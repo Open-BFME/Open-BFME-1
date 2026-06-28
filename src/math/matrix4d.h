@@ -13,6 +13,8 @@ public:
         float m20, float m21, float m22, float m23,
         float m30, float m31, float m32, float m33);
     Matrix4D &operator=(const Matrix4D &that);
+    Matrix4D &operator+=(const Matrix4D &that);
+    Matrix4D &operator-=(const Matrix4D &that);
 
     Coord3D &GetXVector(Coord3D &out) const;
     Coord3D &GetYVector(Coord3D &out) const;

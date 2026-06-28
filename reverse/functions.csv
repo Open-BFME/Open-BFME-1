@@ -53,10 +53,12 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??YCoord2D@@QAEAAV0@ABV0@@Z,0x0001945C,0x002320C0,24,src/math/coord2d.cpp,matched,adds Coord2D
 ??YCoord3D@@QAEAAV0@ABUCoord3DBase@@@Z,0x000233EE,0x00148730,33,src/math/coord3d.cpp,matched,adds Coord3DBase
 ??YCoord3D@@QAEAAV0@ABVCoord2D@@@Z,0x000267FB,0x007E5CB0,24,src/math/coord3d.cpp,matched,adds Coord2D x/y
+??YMatrix4D@@QAEAAV0@ABV0@@Z,0x00008742,0x007E6560,150,src/math/matrix4d.cpp,matched,adds matrix values in place
 ??ZCoord2D@@QAEAAV0@ABUCoord3DBase@@@Z,0x0003F7BF,0x007E5AA0,24,src/math/coord2d.cpp,matched,subtracts Coord3DBase x/y
 ??ZCoord2D@@QAEAAV0@ABV0@@Z,0x00045002,0x002320E0,24,src/math/coord2d.cpp,matched,subtracts Coord2D
 ??ZCoord3D@@QAEAAV0@ABUCoord3DBase@@@Z,0x000126B6,0x0016A240,33,src/math/coord3d.cpp,matched,subtracts Coord3DBase
 ??ZCoord3D@@QAEAAV0@ABVCoord2D@@@Z,0x000296FE,0x007E5CD0,24,src/math/coord3d.cpp,matched,subtracts Coord2D x/y
+??ZMatrix4D@@QAEAAV0@ABV0@@Z,0x000480B8,0x007E6620,150,src/math/matrix4d.cpp,matched,subtracts matrix values in place
 ??8ICoord2D@@QBE_NABUICoord2DBase@@@Z,0x00010AA5,0x003D5220,31,src/math/icoord.cpp,matched,compares x/y
 ??8@YA_NABVGameClientRandomVariable@@0@Z,0x0002BEF9,0x007E7750,53,src/game/game_client_random_variable.cpp,matched,compares distribution/minimum/maximum
 ??8Coord3D@@QBE_NABV0@@Z,0x00008FF8,0x00131C40,60,src/math/coord3d.cpp,matched,compares x/y/z
