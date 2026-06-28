@@ -171,6 +171,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Cos@@YAMM@Z,0x00873920,0x00873920,7,src/math/trig.cpp,matched,returns cosine of radians
 ?Tan@@YAMM@Z,0x00873930,0x00873930,9,src/math/trig.cpp,matched,returns tangent of radians
 ?deg2rad@@YAMM@Z,0x00018A7F,0x00069780,11,src/math/trig.cpp,matched,converts degrees to radians
+?rad2deg@@YAMM@Z,0x00008BF2,0x007E5950,11,src/math/trig.cpp,matched,converts radians to degrees
 ?_GetBlockSize@MemoryPool@@YAIPAX@Z,0x00882D40,0x00882D40,13,src/game/memory_pool.cpp,matched,returns block size or zero for null
 ?_Exit@MemoryPool@@YAXXZ,0x00882950,0x00882950,6,src/game/memory_pool.cpp,matched,decrements reference count
 ?debugIgnoreLeaks@?$StringBase@D@@QAEXXZ,0x00887080,0x00887080,1,src/game/string_base.cpp,matched,no-op leak ignore
