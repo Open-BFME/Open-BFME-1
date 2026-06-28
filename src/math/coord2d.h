@@ -33,6 +33,7 @@ public:
     Coord2D &Add(const Coord2D &that);
     Coord2D &Add(const Coord3DBase &that);
     float GetLength() const;
+    float GetLengthEstimate() const;
     float GetLengthSqrd() const;
     bool IsExactlyEqualTo(const Coord2D &that) const;
     float length() const;

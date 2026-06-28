@@ -116,8 +116,10 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?expandBy@Region3D@@QAEXABVCoord3D@@@Z,0x00022F75,0x007E8330,111,src/math/region.cpp,matched,expands float x/y/z bounds to include point
 ?equals@Coord3D@@QBE_NABUCoord3DBase@@@Z,0x00001334,0x0016A110,60,src/math/coord3d.cpp,matched,compares x/y/z with Coord3DBase
 ?GetLength@Coord2D@@QBEMXZ,0x00022FA2,0x0016E3A0,22,src/math/coord2d.cpp,matched,returns vector length
+?GetLengthEstimate@Coord2D@@QBEMXZ,0x0002DC72,0x0043A590,31,src/math/coord2d.cpp,matched,returns approximate length
 ?GetLength2D@Coord3D@@QBEMXZ,0x00036D95,0x001A5D70,22,src/math/coord3d.cpp,matched,returns x/y vector length
 ?GetLength@Coord3D@@QBEMXZ,0x0002EF14,0x000FE9B0,33,src/math/coord3d.cpp,matched,returns vector length
+?GetLengthEstimate2D@Coord3D@@QBEMXZ,0x00043464,0x000C3D10,31,src/math/coord3d.cpp,matched,returns approximate x/y length
 ?GetLengthSqrd2D@Coord3D@@QBEMXZ,0x000185D9,0x001DD2C0,20,src/math/coord3d.cpp,matched,returns squared x/y length
 ?GetLengthSqrd@Coord2D@@QBEMXZ,0x00013976,0x00233D00,20,src/math/coord2d.cpp,matched,returns squared x/y length
 ?GetLengthSqrd@Coord3D@@QBEMXZ,0x0002E339,0x0015BEF0,31,src/math/coord3d.cpp,matched,returns squared x/y/z length

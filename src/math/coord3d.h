@@ -40,6 +40,7 @@ public:
     bool equals(const Coord3DBase &that) const;
     float GetLength() const;
     float GetLength2D() const;
+    float GetLengthEstimate2D() const;
     float GetLengthSqrd() const;
     float GetLengthSqrd2D() const;
     bool IsExactlyEqualTo(const Coord3D &that) const;

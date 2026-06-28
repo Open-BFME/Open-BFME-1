@@ -197,6 +197,27 @@ float Coord3D::GetLength2D() const
     return (float)sqrt(x_value * x_value + y_value * y_value);
 }
 
+static const float length_estimate_factor = 0.25f;
+
+float Coord3D::GetLengthEstimate2D() const
+{
+    __asm {
+        fld dword ptr [ecx]
+        fabs
+        fld dword ptr [ecx + 4]
+        fabs
+        fld ST(1)
+        fcomp ST(1)
+        fnstsw ax
+        test ah, 0x41
+        je no_swap
+        fxch ST(1)
+    no_swap:
+        fmul length_estimate_factor
+        faddp ST(1), ST(0)
+    }
+}
+
 float Coord3D::GetLengthSqrd() const
 {
     float x_value = x;

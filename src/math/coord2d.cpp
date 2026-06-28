@@ -162,6 +162,7 @@ Coord2D &Coord2D::Negate()
 }
 
 static const float one = 1.0f;
+static const float length_estimate_factor = 0.25f;
 
 float Coord2D::Normalize()
 {
@@ -183,6 +184,25 @@ float Coord2D::Normalize()
         fstp dword ptr [ecx]
         fmul dword ptr [ecx + 4]
         fstp dword ptr [ecx + 4]
+    }
+}
+
+float Coord2D::GetLengthEstimate() const
+{
+    __asm {
+        fld dword ptr [ecx]
+        fabs
+        fld dword ptr [ecx + 4]
+        fabs
+        fld ST(1)
+        fcomp ST(1)
+        fnstsw ax
+        test ah, 0x41
+        je no_swap
+        fxch ST(1)
+    no_swap:
+        fmul length_estimate_factor
+        faddp ST(1), ST(0)
     }
 }
 
