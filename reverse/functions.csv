@@ -11,6 +11,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0Coord3D@@QAE@HHH@Z,0x0003AE04,0x00064310,25,src/math/coord3d.cpp,matched,converts ints to floats
 ??0Coord3D@@QAE@MMM@Z,0x000156C7,0x000642F0,25,src/math/coord3d.cpp,matched,sets x/y/z from floats
 ??0Coord3D@@QAE@XZ,0x00016C93,0x00083330,3,src/math/coord3d.cpp,matched,empty constructor returns self
+??0GameClientRandomVariable@@QAE@XZ,0x0002466D,0x0005C5D0,13,src/game/game_client_random_variable.cpp,matched,initializes distribution/minimum/maximum to zero
 ??0ICoord2D@@QAE@ABUICoord2DBase@@@Z,0x00001EB0,0x0008AA60,19,src/math/icoord.cpp,matched,copies x/y from ICoord2DBase
 ??0ICoord2D@@QAE@HH@Z,0x000160D6,0x00106690,18,src/math/icoord.cpp,matched,sets x/y from ints
 ??0ICoord2D@@QAE@XZ,0x00039130,0x00083360,3,src/math/icoord.cpp,matched,empty constructor returns self
@@ -29,7 +30,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??4ICoord2D@@QAEAAU0@ABUICoord2DBase@@@Z,0x00001C21,0x00477BA0,19,src/math/icoord.cpp,matched,copies x/y from ICoord2DBase
 ??4ICoord2DBase@@QAEAAU0@ABU0@@Z,0x00017071,0x007E6D50,19,src/math/icoord.cpp,matched,copies x/y from ICoord2DBase
 ??8ICoord2D@@QBE_NABUICoord2DBase@@@Z,0x00010AA5,0x003D5220,31,src/math/icoord.cpp,matched,compares x/y
+??8@YA_NABVGameClientRandomVariable@@0@Z,0x0002BEF9,0x007E7750,53,src/game/game_client_random_variable.cpp,matched,compares distribution/minimum/maximum
 ??9ICoord2D@@QBE_NABUICoord2DBase@@@Z,0x0000FEDE,0x003D5250,31,src/math/icoord.cpp,matched,compares x/y
+??9@YA_NABVGameClientRandomVariable@@0@Z,0x00016775,0x007E77A0,71,src/game/game_client_random_variable.cpp,matched,compares distribution/minimum/maximum
 ?zero@Coord3D@@QAEXXZ,0x00029226,0x00083340,11,src/math/coord3d.cpp,matched,sets x/y/z to zero
 ?zero@ICoord3D@@QAEXXZ,0x000268C3,0x0045B890,11,src/math/icoord.cpp,matched,sets x/y/z to zero
 ?Set2D@Coord3D@@QAEAAV1@MM@Z,0x0003D00A,0x007E5FB0,18,src/math/coord3d.cpp,matched,sets x/y from floats
@@ -46,5 +49,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?SetZAxis@Coord3D@@QAEAAV1@XZ,0x0001C06C,0x001BD760,23,src/math/coord3d.cpp,matched,sets unit z axis
 ?SetZero@Coord2D@@QAEAAV1@XZ,0x00022D0E,0x003FD390,16,src/math/coord2d.cpp,matched,sets x/y to zero and returns self
 ?SetZero@Coord3D@@QAEAAV1@XZ,0x000495CB,0x00148760,13,src/math/coord3d.cpp,matched,sets x/y/z to zero and returns self
+?getDistributionType@GameClientRandomVariable@@QBE?AW4DistributionType@1@XZ,0x0000E4C1,0x0010BDB0,3,src/game/game_client_random_variable.cpp,matched,returns distribution type
+?getMaximumValue@GameClientRandomVariable@@QBEMXZ,0x0002E532,0x0010BDA0,4,src/game/game_client_random_variable.cpp,matched,returns maximum value
+?getMinimumValue@GameClientRandomVariable@@QBEMXZ,0x00013822,0x0010BD90,4,src/game/game_client_random_variable.cpp,matched,returns minimum value
 ?set@Coord3D@@QAEXMMM@Z,0x00005F0B,0x000FB9C0,23,src/math/coord3d.cpp,matched,sets x/y/z from floats
 ?set@Coord3D@@QAEXPBUCoord3DBase@@@Z,0x000491F2,0x000FB9A0,23,src/math/coord3d.cpp,matched,copies x/y/z from pointer
+?setRange@GameClientRandomVariable@@QAEXMMW4DistributionType@1@@Z,0x00006C58,0x00096F40,23,src/game/game_client_random_variable.cpp,matched,sets distribution/minimum/maximum
