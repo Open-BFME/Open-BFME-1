@@ -161,6 +161,22 @@ Coord2D &Coord2D::Negate()
     return *this;
 }
 
+Coord2D &Coord2D::Rotate(float sine, float cosine)
+{
+    float new_x = cosine * x - sine * y;
+
+    y = cosine * y + sine * x;
+    x = new_x;
+    return *this;
+}
+
+Coord2D &Coord2D::Rotate(Coord2D &coord, float sine, float cosine)
+{
+    x = cosine * coord.x - sine * coord.y;
+    y = cosine * coord.y + sine * coord.x;
+    return *this;
+}
+
 Coord2D &Coord2D::Scale(float scale)
 {
     x *= scale;
