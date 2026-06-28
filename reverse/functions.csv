@@ -23,6 +23,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0Region2D@@QAE@XZ,0x0001DFB1,0x00160B10,3,src/math/region.cpp,matched,empty constructor returns self
 ??0Region3D@@QAE@ABU0@@Z,0x00032E02,0x000BEC90,43,src/math/region.cpp,matched,copies bounds
 ??0Region3D@@QAE@XZ,0x00024573,0x000BEC80,3,src/math/region.cpp,matched,empty constructor returns self
+??0RGBColorKeyframe@FXParticleSystem@@QAE@XZ,0x00029677,0x0005C700,16,src/math/color.cpp,matched,sets channels and frame to zero
 ??1Coord2D@@QAE@XZ,0x0003EAB8,0x0005BD90,1,src/math/coord2d.cpp,matched,empty destructor emits ret
 ??1Coord3D@@QAE@XZ,0x0001364C,0x0005BC40,1,src/math/coord3d.cpp,matched,empty destructor emits ret
 ??1Region2D@@QAE@XZ,0x000071DF,0x0005C310,1,src/math/region.cpp,matched,empty destructor emits ret
@@ -40,9 +41,11 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??8ICoord2D@@QBE_NABUICoord2DBase@@@Z,0x00010AA5,0x003D5220,31,src/math/icoord.cpp,matched,compares x/y
 ??8@YA_NABVGameClientRandomVariable@@0@Z,0x0002BEF9,0x007E7750,53,src/game/game_client_random_variable.cpp,matched,compares distribution/minimum/maximum
 ??8IRegion2D@@QBE_NABU0@@Z,0x00007338,0x00403AC0,47,src/math/region.cpp,matched,compares bounds
+??8@YA_NABURGBColor@@0@Z,0x000136D8,0x007E6FB0,60,src/math/color.cpp,matched,compares RGB channels
 ??9ICoord2D@@QBE_NABUICoord2DBase@@@Z,0x0000FEDE,0x003D5250,31,src/math/icoord.cpp,matched,compares x/y
 ??9@YA_NABVGameClientRandomVariable@@0@Z,0x00016775,0x007E77A0,71,src/game/game_client_random_variable.cpp,matched,compares distribution/minimum/maximum
 ??9IRegion2D@@QBE_NABU0@@Z,0x0003E9BE,0x00403B00,65,src/math/region.cpp,matched,compares bounds
+??9@YA_NABURGBColor@@0@Z,0x00049ED1,0x007E7000,78,src/math/color.cpp,matched,compares RGB channels
 ?IsExactlyEqualTo@Region2D@@QBE_NABU1@@Z,0x00007C66,0x0061BAF0,75,src/math/region.cpp,matched,compares exact float bounds
 ?zero@Coord3D@@QAEXXZ,0x00029226,0x00083340,11,src/math/coord3d.cpp,matched,sets x/y/z to zero
 ?zero@ICoord3D@@QAEXXZ,0x000268C3,0x0045B890,11,src/math/icoord.cpp,matched,sets x/y/z to zero
