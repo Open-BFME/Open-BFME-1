@@ -1,6 +1,8 @@
 #include "coord2d.h"
 #include "coord3d.h"
 
+#include <math.h>
+
 Coord2DBase &Coord2DBase::operator=(const Coord2DBase &that)
 {
     x = that.x;
@@ -126,9 +128,22 @@ Coord2D &Coord2D::Add(const Coord3DBase &that)
     return *this;
 }
 
+float Coord2D::GetLength() const
+{
+    float x_value = x;
+    float y_value = y;
+
+    return (float)sqrt(x_value * x_value + y_value * y_value);
+}
+
 bool Coord2D::IsExactlyEqualTo(const Coord2D &that) const
 {
     return x == that.x && y == that.y;
+}
+
+float Coord2D::length() const
+{
+    return (float)sqrt(x * x + y * y);
 }
 
 Coord2D &Coord2D::Negate()
