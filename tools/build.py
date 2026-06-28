@@ -1,12 +1,27 @@
 #!/usr/bin/env python3
+import csv
 import hashlib
 import json
+import shutil
+import struct
+import subprocess
 import sys
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "baselines" / "bfme1" / "workshop-vanilla-1.03" / "manifest.json"
+EXE = ROOT / "baselines" / "bfme1" / "workshop-vanilla-1.03" / "files" / "lotrbfme.exe"
+FUNCTIONS = ROOT / "reverse" / "functions.csv"
+BUILD_DIR = ROOT / "build" / "match"
+
+
+def u16(data, offset):
+    return struct.unpack_from("<H", data, offset)[0]
+
+
+def u32(data, offset):
+    return struct.unpack_from("<I", data, offset)[0]
 
 
 def hash_file(path, algorithm):
@@ -17,7 +32,7 @@ def hash_file(path, algorithm):
     return digest.hexdigest()
 
 
-def main():
+def verify_baseline():
     with MANIFEST.open("r", encoding="utf-8") as handle:
         manifest = json.load(handle)
 
@@ -43,7 +58,154 @@ def main():
 
         print(f"  OK {entry['path']}")
 
-    print("Source candidates are not compiled by this script yet.")
+
+def pe_sections(data):
+    pe_offset = u32(data, 0x3C)
+    coff = pe_offset + 4
+    section_count = u16(data, coff + 2)
+    optional_size = u16(data, coff + 16)
+    section_table = coff + 20 + optional_size
+
+    sections = []
+    for index in range(section_count):
+        offset = section_table + index * 40
+        name = data[offset : offset + 8].rstrip(b"\0").decode("ascii", errors="replace").strip()
+        virtual_size = u32(data, offset + 8)
+        virtual_address = u32(data, offset + 12)
+        raw_size = u32(data, offset + 16)
+        raw_pointer = u32(data, offset + 20)
+        sections.append(
+            {
+                "name": name,
+                "rva": virtual_address,
+                "size": max(virtual_size, raw_size),
+                "raw_pointer": raw_pointer,
+            }
+        )
+    return sections
+
+
+def rva_to_file_offset(sections, rva):
+    for section in sections:
+        start = section["rva"]
+        end = start + section["size"]
+        if start <= rva < end:
+            return section["raw_pointer"] + (rva - start)
+    raise ValueError(f"RVA 0x{rva:08X} is outside all PE sections")
+
+
+def read_target_bytes(rva, size):
+    data = EXE.read_bytes()
+    offset = rva_to_file_offset(pe_sections(data), rva)
+    return data[offset : offset + size]
+
+
+def coff_name(data, symbol_offset, string_table):
+    short_name = data[symbol_offset : symbol_offset + 8]
+    if short_name[:4] == b"\0\0\0\0":
+        string_offset = u32(short_name, 4)
+        end = string_table.index(b"\0", string_offset)
+        return string_table[string_offset:end].decode("ascii", errors="replace")
+    return short_name.rstrip(b"\0").decode("ascii", errors="replace")
+
+
+def read_object_symbol_bytes(path, symbol_name):
+    data = path.read_bytes()
+    section_count = u16(data, 2)
+    symbol_table = u32(data, 8)
+    symbol_count = u32(data, 12)
+    section_table = 20
+
+    sections = []
+    for index in range(section_count):
+        offset = section_table + index * 40
+        sections.append(
+            {
+                "name": data[offset : offset + 8].rstrip(b"\0").decode("ascii", errors="replace"),
+                "raw_size": u32(data, offset + 16),
+                "raw_pointer": u32(data, offset + 20),
+            }
+        )
+
+    string_table = data[symbol_table + symbol_count * 18 :]
+    index = 0
+    while index < symbol_count:
+        offset = symbol_table + index * 18
+        name = coff_name(data, offset, string_table)
+        value = u32(data, offset + 8)
+        section_number = struct.unpack_from("<h", data, offset + 12)[0]
+        aux_count = data[offset + 17]
+
+        if name == symbol_name:
+            if section_number <= 0:
+                raise ValueError(f"{symbol_name} is not defined in a section")
+            section = sections[section_number - 1]
+            start = section["raw_pointer"] + value
+            end = section["raw_pointer"] + section["raw_size"]
+            return data[start:end]
+
+        index += 1 + aux_count
+
+    raise ValueError(f"symbol not found in object: {symbol_name}")
+
+
+def compiler_command(source, output):
+    compiler = shutil.which("clang-cl")
+    if compiler is None:
+        raise SystemExit("clang-cl not found. Install LLVM or put clang-cl on PATH.")
+
+    return [
+        compiler,
+        "--target=i686-pc-windows-msvc",
+        "/nologo",
+        "/c",
+        "/O1",
+        "/GR-",
+        "/EHsc-",
+        "/clang:-mno-sse",
+        f"/Fo:{output}",
+        str(source),
+    ]
+
+
+def format_bytes(data):
+    return " ".join(f"{byte:02x}" for byte in data)
+
+
+def verify_functions():
+    with FUNCTIONS.open("r", encoding="utf-8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+
+    print("Functions:")
+    failures = 0
+    for row in rows:
+        source = ROOT / row["source"]
+        output = BUILD_DIR / (source.stem + ".obj")
+        output.parent.mkdir(parents=True, exist_ok=True)
+
+        command = compiler_command(source, output)
+        subprocess.run(command, cwd=ROOT, check=True)
+
+        target = read_target_bytes(int(row["target_rva"], 16), int(row["target_size"]))
+        compiled = read_object_symbol_bytes(output, row["name"])
+
+        if compiled == target:
+            print(f"  OK {row['name']} ({row['source']})")
+            continue
+
+        failures += 1
+        print(f"  FAIL {row['name']} ({row['source']})")
+        print(f"    target:   {format_bytes(target)}")
+        print(f"    compiled: {format_bytes(compiled)}")
+
+    if failures:
+        print(f"{failures} function(s) failed byte comparison")
+        raise SystemExit(1)
+
+
+def main():
+    verify_baseline()
+    verify_functions()
 
 
 if __name__ == "__main__":

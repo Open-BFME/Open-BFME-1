@@ -1,9 +1,5 @@
 #include "coord3d.h"
 
-void Coord3D::zero()
+Coord3D::~Coord3D()
 {
-    x = 0.0f;
-    y = 0.0f;
-    z = 0.0f;
 }
-

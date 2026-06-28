@@ -33,7 +33,7 @@ Git LFS is required for committed executable baselines.
 Windows:
 
 ```powershell
-winget install Git.Git GitHub.GitLFS Python.Python.3.12
+winget install Git.Git GitHub.GitLFS Python.Python.3.12 LLVM.LLVM
 git lfs install
 git lfs pull
 .\build.ps1
@@ -47,19 +47,22 @@ git lfs pull
 ./build.sh
 ```
 
-## Build Status
+## Build
 
-`build.sh` / `build.ps1` currently verifies the checked-in executable baseline.
+`build.sh` / `build.ps1` verifies the executable baseline, compiles tracked source, and compares emitted bytes against `lotrbfme.exe`.
 
-A compiler is not wired into the build yet. The likely long-term target is MSVC 7.1 / Visual Studio .NET 2003, because the baseline executable was linked with MSVC linker 7.10.
+The current compiler harness uses `clang-cl` as a temporary Windows ABI compiler. The likely long-term target is MSVC 7.1 / Visual Studio .NET 2003, because the baseline executable was linked with MSVC linker 7.10.
 
-Current source candidate:
+Current matched source:
 
 ```text
-src/math/coord3d.cpp
+Coord3D::~Coord3D()
+source:     src/math/coord3d.cpp
+target RVA: 0x0005BC40
+bytes:      c3
 ```
 
-It is tracked as `candidate` until compiled bytes are matched against the target RVA in `reverse/functions.csv`.
+Only matched source should live in `src/`. Unmatched experiments belong outside `src/` until the build proves them.
 
 Regenerate the export inventory:
 
