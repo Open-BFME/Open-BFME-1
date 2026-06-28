@@ -137,6 +137,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?length@Coord2D@@QBEMXZ,0x0003CA3D,0x000FB9E0,22,src/math/coord2d.cpp,matched,returns vector length
 ?length@Coord3D@@QBEMXZ,0x0002FE0F,0x000B6CA0,33,src/math/coord3d.cpp,matched,returns vector length
 ?add@Coord3D@@QAEXPBUCoord3DBase@@@Z,0x00022688,0x000B6570,31,src/math/coord3d.cpp,matched,adds Coord3DBase pointer
+?crossProduct@Coord3D@@SAXPBV1@0PAV1@@Z,0x00007536,0x00131BF0,59,src/math/coord3d.cpp,matched,writes cross product to result pointer
 ?lengthSqr@Coord3D@@QBEMXZ,0x00020662,0x0014FF10,31,src/math/coord3d.cpp,matched,returns squared x/y/z length
 ?set@Coord3D@@QAEXMMM@Z,0x00005F0B,0x000FB9C0,23,src/math/coord3d.cpp,matched,sets x/y/z from floats
 ?set@Coord3D@@QAEXPBUCoord3DBase@@@Z,0x000491F2,0x000FB9A0,23,src/math/coord3d.cpp,matched,copies x/y/z from pointer

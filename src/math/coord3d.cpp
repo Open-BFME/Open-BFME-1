@@ -366,6 +366,13 @@ void Coord3D::sub(const Coord3DBase *that)
     z -= that->z;
 }
 
+void Coord3D::crossProduct(const Coord3D *left, const Coord3D *right, Coord3D *result)
+{
+    result->x = left->y * right->z - left->z * right->y;
+    result->y = left->z * right->x - left->x * right->z;
+    result->z = left->x * right->y - left->y * right->x;
+}
+
 Coord3D &Coord3D::SetZero()
 {
     ((unsigned int *)this)[2] = 0;
