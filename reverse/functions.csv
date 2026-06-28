@@ -47,6 +47,10 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??9IRegion2D@@QBE_NABU0@@Z,0x0003E9BE,0x00403B00,65,src/math/region.cpp,matched,compares bounds
 ??9@YA_NABURGBColor@@0@Z,0x00049ED1,0x007E7000,78,src/math/color.cpp,matched,compares RGB channels
 ?IsExactlyEqualTo@Region2D@@QBE_NABU1@@Z,0x00007C66,0x0061BAF0,75,src/math/region.cpp,matched,compares exact float bounds
+?GetTranslationVector@Matrix4D@@QBEAAVCoord3D@@AAV2@@Z,0x00017210,0x007E6CE0,24,src/math/matrix4d.cpp,matched,copies translation vector
+?GetXVector@Matrix4D@@QBEAAVCoord3D@@AAV2@@Z,0x00042F00,0x007E6C80,23,src/math/matrix4d.cpp,matched,copies x basis vector
+?GetYVector@Matrix4D@@QBEAAVCoord3D@@AAV2@@Z,0x00024280,0x007E6CA0,24,src/math/matrix4d.cpp,matched,copies y basis vector
+?GetZVector@Matrix4D@@QBEAAVCoord3D@@AAV2@@Z,0x0003021F,0x007E6CC0,24,src/math/matrix4d.cpp,matched,copies z basis vector
 ?zero@Coord3D@@QAEXXZ,0x00029226,0x00083340,11,src/math/coord3d.cpp,matched,sets x/y/z to zero
 ?zero@ICoord3D@@QAEXXZ,0x000268C3,0x0045B890,11,src/math/icoord.cpp,matched,sets x/y/z to zero
 ?zero@Region3D@@QAEXXZ,0x0003652F,0x000BEC60,20,src/math/region.cpp,matched,sets bounds to zero
