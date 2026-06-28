@@ -1,5 +1,7 @@
 #include "coord3d.h"
 
+#include <math.h>
+
 Coord3D::Coord3D()
 {
 }
@@ -178,9 +180,31 @@ bool Coord3D::equals(const Coord3DBase &that) const
     return x == that.x && y == that.y && z == that.z;
 }
 
+float Coord3D::GetLength() const
+{
+    float x_value = x;
+    float y_value = y;
+    float z_value = z;
+
+    return (float)sqrt(x_value * x_value + y_value * y_value + z_value * z_value);
+}
+
+float Coord3D::GetLength2D() const
+{
+    float x_value = x;
+    float y_value = y;
+
+    return (float)sqrt(x_value * x_value + y_value * y_value);
+}
+
 bool Coord3D::IsExactlyEqualTo(const Coord3D &that) const
 {
     return x == that.x && y == that.y && z == that.z;
+}
+
+float Coord3D::length() const
+{
+    return (float)sqrt(x * x + y * y + z * z);
 }
 
 float Coord3D::lengthSqr() const

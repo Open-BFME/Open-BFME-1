@@ -99,6 +99,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?depth@Region3D@@QBEMXZ,0x0001DB24,0x007E6E30,7,src/math/region.cpp,matched,returns float depth
 ?equals@Coord3D@@QBE_NABUCoord3DBase@@@Z,0x00001334,0x0016A110,60,src/math/coord3d.cpp,matched,compares x/y/z with Coord3DBase
 ?GetLength@Coord2D@@QBEMXZ,0x00022FA2,0x0016E3A0,22,src/math/coord2d.cpp,matched,returns vector length
+?GetLength2D@Coord3D@@QBEMXZ,0x00036D95,0x001A5D70,22,src/math/coord3d.cpp,matched,returns x/y vector length
+?GetLength@Coord3D@@QBEMXZ,0x0002EF14,0x000FE9B0,33,src/math/coord3d.cpp,matched,returns vector length
 ?Set2D@Coord3D@@QAEAAV1@MM@Z,0x0003D00A,0x007E5FB0,18,src/math/coord3d.cpp,matched,sets x/y from floats
 ?Set@Coord2D@@QAEAAV1@MM@Z,0x00037DA8,0x000FBA00,18,src/math/coord2d.cpp,matched,sets x/y from floats
 ?Set@Coord3D@@QAEAAV1@MMM@Z,0x00041C77,0x000C8D50,25,src/math/coord3d.cpp,matched,sets x/y/z from floats
@@ -126,6 +128,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?isInRegionWithZ@Region3D@@QBE_NPBVCoord3D@@@Z,0x000427D0,0x007E6E40,92,src/math/region.cpp,matched,checks point inside x/y/z bounds
 ?isInside@Region2D@@QBE_NABVCoord2D@@@Z,0x000457A5,0x0061BA90,66,src/math/region.cpp,matched,checks point inside region
 ?length@Coord2D@@QBEMXZ,0x0003CA3D,0x000FB9E0,22,src/math/coord2d.cpp,matched,returns vector length
+?length@Coord3D@@QBEMXZ,0x0002FE0F,0x000B6CA0,33,src/math/coord3d.cpp,matched,returns vector length
 ?add@Coord3D@@QAEXPBUCoord3DBase@@@Z,0x00022688,0x000B6570,31,src/math/coord3d.cpp,matched,adds Coord3DBase pointer
 ?lengthSqr@Coord3D@@QBEMXZ,0x00020662,0x0014FF10,31,src/math/coord3d.cpp,matched,returns squared x/y/z length
 ?set@Coord3D@@QAEXMMM@Z,0x00005F0B,0x000FB9C0,23,src/math/coord3d.cpp,matched,sets x/y/z from floats

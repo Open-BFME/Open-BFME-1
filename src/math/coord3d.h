@@ -38,7 +38,10 @@ public:
     Coord3D &Add2D(const Coord3DBase &that);
     Coord3D &Add2D(const Coord3DBase &left, const Coord3DBase &right);
     bool equals(const Coord3DBase &that) const;
+    float GetLength() const;
+    float GetLength2D() const;
     bool IsExactlyEqualTo(const Coord3D &that) const;
+    float length() const;
     float lengthSqr() const;
     Coord3D &Negate();
     Coord3D &Scale(float scale);
