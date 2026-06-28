@@ -67,6 +67,79 @@ Coord2D &Coord2D::operator=(const Coord3DBase &that)
     return *this;
 }
 
+float Coord2D::operator*(const Coord2D &that) const
+{
+    return x * that.x + y * that.y;
+}
+
+float Coord2D::operator*(const Coord3DBase &that) const
+{
+    return x * that.x + y * that.y;
+}
+
+Coord2D &Coord2D::operator*=(float scale)
+{
+    x *= scale;
+    y *= scale;
+    return *this;
+}
+
+Coord2D &Coord2D::operator+=(const Coord2D &that)
+{
+    x += that.x;
+    y += that.y;
+    return *this;
+}
+
+Coord2D &Coord2D::operator+=(const Coord3DBase &that)
+{
+    x += that.x;
+    y += that.y;
+    return *this;
+}
+
+Coord2D &Coord2D::operator-=(const Coord2D &that)
+{
+    x -= that.x;
+    y -= that.y;
+    return *this;
+}
+
+Coord2D &Coord2D::operator-=(const Coord3DBase &that)
+{
+    x -= that.x;
+    y -= that.y;
+    return *this;
+}
+
+Coord2D &Coord2D::Add(const Coord2D &that)
+{
+    x += that.x;
+    y += that.y;
+    return *this;
+}
+
+Coord2D &Coord2D::Add(const Coord3DBase &that)
+{
+    x += that.x;
+    y += that.y;
+    return *this;
+}
+
+Coord2D &Coord2D::Negate()
+{
+    x = -x;
+    y = -y;
+    return *this;
+}
+
+Coord2D &Coord2D::Scale(float scale)
+{
+    x *= scale;
+    y *= scale;
+    return *this;
+}
+
 Coord2D &Coord2D::Set(float x, float y)
 {
     this->x = x;
@@ -106,5 +179,19 @@ Coord2D &Coord2D::SetZero()
 {
     y = 0.0f;
     x = 0.0f;
+    return *this;
+}
+
+Coord2D &Coord2D::Sub(const Coord2D &that)
+{
+    x -= that.x;
+    y -= that.y;
+    return *this;
+}
+
+Coord2D &Coord2D::Sub(const Coord3DBase &that)
+{
+    x -= that.x;
+    y -= that.y;
     return *this;
 }
