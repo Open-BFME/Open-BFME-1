@@ -16,3 +16,8 @@ float Tan(float radians)
 {
     return tanf(radians);
 }
+
+float deg2rad(float degrees)
+{
+    return degrees * 0.01745329238474369f;
+}

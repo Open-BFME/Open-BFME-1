@@ -120,11 +120,30 @@ def coff_name(data, symbol_offset, string_table):
     return short_name.rstrip(b"\0").decode("ascii", errors="replace")
 
 
+def read_object_symbols(data):
+    symbol_table = u32(data, 8)
+    symbol_count = u32(data, 12)
+    string_table = data[symbol_table + symbol_count * 18 :]
+    symbols = []
+    index = 0
+    while index < symbol_count:
+        offset = symbol_table + index * 18
+        name = coff_name(data, offset, string_table)
+        value = u32(data, offset + 8)
+        section_number = struct.unpack_from("<h", data, offset + 12)[0]
+        aux_count = data[offset + 17]
+        symbols.append({"name": name, "value": value, "section": section_number, "aux": aux_count})
+        for _ in range(aux_count):
+            index += 1
+            offset = symbol_table + index * 18
+            symbols.append({"name": "", "value": 0, "section": 0, "aux": 0})
+        index += 1
+    return symbols
+
+
 def read_object_symbol_bytes(path, symbol_name):
     data = path.read_bytes()
     section_count = u16(data, 2)
-    symbol_table = u32(data, 8)
-    symbol_count = u32(data, 12)
     section_table = 20
 
     sections = []
@@ -135,27 +154,36 @@ def read_object_symbol_bytes(path, symbol_name):
                 "name": data[offset : offset + 8].rstrip(b"\0").decode("ascii", errors="replace"),
                 "raw_size": u32(data, offset + 16),
                 "raw_pointer": u32(data, offset + 20),
+                "reloc_count": u16(data, offset + 32),
+                "reloc_pointer": u32(data, offset + 24),
             }
         )
 
-    string_table = data[symbol_table + symbol_count * 18 :]
+    symbols = read_object_symbols(data)
     index = 0
-    while index < symbol_count:
-        offset = symbol_table + index * 18
-        name = coff_name(data, offset, string_table)
-        value = u32(data, offset + 8)
-        section_number = struct.unpack_from("<h", data, offset + 12)[0]
-        aux_count = data[offset + 17]
-
-        if name == symbol_name:
-            if section_number <= 0:
+    while index < len(symbols):
+        symbol = symbols[index]
+        if symbol["name"] == symbol_name:
+            if symbol["section"] <= 0:
                 raise ValueError(f"{symbol_name} is not defined in a section")
-            section = sections[section_number - 1]
+            section = sections[symbol["section"] - 1]
+            value = symbol["value"]
             start = section["raw_pointer"] + value
             end = section["raw_pointer"] + section["raw_size"]
-            return data[start:end]
+            bytes_data = data[start:end]
 
-        index += 1 + aux_count
+            relocs = []
+            for r in range(section["reloc_count"]):
+                ro = section["reloc_pointer"] + r * 10
+                rva = u32(data, ro)
+                sym_idx = u32(data, ro + 4)
+                rtype = u16(data, ro + 8)
+                if value <= rva < value + len(bytes_data):
+                    relocs.append((rva - value, rtype, symbols[sym_idx]["name"]))
+
+            return bytes_data, relocs
+
+        index += 1
 
     raise ValueError(f"symbol not found in object: {symbol_name}")
 
@@ -235,7 +263,14 @@ def load_function_rows():
         return list(csv.DictReader(handle))
 
 
-def compile_function(row):
+def load_symbol_map():
+    symbol_map = {}
+    for row in load_function_rows():
+        symbol_map[row["name"]] = int(row["target_rva"], 16)
+    return symbol_map
+
+
+def compile_function(row, symbol_map):
     source = ROOT / row["source"]
     output = BUILD_DIR / (source.stem + ".obj")
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -254,25 +289,39 @@ def compile_function(row):
         raise SystemExit(result.returncode)
 
     target_rva = int(row["target_rva"], 16)
-    target = read_target_bytes(target_rva, int(row["target_size"]))
-    compiled = read_object_symbol_bytes(output, row["name"])
+    target_size = int(row["target_size"])
+    target = read_target_bytes(target_rva, target_size)
+    compiled, relocs = read_object_symbol_bytes(output, row["name"])
+
+    resolved = bytearray(compiled[:target_size])
+    for offset, rtype, sym_name in relocs:
+        if rtype == 0x0006:  # IMAGE_REL_I386_DIR32
+            resolved[offset : offset + 4] = target[offset : offset + 4]
+        elif rtype == 0x0009:  # IMAGE_REL_I386_REL32
+            if sym_name in symbol_map:
+                target_address = symbol_map[sym_name]
+                next_address = target_rva + offset + 4
+                displacement = struct.pack("<i", target_address - next_address)
+                resolved[offset : offset + 4] = displacement
+
     return {
         "name": row["name"],
         "target_rva": target_rva,
         "target": target,
-        "bytes": compiled,
+        "bytes": bytes(resolved),
         "source": row["source"],
     }
 
 
 def verify_functions():
     rows = load_function_rows()
+    symbol_map = load_symbol_map()
 
     print("Functions:")
     failures = 0
     patches = []
     for row in rows:
-        patch = compile_function(row)
+        patch = compile_function(row, symbol_map)
         target = patch["target"]
         compiled = patch["bytes"]
 

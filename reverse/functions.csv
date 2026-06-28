@@ -90,6 +90,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Add@Coord3D@@QAEAAV1@ABVCoord2D@@ABUCoord3DBase@@@Z,0x0001F802,0x007E5EF0,34,src/math/coord3d.cpp,matched,adds Coord2D and Coord3DBase
 ?Negate@Coord2D@@QAEAAV1@XZ,0x0000848B,0x007E5B20,17,src/math/coord2d.cpp,matched,negates x/y
 ?Negate@Coord3D@@QAEAAV1@XZ,0x0002C3CC,0x007E5DA0,25,src/math/coord3d.cpp,matched,negates x/y/z
+?Normalize@Coord2D@@QAEMXZ,0x0002C548,0x003A4140,42,src/math/coord2d.cpp,matched,normalizes vector and returns length
 ?Rotate@Coord2D@@QAEAAV1@AAV1@MM@Z,0x00023772,0x007E5BD0,44,src/math/coord2d.cpp,matched,rotates source by sine/cosine into this
 ?Rotate@Coord2D@@QAEAAV1@MM@Z,0x0001251C,0x007E5B40,40,src/math/coord2d.cpp,matched,rotates vector in place by sine/cosine
 ?Scale@Coord2D@@QAEAAV1@M@Z,0x000444EF,0x0014FFB0,23,src/math/coord2d.cpp,matched,scales x/y in place
@@ -165,5 +166,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Sin@@YAMM@Z,0x00873910,0x00873910,7,src/math/trig.cpp,matched,returns sine of radians
 ?Cos@@YAMM@Z,0x00873920,0x00873920,7,src/math/trig.cpp,matched,returns cosine of radians
 ?Tan@@YAMM@Z,0x00873930,0x00873930,9,src/math/trig.cpp,matched,returns tangent of radians
+?deg2rad@@YAMM@Z,0x00018A7F,0x00069780,11,src/math/trig.cpp,matched,converts degrees to radians
 ?_GetBlockSize@MemoryPool@@YAIPAX@Z,0x00882D40,0x00882D40,13,src/game/memory_pool.cpp,matched,returns block size or zero for null
+?_Exit@MemoryPool@@YAXXZ,0x00882950,0x00882950,6,src/game/memory_pool.cpp,matched,decrements reference count
 ?debugIgnoreLeaks@?$StringBase@D@@QAEXXZ,0x00887080,0x00887080,1,src/game/string_base.cpp,matched,no-op leak ignore

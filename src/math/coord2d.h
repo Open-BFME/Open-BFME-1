@@ -37,6 +37,7 @@ public:
     bool IsExactlyEqualTo(const Coord2D &that) const;
     float length() const;
     Coord2D &Negate();
+    float Normalize();
     Coord2D &Rotate(float sine, float cosine);
     Coord2D &Rotate(Coord2D &coord, float sine, float cosine);
     Coord2D &Scale(float scale);
