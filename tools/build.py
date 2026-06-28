@@ -2,6 +2,7 @@
 import csv
 import hashlib
 import json
+import os
 import shutil
 import struct
 import subprocess
@@ -14,6 +15,14 @@ MANIFEST = ROOT / "baselines" / "bfme1" / "workshop-vanilla-1.03" / "manifest.js
 EXE = ROOT / "baselines" / "bfme1" / "workshop-vanilla-1.03" / "files" / "lotrbfme.exe"
 FUNCTIONS = ROOT / "reverse" / "functions.csv"
 BUILD_DIR = ROOT / "build" / "match"
+DEFAULT_VC71_ROOT = (
+    ROOT
+    / "build"
+    / "toolchains"
+    / "vs2003"
+    / "Program Files"
+    / "Microsoft Visual Studio .NET 2003"
+)
 
 
 def u16(data, offset):
@@ -149,23 +158,70 @@ def read_object_symbol_bytes(path, symbol_name):
     raise ValueError(f"symbol not found in object: {symbol_name}")
 
 
-def compiler_command(source, output):
-    compiler = shutil.which("clang-cl")
-    if compiler is None:
-        raise SystemExit("clang-cl not found. Install LLVM or put clang-cl on PATH.")
+def vc71_root():
+    root = Path(os.environ.get("VC71_ROOT", DEFAULT_VC71_ROOT))
+    compiler = root / "Vc7" / "bin" / "cl.exe"
+    if not compiler.exists():
+        raise SystemExit(
+            "MSVC 7.1 cl.exe not found. Set VC71_ROOT to a Visual Studio .NET 2003 "
+            f"install root, or place it at {DEFAULT_VC71_ROOT.relative_to(ROOT)}."
+        )
+    return root
 
-    return [
-        compiler,
-        "--target=i686-pc-windows-msvc",
+
+def wine_path(path):
+    winepath = shutil.which("winepath")
+    if winepath is None:
+        raise SystemExit("winepath not found. Install Wine to run MSVC 7.1 on this host.")
+    return subprocess.check_output([winepath, "-w", str(path)], text=True).strip()
+
+
+def compiler_environment(root):
+    env = os.environ.copy()
+    bin_dir = root / "Vc7" / "bin"
+    ide_dir = root / "Common7" / "IDE"
+    base_dir = root.parents[1]
+
+    if os.name == "nt":
+        env["INCLUDE"] = str(root / "Vc7" / "include")
+        env["LIB"] = str(root / "Vc7" / "lib")
+        env["PATH"] = os.pathsep.join([str(bin_dir), str(ide_dir), env.get("PATH", "")])
+        return env
+
+    env["INCLUDE"] = wine_path(root / "Vc7" / "include")
+    env["LIB"] = wine_path(root / "Vc7" / "lib")
+    env["WINEPATH"] = ";".join(
+        path
+        for path in [wine_path(bin_dir), wine_path(ide_dir), wine_path(base_dir), env.get("WINEPATH", "")]
+        if path
+    )
+    return env
+
+
+def compiler_command(source, output):
+    root = vc71_root()
+    compiler = root / "Vc7" / "bin" / "cl.exe"
+    source_arg = source.relative_to(ROOT).as_posix()
+    output_arg = output.relative_to(ROOT).as_posix()
+
+    command = []
+    if os.name != "nt":
+        wine = shutil.which("wine")
+        if wine is None:
+            raise SystemExit("wine not found. Install Wine to run MSVC 7.1 on this host.")
+        command.append(wine)
+
+    command += [
+        str(compiler),
         "/nologo",
         "/c",
         "/O1",
         "/GR-",
         "/EHsc-",
-        "/clang:-mno-sse",
-        f"/Fo:{output}",
-        str(source),
+        f"/Fo{output_arg}",
+        source_arg,
     ]
+    return command, compiler_environment(root)
 
 
 def format_bytes(data):
@@ -183,8 +239,18 @@ def verify_functions():
         output = BUILD_DIR / (source.stem + ".obj")
         output.parent.mkdir(parents=True, exist_ok=True)
 
-        command = compiler_command(source, output)
-        subprocess.run(command, cwd=ROOT, check=True)
+        command, env = compiler_command(source, output)
+        result = subprocess.run(
+            command,
+            cwd=ROOT,
+            env=env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
+        if result.returncode != 0:
+            print(result.stdout, end="")
+            raise SystemExit(result.returncode)
 
         target = read_target_bytes(int(row["target_rva"], 16), int(row["target_size"]))
         compiled = read_object_symbol_bytes(output, row["name"])
