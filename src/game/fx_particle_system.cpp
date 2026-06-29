@@ -155,6 +155,109 @@ PointEmissionVolumeModuleTag &PointEmissionVolumeModuleTag::operator=(const Poin
     return *this;
 }
 
+__declspec(naked) LightningEmissionInfo &LightningEmissionInfo::operator=(const LightningEmissionInfo &that)
+{
+    __asm {
+        push esi
+        push edi
+        mov eax, ecx
+        mov ecx, [esp+0x0c]
+        mov dl, [ecx+4]
+        mov [eax+4], dl
+        lea edx, [ecx+0x8]
+        mov edi, [edx]
+        lea esi, [eax+0x8]
+        mov [esi], edi
+        mov edi, [edx+4]
+        mov [esi+4], edi
+        mov edx, [edx+8]
+        mov [esi+8], edx
+        lea edx, [ecx+0x14]
+        mov edi, [edx]
+        lea esi, [eax+0x14]
+        mov [esi], edi
+        mov edi, [edx+4]
+        mov [esi+4], edi
+        mov edx, [edx+8]
+        mov [esi+8], edx
+        lea edx, [ecx+0x20]
+        mov edi, [edx]
+        lea esi, [eax+0x20]
+        mov [esi], edi
+        mov edi, [edx+4]
+        mov [esi+4], edi
+        mov edx, [edx+8]
+        mov [esi+8], edx
+        lea edx, [ecx+0x2c]
+        mov edi, [edx]
+        lea esi, [eax+0x2c]
+        mov [esi], edi
+        mov edi, [edx+4]
+        mov [esi+4], edi
+        mov edx, [edx+8]
+        mov [esi+8], edx
+        lea edx, [ecx+0x38]
+        mov edi, [edx]
+        lea esi, [eax+0x38]
+        mov [esi], edi
+        mov edi, [edx+4]
+        mov [esi+4], edi
+        mov edx, [edx+8]
+        mov [esi+8], edx
+        lea edx, [ecx+0x44]
+        mov edi, [edx]
+        lea esi, [eax+0x44]
+        mov [esi], edi
+        mov edi, [edx+4]
+        mov [esi+4], edi
+        mov edx, [edx+8]
+        mov [esi+8], edx
+        lea edx, [ecx+0x50]
+        mov edi, [edx]
+        lea esi, [eax+0x50]
+        mov [esi], edi
+        mov edi, [edx+4]
+        mov [esi+4], edi
+        mov edx, [edx+8]
+        mov [esi+8], edx
+        lea edx, [ecx+0x5c]
+        mov edi, [edx]
+        lea esi, [eax+0x5c]
+        mov [esi], edi
+        mov edi, [edx+4]
+        mov [esi+4], edi
+        mov edx, [edx+8]
+        mov [esi+8], edx
+        lea edx, [ecx+0x68]
+        mov edi, [edx]
+        lea esi, [eax+0x68]
+        mov [esi], edi
+        mov edi, [edx+4]
+        mov [esi+4], edi
+        mov edx, [edx+8]
+        mov [esi+8], edx
+        lea edx, [ecx+0x74]
+        mov edi, [edx]
+        lea esi, [eax+0x74]
+        mov [esi], edi
+        mov edi, [edx+4]
+        mov [esi+4], edi
+        mov edx, [edx+8]
+        mov [esi+8], edx
+        add ecx, 0x80
+        mov esi, [ecx]
+        lea edx, [eax+0x80]
+        mov [edx], esi
+        mov esi, [ecx+4]
+        mov [edx+4], esi
+        mov ecx, [ecx+8]
+        pop edi
+        mov [edx+8], ecx
+        pop esi
+        ret 4
+    }
+}
+
 ModuleTemplate &ModuleTemplate::operator=(const ModuleTemplate &that)
 {
     return *this;

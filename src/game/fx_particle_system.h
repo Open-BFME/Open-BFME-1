@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../math/coord3d.h"
 #include "ascii_string.h"
 #include "xfer.h"
 
@@ -63,6 +64,15 @@ public:
     virtual void LoadPostProcess();
     virtual void DoXfer(Xfer &xfer);
     EmissionVelocityInfo &operator=(const EmissionVelocityInfo &that);
+};
+
+class LightningEmissionInfo : public EmissionVelocityInfo {
+public:
+    LightningEmissionInfo &operator=(const LightningEmissionInfo &that);
+
+private:
+    bool m_active;
+    Coord3D m_points[11];
 };
 
 class EmissionVolumeInfo {
