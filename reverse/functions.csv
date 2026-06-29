@@ -29,6 +29,10 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0Region3D@@QAE@XZ,0x00024573,0x000BEC80,3,src/math/region.cpp,matched,empty constructor returns self
 ??0RGBColorKeyframe@FXParticleSystem@@QAE@XZ,0x00029677,0x0005C700,16,src/math/color.cpp,matched,sets channels and frame to zero
 ??0AsciiString@@QAE@XZ,0x00017BD9,0x00062030,9,src/game/ascii_string.cpp,matched,default constructor sets text pointer to null
+??0QuadDrawModuleInfo@FXParticleSystem@@QAE@XZ,0x00015C4E,0x005F5450,9,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer
+??1DefaultAlphaModuleInfo@FXParticleSystem@@UAE@XZ,0x0001AFAF,0x005D4F50,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
+??1QuadDrawModuleInfo@FXParticleSystem@@UAE@XZ,0x0001C5CB,0x005D88A0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
+??1DefaultPhysicsModuleInfo@FXParticleSystem@@UAE@XZ,0x00042F28,0x005D7E90,7,src/game/fx_particle_system.cpp,unmatched,destructor resets vtable pointer
 ??1Coord2D@@QAE@XZ,0x0003EAB8,0x0005BD90,1,src/math/coord2d.cpp,matched,empty destructor emits ret
 ??1Coord3D@@QAE@XZ,0x0001364C,0x0005BC40,1,src/math/coord3d.cpp,matched,empty destructor emits ret
 ??1Region2D@@QAE@XZ,0x000071DF,0x0005C310,1,src/math/region.cpp,matched,empty destructor emits ret

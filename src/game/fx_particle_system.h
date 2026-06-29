@@ -9,6 +9,7 @@ public:
 
 class DefaultAlphaModuleInfo {
 public:
+    virtual ~DefaultAlphaModuleInfo();
     virtual const char *GetSnapshotName();
 };
 
@@ -24,6 +25,7 @@ public:
 
 class DefaultPhysicsModuleInfo {
 public:
+    virtual ~DefaultPhysicsModuleInfo();
     virtual const char *GetSnapshotName();
 };
 
@@ -59,6 +61,8 @@ public:
 
 class QuadDrawModuleInfo {
 public:
+    QuadDrawModuleInfo();
+    virtual ~QuadDrawModuleInfo();
     virtual const char *GetSnapshotName();
 };
 

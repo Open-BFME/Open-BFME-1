@@ -7,6 +7,10 @@ const char *ButterflyDrawModuleInfo::GetSnapshotName()
     return "ButterflyDrawModuleInfo";
 }
 
+DefaultAlphaModuleInfo::~DefaultAlphaModuleInfo()
+{
+}
+
 const char *DefaultAlphaModuleInfo::GetSnapshotName()
 {
     return "DefaultAlphaModuleInfo";
@@ -20,6 +24,10 @@ const char *DefaultColorModuleInfo::GetSnapshotName()
 const char *DefaultDrawModuleInfo::GetSnapshotName()
 {
     return "DefaultDrawModuleInfo";
+}
+
+DefaultPhysicsModuleInfo::~DefaultPhysicsModuleInfo()
+{
 }
 
 const char *DefaultPhysicsModuleInfo::GetSnapshotName()
@@ -55,6 +63,14 @@ const char *LightningDrawModuleInfo::GetSnapshotName()
 const char *ParticleSystemInfo::GetSnapshotName()
 {
     return "ParticleSystemInfo";
+}
+
+QuadDrawModuleInfo::QuadDrawModuleInfo()
+{
+}
+
+QuadDrawModuleInfo::~QuadDrawModuleInfo()
+{
 }
 
 const char *QuadDrawModuleInfo::GetSnapshotName()
