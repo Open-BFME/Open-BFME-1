@@ -270,11 +270,8 @@ def load_symbol_map():
     return symbol_map
 
 
-def compile_function(row, symbol_map):
-    source = ROOT / row["source"]
-    output = BUILD_DIR / (source.stem + ".obj")
+def compile_source(source, output):
     output.parent.mkdir(parents=True, exist_ok=True)
-
     command, env = compiler_command(source, output)
     result = subprocess.run(
         command,
@@ -288,6 +285,8 @@ def compile_function(row, symbol_map):
         print(result.stdout, end="")
         raise SystemExit(result.returncode)
 
+
+def compile_function(row, symbol_map, output):
     target_rva = int(row["target_rva"], 16)
     target_size = int(row["target_size"])
     target = read_target_bytes(target_rva, target_size)
@@ -320,8 +319,15 @@ def verify_functions():
     print("Functions:")
     failures = 0
     patches = []
+    source_outputs = {}
     for row in rows:
-        patch = compile_function(row, symbol_map)
+        source = ROOT / row["source"]
+        if source not in source_outputs:
+            output = BUILD_DIR / (source.stem + ".obj")
+            compile_source(source, output)
+            source_outputs[source] = output
+
+        patch = compile_function(row, symbol_map, source_outputs[source])
         target = patch["target"]
         compiled = patch["bytes"]
 
