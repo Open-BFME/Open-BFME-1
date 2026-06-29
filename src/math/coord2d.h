@@ -43,6 +43,7 @@ public:
     float Normalize();
     Coord2D &Rotate(float sine, float cosine);
     Coord2D &Rotate(Coord2D &coord, float sine, float cosine);
+    Coord2D &Rotate(const Coord2D &source, float angle);
     Coord2D &Scale(float scale);
     Coord2D &Set(float x, float y);
     Coord2D &SetMaxVect();

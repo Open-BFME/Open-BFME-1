@@ -220,3 +220,4 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??4IRegion2D@@QAEAAU0@ABU0@@Z,0x00022C28,0x007E6D90,34,src/math/region.cpp,matched,copies bounds
 ??4Region3D@@QAEAAU0@ABU0@@Z,0x00023A5B,0x007E6EC0,46,src/math/region.cpp,matched,copies bounds
 ?setFromInt@RGBColor@@QAEXH@Z,0x0002CDC7,0x00083370,84,src/math/color.cpp,matched,sets RGB channels from packed int
+?Rotate@Coord2D@@QAEAAV1@ABV1@M@Z,0x0002F1E9,0x007E5B80,61,src/math/coord2d.cpp,matched,rotates around center by angle

@@ -232,6 +232,21 @@ Coord2D &Coord2D::Rotate(Coord2D &coord, float sine, float cosine)
     return *this;
 }
 
+Coord2D &Coord2D::Rotate(const Coord2D &source, float angle)
+{
+    float sine;
+    float cosine;
+    __asm {
+        fld angle
+        fsincos
+        fstp cosine
+        fstp sine
+    }
+    x = cosine * source.x - sine * source.y;
+    y = sine * source.x + cosine * source.y;
+    return *this;
+}
+
 Coord2D &Coord2D::Scale(float scale)
 {
     x *= scale;
