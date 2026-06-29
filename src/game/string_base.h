@@ -11,6 +11,7 @@ public:
     T getCharAt(int index) const;
 
 private:
+    StringBase();
     void validate() const;
     T *peek() const;
 

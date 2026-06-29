@@ -3,6 +3,12 @@
 #include <string.h>
 
 template <typename T>
+StringBase<T>::StringBase()
+{
+    m_data = 0;
+}
+
+template <typename T>
 void StringBase<T>::debugIgnoreLeaks()
 {
 }
