@@ -20,6 +20,7 @@ public:
     Coord3D(int x, int y, int z);
     ~Coord3D();
 
+    Coord3D &operator=(const Coord3D &that);
     Coord3D &operator=(const Coord2D &that);
     Coord3D &operator=(const Coord2DBase &that);
     Coord3D &operator=(const Coord3DBase &that);

@@ -56,6 +56,13 @@ Coord3D::~Coord3D()
 {
 }
 
+Coord3D &Coord3D::operator=(const Coord3D &that)
+{
+    Coord3DBase *base = this;
+    *base = that;
+    return *this;
+}
+
 Coord3D &Coord3D::operator=(const Coord2D &that)
 {
     x = that.x;
