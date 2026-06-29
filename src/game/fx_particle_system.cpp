@@ -105,6 +105,56 @@ template DefaultModuleName<6> &DefaultModuleName<6>::operator=(const DefaultModu
 template DefaultModuleName<7> &DefaultModuleName<7>::operator=(const DefaultModuleName<7> &);
 template DefaultModuleTemplate<6> &DefaultModuleTemplate<6>::operator=(const DefaultModuleTemplate<6> &);
 
+ButterflyDrawModuleInfo &ButterflyDrawModuleInfo::operator=(const ButterflyDrawModuleInfo &that)
+{
+    return *this;
+}
+
+ButterflyDrawModuleTemplate &ButterflyDrawModuleTemplate::operator=(const ButterflyDrawModuleTemplate &that)
+{
+    return *this;
+}
+
+DefaultDrawModuleInfo &DefaultDrawModuleInfo::operator=(const DefaultDrawModuleInfo &that)
+{
+    return *this;
+}
+
+EmissionVelocityInfo &EmissionVelocityInfo::operator=(const EmissionVelocityInfo &that)
+{
+    return *this;
+}
+
+QuadDrawModuleInfo &QuadDrawModuleInfo::operator=(const QuadDrawModuleInfo &that)
+{
+    return *this;
+}
+
+QuadDrawModuleTemplate &QuadDrawModuleTemplate::operator=(const QuadDrawModuleTemplate &that)
+{
+    return *this;
+}
+
+StreakDrawModuleInfo &StreakDrawModuleInfo::operator=(const StreakDrawModuleInfo &that)
+{
+    return *this;
+}
+
+StreakDrawModuleTemplate &StreakDrawModuleTemplate::operator=(const StreakDrawModuleTemplate &that)
+{
+    return *this;
+}
+
+OrthoEmissionVelocityModuleTag &OrthoEmissionVelocityModuleTag::operator=(const OrthoEmissionVelocityModuleTag &that)
+{
+    return *this;
+}
+
+PointEmissionVolumeModuleTag &PointEmissionVolumeModuleTag::operator=(const PointEmissionVolumeModuleTag &that)
+{
+    return *this;
+}
+
 ButterflyDrawModuleInfo::~ButterflyDrawModuleInfo()
 {
 }

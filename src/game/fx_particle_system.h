@@ -9,6 +9,12 @@ public:
     virtual ~ButterflyDrawModuleInfo();
     virtual const char *GetSnapshotName();
     virtual void LoadPostProcess();
+    ButterflyDrawModuleInfo &operator=(const ButterflyDrawModuleInfo &that);
+};
+
+class ButterflyDrawModuleTemplate {
+public:
+    ButterflyDrawModuleTemplate &operator=(const ButterflyDrawModuleTemplate &that);
 };
 
 class DefaultAlphaModuleInfo {
@@ -30,6 +36,7 @@ public:
     virtual ~DefaultDrawModuleInfo();
     virtual const char *GetSnapshotName();
     virtual void LoadPostProcess();
+    DefaultDrawModuleInfo &operator=(const DefaultDrawModuleInfo &that);
 };
 
 class DefaultPhysicsModuleInfo {
@@ -54,6 +61,7 @@ public:
     virtual const char *GetSnapshotName();
     virtual void LoadPostProcess();
     virtual void DoXfer(Xfer &xfer);
+    EmissionVelocityInfo &operator=(const EmissionVelocityInfo &that);
 };
 
 class EmissionVolumeInfo {
@@ -93,6 +101,12 @@ public:
     virtual ~QuadDrawModuleInfo();
     virtual const char *GetSnapshotName();
     virtual void LoadPostProcess();
+    QuadDrawModuleInfo &operator=(const QuadDrawModuleInfo &that);
+};
+
+class QuadDrawModuleTemplate {
+public:
+    QuadDrawModuleTemplate &operator=(const QuadDrawModuleTemplate &that);
 };
 
 class RenderObjectDrawModuleInfo {
@@ -113,6 +127,20 @@ public:
     virtual ~StreakDrawModuleInfo();
     virtual const char *GetSnapshotName();
     virtual void LoadPostProcess();
+    StreakDrawModuleInfo &operator=(const StreakDrawModuleInfo &that);
+};
+
+class StreakDrawModuleTemplate {
+public:
+    StreakDrawModuleTemplate &operator=(const StreakDrawModuleTemplate &that);
+};
+
+struct OrthoEmissionVelocityModuleTag {
+    OrthoEmissionVelocityModuleTag &operator=(const OrthoEmissionVelocityModuleTag &that);
+};
+
+struct PointEmissionVolumeModuleTag {
+    PointEmissionVolumeModuleTag &operator=(const PointEmissionVolumeModuleTag &that);
 };
 
 class TerrainCollisionModuleInfo {

@@ -81,6 +81,16 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??4?$DefaultModuleName@$06@FXParticleSystem@@QAEAAU01@ABU01@@Z,0x00026427,0x005D4900,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
 ??4?$DefaultModuleName@$0A@@FXParticleSystem@@QAEAAU01@ABU01@@Z,0x0001CC2E,0x005D4870,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
 ??4?$DefaultModuleTemplate@$05@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x00020D06,0x005D57F0,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
+??4ButterflyDrawModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0001B6DF,0x005D8B70,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
+??4ButterflyDrawModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x00029898,0x005D8D40,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
+??4DefaultDrawModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x000300DA,0x005D56B0,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
+??4EmissionVelocityInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0003A4EF,0x005BD830,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
+??4QuadDrawModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x000030A3,0x005D88C0,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
+??4QuadDrawModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x00018F34,0x005D8A90,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
+??4StreakDrawModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0000E86D,0x005D8610,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
+??4StreakDrawModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0001013B,0x005D87E0,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
+??4OrthoEmissionVelocityModuleTag@FXParticleSystem@@QAEAAU01@ABU01@@Z,0x0001A645,0x005D4600,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
+??4PointEmissionVolumeModuleTag@FXParticleSystem@@QAEAAU01@ABU01@@Z,0x0002E9CE,0x005D45E0,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
 ??4?$CategoryModuleInfo@$0A@@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x00025E6E,0x0005C970,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
 ??4?$CategoryModuleInfo@$00@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0000681B,0x005BD600,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
 ??4?$CategoryModuleInfo@$01@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x00012E27,0x005BD930,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
