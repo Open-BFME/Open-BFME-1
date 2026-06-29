@@ -32,6 +32,12 @@ public:
     CategoryModuleTemplate &operator=(const CategoryModuleTemplate &that) { return *this; }
 };
 
+template <int Category>
+class CategoryModuleInfo {
+public:
+    CategoryModuleInfo &operator=(const CategoryModuleInfo &that) { return *this; }
+};
+
 template CategoryModuleClassBase<0, 1> &CategoryModuleClassBase<0, 1>::operator=(const CategoryModuleClassBase<0, 1> &);
 template CategoryModuleClassBase<3, 1> &CategoryModuleClassBase<3, 1>::operator=(const CategoryModuleClassBase<3, 1> &);
 template const char *CategoryModuleClass<0>::getKey() const;
@@ -40,6 +46,15 @@ template const char *CategoryModuleClass<8>::getName() const;
 template CategoryModuleTemplateBase<1> &CategoryModuleTemplateBase<1>::operator=(const CategoryModuleTemplateBase<1> &);
 template CategoryModuleTemplate<1> &CategoryModuleTemplate<1>::operator=(const CategoryModuleTemplate<1> &);
 template CategoryModuleTemplate<3> &CategoryModuleTemplate<3>::operator=(const CategoryModuleTemplate<3> &);
+template CategoryModuleInfo<0> &CategoryModuleInfo<0>::operator=(const CategoryModuleInfo<0> &);
+template CategoryModuleInfo<1> &CategoryModuleInfo<1>::operator=(const CategoryModuleInfo<1> &);
+template CategoryModuleInfo<2> &CategoryModuleInfo<2>::operator=(const CategoryModuleInfo<2> &);
+template CategoryModuleInfo<3> &CategoryModuleInfo<3>::operator=(const CategoryModuleInfo<3> &);
+template CategoryModuleInfo<4> &CategoryModuleInfo<4>::operator=(const CategoryModuleInfo<4> &);
+template CategoryModuleInfo<5> &CategoryModuleInfo<5>::operator=(const CategoryModuleInfo<5> &);
+template CategoryModuleInfo<6> &CategoryModuleInfo<6>::operator=(const CategoryModuleInfo<6> &);
+template CategoryModuleInfo<7> &CategoryModuleInfo<7>::operator=(const CategoryModuleInfo<7> &);
+template CategoryModuleInfo<8> &CategoryModuleInfo<8>::operator=(const CategoryModuleInfo<8> &);
 
 ButterflyDrawModuleInfo::~ButterflyDrawModuleInfo()
 {
