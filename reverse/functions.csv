@@ -377,3 +377,4 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0ModuleTemplate@FXParticleSystem@@QAE@XZ,0x00028E3E,0x0005C7C0,9,src/game/fx_particle_system.cpp,matched,default constructor sets vtable
 ??0ModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00029B81,0x0005C7E0,9,src/game/fx_particle_system.cpp,matched,copy constructor sets vtable
 ??1ModuleTemplate@FXParticleSystem@@UAE@XZ,0x00015A14,0x0005C7D0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable
+??6@YAAAVDebug@@AAV0@ABURGBColor@@@Z,0x0001DC9B,0x007E7470,95,src/math/color.cpp,matched,stream RGBColor to Debug
