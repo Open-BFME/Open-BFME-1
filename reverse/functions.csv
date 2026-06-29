@@ -364,3 +364,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getDistributionType@GameClientRandomVariable@@QBE?AW4DistributionType@1@XZ,0x0010BDB0,0x0010BDB0,3,src/game/game_client_random_variable.cpp,matched,get distribution type
 ?getMinimumValue@GameClientRandomVariable@@QBEMXZ,0x0010BD90,0x0010BD90,4,src/game/game_client_random_variable.cpp,matched,get minimum value
 ?getMaximumValue@GameClientRandomVariable@@QBEMXZ,0x0010BDA0,0x0010BDA0,4,src/game/game_client_random_variable.cpp,matched,get maximum value
+??M@YA_NABV?$StringBase@D@@0@Z,0x0000FAAB,0x00062ED0,24,src/game/string_base.cpp,matched,StringBase<char> less-than
+??M@YA_NABV?$StringBase@G@@0@Z,0x00005D94,0x0054EB50,24,src/game/string_base.cpp,matched,StringBase<wchar_t> less-than
+??9@YA_NABV?$StringBase@D@@PBD@Z,0x000153A7,0x000D0D30,21,src/game/string_base.cpp,matched,StringBase<char> not-equal C string
