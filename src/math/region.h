@@ -23,7 +23,6 @@ struct IRegion2D {
 
 struct IRegion3D {
     IRegion3D();
-
     IRegion3D &operator=(const IRegion3D &that);
 
     void expandBy(const ICoord3D &point);
