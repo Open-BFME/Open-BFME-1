@@ -25,3 +25,4 @@ void StringBase<T>::validate() const
 }
 
 template class StringBase<char>;
+template class StringBase<wchar_t>;

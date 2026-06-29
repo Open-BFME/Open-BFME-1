@@ -45,7 +45,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1StreakDrawModuleInfo@FXParticleSystem@@UAE@XZ,0x00049CA1,0x005D85F0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??1WindModuleInfo@FXParticleSystem@@UAE@XZ,0x0001B31F,0x005BD960,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ?isEmpty@?$StringBase@D@@QBE_NXZ,0x0000C752,0x0005E4C0,22,src/game/string_base.cpp,matched,returns true if string has no data or zero length
+?isEmpty@?$StringBase@G@@QBE_NXZ,0x0001F361,0x0007F7D0,22,src/game/string_base.cpp,matched,returns true if string has no data or zero length
 ?getLength@?$StringBase@D@@QBEHXZ,0x00004A30,0x0005E4A0,14,src/game/string_base.cpp,matched,returns string length or zero
+?getLength@?$StringBase@G@@QBEHXZ,0x0000ED6D,0x0005E4F0,14,src/game/string_base.cpp,matched,returns string length or zero
 ?validate@?$StringBase@D@@ABEXXZ,0x0001D4A3,0x0005D790,1,src/game/string_base.cpp,matched,no-op string validation
 ??1DefaultPhysicsModuleInfo@FXParticleSystem@@UAE@XZ,0x00042F28,0x005D7E90,7,src/game/fx_particle_system.cpp,unmatched,destructor resets vtable pointer
 ??1Coord2D@@QAE@XZ,0x0003EAB8,0x0005BD90,1,src/math/coord2d.cpp,matched,empty destructor emits ret
