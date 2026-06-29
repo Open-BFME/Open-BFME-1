@@ -367,3 +367,5 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??M@YA_NABV?$StringBase@D@@0@Z,0x0000FAAB,0x00062ED0,24,src/game/string_base.cpp,matched,StringBase<char> less-than
 ??M@YA_NABV?$StringBase@G@@0@Z,0x00005D94,0x0054EB50,24,src/game/string_base.cpp,matched,StringBase<wchar_t> less-than
 ??9@YA_NABV?$StringBase@D@@PBD@Z,0x000153A7,0x000D0D30,21,src/game/string_base.cpp,matched,StringBase<char> not-equal C string
+??0AsciiString@@QAE@D@Z,0x0000A939,0x007E8420,19,src/game/ascii_string.cpp,matched,construct from single char
+??4AsciiString@@QAEAAV0@ABV0@@Z,0x00003765,0x0005C500,19,src/game/ascii_string.cpp,matched,copy assignment
