@@ -5,7 +5,11 @@ Useful for finding the next small functions to reverse-engineer.
 Run after generating reverse/exports.csv with export_symbols.py.
 """
 import csv
+import signal
 from pathlib import Path
+
+# Exit silently when piped to a tool that closes early (e.g. head).
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 ROOT = Path(__file__).resolve().parents[1]
 FUNCTIONS = ROOT / "reverse" / "functions.csv"
@@ -24,10 +28,14 @@ def main():
 
     for i, row in enumerate(code):
         rva = int(row["rva"], 16)
-        next_rva = int(code[i + 1]["rva"], 16) if i + 1 < len(code) else rva + 200
-        size = next_rva - rva
+        if i + 1 < len(code):
+            next_rva = int(code[i + 1]["rva"], 16)
+            size = next_rva - rva
+        else:
+            size = 0
         target = row["target_rva"] or row["rva"]
-        print(f"{row['rva']} -> {target} size~{size:4d} {row['name']}")
+        size_note = f"size~{size:4d}" if size else "size~   ?"
+        print(f"{row['rva']} -> {target} {size_note} {row['name']}")
 
 
 if __name__ == "__main__":
