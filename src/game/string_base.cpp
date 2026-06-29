@@ -14,6 +14,12 @@ bool StringBase<T>::isEmpty() const
 }
 
 template <typename T>
+int StringBase<T>::getLength() const
+{
+    return m_data ? m_data->length : 0;
+}
+
+template <typename T>
 void StringBase<T>::validate() const
 {
 }

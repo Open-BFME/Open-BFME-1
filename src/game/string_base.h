@@ -5,6 +5,7 @@ class StringBase {
 public:
     void debugIgnoreLeaks();
     bool isEmpty() const;
+    int getLength() const;
 
 private:
     void validate() const;
