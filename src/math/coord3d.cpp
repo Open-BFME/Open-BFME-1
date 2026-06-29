@@ -241,21 +241,12 @@ void Coord3D::normalize()
 
 float Coord3D::GetLengthEstimate2D() const
 {
-    __asm {
-        fld dword ptr [ecx]
-        fabs
-        fld dword ptr [ecx + 4]
-        fabs
-        fld ST(1)
-        fcomp ST(1)
-        fnstsw ax
-        test ah, 0x41
-        je no_swap
-        fxch ST(1)
-    no_swap:
-        fmul length_estimate_factor
-        faddp ST(1), ST(0)
+    float ax = fabs(x);
+    float ay = fabs(y);
+    if (ax > ay) {
+        return ax + length_estimate_factor * ay;
     }
+    return ay + length_estimate_factor * ax;
 }
 
 float Coord3D::GetLengthSqrd() const
