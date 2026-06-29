@@ -252,3 +252,4 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?LoadPostProcess@WindModuleInfo@FXParticleSystem@@UAEXXZ,0x0001B518,0x005BD940,1,src/game/fx_particle_system.cpp,matched,no-op
 ?DoXfer@EmissionVelocityInfo@FXParticleSystem@@UAEXAAVXfer@@@Z,0x00003C5B,0x005BD7C0,3,src/game/fx_particle_system.cpp,matched,no-op
 ?DoXfer@EmissionVolumeInfo@FXParticleSystem@@UAEXAAVXfer@@@Z,0x0003D924,0x005BD670,3,src/game/fx_particle_system.cpp,matched,no-op
+?Normalize@Coord3D@@QAEMXZ,0x0001E0BA,0x000FE9E0,60,src/math/coord3d.cpp,matched,normalizes and returns length
