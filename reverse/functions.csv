@@ -36,6 +36,14 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1EmissionVelocityInfo@FXParticleSystem@@UAE@XZ,0x0003CF47,0x005BD810,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??0EmissionVolumeInfo@FXParticleSystem@@QAE@XZ,0x0002EFF0,0x005BD640,10,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer and flag
 ??1EmissionVolumeInfo@FXParticleSystem@@UAE@XZ,0x0004AA61,0x005BD6B0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
+??1ButterflyDrawModuleInfo@FXParticleSystem@@UAE@XZ,0x00001C08,0x005D8B50,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
+??1DefaultColorModuleInfo@FXParticleSystem@@UAE@XZ,0x0001B82E,0x005D52D0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
+??1DefaultDrawModuleInfo@FXParticleSystem@@UAE@XZ,0x00008CBA,0x005D5690,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
+??1DefaultUpdateModuleInfo@FXParticleSystem@@UAE@XZ,0x00017242,0x005D81B0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
+??1LightningDrawModuleInfo@FXParticleSystem@@UAE@XZ,0x000121B1,0x005D8EF0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
+??1RenderObjectUpdateModuleInfo@FXParticleSystem@@UAE@XZ,0x000095F7,0x005D92B0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
+??1StreakDrawModuleInfo@FXParticleSystem@@UAE@XZ,0x00049CA1,0x005D85F0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
+??1WindModuleInfo@FXParticleSystem@@UAE@XZ,0x0001B31F,0x005BD960,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ?isEmpty@?$StringBase@D@@QBE_NXZ,0x0000C752,0x0005E4C0,22,src/game/string_base.cpp,matched,returns true if string has no data or zero length
 ?validate@?$StringBase@D@@ABEXXZ,0x0001D4A3,0x0005D790,1,src/game/string_base.cpp,matched,no-op string validation
 ??1DefaultPhysicsModuleInfo@FXParticleSystem@@UAE@XZ,0x00042F28,0x005D7E90,7,src/game/fx_particle_system.cpp,unmatched,destructor resets vtable pointer

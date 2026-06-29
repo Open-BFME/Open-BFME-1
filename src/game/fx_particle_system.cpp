@@ -2,6 +2,10 @@
 
 namespace FXParticleSystem {
 
+ButterflyDrawModuleInfo::~ButterflyDrawModuleInfo()
+{
+}
+
 const char *ButterflyDrawModuleInfo::GetSnapshotName()
 {
     return "ButterflyDrawModuleInfo";
@@ -16,9 +20,17 @@ const char *DefaultAlphaModuleInfo::GetSnapshotName()
     return "DefaultAlphaModuleInfo";
 }
 
+DefaultColorModuleInfo::~DefaultColorModuleInfo()
+{
+}
+
 const char *DefaultColorModuleInfo::GetSnapshotName()
 {
     return "DefaultColorModuleInfo";
+}
+
+DefaultDrawModuleInfo::~DefaultDrawModuleInfo()
+{
 }
 
 const char *DefaultDrawModuleInfo::GetSnapshotName()
@@ -33,6 +45,10 @@ DefaultPhysicsModuleInfo::~DefaultPhysicsModuleInfo()
 const char *DefaultPhysicsModuleInfo::GetSnapshotName()
 {
     return "DefaultPhysicsModuleInfo";
+}
+
+DefaultUpdateModuleInfo::~DefaultUpdateModuleInfo()
+{
 }
 
 const char *DefaultUpdateModuleInfo::GetSnapshotName()
@@ -72,6 +88,10 @@ const char *LifeEventModuleInfo::GetSnapshotName()
     return "LifeEventModuleInfo";
 }
 
+LightningDrawModuleInfo::~LightningDrawModuleInfo()
+{
+}
+
 const char *LightningDrawModuleInfo::GetSnapshotName()
 {
     return "LightningDrawModuleInfo";
@@ -100,9 +120,17 @@ const char *RenderObjectDrawModuleInfo::GetSnapshotName()
     return "RenderObjectDrawModuleInfo";
 }
 
+RenderObjectUpdateModuleInfo::~RenderObjectUpdateModuleInfo()
+{
+}
+
 const char *RenderObjectUpdateModuleInfo::GetSnapshotName()
 {
     return "RenderObjectUpdateModuleInfo";
+}
+
+StreakDrawModuleInfo::~StreakDrawModuleInfo()
+{
 }
 
 const char *StreakDrawModuleInfo::GetSnapshotName()
@@ -113,6 +141,10 @@ const char *StreakDrawModuleInfo::GetSnapshotName()
 const char *TerrainCollisionModuleInfo::GetSnapshotName()
 {
     return "TerrainCollisionModuleInfo";
+}
+
+WindModuleInfo::~WindModuleInfo()
+{
 }
 
 const char *WindModuleInfo::GetSnapshotName()

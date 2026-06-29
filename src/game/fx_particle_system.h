@@ -4,6 +4,7 @@ namespace FXParticleSystem {
 
 class ButterflyDrawModuleInfo {
 public:
+    virtual ~ButterflyDrawModuleInfo();
     virtual const char *GetSnapshotName();
 };
 
@@ -15,11 +16,13 @@ public:
 
 class DefaultColorModuleInfo {
 public:
+    virtual ~DefaultColorModuleInfo();
     virtual const char *GetSnapshotName();
 };
 
 class DefaultDrawModuleInfo {
 public:
+    virtual ~DefaultDrawModuleInfo();
     virtual const char *GetSnapshotName();
 };
 
@@ -31,6 +34,7 @@ public:
 
 class DefaultUpdateModuleInfo {
 public:
+    virtual ~DefaultUpdateModuleInfo();
     virtual const char *GetSnapshotName();
 };
 
@@ -57,6 +61,7 @@ public:
 
 class LightningDrawModuleInfo {
 public:
+    virtual ~LightningDrawModuleInfo();
     virtual const char *GetSnapshotName();
 };
 
@@ -79,11 +84,13 @@ public:
 
 class RenderObjectUpdateModuleInfo {
 public:
+    virtual ~RenderObjectUpdateModuleInfo();
     virtual const char *GetSnapshotName();
 };
 
 class StreakDrawModuleInfo {
 public:
+    virtual ~StreakDrawModuleInfo();
     virtual const char *GetSnapshotName();
 };
 
@@ -94,6 +101,7 @@ public:
 
 class WindModuleInfo {
 public:
+    virtual ~WindModuleInfo();
     virtual const char *GetSnapshotName();
 };
 
