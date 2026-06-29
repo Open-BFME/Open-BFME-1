@@ -1,4 +1,10 @@
 #include "xfer.h"
+#include "snapshot.h"
+#include "../math/coord3d.h"
+#include "../math/coord2d.h"
+#include "../math/icoord.h"
+#include "../math/region.h"
+#include "../math/color.h"
 
 Xfer::Xfer()
 {
@@ -203,6 +209,307 @@ __declspec(naked) Xfer &Xfer::operator==(Snapshot &snapshot)
         mov eax, [ecx]
         push esi
         call dword ptr [eax + 0x0c]
+        mov eax, esi
+        pop esi
+        ret 4
+    }
+}
+
+__declspec(naked) Xfer &Xfer::operator==(Coord3DBase& v)
+{
+    __asm {
+        push esi
+        push 0
+        mov esi, ecx
+        mov eax, [esi]
+        push 0
+        push 0x00633364
+        call dword ptr [eax + 0x94]
+        mov eax, [esp + 0x8]
+        mov edx, [esi]
+        push 12
+        push eax
+        push 0
+        mov ecx, esi
+        call dword ptr [edx + 0x94]
+        mov eax, esi
+        pop esi
+        ret 4
+    }
+}
+__declspec(naked) Xfer &Xfer::operator==(ICoord3D& v)
+{
+    __asm {
+        push esi
+        push 0
+        mov esi, ecx
+        mov eax, [esi]
+        push 0
+        push 0x69633364
+        call dword ptr [eax + 0x94]
+        mov eax, [esp + 0x8]
+        mov edx, [esi]
+        push 12
+        push eax
+        push 0
+        mov ecx, esi
+        call dword ptr [edx + 0x94]
+        mov eax, esi
+        pop esi
+        ret 4
+    }
+}
+__declspec(naked) Xfer &Xfer::operator==(Region3D& v)
+{
+    __asm {
+        push esi
+        push edi
+        push 0
+        mov esi, ecx
+        mov eax, [esi]
+        push 0
+        push 0x00723364
+        call dword ptr [eax + 0x94]
+        mov edi, [esp + 0xc]
+        mov edx, [esi]
+        push 12
+        push edi
+        push 0
+        mov ecx, esi
+        call dword ptr [edx + 0x94]
+        mov eax, [esi]
+        push 12
+        add edi, 12
+        push edi
+        push 0
+        mov ecx, esi
+        call dword ptr [eax + 0x94]
+        pop edi
+        mov eax, esi
+        pop esi
+        ret 4
+    }
+}
+__declspec(naked) Xfer &Xfer::operator==(IRegion3D& v)
+{
+    __asm {
+        push esi
+        push edi
+        push 0
+        mov esi, ecx
+        mov eax, [esi]
+        push 0
+        push 0x69723364
+        call dword ptr [eax + 0x94]
+        mov edi, [esp + 0xc]
+        mov edx, [esi]
+        push 12
+        push edi
+        push 0
+        mov ecx, esi
+        call dword ptr [edx + 0x94]
+        mov eax, [esi]
+        push 12
+        add edi, 12
+        push edi
+        push 0
+        mov ecx, esi
+        call dword ptr [eax + 0x94]
+        pop edi
+        mov eax, esi
+        pop esi
+        ret 4
+    }
+}
+__declspec(naked) Xfer &Xfer::operator==(Coord2D& v)
+{
+    __asm {
+        push esi
+        push 0
+        mov esi, ecx
+        mov eax, [esi]
+        push 0
+        push 0x00633264
+        call dword ptr [eax + 0x94]
+        mov eax, [esp + 0x8]
+        mov edx, [esi]
+        push 8
+        push eax
+        push 0
+        mov ecx, esi
+        call dword ptr [edx + 0x94]
+        mov eax, esi
+        pop esi
+        ret 4
+    }
+}
+__declspec(naked) Xfer &Xfer::operator==(ICoord2D& v)
+{
+    __asm {
+        push esi
+        push 0
+        mov esi, ecx
+        mov eax, [esi]
+        push 0
+        push 0x69633264
+        call dword ptr [eax + 0x94]
+        mov eax, [esp + 0x8]
+        mov edx, [esi]
+        push 8
+        push eax
+        push 0
+        mov ecx, esi
+        call dword ptr [edx + 0x94]
+        mov eax, esi
+        pop esi
+        ret 4
+    }
+}
+__declspec(naked) Xfer &Xfer::operator==(Region2D& v)
+{
+    __asm {
+        push esi
+        push edi
+        push 0
+        mov esi, ecx
+        mov eax, [esi]
+        push 0
+        push 0x00723264
+        call dword ptr [eax + 0x94]
+        mov edi, [esp + 0xc]
+        mov edx, [esi]
+        push 8
+        push edi
+        push 0
+        mov ecx, esi
+        call dword ptr [edx + 0x94]
+        mov eax, [esi]
+        push 8
+        add edi, 8
+        push edi
+        push 0
+        mov ecx, esi
+        call dword ptr [eax + 0x94]
+        pop edi
+        mov eax, esi
+        pop esi
+        ret 4
+    }
+}
+__declspec(naked) Xfer &Xfer::operator==(IRegion2D& v)
+{
+    __asm {
+        push esi
+        push edi
+        push 0
+        mov esi, ecx
+        mov eax, [esi]
+        push 0
+        push 0x69723264
+        call dword ptr [eax + 0x94]
+        mov edi, [esp + 0xc]
+        mov edx, [esi]
+        push 8
+        push edi
+        push 0
+        mov ecx, esi
+        call dword ptr [edx + 0x94]
+        mov eax, [esi]
+        push 8
+        add edi, 8
+        push edi
+        push 0
+        mov ecx, esi
+        call dword ptr [eax + 0x94]
+        pop edi
+        mov eax, esi
+        pop esi
+        ret 4
+    }
+}
+__declspec(naked) Xfer &Xfer::operator==(RealRange& v)
+{
+    __asm {
+        push esi
+        push 0
+        mov esi, ecx
+        mov eax, [esi]
+        push 0
+        push 0x726e6765
+        call dword ptr [eax + 0x94]
+        mov eax, [esp + 0x8]
+        mov edx, [esi]
+        push 8
+        push eax
+        push 0
+        mov ecx, esi
+        call dword ptr [edx + 0x94]
+        mov eax, esi
+        pop esi
+        ret 4
+    }
+}
+__declspec(naked) Xfer &Xfer::operator==(RGBColor& v)
+{
+    __asm {
+        push esi
+        push 0
+        mov esi, ecx
+        mov eax, [esi]
+        push 0
+        push 0x00726762
+        call dword ptr [eax + 0x94]
+        mov eax, [esp + 0x8]
+        mov edx, [esi]
+        push 12
+        push eax
+        push 0
+        mov ecx, esi
+        call dword ptr [edx + 0x94]
+        mov eax, esi
+        pop esi
+        ret 4
+    }
+}
+__declspec(naked) Xfer &Xfer::operator==(RGBAColorReal& v)
+{
+    __asm {
+        push esi
+        push 0
+        mov esi, ecx
+        mov eax, [esi]
+        push 0
+        push 0x72676272
+        call dword ptr [eax + 0x94]
+        mov eax, [esp + 0x8]
+        mov edx, [esi]
+        push 16
+        push eax
+        push 0
+        mov ecx, esi
+        call dword ptr [edx + 0x94]
+        mov eax, esi
+        pop esi
+        ret 4
+    }
+}
+__declspec(naked) Xfer &Xfer::operator==(RGBAColorInt& v)
+{
+    __asm {
+        push esi
+        push 0
+        mov esi, ecx
+        mov eax, [esi]
+        push 0
+        push 0x72676269
+        call dword ptr [eax + 0x94]
+        mov eax, [esp + 0x8]
+        mov edx, [esi]
+        push 16
+        push eax
+        push 0
+        mov ecx, esi
+        call dword ptr [edx + 0x94]
         mov eax, esi
         pop esi
         ret 4

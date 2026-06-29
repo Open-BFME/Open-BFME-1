@@ -1,6 +1,18 @@
 #pragma once
 
 class Snapshot;
+struct Coord3DBase;
+struct ICoord3D;
+struct Region3D;
+struct IRegion3D;
+class Coord2D;
+struct ICoord2D;
+struct Region2D;
+struct IRegion2D;
+struct RealRange;
+struct RGBColor;
+struct RGBAColorReal;
+struct RGBAColorInt;
 
 class Xfer {
 public:
@@ -23,4 +35,17 @@ public:
     virtual Xfer &operator==(__int64 &i);
     virtual Xfer &operator==(bool &b);
     virtual Xfer &operator==(Snapshot &snapshot);
+
+    virtual Xfer &operator==(Coord3DBase &v);
+    virtual Xfer &operator==(ICoord3D &v);
+    virtual Xfer &operator==(Region3D &v);
+    virtual Xfer &operator==(IRegion3D &v);
+    virtual Xfer &operator==(Coord2D &v);
+    virtual Xfer &operator==(ICoord2D &v);
+    virtual Xfer &operator==(Region2D &v);
+    virtual Xfer &operator==(IRegion2D &v);
+    virtual Xfer &operator==(RealRange &v);
+    virtual Xfer &operator==(RGBColor &v);
+    virtual Xfer &operator==(RGBAColorReal &v);
+    virtual Xfer &operator==(RGBAColorInt &v);
 };

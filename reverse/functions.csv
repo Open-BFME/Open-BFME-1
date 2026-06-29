@@ -350,3 +350,15 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??8Xfer@@UAEAAV0@AA_J@Z,0x0002A086,0x0006B2A0,31,src/game/xfer.cpp,matched,stream __int64
 ??8Xfer@@UAEAAV0@AA_N@Z,0x00038866,0x0006B240,31,src/game/xfer.cpp,matched,stream bool
 ??8Xfer@@UAEAAV0@AAVSnapshot@@@Z,0x000429C9,0x009D6410,19,src/game/xfer.cpp,matched,stream Snapshot
+??8Xfer@@UAEAAV0@AAUCoord3DBase@@@Z,0x009D64F0,0x009D64F0,45,src/game/xfer.cpp,matched,stream Coord3DBase
+??8Xfer@@UAEAAV0@AAUICoord3D@@@Z,0x009D6520,0x009D6520,45,src/game/xfer.cpp,matched,stream ICoord3D
+??8Xfer@@UAEAAV0@AAURegion3D@@@Z,0x009D6550,0x009D6550,65,src/game/xfer.cpp,matched,stream Region3D
+??8Xfer@@UAEAAV0@AAUIRegion3D@@@Z,0x009D65A0,0x009D65A0,65,src/game/xfer.cpp,matched,stream IRegion3D
+??8Xfer@@UAEAAV0@AAVCoord2D@@@Z,0x009D65F0,0x009D65F0,45,src/game/xfer.cpp,matched,stream Coord2D
+??8Xfer@@UAEAAV0@AAUICoord2D@@@Z,0x009D6620,0x009D6620,45,src/game/xfer.cpp,matched,stream ICoord2D
+??8Xfer@@UAEAAV0@AAURegion2D@@@Z,0x009D6650,0x009D6650,65,src/game/xfer.cpp,matched,stream Region2D
+??8Xfer@@UAEAAV0@AAUIRegion2D@@@Z,0x009D66A0,0x009D66A0,65,src/game/xfer.cpp,matched,stream IRegion2D
+??8Xfer@@UAEAAV0@AAURealRange@@@Z,0x009D66F0,0x009D66F0,45,src/game/xfer.cpp,matched,stream RealRange
+??8Xfer@@UAEAAV0@AAURGBColor@@@Z,0x009D6720,0x009D6720,45,src/game/xfer.cpp,matched,stream RGBColor
+??8Xfer@@UAEAAV0@AAURGBAColorReal@@@Z,0x009D6750,0x009D6750,45,src/game/xfer.cpp,matched,stream RGBAColorReal
+??8Xfer@@UAEAAV0@AAURGBAColorInt@@@Z,0x009D6780,0x009D6780,45,src/game/xfer.cpp,matched,stream RGBAColorInt
