@@ -12,6 +12,14 @@ RGBColor &RGBColor::operator=(const RGBColor &that)
     return *this;
 }
 
+void RGBColor::setFromInt(int color)
+{
+    static const float scale = 1.0f / 255.0f;
+    red = (float)((color >> 16) & 0xFF) * scale;
+    green = (float)((color >> 8) & 0xFF) * scale;
+    blue = (float)(color & 0xFF) * scale;
+}
+
 bool operator==(const RGBColor &left, const RGBColor &right)
 {
     return left.red == right.red &&

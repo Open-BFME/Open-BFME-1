@@ -6,6 +6,7 @@ struct RGBColor {
     float blue;
 
     RGBColor &operator=(const RGBColor &that);
+    void setFromInt(int color);
 };
 
 bool operator==(const RGBColor &left, const RGBColor &right);
