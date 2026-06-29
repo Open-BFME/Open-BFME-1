@@ -11,6 +11,7 @@ public:
     GameClientRandomVariable &operator=(const GameClientRandomVariable &that);
 
     DistributionType getDistributionType() const;
+    float getValue() const;
     float getMinimumValue() const;
     float getMaximumValue() const;
     void setRange(float minimum, float maximum, DistributionType distribution);

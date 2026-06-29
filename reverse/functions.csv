@@ -371,3 +371,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??4AsciiString@@QAEAAV0@ABV0@@Z,0x00003765,0x0005C500,19,src/game/ascii_string.cpp,matched,copy assignment
 ??YAsciiString@@QAEAAV0@ABV0@@Z,0x000125E4,0x000D1810,63,src/game/ascii_string.cpp,matched,append AsciiString
 ?getName@ParticleSystemTemplate@FXParticleSystem@@QBE?AVAsciiString@@XZ,0x00001E5B,0x0005F210,35,src/game/fx_particle_system.cpp,matched,return particle system name
+?getTextureFilename@ParticleSystemTemplate@FXParticleSystem@@QBE?AVAsciiString@@XZ,0x00018755,0x0005F240,32,src/game/fx_particle_system.cpp,matched,return texture filename
+??4Keyframe@FXParticleSystem@@QAEAAU01@ABU01@@Z,0x0001C38C,0x0005C6E0,19,src/game/fx_particle_system.cpp,matched,copy Keyframe frame and value
+?getValue@GameClientRandomVariable@@QBEMXZ,0x0000D7B5,0x00096F60,123,src/game/game_client_random_variable.cpp,matched,evaluate distribution value

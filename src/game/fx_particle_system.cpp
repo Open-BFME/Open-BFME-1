@@ -436,4 +436,53 @@ __declspec(naked) AsciiString ParticleSystemTemplate::getName() const
     }
 }
 
+__declspec(naked) AsciiString ParticleSystemTemplate::getTextureFilename() const
+{
+    __asm {
+        __emit 0x51
+        __emit 0x56
+        __emit 0x8b
+        __emit 0x74
+        __emit 0x24
+        __emit 0x0c
+        __emit 0x83
+        __emit 0xc1
+        __emit 0x10
+        __emit 0x51
+        __emit 0x8b
+        __emit 0xce
+        __emit 0xc7
+        __emit 0x44
+        __emit 0x24
+        __emit 0x08
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0xe8
+        __emit 0x07
+        __emit 0x89
+        __emit 0x82
+        __emit 0x00
+        __emit 0x8b
+        __emit 0xc6
+        __emit 0x5e
+        __emit 0x59
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+    }
+}
+
+Keyframe &Keyframe::operator=(const Keyframe &that)
+{
+    struct Raw {
+        unsigned int frame;
+        unsigned int value;
+    };
+
+    *(Raw *)this = *(const Raw *)&that;
+    return *this;
+}
+
 }

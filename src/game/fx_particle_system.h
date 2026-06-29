@@ -162,9 +162,17 @@ public:
     ModuleTemplate &operator=(const ModuleTemplate &that);
 };
 
+struct Keyframe {
+    float frame;
+    float value;
+
+    Keyframe &operator=(const Keyframe &that);
+};
+
 class ParticleSystemTemplate {
 public:
     AsciiString getName() const;
+    AsciiString getTextureFilename() const;
 };
 
 }
