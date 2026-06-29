@@ -32,6 +32,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0QuadDrawModuleInfo@FXParticleSystem@@QAE@XZ,0x00015C4E,0x005F5450,9,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer
 ??1DefaultAlphaModuleInfo@FXParticleSystem@@UAE@XZ,0x0001AFAF,0x005D4F50,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??1QuadDrawModuleInfo@FXParticleSystem@@UAE@XZ,0x0001C5CB,0x005D88A0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
+?isEmpty@?$StringBase@D@@QBE_NXZ,0x0000C752,0x0005E4C0,22,src/game/string_base.cpp,matched,returns true if string has no data or zero length
 ??1DefaultPhysicsModuleInfo@FXParticleSystem@@UAE@XZ,0x00042F28,0x005D7E90,7,src/game/fx_particle_system.cpp,unmatched,destructor resets vtable pointer
 ??1Coord2D@@QAE@XZ,0x0003EAB8,0x0005BD90,1,src/math/coord2d.cpp,matched,empty destructor emits ret
 ??1Coord3D@@QAE@XZ,0x0001364C,0x0005BC40,1,src/math/coord3d.cpp,matched,empty destructor emits ret
