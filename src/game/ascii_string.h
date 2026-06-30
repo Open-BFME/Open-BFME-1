@@ -4,6 +4,7 @@ class AsciiString {
 public:
     AsciiString();
     AsciiString(char c);
+    AsciiString(const AsciiString &that);
     AsciiString(const char *str, int len);
     AsciiString &operator=(const AsciiString &that);
     AsciiString &operator=(const char *str);
