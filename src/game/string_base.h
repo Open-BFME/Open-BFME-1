@@ -13,10 +13,13 @@ public:
     const T *find(T c) const;
     T getCharAt(int index) const;
     int compare(const T *str) const;
+    bool startsWithNoCase(const T *str) const;
+    bool startsWithNoCase(const StringBase<T> &str) const;
     void clear();
 
 private:
     StringBase();
+    ~StringBase();
     void validate() const;
     T *peek() const;
 

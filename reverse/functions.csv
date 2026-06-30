@@ -585,3 +585,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0BoxEmissionVolumeInfo@FXParticleSystem@@QAE@XZ,0x0001A78F,0x005D5E00,23,src/game/fx_particle_system.cpp,matched,default constructor sets vtable and zeros box half-extents
 ??0CylinderEmissionVolumeInfo@FXParticleSystem@@QAE@XZ,0x000223A4,0x005D63F0,29,src/game/fx_particle_system.cpp,matched,default constructor sets vtable and zeros cylinder fields
 ??0LineEmissionVolumeInfo@FXParticleSystem@@QAE@XZ,0x0003656B,0x005D5A50,32,src/game/fx_particle_system.cpp,matched,default constructor sets vtable and zeros line endpoints
+??1?$StringBase@D@@AAE@XZ,0x00004A34,0x0005E490,6,src/game/string_base.cpp,matched,destroy char string base
+??1?$StringBase@G@@AAE@XZ,0x000160F9,0x0005E4E0,6,src/game/string_base.cpp,matched,destroy wide string base
+?startsWithNoCase@?$StringBase@D@@QBE_NPBD@Z,0x00002667,0x0010D260,50,src/game/string_base.cpp,matched,case-insensitive prefix check against C string
+?startsWithNoCase@?$StringBase@D@@QBE_NABV1@@Z,0x0003DEC9,0x0010EB00,50,src/game/string_base.cpp,matched,case-insensitive prefix check against AsciiString
