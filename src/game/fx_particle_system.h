@@ -208,6 +208,11 @@ struct PointEmissionVolumeModuleTag {
     PointEmissionVolumeModuleTag &operator=(const PointEmissionVolumeModuleTag &that);
 };
 
+class BoxEmissionVolumeInfo {
+public:
+    virtual ~BoxEmissionVolumeInfo();
+};
+
 class TerrainCollisionModuleInfo {
 public:
     virtual const char *GetSnapshotName();
