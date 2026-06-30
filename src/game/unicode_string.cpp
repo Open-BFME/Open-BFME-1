@@ -30,6 +30,174 @@ __declspec(naked) UnicodeString::UnicodeString(wchar_t c)
     }
 }
 
+__declspec(naked) UnicodeString::UnicodeString(const wchar_t *str, int len)
+{
+    __asm {
+        __emit 0x8b
+        __emit 0x44
+        __emit 0x24
+        __emit 0x08
+        __emit 0x56
+        __emit 0x8b
+        __emit 0xf1
+        __emit 0x8b
+        __emit 0x4c
+        __emit 0x24
+        __emit 0x08
+        __emit 0x50
+        __emit 0x51
+        __emit 0x8b
+        __emit 0xce
+        __emit 0xe8
+        __emit 0x7c
+        __emit 0x47
+        __emit 0x45
+        __emit 0x00
+        __emit 0x8b
+        __emit 0xc6
+        __emit 0x5e
+        __emit 0xc2
+        __emit 0x08
+        __emit 0x00
+    }
+}
+
+__declspec(naked) UnicodeString::UnicodeString(const UnicodeString &that, int start, int len)
+{
+    __asm {
+        __emit 0x8b
+        __emit 0x44
+        __emit 0x24
+        __emit 0x0c
+        __emit 0x8b
+        __emit 0x54
+        __emit 0x24
+        __emit 0x04
+        __emit 0x56
+        __emit 0x8b
+        __emit 0xf1
+        __emit 0x8b
+        __emit 0x4c
+        __emit 0x24
+        __emit 0x0c
+        __emit 0x50
+        __emit 0x51
+        __emit 0x52
+        __emit 0x8b
+        __emit 0xce
+        __emit 0xe8
+        __emit 0x77
+        __emit 0x49
+        __emit 0x45
+        __emit 0x00
+        __emit 0x8b
+        __emit 0xc6
+        __emit 0x5e
+        __emit 0xc2
+        __emit 0x0c
+        __emit 0x00
+    }
+}
+
+__declspec(naked) UnicodeString &UnicodeString::operator=(wchar_t c)
+{
+    __asm {
+        __emit 0x8b
+        __emit 0x44
+        __emit 0x24
+        __emit 0x04
+        __emit 0x56
+        __emit 0x8b
+        __emit 0xf1
+        __emit 0x6a
+        __emit 0x01
+        __emit 0x8d
+        __emit 0x4c
+        __emit 0x24
+        __emit 0x0c
+        __emit 0x51
+        __emit 0x8b
+        __emit 0xce
+        __emit 0x89
+        __emit 0x44
+        __emit 0x24
+        __emit 0x10
+        __emit 0xe8
+        __emit 0xd7
+        __emit 0x35
+        __emit 0x32
+        __emit 0x00
+        __emit 0x8b
+        __emit 0xc6
+        __emit 0x5e
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+    }
+}
+
+__declspec(naked) UnicodeString &UnicodeString::operator=(const wchar_t *str)
+{
+    __asm {
+        __emit 0x56
+        __emit 0x57
+        __emit 0x8b
+        __emit 0x7c
+        __emit 0x24
+        __emit 0x0c
+        __emit 0x85
+        __emit 0xff
+        __emit 0x8b
+        __emit 0xf1
+        __emit 0x74
+        __emit 0x1a
+        __emit 0x57
+        __emit 0xff
+        __emit 0x15
+        __emit 0x24
+        __emit 0x95
+        __emit 0x35
+        __emit 0x01
+        __emit 0x83
+        __emit 0xc4
+        __emit 0x04
+        __emit 0x50
+        __emit 0x57
+        __emit 0x8b
+        __emit 0xce
+        __emit 0xe8
+        __emit 0x81
+        __emit 0x48
+        __emit 0x80
+        __emit 0x00
+        __emit 0x5f
+        __emit 0x8b
+        __emit 0xc6
+        __emit 0x5e
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+        __emit 0x33
+        __emit 0xc0
+        __emit 0x50
+        __emit 0x57
+        __emit 0x8b
+        __emit 0xce
+        __emit 0xe8
+        __emit 0x6f
+        __emit 0x48
+        __emit 0x80
+        __emit 0x00
+        __emit 0x5f
+        __emit 0x8b
+        __emit 0xc6
+        __emit 0x5e
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+    }
+}
+
 __declspec(naked) UnicodeString &UnicodeString::operator=(const UnicodeString &that)
 {
     __asm {
