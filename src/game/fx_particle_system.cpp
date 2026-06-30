@@ -365,6 +365,12 @@ ModuleTemplate::~ModuleTemplate()
 {
 }
 
+RandomAlphaKeyframe::RandomAlphaKeyframe()
+{
+    var.setRange(0.0f, 0.0f, GameClientRandomVariable::UNIFORM);
+    frame = 0;
+}
+
 ButterflyDrawModuleInfo::~ButterflyDrawModuleInfo()
 {
 }

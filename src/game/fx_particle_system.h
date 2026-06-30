@@ -1,12 +1,20 @@
 #pragma once
 
 #include "ascii_string.h"
+#include "game_client_random_variable.h"
 #include "xfer.h"
 
 struct Region2D;
 class AssetList;
 
 namespace FXParticleSystem {
+
+struct RandomAlphaKeyframe {
+    RandomAlphaKeyframe();
+
+    GameClientRandomVariable var;
+    float frame;
+};
 
 enum ParticleType {
     PARTICLE_TYPE_DEFAULT,

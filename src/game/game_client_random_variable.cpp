@@ -1,12 +1,5 @@
 #include "game_client_random_variable.h"
 
-GameClientRandomVariable::GameClientRandomVariable()
-{
-    distribution = CONSTANT;
-    minimum = 0.0f;
-    maximum = 0.0f;
-}
-
 GameClientRandomVariable &GameClientRandomVariable::operator=(const GameClientRandomVariable &that)
 {
     struct Raw {

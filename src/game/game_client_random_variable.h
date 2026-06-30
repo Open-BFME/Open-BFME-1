@@ -4,9 +4,19 @@ class GameClientRandomVariable {
 public:
     enum DistributionType {
         CONSTANT = 0,
+        UNIFORM,
+        GAUSSIAN,
+        TRIANGULAR,
+        LOW_BIAS,
+        HIGH_BIAS,
     };
 
-    GameClientRandomVariable();
+    GameClientRandomVariable()
+    {
+        distribution = CONSTANT;
+        minimum = 0.0f;
+        maximum = 0.0f;
+    }
 
     GameClientRandomVariable &operator=(const GameClientRandomVariable &that);
 

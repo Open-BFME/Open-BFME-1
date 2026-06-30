@@ -11,7 +11,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0Coord3D@@QAE@HHH@Z,0x0003AE04,0x00064310,25,src/math/coord3d.cpp,matched,converts ints to floats
 ??0Coord3D@@QAE@MMM@Z,0x000156C7,0x000642F0,25,src/math/coord3d.cpp,matched,sets x/y/z from floats
 ??0Coord3D@@QAE@XZ,0x00016C93,0x00083330,3,src/math/coord3d.cpp,matched,empty constructor returns self
-??0GameClientRandomVariable@@QAE@XZ,0x0002466D,0x0005C5D0,13,src/game/game_client_random_variable.cpp,matched,initializes distribution/minimum/maximum to zero
+??0GameClientRandomVariable@@QAE@XZ,0x0002466D,0x0005C5D0,13,src/game/fx_particle_system.cpp,matched,initializes distribution/minimum/maximum to zero (inlined; emitted where used)
 ??0ICoord2D@@QAE@ABUICoord2DBase@@@Z,0x00001EB0,0x0008AA60,19,src/math/icoord.cpp,matched,copies x/y from ICoord2DBase
 ??0ICoord2D@@QAE@HH@Z,0x000160D6,0x00106690,18,src/math/icoord.cpp,matched,sets x/y from ints
 ??0ICoord2D@@QAE@XZ,0x00039130,0x00083360,3,src/math/icoord.cpp,matched,empty constructor returns self
@@ -32,6 +32,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0RGBColorKeyframe@FXParticleSystem@@QAE@XZ,0x00029677,0x0005C700,16,src/math/color.cpp,matched,sets channels and frame to zero
 ??0AsciiString@@QAE@XZ,0x00017BD9,0x00062030,9,src/game/ascii_string.cpp,matched,default constructor sets text pointer to null
 ??0QuadDrawModuleInfo@FXParticleSystem@@QAE@XZ,0x00015C4E,0x005F5450,9,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer
+??0RandomAlphaKeyframe@FXParticleSystem@@QAE@XZ,0x0003F107,0x0005C750,45,src/game/fx_particle_system.cpp,matched,constructs keyframe and calls setRange on its random variable
 ??1DefaultAlphaModuleInfo@FXParticleSystem@@UAE@XZ,0x0001AFAF,0x005D4F50,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??1QuadDrawModuleInfo@FXParticleSystem@@UAE@XZ,0x0001C5CB,0x005D88A0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??0EmissionVelocityInfo@FXParticleSystem@@QAE@XZ,0x00012468,0x005BD800,9,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer
