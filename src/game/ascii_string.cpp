@@ -55,6 +55,71 @@ __declspec(naked) AsciiString &AsciiString::operator=(const AsciiString &that)
     }
 }
 
+__declspec(naked) AsciiString &AsciiString::operator=(const char *str)
+{
+    __asm {
+        __emit 0x8b
+        __emit 0x54
+        __emit 0x24
+        __emit 0x04
+        __emit 0x85
+        __emit 0xd2
+        __emit 0x57
+        __emit 0x8b
+        __emit 0xf9
+        __emit 0x74
+        __emit 0x1f
+        __emit 0x8b
+        __emit 0xc2
+        __emit 0x56
+        __emit 0x8d
+        __emit 0x70
+        __emit 0x01
+        __emit 0x8a
+        __emit 0x08
+        __emit 0x40
+        __emit 0x84
+        __emit 0xc9
+        __emit 0x75
+        __emit 0xf9
+        __emit 0x2b
+        __emit 0xc6
+        __emit 0x5e
+        __emit 0x50
+        __emit 0x52
+        __emit 0x8b
+        __emit 0xcf
+        __emit 0xe8
+        __emit 0xbc
+        __emit 0x5c
+        __emit 0x82
+        __emit 0x00
+        __emit 0x8b
+        __emit 0xc7
+        __emit 0x5f
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+        __emit 0x33
+        __emit 0xc0
+        __emit 0x50
+        __emit 0x52
+        __emit 0x8b
+        __emit 0xcf
+        __emit 0xe8
+        __emit 0xab
+        __emit 0x5c
+        __emit 0x82
+        __emit 0x00
+        __emit 0x8b
+        __emit 0xc7
+        __emit 0x5f
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+    }
+}
+
 __declspec(naked) AsciiString &AsciiString::operator+=(const AsciiString &that)
 {
     __asm {

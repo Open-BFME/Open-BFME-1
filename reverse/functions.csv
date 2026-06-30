@@ -459,3 +459,4 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getFirst@?$CategoryModuleClass@$0A@@FXParticleSystem@@SAPBV12@XZ,0x00011D15,0x005C1200,6,src/game/fx_particle_system_category_accessors.cpp,matched,returns first module in category list
 ?getName@?$CategoryModuleClass@$0A@@FXParticleSystem@@QBEPBDXZ,0x0004ACA0,0x005D4A60,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module name string
 ?getNext@?$CategoryModuleClass@$0A@@FXParticleSystem@@QBEPBV12@XZ,0x00014579,0x005C1220,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns next module in category list
+??4AsciiString@@QAEAAV0@PBD@Z,0x00028BB9,0x00062040,59,src/game/ascii_string.cpp,matched,AsciiString operator=(const char *)
