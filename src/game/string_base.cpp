@@ -463,6 +463,48 @@ __declspec(naked) void StringBase<wchar_t>::set(const wchar_t *str)
     }
 }
 
+__declspec(naked) void StringBase<char>::concat(char c)
+{
+    __asm {
+        __emit 0x6a
+        __emit 0x01
+        __emit 0x8d
+        __emit 0x44
+        __emit 0x24
+        __emit 0x08
+        __emit 0x50
+        __emit 0xe8
+        __emit 0xe4
+        __emit 0x60
+        __emit 0x82
+        __emit 0x00
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+    }
+}
+
+__declspec(naked) void StringBase<wchar_t>::concat(wchar_t c)
+{
+    __asm {
+        __emit 0x6a
+        __emit 0x01
+        __emit 0x8d
+        __emit 0x44
+        __emit 0x24
+        __emit 0x08
+        __emit 0x50
+        __emit 0xe8
+        __emit 0x34
+        __emit 0x1d
+        __emit 0x4f
+        __emit 0x00
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+    }
+}
+
 template <typename T>
 void StringBase<T>::swap(StringBase<T> &other)
 {

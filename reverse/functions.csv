@@ -340,6 +340,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0Xfer@@QAE@XZ,0x00041BAF,0x007E7660,9,src/game/xfer.cpp,matched,constructor sets vtable
 ??1Xfer@@UAE@XZ,0x00038D2A,0x007E7670,7,src/game/xfer.cpp,matched,destructor
 ??4IRegion3D@@QAEAAU0@ABU0@@Z,0x000327FE,0x007E6F40,47,src/math/region.cpp,matched,copy assignment
+?concat@?$StringBase@D@@QAEXD@Z,0x0002187D,0x00061C70,15,src/game/string_base.cpp,matched,concat single char
+?concat@?$StringBase@G@@QAEXG@Z,0x0000EA34,0x003968C0,15,src/game/string_base.cpp,matched,concat single wchar_t
 ?find@?$StringBase@D@@QBEPBDD@Z,0x0001CA8A,0x000628B0,45,src/game/string_base.cpp,matched,find character in string
 ?find@?$StringBase@G@@QBEPBGG@Z,0x00046623,0x00450B30,48,src/game/string_base.cpp,matched,find wchar_t character in string
 ?reverseFind@?$StringBase@D@@QBEPBDD@Z,0x0000C342,0x00072C40,49,src/game/string_base.cpp,matched,reverse find char in string

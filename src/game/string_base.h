@@ -13,6 +13,7 @@ public:
     const T *find(T c) const;
     T getCharAt(int index) const;
     int compare(const T *str) const;
+    void concat(T c);
     const T *reverseFind(T c) const;
     bool startsWithNoCase(const T *str) const;
     bool startsWithNoCase(const StringBase<T> &str) const;
