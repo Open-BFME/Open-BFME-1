@@ -552,3 +552,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0?$CategoryModuleClassBase@$04$00@FXParticleSystem@@IAE@ABV?$CategoryModuleClass@$04@1@_N@Z,0x00017DB4,0x005C16E0,23,src/game/fx_particle_system_category_accessors.cpp,matched,CategoryModuleClassBase default-module constructor
 ??0?$CategoryModuleClassBase@$05$00@FXParticleSystem@@IAE@ABV?$CategoryModuleClass@$05@1@_N@Z,0x00010AC8,0x005C1780,23,src/game/fx_particle_system_category_accessors.cpp,matched,CategoryModuleClassBase default-module constructor
 ??0?$CategoryModuleClassBase@$06$00@FXParticleSystem@@IAE@ABV?$CategoryModuleClass@$06@1@_N@Z,0x0002DD7B,0x005C1820,23,src/game/fx_particle_system_category_accessors.cpp,matched,CategoryModuleClassBase default-module constructor
+?6@YAAAVDebug@@AAV0@ABURegion2D@@@Z,0x0004AC2D,0x007E71F0,142,src/math/region.cpp,matched,Debug output for Region2D
+??6@YAAAVDebug@@AAV0@ABUIRegion2D@@@Z,0x000361BF,0x007E72B0,142,src/math/region.cpp,matched,Debug output for IRegion2D
+??6@YAAAVDebug@@AAV0@ABURealRange@@@Z,0x0000D2AB,0x007E70D0,72,src/math/region.cpp,matched,Debug output for RealRange
+??6@YAAAVDebug@@AAV0@ABURGBAColorReal@@@Z,0x00039D6F,0x007E74F0,118,src/math/color.cpp,matched,Debug output for RGBAColorReal
+??6@YAAAVDebug@@AAV0@ABURGBAColorInt@@@Z,0x00040D8B,0x007E7590,118,src/math/color.cpp,matched,Debug output for RGBAColorInt
