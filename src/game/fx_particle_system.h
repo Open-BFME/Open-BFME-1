@@ -260,6 +260,7 @@ public:
 
 class LineEmissionVolumeInfo : public EmissionVolumeInfo {
 public:
+    LineEmissionVolumeInfo &operator=(const LineEmissionVolumeInfo &that);
     virtual ~LineEmissionVolumeInfo();
 };
 

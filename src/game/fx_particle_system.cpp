@@ -352,6 +352,37 @@ LineEmissionVolumeInfo::~LineEmissionVolumeInfo()
     *(void **)this = (void *)0x01073744;
 }
 
+__declspec(naked) LineEmissionVolumeInfo &LineEmissionVolumeInfo::operator=(const LineEmissionVolumeInfo &that)
+{
+    __asm {
+        mov eax, ecx
+        mov ecx, [esp + 4]
+        mov dl, [ecx + 4]
+        mov [eax + 4], dl
+        push esi
+        lea edx, [ecx + 8]
+        push edi
+        mov edi, [edx]
+        lea esi, [eax + 8]
+        mov [esi], edi
+        mov edi, [edx + 4]
+        mov [esi + 4], edi
+        mov edx, [edx + 8]
+        mov [esi + 8], edx
+        add ecx, 0x14
+        mov esi, [ecx]
+        lea edx, [eax + 0x14]
+        mov [edx], esi
+        mov esi, [ecx + 4]
+        mov [edx + 4], esi
+        mov ecx, [ecx + 8]
+        pop edi
+        mov [edx + 8], ecx
+        pop esi
+        ret 4
+    }
+}
+
 ModuleTemplate &ModuleTemplate::operator=(const ModuleTemplate &that)
 {
     return *this;
