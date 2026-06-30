@@ -39,7 +39,6 @@ private:
     const char *m_key;
     const char *m_name;
 };
-
 template <int Category>
 class CategoryModuleTemplateBase {
 public:
@@ -104,9 +103,7 @@ template CategoryModuleClassBase<5, 1> &CategoryModuleClassBase<5, 1>::operator=
 template CategoryModuleClassBase<6, 1> &CategoryModuleClassBase<6, 1>::operator=(const CategoryModuleClassBase<6, 1> &);
 template CategoryModuleClassBase<7, 1> &CategoryModuleClassBase<7, 1>::operator=(const CategoryModuleClassBase<7, 1> &);
 template CategoryModuleClassBase<8, 0> &CategoryModuleClassBase<8, 0>::operator=(const CategoryModuleClassBase<8, 0> &);
-template const char *CategoryModuleClass<0>::getKey() const;
-template const char *CategoryModuleClass<5>::getKey() const;
-template const char *CategoryModuleClass<8>::getName() const;
+
 template CategoryModuleTemplateBase<0> &CategoryModuleTemplateBase<0>::operator=(const CategoryModuleTemplateBase<0> &);
 template CategoryModuleTemplateBase<1> &CategoryModuleTemplateBase<1>::operator=(const CategoryModuleTemplateBase<1> &);
 template CategoryModuleTemplateBase<2> &CategoryModuleTemplateBase<2>::operator=(const CategoryModuleTemplateBase<2> &);

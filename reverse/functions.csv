@@ -48,9 +48,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1WindModuleInfo@FXParticleSystem@@UAE@XZ,0x0001B31F,0x005BD960,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??4?$CategoryModuleClassBase@$0A@$00@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0000540C,0x005C10D0,5,src/game/fx_particle_system.cpp,matched,empty base assignment returns this
 ??4?$CategoryModuleClassBase@$02$00@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0003E8FB,0x005C1490,5,src/game/fx_particle_system.cpp,matched,empty base assignment returns this
-?getKey@?$CategoryModuleClass@$0A@@FXParticleSystem@@QBEPBDXZ,0x0000631B,0x005C1210,4,src/game/fx_particle_system.cpp,matched,returns module key string
-?getKey@?$CategoryModuleClass@$04@FXParticleSystem@@QBEPBDXZ,0x00005D7B,0x005C16B0,4,src/game/fx_particle_system.cpp,matched,returns module key string
-?getName@?$CategoryModuleClass@$07@FXParticleSystem@@QBEPBDXZ,0x000014E2,0x005D4AE0,4,src/game/fx_particle_system.cpp,matched,returns module name string
+?getKey@?$CategoryModuleClass@$0A@@FXParticleSystem@@QBEPBDXZ,0x0000631B,0x005C1210,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module key string
+?getKey@?$CategoryModuleClass@$04@FXParticleSystem@@QBEPBDXZ,0x00005D7B,0x005C16B0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module key string
+?getName@?$CategoryModuleClass@$07@FXParticleSystem@@QBEPBDXZ,0x000014E2,0x005D4AE0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module name string
 ??4?$CategoryModuleTemplateBase@$00@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x00004B7E,0x005BF150,5,src/game/fx_particle_system.cpp,matched,empty base assignment returns this
 ??4?$CategoryModuleTemplate@$00@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x00006933,0x005BF280,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
 ??4?$CategoryModuleTemplate@$02@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x00008765,0x005BF720,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
@@ -423,3 +423,36 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1?$CategoryModuleInfo@$06@FXParticleSystem@@IAE@XZ,0x00042389,0x005BF040,7,src/game/fx_particle_system.cpp,matched,CategoryModuleInfo ctor/dtor
 ??1?$CategoryModuleInfo@$07@FXParticleSystem@@IAE@XZ,0x0001B473,0x0005D810,7,src/game/fx_particle_system.cpp,matched,CategoryModuleInfo ctor/dtor
 ??1?$CategoryModuleInfo@$0A@@FXParticleSystem@@IAE@XZ,0x0000D67F,0x0005D820,7,src/game/fx_particle_system.cpp,matched,CategoryModuleInfo ctor/dtor
+?getFirst@?$CategoryModuleClass@$00@FXParticleSystem@@SAPBV12@XZ,0x00001EA1,0x005C12D0,6,src/game/fx_particle_system_category_accessors.cpp,matched,returns first module in category list
+?getKey@?$CategoryModuleClass@$00@FXParticleSystem@@QBEPBDXZ,0x0004A539,0x005C12E0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module key string
+?getName@?$CategoryModuleClass@$00@FXParticleSystem@@QBEPBDXZ,0x0003A689,0x005D4A40,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module name string
+?getNext@?$CategoryModuleClass@$00@FXParticleSystem@@QBEPBV12@XZ,0x00013809,0x005C12F0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns next module in category list
+?getFirst@?$CategoryModuleClass@$01@FXParticleSystem@@SAPBV12@XZ,0x0002EA2D,0x005C1390,6,src/game/fx_particle_system_category_accessors.cpp,matched,returns first module in category list
+?getKey@?$CategoryModuleClass@$01@FXParticleSystem@@QBEPBDXZ,0x00023F4C,0x005C13A0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module key string
+?getName@?$CategoryModuleClass@$01@FXParticleSystem@@QBEPBDXZ,0x00033122,0x005D4AA0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module name string
+?getNext@?$CategoryModuleClass@$01@FXParticleSystem@@QBEPBV12@XZ,0x00025BE9,0x005C13B0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns next module in category list
+?getFirst@?$CategoryModuleClass@$02@FXParticleSystem@@SAPBV12@XZ,0x00010046,0x005C14A0,6,src/game/fx_particle_system_category_accessors.cpp,matched,returns first module in category list
+?getKey@?$CategoryModuleClass@$02@FXParticleSystem@@QBEPBDXZ,0x0002E87F,0x005C14B0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module key string
+?getName@?$CategoryModuleClass@$02@FXParticleSystem@@QBEPBDXZ,0x0000B956,0x005D4A80,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module name string
+?getNext@?$CategoryModuleClass@$02@FXParticleSystem@@QBEPBV12@XZ,0x000343F1,0x005C14C0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns next module in category list
+?getFirst@?$CategoryModuleClass@$03@FXParticleSystem@@SAPBV12@XZ,0x0000B3C5,0x005C1600,6,src/game/fx_particle_system_category_accessors.cpp,matched,returns first module in category list
+?getKey@?$CategoryModuleClass@$03@FXParticleSystem@@QBEPBDXZ,0x00023380,0x005C1610,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module key string
+?getName@?$CategoryModuleClass@$03@FXParticleSystem@@QBEPBDXZ,0x0003A85F,0x005D4B00,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module name string
+?getNext@?$CategoryModuleClass@$03@FXParticleSystem@@QBEPBV12@XZ,0x00038271,0x005C1620,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns next module in category list
+?getFirst@?$CategoryModuleClass@$04@FXParticleSystem@@SAPBV12@XZ,0x0003468A,0x005C16A0,6,src/game/fx_particle_system_category_accessors.cpp,matched,returns first module in category list
+?getName@?$CategoryModuleClass@$04@FXParticleSystem@@QBEPBDXZ,0x0004A45D,0x005D4B20,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module name string
+?getNext@?$CategoryModuleClass@$04@FXParticleSystem@@QBEPBV12@XZ,0x0004A3C7,0x005C16C0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns next module in category list
+?getFirst@?$CategoryModuleClass@$05@FXParticleSystem@@SAPBV12@XZ,0x0000349A,0x005C1740,6,src/game/fx_particle_system_category_accessors.cpp,matched,returns first module in category list
+?getKey@?$CategoryModuleClass@$05@FXParticleSystem@@QBEPBDXZ,0x0004403F,0x005C1750,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module key string
+?getName@?$CategoryModuleClass@$05@FXParticleSystem@@QBEPBDXZ,0x0002E18B,0x005D47C0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module name string
+?getNext@?$CategoryModuleClass@$05@FXParticleSystem@@QBEPBV12@XZ,0x0000DE04,0x005C1760,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns next module in category list
+?getFirst@?$CategoryModuleClass@$06@FXParticleSystem@@SAPBV12@XZ,0x00044DBE,0x005C17E0,6,src/game/fx_particle_system_category_accessors.cpp,matched,returns first module in category list
+?getKey@?$CategoryModuleClass@$06@FXParticleSystem@@QBEPBDXZ,0x00010A55,0x005C17F0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module key string
+?getName@?$CategoryModuleClass@$06@FXParticleSystem@@QBEPBDXZ,0x0003A963,0x005D4AC0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module name string
+?getNext@?$CategoryModuleClass@$06@FXParticleSystem@@QBEPBV12@XZ,0x0000CE73,0x005C1800,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns next module in category list
+?getFirst@?$CategoryModuleClass@$07@FXParticleSystem@@SAPBV12@XZ,0x0003F571,0x005C1880,6,src/game/fx_particle_system_category_accessors.cpp,matched,returns first module in category list
+?getKey@?$CategoryModuleClass@$07@FXParticleSystem@@QBEPBDXZ,0x00032E57,0x005C1890,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module key string
+?getNext@?$CategoryModuleClass@$07@FXParticleSystem@@QBEPBV12@XZ,0x00032498,0x005C18A0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns next module in category list
+?getFirst@?$CategoryModuleClass@$0A@@FXParticleSystem@@SAPBV12@XZ,0x00011D15,0x005C1200,6,src/game/fx_particle_system_category_accessors.cpp,matched,returns first module in category list
+?getName@?$CategoryModuleClass@$0A@@FXParticleSystem@@QBEPBDXZ,0x0004ACA0,0x005D4A60,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module name string
+?getNext@?$CategoryModuleClass@$0A@@FXParticleSystem@@QBEPBV12@XZ,0x00014579,0x005C1220,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns next module in category list
