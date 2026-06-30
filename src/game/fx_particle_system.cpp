@@ -79,16 +79,6 @@ CategoryModuleInfo<Category>::CategoryModuleInfo(const CategoryModuleInfo<Catego
 }
 
 template <int Category>
-struct DefaultModuleKey {
-    DefaultModuleKey &operator=(const DefaultModuleKey &that) { return *this; }
-};
-
-template <int Category>
-struct DefaultModuleName {
-    DefaultModuleName &operator=(const DefaultModuleName &that) { return *this; }
-};
-
-template <int Category>
 class DefaultModuleTemplate {
 public:
     DefaultModuleTemplate &operator=(const DefaultModuleTemplate &that) { return *this; }
@@ -1051,5 +1041,148 @@ Keyframe &Keyframe::operator=(const Keyframe &that)
     *(Raw *)this = *(const Raw *)&that;
     return *this;
 }
+
+template <int Category>
+class DefaultModule {
+public:
+    DefaultModule &operator=(const DefaultModule &that) { return *this; }
+};
+
+template <int Category>
+class DefaultParticleModule {
+public:
+    DefaultParticleModule &operator=(const DefaultParticleModule &that) { return *this; }
+};
+
+template <int Category>
+class DefaultParticleModuleTemplate {
+public:
+    DefaultParticleModuleTemplate &operator=(const DefaultParticleModuleTemplate &that) { return *this; }
+};
+
+// Key/name strings for specific ModuleTag instantiations
+const char BOX_EMISSION_VOLUME_MODULE_KEY[1] = "";
+const char BUTTERFLY_DRAW_MODULE_KEY[1] = "";
+const char CYLINDER_EMISSION_VOLUME_MODULE_KEY[1] = "";
+const char CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY[1] = "";
+const char HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY[1] = "";
+const char LIFE_EVENT_MODULE_KEY[1] = "";
+const char LIGHTNING_DRAW_MODULE_KEY[1] = "";
+const char LIGHTNING_EMISSION_MODULE_KEY[1] = "";
+const char LINE_EMISSION_VOLUME_MODULE_KEY[1] = "";
+const char ORTHO_EMISSION_VELOCITY_MODULE_KEY[1] = "";
+const char OUTWARD_EMISSION_VELOCITY_MODULE_KEY[1] = "";
+const char POINT_EMISSION_VOLUME_MODULE_KEY[1] = "";
+const char QUAD_DRAW_MODULE_KEY[1] = "";
+const char RENDEROBJECT_DRAW_MODULE_KEY[1] = "";
+const char RENDEROBJECT_UPDATE_MODULE_KEY[1] = "";
+const char SPHERE_EMISSION_VOLUME_MODULE_KEY[1] = "";
+const char SPHERICAL_EMISSION_VELOCITY_MODULE_KEY[1] = "";
+const char STREAK_DRAW_MODULE_KEY[1] = "";
+const char TERRAIN_COLLISION_MODULE_KEY[1] = "";
+const char BOX_EMISSION_VOLUME_MODULE_NAME[1] = "";
+const char BUTTERFLY_DRAW_MODULE_NAME[1] = "";
+const char CYLINDER_EMISSION_VOLUME_MODULE_NAME[1] = "";
+const char CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME[1] = "";
+const char HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME[1] = "";
+const char LIFE_EVENT_MODULE_NAME[1] = "";
+const char LIGHTNING_DRAW_MODULE_NAME[1] = "";
+const char LIGHTNING_EMISSION_MODULE_NAME[1] = "";
+const char LINE_EMISSION_VOLUME_MODULE_NAME[1] = "";
+const char ORTHO_EMISSION_VELOCITY_MODULE_NAME[1] = "";
+const char OUTWARD_EMISSION_VELOCITY_MODULE_NAME[1] = "";
+const char POINT_EMISSION_VOLUME_MODULE_NAME[1] = "";
+const char QUAD_DRAW_MODULE_NAME[1] = "";
+const char RENDEROBJECT_DRAW_MODULE_NAME[1] = "";
+const char RENDEROBJECT_UPDATE_MODULE_NAME[1] = "";
+const char SPHERE_EMISSION_VOLUME_MODULE_NAME[1] = "";
+const char SPHERICAL_EMISSION_VELOCITY_MODULE_NAME[1] = "";
+const char STREAK_DRAW_MODULE_NAME[1] = "";
+const char TERRAIN_COLLISION_MODULE_NAME[1] = "";
+
+// Typedefs to avoid nested angle brackets in explicit instantiations for MSVC 7.1
+typedef DefaultModule<0> DefaultModule_0;
+typedef DefaultModuleTemplate<0> DefaultModuleTemplate_0;
+typedef DefaultModuleKey<0> DefaultModuleKey_0;
+typedef DefaultModuleName<0> DefaultModuleName_0;
+typedef DefaultModule<1> DefaultModule_1;
+typedef DefaultModuleTemplate<1> DefaultModuleTemplate_1;
+typedef DefaultModuleKey<1> DefaultModuleKey_1;
+typedef DefaultModuleName<1> DefaultModuleName_1;
+typedef DefaultModule<2> DefaultModule_2;
+typedef DefaultModuleTemplate<2> DefaultModuleTemplate_2;
+typedef DefaultModuleKey<2> DefaultModuleKey_2;
+typedef DefaultModuleName<2> DefaultModuleName_2;
+typedef DefaultModule<3> DefaultModule_3;
+typedef DefaultModuleTemplate<3> DefaultModuleTemplate_3;
+typedef DefaultModuleKey<3> DefaultModuleKey_3;
+typedef DefaultModuleName<3> DefaultModuleName_3;
+typedef DefaultModule<6> DefaultModule_6;
+typedef DefaultModuleTemplate<6> DefaultModuleTemplate_6;
+typedef DefaultModuleKey<6> DefaultModuleKey_6;
+typedef DefaultModuleName<6> DefaultModuleName_6;
+typedef DefaultModule<7> DefaultModule_7;
+typedef DefaultModuleTemplate<7> DefaultModuleTemplate_7;
+typedef DefaultModuleKey<7> DefaultModuleKey_7;
+typedef DefaultModuleName<7> DefaultModuleName_7;
+typedef DefaultParticleModule<0> DefaultParticleModule_0;
+typedef DefaultParticleModuleTemplate<0> DefaultParticleModuleTemplate_0;
+typedef DefaultParticleModule<1> DefaultParticleModule_1;
+typedef DefaultParticleModuleTemplate<1> DefaultParticleModuleTemplate_1;
+typedef DefaultParticleModule<2> DefaultParticleModule_2;
+typedef DefaultParticleModuleTemplate<2> DefaultParticleModuleTemplate_2;
+typedef DefaultParticleModule<3> DefaultParticleModule_3;
+typedef DefaultParticleModuleTemplate<3> DefaultParticleModuleTemplate_3;
+typedef DefaultParticleModule<4> DefaultParticleModule_4;
+typedef DefaultParticleModuleTemplate<4> DefaultParticleModuleTemplate_4;
+typedef DefaultParticleModule<5> DefaultParticleModule_5;
+typedef DefaultParticleModuleTemplate<5> DefaultParticleModuleTemplate_5;
+typedef DefaultParticleModule<6> DefaultParticleModule_6;
+typedef DefaultParticleModuleTemplate<6> DefaultParticleModuleTemplate_6;
+typedef DefaultParticleModule<7> DefaultParticleModule_7;
+typedef DefaultParticleModuleTemplate<7> DefaultParticleModuleTemplate_7;
+typedef DefaultParticleModule<8> DefaultParticleModule_8;
+typedef DefaultParticleModuleTemplate<8> DefaultParticleModuleTemplate_8;
+
+// Default key/name values for ModuleTag instantiations
+template<> const char DefaultModuleKey<0>::VALUE[1] = "";
+template<> const char DefaultModuleKey<1>::VALUE[1] = "";
+template<> const char DefaultModuleKey<2>::VALUE[1] = "";
+template<> const char DefaultModuleKey<3>::VALUE[1] = "";
+template<> const char DefaultModuleKey<6>::VALUE[1] = "";
+template<> const char DefaultModuleKey<7>::VALUE[1] = "";
+template<> const char DefaultModuleName<0>::VALUE[1] = "";
+template<> const char DefaultModuleName<1>::VALUE[1] = "";
+template<> const char DefaultModuleName<2>::VALUE[1] = "";
+template<> const char DefaultModuleName<3>::VALUE[1] = "";
+template<> const char DefaultModuleName<6>::VALUE[1] = "";
+template<> const char DefaultModuleName<7>::VALUE[1] = "";
+
+// Explicit ModuleTag instantiations
+template class ModuleTag<1, DefaultModuleKey_1::VALUE, DefaultModuleName_1::VALUE, DefaultModule_1, DefaultModuleTemplate_1, DefaultParticleModule_1, DefaultParticleModuleTemplate_1>;
+template class ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>;
+template class ModuleTag<2, DefaultModuleKey_2::VALUE, DefaultModuleName_2::VALUE, DefaultModule_2, DefaultModuleTemplate_2, DefaultParticleModule_2, DefaultParticleModuleTemplate_2>;
+template class ModuleTag<3, DefaultModuleKey_3::VALUE, DefaultModuleName_3::VALUE, DefaultModule_3, DefaultModuleTemplate_3, DefaultParticleModule_3, DefaultParticleModuleTemplate_3>;
+template class ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>;
+template class ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>;
+template class ModuleTag<4, ORTHO_EMISSION_VELOCITY_MODULE_KEY, ORTHO_EMISSION_VELOCITY_MODULE_NAME, OrthoEmissionVelocityModule, OrthoEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>;
+template class ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>;
+template class ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>;
+template class ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>;
+template class ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>;
+template class ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>;
+template class ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>;
+template class ModuleTag<5, POINT_EMISSION_VOLUME_MODULE_KEY, POINT_EMISSION_VOLUME_MODULE_NAME, PointEmissionVolumeModule, PointEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>;
+template class ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>;
+template class ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>;
+template class ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>;
+template class ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>;
+template class ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>;
+template class ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>;
+template class ModuleTag<6, DefaultModuleKey_6::VALUE, DefaultModuleName_6::VALUE, DefaultModule_6, DefaultModuleTemplate_6, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>;
+template class ModuleTag<7, DefaultModuleKey_7::VALUE, DefaultModuleName_7::VALUE, DefaultModule_7, DefaultModuleTemplate_7, DefaultParticleModule_7, DefaultParticleModuleTemplate_7>;
+template class ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>;
+template class ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>;
+template class ModuleTag<0, DefaultModuleKey_0::VALUE, DefaultModuleName_0::VALUE, DefaultModule_0, DefaultModuleTemplate_0, DefaultParticleModule_0, DefaultParticleModuleTemplate_0>;
 
 }

@@ -25,6 +25,120 @@ enum ModuleCategory {
 
 const char *GetKey(ModuleCategory category);
 
+// Forward declarations for int-based module templates
+template <int Category> class DefaultModule;
+template <int Category> class DefaultModuleTemplate;
+template <int Category> class DefaultParticleModule;
+template <int Category> class DefaultParticleModuleTemplate;
+
+// Forward declarations for module classes used by ModuleTag
+class BoxEmissionVolumeModule;
+class ButterflyDrawModule;
+class CylinderEmissionVolumeModule;
+class CylindricalEmissionVelocityModule;
+class HemisphericalEmissionVelocityModule;
+class LifeEventModule;
+class LightningDrawModule;
+class LightningEmissionModule;
+class LineEmissionVolumeModule;
+class OrthoEmissionVelocityModule;
+class OutwardEmissionVelocityModule;
+class PointEmissionVolumeModule;
+class QuadDrawModule;
+class RenderObjectDrawModule;
+class RenderObjectUpdateModule;
+class SphereEmissionVolumeModule;
+class SphericalEmissionVelocityModule;
+class StreakDrawModule;
+class TerrainCollisionModule;
+
+class BoxEmissionVolumeModuleTemplate;
+class ButterflyDrawModuleTemplate;
+class CylinderEmissionVolumeModuleTemplate;
+class CylindricalEmissionVelocityModuleTemplate;
+class HemisphericalEmissionVelocityModuleTemplate;
+class LifeEventModuleTemplate;
+class LightningDrawModuleTemplate;
+class LightningEmissionModuleTemplate;
+class LineEmissionVolumeModuleTemplate;
+class OrthoEmissionVelocityModuleTemplate;
+class OutwardEmissionVelocityModuleTemplate;
+class PointEmissionVolumeModuleTemplate;
+class QuadDrawModuleTemplate;
+class RenderObjectDrawModuleTemplate;
+class RenderObjectUpdateModuleTemplate;
+class SphereEmissionVolumeModuleTemplate;
+class SphericalEmissionVelocityModuleTemplate;
+class StreakDrawModuleTemplate;
+class TerrainCollisionModuleTemplate;
+
+class ParticleLifeEventModule;
+class ParticleTerrainCollisionModule;
+class RenderObjectParticleUpdateModule;
+
+class ParticleLifeEventModuleTemplate;
+class ParticleTerrainCollisionModuleTemplate;
+class RenderObjectParticleUpdateModuleTemplate;
+
+template <int Category>
+struct DefaultModuleKey {
+    static const char VALUE[1];
+    DefaultModuleKey &operator=(const DefaultModuleKey &that) { return *this; }
+};
+
+template <int Category>
+struct DefaultModuleName {
+    static const char VALUE[1];
+    DefaultModuleName &operator=(const DefaultModuleName &that) { return *this; }
+};
+
+// Namespace-level key/name strings for specific ModuleTag instantiations
+extern const char BOX_EMISSION_VOLUME_MODULE_KEY[1];
+extern const char BUTTERFLY_DRAW_MODULE_KEY[1];
+extern const char CYLINDER_EMISSION_VOLUME_MODULE_KEY[1];
+extern const char CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY[1];
+extern const char HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY[1];
+extern const char LIFE_EVENT_MODULE_KEY[1];
+extern const char LIGHTNING_DRAW_MODULE_KEY[1];
+extern const char LIGHTNING_EMISSION_MODULE_KEY[1];
+extern const char LINE_EMISSION_VOLUME_MODULE_KEY[1];
+extern const char ORTHO_EMISSION_VELOCITY_MODULE_KEY[1];
+extern const char OUTWARD_EMISSION_VELOCITY_MODULE_KEY[1];
+extern const char POINT_EMISSION_VOLUME_MODULE_KEY[1];
+extern const char QUAD_DRAW_MODULE_KEY[1];
+extern const char RENDEROBJECT_DRAW_MODULE_KEY[1];
+extern const char RENDEROBJECT_UPDATE_MODULE_KEY[1];
+extern const char SPHERE_EMISSION_VOLUME_MODULE_KEY[1];
+extern const char SPHERICAL_EMISSION_VELOCITY_MODULE_KEY[1];
+extern const char STREAK_DRAW_MODULE_KEY[1];
+extern const char TERRAIN_COLLISION_MODULE_KEY[1];
+
+extern const char BOX_EMISSION_VOLUME_MODULE_NAME[1];
+extern const char BUTTERFLY_DRAW_MODULE_NAME[1];
+extern const char CYLINDER_EMISSION_VOLUME_MODULE_NAME[1];
+extern const char CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME[1];
+extern const char HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME[1];
+extern const char LIFE_EVENT_MODULE_NAME[1];
+extern const char LIGHTNING_DRAW_MODULE_NAME[1];
+extern const char LIGHTNING_EMISSION_MODULE_NAME[1];
+extern const char LINE_EMISSION_VOLUME_MODULE_NAME[1];
+extern const char ORTHO_EMISSION_VELOCITY_MODULE_NAME[1];
+extern const char OUTWARD_EMISSION_VELOCITY_MODULE_NAME[1];
+extern const char POINT_EMISSION_VOLUME_MODULE_NAME[1];
+extern const char QUAD_DRAW_MODULE_NAME[1];
+extern const char RENDEROBJECT_DRAW_MODULE_NAME[1];
+extern const char RENDEROBJECT_UPDATE_MODULE_NAME[1];
+extern const char SPHERE_EMISSION_VOLUME_MODULE_NAME[1];
+extern const char SPHERICAL_EMISSION_VELOCITY_MODULE_NAME[1];
+extern const char STREAK_DRAW_MODULE_NAME[1];
+extern const char TERRAIN_COLLISION_MODULE_NAME[1];
+
+template <int Category, const char (&Key)[1], const char (&Name)[1], class Module, class ModuleTemplate, class DefaultParticleModule, class DefaultParticleModuleTemplate>
+class ModuleTag {
+public:
+    ModuleTag &operator=(const ModuleTag &that) { return *this; }
+};
+
 class ButterflyDrawModuleInfo {
 public:
     virtual ~ButterflyDrawModuleInfo();
