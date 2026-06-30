@@ -15,6 +15,8 @@ public:
     int compare(const T *str) const;
     bool startsWithNoCase(const T *str) const;
     bool startsWithNoCase(const StringBase<T> &str) const;
+    void set(T c);
+    void set(const T *str);
     void clear();
 
 private:

@@ -305,6 +305,164 @@ __declspec(naked) bool StringBase<char>::startsWithNoCase(const StringBase<char>
     }
 }
 
+__declspec(naked) void StringBase<char>::set(char c)
+{
+    __asm {
+        __emit 0x6a
+        __emit 0x01
+        __emit 0x8d
+        __emit 0x44
+        __emit 0x24
+        __emit 0x08
+        __emit 0x50
+        __emit 0xe8
+        __emit 0xb4
+        __emit 0x74
+        __emit 0x31
+        __emit 0x00
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+        __emit 0xcc
+    }
+}
+
+__declspec(naked) void StringBase<wchar_t>::set(wchar_t c)
+{
+    __asm {
+        __emit 0x6a
+        __emit 0x01
+        __emit 0x8d
+        __emit 0x44
+        __emit 0x24
+        __emit 0x08
+        __emit 0x50
+        __emit 0xe8
+        __emit 0x04
+        __emit 0x36
+        __emit 0x32
+        __emit 0x00
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+        __emit 0xcc
+    }
+}
+
+__declspec(naked) void StringBase<char>::set(const char *str)
+{
+    __asm {
+        __emit 0x56
+        __emit 0x8b
+        __emit 0x74
+        __emit 0x24
+        __emit 0x08
+        __emit 0x85
+        __emit 0xf6
+        __emit 0x74
+        __emit 0x1c
+        __emit 0x8b
+        __emit 0xc6
+        __emit 0x57
+        __emit 0x8d
+        __emit 0x78
+        __emit 0x01
+        __emit 0x90
+        __emit 0x8a
+        __emit 0x10
+        __emit 0x40
+        __emit 0x84
+        __emit 0xd2
+        __emit 0x75
+        __emit 0xf9
+        __emit 0x2b
+        __emit 0xc7
+        __emit 0x5f
+        __emit 0x50
+        __emit 0x56
+        __emit 0xe8
+        __emit 0x0f
+        __emit 0x61
+        __emit 0x82
+        __emit 0x00
+        __emit 0x5e
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+        __emit 0x33
+        __emit 0xc0
+        __emit 0x50
+        __emit 0x56
+        __emit 0xe8
+        __emit 0x02
+        __emit 0x61
+        __emit 0x82
+        __emit 0x00
+        __emit 0x5e
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+    }
+}
+
+__declspec(naked) void StringBase<wchar_t>::set(const wchar_t *str)
+{
+    __asm {
+        __emit 0x56
+        __emit 0x8b
+        __emit 0x74
+        __emit 0x24
+        __emit 0x08
+        __emit 0x85
+        __emit 0xf6
+        __emit 0x57
+        __emit 0x8b
+        __emit 0xf9
+        __emit 0x74
+        __emit 0x18
+        __emit 0x56
+        __emit 0xff
+        __emit 0x15
+        __emit 0x24
+        __emit 0x95
+        __emit 0x35
+        __emit 0x01
+        __emit 0x83
+        __emit 0xc4
+        __emit 0x04
+        __emit 0x50
+        __emit 0x56
+        __emit 0x8b
+        __emit 0xcf
+        __emit 0xe8
+        __emit 0x31
+        __emit 0x51
+        __emit 0x80
+        __emit 0x00
+        __emit 0x5f
+        __emit 0x5e
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+        __emit 0x33
+        __emit 0xc0
+        __emit 0x50
+        __emit 0x56
+        __emit 0x8b
+        __emit 0xcf
+        __emit 0xe8
+        __emit 0x21
+        __emit 0x51
+        __emit 0x80
+        __emit 0x00
+        __emit 0x5f
+        __emit 0x5e
+        __emit 0xc2
+        __emit 0x04
+        __emit 0x00
+    }
+}
+
 template class StringBase<char>;
 template class StringBase<wchar_t>;
 

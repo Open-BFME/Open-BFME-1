@@ -589,3 +589,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1?$StringBase@G@@AAE@XZ,0x000160F9,0x0005E4E0,6,src/game/string_base.cpp,matched,destroy wide string base
 ?startsWithNoCase@?$StringBase@D@@QBE_NPBD@Z,0x00002667,0x0010D260,50,src/game/string_base.cpp,matched,case-insensitive prefix check against C string
 ?startsWithNoCase@?$StringBase@D@@QBE_NABV1@@Z,0x0003DEC9,0x0010EB00,50,src/game/string_base.cpp,matched,case-insensitive prefix check against AsciiString
+?set@?$StringBase@D@@QAEXD@Z,0x000462CC,0x00570860,16,src/game/string_base.cpp,matched,set from single char
+?set@?$StringBase@G@@QAEXG@Z,0x0000434F,0x00564FB0,16,src/game/string_base.cpp,matched,set wide string from single wchar_t
+?set@?$StringBase@D@@QAEXPBD@Z,0x0000AD53,0x00061BF0,50,src/game/string_base.cpp,matched,set from C string
+?set@?$StringBase@G@@QAEXPBG@Z,0x0003517A,0x00083470,52,src/game/string_base.cpp,matched,set from wide C string
