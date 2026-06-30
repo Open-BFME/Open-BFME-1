@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../math/coord3d.h"
 #include "ascii_string.h"
 #include "xfer.h"
 
@@ -89,11 +88,25 @@ public:
 
 class LightningEmissionInfo : public EmissionVelocityInfo {
 public:
+    virtual ~LightningEmissionInfo();
     LightningEmissionInfo &operator=(const LightningEmissionInfo &that);
 
 private:
     bool m_active;
-    Coord3D m_points[11];
+    struct { float x, y, z; } m_points[11];
+};
+
+class EventModuleInfo {
+public:
+    EventModuleInfo();
+    EventModuleInfo &operator=(const EventModuleInfo &that);
+
+protected:
+    ~EventModuleInfo();
+
+private:
+    bool m_unk0;
+    bool m_unk1;
 };
 
 class EmissionVolumeInfo {
@@ -106,6 +119,26 @@ public:
     virtual void DoXfer(Xfer &xfer);
 
     bool m_flag;
+};
+
+class BoxEmissionVolumeInfo : public EmissionVolumeInfo {
+public:
+    virtual ~BoxEmissionVolumeInfo();
+};
+
+class SphereEmissionVolumeInfo : public EmissionVolumeInfo {
+public:
+    virtual ~SphereEmissionVolumeInfo();
+};
+
+class CylinderEmissionVolumeInfo : public EmissionVolumeInfo {
+public:
+    virtual ~CylinderEmissionVolumeInfo();
+};
+
+class LineEmissionVolumeInfo : public EmissionVolumeInfo {
+public:
+    virtual ~LineEmissionVolumeInfo();
 };
 
 class LifeEventModuleInfo {

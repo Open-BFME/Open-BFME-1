@@ -278,6 +278,59 @@ __declspec(naked) LightningEmissionInfo &LightningEmissionInfo::operator=(const 
     }
 }
 
+LightningEmissionInfo::~LightningEmissionInfo()
+{
+    *(void **)this = (void *)0x01073744;
+}
+
+__declspec(naked) EventModuleInfo::EventModuleInfo()
+{
+    __asm {
+        mov eax, ecx
+        mov byte ptr [eax], 1
+        mov byte ptr [eax + 1], 1
+        ret
+    }
+}
+
+__declspec(naked) EventModuleInfo::~EventModuleInfo()
+{
+    __asm {
+        ret
+    }
+}
+
+__declspec(naked) EventModuleInfo &EventModuleInfo::operator=(const EventModuleInfo &that)
+{
+    __asm {
+        mov eax, ecx
+        mov ecx, [esp + 4]
+        mov dx, [ecx]
+        mov [eax], dx
+        ret 4
+    }
+}
+
+BoxEmissionVolumeInfo::~BoxEmissionVolumeInfo()
+{
+    *(void **)this = (void *)0x01073744;
+}
+
+SphereEmissionVolumeInfo::~SphereEmissionVolumeInfo()
+{
+    *(void **)this = (void *)0x01073744;
+}
+
+CylinderEmissionVolumeInfo::~CylinderEmissionVolumeInfo()
+{
+    *(void **)this = (void *)0x01073744;
+}
+
+LineEmissionVolumeInfo::~LineEmissionVolumeInfo()
+{
+    *(void **)this = (void *)0x01073744;
+}
+
 ModuleTemplate &ModuleTemplate::operator=(const ModuleTemplate &that)
 {
     return *this;
