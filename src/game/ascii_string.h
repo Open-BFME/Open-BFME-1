@@ -10,6 +10,7 @@ public:
     AsciiString(const AsciiString &that, int start, int len);
     ~AsciiString();
     AsciiString &operator=(const AsciiString &that);
+    AsciiString &operator=(char c);
     AsciiString &operator=(const char *str);
     AsciiString &operator+=(const AsciiString &that);
     AsciiString &operator+=(char c);
