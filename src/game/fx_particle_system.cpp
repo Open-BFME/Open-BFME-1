@@ -931,10 +931,6 @@ const char *DefaultUpdateModuleInfo::GetSnapshotName()
     return "DefaultUpdateModuleInfo";
 }
 
-EmissionVelocityInfo::EmissionVelocityInfo()
-{
-}
-
 EmissionVelocityInfo::EmissionVelocityInfo(const EmissionVelocityInfo &that)
 {
 }

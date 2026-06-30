@@ -35,7 +35,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0RandomAlphaKeyframe@FXParticleSystem@@QAE@XZ,0x0003F107,0x0005C750,45,src/game/fx_particle_system.cpp,matched,constructs keyframe and calls setRange on its random variable
 ??1DefaultAlphaModuleInfo@FXParticleSystem@@UAE@XZ,0x0001AFAF,0x005D4F50,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??1QuadDrawModuleInfo@FXParticleSystem@@UAE@XZ,0x0001C5CB,0x005D88A0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
-??0EmissionVelocityInfo@FXParticleSystem@@QAE@XZ,0x00012468,0x005BD800,9,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer
+??0EmissionVelocityInfo@FXParticleSystem@@QAE@XZ,0x00012468,0x005BD800,9,src/game/fx_particle_system_bulk.cpp,matched,default constructor sets vtable pointer
 ??1EmissionVelocityInfo@FXParticleSystem@@UAE@XZ,0x0003CF47,0x005BD810,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??0EmissionVolumeInfo@FXParticleSystem@@QAE@XZ,0x0002EFF0,0x005BD640,10,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer and flag
 ??1EmissionVolumeInfo@FXParticleSystem@@UAE@XZ,0x0004AA61,0x005BD6B0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
@@ -353,6 +353,10 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0OrthoEmissionVelocityInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00003FB2,0x005D6DA0,93,src/game/fx_particle_system_bulk.cpp,matched,
 ??0OutwardEmissionVelocityInfo@FXParticleSystem@@QAE@ABV01@@Z,0x0000AEE8,0x005D7B20,71,src/game/fx_particle_system_bulk.cpp,matched,
 ??0SphericalEmissionVelocityInfo@FXParticleSystem@@QAE@ABV01@@Z,0x0001B2D4,0x005D71E0,49,src/game/fx_particle_system_bulk.cpp,matched,
+??0CylindricalEmissionVelocityInfo@FXParticleSystem@@QAE@XZ,0x00016383,0x005D7670,105,src/game/fx_particle_system_bulk.cpp,matched,
+??0OrthoEmissionVelocityInfo@FXParticleSystem@@QAE@XZ,0x00046E75,0x005D6CE0,130,src/game/fx_particle_system_bulk.cpp,matched,
+??0OutwardEmissionVelocityInfo@FXParticleSystem@@QAE@XZ,0x000051C3,0x005D7A80,105,src/game/fx_particle_system_bulk.cpp,matched,
+??0SphericalEmissionVelocityInfo@FXParticleSystem@@QAE@XZ,0x0002A91E,0x005D7160,79,src/game/fx_particle_system_bulk.cpp,matched,
 ??0EmissionVolumeInfo@FXParticleSystem@@QAE@ABV01@@Z,0x000376DC,0x005BD6C0,21,src/game/fx_particle_system.cpp,matched,copy constructor
 ??4RGBColorKeyframe@FXParticleSystem@@QAEAAU01@ABU01@@Z,0x00020770,0x0005C720,35,src/math/color.cpp,matched,copy assignment
 ??8Xfer@@UAEAAV0@AAD@Z,0x0002A2D4,0x0006B1E0,31,src/game/xfer.cpp,matched,stream char

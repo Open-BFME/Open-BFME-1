@@ -18075,115 +18075,13 @@ CylindricalEmissionVelocityInfo::CylindricalEmissionVelocityInfo(const Cylindric
 }
 
 // ??0CylindricalEmissionVelocityInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) CylindricalEmissionVelocityInfo::CylindricalEmissionVelocityInfo()
+CylindricalEmissionVelocityInfo::CylindricalEmissionVelocityInfo()
+    : EmissionVelocityInfo()
+    , m_var0()
+    , m_var1()
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x18
-        __emit 0xab
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x53
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x57
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x33
-        __emit 0xdb
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x78
-        __emit 0x0b
-        __emit 0x11
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x04
-        __emit 0x89
-        __emit 0x19
-        __emit 0x89
-        __emit 0x59
-        __emit 0x04
-        __emit 0x89
-        __emit 0x59
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x10
-        __emit 0x53
-        __emit 0x53
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x24
-        __emit 0x89
-        __emit 0x1f
-        __emit 0x89
-        __emit 0x5f
-        __emit 0x04
-        __emit 0x89
-        __emit 0x5f
-        __emit 0x08
-        __emit 0xe8
-        __emit 0x9e
-        __emit 0xf5
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x53
-        __emit 0x53
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0x93
-        __emit 0xf5
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x5f
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
+    m_var0.setRange(0.0f, 0.0f, GameClientRandomVariable::UNIFORM);
+    m_var1.setRange(0.0f, 0.0f, GameClientRandomVariable::UNIFORM);
 }
 
 // ??0CylindricalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
@@ -21288,140 +21186,15 @@ OrthoEmissionVelocityInfo::OrthoEmissionVelocityInfo(const OrthoEmissionVelocity
 }
 
 // ??0OrthoEmissionVelocityInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) OrthoEmissionVelocityInfo::OrthoEmissionVelocityInfo()
+OrthoEmissionVelocityInfo::OrthoEmissionVelocityInfo()
+    : EmissionVelocityInfo()
+    , m_var0()
+    , m_var1()
+    , m_var2()
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x98
-        __emit 0xaa
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x53
-        __emit 0x55
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x57
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x10
-        __emit 0x33
-        __emit 0xed
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xcc
-        __emit 0x0a
-        __emit 0x11
-        __emit 0x01
-        __emit 0x89
-        __emit 0x6e
-        __emit 0x04
-        __emit 0x89
-        __emit 0x6e
-        __emit 0x08
-        __emit 0x89
-        __emit 0x6e
-        __emit 0x0c
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x04
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x10
-        __emit 0x89
-        __emit 0x2f
-        __emit 0x89
-        __emit 0x6f
-        __emit 0x04
-        __emit 0x89
-        __emit 0x6f
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x5e
-        __emit 0x1c
-        __emit 0x55
-        __emit 0x55
-        __emit 0x89
-        __emit 0x6c
-        __emit 0x24
-        __emit 0x28
-        __emit 0x89
-        __emit 0x2b
-        __emit 0x89
-        __emit 0x6b
-        __emit 0x04
-        __emit 0x89
-        __emit 0x6b
-        __emit 0x08
-        __emit 0xe8
-        __emit 0x21
-        __emit 0xff
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x55
-        __emit 0x55
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0x16
-        __emit 0xff
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x55
-        __emit 0x55
-        __emit 0x8b
-        __emit 0xcb
-        __emit 0xe8
-        __emit 0x0b
-        __emit 0xff
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x5f
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x5d
-        __emit 0x5b
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
+    m_var0.setRange(0.0f, 0.0f, GameClientRandomVariable::UNIFORM);
+    m_var1.setRange(0.0f, 0.0f, GameClientRandomVariable::UNIFORM);
+    m_var2.setRange(0.0f, 0.0f, GameClientRandomVariable::UNIFORM);
 }
 
 // ??0OrthoEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
@@ -21615,115 +21388,13 @@ OutwardEmissionVelocityInfo::OutwardEmissionVelocityInfo(const OutwardEmissionVe
 }
 
 // ??0OutwardEmissionVelocityInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) OutwardEmissionVelocityInfo::OutwardEmissionVelocityInfo()
+OutwardEmissionVelocityInfo::OutwardEmissionVelocityInfo()
+    : EmissionVelocityInfo()
+    , m_var0()
+    , m_var1()
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x58
-        __emit 0xab
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x53
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x57
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x33
-        __emit 0xdb
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xb8
-        __emit 0x0b
-        __emit 0x11
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x04
-        __emit 0x89
-        __emit 0x19
-        __emit 0x89
-        __emit 0x59
-        __emit 0x04
-        __emit 0x89
-        __emit 0x59
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x10
-        __emit 0x53
-        __emit 0x53
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x24
-        __emit 0x89
-        __emit 0x1f
-        __emit 0x89
-        __emit 0x5f
-        __emit 0x04
-        __emit 0x89
-        __emit 0x5f
-        __emit 0x08
-        __emit 0xe8
-        __emit 0x8e
-        __emit 0xf1
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x53
-        __emit 0x53
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0x83
-        __emit 0xf1
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x5f
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
+    m_var0.setRange(0.0f, 0.0f, GameClientRandomVariable::UNIFORM);
+    m_var1.setRange(0.0f, 0.0f, GameClientRandomVariable::UNIFORM);
 }
 
 // ??0OutwardEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
@@ -24524,89 +24195,11 @@ SphericalEmissionVelocityInfo::SphericalEmissionVelocityInfo(const SphericalEmis
 }
 
 // ??0SphericalEmissionVelocityInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) SphericalEmissionVelocityInfo::SphericalEmissionVelocityInfo()
+SphericalEmissionVelocityInfo::SphericalEmissionVelocityInfo()
+    : EmissionVelocityInfo()
+    , m_var0()
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xd8
-        __emit 0xaa
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x0c
-        __emit 0x0b
-        __emit 0x11
-        __emit 0x01
-        __emit 0x50
-        __emit 0x50
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x01
-        __emit 0x89
-        __emit 0x41
-        __emit 0x04
-        __emit 0x89
-        __emit 0x41
-        __emit 0x08
-        __emit 0xe8
-        __emit 0xbb
-        __emit 0xfa
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
+    m_var0.setRange(0.0f, 0.0f, GameClientRandomVariable::UNIFORM);
 }
 
 // ??0SphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z

@@ -241,7 +241,7 @@ public:
 
 class EmissionVelocityInfo {
 public:
-    EmissionVelocityInfo();
+    EmissionVelocityInfo() {}
     __declspec(nothrow) EmissionVelocityInfo(const EmissionVelocityInfo &that);
     virtual ~EmissionVelocityInfo();
     virtual const char *GetSnapshotName();
