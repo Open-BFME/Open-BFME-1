@@ -739,6 +739,10 @@ template <typename Tag> class ConcreteModuleTemplate;
 // Explicit specializations - MSVC 7.1 does not support partial specializations,
 // so each tag type gets its own full template<> specialization.
 
+#ifndef FXPS_V
+#define FXPS_V
+#endif
+
 template <>
 class ConcreteModuleClass<DefaultModuleTag<0> > {
 private:
@@ -746,21 +750,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<DefaultModuleTag<0> > &getInstance();
-    DefaultModuleTemplate<0> *createTemplate(INI *ini) const;
-    DefaultModuleTemplate<0> *createTemplate() const;
-};
+    FXPS_V DefaultModuleTemplate<0> *createTemplate(INI *ini) const;    FXPS_V DefaultModuleTemplate<0> *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<DefaultModuleTag<0> > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<0> > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<DefaultModuleTag<0> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<0> > &that);
-    const ConcreteModuleClass<DefaultModuleTag<0> > &getClass() const;
-    DefaultModuleTemplate<0> *clone() const;
-    DefaultModule<0> *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<DefaultModuleTag<0> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<0> > &that);
+    FXPS_V const ConcreteModuleClass<DefaultModuleTag<0> > &getClass() const;    FXPS_V DefaultModuleTemplate<0> *clone() const;    FXPS_V DefaultModule<0> *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<DefaultModuleTag<1> > {
@@ -769,21 +767,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<DefaultModuleTag<1> > &getInstance();
-    DefaultModuleTemplate<1> *createTemplate(INI *ini) const;
-    DefaultModuleTemplate<1> *createTemplate() const;
-};
+    FXPS_V DefaultModuleTemplate<1> *createTemplate(INI *ini) const;    FXPS_V DefaultModuleTemplate<1> *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<DefaultModuleTag<1> > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<1> > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<DefaultModuleTag<1> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<1> > &that);
-    const ConcreteModuleClass<DefaultModuleTag<1> > &getClass() const;
-    DefaultModuleTemplate<1> *clone() const;
-    DefaultModule<1> *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<DefaultModuleTag<1> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<1> > &that);
+    FXPS_V const ConcreteModuleClass<DefaultModuleTag<1> > &getClass() const;    FXPS_V DefaultModuleTemplate<1> *clone() const;    FXPS_V DefaultModule<1> *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<DefaultModuleTag<2> > {
@@ -792,21 +784,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<DefaultModuleTag<2> > &getInstance();
-    DefaultModuleTemplate<2> *createTemplate(INI *ini) const;
-    DefaultModuleTemplate<2> *createTemplate() const;
-};
+    FXPS_V DefaultModuleTemplate<2> *createTemplate(INI *ini) const;    FXPS_V DefaultModuleTemplate<2> *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<DefaultModuleTag<2> > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<2> > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<DefaultModuleTag<2> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<2> > &that);
-    const ConcreteModuleClass<DefaultModuleTag<2> > &getClass() const;
-    DefaultModuleTemplate<2> *clone() const;
-    DefaultModule<2> *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<DefaultModuleTag<2> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<2> > &that);
+    FXPS_V const ConcreteModuleClass<DefaultModuleTag<2> > &getClass() const;    FXPS_V DefaultModuleTemplate<2> *clone() const;    FXPS_V DefaultModule<2> *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<DefaultModuleTag<3> > {
@@ -815,21 +801,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<DefaultModuleTag<3> > &getInstance();
-    DefaultModuleTemplate<3> *createTemplate(INI *ini) const;
-    DefaultModuleTemplate<3> *createTemplate() const;
-};
+    FXPS_V DefaultModuleTemplate<3> *createTemplate(INI *ini) const;    FXPS_V DefaultModuleTemplate<3> *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<DefaultModuleTag<3> > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<3> > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<DefaultModuleTag<3> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<3> > &that);
-    const ConcreteModuleClass<DefaultModuleTag<3> > &getClass() const;
-    DefaultModuleTemplate<3> *clone() const;
-    DefaultModule<3> *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<DefaultModuleTag<3> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<3> > &that);
+    FXPS_V const ConcreteModuleClass<DefaultModuleTag<3> > &getClass() const;    FXPS_V DefaultModuleTemplate<3> *clone() const;    FXPS_V DefaultModule<3> *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<DefaultModuleTag<6> > {
@@ -838,21 +818,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<DefaultModuleTag<6> > &getInstance();
-    DefaultModuleTemplate<6> *createTemplate(INI *ini) const;
-    DefaultModuleTemplate<6> *createTemplate() const;
-};
+    FXPS_V DefaultModuleTemplate<6> *createTemplate(INI *ini) const;    FXPS_V DefaultModuleTemplate<6> *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<DefaultModuleTag<6> > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<6> > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<DefaultModuleTag<6> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<6> > &that);
-    const ConcreteModuleClass<DefaultModuleTag<6> > &getClass() const;
-    DefaultModuleTemplate<6> *clone() const;
-    DefaultModule<6> *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<DefaultModuleTag<6> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<6> > &that);
+    FXPS_V const ConcreteModuleClass<DefaultModuleTag<6> > &getClass() const;    FXPS_V DefaultModuleTemplate<6> *clone() const;    FXPS_V DefaultModule<6> *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<DefaultModuleTag<7> > {
@@ -861,21 +835,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<DefaultModuleTag<7> > &getInstance();
-    DefaultModuleTemplate<7> *createTemplate(INI *ini) const;
-    DefaultModuleTemplate<7> *createTemplate() const;
-};
+    FXPS_V DefaultModuleTemplate<7> *createTemplate(INI *ini) const;    FXPS_V DefaultModuleTemplate<7> *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<DefaultModuleTag<7> > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<7> > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<DefaultModuleTag<7> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<7> > &that);
-    const ConcreteModuleClass<DefaultModuleTag<7> > &getClass() const;
-    DefaultModuleTemplate<7> *clone() const;
-    DefaultModule<7> *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<DefaultModuleTag<7> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<7> > &that);
+    FXPS_V const ConcreteModuleClass<DefaultModuleTag<7> > &getClass() const;    FXPS_V DefaultModuleTemplate<7> *clone() const;    FXPS_V DefaultModule<7> *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<OrthoEmissionVelocityModuleTag> {
@@ -884,21 +852,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<OrthoEmissionVelocityModuleTag> &getInstance();
-    OrthoEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;
-    OrthoEmissionVelocityModuleTemplate *createTemplate() const;
-};
+    FXPS_V OrthoEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;    FXPS_V OrthoEmissionVelocityModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &operator=(const ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &that);
-    const ConcreteModuleClass<OrthoEmissionVelocityModuleTag> &getClass() const;
-    OrthoEmissionVelocityModuleTemplate *clone() const;
-    OrthoEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &operator=(const ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &that);
+    FXPS_V const ConcreteModuleClass<OrthoEmissionVelocityModuleTag> &getClass() const;    FXPS_V OrthoEmissionVelocityModuleTemplate *clone() const;    FXPS_V OrthoEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<PointEmissionVolumeModuleTag> {
@@ -907,21 +869,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<PointEmissionVolumeModuleTag> &getInstance();
-    PointEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;
-    PointEmissionVolumeModuleTemplate *createTemplate() const;
-};
+    FXPS_V PointEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;    FXPS_V PointEmissionVolumeModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<PointEmissionVolumeModuleTag> {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<PointEmissionVolumeModuleTag> &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<PointEmissionVolumeModuleTag> &operator=(const ConcreteModuleTemplate<PointEmissionVolumeModuleTag> &that);
-    const ConcreteModuleClass<PointEmissionVolumeModuleTag> &getClass() const;
-    PointEmissionVolumeModuleTemplate *clone() const;
-    PointEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<PointEmissionVolumeModuleTag> &operator=(const ConcreteModuleTemplate<PointEmissionVolumeModuleTag> &that);
+    FXPS_V const ConcreteModuleClass<PointEmissionVolumeModuleTag> &getClass() const;    FXPS_V PointEmissionVolumeModuleTemplate *clone() const;    FXPS_V PointEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
@@ -930,21 +886,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getInstance();
-    BoxEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;
-    BoxEmissionVolumeModuleTemplate *createTemplate() const;
-};
+    FXPS_V BoxEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;    FXPS_V BoxEmissionVolumeModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
-    const ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;
-    BoxEmissionVolumeModuleTemplate *clone() const;
-    BoxEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;    FXPS_V BoxEmissionVolumeModuleTemplate *clone() const;    FXPS_V BoxEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
@@ -953,21 +903,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getInstance();
-    ButterflyDrawModuleTemplate *createTemplate(INI *ini) const;
-    ButterflyDrawModuleTemplate *createTemplate() const;
-};
+    FXPS_V ButterflyDrawModuleTemplate *createTemplate(INI *ini) const;    FXPS_V ButterflyDrawModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
-    const ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;
-    ButterflyDrawModuleTemplate *clone() const;
-    ButterflyDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;    FXPS_V ButterflyDrawModuleTemplate *clone() const;    FXPS_V ButterflyDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
@@ -976,21 +920,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getInstance();
-    CylinderEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;
-    CylinderEmissionVolumeModuleTemplate *createTemplate() const;
-};
+    FXPS_V CylinderEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;    FXPS_V CylinderEmissionVolumeModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
-    const ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;
-    CylinderEmissionVolumeModuleTemplate *clone() const;
-    CylinderEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;    FXPS_V CylinderEmissionVolumeModuleTemplate *clone() const;    FXPS_V CylinderEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
@@ -999,21 +937,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getInstance();
-    CylindricalEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;
-    CylindricalEmissionVelocityModuleTemplate *createTemplate() const;
-};
+    FXPS_V CylindricalEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;    FXPS_V CylindricalEmissionVelocityModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &operator=(const ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
-    const ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getClass() const;
-    CylindricalEmissionVelocityModuleTemplate *clone() const;
-    CylindricalEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &operator=(const ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getClass() const;    FXPS_V CylindricalEmissionVelocityModuleTemplate *clone() const;    FXPS_V CylindricalEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
@@ -1022,21 +954,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getInstance();
-    HemisphericalEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;
-    HemisphericalEmissionVelocityModuleTemplate *createTemplate() const;
-};
+    FXPS_V HemisphericalEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;    FXPS_V HemisphericalEmissionVelocityModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &operator=(const ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
-    const ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getClass() const;
-    HemisphericalEmissionVelocityModuleTemplate *clone() const;
-    HemisphericalEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &operator=(const ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getClass() const;    FXPS_V HemisphericalEmissionVelocityModuleTemplate *clone() const;    FXPS_V HemisphericalEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > {
@@ -1045,21 +971,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &getInstance();
-    LifeEventModuleTemplate *createTemplate(INI *ini) const;
-    LifeEventModuleTemplate *createTemplate() const;
-};
+    FXPS_V LifeEventModuleTemplate *createTemplate(INI *ini) const;    FXPS_V LifeEventModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &operator=(const ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &that);
-    const ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &getClass() const;
-    LifeEventModuleTemplate *clone() const;
-    LifeEventModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &operator=(const ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &getClass() const;    FXPS_V LifeEventModuleTemplate *clone() const;    FXPS_V LifeEventModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
@@ -1068,21 +988,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getInstance();
-    LightningDrawModuleTemplate *createTemplate(INI *ini) const;
-    LightningDrawModuleTemplate *createTemplate() const;
-};
+    FXPS_V LightningDrawModuleTemplate *createTemplate(INI *ini) const;    FXPS_V LightningDrawModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
-    const ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;
-    LightningDrawModuleTemplate *clone() const;
-    LightningDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;    FXPS_V LightningDrawModuleTemplate *clone() const;    FXPS_V LightningDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
@@ -1091,21 +1005,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getInstance();
-    LightningEmissionModuleTemplate *createTemplate(INI *ini) const;
-    LightningEmissionModuleTemplate *createTemplate() const;
-};
+    FXPS_V LightningEmissionModuleTemplate *createTemplate(INI *ini) const;    FXPS_V LightningEmissionModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
-    const ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;
-    LightningEmissionModuleTemplate *clone() const;
-    LightningEmissionModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;    FXPS_V LightningEmissionModuleTemplate *clone() const;    FXPS_V LightningEmissionModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
@@ -1114,21 +1022,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getInstance();
-    LineEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;
-    LineEmissionVolumeModuleTemplate *createTemplate() const;
-};
+    FXPS_V LineEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;    FXPS_V LineEmissionVolumeModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
-    const ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;
-    LineEmissionVolumeModuleTemplate *clone() const;
-    LineEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;    FXPS_V LineEmissionVolumeModuleTemplate *clone() const;    FXPS_V LineEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
@@ -1137,21 +1039,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getInstance();
-    OutwardEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;
-    OutwardEmissionVelocityModuleTemplate *createTemplate() const;
-};
+    FXPS_V OutwardEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;    FXPS_V OutwardEmissionVelocityModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &operator=(const ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
-    const ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getClass() const;
-    OutwardEmissionVelocityModuleTemplate *clone() const;
-    OutwardEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &operator=(const ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getClass() const;    FXPS_V OutwardEmissionVelocityModuleTemplate *clone() const;    FXPS_V OutwardEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
@@ -1160,21 +1056,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getInstance();
-    QuadDrawModuleTemplate *createTemplate(INI *ini) const;
-    QuadDrawModuleTemplate *createTemplate() const;
-};
+    FXPS_V QuadDrawModuleTemplate *createTemplate(INI *ini) const;    FXPS_V QuadDrawModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
-    const ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;
-    QuadDrawModuleTemplate *clone() const;
-    QuadDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;    FXPS_V QuadDrawModuleTemplate *clone() const;    FXPS_V QuadDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
@@ -1183,21 +1073,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getInstance();
-    RenderObjectDrawModuleTemplate *createTemplate(INI *ini) const;
-    RenderObjectDrawModuleTemplate *createTemplate() const;
-};
+    FXPS_V RenderObjectDrawModuleTemplate *createTemplate(INI *ini) const;    FXPS_V RenderObjectDrawModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
-    const ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;
-    RenderObjectDrawModuleTemplate *clone() const;
-    RenderObjectDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;    FXPS_V RenderObjectDrawModuleTemplate *clone() const;    FXPS_V RenderObjectDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > {
@@ -1206,21 +1090,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &getInstance();
-    RenderObjectUpdateModuleTemplate *createTemplate(INI *ini) const;
-    RenderObjectUpdateModuleTemplate *createTemplate() const;
-};
+    FXPS_V RenderObjectUpdateModuleTemplate *createTemplate(INI *ini) const;    FXPS_V RenderObjectUpdateModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &operator=(const ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &that);
-    const ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &getClass() const;
-    RenderObjectUpdateModuleTemplate *clone() const;
-    RenderObjectUpdateModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &operator=(const ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &getClass() const;    FXPS_V RenderObjectUpdateModuleTemplate *clone() const;    FXPS_V RenderObjectUpdateModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
@@ -1229,21 +1107,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getInstance();
-    SphereEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;
-    SphereEmissionVolumeModuleTemplate *createTemplate() const;
-};
+    FXPS_V SphereEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;    FXPS_V SphereEmissionVolumeModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
-    const ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;
-    SphereEmissionVolumeModuleTemplate *clone() const;
-    SphereEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;    FXPS_V SphereEmissionVolumeModuleTemplate *clone() const;    FXPS_V SphereEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
@@ -1252,21 +1124,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getInstance();
-    SphericalEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;
-    SphericalEmissionVelocityModuleTemplate *createTemplate() const;
-};
+    FXPS_V SphericalEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;    FXPS_V SphericalEmissionVelocityModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &operator=(const ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
-    const ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getClass() const;
-    SphericalEmissionVelocityModuleTemplate *clone() const;
-    SphericalEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &operator=(const ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getClass() const;    FXPS_V SphericalEmissionVelocityModuleTemplate *clone() const;    FXPS_V SphericalEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
@@ -1275,21 +1141,15 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getInstance();
-    StreakDrawModuleTemplate *createTemplate(INI *ini) const;
-    StreakDrawModuleTemplate *createTemplate() const;
-};
+    FXPS_V StreakDrawModuleTemplate *createTemplate(INI *ini) const;    FXPS_V StreakDrawModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
-    const ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;
-    StreakDrawModuleTemplate *clone() const;
-    StreakDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;    FXPS_V StreakDrawModuleTemplate *clone() const;    FXPS_V StreakDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 
 template <>
 class ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > {
@@ -1298,19 +1158,13 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &getInstance();
-    TerrainCollisionModuleTemplate *createTemplate(INI *ini) const;
-    TerrainCollisionModuleTemplate *createTemplate() const;
-};
+    FXPS_V TerrainCollisionModuleTemplate *createTemplate(INI *ini) const;    FXPS_V TerrainCollisionModuleTemplate *createTemplate() const;};
 
 template <>
 class ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &that);
-    ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &operator=(const ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &that);
-    const ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &getClass() const;
-    TerrainCollisionModuleTemplate *clone() const;
-    TerrainCollisionModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
+    FXPS_V ~ConcreteModuleTemplate();    ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &operator=(const ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &that);
+    FXPS_V const ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &getClass() const;    FXPS_V TerrainCollisionModuleTemplate *clone() const;    FXPS_V TerrainCollisionModule *createModule(TrackingPtr<ParticleSystem> &sys);};
 } // namespace FXParticleSystem
