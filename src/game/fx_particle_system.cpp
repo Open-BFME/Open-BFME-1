@@ -361,10 +361,6 @@ DefaultAlphaModuleInfo::~DefaultAlphaModuleInfo()
 {
 }
 
-BoxEmissionVolumeInfo::~BoxEmissionVolumeInfo()
-{
-}
-
 __declspec(naked) DefaultAlphaModuleInfo &DefaultAlphaModuleInfo::operator=(const DefaultAlphaModuleInfo &that)
 {
     __asm {
