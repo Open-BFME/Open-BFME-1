@@ -5,6 +5,7 @@ public:
     AsciiString();
     AsciiString(char c);
     AsciiString(const AsciiString &that);
+    AsciiString(const char *str);
     AsciiString(const char *str, int len);
     ~AsciiString();
     AsciiString &operator=(const AsciiString &that);
