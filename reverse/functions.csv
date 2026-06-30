@@ -562,3 +562,5 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getDefault@?$CategoryModuleClassBase@$04$00@FXParticleSystem@@SAABV?$CategoryModuleClass@$04@2@XZ,0x0003BB4C,0x005C16D0,6,src/game/fx_particle_system_category_accessors.cpp,matched,returns the registered default module
 ?getDefault@?$CategoryModuleClassBase@$05$00@FXParticleSystem@@SAABV?$CategoryModuleClass@$05@2@XZ,0x00030AD5,0x005C1770,6,src/game/fx_particle_system_category_accessors.cpp,matched,returns the registered default module
 ?getDefault@?$CategoryModuleClassBase@$06$00@FXParticleSystem@@SAABV?$CategoryModuleClass@$06@2@XZ,0x00007ABD,0x005C1810,6,src/game/fx_particle_system_category_accessors.cpp,matched,returns the registered default module
+ame,export_rva,target_rva,target_size,source,status,notes
+?staticInitModules@FXParticleSystem@@YAXXZ,0x0000261C,0x005EB400,125,src/game/fx_particle_system.cpp,matched,initializes all module category static data

@@ -32,6 +32,7 @@ enum ModuleCategory {
 };
 
 const char *GetKey(ModuleCategory category);
+void staticInitModules();
 
 // Forward declarations for int-based module templates
 template <int Category> class DefaultModule;
