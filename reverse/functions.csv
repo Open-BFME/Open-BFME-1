@@ -494,6 +494,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0AsciiString@@QAE@ABV0@@Z,0x000416AF,0x0005EE50,19,src/game/ascii_string.cpp,matched,AsciiString copy constructor
 ??1AsciiString@@QAE@XZ,0x0000D828,0x0005EE90,5,src/game/ascii_string.cpp,matched,AsciiString destructor
 ??0AsciiString@@QAE@PBD@Z,0x00012C42,0x0005EE70,19,src/game/ascii_string.cpp,matched,AsciiString(const char *)
+??0AsciiString@@QAE@ABV0@HH@Z,0x0000F1C8,0x000DF970,31,src/game/ascii_string.cpp,matched,AsciiString copy substring
 ??0UnicodeString@@QAE@G@Z,0x0002C769,0x007E84E0,18,src/game/unicode_string.cpp,matched,UnicodeString(wchar_t)
 ??9@YA_NABV?$StringBase@D@@0@Z,0x000418C6,0x000A3D50,20,src/game/string_base.cpp,matched,StringBase<char> inequality
 ??6@YAAAVDebug@@AAV0@ABV?$StringBase@D@@@Z,0x00016F86,0x0005F590,52,src/game/string_base.cpp,matched,Debug output for StringBase<char>
