@@ -577,3 +577,5 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0SphereEmissionVolumeInfo@FXParticleSystem@@QAE@XZ,0x0004B2AE,0x005D6120,17,src/game/fx_particle_system.cpp,matched,default constructor initializes base and radius
 ?ACos@@YAMM@Z,0x00873940,0x00873940,10,src/math/trig.cpp,matched,wraps internal acos helper
 ?ASin@@YAMM@Z,0x00873950,0x00873950,10,src/math/trig.cpp,matched,wraps internal asin helper
+?isNone@?$StringBase@D@@QBE_NXZ,0x008881A0,0x008881A0,16,src/game/string_base.cpp,matched,returns true if string equals the global none string
+?isNone@?$StringBase@G@@QBE_NXZ,0x00888A80,0x00888A80,16,src/game/string_base.cpp,matched,returns true if wide string equals the global none string

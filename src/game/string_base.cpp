@@ -37,6 +37,33 @@ const T *StringBase<T>::str() const
     return m_data ? &m_data->data[0] : (const T *)"";
 }
 
+extern "C" void _stringbase_isnone_cmp_char();
+extern "C" void _stringbase_isnone_cmp_wchar();
+
+__declspec(naked) bool StringBase<char>::isNone() const
+{
+    __asm {
+        push 0x01133008
+        call _stringbase_isnone_cmp_char
+        neg eax
+        sbb eax, eax
+        inc eax
+        ret
+    }
+}
+
+__declspec(naked) bool StringBase<wchar_t>::isNone() const
+{
+    __asm {
+        push 0x0113301c
+        call _stringbase_isnone_cmp_wchar
+        neg eax
+        sbb eax, eax
+        inc eax
+        ret
+    }
+}
+
 template <typename T>
 const T *StringBase<T>::find(T c) const
 {

@@ -6,6 +6,7 @@ public:
     void debugIgnoreLeaks();
     bool isEmpty() const;
     bool isNotEmpty() const;
+    bool isNone() const;
     int getLength() const;
     const T *str() const;
     const T *find(T c) const;
