@@ -974,6 +974,24 @@ EmissionVolumeInfo::EmissionVolumeInfo(const EmissionVolumeInfo &that)
     m_flag = that.m_flag;
 }
 
+BoxEmissionVolumeInfo::BoxEmissionVolumeInfo(const BoxEmissionVolumeInfo &that)
+    : EmissionVolumeInfo(that)
+{
+    m_unk[0] = that.m_unk[0];
+    m_unk[1] = that.m_unk[1];
+    m_unk[2] = that.m_unk[2];
+}
+
+CylinderEmissionVolumeInfo::CylinderEmissionVolumeInfo(const CylinderEmissionVolumeInfo &that)
+    : EmissionVolumeInfo(that)
+{
+    m_unk[0] = that.m_unk[0];
+    m_unk[1] = that.m_unk[1];
+    m_unk[2] = that.m_unk[2];
+    m_unk[3] = that.m_unk[3];
+    m_unk[4] = that.m_unk[4];
+}
+
 EmissionVolumeInfo::~EmissionVolumeInfo()
 {
 }

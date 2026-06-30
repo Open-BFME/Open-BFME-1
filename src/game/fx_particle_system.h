@@ -310,7 +310,7 @@ private:
 class EmissionVolumeInfo {
 public:
     EmissionVolumeInfo();
-    EmissionVolumeInfo(const EmissionVolumeInfo &that);
+    __declspec(nothrow) EmissionVolumeInfo(const EmissionVolumeInfo &that);
     virtual ~EmissionVolumeInfo();
     virtual const char *GetSnapshotName();
     virtual void LoadPostProcess();

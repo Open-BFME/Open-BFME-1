@@ -611,6 +611,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0ButterflyDrawModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x0002C732,0x005D8B60,11,src/game/fx_particle_system.cpp,matched,copy constructor sets vtable pointer
 ??0DefaultDrawModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x0003BB0B,0x005D56A0,11,src/game/fx_particle_system.cpp,matched,copy constructor sets vtable pointer
 ??0QuadDrawModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00048AE5,0x005D88B0,11,src/game/fx_particle_system.cpp,matched,copy constructor sets vtable pointer
+??0BoxEmissionVolumeInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00036417,0x005D5E30,45,src/game/fx_particle_system.cpp,matched,
+??0CylinderEmissionVolumeInfo@FXParticleSystem@@QAE@ABV01@@Z,0x0004556B,0x005D6430,57,src/game/fx_particle_system.cpp,matched,
+??0SphereEmissionVolumeInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00032CD1,0x005D6150,33,src/game/fx_particle_system_bulk.cpp,matched,
 ??0ButterflyDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00019CB3,0x005D8CF0,62,src/game/fx_particle_system_bulk.cpp,matched,
 ??0QuadDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00005222,0x005D8A40,62,src/game/fx_particle_system_bulk.cpp,matched,
 ?GetName@FXParticleSystem@@YAPBDW4ModuleCategory@1@@Z,0x00048B58,0x005D4510,12,src/game/fx_particle_system.cpp,matched,returns name for module category
