@@ -528,3 +528,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??6@YAAAVDebug@@AAV0@ABVCoord2D@@@Z,0x000158FC,0x007E7130,72,src/math/coord2d.cpp,matched,Debug output for Coord2D
 ??6@YAAAVDebug@@AAV0@ABVCoord3D@@@Z,0x00005420,0x003D5280,95,src/math/coord3d.cpp,matched,Debug output for Coord3D
 ??6@YAAAVDebug@@AAV0@ABURegion3D@@@Z,0x00041CAE,0x007E73F0,50,src/math/region.cpp,matched,Debug output for Region3D
+??6@YAAAVDebug@@AAV0@ABUICoord2DBase@@@Z,0x0000C82E,0x007E7190,72,src/math/icoord.cpp,matched,Debug output for ICoord2DBase
+??6@YAAAVDebug@@AAV0@ABUICoord3D@@@Z,0x0003B732,0x007E7370,95,src/math/icoord.cpp,matched,Debug output for ICoord3D
+??6@YAAAVDebug@@AAV0@ABUIRegion3D@@@Z,0x000235EC,0x007E7430,50,src/math/region.cpp,matched,Debug output for IRegion3D
