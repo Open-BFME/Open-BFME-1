@@ -1,2205 +1,9 @@
 #include "fx_particle_system.h"
-#include "fx_particle_system_category.h"
-
-struct INI;
-class File;
-class FXList;
-class ParticleSystem;
-template <class T> class TrackingPtr;
 
 namespace FXParticleSystem {
 
-// CategoryModuleClassBase
-// ??0?$CategoryModuleClassBase@$07$0A@@FXParticleSystem@@QAE@ABV?$CategoryModuleClass@$07@1@_N@Z
-__declspec(naked) CategoryModuleClassBase<8, 0>::CategoryModuleClassBase(const CategoryModuleClass<8> &module, bool setDefault)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
-    }
-}
-
-
-// CategoryModuleTemplateBase
-// ??0?$CategoryModuleTemplateBase@$0A@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplateBase<0>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<0> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x60
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x00
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xfc
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$0A@@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<0>::CategoryModuleTemplateBase()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x60
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x00
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xfc
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplateBase@$0A@@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<0>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<0> &that)
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0x60
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x60
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$00@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplateBase<1>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<1> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x78
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x48
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x44
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$00@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<1>::CategoryModuleTemplateBase()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x78
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x48
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x44
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplateBase@$00@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<1>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<1> &that)
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0x78
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x78
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$01@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplateBase<2>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<2> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xe8
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x78
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x74
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$01@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<2>::CategoryModuleTemplateBase()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xe8
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x78
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x74
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplateBase@$01@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<2>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<2> &that)
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0xe8
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$02@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplateBase<3>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<3> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xe4
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xa8
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xa4
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$02@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<3>::CategoryModuleTemplateBase()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xe4
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xa8
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xa4
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplateBase@$02@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<3>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<3> &that)
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0xe4
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xe4
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$03@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplateBase<4>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<4> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xcc
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xd8
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xd4
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$03@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<4>::CategoryModuleTemplateBase()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xcc
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xd8
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xd4
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplateBase@$03@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<4>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<4> &that)
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0xcc
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xcc
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$04@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplateBase<5>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<5> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xac
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x08
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x04
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$04@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<5>::CategoryModuleTemplateBase()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xac
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x08
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x04
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplateBase@$04@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<5>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<5> &that)
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0xac
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xac
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$05@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplateBase<6>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<6> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x7c
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x38
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x34
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$05@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<6>::CategoryModuleTemplateBase()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x7c
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x38
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x34
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplateBase@$05@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<6>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<6> &that)
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0x7c
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x7c
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$06@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplateBase<7>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<7> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x14
-        __emit 0xfa
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x68
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x64
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$06@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<7>::CategoryModuleTemplateBase()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x14
-        __emit 0xfa
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x68
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x64
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplateBase@$06@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<7>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<7> &that)
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0x14
-        __emit 0xfa
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x14
-        __emit 0xfa
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$07@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplateBase<8>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<8> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x5c
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x30
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x2c
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplateBase@$07@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<8>::CategoryModuleTemplateBase()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x5c
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x30
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x2c
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplateBase@$07@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplateBase<8>::CategoryModuleTemplateBase(const CategoryModuleTemplateBase<8> &that)
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0x5c
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x5c
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-template class CategoryModuleTemplateBase<0>;
-template class CategoryModuleTemplateBase<1>;
-template class CategoryModuleTemplateBase<2>;
-template class CategoryModuleTemplateBase<3>;
-template class CategoryModuleTemplateBase<4>;
-template class CategoryModuleTemplateBase<5>;
-template class CategoryModuleTemplateBase<6>;
-template class CategoryModuleTemplateBase<7>;
-template class CategoryModuleTemplateBase<8>;
-
-// CategoryModuleTemplate  
-// ??0?$CategoryModuleTemplate@$0A@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplate<0>::CategoryModuleTemplate(const CategoryModuleTemplate<0> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x56
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0xb4
-        __emit 0x21
-        __emit 0xfe
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x18
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x14
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$0A@@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplate<0>::CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x60
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x18
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x14
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplate@$0A@@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplate<0>::~CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0x60
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x60
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$00@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplate<1>::CategoryModuleTemplate(const CategoryModuleTemplate<1> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x56
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0x8c
-        __emit 0x7b
-        __emit 0xa8
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x60
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x5c
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$00@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplate<1>::CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x78
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x60
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x5c
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplate@$00@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplate<1>::~CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0x78
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x78
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$01@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplate<2>::CategoryModuleTemplate(const CategoryModuleTemplate<2> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x56
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0xf7
-        __emit 0x9d
-        __emit 0xa5
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x90
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x8c
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$01@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplate<2>::CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xe8
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x90
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x8c
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplate@$01@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplate<2>::~CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0xe8
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$02@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplate<3>::CategoryModuleTemplate(const CategoryModuleTemplate<3> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x56
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0xec
-        __emit 0xcf
-        __emit 0xa4
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xc0
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xbc
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$02@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplate<3>::CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xe4
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xc0
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xbc
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplate@$02@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplate<3>::~CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0xe4
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xe4
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$03@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplate<4>::CategoryModuleTemplate(const CategoryModuleTemplate<4> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x56
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0xfd
-        __emit 0xb0
-        __emit 0xa6
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xf0
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xec
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$03@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplate<4>::CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xcc
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xf0
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xec
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplate@$03@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplate<4>::~CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0xcc
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xcc
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$04@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplate<5>::CategoryModuleTemplate(const CategoryModuleTemplate<5> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x56
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0xf1
-        __emit 0xdc
-        __emit 0xa5
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x20
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x1c
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$04@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplate<5>::CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xac
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x20
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x1c
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplate@$04@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplate<5>::~CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0xac
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xac
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$05@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplate<6>::CategoryModuleTemplate(const CategoryModuleTemplate<6> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x56
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0xa9
-        __emit 0xb2
-        __emit 0xa7
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x50
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x4c
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$05@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplate<6>::CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x7c
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x50
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x4c
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplate@$05@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplate<6>::~CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0x7c
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x7c
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$06@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplate<7>::CategoryModuleTemplate(const CategoryModuleTemplate<7> &that)
-{
-    __asm {
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0xbb
-        __emit 0x51
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x47
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0xec
-        __emit 0x58
-        __emit 0xa8
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x94
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0x5f
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x80
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x7c
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$06@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplate<7>::CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x28
-        __emit 0x98
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x14
-        __emit 0xfa
-        __emit 0x10
-        __emit 0x01
-        __emit 0x57
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x68
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x64
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x26
-        __emit 0xd0
-        __emit 0xa7
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x94
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x80
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x7c
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0x5f
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplate@$06@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplate<7>::~CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x41
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x44
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0x14
-        __emit 0xfa
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x14
-        __emit 0xfa
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??4?$CategoryModuleTemplate@$06@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) /* CatT<7> unknown */
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x74
-        __emit 0x12
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x08
-        __emit 0xe8
-        __emit 0xbc
-        __emit 0xa3
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x08
-        __emit 0xe8
-        __emit 0xab
-        __emit 0xa3
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$07@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) CategoryModuleTemplate<8>::CategoryModuleTemplate(const CategoryModuleTemplate<8> &that)
-{
-    __asm {
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0xa0
-        __emit 0xe4
-        __emit 0xfd
-        __emit 0xff
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x47
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x66
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x66
-        __emit 0x89
-        __emit 0x46
-        __emit 0x08
-        __emit 0x5f
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x48
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x44
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$CategoryModuleTemplate@$07@FXParticleSystem@@QAE@XZ
-__declspec(naked) CategoryModuleTemplate<8>::CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x5c
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xb1
-        __emit 0x01
-        __emit 0x88
-        __emit 0x48
-        __emit 0x08
-        __emit 0x88
-        __emit 0x48
-        __emit 0x09
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x48
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x44
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??1?$CategoryModuleTemplate@$07@FXParticleSystem@@UAE@XZ
-__declspec(naked) CategoryModuleTemplate<8>::~CategoryModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0x5c
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x5c
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??4?$CategoryModuleTemplate@$07@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) /* CatT<8> unknown */
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0d
-        __emit 0x8d
-        __emit 0x51
-        __emit 0x08
-        __emit 0x66
-        __emit 0x8b
-        __emit 0x0a
-        __emit 0x66
-        __emit 0x89
-        __emit 0x48
-        __emit 0x08
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x33
-        __emit 0xd2
-        __emit 0x66
-        __emit 0x8b
-        __emit 0x0a
-        __emit 0x66
-        __emit 0x89
-        __emit 0x48
-        __emit 0x08
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-template class CategoryModuleTemplate<0>;
-template class CategoryModuleTemplate<1>;
-template class CategoryModuleTemplate<2>;
-template class CategoryModuleTemplate<3>;
-template class CategoryModuleTemplate<4>;
-template class CategoryModuleTemplate<5>;
-template class CategoryModuleTemplate<6>;
-template class CategoryModuleTemplate<7>;
-template class CategoryModuleTemplate<8>;
-
-// ConcreteModuleClass
 // ??0?$ConcreteModuleClass@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<DefaultModuleTag<0>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<DefaultModuleTag<0> >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -2262,7 +66,7 @@ __declspec(naked) ConcreteModuleClass<DefaultModuleTag<0>>::ConcreteModuleClass(
 }
 
 // ??1?$ConcreteModuleClass@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<DefaultModuleTag<0>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<DefaultModuleTag<0> >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -2271,252 +75,12 @@ __declspec(naked) ConcreteModuleClass<DefaultModuleTag<0>>::~ConcreteModuleClass
         __emit 0x08
         __emit 0x11
         __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ?createTemplate@?$ConcreteModuleClass@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$0A@@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<DefaultModuleTag<0>>::createTemplate(INI *ini)
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x03
-        __emit 0xb7
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x68
-        __emit 0x98
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xdf
-        __emit 0xdc
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xf6
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x48
-        __emit 0xd8
-        __emit 0xa5
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x98
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x94
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0x80
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xae
-        __emit 0x7e
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?createTemplate@?$ConcreteModuleClass@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$0A@@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<DefaultModuleTag<0>>::createTemplate()
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x2b
-        __emit 0xb7
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x68
-        __emit 0x98
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x2f
-        __emit 0xdc
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x9a
-        __emit 0xd7
-        __emit 0xa5
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x98
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x94
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0x80
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
         __emit 0xc3
     }
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<0>> &ConcreteModuleTemplate<DefaultModuleTag<0>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<0> > &ConcreteModuleTemplate<DefaultModuleTag<0> >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -2528,7 +92,7 @@ __declspec(naked) const ConcreteModuleClass<DefaultModuleTag<0>> &ConcreteModule
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<0>> &ConcreteModuleClass<DefaultModuleTag<0>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<0> > &ConcreteModuleClass<DefaultModuleTag<0> >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -2646,7 +210,7 @@ __declspec(naked) const ConcreteModuleClass<DefaultModuleTag<0>> &ConcreteModule
 }
 
 // ??0?$ConcreteModuleClass@V?$DefaultModuleTag@$00@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<DefaultModuleTag<1>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<DefaultModuleTag<1> >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -2709,7 +273,7 @@ __declspec(naked) ConcreteModuleClass<DefaultModuleTag<1>>::ConcreteModuleClass(
 }
 
 // ??1?$ConcreteModuleClass@V?$DefaultModuleTag@$00@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<DefaultModuleTag<1>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<DefaultModuleTag<1> >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -2722,248 +286,8 @@ __declspec(naked) ConcreteModuleClass<DefaultModuleTag<1>>::~ConcreteModuleClass
     }
 }
 
-// ?createTemplate@?$ConcreteModuleClass@V?$DefaultModuleTag@$00@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$00@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<DefaultModuleTag<1>>::createTemplate(INI *ini)
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xb3
-        __emit 0xb6
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x68
-        __emit 0x8c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x0f
-        __emit 0xde
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xf6
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x58
-        __emit 0x2e
-        __emit 0xa3
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x6c
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x68
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0x54
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x20
-        __emit 0x29
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?createTemplate@?$ConcreteModuleClass@V?$DefaultModuleTag@$00@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$00@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<DefaultModuleTag<1>>::createTemplate()
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xdb
-        __emit 0xb6
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x68
-        __emit 0x8c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x5f
-        __emit 0xdd
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xaa
-        __emit 0x2d
-        __emit 0xa3
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x6c
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x68
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0x54
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
-}
-
 // ?getClass@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$00@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$DefaultModuleTag@$00@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<1>> &ConcreteModuleTemplate<DefaultModuleTag<1>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<1> > &ConcreteModuleTemplate<DefaultModuleTag<1> >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -2975,7 +299,7 @@ __declspec(naked) const ConcreteModuleClass<DefaultModuleTag<1>> &ConcreteModule
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$DefaultModuleTag@$00@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<1>> &ConcreteModuleClass<DefaultModuleTag<1>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<1> > &ConcreteModuleClass<DefaultModuleTag<1> >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -3093,7 +417,7 @@ __declspec(naked) const ConcreteModuleClass<DefaultModuleTag<1>> &ConcreteModule
 }
 
 // ??0?$ConcreteModuleClass@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<DefaultModuleTag<2>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<DefaultModuleTag<2> >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -3156,7 +480,7 @@ __declspec(naked) ConcreteModuleClass<DefaultModuleTag<2>>::ConcreteModuleClass(
 }
 
 // ??1?$ConcreteModuleClass@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<DefaultModuleTag<2>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<DefaultModuleTag<2> >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -3169,242 +493,8 @@ __declspec(naked) ConcreteModuleClass<DefaultModuleTag<2>>::~ConcreteModuleClass
     }
 }
 
-// ?createTemplate@?$ConcreteModuleClass@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$01@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<DefaultModuleTag<2>>::createTemplate(INI *ini)
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xa3
-        __emit 0xb7
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x4c
-        __emit 0xe8
-        __emit 0x92
-        __emit 0xda
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xf6
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x8b
-        __emit 0xaa
-        __emit 0xa5
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xf0
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xec
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0xd8
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xdc
-        __emit 0x12
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?createTemplate@?$ConcreteModuleClass@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$01@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<DefaultModuleTag<2>>::createTemplate()
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xcb
-        __emit 0xb7
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x4c
-        __emit 0xe8
-        __emit 0xf2
-        __emit 0xd9
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xed
-        __emit 0xa9
-        __emit 0xa5
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xf0
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xec
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0xd8
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
-}
-
 // ?getClass@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$DefaultModuleTag@$01@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<2>> &ConcreteModuleTemplate<DefaultModuleTag<2>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<2> > &ConcreteModuleTemplate<DefaultModuleTag<2> >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -3416,7 +506,7 @@ __declspec(naked) const ConcreteModuleClass<DefaultModuleTag<2>> &ConcreteModule
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<2>> &ConcreteModuleClass<DefaultModuleTag<2>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<2> > &ConcreteModuleClass<DefaultModuleTag<2> >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -3534,7 +624,7 @@ __declspec(naked) const ConcreteModuleClass<DefaultModuleTag<2>> &ConcreteModule
 }
 
 // ??0?$ConcreteModuleClass@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<DefaultModuleTag<3>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<DefaultModuleTag<3> >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -3597,7 +687,7 @@ __declspec(naked) ConcreteModuleClass<DefaultModuleTag<3>>::ConcreteModuleClass(
 }
 
 // ??1?$ConcreteModuleClass@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<DefaultModuleTag<3>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<DefaultModuleTag<3> >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -3606,246 +696,12 @@ __declspec(naked) ConcreteModuleClass<DefaultModuleTag<3>>::~ConcreteModuleClass
         __emit 0x08
         __emit 0x11
         __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ?createTemplate@?$ConcreteModuleClass@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$02@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<DefaultModuleTag<3>>::createTemplate(INI *ini)
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x53
-        __emit 0xb7
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x28
-        __emit 0xe8
-        __emit 0xb2
-        __emit 0xdb
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xf6
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xe0
-        __emit 0x70
-        __emit 0xa6
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xc4
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xc0
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0xac
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x5d
-        __emit 0x61
-        __emit 0xa4
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?createTemplate@?$ConcreteModuleClass@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$02@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<DefaultModuleTag<3>>::createTemplate()
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x7b
-        __emit 0xb7
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x28
-        __emit 0xe8
-        __emit 0x12
-        __emit 0xdb
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x42
-        __emit 0x70
-        __emit 0xa6
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xc4
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xc0
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0xac
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
         __emit 0xc3
     }
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$DefaultModuleTag@$02@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<3>> &ConcreteModuleTemplate<DefaultModuleTag<3>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<3> > &ConcreteModuleTemplate<DefaultModuleTag<3> >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -3857,7 +713,7 @@ __declspec(naked) const ConcreteModuleClass<DefaultModuleTag<3>> &ConcreteModule
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<3>> &ConcreteModuleClass<DefaultModuleTag<3>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<3> > &ConcreteModuleClass<DefaultModuleTag<3> >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -3975,7 +831,7 @@ __declspec(naked) const ConcreteModuleClass<DefaultModuleTag<3>> &ConcreteModule
 }
 
 // ??0?$ConcreteModuleClass@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<DefaultModuleTag<6>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<DefaultModuleTag<6> >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -4038,7 +894,7 @@ __declspec(naked) ConcreteModuleClass<DefaultModuleTag<6>>::ConcreteModuleClass(
 }
 
 // ??1?$ConcreteModuleClass@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<DefaultModuleTag<6>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<DefaultModuleTag<6> >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -4051,242 +907,8 @@ __declspec(naked) ConcreteModuleClass<DefaultModuleTag<6>>::~ConcreteModuleClass
     }
 }
 
-// ?createTemplate@?$ConcreteModuleClass@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$05@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<DefaultModuleTag<6>>::createTemplate(INI *ini)
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x13
-        __emit 0xb6
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x82
-        __emit 0xe1
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xf6
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x60
-        __emit 0xbe
-        __emit 0xa4
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x0c
-        __emit 0x0e
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x08
-        __emit 0x0e
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0xf4
-        __emit 0x0d
-        __emit 0x11
-        __emit 0x01
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x1b
-        __emit 0x6e
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?createTemplate@?$ConcreteModuleClass@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$05@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<DefaultModuleTag<6>>::createTemplate()
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x3b
-        __emit 0xb6
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0xe2
-        __emit 0xe0
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xc2
-        __emit 0xbd
-        __emit 0xa4
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x0c
-        __emit 0x0e
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x08
-        __emit 0x0e
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0xf4
-        __emit 0x0d
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
-}
-
 // ?getClass@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$DefaultModuleTag@$05@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<6>> &ConcreteModuleTemplate<DefaultModuleTag<6>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<6> > &ConcreteModuleTemplate<DefaultModuleTag<6> >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -4298,7 +920,7 @@ __declspec(naked) const ConcreteModuleClass<DefaultModuleTag<6>> &ConcreteModule
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<6>> &ConcreteModuleClass<DefaultModuleTag<6>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<6> > &ConcreteModuleClass<DefaultModuleTag<6> >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -4416,7 +1038,7 @@ __declspec(naked) const ConcreteModuleClass<DefaultModuleTag<6>> &ConcreteModule
 }
 
 // ??0?$ConcreteModuleClass@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<DefaultModuleTag<7>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<DefaultModuleTag<7> >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -4479,7 +1101,7 @@ __declspec(naked) ConcreteModuleClass<DefaultModuleTag<7>>::ConcreteModuleClass(
 }
 
 // ??1?$ConcreteModuleClass@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<DefaultModuleTag<7>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<DefaultModuleTag<7> >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -4488,246 +1110,12 @@ __declspec(naked) ConcreteModuleClass<DefaultModuleTag<7>>::~ConcreteModuleClass
         __emit 0x08
         __emit 0x11
         __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ?createTemplate@?$ConcreteModuleClass@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$06@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<DefaultModuleTag<7>>::createTemplate(INI *ini)
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xf3
-        __emit 0xb7
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x50
-        __emit 0xe8
-        __emit 0x72
-        __emit 0xd9
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xf6
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x12
-        __emit 0x21
-        __emit 0xa5
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x48
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x44
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0x30
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x9d
-        __emit 0x7a
-        __emit 0xa4
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?createTemplate@?$ConcreteModuleClass@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$06@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<DefaultModuleTag<7>>::createTemplate()
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x1b
-        __emit 0xb8
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xd2
-        __emit 0xd8
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x74
-        __emit 0x20
-        __emit 0xa5
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x48
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x44
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0x30
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
         __emit 0xc3
     }
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$DefaultModuleTag@$06@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<7>> &ConcreteModuleTemplate<DefaultModuleTag<7>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<7> > &ConcreteModuleTemplate<DefaultModuleTag<7> >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -4739,7 +1127,7 @@ __declspec(naked) const ConcreteModuleClass<DefaultModuleTag<7>> &ConcreteModule
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<7>> &ConcreteModuleClass<DefaultModuleTag<7>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<DefaultModuleTag<7> > &ConcreteModuleClass<DefaultModuleTag<7> >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -4857,7 +1245,7 @@ __declspec(naked) const ConcreteModuleClass<DefaultModuleTag<7>> &ConcreteModule
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -4915,7 +1303,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KE
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -4929,7 +1317,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KE
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVRenderObjectUpdateModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>>::createTemplate(INI *ini)
+__declspec(naked) RenderObjectUpdateModuleTemplate *ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -5065,7 +1453,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<2, REN
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVRenderObjectUpdateModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>>::createTemplate()
+__declspec(naked) RenderObjectUpdateModuleTemplate *ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -5169,7 +1557,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<2, REN
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>> &ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -5181,7 +1569,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MOD
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>> &ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -5292,7 +1680,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MOD
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -5350,7 +1738,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -5364,7 +1752,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVCylindricalEmissionVelocityModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::createTemplate(INI *ini)
+__declspec(naked) CylindricalEmissionVelocityModuleTemplate *ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -5497,7 +1885,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, CYL
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVCylindricalEmissionVelocityModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::createTemplate()
+__declspec(naked) CylindricalEmissionVelocityModuleTemplate *ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -5598,7 +1986,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, CYL
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -5610,7 +1998,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VE
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -5721,7 +2109,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VE
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -5779,7 +2167,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCI
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -5793,7 +2181,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCI
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVHemisphericalEmissionVelocityModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::createTemplate(INI *ini)
+__declspec(naked) HemisphericalEmissionVelocityModuleTemplate *ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -5926,7 +2314,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, HEM
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVHemisphericalEmissionVelocityModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::createTemplate()
+__declspec(naked) HemisphericalEmissionVelocityModuleTemplate *ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -6027,7 +2415,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, HEM
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -6039,7 +2427,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -6150,7 +2538,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -6208,7 +2596,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MOD
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -6222,7 +2610,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MOD
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVOutwardEmissionVelocityModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::createTemplate(INI *ini)
+__declspec(naked) OutwardEmissionVelocityModuleTemplate *ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -6355,7 +2743,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, OUT
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVOutwardEmissionVelocityModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::createTemplate()
+__declspec(naked) OutwardEmissionVelocityModuleTemplate *ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -6456,7 +2844,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, OUT
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -6468,7 +2856,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCI
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -6579,7 +2967,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCI
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -6637,7 +3025,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_M
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -6651,7 +3039,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_M
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVSphericalEmissionVelocityModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::createTemplate(INI *ini)
+__declspec(naked) SphericalEmissionVelocityModuleTemplate *ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -6784,7 +3172,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, SPH
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVSphericalEmissionVelocityModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::createTemplate()
+__declspec(naked) SphericalEmissionVelocityModuleTemplate *ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -6885,7 +3273,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<4, SPH
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -6897,7 +3285,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELO
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -7008,7 +3396,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELO
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$04$E?BOX_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?BOX_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVBoxEmissionVolumeModule@2@VBoxEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -7066,7 +3454,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KE
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$04$E?BOX_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?BOX_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVBoxEmissionVolumeModule@2@VBoxEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -7080,7 +3468,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KE
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$04$E?BOX_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?BOX_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVBoxEmissionVolumeModule@2@VBoxEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVBoxEmissionVolumeModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createTemplate(INI *ini)
+__declspec(naked) BoxEmissionVolumeModuleTemplate *ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -7218,7 +3606,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, BOX
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$04$E?BOX_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?BOX_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVBoxEmissionVolumeModule@2@VBoxEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVBoxEmissionVolumeModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createTemplate()
+__declspec(naked) BoxEmissionVolumeModuleTemplate *ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -7291,7 +3679,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, BOX
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?BOX_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?BOX_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVBoxEmissionVolumeModule@2@VBoxEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$04$E?BOX_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?BOX_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVBoxEmissionVolumeModule@2@VBoxEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -7303,7 +3691,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MOD
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$04$E?BOX_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?BOX_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVBoxEmissionVolumeModule@2@VBoxEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -7414,7 +3802,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MOD
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -7472,7 +3860,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODU
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -7486,7 +3874,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODU
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVCylinderEmissionVolumeModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createTemplate(INI *ini)
+__declspec(naked) CylinderEmissionVolumeModuleTemplate *ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -7630,7 +4018,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, CYL
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVCylinderEmissionVolumeModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createTemplate()
+__declspec(naked) CylinderEmissionVolumeModuleTemplate *ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -7709,7 +4097,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, CYL
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -7721,7 +4109,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUM
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -7832,7 +4220,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUM
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -7890,7 +4278,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -7904,7 +4292,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVLightningEmissionModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createTemplate(INI *ini)
+__declspec(naked) LightningEmissionModuleTemplate *ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -8040,7 +4428,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, LIG
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVLightningEmissionModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createTemplate()
+__declspec(naked) LightningEmissionModuleTemplate *ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -8144,7 +4532,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, LIG
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -8156,7 +4544,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODU
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -8267,7 +4655,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODU
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -8325,7 +4713,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_K
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -8339,7 +4727,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_K
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVLineEmissionVolumeModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createTemplate(INI *ini)
+__declspec(naked) LineEmissionVolumeModuleTemplate *ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -8486,7 +4874,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, LIN
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVLineEmissionVolumeModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createTemplate()
+__declspec(naked) LineEmissionVolumeModuleTemplate *ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -8568,7 +4956,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, LIN
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -8580,7 +4968,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MO
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -8691,7 +5079,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MO
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -8749,7 +5137,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -8763,7 +5151,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVSphereEmissionVolumeModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createTemplate(INI *ini)
+__declspec(naked) SphereEmissionVolumeModuleTemplate *ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -8895,7 +5283,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, SPH
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVSphereEmissionVolumeModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createTemplate()
+__declspec(naked) SphereEmissionVolumeModuleTemplate *ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -8962,7 +5350,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<5, SPH
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -8974,7 +5362,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -9085,7 +5473,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$05$E?BUTTERFLY_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?BUTTERFLY_DRAW_MODULE_NAME@2@3QBDBVButterflyDrawModule@2@VButterflyDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -9143,7 +5531,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BU
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$05$E?BUTTERFLY_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?BUTTERFLY_DRAW_MODULE_NAME@2@3QBDBVButterflyDrawModule@2@VButterflyDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -9157,7 +5545,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BU
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$05$E?BUTTERFLY_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?BUTTERFLY_DRAW_MODULE_NAME@2@3QBDBVButterflyDrawModule@2@VButterflyDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVButterflyDrawModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createTemplate(INI *ini)
+__declspec(naked) ButterflyDrawModuleTemplate *ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -9290,7 +5678,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, BUT
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$05$E?BUTTERFLY_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?BUTTERFLY_DRAW_MODULE_NAME@2@3QBDBVButterflyDrawModule@2@VButterflyDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVButterflyDrawModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createTemplate()
+__declspec(naked) ButterflyDrawModuleTemplate *ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -9391,7 +5779,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, BUT
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?BUTTERFLY_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?BUTTERFLY_DRAW_MODULE_NAME@2@3QBDBVButterflyDrawModule@2@VButterflyDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$05$E?BUTTERFLY_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?BUTTERFLY_DRAW_MODULE_NAME@2@3QBDBVButterflyDrawModule@2@VButterflyDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -9403,7 +5791,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_K
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$05$E?BUTTERFLY_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?BUTTERFLY_DRAW_MODULE_NAME@2@3QBDBVButterflyDrawModule@2@VButterflyDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -9514,7 +5902,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_K
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$05$E?LIGHTNING_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_DRAW_MODULE_NAME@2@3QBDBVLightningDrawModule@2@VLightningDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -9572,7 +5960,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LI
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$05$E?LIGHTNING_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_DRAW_MODULE_NAME@2@3QBDBVLightningDrawModule@2@VLightningDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -9586,7 +5974,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LI
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$05$E?LIGHTNING_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_DRAW_MODULE_NAME@2@3QBDBVLightningDrawModule@2@VLightningDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVLightningDrawModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createTemplate(INI *ini)
+__declspec(naked) LightningDrawModuleTemplate *ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -9719,7 +6107,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, LIG
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$05$E?LIGHTNING_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_DRAW_MODULE_NAME@2@3QBDBVLightningDrawModule@2@VLightningDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVLightningDrawModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createTemplate()
+__declspec(naked) LightningDrawModuleTemplate *ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -9820,7 +6208,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, LIG
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?LIGHTNING_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_DRAW_MODULE_NAME@2@3QBDBVLightningDrawModule@2@VLightningDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$05$E?LIGHTNING_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_DRAW_MODULE_NAME@2@3QBDBVLightningDrawModule@2@VLightningDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -9832,7 +6220,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_K
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$05$E?LIGHTNING_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_DRAW_MODULE_NAME@2@3QBDBVLightningDrawModule@2@VLightningDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -9943,7 +6331,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_K
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$05$E?QUAD_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?QUAD_DRAW_MODULE_NAME@2@3QBDBVQuadDrawModule@2@VQuadDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -10001,7 +6389,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DR
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$05$E?QUAD_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?QUAD_DRAW_MODULE_NAME@2@3QBDBVQuadDrawModule@2@VQuadDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -10015,7 +6403,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DR
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$05$E?QUAD_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?QUAD_DRAW_MODULE_NAME@2@3QBDBVQuadDrawModule@2@VQuadDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVQuadDrawModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createTemplate(INI *ini)
+__declspec(naked) QuadDrawModuleTemplate *ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -10148,7 +6536,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, QUA
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$05$E?QUAD_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?QUAD_DRAW_MODULE_NAME@2@3QBDBVQuadDrawModule@2@VQuadDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVQuadDrawModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createTemplate()
+__declspec(naked) QuadDrawModuleTemplate *ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -10249,7 +6637,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, QUA
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?QUAD_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?QUAD_DRAW_MODULE_NAME@2@3QBDBVQuadDrawModule@2@VQuadDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$05$E?QUAD_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?QUAD_DRAW_MODULE_NAME@2@3QBDBVQuadDrawModule@2@VQuadDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -10261,7 +6649,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, Q
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$05$E?QUAD_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?QUAD_DRAW_MODULE_NAME@2@3QBDBVQuadDrawModule@2@VQuadDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -10372,7 +6760,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, Q
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -10430,7 +6818,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY,
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -10444,7 +6832,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY,
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVRenderObjectDrawModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createTemplate(INI *ini)
+__declspec(naked) RenderObjectDrawModuleTemplate *ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -10577,7 +6965,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, REN
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVRenderObjectDrawModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createTemplate()
+__declspec(naked) RenderObjectDrawModuleTemplate *ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -10678,7 +7066,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, REN
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -10690,7 +7078,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODUL
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -10801,7 +7189,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODUL
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -10859,7 +7247,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREA
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -10873,7 +7261,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREA
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVStreakDrawModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createTemplate(INI *ini)
+__declspec(naked) StreakDrawModuleTemplate *ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -11006,7 +7394,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, STR
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVStreakDrawModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createTemplate()
+__declspec(naked) StreakDrawModuleTemplate *ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -11107,7 +7495,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<6, STR
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -11119,7 +7507,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY,
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -11230,7 +7618,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY,
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -11288,7 +7676,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_E
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -11302,7 +7690,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_E
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVLifeEventModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>>::createTemplate(INI *ini)
+__declspec(naked) LifeEventModuleTemplate *ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -11435,7 +7823,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<8, LIF
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVLifeEventModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>>::createTemplate()
+__declspec(naked) LifeEventModuleTemplate *ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -11536,7 +7924,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<8, LIF
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>> &ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -11548,7 +7936,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, 
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>> &ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -11659,7 +8047,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, 
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>>::ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::ConcreteModuleClass()
 {
     __asm {
         __emit 0x8b
@@ -11717,7 +8105,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY,
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>>::~ConcreteModuleClass()
+__declspec(naked) ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::~ConcreteModuleClass()
 {
     __asm {
         __emit 0xc7
@@ -11731,7 +8119,7 @@ __declspec(naked) ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY,
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVTerrainCollisionModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>>::createTemplate(INI *ini)
+__declspec(naked) TerrainCollisionModuleTemplate *ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -11864,7 +8252,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<8, TER
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVTerrainCollisionModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>>::createTemplate()
+__declspec(naked) TerrainCollisionModuleTemplate *ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -11965,7 +8353,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<ModuleTag<8, TER
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>> &ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>>::getClass() const
+__declspec(naked) const ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::getClass() const
 {
     __asm {
         __emit 0xe9
@@ -11977,7 +8365,7 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODUL
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>> &ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>>::getInstance()
+__declspec(naked) const ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::getInstance()
 {
     __asm {
         __emit 0x8a
@@ -12165,7 +8553,7 @@ __declspec(naked) ConcreteModuleClass<OrthoEmissionVelocityModuleTag>::~Concrete
 }
 
 // ?createTemplate@?$ConcreteModuleClass@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@UBEPAVOrthoEmissionVelocityModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<OrthoEmissionVelocityModuleTag>::createTemplate(INI *ini)
+__declspec(naked) OrthoEmissionVelocityModuleTemplate *ConcreteModuleClass<OrthoEmissionVelocityModuleTag>::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -12298,7 +8686,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<OrthoEmissionVel
 }
 
 // ?createTemplate@?$ConcreteModuleClass@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@UBEPAVOrthoEmissionVelocityModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<OrthoEmissionVelocityModuleTag>::createTemplate()
+__declspec(naked) OrthoEmissionVelocityModuleTemplate *ConcreteModuleClass<OrthoEmissionVelocityModuleTag>::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -12606,7 +8994,7 @@ __declspec(naked) ConcreteModuleClass<PointEmissionVolumeModuleTag>::~ConcreteMo
 }
 
 // ?createTemplate@?$ConcreteModuleClass@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@UBEPAVPointEmissionVolumeModuleTemplate@2@PAVINI@@@Z
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<PointEmissionVolumeModuleTag>::createTemplate(INI *ini)
+__declspec(naked) PointEmissionVolumeModuleTemplate *ConcreteModuleClass<PointEmissionVolumeModuleTag>::createTemplate(INI *ini) const
 {
     __asm {
         __emit 0x6a
@@ -12735,7 +9123,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<PointEmissionVol
 }
 
 // ?createTemplate@?$ConcreteModuleClass@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@UBEPAVPointEmissionVolumeModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleClass<PointEmissionVolumeModuleTag>::createTemplate()
+__declspec(naked) PointEmissionVolumeModuleTemplate *ConcreteModuleClass<PointEmissionVolumeModuleTag>::createTemplate() const
 {
     __asm {
         __emit 0x6a
@@ -12927,35 +9315,8 @@ __declspec(naked) const ConcreteModuleClass<PointEmissionVolumeModuleTag> &Concr
     }
 }
 
-template class ConcreteModuleClass<DefaultModuleTag<0>>;
-template class ConcreteModuleClass<DefaultModuleTag<1>>;
-template class ConcreteModuleClass<DefaultModuleTag<2>>;
-template class ConcreteModuleClass<DefaultModuleTag<3>>;
-template class ConcreteModuleClass<DefaultModuleTag<6>>;
-template class ConcreteModuleClass<DefaultModuleTag<7>>;
-template class ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>>;
-template class ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>;
-template class ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>;
-template class ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>;
-template class ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>;
-template class ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>;
-template class ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>;
-template class ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>;
-template class ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>;
-template class ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>;
-template class ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>;
-template class ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>;
-template class ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>;
-template class ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>;
-template class ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>;
-template class ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>>;
-template class ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>>;
-template class ConcreteModuleClass<OrthoEmissionVelocityModuleTag>;
-template class ConcreteModuleClass<PointEmissionVolumeModuleTag>;
-
-// ConcreteModuleTemplate
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<0>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<0>> &that)
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<0> >::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<0> > &that)
 {
     __asm {
         __emit 0x8b
@@ -13001,7 +9362,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<0>>::ConcreteModuleTem
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<0>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<0> >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -13040,7 +9401,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<0>>::ConcreteModuleTem
 }
 
 // ??1?$ConcreteModuleTemplate@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<0>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<0> >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -13097,7 +9458,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<0>>::~ConcreteModuleTe
 }
 
 // ??4?$ConcreteModuleTemplate@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<0>> &ConcreteModuleTemplate<DefaultModuleTag<0>>::operator=(const ConcreteModuleTemplate<DefaultModuleTag<0>> &that)
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<0> > &ConcreteModuleTemplate<DefaultModuleTag<0> >::operator=(const ConcreteModuleTemplate<DefaultModuleTag<0> > &that)
 {
     __asm {
         __emit 0x8b
@@ -13149,49 +9510,8 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<0>> &ConcreteModuleTem
     }
 }
 
-// ?clone@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$0A@@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<DefaultModuleTag<0>>::clone() const
-{
-    __asm {
-        __emit 0x56
-        __emit 0x68
-        __emit 0x98
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0xd3
-        __emit 0x52
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x0a
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0xfe
-        __emit 0x03
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x5e
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x5e
-        __emit 0xc3
-    }
-}
-
 // ?createModule@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@UAEPAV?$DefaultModule@$0A@@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<DefaultModuleTag<0>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<DefaultModuleTag<0> >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -13314,7 +9634,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<DefaultModuleTag<0>>:
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$00@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<1>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<1>> &that)
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<1> >::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<1> > &that)
 {
     __asm {
         __emit 0x8b
@@ -13360,7 +9680,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<1>>::ConcreteModuleTem
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$00@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<1>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<1> >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -13399,7 +9719,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<1>>::ConcreteModuleTem
 }
 
 // ??1?$ConcreteModuleTemplate@V?$DefaultModuleTag@$00@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<1>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<1> >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -13456,7 +9776,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<1>>::~ConcreteModuleTe
 }
 
 // ??4?$ConcreteModuleTemplate@V?$DefaultModuleTag@$00@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<1>> &ConcreteModuleTemplate<DefaultModuleTag<1>>::operator=(const ConcreteModuleTemplate<DefaultModuleTag<1>> &that)
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<1> > &ConcreteModuleTemplate<DefaultModuleTag<1> >::operator=(const ConcreteModuleTemplate<DefaultModuleTag<1> > &that)
 {
     __asm {
         __emit 0x8b
@@ -13508,49 +9828,8 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<1>> &ConcreteModuleTem
     }
 }
 
-// ?clone@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$00@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$00@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<DefaultModuleTag<1>>::clone() const
-{
-    __asm {
-        __emit 0x56
-        __emit 0x68
-        __emit 0x8c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0x03
-        __emit 0x53
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x0a
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0x1e
-        __emit 0xa7
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x5e
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x5e
-        __emit 0xc3
-    }
-}
-
 // ?createModule@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$00@FXParticleSystem@@@FXParticleSystem@@UAEPAV?$DefaultModule@$00@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<DefaultModuleTag<1>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) DefaultModule<1> *ConcreteModuleTemplate<DefaultModuleTag<1> >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -13673,7 +9952,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<DefaultModuleTag<1>>:
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<2>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<2>> &that)
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<2> >::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<2> > &that)
 {
     __asm {
         __emit 0x8b
@@ -13719,7 +9998,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<2>>::ConcreteModuleTem
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<2>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<2> >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -13758,7 +10037,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<2>>::ConcreteModuleTem
 }
 
 // ??1?$ConcreteModuleTemplate@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<2>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<2> >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -13815,7 +10094,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<2>>::~ConcreteModuleTe
 }
 
 // ??4?$ConcreteModuleTemplate@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<2>> &ConcreteModuleTemplate<DefaultModuleTag<2>>::operator=(const ConcreteModuleTemplate<DefaultModuleTag<2>> &that)
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<2> > &ConcreteModuleTemplate<DefaultModuleTag<2> >::operator=(const ConcreteModuleTemplate<DefaultModuleTag<2> > &that)
 {
     __asm {
         __emit 0x8b
@@ -13867,46 +10146,8 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<2>> &ConcreteModuleTem
     }
 }
 
-// ?clone@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$01@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<DefaultModuleTag<2>>::clone() const
-{
-    __asm {
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x4c
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0x56
-        __emit 0x52
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x0a
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0x65
-        __emit 0x94
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x5e
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x5e
-        __emit 0xc3
-    }
-}
-
 // ?createModule@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@UAEPAV?$DefaultModule@$01@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<DefaultModuleTag<2>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) DefaultModule<2> *ConcreteModuleTemplate<DefaultModuleTag<2> >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -14026,7 +10267,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<DefaultModuleTag<2>>:
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<3>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<3>> &that)
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<3> >::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<3> > &that)
 {
     __asm {
         __emit 0x8b
@@ -14072,7 +10313,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<3>>::ConcreteModuleTem
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<3>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<3> >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -14111,7 +10352,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<3>>::ConcreteModuleTem
 }
 
 // ??1?$ConcreteModuleTemplate@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<3>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<3> >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -14168,7 +10409,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<3>>::~ConcreteModuleTe
 }
 
 // ??4?$ConcreteModuleTemplate@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<3>> &ConcreteModuleTemplate<DefaultModuleTag<3>>::operator=(const ConcreteModuleTemplate<DefaultModuleTag<3>> &that)
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<3> > &ConcreteModuleTemplate<DefaultModuleTag<3> >::operator=(const ConcreteModuleTemplate<DefaultModuleTag<3> > &that)
 {
     __asm {
         __emit 0x8b
@@ -14248,73 +10489,8 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<3>> &ConcreteModuleTem
     }
 }
 
-// ?clone@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$02@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<DefaultModuleTag<3>>::clone() const
-{
-    __asm {
-        __emit 0x56
-        __emit 0x57
-        __emit 0x6a
-        __emit 0x28
-        __emit 0x8b
-        __emit 0xf9
-        __emit 0xe8
-        __emit 0xa5
-        __emit 0x52
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x74
-        __emit 0x21
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xaa
-        __emit 0x7e
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x5f
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xc4
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xc0
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0xac
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc3
-        __emit 0x5f
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x5e
-        __emit 0xc3
-    }
-}
-
 // ?createModule@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@UAEPAV?$DefaultModule@$02@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<DefaultModuleTag<3>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) DefaultModule<3> *ConcreteModuleTemplate<DefaultModuleTag<3> >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -14434,7 +10610,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<DefaultModuleTag<3>>:
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<6>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<6>> &that)
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<6> >::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<6> > &that)
 {
     __asm {
         __emit 0x8b
@@ -14480,7 +10656,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<6>>::ConcreteModuleTem
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<6>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<6> >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -14519,7 +10695,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<6>>::ConcreteModuleTem
 }
 
 // ??1?$ConcreteModuleTemplate@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<6>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<6> >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -14576,7 +10752,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<6>>::~ConcreteModuleTe
 }
 
 // ??4?$ConcreteModuleTemplate@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<6>> &ConcreteModuleTemplate<DefaultModuleTag<6>>::operator=(const ConcreteModuleTemplate<DefaultModuleTag<6>> &that)
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<6> > &ConcreteModuleTemplate<DefaultModuleTag<6> >::operator=(const ConcreteModuleTemplate<DefaultModuleTag<6> > &that)
 {
     __asm {
         __emit 0x8b
@@ -14587,46 +10763,8 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<6>> &ConcreteModuleTem
     }
 }
 
-// ?clone@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$05@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<DefaultModuleTag<6>>::clone() const
-{
-    __asm {
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0x36
-        __emit 0x72
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x0a
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0xf3
-        __emit 0x00
-        __emit 0xa4
-        __emit 0xff
-        __emit 0x5e
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x5e
-        __emit 0xc3
-    }
-}
-
 // ?createModule@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@UAEPAV?$DefaultModule@$05@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<DefaultModuleTag<6>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) DefaultModule<6> *ConcreteModuleTemplate<DefaultModuleTag<6> >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -14739,7 +10877,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<DefaultModuleTag<6>>:
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<7>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<7>> &that)
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<7> >::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<7> > &that)
 {
     __asm {
         __emit 0x8b
@@ -14785,7 +10923,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<7>>::ConcreteModuleTem
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<7>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<7> >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -14824,7 +10962,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<7>>::ConcreteModuleTem
 }
 
 // ??1?$ConcreteModuleTemplate@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<7>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<7> >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -14881,7 +11019,7 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<7>>::~ConcreteModuleTe
 }
 
 // ??4?$ConcreteModuleTemplate@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<7>> &ConcreteModuleTemplate<DefaultModuleTag<7>>::operator=(const ConcreteModuleTemplate<DefaultModuleTag<7>> &that)
+__declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<7> > &ConcreteModuleTemplate<DefaultModuleTag<7> >::operator=(const ConcreteModuleTemplate<DefaultModuleTag<7> > &that)
 {
     __asm {
         __emit 0x8b
@@ -14933,46 +11071,8 @@ __declspec(naked) ConcreteModuleTemplate<DefaultModuleTag<7>> &ConcreteModuleTem
     }
 }
 
-// ?clone@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@UBEPAV?$DefaultModuleTemplate@$06@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<DefaultModuleTag<7>>::clone() const
-{
-    __asm {
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0x26
-        __emit 0x52
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x0a
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0xc3
-        __emit 0xd0
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x5e
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x5e
-        __emit 0xc3
-    }
-}
-
 // ?createModule@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@UAEPAV?$DefaultModule@$06@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<DefaultModuleTag<7>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) DefaultModule<7> *ConcreteModuleTemplate<DefaultModuleTag<7> >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -15092,7 +11192,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<DefaultModuleTag<7>>:
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &that)
 {
     __asm {
         __emit 0x8b
@@ -15138,7 +11238,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -15177,7 +11277,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -15234,7 +11334,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>> &ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>>::operator=(const ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::operator=(const ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &that)
 {
     __asm {
         __emit 0x8b
@@ -15287,7 +11387,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVRenderObjectUpdateModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>>::clone() const
+__declspec(naked) RenderObjectUpdateModuleTemplate *ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::clone() const
 {
     __asm {
         __emit 0x56
@@ -15328,7 +11428,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<2, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVRenderObjectUpdateModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) RenderObjectUpdateModule *ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -15451,7 +11551,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<2, RENDEROB
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -15497,7 +11597,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOC
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -15536,7 +11636,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOC
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -15593,7 +11693,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOC
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::operator=(const ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::operator=(const ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -15668,7 +11768,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOC
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVCylindricalEmissionVelocityModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::clone() const
+__declspec(naked) CylindricalEmissionVelocityModuleTemplate *ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::clone() const
 {
     __asm {
         __emit 0x56
@@ -15706,7 +11806,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<4, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVCylindricalEmissionVelocityModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) CylindricalEmissionVelocityModule *ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x56
@@ -15780,7 +11880,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<4, CYLINDRI
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -15826,7 +11926,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VEL
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -15865,7 +11965,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VEL
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -15922,7 +12022,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VEL
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::operator=(const ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::operator=(const ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -15973,7 +12073,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VEL
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVHemisphericalEmissionVelocityModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::clone() const
+__declspec(naked) HemisphericalEmissionVelocityModuleTemplate *ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::clone() const
 {
     __asm {
         __emit 0x56
@@ -16011,7 +12111,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<4, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVHemisphericalEmissionVelocityModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) HemisphericalEmissionVelocityModule *ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x56
@@ -16085,7 +12185,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<4, HEMISPHE
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -16131,7 +12231,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -16170,7 +12270,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -16227,7 +12327,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::operator=(const ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::operator=(const ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -16302,7 +12402,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVOutwardEmissionVelocityModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::clone() const
+__declspec(naked) OutwardEmissionVelocityModuleTemplate *ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::clone() const
 {
     __asm {
         __emit 0x56
@@ -16340,7 +12440,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<4, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVOutwardEmissionVelocityModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) OutwardEmissionVelocityModule *ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x56
@@ -16414,7 +12514,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<4, OUTWARD_
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -16460,7 +12560,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCIT
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -16499,7 +12599,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCIT
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -16556,7 +12656,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCIT
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::operator=(const ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::operator=(const ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -16607,7 +12707,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCIT
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVSphericalEmissionVelocityModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::clone() const
+__declspec(naked) SphericalEmissionVelocityModuleTemplate *ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::clone() const
 {
     __asm {
         __emit 0x56
@@ -16645,7 +12745,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<4, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVSphericalEmissionVelocityModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) SphericalEmissionVelocityModule *ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x56
@@ -16719,7 +12819,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<4, SPHERICA
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?BOX_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?BOX_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVBoxEmissionVolumeModule@2@VBoxEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -16765,7 +12865,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?BOX_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?BOX_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVBoxEmissionVolumeModule@2@VBoxEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x8b
@@ -16823,7 +12923,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?BOX_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?BOX_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVBoxEmissionVolumeModule@2@VBoxEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -16880,7 +12980,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?BOX_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?BOX_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVBoxEmissionVolumeModule@2@VBoxEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::operator=(const ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::operator=(const ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -16937,7 +13037,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?BOX_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?BOX_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVBoxEmissionVolumeModule@2@VBoxEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVBoxEmissionVolumeModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::clone() const
+__declspec(naked) BoxEmissionVolumeModuleTemplate *ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::clone() const
 {
     __asm {
         __emit 0x56
@@ -17002,7 +13102,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<5, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?BOX_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?BOX_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVBoxEmissionVolumeModule@2@VBoxEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVBoxEmissionVolumeModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) BoxEmissionVolumeModule *ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x56
@@ -17083,7 +13183,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<5, BOX_EMIS
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -17129,7 +13229,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_M
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x8b
@@ -17193,7 +13293,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_M
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -17250,7 +13350,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_M
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::operator=(const ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::operator=(const ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -17319,7 +13419,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_M
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVCylinderEmissionVolumeModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::clone() const
+__declspec(naked) CylinderEmissionVolumeModuleTemplate *ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::clone() const
 {
     __asm {
         __emit 0x56
@@ -17384,7 +13484,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<5, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVCylinderEmissionVolumeModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) CylinderEmissionVolumeModule *ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x56
@@ -17465,7 +13565,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<5, CYLINDER
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -17548,7 +13648,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -17587,7 +13687,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -17644,7 +13744,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::operator=(const ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::operator=(const ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -17697,7 +13797,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVLightningEmissionModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::clone() const
+__declspec(naked) LightningEmissionModuleTemplate *ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::clone() const
 {
     __asm {
         __emit 0x56
@@ -17738,7 +13838,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<5, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVLightningEmissionModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) LightningEmissionModule *ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -17861,7 +13961,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<5, LIGHTNIN
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -17907,7 +14007,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODUL
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x8b
@@ -17974,7 +14074,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODUL
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -18031,7 +14131,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODUL
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::operator=(const ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::operator=(const ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -18112,7 +14212,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODUL
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVLineEmissionVolumeModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::clone() const
+__declspec(naked) LineEmissionVolumeModuleTemplate *ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::clone() const
 {
     __asm {
         __emit 0x56
@@ -18177,7 +14277,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<5, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVLineEmissionVolumeModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) LineEmissionVolumeModule *ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x56
@@ -18258,7 +14358,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<5, LINE_EMI
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -18304,7 +14404,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MOD
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x8b
@@ -18356,7 +14456,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MOD
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -18413,7 +14513,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MOD
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::operator=(const ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::operator=(const ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -18465,7 +14565,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MOD
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVSphereEmissionVolumeModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::clone() const
+__declspec(naked) SphereEmissionVolumeModuleTemplate *ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::clone() const
 {
     __asm {
         __emit 0x56
@@ -18503,7 +14603,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<5, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVSphereEmissionVolumeModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) SphereEmissionVolumeModule *ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x56
@@ -18584,7 +14684,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<5, SPHERE_E
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?BUTTERFLY_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?BUTTERFLY_DRAW_MODULE_NAME@2@3QBDBVButterflyDrawModule@2@VButterflyDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -18630,7 +14730,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY,
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?BUTTERFLY_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?BUTTERFLY_DRAW_MODULE_NAME@2@3QBDBVButterflyDrawModule@2@VButterflyDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -18669,7 +14769,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY,
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?BUTTERFLY_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?BUTTERFLY_DRAW_MODULE_NAME@2@3QBDBVButterflyDrawModule@2@VButterflyDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -18726,7 +14826,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY,
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?BUTTERFLY_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?BUTTERFLY_DRAW_MODULE_NAME@2@3QBDBVButterflyDrawModule@2@VButterflyDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::operator=(const ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::operator=(const ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -18738,7 +14838,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY,
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?BUTTERFLY_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?BUTTERFLY_DRAW_MODULE_NAME@2@3QBDBVButterflyDrawModule@2@VButterflyDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVButterflyDrawModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::clone() const
+__declspec(naked) ButterflyDrawModuleTemplate *ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::clone() const
 {
     __asm {
         __emit 0x56
@@ -18776,7 +14876,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<6, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?BUTTERFLY_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?BUTTERFLY_DRAW_MODULE_NAME@2@3QBDBVButterflyDrawModule@2@VButterflyDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVButterflyDrawModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) ButterflyDrawModule *ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -18889,7 +14989,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<6, BUTTERFL
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?LIGHTNING_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_DRAW_MODULE_NAME@2@3QBDBVLightningDrawModule@2@VLightningDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -18935,7 +15035,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY,
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?LIGHTNING_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_DRAW_MODULE_NAME@2@3QBDBVLightningDrawModule@2@VLightningDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -18974,7 +15074,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY,
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?LIGHTNING_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_DRAW_MODULE_NAME@2@3QBDBVLightningDrawModule@2@VLightningDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -19031,7 +15131,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY,
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?LIGHTNING_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_DRAW_MODULE_NAME@2@3QBDBVLightningDrawModule@2@VLightningDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::operator=(const ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::operator=(const ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -19084,7 +15184,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY,
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?LIGHTNING_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_DRAW_MODULE_NAME@2@3QBDBVLightningDrawModule@2@VLightningDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVLightningDrawModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::clone() const
+__declspec(naked) LightningDrawModuleTemplate *ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::clone() const
 {
     __asm {
         __emit 0x56
@@ -19122,7 +15222,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<6, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?LIGHTNING_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_DRAW_MODULE_NAME@2@3QBDBVLightningDrawModule@2@VLightningDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVLightningDrawModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) LightningDrawModule *ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -19238,7 +15338,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<6, LIGHTNIN
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?QUAD_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?QUAD_DRAW_MODULE_NAME@2@3QBDBVQuadDrawModule@2@VQuadDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -19284,7 +15384,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?QUAD_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?QUAD_DRAW_MODULE_NAME@2@3QBDBVQuadDrawModule@2@VQuadDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -19323,7 +15423,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?QUAD_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?QUAD_DRAW_MODULE_NAME@2@3QBDBVQuadDrawModule@2@VQuadDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -19380,7 +15480,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?QUAD_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?QUAD_DRAW_MODULE_NAME@2@3QBDBVQuadDrawModule@2@VQuadDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::operator=(const ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::operator=(const ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -19392,7 +15492,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?QUAD_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?QUAD_DRAW_MODULE_NAME@2@3QBDBVQuadDrawModule@2@VQuadDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVQuadDrawModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::clone() const
+__declspec(naked) QuadDrawModuleTemplate *ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::clone() const
 {
     __asm {
         __emit 0x56
@@ -19430,7 +15530,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<6, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?QUAD_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?QUAD_DRAW_MODULE_NAME@2@3QBDBVQuadDrawModule@2@VQuadDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVQuadDrawModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) QuadDrawModule *ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -19543,7 +15643,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<6, QUAD_DRA
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -19589,7 +15689,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_K
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -19628,7 +15728,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_K
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0xe9
@@ -19640,7 +15740,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_K
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::operator=(const ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::operator=(const ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -19693,7 +15793,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_K
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVRenderObjectDrawModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::clone() const
+__declspec(naked) RenderObjectDrawModuleTemplate *ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::clone() const
 {
     __asm {
         __emit 0x6a
@@ -19799,7 +15899,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<6, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVRenderObjectDrawModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) RenderObjectDrawModule *ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -19912,7 +16012,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<6, RENDEROB
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -19958,7 +16058,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, ST
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -19997,7 +16097,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, ST
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -20054,7 +16154,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, ST
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::operator=(const ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::operator=(const ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that)
 {
     __asm {
         __emit 0x8b
@@ -20066,7 +16166,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, ST
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVStreakDrawModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::clone() const
+__declspec(naked) StreakDrawModuleTemplate *ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::clone() const
 {
     __asm {
         __emit 0x56
@@ -20104,7 +16204,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<6, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVStreakDrawModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) StreakDrawModule *ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -20217,7 +16317,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<6, STREAK_D
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &that)
 {
     __asm {
         __emit 0x8b
@@ -20263,7 +16363,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIF
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -20302,7 +16402,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIF
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0xe9
@@ -20314,7 +16414,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIF
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>> &ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>>::operator=(const ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::operator=(const ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &that)
 {
     __asm {
         __emit 0x8b
@@ -20340,7 +16440,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIF
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVLifeEventModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>>::clone() const
+__declspec(naked) LifeEventModuleTemplate *ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::clone() const
 {
     __asm {
         __emit 0x6a
@@ -20446,7 +16546,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<8, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVLifeEventModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) LifeEventModule *ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -20566,7 +16666,7 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<8, LIFE_EVE
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>>::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &that)
 {
     __asm {
         __emit 0x8b
@@ -20612,7 +16712,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_K
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>>::ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::ConcreteModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -20651,7 +16751,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_K
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>>::~ConcreteModuleTemplate()
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::~ConcreteModuleTemplate()
 {
     __asm {
         __emit 0xe9
@@ -20663,7 +16763,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_K
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>> &ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>>::operator=(const ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>> &that)
+__declspec(naked) ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::operator=(const ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &that)
 {
     __asm {
         __emit 0x8b
@@ -20689,7 +16789,7 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_K
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVTerrainCollisionModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>>::clone() const
+__declspec(naked) TerrainCollisionModuleTemplate *ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::clone() const
 {
     __asm {
         __emit 0x6a
@@ -20795,7 +16895,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<ModuleTag<8, 
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVTerrainCollisionModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) TerrainCollisionModule *ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x6a
@@ -21083,7 +17183,7 @@ __declspec(naked) ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &Concre
 }
 
 // ?clone@?$ConcreteModuleTemplate@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@UBEPAVOrthoEmissionVelocityModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag>::clone() const
+__declspec(naked) OrthoEmissionVelocityModuleTemplate *ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag>::clone() const
 {
     __asm {
         __emit 0x56
@@ -21121,7 +17221,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<OrthoEmission
 }
 
 // ?createModule@?$ConcreteModuleTemplate@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@UAEPAVOrthoEmissionVelocityModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) OrthoEmissionVelocityModule *ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag>::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x56
@@ -21386,7 +17486,7 @@ __declspec(naked) ConcreteModuleTemplate<PointEmissionVolumeModuleTag> &Concrete
 }
 
 // ?clone@?$ConcreteModuleTemplate@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@UBEPAVPointEmissionVolumeModuleTemplate@2@XZ
-__declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<PointEmissionVolumeModuleTag>::clone() const
+__declspec(naked) PointEmissionVolumeModuleTemplate *ConcreteModuleTemplate<PointEmissionVolumeModuleTag>::clone() const
 {
     __asm {
         __emit 0x56
@@ -21424,7 +17524,7 @@ __declspec(naked) DefaultModuleTemplate<0> *ConcreteModuleTemplate<PointEmission
 }
 
 // ?createModule@?$ConcreteModuleTemplate@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@UAEPAVPointEmissionVolumeModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<PointEmissionVolumeModuleTag>::createModule(TrackingPtr<ParticleSystem> &sys)
+__declspec(naked) PointEmissionVolumeModule *ConcreteModuleTemplate<PointEmissionVolumeModuleTag>::createModule(TrackingPtr<ParticleSystem> &sys)
 {
     __asm {
         __emit 0x56
@@ -21504,6772 +17604,8 @@ __declspec(naked) DefaultModule<0> *ConcreteModuleTemplate<PointEmissionVolumeMo
     }
 }
 
-template class ConcreteModuleTemplate<DefaultModuleTag<0>>;
-template class ConcreteModuleTemplate<DefaultModuleTag<1>>;
-template class ConcreteModuleTemplate<DefaultModuleTag<2>>;
-template class ConcreteModuleTemplate<DefaultModuleTag<3>>;
-template class ConcreteModuleTemplate<DefaultModuleTag<6>>;
-template class ConcreteModuleTemplate<DefaultModuleTag<7>>;
-template class ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate>>;
-template class ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>;
-template class ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>;
-template class ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>;
-template class ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule_4, DefaultParticleModuleTemplate_4>>;
-template class ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>;
-template class ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>;
-template class ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>;
-template class ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>;
-template class ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule_5, DefaultParticleModuleTemplate_5>>;
-template class ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>;
-template class ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>;
-template class ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>;
-template class ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>;
-template class ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule_6, DefaultParticleModuleTemplate_6>>;
-template class ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate>>;
-template class ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate>>;
-template class ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag>;
-template class ConcreteModuleTemplate<PointEmissionVolumeModuleTag>;
-
-// DefaultModuleTemplate
-// ??0?$DefaultModuleTemplate@$0A@@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) DefaultModuleTemplate<0>::DefaultModuleTemplate(const DefaultModuleTemplate<0> &that)
-{
-    __asm {
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0x39
-        __emit 0x07
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x47
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0x70
-        __emit 0xff
-        __emit 0xa5
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x0c
-        __emit 0x09
-        __emit 0x11
-        __emit 0x01
-        __emit 0x5f
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xf8
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xf4
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$DefaultModuleTemplate@$0A@@FXParticleSystem@@QAE@XZ
-__declspec(naked) DefaultModuleTemplate<0>::DefaultModuleTemplate()
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x18
-        __emit 0xad
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x60
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0x57
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x18
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x14
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x2b
-        __emit 0xae
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x0c
-        __emit 0x09
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xf8
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xf4
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0x5f
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
-}
-
-// ??1?$DefaultModuleTemplate@$0A@@FXParticleSystem@@UAE@XZ
-__declspec(naked) DefaultModuleTemplate<0>::~DefaultModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x41
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x44
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0x60
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x60
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??4?$DefaultModuleTemplate@$0A@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) DefaultModuleTemplate<0> &DefaultModuleTemplate<0>::operator=(const DefaultModuleTemplate<0> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x74
-        __emit 0x12
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x08
-        __emit 0xe8
-        __emit 0xff
-        __emit 0xbb
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x08
-        __emit 0xe8
-        __emit 0xee
-        __emit 0xbb
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?parse@?$DefaultModuleTemplate@$0A@@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void DefaultModuleTemplate<0>::parse(INI *ini)
-{
-    __asm {
-        __emit 0x68
-        __emit 0x60
-        __emit 0x34
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x61
-        __emit 0x2e
-        __emit 0x26
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?parseRGBColorKeyframe@?$DefaultModuleTemplate@$0A@@FXParticleSystem@@SAXPAVINI@@PAX1PBX@Z
-__declspec(naked) /* DefMT<0> unknown */
-{
-    __asm {
-        __emit 0x53
-        __emit 0x8b
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x74
-        __emit 0x24
-        __emit 0x14
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x56
-        __emit 0x57
-        __emit 0x53
-        __emit 0xe8
-        __emit 0x47
-        __emit 0x3d
-        __emit 0x26
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc6
-        __emit 0x0c
-        __emit 0x56
-        __emit 0x57
-        __emit 0x53
-        __emit 0xe8
-        __emit 0xaa
-        __emit 0x38
-        __emit 0x26
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x20
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0xc3
-    }
-}
-
-// ?writeINI@?$DefaultModuleTemplate@$0A@@FXParticleSystem@@UBEXAAVFile@@I@Z
-__declspec(naked) /* DefMT<0> unknown */
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x44
-        __emit 0xc2
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xec
-        __emit 0xe0
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x53
-        __emit 0x55
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xd9
-        __emit 0x8b
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x00
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x84
-        __emit 0x24
-        __emit 0x04
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x51
-        __emit 0x53
-        __emit 0xe8
-        __emit 0x95
-        __emit 0xd8
-        __emit 0xa4
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x28
-        __emit 0xe8
-        __emit 0x68
-        __emit 0xdd
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x33
-        __emit 0xed
-        __emit 0x89
-        __emit 0xac
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x7b
-        __emit 0x0c
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x07
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x2b
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x47
-        __emit 0x04
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x19
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x47
-        __emit 0x08
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x07
-        __emit 0x8b
-        __emit 0x47
-        __emit 0x0c
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x79
-        __emit 0x8b
-        __emit 0xb4
-        __emit 0x24
-        __emit 0x04
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x76
-        __emit 0x14
-        __emit 0x8d
-        __emit 0x9b
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x20
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0xe8
-        __emit 0x9f
-        __emit 0xb1
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x4e
-        __emit 0x75
-        __emit 0xf2
-        __emit 0x68
-        __emit 0x50
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0xe8
-        __emit 0x00
-        __emit 0xda
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x55
-        __emit 0x01
-        __emit 0x52
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x24
-        __emit 0x50
-        __emit 0xe8
-        __emit 0x2d
-        __emit 0x13
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x68
-        __emit 0xa8
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0xe3
-        __emit 0xd9
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x20
-        __emit 0x57
-        __emit 0x51
-        __emit 0xe8
-        __emit 0xed
-        __emit 0x6d
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x6a
-        __emit 0x20
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x6a
-        __emit 0x3a
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x47
-        __emit 0x0c
-        __emit 0x50
-        __emit 0x56
-        __emit 0xe8
-        __emit 0xfb
-        __emit 0x12
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x6a
-        __emit 0x0a
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0x54
-        __emit 0x3a
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x45
-        __emit 0x83
-        __emit 0xc7
-        __emit 0x10
-        __emit 0x83
-        __emit 0xfd
-        __emit 0x08
-        __emit 0x0f
-        __emit 0x82
-        __emit 0x3e
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x83
-        __emit 0x90
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x15
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x83
-        __emit 0x94
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7b
-        __emit 0x79
-        __emit 0x8b
-        __emit 0xb4
-        __emit 0x24
-        __emit 0x04
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x76
-        __emit 0x14
-        __emit 0x8d
-        __emit 0x9b
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x20
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0xe8
-        __emit 0xef
-        __emit 0xb0
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x4e
-        __emit 0x75
-        __emit 0xf2
-        __emit 0x68
-        __emit 0x30
-        __emit 0x35
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0xe8
-        __emit 0x50
-        __emit 0xd9
-        __emit 0xa3
-        __emit 0xff
-        __emit 0xd9
-        __emit 0x83
-        __emit 0x90
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x93
-        __emit 0x94
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xec
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x28
-        __emit 0xdd
-        __emit 0x1c
-        __emit 0x24
-        __emit 0x50
-        __emit 0x89
-        __emit 0x54
-        __emit 0x24
-        __emit 0x1c
-        __emit 0xe8
-        __emit 0xba
-        __emit 0xec
-        __emit 0xa1
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x6a
-        __emit 0x20
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xc2
-        __emit 0x39
-        __emit 0xa3
-        __emit 0xff
-        __emit 0xd9
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x83
-        __emit 0xec
-        __emit 0x08
-        __emit 0xdd
-        __emit 0x1c
-        __emit 0x24
-        __emit 0x56
-        __emit 0xe8
-        __emit 0x9c
-        __emit 0xec
-        __emit 0xa1
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x0a
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0xe8
-        __emit 0xa4
-        __emit 0x39
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0xe8
-        __emit 0x30
-        __emit 0xc3
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x04
-        __emit 0x8b
-        __emit 0xb4
-        __emit 0x24
-        __emit 0x00
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x16
-        __emit 0x2b
-        __emit 0xc1
-        __emit 0x50
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0x00
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x01
-        __emit 0xff
-        __emit 0x52
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x2b
-        __emit 0xc1
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x1c
-        __emit 0x3d
-        __emit 0x80
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x76
-        __emit 0x0b
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x78
-        __emit 0x17
-        __emit 0x29
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x0a
-        __emit 0x50
-        __emit 0x51
-        __emit 0xe8
-        __emit 0xac
-        __emit 0xde
-        __emit 0x23
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0xe8
-        __emit 0x37
-        __emit 0x5a
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x28
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x04
-        __emit 0x8d
-        __emit 0x94
-        __emit 0x24
-        __emit 0x98
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x89
-        __emit 0x54
-        __emit 0x24
-        __emit 0x10
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x0c
-        __emit 0x20
-        __emit 0xac
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xd3
-        __emit 0x3c
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x20
-        __emit 0x8b
-        __emit 0x42
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x04
-        __emit 0x20
-        __emit 0x04
-        __emit 0xf3
-        __emit 0x12
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x90
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0x90
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc4
-        __emit 0xeb
-        __emit 0x12
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x79
-        __emit 0xef
-        __emit 0x24
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x8c
-        __emit 0x24
-        __emit 0xf0
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5d
-        __emit 0x5b
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xc4
-        __emit 0xec
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
-    }
-}
-
-// ??0?$DefaultModuleTemplate@$00@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) DefaultModuleTemplate<1>::DefaultModuleTemplate(const DefaultModuleTemplate<1> &that)
-{
-    __asm {
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0xf9
-        __emit 0xd6
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x47
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0x88
-        __emit 0x8e
-        __emit 0xa4
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x07
-        __emit 0xcc
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0x5f
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xb8
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xb4
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$DefaultModuleTemplate@$00@FXParticleSystem@@QAE@XZ
-__declspec(naked) DefaultModuleTemplate<1>::DefaultModuleTemplate()
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xf8
-        __emit 0xac
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x78
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0x57
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x60
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x5c
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x50
-        __emit 0x89
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xc7
-        __emit 0x07
-        __emit 0xcc
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xb8
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xb4
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0x5f
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
-}
-
-// ??1?$DefaultModuleTemplate@$00@FXParticleSystem@@UAE@XZ
-__declspec(naked) DefaultModuleTemplate<1>::~DefaultModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x41
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x44
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0x78
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x78
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??4?$DefaultModuleTemplate@$00@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) DefaultModuleTemplate<1> &DefaultModuleTemplate<1>::operator=(const DefaultModuleTemplate<1> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x74
-        __emit 0x12
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x08
-        __emit 0xe8
-        __emit 0x2f
-        __emit 0x9a
-        __emit 0xa4
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x08
-        __emit 0xe8
-        __emit 0x1e
-        __emit 0x9a
-        __emit 0xa4
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?parse@?$DefaultModuleTemplate@$00@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void DefaultModuleTemplate<1>::parse(INI *ini)
-{
-    __asm {
-        __emit 0x68
-        __emit 0x60
-        __emit 0x33
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0xa1
-        __emit 0x3c
-        __emit 0x26
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?parseRandomKeyframe@?$DefaultModuleTemplate@$00@FXParticleSystem@@SAXPAVINI@@PAX1PBX@Z
-__declspec(naked) /* DefMT<1> unknown */
-{
-    __asm {
-        __emit 0x83
-        __emit 0xec
-        __emit 0x08
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x74
-        __emit 0x24
-        __emit 0x10
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xef
-        __emit 0x25
-        __emit 0x26
-        __emit 0x00
-        __emit 0x50
-        __emit 0xe8
-        __emit 0x59
-        __emit 0x43
-        __emit 0x26
-        __emit 0x00
-        __emit 0xd9
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xd9
-        __emit 0x25
-        __emit 0x26
-        __emit 0x00
-        __emit 0x50
-        __emit 0xe8
-        __emit 0x43
-        __emit 0x43
-        __emit 0x26
-        __emit 0x00
-        __emit 0xd9
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xc3
-        __emit 0x25
-        __emit 0x26
-        __emit 0x00
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xcd
-        __emit 0x42
-        __emit 0x26
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x41
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x50
-        __emit 0x52
-        __emit 0xe8
-        __emit 0x8a
-        __emit 0x88
-        __emit 0xa1
-        __emit 0xff
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0xc3
-    }
-}
-
-// ?writeINI@?$DefaultModuleTemplate@$00@FXParticleSystem@@UBEXAAVFile@@I@Z
-__declspec(naked) /* DefMT<1> unknown */
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x54
-        __emit 0xc1
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xec
-        __emit 0xe0
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x53
-        __emit 0x8b
-        __emit 0x9c
-        __emit 0x24
-        __emit 0xf4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x55
-        __emit 0x56
-        __emit 0x8d
-        __emit 0x84
-        __emit 0x24
-        __emit 0x00
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x53
-        __emit 0x56
-        __emit 0xe8
-        __emit 0x0e
-        __emit 0x91
-        __emit 0xa1
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0xe8
-        __emit 0x49
-        __emit 0xf3
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x33
-        __emit 0xed
-        __emit 0x89
-        __emit 0xac
-        __emit 0x24
-        __emit 0xf4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc6
-        __emit 0x10
-        __emit 0x57
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x06
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x1d
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x46
-        __emit 0x04
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x0b
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x08
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x0f
-        __emit 0x84
-        __emit 0xa7
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xbc
-        __emit 0x24
-        __emit 0x04
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xff
-        __emit 0x76
-        __emit 0x12
-        __emit 0x8d
-        __emit 0x64
-        __emit 0x24
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x20
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0xe8
-        __emit 0x8f
-        __emit 0xc7
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x4f
-        __emit 0x75
-        __emit 0xf2
-        __emit 0x68
-        __emit 0xd0
-        __emit 0x05
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0xe8
-        __emit 0xf0
-        __emit 0xef
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x4d
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x24
-        __emit 0x52
-        __emit 0xe8
-        __emit 0x1d
-        __emit 0x29
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x68
-        __emit 0xa8
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0xd3
-        __emit 0xef
-        __emit 0xa3
-        __emit 0xff
-        __emit 0xd9
-        __emit 0x06
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x04
-        __emit 0x83
-        __emit 0xec
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x28
-        __emit 0xdd
-        __emit 0x1c
-        __emit 0x24
-        __emit 0x51
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0xe8
-        __emit 0x44
-        __emit 0x03
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0xf8
-        __emit 0x6a
-        __emit 0x20
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0x4c
-        __emit 0x50
-        __emit 0xa3
-        __emit 0xff
-        __emit 0xd9
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x83
-        __emit 0xec
-        __emit 0x08
-        __emit 0xdd
-        __emit 0x1c
-        __emit 0x24
-        __emit 0x57
-        __emit 0xe8
-        __emit 0x26
-        __emit 0x03
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x20
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0xe8
-        __emit 0x2e
-        __emit 0x50
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x24
-        __emit 0x52
-        __emit 0xe8
-        __emit 0xbb
-        __emit 0x28
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x6a
-        __emit 0x0a
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0x14
-        __emit 0x50
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x45
-        __emit 0x83
-        __emit 0xc6
-        __emit 0x10
-        __emit 0x83
-        __emit 0xfd
-        __emit 0x08
-        __emit 0x0f
-        __emit 0x82
-        __emit 0x1e
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0xe8
-        __emit 0x93
-        __emit 0xd9
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x13
-        __emit 0x2b
-        __emit 0xc1
-        __emit 0x50
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xcb
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0x00
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x01
-        __emit 0xff
-        __emit 0x52
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x2b
-        __emit 0xc1
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5f
-        __emit 0x74
-        __emit 0x1c
-        __emit 0x3d
-        __emit 0x80
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x76
-        __emit 0x0b
-        __emit 0x51
-        __emit 0xe8
-        __emit 0xe1
-        __emit 0x2d
-        __emit 0x29
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x0a
-        __emit 0x50
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x15
-        __emit 0xf5
-        __emit 0x23
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x00
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x53
-        __emit 0xe8
-        __emit 0xa0
-        __emit 0x70
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x24
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x04
-        __emit 0x8d
-        __emit 0x94
-        __emit 0x24
-        __emit 0x94
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x89
-        __emit 0x54
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x0c
-        __emit 0x1c
-        __emit 0xac
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x20
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x3c
-        __emit 0x53
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0x42
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x04
-        __emit 0x1c
-        __emit 0x04
-        __emit 0xf3
-        __emit 0x12
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x8c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0x8c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc4
-        __emit 0xeb
-        __emit 0x12
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xe2
-        __emit 0x05
-        __emit 0x25
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x8c
-        __emit 0x24
-        __emit 0xec
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x5d
-        __emit 0x5b
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xc4
-        __emit 0xec
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
-    }
-}
-
-// ??0?$DefaultModuleTemplate@$01@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) DefaultModuleTemplate<2>::DefaultModuleTemplate(const DefaultModuleTemplate<2> &that)
-{
-    __asm {
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0x27
-        __emit 0x50
-        __emit 0xa4
-        __emit 0xff
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x47
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0x8a
-        __emit 0xce
-        __emit 0xa2
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x64
-        __emit 0x0c
-        __emit 0x11
-        __emit 0x01
-        __emit 0x5f
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x50
-        __emit 0x0c
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x4c
-        __emit 0x0c
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$DefaultModuleTemplate@$01@FXParticleSystem@@QAE@XZ
-__declspec(naked) DefaultModuleTemplate<2>::DefaultModuleTemplate()
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x78
-        __emit 0xad
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xe8
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0x57
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x90
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x8c
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xb7
-        __emit 0x73
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x64
-        __emit 0x0c
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x50
-        __emit 0x0c
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x4c
-        __emit 0x0c
-        __emit 0x11
-        __emit 0x01
-        __emit 0x5f
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
-}
-
-// ??1?$DefaultModuleTemplate@$01@FXParticleSystem@@UAE@XZ
-__declspec(naked) DefaultModuleTemplate<2>::~DefaultModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x41
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x44
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0xe8
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??4?$DefaultModuleTemplate@$01@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) DefaultModuleTemplate<2> &DefaultModuleTemplate<2>::operator=(const DefaultModuleTemplate<2> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x74
-        __emit 0x12
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x08
-        __emit 0xe8
-        __emit 0xa2
-        __emit 0xa5
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x08
-        __emit 0xe8
-        __emit 0x91
-        __emit 0xa5
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?parse@?$DefaultModuleTemplate@$01@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void DefaultModuleTemplate<2>::parse(INI *ini)
-{
-    __asm {
-        __emit 0x68
-        __emit 0x58
-        __emit 0x49
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0xa1
-        __emit 0x29
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?writeINI@?$DefaultModuleTemplate@$01@FXParticleSystem@@UBEXAAVFile@@I@Z
-__declspec(naked) /* DefMT<2> unknown */
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xf6
-        __emit 0xcc
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xec
-        __emit 0xdc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xbc
-        __emit 0x24
-        __emit 0xf4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x57
-        __emit 0x56
-        __emit 0xe8
-        __emit 0x2d
-        __emit 0x7b
-        __emit 0xa4
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0xe8
-        __emit 0xea
-        __emit 0xe1
-        __emit 0xa2
-        __emit 0xff
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x46
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x0c
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0xec
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x12
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x08
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7b
-        __emit 0x1b
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x8c
-        __emit 0x24
-        __emit 0xfc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x68
-        __emit 0x4c
-        __emit 0x49
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x20
-        __emit 0x52
-        __emit 0xe8
-        __emit 0x45
-        __emit 0x32
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x18
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x04
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x12
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x08
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7b
-        __emit 0x1b
-        __emit 0x8b
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x68
-        __emit 0x38
-        __emit 0x49
-        __emit 0x11
-        __emit 0x01
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x20
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x03
-        __emit 0x32
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x24
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x04
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x12
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x08
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7b
-        __emit 0x1b
-        __emit 0x8b
-        __emit 0x94
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x68
-        __emit 0x30
-        __emit 0x49
-        __emit 0x11
-        __emit 0x01
-        __emit 0x52
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x20
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xc1
-        __emit 0x31
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x30
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x04
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x12
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x08
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7b
-        __emit 0x1b
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x8c
-        __emit 0x24
-        __emit 0xfc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x68
-        __emit 0x20
-        __emit 0x49
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x20
-        __emit 0x52
-        __emit 0xe8
-        __emit 0x7f
-        __emit 0x31
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x3c
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x04
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x12
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x08
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7b
-        __emit 0x1b
-        __emit 0x8b
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x68
-        __emit 0x0c
-        __emit 0x49
-        __emit 0x11
-        __emit 0x01
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x20
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x3d
-        __emit 0x31
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x76
-        __emit 0x48
-        __emit 0x83
-        __emit 0xfe
-        __emit 0x01
-        __emit 0x74
-        __emit 0x22
-        __emit 0x8b
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x14
-        __emit 0xb5
-        __emit 0x58
-        __emit 0x02
-        __emit 0x11
-        __emit 0x01
-        __emit 0x52
-        __emit 0x68
-        __emit 0x00
-        __emit 0x49
-        __emit 0x11
-        __emit 0x01
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x20
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x92
-        __emit 0xfe
-        __emit 0xa1
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x08
-        __emit 0x52
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0xe8
-        __emit 0xa4
-        __emit 0xc7
-        __emit 0xa1
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x17
-        __emit 0x2b
-        __emit 0xc1
-        __emit 0x50
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x01
-        __emit 0xff
-        __emit 0x52
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x2b
-        __emit 0xc1
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0xec
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x1c
-        __emit 0x3d
-        __emit 0x80
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x76
-        __emit 0x0b
-        __emit 0x51
-        __emit 0xe8
-        __emit 0xf3
-        __emit 0x1b
-        __emit 0x28
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x0a
-        __emit 0x50
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x27
-        __emit 0xe3
-        __emit 0x22
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x57
-        __emit 0xe8
-        __emit 0xb2
-        __emit 0x5e
-        __emit 0xa4
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0xec
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0x86
-        __emit 0x95
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc4
-        __emit 0xeb
-        __emit 0x12
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x25
-        __emit 0xf4
-        __emit 0x23
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x8c
-        __emit 0x24
-        __emit 0xe4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xc4
-        __emit 0xe8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
-    }
-}
-
-// ??0?$DefaultModuleTemplate@$02@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) DefaultModuleTemplate<3>::DefaultModuleTemplate(const DefaultModuleTemplate<3> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xe4
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xc0
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xbc
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0x74
-        __emit 0x05
-        __emit 0x83
-        __emit 0xc1
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x08
-        __emit 0xf8
-        __emit 0x0b
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x51
-        __emit 0x04
-        __emit 0x89
-        __emit 0x50
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x51
-        __emit 0x08
-        __emit 0x89
-        __emit 0x50
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x51
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x50
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x51
-        __emit 0x10
-        __emit 0x89
-        __emit 0x50
-        __emit 0x18
-        __emit 0x83
-        __emit 0xc1
-        __emit 0x14
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x31
-        __emit 0x8d
-        __emit 0x50
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x32
-        __emit 0x8b
-        __emit 0x71
-        __emit 0x04
-        __emit 0x89
-        __emit 0x72
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x49
-        __emit 0x08
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x08
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x20
-        __emit 0x0c
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x08
-        __emit 0x0c
-        __emit 0x0c
-        __emit 0x11
-        __emit 0x01
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$DefaultModuleTemplate@$02@FXParticleSystem@@QAE@XZ
-__declspec(naked) DefaultModuleTemplate<3>::DefaultModuleTemplate()
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x58
-        __emit 0xad
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xe4
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0x57
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xc0
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xbc
-        __emit 0xfb
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xff
-        __emit 0xce
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x0c
-        __emit 0x0c
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x20
-        __emit 0x0c
-        __emit 0x11
-        __emit 0x01
-        __emit 0x5f
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
-}
-
-// ??1?$DefaultModuleTemplate@$02@FXParticleSystem@@UAE@XZ
-__declspec(naked) DefaultModuleTemplate<3>::~DefaultModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x41
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x44
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0xe4
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xe4
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??4?$DefaultModuleTemplate@$02@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) DefaultModuleTemplate<3> &DefaultModuleTemplate<3>::operator=(const DefaultModuleTemplate<3> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x51
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xd2
-        __emit 0x56
-        __emit 0x8d
-        __emit 0x4a
-        __emit 0x04
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x39
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x3e
-        __emit 0x8b
-        __emit 0x79
-        __emit 0x04
-        __emit 0x89
-        __emit 0x7e
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x49
-        __emit 0x08
-        __emit 0x89
-        __emit 0x4e
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4a
-        __emit 0x10
-        __emit 0x89
-        __emit 0x48
-        __emit 0x18
-        __emit 0x83
-        __emit 0xc2
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x32
-        __emit 0x8d
-        __emit 0x48
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x31
-        __emit 0x8b
-        __emit 0x72
-        __emit 0x04
-        __emit 0x89
-        __emit 0x71
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x5f
-        __emit 0x89
-        __emit 0x51
-        __emit 0x08
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?parse@?$DefaultModuleTemplate@$02@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void DefaultModuleTemplate<3>::parse(INI *ini)
-{
-    __asm {
-        __emit 0x68
-        __emit 0xb0
-        __emit 0x45
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x11
-        __emit 0x47
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?writeINI@?$DefaultModuleTemplate@$02@FXParticleSystem@@UBEXAAVFile@@I@Z
-__declspec(naked) /* DefMT<3> unknown */
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x56
-        __emit 0xcb
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xec
-        __emit 0xdc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xbc
-        __emit 0x24
-        __emit 0xf4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x57
-        __emit 0x56
-        __emit 0xe8
-        __emit 0x73
-        __emit 0xb8
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0xe8
-        __emit 0x8a
-        __emit 0x00
-        __emit 0xa3
-        __emit 0xff
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x46
-        __emit 0x18
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x18
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0xec
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7b
-        __emit 0x1b
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x8c
-        __emit 0x24
-        __emit 0xfc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x68
-        __emit 0x2c
-        __emit 0xb9
-        __emit 0x07
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x20
-        __emit 0x52
-        __emit 0xe8
-        __emit 0xfd
-        __emit 0x19
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x1c
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x04
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x12
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x08
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7b
-        __emit 0x1b
-        __emit 0x8b
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x68
-        __emit 0x9c
-        __emit 0x45
-        __emit 0x11
-        __emit 0x01
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x20
-        __emit 0x51
-        __emit 0xe8
-        __emit 0xb5
-        __emit 0x50
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x0c
-        __emit 0xd9
-        __emit 0x01
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x24
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x04
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x12
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x08
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7b
-        __emit 0x1b
-        __emit 0x8b
-        __emit 0x94
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x68
-        __emit 0x8c
-        __emit 0x45
-        __emit 0x11
-        __emit 0x01
-        __emit 0x52
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x20
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xc2
-        __emit 0x9f
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0xe8
-        __emit 0xf3
-        __emit 0xe6
-        __emit 0xa1
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x17
-        __emit 0x2b
-        __emit 0xc1
-        __emit 0x50
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x01
-        __emit 0xff
-        __emit 0x52
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x2b
-        __emit 0xc1
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0xec
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x1c
-        __emit 0x3d
-        __emit 0x80
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x76
-        __emit 0x0b
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x42
-        __emit 0x3b
-        __emit 0x28
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x0a
-        __emit 0x50
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x76
-        __emit 0x02
-        __emit 0x23
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x57
-        __emit 0xe8
-        __emit 0x01
-        __emit 0x7e
-        __emit 0xa4
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0xec
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0xd5
-        __emit 0xb4
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc4
-        __emit 0xeb
-        __emit 0x12
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x74
-        __emit 0x13
-        __emit 0x24
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x8c
-        __emit 0x24
-        __emit 0xe4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xc4
-        __emit 0xe8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
-    }
-}
-
-// ??0?$DefaultModuleTemplate@$05@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) DefaultModuleTemplate<6>::DefaultModuleTemplate(const DefaultModuleTemplate<6> &that)
-{
-    __asm {
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0x42
-        __emit 0x48
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x47
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0x47
-        __emit 0x63
-        __emit 0xa6
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x4c
-        __emit 0x09
-        __emit 0x11
-        __emit 0x01
-        __emit 0x5f
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x38
-        __emit 0x09
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x34
-        __emit 0x09
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$DefaultModuleTemplate@$05@FXParticleSystem@@QAE@XZ
-__declspec(naked) DefaultModuleTemplate<6>::DefaultModuleTemplate()
-{
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x38
-        __emit 0xad
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x7c
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0x57
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x50
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x4c
-        __emit 0xfc
-        __emit 0x10
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xac
-        __emit 0x7f
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x4c
-        __emit 0x09
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x38
-        __emit 0x09
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x34
-        __emit 0x09
-        __emit 0x11
-        __emit 0x01
-        __emit 0x5f
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
-}
-
-// ??1?$DefaultModuleTemplate@$05@FXParticleSystem@@UAE@XZ
-__declspec(naked) DefaultModuleTemplate<6>::~DefaultModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x41
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x44
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0x7c
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x7c
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ?parse@?$DefaultModuleTemplate@$05@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void DefaultModuleTemplate<6>::parse(INI *ini)
-{
-    __asm {
-        __emit 0x68
-        __emit 0x94
-        __emit 0x35
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x61
-        __emit 0xf0
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ?writeINI@?$DefaultModuleTemplate@$05@FXParticleSystem@@UBEXAAVFile@@I@Z
-__declspec(naked) /* DefMT<6> unknown */
-{
-    __asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x50
-        __emit 0x56
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x48
-        __emit 0x28
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x51
-        __emit 0x56
-        __emit 0xe8
-        __emit 0x00
-        __emit 0x29
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x14
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
-    }
-}
-
-// ??0?$DefaultModuleTemplate@$06@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) DefaultModuleTemplate<7>::DefaultModuleTemplate(const DefaultModuleTemplate<7> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x56
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0x00
-        __emit 0x19
-        __emit 0xa3
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x1c
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x18
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0x04
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-// ??0?$DefaultModuleTemplate@$06@FXParticleSystem@@QAE@XZ
-__declspec(naked) DefaultModuleTemplate<7>::DefaultModuleTemplate()
-{
-    __asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0x64
-        __emit 0x7c
-        __emit 0xa5
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x1c
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x18
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0x04
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc3
-    }
-}
-
-// ??1?$DefaultModuleTemplate@$06@FXParticleSystem@@UAE@XZ
-__declspec(naked) DefaultModuleTemplate<7>::~DefaultModuleTemplate()
-{
-    __asm {
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x41
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x44
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0x74
-        __emit 0x0e
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x04
-        __emit 0x14
-        __emit 0xfa
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x14
-        __emit 0xfa
-        __emit 0x10
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x58
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0xc3
-    }
-}
-
-// ??4?$DefaultModuleTemplate@$06@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) DefaultModuleTemplate<7> &DefaultModuleTemplate<7>::operator=(const DefaultModuleTemplate<7> &that)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x74
-        __emit 0x12
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x08
-        __emit 0xe8
-        __emit 0xcc
-        __emit 0xcb
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x08
-        __emit 0xe8
-        __emit 0xbb
-        __emit 0xcb
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
-template class DefaultModuleTemplate<0>;
-template class DefaultModuleTemplate<1>;
-template class DefaultModuleTemplate<2>;
-template class DefaultModuleTemplate<3>;
-template class DefaultModuleTemplate<6>;
-template class DefaultModuleTemplate<7>;
-
-// DefaultModuleKey / DefaultModuleName
-// ?GetValue@?$DefaultModuleKey@$0A@@FXParticleSystem@@CAPBDXZ
-__declspec(naked) const char *DefaultModuleKey<0>::GetValue()
-{
-    __asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x9e
-        __emit 0xb1
-        __emit 0x03
-        __emit 0x01
-        __emit 0x50
-        __emit 0xf6
-        __emit 0x05
-        __emit 0x3c
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x75
-        __emit 0x33
-        __emit 0x83
-        __emit 0x0d
-        __emit 0x3c
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x68
-        __emit 0x14
-        __emit 0x57
-        __emit 0x07
-        __emit 0x01
-        __emit 0xb9
-        __emit 0x38
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xa3
-        __emit 0x8d
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x68
-        __emit 0x2b
-        __emit 0x3a
-        __emit 0x40
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xff
-        __emit 0x6f
-        __emit 0x41
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa0
-        __emit 0x34
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x35
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xdc
-        __emit 0x98
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8d
-        __emit 0x71
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x11
-        __emit 0x41
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xce
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x51
-        __emit 0x50
-        __emit 0xb9
-        __emit 0x38
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xf7
-        __emit 0x7e
-        __emit 0x2a
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x05
-        __emit 0x34
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0xa1
-        __emit 0x38
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x13
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-    }
-}
-
-// ?GetValue@?$DefaultModuleKey@$00@FXParticleSystem@@CAPBDXZ
-__declspec(naked) const char *DefaultModuleKey<1>::GetValue()
-{
-    __asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x5e
-        __emit 0xb1
-        __emit 0x03
-        __emit 0x01
-        __emit 0x50
-        __emit 0xf6
-        __emit 0x05
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x75
-        __emit 0x33
-        __emit 0x83
-        __emit 0x0d
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x68
-        __emit 0x14
-        __emit 0x57
-        __emit 0x07
-        __emit 0x01
-        __emit 0xb9
-        __emit 0x08
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x33
-        __emit 0x90
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x68
-        __emit 0x99
-        __emit 0x1c
-        __emit 0x40
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x8f
-        __emit 0x72
-        __emit 0x41
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa0
-        __emit 0x04
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x35
-        __emit 0x6a
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x6c
-        __emit 0x9b
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8d
-        __emit 0x71
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x11
-        __emit 0x41
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xce
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x51
-        __emit 0x50
-        __emit 0xb9
-        __emit 0x08
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x87
-        __emit 0x81
-        __emit 0x2a
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x05
-        __emit 0x04
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0xa1
-        __emit 0x08
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x13
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-    }
-}
-
-// ?GetValue@?$DefaultModuleKey@$01@FXParticleSystem@@CAPBDXZ
-__declspec(naked) const char *DefaultModuleKey<2>::GetValue()
-{
-    __asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x1e
-        __emit 0xb2
-        __emit 0x03
-        __emit 0x01
-        __emit 0x50
-        __emit 0xf6
-        __emit 0x05
-        __emit 0x9c
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x75
-        __emit 0x33
-        __emit 0x83
-        __emit 0x0d
-        __emit 0x9c
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x68
-        __emit 0x14
-        __emit 0x57
-        __emit 0x07
-        __emit 0x01
-        __emit 0xb9
-        __emit 0x98
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x83
-        __emit 0x88
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x68
-        __emit 0x0c
-        __emit 0x29
-        __emit 0x43
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xdf
-        __emit 0x6a
-        __emit 0x41
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa0
-        __emit 0x94
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x35
-        __emit 0x6a
-        __emit 0x02
-        __emit 0xe8
-        __emit 0xbc
-        __emit 0x93
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8d
-        __emit 0x71
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x11
-        __emit 0x41
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xce
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x51
-        __emit 0x50
-        __emit 0xb9
-        __emit 0x98
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xd7
-        __emit 0x79
-        __emit 0x2a
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x05
-        __emit 0x94
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0xa1
-        __emit 0x98
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x13
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-    }
-}
-
-// ?GetValue@?$DefaultModuleKey@$02@FXParticleSystem@@CAPBDXZ
-__declspec(naked) const char *DefaultModuleKey<3>::GetValue()
-{
-    __asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xde
-        __emit 0xb1
-        __emit 0x03
-        __emit 0x01
-        __emit 0x50
-        __emit 0xf6
-        __emit 0x05
-        __emit 0x6c
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x75
-        __emit 0x33
-        __emit 0x83
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x68
-        __emit 0x14
-        __emit 0x57
-        __emit 0x07
-        __emit 0x01
-        __emit 0xb9
-        __emit 0x68
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x13
-        __emit 0x8b
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x68
-        __emit 0xe4
-        __emit 0x2a
-        __emit 0x41
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x6f
-        __emit 0x6d
-        __emit 0x41
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa0
-        __emit 0x64
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x35
-        __emit 0x6a
-        __emit 0x03
-        __emit 0xe8
-        __emit 0x4c
-        __emit 0x96
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8d
-        __emit 0x71
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x11
-        __emit 0x41
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xce
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x51
-        __emit 0x50
-        __emit 0xb9
-        __emit 0x68
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x67
-        __emit 0x7c
-        __emit 0x2a
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x05
-        __emit 0x64
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0xa1
-        __emit 0x68
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x13
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-    }
-}
-
-// ?GetValue@?$DefaultModuleKey@$05@FXParticleSystem@@CAPBDXZ
-__declspec(naked) const char *DefaultModuleKey<6>::GetValue()
-{
-    __asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xbe
-        __emit 0xaf
-        __emit 0x03
-        __emit 0x01
-        __emit 0x50
-        __emit 0xf6
-        __emit 0x05
-        __emit 0x64
-        __emit 0x69
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x75
-        __emit 0x33
-        __emit 0x83
-        __emit 0x0d
-        __emit 0x64
-        __emit 0x69
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x68
-        __emit 0x14
-        __emit 0x57
-        __emit 0x07
-        __emit 0x01
-        __emit 0xb9
-        __emit 0x60
-        __emit 0x69
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xa3
-        __emit 0x9e
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x68
-        __emit 0xe5
-        __emit 0xd7
-        __emit 0x42
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xff
-        __emit 0x80
-        __emit 0x41
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa0
-        __emit 0x5c
-        __emit 0x69
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x35
-        __emit 0x6a
-        __emit 0x06
-        __emit 0xe8
-        __emit 0xdc
-        __emit 0xa9
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8d
-        __emit 0x71
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x11
-        __emit 0x41
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xce
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x51
-        __emit 0x50
-        __emit 0xb9
-        __emit 0x60
-        __emit 0x69
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xf7
-        __emit 0x8f
-        __emit 0x2a
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x05
-        __emit 0x5c
-        __emit 0x69
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0xa1
-        __emit 0x60
-        __emit 0x69
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x13
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-    }
-}
-
-// ?GetValue@?$DefaultModuleKey@$06@FXParticleSystem@@CAPBDXZ
-__declspec(naked) const char *DefaultModuleKey<7>::GetValue()
-{
-    __asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x5e
-        __emit 0xb2
-        __emit 0x03
-        __emit 0x01
-        __emit 0x50
-        __emit 0xf6
-        __emit 0x05
-        __emit 0xcc
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x75
-        __emit 0x33
-        __emit 0x83
-        __emit 0x0d
-        __emit 0xcc
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x68
-        __emit 0x14
-        __emit 0x57
-        __emit 0x07
-        __emit 0x01
-        __emit 0xb9
-        __emit 0xc8
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xf3
-        __emit 0x85
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x68
-        __emit 0x30
-        __emit 0x55
-        __emit 0x43
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x4f
-        __emit 0x68
-        __emit 0x41
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa0
-        __emit 0xc4
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x35
-        __emit 0x6a
-        __emit 0x07
-        __emit 0xe8
-        __emit 0x2c
-        __emit 0x91
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8d
-        __emit 0x71
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x11
-        __emit 0x41
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xce
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x51
-        __emit 0x50
-        __emit 0xb9
-        __emit 0xc8
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x47
-        __emit 0x77
-        __emit 0x2a
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x05
-        __emit 0xc4
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0xa1
-        __emit 0xc8
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x13
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-    }
-}
-
-// ?GetValue@?$DefaultModuleName@$0A@@FXParticleSystem@@CAPBDXZ
-__declspec(naked) const char *DefaultModuleName<0>::GetValue()
-{
-    __asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xbe
-        __emit 0xb1
-        __emit 0x03
-        __emit 0x01
-        __emit 0x50
-        __emit 0xf6
-        __emit 0x05
-        __emit 0x48
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x75
-        __emit 0x33
-        __emit 0x83
-        __emit 0x0d
-        __emit 0x48
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x68
-        __emit 0x74
-        __emit 0x13
-        __emit 0x11
-        __emit 0x01
-        __emit 0xb9
-        __emit 0x44
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xa3
-        __emit 0x8c
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x68
-        __emit 0x56
-        __emit 0x64
-        __emit 0x40
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xff
-        __emit 0x6e
-        __emit 0x41
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa0
-        __emit 0x40
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x35
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x16
-        __emit 0x8c
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8d
-        __emit 0x71
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x11
-        __emit 0x41
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xce
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x51
-        __emit 0x50
-        __emit 0xb9
-        __emit 0x44
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xf7
-        __emit 0x7d
-        __emit 0x2a
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x05
-        __emit 0x40
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0xa1
-        __emit 0x44
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x13
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-    }
-}
-
-// ?GetValue@?$DefaultModuleName@$00@FXParticleSystem@@CAPBDXZ
-__declspec(naked) const char *DefaultModuleName<1>::GetValue()
-{
-    __asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x7e
-        __emit 0xb1
-        __emit 0x03
-        __emit 0x01
-        __emit 0x50
-        __emit 0xf6
-        __emit 0x05
-        __emit 0x18
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x75
-        __emit 0x33
-        __emit 0x83
-        __emit 0x0d
-        __emit 0x18
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x68
-        __emit 0x74
-        __emit 0x13
-        __emit 0x11
-        __emit 0x01
-        __emit 0xb9
-        __emit 0x14
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x33
-        __emit 0x8f
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x68
-        __emit 0xdd
-        __emit 0xd0
-        __emit 0x42
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x8f
-        __emit 0x71
-        __emit 0x41
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa0
-        __emit 0x10
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x35
-        __emit 0x6a
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xa6
-        __emit 0x8e
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8d
-        __emit 0x71
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x11
-        __emit 0x41
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xce
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x51
-        __emit 0x50
-        __emit 0xb9
-        __emit 0x14
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x87
-        __emit 0x80
-        __emit 0x2a
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x05
-        __emit 0x10
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0xa1
-        __emit 0x14
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x13
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-    }
-}
-
-// ?GetValue@?$DefaultModuleName@$01@FXParticleSystem@@CAPBDXZ
-__declspec(naked) const char *DefaultModuleName<2>::GetValue()
-{
-    __asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x3e
-        __emit 0xb2
-        __emit 0x03
-        __emit 0x01
-        __emit 0x50
-        __emit 0xf6
-        __emit 0x05
-        __emit 0xa8
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x75
-        __emit 0x33
-        __emit 0x83
-        __emit 0x0d
-        __emit 0xa8
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x68
-        __emit 0x74
-        __emit 0x13
-        __emit 0x11
-        __emit 0x01
-        __emit 0xb9
-        __emit 0xa4
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x83
-        __emit 0x87
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x68
-        __emit 0x9e
-        __emit 0xa6
-        __emit 0x42
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xdf
-        __emit 0x69
-        __emit 0x41
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa0
-        __emit 0xa0
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x35
-        __emit 0x6a
-        __emit 0x02
-        __emit 0xe8
-        __emit 0xf6
-        __emit 0x86
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8d
-        __emit 0x71
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x11
-        __emit 0x41
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xce
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x51
-        __emit 0x50
-        __emit 0xb9
-        __emit 0xa4
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xd7
-        __emit 0x78
-        __emit 0x2a
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x05
-        __emit 0xa0
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0xa1
-        __emit 0xa4
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x13
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-    }
-}
-
-// ?GetValue@?$DefaultModuleName@$02@FXParticleSystem@@CAPBDXZ
-__declspec(naked) const char *DefaultModuleName<3>::GetValue()
-{
-    __asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xfe
-        __emit 0xb1
-        __emit 0x03
-        __emit 0x01
-        __emit 0x50
-        __emit 0xf6
-        __emit 0x05
-        __emit 0x78
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x75
-        __emit 0x33
-        __emit 0x83
-        __emit 0x0d
-        __emit 0x78
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x68
-        __emit 0x74
-        __emit 0x13
-        __emit 0x11
-        __emit 0x01
-        __emit 0xb9
-        __emit 0x74
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x13
-        __emit 0x8a
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x68
-        __emit 0x51
-        __emit 0xed
-        __emit 0x43
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x6f
-        __emit 0x6c
-        __emit 0x41
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa0
-        __emit 0x70
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x35
-        __emit 0x6a
-        __emit 0x03
-        __emit 0xe8
-        __emit 0x86
-        __emit 0x89
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8d
-        __emit 0x71
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x11
-        __emit 0x41
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xce
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x51
-        __emit 0x50
-        __emit 0xb9
-        __emit 0x74
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x67
-        __emit 0x7b
-        __emit 0x2a
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x05
-        __emit 0x70
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0xa1
-        __emit 0x74
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x13
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-    }
-}
-
-// ?GetValue@?$DefaultModuleName@$05@FXParticleSystem@@CAPBDXZ
-__declspec(naked) const char *DefaultModuleName<6>::GetValue()
-{
-    __asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xde
-        __emit 0xaf
-        __emit 0x03
-        __emit 0x01
-        __emit 0x50
-        __emit 0xf6
-        __emit 0x05
-        __emit 0x70
-        __emit 0x69
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x75
-        __emit 0x33
-        __emit 0x83
-        __emit 0x0d
-        __emit 0x70
-        __emit 0x69
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x68
-        __emit 0x74
-        __emit 0x13
-        __emit 0x11
-        __emit 0x01
-        __emit 0xb9
-        __emit 0x6c
-        __emit 0x69
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xa3
-        __emit 0x9d
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x68
-        __emit 0xfa
-        __emit 0xcb
-        __emit 0x43
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xff
-        __emit 0x7f
-        __emit 0x41
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa0
-        __emit 0x68
-        __emit 0x69
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x35
-        __emit 0x6a
-        __emit 0x06
-        __emit 0xe8
-        __emit 0x16
-        __emit 0x9d
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8d
-        __emit 0x71
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x11
-        __emit 0x41
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xce
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x51
-        __emit 0x50
-        __emit 0xb9
-        __emit 0x6c
-        __emit 0x69
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xf7
-        __emit 0x8e
-        __emit 0x2a
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x05
-        __emit 0x68
-        __emit 0x69
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0xa1
-        __emit 0x6c
-        __emit 0x69
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x13
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-    }
-}
-
-// ?GetValue@?$DefaultModuleName@$06@FXParticleSystem@@CAPBDXZ
-__declspec(naked) const char *DefaultModuleName<7>::GetValue()
-{
-    __asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x7e
-        __emit 0xb2
-        __emit 0x03
-        __emit 0x01
-        __emit 0x50
-        __emit 0xf6
-        __emit 0x05
-        __emit 0xd8
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x75
-        __emit 0x33
-        __emit 0x83
-        __emit 0x0d
-        __emit 0xd8
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x68
-        __emit 0x74
-        __emit 0x13
-        __emit 0x11
-        __emit 0x01
-        __emit 0xb9
-        __emit 0xd4
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xf3
-        __emit 0x84
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x68
-        __emit 0x03
-        __emit 0x16
-        __emit 0x41
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x4f
-        __emit 0x67
-        __emit 0x41
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa0
-        __emit 0xd0
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x35
-        __emit 0x6a
-        __emit 0x07
-        __emit 0xe8
-        __emit 0x66
-        __emit 0x84
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8d
-        __emit 0x71
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x11
-        __emit 0x41
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xce
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x51
-        __emit 0x50
-        __emit 0xb9
-        __emit 0xd4
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x47
-        __emit 0x76
-        __emit 0x2a
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x05
-        __emit 0xd0
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x01
-        __emit 0xa1
-        __emit 0xd4
-        __emit 0x6a
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x13
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc3
-    }
-}
-
-
-// Other non-template
 // ??0BoxEmissionVolumeInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) BoxEmissionVolumeInfo::BoxEmissionVolumeInfo(const BoxEmissionVolumeInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -28321,7 +17657,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0BoxEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) BoxEmissionVolumeModuleTemplate::BoxEmissionVolumeModuleTemplate(const BoxEmissionVolumeModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -28426,7 +17762,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0BoxEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) BoxEmissionVolumeModuleTemplate::BoxEmissionVolumeModuleTemplate()
 {
     __asm {
         __emit 0x8b
@@ -28484,7 +17820,7 @@ __declspec(naked) e::e()
 }
 
 // ??0ButterflyDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) ButterflyDrawModuleTemplate::ButterflyDrawModuleTemplate(const ButterflyDrawModuleTemplate &that)
 {
     __asm {
         __emit 0x56
@@ -28553,7 +17889,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0ButterflyDrawModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) ButterflyDrawModuleTemplate::ButterflyDrawModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -28666,7 +18002,7 @@ __declspec(naked) e::e()
 }
 
 // ??0CylinderEmissionVolumeInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) CylinderEmissionVolumeInfo::CylinderEmissionVolumeInfo(const CylinderEmissionVolumeInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -28730,7 +18066,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0CylinderEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) CylinderEmissionVolumeModuleTemplate::CylinderEmissionVolumeModuleTemplate(const CylinderEmissionVolumeModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -28847,7 +18183,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0CylinderEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) CylinderEmissionVolumeModuleTemplate::CylinderEmissionVolumeModuleTemplate()
 {
     __asm {
         __emit 0x8b
@@ -28911,7 +18247,7 @@ __declspec(naked) e::e()
 }
 
 // ??0CylindricalEmissionVelocityInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) CylindricalEmissionVelocityInfo::CylindricalEmissionVelocityInfo(const CylindricalEmissionVelocityInfo &that)
 {
     __asm {
         __emit 0x56
@@ -28989,7 +18325,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0CylindricalEmissionVelocityInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) CylindricalEmissionVelocityInfo::CylindricalEmissionVelocityInfo()
 {
     __asm {
         __emit 0x6a
@@ -29101,7 +18437,7 @@ __declspec(naked) o::o()
 }
 
 // ??0CylindricalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) CylindricalEmissionVelocityModuleTemplate::CylindricalEmissionVelocityModuleTemplate(const CylindricalEmissionVelocityModuleTemplate &that)
 {
     __asm {
         __emit 0x56
@@ -29170,7 +18506,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0CylindricalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) CylindricalEmissionVelocityModuleTemplate::CylindricalEmissionVelocityModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -29283,7 +18619,7 @@ __declspec(naked) e::e()
 }
 
 // ??0DefaultAlphaModuleInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) DefaultAlphaModuleInfo::DefaultAlphaModuleInfo(const DefaultAlphaModuleInfo &that)
 {
     __asm {
         __emit 0x56
@@ -29322,7 +18658,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0DefaultAlphaModuleInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) DefaultAlphaModuleInfo::DefaultAlphaModuleInfo()
 {
     __asm {
         __emit 0x6a
@@ -29431,7 +18767,7 @@ __declspec(naked) o::o()
 }
 
 // ??0DefaultColorModuleInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) DefaultColorModuleInfo::DefaultColorModuleInfo(const DefaultColorModuleInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -29498,7 +18834,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0DefaultColorModuleInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) DefaultColorModuleInfo::DefaultColorModuleInfo()
 {
     __asm {
         __emit 0x8b
@@ -29652,7 +18988,7 @@ __declspec(naked) o::o()
 }
 
 // ??0DefaultPhysicsModuleInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) DefaultPhysicsModuleInfo::DefaultPhysicsModuleInfo(const DefaultPhysicsModuleInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -29722,7 +19058,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0DefaultPhysicsModuleInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) DefaultPhysicsModuleInfo::DefaultPhysicsModuleInfo()
 {
     __asm {
         __emit 0x6a
@@ -29820,7 +19156,7 @@ __declspec(naked) o::o()
 }
 
 // ??0DefaultUpdateModuleInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) DefaultUpdateModuleInfo::DefaultUpdateModuleInfo(const DefaultUpdateModuleInfo &that)
 {
     __asm {
         __emit 0x56
@@ -29962,7 +19298,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0DefaultUpdateModuleInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) DefaultUpdateModuleInfo::DefaultUpdateModuleInfo()
 {
     __asm {
         __emit 0x6a
@@ -30150,7 +19486,7 @@ __declspec(naked) o::o()
 }
 
 // ??0HemisphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) HemisphericalEmissionVelocityModuleTemplate::HemisphericalEmissionVelocityModuleTemplate(const HemisphericalEmissionVelocityModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -30196,7 +19532,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0HemisphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) HemisphericalEmissionVelocityModuleTemplate::HemisphericalEmissionVelocityModuleTemplate()
 {
     __asm {
         __emit 0x56
@@ -30235,7 +19571,7 @@ __declspec(naked) e::e()
 }
 
 // ??0LifeEventModuleInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) LifeEventModuleInfo::LifeEventModuleInfo(const LifeEventModuleInfo &that)
 {
     __asm {
         __emit 0x6a
@@ -30351,7 +19687,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0LifeEventModuleInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) LifeEventModuleInfo::LifeEventModuleInfo()
 {
     __asm {
         __emit 0x6a
@@ -30448,7 +19784,7 @@ __declspec(naked) o::o()
 }
 
 // ??0LifeEventModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) LifeEventModuleTemplate::LifeEventModuleTemplate(const LifeEventModuleTemplate &that)
 {
     __asm {
         __emit 0x6a
@@ -30610,7 +19946,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0LifeEventModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) LifeEventModuleTemplate::LifeEventModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -30731,7 +20067,7 @@ __declspec(naked) e::e()
 }
 
 // ??0LightningDrawModuleInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) LightningDrawModuleInfo::LightningDrawModuleInfo(const LightningDrawModuleInfo &that)
 {
     __asm {
         __emit 0x56
@@ -30835,7 +20171,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0LightningDrawModuleInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) LightningDrawModuleInfo::LightningDrawModuleInfo()
 {
     __asm {
         __emit 0x6a
@@ -30979,7 +20315,7 @@ __declspec(naked) o::o()
 }
 
 // ??0LightningDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) LightningDrawModuleTemplate::LightningDrawModuleTemplate(const LightningDrawModuleTemplate &that)
 {
     __asm {
         __emit 0x56
@@ -31048,7 +20384,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0LightningDrawModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) LightningDrawModuleTemplate::LightningDrawModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -31161,7 +20497,7 @@ __declspec(naked) e::e()
 }
 
 // ??0LightningEmissionInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) LightningEmissionInfo::LightningEmissionInfo(const LightningEmissionInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -31439,7 +20775,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0LightningEmissionInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) LightningEmissionInfo::LightningEmissionInfo()
 {
     __asm {
         __emit 0x6a
@@ -31737,7 +21073,7 @@ __declspec(naked) o::o()
 }
 
 // ??0LightningEmissionModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) LightningEmissionModuleTemplate::LightningEmissionModuleTemplate(const LightningEmissionModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -31820,7 +21156,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0LightningEmissionModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) LightningEmissionModuleTemplate::LightningEmissionModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -31933,7 +21269,7 @@ __declspec(naked) e::e()
 }
 
 // ??0LineEmissionVolumeInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) LineEmissionVolumeInfo::LineEmissionVolumeInfo(const LineEmissionVolumeInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -32003,7 +21339,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0LineEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) LineEmissionVolumeModuleTemplate::LineEmissionVolumeModuleTemplate(const LineEmissionVolumeModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -32126,7 +21462,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0LineEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) LineEmissionVolumeModuleTemplate::LineEmissionVolumeModuleTemplate()
 {
     __asm {
         __emit 0x8b
@@ -32193,7 +21529,7 @@ __declspec(naked) e::e()
 }
 
 // ??0OrthoEmissionVelocityInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) OrthoEmissionVelocityInfo::OrthoEmissionVelocityInfo(const OrthoEmissionVelocityInfo &that)
 {
     __asm {
         __emit 0x56
@@ -32293,7 +21629,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0OrthoEmissionVelocityInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) OrthoEmissionVelocityInfo::OrthoEmissionVelocityInfo()
 {
     __asm {
         __emit 0x6a
@@ -32430,7 +21766,7 @@ __declspec(naked) o::o()
 }
 
 // ??0OrthoEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) OrthoEmissionVelocityModuleTemplate::OrthoEmissionVelocityModuleTemplate(const OrthoEmissionVelocityModuleTemplate &that)
 {
     __asm {
         __emit 0x56
@@ -32499,7 +21835,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0OrthoEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) OrthoEmissionVelocityModuleTemplate::OrthoEmissionVelocityModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -32612,7 +21948,7 @@ __declspec(naked) e::e()
 }
 
 // ??0OutwardEmissionVelocityInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) OutwardEmissionVelocityInfo::OutwardEmissionVelocityInfo(const OutwardEmissionVelocityInfo &that)
 {
     __asm {
         __emit 0x56
@@ -32690,7 +22026,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0OutwardEmissionVelocityInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) OutwardEmissionVelocityInfo::OutwardEmissionVelocityInfo()
 {
     __asm {
         __emit 0x6a
@@ -32802,7 +22138,7 @@ __declspec(naked) o::o()
 }
 
 // ??0OutwardEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) OutwardEmissionVelocityModuleTemplate::OutwardEmissionVelocityModuleTemplate(const OutwardEmissionVelocityModuleTemplate &that)
 {
     __asm {
         __emit 0x56
@@ -32871,7 +22207,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0OutwardEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) OutwardEmissionVelocityModuleTemplate::OutwardEmissionVelocityModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -32984,7 +22320,7 @@ __declspec(naked) e::e()
 }
 
 // ??0ParticleSystemInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) ParticleSystemInfo::ParticleSystemInfo(const ParticleSystemInfo &that)
 {
     __asm {
         __emit 0x6a
@@ -33406,7 +22742,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0ParticleSystemInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) ParticleSystemInfo::ParticleSystemInfo()
 {
     __asm {
         __emit 0x8b
@@ -33581,7 +22917,7 @@ __declspec(naked) o::o()
 }
 
 // ??0ParticleSystemTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) ParticleSystemTemplate::ParticleSystemTemplate(const ParticleSystemTemplate &that)
 {
     __asm {
         __emit 0x6a
@@ -33714,7 +23050,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0ParticleSystemTemplate@FXParticleSystem@@QAE@ABVAsciiString@@@Z
-__declspec(naked) e::e(const AsciiString &name)
+__declspec(naked) ParticleSystemTemplate::ParticleSystemTemplate(const AsciiString &name)
 {
     __asm {
         __emit 0x6a
@@ -33877,7 +23213,7 @@ __declspec(naked) e::e(const AsciiString &name)
 }
 
 // ??0PointEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) PointEmissionVolumeModuleTemplate::PointEmissionVolumeModuleTemplate(const PointEmissionVolumeModuleTemplate &that)
 {
     __asm {
         __emit 0x56
@@ -33946,7 +23282,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0PointEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) PointEmissionVolumeModuleTemplate::PointEmissionVolumeModuleTemplate()
 {
     __asm {
         __emit 0x8b
@@ -33994,7 +23330,7 @@ __declspec(naked) e::e()
 }
 
 // ??0QuadDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) QuadDrawModuleTemplate::QuadDrawModuleTemplate(const QuadDrawModuleTemplate &that)
 {
     __asm {
         __emit 0x56
@@ -34063,7 +23399,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0QuadDrawModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) QuadDrawModuleTemplate::QuadDrawModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -34176,7 +23512,7 @@ __declspec(naked) e::e()
 }
 
 // ??0RenderObjectDrawModuleInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) RenderObjectDrawModuleInfo::RenderObjectDrawModuleInfo(const RenderObjectDrawModuleInfo &that)
 {
     __asm {
         __emit 0x6a
@@ -34370,7 +23706,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0RenderObjectDrawModuleInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) RenderObjectDrawModuleInfo::RenderObjectDrawModuleInfo()
 {
     __asm {
         __emit 0x8b
@@ -34438,7 +23774,7 @@ __declspec(naked) o::o()
 }
 
 // ??0RenderObjectDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) RenderObjectDrawModuleTemplate::RenderObjectDrawModuleTemplate(const RenderObjectDrawModuleTemplate &that)
 {
     __asm {
         __emit 0x6a
@@ -34569,7 +23905,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0RenderObjectDrawModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) RenderObjectDrawModuleTemplate::RenderObjectDrawModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -34682,7 +24018,7 @@ __declspec(naked) e::e()
 }
 
 // ??0RenderObjectUpdateModuleInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) RenderObjectUpdateModuleInfo::RenderObjectUpdateModuleInfo(const RenderObjectUpdateModuleInfo &that)
 {
     __asm {
         __emit 0x56
@@ -34990,7 +24326,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0RenderObjectUpdateModuleInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) RenderObjectUpdateModuleInfo::RenderObjectUpdateModuleInfo()
 {
     __asm {
         __emit 0x6a
@@ -35346,7 +24682,7 @@ __declspec(naked) o::o()
 }
 
 // ??0RenderObjectUpdateModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) RenderObjectUpdateModuleTemplate::RenderObjectUpdateModuleTemplate(const RenderObjectUpdateModuleTemplate &that)
 {
     __asm {
         __emit 0x56
@@ -35415,7 +24751,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0RenderObjectUpdateModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) RenderObjectUpdateModuleTemplate::RenderObjectUpdateModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -35528,7 +24864,7 @@ __declspec(naked) e::e()
 }
 
 // ??0SphereEmissionVolumeInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) SphereEmissionVolumeInfo::SphereEmissionVolumeInfo(const SphereEmissionVolumeInfo &that)
 {
     __asm {
         __emit 0x56
@@ -35568,7 +24904,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0SphereEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) SphereEmissionVolumeModuleTemplate::SphereEmissionVolumeModuleTemplate(const SphereEmissionVolumeModuleTemplate &that)
 {
     __asm {
         __emit 0x56
@@ -35637,7 +24973,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0SphereEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) SphereEmissionVolumeModuleTemplate::SphereEmissionVolumeModuleTemplate()
 {
     __asm {
         __emit 0x8b
@@ -35689,7 +25025,7 @@ __declspec(naked) e::e()
 }
 
 // ??0SphericalEmissionVelocityInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) SphericalEmissionVelocityInfo::SphericalEmissionVelocityInfo(const SphericalEmissionVelocityInfo &that)
 {
     __asm {
         __emit 0x56
@@ -35745,7 +25081,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0SphericalEmissionVelocityInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) SphericalEmissionVelocityInfo::SphericalEmissionVelocityInfo()
 {
     __asm {
         __emit 0x6a
@@ -35831,7 +25167,7 @@ __declspec(naked) o::o()
 }
 
 // ??0SphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) SphericalEmissionVelocityModuleTemplate::SphericalEmissionVelocityModuleTemplate(const SphericalEmissionVelocityModuleTemplate &that)
 {
     __asm {
         __emit 0x56
@@ -35900,7 +25236,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0SphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) SphericalEmissionVelocityModuleTemplate::SphericalEmissionVelocityModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -36013,7 +25349,7 @@ __declspec(naked) e::e()
 }
 
 // ??0StreakDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) StreakDrawModuleTemplate::StreakDrawModuleTemplate(const StreakDrawModuleTemplate &that)
 {
     __asm {
         __emit 0x56
@@ -36082,7 +25418,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0StreakDrawModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) StreakDrawModuleTemplate::StreakDrawModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -36195,7 +25531,7 @@ __declspec(naked) e::e()
 }
 
 // ??0TerrainCollisionModuleInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) TerrainCollisionModuleInfo::TerrainCollisionModuleInfo(const TerrainCollisionModuleInfo &that)
 {
     __asm {
         __emit 0x6a
@@ -36317,7 +25653,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0TerrainCollisionModuleInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) TerrainCollisionModuleInfo::TerrainCollisionModuleInfo()
 {
     __asm {
         __emit 0x6a
@@ -36419,7 +25755,7 @@ __declspec(naked) o::o()
 }
 
 // ??0TerrainCollisionModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) e::e(const e &that)
+__declspec(naked) TerrainCollisionModuleTemplate::TerrainCollisionModuleTemplate(const TerrainCollisionModuleTemplate &that)
 {
     __asm {
         __emit 0x6a
@@ -36581,7 +25917,7 @@ __declspec(naked) e::e(const e &that)
 }
 
 // ??0TerrainCollisionModuleTemplate@FXParticleSystem@@QAE@XZ
-__declspec(naked) e::e()
+__declspec(naked) TerrainCollisionModuleTemplate::TerrainCollisionModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -36702,7 +26038,7 @@ __declspec(naked) e::e()
 }
 
 // ??0WindModuleInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) o::o(const o &that)
+__declspec(naked) WindModuleInfo::WindModuleInfo(const WindModuleInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -36826,7 +26162,7 @@ __declspec(naked) o::o(const o &that)
 }
 
 // ??0WindModuleInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) o::o()
+__declspec(naked) WindModuleInfo::WindModuleInfo()
 {
     __asm {
         __emit 0x8b
@@ -36945,7 +26281,7 @@ __declspec(naked) o::o()
 }
 
 // ??1BoxEmissionVolumeModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) BoxEmissionVolumeModuleTemplate::~BoxEmissionVolumeModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -37002,7 +26338,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1ButterflyDrawModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) ButterflyDrawModuleTemplate::~ButterflyDrawModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -37059,7 +26395,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1CylinderEmissionVolumeModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) CylinderEmissionVolumeModuleTemplate::~CylinderEmissionVolumeModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -37116,7 +26452,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1CylindricalEmissionVelocityInfo@FXParticleSystem@@UAE@XZ
-__declspec(naked) o::~o()
+__declspec(naked) CylindricalEmissionVelocityInfo::~CylindricalEmissionVelocityInfo()
 {
     __asm {
         __emit 0xc7
@@ -37130,7 +26466,7 @@ __declspec(naked) o::~o()
 }
 
 // ??1CylindricalEmissionVelocityModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) CylindricalEmissionVelocityModuleTemplate::~CylindricalEmissionVelocityModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -37187,7 +26523,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1HemisphericalEmissionVelocityModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) HemisphericalEmissionVelocityModuleTemplate::~HemisphericalEmissionVelocityModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -37244,7 +26580,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1LifeEventModuleInfo@FXParticleSystem@@UAE@XZ
-__declspec(naked) o::~o()
+__declspec(naked) LifeEventModuleInfo::~LifeEventModuleInfo()
 {
     __asm {
         __emit 0x6a
@@ -37318,7 +26654,7 @@ __declspec(naked) o::~o()
 }
 
 // ??1LifeEventModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) LifeEventModuleTemplate::~LifeEventModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -37443,7 +26779,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1LightningDrawModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) LightningDrawModuleTemplate::~LightningDrawModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -37500,7 +26836,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1LightningEmissionModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) LightningEmissionModuleTemplate::~LightningEmissionModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -37557,7 +26893,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1LineEmissionVolumeModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) LineEmissionVolumeModuleTemplate::~LineEmissionVolumeModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -37614,7 +26950,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1OrthoEmissionVelocityInfo@FXParticleSystem@@UAE@XZ
-__declspec(naked) o::~o()
+__declspec(naked) OrthoEmissionVelocityInfo::~OrthoEmissionVelocityInfo()
 {
     __asm {
         __emit 0xc7
@@ -37628,7 +26964,7 @@ __declspec(naked) o::~o()
 }
 
 // ??1OrthoEmissionVelocityModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) OrthoEmissionVelocityModuleTemplate::~OrthoEmissionVelocityModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -37685,7 +27021,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1OutwardEmissionVelocityInfo@FXParticleSystem@@UAE@XZ
-__declspec(naked) o::~o()
+__declspec(naked) OutwardEmissionVelocityInfo::~OutwardEmissionVelocityInfo()
 {
     __asm {
         __emit 0xc7
@@ -37699,7 +27035,7 @@ __declspec(naked) o::~o()
 }
 
 // ??1OutwardEmissionVelocityModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) OutwardEmissionVelocityModuleTemplate::~OutwardEmissionVelocityModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -37756,7 +27092,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1ParticleSystemInfo@FXParticleSystem@@UAE@XZ
-__declspec(naked) o::~o()
+__declspec(naked) ParticleSystemInfo::~ParticleSystemInfo()
 {
     __asm {
         __emit 0x6a
@@ -37856,7 +27192,7 @@ __declspec(naked) o::~o()
 }
 
 // ??1ParticleSystemTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) ParticleSystemTemplate::~ParticleSystemTemplate()
 {
     __asm {
         __emit 0x6a
@@ -37964,7 +27300,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1PointEmissionVolumeModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) PointEmissionVolumeModuleTemplate::~PointEmissionVolumeModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -38021,7 +27357,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1QuadDrawModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) QuadDrawModuleTemplate::~QuadDrawModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -38078,7 +27414,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1RenderObjectDrawModuleInfo@FXParticleSystem@@UAE@XZ
-__declspec(naked) o::~o()
+__declspec(naked) RenderObjectDrawModuleInfo::~RenderObjectDrawModuleInfo()
 {
     __asm {
         __emit 0x6a
@@ -38178,7 +27514,7 @@ __declspec(naked) o::~o()
 }
 
 // ??1RenderObjectDrawModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) RenderObjectDrawModuleTemplate::~RenderObjectDrawModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -38281,7 +27617,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1RenderObjectUpdateModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) RenderObjectUpdateModuleTemplate::~RenderObjectUpdateModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -38338,7 +27674,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1SphereEmissionVolumeModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) SphereEmissionVolumeModuleTemplate::~SphereEmissionVolumeModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -38395,7 +27731,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1SphericalEmissionVelocityInfo@FXParticleSystem@@UAE@XZ
-__declspec(naked) o::~o()
+__declspec(naked) SphericalEmissionVelocityInfo::~SphericalEmissionVelocityInfo()
 {
     __asm {
         __emit 0xc7
@@ -38409,7 +27745,7 @@ __declspec(naked) o::~o()
 }
 
 // ??1SphericalEmissionVelocityModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) SphericalEmissionVelocityModuleTemplate::~SphericalEmissionVelocityModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -38466,7 +27802,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1StreakDrawModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) StreakDrawModuleTemplate::~StreakDrawModuleTemplate()
 {
     __asm {
         __emit 0x85
@@ -38523,7 +27859,7 @@ __declspec(naked) e::~e()
 }
 
 // ??1TerrainCollisionModuleInfo@FXParticleSystem@@UAE@XZ
-__declspec(naked) o::~o()
+__declspec(naked) TerrainCollisionModuleInfo::~TerrainCollisionModuleInfo()
 {
     __asm {
         __emit 0x6a
@@ -38597,7 +27933,7 @@ __declspec(naked) o::~o()
 }
 
 // ??1TerrainCollisionModuleTemplate@FXParticleSystem@@UAE@XZ
-__declspec(naked) e::~e()
+__declspec(naked) TerrainCollisionModuleTemplate::~TerrainCollisionModuleTemplate()
 {
     __asm {
         __emit 0x6a
@@ -38722,7 +28058,7 @@ __declspec(naked) e::~e()
 }
 
 // ??4BoxEmissionVolumeInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) BoxEmissionVolumeInfo &BoxEmissionVolumeInfo::operator=(const BoxEmissionVolumeInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -38768,7 +28104,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4BoxEmissionVolumeModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) BoxEmissionVolumeModuleTemplate &BoxEmissionVolumeModuleTemplate::operator=(const BoxEmissionVolumeModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -38825,7 +28161,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4CylinderEmissionVolumeInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) CylinderEmissionVolumeInfo &CylinderEmissionVolumeInfo::operator=(const CylinderEmissionVolumeInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -38883,7 +28219,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4CylinderEmissionVolumeModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) CylinderEmissionVolumeModuleTemplate &CylinderEmissionVolumeModuleTemplate::operator=(const CylinderEmissionVolumeModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -38952,7 +28288,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4CylindricalEmissionVelocityInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) CylindricalEmissionVelocityInfo &CylindricalEmissionVelocityInfo::operator=(const CylindricalEmissionVelocityInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -39016,7 +28352,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4CylindricalEmissionVelocityModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) CylindricalEmissionVelocityModuleTemplate &CylindricalEmissionVelocityModuleTemplate::operator=(const CylindricalEmissionVelocityModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -39091,7 +28427,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4DefaultColorModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) DefaultColorModuleInfo &DefaultColorModuleInfo::operator=(const DefaultColorModuleInfo &that)
 {
     __asm {
         __emit 0x56
@@ -39363,7 +28699,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4DefaultPhysicsModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) DefaultPhysicsModuleInfo &DefaultPhysicsModuleInfo::operator=(const DefaultPhysicsModuleInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -39433,7 +28769,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4DefaultUpdateModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) DefaultUpdateModuleInfo &DefaultUpdateModuleInfo::operator=(const DefaultUpdateModuleInfo &that)
 {
     __asm {
         __emit 0x56
@@ -39569,7 +28905,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4EmissionVolumeInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) EmissionVolumeInfo &EmissionVolumeInfo::operator=(const EmissionVolumeInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -39591,7 +28927,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4HemisphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) HemisphericalEmissionVelocityModuleTemplate &HemisphericalEmissionVelocityModuleTemplate::operator=(const HemisphericalEmissionVelocityModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -39642,7 +28978,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4LifeEventModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) LifeEventModuleInfo &LifeEventModuleInfo::operator=(const LifeEventModuleInfo &that)
 {
     __asm {
         __emit 0x56
@@ -39704,7 +29040,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4LifeEventModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) LifeEventModuleTemplate &LifeEventModuleTemplate::operator=(const LifeEventModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -39795,7 +29131,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4LightningDrawModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) LightningDrawModuleInfo &LightningDrawModuleInfo::operator=(const LightningDrawModuleInfo &that)
 {
     __asm {
         __emit 0x56
@@ -39893,7 +29229,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4LightningDrawModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) LightningDrawModuleTemplate &LightningDrawModuleTemplate::operator=(const LightningDrawModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -39946,7 +29282,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4LightningEmissionModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) LightningEmissionModuleTemplate &LightningEmissionModuleTemplate::operator=(const LightningEmissionModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -39999,7 +29335,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4LineEmissionVolumeModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) LineEmissionVolumeModuleTemplate &LineEmissionVolumeModuleTemplate::operator=(const LineEmissionVolumeModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -40080,7 +29416,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4OrthoEmissionVelocityInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) OrthoEmissionVelocityInfo &OrthoEmissionVelocityInfo::operator=(const OrthoEmissionVelocityInfo &that)
 {
     __asm {
         __emit 0x56
@@ -40166,7 +29502,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4OrthoEmissionVelocityModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) OrthoEmissionVelocityModuleTemplate &OrthoEmissionVelocityModuleTemplate::operator=(const OrthoEmissionVelocityModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -40263,7 +29599,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4OutwardEmissionVelocityInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) OutwardEmissionVelocityInfo &OutwardEmissionVelocityInfo::operator=(const OutwardEmissionVelocityInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -40327,7 +29663,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4OutwardEmissionVelocityModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) OutwardEmissionVelocityModuleTemplate &OutwardEmissionVelocityModuleTemplate::operator=(const OutwardEmissionVelocityModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -40402,7 +29738,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4ParticleSystemInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) ParticleSystemInfo &ParticleSystemInfo::operator=(const ParticleSystemInfo &that)
 {
     __asm {
         __emit 0x56
@@ -40750,7 +30086,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4ParticleSystemTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) ParticleSystemTemplate &ParticleSystemTemplate::operator=(const ParticleSystemTemplate &that)
 {
     __asm {
         __emit 0x56
@@ -40824,7 +30160,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4PointEmissionVolumeModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) PointEmissionVolumeModuleTemplate &PointEmissionVolumeModuleTemplate::operator=(const PointEmissionVolumeModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -40864,7 +30200,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4RandomAlphaKeyframe@FXParticleSystem@@QAEAAU01@ABU01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) RandomAlphaKeyframe &RandomAlphaKeyframe::operator=(const RandomAlphaKeyframe &that)
 {
     __asm {
         __emit 0x8b
@@ -40906,7 +30242,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4RenderObjectDrawModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) RenderObjectDrawModuleInfo &RenderObjectDrawModuleInfo::operator=(const RenderObjectDrawModuleInfo &that)
 {
     __asm {
         __emit 0x56
@@ -41036,7 +30372,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4RenderObjectDrawModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) RenderObjectDrawModuleTemplate &RenderObjectDrawModuleTemplate::operator=(const RenderObjectDrawModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -41089,7 +30425,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4RenderObjectUpdateModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) RenderObjectUpdateModuleInfo &RenderObjectUpdateModuleInfo::operator=(const RenderObjectUpdateModuleInfo &that)
 {
     __asm {
         __emit 0x56
@@ -41391,7 +30727,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4RenderObjectUpdateModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) RenderObjectUpdateModuleTemplate &RenderObjectUpdateModuleTemplate::operator=(const RenderObjectUpdateModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -41444,7 +30780,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4SphereEmissionVolumeInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) SphereEmissionVolumeInfo &SphereEmissionVolumeInfo::operator=(const SphereEmissionVolumeInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -41472,7 +30808,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4SphereEmissionVolumeModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) SphereEmissionVolumeModuleTemplate &SphereEmissionVolumeModuleTemplate::operator=(const SphereEmissionVolumeModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -41524,7 +30860,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4SphericalEmissionVelocityInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) SphericalEmissionVelocityInfo &SphericalEmissionVelocityInfo::operator=(const SphericalEmissionVelocityInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -41564,7 +30900,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4SphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) SphericalEmissionVelocityModuleTemplate &SphericalEmissionVelocityModuleTemplate::operator=(const SphericalEmissionVelocityModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -41615,7 +30951,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4TerrainCollisionModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) TerrainCollisionModuleInfo &TerrainCollisionModuleInfo::operator=(const TerrainCollisionModuleInfo &that)
 {
     __asm {
         __emit 0x56
@@ -41683,7 +31019,7 @@ __declspec(naked) o &o::operator=(const o &that)
 }
 
 // ??4TerrainCollisionModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) e &e::operator=(const e &that)
+__declspec(naked) TerrainCollisionModuleTemplate &TerrainCollisionModuleTemplate::operator=(const TerrainCollisionModuleTemplate &that)
 {
     __asm {
         __emit 0x8b
@@ -41780,7 +31116,7 @@ __declspec(naked) e &e::operator=(const e &that)
 }
 
 // ??4WindModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) o &o::operator=(const o &that)
+__declspec(naked) WindModuleInfo &WindModuleInfo::operator=(const WindModuleInfo &that)
 {
     __asm {
         __emit 0x8b
@@ -43685,7 +33021,7 @@ __declspec(naked) void WindModuleInfo::DoXfer(Xfer &xfer)
 }
 
 // ?createSlaveSystem@ParticleSystemTemplate@FXParticleSystem@@QBE?AV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@_N@Z
-__declspec(naked) void ParticleSystemTemplate::createSlaveSystem() const
+__declspec(naked) TrackingPtr<ParticleSystem> ParticleSystemTemplate::createSlaveSystem(bool) const
 {
     __asm {
         __emit 0x6a
@@ -43938,7 +33274,7 @@ __declspec(naked) void ParticleSystemTemplate::createSlaveSystem() const
 }
 
 // ?getEventFX@LifeEventModuleInfo@FXParticleSystem@@QAEPBVFXList@@XZ
-__declspec(naked) const FXList *LifeEventModuleInfo::getEventFX() const
+__declspec(naked) const FXList *LifeEventModuleInfo::getEventFX()
 {
     __asm {
         __emit 0x56
@@ -44007,7 +33343,7 @@ __declspec(naked) const FXList *LifeEventModuleInfo::getEventFX() const
 }
 
 // ?getEventFX@TerrainCollisionModuleInfo@FXParticleSystem@@QAEPBVFXList@@XZ
-__declspec(naked) const FXList *TerrainCollisionModuleInfo::getEventFX() const
+__declspec(naked) const FXList *TerrainCollisionModuleInfo::getEventFX()
 {
     __asm {
         __emit 0x56

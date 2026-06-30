@@ -9,7 +9,10 @@ class AssetList;
 class INI;
 class File;
 class FXList;
-template <class T> class TrackingPtr;
+template <class T>
+class TrackingPtr {
+    T *m_ptr;
+};
 
 namespace FXParticleSystem {
 
@@ -99,18 +102,18 @@ class ParticleTerrainCollisionModuleTemplate;
 class RenderObjectParticleUpdateModuleTemplate;
 
 template <int Category>
-class DefaultModuleKey {
-public:
+struct DefaultModuleKey {
     static const char VALUE[1];
     DefaultModuleKey &operator=(const DefaultModuleKey &that) { return *this; }
+private:
     static const char *GetValue();
 };
 
 template <int Category>
-class DefaultModuleName {
-public:
+struct DefaultModuleName {
     static const char VALUE[1];
     DefaultModuleName &operator=(const DefaultModuleName &that) { return *this; }
+private:
     static const char *GetValue();
 };
 
@@ -378,7 +381,7 @@ public:
     virtual void LoadPostProcess();
     virtual void DoXfer(Xfer &xfer);
     LifeEventModuleInfo &operator=(const LifeEventModuleInfo &that);
-    const FXList *getEventFX() const;
+    const FXList *getEventFX();
 };
 
 class LightningDrawModuleInfo {
@@ -484,7 +487,7 @@ public:
     virtual void LoadPostProcess();
     virtual void DoXfer(Xfer &xfer);
     TerrainCollisionModuleInfo &operator=(const TerrainCollisionModuleInfo &that);
-    const FXList *getEventFX() const;
+    const FXList *getEventFX();
 };
 
 class WindModuleInfo {
@@ -704,7 +707,7 @@ public:
     DefaultModuleTemplate();
     DefaultModuleTemplate(const DefaultModuleTemplate<N> &that);
     virtual ~DefaultModuleTemplate();
-    DefaultModuleTemplate<N> &operator=(const DefaultModuleTemplate<N> &that);
+    DefaultModuleTemplate<N> &operator=(const DefaultModuleTemplate<N> &that) { return *this; }
     void parse(INI *ini);
     static void parseRGBColorKeyframe(INI *ini, void *data, void *store, const void *userData);
     virtual void writeINI(File &file, unsigned int flags) const;
@@ -716,6 +719,7 @@ class CategoryModuleTemplateBase {
 public:
     CategoryModuleTemplateBase();
     CategoryModuleTemplateBase(const CategoryModuleTemplateBase<Category> &that);
+    virtual ~CategoryModuleTemplateBase();
     CategoryModuleTemplateBase<Category> &operator=(const CategoryModuleTemplateBase<Category> &that) { return *this; }
 };
 
@@ -729,36 +733,150 @@ public:
     CategoryModuleTemplate<Category> &operator=(const CategoryModuleTemplate<Category> &that) { return *this; }
 };
 
-// ConcreteModuleClass forward declaration
 template <typename Tag> class ConcreteModuleClass;
 template <typename Tag> class ConcreteModuleTemplate;
 
-// Partial specialization for DefaultModuleTag<N>
-template <int N>
-class ConcreteModuleClass<DefaultModuleTag<N>> {
+// Explicit specializations - MSVC 7.1 does not support partial specializations,
+// so each tag type gets its own full template<> specialization.
+
+template <>
+class ConcreteModuleClass<DefaultModuleTag<0> > {
 private:
     ConcreteModuleClass();
 public:
     ~ConcreteModuleClass();
-    static const ConcreteModuleClass<DefaultModuleTag<N>> &getInstance();
-    virtual DefaultModuleTemplate<N> *createTemplate(INI *ini) const;
-    virtual DefaultModuleTemplate<N> *createTemplate() const;
+    static const ConcreteModuleClass<DefaultModuleTag<0> > &getInstance();
+    DefaultModuleTemplate<0> *createTemplate(INI *ini) const;
+    DefaultModuleTemplate<0> *createTemplate() const;
 };
 
-// Partial specialization for ModuleTag<...>
-template <int Cat, const char (&Key)[1], const char (&Name)[1], class Module, class Template, class PModule, class PTemplate>
-class ConcreteModuleClass<ModuleTag<Cat, Key, Name, Module, Template, PModule, PTemplate>> {
-    typedef ModuleTag<Cat, Key, Name, Module, Template, PModule, PTemplate> Tag;
+template <>
+class ConcreteModuleTemplate<DefaultModuleTag<0> > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<0> > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<DefaultModuleTag<0> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<0> > &that);
+    const ConcreteModuleClass<DefaultModuleTag<0> > &getClass() const;
+    DefaultModuleTemplate<0> *clone() const;
+    DefaultModule<0> *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<DefaultModuleTag<1> > {
 private:
     ConcreteModuleClass();
 public:
     ~ConcreteModuleClass();
-    static const ConcreteModuleClass<Tag> &getInstance();
-    virtual Template *createTemplate(INI *ini) const;
-    virtual Template *createTemplate() const;
+    static const ConcreteModuleClass<DefaultModuleTag<1> > &getInstance();
+    DefaultModuleTemplate<1> *createTemplate(INI *ini) const;
+    DefaultModuleTemplate<1> *createTemplate() const;
 };
 
-// Explicit specialization for OrthoEmissionVelocityModuleTag
+template <>
+class ConcreteModuleTemplate<DefaultModuleTag<1> > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<1> > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<DefaultModuleTag<1> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<1> > &that);
+    const ConcreteModuleClass<DefaultModuleTag<1> > &getClass() const;
+    DefaultModuleTemplate<1> *clone() const;
+    DefaultModule<1> *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<DefaultModuleTag<2> > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<DefaultModuleTag<2> > &getInstance();
+    DefaultModuleTemplate<2> *createTemplate(INI *ini) const;
+    DefaultModuleTemplate<2> *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<DefaultModuleTag<2> > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<2> > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<DefaultModuleTag<2> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<2> > &that);
+    const ConcreteModuleClass<DefaultModuleTag<2> > &getClass() const;
+    DefaultModuleTemplate<2> *clone() const;
+    DefaultModule<2> *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<DefaultModuleTag<3> > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<DefaultModuleTag<3> > &getInstance();
+    DefaultModuleTemplate<3> *createTemplate(INI *ini) const;
+    DefaultModuleTemplate<3> *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<DefaultModuleTag<3> > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<3> > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<DefaultModuleTag<3> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<3> > &that);
+    const ConcreteModuleClass<DefaultModuleTag<3> > &getClass() const;
+    DefaultModuleTemplate<3> *clone() const;
+    DefaultModule<3> *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<DefaultModuleTag<6> > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<DefaultModuleTag<6> > &getInstance();
+    DefaultModuleTemplate<6> *createTemplate(INI *ini) const;
+    DefaultModuleTemplate<6> *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<DefaultModuleTag<6> > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<6> > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<DefaultModuleTag<6> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<6> > &that);
+    const ConcreteModuleClass<DefaultModuleTag<6> > &getClass() const;
+    DefaultModuleTemplate<6> *clone() const;
+    DefaultModule<6> *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<DefaultModuleTag<7> > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<DefaultModuleTag<7> > &getInstance();
+    DefaultModuleTemplate<7> *createTemplate(INI *ini) const;
+    DefaultModuleTemplate<7> *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<DefaultModuleTag<7> > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<7> > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<DefaultModuleTag<7> > &operator=(const ConcreteModuleTemplate<DefaultModuleTag<7> > &that);
+    const ConcreteModuleClass<DefaultModuleTag<7> > &getClass() const;
+    DefaultModuleTemplate<7> *clone() const;
+    DefaultModule<7> *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
 template <>
 class ConcreteModuleClass<OrthoEmissionVelocityModuleTag> {
 private:
@@ -766,11 +884,22 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<OrthoEmissionVelocityModuleTag> &getInstance();
-    virtual OrthoEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;
-    virtual OrthoEmissionVelocityModuleTemplate *createTemplate() const;
+    OrthoEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;
+    OrthoEmissionVelocityModuleTemplate *createTemplate() const;
 };
 
-// Explicit specialization for PointEmissionVolumeModuleTag
+template <>
+class ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &operator=(const ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &that);
+    const ConcreteModuleClass<OrthoEmissionVelocityModuleTag> &getClass() const;
+    OrthoEmissionVelocityModuleTemplate *clone() const;
+    OrthoEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
 template <>
 class ConcreteModuleClass<PointEmissionVolumeModuleTag> {
 private:
@@ -778,61 +907,410 @@ private:
 public:
     ~ConcreteModuleClass();
     static const ConcreteModuleClass<PointEmissionVolumeModuleTag> &getInstance();
-    virtual PointEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;
-    virtual PointEmissionVolumeModuleTemplate *createTemplate() const;
+    PointEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;
+    PointEmissionVolumeModuleTemplate *createTemplate() const;
 };
 
-// ConcreteModuleTemplate partial specialization for DefaultModuleTag<N>
-template <int N>
-class ConcreteModuleTemplate<DefaultModuleTag<N>> {
-public:
-    ConcreteModuleTemplate();
-    ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<N>> &that);
-    virtual ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<DefaultModuleTag<N>> &operator=(const ConcreteModuleTemplate<DefaultModuleTag<N>> &that);
-    virtual const ConcreteModuleClass<DefaultModuleTag<N>> &getClass() const;
-    virtual DefaultModuleTemplate<N> *clone() const;
-    virtual DefaultModule<N> *createModule(TrackingPtr<ParticleSystem> &sys);
-};
-
-// ConcreteModuleTemplate partial specialization for ModuleTag<...>
-template <int Cat, const char (&Key)[1], const char (&Name)[1], class Module, class Template, class PModule, class PTemplate>
-class ConcreteModuleTemplate<ModuleTag<Cat, Key, Name, Module, Template, PModule, PTemplate>> {
-    typedef ModuleTag<Cat, Key, Name, Module, Template, PModule, PTemplate> Tag;
-public:
-    ConcreteModuleTemplate();
-    ConcreteModuleTemplate(const ConcreteModuleTemplate<Tag> &that);
-    virtual ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<Tag> &operator=(const ConcreteModuleTemplate<Tag> &that);
-    virtual const ConcreteModuleClass<Tag> &getClass() const;
-    virtual Template *clone() const;
-    virtual Module *createModule(TrackingPtr<ParticleSystem> &sys);
-};
-
-// Explicit specialization for OrthoEmissionVelocityModuleTag
-template <>
-class ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> {
-public:
-    ConcreteModuleTemplate();
-    ConcreteModuleTemplate(const ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &that);
-    virtual ~ConcreteModuleTemplate();
-    ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &operator=(const ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &that);
-    virtual const ConcreteModuleClass<OrthoEmissionVelocityModuleTag> &getClass() const;
-    virtual OrthoEmissionVelocityModuleTemplate *clone() const;
-    virtual OrthoEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);
-};
-
-// Explicit specialization for PointEmissionVolumeModuleTag
 template <>
 class ConcreteModuleTemplate<PointEmissionVolumeModuleTag> {
 public:
     ConcreteModuleTemplate();
     ConcreteModuleTemplate(const ConcreteModuleTemplate<PointEmissionVolumeModuleTag> &that);
-    virtual ~ConcreteModuleTemplate();
+    ~ConcreteModuleTemplate();
     ConcreteModuleTemplate<PointEmissionVolumeModuleTag> &operator=(const ConcreteModuleTemplate<PointEmissionVolumeModuleTag> &that);
-    virtual const ConcreteModuleClass<PointEmissionVolumeModuleTag> &getClass() const;
-    virtual PointEmissionVolumeModuleTemplate *clone() const;
-    virtual PointEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);
+    const ConcreteModuleClass<PointEmissionVolumeModuleTag> &getClass() const;
+    PointEmissionVolumeModuleTemplate *clone() const;
+    PointEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);
 };
 
-}
+template <>
+class ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getInstance();
+    BoxEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;
+    BoxEmissionVolumeModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    const ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;
+    BoxEmissionVolumeModuleTemplate *clone() const;
+    BoxEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getInstance();
+    ButterflyDrawModuleTemplate *createTemplate(INI *ini) const;
+    ButterflyDrawModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    const ConcreteModuleClass<ModuleTag<6, BUTTERFLY_DRAW_MODULE_KEY, BUTTERFLY_DRAW_MODULE_NAME, ButterflyDrawModule, ButterflyDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;
+    ButterflyDrawModuleTemplate *clone() const;
+    ButterflyDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getInstance();
+    CylinderEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;
+    CylinderEmissionVolumeModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    const ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;
+    CylinderEmissionVolumeModuleTemplate *clone() const;
+    CylinderEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getInstance();
+    CylindricalEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;
+    CylindricalEmissionVelocityModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &operator=(const ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
+    const ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getClass() const;
+    CylindricalEmissionVelocityModuleTemplate *clone() const;
+    CylindricalEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getInstance();
+    HemisphericalEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;
+    HemisphericalEmissionVelocityModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &operator=(const ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
+    const ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getClass() const;
+    HemisphericalEmissionVelocityModuleTemplate *clone() const;
+    HemisphericalEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &getInstance();
+    LifeEventModuleTemplate *createTemplate(INI *ini) const;
+    LifeEventModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &operator=(const ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &that);
+    const ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &getClass() const;
+    LifeEventModuleTemplate *clone() const;
+    LifeEventModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getInstance();
+    LightningDrawModuleTemplate *createTemplate(INI *ini) const;
+    LightningDrawModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    const ConcreteModuleClass<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MODULE_NAME, LightningDrawModule, LightningDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;
+    LightningDrawModuleTemplate *clone() const;
+    LightningDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getInstance();
+    LightningEmissionModuleTemplate *createTemplate(INI *ini) const;
+    LightningEmissionModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    const ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;
+    LightningEmissionModuleTemplate *clone() const;
+    LightningEmissionModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getInstance();
+    LineEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;
+    LineEmissionVolumeModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    const ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;
+    LineEmissionVolumeModuleTemplate *clone() const;
+    LineEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getInstance();
+    OutwardEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;
+    OutwardEmissionVelocityModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &operator=(const ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
+    const ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getClass() const;
+    OutwardEmissionVelocityModuleTemplate *clone() const;
+    OutwardEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getInstance();
+    QuadDrawModuleTemplate *createTemplate(INI *ini) const;
+    QuadDrawModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    const ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_DRAW_MODULE_NAME, QuadDrawModule, QuadDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;
+    QuadDrawModuleTemplate *clone() const;
+    QuadDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getInstance();
+    RenderObjectDrawModuleTemplate *createTemplate(INI *ini) const;
+    RenderObjectDrawModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    const ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;
+    RenderObjectDrawModuleTemplate *clone() const;
+    RenderObjectDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &getInstance();
+    RenderObjectUpdateModuleTemplate *createTemplate(INI *ini) const;
+    RenderObjectUpdateModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &operator=(const ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &that);
+    const ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &getClass() const;
+    RenderObjectUpdateModuleTemplate *clone() const;
+    RenderObjectUpdateModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getInstance();
+    SphereEmissionVolumeModuleTemplate *createTemplate(INI *ini) const;
+    SphereEmissionVolumeModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &operator=(const ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that);
+    const ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &getClass() const;
+    SphereEmissionVolumeModuleTemplate *clone() const;
+    SphereEmissionVolumeModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getInstance();
+    SphericalEmissionVelocityModuleTemplate *createTemplate(INI *ini) const;
+    SphericalEmissionVelocityModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &operator=(const ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &that);
+    const ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &getClass() const;
+    SphericalEmissionVelocityModuleTemplate *clone() const;
+    SphericalEmissionVelocityModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getInstance();
+    StreakDrawModuleTemplate *createTemplate(INI *ini) const;
+    StreakDrawModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &operator=(const ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that);
+    const ConcreteModuleClass<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &getClass() const;
+    StreakDrawModuleTemplate *clone() const;
+    StreakDrawModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+
+template <>
+class ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > {
+private:
+    ConcreteModuleClass();
+public:
+    ~ConcreteModuleClass();
+    static const ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &getInstance();
+    TerrainCollisionModuleTemplate *createTemplate(INI *ini) const;
+    TerrainCollisionModuleTemplate *createTemplate() const;
+};
+
+template <>
+class ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > {
+public:
+    ConcreteModuleTemplate();
+    ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &that);
+    ~ConcreteModuleTemplate();
+    ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &operator=(const ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &that);
+    const ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &getClass() const;
+    TerrainCollisionModuleTemplate *clone() const;
+    TerrainCollisionModule *createModule(TrackingPtr<ParticleSystem> &sys);
+};
+} // namespace FXParticleSystem
