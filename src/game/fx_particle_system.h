@@ -32,6 +32,7 @@ enum ModuleCategory {
 };
 
 const char *GetKey(ModuleCategory category);
+const char *GetName(ModuleCategory category);
 void staticInitModules();
 
 // Forward declarations for int-based module templates
@@ -150,6 +151,8 @@ public:
 
 class ButterflyDrawModuleInfo {
 public:
+    ButterflyDrawModuleInfo();
+    ButterflyDrawModuleInfo(const ButterflyDrawModuleInfo &that);
     virtual ~ButterflyDrawModuleInfo();
     virtual const char *GetSnapshotName();
     virtual void LoadPostProcess();
@@ -178,6 +181,8 @@ public:
 
 class DefaultDrawModuleInfo {
 public:
+    DefaultDrawModuleInfo();
+    DefaultDrawModuleInfo(const DefaultDrawModuleInfo &that);
     virtual ~DefaultDrawModuleInfo();
     virtual const char *GetSnapshotName();
     virtual void LoadPostProcess();
@@ -251,7 +256,11 @@ public:
 
 class SphereEmissionVolumeInfo : public EmissionVolumeInfo {
 public:
+    SphereEmissionVolumeInfo();
     virtual ~SphereEmissionVolumeInfo();
+
+private:
+    float m_radius;
 };
 
 class CylinderEmissionVolumeInfo : public EmissionVolumeInfo {
@@ -287,6 +296,7 @@ public:
 class QuadDrawModuleInfo {
 public:
     QuadDrawModuleInfo();
+    QuadDrawModuleInfo(const QuadDrawModuleInfo &that);
     virtual ~QuadDrawModuleInfo();
     virtual const char *GetSnapshotName();
     virtual void LoadPostProcess();
@@ -313,6 +323,7 @@ public:
 
 class StreakDrawModuleInfo {
 public:
+    StreakDrawModuleInfo();
     StreakDrawModuleInfo(const StreakDrawModuleInfo &that);
     virtual ~StreakDrawModuleInfo();
     virtual const char *GetSnapshotName();
@@ -355,6 +366,8 @@ public:
 };
 
 struct Keyframe {
+    Keyframe();
+
     float frame;
     float value;
 

@@ -22,6 +22,24 @@ __declspec(naked) const char *GetKey(ModuleCategory category)
     }
 }
 
+__declspec(naked) const char *GetName(ModuleCategory category)
+{
+    __asm {
+        __emit 0x8b
+        __emit 0x44
+        __emit 0x24
+        __emit 0x04
+        __emit 0x8b
+        __emit 0x04
+        __emit 0xc5
+        __emit 0x00
+        __emit 0x05
+        __emit 0x11
+        __emit 0x01
+        __emit 0xc3
+    }
+}
+
 __declspec(naked) void staticInitModules()
 {
     __asm {
@@ -151,6 +169,59 @@ __declspec(naked) void staticInitModules()
         __emit 0xff
         __emit 0xff
     }
+}
+
+ButterflyDrawModuleInfo::ButterflyDrawModuleInfo()
+{
+}
+
+ButterflyDrawModuleInfo::ButterflyDrawModuleInfo(const ButterflyDrawModuleInfo &that)
+{
+}
+
+DefaultDrawModuleInfo::DefaultDrawModuleInfo()
+{
+}
+
+DefaultDrawModuleInfo::DefaultDrawModuleInfo(const DefaultDrawModuleInfo &that)
+{
+}
+
+QuadDrawModuleInfo::QuadDrawModuleInfo(const QuadDrawModuleInfo &that)
+{
+}
+
+StreakDrawModuleInfo::StreakDrawModuleInfo()
+{
+}
+
+__declspec(naked) Keyframe::Keyframe()
+{
+    __asm {
+        __emit 0x8b
+        __emit 0xc1
+        __emit 0xc7
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0xc7
+        __emit 0x40
+        __emit 0x04
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0xc3
+    }
+}
+
+SphereEmissionVolumeInfo::SphereEmissionVolumeInfo()
+{
+    m_flag = false;
+    *(void **)this = (void *)0x01110A0C;
+    m_radius = 0.0f;
 }
 
 template <int Category, int SubCategory = 1>

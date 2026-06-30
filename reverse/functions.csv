@@ -566,3 +566,12 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?clear@?$StringBase@D@@QAEXXZ,0x00041A38,0x000680C0,6,src/game/string_base.cpp,matched,clears string by releasing buffer
 ?clear@?$StringBase@G@@QAEXXZ,0x00024C85,0x00068090,6,src/game/string_base.cpp,matched,clears wide string by releasing buffer
 ?Set@Matrix4D@@QAEAAV1@ABVCoord3D@@@Z,0x0003670F,0x007E6150,78,src/math/matrix4d.cpp,matched,set matrix to identity with translation vector
+??0ButterflyDrawModuleInfo@FXParticleSystem@@QAE@XZ,0x000116C6,0x005F0C60,9,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer
+??0DefaultDrawModuleInfo@FXParticleSystem@@QAE@XZ,0x000455C0,0x005F3090,9,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer
+??0StreakDrawModuleInfo@FXParticleSystem@@QAE@XZ,0x00018796,0x005F7EF0,9,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer
+??0ButterflyDrawModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x0002C732,0x005D8B60,11,src/game/fx_particle_system.cpp,matched,copy constructor sets vtable pointer
+??0DefaultDrawModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x0003BB0B,0x005D56A0,11,src/game/fx_particle_system.cpp,matched,copy constructor sets vtable pointer
+??0QuadDrawModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00048AE5,0x005D88B0,11,src/game/fx_particle_system.cpp,matched,copy constructor sets vtable pointer
+?GetName@FXParticleSystem@@YAPBDW4ModuleCategory@1@@Z,0x00048B58,0x005D4510,12,src/game/fx_particle_system.cpp,matched,returns name for module category
+??0Keyframe@FXParticleSystem@@QAE@XZ,0x0002F21B,0x0005C6C0,16,src/game/fx_particle_system.cpp,matched,default constructor zeroes frame and value
+??0SphereEmissionVolumeInfo@FXParticleSystem@@QAE@XZ,0x0004B2AE,0x005D6120,17,src/game/fx_particle_system.cpp,matched,default constructor initializes base and radius
