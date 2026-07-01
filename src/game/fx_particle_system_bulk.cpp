@@ -1533,15 +1533,9 @@ __declspec(naked) RenderObjectUpdateModuleTemplate *ConcreteModuleClass<ModuleTa
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::getClass() const
+const ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > &ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::getClass() const
 {
-    __asm {
-        __emit 0xe9
-        __emit 0x90
-        __emit 0x44
-        __emit 0xa3
-        __emit 0xff
-    }
+    return ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::getInstance();
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
@@ -1962,15 +1956,9 @@ __declspec(naked) CylindricalEmissionVelocityModuleTemplate *ConcreteModuleClass
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getClass() const
+const ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getClass() const
 {
-    __asm {
-        __emit 0xe9
-        __emit 0xa0
-        __emit 0xb6
-        __emit 0xa5
-        __emit 0xff
-    }
+    return ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getInstance();
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
@@ -2391,15 +2379,9 @@ __declspec(naked) HemisphericalEmissionVelocityModuleTemplate *ConcreteModuleCla
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getClass() const
+const ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getClass() const
 {
-    __asm {
-        __emit 0xe9
-        __emit 0x2c
-        __emit 0x8f
-        __emit 0xa6
-        __emit 0xff
-    }
+    return ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getInstance();
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
@@ -2820,15 +2802,9 @@ __declspec(naked) OutwardEmissionVelocityModuleTemplate *ConcreteModuleClass<Mod
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getClass() const
+const ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getClass() const
 {
-    __asm {
-        __emit 0xe9
-        __emit 0x73
-        __emit 0x42
-        __emit 0xa5
-        __emit 0xff
-    }
+    return ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getInstance();
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
@@ -3249,15 +3225,9 @@ __declspec(naked) SphericalEmissionVelocityModuleTemplate *ConcreteModuleClass<M
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getClass() const
+const ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > &ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getClass() const
 {
-    __asm {
-        __emit 0xe9
-        __emit 0xec
-        __emit 0x56
-        __emit 0xa2
-        __emit 0xff
-    }
+    return ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::getInstance();
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
