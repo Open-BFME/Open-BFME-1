@@ -109,305 +109,92 @@ __declspec(naked) Xfer &Xfer::operator==(Snapshot &snapshot)
     }
 }
 
-__declspec(naked) Xfer &Xfer::operator==(Coord3DBase& v)
+Xfer &Xfer::operator==(Coord3DBase& v)
 {
-    __asm {
-        push esi
-        push 0
-        mov esi, ecx
-        mov eax, [esi]
-        push 0
-        push 0x00633364
-        call dword ptr [eax + 0x94]
-        mov eax, [esp + 0x8]
-        mov edx, [esi]
-        push 12
-        push eax
-        push 0
-        mov ecx, esi
-        call dword ptr [edx + 0x94]
-        mov eax, esi
-        pop esi
-        ret 4
-    }
+    XferEnum((const char *)0x00633364, 0, 0);
+    XferEnum(0, &v, 12);
+    return *this;
 }
-__declspec(naked) Xfer &Xfer::operator==(ICoord3D& v)
+
+Xfer &Xfer::operator==(ICoord3D& v)
 {
-    __asm {
-        push esi
-        push 0
-        mov esi, ecx
-        mov eax, [esi]
-        push 0
-        push 0x69633364
-        call dword ptr [eax + 0x94]
-        mov eax, [esp + 0x8]
-        mov edx, [esi]
-        push 12
-        push eax
-        push 0
-        mov ecx, esi
-        call dword ptr [edx + 0x94]
-        mov eax, esi
-        pop esi
-        ret 4
-    }
+    XferEnum((const char *)0x69633364, 0, 0);
+    XferEnum(0, &v, 12);
+    return *this;
 }
-__declspec(naked) Xfer &Xfer::operator==(Region3D& v)
+
+Xfer &Xfer::operator==(Region3D& v)
 {
-    __asm {
-        push esi
-        push edi
-        push 0
-        mov esi, ecx
-        mov eax, [esi]
-        push 0
-        push 0x00723364
-        call dword ptr [eax + 0x94]
-        mov edi, [esp + 0xc]
-        mov edx, [esi]
-        push 12
-        push edi
-        push 0
-        mov ecx, esi
-        call dword ptr [edx + 0x94]
-        mov eax, [esi]
-        push 12
-        add edi, 12
-        push edi
-        push 0
-        mov ecx, esi
-        call dword ptr [eax + 0x94]
-        pop edi
-        mov eax, esi
-        pop esi
-        ret 4
-    }
+    XferEnum((const char *)0x00723364, 0, 0);
+    XferEnum(0, &v.x_min, 12);
+    XferEnum(0, &v.x_max, 12);
+    return *this;
 }
-__declspec(naked) Xfer &Xfer::operator==(IRegion3D& v)
+
+Xfer &Xfer::operator==(IRegion3D& v)
 {
-    __asm {
-        push esi
-        push edi
-        push 0
-        mov esi, ecx
-        mov eax, [esi]
-        push 0
-        push 0x69723364
-        call dword ptr [eax + 0x94]
-        mov edi, [esp + 0xc]
-        mov edx, [esi]
-        push 12
-        push edi
-        push 0
-        mov ecx, esi
-        call dword ptr [edx + 0x94]
-        mov eax, [esi]
-        push 12
-        add edi, 12
-        push edi
-        push 0
-        mov ecx, esi
-        call dword ptr [eax + 0x94]
-        pop edi
-        mov eax, esi
-        pop esi
-        ret 4
-    }
+    XferEnum((const char *)0x69723364, 0, 0);
+    XferEnum(0, &v.x_min, 12);
+    XferEnum(0, &v.x_max, 12);
+    return *this;
 }
-__declspec(naked) Xfer &Xfer::operator==(Coord2D& v)
+
+Xfer &Xfer::operator==(Coord2D& v)
 {
-    __asm {
-        push esi
-        push 0
-        mov esi, ecx
-        mov eax, [esi]
-        push 0
-        push 0x00633264
-        call dword ptr [eax + 0x94]
-        mov eax, [esp + 0x8]
-        mov edx, [esi]
-        push 8
-        push eax
-        push 0
-        mov ecx, esi
-        call dword ptr [edx + 0x94]
-        mov eax, esi
-        pop esi
-        ret 4
-    }
+    XferEnum((const char *)0x00633264, 0, 0);
+    XferEnum(0, &v, 8);
+    return *this;
 }
-__declspec(naked) Xfer &Xfer::operator==(ICoord2D& v)
+
+Xfer &Xfer::operator==(ICoord2D& v)
 {
-    __asm {
-        push esi
-        push 0
-        mov esi, ecx
-        mov eax, [esi]
-        push 0
-        push 0x69633264
-        call dword ptr [eax + 0x94]
-        mov eax, [esp + 0x8]
-        mov edx, [esi]
-        push 8
-        push eax
-        push 0
-        mov ecx, esi
-        call dword ptr [edx + 0x94]
-        mov eax, esi
-        pop esi
-        ret 4
-    }
+    XferEnum((const char *)0x69633264, 0, 0);
+    XferEnum(0, &v, 8);
+    return *this;
 }
-__declspec(naked) Xfer &Xfer::operator==(Region2D& v)
+
+Xfer &Xfer::operator==(Region2D& v)
 {
-    __asm {
-        push esi
-        push edi
-        push 0
-        mov esi, ecx
-        mov eax, [esi]
-        push 0
-        push 0x00723264
-        call dword ptr [eax + 0x94]
-        mov edi, [esp + 0xc]
-        mov edx, [esi]
-        push 8
-        push edi
-        push 0
-        mov ecx, esi
-        call dword ptr [edx + 0x94]
-        mov eax, [esi]
-        push 8
-        add edi, 8
-        push edi
-        push 0
-        mov ecx, esi
-        call dword ptr [eax + 0x94]
-        pop edi
-        mov eax, esi
-        pop esi
-        ret 4
-    }
+    XferEnum((const char *)0x00723264, 0, 0);
+    XferEnum(0, &v.x_min, 8);
+    XferEnum(0, &v.x_max, 8);
+    return *this;
 }
-__declspec(naked) Xfer &Xfer::operator==(IRegion2D& v)
+
+Xfer &Xfer::operator==(IRegion2D& v)
 {
-    __asm {
-        push esi
-        push edi
-        push 0
-        mov esi, ecx
-        mov eax, [esi]
-        push 0
-        push 0x69723264
-        call dword ptr [eax + 0x94]
-        mov edi, [esp + 0xc]
-        mov edx, [esi]
-        push 8
-        push edi
-        push 0
-        mov ecx, esi
-        call dword ptr [edx + 0x94]
-        mov eax, [esi]
-        push 8
-        add edi, 8
-        push edi
-        push 0
-        mov ecx, esi
-        call dword ptr [eax + 0x94]
-        pop edi
-        mov eax, esi
-        pop esi
-        ret 4
-    }
+    XferEnum((const char *)0x69723264, 0, 0);
+    XferEnum(0, &v.x_min, 8);
+    XferEnum(0, &v.x_max, 8);
+    return *this;
 }
-__declspec(naked) Xfer &Xfer::operator==(RealRange& v)
+
+Xfer &Xfer::operator==(RealRange& v)
 {
-    __asm {
-        push esi
-        push 0
-        mov esi, ecx
-        mov eax, [esi]
-        push 0
-        push 0x726e6765
-        call dword ptr [eax + 0x94]
-        mov eax, [esp + 0x8]
-        mov edx, [esi]
-        push 8
-        push eax
-        push 0
-        mov ecx, esi
-        call dword ptr [edx + 0x94]
-        mov eax, esi
-        pop esi
-        ret 4
-    }
+    XferEnum((const char *)0x726e6765, 0, 0);
+    XferEnum(0, &v, 8);
+    return *this;
 }
-__declspec(naked) Xfer &Xfer::operator==(RGBColor& v)
+
+Xfer &Xfer::operator==(RGBColor& v)
 {
-    __asm {
-        push esi
-        push 0
-        mov esi, ecx
-        mov eax, [esi]
-        push 0
-        push 0x00726762
-        call dword ptr [eax + 0x94]
-        mov eax, [esp + 0x8]
-        mov edx, [esi]
-        push 12
-        push eax
-        push 0
-        mov ecx, esi
-        call dword ptr [edx + 0x94]
-        mov eax, esi
-        pop esi
-        ret 4
-    }
+    XferEnum((const char *)0x00726762, 0, 0);
+    XferEnum(0, &v, 12);
+    return *this;
 }
-__declspec(naked) Xfer &Xfer::operator==(RGBAColorReal& v)
+
+Xfer &Xfer::operator==(RGBAColorReal& v)
 {
-    __asm {
-        push esi
-        push 0
-        mov esi, ecx
-        mov eax, [esi]
-        push 0
-        push 0x72676272
-        call dword ptr [eax + 0x94]
-        mov eax, [esp + 0x8]
-        mov edx, [esi]
-        push 16
-        push eax
-        push 0
-        mov ecx, esi
-        call dword ptr [edx + 0x94]
-        mov eax, esi
-        pop esi
-        ret 4
-    }
+    XferEnum((const char *)0x72676272, 0, 0);
+    XferEnum(0, &v, 16);
+    return *this;
 }
-__declspec(naked) Xfer &Xfer::operator==(RGBAColorInt& v)
+
+Xfer &Xfer::operator==(RGBAColorInt& v)
 {
-    __asm {
-        push esi
-        push 0
-        mov esi, ecx
-        mov eax, [esi]
-        push 0
-        push 0x72676269
-        call dword ptr [eax + 0x94]
-        mov eax, [esp + 0x8]
-        mov edx, [esi]
-        push 16
-        push eax
-        push 0
-        mov ecx, esi
-        call dword ptr [edx + 0x94]
-        mov eax, esi
-        pop esi
-        ret 4
-    }
+    XferEnum((const char *)0x72676269, 0, 0);
+    XferEnum(0, &v, 16);
+    return *this;
 }
 
 __declspec(naked) void Xfer::Version1()
