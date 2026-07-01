@@ -23623,49 +23623,17 @@ __declspec(naked) TerrainCollisionModuleTemplate::~TerrainCollisionModuleTemplat
 }
 
 // ??4BoxEmissionVolumeInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) BoxEmissionVolumeInfo &BoxEmissionVolumeInfo::operator=(const BoxEmissionVolumeInfo &that)
+BoxEmissionVolumeInfo &BoxEmissionVolumeInfo::operator=(const BoxEmissionVolumeInfo &that)
 {
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8a
-        __emit 0x51
-        __emit 0x04
-        __emit 0x88
-        __emit 0x50
-        __emit 0x04
-        __emit 0x83
-        __emit 0xc1
-        __emit 0x08
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x31
-        __emit 0x8d
-        __emit 0x50
-        __emit 0x08
-        __emit 0x89
-        __emit 0x32
-        __emit 0x8b
-        __emit 0x71
-        __emit 0x04
-        __emit 0x89
-        __emit 0x72
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x49
-        __emit 0x08
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x08
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    struct Float3 {
+        float x;
+        float y;
+        float z;
+    };
+
+    m_flag = that.m_flag;
+    *(Float3 *)m_unk = *(const Float3 *)that.m_unk;
+    return *this;
 }
 
 // ??4BoxEmissionVolumeModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
@@ -23726,61 +23694,19 @@ __declspec(naked) BoxEmissionVolumeModuleTemplate &BoxEmissionVolumeModuleTempla
 }
 
 // ??4CylinderEmissionVolumeInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) CylinderEmissionVolumeInfo &CylinderEmissionVolumeInfo::operator=(const CylinderEmissionVolumeInfo &that)
+CylinderEmissionVolumeInfo &CylinderEmissionVolumeInfo::operator=(const CylinderEmissionVolumeInfo &that)
 {
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8a
-        __emit 0x51
-        __emit 0x04
-        __emit 0x88
-        __emit 0x50
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x51
-        __emit 0x08
-        __emit 0x89
-        __emit 0x50
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x51
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x50
-        __emit 0x0c
-        __emit 0x83
-        __emit 0xc1
-        __emit 0x10
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x31
-        __emit 0x8d
-        __emit 0x50
-        __emit 0x10
-        __emit 0x89
-        __emit 0x32
-        __emit 0x8b
-        __emit 0x71
-        __emit 0x04
-        __emit 0x89
-        __emit 0x72
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x49
-        __emit 0x08
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x08
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    struct Float3 {
+        float x;
+        float y;
+        float z;
+    };
+
+    m_flag = that.m_flag;
+    m_unk[0] = that.m_unk[0];
+    m_unk[1] = that.m_unk[1];
+    *(Float3 *)&m_unk[2] = *(const Float3 *)&that.m_unk[2];
+    return *this;
 }
 
 // ??4CylinderEmissionVolumeModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
