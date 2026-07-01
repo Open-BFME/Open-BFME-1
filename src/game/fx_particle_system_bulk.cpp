@@ -7810,15 +7810,9 @@ __declspec(naked) LifeEventModuleTemplate *ConcreteModuleClass<ModuleTag<8, LIFE
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::getClass() const
+const ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > &ConcreteModuleTemplate<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::getClass() const
 {
-    __asm {
-        __emit 0xe9
-        __emit 0x07
-        __emit 0x2b
-        __emit 0xa6
-        __emit 0xff
-    }
+    return ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> >::getInstance();
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
@@ -8239,15 +8233,9 @@ __declspec(naked) TerrainCollisionModuleTemplate *ConcreteModuleClass<ModuleTag<
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::getClass() const
+const ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > &ConcreteModuleTemplate<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::getClass() const
 {
-    __asm {
-        __emit 0xe9
-        __emit 0x19
-        __emit 0x03
-        __emit 0xa3
-        __emit 0xff
-    }
+    return ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::getInstance();
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
@@ -8673,15 +8661,9 @@ __declspec(naked) OrthoEmissionVelocityModuleTemplate *ConcreteModuleClass<Ortho
 }
 
 // ?getClass@?$ConcreteModuleTemplate@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<OrthoEmissionVelocityModuleTag> &ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag>::getClass() const
+const ConcreteModuleClass<OrthoEmissionVelocityModuleTag> &ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag>::getClass() const
 {
-    __asm {
-        __emit 0xe9
-        __emit 0xe1
-        __emit 0x94
-        __emit 0xa2
-        __emit 0xff
-    }
+    return ConcreteModuleClass<OrthoEmissionVelocityModuleTag>::getInstance();
 }
 
 // ?getInstance@?$ConcreteModuleClass@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
@@ -9072,15 +9054,9 @@ __declspec(naked) PointEmissionVolumeModuleTemplate *ConcreteModuleClass<PointEm
 }
 
 // ?getClass@?$ConcreteModuleTemplate@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@UPointEmissionVolumeModuleTag@FXParticleSystem@@@2@XZ
-__declspec(naked) const ConcreteModuleClass<PointEmissionVolumeModuleTag> &ConcreteModuleTemplate<PointEmissionVolumeModuleTag>::getClass() const
+const ConcreteModuleClass<PointEmissionVolumeModuleTag> &ConcreteModuleTemplate<PointEmissionVolumeModuleTag>::getClass() const
 {
-    __asm {
-        __emit 0xe9
-        __emit 0xb4
-        __emit 0xdf
-        __emit 0xa2
-        __emit 0xff
-    }
+    return ConcreteModuleClass<PointEmissionVolumeModuleTag>::getInstance();
 }
 
 // ?getInstance@?$ConcreteModuleClass@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
