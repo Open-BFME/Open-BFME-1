@@ -278,6 +278,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0UnicodeString@@QAE@PBGH@Z,0x0003CB05,0x00434610,26,src/game/unicode_string.cpp,matched,UnicodeString(const wchar_t *
 ??0UnicodeString@@QAE@XZ,0x00041C95,0x00083D10,9,src/game/unicode_string.cpp,matched,default constructor
 ??0WindModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00047410,0x005BD970,117,src/game/fx_particle_system_bulk.cpp,matched,
+??0WindowLayout@@QAE@XZ,,0x00497C40,99,src/game/window_layout.cpp,matched,EH function (cl: /EHsc); BFME added vtable vs Generals
 ??0Xfer@@QAE@XZ,0x00041BAF,0x007E7660,9,src/game/xfer.cpp,matched,constructor sets vtable
 ??1?$CategoryModuleClass@$00@FXParticleSystem@@MAE@XZ,0x0000a916,0x005d4a50,7,src/game/fx_particle_system_category_accessors.cpp,matched,virtual dtor vtable reset
 ??1?$CategoryModuleClass@$01@FXParticleSystem@@MAE@XZ,0x0001bdfb,0x005d4ab0,7,src/game/fx_particle_system_category_accessors.cpp,matched,virtual dtor vtable reset
@@ -357,6 +358,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1StreakDrawModuleInfo@FXParticleSystem@@UAE@XZ,0x00049CA1,0x005D85F0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??1UnicodeString@@QAE@XZ,0x0003B304,0x0005EEA0,5,src/game/unicode_string.cpp,matched,UnicodeString destructor
 ??1WindModuleInfo@FXParticleSystem@@UAE@XZ,0x0001B31F,0x005BD960,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
+??1WindowLayout@@UAE@XZ,,0x00497CC0,14,src/game/window_layout.cpp,matched,virtual dtor; tail-jmps member string dtor
 ??1Xfer@@UAE@XZ,0x00038D2A,0x007E7670,7,src/game/xfer.cpp,matched,destructor
 ??4?$CategoryModuleClassBase@$00$00@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0002C499,0x005C12B0,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
 ??4?$CategoryModuleClassBase@$01$00@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x00038D1B,0x005C1330,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
@@ -630,6 +632,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??_0Coord2D@@QAEAAV0@M@Z,0x0001067C,0x0043A5C0,26,src/math/coord2d.cpp,matched,divides x/y by scalar
 ??_0Coord3D@@QAEAAV0@M@Z,0x0002EB1D,0x000EC6C0,33,src/math/coord3d.cpp,matched,divides x/y/z by scalar
 ??_0Matrix4D@@QAEAAV0@M@Z,0x00025BC6,0x007E67B0,139,src/math/matrix4d.cpp,matched,divides matrix values by scalar
+??_GWindowLayout@@UAEPAXI@Z,,0x004706F0,30,src/game/window_layout.cpp,matched,compiler-generated deleting dtor
 ?ACos@@YAMM@Z,0x00873940,0x00873940,10,src/math/trig.cpp,matched,wraps internal acos helper
 ?ASin@@YAMM@Z,0x00873950,0x00873950,10,src/math/trig.cpp,matched,wraps internal asin helper
 ?Add2D@Coord3D@@QAEAAV1@ABUCoord3DBase@@0@Z,0x000263B4,0x007E5DE0,28,src/math/coord3d.cpp,matched,adds two Coord3DBase x/y values
@@ -782,9 +785,12 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?_Reallocate@MemoryPool@@YAPAXPAXIW4AllocType@1@@Z,0x00882B20,0x00882B20,115,src/game/memory_pool.cpp,matched,reallocate pool block
 ?_VerifyIntegrity@MemoryPool@@YAXXZ,0x00882D50,0x00882D50,180,src/game/memory_pool.cpp,matched,verify pool integrity
 ?add@Coord3D@@QAEXPBUCoord3DBase@@@Z,0x00022688,0x000B6570,31,src/math/coord3d.cpp,matched,adds Coord3DBase pointer
+?addWindow@WindowLayout@@UAEXPAVGameWindow@@@Z,,0x00497B00,99,src/game/window_layout.cpp,matched,
 ?appendNextCommand@RecorderClass@@IAEXXZ,0x0003D0F0,0x987b0,533,src/game/recorder_strings.cpp,matched,
+?bringForward@WindowLayout@@UAEXXZ,,0x00497A90,41,src/game/window_layout.cpp,matched,
 ?clear@?$StringBase@D@@QAEXXZ,0x00041A38,0x000680C0,6,src/game/string_base.cpp,matched,clears string by releasing buffer
 ?clear@?$StringBase@G@@QAEXXZ,0x00024C85,0x00068090,6,src/game/string_base.cpp,matched,clears wide string by releasing buffer
+?closeWindows@GameLogic@@QAEXXZ,,0x00396950,294,src/game/game_logic_dispatch.cpp,unmatched,BFME drift from Generals: extra guarded hides + background cleanup; several callee names provisional
 ?combine@RealRange@@QAEXAAU1@@Z,0x0003A332,0x007E8240,45,src/math/region.cpp,matched,updates min/max to include another range
 ?compare@?$StringBase@D@@QBEHABV1@@Z,0x000220C5,0x0005FEB0,92,src/game/string_base.cpp,matched,
 ?compare@?$StringBase@D@@QBEHPBD@Z,0x0004B01A,0x0004B01A,10,src/game/string_base.cpp,matched,compare with C string via internal helper
@@ -813,6 +819,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?deg2rad@@YAMM@Z,0x00018A7F,0x00069780,11,src/math/trig.cpp,matched,converts degrees to radians
 ?depth@IRegion3D@@QBEHXZ,0x00040E53,0x007E6F20,7,src/math/region.cpp,matched,returns integer depth
 ?depth@Region3D@@QBEMXZ,0x0001DB24,0x007E6E30,7,src/math/region.cpp,matched,returns float depth
+?destroyWindows@WindowLayout@@UAEXXZ,,0x00497A50,40,src/game/window_layout.cpp,matched,BFME rewrote: direct m_windowList loop
 ?endsWith@?$StringBase@D@@QBE_NABV1@@Z,0x00887870,0x887870,111,src/game/string_base.cpp,matched,
 ?endsWith@?$StringBase@D@@QBE_NPBD@Z,0x000109C9,0x00061E30,50,src/game/string_base.cpp,matched,
 ?endsWith@?$StringBase@D@@QBE_NPBDH@Z,0x00887630,0x887630,75,src/game/string_base.cpp,matched,
@@ -834,6 +841,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?expandBy@Region3D@@QAEXABVCoord3D@@@Z,0x00022F75,0x007E8330,111,src/math/region.cpp,matched,expands float x/y/z bounds to include point
 ?find@?$StringBase@D@@QBEPBDD@Z,0x0001CA8A,0x000628B0,45,src/game/string_base.cpp,matched,find character in string
 ?find@?$StringBase@G@@QBEPBGG@Z,0x00046623,0x00450B30,48,src/game/string_base.cpp,matched,find wchar_t character in string
+?findWindow@WindowLayout@@AAEPAVGameWindow@@PAV2@@Z,,0x00497AD0,37,src/game/window_layout.cpp,matched,
 ?format@?$StringBase@D@@QAAXPBDZZ,0x00888D50,0x888d50,20,src/game/string_base.cpp,matched,
 ?format@?$StringBase@G@@QAAXPBGZZ,0x00888F70,0x888f70,20,src/game/string_base.cpp,matched,
 ?format@AsciiString@@QAAXV1@ZZ,0x00888FF0,0x00888FF0,93,src/game/ascii_string.cpp,matched,AsciiString format varargs
@@ -935,6 +943,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?height@IRegion3D@@QBEHXZ,0x00005B5A,0x007E6F10,7,src/math/region.cpp,matched,returns integer height
 ?height@Region2D@@QBEMXZ,0x00035053,0x00160B30,7,src/math/region.cpp,matched,returns float height
 ?height@Region3D@@QBEMXZ,0x00039225,0x001066C0,7,src/math/region.cpp,matched,returns float height
+?hide@WindowLayout@@UAEXH@Z,,0x00497A00,58,src/game/window_layout.cpp,matched,
 ?isEmpty@?$StringBase@D@@QBE_NXZ,0x0000C752,0x0005E4C0,22,src/game/string_base.cpp,matched,returns true if string has no data or zero length
 ?isEmpty@?$StringBase@G@@QBE_NXZ,0x0001F361,0x0007F7D0,22,src/game/string_base.cpp,matched,returns true if string has no data or zero length
 ?isInRegionNoZ@Region3D@@QBE_NPBVCoord3D@@@Z,0x0001A1A4,0x000FBA20,66,src/math/region.cpp,matched,checks point inside x/y bounds
@@ -987,8 +996,12 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?releaseBuffer@?$StringBase@G@@AAEXXZ,0x008881D0,0x8881d0,134,src/game/string_base.cpp,matched,
 ?removeLastChar@?$StringBase@D@@QAEXXZ,0x00887F80,0x887f80,224,src/game/string_base.cpp,matched,
 ?removeLastChar@?$StringBase@G@@QAEXXZ,0x00888840,0x888840,237,src/game/string_base.cpp,matched,
+?removeWindow@WindowLayout@@UAEXPAVGameWindow@@@Z,,0x00497B80,136,src/game/window_layout.cpp,matched,
 ?reverseFind@?$StringBase@D@@QBEPBDD@Z,0x0000C342,0x00072C40,49,src/game/string_base.cpp,matched,reverse find char in string
 ?reverseFind@?$StringBase@G@@QBEPBGG@Z,0x00887090,0x00887090,49,src/game/string_base.cpp,matched,reverse find wchar_t in string
+?runInit@WindowLayout@@UAEXPAX@Z,,0x00470690,21,src/game/window_layout.cpp,matched,header-inline virtual (COMDAT)
+?runShutdown@WindowLayout@@UAEXPAX@Z,,0x004706D0,21,src/game/window_layout.cpp,matched,header-inline virtual (COMDAT)
+?runUpdate@WindowLayout@@UAEXPAX@Z,,0x004706B0,21,src/game/window_layout.cpp,matched,header-inline virtual (COMDAT)
 ?scale@Coord3D@@QAEXM@Z,0x000236AF,0x000B6CD0,31,src/math/coord3d.cpp,matched,scales x/y/z in place
 ?set@?$StringBase@D@@QAEXABV1@@Z,0x00887C90,0x887c90,135,src/game/string_base.cpp,matched,
 ?set@?$StringBase@D@@QAEXABV1@HH@Z,0x00888C10,0x888c10,143,src/game/string_base.cpp,matched,
