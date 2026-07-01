@@ -5,22 +5,14 @@
 
 namespace FXParticleSystem {
 
-__declspec(naked) const char *GetKey(ModuleCategory category)
+struct ModuleCategoryEntry {
+    const char *name;
+    const char *key;
+};
+
+const char *GetKey(ModuleCategory category)
 {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x04
-        __emit 0xc5
-        __emit 0x04
-        __emit 0x05
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc3
-    }
+    return reinterpret_cast<const ModuleCategoryEntry *>(0x01110500)[category].key;
 }
 
 __declspec(naked) const char *GetName(ModuleCategory category)
