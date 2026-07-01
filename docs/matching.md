@@ -18,6 +18,27 @@
 
 Leaf functions (no calls) are easiest; `reverse/symbols.csv` is what makes call-using functions matchable.
 
+## MSVC 7.1 shaping notes
+
+Near-matches are still failures. If a candidate differs only by register choice, branch layout, or
+x87 operand order, revert it unless the exact decorated-symbol check passes.
+
+Observed traps:
+
+- `register` did not force MSVC 7.1 to preload constants. In `Matrix4D::Set(const Coord3D&)`,
+  C++ kept `0x3f800000` near first use instead of matching the target's early `mov edx, 0x3f800000`.
+- Equivalent x87 expressions can compile differently. `Coord3D::CrossProduct` commuted
+  multiplication operands, changing `fld`/`fmul` order while preserving behavior.
+- Ternary min/max forms can switch between integer bit copies and x87 stores. `RealRange::combine`
+  needs both the target condition flags and the target raw float-copy shape.
+- Pointer/index loops are unstable. `Matrix4D::IsExactlyEqualTo` compiled to a different loop shape
+  from the target's four-dword xor/or block.
+- Virtual-call wrappers may match semantically while saving registers or branching differently.
+  `Xfer::XferRawBytes` was a near-match but not byte-identical.
+
+Use these as negative patterns: once a diff shows one of these traps, prefer another function family
+or first find a source pattern that proves the exact instruction shape in a targeted build.
+
 ## Reference source
 
 BFME is the SAGE engine — its original source largely survives in C&C Generals, vendored under
