@@ -22690,78 +22690,10 @@ CylindricalEmissionVelocityInfo &CylindricalEmissionVelocityInfo::operator=(cons
 }
 
 // ??4CylindricalEmissionVelocityModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) CylindricalEmissionVelocityModuleTemplate &CylindricalEmissionVelocityModuleTemplate::operator=(const CylindricalEmissionVelocityModuleTemplate &that)
+CylindricalEmissionVelocityModuleTemplate &CylindricalEmissionVelocityModuleTemplate::operator=(const CylindricalEmissionVelocityModuleTemplate &that)
 {
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8d
-        __emit 0x51
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xd2
-        __emit 0x56
-        __emit 0x8d
-        __emit 0x4a
-        __emit 0x04
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x39
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x3e
-        __emit 0x8b
-        __emit 0x79
-        __emit 0x04
-        __emit 0x89
-        __emit 0x7e
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x49
-        __emit 0x08
-        __emit 0x89
-        __emit 0x4e
-        __emit 0x08
-        __emit 0x83
-        __emit 0xc2
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x32
-        __emit 0x8d
-        __emit 0x48
-        __emit 0x18
-        __emit 0x89
-        __emit 0x31
-        __emit 0x8b
-        __emit 0x72
-        __emit 0x04
-        __emit 0x89
-        __emit 0x71
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x5f
-        __emit 0x89
-        __emit 0x51
-        __emit 0x08
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    CylindricalEmissionVelocityInfo::operator=(that);
+    return *this;
 }
 
 // ??4DefaultColorModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
