@@ -196,26 +196,10 @@ StreakDrawModuleInfo::StreakDrawModuleInfo()
 {
 }
 
-__declspec(naked) Keyframe::Keyframe()
+Keyframe::Keyframe()
 {
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc3
-    }
+    ((unsigned int *)this)[0] = 0;
+    ((unsigned int *)this)[1] = 0;
 }
 
 
