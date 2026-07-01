@@ -235,6 +235,12 @@ public:
     virtual void LoadPostProcess();
     virtual void DoXfer(Xfer &xfer);
     DefaultPhysicsModuleInfo &operator=(const DefaultPhysicsModuleInfo &that);
+
+    float m_field0;
+    float m_field1;
+    float m_field2;
+    int m_field3;
+    GameClientRandomVariable m_var1;
 };
 
 class DefaultUpdateModuleInfo {
@@ -246,6 +252,13 @@ public:
     virtual void LoadPostProcess();
     virtual void DoXfer(Xfer &xfer);
     DefaultUpdateModuleInfo &operator=(const DefaultUpdateModuleInfo &that);
+
+    GameClientRandomVariable m_var0;
+    GameClientRandomVariable m_var1;
+    GameClientRandomVariable m_var2;
+    GameClientRandomVariable m_var3;
+    GameClientRandomVariable m_var4;
+    int m_extra;
 };
 
 class EmissionVelocityInfo {

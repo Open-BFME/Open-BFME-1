@@ -1031,3 +1031,5 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0OrthoEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0000ADDA,0x005D7000,62,src/game/fx_particle_system_bulk.cpp,matched,
 ??0OutwardEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0003C6DC,0x005D7D40,62,src/game/fx_particle_system_bulk.cpp,matched,
 ??0HemisphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0002DB50,0x005D7560,39,src/game/fx_particle_system.cpp,matched,
+??0DefaultPhysicsModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00005DC6,0x005D7EA0,63,src/game/fx_particle_system_bulk.cpp,matched,
+??0DefaultUpdateModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x000052AE,0x005D81C0,135,src/game/fx_particle_system_bulk.cpp,matched,
