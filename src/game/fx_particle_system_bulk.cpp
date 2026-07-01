@@ -22833,56 +22833,10 @@ LightningDrawModuleInfo &LightningDrawModuleInfo::operator=(const LightningDrawM
 }
 
 // ??4LightningDrawModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) LightningDrawModuleTemplate &LightningDrawModuleTemplate::operator=(const LightningDrawModuleTemplate &that)
+LightningDrawModuleTemplate &LightningDrawModuleTemplate::operator=(const LightningDrawModuleTemplate &that)
 {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x74
-        __emit 0x12
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x08
-        __emit 0xe8
-        __emit 0x31
-        __emit 0x4f
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x08
-        __emit 0xe8
-        __emit 0x20
-        __emit 0x4f
-        __emit 0xa6
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    LightningDrawModuleInfo::operator=(that);
+    return *this;
 }
 
 // ??4LightningEmissionModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
