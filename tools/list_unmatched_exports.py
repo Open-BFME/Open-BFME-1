@@ -28,24 +28,28 @@ def main():
         exports = list(csv.DictReader(handle))
 
     code = [row for row in exports if row["kind"] == "code" and row["name"] not in matched]
-    code.sort(key=lambda row: int(row["rva"], 16))
+    code.sort(key=body_rva)
 
     entries = []
     for i, row in enumerate(code):
-        rva = int(row["rva"], 16)
+        rva = body_rva(row)
         if i + 1 < len(code):
-            next_rva = int(code[i + 1]["rva"], 16)
+            next_rva = body_rva(code[i + 1])
             size = next_rva - rva
         else:
             size = 0
         entries.append((size, row))
 
-    entries.sort(key=lambda entry: (entry[0] == 0, entry[0], int(entry[1]["rva"], 16)))
+    entries.sort(key=lambda entry: (entry[0] == 0, entry[0], body_rva(entry[1])))
 
     for size, row in entries:
         target = row["target_rva"] or row["rva"]
         size_note = f"size~{size:4d}" if size else "size~   ?"
         print(f"{row['rva']} -> {target} {size_note} {row['name']}")
+
+
+def body_rva(row):
+    return int(row["target_rva"] or row["rva"], 16)
 
 
 if __name__ == "__main__":
