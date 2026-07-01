@@ -912,6 +912,26 @@ EmissionVolumeInfo::EmissionVolumeInfo(const EmissionVolumeInfo &that)
 {
 }
 
+LightningEmissionInfo::LightningEmissionInfo(const LightningEmissionInfo &that)
+    : EmissionVolumeInfo(that)
+{
+    m_points[0].x = that.m_points[0].x;
+    m_points[0].y = that.m_points[0].y;
+    m_points[0].z = that.m_points[0].z;
+    m_points[1].x = that.m_points[1].x;
+    m_points[1].y = that.m_points[1].y;
+    m_points[1].z = that.m_points[1].z;
+    m_points[2] = that.m_points[2];
+    m_points[3] = that.m_points[3];
+    m_points[4] = that.m_points[4];
+    m_points[5] = that.m_points[5];
+    m_points[6] = that.m_points[6];
+    m_points[7] = that.m_points[7];
+    m_points[8] = that.m_points[8];
+    m_points[9] = that.m_points[9];
+    m_points[10] = that.m_points[10];
+}
+
 BoxEmissionVolumeInfo::BoxEmissionVolumeInfo(const BoxEmissionVolumeInfo &that)
     : EmissionVolumeInfo(that)
 {

@@ -312,18 +312,6 @@ public:
     GameClientRandomVariable m_var0;
 };
 
-class LightningEmissionInfo : public EmissionVelocityInfo {
-public:
-    LightningEmissionInfo();
-    LightningEmissionInfo(const LightningEmissionInfo &that);
-    virtual ~LightningEmissionInfo();
-    LightningEmissionInfo &operator=(const LightningEmissionInfo &that);
-
-private:
-    bool m_active;
-    struct { float x, y, z; } m_points[11];
-};
-
 class EventModuleInfo {
 public:
     EventModuleInfo();
@@ -348,6 +336,17 @@ public:
     EmissionVolumeInfo &operator=(const EmissionVolumeInfo &that);
 
     bool m_flag;
+};
+
+class LightningEmissionInfo : public EmissionVolumeInfo {
+public:
+    LightningEmissionInfo();
+    LightningEmissionInfo(const LightningEmissionInfo &that);
+    virtual ~LightningEmissionInfo();
+    LightningEmissionInfo &operator=(const LightningEmissionInfo &that);
+
+    struct Point3D { float x, y, z; };
+    Point3D m_points[11];
 };
 
 class BoxEmissionVolumeInfo : public EmissionVolumeInfo {
