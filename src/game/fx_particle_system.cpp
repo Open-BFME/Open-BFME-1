@@ -235,6 +235,12 @@ private:
     const char *m_key;
     const char *m_name;
 };
+
+ModuleTemplate &ModuleTemplate::operator=(const ModuleTemplate &that)
+{
+    return *this;
+}
+
 template <int Category>
 void CategoryModuleInfo<Category>::unusedVirtual()
 {
@@ -271,6 +277,7 @@ template class CategoryModuleInfo<0>;
 template class CategoryModuleInfo<1>;
 template class CategoryModuleInfo<2>;
 template class CategoryModuleInfo<3>;
+template class CategoryModuleInfo<4>;
 template class CategoryModuleInfo<5>;
 template class CategoryModuleInfo<6>;
 template class CategoryModuleInfo<7>;
@@ -280,6 +287,7 @@ template class CategoryModuleTemplateBase<1>;
 template class CategoryModuleTemplateBase<2>;
 template class CategoryModuleTemplateBase<3>;
 template class CategoryModuleTemplateBase<4>;
+template class CategoryModuleTemplateBase<5>;
 template class CategoryModuleTemplateBase<6>;
 template class CategoryModuleTemplateBase<7>;
 template class CategoryModuleTemplateBase<8>;
@@ -288,6 +296,7 @@ template class CategoryModuleTemplate<1>;
 template class CategoryModuleTemplate<2>;
 template class CategoryModuleTemplate<3>;
 template class CategoryModuleTemplate<4>;
+template class CategoryModuleTemplate<5>;
 template class CategoryModuleTemplate<6>;
 template class CategoryModuleTemplate<7>;
 template class CategoryModuleTemplate<8>;
@@ -907,6 +916,11 @@ const char *EmissionVelocityInfo::GetSnapshotName()
     return "EmissionVelocityInfo";
 }
 
+EmissionVolumeInfo::EmissionVolumeInfo()
+    : m_flag(false)
+{
+}
+
 EmissionVolumeInfo::EmissionVolumeInfo(const EmissionVolumeInfo &that)
     : m_flag(that.m_flag)
 {
@@ -932,12 +946,30 @@ LightningEmissionInfo::LightningEmissionInfo(const LightningEmissionInfo &that)
     m_points[10] = that.m_points[10];
 }
 
+BoxEmissionVolumeInfo::BoxEmissionVolumeInfo()
+    : EmissionVolumeInfo()
+{
+    m_unk[0] = 0.0f;
+    m_unk[1] = 0.0f;
+    m_unk[2] = 0.0f;
+}
+
 BoxEmissionVolumeInfo::BoxEmissionVolumeInfo(const BoxEmissionVolumeInfo &that)
     : EmissionVolumeInfo(that)
 {
     m_unk[0] = that.m_unk[0];
     m_unk[1] = that.m_unk[1];
     m_unk[2] = that.m_unk[2];
+}
+
+CylinderEmissionVolumeInfo::CylinderEmissionVolumeInfo()
+    : EmissionVolumeInfo()
+{
+    m_unk[0] = 0.0f;
+    m_unk[1] = 0.0f;
+    m_unk[2] = 0.0f;
+    m_unk[3] = 0.0f;
+    m_unk[4] = 0.0f;
 }
 
 CylinderEmissionVolumeInfo::CylinderEmissionVolumeInfo(const CylinderEmissionVolumeInfo &that)
@@ -950,6 +982,17 @@ CylinderEmissionVolumeInfo::CylinderEmissionVolumeInfo(const CylinderEmissionVol
     m_unk[4] = that.m_unk[4];
 }
 
+LineEmissionVolumeInfo::LineEmissionVolumeInfo()
+    : EmissionVolumeInfo()
+{
+    m_unk[0] = 0.0f;
+    m_unk[1] = 0.0f;
+    m_unk[2] = 0.0f;
+    m_unk[3] = 0.0f;
+    m_unk[4] = 0.0f;
+    m_unk[5] = 0.0f;
+}
+
 LineEmissionVolumeInfo::LineEmissionVolumeInfo(const LineEmissionVolumeInfo &that)
     : EmissionVolumeInfo(that)
 {
@@ -960,6 +1003,11 @@ LineEmissionVolumeInfo::LineEmissionVolumeInfo(const LineEmissionVolumeInfo &tha
     m_unk[4] = that.m_unk[4];
     m_unk[5] = that.m_unk[5];
 }
+
+SphereEmissionVolumeInfo::SphereEmissionVolumeInfo()
+    : EmissionVolumeInfo()
+    , m_radius(0.0f)
+{}
 
 SphereEmissionVolumeInfo::SphereEmissionVolumeInfo(const SphereEmissionVolumeInfo &that)
     : EmissionVolumeInfo(that)

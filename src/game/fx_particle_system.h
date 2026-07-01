@@ -327,7 +327,7 @@ private:
 
 class EmissionVolumeInfo : public Snapshot {
 public:
-    EmissionVolumeInfo() : m_flag(false) {}
+    EmissionVolumeInfo();
     __declspec(nothrow) EmissionVolumeInfo(const EmissionVolumeInfo &that);
     virtual ~EmissionVolumeInfo();
     virtual const char *GetSnapshotName();
@@ -351,11 +351,7 @@ public:
 
 class BoxEmissionVolumeInfo : public EmissionVolumeInfo {
 public:
-    BoxEmissionVolumeInfo() : EmissionVolumeInfo() {
-        m_unk[0] = 0.0f;
-        m_unk[1] = 0.0f;
-        m_unk[2] = 0.0f;
-    }
+    BoxEmissionVolumeInfo();
     BoxEmissionVolumeInfo(const BoxEmissionVolumeInfo &that);
     virtual ~BoxEmissionVolumeInfo();
     BoxEmissionVolumeInfo &operator=(const BoxEmissionVolumeInfo &that);
@@ -366,7 +362,7 @@ private:
 
 class SphereEmissionVolumeInfo : public EmissionVolumeInfo {
 public:
-    SphereEmissionVolumeInfo() : EmissionVolumeInfo(), m_radius(0.0f) {}
+    SphereEmissionVolumeInfo();
     __declspec(nothrow) SphereEmissionVolumeInfo(const SphereEmissionVolumeInfo &that);
     virtual ~SphereEmissionVolumeInfo();
     SphereEmissionVolumeInfo &operator=(const SphereEmissionVolumeInfo &that);
@@ -377,13 +373,7 @@ private:
 
 class CylinderEmissionVolumeInfo : public EmissionVolumeInfo {
 public:
-    CylinderEmissionVolumeInfo() : EmissionVolumeInfo() {
-        m_unk[0] = 0.0f;
-        m_unk[1] = 0.0f;
-        m_unk[2] = 0.0f;
-        m_unk[3] = 0.0f;
-        m_unk[4] = 0.0f;
-    }
+    CylinderEmissionVolumeInfo();
     CylinderEmissionVolumeInfo(const CylinderEmissionVolumeInfo &that);
     virtual ~CylinderEmissionVolumeInfo();
     CylinderEmissionVolumeInfo &operator=(const CylinderEmissionVolumeInfo &that);
@@ -394,14 +384,7 @@ private:
 
 class LineEmissionVolumeInfo : public EmissionVolumeInfo {
 public:
-    LineEmissionVolumeInfo() : EmissionVolumeInfo() {
-        m_unk[0] = 0.0f;
-        m_unk[1] = 0.0f;
-        m_unk[2] = 0.0f;
-        m_unk[3] = 0.0f;
-        m_unk[4] = 0.0f;
-        m_unk[5] = 0.0f;
-    }
+    LineEmissionVolumeInfo();
     LineEmissionVolumeInfo(const LineEmissionVolumeInfo &that);
     LineEmissionVolumeInfo &operator=(const LineEmissionVolumeInfo &that);
     virtual ~LineEmissionVolumeInfo();
@@ -534,7 +517,7 @@ public:
     ModuleTemplate() {}
     ModuleTemplate(const ModuleTemplate &that) {}
     virtual ~ModuleTemplate() {}
-    ModuleTemplate &operator=(const ModuleTemplate &that) { return *this; }
+    ModuleTemplate &operator=(const ModuleTemplate &that);
 };
 
 // CategoryModuleInfo<N> - base for CategoryModuleTemplateBase, split across header/cpp
