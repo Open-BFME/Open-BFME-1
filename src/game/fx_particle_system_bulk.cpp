@@ -24139,209 +24139,41 @@ __declspec(naked) DefaultColorModuleInfo &DefaultColorModuleInfo::operator=(cons
 }
 
 // ??4DefaultPhysicsModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) DefaultPhysicsModuleInfo &DefaultPhysicsModuleInfo::operator=(const DefaultPhysicsModuleInfo &that)
+DefaultPhysicsModuleInfo &DefaultPhysicsModuleInfo::operator=(const DefaultPhysicsModuleInfo &that)
 {
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x56
-        __emit 0x8d
-        __emit 0x51
-        __emit 0x04
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x3a
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x04
-        __emit 0x89
-        __emit 0x3e
-        __emit 0x8b
-        __emit 0x7a
-        __emit 0x04
-        __emit 0x89
-        __emit 0x7e
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x89
-        __emit 0x56
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x51
-        __emit 0x10
-        __emit 0x89
-        __emit 0x50
-        __emit 0x10
-        __emit 0x83
-        __emit 0xc1
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x31
-        __emit 0x8d
-        __emit 0x50
-        __emit 0x14
-        __emit 0x89
-        __emit 0x32
-        __emit 0x8b
-        __emit 0x71
-        __emit 0x04
-        __emit 0x89
-        __emit 0x72
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x49
-        __emit 0x08
-        __emit 0x5f
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x08
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    struct Float3 {
+        float x;
+        float y;
+        float z;
+    };
+    struct VariableBlock {
+        unsigned int value0;
+        unsigned int value1;
+        unsigned int value2;
+    };
+
+    *(Float3 *)&m_field0 = *(const Float3 *)&that.m_field0;
+    m_field3 = that.m_field3;
+    *(VariableBlock *)&m_var1 = *(const VariableBlock *)&that.m_var1;
+    return *this;
 }
 
 // ??4DefaultUpdateModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) DefaultUpdateModuleInfo &DefaultUpdateModuleInfo::operator=(const DefaultUpdateModuleInfo &that)
+DefaultUpdateModuleInfo &DefaultUpdateModuleInfo::operator=(const DefaultUpdateModuleInfo &that)
 {
-    __asm {
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x8d
-        __emit 0x51
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x3a
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x04
-        __emit 0x89
-        __emit 0x3e
-        __emit 0x8b
-        __emit 0x7a
-        __emit 0x04
-        __emit 0x89
-        __emit 0x7e
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x89
-        __emit 0x56
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x51
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x3a
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x10
-        __emit 0x89
-        __emit 0x3e
-        __emit 0x8b
-        __emit 0x7a
-        __emit 0x04
-        __emit 0x89
-        __emit 0x7e
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x89
-        __emit 0x56
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x51
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0x3a
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x3e
-        __emit 0x8b
-        __emit 0x7a
-        __emit 0x04
-        __emit 0x89
-        __emit 0x7e
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x89
-        __emit 0x56
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x51
-        __emit 0x28
-        __emit 0x8b
-        __emit 0x3a
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x28
-        __emit 0x89
-        __emit 0x3e
-        __emit 0x8b
-        __emit 0x7a
-        __emit 0x04
-        __emit 0x89
-        __emit 0x7e
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x89
-        __emit 0x56
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x51
-        __emit 0x34
-        __emit 0x8b
-        __emit 0x3a
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x34
-        __emit 0x89
-        __emit 0x3e
-        __emit 0x8b
-        __emit 0x7a
-        __emit 0x04
-        __emit 0x89
-        __emit 0x7e
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x89
-        __emit 0x56
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x49
-        __emit 0x40
-        __emit 0x5f
-        __emit 0x89
-        __emit 0x48
-        __emit 0x40
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    struct VariableBlock {
+        unsigned int value0;
+        unsigned int value1;
+        unsigned int value2;
+    };
+
+    *(VariableBlock *)&m_var0 = *(const VariableBlock *)&that.m_var0;
+    *(VariableBlock *)&m_var1 = *(const VariableBlock *)&that.m_var1;
+    *(VariableBlock *)&m_var2 = *(const VariableBlock *)&that.m_var2;
+    *(VariableBlock *)&m_var3 = *(const VariableBlock *)&that.m_var3;
+    *(VariableBlock *)&m_var4 = *(const VariableBlock *)&that.m_var4;
+    m_extra = that.m_extra;
+    return *this;
 }
 
 EmissionVolumeInfo &EmissionVolumeInfo::operator=(const EmissionVolumeInfo &that)
