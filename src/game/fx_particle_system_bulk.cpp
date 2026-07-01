@@ -25764,46 +25764,17 @@ __declspec(naked) PointEmissionVolumeModuleTemplate &PointEmissionVolumeModuleTe
     }
 }
 
-// ??4RandomAlphaKeyframe@FXParticleSystem@@QAEAAU01@ABU01@@Z
-__declspec(naked) RandomAlphaKeyframe &RandomAlphaKeyframe::operator=(const RandomAlphaKeyframe &that)
+RandomAlphaKeyframe &RandomAlphaKeyframe::operator=(const RandomAlphaKeyframe &that)
 {
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x31
-        __emit 0x8b
-        __emit 0xd0
-        __emit 0x89
-        __emit 0x32
-        __emit 0x8b
-        __emit 0x71
-        __emit 0x04
-        __emit 0x89
-        __emit 0x72
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x71
-        __emit 0x08
-        __emit 0x89
-        __emit 0x72
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x49
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x0c
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    struct KeyBlock {
+        unsigned int value0;
+        unsigned int value1;
+        unsigned int value2;
+        unsigned int value3;
+    };
+
+    *(KeyBlock *)this = *(const KeyBlock *)&that;
+    return *this;
 }
 
 // ??4RenderObjectDrawModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
