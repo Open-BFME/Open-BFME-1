@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <iomanip>
@@ -129,6 +130,66 @@ struct TypeRun {
     std::uint8_t count;
 };
 
+struct SlotInfo {
+    std::string state;
+    std::string name;
+    std::uint32_t ip = 0;
+    std::uint32_t port = 0;
+    bool accepted = false;
+    bool hasMap = false;
+    int color = -1;
+    int playerTemplate = -1;
+    int startPosition = -1;
+    int team = -1;
+    int nat = -1;
+};
+
+struct GameOptions {
+    int mapContentsMask = 0;
+    std::string portableMapPath;
+    std::uint32_t mapCrc = 0;
+    std::uint32_t mapSize = 0;
+    int seed = 0;
+    int crcInterval = 0;
+    std::vector<SlotInfo> slots;
+};
+
+std::vector<std::string> split(const std::string &text, char delimiter)
+{
+    std::vector<std::string> out;
+    std::string current;
+    for (char c : text) {
+        if (c == delimiter) {
+            out.push_back(current);
+            current.clear();
+        } else {
+            current.push_back(c);
+        }
+    }
+    out.push_back(current);
+    return out;
+}
+
+int parseInt(const std::string &text)
+{
+    char *end = 0;
+    long value = std::strtol(text.c_str(), &end, 10);
+    if (*end != 0) {
+        throw std::runtime_error("invalid decimal integer in game options");
+    }
+    return static_cast<int>(value);
+}
+
+std::uint32_t parseHex(const std::string &text)
+{
+    char *end = 0;
+    unsigned long value = std::strtoul(text.c_str(), &end, 16);
+    if (*end != 0) {
+        throw std::runtime_error("invalid hex integer in game options");
+    }
+    return static_cast<std::uint32_t>(value);
+}
+
 void jsonString(std::ostream &out, const std::string &s)
 {
     out << '"';
@@ -174,6 +235,156 @@ const char *typeName(std::uint8_t type)
     }
 }
 
+SlotInfo parseSlot(const std::string &raw)
+{
+    if (raw.empty()) {
+        throw std::runtime_error("empty slot entry in game options");
+    }
+
+    SlotInfo slot;
+    if (raw[0] == 'H') {
+        std::vector<std::string> fields = split(raw, ',');
+        if (fields.size() != 9 || fields[0].size() < 2 || fields[3].size() != 2) {
+            throw std::runtime_error("invalid human slot entry in game options");
+        }
+        slot.state = "human";
+        slot.name = fields[0].substr(1);
+        slot.ip = parseHex(fields[1]);
+        slot.port = static_cast<std::uint32_t>(parseInt(fields[2]));
+        slot.accepted = fields[3][0] == 'T';
+        slot.hasMap = fields[3][1] == 'T';
+        slot.color = parseInt(fields[4]);
+        slot.playerTemplate = parseInt(fields[5]);
+        slot.startPosition = parseInt(fields[6]);
+        slot.team = parseInt(fields[7]);
+        slot.nat = parseInt(fields[8]);
+    } else if (raw[0] == 'C') {
+        std::vector<std::string> fields = split(raw, ',');
+        if (fields.size() != 5 || fields[0].size() != 2) {
+            throw std::runtime_error("invalid AI slot entry in game options");
+        }
+        switch (fields[0][1]) {
+            case 'E': slot.state = "easy_ai"; break;
+            case 'M': slot.state = "medium_ai"; break;
+            case 'H': slot.state = "brutal_ai"; break;
+            default: throw std::runtime_error("invalid AI difficulty in game options");
+        }
+        slot.accepted = true;
+        slot.hasMap = true;
+        slot.color = parseInt(fields[1]);
+        slot.playerTemplate = parseInt(fields[2]);
+        slot.startPosition = parseInt(fields[3]);
+        slot.team = parseInt(fields[4]);
+    } else if (raw == "O") {
+        slot.state = "open";
+    } else if (raw == "X") {
+        slot.state = "closed";
+    } else {
+        throw std::runtime_error("unknown slot entry in game options");
+    }
+
+    return slot;
+}
+
+GameOptions parseGameOptions(const std::string &text)
+{
+    GameOptions options;
+    bool sawMap = false;
+    bool sawMapCrc = false;
+    bool sawMapSize = false;
+    bool sawSeed = false;
+    bool sawCrc = false;
+    bool sawSlots = false;
+
+    for (const std::string &pair : split(text, ';')) {
+        if (pair.empty()) {
+            continue;
+        }
+
+        std::size_t equals = pair.find('=');
+        if (equals == std::string::npos) {
+            throw std::runtime_error("invalid key/value pair in game options");
+        }
+        std::string key = pair.substr(0, equals);
+        std::string value = pair.substr(equals + 1);
+        if (value.empty()) {
+            throw std::runtime_error("empty value in game options");
+        }
+
+        if (key == "M") {
+            if (value.size() < 2) {
+                throw std::runtime_error("invalid map entry in game options");
+            }
+            options.mapContentsMask = static_cast<int>(parseHex(value.substr(0, 2)));
+            options.portableMapPath = value.substr(2);
+            sawMap = true;
+        } else if (key == "MC") {
+            options.mapCrc = parseHex(value);
+            sawMapCrc = true;
+        } else if (key == "MS") {
+            options.mapSize = static_cast<std::uint32_t>(parseInt(value));
+            sawMapSize = true;
+        } else if (key == "SD") {
+            options.seed = parseInt(value);
+            sawSeed = true;
+        } else if (key == "C") {
+            options.crcInterval = parseInt(value);
+            sawCrc = true;
+        } else if (key == "S") {
+            std::vector<std::string> rawSlots = split(value, ':');
+            for (const std::string &rawSlot : rawSlots) {
+                if (!rawSlot.empty()) {
+                    options.slots.push_back(parseSlot(rawSlot));
+                }
+            }
+            if (options.slots.size() != 8) {
+                throw std::runtime_error("slot list does not contain eight slots");
+            }
+            sawSlots = true;
+        } else {
+            throw std::runtime_error("unknown key in game options");
+        }
+    }
+
+    if (!sawMap || !sawMapCrc || !sawMapSize || !sawSeed || !sawCrc || !sawSlots) {
+        throw std::runtime_error("missing key in game options");
+    }
+    return options;
+}
+
+void emitGameOptions(const GameOptions &game)
+{
+    std::cout << ",\"game_info\":{\"map_contents_mask\":" << game.mapContentsMask;
+    std::cout << ",\"portable_map_path\":";
+    jsonString(std::cout, game.portableMapPath);
+    std::cout << ",\"map_crc\":" << game.mapCrc;
+    std::cout << ",\"map_size\":" << game.mapSize;
+    std::cout << ",\"seed\":" << game.seed;
+    std::cout << ",\"crc_interval\":" << game.crcInterval;
+    std::cout << ",\"slots\":[";
+    for (std::size_t i = 0; i < game.slots.size(); ++i) {
+        const SlotInfo &slot = game.slots[i];
+        if (i != 0) {
+            std::cout << ',';
+        }
+        std::cout << "{\"index\":" << i << ",\"state\":";
+        jsonString(std::cout, slot.state);
+        std::cout << ",\"name\":";
+        jsonString(std::cout, slot.name);
+        std::cout << ",\"ip\":" << slot.ip;
+        std::cout << ",\"port\":" << slot.port;
+        std::cout << ",\"accepted\":" << (slot.accepted ? "true" : "false");
+        std::cout << ",\"has_map\":" << (slot.hasMap ? "true" : "false");
+        std::cout << ",\"color\":" << slot.color;
+        std::cout << ",\"player_template\":" << slot.playerTemplate;
+        std::cout << ",\"start_position\":" << slot.startPosition;
+        std::cout << ",\"team\":" << slot.team;
+        std::cout << ",\"nat\":" << slot.nat;
+        std::cout << "}";
+    }
+    std::cout << "]}";
+}
+
 void emitHeader(Reader &reader)
 {
     char magic[8];
@@ -210,6 +421,7 @@ void emitHeader(Reader &reader)
     std::uint8_t official = reader.u8();
     std::uint32_t seed = reader.u32();
     std::string gameOptions = reader.asciiZ();
+    GameOptions parsedGameOptions = parseGameOptions(gameOptions);
     std::string localPlayerIndex = reader.asciiZ();
     std::uint32_t difficulty = reader.u32();
     std::uint32_t originalGameMode = reader.u32();
@@ -248,6 +460,7 @@ void emitHeader(Reader &reader)
     std::cout << ",\"seed\":" << seed;
     std::cout << ",\"game_options\":";
     jsonString(std::cout, gameOptions);
+    emitGameOptions(parsedGameOptions);
     std::cout << ",\"local_player_index\":";
     jsonString(std::cout, localPlayerIndex);
     std::cout << ",\"difficulty\":" << difficulty;
