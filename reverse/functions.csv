@@ -901,6 +901,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??4LifeEventModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0004A36D,0x5d8530,55,src/game/fx_particle_system_bulk.cpp,matched,
 ??4LifeEventModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0002F211,0x5d8580,84,src/game/fx_particle_system_bulk.cpp,matched,
 ??4LightningDrawModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0003E108,0x5d8f80,91,src/game/fx_particle_system_bulk.cpp,matched,
+??0LightningDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0004A89F,0x005D9170,62,src/game/fx_particle_system_bulk.cpp,matched,
 ??4LightningDrawModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0000AC59,0x5d91c0,46,src/game/fx_particle_system_bulk.cpp,matched,
 ??4LightningEmissionModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0001B1EE,0x5d6c00,46,src/game/fx_particle_system_bulk.cpp,matched,
 ??4LineEmissionVolumeModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x000174D6,0x5d5d00,74,src/game/fx_particle_system_bulk.cpp,matched,

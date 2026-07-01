@@ -631,7 +631,7 @@ public:
     static void parseEventFXListName(INI *ini, void *data, void *store, const void *userData);
 };
 
-class LightningDrawModuleTemplate {
+class LightningDrawModuleTemplate : public CategoryModuleTemplate<6>, public LightningDrawModuleInfo {
 public:
     LightningDrawModuleTemplate();
     LightningDrawModuleTemplate(const LightningDrawModuleTemplate &that);
@@ -641,10 +641,10 @@ public:
     virtual void writeINI(File &file, unsigned int flags) const;
 };
 
-class LightningEmissionModuleTemplate {
+class LightningEmissionModuleTemplate : public CategoryModuleTemplate<5>, public LightningEmissionInfo {
 public:
     LightningEmissionModuleTemplate();
-    LightningEmissionModuleTemplate(const LightningEmissionModuleTemplate &that);
+    __declspec(nothrow) LightningEmissionModuleTemplate(const LightningEmissionModuleTemplate &that);
     virtual ~LightningEmissionModuleTemplate();
     LightningEmissionModuleTemplate &operator=(const LightningEmissionModuleTemplate &that);
     void parse(INI *ini);
