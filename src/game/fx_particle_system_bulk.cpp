@@ -21,6 +21,7 @@ extern const char SPHERE_EMISSION_VOLUME_MODULE_TEMPLATE_PARSE_TABLE[];
 extern const char SPHERICAL_EMISSION_VELOCITY_MODULE_TEMPLATE_PARSE_TABLE[];
 extern const char STREAK_DRAW_MODULE_TEMPLATE_PARSE_TABLE[];
 extern const char TERRAIN_COLLISION_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const void *CATEGORY_MODULE_CLASS_0_VTABLE;
 
 // ??0?$ConcreteModuleClass@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
 __declspec(naked) ConcreteModuleClass<DefaultModuleTag<0> >::ConcreteModuleClass()
@@ -85,18 +86,9 @@ __declspec(naked) ConcreteModuleClass<DefaultModuleTag<0> >::ConcreteModuleClass
     }
 }
 
-// ??1?$ConcreteModuleClass@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
-__declspec(naked) ConcreteModuleClass<DefaultModuleTag<0> >::~ConcreteModuleClass()
+ConcreteModuleClass<DefaultModuleTag<0> >::~ConcreteModuleClass()
 {
-    __asm {
-        __emit 0xc7
-        __emit 0x01
-        __emit 0x44
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc3
-    }
+    *(const void **)this = &CATEGORY_MODULE_CLASS_0_VTABLE;
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@2@XZ
