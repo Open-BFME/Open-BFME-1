@@ -648,6 +648,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Add@Coord3D@@QAEAAV1@ABVCoord2D@@ABUCoord3DBase@@@Z,0x0001F802,0x007E5EF0,34,src/math/coord3d.cpp,matched,adds Coord2D and Coord3DBase
 ?Add_Size@ChunkHeader@@QAEXK@Z,,0x009E1780,36,src/w3d/chunkio.cpp,matched,
 ?Add_Size@MicroChunkHeader@@QAEXE@Z,,0x009E17B0,15,src/w3d/chunkio.cpp,matched,
+?Base64_Decode@@YAHPBXHPAXH@Z,,0x009EB670,286,src/w3d/base64.cpp,matched,
+?Base64_Encode@@YAHPBXHPAXH@Z,,0x009EB560,264,src/w3d/base64.cpp,matched,
 ?Begin_Chunk@ChunkSaveClass@@QAE_NK@Z,,0x009E16F0,138,src/w3d/chunkio.cpp,matched,
 ?Begin_Micro_Chunk@ChunkSaveClass@@QAE_NK@Z,,0x009E1950,76,src/w3d/chunkio.cpp,matched,
 ?Cos@@YAMM@Z,0x00873920,0x00873920,7,src/math/trig.cpp,matched,returns cosine of radians
