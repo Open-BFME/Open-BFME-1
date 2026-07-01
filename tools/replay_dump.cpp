@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <map>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -128,6 +129,26 @@ private:
 struct TypeRun {
     std::uint8_t type;
     std::uint8_t count;
+};
+
+struct HeaderInfo {
+    std::uint32_t frameCount = 0;
+    std::uint32_t maxFps = 0;
+};
+
+struct PlayerSummary {
+    std::uint64_t commands = 0;
+    std::uint32_t firstFrame = 0;
+    std::uint32_t lastFrame = 0;
+};
+
+struct Summary {
+    std::uint32_t frameCount = 0;
+    std::uint32_t maxFps = 0;
+    std::uint32_t lastCommandFrame = 0;
+    std::uint64_t commands = 0;
+    std::map<std::int32_t, PlayerSummary> players;
+    std::map<std::uint32_t, std::uint64_t> messageTypes;
 };
 
 struct SlotInfo {
@@ -385,7 +406,7 @@ void emitGameOptions(const GameOptions &game)
     std::cout << "]}";
 }
 
-void emitHeader(Reader &reader)
+HeaderInfo emitHeader(Reader &reader)
 {
     char magic[8];
     reader.file.read(magic, sizeof(magic));
@@ -469,6 +490,11 @@ void emitHeader(Reader &reader)
     std::cout << ",\"max_fps\":" << maxFps;
     std::cout << ",\"command_stream_offset\":" << reader.position();
     std::cout << "}\n";
+
+    HeaderInfo info;
+    info.frameCount = frameCount;
+    info.maxFps = maxFps;
+    return info;
 }
 
 void emitArgument(Reader &reader, std::uint8_t type)
@@ -509,7 +535,7 @@ void emitArgument(Reader &reader, std::uint8_t type)
     std::cout << "}";
 }
 
-bool emitCommand(Reader &reader)
+bool emitCommand(Reader &reader, Summary &summary)
 {
     if (reader.atEnd()) {
         return false;
@@ -517,7 +543,7 @@ bool emitCommand(Reader &reader)
 
     std::uint32_t frame = reader.u32();
     std::uint32_t messageType = reader.u32();
-    std::uint32_t playerIndex = reader.u32();
+    std::int32_t playerIndex = static_cast<std::int32_t>(reader.u32());
     std::uint8_t numTypes = reader.u8();
     std::vector<TypeRun> runs;
     int totalArgs = 0;
@@ -526,6 +552,16 @@ bool emitCommand(Reader &reader)
         runs.push_back(run);
         totalArgs += run.count;
     }
+
+    ++summary.commands;
+    summary.lastCommandFrame = frame;
+    ++summary.messageTypes[messageType];
+    PlayerSummary &player = summary.players[playerIndex];
+    if (player.commands == 0) {
+        player.firstFrame = frame;
+    }
+    ++player.commands;
+    player.lastFrame = frame;
 
     std::cout << "{\"kind\":\"command\",\"offset\":" << reader.position();
     std::cout << ",\"frame\":" << frame;
@@ -558,6 +594,42 @@ bool emitCommand(Reader &reader)
     return true;
 }
 
+void emitSummary(const Summary &summary)
+{
+    std::cout << "{\"kind\":\"summary\",\"commands\":" << summary.commands;
+    std::cout << ",\"frame_count\":" << summary.frameCount;
+    std::cout << ",\"last_command_frame\":" << summary.lastCommandFrame;
+    std::cout << ",\"max_fps\":" << summary.maxFps;
+    std::cout << ",\"players\":[";
+    bool first = true;
+    for (const auto &entry : summary.players) {
+        if (!first) {
+            std::cout << ',';
+        }
+        first = false;
+        const PlayerSummary &player = entry.second;
+        std::cout << "{\"player_index\":" << entry.first;
+        std::cout << ",\"commands\":" << player.commands;
+        std::cout << ",\"first_frame\":" << player.firstFrame;
+        std::cout << ",\"last_frame\":" << player.lastFrame;
+        if (summary.frameCount != 0 && summary.maxFps != 0) {
+            double apm = static_cast<double>(player.commands) * summary.maxFps * 60.0 / summary.frameCount;
+            std::cout << ",\"apm_by_max_fps\":" << apm;
+        }
+        std::cout << "}";
+    }
+    std::cout << "],\"message_types\":[";
+    first = true;
+    for (const auto &entry : summary.messageTypes) {
+        if (!first) {
+            std::cout << ',';
+        }
+        first = false;
+        std::cout << "{\"message_type\":" << entry.first << ",\"count\":" << entry.second << "}";
+    }
+    std::cout << "]}\n";
+}
+
 } // namespace
 
 int main(int argc, char **argv)
@@ -569,9 +641,13 @@ int main(int argc, char **argv)
 
     try {
         Reader reader(argv[1]);
-        emitHeader(reader);
-        while (emitCommand(reader)) {
+        HeaderInfo header = emitHeader(reader);
+        Summary summary;
+        summary.frameCount = header.frameCount;
+        summary.maxFps = header.maxFps;
+        while (emitCommand(reader, summary)) {
         }
+        emitSummary(summary);
     } catch (const std::exception &ex) {
         std::cerr << "replay_dump: " << ex.what() << "\n";
         return 1;
