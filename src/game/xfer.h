@@ -60,6 +60,15 @@ public:
     virtual Xfer &operator==(AsciiString &as);
     virtual Xfer &operator==(UnicodeString &us);
     virtual Xfer &operator==(Version &v);
+
+private:
+    virtual void ReservedVirtual1();
+    virtual void ReservedVirtual2();
+    virtual void ReservedVirtual3();
+    virtual void ReservedVirtual4();
+    virtual void ReservedVirtual5();
+
+public:
     virtual Xfer &XferRawBytes(void *data, unsigned int size);
     virtual Xfer &XferEnum(const char *name, void *data, unsigned int size);
 };
