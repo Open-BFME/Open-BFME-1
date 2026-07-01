@@ -3,7 +3,24 @@
 
 namespace FXParticleSystem {
 
+extern const char BOX_EMISSION_VOLUME_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char BUTTERFLY_DRAW_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char CYLINDER_EMISSION_VOLUME_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char CYLINDRICAL_EMISSION_VELOCITY_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char LIFE_EVENT_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char LIGHTNING_DRAW_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char LIGHTNING_EMISSION_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char LINE_EMISSION_VOLUME_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char ORTHO_EMISSION_VELOCITY_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char OUTWARD_EMISSION_VELOCITY_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char POINT_EMISSION_VOLUME_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char QUAD_DRAW_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char RENDER_OBJECT_DRAW_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char RENDER_OBJECT_UPDATE_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char SPHERE_EMISSION_VOLUME_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char SPHERICAL_EMISSION_VELOCITY_MODULE_TEMPLATE_PARSE_TABLE[];
 extern const char STREAK_DRAW_MODULE_TEMPLATE_PARSE_TABLE[];
+extern const char TERRAIN_COLLISION_MODULE_TEMPLATE_PARSE_TABLE[];
 
 // ??0?$ConcreteModuleClass@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
 __declspec(naked) ConcreteModuleClass<DefaultModuleTag<0> >::ConcreteModuleClass()
@@ -28960,253 +28977,63 @@ __declspec(naked) const FXList *TerrainCollisionModuleInfo::getEventFX()
 }
 
 // ?parse@BoxEmissionVolumeModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void BoxEmissionVolumeModuleTemplate::parse(INI *ini)
+void BoxEmissionVolumeModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0x88
-        __emit 0x3a
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x41
-        __emit 0x9a
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, BOX_EMISSION_VOLUME_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@ButterflyDrawModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void ButterflyDrawModuleTemplate::parse(INI *ini)
+void ButterflyDrawModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0x70
-        __emit 0x35
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0xa1
-        __emit 0x17
-        __emit 0x26
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, BUTTERFLY_DRAW_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@CylinderEmissionVolumeModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void CylinderEmissionVolumeModuleTemplate::parse(INI *ini)
+void CylinderEmissionVolumeModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0xa0
-        __emit 0x3c
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x31
-        __emit 0x8d
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, CYLINDER_EMISSION_VOLUME_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@CylindricalEmissionVelocityModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void CylindricalEmissionVelocityModuleTemplate::parse(INI *ini)
+void CylindricalEmissionVelocityModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0x90
-        __emit 0x3b
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0xc1
-        __emit 0x91
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, CYLINDRICAL_EMISSION_VELOCITY_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@LifeEventModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void LifeEventModuleTemplate::parse(INI *ini)
+void LifeEventModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0x50
-        __emit 0x44
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x91
-        __emit 0x5d
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, LIFE_EVENT_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@LightningDrawModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void LightningDrawModuleTemplate::parse(INI *ini)
+void LightningDrawModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0xe8
-        __emit 0x36
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x51
-        __emit 0xdf
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, LIGHTNING_DRAW_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@LightningEmissionModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void LightningEmissionModuleTemplate::parse(INI *ini)
+void LightningEmissionModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0x00
-        __emit 0x43
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x91
-        __emit 0x71
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, LIGHTNING_EMISSION_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@LineEmissionVolumeModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void LineEmissionVolumeModuleTemplate::parse(INI *ini)
+void LineEmissionVolumeModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0x30
-        __emit 0x3e
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x21
-        __emit 0x88
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, LINE_EMISSION_VOLUME_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@OrthoEmissionVelocityModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void OrthoEmissionVelocityModuleTemplate::parse(INI *ini)
+void OrthoEmissionVelocityModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0x40
-        __emit 0x3f
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0xd1
-        __emit 0x82
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, ORTHO_EMISSION_VELOCITY_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@OutwardEmissionVelocityModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void OutwardEmissionVelocityModuleTemplate::parse(INI *ini)
+void OutwardEmissionVelocityModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0xe4
-        __emit 0x3f
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0xb1
-        __emit 0x7f
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, OUTWARD_EMISSION_VELOCITY_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@ParticleSystemTemplate@FXParticleSystem@@SAXPAVINI@@PAX1PBX@Z
@@ -29951,153 +29778,39 @@ __declspec(naked) void ParticleSystemTemplate::parse(INI *ini, void *data, void 
 }
 
 // ?parse@PointEmissionVolumeModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void PointEmissionVolumeModuleTemplate::parse(INI *ini)
+void PointEmissionVolumeModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0x60
-        __emit 0x40
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0xf1
-        __emit 0x7c
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, POINT_EMISSION_VOLUME_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@QuadDrawModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void QuadDrawModuleTemplate::parse(INI *ini)
+void QuadDrawModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0x80
-        __emit 0x37
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x81
-        __emit 0xcc
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, QUAD_DRAW_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@RenderObjectDrawModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void RenderObjectDrawModuleTemplate::parse(INI *ini)
+void RenderObjectDrawModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0xb0
-        __emit 0x38
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x11
-        __emit 0xb9
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, RENDER_OBJECT_DRAW_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@RenderObjectUpdateModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void RenderObjectUpdateModuleTemplate::parse(INI *ini)
+void RenderObjectUpdateModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0xa0
-        __emit 0x4a
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0xb1
-        __emit 0x1c
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, RENDER_OBJECT_UPDATE_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@SphereEmissionVolumeModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void SphereEmissionVolumeModuleTemplate::parse(INI *ini)
+void SphereEmissionVolumeModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0x44
-        __emit 0x41
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0xe1
-        __emit 0x77
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, SPHERE_EMISSION_VOLUME_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@SphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void SphericalEmissionVelocityModuleTemplate::parse(INI *ini)
+void SphericalEmissionVelocityModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0xd8
-        __emit 0x40
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x41
-        __emit 0x7a
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, SPHERICAL_EMISSION_VELOCITY_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parse@StreakDrawModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
@@ -30107,28 +29820,9 @@ void StreakDrawModuleTemplate::parse(INI *ini)
 }
 
 // ?parse@TerrainCollisionModuleTemplate@FXParticleSystem@@QAEXPAVINI@@@Z
-__declspec(naked) void TerrainCollisionModuleTemplate::parse(INI *ini)
+void TerrainCollisionModuleTemplate::parse(INI *ini)
 {
-    __asm {
-        __emit 0x68
-        __emit 0x18
-        __emit 0x45
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0xa1
-        __emit 0x51
-        __emit 0x25
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    ini->initFromINI(this, TERRAIN_COLLISION_MODULE_TEMPLATE_PARSE_TABLE);
 }
 
 // ?parseEventFXListName@LifeEventModuleTemplate@FXParticleSystem@@SAXPAVINI@@PAX1PBX@Z
