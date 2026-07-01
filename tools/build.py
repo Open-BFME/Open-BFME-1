@@ -231,6 +231,17 @@ def compiler_environment(root):
     return env
 
 
+def source_extra_flags(source):
+    # A source that needs different compiler flags (e.g. /EHsc for functions the
+    # original built with exception handling) declares them in its first lines:
+    #   // cl: /EHsc
+    with source.open("r", encoding="utf-8", errors="replace") as handle:
+        for line in handle.read(2048).splitlines():
+            if line.startswith("// cl:"):
+                return line[len("// cl:") :].split()
+    return []
+
+
 def compiler_command(source, output):
     root = vc71_root()
     compiler = root / "Vc7" / "bin" / "cl.exe"
@@ -251,6 +262,9 @@ def compiler_command(source, output):
         "/O2",
         "/GR-",
         "/EHsc-",
+    ]
+    command += source_extra_flags(source)
+    command += [
         f"/Fo{output_arg}",
         source_arg,
     ]
@@ -293,18 +307,24 @@ def build_call_thunks():
 
 
 def load_symbol_map():
-    # Addresses for resolving relative calls (REL32). A call to a matched function
-    # goes through its incremental-link thunk, not its body; reverse/symbols.csv
-    # holds callees we do not own source for yet (CRT helpers like __ftol2).
+    # Candidate addresses for resolving relative calls (REL32), most-likely first.
+    # Incremental linking makes the callee encoding site-specific: objs linked
+    # earlier call a matched function through its incremental-link thunk, objs
+    # re-linked in place call the body directly. Both are legitimate, so a matched
+    # function maps to [thunk, body] and the comparison picks whichever the target
+    # actually used; anything else still fails the byte comparison loudly.
+    # reverse/symbols.csv holds callees we do not own source for yet (CRT helpers
+    # like __ftol2) at their exact call-target address.
     thunks = build_call_thunks()
     symbol_map = {}
     for row in load_all_function_rows():
         body = int(row["target_rva"], 16)
-        symbol_map[row["name"]] = thunks.get(body, body)
+        thunk = thunks.get(body)
+        symbol_map[row["name"]] = [thunk, body] if thunk is not None else [body]
     if SYMBOLS.exists():
         with SYMBOLS.open("r", encoding="utf-8", newline="") as handle:
             for row in csv.DictReader(handle):
-                symbol_map[row["name"]] = int(row["address"], 16)
+                symbol_map[row["name"]] = [int(row["address"], 16)]
     return symbol_map
 
 
@@ -339,9 +359,13 @@ def compile_function(row, symbol_map, output):
             resolved[offset : offset + 4] = target[offset : offset + 4]
         elif rtype == 0x0014:  # IMAGE_REL_I386_REL32
             if sym_name in symbol_map:
-                target_address = symbol_map[sym_name]
                 next_address = target_rva + offset + 4
-                displacement = struct.pack("<i", target_address - next_address)
+                candidates = symbol_map[sym_name]
+                displacement = struct.pack("<i", candidates[0] - next_address)
+                for target_address in candidates[1:]:
+                    if target[offset : offset + 4] == displacement:
+                        break
+                    displacement = struct.pack("<i", target_address - next_address)
                 resolved[offset : offset + 4] = displacement
             else:
                 unresolved.append(sym_name)

@@ -63,6 +63,7 @@ def compile_obj(source, includes):
     compiler = build.vc71_root() / "Vc7" / "bin" / "cl.exe"
     command = ["wine"] if os.name != "nt" else []
     command += [str(compiler), "/nologo", "/c", "/O2", "/GR-", "/EHsc-"]
+    command += build.source_extra_flags(source)
     for directory in includes:
         command += ["/I", build.wine_path(build.Path(directory).resolve())]
     command += ["/Fo" + build.wine_path(obj), build.wine_path(source.resolve())]
@@ -115,7 +116,14 @@ def main():
                 resolved[offset : offset + 4] = target[offset : offset + 4]
             elif rtype == 0x0014:  # REL32
                 if sym in symbol_map:
-                    resolved[offset : offset + 4] = struct.pack("<i", symbol_map[sym] - (rva + offset + 4))
+                    next_address = rva + offset + 4
+                    candidates = symbol_map[sym]
+                    patch = struct.pack("<i", candidates[0] - next_address)
+                    for target_address in candidates[1:]:
+                        if target[offset : offset + 4] == patch:
+                            break
+                        patch = struct.pack("<i", target_address - next_address)
+                    resolved[offset : offset + 4] = patch
                 else:
                     missing.append(sym)
         if bytes(resolved) == target and not missing:
