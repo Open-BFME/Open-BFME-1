@@ -8,10 +8,6 @@ typedef unsigned short wchar_t;
 extern "C" __declspec(dllimport) int __cdecl fgetc(FILE *stream);
 extern "C" __declspec(dllimport) unsigned int __cdecl fread(void *buffer, unsigned int size, unsigned int count, FILE *stream);
 extern "C" __declspec(dllimport) int __cdecl fclose(FILE *stream);
-extern "C" __declspec(dllimport) FILE *__cdecl fopen(const char *filename, const char *mode);
-extern "C" __declspec(dllimport) int __cdecl fgetpos(FILE *stream, int *pos);
-extern "C" __declspec(dllimport) int __cdecl strncmp(const char *str1, const char *str2, unsigned int count);
-extern "C" __declspec(dllimport) int __cdecl atoi(const char *str);
 
 class AsciiString {
 public:
@@ -19,21 +15,7 @@ public:
     AsciiString(const AsciiString &that) { base()->StringBase<char>::StringBase(*that.base()); }
     AsciiString(const char *str) { base()->StringBase<char>::StringBase(str); }
     ~AsciiString() { base()->releaseBuffer(); }
-    AsciiString &operator=(const AsciiString &that) { base()->set(*that.base()); return *this; }
     void clear() { base()->releaseBuffer(); }
-    const char *str() const { return m_data != 0 ? &m_data->data[0] : ""; }
-    void concat(const char *str)
-    {
-        const char *start = str;
-        int len = 0;
-        if (start != 0) {
-            const char *end = str + 1;
-            while (*str++) {
-            }
-            len = str - end;
-        }
-        base()->concat(start, len);
-    }
 
 private:
     StringBase<char> *base() { return (StringBase<char> *)this; }
@@ -49,7 +31,6 @@ public:
     UnicodeString(const UnicodeString &that) { base()->StringBase<wchar_t>::StringBase(*that.base()); }
     UnicodeString(const wchar_t *str) { base()->StringBase<wchar_t>::StringBase(str); }
     ~UnicodeString() { base()->releaseBuffer(); }
-    UnicodeString &operator=(const UnicodeString &that) { base()->set(*that.base()); return *this; }
 
 private:
     StringBase<wchar_t> *base() { return (StringBase<wchar_t> *)this; }
@@ -60,17 +41,6 @@ private:
 };
 
 UnicodeString readUnicodeString(FILE *file);
-
-struct SystemTime {
-    unsigned short year;
-    unsigned short month;
-    unsigned short dayOfWeek;
-    unsigned short day;
-    unsigned short hour;
-    unsigned short minute;
-    unsigned short second;
-    unsigned short milliseconds;
-};
 
 class MessageStream {
 public:
@@ -174,59 +144,6 @@ public:
 
 extern CommandList *TheCommandList;
 
-enum SlotState {
-    SLOT_OPEN,
-    SLOT_CLOSED,
-    SLOT_EASY_AI,
-    SLOT_MED_AI,
-    SLOT_BRUTAL_AI,
-    SLOT_PLAYER
-};
-
-class GameSlot {
-public:
-    virtual void reset();
-    SlotState getState() const { return m_state; }
-    unsigned int getIP() const { return m_IP; }
-    unsigned int getPort() const { return m_port; }
-    bool isHuman() const { return m_state == SLOT_PLAYER; }
-
-private:
-    SlotState m_state;
-    bool m_isAccepted;
-    bool m_hasMap;
-    bool m_isMuted;
-    int m_color;
-    int m_startPos;
-    int m_playerTemplate;
-    int m_teamNumber;
-    int m_origColor;
-    int m_origStartPos;
-    int m_origPlayerTemplate;
-    int m_origTeamNumber;
-    UnicodeString m_name;
-    unsigned int m_IP;
-    unsigned int m_port;
-};
-
-class GameInfo {
-public:
-    virtual void v0();
-    virtual void v1();
-    virtual void reset();
-    virtual void startGame(int gameID);
-
-    void enterGame();
-    void endGame();
-    GameSlot *getSlot(int slotNum);
-    const GameSlot *getConstSlot(int slotNum) const;
-
-private:
-    char m_padding4[0x34 - 0x04];
-};
-
-bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options, bool unknown);
-
 class GameMessageParserArgumentType {
 public:
     virtual ~GameMessageParserArgumentType();
@@ -255,36 +172,6 @@ private:
 };
 
 class RecorderClass {
-public:
-    struct ReplayHeader {
-        int startTime;
-        int endTime;
-        unsigned int frameDuration;
-        unsigned int field0c;
-        unsigned int field10;
-        bool desyncGame;
-        bool playerDiscons[8];
-        char padding1d[3];
-        AsciiString gameOptions;
-        int localPlayerIndex;
-        AsciiString filename;
-        bool forPlayback;
-        char padding2d[3];
-        UnicodeString replayName;
-        SystemTime timeVal;
-        UnicodeString versionString;
-        UnicodeString versionTimeString;
-        unsigned int versionNumber;
-        unsigned int exeCRC;
-        unsigned int iniCRC;
-        bool quitEarly;
-        char padding59[3];
-        unsigned int field5c;
-    };
-
-    static AsciiString getReplayDir();
-    bool readReplayHeader(ReplayHeader &header);
-
 protected:
     AsciiString readAsciiString();
     UnicodeString readUnicodeString();
@@ -298,15 +185,7 @@ private:
     int m_padding8;
     FILE *m_file;
     AsciiString m_fileName;
-    char m_padding14[0x20 - 0x14];
-    GameInfo m_gameInfo;
-    unsigned int m_gameInfoLocalIP;
-    unsigned int m_gameInfoLocalPort;
-    char m_gameInfoPadding5c[0x298 - 0x5c];
-    unsigned int m_replayHeaderField0c;
-    unsigned int m_replayHeaderField10;
-    int m_humanPlayerCount;
-    int m_localPlayerIndex;
+    char m_padding14[0x2a8 - 0x14];
     bool m_doingAnalysis;
     char m_padding2a9[0x2b0 - 0x2a9];
     int m_nextFrame;
@@ -477,90 +356,4 @@ void RecorderClass::appendNextCommand()
     }
 
     delete parser;
-}
-
-bool RecorderClass::readReplayHeader(ReplayHeader &header)
-{
-    AsciiString filepath = getReplayDir();
-    filepath.concat(header.filename.str());
-    m_file = fopen(filepath.str(), "rb");
-    if (m_file == 0) {
-        return false;
-    }
-
-    char magic[9];
-    fread(&magic, sizeof(char), 8, m_file);
-    magic[8] = 0;
-    if (strncmp(magic, "BFMEREPL", 8)) {
-        fclose(m_file);
-        m_file = 0;
-        return false;
-    }
-
-    fread(&header.startTime, sizeof(header.startTime), 1, m_file);
-    fread(&header.endTime, sizeof(header.endTime), 1, m_file);
-    fread(&header.frameDuration, sizeof(header.frameDuration), 1, m_file);
-    fread(&header.field0c, sizeof(header.field0c), 1, m_file);
-    m_replayHeaderField0c = header.field0c;
-    fread(&header.field10, sizeof(header.field10), 1, m_file);
-    m_replayHeaderField10 = header.field10;
-    fread(&header.desyncGame, sizeof(header.desyncGame), 1, m_file);
-    for (int i = 0; i < 8; ++i) {
-        fread(&header.playerDiscons[i], sizeof(header.playerDiscons[i]), 1, m_file);
-    }
-
-    header.replayName = readUnicodeString();
-    fread(&header.timeVal, sizeof(header.timeVal), 1, m_file);
-    header.versionString = readUnicodeString();
-    header.versionTimeString = readUnicodeString();
-    fread(&header.versionNumber, sizeof(header.versionNumber), 1, m_file);
-    fread(&header.exeCRC, sizeof(header.exeCRC), 1, m_file);
-    fread(&header.iniCRC, sizeof(header.iniCRC), 1, m_file);
-    fread(&header.quitEarly, sizeof(header.quitEarly), 1, m_file);
-    fread(&header.field5c, sizeof(header.field5c), 1, m_file);
-
-    int commandStart;
-    fgetpos(m_file, &commandStart);
-
-    header.gameOptions = readAsciiString();
-    m_gameInfo.reset();
-    m_gameInfo.enterGame();
-    if (!ParseAsciiStringToGameInfo(&m_gameInfo, header.gameOptions, true)) {
-        fclose(m_file);
-        m_file = 0;
-        return false;
-    }
-    m_gameInfo.startGame(0);
-
-    AsciiString playerIndex = readAsciiString();
-    header.localPlayerIndex = atoi(playerIndex.str());
-    if (header.localPlayerIndex < -1 || header.localPlayerIndex >= 8) {
-        m_gameInfo.endGame();
-        m_gameInfo.reset();
-        fclose(m_file);
-        m_file = 0;
-        return false;
-    }
-    if (header.localPlayerIndex >= 0) {
-        GameSlot *slot = m_gameInfo.getSlot(header.localPlayerIndex);
-        m_gameInfoLocalIP = slot->getIP();
-        m_gameInfoLocalPort = slot->getPort();
-    }
-
-    if (!header.forPlayback) {
-        m_gameInfo.endGame();
-        m_gameInfo.reset();
-        fclose(m_file);
-        m_file = 0;
-    }
-
-    m_humanPlayerCount = 0;
-    for (int j = 0; j < 8; ++j) {
-        const GameSlot *slot = m_gameInfo.getConstSlot(j);
-        if (slot->isHuman()) {
-            ++m_humanPlayerCount;
-        }
-    }
-    m_localPlayerIndex = header.localPlayerIndex;
-    return true;
 }
