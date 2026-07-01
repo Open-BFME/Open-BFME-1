@@ -24387,101 +24387,20 @@ __declspec(naked) LifeEventModuleTemplate &LifeEventModuleTemplate::operator=(co
 }
 
 // ??4LightningDrawModuleInfo@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) LightningDrawModuleInfo &LightningDrawModuleInfo::operator=(const LightningDrawModuleInfo &that)
+LightningDrawModuleInfo &LightningDrawModuleInfo::operator=(const LightningDrawModuleInfo &that)
 {
-    __asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x57
-        __emit 0x8d
-        __emit 0x51
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x3a
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x04
-        __emit 0x89
-        __emit 0x3e
-        __emit 0x8b
-        __emit 0x7a
-        __emit 0x04
-        __emit 0x89
-        __emit 0x7e
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x89
-        __emit 0x56
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x51
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x3a
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x10
-        __emit 0x89
-        __emit 0x3e
-        __emit 0x8b
-        __emit 0x7a
-        __emit 0x04
-        __emit 0x89
-        __emit 0x7e
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x89
-        __emit 0x56
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x51
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0x3a
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x3e
-        __emit 0x8b
-        __emit 0x7a
-        __emit 0x04
-        __emit 0x89
-        __emit 0x7e
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x89
-        __emit 0x56
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x51
-        __emit 0x28
-        __emit 0x89
-        __emit 0x50
-        __emit 0x28
-        __emit 0x8a
-        __emit 0x49
-        __emit 0x2c
-        __emit 0x5f
-        __emit 0x88
-        __emit 0x48
-        __emit 0x2c
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    struct VariableBlock {
+        unsigned int value0;
+        unsigned int value1;
+        unsigned int value2;
+    };
+
+    *(VariableBlock *)&m_gcrv1 = *(const VariableBlock *)&that.m_gcrv1;
+    *(VariableBlock *)&m_gcrv2 = *(const VariableBlock *)&that.m_gcrv2;
+    *(VariableBlock *)&m_gcrv3 = *(const VariableBlock *)&that.m_gcrv3;
+    m_field28 = that.m_field28;
+    m_flag = that.m_flag;
+    return *this;
 }
 
 // ??4LightningDrawModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z
