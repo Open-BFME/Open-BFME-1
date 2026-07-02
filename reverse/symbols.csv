@@ -23,6 +23,7 @@ name,address,notes
 ??_V@YAXPAX@Z,0x00881EB0
 ?Add_To_Collection@CullSystemClass@@IAEXPAVCullableClass@@@Z,0x008E21D0
 ?Allocate_Object_Memory@?$ObjectPoolClass@VGridLinkClass@@$0BAA@@@QAEPAVGridLinkClass@@XZ,0x008DD970
+?Allocate_Object_Memory@?$ObjectPoolClass@VMultiListNodeClass@@$0BAA@@@QAEPAVMultiListNodeClass@@XZ,0x009DBDD0
 ?Begin_Chunk@ChunkSaveClass@@QAE_NK@Z,0x009E16F0
 ?Close_Chunk@ChunkLoadClass@@QAE_NXZ,0x009E13E0
 ?Collide@CollisionMath@@SA_NABVAABoxClass@@ABVVector3@@ABVTriClass@@PAUCastResultStruct@@@Z,0x008E0C30
@@ -39,6 +40,7 @@ name,address,notes
 ?HideInGameChat@@YAXXZ,0x00019583
 ?HideQuitMenu@@YAXXZ,0x0001BF36
 ?HideSaveLoadMenu@@YAXXZ,0x0000A416
+?Internal_Remove@GenericMultiListClass@@IAE_NPAVMultiListObjectClass@@@Z,0x009DC100
 ?Inv_Sqrt@WWMath@@SIMM@Z,0x00027A43,WWMath::Inv_Sqrt (naked __fastcall) incremental-link thunk (body 0x00131C90); called by Quaternion::Normalize and Axis_To_Quat, owned by wwmath.cpp
 ?Load@INIClass@@QAEHAAVStraw@@@Z,0x009E4680
 ?Open_Chunk@ChunkLoadClass@@QAE_NXZ,0x009E1380

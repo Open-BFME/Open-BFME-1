@@ -276,6 +276,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0Matrix4D@@QAE@_N@Z,0x0000F5F1,0x007E79D0,67,src/math/matrix4d.cpp,matched,optionally initializes identity
 ??0ModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00029B81,0x0005C7E0,9,src/game/fx_particle_system.cpp,matched,copy constructor sets vtable
 ??0ModuleTemplate@FXParticleSystem@@QAE@XZ,0x00028E3E,0x0005C7C0,9,src/game/fx_particle_system.cpp,matched,default constructor sets vtable
+??0MultiListNodeClass@@QAE@XZ,,0x006D11C0,19,src/w3d/multilist.cpp,matched,
 ??0OBBoxClass@@QAE@ABVVector3@@0@Z,,0x0075B300,80,src/w3d/colmathobbobb.cpp,matched,
 ??0ObbCollisionStruct@@QAE@ABVOBBoxClass@@ABVVector3@@01@Z,,0x008E3760,218,src/w3d/colmathobbobb.cpp,matched,
 ??0ObbIntersectionStruct@@QAE@ABVOBBoxClass@@0@Z,,0x008E2A20,153,src/w3d/colmathobbobb.cpp,matched,
@@ -405,6 +406,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1FilePipe@@UAE@XZ,,0x009E7DC0,104,src/w3d/xpipe.cpp,matched,
 ??1FileStraw@@UAE@XZ,,0x009E1C50,104,src/w3d/xstraw.cpp,matched,
 ??1GenericList@@UAE@XZ,,0x009E2F30,148,src/w3d/ini.cpp,matched,
+??1GenericMultiListClass@@UAE@XZ,,0x009DBD20,7,src/w3d/multilist.cpp,matched,
 ??1GenericNode@@UAE@XZ,,0x009E2DE0,47,src/w3d/ini.cpp,matched,sibling
 ??1GridCullSystemClass@@UAE@XZ,,0x008DCAD0,97,src/w3d/gridcull.cpp,matched,
 ??1INIClass@@UAE@XZ,,0x009E45F0,138,src/w3d/ini.cpp,matched,
@@ -413,6 +415,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1LightningEmissionInfo@FXParticleSystem@@UAE@XZ,0x0000D7F6,0x005D6770,7,src/game/fx_particle_system.cpp,matched,resets vtable pointer
 ??1LineEmissionVolumeInfo@FXParticleSystem@@UAE@XZ,0x0002F03B,0x005D5A80,7,src/game/fx_particle_system.cpp,matched,resets vtable pointer
 ??1ModuleTemplate@FXParticleSystem@@UAE@XZ,0x00015A14,0x0005C7D0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable
+??1MultiListObjectClass@@UAE@XZ,,0x009DC190,37,src/w3d/multilist.cpp,matched,
 ??1OrthoEmissionVelocityInfo@FXParticleSystem@@UAE@XZ,0x000346BC,0x005D6D90,7,src/game/fx_particle_system.cpp,matched,empty dtor resets to EmissionVelocityInfo vtable
 ??1OutwardEmissionVelocityInfo@FXParticleSystem@@UAE@XZ,0x000206CB,0x005D7B10,7,src/game/fx_particle_system.cpp,matched,empty dtor resets to EmissionVelocityInfo vtable
 ??1Pipe@@UAE@XZ,,0x009E78C0,50,src/w3d/pipe.cpp,matched,
@@ -777,8 +780,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Build_Matrix4@@YA?AVMatrix4@@ABVQuaternion@@@Z,,0x008DBE10,286,src/w3d/quat.cpp,matched,
 ?Build_Quaternion@@YA?AVQuaternion@@ABVMatrix3@@@Z,,0x008DBB80,330,src/w3d/quat.cpp,matched,
 ?Build_Quaternion@@YA?AVQuaternion@@ABVMatrix4@@@Z,,0x008DBCD0,311,src/w3d/quat.cpp,matched,
-?CRC_Memory@@YAKPBEKK@Z,,0x009E7F90,53,src/w3d/realcrc.cpp,matched,realcrc TU linked twice
 ?CRC_Memory@@YAKPBEKK@Z,,0x009E19C0,53,src/w3d/realcrc.cpp,matched,realcrc TU linked twice
+?CRC_Memory@@YAKPBEKK@Z,,0x009E7F90,53,src/w3d/realcrc.cpp,matched,realcrc TU linked twice
 ?CRC_String@@YAKPBDK@Z,,0x009E1A00,64,src/w3d/realcrc.cpp,matched,realcrc TU linked twice
 ?CRC_String@@YAKPBDK@Z,,0x009E7FD0,64,src/w3d/realcrc.cpp,matched,realcrc TU linked twice
 ?CRC_Stringi@@YAKPBDK@Z,,0x009E1A40,76,src/w3d/realcrc.cpp,matched,
@@ -809,6 +812,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Compute_Axis_Aligned_Extent@OBBoxClass@@QBEXPAVVector3@@@Z,,0x008DCD20,225,src/w3d/gridcull.cpp,matched,
 ?Compute_Point@OBBoxClass@@QBEXQAMPAVVector3@@@Z,,0x008E2960,189,src/w3d/colmathobbobb.cpp,matched,
 ?Contains@AABoxClass@@QBE_NABVVector3@@@Z,,0x008DDA80,139,src/w3d/gridcull.cpp,matched,
+?Contains@GenericMultiListClass@@QAE_NPAVMultiListObjectClass@@@Z,,0x009DBEE0,38,src/w3d/multilist.cpp,matched,
 ?Contains_Point@TriClass@@QBE_NABVVector3@@@Z,,0x008E1900,297,src/w3d/tri.cpp,matched,
 ?Copy@VectorProcessorClass@@SAXPAIPBIH@Z,,0x00AFFB40,23,src/w3d/vp.cpp,matched,
 ?Copy@VectorProcessorClass@@SAXPAVVector2@@PBV2@H@Z,,0x00AFFB20,26,src/w3d/vp.cpp,matched,
@@ -825,6 +829,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?CopyIndexed@VectorProcessorClass@@SAXPAVVector4@@PBV2@PBIH@Z,,0x00B006F0,270,src/w3d/vp.cpp,matched,
 ?Copy_3x3_Matrix@Matrix3D@@QAEXQAY02M@Z,,0x008D7080,72,src/w3d/matrix3d.cpp,matched,
 ?Cos@@YAMM@Z,0x00873920,0x00873920,7,src/math/trig.cpp,matched,returns cosine of radians
+?Count@GenericMultiListClass@@QAEHXZ,,0x009DBF10,25,src/w3d/multilist.cpp,matched,
 ?Create@RawFileClass@@UAEHXZ,,0x009E65A0,56,src/w3d/rawfile.cpp,matched,
 ?CrossProduct@Coord3D@@QAEAAV1@ABUCoord3DBase@@0@Z,0x00022557,0x00232100,61,src/math/coord3d.cpp,matched,
 ?Cross_Product@Vector3@@SAXABV1@0PAV1@@Z,,0x001A1CA0,59,src/w3d/colmathobbobb.cpp,matched,
@@ -880,6 +885,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Find_Intersection@LineSegClass@@QBE_NABV1@PAVVector3@@PAM12@Z,,0x008D8A50,584,src/w3d/lineseg.cpp,matched,
 ?Find_Point_Closest_To@LineSegClass@@QBE?AVVector3@@ABV2@@Z,,0x008D8990,185,src/w3d/lineseg.cpp,matched,
 ?Find_Section@INIClass@@QBEPAUINISection@@PBD@Z,,0x009E3720,103,src/w3d/ini.cpp,matched,
+?First@GenericMultiListIterator@@QAEXPAVGenericMultiListClass@@@Z,,0x006C51C0,15,src/w3d/multilist.cpp,matched,
+?First@GenericMultiListIterator@@QAEXXZ,,0x006C51E0,9,src/w3d/multilist.cpp,matched,
 ?First@GridListIterator@@QAEXPAVCullableClass@@@Z,,0x008DCE20,12,src/w3d/gridcull.cpp,matched,
 ?Flush@Pipe@@UAEHXZ,,0x009E7970,17,src/w3d/pipe.cpp,matched,
 ?Format@StringClass@@QAAHPBDZZ,,0x009DBB90,151,src/w3d/wwstring.cpp,matched,
@@ -981,6 +988,11 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Init_Min_Max@AABoxClass@@QAEXABVVector3@@0@Z,,0x009186F0,156,src/w3d/aabox.cpp,matched,
 ?Init_Random@AABoxClass@@QAEXMMMM@Z,,0x008DB3D0,126,src/w3d/aabox.cpp,matched,
 ?Initialize@INIClass@@AAEXXZ,,0x009E3640,98,src/w3d/ini.cpp,matched,
+?Internal_Add@GenericMultiListClass@@IAE_NPAVMultiListObjectClass@@_N@Z,,0x009DBF60,125,src/w3d/multilist.cpp,matched,
+?Internal_Add_After@GenericMultiListClass@@IAE_NPAVMultiListObjectClass@@PBV2@_N@Z,,0x009DC060,151,src/w3d/multilist.cpp,matched,
+?Internal_Add_Tail@GenericMultiListClass@@IAE_NPAVMultiListObjectClass@@_N@Z,,0x009DBFE0,125,src/w3d/multilist.cpp,matched,
+?Internal_Remove@GenericMultiListClass@@IAE_NPAVMultiListObjectClass@@@Z,,0x009DC100,101,src/w3d/multilist.cpp,unmatched,BFME drift: delete tail-duplicated into both branches
+?Internal_Remove_List_Head@GenericMultiListClass@@IAEPAVMultiListObjectClass@@XZ,,0x009DC170,27,src/w3d/multilist.cpp,matched,
 ?Intersection_Test@CollisionMath@@SA_NABVAABoxClass@@0@Z,,0x008D99E0,149,src/w3d/colmathaabox.cpp,matched,
 ?Intersection_Test@CollisionMath@@SA_NABVAABoxClass@@ABVOBBoxClass@@@Z,,0x008E36B0,165,src/w3d/colmathobbobb.cpp,matched,
 ?Intersection_Test@CollisionMath@@SA_NABVAABoxClass@@ABVTriClass@@@Z,,0x008DF760,2450,src/w3d/colmathaabtri.cpp,matched,locate ambiguous Vector3 callees; build.sh+explain_mismatch exact match
@@ -1002,8 +1014,10 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Is_Archive_Same@?$IndexClass@HPAUINIEntry@@@@ABE_NABH@Z,,0x009E22E0,27,src/w3d/ini.cpp,matched,IndexClass sibling
 ?Is_Archive_Same@?$IndexClass@HPAUINISection@@@@ABE_NABH@Z,,0x009E2320,27,src/w3d/ini.cpp,matched,IndexClass sibling
 ?Is_Available@RawFileClass@@UAE_NH@Z,,0x009E6BF0,176,src/w3d/rawfile.cpp,matched,
+?Is_Done@GenericMultiListIterator@@QAE_NXZ,,0x006C5200,20,src/w3d/multilist.cpp,matched,
 ?Is_Empty@GenericList@@QBE_NXZ,,0x009E2340,48,src/w3d/ini.cpp,matched,
 ?Is_Empty@VolumeStruct@GridCullSystemClass@@QBE_NXZ,,0x008DD710,38,src/w3d/gridcull.cpp,matched,
+?Is_In_List@GenericMultiListClass@@QAE_NPAVMultiListObjectClass@@@Z,,0x009DBD80,38,src/w3d/multilist.cpp,matched,
 ?Is_Loaded@INIClass@@QBE_NXZ,,0x009E24C0,51,src/w3d/ini.cpp,matched,
 ?Is_Open@RawFileClass@@UBE_NXZ,,0x009E6550,12,src/w3d/rawfile.cpp,matched,
 ?Is_Orthogonal@Matrix3@@QBEHXZ,,0x008D94E0,455,src/w3d/matrix3.cpp,matched,
@@ -1049,6 +1063,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Multiply@Matrix4D@@QAEAAV1@ABV1@0@Z,0x00019bfa,0x007e6950,534,src/math/matrix4d.cpp,matched,
 ?Negate@Coord2D@@QAEAAV1@XZ,0x0000848B,0x007E5B20,17,src/math/coord2d.cpp,matched,negates x/y
 ?Negate@Coord3D@@QAEAAV1@XZ,0x0002C3CC,0x007E5DA0,25,src/math/coord3d.cpp,matched,negates x/y/z
+?Next@GenericMultiListIterator@@QAEXXZ,,0x006C51F0,10,src/w3d/multilist.cpp,matched,
 ?Next@GridListIterator@@QAEXXZ,,0x008DCE30,17,src/w3d/gridcull.cpp,matched,
 ?Normalize2D@Coord3D@@QAEMXZ,0x0001C661,0x007E7990,42,src/math/coord3d.cpp,matched,normalizes x/y and returns 2D length
 ?Normalize@Coord2D@@QAEMXZ,0x0002C548,0x003A4140,42,src/math/coord2d.cpp,matched,normalizes vector and returns length
