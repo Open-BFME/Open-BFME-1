@@ -6,6 +6,7 @@ name,address,notes
 ??1LayoutFilename@@QAE@XZ,0x00887940
 ??2@YAPAXI@Z,0x00881F30,operator new body
 ??3@YAXPAX@Z,0x00881EB0
+??AModuleTemplateMap@ModuleFactory@@QAEAAVModuleTemplate@1@ABH@Z,0x0002047D,ModuleFactory::ModuleTemplateMap::operator[] thunk (body 0x001296E0)
 ??_U@YAPAXI@Z,0x00881F30
 ??_V@YAXPAX@Z,0x00881EB0
 ?Add_To_Collection@CullSystemClass@@IAEXPAVCullableClass@@@Z,0x008E21D0
@@ -55,6 +56,7 @@ name,address,notes
 ?hidePurchaseScience@ControlBar@@QAEXXZ,0x00020347
 ?hideSpecialPowerShortcut@ControlBar@@QAEXXZ,0x00041367
 ?initFromINI@INI@@QAEXPAXPBX@Z,0x008520A0,INI::initFromINI(void*, const void*) body
+?makeDecoratedNameKey@ModuleFactory@@KAHABVAsciiString@@H@Z,0x0004B439,ModuleFactory::makeDecoratedNameKey thunk (body 0x00126260)
 ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z,0x0003ADD7
 ?readUnicodeString@@YA?AVUnicodeString@@PAU_iobuf@@@Z,0x000322F4,shared replay Unicode string reader thunk
 ?releaseBuffer@?$StringBase@D@@AAEXXZ,0x00887940,StringBase<char>::releaseBuffer body

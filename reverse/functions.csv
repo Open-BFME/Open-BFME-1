@@ -1034,6 +1034,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?aabtri_intersect_normal_axis@@YA_NAAVVector3@@@Z,,0x008DF6A0,192,src/w3d/colmathaabtri.cpp,matched,
 ?aabtri_separation_test@@YA_NMMM@Z,,0x008E0100,285,src/w3d/colmathaabtri.cpp,matched,
 ?add@Coord3D@@QAEXPBUCoord3DBase@@@Z,0x00022688,0x000B6570,31,src/math/coord3d.cpp,matched,adds Coord3DBase pointer
+?addModuleInternal@ModuleFactory@@IAEXPBX00HABVAsciiString@@H@Z,,0x00129AC0,69,src/game/module_factory.cpp,matched,ModuleFactory::addModuleInternal shared body
 ?addWindow@WindowLayout@@UAEXPAVGameWindow@@@Z,,0x00497B00,99,src/game/window_layout.cpp,matched,
 ?appendNextCommand@RecorderClass@@IAEXXZ,0x0003D0F0,0x987b0,533,src/game/recorder_strings.cpp,matched,
 ?bringForward@WindowLayout@@UAEXXZ,,0x00497A90,41,src/game/window_layout.cpp,matched,
@@ -1210,6 +1211,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?height@Region2D@@QBEMXZ,0x00035053,0x00160B30,7,src/math/region.cpp,matched,returns float height
 ?height@Region3D@@QBEMXZ,0x00039225,0x001066C0,7,src/math/region.cpp,matched,returns float height
 ?hide@WindowLayout@@UAEXH@Z,,0x00497A00,58,src/game/window_layout.cpp,matched,
+?init@ModuleFactory@@UAEXXZ,,0x0012C2E0,18040,src/game/module_factory.cpp,matched,
 ?init_volume@GridCullSystemClass@@IAEXABVAABoxClass@@PAUVolumeStruct@1@@Z,,0x008DD170,463,src/w3d/gridcull.cpp,matched,
 ?init_volume@GridCullSystemClass@@IAEXABVFrustumClass@@PAUVolumeStruct@1@@Z,,0x008DD530,457,src/w3d/gridcull.cpp,matched,
 ?init_volume@GridCullSystemClass@@IAEXABVOBBoxClass@@PAUVolumeStruct@1@@Z,,0x008DD340,483,src/w3d/gridcull.cpp,matched,
