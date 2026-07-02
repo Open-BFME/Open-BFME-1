@@ -212,6 +212,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0EmissionVolumeInfo@FXParticleSystem@@QAE@XZ,0x0002EFF0,0x005BD640,10,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer and flag
 ??0EventModuleInfo@FXParticleSystem@@QAE@XZ,0x0002085B,0x0005C8A0,10,src/game/fx_particle_system.cpp,matched,initializes two bools to 1
 ??0GameClientRandomVariable@@QAE@XZ,0x0002466D,0x0005C5D0,13,src/game/fx_particle_system_bulk.cpp,matched,initializes distribution/minimum/maximum to zero (inlined; emitted where used)
+??0GridCullSystemClass@@QAE@XZ,,0x008DF190,222,src/w3d/gridcull.cpp,matched,
+??0GridLinkClass@@QAE@PAVGridCullSystemClass@@@Z,,0x008DD870,33,src/w3d/gridcull.cpp,matched,
 ??0HemisphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0002DB50,0x005D7560,39,src/game/fx_particle_system.cpp,matched,
 ??0HemisphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@XZ,0x0002BF67,0x005D74F0,32,src/game/fx_particle_system.cpp,matched,
 ??0ICoord2D@@QAE@ABUICoord2DBase@@@Z,0x00001EB0,0x0008AA60,19,src/math/icoord.cpp,matched,copies x/y from ICoord2DBase
@@ -352,6 +354,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1EmissionVelocityInfo@FXParticleSystem@@UAE@XZ,0x0003CF47,0x005BD810,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??1EmissionVolumeInfo@FXParticleSystem@@UAE@XZ,0x0004AA61,0x005BD6B0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??1EventModuleInfo@FXParticleSystem@@IAE@XZ,0x0002A298,0x0005C8B0,1,src/game/fx_particle_system.cpp,matched,empty protected destructor
+??1GridCullSystemClass@@UAE@XZ,,0x008DCAD0,97,src/w3d/gridcull.cpp,matched,
 ??1LightningDrawModuleInfo@FXParticleSystem@@UAE@XZ,0x000121B1,0x005D8EF0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??1LightningEmissionInfo@FXParticleSystem@@UAE@XZ,0x0000D7F6,0x005D6770,7,src/game/fx_particle_system.cpp,matched,resets vtable pointer
 ??1LineEmissionVolumeInfo@FXParticleSystem@@UAE@XZ,0x0002F03B,0x005D5A80,7,src/game/fx_particle_system.cpp,matched,resets vtable pointer
@@ -618,12 +621,12 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??DCoord2D@@QBEMABV0@@Z,0x0004A4BC,0x007E5A40,19,src/math/coord2d.cpp,matched,dot product with Coord2D
 ??DCoord3D@@QBEMABUCoord3DBase@@@Z,0x00011F09,0x0018F1C0,27,src/math/coord3d.cpp,matched,dot product with Coord3DBase
 ??DCoord3D@@QBEMABVCoord2D@@@Z,0x00044FE4,0x007E5CF0,19,src/math/coord3d.cpp,matched,dot product with Coord2D
-??G@YA?AVVector3@@ABV0@0@Z,,0x001A1BF0,37,src/w3d/lineseg.cpp,matched,
+??G@YA?AVVector3@@ABV0@0@Z,,0x001A1BF0,37,src/w3d/gridcull.cpp,matched,
 ??GVector3@@QBE?AV0@XZ,,0x0020DD70,29,src/w3d/colmathplane.cpp,matched,
 ??H@YA?AVAsciiString@@V0@ABV0@@Z,0x0000FE52,0x000D1860,137,src/game/ascii_string.cpp,matched,AsciiString + AsciiString
 ??H@YA?AVAsciiString@@V0@D@Z,0x000265E4,0x007E8440,119,src/game/ascii_string.cpp,matched,AsciiString + char
 ??H@YA?AVAsciiString@@V0@PBD@Z,0x00006C5D,0x000CD5D0,132,src/game/ascii_string.cpp,matched,AsciiString + const char*
-??H@YA?AVVector3@@ABV0@0@Z,,0x001A1BC0,37,src/w3d/colmathaabox.cpp,matched,
+??H@YA?AVVector3@@ABV0@0@Z,,0x001A1BC0,37,src/w3d/gridcull.cpp,matched,
 ??K@YA?AVVector3@@ABV0@M@Z,,0x00710D80,47,src/w3d/vector3.cpp,matched,
 ??M@YA_NABV?$StringBase@D@@0@Z,0x0000FAAB,0x00062ED0,24,src/game/string_base.cpp,matched,StringBase<char> less-than
 ??M@YA_NABV?$StringBase@G@@0@Z,0x00005D94,0x0054EB50,24,src/game/string_base.cpp,matched,StringBase<wchar_t> less-than
@@ -657,7 +660,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??_0Matrix4D@@QAEAAV0@M@Z,0x00025BC6,0x007E67B0,139,src/math/matrix4d.cpp,matched,divides matrix values by scalar
 ??_0Vector3@@QAEAAV0@M@Z,,0x006D75B0,35,src/w3d/colmathline.cpp,matched,
 ??_GWindowLayout@@UAEPAXI@Z,,0x004706F0,30,src/game/window_layout.cpp,matched,compiler-generated deleting dtor
-??_H@YGXPAXIHP6EPAX0@Z@Z,,0x0005C600,48,src/w3d/chunkio.cpp,matched,
+??_H@YGXPAXIHP6EPAX0@Z@Z,,0x0005C600,48,src/w3d/gridcull.cpp,matched,
 ?ACos@@YAMM@Z,0x00873940,0x00873940,10,src/math/trig.cpp,matched,wraps internal acos helper
 ?ASin@@YAMM@Z,0x00873950,0x00873950,10,src/math/trig.cpp,matched,wraps internal asin helper
 ?Add2D@Coord3D@@QAEAAV1@ABUCoord3DBase@@0@Z,0x000263B4,0x007E5DE0,28,src/math/coord3d.cpp,matched,adds two Coord3DBase x/y values
@@ -670,6 +673,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Add@Coord3D@@QAEAAV1@ABVCoord2D@@@Z,0x00023452,0x007E5EB0,24,src/math/coord3d.cpp,matched,adds Coord2D x/y
 ?Add@Coord3D@@QAEAAV1@ABVCoord2D@@ABUCoord3DBase@@@Z,0x0001F802,0x007E5EF0,34,src/math/coord3d.cpp,matched,adds Coord2D and Coord3DBase
 ?Add@Vector3@@SAXABV1@0PAV1@@Z,,0x004106B0,37,src/w3d/colmathobbobb.cpp,matched,
+?Add_Object_Internal@GridCullSystemClass@@IAEXPAVCullableClass@@@Z,,0x008DF140,72,src/w3d/gridcull.cpp,matched,
 ?Add_Size@ChunkHeader@@QAEXK@Z,,0x009E1780,36,src/w3d/chunkio.cpp,matched,
 ?Add_Size@MicroChunkHeader@@QAEXE@Z,,0x009E17B0,15,src/w3d/chunkio.cpp,matched,
 ?Axis_To_Quat@@YA?AVQuaternion@@ABVVector3@@M@Z,,0x008DC3C0,245,src/w3d/quat.cpp,matched,
@@ -683,6 +687,11 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Build_Quaternion@@YA?AVQuaternion@@ABVMatrix4@@@Z,,0x008DBCD0,311,src/w3d/quat.cpp,matched,
 ?Cached_Slerp@@YA?AVQuaternion@@ABV1@0MPAUSlerpInfoStruct@@@Z,,0x008DB8A0,224,src/w3d/quat.cpp,matched,
 ?Cached_Slerp@@YAXABVQuaternion@@0MPAUSlerpInfoStruct@@PAV1@@Z,,0x008DB980,190,src/w3d/quat.cpp,matched,
+?Collect_And_Unlink_All@GridCullSystemClass@@IAEXXZ,,0x008DEA60,359,src/w3d/gridcull.cpp,matched,
+?Collect_Objects@GridCullSystemClass@@UAEXABVAABoxClass@@@Z,,0x008DE1B0,710,src/w3d/gridcull.cpp,matched,
+?Collect_Objects@GridCullSystemClass@@UAEXABVFrustumClass@@@Z,,0x008DE780,724,src/w3d/gridcull.cpp,matched,
+?Collect_Objects@GridCullSystemClass@@UAEXABVOBBoxClass@@@Z,,0x008DE480,753,src/w3d/gridcull.cpp,matched,
+?Collect_Objects@GridCullSystemClass@@UAEXABVVector3@@@Z,,0x008DDF00,678,src/w3d/gridcull.cpp,matched,
 ?Collide@CollisionMath@@SA_NABVAABoxClass@@ABVVector3@@ABVOBBoxClass@@1PAUCastResultStruct@@@Z,,0x008E5AE0,189,src/w3d/colmathobbobb.cpp,matched,
 ?Collide@CollisionMath@@SA_NABVAABoxClass@@ABVVector3@@ABVPlaneClass@@PAUCastResultStruct@@@Z,,0x008DA1A0,587,src/w3d/colmathaabox.cpp,matched,
 ?Collide@CollisionMath@@SA_NABVLineSegClass@@ABVAAPlaneClass@@PAUCastResultStruct@@@Z,,0x008DA4F0,138,src/w3d/colmathline.cpp,matched,
@@ -691,7 +700,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Collide@CollisionMath@@SA_NABVLineSegClass@@ABVTriClass@@PAUCastResultStruct@@@Z,,0x008DAAA0,390,src/w3d/colmathline.cpp,matched,
 ?Collide@CollisionMath@@SA_NABVOBBoxClass@@ABVVector3@@01PAUCastResultStruct@@@Z,,0x008E59E0,63,src/w3d/colmathobbobb.cpp,matched,
 ?Collide@CollisionMath@@SA_NABVOBBoxClass@@ABVVector3@@ABVAABoxClass@@1PAUCastResultStruct@@@Z,,0x008E5A20,189,src/w3d/colmathobbobb.cpp,matched,
+?Compute_Axis_Aligned_Extent@OBBoxClass@@QBEXPAVVector3@@@Z,,0x008DCD20,225,src/w3d/gridcull.cpp,matched,
 ?Compute_Point@OBBoxClass@@QBEXQAMPAVVector3@@@Z,,0x008E2960,189,src/w3d/colmathobbobb.cpp,matched,
+?Contains@AABoxClass@@QBE_NABVVector3@@@Z,,0x008DDA80,139,src/w3d/gridcull.cpp,matched,
 ?Contains_Point@TriClass@@QBE_NABVVector3@@@Z,,0x008E1900,297,src/w3d/tri.cpp,matched,
 ?Copy_3x3_Matrix@Matrix3D@@QAEXQAY02M@Z,,0x008D7080,72,src/w3d/matrix3d.cpp,matched,
 ?Cos@@YAMM@Z,0x00873920,0x00873920,7,src/math/trig.cpp,matched,returns cosine of radians
@@ -724,6 +735,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Find_Dominant_Plane@TriClass@@QBEXPAH0@Z,,0x008E1830,195,src/w3d/tri.cpp,matched,
 ?Find_Intersection@LineSegClass@@QBE_NABV1@PAVVector3@@PAM12@Z,,0x008D8A50,584,src/w3d/lineseg.cpp,matched,
 ?Find_Point_Closest_To@LineSegClass@@QBE?AVVector3@@ABV2@@Z,,0x008D8990,185,src/w3d/lineseg.cpp,matched,
+?First@GridListIterator@@QAEXPAVCullableClass@@@Z,,0x008DCE20,12,src/w3d/gridcull.cpp,matched,
 ?GetAssetList@ParticleSystemTemplate@FXParticleSystem@@QBEXAAVAssetList@@@Z,0x0004B330,0x0005CBB0,3,src/game/fx_particle_system.cpp,matched,no-op asset list stub
 ?GetKey@FXParticleSystem@@YAPBDW4ModuleCategory@1@@Z,0x0000971E,0x005D4520,12,src/game/fx_particle_system.cpp,matched,lookup category key string
 ?GetLength2D@Coord3D@@QBEMXZ,0x00036D95,0x001A5D70,22,src/math/coord3d.cpp,matched,returns x/y vector length
@@ -782,9 +794,11 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?IsLightCRC@Xfer@@UBE_NXZ,0x00028B78,0x007E76A0,3,src/game/xfer.cpp,matched,returns false
 ?IsLoading@Xfer@@UBE_NXZ,0x0004A7FA,0x0006B1C0,3,src/game/xfer.cpp,matched,returns false
 ?IsStoring@Xfer@@UBE_NXZ,0x0003C286,0x007E7680,3,src/game/xfer.cpp,matched,returns false
+?Is_Empty@VolumeStruct@GridCullSystemClass@@QBE_NXZ,,0x008DD710,38,src/w3d/gridcull.cpp,matched,
 ?Is_Orthogonal@Matrix3D@@QBEHXZ,,0x008D7290,388,src/w3d/matrix3d.cpp,matched,
 ?Length@Vector3@@QBEMXZ,,0x001EF570,53,src/w3d/colmathobbtri.cpp,matched,
 ?Lerp@Vector3@@SAXABV1@0MPAV1@@Z,,0x006DF920,57,src/w3d/vector3.cpp,matched,
+?Load@GridCullSystemClass@@UAEXAAVChunkLoadClass@@@Z,,0x008DEFE0,343,src/w3d/gridcull.cpp,matched,
 ?LoadPostProcess@ButterflyDrawModuleInfo@FXParticleSystem@@UAEXXZ,0x000073FB,0x005D46D0,1,src/game/fx_particle_system.cpp,matched,no-op
 ?LoadPostProcess@DefaultAlphaModuleInfo@FXParticleSystem@@UAEXXZ,0x0002379F,0x005D4530,1,src/game/fx_particle_system.cpp,matched,no-op
 ?LoadPostProcess@DefaultColorModuleInfo@FXParticleSystem@@UAEXXZ,0x0004B65A,0x005D4550,1,src/game/fx_particle_system.cpp,matched,no-op
@@ -808,6 +822,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Multiply@Matrix4D@@QAEAAV1@ABV1@0@Z,0x00019bfa,0x007e6950,534,src/math/matrix4d.cpp,matched,
 ?Negate@Coord2D@@QAEAAV1@XZ,0x0000848B,0x007E5B20,17,src/math/coord2d.cpp,matched,negates x/y
 ?Negate@Coord3D@@QAEAAV1@XZ,0x0002C3CC,0x007E5DA0,25,src/math/coord3d.cpp,matched,negates x/y/z
+?Next@GridListIterator@@QAEXXZ,,0x008DCE30,17,src/w3d/gridcull.cpp,matched,
 ?Normalize2D@Coord3D@@QAEMXZ,0x0001C661,0x007E7990,42,src/math/coord3d.cpp,matched,normalizes x/y and returns 2D length
 ?Normalize@Coord2D@@QAEMXZ,0x0002C548,0x003A4140,42,src/math/coord2d.cpp,matched,normalizes vector and returns length
 ?Normalize@Coord3D@@QAEMXZ,0x0001E0BA,0x000FE9E0,60,src/math/coord3d.cpp,matched,normalizes and returns length
@@ -815,6 +830,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Normalize@Vector3@@QAEXXZ,,0x00132850,90,src/w3d/colmathobbobb.cpp,matched,
 ?Normalized_Cross_Product@Vector3@@SAXABV1@0PAV1@@Z,,0x006CB450,141,src/w3d/vector3.cpp,matched,
 ?Obj_Look_At@Matrix3D@@QAEXABVVector3@@0M@Z,,0x008D6D60,622,src/w3d/matrix3d.cpp,matched,
+?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVAABoxClass@@0@Z,,0x008DD740,274,src/w3d/gridcull.cpp,matched,
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVAABoxClass@@ABVLineSegClass@@@Z,,0x008D9B30,909,src/w3d/colmathaabox.cpp,matched,
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVAABoxClass@@ABVSphereClass@@@Z,,0x008D9A80,174,src/w3d/colmathaabox.cpp,matched,
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVAABoxClass@@ABVTriClass@@@Z,,0x008DA0F0,171,src/w3d/colmathaabox.cpp,matched,
@@ -834,8 +850,10 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Quick_Distance@Vector3@@SAMABV1@0@Z,,0x003D53F0,190,src/w3d/vector3.cpp,matched,
 ?Quick_Length@Vector3@@QBEMXZ,,0x003D5320,161,src/w3d/vector3.cpp,matched,
 ?Re_Orthogonalize@Matrix3D@@QAEXXZ,,0x008D8260,534,src/w3d/matrix3d.cpp,matched,
+?Re_Partition@GridCullSystemClass@@UAEXABVVector3@@0M@Z,,0x008DEDA0,575,src/w3d/gridcull.cpp,matched,
 ?Reset@BTCollisionStruct@@QAEXXZ,,0x008E5BE0,443,src/w3d/colmathobbtri.cpp,matched,
 ?Reset@CastResultStruct@@QAEXXZ,,0x006098A0,36,src/w3d/colmathaabox.cpp,matched,
+?Reset_Statistics@GridCullSystemClass@@QAEXXZ,,0x008DCC10,30,src/w3d/gridcull.cpp,matched,
 ?Rotate@Coord2D@@QAEAAV1@AAV1@MM@Z,0x00023772,0x007E5BD0,44,src/math/coord2d.cpp,matched,rotates source by sine/cosine into this
 ?Rotate@Coord2D@@QAEAAV1@ABV1@M@Z,0x0002F1E9,0x007E5B80,61,src/math/coord2d.cpp,matched,rotates source by angle
 ?Rotate@Coord2D@@QAEAAV1@M@Z,0x0001ac94,0x004afaa0,76,src/math/coord2d.cpp,matched,
@@ -854,6 +872,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Rotate_Z@Quaternion@@QAEXM@Z,,0x008DC110,227,src/w3d/quat.cpp,matched,
 ?Rotate_Z@Vector3@@QAEXM@Z,,0x000FC6A0,47,src/w3d/vector3.cpp,matched,
 ?Rotate_Z@Vector3@@QAEXMM@Z,,0x000FBB00,41,src/w3d/vector3.cpp,matched,
+?Save@GridCullSystemClass@@UAEXAAVChunkSaveClass@@@Z,,0x008DCB40,196,src/w3d/gridcull.cpp,matched,
 ?Scale2D@Coord3D@@QAEAAV1@ABUCoord3DBase@@M@Z,0x0000D4C7,0x007E5E80,27,src/math/coord3d.cpp,matched,scales Coord3DBase x/y
 ?Scale2D@Coord3D@@QAEAAV1@M@Z,0x00035918,0x007E5E60,23,src/math/coord3d.cpp,matched,scales x/y in place
 ?Scale@Coord2D@@QAEAAV1@M@Z,0x000444EF,0x0014FFB0,23,src/math/coord2d.cpp,matched,scales x/y in place
@@ -904,7 +923,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Sub@Coord3D@@QAEAAV1@ABUCoord3DBase@@ABVCoord2D@@@Z,0x00031D36,0x007E5F80,34,src/math/coord3d.cpp,matched,subtracts Coord2D from Coord3DBase
 ?Sub@Coord3D@@QAEAAV1@ABVCoord2D@@@Z,0x00036881,0x007E5ED0,24,src/math/coord3d.cpp,matched,subtracts Coord2D x/y
 ?Sub@Coord3D@@QAEAAV1@ABVCoord2D@@ABUCoord3DBase@@@Z,0x0003595E,0x007E5F50,36,src/math/coord3d.cpp,matched,subtracts Coord3DBase from Coord2D
-?Subtract@Vector3@@SAXABV1@0PAV1@@Z,,0x004106E0,37,src/w3d/colmathobbobb.cpp,matched,
+?Subtract@Vector3@@SAXABV1@0PAV1@@Z,,0x004106E0,37,src/w3d/gridcull.cpp,matched,
 ?Tan@@YAMM@Z,0x00873930,0x00873930,9,src/math/trig.cpp,matched,returns tangent of radians
 ?TransformCoord@Matrix4D@@QAEAAVCoord3D@@ABV2@AAV2@@Z,0x000085A8,0x007E6860,92,src/math/matrix4d.cpp,matched,transforms coordinate with translation
 ?Transform_Center_Extent_AABox@Matrix3D@@QBEXABVVector3@@0PAV2@1@Z,,0x008D71C0,202,src/w3d/matrix3d.cpp,matched,
@@ -913,6 +932,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Translate@Matrix3D@@QAEXABVVector3@@@Z,,0x001BD830,87,src/w3d/matrix3d.cpp,matched,
 ?Transpose@Matrix4D@@QAEAAV1@XZ,0x00008396,0x007e6300,169,src/math/matrix4d.cpp,matched,
 ?Transpose_Rotate_Vector@Matrix3@@SAXABV1@ABVVector3@@PAV2@@Z,,0x008E1AF0,115,src/w3d/colmathplane.cpp,matched,
+?Update_Culling@GridCullSystemClass@@UAEXPAVCullableClass@@@Z,,0x008DEBD0,198,src/w3d/gridcull.cpp,matched,
 ?Update_Max@Vector3@@QAEXABV1@@Z,,0x007281D0,60,src/w3d/vector3.cpp,matched,
 ?Update_Min@Vector3@@QAEXABV1@@Z,,0x00728180,60,src/w3d/vector3.cpp,matched,
 ?Version1@Xfer@@QAEXXZ,0x000429C9,0x000C7E90,21,src/game/xfer.cpp,matched,xfer version 1 marker
@@ -934,8 +954,13 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?appendNextCommand@RecorderClass@@IAEXXZ,0x0003D0F0,0x987b0,533,src/game/recorder_strings.cpp,matched,
 ?bringForward@WindowLayout@@UAEXXZ,,0x00497A90,41,src/game/window_layout.cpp,matched,
 ?buildTransformMatrix@Matrix3D@@QAEXABVVector3@@0@Z,,0x008D6BC0,401,src/w3d/matrix3d.cpp,matched,
+?clamp_indices_to_grid@GridCullSystemClass@@IAEXPAH00@Z,,0x008DCE70,82,src/w3d/gridcull.cpp,matched,
 ?clear@?$StringBase@D@@QAEXXZ,0x00041A38,0x000680C0,6,src/game/string_base.cpp,matched,clears string by releasing buffer
 ?clear@?$StringBase@G@@QAEXXZ,0x00024C85,0x00068090,6,src/game/string_base.cpp,matched,clears wide string by releasing buffer
+?collect_objects_in_leaf@GridCullSystemClass@@IAEXABVAABoxClass@@PAVCullableClass@@@Z,,0x008DDD60,188,src/w3d/gridcull.cpp,matched,
+?collect_objects_in_leaf@GridCullSystemClass@@IAEXABVFrustumClass@@PAVCullableClass@@@Z,,0x008DDE60,63,src/w3d/gridcull.cpp,matched,
+?collect_objects_in_leaf@GridCullSystemClass@@IAEXABVOBBoxClass@@PAVCullableClass@@@Z,,0x008DDE20,63,src/w3d/gridcull.cpp,matched,
+?collect_objects_in_leaf@GridCullSystemClass@@IAEXABVVector3@@PAVCullableClass@@@Z,,0x008DDCC0,139,src/w3d/gridcull.cpp,matched,
 ?collide_obb_obb@@YA_NAAUObbCollisionStruct@@PAUCastResultStruct@@@Z,,0x008E4D00,3296,src/w3d/colmathobbobb.cpp,matched,
 ?combine@RealRange@@QAEXAAU1@@Z,0x0003A332,0x007E8240,45,src/math/region.cpp,matched,updates min/max to include another range
 ?compare@?$StringBase@D@@QBEHABV1@@Z,0x000220C5,0x0005FEB0,92,src/game/string_base.cpp,matched,
@@ -1101,6 +1126,10 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?height@Region2D@@QBEMXZ,0x00035053,0x00160B30,7,src/math/region.cpp,matched,returns float height
 ?height@Region3D@@QBEMXZ,0x00039225,0x001066C0,7,src/math/region.cpp,matched,returns float height
 ?hide@WindowLayout@@UAEXH@Z,,0x00497A00,58,src/game/window_layout.cpp,matched,
+?init_volume@GridCullSystemClass@@IAEXABVAABoxClass@@PAUVolumeStruct@1@@Z,,0x008DD170,463,src/w3d/gridcull.cpp,matched,
+?init_volume@GridCullSystemClass@@IAEXABVFrustumClass@@PAUVolumeStruct@1@@Z,,0x008DD530,457,src/w3d/gridcull.cpp,matched,
+?init_volume@GridCullSystemClass@@IAEXABVOBBoxClass@@PAUVolumeStruct@1@@Z,,0x008DD340,483,src/w3d/gridcull.cpp,matched,
+?init_volume@GridCullSystemClass@@IAEXABVVector3@@0PAUVolumeStruct@1@@Z,,0x008DCFB0,442,src/w3d/gridcull.cpp,matched,
 ?intersect_obb_obb@@YA_NAAUObbIntersectionStruct@@@Z,,0x008E2C70,2391,src/w3d/colmathobbobb.cpp,matched,
 ?isEmpty@?$StringBase@D@@QBE_NXZ,0x0000C752,0x0005E4C0,22,src/game/string_base.cpp,matched,returns true if string has no data or zero length
 ?isEmpty@?$StringBase@G@@QBE_NXZ,0x0001F361,0x0007F7D0,22,src/game/string_base.cpp,matched,returns true if string has no data or zero length
@@ -1118,6 +1147,12 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?length@ICoord3D@@QBEHXZ,0x0002E83E,0x007E6DC0,47,src/math/icoord.cpp,matched,returns integer vector length
 ?lengthEstimate@Coord3D@@QBEMXZ,0x00015C5D,0x0016A050,121,src/math/coord3d.cpp,matched,returns approximate 3D length
 ?lengthSqr@Coord3D@@QBEMXZ,0x00020662,0x0014FF10,31,src/math/coord3d.cpp,matched,returns squared x/y/z length
+?link_object@GridCullSystemClass@@IAEXPAVCullableClass@@@Z,,0x008DECE0,189,src/w3d/gridcull.cpp,matched,
+?link_object@GridCullSystemClass@@IAEXPAVCullableClass@@H@Z,,0x008DDBE0,121,src/w3d/gridcull.cpp,matched,
+?link_object_to_list@GridCullSystemClass@@IAEXPAPAVCullableClass@@PAV2@@Z,,0x008DD8D0,42,src/w3d/gridcull.cpp,matched,
+?map_indices_to_address@GridCullSystemClass@@IAEHHHH@Z,,0x008DCF80,23,src/w3d/gridcull.cpp,matched,
+?map_point_to_address@GridCullSystemClass@@IAE_NABVVector3@@AAH@Z,,0x008DDB20,184,src/w3d/gridcull.cpp,matched,
+?map_point_to_cell@GridCullSystemClass@@IAE_NABVVector3@@AAH11@Z,,0x008DCED0,173,src/w3d/gridcull.cpp,matched,
 ?nextToken@?$StringBase@D@@QAE_NPAV1@PBD@Z,0x008880E0,0x8880e0,186,src/game/string_base.cpp,matched,
 ?nextToken@?$StringBase@G@@QAE_NPAV1@PBG@Z,0x008889B0,0x8889b0,197,src/game/string_base.cpp,matched,
 ?normalize@Coord2D@@QAEXXZ,0x0000650F,0x0014FF40,60,src/math/coord2d.cpp,matched,normalizes vector in place with zero check
@@ -1222,10 +1257,13 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?toLower@?$StringBase@G@@QAEXXZ,0x00888640,0x888640,248,src/game/string_base.cpp,matched,
 ?toUpper@?$StringBase@D@@QAEXXZ,0x00887E90,0x887e90,229,src/game/string_base.cpp,matched,
 ?toUpper@?$StringBase@G@@QAEXXZ,0x00888740,0x888740,248,src/game/string_base.cpp,matched,
+?total_cell_count@GridCullSystemClass@@IAEHXZ,,0x008DCFA0,12,src/w3d/gridcull.cpp,matched,
 ?translate@AsciiString@@QAEXABVUnicodeString@@@Z,0x00889050,0x00889050,54,src/game/ascii_string.cpp,matched,translate UnicodeString to AsciiString
 ?translate@UnicodeString@@QAEXABVAsciiString@@@Z,0x008891F0,0x008891F0,54,src/game/unicode_string.cpp,matched,translate AsciiString to UnicodeString
 ?trim@?$StringBase@D@@QAEXXZ,0x00888CA0,0x888ca0,172,src/game/string_base.cpp,matched,
 ?trim@?$StringBase@G@@QAEXXZ,0x00888ED0,0x888ed0,147,src/game/string_base.cpp,matched,
+?unlink_object@GridCullSystemClass@@IAEXPAVCullableClass@@@Z,,0x008DDC60,88,src/w3d/gridcull.cpp,matched,
+?unlink_object_from_list@GridCullSystemClass@@IAEXPAPAVCullableClass@@PAV2@@Z,,0x008DD900,65,src/w3d/gridcull.cpp,matched,
 ?validate@?$StringBase@D@@ABEXXZ,0x0001D4A3,0x0005D790,1,src/game/string_base.cpp,matched,no-op string validation
 ?validate@?$StringBase@G@@ABEXXZ,0x000390A9,0x0005D7A0,1,src/game/string_base.cpp,matched,no-op
 ?width@IRegion2D@@QBEHXZ,0x00029299,0x001A19A0,6,src/math/region.cpp,matched,returns integer width

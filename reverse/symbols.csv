@@ -1,19 +1,36 @@
 name,address,notes
+??0CullSystemClass@@QAE@XZ,0x008E2140
 ??0GameMessage@@QAE@W4Type@0@@Z,0x000359E5,GameMessage::GameMessage(Type) thunk
 ??0GameMessageParser@@QAE@XZ,0x00013FCA,GameMessageParser::GameMessageParser() thunk
+??1CullSystemClass@@UAE@XZ,0x008E2150
 ??1LayoutFilename@@QAE@XZ,0x00887940
 ??2@YAPAXI@Z,0x00881F30,operator new body
 ??3@YAXPAX@Z,0x00881EB0
+??_U@YAPAXI@Z,0x00881F30
+??_V@YAXPAX@Z,0x00881EB0
+?Add_To_Collection@CullSystemClass@@IAEXPAVCullableClass@@@Z,0x008E21D0
+?Allocate_Object_Memory@?$ObjectPoolClass@VGridLinkClass@@$0BAA@@@QAEPAVGridLinkClass@@XZ,0x008DD970
+?Begin_Chunk@ChunkSaveClass@@QAE_NK@Z,0x009E16F0
+?Close_Chunk@ChunkLoadClass@@QAE_NXZ,0x009E13E0
 ?Collide@CollisionMath@@SA_NABVAABoxClass@@ABVVector3@@ABVTriClass@@PAUCastResultStruct@@@Z,0x008E0C30
 ?Contains_Point@TriClass@@QBE_NABVVector3@@@Z,0x008E1900
+?End_Chunk@ChunkSaveClass@@QAE_NXZ,0x009E17F0
+?Get_First_Collected_Object_Internal@CullSystemClass@@IAEPAVCullableClass@@XZ,0x008E2160
+?Get_Next_Collected_Object_Internal@CullSystemClass@@IAEPAVCullableClass@@PAV2@@Z,0x008E2170
 ?HideDiplomacy@@YAXXZ,0x000067BC
 ?HideInGameChat@@YAXXZ,0x00019583
 ?HideQuitMenu@@YAXXZ,0x0001BF36
 ?HideSaveLoadMenu@@YAXXZ,0x0000A416
 ?Inv_Sqrt@WWMath@@SIMM@Z,0x00027A43,WWMath::Inv_Sqrt (naked __fastcall) incremental-link thunk (body 0x00131C90); called by Quaternion::Normalize and Axis_To_Quat, owned by wwmath.cpp
+?Open_Chunk@ChunkLoadClass@@QAE_NXZ,0x009E1380
+?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVFrustumClass@@ABVAABoxClass@@@Z,0x008DB380
+?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVOBBoxClass@@ABVAABoxClass@@@Z,0x008E2310
 ?Random_Float@WWMath@@SAMXZ,0x008D8E00
+?Read@ChunkLoadClass@@QAEKPAXK@Z,0x009E15C0
 ?ReleaseWindowLayout@@YAXPAVWindowLayout@@@Z,0x00049AD0
 ?ResetInGameChat@@YAXXZ,0x00033A6E
+?Reset_Collection@CullSystemClass@@QAEXXZ,0x008E21C0
+?Write@ChunkSaveClass@@QAEKPBXK@Z,0x009E18A0
 ?addArgType@GameMessageParser@@QAEXW4GameMessageArgumentDataType@@H@Z,0x0000B569,GameMessageParser::addArgType thunk
 ?appendBooleanArgument@GameMessage@@QAEX_N@Z,0x000032AB,GameMessage::appendBooleanArgument thunk
 ?appendDrawableIDArgument@GameMessage@@QAEXI@Z,0x000154BF,GameMessage::appendDrawableIDArgument thunk
