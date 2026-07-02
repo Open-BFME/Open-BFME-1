@@ -162,6 +162,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0?$StringBase@G@@AAE@PBGH@Z,0x00888DA0,0x888da0,56,src/game/string_base.cpp,matched,
 ??0?$StringBase@G@@AAE@XZ,0x0001431C,0x000834C0,9,src/game/string_base.cpp,matched,initializes string data pointer to null
 ??0AABTIntersectStruct@@QAE@XZ,,0x008DF400,17,src/w3d/colmathaabtri.cpp,matched,
+??0AABoxClass@@QAE@ABVMinMaxAABoxClass@@@Z,,0x0097B280,154,src/w3d/aabtreecull.cpp,matched,
 ??0AsciiString@@QAE@ABV0@@Z,0x000416AF,0x0005EE50,19,src/game/ascii_string.cpp,matched,AsciiString copy constructor
 ??0AsciiString@@QAE@ABV0@HH@Z,0x0000F1C8,0x000DF970,31,src/game/ascii_string.cpp,matched,AsciiString copy substring
 ??0AsciiString@@QAE@ABVUnicodeString@@@Z,0x00889090,0x00889090,110,src/game/ascii_string.cpp,matched,construct AsciiString from UnicodeString
@@ -732,6 +733,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Add@Coord3D@@QAEAAV1@ABVCoord2D@@@Z,0x00023452,0x007E5EB0,24,src/math/coord3d.cpp,matched,adds Coord2D x/y
 ?Add@Coord3D@@QAEAAV1@ABVCoord2D@@ABUCoord3DBase@@@Z,0x0001F802,0x007E5EF0,34,src/math/coord3d.cpp,matched,adds Coord2D and Coord3DBase
 ?Add@Vector3@@SAXABV1@0PAV1@@Z,,0x004106B0,37,src/w3d/colmathobbobb.cpp,matched,
+?Add_Box@MinMaxAABoxClass@@QAEXABVAABoxClass@@@Z,,0x00979230,237,src/w3d/aabtreecull.cpp,matched,
 ?Add_Index@?$IndexClass@HPAUINIEntry@@@@QAE_NABHABQAUINIEntry@@@Z,,0x009E2D00,81,src/w3d/ini.cpp,matched,IndexClass sibling
 ?Add_Index@?$IndexClass@HPAUINISection@@@@QAE_NABHABQAUINISection@@@Z,,0x009E2D80,81,src/w3d/ini.cpp,matched,IndexClass sibling
 ?Add_Object_Internal@GridCullSystemClass@@IAEXPAVCullableClass@@@Z,,0x008DF140,72,src/w3d/gridcull.cpp,matched,
@@ -906,11 +908,16 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Increase_Table_Size@?$IndexClass@HPAUINIEntry@@@@AAE_NH@Z,,0x009E2820,217,src/w3d/ini.cpp,matched,IndexClass sibling
 ?Increase_Table_Size@?$IndexClass@HPAUINISection@@@@AAE_NH@Z,,0x009E2950,217,src/w3d/ini.cpp,matched,IndexClass sibling
 ?Init@AABTIntersectStruct@@QAEXABVAABoxClass@@ABVTriClass@@@Z,,0x008DF420,282,src/w3d/colmathaabtri.cpp,matched,
+?Init@AABoxClass@@QAEXABVMinMaxAABoxClass@@@Z,,0x006CA330,152,src/w3d/aabtreecull.cpp,matched,
 ?Init@AABoxClass@@QAEXABVVector3@@0@Z,,0x00725F00,44,src/w3d/cullsys.cpp,matched,
 ?Init@BTCollisionStruct@@QAEXABVAABoxClass@@ABVVector3@@ABVTriClass@@1@Z,,0x008DF290,353,src/w3d/colmathaabtri.cpp,matched,
 ?Init@FrustumClass@@QAEXABVMatrix3D@@ABVVector2@@1MM@Z,,0x00B00B00,3661,src/w3d/frustum.cpp,matched,
 ?Init@Matrix4@@QAEXABVMatrix3D@@@Z,,0x006CA420,95,src/w3d/matrix3d.cpp,matched,
+?Init@MinMaxAABoxClass@@QAEXABVAABoxClass@@@Z,,0x009791A0,84,src/w3d/aabtreecull.cpp,matched,
 ?Init@WWMath@@SAXXZ,,0x008D8E90,157,src/w3d/wwmath.cpp,matched,BFME drift: no LookupTableMgrClass::Init() call
+?Init_Empty@MinMaxAABoxClass@@QAEXXZ,,0x008DB470,28,src/w3d/aabox.cpp,matched,
+?Init_Min_Max@AABoxClass@@QAEXABVVector3@@0@Z,,0x009186F0,156,src/w3d/aabtreecull.cpp,matched,
+?Init_Random@AABoxClass@@QAEXMMMM@Z,,0x008DB3D0,126,src/w3d/aabox.cpp,matched,
 ?Initialize@INIClass@@AAEXXZ,,0x009E3640,98,src/w3d/ini.cpp,matched,
 ?Intersection_Test@CollisionMath@@SA_NABVAABoxClass@@0@Z,,0x008D99E0,149,src/w3d/colmathaabox.cpp,matched,
 ?Intersection_Test@CollisionMath@@SA_NABVAABoxClass@@ABVOBBoxClass@@@Z,,0x008E36B0,165,src/w3d/colmathobbobb.cpp,matched,
@@ -1131,6 +1138,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Subtract@Vector3@@SAXABV1@0PAV1@@Z,,0x004106E0,37,src/w3d/gridcull.cpp,matched,
 ?Tan@@YAMM@Z,0x00873930,0x00873930,9,src/math/trig.cpp,matched,returns tangent of radians
 ?Tell@FileClass@@UAEHXZ,,0x006F5FC0,10,src/w3d/bufffile.cpp,matched,
+?Transform@AABoxClass@@SAXABVMatrix3D@@ABV1@PAV1@@Z,,0x008DB450,28,src/w3d/aabox.cpp,matched,
 ?Transform@VectorProcessorClass@@SAXPAVVector3@@PBV2@ABVMatrix3D@@H@Z,,0x00B001D0,130,src/w3d/vp.cpp,matched,
 ?Transform@VectorProcessorClass@@SAXPAVVector4@@PBVVector3@@ABVMatrix4@@H@Z,,0x00B002E0,772,src/w3d/vp.cpp,matched,
 ?TransformCoord@Matrix4D@@QAEAAVCoord3D@@ABV2@AAV2@@Z,0x000085A8,0x007E6860,92,src/math/matrix4d.cpp,matched,transforms coordinate with translation
