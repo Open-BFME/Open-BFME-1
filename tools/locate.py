@@ -137,6 +137,8 @@ def main():
 
     accepted, ambiguous, unlocated, conflicts, weak = [], [], [], [], []
     pending_multi = []
+    deferred = []
+    validate_hits = None  # bound inside the scan loop; reused by the fixpoint pass
     skipped_small = 0
     callee_map = {}  # symbol -> derived address, must stay consistent across all sites
     accepted_addr = {}  # name -> rva accepted this run
@@ -192,28 +194,37 @@ def main():
                     hits.append(rva)
 
         # validate call sites: every REL32 must point at a known function start/thunk
-        validated = []
-        for rva in hits:
-            target = exe[text_raw + (rva - text_rva) : text_raw + (rva - text_rva) + size]
-            callees = {}
-            ok = True
-            for off, sym in rel32:
-                if off + 4 > size:
-                    ok = False
-                    break
-                displacement = struct.unpack_from("<i", target, off)[0]
-                callee = rva + off + 4 + displacement
-                if callee not in known_starts:
-                    ok = False
-                    break
-                if callees.setdefault(sym, callee) != callee:
-                    ok = False  # one symbol, two addresses inside one function
-                    break
-            if ok:
-                validated.append((rva, callees))
+        def validate_hits(hits, rel32, size, starts):
+            validated = []
+            for rva in hits:
+                target = exe[text_raw + (rva - text_rva) : text_raw + (rva - text_rva) + size]
+                callees = {}
+                ok = True
+                for off, sym in rel32:
+                    if off + 4 > size:
+                        ok = False
+                        break
+                    displacement = struct.unpack_from("<i", target, off)[0]
+                    callee = rva + off + 4 + displacement
+                    if callee not in starts:
+                        ok = False
+                        break
+                    if callees.setdefault(sym, callee) != callee:
+                        ok = False  # one symbol, two addresses inside one function
+                        break
+                if ok:
+                    validated.append((rva, callees))
+            return validated
+
+        validated = validate_hits(hits, rel32, size, known_starts)
 
         if not validated:
-            unlocated.append((name, size))
+            if hits and rel32:
+                # a callee may be a same-file function not yet accepted (or missed by
+                # Ghidra); retry in the fixpoint loop once siblings pin more addresses
+                deferred.append((name, size, rel32, hits))
+            else:
+                unlocated.append((name, size))
             continue
 
         def try_accept(name, size, validated):
@@ -252,16 +263,33 @@ def main():
             pending_multi.append((name, size, validated))
 
     # identical bodies (template siblings) resolve once their callees' addresses are
-    # pinned by other acceptances; iterate to a fixpoint before declaring ambiguity
+    # pinned by other acceptances, and callee-validation rejections may pass once
+    # same-file siblings are accepted; iterate both to a fixpoint
     progress = True
-    while progress and pending_multi:
+    while progress and (pending_multi or deferred):
         progress = False
         for entry in list(pending_multi):
             if try_accept(*entry):
                 pending_multi.remove(entry)
                 progress = True
+        expanded = set(known_starts)
+        for body in accepted_addr.values():
+            expanded.add(body)
+            thunk = body_to_thunk.get(body)
+            if thunk is not None:
+                expanded.add(thunk)
+        for entry in list(deferred):
+            name, size, rel32, hits = entry
+            validated = validate_hits(hits, rel32, size, expanded)
+            if validated:
+                deferred.remove(entry)
+                progress = True
+                if not try_accept(name, size, validated):
+                    pending_multi.append((name, size, validated))
     for name, size, validated in pending_multi:
         ambiguous.append((name, size, [hex(rva) for rva, _ in validated[:6]]))
+    for name, size, rel32, hits in deferred:
+        unlocated.append((name, size))
 
     accepted_names = {name for name, _, _, _ in accepted}
     new_symbols = sorted(
