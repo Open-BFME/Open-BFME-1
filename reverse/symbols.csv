@@ -43,6 +43,7 @@ name,address,notes
 ?winSetLayout@GameWindow@@QAEHPAVWindowLayout@@@Z,0x00031881
 ?winSetNextInLayout@GameWindow@@QAEHPAV1@@Z,0x00035CF6
 ?winSetPrevInLayout@GameWindow@@QAEHPAV1@@Z,0x00015FB4
+_D3DXMatrixInverse@12,0x009FB321
 __CIacos,0x009F7256
 __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
 __stringbase_isnone_cmp_char,0x00405E8,internal char string none-comparison helper

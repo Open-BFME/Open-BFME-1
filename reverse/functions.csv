@@ -230,6 +230,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0LineEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00004269,0x005D5C60,116,src/game/fx_particle_system.cpp,matched,
 ??0LineEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@XZ,0x00045075,0x005D5BD0,60,src/game/fx_particle_system_bulk.cpp,matched,
 ??0Matrix3@@QAE@_N@Z,,0x0060C330,46,src/w3d/colmathobbobb.cpp,matched,
+??0Matrix3D@@QAE@MMMMMMMMMMMM@Z,,0x008D64A0,88,src/w3d/matrix3d.cpp,matched,
+??0Matrix4@@QAE@ABVMatrix3D@@@Z,,0x006CB3A0,97,src/w3d/matrix3d.cpp,matched,
 ??0Matrix4D@@QAE@ABV0@@Z,0x00014FB0,0x007E7B70,107,src/math/matrix4d.cpp,matched,copies values
 ??0Matrix4D@@QAE@ABVCoord3D@@@Z,0x000230ba,0x007e7c00,80,src/math/matrix4d.cpp,matched,
 ??0Matrix4D@@QAE@ABVCoord3D@@M@Z,0x000204aa,0x007e7a30,247,src/math/matrix4d.cpp,matched,
@@ -606,12 +608,14 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??D@YA?AVQuaternion@@ABV0@0@Z,,0x008DB550,136,src/w3d/quat.cpp,matched,
 ??D@YA?AVVector3@@ABV0@M@Z,,0x001A1B90,37,src/w3d/lineseg.cpp,matched,
 ??D@YA?AVVector3@@MABV0@@Z,,0x003A13B0,37,src/w3d/lineseg.cpp,matched,
+??D@YA?AVVector4@@ABV0@M@Z,,0x008D63D0,47,src/w3d/matrix3d.cpp,matched,
+??D@YA?AVVector4@@MABV0@@Z,,0x008D6400,47,src/w3d/matrix3d.cpp,matched,
 ??DCoord2D@@QBEMABUCoord3DBase@@@Z,0x0000DAF8,0x007E5AC0,19,src/math/coord2d.cpp,matched,dot product with Coord3DBase x/y
 ??DCoord2D@@QBEMABV0@@Z,0x0004A4BC,0x007E5A40,19,src/math/coord2d.cpp,matched,dot product with Coord2D
 ??DCoord3D@@QBEMABUCoord3DBase@@@Z,0x00011F09,0x0018F1C0,27,src/math/coord3d.cpp,matched,dot product with Coord3DBase
 ??DCoord3D@@QBEMABVCoord2D@@@Z,0x00044FE4,0x007E5CF0,19,src/math/coord3d.cpp,matched,dot product with Coord2D
 ??G@YA?AVVector3@@ABV0@0@Z,,0x001A1BF0,37,src/w3d/lineseg.cpp,matched,
-??GVector3@@QBE?AV0@XZ,,0x0020DD70,29,src/w3d/colmathobbobb.cpp,matched,
+??GVector3@@QBE?AV0@XZ,,0x0020DD70,29,src/w3d/matrix3d.cpp,matched,
 ??H@YA?AVAsciiString@@V0@ABV0@@Z,0x0000FE52,0x000D1860,137,src/game/ascii_string.cpp,matched,AsciiString + AsciiString
 ??H@YA?AVAsciiString@@V0@D@Z,0x000265E4,0x007E8440,119,src/game/ascii_string.cpp,matched,AsciiString + char
 ??H@YA?AVAsciiString@@V0@PBD@Z,0x00006C5D,0x000CD5D0,132,src/game/ascii_string.cpp,matched,AsciiString + const char*
@@ -642,6 +646,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??ZCoord3D@@QAEAAV0@ABUCoord3DBase@@@Z,0x000126B6,0x0016A240,33,src/math/coord3d.cpp,matched,subtracts Coord3DBase
 ??ZCoord3D@@QAEAAV0@ABVCoord2D@@@Z,0x000296FE,0x007E5CD0,24,src/math/coord3d.cpp,matched,subtracts Coord2D x/y
 ??ZMatrix4D@@QAEAAV0@ABV0@@Z,0x000480B8,0x007E6620,150,src/math/matrix4d.cpp,matched,subtracts matrix values in place
+??ZVector4@@QAEAAV0@ABV0@@Z,,0x008D6370,42,src/w3d/matrix3d.cpp,matched,
 ??_0Coord2D@@QAEAAV0@M@Z,0x0001067C,0x0043A5C0,26,src/math/coord2d.cpp,matched,divides x/y by scalar
 ??_0Coord3D@@QAEAAV0@M@Z,0x0002EB1D,0x000EC6C0,33,src/math/coord3d.cpp,matched,divides x/y/z by scalar
 ??_0Matrix4D@@QAEAAV0@M@Z,0x00025BC6,0x007E67B0,139,src/math/matrix4d.cpp,matched,divides matrix values by scalar
@@ -677,6 +682,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Collide@CollisionMath@@SA_NABVOBBoxClass@@ABVVector3@@ABVAABoxClass@@1PAUCastResultStruct@@@Z,,0x008E5A20,189,src/w3d/colmathobbobb.cpp,matched,
 ?Compute_Point@OBBoxClass@@QBEXQAMPAVVector3@@@Z,,0x008E2960,189,src/w3d/colmathobbobb.cpp,matched,
 ?Contains_Point@TriClass@@QBE_NABVVector3@@@Z,,0x008E1900,297,src/w3d/tri.cpp,matched,
+?Copy_3x3_Matrix@Matrix3D@@QAEXQAY02M@Z,,0x008D7080,72,src/w3d/matrix3d.cpp,matched,
 ?Cos@@YAMM@Z,0x00873920,0x00873920,7,src/math/trig.cpp,matched,returns cosine of radians
 ?CrossProduct@Coord3D@@QAEAAV1@ABUCoord3DBase@@0@Z,0x00022557,0x00232100,61,src/math/coord3d.cpp,matched,
 ?Cross_Product@Vector3@@SAXABV1@0PAV1@@Z,,0x001A1CA0,59,src/w3d/colmathobbobb.cpp,matched,
@@ -739,13 +745,21 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?GetYVector@Matrix4D@@QBEAAVCoord3D@@AAV2@@Z,0x00024280,0x007E6CA0,24,src/math/matrix4d.cpp,matched,copies y basis vector
 ?GetZVector@Matrix4D@@QBEAAVCoord3D@@AAV2@@Z,0x0003021F,0x007E6CC0,24,src/math/matrix4d.cpp,matched,copies z basis vector
 ?Get_Float@Random4Class@@QAEMXZ,,0x009E6120,30,src/w3d/random.cpp,matched,verbatim Generals WWLib
+?Get_Inverse@Matrix3D@@QBEXAAV1@@Z,,0x008D7B30,238,src/w3d/matrix3d.cpp,matched,
+?Get_Orthogonal_Inverse@Matrix3D@@QBEXAAV1@@Z,,0x008D6FD0,170,src/w3d/matrix3d.cpp,matched,
 ?Get_Size@ChunkHeader@@QAEKXZ,,0x009E1210,9,src/w3d/chunkio.cpp,matched,
+?Get_Translation@Matrix3D@@QBE?AVVector3@@XZ,,0x001B4770,24,src/w3d/matrix3d.cpp,matched,
+?Get_X_Rotation@Matrix3D@@QBEMXZ,,0x008D6880,9,src/w3d/matrix3d.cpp,matched,
+?Get_Y_Rotation@Matrix3D@@QBEMXZ,,0x008D6890,9,src/w3d/matrix3d.cpp,matched,
+?Get_Z_Rotation@Matrix3D@@QBEMXZ,,0x008D68A0,8,src/w3d/matrix3d.cpp,matched,
+?Init@Matrix4@@QAEXABVMatrix3D@@@Z,,0x006CA420,95,src/w3d/matrix3d.cpp,matched,
 ?Intersection_Test@CollisionMath@@SA_NABVAABoxClass@@ABVOBBoxClass@@@Z,,0x008E36B0,165,src/w3d/colmathobbobb.cpp,matched,
 ?Intersection_Test@CollisionMath@@SA_NABVOBBoxClass@@0@Z,,0x008E35D0,41,src/w3d/colmathobbobb.cpp,matched,
 ?Intersection_Test@CollisionMath@@SA_NABVOBBoxClass@@ABVAABoxClass@@@Z,,0x008E3600,164,src/w3d/colmathobbobb.cpp,matched,
 ?Intersection_Test@CollisionMath@@SA_NABVOBBoxClass@@ABVTriClass@@@Z,,0x008E85F0,3495,src/w3d/colmathobbtri.cpp,matched,
 ?Inv_Sqrt@WWMath@@SIMM@Z,,0x00131C90,82,src/w3d/colmathobbobb.cpp,matched,
 ?Inverse@Matrix4D@@QAEMXZ,0x00023f47,0x007e7d10,1060,src/math/matrix4d.cpp,matched,
+?Inverse_Rotate_Vector@Matrix3D@@QBE?AVVector3@@ABV2@@Z,,0x008D6910,81,src/w3d/matrix3d.cpp,matched,
 ?IsCRC@Xfer@@UBE_NXZ,0x0001BE7D,0x007E7690,3,src/game/xfer.cpp,matched,returns false
 ?IsExactlyEqualTo@Coord2D@@QBE_NABV1@@Z,0x0003012A,0x003BC910,45,src/math/coord2d.cpp,matched,compares exact x/y
 ?IsExactlyEqualTo@Coord3D@@QBE_NABV1@@Z,0x0001DD72,0x001B2C20,60,src/math/coord3d.cpp,matched,compares exact x/y/z
@@ -754,6 +768,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?IsLightCRC@Xfer@@UBE_NXZ,0x00028B78,0x007E76A0,3,src/game/xfer.cpp,matched,returns false
 ?IsLoading@Xfer@@UBE_NXZ,0x0004A7FA,0x0006B1C0,3,src/game/xfer.cpp,matched,returns false
 ?IsStoring@Xfer@@UBE_NXZ,0x0003C286,0x007E7680,3,src/game/xfer.cpp,matched,returns false
+?Is_Orthogonal@Matrix3D@@QBEHXZ,,0x008D7290,388,src/w3d/matrix3d.cpp,matched,
 ?Length@Vector3@@QBEMXZ,,0x001EF570,53,src/w3d/colmathobbtri.cpp,matched,
 ?LoadPostProcess@ButterflyDrawModuleInfo@FXParticleSystem@@UAEXXZ,0x000073FB,0x005D46D0,1,src/game/fx_particle_system.cpp,matched,no-op
 ?LoadPostProcess@DefaultAlphaModuleInfo@FXParticleSystem@@UAEXXZ,0x0002379F,0x005D4530,1,src/game/fx_particle_system.cpp,matched,no-op
@@ -772,7 +787,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?LoadPostProcess@StreakDrawModuleInfo@FXParticleSystem@@UAEXXZ,0x0003D88E,0x005D4670,1,src/game/fx_particle_system.cpp,matched,no-op
 ?LoadPostProcess@TerrainCollisionModuleInfo@FXParticleSystem@@UAEXXZ,0x0003D208,0x005D4780,1,src/game/fx_particle_system.cpp,matched,no-op
 ?LoadPostProcess@WindModuleInfo@FXParticleSystem@@UAEXXZ,0x0001B518,0x005BD940,1,src/game/fx_particle_system.cpp,matched,no-op
+?Look_At@Matrix3D@@QAEXABVVector3@@0M@Z,,0x008D6970,584,src/w3d/matrix3d.cpp,matched,
 ?Make_Closest@Quaternion@@QAEAAV1@ABV1@@Z,,0x008DB490,80,src/w3d/quat.cpp,matched,
+?Make_Identity@Matrix3D@@QAEXXZ,,0x000FBBE0,43,src/w3d/matrix3d.cpp,matched,
 ?Multiply@Matrix4D@@QAEAAV1@ABV1@0@Z,0x00019bfa,0x007e6950,534,src/math/matrix4d.cpp,matched,
 ?Negate@Coord2D@@QAEAAV1@XZ,0x0000848B,0x007E5B20,17,src/math/coord2d.cpp,matched,negates x/y
 ?Negate@Coord3D@@QAEAAV1@XZ,0x0002C3CC,0x007E5DA0,25,src/math/coord3d.cpp,matched,negates x/y/z
@@ -781,6 +798,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Normalize@Coord3D@@QAEMXZ,0x0001E0BA,0x000FE9E0,60,src/math/coord3d.cpp,matched,normalizes and returns length
 ?Normalize@Quaternion@@QAEXXZ,,0x008DB660,109,src/w3d/quat.cpp,matched,
 ?Normalize@Vector3@@QAEXXZ,,0x00132850,90,src/w3d/colmathobbobb.cpp,matched,
+?Obj_Look_At@Matrix3D@@QAEXABVVector3@@0M@Z,,0x008D6D60,622,src/w3d/matrix3d.cpp,matched,
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVAAPlaneClass@@ABVAABoxClass@@@Z,,0x008E1DA0,158,src/w3d/colmathplane.cpp,matched,
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVAAPlaneClass@@ABVLineSegClass@@@Z,,0x008E1BC0,169,src/w3d/colmathplane.cpp,matched,
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVAAPlaneClass@@ABVSphereClass@@@Z,,0x008E1D60,55,src/w3d/colmathplane.cpp,matched,
@@ -792,6 +810,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVPlaneClass@@ABVTriClass@@@Z,,0x008E1EA0,97,src/w3d/colmathplane.cpp,matched,
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVPlaneClass@@ABVVector3@@@Z,,0x008DB1F0,82,src/w3d/colmathplane.cpp,matched,
 ?PreStaticInit@Debug@@CAPAV1@XZ,0x00889500,0x00889500,114,src/game/debug.cpp,matched,Debug PreStaticInit singleton allocator
+?Re_Orthogonalize@Matrix3D@@QAEXXZ,,0x008D8260,534,src/w3d/matrix3d.cpp,matched,
 ?Reset@BTCollisionStruct@@QAEXXZ,,0x008E5BE0,443,src/w3d/colmathobbtri.cpp,matched,
 ?Rotate@Coord2D@@QAEAAV1@AAV1@MM@Z,0x00023772,0x007E5BD0,44,src/math/coord2d.cpp,matched,rotates source by sine/cosine into this
 ?Rotate@Coord2D@@QAEAAV1@ABV1@M@Z,0x0002F1E9,0x007E5B80,61,src/math/coord2d.cpp,matched,rotates source by angle
@@ -799,9 +818,15 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Rotate@Coord2D@@QAEAAV1@MM@Z,0x0001251C,0x007E5B40,40,src/math/coord2d.cpp,matched,rotates vector in place by sine/cosine
 ?RotateCoord@Matrix4D@@QAEAAVCoord3D@@ABV2@AAV2@@Z,0x0001C887,0x007E68E0,83,src/math/matrix4d.cpp,matched,rotates coordinate without translation
 ?Rotate_Vector@Matrix3@@SAXABV1@ABVVector3@@PAV2@@Z,,0x008E1A70,115,src/w3d/colmathobbobb.cpp,matched,
+?Rotate_Vector@Matrix3D@@QBE?AVVector3@@ABV2@@Z,,0x008D68B0,81,src/w3d/matrix3d.cpp,matched,
 ?Rotate_Vector@Matrix3D@@SAXABV1@ABVVector3@@PAV2@@Z,,0x005BDD00,115,src/w3d/lineseg.cpp,matched,
+?Rotate_X@Matrix3D@@QAEXM@Z,,0x00294ED0,109,src/w3d/matrix3d.cpp,matched,
+?Rotate_X@Matrix3D@@QAEXMM@Z,,0x008D6500,117,src/w3d/matrix3d.cpp,matched,
 ?Rotate_X@Quaternion@@QAEXM@Z,,0x008DBF30,225,src/w3d/quat.cpp,matched,
+?Rotate_Y@Matrix3D@@QAEXMM@Z,,0x008D6580,121,src/w3d/matrix3d.cpp,matched,
 ?Rotate_Y@Quaternion@@QAEXM@Z,,0x008DC020,229,src/w3d/quat.cpp,matched,
+?Rotate_Z@Matrix3D@@QAEXM@Z,,0x000FBC20,107,src/w3d/matrix3d.cpp,matched,
+?Rotate_Z@Matrix3D@@QAEXMM@Z,,0x008D6600,115,src/w3d/matrix3d.cpp,matched,
 ?Rotate_Z@Quaternion@@QAEXM@Z,,0x008DC110,227,src/w3d/quat.cpp,matched,
 ?Scale2D@Coord3D@@QAEAAV1@ABUCoord3DBase@@M@Z,0x0000D4C7,0x007E5E80,27,src/math/coord3d.cpp,matched,scales Coord3DBase x/y
 ?Scale2D@Coord3D@@QAEAAV1@M@Z,0x00035918,0x007E5E60,23,src/math/coord3d.cpp,matched,scales x/y in place
@@ -813,6 +838,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Set@Coord2D@@QAEAAV1@MM@Z,0x00037DA8,0x000FBA00,18,src/math/coord2d.cpp,matched,sets x/y from floats
 ?Set@Coord3D@@QAEAAV1@MMM@Z,0x00041C77,0x000C8D50,25,src/math/coord3d.cpp,matched,sets x/y/z from floats
 ?Set@LineSegClass@@QAEXABV1@ABVMatrix3D@@@Z,,0x008D8800,392,src/w3d/lineseg.cpp,matched,
+?Set@Matrix3D@@QAEXABVMatrix3@@ABVVector3@@@Z,,0x008D6710,82,src/w3d/matrix3d.cpp,matched,
+?Set@Matrix3D@@QAEXABVQuaternion@@ABVVector3@@@Z,,0x008D7B00,34,src/w3d/matrix3d.cpp,matched,
 ?Set@Matrix4D@@QAEAAV1@ABVCoord3D@@@Z,0x0003670F,0x007E6150,78,src/math/matrix4d.cpp,matched,set matrix to identity with translation vector
 ?Set@Matrix4D@@QAEAAV1@ABVCoord3D@@M@Z,0x0000be51,0x007e61c0,247,src/math/matrix4d.cpp,matched,
 ?Set@Matrix4D@@QAEAAV1@MMMMMMMMMMMMMMMM@Z,0x0000D7CE,0x007E60B0,116,src/math/matrix4d.cpp,matched,sets values from 16 floats
@@ -829,12 +856,16 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?SetZero@Coord2D@@QAEAAV1@XZ,0x00022D0E,0x003FD390,16,src/math/coord2d.cpp,matched,sets x/y to zero and returns self
 ?SetZero@Coord3D@@QAEAAV1@XZ,0x000495CB,0x00148760,13,src/math/coord3d.cpp,matched,sets x/y/z to zero and returns self
 ?Set_Random@LineSegClass@@QAEXABVVector3@@0@Z,,0x008D8CA0,336,src/w3d/lineseg.cpp,matched,
+?Set_Rotation@Matrix3D@@QAEXABVMatrix3@@@Z,,0x008D6770,59,src/w3d/matrix3d.cpp,matched,
+?Set_Rotation@Matrix3D@@QAEXABVQuaternion@@@Z,,0x008D67B0,205,src/w3d/matrix3d.cpp,matched,
 ?Set_Size@ChunkHeader@@QAEXK@Z,,0x009E11F0,23,src/w3d/chunkio.cpp,matched,
 ?Set_Sub_Chunk_Flag@ChunkHeader@@QAEX_N@Z,,0x009E1220,33,src/w3d/chunkio.cpp,matched,
+?Set_Translation@Matrix3D@@QAEXABVVector3@@@Z,,0x001B47B0,24,src/w3d/matrix3d.cpp,matched,
 ?Sin@@YAMM@Z,0x00873910,0x00873910,7,src/math/trig.cpp,matched,returns sine of radians
 ?SkipBadBlock@Xfer@@UAEXAAVSnapshot@@I@Z,0x00048B44,0x0006B1D0,3,src/game/xfer.cpp,matched,no-op
 ?Slerp@@YAXAAVQuaternion@@ABV1@1M@Z,,0x008DB6D0,302,src/w3d/quat.cpp,matched,
 ?Slerp_Setup@@YAXABVQuaternion@@0PAUSlerpInfoStruct@@@Z,,0x008DB800,150,src/w3d/quat.cpp,matched,
+?Solve_Linear_System@Matrix3D@@SA_NAAV1@@Z,,0x008D7420,638,src/w3d/matrix3d.cpp,matched,
 ?Sqrt@WWMath@@SAMM@Z,,0x001EF4C0,15,src/w3d/colmathobbtri.cpp,matched,
 ?Sub2D@Coord3D@@QAEAAV1@ABUCoord3DBase@@0@Z,0x0000F1A5,0x007E5E30,28,src/math/coord3d.cpp,matched,subtracts two Coord3DBase x/y values
 ?Sub2D@Coord3D@@QAEAAV1@ABUCoord3DBase@@@Z,0x0004651A,0x007E5E10,24,src/math/coord3d.cpp,matched,subtracts Coord3DBase x/y
@@ -848,7 +879,10 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Subtract@Vector3@@SAXABV1@0PAV1@@Z,,0x004106E0,37,src/w3d/colmathobbobb.cpp,matched,
 ?Tan@@YAMM@Z,0x00873930,0x00873930,9,src/math/trig.cpp,matched,returns tangent of radians
 ?TransformCoord@Matrix4D@@QAEAAVCoord3D@@ABV2@AAV2@@Z,0x000085A8,0x007E6860,92,src/math/matrix4d.cpp,matched,transforms coordinate with translation
+?Transform_Center_Extent_AABox@Matrix3D@@QBEXABVVector3@@0PAV2@1@Z,,0x008D71C0,202,src/w3d/matrix3d.cpp,matched,
+?Transform_Min_Max_AABox@Matrix3D@@QBEXABVVector3@@0PAV2@1@Z,,0x008D70D0,237,src/w3d/matrix3d.cpp,matched,
 ?Transform_Vector@Matrix3D@@SAXABV1@ABVVector3@@PAV2@@Z,,0x000FBD10,124,src/w3d/lineseg.cpp,matched,
+?Translate@Matrix3D@@QAEXABVVector3@@@Z,,0x001BD830,87,src/w3d/matrix3d.cpp,matched,
 ?Transpose@Matrix4D@@QAEAAV1@XZ,0x00008396,0x007e6300,169,src/math/matrix4d.cpp,matched,
 ?Transpose_Rotate_Vector@Matrix3@@SAXABV1@ABVVector3@@PAV2@@Z,,0x008E1AF0,115,src/w3d/colmathplane.cpp,matched,
 ?Version1@Xfer@@QAEXXZ,0x000429C9,0x000C7E90,21,src/game/xfer.cpp,matched,xfer version 1 marker
@@ -869,6 +903,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?addWindow@WindowLayout@@UAEXPAVGameWindow@@@Z,,0x00497B00,99,src/game/window_layout.cpp,matched,
 ?appendNextCommand@RecorderClass@@IAEXXZ,0x0003D0F0,0x987b0,533,src/game/recorder_strings.cpp,matched,
 ?bringForward@WindowLayout@@UAEXXZ,,0x00497A90,41,src/game/window_layout.cpp,matched,
+?buildTransformMatrix@Matrix3D@@QAEXABVVector3@@0@Z,,0x008D6BC0,401,src/w3d/matrix3d.cpp,matched,
 ?clear@?$StringBase@D@@QAEXXZ,0x00041A38,0x000680C0,6,src/game/string_base.cpp,matched,clears string by releasing buffer
 ?clear@?$StringBase@G@@QAEXXZ,0x00024C85,0x00068090,6,src/game/string_base.cpp,matched,clears wide string by releasing buffer
 ?collide_obb_obb@@YA_NAAUObbCollisionStruct@@PAUCastResultStruct@@@Z,,0x008E4D00,3296,src/w3d/colmathobbobb.cpp,matched,
