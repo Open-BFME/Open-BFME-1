@@ -123,7 +123,12 @@ def find_defined_functions(text: str):
         while namespace_stack and namespace_stack[-1][1] > brace_depth:
             namespace_stack.pop()
 
-        match = definition_pattern.match(line)
+        # a definition's signature line never ends with ';' — that's a call
+        # statement or prototype (e.g. `BASECLASS::Read(buffer, size);`)
+        if stripped.endswith(";"):
+            match = None
+        else:
+            match = definition_pattern.match(line)
         if match:
             class_name = match.group(1)
             method_name = match.group(2)
