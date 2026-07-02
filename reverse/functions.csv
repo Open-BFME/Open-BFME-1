@@ -190,6 +190,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0BufferStraw@@QAE@PBXH@Z,,0x00921730,90,src/w3d/ini.cpp,matched,definite (call-site resolved)
 ??0BufferedFileClass@@QAE@PBD@Z,,0x009E7600,39,src/w3d/bufffile.cpp,matched,
 ??0BufferedFileClass@@QAE@XZ,,0x009E75E0,32,src/w3d/bufffile.cpp,matched,
+??0BumpEnvTextureMapperClass@@QAE@AAVINIClass@@PADI@Z,,0x009693A0,141,src/w3d/mapper.cpp,matched,
+??0BumpEnvTextureMapperClass@@QAE@ABV0@@Z,,0x00969430,54,src/w3d/mapper.cpp,matched,
+??0BumpEnvTextureMapperClass@@QAE@MMABVVector2@@0_N0I@Z,,0x00969340,77,src/w3d/mapper.cpp,matched,
 ??0ButterflyDrawModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x0002C732,0x005D8B60,11,src/game/fx_particle_system.cpp,matched,copy constructor sets vtable pointer
 ??0ButterflyDrawModuleInfo@FXParticleSystem@@QAE@XZ,0x000116C6,0x005F0C60,9,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer
 ??0ButterflyDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00019CB3,0x005D8CF0,62,src/game/fx_particle_system_bulk.cpp,matched,
@@ -229,6 +232,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0DefaultPhysicsModuleInfo@FXParticleSystem@@QAE@XZ,0x0000AB23,0x005FD9E0,2096,src/game/fx_particle_system_bulk.cpp,unmatched,needs SEH constructor wrapper
 ??0DefaultUpdateModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x000052AE,0x005D81C0,135,src/game/fx_particle_system_bulk.cpp,matched,
 ??0DefaultUpdateModuleInfo@FXParticleSystem@@QAE@XZ,0x0004506B,0x005FF750,2400,src/game/fx_particle_system_bulk.cpp,unmatched,needs SEH constructor wrapper
+??0EdgeMapperClass@@QAE@ABV0@@Z,,0x00965830,73,src/w3d/mapper.cpp,matched,
+??0EdgeMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x00965780,172,src/w3d/mapper.cpp,matched,
+??0EdgeMapperClass@@QAE@I@Z,,0x00965710,60,src/w3d/mapper.cpp,matched,
 ??0EmissionVelocityInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00038D4D,0x005BD820,11,src/game/fx_particle_system_bulk.cpp,matched,copy constructor
 ??0EmissionVelocityInfo@FXParticleSystem@@QAE@XZ,0x00012468,0x005BD800,9,src/game/fx_particle_system_bulk.cpp,matched,default constructor sets vtable pointer
 ??0EmissionVolumeInfo@FXParticleSystem@@QAE@ABV01@@Z,0x000376DC,0x005BD6C0,21,src/game/fx_particle_system.cpp,matched,copy constructor
@@ -240,6 +246,12 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0GenericList@@QAE@XZ,,0x009E2EC0,103,src/w3d/ini.cpp,matched,
 ??0GridCullSystemClass@@QAE@XZ,,0x008DF190,222,src/w3d/gridcull.cpp,matched,
 ??0GridLinkClass@@QAE@PAVGridCullSystemClass@@@Z,,0x008DD870,33,src/w3d/gridcull.cpp,matched,
+??0GridTextureMapperClass@@QAE@ABV0@@Z,,0x00966B80,123,src/w3d/mapper.cpp,matched,
+??0GridTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x00966AB0,193,src/w3d/mapper.cpp,matched,
+??0GridTextureMapperClass@@QAE@MIIII@Z,,0x00966A30,75,src/w3d/mapper.cpp,matched,
+??0GridWSEnvMapperClass@@QAE@ABV0@@Z,,0x00969710,33,src/w3d/mapper.cpp,matched,
+??0GridWSEnvMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x00969740,171,src/w3d/mapper.cpp,matched,
+??0GridWSEnvMapperClass@@QAE@MIIIW4AxisType@0@I@Z,,0x00969680,88,src/w3d/mapper.cpp,matched,
 ??0HemisphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0002DB50,0x005D7560,39,src/game/fx_particle_system.cpp,matched,
 ??0HemisphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@XZ,0x0002BF67,0x005D74F0,32,src/game/fx_particle_system.cpp,matched,
 ??0ICoord2D@@QAE@ABUICoord2DBase@@@Z,0x00001EB0,0x0008AA60,19,src/math/icoord.cpp,matched,copies x/y from ICoord2DBase
@@ -263,6 +275,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0LineEmissionVolumeInfo@FXParticleSystem@@QAE@XZ,0x0003656B,0x005D5A50,32,src/game/fx_particle_system.cpp,matched,default constructor sets vtable and zeros line endpoints
 ??0LineEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00004269,0x005D5C60,116,src/game/fx_particle_system.cpp,matched,
 ??0LineEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@XZ,0x00045075,0x005D5BD0,60,src/game/fx_particle_system_bulk.cpp,matched,
+??0LinearOffsetTextureMapperClass@@QAE@ABV0@@Z,,0x009669A0,103,src/w3d/mapper.cpp,matched,
+??0LinearOffsetTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x009668B0,237,src/w3d/mapper.cpp,matched,
+??0LinearOffsetTextureMapperClass@@QAE@ABVVector2@@0_N0I@Z,,0x009667F0,133,src/w3d/mapper.cpp,matched,
 ??0Matrix3@@QAE@ABVVector3@@00@Z,,0x005F6910,67,src/w3d/obbox.cpp,matched,
 ??0Matrix3@@QAE@MMMMMMMMM@Z,,0x008D8F30,67,src/w3d/matrix3.cpp,matched,
 ??0Matrix3@@QAE@_N@Z,,0x0060C330,46,src/w3d/colmathobbobb.cpp,matched,
@@ -302,6 +317,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0Random2Class@@QAE@I@Z,,0x009E63C0,76,src/w3d/random.cpp,matched,verbatim Generals WWLib
 ??0Random4Class@@QAE@I@Z,,0x009E5FD0,77,src/w3d/random.cpp,matched,verbatim Generals WWLib
 ??0RandomAlphaKeyframe@FXParticleSystem@@QAE@XZ,0x0003F107,0x0005C750,45,src/game/fx_particle_system_bulk.cpp,matched,constructs keyframe and calls setRange on its random variable
+??0RandomTextureMapperClass@@QAE@ABV0@@Z,,0x00965DC0,176,src/w3d/mapper.cpp,matched,
+??0RandomTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x00965CE0,220,src/w3d/mapper.cpp,matched,
+??0RandomTextureMapperClass@@QAE@MABVVector2@@I@Z,,0x00965C00,186,src/w3d/mapper.cpp,matched,
 ??0RawFileClass@@QAE@PBD@Z,,0x009E6A20,144,src/w3d/rawfile.cpp,matched,
 ??0RawFileClass@@QAE@XZ,,0x009E6990,108,src/w3d/rawfile.cpp,matched,
 ??0Region2D@@QAE@ABU0@@Z,0x000173CD,0x0005C320,31,src/math/region.cpp,matched,copies bounds
@@ -309,6 +327,15 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0Region2D@@QAE@XZ,0x0001DFB1,0x00160B10,3,src/math/region.cpp,matched,empty constructor returns self
 ??0Region3D@@QAE@ABU0@@Z,0x00032E02,0x000BEC90,43,src/math/region.cpp,matched,copies bounds
 ??0Region3D@@QAE@XZ,0x00024573,0x000BEC80,3,src/math/region.cpp,matched,empty constructor returns self
+??0RotateTextureMapperClass@@QAE@ABV0@@Z,,0x00964BB0,86,src/w3d/mapper.cpp,matched,
+??0RotateTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x00964B00,166,src/w3d/mapper.cpp,matched,
+??0RotateTextureMapperClass@@QAE@MABVVector2@@0I@Z,,0x00964A70,105,src/w3d/mapper.cpp,matched,
+??0ScaleTextureMapperClass@@QAE@ABV0@@Z,,0x00964710,46,src/w3d/mapper.cpp,matched,
+??0ScaleTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x00964670,146,src/w3d/mapper.cpp,matched,
+??0ScaleTextureMapperClass@@QAE@ABVVector2@@I@Z,,0x00964600,55,src/w3d/mapper.cpp,matched,
+??0SineLinearOffsetTextureMapperClass@@QAE@ABV0@@Z,,0x00964EC0,104,src/w3d/mapper.cpp,matched,
+??0SineLinearOffsetTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x00964DE0,223,src/w3d/mapper.cpp,matched,
+??0SineLinearOffsetTextureMapperClass@@QAE@ABVVector3@@0ABVVector2@@I@Z,,0x00964D40,119,src/w3d/mapper.cpp,matched,
 ??0Snapshot@@QAE@ABV0@@Z,0x000021D0,0x0005C530,10,src/game/snapshot.cpp,matched,sets vtable pointer
 ??0Snapshot@@QAE@XZ,0x00024C80,0x0006B180,9,src/game/snapshot.cpp,matched,sets vtable pointer
 ??0SphereEmissionVolumeInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00032CD1,0x005D6150,33,src/game/fx_particle_system.cpp,matched,
@@ -319,18 +346,27 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0SphericalEmissionVelocityInfo@FXParticleSystem@@QAE@XZ,0x0002A91E,0x005D7160,79,src/game/fx_particle_system_bulk.cpp,matched,
 ??0SphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00003DF5,0x005D73C0,62,src/game/fx_particle_system_bulk.cpp,matched,
 ??0SphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@XZ,0x0001BF86,0x005D72F0,106,src/game/fx_particle_system_bulk.cpp,matched,
+??0StepLinearOffsetTextureMapperClass@@QAE@ABV0@@Z,,0x00965160,96,src/w3d/mapper.cpp,matched,
+??0StepLinearOffsetTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x009650A0,179,src/w3d/mapper.cpp,matched,
+??0StepLinearOffsetTextureMapperClass@@QAE@ABVVector2@@M_N0I@Z,,0x00965000,116,src/w3d/mapper.cpp,matched,
 ??0StreakDrawModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00007fea,0x005d8600,11,src/game/fx_particle_system.cpp,matched,copy constructor sets vtable pointer
 ??0StreakDrawModuleInfo@FXParticleSystem@@QAE@XZ,0x00018796,0x005F7EF0,9,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer
 ??0StreakDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00033B59,0x005D8790,62,src/game/fx_particle_system_bulk.cpp,matched,
+??0TextureMapperClass@@QAE@ABV0@@Z,,0x00964490,28,src/w3d/mapper.cpp,matched,
+??0TextureMapperClass@@QAE@I@Z,,0x009645D0,34,src/w3d/mapper.cpp,matched,
 ??0UnicodeString@@QAE@ABV0@@Z,0x00025E28,0x000682C0,19,src/game/unicode_string.cpp,matched,UnicodeString copy constructor
 ??0UnicodeString@@QAE@ABV0@HH@Z,0x0001A843,0x00434630,31,src/game/unicode_string.cpp,matched,UnicodeString copy substring
 ??0UnicodeString@@QAE@G@Z,0x0002C769,0x007E84E0,18,src/game/unicode_string.cpp,matched,UnicodeString(wchar_t)
 ??0UnicodeString@@QAE@PBG@Z,0x00036953,0x00065410,19,src/game/unicode_string.cpp,matched,UnicodeString(const wchar_t *)
 ??0UnicodeString@@QAE@PBGH@Z,0x0003CB05,0x00434610,26,src/game/unicode_string.cpp,matched,UnicodeString(const wchar_t *
 ??0UnicodeString@@QAE@XZ,0x00041C95,0x00083D10,9,src/game/unicode_string.cpp,matched,default constructor
+??0WSEnvMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x00965920,167,src/w3d/mapper.cpp,matched,
 ??0WindModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00047410,0x005BD970,117,src/game/fx_particle_system_bulk.cpp,matched,
 ??0WindowLayout@@QAE@XZ,,0x00497C40,99,src/game/window_layout.cpp,matched,EH function (cl: /EHsc); BFME added vtable vs Generals
 ??0Xfer@@QAE@XZ,0x00041BAF,0x007E7660,9,src/game/xfer.cpp,matched,constructor sets vtable
+??0ZigZagLinearOffsetTextureMapperClass@@QAE@ABV0@@Z,,0x00965500,92,src/w3d/mapper.cpp,matched,
+??0ZigZagLinearOffsetTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x00965420,209,src/w3d/mapper.cpp,matched,
+??0ZigZagLinearOffsetTextureMapperClass@@QAE@ABVVector2@@M0I@Z,,0x00965350,166,src/w3d/mapper.cpp,matched,
 ??1?$CategoryModuleClass@$00@FXParticleSystem@@MAE@XZ,0x0000a916,0x005d4a50,7,src/game/fx_particle_system_category_accessors.cpp,matched,virtual dtor vtable reset
 ??1?$CategoryModuleClass@$01@FXParticleSystem@@MAE@XZ,0x0001bdfb,0x005d4ab0,7,src/game/fx_particle_system_category_accessors.cpp,matched,virtual dtor vtable reset
 ??1?$CategoryModuleClass@$02@FXParticleSystem@@MAE@XZ,0x000177d8,0x005d4a90,7,src/game/fx_particle_system_category_accessors.cpp,matched,virtual dtor vtable reset
@@ -681,6 +717,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??D?$Int@$0EA@@@QBE?AV0@ABV0@@Z,,0x009EAB60,84,src/w3d/pk.cpp,matched,
 ??D?$Int@$0EA@@@QBE?AV0@G@Z,,0x009EA8A0,84,src/w3d/pk.cpp,matched,
 ??D@YA?AVQuaternion@@ABV0@0@Z,,0x008DB550,136,src/w3d/quat.cpp,matched,
+??D@YA?AVVector2@@ABV0@M@Z,,0x00703D20,27,src/w3d/mapper.cpp,matched,
 ??D@YA?AVVector3@@ABV0@M@Z,,0x001A1B90,37,src/w3d/lineseg.cpp,matched,
 ??D@YA?AVVector3@@MABV0@@Z,,0x003A13B0,37,src/w3d/lineseg.cpp,matched,
 ??D@YA?AVVector4@@ABV0@M@Z,,0x008D63D0,47,src/w3d/matrix3d.cpp,matched,
@@ -698,6 +735,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??H@YA?AVAsciiString@@V0@D@Z,0x000265E4,0x007E8440,119,src/game/ascii_string.cpp,matched,AsciiString + char
 ??H@YA?AVAsciiString@@V0@PBD@Z,0x00006C5D,0x000CD5D0,132,src/game/ascii_string.cpp,matched,AsciiString + const char*
 ??H@YA?AVVector3@@ABV0@0@Z,,0x001A1BC0,37,src/w3d/gridcull.cpp,matched,
+??K@YA?AVVector2@@ABV0@M@Z,,0x00703D80,33,src/w3d/mapper.cpp,matched,
 ??K@YA?AVVector3@@ABV0@M@Z,,0x00710D80,47,src/w3d/vector3.cpp,matched,
 ??L?$Int@$0EA@@@QBEGG@Z,,0x009EA9F0,24,src/w3d/pk.cpp,matched,
 ??M@YA_NABV?$StringBase@D@@0@Z,0x0000FAAB,0x00062ED0,24,src/game/string_base.cpp,matched,StringBase<char> less-than
@@ -794,6 +832,16 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Clear@?$IndexClass@HPAUINISection@@@@QAEXXZ,,0x009E2CE0,32,src/w3d/ini.cpp,matched,IndexClass sibling
 ?Clear@INIClass@@QAE_NPBD0@Z,,0x009E3890,209,src/w3d/ini.cpp,matched,
 ?Clear@VectorProcessorClass@@SAXPAVVector3@@H@Z,,0x00B00000,37,src/w3d/vp.cpp,matched,
+?Clone@BumpEnvTextureMapperClass@@UBEPAVTextureMapperClass@@XZ,,0x0096A500,71,src/w3d/mapper.cpp,matched,
+?Clone@EdgeMapperClass@@UBEPAVTextureMapperClass@@XZ,,0x00966410,31,src/w3d/mapper.cpp,matched,
+?Clone@GridTextureMapperClass@@UBEPAVTextureMapperClass@@XZ,,0x0096A4E0,31,src/w3d/mapper.cpp,matched,
+?Clone@LinearOffsetTextureMapperClass@@UBEPAVTextureMapperClass@@XZ,,0x0096A4C0,31,src/w3d/mapper.cpp,matched,
+?Clone@RandomTextureMapperClass@@UBEPAVTextureMapperClass@@XZ,,0x00966430,93,src/w3d/mapper.cpp,matched,
+?Clone@RotateTextureMapperClass@@UBEPAVTextureMapperClass@@XZ,,0x00966390,31,src/w3d/mapper.cpp,matched,
+?Clone@ScaleTextureMapperClass@@UBEPAVTextureMapperClass@@XZ,,0x00966350,60,src/w3d/mapper.cpp,matched,
+?Clone@SineLinearOffsetTextureMapperClass@@UBEPAVTextureMapperClass@@XZ,,0x009663B0,31,src/w3d/mapper.cpp,matched,
+?Clone@StepLinearOffsetTextureMapperClass@@UBEPAVTextureMapperClass@@XZ,,0x009663D0,31,src/w3d/mapper.cpp,matched,
+?Clone@ZigZagLinearOffsetTextureMapperClass@@UBEPAVTextureMapperClass@@XZ,,0x009663F0,31,src/w3d/mapper.cpp,matched,
 ?Close@BufferedFileClass@@UAEXXZ,,0x009E77F0,42,src/w3d/bufffile.cpp,matched,
 ?Close@RawFileClass@@UAEXXZ,,0x009E6720,57,src/w3d/rawfile.cpp,matched,
 ?Collect_And_Unlink_All@GridCullSystemClass@@IAEXXZ,,0x008DEA60,359,src/w3d/gridcull.cpp,matched,
@@ -1141,7 +1189,15 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Reset@BTCollisionStruct@@QAEXXZ,,0x008E5BE0,443,src/w3d/colmathobbtri.cpp,matched,
 ?Reset@Buffer@@QAEXXZ,,0x009E1E60,40,src/w3d/buff.cpp,matched,
 ?Reset@CastResultStruct@@QAEXXZ,,0x006098A0,36,src/w3d/colmathaabox.cpp,matched,
+?Reset@EdgeMapperClass@@UAEXXZ,,0x00965880,16,src/w3d/mapper.cpp,matched,
+?Reset@GridTextureMapperClass@@UAEXXZ,,0x009648F0,52,src/w3d/mapper.cpp,matched,
+?Reset@LinearOffsetTextureMapperClass@@UAEXXZ,,0x00966A10,17,src/w3d/mapper.cpp,matched,
+?Reset@RandomTextureMapperClass@@UAEXXZ,,0x00965E70,16,src/w3d/mapper.cpp,matched,
 ?Reset@RawFileClass@@IAEXXZ,,0x009E6AB0,49,src/w3d/rawfile.cpp,matched,
+?Reset@RotateTextureMapperClass@@UAEXXZ,,0x00964C10,16,src/w3d/mapper.cpp,matched,
+?Reset@SineLinearOffsetTextureMapperClass@@UAEXXZ,,0x00964F30,16,src/w3d/mapper.cpp,matched,
+?Reset@StepLinearOffsetTextureMapperClass@@UAEXXZ,,0x009651C0,20,src/w3d/mapper.cpp,matched,
+?Reset@ZigZagLinearOffsetTextureMapperClass@@UAEXXZ,,0x00965560,16,src/w3d/mapper.cpp,matched,
 ?Reset_Buffer@BufferedFileClass@@IAEXXZ,,0x009E7750,37,src/w3d/bufffile.cpp,matched,
 ?Reset_Collection@CullSystemClass@@QAEXXZ,,0x008E21C0,8,src/w3d/cullsys.cpp,matched,
 ?Reset_Statistics@GridCullSystemClass@@QAEXXZ,,0x008DCC10,30,src/w3d/gridcull.cpp,matched,
@@ -1206,6 +1262,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Set_Cull_Box@CullableClass@@QAEXABVAABoxClass@@_N@Z,,0x008E22A0,72,src/w3d/cullsys.cpp,matched,
 ?Set_Culling_System@CullableClass@@QAEXPAVCullSystemClass@@@Z,,0x008E2230,17,src/w3d/cullsys.cpp,matched,
 ?Set_Date_Time@RawFileClass@@UAE_NK@Z,,0x009E6690,99,src/w3d/rawfile.cpp,matched,
+?Set_Frame_Per_Second@GridTextureMapperClass@@QAEXM@Z,,0x00967040,17,src/w3d/mapper.cpp,matched,
 ?Set_Name@RawFileClass@@UAEPBDPBD@Z,,0x009E6AF0,33,src/w3d/rawfile.cpp,matched,
 ?Set_Random@LineSegClass@@QAEXABVVector3@@0@Z,,0x008D8CA0,336,src/w3d/lineseg.cpp,matched,
 ?Set_Rotation@Matrix3D@@QAEXABVMatrix3@@@Z,,0x008D6770,59,src/w3d/matrix3d.cpp,matched,
@@ -1284,6 +1341,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?appendNextCommand@RecorderClass@@IAEXXZ,0x0003D0F0,0x987b0,533,src/game/recorder_strings.cpp,matched,
 ?bringForward@WindowLayout@@UAEXXZ,,0x00497A90,41,src/game/window_layout.cpp,matched,
 ?buildTransformMatrix@Matrix3D@@QAEXABVVector3@@0@Z,,0x008D6BC0,401,src/w3d/matrix3d.cpp,matched,
+?calculate_uv_offset@GridTextureMapperClass@@IAEXPAM0@Z,,0x009643F0,88,src/w3d/mapper.cpp,matched,
 ?clamp_indices_to_grid@GridCullSystemClass@@IAEXPAH00@Z,,0x008DCE70,82,src/w3d/gridcull.cpp,matched,
 ?clear@?$StringBase@D@@QAEXXZ,0x00041A38,0x000680C0,5,src/game/string_base.cpp,matched,clears string by releasing buffer; size trimmed: trailing int3 padding
 ?clear@?$StringBase@G@@QAEXXZ,0x00024C85,0x00068090,5,src/game/string_base.cpp,matched,clears wide string by releasing buffer; size trimmed: trailing int3 padding
@@ -1462,6 +1520,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?init_volume@GridCullSystemClass@@IAEXABVFrustumClass@@PAUVolumeStruct@1@@Z,,0x008DD530,457,src/w3d/gridcull.cpp,matched,
 ?init_volume@GridCullSystemClass@@IAEXABVOBBoxClass@@PAUVolumeStruct@1@@Z,,0x008DD340,483,src/w3d/gridcull.cpp,matched,
 ?init_volume@GridCullSystemClass@@IAEXABVVector3@@0PAUVolumeStruct@1@@Z,,0x008DCFB0,442,src/w3d/gridcull.cpp,matched,
+?initialize@GridTextureMapperClass@@IAEXMI@Z,,0x00964930,226,src/w3d/mapper.cpp,matched,
 ?intersect_obb_obb@@YA_NAAUObbIntersectionStruct@@@Z,,0x008E2C70,2391,src/w3d/colmathobbobb.cpp,matched,
 ?isEmpty@?$StringBase@D@@QBE_NXZ,0x0000C752,0x0005E4C0,22,src/game/string_base.cpp,matched,returns true if string has no data or zero length
 ?isEmpty@?$StringBase@G@@QBE_NXZ,0x0001F361,0x0007F7D0,22,src/game/string_base.cpp,matched,returns true if string has no data or zero length
@@ -1603,6 +1662,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?trim@?$StringBase@G@@QAEXXZ,0x00888ED0,0x888ed0,147,src/game/string_base.cpp,matched,
 ?unlink_object@GridCullSystemClass@@IAEXPAVCullableClass@@@Z,,0x008DDC60,88,src/w3d/gridcull.cpp,matched,
 ?unlink_object_from_list@GridCullSystemClass@@IAEXPAPAVCullableClass@@PAV2@@Z,,0x008DD900,65,src/w3d/gridcull.cpp,matched,
+?update_temporal_state@GridTextureMapperClass@@IAEXXZ,,0x00964A20,73,src/w3d/mapper.cpp,matched,
 ?validate@?$StringBase@D@@ABEXXZ,0x0001D4A3,0x0005D790,1,src/game/string_base.cpp,matched,no-op string validation
 ?validate@?$StringBase@G@@ABEXXZ,0x000390A9,0x0005D7A0,1,src/game/string_base.cpp,matched,no-op
 ?wcstrim@@YAPAGPAG@Z,,0x009E7F20,100,src/w3d/trim.cpp,matched,
