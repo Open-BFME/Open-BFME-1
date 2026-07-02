@@ -162,6 +162,12 @@ def main():
             text = source_path.read_text(encoding="utf-8")
         for class_name, method_name, symbol_name in find_defined_functions(text):
             if symbol_name:
+                # `// ?<mangled> absent-from-retail` marks a definition kept only to
+                # force emission/instantiation of other matched functions; the retail
+                # binary dead-stripped it, so there is no address for a CSV row.
+                parts = symbol_name.split()
+                if len(parts) == 2 and parts[1] == "absent-from-retail":
+                    continue
                 if symbol_name in declared:
                     continue
                 unmatched.append((rel_path, class_name, method_name))
