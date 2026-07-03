@@ -1,5 +1,14 @@
 #include "memory_pool.h"
 
+#include <string.h>
+
+// Internal allocator dispatch: the pool routes allocate/size/free through a table
+// of function pointers resolved at init. Addresses are supplied by the patcher.
+extern void *(__cdecl *g_poolAllocate)(unsigned int, MemoryPool::AllocType);
+extern unsigned int (__cdecl *g_poolBlockSize)(void *);
+extern void (__cdecl *g_poolFree)(void *, MemoryPool::AllocType);
+
+
 static int g_refCount;
 
 void MemoryPool::_Exit()
@@ -863,125 +872,17 @@ __declspec(naked) void MemoryPool::_Free(void *ptr, MemoryPool::AllocType type)
     }
 }
 
-__declspec(naked) void *MemoryPool::_Reallocate(void *ptr, unsigned int size, MemoryPool::AllocType type)
+void *MemoryPool::_Reallocate(void *ptr, unsigned int size, MemoryPool::AllocType type)
 {
-    __asm {
-        __emit 0x53
-        __emit 0x55
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x74
-        __emit 0x24
-        __emit 0x14
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x74
-        __emit 0x13
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x50
-        __emit 0x56
-        __emit 0xff
-        __emit 0x15
-        __emit 0xb4
-        __emit 0xe9
-        __emit 0x30
-        __emit 0x01
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xe8
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xed
-        __emit 0x8b
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x85
-        __emit 0xdb
-        __emit 0x74
-        __emit 0x0c
-        __emit 0x53
-        __emit 0xff
-        __emit 0x15
-        __emit 0xb0
-        __emit 0xe9
-        __emit 0x30
-        __emit 0x01
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x74
-        __emit 0x20
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x1c
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x73
-        __emit 0x02
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8b
-        __emit 0xd1
-        __emit 0xc1
-        __emit 0xe9
-        __emit 0x02
-        __emit 0x8b
-        __emit 0xf3
-        __emit 0x8b
-        __emit 0xfd
-        __emit 0xf3
-        __emit 0xa5
-        __emit 0x8b
-        __emit 0xca
-        __emit 0x83
-        __emit 0xe1
-        __emit 0x03
-        __emit 0xf3
-        __emit 0xa4
-        __emit 0x5f
-        __emit 0x85
-        __emit 0xdb
-        __emit 0x74
-        __emit 0x0f
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x50
-        __emit 0x53
-        __emit 0xff
-        __emit 0x15
-        __emit 0xac
-        __emit 0xe9
-        __emit 0x30
-        __emit 0x01
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x5e
-        __emit 0x8b
-        __emit 0xc5
-        __emit 0x5d
-        __emit 0x5b
-        __emit 0xc3
+    void *newPtr = size ? g_poolAllocate(size, type) : 0;
+    unsigned int oldSize = ptr ? g_poolBlockSize(ptr) : 0;
+    if (size != 0 && oldSize != 0) {
+        memcpy(newPtr, ptr, size < oldSize ? size : oldSize);
     }
+    if (ptr != 0) {
+        g_poolFree(ptr, type);
+    }
+    return newPtr;
 }
 
 __declspec(naked) void MemoryPool::_Init()
