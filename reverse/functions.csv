@@ -333,6 +333,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0ScaleTextureMapperClass@@QAE@ABV0@@Z,,0x00964710,46,src/w3d/mapper.cpp,matched,
 ??0ScaleTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x00964670,146,src/w3d/mapper.cpp,matched,
 ??0ScaleTextureMapperClass@@QAE@ABVVector2@@I@Z,,0x00964600,55,src/w3d/mapper.cpp,matched,
+??0SimpleFileFactoryClass@@QAE@XZ,,0x009DD6C0,111,src/w3d/ffactory.cpp,matched,
 ??0SineLinearOffsetTextureMapperClass@@QAE@ABV0@@Z,,0x00964EC0,104,src/w3d/mapper.cpp,matched,
 ??0SineLinearOffsetTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x00964DE0,223,src/w3d/mapper.cpp,matched,
 ??0SineLinearOffsetTextureMapperClass@@QAE@ABVVector3@@0ABVVector2@@I@Z,,0x00964D40,119,src/w3d/mapper.cpp,matched,
@@ -352,6 +353,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0StreakDrawModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00007fea,0x005d8600,11,src/game/fx_particle_system.cpp,matched,copy constructor sets vtable pointer
 ??0StreakDrawModuleInfo@FXParticleSystem@@QAE@XZ,0x00018796,0x005F7EF0,9,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer
 ??0StreakDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00033B59,0x005D8790,62,src/game/fx_particle_system_bulk.cpp,matched,
+??0StringClass@@QAE@ABV0@_N@Z,,0x008FF470,132,src/w3d/ffactory.cpp,matched,
+??0StringClass@@QAE@H_N@Z,,0x0013A010,43,src/w3d/ffactory.cpp,matched,
+??0StringClass@@QAE@_N@Z,,0x00972B50,42,src/w3d/ffactory.cpp,matched,
 ??0TextureMapperClass@@QAE@ABV0@@Z,,0x00964490,28,src/w3d/mapper.cpp,matched,
 ??0TextureMapperClass@@QAE@I@Z,,0x009645D0,34,src/w3d/mapper.cpp,matched,
 ??0UnicodeString@@QAE@ABV0@@Z,0x00025E28,0x000682C0,19,src/game/unicode_string.cpp,matched,UnicodeString copy constructor
@@ -367,6 +371,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0ZigZagLinearOffsetTextureMapperClass@@QAE@ABV0@@Z,,0x00965500,92,src/w3d/mapper.cpp,matched,
 ??0ZigZagLinearOffsetTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x00965420,209,src/w3d/mapper.cpp,matched,
 ??0ZigZagLinearOffsetTextureMapperClass@@QAE@ABVVector2@@M0I@Z,,0x00965350,166,src/w3d/mapper.cpp,matched,
+??0file_auto_ptr@@QAE@PAVFileFactoryClass@@PBD@Z,,0x009DD4F0,112,src/w3d/ffactory.cpp,matched,
 ??1?$CategoryModuleClass@$00@FXParticleSystem@@MAE@XZ,0x0000a916,0x005d4a50,7,src/game/fx_particle_system_category_accessors.cpp,matched,virtual dtor vtable reset
 ??1?$CategoryModuleClass@$01@FXParticleSystem@@MAE@XZ,0x0001bdfb,0x005d4ab0,7,src/game/fx_particle_system_category_accessors.cpp,matched,virtual dtor vtable reset
 ??1?$CategoryModuleClass@$02@FXParticleSystem@@MAE@XZ,0x000177d8,0x005d4a90,7,src/game/fx_particle_system_category_accessors.cpp,matched,virtual dtor vtable reset
@@ -462,6 +467,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1Region2D@@QAE@XZ,0x000071DF,0x0005C310,1,src/math/region.cpp,matched,empty destructor emits ret
 ??1Region3D@@QAE@XZ,0x00045746,0x0006B0C0,1,src/math/region.cpp,matched,empty destructor emits ret
 ??1RenderObjectUpdateModuleInfo@FXParticleSystem@@UAE@XZ,0x000095F7,0x005D92B0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
+??1SimpleFileFactoryClass@@UAE@XZ,,0x009DD640,86,src/w3d/ffactory.cpp,matched,
 ??1Snapshot@@UAE@XZ,0x00001C80,0x0005C520,7,src/game/snapshot.cpp,matched,sets vtable pointer
 ??1SphereEmissionVolumeInfo@FXParticleSystem@@UAE@XZ,0x00028E9D,0x005D6140,7,src/game/fx_particle_system.cpp,matched,resets vtable pointer
 ??1SphericalEmissionVelocityInfo@FXParticleSystem@@UAE@XZ,0x0001BFDB,0x005D71D0,7,src/game/fx_particle_system.cpp,matched,empty dtor resets to EmissionVelocityInfo vtable
@@ -471,6 +477,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1WindModuleInfo@FXParticleSystem@@UAE@XZ,0x0001B31F,0x005BD960,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??1WindowLayout@@UAE@XZ,,0x00497CC0,14,src/game/window_layout.cpp,matched,virtual dtor; tail-jmps member string dtor
 ??1Xfer@@UAE@XZ,0x00038D2A,0x007E7670,7,src/game/xfer.cpp,matched,destructor
+??1file_auto_ptr@@QAE@XZ,,0x009DD560,14,src/w3d/ffactory.cpp,matched,
 ??4?$CategoryModuleClassBase@$00$00@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0002C499,0x005C12B0,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
 ??4?$CategoryModuleClassBase@$01$00@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x00038D1B,0x005C1330,5,src/game/fx_particle_system.cpp,matched,empty assignment returns this
 ??4?$CategoryModuleClassBase@$02$00@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0003E8FB,0x005C1490,5,src/game/fx_particle_system.cpp,matched,empty base assignment returns this
@@ -734,6 +741,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??H@YA?AVAsciiString@@V0@ABV0@@Z,0x0000FE52,0x000D1860,137,src/game/ascii_string.cpp,matched,AsciiString + AsciiString
 ??H@YA?AVAsciiString@@V0@D@Z,0x000265E4,0x007E8440,119,src/game/ascii_string.cpp,matched,AsciiString + char
 ??H@YA?AVAsciiString@@V0@PBD@Z,0x00006C5D,0x000CD5D0,132,src/game/ascii_string.cpp,matched,AsciiString + const char*
+??H@YA?AVStringClass@@PBDABV0@@Z,,0x009DD800,241,src/w3d/ffactory.cpp,matched,
 ??H@YA?AVVector3@@ABV0@0@Z,,0x001A1BC0,37,src/w3d/gridcull.cpp,matched,
 ??K@YA?AVVector2@@ABV0@M@Z,,0x00703D80,33,src/w3d/mapper.cpp,matched,
 ??K@YA?AVVector3@@ABV0@M@Z,,0x00710D80,47,src/w3d/vector3.cpp,matched,
@@ -758,6 +766,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??YCoord3D@@QAEAAV0@ABUCoord3DBase@@@Z,0x000233EE,0x00148730,33,src/math/coord3d.cpp,matched,adds Coord3DBase
 ??YCoord3D@@QAEAAV0@ABVCoord2D@@@Z,0x000267FB,0x007E5CB0,24,src/math/coord3d.cpp,matched,adds Coord2D x/y
 ??YMatrix4D@@QAEAAV0@ABV0@@Z,0x00008742,0x007E6560,150,src/math/matrix4d.cpp,matched,adds matrix values in place
+??YStringClass@@QAEABV0@ABV0@@Z,,0x0091B7E0,172,src/w3d/ffactory.cpp,matched,
+??YStringClass@@QAEABV0@D@Z,,0x009DD790,107,src/w3d/ffactory.cpp,matched,
+??YStringClass@@QAEABV0@PBD@Z,,0x00907590,127,src/w3d/ffactory.cpp,matched,
 ??YUnicodeString@@QAEAAV0@ABV0@@Z,0x00035229,0x0048F040,63,src/game/unicode_string.cpp,matched,UnicodeString operator+=(const UnicodeString&)
 ??YUnicodeString@@QAEAAV0@G@Z,0x0001CC6A,0x0043CC80,31,src/game/unicode_string.cpp,matched,UnicodeString operator+=(wchar_t)
 ??YUnicodeString@@QAEAAV0@PBG@Z,0x0002D790,0x0049A020,53,src/game/unicode_string.cpp,matched,UnicodeString operator+=(const wchar_t *)
@@ -784,6 +795,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??_GINISection@@UAEPAXI@Z,,0x009E3620,30,src/w3d/ini.cpp,matched,
 ??_GPipe@@UAEPAXI@Z,,0x009E1EC0,30,src/w3d/ini.cpp,matched,
 ??_GRawFileClass@@UAEPAXI@Z,,0x009E7100,30,src/w3d/rawfile.cpp,matched,
+??_GSimpleFileFactoryClass@@UAEPAXI@Z,,0x009DD6A0,30,src/w3d/ffactory.cpp,matched,
 ??_GStraw@@UAEPAXI@Z,,0x00921710,30,src/w3d/ini.cpp,matched,
 ??_GWindowLayout@@UAEPAXI@Z,,0x004706F0,30,src/game/window_layout.cpp,matched,compiler-generated deleting dtor
 ??_H@YGXPAXIHP6EPAX0@Z@Z,,0x0005C600,48,src/w3d/gridcull.cpp,matched,
@@ -808,6 +820,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Add_Tail@GenericList@@QAEXPAVGenericNode@@@Z,,0x009E2A30,78,src/w3d/ini.cpp,matched,
 ?Add_To_Collection@CullSystemClass@@IAEXPAVCullableClass@@@Z,,0x008E21D0,16,src/w3d/cullsys.cpp,matched,
 ?Allocate_Buffer@StringClass@@AAEPADH@Z,,0x009DB750,33,src/w3d/wwstring.cpp,matched,
+?Append_Sub_Directory@SimpleFileFactoryClass@@QAEXPBD@Z,,0x009DDA50,249,src/w3d/ffactory.cpp,matched,
 ?Attach@RawFileClass@@UAEXPAXH@Z,,0x009E7020,84,src/w3d/rawfile.cpp,matched,
 ?Axis_To_Quat@@YA?AVQuaternion@@ABVVector3@@M@Z,,0x008DC3C0,245,src/w3d/quat.cpp,matched,
 ?Base64_Decode@@YAHPBXHPAXH@Z,,0x009EB670,286,src/w3d/base64.cpp,matched,
@@ -994,6 +1007,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_Culling_System@CullableClass@@QBEPAVCullSystemClass@@XZ,,0x008E2250,14,src/w3d/cullsys.cpp,matched,
 ?Get_Date_Time@RawFileClass@@UAEKXZ,,0x009E65E0,162,src/w3d/rawfile.cpp,matched,
 ?Get_Entry@INIClass@@QBEPBDPBDH@Z,,0x009E37B0,70,src/w3d/ini.cpp,matched,
+?Get_File@RawFileFactoryClass@@QAEPAVRawFileClass@@PBD@Z,,0x009DD570,95,src/w3d/ffactory.cpp,matched,
+?Get_File@SimpleFileFactoryClass@@UAEPAVFileClass@@PBD@Z,,0x009DDB50,641,src/w3d/ffactory.cpp,matched,
 ?Get_First_Collected_Object_Internal@CullSystemClass@@IAEPAVCullableClass@@XZ,,0x008E2160,4,src/w3d/cullsys.cpp,matched,
 ?Get_Float@INIClass@@QBEMPBD0M@Z,,0x009E3AB0,130,src/w3d/ini.cpp,matched,
 ?Get_Float@Random4Class@@QAEMXZ,,0x009E6120,30,src/w3d/random.cpp,matched,verbatim Generals WWLib
@@ -1015,6 +1030,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_String@INIClass@@QBEABVStringClass@@AAV2@PBD11@Z,,0x009E3E10,92,src/w3d/ini.cpp,matched,
 ?Get_String@INIClass@@QBEHPBD00PADH@Z,,0x009E3DA0,112,src/w3d/ini.cpp,matched,
 ?Get_String@StringClass@@AAEXH_N@Z,,0x009DB890,352,src/w3d/wwstring.cpp,matched,
+?Get_Sub_Directory@SimpleFileFactoryClass@@QBEXAAVStringClass@@@Z,,0x009DD900,94,src/w3d/ffactory.cpp,matched,
 ?Get_TextBlock@INIClass@@QBEHPBDPADH@Z,,0x009E57C0,192,src/w3d/ini.cpp,matched,
 ?Get_Translation@Matrix3D@@QBE?AVVector3@@XZ,,0x001B4770,24,src/w3d/matrix3d.cpp,matched,
 ?Get_UUBlock@INIClass@@QBEHPBD0PAXH@Z,,0x009E55C0,228,src/w3d/ini.cpp,matched,
@@ -1067,7 +1083,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Is_Available@RawFileClass@@UAE_NH@Z,,0x009E6BF0,176,src/w3d/rawfile.cpp,matched,
 ?Is_Done@GenericMultiListIterator@@QAE_NXZ,,0x006C5200,20,src/w3d/multilist.cpp,matched,
 ?Is_Empty@GenericList@@QBE_NXZ,,0x009E2340,48,src/w3d/ini.cpp,matched,
+?Is_Empty@StringClass@@QBE_NXZ,,0x0090C6D0,19,src/w3d/ffactory.cpp,matched,
 ?Is_Empty@VolumeStruct@GridCullSystemClass@@QBE_NXZ,,0x008DD710,38,src/w3d/gridcull.cpp,matched,
+?Is_Full_Path@@YA_NPBD@Z,,0x009DD5F0,40,src/w3d/ffactory.cpp,matched,
 ?Is_In_List@GenericMultiListClass@@QAE_NPAVMultiListObjectClass@@@Z,,0x009DBD80,38,src/w3d/multilist.cpp,matched,
 ?Is_Loaded@INIClass@@QBE_NXZ,,0x009E24C0,51,src/w3d/ini.cpp,matched,
 ?Is_Open@RawFileClass@@UBE_NXZ,,0x009E6550,12,src/w3d/rawfile.cpp,matched,
@@ -1153,6 +1171,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Plain_Block_Size@PKey@@QBEHXZ,,0x009EA720,17,src/w3d/pk.cpp,matched,
 ?Power@VectorProcessorClass@@SAXPAM0MH@Z,,0x00B00190,56,src/w3d/vp.cpp,matched,
 ?PreStaticInit@Debug@@CAPAV1@XZ,0x00889500,0x00889500,114,src/game/debug.cpp,matched,Debug PreStaticInit singleton allocator
+?Prepend_Sub_Directory@SimpleFileFactoryClass@@QAEXPBD@Z,,0x009DD960,239,src/w3d/ffactory.cpp,matched,
 ?Project_To_Axis@AABoxClass@@QBEMABVVector3@@@Z,,0x008D9900,84,src/w3d/colmathaabox.cpp,matched,
 ?Project_To_Axis@OBBoxClass@@QBEMABVVector3@@@Z,,0x008E2330,190,src/w3d/obbox.cpp,matched,
 ?Put@Base64Pipe@@UAEHPBXH@Z,,0x009E7990,395,src/w3d/b64pipe.cpp,matched,
@@ -1202,6 +1221,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Reset_Collection@CullSystemClass@@QAEXXZ,,0x008E21C0,8,src/w3d/cullsys.cpp,matched,
 ?Reset_Statistics@GridCullSystemClass@@QAEXXZ,,0x008DCC10,30,src/w3d/gridcull.cpp,matched,
 ?Resize@StringClass@@AAEXH@Z,,0x009DB9F0,117,src/w3d/wwstring.cpp,matched,
+?Return_File@RawFileFactoryClass@@QAEXPAVFileClass@@@Z,,0x009DD5D0,23,src/w3d/ffactory.cpp,matched,
+?Return_File@SimpleFileFactoryClass@@UAEXPAVFileClass@@@Z,,0x009DD620,23,src/w3d/ffactory.cpp,matched,
 ?Rotate@Coord2D@@QAEAAV1@AAV1@MM@Z,0x00023772,0x007E5BD0,44,src/math/coord2d.cpp,matched,rotates source by sine/cosine into this
 ?Rotate@Coord2D@@QAEAAV1@ABV1@M@Z,0x0002F1E9,0x007E5B80,61,src/math/coord2d.cpp,matched,rotates source by angle
 ?Rotate@Coord2D@@QAEAAV1@M@Z,0x0001ac94,0x004afaa0,76,src/math/coord2d.cpp,matched,
@@ -1269,6 +1290,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Set_Rotation@Matrix3D@@QAEXABVQuaternion@@@Z,,0x008D67B0,205,src/w3d/matrix3d.cpp,matched,
 ?Set_Size@ChunkHeader@@QAEXK@Z,,0x009E11F0,23,src/w3d/chunkio.cpp,matched,
 ?Set_Sub_Chunk_Flag@ChunkHeader@@QAEX_N@Z,,0x009E1220,33,src/w3d/chunkio.cpp,matched,
+?Set_Sub_Directory@SimpleFileFactoryClass@@QAEXPBD@Z,,0x009DD730,94,src/w3d/ffactory.cpp,matched,
 ?Set_Translation@Matrix3D@@QAEXABVVector3@@@Z,,0x001B47B0,24,src/w3d/matrix3d.cpp,matched,
 ?Shutdown@INIClass@@AAEXXZ,,0x009E36B0,74,src/w3d/ini.cpp,matched,
 ?Shutdown@WWMath@@SAXXZ,,0x008D8DF0,1,src/w3d/wwmath.cpp,matched,BFME drift: empty body (LookupTableMgr call dropped) -> lone ret; addr inferred from WWMath cluster adjacency to Random_Float/Init

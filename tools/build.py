@@ -292,7 +292,7 @@ def build_call_thunks():
     data = EXE.read_bytes()
     text = next(section for section in pe_sections(data) if section["name"] == ".text")
     lo, size, raw = text["rva"], text["size"], text["raw_pointer"]
-    body_to_thunk = {}
+    body_to_thunks = {}
     pos, end = raw, raw + size - 5
     while True:
         pos = data.find(b"\xe9", pos, end)
@@ -301,9 +301,11 @@ def build_call_thunks():
         thunk_rva = (pos - raw) + lo
         target = thunk_rva + 5 + struct.unpack_from("<i", data, pos + 1)[0]
         if lo <= target < lo + size:
-            body_to_thunk.setdefault(target, thunk_rva)
+            # incremental linking creates one thunk block per re-link; a body can
+            # have several thunks and different call sites use different ones
+            body_to_thunks.setdefault(target, []).append(thunk_rva)
         pos += 1
-    return body_to_thunk
+    return body_to_thunks
 
 
 def load_symbol_map():
@@ -314,17 +316,22 @@ def load_symbol_map():
     # function maps to [thunk, body] and the comparison picks whichever the target
     # actually used; anything else still fails the byte comparison loudly.
     # reverse/symbols.csv holds callees we do not own source for yet (CRT helpers
-    # like __ftol2) at their exact call-target address.
+    # like __ftol2) at their exact call-target address, plus specific incremental-
+    # link thunks build_call_thunks does not auto-discover. It is ADDITIVE: each
+    # pinned address becomes one more candidate, so a matched name and a hand-pinned
+    # thunk for the same name coexist and each call site picks whichever it encodes.
     thunks = build_call_thunks()
     symbol_map = {}
     for row in load_all_function_rows():
         body = int(row["target_rva"], 16)
-        thunk = thunks.get(body)
-        symbol_map[row["name"]] = [thunk, body] if thunk is not None else [body]
+        symbol_map[row["name"]] = thunks.get(body, []) + [body]
     if SYMBOLS.exists():
         with SYMBOLS.open("r", encoding="utf-8", newline="") as handle:
             for row in csv.DictReader(handle):
-                symbol_map[row["name"]] = [int(row["address"], 16)]
+                address = int(row["address"], 16)
+                candidates = symbol_map.setdefault(row["name"], [])
+                if address not in candidates:
+                    candidates.append(address)
     return symbol_map
 
 

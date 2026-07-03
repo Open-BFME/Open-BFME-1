@@ -69,6 +69,7 @@ class StringClass
 public:
 
 	StringClass (bool hint_temporary);
+	StringClass (int initial_len = 0, bool hint_temporary = false);
 	StringClass (const StringClass &string, bool hint_temporary = false);
 	StringClass (const TCHAR *string, bool hint_temporary = false);
 	~StringClass (void);
@@ -192,6 +193,26 @@ inline
 StringClass::operator const TCHAR * (void) const
 {
 	return m_Buffer;
+}
+
+///////////////////////////////////////////////////////////////////
+//	operator[]
+///////////////////////////////////////////////////////////////////
+inline const TCHAR &
+StringClass::operator[] (int index) const
+{
+	WWASSERT (index >= 0 && index < Get_Length ());
+	return m_Buffer[index];
+}
+
+///////////////////////////////////////////////////////////////////
+//	operator[]
+///////////////////////////////////////////////////////////////////
+inline TCHAR &
+StringClass::operator[] (int index)
+{
+	WWASSERT (index >= 0 && index < Get_Length ());
+	return m_Buffer[index];
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -368,6 +389,19 @@ StringClass::StringClass (bool hint_temporary)
 	:	m_Buffer (m_EmptyString)
 {
 	Get_String (MAX_TEMP_LEN, hint_temporary);
+	m_Buffer[0]	= m_NullChar;
+
+	return ;
+}
+
+///////////////////////////////////////////////////////////////////
+//	StringClass
+///////////////////////////////////////////////////////////////////
+inline
+StringClass::StringClass (int initial_len, bool hint_temporary)
+	:	m_Buffer (m_EmptyString)
+{
+	Get_String (initial_len, hint_temporary);
 	m_Buffer[0]	= m_NullChar;
 
 	return ;

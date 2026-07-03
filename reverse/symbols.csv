@@ -3,21 +3,26 @@ name,address,notes
 ??0Buffer@@QAE@PAXJ@Z,0x009E1CE0,Buffer::Buffer(void*, long)
 ??0BufferPipe@@QAE@PAXH@Z,0x009E2010
 ??0BufferStraw@@QAE@PBXH@Z,0x00921730
+??0CriticalSectionClass@@QAE@XZ,0x009DB420
 ??0CullSystemClass@@QAE@XZ,0x008E2140
 ??0GameMessage@@QAE@W4Type@0@@Z,0x000359E5,GameMessage::GameMessage(Type) thunk
 ??0GameMessageParser@@QAE@XZ,0x00013FCA,GameMessageParser::GameMessageParser() thunk
+??0LockClass@CriticalSectionClass@@QAE@AAV1@@Z,0x009DB4B0
 ??0file_auto_ptr@@QAE@PAVFileFactoryClass@@PBD@Z,0x009DD4F0
 ??1Buffer@@QAE@XZ,0x009E1E60
 ??1BufferStraw@@UAE@XZ,0x00921790
+??1CriticalSectionClass@@QAE@XZ,0x009DB450
 ??1CullSystemClass@@UAE@XZ,0x008E2150
 ??1FilePipe@@UAE@XZ,0x009E7DC0
 ??1FileStraw@@UAE@XZ,0x009E1C50
 ??1LayoutFilename@@QAE@XZ,0x00887940
+??1LockClass@CriticalSectionClass@@QAE@XZ,0x009DB4D0
 ??1Pipe@@UAE@XZ,0x009E78C0
 ??1Straw@@UAE@XZ,0x009E1A90
 ??1file_auto_ptr@@QAE@XZ,0x009DD560
 ??2@YAPAXI@Z,0x00881F30,operator new body
 ??3@YAXPAX@Z,0x00881EB0
+??4StringClass@@QAEABV0@ABV0@@Z,0x00035FDF
 ??AModuleTemplateMap@ModuleFactory@@QAEAAVModuleTemplate@1@ABH@Z,0x0002047D,ModuleFactory::ModuleTemplateMap::operator[] thunk (body 0x001296E0)
 ??_U@YAPAXI@Z,0x00881F30
 ??_V@YAXPAX@Z,0x00881EB0

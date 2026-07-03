@@ -115,8 +115,10 @@ def main():
     with (build.ROOT / "reverse" / "ghidra_functions.csv").open(newline="") as handle:
         for row in csv.DictReader(handle):
             ghidra[int(row["rva"], 16)] = int(row["size"])
-    body_to_thunk = build.build_call_thunks()
-    known_starts = set(ghidra) | set(body_to_thunk) | set(body_to_thunk.values())
+    body_to_thunks = build.build_call_thunks()  # body -> [incremental-link thunks]
+    known_starts = set(ghidra) | set(body_to_thunks) | {
+        thunk for thunks in body_to_thunks.values() for thunk in thunks
+    }
 
     export_body = {}
     export_rva = {}
@@ -154,9 +156,7 @@ def main():
         if sym in accepted_addr:
             body = accepted_addr[sym]
             addresses.add(body)
-            thunk = body_to_thunk.get(body)
-            if thunk is not None:
-                addresses.add(thunk)
+            addresses.update(body_to_thunks.get(body, []))
         return addresses or None
 
     for name, span, relocs in object_functions(obj):
@@ -275,9 +275,7 @@ def main():
         expanded = set(known_starts)
         for body in accepted_addr.values():
             expanded.add(body)
-            thunk = body_to_thunk.get(body)
-            if thunk is not None:
-                expanded.add(thunk)
+            expanded.update(body_to_thunks.get(body, []))
         for entry in list(deferred):
             name, size, rel32, hits = entry
             validated = validate_hits(hits, rel32, size, expanded)
