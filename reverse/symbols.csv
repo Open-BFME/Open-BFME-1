@@ -97,6 +97,7 @@ name,address,notes
 ?winSetLayout@GameWindow@@QAEHPAVWindowLayout@@@Z,0x00031881
 ?winSetNextInLayout@GameWindow@@QAEHPAV1@@Z,0x00035CF6
 ?winSetPrevInLayout@GameWindow@@QAEHPAV1@@Z,0x00015FB4
+?xferRandomVariable@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0003EE32,H1 GameClientRandomVariable xfer helper (thunk; body 0x0010C4D0) — pinned, ideally matched in game_client_random_variable.cpp
 _D3DXMatrixInverse@12,0x009FB321
 _XMP_Fetch_Prime_Size,0x009E8140
 _XMP_Fetch_Prime_Table,0x009E8130
