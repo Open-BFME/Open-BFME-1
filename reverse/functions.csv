@@ -1381,6 +1381,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?clamp_indices_to_grid@GridCullSystemClass@@IAEXPAH00@Z,,0x008DCE70,82,src/w3d/gridcull.cpp,matched,
 ?clear@?$StringBase@D@@QAEXXZ,0x00041A38,0x000680C0,5,src/game/string_base.cpp,matched,clears string by releasing buffer; size trimmed: trailing int3 padding
 ?clear@?$StringBase@G@@QAEXXZ,0x00024C85,0x00068090,5,src/game/string_base.cpp,matched,clears wide string by releasing buffer; size trimmed: trailing int3 padding
+?closeWindows@GameLogic@@QAEXXZ,,0x00396950,294,src/game/game_logic_dispatch.cpp,unmatched,structure reconstructed; blocked on /O2 register-coloring (ebp/edi eager-save + cache-0-in-ebx 2nd half)
 ?collect_objects_in_leaf@GridCullSystemClass@@IAEXABVAABoxClass@@PAVCullableClass@@@Z,,0x008DDD60,188,src/w3d/gridcull.cpp,matched,
 ?collect_objects_in_leaf@GridCullSystemClass@@IAEXABVFrustumClass@@PAVCullableClass@@@Z,,0x008DDE60,63,src/w3d/gridcull.cpp,matched,
 ?collect_objects_in_leaf@GridCullSystemClass@@IAEXABVOBBoxClass@@PAVCullableClass@@@Z,,0x008DDE20,63,src/w3d/gridcull.cpp,matched,
