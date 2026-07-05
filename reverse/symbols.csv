@@ -18,6 +18,8 @@ name,address,notes
 ??1LayoutFilename@@QAE@XZ,0x00887940
 ??1LockClass@CriticalSectionClass@@QAE@XZ,0x009DB4D0
 ??1Pipe@@UAE@XZ,0x009E78C0
+??1RenderObjClass@@UAE@XZ,0x0091FC10,base dtor; derived from ~ParticleBufferClass call site
+??1SegLineRendererClass@@QAE@XZ,0x00960030,derived from ~ParticleBufferClass call site
 ??1Straw@@UAE@XZ,0x009E1A90
 ??1file_auto_ptr@@QAE@XZ,0x009DD560
 ??2@YAPAXI@Z,0x00881F30,operator new body
@@ -25,7 +27,9 @@ name,address,notes
 ??4StringClass@@QAEABV0@ABV0@@Z,0x00035FDF
 ??AModuleTemplateMap@ModuleFactory@@QAEAAVModuleTemplate@1@ABH@Z,0x0002047D,ModuleFactory::ModuleTemplateMap::operator[] thunk (body 0x001296E0)
 ??_U@YAPAXI@Z,0x00881F30
+??_U@YAPAXI@Z,0x00881F70,array operator new flag-2 variant (W3D containers); flag-1 at 0x881F30
 ??_V@YAXPAX@Z,0x00881EB0
+??_V@YAXPAX@Z,0x00881EF0,array operator delete flag-2 variant (W3D containers); flag-1 at 0x881EB0
 ?Add_To_Collection@CullSystemClass@@IAEXPAVCullableClass@@@Z,0x008E21D0
 ?Allocate_Object_Memory@?$ObjectPoolClass@VGridLinkClass@@$0BAA@@@QAEPAVGridLinkClass@@XZ,0x008DD970
 ?Allocate_Object_Memory@?$ObjectPoolClass@VMultiListNodeClass@@$0BAA@@@QAEPAVMultiListNodeClass@@XZ,0x009DBDD0
@@ -115,3 +119,20 @@ __stringbase_isnotnone_cmp_wchar,0x0041F3D,internal wide-char string not-none co
 _atexit,0x009F6E26,CRT atexit (registers static destructors)
 _bfme_acos,0x009F7256,internal acos helper called by ACos
 _bfme_asin,0x009F7D86,internal asin helper called by ASin
+??0ParticleBufferClass@@QAE@ABV0@@Z,0x00989A20
+?Add_To_Static_Sort_List@WW3D@@SAXPAVRenderObjClass@@I@Z,0x008FD4C0
+?Find_POT@@YAHH@Z,0x00AFFAB0
+?Get_New_Particles@ParticleBufferClass@@IAEXXZ,0x00987C60
+?Get_Shader@LineGroupClass@@QAE?AVShaderClass@@XZ,0x0098ED00
+?Get_Shader@PointGroupClass@@QAE?AVShaderClass@@XZ,0x00912870
+?Guess_Sort_Level@ShaderClass@@QBEHXZ,0x00910E90
+?Render_Line@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z,0x0098AD00
+?Render_Line_Group@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z,0x0098B950
+?Render_Particles@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z,0x0098B800
+?Scale@SegLineRendererClass@@QAEXM@Z,0x0095FF30
+?Set_Texture@LineGroupClass@@QAEXPAVTextureClass@@@Z,0x0098EC80
+?Set_Texture@PointGroupClass@@QAEXPAVTextureClass@@@Z,0x009127F0
+?Set_Texture@SegLineRendererClass@@QAEXPAVTextureClass@@@Z,0x00960050
+?Update_Bounding_Box@ParticleBufferClass@@IAEXXZ,0x0098B460
+?Update_Non_New_Particles@ParticleBufferClass@@IAEXI@Z,0x00988060
+?Update_Visual_Particle_State@ParticleBufferClass@@IAEXXZ,0x00986FC0

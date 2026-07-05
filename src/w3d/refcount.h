@@ -77,7 +77,9 @@ struct ActiveRefStruct
 ** point it at the new object, and add-ref the new object (if its not null...)
 */
 #define REF_PTR_SET(dst,src)	{ if (src) (src)->Add_Ref(); if (dst) (dst)->Release_Ref(); (dst) = (src); }
-#define REF_PTR_RELEASE(x)		{ if (x) x->Release_Ref(); x = NULL; }
+// BFME drift: retail's release sequence stores NULL inside the if (the null
+// path skips the store) — verified against ~ParticleBufferClass at 0x984730.
+#define REF_PTR_RELEASE(x)		{ if (x) { x->Release_Ref(); x = NULL; } }
 
 
 /*
@@ -143,7 +145,10 @@ public:
 	** Release_Ref, call this function when you no longer need the pointer
 	** to this object.
 	*/
-	virtual void		Release_Ref(void)							{ 
+	// BFME drift: Release_Ref is NOT virtual in retail — call sites fully inline
+	// the dec/test/Delete_This sequence, and Delete_This sits at vtable slot 0
+	// (verified against ~ParticleBufferClass at 0x984730).
+	void					Release_Ref(void)							{ 
 																				#ifndef NDEBUG
 																				Dec_Total_Refs(this);
 																				#endif

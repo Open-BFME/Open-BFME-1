@@ -171,7 +171,12 @@ def main():
                 # force emission/instantiation of other matched functions; the retail
                 # binary dead-stripped it, so there is no address for a CSV row.
                 parts = symbol_name.split()
-                if len(parts) == 2 and parts[1] == "absent-from-retail":
+                if len(parts) >= 2 and parts[1] in ("absent-from-retail", "present-unmatched"):
+                    # absent-from-retail: definition kept only to force emission of
+                    # matched siblings; the retail binary dead-stripped it.
+                    # present-unmatched: the function exists in retail but its bytes
+                    # or address are not yet pinned; kept because trimming it would
+                    # change inlining of matched functions in this TU.
                     continue
                 if symbol_name in declared:
                     continue
