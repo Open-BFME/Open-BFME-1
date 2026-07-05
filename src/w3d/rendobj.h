@@ -462,6 +462,12 @@ public:
    virtual void					Set_Sort_Level(int level)													{ }
 	
 	virtual int						Is_Really_Visible(void)														{ return ((Bits & IS_REALLY_VISIBLE) == IS_REALLY_VISIBLE); }
+	// BFME drift: retail's vtable has two extra virtuals in this region —
+	// Prepare_LOD at 0x984E60 dispatches Is_Not_Hidden_At_All via slot +0x180
+	// where this reconstruction had +0x178. Identities unknown; placement is
+	// pinned only to "before Is_Not_Hidden_At_All" so far.
+	virtual void					_BFME_Unknown_Virtual_1(void)												{ }
+	virtual void					_BFME_Unknown_Virtual_2(void)												{ }
 	virtual int						Is_Not_Hidden_At_All(void)													{ return ((Bits & IS_NOT_HIDDEN_AT_ALL) == IS_NOT_HIDDEN_AT_ALL); }
 	virtual int						Is_Visible(void) const														{ return (Bits & IS_VISIBLE); }
   virtual void					Set_Visible(int onoff)														{ if (onoff) { Bits |= IS_VISIBLE; } else { Bits &= ~IS_VISIBLE; } }

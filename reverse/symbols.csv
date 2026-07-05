@@ -53,10 +53,12 @@ name,address,notes
 ?Get_First_Collected_Object_Internal@CullSystemClass@@IAEPAVCullableClass@@XZ,0x008E2160
 ?Get_New_Particles@ParticleBufferClass@@IAEXXZ,0x00987C60
 ?Get_Next_Collected_Object_Internal@CullSystemClass@@IAEPAVCullableClass@@PAV2@@Z,0x008E2170
+?Get_Position@RenderObjClass@@QBE?AVVector3@@XZ,0x009202C0,derived from part_buf matched-caller call sites
 ?Get_Shader@LineGroupClass@@QAE?AVShaderClass@@XZ,0x0098ED00
 ?Get_Shader@PointGroupClass@@QAE?AVShaderClass@@XZ,0x00912870
 ?Get_String@INIClass@@QBEHPBD00PADH@Z,0x009E3DA0
 ?Get_String@StringClass@@AAEXH_N@Z,0x009DB890
+?Get_View_Plane@CameraClass@@QBEXAAVVector2@@0@Z,0x00931DC0,derived from part_buf matched-caller call sites
 ?Guess_Sort_Level@ShaderClass@@QBEHXZ,0x00910E90
 ?HideDiplomacy@@YAXXZ,0x000067BC
 ?HideInGameChat@@YAXXZ,0x00019583
