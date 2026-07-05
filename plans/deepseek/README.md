@@ -35,6 +35,18 @@ is the only judge. What you may NOT do is anything in "Hard rules" below.
 - **Use the `GeneralsMD/` (Zero Hour) reference variant first.** BFME tracks it, not
   base `Generals/`. If a class is 12 bytes too small or a member is missing, you're
   probably on the wrong variant.
+- **BFME's RenderObjClass hierarchy (WW3D2) has pinned drift — trust the local
+  headers.** `src/w3d/rendobj.h` / `refcount.h` / `part_buf.h` already encode it:
+  PersistClass is DROPPED from RenderObjClass's bases, the base carries a 0x34-byte
+  pad of unknown members, `RefCountClass::Release_Ref` is NON-virtual (call sites
+  inline dec/test/Delete_This; Delete_This is vtable slot 0), and REF_PTR_RELEASE
+  stores NULL inside the if. If a renderobj-derived port mismatches on member
+  offsets or an extra vtable-pointer store, you are using a reference header where
+  a local pinned one exists — prefer the local. Useful pinned addresses:
+  `~RenderObjClass` = 0x0091FC10 (already in symbols.csv).
+- **`// ?<name> present-unmatched` marker**: for a definition that exists in retail
+  but isn't byte-pinned yet, kept because trimming would change inlining of matched
+  functions. Use it instead of fake CSV rows (see src/w3d/part_buf.cpp).
 - **`W3DMPO` does not exist in BFME.** In WW3D2 classes, delete `public W3DMPO,` and
   every `W3DMPO_GLUE(...)` line → single-vtable `RefCountClass` bases. Otherwise
   layout is off by a vtable pointer and nothing matches.
