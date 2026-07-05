@@ -858,7 +858,6 @@ void ParticleBufferClass::Render(RenderInfoClass & rinfo)
 	}
 }
 
-// ?ParticleBufferClass::Generate_APT present-unmatched
 void ParticleBufferClass::Generate_APT(ShareBufferClass <unsigned int> **apt,unsigned int &active_point_count)
 {
 	if (NonNewNum < (int)MaxNum || DecimationThreshold > 0) {
@@ -2545,7 +2544,6 @@ void ParticleBufferClass::Update_Kinematic_Particle_State(void)
 }
 
 
-// ?ParticleBufferClass::Update_Visual_Particle_State present-unmatched
 void ParticleBufferClass::Update_Visual_Particle_State(void)
 {
 	// NOTE: The visual state (color/alpha/size) is "stateless" in that each time it is calculated
@@ -2801,7 +2799,6 @@ void ParticleBufferClass::Update_Visual_Particle_State(void)
 }
 
 
-// ?ParticleBufferClass::Update_Bounding_Box present-unmatched
 void ParticleBufferClass::Update_Bounding_Box(void)
 {
 	// Ensure all particle positions are updated. If bounding box still not
@@ -2872,7 +2869,6 @@ void ParticleBufferClass::Update_Bounding_Box(void)
 // particles (including possibly other new particles) so that the newest
 // particles are preserved. The particles are initialized to their state at
 // the end of the current interval.
-// ?ParticleBufferClass::Get_New_Particles present-unmatched
 void ParticleBufferClass::Get_New_Particles(void)
 {
 	unsigned int current_time = WW3D::Get_Sync_Time();
@@ -2994,7 +2990,6 @@ void ParticleBufferClass::Kill_Old_Particles(void)
 }
 
 
-// ?ParticleBufferClass::Update_Non_New_Particles present-unmatched
 void ParticleBufferClass::Update_Non_New_Particles(unsigned int elapsed)
 {
 	// In the general case, a range in a circular buffer can be composed of up

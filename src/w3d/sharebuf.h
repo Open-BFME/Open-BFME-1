@@ -76,9 +76,9 @@ class ShareBufferClass : public RefCountClass
 
 	protected:
 
-#if (defined(_DEBUG) || defined(_INTERNAL)) 
+		// BFME drift: retail keeps the Msg member in release builds too — the
+		// buffer pointer reads at [this+0xC] in Get_New_Particles at 0x987C60.
 		const char* Msg;
-#endif
 		T *			Array;
 		int			Count;
 
