@@ -77,6 +77,7 @@ name,address,notes
 ?Raw_Seek@RawFileClass@@IAEHHH@Z,0x009E6910
 ?Read@ChunkLoadClass@@QAEKPAXK@Z,0x009E15C0
 ?ReleaseWindowLayout@@YAXPAVWindowLayout@@@Z,0x00049AD0
+?Release_Ref@RefCountClass@@QAEXXZ,0x009EB7A0,out-of-line body; call sites usually inline the dec/test instead
 ?Remove_Index@?$IndexClass@HPAUINIEntry@@@@QAE_NABH@Z,0x009E26A0
 ?Remove_Index@?$IndexClass@HPAUINISection@@@@QAE_NABH@Z,0x009E2730
 ?Render@LineGroupClass@@QAEXAAVRenderInfoClass@@@Z,0x0098ED30

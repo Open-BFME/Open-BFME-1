@@ -925,7 +925,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Delete@RawFileClass@@UAEHXZ,,0x009E68B0,92,src/w3d/rawfile.cpp,matched,
 ?Detach@RawFileClass@@UAEXXZ,,0x009E6700,26,src/w3d/rawfile.cpp,matched,
 ?Determinant@Matrix4D@@QBEMXZ,0x0002912c,0x007e63e0,188,src/math/matrix4d.cpp,matched,
-?Determine_Tail_Diffuse@ParticleBufferClass@@IAE?AW4TailDiffuseTypeEnum@1@XZ,,0x0098B750,170,src/w3d/part_buf.cpp,unmatched,mismatch at +0x0; needs LineGroup/PointGroup/SegLine Get_Texture pins + pairing recheck
+?Determine_Tail_Diffuse@ParticleBufferClass@@IAE?AW4TailDiffuseTypeEnum@1@XZ,,0x0098B750,170,src/w3d/part_buf.cpp,unmatched,"decoded: BFME Get_Texture@0x988F60 + Get_Shader@0x988FD0 take out-params (lea local; push; call), Release_Ref out-of-line @0x9EB7A0; blend logic: dst==2->1; b14-15==1&&dst==1->0; dst==3->0; b14-15==2&&dst==5->3; else (b18-19==1)?2:3"
 ?Distance@Vector3@@SAMABV1@0@Z,,0x006DFAD0,65,src/w3d/vector3.cpp,matched,
 ?DoXfer@ButterflyDrawModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z,0x0003967B,0x5f0c70,27,src/game/fx_particle_system_bulk.cpp,matched,
 ?DoXfer@DefaultAlphaModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z,0x0002EE88,0x5ee540,74,src/game/fx_particle_system_bulk.cpp,matched,
