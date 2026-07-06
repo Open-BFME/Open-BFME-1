@@ -32,6 +32,9 @@ inline NUM sqr(NUM x)
 }
 
 template <typename NUM>
+inline NUM clamp(NUM lo, NUM val, NUM hi) { if (val < lo) return lo; else if (val > hi) return hi; else return val; }
+
+template <typename NUM>
 inline int sign(NUM x) { if (x > 0) return 1; else if (x < 0) return -1; else return 0; }
 
 typedef float Real;
@@ -41,6 +44,7 @@ typedef short Short;
 typedef unsigned short UnsignedShort;
 typedef char Byte;
 typedef unsigned char UnsignedByte;
+typedef unsigned char XferVersion;
 typedef bool Bool;
 
 // Fast float helpers + REAL_TO_INT — verbatim from Lib/BaseType.h (inline, header-

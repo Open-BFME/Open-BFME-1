@@ -72,4 +72,18 @@ public:
 
     virtual void ReservedVirtual4();                                // slot 36
     virtual Xfer &XferEnum(const char *name, void *data, unsigned int size); // slot 37
+
+public:
+    // Stubs so Xfer-using .cpp files compile; the xfer() methods that call these
+    // won't byte-match (they'd need the real slot mapping — see game-file-recipe),
+    // but a file's NON-xfer functions (e.g. geometry math) place fine.
+    void xferVersion(unsigned char*, unsigned char);
+    void xferInt(int*);
+    void xferReal(float*);
+    void xferUser(void*, int);
+    void xferAsciiString(AsciiString*);
+    void xferUnsignedInt(unsigned int*);
+    void xferByte(char*);
+    void xferBool(bool*);
+    void xferCoord3D(void*) {}
 };
