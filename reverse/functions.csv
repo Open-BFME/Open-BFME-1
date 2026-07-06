@@ -948,6 +948,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Clear@?$ShareBufferClass@VVector3i16@@@@QAEXXZ,,0x00923D50,32,src/w3d/meshgeometry.cpp,matched,
 ?Clear@INIClass@@QAE_NPBD0@Z,,0x009E3890,209,src/w3d/ini.cpp,matched,
 ?Clear@VectorProcessorClass@@SAXPAVVector3@@H@Z,,0x00B00000,37,src/w3d/vp.cpp,matched,
+?Clip@VisPolyClass@@QBEXABVPlaneClass@@AAV1@@Z,,0x007020A0,475,src/w3d/visrasterizer.cpp,matched,
 ?Clone@BumpEnvTextureMapperClass@@UBEPAVTextureMapperClass@@XZ,,0x0096A500,71,src/w3d/mapper.cpp,matched,
 ?Clone@EdgeMapperClass@@UBEPAVTextureMapperClass@@XZ,,0x00966410,31,src/w3d/mapper.cpp,matched,
 ?Clone@GridTextureMapperClass@@UBEPAVTextureMapperClass@@XZ,,0x0096A4E0,31,src/w3d/mapper.cpp,matched,
@@ -983,6 +984,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Combine_Color_And_Alpha@ParticleBufferClass@@IAEXXZ,,0x00984CB0,357,src/w3d/part_buf.cpp,matched,
 ?Combo_Update@Animatable3DObjClass@@IAEXABVMatrix3D@@PAVHAnimComboClass@@@Z,,0x00981EC0,39,src/w3d/animobj.cpp,matched,
 ?Compute_Axis_Aligned_Extent@OBBoxClass@@QBEXPAVVector3@@@Z,,0x008DCD20,225,src/w3d/gridcull.cpp,matched,
+?Compute_Intersection@PlaneClass@@QBE_NABVVector3@@0PAM@Z,,0x001A1CF0,130,src/w3d/visrasterizer.cpp,matched,
+?Compute_Normal@TriClass@@QAEXXZ,,0x006CB2B0,189,src/w3d/aabtree.cpp,matched,
 ?Compute_Point@LineSegClass@@QBEXMPAVVector3@@@Z,,0x00711EE0,60,src/w3d/rendobj.cpp,matched,
 ?Compute_Point@OBBoxClass@@QBEXQAMPAVVector3@@@Z,,0x008E2960,189,src/w3d/colmathobbobb.cpp,matched,
 ?Contains@AABoxClass@@QBE_NABVVector3@@@Z,,0x008DDA80,139,src/w3d/gridcull.cpp,matched,
@@ -1012,6 +1015,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?CrossProduct@Coord3D@@QAEAAV1@ABUCoord3DBase@@0@Z,0x00022557,0x00232100,61,src/math/coord3d.cpp,matched,
 ?Cross_Product@Vector3@@SAXABV1@0PAV1@@Z,,0x001A1CA0,59,src/w3d/colmathobbobb.cpp,matched,
 ?Crypt_Block_Size@PKey@@QBEHXZ,,0x009EA740,18,src/w3d/pk.cpp,matched,
+?Cull@OBBoxIntersectionTestClass@@QAE_NABVVector3@@0@Z,,0x0096A700,159,src/w3d/aabtree.cpp,matched,
+?Cull@RayCollisionTestClass@@QAE_NABVVector3@@0@Z,,0x0096AC80,31,src/w3d/aabtree.cpp,matched,
 ?DERDecode@?$Int@$0EA@@@QAEXPBE@Z,,0x009EA790,19,src/w3d/pk.cpp,matched,ghidra-unknown callee + identical DEREncode wrapper; disambiguated by call target; build.sh exact
 ?DEREncode@?$Int@$0EA@@@QBEHPAE@Z,,0x009E21F0,19,src/w3d/pk.cpp,matched,ghidra-unknown callee + identical DERDecode wrapper; disambiguated by call target; build.sh exact
 ?Decode@@YAXPAKPAEI@Z,,0x0086A470,57,src/w3d/md5.cpp,matched,
@@ -1251,6 +1256,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?ID@?$VectorClass@VVector2@@@@UAEHABVVector2@@@Z,,0x009135B0,101,src/w3d/pointgr.cpp,matched,
 ?ID@?$VectorClass@VVector3@@@@UAEHABVVector3@@@Z,,0x007B9FC0,98,src/w3d/pointgr.cpp,matched,
 ?ID@?$VectorClass@VVector4@@@@UAEHABVVector4@@@Z,,0x00913090,113,src/w3d/pointgr.cpp,matched,
+?In_Front@PlaneClass@@QBE_NABVVector3@@@Z,,0x00701F70,47,src/w3d/visrasterizer.cpp,matched,
 ?Increase_Table_Size@?$IndexClass@HPAUINIEntry@@@@AAE_NH@Z,,0x009E2820,217,src/w3d/ini.cpp,matched,IndexClass sibling
 ?Increase_Table_Size@?$IndexClass@HPAUINISection@@@@AAE_NH@Z,,0x009E2950,217,src/w3d/ini.cpp,matched,IndexClass sibling
 ?Increment@?$RemainderTable@V?$Int@$0EA@@@@@QAEXG@Z,,0x009EA980,104,src/w3d/pk.cpp,matched,
@@ -1398,6 +1404,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVPlaneClass@@ABVTriClass@@@Z,,0x008E1EA0,97,src/w3d/colmathplane.cpp,matched,
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVPlaneClass@@ABVVector3@@@Z,,0x008DB1F0,82,src/w3d/colmathplane.cpp,matched,
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVSphereClass@@ABVAABoxClass@@@Z,,0x008E2310,27,src/w3d/colmathsphere.cpp,matched,
+?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVVector3@@0ABVLineSegClass@@@Z,,0x0096A830,174,src/w3d/aabtree.cpp,matched,
 ?Peek_First_Collected_Object_Internal@CullSystemClass@@IAEPAVCullableClass@@XZ,,0x008E2190,4,src/w3d/cullsys.cpp,matched,
 ?Peek_Next_Collected_Object_Internal@CullSystemClass@@IAEPAVCullableClass@@PAV2@@Z,,0x008E21A0,19,src/w3d/cullsys.cpp,matched,
 ?Plain_Block_Size@PKey@@QBEHXZ,,0x009EA720,17,src/w3d/pk.cpp,matched,
