@@ -209,19 +209,55 @@ def wine_path(path):
     return subprocess.check_output([winepath, "-w", str(path)], text=True).strip()
 
 
-def compiler_environment(root):
+def stlport_include_dir():
+    """Directory of STLport 4.5.3 headers, or None. The game linked STLport, so
+    files using std:: containers must compile against it to byte-match (MSVC's own
+    STL emits different code). Prefer a vendored copy; fall back to an env var."""
+    candidates = [ROOT / "vendor" / "stlport"]
+    env_root = os.environ.get("STLPORT_ROOT")
+    if env_root:
+        candidates.append(Path(env_root))
+    for path in candidates:
+        if (path / "list").exists():
+            return path
+    return None
+
+
+def source_needs_stlport(source):
+    """A source declares it needs STLport with a `// stlport` line near the top.
+    STLport shadows standard headers (<cmath>, <cstring>, ...), so it must be
+    opt-in per file — never on the global include path for STL-free matched files."""
+    if source is None:
+        return False
+    try:
+        with Path(source).open("r", encoding="utf-8", errors="replace") as handle:
+            head = handle.read(2048)
+    except OSError:
+        return False
+    return "// stlport" in head
+
+
+def compiler_environment(root, source=None):
     env = os.environ.copy()
     bin_dir = root / "Vc7" / "bin"
     ide_dir = root / "Common7" / "IDE"
     base_dir = root.parents[1]
 
+    stlport = stlport_include_dir() if source_needs_stlport(source) else None
+
     if os.name == "nt":
-        env["INCLUDE"] = str(root / "Vc7" / "include")
+        include = str(root / "Vc7" / "include")
+        if stlport:
+            include = str(stlport) + os.pathsep + include
+        env["INCLUDE"] = include
         env["LIB"] = str(root / "Vc7" / "lib")
         env["PATH"] = os.pathsep.join([str(bin_dir), str(ide_dir), env.get("PATH", "")])
         return env
 
-    env["INCLUDE"] = wine_path(root / "Vc7" / "include")
+    include = wine_path(root / "Vc7" / "include")
+    if stlport:
+        include = wine_path(stlport) + ";" + include
+    env["INCLUDE"] = include
     env["LIB"] = wine_path(root / "Vc7" / "lib")
     env["WINEPATH"] = ";".join(
         path
@@ -268,7 +304,7 @@ def compiler_command(source, output):
         f"/Fo{output_arg}",
         source_arg,
     ]
-    return command, compiler_environment(root)
+    return command, compiler_environment(root, source)
 
 
 def format_bytes(data):

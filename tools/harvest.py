@@ -68,7 +68,7 @@ def compile_obj(source, includes):
         command += ["/I", build.wine_path(build.Path(directory).resolve())]
     command += ["/Fo" + build.wine_path(obj), build.wine_path(source.resolve())]
     result = subprocess.run(
-        command, cwd=build.ROOT, env=build.compiler_environment(build.vc71_root()),
+        command, cwd=build.ROOT, env=build.compiler_environment(build.vc71_root(), source),
         stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
     )
     if result.returncode != 0:
