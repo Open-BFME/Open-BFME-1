@@ -217,7 +217,7 @@ __declspec(naked) AsciiString::AsciiString(const UnicodeString &that)
 AsciiString &AsciiString::operator=(const UnicodeString &that)
 {
     const StringBase<wchar_t> *w = (const StringBase<wchar_t> *)&that;
-    format(AsciiString("%S"), w->m_data ? &w->m_data->data[0] : (const wchar_t *)L"");
+    format(AsciiString("%ls"), w->m_data ? &w->m_data->data[0] : (const wchar_t *)L"");
     return *this;
 }
 
@@ -310,6 +310,6 @@ void __cdecl AsciiString::format(AsciiString fmt, ...)
 void AsciiString::translate(const UnicodeString &that)
 {
     const StringBase<wchar_t> *w = (const StringBase<wchar_t> *)&that;
-    format(AsciiString("%S"), w->m_data ? &w->m_data->data[0] : (const wchar_t *)L"");
+    format(AsciiString("%ls"), w->m_data ? &w->m_data->data[0] : (const wchar_t *)L"");
 }
 
