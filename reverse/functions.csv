@@ -902,6 +902,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Attach@RawFileClass@@UAEXPAXH@Z,,0x009E7020,84,src/w3d/rawfile.cpp,matched,
 ?Axis_To_Quat@@YA?AVQuaternion@@ABVVector3@@M@Z,,0x008DC3C0,245,src/w3d/quat.cpp,matched,
 ?BTREE_adjcount@@YAXPAE0PAF@Z,,0x00820E10,365,src/w3d/btreeencode.cpp,matched,
+?BTREE_chase@@YAXPAUBTreeDecodeContext@@E@Z,,0x00822ED0,74,src/w3d/btreedecode.cpp,matched,
 ?BTREE_clearcount@@YAXPAEPAF@Z,,0x00820F80,96,src/w3d/btreeencode.cpp,matched,
 ?BTREE_findbest@@YAIPAFPAEPAI2H@Z,,0x00821090,357,src/w3d/btreeencode.cpp,matched,
 ?BTREE_joinnodes@@YAXPAUBTreeEncodeContext@@PAE11I@Z,,0x00820FF0,154,src/w3d/btreeencode.cpp,matched,
@@ -1196,6 +1197,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_Y_Vector@Matrix3D@@QBE?AVVector3@@XZ,,0x001BD810,24,src/w3d/frustum.cpp,matched,
 ?Get_Z_Rotation@Matrix3D@@QBEMXZ,,0x008D68A0,8,src/w3d/matrix3d.cpp,matched,
 ?Greatest_Common_Divisor@@YAIII@Z,,0x009E6450,29,src/w3d/gcd_lcm.cpp,matched,
+?HUFF_decompress@@YAHPAE0@Z,,0x00822110,3161,src/w3d/huffdecode.cpp,matched,
 ?HUFF_deltabytes@@YAXPBXPAXH@Z,,0x0081F490,36,src/w3d/huffencode.cpp,matched,
 ?HUFF_init@@YAXPAUHuffEncodeContext@@@Z,,0x0081FA20,292,src/w3d/huffencode.cpp,matched,
 ?HUFF_maketree@@YAXPAUHuffEncodeContext@@@Z,,0x0081F5E0,398,src/w3d/huffencode.cpp,matched,
@@ -1828,6 +1830,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?map_indices_to_address@GridCullSystemClass@@IAEHHHH@Z,,0x008DCF80,23,src/w3d/gridcull.cpp,matched,
 ?map_point_to_address@GridCullSystemClass@@IAE_NABVVector3@@AAH@Z,,0x008DDB20,184,src/w3d/gridcull.cpp,matched,
 ?map_point_to_cell@GridCullSystemClass@@IAE_NABVVector3@@AAH11@Z,,0x008DCED0,173,src/w3d/gridcull.cpp,matched,
+?matchlen@@YAIPAE0I@Z,,0x0081EF50,35,src/w3d/refencode.cpp,matched,
 ?memrev@@YAXPADI@Z,,0x009E8C50,33,src/w3d/mpmath.cpp,matched,
 ?mp_quo_digit@@YAGPAG@Z,,0x009E8BC0,129,src/w3d/mpmath.cpp,matched,
 ?mul@Matrix3D@@QAEXABV1@0@Z,,0x00131F60,306,src/w3d/htree.cpp,matched,
@@ -1983,6 +1986,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?zero@Coord3D@@QAEXXZ,0x00029226,0x00083340,11,src/math/coord3d.cpp,matched,sets x/y/z to zero
 ?zero@ICoord3D@@QAEXXZ,0x000268C3,0x0045B890,11,src/math/icoord.cpp,matched,sets x/y/z to zero
 ?zero@Region3D@@QAEXXZ,0x0003652F,0x000BEC60,20,src/math/region.cpp,matched,sets bounds to zero
+_REF_decode@12,,0x00821E70,438,src/w3d/refdecode.cpp,matched,
 _XMP_Abs,,0x009E90C0,60,src/w3d/mpmath.cpp,matched,
 _XMP_Add,,0x009E8820,94,src/w3d/mpmath.cpp,matched,
 _XMP_Add_Int,,0x009E8880,82,src/w3d/mpmath.cpp,matched,

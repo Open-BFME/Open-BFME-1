@@ -249,7 +249,7 @@ void *  GCALL galloc(long size);
 int     GCALL gfree(void *memptr);
 void          gputm(void *memptr, unsigned long val, int numbytes);
 void          gputi(void *memptr, unsigned long val, int numbytes);
-unsigned long ggetm(void *memptr, int numbytes);
+unsigned long ggetm(const void *memptr, int numbytes);
 unsigned long ggeti(void *memptr, int numbytes);
 
 /****************************************************************************/
