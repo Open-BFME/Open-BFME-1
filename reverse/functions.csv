@@ -251,6 +251,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0FileStraw@@QAE@AAVFileClass@@@Z,,0x009E2100,29,src/w3d/ini.cpp,matched,sibling
 ??0GameClientRandomVariable@@QAE@XZ,0x0002466D,0x0005C5D0,13,src/game/fx_particle_system_bulk.cpp,matched,initializes distribution/minimum/maximum to zero (inlined; emitted where used)
 ??0GenericList@@QAE@XZ,,0x009E2EC0,103,src/w3d/ini.cpp,matched,
+??0GenericMultiListClass@@QAE@XZ,,0x006D11E0,39,src/w3d/lookuptable.cpp,matched,
 ??0GridCullSystemClass@@QAE@XZ,,0x008DF190,222,src/w3d/gridcull.cpp,matched,
 ??0GridLinkClass@@QAE@PAVGridCullSystemClass@@@Z,,0x008DD870,33,src/w3d/gridcull.cpp,matched,
 ??0GridTextureMapperClass@@QAE@ABV0@@Z,,0x00966B80,123,src/w3d/mapper.cpp,matched,
@@ -436,6 +437,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1?$Node@PAUINIEntry@@@@UAE@XZ,,0x009E3070,47,src/w3d/ini.cpp,matched,sibling
 ??1?$Node@PAUINISection@@@@UAE@XZ,,0x009E30E0,47,src/w3d/ini.cpp,matched,sibling
 ??1?$ObjectPoolClass@VMultiListNodeClass@@$0BAA@@@QAE@XZ,,0x009DBD30,42,src/w3d/multilist.cpp,matched,
+??1?$RefMultiListClass@VLookupTableClass@@@@UAE@XZ,,0x00712160,118,src/w3d/lookuptable.cpp,matched,
 ??1?$StringBase@D@@AAE@XZ,0x00004A34,0x0005E490,5,src/game/string_base.cpp,matched,destroy char string base; size trimmed: trailing int3 padding
 ??1?$StringBase@G@@AAE@XZ,0x000160F9,0x0005E4E0,5,src/game/string_base.cpp,matched,destroy wide string base; size trimmed: trailing int3 padding
 ??1AsciiString@@QAE@XZ,0x0000D828,0x0005EE90,5,src/game/ascii_string.cpp,matched,AsciiString destructor
@@ -808,6 +810,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??_0Matrix4D@@QAEAAV0@M@Z,0x00025BC6,0x007E67B0,139,src/math/matrix4d.cpp,matched,divides matrix values by scalar
 ??_0Vector3@@QAEAAV0@M@Z,,0x006D75B0,35,src/w3d/colmathline.cpp,matched,
 ??_G?$IndexClass@HPAUINISection@@@@QAEPAXI@Z,,0x009E32E0,53,src/w3d/ini.cpp,matched,
+??_G?$RefMultiListClass@VLookupTableClass@@@@UAEPAXI@Z,,0x007123C0,30,src/w3d/lookuptable.cpp,matched,
 ??_GBufferPipe@@UAEPAXI@Z,,0x009E2570,30,src/w3d/ini.cpp,matched,
 ??_GBufferStraw@@UAEPAXI@Z,,0x00922200,30,src/w3d/ini.cpp,matched,
 ??_GBufferedFileClass@@UAEPAXI@Z,,0x009E78A0,30,src/w3d/bufffile.cpp,matched,
@@ -815,6 +818,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??_GCullableClass@@UAEPAXI@Z,,0x008E2280,30,src/w3d/cullsys.cpp,matched,
 ??_GFilePipe@@UAEPAXI@Z,,0x009E20E0,30,src/w3d/ini.cpp,matched,
 ??_GFileStraw@@UAEPAXI@Z,,0x009E1CC0,30,src/w3d/ini.cpp,matched,
+??_GGenericMultiListClass@@UAEPAXI@Z,,0x006D1210,30,src/w3d/lookuptable.cpp,matched,
 ??_GGenericNode@@UAEPAXI@Z,,0x009E2E10,65,src/w3d/ini.cpp,matched,
 ??_GINIClass@@UAEPAXI@Z,,0x009E5C60,30,src/w3d/ini.cpp,matched,
 ??_GINISection@@UAEPAXI@Z,,0x009E3620,30,src/w3d/ini.cpp,matched,
@@ -831,6 +835,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?ASin@@YAMM@Z,0x00873950,0x00873950,10,src/math/trig.cpp,matched,wraps internal asin helper
 ?Add2D@Coord3D@@QAEAAV1@ABUCoord3DBase@@0@Z,0x000263B4,0x007E5DE0,28,src/math/coord3d.cpp,matched,adds two Coord3DBase x/y values
 ?Add2D@Coord3D@@QAEAAV1@ABUCoord3DBase@@@Z,0x00002734,0x007E5DC0,24,src/math/coord3d.cpp,matched,adds Coord3DBase x/y
+?Add@?$RefMultiListClass@VLookupTableClass@@@@QAE_NPAVLookupTableClass@@_N@Z,,0x00711B40,38,src/w3d/lookuptable.cpp,matched,
 ?Add@?$SimpleDynVecClass@E@@QAE_NABEH@Z,,0x009890A0,86,src/w3d/part_buf.cpp,matched,
 ?Add@?$SimpleDynVecClass@VVector3@@@@QAE_NABVVector3@@H@Z,,0x00701FB0,103,src/w3d/part_buf.cpp,matched,
 ?Add@?$SimpleDynVecClass@VVector4@@@@QAE_NABVVector4@@H@Z,,0x00919D50,108,src/w3d/part_buf.cpp,matched,
@@ -988,6 +993,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Find_Entry@INIClass@@QBEPAUINIEntry@@PBD0@Z,,0x009E3970,34,src/w3d/ini.cpp,matched,
 ?Find_Entry@INISection@@QBEPAUINIEntry@@PBD@Z,,0x009E3800,90,src/w3d/ini.cpp,matched,
 ?Find_Intersection@LineSegClass@@QBE_NABV1@PAVVector3@@PAM12@Z,,0x008D8A50,584,src/w3d/lineseg.cpp,matched,
+?Find_POT@@YAHH@Z,,0x00AFFAB0,45,src/w3d/pot.cpp,matched,
+?Find_POT_Log2@@YAII@Z,,0x00AFFAE0,39,src/w3d/pot.cpp,matched,
 ?Find_Point_Closest_To@LineSegClass@@QBE?AVVector3@@ABV2@@Z,,0x008D8990,185,src/w3d/lineseg.cpp,matched,
 ?Find_Section@INIClass@@QBEPAUINISection@@PBD@Z,,0x009E3720,103,src/w3d/ini.cpp,matched,
 ?First@GenericMultiListIterator@@QAEXPAVGenericMultiListClass@@@Z,,0x006C51C0,15,src/w3d/multilist.cpp,matched,
@@ -1115,6 +1122,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_Y_Vector@Matrix3D@@QBE?AVVector3@@XZ,,0x001BD810,24,src/w3d/frustum.cpp,matched,
 ?Get_Z_Rotation@Matrix3D@@QBEMXZ,,0x008D68A0,8,src/w3d/matrix3d.cpp,matched,
 ?Hash@HashTableClass@@AAEHPBD@Z,,0x009E0010,27,src/w3d/hash.cpp,matched,
+?ID@?$DynamicVectorClass@M@@UAEHABM@Z,,0x00974530,54,src/w3d/ode.cpp,matched,
 ?ID@?$VectorClass@E@@UAEHABE@Z,,0x00912F80,49,src/w3d/pointgr.cpp,matched,
 ?ID@?$VectorClass@M@@UAEHABM@Z,,0x00913490,68,src/w3d/pointgr.cpp,matched,
 ?ID@?$VectorClass@VVector2@@@@UAEHABVVector2@@@Z,,0x009135B0,101,src/w3d/pointgr.cpp,matched,
@@ -1290,6 +1298,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Read_Line@@YAHAAVFileClass@@PADHAA_N@Z,,0x009EA6A0,124,src/w3d/readline.cpp,matched,
 ?Read_Line@@YAHAAVStraw@@PADHAA_N@Z,,0x009EA560,151,src/w3d/readline.cpp,matched,
 ?Read_Line@@YAHAAVStraw@@PAGHAA_N@Z,,0x009EA600,159,src/w3d/readline.cpp,matched,
+?Release_Head@?$RefMultiListClass@VLookupTableClass@@@@QAE_NXZ,,0x00711C80,31,src/w3d/lookuptable.cpp,matched,
+?Remove@?$RefMultiListClass@VLookupTableClass@@@@QAE_NPAVLookupTableClass@@@Z,,0x00711B70,47,src/w3d/lookuptable.cpp,matched,
 ?Remove@HashTableClass@@QAE_NPAVHashableClass@@@Z,,0x009E00E0,102,src/w3d/hash.cpp,matched,
 ?Remove_Index@?$IndexClass@HPAUINIEntry@@@@QAE_NABH@Z,,0x009E26A0,111,src/w3d/ini.cpp,matched,IndexClass sibling (byte-identical to INISection instantiation)
 ?Remove_Index@?$IndexClass@HPAUINISection@@@@QAE_NABH@Z,,0x009E2730,111,src/w3d/ini.cpp,matched,IndexClass sibling
@@ -1321,6 +1331,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Reset_Rotations@ParticleBufferClass@@QAEXAAU?$ParticlePropertyStruct@M@@M@Z,,0x00986050,1656,src/w3d/part_buf.cpp,matched,
 ?Reset_Size@ParticleBufferClass@@QAEXAAU?$ParticlePropertyStruct@M@@@Z,,0x00985B10,1328,src/w3d/part_buf.cpp,matched,
 ?Reset_Statistics@GridCullSystemClass@@QAEXXZ,,0x008DCC10,30,src/w3d/gridcull.cpp,matched,
+?Resize@?$DynamicVectorClass@M@@UAE_NHPBM@Z,,0x00974500,47,src/w3d/ode.cpp,matched,
 ?Resize@?$SimpleDynVecClass@E@@UAE_NH@Z,,0x00989070,40,src/w3d/part_buf.cpp,matched,
 ?Resize@?$SimpleVecClass@E@@UAE_NH@Z,,0x009844D0,136,src/w3d/part_buf.cpp,matched,
 ?Resize@?$VectorClass@E@@UAE_NHPBE@Z,,0x009121F0,165,src/w3d/pointgr.cpp,matched,
