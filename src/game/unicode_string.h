@@ -30,6 +30,8 @@ public:
     wchar_t getCharAt(int i) const { return (wchar_t)((const StringBase<unsigned short>*)this)->getCharAt(i); }
     bool isEmpty() const { return ((const StringBase<unsigned short>*)this)->isEmpty(); }
     bool isNotEmpty() const { return ((const StringBase<unsigned short>*)this)->isNotEmpty(); }
+    int compare(const UnicodeString &s) const { return ((const StringBase<unsigned short>*)this)->compare(*(const StringBase<unsigned short>*)&s); }
+    int compareNoCase(const UnicodeString &s) const { return ((const StringBase<unsigned short>*)this)->compareNoCase(*(const StringBase<unsigned short>*)&s); }
 private:
     wchar_t *m_text;
 };

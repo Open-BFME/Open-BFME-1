@@ -75,6 +75,10 @@
 // <string>/<hash_map>/<deque> fail to compile though <list>/<vector> happen to squeak by.
 # if (_MSC_VER >= 1310)
 #  undef _STLP_NO_TYPENAME_ON_RETURN_TYPE
+// VC7.1's CRT keeps C functions (and the MSVC-only _vsnprintf/_snprintf) in the
+// GLOBAL namespace, same as VC7.0; STLport only auto-detects that for _MSC_VER<=1300,
+// so without this it looks for std::_vsnprintf and fails. Namespace-only → 0 byte change.
+#  define _STLP_VENDOR_GLOBAL_CSTD
 # endif
 
 # if (_STLP_MSVC <= 1300) 
