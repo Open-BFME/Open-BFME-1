@@ -75,3 +75,11 @@ assignments' address-leas together (e.g. enum44 SET_BASE_CONSTRUCTION_SPEED: `pu
 state machine drops one. Fix: make the decoder a small QUEUE that pairs pending (push,lea) in
 order across a batched run. (These 11 must be complete for the all-or-nothing match, but they do
 NOT change the regalloc verdict.) Manual values recoverable per-block from the disasm if needed.
+
+## Conditions whale (0x3307e0) GO/NO-GO measured 2026-07-06
+Generated initConditions() from conditions_worklist.json (174 templates, m_conditionTemplates @
+this+0x10720), built: 18652B vs 19131B, **41% aligned** — same straight-line global-regalloc wall
+as the actions whale (44%), as expected (identical structure, fewer templates). ALL THREE whales
+now measured: actions 44%, conditions 41%, message-name 64%. Every one confirmed matchable
+(structure/layout/enum recovered) but blocked at the MSVC-codegen wall (register allocation /
+RVO scheduling) — the dedicated multi-day mile. Groundwork for all three is committed.
