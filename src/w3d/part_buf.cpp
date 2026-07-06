@@ -3519,10 +3519,8 @@ ParticleBufferClass::TailDiffuseTypeEnum ParticleBufferClass::Determine_Tail_Dif
 	// if there is a texture, the assumption is that the artist
 	// is controlling the fadeoff ramp using the texture
 	// thus, the ARGB of the tail should be the same as the head
-	TextureClass *tex=Get_Texture();
-	if (tex)
-	{
-		REF_PTR_RELEASE(tex);
+	bool has_texture = (Get_Texture().Ptr != NULL);
+	if (has_texture) {
 		return SAME_AS_HEAD;
 	}
 
@@ -3552,12 +3550,12 @@ ParticleBufferClass::TailDiffuseTypeEnum ParticleBufferClass::Determine_Tail_Dif
 }
 
 // ?ParticleBufferClass::Get_Texture present-unmatched
-TextureClass * ParticleBufferClass::Get_Texture (void) const
+ParticleBufferClass::TextureHandleClass ParticleBufferClass::Get_Texture (void) const
 {
-	if (PointGroup) return PointGroup->Get_Texture();
-	else if (LineGroup) return LineGroup->Get_Texture();
-	else if (LineRenderer) return LineRenderer->Get_Texture();
-	return NULL;
+	if (PointGroup) return TextureHandleClass(PointGroup->Get_Texture());
+	else if (LineGroup) return TextureHandleClass(LineGroup->Get_Texture());
+	else if (LineRenderer) return TextureHandleClass(LineRenderer->Get_Texture());
+	return TextureHandleClass(NULL);
 }
 
 void ParticleBufferClass::Set_Texture (TextureClass *tex)

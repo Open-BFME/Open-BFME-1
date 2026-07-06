@@ -192,7 +192,17 @@ class ParticleBufferClass : public RenderObjClass
 		float						Get_Start_Opacity (void) const	{ return AlphaKeyFrameValues[0]; }
 		Vector3					Get_End_Color (void) const			{ return (NumColorKeyFrames > 1) ? ColorKeyFrameValues[NumColorKeyFrames - 1] : ColorKeyFrameValues[0]; }
 		float						Get_End_Opacity (void) const		{ return (NumAlphaKeyFrames > 1) ? AlphaKeyFrameValues[NumAlphaKeyFrames - 1] : AlphaKeyFrameValues[0]; }
-		TextureClass *			Get_Texture (void) const;
+		// BFME drift: Get_Texture returns this 4-byte holder by value. It is
+		// non-POD (user dtor) so MSVC returns it via hidden sret pointer, and the
+		// holder's destructor releases the reference — matching the
+		// lea/push/call + cmp [eax],0 + conditional Release_Ref shape at 0x98B750.
+		class TextureHandleClass {
+		public:
+			TextureClass *Ptr;
+			TextureHandleClass(TextureClass *ptr) : Ptr(ptr) { }
+			~TextureHandleClass() { if (Ptr) Ptr->Release_Ref(); }
+		};
+		TextureHandleClass	Get_Texture (void) const;
 		void						Set_Texture (TextureClass *tex);
 		float						Get_Fade_Time (void) const			{ return (NumColorKeyFrames > 1) ? (((float)ColorKeyFrameTimes[1]) / 1000.0f) : 0.0f; }
 		ShaderClass				Get_Shader (void) const;

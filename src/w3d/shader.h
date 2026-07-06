@@ -242,7 +242,9 @@ public:
 		MASK_SRCBLEND				= (3<<14),			// mask for source blend setting
 		MASK_TEXTURING				= (1<<16),			// mask for texturing setting
 		MASK_NPATCHENABLE			= (1<<17),			// mask for npatch enable
-		MASK_ALPHATEST				= (1<<18),			// mask for alpha test enable
+		// BFME drift: alpha test occupies two bits in retail (Determine_Tail_Diffuse
+		// at 0x98B750 tests [bits & 0xC0000] == 0x40000).
+		MASK_ALPHATEST				= (3<<18),			// mask for alpha test enable
 		MASK_CULLMODE				= (1<<19),			// mask for cullmode setting
 		MASK_POSTDETAILCOLORFUNC= (15<<20),			// mask for post detail color function setting
 		MASK_POSTDETAILALPHAFUNC= (7<<24)			// mask for post detail alpha function setting

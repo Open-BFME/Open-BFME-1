@@ -58,6 +58,7 @@ name,address,notes
 ?Get_Shader@PointGroupClass@@QAE?AVShaderClass@@XZ,0x00912870
 ?Get_String@INIClass@@QBEHPBD00PADH@Z,0x009E3DA0
 ?Get_String@StringClass@@AAEXH_N@Z,0x009DB890
+?Get_Texture@ParticleBufferClass@@QBE?AVTextureHandleClass@1@XZ,0x00988F60,sret holder-returning getter
 ?Get_View_Plane@CameraClass@@QBEXAAVVector2@@0@Z,0x00931DC0,derived from part_buf matched-caller call sites
 ?Guess_Sort_Level@ShaderClass@@QBEHXZ,0x00910E90
 ?HideDiplomacy@@YAXXZ,0x000067BC
@@ -77,7 +78,8 @@ name,address,notes
 ?Raw_Seek@RawFileClass@@IAEHHH@Z,0x009E6910
 ?Read@ChunkLoadClass@@QAEKPAXK@Z,0x009E15C0
 ?ReleaseWindowLayout@@YAXPAVWindowLayout@@@Z,0x00049AD0
-?Release_Ref@RefCountClass@@QAEXXZ,0x009EB7A0,out-of-line body; call sites usually inline the dec/test instead
+?Release_Ref@TextureBaseClass@@QAEXXZ,0x009EB7A0,hider decl in texture.h; WORD refcount+flags release
+?Release_Ref@TextureClass@@QAEXXZ,0x009EB7A0,BFME texture release: WORD refcount+flag bits at [this+4]; auto-delete via vtbl slot 8 when bit24 set — TextureClass does NOT derive RefCountClass
 ?Remove_Index@?$IndexClass@HPAUINIEntry@@@@QAE_NABH@Z,0x009E26A0
 ?Remove_Index@?$IndexClass@HPAUINISection@@@@QAE_NABH@Z,0x009E2730
 ?Render@LineGroupClass@@QAEXAAVRenderInfoClass@@@Z,0x0098ED30

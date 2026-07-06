@@ -238,7 +238,7 @@ class ParticleEmitterClass : public RenderObjClass
 		float						Get_Future_Start_Time (void) const { return Buffer->Get_Future_Start_Time(); }
 		Vector3					Get_End_Color (void) const			{ return Buffer->Get_End_Color (); }
 		float						Get_End_Opacity (void) const		{ return Buffer->Get_End_Opacity (); }
-		TextureClass *			Get_Texture (void) const			{ return Buffer->Get_Texture (); }
+		TextureClass *			Get_Texture (void) const			{ return Buffer->Get_Texture().Ptr; }
 		void						Set_Texture (TextureClass *tex)  { Buffer->Set_Texture(tex); }
 		float						Get_Fade_Time (void) const			{ return Buffer->Get_Fade_Time (); }
 		Vector3					Get_Start_Color (void) const		{ return Buffer->Get_Start_Color(); }

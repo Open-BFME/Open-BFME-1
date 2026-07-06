@@ -70,6 +70,12 @@ class VolumeTextureClass;
 
 class TextureBaseClass : public RefCountClass
 {
+public:
+	// BFME drift: texture release is an out-of-line routine (0x9EB7A0) with a
+	// WORD refcount + flag bits — not RefCountClass's inline dec. Declaring a
+	// hider here makes call sites emit the call instead of the inline sequence.
+	void Release_Ref(void);
+private:
 	friend class TextureLoader;
 	friend class LoaderThreadClass;
 	friend class DX8TextureTrackerClass;  //(gth) so it can call Poke_Texture, 
