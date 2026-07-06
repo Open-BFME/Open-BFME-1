@@ -49,9 +49,9 @@
 #include "w3d_file.h"
 #include "hash.h"
 #include "mempool.h"
-#include <refcount.h>
-#include <slist.h>
-#include <vector.h>
+#include "refcount.h"
+#include "slist.h"
+#include "vector.h"
 
 struct NodeMotionStruct;
 class MotionChannelClass;
