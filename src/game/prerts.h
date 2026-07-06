@@ -8,6 +8,11 @@
 #include <ctype.h>
 #include <string.h>
 #define PI 3.14159265358979323846f
+#ifndef TRUE
+#define TRUE 1
+#define FALSE 0
+#endif
+#define NEW new
 typedef float Real;
 typedef int Int;
 typedef unsigned int UnsignedInt;
