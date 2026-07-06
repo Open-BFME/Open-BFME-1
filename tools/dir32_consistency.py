@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+# INVESTIGATION 2026-07-06: the 11 flagged candidates are all LEGITIMATE patterns, not bugs:
+#   - CRC32_Table, _COLLISION_EPSILON: their translation units are LINKED TWICE in lotrbfme.exe
+#     (see realcrc.cpp comment) -> two byte-identical copies at two addresses. Expected.
+#   - 8 FX module ??_7Class ctor-vs-dtor: same vtable symbol resolves to different addresses in
+#     ctor (real fn-ptr vtable) vs dtor -> MSVC construction/destruction-vtable variants. Expected.
+# NET: zero real bugs beyond the two strings verify_string_refs already fixed; existing globals/
+# vtables are consistent. To make this a build GATE, whitelist doubly-linked TUs + the ctor/dtor
+# vtable-variant pairs, then any NEW inconsistency (a real masked bug) fails.
 """Consistency verifier for the NON-string DIR32 relocations that build.py masks (globals, vtables,
 function-address references). Strings are handled by verify_string_refs (content self-verification);
 these have no content signature, but they DO have a consistency signature: a given symbol has exactly
