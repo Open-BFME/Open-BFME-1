@@ -283,6 +283,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0LineEmissionVolumeInfo@FXParticleSystem@@QAE@XZ,0x0003656B,0x005D5A50,32,src/game/fx_particle_system.cpp,matched,default constructor sets vtable and zeros line endpoints
 ??0LineEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00004269,0x005D5C60,116,src/game/fx_particle_system.cpp,matched,
 ??0LineEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@XZ,0x00045075,0x005D5BD0,60,src/game/fx_particle_system_bulk.cpp,matched,
+??0LineGroupClass@@QAE@XZ,,0x0098E9C0,88,src/w3d/linegrp.cpp,matched,
 ??0LinearOffsetTextureMapperClass@@QAE@ABV0@@Z,,0x009669A0,103,src/w3d/mapper.cpp,matched,
 ??0LinearOffsetTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x009668B0,237,src/w3d/mapper.cpp,matched,
 ??0LinearOffsetTextureMapperClass@@QAE@ABVVector2@@0_N0I@Z,,0x009667F0,133,src/w3d/mapper.cpp,matched,
@@ -1063,6 +1064,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_Inverse@Matrix3D@@QBEXAAV1@@Z,,0x008D7B30,238,src/w3d/matrix3d.cpp,matched,
 ?Get_LOD_Max_Screen_Size@ParticleBufferClass@@SAMH@Z,,0x009843F0,28,src/w3d/part_buf.cpp,matched,
 ?Get_Length@StringClass@@QBEHXZ,,0x0013B660,43,src/w3d/rawfile.cpp,matched,
+?Get_Line_Color@LineGroupClass@@QAE?AVVector3@@XZ,,0x0098EC20,24,src/w3d/linegrp.cpp,matched,
 ?Get_List_Index@INIClass@@QAEHPBD0HQAPAD@Z,,0x009E3EC0,135,src/w3d/ini.cpp,matched,
 ?Get_Merge_Abort_Factor@ParticleBufferClass@@QBEMXZ,,0x00988EC0,21,src/w3d/part_buf.cpp,unmatched,"stale-header build artifact: part_buf.cpp was compiled against the pre-extra-member SegLineRenderer layout (MergeAbortFactor@0x24), while seglinerenderer.cpp uses the +0x1c-member layout (MergeAbortFactor@0x28). Cannot satisfy both with one shared header; seglinerenderer side chosen (10 fns vs 2)."
 ?Get_New_Particles@ParticleBufferClass@@IAEXXZ,,0x00987C60,827,src/w3d/part_buf.cpp,matched,
@@ -1076,6 +1078,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_Point@INIClass@@QBE?BV?$TPoint3D@H@@PBD0ABV2@@Z,,0x009E4340,207,src/w3d/ini.cpp,matched,
 ?Get_Point@INIClass@@QBE?BV?$TPoint3D@M@@PBD0ABV2@@Z,,0x009E4460,207,src/w3d/ini.cpp,matched,
 ?Get_Point_Color@PointGroupClass@@QAE?AVVector3@@XZ,,0x009127D0,24,src/w3d/pointgr.cpp,matched,
+?Get_Polygon_Count@LineGroupClass@@QAEHXZ,,0x0098E970,28,src/w3d/linegrp.cpp,matched,
 ?Get_Polygon_Count@PointGroupClass@@QAEHXZ,,0x00912150,27,src/w3d/pointgr.cpp,matched,
 ?Get_Post_Increment_Value@ParticleBufferClass@@UBEMXZ,,0x00983810,20,src/w3d/part_buf.cpp,matched,
 ?Get_Rect@INIClass@@QBE?BV?$TRect@H@@PBD0ABV2@@Z,,0x009E5940,258,src/w3d/ini.cpp,matched,
@@ -1087,6 +1090,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_String@INIClass@@QBEHPBD00PADH@Z,,0x009E3DA0,112,src/w3d/ini.cpp,matched,
 ?Get_String@StringClass@@AAEXH_N@Z,,0x009DB890,352,src/w3d/wwstring.cpp,matched,
 ?Get_Sub_Directory@SimpleFileFactoryClass@@QBEXAAVStringClass@@@Z,,0x009DD900,94,src/w3d/ffactory.cpp,matched,
+?Get_Tail_Diffuse@LineGroupClass@@QAE?AVVector4@@XZ,,0x0098EC60,30,src/w3d/linegrp.cpp,matched,
 ?Get_TextBlock@INIClass@@QBEHPBDPADH@Z,,0x009E57C0,192,src/w3d/ini.cpp,matched,
 ?Get_Texture_Tile_Factor@ParticleBufferClass@@QBEMXZ,,0x00988EE0,21,src/w3d/part_buf.cpp,unmatched,"stale-header build artifact: part_buf.cpp was compiled against the pre-extra-member SegLineRenderer layout (MergeAbortFactor@0x24), while seglinerenderer.cpp uses the +0x1c-member layout (MergeAbortFactor@0x28). Cannot satisfy both with one shared header; seglinerenderer side chosen (10 fns vs 2)."
 ?Get_Translation@Matrix3D@@QBE?AVVector3@@XZ,,0x001B4770,24,src/w3d/matrix3d.cpp,matched,
@@ -1373,6 +1377,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?SetZero@Coord3D@@QAEAAV1@XZ,0x000495CB,0x00148760,13,src/math/coord3d.cpp,matched,sets x/y/z to zero and returns self
 ?Set_Additive@RenderObjClass@@UAEXH@Z,,0x009807D0,33,src/w3d/part_buf.cpp,matched,
 ?Set_Alpha@RenderObjClass@@UAEXH@Z,,0x006CF7D0,33,src/w3d/part_buf.cpp,matched,
+?Set_Arrays@LineGroupClass@@QAEXPAV?$ShareBufferClass@VVector3@@@@0PAV?$ShareBufferClass@VVector4@@@@1PAV?$ShareBufferClass@I@@PAV?$ShareBufferClass@M@@3H@Z,,0x0098EB00,255,src/w3d/linegrp.cpp,matched,
 ?Set_Arrays@PointGroupClass@@QAEXPAV?$ShareBufferClass@VVector3@@@@PAV?$ShareBufferClass@VVector4@@@@PAV?$ShareBufferClass@I@@PAV?$ShareBufferClass@M@@PAV?$ShareBufferClass@E@@4HMMMM@Z,,0x009126B0,241,src/w3d/pointgr.cpp,matched,
 ?Set_Buffer_And_Allocated_Length@StringClass@@AAEXPADH@Z,,0x009DB850,50,src/w3d/wwstring.cpp,matched,
 ?Set_Cull_Box@CullableClass@@QAEXABVAABoxClass@@_N@Z,,0x008E22A0,72,src/w3d/cullsys.cpp,matched,
@@ -1382,6 +1387,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Set_Element@?$ShareBufferClass@VVector4@@@@QAEXHABVVector4@@@Z,,0x00984460,41,src/w3d/part_buf.cpp,matched,
 ?Set_Emitter@ParticleBufferClass@@QAEXPAVParticleEmitterClass@@@Z,,0x00983A60,46,src/w3d/part_buf.cpp,matched,
 ?Set_End_Caps@SegLineRendererClass@@QAEXH@Z,,0x00918940,29,src/w3d/seglinerenderer.cpp,matched,
+?Set_Flag@LineGroupClass@@QAEXW4FlagsType@1@_N@Z,,0x0098E900,42,src/w3d/linegrp.cpp,matched,
 ?Set_Flag@PointGroupClass@@QAEXW4FlagsType@1@_N@Z,,0x009120A0,42,src/w3d/pointgr.cpp,matched,
 ?Set_Frame_Per_Second@GridTextureMapperClass@@QAEXM@Z,,0x00967040,17,src/w3d/mapper.cpp,matched,
 ?Set_Freeze_Random@SegLineRendererClass@@QAEXH@Z,,0x00918900,29,src/w3d/seglinerenderer.cpp,matched,
@@ -1397,6 +1403,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Set_Size@ChunkHeader@@QAEXK@Z,,0x009E11F0,23,src/w3d/chunkio.cpp,matched,
 ?Set_Sub_Chunk_Flag@ChunkHeader@@QAEX_N@Z,,0x009E1220,33,src/w3d/chunkio.cpp,matched,
 ?Set_Sub_Directory@SimpleFileFactoryClass@@QAEXPBD@Z,,0x009DD730,94,src/w3d/ffactory.cpp,matched,
+?Set_Tail_Diffuse@LineGroupClass@@QAEXABVVector4@@@Z,,0x0098EC40,30,src/w3d/linegrp.cpp,matched,
 ?Set_Texture@ParticleBufferClass@@QAEXPAVTextureClass@@@Z,,0x00984410,52,src/w3d/part_buf.cpp,matched,
 ?Set_Texture_Tile_Factor@SegLineRendererClass@@QAEXM@Z,,0x0095FEF0,64,src/w3d/seglinerenderer.cpp,matched,
 ?Set_Translation@Matrix3D@@QAEXABVVector3@@@Z,,0x001B47B0,24,src/w3d/matrix3d.cpp,matched,
