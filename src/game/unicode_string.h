@@ -1,6 +1,7 @@
 #pragma once
 
 #include <wchar.h>
+#include "string_base.h"
 
 class AsciiString;
 
@@ -23,7 +24,12 @@ public:
     void translate(const AsciiString &that);
 
 public:
-    const wchar_t *str() const { return m_text; }
+    // Delegate to StringBase<unsigned short> (matched, mangles @StringBase@G).
+    const wchar_t *str() const { return (const wchar_t*)((const StringBase<unsigned short>*)this)->str(); }
+    int getLength() const { return ((const StringBase<unsigned short>*)this)->getLength(); }
+    wchar_t getCharAt(int i) const { return (wchar_t)((const StringBase<unsigned short>*)this)->getCharAt(i); }
+    bool isEmpty() const { return ((const StringBase<unsigned short>*)this)->isEmpty(); }
+    bool isNotEmpty() const { return ((const StringBase<unsigned short>*)this)->isNotEmpty(); }
 private:
     wchar_t *m_text;
 };
