@@ -71,9 +71,9 @@ class HRawAnimClass;
 	by the HierarchyModelClass.
 
 */
-class HTreeClass : public W3DMPO
+// BFME drift: W3DMPO absent (would add a phantom vtable ptr; HTreeClass is 0x1c not 0x20).
+class HTreeClass
 {
-	W3DMPO_GLUE(HTreeClass)
 public:
 
 	enum
