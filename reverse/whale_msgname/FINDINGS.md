@@ -48,3 +48,14 @@ even structurally-correct + correct-enum, it's the same MSVC-codegen matching wa
 whale. The reference source is if-cascade yet the binary has jump tables -> MSVC 7.1 converted it;
 reproducing that exact conversion (bounds, case layout, the RVO/EH prologue) is the multi-day fight.
 BOTH whales: confirmed matchable, structure/enum/layout recovered, register-alloc + codegen is the wall.
+
+## CONVERGENCE: 32% -> 64% (2026-07-06, generate_msgfunc.py)
+Source-form tweaks each lifted the match, prologue now aligns through byte 24:
+1. correct sectioned enum: 32->39%. 2. switch (not if-cascade -> gets the 2 jump tables): keeps.
+3. `commandName` local present (2nd AsciiString -> correct 2-slot EH prologue): 39->47%.
+4. `AsciiString commandName;` default-ctor THEN assign (not copy-init): 47->**64%**.
+REMAINING divergence at byte 25: target 0-inits BOTH AsciiString slots (commandName + RVO return)
+INTERLEAVED with the register pushes (`push ebx;xor ebx,ebx;push esi;mov[esp+0xc],ebx;push edi;
+mov[esp+0xc],ebx`); my form emits one 0-init + constructs. The RVO-return-slot upfront 0-init +
+that exact push/zero interleave is MSVC scheduling — the last (hardest) mile. This whale is CLOSE:
+switch-based (independent cases), 64% with the prologue nearly matched. Best landing candidate.
