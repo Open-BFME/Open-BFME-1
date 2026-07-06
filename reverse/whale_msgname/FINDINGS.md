@@ -38,3 +38,13 @@ local/RVO prologue diverges; (c) generated is LARGER, so some CHECK_IFs stay if-
 of folding into the jump tables. To land: fix the ~few dup/fallthrough cases (decode each 2nd-table
 case past the first push to the ACTUAL return string), match the prologue two-slot 0-init, verify
 the two dense ranges fold to jump tables. Still multi-day but closer + independent-cases.
+
+## SWITCH form + jump-table finding (2026-07-06, final for this session)
+KEY: an if-cascade (`if(t==x)return`) source compiles to **0 jump tables** (pure sequential), but
+the TARGET has 2. A **switch(t){case MSG_X:...}** form DOES regenerate **2 jump tables** (structurally
+matching) at 8120B. BUT still only the 219B TAIL aligns (the default/return-commandName epilogue);
+the jump-table bounds, case bodies (AsciiString return construction), and prologue all diverge. So
+even structurally-correct + correct-enum, it's the same MSVC-codegen matching wall as the scripting
+whale. The reference source is if-cascade yet the binary has jump tables -> MSVC 7.1 converted it;
+reproducing that exact conversion (bounds, case layout, the RVO/EH prologue) is the multi-day fight.
+BOTH whales: confirmed matchable, structure/enum/layout recovered, register-alloc + codegen is the wall.
