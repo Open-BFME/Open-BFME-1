@@ -679,7 +679,7 @@ const char *LightningDrawModuleInfo::GetSnapshotName()
 
 const char *ParticleSystemInfo::GetSnapshotName()
 {
-    return "ParticleSystemInfo";
+    return "FXParticleSystemInfo";
 }
 
 QuadDrawModuleInfo::QuadDrawModuleInfo()
