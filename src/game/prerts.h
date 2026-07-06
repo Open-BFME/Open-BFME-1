@@ -13,6 +13,16 @@
 #define FALSE 0
 #endif
 #define NEW new
+#define MSGNEW new
+#define NEW_MEMSET new
+// Game debug macros — retail-empty under /DNDEBUG.
+#define DEBUG_CRASH(x)
+#define DEBUG_ASSERTCRASH(c,x)
+#define DEBUG_LOG(x)
+#define DEBUG_ASSERTLOG(c,x)
+#define RELEASE_CRASH(x)
+#define DEBUG_LOG_LEVEL(l,x)
+typedef char Char;
 typedef float Real;
 typedef int Int;
 typedef unsigned int UnsignedInt;
