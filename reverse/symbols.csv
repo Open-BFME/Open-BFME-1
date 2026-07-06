@@ -19,6 +19,7 @@ name,address,notes
 ??0PointGroupClass@@QAE@XZ,0x00912580,derived from ParticleBufferClass main ctor aligned call sites
 ??0RenderObjClass@@QAE@ABV0@@Z,0x0091FFE0,base copy ctor; derived from ParticleBufferClass copy ctor site
 ??0RenderObjClass@@QAE@XZ,0x009204B0,derived from ParticleBufferClass main ctor aligned call sites
+??0SegLineRendererClass@@QAE@ABV0@@Z,0x00960990
 ??0SegLineRendererClass@@QAE@XZ,0x0095FFD0,derived from ParticleBufferClass main ctor aligned call sites
 ??0file_auto_ptr@@QAE@PAVFileFactoryClass@@PBD@Z,0x009DD4F0
 ??1Buffer@@QAE@XZ,0x009E1E60
@@ -39,6 +40,7 @@ name,address,notes
 ??3@YAXPAX@Z,0x00881EB0
 ??4?$VectorClass@VModelNodeClass@HLodClass@@@@QAEAAV0@ABV0@@Z,0x0097ACA0
 ??4RenderObjClass@@QAEAAV0@ABV0@@Z,0x0091F790
+??4SegLineRendererClass@@QAEAAV0@ABV0@@Z,0x009600F0
 ??4StringClass@@QAEABV0@ABV0@@Z,0x00035FDF
 ??AModuleTemplateMap@ModuleFactory@@QAEAAVModuleTemplate@1@ABH@Z,0x0002047D,ModuleFactory::ModuleTemplateMap::operator[] thunk (body 0x001296E0)
 ??_L@YGXPAXIHP6EX0@Z1@Z,0x009F6EE4
@@ -110,6 +112,7 @@ name,address,notes
 ?Render_Line@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z,0x0098AD00
 ?Render_Line_Group@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z,0x0098B950
 ?Render_Particles@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z,0x0098B800
+?Render_Seg_Line@SegmentedLineClass@@IAEXAAVRenderInfoClass@@@Z,0x00950960
 ?Reset@HAnimComboClass@@QAEXXZ,0x00974DC0
 ?ResetInGameChat@@YAXXZ,0x00033A6E
 ?Reset_Collection@CullSystemClass@@QAEXXZ,0x008E21C0
@@ -139,6 +142,7 @@ name,address,notes
 ?Set_Texture@LineGroupClass@@QAEXPAVTextureClass@@@Z,0x0098EC80
 ?Set_Texture@PointGroupClass@@QAEXPAVTextureClass@@@Z,0x009127F0
 ?Set_Texture@SegLineRendererClass@@QAEXPAVTextureClass@@@Z,0x00960050
+?Start@ParticleEmitterClass@@QAEXXZ,0x0097F090
 ?String@CRC@@SAKPBDK@Z,0x009E7FD0
 ?Uninitialised_Grow@StringClass@@AAEXH@Z,0x009DBA70
 ?Update_Bounding_Box@ParticleBufferClass@@IAEXXZ,0x0098B460
