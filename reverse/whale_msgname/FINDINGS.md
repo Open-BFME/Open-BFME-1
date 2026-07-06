@@ -59,3 +59,11 @@ INTERLEAVED with the register pushes (`push ebx;xor ebx,ebx;push esi;mov[esp+0xc
 mov[esp+0xc],ebx`); my form emits one 0-init + constructs. The RVO-return-slot upfront 0-init +
 that exact push/zero interleave is MSVC scheduling — the last (hardest) mile. This whale is CLOSE:
 switch-based (independent cases), 64% with the prologue nearly matched. Best landing candidate.
+
+## Variant sweep confirms 64% is the SOURCE-FORM CEILING (2026-07-06)
+Tested prologue variants: no-MSG_COUNT-check 48%, copy-init+switch 47%, commandName-after-switch 35%
+— ALL worse than the committed default-ctor+MSG_COUNT-check+switch form (64%). So 64% is the best
+achievable by source structure; the remaining 36% is MSVC's exact RVO-return-slot 0-init INTERLEAVE
+scheduling (byte 25 onward), which source changes can't steer (same MSVC-codegen wall as scripting's
+register allocation, just reached at 64% vs 44%). NET for both whales: layouts/enums/forms fully
+recovered and committed; the final mile is MSVC internal codegen matching = the dedicated multi-day run.
