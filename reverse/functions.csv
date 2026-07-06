@@ -153,6 +153,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0?$Int@$0EA@@@QAE@K@Z,,0x009E21D0,25,src/w3d/pk.cpp,matched,
 ??0?$Int@$0EA@@@QAE@XZ,,0x009EA760,20,src/w3d/int.cpp,matched,
 ??0?$RemainderTable@V?$Int@$0EA@@@@@QAE@ABV?$Int@$0EA@@@@Z,,0x009EAC70,98,src/w3d/pk.cpp,matched,
+??0?$ShareBufferClass@VVector3@@@@QAE@HPBDH@Z,,0x005F3BE0,226,src/w3d/part_buf.cpp,matched,
+??0?$ShareBufferClass@VVector4@@@@QAE@HPBDH@Z,,0x005F3D60,224,src/w3d/part_buf.cpp,matched,
 ??0?$SimpleDynVecClass@E@@QAE@H@Z,,0x00989030,56,src/w3d/part_buf.cpp,matched,
 ??0?$SimpleVecClass@E@@QAE@H@Z,,0x00984660,39,src/w3d/part_buf.cpp,matched,
 ??0?$StringBase@D@@AAE@ABV0@@Z,0x00887B60,0x887b60,121,src/game/string_base.cpp,matched,
