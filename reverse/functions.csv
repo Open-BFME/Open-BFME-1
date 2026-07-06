@@ -921,6 +921,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?DEREncode@?$Int@$0EA@@@QBEHPAE@Z,,0x009E21F0,19,src/w3d/pk.cpp,matched,ghidra-unknown callee + identical DERDecode wrapper; disambiguated by call target; build.sh exact
 ?Decode_Exponent@PKey@@QAEXPAX@Z,,0x009EAAE0,25,src/w3d/pk.cpp,matched,locate ghidra-unknown callee; build.sh exact match
 ?Decode_Modulus@PKey@@QAEXPAX@Z,,0x009EAAB0,38,src/w3d/pk.cpp,matched,locate ghidra-unknown callee; build.sh exact match
+?Decrement_LOD@ParticleBufferClass@@UAEXXZ,,0x009837B0,22,src/w3d/part_buf.cpp,matched,
 ?Decrypt@PKey@@QBEHPBXHPAX@Z,,0x009EAE10,339,src/w3d/pk.cpp,matched,
 ?Delete@?$List@PAUINIEntry@@@@QAEXXZ,,0x009E2600,38,src/w3d/ini.cpp,matched,List sibling
 ?Delete@?$List@PAUINISection@@@@QAEXXZ,,0x009E2630,38,src/w3d/ini.cpp,matched,List sibling
@@ -949,6 +950,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?DotProduct@VectorProcessorClass@@SAXPAMABVVector3@@PBV2@H@Z,,0x00B008F0,213,src/w3d/vp.cpp,matched,
 ?Dot_Product@Vector3@@SAMABV1@0@Z,,0x001A1C20,29,src/w3d/lineseg.cpp,matched,
 ?DuplicateCRCError@INIClass@@QAEXPBD00@Z,,0x009E2160,90,src/w3d/ini.cpp,matched,
+?Emitter_Is_Dead@ParticleBufferClass@@QAEXXZ,,0x00983A40,18,src/w3d/part_buf.cpp,matched,
 ?Encode_Exponent@PKey@@QBEHPAX@Z,,0x009EAA90,32,src/w3d/pk.cpp,matched,locate ghidra-unknown callee; build.sh exact match
 ?Encode_Modulus@PKey@@QBEHPAX@Z,,0x009EAA70,26,src/w3d/pk.cpp,matched,locate ghidra-unknown callee; build.sh exact match
 ?Encrypt@PKey@@QBEHPBXHPAX@Z,,0x009EACE0,299,src/w3d/pk.cpp,matched,
@@ -1031,6 +1033,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_Blur_Time_Key_Frames@ParticleBufferClass@@QBEXAAU?$ParticlePropertyStruct@M@@@Z,,0x00984290,318,src/w3d/part_buf.cpp,matched,
 ?Get_Bool@INIClass@@QBE_NPBD0_N@Z,,0x009E4140,101,src/w3d/ini.cpp,matched,
 ?Get_Color_Key_Frames@ParticleBufferClass@@QBEXAAU?$ParticlePropertyStruct@VVector3@@@@@Z,,0x00983B00,598,src/w3d/part_buf.cpp,matched,
+?Get_Cost@ParticleBufferClass@@UBEMXZ,,0x009837D0,20,src/w3d/part_buf.cpp,matched,
 ?Get_Culling_System@CullableClass@@QBEPAVCullSystemClass@@XZ,,0x008E2250,14,src/w3d/cullsys.cpp,matched,
 ?Get_Date_Time@RawFileClass@@UAEKXZ,,0x009E65E0,162,src/w3d/rawfile.cpp,matched,
 ?Get_Entry@INIClass@@QBEPBDPBDH@Z,,0x009E37B0,70,src/w3d/ini.cpp,matched,
@@ -1048,6 +1051,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_LOD_Max_Screen_Size@ParticleBufferClass@@SAMH@Z,,0x009843F0,28,src/w3d/part_buf.cpp,matched,
 ?Get_Length@StringClass@@QBEHXZ,,0x0013B660,43,src/w3d/rawfile.cpp,matched,
 ?Get_List_Index@INIClass@@QAEHPBD0HQAPAD@Z,,0x009E3EC0,135,src/w3d/ini.cpp,matched,
+?Get_Merge_Abort_Factor@ParticleBufferClass@@QBEMXZ,,0x00988EC0,21,src/w3d/part_buf.cpp,matched,
 ?Get_New_Particles@ParticleBufferClass@@IAEXXZ,,0x00987C60,827,src/w3d/part_buf.cpp,matched,
 ?Get_Next_Collected_Object_Internal@CullSystemClass@@IAEPAVCullableClass@@PAV2@@Z,,0x008E2170,19,src/w3d/cullsys.cpp,matched,
 ?Get_Obj_Space_Bounding_Box@ParticleBufferClass@@UBEXAAVAABoxClass@@@Z,,0x0098BD50,69,src/w3d/part_buf.cpp,matched,
@@ -1058,6 +1062,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_Point@INIClass@@QBE?BV?$TPoint2D@M@@PBD0ABV2@@Z,,0x009E4530,179,src/w3d/ini.cpp,matched,
 ?Get_Point@INIClass@@QBE?BV?$TPoint3D@H@@PBD0ABV2@@Z,,0x009E4340,207,src/w3d/ini.cpp,matched,
 ?Get_Point@INIClass@@QBE?BV?$TPoint3D@M@@PBD0ABV2@@Z,,0x009E4460,207,src/w3d/ini.cpp,matched,
+?Get_Post_Increment_Value@ParticleBufferClass@@UBEMXZ,,0x00983810,20,src/w3d/part_buf.cpp,matched,
 ?Get_Rect@INIClass@@QBE?BV?$TRect@H@@PBD0ABV2@@Z,,0x009E5940,258,src/w3d/ini.cpp,matched,
 ?Get_Rotation_Key_Frames@ParticleBufferClass@@QBEXAAU?$ParticlePropertyStruct@M@@@Z,,0x00983FE0,360,src/w3d/part_buf.cpp,matched,
 ?Get_Shader@ParticleBufferClass@@QBE?AVShaderClass@@XZ,,0x00988FD0,94,src/w3d/part_buf.cpp,matched,
@@ -1068,9 +1073,11 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_String@StringClass@@AAEXH_N@Z,,0x009DB890,352,src/w3d/wwstring.cpp,matched,
 ?Get_Sub_Directory@SimpleFileFactoryClass@@QBEXAAVStringClass@@@Z,,0x009DD900,94,src/w3d/ffactory.cpp,matched,
 ?Get_TextBlock@INIClass@@QBEHPBDPADH@Z,,0x009E57C0,192,src/w3d/ini.cpp,matched,
+?Get_Texture_Tile_Factor@ParticleBufferClass@@QBEMXZ,,0x00988EE0,21,src/w3d/part_buf.cpp,matched,
 ?Get_Translation@Matrix3D@@QBE?AVVector3@@XZ,,0x001B4770,24,src/w3d/matrix3d.cpp,matched,
 ?Get_UUBlock@INIClass@@QBEHPBD0PAXH@Z,,0x009E55C0,228,src/w3d/ini.cpp,matched,
 ?Get_UUBlock@INIClass@@QBEHPBDPAXH@Z,,0x009E5070,455,src/w3d/ini.cpp,matched,
+?Get_Value@ParticleBufferClass@@UBEMXZ,,0x009837F0,20,src/w3d/part_buf.cpp,matched,
 ?Get_X_Rotation@Matrix3D@@QBEMXZ,,0x008D6880,9,src/w3d/matrix3d.cpp,matched,
 ?Get_X_Vector@Matrix3D@@QBE?AVVector3@@XZ,,0x00131DC0,23,src/w3d/frustum.cpp,matched,
 ?Get_Y_Rotation@Matrix3D@@QBEMXZ,,0x008D6890,9,src/w3d/matrix3d.cpp,matched,
@@ -1080,6 +1087,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Increase_Table_Size@?$IndexClass@HPAUINIEntry@@@@AAE_NH@Z,,0x009E2820,217,src/w3d/ini.cpp,matched,IndexClass sibling
 ?Increase_Table_Size@?$IndexClass@HPAUINISection@@@@AAE_NH@Z,,0x009E2950,217,src/w3d/ini.cpp,matched,IndexClass sibling
 ?Increment@?$RemainderTable@V?$Int@$0EA@@@@@QAEXG@Z,,0x009EA980,104,src/w3d/pk.cpp,matched,
+?Increment_LOD@ParticleBufferClass@@UAEXXZ,,0x00983790,18,src/w3d/part_buf.cpp,matched,
 ?Init@AABTIntersectStruct@@QAEXABVAABoxClass@@ABVTriClass@@@Z,,0x008DF420,282,src/w3d/colmathaabtri.cpp,matched,
 ?Init@AABoxClass@@QAEXABVMinMaxAABoxClass@@@Z,,0x006CA330,152,src/w3d/aabox.cpp,matched,
 ?Init@AABoxClass@@QAEXABVVector3@@0@Z,,0x00725F00,44,src/w3d/cullsys.cpp,matched,

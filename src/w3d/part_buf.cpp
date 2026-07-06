@@ -899,7 +899,6 @@ void ParticleBufferClass::Generate_APT(ShareBufferClass <unsigned int> **apt,uns
 	}
 }
 
-// ?ParticleBufferClass::Combine_Color_And_Alpha present-unmatched
 void ParticleBufferClass::Combine_Color_And_Alpha()
 {
 	// Temporary array copying to combine diffuse and alpha to one array.
@@ -942,7 +941,6 @@ void ParticleBufferClass::Combine_Color_And_Alpha()
 	}
 }
 
-// ?ParticleBufferClass::Render_Particles present-unmatched
 void ParticleBufferClass::Render_Particles(RenderInfoClass & rinfo)
 {
 	// If the number of active points is less than the maximum or we need to decimate particles
@@ -1095,7 +1093,6 @@ void ParticleBufferClass::Render_Line(RenderInfoClass & rinfo)
 	}
 }
 
-// ?ParticleBufferClass::Render_Line_Group present-unmatched
 void ParticleBufferClass::Render_Line_Group(RenderInfoClass & rinfo)
 {
 	// If the number of active points is less than the maximum or we need to decimate particles
@@ -1327,31 +1324,26 @@ void ParticleBufferClass::Prepare_LOD(CameraClass &camera)
 	PredictiveLODOptimizerClass::Add_Object(this);
 }
 
-// ?ParticleBufferClass::Increment_LOD present-unmatched
 void ParticleBufferClass::Increment_LOD(void)
 {
 	if (DecimationThreshold > 0) DecimationThreshold--;
 }
 
-// ?ParticleBufferClass::Decrement_LOD present-unmatched
 void ParticleBufferClass::Decrement_LOD(void)
 {
 	if (DecimationThreshold < LodCount) DecimationThreshold++;
 }
 
-// ?ParticleBufferClass::Get_Cost present-unmatched
 float ParticleBufferClass::Get_Cost(void) const
 {
 	return(Cost[(LodCount - 1) - DecimationThreshold]);
 }
 
-// ?ParticleBufferClass::Get_Value present-unmatched
 float ParticleBufferClass::Get_Value(void) const
 {
 	return(Value[(LodCount - 1) - DecimationThreshold]);
 }
 
-// ?ParticleBufferClass::Get_Post_Increment_Value present-unmatched
 float ParticleBufferClass::Get_Post_Increment_Value(void) const
 {
 	return(Value[LodCount - DecimationThreshold]);
@@ -1441,7 +1433,6 @@ int ParticleBufferClass::Calculate_Cost_Value_Arrays(float screen_area, float *v
 }
 
 		
-// ?ParticleBufferClass::Reset_Colors present-unmatched
 void ParticleBufferClass::Reset_Colors(ParticlePropertyStruct<Vector3> &new_props)
 {
 
@@ -1602,7 +1593,6 @@ void ParticleBufferClass::Reset_Colors(ParticlePropertyStruct<Vector3> &new_prop
 }
 
 
-// ?ParticleBufferClass::Reset_Opacity present-unmatched
 void ParticleBufferClass::Reset_Opacity(ParticlePropertyStruct<float> &new_props)
 {
 	unsigned int i;	// Used in loops
@@ -1758,7 +1748,6 @@ void ParticleBufferClass::Reset_Opacity(ParticlePropertyStruct<float> &new_props
 }
 
 
-// ?ParticleBufferClass::Reset_Size present-unmatched
 void ParticleBufferClass::Reset_Size(ParticlePropertyStruct<float> &new_props)
 {
 
@@ -1926,7 +1915,6 @@ void ParticleBufferClass::Reset_Size(ParticlePropertyStruct<float> &new_props)
 }
 
 
-// ?ParticleBufferClass::Reset_Rotations present-unmatched
 void ParticleBufferClass::Reset_Rotations(ParticlePropertyStruct<float> &new_props, float orient_rnd)
 {
 
@@ -2137,7 +2125,6 @@ void ParticleBufferClass::Reset_Rotations(ParticlePropertyStruct<float> &new_pro
 
 
 
-// ?ParticleBufferClass::Reset_Frames present-unmatched
 void ParticleBufferClass::Reset_Frames(ParticlePropertyStruct<float> &new_props)
 {
 
@@ -2449,7 +2436,6 @@ void ParticleBufferClass::Reset_Blur_Times(ParticlePropertyStruct<float> &new_bl
 // This informs the buffer that the emitter is dead, so it can release
 // its pointer to it and be removed itself after all its particles dies
 // out.
-// ?ParticleBufferClass::Emitter_Is_Dead present-unmatched
 void ParticleBufferClass::Emitter_Is_Dead(void)
 {
 	IsEmitterDead = true;
@@ -3486,7 +3472,6 @@ float ParticleBufferClass::Get_Noise_Amplitude(void) const
 	return 0.0f;
 }
 
-// ?ParticleBufferClass::Get_Merge_Abort_Factor present-unmatched
 float ParticleBufferClass::Get_Merge_Abort_Factor(void) const
 {
 	if (LineRenderer != NULL) {
@@ -3495,7 +3480,6 @@ float ParticleBufferClass::Get_Merge_Abort_Factor(void) const
 	return 0.0f;
 }
 
-// ?ParticleBufferClass::Get_Texture_Tile_Factor present-unmatched
 float ParticleBufferClass::Get_Texture_Tile_Factor(void) const
 {
 	if (LineRenderer != NULL) {
@@ -3513,7 +3497,6 @@ Vector2 ParticleBufferClass::Get_UV_Offset_Rate(void) const
 	return Vector2(0.0f,0.0f);
 }
 
-// ?ParticleBufferClass::Determine_Tail_Diffuse present-unmatched
 ParticleBufferClass::TailDiffuseTypeEnum ParticleBufferClass::Determine_Tail_Diffuse()
 {
 	// if there is a texture, the assumption is that the artist
