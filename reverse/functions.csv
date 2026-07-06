@@ -153,7 +153,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0?$Int@$0EA@@@QAE@K@Z,,0x009E21D0,25,src/w3d/pk.cpp,matched,
 ??0?$Int@$0EA@@@QAE@XZ,,0x009EA760,20,src/w3d/int.cpp,matched,
 ??0?$RemainderTable@V?$Int@$0EA@@@@@QAE@ABV?$Int@$0EA@@@@Z,,0x009EAC70,98,src/w3d/pk.cpp,matched,
+??0?$ShareBufferClass@G@@QAE@HPBDH@Z,,0x00923E50,135,src/w3d/meshgeometry.cpp,matched,
 ??0?$ShareBufferClass@VVector3@@@@QAE@HPBDH@Z,,0x005F3BE0,226,src/w3d/part_buf.cpp,matched,
+??0?$ShareBufferClass@VVector3i16@@@@QAE@HPBDH@Z,,0x00926520,225,src/w3d/meshgeometry.cpp,matched,
 ??0?$ShareBufferClass@VVector4@@@@QAE@HPBDH@Z,,0x005F3D60,224,src/w3d/part_buf.cpp,matched,
 ??0?$SimpleDynVecClass@E@@QAE@H@Z,,0x00989030,56,src/w3d/part_buf.cpp,matched,
 ??0?$SimpleVecClass@E@@QAE@H@Z,,0x00984660,39,src/w3d/part_buf.cpp,matched,
@@ -295,6 +297,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0Matrix3D@@QAE@ABVMatrix3@@ABVVector3@@@Z,,0x00956C10,26,src/w3d/colmathsphere.cpp,matched,
 ??0Matrix3D@@QAE@MMMMMMMMMMMM@Z,,0x008D64A0,88,src/w3d/matrix3d.cpp,matched,
 ??0Matrix4@@QAE@ABVMatrix3D@@@Z,,0x006CB3A0,97,src/w3d/matrix3d.cpp,matched,
+??0Matrix4@@QAE@ABVVector4@@000@Z,,0x005F0D80,112,src/w3d/meshgeometry.cpp,matched,
 ??0Matrix4D@@QAE@ABV0@@Z,0x00014FB0,0x007E7B70,107,src/math/matrix4d.cpp,matched,copies values
 ??0Matrix4D@@QAE@ABVCoord3D@@@Z,0x000230ba,0x007e7c00,80,src/math/matrix4d.cpp,matched,
 ??0Matrix4D@@QAE@ABVCoord3D@@M@Z,0x000204aa,0x007e7a30,247,src/math/matrix4d.cpp,matched,
@@ -763,6 +766,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??DCoord3D@@QBEMABUCoord3DBase@@@Z,0x00011F09,0x0018F1C0,27,src/math/coord3d.cpp,matched,dot product with Coord3DBase
 ??DCoord3D@@QBEMABVCoord2D@@@Z,0x00044FE4,0x007E5CF0,19,src/math/coord3d.cpp,matched,dot product with Coord2D
 ??G?$Int@$0EA@@@QBE?AV0@G@Z,,0x009EAB00,86,src/w3d/pk.cpp,matched,
+??G@YA?AVVector2@@ABV0@0@Z,,0x001A0E40,28,src/w3d/meshgeometry.cpp,matched,
 ??G@YA?AVVector3@@ABV0@0@Z,,0x001A1BF0,37,src/w3d/gridcull.cpp,matched,
 ??GVector3@@QBE?AV0@XZ,,0x0020DD70,29,src/w3d/colmathplane.cpp,matched,
 ??H?$Int@$0EA@@@QBE?AV0@G@Z,,0x009EA840,87,src/w3d/pk.cpp,matched,
@@ -887,6 +891,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?ClampMin@VectorProcessorClass@@SAXPAM0MH@Z,,0x00B000B0,218,src/w3d/vp.cpp,matched,
 ?Clear@?$IndexClass@HPAUINIEntry@@@@QAEXXZ,,0x009E27B0,32,src/w3d/ini.cpp,matched,IndexClass sibling
 ?Clear@?$IndexClass@HPAUINISection@@@@QAEXXZ,,0x009E2CE0,32,src/w3d/ini.cpp,matched,IndexClass sibling
+?Clear@?$ShareBufferClass@E@@QAEXXZ,,0x00923DA0,27,src/w3d/meshgeometry.cpp,matched,
+?Clear@?$ShareBufferClass@VVector3@@@@QAEXXZ,,0x00923D70,33,src/w3d/meshgeometry.cpp,matched,
+?Clear@?$ShareBufferClass@VVector3i16@@@@QAEXXZ,,0x00923D50,32,src/w3d/meshgeometry.cpp,matched,
 ?Clear@INIClass@@QAE_NPBD0@Z,,0x009E3890,209,src/w3d/ini.cpp,matched,
 ?Clear@VectorProcessorClass@@SAXPAVVector3@@H@Z,,0x00B00000,37,src/w3d/vp.cpp,matched,
 ?Clone@BumpEnvTextureMapperClass@@UBEPAVTextureMapperClass@@XZ,,0x0096A500,71,src/w3d/mapper.cpp,matched,
@@ -1145,6 +1152,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Init@BTCollisionStruct@@QAEXABVAABoxClass@@ABVVector3@@ABVTriClass@@1@Z,,0x008DF290,353,src/w3d/colmathaabtri.cpp,matched,
 ?Init@FrustumClass@@QAEXABVMatrix3D@@ABVVector2@@1MM@Z,,0x00B00B00,3661,src/w3d/frustum.cpp,matched,
 ?Init@Matrix4@@QAEXABVMatrix3D@@@Z,,0x006CA420,95,src/w3d/matrix3d.cpp,matched,
+?Init@Matrix4@@QAEXABVVector4@@000@Z,,0x005F0AA0,110,src/w3d/meshgeometry.cpp,matched,
 ?Init@MinMaxAABoxClass@@QAEXABVAABoxClass@@@Z,,0x009791A0,84,src/w3d/aabox.cpp,matched,
 ?Init@SegLineRendererClass@@QAEXABUW3dEmitterLinePropertiesStruct@@@Z,,0x00960190,237,src/w3d/seglinerenderer.cpp,matched,
 ?Init@WWMath@@SAXXZ,,0x008D8E90,157,src/w3d/wwmath.cpp,matched,BFME drift: no LookupTableMgrClass::Init() call
@@ -1277,6 +1285,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Peek_First_Collected_Object_Internal@CullSystemClass@@IAEPAVCullableClass@@XZ,,0x008E2190,4,src/w3d/cullsys.cpp,matched,
 ?Peek_Next_Collected_Object_Internal@CullSystemClass@@IAEPAVCullableClass@@PAV2@@Z,,0x008E21A0,19,src/w3d/cullsys.cpp,matched,
 ?Plain_Block_Size@PKey@@QBEHXZ,,0x009EA720,17,src/w3d/pk.cpp,matched,
+?Point_In_Triangle_2D@@YA_NABVVector3@@000HHAAE@Z,,0x001A0ED0,809,src/w3d/meshgeometry.cpp,matched,
 ?Power@VectorProcessorClass@@SAXPAM0MH@Z,,0x00B00190,56,src/w3d/vp.cpp,matched,
 ?PreStaticInit@Debug@@CAPAV1@XZ,0x00889500,0x00889500,114,src/game/debug.cpp,matched,Debug PreStaticInit singleton allocator
 ?Prepare_LOD@ParticleBufferClass@@UAEXAAVCameraClass@@@Z,,0x00984E60,437,src/w3d/part_buf.cpp,unmatched,rendobj vtable slot map incomplete: this-vcalls need +6 slots before mine 0x120..0x130 region yet only +2 by 0x178; map LOD-section virtuals
@@ -1433,6 +1442,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Set_LOD_Level@ParticleBufferClass@@UAEXH@Z,,0x00985020,46,src/w3d/part_buf.cpp,matched,
 ?Set_LOD_Max_Screen_Size@ParticleBufferClass@@SAXHM@Z,,0x009843D0,25,src/w3d/part_buf.cpp,matched,
 ?Set_Merge_Intersections@SegLineRendererClass@@QAEXH@Z,,0x009188E0,29,src/w3d/seglinerenderer.cpp,matched,
+?Set_Name@MeshGeometryClass@@QAEXPBD@Z,,0x00924D10,178,src/w3d/meshgeometry.cpp,matched,
 ?Set_Name@RawFileClass@@UAEPBDPBD@Z,,0x009E6AF0,33,src/w3d/rawfile.cpp,matched,
 ?Set_Point_Color@PointGroupClass@@QAEXVVector3@@@Z,,0x009127B0,24,src/w3d/pointgr.cpp,matched,
 ?Set_Random@LineSegClass@@QAEXABVVector3@@0@Z,,0x008D8CA0,336,src/w3d/lineseg.cpp,matched,
