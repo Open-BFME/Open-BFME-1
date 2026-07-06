@@ -104,9 +104,14 @@ def main():
         if size < 8:
             continue
         # string_xrefs.tsv lists the *containing function's* start address for each
-        # reference (validated: A == known start, 10/10), so a unique-string DIR32
-        # reloc names this function's start directly.
-        votes = {}
+        # reference (validated: A == known start, 10/10). A string referenced from
+        # exactly one function names that function's start directly (unique-string
+        # anchor). When no single string is unique, the INTERSECTION of the address
+        # sets of two or more strings this function references can still be a single
+        # address — multi-string intersection anchoring, which reaches functions the
+        # unique-string pass misses.
+        votes = {}          # address -> how many unique strings vote for it
+        ref_sets = []       # per-string candidate address sets (any multiplicity)
         for off, rtype, target in relocs:
             if rtype != 0x0006 or target not in strmap:  # DIR32 to a string
                 continue
@@ -114,33 +119,40 @@ def main():
             if len(text) < 6 or text not in xrefs:
                 continue
             addrs = xrefs[text]
-            if len(addrs) != 1:  # only strings referenced from exactly one function anchor cleanly
-                continue
-            votes.setdefault(addrs[0], 0)
-            votes[addrs[0]] += 1
-        if not votes:
+            ref_sets.append(set(addrs))
+            if len(addrs) == 1:
+                votes.setdefault(addrs[0], 0)
+                votes[addrs[0]] += 1
+        if votes:
+            best = max(votes, key=votes.get)
+            if 0x1000 <= best < 0xd00000:
+                candidates[name] = (best, size, votes[best], "unique")
             continue
-        best = max(votes, key=votes.get)
-        if 0x1000 <= best < 0xd00000:
-            candidates[name] = (best, size, votes[best])
+        # no unique string — try intersecting the address sets of 2+ shared strings
+        if len(ref_sets) >= 2:
+            inter = set.intersection(*ref_sets)
+            if len(inter) == 1:
+                best = next(iter(inter))
+                if 0x1000 <= best < 0xd00000:
+                    candidates[name] = (best, size, len(ref_sets), "intersect")
 
     if not candidates:
         print(f"{src.name}: no string anchors found")
         return
 
     print(f"{src.name}: {len(candidates)} string-anchor candidate(s)")
-    for name, (rva, size, v) in sorted(candidates.items(), key=lambda x: -x[1][2]):
+    for name, (rva, size, v, kind) in sorted(candidates.items(), key=lambda x: -x[1][2]):
         flag = " (in-csv)" if name in have else ""
-        print(f"  0x{rva:06x} size~{size} votes={v} {name.split('@@')[0][:50]}{flag}")
+        print(f"  0x{rva:06x} size~{size} {kind}={v} {name.split('@@')[0][:50]}{flag}")
 
     if emit:
         rows = (ROOT / "reverse" / "functions.csv").read_text().rstrip("\n").split("\n")
         header, body = rows[0], rows[1:]
         added = 0
-        for name, (rva, size, v) in candidates.items():
+        for name, (rva, size, v, kind) in candidates.items():
             if name in have:
                 continue
-            body.append(f"{name},,0x{rva:08X},{size},{src.as_posix()},matched,string-anchored")
+            body.append(f"{name},,0x{rva:08X},{size},{src.as_posix()},matched,string-anchored ({kind})")
             added += 1
         body.sort(key=lambda r: r.split(",")[0])
         (ROOT / "reverse" / "functions.csv").write_text(header + "\n" + "\n".join(body) + "\n")
