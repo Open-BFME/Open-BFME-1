@@ -155,6 +155,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0?$Int@$0EA@@@QAE@K@Z,,0x009E21D0,25,src/w3d/pk.cpp,matched,
 ??0?$Int@$0EA@@@QAE@XZ,,0x009EA760,20,src/w3d/int.cpp,matched,
 ??0?$RemainderTable@V?$Int@$0EA@@@@@QAE@ABV?$Int@$0EA@@@@Z,,0x009EAC70,98,src/w3d/pk.cpp,matched,
+??0?$ShareBufferClass@E@@QAE@HPBDH@Z,,0x005F3A70,131,src/w3d/meshgeometry.cpp,matched,caller-derived
 ??0?$ShareBufferClass@G@@QAE@HPBDH@Z,,0x00923E50,135,src/w3d/meshgeometry.cpp,matched,
 ??0?$ShareBufferClass@VVector3@@@@QAE@HPBDH@Z,,0x005F3BE0,226,src/w3d/part_buf.cpp,matched,
 ??0?$ShareBufferClass@VVector3i16@@@@QAE@HPBDH@Z,,0x00926520,225,src/w3d/meshgeometry.cpp,matched,
@@ -299,6 +300,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0LinearOffsetTextureMapperClass@@QAE@ABV0@@Z,,0x009669A0,103,src/w3d/mapper.cpp,matched,
 ??0LinearOffsetTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x009668B0,237,src/w3d/mapper.cpp,matched,
 ??0LinearOffsetTextureMapperClass@@QAE@ABVVector2@@0_N0I@Z,,0x009667F0,133,src/w3d/mapper.cpp,matched,
+??0Matrix3@@QAE@ABVMatrix3D@@@Z,,0x008D9150,61,src/w3d/matrix3.cpp,matched,caller-derived
 ??0Matrix3@@QAE@ABVVector3@@00@Z,,0x005F6910,67,src/w3d/obbox.cpp,matched,
 ??0Matrix3@@QAE@MMMMMMMMM@Z,,0x008D8F30,67,src/w3d/matrix3.cpp,matched,
 ??0Matrix3@@QAE@_N@Z,,0x0060C330,46,src/w3d/colmathobbobb.cpp,matched,
