@@ -296,6 +296,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0Matrix3@@QAE@_N@Z,,0x0060C330,46,src/w3d/colmathobbobb.cpp,matched,
 ??0Matrix3D@@QAE@ABVMatrix3@@ABVVector3@@@Z,,0x00956C10,26,src/w3d/colmathsphere.cpp,matched,
 ??0Matrix3D@@QAE@MMMMMMMMMMMM@Z,,0x008D64A0,88,src/w3d/matrix3d.cpp,matched,
+??0Matrix3D@@QAE@_N@Z,,0x001B5AF0,55,src/w3d/pivot.cpp,matched,
 ??0Matrix4@@QAE@ABVMatrix3D@@@Z,,0x006CB3A0,97,src/w3d/matrix3d.cpp,matched,
 ??0Matrix4@@QAE@ABVVector4@@000@Z,,0x005F0D80,112,src/w3d/meshgeometry.cpp,matched,
 ??0Matrix4D@@QAE@ABV0@@Z,0x00014FB0,0x007E7B70,107,src/math/matrix4d.cpp,matched,copies values
@@ -331,6 +332,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0QuadDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00005222,0x005D8A40,62,src/game/fx_particle_system_bulk.cpp,matched,
 ??0QuadDrawModuleTemplate@FXParticleSystem@@QAE@XZ,0x0001D278,0x005D8970,106,src/game/fx_particle_system_bulk.cpp,matched,
 ??0Quaternion@@QAE@ABVVector3@@M@Z,,0x008DB600,92,src/w3d/quat.cpp,matched,
+??0Quaternion@@QAE@_N@Z,,0x00959750,30,src/w3d/motchan.cpp,matched,
 ??0RGBColorKeyframe@FXParticleSystem@@QAE@XZ,0x00029677,0x0005C700,16,src/game/fx_particle_system_bulk.cpp,matched,sets channels and frame to zero
 ??0Random2Class@@QAE@I@Z,,0x009E63C0,76,src/w3d/random.cpp,matched,verbatim Generals WWLib
 ??0Random4Class@@QAE@I@Z,,0x009E5FD0,77,src/w3d/random.cpp,matched,verbatim Generals WWLib
@@ -865,6 +867,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Add_Tail@GenericList@@QAEXPAVGenericNode@@@Z,,0x009E2A30,78,src/w3d/ini.cpp,matched,
 ?Add_To_Collection@CullSystemClass@@IAEXPAVCullableClass@@@Z,,0x008E21D0,16,src/w3d/cullsys.cpp,matched,
 ?Add_Uninitialized_New_Particle@ParticleBufferClass@@QAEPAUNewParticleStruct@@XZ,,0x00983A90,105,src/w3d/part_buf.cpp,matched,
+?Adjust_Translation@Matrix3D@@QAEXABVVector3@@@Z,,0x000FBBB0,33,src/w3d/pivot.cpp,matched,
 ?Advance_Next@HashTableIteratorClass@@AAEXXZ,,0x009E0030,42,src/w3d/hash.cpp,matched,
 ?Allocate_Buffer@StringClass@@AAEPADH@Z,,0x009DB750,33,src/w3d/wwstring.cpp,matched,
 ?Append_Sub_Directory@SimpleFileFactoryClass@@QAEXPBD@Z,,0x009DDA50,249,src/w3d/ffactory.cpp,matched,
@@ -931,6 +934,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Contains@AABoxClass@@QBE_NABVVector3@@@Z,,0x008DDA80,139,src/w3d/gridcull.cpp,matched,
 ?Contains@GenericMultiListClass@@QAE_NPAVMultiListObjectClass@@@Z,,0x009DBEE0,38,src/w3d/multilist.cpp,matched,
 ?Contains_Point@TriClass@@QBE_NABVVector3@@@Z,,0x008E1900,297,src/w3d/tri.cpp,matched,
+?Convert_Color@W3dUtilityClass@@SAXABUW3dRGBAStruct@@PAVVector4@@@Z,,0x0096CFF0,91,src/w3d/w3d_util.cpp,matched,
+?Convert_Color@W3dUtilityClass@@SAXABUW3dRGBStruct@@PAVVector3@@@Z,,0x009216A0,70,src/w3d/w3d_util.cpp,matched,
+?Convert_Vector@W3dUtilityClass@@SAXABUIOVector3Struct@@PAVVector3@@@Z,,0x00956C30,25,src/w3d/w3d_util.cpp,matched,
 ?Copy@VectorProcessorClass@@SAXPAIPBIH@Z,,0x00AFFB40,23,src/w3d/vp.cpp,matched,
 ?Copy@VectorProcessorClass@@SAXPAVVector2@@PBV2@H@Z,,0x00AFFB20,26,src/w3d/vp.cpp,matched,
 ?Copy@VectorProcessorClass@@SAXPAVVector3@@PBV2@H@Z,,0x00AFFB60,41,src/w3d/vp.cpp,matched,
@@ -1014,6 +1020,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?First@GenericMultiListIterator@@QAEXXZ,,0x006C51E0,9,src/w3d/multilist.cpp,matched,
 ?First@GridListIterator@@QAEXPAVCullableClass@@@Z,,0x008DCE20,12,src/w3d/gridcull.cpp,matched,
 ?First@HashTableIteratorClass@@QAEXXZ,,0x009E01F0,93,src/w3d/hash.cpp,matched,
+?Float_To_Int_Floor@WWMath@@SAHABM@Z,,0x007239D0,103,src/w3d/motchan.cpp,matched,
 ?Flush@Base64Pipe@@UAEHXZ,,0x009E7B20,87,src/w3d/b64pipe.cpp,matched,
 ?Flush@Pipe@@UAEHXZ,,0x009E7970,17,src/w3d/pipe.cpp,matched,
 ?Format@StringClass@@QAAHPBDZZ,,0x009DBB90,151,src/w3d/wwstring.cpp,matched,
@@ -1106,6 +1113,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_Polygon_Count@LineGroupClass@@QAEHXZ,,0x0098E970,28,src/w3d/linegrp.cpp,matched,
 ?Get_Polygon_Count@PointGroupClass@@QAEHXZ,,0x00912150,27,src/w3d/pointgr.cpp,matched,
 ?Get_Post_Increment_Value@ParticleBufferClass@@UBEMXZ,,0x00983810,20,src/w3d/part_buf.cpp,matched,
+?Get_QuatVector@AdaptiveDeltaMotionChannelClass@@QAE?AVQuaternion@@M@Z,,0x00978460,369,src/w3d/motchan.cpp,matched,
 ?Get_Random_Float_Minus1_To_1@Vector3Randomizer@@IAEMXZ,,0x00B02120,25,src/w3d/v3_rnd.cpp,matched,
 ?Get_Rect@INIClass@@QBE?BV?$TRect@H@@PBD0ABV2@@Z,,0x009E5940,258,src/w3d/ini.cpp,matched,
 ?Get_Rotation_Key_Frames@ParticleBufferClass@@QBEXAAU?$ParticlePropertyStruct@M@@@Z,,0x00983FE0,360,src/w3d/part_buf.cpp,matched,
@@ -1125,6 +1133,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_UV_Offset_Rate@ParticleBufferClass@@QBE?AVVector2@@XZ,,0x00988F20,60,src/w3d/part_buf.cpp,matched,
 ?Get_UV_Offset_Rate@SegLineRendererClass@@QBE?AVVector2@@XZ,,0x00918990,30,src/w3d/part_buf.cpp,matched,
 ?Get_Value@ParticleBufferClass@@UBEMXZ,,0x009837F0,20,src/w3d/part_buf.cpp,matched,
+?Get_Vector@AdaptiveDeltaMotionChannelClass@@QAEXMPAM@Z,,0x00978400,90,src/w3d/motchan.cpp,matched,
 ?Get_Vector@Vector3HollowSphereRandomizer@@UAEXAAVVector3@@@Z,,0x00B023B0,197,src/w3d/v3_rnd.cpp,matched,
 ?Get_Vector@Vector3SolidBoxRandomizer@@UAEXAAVVector3@@@Z,,0x00B021E0,104,src/w3d/v3_rnd.cpp,matched,
 ?Get_Vector@Vector3SolidCylinderRandomizer@@UAEXAAVVector3@@@Z,,0x00B02510,154,src/w3d/v3_rnd.cpp,matched,
@@ -1502,6 +1511,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Update_Non_New_Particles@ParticleBufferClass@@IAEXI@Z,,0x00988060,3476,src/w3d/part_buf.cpp,matched,
 ?Update_Visual_Particle_State@ParticleBufferClass@@IAEXXZ,,0x00986FC0,3223,src/w3d/part_buf.cpp,matched,
 ?Version1@Xfer@@QAEXXZ,0x000429C9,0x000C7E90,21,src/game/xfer.cpp,matched,xfer version 1 marker
+?W3d_Shader_Reset@@YAXPAUW3dShaderStruct@@@Z,,0x009785E0,57,src/w3d/w3d_util.cpp,matched,
 ?Write@BufferedFileClass@@UAEHPBXH@Z,,0x009E7740,5,src/w3d/bufffile.cpp,matched,
 ?Write@ChunkSaveClass@@QAEKABUIOVector2Struct@@@Z,,0x009E1910,15,src/w3d/chunkio.cpp,matched,
 ?Write@ChunkSaveClass@@QAEKABUIOVector3Struct@@@Z,,0x009E1920,15,src/w3d/chunkio.cpp,matched,
@@ -1789,6 +1799,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?peek@?$StringBase@D@@ABEPADXZ,0x0002B26A,0x0005E5B0,6,src/game/string_base.cpp,matched,returns pointer to data
 ?peek@?$StringBase@G@@ABEPAGXZ,0x0002264C,0x0005E5C0,6,src/game/string_base.cpp,matched,returns pointer to data
 ?pfunc@@YAHPBX0@Z,,0x009E8C80,30,src/w3d/mpmath.cpp,matched,
+?postMul@Matrix3D@@QAEXABV1@@Z,,0x001E0E80,338,src/w3d/pivot.cpp,matched,
 ?project_to_sphere@@YAMMMM@Z,,0x008DC200,105,src/w3d/quat.cpp,matched,
 ?rad2deg@@YAMM@Z,0x00008BF2,0x007E5950,11,src/math/trig.cpp,matched,converts radians to degrees
 ?readArgument@RecorderClass@@IAEXW4GameMessageArgumentDataType@@PAVGameMessage@@@Z,0x0000139D,0x97500,520,src/game/recorder_strings.cpp,matched,
@@ -1842,6 +1853,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?str@?$StringBase@G@@QBEPBGXZ,0x0002287C,0x0005F290,16,src/game/string_base.cpp,matched,returns c-string
 ?strtrim@@YAPADPAD@Z,,0x009E7EB0,102,src/w3d/trim.cpp,matched,
 ?sub@Coord3D@@QAEXPBUCoord3DBase@@@Z,0x00045084,0x000C3CE0,31,src/math/coord3d.cpp,matched,subtracts Coord3DBase pointer
+?submul@@YAMABVVector4@@MMM@Z,,0x00131F30,29,src/w3d/pivot.cpp,matched,
 ?swap@?$StringBase@D@@QAEXAAV1@@Z,0x0002E4E7,0x0006F4E0,17,src/game/string_base.cpp,matched,swap m_data pointers
 ?swap@?$StringBase@G@@QAEXAAV1@@Z,0x000325F1,0x004B22E0,17,src/game/string_base.cpp,matched,swap m_data pointers
 ?tintAllColors@DefaultColorModuleInfo@FXParticleSystem@@QAEXH@Z,0x0002C228,0x5ef6c0,283,src/game/fx_particle_system_bulk.cpp,matched,

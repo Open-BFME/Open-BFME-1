@@ -53,6 +53,7 @@ name,address,notes
 ?Determine_Tail_Diffuse@ParticleBufferClass@@IAE?AW4TailDiffuseTypeEnum@1@XZ,0x0098B750
 ?Enable_Fog@ShaderClass@@QAEXPBD@Z,0x00910F90,derived from ParticleBufferClass main ctor aligned call sites
 ?End_Chunk@ChunkSaveClass@@QAE_NXZ,0x009E17F0
+?Fast_Slerp@@YAXAAVQuaternion@@ABV1@1M@Z,0x008DC4C0
 ?Find_POT@@YAHH@Z,0x00AFFAB0
 ?Free_String@StringClass@@AAEXXZ,0x009DB7A0
 ?Get@Base64Straw@@UAEHPAXH@Z,0x009E7B80
@@ -143,6 +144,7 @@ name,address,notes
 ?appendTimestampArgument@GameMessage@@QAEXI@Z,0x0000D558,GameMessage::appendTimestampArgument thunk
 ?appendWideCharArgument@GameMessage@@QAEXABG@Z,0x000028C9,GameMessage::appendWideCharArgument thunk
 ?getPath_UserData@GlobalData@@QBE?AVAsciiString@@XZ,0x000106EA,GlobalData::getPath_UserData thunk
+?getframe@AdaptiveDeltaMotionChannelClass@@AAEMKK@Z,0x00977FF0
 ?hidePurchaseScience@ControlBar@@QAEXXZ,0x00020347
 ?hideSpecialPowerShortcut@ControlBar@@QAEXXZ,0x00041367
 ?initFromINI@INI@@QAEXPAXPBX@Z,0x008520A0,INI::initFromINI(void*, const void*) body
