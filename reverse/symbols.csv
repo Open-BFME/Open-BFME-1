@@ -39,6 +39,7 @@ name,address,notes
 ??2@YAPAXI@Z,0x00881F30,operator new body
 ??3@YAXPAX@Z,0x00881EB0
 ??4?$VectorClass@VModelNodeClass@HLodClass@@@@QAEAAV0@ABV0@@Z,0x0097ACA0
+??4Matrix3@@QAEAAV0@ABVMatrix3D@@@Z,0x008D9150
 ??4RenderObjClass@@QAEAAV0@ABV0@@Z,0x0091F790
 ??4SegLineRendererClass@@QAEAAV0@ABV0@@Z,0x009600F0
 ??4StringClass@@QAEABV0@ABV0@@Z,0x00035FDF
@@ -72,6 +73,8 @@ name,address,notes
 ?Free@DistLODClass@@AAEXXZ,0x00014BC3
 ?Free_String@StringClass@@AAEXXZ,0x009DB7A0
 ?Get@Base64Straw@@UAEHPAXH@Z,0x009E7B80
+?Get_Bounding_Box@MeshGeometryClass@@QAEXPAVAABoxClass@@@Z,0x00924DD0
+?Get_Bounding_Sphere@MeshGeometryClass@@QAEXPAVSphereClass@@@Z,0x00924E70
 ?Get_First_Collected_Object_Internal@CullSystemClass@@IAEPAVCullableClass@@XZ,0x008E2160
 ?Get_New_Particles@ParticleBufferClass@@IAEXXZ,0x00987C60
 ?Get_Next_Collected_Object_Internal@CullSystemClass@@IAEPAVCullableClass@@PAV2@@Z,0x008E2170

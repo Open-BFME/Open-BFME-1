@@ -294,6 +294,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0LineEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00004269,0x005D5C60,116,src/game/fx_particle_system.cpp,matched,
 ??0LineEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@XZ,0x00045075,0x005D5BD0,60,src/game/fx_particle_system_bulk.cpp,matched,
 ??0LineGroupClass@@QAE@XZ,,0x0098E9C0,88,src/w3d/linegrp.cpp,matched,
+??0LineSegClass@@QAE@ABV0@ABVMatrix3D@@@Z,,0x0092C6D0,26,src/w3d/mesh.cpp,matched,
 ??0LineSegClass@@QAE@ABVVector3@@0@Z,,0x003FEAF0,57,src/w3d/segline.cpp,matched,
 ??0LinearOffsetTextureMapperClass@@QAE@ABV0@@Z,,0x009669A0,103,src/w3d/mapper.cpp,matched,
 ??0LinearOffsetTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x009668B0,237,src/w3d/mapper.cpp,matched,
@@ -319,6 +320,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0Null3DObjClass@@QAE@ABV0@@Z,,0x009726E0,54,src/w3d/nullrobj.cpp,matched,
 ??0Null3DObjClass@@QAE@PBD@Z,,0x009726A0,49,src/w3d/nullrobj.cpp,matched,
 ??0OBBoxClass@@QAE@ABVVector3@@0@Z,,0x0075B300,80,src/w3d/colmathobbobb.cpp,matched,
+??0OBBoxIntersectionTestClass@@QAE@ABVAABoxIntersectionTestClass@@ABVMatrix3D@@@Z,,0x0092D8E0,176,src/w3d/mesh.cpp,matched,
 ??0ObbCollisionStruct@@QAE@ABVOBBoxClass@@ABVVector3@@01@Z,,0x008E3760,218,src/w3d/colmathobbobb.cpp,matched,
 ??0ObbIntersectionStruct@@QAE@ABVOBBoxClass@@0@Z,,0x008E2A20,153,src/w3d/colmathobbobb.cpp,matched,
 ??0OrthoEmissionVelocityInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00003FB2,0x005D6DA0,93,src/game/fx_particle_system.cpp,matched,
@@ -356,6 +358,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0RandomTextureMapperClass@@QAE@MABVVector2@@I@Z,,0x00965C00,186,src/w3d/mapper.cpp,matched,
 ??0RawFileClass@@QAE@PBD@Z,,0x009E6A20,144,src/w3d/rawfile.cpp,matched,
 ??0RawFileClass@@QAE@XZ,,0x009E6990,108,src/w3d/rawfile.cpp,matched,
+??0RayCollisionTestClass@@QAE@ABV0@ABVMatrix3D@@@Z,,0x0092C8B0,60,src/w3d/mesh.cpp,matched,
 ??0RayCollisionTestClass@@QAE@ABVLineSegClass@@PAUCastResultStruct@@H_N2@Z,,0x00609A20,120,src/w3d/rendobj.cpp,matched,
 ??0Region2D@@QAE@ABU0@@Z,0x000173CD,0x0005C320,31,src/math/region.cpp,matched,copies bounds
 ??0Region2D@@QAE@ABVCoord2D@@0@Z,0x000277EB,0x0061BA60,34,src/math/region.cpp,matched,copies lower and upper coordinates
@@ -1186,11 +1189,13 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_Num_Polys@SegmentedLineClass@@UBEHXZ,,0x0094FEE0,28,src/w3d/segline.cpp,matched,
 ?Get_Obj_Space_Bounding_Box@CompositeRenderObjClass@@UBEXAAVAABoxClass@@@Z,,0x0097B6D0,60,src/w3d/hlod.cpp,matched,
 ?Get_Obj_Space_Bounding_Box@Line3DClass@@UBEXAAVAABoxClass@@@Z,,0x00951810,40,src/w3d/line3d.cpp,matched,
+?Get_Obj_Space_Bounding_Box@MeshClass@@UBEXAAVAABoxClass@@@Z,,0x0092D360,46,src/w3d/mesh.cpp,matched,
 ?Get_Obj_Space_Bounding_Box@Null3DObjClass@@UBEXAAVAABoxClass@@@Z,,0x009729B0,31,src/w3d/nullrobj.cpp,matched,
 ?Get_Obj_Space_Bounding_Box@ParticleBufferClass@@UBEXAAVAABoxClass@@@Z,,0x0098BD50,69,src/w3d/part_buf.cpp,matched,
 ?Get_Obj_Space_Bounding_Box@SegmentedLineClass@@UBEXAAVAABoxClass@@@Z,,0x0094FF00,2279,src/w3d/segline.cpp,matched,
 ?Get_Obj_Space_Bounding_Sphere@CompositeRenderObjClass@@UBEXAAVSphereClass@@@Z,,0x009828B0,42,src/w3d/animobj.cpp,matched,
 ?Get_Obj_Space_Bounding_Sphere@Line3DClass@@UBEXAAVSphereClass@@@Z,,0x009517E0,34,src/w3d/line3d.cpp,matched,
+?Get_Obj_Space_Bounding_Sphere@MeshClass@@UBEXAAVSphereClass@@@Z,,0x0092D330,39,src/w3d/mesh.cpp,matched,
 ?Get_Obj_Space_Bounding_Sphere@Null3DObjClass@@UBEXAAVSphereClass@@@Z,,0x00972990,24,src/w3d/nullrobj.cpp,matched,
 ?Get_Obj_Space_Bounding_Sphere@ParticleBufferClass@@UBEXAAVSphereClass@@@Z,,0x0098BCE0,105,src/w3d/part_buf.cpp,matched,
 ?Get_Obj_Space_Bounding_Sphere@RenderObjClass@@UBEXAAVSphereClass@@@Z,,0x009203F0,24,src/w3d/rendobj.cpp,matched,
@@ -1499,6 +1504,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Rotate@Coord2D@@QAEAAV1@M@Z,0x0001ac94,0x004afaa0,76,src/math/coord2d.cpp,matched,
 ?Rotate@Coord2D@@QAEAAV1@MM@Z,0x0001251C,0x007E5B40,40,src/math/coord2d.cpp,matched,rotates vector in place by sine/cosine
 ?RotateCoord@Matrix4D@@QAEAAVCoord3D@@ABV2@AAV2@@Z,0x0001C887,0x007E68E0,83,src/math/matrix4d.cpp,matched,rotates coordinate without translation
+?Rotate_AABox_Extent@Matrix3@@QAEXABVVector3@@PAV2@@Z,,0x0092C800,114,src/w3d/mesh.cpp,matched,
 ?Rotate_Vector@Matrix3@@SAXABV1@ABVVector3@@PAV2@@Z,,0x008E1A70,115,src/w3d/colmathplane.cpp,matched,
 ?Rotate_Vector@Matrix3D@@QBE?AVVector3@@ABV2@@Z,,0x008D68B0,81,src/w3d/matrix3d.cpp,matched,
 ?Rotate_Vector@Matrix3D@@SAXABV1@ABVVector3@@PAV2@@Z,,0x005BDD00,115,src/w3d/lineseg.cpp,matched,
@@ -1633,6 +1639,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Transform@AABoxClass@@QAEXABVMatrix3D@@@Z,,0x0091FD10,72,src/w3d/rendobj.cpp,matched,
 ?Transform@AABoxClass@@SAXABVMatrix3D@@ABV1@PAV1@@Z,,0x008DB450,28,src/w3d/aabox.cpp,matched,
 ?Transform@MinMaxAABoxClass@@QAEXABVMatrix3D@@@Z,,0x00979320,72,src/w3d/hlod.cpp,matched,
+?Transform@OBBoxClass@@SAXABVMatrix3D@@ABV1@PAV1@@Z,,0x0075B370,165,src/w3d/mesh.cpp,matched,
 ?Transform@SphereClass@@QAEXABVMatrix3D@@@Z,,0x00979110,88,src/w3d/hlod.cpp,matched,
 ?Transform@VectorProcessorClass@@SAXPAVVector3@@PBV2@ABVMatrix3D@@H@Z,,0x00B001D0,130,src/w3d/vp.cpp,matched,
 ?Transform@VectorProcessorClass@@SAXPAVVector4@@PBVVector3@@ABVMatrix4@@H@Z,,0x00B002E0,772,src/w3d/vp.cpp,matched,
@@ -2022,6 +2029,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?trim@?$StringBase@G@@QAEXXZ,0x00888ED0,0x888ed0,147,src/game/string_base.cpp,matched,
 ?unlink_object@GridCullSystemClass@@IAEXPAVCullableClass@@@Z,,0x008DDC60,88,src/w3d/gridcull.cpp,matched,
 ?unlink_object_from_list@GridCullSystemClass@@IAEXPAPAVCullableClass@@PAV2@@Z,,0x008DD900,65,src/w3d/gridcull.cpp,matched,
+?update_bounding_box@OBBoxIntersectionTestClass@@IAEXXZ,,0x0092C900,130,src/w3d/mesh.cpp,matched,
 ?update_temporal_state@GridTextureMapperClass@@IAEXXZ,,0x00964A20,73,src/w3d/mapper.cpp,matched,
 ?validate@?$StringBase@D@@ABEXXZ,0x0001D4A3,0x0005D790,1,src/game/string_base.cpp,matched,no-op string validation
 ?validate@?$StringBase@G@@ABEXXZ,0x000390A9,0x0005D7A0,1,src/game/string_base.cpp,matched,no-op
