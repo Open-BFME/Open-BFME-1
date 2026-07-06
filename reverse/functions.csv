@@ -169,6 +169,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0?$StringBase@G@@AAE@PBG@Z,0x00888DE0,0x888de0,82,src/game/string_base.cpp,matched,
 ??0?$StringBase@G@@AAE@PBGH@Z,0x00888DA0,0x888da0,56,src/game/string_base.cpp,matched,
 ??0?$StringBase@G@@AAE@XZ,0x0001431C,0x000834C0,9,src/game/string_base.cpp,matched,initializes string data pointer to null
+??0?$VectorClass@E@@QAE@HPBE@Z,,0x009121A0,71,src/w3d/pointgr.cpp,matched,
+??0?$VectorClass@VVector2@@@@QAE@HPBVVector2@@@Z,,0x00913500,175,src/w3d/pointgr.cpp,matched,
+??0?$VectorClass@VVector3@@@@QAE@HPBVVector3@@@Z,,0x007B9EE0,174,src/w3d/pointgr.cpp,matched,
 ??0AABTIntersectStruct@@QAE@XZ,,0x008DF400,17,src/w3d/colmathaabtri.cpp,matched,
 ??0AABoxClass@@QAE@ABVMinMaxAABoxClass@@@Z,,0x0097B280,154,src/w3d/aabox.cpp,matched,
 ??0AsciiString@@QAE@ABV0@@Z,0x000416AF,0x0005EE50,19,src/game/ascii_string.cpp,matched,AsciiString copy constructor
@@ -315,6 +318,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0PlaneClass@@QAE@XZ,,0x00931400,20,src/w3d/frustum.cpp,matched,
 ??0PointEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0000FECA,0x005D5930,62,src/game/fx_particle_system_bulk.cpp,matched,
 ??0PointEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@XZ,0x0003160B,0x005D58B0,41,src/game/fx_particle_system_bulk.cpp,matched,
+??0PointGroupClass@@QAE@XZ,,0x00912580,91,src/w3d/pointgr.cpp,matched,
 ??0QuadDrawModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00048AE5,0x005D88B0,11,src/game/fx_particle_system.cpp,matched,copy constructor sets vtable pointer
 ??0QuadDrawModuleInfo@FXParticleSystem@@QAE@XZ,0x00015C4E,0x005F5450,9,src/game/fx_particle_system.cpp,matched,default constructor sets vtable pointer
 ??0QuadDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00005222,0x005D8A40,62,src/game/fx_particle_system_bulk.cpp,matched,
@@ -690,6 +694,10 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??6@YAAAVDebug@@AAV0@ABV?$StringBase@D@@@Z,0x00016F86,0x0005F590,52,src/game/string_base.cpp,matched,Debug output for StringBase<char>
 ??6@YAAAVDebug@@AAV0@ABVCoord2D@@@Z,0x000158FC,0x007E7130,72,src/math/coord2d.cpp,matched,Debug output for Coord2D
 ??6@YAAAVDebug@@AAV0@ABVCoord3D@@@Z,0x00005420,0x003D5280,95,src/math/coord3d.cpp,matched,Debug output for Coord3D
+??8?$VectorClass@E@@UBE_NABV0@@Z,,0x00912F30,65,src/w3d/pointgr.cpp,matched,
+??8?$VectorClass@M@@UBE_NABV0@@Z,,0x00913440,74,src/w3d/pointgr.cpp,matched,
+??8?$VectorClass@VVector3@@@@UBE_NABV0@@Z,,0x007BB950,112,src/w3d/pointgr.cpp,matched,
+??8?$VectorClass@VVector4@@@@UBE_NABV0@@Z,,0x00913160,127,src/w3d/pointgr.cpp,matched,
 ??8@YA_NABURGBColor@@0@Z,0x000136D8,0x007E6FB0,60,src/math/color.cpp,matched,compares RGB channels
 ??8@YA_NABV?$StringBase@D@@0@Z,0x000259B9,0x0007FFF0,20,src/game/string_base.cpp,matched,StringBase<char> equals StringBase<char>
 ??8@YA_NABV?$StringBase@D@@PBD@Z,0x0002A71B,0x000AA230,20,src/game/string_base.cpp,matched,StringBase<char> equals C string
@@ -1067,6 +1075,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_Point@INIClass@@QBE?BV?$TPoint2D@M@@PBD0ABV2@@Z,,0x009E4530,179,src/w3d/ini.cpp,matched,
 ?Get_Point@INIClass@@QBE?BV?$TPoint3D@H@@PBD0ABV2@@Z,,0x009E4340,207,src/w3d/ini.cpp,matched,
 ?Get_Point@INIClass@@QBE?BV?$TPoint3D@M@@PBD0ABV2@@Z,,0x009E4460,207,src/w3d/ini.cpp,matched,
+?Get_Point_Color@PointGroupClass@@QAE?AVVector3@@XZ,,0x009127D0,24,src/w3d/pointgr.cpp,matched,
+?Get_Polygon_Count@PointGroupClass@@QAEHXZ,,0x00912150,27,src/w3d/pointgr.cpp,matched,
 ?Get_Post_Increment_Value@ParticleBufferClass@@UBEMXZ,,0x00983810,20,src/w3d/part_buf.cpp,matched,
 ?Get_Rect@INIClass@@QBE?BV?$TRect@H@@PBD0ABV2@@Z,,0x009E5940,258,src/w3d/ini.cpp,matched,
 ?Get_Rotation_Key_Frames@ParticleBufferClass@@QBEXAAU?$ParticlePropertyStruct@M@@@Z,,0x00983FE0,360,src/w3d/part_buf.cpp,matched,
@@ -1091,6 +1101,11 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_Y_Vector@Matrix3D@@QBE?AVVector3@@XZ,,0x001BD810,24,src/w3d/frustum.cpp,matched,
 ?Get_Z_Rotation@Matrix3D@@QBEMXZ,,0x008D68A0,8,src/w3d/matrix3d.cpp,matched,
 ?Hash@HashTableClass@@AAEHPBD@Z,,0x009E0010,27,src/w3d/hash.cpp,matched,
+?ID@?$VectorClass@E@@UAEHABE@Z,,0x00912F80,49,src/w3d/pointgr.cpp,matched,
+?ID@?$VectorClass@M@@UAEHABM@Z,,0x00913490,68,src/w3d/pointgr.cpp,matched,
+?ID@?$VectorClass@VVector2@@@@UAEHABVVector2@@@Z,,0x009135B0,101,src/w3d/pointgr.cpp,matched,
+?ID@?$VectorClass@VVector3@@@@UAEHABVVector3@@@Z,,0x007B9FC0,98,src/w3d/pointgr.cpp,matched,
+?ID@?$VectorClass@VVector4@@@@UAEHABVVector4@@@Z,,0x00913090,113,src/w3d/pointgr.cpp,matched,
 ?Increase_Table_Size@?$IndexClass@HPAUINIEntry@@@@AAE_NH@Z,,0x009E2820,217,src/w3d/ini.cpp,matched,IndexClass sibling
 ?Increase_Table_Size@?$IndexClass@HPAUINISection@@@@AAE_NH@Z,,0x009E2950,217,src/w3d/ini.cpp,matched,IndexClass sibling
 ?Increment@?$RemainderTable@V?$Int@$0EA@@@@@QAEXG@Z,,0x009EA980,104,src/w3d/pk.cpp,matched,
@@ -1294,6 +1309,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Reset_Statistics@GridCullSystemClass@@QAEXXZ,,0x008DCC10,30,src/w3d/gridcull.cpp,matched,
 ?Resize@?$SimpleDynVecClass@E@@UAE_NH@Z,,0x00989070,40,src/w3d/part_buf.cpp,matched,
 ?Resize@?$SimpleVecClass@E@@UAE_NH@Z,,0x009844D0,136,src/w3d/part_buf.cpp,matched,
+?Resize@?$VectorClass@E@@UAE_NHPBE@Z,,0x009121F0,165,src/w3d/pointgr.cpp,matched,
+?Resize@?$VectorClass@M@@UAE_NHPBM@Z,,0x00912350,316,src/w3d/pointgr.cpp,matched,
 ?Resize@StringClass@@AAEXH@Z,,0x009DB9F0,117,src/w3d/wwstring.cpp,matched,
 ?Return_File@RawFileFactoryClass@@QAEXPAVFileClass@@@Z,,0x009DD5D0,23,src/w3d/ffactory.cpp,matched,
 ?Return_File@SimpleFileFactoryClass@@UAEXPAVFileClass@@@Z,,0x009DD620,23,src/w3d/ffactory.cpp,matched,
@@ -1356,6 +1373,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?SetZero@Coord3D@@QAEAAV1@XZ,0x000495CB,0x00148760,13,src/math/coord3d.cpp,matched,sets x/y/z to zero and returns self
 ?Set_Additive@RenderObjClass@@UAEXH@Z,,0x009807D0,33,src/w3d/part_buf.cpp,matched,
 ?Set_Alpha@RenderObjClass@@UAEXH@Z,,0x006CF7D0,33,src/w3d/part_buf.cpp,matched,
+?Set_Arrays@PointGroupClass@@QAEXPAV?$ShareBufferClass@VVector3@@@@PAV?$ShareBufferClass@VVector4@@@@PAV?$ShareBufferClass@I@@PAV?$ShareBufferClass@M@@PAV?$ShareBufferClass@E@@4HMMMM@Z,,0x009126B0,241,src/w3d/pointgr.cpp,matched,
 ?Set_Buffer_And_Allocated_Length@StringClass@@AAEXPADH@Z,,0x009DB850,50,src/w3d/wwstring.cpp,matched,
 ?Set_Cull_Box@CullableClass@@QAEXABVAABoxClass@@_N@Z,,0x008E22A0,72,src/w3d/cullsys.cpp,matched,
 ?Set_Culling_System@CullableClass@@QAEXPAVCullSystemClass@@@Z,,0x008E2230,17,src/w3d/cullsys.cpp,matched,
@@ -1364,6 +1382,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Set_Element@?$ShareBufferClass@VVector4@@@@QAEXHABVVector4@@@Z,,0x00984460,41,src/w3d/part_buf.cpp,matched,
 ?Set_Emitter@ParticleBufferClass@@QAEXPAVParticleEmitterClass@@@Z,,0x00983A60,46,src/w3d/part_buf.cpp,matched,
 ?Set_End_Caps@SegLineRendererClass@@QAEXH@Z,,0x00918940,29,src/w3d/seglinerenderer.cpp,matched,
+?Set_Flag@PointGroupClass@@QAEXW4FlagsType@1@_N@Z,,0x009120A0,42,src/w3d/pointgr.cpp,matched,
 ?Set_Frame_Per_Second@GridTextureMapperClass@@QAEXM@Z,,0x00967040,17,src/w3d/mapper.cpp,matched,
 ?Set_Freeze_Random@SegLineRendererClass@@QAEXH@Z,,0x00918900,29,src/w3d/seglinerenderer.cpp,matched,
 ?Set_LOD_Bias@ParticleBufferClass@@UAEXM@Z,,0x00984B70,43,src/w3d/part_buf.cpp,matched,
@@ -1371,6 +1390,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Set_LOD_Max_Screen_Size@ParticleBufferClass@@SAXHM@Z,,0x009843D0,25,src/w3d/part_buf.cpp,matched,
 ?Set_Merge_Intersections@SegLineRendererClass@@QAEXH@Z,,0x009188E0,29,src/w3d/seglinerenderer.cpp,matched,
 ?Set_Name@RawFileClass@@UAEPBDPBD@Z,,0x009E6AF0,33,src/w3d/rawfile.cpp,matched,
+?Set_Point_Color@PointGroupClass@@QAEXVVector3@@@Z,,0x009127B0,24,src/w3d/pointgr.cpp,matched,
 ?Set_Random@LineSegClass@@QAEXABVVector3@@0@Z,,0x008D8CA0,336,src/w3d/lineseg.cpp,matched,
 ?Set_Rotation@Matrix3D@@QAEXABVMatrix3@@@Z,,0x008D6770,59,src/w3d/matrix3d.cpp,matched,
 ?Set_Rotation@Matrix3D@@QAEXABVQuaternion@@@Z,,0x008D67B0,205,src/w3d/matrix3d.cpp,matched,
