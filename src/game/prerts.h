@@ -5,6 +5,8 @@
 #ifndef PRERTS_SHIM_H
 #define PRERTS_SHIM_H
 #include <math.h>
+#include <stdio.h>
+#include <stdarg.h>
 #include <ctype.h>
 #include <string.h>
 #define PI 3.14159265358979323846f
@@ -23,6 +25,9 @@
 #define RELEASE_CRASH(x)
 #define DEBUG_LOG_LEVEL(l,x)
 typedef char Char;
+template <typename NUM>
+inline int sign(NUM x) { if (x > 0) return 1; else if (x < 0) return -1; else return 0; }
+
 typedef float Real;
 typedef int Int;
 typedef unsigned int UnsignedInt;
