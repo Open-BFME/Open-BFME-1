@@ -67,3 +67,20 @@ achievable by source structure; the remaining 36% is MSVC's exact RVO-return-slo
 scheduling (byte 25 onward), which source changes can't steer (same MSVC-codegen wall as scripting's
 register allocation, just reached at 64% vs 44%). NET for both whales: layouts/enums/forms fully
 recovered and committed; the final mile is MSVC internal codegen matching = the dedicated multi-day run.
+
+## THE CONCRETE C++ DEAD-END (deep iterate loop, 2026-07-06)
+Ran the real explain_mismatch loop (not just form sweeps). The 64% form gives jt=2 (both jump
+tables, matching target) but only **1** prologue AsciiString slot-zeroing; the TARGET has **2**
+(commandName local + the RVO return slot, both 0-inited upfront for EH). Root cause is a genuine
+TENSION with no C++ resolution found:
+- The 2 jump tables require a CLEAN switch — returns deferred past the dispatch, so MSVC sees the
+  RVO return value as live only inside the cases -> it 0-inits that slot late, not in the prologue
+  (1 zeroing).
+- Forcing the RVO live upfront (an early `return` before the switch) DOES add the 2nd zeroing, but
+  it BREAKS the jump-table conversion (jt drops to 0). Verified: early-return-literal jt=0,
+  switch+explicit-default jt=0, switch-break-to-var jt=0/zeroings=0.
+So "2 jump tables" and "RVO-slot 0-inited in the prologue" are mutually exclusive across every C++
+form tried. This is why 64% is a hard C++ ceiling: MSVC's exact EH/RVO schedule for THIS control
+flow isn't reproducible from source while keeping the jump tables. The logic is fully & correctly
+decompiled (the 64% C++ IS the right source); only the compiler's schedule differs. => this is the
+canonical "asm would close it, but only by forcing schedule on already-correct logic" case.
