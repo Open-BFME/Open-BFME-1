@@ -1,0 +1,27 @@
+#pragma once
+#include "prerts.h"
+#include "ascii_string.h"
+#include "subsystem_interface.h"
+
+// Template: sizeof 0x7C, layout recovered from 0x3107F0 block 0 (no vtable — m_uiName @ +0).
+class Template {
+public:
+	AsciiString m_uiName;         // +0x00
+	AsciiString m_uiName2;        // +0x04
+	AsciiString m_internalName;   // +0x08
+	int m_internalNameKey;        // +0x0C
+	int m_numUiStrings;           // +0x10
+	AsciiString m_uiStrings[12];  // +0x14..+0x44
+	int m_numParameters;          // +0x44
+	int m_parameters[12];         // +0x48..+0x78
+	int m_pad;                    // +0x78 -> sizeof 0x7C
+};
+
+class ScriptEngine : public SubsystemInterface {
+	char m_pre[0x14];                    // pad: m_actionTemplates lands at this+0x1C
+	Template m_actionTemplates[600];     // +0x1C
+public:
+	virtual void init(void);
+	virtual void reset(void) {}
+	virtual void update(void) {}
+};

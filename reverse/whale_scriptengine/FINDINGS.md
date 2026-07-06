@@ -38,8 +38,23 @@ So it's all-or-nothing: generate all ~247 templates, compile the whole function,
   investigate their block form (likely uiName set via a not-yet-decoded pattern, or a param count
   read from a register whose imm the decoder lost). These 11 must be fixed for the all-or-nothing match.
 
-## Recipe to finish (for a dedicated attempt)
-1. Fix extractor's stale-base attribution (track per-block base reset; disambiguate cached-register int stores).
-2. Reconstruct `struct Template { void* vtbl; AsciiString m_uiName,m_uiName2,m_internalName; int m_internalNameKey,m_numUiStrings; AsciiString m_uiStrings[12]; int m_numParameters; int m_parameters[12]; };` (sizeof 0x7C) + `ScriptEngine` with `Template m_actionTemplates[N]` at +0x1C.
-3. Generate init() from worklist in source order (enum index literals). `// cl: /EHsc`.
-4. Iterate the WHOLE function with explain_mismatch (register alloc will be the fight).
+## GO/NO-GO MEASURED 2026-07-06 (first time the full init() was generated + built)
+`generate_init.py` (worklist → `src/game/script_engine.cpp`) + reconstructed types (below) build
+cleanly. Result: **generated init() = 56,028B vs target 57,072B; masked-match 41% aligned.**
+- **First divergence is the prologue:** target starts `51`=`push ecx` (saves `this` on the stack for
+  the EH frame); generated omits it (MSVC enregistered `this`). Shift by 1 and the next ~510 bytes
+  (first ~5 templates) align EXACTLY.
+- **Then a register-allocation divergence at gen byte 510:** generated `b8 04000000`=`mov eax,4`
+  vs target `b9 04000000`=`mov ecx,4` — same constant, different register. From here it cascades.
+- **Verdict: CONFIRMED it's the global-regalloc battle, now quantified.** The per-block FORM and the
+  Template layout are RIGHT (first templates byte-align). What remains is making MSVC allocate
+  registers identically across all 537 blocks — the hard, iterative part. Levers to try: force `this`
+  onto the stack (match the `push ecx`); reorder/shape the constant assignments so the cross-block
+  register caching (numParameters/param-enum in ebp/ebx) matches; include all 541 (fix the 4 skipped
+  uiName=None + 11 unclean) since register pressure is global.
+
+## Reconstructed types (in `src/game/script_engine.h` during the measurement; regenerate for the run)
+`class Template { AsciiString m_uiName,m_uiName2,m_internalName; int m_internalNameKey,m_numUiStrings;
+AsciiString m_uiStrings[12]; int m_numParameters; int m_parameters[12]; int m_pad; };` (sizeof 0x7C,
+NO vtable). `class ScriptEngine : SubsystemInterface { char m_pre[0x14]; Template m_actionTemplates[600]; };`
+(m_actionTemplates @ this+0x1C). String assign = `AsciiString::operator=(const char*)` @ 0x62040 (MATCHED).
