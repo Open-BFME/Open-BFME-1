@@ -150,6 +150,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ,0x0002B1B6,0x5e1e00,32,src/game/fx_particle_system_bulk.cpp,matched,
 ??0?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x0000B195,0x5e1f50,39,src/game/fx_particle_system_bulk.cpp,matched,
 ??0?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ,0x00020E23,0x5e1f10,32,src/game/fx_particle_system_bulk.cpp,matched,
+??0?$DynamicVectorClass@UPtrRemapStruct@PointerRemapClass@@@@QAE@IPBUPtrRemapStruct@PointerRemapClass@@@Z,,0x00930C50,46,src/w3d/pointerremap.cpp,matched,
 ??0?$DynamicVectorClass@VVector3@@@@QAE@IPBVVector3@@@Z,,0x007BB9E0,46,src/w3d/hmdldef.cpp,matched,
 ??0?$Int@$0EA@@@QAE@K@Z,,0x009E21D0,25,src/w3d/pk.cpp,matched,
 ??0?$Int@$0EA@@@QAE@XZ,,0x009EA760,20,src/w3d/int.cpp,matched,
@@ -173,6 +174,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0?$StringBase@G@@AAE@PBGH@Z,0x00888DA0,0x888da0,56,src/game/string_base.cpp,matched,
 ??0?$StringBase@G@@AAE@XZ,0x0001431C,0x000834C0,9,src/game/string_base.cpp,matched,initializes string data pointer to null
 ??0?$VectorClass@E@@QAE@HPBE@Z,,0x009121A0,71,src/w3d/pointgr.cpp,matched,
+??0?$VectorClass@UPtrRemapStruct@PointerRemapClass@@@@QAE@HPBUPtrRemapStruct@PointerRemapClass@@@Z,,0x009305D0,175,src/w3d/pointerremap.cpp,matched,
 ??0?$VectorClass@VProxyRecordClass@@@@QAE@HPBVProxyRecordClass@@@Z,,0x0097B320,174,src/w3d/hlod.cpp,matched,
 ??0?$VectorClass@VVector2@@@@QAE@HPBVVector2@@@Z,,0x00913500,175,src/w3d/pointgr.cpp,matched,
 ??0?$VectorClass@VVector3@@@@QAE@HPBVVector3@@@Z,,0x007B9EE0,174,src/w3d/pointgr.cpp,matched,
@@ -300,6 +302,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0Matrix3@@QAE@MMMMMMMMM@Z,,0x008D8F30,67,src/w3d/matrix3.cpp,matched,
 ??0Matrix3@@QAE@_N@Z,,0x0060C330,46,src/w3d/colmathobbobb.cpp,matched,
 ??0Matrix3D@@QAE@ABVMatrix3@@ABVVector3@@@Z,,0x00956C10,26,src/w3d/colmathsphere.cpp,matched,
+??0Matrix3D@@QAE@ABVVector3@@000@Z,,0x007A0370,94,src/w3d/vehiclecurve.cpp,matched,
 ??0Matrix3D@@QAE@MMMMMMMMMMMM@Z,,0x008D64A0,88,src/w3d/matrix3d.cpp,matched,
 ??0Matrix3D@@QAE@_N@Z,,0x001B5AF0,55,src/w3d/pivot.cpp,matched,
 ??0Matrix4@@QAE@ABVMatrix3D@@@Z,,0x006CB3A0,97,src/w3d/matrix3d.cpp,matched,
@@ -409,6 +412,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0ZigZagLinearOffsetTextureMapperClass@@QAE@ABV0@@Z,,0x00965500,92,src/w3d/mapper.cpp,matched,
 ??0ZigZagLinearOffsetTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x00965420,209,src/w3d/mapper.cpp,matched,
 ??0ZigZagLinearOffsetTextureMapperClass@@QAE@ABVVector2@@M0I@Z,,0x00965350,166,src/w3d/mapper.cpp,matched,
+??0_ArcInfoStruct@VehicleCurveClass@@QAE@XZ,,0x0045DC20,43,src/w3d/vehiclecurve.cpp,matched,
 ??0file_auto_ptr@@QAE@PAVFileFactoryClass@@PBD@Z,,0x009DD4F0,112,src/w3d/ffactory.cpp,matched,
 ??1?$CategoryModuleClass@$00@FXParticleSystem@@MAE@XZ,0x0000a916,0x005d4a50,7,src/game/fx_particle_system_category_accessors.cpp,matched,virtual dtor vtable reset
 ??1?$CategoryModuleClass@$01@FXParticleSystem@@MAE@XZ,0x0001bdfb,0x005d4ab0,7,src/game/fx_particle_system_category_accessors.cpp,matched,virtual dtor vtable reset
@@ -1535,6 +1539,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Set@Matrix3@@QAEXABVQuaternion@@@Z,,0x008D9080,205,src/w3d/matrix3.cpp,matched,
 ?Set@Matrix3D@@QAEXABVMatrix3@@ABVVector3@@@Z,,0x008D6710,82,src/w3d/matrix3d.cpp,matched,
 ?Set@Matrix3D@@QAEXABVQuaternion@@ABVVector3@@@Z,,0x008D7B00,34,src/w3d/matrix3d.cpp,matched,
+?Set@Matrix3D@@QAEXABVVector3@@000@Z,,0x006E6E80,92,src/w3d/vehiclecurve.cpp,matched,
 ?Set@Matrix4D@@QAEAAV1@ABVCoord3D@@@Z,0x0003670F,0x007E6150,78,src/math/matrix4d.cpp,matched,set matrix to identity with translation vector
 ?Set@Matrix4D@@QAEAAV1@ABVCoord3D@@M@Z,0x0000be51,0x007e61c0,247,src/math/matrix4d.cpp,matched,
 ?Set@Matrix4D@@QAEAAV1@MMMMMMMMMMMMMMMM@Z,0x0000D7CE,0x007E60B0,116,src/math/matrix4d.cpp,matched,sets values from 16 floats
