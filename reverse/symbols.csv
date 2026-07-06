@@ -1,4 +1,5 @@
 name,address,notes
+??$__copy@PAUHorzLine@@PAU1@H@_STL@@YAPAUHorzLine@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001B91E
 ??0?$ShareBufferClass@E@@QAE@HPBDH@Z,0x0004B4A7,derived from part_buf matched-caller call sites
 ??0?$ShareBufferClass@VVector3@@@@QAE@HPBDH@Z,0x00049832,ILT thunk; body 0x5F3BE0
 ??0?$ShareBufferClass@VVector3@@@@QAE@HPBDH@Z,0x005F3BE0,3-arg aligned-buffer ctor
@@ -40,6 +41,7 @@ name,address,notes
 ??2@YAPAXI@Z,0x00881F30,operator new body
 ??3@YAXPAX@Z,0x00881EB0
 ??4?$VectorClass@VModelNodeClass@HLodClass@@@@QAEAAV0@ABV0@@Z,0x0097ACA0
+??4?$vector@U?$pair@W4ObjectID@@I@_STL@@V?$allocator@U?$pair@W4ObjectID@@I@_STL@@@2@@_STL@@QAEAAV01@ABV01@@Z,0x0002DC9F
 ??4Matrix3@@QAEAAV0@ABVMatrix3D@@@Z,0x008D9150
 ??4RenderObjClass@@QAEAAV0@ABV0@@Z,0x0091F790
 ??4SegLineRendererClass@@QAEAAV0@ABV0@@Z,0x009600F0
@@ -155,6 +157,7 @@ name,address,notes
 ?Update_Non_New_Particles@ParticleBufferClass@@IAEXI@Z,0x00988060
 ?Update_Visual_Particle_State@ParticleBufferClass@@IAEXXZ,0x00986FC0
 ?Write@ChunkSaveClass@@QAEKPBXK@Z,0x009E18A0
+?_M_insert_overflow@?$vector@UHorzLine@@V?$allocator@UHorzLine@@@_STL@@@_STL@@IAEXPAUHorzLine@@ABU3@ABU__false_type@2@I_N@Z,0x00017FB2
 ?addArgType@GameMessageParser@@QAEXW4GameMessageArgumentDataType@@H@Z,0x0000B569,GameMessageParser::addArgType thunk
 ?appendBooleanArgument@GameMessage@@QAEX_N@Z,0x000032AB,GameMessage::appendBooleanArgument thunk
 ?appendDrawableIDArgument@GameMessage@@QAEXI@Z,0x000154BF,GameMessage::appendDrawableIDArgument thunk
@@ -177,6 +180,7 @@ name,address,notes
 ?nstrdup@@YAPADPBD@Z,0x009E6410
 ?parseFXList@INI@@SAXPAV1@PAX1PBX@Z,0x00851EE0,INI::parseFXList body
 ?readUnicodeString@@YA?AVUnicodeString@@PAU_iobuf@@@Z,0x000322F4,shared replay Unicode string reader thunk
+?reserve@?$vector@UHorzLine@@V?$allocator@UHorzLine@@@_STL@@@_STL@@QAEXI@Z,0x0000DE95
 ?set@LayoutFilename@@QAEXPBDH@Z,0x00887D20
 ?spin@LockClass@FastCriticalSectionClass@@CIXPAI@Z,0x00026FA8,FastCriticalSectionClass::LockClass spin-acquire (shared out-of-line body reached via ILT thunk); StringClass locks resolve here
 ?strtrim@@YAPADPAD@Z,0x009E7EB0
@@ -205,6 +209,3 @@ __stringbase_isnotnone_cmp_wchar,0x0041F3D,internal wide-char string not-none co
 _atexit,0x009F6E26,CRT atexit (registers static destructors)
 _bfme_acos,0x009F7256,internal acos helper called by ACos
 _bfme_asin,0x009F7D86,internal asin helper called by ASin
-??$__copy@PAUHorzLine@@PAU1@H@_STL@@YAPAUHorzLine@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001B91E
-?_M_insert_overflow@?$vector@UHorzLine@@V?$allocator@UHorzLine@@@_STL@@@_STL@@IAEXPAUHorzLine@@ABU3@ABU__false_type@2@I_N@Z,0x00017FB2
-?reserve@?$vector@UHorzLine@@V?$allocator@UHorzLine@@@_STL@@@_STL@@QAEXI@Z,0x0000DE95
