@@ -21,9 +21,9 @@ DEST = ROOT / "src" / "zh"
 
 REF_REL = "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code"
 HEAD = (
-    f"// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/sweep /I{REF_REL}/GameEngine/Include"
+    f"// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /I{REF_REL}/GameEngine/Include"
     f" /I{REF_REL}/GameEngine/Source /I{REF_REL}/Libraries/Include /I{REF_REL}/Libraries/Source"
-    f" /I{REF_REL}/Libraries/Source/WWVegas /I{REF_REL}/Libraries/Source/WWVegas/WWLib"
+    f" /I{REF_REL}/Libraries/Source/Compression /I{REF_REL}/Libraries/Source/WWVegas /I{REF_REL}/Libraries/Source/WWVegas/WWLib"
     f" /I{REF_REL}/GameEngineDevice/Include /I{REF_REL}/Libraries/Source/WWVegas/WW3D2"
     f" /I{REF_REL}/Libraries/Source/WWVegas/WWMath /I{REF_REL}/Libraries/Source/WWVegas/WWDebug"
     f" /I{REF_REL}/Libraries/Source/WWVegas/WWSaveLoad /I{REF_REL}/Main\n"

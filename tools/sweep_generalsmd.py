@@ -38,6 +38,7 @@ INCLUDE_DIRS = [
     REF / "GameEngine" / "Source",
     REF / "Libraries" / "Include",
     REF / "Libraries" / "Source",
+    REF / "Libraries" / "Source" / "Compression",
     REF / "Libraries" / "Source" / "WWVegas",
     REF / "Libraries" / "Source" / "WWVegas" / "WWLib",
     REF / "GameEngineDevice" / "Include",
@@ -48,7 +49,7 @@ INCLUDE_DIRS = [
     REF / "Main",
 ]
 
-HEAD = "// cl: /DNDEBUG /DWIN32 /MD /EHsc\n// stlport\n#define Matrix4x4 Matrix4  // BFME renamed it\n"
+HEAD = "// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n// stlport\n#define Matrix4x4 Matrix4  // BFME renamed it\n"
 
 
 def candidates(area, names):
