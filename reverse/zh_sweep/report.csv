@@ -188,3 +188,79 @@ GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ScoreScreen.cpp,compile-erro
 GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SinglePlayerMenu.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
 GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenu.cpp,missing-header,0,0,0,netdb.h
 GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishMapSelectMenu.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyOverlay.cpp,compile-error,0,0,0,C2065 'DIK_UPARROW' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLCustomScoreScreen.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLGameSetupMenu.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLadderScreen.cpp,missing-header,0,0,0,EABrowserDispatch/BrowserDispatch.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLobbyMenu.cpp,compile-error,0,0,0,C2065 'DIK_UPARROW' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLocaleSelectPopup.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLoginMenu.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLMapSelectMenu.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLMessageWindow.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQMScoreScreen.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLStatusMenu.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLWelcomeMenu.cpp,missing-header,0,0,0,GameSpy/peer/peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/MessageBox.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GUICallbacks/ReplayControls.cpp,ok,0,0,0,
+GameEngine/Source/GameClient/GUI/Gadget/GadgetCheckBox.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/Gadget/GadgetHorizontalSlider.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,compile-error,0,0,0,C2065 'DIK_UPARROW' : undeclared identifier
+GameEngine/Source/GameClient/GUI/Gadget/GadgetProgressBar.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/Gadget/GadgetPushButton.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/Gadget/GadgetRadioButton.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/Gadget/GadgetStaticText.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/Gadget/GadgetTabControl.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/Gadget/GadgetTextEntry.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/Gadget/GadgetVerticalSlider.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GameFont.cpp,ok,1,3,9,
+GameEngine/Source/GameClient/GUI/GameWindow.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GameWindowTransitions.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,compile-error,0,0,0,C2065 'DIK_UPARROW' : undeclared identifier
+GameEngine/Source/GameClient/GUI/HeaderTemplate.cpp,compile-error,0,0,0,C2065 'OSVERSIONINFO' : undeclared identifier
+GameEngine/Source/GameClient/GUI/IMEManager.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/LoadScreen.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp,compile-error,0,0,0,"C3861 'timeGetTime': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/GameClient/GUI/Shell/Shell.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameClient/GUI/WinInstanceData.cpp,ok,1,1,6,
+GameEngine/Source/GameClient/GUI/WindowLayout.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GUI/WindowVideoManager.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameClient/GameClient.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/GameClientDispatch.cpp,ok,0,0,1,
+GameEngine/Source/GameClient/GameText.cpp,compile-error,0,0,0,C2039 'SetWindowText' : is not a member of 'operator``global namespace'''
+GameEngine/Source/GameClient/GlobalLanguage.cpp,compile-error,0,0,0,"C3861 'RemoveFontResource': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/GameClient/GraphDraw.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameClient/InGameUI.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/Input/Keyboard.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/Input/Mouse.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/LanguageFilter.cpp,ok,2,9,24,
+GameEngine/Source/GameClient/Line2D.cpp,ok,0,0,1,
+GameEngine/Source/GameClient/MapUtil.cpp,missing-header,0,0,0,winsock2.h
+GameEngine/Source/GameClient/MessageStream/CommandXlat.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/MessageStream/GUICommandTranslator.cpp,ok,0,2,7,
+GameEngine/Source/GameClient/MessageStream/HintSpy.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/MessageStream/HotKey.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/MessageStream/LookAtXlat.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/MessageStream/MetaEvent.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/MessageStream/PlaceEventTranslator.cpp,compile-error,0,0,0,C2668 'sqrt' : ambiguous call to overloaded function
+GameEngine/Source/GameClient/MessageStream/SelectionXlat.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/MessageStream/WindowXlat.cpp,compile-error,0,0,0,C2065 'DIK_UPARROW' : undeclared identifier
+GameEngine/Source/GameClient/RadiusDecal.cpp,ok,0,0,15,
+GameEngine/Source/GameClient/SelectionInfo.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
+GameEngine/Source/GameClient/System/Anim2D.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameClient/System/CampaignManager.cpp,ok,2,1,55,
+GameEngine/Source/GameClient/System/Debug Displayers/AudioDebugDisplay.cpp,ok,0,0,0,
+GameEngine/Source/GameClient/System/DebugDisplay.cpp,ok,0,2,3,
+GameEngine/Source/GameClient/System/Image.cpp,ok,2,10,28,
+GameEngine/Source/GameClient/System/ParticleSys.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameClient/System/RayEffect.cpp,ok,0,1,1,
+GameEngine/Source/GameClient/System/Smudge.cpp,ok,2,9,26,
+GameEngine/Source/GameClient/Terrain/TerrainRoads.cpp,ok,1,1,43,
+GameEngine/Source/GameClient/Terrain/TerrainVisual.cpp,compile-error,0,0,0,C2668 'sqrt' : ambiguous call to overloaded function
+GameEngine/Source/GameClient/VideoPlayer.cpp,ok,3,15,33,
+GameEngine/Source/GameClient/VideoStream.cpp,compile-error,0,0,0,"C2084 function 'void *operator new[](size_t,void *)' already has a body"
