@@ -351,3 +351,5 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ??0BFMEAutoLockRef@@QAE@PAVBFMENetworkLock@@I@Z,0x009DB3B0,native BFME lock-ref acquire helper
 ?copyFromQueueNode@BFMENetworkQueueItem@@QAEXPAX@Z,0x00030C60,native BFME queue item copy helper for wrapper queue +0x14
 ?popFront@BFMENetworkQueue@@QAEXXZ,0x0002491A,native BFME queue pop helper for wrapper queue +0x14
+?copyFromQueueNode@BFMENetworkQueueItem1@@QAEXPAX@Z,0x00032F6A,native BFME queue item copy helper for wrapper queue +0x3c
+?popFront@BFMENetworkQueue1@@QAEXXZ,0x00023592,native BFME queue pop helper for wrapper queue +0x3c
