@@ -343,3 +343,8 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?parseScience@INI@@SAXPAV1@PAX1PBX@Z,0x0001393A
 ?getID@Drawable@@QBE?AW4DrawableID@@XZ,0x00009B01
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x009409F0
+?getPercentage@NetProgressCommandMsg@@QAEEXZ,0x000157A3
+?insert_unique@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@2@U32@ABU?$pair@$$CBGE@2@@Z,0x0000DE77
+?processProgress@GameLogic@@QAEXHH@Z,0x0002E66D
+??0Network@@QAE@XZ,0x00029C12
+?isPacketRouter@ConnectionManager@@QAE_NXZ,0x00044139

@@ -36,15 +36,29 @@ source of truth.
 | apply delay | `Network::processRunAheadCommand` | TBD | not recovered |
 | frame pacing | `Network::timeForNewFrame` | TBD | not recovered |
 
+## Landed evidence
+
+- `src/zh/connectionmanager.cpp` is present from ZH and byte-verifies 5 emitted
+  functions. `land_zh.py` marked 88 drifted definitions `present-unmatched`.
+- `src/zh/network.cpp` is present from ZH and byte-verifies 2 emitted functions.
+  `land_zh.py` marked 55 drifted definitions `present-unmatched`.
+- The current matched network rows are:
+  - `ConnectionManager::processProgress` at `0x00662D20`.
+  - `NetworkInterface::createNetwork` at `0x0065C1F0`.
+  - `Network::isPacketRouter` at `0x00681B20`.
+  - Three STL helper/template rows emitted from `connectionmanager.cpp`.
+- The core delay functions in the table above are now source-visible in `src/zh/`,
+  but still not byte-matched. Treat their bodies as a map for manual BFME
+  reconciliation, not as proven BFME code.
+
 ## Work plan
 
-1. Unblock targeted ZH sweeps for the GameNetwork files with minimal compile shims.
-2. Land byte-verified support files first: `NetworkUtil`, `FrameData`,
-   `FrameDataManager`, `FrameMetrics`, and `NetPacket` if it locates cleanly.
-3. Land or manually locate the core files: `Connection`, `ConnectionManager`,
-   and `Network`.
-4. Update this document with exact BFME RVAs, matched source paths, and any
-   drift notes for the functions above.
+1. DONE: unblock targeted ZH sweeps for the GameNetwork files with minimal
+   compile shims.
+2. DONE: land the first byte-verified `ConnectionManager` and `Network` rows.
+3. NEXT: reconcile or manually locate the core delay functions listed above.
+4. NEXT: update this document with exact BFME RVAs and drift notes for each core
+   function as they are proven.
 
 ## Non-goals
 
