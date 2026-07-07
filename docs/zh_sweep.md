@@ -52,6 +52,20 @@ The sweep summary histograms blockers. Fix the top one, delete its rows from the
   byte-verify — land_zh reverts it; reconcile manually or drop that file.
 - The pre-commit hook runs the full build (several minutes); don't bypass it, budget for it.
 
+## Territory map (string-vote: fraction of an area's literals present in lotrbfme.exe)
+
+Sweepable, in current include-chain order of value:
+- `GameEngine/Source` (51% overall) — first swept; the richest area.
+- `GameEngineDevice/Source/W3DDevice` (25%, 206 hits) + `Win32Device` (42%) — renderer/OS glue;
+  needs the d3d8 shim routing + `#define Matrix4x4 Matrix4` (BFME renamed it), already in the HEAD.
+- `Libraries/Source/WWVegas/WWLib` remainder (48% strings but mostly from already-landed files;
+  measured yield small — refcount/mutex drifted). Probe route: `tools/harvest_probe.py --min 1 <names>`.
+
+**Measured DEAD — do not sweep** (0–5% string survival; BFME replaced these subsystems):
+`wwshade` (own shader system), `WWSaveLoad` (BFME uses Xfer/Snapshot), `WWAudio` + `MilesAudioDevice`
+(audio rewritten; no "Miles Sound System" banner in the exe), `VideoDevice` (Bink wrapper rewritten).
+Evidence: reverse/zh_provenance/FINDINGS.md method, measured 2026-07-06.
+
 ## State
 
 `reverse/zh_sweep/report.csv` is the sweep ledger (resumable via `--skip-done`).
