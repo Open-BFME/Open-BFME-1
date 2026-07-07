@@ -553,3 +553,77 @@ GameEngine/Source/GameNetwork/GameSpy/Thread/ThreadUtils.cpp,compile-error,0,0,0
 GameEngine/Source/GameNetwork/GameSpyChat.cpp,missing-header,0,0,0,GameNetwork/GameSpy.h
 GameEngine/Source/GameNetwork/GameSpyGP.cpp,missing-header,0,0,0,GameNetwork/GameSpy.h
 GameEngine/Source/GameNetwork/GameSpyGameInfo.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameNetwork/GameSpyOverlay.cpp,missing-header,0,0,0,GameSpy/GP/GP.h
+GameEngine/Source/GameNetwork/IPEnumeration.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/LANAPI.cpp,missing-header,0,0,0,winsock2.h
+GameEngine/Source/GameNetwork/LANAPICallbacks.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/LANAPIhandlers.cpp,missing-header,0,0,0,winsock2.h
+GameEngine/Source/GameNetwork/LANGameInfo.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/NAT.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/NetCommandList.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/NetCommandMsg.cpp,ok,3,8,100,
+GameEngine/Source/GameNetwork/NetCommandRef.cpp,ok,1,0,3,
+GameEngine/Source/GameNetwork/NetCommandWrapperList.cpp,ok,2,0,15,
+GameEngine/Source/GameNetwork/NetMessageStream.cpp,ok,0,0,0,
+GameEngine/Source/GameNetwork/NetPacket.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/Network.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/NetworkUtil.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/Transport.cpp,missing-header,0,0,0,winsock2.h
+GameEngine/Source/GameNetwork/User.cpp,ok,1,0,8,
+GameEngine/Source/GameNetwork/WOLBrowser/WebBrowser.cpp,missing-header,0,0,0,EABrowserDispatch/BrowserDispatch.h
+GameEngine/Source/GameNetwork/udp.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/Precompiled/PreRTS.cpp,ok,0,0,0,
+GameEngineDevice/Source/W3DDevice/Common/W3DConvert.cpp,ok,1,0,2,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DGranny.cpp,ok,0,0,0,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DPoly.cpp,ok,0,5,1,
+GameEngineDevice/Source/W3DDevice/GameLogic/W3DGameLogic.cpp,ok,0,0,0,
+GameEngineDevice/Source/Win32Device/Common/Win32LocalFile.cpp,ok,0,0,2,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DAssetManagerExposed.cpp,ok,0,0,0,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DDynamicLight.cpp,ok,0,3,11,
+GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,ok,0,5,49,
+GameEngineDevice/Source/W3DDevice/Common/Thing/W3DThingFactory.cpp,ok,0,1,0,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cpp,ok,1,6,14,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDefaultDraw.cpp,ok,1,5,11,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDependencyModelDraw.cpp,ok,0,4,10,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDraw.cpp,ok,0,5,12,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordAircraftDraw.cpp,ok,0,3,7,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordTankDraw.cpp,ok,0,3,10,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordTruckDraw.cpp,ok,0,3,10,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DPoliceCarDraw.cpp,ok,0,3,10,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DProjectileStreamDraw.cpp,ok,0,5,14,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DRopeDraw.cpp,ok,1,14,20,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DScienceModelDraw.cpp,ok,0,2,6,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DSupplyDraw.cpp,ok,0,8,22,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTracerDraw.cpp,ok,0,4,11,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DMOTD.cpp,ok,1,0,0,
+GameEngineDevice/Source/W3DDevice/GameClient/TileData.cpp,ok,4,2,0,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DDebugDisplay.cpp,ok,0,3,5,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DFileSystem.cpp,ok,5,4,5,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DInGameUI.cpp,ok,0,1,9,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DVideoBuffer.cpp,ok,0,2,9,
+GameEngineDevice/Source/W3DDevice/GameLogic/W3DGhostObject.cpp,ok,1,5,29,
+GameEngineDevice/Source/Win32Device/Common/Win32BIGFile.cpp,ok,1,1,8,
+GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp,ok,1,3,25,
+GameEngineDevice/Source/MilesAudioDevice/MilesAudioManager.cpp,missing-header,0,0,0,dsound.h
+GameEngineDevice/Source/VideoDevice/Bink/BinkVideoPlayer.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_handle'
+GameEngineDevice/Source/W3DDevice/Common/System/W3DFunctionLexicon.cpp,ok,0,10,1,
+GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'Get_Processor_Ticks_Per_Second'
+GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp,compile-error,0,0,0,C2065 'D3DCOLORWRITEENABLE_RED' : undeclared identifier
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,missing-header,0,0,0,winsock2.h
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DPropDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'Get_Processor_Ticks_Per_Second'
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_pDirectInput'
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankTruckDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_pDirectInput'
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'Get_Processor_Ticks_Per_Second'
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTruckDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_pDirectInput'
+GameEngineDevice/Source/W3DDevice/GameClient/FlatHeightMap.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'Get_Processor_Ticks_Per_Second'
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DControlBar.cpp,ok,1,10,16,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DMainMenu.cpp,ok,0,10,12,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DCheckBox.cpp,ok,0,9,4,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DComboBox.cpp,ok,0,9,3,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DHorizontalSlider.cpp,ok,0,9,7,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DListBox.cpp,ok,0,9,5,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DProgressBar.cpp,ok,0,10,4,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DPushButton.cpp,ok,0,9,7,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DRadioButton.cpp,ok,0,9,4,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DStaticText.cpp,ok,0,9,4,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DTabControl.cpp,ok,0,9,3,

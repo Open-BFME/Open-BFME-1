@@ -60,4 +60,9 @@ print("STILL UNVERIFIED (need a pin, or a real mismatch):")
 for k,n in unver.most_common(): print(f"  {k:12s}: {n}")
 tot=sum(ver.values())+sum(unver.values())
 print(f"\nTOTAL DIR32: {tot} | verified {sum(ver.values())} ({sum(ver.values())*100//max(tot,1)}%) | unverified {sum(unver.values())}")
-if fails: print("string mismatches (would be REAL bugs caught):", fails[:5])
+if fails:
+    print(f"\n{len(fails)} string mismatches (candidate hidden byte-fidelity bugs):")
+    seen=set()
+    for nm,sm in fails:
+        if sm in seen: continue
+        seen.add(sm); print(f"  {nm} -> {sm}")

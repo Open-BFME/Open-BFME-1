@@ -284,3 +284,10 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?parseWeaponTemplate@INI@@SAXPAV1@PAX1PBX@Z,0x0000CBDF
 ?friend_awakenUpdateModule@GameLogic@@QAEXPAVObject@@PAVUpdateModule@@I@Z,0x00009944
 ?normalizeAngle@@YAMM@Z,0x0000991C
+?Set_Name@GameFileClass@@UAEPBDPBD@Z,0x00006F05
+?openFile@FileSystem@@QAEPAVFile@@PBDH@Z,0x009C8860
+??0ArchiveFile@@QAE@XZ,0x009D10B0
+??0GhostObjectManager@@QAE@XZ,0x00008652
+?winGetWindowId@GameWindow@@QAEHXZ,0x000188A4
+?winHide@GameWindow@@QAEH_N@Z,0x00027F2A
+?winIsHidden@GameWindow@@QAE_NXZ,0x0003A5B7

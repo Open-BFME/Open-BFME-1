@@ -8,6 +8,8 @@
 // is authoritative.
 #ifndef D3D8_H_SHIM
 #define D3D8_H_SHIM
+
+#define D3DDP_MAXTEXCOORD 8  // SDK d3d8types.h
 #include "winbase_shim.h"
 
 typedef unsigned long DWORD;

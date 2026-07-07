@@ -11,6 +11,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// GameMemory.h defines the ARRAY placement new/delete itself; keep VC7.1's <new>
+// from also defining them. Lives here (not just the PreRTS shim) because device-side
+// TUs include <windows.h> + engine headers directly, never PreRTS.
+#ifndef __PLACEMENT_VEC_NEW_INLINE
+#define __PLACEMENT_VEC_NEW_INLINE
+#endif
+
 typedef void *HANDLE;
 typedef void *HGLOBAL;
 typedef void *HLOCAL;
@@ -18,6 +25,11 @@ typedef void *HMODULE;
 typedef void *HINSTANCE;
 typedef void *HWND;
 typedef void *HDC;
+typedef void *HFONT;
+typedef void *HBITMAP;
+typedef void *HGDIOBJ;
+typedef void *HPEN;
+typedef void *HBRUSH;
 typedef void *HKEY;
 typedef void *HICON;
 typedef void *HCURSOR;

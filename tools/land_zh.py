@@ -26,7 +26,7 @@ HEAD = (
     f" /I{REF_REL}/Libraries/Source/WWVegas /I{REF_REL}/Libraries/Source/WWVegas/WWLib"
     f" /I{REF_REL}/GameEngineDevice/Include /I{REF_REL}/Libraries/Source/WWVegas/WW3D2"
     f" /I{REF_REL}/Libraries/Source/WWVegas/WWMath /I{REF_REL}/Libraries/Source/WWVegas/WWDebug"
-    f" /I{REF_REL}/Libraries/Source/WWVegas/WWSaveLoad\n"
+    f" /I{REF_REL}/Libraries/Source/WWVegas/WWSaveLoad /I{REF_REL}/Main\n"
     "// stlport\n"
     "#define Matrix4x4 Matrix4  // BFME renamed it\n"
 )
