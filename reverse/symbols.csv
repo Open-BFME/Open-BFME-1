@@ -264,3 +264,11 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?makeDecoratedNameKey@ModuleFactory@@KA?AW4NameKeyType@@ABVAsciiString@@W4ModuleType@@@Z,0x0004B439
 ??1Snapshot@@QAE@XZ,0x009A1A40
 ?init@WinInstanceData@@QAEXXZ,0x00021EC7
+??$__copy@PAUVideo@@PAU1@H@_STL@@YAPAUVideo@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000112FC
+??1Video@@QAE@XZ,0x0001642D
+?addToBuildList@SidesInfo@@QAEXPAVBuildListInfo@@H@Z,0x0000DD9B
+?clear@Dict@@QAEXXZ,0x00033F46
+?removeFromBuildList@SidesInfo@@QAEHPAVBuildListInfo@@@Z,0x0000A5A6
+?_M_insert_overflow@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@IAEXPAW4ObjectID@@ABW43@ABU__false_type@2@I_N@Z,0x00033DAC
+?parseBitString32@INI@@SAXPAV1@PAX1PBX@Z,0x00850E70
+?getNextMission@Campaign@@QAEPAVMission@@PAV2@@Z,0x0003236C

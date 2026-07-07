@@ -264,3 +264,102 @@ GameEngine/Source/GameClient/Terrain/TerrainRoads.cpp,ok,1,1,43,
 GameEngine/Source/GameClient/Terrain/TerrainVisual.cpp,compile-error,0,0,0,C2668 'sqrt' : ambiguous call to overloaded function
 GameEngine/Source/GameClient/VideoPlayer.cpp,ok,3,15,33,
 GameEngine/Source/GameClient/VideoStream.cpp,compile-error,0,0,0,"C2084 function 'void *operator new[](size_t,void *)' already has a body"
+GameEngine/Source/GameClient/View.cpp,ok,2,2,11,
+GameEngine/Source/GameClient/Water.cpp,ok,0,1,4,
+GameEngine/Source/GameLogic/AI/AI.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/AI/AIDock.cpp,ok,0,1,66,
+GameEngine/Source/GameLogic/AI/AIGroup.cpp,ok,1,29,163,
+GameEngine/Source/GameLogic/AI/AIGuard.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/AI/AIPathfind.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/AI/AIPlayer.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/AI/AISkirmishPlayer.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/AI/AIStates.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/AI/AITNGuard.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/AI/Squad.cpp,ok,2,19,27,
+GameEngine/Source/GameLogic/AI/TurretAI.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/Map/PolygonTrigger.cpp,ok,0,0,27,
+GameEngine/Source/GameLogic/Map/SidesList.cpp,ok,2,2,65,
+GameEngine/Source/GameLogic/Map/TerrainLogic.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/Object/Armor.cpp,ok,0,9,29,
+GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/Object/Behavior/BattleBusSlowDeathBehavior.cpp,ok,0,4,29,
+GameEngine/Source/GameLogic/Object/Behavior/BehaviorModule.cpp,ok,0,0,1,
+GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/Object/Behavior/BridgeScaffoldBehavior.cpp,ok,3,1,10,
+GameEngine/Source/GameLogic/Object/Behavior/BridgeTowerBehavior.cpp,ok,0,1,15,
+GameEngine/Source/GameLogic/Object/Behavior/BunkerBusterBehavior.cpp,ok,0,5,24,
+GameEngine/Source/GameLogic/Object/Behavior/CountermeasuresBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/Object/Behavior/DumbProjectileBehavior.cpp,missing-header,0,0,0,D3DX8Math.h
+GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDamagedBehavior.cpp,ok,0,2,18,
+GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehavior.cpp,ok,0,2,16,
+GameEngine/Source/GameLogic/Object/Behavior/FlightDeckBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/Object/Behavior/GenerateMinefieldBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/Object/Behavior/GrantStealthBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/Object/Behavior/InstantDeathBehavior.cpp,ok,0,16,42,
+GameEngine/Source/GameLogic/Object/Behavior/JetSlowDeathBehavior.cpp,ok,0,5,31,
+GameEngine/Source/GameLogic/Object/Behavior/MinefieldBehavior.cpp,ok,0,15,36,
+GameEngine/Source/GameLogic/Object/Behavior/NeutonBlastBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/Object/Behavior/OverchargeBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/Object/Behavior/POWTruckBehavior.cpp,ok,0,0,0,
+GameEngine/Source/GameLogic/Object/Behavior/ParkingPlaceBehavior.cpp,ok,2,25,103,
+GameEngine/Source/GameLogic/Object/Behavior/PoisonedBehavior.cpp,ok,1,6,17,
+GameEngine/Source/GameLogic/Object/Behavior/PrisonBehavior.cpp,ok,0,0,0,
+GameEngine/Source/GameLogic/Object/Behavior/PropagandaCenterBehavior.cpp,ok,0,0,0,
+GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/Object/Behavior/RebuildHoleBehavior.cpp,ok,0,7,35,
+GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehavior.cpp,ok,2,21,56,
+GameEngine/Source/GameLogic/Object/Behavior/SpawnBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/Object/Behavior/SupplyWarehouseCripplingBehavior.cpp,ok,0,5,12,
+GameEngine/Source/GameLogic/Object/Behavior/TechBuildingBehavior.cpp,ok,0,6,11,
+GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
+GameEngine/Source/GameLogic/Object/Body/BodyModule.cpp,ok,0,0,1,
+GameEngine/Source/GameLogic/Object/Body/HighlanderBody.cpp,ok,0,2,8,
+GameEngine/Source/GameLogic/Object/Body/HiveStructureBody.cpp,ok,0,5,13,
+GameEngine/Source/GameLogic/Object/Body/ImmortalBody.cpp,ok,0,2,8,
+GameEngine/Source/GameLogic/Object/Body/InactiveBody.cpp,ok,0,1,11,
+GameEngine/Source/GameLogic/Object/Body/StructureBody.cpp,ok,0,1,7,
+GameEngine/Source/GameLogic/Object/Body/UndeadBody.cpp,ok,0,4,11,
+GameEngine/Source/GameLogic/Object/Collide/CollideModule.cpp,ok,0,0,1,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/ConvertToCarBombCrateCollide.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/ConvertToHijackedVehicleCrateCollide.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/CrateCollide.cpp,ok,0,6,22,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/HealCrateCollide.cpp,ok,0,1,5,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/MoneyCrateCollide.cpp,ok,0,1,8,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageCommandCenterCrateCollide.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageFakeBuilding.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageInternetCenterCrateCollide.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageMilitaryFactoryCrateCollide.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotagePowerPlantCrateCollide.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageSuperweaponCrateCollide.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageSupplyCenterCrateCollide.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageSupplyDropzoneCrateCollide.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SalvageCrateCollide.cpp,ok,0,4,21,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/ShroudCrateCollide.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/UnitCrateCollide.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/VeterancyCrateCollide.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Collide/FireWeaponCollide.cpp,ok,0,2,28,
+GameEngine/Source/GameLogic/Object/Collide/SquishCollide.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Contain/CaveContain.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Contain/GarrisonContain.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Contain/HealContain.cpp,ok,0,3,13,
+GameEngine/Source/GameLogic/Object/Contain/HelixContain.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Contain/InternetHackContain.cpp,ok,0,3,17,
+GameEngine/Source/GameLogic/Object/Contain/MobNexusContain.cpp,ok,0,5,23,
+GameEngine/Source/GameLogic/Object/Contain/OpenContain.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Contain/OverlordContain.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Contain/ParachuteContain.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Contain/RailedTransportContain.cpp,ok,0,1,8,
+GameEngine/Source/GameLogic/Object/Contain/RiderChangeContain.cpp,ok,1,6,33,
+GameEngine/Source/GameLogic/Object/Contain/TransportContain.cpp,ok,0,6,33,
+GameEngine/Source/GameLogic/Object/Contain/TunnelContain.cpp,missing-header,0,0,0,View.h
+GameEngine/Source/GameLogic/Object/Create/CreateModule.cpp,ok,0,0,5,
+GameEngine/Source/GameLogic/Object/Create/GrantUpgradeCreate.cpp,ok,1,7,18,
+GameEngine/Source/GameLogic/Object/Create/LockWeaponCreate.cpp,ok,0,6,5,
+GameEngine/Source/GameLogic/Object/Create/PreorderCreate.cpp,ok,0,1,5,
+GameEngine/Source/GameLogic/Object/Create/SpecialPowerCreate.cpp,ok,0,1,5,
+GameEngine/Source/GameLogic/Object/Create/SupplyCenterCreate.cpp,ok,0,1,5,
+GameEngine/Source/GameLogic/Object/Create/SupplyWarehouseCreate.cpp,ok,0,1,5,
+GameEngine/Source/GameLogic/Object/Create/VeterancyGainCreate.cpp,ok,0,5,6,
+GameEngine/Source/GameLogic/Object/Damage/BoneFXDamage.cpp,ok,1,1,9,
+GameEngine/Source/GameLogic/Object/Damage/DamageModule.cpp,ok,0,0,1,
