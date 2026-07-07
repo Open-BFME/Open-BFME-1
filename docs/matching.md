@@ -8,8 +8,11 @@
    It compiles with MSVC 7.1 and fails loudly on any mismatch.
 
 2. Relocations the patcher fills in for you (so don't worry about matching these bytes):
-   - **DIR32** (constants, vtables, string literals): copied from the target binary. The
-     address your source produces is irrelevant — only the surrounding instruction bytes matter.
+   - **DIR32** (constants, vtables, string literals): the address slot is copied from the target
+     binary, but the full build independently VERIFIES what you reference: a string literal must
+     byte-equal the string at the referenced address (`verify_string_refs` — so `"%S"` vs `"%ls"`
+     fails), and a global/vtable symbol must resolve to one consistent address across all its
+     references (`verify_dir32_consistency`). Write the real literal, not a lookalike.
    - **REL32** (calls/jumps): resolved to the callee's address. A matched callee resolves
      automatically; for anything else (CRT helpers like `__ftol2`, not-yet-matched functions)
      add `name,address` to `reverse/symbols.csv`. The build prints the unresolved name on
@@ -54,9 +57,11 @@ so `float`, `unsigned int`, `int`, and `const char *` land at the target vtable 
 
 ## Reference source
 
-BFME is the SAGE engine — its original source largely survives in C&C Generals, vendored under
-`reference/CnC_Generals_Zero_Hour/` (GPLv3, same license as this repo). Many functions match it
-verbatim. Use it as a guide and reconcile against the binary (the source of truth).
+BFME is the SAGE engine — its original source largely survives in the vendored
+`reference/CnC_Generals_Zero_Hour/` (GPLv3, same license as this repo). **BFME forks from Zero
+Hour: always port from `GeneralsMD/` (= ZH), never `Generals/`** — proof and the ranked worklist
+live in `reverse/zh_provenance/FINDINGS.md`. Many functions match verbatim; the batch pipeline for
+finding and landing them is `docs/zh_sweep.md`. Reconcile against the binary (the source of truth).
 
 For exact function sizes, the full function inventory, and the bulk-port pipeline, see
 `tools/ghidra/README.md`.
