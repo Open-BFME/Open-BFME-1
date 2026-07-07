@@ -71,6 +71,8 @@ anchors, not behavior changes.
 | BFME network wrapper vtable | VA `0x01119C8C` / RVA `0x00D19C8C` | referenced by constructor | recovered |
 | backend constructor | RVA `0x006547F0`, ILT `0x00040E44` | allocated by wrapper init; stores owner pointer at backend `+0x68` | recovered |
 | backend vtable | VA `0x0111988C` / RVA `0x00D1988C` | installed by backend constructor | recovered |
+| backend handle check | RVA `0x009DB590` | byte-matched as `BFMENetworkBackend::hasLiveHandle`; reads backend `+0x48` | matched |
+| backend handle clear | RVA `0x009DB5A0` | byte-matched as `BFMENetworkBackend::closeLiveHandle`; waits on/clears backend `+0x48` and `+0x44` | matched |
 | backend event dispatcher | RVA `0x0065CA50` | backend vtable slot `+0x08`; switch/jump table at VA `0x00A5D6FC` | boundary suspect |
 | registered callback | RVA `0x0065C260` | pushed as callback VA `0x00A5C260` by dispatcher before call to `0x009D5330` | Ghidra start missing |
 
@@ -80,8 +82,8 @@ Known wrapper slots from vtable VA `0x01119C8C`:
 | --- | --- | --- |
 | `+0x00` | `0x0065ADB0` | deleting destructor-ish |
 | `+0x04` | `0x006548C0` | init; allocates backend object and calls backend slot `+0x04` |
-| `+0x08` | `0x00652AB0` | shutdown/reset-ish |
-| `+0x0C` | `0x00651780` | proxies backend pointer at wrapper `+0x64` |
+| `+0x08` | `0x00652AB0` | matched as `BFMENetwork::destroyBackend`; releases lock-ref `+0xA4`, backend handle, then backend `+0x64` |
+| `+0x0C` | `0x00651780` | matched as `BFMENetwork::backendHasLiveHandle`; proxies backend pointer at wrapper `+0x64` |
 | `+0x10` | `0x0065E050` | queue/list operation on wrapper `+0x14` |
 | `+0x14` | `0x0065ADE0` | queue/list operation on wrapper `+0x14`, returns bool |
 | `+0x18` | `0x0065E120` | queue/list operation on wrapper `+0x3C` |
@@ -104,18 +106,23 @@ and `+0x10` and reads `TheNetwork+0x68`.
 
 ## Landed evidence
 
-- `src/zh/connectionmanager.cpp` is present from ZH and byte-verifies 5 emitted
-  functions. `land_zh.py` marked 88 drifted definitions `present-unmatched`.
-- `src/zh/network.cpp` is present from ZH and byte-verifies 2 emitted functions.
-  `land_zh.py` marked 55 drifted definitions `present-unmatched`.
+- `src/zh/connectionmanager.cpp`, `src/zh/network.cpp`,
+  `src/zh/netcommandmsg.cpp`, and `src/zh/messagestream.cpp` are now trimmed to
+  byte-matched surfaces only; the previous unclaimed ZH bodies were removed
+  rather than treated as progress.
+- `src/game/native_network.cpp` contains the first byte-matched BFME-native
+  wrapper/backend code:
+  - `BFMENetwork::backendHasLiveHandle` at `0x00651780`.
+  - `BFMENetwork::destroyBackend` at `0x00652AB0`.
+  - `BFMENetworkBackend::hasLiveHandle` at `0x009DB590`.
+  - `BFMENetworkBackend::closeLiveHandle` at `0x009DB5A0`.
 - The current matched network rows are:
   - `ConnectionManager::processProgress` at `0x00662D20`.
   - `NetworkInterface::createNetwork` at `0x0065C1F0`.
   - `Network::isPacketRouter` at `0x00681B20`.
   - Three STL helper/template rows emitted from `connectionmanager.cpp`.
-- The core delay functions in the table above are now source-visible in `src/zh/`,
-  but still not byte-matched. Treat their bodies as a map for manual BFME
-  reconciliation, not as proven BFME code.
+- The old ZH delay functions are not proven BFME code. Treat ZH as an intent map
+  and the BFME-native rows above as the patchable evidence.
 
 ## Work plan
 

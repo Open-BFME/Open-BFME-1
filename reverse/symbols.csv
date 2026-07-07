@@ -348,3 +348,4 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?processProgress@GameLogic@@QAEXHH@Z,0x0002E66D
 ??0Network@@QAE@XZ,0x00029C12
 ?isPacketRouter@ConnectionManager@@QAE_NXZ,0x00044139
+??1BFMEAutoLockRef@@QAE@XZ,0x009DB400,native BFME lock-ref destructor used by BFMENetwork::destroyBackend
