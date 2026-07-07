@@ -71,6 +71,8 @@ anchors, not behavior changes.
 | BFME network wrapper vtable | VA `0x01119C8C` / RVA `0x00D19C8C` | referenced by constructor | recovered |
 | backend constructor | RVA `0x006547F0`, ILT `0x00040E44` | allocated by wrapper init; stores owner pointer at backend `+0x68` | recovered |
 | backend vtable | VA `0x0111988C` / RVA `0x00D1988C` | installed by backend constructor | recovered |
+| backend deleting destructor | RVA `0x00654890` | byte-matched as `BFMENetworkBackend::destroyAndMaybeDelete`; backend vtable slot `+0x00` | matched |
+| wrapper deleting destructor | RVA `0x0065ADB0` | byte-matched as `BFMENetwork::destroyAndMaybeDelete`; wrapper vtable slot `+0x00` | matched |
 | backend handle check | RVA `0x009DB590` | byte-matched as `BFMENetworkBackend::hasLiveHandle`; reads backend `+0x48` | matched |
 | backend handle clear | RVA `0x009DB5A0` | byte-matched as `BFMENetworkBackend::closeLiveHandle`; waits on/clears backend `+0x48` and `+0x44` | matched |
 | lock-ref release | RVA `0x009DB400` | byte-matched as `BFMEAutoLockRef::~BFMEAutoLockRef`; releases lock handle at `+0x00` when `+0x04` is false | matched |
@@ -87,7 +89,7 @@ Known wrapper slots from vtable VA `0x01119C8C`:
 
 | Slot | Body RVA | Current role |
 | --- | --- | --- |
-| `+0x00` | `0x0065ADB0` | deleting destructor-ish |
+| `+0x00` | `0x0065ADB0` | matched as `BFMENetwork::destroyAndMaybeDelete`; scalar deleting destructor wrapper |
 | `+0x04` | `0x006548C0` | init; allocates backend object and calls backend slot `+0x04` |
 | `+0x08` | `0x00652AB0` | matched as `BFMENetwork::destroyBackend`; releases lock-ref `+0xA4`, backend handle, then backend `+0x64` |
 | `+0x0C` | `0x00651780` | matched as `BFMENetwork::backendHasLiveHandle`; proxies backend pointer at wrapper `+0x64` |
@@ -119,6 +121,8 @@ and `+0x10` and reads `TheNetwork+0x68`.
   rather than treated as progress.
 - `src/game/native_network.cpp` contains the first byte-matched BFME-native
   wrapper/backend code:
+  - `BFMENetworkBackend::destroyAndMaybeDelete` at `0x00654890`.
+  - `BFMENetwork::destroyAndMaybeDelete` at `0x0065ADB0`.
   - `BFMENetwork::backendHasLiveHandle` at `0x00651780`.
   - `BFMENetwork::destroyBackend` at `0x00652AB0`.
   - `BFMENetwork::pushQueue0` at `0x0065E050`.

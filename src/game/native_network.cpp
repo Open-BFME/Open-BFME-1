@@ -6,6 +6,7 @@ class BFMENetworkBackend
 {
 public:
 	virtual ~BFMENetworkBackend();
+	void *destroyAndMaybeDelete(unsigned int flags);
 	__declspec(noinline) Bool hasLiveHandle();
 	__declspec(noinline) void closeLiveHandle();
 
@@ -83,6 +84,7 @@ public:
 class BFMENetwork
 {
 public:
+	void *destroyAndMaybeDelete(unsigned int flags);
 	Bool backendHasLiveHandle();
 	void destroyBackend();
 	void pushQueue0(BFMENetworkQueueItem *item);
@@ -105,6 +107,32 @@ private:
 
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
+
+__declspec(naked) void *BFMENetworkBackend::destroyAndMaybeDelete(unsigned int flags)
+{
+	__asm {
+		push esi
+		mov esi, ecx
+		__emit 0xe8
+		__emit 0x97
+		__emit 0xdb
+		__emit 0x9d
+		__emit 0xff
+		test byte ptr [esp+8], 1
+		je doneBackendDeleting
+		push esi
+		__emit 0xe8
+		__emit 0x0b
+		__emit 0xd6
+		__emit 0x22
+		__emit 0x00
+		add esp, 4
+doneBackendDeleting:
+		mov eax, esi
+		pop esi
+		ret 4
+	}
+}
 
 __declspec(noinline) Bool BFMENetworkBackend::hasLiveHandle()
 {
@@ -143,6 +171,32 @@ void BFMENetwork::destroyBackend()
 		}
 	}
 	m_backend = 0;
+}
+
+__declspec(naked) void *BFMENetwork::destroyAndMaybeDelete(unsigned int flags)
+{
+	__asm {
+		push esi
+		mov esi, ecx
+		__emit 0xe8
+		__emit 0x10
+		__emit 0xdb
+		__emit 0x9a
+		__emit 0xff
+		test byte ptr [esp+8], 1
+		je doneWrapperDeleting
+		push esi
+		__emit 0xe8
+		__emit 0xeb
+		__emit 0x70
+		__emit 0x22
+		__emit 0x00
+		add esp, 4
+doneWrapperDeleting:
+		mov eax, esi
+		pop esi
+		ret 4
+	}
 }
 
 __declspec(naked) void BFMENetwork::pushQueue0(BFMENetworkQueueItem *item)
