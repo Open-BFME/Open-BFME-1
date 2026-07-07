@@ -604,18 +604,7 @@ GameEngineDevice/Source/W3DDevice/GameClient/W3DVideoBuffer.cpp,ok,0,2,9,
 GameEngineDevice/Source/W3DDevice/GameLogic/W3DGhostObject.cpp,ok,1,5,29,
 GameEngineDevice/Source/Win32Device/Common/Win32BIGFile.cpp,ok,1,1,8,
 GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp,ok,1,3,25,
-GameEngineDevice/Source/MilesAudioDevice/MilesAudioManager.cpp,missing-header,0,0,0,dsound.h
-GameEngineDevice/Source/VideoDevice/Bink/BinkVideoPlayer.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_handle'
 GameEngineDevice/Source/W3DDevice/Common/System/W3DFunctionLexicon.cpp,ok,0,10,1,
-GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'Get_Processor_Ticks_Per_Second'
-GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp,compile-error,0,0,0,C2065 'D3DCOLORWRITEENABLE_RED' : undeclared identifier
-GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,missing-header,0,0,0,winsock2.h
-GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DPropDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'Get_Processor_Ticks_Per_Second'
-GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_pDirectInput'
-GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankTruckDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_pDirectInput'
-GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'Get_Processor_Ticks_Per_Second'
-GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTruckDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_pDirectInput'
-GameEngineDevice/Source/W3DDevice/GameClient/FlatHeightMap.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'Get_Processor_Ticks_Per_Second'
 GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DControlBar.cpp,ok,1,10,16,
 GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DMainMenu.cpp,ok,0,10,12,
 GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DCheckBox.cpp,ok,0,9,4,
@@ -627,3 +616,63 @@ GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DPushButton.cpp,ok,0,9
 GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DRadioButton.cpp,ok,0,9,4,
 GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DStaticText.cpp,ok,0,9,4,
 GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DTabControl.cpp,ok,0,9,3,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DTextEntry.cpp,ok,0,9,4,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DVerticalSlider.cpp,ok,0,9,3,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/W3DGameFont.cpp,ok,0,9,3,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/W3DGameWindow.cpp,ok,0,9,17,
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/W3DGameWindowManager.cpp,ok,0,10,3,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayString.cpp,ok,3,13,18,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringManager.cpp,ok,2,10,10,
+GameEngineDevice/Source/MilesAudioDevice/MilesAudioManager.cpp,missing-header,0,0,0,dsound.h
+GameEngineDevice/Source/VideoDevice/Bink/BinkVideoPlayer.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_handle'
+GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar.cpp,ok,3,6,41,
+GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp,compile-error,0,0,0,C2065 'D3DCOLORWRITEENABLE_RED' : undeclared identifier
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,missing-header,0,0,0,winsock2.h
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DPropDraw.cpp,ok,0,4,9,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_handle'
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankTruckDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_handle'
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp,ok,0,3,11,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTruckDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_handle'
+GameEngineDevice/Source/W3DDevice/GameClient/FlatHeightMap.cpp,compile-error,0,0,0,C2065 'D3DRS_COLORWRITEENABLE' : undeclared identifier
+GameEngineDevice/Source/W3DDevice/GameClient/HeightMap.cpp,compile-error,0,0,0,C2065 'D3DTSS_COLORARG2' : undeclared identifier
+GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager.cpp,compile-error,0,0,0,"C3861 '__max': identifier not found, even with argument-dependent lookup"
+GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp,compile-error,0,0,0,C2065 'D3DRS_ALPHATESTENABLE' : undeclared identifier
+GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DShadow.cpp,ok,1,5,6,
+GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,compile-error,0,0,0,C2065 'D3DRS_STENCILZFAIL' : undeclared identifier
+GameEngineDevice/Source/W3DDevice/GameClient/TerrainTex.cpp,compile-error,0,0,0,C2065 'D3DTOP_MODULATE' : undeclared identifier
+GameEngineDevice/Source/W3DDevice/GameClient/W3DAssetManager.cpp,compile-error,0,0,0,C2039 'lstrcat' : is not a member of 'operator``global namespace'''
+GameEngineDevice/Source/W3DDevice/GameClient/W3DBibBuffer.cpp,ok,6,2,11,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeBuffer.cpp,ok,6,14,50,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DCustomEdging.cpp,compile-error,0,0,0,"C3861 'D3DRS_ALPHAREF': identifier not found, even with argument-dependent lookup"
+GameEngineDevice/Source/W3DDevice/GameClient/W3DDebugIcons.cpp,ok,0,0,0,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp,missing-header,0,0,0,netdb.h
+GameEngineDevice/Source/W3DDevice/GameClient/W3DGameClient.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_handle'
+GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse.cpp,compile-error,0,0,0,C2061 syntax error : identifier 'WPARAM'
+GameEngineDevice/Source/W3DDevice/GameClient/W3DParticleSys.cpp,ok,0,3,21,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBuffer.cpp,ok,1,8,21,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp,ok,33,17,52,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp,compile-error,0,0,0,"C3861 'D3DRS_STENCILPASS': identifier not found, even with argument-dependent lookup"
+GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp,missing-header,0,0,0,Benchmark.h
+GameEngineDevice/Source/W3DDevice/GameClient/W3DShroud.cpp,compile-error,0,0,0,C2065 'D3DLOCKED_RECT' : undeclared identifier
+GameEngineDevice/Source/W3DDevice/GameClient/W3DSmudge.cpp,compile-error,0,0,0,"C3861 'D3DDesc': identifier not found, even with argument-dependent lookup"
+GameEngineDevice/Source/W3DDevice/GameClient/W3DSnow.cpp,compile-error,0,0,0,C2146 syntax error : missing ')' before identifier 'f'
+GameEngineDevice/Source/W3DDevice/GameClient/W3DStatusCircle.cpp,compile-error,0,0,0,C2065 'D3DRS_BLENDOP' : undeclared identifier
+GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackground.cpp,ok,1,4,18,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainTracks.cpp,ok,3,14,39,
+GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp,compile-error,0,0,0,C2668 'sqrt' : ambiguous call to overloaded function
+GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBuffer.cpp,compile-error,0,0,0,"C3861 'D3DXMATRIX': identifier not found, even with argument-dependent lookup"
+GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp,compile-error,0,0,0,C2061 syntax error : identifier 'WPARAM'
+GameEngineDevice/Source/W3DDevice/GameClient/W3DWebBrowser.cpp,missing-header,0,0,0,EABrowserDispatch/BrowserDispatch.h
+GameEngineDevice/Source/W3DDevice/GameClient/W3dWaypointBuffer.cpp,ok,0,1,6,
+GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp,compile-error,0,0,0,C2065 'D3DFMT_V8U8' : undeclared identifier
+GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp,compile-error,0,0,0,C2065 'D3DTSS_ALPHAOP' : undeclared identifier
+GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp,ok,6,33,110,
+GameEngineDevice/Source/W3DDevice/GameClient/camerashakesystem.cpp,compile-error,0,0,0,C2248 'CameraShakeSystemClass::CameraShakerClass' : cannot access protected class declared in cl
+GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogic.cpp,ok,0,4,21,
+GameEngineDevice/Source/Win32Device/Common/Win32BIGFileSystem.cpp,missing-header,0,0,0,winsock2.h
+GameEngineDevice/Source/Win32Device/Common/Win32CDManager.cpp,compile-error,0,0,0,"C3861 'GetVolumeInformation': identifier not found, even with argument-dependent lookup"
+GameEngineDevice/Source/Win32Device/Common/Win32GameEngine.cpp,missing-header,0,0,0,netdb.h
+GameEngineDevice/Source/Win32Device/Common/Win32OSDisplay.cpp,compile-error,0,0,0,C2065 'MB_APPLMODAL' : undeclared identifier
+GameEngineDevice/Source/Win32Device/GameClient/Win32DIKeyboard.cpp,compile-error,0,0,0,"C3861 'prop': identifier not found, even with argument-dependent lookup"
+GameEngineDevice/Source/Win32Device/GameClient/Win32DIMouse.cpp,compile-error,0,0,0,C2227 left of '->Unacquire' must point to class/struct/union
+GameEngineDevice/Source/Win32Device/GameClient/Win32Mouse.cpp,compile-error,0,0,0,"C3861 'LOWORD': identifier not found, even with argument-dependent lookup"

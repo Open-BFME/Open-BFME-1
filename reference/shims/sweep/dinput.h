@@ -4,6 +4,9 @@
 #ifndef SWEEP_DINPUT_SHIM_H
 #define SWEEP_DINPUT_SHIM_H
 
+typedef void *LPDIRECTINPUT8;
+typedef void *LPDIRECTINPUTDEVICE8;
+
 #define DIK_ESCAPE 0x01
 #define DIK_1 0x02
 #define DIK_2 0x03

@@ -291,3 +291,4 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?winGetWindowId@GameWindow@@QAEHXZ,0x000188A4
 ?winHide@GameWindow@@QAEH_N@Z,0x00027F2A
 ?winIsHidden@GameWindow@@QAE_NXZ,0x0003A5B7
+??0DisplayStringManager@@QAE@XZ,0x0000F7A9
