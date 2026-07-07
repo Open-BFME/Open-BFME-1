@@ -2685,3 +2685,4 @@ _powf,,0x00097070,14,src/w3d/vp.cpp,matched,
 ??1BFMEAutoLockRef@@QAE@XZ,,0x009DB400,22,src/game/native_network.cpp,matched,native BFME lock-ref release helper used by wrapper/backend
 ?backendHasLiveHandle@BFMENetwork@@QAE_NXZ,,0x00651780,15,src/game/native_network.cpp,matched,native BFME network wrapper slot +0x0c; delegates through backend pointer at +0x64
 ?destroyBackend@BFMENetwork@@QAEXXZ,,0x00652AB0,74,src/game/native_network.cpp,matched,native BFME network wrapper slot +0x08; releases backend helper at +0x64
+?popQueue0@BFMENetwork@@QAE_NPAVBFMENetworkQueueItem@@@Z,,0x0065ADE0,164,src/game/native_network.cpp,matched,native BFME network wrapper slot +0x14; pops dispatcher queue +0x14

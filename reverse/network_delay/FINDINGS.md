@@ -74,6 +74,7 @@ anchors, not behavior changes.
 | backend handle check | RVA `0x009DB590` | byte-matched as `BFMENetworkBackend::hasLiveHandle`; reads backend `+0x48` | matched |
 | backend handle clear | RVA `0x009DB5A0` | byte-matched as `BFMENetworkBackend::closeLiveHandle`; waits on/clears backend `+0x48` and `+0x44` | matched |
 | lock-ref release | RVA `0x009DB400` | byte-matched as `BFMEAutoLockRef::~BFMEAutoLockRef`; releases lock handle at `+0x00` when `+0x04` is false | matched |
+| wrapper queue pop | RVA `0x0065ADE0` | byte-matched as `BFMENetwork::popQueue0`; locks wrapper `+0x04`, pops queue at `+0x14` into caller output | matched |
 | backend event dispatcher | RVA `0x0065CA50` | backend vtable slot `+0x08`; switch/jump table at VA `0x00A5D6FC` | boundary suspect |
 | registered callback | RVA `0x0065C260` | pushed as callback VA `0x00A5C260` by dispatcher before call to `0x009D5330` | Ghidra start missing |
 
@@ -86,7 +87,7 @@ Known wrapper slots from vtable VA `0x01119C8C`:
 | `+0x08` | `0x00652AB0` | matched as `BFMENetwork::destroyBackend`; releases lock-ref `+0xA4`, backend handle, then backend `+0x64` |
 | `+0x0C` | `0x00651780` | matched as `BFMENetwork::backendHasLiveHandle`; proxies backend pointer at wrapper `+0x64` |
 | `+0x10` | `0x0065E050` | queue/list operation on wrapper `+0x14` |
-| `+0x14` | `0x0065ADE0` | queue/list operation on wrapper `+0x14`, returns bool |
+| `+0x14` | `0x0065ADE0` | matched as `BFMENetwork::popQueue0`; pops queue at wrapper `+0x14`, returns bool |
 | `+0x18` | `0x0065E120` | queue/list operation on wrapper `+0x3C` |
 | `+0x1C` | `0x00658E20` | queue/list operation on wrapper `+0x3C`, returns bool |
 | `+0x20` | `0x0065E340` | list transfer-ish operation using wrapper `+0x90` |
@@ -118,6 +119,7 @@ and `+0x10` and reads `TheNetwork+0x68`.
   - `BFMENetworkBackend::hasLiveHandle` at `0x009DB590`.
   - `BFMENetworkBackend::closeLiveHandle` at `0x009DB5A0`.
   - `BFMEAutoLockRef::~BFMEAutoLockRef` at `0x009DB400`.
+  - `BFMENetwork::popQueue0` at `0x0065ADE0`.
 - The current matched network rows are:
   - `ConnectionManager::processProgress` at `0x00662D20`.
   - `NetworkInterface::createNetwork` at `0x0065C1F0`.

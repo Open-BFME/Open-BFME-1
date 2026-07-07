@@ -348,3 +348,6 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?processProgress@GameLogic@@QAEXHH@Z,0x0002E66D
 ??0Network@@QAE@XZ,0x00029C12
 ?isPacketRouter@ConnectionManager@@QAE_NXZ,0x00044139
+??0BFMEAutoLockRef@@QAE@PAVBFMENetworkLock@@I@Z,0x009DB3B0,native BFME lock-ref acquire helper
+?copyFromQueueNode@BFMENetworkQueueItem@@QAEXPAX@Z,0x00030C60,native BFME queue item copy helper for wrapper queue +0x14
+?popFront@BFMENetworkQueue@@QAEXXZ,0x0002491A,native BFME queue pop helper for wrapper queue +0x14
