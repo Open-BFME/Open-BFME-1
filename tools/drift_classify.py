@@ -41,7 +41,7 @@ SCRATCH = ROOT / "build" / "drift"
 REPORT = ROOT / "reverse" / "zh_sweep" / "drift_report.csv"
 IMAGE_BASE = 0x400000
 
-CLASS_ORDER = {"immediate-only": 0, "imm+reg": 1, "structural": 2,
+CLASS_ORDER = {"exact-ambiguous": -1, "immediate-only": 0, "imm+reg": 1, "structural": 2,
                "register-swap": 3, "absent": 4, "no-anchors": 5, "no-obj": 6}
 
 
@@ -170,6 +170,10 @@ def classify(exe, pe, body, relocs, cand_rva, ghidra):
     pct = same * 100 // max(len(cmp_masked), 1)
     first = next((i for i, (a, b) in enumerate(zip(cmp_masked, tgt_masked)) if a != b), -1)
 
+    if pct == 100 and first == -1 and size == tsize:
+        # byte-identical after masking: locate refused it as AMBIGUOUS (template copies);
+        # the string anchor picked THIS copy, and verify_string_refs arbitrates correctness
+        return pct, first, "exact-ambiguous", "identical bytes; string-anchor disambiguated"
     ci = disasm(mask(body, holes, size))
     ti = disasm(mask(target, holes, tsize))
     if not ci or not ti:

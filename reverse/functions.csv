@@ -2510,3 +2510,14 @@ _powf,,0x00097070,14,src/w3d/vp.cpp,matched,
 ?erase@?$vector@VPlayerTemplate@@V?$allocator@VPlayerTemplate@@@_STL@@@_STL@@QAEPAVPlayerTemplate@@PAV3@0@Z,,0x000E3E60,79,src/zh/playertemplate.cpp,matched,
 ?push_back@?$vector@VPlayerTemplate@@V?$allocator@VPlayerTemplate@@@_STL@@@_STL@@QAEXABVPlayerTemplate@@@Z,,0x000E41C0,64,src/zh/playertemplate.cpp,matched,
 ?parsePlayerTemplateDefinition@PlayerTemplateStore@@SAXPAVINI@@@Z,,0x000E4210,284,src/zh/playertemplate.cpp,matched,
+?getModuleNameKey@BoneFXUpdate@@UBE?AW4NameKeyType@@XZ,,0x00288E40,104,src/zh/bonefxupdate.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
+?getModuleNameKey@BridgeScaffoldBehavior@@UBE?AW4NameKeyType@@XZ,,0x001F5B00,104,src/zh/bridgescaffoldbehavior.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
+?getModuleNameKey@PhysicsBehavior@@UBE?AW4NameKeyType@@XZ,,0x0029A990,104,src/zh/physicsupdate.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
+?getModuleNameKey@SlowDeathBehavior@@UBE?AW4NameKeyType@@XZ,,0x00207D10,104,src/zh/slowdeathbehavior.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
+?getModuleNameKey@SpecialPowerModule@@UBE?AW4NameKeyType@@XZ,,0x00269070,104,src/zh/specialpowermodule.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
+?getModuleNameKey@StructureCollapseUpdate@@UBE?AW4NameKeyType@@XZ,,0x002AE310,104,src/zh/structurecollapseupdate.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
+?getModuleNameKey@StructureToppleUpdate@@UBE?AW4NameKeyType@@XZ,,0x002AF310,104,src/zh/structuretoppleupdate.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
+?getModuleNameKey@SwayClientUpdate@@UBE?AW4NameKeyType@@XZ,,0x00604560,104,src/zh/swayclientupdate.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
+?getModuleNameKey@ToppleUpdate@@UBE?AW4NameKeyType@@XZ,,0x002B1180,104,src/zh/toppleupdate.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
+?getModuleNameKey@W3DDefaultDraw@@UBE?AW4NameKeyType@@XZ,,0x00751260,104,src/zh/w3ddefaultdraw.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
+?getModuleNameKey@W3DRopeDraw@@UBE?AW4NameKeyType@@XZ,,0x0075A5D0,104,src/zh/w3dropedraw.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
