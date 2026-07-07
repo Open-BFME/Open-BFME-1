@@ -15,10 +15,21 @@ private:
 	void *m_liveHandle;
 };
 
+class BFMENetworkLock
+{
+public:
+	void *m_handle;
+	int m_refCount;
+};
+
 class BFMEAutoLockRef
 {
 public:
-	~BFMEAutoLockRef();
+	__declspec(noinline) ~BFMEAutoLockRef();
+
+private:
+	BFMENetworkLock *m_lock;
+	Bool m_failed;
 };
 
 class BFMENetwork
@@ -34,13 +45,14 @@ private:
 	BFMEAutoLockRef *m_backendLockRef;
 };
 
+extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void *handle, unsigned long milliseconds);
+extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
+
 __declspec(noinline) Bool BFMENetworkBackend::hasLiveHandle()
 {
 	void *liveHandle = m_liveHandle;
 	return liveHandle != 0;
 }
-
-extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void *handle, unsigned long milliseconds);
 
 __declspec(noinline) void BFMENetworkBackend::closeLiveHandle()
 {
@@ -48,6 +60,15 @@ __declspec(noinline) void BFMENetworkBackend::closeLiveHandle()
 		WaitForSingleObject(m_liveHandle, 0xffffffff);
 		m_liveHandle = 0;
 		m_auxHandle = 0;
+	}
+}
+
+__declspec(noinline) BFMEAutoLockRef::~BFMEAutoLockRef()
+{
+	if (!m_failed) {
+		BFMENetworkLock *lock = m_lock;
+		--lock->m_refCount;
+		ReleaseMutex(lock->m_handle);
 	}
 }
 

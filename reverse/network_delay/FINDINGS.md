@@ -73,6 +73,7 @@ anchors, not behavior changes.
 | backend vtable | VA `0x0111988C` / RVA `0x00D1988C` | installed by backend constructor | recovered |
 | backend handle check | RVA `0x009DB590` | byte-matched as `BFMENetworkBackend::hasLiveHandle`; reads backend `+0x48` | matched |
 | backend handle clear | RVA `0x009DB5A0` | byte-matched as `BFMENetworkBackend::closeLiveHandle`; waits on/clears backend `+0x48` and `+0x44` | matched |
+| lock-ref release | RVA `0x009DB400` | byte-matched as `BFMEAutoLockRef::~BFMEAutoLockRef`; releases lock handle at `+0x00` when `+0x04` is false | matched |
 | backend event dispatcher | RVA `0x0065CA50` | backend vtable slot `+0x08`; switch/jump table at VA `0x00A5D6FC` | boundary suspect |
 | registered callback | RVA `0x0065C260` | pushed as callback VA `0x00A5C260` by dispatcher before call to `0x009D5330` | Ghidra start missing |
 
@@ -116,6 +117,7 @@ and `+0x10` and reads `TheNetwork+0x68`.
   - `BFMENetwork::destroyBackend` at `0x00652AB0`.
   - `BFMENetworkBackend::hasLiveHandle` at `0x009DB590`.
   - `BFMENetworkBackend::closeLiveHandle` at `0x009DB5A0`.
+  - `BFMEAutoLockRef::~BFMEAutoLockRef` at `0x009DB400`.
 - The current matched network rows are:
   - `ConnectionManager::processProgress` at `0x00662D20`.
   - `NetworkInterface::createNetwork` at `0x0065C1F0`.
