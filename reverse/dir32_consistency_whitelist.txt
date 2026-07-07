@@ -1,6 +1,12 @@
 # DIR32 consistency whitelist — symbols with >1 resolved base that are
 # KNOWN-legitimate (doubly-linked TUs / investigated FX vtable artifacts). Any symbol NOT
 # listed here that becomes inconsistent is a NEW candidate bug and fails the build.
+#
+# The ??_7 ctor-vs-dtor family (FX modules + MemoryPoolObject) is ONE phenomenon: retail
+# destructors inline the base-chain dtor, whose final vptr store targets the BASE-most vtable
+# (0x1073744 = the real ??_7MemoryPoolObject@@6B@), while our shallower reconstructions
+# reference the class's own vtable. Latent (patching masks with original bytes; drop-in stays
+# byte-identical); root fix = reconstruct the MemoryPoolObject base-dtor inlining.
 ??_7DefaultAlphaModuleInfo@FXParticleSystem@@6B@
 ??_7DefaultColorModuleInfo@FXParticleSystem@@6B@
 ??_7DefaultDrawModuleInfo@FXParticleSystem@@6B@
@@ -12,3 +18,4 @@
 ??_7WindModuleInfo@FXParticleSystem@@6B@
 ?CRC32_Table@@3PAKA
 _COLLISION_EPSILON
+??_7MemoryPoolObject@@6B@

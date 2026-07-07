@@ -7,22 +7,12 @@ GameEngine/Source/Common/Audio/AudioRequest.cpp,ok,0,0,0,
 GameEngine/Source/Common/Audio/DynamicAudioEventInfo.cpp,ok,0,5,30,
 GameEngine/Source/Common/Audio/GameAudio.cpp,ok,5,27,136,
 GameEngine/Source/Common/Audio/GameMusic.cpp,ok,0,1,4,
-GameEngine/Source/Common/Audio/GameSounds.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/Common/Audio/GameSpeech.cpp,missing-header,0,0,0,wpaudio/attributes.h
-GameEngine/Source/Common/Audio/simpleplayer.cpp,missing-header,0,0,0,wmsdk.h
-GameEngine/Source/Common/Audio/urllaunch.cpp,compile-error,0,0,0,C2501 'HRESULT' : missing storage-class or type specifiers
-GameEngine/Source/Common/Bezier/BezFwdIterator.cpp,missing-header,0,0,0,D3DX8Math.h
-GameEngine/Source/Common/Bezier/BezierSegment.cpp,missing-header,0,0,0,D3DX8Math.h
 GameEngine/Source/Common/BitFlags.cpp,ok,0,0,0,
-GameEngine/Source/Common/CRCDebug.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/Common/CommandLine.cpp,compile-error,0,0,0,C2661 '_stat::_stat' : no overloaded function takes 2 arguments
 GameEngine/Source/Common/DamageFX.cpp,ok,3,9,31,
 GameEngine/Source/Common/Dict.cpp,ok,16,0,13,
 GameEngine/Source/Common/DiscreteCircle.cpp,ok,0,7,10,
-GameEngine/Source/Common/GameEngine.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
 GameEngine/Source/Common/GameLOD.cpp,ok,1,1,44,
 GameEngine/Source/Common/GameMain.cpp,ok,0,0,1,
-GameEngine/Source/Common/GlobalData.cpp,missing-header,0,0,0,winsock2.h
 GameEngine/Source/Common/INI/INIAiData.cpp,ok,0,0,0,
 GameEngine/Source/Common/INI/INIAnimation.cpp,ok,0,0,3,
 GameEngine/Source/Common/INI/INIAudioEventInfo.cpp,ok,0,3,27,
@@ -49,48 +39,34 @@ GameEngine/Source/Common/INI/INIUpgrade.cpp,ok,0,0,0,
 GameEngine/Source/Common/INI/INIVideo.cpp,ok,0,0,4,
 GameEngine/Source/Common/INI/INIWater.cpp,ok,0,2,14,
 GameEngine/Source/Common/INI/INIWeapon.cpp,ok,0,0,0,
-GameEngine/Source/Common/INI/INIWebpageURL.cpp,missing-header,0,0,0,EABrowserDispatch/BrowserDispatch.h
 GameEngine/Source/Common/Language.cpp,ok,0,0,0,
 GameEngine/Source/Common/MessageStream.cpp,ok,14,4,23,
 GameEngine/Source/Common/MiniLog.cpp,ok,0,0,0,
 GameEngine/Source/Common/MultiplayerSettings.cpp,ok,4,18,45,
 GameEngine/Source/Common/NameKeyGenerator.cpp,ok,3,2,11,
 GameEngine/Source/Common/PartitionSolver.cpp,ok,0,18,20,
-GameEngine/Source/Common/PerfTimer.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/Common/RTS/AcademyStats.cpp,ok,0,2,20,
-GameEngine/Source/Common/RTS/ActionManager.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/Common/RTS/Energy.cpp,ok,0,0,11,
 GameEngine/Source/Common/RTS/Handicap.cpp,ok,0,1,12,
 GameEngine/Source/Common/RTS/MissionStats.cpp,ok,0,0,3,
 GameEngine/Source/Common/RTS/Money.cpp,ok,0,0,3,
-GameEngine/Source/Common/RTS/Player.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/Common/RTS/PlayerList.cpp,ok,1,1,20,
 GameEngine/Source/Common/RTS/PlayerTemplate.cpp,ok,3,36,98,
 GameEngine/Source/Common/RTS/ProductionPrerequisite.cpp,ok,3,14,32,
-GameEngine/Source/Common/RTS/ResourceGatheringManager.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/Common/RTS/Science.cpp,ok,2,28,60,
 GameEngine/Source/Common/RTS/ScoreKeeper.cpp,ok,0,13,43,
 GameEngine/Source/Common/RTS/SpecialPower.cpp,ok,4,13,29,
-GameEngine/Source/Common/RTS/Team.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/Common/RTS/TunnelTracker.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/Common/RandomValue.cpp,missing-header,0,0,0,winsock2.h
 GameEngine/Source/Common/SkirmishBattleHonors.cpp,ok,0,1,34,
 GameEngine/Source/Common/StateMachine.cpp,ok,1,10,48,
-GameEngine/Source/Common/StatsCollector.cpp,missing-header,0,0,0,netdb.h
 GameEngine/Source/Common/System/ArchiveFile.cpp,ok,0,19,88,
 GameEngine/Source/Common/System/ArchiveFileSystem.cpp,ok,0,24,106,
 GameEngine/Source/Common/System/AsciiString.cpp,ok,0,0,23,
-GameEngine/Source/Common/System/BuildAssistant.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/Common/System/CDManager.cpp,ok,6,3,9,
-GameEngine/Source/Common/System/Compression.cpp,missing-header,0,0,0,Compression.h
-GameEngine/Source/Common/System/CopyProtection.cpp,compile-error,0,0,0,C2061 syntax error : identifier 'LPARAM'
 GameEngine/Source/Common/System/CriticalSection.cpp,ok,0,0,0,
-GameEngine/Source/Common/System/DataChunk.cpp,missing-header,0,0,0,Compression.h
 GameEngine/Source/Common/System/Directory.cpp,ok,0,0,0,
 GameEngine/Source/Common/System/DisabledTypes.cpp,ok,0,0,0,
 GameEngine/Source/Common/System/File.cpp,ok,0,0,11,
 GameEngine/Source/Common/System/FileSystem.cpp,ok,0,10,28,
-GameEngine/Source/Common/System/FunctionLexicon.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
 GameEngine/Source/Common/System/GameCommon.cpp,ok,0,0,1,
 GameEngine/Source/Common/System/GameMemory.cpp,ok,0,1,53,
 GameEngine/Source/Common/System/GameType.cpp,ok,0,0,0,
@@ -101,218 +77,73 @@ GameEngine/Source/Common/System/MemoryInit.cpp,ok,0,0,2,
 GameEngine/Source/Common/System/QuickTrig.cpp,ok,0,0,0,
 GameEngine/Source/Common/System/QuotedPrintable.cpp,ok,0,0,5,
 GameEngine/Source/Common/System/RAMFile.cpp,ok,0,0,23,
-GameEngine/Source/Common/System/Radar.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/Common/System/SaveGame/GameState.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/Common/System/SaveGame/GameStateMap.cpp,compile-error,0,0,0,"C3861 'GetCurrentDirectory': identifier not found, even with argument-dependent lookup"
 GameEngine/Source/Common/System/StackDump.cpp,ok,0,0,0,
 GameEngine/Source/Common/System/StreamingArchiveFile.cpp,ok,0,1,8,
 GameEngine/Source/Common/System/String.cpp,ok,10,2,0,
 GameEngine/Source/Common/System/SubsystemInterface.cpp,ok,1,7,17,
 GameEngine/Source/Common/System/UnicodeString.cpp,ok,0,0,16,
 GameEngine/Source/Common/System/Upgrade.cpp,ok,2,6,55,
-GameEngine/Source/Common/System/XferCRC.cpp,missing-header,0,0,0,winsock2.h
 GameEngine/Source/Common/System/XferLoad.cpp,ok,0,1,13,
 GameEngine/Source/Common/System/XferSave.cpp,ok,0,1,16,
-GameEngine/Source/Common/System/registry.cpp,compile-error,0,0,0,"C3861 'ERROR_SUCCESS': identifier not found, even with argument-dependent lookup"
 GameEngine/Source/Common/TerrainTypes.cpp,ok,0,2,15,
 GameEngine/Source/Common/Thing/DrawModule.cpp,ok,0,0,1,
 GameEngine/Source/Common/Thing/Module.cpp,ok,1,4,34,
 GameEngine/Source/Common/Thing/ModuleFactory.cpp,ok,16,200,679,
 GameEngine/Source/Common/Thing/Thing.cpp,ok,7,9,23,
-GameEngine/Source/Common/Thing/ThingFactory.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/Common/Thing/ThingTemplate.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/Common/UserPreferences.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
 GameEngine/Source/Common/version.cpp,ok,0,0,13,
-GameEngine/Source/GameClient/Credits.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/GameClient/Display.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameClient/DisplayString.cpp,ok,0,1,8,
 GameEngine/Source/GameClient/DisplayStringManager.cpp,ok,0,2,2,
 GameEngine/Source/GameClient/DrawGroupInfo.cpp,ok,0,1,3,
 GameEngine/Source/GameClient/Drawable/DrawableManager.cpp,ok,0,0,0,
 GameEngine/Source/GameClient/Drawable/Update/AnimatedParticleSysBoneClientUpdate.cpp,ok,0,1,7,
-GameEngine/Source/GameClient/Drawable/Update/BeaconClientUpdate.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameClient/Drawable/Update/SwayClientUpdate.cpp,ok,2,4,11,
-GameEngine/Source/GameClient/Drawable.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameClient/DrawableManager.cpp,ok,0,0,0,
 GameEngine/Source/GameClient/Eva.cpp,ok,0,22,70,
-GameEngine/Source/GameClient/FXList.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/GameClient/GUI/AnimateWindowManager.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameClient/GUI/ChallengeGenerals.cpp,ok,0,1,10,
-GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/ControlBar/ControlBarBeacon.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/ControlBar/ControlBarCommand.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/ControlBar/ControlBarCommandProcessing.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
 GameEngine/Source/GameClient/GUI/ControlBar/ControlBarMultiSelect.cpp,ok,0,1,7,
-GameEngine/Source/GameClient/GUI/ControlBar/ControlBarOCLTimer.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/ControlBar/ControlBarObserver.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/ControlBar/ControlBarPrintPositions.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/ControlBar/ControlBarResizer.cpp,compile-error,0,0,0,C2065 'DIK_UPARROW' : undeclared identifier
-GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/ControlBar/ControlBarStructureInventory.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/ControlBar/ControlBarUnderConstruction.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/DisconnectMenu/DisconnectMenu.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/EstablishConnectionsMenu/EstablishConnectionsMenu.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBarCallback.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBarPopupDescription.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Diplomacy.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/ExtendedMessageBox.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/GeneralsExpPoints.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/IMECandidate.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/InGameChat.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/InGamePopupMessage.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ChallengeMenu.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/CreditsMenu.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/DifficultySelect.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/DisconnectWindow.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/DownloadMenu.cpp,missing-header,0,0,0,winsock.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/EstablishConnectionsWindow.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/GameInfoWindow.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/KeyboardOptionsMenu.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanGameOptionsMenu.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanLobbyMenu.cpp,missing-header,0,0,0,winsock2.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanMapSelectMenu.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MainMenu.cpp,missing-header,0,0,0,GameSpy/ghttp/ghttp.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MapSelectMenu.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnect.cpp,missing-header,0,0,0,GameSpy/peer/peer.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionsMenu.cpp,missing-header,0,0,0,GameSpy/ghttp/ghttp.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupCommunicator.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupHostGame.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupJoinGame.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupLadderSelect.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupPlayerInfo.cpp,compile-error,0,0,0,C2065 'DIK_UPARROW' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay.cpp,compile-error,0,0,0,C2065 'DIK_UPARROW' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupSaveLoad.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/QuitMenu.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ReplayMenu.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ScoreScreen.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SinglePlayerMenu.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenu.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishMapSelectMenu.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyOverlay.cpp,compile-error,0,0,0,C2065 'DIK_UPARROW' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLCustomScoreScreen.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLGameSetupMenu.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLadderScreen.cpp,missing-header,0,0,0,EABrowserDispatch/BrowserDispatch.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLobbyMenu.cpp,compile-error,0,0,0,C2065 'DIK_UPARROW' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLocaleSelectPopup.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLoginMenu.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLMapSelectMenu.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLMessageWindow.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQMScoreScreen.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLStatusMenu.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLWelcomeMenu.cpp,missing-header,0,0,0,GameSpy/peer/peer.h
-GameEngine/Source/GameClient/GUI/GUICallbacks/MessageBox.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
 GameEngine/Source/GameClient/GUI/GUICallbacks/ReplayControls.cpp,ok,0,0,0,
-GameEngine/Source/GameClient/GUI/Gadget/GadgetCheckBox.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/Gadget/GadgetHorizontalSlider.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,compile-error,0,0,0,C2065 'DIK_UPARROW' : undeclared identifier
-GameEngine/Source/GameClient/GUI/Gadget/GadgetProgressBar.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/Gadget/GadgetPushButton.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/Gadget/GadgetRadioButton.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/Gadget/GadgetStaticText.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/Gadget/GadgetTabControl.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/Gadget/GadgetTextEntry.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/Gadget/GadgetVerticalSlider.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
 GameEngine/Source/GameClient/GUI/GameFont.cpp,ok,1,3,9,
-GameEngine/Source/GameClient/GUI/GameWindow.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GameWindowTransitions.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,compile-error,0,0,0,C2065 'DIK_UPARROW' : undeclared identifier
-GameEngine/Source/GameClient/GUI/HeaderTemplate.cpp,compile-error,0,0,0,C2065 'OSVERSIONINFO' : undeclared identifier
-GameEngine/Source/GameClient/GUI/IMEManager.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/LoadScreen.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp,compile-error,0,0,0,"C3861 'timeGetTime': identifier not found, even with argument-dependent lookup"
-GameEngine/Source/GameClient/GUI/Shell/Shell.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
-GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameClient/GUI/WinInstanceData.cpp,ok,1,1,6,
-GameEngine/Source/GameClient/GUI/WindowLayout.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/GUI/WindowVideoManager.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/GameClient/GameClient.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
 GameEngine/Source/GameClient/GameClientDispatch.cpp,ok,0,0,1,
-GameEngine/Source/GameClient/GameText.cpp,compile-error,0,0,0,C2039 'SetWindowText' : is not a member of 'operator``global namespace'''
-GameEngine/Source/GameClient/GlobalLanguage.cpp,compile-error,0,0,0,"C3861 'RemoveFontResource': identifier not found, even with argument-dependent lookup"
-GameEngine/Source/GameClient/GraphDraw.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/GameClient/InGameUI.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/Input/Keyboard.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/Input/Mouse.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
 GameEngine/Source/GameClient/LanguageFilter.cpp,ok,2,9,24,
 GameEngine/Source/GameClient/Line2D.cpp,ok,0,0,1,
-GameEngine/Source/GameClient/MapUtil.cpp,missing-header,0,0,0,winsock2.h
-GameEngine/Source/GameClient/MessageStream/CommandXlat.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
 GameEngine/Source/GameClient/MessageStream/GUICommandTranslator.cpp,ok,0,2,7,
-GameEngine/Source/GameClient/MessageStream/HintSpy.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/MessageStream/HotKey.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/MessageStream/LookAtXlat.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/MessageStream/MetaEvent.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/MessageStream/PlaceEventTranslator.cpp,compile-error,0,0,0,C2668 'sqrt' : ambiguous call to overloaded function
-GameEngine/Source/GameClient/MessageStream/SelectionXlat.cpp,compile-error,0,0,0,C2065 'DIK_RSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/MessageStream/WindowXlat.cpp,compile-error,0,0,0,C2065 'DIK_UPARROW' : undeclared identifier
 GameEngine/Source/GameClient/RadiusDecal.cpp,ok,0,0,15,
-GameEngine/Source/GameClient/SelectionInfo.cpp,compile-error,0,0,0,C2065 'DIK_LSHIFT' : undeclared identifier
-GameEngine/Source/GameClient/System/Anim2D.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameClient/System/CampaignManager.cpp,ok,2,1,55,
 GameEngine/Source/GameClient/System/Debug Displayers/AudioDebugDisplay.cpp,ok,0,0,0,
 GameEngine/Source/GameClient/System/DebugDisplay.cpp,ok,0,2,3,
 GameEngine/Source/GameClient/System/Image.cpp,ok,2,10,28,
-GameEngine/Source/GameClient/System/ParticleSys.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameClient/System/RayEffect.cpp,ok,0,1,1,
 GameEngine/Source/GameClient/System/Smudge.cpp,ok,2,9,26,
 GameEngine/Source/GameClient/Terrain/TerrainRoads.cpp,ok,1,1,43,
-GameEngine/Source/GameClient/Terrain/TerrainVisual.cpp,compile-error,0,0,0,C2668 'sqrt' : ambiguous call to overloaded function
 GameEngine/Source/GameClient/VideoPlayer.cpp,ok,3,15,33,
-GameEngine/Source/GameClient/VideoStream.cpp,compile-error,0,0,0,"C2084 function 'void *operator new[](size_t,void *)' already has a body"
 GameEngine/Source/GameClient/View.cpp,ok,2,2,11,
 GameEngine/Source/GameClient/Water.cpp,ok,0,1,4,
-GameEngine/Source/GameLogic/AI/AI.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameLogic/AI/AIDock.cpp,ok,0,1,66,
 GameEngine/Source/GameLogic/AI/AIGroup.cpp,ok,1,29,163,
-GameEngine/Source/GameLogic/AI/AIGuard.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/GameLogic/AI/AIPathfind.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/GameLogic/AI/AIPlayer.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/GameLogic/AI/AISkirmishPlayer.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/GameLogic/AI/AIStates.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/GameLogic/AI/AITNGuard.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameLogic/AI/Squad.cpp,ok,2,19,27,
-GameEngine/Source/GameLogic/AI/TurretAI.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameLogic/Map/PolygonTrigger.cpp,ok,0,0,27,
 GameEngine/Source/GameLogic/Map/SidesList.cpp,ok,2,2,65,
-GameEngine/Source/GameLogic/Map/TerrainLogic.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameLogic/Object/Armor.cpp,ok,0,9,29,
-GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameLogic/Object/Behavior/BattleBusSlowDeathBehavior.cpp,ok,0,4,29,
 GameEngine/Source/GameLogic/Object/Behavior/BehaviorModule.cpp,ok,0,0,1,
-GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameLogic/Object/Behavior/BridgeScaffoldBehavior.cpp,ok,3,1,10,
 GameEngine/Source/GameLogic/Object/Behavior/BridgeTowerBehavior.cpp,ok,0,1,15,
 GameEngine/Source/GameLogic/Object/Behavior/BunkerBusterBehavior.cpp,ok,0,5,24,
-GameEngine/Source/GameLogic/Object/Behavior/CountermeasuresBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/GameLogic/Object/Behavior/DumbProjectileBehavior.cpp,missing-header,0,0,0,D3DX8Math.h
 GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDamagedBehavior.cpp,ok,0,2,18,
 GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehavior.cpp,ok,0,2,16,
-GameEngine/Source/GameLogic/Object/Behavior/FlightDeckBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/GameLogic/Object/Behavior/GenerateMinefieldBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/GameLogic/Object/Behavior/GrantStealthBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameLogic/Object/Behavior/InstantDeathBehavior.cpp,ok,0,16,42,
 GameEngine/Source/GameLogic/Object/Behavior/JetSlowDeathBehavior.cpp,ok,0,5,31,
 GameEngine/Source/GameLogic/Object/Behavior/MinefieldBehavior.cpp,ok,0,15,36,
-GameEngine/Source/GameLogic/Object/Behavior/NeutonBlastBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
-GameEngine/Source/GameLogic/Object/Behavior/OverchargeBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameLogic/Object/Behavior/POWTruckBehavior.cpp,ok,0,0,0,
 GameEngine/Source/GameLogic/Object/Behavior/ParkingPlaceBehavior.cpp,ok,2,25,103,
 GameEngine/Source/GameLogic/Object/Behavior/PoisonedBehavior.cpp,ok,1,6,17,
 GameEngine/Source/GameLogic/Object/Behavior/PrisonBehavior.cpp,ok,0,0,0,
 GameEngine/Source/GameLogic/Object/Behavior/PropagandaCenterBehavior.cpp,ok,0,0,0,
-GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameLogic/Object/Behavior/RebuildHoleBehavior.cpp,ok,0,7,35,
 GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehavior.cpp,ok,2,21,56,
-GameEngine/Source/GameLogic/Object/Behavior/SpawnBehavior.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameLogic/Object/Behavior/SupplyWarehouseCripplingBehavior.cpp,ok,0,5,12,
 GameEngine/Source/GameLogic/Object/Behavior/TechBuildingBehavior.cpp,ok,0,6,11,
-GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp,compile-error,0,0,0,C2383 'Display::DebugDisplayCallback' : default-arguments are not allowed on this symbol
 GameEngine/Source/GameLogic/Object/Body/BodyModule.cpp,ok,0,0,1,
 GameEngine/Source/GameLogic/Object/Body/HighlanderBody.cpp,ok,0,2,8,
 GameEngine/Source/GameLogic/Object/Body/HiveStructureBody.cpp,ok,0,5,13,
@@ -321,38 +152,17 @@ GameEngine/Source/GameLogic/Object/Body/InactiveBody.cpp,ok,0,1,11,
 GameEngine/Source/GameLogic/Object/Body/StructureBody.cpp,ok,0,1,7,
 GameEngine/Source/GameLogic/Object/Body/UndeadBody.cpp,ok,0,4,11,
 GameEngine/Source/GameLogic/Object/Collide/CollideModule.cpp,ok,0,0,1,
-GameEngine/Source/GameLogic/Object/Collide/CrateCollide/ConvertToCarBombCrateCollide.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Collide/CrateCollide/ConvertToHijackedVehicleCrateCollide.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Collide/CrateCollide/CrateCollide.cpp,ok,0,6,22,
 GameEngine/Source/GameLogic/Object/Collide/CrateCollide/HealCrateCollide.cpp,ok,0,1,5,
 GameEngine/Source/GameLogic/Object/Collide/CrateCollide/MoneyCrateCollide.cpp,ok,0,1,8,
-GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageCommandCenterCrateCollide.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageFakeBuilding.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageInternetCenterCrateCollide.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageMilitaryFactoryCrateCollide.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotagePowerPlantCrateCollide.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageSuperweaponCrateCollide.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageSupplyCenterCrateCollide.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageSupplyDropzoneCrateCollide.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SalvageCrateCollide.cpp,ok,0,4,21,
-GameEngine/Source/GameLogic/Object/Collide/CrateCollide/ShroudCrateCollide.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Collide/CrateCollide/UnitCrateCollide.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Collide/CrateCollide/VeterancyCrateCollide.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Collide/FireWeaponCollide.cpp,ok,0,2,28,
-GameEngine/Source/GameLogic/Object/Collide/SquishCollide.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Contain/CaveContain.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Contain/GarrisonContain.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Contain/HealContain.cpp,ok,0,3,13,
-GameEngine/Source/GameLogic/Object/Contain/HelixContain.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Contain/InternetHackContain.cpp,ok,0,3,17,
 GameEngine/Source/GameLogic/Object/Contain/MobNexusContain.cpp,ok,0,5,23,
-GameEngine/Source/GameLogic/Object/Contain/OpenContain.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Contain/OverlordContain.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Contain/ParachuteContain.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Contain/RailedTransportContain.cpp,ok,0,1,8,
 GameEngine/Source/GameLogic/Object/Contain/RiderChangeContain.cpp,ok,1,6,33,
 GameEngine/Source/GameLogic/Object/Contain/TransportContain.cpp,ok,0,6,33,
-GameEngine/Source/GameLogic/Object/Contain/TunnelContain.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Create/CreateModule.cpp,ok,0,0,5,
 GameEngine/Source/GameLogic/Object/Create/GrantUpgradeCreate.cpp,ok,1,7,18,
 GameEngine/Source/GameLogic/Object/Create/LockWeaponCreate.cpp,ok,0,6,5,
@@ -365,7 +175,6 @@ GameEngine/Source/GameLogic/Object/Damage/BoneFXDamage.cpp,ok,1,1,9,
 GameEngine/Source/GameLogic/Object/Damage/DamageModule.cpp,ok,0,0,1,
 GameEngine/Source/GameLogic/Object/Damage/TransitionDamageFX.cpp,ok,1,6,28,
 GameEngine/Source/GameLogic/Object/Destroy/DestroyModule.cpp,ok,0,0,5,
-GameEngine/Source/GameLogic/Object/Die/CreateCrateDie.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Die/CreateObjectDie.cpp,ok,0,6,17,
 GameEngine/Source/GameLogic/Object/Die/CrushDie.cpp,ok,0,3,14,
 GameEngine/Source/GameLogic/Object/Die/DamDie.cpp,ok,0,5,11,
@@ -388,109 +197,59 @@ GameEngine/Source/GameLogic/Object/Helper/ObjectWeaponStatusHelper.cpp,ok,0,1,3,
 GameEngine/Source/GameLogic/Object/Helper/StatusDamageHelper.cpp,ok,0,2,16,
 GameEngine/Source/GameLogic/Object/Helper/SubdualDamageHelper.cpp,ok,0,1,16,
 GameEngine/Source/GameLogic/Object/Helper/TempWeaponBonusHelper.cpp,ok,0,1,13,
-GameEngine/Source/GameLogic/Object/Locomotor.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Object.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/ObjectCreationList.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/ObjectTypes.cpp,ok,0,20,48,
-GameEngine/Source/GameLogic/Object/PartitionManager.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/SimpleObjectIterator.cpp,ok,3,1,10,
 GameEngine/Source/GameLogic/Object/SpecialPower/BaikonurLaunchPower.cpp,ok,0,3,10,
 GameEngine/Source/GameLogic/Object/SpecialPower/CashBountyPower.cpp,ok,0,3,8,
-GameEngine/Source/GameLogic/Object/SpecialPower/CashHackSpecialPower.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/SpecialPower/CleanupAreaPower.cpp,ok,0,3,7,
 GameEngine/Source/GameLogic/Object/SpecialPower/DefectorSpecialPower.cpp,ok,0,6,8,
 GameEngine/Source/GameLogic/Object/SpecialPower/DemoralizeSpecialPower.cpp,ok,0,0,0,
 GameEngine/Source/GameLogic/Object/SpecialPower/FireWeaponPower.cpp,ok,0,3,17,
-GameEngine/Source/GameLogic/Object/SpecialPower/OCLSpecialPower.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/SpecialPower/SpecialAbility.cpp,ok,0,1,6,
 GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule.cpp,ok,4,10,34,
 GameEngine/Source/GameLogic/Object/SpecialPower/SpyVisionSpecialPower.cpp,ok,0,3,7,
-GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/AIUpdate/ChinookAIUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeliverPayloadAIUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/AIUpdate/HackInternetAIUpdate.cpp,ok,0,6,59,
-GameEngine/Source/GameLogic/Object/Update/AIUpdate/JetAIUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/AIUpdate/MissileAIUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/AIUpdate/POWTruckAIUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/AIUpdate/RailedTransportAIUpdate.cpp,ok,0,2,23,
-GameEngine/Source/GameLogic/Object/Update/AIUpdate/RailroadGuideAIUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/AIUpdate/TransportAIUpdate.cpp,ok,0,2,23,
 GameEngine/Source/GameLogic/Object/Update/AIUpdate/WanderAIUpdate.cpp,ok,0,1,15,
-GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/AnimationSteeringUpdate.cpp,ok,0,7,12,
 GameEngine/Source/GameLogic/Object/Update/AssistedTargetingUpdate.cpp,ok,0,1,21,
 GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdate.cpp,ok,0,3,25,
-GameEngine/Source/GameLogic/Object/Update/AutoFindHealingUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/BaseRenerateUpdate.cpp,ok,0,6,13,
-GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/BoneFXUpdate.cpp,ok,4,14,49,
 GameEngine/Source/GameLogic/Object/Update/CheckpointUpdate.cpp,ok,0,1,11,
-GameEngine/Source/GameLogic/Object/Update/CleanupHazardUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/CommandButtonHuntUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/DeletionUpdate.cpp,ok,0,1,10,
-GameEngine/Source/GameLogic/Object/Update/DemoTrapUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/DockUpdate/PrisonDockUpdate.cpp,ok,0,0,0,
-GameEngine/Source/GameLogic/Object/Update/DockUpdate/RailedTransportDockUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/DockUpdate/RepairDockUpdate.cpp,ok,1,3,9,
 GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdate.cpp,ok,0,5,9,
-GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyWarehouseDockUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/DynamicGeometryInfoUpdate.cpp,ok,0,3,12,
 GameEngine/Source/GameLogic/Object/Update/DynamicShroudClearingRangeUpdate.cpp,ok,0,6,17,
-GameEngine/Source/GameLogic/Object/Update/EMPUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/EnemyNearUpdate.cpp,ok,0,1,10,
 GameEngine/Source/GameLogic/Object/Update/FireOCLAfterWeaponCooldownUpdate.cpp,ok,0,9,31,
-GameEngine/Source/GameLogic/Object/Update/FireSpreadUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/FireWeaponUpdate.cpp,ok,0,6,18,
-GameEngine/Source/GameLogic/Object/Update/FirestormDynamicGeometryInfoUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/FlammableUpdate.cpp,ok,1,7,28,
 GameEngine/Source/GameLogic/Object/Update/FloatUpdate.cpp,ok,0,8,9,
-GameEngine/Source/GameLogic/Object/Update/HeightDieUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/HelicopterSlowDeathUpdate.cpp,ok,2,5,28,
-GameEngine/Source/GameLogic/Object/Update/HijackerUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/HordeUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/LaserUpdate.cpp,ok,0,7,19,
 GameEngine/Source/GameLogic/Object/Update/LifetimeUpdate.cpp,ok,0,1,10,
 GameEngine/Source/GameLogic/Object/Update/MissileLauncherBuildingUpdate.cpp,ok,1,3,12,
-GameEngine/Source/GameLogic/Object/Update/MobMemberSlavedUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/NeutronMissileSlowDeathUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/NeutronMissileUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/OCLUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/ParticleUplinkCannonUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/PhysicsUpdate.cpp,ok,3,16,70,
-GameEngine/Source/GameLogic/Object/Update/PilotFindVehicleUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/PointDefenseLaserUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/PowerPlantUpdate.cpp,ok,0,7,13,
 GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdate.cpp,ok,0,17,24,
 GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/QueueProductionExitUpdate.cpp,ok,1,16,28,
 GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/SpawnPointProductionExitUpdate.cpp,ok,1,2,12,
 GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/SupplyCenterProductionExitUpdate.cpp,ok,0,18,27,
-GameEngine/Source/GameLogic/Object/Update/ProductionUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/ProjectileStreamUpdate.cpp,ok,0,1,15,
 GameEngine/Source/GameLogic/Object/Update/ProneUpdate.cpp,ok,0,4,15,
 GameEngine/Source/GameLogic/Object/Update/RadarUpdate.cpp,ok,0,6,10,
 GameEngine/Source/GameLogic/Object/Update/RadiusDecalUpdate.cpp,ok,0,2,15,
-GameEngine/Source/GameLogic/Object/Update/SlavedUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/SmartBombTargetHomingUpdate.cpp,ok,0,1,10,
-GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/SpecialPowerUpdateModule.cpp,ok,0,0,8,
-GameEngine/Source/GameLogic/Object/Update/SpectreGunshipDeploymentUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/SpectreGunshipUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/SpyVisionUpdate.cpp,ok,0,1,16,
-GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/StealthUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/StickyBombUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/StructureCollapseUpdate.cpp,ok,4,8,28,
 GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdate.cpp,ok,3,11,40,
-GameEngine/Source/GameLogic/Object/Update/TensileFormationUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Update/ToppleUpdate.cpp,ok,2,9,26,
 GameEngine/Source/GameLogic/Object/Update/UpdateModule.cpp,ok,2,0,2,
-GameEngine/Source/GameLogic/Object/Update/WaveGuideUpdate.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/Object/Update/WeaponBonusUpdate.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/Object/Upgrade/ActiveShroudUpgrade.cpp,ok,0,9,24,
 GameEngine/Source/GameLogic/Object/Upgrade/ArmorUpgrade.cpp,ok,0,1,9,
 GameEngine/Source/GameLogic/Object/Upgrade/CommandSetUpgrade.cpp,ok,0,2,18,
@@ -512,66 +271,18 @@ GameEngine/Source/GameLogic/Object/Upgrade/UnpauseSpecialPowerUpgrade.cpp,ok,0,9
 GameEngine/Source/GameLogic/Object/Upgrade/UpgradeModule.cpp,ok,0,0,14,
 GameEngine/Source/GameLogic/Object/Upgrade/WeaponBonusUpgrade.cpp,ok,0,1,8,
 GameEngine/Source/GameLogic/Object/Upgrade/WeaponSetUpgrade.cpp,ok,0,1,8,
-GameEngine/Source/GameLogic/Object/Weapon.cpp,missing-header,0,0,0,winsock2.h
 GameEngine/Source/GameLogic/Object/WeaponSet.cpp,ok,2,12,57,
-GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/System/CaveSystem.cpp,ok,1,8,16,
 GameEngine/Source/GameLogic/System/CrateSystem.cpp,ok,1,13,58,
 GameEngine/Source/GameLogic/System/Damage.cpp,ok,0,0,6,
-GameEngine/Source/GameLogic/System/GameLogic.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameLogic/System/GameLogicDispatch.cpp,missing-header,0,0,0,View.h
 GameEngine/Source/GameLogic/System/RankInfo.cpp,ok,1,15,30,
-GameEngine/Source/GameNetwork/Connection.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameNetwork/ConnectionManager.cpp,missing-header,0,0,0,Compression.h
-GameEngine/Source/GameNetwork/DisconnectManager.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameNetwork/DownloadManager.cpp,missing-header,0,0,0,winsock.h
-GameEngine/Source/GameNetwork/FileTransfer.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameNetwork/FirewallHelper.cpp,missing-header,0,0,0,winsock2.h
-GameEngine/Source/GameNetwork/FrameData.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameNetwork/FrameDataManager.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameNetwork/FrameMetrics.cpp,missing-header,0,0,0,View.h
-GameEngine/Source/GameNetwork/GUIUtil.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameNetwork/GameInfo.cpp,missing-header,0,0,0,netdb.h
 GameEngine/Source/GameNetwork/GameMessageParser.cpp,ok,1,0,8,
-GameEngine/Source/GameNetwork/GameSpy/Chat.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
 GameEngine/Source/GameNetwork/GameSpy/GSConfig.cpp,ok,3,15,72,
-GameEngine/Source/GameNetwork/GameSpy/LadderDefs.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
-GameEngine/Source/GameNetwork/GameSpy/LobbyUtils.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
-GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cpp,missing-header,0,0,0,GameSpy/ghttp/ghttp.h
-GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
-GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp,missing-header,0,0,0,GameSpy/GP/GP.h
-GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThread.cpp,missing-header,0,0,0,GameSpy/GP/GP.h
-GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,missing-header,0,0,0,winsock.h
-GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameNetwork/GameSpy/Thread/PersistentStorageThread.cpp,missing-header,0,0,0,GameSpy/gstats/gpersist.h
-GameEngine/Source/GameNetwork/GameSpy/Thread/PingThread.cpp,missing-header,0,0,0,winsock.h
-GameEngine/Source/GameNetwork/GameSpy/Thread/ThreadUtils.cpp,compile-error,0,0,0,C2065 'CP_UTF8' : undeclared identifier
-GameEngine/Source/GameNetwork/GameSpyChat.cpp,missing-header,0,0,0,GameNetwork/GameSpy.h
-GameEngine/Source/GameNetwork/GameSpyGP.cpp,missing-header,0,0,0,GameNetwork/GameSpy.h
-GameEngine/Source/GameNetwork/GameSpyGameInfo.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
-GameEngine/Source/GameNetwork/GameSpyOverlay.cpp,missing-header,0,0,0,GameSpy/GP/GP.h
-GameEngine/Source/GameNetwork/IPEnumeration.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameNetwork/LANAPI.cpp,missing-header,0,0,0,winsock2.h
-GameEngine/Source/GameNetwork/LANAPICallbacks.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameNetwork/LANAPIhandlers.cpp,missing-header,0,0,0,winsock2.h
-GameEngine/Source/GameNetwork/LANGameInfo.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameNetwork/NAT.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameNetwork/NetCommandList.cpp,missing-header,0,0,0,netdb.h
 GameEngine/Source/GameNetwork/NetCommandMsg.cpp,ok,3,8,100,
 GameEngine/Source/GameNetwork/NetCommandRef.cpp,ok,1,0,3,
 GameEngine/Source/GameNetwork/NetCommandWrapperList.cpp,ok,2,0,15,
 GameEngine/Source/GameNetwork/NetMessageStream.cpp,ok,0,0,0,
-GameEngine/Source/GameNetwork/NetPacket.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameNetwork/Network.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameNetwork/NetworkUtil.cpp,missing-header,0,0,0,netdb.h
-GameEngine/Source/GameNetwork/Transport.cpp,missing-header,0,0,0,winsock2.h
 GameEngine/Source/GameNetwork/User.cpp,ok,1,0,8,
-GameEngine/Source/GameNetwork/WOLBrowser/WebBrowser.cpp,missing-header,0,0,0,EABrowserDispatch/BrowserDispatch.h
-GameEngine/Source/GameNetwork/udp.cpp,missing-header,0,0,0,netdb.h
 GameEngine/Source/Precompiled/PreRTS.cpp,ok,0,0,0,
 GameEngineDevice/Source/W3DDevice/Common/W3DConvert.cpp,ok,1,0,2,
 GameEngineDevice/Source/W3DDevice/GameClient/W3DGranny.cpp,ok,0,0,0,
@@ -676,3 +387,281 @@ GameEngineDevice/Source/Win32Device/Common/Win32OSDisplay.cpp,compile-error,0,0,
 GameEngineDevice/Source/Win32Device/GameClient/Win32DIKeyboard.cpp,compile-error,0,0,0,"C3861 'prop': identifier not found, even with argument-dependent lookup"
 GameEngineDevice/Source/Win32Device/GameClient/Win32DIMouse.cpp,compile-error,0,0,0,C2227 left of '->Unacquire' must point to class/struct/union
 GameEngineDevice/Source/Win32Device/GameClient/Win32Mouse.cpp,compile-error,0,0,0,"C3861 'LOWORD': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/Common/Audio/GameSounds.cpp,ok,0,1,6,
+GameEngine/Source/Common/Audio/GameSpeech.cpp,missing-header,0,0,0,wpaudio/attributes.h
+GameEngine/Source/Common/Audio/simpleplayer.cpp,missing-header,0,0,0,wmsdk.h
+GameEngine/Source/Common/Audio/urllaunch.cpp,compile-error,0,0,0,C2501 'HRESULT' : missing storage-class or type specifiers
+GameEngine/Source/Common/Bezier/BezFwdIterator.cpp,compile-error,0,0,0,C2039 's_bezBasisMatrix' : is not a member of 'BezierSegment'
+GameEngine/Source/Common/Bezier/BezierSegment.cpp,compile-error,0,0,0,"C3861 'D3DXVec4Transform': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/Common/CRCDebug.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/Common/CommandLine.cpp,compile-error,0,0,0,C2661 '_stat::_stat' : no overloaded function takes 2 arguments
+GameEngine/Source/Common/GameEngine.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/Common/GlobalData.cpp,missing-header,0,0,0,winsock2.h
+GameEngine/Source/Common/INI/INIWebpageURL.cpp,missing-header,0,0,0,EABrowserDispatch/BrowserDispatch.h
+GameEngine/Source/Common/PerfTimer.cpp,ok,0,0,0,
+GameEngine/Source/Common/RTS/ActionManager.cpp,ok,1,7,39,
+GameEngine/Source/Common/RTS/Player.cpp,ok,2,81,347,
+GameEngine/Source/Common/RTS/ResourceGatheringManager.cpp,ok,0,0,26,
+GameEngine/Source/Common/RTS/Team.cpp,ok,2,37,215,
+GameEngine/Source/Common/RTS/TunnelTracker.cpp,ok,0,6,51,
+GameEngine/Source/Common/RandomValue.cpp,missing-header,0,0,0,winsock2.h
+GameEngine/Source/Common/StatsCollector.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/Common/System/BuildAssistant.cpp,ok,0,10,76,
+GameEngine/Source/Common/System/Compression.cpp,missing-header,0,0,0,Compression.h
+GameEngine/Source/Common/System/CopyProtection.cpp,compile-error,0,0,0,C2061 syntax error : identifier 'LPARAM'
+GameEngine/Source/Common/System/DataChunk.cpp,missing-header,0,0,0,Compression.h
+GameEngine/Source/Common/System/FunctionLexicon.cpp,ok,2,1,7,
+GameEngine/Source/Common/System/Radar.cpp,ok,3,3,37,
+GameEngine/Source/Common/System/SaveGame/GameState.cpp,compile-error,0,0,0,"C3861 'OSVERSIONINFO': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/Common/System/SaveGame/GameStateMap.cpp,compile-error,0,0,0,"C3861 'GetCurrentDirectory': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/Common/System/XferCRC.cpp,missing-header,0,0,0,winsock2.h
+GameEngine/Source/Common/System/registry.cpp,compile-error,0,0,0,"C3861 'ERROR_SUCCESS': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/Common/Thing/ThingFactory.cpp,ok,7,65,164,
+GameEngine/Source/Common/Thing/ThingTemplate.cpp,ok,14,117,268,
+GameEngine/Source/Common/UserPreferences.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/Credits.cpp,ok,0,7,27,
+GameEngine/Source/GameClient/Display.cpp,compile-error,0,0,0,"C3861 'timeGetTime': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/GameClient/Drawable/Update/BeaconClientUpdate.cpp,ok,0,3,12,
+GameEngine/Source/GameClient/Drawable.cpp,ok,4,24,214,
+GameEngine/Source/GameClient/FXList.cpp,ok,2,15,94,
+GameEngine/Source/GameClient/GUI/AnimateWindowManager.cpp,ok,6,1,22,
+GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp,ok,8,23,113,
+GameEngine/Source/GameClient/GUI/ControlBar/ControlBarBeacon.cpp,ok,0,0,3,
+GameEngine/Source/GameClient/GUI/ControlBar/ControlBarCommand.cpp,ok,1,14,25,
+GameEngine/Source/GameClient/GUI/ControlBar/ControlBarCommandProcessing.cpp,ok,1,4,5,
+GameEngine/Source/GameClient/GUI/ControlBar/ControlBarOCLTimer.cpp,ok,0,0,4,
+GameEngine/Source/GameClient/GUI/ControlBar/ControlBarObserver.cpp,ok,1,3,8,
+GameEngine/Source/GameClient/GUI/ControlBar/ControlBarPrintPositions.cpp,ok,0,0,4,
+GameEngine/Source/GameClient/GUI/ControlBar/ControlBarResizer.cpp,ok,1,1,24,
+GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme.cpp,ok,3,10,70,
+GameEngine/Source/GameClient/GUI/ControlBar/ControlBarStructureInventory.cpp,ok,1,0,4,
+GameEngine/Source/GameClient/GUI/ControlBar/ControlBarUnderConstruction.cpp,ok,0,1,7,
+GameEngine/Source/GameClient/GUI/DisconnectMenu/DisconnectMenu.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/EstablishConnectionsMenu/EstablishConnectionsMenu.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBarCallback.cpp,ok,0,0,9,
+GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBarPopupDescription.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Diplomacy.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/ExtendedMessageBox.cpp,ok,0,0,9,
+GameEngine/Source/GameClient/GUI/GUICallbacks/GeneralsExpPoints.cpp,ok,1,0,1,
+GameEngine/Source/GameClient/GUI/GUICallbacks/IMECandidate.cpp,ok,0,1,3,
+GameEngine/Source/GameClient/GUI/GUICallbacks/InGameChat.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/InGamePopupMessage.cpp,ok,0,0,5,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ChallengeMenu.cpp,ok,0,2,22,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/CreditsMenu.cpp,ok,2,0,5,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/DifficultySelect.cpp,ok,1,0,5,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/DisconnectWindow.cpp,ok,0,1,7,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/DownloadMenu.cpp,missing-header,0,0,0,winsock.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/EstablishConnectionsWindow.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/GameInfoWindow.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/KeyboardOptionsMenu.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanGameOptionsMenu.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanLobbyMenu.cpp,missing-header,0,0,0,winsock2.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanMapSelectMenu.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MainMenu.cpp,missing-header,0,0,0,GameSpy/ghttp/ghttp.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MapSelectMenu.cpp,ok,0,1,28,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnect.cpp,missing-header,0,0,0,GameSpy/peer/peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionsMenu.cpp,missing-header,0,0,0,GameSpy/ghttp/ghttp.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupCommunicator.cpp,ok,0,0,6,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupHostGame.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupJoinGame.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupLadderSelect.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupPlayerInfo.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay.cpp,compile-error,0,0,0,"C3861 'timeGetTime': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupSaveLoad.cpp,ok,0,0,18,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/QuitMenu.cpp,ok,0,0,16,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ReplayMenu.cpp,compile-error,0,0,0,C2065 'FORMAT_MESSAGE_FROM_SYSTEM' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ScoreScreen.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SinglePlayerMenu.cpp,ok,0,0,7,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenu.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishMapSelectMenu.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyOverlay.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLCustomScoreScreen.cpp,ok,0,0,6,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLGameSetupMenu.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLadderScreen.cpp,missing-header,0,0,0,EABrowserDispatch/BrowserDispatch.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLobbyMenu.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLocaleSelectPopup.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLoginMenu.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLMapSelectMenu.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLMessageWindow.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQMScoreScreen.cpp,ok,0,0,6,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLStatusMenu.cpp,ok,0,0,6,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLWelcomeMenu.cpp,missing-header,0,0,0,GameSpy/peer/peer.h
+GameEngine/Source/GameClient/GUI/GUICallbacks/MessageBox.cpp,ok,0,0,10,
+GameEngine/Source/GameClient/GUI/Gadget/GadgetCheckBox.cpp,ok,0,0,5,
+GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,ok,2,0,23,
+GameEngine/Source/GameClient/GUI/Gadget/GadgetHorizontalSlider.cpp,ok,0,0,2,
+GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,compile-error,0,0,0,"C3861 'GetDoubleClickTime': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/GameClient/GUI/Gadget/GadgetProgressBar.cpp,ok,0,0,2,
+GameEngine/Source/GameClient/GUI/Gadget/GadgetPushButton.cpp,ok,10,1,9,
+GameEngine/Source/GameClient/GUI/Gadget/GadgetRadioButton.cpp,ok,1,0,5,
+GameEngine/Source/GameClient/GUI/Gadget/GadgetStaticText.cpp,ok,1,0,4,
+GameEngine/Source/GameClient/GUI/Gadget/GadgetTabControl.cpp,ok,5,0,5,
+GameEngine/Source/GameClient/GUI/Gadget/GadgetTextEntry.cpp,compile-error,0,0,0,C2065 'VK_RETURN' : undeclared identifier
+GameEngine/Source/GameClient/GUI/Gadget/GadgetVerticalSlider.cpp,ok,0,0,2,
+GameEngine/Source/GameClient/GUI/GameWindow.cpp,ok,6,1,50,
+GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp,ok,2,1,7,
+GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,ok,4,27,77,
+GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp,ok,13,3,60,
+GameEngine/Source/GameClient/GUI/GameWindowTransitions.cpp,ok,0,3,57,
+GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,ok,5,21,61,
+GameEngine/Source/GameClient/GUI/HeaderTemplate.cpp,compile-error,0,0,0,C2065 'OSVERSIONINFO' : undeclared identifier
+GameEngine/Source/GameClient/GUI/IMEManager.cpp,compile-error,0,0,0,"C3861 'm_context': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/GameClient/GUI/LoadScreen.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp,compile-error,0,0,0,"C3861 'timeGetTime': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/GameClient/GUI/Shell/Shell.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme.cpp,ok,1,3,56,
+GameEngine/Source/GameClient/GUI/WindowLayout.cpp,ok,0,0,18,
+GameEngine/Source/GameClient/GUI/WindowVideoManager.cpp,ok,0,10,34,
+GameEngine/Source/GameClient/GameClient.cpp,compile-error,0,0,0,"C3861 'timeGetTime': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/GameClient/GameText.cpp,compile-error,0,0,0,C2039 'SetWindowText' : is not a member of 'operator``global namespace'''
+GameEngine/Source/GameClient/GlobalLanguage.cpp,compile-error,0,0,0,"C3861 'RemoveFontResource': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/GameClient/GraphDraw.cpp,ok,0,0,0,
+GameEngine/Source/GameClient/InGameUI.cpp,ok,4,37,280,
+GameEngine/Source/GameClient/Input/Keyboard.cpp,compile-error,0,0,0,C2065 'HKL' : undeclared identifier
+GameEngine/Source/GameClient/Input/Mouse.cpp,compile-error,0,0,0,"C3861 'timeGetTime': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/GameClient/MapUtil.cpp,missing-header,0,0,0,winsock2.h
+GameEngine/Source/GameClient/MessageStream/CommandXlat.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameClient/MessageStream/HintSpy.cpp,ok,0,0,1,
+GameEngine/Source/GameClient/MessageStream/HotKey.cpp,ok,1,6,39,
+GameEngine/Source/GameClient/MessageStream/LookAtXlat.cpp,ok,0,2,6,
+GameEngine/Source/GameClient/MessageStream/MetaEvent.cpp,ok,1,4,9,
+GameEngine/Source/GameClient/MessageStream/PlaceEventTranslator.cpp,compile-error,0,0,0,C2668 'sqrt' : ambiguous call to overloaded function
+GameEngine/Source/GameClient/MessageStream/SelectionXlat.cpp,ok,3,18,53,
+GameEngine/Source/GameClient/MessageStream/WindowXlat.cpp,ok,0,2,2,
+GameEngine/Source/GameClient/SelectionInfo.cpp,ok,1,2,20,
+GameEngine/Source/GameClient/System/Anim2D.cpp,ok,3,3,32,
+GameEngine/Source/GameClient/System/ParticleSys.cpp,ok,3,25,146,
+GameEngine/Source/GameClient/Terrain/TerrainVisual.cpp,compile-error,0,0,0,C2668 'sqrt' : ambiguous call to overloaded function
+GameEngine/Source/GameClient/VideoStream.cpp,ok,0,0,0,
+GameEngine/Source/GameLogic/AI/AI.cpp,ok,4,9,63,
+GameEngine/Source/GameLogic/AI/AIGuard.cpp,ok,1,2,66,
+GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp,ok,1,2,61,
+GameEngine/Source/GameLogic/AI/AIPathfind.cpp,compile-error,0,0,0,C2668 'sqrt' : ambiguous call to overloaded function
+GameEngine/Source/GameLogic/AI/AIPlayer.cpp,ok,2,17,151,
+GameEngine/Source/GameLogic/AI/AISkirmishPlayer.cpp,ok,1,6,59,
+GameEngine/Source/GameLogic/AI/AIStates.cpp,ok,5,35,430,
+GameEngine/Source/GameLogic/AI/AITNGuard.cpp,ok,1,1,63,
+GameEngine/Source/GameLogic/AI/TurretAI.cpp,ok,3,2,82,
+GameEngine/Source/GameLogic/Map/TerrainLogic.cpp,ok,7,7,96,
+GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehavior.cpp,ok,1,1,29,
+GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp,ok,1,10,98,
+GameEngine/Source/GameLogic/Object/Behavior/CountermeasuresBehavior.cpp,ok,0,8,25,
+GameEngine/Source/GameLogic/Object/Behavior/DumbProjectileBehavior.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 's_bezBasisMatrix'
+GameEngine/Source/GameLogic/Object/Behavior/FlightDeckBehavior.cpp,ok,0,39,133,
+GameEngine/Source/GameLogic/Object/Behavior/GenerateMinefieldBehavior.cpp,ok,0,16,69,
+GameEngine/Source/GameLogic/Object/Behavior/GrantStealthBehavior.cpp,ok,1,1,13,
+GameEngine/Source/GameLogic/Object/Behavior/NeutonBlastBehavior.cpp,ok,0,2,21,
+GameEngine/Source/GameLogic/Object/Behavior/OverchargeBehavior.cpp,ok,0,6,18,
+GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehavior.cpp,ok,1,7,34,
+GameEngine/Source/GameLogic/Object/Behavior/SpawnBehavior.cpp,ok,0,5,77,
+GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp,ok,1,15,73,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/ConvertToCarBombCrateCollide.cpp,ok,0,5,16,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/ConvertToHijackedVehicleCrateCollide.cpp,ok,0,3,21,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageCommandCenterCrateCollide.cpp,ok,0,1,6,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageFakeBuilding.cpp,ok,0,1,10,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageInternetCenterCrateCollide.cpp,ok,0,1,7,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageMilitaryFactoryCrateCollide.cpp,ok,0,1,6,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotagePowerPlantCrateCollide.cpp,ok,0,1,6,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageSuperweaponCrateCollide.cpp,ok,0,1,6,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageSupplyCenterCrateCollide.cpp,ok,0,2,6,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageSupplyDropzoneCrateCollide.cpp,ok,0,2,6,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/ShroudCrateCollide.cpp,ok,0,1,5,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/UnitCrateCollide.cpp,ok,1,1,5,
+GameEngine/Source/GameLogic/Object/Collide/CrateCollide/VeterancyCrateCollide.cpp,ok,0,1,9,
+GameEngine/Source/GameLogic/Object/Collide/SquishCollide.cpp,ok,0,1,14,
+GameEngine/Source/GameLogic/Object/Contain/CaveContain.cpp,ok,0,2,23,
+GameEngine/Source/GameLogic/Object/Contain/GarrisonContain.cpp,ok,2,28,85,
+GameEngine/Source/GameLogic/Object/Contain/HelixContain.cpp,ok,0,7,45,
+GameEngine/Source/GameLogic/Object/Contain/OpenContain.cpp,ok,0,41,137,
+GameEngine/Source/GameLogic/Object/Contain/OverlordContain.cpp,ok,0,7,52,
+GameEngine/Source/GameLogic/Object/Contain/ParachuteContain.cpp,ok,1,8,55,
+GameEngine/Source/GameLogic/Object/Contain/TunnelContain.cpp,ok,0,1,27,
+GameEngine/Source/GameLogic/Object/Die/CreateCrateDie.cpp,ok,1,1,32,
+GameEngine/Source/GameLogic/Object/Locomotor.cpp,ok,4,35,118,
+GameEngine/Source/GameLogic/Object/Object.cpp,ok,4,55,313,
+GameEngine/Source/GameLogic/Object/ObjectCreationList.cpp,ok,5,47,127,
+GameEngine/Source/GameLogic/Object/PartitionManager.cpp,ok,23,76,315,
+GameEngine/Source/GameLogic/Object/SpecialPower/CashHackSpecialPower.cpp,ok,2,11,17,
+GameEngine/Source/GameLogic/Object/SpecialPower/OCLSpecialPower.cpp,ok,1,12,23,
+GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdate.cpp,ok,0,2,27,
+GameEngine/Source/GameLogic/Object/Update/AIUpdate/ChinookAIUpdate.cpp,ok,1,9,136,
+GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeliverPayloadAIUpdate.cpp,ok,0,6,91,
+GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdate.cpp,ok,0,4,23,
+GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate.cpp,ok,3,13,107,
+GameEngine/Source/GameLogic/Object/Update/AIUpdate/JetAIUpdate.cpp,ok,1,14,165,
+GameEngine/Source/GameLogic/Object/Update/AIUpdate/MissileAIUpdate.cpp,ok,0,6,48,
+GameEngine/Source/GameLogic/Object/Update/AIUpdate/POWTruckAIUpdate.cpp,ok,0,0,0,
+GameEngine/Source/GameLogic/Object/Update/AIUpdate/RailroadGuideAIUpdate.cpp,ok,2,9,73,
+GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate.cpp,ok,1,3,69,
+GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate.cpp,ok,3,6,70,
+GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp,ok,1,41,228,
+GameEngine/Source/GameLogic/Object/Update/AutoFindHealingUpdate.cpp,ok,0,3,20,
+GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdate.cpp,ok,1,9,42,
+GameEngine/Source/GameLogic/Object/Update/CleanupHazardUpdate.cpp,ok,0,4,27,
+GameEngine/Source/GameLogic/Object/Update/CommandButtonHuntUpdate.cpp,ok,1,7,35,
+GameEngine/Source/GameLogic/Object/Update/DemoTrapUpdate.cpp,ok,0,6,25,
+GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdate.cpp,ok,23,41,66,
+GameEngine/Source/GameLogic/Object/Update/DockUpdate/RailedTransportDockUpdate.cpp,ok,1,4,21,
+GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyWarehouseDockUpdate.cpp,ok,1,3,17,
+GameEngine/Source/GameLogic/Object/Update/EMPUpdate.cpp,ok,0,3,25,
+GameEngine/Source/GameLogic/Object/Update/FireSpreadUpdate.cpp,ok,1,6,16,
+GameEngine/Source/GameLogic/Object/Update/FirestormDynamicGeometryInfoUpdate.cpp,ok,0,3,14,
+GameEngine/Source/GameLogic/Object/Update/HeightDieUpdate.cpp,ok,0,6,15,
+GameEngine/Source/GameLogic/Object/Update/HijackerUpdate.cpp,ok,0,2,22,
+GameEngine/Source/GameLogic/Object/Update/HordeUpdate.cpp,ok,1,7,33,
+GameEngine/Source/GameLogic/Object/Update/MobMemberSlavedUpdate.cpp,ok,1,4,37,
+GameEngine/Source/GameLogic/Object/Update/NeutronMissileSlowDeathUpdate.cpp,ok,0,3,27,
+GameEngine/Source/GameLogic/Object/Update/NeutronMissileUpdate.cpp,ok,3,13,26,
+GameEngine/Source/GameLogic/Object/Update/OCLUpdate.cpp,ok,2,7,35,
+GameEngine/Source/GameLogic/Object/Update/ParticleUplinkCannonUpdate.cpp,ok,1,8,50,
+GameEngine/Source/GameLogic/Object/Update/PilotFindVehicleUpdate.cpp,ok,0,4,25,
+GameEngine/Source/GameLogic/Object/Update/PointDefenseLaserUpdate.cpp,ok,0,5,29,
+GameEngine/Source/GameLogic/Object/Update/ProductionUpdate.cpp,ok,0,22,72,
+GameEngine/Source/GameLogic/Object/Update/SlavedUpdate.cpp,ok,1,4,50,
+GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate.cpp,ok,0,9,77,
+GameEngine/Source/GameLogic/Object/Update/SpectreGunshipDeploymentUpdate.cpp,ok,0,4,18,
+GameEngine/Source/GameLogic/Object/Update/SpectreGunshipUpdate.cpp,ok,0,6,43,
+GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdate.cpp,ok,1,3,26,
+GameEngine/Source/GameLogic/Object/Update/StealthUpdate.cpp,ok,0,8,44,
+GameEngine/Source/GameLogic/Object/Update/StickyBombUpdate.cpp,ok,0,3,24,
+GameEngine/Source/GameLogic/Object/Update/TensileFormationUpdate.cpp,ok,0,7,22,
+GameEngine/Source/GameLogic/Object/Update/WaveGuideUpdate.cpp,ok,0,8,39,
+GameEngine/Source/GameLogic/Object/Update/WeaponBonusUpdate.cpp,ok,1,6,22,
+GameEngine/Source/GameLogic/Object/Weapon.cpp,missing-header,0,0,0,winsock2.h
+GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,ok,4,19,340,
+GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp,ok,3,16,156,
+GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp,compile-error,0,0,0,C2248 'AttackPriorityInfo::~AttackPriorityInfo' : cannot access protected member declared in cla
+GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp,ok,4,1,117,
+GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp,ok,0,5,15,
+GameEngine/Source/GameLogic/System/GameLogic.cpp,missing-header,0,0,0,GameSpy/GP/GP.h
+GameEngine/Source/GameLogic/System/GameLogicDispatch.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/Connection.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/ConnectionManager.cpp,missing-header,0,0,0,Compression.h
+GameEngine/Source/GameNetwork/DisconnectManager.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/DownloadManager.cpp,missing-header,0,0,0,winsock.h
+GameEngine/Source/GameNetwork/FileTransfer.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/FirewallHelper.cpp,missing-header,0,0,0,winsock2.h
+GameEngine/Source/GameNetwork/FrameData.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/FrameDataManager.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/FrameMetrics.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/GUIUtil.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/GameInfo.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/GameSpy/Chat.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameNetwork/GameSpy/LadderDefs.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameNetwork/GameSpy/LobbyUtils.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cpp,missing-header,0,0,0,GameSpy/ghttp/ghttp.h
+GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp,missing-header,0,0,0,GameSpy/GP/GP.h
+GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThread.cpp,missing-header,0,0,0,GameSpy/GP/GP.h
+GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,missing-header,0,0,0,winsock.h
+GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/GameSpy/Thread/PersistentStorageThread.cpp,missing-header,0,0,0,GameSpy/gstats/gpersist.h
+GameEngine/Source/GameNetwork/GameSpy/Thread/PingThread.cpp,missing-header,0,0,0,winsock.h
+GameEngine/Source/GameNetwork/GameSpy/Thread/ThreadUtils.cpp,compile-error,0,0,0,C2065 'CP_UTF8' : undeclared identifier
+GameEngine/Source/GameNetwork/GameSpyChat.cpp,missing-header,0,0,0,GameNetwork/GameSpy.h
+GameEngine/Source/GameNetwork/GameSpyGP.cpp,missing-header,0,0,0,GameNetwork/GameSpy.h
+GameEngine/Source/GameNetwork/GameSpyGameInfo.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameNetwork/GameSpyOverlay.cpp,missing-header,0,0,0,GameSpy/GP/GP.h
+GameEngine/Source/GameNetwork/IPEnumeration.cpp,missing-header,0,0,0,netdb.h
+GameEngine/Source/GameNetwork/LANAPI.cpp,missing-header,0,0,0,winsock2.h
