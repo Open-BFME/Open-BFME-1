@@ -3081,3 +3081,7 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ?getTunnelTrackerForCaveIndex@CaveSystem@@QAEPAVTunnelTracker@@H@Z,,0x00378340,32,src/zh/cavesystem.cpp,matched,
 ??0CrateSystem@@QAE@XZ,,0x003799D0,69,src/zh/cratesystem.cpp,matched,
 ?getRankInfo@RankInfoStore@@QBEPBVRankInfo@@H@Z,,0x003A0730,53,src/zh/rankinfo.cpp,matched,
+?onBuildComplete@GrantUpgradeCreate@@UAEXXZ,,0x0024F9D0,78,src/zh/grantupgradecreate.cpp,matched,
+?getContainerPipsToShow@RiderChangeContain@@UAE_NAAH0@Z,,0x0022A150,25,src/zh/riderchangecontain.cpp,matched,
+?calcSleepTime@PoisonedBehavior@@IAE?AW4UpdateSleepTime@@XZ,,0x00202930,45,src/zh/poisonedbehavior.cpp,matched,
+?calcSleepTime@FlammableUpdate@@IAE?AW4UpdateSleepTime@@XZ,,0x00292FAD,71,src/zh/flammableupdate.cpp,matched,
