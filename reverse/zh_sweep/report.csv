@@ -962,3 +962,79 @@ Libraries/Source/profile/profile_highlevel.cpp,missing-header,0,0,0,_pch.h
 Libraries/Source/profile/profile_result.cpp,missing-header,0,0,0,_pch.h
 Libraries/Source/profile/test1/test1.cpp,missing-header,0,0,0,../profile.h
 Libraries/Source/template.cpp,ok,0,0,0,
+GameEngine/Source/Common/Thing/ThingFactory.cpp,ok,0,68,165,
+Libraries/Source/WWVegas/WWSaveLoad/parameter.cpp,ok,0,63,200,
+Libraries/Source/WWVegas/WW3D2/shattersystem.cpp,ok,0,52,74,
+Libraries/Source/WWVegas/WW3D2/projector.cpp,ok,0,8,11,
+Libraries/Source/WWVegas/WW3D2/ww3dformat.cpp,ok,0,1,11,
+Libraries/Source/WWVegas/WW3D2/dynamesh.cpp,ok,0,14,76,
+Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.cpp,ok,0,3,34,
+GameEngineDevice/Source/MilesAudioDevice/MilesAudioManager.cpp,missing-header,0,0,0,dsound.h
+GameEngineDevice/Source/VideoDevice/Bink/BinkVideoPlayer.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_handle'
+GameEngineDevice/Source/W3DDevice/Common/System/W3DFunctionLexicon.cpp,ok,0,10,1,
+GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,ok,0,24,30,
+GameEngineDevice/Source/W3DDevice/Common/Thing/W3DThingFactory.cpp,ok,0,1,0,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cpp,ok,0,7,13,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDependencyModelDraw.cpp,ok,0,5,9,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDraw.cpp,ok,0,6,11,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,ok,9,130,342,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordAircraftDraw.cpp,ok,0,4,6,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordTankDraw.cpp,ok,0,4,9,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordTruckDraw.cpp,ok,0,4,9,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DPoliceCarDraw.cpp,ok,0,4,9,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DProjectileStreamDraw.cpp,ok,0,6,13,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DPropDraw.cpp,ok,0,5,8,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DScienceModelDraw.cpp,ok,0,3,5,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DSupplyDraw.cpp,ok,0,9,21,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_handle'
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankTruckDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_handle'
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTracerDraw.cpp,ok,0,5,10,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp,ok,0,4,10,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTruckDraw.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_handle'
+GameEngineDevice/Source/MilesAudioDevice/MilesAudioManager.cpp,missing-header,0,0,0,dsound.h
+GameEngineDevice/Source/VideoDevice/Bink/BinkVideoPlayer.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'm_handle'
+GameEngineDevice/Source/W3DDevice/Common/System/W3DFunctionLexicon.cpp,ok,0,10,1,
+GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,ok,0,24,30,
+GameEngineDevice/Source/W3DDevice/Common/Thing/W3DThingFactory.cpp,ok,0,1,0,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cpp,ok,0,7,13,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDependencyModelDraw.cpp,ok,0,5,9,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDraw.cpp,ok,0,6,11,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,ok,9,130,342,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordAircraftDraw.cpp,ok,0,4,6,
+GameEngineDevice/Source/W3DDevice/Common/System/W3DFunctionLexicon.cpp,ok,0,10,1,
+GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,ok,0,24,30,
+GameEngineDevice/Source/W3DDevice/Common/Thing/W3DThingFactory.cpp,ok,0,1,0,
+GameEngine/Source/GameLogic/AI/AIDock.cpp,ok,0,10,57,
+GameEngine/Source/Common/Audio/AudioEventRTS.cpp,ok,0,1,37,
+GameEngine/Source/Common/Audio/AudioRequest.cpp,ok,0,0,0,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cpp,ok,0,7,13,
+GameEngine/Source/GameLogic/AI/AIGroup.cpp,ok,0,30,161,
+GameEngine/Source/Common/Audio/DynamicAudioEventInfo.cpp,ok,0,7,28,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDependencyModelDraw.cpp,ok,0,5,9,
+GameEngine/Source/GameLogic/AI/AIGuard.cpp,ok,0,12,56,
+GameEngine/Source/Common/Audio/GameMusic.cpp,ok,0,1,4,
+GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp,ok,0,12,51,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDraw.cpp,ok,0,6,11,
+GameEngine/Source/Common/Audio/GameSounds.cpp,ok,0,1,6,
+GameEngine/Source/Common/Audio/GameSpeech.cpp,missing-header,0,0,0,wpaudio/attributes.h
+GameEngine/Source/Common/Audio/simpleplayer.cpp,missing-header,0,0,0,wmsdk.h
+GameEngine/Source/GameLogic/AI/AIPathfind.cpp,compile-error,0,0,0,C2668 'sqrt' : ambiguous call to overloaded function
+GameEngine/Source/Common/Audio/urllaunch.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 'GetShellOpenCommand'
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,ok,9,130,342,
+GameEngine/Source/GameLogic/AI/AISkirmishPlayer.cpp,ok,0,8,57,
+GameEngine/Source/Common/Bezier/BezFwdIterator.cpp,compile-error,0,0,0,"C3861 'px': identifier not found, even with argument-dependent lookup"
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordAircraftDraw.cpp,ok,0,4,6,
+GameEngine/Source/Common/Bezier/BezierSegment.cpp,compile-error,0,0,0,C2065 's_bezBasisMatrix' : undeclared identifier
+GameEngine/Source/GameLogic/AI/AITNGuard.cpp,ok,0,11,53,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordTankDraw.cpp,ok,0,4,9,
+GameEngine/Source/Common/BitFlags.cpp,ok,0,0,0,
+GameEngine/Source/GameLogic/Map/PolygonTrigger.cpp,ok,0,1,26,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordTruckDraw.cpp,ok,0,4,9,
+GameEngine/Source/Common/CRCDebug.cpp,ok,0,0,0,
+GameEngine/Source/GameLogic/Object/Armor.cpp,ok,0,9,29,
+GameEngine/Source/Common/CommandLine.cpp,compile-error,0,0,0,C2661 '_stat::_stat' : no overloaded function takes 2 arguments
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DPoliceCarDraw.cpp,ok,0,4,9,
+GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehavior.cpp,ok,0,1,28,
+GameEngine/Source/Common/DiscreteCircle.cpp,ok,0,7,10,
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DProjectileStreamDraw.cpp,ok,0,6,13,
+GameEngine/Source/GameLogic/Object/Behavior/BattleBusSlowDeathBehavior.cpp,ok,0,5,28,
