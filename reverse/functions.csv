@@ -2797,3 +2797,8 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ?Convert_Color@DX8Wrapper@@SAIABVVector3@@M@Z,,0x00710E70,151,src/zh/bitmaphandler.cpp,matched,
 ?Convert_Color@DX8Wrapper@@SAIABVVector4@@@Z,,0x0091DBB0,160,src/zh/bitmaphandler.cpp,matched,
 ?Convert_Color@DX8Wrapper@@SA?AVVector4@@I@Z,,0x00929100,150,src/zh/bitmaphandler.cpp,matched,
+?Resize@?$VectorClass@VStringClass@@@@UAE_NHPBVStringClass@@@Z,,0x0013B450,333,src/zh/mixfile.cpp,matched,
+?Resize@?$DynamicVectorClass@VStringClass@@@@UAE_NHPBVStringClass@@@Z,,0x0013B7C0,47,src/zh/mixfile.cpp,matched,
+??0?$VectorClass@UAddInfoStruct@MixFileFactoryClass@@@@QAE@HPBUAddInfoStruct@MixFileFactoryClass@@@Z,,0x0093DBB0,191,src/zh/mixfile.cpp,matched,
+??0?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@QAE@IPBUAddInfoStruct@MixFileFactoryClass@@@Z,,0x0093E660,46,src/zh/mixfile.cpp,matched,
+?Clear@?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAEXXZ,,0x0093E6C0,64,src/zh/mixfile.cpp,matched,
