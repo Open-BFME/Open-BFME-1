@@ -899,3 +899,10 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?getColor@MultiplayerSettings@@QAEPAVMultiplayerColorDefinition@@H@Z,0x00021EC2
 ?isSlotLocalAlly@@YA_NPBVGameSlot@@@Z,0x0061ED20
 ??0Cftp@@QAE@XZ,0x00885AD0
+?DoesCommandRequireACommandID@@YA_NW4NetCommandType@@@Z,0x00015B72
+?getCommandID@NetAckBothCommandMsg@@QAEGXZ,0x000074E1
+?getCommandID@NetAckStage1CommandMsg@@QAEGXZ,0x0002A482
+?getCommandID@NetAckStage2CommandMsg@@QAEGXZ,0x00005975
+?getOriginalPlayerID@NetAckBothCommandMsg@@QAEEXZ,0x00046D17
+?getOriginalPlayerID@NetAckStage1CommandMsg@@QAEEXZ,0x00020518
+?getOriginalPlayerID@NetAckStage2CommandMsg@@QAEEXZ,0x0002714C

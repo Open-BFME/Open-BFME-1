@@ -1156,3 +1156,38 @@ GameEngine/Source/GameNetwork/IPEnumeration.cpp,compile-error,0,0,0,C2065 'HOSTE
 Libraries/Source/WWVegas/WW3D2/meshbuild.cpp,ok,0,14,53,
 GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLadderScreen.cpp,missing-header,0,0,0,EABrowserDispatch/BrowserDispatch.h
 Libraries/Source/WWVegas/WW3D2/meshdam.cpp,ok,0,0,0,
+GameEngine/Source/GameNetwork/LANAPI.cpp,compile-error,0,0,0,C2065 'UNLEN' : undeclared identifier
+Libraries/Source/WWVegas/WW3D2/metalmap.cpp,ok,0,5,9,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLobbyMenu.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+Libraries/Source/WWVegas/WW3D2/missingtexture.cpp,compile-error,0,0,0,C2039 'ZeroMemory' : is not a member of 'operator``global namespace'''
+GameEngine/Source/GameNetwork/LANAPICallbacks.cpp,ok,0,4,44,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLocaleSelectPopup.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+Libraries/Source/WWVegas/WW3D2/polyinfo.cpp,ok,0,0,4,
+Libraries/Source/WWVegas/WW3D2/prim_anim.cpp,compile-error,0,0,0,C2143 syntax error : missing ';' before '&'
+GameEngine/Source/GameNetwork/LANAPIhandlers.cpp,ok,0,5,56,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLoginMenu.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+Libraries/Source/WWVegas/WW3D2/projector.cpp,ok,0,8,11,
+GameEngine/Source/GameNetwork/LANGameInfo.cpp,ok,0,14,50,
+Libraries/Source/WWVegas/WW3D2/proto.cpp,ok,0,3,13,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLMapSelectMenu.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+GameEngine/Source/GameNetwork/NAT.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+Libraries/Source/WWVegas/WW3D2/render2d.cpp,compile-error,0,0,0,C2065 'D3DTOP_MULTIPLYADD' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLMessageWindow.cpp,ok,0,0,6,
+Libraries/Source/WWVegas/WW3D2/render2dsentence.cpp,compile-error,0,0,0,"C3861 'SetTextColor': identifier not found, even with argument-dependent lookup"
+GameEngine/Source/GameNetwork/NetCommandList.cpp,ok,1,3,9,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQMScoreScreen.cpp,ok,0,0,6,
+Libraries/Source/WWVegas/WW3D2/renderobjectrecycler.cpp,ok,0,0,9,
+GameEngine/Source/GameNetwork/NetMessageStream.cpp,ok,0,0,0,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu.cpp,missing-header,0,0,0,GameSpy/Peer/Peer.h
+Libraries/Source/WWVegas/WW3D2/ringobj.cpp,compile-error,0,0,0,C2143 syntax error : missing ';' before '&'
+GameEngine/Source/GameNetwork/NetPacket.cpp,compile-error,0,0,0,C2664 '_STL::list<_Tp>::list(const _STL::list<_Tp> &)' : cannot convert parameter 1 from 'int' t
+Libraries/Source/WWVegas/WW3D2/scene.cpp,ok,3,13,21,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLStatusMenu.cpp,ok,0,0,6,
+GameEngine/Source/GameNetwork/NetworkUtil.cpp,ok,0,0,9,
+Libraries/Source/WWVegas/WW3D2/shader.cpp,compile-error,0,0,0,C2065 'D3DTEXOPCAPS_MODULATE' : undeclared identifier
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLWelcomeMenu.cpp,missing-header,0,0,0,GameSpy/peer/peer.h
+GameEngine/Source/GameNetwork/Transport.cpp,ok,0,0,19,
+Libraries/Source/WWVegas/WW3D2/shattersystem.cpp,ok,0,52,74,
+GameEngine/Source/GameClient/GUI/GUICallbacks/MessageBox.cpp,ok,0,0,10,
+Libraries/Source/WWVegas/WW3D2/snappts.cpp,ok,0,2,2,
+GameEngine/Source/GameNetwork/User.cpp,ok,0,1,8,
