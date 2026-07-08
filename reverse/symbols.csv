@@ -865,3 +865,5 @@ __ehhandler$?getClassMemoryPool@WorkerAIUpdate@@CAPAVMemoryPool@@XZ,0x00C140BE,p
 ?getShroudStatusForPlayer@PartitionManager@@QBE?AW4CellShroudStatus@@HPBUCoord3D@@@Z,0x008F7430
 ??1?$SimpleDynVecClass@VVector3@@@@UAE@XZ,0x00887940
 ??0DockUpdateModuleData@@QAE@XZ,0x0002C54D
+?initializeBonePositions@SpawnPointProductionExitUpdate@@AAEXXZ,0x0003B566
+?revalidateOccupiers@SpawnPointProductionExitUpdate@@AAEXXZ,0x0002374A

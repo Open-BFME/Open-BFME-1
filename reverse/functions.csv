@@ -3076,3 +3076,8 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ??0RepairDockUpdateModuleData@@QAE@XZ,,0x002CEF40,25,src/zh/repairdockupdate.cpp,matched,
 ??_ELODHeapNode@@QAEPAXI@Z,,0x00881390,77,src/zh/predlod.cpp,matched,
 ?findGameMessageMetaType@MetaMap@@IAE?AW4Type@GameMessage@@PBD@Z,,0x005B6AD0,69,src/zh/metaevent.cpp,matched,
+?reserveDoorForExit@SpawnPointProductionExitUpdate@@UAE?AW4ExitDoorType@@PBVThingTemplate@@PAVObject@@@Z,,0x002D21A0,90,src/zh/spawnpointproductionexitupdate.cpp,matched,
+?parseSingleBitFromINI@?$BitFlags@$0HF@@@SAXPAVINI@@PAX1PBX@Z,,0x0081D410,32,src/zh/modelconditionupgrade.cpp,matched,
+?getTunnelTrackerForCaveIndex@CaveSystem@@QAEPAVTunnelTracker@@H@Z,,0x00378340,32,src/zh/cavesystem.cpp,matched,
+??0CrateSystem@@QAE@XZ,,0x003799D0,69,src/zh/cratesystem.cpp,matched,
+?getRankInfo@RankInfoStore@@QBEPBVRankInfo@@H@Z,,0x003A0730,53,src/zh/rankinfo.cpp,matched,
