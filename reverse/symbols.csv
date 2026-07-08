@@ -892,3 +892,7 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?getManglerResponse@FirewallHelperClass@@QAEGGH@Z,0x00025A7C
 ?getNATPortAllocationScheme@FirewallHelperClass@@AAEHHPAG0AA_N1@Z,0x00012F3F
 ?sendToManglerFromPort@FirewallHelperClass@@QAE_NIGG_N@Z,0x00022C00
+?getLocalPlayerID@ConnectionManager@@QAEIXZ,0x0004A291
+?hasPlayerTimedOut@DisconnectManager@@IAE_NH@Z,0x00014AD8
+?isPlayerConnected@ConnectionManager@@QAE_NH@Z,0x0001514A
+?isPlayerVotedOut@DisconnectManager@@IAE_NHPAVConnectionManager@@@Z,0x0001ECE0
