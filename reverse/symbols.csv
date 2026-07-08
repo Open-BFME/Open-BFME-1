@@ -1150,3 +1150,7 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?Get_Char_Spacing@FontCharsClass@@QAEHG@Z,0x009414D0,body
 ?findMemoryPool@MemoryPoolFactory@@QAEPAVMemoryPool@@PBD@Z,0x0003ADD7,ILT thunk for MemoryPoolFactory::findMemoryPool
 ??$_M_find@G@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@1@ABG@Z,0x00003071
+?Get_Bone_Name@HTreeClass@@QBEPBDH@Z,0x009522B0
+?Is_Bone_Captured@HTreeClass@@QBE_NH@Z,0x00952A40
+?Convert_Shader@W3dUtilityClass@@SAXABUW3dShaderStruct@@PAVShaderClass@@@Z,0x00978760
+?onExit@AIInternalMoveToState@@UAEXW4StateExitType@@@Z,0x00029311
