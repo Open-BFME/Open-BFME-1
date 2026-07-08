@@ -31,6 +31,14 @@ typedef void *HGDIOBJ;
 typedef void *HPEN;
 typedef void *HBRUSH;
 typedef void *HKEY;
+#define HKEY_LOCAL_MACHINE ((HKEY)(ULONG_PTR)0x80000002)
+#define HKEY_CURRENT_USER ((HKEY)(ULONG_PTR)0x80000001)
+#define REG_OPTION_NON_VOLATILE 0
+#define KEY_WRITE 0x00020006
+#define KEY_READ 0x00020019
+#define KEY_ALL_ACCESS 0x000F003F
+#define REG_SZ 1
+#define REG_DWORD 4
 typedef void *HICON;
 typedef void *HCURSOR;
 typedef void *HRSRC;
@@ -43,6 +51,8 @@ typedef unsigned int UINT;
 typedef unsigned short WORD;
 typedef unsigned short USHORT;
 typedef unsigned char BYTE;
+typedef BYTE *LPBYTE;
+typedef HKEY *PHKEY;
 typedef long LONG;
 typedef unsigned __int64 ULONGLONG;
 typedef __int64 LONGLONG;
@@ -56,6 +66,7 @@ typedef const unsigned short *LPCWSTR;
 typedef unsigned long SIZE_T;
 typedef unsigned long ULONG_PTR;
 typedef long *LPLONG;
+typedef BOOL *LPBOOL;
 typedef int (__stdcall *FARPROC)();
 
 #define WINAPI __stdcall
@@ -248,8 +259,13 @@ __declspec(dllimport) BOOL WINAPI GetVersionExA(LPOSVERSIONINFOA);
 #define GetWindowsDirectory GetWindowsDirectoryA
 #define LoadString LoadStringA
 #define FormatMessage FormatMessageA
+#define FindResource FindResourceA
 #define GetVolumeInformation GetVolumeInformationA
 #define GetDriveType GetDriveTypeA
+#define RegOpenKeyEx RegOpenKeyExA
+#define RegCreateKeyEx RegCreateKeyExA
+#define RegSetValueEx RegSetValueExA
+#define RegQueryValueEx RegQueryValueExA
 __declspec(dllimport) int WINAPI GetDateFormatA(DWORD, DWORD, const SYSTEMTIME *, LPCSTR, LPSTR, int);
 __declspec(dllimport) int WINAPI GetDateFormatW(DWORD, DWORD, const SYSTEMTIME *, LPCWSTR, LPWSTR, int);
 __declspec(dllimport) int WINAPI GetTimeFormatA(DWORD, DWORD, const SYSTEMTIME *, LPCSTR, LPSTR, int);
@@ -261,8 +277,19 @@ __declspec(dllimport) UINT WINAPI GetWindowsDirectoryA(LPSTR, UINT);
 __declspec(dllimport) BOOL WINAPI GetDiskFreeSpaceA(LPCSTR, LPDWORD, LPDWORD, LPDWORD, LPDWORD);
 __declspec(dllimport) BOOL WINAPI GetVolumeInformationA(LPCSTR, LPSTR, DWORD, LPDWORD, LPDWORD, LPDWORD, LPSTR, DWORD);
 __declspec(dllimport) UINT WINAPI GetDriveTypeA(LPCSTR);
+__declspec(dllimport) LONG WINAPI RegOpenKeyExA(HKEY, LPCSTR, DWORD, DWORD, PHKEY);
+__declspec(dllimport) LONG WINAPI RegCreateKeyExA(HKEY, LPCSTR, DWORD, LPSTR, DWORD, DWORD, void *, PHKEY, LPDWORD);
+__declspec(dllimport) LONG WINAPI RegSetValueExA(HKEY, LPCSTR, DWORD, DWORD, const BYTE *, DWORD);
+__declspec(dllimport) LONG WINAPI RegQueryValueExA(HKEY, LPCSTR, LPDWORD, LPDWORD, LPBYTE, LPDWORD);
+__declspec(dllimport) LONG WINAPI RegCloseKey(HKEY);
 __declspec(dllimport) int WINAPI LoadStringA(HINSTANCE, UINT, LPSTR, int);
 __declspec(dllimport) int WINAPI LoadStringW(HINSTANCE, UINT, LPWSTR, int);
+__declspec(dllimport) HRSRC WINAPI FindResourceA(HINSTANCE, LPCSTR, LPCSTR);
+__declspec(dllimport) HGLOBAL WINAPI LoadResource(HINSTANCE, HRSRC);
+__declspec(dllimport) LPVOID WINAPI LockResource(HGLOBAL);
+__declspec(dllimport) DWORD WINAPI SizeofResource(HINSTANCE, HRSRC);
+__declspec(dllimport) int WINAPI MultiByteToWideChar(UINT, DWORD, LPCSTR, int, LPWSTR, int);
+__declspec(dllimport) int WINAPI WideCharToMultiByte(UINT, DWORD, LPCWSTR, int, LPSTR, int, LPCSTR, LPBOOL);
 __declspec(dllimport) DWORD WINAPI FormatMessageA(DWORD, LPCVOID, DWORD, DWORD, LPSTR, DWORD, va_list *);
 __declspec(dllimport) DWORD WINAPI FormatMessageW(DWORD, LPCVOID, DWORD, DWORD, LPWSTR, DWORD, va_list *);
 __declspec(dllimport) BOOL WINAPI QueryPerformanceCounter(PLARGE_INTEGER);
