@@ -2857,3 +2857,6 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ??$__copy_backward_ptrs@PAV?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@PAV12@@_STL@@YAPAV?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@0@PAV10@00ABU__false_type@0@@Z,,0x000BD5B0,32,src/zh/partitionmanager.cpp,matched,
 ?_M_fill_insert@?$vector@EV?$allocator@E@_STL@@@_STL@@QAEXPAEIABE@Z,,0x0074DA00,257,src/zh/partitionmanager.cpp,matched,
 ??_ECellAndObjectIntersection@@QAEPAXI@Z,,0x008F7DD0,77,src/zh/partitionmanager.cpp,matched,
+?worldToRadar@Radar@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z,,0x00106D20,120,src/zh/radar.cpp,matched,
+?reset@Radar@@UAEXXZ,,0x001077A0,28,src/zh/radar.cpp,matched,
+?objectUnderRadarPixel@Radar@@QAEPAVObject@@PBUICoord2D@@@Z,,0x00107CF0,83,src/zh/radar.cpp,matched,

@@ -384,3 +384,7 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ??$uninitialized_fill_n@PAEIE@_STL@@YAPAEPAEIABE@Z,0x0003932E
 ??4?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,0x00018A70
 ?_M_insert_overflow@?$vector@EV?$allocator@E@_STL@@@_STL@@IAEXPAEABEABU__true_type@2@I_N@Z,0x0002F20C
+?clearAllEvents@Radar@@IAEXXZ,0x00028C27
+?deleteListResources@Radar@@IAEXXZ,0x0002C976
+?localPixelToRadar@Radar@@QAE_NPBUICoord2D@@PAU2@@Z,0x00004D59
+?searchListForRadarLocationMatch@Radar@@IAEPAVObject@@PAVRadarObject@@PAUICoord2D@@@Z,0x0000C6DA
