@@ -2827,3 +2827,5 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ??$find@U?$_Rb_tree_iterator@HU?$_Const_traits@H@_STL@@@_STL@@H@_STL@@YA?AU?$_Rb_tree_iterator@HU?$_Const_traits@H@_STL@@@0@U10@0ABH@Z,,0x005063B0,38,src/zh/gsconfig.cpp,matched,
 ?getPointsForRank@GameSpyConfig@@UAEHH@Z,,0x006282F0,34,src/zh/gsconfig.cpp,matched,
 ?isInSection@SectionChecker@@QAE_NXZ,,0x006287C0,41,src/zh/gsconfig.cpp,matched,
+?Contribution@InputLightStruct@LightEnvironmentClass@@QAEMXZ,,0x0094AA10,32,src/zh/lightenvironment.cpp,matched,
+?Init@OutputLightStruct@LightEnvironmentClass@@QAEXABUInputLightStruct@2@ABVMatrix3D@@@Z,,0x0094AA30,179,src/zh/lightenvironment.cpp,matched,
