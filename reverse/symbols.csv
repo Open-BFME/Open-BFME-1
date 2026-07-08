@@ -875,3 +875,8 @@ __stringbase_isnotnone_cmp_wchar,0x0041F3D,internal wide-char string not-none co
 _atexit,0x009F6E26,CRT atexit (registers static destructors)
 _bfme_acos,0x009F7256,internal acos helper called by ACos
 _bfme_asin,0x009F7D86,internal asin helper called by ASin
+?GadgetListBoxAddEntryImage@@YAHPAVGameWindow@@PBVImage@@HHHH_NH@Z,0x0001712A
+?GadgetListBoxGetTextAndColor@@YA?AVUnicodeString@@PAVGameWindow@@PAHHH@Z,0x00044C0B
+?getListboxBottomEntry@@YAHPAU_ListboxData@@@Z,0x004B6BA0
+?getListboxEntryBasedOnCoord@@YAHPAVGameWindow@@HHAAH1@Z,0x004B69D0
+?getListboxTopEntry@@YAHPAU_ListboxData@@@Z,0x004B6B60

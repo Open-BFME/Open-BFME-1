@@ -186,6 +186,7 @@ __declspec(dllimport) BOOL WINAPI FreeLibrary(HMODULE);
 __declspec(dllimport) void WINAPI Sleep(DWORD);
 __declspec(dllimport) DWORD WINAPI GetTickCount(void);
 __declspec(dllimport) DWORD WINAPI timeGetTime(void);
+__declspec(dllimport) UINT WINAPI GetDoubleClickTime(void);
 __declspec(dllimport) BOOL WINAPI QueryPerformanceCounter(PLARGE_INTEGER);
 __declspec(dllimport) BOOL WINAPI QueryPerformanceFrequency(PLARGE_INTEGER);
 __declspec(dllimport) void WINAPI InitializeCriticalSection(LPCRITICAL_SECTION);
