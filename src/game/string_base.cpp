@@ -2076,85 +2076,25 @@ __declspec(naked) bool StringBase<char>::endsWith(const StringBase<char> &str) c
     }
 }
 
-__declspec(naked) bool StringBase<char>::endsWith(const char *str, int len) const
+template <>
+__declspec(noinline) bool StringBase<char>::endsWith(const char *str, int len) const
 {
-    __asm {
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x80
-        __emit 0x3f
-        __emit 0x00
-        __emit 0x75
-        __emit 0x06
-        __emit 0xb0
-        __emit 0x01
-        __emit 0x5f
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x06
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x50
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xd2
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x3b
-        __emit 0xd1
-        __emit 0x7d
-        __emit 0x06
-        __emit 0x32
-        __emit 0xc0
-        __emit 0x5f
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x06
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x50
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xd2
-        __emit 0x2b
-        __emit 0xc1
-        __emit 0x56
-        __emit 0x8d
-        __emit 0x74
-        __emit 0x10
-        __emit 0x08
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xf3
-        __emit 0xa6
-        __emit 0x5e
-        __emit 0x0f
-        __emit 0x94
-        __emit 0xc0
-        __emit 0x5f
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
+    if (str[0] == '\0') {
+        return true;
     }
+    int myLen = m_data ? m_data->length : 0;
+    if (myLen < len) {
+        return false;
+    }
+    int length = m_data ? m_data->length : 0;
+    const char *addr = (const char *)m_data - len + length + 8;
+    return memcmp(addr, str, len) == 0;
+}
+
+template <>
+bool StringBase<char>::endsWith(const char *str) const
+{
+    return endsWith(str, str ? stringLength(str) : 0);
 }
 
 __declspec(naked) bool StringBase<wchar_t>::endsWith(const StringBase<wchar_t> &str) const
@@ -7967,5 +7907,4 @@ bool StringBase<char>::startsWith(const StringBase<char> &str) const
     const char *data = str.m_data ? str.m_data->data : "";
     return startsWith(data, len);
 }
-
 
