@@ -3067,3 +3067,7 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ?getClassMemoryPool@TransitionDamageFX@@CAPAVMemoryPool@@XZ,,0x00253000,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
 ?reserveDoorForExit@QueueProductionExitUpdate@@UAE?AW4ExitDoorType@@PBVThingTemplate@@PAVObject@@@Z,,0x002D0890,43,src/zh/queueproductionexitupdate.cpp,matched,
 ?canOverrideSpecialPowerDestination@ActionManager@@QAE_NPBVObject@@PBUCoord3D@@W4SpecialPowerType@@W4CommandSourceType@@@Z,,0x000C4330,68,src/zh/actionmanager.cpp,matched,
+??0Matrix4@@QAE@_N@Z,,0x006DB770,67,src/zh/streakrender.cpp,matched,
+?Push_Override_Flags@RenderInfoClass@@QAEXW4RINFO_OVERRIDE_FLAGS@1@@Z,,0x00923730,27,src/zh/rinfo.cpp,matched,
+?Push_Material_Pass@RenderInfoClass@@QAEXPAVMaterialPassClass@@@Z,,0x00923790,48,src/zh/rinfo.cpp,matched,
+?Pop_Material_Pass@RenderInfoClass@@QAEXXZ,,0x009237C0,50,src/zh/rinfo.cpp,matched,
