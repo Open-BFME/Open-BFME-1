@@ -2609,6 +2609,7 @@ _powf,,0x00097070,14,src/w3d/vp.cpp,matched,
 ??1NetWrapperCommandMsg@@MAE@XZ,,0x00673E20,40,src/zh/netcommandmsg.cpp,matched,
 ?setData@NetWrapperCommandMsg@@QAEXPAEI@Z,,0x00673E70,77,src/zh/netcommandmsg.cpp,matched,
 ?setFileData@NetFileCommandMsg@@QAEXPAEI@Z,,0x00673FA0,52,src/zh/netcommandmsg.cpp,matched,
+??4?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,,0x00483D00,117,src/zh/gamewindowmanagerscript.cpp,matched,
 ?parseBitFlag@@YA_NPBDPAIPAPBD@Z,,0x004842E0,81,src/zh/gamewindowmanagerscript.cpp,matched,
 ?parseBitString@@YAXPBDPAIPAPBD@Z,,0x00484350,113,src/zh/gamewindowmanagerscript.cpp,matched,
 ?scanBool@@YAHPBDAA_N@Z,,0x00484470,44,src/zh/gamewindowmanagerscript.cpp,matched,
@@ -2926,3 +2927,4 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ?Release_Log@WWMemoryLogClass@@KAXXZ,,0x00AFF860,159,src/zh/wwmemlog.cpp,matched,
 ?Get_Log@WWMemoryLogClass@@KAPAVMemLogClass@@XZ,,0x00AFF960,180,src/zh/wwmemlog.cpp,matched,
 ??0?$list@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAE@ABV01@@Z,,0x000BF580,111,src/zh/inimapcache.cpp,matched,copy ctor for Coord3DList; BFME uses STLport node allocator
+??$insert@U?$_List_iterator@PAVGameWindow@@U?$_Const_traits@PAVGameWindow@@@_STL@@@_STL@@@?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAEXU?$_List_iterator@PAVGameWindow@@U?$_Nonconst_traits@PAVGameWindow@@@_STL@@@1@U?$_List_iterator@PAVGameWindow@@U?$_Const_traits@PAVGameWindow@@@_STL@@@1@1@Z,,0x00483B60,32,src/zh/gamewindowmanagerscript.cpp,matched,
