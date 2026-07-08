@@ -361,3 +361,7 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ??0Vector3HollowSphereRandomizer@@QAE@M@Z,0x00B02350
 ??0Vector3SolidSphereRandomizer@@QAE@M@Z,0x00B02250
 ?Convert_Shader@W3dUtilityClass@@SAXABVShaderClass@@PAUW3dShaderStruct@@@Z,0x00978820
+?clearAllEvents@Radar@@IAEXXZ,0x00028C27
+?deleteListResources@Radar@@IAEXXZ,0x0002C976
+?localPixelToRadar@Radar@@QAE_NPBUICoord2D@@PAU2@@Z,0x00004D59
+?searchListForRadarLocationMatch@Radar@@IAEPAVObject@@PAVRadarObject@@PAUICoord2D@@@Z,0x0000C6DA
