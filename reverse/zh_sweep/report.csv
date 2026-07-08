@@ -1098,3 +1098,12 @@ GameEngine/Source/GameNetwork/DownloadManager.cpp,compile-error,0,0,0,C2065 'S_O
 GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanGameOptionsMenu.cpp,ok,0,9,46,
 GameEngine/Source/GameNetwork/FileTransfer.cpp,ok,0,0,15,
 GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanLobbyMenu.cpp,ok,0,6,47,
+GameEngine/Source/GameNetwork/FirewallHelper.cpp,ok,21,1,31,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanMapSelectMenu.cpp,ok,0,1,27,
+GameEngine/Source/GameNetwork/FrameData.cpp,ok,0,1,7,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MainMenu.cpp,missing-header,0,0,0,GameSpy/ghttp/ghttp.h
+GameEngine/Source/GameNetwork/FrameDataManager.cpp,ok,0,2,13,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MapSelectMenu.cpp,ok,0,1,27,
+GameEngine/Source/GameNetwork/FrameMetrics.cpp,ok,0,1,6,
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnect.cpp,missing-header,0,0,0,GameSpy/peer/peer.h
+GameEngine/Source/GameNetwork/GUIUtil.cpp,ok,0,14,42,

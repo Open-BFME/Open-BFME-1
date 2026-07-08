@@ -884,3 +884,11 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?Free_String@WideStringClass@@AAEXXZ,0x009E71B0
 ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z,0x0001321E
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@2@@Z,0x00024ADC
+??0FirewallHelperClass@@QAE@XZ,0x00003AD5
+??0UDP@@QAE@XZ,0x0001FFFA
+??1UDP@@QAE@XZ,0x00006591
+?Bind@UDP@@QAEHIG@Z,0x00047FA0
+?detectionBeginUpdate@FirewallHelperClass@@QAE_NXZ,0x000205F4
+?getManglerResponse@FirewallHelperClass@@QAEGGH@Z,0x00025A7C
+?getNATPortAllocationScheme@FirewallHelperClass@@AAEHHPAG0AA_N1@Z,0x00012F3F
+?sendToManglerFromPort@FirewallHelperClass@@QAE_NIGG_N@Z,0x00022C00
