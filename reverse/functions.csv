@@ -2849,3 +2849,6 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ?addObjectCreationNugget@ObjectCreationListStore@@QAEXPAVObjectCreationNugget@@@Z,,0x001D7970,53,src/zh/objectcreationlist.cpp,matched,
 ?addObjectCreationNugget@ObjectCreationList@@QAEXPAVObjectCreationNugget@@@Z,,0x001D82E0,106,src/zh/objectcreationlist.cpp,matched,
 ?parseObjectCreationListDefinition@ObjectCreationListStore@@SAXPAVINI@@@Z,,0x001DB050,124,src/zh/objectcreationlist.cpp,matched,
+?findTemplate@ParticleSystemManager@@QBEPAVParticleSystemTemplate@@ABVAsciiString@@@Z,,0x005C9F90,36,src/zh/particlesys.cpp,matched,
+?parseRandomKeyframe@ParticleSystemTemplate@@SAXPAVINI@@PAX1PBX@Z,,0x005EE370,99,src/zh/particlesys.cpp,matched,
+?parseRGBColorKeyframe@ParticleSystemTemplate@@SAXPAVINI@@PAX1PBX@Z,,0x005EF1F0,45,src/zh/particlesys.cpp,matched,
