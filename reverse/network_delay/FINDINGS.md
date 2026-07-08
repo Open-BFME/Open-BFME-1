@@ -177,6 +177,34 @@ These are timeout/readiness gates, not the delay patch itself, but they expose t
 retail frame and keep-alive timing constants that a later patch design must not
 confuse with ZH run-ahead command traffic.
 
+## BFME frame pacing
+
+ZH `Network::timeForNewFrame` is not a BFME byte match. A locate-only probe of
+the 256-byte ZH-shaped body returned `0 located`, and BFME has no code xrefs to
+the `NetworkRunAheadSlack`/`NetworkRunAheadMetricsTime` strings beyond their INI
+parse-table rows. That rules out the ZH run-ahead pacing body as the direct patch
+site.
+
+The BFME-native `Network` object instead initializes QPC pacing state in the
+constructor body at `0x006818B0`, now byte-matched as
+`BFMENativeNetwork::construct`:
+
+| Field | Constructor evidence |
+| --- | --- |
+| `+0x08` | connection manager pointer initialized to null |
+| `+0x0C` | local/network status initialized to `0` |
+| `+0x10` | `QueryPerformanceFrequency` output |
+| `+0x18` | initial `QueryPerformanceCounter` output |
+| `+0x20`/`+0x24` | QPC accumulator initialized to `0` |
+| `+0x28`, `+0x34`, `+0x35` | pacing/status flags initialized to false |
+| `+0x38` | frame/player sentinel initialized to `-1` |
+
+The native vtable at `0x0111A968` resolves slot `+0x3C` to `0x00681F70` and
+slot `+0x40` to `0x00682160`. Both are QPC-backed frame readiness/pacing
+candidates; `0x00681F70` also uses connection manager `+0x1205C`, current
+game frame `TheGameLogic + 0x3C`, and globals `0x012F7718`,
+`0x012F771C`, `0x012F7724`, and `0x012F7728`.
+
 ## Landed evidence
 
 - `src/zh/connectionmanager.cpp`, `src/zh/network.cpp`,
@@ -217,6 +245,8 @@ confuse with ZH run-ahead command traffic.
   player-timeout, packet-router stall, disconnect-screen timeout, and request
   frame-data handler checks at `0x00662A50`, `0x00662B00`, `0x00664260`,
   `0x0066B510`, and `0x006659B0`.
+- `src/game/native_network_interface.cpp` contains the native BFME `Network`
+  constructor body at `0x006818B0`, anchoring the QPC frame-pacing fields.
 - The current matched network rows are:
   - `ConnectionManager::processProgress` at `0x00662D20`.
   - `NetworkInterface::createNetwork` at `0x0065C1F0`.
@@ -242,7 +272,8 @@ confuse with ZH run-ahead command traffic.
 7. NEXT: trace the BFME frame scheduler that sends/consumes frame info, request
    frame-data, inform-player-leave-frame, and keep-alive commands. Command type
    `9` request-frame-data handling is matched; command type `8` and the frame
-   tick sender remain next.
+   tick sender remain next. Native QPC frame pacing is anchored, but slots
+   `0x00681F70` and `0x00682160` still need names/matches before patch design.
 
 ## Non-goals
 
