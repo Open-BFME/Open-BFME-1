@@ -441,6 +441,11 @@ def verify_functions(only=None):
         if source not in seen:
             seen.add(source)
             sources.append(source)
+    missing = [s for s in sources if not s.exists()]
+    if missing:
+        raise SystemExit("functions.csv references missing source file(s): "
+                         + ", ".join(str(m) for m in missing)
+                         + " - a commit added rows without adding the file")
     source_outputs = {s: BUILD_DIR / (s.stem + ".obj") for s in sources}
     if len(set(source_outputs.values())) != len(source_outputs):
         raise SystemExit("obj stem collision between sources; refusing parallel compile")
