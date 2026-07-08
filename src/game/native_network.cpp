@@ -10,6 +10,7 @@ public:
 	void *construct(BFMENetworkLock *ownerLock);
 	virtual ~BFMENetworkBackend();
 	void *destroyAndMaybeDelete(unsigned int flags);
+	void openLiveHandle();
 	__declspec(noinline) Bool hasLiveHandle();
 	__declspec(noinline) void closeLiveHandle();
 
@@ -113,6 +114,25 @@ private:
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 
+extern "C" __declspec(naked) unsigned long __stdcall BFMENetworkBackendThreadStart(BFMENetworkBackend *backend)
+{
+	__asm {
+		__emit 0x8b
+		__emit 0x0d
+		__emit 0x5c
+		__emit 0x6e
+		__emit 0x33
+		__emit 0x01
+		mov eax, [ecx]
+		call dword ptr [eax+58h]
+		mov ecx, [esp+4]
+		mov edx, [ecx]
+		call dword ptr [edx+8]
+		xor eax, eax
+		ret 4
+	}
+}
+
 // ?construct@BFMENetworkBackend@@QAEPAXPAVBFMENetworkLock@@@Z
 __declspec(naked) void *BFMENetworkBackend::construct(BFMENetworkLock *ownerLock)
 {
@@ -192,6 +212,48 @@ doneBackendDeleting:
 		mov eax, esi
 		pop esi
 		ret 4
+	}
+}
+
+__declspec(naked) void BFMENetworkBackend::openLiveHandle()
+{
+	__asm {
+		push esi
+		mov esi, ecx
+		lea eax, [esi+44h]
+		push eax
+		push 4
+		push esi
+		push 00ddb630h
+		push 0
+		push 0
+		__emit 0xff
+		__emit 0x15
+		__emit 0x98
+		__emit 0x92
+		__emit 0x35
+		__emit 0x01
+		mov ecx, [esi+4ch]
+		add esp, 18h
+		push ecx
+		push eax
+		mov [esi+48h], eax
+		__emit 0xff
+		__emit 0x15
+		__emit 0x20
+		__emit 0x8f
+		__emit 0x35
+		__emit 0x01
+		mov edx, [esi+48h]
+		push edx
+		__emit 0xff
+		__emit 0x15
+		__emit 0xd4
+		__emit 0x8e
+		__emit 0x35
+		__emit 0x01
+		pop esi
+		ret
 	}
 }
 
