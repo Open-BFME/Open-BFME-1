@@ -179,6 +179,7 @@ name,address,notes
 ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z,0x0003ADD7
 ?nstrdup@@YAPADPBD@Z,0x009E6410
 ?parseFXList@INI@@SAXPAV1@PAX1PBX@Z,0x00851EE0,INI::parseFXList body
+?parseFXList@INI@@SAXPAV1@PAX1PBX@Z,0x00004B47,INI::parseFXList thunk
 ?readUnicodeString@@YA?AVUnicodeString@@PAU_iobuf@@@Z,0x000322F4,shared replay Unicode string reader thunk
 ?reserve@?$vector@UHorzLine@@V?$allocator@UHorzLine@@@_STL@@@_STL@@QAEXI@Z,0x0000DE95
 ?set@LayoutFilename@@QAEXPBDH@Z,0x00887D20
