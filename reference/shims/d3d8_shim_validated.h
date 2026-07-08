@@ -84,6 +84,10 @@ enum _D3DFORMAT { D3DFMT_UNKNOWN=0, D3DFMT_A8R8G8B8=21, D3DFMT_X8R8G8B8=22,
 	D3DFMT_R5G6B5=23, D3DFMT_A8=28, D3DFMT_L8=50, D3DFMT_A8L8=51, D3DFMT_V8U8=60,
 	D3DFMT_X8L8V8U8=62, D3DFMT_Q8W8V8U8=63, D3DFMT_V16U16=64,
 	D3DFMT_INDEX16=101, D3DFMT_INDEX32=102 };
+enum _D3DRESOURCETYPE { D3DRTYPE_SURFACE=1, D3DRTYPE_VOLUME=2, D3DRTYPE_TEXTURE=3,
+	D3DRTYPE_VOLUMETEXTURE=4, D3DRTYPE_CUBETEXTURE=5, D3DRTYPE_VERTEXBUFFER=6,
+	D3DRTYPE_INDEXBUFFER=7, D3DRTYPE_FORCE_DWORD=0x7fffffff };
+typedef enum _D3DRESOURCETYPE D3DRESOURCETYPE;
 typedef enum _D3DFORMAT D3DFORMAT;
 
 // COM interface bases. The pure-virtual method order below is the authoritative
@@ -142,11 +146,7 @@ struct IDirect3DBaseTexture8 {
 	virtual DWORD __stdcall GetLOD() = 0;
 	virtual DWORD __stdcall GetLevelCount() = 0;
 };
-struct IDirect3DTexture8 {
-	D3DRESOURCE_METHODS
-	virtual DWORD __stdcall SetLOD(DWORD) = 0;
-	virtual DWORD __stdcall GetLOD() = 0;
-	virtual DWORD __stdcall GetLevelCount() = 0;
+struct IDirect3DTexture8 : IDirect3DBaseTexture8 {
 	virtual HRESULT __stdcall GetLevelDesc(UINT, void*) = 0;
 	virtual HRESULT __stdcall GetSurfaceLevel(UINT, IDirect3DSurface8**) = 0;
 	virtual HRESULT __stdcall LockRect(UINT, void*, const void*, DWORD) = 0;
@@ -376,6 +376,11 @@ typedef DWORD D3DTEXTURESTAGESTATETYPE;
 #define D3DTEXF_POINT 1
 #define D3DTEXF_LINEAR 2
 #define D3DTEXF_ANISOTROPIC 3
+#define D3DTADDRESS_WRAP 1
+#define D3DTADDRESS_MIRROR 2
+#define D3DTADDRESS_CLAMP 3
+#define D3DTADDRESS_BORDER 4
+#define D3DTADDRESS_MIRRORONCE 5
 #define D3DTOP_BLENDTEXTUREALPHA 13
 #define D3DTOP_BLENDFACTORALPHA 14
 #define D3DTOP_BLENDCURRENTALPHA 15
@@ -386,12 +391,51 @@ typedef struct _D3DMATRIX { float m[4][4]; } D3DMATRIX;
 typedef struct _D3DVIEWPORT8 { DWORD X,Y,Width,Height; float MinZ,MaxZ; } D3DVIEWPORT8;
 typedef struct _D3DLOCKED_RECT { long Pitch; void *pBits; } D3DLOCKED_RECT;
 typedef struct _D3DLOCKED_BOX { int RowPitch; int SlicePitch; void *pBits; } D3DLOCKED_BOX;
+typedef struct _D3DSURFACE_DESC { D3DFORMAT Format; D3DRESOURCETYPE Type; DWORD Usage; D3DPOOL Pool; UINT Size; UINT Width; UINT Height; } D3DSURFACE_DESC;
+#define D3DFILL_POINT 1
+#define D3DFILL_WIREFRAME 2
+#define D3DFILL_SOLID 3
+#define S_OK 0
 typedef struct _D3DADAPTER_IDENTIFIER8 {
 	char Driver[512]; char Description[512];
 	long long DriverVersion; DWORD VendorId, DeviceId, SubSysId, Revision;
 	GUID DeviceIdentifier; DWORD WHQLLevel;
 } D3DADAPTER_IDENTIFIER8;
-typedef struct _D3DCAPS8 { DWORD pad[228]; } D3DCAPS8;   // opaque, sized for member storage
+enum _D3DDEVTYPE { D3DDEVTYPE_HAL=1, D3DDEVTYPE_REF=2, D3DDEVTYPE_SW=3, D3DDEVTYPE_FORCE_DWORD=0x7fffffff };
+typedef enum _D3DDEVTYPE D3DDEVTYPE;
+typedef struct _D3DCAPS8 {
+    D3DDEVTYPE DeviceType;
+    UINT AdapterOrdinal;
+    DWORD Caps, Caps2, Caps3, PresentationIntervals;
+    DWORD CursorCaps;
+    DWORD DevCaps;
+    DWORD PrimitiveMiscCaps, RasterCaps, ZCmpCaps, SrcBlendCaps, DestBlendCaps, AlphaCmpCaps;
+    DWORD ShadeCaps, TextureCaps, TextureFilterCaps, CubeTextureFilterCaps, VolumeTextureFilterCaps;
+    DWORD TextureAddressCaps, VolumeTextureAddressCaps;
+    DWORD LineCaps;
+    DWORD MaxTextureWidth, MaxTextureHeight, MaxVolumeExtent;
+    DWORD MaxTextureRepeat, MaxTextureAspectRatio, MaxAnisotropy;
+    float MaxVertexW;
+    float GuardBandLeft, GuardBandTop, GuardBandRight, GuardBandBottom;
+    float ExtentsAdjust;
+    DWORD StencilCaps;
+    DWORD FVFCaps, TextureOpCaps, MaxTextureBlendStages, MaxSimultaneousTextures;
+    DWORD VertexProcessingCaps, MaxActiveLights, MaxUserClipPlanes, MaxVertexBlendMatrices, MaxVertexBlendMatrixIndex;
+    float MaxPointSize;
+    DWORD MaxPrimitiveCount, MaxVertexIndex, MaxStreams, MaxStreamStride;
+    DWORD VertexShaderVersion, MaxVertexShaderConst;
+    DWORD PixelShaderVersion;
+    float MaxPixelShaderValue;
+} D3DCAPS8;
+#define D3DPMISCCAPS_COLORWRITEENABLE 0x00000080L
+#define D3DPTFILTERCAPS_MINFLINEAR 0x00000200L
+#define D3DPTFILTERCAPS_MINFPOINT 0x00000100L
+#define D3DPTFILTERCAPS_MIPFLINEAR 0x00020000L
+#define D3DPTFILTERCAPS_MIPFPOINT 0x00010000L
+#define D3DPTFILTERCAPS_MAGFLINEAR 0x02000000L
+#define D3DPTFILTERCAPS_MAGFPOINT 0x01000000L
+#define D3DPTFILTERCAPS_MAGFANISOTROPIC 0x04000000L
+#define D3DTEXOPCAPS_BUMPENVMAPLUMINANCE 0x00400000L
 typedef struct _D3DLIGHT8 { DWORD pad[26]; } D3DLIGHT8;
 typedef struct _D3DMATERIAL8 { float pad[17]; } D3DMATERIAL8;
 typedef struct _D3DDISPLAYMODE { UINT Width, Height, RefreshRate; D3DFORMAT Format; } D3DDISPLAYMODE;

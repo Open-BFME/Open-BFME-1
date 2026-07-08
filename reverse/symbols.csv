@@ -882,3 +882,4 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?getListboxTopEntry@@YAHPAU_ListboxData@@@Z,0x004B6B60
 ??0CDDrive@@QAE@XZ,0x0002E997
 ?Free_String@WideStringClass@@AAEXXZ,0x009E71B0
+?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z,0x0001321E
