@@ -2880,3 +2880,6 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ?findPreviousCondition@OrCondition@@QAEPAVCondition@@PAV2@@Z,,0x0034FD70,34,src/zh/scripts.cpp,matched,
 ??0Condition@@IAE@XZ,,0x0034FDA0,65,src/zh/scripts.cpp,matched,
 ?WriteOrConditionDataChunk@OrCondition@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x00355C90,64,src/zh/scripts.cpp,matched,
+??1SelectionTranslator@@UAE@XZ,,0x005B7BE0,73,src/zh/selectionxlat.cpp,matched,
+??_GSelectionTranslator@@UAEPAXI@Z,,0x005B7E70,30,src/zh/selectionxlat.cpp,matched,
+?selectFriendsWrapper@@YA_NPAVDrawable@@PAX@Z,,0x005B8490,33,src/zh/selectionxlat.cpp,matched,
