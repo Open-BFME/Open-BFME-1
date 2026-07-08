@@ -434,4 +434,13 @@ __declspec(dllimport) void WINAPI ExitProcess(UINT);
 #define GetCommandLine GetCommandLineA
 #define GetEnvironmentVariable GetEnvironmentVariableA
 
+// VC7.1 <math.h> exposes float/long-double sqrt overloads, so integer args become
+// ambiguous. Forward-declare the double variant and provide integer overloads that
+// route to it (matches retail codegen where only double sqrt existed).
+extern "C" double __cdecl sqrt(double);
+inline double sqrt(int x) { return sqrt((double)x); }
+inline double sqrt(unsigned int x) { return sqrt((double)x); }
+inline double sqrt(long x) { return sqrt((double)x); }
+inline double sqrt(unsigned long x) { return sqrt((double)x); }
+
 #endif
