@@ -405,3 +405,5 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?setTransformMatrix@Thing@@QAEXPBVMatrix3D@@@Z,0x00023D49
 ?stopAllBoneFX@BoneFXUpdate@@QAEXXZ,0x0002728C
 ??8?$VectorClass@H@@UBE_NABV0@@Z,0x00AFEDF0
+?insertTee@W3DRoadBuffer@@IAEXVVector2@@HM@Z,0x00007522,ILT thunk to 0x70BC00
+?insert4Way@W3DRoadBuffer@@IAEXVVector2@@HM@Z,0x00032B96,ILT thunk to 0x706310
