@@ -189,6 +189,7 @@ struct _EXCEPTION_POINTERS;
 #define SW_HIDE 0
 #define SW_SHOW 1
 #define SW_SHOWNORMAL 1
+#define DRIVE_CDROM 5
 
 extern "C" {
 __declspec(dllimport) int WINAPIV wsprintfA(LPSTR, LPCSTR, ...);
@@ -247,6 +248,8 @@ __declspec(dllimport) BOOL WINAPI GetVersionExA(LPOSVERSIONINFOA);
 #define GetWindowsDirectory GetWindowsDirectoryA
 #define LoadString LoadStringA
 #define FormatMessage FormatMessageA
+#define GetVolumeInformation GetVolumeInformationA
+#define GetDriveType GetDriveTypeA
 __declspec(dllimport) int WINAPI GetDateFormatA(DWORD, DWORD, const SYSTEMTIME *, LPCSTR, LPSTR, int);
 __declspec(dllimport) int WINAPI GetDateFormatW(DWORD, DWORD, const SYSTEMTIME *, LPCWSTR, LPWSTR, int);
 __declspec(dllimport) int WINAPI GetTimeFormatA(DWORD, DWORD, const SYSTEMTIME *, LPCSTR, LPSTR, int);
@@ -256,6 +259,8 @@ __declspec(dllimport) BOOL WINAPI SetCurrentDirectoryA(LPCSTR);
 __declspec(dllimport) int __cdecl _access(LPCSTR, int);
 __declspec(dllimport) UINT WINAPI GetWindowsDirectoryA(LPSTR, UINT);
 __declspec(dllimport) BOOL WINAPI GetDiskFreeSpaceA(LPCSTR, LPDWORD, LPDWORD, LPDWORD, LPDWORD);
+__declspec(dllimport) BOOL WINAPI GetVolumeInformationA(LPCSTR, LPSTR, DWORD, LPDWORD, LPDWORD, LPDWORD, LPSTR, DWORD);
+__declspec(dllimport) UINT WINAPI GetDriveTypeA(LPCSTR);
 __declspec(dllimport) int WINAPI LoadStringA(HINSTANCE, UINT, LPSTR, int);
 __declspec(dllimport) int WINAPI LoadStringW(HINSTANCE, UINT, LPWSTR, int);
 __declspec(dllimport) DWORD WINAPI FormatMessageA(DWORD, LPCVOID, DWORD, DWORD, LPSTR, DWORD, va_list *);

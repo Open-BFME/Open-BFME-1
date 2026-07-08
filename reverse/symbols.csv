@@ -880,3 +880,4 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?getListboxBottomEntry@@YAHPAU_ListboxData@@@Z,0x004B6BA0
 ?getListboxEntryBasedOnCoord@@YAHPAVGameWindow@@HHAAH1@Z,0x004B69D0
 ?getListboxTopEntry@@YAHPAU_ListboxData@@@Z,0x004B6B60
+??0CDDrive@@QAE@XZ,0x0002E997
