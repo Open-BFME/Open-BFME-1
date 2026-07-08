@@ -2958,3 +2958,6 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ?grantScience@Player@@QAE_NW4ScienceType@@@Z,,0x000D5600,42,src/zh/player.cpp,matched,
 ?onPowerBrownOutChange@Player@@QAEX_N@Z,,0x000D59F0,63,src/zh/player.cpp,matched,
 ??0TerrainRoadCollection@@QAE@XZ,,0x00601430,36,src/zh/terrainroads.cpp,matched,
+??0DefaultStaticSortListClass@@QAE@XZ,,0x00958110,98,src/zh/static_sort_list.cpp,matched,
+??1DefaultStaticSortListClass@@UAE@XZ,,0x00958180,83,src/zh/static_sort_list.cpp,matched,
+??_GDefaultStaticSortListClass@@UAEPAXI@Z,,0x009581E0,30,src/zh/static_sort_list.cpp,matched,
