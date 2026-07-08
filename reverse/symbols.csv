@@ -404,3 +404,4 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?setOrientation@Thing@@QAEXM@Z,0x000399A5
 ?setTransformMatrix@Thing@@QAEXPBVMatrix3D@@@Z,0x00023D49
 ?stopAllBoneFX@BoneFXUpdate@@QAEXXZ,0x0002728C
+??8?$VectorClass@H@@UBE_NABV0@@Z,0x00AFEDF0
