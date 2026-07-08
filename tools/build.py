@@ -459,7 +459,7 @@ def verify_functions(only=None):
         print(f"Incremental compile: {len(to_compile)} of {len(sources)} source(s)")
     else:
         to_compile = sources
-    pool_size = min(8, os.cpu_count() or 1)
+    pool_size = min(2, os.cpu_count() or 1)
     with concurrent.futures.ThreadPoolExecutor(pool_size) as pool:
         futures = {pool.submit(compile_source, s, source_outputs[s]): s for s in to_compile}
         for future in concurrent.futures.as_completed(futures):
