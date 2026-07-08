@@ -2883,3 +2883,4 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ??1SelectionTranslator@@UAE@XZ,,0x005B7BE0,73,src/zh/selectionxlat.cpp,matched,
 ??_GSelectionTranslator@@UAEPAXI@Z,,0x005B7E70,30,src/zh/selectionxlat.cpp,matched,
 ?selectFriendsWrapper@@YA_NPAVDrawable@@PAX@Z,,0x005B8490,33,src/zh/selectionxlat.cpp,matched,
+?findCrossTypeJoinVector@W3DRoadBuffer@@IAEHVVector2@@PAV2@H@Z,,0x0070CA00,818,src/zh/w3droadbuffer.cpp,matched,

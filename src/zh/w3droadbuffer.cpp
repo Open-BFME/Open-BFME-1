@@ -2683,9 +2683,12 @@ void W3DRoadBuffer::insertCurveSegments(void)
 //=============================================================================
 /** Finds a road segment of different type && sets the join vector. */
 //=============================================================================
-// ?findCrossTypeJoinVector@W3DRoadBuffer@@IAEHVVector2@@PAV2@H@Z present-unmatched
+// ?findCrossTypeJoinVector@W3DRoadBuffer@@IAEHVVector2@@PAV2@H@Z
 Int W3DRoadBuffer::findCrossTypeJoinVector(Vector2 loc, Vector2 *joinVector, Int uniqueID)
 {
+	if (!m_initialized) {
+		return 0;
+	}
 	Vector2 newVector = *joinVector;
 	// Insert the curve segments. 
 	Int numRoadSegments = m_numRoads;
