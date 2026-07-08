@@ -70,6 +70,8 @@ typedef int (__stdcall *FARPROC)();
 #define FALSE 0
 #endif
 #define MAX_PATH 260
+#define LOWORD(l) ((WORD)((DWORD)(l) & 0xFFFF))
+#define HIWORD(l) ((WORD)((DWORD)(l) >> 16))
 
 typedef struct _SYSTEMTIME {
     WORD wYear, wMonth, wDayOfWeek, wDay, wHour, wMinute, wSecond, wMilliseconds;
@@ -93,6 +95,18 @@ typedef struct _MEMORYSTATUS {
     DWORD dwLength, dwMemoryLoad;
     SIZE_T dwTotalPhys, dwAvailPhys, dwTotalPageFile, dwAvailPageFile, dwTotalVirtual, dwAvailVirtual;
 } MEMORYSTATUS, *LPMEMORYSTATUS;
+
+typedef struct _OSVERSIONINFOA {
+    DWORD dwOSVersionInfoSize;
+    DWORD dwMajorVersion;
+    DWORD dwMinorVersion;
+    DWORD dwBuildNumber;
+    DWORD dwPlatformId;
+    char szCSDVersion[128];
+} OSVERSIONINFOA, *LPOSVERSIONINFOA;
+#define OSVERSIONINFO OSVERSIONINFOA
+#define VER_PLATFORM_WIN32_WINDOWS 1
+#define VER_PLATFORM_WIN32_NT 2
 
 typedef struct tagRECT { LONG left, top, right, bottom; } RECT, *LPRECT;
 typedef struct tagPOINT { LONG x, y; } POINT, *LPPOINT;
@@ -187,6 +201,12 @@ __declspec(dllimport) void WINAPI Sleep(DWORD);
 __declspec(dllimport) DWORD WINAPI GetTickCount(void);
 __declspec(dllimport) DWORD WINAPI timeGetTime(void);
 __declspec(dllimport) UINT WINAPI GetDoubleClickTime(void);
+__declspec(dllimport) BOOL WINAPI RemoveFontResourceA(LPCSTR);
+#define RemoveFontResource RemoveFontResourceA
+__declspec(dllimport) int WINAPI AddFontResourceA(LPCSTR);
+#define AddFontResource AddFontResourceA
+__declspec(dllimport) BOOL WINAPI GetVersionExA(LPOSVERSIONINFOA);
+#define GetVersionEx GetVersionExA
 __declspec(dllimport) BOOL WINAPI QueryPerformanceCounter(PLARGE_INTEGER);
 __declspec(dllimport) BOOL WINAPI QueryPerformanceFrequency(PLARGE_INTEGER);
 __declspec(dllimport) void WINAPI InitializeCriticalSection(LPCRITICAL_SECTION);
