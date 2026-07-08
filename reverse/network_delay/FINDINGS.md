@@ -90,6 +90,15 @@ run-ahead. In BFME:
 So a future delay fix should not patch BFME command types `6` or `7` as if they
 were ZH `NetRunAhead*` classes.
 
+The incoming command dispatcher at `0x0066A3F0` uses the command type at message
+offset `+0x14` and a jump table at `0x0066A634`. For the frame-delay path:
+
+| Value | Dispatcher evidence |
+| --- | --- |
+| `3` | inline frame-info-ish state update for per-player latest frame fields at `+0x12060`/`+0x120A0` |
+| `8` | calls `0x00664430`, the next frame-info/request helper to recover |
+| `9` | calls matched `BFMEConnectionManager::processRequestFrameDataCommand` at `0x006659B0` |
+
 ## BFME-native path
 
 The BFME binary routes the proven multiplayer entry point through a smaller
@@ -162,6 +171,7 @@ The first native timing slice is now byte-matched:
 | `BFMEConnectionManager::isPlayerConnectedForTimeout` | `0x00662B00` | same connection timestamp at peer object `+0x34C`; normally uses caller timeout, but startup path still falls back to `NetworkPlayerTimeoutTime * 4` |
 | `BFMEConnectionManager::hasPacketRouterFrameStall` | `0x00664260` | only runs when local player is packet router; after frame `5`, uses `TheGlobalData + 0xCB4` (`NetworkKeepAliveDelay`) to detect stale per-player frame data |
 | `BFMEDisconnectManager::hasDisconnectScreenNotifyTimedOut` | `0x0066B510` | compares elapsed time against `TheGlobalData + 0xCC0` (`NetworkDisconnectScreenNotifyTime`) |
+| `BFMEConnectionManager::processRequestFrameDataCommand` | `0x006659B0` | command type `9` handler; rejects/clamps requested resend windows using `NetworkKeepAliveDelay`, then calls `0x0040D8CD` with player id and frame range |
 
 These are timeout/readiness gates, not the delay patch itself, but they expose the
 retail frame and keep-alive timing constants that a later patch design must not
@@ -204,8 +214,9 @@ confuse with ZH run-ahead command traffic.
   request-player-leave constructor/destructor and its single dword payload
   setter/getter at `0x006741F0`, `0x00674230`, `0x00674240`, and `0x00674250`.
 - `src/game/native_connection_timing.cpp` contains the first byte-matched BFME
-  player-timeout, packet-router stall, and disconnect-screen timeout checks at
-  `0x00662A50`, `0x00662B00`, `0x00664260`, and `0x0066B510`.
+  player-timeout, packet-router stall, disconnect-screen timeout, and request
+  frame-data handler checks at `0x00662A50`, `0x00662B00`, `0x00664260`,
+  `0x0066B510`, and `0x006659B0`.
 - The current matched network rows are:
   - `ConnectionManager::processProgress` at `0x00662D20`.
   - `NetworkInterface::createNetwork` at `0x0065C1F0`.
@@ -229,7 +240,9 @@ confuse with ZH run-ahead command traffic.
    `NetworkPlayerTimeoutTime`, `NetworkKeepAliveDelay`, and
    `NetworkDisconnectScreenNotifyTime`.
 7. NEXT: trace the BFME frame scheduler that sends/consumes frame info, request
-   frame-data, inform-player-leave-frame, and keep-alive commands.
+   frame-data, inform-player-leave-frame, and keep-alive commands. Command type
+   `9` request-frame-data handling is matched; command type `8` and the frame
+   tick sender remain next.
 
 ## Non-goals
 
