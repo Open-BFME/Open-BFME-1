@@ -381,3 +381,6 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?parseRGBColor@INI@@SAXPAV1@PAX1PBX@Z,0x00852F50
 ?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z,0x00852AC0
 ?scanUnsignedInt@INI@@SAIPBD@Z,0x00852680
+??$uninitialized_fill_n@PAEIE@_STL@@YAPAEPAEIABE@Z,0x0003932E
+??4?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,0x00018A70
+?_M_insert_overflow@?$vector@EV?$allocator@E@_STL@@@_STL@@IAEXPAEABEABU__true_type@2@I_N@Z,0x0002F20C
