@@ -2860,3 +2860,6 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ?worldToRadar@Radar@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z,,0x00106D20,120,src/zh/radar.cpp,matched,
 ?reset@Radar@@UAEXXZ,,0x001077A0,28,src/zh/radar.cpp,matched,
 ?objectUnderRadarPixel@Radar@@QAEPAVObject@@PBUICoord2D@@@Z,,0x00107CF0,83,src/zh/radar.cpp,matched,
+?frameToSleepTime@@YA?AW4StateReturnType@@IIII@Z,,0x0018C2A0,37,src/zh/turretai.cpp,matched,
+?parseTWS@@YAXPAVINI@@PAX1PBX@Z,,0x0018C380,77,src/zh/turretai.cpp,matched,
+?parseTurretSweepSpeed@TurretAIData@@SAXPAVINI@@PAX1PBX@Z,,0x0018C420,48,src/zh/turretai.cpp,matched,
