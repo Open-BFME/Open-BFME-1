@@ -45,6 +45,8 @@ typedef void *HICON;
 typedef void *HCURSOR;
 typedef void *HRSRC;
 typedef void *HKL;
+typedef void *HACCEL;
+typedef void *HMENU;
 typedef unsigned long DWORD;
 typedef unsigned long *LPDWORD;
 typedef unsigned long ULONG;
@@ -173,6 +175,7 @@ typedef struct _PROCESS_INFORMATION {
 #define OSVERSIONINFO OSVERSIONINFOA
 #define VER_PLATFORM_WIN32_WINDOWS 1
 #define VER_PLATFORM_WIN32_NT 2
+#define VER_PLATFORM_WIN32s 0
 
 typedef struct tagRECT { LONG left, top, right, bottom; } RECT, *LPRECT;
 typedef struct tagPOINT { LONG x, y; } POINT, *LPPOINT;
@@ -280,6 +283,9 @@ __declspec(dllimport) int WINAPI MessageBoxA(HWND, LPCSTR, LPCSTR, UINT);
 __declspec(dllimport) int WINAPI MessageBoxW(HWND, LPCWSTR, LPCWSTR, UINT);
 __declspec(dllimport) BOOL WINAPI SetWindowPos(HWND, HWND, int, int, int, int, UINT);
 __declspec(dllimport) BOOL WINAPI ShowWindow(HWND, int);
+__declspec(dllimport) BOOL WINAPI SetWindowTextA(HWND, LPCSTR);
+__declspec(dllimport) BOOL WINAPI SetWindowTextW(HWND, LPCWSTR);
+#define SetWindowText SetWindowTextA
 __declspec(dllimport) BOOL WINAPI CreateProcessA(LPCSTR, LPSTR, void *, void *, BOOL, DWORD, void *, LPCSTR, LPSTARTUPINFOA, LPPROCESS_INFORMATION);
 __declspec(dllimport) UINT WINAPI GetTempFileNameA(LPCSTR, LPCSTR, UINT, LPSTR);
 __declspec(dllimport) HINSTANCE WINAPI FindExecutableA(LPCSTR, LPCSTR, LPSTR);
@@ -362,6 +368,12 @@ __declspec(dllimport) DWORD WINAPI GetCurrentDirectoryA(DWORD, LPSTR);
 __declspec(dllimport) BOOL WINAPI SetCurrentDirectoryA(LPCSTR);
 __declspec(dllimport) int __cdecl _access(LPCSTR, int);
 __declspec(dllimport) UINT WINAPI GetWindowsDirectoryA(LPSTR, UINT);
+#define CSIDL_APPDATA 0x001a
+#define CSIDL_LOCAL_APPDATA 0x001c
+#define CSIDL_PERSONAL 0x0005
+__declspec(dllimport) BOOL WINAPI SHGetSpecialFolderPathA(HWND, LPSTR, int, BOOL);
+__declspec(dllimport) BOOL WINAPI SHGetSpecialFolderPathW(HWND, LPWSTR, int, BOOL);
+#define SHGetSpecialFolderPath SHGetSpecialFolderPathA
 __declspec(dllimport) BOOL WINAPI GetDiskFreeSpaceA(LPCSTR, LPDWORD, LPDWORD, LPDWORD, LPDWORD);
 __declspec(dllimport) BOOL WINAPI GetVolumeInformationA(LPCSTR, LPSTR, DWORD, LPDWORD, LPDWORD, LPDWORD, LPSTR, DWORD);
 __declspec(dllimport) UINT WINAPI GetDriveTypeA(LPCSTR);

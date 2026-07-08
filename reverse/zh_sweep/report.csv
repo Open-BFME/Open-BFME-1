@@ -1642,3 +1642,44 @@ Libraries/Source/profile/profile_funclevel.cpp,missing-header,0,0,0,_pch.h
 Libraries/Source/profile/profile_highlevel.cpp,missing-header,0,0,0,_pch.h
 Libraries/Source/profile/profile_result.cpp,missing-header,0,0,0,_pch.h
 Libraries/Source/profile/test1/test1.cpp,missing-header,0,0,0,../profile.h
+GameEngine/Source/GameLogic/AI/AIDock.cpp,ok,0,10,57,
+GameEngine/Source/GameLogic/AI/AIGroup.cpp,ok,0,30,161,
+GameEngine/Source/GameLogic/AI/AIGuard.cpp,ok,0,12,56,
+GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp,ok,0,12,51,
+GameEngine/Source/GameLogic/AI/AISkirmishPlayer.cpp,ok,0,8,57,
+GameEngine/Source/GameLogic/AI/AITNGuard.cpp,ok,0,11,53,
+GameEngine/Source/GameLogic/Map/PolygonTrigger.cpp,ok,0,1,26,
+GameEngine/Source/GameLogic/Object/Armor.cpp,ok,0,9,29,
+GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehavior.cpp,ok,0,1,28,
+GameEngine/Source/GameLogic/Object/Behavior/BattleBusSlowDeathBehavior.cpp,ok,0,5,28,
+GameEngine/Source/GameLogic/Object/Behavior/BehaviorModule.cpp,ok,0,0,1,
+GameEngine/Source/GameLogic/Object/Behavior/BridgeTowerBehavior.cpp,ok,0,1,14,
+GameEngine/Source/GameLogic/Object/Behavior/BunkerBusterBehavior.cpp,ok,0,6,23,
+GameEngine/Source/GameLogic/Object/Behavior/CountermeasuresBehavior.cpp,ok,0,9,24,
+GameEngine/Source/GameLogic/Object/Behavior/DumbProjectileBehavior.cpp,compile-error,0,0,0,C2146 syntax error : missing ';' before identifier 's_bezBasisMatrix'
+GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDamagedBehavior.cpp,ok,0,3,16,
+GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehavior.cpp,ok,0,2,15,
+GameEngine/Source/GameLogic/Object/Behavior/FlightDeckBehavior.cpp,ok,0,40,132,
+GameEngine/Source/GameLogic/Object/Behavior/GenerateMinefieldBehavior.cpp,ok,0,17,68,
+GameEngine/Source/GameLogic/Object/Behavior/GrantStealthBehavior.cpp,ok,0,2,12,
+GameEngine/Source/GameLogic/Object/Behavior/InstantDeathBehavior.cpp,ok,0,15,40,
+GameEngine/Source/GameLogic/Object/Behavior/JetSlowDeathBehavior.cpp,ok,0,6,30,
+GameEngine/Source/GameLogic/Object/Behavior/MinefieldBehavior.cpp,ok,0,16,35,
+GameEngine/Source/GameLogic/Object/Behavior/NeutonBlastBehavior.cpp,ok,0,3,20,
+GameEngine/Source/GameLogic/Object/Behavior/OverchargeBehavior.cpp,ok,0,7,17,
+GameEngine/Source/GameLogic/Object/Behavior/POWTruckBehavior.cpp,ok,0,0,0,
+GameEngine/Source/GameLogic/Object/Behavior/PrisonBehavior.cpp,ok,0,0,0,
+GameEngine/Source/GameLogic/Object/Behavior/PropagandaCenterBehavior.cpp,ok,0,0,0,
+GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehavior.cpp,ok,0,8,32,
+GameEngine/Source/GameLogic/Object/Behavior/RebuildHoleBehavior.cpp,ok,0,8,34,
+GameEngine/Source/GameLogic/Object/Behavior/SpawnBehavior.cpp,ok,0,5,76,
+GameEngine/Source/GameLogic/Object/Behavior/SupplyWarehouseCripplingBehavior.cpp,compile-error,0,0,0,C2011 '_stat' : 'struct' type redefinition
+GameEngine/Source/GameLogic/Object/Behavior/TechBuildingBehavior.cpp,compile-error,0,0,0,C2011 '_stat' : 'struct' type redefinition
+GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp,compile-error,0,0,0,C2011 '_stat' : 'struct' type redefinition
+GameEngine/Source/GameLogic/Object/Body/BodyModule.cpp,compile-error,0,0,0,C2011 '_stat' : 'struct' type redefinition
+GameEngine/Source/GameLogic/Object/Body/HighlanderBody.cpp,compile-error,0,0,0,C2011 '_stat' : 'struct' type redefinition
+GameEngine/Source/GameLogic/Object/Body/HiveStructureBody.cpp,compile-error,0,0,0,C2011 '_stat' : 'struct' type redefinition
+GameEngine/Source/GameLogic/Object/Body/ImmortalBody.cpp,ok,0,3,7,
+GameEngine/Source/GameLogic/Object/Body/InactiveBody.cpp,ok,0,2,10,
+GameEngine/Source/GameLogic/Object/Body/StructureBody.cpp,ok,0,2,6,
+GameEngine/Source/GameLogic/Object/Body/UndeadBody.cpp,ok,0,5,10,
