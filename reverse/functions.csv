@@ -2870,3 +2870,4 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ??0FrustumClass@@QAE@XZ,,0x00931980,97,src/zh/camera.cpp,matched,
 ??0FrustumClass@@QAE@ABV0@@Z,,0x009319F0,254,src/zh/camera.cpp,matched,
 ??4FrustumClass@@QAEAAV0@ABV0@@Z,,0x00931B10,607,src/zh/camera.cpp,matched,
+?getFileInfo@Win32LocalFileSystem@@UBE_NABVAsciiString@@PAUFileInfo@@@Z,,0x009CDE50,105,src/zh/win32localfilesystem.cpp,matched,
