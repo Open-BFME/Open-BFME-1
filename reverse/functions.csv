@@ -2797,3 +2797,5 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ?Convert_Color@DX8Wrapper@@SAIABVVector3@@M@Z,,0x00710E70,151,src/zh/bitmaphandler.cpp,matched,
 ?Convert_Color@DX8Wrapper@@SAIABVVector4@@@Z,,0x0091DBB0,160,src/zh/bitmaphandler.cpp,matched,
 ?Convert_Color@DX8Wrapper@@SA?AVVector4@@I@Z,,0x00929100,150,src/zh/bitmaphandler.cpp,matched,
+?animSlideRight@@YAXPAVControlBarSchemeAnimation@@@Z,,0x004AB840,91,src/zh/controlbarscheme.cpp,matched,
+?update@ControlBarScheme@@QAEXXZ,,0x004AD410,136,src/zh/controlbarscheme.cpp,matched,
