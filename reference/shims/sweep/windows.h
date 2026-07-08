@@ -72,6 +72,12 @@ typedef int (__stdcall *FARPROC)();
 #define MAX_PATH 260
 #define LOWORD(l) ((WORD)((DWORD)(l) & 0xFFFF))
 #define HIWORD(l) ((WORD)((DWORD)(l) >> 16))
+#define LOCALE_SYSTEM_DEFAULT 0x0800
+#define DATE_SHORTDATE 0x00000001
+#define DATE_LONGDATE 0x00000002
+#define TIME_NOSECONDS 0x00000002
+#define TIME_NOTIMEMARKER 0x00000004
+#define TIME_FORCE24HOURFORMAT 0x00000008
 
 typedef struct _SYSTEMTIME {
     WORD wYear, wMonth, wDayOfWeek, wDay, wHour, wMinute, wSecond, wMilliseconds;
@@ -207,6 +213,17 @@ __declspec(dllimport) int WINAPI AddFontResourceA(LPCSTR);
 #define AddFontResource AddFontResourceA
 __declspec(dllimport) BOOL WINAPI GetVersionExA(LPOSVERSIONINFOA);
 #define GetVersionEx GetVersionExA
+#define GetDateFormat GetDateFormatA
+#define GetTimeFormat GetTimeFormatA
+#define GetCurrentDirectory GetCurrentDirectoryA
+#define SetCurrentDirectory SetCurrentDirectoryA
+__declspec(dllimport) int WINAPI GetDateFormatA(DWORD, DWORD, const SYSTEMTIME *, LPCSTR, LPSTR, int);
+__declspec(dllimport) int WINAPI GetDateFormatW(DWORD, DWORD, const SYSTEMTIME *, LPCWSTR, LPWSTR, int);
+__declspec(dllimport) int WINAPI GetTimeFormatA(DWORD, DWORD, const SYSTEMTIME *, LPCSTR, LPSTR, int);
+__declspec(dllimport) int WINAPI GetTimeFormatW(DWORD, DWORD, const SYSTEMTIME *, LPCWSTR, LPWSTR, int);
+__declspec(dllimport) DWORD WINAPI GetCurrentDirectoryA(DWORD, LPSTR);
+__declspec(dllimport) BOOL WINAPI SetCurrentDirectoryA(LPCSTR);
+__declspec(dllimport) int __cdecl _access(LPCSTR, int);
 __declspec(dllimport) BOOL WINAPI QueryPerformanceCounter(PLARGE_INTEGER);
 __declspec(dllimport) BOOL WINAPI QueryPerformanceFrequency(PLARGE_INTEGER);
 __declspec(dllimport) void WINAPI InitializeCriticalSection(LPCRITICAL_SECTION);
