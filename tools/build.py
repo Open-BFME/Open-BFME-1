@@ -441,6 +441,11 @@ def verify_functions(only=None):
         if source not in seen:
             seen.add(source)
             sources.append(source)
+    missing = [s for s in sources if not s.exists()]
+    if missing:
+        raise SystemExit("functions.csv references missing source file(s): "
+                         + ", ".join(str(m) for m in missing)
+                         + " - a commit added rows without adding the file")
     source_outputs = {s: BUILD_DIR / (s.stem + ".obj") for s in sources}
     if len(set(source_outputs.values())) != len(source_outputs):
         raise SystemExit("obj stem collision between sources; refusing parallel compile")
@@ -459,11 +464,20 @@ def verify_functions(only=None):
         print(f"Incremental compile: {len(to_compile)} of {len(sources)} source(s)")
     else:
         to_compile = sources
-    pool_size = min(2, os.cpu_count() or 1)
-    with concurrent.futures.ThreadPoolExecutor(pool_size) as pool:
-        futures = {pool.submit(compile_source, s, source_outputs[s]): s for s in to_compile}
-        for future in concurrent.futures.as_completed(futures):
-            future.result()
+    # BUILD_POOL controls compile parallelism. Default 1: a single build.py call
+    # (a worker verifying its own 1-2 files, or the fleet's per-task fast verify)
+    # must NOT fork an 8-way wine pool - dozens of concurrent callers would then
+    # oversubscribe the cores into a stall. Only the full-suite periodic audit,
+    # which runs alone, sets BUILD_POOL=8 to compile all 260+ TUs in parallel.
+    pool_size = max(1, min(int(os.environ.get("BUILD_POOL", "1")), os.cpu_count() or 1))
+    if pool_size == 1 or len(to_compile) <= 1:
+        for s in to_compile:
+            compile_source(s, source_outputs[s])
+    else:
+        with concurrent.futures.ThreadPoolExecutor(pool_size) as pool:
+            futures = {pool.submit(compile_source, s, source_outputs[s]): s for s in to_compile}
+            for future in concurrent.futures.as_completed(futures):
+                future.result()
 
     failures = 0
     patches = []
