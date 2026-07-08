@@ -1154,3 +1154,4 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?Is_Bone_Captured@HTreeClass@@QBE_NH@Z,0x00952A40
 ?Convert_Shader@W3dUtilityClass@@SAXABUW3dShaderStruct@@PAVShaderClass@@@Z,0x00978760
 ?onExit@AIInternalMoveToState@@UAEXW4StateExitType@@@Z,0x00029311
+?clear@TeamFactory@@QAEXXZ,0x000284A7
