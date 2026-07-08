@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
+import concurrent.futures
 import csv
 import hashlib
 import json
 import os
+import re
 import shutil
 import struct
 import subprocess
@@ -432,16 +434,41 @@ def verify_functions(only=None):
     total = len(rows)
     symbol_map = load_symbol_map()
 
-    failures = 0
-    patches = []
-    source_outputs = {}
+    sources = []
+    seen = set()
     for row in rows:
         source = ROOT / row["source"]
-        if source not in source_outputs:
-            output = BUILD_DIR / (source.stem + ".obj")
-            compile_source(source, output)
-            source_outputs[source] = output
+        if source not in seen:
+            seen.add(source)
+            sources.append(source)
+    source_outputs = {s: BUILD_DIR / (s.stem + ".obj") for s in sources}
+    if len(set(source_outputs.values())) != len(source_outputs):
+        raise SystemExit("obj stem collision between sources; refusing parallel compile")
+    # wine cl.exe instances are independent processes; compile is the wall-clock
+    # hog (byte comparison below is pure reads), so parallelize only this phase
+    # Incremental mode (BUILD_RECOMPILE_ONLY="a.cpp;b.cpp"): reuse existing .obj
+    # files for every source NOT listed - valid only when the caller proves the
+    # unlisted sources and all headers are identical to the previous verified
+    # build in this same tree (the fleet verifier does, via git diff). A missing
+    # .obj is compiled regardless; never silently reused when absent.
+    recompile_only = os.environ.get("BUILD_RECOMPILE_ONLY")
+    if recompile_only is not None:
+        wanted = {w for w in recompile_only.split(";") if w}
+        to_compile = [s for s in sources
+                      if str(s.relative_to(ROOT)) in wanted or not source_outputs[s].exists()]
+        print(f"Incremental compile: {len(to_compile)} of {len(sources)} source(s)")
+    else:
+        to_compile = sources
+    pool_size = min(8, os.cpu_count() or 1)
+    with concurrent.futures.ThreadPoolExecutor(pool_size) as pool:
+        futures = {pool.submit(compile_source, s, source_outputs[s]): s for s in to_compile}
+        for future in concurrent.futures.as_completed(futures):
+            future.result()
 
+    failures = 0
+    patches = []
+    for row in rows:
+        source = ROOT / row["source"]
         patch = compile_function(row, symbol_map, source_outputs[source])
         target = patch["target"]
         compiled = patch["bytes"]
@@ -607,6 +634,69 @@ def verify_dir32_consistency(rows):
     print(f"DIR32 consistency: OK ({len(sym2base)} symbols; {len(inconsistent)} whitelisted, 0 new)")
 
 
+CLAIMS_WHITELIST = ROOT / "reverse" / "unclaimed_sources_whitelist.txt"
+UNMATCHED_MARKER_RE = re.compile(
+    r"^\s*//\s*(\S+)\s+(?:present-unmatched|absent-from-retail)\b", re.MULTILINE
+)
+
+
+def load_claims_whitelist():
+    if not CLAIMS_WHITELIST.exists():
+        return set()
+    return {
+        line.strip()
+        for line in CLAIMS_WHITELIST.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    }
+
+
+def verify_source_claims():
+    """Progress is matched rows, nothing else: every src .cpp must own at least
+    one byte-verified matched row (parked exceptions live in the whitelist, with
+    reasons), and no marker may contradict the ledger (a symbol both matched and
+    marked unmatched is a stale annotation lying about state). This closes the
+    'land a file of present-unmatched markers and call it work' path."""
+    matched_by_source = {}
+    matched_sources = {}
+    for row in load_function_rows():
+        matched_by_source[row["source"]] = matched_by_source.get(row["source"], 0) + 1
+        matched_sources.setdefault(row["name"], set()).add(row["source"])
+    whitelist = load_claims_whitelist()
+
+    problems = []
+    sources = sorted((ROOT / "src").rglob("*.cpp"))
+    for path in sources:
+        rel = path.relative_to(ROOT).as_posix()
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for label in UNMATCHED_MARKER_RE.findall(text):
+            # a marker on a symbol matched from ANOTHER file is correct bookkeeping
+            # (e.g. the ZH copy of a function landed via an asm-whale scaffold);
+            # matched from THIS file, the marker is a stale lie about its state
+            if rel in matched_sources.get(label, ()):
+                problems.append(
+                    f"{rel}: {label} is byte-verified matched from this file but still "
+                    f"carries an unmatched marker (stale annotation)"
+                )
+        if matched_by_source.get(rel, 0) == 0 and rel not in whitelist:
+            problems.append(
+                f"{rel}: ZERO matched rows — source presence is not progress; match at "
+                f"least one function or whitelist it with a reason "
+                f"({CLAIMS_WHITELIST.relative_to(ROOT)})"
+            )
+    for entry in sorted(whitelist):
+        if not (ROOT / entry).exists():
+            problems.append(f"whitelist: {entry} no longer exists — remove the entry")
+        elif matched_by_source.get(entry, 0):
+            problems.append(f"whitelist: {entry} now has matched rows — remove the stale entry")
+
+    if problems:
+        print(f"Source claims: FAIL ({len(problems)} problem(s))")
+        for problem in problems[:20]:
+            print(f"    {problem}")
+        raise SystemExit(1)
+    print(f"Source claims: OK ({len(sources)} sources, {len(whitelist)} whitelisted unclaimed)")
+
+
 def main(only=None):
     if only:
         # Fast path: compile and byte-compare only the matching sources/functions
@@ -619,6 +709,7 @@ def main(only=None):
     patches = verify_functions()
     verify_string_refs(load_function_rows())
     verify_dir32_consistency(load_function_rows())
+    verify_source_claims()
     verify_noop_patch(patches)
 
 

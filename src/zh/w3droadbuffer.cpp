@@ -2622,9 +2622,12 @@ void W3DRoadBuffer::insert4Way(Vector2 loc, Int index1, Real scale)
 //=============================================================================
 /** Inserts Tee intersections at 3 way intersections. */
 //=============================================================================
-// ?insertTeeIntersections@W3DRoadBuffer@@IAEXXZ present-unmatched
+// ?insertTeeIntersections@W3DRoadBuffer@@IAEXXZ
 void W3DRoadBuffer::insertTeeIntersections(void)
 {
+	if (!m_initialized) {
+		return;
+	}
 	// Insert the tees. 
 	Int numRoadSegments = m_numRoads;
 	Int i;
@@ -2683,9 +2686,12 @@ void W3DRoadBuffer::insertCurveSegments(void)
 //=============================================================================
 /** Finds a road segment of different type && sets the join vector. */
 //=============================================================================
-// ?findCrossTypeJoinVector@W3DRoadBuffer@@IAEHVVector2@@PAV2@H@Z present-unmatched
+// ?findCrossTypeJoinVector@W3DRoadBuffer@@IAEHVVector2@@PAV2@H@Z
 Int W3DRoadBuffer::findCrossTypeJoinVector(Vector2 loc, Vector2 *joinVector, Int uniqueID)
 {
+	if (!m_initialized) {
+		return 0;
+	}
 	Vector2 newVector = *joinVector;
 	// Insert the curve segments. 
 	Int numRoadSegments = m_numRoads;

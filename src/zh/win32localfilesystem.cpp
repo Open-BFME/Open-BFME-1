@@ -29,6 +29,12 @@
 // Bryan Cleveland, August 2002
 ////////////////////////////////////////////////////////////
 
+// BFME's retail AsciiStringData has an extra 4-byte field (debug ptr) before the
+// string buffer, so force the _INTERNAL layout without enabling debug side effects.
+#define _INTERNAL
+#define DISABLE_ALLOW_DEBUG_UTILS
+#define DISABLE_MEMORYPOOL_DEBUG_CUSTOM_NEW
+
 #include <windows.h>
 #include "Common/AsciiString.h"
 #include "Common/GameMemory.h"
@@ -195,7 +201,7 @@ void Win32LocalFileSystem::getFileListInDirectory(const AsciiString& currentDire
 
 }
 
-// ?getFileInfo@Win32LocalFileSystem@@UBE_NABVAsciiString@@PAUFileInfo@@@Z present-unmatched
+// ?getFileInfo@Win32LocalFileSystem@@UBE_NABVAsciiString@@PAUFileInfo@@@Z
 Bool Win32LocalFileSystem::getFileInfo(const AsciiString& filename, FileInfo *fileInfo) const 
 {
 	WIN32_FIND_DATA findData;
