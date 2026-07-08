@@ -437,3 +437,10 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?GadgetRadioSetSelection@@YAXPAVGameWindow@@_N@Z,0x00034536
 ?getCampaignDifficulty@OptionPreferences@@QAEHXZ,0x00032B5A
 ?winGetStyle@GameWindow@@QAEIXZ,0x00008B52
+?Add@?$DynamicVectorClass@VShaderClass@@@@QAE_NABVShaderClass@@@Z,0x0092FA60
+?addScience@Player@@AAE_NW4ScienceType@@@Z,0x00036057
+?disableRadar@Player@@QAEXXZ,0x0003C2BD
+?enableRadar@Player@@QAEXXZ,0x00043207
+?isScienceGrantable@ScienceStore@@QBE_NW4ScienceType@@@Z,0x0003882A
+?iterateObjects@Player@@QBEXP6AXPAVObject@@PAX@Z1@Z,0x0002F1CB
+?Get_Char_Spacing@FontCharsClass@@QAEHG@Z,0x009414D0,body
