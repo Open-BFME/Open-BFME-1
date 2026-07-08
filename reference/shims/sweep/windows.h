@@ -52,6 +52,7 @@ typedef int BOOL;
 typedef unsigned int UINT;
 typedef unsigned short WORD;
 typedef unsigned short USHORT;
+typedef short SHORT;
 typedef unsigned char BYTE;
 typedef BYTE *LPBYTE;
 typedef HKEY *PHKEY;
@@ -188,6 +189,12 @@ struct _EXCEPTION_POINTERS;
 #define MB_APPLMODAL 0x00000000L
 #define MB_DEFBUTTON3 0x00000200L
 #define VK_RETURN 0x0D
+#define VK_INSERT 0x2D
+#define VK_DELETE 0x2E
+#define VK_F5 0x74
+#define VK_F6 0x75
+#define VK_F7 0x76
+#define VK_F8 0x77
 #define ERROR_SUCCESS 0L
 #define CP_ACP 0
 #define CP_UTF8 65001
@@ -255,6 +262,8 @@ __declspec(dllimport) HINSTANCE WINAPI FindExecutableA(LPCSTR, LPCSTR, LPSTR);
 __declspec(dllimport) BOOL WINAPI ScreenToClient(HWND, LPPOINT);
 __declspec(dllimport) HCURSOR WINAPI LoadCursorFromFileA(LPCSTR);
 __declspec(dllimport) HCURSOR WINAPI SetCursor(HCURSOR);
+__declspec(dllimport) BOOL WINAPI GetCursorPos(LPPOINT);
+__declspec(dllimport) SHORT WINAPI GetAsyncKeyState(int);
 __declspec(dllimport) BOOL WINAPI TerminateProcess(HANDLE, UINT);
 __declspec(dllimport) HANDLE WINAPI GetCurrentProcess(void);
 __declspec(dllimport) DWORD WINAPI GetCurrentProcessId(void);
