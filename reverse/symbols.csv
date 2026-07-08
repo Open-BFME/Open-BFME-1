@@ -366,3 +366,5 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?_M_fill_insert@?$vector@_NV?$allocator@_N@_STL@@@_STL@@QAEXU?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@2@I_N@Z,0x0000886E
 ?_M_insert_aux@?$vector@_NV?$allocator@_N@_STL@@@_STL@@IAEXU?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@2@_N@Z,0x0002CB5B
 ?Set@Matrix3D@@QAEXABVMatrix3x3@@ABVVector3@@@Z,0x00964150
+?Collide@CollisionMath@@SA_NABVLineSegClass@@ABVOBBoxClass@@PAUCastResultStruct@@@Z,0x008DAD70
+?Collide@CollisionMath@@SA_NABVOBBoxClass@@ABVVector3@@ABVTriClass@@1PAUCastResultStruct@@@Z,0x008E7180

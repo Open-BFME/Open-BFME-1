@@ -2799,3 +2799,8 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ?Convert_Color@DX8Wrapper@@SA?AVVector4@@I@Z,,0x00929100,150,src/zh/bitmaphandler.cpp,matched,
 ?Transpose@Matrix4@@QBE?AV1@XZ,,0x005F0E10,181,src/zh/boxrobj.cpp,matched,
 ??0Matrix3D@@QAE@ABVMatrix3x3@@ABVVector3@@@Z,,0x00964270,26,src/zh/boxrobj.cpp,matched,
+?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVOBBoxClass@@ABVVector3@@@Z,,0x008E23F0,220,src/zh/colmathobbox.cpp,matched,
+?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVOBBoxClass@@ABVLineSegClass@@@Z,,0x008E24D0,140,src/zh/colmathobbox.cpp,matched,
+?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVOBBoxClass@@ABVTriClass@@@Z,,0x008E2560,200,src/zh/colmathobbox.cpp,matched,
+?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVOBBoxClass@@0@Z,,0x008E2630,200,src/zh/colmathobbox.cpp,matched,
+?Collide@CollisionMath@@SA_NABVOBBoxClass@@ABVVector3@@ABVPlaneClass@@PAUCastResultStruct@@@Z,,0x008E2700,533,src/zh/colmathobbox.cpp,matched,
