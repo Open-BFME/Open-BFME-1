@@ -1167,3 +1167,8 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?killThemKillThemAll@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@@Z,0x00019F5B
 ?ParseBlendTileData@WorldHeightMap@@IAE_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,0x00040AAC
 ??1?$SimpleDynVecClass@VVector3@@@@UAE@XZ,0x00887940
+?addUpgrade@Player@@QAEPAVUpgrade@@PBVUpgradeTemplate@@W4UpgradeStatusType@@@Z,0x00040327
+?findUpgrade@UpgradeCenter@@QBEPBVUpgradeTemplate@@ABVAsciiString@@@Z,0x0002F95A
+?getControllingPlayer@Object@@QBEPAVPlayer@@XZ,0x00020824
+?giveUpgrade@Object@@QAEXPBVUpgradeTemplate@@@Z,0x0001A97E
+??0DockUpdateModuleData@@QAE@XZ,0x0002C54D
