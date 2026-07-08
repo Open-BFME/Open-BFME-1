@@ -2844,3 +2844,8 @@ _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatche
 ??0LockClass@CriticalSectionClass@@QAE@AAV1@@Z,,0x009DB4B0,29,src/zh/mutex.cpp,matched,
 ??0MeshSaveContextClass@@QAE@XZ,,0x0096CAD0,28,src/zh/meshmdlio.cpp,matched,
 ??0LegacyMaterialClass@MeshLoadContextClass@@QAE@XZ,,0x0096D0E0,54,src/zh/meshmdlio.cpp,matched,
+?findObjectCreationList@ObjectCreationListStore@@QBEPBVObjectCreationList@@PBD@Z,,0x001D7440,89,src/zh/objectcreationlist.cpp,matched,
+?push_back@?$vector@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@QAEXABQAVObjectCreationNugget@@@Z,,0x001D77D0,50,src/zh/objectcreationlist.cpp,matched,
+?addObjectCreationNugget@ObjectCreationListStore@@QAEXPAVObjectCreationNugget@@@Z,,0x001D7970,53,src/zh/objectcreationlist.cpp,matched,
+?addObjectCreationNugget@ObjectCreationList@@QAEXPAVObjectCreationNugget@@@Z,,0x001D82E0,106,src/zh/objectcreationlist.cpp,matched,
+?parseObjectCreationListDefinition@ObjectCreationListStore@@SAXPAVINI@@@Z,,0x001DB050,124,src/zh/objectcreationlist.cpp,matched,
