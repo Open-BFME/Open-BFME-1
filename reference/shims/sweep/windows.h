@@ -51,6 +51,7 @@ typedef int INT;
 typedef int *LPINT;
 typedef unsigned long DWORD;
 typedef unsigned long *LPDWORD;
+typedef DWORD *PDWORD;
 typedef unsigned long ULONG;
 typedef int BOOL;
 typedef unsigned int UINT;
@@ -68,6 +69,7 @@ typedef void *LPVOID;
 typedef const void *LPCVOID;
 typedef char *LPSTR;
 typedef const char *LPCSTR;
+typedef const char *PCSTR;
 typedef unsigned short WCHAR;   // = VC7.1 default wchar_t (unsigned short), mangles as G like retail
 typedef WCHAR *PWCHAR, *LPWSTR;
 typedef const unsigned short *LPCWSTR;
@@ -106,6 +108,7 @@ typedef int (__stdcall *FARPROC)();
 #ifndef MAKEWORD
 #define MAKEWORD(a,b) ((WORD)(((BYTE)((a) & 0xFF)) | ((WORD)((BYTE)((b) & 0xFF))) << 8))
 #endif
+#define MAKELPARAM(l,h) ((LPARAM)((WORD)(l) | ((DWORD)((WORD)(h))) << 16))
 #define UNLEN 256
 #define LOBYTE(w) ((BYTE)((w) & 0xFF))
 #define HIBYTE(w) ((BYTE)(((w) >> 8) & 0xFF))
@@ -118,7 +121,7 @@ typedef LONG HRESULT;
 #define E_OUTOFMEMORY ((HRESULT)0x8007000E)
 #define E_UNEXPECTED ((HRESULT)0x8000FFFF)
 
-struct _EXCEPTION_POINTERS; // fwd-declare for Minidump handlers / crash reporters
+struct _EXCEPTION_POINTERS;
 typedef struct _ITEMIDLIST { BYTE abID[1]; } ITEMIDLIST, *LPITEMIDLIST;
 #define LOCALE_SYSTEM_DEFAULT 0x0800
 #define DATE_SHORTDATE 0x00000001
@@ -243,8 +246,6 @@ typedef struct _WIN32_FIND_DATAA {
     char cAlternateFileName[14];
 } WIN32_FIND_DATAA, *LPWIN32_FIND_DATAA;
 
-struct _EXCEPTION_POINTERS;
-
 #define MB_OK 0x00000000L
 #define MB_OKCANCEL 0x00000001L
 #define MB_ABORTRETRYIGNORE 0x00000002L
@@ -307,6 +308,21 @@ struct _EXCEPTION_POINTERS;
 #define HWND_NOTOPMOST ((HWND)-2)
 #define SWP_NOSIZE 0x0001
 #define SWP_NOMOVE 0x0002
+#define GWL_STYLE (-16)
+#define WS_CAPTION 0x00C00000L
+#define GWL_EXSTYLE (-20)
+#define WS_EX_TOOLWINDOW 0x00000080L
+#define SW_SHOWMINNOACTIVE 7
+#define SW_RESTORE 9
+#define FW_NORMAL 400
+#define FF_MODERN 48
+#define FIXED_PITCH 1
+#define DEFAULT_PITCH 0
+#define OUT_DEFAULT_PRECIS 0
+#define CLIP_DEFAULT_PRECIS 0
+#define DEFAULT_QUALITY 0
+#define ANTIALIASED_QUALITY 4
+#define DEFAULT_CHARSET 1
 #define SW_HIDE 0
 #define SW_SHOW 1
 #define SW_SHOWNORMAL 1
@@ -325,24 +341,152 @@ struct _EXCEPTION_POINTERS;
 #define WM_KEYUP 0x0101
 #define WM_SYSKEYDOWN 0x0104
 #define WM_SYSKEYUP 0x0105
-#define WM_MOUSEMOVE 0x0200
-#define WM_LBUTTONDOWN 0x0201
-#define WM_LBUTTONUP 0x0202
-#define WM_LBUTTONDBLCLK 0x0203
-#define WM_RBUTTONDOWN 0x0204
-#define WM_RBUTTONUP 0x0205
-#define WM_RBUTTONDBLCLK 0x0206
-#define WM_MBUTTONDOWN 0x0207
-#define WM_MBUTTONUP 0x0208
-#define WM_MBUTTONDBLCLK 0x0209
 #define WM_MOUSEWHEEL 0x020A
+#define WM_SETFONT 0x0030
 #define STARTF_USESHOWWINDOW 0x00000001
 #define STARTF_USESTDHANDLES 0x00000100
 #define PM_NOREMOVE 0x0000
 #define PM_REMOVE 0x0001
 #define MAPVK_VK_TO_CHAR 2
 
+typedef struct _CHAR_UNION {
+    union {
+        WCHAR UnicodeChar;
+        char AsciiChar;
+    };
+} CHAR_UNION;
+
+typedef struct _KEY_EVENT_RECORD {
+    BOOL bKeyDown;
+    WORD wRepeatCount;
+    WORD wVirtualKeyCode;
+    WORD wVirtualScanCode;
+    CHAR_UNION uChar;
+    DWORD dwControlKeyState;
+} KEY_EVENT_RECORD, *PKEY_EVENT_RECORD;
+
+typedef struct _INPUT_RECORD {
+    WORD EventType;
+    union {
+        KEY_EVENT_RECORD KeyEvent;
+    } Event;
+} INPUT_RECORD, *PINPUT_RECORD;
+#define KEY_EVENT 0x0001
+#define BACKGROUND_RED 0x0040
+#define BACKGROUND_GREEN 0x0020
+#define BACKGROUND_BLUE 0x0010
+#define BACKGROUND_INTENSITY 0x0080
+#define FOREGROUND_BLUE 0x0001
+#define FOREGROUND_GREEN 0x0002
+#define FOREGROUND_RED 0x0004
+#define FOREGROUND_INTENSITY 0x0008
+
+typedef struct _COORD { SHORT X; SHORT Y; } COORD, *PCOORD;
+typedef struct _SMALL_RECT { SHORT Left, Top, Right, Bottom; } SMALL_RECT, *PSMALL_RECT;
+
+typedef struct _CHAR_INFO {
+    CHAR_UNION Char;
+    WORD Attributes;
+} CHAR_INFO, *PCHAR_INFO;
+
+typedef struct _FLOATING_SAVE_AREA {
+    DWORD ControlWord, StatusWord, TagWord, ErrorOffset, ErrorSelector, DataOffset, DataSelector;
+    BYTE RegisterArea[80];
+    DWORD Cr0NpxState;
+} FLOATING_SAVE_AREA;
+
+#define CONTEXT_i386 0x00010000
+#define CONTEXT_CONTROL (CONTEXT_i386 | 0x00000001)
+#define CONTEXT_INTEGER (CONTEXT_i386 | 0x00000002)
+#define CONTEXT_SEGMENTS (CONTEXT_i386 | 0x00000004)
+#define CONTEXT_FLOATING_POINT (CONTEXT_i386 | 0x00000008)
+#define CONTEXT_DEBUG_REGISTERS (CONTEXT_i386 | 0x00000010)
+#define CONTEXT_EXTENDED_REGISTERS (CONTEXT_i386 | 0x00000020)
+#define CONTEXT_FULL (CONTEXT_CONTROL | CONTEXT_INTEGER | CONTEXT_SEGMENTS)
+
+#define MAXIMUM_SUPPORTED_EXTENSION 512
+
+typedef struct _CONTEXT {
+    DWORD ContextFlags;
+    DWORD Dr0, Dr1, Dr2, Dr3, Dr6, Dr7;
+    FLOATING_SAVE_AREA FloatSave;
+    DWORD SegGs;
+    DWORD SegFs;
+    DWORD SegEs;
+    DWORD SegDs;
+    DWORD Edi;
+    DWORD Esi;
+    DWORD Ebx;
+    DWORD Edx;
+    DWORD Ecx;
+    DWORD Eax;
+    DWORD Ebp;
+    DWORD Eip;
+    DWORD SegCs;
+    DWORD EFlags;
+    DWORD Esp;
+    DWORD SegSs;
+    BYTE ExtendedRegisters[MAXIMUM_SUPPORTED_EXTENSION];
+} CONTEXT, *PCONTEXT, *LPCONTEXT;
+
+typedef struct _EXCEPTION_RECORD {
+    DWORD ExceptionCode;
+    DWORD ExceptionFlags;
+    struct _EXCEPTION_RECORD *ExceptionRecord;
+    void *ExceptionAddress;
+    DWORD NumberParameters;
+    ULONG_PTR ExceptionInformation[15];
+} EXCEPTION_RECORD, *PEXCEPTION_RECORD;
+
+typedef struct _EXCEPTION_POINTERS {
+    PEXCEPTION_RECORD ExceptionRecord;
+    PCONTEXT ContextRecord;
+} EXCEPTION_POINTERS, *PEXCEPTION_POINTERS;
+
+#define EXCEPTION_ACCESS_VIOLATION 0xC0000005L
+#define EXCEPTION_STACK_OVERFLOW 0xC00000FDL
+#define EXCEPTION_BREAKPOINT 0x80000003L
+#define EXCEPTION_IN_PAGE_ERROR 0xC0000006L
+#define STATUS_INVALID_PARAMETER 0xC000000DL
+#define STATUS_NO_MEMORY 0xC0000017L
+
 extern "C" {
+__declspec(dllimport) BOOL WINAPI ReadConsoleInputA(HANDLE, PINPUT_RECORD, DWORD, LPDWORD);
+#define ReadConsoleInput ReadConsoleInputA
+__declspec(dllimport) BOOL WINAPI WriteConsoleOutputA(HANDLE, CHAR_INFO *, COORD, COORD, PSMALL_RECT);
+#define WriteConsoleOutput WriteConsoleOutputA
+__declspec(dllimport) BOOL WINAPI SetConsoleWindowInfo(HANDLE, BOOL, const SMALL_RECT *);
+__declspec(dllimport) BOOL WINAPI SetConsoleScreenBufferSize(HANDLE, COORD);
+__declspec(dllimport) BOOL WINAPI AllocConsole(void);
+__declspec(dllimport) BOOL WINAPI FreeConsole(void);
+__declspec(dllimport) BOOL WINAPI SetConsoleCtrlHandler(void *, BOOL);
+__declspec(dllimport) BOOL WINAPI SetConsoleTitleA(LPCSTR);
+#define SetConsoleTitle SetConsoleTitleA
+
+typedef struct _CONSOLE_SCREEN_BUFFER_INFO {
+    COORD dwSize;
+    COORD dwCursorPosition;
+    WORD wAttributes;
+    SMALL_RECT srWindow;
+    COORD dwMaximumWindowSize;
+} CONSOLE_SCREEN_BUFFER_INFO, *PCONSOLE_SCREEN_BUFFER_INFO;
+
+__declspec(dllimport) BOOL WINAPI GetConsoleScreenBufferInfo(HANDLE, PCONSOLE_SCREEN_BUFFER_INFO);
+__declspec(dllimport) BOOL WINAPI SetConsoleMode(HANDLE, DWORD);
+__declspec(dllimport) BOOL WINAPI GetConsoleMode(HANDLE, LPDWORD);
+__declspec(dllimport) BOOL WINAPI GetNumberOfConsoleInputEvents(HANDLE, LPDWORD);
+typedef struct _CONSOLE_CURSOR_INFO {
+    DWORD dwSize;
+    BOOL bVisible;
+} CONSOLE_CURSOR_INFO, *PCONSOLE_CURSOR_INFO;
+
+__declspec(dllimport) BOOL WINAPI GetConsoleCursorInfo(HANDLE, PCONSOLE_CURSOR_INFO);
+__declspec(dllimport) BOOL WINAPI SetConsoleCursorInfo(HANDLE, const CONSOLE_CURSOR_INFO *);
+__declspec(dllimport) COORD WINAPI GetLargestConsoleWindowSize(HANDLE);
+__declspec(dllimport) HANDLE WINAPI GetStdHandle(DWORD);
+#define STD_INPUT_HANDLE ((DWORD)-10)
+#define STD_OUTPUT_HANDLE ((DWORD)-11)
+#define STD_ERROR_HANDLE ((DWORD)-12)
 __declspec(dllimport) int WINAPIV wsprintfA(LPSTR, LPCSTR, ...);
 __declspec(dllimport) int WINAPI lstrcmpA(LPCSTR, LPCSTR);
 __declspec(dllimport) int WINAPI lstrcmpW(LPCWSTR, LPCWSTR);
@@ -364,6 +508,13 @@ __declspec(dllimport) LPWSTR WINAPI lstrcpynW(LPWSTR, LPCWSTR, int);
 #define lstrcpyn lstrcpynA
 __declspec(dllimport) int WINAPI MessageBoxA(HWND, LPCSTR, LPCSTR, UINT);
 __declspec(dllimport) int WINAPI MessageBoxW(HWND, LPCWSTR, LPCWSTR, UINT);
+__declspec(dllimport) HWND WINAPI GetDlgItem(HWND, int);
+__declspec(dllimport) LRESULT WINAPI SendDlgItemMessageA(HWND, int, UINT, WPARAM, LPARAM);
+#define SendDlgItemMessage SendDlgItemMessageA
+__declspec(dllimport) HWND WINAPI CreateWindowExA(DWORD, LPCSTR, LPCSTR, DWORD, int, int, int, int, HWND, HMENU, HINSTANCE, LPVOID);
+__declspec(dllimport) void * WINAPI CreateFontA(int, int, int, int, int, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, LPCSTR);
+__declspec(dllimport) LRESULT WINAPI SendMessageA(HWND, UINT, WPARAM, LPARAM);
+__declspec(dllimport) LRESULT WINAPI DefWindowProcA(HWND, UINT, WPARAM, LPARAM);
 __declspec(dllimport) BOOL WINAPI SetWindowPos(HWND, HWND, int, int, int, int, UINT);
 __declspec(dllimport) BOOL WINAPI ShowWindow(HWND, int);
 __declspec(dllimport) BOOL WINAPI SetWindowTextA(HWND, LPCSTR);
@@ -553,7 +704,29 @@ __declspec(dllimport) void WINAPI DebugBreak(void);
 __declspec(dllimport) LPSTR WINAPI GetCommandLineA(void);
 __declspec(dllimport) DWORD WINAPI GetEnvironmentVariableA(LPCSTR, LPSTR, DWORD);
 __declspec(dllimport) void WINAPI ExitProcess(UINT);
+__declspec(dllimport) void WINAPI SetUnhandledExceptionFilter(void *);
+__declspec(dllimport) BOOL WINAPI IsBadReadPtr(const void *, UINT_PTR);
+__declspec(dllimport) BOOL WINAPI IsBadCodePtr(FARPROC);
+__declspec(dllimport) LONG WINAPI GetWindowLongA(HWND, int);
+__declspec(dllimport) LONG WINAPI SetWindowLongA(HWND, int, LONG);
+#define GetWindowLong GetWindowLongA
+#define SetWindowLong SetWindowLongA
+__declspec(dllimport) int __cdecl wvsprintfA(LPSTR, LPCSTR, void *);
+__declspec(dllimport) int __cdecl wvsprintfW(LPWSTR, LPCWSTR, void *);
+#define wvsprintf wvsprintfA
+__declspec(dllimport) BOOL WINAPI SetNamedPipeHandleState(HANDLE, LPDWORD, LPDWORD, LPDWORD);
+__declspec(dllimport) BOOL WINAPI EnumThreadWindows(DWORD, void *, LPARAM);
+__declspec(dllimport) BOOL WINAPI IsWindow(HWND);
+__declspec(dllimport) HANDLE WINAPI CreateNamedPipeA(LPCSTR, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, void *);
+#define CreateNamedPipe CreateNamedPipeA
 }
+#define ERROR_FILE_EXISTS 80L
+#define PIPE_READMODE_MESSAGE 2
+#define PIPE_NOWAIT 1
+#define PIPE_WAIT 0
+#define PIPE_ACCESS_DUPLEX 3
+#define PIPE_TYPE_MESSAGE 4
+#define PIPE_UNLIMITED_INSTANCES 255
 
 #define wsprintf wsprintfA
 #ifndef __max

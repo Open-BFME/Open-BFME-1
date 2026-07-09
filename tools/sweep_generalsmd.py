@@ -38,6 +38,7 @@ INCLUDE_DIRS = [
     REF / "GameEngine" / "Source",
     REF / "Libraries" / "Include",
     REF / "Libraries" / "Source",
+    REF / "Libraries" / "Source" / "debug",
     REF / "Libraries" / "Source" / "Compression",
     REF / "Libraries" / "Source" / "WWVegas",
     REF / "Libraries" / "Source" / "WWVegas" / "WWLib",
