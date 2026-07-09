@@ -210,6 +210,14 @@ typedef struct tagTEXTMETRICA {
     BYTE tmFirstChar, tmLastChar, tmDefaultChar, tmBreakChar;
     BYTE tmItalic, tmUnderlined, tmStruckOut, tmPitchAndFamily, tmCharSet;
 } TEXTMETRIC, *LPTEXTMETRIC;
+typedef struct tagRGBQUAD { BYTE rgbBlue, rgbGreen, rgbRed, rgbReserved; } RGBQUAD;
+typedef struct tagBITMAPINFOHEADER {
+    DWORD biSize; LONG biWidth, biHeight; WORD biPlanes, biBitCount;
+    DWORD biCompression, biSizeImage; LONG biXPelsPerMeter, biYPelsPerMeter;
+    DWORD biClrUsed, biClrImportant;
+} BITMAPINFOHEADER, *LPBITMAPINFOHEADER;
+typedef struct tagBITMAPINFO { BITMAPINFOHEADER bmiHeader; RGBQUAD bmiColors[1]; } BITMAPINFO, *LPBITMAPINFO;
+#define RGB(r,g,b) ((DWORD)(((BYTE)(r) | ((WORD)(g) << 8)) | (((DWORD)(BYTE)(b)) << 16)))
 
 typedef struct _FILETIME { DWORD dwLowDateTime, dwHighDateTime; } FILETIME, *LPFILETIME;
 typedef struct _WIN32_FIND_DATAA {
@@ -429,6 +437,8 @@ __declspec(dllimport) BOOL WINAPI GetTextMetricsA(HDC, LPTEXTMETRIC);
 #define GetTextMetrics GetTextMetricsA
 __declspec(dllimport) BOOL WINAPI DeleteObject(HGDIOBJ);
 __declspec(dllimport) BOOL WINAPI DeleteDC(HDC);
+__declspec(dllimport) int WINAPI ReleaseDC(HWND, HDC);
+__declspec(dllimport) HBITMAP WINAPI CreateDIBSection(HDC, const BITMAPINFO *, UINT, void **, HANDLE, DWORD);
 __declspec(dllimport) BOOL WINAPI GetVersionExA(LPOSVERSIONINFOA);
 #define GetVersionEx GetVersionExA
 #define GetDateFormat GetDateFormatA
