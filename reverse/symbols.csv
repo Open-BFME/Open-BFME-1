@@ -1190,3 +1190,5 @@ _D3DXVec4Transform@12,0x009FAA48
 ?Build_Sentence_Not_Centered@Render2DSentenceClass@@AAE?AVVector2@@PBGPAH1_N@Z,0x00942430
 ?Build_Textures@Render2DSentenceClass@@AAEXXZ,0x0093DD60
 ?Render@Render2DClass@@QAEXXZ,0x00933E50
+?renderTrees@BaseHeightMapRenderObjClass@@QAEXPAVCameraClass@@@Z,0x0003FE36
+?playerHasPrereqsForScience@ScienceStore@@QBE_NPBVPlayer@@W4ScienceType@@@Z,0x0000DCDD
