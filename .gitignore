@@ -9,3 +9,5 @@ __pycache__/
 reverse/exports.csv
 reverse/ghidra_functions.csv
 reverse/string_xrefs.tsv
+reverse/.add_match.lock
+reverse/zh_sweep/locate_state.json
