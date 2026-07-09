@@ -4059,3 +4059,5 @@ _HUFF_decode@12,,0x00822EB0,20,src/w3d/huffdecode.cpp,matched,
 ?getModuleNameKey@ObjectRepulsorHelper@@UBE?AW4NameKeyType@@XZ,,0x001C1210,104,src/zh/object.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
 ?getModuleNameKey@ObjectSMCHelper@@UBE?AW4NameKeyType@@XZ,,0x001C5530,104,src/zh/object.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
 ?getModuleNameKey@ObjectWeaponStatusHelper@@UBE?AW4NameKeyType@@XZ,,0x001C13D0,104,src/zh/object.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
+?DownloadMenuShutdown@@YAXPAVWindowLayout@@PAX@Z,,0x004C76F0,64,src/zh/downloadmenu.cpp,matched,
+?OnStatusUpdate@DownloadManagerMunkee@@UAEJH@Z,,0x004C7DF0,62,src/zh/downloadmenu.cpp,matched,
