@@ -2895,6 +2895,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getTunnelTrackerForCaveIndex@CaveSystem@@QAEPAVTunnelTracker@@H@Z,,0x00378340,32,src/zh/cavesystem.cpp,matched,
 ?getType@Dict@@QBE?AW4DataType@1@W4NameKeyType@@@Z,,0x00067DF0,30,src/zh/dict.cpp,matched,
 ?getUV@ParticleSystemTemplate@FXParticleSystem@@QBEPBURegion2D@@XZ,0x0002D6E6,0x0005CBA0,7,src/game/fx_particle_system.cpp,matched,returns UV region pointer
+?getUnicodeString@Dict@@QBE?AVUnicodeString@@W4NameKeyType@@PA_N@Z,,0x00068600,96,src/zh/dict.cpp,matched,recovered from Open-BFME4 overnight session (deepseek)
 ?getUnitDirectionVector2D@Thing@@QBEPBUCoord3D@@XZ,,0x00132140,64,src/zh/thing.cpp,matched,
 ?getUnitDirectionVector2D@Thing@@QBEXAAUCoord3D@@@Z,,0x00132190,86,src/zh/thing.cpp,matched,
 ?getUnitDirectionVector3D@Thing@@QBEXAAUCoord3D@@@Z,,0x00132970,130,src/zh/thing.cpp,matched,
@@ -3127,6 +3128,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?parseWaypointData@TerrainLogic@@IAE_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,,0x001A7860,60,src/zh/terrainlogic.cpp,matched,
 ?parseWeapon@WeaponTemplateSet@@CAXPAVINI@@PAX1PBX@Z,,0x001EAC70,48,src/zh/weaponset.cpp,matched,
 ?parseWeaponTemplateSet@WeaponTemplateSet@@QAEXPAVINI@@PBVThingTemplate@@@Z,,0x001ECE50,28,src/zh/weaponset.cpp,matched,
+?pauseCountdown@SpecialPowerModule@@UAEX_N@Z,,0x0026A770,84,src/zh/specialpowermodule.cpp,matched,recovered from Open-BFME4 overnight session (deepseek)
 ?peek@?$StringBase@D@@ABEPADXZ,0x0002B26A,0x0005E5B0,6,src/game/string_base.cpp,matched,returns pointer to data
 ?peek@?$StringBase@G@@ABEPAGXZ,0x0002264C,0x0005E5C0,6,src/game/string_base.cpp,matched,returns pointer to data
 ?pfunc@@YAHPBX0@Z,,0x009E8C80,30,src/w3d/mpmath.cpp,matched,

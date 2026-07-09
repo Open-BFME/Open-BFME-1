@@ -336,7 +336,6 @@ AsciiString Dict::getAsciiString(NameKeyType key, Bool *exists/*=NULL*/) const
 }
 
 // -----------------------------------------------------
-// ?getUnicodeString@Dict@@ present-unmatched
 UnicodeString Dict::getUnicodeString(NameKeyType key, Bool *exists/*=NULL*/) const
 {
 	validate();

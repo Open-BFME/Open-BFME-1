@@ -773,7 +773,6 @@ void SpecialPowerModule::doSpecialPowerUsingWaypoints( const Waypoint *way, Unsi
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?pauseCountdown@SpecialPowerModule@@UAEX_N@Z present-unmatched
 void SpecialPowerModule::pauseCountdown( Bool pause )
 {
 	if (pause)// If pausing

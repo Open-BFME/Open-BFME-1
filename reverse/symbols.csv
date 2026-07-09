@@ -173,6 +173,7 @@ name,address,notes
 ??0TensileFormationUpdateModuleData@@QAE@XZ,0x000028AB
 ??0TileData@@QAE@XZ,0x0003B6B5
 ??0UDP@@QAE@XZ,0x0001FFFA
+??0UnicodeString@@QAE@ABV0@@Z,0x00888400
 ??0Vector3HollowSphereRandomizer@@QAE@M@Z,0x00B02350
 ??0Vector3SolidSphereRandomizer@@QAE@M@Z,0x00B02250
 ??0file_auto_ptr@@QAE@PAVFileFactoryClass@@PBD@Z,0x009DD4F0
