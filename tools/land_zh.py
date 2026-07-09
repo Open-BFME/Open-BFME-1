@@ -4,12 +4,21 @@ with the sweep-environment flags head, fingerprint-locate its functions, emit th
 matched rows, and byte-verify through build.py.
 
     python3 tools/land_zh.py Dict MessageStream GameAudio
+    python3 tools/land_zh.py --dry-run GameEngine/Source/Common/Dict.cpp
+
+Names may be reference basenames or paths (directories and .cpp are stripped).
+--dry-run reports whether each name could land (reference file found, dest free)
+without writing anything.
 
 Winners come from reverse/zh_sweep/report.csv (tools/sweep_generalsmd.py). A file
 whose located functions all fail verification is removed again — nothing lands
 unverified. src/zh/ holds verbatim ZH sources on purpose: the sweep shims supply
 the environment via /I flags, and src/game's own prerts.h must not shadow them.
+
+Exit code is 0 when every name landed or was skipped (already in src/zh), 1 when
+any name failed (no reference file, compile failure, nothing located).
 """
+import argparse
 import re
 import subprocess
 import sys
@@ -33,25 +42,41 @@ HEAD = (
 )
 
 
-def land(name):
-    hits = sorted(REF.rglob(f"{name}.cpp"))
-    if not hits:
-        print(f"{name}: no reference file")
-        return False
+def land(name, dry_run=False):
+    """True when landed or skipped, False when the name failed."""
+    # skip before the reference lookup: dest is lowercase, so src/zh paths skip
+    # cleanly even though reference basenames are case-sensitive
     dest = DEST / f"{name.lower()}.cpp"
     if dest.exists():
-        print(f"{name}: {dest.relative_to(ROOT)} already exists")
+        print(f"{name}: SKIP — {dest.relative_to(ROOT)} already exists (already landed)")
+        return True
+    hits = sorted(REF.rglob(f"{name}.cpp"))
+    if not hits:
+        print(f"{name}: FAIL — no reference file {name}.cpp under {REF.relative_to(ROOT)}")
         return False
+    if dry_run:
+        print(f"{name}: would land {hits[0].relative_to(ROOT)} -> {dest.relative_to(ROOT)}")
+        return True
     dest.write_text(HEAD + hits[0].read_text(errors="replace"))
 
-    out = subprocess.run(
+    proc = subprocess.run(
         [sys.executable, str(ROOT / "tools" / "locate.py"), str(dest.relative_to(ROOT)), "--emit"],
         cwd=ROOT, capture_output=True, text=True, timeout=420,
-    ).stdout
+    )
+    out = proc.stdout
     emitted = re.search(r"emitted (\d+) row", out)
     if not emitted:
+        # surface the actual blocker: locate prints cl's error lines on stdout
         summary = re.search(r"\d+ located.*", out)
-        print(f"{name}: nothing landed ({summary.group(0) if summary else 'compile fail'})")
+        error = re.search(r"^.*error C\d+.*$", out, re.M)
+        if summary:
+            reason = summary.group(0)
+        elif error:
+            reason = error.group(0).strip()
+        else:
+            reason = (proc.stderr.strip().splitlines()
+                      or [f"locate exited {proc.returncode} with no diagnostics"])[-1]
+        print(f"{name}: FAIL — nothing landed ({reason})")
         dest.unlink()
         return False
 
@@ -78,11 +103,24 @@ def land(name):
 
 
 def main():
-    if len(sys.argv) < 2:
-        raise SystemExit("usage: land_zh.py <RefBasename> [...]")
-    DEST.mkdir(parents=True, exist_ok=True)
-    for name in sys.argv[1:]:
-        land(name)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("names", nargs="+",
+                        help="reference basenames or paths (directories and .cpp stripped)")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="report what would land without writing anything")
+    args = parser.parse_args()
+
+    if not args.dry_run:
+        DEST.mkdir(parents=True, exist_ok=True)
+    failed = []
+    for raw in args.names:
+        base = Path(raw).name
+        name = base[:-4] if base.lower().endswith(".cpp") else base
+        if not land(name, args.dry_run):
+            failed.append(name)
+    if failed:
+        raise SystemExit(f"land_zh: {len(failed)} of {len(args.names)} failed: {', '.join(failed)}")
 
 
 if __name__ == "__main__":

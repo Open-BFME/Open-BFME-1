@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Audit verified progress between two states of the repo.
+"""Count matched-row deltas in reverse/functions.csv between two repo states.
 
-The ONLY numbers that count as progress are matched rows in reverse/functions.csv
-(each is byte-verified against retail by the build gates on every run). Source
-text, present-unmatched markers, docs, and prose claims are NOT progress. Use
-this to check any session's "done" claim in seconds:
+The ONLY numbers that count as progress are matched rows in reverse/functions.csv,
+and rows only become trustworthy when ./build.sh byte-verifies them — this tool
+compiles nothing and verifies nothing, it counts ledger rows. Source text,
+present-unmatched markers, docs, and prose claims are NOT progress. Use this to
+size any session's "done" claim in seconds, then run ./build.sh for proof:
 
   python3 tools/progress.py                # HEAD vs worktree
   python3 tools/progress.py REF            # REF vs worktree
@@ -84,12 +85,12 @@ def main():
     markers = marker_delta(ref1, ref2)
 
     label2 = ref2 or "worktree"
-    print(f"verified progress {ref1} -> {label2}")
-    print(f"  matched functions: {len(old)} -> {len(new)}  "
-          f"(+{len(added)}, -{len(removed)})")
-    print(f"  matched bytes:     +{sum(s for s, _ in added.values())}"
+    print(f"matched-row delta {ref1} -> {label2}")
+    print(f"  +{len(added)}, -{len(removed)} matched rows (not byte-verified — build.sh is proof)")
+    print(f"  matched rows total: {len(old)} -> {len(new)}")
+    print(f"  claimed bytes:      +{sum(s for s, _ in added.values())}"
           f"{'' if not removed else f'  (-{sum(s for s, _ in removed.values())} removed)'}")
-    print(f"  unclaimed markers: {markers:+d}")
+    print(f"  unclaimed markers:  {markers:+d}")
 
     if added:
         by_area = Counter()
@@ -106,7 +107,8 @@ def main():
         for (name, rva), (size, source) in sorted(removed.items())[:10]:
             print(f"    -{size:<5d} {source}  {name[:60]}")
 
-    print("\nanything a session claims beyond these numbers is unverified prose.")
+    print("\nthese are ledger row counts, nothing here was compiled or byte-verified;"
+          "\na clean ./build.sh run is the only proof the rows are real.")
 
 
 if __name__ == "__main__":
