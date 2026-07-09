@@ -371,6 +371,9 @@ __declspec(dllimport) UINT WINAPI GetWindowsDirectoryA(LPSTR, UINT);
 #define CSIDL_APPDATA 0x001a
 #define CSIDL_LOCAL_APPDATA 0x001c
 #define CSIDL_PERSONAL 0x0005
+#define CSIDL_DESKTOPDIRECTORY 0x0010
+#define CSIDL_FONTS 0x0014
+#define CSIDL_FLAG_CREATE 0x8000
 __declspec(dllimport) BOOL WINAPI SHGetSpecialFolderPathA(HWND, LPSTR, int, BOOL);
 __declspec(dllimport) BOOL WINAPI SHGetSpecialFolderPathW(HWND, LPWSTR, int, BOOL);
 #define SHGetSpecialFolderPath SHGetSpecialFolderPathA
