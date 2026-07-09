@@ -204,6 +204,7 @@ typedef struct _PROCESS_INFORMATION {
 #define VER_PLATFORM_WIN32s 0
 
 typedef struct tagRECT { LONG left, top, right, bottom; } RECT, *LPRECT;
+typedef struct tagSIZE { LONG cx, cy; } SIZE, *LPSIZE;
 typedef struct tagTEXTMETRICA {
     LONG tmHeight, tmAscent, tmDescent, tmInternalLeading, tmExternalLeading, tmAveCharWidth, tmMaxCharWidth, tmWeight;
     LONG tmOverhang, tmDigitizedAspectX, tmDigitizedAspectY;
@@ -218,6 +219,15 @@ typedef struct tagBITMAPINFOHEADER {
 } BITMAPINFOHEADER, *LPBITMAPINFOHEADER;
 typedef struct tagBITMAPINFO { BITMAPINFOHEADER bmiHeader; RGBQUAD bmiColors[1]; } BITMAPINFO, *LPBITMAPINFO;
 #define RGB(r,g,b) ((DWORD)(((BYTE)(r) | ((WORD)(g) << 8)) | (((DWORD)(BYTE)(b)) << 16)))
+#define FW_NORMAL 400
+#define FW_BOLD 700
+#define DEFAULT_CHARSET 1
+#define OUT_DEFAULT_PRECIS 0
+#define CLIP_DEFAULT_PRECIS 0
+#define ANTIALIASED_QUALITY 4
+#define VARIABLE_PITCH 2
+#define BI_RGB 0L
+#define DIB_RGB_COLORS 0
 
 typedef struct _FILETIME { DWORD dwLowDateTime, dwHighDateTime; } FILETIME, *LPFILETIME;
 typedef struct _WIN32_FIND_DATAA {
@@ -437,8 +447,10 @@ __declspec(dllimport) BOOL WINAPI GetTextMetricsA(HDC, LPTEXTMETRIC);
 #define GetTextMetrics GetTextMetricsA
 __declspec(dllimport) BOOL WINAPI DeleteObject(HGDIOBJ);
 __declspec(dllimport) BOOL WINAPI DeleteDC(HDC);
+__declspec(dllimport) HDC WINAPI GetDC(HWND);
 __declspec(dllimport) int WINAPI ReleaseDC(HWND, HDC);
 __declspec(dllimport) HBITMAP WINAPI CreateDIBSection(HDC, const BITMAPINFO *, UINT, void **, HANDLE, DWORD);
+__declspec(dllimport) int WINAPI MulDiv(int, int, int);
 __declspec(dllimport) BOOL WINAPI GetVersionExA(LPOSVERSIONINFOA);
 #define GetVersionEx GetVersionExA
 #define GetDateFormat GetDateFormatA
