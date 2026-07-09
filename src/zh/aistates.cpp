@@ -3214,7 +3214,6 @@ StateReturnType AIAttackPursueTargetState::update()
 }
 
 //----------------------------------------------------------------------------------------------------------
-// ?onExit@AIAttackPursueTargetState@@UAEXW4StateExitType@@@Z present-unmatched
 void AIAttackPursueTargetState::onExit( StateExitType status )
 {
 	// contained by AIAttackState, so no separate timer

@@ -2106,7 +2106,6 @@ void DozerAIUpdate::cancelTask( DozerTask task )
 //-------------------------------------------------------------------------------------------------
 /** Is there a given task waiting to be done */
 //-------------------------------------------------------------------------------------------------
-// ?isTaskPending@DozerAIUpdate@@UAE_NW4DozerTask@@@Z present-unmatched
 Bool DozerAIUpdate::isTaskPending( DozerTask task )
 {
 

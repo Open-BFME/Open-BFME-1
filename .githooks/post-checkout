@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# core.hooksPath bypasses the hooks `git lfs install` writes into .git/hooks;
+# chain LFS here so baselines and the MSVC toolchain smudge on checkout.
+command -v git-lfs >/dev/null 2>&1 || exit 0
+git lfs post-checkout "$@"

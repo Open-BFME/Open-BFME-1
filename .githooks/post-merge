@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# After every merge/pull: chain git-lfs, then validate the ledgers — the union
+# merge driver combines both sides' rows without conflict markers, so this is
+# the moment duplicates appear.
+set -uo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+
+if command -v git-lfs >/dev/null 2>&1; then
+    git lfs post-merge "$@"
+fi
+
+if ! python3 tools/check_csv.py; then
+    cat >&2 <<'MSG'
+=============== MERGE LEFT THE LEDGER CORRUPT ===============
+Fix it NOW, before any other work:
+  1. python3 tools/dedup_csv.py
+  2. python3 tools/check_csv.py     # must pass. A surviving conflict means
+     two agents claimed the same bytes — byte-verify decides which row lives.
+  3. git add reverse/functions.csv reverse/symbols.csv && git commit
+=============================================================
+MSG
+    exit 1
+fi

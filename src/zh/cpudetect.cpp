@@ -1076,7 +1076,7 @@ void CPUDetectClass::Init_Processor_Log()
 	}
 
 	if (CPUDetectClass::Get_L1_Instruction_Trace_Cache_Size()) {
-		SYSLOG(("L1 Instruction Trace Cache: %d way set associative, %dk �OPs\r\n",
+		SYSLOG(("L1 Instruction Trace Cache: %d way set associative, %dk \xb5OPs\r\n",
 // ?Get_L1_Instruction_Cache_Set_Associative@CPUDetectClass@@SAIXZ present-unmatched
 			CPUDetectClass::Get_L1_Instruction_Cache_Set_Associative(),
 			CPUDetectClass::Get_L1_Instruction_Cache_Size()/1024));

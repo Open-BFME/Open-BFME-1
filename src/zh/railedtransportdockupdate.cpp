@@ -210,7 +210,6 @@ Bool RailedTransportDockUpdate::isClearToEnter( Object const *docker ) const
 // ------------------------------------------------------------------------------------------------
 /** Is anything currently loading or unloading */
 // ------------------------------------------------------------------------------------------------
-// ?isLoadingOrUnloading@RailedTransportDockUpdate@@UAE_NXZ present-unmatched
 Bool RailedTransportDockUpdate::isLoadingOrUnloading( void )
 {
 
@@ -240,7 +239,6 @@ void RailedTransportDockUpdate::unloadAll( void )
 // ------------------------------------------------------------------------------------------------
 /** Unload a single individual only */
 // ------------------------------------------------------------------------------------------------
-// ?unloadSingleObject@RailedTransportDockUpdate@@UAEXPAVObject@@@Z present-unmatched
 void RailedTransportDockUpdate::unloadSingleObject( Object *obj )
 {
 

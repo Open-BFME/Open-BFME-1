@@ -652,7 +652,6 @@ Int GameWindowManager::winCapture( GameWindow *window )
 //-------------------------------------------------------------------------------------------------
 /** Releases the mouse capture. */
 //-------------------------------------------------------------------------------------------------
-// ?winRelease@GameWindowManager@@UAEHPAVGameWindow@@@Z present-unmatched
 Int GameWindowManager::winRelease( GameWindow *window )
 {
 

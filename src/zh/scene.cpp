@@ -714,7 +714,6 @@ void SimpleSceneIterator::Next(void)
 	RobjIterator.Next();
 }
 
-// ?Is_Done@SimpleSceneIterator@@UAE_NXZ present-unmatched
 bool SimpleSceneIterator::Is_Done(void)
 {
 	return RobjIterator.Is_Done();

@@ -384,6 +384,7 @@ inline void projectCoord3D(Coord3D *coord, const Coord3D *unitDir, Real dist)
 }
 
 //-----------------------------------------------------------------------------
+// ?flipCoord3D@@YAXPAUCoord3D@@@Z present-unmatched
 inline void flipCoord3D(Coord3D *coord)
 {
 	coord->x = -coord->x;

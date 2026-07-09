@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Push gate: static ledger integrity of the outgoing commit + byte-verify of
+# every source whose ledger claims changed vs the remote. Bounded by push size
+# — never the full gate. Also chains git-lfs (core.hooksPath bypasses the
+# hooks `git lfs install` writes into .git/hooks).
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+
+fail() {
+    echo "PRE-PUSH FAILED: $*" >&2
+    exit 1
+}
+
+refs="$(cat || true)"
+
+if command -v git-lfs >/dev/null 2>&1; then
+    printf '%s\n' "$refs" | git lfs pre-push "$@" || fail "git lfs pre-push"
+fi
+
+ZERO=0000000000000000000000000000000000000000
+
+while read -r _local_ref local_sha _remote_ref remote_sha; do
+    [ -z "${local_sha:-}" ] && continue
+    [ "$local_sha" = "$ZERO" ] && continue   # deleting a remote ref
+
+    python3 tools/check_csv.py --ref "$local_sha" || fail "ledger integrity at $local_sha (see above)"
+
+    if [ "$remote_sha" != "$ZERO" ] && git cat-file -e "$remote_sha" 2>/dev/null; then
+        base="$remote_sha"
+    else
+        base="$(git merge-base "$local_sha" origin/master 2>/dev/null || true)"
+    fi
+    if [ -z "$base" ]; then
+        echo "pre-push: no known remote base; static ledger check only" >&2
+        continue
+    fi
+
+    mapfile -t delta < <(python3 tools/delta_sources.py --range "$base" "$local_sha")
+    verify=()
+    for s in "${delta[@]}"; do
+        [ -z "$s" ] && continue
+        [ -f "$s" ] || fail "outgoing rows reference missing source $s"
+        git diff --quiet HEAD -- "$s" || fail "$s differs from HEAD; commit or stash before pushing"
+        verify+=("$s")
+    done
+    if [ "${#verify[@]}" -ne 0 ]; then
+        BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${verify[@]}" \
+            || fail "byte-verify of outgoing sources (see above)"
+    fi
+    echo "PRE-PUSH OK (${#verify[@]} outgoing source(s) byte-verified)"
+done <<< "$refs"

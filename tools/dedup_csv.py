@@ -48,7 +48,19 @@ def dedup_symbols(path):
         return 0, 0
     lines = path.read_text(encoding="utf-8").splitlines()
     header, body = lines[0], lines[1:]
-    unique = sorted(set(line for line in body if line.strip()))
+    # Key on (name,address): union merges can land the same pin twice with
+    # different notes text, which exact-line dedup keeps. Prefer the longer
+    # line (the one carrying notes), then lexical, so the pick is
+    # merge-order-independent.
+    best = {}
+    for line in body:
+        if not line.strip():
+            continue
+        parts = next(csv.reader(io.StringIO(line)))
+        key = (parts[0], parts[1] if len(parts) > 1 else "")
+        if key not in best or (-len(line), line) < (-len(best[key]), best[key]):
+            best[key] = line
+    unique = sorted(best.values())
     path.write_text(header + "\n" + "\n".join(unique) + "\n", encoding="utf-8")
     return len(body), len(unique)
 

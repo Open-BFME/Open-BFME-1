@@ -1586,7 +1586,6 @@ void Radar::loadPostProcess( void )
 // ------------------------------------------------------------------------------------------------
 /** Is the priority type passed in a "visible" one that can show up on the radar */
 // ------------------------------------------------------------------------------------------------
-// ?isPriorityVisible@Radar@@QBE_NW4RadarPriorityType@@@Z present-unmatched
 Bool Radar::isPriorityVisible( RadarPriorityType priority ) const 
 {
 

@@ -1,45 +1,73 @@
 #!/usr/bin/env bash
+# Fast commit gate: static ledger integrity + byte-verify of exactly what this
+# commit changes. The full multi-minute gate (./build.sh with no args) is NOT
+# run here — run it at session start and after merges; pre-push re-checks the
+# outgoing delta. Never bypass with --no-verify: this hook takes seconds, and
+# a bad row committed here becomes every other agent's red build.
 set -euo pipefail
 
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
+fail() {
+    echo "PRE-COMMIT FAILED: $*" >&2
+    exit 1
+}
+
 staged_sources=()
-functions_changed=0
+ledger_changed=0
 while IFS= read -r path; do
     case "$path" in
         src/*.cpp) staged_sources+=("$path") ;;
-        reverse/functions.csv) functions_changed=1 ;;
+        reverse/functions.csv|reverse/symbols.csv) ledger_changed=1 ;;
     esac
 done < <(git diff --cached --name-only --diff-filter=ACMRT)
 
-if [ "${#staged_sources[@]}" -eq 0 ] && [ "$functions_changed" -eq 0 ]; then
+if [ "${#staged_sources[@]}" -eq 0 ] && [ "$ledger_changed" -eq 0 ]; then
     exit 0
 fi
 
-dirty_sources=()
+# The build verifies file contents on disk; refuse if a file being committed
+# also has unstaged edits, or we would be proving the wrong bytes.
+dirty=()
 for path in "${staged_sources[@]}"; do
     if ! git diff --quiet -- "$path"; then
-        dirty_sources+=("$path")
+        dirty+=("$path")
     fi
 done
-
-if [ "$functions_changed" -ne 0 ] && ! git diff --quiet -- reverse/functions.csv; then
-    dirty_sources+=("reverse/functions.csv")
+for ledger in reverse/functions.csv reverse/symbols.csv; do
+    if ! git diff --cached --quiet -- "$ledger" && ! git diff --quiet -- "$ledger"; then
+        dirty+=("$ledger")
+    fi
+done
+if [ "${#dirty[@]}" -ne 0 ]; then
+    printf '  unstaged edits in: %s\n' "${dirty[@]}" >&2
+    fail "staged verification files also have unstaged edits; build would not verify the staged content"
 fi
 
-if [ "${#dirty_sources[@]}" -ne 0 ]; then
-    echo "pre-commit: staged verification files also have unstaged edits; build would not verify the staged content:" >&2
-    printf '  %s\n' "${dirty_sources[@]}" >&2
-    exit 1
-fi
+# 1) Static ledger integrity (<1s): duplicate rows, conflicting or overlapping
+#    claims, malformed rows, missing sources. Turns union-merge corruption into
+#    an immediate loud failure instead of someone else's red build later.
+python3 tools/check_csv.py --staged || fail "ledger integrity (see above)"
 
+# 2) Every function defined in staged sources must be declared in the ledger.
 if [ "${#staged_sources[@]}" -ne 0 ]; then
-    python3 tools/find_declared_unmatched.py --fail --staged "${staged_sources[@]}"
+    python3 tools/find_declared_unmatched.py --fail --staged "${staged_sources[@]}" \
+        || fail "staged sources define functions the ledger does not declare (see above)"
 fi
 
-if [ "$functions_changed" -ne 0 ]; then
-    ./build.sh
-elif [ "${#staged_sources[@]}" -ne 0 ]; then
-    ./build.sh "${staged_sources[@]}"
+# 3) Byte-verify the delta: staged sources plus sources of any ledger rows this
+#    commit adds or edits. Seconds per file. Row deletions and dedup reorders
+#    verify nothing extra — they cannot break byte-truth.
+declare -A verify_set=()
+for path in "${staged_sources[@]}"; do verify_set["$path"]=1; done
+while IFS= read -r path; do
+    [ -n "$path" ] && verify_set["$path"]=1
+done < <(python3 tools/delta_sources.py --staged)
+
+if [ "${#verify_set[@]}" -ne 0 ]; then
+    BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${!verify_set[@]}" \
+        || fail "byte-verify of changed sources (see above)"
 fi
+
+echo "PRE-COMMIT OK (ledger integrity + ${#verify_set[@]} source(s) byte-verified)"

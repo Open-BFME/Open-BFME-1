@@ -2550,7 +2550,6 @@ void Player::doBountyForKill(const Object* killer, const Object* victim)
 }
 
 //=============================================================================
-// ?hasPrereqsForScience@Player@@QBE_NW4ScienceType@@@Z present-unmatched
 Bool Player::hasPrereqsForScience(ScienceType t) const
 {
 	return TheScienceStore->playerHasPrereqsForScience(this, t);

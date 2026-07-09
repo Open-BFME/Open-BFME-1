@@ -448,7 +448,6 @@ void DataChunkOutput::writeDict( const Dict& d )
 // DataChunkTableOfContents
 //----------------------------------------------------------------------
 
-// ??0DataChunkTableOfContents@@QAE@XZ present-unmatched
 DataChunkTableOfContents::DataChunkTableOfContents( void ) : 
 m_list(NULL), 
 m_nextID(1), 

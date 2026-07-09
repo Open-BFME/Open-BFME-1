@@ -211,7 +211,6 @@ void QueueProductionExitUpdate::unreserveDoorForExit( ExitDoorType exitDoor )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?isFreeToExit@QueueProductionExitUpdate@@IBE_NXZ present-unmatched
 Bool QueueProductionExitUpdate::isFreeToExit() const
 {
 	Bool stillBursting = (m_currentBurstCount > 0);

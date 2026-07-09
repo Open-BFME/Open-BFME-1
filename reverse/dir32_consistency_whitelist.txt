@@ -19,3 +19,11 @@
 ?CRC32_Table@@3PAKA
 _COLLISION_EPSILON
 ??_7MemoryPoolObject@@6B@
+
+# realcrc.cpp is linked twice in retail (same reason CRC_Memory/CRC_String each match at
+# two addresses): its static ?_Table@CRC@@0PAKA exists at both link sites. Callers resolve
+# to whichever copy their TU linked against; both are the same table.
+?_Table@CRC@@0PAKA
+# memmove is imported through two IAT slots in retail (two import descriptors); DIR32
+# references legitimately resolve to either __imp__ address.
+__imp__memmove

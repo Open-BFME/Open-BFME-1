@@ -43,7 +43,6 @@ FontLibrary *TheFontLibrary = NULL;
 //-------------------------------------------------------------------------------------------------
 /** Link a font to the font list */
 //-------------------------------------------------------------------------------------------------
-// ?linkFont@FontLibrary@@IAEXPAVGameFont@@@Z present-unmatched
 void FontLibrary::linkFont( GameFont *font )
 {
 

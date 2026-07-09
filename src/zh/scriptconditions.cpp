@@ -673,7 +673,6 @@ Bool ScriptConditions::evaluateTeamStateIsNot(Parameter *pTeamParm, Parameter *p
 //-------------------------------------------------------------------------------------------------
 /** evaluateNamedOutsideArea */
 //-------------------------------------------------------------------------------------------------
-// ?evaluateNamedOutsideArea@ScriptConditions@@IAE_NPAVParameter@@0@Z present-unmatched
 Bool ScriptConditions::evaluateNamedOutsideArea(Parameter *pUnitParm, Parameter *pTriggerParm)
 {// This is actually NamedUnitInside(...)
 
