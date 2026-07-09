@@ -57,6 +57,7 @@ typedef unsigned short USHORT;
 typedef short SHORT;
 typedef unsigned char BYTE;
 typedef BYTE *LPBYTE;
+typedef BYTE *PBYTE;
 typedef HKEY *PHKEY;
 typedef long LONG;
 typedef unsigned __int64 ULONGLONG;
@@ -73,6 +74,8 @@ typedef unsigned long ULONG_PTR;
 typedef long LONG_PTR;
 typedef unsigned int UINT_PTR;
 typedef long *LPLONG;
+typedef LONG_PTR LRESULT;
+typedef WORD *LPWORD;
 typedef BOOL *LPBOOL;
 typedef UINT_PTR WPARAM;
 typedef LONG_PTR LPARAM;
@@ -122,6 +125,26 @@ typedef struct _ITEMIDLIST { BYTE abID[1]; } ITEMIDLIST, *LPITEMIDLIST;
 typedef struct _SYSTEMTIME {
     WORD wYear, wMonth, wDayOfWeek, wDay, wHour, wMinute, wSecond, wMilliseconds;
 } SYSTEMTIME, *LPSYSTEMTIME;
+
+typedef struct _TIME_ZONE_INFORMATION {
+    LONG Bias;
+    WCHAR StandardName[32];
+    SYSTEMTIME StandardDate;
+    LONG StandardBias;
+    WCHAR DaylightName[32];
+    SYSTEMTIME DaylightDate;
+    LONG DaylightBias;
+} TIME_ZONE_INFORMATION, *LPTIME_ZONE_INFORMATION;
+
+typedef struct tagPOINT { LONG x; LONG y; } POINT, *LPPOINT;
+typedef struct tagMSG {
+    HWND hwnd;
+    UINT message;
+    WPARAM wParam;
+    LPARAM lParam;
+    DWORD time;
+    POINT pt;
+} MSG, *LPMSG;
 
 typedef union _LARGE_INTEGER {
     struct { DWORD LowPart; LONG HighPart; };
@@ -178,7 +201,6 @@ typedef struct _PROCESS_INFORMATION {
 #define VER_PLATFORM_WIN32s 0
 
 typedef struct tagRECT { LONG left, top, right, bottom; } RECT, *LPRECT;
-typedef struct tagPOINT { LONG x, y; } POINT, *LPPOINT;
 
 typedef struct _FILETIME { DWORD dwLowDateTime, dwHighDateTime; } FILETIME, *LPFILETIME;
 typedef struct _WIN32_FIND_DATAA {
@@ -267,9 +289,26 @@ struct _EXCEPTION_POINTERS;
 #define WM_MBUTTONDOWN 0x0207
 #define WM_MBUTTONUP 0x0208
 #define WM_MBUTTONDBLCLK 0x0209
+#define WM_KEYDOWN 0x0100
+#define WM_KEYUP 0x0101
+#define WM_SYSKEYDOWN 0x0104
+#define WM_SYSKEYUP 0x0105
+#define WM_MOUSEMOVE 0x0200
+#define WM_LBUTTONDOWN 0x0201
+#define WM_LBUTTONUP 0x0202
+#define WM_LBUTTONDBLCLK 0x0203
+#define WM_RBUTTONDOWN 0x0204
+#define WM_RBUTTONUP 0x0205
+#define WM_RBUTTONDBLCLK 0x0206
+#define WM_MBUTTONDOWN 0x0207
+#define WM_MBUTTONUP 0x0208
+#define WM_MBUTTONDBLCLK 0x0209
 #define WM_MOUSEWHEEL 0x020A
 #define STARTF_USESHOWWINDOW 0x00000001
 #define STARTF_USESTDHANDLES 0x00000100
+#define PM_NOREMOVE 0x0000
+#define PM_REMOVE 0x0001
+#define MAPVK_VK_TO_CHAR 2
 
 extern "C" {
 __declspec(dllimport) int WINAPIV wsprintfA(LPSTR, LPCSTR, ...);
@@ -296,6 +335,26 @@ __declspec(dllimport) BOOL WINAPI ScreenToClient(HWND, LPPOINT);
 __declspec(dllimport) HCURSOR WINAPI LoadCursorFromFileA(LPCSTR);
 __declspec(dllimport) HCURSOR WINAPI SetCursor(HCURSOR);
 __declspec(dllimport) BOOL WINAPI GetCursorPos(LPPOINT);
+__declspec(dllimport) BOOL WINAPI PeekMessageA(LPMSG, HWND, UINT, UINT, UINT);
+__declspec(dllimport) BOOL WINAPI GetMessageA(LPMSG, HWND, UINT, UINT);
+__declspec(dllimport) BOOL WINAPI TranslateMessage(const MSG *);
+__declspec(dllimport) LONG WINAPI DispatchMessageA(const MSG *);
+__declspec(dllimport) SHORT WINAPI GetKeyState(int);
+__declspec(dllimport) UINT WINAPI MapVirtualKeyA(UINT, UINT);
+__declspec(dllimport) int WINAPI ToAscii(UINT, UINT, PBYTE, LPWORD, UINT);
+__declspec(dllimport) int WINAPI ToUnicode(UINT, UINT, PBYTE, LPWSTR, int, UINT);
+__declspec(dllimport) BOOL WINAPI ClientToScreen(HWND, LPPOINT);
+__declspec(dllimport) LRESULT WINAPI DefWindowProcA(HWND, UINT, WPARAM, LPARAM);
+__declspec(dllimport) int WINAPI TranslateAcceleratorA(HWND, HACCEL, LPMSG);
+__declspec(dllimport) BOOL WINAPI IsDialogMessageA(HWND, LPMSG);
+__declspec(dllimport) DWORD WINAPI GetTimeZoneInformation(LPTIME_ZONE_INFORMATION);
+#define PeekMessage PeekMessageA
+#define GetMessage GetMessageA
+#define DispatchMessage DispatchMessageA
+#define MapVirtualKey MapVirtualKeyA
+#define DefWindowProc DefWindowProcA
+#define TranslateAccelerator TranslateAcceleratorA
+#define IsDialogMessage IsDialogMessageA
 __declspec(dllimport) SHORT WINAPI GetAsyncKeyState(int);
 __declspec(dllimport) BOOL WINAPI TerminateProcess(HANDLE, UINT);
 __declspec(dllimport) HANDLE WINAPI GetCurrentProcess(void);
