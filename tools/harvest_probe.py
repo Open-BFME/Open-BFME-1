@@ -19,10 +19,13 @@ The recipe (per file), matching what landed the WW3D2/anim harvest:
   * empty-guard shims for dx8*.h / d3d*.h
   * vendor any other missing header flat from the reference (angle->quote redirect)
   * STOP at windows.h / win.h walls
-It does NOT stub DX8 Render bodies (do that by hand for renderer files — see
-plans/deepseek/README.md "renderer recipe"); files needing it show as COMPILE-FAIL.
+It does NOT stub DX8 Render bodies (do that by hand for renderer files); files
+needing it show as COMPILE-FAIL.
 """
-import subprocess, sys, re, shutil
+import argparse
+import re
+import shutil
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -121,20 +124,26 @@ def probe(name: str, min_located: int):
 
 
 def main():
-    args = sys.argv[1:]
-    min_located = 2
-    if "--min" in args:
-        i = args.index("--min"); min_located = int(args[i + 1]); del args[i:i + 2]
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("names", nargs="*", help="reference .cpp basenames to probe")
+    parser.add_argument("--list", dest="lib", metavar="LIB",
+                        help="also probe every untracked .cpp in reference WWVegas/<LIB>")
+    parser.add_argument("--min", dest="min_located", type=int, default=2,
+                        help="keep a probe only when it locates at least this many functions")
+    args = parser.parse_args()
+
     names = []
-    if "--list" in args:
-        i = args.index("--list"); lib = args[i + 1]; del args[i:i + 2]
+    if args.lib:
         tracked_names = {p.stem.lower() for p in ROOT.glob("src/**/*.cpp")}
-        for cpp in (REF / "Libraries" / "Source" / "WWVegas" / lib).rglob("*.cpp"):
+        for cpp in (REF / "Libraries" / "Source" / "WWVegas" / args.lib).rglob("*.cpp"):
             if cpp.stem.lower() not in tracked_names:
                 names.append(cpp.stem)
-    names += args
+    names += args.names
+    if not names:
+        parser.error("nothing to probe: pass basenames and/or --list LIB")
     for n in names:
-        probe(n, min_located)
+        probe(n, args.min_located)
 
 
 if __name__ == "__main__":
