@@ -95,6 +95,9 @@ typedef int (__stdcall *FARPROC)();
 #define FALSE 0
 #endif
 #define MAX_PATH 260
+#ifndef ZeroMemory
+#define ZeroMemory(dst, len) memset((dst), 0, (len))
+#endif
 #define MAX_COMPUTERNAME_LENGTH 31
 #define LOWORD(l) ((WORD)((DWORD)(l) & 0xFFFF))
 #define HIWORD(l) ((WORD)((DWORD)(l) >> 16))
@@ -201,6 +204,12 @@ typedef struct _PROCESS_INFORMATION {
 #define VER_PLATFORM_WIN32s 0
 
 typedef struct tagRECT { LONG left, top, right, bottom; } RECT, *LPRECT;
+typedef struct tagTEXTMETRICA {
+    LONG tmHeight, tmAscent, tmDescent, tmInternalLeading, tmExternalLeading, tmAveCharWidth, tmMaxCharWidth, tmWeight;
+    LONG tmOverhang, tmDigitizedAspectX, tmDigitizedAspectY;
+    BYTE tmFirstChar, tmLastChar, tmDefaultChar, tmBreakChar;
+    BYTE tmItalic, tmUnderlined, tmStruckOut, tmPitchAndFamily, tmCharSet;
+} TEXTMETRIC, *LPTEXTMETRIC;
 
 typedef struct _FILETIME { DWORD dwLowDateTime, dwHighDateTime; } FILETIME, *LPFILETIME;
 typedef struct _WIN32_FIND_DATAA {
@@ -327,6 +336,9 @@ __declspec(dllimport) LPWSTR WINAPI lstrcatW(LPWSTR, LPCWSTR);
 __declspec(dllimport) LPSTR WINAPI lstrcpyA(LPSTR, LPCSTR);
 __declspec(dllimport) LPWSTR WINAPI lstrcpyW(LPWSTR, LPCWSTR);
 #define lstrcpy lstrcpyA
+__declspec(dllimport) LPSTR WINAPI lstrcpynA(LPSTR, LPCSTR, int);
+__declspec(dllimport) LPWSTR WINAPI lstrcpynW(LPWSTR, LPCWSTR, int);
+#define lstrcpyn lstrcpynA
 __declspec(dllimport) int WINAPI MessageBoxA(HWND, LPCSTR, LPCSTR, UINT);
 __declspec(dllimport) int WINAPI MessageBoxW(HWND, LPCWSTR, LPCWSTR, UINT);
 __declspec(dllimport) BOOL WINAPI SetWindowPos(HWND, HWND, int, int, int, int, UINT);
@@ -404,6 +416,19 @@ __declspec(dllimport) BOOL WINAPI RemoveFontResourceA(LPCSTR);
 #define RemoveFontResource RemoveFontResourceA
 __declspec(dllimport) int WINAPI AddFontResourceA(LPCSTR);
 #define AddFontResource AddFontResourceA
+__declspec(dllimport) DWORD WINAPI SetTextColor(HDC, DWORD);
+__declspec(dllimport) DWORD WINAPI SetBkColor(HDC, DWORD);
+__declspec(dllimport) int WINAPI SetBkMode(HDC, int);
+__declspec(dllimport) BOOL WINAPI TextOutA(HDC, int, int, LPCSTR, int);
+#define TextOut TextOutA
+__declspec(dllimport) HDC WINAPI CreateCompatibleDC(HDC);
+__declspec(dllimport) HFONT WINAPI CreateFontA(int, int, int, int, int, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, LPCSTR);
+#define CreateFont CreateFontA
+__declspec(dllimport) HGDIOBJ WINAPI SelectObject(HDC, HGDIOBJ);
+__declspec(dllimport) BOOL WINAPI GetTextMetricsA(HDC, LPTEXTMETRIC);
+#define GetTextMetrics GetTextMetricsA
+__declspec(dllimport) BOOL WINAPI DeleteObject(HGDIOBJ);
+__declspec(dllimport) BOOL WINAPI DeleteDC(HDC);
 __declspec(dllimport) BOOL WINAPI GetVersionExA(LPOSVERSIONINFOA);
 #define GetVersionEx GetVersionExA
 #define GetDateFormat GetDateFormatA
