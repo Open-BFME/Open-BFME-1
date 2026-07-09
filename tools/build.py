@@ -19,6 +19,13 @@ FUNCTIONS = ROOT / "reverse" / "functions.csv"
 SYMBOLS = ROOT / "reverse" / "symbols.csv"
 BUILD_DIR = ROOT / "build" / "match"
 PATCH_DIR = ROOT / "build" / "patch"
+
+
+def obj_path(source):
+    # Namespace objs by the source's repo-relative path, not its bare stem:
+    # src/w3d/ini.cpp and src/zh/ini.cpp must not both map to ini.obj.
+    rel = Path(source).resolve().relative_to(ROOT)
+    return BUILD_DIR / ("_".join(rel.with_suffix("").parts) + ".obj")
 NOOP_EXE = PATCH_DIR / "lotrbfme.noop.exe"
 DEFAULT_VC71_ROOT = (
     ROOT
@@ -446,7 +453,7 @@ def verify_functions(only=None):
         raise SystemExit("functions.csv references missing source file(s): "
                          + ", ".join(str(m) for m in missing)
                          + " - a commit added rows without adding the file")
-    source_outputs = {s: BUILD_DIR / (s.stem + ".obj") for s in sources}
+    source_outputs = {s: obj_path(s) for s in sources}
     if len(set(source_outputs.values())) != len(source_outputs):
         raise SystemExit("obj stem collision between sources; refusing parallel compile")
     # wine cl.exe instances are independent processes; compile is the wall-clock
@@ -561,7 +568,7 @@ def verify_string_refs(rows):
     checked = 0
     empty_ok = 0
     for row in rows:
-        obj = BUILD_DIR / ((ROOT / row["source"]).stem + ".obj")
+        obj = obj_path(ROOT / row["source"])
         if not obj.exists():
             continue
         target_rva = int(row["target_rva"], 16)
@@ -615,7 +622,7 @@ def verify_dir32_consistency(rows):
     whitelist_path = ROOT / "reverse" / "dir32_consistency_whitelist.txt"
     sym2base = defaultdict(set)
     for row in rows:
-        obj = BUILD_DIR / ((ROOT / row["source"]).stem + ".obj")
+        obj = obj_path(ROOT / row["source"])
         if not obj.exists():
             continue
         trva, tsz = int(row["target_rva"], 16), int(row["target_size"])
