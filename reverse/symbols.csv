@@ -386,6 +386,8 @@ name,address,notes
 ?GadgetRadioSetSelection@@YAXPAVGameWindow@@_N@Z,0x00034536
 ?GadgetStaticTextSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z,0x0002C16F
 ?GadgetTabControlShowSubPane@@YAXPAVGameWindow@@H@Z,0x00008936
+?GameSpyCloseOverlay@@YAXW4GSOverlayType@@@Z,0x00040E94
+?GameSpyOpenOverlay@@YAXW4GSOverlayType@@@Z,0x0002BA21
 ?Get@Base64Straw@@UAEHPAXH@Z,0x009E7B80
 ?GetGameLogicRandomValueReal@@YAMMMPADH@Z,0x0002CCA5
 ?Get_Bone_Index@HTreeClass@@QBEHPBD@Z,0x00952260
@@ -975,16 +977,3 @@ __stringbase_isnotnone_cmp_wchar,0x0041F3D,internal wide-char string not-none co
 _atexit,0x009F6E26,CRT atexit (registers static destructors)
 _bfme_acos,0x009F7256,internal acos helper called by ACos
 _bfme_asin,0x009F7D86,internal asin helper called by ASin
-??1?$set@PAVGameSpyStagingRoom@@U?$less@PAVGameSpyStagingRoom@@@_STL@@V?$allocator@PAVGameSpyStagingRoom@@@3@@_STL@@QAE@XZ,0x0001F514
-??RGameSortStruct@@QAE_NPAVGameSpyStagingRoom@@0@Z,0x000317D7
-?RefreshGameListBox@@YAXPAVGameWindow@@_N@Z,0x0000FD1C
-?_M_insert@?$_Rb_tree@PAVGameSpyStagingRoom@@PAV1@U?$_Identity@PAVGameSpyStagingRoom@@@_STL@@UGameSortStruct@@V?$allocator@PAVGameSpyStagingRoom@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@PAVGameSpyStagingRoom@@U?$_Nonconst_traits@PAVGameSpyStagingRoom@@@_STL@@@2@PAU_Rb_tree_node_base@2@0ABQAVGameSpyStagingRoom@@0@Z,0x0000FF47
-?setSortMode@@YAXW4GameSortType@@@Z,0x00048360
-?winEnable@GameWindow@@QAEH_N@Z,0x0004A1FB
-??0CustomMatchPreferences@@QAE@XZ,0x0000B0F5
-??1CustomMatchPreferences@@UAE@XZ,0x00041F6A
-?findLadderByIndex@LadderList@@QAEPBVLadderInfo@@H@Z,0x00028E93
-?setLastLadder@CustomMatchPreferences@@QAEXABVAsciiString@@G@Z,0x00046E43
-?write@UserPreferences@@UAE_NXZ,0x00030495
-?GameSpyCloseOverlay@@YAXW4GSOverlayType@@@Z,0x00040E94
-?GameSpyOpenOverlay@@YAXW4GSOverlayType@@@Z,0x0002BA21
