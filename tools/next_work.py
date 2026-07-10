@@ -196,7 +196,7 @@ def resolve_drift_source(basename):
     return hits[0].relative_to(ROOT).as_posix() if hits else None
 
 
-def structural_candidates(mine, claimed, claimed_names, attempts):
+def structural_candidates(mine, claimed, claimed_names, attempts, big=False):
     """The manual-RE tier: drifted functions whose source exists but whose code
     shape differs (class structural / register-swap). Workflow: docs/structural.md."""
     _, rows = read_csv(DRIFT, "python3 tools/drift_classify.py")
@@ -227,8 +227,12 @@ def structural_candidates(mine, claimed, claimed_names, attempts):
                     "command": (f"python3 tools/explain_mismatch.py '{name}' "
                                 f"--rva {row['candidate_rva']} --size {row['size']} "
                                 f"--source {source}")})
-    # highest alignment first (closest to matching), small before big at equal alignment
-    out.sort(key=lambda c: (-c["aligned_pct"], c["size"], c["function"]))
+    if big:
+        # byte-yield mode: biggest functions first (still gated by alignment)
+        out.sort(key=lambda c: (-c["size"], -c["aligned_pct"], c["function"]))
+    else:
+        # highest alignment first (closest to matching), small before big at equal alignment
+        out.sort(key=lambda c: (-c["aligned_pct"], c["size"], c["function"]))
     return out
 
 
@@ -269,6 +273,8 @@ def main():
     ap.add_argument("--tier", choices=("harvest", "structural"),
                     help="show only that tier's sections (structural agents pass "
                          "--tier structural for a deeper list)")
+    ap.add_argument("--big", action="store_true",
+                    help="sort structural candidates by size (byte yield) instead of alignment")
     args = ap.parse_args()
 
     ledger = check_ledger()  # exit 2 happens in there; nothing below matters if red
@@ -286,7 +292,8 @@ def main():
             if row["target_rva"]:
                 claimed.add(int(row["target_rva"], 16))
                 claimed_names.add(row["name"])
-    structural = structural_candidates(mine, claimed, claimed_names, read_attempts())
+    structural = structural_candidates(mine, claimed, claimed_names, read_attempts(),
+                                       big=args.big)
     blockers = shim_blockers(last_report)
 
     if args.json:
