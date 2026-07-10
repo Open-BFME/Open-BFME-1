@@ -25,3 +25,5 @@ src/zh/grantstealthbehavior.cpp
 # store-before-push). See reverse/re_attempts.log for full analysis.
 src/game/handicap.cpp
 src/game/water_transparency.cpp
+# Third beyond-ZH probe target from r1s4; drafts parked with attempt evidence.
+src/game/object_defection_helper_pool.cpp
