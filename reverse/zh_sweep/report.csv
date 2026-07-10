@@ -3158,3 +3158,10 @@ GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MainMenu.cpp,missing-header,
 GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MainMenu.cpp,compile-error,0,0,0,C2065 '_P_NOWAIT' : undeclared identifier,0
 GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionsMenu.cpp,ok,2,2,78,,2
 GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cpp,compile-error,0,0,0,C2059 syntax error : ')',0
+GameEngine/Source/Common/Audio/simpleplayer.cpp,compile-error,0,0,0,C2065 'IID_IWMHeaderInfo' : undeclared identifier,0
+GameEngine/Source/Common/Audio/simpleplayer.cpp,compile-error,0,0,0,C2065 'VOID' : undeclared identifier,0
+GameEngine/Source/Common/Audio/simpleplayer.cpp,compile-error,0,0,0,"C3861 'E_UNEXPECTED': identifier not found, even with argument-dependent lookup",0
+GameEngine/Source/Common/Audio/simpleplayer.cpp,compile-error,0,0,0,C2065 'MAX_PATH' : undeclared identifier,0
+GameEngine/Source/Common/Audio/simpleplayer.cpp,compile-error,0,0,0,"C3861 'wcsstr': identifier not found, even with argument-dependent lookup",0
+GameEngine/Source/Common/Audio/simpleplayer.cpp,compile-error,0,0,0,C2664 'wcsstr' : cannot convert parameter 2 from 'const unsigned short [4]' to 'const wchar_t *',0
+GameEngine/Source/Common/Audio/simpleplayer.cpp,compile-error,0,0,0,"C3861 'wszFullUrl': identifier not found, even with argument-dependent lookup",0
