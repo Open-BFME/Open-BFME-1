@@ -990,3 +990,4 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?requestCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyRequestArg@@@Z,0x00031D9F
 ?statusCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyStatusArg@@@Z,0x0003BD8B
 ?Alloc@FastAllocatorGeneral@@QAEPAXI@Z,0x00AFEE40,decoded from Allocate_Memory call site
+?_M_insert@?$_Rb_tree@PBVThingTemplate@@PBV1@U?$_Identity@PBVThingTemplate@@@_STL@@U?$less@PBVThingTemplate@@@3@V?$allocator@PBVThingTemplate@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@PBVThingTemplate@@U?$_Nonconst_traits@PBVThingTemplate@@@_STL@@@2@PAU_Rb_tree_node_base@2@0ABQBVThingTemplate@@0@Z,0x009A4130,decoded from insert_unique call site
