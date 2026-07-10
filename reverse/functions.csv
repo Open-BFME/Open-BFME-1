@@ -1,5 +1,6 @@
 name,export_rva,target_rva,target_size,source,status,notes
 ??$?8DV?$char_traits@D@_STL@@V?$allocator@D@1@@_STL@@YA_NABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@0@Z,,0x00832760,47,src/zh/oclupdate.cpp,matched,
+??$?8DV?$char_traits@D@_STL@@V?$allocator@D@1@@_STL@@YA_NABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@PBD@Z,,0x0063B2A0,58,src/zh/buddythread.cpp,matched,
 ??$?9D@@YA_NPBDABV?$StringBase@D@@@Z,0x0087F570,0x0087F570,21,src/game/string_base.cpp,matched,operator!= reversed args char
 ??$Binary_Search@UNodeElement@?$IndexClass@HPAUINIEntry@@@@@@YAPAUNodeElement@?$IndexClass@HPAUINIEntry@@@@PAU01@HABU01@@Z,,0x009E2A80,70,src/w3d/ini.cpp,matched,Binary_Search sibling
 ??$Binary_Search@UNodeElement@?$IndexClass@HPAUINISection@@@@@@YAPAUNodeElement@?$IndexClass@HPAUINISection@@@@PAU01@HABU01@@Z,,0x009E2AD0,70,src/w3d/ini.cpp,matched,Binary_Search sibling
@@ -17,6 +18,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??$_Construct@UWeaponDelayedDamageInfo@WeaponStore@@U12@@_STL@@YAXPAUWeaponDelayedDamageInfo@WeaponStore@@ABU12@@Z,,0x0028D4C0,24,src/zh/weapon.cpp,matched,
 ??$_Construct@VGameResultsRequest@@V1@@_STL@@YAXPAVGameResultsRequest@@ABV1@@Z,,0x00641B70,66,src/zh/gameresultsthread.cpp,matched,
 ??$_Construct@VPlayerTemplate@@V1@@_STL@@YAXPAVPlayerTemplate@@ABV1@@Z,,0x000E3B70,66,src/zh/playertemplate.cpp,matched,
+??$_Construct@VUnicodeString@@V1@@_STL@@YAXPAVUnicodeString@@ABV1@@Z,,0x0009EF50,66,src/zh/peerdefs.cpp,matched,
 ??$_Construct@VWeaponTemplateSet@@V1@@_STL@@YAXPAVWeaponTemplateSet@@ABV1@@Z,,0x002E2F30,24,src/zh/thingtemplate.cpp,matched,
 ??$__adjust_heap@PAU?$pair@W4ObjectID@@I@_STL@@HU12@P6A_NU12@0@Z@_STL@@YAXPAU?$pair@W4ObjectID@@I@0@HHU10@P6A_N11@Z@Z,,0x000954A0,166,src/game/partition_solver.cpp,matched,
 ??$__copy@PAVPlayerTemplate@@PAV1@H@_STL@@YAPAVPlayerTemplate@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,,0x000E3C50,83,src/zh/playertemplate.cpp,matched,
@@ -283,6 +285,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0BoxEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0002D402,0x005D5FC0,98,src/game/fx_particle_system.cpp,matched,
 ??0BoxEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@XZ,0x00048A72,0x005D5F40,51,src/game/fx_particle_system_bulk.cpp,matched,
 ??0BridgeInfo@@QAE@XZ,,0x001A1EC0,85,src/zh/terrainlogic.cpp,matched,
+??0BuddyControls@@QAE@XZ,,0x004E9B50,25,src/zh/wolbuddyoverlay.cpp,matched,
 ??0Buffer@@QAE@ABV0@@Z,,0x009E1DD0,23,src/w3d/buff.cpp,matched,
 ??0Buffer@@QAE@J@Z,,0x009E1DA0,45,src/w3d/buff.cpp,matched,
 ??0Buffer@@QAE@PADJ@Z,,0x009E1D20,49,src/w3d/buff.cpp,matched,
@@ -680,6 +683,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1HashTableClass@@QAE@XZ,,0x009DFFC0,28,src/w3d/hash.cpp,matched,
 ??1INIClass@@UAE@XZ,,0x009E45F0,138,src/w3d/ini.cpp,matched,
 ??1INISection@@UAE@XZ,,0x009E3220,190,src/w3d/ini.cpp,matched,
+??1LadderPreferences@@UAE@XZ,,0x000ABB70,82,src/zh/userpreferences.cpp,matched,
 ??1LanguageFilter@@UAE@XZ,,0x0044E400,150,src/zh/languagefilter.cpp,matched,
 ??1LightningDrawModuleInfo@FXParticleSystem@@UAE@XZ,0x000121B1,0x005D8EF0,7,src/game/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??1LightningEmissionInfo@FXParticleSystem@@UAE@XZ,0x0000D7F6,0x005D6770,7,src/game/fx_particle_system.cpp,matched,resets vtable pointer
@@ -1129,6 +1133,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??_GCullNodeStruct@AABTreeBuilderClass@@QAEPAXI@Z,,0x0096B5E0,69,src/w3d/aabtreebuilder.cpp,matched,
 ??_GCullSystemClass@@UAEPAXI@Z,,0x008E2260,31,src/w3d/cullsys.cpp,matched,
 ??_GCullableClass@@UAEPAXI@Z,,0x008E2280,30,src/w3d/cullsys.cpp,matched,
+??_GCustomMatchPreferences@@UAEPAXI@Z,,0x000AB8E0,30,src/zh/userpreferences.cpp,matched,
 ??_GCylinderEmissionVolumeInfo@FXParticleSystem@@UAEPAXI@Z,,0x005D64C0,30,src/game/fx_particle_system.cpp,matched,
 ??_GCylindricalEmissionVelocityInfo@FXParticleSystem@@UAEPAXI@Z,,0x005D77C0,30,src/game/fx_particle_system.cpp,matched,
 ??_GDX8PolygonRendererClass@@UAEPAXI@Z,,0x00972C10,30,src/zh/dx8polygonrenderer.cpp,matched,
@@ -1153,6 +1158,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??_GHashTableClass@@QAEPAXI@Z,,0x007AEE70,30,src/zh/hanimmgr.cpp,matched,
 ??_GINIClass@@UAEPAXI@Z,,0x009E5C60,30,src/w3d/ini.cpp,matched,
 ??_GINISection@@UAEPAXI@Z,,0x009E3620,30,src/w3d/ini.cpp,matched,
+??_GLadderPreferences@@UAEPAXI@Z,,0x000ACC10,30,src/zh/userpreferences.cpp,matched,
 ??_GLanguageFilter@@UAEPAXI@Z,,0x0044E600,30,src/zh/languagefilter.cpp,matched,
 ??_GLightningDrawModuleInfo@FXParticleSystem@@UAEPAXI@Z,,0x005D9000,30,src/game/fx_particle_system_bulk.cpp,matched,
 ??_GLightningEmissionInfo@FXParticleSystem@@UAEPAXI@Z,,0x005D6A30,30,src/game/fx_particle_system.cpp,matched,
@@ -1171,6 +1177,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??_GPlayerTemplate@@QAEPAXI@Z,,0x000E2D70,30,src/zh/playertemplate.cpp,matched,
 ??_GQuadDrawModuleInfo@FXParticleSystem@@UAEPAXI@Z,,0x005D88D0,30,src/game/fx_particle_system.cpp,matched,
 ??_GQuadDrawModuleTemplate@FXParticleSystem@@UAEPAXI@Z,,0x005D8AA0,30,src/game/fx_particle_system_bulk.cpp,matched,
+??_GQuickMatchPreferences@@UAEPAXI@Z,,0x000AB7C0,30,src/zh/userpreferences.cpp,matched,
 ??_GRawFileClass@@UAEPAXI@Z,,0x009E7100,30,src/w3d/rawfile.cpp,matched,
 ??_GRenderObjClass@@UAEPAXI@Z,,0x0091FFC0,30,src/w3d/part_buf.cpp,matched,
 ??_GRenderObjectUpdateModuleInfo@FXParticleSystem@@UAEPAXI@Z,,0x005D95B0,30,src/game/fx_particle_system_bulk.cpp,matched,
@@ -1183,6 +1190,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??_GSubsystemInterface@@UAEPAXI@Z,,0x009A1D00,30,src/zh/subsysteminterface.cpp,matched,
 ??_GTranslatorData@MessageStream@@QAEPAXI@Z,,0x0008A630,39,src/zh/messagestream.cpp,matched,
 ??_GUDP@@QAEPAXI@Z,,0x0066EB30,30,src/zh/firewallhelper.cpp,matched,
+??_GUserPreferences@@UAEPAXI@Z,,0x000AB6A0,30,src/zh/userpreferences.cpp,matched,
 ??_GVideo@@QAEPAXI@Z,,0x007544F0,30,src/zh/videoplayer.cpp,matched,
 ??_GWindModuleInfo@FXParticleSystem@@UAEPAXI@Z,,0x005BDAA0,30,src/game/fx_particle_system_bulk.cpp,matched,
 ??_GWindowLayout@@UAEPAXI@Z,,0x004706F0,30,src/game/window_layout.cpp,matched,compiler-generated deleting dtor
@@ -1231,6 +1239,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Alloc@FastFixedAllocator@@QAEPAXXZ,,0x00AFED40,120,src/zh/wwmemlog.cpp,matched,
 ?Allocate_Buffer@StringClass@@AAEPADH@Z,,0x009DB750,33,src/w3d/wwstring.cpp,matched,
 ?Allocate_Buffer@WideStringClass@@AAEPAGH@Z,,0x009E7160,34,src/zh/widestring.cpp,matched,
+?Allocate_Memory@WWMemoryLogClass@@SAPAXI@Z,,0x00AFF2D0,30,src/zh/wwmemlog.cpp,matched,
 ?AllowBroadcasts@UDP@@QAEH_N@Z,,0x006848C0,40,src/zh/udp.cpp,matched,
 ?Append_Anim_Combo_Data@HAnimComboClass@@QAEXPAVHAnimComboDataClass@@@Z,,0x009743C0,68,src/w3d/hanim.cpp,matched,
 ?Append_Sub_Directory@SimpleFileFactoryClass@@QAEXPBD@Z,,0x009DDA50,249,src/w3d/ffactory.cpp,matched,
@@ -1963,6 +1972,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?PointInsideRect3D@@YA_NPBUCoord3D@@0000@Z,,0x0044F250,103,src/game/line2_d.cpp,matched,
 ?Point_In_Triangle_2D@@YA_NABVVector3@@000HHAAE@Z,,0x001A0ED0,809,src/w3d/meshgeometry.cpp,matched,
 ?Pop_Material_Pass@RenderInfoClass@@QAEXXZ,,0x009237C0,50,src/zh/rinfo.cpp,matched,
+?PopupBuddyNotificationSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004E9C70,53,src/zh/wolbuddyoverlay.cpp,matched,
+?PopupJoinGameInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004D72B0,58,src/zh/popupjoingame.cpp,matched,
 ?Power@VectorProcessorClass@@SAXPAM0MH@Z,,0x00B00190,56,src/w3d/vp.cpp,matched,
 ?PreStaticInit@Debug@@CAPAV1@XZ,0x00889500,0x00889500,114,src/game/debug.cpp,matched,Debug PreStaticInit singleton allocator
 ?Pre_Rotate_Z@Matrix3D@@QAEXM@Z,,0x0075B080,145,src/zh/w3dmodeldraw.cpp,matched,
@@ -2315,6 +2326,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Update_Visual_Particle_State@ParticleBufferClass@@IAEXXZ,,0x00986FC0,3223,src/w3d/part_buf.cpp,matched,
 ?Version1@Xfer@@QAEXXZ,0x000429C9,0x000C7E90,21,src/game/xfer.cpp,matched,xfer version 1 marker
 ?W3d_Shader_Reset@@YAXPAUW3dShaderStruct@@@Z,,0x009785E0,57,src/w3d/w3d_util.cpp,matched,
+?WOLBuddyOverlayUpdate@@YAXPAVWindowLayout@@PAX@Z,,0x004E9BE0,28,src/zh/wolbuddyoverlay.cpp,matched,
 ?Which_Side@AABTreeBuilderClass@@AAE?AW4OverlapType@1@ABVAAPlaneClass@@H@Z,,0x0096B790,244,src/w3d/aabtreebuilder.cpp,matched,
 ?Write@BufferedFileClass@@UAEHPBXH@Z,,0x009E7740,5,src/w3d/bufffile.cpp,matched,
 ?Write@ChunkSaveClass@@QAEKABUIOVector2Struct@@@Z,,0x009E1910,15,src/w3d/chunkio.cpp,matched,
@@ -2406,6 +2418,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?calcSleepTime@FlammableUpdate@@IAE?AW4UpdateSleepTime@@XZ,,0x00292FAD,71,src/zh/flammableupdate.cpp,matched,
 ?calcSleepTime@PoisonedBehavior@@IAE?AW4UpdateSleepTime@@XZ,,0x00202930,45,src/zh/poisonedbehavior.cpp,matched,
 ?calculate_uv_offset@GridTextureMapperClass@@IAEXPAM0@Z,,0x009643F0,88,src/w3d/mapper.cpp,matched,
+?callbackWrapper@@YAXPAVGPConnection@@PAX1@Z,,0x0063EA60,128,src/zh/buddythread.cpp,matched,
 ?canOverrideSpecialPowerDestination@ActionManager@@QAE_NPBVObject@@PBUCoord3D@@W4SpecialPowerType@@W4CommandSourceType@@@Z,,0x000C4330,68,src/zh/actionmanager.cpp,matched,
 ?capacity@?$vector@_NV?$allocator@_N@_STL@@@_STL@@QBEIXZ,,0x002CB3E0,21,src/zh/dockupdate.cpp,matched,
 ?changeBodyDamageState@BoneFXUpdate@@QAEXW4BodyDamageType@@0@Z,,0x00289160,29,src/zh/bonefxupdate.cpp,matched,
@@ -2635,6 +2648,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?findScienceInfo@ScienceStore@@ABEPBVScienceInfo@@W4ScienceType@@@Z,,0x000E6D30,51,src/zh/science.cpp,matched,
 ?findSpareSocketByPort@FirewallHelperClass@@AAEPAUSpareSocketStruct@@G@Z,,0x0066E490,44,src/zh/firewallhelper.cpp,matched,
 ?findSpecialPowerTemplateByID@SpecialPowerStore@@QAEPBVSpecialPowerTemplate@@I@Z,,0x000EB690,101,src/zh/specialpower.cpp,matched,
+?findStagingRoomByID@GameSpyInfo@@UAEPAVGameSpyStagingRoom@@H@Z,,0x00632B40,46,src/zh/peerdefs.cpp,matched,
 ?findTemplate@ParticleSystemManager@@QBEPAVParticleSystemTemplate@@ABVAsciiString@@@Z,,0x005C9F90,36,src/zh/particlesys.cpp,matched,
 ?findTrack@WaterTracksRenderSystem@@QAEPAVWaterTracksObj@@AAVVector2@@0W4waveType@@@Z,,0x007AB090,143,src/zh/w3dwatertracks.cpp,matched,
 ?findTranslator@MessageStream@@QAEPAVGameMessageTranslator@@I@Z,,0x0008A8A0,35,src/zh/messagestream.cpp,matched,
@@ -2680,6 +2694,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getBridgeRenderObject@MapObject@@QAEPAVRenderObjClass@@W4BridgeTowerType@@@Z,,0x000875D0,25,src/zh/worldheightmap.cpp,matched,
 ?getBufferForRead@?$StringBase@D@@QAEPADH@Z,0x00887BE0,0x887be0,169,src/game/string_base.cpp,matched,
 ?getBufferForRead@?$StringBase@G@@QAEPAGH@Z,0x00888480,0x888480,170,src/game/string_base.cpp,matched,
+?getCachedLocalPlayerStats@GameSpyInfo@@UAE?AVPSPlayerStats@@XZ,,0x006372D0,32,src/zh/peerdefs.cpp,matched,
 ?getCell@Pathfinder@@QAEPAVPathfindCell@@W4PathfindLayerEnum@@PBUCoord3D@@@Z,,0x003D7F90,65,src/zh/aipathfind.cpp,matched,
 ?getCharAt@?$StringBase@D@@QBEDH@Z,0x00038A14,0x0007FB80,18,src/game/string_base.cpp,matched,returns character at index
 ?getCharAt@?$StringBase@G@@QBEGH@Z,0x0001588E,0x0043D590,18,src/game/string_base.cpp,matched,returns character at index
@@ -2732,6 +2747,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getClassMemoryPool@ModelConditionUpgrade@@CAPAVMemoryPool@@XZ,,0x002D6740,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
 ?getClassMemoryPool@MoneyCrateCollide@@CAPAVMemoryPool@@XZ,,0x00217D90,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
 ?getClassMemoryPool@ObjectCreationUpgrade@@CAPAVMemoryPool@@XZ,,0x002D6C60,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
+?getClassMemoryPool@ObjectRepulsorHelper@@CAPAVMemoryPool@@XZ,,0x001C10D0,104,src/zh/object.cpp,matched,
 ?getClassMemoryPool@OpenContain@@CAPAVMemoryPool@@XZ,,0x00226460,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
 ?getClassMemoryPool@PoisonedBehavior@@CAPAVMemoryPool@@XZ,,0x00202B10,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
 ?getClassMemoryPool@PreorderCreate@@CAPAVMemoryPool@@XZ,,0x0024FF00,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
@@ -2744,6 +2760,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getClassMemoryPool@RadiusDecalUpdate@@CAPAVMemoryPool@@XZ,,0x002A05B0,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
 ?getClassMemoryPool@RailedTransportDockUpdate@@CAPAVMemoryPool@@XZ,,0x002CE450,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
 ?getClassMemoryPool@RepairDockUpdate@@CAPAVMemoryPool@@XZ,,0x002CEE00,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
+?getClassMemoryPool@RiderChangeContain@@CAPAVMemoryPool@@XZ,,0x0022A230,104,src/zh/modulefactory.cpp,matched,
 ?getClassMemoryPool@SalvageCrateCollide@@CAPAVMemoryPool@@XZ,,0x002180F0,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
 ?getClassMemoryPool@ShroudCrateCollide@@CAPAVMemoryPool@@XZ,,0x00218770,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
 ?getClassMemoryPool@SlavedUpdate@@CAPAVMemoryPool@@XZ,,0x002A4320,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
@@ -2997,6 +3014,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?invalidateCachedLightPositions@W3DShadowTextureManager@@QAEXXZ,,0x007AEFC0,107,src/zh/w3dprojectedshadow.cpp,matched,
 ?isAI@GameSlot@@QBE_NXZ,,0x0061E5C0,27,src/zh/gameinfo.cpp,matched,
 ?isAngleDifferent@@YA_NMM@Z,,0x001BE650,29,src/zh/object.cpp,matched,
+?isBuddy@GameSpyInfo@@UAE_NH@Z,,0x00632810,40,src/zh/peerdefs.cpp,matched,
 ?isColorTaken@GameInfo@@QBE_NHH@Z,,0x0061EA00,63,src/zh/gameinfo.cpp,matched,
 ?isDrawableSelected@InGameUI@@UBE_NW4DrawableID@@@Z,,0x0043E1A0,53,src/zh/ingameui.cpp,matched,
 ?isEmpty@?$StringBase@D@@QBE_NXZ,0x0000C752,0x0005E4C0,22,src/game/string_base.cpp,matched,returns true if string has no data or zero length
@@ -3201,6 +3219,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?push_back@?$vector@UUpgrades@CashHackSpecialPowerModuleData@@V?$allocator@UUpgrades@CashHackSpecialPowerModuleData@@@_STL@@@_STL@@QAEXABUUpgrades@CashHackSpecialPowerModuleData@@@Z,,0x00258EC0,58,src/zh/cashhackspecialpower.cpp,matched,
 ?push_back@?$vector@UUpgrades@OCLSpecialPowerModuleData@@V?$allocator@UUpgrades@OCLSpecialPowerModuleData@@@_STL@@@_STL@@QAEXABUUpgrades@OCLSpecialPowerModuleData@@@Z,,0x00263160,58,src/zh/oclspecialpower.cpp,matched,
 ?push_back@?$vector@VPlayerTemplate@@V?$allocator@VPlayerTemplate@@@_STL@@@_STL@@QAEXABVPlayerTemplate@@@Z,,0x000E41C0,64,src/zh/playertemplate.cpp,matched,
+?push_back@?$vector@VUnicodeString@@V?$allocator@VUnicodeString@@@_STL@@@_STL@@QAEXABVUnicodeString@@@Z,,0x005330B0,62,src/zh/peerdefs.cpp,matched,
 ?push_back@?$vector@VWeaponTemplateSet@@V?$allocator@VWeaponTemplateSet@@@_STL@@@_STL@@QAEXABVWeaponTemplateSet@@@Z,,0x002E8EF0,64,src/zh/thingtemplate.cpp,matched,
 ?push_back@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@QAEXABW4ObjectID@@@Z,,0x0036B720,50,src/zh/squad.cpp,matched,
 ?push_back@?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEXABW4ScienceType@@@Z,,0x000BCD40,50,src/zh/thingtemplate.cpp,matched,
@@ -3218,6 +3237,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?readUnicodeString@RecorderClass@@IAE?AVUnicodeString@@XZ,0x000383D4,0x991f0,34,src/game/recorder_strings.cpp,matched,
 ?recalculate@LineSegClass@@IAEXXZ,,0x003FE770,203,src/w3d/rendobj.cpp,matched,
 ?refreshDrives@CDManager@@UAEXXZ,,0x00101CC0,43,src/zh/cdmanager.cpp,matched,
+?refreshPlayerList@@YAX_N@Z,,0x004FC440,52,src/zh/wollobbymenu.cpp,matched,
 ?releaseBuffer@?$StringBase@D@@AAEXXZ,0x00887940,0x887940,134,src/game/string_base.cpp,matched,
 ?releaseBuffer@?$StringBase@G@@AAEXXZ,0x008881D0,0x8881d0,134,src/game/string_base.cpp,matched,
 ?remove@LListNode@@QAEXXZ,,0x00105930,21,src/game/list.cpp,matched,
@@ -3286,8 +3306,10 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?setCRCInterval@GameInfo@@QAEXH@Z,,0x000970F0,20,src/zh/gameinfo.cpp,matched,
 ?setColor@MultiplayerColorDefinition@@QAEXURGBColor@@@Z,,0x0008E0A0,75,src/zh/multiplayersettings.cpp,matched,
 ?setCopiedFromDefault@ModuleInfo@@QAEX_N@Z,,0x0013F2B0,81,src/zh/thingtemplate.cpp,matched,
+?setCurrentGroupRoom@GameSpyInfo@@UAEXH@Z,,0x006374D0,61,src/zh/peerdefs.cpp,matched,
 ?setData@NetWrapperCommandMsg@@QAEXPAEI@Z,,0x00673E70,77,src/zh/netcommandmsg.cpp,matched,
 ?setDecalUVAxis@W3DShadowTexture@@QAEXAAVVector3@@0@Z,,0x007AE7E0,63,src/zh/w3dprojectedshadow.cpp,matched,
+?setFPMode@@YAXXZ,,0x008FC4C0,38,src/zh/gamelogic.cpp,matched,
 ?setFileData@NetFileCommandMsg@@QAEXPAEI@Z,,0x00673FA0,52,src/zh/netcommandmsg.cpp,matched,
 ?setFromInt@RGBColor@@QAEXH@Z,0x0002CDC7,0x00083370,84,src/math/color.cpp,matched,sets RGB channels from packed int
 ?setInt@Dict@@QAEXW4NameKeyType@@H@Z,,0x00068800,33,src/zh/dict.cpp,matched,
@@ -3424,6 +3446,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?zero@Coord3D@@QAEXXZ,0x00029226,0x00083340,11,src/math/coord3d.cpp,matched,sets x/y/z to zero
 ?zero@ICoord3D@@QAEXXZ,0x000268C3,0x0045B890,11,src/math/icoord.cpp,matched,sets x/y/z to zero
 ?zero@Region3D@@QAEXXZ,0x0003652F,0x000BEC60,20,src/math/region.cpp,matched,sets bounds to zero
+_$E312,,0x00C6B750,23,src/zh/worldheightmap.cpp,matched,
 _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,src/game/native_network_dispatcher.cpp,matched,native BFME backend dispatcher EH catch thunk; returns cleanup resume VA 0x00A5CAEB
 _BFMENetworkBackendEventCallback@40,,0x006549C0,372,src/game/native_network.cpp,matched,
 _BFMENetworkBackendThreadStart@4,,0x009DB630,25,src/game/native_network.cpp,matched,
