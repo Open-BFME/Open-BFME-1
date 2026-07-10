@@ -3149,3 +3149,12 @@ GameEngineDevice/Source/VideoDevice/Bink/BinkVideoPlayer.cpp,compile-error,0,0,0
 GameEngineDevice/Source/VideoDevice/Bink/BinkVideoPlayer.cpp,compile-error,0,0,0,"C3861 'BinkSoundUseDirectSound': identifier not found, even with argument-dependent lookup",0
 GameEngineDevice/Source/VideoDevice/Bink/BinkVideoPlayer.cpp,compile-error,0,0,0,C2660 'BinkSoundUseDirectSound' : function does not take 1 arguments,0
 GameEngineDevice/Source/VideoDevice/Bink/BinkVideoPlayer.cpp,compile-error,0,0,0,C2440 '=' : cannot convert from 'void' to 'Int',0
+Libraries/Source/debug/_pch.cpp,ok,0,0,0,,0
+Libraries/Source/profile/_pch.cpp,ok,0,0,0,,0
+Libraries/Source/debug/debug_cmd.cpp,ok,0,0,1,,0
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLWelcomeMenu.cpp,compile-error,0,0,0,"C2782 'T max(T,T)' : template parameter 'T' is ambiguous",0
+Libraries/Source/debug/debug_cmd.cpp,ok,0,0,1,,0
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MainMenu.cpp,missing-header,0,0,0,GameSpy/ghttp/ghttp.h,0
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MainMenu.cpp,compile-error,0,0,0,C2065 '_P_NOWAIT' : undeclared identifier,0
+GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionsMenu.cpp,ok,2,2,78,,2
+GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cpp,compile-error,0,0,0,C2059 syntax error : ')',0
