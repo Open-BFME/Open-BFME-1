@@ -196,7 +196,7 @@ def resolve_drift_source(basename):
     return hits[0].relative_to(ROOT).as_posix() if hits else None
 
 
-def structural_candidates(mine, claimed, attempts):
+def structural_candidates(mine, claimed, claimed_names, attempts):
     """The manual-RE tier: drifted functions whose source exists but whose code
     shape differs (class structural / register-swap). Workflow: docs/structural.md."""
     _, rows = read_csv(DRIFT, "python3 tools/drift_classify.py")
@@ -207,7 +207,10 @@ def structural_candidates(mine, claimed, attempts):
     out = []
     for name, row in last.items():
         rva = to_int(row["candidate_rva"], 16, f"drift_report.csv candidate_rva for {name}")
-        if rva in claimed or not mine(name):
+        # candidate_rva is an alignment vote and can be shifted a few bytes from
+        # the real start, so a matched function may not hit the rva filter —
+        # the name filter catches those stale rows (proven live: insertTee...)
+        if rva in claimed or name in claimed_names or not mine(name):
             continue
         att = attempts.get(name, {"n": 0, "dead": False, "last": ""})
         if att["dead"] or att["n"] >= 3:
@@ -277,12 +280,13 @@ def main():
     staleness = sweep_staleness()
     winners, last_report = sweep_winners(mine)
     drifts = drift_quick_wins(mine)
-    claimed = set()
+    claimed, claimed_names = set(), set()
     with FUNCTIONS.open(newline="") as fh:
         for row in csv.DictReader(fh):
             if row["target_rva"]:
                 claimed.add(int(row["target_rva"], 16))
-    structural = structural_candidates(mine, claimed, read_attempts())
+                claimed_names.add(row["name"])
+    structural = structural_candidates(mine, claimed, claimed_names, read_attempts())
     blockers = shim_blockers(last_report)
 
     if args.json:
