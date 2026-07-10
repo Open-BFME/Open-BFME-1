@@ -952,3 +952,12 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?DebugAllocMemory@@YAPAXI@Z,0x0088EB30
 ?DebugFreeMemory@@YAXPAX@Z,0x0088EAD0
 ?AddOutput@Debug@@AAEXPBDI@Z,0x0088A8F0
+??$_Construct@VGameResultsResponse@@V1@@_STL@@YAXPAVGameResultsResponse@@ABV1@@Z,0x0000DCE7
+??0GameResultsQueue@@QAE@XZ,0x0000DAFD
+??0GameResultsRequest@@QAE@ABV0@@Z,0x0004355E
+??1GameResultsRequest@@QAE@XZ,0x00049288
+??1GameResultsResponse@@QAE@XZ,0x00024352
+??1LockClass@MutexClass@@QAE@XZ,0x009DB400
+?Is_Running@ThreadClass@@QAE_NXZ,0x009DB590
+?_M_push_back_aux_v@?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@IAEXABVGameResultsRequest@@@Z,0x0002217E
+?_M_push_back_aux_v@?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@IAEXABVGameResultsResponse@@@Z,0x0004A0B1
