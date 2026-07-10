@@ -3080,3 +3080,4 @@ GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp,compile-error,0,0,
 GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread.cpp,compile-error,0,0,0,C2065 'NUM_RESERVED_KEYS' : undeclared identifier,0
 GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThread.cpp,ok,2,31,75,,2
 GameEngine/Source/GameNetwork/NAT.cpp,ok,2,3,39,,2
+GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp,ok,0,4,15,,0
