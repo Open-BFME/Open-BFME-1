@@ -24,8 +24,13 @@ typedef unsigned short WORD;
 typedef const void* LPCVOID;
 typedef void* LPVOID;
 typedef unsigned long D3DCOLOR;
+#ifndef REFIID_DEFINED
 typedef void* REFIID;
+#endif
+#ifndef _GUID_DEFINED
+#define _GUID_DEFINED
 typedef struct _GUID { DWORD Data1; WORD Data2; WORD Data3; BYTE Data4[8]; } GUID, IID;
+#endif
 #define SUCCEEDED(hr) ((HRESULT)(hr) >= 0)
 #define FAILED(hr)    ((HRESULT)(hr) < 0)
 #define D3D_OK 0

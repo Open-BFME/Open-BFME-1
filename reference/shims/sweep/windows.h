@@ -91,6 +91,22 @@ typedef int (__stdcall *FARPROC)();
 #define VOID void
 #define CONST const
 
+typedef struct _GUID {
+	unsigned long  Data1;
+	unsigned short Data2;
+	unsigned short Data3;
+	unsigned char  Data4[8];
+} GUID;
+#ifndef _GUID_DEFINED
+#define _GUID_DEFINED
+#endif
+
+__inline int operator==(const GUID& a, const GUID& b) {
+	return a.Data1 == b.Data1 && a.Data2 == b.Data2 && a.Data3 == b.Data3 &&
+		*(unsigned int*)(&a.Data4[0]) == *(unsigned int*)(&b.Data4[0]) &&
+		*(unsigned int*)(&a.Data4[4]) == *(unsigned int*)(&b.Data4[4]);
+}
+
 #ifndef NULL
 #define NULL 0
 #endif
