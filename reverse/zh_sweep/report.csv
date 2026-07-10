@@ -2980,3 +2980,4 @@ GameEngine/Source/GameNetwork/Transport.cpp,ok,0,0,19,,0
 GameEngine/Source/GameNetwork/User.cpp,ok,0,1,8,,0
 GameEngine/Source/GameNetwork/WOLBrowser/WebBrowser.cpp,missing-header,0,0,0,EABrowserDispatch/BrowserDispatch.h,0
 GameEngine/Source/Precompiled/PreRTS.cpp,ok,0,0,0,,0
+GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp,ok,0,4,15,,0
