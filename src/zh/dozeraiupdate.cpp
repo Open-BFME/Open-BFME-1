@@ -46,6 +46,7 @@
 #include "Common/GameState.h"
 #include "Common/GlobalData.h"
 #include "Common/Xfer.h"
+#include "vector3.h"
 #include "GameClient/Drawable.h"
 #include "GameClient/GameText.h"
 #include "GameLogic/AIPathfind.h"

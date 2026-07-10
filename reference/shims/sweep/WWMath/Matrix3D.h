@@ -8,6 +8,8 @@
 #ifndef _MATRIX3D_H
 #define _MATRIX3D_H
 
+#include "vector3.h"
+
 class Matrix3D
 {
 public:
