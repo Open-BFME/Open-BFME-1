@@ -1001,3 +1001,5 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 ?erase@?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE?AU?$_List_iterator@PAVDrawable@@U?$_Nonconst_traits@PAVDrawable@@@_STL@@@2@U32@0@Z,0x00015348,ILT thunk to 0x00234C10
 ?getNextSubToken@INI@@QAEPBDPBD@Z,0x00850B00,INI parser
 ?scanInt@INI@@SAHPBD@Z,0x00852620,INI parser
+?loadDockPositions@DockUpdate@@IAEXXZ,0x0000C595,ILT thunk to 0x002CB0A0
+?isUsingAirborneLocomotor@Object@@QBE_NXZ,0x0000A001,ILT thunk to 0x001C1770
