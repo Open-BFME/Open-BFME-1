@@ -2878,7 +2878,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getName@?$CategoryModuleClass@$07@FXParticleSystem@@QBEPBDXZ,0x000014E2,0x005D4AE0,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module name string
 ?getName@?$CategoryModuleClass@$0A@@FXParticleSystem@@QBEPBDXZ,0x0004ACA0,0x005D4A60,4,src/game/fx_particle_system_category_accessors.cpp,matched,returns module name string
 ?getName@GameSlot@@QBE?AVUnicodeString@@XZ,,0x003879C0,32,src/zh/lanapihandlers.cpp,matched,
-?getName@GameSlot@@QBE?AVUnicodeString@@XZ,,0x003879C0,32,src/zh/langameinfo.cpp,matched,
 ?getName@ParticleSystemTemplate@FXParticleSystem@@QBE?AVAsciiString@@XZ,0x00001E5B,0x0005F210,35,src/game/fx_particle_system.cpp,matched,return particle system name
 ?getName@PlayerTemplate@@QBE?AVAsciiString@@XZ,,0x00098F50,33,src/zh/playertemplate.cpp,matched,
 ?getNameAndDescription@ScienceStore@@QBE_NW4ScienceType@@AAVUnicodeString@@1@Z,,0x000E6E00,55,src/zh/science.cpp,matched,
