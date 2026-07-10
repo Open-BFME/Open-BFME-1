@@ -91,14 +91,14 @@ typedef int (__stdcall *FARPROC)();
 #define VOID void
 #define CONST const
 
+#ifndef _GUID_DEFINED
+#define _GUID_DEFINED
 typedef struct _GUID {
 	unsigned long  Data1;
 	unsigned short Data2;
 	unsigned short Data3;
 	unsigned char  Data4[8];
 } GUID;
-#ifndef _GUID_DEFINED
-#define _GUID_DEFINED
 #endif
 
 __inline int operator==(const GUID& a, const GUID& b) {

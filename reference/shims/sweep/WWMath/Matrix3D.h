@@ -8,6 +8,10 @@
 #ifndef _MATRIX3D_H
 #define _MATRIX3D_H
 
+// If the real matrix3d.h was already included, its class Matrix3D is already
+// defined; skip our shim entirely.
+#ifndef MATRIX3D_H
+
 #include "../../../../../CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class Matrix3D
@@ -20,4 +24,6 @@ public:
 	void Make_Identity();
 };
 
-#endif
+#endif // MATRIX3D_H
+
+#endif // _MATRIX3D_H
