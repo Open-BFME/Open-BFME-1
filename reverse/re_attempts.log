@@ -131,3 +131,13 @@ _$E312	landed	Compiler-generated static initializer. Candidate RVA 0xC6B74F off 
 ?getClassMemoryPool@NetCommandWrapperListNode@@CAPAVMemoryPool@@XZ	no-match	Same as AIAttackApproachTargetState: drift RVA is mid-function inside MOTDSystem; stale/misplaced drift row. Same systemic createW3DMemPool shape diff.
 ?getClassMemoryPool@NeutronBlastBehavior@@CAPAVMemoryPool@@XZ	no-match	Same as AIAttackApproachTargetState: drift RVA is mid-function inside MOTDSystem; stale/misplaced drift row. Same systemic createW3DMemPool shape diff.
 ?getClassMemoryPool@ObjectSMCHelper@@CAPAVMemoryPool@@XZ	no-match	Same as AIAttackApproachTargetState: drift RVA is mid-function inside MOTDSystem; stale/misplaced drift row. Same systemic createW3DMemPool shape diff.
+?isReady@CommandButton@@QBE_NPBVObject@@@Z	no-match	unresolved REL32 call for Object::getSpecialPowerModule/affectedByUpgrade/hasUpgrade; those callees are absent from binary. Not a per-function fix.
+?getHealthBoxDimensions@Object@@QBE_NAAM0@Z	no-match	unresolved REL32 call for Thing::isKindOf; candidate starts inside already-matched Object::getHealthBoxDimensions at 0x001C9E64 (stale drift sub-span).
+?getClassMemoryPool@InactiveBody@@CAPAVMemoryPool@@XZ	no-match	target starts with 6cc padding; real start 0x00213D60. Compiled 110B vs target 104B; systemic createW3DMemPool arg-setup diff.
+?getClassMemoryPool@Upgrade@@CAPAVMemoryPool@@XZ	no-match	target starts with 6cc padding; real start 0x00256140. Size mismatch (compiled 104B vs drift 110B); systemic createW3DMemPool diff.
+?getClassMemoryPool@W3DRopeDraw@@CAPAVMemoryPool@@XZ	no-match	target starts with ret+5cc padding; real start 0x0075A5D0. Size mismatch; systemic createW3DMemPool diff.
+?getClassMemoryPool@StructureBody@@CAPAVMemoryPool@@XZ	no-match	target starts with 9cc padding; real start 0x00214BA0. Instruction/register mismatch; systemic createW3DMemPool diff.
+?processWrapper@NetCommandWrapperList@@QAEXPAVNetCommandRef@@@Z	no-match	target starts with 2cc padding; real start 0x00676600. Four unresolved callees; REL32 blocked.
+??4?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z	no-match	candidate RVA is mid-function inside already-matched vector::operator= at 0x004A08B4 (210B). Stale drift sub-span.
+??4?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z	no-match	candidate RVA is mid-function inside already-matched vector::operator= at 0x00170220 (221B). Stale drift sub-span.
+?addArgType@GameMessageParser@@QAEXW4GameMessageArgumentDataType@@H@Z	no-match	target starts with 6cc padding; real start 0x006235E0. Two unresolved callees; REL32 blocked.
