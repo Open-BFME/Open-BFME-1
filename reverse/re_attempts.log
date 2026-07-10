@@ -95,3 +95,4 @@ _$E312	landed	Compiler-generated static initializer. Candidate RVA 0xC6B74F off 
 ?doNamedSetTrainHeld@ScriptActions@@IAEXABVAsciiString@@_N@Z	no-match	Misplaced: drift 0x594AE1 starts with 00 00 00 00 (padding). Ghidra: 0x594AD0/524B but compiled is 147B. Major size mismatch.
 ??1SpawnBehaviorModuleData@@UAE@XZ	no-match	Misplaced: drift 0x9F281F starts with 0c (mid-function). Ghidra: 0x9F2800/115B but compiled is 82B. Unresolved ~vector<AsciiString> callee. Size mismatch.
 ??1SpecialPowerModuleData@@UAE@XZ	no-match	Same drift RVA 0x9F281F as SpawnBehaviorModuleData. Misplaced, same shape diff. ICF fold candidate.
+?getSingleBitFromName@?$BitFlags@$0CG@@@SAHPBD@Z	landed	100% aligned, exact match. No source changes or pins needed.
