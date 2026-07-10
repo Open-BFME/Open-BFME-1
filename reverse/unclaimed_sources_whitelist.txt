@@ -19,3 +19,8 @@ src/zh/streakrender.cpp
 # Same situation: its located functions were COMDAT-deduped to other files'
 # rows; carries drift markers pending reconciliation.
 src/zh/grantstealthbehavior.cpp
+
+# BEYOND-ZH probe: reconstructed Handicap::readFromDict from binary. 360/362
+# bytes matched — 2-byte diff is MSVC codegen ordering (push-before-store vs
+# store-before-push). See reverse/re_attempts.log for full analysis.
+src/game/handicap.cpp
