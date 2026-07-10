@@ -675,6 +675,7 @@ name,address,notes
 ?enableRadar@Player@@QAEXXZ,0x00043207
 ?ensureUnique@Dict@@AAEPAUDictPair@1@H_NPAU21@@Z,0x0002BF21
 ?erase@?$hashtable@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEXABU?$_Ht_iterator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@U?$_Const_traits@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@2@@Z,0x0003FB98
+?erase@?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE?AU?$_List_iterator@PAVDrawable@@U?$_Nonconst_traits@PAVDrawable@@@_STL@@@2@U32@0@Z,0x00015348,ILT thunk to 0x00234C10
 ?erase@?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAE?AU?$_List_iterator@PAVGameWindow@@U?$_Nonconst_traits@PAVGameWindow@@@_STL@@@2@U32@0@Z,0x00024131,ILT thunk for list<GameWindow*>::erase(range)
 ?erase@?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAE?AU?$_List_iterator@PAVGameWindow@@U?$_Nonconst_traits@PAVGameWindow@@@_STL@@@2@U32@0@Z,0x00483310,body
 ?erase@?$list@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAE?AU?$_List_iterator@UCoord3D@@U?$_Nonconst_traits@UCoord3D@@@_STL@@@2@U32@0@Z,0x0004169B
@@ -722,6 +723,7 @@ name,address,notes
 ?getName@SpecialPowerTemplate@@QBE?AVAsciiString@@XZ,0x00005682
 ?getNewPushButtonData@@YAPAU_PushButtonData@@XZ,0x00012765
 ?getNextMission@Campaign@@QAEPAVMission@@PAV2@@Z,0x0003236C
+?getNextSubToken@INI@@QAEPBDPBD@Z,0x00850B00,INI parser
 ?getNextToken@INI@@QAEPBDPBD@Z,0x00850970
 ?getNextTokenOrNull@INI@@QAEPBDPBD@Z,0x008509C0
 ?getOriginalPlayerID@NetAckBothCommandMsg@@QAEEXZ,0x00046D17
@@ -759,11 +761,13 @@ name,address,notes
 ?isPointOnBridge@Bridge@@QAE_NPBUCoord3D@@@Z,0x00014637
 ?isScienceGrantable@ScienceStore@@QBE_NW4ScienceType@@@Z,0x0003882A
 ?isSlotLocalAlly@@YA_NPBVGameSlot@@@Z,0x0061ED20
+?isUsingAirborneLocomotor@Object@@QBE_NXZ,0x0000A001,ILT thunk to 0x001C1770
 ?iterateObjects@Player@@QBEXP6AXPAVObject@@PAX@Z1@Z,0x0002F1CB
 ?keyToName@NameKeyGenerator@@QAE?AVAsciiString@@W4NameKeyType@@@Z,0x0003EC7A
 ?killRunningParticleSystems@BoneFXUpdate@@IAEXXZ,0x0000628F
 ?killThemKillThemAll@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@@Z,0x00019F5B
 ?loadBridgesInVertexAndIndexBuffers@W3DBridgeBuffer@@IAEXPAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,0x000367EB
+?loadDockPositions@DockUpdate@@IAEXXZ,0x0000C595,ILT thunk to 0x002CB0A0
 ?loadFloat4PtSection@W3DRoadBuffer@@IAEXPAVRoadSegment@@VVector2@@11PAV3@MMMM@Z,0x000346DF
 ?loadStandardMaps@MapCache@@AAEXXZ,0x000359DB
 ?loadUserMaps@MapCache@@AAE_NXZ,0x00028FF1
@@ -816,6 +820,7 @@ name,address,notes
 ?resize@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEXI@Z,0x0000366B
 ?revalidateOccupiers@SpawnPointProductionExitUpdate@@AAEXXZ,0x0002374A
 ?scanIndexList@INI@@SAHPBDPBQBD@Z,0x008509E0
+?scanInt@INI@@SAHPBD@Z,0x00852620,INI parser
 ?scanReal@INI@@SAMPBD@Z,0x008526E0
 ?scanUnsignedInt@INI@@SAIPBD@Z,0x00852680
 ?searchListForRadarLocationMatch@Radar@@IAEPAVObject@@PAVRadarObject@@PAUICoord2D@@@Z,0x0000C6DA
@@ -998,8 +1003,3 @@ __stringbase_isnotnone_cmp_wchar,0x0041F3D,internal wide-char string not-none co
 _atexit,0x009F6E26,CRT atexit (registers static destructors)
 _bfme_acos,0x009F7256,internal acos helper called by ACos
 _bfme_asin,0x009F7D86,internal asin helper called by ASin
-?erase@?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE?AU?$_List_iterator@PAVDrawable@@U?$_Nonconst_traits@PAVDrawable@@@_STL@@@2@U32@0@Z,0x00015348,ILT thunk to 0x00234C10
-?getNextSubToken@INI@@QAEPBDPBD@Z,0x00850B00,INI parser
-?scanInt@INI@@SAHPBD@Z,0x00852620,INI parser
-?loadDockPositions@DockUpdate@@IAEXXZ,0x0000C595,ILT thunk to 0x002CB0A0
-?isUsingAirborneLocomotor@Object@@QBE_NXZ,0x0000A001,ILT thunk to 0x001C1770
