@@ -60,4 +60,9 @@ class GServer
 {
 };
 
+// Peer SDK function declarations (sweep compilation only)
+void peerMessageRoom(PEER peer, RoomType roomType, const char* message, MessageType msgType);
+void peerMessagePlayer(PEER peer, const char* nick, const char* message, MessageType msgType);
+PEERBool peerGetPlayerFlags(PEER peer, const char* nick, RoomType roomType, int* flags);
+
 #endif // __PEER_H__
