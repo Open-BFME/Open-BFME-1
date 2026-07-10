@@ -1166,6 +1166,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??_GMemLogClass@@QAEPAXI@Z,,0x00AFF810,30,src/zh/wwmemlog.cpp,matched,
 ??_GMessageStream@@UAEPAXI@Z,,0x0008DD80,30,src/zh/messagestream.cpp,matched,
 ??_GNamedPivotMapClass@@UAEPAXI@Z,,0x00974EF0,30,src/w3d/hanim.cpp,matched,
+??_GOptionPreferences@@UAEPAXI@Z,,0x00090470,30,src/zh/optionsmenu.cpp,matched,
 ??_GOrthoEmissionVelocityInfo@FXParticleSystem@@UAEPAXI@Z,,0x005D6E90,30,src/game/fx_particle_system.cpp,matched,
 ??_GOutputStream@DebugIOFlat@@AAEPAXI@Z,,0x0088FFC0,28,src/zh/debug_io_flat.cpp,matched,
 ??_GOutwardEmissionVelocityInfo@FXParticleSystem@@UAEPAXI@Z,,0x005D7BD0,30,src/game/fx_particle_system.cpp,matched,
@@ -1496,6 +1497,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?GadgetSliderGetDisabledSelectedThumbBorderColor@@YAHPAVGameWindow@@@Z,,0x004B6950,26,src/zh/gadgetlistbox.cpp,matched,
 ?GadgetSliderGetEnabledSelectedThumbBorderColor@@YAHPAVGameWindow@@@Z,,0x004B6910,23,src/zh/gadgetlistbox.cpp,matched,
 ?GadgetSliderGetHiliteSelectedThumbBorderColor@@YAHPAVGameWindow@@@Z,,0x004B6990,26,src/zh/gadgetlistbox.cpp,matched,
+?GadgetSliderGetMinMax@@YAXPAVGameWindow@@PAH1@Z,,0x0055DAF0,27,src/zh/optionsmenu.cpp,matched,
 ?GadgetSliderSetDisabledSelectedThumbBorderColor@@YAXPAVGameWindow@@H@Z,,0x0047B860,28,src/zh/gamewindowmanager.cpp,matched,
 ?GadgetSliderSetDisabledThumbBorderColor@@YAXPAVGameWindow@@H@Z,,0x0047B7B0,28,src/zh/gamewindowmanager.cpp,matched,
 ?GadgetSliderSetEnabledSelectedThumbBorderColor@@YAXPAVGameWindow@@H@Z,,0x0047B700,28,src/zh/gamewindowmanager.cpp,matched,
@@ -2424,6 +2426,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?canOverrideSpecialPowerDestination@ActionManager@@QAE_NPBVObject@@PBUCoord3D@@W4SpecialPowerType@@W4CommandSourceType@@@Z,,0x000C4330,68,src/zh/actionmanager.cpp,matched,
 ?capacity@?$vector@_NV?$allocator@_N@_STL@@@_STL@@QBEIXZ,,0x002CB3E0,21,src/zh/dockupdate.cpp,matched,
 ?changeBodyDamageState@BoneFXUpdate@@QAEXW4BodyDamageType@@0@Z,,0x00289160,29,src/zh/bonefxupdate.cpp,matched,
+?checkLinkBefore@W3DRoadBuffer@@IAEXH@Z,,0x0070B160,745,src/zh/w3droadbuffer.cpp,matched,
 ?clamp_indices_to_grid@GridCullSystemClass@@IAEXPAH00@Z,,0x008DCE70,82,src/w3d/gridcull.cpp,matched,
 ?clear@?$StringBase@D@@QAEXXZ,0x00041A38,0x000680C0,5,src/game/string_base.cpp,matched,clears string by releasing buffer; size trimmed: trailing int3 padding
 ?clear@?$StringBase@G@@QAEXXZ,0x00024C85,0x00068090,5,src/game/string_base.cpp,matched,clears wide string by releasing buffer; size trimmed: trailing int3 padding
@@ -2884,6 +2887,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getModelVerticesFixed@W3DBridge@@IAEHPAUVertexFormatXYZNDUV1@@HABVMatrix3D@@PAVMeshClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,,0x006D84F0,532,src/zh/w3dbridgebuffer.cpp,matched,
 ?getModuleNameKey@BoneFXUpdate@@UBE?AW4NameKeyType@@XZ,,0x00288E40,104,src/zh/bonefxupdate.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
 ?getModuleNameKey@BridgeScaffoldBehavior@@UBE?AW4NameKeyType@@XZ,,0x001F5B00,104,src/zh/bridgescaffoldbehavior.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
+?getModuleNameKey@CashHackSpecialPower@@UBE?AW4NameKeyType@@XZ,,0x002584C0,104,src/zh/cashhackspecialpower.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
+?getModuleNameKey@OCLUpdate@@UBE?AW4NameKeyType@@XZ,,0x002989E0,104,src/zh/oclupdate.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
 ?getModuleNameKey@ObjectDefectionHelper@@UBE?AW4NameKeyType@@XZ,,0x001C0EF0,104,src/zh/object.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
 ?getModuleNameKey@ObjectRepulsorHelper@@UBE?AW4NameKeyType@@XZ,,0x001C1210,104,src/zh/object.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
 ?getModuleNameKey@ObjectSMCHelper@@UBE?AW4NameKeyType@@XZ,,0x001C5530,104,src/zh/object.cpp,matched,exact-ambiguous copy; assignment proven by verify_string_refs
@@ -3515,6 +3520,3 @@ _XMP_Unsigned_Div_Int,,0x009E89C0,176,src/w3d/mpmath.cpp,matched,
 _XMP_Unsigned_Mult,,0x009E9100,298,src/w3d/mpmath.cpp,matched,
 _XMP_Unsigned_Mult_Int,,0x009E8980,61,src/w3d/mpmath.cpp,matched,
 _powf,,0x00097070,14,src/w3d/vp.cpp,matched,
-?checkLinkBefore@W3DRoadBuffer@@IAEXH@Z,,0x0070B160,745,src/zh/w3droadbuffer.cpp,matched,
-??_GOptionPreferences@@UAEPAXI@Z,,0x00090470,30,src/zh/optionsmenu.cpp,matched,
-?GadgetSliderGetMinMax@@YAXPAVGameWindow@@PAH1@Z,,0x0055DAF0,27,src/zh/optionsmenu.cpp,matched,
