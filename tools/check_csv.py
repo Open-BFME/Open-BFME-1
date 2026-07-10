@@ -43,7 +43,34 @@ def read_ledger(path, spec):
     return out.stdout
 
 
-def check_functions(raw, problems):
+def known_sources(spec):
+    """Sources a ledger row may legally reference for the given state.
+
+    A row whose source exists on disk but is not in git is the worst failure
+    class this tool guards: the row pushes fine locally and breaks every
+    other clone ("references missing source file"). So worktree/staged modes
+    require git-tracked (staged counts during a commit), and --ref mode
+    requires presence in that commit's tree.
+    """
+    if spec:  # a ref/SHA
+        out = subprocess.run(["git", "-C", str(ROOT), "ls-tree", "-r", "--name-only", spec],
+                             capture_output=True, text=True)
+        if out.returncode != 0:
+            raise SystemExit(f"check_csv: git ls-tree {spec} failed: {out.stderr.strip()}")
+        return set(out.stdout.splitlines())
+    tracked = subprocess.run(["git", "-C", str(ROOT), "ls-files"],
+                             capture_output=True, text=True)
+    if tracked.returncode != 0:
+        raise SystemExit(f"check_csv: git ls-files failed: {tracked.stderr.strip()}")
+    allowed = set(tracked.stdout.splitlines())
+    staged = subprocess.run(["git", "-C", str(ROOT), "diff", "--cached", "--name-only",
+                             "--diff-filter=ACMRT"], capture_output=True, text=True)
+    if staged.returncode == 0:
+        allowed.update(staged.stdout.splitlines())
+    return allowed
+
+
+def check_functions(raw, problems, sources_ok):
     if b"\r\n" not in raw[:200]:
         problems.append("functions.csv: CRLF line endings were lost (file is LF). "
                         "Restore from git and use binary-safe edits (tools/dedup_csv.py "
@@ -97,9 +124,11 @@ def check_functions(raw, problems):
             problems.append(f"functions.csv line {i} ({name}): matched with target_size {size}")
         if not source:
             problems.append(f"functions.csv line {i} ({name}): empty source")
-        elif not (ROOT / source).exists():
-            problems.append(f"functions.csv line {i} ({name}): source does not exist: {source} "
-                            "(a commit added rows without adding the file)")
+        elif source not in sources_ok:
+            hint = ("file exists on disk but is NOT tracked by git — `git add` it"
+                    if (ROOT / source).exists()
+                    else "a commit added rows without adding the file")
+            problems.append(f"functions.csv line {i} ({name}): source not in git: {source} ({hint})")
 
         key = (name, target_rva)
         if key in seen_exact:
@@ -178,7 +207,7 @@ def main():
 
     spec = "" if args.staged else args.ref  # None -> working tree
     problems = []
-    n_funcs = check_functions(read_ledger(FUNCTIONS, spec), problems)
+    n_funcs = check_functions(read_ledger(FUNCTIONS, spec), problems, known_sources(spec))
     n_syms = check_symbols(read_ledger(SYMBOLS, spec), problems)
 
     if problems:

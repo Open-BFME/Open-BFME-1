@@ -99,6 +99,9 @@ def land(name, dry_run=False):
     print("    " + (annotate.stdout.strip().splitlines() or ["annotation: no output"])[-1])
     if annotate.returncode != 0:
         raise SystemExit(f"{name}: present-unmatched annotation failed — see above")
+    # the new source is untracked until added; rows referencing an untracked
+    # file break every other clone once pushed
+    print(f"    now: git add {dest.relative_to(ROOT)} reverse/functions.csv reverse/symbols.csv")
     return True
 
 

@@ -16,7 +16,9 @@ The workflow docs: `docs/matching.md` (core byte-matching loop),
 
 1. Pick ONE small unit from `tools/next_work.py` (one function or one file).
 2. Do the work; iterate with `./build.sh <file-or-symbol>` (seconds).
-3. `git add <specific files>` — never `git add -A` or `git add .`
+3. `git add <specific files>` — never `git add -A` or `git add .` Landed a
+   new source? Add THAT FILE too (check `git status` for `??` entries) —
+   ledger rows referencing an untracked file break every other clone.
 4. `git commit` — the hook takes seconds (static ledger checks + byte-verify
    of your delta). NEVER `--no-verify`: a bad row committed here becomes
    every other agent's red build.
