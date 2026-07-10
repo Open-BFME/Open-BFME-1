@@ -8,3 +8,4 @@ build/toolchains/vs2003/** filter=lfs diff=lfs merge=lfs -text
 # shared COMDAT address).
 reverse/functions.csv merge=union
 reverse/symbols.csv merge=union
+reverse/re_attempts.log merge=union

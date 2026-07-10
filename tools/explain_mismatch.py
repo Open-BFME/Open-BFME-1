@@ -104,15 +104,49 @@ def classify(target, compiled, offset, relocs, unresolved):
     return "instruction/register encoding mismatch"
 
 
+def candidate_row(args):
+    """Synthesize a row for an unmatched candidate (drift/structural work):
+    the function has no ledger row yet, so the caller supplies where it is
+    believed to live. Size defaults from the ghidra function inventory, which
+    also guards against explaining a mid-function misplacement."""
+    if not args.source:
+        raise SystemExit("--rva needs --source (the file defining the symbol)")
+    rva = int(args.rva, 16)
+    size = args.size
+    if size is None:
+        ghidra = build.ROOT / "reverse" / "ghidra_functions.csv"
+        if not ghidra.exists():
+            raise SystemExit("--size omitted and reverse/ghidra_functions.csv absent "
+                             "(generate it per tools/ghidra/README.md, or pass --size)")
+        for line in ghidra.open():
+            parts = line.split(",", 2)
+            try:
+                if int(parts[0], 16) == rva:
+                    size = int(parts[1])
+                    break
+            except ValueError:
+                continue
+        if size is None:
+            raise SystemExit(f"0x{rva:08X} is not a ghidra function start — likely a "
+                             "misplaced candidate; verify the address before shaping")
+    return {"name": args.selector, "export_rva": "", "target_rva": f"0x{rva:08X}",
+            "target_size": str(size), "source": args.source, "status": "matched", "notes": ""}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("selector", help="Decorated symbol substring or source path substring")
+    parser.add_argument("selector", help="Decorated symbol substring or source path substring; "
+                        "with --rva, the EXACT decorated symbol")
     parser.add_argument("--context", type=int, default=24, help="bytes around the first difference")
+    parser.add_argument("--rva", help="explain an unmatched candidate believed to live at this "
+                        "target RVA (drift_report candidate_rva); needs --source")
+    parser.add_argument("--size", type=int, help="candidate size (default: ghidra inventory)")
+    parser.add_argument("--source", help="source file defining the candidate symbol")
     args = parser.parse_args()
 
-    row = find_row(args.selector)
+    row = candidate_row(args) if args.rva else find_row(args.selector)
     source = build.ROOT / row["source"]
-    output = build.BUILD_DIR / (source.stem + ".obj")
+    output = build.obj_path(source)
     build.compile_source(source, output)
 
     compiled_raw, relocs = build.read_object_symbol_bytes(output, row["name"])

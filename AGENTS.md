@@ -40,9 +40,11 @@ The workflow docs: `docs/matching.md` (core byte-matching loop),
 3. Grow a shim to unblock swept-out areas: `reverse/zh_sweep/report.csv`
    rows with `missing-header`/`compile-error` blockers. Add MINIMAL verbatim
    declarations to `reference/shims/sweep/`, then re-sweep those files.
-4. Drift reconciliation: `reverse/zh_sweep/drift_report.csv` class
-   `immediate-only` first (fix a constant), then `imm+reg`. `structural` and
-   `absent` are real reverse-engineering — budget accordingly.
+4. Structural reconciliation — the manual-RE tier and most of what remains:
+   `python3 tools/next_work.py --tier structural` for the ranked queue, then
+   follow `docs/structural.md` exactly. Budget 30-60 min per function; log
+   EVERY attempt with `tools/log_attempt.py` (unlogged failures get re-paid
+   by the next agent); 3 strikes on one function → log and move on.
 5. Resolve REL32-blocked functions: find the callee address, add a
    `name,address` pin to `reverse/symbols.csv` (see docs/matching.md).
 6. Translate a `__asm` block or a small unmatched export to C++

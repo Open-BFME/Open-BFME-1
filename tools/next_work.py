@@ -36,6 +36,7 @@ REPORT = ROOT / "reverse" / "zh_sweep" / "report.csv"
 META = ROOT / "reverse" / "zh_sweep" / "report.meta"
 DRIFT = ROOT / "reverse" / "zh_sweep" / "drift_report.csv"
 FUNCTIONS = ROOT / "reverse" / "functions.csv"
+ATTEMPTS = ROOT / "reverse" / "re_attempts.log"
 
 POINTERS = [
     ("python3 tools/land_ambiguous.py",
@@ -166,6 +167,68 @@ def drift_quick_wins(mine):
     return out
 
 
+def read_attempts():
+    """reverse/re_attempts.log (TSV: function, outcome, note — tools/log_attempt.py).
+    Returns {function: {"n": count, "dead": bool, "last": note}}."""
+    out = {}
+    if not ATTEMPTS.exists():
+        return out
+    for line in ATTEMPTS.read_text(encoding="utf-8").splitlines():
+        parts = line.split("\t")
+        if len(parts) < 2:
+            continue
+        entry = out.setdefault(parts[0], {"n": 0, "dead": False, "last": ""})
+        entry["n"] += 1
+        if parts[1] == "dead":
+            entry["dead"] = True
+        if len(parts) > 2:
+            entry["last"] = parts[2]
+    return out
+
+
+def resolve_drift_source(basename):
+    """drift_report source column is a bare basename; the landed file usually
+    lives in src/zh/ but older landings sit elsewhere under src/."""
+    direct = ROOT / "src" / "zh" / basename
+    if direct.exists():
+        return direct.relative_to(ROOT).as_posix()
+    hits = sorted(ROOT.glob(f"src/*/{basename}"))
+    return hits[0].relative_to(ROOT).as_posix() if hits else None
+
+
+def structural_candidates(mine, claimed, attempts):
+    """The manual-RE tier: drifted functions whose source exists but whose code
+    shape differs (class structural / register-swap). Workflow: docs/structural.md."""
+    _, rows = read_csv(DRIFT, "python3 tools/drift_classify.py")
+    last = {}
+    for row in rows:
+        if row["class"] in ("structural", "register-swap"):
+            last[row["function"]] = row
+    out = []
+    for name, row in last.items():
+        rva = to_int(row["candidate_rva"], 16, f"drift_report.csv candidate_rva for {name}")
+        if rva in claimed or not mine(name):
+            continue
+        att = attempts.get(name, {"n": 0, "dead": False, "last": ""})
+        if att["dead"] or att["n"] >= 3:
+            continue
+        source = resolve_drift_source(row["source"])
+        if source is None:
+            print(f"warning: drift_report.csv row for {name} names a missing source "
+                  f"{row['source']} — stale report, skipped", file=sys.stderr)
+            continue
+        out.append({"function": name, "source": source, "class": row["class"],
+                    "aligned_pct": int(row["aligned_pct"]), "size": int(row["size"]),
+                    "candidate_rva": row["candidate_rva"], "hint": row["hint"],
+                    "attempts": att["n"], "last_attempt": att["last"],
+                    "command": (f"python3 tools/explain_mismatch.py '{name}' "
+                                f"--rva {row['candidate_rva']} --size {row['size']} "
+                                f"--source {source}")})
+    # highest alignment first (closest to matching), small before big at equal alignment
+    out.sort(key=lambda c: (-c["aligned_pct"], c["size"], c["function"]))
+    return out
+
+
 def shim_blockers(last_report_rows):
     counts, examples = Counter(), {}
     for row in last_report_rows.values():
@@ -200,6 +263,9 @@ def main():
                     help="machine-readable dump of all sections (full lists, no --limit)")
     ap.add_argument("--any", action="store_true",
                     help="ignore AGENT_SLOT partitioning (when your slot runs dry)")
+    ap.add_argument("--tier", choices=("harvest", "structural"),
+                    help="show only that tier's sections (structural agents pass "
+                         "--tier structural for a deeper list)")
     args = ap.parse_args()
 
     ledger = check_ledger()  # exit 2 happens in there; nothing below matters if red
@@ -211,6 +277,12 @@ def main():
     staleness = sweep_staleness()
     winners, last_report = sweep_winners(mine)
     drifts = drift_quick_wins(mine)
+    claimed = set()
+    with FUNCTIONS.open(newline="") as fh:
+        for row in csv.DictReader(fh):
+            if row["target_rva"]:
+                claimed.add(int(row["target_rva"], 16))
+    structural = structural_candidates(mine, claimed, read_attempts())
     blockers = shim_blockers(last_report)
 
     if args.json:
@@ -218,6 +290,7 @@ def main():
             "ledger": ledger, "sweep_meta": staleness,
             "slot": slot, "pool": pool, "filtered": filtered,
             "sweep_winners": winners, "drift_quick_wins": drifts,
+            "structural": structural,
             "shim_blockers": blockers,
             "pointers": [cmd for cmd, _ in POINTERS],
         }, indent=2))
@@ -231,16 +304,33 @@ def main():
         print(f"  [slot {slot}/{pool}: sections 1-2 show only this agent's slice; "
               f"--any shows everything]")
 
-    print(f"\n== 1. sweep winners still landable ({len(winners)}) ==")
-    for c in winners[:args.limit]:
-        print(f"  landable {c['landable']:>2}  {c['file']}")
-        print(f"               {c['command']}")
+    if args.tier != "structural":
+        print(f"\n== 1. sweep winners still landable ({len(winners)}) ==")
+        for c in winners[:args.limit]:
+            print(f"  landable {c['landable']:>2}  {c['file']}")
+            print(f"               {c['command']}")
 
-    print(f"\n== 2. drift quick wins: literal-only diffs ({len(drifts)}) ==")
-    for c in drifts[:args.limit]:
-        print(f"  {c['aligned_pct']:>3}% {c['class']:<14} {c['function']}")
-        print(f"       {c['source']} @ {c['candidate_rva']}  hint: {c['hint']}")
-        print(f"       fix the literal in source, then byte-verify: {c['command']}")
+        print(f"\n== 2. drift quick wins: literal-only diffs ({len(drifts)}) ==")
+        for c in drifts[:args.limit]:
+            print(f"  {c['aligned_pct']:>3}% {c['class']:<14} {c['function']}")
+            print(f"       {c['source']} @ {c['candidate_rva']}  hint: {c['hint']}")
+            print(f"       fix the literal in source, then byte-verify: {c['command']}")
+
+    if args.tier != "harvest":
+        shown = structural[:args.limit if args.tier != "structural" else args.limit * 3]
+        print(f"\n== 2b. structural reconciliation — manual RE ({len(structural)}; "
+              f"workflow: docs/structural.md) ==")
+        for c in shown:
+            tried = f"  [tried {c['attempts']}x: {c['last_attempt']}]" if c["attempts"] else ""
+            print(f"  {c['aligned_pct']:>3}% {c['size']:>5}B {c['function']}{tried}")
+            print(f"       {c['source']} @ {c['candidate_rva']}  hint: {c['hint']}")
+            print(f"       start: {c['command']}")
+        if structural:
+            print("       log every attempt: python3 tools/log_attempt.py '<symbol>' "
+                  "<landed|no-match|dead|blocked> 'what you tried'")
+
+    if args.tier == "structural":
+        return
 
     print(f"\n== 3. shim unblocking (top {len(blockers)} blockers) ==")
     for b in blockers:
