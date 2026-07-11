@@ -161,7 +161,6 @@ HRESULT DownloadManagerMunkee::downloadFile( AsciiString server, AsciiString use
 	password.format("-%s", password.str());
 	return DownloadManager::downloadFile( server, username, password, file, localfile, regkey, tryResume );
 }
-// ?OnError@DownloadManagerMunkee@@UAEJH@Z present-unmatched
 HRESULT DownloadManagerMunkee::OnError( Int error )
 {
 	HRESULT ret = DownloadManager::OnError( error );
@@ -169,7 +168,6 @@ HRESULT DownloadManagerMunkee::OnError( Int error )
 	MessageBoxOk(TheGameText->fetch("GUI:DownloadErrorTitle"), getErrorString(), errorCallback);
 	return ret;
 }
-// ?OnEnd@DownloadManagerMunkee@@UAEJXZ present-unmatched
 HRESULT DownloadManagerMunkee::OnEnd()
 {
 	HRESULT ret = DownloadManager::OnEnd();

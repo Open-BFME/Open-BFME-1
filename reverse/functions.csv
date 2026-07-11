@@ -3682,3 +3682,6 @@ _powf,,0x00097070,14,src/w3d/vp.cpp,matched,
 ?push_back@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@QAEXABVW3DAnimationInfo@@@Z,,0x00788860,62,src/zh/w3dmodeldraw.cpp,matched,resweep exact post-GWM-fix (exact-ambiguous)
 ?Get_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@AAVMatrix4@@@Z,,0x005F0F00,854,src/zh/render2d.cpp,matched,D3D shim vtable aligned to retail (+7 slots)
 ?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix4@@@Z,,0x006DB7D0,1057,src/zh/render2d.cpp,matched,D3D shim vtable aligned to retail (+7 slots)
+?OnError@DownloadManagerMunkee@@UAEJH@Z,,0x004C79A0,129,src/zh/downloadmenu.cpp,matched,gametext vtable fix
+?OnEnd@DownloadManagerMunkee@@UAEJXZ,,0x004C7A50,217,src/zh/downloadmenu.cpp,matched,gametext vtable fix
+?DownloadMenuInit@@YAXPAVWindowLayout@@PAX@Z,,0x004C74B0,459,src/zh/downloadmenu.cpp,matched,gametext vtable fix

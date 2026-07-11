@@ -1142,3 +1142,9 @@ __CxxThrowException@8,0x00850600,CRT throw helper
 ?_M_insert_overflow@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEXPAVW3DAnimationInfo@@ABV3@ABU__false_type@2@I_N@Z,0x00037024,ILT thunk used by call site
 ?insert_unique@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@2@U32@ABU?$pair@QBVThingTemplate@@H@2@@Z,0x0003E22A,ILT thunk used by call site
 ?winGetParent@GameWindow@@QAEPAV1@XZ,0x00014F97,ILT thunk used by call site
+?OnError@DownloadManager@@UAEJH@Z,0x00031EC1,ILT thunk used by call site
+?getErrorString@DownloadManager@@QAE?AVUnicodeString@@XZ,0x0000ECCD,ILT thunk used by call site
+?MessageBoxOk@@YAPAVGameWindow@@VUnicodeString@@0P6AXXZ@Z,0x0004A340,ILT thunk used by call site
+?OnEnd@DownloadManager@@UAEJXZ,0x000044E4,ILT thunk used by call site
+?downloadNextQueuedFile@DownloadManager@@QAEJXZ,0x00038F00,ILT thunk used by call site
+??0DownloadManager@@QAE@XZ,0x0001958D,ILT thunk used by call site
