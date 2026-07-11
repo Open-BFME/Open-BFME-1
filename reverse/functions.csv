@@ -3566,3 +3566,5 @@ _powf,,0x00097070,14,src/w3d/vp.cpp,matched,
 ?Get_Diffuse@LightClass@@QBEXPAVVector3@@@Z,,0x006C5520,37,src/zh/lightenvironment.cpp,matched,exact after camera shim (RenderObjClass +0x34)
 ?Get_Far_Attenuation_Range@LightClass@@QBEXAAN0@Z,,0x006C5550,27,src/zh/lightenvironment.cpp,matched,exact after camera shim (RenderObjClass +0x34)
 ?Get_Spot_Direction@LightClass@@QBEXAAVVector3@@@Z,,0x00903870,33,src/zh/lightenvironment.cpp,matched,exact after camera shim (RenderObjClass +0x34)
+?Set_Ambient@LightClass@@QAEXABVVector3@@@Z,,0x006E7980,33,src/zh/w3dscene.cpp,matched,exact after camera shim
+?setEnabled@W3DDynamicLight@@QAEX_N@Z,,0x006E7A90,39,src/zh/w3dscene.cpp,matched,exact after camera shim
