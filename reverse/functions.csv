@@ -3543,3 +3543,21 @@ _powf,,0x00097070,14,src/w3d/vp.cpp,matched,
 ?isBridgeRepaired@TerrainLogic@@QAE_NPBVObject@@@Z,,0x001A3510,69,src/zh/terrainlogic.cpp,matched,
 ?isBridgeBroken@TerrainLogic@@QAE_NPBVObject@@@Z,,0x001A3570,69,src/zh/terrainlogic.cpp,matched,
 ?findBridgeAt@TerrainLogic@@UBEPAVBridge@@PBUCoord3D@@@Z,,0x001A65F0,53,src/zh/terrainlogic.cpp,matched,
+?Project@CameraClass@@QBE?AW4ProjectionResType@1@AAVVector3@@ABV3@@Z,,0x00932BB0,546,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim); Update_Frustum pinned
+?Set_Aspect_Ratio@CameraClass@@QAEXM@Z,,0x00931330,56,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Set_Clip_Planes@CameraClass@@QAEXMM@Z,,0x00931370,30,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Get_Clip_Planes@CameraClass@@QBEXAAM0@Z,,0x00931390,27,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Get_Obj_Space_Bounding_Sphere@CameraClass@@UBEXAAVSphereClass@@@Z,,0x00931730,26,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Get_Obj_Space_Bounding_Box@CameraClass@@UBEXAAVAABoxClass@@@Z,,0x00931750,44,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Set_View_Plane@CameraClass@@QAEXMM@Z,,0x00931780,117,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Compute_Projected_Sphere_Radius@CameraClass@@QAEMMM@Z,,0x00931920,89,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Set_View_Plane@CameraClass@@QAEXABVVector2@@0@Z,,0x00931D70,72,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Get_View_Plane@CameraClass@@QBEXAAVVector2@@0@Z,,0x00931DC0,45,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Device_To_View_Space@CameraClass@@QAEXABVVector2@@PAVVector3@@@Z,,0x009321D0,174,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Get_Projection_Matrix@CameraClass@@QAEXPAVMatrix4@@@Z,,0x00932320,159,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Get_D3D_Projection_Matrix@CameraClass@@QAEXPAVMatrix4@@@Z,,0x009323C0,241,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Get_View_Matrix@CameraClass@@QAEXPAVMatrix3D@@@Z,,0x009324C0,123,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Clone@CameraClass@@UBEPAVRenderObjClass@@XZ,,0x00932B50,96,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Project_Camera_Space_Point@CameraClass@@QBE?AW4ProjectionResType@1@AAVVector3@@ABV3@@Z,,0x00932DE0,381,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Transform_To_View_Space@CameraClass@@QBEXAAVVector3@@ABV2@@Z,,0x00932F60,170,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
+?Rotate_To_View_Space@CameraClass@@QBEXAAVVector3@@ABV2@@Z,,0x00933010,152,src/zh/camera.cpp,matched,RenderObjClass +0x34 (camera shim)

@@ -210,7 +210,6 @@ CameraClass::~CameraClass(void)
  * HISTORY:                                                                                    *
  *   3/21/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Clone@CameraClass@@UBEPAVRenderObjClass@@XZ present-unmatched
 RenderObjClass * CameraClass::Clone(void) const
 {
 	return NEW_REF( CameraClass, (*this) );
@@ -229,7 +228,6 @@ RenderObjClass * CameraClass::Clone(void) const
  * HISTORY:                                                                                    *
  *   9/29/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Get_Obj_Space_Bounding_Sphere@CameraClass@@UBEXAAVSphereClass@@@Z present-unmatched
 void CameraClass::Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) const
 {
 	sphere.Center.Set(0,0,0);
@@ -249,7 +247,6 @@ void CameraClass::Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) const
  * HISTORY:                                                                                    *
  *   9/29/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Get_Obj_Space_Bounding_Box@CameraClass@@UBEXAAVAABoxClass@@@Z present-unmatched
 void CameraClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) const
 {
 	box.Center.Set(0,0,0);
@@ -315,7 +312,6 @@ void CameraClass::Set_Position(const Vector3 &v)
  * HISTORY:                                                                                    *
  *   3/21/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Set_View_Plane@CameraClass@@ present-unmatched
 void CameraClass::Set_View_Plane(const Vector2 & vmin,const Vector2 & vmax)
 {
 	ViewPlane.Min = vmin;
@@ -337,7 +333,6 @@ void CameraClass::Set_View_Plane(const Vector2 & vmin,const Vector2 & vmax)
  * HISTORY:                                                                                    *
  *   3/21/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Set_View_Plane@CameraClass@@ present-unmatched
 void CameraClass::Set_View_Plane(float hfov,float vfov)
 {
 
@@ -370,7 +365,6 @@ void CameraClass::Set_View_Plane(float hfov,float vfov)
  * HISTORY:                                                                                    *
  *   1/29/2001  gth : Created.                                                                 *
  *=============================================================================================*/
-// ?Set_Aspect_Ratio@CameraClass@@QAEXM@Z present-unmatched
 void CameraClass::Set_Aspect_Ratio(float width_to_height)
 {
 	AspectRatio = width_to_height;
@@ -392,7 +386,6 @@ void CameraClass::Set_Aspect_Ratio(float width_to_height)
  * HISTORY:                                                                                    *
  *   3/21/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Get_View_Plane@CameraClass@@QBEXAAVVector2@@0@Z present-unmatched
 void CameraClass::Get_View_Plane(Vector2 & set_min,Vector2 & set_max) const
 {
 	set_min = ViewPlane.Min;
@@ -416,7 +409,6 @@ void CameraClass::Get_View_Plane(Vector2 & set_min,Vector2 & set_max) const
  * HISTORY:                                                                                    *
  *   3/21/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Project@CameraClass@@QBE?AW4ProjectionResType@1@AAVVector3@@ABV3@@Z present-unmatched
 CameraClass::ProjectionResType CameraClass::Project(Vector3 & dest,const Vector3 & ws_point) const
 {
 	Update_Frustum();
@@ -463,7 +455,6 @@ CameraClass::ProjectionResType CameraClass::Project(Vector3 & dest,const Vector3
  *   11/17/2000 gth : Created.                                                                 *
  *=============================================================================================*/
 CameraClass::ProjectionResType 
-// ?Project_Camera_Space_Point@CameraClass@@QBE?AW4ProjectionResType@1@AAVVector3@@ABV3@@Z present-unmatched
 CameraClass::Project_Camera_Space_Point(Vector3 & dest,const Vector3 & cam_point) const
 {
 	Update_Frustum();
@@ -538,7 +529,6 @@ void CameraClass::Un_Project(Vector3 & dest,const Vector2 & view_point) const
  * HISTORY:                                                                                    *
  *   2/22/2001  gth : Created.                                                                 *
  *=============================================================================================*/
-// ?Transform_To_View_Space@CameraClass@@QBEXAAVVector3@@ABV2@@Z present-unmatched
 void CameraClass::Transform_To_View_Space(Vector3 & dest,const Vector3 & ws_point) const
 {
 	Update_Frustum();
@@ -558,7 +548,6 @@ void CameraClass::Transform_To_View_Space(Vector3 & dest,const Vector3 & ws_poin
  * HISTORY:                                                                                    *
  *   2/22/2001  gth : Created.                                                                 *
  *=============================================================================================*/
-// ?Rotate_To_View_Space@CameraClass@@QBEXAAVVector3@@ABV2@@Z present-unmatched
 void CameraClass::Rotate_To_View_Space(Vector3 & dest,const Vector3 & ws_vector) const
 {
 	Update_Frustum();
@@ -682,7 +671,6 @@ void CameraClass::Update_Frustum(void) const
  * HISTORY:                                                                                    *
  *   12/8/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Device_To_View_Space@CameraClass@@QAEXABVVector2@@PAVVector3@@@Z present-unmatched
 void CameraClass::Device_To_View_Space(const Vector2 & device_coord,Vector3 * set_view)
 {
 	int res_width;
@@ -766,7 +754,6 @@ void CameraClass::Apply(void)
 	DX8Wrapper::Set_Transform(D3DTS_VIEW,CameraInvTransform);
 }
 
-// ?Set_Clip_Planes@CameraClass@@QAEXMM@Z present-unmatched
 void CameraClass::Set_Clip_Planes(float znear,float zfar)						
 { 
 	FrustumValid = false;
@@ -774,7 +761,6 @@ void CameraClass::Set_Clip_Planes(float znear,float zfar)
 	ZFar = zfar;
 }
 
-// ?Get_Clip_Planes@CameraClass@@QBEXAAM0@Z present-unmatched
 void CameraClass::Get_Clip_Planes(float & znear,float & zfar) const		
 { 
 	znear = ZNear;
@@ -801,7 +787,6 @@ float CameraClass::Get_Aspect_Ratio(void) const
 	return AspectRatio;
 }
 
-// ?Get_Projection_Matrix@CameraClass@@ present-unmatched
 void CameraClass::Get_Projection_Matrix(Matrix4x4 * set_tm)
 {
 	WWASSERT(set_tm != NULL);
@@ -810,7 +795,6 @@ void CameraClass::Get_Projection_Matrix(Matrix4x4 * set_tm)
 	*set_tm = ProjectionTransform;
 }
 
-// ?Get_D3D_Projection_Matrix@CameraClass@@QAEXPAVMatrix4@@@Z present-unmatched
 void CameraClass::Get_D3D_Projection_Matrix(Matrix4x4 * set_tm)
 {
 	WWASSERT(set_tm != NULL);
@@ -832,7 +816,6 @@ void CameraClass::Get_D3D_Projection_Matrix(Matrix4x4 * set_tm)
 
 }
 
-// ?Get_View_Matrix@CameraClass@@ present-unmatched
 void CameraClass::Get_View_Matrix(Matrix3D * set_tm)
 {
 	WWASSERT(set_tm != NULL);
@@ -860,7 +843,6 @@ void CameraClass::Convert_Old(Vector3 &pos)
 	pos.Y=(pos.Y+1)/2;
 }
 
-// ?Compute_Projected_Sphere_Radius@CameraClass@@QAEMMM@Z present-unmatched
 float CameraClass::Compute_Projected_Sphere_Radius(float dist,float radius)
 {
 	Vector4 result = ProjectionTransform * Vector4(radius,0.0f,dist,1.0f);
