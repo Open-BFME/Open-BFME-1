@@ -1122,3 +1122,23 @@ __CxxThrowException@8,0x00850600,CRT throw helper
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@M@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@M@2@@Z,0x00030512,resweep callee back-solved
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@2@@Z,0x000082F6,resweep callee back-solved
 ??4?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,0x00026C6A,ILT thunk used by __copy call site
+??$_Construct@UWeaponBarrelInfo@ModelConditionInfo@@U12@@_STL@@YAXPAUWeaponBarrelInfo@ModelConditionInfo@@ABU12@@Z,0x0003B7E6,ILT thunk used by call site
+??$_Construct@VW3DAnimationInfo@@V1@@_STL@@YAXPAVW3DAnimationInfo@@ABV1@@Z,0x00033AAA,ILT thunk used by call site
+??$_Destroy@PAUHideShowSubObjInfo@ModelConditionInfo@@@_STL@@YAXPAUHideShowSubObjInfo@ModelConditionInfo@@0@Z,0x000413AD,ILT thunk used by call site
+??$_Destroy@PAVW3DAnimationInfo@@@_STL@@YAXPAVW3DAnimationInfo@@0@Z,0x00001663,ILT thunk used by call site
+??$_M_allocate_and_copy@PBUHideShowSubObjInfo@ModelConditionInfo@@@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEPAUHideShowSubObjInfo@ModelConditionInfo@@IPBU23@0@Z,0x00030D69,ILT thunk used by call site
+??$_M_allocate_and_copy@PBVW3DAnimationInfo@@@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEPAVW3DAnimationInfo@@IPBV2@0@Z,0x0003D3C5,ILT thunk used by call site
+??$__copy@PAVW3DAnimationInfo@@PAV1@H@_STL@@YAPAVW3DAnimationInfo@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00024023,ILT thunk used by call site
+??$__copy@PBUHideShowSubObjInfo@ModelConditionInfo@@PAU12@H@_STL@@YAPAUHideShowSubObjInfo@ModelConditionInfo@@PBU12@0PAU12@ABUrandom_access_iterator_tag@0@PAH@Z,0x0003DB1D,ILT thunk used by call site
+??$__copy@PBVW3DAnimationInfo@@PAV1@H@_STL@@YAPAVW3DAnimationInfo@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x000417EF,ILT thunk used by call site
+??$__uninitialized_copy@PBUHideShowSubObjInfo@ModelConditionInfo@@PAU12@@_STL@@YAPAUHideShowSubObjInfo@ModelConditionInfo@@PBU12@0PAU12@ABU__false_type@0@@Z,0x000032A6,ILT thunk used by call site
+??$__uninitialized_copy@PBVW3DAnimationInfo@@PAV1@@_STL@@YAPAVW3DAnimationInfo@@PBV1@0PAV1@ABU__false_type@0@@Z,0x0001D5F7,ILT thunk used by call site
+??$fill@PAPAVObject@@PAV1@@_STL@@YAXPAPAVObject@@0ABQAV1@@Z,0x0003C7F9,ILT thunk used by call site
+??1W3DAnimationInfo@@QAE@XZ,0x00020018,ILT thunk used by call site
+?_M_clear@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEXXZ,0x00015168,ILT thunk used by call site
+?_M_clear@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEXXZ,0x00008837,ILT thunk used by call site
+?_M_insert_overflow@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@IAEXPAPAVObject@@ABQAV3@ABU__true_type@2@I_N@Z,0x000486BC,ILT thunk used by call site
+?_M_insert_overflow@?$vector@UWeaponBarrelInfo@ModelConditionInfo@@V?$allocator@UWeaponBarrelInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEXPAUWeaponBarrelInfo@ModelConditionInfo@@ABU34@ABU__false_type@2@I_N@Z,0x0003D7B2,ILT thunk used by call site
+?_M_insert_overflow@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEXPAVW3DAnimationInfo@@ABV3@ABU__false_type@2@I_N@Z,0x00037024,ILT thunk used by call site
+?insert_unique@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@2@U32@ABU?$pair@QBVThingTemplate@@H@2@@Z,0x0003E22A,ILT thunk used by call site
+?winGetParent@GameWindow@@QAEPAV1@XZ,0x00014F97,ILT thunk used by call site

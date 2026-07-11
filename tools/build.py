@@ -595,7 +595,7 @@ def verify_string_refs(rows):
         target_size = int(row["target_size"])
         target = read_target_bytes(target_rva, target_size)
         try:
-            _, relocs = read_object_symbol_bytes(obj, row["name"])
+            fn_bytes, relocs = read_object_symbol_bytes(obj, row["name"])
         except ValueError:
             continue
         for offset, rtype, sym in relocs:
@@ -610,7 +610,13 @@ def verify_string_refs(rows):
             except (ValueError, struct.error) as exc:
                 mismatches.append((row["name"], f"<unverifiable {sym[:24]}: {exc}>".encode(), b""))
                 continue
+            # DIR32 relocs carry an addend (pre-link value at the site): pooled string reuse
+            # references symbol+addend (e.g. "DBGHELP.DLL"+4 == "ELP.DLL"), so the referenced
+            # literal is content[addend:], and the binary holds it at str_rva == sym_rva+addend.
+            addend = struct.unpack_from("<i", fn_bytes, offset)[0] if offset + 4 <= len(fn_bytes) else 0
             content = cs.rstrip(b"\x00")
+            if 0 < addend <= len(content):
+                content = content[addend:]
             if not content:
                 # empty string literal "": no content to match, but confirm the referenced location
                 # really is an empty string (a null byte) and not a stale/wrong pointer.
