@@ -1072,3 +1072,4 @@ __CxxThrowException@8,0x00850600,CRT throw helper
 ??0UnitCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x00009AED,module ctor (friend_newModuleInstance retail call target)
 ??0VeterancyCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003C37B,module ctor (friend_newModuleInstance retail call target)
 ??0SalvageCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x00038668,module ctor (friend_newModuleInstance retail call target)
+?releaseBuffer@UnicodeString@@IAEXXZ,0x008881D0,BFME releaseBuffer body (inlined ~UnicodeString call sites encode this)
