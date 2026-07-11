@@ -189,7 +189,7 @@ void DebugStackwalk::Signature::GetSymbol(unsigned addr, char *buf, unsigned buf
   DWORD displacement;
   if (!gDbg._SymGetSymFromAddr((HANDLE)GetCurrentProcessId(),addr,&displacement,symPtr))
     return;
-  if ((unsigned int)(bufEnd-buf)<strlen(symPtr->Name)+16)
+  if ((int)(bufEnd-buf)<(int)strlen(symPtr->Name)+16)
     return;
   buf+=wsprintf(buf,", %s+0x%x",symPtr->Name,displacement);
 
@@ -203,7 +203,7 @@ void DebugStackwalk::Signature::GetSymbol(unsigned addr, char *buf, unsigned buf
   p=strrchr(line.FileName,'\\'); // use filename only, strip off path
   p=p?p+1:line.FileName;
 
-  if ((unsigned int)(bufEnd-buf)<strlen(p)+16)
+  if ((int)(bufEnd-buf)<(int)strlen(p)+16)
     return;
   buf+=wsprintf(buf,", %s:%i+0x%x",p,line.LineNumber,displacement);
 }

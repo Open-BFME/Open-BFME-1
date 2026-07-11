@@ -232,6 +232,13 @@ public:
 
 	virtual Real getGroundHeight( Real x, Real y, Coord3D* normal = NULL )  const;
 	virtual Real getLayerHeight(Real x, Real y, PathfindLayerEnum layer, Coord3D* normal = NULL, Bool clip = true) const;
+
+	// BFME layout reconciliation: one virtual sits here in retail, moving
+	// getExtent from vtable slot 7 (+0x1c) to slot 8 (+0x20) -- see retail
+	// call sites in clipToTerrainExtent (weapon.cpp). Balanced by dropping one
+	// of the nine stubs below so getFirstBridge stays at slot 0x94.
+	virtual void _bfme_tl_v0( void ) {}
+
 	virtual void getExtent( Region3D *extent ) const { DEBUG_CRASH(("not implemented"));  }		///< @todo This should not be a stub - this should own this functionality
 	virtual void getExtentIncludingBorder( Region3D *extent ) const { DEBUG_CRASH(("not implemented"));  }		///< @todo This should not be a stub - this should own this functionality
 	virtual void getMaximumPathfindExtent( Region3D *extent ) const { DEBUG_CRASH(("not implemented"));  }		///< @todo This should not be a stub - this should own this functionality
@@ -274,7 +281,8 @@ public:
 	/// Return the trigger area with the given name
 	virtual PolygonTrigger *getTriggerAreaByName( AsciiString name );
 
-	// BFME layout reconciliation: 9 virtuals inserted here to shift getFirstBridge vtable slot 0x70->0x94
+	// BFME layout reconciliation: 8 virtuals inserted here (a 9th sits before
+	// getExtent) to shift getFirstBridge vtable slot 0x70->0x94
 	virtual void _bfme_tl_v1( void ) {}
 	virtual void _bfme_tl_v2( void ) {}
 	virtual void _bfme_tl_v3( void ) {}
@@ -283,7 +291,6 @@ public:
 	virtual void _bfme_tl_v6( void ) {}
 	virtual void _bfme_tl_v7( void ) {}
 	virtual void _bfme_tl_v8( void ) {}
-	virtual void _bfme_tl_v9( void ) {}
 
 	///Gets the first bridge.  Traverse all bridges using bridge->getNext();
 	virtual Bridge *getFirstBridge(void) const { return m_bridgeListHead; }

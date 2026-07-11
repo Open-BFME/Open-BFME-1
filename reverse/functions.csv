@@ -3688,3 +3688,5 @@ _powf,,0x00097070,14,src/w3d/vp.cpp,matched,
 ?updateCircleVB@W3DStatusCircle@@IAEHXZ,,0x007260F0,324,src/zh/w3dstatuscircle.cpp,matched,shaderclass fix
 ?updateScreenVB@W3DStatusCircle@@IAEHH@Z,,0x00725DE0,221,src/zh/w3dstatuscircle.cpp,matched,shaderclass fix
 ?getApparentPlayerTemplateDisplayName@GameSlot@@QBE?AVUnicodeString@@XZ,,0x0061F130,175,src/zh/gameinfo.cpp,matched,gametext vtable fix
+?clipToTerrainExtent@@YAXAAUCoord3D@@@Z,,0x001E18B0,127,src/zh/weapon.cpp,matched,terrainlogic getExtent slot fix
+?GetSymbol@Signature@DebugStackwalk@@SAXIPADI@Z,,0x0088C6E0,635,src/zh/debug_stack.cpp,matched,signed comparison fix
