@@ -226,7 +226,7 @@ def main():
     seen = {}   # name -> row index (inline COMDATs appear in every TU; report once)
     sources = sorted((ROOT / args.src).glob("*.cpp"))
     for src in sources:
-        obj = build.BUILD_DIR / (src.stem + ".obj")
+        obj = build.obj_path(src)
         if not obj.exists():
             rows.append((src.name, "?", 0, "", 0, "no-obj", -1, "run build.py first", 0))
             continue
