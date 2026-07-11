@@ -3582,3 +3582,11 @@ _powf,,0x00097070,14,src/w3d/vp.cpp,matched,
 ?getClassMemoryPool@AnimatedParticleSysBoneClientUpdate@@CAPAVMemoryPool@@XZ,,0x00602F60,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
 ?getClassMemoryPool@BeaconClientUpdate@@CAPAVMemoryPool@@XZ,,0x00603130,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
 ?getClassMemoryPool@BoneFXDamage@@CAPAVMemoryPool@@XZ,,0x002507C0,104,src/zh/bonefxdamage.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
+?friend_newModuleData@BridgeBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00114810,107,src/zh/modulefactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
+?friend_newModuleData@PoisonedBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001170D0,107,src/zh/modulefactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
+?friend_newModuleData@SupplyWarehouseCripplingBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001171F0,107,src/zh/modulefactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
+?friend_newModuleData@AutoFindHealingUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119800,107,src/zh/modulefactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
+?friend_newModuleData@FireSpreadUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118240,107,src/zh/modulefactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
+?friend_newModuleData@FloatUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118580,107,src/zh/modulefactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
+?friend_newModuleData@HeightDieUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118AA0,107,src/zh/modulefactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
+?friend_newModuleData@CommandButtonHuntUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119910,107,src/zh/modulefactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build

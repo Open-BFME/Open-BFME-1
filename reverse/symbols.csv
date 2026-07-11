@@ -1017,3 +1017,11 @@ __CxxThrowException@8,0x00850600,CRT throw helper
 
 ??0CameraClass@@QAE@ABV0@@Z,0x00932690,CameraClass copy ctor (located from binary via Clone)
 ?Get_Render_Target_Resolution@WW3D@@SAXAAH00AA_N@Z,0x008FD1F0,located from binary (camera callee)
+??0BridgeBehaviorModuleData@@QAE@XZ,0x0001F7F3,module-glue cascade callee (from retail call site)
+??0PoisonedBehaviorModuleData@@QAE@XZ,0x0002EA73,module-glue cascade callee (from retail call site)
+??0SupplyWarehouseCripplingBehaviorModuleData@@QAE@XZ,0x000261CA,module-glue cascade callee (from retail call site)
+??0AutoFindHealingUpdateModuleData@@QAE@XZ,0x0001D4EE,module-glue cascade callee (from retail call site)
+??0FireSpreadUpdateModuleData@@QAE@XZ,0x000104B5,module-glue cascade callee (from retail call site)
+??0FloatUpdateModuleData@@QAE@XZ,0x0004601A,module-glue cascade callee (from retail call site)
+??0HeightDieUpdateModuleData@@QAE@XZ,0x0002C9D0,module-glue cascade callee (from retail call site)
+??0CommandButtonHuntUpdateModuleData@@QAE@XZ,0x0002E500,module-glue cascade callee (from retail call site)
