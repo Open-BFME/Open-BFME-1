@@ -3571,3 +3571,13 @@ _powf,,0x00097070,14,src/w3d/vp.cpp,matched,
 ?adjustVector@@YAXPAUCoord3D@@PBVMatrix3D@@@Z,,0x00429350,84,src/zh/fxlist.cpp,matched,identical-bytes drift row; string-anchored; ICF-folded template instantiation
 ??0?$DynamicVectorClass@PAVVertexMaterialClass@@@@QAE@IPBQAVVertexMaterialClass@@@Z,,0x00981490,93,src/zh/matinfo.cpp,matched,identical-bytes drift row; string-anchored; ICF-folded template instantiation
 ?Put_TextBlock@INIClass@@QAE_NPBD0@Z,,0x009E56B0,257,src/w3d/ini.cpp,matched,identical-bytes drift row; string-anchored; ICF-folded template instantiation
+?getClassMemoryPool@InactiveBody@@CAPAVMemoryPool@@XZ,,0x00213D60,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
+?getClassMemoryPool@ActiveBody@@CAPAVMemoryPool@@XZ,,0x0020F9C0,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
+?getClassMemoryPool@HighlanderBody@@CAPAVMemoryPool@@XZ,,0x00213830,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
+?getClassMemoryPool@ImmortalBody@@CAPAVMemoryPool@@XZ,,0x00213A10,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
+?getClassMemoryPool@StructureBody@@CAPAVMemoryPool@@XZ,,0x00214BA0,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
+?getClassMemoryPool@DefectorSpecialPower@@CAPAVMemoryPool@@XZ,,0x00259FD0,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
+?getClassMemoryPool@OCLSpecialPower@@CAPAVMemoryPool@@XZ,,0x00262AF0,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
+?getClassMemoryPool@SpecialAbility@@CAPAVMemoryPool@@XZ,,0x002A6520,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
+?getClassMemoryPool@AnimatedParticleSysBoneClientUpdate@@CAPAVMemoryPool@@XZ,,0x00602F60,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
+?getClassMemoryPool@BeaconClientUpdate@@CAPAVMemoryPool@@XZ,,0x00603130,104,src/zh/modulefactory.cpp,matched,pool-glue cascade; copy proven by verify_string_refs

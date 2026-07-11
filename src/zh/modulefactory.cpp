@@ -257,11 +257,12 @@
 
 #include "GameLogic/Module/VeterancyCrateCollide.h"
 
-// Restore the ZH macro for remaining headers.
+// BFME: every module pool is a central pre-created lookup (findMemoryPool,
+// 1 arg) - keep the shim default (GCMP_FIND) for all remaining headers.
 #undef MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE
 #define MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(ARGCLASS, ARGPOOLNAME) \
 	MEMORY_POOL_GLUE_WITHOUT_GCMP(ARGCLASS) \
-	GCMP_CREATE(ARGCLASS, ARGPOOLNAME, -1, -1)
+	GCMP_FIND(ARGCLASS, ARGPOOLNAME)
 
 // body includes
 #include "GameLogic/Module/InactiveBody.h"
