@@ -22,6 +22,11 @@ Run from the repo root; replace `$EXE` with `baselines/bfme1/workshop-vanilla-1.
 Outputs (gitignored, derived from the binary, like `reverse/exports.csv`):
 - `reverse/ghidra_functions.csv` — `rva,size,name` for every function. Consumed by `tools/harvest.py`.
 - `reverse/string_xrefs.tsv` — `string<TAB>referencing function rvas`. For identification.
+- `reverse/vtables.tsv` — `vtable_rva<TAB>label<TAB>slot<TAB>func_rva<TAB>func_name` for every
+  recovered vtable. Read BFME's exact class vtable slot order instead of hand-triangulating.
+  Generate (reuse the analyzed project, store it on disk not /tmp — tmpfs quota):
+    analyzeHeadless build/toolchains/bfme_ghidra bfme -process lotrbfme.exe -noanalysis \
+        -scriptPath tools/ghidra -postScript export_vtables.java $PWD/reverse/vtables.tsv
 
 ## Use
 - **Sizes:** look up a function's exact `target_size` instead of guessing from export gaps.
