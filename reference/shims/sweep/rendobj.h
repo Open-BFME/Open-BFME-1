@@ -265,6 +265,12 @@ public:
 	//           put itself back into a state as if it has never been rendered (e.g. particle emitters 
 	//           should reset their "emitted particle counts" so they can be re-used.)
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// BFME layout stubs: retail RenderObjClass vtable (see retail ParticleBufferClass
+	// vtable RVA 0xD3F618) has Render at slot 12, Get_Bounding_Box at 65,
+	// Increment_LOD at 73; shim declarations alone put them at 9/61/68.
+	virtual void					_bfme_ro_v9(void)														{ }
+	virtual void					_bfme_ro_v10(void)														{ }
+	virtual void					_bfme_ro_v11(void)														{ }
 	virtual void					Render(RenderInfoClass & rinfo)											= 0;
 	virtual void					Special_Render(SpecialRenderInfoClass & rinfo)						{ }
 	virtual void					On_Frame_Update() 														{ }
@@ -387,6 +393,7 @@ public:
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Render Object Interface - Bounding Volumes
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	virtual void					_bfme_ro_v61(void)														{ }
 	virtual const SphereClass & Get_Bounding_Sphere(void) const;
 	virtual const AABoxClass &	Get_Bounding_Box(void) const;
 	virtual void		 			Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) const;
@@ -406,6 +413,7 @@ public:
 
 	virtual void	Prepare_LOD(CameraClass &camera);
    virtual void   Recalculate_Static_LOD_Factors(void)													{ }
+	virtual void	_bfme_ro_v72(void)																		{ }
 	virtual void	Increment_LOD(void)																			{ }
 	virtual void	Decrement_LOD(void)																			{ }
 	virtual float	Get_Cost(void) const;

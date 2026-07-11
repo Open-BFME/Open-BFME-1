@@ -36,6 +36,9 @@
 
 // USER INCLUDES //////////////////////////////////////////////////////////////
 #include "always.h"
+// Pull in the shim RenderObjClass (BFME vtable layout stubs) before any WW3D2
+// header grabs the ZH reference rendobj.h; both share include guard RENDOBJ_H.
+#include "rendobj.h"
 #include "GameClient/View.h"
 #include "WW3D2/Camera.h"
 #include "WW3D2/Light.h"
@@ -2307,7 +2310,6 @@ Int W3DShadowTexture::init(RenderObjClass *robj)
 	return TRUE;
 }
 
-// ?updateBounds@W3DShadowTexture@@QAEXAAVVector3@@PAVRenderObjClass@@@Z present-unmatched
 void W3DShadowTexture::updateBounds(Vector3 &lightPos, RenderObjClass *robj)
 {
 		AABoxClass	&box=m_areaEffectBox;	///@todo: fix for multiple lights

@@ -3691,3 +3691,4 @@ _powf,,0x00097070,14,src/w3d/vp.cpp,matched,
 ?clipToTerrainExtent@@YAXAAUCoord3D@@@Z,,0x001E18B0,127,src/zh/weapon.cpp,matched,terrainlogic getExtent slot fix
 ?GetSymbol@Signature@DebugStackwalk@@SAXIPADI@Z,,0x0088C6E0,635,src/zh/debug_stack.cpp,matched,signed comparison fix
 ?objectInteractsWithBridgeEnd@TerrainLogic@@UBE_NPAVObject@@H@Z,,0x001A7F70,216,src/zh/terrainlogic.cpp,matched,object geometry pad fix
+?updateBounds@W3DShadowTexture@@QAEXAAVVector3@@PAVRenderObjClass@@@Z,,0x007B04A0,2313,src/zh/w3dprojectedshadow.cpp,matched,renderobjclass vtable fix
