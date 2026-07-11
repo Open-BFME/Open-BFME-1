@@ -133,7 +133,6 @@ static Bool isSlotLocalAlly(const GameSlot *slot)
 	return FALSE;
 }
 
-// ?getApparentPlayerTemplateDisplayName@GameSlot@@QBE?AVUnicodeString@@XZ present-unmatched
 UnicodeString GameSlot::getApparentPlayerTemplateDisplayName( void ) const
 {
 	if (TheMultiplayerSettings && TheMultiplayerSettings->showRandomPlayerTemplate() &&

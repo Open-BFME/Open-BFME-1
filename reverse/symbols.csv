@@ -1150,3 +1150,4 @@ __CxxThrowException@8,0x00850600,CRT throw helper
 ??0DownloadManager@@QAE@XZ,0x0001958D,ILT thunk used by call site
 ??0WriteLockClass@VertexBufferClass@@QAE@PAV1@H@Z,0x0091DD70,REL32 callee pin
 ??1WriteLockClass@VertexBufferClass@@QAE@XZ,0x0091DE10,REL32 callee pin
+?getDisplayName@PlayerTemplate@@QBE?AVUnicodeString@@XZ,0x000300D5,ILT thunk used by call site

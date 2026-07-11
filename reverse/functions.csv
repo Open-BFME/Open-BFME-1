@@ -3687,3 +3687,4 @@ _powf,,0x00097070,14,src/w3d/vp.cpp,matched,
 ?DownloadMenuInit@@YAXPAVWindowLayout@@PAX@Z,,0x004C74B0,459,src/zh/downloadmenu.cpp,matched,gametext vtable fix
 ?updateCircleVB@W3DStatusCircle@@IAEHXZ,,0x007260F0,324,src/zh/w3dstatuscircle.cpp,matched,shaderclass fix
 ?updateScreenVB@W3DStatusCircle@@IAEHH@Z,,0x00725DE0,221,src/zh/w3dstatuscircle.cpp,matched,shaderclass fix
+?getApparentPlayerTemplateDisplayName@GameSlot@@QBE?AVUnicodeString@@XZ,,0x0061F130,175,src/zh/gameinfo.cpp,matched,gametext vtable fix
