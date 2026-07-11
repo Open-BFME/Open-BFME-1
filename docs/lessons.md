@@ -19,3 +19,4 @@ tool fix has made obsolete.
 * Inline `static`/tiny helpers (e.g. `flipCoord3D`) often don't exist standalone in the binary — a "unique" locate hit inside another function's body is a misplacement; check `ghidra_functions.csv` boundaries before claiming.
 * This host runs a second fleet (`~/Projects/fleet/wt/*`) sharing wine and /tmp (tmpfs with quota): never kill cl.exe/build.py by name — scope by path; if /tmp hits quota, set TMPDIR to a repo-local dir.
 * `locate.py --emit` historically appended LF-tail rows into the CRLF ledger; `tools/add_match.py` / `tools/dedup_csv.py` write it correctly — prefer them over hand-appends.
+* `build.py <file>` does not reliably recompile when only an included header changed (it can verify a stale object and report green); a header/shim/layout edit is only proven by the full `./build.sh` — which the pre-commit hook runs for you.
