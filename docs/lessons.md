@@ -46,3 +46,4 @@ BFME gadget-msg enum: retail GCM_ADD_ENTRY=0x4022 (ZH 0x4020) - BFME added 2 msg
 * MatBufferClass/TexBufferClass: BFME allocates via global operator new (not W3DMPO pool); drop W3DMPO_GLUE so Get_Material_Array/Get_Texture_Array match (global new @0x881F30).
 * CRC_Memory is dual-linked (0x9E7F90 and 0x9E19C0); pin both in symbols.csv so locate accepts Install_UV/Update_CRC callees from either copy.
 * SEH array-ctors (e.g. DefaultAlphaModuleInfo default): C++/naked under /EHsc- cannot emit the retail SEH prologue; MSVC still prepends member-init fragments before a naked ctor body. Land exact bytes via MASM (.asm + ml.exe; build.py routes .asm to ml).
+* MASM exact-byte dumps: size = last non-0xCC byte ending in ret (C3/C2); strip trailing int3. When removing C++ body, force-emit any sibling COMDATs it was the only caller of (AABoxClass::Init, GameSpyStagingRoom setExe/IniCRC).
