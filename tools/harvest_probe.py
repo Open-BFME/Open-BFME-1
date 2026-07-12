@@ -30,7 +30,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REF = ROOT / "reference" / "CnC_Generals_Zero_Hour" / "GeneralsMD" / "Code"
-W3D = ROOT / "src" / "w3d"
+W3D = ROOT / "Code" / "Libraries" / "Source" / "WWVegas" / "WW3D2"
 
 
 def tracked(path: Path) -> bool:
@@ -135,7 +135,7 @@ def main():
 
     names = []
     if args.lib:
-        tracked_names = {p.stem.lower() for p in ROOT.glob("src/**/*.cpp")}
+        tracked_names = {p.stem.lower() for p in W3D.glob("*.cpp")}
         for cpp in (REF / "Libraries" / "Source" / "WWVegas" / args.lib).rglob("*.cpp"):
             if cpp.stem.lower() not in tracked_names:
                 names.append(cpp.stem)
