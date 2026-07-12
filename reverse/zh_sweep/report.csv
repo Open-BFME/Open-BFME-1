@@ -3531,3 +3531,15 @@ Tools/WorldBuilder/src/CameraOptions.cpp,missing-header,0,0,0,CameraOptions.h,0
 Tools/WorldBuilder/src/BaseBuildProps.cpp,missing-header,0,0,0,BaseBuildProps.h,0
 Tools/WorldBuilder/src/CellWidth.cpp,compile-error,0,0,0,C2504 'CDialog' : base class undefined,0
 Tools/WorldBuilder/src/CellWidth.cpp,missing-header,0,0,0,CellWidth.h,0
+GameEngine/Source/Common/INI/INI.cpp,ok,0,13,102,,0
+GameEngine/Source/Common/Recorder.cpp,ok,1,3,58,,1
+GameEngine/Source/Common/System/Debug.cpp,compile-error,0,0,0,C2065 'g_LastErrorDump' : undeclared identifier,0
+GameEngine/Source/Common/System/Geometry.cpp,ok,0,0,22,,0
+GameEngine/Source/Common/System/List.cpp,ok,0,0,0,,0
+GameEngine/Source/Common/System/Snapshot.cpp,ok,0,0,0,,0
+GameEngine/Source/Common/System/Trig.cpp,ok,0,0,0,,0
+GameEngine/Source/Common/System/Xfer.cpp,ok,0,15,63,,0
+GameEngine/Source/Common/System/encrypt.cpp,ok,0,0,1,,0
+GameEngine/Source/Common/crc.cpp,ok,0,0,0,,0
+GameEngine/Source/GameClient/Color.cpp,ok,0,1,0,,0
+GameEngine/Source/GameClient/Statistics.cpp,ok,0,0,0,,0
