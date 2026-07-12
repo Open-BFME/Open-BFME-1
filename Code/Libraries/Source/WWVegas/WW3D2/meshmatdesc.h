@@ -277,7 +277,8 @@ private:
 */
 class UVBufferClass : public ShareBufferClass < Vector2 >
 {
-	W3DMPO_GLUE(UVBufferClass)
+	// BFME: same as Mat/TexBuffer — no W3DMPO pool glue.
+	// W3DMPO_GLUE(UVBufferClass)
 public:
 	UVBufferClass(int count, const char* msg) : ShareBufferClass<Vector2>(count, msg), CRC(0xFFFFFFFF) { }
 	UVBufferClass(const UVBufferClass & that);
