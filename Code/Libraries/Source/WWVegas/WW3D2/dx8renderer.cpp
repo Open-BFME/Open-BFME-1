@@ -716,7 +716,6 @@ void DX8FVFCategoryContainer::Change_Polygon_Renderer_Material(
 
 // ----------------------------------------------------------------------------
 
-// ?Define_FVF@DX8FVFCategoryContainer@@SAIPAVMeshModelClass@@_N@Z present-unmatched
 unsigned DX8FVFCategoryContainer::Define_FVF(MeshModelClass* mmc,bool enable_lighting)
 {
 	if ((!!mmc->Get_Flag(MeshGeometryClass::SORT)) && WW3D::Is_Sorting_Enabled()) {

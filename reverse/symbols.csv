@@ -1173,3 +1173,7 @@ __CxxThrowException@8,0x00850600,CRT throw helper
 ?findImageByName@ImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z,0x0001D606
 ?Init_From_Directional_Light@InputLightStruct@LightEnvironmentClass@@QAEXABVLightClass@@ABVVector3@@@Z,0x0094A970
 ?Init_From_Point_Or_Spot_Light@InputLightStruct@LightEnvironmentClass@@QAEXABVLightClass@@ABVVector3@@@Z,0x0094AE10
+?Do_Mappers_Need_Normals@MeshMatDescClass@@QAE_NXZ,0x00929AD0
+?Get_Shader@MeshMatDescClass@@QBE?AVShaderClass@@HH@Z,0x00929990
+?Needs_Vertex_Normals@MeshModelClass@@QAE_NXZ,0x0094E0B0,
+?Get_Color_Array@MeshMatDescClass@@QAEPAIH_N@Z,0x0002F8E2,

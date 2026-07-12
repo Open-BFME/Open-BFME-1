@@ -58,9 +58,9 @@ class MeshModelClass;
 ** MeshMatDescClass - This class encapsulates all of the material description data for a mesh.
 ** WARNING: The vertex count and polygon count *MUST* be kept in sync with the mesh
 */
-class MeshMatDescClass : public W3DMPO
+class MeshMatDescClass // BFME: drop empty W3DMPO base (UV@+0x0c)
 {
-	W3DMPO_GLUE(MeshMatDescClass)
+	// W3DMPO_GLUE(MeshMatDescClass) // BFME: ColorArray at this+0x0c
 public:
 
 	enum 

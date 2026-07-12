@@ -37,6 +37,8 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef MESHGEOMETRY_H
+
+#pragma message("USING_CODE_MESHGEOMETRY_H")
 #define MESHGEOMETRY_H
 
 #include "always.h"
@@ -229,8 +231,10 @@ protected:
 	
 	// General info
 	ShareBufferClass<char> *							MeshName;
-	ShareBufferClass<char> *							UserText;
+	// BFME_FLAGS_BEFORE_USERTEXT
+// BFME: Flags before UserText so SORT lives at this+0x18 (Define_FVF).
 	int														Flags;
+	ShareBufferClass<char> *							UserText;
 	char														SortLevel;
 	uint32													W3dAttributes;
 	
@@ -251,6 +255,9 @@ protected:
 	Vector3													BoundSphereCenter;
 	float														BoundSphereRadius;
 	AABTreeClass *											CullTree;
+
+	// BFME: MeshGeometry is 0x1c larger so CurMatDesc sits at this+0x9c (Define_FVF).
+	char														_bfme_meshgeom_pad[0x1c];
 
 };
 
