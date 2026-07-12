@@ -4069,3 +4069,4 @@ _BTREE_encode@16,,0x00821D70,92,Code/Libraries/Source/Compression/EAC/btreeencod
 ?HUFF_packfile@@YAHPAUHuffEncodeContext@@PAUHUFFMemStruct@@1HH@Z,,0x00820AD0,473,Code/Libraries/Source/Compression/EAC/huffencode.cpp,matched,
 ?Free_String@WideStringClass@@AAEXXZ,,0x009E71B0,123,Code/Libraries/Source/WWVegas/WWLib/widestring.cpp,matched,
 ?Get_String@WideStringClass@@AAEXH_N@Z,,0x009E7290,306,Code/Libraries/Source/WWVegas/WWLib/widestring.cpp,matched,
+?Execute@DebugIONet@@UAEXAAVDebug@@PBD_NIPBQBD@Z,,0x0088FCE0,283,Code/Libraries/Source/WWVegas/WWDebug/DebugIONet_Execute.asm,matched,
