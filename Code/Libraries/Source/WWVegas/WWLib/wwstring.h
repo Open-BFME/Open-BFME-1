@@ -17,6 +17,8 @@
 #include <tchar.h>
 #include <stdarg.h>
 
+typedef unsigned short WCHAR;   // see win.h; needed for Copy_Wide's signature
+
 #ifndef WWASSERT
 #define WWASSERT(exp)
 #endif
@@ -34,6 +36,8 @@
 // dtor a direct `mov [&mutex],0`. Modelling the spin as a fastcall prototype (resolved
 // through reverse/symbols.csv to that shared out-of-line body) reproduces exactly that
 // codegen; a verbatim asm ctor instead materialises the object and does not match.
+#ifndef BFME_FASTCRITICALSECTION_DEFINED
+#define BFME_FASTCRITICALSECTION_DEFINED
 class FastCriticalSectionClass
 {
 	unsigned Flag;
@@ -63,6 +67,7 @@ public:
 
 	friend class LockClass;
 };
+#endif // BFME_FASTCRITICALSECTION_DEFINED
 
 class StringClass
 {
@@ -94,6 +99,9 @@ public:
 
 	int _cdecl  Format (const TCHAR *format, ...);
 	int _cdecl  Format_Args (const TCHAR *format, const va_list & arg_list );
+	int			Compare (const TCHAR *string) const;
+	int			Compare_No_Case (const TCHAR *string) const;
+	bool Copy_Wide (const WCHAR *source);
 
 	TCHAR *		Get_Buffer (int new_length);
 	TCHAR *		Peek_Buffer (void);
@@ -551,6 +559,21 @@ operator+ (const StringClass &string1, const TCHAR *string2)
 	StringClass new_string2(string2, true);
 	new_string += new_string2;
 	return new_string;
+}
+
+
+// Grown verbatim from the ZH reference: lean stand-in lacked these; zh TUs
+// (mixfile.cpp, widestring.h) call them. Inline, so byte-neutral elsewhere.
+inline int
+StringClass::Compare (const TCHAR *string) const
+{
+	return _tcscmp (m_Buffer, string);
+}
+
+inline int
+StringClass::Compare_No_Case (const TCHAR *string) const
+{
+	return _tcsicmp (m_Buffer, string);
 }
 
 #endif //__WWSTRING_H

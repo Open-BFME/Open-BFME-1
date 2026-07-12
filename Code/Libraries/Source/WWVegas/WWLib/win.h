@@ -11,6 +11,9 @@
 #ifndef WIN_H
 #define WIN_H
 
+#define MAX_PATH				260
+#define FILE_ATTRIBUTE_DIRECTORY	0x00000010
+
 typedef unsigned long	DWORD;
 typedef unsigned short	WORD;
 typedef int				BOOL;
@@ -24,11 +27,21 @@ typedef LONG *			PLONG;
 typedef WORD *			LPWORD;
 typedef unsigned int	UINT;
 typedef void *			HWND;
+typedef unsigned short	WCHAR;
+typedef WCHAR *			LPWSTR;   // = VC7.1 default wchar_t; needed by widestring.h (same as shim windows.h)
 
 typedef struct _FILETIME {
 	DWORD dwLowDateTime;
 	DWORD dwHighDateTime;
 } FILETIME, *PFILETIME, *LPFILETIME;
+
+typedef struct _WIN32_FIND_DATAA {
+	DWORD dwFileAttributes;
+	FILETIME ftCreationTime, ftLastAccessTime, ftLastWriteTime;
+	DWORD nFileSizeHigh, nFileSizeLow, dwReserved0, dwReserved1;
+	char cFileName[MAX_PATH];
+	char cAlternateFileName[14];
+} WIN32_FIND_DATAA, *LPWIN32_FIND_DATAA;
 
 typedef struct _BY_HANDLE_FILE_INFORMATION {
 	DWORD		dwFileAttributes;
@@ -67,6 +80,8 @@ typedef struct _OVERLAPPED *			LPOVERLAPPED;
 #define FILE_CURRENT			1
 #define FILE_END				2
 
+#define CP_ACP				0
+
 #define MB_OK					0x00000000L
 #define MB_ICONHAND				0x00000010L
 #define MB_ICONSTOP				MB_ICONHAND
@@ -84,6 +99,12 @@ __declspec(dllimport) BOOL __stdcall WriteFile(HANDLE hFile, LPCVOID lpBuffer, D
 __declspec(dllimport) DWORD __stdcall GetFileSize(HANDLE hFile, LPDWORD lpFileSizeHigh);
 __declspec(dllimport) DWORD __stdcall SetFilePointer(HANDLE hFile, LONG lDistanceToMove, PLONG lpDistanceToMoveHigh, DWORD dwMoveMethod);
 __declspec(dllimport) BOOL __stdcall DeleteFileA(LPCSTR lpFileName);
+__declspec(dllimport) BOOL __stdcall MoveFileA(LPCSTR lpExistingFileName, LPCSTR lpNewFileName);
+__declspec(dllimport) DWORD __stdcall GetFileAttributesA(LPCSTR lpFileName);
+__declspec(dllimport) HANDLE __stdcall FindFirstFileA(LPCSTR lpFileName, LPWIN32_FIND_DATAA lpFindFileData);
+__declspec(dllimport) BOOL __stdcall FindNextFileA(HANDLE hFindFile, LPWIN32_FIND_DATAA lpFindFileData);
+__declspec(dllimport) BOOL __stdcall FindClose(HANDLE hFindFile);
+__declspec(dllimport) int __stdcall MultiByteToWideChar(UINT CodePage, DWORD dwFlags, LPCSTR lpMultiByteStr, int cbMultiByte, LPWSTR lpWideCharStr, int cchWideChar);
 __declspec(dllimport) DWORD __stdcall GetLastError(void);
 __declspec(dllimport) BOOL __stdcall GetFileInformationByHandle(HANDLE hFile, LPBY_HANDLE_FILE_INFORMATION lpFileInformation);
 __declspec(dllimport) BOOL __stdcall FileTimeToDosDateTime(const FILETIME *lpFileTime, LPWORD lpFatDate, LPWORD lpFatTime);
@@ -93,6 +114,11 @@ __declspec(dllimport) BOOL __stdcall SetFileTime(HANDLE hFile, const FILETIME *l
 }
 
 #define DeleteFile	DeleteFileA
+#define MoveFile	MoveFileA
+#define GetFileAttributes	GetFileAttributesA
+#define FindFirstFile		FindFirstFileA
+#define FindNextFile		FindNextFileA
+#define WIN32_FIND_DATA		WIN32_FIND_DATAA
 #define OutputDebugString	OutputDebugStringA
 #define MessageBox			MessageBoxA
 
