@@ -16385,8 +16385,14 @@ CylindricalEmissionVelocityModuleTemplate::CylindricalEmissionVelocityModuleTemp
 // compiler-generated: set vtable, rep movsd m_alphaKey[8]
 
 // ??0DefaultAlphaModuleInfo@FXParticleSystem@@QAE@XZ
-DefaultAlphaModuleInfo::DefaultAlphaModuleInfo()
+// Body lives in DefaultAlphaModuleInfo_ctor.asm (SEH array-ctor; C++ naked
+// still gets MSVC member-init fragments prepended under this toolchain).
+// Keep RandomAlphaKeyframe default-ctor COMDAT in this TU (was only referenced
+// by the old C++ DefaultAlphaModuleInfo default ctor).
+void _force_RandomAlphaKeyframe_ctor(RandomAlphaKeyframe *p)
 {
+    RandomAlphaKeyframe tmp;
+    *p = tmp;
 }
 
 // ??0DefaultColorModuleInfo@FXParticleSystem@@QAE@ABV01@@Z

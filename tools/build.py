@@ -289,7 +289,6 @@ def source_extra_flags(source):
 
 def compiler_command(source, output):
     root = vc71_root()
-    compiler = root / "Vc7" / "bin" / "cl.exe"
     source_arg = source.relative_to(ROOT).as_posix()
     output_arg = output.relative_to(ROOT).as_posix()
 
@@ -300,6 +299,20 @@ def compiler_command(source, output):
             raise SystemExit("wine not found. Install Wine to run MSVC 7.1 on this host.")
         command.append(wine)
 
+    if source.suffix.lower() == ".asm":
+        # Pure MASM for bodies C++ cannot emit (e.g. SEH array-ctor prologues).
+        assembler = root / "Vc7" / "bin" / "ml.exe"
+        command += [
+            str(assembler),
+            "/nologo",
+            "/c",
+            "/Cx",
+            f"/Fo{output_arg}",
+            source_arg,
+        ]
+        return command, compiler_environment(root, source)
+
+    compiler = root / "Vc7" / "bin" / "cl.exe"
     command += [
         str(compiler),
         "/nologo",
