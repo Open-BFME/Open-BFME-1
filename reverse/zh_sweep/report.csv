@@ -3525,3 +3525,4 @@ GameEngine/Source/GameNetwork/GameSpy/LobbyUtils.cpp,ok,0,7,36,,0
 GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,unknown,0,0,0,leNotFoundError: [Errno 2] No such file or directory: '/home/wacket/Projects/Open-BFME/build/match/peerdefs.harvest.obj',0
 GameEngine/Source/GameNetwork/LANGameInfo.cpp,unknown,0,0,0,otFoundError: [Errno 2] No such file or directory: '/home/wacket/Projects/Open-BFME/build/match/langameinfo.harvest.obj',0
 GameEngine/Source/GameNetwork/NAT.cpp,ok,0,3,33,,0
+GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp,ok,0,16,42,,0
