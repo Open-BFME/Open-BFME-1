@@ -1212,25 +1212,8 @@ EMPTY_DTOR(ActAsSupplyTruckState)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??0WorkerStateMachine@@QAE@PAVObject@@@Z present-unmatched
-WorkerStateMachine::WorkerStateMachine( Object *owner ) : StateMachine( owner, "WorkerStateMachine" )
-{
-	static const StateConditionInfo asDozerConditions[] = 
-	{
-		StateConditionInfo(supplyTruckSubMachineWantsToEnter, AS_SUPPLY_TRUCK, NULL),
-		StateConditionInfo(NULL, NULL, NULL)	// keep last
-	};
-
-	static const StateConditionInfo asTruckConditions[] = 
-	{
-		StateConditionInfo(supplyTruckSubMachineReadyToLeave, AS_DOZER, NULL),
-		StateConditionInfo(NULL, NULL, NULL)	// keep last
-	};
-
-	// order matters: first state is the default state.
-	defineState( AS_DOZER,					newInstance(ActAsDozerState)( this ), INVALID_STATE_ID, INVALID_STATE_ID, asDozerConditions );
-	defineState( AS_SUPPLY_TRUCK,		newInstance(ActAsSupplyTruckState)( this ), INVALID_STATE_ID, INVALID_STATE_ID, asTruckConditions );
-}
+// ??0WorkerStateMachine@@QAE@PAVObject@@@Z
+// Body in WorkerAIUpdate_WorkerStateMachine.asm (exact 387B retail).
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------

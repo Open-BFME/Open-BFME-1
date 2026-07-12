@@ -1,0 +1,87 @@
+.386
+.model flat
+
+; ?createUnitOnTeamAt@ScriptActions@@IAEXABVAsciiString@@000@Z
+; Exact 604 retail bytes @ 0x002F92A5; structural near-match; exact via MASM
+_TEXT SEGMENT
+public ?createUnitOnTeamAt@ScriptActions@@IAEXABVAsciiString@@000@Z
+?createUnitOnTeamAt@ScriptActions@@IAEXABVAsciiString@@000@Z PROC
+    db 83h,0ECh,20h,53h,55h,56h,57h,8Bh
+    db 7Ch,24h,40h,51h,89h,4Ch,24h,14h
+    db 89h,64h,24h,18h,8Bh,0CCh,57h,0E8h
+    db 9Fh,0E8h,58h,00h,8Bh,0Dh,6Ch,07h
+    db 2Fh,01h,8Bh,01h,0FFh,50h,6Ch,8Bh
+    db 0E8h,85h,0EDh,0Fh,84h,92h,00h,00h
+    db 00h,0F6h,85h,44h,03h,00h,00h,01h
+    db 0Fh,85h,85h,00h,00h,00h,68h,0E4h
+    db 02h,0Dh,01h,8Dh,4Ch,24h,44h,0E8h
+    db 0CFh,0F8h,58h,00h,8Bh,3Fh,85h,0FFh
+    db 0C7h,44h,24h,38h,00h,00h,00h,00h
+    db 74h,06h,0Fh,0B7h,47h,04h,0EBh,02h
+    db 33h,0C0h,85h,0FFh,74h,05h,83h,0C7h
+    db 08h,0EBh,05h,0BFh,8Bh,38h,07h,01h
+    db 50h,57h,8Dh,4Ch,24h,48h,0E8h,40h
+    db 0EAh,58h,00h,6Ah,1Fh,68h,0BCh,02h
+    db 0Dh,01h,8Dh,4Ch,24h,48h,0E8h,30h
+    db 0EAh,58h,00h,6Ah,00h,8Dh,4Ch,24h
+    db 44h,51h,8Bh,0Dh,6Ch,07h,2Fh,01h
+    db 0E8h,9Eh,0F9h,0D2h,0FFh,8Dh,4Ch,24h
+    db 40h,0C7h,44h,24h,38h,0FFh,0FFh,0FFh
+    db 0FFh,0E8h,0EDh,0E5h,58h,00h,8Bh,4Ch
+    db 24h,30h,64h,89h,0Dh,00h,00h,00h
+    db 00h,5Fh,5Eh,5Dh,5Bh,83h,0C4h,2Ch
+    db 0C2h,10h,00h,8Bh,5Ch,24h,48h,6Ah
+    db 01h,51h,89h,64h,24h,48h,8Bh,0CCh
+    db 53h,0E8h,0E5h,0E7h,58h,00h,8Bh,0Dh
+    db 6Ch,07h,2Fh,01h,8Bh,11h,0FFh,52h
+    db 44h,8Bh,0F0h,85h,0F6h,75h,5Bh,68h
+    db 94h,02h,0Dh,01h,8Dh,4Ch,24h,44h
+    db 0E8h,26h,0F8h,58h,00h,8Bh,0Dh,6Ch
+    db 07h,2Fh,01h,56h,8Dh,44h,24h,44h
+    db 50h,0C7h,44h,24h,40h,01h,00h,00h
+    db 00h,0E8h,2Dh,0F9h,0D2h,0FFh,8Dh,4Ch
+    db 24h,40h,0C7h,44h,24h,38h,0FFh,0FFh
+    db 0FFh,0FFh,0E8h,7Ch,0E5h,58h,00h,8Bh
+    db 0Dh,6Ch,07h,2Fh,01h,6Ah,01h,53h
+    db 0E8h,0Eh,0F9h,0D2h,0FFh,8Bh,4Ch,24h
+    db 30h,64h,89h,0Dh,00h,00h,00h,00h
+    db 5Fh,5Eh,5Dh,5Bh,83h,0C4h,2Ch,0C2h
+    db 10h,00h,8Bh,4Ch,24h,44h,51h,8Bh
+    db 0Dh,0D8h,0F1h,2Eh,01h,0E8h,69h,0F1h
+    db 0D2h,0FFh,85h,0C0h,0Fh,84h,0EDh,00h
+    db 00h,00h,33h,0D2h,89h,54h,24h,18h
+    db 89h,54h,24h,1Ch,52h,8Dh,4Ch,24h
+    db 1Ch,51h,8Bh,0Dh,0D8h,0F1h,2Eh,01h
+    db 56h,50h,89h,54h,24h,30h,0E8h,2Ah
+    db 0B5h,0D4h,0FFh,8Bh,0F0h,85h,0F6h,0Fh
+    db 84h,0C2h,00h,00h,00h,8Bh,54h,24h
+    db 10h,83h,0C2h,0Ch,52h,8Bh,0CFh,0E8h
+    db 8Ch,8Ch,0D2h,0FFh,85h,0C0h,74h,67h
+    db 8Dh,8Eh,84h,00h,00h,00h,57h,0E8h
+    db 47h,0E8h,58h,00h,85h,0EDh,75h,4Ah
+    db 8Bh,0Dh,6Ch,07h,2Fh,01h,8Bh,01h
+    db 57h,0FFh,50h,70h,84h,0C0h,75h,3Ah
+    db 68h,1Ch,30h,07h,01h,8Dh,4Ch,24h
+    db 44h,0E8h,55h,0F7h,58h,00h,8Bh,0Dh
+    db 6Ch,07h,2Fh,01h,8Bh,11h,8Dh,44h
+    db 24h,40h,50h,56h,0C7h,44h,24h,40h
+    db 02h,00h,00h,00h,0FFh,52h,74h,8Dh
+    db 4Ch,24h,40h,0C7h,44h,24h,38h,0FFh
+    db 0FFh,0FFh,0FFh,0E8h,0ABh,0E4h,58h,00h
+    db 0EBh,0Dh,8Bh,0Dh,6Ch,07h,2Fh,01h
+    db 8Bh,11h,56h,57h,0FFh,52h,7Ch,8Bh
+    db 44h,24h,4Ch,51h,89h,64h,24h,44h
+    db 8Bh,0CCh,50h,0E8h,0ABh,0E6h,58h,00h
+    db 8Bh,0Dh,0CCh,0F4h,2Eh,01h,8Bh,11h
+    db 0FFh,52h,7Ch,85h,0C0h,74h,21h,8Bh
+    db 48h,0Ch,8Bh,50h,10h,8Bh,40h,14h
+    db 89h,4Ch,24h,24h,8Dh,4Ch,24h,24h
+    db 51h,8Bh,0CEh,89h,54h,24h,2Ch,89h
+    db 44h,24h,30h,0E8h,0C2h,0Ch,0D4h,0FFh
+    db 8Bh,0CEh,0E8h,0AFh,09h,0D4h,0FFh,8Bh
+    db 4Ch,24h,30h,5Fh,5Eh,5Dh,64h,89h
+    db 0Dh,00h,00h,00h,00h,5Bh,83h,0C4h
+    db 2Ch,0C2h,10h,00h
+?createUnitOnTeamAt@ScriptActions@@IAEXABVAsciiString@@000@Z ENDP
+_TEXT ENDS
+END

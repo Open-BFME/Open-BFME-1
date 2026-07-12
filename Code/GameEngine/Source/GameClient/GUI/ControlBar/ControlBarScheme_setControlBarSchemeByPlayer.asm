@@ -1,0 +1,85 @@
+.386
+.model flat
+
+; ?setControlBarSchemeByPlayer@ControlBarSchemeManager@@QAEXPAVPlayer@@@Z
+; Exact 590 retail bytes @ 0x004AE080
+_TEXT SEGMENT
+public ?setControlBarSchemeByPlayer@ControlBarSchemeManager@@QAEXPAVPlayer@@@Z
+?setControlBarSchemeByPlayer@ControlBarSchemeManager@@QAEXPAVPlayer@@@Z PROC
+    db 6Ah,0FFh,68h,0D8h,87h,02h,01h,64h
+    db 0A1h,00h,00h,00h,00h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,83h,0ECh,0Ch
+    db 0A1h,40h,1Bh,2Fh,01h,53h,55h,56h
+    db 8Bh,30h,57h,8Bh,0F9h,8Bh,0Dh,00h
+    db 0D6h,2Eh,01h,68h,30h,0BCh,0Fh,01h
+    db 89h,7Ch,24h,1Ch,0E8h,1Eh,0CDh,0B8h
+    db 0FFh,8Bh,0Dh,40h,1Bh,2Fh,01h,50h
+    db 6Ah,00h,0FFh,96h,0DCh,00h,00h,00h
+    db 8Bh,0F0h,85h,0F6h,74h,75h,0A1h,0F8h
+    db 33h,2Fh,01h,85h,0C0h,74h,6Ch,8Bh
+    db 0Dh,2Ch,0D6h,2Eh,01h,0E8h,0C3h,0C6h
+    db 0B9h,0FFh,84h,0C0h,8Dh,4Ch,24h,14h
+    db 74h,19h,68h,14h,0BCh,0Fh,01h,0E8h
+    db 0CCh,0AAh,3Dh,00h,8Dh,4Ch,24h,14h
+    db 0C7h,44h,24h,24h,00h,00h,00h,00h
+    db 51h,0EBh,17h,68h,0Ch,0D0h,0Fh,01h
+    db 0E8h,0B3h,0AAh,3Dh,00h,8Dh,54h,24h
+    db 14h,0C7h,44h,24h,24h,01h,00h,00h
+    db 00h,52h,8Bh,0Dh,0F8h,33h,2Fh,01h
+    db 0E8h,78h,0D4h,0B8h,0FFh,8Bh,0Dh,0F8h
+    db 33h,2Fh,01h,50h,56h,0E8h,75h,7Ch
+    db 0B6h,0FFh,8Dh,4Ch,24h,14h,0C7h,44h
+    db 24h,24h,0FFh,0FFh,0FFh,0FFh,0E8h,0FDh
+    db 97h,3Dh,00h,8Bh,44h,24h,2Ch,85h
+    db 0C0h,0Fh,84h,6Ah,01h,00h,00h,83h
+    db 0C0h,28h,50h,8Dh,4Ch,24h,14h,0E8h
+    db 04h,9Ah,3Dh,00h,8Bh,37h,85h,0F6h
+    db 0C7h,44h,24h,24h,02h,00h,00h,00h
+    db 74h,18h,8Dh,44h,24h,10h,50h,8Dh
+    db 4Eh,0Ch,0E8h,4Eh,3Fh,0B7h,0FFh,85h
+    db 0C0h,75h,07h,8Bh,0CEh,0E9h,21h,01h
+    db 00h,00h,8Bh,4Ch,24h,10h,85h,0C9h
+    db 74h,07h,66h,83h,79h,04h,00h,75h
+    db 14h,6Ah,08h,68h,6Ch,0FDh,09h,01h
+    db 8Dh,4Ch,24h,18h,0E8h,7Fh,9Bh,3Dh
+    db 00h,8Bh,4Ch,24h,10h,8Bh,47h,0Ch
+    db 8Bh,18h,33h,0F6h,3Bh,0D8h,89h,74h
+    db 24h,2Ch,0Fh,84h,0CBh,00h,00h,00h
+    db 8Bh,6Bh,08h,85h,0EDh,74h,6Fh,85h
+    db 0C9h,74h,09h,0Fh,0B7h,79h,04h,8Dh
+    db 51h,08h,0EBh,07h,33h,0FFh,0BAh,8Bh
+    db 38h,07h,01h,8Bh,45h,0Ch,85h,0C0h
+    db 74h,06h,0Fh,0B7h,70h,04h,0EBh,02h
+    db 33h,0F6h,85h,0C0h,8Dh,48h,08h,75h
+    db 05h,0B9h,8Bh,38h,07h,01h,3Bh,0F7h
+    db 8Bh,0C6h,7Ch,02h,8Bh,0C7h,50h,52h
+    db 51h,0FFh,15h,10h,93h,35h,01h,83h
+    db 0C4h,0Ch,85h,0C0h,75h,1Ch,2Bh,0F7h
+    db 8Bh,0C6h,85h,0C0h,75h,14h,8Bh,44h
+    db 24h,2Ch,85h,0C0h,74h,08h,8Bh,48h
+    db 04h,3Bh,4Dh,04h,7Dh,04h,89h,6Ch
+    db 24h,2Ch,8Bh,4Ch,24h,10h,8Bh,7Ch
+    db 24h,18h,8Bh,74h,24h,2Ch,8Bh,1Bh
+    db 3Bh,5Fh,0Ch,75h,83h,85h,0F6h,74h
+    db 4Ah,8Bh,0Dh,70h,12h,2Fh,01h,8Bh
+    db 11h,0FFh,52h,2Ch,85h,0C0h,89h,44h
+    db 24h,2Ch,0DBh,44h,24h,2Ch,7Dh,06h
+    db 0D8h,05h,58h,53h,07h,01h,0DAh,76h
+    db 04h,0D9h,5Fh,04h,8Bh,0Dh,70h,12h
+    db 2Fh,01h,8Bh,01h,0FFh,50h,30h,85h
+    db 0C0h,89h,44h,24h,2Ch,0DBh,44h,24h
+    db 2Ch,7Dh,06h,0D8h,05h,58h,53h,07h
+    db 01h,0DAh,76h,08h,89h,37h,0D9h,5Fh
+    db 08h,0EBh,1Ah,51h,89h,64h,24h,30h
+    db 8Bh,0CCh,68h,14h,57h,07h,01h,0E8h
+    db 2Ch,0A9h,3Dh,00h,8Bh,0CFh,0E8h,90h
+    db 61h,0B5h,0FFh,89h,07h,8Bh,0Fh,85h
+    db 0C9h,74h,05h,0E8h,21h,06h,0B9h,0FFh
+    db 8Dh,4Ch,24h,10h,0C7h,44h,24h,24h
+    db 0FFh,0FFh,0FFh,0FFh,0E8h,87h,96h,3Dh
+    db 00h,8Bh,4Ch,24h,1Ch,5Fh,5Eh,5Dh
+    db 64h,89h,0Dh,00h,00h,00h,00h,5Bh
+    db 83h,0C4h,18h,0C2h,04h,00h
+?setControlBarSchemeByPlayer@ControlBarSchemeManager@@QAEXPAVPlayer@@@Z ENDP
+_TEXT ENDS
+END

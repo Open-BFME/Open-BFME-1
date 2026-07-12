@@ -3634,20 +3634,8 @@ void GameWindowManager::assignDefaultGadgetLook( GameWindow *gadget,
 /** Given a text label, retreive the real localized text associated
 	* with that label */
 //-------------------------------------------------------------------------------------------------
-// ?winTextLabelToText@GameWindowManager@@UAE?AVUnicodeString@@VAsciiString@@@Z present-unmatched
-UnicodeString GameWindowManager::winTextLabelToText( AsciiString label )
-{
-	
-	// sanity
-	if( label.isEmpty() )
-		return UnicodeString::TheEmptyString;
-
-	/// @todo we need to write the string manager here, this is TEMPORARY!!!
-	UnicodeString tmp;
-	tmp.translate(label);
-	return tmp;
-
-}  // end winTextLabelToText
+// ?winTextLabelToText@GameWindowManager@@QAE?AVUnicodeString@@VAsciiString@@@Z
+// Body in GameWindowManager_winTextLabelToText.asm (exact 175B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** find the top window at the given coordinates */

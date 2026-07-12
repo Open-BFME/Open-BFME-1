@@ -1190,74 +1190,8 @@ void ControlBarSchemeManager::setControlBarSchemeByPlayerTemplate( const PlayerT
 		m_currentScheme->init();
 }
 //-----------------------------------------------------------------------------
-// ?setControlBarSchemeByPlayer@ControlBarSchemeManager@@QAEXPAVPlayer@@@Z present-unmatched
-void ControlBarSchemeManager::setControlBarSchemeByPlayer(Player *p)
-{
-	GameWindow *communicatorButton = TheWindowManager->winGetWindowFromId( NULL, NAMEKEY("ControlBar.wnd:PopupCommunicator") );
-	if (communicatorButton && TheControlBar)
-	{
-		if (TheRecorder->isMultiplayer())
-			TheControlBar->setControlCommand(communicatorButton, TheControlBar->findCommandButton("NonCommand_Communicator") );
-		else
-			TheControlBar->setControlCommand(communicatorButton, TheControlBar->findCommandButton("NonCommand_BriefingHistory") );
-	}
-
-	if(!p)
-		return;
-	AsciiString side = p->getSide();
-	if(m_currentScheme && (m_currentScheme->m_side.compare(side) == 0))
-	{
-		m_currentScheme->init();
-
-		DEBUG_LOG(("setControlBarSchemeByPlayer already is using %s as its side\n", side.str()));
-		return;
-	}
-
-	// if we don't have a side, set it to Observer shell
-	if(side.isEmpty())
-		side.set("Observer");
-	DEBUG_LOG(("setControlBarSchemeByPlayer used %s as its side\n", side.str()));
-	ControlBarScheme *tempScheme = NULL;
-
-	ControlBarSchemeList::iterator it = m_schemeList.begin();
-	
-	// iterate through the list and return the scheme that we're looking for
-	while (it != m_schemeList.end())
-	{
-		ControlBarScheme *CBScheme = *it;
-		if( !CBScheme )
-		{
-			DEBUG_ASSERTCRASH(FALSE,("There's no ControlBarScheme in the ControlBarSchemeList:m_schemeList"));
-			it++;
-			continue;
-		}
-		// find the scheme that best matches our resolution
-		if(CBScheme->m_side.compareNoCase( side ) == 0)
-		{
-		
-			if((!tempScheme || tempScheme->m_ScreenCreationRes.x < CBScheme->m_ScreenCreationRes.x) )//&& TheDisplay->getWidth() >= CBScheme->m_ScreenCreationRes.x )
-				tempScheme = CBScheme;
-		}
-		it ++;	
-	}
-	
-	if(tempScheme)
-	{
-		// setup the multiplyer value
- 		m_multiplyer.x = TheDisplay->getWidth() / (Real)tempScheme->m_ScreenCreationRes.x;
-		m_multiplyer.y = TheDisplay->getHeight() / (Real)tempScheme->m_ScreenCreationRes.y;
-		m_currentScheme = tempScheme;
-	}
-	else
-	{
-		// well, we couldn't find
-		m_currentScheme = findControlBarScheme("Default");
-		DEBUG_LOG(("There's no ControlBarScheme with a side of %s", side.str()));
-//		m_currentScheme = NULL;
-	}
-	if(m_currentScheme)
-		m_currentScheme->init();
-}	
+// ?setControlBarSchemeByPlayer@ControlBarSchemeManager@@QAEXPAVPlayer@@@Z
+// Body in ControlBarScheme_setControlBarSchemeByPlayer.asm (exact 590B retail).
 
 
 //-----------------------------------------------------------------------------

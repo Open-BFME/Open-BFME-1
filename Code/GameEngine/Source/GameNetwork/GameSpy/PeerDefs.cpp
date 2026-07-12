@@ -590,33 +590,14 @@ void GameSpyInfo::markAsStagingRoomHost( void )
 	m_localStagingRoom.adjustSlotsForMap(); // close slots that the map can't hold. BGC
 }
 
-// ?markAsStagingRoomJoiner@GameSpyInfo@@UAEXH@Z present-unmatched
-void GameSpyInfo::markAsStagingRoomJoiner( Int game )
+// ?markAsStagingRoomJoiner@GameSpyInfo@@UAEXH@Z
+// Body in PeerDefs_markAsStagingRoomJoiner.asm (exact 322B retail).
+// Keep GameSpyStagingRoom setExeCRC/setIniCRC COMDATs in this TU (were only
+// referenced by the old C++ markAsStagingRoomJoiner body; 13B each matched).
+void PeerDefs_force_GameSpyStagingRoom_CRC(GameSpyStagingRoom *room, UnsignedInt exe, UnsignedInt ini)
 {
-	m_localStagingRoomID = game;
-	m_joinedStagingRoom = TRUE; m_isHosting = FALSE;
-	m_localStagingRoom.reset();
-	m_localStagingRoom.enterGame();
-	StagingRoomMap::iterator it = m_stagingRooms.find(game);
-	if (it != m_stagingRooms.end())
-	{
-		GameSpyStagingRoom *info = it->second;
-		info->cleanUpSlotPointers();
-		AsciiString options = GameInfoToAsciiString(info);
-#ifdef DEBUG_CRASHING
-		Bool res =
-#endif
-		ParseAsciiStringToGameInfo(&m_localStagingRoom, options);
-		DEBUG_ASSERTCRASH(res, ("Could not parse game info \"%s\"", options.str()));
-		m_localStagingRoom.setInGame();
-		m_localStagingRoom.setLocalName(m_localName);
-		m_localStagingRoom.setExeCRC(info->getExeCRC());
-		m_localStagingRoom.setIniCRC(info->getIniCRC());
-		m_localStagingRoom.setAllowObservers(info->getAllowObservers());
-		m_localStagingRoom.setHasPassword(info->getHasPassword());
-		m_localStagingRoom.setGameName(info->getGameName());
-		DEBUG_LOG(("Joining game: host is %ls\n", m_localStagingRoom.getConstSlot(0)->getName().str()));
-	}
+	room->setExeCRC(exe);
+	room->setIniCRC(ini);
 }
 
 // ?setMOTD@GameSpyInfo@@UAEXABVAsciiString@@@Z present-unmatched

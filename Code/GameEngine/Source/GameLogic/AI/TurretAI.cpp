@@ -89,23 +89,8 @@ static StateReturnType frameToSleepTime(
  * Create a TurretAI state machine. Define all of the states the machine 
  * can possibly be in, and set the initial (default) state.
  */
-// ??0TurretStateMachine@@QAE@PAVTurretAI@@PAVObject@@VAsciiString@@@Z present-unmatched
-TurretStateMachine::TurretStateMachine( TurretAI* tai, Object *obj, AsciiString name ) : m_turretAI(tai), StateMachine( obj, name )
-{
-	static const StateConditionInfo fireConditions[] = 
-	{
-		StateConditionInfo(outOfWeaponRangeObject, TURRETAI_AIM, NULL),
-		StateConditionInfo(NULL, NULL, NULL)	// keep last
-	};
-
-	// order matters: first state is the default state.
-	defineState( TURRETAI_IDLE,					newInstance(TurretAIIdleState)( this ), TURRETAI_IDLE, TURRETAI_IDLESCAN );
-	defineState( TURRETAI_IDLESCAN,			newInstance(TurretAIIdleScanState)( this ), TURRETAI_HOLD, TURRETAI_HOLD );
-	defineState( TURRETAI_AIM,					newInstance(TurretAIAimTurretState)( this ), TURRETAI_FIRE, TURRETAI_HOLD );
-	defineState( TURRETAI_FIRE,					newInstance(AIAttackFireWeaponState)( this, tai ), TURRETAI_AIM, TURRETAI_AIM, fireConditions );
-	defineState( TURRETAI_RECENTER,			newInstance(TurretAIRecenterTurretState)( this ), TURRETAI_IDLE, TURRETAI_IDLE );
-	defineState( TURRETAI_HOLD,					newInstance(TurretAIHoldTurretState)( this ), TURRETAI_RECENTER, TURRETAI_RECENTER );
-}
+// ??0TurretStateMachine@@QAE@PAVTurretAI@@PAVObject@@VAsciiString@@@Z
+// Body in TurretAI_TurretStateMachine.asm (exact 658B retail).
 
 //----------------------------------------------------------------------------------------------------------
 // ??1TurretStateMachine@@MAE@XZ present-unmatched

@@ -1,0 +1,49 @@
+.386
+.model flat
+
+; ?WOLLobbyMenuShutdown@@YAXPAVWindowLayout@@PAX@Z
+; Exact 299 retail bytes @ 0x004FAF70
+_TEXT SEGMENT
+public ?WOLLobbyMenuShutdown@@YAXPAVWindowLayout@@PAX@Z
+?WOLLobbyMenuShutdown@@YAXPAVWindowLayout@@PAX@Z PROC
+    db 6Ah,0FFh,68h,46h,0D1h,02h,01h,64h
+    db 0A1h,00h,00h,00h,00h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,81h,0ECh,0ACh
+    db 01h,00h,00h,53h,56h,8Dh,4Ch,24h
+    db 08h,0E8h,5Fh,01h,0B1h,0FFh,33h,0DBh
+    db 89h,9Ch,24h,0BCh,01h,00h,00h,0E8h
+    db 96h,9Ah,0B4h,0FFh,85h,0C0h,8Dh,4Ch
+    db 24h,08h,74h,03h,53h,0EBh,02h,6Ah
+    db 01h,0E8h,21h,26h,0B4h,0FFh,8Dh,4Ch
+    db 24h,08h,0E8h,0D6h,54h,0B3h,0FFh,0E8h
+    db 84h,42h,0B3h,0FFh,8Bh,0Dh,94h,71h
+    db 2Fh,01h,8Bh,15h,28h,46h,2Fh,01h
+    db 8Bh,01h,52h,0FFh,90h,0E8h,00h,00h
+    db 00h,8Dh,4Ch,24h,20h,0E8h,1Ah,0C2h
+    db 0B1h,0FFh,8Bh,0Dh,0C8h,71h,2Fh,01h
+    db 8Dh,54h,24h,20h,0C7h,44h,24h,20h
+    db 08h,00h,00h,00h,8Bh,01h,52h,0C6h
+    db 84h,24h,0C0h,01h,00h,00h,01h,0FFh
+    db 50h,18h,8Bh,84h,24h,0C8h,01h,00h
+    db 00h,38h,18h,89h,1Dh,28h,46h,2Fh
+    db 01h,89h,1Dh,24h,46h,2Fh,01h,0C6h
+    db 05h,0C0h,45h,2Fh,01h,01h,74h,0Eh
+    db 8Bh,0B4h,24h,0C4h,01h,00h,00h,0E8h
+    db 84h,0E8h,0FFh,0FFh,0EBh,32h,8Bh,0Dh
+    db 58h,4Bh,2Fh,01h,0E8h,0B5h,2Ch,0B4h
+    db 0FFh,88h,1Dh,0D4h,45h,2Fh,01h,0E8h
+    db 48h,0CBh,0B3h,0FFh,51h,89h,64h,24h
+    db 20h,8Bh,0CCh,68h,0A8h,30h,10h,01h
+    db 0E8h,6Bh,0DBh,38h,00h,8Bh,0Dh,30h
+    db 33h,2Fh,01h,0E8h,0CCh,91h,0B1h,0FFh
+    db 8Dh,4Ch,24h,20h,88h,9Ch,24h,0BCh
+    db 01h,00h,00h,0E8h,65h,0BBh,0B1h,0FFh
+    db 8Dh,4Ch,24h,08h,0C7h,84h,24h,0BCh
+    db 01h,00h,00h,0FFh,0FFh,0FFh,0FFh,0E8h
+    db 0E6h,6Eh,0B4h,0FFh,8Bh,8Ch,24h,0B4h
+    db 01h,00h,00h,5Eh,64h,89h,0Dh,00h
+    db 00h,00h,00h,5Bh,81h,0C4h,0B8h,01h
+    db 00h,00h,0C3h
+?WOLLobbyMenuShutdown@@YAXPAVWindowLayout@@PAX@Z ENDP
+_TEXT ENDS
+END

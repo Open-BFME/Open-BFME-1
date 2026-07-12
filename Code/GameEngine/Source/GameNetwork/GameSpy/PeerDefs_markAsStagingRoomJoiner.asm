@@ -1,0 +1,52 @@
+.386
+.model flat
+
+; ?markAsStagingRoomJoiner@GameSpyInfo@@UAEXH@Z
+; Exact 322 retail bytes @ 0x00632B80; structural near-match; exact via MASM
+_TEXT SEGMENT
+public ?markAsStagingRoomJoiner@GameSpyInfo@@UAEXH@Z
+?markAsStagingRoomJoiner@GameSpyInfo@@UAEXH@Z PROC
+    db 6Ah,0FFh,68h,98h,09h,04h,01h,64h
+    db 0A1h,00h,00h,00h,00h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,51h,8Bh,44h
+    db 24h,14h,55h,56h,8Bh,0F1h,8Bh,96h
+    db 5Ch,02h,00h,00h,8Dh,0AEh,5Ch,02h
+    db 00h,00h,57h,8Bh,0CDh,89h,86h,0C4h
+    db 06h,00h,00h,0C7h,86h,54h,02h,00h
+    db 00h,01h,00h,00h,00h,0C6h,86h,58h
+    db 02h,00h,00h,00h,0FFh,52h,08h,8Bh
+    db 0CDh,0E8h,4Fh,33h,9Fh,0FFh,8Dh,44h
+    db 24h,20h,50h,8Dh,4Ch,24h,10h,8Dh
+    db 7Eh,24h,51h,8Bh,0CFh,0E8h,2Ah,6Dh
+    db 9Eh,0FFh,8Bh,3Fh,8Bh,44h,24h,0Ch
+    db 3Bh,0C7h,0Fh,84h,0BEh,00h,00h,00h
+    db 8Bh,78h,14h,8Bh,0CFh,0E8h,0Dh,0F9h
+    db 9Eh,0FFh,6Ah,01h,8Dh,54h,24h,24h
+    db 57h,52h,0E8h,03h,0BBh,9Dh,0FFh,83h
+    db 0C4h,0Ch,6Ah,01h,51h,8Dh,44h,24h
+    db 28h,89h,64h,24h,14h,8Bh,0CCh,50h
+    db 0C7h,44h,24h,24h,00h,00h,00h,00h
+    db 0E8h,3Bh,4Fh,25h,00h,55h,0E8h,2Eh
+    db 0D0h,9Dh,0FFh,83h,0C4h,08h,8Dh,56h
+    db 6Ch,89h,64h,24h,10h,8Bh,0CCh,52h
+    db 0C6h,86h,68h,02h,00h,00h,01h,0E8h
+    db 1Ch,4Fh,25h,00h,8Bh,0CDh,0E8h,6Ch
+    db 7Bh,9Eh,0FFh,8Bh,87h,30h,04h,00h
+    db 00h,89h,86h,8Ch,06h,00h,00h,8Bh
+    db 87h,34h,04h,00h,00h,89h,86h,90h
+    db 06h,00h,00h,8Bh,87h,38h,04h,00h
+    db 00h,89h,86h,94h,06h,00h,00h,8Ah
+    db 87h,29h,04h,00h,00h,88h,86h,85h
+    db 06h,00h,00h,8Ah,87h,28h,04h,00h
+    db 00h,51h,88h,86h,84h,06h,00h,00h
+    db 8Bh,0C4h,89h,64h,24h,10h,50h,8Bh
+    db 0CFh,0E8h,1Eh,9Bh,9Fh,0FFh,8Bh,0CDh
+    db 0E8h,0D0h,14h,9Fh,0FFh,8Dh,4Ch,24h
+    db 20h,0C7h,44h,24h,18h,0FFh,0FFh,0FFh
+    db 0FFh,0E8h,92h,4Ch,25h,00h,8Bh,4Ch
+    db 24h,10h,5Fh,5Eh,64h,89h,0Dh,00h
+    db 00h,00h,00h,5Dh,83h,0C4h,10h,0C2h
+    db 04h,00h
+?markAsStagingRoomJoiner@GameSpyInfo@@UAEXH@Z ENDP
+_TEXT ENDS
+END

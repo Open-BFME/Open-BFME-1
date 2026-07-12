@@ -1212,61 +1212,8 @@ void ScriptActions::doBuildBaseStructure(const AsciiString& buildingType, Bool f
 //-------------------------------------------------------------------------------------------------
 /** createUnitOnTeamAt */
 //-------------------------------------------------------------------------------------------------
-// ?createUnitOnTeamAt@ScriptActions@@IAEXABVAsciiString@@000@Z present-unmatched
-void ScriptActions::createUnitOnTeamAt(const AsciiString& unitName, const AsciiString& objType, const AsciiString& teamName, const AsciiString& waypoint)
-{
-	Object* pOldObj = TheScriptEngine->getUnitNamed(unitName);
-
-	if (pOldObj && !pOldObj->isEffectivelyDead()) {
-		AsciiString str = "WARNING - Object with name ";
-		str.concat(unitName);
-		str.concat(" already exists. Failed Create.");
-		TheScriptEngine->AppendDebugMessage(str, false);
-			// Unit by that name already exists
-		return;
-	}
-
-	Team *theTeam = TheScriptEngine->getTeamNamed( teamName );
-	// The team is the team based on the name, and the calling team (if any) and the team that
-	// triggered the condition.  jba. :)
-	if (theTeam==NULL) {
-		// We may need to create the team.
-		theTeam = TheTeamFactory->createTeam( teamName );
-	}
-	if (!theTeam) {
-		TheScriptEngine->AppendDebugMessage("***WARNING - Team not found:***", false);
-		TheScriptEngine->AppendDebugMessage(teamName, true);
-		DEBUG_LOG(("WARNING - Team %s not found.\n", teamName.str()));
-		return;
-	}
-	const ThingTemplate *thingTemplate;
-	// get thing template based from map object name
-	thingTemplate = TheThingFactory->findTemplate(objType);
-	if (thingTemplate) {
-		// create new object in the world
-		Object *obj = TheThingFactory->newObject( thingTemplate, theTeam );
-		if( obj )
-		{
-			if (unitName != m_unnamedUnit) {
-				obj->setName(unitName);
-				if (pOldObj || TheScriptEngine->didUnitExist(unitName)) {
-					TheScriptEngine->transferObjectName(unitName, obj);
-				} else {
-					TheScriptEngine->addObjectToCache(obj);
-				}
-			}
-	
-			Waypoint *way = TheTerrainLogic->getWaypointByName( waypoint );
-			if (way)
-			{
-				Coord3D destination = *way->getLocation();
-				obj->setPosition(&destination);
-			}
-		}  // end if
-	} else {
-		DEBUG_LOG(("WARNING - ThingTemplate '%s' not found.\n", objType.str()));
-	}
-}
+// ?createUnitOnTeamAt@ScriptActions@@IAEXABVAsciiString@@000@Z
+// Body in ScriptActions_createUnitOnTeamAt.asm (exact 604B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** updateNamedAttackPrioritySet */

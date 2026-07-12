@@ -751,56 +751,8 @@ static void shutdownComplete( WindowLayout *layout )
 
 //-------------------------------------------------------------------------------------------------
 /** WOL Lobby Menu shutdown method */
-//-------------------------------------------------------------------------------------------------
-void WOLLobbyMenuShutdown( WindowLayout *layout, void *userData )
-{
-	CustomMatchPreferences pref;
-//	GameWindow *slider = TheWindowManager->winGetWindowFromId(parent, sliderChatAdjustID);
-//	if (slider)
-//	{
-//		pref.setChatSizeSlider(GadgetSliderGetPosition(slider));
-//	}
-	if (GetGameInfoListBox())
-	{
-		pref.setUsesLongGameList(FALSE);
-	}
-	else
-	{
-		pref.setUsesLongGameList(TRUE);
-	}
-	pref.write();
-
-	ReleaseWindowInfo();
-
-	TheGameSpyInfo->unregisterTextWindow(listboxLobbyChat);
-
-	//TheGameSpyChat->stopListingGames();
-	PeerRequest req;
-	req.peerRequestType = PeerRequest::PEERREQUEST_STOPGAMELIST;
-	TheGameSpyPeerMessageQueue->addRequest(req);
-
-	listboxLobbyChat = NULL;
-	listboxLobbyPlayers = NULL;
-
-	isShuttingDown = true;
-
-	// if we are shutting down for an immediate pop, skip the animations
-	Bool popImmediate = *(Bool *)userData;
-	if( popImmediate )
-	{
-
-		shutdownComplete( layout );
-		return;
-
-	}  //end if
-
-	TheShell->reverseAnimatewindow();
-	DontShowMainMenu = FALSE;
-
-	RaiseGSMessageBox();
-	TheTransitionHandler->reverse("WOLCustomLobbyFade");
-
-}  // WOLLobbyMenuShutdown
+// ?WOLLobbyMenuShutdown@@YAXPAVWindowLayout@@PAX@Z
+// Body in WOLLobbyMenu_WOLLobbyMenuShutdown.asm (exact 299B retail).
 
 static void fillPlayerInfo(const PeerResponse *resp, PlayerInfo *info)
 {

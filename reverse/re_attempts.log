@@ -327,3 +327,14 @@ _$E117	no-match	Compiler-generated static initializer. Drift RVA 0xC6E36F starts
 ?getHealthBoxDimensions@Object@@QBE_NAAM0@Z	landed	MASM exact 166B @ 0x001C9E64
 ?loadSavedIgnoreList@GameSpyInfo@@UAEXXZ	landed	MASM exact 162B @ 0x00635310
 ?closeDataChunk@DataChunkOutput@@QAEXXZ	landed	MASM exact 118B @ 0x001024A0
+??0ControlBar@@QAE@XZ	landed	MASM exact 819B @ 0x009F2730
+??0TurretStateMachine@@QAE@PAVTurretAI@@PAVObject@@VAsciiString@@@Z	landed	MASM exact 658B @ 0x0018DB84
+?createUnitOnTeamAt@ScriptActions@@IAEXABVAsciiString@@000@Z	landed	MASM exact 604B @ 0x002F92A5
+?setControlBarSchemeByPlayer@ControlBarSchemeManager@@QAEXPAVPlayer@@@Z	landed	MASM exact 590B @ 0x004AE080
+??0WorkerStateMachine@@QAE@PAVObject@@@Z	landed	MASM exact 387B @ 0x002C9260
+?markAsStagingRoomJoiner@GameSpyInfo@@UAEXH@Z	landed	MASM exact 322B @ 0x00632B80
+?WOLLobbyMenuShutdown@@YAXPAVWindowLayout@@PAX@Z	landed	MASM exact 299B @ 0x004FAF70
+?winTextLabelToText@GameWindowManager@@QAE?AVUnicodeString@@VAsciiString@@@Z	landed	MASM exact 175B @ 0x0047E1B0
+?write@UserPreferences@@UAE_NXZ	landed	MASM exact 162B @ 0x000A9F60
+??0GameTextManager@@QAE@XZ	landed	MASM exact 161B @ 0x00438350
+?WriteBuildInfo@Debug@@QAEXXZ	landed	MASM exact 135B @ 0x0088A492

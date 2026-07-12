@@ -161,26 +161,8 @@ Bool UserPreferences::load(AsciiString fname)
 	return false;
 }
 
-// ?write@UserPreferences@@UAE_NXZ present-unmatched
-Bool UserPreferences::write( void )
-{
-	if (m_filename.isEmpty())
-		return false;
-
-	FILE *fp = fopen(m_filename.str(), "w");
-	if (fp)
-	{
-		PreferenceMap::const_iterator it = begin();
-		while (it != end())
-		{
-			fprintf(fp, "%s = %s\n", it->first.str(), it->second.str());
-			++it;
-		}
-		fclose(fp);
-		return true;
-	}
-	return false;
-}
+// ?write@UserPreferences@@UAE_NXZ
+// Body in UserPreferences_write.asm (exact 162B retail).
 
 // ?getBool@UserPreferences@@QBE_NVAsciiString@@_N@Z present-unmatched
 Bool UserPreferences::getBool(AsciiString key, Bool defaultValue) const

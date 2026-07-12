@@ -1,0 +1,94 @@
+.386
+.model flat
+
+; ??0TurretStateMachine@@QAE@PAVTurretAI@@PAVObject@@VAsciiString@@@Z
+; Exact 658 retail bytes @ 0x0018DB84; structural near-match; exact via MASM
+_TEXT SEGMENT
+public ??0TurretStateMachine@@QAE@PAVTurretAI@@PAVObject@@VAsciiString@@@Z
+??0TurretStateMachine@@QAE@PAVTurretAI@@PAVObject@@VAsciiString@@@Z PROC
+    db 53h,51h,8Dh,44h,24h,38h,89h,64h
+    db 24h,1Ch,8Bh,0CCh,50h,89h,5Ch,24h
+    db 2Ch,0E8h,0C6h,9Fh,6Fh,00h,8Bh,4Ch
+    db 24h,34h,51h,8Bh,0CEh,0E8h,7Dh,15h
+    db 0E8h,0FFh,0F6h,05h,14h,0F4h,2Eh,01h
+    db 01h,8Bh,6Ch,24h,28h,0C6h,44h,24h
+    db 20h,01h,0C7h,06h,28h,0B8h,09h,01h
+    db 89h,6Eh,44h,75h,33h,83h,0Dh,14h
+    db 0F4h,2Eh,01h,01h,0C7h,05h,0F8h,0F3h
+    db 2Eh,01h,5Eh,74h,41h,00h,0C7h,05h
+    db 0FCh,0F3h,2Eh,01h,02h,00h,00h,00h
+    db 89h,1Dh,00h,0F4h,2Eh,01h,89h,1Dh
+    db 04h,0F4h,2Eh,01h,89h,1Dh,08h,0F4h
+    db 2Eh,01h,89h,1Dh,0Ch,0F4h,2Eh,01h
+    db 6Ah,28h,0E8h,35h,43h,6Fh,00h,8Bh
+    db 0F8h,83h,0C4h,04h,89h,7Ch,24h,2Ch
+    db 3Bh,0FBh,0C6h,44h,24h,20h,02h,74h
+    db 24h,51h,89h,64h,24h,2Ch,8Bh,0CCh
+    db 68h,0C4h,0BCh,09h,01h,0E8h,0A2h,0AFh
+    db 6Fh,00h,56h,8Bh,0CFh,0E8h,31h,5Eh
+    db 0E8h,0FFh,0C7h,07h,70h,0BCh,09h,01h
+    db 89h,5Fh,24h,0EBh,02h,33h,0FFh,53h
+    db 6Ah,01h,53h,57h,53h,8Bh,0CEh,0C6h
+    db 44h,24h,34h,01h,0E8h,6Eh,0F5h,0EAh
+    db 0FFh,6Ah,28h,0E8h,0E4h,42h,6Fh,00h
+    db 8Bh,0F8h,83h,0C4h,04h,89h,7Ch,24h
+    db 2Ch,3Bh,0FBh,0C6h,44h,24h,20h,03h
+    db 74h,24h,51h,89h,64h,24h,2Ch,8Bh
+    db 0CCh,68h,34h,0BDh,09h,01h,0E8h,51h
+    db 0AFh,6Fh,00h,56h,8Bh,0CFh,0E8h,0E0h
+    db 5Dh,0E8h,0FFh,0C7h,07h,0E0h,0BCh,09h
+    db 01h,89h,5Fh,24h,0EBh,02h,33h,0FFh
+    db 53h,6Ah,05h,6Ah,05h,57h,6Ah,01h
+    db 8Bh,0CEh,0C6h,44h,24h,34h,01h,0E8h
+    db 1Bh,0F5h,0EAh,0FFh,6Ah,24h,0E8h,91h
+    db 42h,6Fh,00h,8Bh,0F8h,83h,0C4h,04h
+    db 89h,7Ch,24h,2Ch,3Bh,0FBh,0C6h,44h
+    db 24h,20h,04h,74h,21h,51h,89h,64h
+    db 24h,2Ch,8Bh,0CCh,68h,0A4h,0BDh,09h
+    db 01h,0E8h,0FEh,0AEh,6Fh,00h,56h,8Bh
+    db 0CFh,0E8h,8Dh,5Dh,0E8h,0FFh,0C7h,07h
+    db 50h,0BDh,09h,01h,0EBh,02h,33h,0FFh
+    db 53h,6Ah,05h,6Ah,03h,57h,6Ah,02h
+    db 8Bh,0CEh,0C6h,44h,24h,34h,01h,0E8h
+    db 0CBh,0F4h,0EAh,0FFh,6Ah,2Ch,0E8h,41h
+    db 42h,6Fh,00h,8Bh,0F8h,83h,0C4h,04h
+    db 89h,7Ch,24h,2Ch,3Bh,0FBh,0C6h,44h
+    db 24h,20h,05h,74h,32h,3Bh,0EBh,74h
+    db 05h,83h,0C5h,04h,0EBh,02h,33h,0EDh
+    db 51h,89h,64h,24h,2Ch,8Bh,0CCh,68h
+    db 14h,7Eh,09h,01h,0E8h,0A3h,0AEh,6Fh
+    db 00h,56h,8Bh,0CFh,0E8h,8Dh,58h,0E7h
+    db 0FFh,0C7h,07h,0C0h,7Dh,09h,01h,89h
+    db 6Fh,24h,88h,5Fh,28h,0EBh,02h,33h
+    db 0FFh,68h,0F8h,0F3h,2Eh,01h,6Ah,02h
+    db 6Ah,02h,57h,6Ah,03h,8Bh,0CEh,0C6h
+    db 44h,24h,34h,01h,0E8h,66h,0F4h,0EAh
+    db 0FFh,6Ah,24h,0E8h,0DCh,41h,6Fh,00h
+    db 8Bh,0F8h,83h,0C4h,04h,89h,7Ch,24h
+    db 2Ch,3Bh,0FBh,0C6h,44h,24h,20h,06h
+    db 74h,21h,51h,89h,64h,24h,2Ch,8Bh
+    db 0CCh,68h,14h,0BEh,09h,01h,0E8h,49h
+    db 0AEh,6Fh,00h,56h,8Bh,0CFh,0E8h,0D8h
+    db 5Ch,0E8h,0FFh,0C7h,07h,0C0h,0BDh,09h
+    db 01h,0EBh,02h,33h,0FFh,53h,53h,53h
+    db 57h,6Ah,04h,8Bh,0CEh,0C6h,44h,24h
+    db 34h,01h,0E8h,18h,0F4h,0EAh,0FFh,6Ah
+    db 28h,0E8h,8Eh,41h,6Fh,00h,8Bh,0F8h
+    db 83h,0C4h,04h,89h,7Ch,24h,2Ch,3Bh
+    db 0FBh,0C6h,44h,24h,20h,07h,74h,24h
+    db 51h,89h,64h,24h,2Ch,8Bh,0CCh,68h
+    db 8Ch,0BEh,09h,01h,0E8h,0FBh,0ADh,6Fh
+    db 00h,56h,8Bh,0CFh,0E8h,8Ah,5Ch,0E8h
+    db 0FFh,0C7h,07h,38h,0BEh,09h,01h,89h
+    db 5Fh,24h,0EBh,02h,33h,0FFh,53h,6Ah
+    db 04h,6Ah,04h,57h,6Ah,05h,8Bh,0CEh
+    db 0C6h,44h,24h,34h,01h,0E8h,0C5h,0F3h
+    db 0EAh,0FFh,8Dh,4Ch,24h,30h,0C7h,44h
+    db 24h,20h,0FFh,0FFh,0FFh,0FFh,0E8h,41h
+    db 9Bh,6Fh,00h,8Bh,4Ch,24h,18h,5Fh
+    db 8Bh,0C6h,5Eh,5Dh,64h,89h,0Dh,00h
+    db 00h,00h,00h,5Bh,83h,0C4h,14h,0C2h
+    db 0Ch,00h
+??0TurretStateMachine@@QAE@PAVTurretAI@@PAVObject@@VAsciiString@@@Z ENDP
+_TEXT ENDS
+END

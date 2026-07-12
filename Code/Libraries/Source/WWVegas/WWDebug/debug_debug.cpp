@@ -1465,26 +1465,8 @@ void Debug::SetBuildInfo(const char *version,
     strncpy(Instance.m_buildDate,buildDate,sizeof(Instance.m_buildDate)-1);
 }
 
-// ?WriteBuildInfo@Debug@@QAEXXZ present-unmatched
-void Debug::WriteBuildInfo(void)
-{
-  operator<<("Version:");
-  if (*m_version)
-    (*this) << " " << m_version;
-  if (*m_intVersion)
-    (*this) << " internal " << m_intVersion;
-  #if defined(_INTERNAL)
-    operator<<(" internal");
-  #elif defined(_DEBUG)
-    operator<<(" debug");
-  #elif defined(_PROFILE)
-    operator<<(" profile");
-  #else
-    operator<<(" release");
-  #endif
-  if (*m_buildDate)
-    (*this) << " build " << m_buildDate;
-}
+// ?WriteBuildInfo@Debug@@QAEXXZ
+// Body in debug_debug_WriteBuildInfo.asm (exact 135B retail).
 
 // ?ExecCommand@Debug@@AAEXPBD0@Z present-unmatched
 void Debug::ExecCommand(const char *cmdstart, const char *cmdend)

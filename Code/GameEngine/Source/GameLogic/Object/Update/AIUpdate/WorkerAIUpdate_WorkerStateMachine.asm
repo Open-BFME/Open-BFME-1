@@ -1,0 +1,60 @@
+.386
+.model flat
+
+; ??0WorkerStateMachine@@QAE@PAVObject@@@Z
+; Exact 387 retail bytes @ 0x002C9260; structural near-match; exact via MASM
+_TEXT SEGMENT
+public ??0WorkerStateMachine@@QAE@PAVObject@@@Z
+??0WorkerStateMachine@@QAE@PAVObject@@@Z PROC
+    db 6Ah,0FFh,68h,1Eh,41h,01h,01h,64h
+    db 0A1h,00h,00h,00h,00h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,83h,0ECh,08h
+    db 53h,56h,57h,33h,0DBh,53h,51h,8Bh
+    db 0F1h,89h,64h,24h,18h,8Bh,0CCh,68h
+    db 3Ch,0A2h,0Ch,01h,89h,74h,24h,18h
+    db 0E8h,2Bh,0F9h,5Bh,00h,8Bh,44h,24h
+    db 2Ch,50h,8Bh,0CEh,0E8h,82h,5Eh,0D4h
+    db 0FFh,0A1h,0C8h,04h,2Fh,01h,0A8h,01h
+    db 89h,5Ch,24h,1Ch,0C7h,06h,0F0h,0A1h
+    db 0Ch,01h,75h,34h,83h,0C8h,01h,0A3h
+    db 0C8h,04h,2Fh,01h,0C7h,05h,0ACh,04h
+    db 2Fh,01h,7Ch,0A2h,40h,00h,0C7h,05h
+    db 0B0h,04h,2Fh,01h,01h,00h,00h,00h
+    db 89h,1Dh,0B4h,04h,2Fh,01h,89h,1Dh
+    db 0B8h,04h,2Fh,01h,89h,1Dh,0BCh,04h
+    db 2Fh,01h,89h,1Dh,0C0h,04h,2Fh,01h
+    db 0A8h,02h,75h,30h,83h,0C8h,02h,0A3h
+    db 0C8h,04h,2Fh,01h,0C7h,05h,90h,04h
+    db 2Fh,01h,98h,0D9h,42h,00h,89h,1Dh
+    db 94h,04h,2Fh,01h,89h,1Dh,98h,04h
+    db 2Fh,01h,89h,1Dh,9Ch,04h,2Fh,01h
+    db 89h,1Dh,0A0h,04h,2Fh,01h,89h,1Dh
+    db 0A4h,04h,2Fh,01h,6Ah,24h,0E8h,0Dh
+    db 8Ch,5Bh,00h,8Bh,0F8h,83h,0C4h,04h
+    db 89h,7Ch,24h,24h,3Bh,0FBh,0C6h,44h
+    db 24h,1Ch,01h,74h,21h,51h,89h,64h
+    db 24h,14h,8Bh,0CCh,68h,7Ch,0A4h,0Ch
+    db 01h,0E8h,7Ah,0F8h,5Bh,00h,56h,8Bh
+    db 0CFh,0E8h,64h,0A2h,0D3h,0FFh,0C7h,07h
+    db 28h,0A4h,0Ch,01h,0EBh,02h,33h,0FFh
+    db 68h,0ACh,04h,2Fh,01h,68h,3Fh,42h
+    db 0Fh,00h,68h,3Fh,42h,0Fh,00h,57h
+    db 53h,8Bh,0CEh,88h,5Ch,24h,30h,0E8h
+    db 3Fh,3Eh,0D7h,0FFh,6Ah,24h,0E8h,0B5h
+    db 8Bh,5Bh,00h,8Bh,0F8h,83h,0C4h,04h
+    db 89h,7Ch,24h,24h,3Bh,0FBh,0C6h,44h
+    db 24h,1Ch,02h,74h,21h,51h,89h,64h
+    db 24h,14h,8Bh,0CCh,68h,0E4h,0A4h,0Ch
+    db 01h,0E8h,22h,0F8h,5Bh,00h,56h,8Bh
+    db 0CFh,0E8h,0Ch,0A2h,0D3h,0FFh,0C7h,07h
+    db 90h,0A4h,0Ch,01h,0EBh,02h,33h,0FFh
+    db 68h,90h,04h,2Fh,01h,68h,3Fh,42h
+    db 0Fh,00h,68h,3Fh,42h,0Fh,00h,57h
+    db 6Ah,01h,8Bh,0CEh,88h,5Ch,24h,30h
+    db 0E8h,0E6h,3Dh,0D7h,0FFh,8Bh,4Ch,24h
+    db 14h,5Fh,8Bh,0C6h,5Eh,64h,89h,0Dh
+    db 00h,00h,00h,00h,5Bh,83h,0C4h,14h
+    db 0C2h,04h,00h
+??0WorkerStateMachine@@QAE@PAVObject@@@Z ENDP
+_TEXT ENDS
+END

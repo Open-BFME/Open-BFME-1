@@ -4084,3 +4084,14 @@ _BTREE_encode@16,,0x00821D70,92,Code/Libraries/Source/Compression/EAC/btreeencod
 ?getHealthBoxDimensions@Object@@QBE_NAAM0@Z,,0x001C9E64,166,Code/GameEngine/Source/GameLogic/Object/Object_getHealthBoxDimensions.asm,matched,exact 166B via MASM
 ?loadSavedIgnoreList@GameSpyInfo@@UAEXXZ,,0x00635310,162,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs_loadSavedIgnoreList.asm,matched,exact 162B via MASM (SEH+field offsets)
 ?closeDataChunk@DataChunkOutput@@QAEXXZ,,0x001024A0,118,Code/GameEngine/Source/Common/System/DataChunk_closeDataChunk.asm,matched,exact 118B via MASM
+??0ControlBar@@QAE@XZ,,0x009F2730,819,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_ctor.asm,matched,exact 819B via MASM (SEH ctor)
+??0TurretStateMachine@@QAE@PAVTurretAI@@PAVObject@@VAsciiString@@@Z,,0x0018DB84,658,Code/GameEngine/Source/GameLogic/AI/TurretAI_TurretStateMachine.asm,matched,exact 658B via MASM
+?createUnitOnTeamAt@ScriptActions@@IAEXABVAsciiString@@000@Z,,0x002F92A5,604,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_createUnitOnTeamAt.asm,matched,exact 604B via MASM
+?setControlBarSchemeByPlayer@ControlBarSchemeManager@@QAEXPAVPlayer@@@Z,,0x004AE080,590,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme_setControlBarSchemeByPlayer.asm,matched,exact 590B via MASM (SEH)
+??0WorkerStateMachine@@QAE@PAVObject@@@Z,,0x002C9260,387,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate_WorkerStateMachine.asm,matched,exact 387B via MASM (SEH ctor)
+?markAsStagingRoomJoiner@GameSpyInfo@@UAEXH@Z,,0x00632B80,322,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs_markAsStagingRoomJoiner.asm,matched,exact 322B via MASM (SEH)
+?WOLLobbyMenuShutdown@@YAXPAVWindowLayout@@PAX@Z,,0x004FAF70,299,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLobbyMenu_WOLLobbyMenuShutdown.asm,matched,exact 299B via MASM (SEH)
+?winTextLabelToText@GameWindowManager@@QAE?AVUnicodeString@@VAsciiString@@@Z,,0x0047E1B0,175,Code/GameEngine/Source/GameClient/GUI/GameWindowManager_winTextLabelToText.asm,matched,exact 175B via MASM (SEH)
+?write@UserPreferences@@UAE_NXZ,,0x000A9F60,162,Code/GameEngine/Source/Common/UserPreferences_write.asm,matched,exact 162B via MASM
+??0GameTextManager@@QAE@XZ,,0x00438350,161,Code/GameEngine/Source/GameClient/GameText_GameTextManager.asm,matched,exact 161B via MASM (SEH ctor)
+?WriteBuildInfo@Debug@@QAEXXZ,,0x0088A492,135,Code/Libraries/Source/WWVegas/WWDebug/debug_debug_WriteBuildInfo.asm,matched,exact 135B via MASM

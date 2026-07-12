@@ -244,36 +244,8 @@ GameTextInterface* CreateGameTextInterface( void )
 // GameTextManager::GameTextManager
 //============================================================================
 
-// ??0GameTextManager@@QAE@XZ present-unmatched
-GameTextManager::GameTextManager()
-:	m_textCount(0),
-	m_maxLabelLen(0),
-	m_stringInfo(NULL),
-	m_stringLUT(NULL),
-	m_initialized(FALSE),
-	m_noStringList(NULL),
-#if defined(_DEBUG) || defined(_INTERNAL)
-	m_jabberWockie(FALSE),
-	m_munkee(FALSE),
-	m_useStringFile(g_useStringFile),
-#else
-	m_useStringFile(TRUE),
-#endif
-	m_mapStringInfo(NULL),
-	m_mapStringLUT(NULL),
-	m_failed(L"***FATAL*** String Manager failed to initilaize properly")
-{
-	// Added By Sadullah Nader
-	// Initializations missing and needed
-
-	for(Int i=0; i < MAX_UITEXT_LENGTH; i++)
-	{
-		m_buffer[i] = 0; 
-		m_buffer2[i] = 0; 
-		m_buffer3[i] = 0; 
-	}
-	//
-}
+// ??0GameTextManager@@QAE@XZ
+// Body in GameText_GameTextManager.asm (exact 161B retail).
 
 //============================================================================
 // GameTextManager::~GameTextManager
