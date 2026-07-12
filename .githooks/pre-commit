@@ -19,7 +19,7 @@ ledger_changed=0
 wide_change=0
 while IFS= read -r path; do
     case "$path" in
-        src/*.cpp) staged_sources+=("$path") ;;
+        Code/*.cpp) staged_sources+=("$path") ;;
         reverse/functions.csv|reverse/symbols.csv) ledger_changed=1 ;;
         # A header or shim recompiles many TUs while changing NO ledger rows,
         # so the delta byte-verify below would prove nothing. Any such change
@@ -28,6 +28,16 @@ while IFS= read -r path; do
         *.h|reference/shims/*) wide_change=1 ;;
     esac
 done < <(git diff --cached --name-only --diff-filter=ACMRT)
+
+# Placement: game sources live only under Code/ at the official BFME path
+# (plus reference/shims/ for shim headers and tools/tests/ for fixtures).
+# No src/, no invented layouts, no sources at the repo root.
+while IFS= read -r path; do
+    case "$path" in
+        Code/GameEngine/*|Code/GameEngineDevice/*|Code/Libraries/*|Code/masm_dumps/*|reference/shims/*|tools/tests/*) ;;
+        *) fail "source added outside official tree: $path — see AGENTS.md 'File placement'" ;;
+    esac
+done < <(git diff --cached --name-only --diff-filter=A | grep -E '\.(cpp|c|h|hpp|asm)$' || true)
 
 if [ "${#staged_sources[@]}" -eq 0 ] && [ "$ledger_changed" -eq 0 ] && [ "$wide_change" -eq 0 ]; then
     exit 0

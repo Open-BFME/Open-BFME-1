@@ -62,6 +62,15 @@ official dirs (the old `/Isrc/w3d` idirs are stripped). Headers are shared
 truth now — moving/editing one means BOTH the zh cpps and the ported cpps
 that include it must still byte-match.
 
+## File placement
+
+* Sources → `Code/` at the official BFME path (exe `__FILE__` strings;
+  mirror the ZH reference tree). No invented layouts (`src/`, `zh/`,
+  `game/`, repo root) — all tried before, all deleted. The pre-commit hook
+  rejects sources added anywhere else.
+* MASM dumps → `Code/masm_dumps/`; scratch → untracked `build/`;
+  `tools/` is dev tooling — never game code.
+
 ## Stopping rules
 
 * 3 failed attempts on one function → note it and move on (skip, don't sink).
