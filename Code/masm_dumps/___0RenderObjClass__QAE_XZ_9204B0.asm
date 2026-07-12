@@ -32,40 +32,6 @@ public ??0RenderObjClass@@QAE@XZ
     db 88h, 9Ch, 00h, 00h, 00h, 89h, 90h, 0A0h
     db 00h, 00h, 00h, 88h, 88h, 0C4h, 00h, 00h
     db 00h, 88h, 88h, 0A4h, 00h, 00h, 00h, 0C3h
-    db 83h, 0ECh, 38h, 56h, 8Bh, 74h, 24h, 40h
-    db 8Bh, 06h, 57h, 8Bh, 0F9h, 8Bh, 0CEh, 0FFh
-    db 50h, 50h, 8Bh, 56h, 34h, 8Bh, 4Eh, 24h
-    db 8Bh, 46h, 44h, 89h, 4Ch, 24h, 24h, 8Bh
-    db 8Eh, 0CCh, 00h, 00h, 00h, 89h, 54h, 24h
-    db 28h, 8Bh, 96h, 0D0h, 00h, 00h, 00h, 89h
-    db 44h, 24h, 2Ch, 8Bh, 86h, 0D4h, 00h, 00h
-    db 00h, 89h, 4Ch, 24h, 30h, 8Bh, 8Eh, 0D8h
-    db 00h, 00h, 00h, 89h, 54h, 24h, 34h, 8Dh
-    db 54h, 24h, 14h, 89h, 44h, 24h, 38h, 52h
-    db 8Dh, 44h, 24h, 20h, 89h, 4Ch, 24h, 40h
-    db 50h, 8Bh, 0CEh, 0E8h, 0E0h, 17h, 01h, 00h
-    db 0D9h, 44h, 24h, 38h, 0D8h, 64h, 24h, 30h
-    db 8Bh, 17h, 0D9h, 44h, 24h, 14h, 8Bh, 0CFh
-    db 0D8h, 64h, 24h, 1Ch, 0DEh, 0F9h, 0D9h, 5Ch
-    db 24h, 10h, 0D9h, 44h, 24h, 3Ch, 0D8h, 64h
-    db 24h, 34h, 0D9h, 44h, 24h, 18h, 0D8h, 64h
-    db 24h, 20h, 0DEh, 0F9h, 0D9h, 5Ch, 24h, 0Ch
-    db 0FFh, 92h, 00h, 01h, 00h, 00h, 8Bh, 0C8h
-    db 0D9h, 01h, 0D8h, 64h, 24h, 24h, 0D9h, 41h
-    db 04h, 0D8h, 64h, 24h, 28h, 0D9h, 41h, 08h
-    db 0D8h, 64h, 24h, 2Ch, 0D9h, 0C0h, 0D8h, 0C9h
-    db 0D9h, 0C2h, 0D8h, 0CBh, 0DEh, 0C1h, 0D9h, 0C3h
-    db 0D8h, 0CCh, 0DEh, 0C1h, 0D9h, 5Ch, 24h, 08h
-    db 0DDh, 0D8h, 0DDh, 0D8h, 0DDh, 0D8h, 0D9h, 44h
-    db 24h, 08h, 0D9h, 0FAh, 0D9h, 5Ch, 24h, 44h
-    db 0D9h, 05h, 50h, 53h, 07h, 01h, 5Fh, 0D9h
-    db 05h, 50h, 53h, 07h, 01h, 5Eh, 0D9h, 44h
-    db 24h, 3Ch, 0DAh, 0E9h, 0DFh, 0E0h, 0F6h, 0C4h
-    db 44h, 7Bh, 09h, 0DDh, 0D8h, 0D9h, 41h, 0Ch
-    db 0D8h, 74h, 24h, 3Ch, 0D9h, 0C0h, 0DEh, 0C9h
-    db 0D8h, 4Ch, 24h, 04h, 0D8h, 4Ch, 24h, 08h
-    db 0D8h, 0Dh, 14h, 7Bh, 08h, 01h, 83h, 0C4h
-    db 38h, 0C2h, 04h, 00h
 ??0RenderObjClass@@QAE@XZ ENDP
 _TEXT ENDS
 END

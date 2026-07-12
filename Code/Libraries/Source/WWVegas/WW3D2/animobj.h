@@ -170,6 +170,8 @@ protected:
 
 	// Hierarchy Tree
 	HTreeClass *					HTree;
+
+	void *							_bfme_a3o_v0;		// BFME-era member; retail offset 0x100 (between HTree and CurMotionMode)
 	
 	// Animation state for the next frame.  When we add more flexible motion
 	// compositing, add a new state and its associated data to the union below

@@ -245,6 +245,9 @@ public:
 private:
 	// We're using the pointer instead of the actual structure
 	// so we don't have to include the d3d header - HY
+	// BFME: one extra dword before MaterialOld; retail reads AmbientColorSource
+	// at this+0x14 and EmissiveColorSource at this+0x18 (Get_*_Color_Source).
+	unsigned int					_bfme_vmat_v0;
 #ifdef DYN_MAT8
 	DynD3DMATERIAL8 *			MaterialDyn;
 #else

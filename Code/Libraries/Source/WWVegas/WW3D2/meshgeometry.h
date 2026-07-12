@@ -230,6 +230,9 @@ protected:
 	void get_deformed_screenspace_vertices(Vector4 *dst_vert,const RenderInfoClass & rinfo,const Matrix3D & mesh_tm,const HTreeClass * htree);
 	
 	// General info
+	// BFME: one extra dword before MeshName; retail reads/stores the MeshName
+	// ShareBuffer at this+0x14 (Set_Name/Get_Name).
+	int														_bfme_mgeom_v0;
 	ShareBufferClass<char> *							MeshName;
 	// BFME_FLAGS_BEFORE_USERTEXT
 // BFME: Flags before UserText so SORT lives at this+0x18 (Define_FVF).

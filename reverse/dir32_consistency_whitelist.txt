@@ -46,3 +46,11 @@ _parent
 # CINEMA/HUD list at 0xec51bc). Both are retail-true references from byte-matched functions —
 # same class of per-TU static as _Table@CRC / __real@3f800000 above.
 ?s_bitNameList@?$BitFlags@$0HF@@@0PAPBDA
+#
+# WOL menu file-statics: WOLLoginMenu.cpp and WOLLobbyMenu.cpp each define their own
+# static buttonBack/buttonBackID/buttonPushed globals (same names, distinct retail
+# addresses per TU: 0x12f46xx vs 0x12f48xx). Both byte-verified; name-based check
+# cannot distinguish file-statics across TUs.
+_buttonBack
+_buttonBackID
+_buttonPushed

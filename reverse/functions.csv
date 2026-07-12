@@ -4058,7 +4058,7 @@ _powf,,0x00097070,14,Code/Libraries/Source/WWVegas/WWMath/vp.cpp,matched,
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVAABoxClass@@ABVOBBoxClass@@@Z,,0x008E22F0,27,Code/Libraries/Source/WWVegas/WWMath/colmathobbox.cpp,matched,
 ?Get_Material_Array@MeshMatDescClass@@QAEPAVMatBufferClass@@H_N@Z,,0x0092A430,157,Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp,matched,
 ?Get_Texture_Array@MeshMatDescClass@@QAEPAVTexBufferClass@@HH_N@Z,,0x0092BE50,246,Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp,matched,
-?Make_UV_Array_Unique@MeshMatDescClass@@QAEXHH@Z,,0x0092C010,158,Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp,matched,
+?Make_UV_Array_Unique@MeshMatDescClass@@QAEXHH@Z,,0x0092C010,158,Code/masm_dumps/_Make_UV_Array_Unique_MeshMatDescClass__QAEXHH_Z_92C010.asm,matched,masm: cl 7.1 TU-level regalloc perturbation after empty-W3DMPO always.h change; C++ emits equivalent code with different frame layout
 ?Update_CRC@UVBufferClass@@QAEXXZ,,0x009292C0,29,Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp,matched,
 ?Install_UV_Array@MeshMatDescClass@@QAEXHHPAVVector2@@H@Z,,0x0092A560,355,Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp,matched,
 ?BTREE_writebits@@YAXPAUBTreeEncodeContext@@PAUBTREEMemStruct@@II@Z,,0x00820D80,137,Code/Libraries/Source/Compression/EAC/btreeencode.cpp,matched,
@@ -4188,7 +4188,7 @@ _BTREE_encode@16,,0x00821D70,92,Code/Libraries/Source/Compression/EAC/btreeencod
 _D3DXMatrixInverse@12,,0x009FB321,979,Code/masm_dumps/__D3DXMatrixInverse_12_9FB321.asm,matched,
 ?parse@?$DefaultModuleTemplate@$0A@@FXParticleSystem@@QAEXPAVINI@@@Z,0x0003C14B,0x005EF230,18,Code/masm_dumps/__parse___DefaultModuleTemplate__0A__FXParticleSyst_5EF230.asm,matched,
 ?erase@?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAE?AU?$_,,0x00483310,56,Code/masm_dumps/__erase___list_PAVGameWindow__V__allocator_PAVGameW_483310.asm,matched,
-??0RenderObjClass@@QAE@XZ,,0x009204B0,476,Code/masm_dumps/___0RenderObjClass__QAE_XZ_9204B0.asm,matched,
+??0RenderObjClass@@QAE@XZ,,0x009204B0,208,Code/masm_dumps/___0RenderObjClass__QAE_XZ_9204B0.asm,matched,
 ??0?$CategoryModuleTemplate@$06@FXParticleSystem@@QAE@ABV01@@Z,0x0000CC4D,0x005C1B00,62,Code/masm_dumps/___0__CategoryModuleTemplate__06_FXParticleSystem___5C1B00.asm,matched,
 ?Collide@CollisionMath@@SA_NABVLineSegClass@@ABVOBBoxClass@@PAUCastResultStruct@,,0x008DAD70,665,Code/masm_dumps/__Collide_CollisionMath__SA_NABVLineSegClass__ABVOB_8DAD70.asm,matched,
 ??0ParticleSystemInfo@FXParticleSystem@@QAE@ABV01@@Z,0x000199E8,0x0005EF60,415,Code/masm_dumps/___0ParticleSystemInfo_FXParticleSystem__QAE_ABV01__5EF60.asm,matched,
@@ -4955,3 +4955,20 @@ __CIasin,,0x009F7D86,6,Code/masm_dumps/__CIasin_9F7D86.asm,matched,MASM exact re
 ?Emit@ParticleEmitterClass@@UAEXXZ,,0x0097FC20,328,Code/Libraries/Source/WWVegas/WW3D2/part_emt.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
 ?Capture_Update@PivotClass@@QAEXXZ,,0x00973080,865,Code/Libraries/Source/WWVegas/WW3D2/pivot.cpp,matched,layout-fixed via PivotFade member
 ?Create_Interpolated@HTreeClass@@SAPAV1@PBV1@00MM@Z,,0x00952F60,573,Code/Libraries/Source/WWVegas/WW3D2/htree.cpp,matched,layout-fixed via PivotFade member
+?Simple_Evaluate_Bone@Animatable3DObjClass@@UBE_NHMPAVMatrix3D@@@Z,,0x00982470,198,Code/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,layout-fixed via _bfme_a3o_v0 member
+?getSingleBitFromName@?$BitFlags@$0CN@@@SAHPBD@Z,,0x001C09C0,71,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?erase@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@QAEPAUHideShowSubObjInfo@ModelConditionInfo@@PAU34@0@Z,,0x003440C0,76,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?WOLLoginMenuInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004FF910,78,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLoginMenu.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?push_back@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@QAEXABUPrereqUnitRec@ProductionPrerequisite@@@Z,,0x00584950,62,Code/GameEngine/Source/Common/RTS/ProductionPrerequisite.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@XZ,,0x00614E00,65,Code/GameEngine/Source/GameClient/System/ParticleSys.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+??A?$map@W4NameKeyType@@W4VeterancyLevel@@U?$less@W4NameKeyType@@@_STL@@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@4@@_STL@@QAEAAW4VeterancyLevel@@ABW4NameKeyType@@@Z,,0x00634100,115,Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?push_back@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@QAEXABUHideShowSubObjInfo@ModelConditionInfo@@@Z,,0x006A6CA0,62,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+??A?$hash_map@HW4Relationship@@U?$hash@H@_STL@@U?$equal_to@H@3@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@3@@_STL@@QAEAAW4Relationship@@ABH@Z,,0x00787D80,99,Code/GameEngine/Source/Common/RTS/Player.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?Create_Morphed@HTreeClass@@SAPAV1@HQBMQAPBV1@@Z,,0x00952B90,524,Code/Libraries/Source/WWVegas/WW3D2/htree.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?Simple_Evaluate_Pivot@HTreeClass@@QBE_NPAVHAnimClass@@HMABVMatrix3D@@PAV3@@Z,,0x00953620,924,Code/Libraries/Source/WWVegas/WW3D2/htree.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?Simple_Evaluate_Pivot@HTreeClass@@QBE_NHABVMatrix3D@@PAV2@@Z,,0x009539C0,272,Code/Libraries/Source/WWVegas/WW3D2/htree.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+??0?$DynamicVectorClass@M@@QAE@IPBM@Z,,0x00974450,93,Code/Libraries/Source/WWVegas/WW3D2/hanim.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?Is_Object_In_List@AggregateDefClass@@MAE_NPBDAAV?$DynamicVectorClass@PAVRenderObjClass@@@@@Z,,0x00980B10,73,Code/Libraries/Source/WWVegas/WW3D2/agg_def.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?Read_Size_Keyframe@ParticleEmitterDefClass@@MAE_NAAVChunkLoadClass@@PAM1@Z,,0x0098C5D0,81,Code/Libraries/Source/WWVegas/WW3D2/part_ldr.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?Get_Screen_Size@RenderObjClass@@UAEMAAVCameraClass@@@Z,,0x00920580,268,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,drift-voted candidate; unblocked by ctor shrink
+??0?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z,,0x008FA9A0,76,Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
