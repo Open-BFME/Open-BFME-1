@@ -27,6 +27,10 @@ _COLLISION_EPSILON
 # memmove is imported through two IAT slots in retail (two import descriptors); DIR32
 # references legitimately resolve to either __imp__ address.
 __imp__memmove
+# closesocket is imported through two IAT slots in retail: udp.cpp (game lib) resolves
+# 0x13590c8, GameResultsThread.cpp (GameSpy static lib) resolves 0x1359700. Both
+# references come from byte-matched functions — same double-import class as memmove.
+__imp__closesocket@4
 
 # Float-constant COMDAT: 1.0f is emitted per-TU; retail keeps two copies. Same
 # class as _COLLISION_EPSILON above.
