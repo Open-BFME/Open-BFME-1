@@ -13,7 +13,7 @@
 Code/GameEngine/Source/GameLogic/ScriptEngine/game_logic_dispatch.cpp
 
 # Landed verbatim; its only locatable function (??0Matrix4@@QAE@_N@Z COMDAT) is
-# claimed by src/w3d/projector.cpp after dedup (one row per address). Kept for
+# claimed by Code/Libraries/Source/WWVegas/WW3D2/projector.cpp after dedup (one row per address). Kept for
 # its present-unmatched drift inventory until more of its functions match.
 Code/Libraries/Source/WWVegas/WW3D2/streakRender.cpp
 # Same situation: its located functions were COMDAT-deduped to other files'

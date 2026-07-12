@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include/Precompiled
+// cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #include <map>
 #include <hash_map>
