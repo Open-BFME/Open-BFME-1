@@ -50,9 +50,10 @@
 #include "vector3.h"
 #include "ww3d.h"
 
+#include "matrix4.h"
+
 class INIClass;
 class RenderObjClass;
-class Matrix4x4;
 class DX8Wrapper;
 
 class INIClass;

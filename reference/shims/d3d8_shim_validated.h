@@ -35,6 +35,12 @@ typedef struct _GUID { DWORD Data1; WORD Data2; WORD Data3; BYTE Data4[8]; } GUI
 #define FAILED(hr)    ((HRESULT)(hr) < 0)
 #define D3D_OK 0
 #define CONST const
+
+#ifndef BFME_WIN_GEOM_DEFINED
+#define BFME_WIN_GEOM_DEFINED
+typedef struct tagRECT { long left, top, right, bottom; } RECT, *LPRECT;
+typedef struct tagPOINT { long x; long y; } POINT, *LPPOINT;
+#endif
 #define D3DRS_AMBIENT 139
 #define D3DRS_FOGSTART 36
 #define D3DRS_FOGEND 37
@@ -481,6 +487,8 @@ typedef struct _D3DXVECTOR4 {
     float operator[](int i) const { return (&x)[i]; }
     float& operator[](int i) { return (&x)[i]; }
 } D3DXVECTOR4;
+#ifndef BFME_D3DXMATRIX_DEFINED
+#define BFME_D3DXMATRIX_DEFINED
 typedef struct _D3DXMATRIX {
     float m[4][4];
     _D3DXMATRIX() {}
@@ -501,6 +509,7 @@ typedef struct _D3DXMATRIX {
         return r;
     }
 } D3DXMATRIX;
+#endif // BFME_D3DXMATRIX_DEFINED
 typedef struct _D3DXPLANE { float a, b, c, d; } D3DXPLANE;
 typedef struct _D3DXQUATERNION { float x, y, z, w; } D3DXQUATERNION;
 #define D3DX_PI 3.141592654f
@@ -537,6 +546,14 @@ typedef struct _D3DSURFACE_DESC { D3DFORMAT Format; D3DRESOURCETYPE Type; DWORD 
 #ifndef S_OK
 #define S_OK 0
 #endif
+#ifndef _LARGE_INTEGER_DEFINED
+#define _LARGE_INTEGER_DEFINED
+typedef union _LARGE_INTEGER {
+    struct { DWORD LowPart; long HighPart; };
+    __int64 QuadPart;
+} LARGE_INTEGER, *PLARGE_INTEGER;
+#endif
+
 typedef struct _D3DADAPTER_IDENTIFIER8 {
 	char Driver[512]; char Description[512];
 	LARGE_INTEGER DriverVersion; DWORD VendorId, DeviceId, SubSysId, Revision;

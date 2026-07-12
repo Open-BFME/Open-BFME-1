@@ -30,6 +30,15 @@ typedef void *			HWND;
 typedef unsigned short	WCHAR;
 typedef WCHAR *			LPWSTR;   // = VC7.1 default wchar_t; needed by widestring.h (same as shim windows.h)
 
+#ifndef _LARGE_INTEGER_DEFINED
+#define _LARGE_INTEGER_DEFINED
+typedef union _LARGE_INTEGER {
+	struct { DWORD LowPart; LONG HighPart; };
+	struct { DWORD LowPart; LONG HighPart; } u;
+	__int64 QuadPart;
+} LARGE_INTEGER, *PLARGE_INTEGER;
+#endif
+
 typedef struct _FILETIME {
 	DWORD dwLowDateTime;
 	DWORD dwHighDateTime;

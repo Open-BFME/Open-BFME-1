@@ -181,6 +181,12 @@ protected:
 	Vector4 Row[4];
 
 };
+// BFME predates the ZH Matrix4 -> Matrix4x4 rename (same as Matrix3/Matrix3x3).
+// ZH-spelling TUs and reference headers (dx8wrapper.h embeds Matrix4x4 members)
+// alias onto the retail class. Same convention as camera.h's typedef.
+typedef Matrix4 Matrix4x4;
+
+
 
 
 /*********************************************************************************************** 

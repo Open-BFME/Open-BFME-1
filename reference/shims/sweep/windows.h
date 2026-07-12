@@ -160,7 +160,9 @@ typedef struct _TIME_ZONE_INFORMATION {
     LONG DaylightBias;
 } TIME_ZONE_INFORMATION, *LPTIME_ZONE_INFORMATION;
 
+#ifndef BFME_WIN_GEOM_DEFINED
 typedef struct tagPOINT { LONG x; LONG y; } POINT, *LPPOINT;
+#endif
 typedef struct tagMSG {
     HWND hwnd;
     UINT message;
@@ -227,7 +229,10 @@ typedef struct _PROCESS_INFORMATION {
 #define VER_PLATFORM_WIN32_NT 2
 #define VER_PLATFORM_WIN32s 0
 
+#ifndef BFME_WIN_GEOM_DEFINED
+#define BFME_WIN_GEOM_DEFINED
 typedef struct tagRECT { LONG left, top, right, bottom; } RECT, *LPRECT;
+#endif
 typedef struct tagSIZE { LONG cx, cy; } SIZE, *LPSIZE;
 typedef struct tagTEXTMETRICA {
     LONG tmHeight, tmAscent, tmDescent, tmInternalLeading, tmExternalLeading, tmAveCharWidth, tmMaxCharWidth, tmWeight;

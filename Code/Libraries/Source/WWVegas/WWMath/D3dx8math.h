@@ -9,9 +9,12 @@
 #ifndef D3DX8MATH_H
 #define D3DX8MATH_H
 
+#ifndef BFME_D3DXMATRIX_DEFINED
+#define BFME_D3DXMATRIX_DEFINED
 typedef struct _D3DXMATRIX {
 	float m[4][4];
 } D3DXMATRIX;
+#endif // BFME_D3DXMATRIX_DEFINED
 
 #ifdef __cplusplus
 extern "C" {

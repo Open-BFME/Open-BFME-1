@@ -1,4 +1,3 @@
-// cl: /DNDEBUG /ICode/Libraries/Source/WWVegas/WWLib /Isrc/w3d /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -21,49 +20,56 @@
  ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
- *                 Project Name : WWMath                                                       *
+ *                 Project Name : ww3d                                                         *
  *                                                                                             *
- *                     $Archive:: /Commando/Code/wwmath/colmath.cpp                           $*
+ *                     $Archive:: /Commando/Code/ww3d2/dx8rendererdebugger.h                  $*
  *                                                                                             *
- *                       Author:: Greg Hjelstrom                                               *
+ *              Original Author:: Jani Penttinen                                               *
  *                                                                                             *
- *                     $Modtime:: 3/16/00 2:19p                                               $*
+ *                      $Author:: Jani_p                                                      $*
  *                                                                                             *
- *                    $Revision:: 4                                                           $*
+ *                     $Modtime:: 11/06/01 6:14p                                              $*
+ *                                                                                             *
+ *                    $Revision:: 1                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 
-#include "colmath.h"
+#if defined(_MSC_VER)
+#pragma once
+#endif
 
-const float CollisionMath::COINCIDENCE_EPSILON = 0.000001f;
-CollisionMath::ColmathStatsStruct CollisionMath::Stats;
+#ifndef DX8_RENDERER_DEBUGGER_H
+#define DX8_RENDERER_DEBUGGER_H
 
-CollisionMath::ColmathStatsStruct::ColmathStatsStruct(void)
+#include "always.h"
+
+class StringClass;
+class MeshClass;
+
+// Note! For the debugger to be usable, the application must call DX8RendererDebugger::Update() once
+// each frame.
+
+class DX8RendererDebugger
 {
-	Reset();
-}
+	static bool Enabled;
+public:
+	static void Enable(bool enable);
+	WWINLINE static bool Is_Enabled() { return Enabled; }
+	static void Get_String(StringClass& s);
+	static void Update();
+#ifdef WWDEBUG
+	static void Add_Mesh(MeshClass* mesh);
+#else
+	static void Add_Mesh(MeshClass* mesh) {}
+#endif
 
-void CollisionMath::ColmathStatsStruct::Reset(void)
-{
-	TotalCollisionCount = 0;
-	TotalCollisionHitCount = 0;
-	
-	CollisionRayTriCount = 0;
-	CollisionRayTriHitCount = 0;
+	static void Disable_Mesh(unsigned id);
+	static void Enable_Mesh(unsigned id);
+	static void Disable_All();
+	static void Enable_All();
+};
 
-	CollisionAABoxTriCount = 0;
-	CollisionAABoxTriHitCount = 0;
-	CollisionAABoxAABoxCount = 0;
-	CollisionAABoxAABoxHitCount = 0;
-
-	CollisionOBBoxTriCount = 0;
-	CollisionOBBoxTriHitCount = 0;
-	CollisionOBBoxAABoxCount = 0;
-	CollisionOBBoxAABoxHitCount = 0;
-	CollisionOBBoxOBBoxCount = 0;
-	CollisionOBBoxOBBoxHitCount = 0;
-}
-
+#endif
