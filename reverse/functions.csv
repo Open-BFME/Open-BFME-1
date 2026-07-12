@@ -5105,3 +5105,13 @@ _powf,,0x00097070,14,Code/Libraries/Source/WWVegas/WWMath/vp.cpp,matched,
 ?removeSmudgeSet@SmudgeManager@@QAEXAAUSmudgeSet@@@Z,,0x005D4060,40,Code/GameEngine/Source/GameClient/System/Smudge.cpp,matched,
 ?removeSmudgeFromSet@SmudgeSet@@QAEXAAUSmudge@@@Z,,0x005D40A0,115,Code/GameEngine/Source/GameClient/System/Smudge.cpp,matched,
 ??1SmudgeSet@@UAE@XZ,,0x005D4190,89,Code/GameEngine/Source/GameClient/System/Smudge.cpp,matched,
+?Remove_Sub_Objects_From_Bone@RenderObjClass@@UAEHH@Z,,0x0091F920,108,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,
+?Get_Cost@RenderObjClass@@UBEMXZ,,0x0091F9C0,26,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,
+?Calculate_Cost_Value_Arrays@RenderObjClass@@UBEHMPAM0@Z,,0x0091F9E0,36,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,
+?Remove@RenderObjClass@@UAEXXZ,,0x0091FBC0,42,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,
+?Intersect_Sphere@RenderObjClass@@UAE_NPAVIntersectionClass@@PAVIntersectionResultClass@@@Z,,0x00920430,62,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,
+?Intersect_Sphere_Quick@RenderObjClass@@UAE_NPAVIntersectionClass@@PAVIntersectionResultClass@@@Z,,0x00920470,62,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,
+?Set_Diffuse@LightClass@@QAEXABVVector3@@@Z,,0x006E79B0,33,Code/Libraries/Source/WWVegas/WW3D2/light.cpp,matched,trimmed oversized claim into sibling
+??0LightClass@@QAE@W4LightType@0@@Z,,0x0093BE90,286,Code/Libraries/Source/WWVegas/WW3D2/light.cpp,matched,
+??0LightClass@@QAE@ABV0@@Z,,0x0093BFB0,307,Code/Libraries/Source/WWVegas/WW3D2/light.cpp,matched,trimmed oversized claim into sibling
+?Clone@LightClass@@UBEPAVRenderObjClass@@XZ,,0x0093C230,96,Code/Libraries/Source/WWVegas/WW3D2/light.cpp,matched,
