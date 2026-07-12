@@ -1,0 +1,93 @@
+.386
+.model flat
+
+; ?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z
+; Retail @ 0x00D07BE0 size 652
+_TEXT SEGMENT
+public ?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z
+?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z PROC
+    db 8Bh,44h,24h,08h,83h,0C0h,0F9h,3Dh
+    db 0BCh,00h,00h,00h,53h,56h,0Fh,87h
+    db 69h,02h,00h,00h,0Fh,0B6h,80h,0BCh
+    db 7Eh,0D0h,00h,0FFh,24h,85h,6Ch,7Eh
+    db 0D0h,00h,8Bh,4Ch,24h,14h,51h,0E8h
+    db 0A4h,0B0h,0FFh,0FFh,83h,0C4h,04h,8Bh
+    db 4Ch,24h,0Ch,50h,0E8h,0CAh,86h,71h
+    db 0FFh,5Eh,5Bh,0C3h,8Bh,54h,24h,14h
+    db 52h,0E8h,0BAh,0B0h,0FFh,0FFh,8Bh,4Ch
+    db 24h,10h,83h,0C4h,04h,50h,0E8h,0B0h
+    db 86h,71h,0FFh,5Eh,5Bh,0C3h,8Bh,44h
+    db 24h,14h,50h,0E8h,0D0h,0B0h,0FFh,0FFh
+    db 8Bh,4Ch,24h,10h,83h,0C4h,04h,50h
+    db 0E8h,96h,86h,71h,0FFh,5Eh,5Bh,0C3h
+    db 5Eh,5Bh,0C7h,44h,24h,08h,4Ch,0A4h
+    db 13h,01h,0E9h,31h,3Fh,0Dh,00h,8Bh
+    db 44h,24h,14h,85h,0C0h,0B8h,58h,0FAh
+    db 07h,01h,75h,0A3h,8Bh,4Ch,24h,0Ch
+    db 0B8h,80h,01h,08h,01h,50h,0E8h,68h
+    db 86h,71h,0FFh,5Eh,5Bh,0C3h,8Bh,44h
+    db 24h,14h,50h,0E8h,0B8h,0B0h,0FFh,0FFh
+    db 8Bh,4Ch,24h,10h,83h,0C4h,04h,50h
+    db 0E8h,4Eh,86h,71h,0FFh,5Eh,5Bh,0C3h
+    db 8Bh,4Ch,24h,14h,51h,0E8h,3Eh,0B1h
+    db 0FFh,0FFh,8Bh,4Ch,24h,10h,83h,0C4h
+    db 04h,50h,0E8h,34h,86h,71h,0FFh,5Eh
+    db 5Bh,0C3h,8Bh,54h,24h,14h,52h,0E8h
+    db 54h,0B1h,0FFh,0FFh,8Bh,4Ch,24h,10h
+    db 83h,0C4h,04h,50h,0E8h,1Ah,86h,71h
+    db 0FFh,5Eh,5Bh,0C3h,8Bh,44h,24h,14h
+    db 50h,0E8h,0AAh,0B1h,0FFh,0FFh,8Bh,4Ch
+    db 24h,10h,83h,0C4h,04h,50h,0E8h,00h
+    db 86h,71h,0FFh,5Eh,5Bh,0C3h,0D9h,44h
+    db 24h,14h,8Bh,4Ch,24h,0Ch,83h,0ECh
+    db 08h,0DDh,1Ch,24h,68h,4Ch,2Fh,08h
+    db 01h,51h,0E8h,91h,3Eh,0Dh,00h,83h
+    db 0C4h,10h,5Eh,5Bh,0C3h,5Eh,5Bh,0C7h
+    db 44h,24h,08h,0B4h,0C7h,07h,01h,0E9h
+    db 7Ch,3Eh,0Dh,00h,8Bh,4Ch,24h,14h
+    db 51h,0E8h,0A2h,0B1h,0FFh,0FFh,8Bh,4Ch
+    db 24h,10h,83h,0C4h,04h,50h,0E8h,0B8h
+    db 85h,71h,0FFh,5Eh,5Bh,0C3h,8Bh,74h
+    db 24h,0Ch,68h,38h,12h,08h,01h,8Bh
+    db 0CEh,0E8h,0A5h,85h,71h,0FFh,8Ah,5Ch
+    db 24h,14h,0F6h,0C3h,01h,74h,0Ch,68h
+    db 40h,0A4h,13h,01h,8Bh,0CEh,0E8h,3Dh
+    db 0F8h,0FFh,0FFh,0F6h,0C3h,02h,74h,0Ch
+    db 68h,34h,0A4h,13h,01h,8Bh,0CEh,0E8h
+    db 2Ch,0F8h,0FFh,0FFh,0F6h,0C3h,04h,0Fh
+    db 84h,0ACh,0FEh,0FFh,0FFh,68h,28h,0A4h
+    db 13h,01h,8Bh,0CEh,0E8h,17h,0F8h,0FFh
+    db 0FFh,5Eh,5Bh,0C3h,8Bh,54h,24h,14h
+    db 52h,0E8h,0AAh,0B1h,0FFh,0FFh,8Bh,4Ch
+    db 24h,10h,83h,0C4h,04h,50h,0E8h,50h
+    db 85h,71h,0FFh,5Eh,5Bh,0C3h,8Bh,44h
+    db 24h,14h,50h,0E8h,0C0h,0B1h,0FFh,0FFh
+    db 8Bh,4Ch,24h,10h,83h,0C4h,04h,50h
+    db 0E8h,36h,85h,71h,0FFh,5Eh,5Bh,0C3h
+    db 8Bh,4Ch,24h,14h,51h,0E8h,0F6h,0B1h
+    db 0FFh,0FFh,8Bh,4Ch,24h,10h,83h,0C4h
+    db 04h,50h,0E8h,1Ch,85h,71h,0FFh,5Eh
+    db 5Bh,0C3h,8Bh,54h,24h,14h,52h,0E8h
+    db 0FCh,0B1h,0FFh,0FFh,8Bh,4Ch,24h,10h
+    db 83h,0C4h,04h,50h,0E8h,02h,85h,71h
+    db 0FFh,5Eh,5Bh,0C3h,8Bh,74h,24h,0Ch
+    db 68h,38h,12h,08h,01h,8Bh,0CEh,0E8h
+    db 0EFh,84h,71h,0FFh,8Ah,5Ch,24h,14h
+    db 0F6h,0C3h,01h,74h,0Ch,68h,0Ch,0A4h
+    db 13h,01h,8Bh,0CEh,0E8h,87h,0F7h,0FFh
+    db 0FFh,0F6h,0C3h,02h,74h,0Ch,68h,0F0h
+    db 0A3h,13h,01h,8Bh,0CEh,0E8h,76h,0F7h
+    db 0FFh,0FFh,0F6h,0C3h,04h,74h,0Ch,68h
+    db 0D4h,0A3h,13h,01h,8Bh,0CEh,0E8h,65h
+    db 0F7h,0FFh,0FFh,0F6h,0C3h,08h,0Fh,84h
+    db 0E5h,0FDh,0FFh,0FFh,68h,0B8h,0A3h,13h
+    db 01h,8Bh,0CEh,0E8h,50h,0F7h,0FFh,0FFh
+    db 5Eh,5Bh,0C3h,8Bh,44h,24h,14h,50h
+    db 0E8h,0C3h,0B1h,0FFh,0FFh,8Bh,4Ch,24h
+    db 10h,83h,0C4h,04h,50h,0E8h,89h,84h
+    db 71h,0FFh,5Eh,5Bh,0C3h,5Eh,5Bh,0C7h
+    db 44h,24h,08h,08h,0A3h,13h,01h,0E9h
+    db 24h,3Dh,0Dh,00h
+?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z ENDP
+_TEXT ENDS
+END
