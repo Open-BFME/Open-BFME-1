@@ -1183,3 +1183,6 @@ __CxxThrowException@8,0x00850600,CRT throw helper
 ??0OBBoxClass@@QAE@ABV0@@Z,0x00931420
 ?Set_Position@RenderObjClass@@UAEXABVVector3@@@Z,0x00920220
 ?Set_Transform@RenderObjClass@@UAEXABVMatrix3D@@@Z,0x009201A0
+??0?$ShareBufferClass@VShaderClass@@@@QAE@HPBDH@Z,0x0092B940,Get_Shader_Array ShareBuffer 3-arg ctor
+??0?$ShareBufferClass@I@@QAE@ABV0@@Z,0x0092A090
+??0?$ShareBufferClass@VVector2@@@@QAE@ABV0@@Z,0x0092B710

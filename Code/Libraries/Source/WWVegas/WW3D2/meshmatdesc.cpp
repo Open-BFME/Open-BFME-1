@@ -601,7 +601,6 @@ MatBufferClass * MeshMatDescClass::Get_Material_Array(int pass,bool create)
 	return MaterialArray[pass];
 }
 
-// ?Get_Shader_Array@MeshMatDescClass@@QAEPAVShaderClass@@H_N@Z present-unmatched
 ShaderClass * MeshMatDescClass::Get_Shader_Array(int pass,bool create)
 {
 	if (create && ShaderArray[pass] == NULL) {
