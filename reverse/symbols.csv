@@ -1153,3 +1153,10 @@ __CxxThrowException@8,0x00850600,CRT throw helper
 ?getDisplayName@PlayerTemplate@@QBE?AVUnicodeString@@XZ,0x000300D5,ILT thunk used by call site
 ?isCellOnEnd@Bridge@@QAE_NPBURegion2D@@@Z,0x0000DAAD,ILT thunk used by call site
 ?getBridgeHeight@Bridge@@QAEMPBUCoord3D@@PAU2@@Z,0x0000B802,ILT thunk used by call site
+?Free@FastAllocatorGeneral@@QAEXPAX@Z,0x00AFEBC0
+??0AutoHealBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000A0E2
+??0DynamicGeometryInfoUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048338
+??0LaserUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00035D91
+??0NeutronMissileUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048F2C
+??0PhysicsBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x000328C6
+?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z,0x00907BE0
