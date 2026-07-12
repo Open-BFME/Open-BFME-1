@@ -97,6 +97,12 @@ static ShaderClass PlayerColorShader(SC_PLAYER_COLOR);
 //=============================================================================
 // ??0RTS3DScene@@QAE@XZ
 // Body in W3DScene_0RTS3DScene.asm (exact 940B retail).
+// Keep W3DShroudMaterialPassClass default ctor COMDAT (was only referenced by the
+// old C++ RTS3DScene ctor; 22B matched at 0x00702300).
+void W3DScene_force_W3DShroudMaterialPassClass_ctor(W3DShroudMaterialPassClass *p)
+{
+	new (p) W3DShroudMaterialPassClass();
+}
 
 //=============================================================================
 // RTS3DScene::~RTS3DScene

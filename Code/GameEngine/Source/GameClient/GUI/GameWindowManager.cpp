@@ -2430,6 +2430,12 @@ GameWindow *GameWindowManager::gogoGadgetSlider( GameWindow *parent,
 //-------------------------------------------------------------------------------------------------
 // ?gogoGadgetComboBox@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHPAVWinInstanceData@@PAU_ComboBoxData@@PAVGameFont@@_N@Z
 // Body in GameWindowManager_gogoGadgetComboBox.asm (exact 1121B retail).
+// Keep GameWindow::setTooltipDelay COMDAT in this TU (was only referenced by the
+// old C++ gogoGadgetComboBox body; 13B matched at 0x0098D2B0).
+void GameWindowManager_force_setTooltipDelay(GameWindow *w, Int delay)
+{
+	w->setTooltipDelay(delay);
+}
 
 //-------------------------------------------------------------------------------------------------
 /** Create a progress bar GUI element */

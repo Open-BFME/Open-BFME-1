@@ -1136,5 +1136,12 @@ void W3DBridgeBuffer::updateCenter(CameraClass *camera, RefRenderObjListIterator
 //=============================================================================
 // ?drawBridges@W3DBridgeBuffer@@QAEXPAVCameraClass@@_NPAVTextureClass@@@Z
 // Body in W3DBridgeBuffer_drawBridges.asm (exact 909B retail).
-
+// Keep COMDATs previously only referenced by drawBridges: DX8Wrapper::Set_Shader,
+// Bridge::getBridgeInfo, W3DBridge::setEnabled.
+void W3DBridgeBuffer_force_drawBridges_deps(ShaderClass *sh, Bridge *br, BridgeInfo *bi, W3DBridge *wb, Bool en)
+{
+	DX8Wrapper::Set_Shader(*sh);
+	br->getBridgeInfo(bi);
+	wb->setEnabled(en);
+}
 
