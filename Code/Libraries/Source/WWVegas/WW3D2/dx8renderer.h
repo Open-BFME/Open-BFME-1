@@ -350,6 +350,13 @@ protected:
 	SimpleDynVecClass<FVFCategoryList *>		texture_category_container_lists_rigid;
 	FVFCategoryList *									texture_category_container_list_skin;
 
+public:
+	// BFME: pending-delete MultiLists are members at +0x1c / +0x34 (not file statics).
+	// Declared after skin so layout matches; public for category/container enqueue.
+	TextureCategoryList							texture_category_delete_list;
+	FVFCategoryList								fvf_category_container_delete_list;
+
+protected:
 	DecalMeshClass *									visible_decal_meshes;
 
 

@@ -75,8 +75,6 @@ static DynamicVectorClass<Vector3>				_TempVertexBuffer;
 static DynamicVectorClass<Vector3>				_TempNormalBuffer;
 
 static MultiListClass<MeshModelClass>			_RegisteredMeshList;
-static TextureCategoryList							texture_category_delete_list;
-static FVFCategoryList								fvf_category_container_delete_list;
 
 // helper data structure
 class PolyRemover : public MultiListObjectClass
@@ -261,7 +259,7 @@ void DX8TextureCategoryClass::Remove_Polygon_Renderer(DX8PolygonRendererClass* p
 	p_renderer->Set_Texture_Category(NULL);
 	if (PolygonRendererList.Peek_Head() == NULL) {
 		container->Remove_Texture_Category(this);
-		texture_category_delete_list.Add_Tail(this);
+		TheDX8MeshRenderer.texture_category_delete_list.Add_Tail(this);
 	}
 }
 
@@ -276,7 +274,7 @@ void DX8FVFCategoryContainer::Remove_Texture_Category(DX8TextureCategoryClass* t
 		// If any of the texture category lists has anything in it, no need to delete this container
 		if (texture_category_list[pass].Peek_Head() != NULL) return;
 	}
-	fvf_category_container_delete_list.Add_Tail(this);
+	TheDX8MeshRenderer.fvf_category_container_delete_list.Add_Tail(this);
 }
 
 // ?Add_Visible_Material_Pass@DX8FVFCategoryContainer@@QAEXPAVMaterialPassClass@@PAVMeshClass@@@Z present-unmatched
@@ -2043,7 +2041,6 @@ void DX8MeshRendererClass::Shutdown(void)
 
 // ----------------------------------------------------------------------------
 
-// ?Clear_Pending_Delete_Lists@DX8MeshRendererClass@@QAEXXZ present-unmatched
 void DX8MeshRendererClass::Clear_Pending_Delete_Lists()
 {
 	while (DX8TextureCategoryClass* category=texture_category_delete_list.Remove_Head()) {
