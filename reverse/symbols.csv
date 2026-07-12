@@ -1160,3 +1160,6 @@ __CxxThrowException@8,0x00850600,CRT throw helper
 ??0NeutronMissileUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048F2C
 ??0PhysicsBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x000328C6
 ?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z,0x00907BE0
+?clearAndSetModelConditionState@Drawable@@QAEXW4ModelConditionFlagType@@0@Z,0x0001C8D2
+?setDisabledUntil@Object@@QAEXW4DisabledType@@I@Z,0x0003364A
+?parseWeaponBonusSet@WeaponBonusSet@@QAEXPAVINI@@@Z,0x00019BC8
