@@ -4939,3 +4939,15 @@ __CIasin,,0x009F7D86,6,Code/masm_dumps/__CIasin_9F7D86.asm,matched,MASM exact re
 ?push_back@?$vector@U?$pair@W4ObjectID@@W41@@_STL@@V?$allocator@U?$pair@W4ObjectID@@W41@@_STL@@@2@@_STL@@QAEXABU?$pair@W4ObjectID@@W41@@2@@Z,,0x007740E0,62,Code/GameEngine/Source/GameLogic/AI/partition_solver.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
 ?getSingleBitFromName@?$BitFlags@$0N@@@SAHPBD@Z,,0x001C0A30,71,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
 ?erase@?$vector@UPayload@DeliverPayloadNugget@@V?$allocator@UPayload@DeliverPayloadNugget@@@_STL@@@_STL@@QAEPAUPayload@DeliverPayloadNugget@@PAU34@0@Z,,0x00374B00,76,Code/GameEngine/Source/GameLogic/Object/ObjectCreationList.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?push_back@?$vector@UVideo@@V?$allocator@UVideo@@@_STL@@@_STL@@QAEXABUVideo@@@Z,,0x006FA960,62,Code/GameEngine/Source/GameClient/VideoPlayer.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+??A?$hash_map@PBVGameWindow@@PAVWindowVideo@@UhashConstGameWindowPtr@WindowVideoManager@@U?$equal_to@PBVGameWindow@@@_STL@@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@6@@_STL@@QAEAAPAVWindowVideo@@ABQBVGameWindow@@@Z,,0x00787E00,99,Code/GameEngine/Source/GameClient/window_video_manager.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?Intersect@RenderObjClass@@UAE_NPAVIntersectionClass@@PAVIntersectionResultClass@@@Z,,0x00920850,456,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?Get_Value@SegmentedLineClass@@UBEMXZ,,0x00950870,83,Code/Libraries/Source/WWVegas/WW3D2/segline.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?Get_Post_Increment_Value@SegmentedLineClass@@UBEMXZ,,0x009508D0,71,Code/Libraries/Source/WWVegas/WW3D2/segline.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?Cast_Ray@SegmentedLineClass@@UAE_NAAVRayCollisionTestClass@@@Z,,0x00950DD0,494,Code/Libraries/Source/WWVegas/WW3D2/segline.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?Render@OBBoxRenderObjClass@@UAEXAAVRenderInfoClass@@@Z,,0x00957D00,263,Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+??0?$DynamicVectorClass@PAVRenderObjClass@@@@QAE@IPBQAVRenderObjClass@@@Z,,0x009745E0,93,Code/Libraries/Source/WWVegas/WW3D2/agg_def.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?On_Frame_Update@ParticleEmitterClass@@UAEXXZ,,0x0097EED0,273,Code/Libraries/Source/WWVegas/WW3D2/part_emt.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?Reset@ParticleEmitterClass@@QAEXXZ,,0x0097EFF0,145,Code/Libraries/Source/WWVegas/WW3D2/part_emt.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?Find_Subobject@AggregateDefClass@@MAEPAVRenderObjClass@@AAV2@QAY0CA@$$CBD1@Z,,0x009808F0,269,Code/Libraries/Source/WWVegas/WW3D2/agg_def.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?Read_Opacity_Keyframe@ParticleEmitterDefClass@@MAE_NAAVChunkLoadClass@@PAM1@Z,,0x0098C630,81,Code/Libraries/Source/WWVegas/WW3D2/part_ldr.cpp,matched,exact-ambiguous COMDAT pinned by string anchor

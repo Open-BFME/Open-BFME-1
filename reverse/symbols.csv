@@ -1205,3 +1205,8 @@ __CxxThrowException@8,0x00850600,CRT throw helper
 ??1Payload@DeliverPayloadNugget@@QAE@XZ,0x0004B10A,rel32 pin for exact-ambiguous landing
 
 ??$__copy@PAUPayload@DeliverPayloadNugget@@PAU12@H@_STL@@YAPAUPayload@DeliverPayloadNugget@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000097CD,rel32 pin for exact-ambiguous landing
+??$_Construct@UVideo@@U1@@_STL@@YAXPAUVideo@@ABU1@@Z,0x00030549,rel32 pin for exact-ambiguous landing
+?_M_insert_overflow@?$vector@UVideo@@V?$allocator@UVideo@@@_STL@@@_STL@@IAEXPAUVideo@@ABU3@ABU__false_type@2@I_N@Z,0x000359B3,rel32 pin for exact-ambiguous landing
+?_M_insert@?$hashtable@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEAAU?$pair@QBVGameWindow@@PAVWindowVideo@@@2@ABU32@@Z,0x00032407,rel32 pin for exact-ambiguous landing
+?render_box@BoxRenderObjClass@@IAEXAAVRenderInfoClass@@ABVVector3@@1@Z,0x00956F40,rel32 pin for exact-ambiguous landing
+?Build_Quaternion@@YA?AVQuaternion@@ABVMatrix3D@@@Z,0x008DBA40,rel32 pin for exact-ambiguous landing
