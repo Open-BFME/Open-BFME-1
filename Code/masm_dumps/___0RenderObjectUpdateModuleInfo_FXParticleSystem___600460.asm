@@ -1,0 +1,55 @@
+.386
+.model flat
+
+; ??0RenderObjectUpdateModuleInfo@FXParticleSystem@@QAE@XZ
+; Retail @ 0x00600460 size 349
+_TEXT SEGMENT
+public ??0RenderObjectUpdateModuleInfo@FXParticleSystem@@QAE@XZ
+??0RenderObjectUpdateModuleInfo@FXParticleSystem@@QAE@XZ PROC
+    db 6Ah,0FFh,68h,18h,0CDh,03h,01h,64h
+    db 0A1h,00h,00h,00h,00h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,51h,53h,55h
+    db 56h,8Bh,0F1h,57h,89h,74h,24h,10h
+    db 33h,0FFh,0C7h,06h,78h,0Dh,11h,01h
+    db 89h,7Eh,04h,89h,7Eh,08h,89h,7Eh
+    db 0Ch,89h,7Eh,10h,89h,7Eh,14h,89h
+    db 7Eh,18h,89h,7Eh,1Ch,89h,7Eh,20h
+    db 89h,7Eh,24h,89h,7Eh,28h,89h,7Eh
+    db 2Ch,89h,7Eh,30h,89h,7Eh,34h,89h
+    db 7Eh,38h,89h,7Eh,3Ch,89h,7Eh,40h
+    db 89h,7Eh,44h,89h,7Eh,48h,89h,7Eh
+    db 4Ch,89h,7Eh,50h,89h,7Eh,54h,8Dh
+    db 4Eh,04h,89h,7Eh,58h,89h,7Eh,5Ch
+    db 89h,7Eh,60h,8Dh,5Eh,10h,8Dh,6Eh
+    db 1Ch,89h,7Eh,64h,89h,7Eh,68h,89h
+    db 7Eh,6Ch,89h,7Eh,70h,89h,7Eh,74h
+    db 89h,7Eh,78h,6Ah,01h,89h,7Eh,7Ch
+    db 89h,0BEh,80h,00h,00h,00h,89h,0BEh
+    db 84h,00h,00h,00h,57h,57h,89h,7Ch
+    db 24h,28h,89h,0BEh,88h,00h,00h,00h
+    db 89h,0BEh,8Ch,00h,00h,00h,89h,0BEh
+    db 90h,00h,00h,00h,0E8h,3Fh,67h,0A0h
+    db 0FFh,6Ah,01h,57h,57h,8Dh,4Eh,28h
+    db 0E8h,33h,67h,0A0h,0FFh,6Ah,01h,57h
+    db 57h,8Dh,4Eh,4Ch,0E8h,27h,67h,0A0h
+    db 0FFh,6Ah,01h,57h,57h,8Bh,0CBh,0E8h
+    db 1Ch,67h,0A0h,0FFh,6Ah,01h,57h,57h
+    db 8Dh,4Eh,34h,0E8h,10h,67h,0A0h,0FFh
+    db 6Ah,01h,57h,57h,8Dh,4Eh,58h,0E8h
+    db 04h,67h,0A0h,0FFh,6Ah,01h,57h,57h
+    db 8Bh,0CDh,0E8h,0F9h,66h,0A0h,0FFh,6Ah
+    db 01h,57h,57h,8Dh,4Eh,40h,0E8h,0EDh
+    db 66h,0A0h,0FFh,6Ah,01h,57h,57h,8Dh
+    db 4Eh,64h,0E8h,0E1h,66h,0A0h,0FFh,6Ah
+    db 01h,57h,57h,8Dh,4Eh,70h,0E8h,0D5h
+    db 66h,0A0h,0FFh,6Ah,01h,57h,57h,8Dh
+    db 4Eh,7Ch,0E8h,0C9h,66h,0A0h,0FFh,6Ah
+    db 01h,57h,57h,8Dh,8Eh,88h,00h,00h
+    db 00h,0E8h,0BAh,66h,0A0h,0FFh,8Bh,4Ch
+    db 24h,14h,5Fh,0C7h,86h,94h,00h,00h
+    db 00h,01h,00h,00h,00h,8Bh,0C6h,5Eh
+    db 5Dh,5Bh,64h,89h,0Dh,00h,00h,00h
+    db 00h,83h,0C4h,10h,0C3h
+??0RenderObjectUpdateModuleInfo@FXParticleSystem@@QAE@XZ ENDP
+_TEXT ENDS
+END

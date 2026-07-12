@@ -1,0 +1,53 @@
+.386
+.model flat
+
+; ?getframe@AdaptiveDeltaMotionChannelClass@@AAEMKK@Z
+; Retail @ 0x00977FF0 size 330
+_TEXT SEGMENT
+public ?getframe@AdaptiveDeltaMotionChannelClass@@AAEMKK@Z
+?getframe@AdaptiveDeltaMotionChannelClass@@AAEMKK@Z PROC
+    db 83h,0ECh,10h,53h,8Bh,0D9h,8Bh,43h
+    db 0Ch,55h,8Bh,6Ch,24h,1Ch,3Bh,0E8h
+    db 72h,03h,8Dh,68h,0FFh,8Bh,43h,1Ch
+    db 3Bh,0C5h,75h,12h,8Bh,43h,20h,8Bh
+    db 4Ch,24h,20h,0D9h,04h,88h,5Dh,5Bh
+    db 83h,0C4h,10h,0C2h,08h,00h,8Dh,50h
+    db 01h,3Bh,0D5h,75h,15h,8Bh,43h,08h
+    db 03h,44h,24h,20h,8Bh,4Bh,20h,0D9h
+    db 04h,81h,5Dh,5Bh,83h,0C4h,10h,0C2h
+    db 08h,00h,3Bh,0E8h,73h,40h,8Bh,53h
+    db 20h,52h,55h,8Bh,0CBh,0E8h,66h,0FDh
+    db 0FFh,0FFh,8Bh,43h,0Ch,48h,3Bh,0E8h
+    db 74h,17h,8Bh,43h,20h,8Bh,4Bh,08h
+    db 8Dh,14h,88h,52h,8Dh,4Dh,01h,51h
+    db 50h,55h,8Bh,0CBh,0E8h,47h,0FEh,0FFh
+    db 0FFh,8Bh,53h,20h,8Bh,44h,24h,20h
+    db 89h,6Bh,1Ch,0D9h,04h,82h,5Dh,5Bh
+    db 83h,0C4h,10h,0C2h,08h,00h,8Dh,48h
+    db 02h,56h,3Bh,0E9h,8Bh,4Bh,08h,57h
+    db 75h,4Dh,8Bh,7Bh,20h,0C1h,0E1h,02h
+    db 8Dh,34h,39h,8Bh,0D1h,0C1h,0E9h,02h
+    db 0F3h,0A5h,8Bh,0CAh,83h,0E1h,03h,0F3h
+    db 0A4h,8Bh,43h,20h,8Bh,53h,08h,8Bh
+    db 7Bh,1Ch,8Dh,14h,90h,52h,55h,47h
+    db 8Bh,0CFh,50h,51h,8Bh,0CBh,89h,7Bh
+    db 1Ch,0E8h,0F2h,0FDh,0FFh,0FFh,8Bh,43h
+    db 08h,8Bh,4Ch,24h,28h,5Fh,5Eh,03h
+    db 0C1h,8Bh,4Bh,20h,5Dh,0D9h,04h,81h
+    db 5Bh,83h,0C4h,10h,0C2h,08h,00h,8Bh
+    db 53h,20h,0C1h,0E1h,02h,8Dh,34h,11h
+    db 8Bh,0D1h,0C1h,0E9h,02h,8Dh,7Ch,24h
+    db 10h,0F3h,0A5h,8Bh,0CAh,83h,0E1h,03h
+    db 0F3h,0A4h,8Bh,4Bh,20h,51h,55h,8Dh
+    db 4Ch,24h,18h,51h,50h,8Bh,0CBh,0E8h
+    db 0ACh,0FDh,0FFh,0FFh,8Bh,53h,0Ch,4Ah
+    db 3Bh,0EAh,89h,6Bh,1Ch,74h,17h,8Bh
+    db 43h,20h,8Bh,4Bh,08h,8Dh,14h,88h
+    db 52h,8Dh,4Dh,01h,51h,50h,55h,8Bh
+    db 0CBh,0E8h,8Ah,0FDh,0FFh,0FFh,8Bh,53h
+    db 20h,8Bh,44h,24h,28h,0D9h,04h,82h
+    db 5Fh,5Eh,5Dh,5Bh,83h,0C4h,10h,0C2h
+    db 08h,00h
+?getframe@AdaptiveDeltaMotionChannelClass@@AAEMKK@Z ENDP
+_TEXT ENDS
+END

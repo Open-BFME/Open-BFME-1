@@ -1,0 +1,56 @@
+.386
+.model flat
+
+; ??4?$CategoryModuleTemplate@$06@FXParticleSystem@@QAEAAV01@ABV01@@Z
+; Retail @ 0x005BDB80 size 355
+_TEXT SEGMENT
+public ??4?$CategoryModuleTemplate@$06@FXParticleSystem@@QAEAAV01@ABV01@@Z
+??4?$CategoryModuleTemplate@$06@FXParticleSystem@@QAEAAV01@ABV01@@Z PROC
+    db 8Bh,44h,24h,04h,85h,0C0h,56h,8Bh
+    db 0F1h,74h,12h,83h,0C0h,08h,50h,8Dh
+    db 4Eh,08h,0E8h,0BCh,0A3h,0A5h,0FFh,8Bh
+    db 0C6h,5Eh,0C2h,04h,00h,33h,0C0h,50h
+    db 8Dh,4Eh,08h,0E8h,0ABh,0A3h,0A5h,0FFh
+    db 8Bh,0C6h,5Eh,0C2h,04h,00h,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0D9h,05h,50h,53h,07h,01h,8Bh,4Ch
+    db 24h,04h,0D9h,41h,04h,0DAh,0E9h,0DFh
+    db 0E0h,0F6h,0C4h,44h,7Ah,18h,0D9h,05h
+    db 50h,53h,07h,01h,0D9h,41h,08h,0DAh
+    db 0E9h,0DFh,0E0h,0F6h,0C4h,44h,7Ah,06h
+    db 0B8h,01h,00h,00h,00h,0C3h,33h,0C0h
+    db 0C3h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 8Bh,0C1h,33h,0C9h,0C7h,00h,18h,0FAh
+    db 10h,01h,89h,48h,04h,89h,48h,08h
+    db 89h,48h,0Ch,89h,48h,28h,89h,48h
+    db 2Ch,89h,48h,30h,89h,48h,1Ch,89h
+    db 48h,20h,89h,48h,24h,89h,48h,10h
+    db 89h,48h,14h,89h,48h,18h,89h,48h
+    db 34h,88h,48h,38h,0C3h,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0B8h,2Ch,0FAh,10h,01h,0C3h,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0C7h,01h,44h,37h,07h,01h,0C3h,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 56h,8Bh,74h,24h,08h,8Bh,06h,57h
+    db 8Bh,0F9h,8Bh,0CEh,0FFh,50h,10h,84h
+    db 0C0h,75h,5Bh,8Bh,16h,0B0h,01h,88h
+    db 44h,24h,0Ch,88h,44h,24h,0Dh,8Dh
+    db 44h,24h,0Ch,50h,8Bh,0CEh,0FFh,52h
+    db 28h,8Bh,16h,8Dh,47h,04h,50h,8Bh
+    db 0CEh,0FFh,52h,60h,8Bh,16h,8Dh,47h
+    db 10h,50h,8Bh,0CEh,0FFh,52h,60h,8Bh
+    db 16h,8Dh,47h,1Ch,50h,8Bh,0CEh,0FFh
+    db 52h,60h,8Bh,16h,8Dh,47h,28h,50h
+    db 8Bh,0CEh,0FFh,52h,60h,8Bh,16h,8Dh
+    db 47h,34h,50h,8Bh,0CEh,0FFh,52h,74h
+    db 8Bh,16h,83h,0C7h,38h,57h,8Bh,0CEh
+    db 0FFh,92h,8Ch,00h,00h,00h,5Fh,5Eh
+    db 0C2h,04h,00h
+??4?$CategoryModuleTemplate@$06@FXParticleSystem@@QAEAAV01@ABV01@@Z ENDP
+_TEXT ENDS
+END

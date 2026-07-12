@@ -1,0 +1,94 @@
+.386
+.model flat
+
+; ??0ParticleSystemInfo@FXParticleSystem@@QAE@ABV01@@Z
+; Retail @ 0x0005EF60 size 663
+_TEXT SEGMENT
+public ??0ParticleSystemInfo@FXParticleSystem@@QAE@ABV01@@Z
+??0ParticleSystemInfo@FXParticleSystem@@QAE@ABV01@@Z PROC
+    db 6Ah,0FFh,68h,7Eh,26h,0FFh,00h,64h
+    db 0A1h,00h,00h,00h,00h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,51h,56h,8Bh
+    db 0F1h,57h,89h,74h,24h,08h,8Bh,7Ch
+    db 24h,1Ch,0C7h,06h,78h,38h,07h,01h
+    db 8Ah,47h,04h,88h,46h,04h,8Bh,4Fh
+    db 08h,89h,4Eh,08h,8Bh,57h,0Ch,8Dh
+    db 47h,10h,8Dh,4Eh,10h,50h,0C7h,44h
+    db 24h,18h,00h,00h,00h,00h,89h,56h
+    db 0Ch,0E8h,0B2h,8Bh,82h,00h,8Dh,4Fh
+    db 14h,8Bh,01h,8Dh,56h,14h,89h,02h
+    db 8Bh,41h,04h,89h,42h,04h,8Bh,49h
+    db 08h,89h,4Ah,08h,8Bh,57h,20h,89h
+    db 56h,20h,8Bh,47h,24h,89h,46h,24h
+    db 8Dh,4Fh,28h,8Bh,01h,8Dh,56h,28h
+    db 89h,02h,8Bh,41h,04h,89h,42h,04h
+    db 8Bh,49h,08h,89h,4Ah,08h,8Dh,57h
+    db 34h,8Bh,0Ah,8Dh,46h,34h,89h,08h
+    db 8Bh,4Ah,04h,89h,48h,04h,8Bh,52h
+    db 08h,89h,50h,08h,8Bh,47h,40h,89h
+    db 46h,40h,8Dh,4Fh,44h,8Bh,01h,8Dh
+    db 56h,44h,89h,02h,8Bh,41h,04h,89h
+    db 42h,04h,8Bh,49h,08h,89h,4Ah,08h
+    db 8Dh,57h,50h,8Bh,0Ah,8Dh,46h,50h
+    db 89h,08h,8Bh,4Ah,04h,89h,48h,04h
+    db 8Bh,52h,08h,89h,50h,08h,8Dh,47h
+    db 5Ch,8Bh,10h,8Dh,4Eh,5Ch,89h,11h
+    db 8Bh,50h,04h,89h,51h,04h,8Bh,40h
+    db 08h,8Dh,57h,68h,89h,41h,08h,8Dh
+    db 4Eh,68h,52h,0C6h,44h,24h,18h,01h
+    db 0E8h,0Bh,8Bh,82h,00h,8Bh,47h,6Ch
+    db 0C6h,44h,24h,14h,02h,89h,46h,6Ch
+    db 8Bh,4Fh,70h,89h,4Eh,70h,8Bh,57h
+    db 74h,8Dh,47h,78h,50h,8Dh,4Eh,78h
+    db 89h,56h,74h,0E8h,0E8h,8Ah,82h,00h
+    db 8Bh,4Fh,7Ch,89h,4Eh,7Ch,8Ah,97h
+    db 80h,00h,00h,00h,88h,96h,80h,00h
+    db 00h,00h,8Ah,87h,81h,00h,00h,00h
+    db 88h,86h,81h,00h,00h,00h,8Ah,8Fh
+    db 82h,00h,00h,00h,88h,8Eh,82h,00h
+    db 00h,00h,8Ah,97h,83h,00h,00h,00h
+    db 88h,96h,83h,00h,00h,00h,8Bh,87h
+    db 84h,00h,00h,00h,89h,86h,84h,00h
+    db 00h,00h,8Bh,8Fh,88h,00h,00h,00h
+    db 89h,8Eh,88h,00h,00h,00h,8Bh,97h
+    db 8Ch,00h,00h,00h,89h,96h,8Ch,00h
+    db 00h,00h,8Bh,87h,90h,00h,00h,00h
+    db 89h,86h,90h,00h,00h,00h,8Bh,8Fh
+    db 94h,00h,00h,00h,89h,8Eh,94h,00h
+    db 00h,00h,8Bh,4Ch,24h,0Ch,5Fh,8Bh
+    db 0C6h,5Eh,64h,89h,0Dh,00h,00h,00h
+    db 00h,83h,0C4h,10h,0C2h,04h,00h,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 56h,8Bh,0F1h,0E8h,0E6h,3Dh,0FAh,0FFh
+    db 0F6h,44h,24h,08h,01h,74h,09h,56h
+    db 0E8h,2Bh,2Dh,82h,00h,83h,0C4h,04h
+    db 8Bh,0C6h,5Eh,0C2h,04h,00h,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
+    db 53h,8Ah,5Ch,24h,08h,0F6h,0C3h,02h
+    db 56h,8Bh,0F1h,74h,2Eh,8Bh,46h,0FCh
+    db 57h,68h,5Eh,2Fh,40h,00h,8Dh,7Eh
+    db 0FCh,50h,68h,98h,00h,00h,00h,56h
+    db 0E8h,0B1h,7Bh,99h,00h,0F6h,0C3h,01h
+    db 74h,09h,57h,0E8h,20h,2Dh,82h,00h
+    db 83h,0C4h,04h,8Bh,0C7h,5Fh,5Eh,5Bh
+    db 0C2h,04h,00h,8Bh,0CEh,0E8h,7Ch,3Dh
+    db 0FAh,0FFh,0F6h,0C3h,01h,74h,09h,56h
+    db 0E8h,0C3h,2Ch,82h,00h,83h,0C4h,04h
+    db 8Bh,0C6h,5Eh,5Bh,0C2h,04h,00h
+??0ParticleSystemInfo@FXParticleSystem@@QAE@ABV01@@Z ENDP
+_TEXT ENDS
+END

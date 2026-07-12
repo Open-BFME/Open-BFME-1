@@ -1,0 +1,86 @@
+.386
+.model flat
+
+; _D3DXVec4Transform@12
+; Retail @ 0x009FAA48 size 600
+_TEXT SEGMENT
+public _D3DXVec4Transform@12
+_D3DXVec4Transform@12 PROC
+    db 0FFh,25h,00h,0BEh,2Dh,01h,55h,8Bh
+    db 0ECh,83h,0ECh,10h,8Bh,4Dh,10h,8Bh
+    db 45h,0Ch,0D9h,41h,30h,0D8h,48h,0Ch
+    db 56h,0D9h,41h,10h,57h,0D8h,48h,04h
+    db 8Dh,75h,0F0h,0DEh,0C1h,0D9h,41h,20h
+    db 0D8h,48h,08h,0DEh,0C1h,0D9h,00h,0D8h
+    db 09h,0DEh,0C1h,0D9h,5Dh,0F0h,0D9h,41h
+    db 34h,0D8h,48h,0Ch,0D9h,41h,14h,0D8h
+    db 48h,04h,0DEh,0C1h,0D9h,41h,04h,0D8h
+    db 08h,0DEh,0C1h,0D9h,41h,24h,0D8h,48h
+    db 08h,0DEh,0C1h,0D9h,5Dh,0F4h,0D9h,41h
+    db 38h,0D8h,48h,0Ch,0D9h,41h,18h,0D8h
+    db 48h,04h,0DEh,0C1h,0D9h,41h,08h,0D8h
+    db 08h,0DEh,0C1h,0D9h,41h,28h,0D8h,48h
+    db 08h,0DEh,0C1h,0D9h,5Dh,0F8h,0D9h,41h
+    db 3Ch,0D8h,48h,0Ch,0D9h,41h,1Ch,0D8h
+    db 48h,04h,0DEh,0C1h,0D9h,41h,0Ch,0D8h
+    db 08h,0DEh,0C1h,0D9h,41h,2Ch,0D8h,48h
+    db 08h,8Bh,45h,08h,8Bh,0F8h,0DEh,0C1h
+    db 0D9h,5Dh,0FCh,0A5h,0A5h,0A5h,0A5h,5Fh
+    db 5Eh,0C9h,0C2h,0Ch,00h,55h,8Bh,0ECh
+    db 6Ah,01h,0E8h,5Fh,0CBh,02h,00h,5Dh
+    db 0FFh,25h,0FCh,0BEh,2Dh,01h,0FFh,25h
+    db 0FCh,0BEh,2Dh,01h,55h,8Bh,0ECh,83h
+    db 0ECh,10h,8Bh,45h,1Ch,85h,0C0h,53h
+    db 8Bh,5Dh,08h,89h,5Dh,08h,0Fh,86h
+    db 9Fh,00h,00h,00h,8Bh,55h,18h,8Bh
+    db 4Dh,10h,56h,57h,0D9h,42h,10h,8Bh
+    db 0FBh,0D8h,49h,04h,03h,5Dh,0Ch,0D9h
+    db 42h,20h,8Dh,75h,0F0h,0D8h,49h,08h
+    db 0DEh,0C1h,0D9h,41h,0Ch,0D8h,4Ah,30h
+    db 0DEh,0C1h,0D9h,01h,0D8h,0Ah,0DEh,0C1h
+    db 0D9h,5Dh,0F0h,0D9h,42h,14h,0D8h,49h
+    db 04h,0D9h,42h,34h,0D8h,49h,0Ch,0DEh
+    db 0C1h,0D9h,42h,24h,0D8h,49h,08h,0DEh
+    db 0C1h,0D9h,01h,0D8h,4Ah,04h,0DEh,0C1h
+    db 0D9h,5Dh,0F4h,0D9h,42h,08h,0D8h,09h
+    db 0D9h,42h,18h,0D8h,49h,04h,0DEh,0C1h
+    db 0D9h,42h,28h,0D8h,49h,08h,0DEh,0C1h
+    db 0D9h,41h,0Ch,0D8h,4Ah,38h,0DEh,0C1h
+    db 0D9h,5Dh,0F8h,0D9h,41h,0Ch,0D8h,4Ah
+    db 3Ch,0D9h,42h,0Ch,0D8h,09h,0DEh,0C1h
+    db 0D9h,42h,1Ch,0D8h,49h,04h,0DEh,0C1h
+    db 0D9h,42h,2Ch,0D8h,49h,08h,03h,4Dh
+    db 14h,48h,0DEh,0C1h,0D9h,5Dh,0FCh,0A5h
+    db 0A5h,0A5h,0A5h,0Fh,85h,6Bh,0FFh,0FFh
+    db 0FFh,5Fh,5Eh,8Bh,45h,08h,5Bh,0C9h
+    db 0C2h,18h,00h,6Ah,01h,0E8h,8Ch,0CAh
+    db 02h,00h,0FFh,25h,24h,0BEh,2Dh,01h
+    db 0FFh,25h,24h,0BEh,2Dh,01h,55h,8Bh
+    db 0ECh,8Bh,45h,08h,0D9h,40h,28h,0D8h
+    db 48h,3Ch,0D9h,40h,38h,0D8h,48h,2Ch
+    db 0DEh,0E9h,0D9h,40h,3Ch,0D8h,48h,24h
+    db 0D9h,40h,34h,0D8h,48h,2Ch,0DEh,0E9h
+    db 0D9h,40h,38h,0D8h,48h,24h,0D9h,40h
+    db 28h,0D8h,48h,34h,0DEh,0E9h,0D9h,40h
+    db 20h,0D8h,48h,3Ch,0D9h,40h,30h,0D8h
+    db 48h,2Ch,0DEh,0E9h,0D9h,40h,38h,0D8h
+    db 48h,20h,0D9h,40h,30h,0D8h,48h,28h
+    db 0DEh,0E9h,0D9h,40h,20h,0D8h,48h,34h
+    db 0D9h,40h,30h,0D8h,48h,24h,0DEh,0E9h
+    db 0D9h,5Dh,08h,0D9h,0C4h,0D8h,48h,14h
+    db 0D9h,0C4h,0D8h,48h,18h,0DEh,0E9h,0D9h
+    db 0C3h,0D8h,48h,1Ch,0DEh,0C1h,0D8h,08h
+    db 0D9h,0C5h,0D8h,48h,10h,0D9h,0C3h,0D8h
+    db 48h,18h,0DEh,0E9h,0D9h,0C2h,0D8h,48h
+    db 1Ch,0DEh,0C1h,0D8h,48h,04h,0DEh,0E9h
+    db 0D9h,0C4h,0D8h,48h,10h,0D9h,0C3h,0D8h
+    db 48h,14h,0DEh,0E9h,0D9h,45h,08h,0D8h
+    db 48h,1Ch,0DEh,0C1h,0D8h,48h,08h,0DEh
+    db 0C1h,0D9h,0C3h,0D8h,48h,10h,0D9h,0C2h
+    db 0D8h,48h,14h,0DEh,0E9h,0D9h,45h,08h
+    db 0D8h,48h,18h,0DEh,0C1h,0D8h,48h,0Ch
+    db 0DEh,0E9h,0DDh,0DDh,0DDh,0D8h,0DDh,0D8h
+    db 0DDh,0D8h,0DDh,0D8h,5Dh,0C2h,04h,00h
+_D3DXVec4Transform@12 ENDP
+_TEXT ENDS
+END

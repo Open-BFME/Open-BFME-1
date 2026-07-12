@@ -1,0 +1,94 @@
+.386
+.model flat
+
+; ?Render@PointGroupClass@@QAEXAAVRenderInfoClass@@H@Z
+; Retail @ 0x00917B70 size 662
+_TEXT SEGMENT
+public ?Render@PointGroupClass@@QAEXAAVRenderInfoClass@@H@Z
+?Render@PointGroupClass@@QAEXAAVRenderInfoClass@@H@Z PROC
+    db 83h,0ECh,64h,53h,56h,8Bh,0F1h,8Bh
+    db 46h,1Ch,33h,0DBh,3Bh,0C3h,0Fh,84h
+    db 7Ah,02h,00h,00h,0E8h,0D7h,0B2h,0FFh
+    db 0FFh,8Dh,44h,24h,14h,50h,8Dh,4Ch
+    db 24h,10h,51h,8Dh,54h,24h,18h,52h
+    db 8Dh,44h,24h,24h,50h,8Dh,4Ch,24h
+    db 18h,51h,8Bh,0CEh,89h,5Ch,24h,1Ch
+    db 89h,5Ch,24h,2Ch,89h,5Ch,24h,24h
+    db 89h,5Ch,24h,20h,89h,5Ch,24h,28h
+    db 0E8h,63h,0FDh,0FFh,0FFh,0F7h,05h,9Ch
+    db 0F4h,33h,01h,00h,00h,08h,00h,74h
+    db 3Eh,0C7h,44h,24h,2Ch,00h,00h,80h
+    db 3Fh,89h,5Ch,24h,30h,89h,5Ch,24h
+    db 34h,89h,5Ch,24h,38h,89h,5Ch,24h
+    db 3Ch,0C7h,44h,24h,40h,00h,00h,80h
+    db 3Fh,89h,5Ch,24h,44h,89h,5Ch,24h
+    db 48h,89h,5Ch,24h,4Ch,89h,5Ch,24h
+    db 50h,0C7h,44h,24h,54h,00h,00h,80h
+    db 3Fh,89h,5Ch,24h,58h,0EBh,74h,8Bh
+    db 15h,0CCh,10h,34h,01h,0A1h,0DCh,10h
+    db 34h,01h,8Bh,0Dh,0ECh,10h,34h,01h
+    db 89h,54h,24h,2Ch,8Bh,15h,0FCh,10h
+    db 34h,01h,89h,44h,24h,30h,0A1h,0D0h
+    db 10h,34h,01h,89h,4Ch,24h,34h,8Bh
+    db 0Dh,0E0h,10h,34h,01h,89h,54h,24h
+    db 38h,8Bh,15h,0F0h,10h,34h,01h,89h
+    db 44h,24h,3Ch,0A1h,00h,11h,34h,01h
+    db 89h,4Ch,24h,40h,8Bh,0Dh,0D4h,10h
+    db 34h,01h,89h,54h,24h,44h,8Bh,15h
+    db 0E4h,10h,34h,01h,89h,44h,24h,48h
+    db 0A1h,0F4h,10h,34h,01h,89h,4Ch,24h
+    db 4Ch,8Bh,0Dh,04h,11h,34h,01h,89h
+    db 54h,24h,50h,89h,44h,24h,54h,89h
+    db 4Ch,24h,58h,8Bh,46h,30h,0A8h,01h
+    db 55h,57h,0Fh,84h,0E0h,00h,00h,00h
+    db 0A8h,02h,0Fh,84h,0D8h,00h,00h,00h
+    db 8Bh,46h,1Ch,39h,05h,0B0h,36h,34h
+    db 01h,7Dh,0Fh,53h,8Dh,14h,00h,52h
+    db 0B9h,0A8h,36h,34h,01h,0E8h,0D4h,7Fh
+    db 72h,0FFh,8Bh,46h,1Ch,33h,0D2h,3Bh
+    db 0C3h,0Fh,8Eh,0A8h,00h,00h,00h,8Bh
+    db 4Ch,24h,10h,0BFh,0F8h,0FFh,0FFh,0FFh
+    db 8Dh,41h,08h,2Bh,0F9h,0EBh,09h,8Dh
+    db 0A4h,24h,00h,00h,00h,00h,8Bh,0FFh
+    db 0D9h,44h,24h,38h,8Bh,2Dh,0ACh,36h
+    db 34h,01h,0D8h,48h,0FCh,8Dh,0Ch,07h
+    db 0D9h,44h,24h,3Ch,42h,0D8h,08h,83h
+    db 0C0h,0Ch,0DEh,0C1h,0D9h,44h,24h,34h
+    db 0D8h,48h,0ECh,0DEh,0C1h,0D8h,44h,24h
+    db 40h,0D9h,44h,24h,4Ch,0D8h,48h,0F4h
+    db 0D9h,44h,24h,44h,0D8h,48h,0ECh,0DEh
+    db 0C1h,0D9h,44h,24h,48h,0D8h,48h,0F0h
+    db 0DEh,0C1h,0D8h,44h,24h,50h,0D9h,44h
+    db 24h,5Ch,0D8h,48h,0F4h,0D9h,44h,24h
+    db 54h,0D8h,48h,0ECh,0DEh,0C1h,0D9h,44h
+    db 24h,58h,0D8h,48h,0F0h,0DEh,0C1h,0D8h
+    db 44h,24h,60h,0D9h,5Ch,24h,2Ch,0D9h
+    db 0C9h,0D9h,1Ch,29h,8Bh,2Dh,0ACh,36h
+    db 34h,01h,0D9h,5Ch,29h,04h,8Bh,2Dh
+    db 0ACh,36h,34h,01h,0D9h,44h,24h,2Ch
+    db 0D9h,5Ch,29h,08h,8Bh,4Eh,1Ch,3Bh
+    db 0D1h,0Fh,8Ch,71h,0FFh,0FFh,0FFh,0A1h
+    db 0ACh,36h,34h,01h,89h,44h,24h,10h
+    db 8Bh,46h,2Ch,8Bh,4Eh,04h,8Bh,49h
+    db 10h,8Bh,7Eh,1Ch,48h,0F7h,0D8h,1Bh
+    db 0C0h,83h,0C0h,04h,0Fh,0AFh,0C8h,0Fh
+    db 0AFh,0C7h,8Bh,0E8h,39h,0Dh,6Ch,12h
+    db 34h,01h,7Dh,2Ch,8Dh,1Ch,09h,6Ah
+    db 00h,53h,0B9h,64h,12h,34h,01h,0E8h
+    db 0E2h,7Eh,72h,0FFh,6Ah,00h,53h,0B9h
+    db 98h,36h,34h,01h,0E8h,47h,0B9h,0FFh
+    db 0FFh,6Ah,00h,53h,0B9h,0B8h,66h,34h
+    db 01h,0E8h,2Ah,0B4h,0FFh,0FFh,33h,0DBh
+    db 8Bh,54h,24h,14h,8Bh,44h,24h,18h
+    db 8Bh,4Ch,24h,10h,57h,52h,50h,51h
+    db 8Bh,0CEh,0E8h,0F1h,0CAh,0FFh,0FFh,8Bh
+    db 54h,24h,7Ch,8Bh,44h,24h,1Ch,52h
+    db 57h,50h,8Bh,0CEh,0E8h,0EFh,0EEh,0FFh
+    db 0FFh,57h,8Bh,7Ch,24h,24h,57h,8Bh
+    db 0CEh,0E8h,92h,0AAh,0FFh,0FFh,3Bh,0FBh
+    db 0Fh,94h,0C1h,51h,55h,8Bh,0CEh,0E8h
+    db 0F4h,0BCh,0FFh,0FFh,5Fh,5Dh,5Eh,5Bh
+    db 83h,0C4h,64h,0C2h,08h,00h
+?Render@PointGroupClass@@QAEXAAVRenderInfoClass@@H@Z ENDP
+_TEXT ENDS
+END

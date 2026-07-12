@@ -1,0 +1,59 @@
+.386
+.model flat
+
+; ??0PivotClass@@QAE@ABU0@@Z
+; Retail @ 0x00972D70 size 383
+_TEXT SEGMENT
+public ??0PivotClass@@QAE@ABU0@@Z
+??0PivotClass@@QAE@ABU0@@Z PROC
+    db 8Bh,0C1h,8Bh,54h,24h,04h,8Bh,4Ah
+    db 10h,89h,48h,10h,8Bh,4Ah,14h,89h
+    db 48h,14h,8Bh,4Ah,18h,89h,48h,18h
+    db 8Bh,4Ah,1Ch,89h,48h,1Ch,8Bh,4Ah
+    db 20h,89h,48h,20h,8Bh,4Ah,24h,89h
+    db 48h,24h,8Bh,4Ah,28h,89h,48h,28h
+    db 8Bh,4Ah,2Ch,89h,48h,2Ch,8Bh,4Ah
+    db 30h,89h,48h,30h,8Bh,4Ah,34h,89h
+    db 48h,34h,8Bh,4Ah,38h,89h,48h,38h
+    db 8Bh,4Ah,3Ch,89h,48h,3Ch,8Bh,4Ah
+    db 40h,89h,48h,40h,8Bh,4Ah,44h,89h
+    db 48h,44h,8Bh,4Ah,48h,89h,48h,48h
+    db 8Bh,4Ah,4Ch,89h,48h,4Ch,8Bh,4Ah
+    db 50h,89h,48h,50h,8Bh,4Ah,54h,89h
+    db 48h,54h,8Bh,4Ah,58h,89h,48h,58h
+    db 8Bh,4Ah,5Ch,89h,48h,5Ch,8Bh,4Ah
+    db 60h,89h,48h,60h,8Bh,4Ah,64h,89h
+    db 48h,64h,8Bh,4Ah,68h,89h,48h,68h
+    db 8Bh,4Ah,6Ch,89h,48h,6Ch,8Bh,4Ah
+    db 70h,89h,48h,70h,8Bh,4Ah,74h,89h
+    db 48h,74h,8Bh,4Ah,78h,89h,48h,78h
+    db 8Bh,4Ah,7Ch,89h,48h,7Ch,8Bh,8Ah
+    db 80h,00h,00h,00h,89h,88h,80h,00h
+    db 00h,00h,8Bh,8Ah,84h,00h,00h,00h
+    db 89h,88h,84h,00h,00h,00h,8Bh,8Ah
+    db 88h,00h,00h,00h,89h,88h,88h,00h
+    db 00h,00h,8Bh,8Ah,8Ch,00h,00h,00h
+    db 89h,88h,8Ch,00h,00h,00h,8Bh,8Ah
+    db 90h,00h,00h,00h,89h,88h,90h,00h
+    db 00h,00h,8Bh,8Ah,94h,00h,00h,00h
+    db 89h,88h,94h,00h,00h,00h,8Bh,8Ah
+    db 98h,00h,00h,00h,89h,88h,98h,00h
+    db 00h,00h,8Bh,8Ah,9Ch,00h,00h,00h
+    db 89h,88h,9Ch,00h,00h,00h,8Bh,8Ah
+    db 0A0h,00h,00h,00h,89h,88h,0A0h,00h
+    db 00h,00h,8Bh,8Ah,0A4h,00h,00h,00h
+    db 89h,88h,0A4h,00h,00h,00h,8Ah,8Ah
+    db 0A8h,00h,00h,00h,56h,88h,88h,0A8h
+    db 00h,00h,00h,8Bh,8Ah,0ACh,00h,00h
+    db 00h,89h,88h,0ACh,00h,00h,00h,8Ah
+    db 8Ah,0B0h,00h,00h,00h,88h,88h,0B0h
+    db 00h,00h,00h,8Ah,8Ah,0B1h,00h,00h
+    db 00h,88h,88h,0B1h,00h,00h,00h,8Ah
+    db 8Ah,0B2h,00h,00h,00h,88h,88h,0B2h
+    db 00h,00h,00h,8Bh,32h,8Bh,0C8h,89h
+    db 31h,8Bh,72h,04h,89h,71h,04h,8Bh
+    db 72h,08h,89h,71h,08h,8Bh,52h,0Ch
+    db 89h,51h,0Ch,5Eh,0C2h,04h,00h
+??0PivotClass@@QAE@ABU0@@Z ENDP
+_TEXT ENDS
+END

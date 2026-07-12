@@ -1,0 +1,85 @@
+.386
+.model flat
+
+; ?insert_unique@?$_Rb_tree@IU?$pair@$$CBIPAVImage@@@_STL@@U?$_Select1st@U?$pair@$
+; Retail @ 0x009A4350 size 592
+_TEXT SEGMENT
+public ?insert_unique@?$_Rb_tree@IU?$pair@$$CBIPAVImage@@@_STL@@U?$_Select1st@U?$pair@$
+?insert_unique@?$_Rb_tree@IU?$pair@$$CBIPAVImage@@@_STL@@U?$_Select1st@U?$pair@$ PROC
+    db 83h,0ECh,08h,53h,56h,8Bh,74h,24h
+    db 18h,57h,8Bh,0F9h,8Bh,07h,3Bh,70h
+    db 08h,0Fh,85h,0F0h,00h,00h,00h,8Bh
+    db 47h,04h,85h,0C0h,77h,22h,8Bh,44h
+    db 24h,20h,50h,8Dh,4Ch,24h,10h,51h
+    db 8Bh,0CFh,0E8h,61h,0FEh,0FFh,0FFh,8Bh
+    db 10h,8Bh,44h,24h,18h,5Fh,5Eh,89h
+    db 10h,5Bh,83h,0C4h,08h,0C2h,0Ch,00h
+    db 8Bh,5Ch,24h,20h,8Bh,03h,8Bh,4Eh
+    db 10h,3Bh,0C8h,76h,1Ch,6Ah,00h,53h
+    db 56h,56h,8Bh,74h,24h,28h,56h,8Bh
+    db 0CFh,0E8h,82h,0FDh,0FFh,0FFh,5Fh,8Bh
+    db 0C6h,5Eh,5Bh,83h,0C4h,08h,0C2h,0Ch
+    db 00h,72h,0Fh,8Bh,44h,24h,18h,5Fh
+    db 89h,30h,5Eh,5Bh,83h,0C4h,08h,0C2h
+    db 0Ch,00h,56h,0E8h,0A0h,74h,0E8h,0FFh
+    db 8Bh,0Fh,83h,0C4h,04h,3Bh,0C1h,75h
+    db 1Ch,56h,53h,56h,8Bh,74h,24h,24h
+    db 6Ah,00h,56h,8Bh,0CFh,0E8h,46h,0FDh
+    db 0FFh,0FFh,5Fh,8Bh,0C6h,5Eh,5Bh,83h
+    db 0C4h,08h,0C2h,0Ch,00h,8Bh,0Bh,3Bh
+    db 48h,10h,73h,3Dh,8Bh,4Eh,0Ch,85h
+    db 0C9h,8Bh,0CFh,75h,1Ah,56h,53h,56h
+    db 8Bh,74h,24h,24h,6Ah,00h,56h,0E8h
+    db 1Ch,0FDh,0FFh,0FFh,5Fh,8Bh,0C6h,5Eh
+    db 5Bh,83h,0C4h,08h,0C2h,0Ch,00h,8Bh
+    db 74h,24h,18h,6Ah,00h,53h,50h,50h
+    db 56h,0E8h,02h,0FDh,0FFh,0FFh,5Fh,8Bh
+    db 0C6h,5Eh,5Bh,83h,0C4h,08h,0C2h,0Ch
+    db 00h,53h,8Dh,54h,24h,10h,52h,8Bh
+    db 0CFh,0E8h,9Ah,0FDh,0FFh,0FFh,8Bh,08h
+    db 8Bh,44h,24h,18h,5Fh,5Eh,89h,08h
+    db 5Bh,83h,0C4h,08h,0C2h,0Ch,00h,3Bh
+    db 0F0h,75h,48h,8Bh,48h,0Ch,8Bh,44h
+    db 24h,20h,8Bh,51h,10h,3Bh,10h,73h
+    db 1Ch,56h,8Bh,74h,24h,1Ch,50h,51h
+    db 6Ah,00h,56h,8Bh,0CFh,0E8h,0B6h,0FCh
+    db 0FFh,0FFh,5Fh,8Bh,0C6h,5Eh,5Bh,83h
+    db 0C4h,08h,0C2h,0Ch,00h,50h,8Dh,44h
+    db 24h,10h,50h,8Bh,0CFh,0E8h,4Eh,0FDh
+    db 0FFh,0FFh,8Bh,08h,8Bh,44h,24h,18h
+    db 5Fh,5Eh,89h,08h,5Bh,83h,0C4h,08h
+    db 0C2h,0Ch,00h,55h,56h,0E8h,36h,74h
+    db 0E8h,0FFh,8Bh,6Ch,24h,28h,8Bh,5Eh
+    db 10h,8Bh,4Dh,00h,83h,0C4h,04h,3Bh
+    db 0CBh,0Fh,92h,0C3h,84h,0DBh,74h,44h
+    db 39h,48h,10h,73h,3Fh,8Bh,48h,0Ch
+    db 85h,0C9h,8Bh,0CFh,75h,1Bh,8Bh,74h
+    db 24h,1Ch,50h,55h,50h,6Ah,00h,56h
+    db 0E8h,53h,0FCh,0FFh,0FFh,5Dh,5Fh,8Bh
+    db 0C6h,5Eh,5Bh,83h,0C4h,08h,0C2h,0Ch
+    db 00h,6Ah,00h,55h,56h,56h,8Bh,74h
+    db 24h,2Ch,56h,0E8h,38h,0FCh,0FFh,0FFh
+    db 5Dh,5Fh,8Bh,0C6h,5Eh,5Bh,83h,0C4h
+    db 08h,0C2h,0Ch,00h,56h,0E8h,66h,73h
+    db 0E8h,0FFh,83h,0C4h,04h,84h,0DBh,0Fh
+    db 94h,0C1h,84h,0DBh,75h,57h,8Bh,4Eh
+    db 10h,8Bh,55h,00h,3Bh,0CAh,0Fh,92h
+    db 0C1h,84h,0C9h,74h,4Ch,3Bh,07h,74h
+    db 05h,3Bh,50h,10h,73h,3Fh,8Bh,4Eh
+    db 0Ch,85h,0C9h,8Bh,0CFh,75h,1Bh,56h
+    db 55h,56h,8Bh,74h,24h,28h,6Ah,00h
+    db 56h,0E8h,0EAh,0FBh,0FFh,0FFh,5Dh,5Fh
+    db 8Bh,0C6h,5Eh,5Bh,83h,0C4h,08h,0C2h
+    db 0Ch,00h,8Bh,74h,24h,1Ch,6Ah,00h
+    db 55h,50h,50h,56h,0E8h,0CFh,0FBh,0FFh
+    db 0FFh,5Dh,5Fh,8Bh,0C6h,5Eh,5Bh,83h
+    db 0C4h,08h,0C2h,0Ch,00h,3Ah,0D9h,75h
+    db 10h,8Bh,44h,24h,1Ch,5Dh,5Fh,89h
+    db 30h,5Eh,5Bh,83h,0C4h,08h,0C2h,0Ch
+    db 00h,55h,8Dh,54h,24h,14h,52h,8Bh
+    db 0CFh,0E8h,52h,0FCh,0FFh,0FFh,8Bh,08h
+    db 8Bh,44h,24h,1Ch,5Dh,5Fh,5Eh,89h
+    db 08h,5Bh,83h,0C4h,08h,0C2h,0Ch,00h
+?insert_unique@?$_Rb_tree@IU?$pair@$$CBIPAVImage@@@_STL@@U?$_Select1st@U?$pair@$ ENDP
+_TEXT ENDS
+END

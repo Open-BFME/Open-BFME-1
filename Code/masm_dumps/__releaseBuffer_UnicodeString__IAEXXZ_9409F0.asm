@@ -1,0 +1,53 @@
+.386
+.model flat
+
+; ?releaseBuffer@UnicodeString@@IAEXXZ
+; Retail @ 0x009409F0 size 334
+_TEXT SEGMENT
+public ?releaseBuffer@UnicodeString@@IAEXXZ
+?releaseBuffer@UnicodeString@@IAEXXZ PROC
+    db 6Ah,0FFh,68h,0AAh,0D8h,05h,01h,64h
+    db 0A1h,00h,00h,00h,00h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,51h,53h,56h
+    db 8Bh,0F1h,57h,89h,74h,24h,0Ch,0C7h
+    db 06h,0ACh,0CEh,13h,01h,8Bh,4Eh,4Ch
+    db 33h,0DBh,3Bh,0CBh,0C7h,44h,24h,18h
+    db 04h,00h,00h,00h,74h,0Ch,0FFh,49h
+    db 04h,75h,04h,8Bh,01h,0FFh,10h,89h
+    db 5Eh,4Ch,0E8h,59h,26h,0FCh,0FFh,8Bh
+    db 0CEh,0E8h,22h,0E0h,0FFh,0FFh,8Bh,56h
+    db 34h,8Dh,7Eh,34h,8Bh,0CFh,0FFh,52h
+    db 0Ch,0E8h,0C2h,50h,0FCh,0FFh,8Bh,8Eh
+    db 0B8h,00h,00h,00h,3Bh,0CBh,0C6h,44h
+    db 24h,18h,03h,74h,05h,0E8h,3Eh,0ADh
+    db 0Ah,00h,8Dh,4Eh,7Ch,0C6h,44h,24h
+    db 18h,02h,0E8h,41h,0BBh,0FBh,0FFh,8Bh
+    db 47h,04h,3Bh,0C3h,0C6h,44h,24h,18h
+    db 01h,0C7h,07h,24h,0CEh,13h,01h,74h
+    db 27h,38h,5Fh,0Dh,74h,22h,8Bh,48h
+    db 0FCh,55h,8Dh,68h,0FCh,68h,0F5h,70h
+    db 44h,00h,51h,6Ah,08h,50h,0E8h,0DBh
+    db 62h,0Bh,00h,55h,0E8h,4Fh,14h,0F4h
+    db 0FFh,83h,0C4h,04h,89h,5Fh,04h,5Dh
+    db 88h,5Fh,0Dh,89h,5Fh,08h,8Bh,46h
+    db 20h,3Bh,0C3h,88h,5Ch,24h,18h,0C7h
+    db 46h,1Ch,74h,0CEh,13h,01h,74h,25h
+    db 38h,5Eh,29h,74h,20h,8Bh,50h,0FCh
+    db 8Dh,78h,0FCh,68h,18h,60h,41h,00h
+    db 52h,6Ah,1Ch,50h,0E8h,9Dh,62h,0Bh
+    db 00h,57h,0E8h,11h,14h,0F4h,0FFh,83h
+    db 0C4h,04h,89h,5Eh,20h,88h,5Eh,29h
+    db 89h,5Eh,24h,8Bh,46h,08h,3Bh,0C3h
+    db 0C7h,44h,24h,18h,0FFh,0FFh,0FFh,0FFh
+    db 0C7h,46h,04h,0Ch,0CEh,13h,01h,74h
+    db 25h,38h,5Eh,11h,74h,20h,8Bh,48h
+    db 0FCh,8Dh,78h,0FCh,68h,0CFh,8Fh,41h
+    db 00h,51h,6Ah,24h,50h,0E8h,5Ch,62h
+    db 0Bh,00h,57h,0E8h,0D0h,13h,0F4h,0FFh
+    db 83h,0C4h,04h,89h,5Eh,08h,8Bh,4Ch
+    db 24h,10h,88h,5Eh,11h,89h,5Eh,0Ch
+    db 5Fh,5Eh,5Bh,64h,89h,0Dh,00h,00h
+    db 00h,00h,83h,0C4h,10h,0C3h
+?releaseBuffer@UnicodeString@@IAEXXZ ENDP
+_TEXT ENDS
+END

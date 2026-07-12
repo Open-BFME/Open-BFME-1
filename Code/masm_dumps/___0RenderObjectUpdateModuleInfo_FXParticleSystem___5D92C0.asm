@@ -1,0 +1,49 @@
+.386
+.model flat
+
+; ??0RenderObjectUpdateModuleInfo@FXParticleSystem@@QAE@ABV01@@Z
+; Retail @ 0x005D92C0 size 301
+_TEXT SEGMENT
+public ??0RenderObjectUpdateModuleInfo@FXParticleSystem@@QAE@ABV01@@Z
+??0RenderObjectUpdateModuleInfo@FXParticleSystem@@QAE@ABV01@@Z PROC
+    db 56h,57h,8Bh,0C1h,8Bh,4Ch,24h,0Ch
+    db 0C7h,00h,78h,0Dh,11h,01h,8Dh,51h
+    db 04h,8Bh,3Ah,8Dh,70h,04h,89h,3Eh
+    db 8Bh,7Ah,04h,89h,7Eh,04h,8Bh,52h
+    db 08h,89h,56h,08h,8Dh,51h,10h,8Bh
+    db 3Ah,8Dh,70h,10h,89h,3Eh,8Bh,7Ah
+    db 04h,89h,7Eh,04h,8Bh,52h,08h,89h
+    db 56h,08h,8Dh,51h,1Ch,8Bh,3Ah,8Dh
+    db 70h,1Ch,89h,3Eh,8Bh,7Ah,04h,89h
+    db 7Eh,04h,8Bh,52h,08h,89h,56h,08h
+    db 8Dh,51h,28h,8Bh,3Ah,8Dh,70h,28h
+    db 89h,3Eh,8Bh,7Ah,04h,89h,7Eh,04h
+    db 8Bh,52h,08h,89h,56h,08h,8Dh,51h
+    db 34h,8Bh,3Ah,8Dh,70h,34h,89h,3Eh
+    db 8Bh,7Ah,04h,89h,7Eh,04h,8Bh,52h
+    db 08h,89h,56h,08h,8Dh,51h,40h,8Bh
+    db 3Ah,8Dh,70h,40h,89h,3Eh,8Bh,7Ah
+    db 04h,89h,7Eh,04h,8Bh,52h,08h,89h
+    db 56h,08h,8Dh,51h,4Ch,8Bh,3Ah,8Dh
+    db 70h,4Ch,89h,3Eh,8Bh,7Ah,04h,89h
+    db 7Eh,04h,8Bh,52h,08h,89h,56h,08h
+    db 8Dh,51h,58h,8Bh,3Ah,8Dh,70h,58h
+    db 89h,3Eh,8Bh,7Ah,04h,89h,7Eh,04h
+    db 8Bh,52h,08h,89h,56h,08h,8Dh,51h
+    db 64h,8Bh,3Ah,8Dh,70h,64h,89h,3Eh
+    db 8Bh,7Ah,04h,89h,7Eh,04h,8Bh,52h
+    db 08h,89h,56h,08h,8Dh,51h,70h,8Bh
+    db 3Ah,8Dh,70h,70h,89h,3Eh,8Bh,7Ah
+    db 04h,89h,7Eh,04h,8Bh,52h,08h,89h
+    db 56h,08h,8Dh,51h,7Ch,8Bh,3Ah,8Dh
+    db 70h,7Ch,89h,3Eh,8Bh,7Ah,04h,89h
+    db 7Eh,04h,8Bh,52h,08h,89h,56h,08h
+    db 8Dh,91h,88h,00h,00h,00h,8Bh,3Ah
+    db 8Dh,0B0h,88h,00h,00h,00h,89h,3Eh
+    db 8Bh,7Ah,04h,89h,7Eh,04h,8Bh,52h
+    db 08h,89h,56h,08h,8Bh,89h,94h,00h
+    db 00h,00h,5Fh,89h,88h,94h,00h,00h
+    db 00h,5Eh,0C2h,04h,00h
+??0RenderObjectUpdateModuleInfo@FXParticleSystem@@QAE@ABV01@@Z ENDP
+_TEXT ENDS
+END

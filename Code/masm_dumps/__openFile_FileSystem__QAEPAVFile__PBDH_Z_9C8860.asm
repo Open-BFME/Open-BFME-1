@@ -1,0 +1,61 @@
+.386
+.model flat
+
+; ?openFile@FileSystem@@QAEPAVFile@@PBDH@Z
+; Retail @ 0x009C8860 size 394
+_TEXT SEGMENT
+public ?openFile@FileSystem@@QAEPAVFile@@PBDH@Z
+?openFile@FileSystem@@QAEPAVFile@@PBDH@Z PROC
+    db 64h,0A1h,00h,00h,00h,00h,6Ah,0FFh
+    db 68h,1Bh,03h,06h,01h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,81h,0ECh,04h
+    db 02h,00h,00h,53h,56h,57h,8Bh,0BCh
+    db 24h,20h,02h,00h,00h,57h,68h,48h
+    db 0CAh,34h,01h,8Dh,44h,24h,18h,68h
+    db 00h,41h,0Fh,01h,50h,33h,0F6h,0FFh
+    db 15h,8Ch,94h,35h,01h,0A0h,50h,0CBh
+    db 34h,01h,8Bh,9Ch,24h,34h,02h,00h
+    db 00h,83h,0C4h,10h,84h,0C0h,74h,6Dh
+    db 68h,50h,0CBh,34h,01h,8Dh,4Ch,24h
+    db 10h,0E8h,02h,03h,0ECh,0FFh,85h,0FFh
+    db 89h,0B4h,24h,18h,02h,00h,00h,74h
+    db 12h,8Bh,0C7h,8Dh,50h,01h,8Bh,0FFh
+    db 8Ah,08h,40h,84h,0C9h,75h,0F9h,2Bh
+    db 0C2h,0EBh,02h,33h,0C0h,50h,57h,8Dh
+    db 4Ch,24h,14h,0E8h,78h,0F4h,0EBh,0FFh
+    db 8Bh,44h,24h,0Ch,85h,0C0h,74h,05h
+    db 83h,0C0h,08h,0EBh,05h,0B8h,8Bh,38h
+    db 07h,01h,8Bh,0Dh,60h,0D0h,34h,01h
+    db 8Bh,11h,53h,50h,0FFh,52h,08h,8Dh
+    db 4Ch,24h,0Ch,8Bh,0F0h,0C7h,84h,24h
+    db 18h,02h,00h,00h,0FFh,0FFh,0FFh,0FFh
+    db 0E8h,23h,0F0h,0EBh,0FFh,0A0h,4Ch,0CBh
+    db 34h,01h,84h,0C0h,75h,33h,85h,0F6h
+    db 75h,2Fh,8Bh,0Dh,50h,0CCh,34h,01h
+    db 85h,0C9h,74h,2Bh,0F6h,0C3h,08h,75h
+    db 17h,8Bh,01h,53h,8Dh,54h,24h,14h
+    db 52h,0FFh,50h,14h,8Bh,0Dh,50h,0CCh
+    db 34h,01h,8Bh,0F0h,85h,0F6h,75h,0Fh
+    db 8Bh,01h,53h,57h,0FFh,50h,14h,8Bh
+    db 0F0h,8Bh,0Dh,50h,0CCh,34h,01h,0A1h
+    db 60h,0D0h,34h,01h,85h,0C0h,74h,32h
+    db 85h,0F6h,75h,2Eh,0F6h,0C3h,02h,75h
+    db 18h,8Bh,10h,53h,8Dh,4Ch,24h,14h
+    db 51h,8Bh,0C8h,0FFh,52h,08h,8Bh,0F0h
+    db 85h,0F6h,75h,10h,0A1h,60h,0D0h,34h
+    db 01h,8Bh,10h,53h,57h,8Bh,0C8h,0FFh
+    db 52h,08h,8Bh,0F0h,8Bh,0Dh,50h,0CCh
+    db 34h,01h,0A0h,4Ch,0CBh,34h,01h,84h
+    db 0C0h,74h,2Bh,85h,0F6h,75h,27h,85h
+    db 0C9h,74h,23h,0F6h,0C3h,08h,75h,15h
+    db 8Bh,01h,53h,8Dh,54h,24h,14h,52h
+    db 0FFh,50h,14h,85h,0C0h,75h,11h,8Bh
+    db 0Dh,50h,0CCh,34h,01h,8Bh,01h,53h
+    db 57h,0FFh,50h,14h,0EBh,02h,8Bh,0C6h
+    db 8Bh,8Ch,24h,10h,02h,00h,00h,5Fh
+    db 5Eh,5Bh,64h,89h,0Dh,00h,00h,00h
+    db 00h,81h,0C4h,10h,02h,00h,00h,0C2h
+    db 08h,00h
+?openFile@FileSystem@@QAEPAVFile@@PBDH@Z ENDP
+_TEXT ENDS
+END

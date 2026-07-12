@@ -1,0 +1,57 @@
+.386
+.model flat
+
+; ?read_texture_ids@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMe
+; Retail @ 0x0096DB40 size 368
+_TEXT SEGMENT
+public ?read_texture_ids@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMe
+?read_texture_ids@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMe PROC
+    db 6Ah,0FFh,68h,60h,0ECh,05h,01h,64h
+    db 0A1h,00h,00h,00h,00h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,83h,0ECh,0Ch
+    db 53h,55h,56h,8Bh,0B1h,94h,00h,00h
+    db 00h,57h,8Bh,7Ch,24h,30h,8Bh,0AFh
+    db 8Ch,00h,00h,00h,8Bh,9Fh,90h,00h
+    db 00h,00h,8Dh,04h,6Bh,89h,4Ch,24h
+    db 14h,8Bh,4Ch,86h,74h,85h,0C9h,75h
+    db 0Bh,8Bh,8Ch,86h,0B4h,00h,00h,00h
+    db 85h,0C9h,74h,06h,8Dh,0B7h,0Ch,01h
+    db 00h,00h,8Bh,4Ch,24h,2Ch,0E8h,0B5h
+    db 38h,07h,00h,83h,0F8h,04h,75h,4Dh
+    db 8Bh,4Ch,24h,2Ch,50h,8Dh,44h,24h
+    db 34h,50h,0E8h,11h,3Ah,07h,00h,8Bh
+    db 4Ch,24h,30h,51h,8Dh,54h,24h,30h
+    db 52h,8Bh,0CFh,0E8h,0C0h,0F4h,0FFh,0FFh
+    db 53h,55h,50h,8Bh,0CEh,0C7h,44h,24h
+    db 30h,00h,00h,00h,00h,0E8h,2Eh,0BDh
+    db 0FBh,0FFh,8Bh,4Ch,24h,2Ch,85h,0C9h
+    db 0C7h,44h,24h,24h,0FFh,0FFh,0FFh,0FFh
+    db 0Fh,84h,80h,00h,00h,00h,0E8h,0B5h
+    db 0DBh,07h,00h,0EBh,79h,8Bh,44h,24h
+    db 14h,8Bh,48h,24h,85h,0C9h,0C7h,44h
+    db 24h,10h,00h,00h,00h,00h,7Eh,66h
+    db 6Ah,04h,8Dh,4Ch,24h,34h,51h,8Bh
+    db 4Ch,24h,34h,0E8h,0B0h,39h,07h,00h
+    db 8Bh,44h,24h,30h,83h,0F8h,0FFh,74h
+    db 39h,50h,8Dh,54h,24h,1Ch,52h,8Bh
+    db 0CFh,0E8h,5Ah,0F4h,0FFh,0FFh,53h,55h
+    db 50h,8Bh,44h,24h,1Ch,50h,8Bh,0CEh
+    db 0C7h,44h,24h,34h,01h,00h,00h,00h
+    db 0E8h,0E3h,0E5h,0FBh,0FFh,8Bh,4Ch,24h
+    db 18h,85h,0C9h,0C7h,44h,24h,24h,0FFh
+    db 0FFh,0FFh,0FFh,74h,05h,0E8h,4Eh,0DBh
+    db 07h,00h,8Bh,44h,24h,10h,8Bh,4Ch
+    db 24h,14h,8Bh,51h,24h,40h,3Bh,0C2h
+    db 89h,44h,24h,10h,7Ch,9Ah,8Bh,4Ch
+    db 24h,1Ch,5Fh,5Eh,5Dh,0B0h,01h,5Bh
+    db 64h,89h,0Dh,00h,00h,00h,00h,83h
+    db 0C4h,18h,0C2h,08h,00h,0CCh,0CCh,0CCh
+    db 8Bh,41h,24h,56h,57h,8Bh,7Ch,24h
+    db 0Ch,8Dh,34h,40h,8Bh,0CFh,0C1h,0E6h
+    db 02h,0E8h,0BAh,37h,07h,00h,3Bh,0C6h
+    db 75h,0Fh,56h,8Bh,0CFh,0E8h,5Eh,38h
+    db 07h,00h,5Fh,0B0h,01h,5Eh,0C2h,08h
+    db 00h,5Fh,32h,0C0h,5Eh,0C2h,08h,00h
+?read_texture_ids@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMe ENDP
+_TEXT ENDS
+END

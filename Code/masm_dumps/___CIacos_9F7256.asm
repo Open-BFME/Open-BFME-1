@@ -1,0 +1,93 @@
+.386
+.model flat
+
+; __CIacos
+; Retail @ 0x009F7256 size 654
+_TEXT SEGMENT
+public __CIacos
+__CIacos PROC
+    db 0FFh,25h,30h,92h,35h,01h,0FFh,25h
+    db 48h,93h,35h,01h,0FFh,25h,0Ch,93h
+    db 35h,01h,0FFh,25h,90h,94h,35h,01h
+    db 6Ah,00h,0FFh,15h,0C8h,8Dh,35h,01h
+    db 66h,81h,38h,4Dh,5Ah,75h,1Fh,8Bh
+    db 48h,3Ch,03h,0C8h,81h,39h,50h,45h
+    db 00h,00h,75h,12h,0Fh,0B7h,41h,18h
+    db 3Dh,0Bh,01h,00h,00h,74h,1Dh,3Dh
+    db 0Bh,02h,00h,00h,74h,03h,33h,0C0h
+    db 0C3h,33h,0C0h,83h,0B9h,84h,00h,00h
+    db 00h,0Eh,76h,19h,39h,81h,0F8h,00h
+    db 00h,00h,0EBh,0Eh,33h,0C0h,83h,79h
+    db 74h,0Eh,76h,09h,39h,81h,0E8h,00h
+    db 00h,00h,0Fh,95h,0C0h,0C3h,6Ah,74h
+    db 68h,0B0h,58h,14h,01h,0E8h,0B8h,0Bh
+    db 00h,00h,33h,0DBh,89h,5Dh,0E0h,53h
+    db 8Bh,3Dh,0C8h,8Dh,35h,01h,0FFh,0D7h
+    db 66h,81h,38h,4Dh,5Ah,75h,1Fh,8Bh
+    db 48h,3Ch,03h,0C8h,81h,39h,50h,45h
+    db 00h,00h,75h,12h,0Fh,0B7h,41h,18h
+    db 3Dh,0Bh,01h,00h,00h,74h,1Fh,3Dh
+    db 0Bh,02h,00h,00h,74h,05h,89h,5Dh
+    db 0E4h,0EBh,27h,83h,0B9h,84h,00h,00h
+    db 00h,0Eh,76h,0F2h,33h,0C0h,39h,99h
+    db 0F8h,00h,00h,00h,0EBh,0Eh,83h,79h
+    db 74h,0Eh,76h,0E2h,33h,0C0h,39h,99h
+    db 0E8h,00h,00h,00h,0Fh,95h,0C0h,89h
+    db 45h,0E4h,89h,5Dh,0FCh,6Ah,02h,0FFh
+    db 15h,78h,92h,35h,01h,59h,83h,0Dh
+    db 04h,72h,35h,01h,0FFh,83h,0Dh,14h
+    db 72h,35h,01h,0FFh,0FFh,15h,6Ch,92h
+    db 35h,01h,8Bh,0Dh,0ACh,0FBh,34h,01h
+    db 89h,08h,0FFh,15h,68h,92h,35h,01h
+    db 8Bh,0Dh,0A8h,0FBh,34h,01h,89h,08h
+    db 0A1h,88h,92h,35h,01h,8Bh,00h,0A3h
+    db 0F8h,71h,35h,01h,0E8h,93h,0Bh,00h
+    db 00h,0E8h,37h,0Ch,00h,00h,39h,1Dh
+    db 0E0h,0BDh,2Dh,01h,75h,0Ch,68h,0B0h
+    db 7Fh,0DFh,00h,0FFh,15h,7Ch,92h,35h
+    db 01h,59h,0E8h,03h,0Ch,00h,00h,68h
+    db 84h,63h,2Ah,01h,68h,80h,62h,2Ah
+    db 01h,0E8h,0EEh,0Bh,00h,00h,68h,4Eh
+    db 7Fh,0DFh,00h,0E8h,78h,0FAh,0FFh,0FFh
+    db 0A1h,0A4h,0FBh,34h,01h,89h,45h,0D8h
+    db 8Dh,45h,0D8h,50h,0FFh,35h,0A0h,0FBh
+    db 34h,01h,8Dh,45h,0D0h,50h,8Dh,45h
+    db 0CCh,50h,8Dh,45h,0C8h,50h,0FFh,15h
+    db 64h,92h,35h,01h,83h,0C4h,20h,89h
+    db 45h,0C4h,3Bh,0C3h,7Dh,08h,6Ah,08h
+    db 0E8h,1Bh,0Bh,00h,00h,59h,68h,7Ch
+    db 61h,2Ah,01h,68h,00h,50h,2Ah,01h
+    db 0E8h,9Fh,0Bh,00h,00h,59h,59h,0A1h
+    db 84h,92h,35h,01h,8Bh,30h,89h,75h
+    db 0DCh,8Ah,06h,3Ch,20h,77h,5Dh,3Ah
+    db 0C3h,74h,05h,39h,5Dh,0E0h,75h,54h
+    db 8Ah,06h,3Ah,0C3h,74h,0Ah,3Ch,20h
+    db 77h,06h,46h,89h,75h,0DCh,0EBh,0F0h
+    db 89h,5Dh,0A8h,8Dh,85h,7Ch,0FFh,0FFh
+    db 0FFh,50h,0FFh,15h,0E0h,8Dh,35h,01h
+    db 0F6h,45h,0A8h,01h,74h,06h,0Fh,0B7h
+    db 45h,0ACh,0EBh,03h,6Ah,0Ah,58h,50h
+    db 56h,53h,53h,0FFh,0D7h,50h,0E8h,0C1h
+    db 37h,65h,0FFh,8Bh,0F0h,89h,75h,0C0h
+    db 39h,5Dh,0E4h,75h,07h,56h,0FFh,15h
+    db 9Ch,93h,35h,01h,0FFh,15h,0A0h,92h
+    db 35h,01h,0EBh,55h,3Ch,22h,75h,0Bh
+    db 33h,0C9h,39h,5Dh,0E0h,0Fh,94h,0C1h
+    db 89h,4Dh,0E0h,0Fh,0B6h,0C0h,50h,0FFh
+    db 15h,0F4h,92h,35h,01h,59h,85h,0C0h
+    db 74h,04h,46h,89h,75h,0DCh,46h,0E9h
+    db 72h,0FFh,0FFh,0FFh,8Bh,45h,0ECh,8Bh
+    db 08h,8Bh,09h,89h,4Dh,0D4h,50h,51h
+    db 0E8h,51h,0Ah,00h,00h,59h,59h,0C3h
+    db 8Bh,65h,0E8h,8Bh,75h,0D4h,83h,7Dh
+    db 0E4h,00h,75h,07h,56h,0FFh,15h,0C4h
+    db 92h,35h,01h,0FFh,15h,9Ch,92h,35h
+    db 01h,83h,4Dh,0FCh,0FFh,8Bh,0C6h,0E8h
+    db 01h,0Ah,00h,00h,0C3h,6Ah,08h,68h
+    db 0C0h,58h,14h,01h,0E8h,0B9h,09h,00h
+    db 00h,83h,65h,0FCh,00h,6Ah,00h,6Ah
+    db 01h,0E8h,52h,0Bh,00h,00h,59h,59h
+    db 0EBh,07h,33h,0C0h,40h,0C3h
+__CIacos ENDP
+_TEXT ENDS
+END
