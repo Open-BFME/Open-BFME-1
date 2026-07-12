@@ -559,7 +559,7 @@ void MeshClass::Get_Deformed_Vertices(Vector3 *dst_vert)
  *   1/26/00    gth : Created.                                                                 *
  *=============================================================================================*/
 // ?MeshClass::Create_Decal present-unmatched
-void MeshClass::Create_Decal(DecalGeneratorClass * generator)
+void MeshClass::Create_Decal(DecalGeneratorClass * generator, bool unk)
 {
 	// BFME: DX8 render path stubbed to compile the rest of the TU.
 }

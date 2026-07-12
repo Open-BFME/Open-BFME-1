@@ -151,10 +151,12 @@ public:
 
 	/////////////////////////////////////////////////////////////////////////////
 	// Persistant object save-load interface
+	// BFME: non-virtual — the retail LightClass vtable appends only
+	// Is_Vertex_Processor (idx 128); the persist trio takes no vtable slots.
 	/////////////////////////////////////////////////////////////////////////////
-	virtual const PersistFactoryClass &	Get_Factory (void) const;
-	virtual bool								Save (ChunkSaveClass &csave);
-	virtual bool								Load (ChunkLoadClass &cload);
+	const PersistFactoryClass &	Get_Factory (void) const;
+	bool								Save (ChunkSaveClass &csave);
+	bool								Load (ChunkLoadClass &cload);
 	//bool isDonut(void) {return Donut; };
 	//void setDonut(bool donut) { Donut = donut; };
 

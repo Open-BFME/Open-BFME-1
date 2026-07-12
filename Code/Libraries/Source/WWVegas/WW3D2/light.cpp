@@ -74,9 +74,64 @@
 
 
 /*
-** PersistFactory for LightClasses - lights have custom save-load support
+** PersistFactory for LightClasses - lights have custom save-load support.
+** BFME: RenderObjClass dropped its PersistClass base, so
+** SimplePersistFactoryClass<LightClass> cannot instantiate (its Load returns
+** the new object as PersistClass *). Hand-written copy of that template's
+** body with a cast, mirroring RenderObjPersistFactoryClass in rendobj.cpp.
 */
-SimplePersistFactoryClass<LightClass,WW3D_PERSIST_CHUNKID_LIGHT>	_LightFactory;
+class LightPersistFactoryClass : public PersistFactoryClass
+{
+public:
+
+	virtual uint32				Chunk_ID(void) const										{ return WW3D_PERSIST_CHUNKID_LIGHT; }
+	virtual PersistClass *	Load(ChunkLoadClass & cload) const;
+	virtual void				Save(ChunkSaveClass & csave,PersistClass * obj) const;
+
+	/*
+	** Internal chunk id's
+	*/
+	enum 
+	{
+		SIMPLEFACTORY_CHUNKID_OBJPOINTER		=	 0x00100100,
+		SIMPLEFACTORY_CHUNKID_OBJDATA
+	};
+};
+
+static LightPersistFactoryClass _LightFactory;
+
+// ?LightPersistFactoryClass::Load present-unmatched
+PersistClass * LightPersistFactoryClass::Load(ChunkLoadClass & cload) const 
+{
+	LightClass * new_obj = W3DNEW LightClass;
+	LightClass * old_obj = NULL;
+
+	cload.Open_Chunk();
+	WWASSERT(cload.Cur_Chunk_ID() == SIMPLEFACTORY_CHUNKID_OBJPOINTER);
+	cload.Read(&old_obj,sizeof(LightClass *));
+	cload.Close_Chunk();
+
+	cload.Open_Chunk();
+	WWASSERT(cload.Cur_Chunk_ID() == SIMPLEFACTORY_CHUNKID_OBJDATA);
+	new_obj->Load(cload);
+	cload.Close_Chunk();
+
+	SaveLoadSystemClass::Register_Pointer(old_obj,new_obj);
+	return (PersistClass *)new_obj;  // BFME: RenderObjClass dropped PersistClass base
+}
+
+// ?LightPersistFactoryClass::Save present-unmatched
+void LightPersistFactoryClass::Save(ChunkSaveClass & csave,PersistClass * obj) const 
+{
+	uint32 objptr = (uint32)obj;
+	csave.Begin_Chunk(SIMPLEFACTORY_CHUNKID_OBJPOINTER);
+	csave.Write(&objptr,sizeof(uint32));
+	csave.End_Chunk();
+
+	csave.Begin_Chunk(SIMPLEFACTORY_CHUNKID_OBJDATA);
+	((LightClass *)obj)->Save(csave);
+	csave.End_Chunk();
+}
 
 /*
 ** Chunk ID's used by LightClass's save-load support (different from the W3D file format...)
@@ -515,7 +570,7 @@ WW3DErrorType LightClass::Save_W3D(ChunkSaveClass & csave)
  * HISTORY:                                                                                    *
  *   9/23/99    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Get_Factory@LightClass@@UBEABVPersistFactoryClass@@XZ present-unmatched
+// ?Get_Factory@LightClass@@QBEABVPersistFactoryClass@@XZ present-unmatched
 const PersistFactoryClass & LightClass::Get_Factory (void) const
 {
 	return _LightFactory;	
@@ -534,7 +589,7 @@ const PersistFactoryClass & LightClass::Get_Factory (void) const
  * HISTORY:                                                                                    *
  *   9/23/99    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Save@LightClass@@UAE_NAAVChunkSaveClass@@@Z present-unmatched
+// ?Save@LightClass@@QAE_NAAVChunkSaveClass@@@Z present-unmatched
 bool LightClass::Save (ChunkSaveClass &csave)
 {
 	csave.Begin_Chunk(LIGHT_CHUNK_W3DFILE);
@@ -562,7 +617,7 @@ bool LightClass::Save (ChunkSaveClass &csave)
  * HISTORY:                                                                                    *
  *   9/23/99    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Load@LightClass@@UAE_NAAVChunkLoadClass@@@Z present-unmatched
+// ?Load@LightClass@@QAE_NAAVChunkLoadClass@@@Z present-unmatched
 bool LightClass::Load (ChunkLoadClass &cload)
 {
 	Matrix3D tm(1);
