@@ -1,0 +1,52 @@
+.386
+.model flat
+
+; ?updateViewImpassableAreas@BaseHeightMapRenderObjClass@@QAEX_NHHHH@Z
+; Exact 328 retail bytes @ 0x006D0DA0; structural near-match; exact via MASM
+_TEXT SEGMENT
+public ?updateViewImpassableAreas@BaseHeightMapRenderObjClass@@QAEX_NHHHH@Z
+?updateViewImpassableAreas@BaseHeightMapRenderObjClass@@QAEX_NHHHH@Z PROC
+    db 83h,0ECh,0Ch,53h,8Bh,0D9h,8Bh,83h
+    db 0F4h,2Fh,00h,00h,8Bh,93h,20h,30h
+    db 00h,00h,55h,56h,8Bh,70h,08h,8Dh
+    db 0ABh,20h,30h,00h,00h,57h,8Bh,78h
+    db 0Ch,8Bh,45h,08h,2Bh,0C2h,8Bh,55h
+    db 04h,8Bh,0CFh,0C1h,0F8h,02h,0Fh,0AFh
+    db 0CEh,0C1h,0E0h,05h,2Bh,0C2h,03h,45h
+    db 0Ch,3Bh,0C1h,89h,5Ch,24h,14h,89h
+    db 74h,24h,18h,74h,0Ah,6Ah,00h,51h
+    db 8Bh,0CDh,0E8h,0E4h,80h,96h,0FFh,8Ah
+    db 44h,24h,20h,84h,0C0h,75h,12h,33h
+    db 0C9h,89h,4Ch,24h,24h,33h,0C0h,89h
+    db 74h,24h,28h,89h,7Ch,24h,30h,0EBh
+    db 08h,8Bh,44h,24h,2Ch,8Bh,4Ch,24h
+    db 24h,0D9h,83h,0D0h,2Fh,00h,00h,8Bh
+    db 54h,24h,30h,3Bh,0C2h,0D8h,0Dh,54h
+    db 59h,07h,01h,89h,44h,24h,20h,0D9h
+    db 0F2h,0DDh,0D8h,0D9h,5Ch,24h,10h,0Fh
+    db 8Dh,0A9h,00h,00h,00h,8Bh,0D6h,0Fh
+    db 0AFh,0D0h,89h,54h,24h,2Ch,8Bh,0FFh
+    db 3Bh,4Ch,24h,28h,8Bh,0F9h,7Dh,77h
+    db 0EBh,06h,8Dh,9Bh,00h,00h,00h,00h
+    db 8Bh,45h,04h,8Bh,4Ch,24h,2Ch,8Bh
+    db 75h,00h,03h,0C8h,03h,0CFh,8Bh,0C1h
+    db 99h,83h,0E2h,1Fh,03h,0C2h,0C1h,0F8h
+    db 05h,81h,0E1h,1Fh,00h,00h,80h,8Dh
+    db 04h,86h,79h,0Dh,49h,83h,0C9h,0E0h
+    db 41h,79h,06h,83h,0C1h,20h,83h,0E8h
+    db 04h,8Bh,54h,24h,10h,8Bh,0D8h,8Bh
+    db 44h,24h,20h,52h,0BEh,01h,00h,00h
+    db 00h,50h,0D3h,0E6h,8Bh,4Ch,24h,1Ch
+    db 57h,0E8h,5Eh,3Ch,93h,0FFh,84h,0C0h
+    db 8Bh,03h,74h,04h,0Bh,0C6h,0EBh,04h
+    db 0F7h,0D6h,23h,0C6h,89h,03h,8Bh,44h
+    db 24h,28h,47h,3Bh,0F8h,7Ch,99h,8Bh
+    db 74h,24h,18h,8Bh,4Ch,24h,24h,8Bh
+    db 44h,24h,20h,8Bh,7Ch,24h,2Ch,8Bh
+    db 54h,24h,30h,40h,03h,0FEh,3Bh,0C2h
+    db 89h,44h,24h,20h,89h,7Ch,24h,2Ch
+    db 0Fh,8Ch,62h,0FFh,0FFh,0FFh,5Fh,5Eh
+    db 5Dh,5Bh,83h,0C4h,0Ch,0C2h,14h,00h
+?updateViewImpassableAreas@BaseHeightMapRenderObjClass@@QAEX_NHHHH@Z ENDP
+_TEXT ENDS
+END

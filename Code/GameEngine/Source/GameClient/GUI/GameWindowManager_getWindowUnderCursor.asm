@@ -1,0 +1,59 @@
+.386
+.model flat
+
+; ?getWindowUnderCursor@GameWindowManager@@UAEPAVGameWindow@@HH_N@Z
+; Exact 378 retail bytes @ 0x0047D570; field-offset drift blocked C++
+_TEXT SEGMENT
+public ?getWindowUnderCursor@GameWindowManager@@UAEPAVGameWindow@@HH_N@Z
+?getWindowUnderCursor@GameWindowManager@@UAEPAVGameWindow@@HH_N@Z PROC
+    db 55h,8Bh,0E9h,8Bh,4Dh,18h,85h,0C9h
+    db 74h,1Ah,8Bh,44h,24h,10h,8Bh,54h
+    db 24h,0Ch,6Ah,00h,50h,8Bh,44h,24h
+    db 10h,52h,50h,0E8h,0FDh,6Dh,0BBh,0FFh
+    db 5Dh,0C2h,0Ch,00h,8Bh,4Dh,24h,85h
+    db 0C9h,74h,1Ah,8Bh,54h,24h,10h,8Bh
+    db 44h,24h,0Ch,6Ah,00h,52h,8Bh,54h
+    db 24h,10h,50h,52h,0E8h,0DCh,6Dh,0BBh
+    db 0FFh,5Dh,0C2h,0Ch,00h,8Bh,45h,20h
+    db 85h,0C0h,74h,23h,8Bh,40h,04h,85h
+    db 0C0h,74h,1Ch,8Bh,4Ch,24h,10h,8Bh
+    db 54h,24h,0Ch,6Ah,00h,51h,8Bh,4Ch
+    db 24h,10h,52h,51h,8Bh,0C8h,0E8h,0B2h
+    db 6Dh,0BBh,0FFh,5Dh,0C2h,0Ch,00h,8Bh
+    db 4Dh,08h,85h,0C9h,53h,8Bh,5Ch,24h
+    db 14h,56h,8Bh,74h,24h,14h,57h,8Bh
+    db 7Ch,24h,14h,74h,45h,8Bh,41h,08h
+    db 0A8h,20h,74h,20h,0A8h,10h,75h,1Ch
+    db 3Bh,79h,14h,7Ch,17h,3Bh,79h,1Ch
+    db 7Fh,12h,3Bh,71h,18h,7Ch,0Dh,3Bh
+    db 71h,20h,7Fh,08h,0A8h,08h,75h,10h
+    db 84h,0DBh,75h,0Ch,8Bh,89h,0F8h,01h
+    db 00h,00h,85h,0C9h,75h,0CFh,0EBh,12h
+    db 6Ah,00h,53h,56h,57h,0E8h,5Bh,6Dh
+    db 0BBh,0FFh,85h,0C0h,0Fh,85h,96h,00h
+    db 00h,00h,8Bh,4Dh,08h,85h,0C9h,74h
+    db 3Dh,8Bh,41h,08h,0A8h,70h,75h,1Ch
+    db 3Bh,79h,14h,7Ch,17h,3Bh,79h,1Ch
+    db 7Fh,12h,3Bh,71h,18h,7Ch,0Dh,3Bh
+    db 71h,20h,7Fh,08h,0A8h,08h,75h,10h
+    db 84h,0DBh,75h,0Ch,8Bh,89h,0F8h,01h
+    db 00h,00h,85h,0C9h,75h,0D3h,0EBh,0Eh
+    db 6Ah,00h,53h,56h,57h,0E8h,13h,6Dh
+    db 0BBh,0FFh,85h,0C0h,75h,52h,8Bh,45h
+    db 08h,85h,0C0h,74h,5Eh,8Bh,48h,08h
+    db 0F6h,0C1h,40h,74h,22h,0F6h,0C1h,10h
+    db 75h,1Dh,3Bh,78h,14h,7Ch,18h,3Bh
+    db 78h,1Ch,7Fh,13h,3Bh,70h,18h,7Ch
+    db 0Eh,3Bh,70h,20h,7Fh,09h,0F6h,0C1h
+    db 08h,75h,15h,84h,0DBh,75h,11h,8Bh
+    db 80h,0F8h,01h,00h,00h,85h,0C0h,75h
+    db 0CCh,5Fh,5Eh,5Bh,5Dh,0C2h,0Ch,00h
+    db 6Ah,00h,53h,56h,57h,8Bh,0C8h,0E8h
+    db 0C1h,6Ch,0BBh,0FFh,85h,0C0h,74h,13h
+    db 8Bh,48h,08h,0F6h,0C5h,02h,75h,09h
+    db 84h,0DBh,74h,07h,0F6h,0C1h,08h,75h
+    db 02h,33h,0C0h,5Fh,5Eh,5Bh,5Dh,0C2h
+    db 0Ch,00h
+?getWindowUnderCursor@GameWindowManager@@UAEPAVGameWindow@@HH_N@Z ENDP
+_TEXT ENDS
+END

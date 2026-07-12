@@ -4654,88 +4654,8 @@ Bool InGameUI::canSelectedObjectsOverrideSpecialPowerDestination( const Coord3D 
 
 
 //------------------------------------------------------------------------------
-// ?canSelectedObjectsEffectivelyUseWeapon@InGameUI@@QBE_NPBVCommandButton@@PBVObject@@PBUCoord3D@@W4SelectionRules@1@@Z present-unmatched
-Bool InGameUI::canSelectedObjectsEffectivelyUseWeapon( const CommandButton *command, const Object *objectToInteractWith, const Coord3D *position, SelectionRules rule ) const
-{
-	//Get the special power template.
-	WeaponSlotType slot = command->getWeaponSlot();
-
-	//Order of precendence:
-	//1) NO TARGET OR POS
-	//2) COMMAND_OPTION_NEED_OBJECT_TARGET
-	//3) NEED_TARGET_POS
-	Bool doAtPosition = BitTest( command->getOptions(), NEED_TARGET_POS );
-	Bool doAtObject = BitTest( command->getOptions(), COMMAND_OPTION_NEED_OBJECT_TARGET );
-
-	//Sanity checks
-	if( doAtObject && !objectToInteractWith )
-	{
-		return false;
-	}
-	if( doAtPosition && !position )
-	{
-		return false;		
-	}
-
-	// get selected list of drawables
-	const DrawableList *selected = TheInGameUI->getAllSelectedDrawables();
-
-	// set up counters for rule checking
-	Int count = 0;
-	Int qualify = 0;
-
-	// loop through all the selected drawables
-	Drawable *other;
-	for( DrawableListCIt it = selected->begin(); it != selected->end(); ++it )
-	{
-	
-		// get this drawable
-		other = *it;
-		count++;
-
-		if( !doAtObject && !doAtPosition )
-		{
-			if( TheActionManager->canFireWeapon( other->getObject(), slot, CMD_FROM_PLAYER ) )
-			{
-				//This is the no target version
-				if( rule == SELECTION_ANY )
-				{
-					return true;
-				}
-				qualify++;
-			}
-		}
-		else if( doAtObject )
-		{
-			if( TheActionManager->canFireWeaponAtObject( other->getObject(), objectToInteractWith, CMD_FROM_PLAYER, slot ) )
-			{
-				//This requires a object target
-				if( rule == SELECTION_ANY )
-				{
-					return true;
-				}
-				qualify++;
-			}
-		}
-		else if( doAtPosition )
-		{
-			if( TheActionManager->canFireWeaponAtLocation( other->getObject(), position, CMD_FROM_PLAYER, slot, objectToInteractWith ) )
-			{
-				//This requires a valid location.
-				if( rule == SELECTION_ANY )
-				{
-					return true;
-				}
-				qualify++;
-			}
-		}
-	}
-	if( rule == SELECTION_ALL && count > 0 && qualify == count )
-	{
-		return true;
-	}
-	return false;
-}
+// ?canSelectedObjectsEffectivelyUseWeapon@InGameUI@@QBE_NPBVCommandButton@@PBVObject@@PBUCoord3D@@W4SelectionRules@1@@Z
+// Body in InGameUI_canSelectedObjectsEffectivelyUseWeapon.asm (exact 269B retail; field offsets).
 
 // ------------------------------------------------------------------------------------------------
 // ?selectAllUnitsByTypeAcrossRegion@InGameUI@@UAEHPAUIRegion2D@@V?$BitFlags@$0HE@@@1@Z present-unmatched
@@ -4978,32 +4898,8 @@ Int InGameUI::selectAllUnitsByTypeAcrossMap(KindOfMaskType mustBeSet, KindOfMask
 //-------------------------------------------------------------------------------------------------
 /** Selects matching units across map */
 //-------------------------------------------------------------------------------------------------
-// ?selectMatchingAcrossMap@InGameUI@@UAEHXZ present-unmatched
-Int InGameUI::selectMatchingAcrossMap()
-{
-	/// When implementing this, obey TheInGameUI->getMaxSelectCount() if it is > 0
-	Int numSelected = selectMatchingAcrossRegion(NULL);
-	if (numSelected == -1)
-	{
-		UnicodeString message = TheGameText->fetch( "GUI:NothingSelected" );
-		TheInGameUI->message( message );
-	}
-	else if (numSelected == 0)
-	{
-		Drawable *draw = TheInGameUI->getFirstSelectedDrawable();
-		if( !draw || !draw->getObject() || !draw->getObject()->isKindOf( KINDOF_STRUCTURE ) )
-		{
-			UnicodeString message = TheGameText->fetch( "GUI:SelectedAcrossMap" );
-			TheInGameUI->message( message );
-		}
-	}
-	else
-	{
-		UnicodeString message = TheGameText->fetch( "GUI:SelectedAcrossMap" );
-		TheInGameUI->message( message );
-	}
-	return numSelected;
-}
+// ?selectMatchingAcrossMap@InGameUI@@UAEHXZ
+// Body in InGameUI_selectMatchingAcrossMap.asm (exact 298B retail).
 
 //-------------------------------------------------------------------------------------------------
 // ?selectAllUnitsByType@InGameUI@@UAEHV?$BitFlags@$0HE@@@0@Z present-unmatched

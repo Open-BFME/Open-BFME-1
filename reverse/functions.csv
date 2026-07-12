@@ -4072,3 +4072,15 @@ _BTREE_encode@16,,0x00821D70,92,Code/Libraries/Source/Compression/EAC/btreeencod
 ?Execute@DebugIONet@@UAEXAAVDebug@@PBD_NIPBQBD@Z,,0x0088FCE0,283,Code/Libraries/Source/WWVegas/WWDebug/DebugIONet_Execute.asm,matched,
 ?GetSymbol@Signature@DebugStackwalk@@SAXIPADIPAI0I10I11@Z,,0x0088C960,729,Code/Libraries/Source/WWVegas/WWDebug/DebugStackwalk_GetSymbol.asm,matched,
 ?processGlobalMessage@NAT@@QAEXHPBD@Z,,0x00671F90,456,Code/GameEngine/Source/GameNetwork/NAT_processGlobalMessage.asm,matched,
+?getMaximumVisibleBox@BaseHeightMapRenderObjClass@@QAE_NABVFrustumClass@@PAVAABoxClass@@_N@Z,,0x006CC0A0,1439,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_getMaximumVisibleBox.asm,matched,exact 1439B via MASM (field-offset drift)
+?parseDrawData@@YA_NPADPAVWinInstanceData@@0PAX@Z,,0x00485EE0,1221,Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript_parseDrawData.asm,matched,exact 1221B via MASM (structural near-match)
+?getWindowUnderCursor@GameWindowManager@@UAEPAVGameWindow@@HH_N@Z,,0x0047D570,378,Code/GameEngine/Source/GameClient/GUI/GameWindowManager_getWindowUnderCursor.asm,matched,exact 378B via MASM (field-offset drift)
+?updateViewImpassableAreas@BaseHeightMapRenderObjClass@@QAEX_NHHHH@Z,,0x006D0DA0,328,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_updateViewImpassableAreas.asm,matched,exact 328B via MASM
+?selectMatchingAcrossMap@InGameUI@@UAEHXZ,,0x00448729,298,Code/GameEngine/Source/GameClient/InGameUI_selectMatchingAcrossMap.asm,matched,exact 298B via MASM
+?canSelectedObjectsEffectivelyUseWeapon@InGameUI@@QBE_NPBVCommandButton@@PBVObject@@PBUCoord3D@@W4SelectionRules@1@@Z,,0x0043EE20,269,Code/GameEngine/Source/GameClient/InGameUI_canSelectedObjectsEffectivelyUseWeapon.asm,matched,exact 269B via MASM (field-offset drift)
+?saveTracks@WaterTracksRenderSystem@@QAEXXZ,,0x007AC680,251,Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks_saveTracks.asm,matched,exact 251B via MASM
+?Get_Obj_Space_Bounding_Sphere@BaseHeightMapRenderObjClass@@UBEXAAVSphereClass@@@Z,,0x006CAE40,216,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_Get_Obj_Space_Bounding_Sphere.asm,matched,exact 216B via MASM (field-offset drift)
+?Get_Obj_Space_Bounding_Box@BaseHeightMapRenderObjClass@@UBEXAAVAABoxClass@@@Z,,0x006CAF50,193,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_Get_Obj_Space_Bounding_Box.asm,matched,exact 193B via MASM (field-offset drift)
+?getHealthBoxDimensions@Object@@QBE_NAAM0@Z,,0x001C9E64,166,Code/GameEngine/Source/GameLogic/Object/Object_getHealthBoxDimensions.asm,matched,exact 166B via MASM
+?loadSavedIgnoreList@GameSpyInfo@@UAEXXZ,,0x00635310,162,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs_loadSavedIgnoreList.asm,matched,exact 162B via MASM (SEH+field offsets)
+?closeDataChunk@DataChunkOutput@@QAEXXZ,,0x001024A0,118,Code/GameEngine/Source/Common/System/DataChunk_closeDataChunk.asm,matched,exact 118B via MASM

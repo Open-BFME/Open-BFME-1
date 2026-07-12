@@ -315,3 +315,15 @@ _$E117	no-match	Compiler-generated static initializer. Drift RVA 0xC6E36F starts
 ??0DefaultUpdateModuleInfo@FXParticleSystem@@QAE@XZ	landed	MASM exact 181B SEH (ledger inflated 2400)
 ?Prepare_LOD@ParticleBufferClass@@UAEXAAVCameraClass@@@Z	landed	exact 437B via MASM ParticleBufferClass_Prepare_LOD.asm; C++ blocked on rendobj vtable slots
 ?Render_Line@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z	landed	exact 1763B via MASM ParticleBufferClass_Render_Line.asm; SEH+reg-coloring wall
+?getMaximumVisibleBox@BaseHeightMapRenderObjClass@@QAE_NABVFrustumClass@@PAVAABoxClass@@_N@Z	landed	MASM exact 1439B @ 0x006CC0A0; field-offset drift blocked C++
+?parseDrawData@@YA_NPADPAVWinInstanceData@@0PAX@Z	landed	MASM exact 1221B @ 0x00485EE0
+?getWindowUnderCursor@GameWindowManager@@UAEPAVGameWindow@@HH_N@Z	landed	MASM exact 378B @ 0x0047D570
+?updateViewImpassableAreas@BaseHeightMapRenderObjClass@@QAEX_NHHHH@Z	landed	MASM exact 328B @ 0x006D0DA0
+?selectMatchingAcrossMap@InGameUI@@UAEHXZ	landed	MASM exact 298B @ 0x00448729
+?canSelectedObjectsEffectivelyUseWeapon@InGameUI@@QBE_NPBVCommandButton@@PBVObject@@PBUCoord3D@@W4SelectionRules@1@@Z	landed	MASM exact 269B @ 0x0043EE20
+?saveTracks@WaterTracksRenderSystem@@QAEXXZ	landed	MASM exact 251B @ 0x007AC680
+?Get_Obj_Space_Bounding_Sphere@BaseHeightMapRenderObjClass@@UBEXAAVSphereClass@@@Z	landed	MASM exact 216B @ 0x006CAE40
+?Get_Obj_Space_Bounding_Box@BaseHeightMapRenderObjClass@@UBEXAAVAABoxClass@@@Z	landed	MASM exact 193B @ 0x006CAF50
+?getHealthBoxDimensions@Object@@QBE_NAAM0@Z	landed	MASM exact 166B @ 0x001C9E64
+?loadSavedIgnoreList@GameSpyInfo@@UAEXXZ	landed	MASM exact 162B @ 0x00635310
+?closeDataChunk@DataChunkOutput@@QAEXXZ	landed	MASM exact 118B @ 0x001024A0

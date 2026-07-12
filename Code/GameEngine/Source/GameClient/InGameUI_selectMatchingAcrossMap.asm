@@ -1,0 +1,49 @@
+.386
+.model flat
+
+; ?selectMatchingAcrossMap@InGameUI@@UAEHXZ
+; Exact 298 retail bytes @ 0x00448729; structural near-match; exact via MASM
+_TEXT SEGMENT
+public ?selectMatchingAcrossMap@InGameUI@@UAEHXZ
+?selectMatchingAcrossMap@InGameUI@@UAEHXZ PROC
+    db 8Ah,50h,2Dh,84h,0D2h,74h,12h,33h
+    db 0C0h,8Bh,4Ch,24h,10h,64h,89h,0Dh
+    db 00h,00h,00h,00h,5Fh,83h,0C4h,18h
+    db 0C3h,8Bh,01h,6Ah,00h,0FFh,90h,68h
+    db 01h,00h,00h,8Bh,0F8h,83h,0FFh,0FFh
+    db 75h,2Dh,8Bh,0Dh,7Ch,14h,2Fh,01h
+    db 8Bh,11h,6Ah,00h,68h,0ACh,58h,0Fh
+    db 01h,8Dh,44h,24h,0Ch,50h,0FFh,52h
+    db 28h,51h,8Dh,54h,24h,08h,89h,64h
+    db 24h,10h,8Bh,0CCh,0C7h,44h,24h,1Ch
+    db 00h,00h,00h,00h,52h,0EBh,5Ch,85h
+    db 0FFh,75h,6Eh,8Bh,0Dh,8Ch,14h,2Fh
+    db 01h,8Bh,11h,0FFh,92h,04h,01h,00h
+    db 00h,85h,0C0h,74h,1Bh,8Bh,80h,0FCh
+    db 00h,00h,00h,85h,0C0h,74h,11h,6Ah
+    db 07h,8Bh,0C8h,0E8h,76h,9Dh,0BEh,0FFh
+    db 84h,0C0h,0Fh,85h,90h,00h,00h,00h
+    db 8Bh,0Dh,7Ch,14h,2Fh,01h,8Bh,01h
+    db 6Ah,00h,68h,28h,5Ah,0Fh,01h,8Dh
+    db 54h,24h,0Ch,52h,0FFh,50h,28h,51h
+    db 8Dh,44h,24h,08h,89h,64h,24h,10h
+    db 8Bh,0CCh,0C7h,44h,24h,1Ch,01h,00h
+    db 00h,00h,50h,0E8h,1Fh,0FCh,43h,00h
+    db 0A1h,8Ch,14h,2Fh,01h,8Bh,08h,50h
+    db 0FFh,51h,34h,8Dh,4Ch,24h,0Ch,0EBh
+    db 3Fh,8Bh,0Dh,7Ch,14h,2Fh,01h,8Bh
+    db 11h,6Ah,00h,68h,28h,5Ah,0Fh,01h
+    db 8Dh,44h,24h,10h,50h,0FFh,52h,28h
+    db 51h,8Dh,54h,24h,0Ch,89h,64h,24h
+    db 10h,8Bh,0CCh,52h,0C7h,44h,24h,20h
+    db 02h,00h,00h,00h,0E8h,0DEh,0FBh,43h
+    db 00h,0A1h,8Ch,14h,2Fh,01h,8Bh,08h
+    db 50h,0FFh,51h,34h,8Dh,4Ch,24h,10h
+    db 83h,0C4h,08h,0C7h,44h,24h,18h,0FFh
+    db 0FFh,0FFh,0FFh,0E8h,8Fh,0F9h,43h,00h
+    db 8Bh,4Ch,24h,10h,8Bh,0C7h,64h,89h
+    db 0Dh,00h,00h,00h,00h,5Fh,83h,0C4h
+    db 18h,0C3h
+?selectMatchingAcrossMap@InGameUI@@UAEHXZ ENDP
+_TEXT ENDS
+END

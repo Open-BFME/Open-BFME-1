@@ -1374,43 +1374,16 @@ void BaseHeightMapRenderObjClass::oversizeTerrain(Int tilesToOversize)
 //=============================================================================
 /** WW3D method that returns object bounding sphere used in frustum culling*/
 //=============================================================================
-// ?Get_Obj_Space_Bounding_Sphere@BaseHeightMapRenderObjClass@@UBEXAAVSphereClass@@@Z present-unmatched
-void BaseHeightMapRenderObjClass::Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) const
-{
-	Int x = 0; Int y = 0;
-	if (m_map) {
-		x = m_map->getXExtent();
-		y = m_map->getYExtent();
-	}
-	Vector3	ObjSpaceCenter((float)x*0.5f*MAP_XY_FACTOR,(float)y*0.5f*MAP_XY_FACTOR,(float)m_minHeight+(m_maxHeight-m_minHeight)*0.5f);
-	float length = ObjSpaceCenter.Length();
-	
-	if (m_map) {
-		ObjSpaceCenter.X += m_map->getDrawOrgX()*MAP_XY_FACTOR;
-		ObjSpaceCenter.Y += m_map->getDrawOrgY()*MAP_XY_FACTOR;
-	}
-	sphere.Init(ObjSpaceCenter, length);
-}
+// ?Get_Obj_Space_Bounding_Sphere@BaseHeightMapRenderObjClass@@UBEXAAVSphereClass@@@Z
+// Body in BaseHeightMap_Get_Obj_Space_Bounding_Sphere.asm (exact 216B retail; field offsets).
 
 //=============================================================================
 // BaseHeightMapRenderObjClass::Get_Obj_Space_Bounding_Box
 //=============================================================================
 /** WW3D method that returns object bounding box used in collision detection*/
 //=============================================================================
-// ?Get_Obj_Space_Bounding_Box@BaseHeightMapRenderObjClass@@UBEXAAVAABoxClass@@@Z present-unmatched
-void BaseHeightMapRenderObjClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) const
-{
-	Int x = 0; Int y = 0;
-	if (m_map) {
-		x = m_map->getXExtent();
-		y = m_map->getYExtent();
-	}
-	Vector3	minPt(0,0,m_minHeight);
-	Vector3	maxPt((float)x*MAP_XY_FACTOR,(float)y*MAP_XY_FACTOR,(float)m_maxHeight);
-	MinMaxAABoxClass minMaxBox(minPt, maxPt);
-
-	box.Init(minMaxBox);
-}
+// ?Get_Obj_Space_Bounding_Box@BaseHeightMapRenderObjClass@@UBEXAAVAABoxClass@@@Z
+// Body in BaseHeightMap_Get_Obj_Space_Bounding_Box.asm (exact 193B retail; field offsets).
 
 //-------------------------------------------------------------------------------------------------
 /** Get the 3D extent of the terrain visible through the camera.  Return value
@@ -1423,31 +1396,11 @@ void BaseHeightMapRenderObjClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) c
 	a volume enclosing things that can float above terrain.
  */
 //-------------------------------------------------------------------------------------------------
-// ?getMaximumVisibleBox@BaseHeightMapRenderObjClass@@QAE_NABVFrustumClass@@PAVAABoxClass@@_N@Z present-unmatched
-Bool BaseHeightMapRenderObjClass::getMaximumVisibleBox(const FrustumClass &frustum, AABoxClass *box, Bool ignoreMaxHeight)
-{
-	//create a plane from the lowest point on the terrain
-	PlaneClass	groundPlane(Vector3(0,0,1), m_minHeight);
-
-	//clip each side of the view frustum to ground plane
-	float clipFraction;
-	Vector3 ClippedCorners[8];
-	ClippedCorners[0]=frustum.Corners[0];
-	for (Int i=0; i<4; i++)
-	{	ClippedCorners[i]=frustum.Corners[i];
-		if (groundPlane.Compute_Intersection(frustum.Corners[i],frustum.Corners[i+4],&clipFraction))
-		{	//edge intersects the terrain
-			ClippedCorners[i+4]=frustum.Corners[i]+(frustum.Corners[i+4]-frustum.Corners[i])*clipFraction;
-		}
-		else
-			ClippedCorners[i+4]=frustum.Corners[i+4];
-	}
-
-	if (box)
-		box->Init(ClippedCorners,8);
-
-	return TRUE;
-}
+// ?getMaximumVisibleBox@BaseHeightMapRenderObjClass@@QAE_NABVFrustumClass@@PAVAABoxClass@@_N@Z
+// Body in BaseHeightMap_getMaximumVisibleBox.asm (exact 1439B retail; field offsets).
+// Keep AABoxClass::Init(Vector3*,int) COMDAT in this TU (was only referenced by the
+// old C++ getMaximumVisibleBox body; 869B matched at 0x006C9EF0).
+void (AABoxClass::*_BaseHeightMap_Force_AABox_Init)(Vector3 *, int) = &AABoxClass::Init;
 
 //=============================================================================
 // BaseHeightMapRenderObjClass::Class_ID
@@ -1746,30 +1699,8 @@ void BaseHeightMapRenderObjClass::updateShorelineTiles(Int minX, Int minY, Int m
 }
 
 /** Generate a lookup table for arbitrary angled impassable area viewing. */
-// ?updateViewImpassableAreas@BaseHeightMapRenderObjClass@@QAEX_NHHHH@Z present-unmatched
-void BaseHeightMapRenderObjClass::updateViewImpassableAreas(Bool partial, Int minX, Int maxX, Int minY, Int maxY)
-{
-	Int xSize = m_map->getXExtent();
-	Int ySize = m_map->getYExtent();
-	if (m_showAsVisibleCliff.size() != xSize * ySize) {
-		m_showAsVisibleCliff.resize(xSize * ySize);
-	}
-
-	if (!partial) {
-		minX = 0;
-		minY = 0;
-		maxX = xSize;
-		maxY = ySize;
-	}
-
-	// save calculating the tangent over and over again.
-	Real tanImpassableRad = tan(m_curImpassableSlope / 360.f * 2 * PI);
-	for (Int j = minY; j < maxY; ++j) {
-		for (Int i = minX; i < maxX; ++i) {
-			m_showAsVisibleCliff[i + j * xSize] = evaluateAsVisibleCliff(i, j, tanImpassableRad);
-		}
-	}
-}
+// ?updateViewImpassableAreas@BaseHeightMapRenderObjClass@@QAEX_NHHHH@Z
+// Body in BaseHeightMap_updateViewImpassableAreas.asm (exact 328B retail).
 
 /** Generate a lookup table which can be used to generate an
 alpha value from a given set of uv coordinates.  Currently used

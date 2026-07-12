@@ -3507,61 +3507,8 @@ void Object::getHealthBoxPosition(Coord3D& pos) const
 //(ANGRY MOB) WHICH NEEDS LOGIC-SIDE POSITION CALC'S...
 //IT WOULD PROBABLY BE WISE TO MOVE ALL THE HARD-CODED DEFAULTS BELOW
 //INTO A NEW Drawable::getHealthBox..() WHICH USES GEOM0INFO, MODEL DATA, INI DATA, ETC.
-// ?getHealthBoxDimensions@Object@@QBE_NAAM0@Z present-unmatched
-Bool Object::getHealthBoxDimensions(Real &healthBoxHeight, Real &healthBoxWidth) const
-{ 
-
-#ifdef CALC_HEALTHBAR_FROM_HITPOINTS
-	Real maxHP = getBodyModule()->getMaxHealth();
-
-	if( isKindOf( KINDOF_STRUCTURE ) )
-	{
-		//enforce healthBoxHeightMinimum/Maximum
-		healthBoxHeight = min(3.0f, max(5.0f, maxHP/50));
-		//enforce healthBoxWidthMinimum/Maximum
-		healthBoxWidth = min(150.0f, max(100.0f, maxHP/10));
-		return true;
-	}
-	else if ( isKindOf(KINDOF_MOB_NEXUS) ) 
-	{
-		//enforce healthBoxHeightMinimum/Maximum
-		healthBoxHeight = min(3.0f, max(5.0f, maxHP/50));
-		//enforce healthBoxWidthMinimum/Maximum
-		healthBoxWidth = min(100.0f, max(66.0f, maxHP/10));
-		return true;
-	}
-	else if ( isKindOf( KINDOF_IGNORED_IN_GUI ) )
-	{
-		healthBoxHeight = 0;
-		healthBoxWidth = 0;
-		return false;
-	}
-	else
-	{
-		//enforce healthBoxHeightMinimum/Maximum
-		healthBoxHeight = min(3.0f, max(5.0f, maxHP/50));
-		//enforce healthBoxWidthMinimum/Maximum
-		healthBoxWidth = min(150.0f, max(35.0f, maxHP/10));
-		return true;
-	}
-#else
-
-	if ( isKindOf( KINDOF_IGNORED_IN_GUI ) )
-	{
-		healthBoxHeight = 0;
-		healthBoxWidth = 0;
-		return false;
-	}
-
-	//just add the major and minor axes
-	Real size = MAX(20.0f, MIN(150.0f, (getGeometryInfo().getMajorRadius() + getGeometryInfo().getMinorRadius())) );
-	healthBoxHeight = 3.0f; 
-	healthBoxWidth = MAX(20.0f, size * 2.0f);
-	return TRUE;
-
-#endif
-
-}
+// ?getHealthBoxDimensions@Object@@QBE_NAAM0@Z
+// Body in Object_getHealthBoxDimensions.asm (exact 166B retail).
 
 
 //-------------------------------------------------------------------------------------------------

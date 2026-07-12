@@ -991,44 +991,8 @@ WaterTracksObj *WaterTracksRenderSystem::findTrack(Vector2 &start, Vector2 &end,
 	}	//while (mod)
 	return NULL;
 }
-// ?saveTracks@WaterTracksRenderSystem@@QAEXXZ present-unmatched
-void WaterTracksRenderSystem::saveTracks(void)
-{
-
-	if (!TheTerrainLogic)
-		return;
-
-	AsciiString fileName=TheTerrainLogic->getSourceFilename();
-	char path[256];
-
-	strcpy(path,fileName.str());
-	Int len=strlen(path);
-
-	strcpy(path+len-4,".wak");
-
-	WaterTracksObj *umod;
-	Int trackCount=0;
-
-	FILE *fp=fopen(path,"wb");
-
-	if (fp)
-	{
-		umod=m_usedModules;
-		while(umod)
-		{	if (umod->m_initTimeOffset == 0)
-			{	//only save the primary wave front, second layer is added automatically.
-				fwrite(&umod->m_initStartPos,sizeof(umod->m_startPos),1,fp);
-				fwrite(&umod->m_initEndPos,sizeof(umod->m_perpDir),1,fp);
-				fwrite(&umod->m_type,sizeof(umod->m_type),1,fp);
-	//			fwrite(&umod->m_initTimeOffset,sizeof(umod->m_initTimeOffset),1,fp);
-				trackCount++;
-			}
-			umod=umod->m_nextSystem;
-		}  // end while
-		fwrite(&trackCount,sizeof(trackCount),1,fp);
-		fclose(fp);
-	}
-}
+// ?saveTracks@WaterTracksRenderSystem@@QAEXXZ
+// Body in W3DWaterTracks_saveTracks.asm (exact 251B retail).
 
 // ?loadTracks@WaterTracksRenderSystem@@QAEXXZ present-unmatched
 void WaterTracksRenderSystem::loadTracks(void)

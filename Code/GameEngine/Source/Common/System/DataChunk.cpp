@@ -322,38 +322,8 @@ void DataChunkOutput::openDataChunk( char *name, DataChunkVersionType ver )
 	::fwrite( (const char *)&dummy, sizeof(Int), 1, m_tmp_file  );
 }
 
-// ?closeDataChunk@DataChunkOutput@@QAEXXZ present-unmatched
-void DataChunkOutput::closeDataChunk( void )
-{
-	if (m_chunkStack == NULL)
-	{
-		// TODO: Throw exception
-		return;
-	}
-
-	// remember where we are
-	Int here = ::ftell(m_tmp_file);
-
-	// rewind to store the data size
-	::fseek(m_tmp_file, m_chunkStack->filepos , SEEK_SET);
-
-	// compute data size (not including the actual data size itself)
-	Int size = here - m_chunkStack->filepos - sizeof(Int);
-
-	// store the data size
-	::fwrite( (const char *)&size, sizeof(Int) , 1, m_tmp_file );
-
-	// go back to where we were
-	::fseek(m_tmp_file, here , SEEK_SET);
-
-	// pop the chunk off the stack
-	OutputChunk *c = m_chunkStack;
-#ifdef VERBOSE
-	DEBUG_LOG(("Closing chunk %s at %d (%x)\n", m_contents.getName(c->id).str(), here, here));
-#endif
-	m_chunkStack = m_chunkStack->next;
-	c->deleteInstance();
-}
+// ?closeDataChunk@DataChunkOutput@@QAEXXZ
+// Body in DataChunk_closeDataChunk.asm (exact 118B retail).
 
 // ?writeReal@DataChunkOutput@@QAEXM@Z present-unmatched
 void DataChunkOutput::writeReal( Real r ) 
