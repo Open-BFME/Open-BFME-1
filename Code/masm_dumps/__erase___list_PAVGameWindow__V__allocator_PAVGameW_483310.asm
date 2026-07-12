@@ -6,102 +6,13 @@
 _TEXT SEGMENT
 public ?erase@?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAE?AU?$_
 ?erase@?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAE?AU?$_ PROC
-    db 56h,8Bh,74h,24h,0Ch,57h,8Bh,7Ch
-    db 24h,14h,3Bh,0F7h,74h,1Fh,8Bh,0FFh
-    db 8Bh,0C6h,8Bh,08h,8Bh,50h,04h,8Bh
-    db 36h,6Ah,0Ch,89h,0Ah,50h,89h,51h
-    db 04h,0E8h,0BAh,0B2h,3Ah,00h,83h,0C4h
-    db 08h,3Bh,0F7h,75h,0E3h,8Bh,44h,24h
-    db 0Ch,89h,38h,5Fh,5Eh,0C2h,0Ch,00h
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 53h,8Bh,5Ch,24h,14h,55h,8Bh,6Ch
-    db 24h,14h,56h,8Bh,74h,24h,14h,57h
-    db 8Bh,7Ch,24h,14h,8Bh,07h,55h,50h
-    db 0FFh,0D3h,83h,0C4h,08h,84h,0C0h,74h
-    db 11h,8Bh,4Fh,04h,83h,0C7h,04h,55h
-    db 51h,0FFh,0D3h,83h,0C4h,08h,84h,0C0h
-    db 75h,0EFh,8Bh,56h,0FCh,83h,0EEh,04h
-    db 52h,55h,0FFh,0D3h,83h,0C4h,08h,84h
-    db 0C0h,74h,11h,8Bh,46h,0FCh,83h,0EEh
-    db 04h,50h,55h,0FFh,0D3h,83h,0C4h,08h
-    db 84h,0C0h,75h,0EFh,3Bh,0FEh,73h,0Dh
-    db 8Bh,07h,8Bh,0Eh,89h,0Fh,89h,06h
-    db 83h,0C7h,04h,0EBh,0AFh,8Bh,0C7h,5Fh
-    db 5Eh,5Dh,5Bh,0C3h,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,44h,24h,0Ch,8Bh,4Ch,24h,08h
-    db 8Bh,54h,24h,04h,50h,6Ah,00h,51h
-    db 52h,0E8h,1Fh,0D6h,0BBh,0FFh,83h,0C4h
-    db 10h,0C3h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,44h,24h,04h,8Bh,08h,8Bh,54h
-    db 24h,0Ch,89h,0Ah,8Bh,4Ch,24h,14h
-    db 8Bh,54h,24h,10h,51h,8Bh,4Ch,24h
-    db 0Ch,52h,2Bh,0C8h,0C1h,0F9h,02h,51h
-    db 6Ah,00h,50h,0E8h,05h,0F5h,0BBh,0FFh
-    db 83h,0C4h,14h,0C3h,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,44h,24h,08h,8Bh,4Ch,24h,04h
-    db 2Bh,0C1h,85h,0C0h,7Eh,13h,50h,51h
-    db 8Bh,4Ch,24h,14h,2Bh,0C8h,51h,0FFh
-    db 15h,5Ch,94h,35h,01h,83h,0C4h,0Ch
-    db 0C3h,8Bh,44h,24h,0Ch,0C3h,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 53h,8Bh,5Ch,24h,0Ch,57h,8Bh,7Ch
-    db 24h,0Ch,2Bh,0DFh,0C1h,0FBh,02h,83h
-    db 0FBh,02h,7Ch,3Ch,55h,8Bh,6Ch,24h
-    db 18h,56h,8Dh,43h,0FEh,99h,2Bh,0C2h
-    db 8Bh,0F0h,0D1h,0FEh,8Bh,04h,0B7h,55h
-    db 50h,53h,56h,57h,0E8h,8Ch,0F4h,0BBh
-    db 0FFh,83h,0C4h,14h,85h,0F6h,74h,16h
-    db 8Bh,4Ch,0B7h,0FCh,4Eh,55h,51h,53h
-    db 56h,57h,0E8h,76h,0F4h,0BBh,0FFh,83h
-    db 0C4h,14h,85h,0F6h,75h,0EAh,5Eh,5Dh
-    db 5Fh,5Bh,0C3h,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,4Ch,24h,04h,8Bh,44h,24h,08h
-    db 8Bh,50h,0FCh,56h,8Bh,31h,89h,70h
-    db 0FCh,8Bh,74h,24h,14h,2Bh,0C1h,56h
-    db 52h,83h,0E8h,04h,0C1h,0F8h,02h,50h
-    db 6Ah,00h,51h,0E8h,25h,0F4h,0BBh,0FFh
-    db 83h,0C4h,14h,5Eh,0C3h,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 56h,8Bh,0F1h,6Ah,0Ch,0C7h,06h,00h
-    db 00h,00h,00h,0E8h,00h,0B0h,3Ah,00h
-    db 89h,00h,89h,40h,04h,89h,06h,83h
-    db 0C4h,04h,8Bh,0C6h,5Eh,0C2h,04h,00h
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,11h,8Bh,0Ah,33h,0C0h,3Bh,0CAh
-    db 74h,0Dh,8Dh,9Bh,00h,00h,00h,00h
-    db 8Bh,09h,40h,3Bh,0CAh,75h,0F9h,0C3h
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,0C1h,33h,0C9h,89h,08h,89h,48h
-    db 04h,89h,48h,08h,0C2h,04h,00h,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,11h,85h,0D2h,74h,26h,8Bh,41h
-    db 08h,2Bh,0C2h,0C1h,0F8h,02h,0C1h,0E0h
-    db 02h,3Dh,80h,00h,00h,00h,76h,0Ah
-    db 52h,0E8h,0F2h,0E8h,3Fh,00h,83h,0C4h
-    db 04h,0C3h,50h,52h,0E8h,27h,0B0h,3Ah
-    db 00h,83h,0C4h,08h,0C3h,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,11h,85h,0D2h,74h,26h,8Bh,41h
-    db 08h,2Bh,0C2h,0C1h,0F8h,02h,0C1h,0E0h
-    db 02h,3Dh,80h,00h,00h,00h,76h,0Ah
-    db 52h,0E8h,0B2h,0E8h,3Fh,00h,83h,0C4h
-    db 04h,0C3h,50h,52h,0E8h,0E7h,0AFh,3Ah
-    db 00h,83h,0C4h,08h,0C3h
+    db 56h, 8Bh, 74h, 24h, 0Ch, 57h, 8Bh, 7Ch
+    db 24h, 14h, 3Bh, 0F7h, 74h, 1Fh, 8Bh, 0FFh
+    db 8Bh, 0C6h, 8Bh, 08h, 8Bh, 50h, 04h, 8Bh
+    db 36h, 6Ah, 0Ch, 89h, 0Ah, 50h, 89h, 51h
+    db 04h, 0E8h, 0BAh, 0B2h, 3Ah, 00h, 83h, 0C4h
+    db 08h, 3Bh, 0F7h, 75h, 0E3h, 8Bh, 44h, 24h
+    db 0Ch, 89h, 38h, 5Fh, 5Eh, 0C2h, 0Ch, 00h
 ?erase@?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAE?AU?$_ ENDP
 _TEXT ENDS
 END

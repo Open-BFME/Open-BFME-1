@@ -6,53 +6,16 @@
 _TEXT SEGMENT
 public ?Set_Force_Visible@RenderObjClass@@UAEXH@Z
 ?Set_Force_Visible@RenderObjClass@@UAEXH@Z PROC
-    db 56h,8Bh,0F1h,8Bh,06h,0FFh,90h,9Ch
-    db 01h,00h,00h,8Bh,0C8h,8Bh,44h,24h
-    db 08h,0F7h,0D9h,1Bh,0C9h,33h,0D2h,0F7h
-    db 0D9h,85h,0C0h,0Fh,95h,0C2h,3Bh,0D1h
-    db 74h,26h,81h,76h,10h,00h,80h,00h
-    db 00h,8Bh,8Eh,80h,00h,00h,00h,85h
-    db 0C9h,74h,15h,85h,0C0h,6Ah,04h,56h
-    db 74h,09h,8Bh,01h,0FFh,50h,38h,5Eh
-    db 0C2h,04h,00h,8Bh,11h,0FFh,52h,3Ch
-    db 5Eh,0C2h,04h,00h,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,44h,24h,04h,89h,81h,84h,00h
-    db 00h,00h,0C2h,04h,00h,0CCh,0CCh,0CCh
-    db 56h,8Bh,0F1h,8Bh,4Ch,24h,0Ch,8Bh
-    db 06h,51h,8Bh,0CEh,0FFh,90h,0C4h,00h
-    db 00h,00h,8Bh,4Ch,24h,10h,8Bh,16h
-    db 51h,50h,8Bh,44h,24h,10h,50h,8Bh
-    db 0CEh,0FFh,92h,94h,00h,00h,00h,5Eh
-    db 0C2h,0Ch,00h,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 51h,53h,55h,8Bh,6Ch,24h,10h,56h
-    db 57h,8Bh,0F1h,8Bh,06h,33h,0FFh,55h
-    db 89h,7Ch,24h,14h,0FFh,90h,80h,00h
-    db 00h,00h,8Bh,0D8h,4Bh,78h,43h,90h
-    db 8Bh,16h,55h,53h,8Bh,0CEh,0FFh,92h
-    db 84h,00h,00h,00h,8Bh,0F8h,85h,0FFh
-    db 74h,21h,8Bh,06h,57h,8Bh,0CEh,0FFh
-    db 50h,78h,8Bh,4Ch,24h,10h,03h,0C8h
-    db 8Bh,47h,04h,48h,89h,4Ch,24h,10h
-    db 89h,47h,04h,75h,06h,8Bh,17h,8Bh
-    db 0CFh,0FFh,12h,4Bh,79h,0CAh,8Bh,44h
-    db 24h,10h,5Fh,5Eh,5Dh,5Bh,59h,0C2h
-    db 04h,00h,8Bh,0C7h,5Fh,5Eh,5Dh,5Bh
-    db 59h,0C2h,04h,00h,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,44h,24h,04h,56h,57h,8Bh,0F1h
-    db 8Bh,3Eh,50h,0FFh,97h,0C4h,00h,00h
-    db 00h,50h,8Bh,0CEh,0FFh,97h,9Ch,00h
-    db 00h,00h,5Fh,5Eh,0C2h,04h,00h,0CCh
-    db 0C2h,04h,00h,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 51h,8Bh,01h,0FFh,50h,28h,85h,0C0h
-    db 89h,04h,24h,74h,05h,0DBh,04h,24h
-    db 59h,0C3h,0D9h,05h,0C0h,77h,13h,01h
-    db 59h,0C3h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,44h,24h,08h,0C7h,00h,0FFh,0FFh
-    db 7Fh,7Fh,0C7h,40h,04h,00h,00h,80h
-    db 0BFh,8Bh,01h,0FFh,90h,2Ch,01h,00h
-    db 00h,8Bh,4Ch,24h,0Ch,0D9h,19h,33h
-    db 0C0h,0C2h,0Ch,00h
+    db 56h, 8Bh, 0F1h, 8Bh, 06h, 0FFh, 90h, 9Ch
+    db 01h, 00h, 00h, 8Bh, 0C8h, 8Bh, 44h, 24h
+    db 08h, 0F7h, 0D9h, 1Bh, 0C9h, 33h, 0D2h, 0F7h
+    db 0D9h, 85h, 0C0h, 0Fh, 95h, 0C2h, 3Bh, 0D1h
+    db 74h, 26h, 81h, 76h, 10h, 00h, 80h, 00h
+    db 00h, 8Bh, 8Eh, 80h, 00h, 00h, 00h, 85h
+    db 0C9h, 74h, 15h, 85h, 0C0h, 6Ah, 04h, 56h
+    db 74h, 09h, 8Bh, 01h, 0FFh, 50h, 38h, 5Eh
+    db 0C2h, 04h, 00h, 8Bh, 11h, 0FFh, 52h, 3Ch
+    db 5Eh, 0C2h, 04h, 00h
 ?Set_Force_Visible@RenderObjClass@@UAEXH@Z ENDP
 _TEXT ENDS
 END

@@ -6,66 +6,11 @@
 _TEXT SEGMENT
 public ?writeINI@?$DefaultModuleTemplate@$05@FXParticleSystem@@UBEXAAVFile@@I@Z
 ?writeINI@?$DefaultModuleTemplate@$05@FXParticleSystem@@UBEXAAVFile@@I@Z PROC
-    db 56h,8Bh,74h,24h,08h,8Dh,44h,24h
-    db 0Ch,50h,56h,51h,0E8h,48h,28h,0A5h
-    db 0FFh,8Dh,4Ch,24h,18h,51h,56h,0E8h
-    db 00h,29h,0A5h,0FFh,83h,0C4h,14h,5Eh
-    db 0C2h,08h,00h,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,0C1h,0C7h,00h,0ACh,35h,11h,01h
-    db 0C7h,40h,04h,01h,00h,00h,00h,0C3h
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 85h,0C9h,74h,07h,8Bh,01h,6Ah,01h
-    db 0FFh,50h,04h,0C3h,0CCh,0CCh,0CCh,0CCh
-    db 0C7h,01h,0ACh,35h,11h,01h,0C3h,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0F6h,44h,24h,04h,01h,56h,8Bh,0F1h
-    db 0C7h,06h,0ACh,35h,11h,01h,74h,09h
-    db 56h,0E8h,0BAh,0E5h,28h,00h,83h,0C4h
-    db 04h,8Bh,0C6h,5Eh,0C2h,04h,00h,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0A1h,0C8h,6Dh,2Fh,01h,56h,33h,0F6h
-    db 3Bh,0C6h,74h,19h,8Bh,50h,04h,8Bh
-    db 0C8h,83h,0C0h,04h,4Ah,3Bh,0D6h,89h
-    db 10h,75h,04h,8Bh,01h,0FFh,10h,89h
-    db 35h,0C8h,6Dh,2Fh,01h,0A1h,0CCh,6Dh
-    db 2Fh,01h,3Bh,0C6h,74h,19h,8Bh,50h
-    db 04h,8Bh,0C8h,83h,0C0h,04h,4Ah,3Bh
-    db 0D6h,89h,10h,75h,04h,8Bh,11h,0FFh
-    db 12h,89h,35h,0CCh,6Dh,2Fh,01h,0A1h
-    db 0D0h,6Dh,2Fh,01h,3Bh,0C6h,74h,19h
-    db 8Bh,50h,04h,8Bh,0C8h,83h,0C0h,04h
-    db 4Ah,3Bh,0D6h,89h,10h,75h,04h,8Bh
-    db 01h,0FFh,10h,89h,35h,0D0h,6Dh,2Fh
-    db 01h,0A1h,0D4h,6Dh,2Fh,01h,3Bh,0C6h
-    db 74h,19h,8Bh,50h,04h,8Bh,0C8h,83h
-    db 0C0h,04h,4Ah,3Bh,0D6h,89h,10h,75h
-    db 04h,8Bh,11h,0FFh,12h,89h,35h,0D4h
-    db 6Dh,2Fh,01h,5Eh,0C3h,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 6Ah,0FFh,68h,68h,0C3h,03h,01h,64h
-    db 0A1h,00h,00h,00h,00h,50h,64h,89h
-    db 25h,00h,00h,00h,00h,51h,56h,8Bh
-    db 0F1h,89h,74h,24h,04h,0C7h,46h,04h
-    db 01h,00h,00h,00h,8Bh,44h,24h,20h
-    db 85h,0C0h,8Bh,4Ch,24h,18h,0C7h,44h
-    db 24h,10h,00h,00h,00h,00h,0C7h,06h
-    db 0B8h,35h,11h,01h,89h,4Eh,10h,89h
-    db 46h,14h,75h,15h,8Dh,04h,8Dh,00h
-    db 00h,00h,00h,50h,0E8h,5Fh,0E5h,28h
-    db 00h,83h,0C4h,04h,89h,46h,0Ch,0EBh
-    db 1Bh,8Dh,0Ch,88h,51h,0E8h,4Eh,0E5h
-    db 28h,00h,8Bh,4Eh,14h,8Dh,54h,01h
-    db 0FFh,83h,0C4h,04h,49h,0F7h,0D1h,23h
-    db 0D1h,89h,56h,0Ch,8Bh,4Ch,24h,08h
-    db 89h,46h,08h,8Bh,0C6h,5Eh,64h,89h
-    db 0Dh,00h,00h,00h,00h,83h,0C4h,10h
-    db 0C2h,0Ch,00h
+    db 56h, 8Bh, 74h, 24h, 08h, 8Dh, 44h, 24h
+    db 0Ch, 50h, 56h, 51h, 0E8h, 48h, 28h, 0A5h
+    db 0FFh, 8Dh, 4Ch, 24h, 18h, 51h, 56h, 0E8h
+    db 00h, 29h, 0A5h, 0FFh, 83h, 0C4h, 14h, 5Eh
+    db 0C2h, 08h, 00h
 ?writeINI@?$DefaultModuleTemplate@$05@FXParticleSystem@@UBEXAAVFile@@I@Z ENDP
 _TEXT ENDS
 END

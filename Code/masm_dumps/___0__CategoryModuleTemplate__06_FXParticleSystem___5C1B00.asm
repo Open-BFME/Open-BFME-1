@@ -6,94 +6,14 @@
 _TEXT SEGMENT
 public ??0?$CategoryModuleTemplate@$06@FXParticleSystem@@QAE@ABV01@@Z
 ??0?$CategoryModuleTemplate@$06@FXParticleSystem@@QAE@ABV01@@Z PROC
-    db 56h,57h,8Bh,7Ch,24h,0Ch,57h,8Bh
-    db 0F1h,0E8h,0BBh,51h,0A6h,0FFh,85h,0FFh
-    db 74h,05h,8Dh,47h,08h,0EBh,02h,33h
-    db 0C0h,8Dh,7Eh,08h,50h,8Bh,0CFh,0E8h
-    db 0ECh,58h,0A8h,0FFh,0C7h,07h,94h,0FCh
-    db 10h,01h,5Fh,0C7h,06h,80h,0FCh,10h
-    db 01h,0C7h,46h,04h,7Ch,0FCh,10h,01h
-    db 8Bh,0C6h,5Eh,0C2h,04h,00h,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 56h,8Bh,0F1h,0E8h,6Dh,66h,0A4h,0FFh
-    db 0F6h,44h,24h,08h,01h,74h,09h,56h
-    db 0E8h,4Bh,03h,2Ch,00h,83h,0C4h,04h
-    db 8Bh,0C6h,5Eh,0C2h,04h,00h,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 53h,8Ah,5Ch,24h,08h,0F6h,0C3h,02h
-    db 56h,8Bh,0F1h,74h,2Bh,8Bh,46h,0FCh
-    db 57h,68h,0C5h,81h,40h,00h,8Dh,7Eh
-    db 0FCh,50h,6Ah,50h,56h,0E8h,0D4h,51h
-    db 43h,00h,0F6h,0C3h,01h,74h,09h,57h
-    db 0E8h,43h,03h,2Ch,00h,83h,0C4h,04h
-    db 8Bh,0C7h,5Fh,5Eh,5Bh,0C2h,04h,00h
-    db 8Bh,0CEh,0E8h,06h,66h,0A4h,0FFh,0F6h
-    db 0C3h,01h,74h,09h,56h,0E8h,0E6h,02h
-    db 2Ch,00h,83h,0C4h,04h,8Bh,0C6h,5Eh
-    db 5Bh,0C2h,04h,00h,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,4Ch,24h,08h,8Bh,01h,8Bh,49h
-    db 04h,56h,8Bh,74h,24h,08h,8Bh,16h
-    db 2Bh,0C8h,51h,50h,8Bh,0CEh,0FFh,52h
-    db 10h,8Bh,0C6h,5Eh,0C3h,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,44h,24h,04h,8Bh,00h,85h,0C0h
-    db 74h,0Ah,66h,83h,78h,04h,00h,74h
-    db 03h,33h,0C0h,0C3h,0B8h,01h,00h,00h
-    db 00h,0C3h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 56h,8Bh,0F1h,0E8h,6Fh,74h,0A8h,0FFh
-    db 0F6h,44h,24h,08h,01h,74h,09h,56h
-    db 0E8h,5Bh,02h,2Ch,00h,83h,0C4h,04h
-    db 8Bh,0C6h,5Eh,0C2h,04h,00h,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,0C1h,0C7h,00h,00h,00h,00h,00h
-    db 0C3h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,09h,85h,0C9h,74h,06h,8Bh,01h
-    db 6Ah,01h,0FFh,10h,0C3h,0CCh,0CCh,0CCh
-    db 8Bh,0C1h,0C7h,00h,00h,00h,00h,00h
-    db 0C3h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,09h,85h,0C9h,74h,06h,8Bh,01h
-    db 6Ah,01h,0FFh,10h,0C3h,0CCh,0CCh,0CCh
-    db 8Bh,0C1h,0C7h,00h,00h,00h,00h,00h
-    db 0C3h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,09h,85h,0C9h,74h,06h,8Bh,01h
-    db 6Ah,01h,0FFh,10h,0C3h,0CCh,0CCh,0CCh
-    db 8Bh,0C1h,0C7h,00h,00h,00h,00h,00h
-    db 0C3h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,09h,85h,0C9h,74h,06h,8Bh,01h
-    db 6Ah,01h,0FFh,10h,0C3h,0CCh,0CCh,0CCh
-    db 8Bh,0C1h,0C7h,00h,00h,00h,00h,00h
-    db 0C3h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,09h,85h,0C9h,74h,06h,8Bh,01h
-    db 6Ah,01h,0FFh,10h,0C3h,0CCh,0CCh,0CCh
-    db 8Bh,0C1h,0C7h,00h,00h,00h,00h,00h
-    db 0C3h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,09h,85h,0C9h,74h,06h,8Bh,01h
-    db 6Ah,01h,0FFh,10h,0C3h,0CCh,0CCh,0CCh
-    db 8Bh,0C1h,0C7h,00h,00h,00h,00h,00h
-    db 0C3h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,09h,85h,0C9h,74h,06h,8Bh,01h
-    db 6Ah,01h,0FFh,10h,0C3h,0CCh,0CCh,0CCh
-    db 8Bh,0C1h,0C7h,00h,00h,00h,00h,00h
-    db 0C3h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,09h,85h,0C9h,74h,06h,8Bh,01h
-    db 6Ah,01h,0FFh,10h,0C3h,0CCh,0CCh,0CCh
-    db 8Bh,0C1h,0C7h,00h,00h,00h,00h,00h
-    db 0C3h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,09h,85h,0C9h,74h,06h,8Bh,01h
-    db 6Ah,01h,0FFh,10h,0C3h,0CCh,0CCh,0CCh
-    db 8Bh,0C1h,0C7h,00h,00h,00h,00h,00h
-    db 0C3h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,09h,85h,0C9h,74h,06h,8Bh,01h
-    db 6Ah,01h,0FFh,10h,0C3h,0CCh,0CCh,0CCh
-    db 8Bh,41h,4Ch,85h,0C0h,75h,05h,0E8h
-    db 5Ch,0FDh,0A3h,0FFh,8Bh,40h,7Ch,0C3h
+    db 56h, 57h, 8Bh, 7Ch, 24h, 0Ch, 57h, 8Bh
+    db 0F1h, 0E8h, 0BBh, 51h, 0A6h, 0FFh, 85h, 0FFh
+    db 74h, 05h, 8Dh, 47h, 08h, 0EBh, 02h, 33h
+    db 0C0h, 8Dh, 7Eh, 08h, 50h, 8Bh, 0CFh, 0E8h
+    db 0ECh, 58h, 0A8h, 0FFh, 0C7h, 07h, 94h, 0FCh
+    db 10h, 01h, 5Fh, 0C7h, 06h, 80h, 0FCh, 10h
+    db 01h, 0C7h, 46h, 04h, 7Ch, 0FCh, 10h, 01h
+    db 8Bh, 0C6h, 5Eh, 0C2h, 04h, 00h
 ??0?$CategoryModuleTemplate@$06@FXParticleSystem@@QAE@ABV01@@Z ENDP
 _TEXT ENDS
 END

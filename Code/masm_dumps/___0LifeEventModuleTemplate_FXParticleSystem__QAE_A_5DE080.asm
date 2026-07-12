@@ -6,49 +6,26 @@
 _TEXT SEGMENT
 public ??0LifeEventModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z
 ??0LifeEventModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z PROC
-    db 6Ah,0FFh,68h,18h,0AEh,03h,01h,64h
-    db 0A1h,00h,00h,00h,00h,50h,64h,89h
-    db 25h,00h,00h,00h,00h,51h,8Bh,44h
-    db 24h,14h,85h,0C0h,56h,8Bh,0F1h,0C7h
-    db 46h,04h,5Ch,37h,07h,01h,57h,89h
-    db 74h,24h,08h,0C7h,06h,30h,38h,07h
-    db 01h,0C7h,46h,04h,2Ch,38h,07h,01h
-    db 74h,05h,8Dh,48h,08h,0EBh,02h,33h
-    db 0C9h,66h,8Bh,09h,66h,89h,4Eh,08h
-    db 0C7h,06h,48h,38h,07h,01h,0C7h,46h
-    db 04h,44h,38h,07h,01h,85h,0C0h,0C7h
-    db 44h,24h,14h,00h,00h,00h,00h,74h
-    db 05h,83h,0C0h,0Ch,0EBh,02h,33h,0C0h
-    db 8Dh,7Eh,0Ch,50h,8Bh,0CFh,0E8h,0BDh
-    db 6Ah,0A2h,0FFh,8Bh,4Ch,24h,0Ch,0C7h
-    db 07h,0A4h,12h,11h,01h,0C7h,06h,90h
-    db 12h,11h,01h,0C7h,46h,04h,8Ch,12h
-    db 11h,01h,5Fh,8Bh,0C6h,5Eh,64h,89h
-    db 0Dh,00h,00h,00h,00h,83h,0C4h,10h
-    db 0C2h,04h,00h,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 56h,8Bh,0F1h,0E8h,0D9h,6Ch,0A6h,0FFh
-    db 0F6h,44h,24h,08h,01h,74h,09h,56h
-    db 0E8h,4Bh,3Dh,2Ah,00h,83h,0C4h,04h
-    db 8Bh,0C6h,5Eh,0C2h,04h,00h,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 53h,8Ah,5Ch,24h,08h,0F6h,0C3h,02h
-    db 56h,8Bh,0F1h,74h,2Bh,8Bh,46h,0FCh
-    db 57h,68h,31h,4Eh,44h,00h,8Dh,7Eh
-    db 0FCh,50h,6Ah,24h,56h,0E8h,0D4h,8Bh
-    db 41h,00h,0F6h,0C3h,01h,74h,09h,57h
-    db 0E8h,43h,3Dh,2Ah,00h,83h,0C4h,04h
-    db 8Bh,0C7h,5Fh,5Eh,5Bh,0C2h,04h,00h
-    db 8Bh,0CEh,0E8h,72h,6Ch,0A6h,0FFh,0F6h
-    db 0C3h,01h,74h,09h,56h,0E8h,0E6h,3Ch
-    db 2Ah,00h,83h,0C4h,04h,8Bh,0C6h,5Eh
-    db 5Bh,0C2h,04h,00h
+    db 6Ah, 0FFh, 68h, 18h, 0AEh, 03h, 01h, 64h
+    db 0A1h, 00h, 00h, 00h, 00h, 50h, 64h, 89h
+    db 25h, 00h, 00h, 00h, 00h, 51h, 8Bh, 44h
+    db 24h, 14h, 85h, 0C0h, 56h, 8Bh, 0F1h, 0C7h
+    db 46h, 04h, 5Ch, 37h, 07h, 01h, 57h, 89h
+    db 74h, 24h, 08h, 0C7h, 06h, 30h, 38h, 07h
+    db 01h, 0C7h, 46h, 04h, 2Ch, 38h, 07h, 01h
+    db 74h, 05h, 8Dh, 48h, 08h, 0EBh, 02h, 33h
+    db 0C9h, 66h, 8Bh, 09h, 66h, 89h, 4Eh, 08h
+    db 0C7h, 06h, 48h, 38h, 07h, 01h, 0C7h, 46h
+    db 04h, 44h, 38h, 07h, 01h, 85h, 0C0h, 0C7h
+    db 44h, 24h, 14h, 00h, 00h, 00h, 00h, 74h
+    db 05h, 83h, 0C0h, 0Ch, 0EBh, 02h, 33h, 0C0h
+    db 8Dh, 7Eh, 0Ch, 50h, 8Bh, 0CFh, 0E8h, 0BDh
+    db 6Ah, 0A2h, 0FFh, 8Bh, 4Ch, 24h, 0Ch, 0C7h
+    db 07h, 0A4h, 12h, 11h, 01h, 0C7h, 06h, 90h
+    db 12h, 11h, 01h, 0C7h, 46h, 04h, 8Ch, 12h
+    db 11h, 01h, 5Fh, 8Bh, 0C6h, 5Eh, 64h, 89h
+    db 0Dh, 00h, 00h, 00h, 00h, 83h, 0C4h, 10h
+    db 0C2h, 04h, 00h
 ??0LifeEventModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z ENDP
 _TEXT ENDS
 END

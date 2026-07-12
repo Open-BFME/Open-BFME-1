@@ -6,46 +6,16 @@
 _TEXT SEGMENT
 public ?Add@?$DynamicVectorClass@VShaderClass@@@@QAE_NABVShaderClass@@@Z
 ?Add@?$DynamicVectorClass@VShaderClass@@@@QAE_NABVShaderClass@@@Z PROC
-    db 56h,8Bh,0F1h,8Bh,4Eh,08h,39h,4Eh
-    db 10h,7Ch,28h,8Ah,46h,0Dh,84h,0C0h
-    db 75h,04h,85h,0C9h,75h,17h,8Bh,46h
-    db 14h,85h,0C0h,7Eh,10h,8Bh,16h,03h
-    db 0C1h,6Ah,00h,50h,8Bh,0CEh,0FFh,52h
-    db 08h,84h,0C0h,75h,06h,32h,0C0h,5Eh
-    db 0C2h,04h,00h,8Bh,46h,10h,8Bh,56h
-    db 04h,8Dh,48h,01h,89h,4Eh,10h,8Bh
-    db 4Ch,24h,08h,8Bh,09h,89h,0Ch,82h
-    db 0B0h,01h,5Eh,0C2h,04h,00h,0CCh,0CCh
-    db 56h,8Bh,0F1h,8Bh,46h,04h,85h,0C0h
-    db 0C7h,06h,0CCh,0C5h,13h,01h,74h,17h
-    db 8Ah,4Eh,0Dh,84h,0C9h,74h,10h,50h
-    db 0E8h,23h,24h,0F5h,0FFh,83h,0C4h,04h
-    db 0C7h,46h,04h,00h,00h,00h,00h,0F6h
-    db 44h,24h,08h,01h,0C6h,46h,0Dh,00h
-    db 0C7h,46h,08h,00h,00h,00h,00h,74h
-    db 09h,56h,0E8h,0C1h,23h,0F5h,0FFh,83h
-    db 0C4h,04h,8Bh,0C6h,5Eh,0C2h,04h,00h
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 56h,8Bh,0F1h,8Bh,46h,04h,85h,0C0h
-    db 0C7h,06h,0E4h,0C5h,13h,01h,74h,17h
-    db 8Ah,4Eh,0Dh,84h,0C9h,74h,10h,50h
-    db 0E8h,0D3h,23h,0F5h,0FFh,83h,0C4h,04h
-    db 0C7h,46h,04h,00h,00h,00h,00h,0F6h
-    db 44h,24h,08h,01h,0C6h,46h,0Dh,00h
-    db 0C7h,46h,08h,00h,00h,00h,00h,74h
-    db 09h,56h,0E8h,71h,23h,0F5h,0FFh,83h
-    db 0C4h,04h,8Bh,0C6h,5Eh,0C2h,04h,00h
-    db 0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 8Bh,44h,24h,04h,33h,0D2h,3Bh,0C2h
-    db 56h,8Bh,0F1h,0C7h,06h,0CCh,0C5h,13h
-    db 01h,89h,56h,04h,89h,46h,08h,0C6h
-    db 46h,0Ch,01h,88h,56h,0Dh,74h,24h
-    db 8Bh,4Ch,24h,0Ch,3Bh,0CAh,74h,09h
-    db 89h,4Eh,04h,8Bh,0C6h,5Eh,0C2h,08h
-    db 00h,0C1h,0E0h,02h,50h,0E8h,0E6h,23h
-    db 0F5h,0FFh,83h,0C4h,04h,89h,46h,04h
-    db 0C6h,46h,0Dh,01h,8Bh,0C6h,5Eh,0C2h
-    db 08h,00h
+    db 56h, 8Bh, 0F1h, 8Bh, 4Eh, 08h, 39h, 4Eh
+    db 10h, 7Ch, 28h, 8Ah, 46h, 0Dh, 84h, 0C0h
+    db 75h, 04h, 85h, 0C9h, 75h, 17h, 8Bh, 46h
+    db 14h, 85h, 0C0h, 7Eh, 10h, 8Bh, 16h, 03h
+    db 0C1h, 6Ah, 00h, 50h, 8Bh, 0CEh, 0FFh, 52h
+    db 08h, 84h, 0C0h, 75h, 06h, 32h, 0C0h, 5Eh
+    db 0C2h, 04h, 00h, 8Bh, 46h, 10h, 8Bh, 56h
+    db 04h, 8Dh, 48h, 01h, 89h, 4Eh, 10h, 8Bh
+    db 4Ch, 24h, 08h, 8Bh, 09h, 89h, 0Ch, 82h
+    db 0B0h, 01h, 5Eh, 0C2h, 04h, 00h
 ?Add@?$DynamicVectorClass@VShaderClass@@@@QAE_NABVShaderClass@@@Z ENDP
 _TEXT ENDS
 END

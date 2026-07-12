@@ -6,44 +6,12 @@
 _TEXT SEGMENT
 public ?Get_Bounding_Sphere@MeshGeometryClass@@QAEXPAVSphereClass@@@Z
 ?Get_Bounding_Sphere@MeshGeometryClass@@QAEXPAVSphereClass@@@Z PROC
-    db 8Bh,91h,80h,00h,00h,00h,8Bh,44h
-    db 24h,04h,89h,10h,8Bh,91h,84h,00h
-    db 00h,00h,89h,50h,04h,8Bh,91h,88h
-    db 00h,00h,00h,89h,50h,08h,8Bh,89h
-    db 8Ch,00h,00h,00h,89h,48h,0Ch,0C2h
-    db 04h,00h,0CCh,0CCh,0CCh,0CCh,0CCh,0CCh
-    db 83h,0ECh,0Ch,33h,0C0h,53h,56h,8Bh
-    db 0F1h,89h,46h,68h,89h,46h,6Ch,89h
-    db 46h,70h,8Dh,5Eh,68h,89h,46h,74h
-    db 89h,46h,78h,89h,46h,7Ch,57h,8Dh
-    db 7Eh,74h,89h,86h,80h,00h,00h,00h
-    db 89h,86h,84h,00h,00h,00h,89h,86h
-    db 88h,00h,00h,00h,8Bh,4Eh,28h,3Bh
-    db 0C8h,89h,86h,8Ch,00h,00h,00h,0Fh
-    db 84h,0AFh,00h,00h,00h,8Bh,54h,24h
-    db 1Ch,3Bh,0D0h,75h,06h,8Bh,46h,30h
-    db 8Bh,50h,0Ch,51h,57h,53h,52h,0E8h
-    db 14h,0B9h,1Dh,00h,0D9h,07h,0D8h,03h
-    db 83h,0C4h,10h,0D9h,47h,04h,0D8h,43h
-    db 04h,0D9h,5Ch,24h,10h,0D9h,47h,08h
-    db 0D8h,43h,08h,0D9h,5Ch,24h,14h,0D8h
-    db 0Dh,3Ch,53h,07h,01h,0D9h,44h,24h
-    db 10h,0D8h,0Dh,3Ch,53h,07h,01h,0D9h
-    db 44h,24h,14h,0D8h,0Dh,3Ch,53h,07h
-    db 01h,0D9h,5Ch,24h,14h,8Bh,4Ch,24h
-    db 14h,0D9h,0C9h,0D9h,9Eh,80h,00h,00h
-    db 00h,89h,8Eh,88h,00h,00h,00h,0D9h
-    db 9Eh,84h,00h,00h,00h,8Bh,46h,18h
-    db 0D9h,07h,83h,0E0h,0FEh,0D8h,0A6h,80h
-    db 00h,00h,00h,0D9h,47h,04h,0D8h,0A6h
-    db 84h,00h,00h,00h,0D9h,47h,08h,0D8h
-    db 0A6h,88h,00h,00h,00h,89h,46h,18h
-    db 0D9h,0C0h,0D8h,0C9h,0D9h,0C2h,0D8h,0CBh
-    db 0DEh,0C1h,0D9h,0C3h,0D8h,0CCh,0DEh,0C1h
-    db 0D9h,0FAh,0DDh,0DBh,0DDh,0D8h,0DDh,0D8h
-    db 0D8h,0Dh,44h,0C1h,13h,01h,0D9h,9Eh
-    db 8Ch,00h,00h,00h,5Fh,5Eh,5Bh,83h
-    db 0C4h,0Ch,0C2h,04h,00h
+    db 8Bh, 91h, 80h, 00h, 00h, 00h, 8Bh, 44h
+    db 24h, 04h, 89h, 10h, 8Bh, 91h, 84h, 00h
+    db 00h, 00h, 89h, 50h, 04h, 8Bh, 91h, 88h
+    db 00h, 00h, 00h, 89h, 50h, 08h, 8Bh, 89h
+    db 8Ch, 00h, 00h, 00h, 89h, 48h, 0Ch, 0C2h
+    db 04h, 00h
 ?Get_Bounding_Sphere@MeshGeometryClass@@QAEXPAVSphereClass@@@Z ENDP
 _TEXT ENDS
 END
