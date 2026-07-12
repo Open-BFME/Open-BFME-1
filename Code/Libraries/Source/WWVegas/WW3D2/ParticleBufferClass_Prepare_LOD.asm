@@ -1,0 +1,66 @@
+.386
+.model flat
+
+; ?Prepare_LOD@ParticleBufferClass@@UAEXAAVCameraClass@@@Z
+; Exact 437 retail bytes @ 0x00984E60; C++ blocked on rendobj vtable slot map.
+_TEXT SEGMENT
+public ?Prepare_LOD@ParticleBufferClass@@UAEXAAVCameraClass@@@Z
+?Prepare_LOD@ParticleBufferClass@@UAEXAAVCameraClass@@@Z PROC
+    db 83h,0ECh,38h,56h,8Bh,0F1h,8Bh,06h
+    db 0FFh,90h,80h,01h,00h,00h,85h,0C0h
+    db 0Fh,84h,98h,01h,00h,00h,57h,8Bh
+    db 7Ch,24h,44h,8Dh,4Ch,24h,24h,51h
+    db 8Bh,0CFh,0E8h,39h,0B4h,0F9h,0FFh,8Bh
+    db 87h,0D0h,00h,00h,00h,8Bh,8Fh,0D4h
+    db 00h,00h,00h,8Bh,97h,0CCh,00h,00h
+    db 00h,89h,44h,24h,34h,89h,4Ch,24h
+    db 38h,8Dh,44h,24h,14h,50h,8Dh,4Ch
+    db 24h,20h,89h,54h,24h,34h,8Bh,97h
+    db 0D8h,00h,00h,00h,51h,8Bh,0CFh,89h
+    db 54h,24h,44h,0E8h,00h,0CFh,0FAh,0FFh
+    db 0D9h,44h,24h,38h,0D8h,64h,24h,30h
+    db 8Bh,16h,0D9h,44h,24h,14h,8Bh,0CEh
+    db 0D8h,64h,24h,1Ch,0DEh,0F9h,0D9h,5Ch
+    db 24h,10h,0D9h,44h,24h,3Ch,0D8h,64h
+    db 24h,34h,0D9h,44h,24h,18h,0D8h,64h
+    db 24h,20h,0DEh,0F9h,0D9h,5Ch,24h,0Ch
+    db 0FFh,92h,00h,01h,00h,00h,8Bh,0C8h
+    db 0D9h,01h,0D8h,64h,24h,24h,0D9h,41h
+    db 04h,0D8h,64h,24h,28h,0D9h,41h,08h
+    db 0D8h,64h,24h,2Ch,0D9h,0C0h,0D8h,0C9h
+    db 0D9h,0C2h,0D8h,0CBh,0DEh,0C1h,0D9h,0C3h
+    db 0D8h,0CCh,0DEh,0C1h,0D9h,5Ch,24h,44h
+    db 0DDh,0D8h,0DDh,0D8h,0DDh,0D8h,0D9h,44h
+    db 24h,44h,0D9h,0FAh,0D9h,5Ch,24h,08h
+    db 0D9h,05h,50h,53h,07h,01h,0C7h,44h
+    db 24h,44h,00h,00h,00h,00h,0D9h,05h
+    db 50h,53h,07h,01h,0D9h,44h,24h,08h
+    db 0DAh,0E9h,0DFh,0E0h,0F6h,0C4h,44h,7Bh
+    db 21h,0DDh,0D8h,0D9h,05h,34h,53h,07h
+    db 01h,0D8h,74h,24h,08h,0D9h,54h,24h
+    db 44h,0D8h,49h,0Ch,0D9h,44h,24h,44h
+    db 0D8h,8Eh,00h,01h,00h,00h,0D9h,5Ch
+    db 24h,44h,8Bh,86h,04h,01h,00h,00h
+    db 0D9h,0C0h,85h,0C0h,0DEh,0C9h,0DBh,86h
+    db 04h,01h,00h,00h,7Dh,06h,0D8h,05h
+    db 58h,53h,07h,01h,0D8h,4Ch,24h,44h
+    db 0D8h,4Ch,24h,44h,0D9h,5Ch,24h,44h
+    db 0D8h,54h,24h,44h,0DFh,0E0h,0F6h,0C4h
+    db 05h,7Bh,06h,0DDh,0D8h,0D9h,44h,24h
+    db 44h,0D8h,4Ch,24h,0Ch,8Bh,16h,8Dh
+    db 86h,60h,02h,00h,00h,50h,0D8h,4Ch
+    db 24h,14h,8Dh,8Eh,0A4h,02h,00h,00h
+    db 51h,8Bh,0CEh,0D8h,0Dh,14h,7Bh,08h
+    db 01h,0D8h,0Dh,70h,5Ch,07h,01h,0D9h
+    db 86h,0F0h,02h,00h,00h,0D8h,0Dh,0C0h
+    db 13h,0Ah,01h,0DEh,0C1h,0D9h,54h,24h
+    db 4Ch,8Bh,44h,24h,4Ch,50h,0D9h,9Eh
+    db 0F0h,02h,00h,00h,0FFh,92h,48h,01h
+    db 00h,00h,8Bh,16h,8Bh,0CEh,8Bh,0F8h
+    db 0FFh,92h,3Ch,01h,00h,00h,3Bh,0C7h
+    db 7Dh,0Bh,8Bh,06h,57h,8Bh,0CEh,0FFh
+    db 90h,38h,01h,00h,00h,5Fh,5Eh,83h
+    db 0C4h,38h,0C2h,04h,00h
+?Prepare_LOD@ParticleBufferClass@@UAEXAAVCameraClass@@@Z ENDP
+_TEXT ENDS
+END

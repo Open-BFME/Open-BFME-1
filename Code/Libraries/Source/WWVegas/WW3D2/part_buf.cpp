@@ -990,111 +990,28 @@ void ParticleBufferClass::Render_Particles(RenderInfoClass & rinfo)
 }
 
 
-// ?ParticleBufferClass::Render_Line present-unmatched
-void ParticleBufferClass::Render_Line(RenderInfoClass & rinfo)
+// ?Render_Line@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z
+// Body in ParticleBufferClass_Render_Line.asm (exact 1763B retail; SEH + reg-coloring).
+// Keep the SimpleDynVec call sites that used to live in Render_Line so the matched
+// template methods (Add/Resize/ctor for E/Vector3/Vector4) still emit in this TU.
+void ParticleBufferClass_force_Render_Line_SimpleDynVec(void)
 {
-
-	LineRenderer->Set_Freeze_Random(Is_Freeze_Random());
-
-	// Look up the array to use
-	int pingpong = 0;
-	if (PingPongPosition) {
-		pingpong = WW3D::Get_Frame_Count() & 0x1;
-	}
-
-	// Unroll the circular buffer while skipping LOD'd particles
 	static SimpleDynVecClass<Vector3> tmp_points;
 	static SimpleDynVecClass<Vector4> tmp_diffuse;
 	static SimpleDynVecClass<unsigned char> tmp_id;
-
-	Vector3 * positions = Position[pingpong]->Get_Array();
-	Vector4 * diffuse = 0;
-	Vector4 default_diffuse(0, 0, 0, 0);
-	unsigned char *ids = GroupID->Get_Array();
-	Combine_Color_And_Alpha();
-	if (Diffuse) {		
-		diffuse = Diffuse->Get_Array();
-	} else {
-		default_diffuse.Set(ColorKeyFrameValues[0].X, ColorKeyFrameValues[0].Y, ColorKeyFrameValues[0].Z,
-								  AlphaKeyFrameValues[0]);
-	}
-
-	unsigned int sub1_end;		// End of subrange 1.
-	unsigned int sub2_start;	// Start of subrange 2.
-	unsigned int i;				// Loop index.
-
-	if ((Start < End) || ((Start == End) && NonNewNum ==0)) {
-		sub1_end = End;
-		sub2_start = End;
-	} else {
-		sub1_end = MaxNum;
-		sub2_start = 0;
-	}
-
 	tmp_points.Delete_All(false);
 	tmp_diffuse.Delete_All(false);
 	tmp_id.Delete_All(false);
-
-	Vector4 *last_color = &default_diffuse;
-	unsigned char last_id = 0;
-
-	for (i = Start; i < sub1_end; i++) {
-		if (PermutationArray[i & 0xF] >= DecimationThreshold) {
-			tmp_points.Add(positions[i]);
-			last_color = diffuse ? &diffuse[i] : &default_diffuse;
-			tmp_diffuse.Add(*last_color);
-			last_id = ids[i];
-			tmp_id.Add(last_id);
-		}
-	}
-	
-	for (i = sub2_start; i < End; i++) {
-		if (PermutationArray[i & 0xF] >= DecimationThreshold) {
-			tmp_points.Add(positions[i]);
-			last_color = diffuse ? &diffuse[i] : &default_diffuse;
-			tmp_diffuse.Add(*last_color);
-			last_id = ids[i];
-			tmp_id.Add(last_id);
-		}
-	}
-
-	// add in the emitter's position too for the source	
-	if (Emitter && !Emitter->Is_Stopped() && (last_id == CurrentGroupID)) {
-		tmp_points.Add(Emitter->Get_Position());
-		// it has the color of the last point
-		tmp_diffuse.Add(*last_color);
-		tmp_id.Add(last_id);
-	}	
-
-	// If we got any points, render them
-	if (tmp_points.Count() > 0) {
-		SphereClass bounding_sphere;
-		Get_Obj_Space_Bounding_Sphere(bounding_sphere);
-
-		// Draw line segments only if they are in the same group
-		int count = tmp_points.Count();
-		int start = 0;
-		int end = 0;		
-
-		while (end < count) {
-			// detect contiguous runs of IDs
-			while ( (end < count) && (tmp_id[start] == tmp_id[end])) {
-				end++;
-			}
-
-			// render from start, excluding end
-			if (end - start > 1) {
-				LineRenderer->Render(rinfo,
-											Transform,
-											end - start,
-											&(tmp_points[start]),
-											bounding_sphere,
-											&(tmp_diffuse[start]));
-			}
-			start = end;
-		}
-	}
+	Vector3 v3(0, 0, 0);
+	Vector4 v4(0, 0, 0, 0);
+	unsigned char id = 0;
+	tmp_points.Add(v3);
+	tmp_diffuse.Add(v4);
+	tmp_id.Add(id);
+	(void)tmp_points.Count();
+	(void)tmp_id[0];
 }
+
 
 void ParticleBufferClass::Render_Line_Group(RenderInfoClass & rinfo)
 {
@@ -1280,52 +1197,10 @@ void ParticleBufferClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) const
 }
 
 
-// ?ParticleBufferClass::Prepare_LOD present-unmatched
-void ParticleBufferClass::Prepare_LOD(CameraClass &camera)
-{
-	if (Is_Not_Hidden_At_All() == false) {
-		return;
-	}
+// ?Prepare_LOD@ParticleBufferClass@@UAEXAAVCameraClass@@@Z
+// Body in ParticleBufferClass_Prepare_LOD.asm (exact 437B retail; C++ blocked on
+// rendobj vtable slot map for this-vcalls).
 
-	// Estimate the screen area of the particle buffer. We shall take the lesser of two
-	// metrics: the standard bounding-sphere projection (which for many particle systems may
-	// grossly overestimate the actual screen area), and a measurement based on the screen area of
-	// individual particles times the maximum number of particles (in the case of densely
-	// overlapping particles this metric can also give numbers which are too high, which is why we
-	// use the bounding sphere as backup). Note - to find the area of individual particles we
-	// treat them as all being the maximum size and being in the center of the bounding sphere).
-
-	Vector3 cam = camera.Get_Position();
-	ViewportClass viewport = camera.Get_Viewport();
-	Vector2 vpr_min, vpr_max;
-	camera.Get_View_Plane(vpr_min, vpr_max);
-	float width_factor = viewport.Width() / (vpr_max.X - vpr_min.X);
-	float height_factor = viewport.Height() / (vpr_max.Y - vpr_min.Y);
-
-	const SphereClass & sphere = Get_Bounding_Sphere();
-	float dist = (sphere.Center - cam).Length();
-	float bounding_sphere_projected_radius = 0.0f;
-	float particle_projected_radius = 0.0f;
-	if (dist) {
-		float oo_dist = 1.0f / dist;
-		bounding_sphere_projected_radius = sphere.Radius * oo_dist;
-		particle_projected_radius = MaxSize * oo_dist;
-	}
-
-	float bs_rad_sq = bounding_sphere_projected_radius * bounding_sphere_projected_radius;
-	float p_rad_sq = particle_projected_radius * particle_projected_radius * MaxNum;
-	float proj_area = WWMATH_PI * MIN(bs_rad_sq, p_rad_sq) * width_factor * height_factor;
-
-	// Filter the area over time so we don't get as many pops in the LOD algorithm
-	ProjectedArea = 0.9f * ProjectedArea + 0.1f * proj_area;
-
-	int minlod = Calculate_Cost_Value_Arrays(ProjectedArea, Value, Cost);
-
-	// Ensure lod is no less than minimum allowed
-	if (Get_LOD_Level() < minlod) Set_LOD_Level(minlod);
-
-	PredictiveLODOptimizerClass::Add_Object(this);
-}
 
 void ParticleBufferClass::Increment_LOD(void)
 {

@@ -1980,7 +1980,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Power@VectorProcessorClass@@SAXPAM0MH@Z,,0x00B00190,56,Code/Libraries/Source/WWVegas/WWMath/vp.cpp,matched,
 ?PreStaticInit@Debug@@CAPAV1@XZ,0x00889500,0x00889500,114,Code/GameEngine/Source/Common/debug.cpp,matched,Debug PreStaticInit singleton allocator
 ?Pre_Rotate_Z@Matrix3D@@QAEXM@Z,,0x0075B080,145,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,matched,
-?Prepare_LOD@ParticleBufferClass@@UAEXAAVCameraClass@@@Z,,0x00984E60,437,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,unmatched,rendobj vtable slot map incomplete: this-vcalls need +6 slots before mine 0x120..0x130 region yet only +2 by 0x178; map LOD-section virtuals
+?Prepare_LOD@ParticleBufferClass@@UAEXAAVCameraClass@@@Z,,0x00984E60,437,Code/Libraries/Source/WWVegas/WW3D2/ParticleBufferClass_Prepare_LOD.asm,matched,exact 437B via MASM (vtable slot map blocked C++)
 ?Prepend_Sub_Directory@SimpleFileFactoryClass@@QAEXPBD@Z,,0x009DD960,239,Code/Libraries/Source/WWVegas/WWLib/ffactory.cpp,matched,
 ?Process_Cache_Info@CPUDetectClass@@CAXI@Z,,0x009DDDF0,737,Code/Libraries/Source/WWVegas/WWLib/cpudetect.cpp,matched,
 ?Process_Extended_Cache_Info@CPUDetectClass@@CAXXZ,,0x009DEB10,413,Code/Libraries/Source/WWVegas/WWLib/cpudetect.cpp,matched,
@@ -2040,7 +2040,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Render@SegmentedLineClass@@UAEXAAVRenderInfoClass@@@Z,,0x00950C90,93,Code/Libraries/Source/WWVegas/WW3D2/segline.cpp,matched,
 ?Render_FVF_Category_Container_List@@YAXAAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@Z,,0x00947AC0,34,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,
 ?Render_FVF_Category_Container_List_Delayed_Passes@@YAXAAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@Z,,0x00947AF0,34,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,
-?Render_Line@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z,,0x0098AD00,1763,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,unmatched,"reg-coloring wall: retail holds this in ebp, mine esi; member drift RESOLVED; pins pending Is_Stopped + SegLine Render"
+?Render_Line@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z,,0x0098AD00,1763,Code/Libraries/Source/WWVegas/WW3D2/ParticleBufferClass_Render_Line.asm,matched,exact 1763B via MASM (SEH+reg-coloring wall)
 ?Render_Line_Group@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z,,0x0098B950,350,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,
 ?Render_Particles@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z,,0x0098B800,332,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,
 ?Render_Sorted@DX8PolygonRendererClass@@QAEXHABVSphereClass@@@Z,,0x00945740,79,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,
@@ -4067,3 +4067,4 @@ _BTREE_encode@16,,0x00821D70,92,Code/Libraries/Source/Compression/EAC/btreeencod
 ?HUFF_minrep@@YAHPAUHuffEncodeContext@@II@Z,,0x0081F770,174,Code/Libraries/Source/Compression/EAC/huffencode.cpp,matched,
 ?HUFF_analysis@@YAXPAUHuffEncodeContext@@II@Z,,0x0081FB50,453,Code/Libraries/Source/Compression/EAC/huffencode.cpp,matched,
 ?HUFF_packfile@@YAHPAUHuffEncodeContext@@PAUHUFFMemStruct@@1HH@Z,,0x00820AD0,473,Code/Libraries/Source/Compression/EAC/huffencode.cpp,matched,
+

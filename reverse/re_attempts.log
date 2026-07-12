@@ -313,3 +313,5 @@ _$E117	no-match	Compiler-generated static initializer. Drift RVA 0xC6E36F starts
 ??0LightningEmissionModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z	landed	MASM exact 76B (ledger inflated 1056)
 ??0DefaultPhysicsModuleInfo@FXParticleSystem@@QAE@XZ	landed	MASM exact 91B SEH (ledger inflated 2096)
 ??0DefaultUpdateModuleInfo@FXParticleSystem@@QAE@XZ	landed	MASM exact 181B SEH (ledger inflated 2400)
+?Prepare_LOD@ParticleBufferClass@@UAEXAAVCameraClass@@@Z	landed	exact 437B via MASM ParticleBufferClass_Prepare_LOD.asm; C++ blocked on rendobj vtable slots
+?Render_Line@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z	landed	exact 1763B via MASM ParticleBufferClass_Render_Line.asm; SEH+reg-coloring wall
