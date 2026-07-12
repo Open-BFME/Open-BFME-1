@@ -2377,6 +2377,17 @@ int HLodClass::Get_Num_Sub_Objects(void) const
 	return count;
 }
 
+// BFME: retail vtable slot-28 override @ 0x979E80 — Lod model counts only,
+// no AdditionalModels (distinct from Get_Num_Sub_Objects).
+int HLodClass::_bfme_ro_v28(void) const
+{
+	int count = 0;
+	for (int lod=0; lod<LodCount;lod++) {
+		count += Lod[lod].Count();
+	}
+	return count;
+}
+
 
 /***********************************************************************************************
  * HLodClass::Get_Sub_Object -- returns a pointer to specified sub-object                      *

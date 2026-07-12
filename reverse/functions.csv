@@ -4972,3 +4972,5 @@ __CIasin,,0x009F7D86,6,Code/masm_dumps/__CIasin_9F7D86.asm,matched,MASM exact re
 ?Read_Size_Keyframe@ParticleEmitterDefClass@@MAE_NAAVChunkLoadClass@@PAM1@Z,,0x0098C5D0,81,Code/Libraries/Source/WWVegas/WW3D2/part_ldr.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
 ?Get_Screen_Size@RenderObjClass@@UAEMAAVCameraClass@@@Z,,0x00920580,268,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,drift-voted candidate; unblocked by ctor shrink
 ??0?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z,,0x008FA9A0,76,Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
+?_bfme_ro_v28@RenderObjClass@@UBEHXZ,,0x006CF3A0,5,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,retail vtable slot 28 tail-dispatch to Get_Num_Sub_Objects
+?_bfme_ro_v28@HLodClass@@UBEHXZ,,0x00979E80,29,Code/Libraries/Source/WWVegas/WW3D2/hlod.cpp,matched,retail slot-28 override sums Lod model counts

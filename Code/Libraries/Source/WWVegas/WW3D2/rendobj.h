@@ -340,8 +340,12 @@ public:
 	virtual void					Notify_Removed(SceneClass * scene);
 
 	virtual int						Get_Num_Sub_Objects(void) const											{ return 0; }
+	// BFME: retail vtable slot 28 tail-dispatches to Get_Num_Sub_Objects (0x6CF3A0);
+	// HLod overrides it with a Lod-model-count loop (0x979E80).
+	virtual int						_bfme_ro_v28(void) const													{ return Get_Num_Sub_Objects(); }
 	virtual RenderObjClass *	Get_Sub_Object(int index) const											{ return NULL; }
-	virtual int						Add_Sub_Object(RenderObjClass * subobj)								{ return 0; }
+	// BFME: Add_Sub_Object is not virtual in retail (slot 30 is Remove only).
+	int								Add_Sub_Object(RenderObjClass * subobj)								{ return 0; }
 	virtual int						Remove_Sub_Object(RenderObjClass * robj)								{ return 0; }
 	virtual RenderObjClass *	Get_Sub_Object_By_Name(const char * name, int *index=NULL) const;
 

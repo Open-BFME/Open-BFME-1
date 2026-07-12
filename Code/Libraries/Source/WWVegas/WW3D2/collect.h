@@ -90,7 +90,8 @@ public:
 	virtual void 					Set_Position(const Vector3 &v);
 	virtual int						Get_Num_Sub_Objects(void) const;	
 	virtual RenderObjClass *	Get_Sub_Object(int index) const;
-	virtual int						Add_Sub_Object(RenderObjClass * subobj);
+	// BFME: not virtual in retail (see RenderObjClass).
+	int								Add_Sub_Object(RenderObjClass * subobj);
 	virtual int						Remove_Sub_Object(RenderObjClass * robj);
 
 	/////////////////////////////////////////////////////////////////////////////

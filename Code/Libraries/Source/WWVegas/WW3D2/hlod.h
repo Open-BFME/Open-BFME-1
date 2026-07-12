@@ -143,9 +143,12 @@ public:
 	virtual void					Notify_Added(SceneClass * scene);
 	virtual void					Notify_Removed(SceneClass * scene);
 
-	virtual int						Get_Num_Sub_Objects(void) const; 					
+	virtual int						Get_Num_Sub_Objects(void) const;
+	// BFME: retail slot-28 override @ 0x979E80 — sums Lod model counts only.
+	virtual int						_bfme_ro_v28(void) const;
 	virtual RenderObjClass *	Get_Sub_Object(int index) const;
-	virtual int						Add_Sub_Object(RenderObjClass * subobj);
+	// BFME: not virtual in retail (see RenderObjClass).
+	int								Add_Sub_Object(RenderObjClass * subobj);
 	virtual int						Remove_Sub_Object(RenderObjClass * robj);
 
 	virtual int						Get_Num_Sub_Objects_On_Bone(int boneindex) const;							
