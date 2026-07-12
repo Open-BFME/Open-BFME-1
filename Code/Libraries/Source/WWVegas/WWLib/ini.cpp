@@ -1547,55 +1547,7 @@ bool INIClass::Put_Double(char const * section, char const * entry, double numbe
  *   03/13/1998 NH  : On duplicate CRC, check if strings identical.                            *
  *=============================================================================================*/
 // ?Put_String@INIClass@@QAE_NPBD00@Z
-bool INIClass::Put_String(char const * section, char const * entry, char const * string)
-{
-	if (section == NULL || entry == NULL) return(false);
-
-	INISection * secptr = Find_Section(section);
-
-	if (secptr == NULL) {
-		secptr = W3DNEW INISection(strdup(section));
-		if (secptr == NULL) return(false);
-		SectionList->Add_Tail(secptr);
-		SectionIndex->Add_Index(secptr->Index_ID(), secptr);
-	}
-
-	/*
-	**	Remove the old entry if found and print debug message
-	*/
-	INIEntry * entryptr = secptr->Find_Entry(entry);
-	if (entryptr != NULL) {
-      if (strcmp(entryptr->Entry, entry)) {
-         DuplicateCRCError("INIClass::Put_String", section, entry);
-      } else {
-#if 0
-			OutputDebugString("INIClass::Put_String - Duplicate Entry \"");
-	   	OutputDebugString(entry);
-		   OutputDebugString("\"\n");
-#endif
-      }
-   	secptr->EntryIndex.Remove_Index(entryptr->Index_ID());
-	   delete entryptr;
-	}
-
-	/*
-	**	Create and add the new entry.
-	*/
-	if (string != NULL && strlen(string) > 0) {
-		entryptr = W3DNEW INIEntry(strdup(entry), strdup(string));
-
-		// If this assert fires, then the string will be truncated on load, because
-		// there will not be enough room in the loading buffer!
-		WWASSERT(strlen(string) < MAX_LINE_LENGTH);
-
-		if (entryptr == NULL) {
-			return(false);
-		}
-		secptr->EntryList.Add_Tail(entryptr);
-		secptr->EntryIndex.Add_Index(entryptr->Index_ID(), entryptr);
-	}
-	return(true);
-}
+// Body in INIClass_Put_String.asm (exact 459B retail; new-expr EH frame wall).
 
 
 /***********************************************************************************************

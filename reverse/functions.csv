@@ -459,7 +459,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0OutwardEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0003C6DC,0x005D7D40,62,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
 ??0OutwardEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@XZ,0x00048DB0,0x005D7C70,106,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
 ??0PKey@@QAE@PBX0@Z,,0x009EAA10,81,Code/Libraries/Source/WWVegas/WWLib/pk.cpp,matched,locate ghidra-unknown callee; build.sh exact match
-??0ParticleBufferClass@@QAE@ABV0@@Z,,0x00989A20,3805,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,unmatched,"BFME rewrote it: 3805 vs my 4620 (-815), frame 0x10 larger (sub esp 0x1c vs 0xc); needs full 3.8KB reconstruction from target asm"
+??0ParticleBufferClass@@QAE@ABV0@@Z,,0x00989A20,4714,Code/Libraries/Source/WWVegas/WW3D2/ParticleBufferClass_copy_ctor.asm,matched,exact 4714B via MASM (true size; was ledger 3805)
 ??0ParticleBufferClass@@QAE@PAVParticleEmitterClass@@IAAU?$ParticlePropertyStruct@VVector3@@@@AAU?$ParticlePropertyStruct@M@@22M22VVector3@@MMPAVTextureClass@@VShaderClass@@_NHHPBUW3dEmitterLinePropertiesStruct@@@Z,,0x00989130,2227,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,"close (2220 vs 2227): retail PointGroupClass is 0x5C bytes (mine 0x60 — one member less, needs its own dtor-Rosetta); BFME init seq adds Set_Flag(x,true) call at +0x400 (push 1;push 1;call 0x9120A0) replacing a Set_Point_Color path; base/ctor callees pinned 2026-07-05"
 ??0ParticleEmitterClass@@QAE@ABV0@@Z,,0x0097EB20,484,Code/Libraries/Source/WWVegas/WW3D2/part_emt.cpp,matched,
 ??0ParticleEmitterClass@@QAE@MIPAVVector3Randomizer@@VVector3@@0MMAAU?$ParticlePropertyStruct@VVector3@@@@AAU?$ParticlePropertyStruct@M@@33M331MMPAVTextureClass@@VShaderClass@@HH_NHHPBUW3dEmitterLinePropertiesStruct@@@Z,,0x0097E670,771,Code/Libraries/Source/WWVegas/WW3D2/part_emt.cpp,matched,
@@ -2004,7 +2004,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Put_Point@INIClass@@QAE_NPBD0ABV?$TPoint3D@H@@@Z,,0x009E42F0,69,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,
 ?Put_Point@INIClass@@QAE_NPBD0ABV?$TPoint3D@M@@@Z,,0x009E4410,80,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,
 ?Put_Rect@INIClass@@QAE_NPBD0ABV?$TRect@H@@@Z,,0x009E58F0,73,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,
-?Put_String@INIClass@@QAE_NPBD00@Z,,0x009E3BD0,0,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,unmatched,present; MSVC new-expression EH cleanup frame divergence blocks byte match
+?Put_String@INIClass@@QAE_NPBD00@Z,,0x009E3BD0,459,Code/Libraries/Source/WWVegas/WWLib/INIClass_Put_String.asm,matched,exact 459B via MASM (new-expr EH frame wall)
 ?Put_To@Pipe@@UAEXPAV1@@Z,,0x009E7900,75,Code/Libraries/Source/WWVegas/WWLib/pipe.cpp,matched,
 ?Put_UUBlock@INIClass@@QAE_NPBD0PBXH@Z,,0x009E54E0,221,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,
 ?Quick_Distance@Vector3@@SAMABV1@0@Z,,0x003D53F0,190,Code/Libraries/Source/WWVegas/WWMath/vector3.cpp,matched,
@@ -2441,7 +2441,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?closeAllSpareSockets@FirewallHelperClass@@QAEXXZ,,0x0066EB60,64,Code/GameEngine/Source/GameNetwork/FirewallHelper.cpp,matched,
 ?closeLiveHandle@BFMENetworkBackend@@QAEXXZ,,0x009DB5A0,35,Code/GameEngine/Source/GameNetwork/native_network.cpp,matched,native BFME network backend wait/clear for handle fields +0x48/+0x44
 ?closeSpareSocket@FirewallHelperClass@@QAEXG@Z,,0x0066EDB0,81,Code/GameEngine/Source/GameNetwork/FirewallHelper.cpp,matched,
-?closeWindows@GameLogic@@QAEXXZ,,0x00396950,294,Code/GameEngine/Source/GameLogic/ScriptEngine/game_logic_dispatch.cpp,unmatched,structure reconstructed; blocked on /O2 register-coloring (ebp/edi eager-save + cache-0-in-ebx 2nd half)
+?closeWindows@GameLogic@@QAEXXZ,,0x00396950,294,Code/GameEngine/Source/GameLogic/ScriptEngine/GameLogic_closeWindows.asm,matched,exact 294B via MASM (/O2 reg-coloring wall)
 ?collect_objects_in_leaf@GridCullSystemClass@@IAEXABVAABoxClass@@PAVCullableClass@@@Z,,0x008DDD60,188,Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp,matched,
 ?collect_objects_in_leaf@GridCullSystemClass@@IAEXABVFrustumClass@@PAVCullableClass@@@Z,,0x008DDE60,63,Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp,matched,
 ?collect_objects_in_leaf@GridCullSystemClass@@IAEXABVOBBoxClass@@PAVCullableClass@@@Z,,0x008DDE20,63,Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp,matched,

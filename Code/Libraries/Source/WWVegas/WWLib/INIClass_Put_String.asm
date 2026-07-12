@@ -1,0 +1,69 @@
+.386
+.model flat
+
+; ?Put_String@INIClass@@QAE_NPBD00@Z
+; Exact 459 retail bytes @ 0x009E3BD0; C++ blocked on new-expression EH cleanup frame
+_TEXT SEGMENT
+public ?Put_String@INIClass@@QAE_NPBD00@Z
+?Put_String@INIClass@@QAE_NPBD00@Z PROC
+    db 83h,0ECh,08h,53h,57h,8Bh,7Ch,24h
+    db 14h,85h,0FFh,8Bh,0D9h,0Fh,84h,0AEh
+    db 01h,00h,00h,8Bh,44h,24h,18h,85h
+    db 0C0h,0Fh,84h,0A2h,01h,00h,00h,55h
+    db 56h,57h,0E8h,29h,0FBh,0FFh,0FFh,8Bh
+    db 0E8h,85h,0EDh,75h,63h,6Ah,40h,0E8h
+    db 2Ch,0E3h,0E9h,0FFh,8Bh,0F0h,83h,0C4h
+    db 04h,85h,0F6h,74h,16h,57h,0FFh,15h
+    db 08h,93h,35h,01h,83h,0C4h,04h,50h
+    db 8Bh,0CEh,0E8h,0B1h,0F9h,0FFh,0FFh,8Bh
+    db 0F0h,0EBh,02h,33h,0F6h,85h,0F6h,8Bh
+    db 0EEh,89h,6Ch,24h,10h,0Fh,84h,19h
+    db 01h,00h,00h,8Bh,4Bh,04h,56h,0E8h
+    db 0F4h,0EDh,0FFh,0FFh,8Bh,46h,0Ch,6Ah
+    db 00h,50h,0E8h,89h,43h,00h,00h,83h
+    db 0C4h,08h,8Dh,4Ch,24h,10h,51h,8Bh
+    db 4Bh,08h,8Dh,54h,24h,18h,52h,89h
+    db 44h,24h,1Ch,0E8h,20h,0F1h,0FFh,0FFh
+    db 8Bh,44h,24h,20h,50h,8Bh,0CDh,0E8h
+    db 94h,0FBh,0FFh,0FFh,8Bh,0F8h,85h,0FFh
+    db 74h,78h,8Bh,74h,24h,20h,8Bh,47h
+    db 0Ch,8Dh,0A4h,24h,00h,00h,00h,00h
+    db 8Ah,10h,8Ah,0CAh,3Ah,16h,75h,1Ch
+    db 84h,0C9h,74h,14h,8Ah,50h,01h,8Ah
+    db 0CAh,3Ah,56h,01h,75h,0Eh,83h,0C0h
+    db 02h,83h,0C6h,02h,84h,0C9h,75h,0E0h
+    db 33h,0C0h,0EBh,05h,1Bh,0C0h,83h,0D8h
+    db 0FFh,85h,0C0h,74h,16h,8Bh,44h,24h
+    db 20h,8Bh,4Ch,24h,1Ch,50h,51h,68h
+    db 0BCh,54h,14h,01h,8Bh,0CBh,0E8h,9Dh
+    db 0E4h,0FFh,0FFh,8Bh,57h,0Ch,6Ah,00h
+    db 52h,0E8h,02h,43h,00h,00h,89h,44h
+    db 24h,24h,83h,0C4h,08h,8Dh,44h,24h
+    db 1Ch,50h,8Dh,4Dh,2Ch,0E8h,0BEh,0E9h
+    db 0FFh,0FFh,8Bh,17h,6Ah,01h,8Bh,0CFh
+    db 0FFh,12h,8Bh,7Ch,24h,24h,85h,0FFh
+    db 0Fh,84h,8Fh,00h,00h,00h,8Bh,0C7h
+    db 8Dh,50h,01h,0EBh,03h,8Dh,49h,00h
+    db 8Ah,08h,40h,84h,0C9h,75h,0F9h,2Bh
+    db 0C2h,89h,44h,24h,1Ch,74h,76h,6Ah
+    db 14h,0E8h,1Ah,0E2h,0E9h,0FFh,8Bh,0F0h
+    db 83h,0C4h,04h,85h,0F6h,74h,23h,57h
+    db 8Bh,3Dh,08h,93h,35h,01h,0FFh,0D7h
+    db 83h,0C4h,04h,50h,8Bh,44h,24h,24h
+    db 50h,0FFh,0D7h,83h,0C4h,04h,50h,8Bh
+    db 0CEh,0E8h,42h,0F8h,0FFh,0FFh,8Bh,0F0h
+    db 0EBh,02h,33h,0F6h,85h,0F6h,89h,74h
+    db 24h,20h,75h,0Ch,5Eh,5Dh,5Fh,32h
+    db 0C0h,5Bh,83h,0C4h,08h,0C2h,0Ch,00h
+    db 56h,8Dh,4Dh,10h,0E8h,0CFh,0ECh,0FFh
+    db 0FFh,8Bh,4Eh,0Ch,6Ah,00h,51h,0E8h
+    db 64h,42h,00h,00h,83h,0C4h,08h,8Dh
+    db 54h,24h,20h,89h,44h,24h,1Ch,52h
+    db 8Dh,44h,24h,20h,50h,8Dh,4Dh,2Ch
+    db 0E8h,7Bh,0EFh,0FFh,0FFh,5Eh,5Dh,5Fh
+    db 0B0h,01h,5Bh,83h,0C4h,08h,0C2h,0Ch
+    db 00h,5Fh,32h,0C0h,5Bh,83h,0C4h,08h
+    db 0C2h,0Ch,00h
+?Put_String@INIClass@@QAE_NPBD00@Z ENDP
+_TEXT ENDS
+END
