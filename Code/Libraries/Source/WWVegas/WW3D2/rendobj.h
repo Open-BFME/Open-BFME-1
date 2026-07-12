@@ -354,11 +354,11 @@ public:
 	// BFME: retail has the two Get_Sub_Object_Bone_Index overloads swapped vs ZH.
 	virtual int						Get_Sub_Object_Bone_Index(int LodIndex, int ModelIndex)	const 		{ return 0; }
 	virtual int						Get_Sub_Object_Bone_Index(RenderObjClass * subobj)	const 		{ return 0; }
-	// BFME: retail Add_Sub_Object_To_Bone takes a third parameter (defaulted
-	// here for ZH call sites) and the (const char *) overload precedes the
-	// (int) overload.
-	virtual int						Add_Sub_Object_To_Bone(RenderObjClass * subobj,const char * bname, bool unk = false);
-	virtual int						Add_Sub_Object_To_Bone(RenderObjClass * subobj,int bone_index, bool unk = false)	{ return 0; }
+	// BFME: retail Add_Sub_Object_To_Bone takes a third parameter (a Vector3
+	// copied into the model node, defaulted here for ZH call sites) and the
+	// (const char *) overload precedes the (int) overload.
+	virtual int						Add_Sub_Object_To_Bone(RenderObjClass * subobj,const char * bname, const Vector3 * offset = NULL);
+	virtual int						Add_Sub_Object_To_Bone(RenderObjClass * subobj,int bone_index, const Vector3 * offset = NULL)	{ return 0; }
 	// BFME: retail Remove_Sub_Objects_From_Bone overloads are swapped vs ZH.
 	virtual int						Remove_Sub_Objects_From_Bone(const char * bname);
 	virtual int						Remove_Sub_Objects_From_Bone(int boneindex);

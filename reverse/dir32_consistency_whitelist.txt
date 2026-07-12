@@ -54,3 +54,9 @@ _parent
 _buttonBack
 _buttonBackID
 _buttonPushed
+# hanim.cpp's HAnimComboDataClass* vector TUs are linked twice in retail: one copy's
+# code lives at file 0x96xxxx with vtables at 0x113e690/0x113e6a8, the other at file
+# 0x97xxxx with vtables at 0x113eae0/0x113eb10. Contents differ (each points at its own
+# copy's functions) — same doubly-linked-TU class as _Table@CRC, not a hidden bug.
+??_7?$DynamicVectorClass@PAVHAnimComboDataClass@@@@6B@
+??_7?$VectorClass@PAVHAnimComboDataClass@@@@6B@

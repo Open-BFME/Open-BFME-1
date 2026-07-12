@@ -608,10 +608,10 @@ RenderObjClass * RenderObjClass::Get_Sub_Object_By_Name(const char * name, int *
  *=============================================================================================*/
 // ?RenderObjClass::Add_Sub_Object_To_Bone present-unmatched
 // BFME: retail takes a third parameter and passes it through to the (int) overload.
-int RenderObjClass::Add_Sub_Object_To_Bone(RenderObjClass * subobj,const char * bname, bool unk)
+int RenderObjClass::Add_Sub_Object_To_Bone(RenderObjClass * subobj,const char * bname, const Vector3 * offset)
 {
 	int bindex = Get_Bone_Index(bname);
-	return Add_Sub_Object_To_Bone(subobj,bindex,unk);
+	return Add_Sub_Object_To_Bone(subobj,bindex,offset);
 }
 
 

@@ -2369,12 +2369,9 @@ void HLodClass::Notify_Removed(SceneClass * scene)
 // ?HLodClass::Get_Num_Sub_Objects present-unmatched
 int HLodClass::Get_Num_Sub_Objects(void) const
 {
-	int count = 0;
-	for (int lod=0; lod<LodCount;lod++) {
-		count += Lod[lod].Count();
-	}
-	count += AdditionalModels.Count();
-	return count;
+	// BFME: retail tail-calls vtable slot 28 (Lod counts) and adds
+	// AdditionalModels.Count() — not an inlined loop.
+	return _bfme_ro_v28() + AdditionalModels.Count();
 }
 
 // BFME: retail vtable slot-28 override @ 0x979E80 — Lod model counts only,
@@ -2632,7 +2629,7 @@ int HLodClass::Get_Sub_Object_Bone_Index(int LodIndex, int ModelIndex)	const
  *   1/26/00    gth : Created.                                                                 *
  *=============================================================================================*/
 // ?HLodClass::Add_Sub_Object_To_Bone present-unmatched
-int HLodClass::Add_Sub_Object_To_Bone(RenderObjClass * subobj,int boneindex, bool unk)
+int HLodClass::Add_Sub_Object_To_Bone(RenderObjClass * subobj,int boneindex, const Vector3 * offset)
 {
 	WWASSERT(subobj);
 	if ((boneindex < 0) || (boneindex >= HTree->Num_Pivots())) return 0;
@@ -2645,6 +2642,12 @@ int HLodClass::Add_Sub_Object_To_Bone(RenderObjClass * subobj,int boneindex, boo
 	newnode.Model->Set_Container(this);
 	newnode.Model->Set_Animation_Hidden(HTree->Get_Visibility (boneindex) == false);
 	newnode.BoneIndex = boneindex;
+	// BFME: retail copies the caller's Vector3 into the node, zeros when NULL.
+	if (offset) {
+		newnode.Offset = *offset;
+	} else {
+		newnode.Offset.Set(0.0f, 0.0f, 0.0f);
+	}
 
 	int result = AdditionalModels.Add(newnode);
 

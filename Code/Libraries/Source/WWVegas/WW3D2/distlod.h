@@ -91,7 +91,7 @@ public:
 	virtual int						Get_Num_Sub_Objects(void) const;
 	virtual RenderObjClass *	Get_Sub_Object(int index) const;
 
-	virtual int						Add_Sub_Object_To_Bone(RenderObjClass * subobj,int bone_index, bool unk = false);
+	virtual int						Add_Sub_Object_To_Bone(RenderObjClass * subobj,int bone_index, const Vector3 * offset = NULL);
 
 	/////////////////////////////////////////////////////////////////////////////
 	// Render Object Interface - Hierarchical Animation

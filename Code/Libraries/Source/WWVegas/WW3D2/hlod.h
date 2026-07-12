@@ -155,7 +155,7 @@ public:
 	virtual RenderObjClass *	Get_Sub_Object_On_Bone(int index,int boneindex) const;
 	virtual int						Get_Sub_Object_Bone_Index(RenderObjClass * subobj) const;
 	virtual int						Get_Sub_Object_Bone_Index(int LodIndex, int ModelIndex)	const;
-	virtual int						Add_Sub_Object_To_Bone(RenderObjClass * subobj,int bone_index, bool unk = false);
+	virtual int						Add_Sub_Object_To_Bone(RenderObjClass * subobj,int bone_index, const Vector3 * offset = NULL);
 
 	/////////////////////////////////////////////////////////////////////////////
 	// Render Object Interface - Hierarchical Animation
@@ -239,6 +239,10 @@ protected:
 	public:
 		RenderObjClass *			Model;
 		int							BoneIndex;
+		// BFME: retail sizeof(ModelNodeClass) == 0x14 — a Vector3 follows
+		// BoneIndex (array-ctor push 0x14; Get_Sub_Object strides elements
+		// x20; Add_Sub_Object_To_Bone copies the caller's Vector3 or zeros).
+		Vector3						Offset;
 		bool operator == (const ModelNodeClass & that) { return (Model == that.Model) && (BoneIndex == that.BoneIndex); }
 		bool operator != (const ModelNodeClass & that) { return !operator == (that); }
 	};
