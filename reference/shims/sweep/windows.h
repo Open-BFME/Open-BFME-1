@@ -66,6 +66,15 @@ typedef long LONG;
 typedef unsigned __int64 ULONGLONG;
 typedef __int64 LONGLONG;
 typedef void *LPVOID;
+// windef.h boilerplate the GameSpy/icmp cpps rely on
+#define FAR
+#define NEAR
+#define IN
+#define OUT
+typedef union _ULARGE_INTEGER {
+	struct { DWORD LowPart; DWORD HighPart; } u;
+	ULONGLONG QuadPart;
+} ULARGE_INTEGER;
 typedef const void *LPCVOID;
 typedef char *LPSTR;
 typedef const char *LPCSTR;
@@ -474,6 +483,11 @@ typedef struct _EXCEPTION_POINTERS {
 #define STATUS_NO_MEMORY 0xC0000017L
 
 extern "C" {
+typedef struct _SECURITY_ATTRIBUTES *LPSECURITY_ATTRIBUTES;
+typedef DWORD (WINAPI *LPTHREAD_START_ROUTINE)(LPVOID);
+__declspec(dllimport) HANDLE WINAPI CreateThread(LPSECURITY_ATTRIBUTES, DWORD, LPTHREAD_START_ROUTINE, LPVOID, DWORD, LPDWORD);
+__declspec(dllimport) BOOL WINAPI TerminateThread(HANDLE, DWORD);
+__declspec(dllimport) DWORD WINAPI GetCurrentTime(void);
 __declspec(dllimport) BOOL WINAPI ReadConsoleInputA(HANDLE, PINPUT_RECORD, DWORD, LPDWORD);
 #define ReadConsoleInput ReadConsoleInputA
 __declspec(dllimport) BOOL WINAPI WriteConsoleOutputA(HANDLE, CHAR_INFO *, COORD, COORD, PSMALL_RECT);

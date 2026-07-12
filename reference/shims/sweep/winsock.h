@@ -114,7 +114,40 @@ struct WSADATA {
 #define WSANO_RECOVERY 11003
 #define WSANO_DATA 11004
 
+#define FD_SETSIZE 64
+typedef struct fd_set {
+    unsigned int fd_count;
+    SOCKET fd_array[FD_SETSIZE];
+} fd_set;
+
+struct timeval {
+    long tv_sec;
+    long tv_usec;
+};
+
+#define FD_ZERO(set) (((fd_set *)(set))->fd_count = 0)
+#define FD_SET(fd, set) do { \
+    ((fd_set *)(set))->fd_array[((fd_set *)(set))->fd_count++] = (SOCKET)(fd); \
+} while (0)
+#define FD_CLR(fd, set) do { \
+    fd_set *_s = (fd_set *)(set); \
+    for (unsigned int _i = 0; _i < _s->fd_count; _i++) { \
+        if (_s->fd_array[_i] == (SOCKET)(fd)) { \
+            while (_i < _s->fd_count - 1) { _s->fd_array[_i] = _s->fd_array[_i + 1]; _i++; } \
+            _s->fd_count--; \
+            break; \
+        } \
+    } \
+} while (0)
+#define FD_ISSET(fd, set) __WSAFDIsSet((SOCKET)(fd), (fd_set *)(set))
+
 extern "C" {
+__declspec(dllimport) int __stdcall __WSAFDIsSet(SOCKET, fd_set *);
+__declspec(dllimport) int __stdcall select(int, fd_set *, fd_set *, fd_set *, const struct timeval *);
+__declspec(dllimport) int __stdcall listen(SOCKET, int);
+__declspec(dllimport) SOCKET __stdcall accept(SOCKET, struct sockaddr *, int *);
+__declspec(dllimport) int __stdcall recv(SOCKET, char *, int, int);
+__declspec(dllimport) int __stdcall getpeername(SOCKET, struct sockaddr *, int *);
 __declspec(dllimport) int __stdcall WSAStartup(WORD, WSADATA *);
 __declspec(dllimport) int __stdcall WSACleanup(void);
 __declspec(dllimport) int __stdcall WSAGetLastError(void);

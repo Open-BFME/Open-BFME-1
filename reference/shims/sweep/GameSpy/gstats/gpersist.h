@@ -24,4 +24,10 @@ void SetPersistDataValues(int localid, int profileid, persisttype_t type,
 	int index, const char* data, void(*callback)(int, int, persisttype_t, int, int, void*),
 	void* instance);
 
+#include "GameSpy/gstats/gstats.h"
+
+// gstats gcd (cdkey) SDK globals written by PersistentStorageThread
+extern char gcd_secret_key[256];
+extern char gcd_gamename[256];
+
 #endif // __GPERSIST_H__

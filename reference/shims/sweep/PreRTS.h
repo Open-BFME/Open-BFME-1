@@ -25,6 +25,7 @@ class STLSpecialAlloc;
 #include <math.h>
 #include <memory.h>
 #include <mmsystem.h>
+#include <snmp.h>
 #include <process.h>
 #include <direct.h>
 #include <stdarg.h>
@@ -32,6 +33,9 @@ class STLSpecialAlloc;
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/timeb.h>
+#include <sys/types.h>
 #include <time.h>
 
 #include "Lib/Basetype.h"

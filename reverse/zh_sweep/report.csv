@@ -3546,3 +3546,113 @@ GameEngine/Source/GameClient/Statistics.cpp,ok,0,0,0,,0
 GameEngine/Source/GameLogic/AI/AI.cpp,ok,0,12,59,,0
 Libraries/Source/debug/debug_stack.cpp,ok,0,2,2,,0
 GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DRopeDraw.cpp,ok,0,14,19,,0
+GameEngine/Source/Common/MessageStream.cpp,ok,1,6,14,,1
+GameEngine/Source/GameNetwork/FirewallHelper.cpp,ok,0,1,25,,0
+GameEngine/Source/GameNetwork/GameSpy/Chat.cpp,ok,0,11,37,,0
+GameEngine/Source/GameNetwork/GameSpyChat.cpp,compile-error,0,0,0,C2227 left of '->getPeer' must point to class/struct/union,0
+GameEngine/Source/GameNetwork/GameSpyGameInfo.cpp,compile-error,0,0,0,C1189 #error :  this file is obsolete,0
+GameEngine/Source/GameNetwork/GameSpyGP.cpp,compile-error,0,0,0,C2065 'TheGameSpyChat' : undeclared identifier,0
+GameEngine/Source/GameNetwork/GameSpy/LadderDefs.cpp,ok,0,8,59,,0
+GameEngine/Source/GameNetwork/GameSpy/LobbyUtils.cpp,ok,0,7,36,,0
+GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cpp,compile-error,0,0,0,C2146 syntax error : missing ')' before identifier 'request',0
+GameEngine/Source/GameNetwork/GameSpyOverlay.cpp,ok,0,0,11,,0
+GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,ok,0,82,257,,0
+GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp,compile-error,0,0,0,C2228 left of '.address' must have class/struct/union type,0
+GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThread.cpp,ok,0,31,70,,0
+GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,ok,0,35,43,,0
+GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread.cpp,compile-error,0,0,0,C2065 'NUM_RESERVED_KEYS' : undeclared identifier,0
+GameEngine/Source/GameNetwork/GameSpy/Thread/PersistentStorageThread.cpp,compile-error,0,0,0,"C3861 'gcd_secret_key': identifier not found, even with argument-dependent lookup",0
+GameEngine/Source/GameNetwork/GameSpy/Thread/PingThread.cpp,compile-error,0,0,0,C2143 syntax error : missing ';' before '*',0
+GameEngine/Source/GameNetwork/GameSpy/Thread/ThreadUtils.cpp,ok,0,0,2,,0
+GameEngine/Source/GameNetwork/GameSpy/Chat.cpp,ok,0,11,37,,0
+GameEngine/Source/GameNetwork/GameSpyChat.cpp,compile-error,0,0,0,C2227 left of '->getPeer' must point to class/struct/union,0
+GameEngine/Source/GameNetwork/GameSpyChat.cpp,compile-error,0,0,0,C2143 syntax error : missing ';' before '<',0
+GameEngine/Source/GameNetwork/GameSpyGP.cpp,ok,0,0,3,,0
+GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cpp,compile-error,0,0,0,C2065 '_S_IREAD' : undeclared identifier,0
+GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp,compile-error,0,0,0,C2228 left of '.asnValue' must have class/struct/union type,0
+GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread.cpp,compile-error,0,0,0,"C3861 'qr2_buffer_add_int': identifier not found, even with argument-dependent lookup",0
+GameEngine/Source/GameNetwork/GameSpy/Thread/PersistentStorageThread.cpp,compile-error,0,0,0,"C3861 'gcd_gamename': identifier not found, even with argument-dependent lookup",0
+GameEngine/Source/GameNetwork/GameSpy/Thread/PingThread.cpp,ok,5,48,78,,5
+GameEngine/Source/GameNetwork/GameSpyChat.cpp,ok,0,0,12,,0
+GameEngine/Source/GameNetwork/GameSpyGP.cpp,ok,0,0,3,,0
+GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cpp,ok,1,4,42,,1
+GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp,ok,3,4,47,,3
+GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread.cpp,ok,7,62,185,,7
+GameEngine/Source/GameNetwork/GameSpy/Thread/PersistentStorageThread.cpp,ok,4,62,130,,4
+GameEngine/Source/GameNetwork/GameSpy/Thread/PingThread.cpp,ok,5,48,78,,5
+Libraries/Source/WPAudio/AUD_DSoundDriver.cpp,missing-header,0,0,0,dsound.h,0
+Libraries/Source/WPAudio/AUD_Windows.cpp,missing-header,0,0,0,mmreg.h,0
+Tools/WW3D/max2w3d/AlphaModifier.cpp,missing-header,0,0,0,AlphaModifier.h,0
+Tools/WW3D/max2w3d/AppData.cpp,missing-header,0,0,0,MaxScrpt.h,0
+Libraries/Source/WWVegas/WWAudio/AudibleSound.cpp,missing-header,0,0,0,audiblesound.h,0
+Libraries/Source/WWVegas/WWAudio/AudioSaveLoad.cpp,missing-header,0,0,0,audiosaveload.h,0
+Tools/WorldBuilder/src/AutoEdgeOutTool.cpp,missing-header,0,0,0,AutoEdgeOutTool.h,0
+Tools/Babylon/Babylon.cpp,missing-header,0,0,0,Babylon.h,0
+Tools/Babylon/BabylonDlg.cpp,missing-header,0,0,0,Babylon.h,0
+Tools/WorldBuilder/src/BaseBuildProps.cpp,missing-header,0,0,0,BaseBuildProps.h,0
+Tools/WorldBuilder/src/BlendEdgeTool.cpp,missing-header,0,0,0,BlendEdgeTool.h,0
+Tools/WorldBuilder/src/BlendMaterial.cpp,missing-header,0,0,0,BlendMaterial.h,0
+Tools/WorldBuilder/src/BorderTool.cpp,missing-header,0,0,0,BorderTool.h,0
+Tools/WorldBuilder/src/BrushTool.cpp,missing-header,0,0,0,BrushTool.h,0
+Tools/WorldBuilder/src/BuildList.cpp,missing-header,0,0,0,BuildList.h,0
+Tools/WorldBuilder/src/BuildListTool.cpp,missing-header,0,0,0,BuildListTool.h,0
+Tools/ParticleEditor/CButtonShowColor.cpp,missing-header,0,0,0,CButtonShowColor.h,0
+Tools/WorldBuilder/src/CButtonShowColor.cpp,missing-header,0,0,0,CButtonShowColor.h,0
+Tools/ParticleEditor/CColorAlphaDialog.cpp,missing-header,0,0,0,CColorAlphaDialog.h,0
+Tools/WorldBuilder/src/CFixTeamOwnerDialog.cpp,missing-header,0,0,0,CFixTeamOwnerDialog.h,0
+Tools/CRCDiff/CRCDiff.cpp,missing-header,0,0,0,expander.h,0
+Tools/ParticleEditor/CSwitchesDialog.cpp,missing-header,0,0,0,CSwitchesDialog.h,0
+Tools/WorldBuilder/src/CUndoable.cpp,missing-header,0,0,0,PointerTool.h,0
+Tools/GUIEdit/Source/Dialog Procedures/CallbackEditor.cpp,missing-header,0,0,0,Properties.h,0
+Tools/WorldBuilder/src/CameraOptions.cpp,missing-header,0,0,0,CameraOptions.h,0
+Tools/WorldBuilder/src/CellWidth.cpp,missing-header,0,0,0,CellWidth.h,0
+Tools/GUIEdit/Source/Dialog Procedures/CheckBoxProperties.cpp,missing-header,0,0,0,Properties.h,0
+Tools/GUIEdit/Source/Dialog Procedures/ColorDialog.cpp,missing-header,0,0,0,GUIEditColor.h,0
+Tools/GUIEdit/Source/Dialog Procedures/ComboBoxProperties.cpp,missing-header,0,0,0,Properties.h,0
+Tools/Compress/Compress.cpp,missing-header,0,0,0,../CRCDiff/Debug.h,0
+Libraries/Source/Compression/CompressionManager.cpp,missing-header,0,0,0,ZLib/zlib.h,0
+Tools/WorldBuilder/src/ContourOptions.cpp,missing-header,0,0,0,ContourOptions.h,0
+Tools/Launcher/DatGen/DatGen.cpp,missing-header,0,0,0,bfish.h,0
+Tools/DebugWindow/DebugWindow.cpp,missing-header,0,0,0,DebugWindow.h,0
+Tools/DebugWindow/DebugWindowDialog.cpp,missing-header,0,0,0,DebugWindowDialog.h,0
+Tools/ImagePacker/Source/Window Procedures/DirectorySelect.cpp,compile-error,0,0,0,C2065 'BUTTON_CANCEL' : undeclared identifier,0
+Tools/Babylon/DlgProxy.cpp,missing-header,0,0,0,Babylon.h,0
+Libraries/Source/WWVegas/WWDownload/Download.cpp,missing-header,0,0,0,DownloadDebug.h,0
+Tools/Autorun/DrawButton.cpp,missing-header,0,0,0,windowsx.h,0
+Tools/WorldBuilder/src/DrawObject.cpp,missing-header,0,0,0,DrawObject.h,0
+Tools/Autorun/EZGIMEX.cpp,missing-header,0,0,0,gimex.h,0
+Tools/WorldBuilder/src/EditAction.cpp,missing-header,0,0,0,EditAction.h,0
+Tools/WorldBuilder/src/EditCondition.cpp,missing-header,0,0,0,EditCondition.h,0
+Tools/WorldBuilder/src/EditCoordParameter.cpp,missing-header,0,0,0,EditCoordParameter.h,0
+Tools/WorldBuilder/src/EditGroup.cpp,missing-header,0,0,0,EditGroup.h,0
+Tools/WorldBuilder/src/EditObjectParameter.cpp,missing-header,0,0,0,EditObjectParameter.h,0
+Tools/WorldBuilder/src/EditParameter.cpp,missing-header,0,0,0,EditParameter.h,0
+Tools/GUIEdit/Source/EditWindow.cpp,missing-header,0,0,0,HierarchyView.h,0
+Tools/ParticleEditor/EmissionTypePanels.cpp,missing-header,0,0,0,EmissionTypePanels.h,0
+Tools/WorldBuilder/src/EulaDialog.cpp,missing-header,0,0,0,euladialog.h,0
+Tools/WW3D/max2w3d/ExportAll.cpp,missing-header,0,0,0,ExportAllDlg.h,0
+Tools/WW3D/max2w3d/ExportAllDlg.cpp,missing-header,0,0,0,ExportAllDlg.h,0
+Tools/Babylon/ExportDlg.cpp,missing-header,0,0,0,Babylon.h,0
+Tools/WorldBuilder/src/ExportScriptsOptions.cpp,missing-header,0,0,0,ExportScriptsOptions.h,0
+Tools/WorldBuilder/src/EyedropperTool.cpp,missing-header,0,0,0,EyedropperTool.h,0
+Tools/WorldBuilder/src/FeatherOptions.cpp,missing-header,0,0,0,FeatherOptions.h,0
+Tools/WorldBuilder/src/FeatherTool.cpp,missing-header,0,0,0,FeatherTool.h,0
+Tools/WorldBuilder/src/FenceOptions.cpp,missing-header,0,0,0,FenceOptions.h,0
+Tools/WorldBuilder/src/FenceTool.cpp,missing-header,0,0,0,FenceTool.h,0
+GameEngine/Source/Common/System/File.cpp,ok,0,0,11,,0
+Tools/Launcher/Toolkit/Storage/File.cpp,missing-header,0,0,0,File.h,0
+Libraries/Source/WWVegas/WWAudio/FilteredSound.cpp,missing-header,0,0,0,filteredsound.h,0
+Tools/WorldBuilder/src/FloodFillTool.cpp,missing-header,0,0,0,FloodFillTool.h,0
+Tools/WW3D/max2w3d/FormClass.cpp,missing-header,0,0,0,FormClass.H,0
+Libraries/Source/WWVegas/WW3D2/FramGrab.cpp,missing-header,0,0,0,windowsx.h,0
+Tools/GUIEdit/Source/GUIEdit.cpp,missing-header,0,0,0,HierarchyView.h,0
+Tools/GUIEdit/Source/GUIEditDisplay.cpp,missing-header,0,0,0,GUIEditDisplay.h,0
+Tools/GUIEdit/Source/GUIEditWindowManager.cpp,missing-header,0,0,0,GUIEditWindowManager.h,0
+GameEngine/Source/Common/GameEngine.cpp,ok,0,21,109,,0
+GameEngine/Source/GameLogic/System/GameLogicDispatch.cpp,ok,0,5,34,,0
+Tools/WW3D/max2w3d/GameMtl.cpp,missing-header,0,0,0,gamemtl.h,0
+Tools/WW3D/max2w3d/GameMtlDlg.cpp,missing-header,0,0,0,Max.h,0
+Tools/WW3D/max2w3d/GameMtlForm.cpp,missing-header,0,0,0,GameMtlForm.h,0
+Tools/WW3D/max2w3d/GameMtlPassDlg.cpp,missing-header,0,0,0,GameMtlPassDlg.h,0
+Tools/WW3D/max2w3d/GameMtlShaderDlg.cpp,missing-header,0,0,0,GameMtlShaderDlg.h,0
+Tools/WW3D/max2w3d/GameMtlTextureDlg.cpp,missing-header,0,0,0,GameMtlTextureDlg.h,0
