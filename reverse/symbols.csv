@@ -356,6 +356,7 @@ name,address,notes
 ??4?$vector@U?$pair@W4ObjectID@@I@_STL@@V?$allocator@U?$pair@W4ObjectID@@I@_STL@@@2@@_STL@@QAEAAV01@ABV01@@Z,0x0002DC9F
 ??4?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,0x00018A70
 ??4?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,0x00026C6A,ILT thunk used by __copy call site
+??4BoxRenderObjClass@@QAEAAV0@ABV0@@Z,0x00956E40,rel32 pin for exact-ambiguous landing
 ??4Matrix3@@QAEAAV0@ABVMatrix3D@@@Z,0x008D9150
 ??4OBBoxClass@@QAEAAV0@ABV0@@Z,0x009316A0
 ??4PlayerTemplate@@QAEAAV0@ABV0@@Z,0x000050F6
@@ -482,7 +483,7 @@ name,address,notes
 ??_U@YAPAXI@Z,0x00881F70,array operator new flag-2 variant (W3D containers); flag-1 at 0x881F30
 ??_V@YAXPAX@Z,0x00881EB0
 ??_V@YAXPAX@Z,0x00881EF0,array operator delete flag-2 variant (W3D containers); flag-1 at 0x881EB0
-?Add@?$DynamicVectorClass@PAVVertexMaterialClass@@@@QAE_NABQAVVertexMaterialClass@@@Z,0x0092F7C0
+?Add@?$DynamicVectorClass@PAVVertexMaterialClass@@@@QAE_NABQAVVertexMaterialClass@@@Z,0x0092F7C0,rel32 pin for exact-ambiguous landing
 ?Add@?$DynamicVectorClass@VShaderClass@@@@QAE_NABVShaderClass@@@Z,0x0092FA60
 ?AddOutput@Debug@@AAEXPBDI@Z,0x0088A8F0
 ?Add_To_Collection@CullSystemClass@@IAEXPAVCullableClass@@@Z,0x008E21D0
@@ -592,45 +593,6 @@ name,address,notes
 ?Needs_Vertex_Normals@MeshModelClass@@QAE_NXZ,0x0094E0B0,
 ?Notify_Added@RenderObjClass@@UAEXPAVSceneClass@@@Z,0x0091FBF0
 ?Notify_Removed@RenderObjClass@@UAEXPAVSceneClass@@@Z,0x0091FC00
-??0TexBufferClass@@QAE@HPBD@Z,0x0092BA60
-?CRC_Memory@@YAKPBEKK@Z,0x009E19C0,second realcrc link (Install_UV / Update_CRC)
-?BTREE_treepack@@YAXPAUBTreeEncodeContext@@PAUBTREEMemStruct@@IIIH@Z,0x00821200
-?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0004004D,rel32 pin for exact-ambiguous landing
-?insert_unique@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@2@U32@ABU?$pair@$$CBHI@2@@Z,0x000079EB,rel32 pin for exact-ambiguous landing
-??0?$_STLP_alloc_proxy@IPAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVPartitionCell@@@1@I@Z,0x008F9A60,rel32 pin for exact-ambiguous landing
-??0?$_STLP_alloc_proxy@PAPAPAVPartitionCell@@PAPAV1@V?$allocator@PAPAVPartitionCell@@@_STL@@@_STL@@QAE@ABV?$allocator@PAPAVPartitionCell@@@1@PAPAPAVPartitionCell@@@Z,0x008F9A50,rel32 pin for exact-ambiguous landing
-?_M_initialize_map@?$_Deque_base@PAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@IAEXI@Z,0x008FA150,rel32 pin for exact-ambiguous landing
-??$_Construct@U?$pair@W4ObjectID@@W41@@_STL@@U12@@_STL@@YAXPAU?$pair@W4ObjectID@@W41@@0@ABU10@@Z,0x0001FA1E,rel32 pin for exact-ambiguous landing
-?_M_insert_overflow@?$vector@U?$pair@W4ObjectID@@W41@@_STL@@V?$allocator@U?$pair@W4ObjectID@@W41@@_STL@@@2@@_STL@@IAEXPAU?$pair@W4ObjectID@@W41@@2@ABU32@ABU__false_type@2@I_N@Z,0x00022AF7,rel32 pin for exact-ambiguous landing
-??1Payload@DeliverPayloadNugget@@QAE@XZ,0x0004B10A,rel32 pin for exact-ambiguous landing
-
-??$__copy@PAUPayload@DeliverPayloadNugget@@PAU12@H@_STL@@YAPAUPayload@DeliverPayloadNugget@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000097CD,rel32 pin for exact-ambiguous landing
-??$_Construct@UVideo@@U1@@_STL@@YAXPAUVideo@@ABU1@@Z,0x00030549,rel32 pin for exact-ambiguous landing
-?_M_insert_overflow@?$vector@UVideo@@V?$allocator@UVideo@@@_STL@@@_STL@@IAEXPAUVideo@@ABU3@ABU__false_type@2@I_N@Z,0x000359B3,rel32 pin for exact-ambiguous landing
-?_M_insert@?$hashtable@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEAAU?$pair@QBVGameWindow@@PAVWindowVideo@@@2@ABU32@@Z,0x00032407,rel32 pin for exact-ambiguous landing
-?render_box@BoxRenderObjClass@@IAEXAAVRenderInfoClass@@ABVVector3@@1@Z,0x00956F40,rel32 pin for exact-ambiguous landing
-?Build_Quaternion@@YA?AVQuaternion@@ABVMatrix3D@@@Z,0x008DBA40,rel32 pin for exact-ambiguous landing
-?_M_erase@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@2@@Z,0x00049E13,rel32 pin for exact-ambiguous landing
-?_M_copy@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@@_STL@@AAEPAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@2@PAU32@0@Z,0x0002BD3C,rel32 pin for exact-ambiguous landing
-?Create_New_Particles@ParticleEmitterClass@@AAEXABVQuaternion@@ABVVector3@@@Z,0x0097F930,rel32 pin for exact-ambiguous landing
-?Simple_Evaluate_Pivot@HTreeClass@@QBE_NPAVHAnimClass@@HMABVMatrix3D@@PAV3@@Z,0x00953620,rel32 pin for layout-fixed landing
-?Simple_Evaluate_Pivot@HTreeClass@@QBE_NHABVMatrix3D@@PAV2@@Z,0x009539C0,rel32 pin for layout-fixed landing
-??$__copy@PAUHideShowSubObjInfo@ModelConditionInfo@@PAU12@H@_STL@@YAPAUHideShowSubObjInfo@ModelConditionInfo@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00018674,rel32 pin for exact-ambiguous landing
-??1HideShowSubObjInfo@ModelConditionInfo@@QAE@XZ,0x0000466F,rel32 pin for exact-ambiguous landing
-??$_Construct@UPrereqUnitRec@ProductionPrerequisite@@U12@@_STL@@YAXPAUPrereqUnitRec@ProductionPrerequisite@@ABU12@@Z,0x00028957,rel32 pin for exact-ambiguous landing
-?_M_insert_overflow@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@IAEXPAUPrereqUnitRec@ProductionPrerequisite@@ABU34@ABU__false_type@2@I_N@Z,0x0000F277,rel32 pin for exact-ambiguous landing
-?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0001F843,rel32 pin for exact-ambiguous landing
-?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z,0x000290B4,rel32 pin for exact-ambiguous landing
-??$_Construct@UHideShowSubObjInfo@ModelConditionInfo@@U12@@_STL@@YAXPAUHideShowSubObjInfo@ModelConditionInfo@@ABU12@@Z,0x0004A818,rel32 pin for exact-ambiguous landing
-?_M_insert_overflow@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEXPAUHideShowSubObjInfo@ModelConditionInfo@@ABU34@ABU__false_type@2@I_N@Z,0x000251D0,rel32 pin for exact-ambiguous landing
-?_M_insert@?$hashtable@U?$pair@$$CBHW4Relationship@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHW4Relationship@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@2@@_STL@@QAEAAU?$pair@$$CBHW4Relationship@@@2@ABU32@@Z,0x000013E8,rel32 pin for exact-ambiguous landing
-?Multiply@Matrix3D@@SAXABV1@0PAV1@@Z,0x008D80C0,rel32 pin for exact-ambiguous landing
-??0?$_STLP_alloc_proxy@PAPAPAVMapObject@@PAPAV1@V?$allocator@PAPAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAPAVMapObject@@@1@PAPAPAVMapObject@@@Z,0x008F9A20,rel32 pin for exact-ambiguous landing
-??0?$_STLP_alloc_proxy@IPAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z,0x008F9A30,rel32 pin for exact-ambiguous landing
-?_M_initialize_map@?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,rel32 pin for exact-ambiguous landing
-?Add@?$DynamicVectorClass@PAVVertexMaterialClass@@@@QAE_NABQAVVertexMaterialClass@@@Z,0x0092F7C0,rel32 pin for exact-ambiguous landing
-?Collide@CollisionMath@@SA_NABVLineSegClass@@ABVAABoxClass@@PAUCastResultStruct@@@Z,0x008DAD70,rel32 pin for exact-ambiguous landing
-??4BoxRenderObjClass@@QAEAAV0@ABV0@@Z,0x00956E40,rel32 pin for exact-ambiguous landing
 ?OnEnd@DownloadManager@@UAEJXZ,0x000044E4,ILT thunk used by call site
 ?OnError@DownloadManager@@UAEJH@Z,0x00031EC1,ILT thunk used by call site
 ?OnStatusUpdate@DownloadManager@@UAEJH@Z,0x00008283
