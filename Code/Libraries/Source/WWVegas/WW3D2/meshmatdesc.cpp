@@ -592,7 +592,6 @@ TexBufferClass * MeshMatDescClass::Get_Texture_Array(int pass,int stage,bool cre
 	return TextureArray[pass][stage];
 }
 
-// ?Get_Material_Array@MeshMatDescClass@@QAEPAVMatBufferClass@@H_N@Z present-unmatched
 MatBufferClass * MeshMatDescClass::Get_Material_Array(int pass,bool create)
 {
 	if (create && MaterialArray[pass] == NULL) {

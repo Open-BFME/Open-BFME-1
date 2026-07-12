@@ -1192,3 +1192,4 @@ __CxxThrowException@8,0x00850600,CRT throw helper
 ?gotMangledPort@NAT@@IAEXHG@Z,0x00671EB0,processGlobalMessage callee
 ?Notify_Added@RenderObjClass@@UAEXPAVSceneClass@@@Z,0x0091FBF0
 ?Notify_Removed@RenderObjClass@@UAEXPAVSceneClass@@@Z,0x0091FC00
+??0TexBufferClass@@QAE@HPBD@Z,0x0092BA60

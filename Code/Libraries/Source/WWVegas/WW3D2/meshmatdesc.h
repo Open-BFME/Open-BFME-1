@@ -231,7 +231,8 @@ protected:
 */
 class MatBufferClass : public ShareBufferClass < VertexMaterialClass * >
 {
-	W3DMPO_GLUE(MatBufferClass)
+	// BFME: Get_Material_Array allocates via global operator new (0x881F30), not W3DMPO pool.
+	// W3DMPO_GLUE(MatBufferClass)
 public:
 	MatBufferClass(int count, const char* msg) : ShareBufferClass<VertexMaterialClass *>(count, msg) { Clear(); }
 	MatBufferClass(const MatBufferClass & that);
@@ -253,7 +254,8 @@ private:
 */
 class TexBufferClass : public ShareBufferClass < TextureClass * >
 {
-	W3DMPO_GLUE(TexBufferClass)
+	// BFME: same as MatBufferClass — allocate via global operator new, not W3DMPO pool.
+	// W3DMPO_GLUE(TexBufferClass)
 public:
 	TexBufferClass(int count, const char* msg) : ShareBufferClass<TextureClass *>(count, msg) { Clear(); }
 	TexBufferClass(const TexBufferClass & that);
