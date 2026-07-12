@@ -1,0 +1,101 @@
+.386
+.model flat
+
+; ?Check_Driver_Version_Status@DX8Caps@@AAEXXZ
+; Retail @ 0x0091BA00 size 713
+_TEXT SEGMENT
+public ?Check_Driver_Version_Status@DX8Caps@@AAEXXZ
+?Check_Driver_Version_Status@DX8Caps@@AAEXXZ PROC
+    db 56h,8Bh,0F1h,8Bh,86h,98h,02h,00h
+    db 00h,57h,33h,0FFh,48h,83h,0F8h,06h
+    db 89h,0BEh,94h,02h,00h,00h,0Fh,87h
+    db 64h,02h,00h,00h,55h,0FFh,24h,85h
+    db 0CCh,0BCh,0D1h,00h,0C7h,86h,94h,02h
+    db 00h,00h,03h,00h,00h,00h,0E9h,4Ch
+    db 02h,00h,00h,8Bh,86h,9Ch,02h,00h
+    db 00h,53h,8Bh,1Dh,3Ch,93h,35h,01h
+    db 68h,2Ch,0B7h,13h,01h,50h,0FFh,0D3h
+    db 83h,0C4h,08h,85h,0C0h,0BFh,03h,00h
+    db 00h,00h,75h,12h,81h,0BEh,90h,02h
+    db 00h,00h,47h,01h,00h,00h,75h,06h
+    db 89h,0BEh,94h,02h,00h,00h,8Bh,86h
+    db 9Ch,02h,00h,00h,68h,1Ch,0B7h,13h
+    db 01h,50h,0FFh,0D3h,83h,0C4h,08h,85h
+    db 0C0h,0BDh,02h,00h,00h,00h,74h,19h
+    db 8Bh,86h,9Ch,02h,00h,00h,68h,10h
+    db 0B7h,13h,01h,50h,0FFh,0D3h,83h,0C4h
+    db 08h,85h,0C0h,0Fh,85h,9Ch,00h,00h
+    db 00h,8Bh,8Eh,90h,02h,00h,00h,8Bh
+    db 0C1h,3Dh,0D9h,04h,00h,00h,77h,40h
+    db 74h,5Ah,3Dh,89h,02h,00h,00h,77h
+    db 1Ah,74h,51h,2Dh,6Ah,02h,00h,00h
+    db 83h,0F8h,11h,77h,60h,0Fh,0B6h,80h
+    db 0F0h,0BCh,0D1h,00h,0FFh,24h,85h,0E8h
+    db 0BCh,0D1h,00h,3Dh,8Ah,02h,00h,00h
+    db 74h,32h,3Dh,4Dh,04h,00h,00h,74h
+    db 2Bh,3Dh,0D8h,04h,00h,00h,75h,3Dh
+    db 89h,0BEh,94h,02h,00h,00h,0EBh,4Dh
+    db 3Dh,85h,08h,00h,00h,77h,1Dh,74h
+    db 3Eh,2Dh,0ECh,04h,00h,00h,74h,0Ch
+    db 2Dh,96h,00h,00h,00h,74h,05h,83h
+    db 0E8h,1Eh,75h,19h,89h,0BEh,94h,02h
+    db 00h,00h,0EBh,29h,2Dh,87h,08h,00h
+    db 00h,74h,1Ch,83h,0E8h,39h,74h,17h
+    db 83h,0E8h,47h,74h,0E7h,81h,0F9h,0D0h
+    db 07h,00h,00h,1Bh,0C9h,23h,0CFh,89h
+    db 8Eh,94h,02h,00h,00h,0EBh,06h,89h
+    db 0AEh,94h,02h,00h,00h,8Bh,86h,9Ch
+    db 02h,00h,00h,68h,04h,0B7h,13h,01h
+    db 50h,0FFh,0D3h,83h,0C4h,08h,85h,0C0h
+    db 75h,1Ch,81h,0BEh,90h,02h,00h,00h
+    db 38h,01h,00h,00h,74h,0Ah,0C7h,86h
+    db 94h,02h,00h,00h,00h,00h,00h,00h
+    db 89h,0AEh,94h,02h,00h,00h,8Bh,86h
+    db 9Ch,02h,00h,00h,68h,0F8h,0B6h,13h
+    db 01h,50h,0FFh,0D3h,83h,0C4h,08h,85h
+    db 0C0h,75h,1Ch,81h,0BEh,90h,02h,00h
+    db 00h,0ACh,00h,00h,00h,74h,0Ah,0C7h
+    db 86h,94h,02h,00h,00h,00h,00h,00h
+    db 00h,89h,0AEh,94h,02h,00h,00h,8Bh
+    db 96h,9Ch,02h,00h,00h,68h,0E8h,0B6h
+    db 13h,01h,52h,0FFh,0D3h,83h,0C4h,08h
+    db 5Bh,0E9h,0D1h,00h,00h,00h,8Bh,86h
+    db 9Ch,02h,00h,00h,8Bh,3Dh,3Ch,93h
+    db 35h,01h,68h,0D8h,0B6h,13h,01h,50h
+    db 0FFh,0D7h,83h,0C4h,08h,85h,0C0h,0BDh
+    db 02h,00h,00h,00h,75h,3Eh,8Bh,86h
+    db 90h,02h,00h,00h,05h,09h,0F4h,0FFh
+    db 0FFh,3Dh,0E0h,00h,00h,00h,77h,2Ch
+    db 0Fh,0B6h,80h,14h,0BDh,0D1h,00h,0FFh
+    db 24h,85h,04h,0BDh,0D1h,00h,0C7h,86h
+    db 94h,02h,00h,00h,00h,00h,00h,00h
+    db 0EBh,12h,89h,0AEh,94h,02h,00h,00h
+    db 0EBh,0Ah,0C7h,86h,94h,02h,00h,00h
+    db 03h,00h,00h,00h,8Bh,86h,9Ch,02h
+    db 00h,00h,68h,0C8h,0B6h,13h,01h,50h
+    db 0FFh,0D7h,83h,0C4h,08h,85h,0C0h,75h
+    db 12h,81h,0BEh,90h,02h,00h,00h,0F2h
+    db 03h,00h,00h,75h,06h,89h,0AEh,94h
+    db 02h,00h,00h,8Bh,86h,9Ch,02h,00h
+    db 00h,68h,0B8h,0B6h,13h,01h,50h,0FFh
+    db 0D7h,83h,0C4h,08h,85h,0C0h,75h,37h
+    db 81h,0BEh,90h,02h,00h,00h,5Fh,04h
+    db 00h,00h,75h,2Bh,0C7h,86h,94h,02h
+    db 00h,00h,00h,00h,00h,00h,0EBh,1Fh
+    db 8Bh,86h,9Ch,02h,00h,00h,68h,0ACh
+    db 0B6h,13h,01h,50h,0FFh,15h,3Ch,93h
+    db 35h,01h,83h,0C4h,08h,85h,0C0h,75h
+    db 06h,89h,0BEh,94h,02h,00h,00h,5Dh
+    db 8Bh,86h,94h,02h,00h,00h,48h,74h
+    db 1Bh,48h,74h,11h,48h,74h,07h,68h
+    db 88h,0B6h,13h,01h,0EBh,13h,68h,4Ch
+    db 0B6h,13h,01h,0EBh,0Ch,68h,1Ch,0B6h
+    db 13h,01h,0EBh,05h,68h,0FCh,0B5h,13h
+    db 01h,68h,18h,67h,34h,01h,0E8h,0DDh
+    db 0FEh,0Bh,00h,83h,0C4h,08h,8Dh,8Eh
+    db 0A4h,02h,00h,00h,68h,18h,67h,34h
+    db 01h,0E8h,1Ah,0FBh,0FFh,0FFh,5Fh,5Eh
+    db 0C3h
+?Check_Driver_Version_Status@DX8Caps@@AAEXXZ ENDP
+_TEXT ENDS
+END

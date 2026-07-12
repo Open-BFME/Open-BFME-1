@@ -338,3 +338,4 @@ _$E117	no-match	Compiler-generated static initializer. Drift RVA 0xC6E36F starts
 ?write@UserPreferences@@UAE_NXZ	landed	MASM exact 162B @ 0x000A9F60
 ??0GameTextManager@@QAE@XZ	landed	MASM exact 161B @ 0x00438350
 ?WriteBuildInfo@Debug@@QAEXXZ	landed	MASM exact 135B @ 0x0088A492
+?Check_Driver_Version_Status@DX8Caps@@AAEXXZ	landed	MASM exact 713B @ 0x0091BA00 (true size from ret; report said 1013)
