@@ -48,10 +48,12 @@
 #include "wwdebug.h"
 #include "vector2.h"
 #include "vector3.h"
+#include "ww3d.h"
 
 class INIClass;
 class RenderObjClass;
 class Matrix4x4;
+class DX8Wrapper;
 
 class INIClass;
 
