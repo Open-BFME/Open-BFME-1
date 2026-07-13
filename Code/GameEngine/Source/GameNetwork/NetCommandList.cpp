@@ -34,7 +34,6 @@
 /**
  * Constructor.
  */
-// ??0NetCommandList@@QAE@XZ present-unmatched
 NetCommandList::NetCommandList() {
 	m_first = NULL;
 	m_last = NULL;

@@ -731,7 +731,6 @@ void WorkerAIUpdate::cancelTask( DozerTask task )
 //-------------------------------------------------------------------------------------------------
 /** Is there a given task waiting to be done */
 //-------------------------------------------------------------------------------------------------
-// ?isTaskPending@WorkerAIUpdate@@UAE_NW4DozerTask@@@Z present-unmatched
 Bool WorkerAIUpdate::isTaskPending( DozerTask task )
 {
 
@@ -745,7 +744,6 @@ Bool WorkerAIUpdate::isTaskPending( DozerTask task )
 //-------------------------------------------------------------------------------------------------
 /** Is there any task pending */
 //-------------------------------------------------------------------------------------------------
-// ?isAnyTaskPending@WorkerAIUpdate@@UAE_NXZ present-unmatched
 Bool WorkerAIUpdate::isAnyTaskPending( void )
 {
 	
@@ -760,7 +758,6 @@ Bool WorkerAIUpdate::isAnyTaskPending( void )
 //-------------------------------------------------------------------------------------------------
 /** Get the target object of a given task */
 //-------------------------------------------------------------------------------------------------
-// ?getTaskTarget@WorkerAIUpdate@@UAE?AW4ObjectID@@W4DozerTask@@@Z present-unmatched
 ObjectID WorkerAIUpdate::getTaskTarget( DozerTask task )
 {
 

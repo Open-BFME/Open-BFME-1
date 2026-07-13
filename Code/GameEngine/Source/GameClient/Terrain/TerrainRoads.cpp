@@ -448,7 +448,6 @@ TerrainRoadType *TerrainRoadCollection::newBridge( AsciiString name )
 //-------------------------------------------------------------------------------------------------
 /** Return next road in list */
 //-------------------------------------------------------------------------------------------------
-// ?nextRoad@TerrainRoadCollection@@QAEPAVTerrainRoadType@@PAV2@@Z present-unmatched
 TerrainRoadType *TerrainRoadCollection::nextRoad( TerrainRoadType *road )
 {
 
@@ -460,7 +459,6 @@ TerrainRoadType *TerrainRoadCollection::nextRoad( TerrainRoadType *road )
 //-------------------------------------------------------------------------------------------------
 /** Return next bridge in list */
 //-------------------------------------------------------------------------------------------------
-// ?nextBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@PAV2@@Z present-unmatched
 TerrainRoadType *TerrainRoadCollection::nextBridge( TerrainRoadType *bridge )
 {
 

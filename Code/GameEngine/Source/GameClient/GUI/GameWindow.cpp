@@ -743,7 +743,6 @@ Bool GameWindow::winIsHidden( void )
 // GameWindow::winSetStatus ===================================================
 /** Allows the user to directly set a window's status flags. */
 //=============================================================================
-// ?winSetStatus@GameWindow@@QAEII@Z present-unmatched
 UnsignedInt GameWindow::winSetStatus( UnsignedInt status )
 {
 	UnsignedInt oldStatus;
@@ -1322,7 +1321,6 @@ GameWindow *GameWindow::winGetPrev( void )
 // GameWindow::winSetNextInLayout =============================================
 /** Set next window in layout */
 //=============================================================================
-// ?winSetNextInLayout@GameWindow@@QAEXPAV1@@Z present-unmatched
 void GameWindow::winSetNextInLayout( GameWindow *next )
 {
 	m_nextLayout = next;
@@ -1331,7 +1329,6 @@ void GameWindow::winSetNextInLayout( GameWindow *next )
 // GameWindow::winSetPrevInLayout =============================================
 /** Set previous window in layout pointer */
 //=============================================================================
-// ?winSetPrevInLayout@GameWindow@@QAEXPAV1@@Z present-unmatched
 void GameWindow::winSetPrevInLayout( GameWindow *prev )
 {
 	m_prevLayout = prev;
@@ -1340,7 +1337,6 @@ void GameWindow::winSetPrevInLayout( GameWindow *prev )
 // GameWindow::winSetLayout ===================================================
 /** Set this window as belonging to layout 'layout' */
 //=============================================================================
-// ?winSetLayout@GameWindow@@QAEXPAVWindowLayout@@@Z present-unmatched
 void GameWindow::winSetLayout( WindowLayout *layout )
 {
 	m_layout = layout;

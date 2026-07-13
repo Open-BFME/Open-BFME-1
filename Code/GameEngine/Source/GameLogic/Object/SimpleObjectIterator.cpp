@@ -60,7 +60,6 @@ SimpleObjectIterator::Clump::~Clump()
 }
 
 //=============================================================================
-// ??0SimpleObjectIterator@@QAE@XZ present-unmatched
 SimpleObjectIterator::SimpleObjectIterator()
 {
 	m_firstClump = NULL;
@@ -255,14 +254,12 @@ void SimpleObjectIterator::sort(IterOrderType order)
 }
 
 //-----------------------------------------------------------------------------
-// ?sortNearToFar@SimpleObjectIterator@@CAMPAVClump@1@0@Z present-unmatched
 Real SimpleObjectIterator::sortNearToFar(Clump *a, Clump *b)
 {
 	return a->m_numeric - b->m_numeric;
 }
 
 //-----------------------------------------------------------------------------
-// ?sortFarToNear@SimpleObjectIterator@@CAMPAVClump@1@0@Z present-unmatched
 Real SimpleObjectIterator::sortFarToNear(Clump *a, Clump *b)
 {
 	return b->m_numeric - a->m_numeric;

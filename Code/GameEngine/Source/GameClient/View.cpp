@@ -125,7 +125,6 @@ void View::reset( void )
 /**
  * Prepend this view to the given list, return the new list.
  */
-// ?prependViewToList@View@@MAEPAV1@PAV1@@Z present-unmatched
 View *View::prependViewToList( View *list )
 {
 	m_next = list;
@@ -172,7 +171,6 @@ void View::scrollBy( Coord2D *delta )
 /**
  * Rotate the view around the up axis by the given angle.
  */
-// ?setAngle@View@@UAEXM@Z present-unmatched
 void View::setAngle( Real angle )
 {
 	m_angle = angle; 

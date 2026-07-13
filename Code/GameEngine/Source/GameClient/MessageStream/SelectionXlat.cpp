@@ -1356,7 +1356,6 @@ GameMessageDisposition SelectionTranslator::translateGameMessage(const GameMessa
 //setDragSelecting(Bool dragSelect)
 //Added to fix the drag selection problem in control bar
 ////////////////////////////////////////////////////////////////////////
-// ?setDragSelecting@SelectionTranslator@@QAEX_N@Z present-unmatched
 void SelectionTranslator::setDragSelecting(Bool dragSelect)
 {
 	m_dragSelecting = dragSelect; 
@@ -1365,7 +1364,6 @@ void SelectionTranslator::setDragSelecting(Bool dragSelect)
 //setLeftMouseButton(Bool state)
 //Added to turn of Left button down when left button goes up
 ////////////////////////////////////////////////////////////////////////
-// ?setLeftMouseButton@SelectionTranslator@@QAEX_N@Z present-unmatched
 void SelectionTranslator::setLeftMouseButton(Bool state)
 {
 	m_leftMouseButtonIsDown = state;

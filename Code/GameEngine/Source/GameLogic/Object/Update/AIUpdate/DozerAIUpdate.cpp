@@ -2120,7 +2120,6 @@ Bool DozerAIUpdate::isTaskPending( DozerTask task )
 //-------------------------------------------------------------------------------------------------
 /** Is there any task pending */
 //-------------------------------------------------------------------------------------------------
-// ?isAnyTaskPending@DozerAIUpdate@@UAE_NXZ present-unmatched
 Bool DozerAIUpdate::isAnyTaskPending( void )
 {
 	
@@ -2135,7 +2134,6 @@ Bool DozerAIUpdate::isAnyTaskPending( void )
 //-------------------------------------------------------------------------------------------------
 /** Get the target object of a given task */
 //-------------------------------------------------------------------------------------------------
-// ?getTaskTarget@DozerAIUpdate@@UAE?AW4ObjectID@@W4DozerTask@@@Z present-unmatched
 ObjectID DozerAIUpdate::getTaskTarget( DozerTask task )
 {
 

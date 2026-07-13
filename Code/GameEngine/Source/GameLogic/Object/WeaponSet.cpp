@@ -1139,7 +1139,6 @@ void WeaponSet::releaseWeaponLock(WeaponLockType lockType)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getWeaponInWeaponSlot@WeaponSet@@QBEPAVWeapon@@W4WeaponSlotType@@@Z present-unmatched
 Weapon* WeaponSet::getWeaponInWeaponSlot(WeaponSlotType wslot) const
 { 
 	return m_weapons[wslot]; 

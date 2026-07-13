@@ -877,7 +877,6 @@ void BattlePlanUpdate::setBattlePlan( BattlePlanStatus plan )
 //Returns the currently active battle plan -- unpacked and ready... returns PLANSTATUS_NONE if in 
 //transition!
 //------------------------------------------------------------------------------------------------
-// ?getActiveBattlePlan@BattlePlanUpdate@@QBE?AW4BattlePlanStatus@@XZ present-unmatched
 BattlePlanStatus BattlePlanUpdate::getActiveBattlePlan() const
 {
 	if( m_status == TRANSITIONSTATUS_ACTIVE )

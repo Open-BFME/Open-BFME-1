@@ -193,7 +193,6 @@ void GameWindowManager::winGetTextSize( GameFont *font, UnicodeString text,
 // GameWindowManager::winFontHeight ===========================================
 /** Return the font height in pixels */
 //=============================================================================
-// ?winFontHeight@GameWindowManager@@UAEHPAVGameFont@@@Z present-unmatched
 Int GameWindowManager::winFontHeight( GameFont *font )
 {
 	

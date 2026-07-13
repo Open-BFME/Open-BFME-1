@@ -5654,7 +5654,6 @@ NetCommandMsg * NetPacket::readDisconnectKeepAliveMessage(UnsignedByte *data, In
 /**
  * Reads the disconnect player data.  Which is the slot number of the player being disconnected.
  */
-// ?readDisconnectPlayerMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z present-unmatched
 NetCommandMsg * NetPacket::readDisconnectPlayerMessage(UnsignedByte *data, Int &i) {
 	NetDisconnectPlayerCommandMsg *msg = newInstance(NetDisconnectPlayerCommandMsg);
 
@@ -5747,7 +5746,6 @@ NetCommandMsg * NetPacket::readChatMessage(UnsignedByte *data, Int &i) {
 /**
  * Reads the disconnect vote data.  Which is the slot number of the player being disconnected.
  */
-// ?readDisconnectVoteMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z present-unmatched
 NetCommandMsg * NetPacket::readDisconnectVoteMessage(UnsignedByte *data, Int &i) {
 	NetDisconnectVoteCommandMsg *msg = newInstance(NetDisconnectVoteCommandMsg);
 

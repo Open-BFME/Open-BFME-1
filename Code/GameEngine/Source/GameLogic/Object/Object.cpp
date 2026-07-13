@@ -5156,7 +5156,6 @@ Real Object::getShroudRange() const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setShroudRange@Object@@QAEXM@Z present-unmatched
 void Object::setShroudRange( Real newShroudRange )
 {
 	m_shroudRange = newShroudRange;
@@ -5940,7 +5939,7 @@ SpecialAbilityUpdate* Object::findSpecialAbilityUpdate( SpecialPowerType type ) 
 }
 
 // ------------------------------------------------------------------------------------------------
-// ?findSpecialPowerCompletionDie@Object@@ present-unmatched
+// ?findSpecialPowerCompletionDie@Object@@QBEPAVSpecialPowerCompletionDie@@XZ present-unmatched
 SpecialPowerCompletionDie* Object::findSpecialPowerCompletionDie() const
 {
 	static NameKeyType key_SpecialPowerCompletionDie = NAMEKEY("SpecialPowerCompletionDie");

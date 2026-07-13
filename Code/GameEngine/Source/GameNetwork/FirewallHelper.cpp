@@ -608,7 +608,6 @@ void FirewallHelperClass::readFirewallBehavior(void)
  * HISTORY:                                                                                    *
  *   3/15/01 12:30PM ST : Created                                                              *
  *=============================================================================================*/
-// ?detectFirewallBehavior@FirewallHelperClass@@AAEXXZ present-unmatched
 void FirewallHelperClass::detectFirewallBehavior(/*Bool &canRecord*/)
 {
 	m_behavior = FIREWALL_TYPE_SIMPLE;
@@ -616,7 +615,6 @@ void FirewallHelperClass::detectFirewallBehavior(/*Bool &canRecord*/)
 	m_currentState = DETECTIONSTATE_BEGIN;
 }
 
-// ?getFirewallBehavior@FirewallHelperClass@@QAE?AW4tFirewallBehaviorType@1@XZ present-unmatched
 FirewallHelperClass::FirewallBehaviorType FirewallHelperClass::getFirewallBehavior() {
 	m_currentState = DETECTIONSTATE_IDLE;
 	return m_behavior;
@@ -1201,7 +1199,6 @@ Bool FirewallHelperClass::detectionTest4Stage2Update() {
 	return detectionTest5Update();
 }
 
-// ?detectionTest5Update@FirewallHelperClass@@QAE_NXZ present-unmatched
 Bool FirewallHelperClass::detectionTest5Update() {
 	/*
 	** We have done all the tests we *have* to. There's other info that it would be nice to know though.

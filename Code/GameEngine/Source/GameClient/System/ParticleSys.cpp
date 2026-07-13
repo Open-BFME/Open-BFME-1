@@ -2325,7 +2325,6 @@ void ParticleSystem::setLifetimeRange( Real min, Real max )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?setControlParticle@ParticleSystem@@QAEXPAVParticle@@@Z present-unmatched
 void ParticleSystem::setControlParticle( Particle *p )
 {
 	m_controlParticle = p;
@@ -2915,7 +2914,6 @@ void ParticleSystemManager::update( void )
 // ------------------------------------------------------------------------------------------------
 /** sets the count of the particles on screen after each frame */
 // ------------------------------------------------------------------------------------------------
-// ?setOnScreenParticleCount@ParticleSystemManager@@UAEXH@Z present-unmatched
 void ParticleSystemManager::setOnScreenParticleCount(int count)
 {
 	m_onScreenParticleCount = count;

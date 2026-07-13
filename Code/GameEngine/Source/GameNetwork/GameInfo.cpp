@@ -466,7 +466,6 @@ void GameInfo::setSlot( Int slotNum, GameSlot slotInfo )
 							ip >> 24, (ip >> 16) & 0xff, (ip >> 8) & 0xff, ip & 0xff));
 }
 
-// ?getSlot@GameInfo@@QAEPAVGameSlot@@H@Z present-unmatched
 GameSlot* GameInfo::getSlot( Int slotNum )
 {
 	DEBUG_ASSERTCRASH( slotNum >= 0 && slotNum < MAX_SLOTS, ("GameInfo::getSlot - Invalid slot number"));
@@ -476,7 +475,6 @@ GameSlot* GameInfo::getSlot( Int slotNum )
 	return m_slot[slotNum];
 }
 
-// ?getConstSlot@GameInfo@@QBEPBVGameSlot@@H@Z present-unmatched
 const GameSlot* GameInfo::getConstSlot( Int slotNum ) const
 {
 	DEBUG_ASSERTCRASH( slotNum >= 0 && slotNum < MAX_SLOTS, ("GameInfo::getSlot - Invalid slot number"));
@@ -634,7 +632,6 @@ void GameInfo::setMap( AsciiString mapName )
 	}
 }
 
-// ?setMapContentsMask@GameInfo@@QAEXH@Z present-unmatched
 void GameInfo::setMapContentsMask( Int mask )
 {
 	m_mapMask = mask;
@@ -713,7 +710,6 @@ void GameInfo::setMapSize( UnsignedInt mapSize )
 	}
 }
 
-// ?setSeed@GameInfo@@QAEXH@Z present-unmatched
 void GameInfo::setSeed( Int seed )
 {
 	m_seed = seed;

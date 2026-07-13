@@ -105,7 +105,6 @@ FlashTransition::~FlashTransition( void )
 	m_win = NULL;
 }
 
-// ?init@FlashTransition@@UAEXPAVGameWindow@@@Z present-unmatched
 void FlashTransition::init( GameWindow *win )
 {
 	if(win)
@@ -647,7 +646,6 @@ FadeTransition::~FadeTransition( void )
 	m_win = NULL;
 }
 
-// ?init@FadeTransition@@UAEXPAVGameWindow@@@Z present-unmatched
 void FadeTransition::init( GameWindow *win )
 {
 	if(win)
@@ -788,7 +786,6 @@ ScaleUpTransition::~ScaleUpTransition( void )
 	m_win = NULL;
 }
 
-// ?init@ScaleUpTransition@@UAEXPAVGameWindow@@@Z present-unmatched
 void ScaleUpTransition::init( GameWindow *win )
 {
 	if(win)
@@ -918,7 +915,6 @@ ScoreScaleUpTransition::~ScoreScaleUpTransition( void )
 	m_win = NULL;
 }
 
-// ?init@ScoreScaleUpTransition@@UAEXPAVGameWindow@@@Z present-unmatched
 void ScoreScaleUpTransition::init( GameWindow *win )
 {
 	if(win)

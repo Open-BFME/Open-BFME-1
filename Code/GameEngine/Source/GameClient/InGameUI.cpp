@@ -5273,7 +5273,6 @@ FloatingTextData::~FloatingTextData(void)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??0WorldAnimationData@@QAE@XZ present-unmatched
 WorldAnimationData::WorldAnimationData( void )
 {
 
