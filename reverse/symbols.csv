@@ -1303,3 +1303,18 @@ _bfme_timeGetTime@0,0x000481E4,ILT thunk for timeGetTime (non-dllimport call sit
 ??1AnimateWindow@@UAE@XZ,0x0002F973,ILT thunk; retail call sites use the thunk
 ??1MissingAnimClass@@UAE@XZ,0x00002C7A,ILT thunk; retail call sites use the thunk
 ?GetGameClientRandomValue@@YAHHHPADH@Z,0x00027AAC,ILT thunk; real body 0x96D70
+??0?$_STLP_alloc_proxy@PAPAVBuddyRequest@@PAV1@V?$allocator@PAVBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVBuddyRequest@@@1@PAPAVBuddyRequest@@@Z,0x008F9A20,shared alloc_proxy ctor body (4 template instances)
+??0?$_STLP_alloc_proxy@PAPAVBuddyResponse@@PAV1@V?$allocator@PAVBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVBuddyResponse@@@1@PAPAVBuddyResponse@@@Z,0x008F9A20,shared alloc_proxy ctor body (4 template instances)
+??0?$_STLP_alloc_proxy@PAPAVGameResultsRequest@@PAV1@V?$allocator@PAVGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVGameResultsRequest@@@1@PAPAVGameResultsRequest@@@Z,0x008F9A20,shared alloc_proxy ctor body (4 template instances)
+??0?$_STLP_alloc_proxy@PAPAVGameResultsResponse@@PAV1@V?$allocator@PAVGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVGameResultsResponse@@@1@PAPAVGameResultsResponse@@@Z,0x008F9A20,shared alloc_proxy ctor body (4 template instances)
+?_M_erase@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBHI@_STL@@@2@@Z,0x0004887E,ILT thunk; real body 0x4AA7B0
+?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAVGameSpyStagingRoom@@@2@@Z,0x000290B4,ILT thunk; real body 0xA33010
+??0?$_STLP_alloc_proxy@IVBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@I@Z,0x008F9A30,shared alloc_proxy int-ctor body (4 template instances)
+??0?$_STLP_alloc_proxy@IVBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@I@Z,0x008F9A30,shared alloc_proxy int-ctor body (4 template instances)
+??0?$_STLP_alloc_proxy@IVGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@I@Z,0x008F9A30,shared alloc_proxy int-ctor body (4 template instances)
+??0?$_STLP_alloc_proxy@IVGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@I@Z,0x008F9A30,shared alloc_proxy int-ctor body (4 template instances)
+?_M_initialize_map@?$_Deque_base@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,shared deque initialize_map body (4 template instances)
+?_M_initialize_map@?$_Deque_base@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,shared deque initialize_map body (4 template instances)
+?_M_initialize_map@?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,shared deque initialize_map body (4 template instances)
+?_M_initialize_map@?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,shared deque initialize_map body (4 template instances)
+?_M_copy@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@AAEPAU?$_Rb_tree_node@U?$pair@$$CBHI@_STL@@@2@PAU32@0@Z,0x00042BB3,ILT thunk; real body 0x4AAC70
