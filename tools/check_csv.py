@@ -137,10 +137,15 @@ def check_functions(raw, problems, sources_ok):
         seen_exact.add(key)
 
         rva = int(target_rva, 16)
-        if rva in by_rva and by_rva[rva] != name:
-            problems.append(f"functions.csv: two names claim target_rva {target_rva}: "
-                            f"{by_rva[rva]} and {name}. Byte-verify decides which is real.")
-        by_rva.setdefault(rva, name)
+        if rva in by_rva and by_rva[rva][0] != name:
+            prev_name, prev_size = by_rva[rva]
+            if prev_size != size:
+                problems.append(f"functions.csv: two names claim target_rva {target_rva} with "
+                                f"different sizes: {prev_name} ({prev_size}B) and {name} ({size}B). "
+                                "Byte-verify decides which is real.")
+            # same (rva, size): ICF alias group — identical COMDATs folded to one
+            # address in retail; each name byte-verifies independently. Allowed.
+        by_rva.setdefault(rva, (name, size))
 
         if name in by_name and by_name[name] != rva and name not in ALLOWED_DUP_NAMES:
             problems.append(f"functions.csv: {name} claims two addresses: "
@@ -151,8 +156,10 @@ def check_functions(raw, problems, sources_ok):
             matched_ranges.append((rva, rva + size, name))
 
     matched_ranges.sort()
-    for (a_start, a_end, a_name), (b_start, _b_end, b_name) in zip(matched_ranges, matched_ranges[1:]):
+    for (a_start, a_end, a_name), (b_start, b_end, b_name) in zip(matched_ranges, matched_ranges[1:]):
         if b_start < a_end:
+            if a_start == b_start and a_end == b_end:
+                continue  # ICF alias group: identical range claimed by multiple names
             problems.append(f"functions.csv: matched ranges overlap: {a_name} "
                             f"[0x{a_start:08X}-0x{a_end:08X}) and {b_name} @ 0x{b_start:08X}. "
                             "The full gate will refuse to patch. Byte-verify decides which is real.")

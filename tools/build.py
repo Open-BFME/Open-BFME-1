@@ -571,6 +571,10 @@ def patch_exe(patches, output):
         if data[offset:end] != patch["target"]:
             raise SystemExit(f"{patch['name']}: target bytes changed before patching")
         if ranges and offset < ranges[-1][1]:
+            # ICF alias group: a previous patch wrote byte-identical code to this
+            # exact range (folded COMDATs share one address). Re-applying is a no-op.
+            if offset == ranges[-1][0] and end == ranges[-1][1] and patch["bytes"] == data[offset:end]:
+                continue
             raise SystemExit(f"{patch['name']}: patch overlaps previous patch")
         ranges.append((offset, end))
         data[offset:end] = patch["bytes"]

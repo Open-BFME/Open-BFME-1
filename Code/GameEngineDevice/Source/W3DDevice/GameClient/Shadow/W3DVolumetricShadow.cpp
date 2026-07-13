@@ -4009,7 +4009,6 @@ void W3DVolumetricShadowManager::removeAllShadows(void)
 	}  // end for
 }
 
-// ??0W3DShadowGeometryManager@@QAE@XZ present-unmatched
 W3DShadowGeometryManager::W3DShadowGeometryManager(void) 
 {
 	// Create the hash tables
@@ -4030,7 +4029,6 @@ W3DShadowGeometryManager::~W3DShadowGeometryManager(void)
 }
 
 /** Release all loaded animations */
-// ?Free_All_Geoms@W3DShadowGeometryManager@@QAEXXZ present-unmatched
 void W3DShadowGeometryManager::Free_All_Geoms(void)
 {
 	// Make an iterator, and release all ptrs
@@ -4045,14 +4043,12 @@ void W3DShadowGeometryManager::Free_All_Geoms(void)
 }
 
 /** Find animation in cache */
-// ?Peek_Geom@W3DShadowGeometryManager@@QAEPAVW3DShadowGeometry@@PBD@Z present-unmatched
 W3DShadowGeometry * W3DShadowGeometryManager::Peek_Geom(const char * name)
 {
 	return (W3DShadowGeometry*)GeomPtrTable->Find( name );
 }
 
 /** Get animation from cache and increment its reference count */
-// ?Get_Geom@W3DShadowGeometryManager@@QAEPAVW3DShadowGeometry@@PBD@Z present-unmatched
 W3DShadowGeometry * W3DShadowGeometryManager::Get_Geom(const char * name)
 {	
 	W3DShadowGeometry * geom = Peek_Geom( name );
@@ -4063,7 +4059,6 @@ W3DShadowGeometry * W3DShadowGeometryManager::Get_Geom(const char * name)
 }
 
 /** Add animation to cache */
-// ?Add_Geom@W3DShadowGeometryManager@@QAE_NPAVW3DShadowGeometry@@@Z present-unmatched
 Bool W3DShadowGeometryManager::Add_Geom(W3DShadowGeometry *new_geom)
 {
 	WWASSERT (new_geom != NULL);
@@ -4104,7 +4099,6 @@ void	W3DShadowGeometryManager::Register_Missing( const char * name )
 	MissingGeomTable->Add( NEW MissingGeomClass( name ) );
 }
 
-// ?Is_Missing@W3DShadowGeometryManager@@QAE_NPBD@Z present-unmatched
 Bool	W3DShadowGeometryManager::Is_Missing( const char * name )
 {
 	return ( MissingGeomTable->Find( name ) != NULL );
@@ -4161,7 +4155,6 @@ Error:
 /*
 ** Iterator converter from HashableClass to GrannyAnimClass
 */
-// ?Get_Current_Geom@W3DShadowGeometryManagerIterator@@QAEPAVW3DShadowGeometry@@XZ present-unmatched
 W3DShadowGeometry * W3DShadowGeometryManagerIterator::Get_Current_Geom( void )	
 { 
 	return (W3DShadowGeometry *)Get_Current(); 

@@ -2,16 +2,18 @@
 """Normalize reverse/functions.csv and reverse/symbols.csv after a union merge.
 
 Many agents append rows concurrently and push straight to main; the union merge
-driver combines both sides, which can leave the ledger unsorted or (when two
-territories claim the same shared COMDAT) holding two rows for one address. The
-build's no-op patch rejects a duplicate address, so this collapses each address
-to a single row and re-sorts, deterministically, so any agent can run it and get
-the identical result.
+driver combines both sides, which can leave the ledger unsorted or holding two
+rows for one (address, name). This collapses each (address, name) pair to a
+single row and re-sorts, deterministically, so any agent can run it and get the
+identical result. Distinct names at one address are ICF alias groups and are
+kept.
 
-functions.csv: one row per target_rva. A matched row beats an unmatched one; among
-equals the smaller target_size wins (a trimmed-padding row), then the lexically
-first source, so the choice never depends on merge order. symbols.csv: unique
-(name,address) lines. Run with no arguments; edits both files in place.
+functions.csv: one row per (target_rva, name) — ICF alias groups legitimately
+hold several names at one address (folded identical COMDATs), so the name is part
+of the key. A matched row beats an unmatched one; among equals the smaller
+target_size wins (a trimmed-padding row), then the lexically first source, so the
+choice never depends on merge order. symbols.csv: unique (name,address) lines.
+Run with no arguments; edits both files in place.
 """
 import csv
 import io
@@ -25,7 +27,7 @@ def dedup_functions(path):
     rows = list(csv.DictReader(path.open(encoding="utf-8", newline="")))
     best = {}
     for row in rows:
-        key = int(row["target_rva"], 16)
+        key = (int(row["target_rva"], 16), row["name"])
         rank = (
             0 if row["status"] == "matched" else 1,   # matched wins
             int(row["target_size"]),                    # smaller (trimmed) wins

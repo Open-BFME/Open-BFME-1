@@ -2386,7 +2386,6 @@ W3DShadowTextureManager::W3DShadowTextureManager(void)
 	missingTextureTable = NEW HashTableClass( 2048 );
 }
 
-// ??1W3DShadowTextureManager@@QAE@XZ present-unmatched
 W3DShadowTextureManager::~W3DShadowTextureManager(void)
 {
 	freeAllTextures();

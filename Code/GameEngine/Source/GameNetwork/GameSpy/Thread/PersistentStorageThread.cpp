@@ -502,7 +502,6 @@ void GameSpyPSMessageQueue::endThread( void )
 	m_thread = NULL;
 }
 
-// ?isThreadRunning@GameSpyPSMessageQueue@@ present-unmatched
 Bool GameSpyPSMessageQueue::isThreadRunning( void )
 {
 	return (m_thread) ? m_thread->Is_Running() : false;
