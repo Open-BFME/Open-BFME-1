@@ -79,6 +79,18 @@ typedef struct _DDBLTFX {
 } DDBLTFX, *LPDDBLTFX;
 
 // IDirectDrawSurface interface (partial)
+struct IDirectDrawSurface;
+struct IDirectDrawPalette;
+struct IDirectDraw;
+struct IDirectDraw2;
+struct IDirectDrawClipper;
+typedef IDirectDraw* LPDIRECTDRAW;
+typedef IDirectDraw2* LPDIRECTDRAW2;
+typedef IDirectDrawSurface* LPDIRECTDRAWSURFACE;
+typedef IDirectDrawPalette* LPDIRECTDRAWPALETTE;
+typedef IDirectDrawClipper* LPDIRECTDRAWCLIPPER;
+typedef PALETTEENTRY* LPPALETTEENTRY;
+
 struct IDirectDrawSurface : public IUnknown {
 	virtual HRESULT STDMETHODCALLTYPE __pad1() = 0;
 	virtual HRESULT STDMETHODCALLTYPE __pad2() = 0;
@@ -132,13 +144,6 @@ struct IDirectDraw : public IUnknown {
 // IDirectDraw2 inherits from IDirectDraw (extends vtable past it)
 struct IDirectDraw2 : public IDirectDraw {};
 
-typedef IDirectDraw* LPDIRECTDRAW;
-typedef IDirectDraw2* LPDIRECTDRAW2;
-typedef IDirectDrawSurface* LPDIRECTDRAWSURFACE;
-typedef IDirectDrawPalette* LPDIRECTDRAWPALETTE;
-
-typedef PALETTEENTRY* LPPALETTEENTRY;
-
 HRESULT WINAPI DirectDrawCreate(GUID* lpGUID, LPDIRECTDRAW* lplpDD, IUnknown* pUnkOuter);
 
 // DD flags
@@ -153,6 +158,15 @@ HRESULT WINAPI DirectDrawCreate(GUID* lpGUID, LPDIRECTDRAW* lplpDD, IUnknown* pU
 #define DDSCAPS_FLIP        0x00000010l
 #define DDSCAPS_BACKBUFFER  0x00000004l
 #define DDSCAPS_SYSTEMMEMORY 0x00000800l
+#define DDSCAPS2_CUBEMAP    0x00000200l
+#define DDSCAPS2_VOLUME     0x00200000l
+#define DDSCAPS2_CUBEMAP_POSITIVEX 0x00000400l
+#define DDSCAPS2_CUBEMAP_NEGATIVEX 0x00000800l
+#define DDSCAPS2_CUBEMAP_POSITIVEY 0x00001000l
+#define DDSCAPS2_CUBEMAP_NEGATIVEY 0x00002000l
+#define DDSCAPS2_CUBEMAP_POSITIVEZ 0x00004000l
+#define DDSCAPS2_CUBEMAP_NEGATIVEZ 0x00008000l
+#define DDSCAPS2_CUBEMAP_ALLFACES (DDSCAPS2_CUBEMAP_POSITIVEX|DDSCAPS2_CUBEMAP_NEGATIVEX|DDSCAPS2_CUBEMAP_POSITIVEY|DDSCAPS2_CUBEMAP_NEGATIVEY|DDSCAPS2_CUBEMAP_POSITIVEZ|DDSCAPS2_CUBEMAP_NEGATIVEZ)
 #define DDSCAPS_VIDEOMEMORY 0x00004000l
 #define DDSCAPS_OFFSCREENPLAIN 0x00000040l
 #define DDSCAPS_LOCALVIDMEM  0x10000000l

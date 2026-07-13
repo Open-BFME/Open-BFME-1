@@ -8,7 +8,13 @@
 
 typedef GUID IID;
 typedef GUID CLSID;
+#ifndef IID_DEFINED
+#define IID_DEFINED
+#endif
+#ifndef REFIID_DEFINED
 typedef const IID& REFIID;
+#define REFIID_DEFINED
+#endif
 typedef const GUID& REFGUID;
 
 // {00000000-0000-0000-C000-000000000046}

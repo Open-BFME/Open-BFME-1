@@ -40,6 +40,7 @@ HEAD = (
     f" /I{REF_REL}/Libraries/Source/WWVegas/WWSaveLoad /I{REF_REL}/Main\n"
     "// stlport\n"
     "#define Matrix4x4 Matrix4  // BFME renamed it\n"
+    "#define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves\n"
 )
 
 

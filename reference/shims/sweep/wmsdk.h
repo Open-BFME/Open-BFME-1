@@ -14,19 +14,18 @@
 typedef unsigned __int64 QWORD;
 typedef unsigned long DWORD_PTR;
 
-#ifndef REFIID_DEFINED
-typedef void* REFIID;
-#define REFIID_DEFINED
+#ifndef IID_DEFINED
+typedef GUID IID;
+#define IID_DEFINED
 #endif
 
-#ifndef IID_DEFINED
-struct IID {};
-#define IID_DEFINED
+#ifndef REFIID_DEFINED
+typedef const IID& REFIID;
+#define REFIID_DEFINED
 #endif
 
 #define MAX_PATH 260
 
-extern const WCHAR* wcsstr(const WCHAR*, const unsigned short*);
 extern int memcmp(const void*, const void*, unsigned int);
 
 // Wave types

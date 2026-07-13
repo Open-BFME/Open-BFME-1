@@ -1287,3 +1287,4 @@ _IsStatsConnected,0x009D2B60
 ?setGridHeightClamps@WaterRenderObjClass@@QAEXMM@Z,0x0003387F
 ?Allocate_DX8_Dynamic_Buffer@DynamicIBAccessClass@@QAEXXZ,0x0091D560
 ?Allocate_Sorting_Dynamic_Buffer@DynamicIBAccessClass@@QAEXXZ,0x0091D6B0
+?Peek_D3D_Base_Texture@TextureBaseClass@@QBEPAUIDirect3DBaseTexture8@@XZ,0x0090DC60

@@ -315,6 +315,7 @@ typedef struct _WIN32_FIND_DATAA {
 #define IDYES 6
 #define IDNO 7
 #define GMEM_FIXED 0x0000
+#define GMEM_MOVEABLE 0x0002
 #define GENERIC_READ 0x80000000L
 #define GENERIC_WRITE 0x40000000L
 #define FILE_SHARE_READ 0x00000001
@@ -363,6 +364,17 @@ typedef struct _WIN32_FIND_DATAA {
 #define WM_INITDIALOG 0x0110
 #define WM_COMMAND 0x0111
 #define LB_ADDSTRING 0x0180
+
+typedef float FLOAT;
+
+// tchar.h (ANSI build)
+#define _T(x) x
+#define _TEXT(x) x
+
+#ifndef PALETTEENTRY_DEFINED
+#define PALETTEENTRY_DEFINED
+typedef struct tagPALETTEENTRY { BYTE peRed, peGreen, peBlue, peFlags; } PALETTEENTRY, *LPPALETTEENTRY;
+#endif
 #define WM_MOUSEMOVE 0x0200
 #define WM_LBUTTONDOWN 0x0201
 #define WM_LBUTTONUP 0x0202
@@ -601,6 +613,8 @@ __declspec(dllimport) DWORD WINAPI GetCurrentThreadId(void);
 __declspec(dllimport) HANDLE WINAPI GetCurrentThread(void);
 __declspec(dllimport) HGLOBAL WINAPI GlobalAlloc(UINT, SIZE_T);
 __declspec(dllimport) HGLOBAL WINAPI GlobalReAlloc(HGLOBAL, SIZE_T, UINT);
+__declspec(dllimport) LPVOID WINAPI GlobalLock(HGLOBAL);
+__declspec(dllimport) BOOL WINAPI GlobalUnlock(HGLOBAL);
 __declspec(dllimport) HGLOBAL WINAPI GlobalFree(HGLOBAL);
 __declspec(dllimport) SIZE_T WINAPI GlobalSize(HGLOBAL);
 __declspec(dllimport) void WINAPI GlobalMemoryStatus(LPMEMORYSTATUS);

@@ -58,7 +58,7 @@ INCLUDE_DIRS = [
     REF / "Main",
 ]
 
-HEAD = "// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n// stlport\n#define Matrix4x4 Matrix4  // BFME renamed it\n"
+HEAD = "// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n// stlport\n#define Matrix4x4 Matrix4  // BFME renamed it\n#define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves\n"
 
 
 def candidates(area, names):
@@ -73,18 +73,23 @@ def candidates(area, names):
                 print(f"  no reference file named {stem}.cpp")
             out += hits
         return out
-    return [p for p in sorted((REF / area).rglob("*.cpp")) if p.stem.lower() not in ported]
+    return [p for p in sorted((REF / area).rglob("*.cpp"))
+            if p.stem.lower() not in ported and not p.name.startswith(".sweep_")]
 
 
 def sweep_one(ref_cpp):
-    """Copy with recipe head into scratch, locate, and classify the outcome."""
-    work = SCRATCH / (ref_cpp.stem.lower() + ".cpp")
+    """Copy with recipe head beside the original (so quoted sibling includes
+    resolve exactly as the real compile did), locate, and classify."""
+    work = ref_cpp.parent / (".sweep_" + ref_cpp.name)
     work.write_text(HEAD + ref_cpp.read_text(errors="replace"))
-    cmd = [sys.executable, str(ROOT / "tools" / "locate.py"), str(work.relative_to(ROOT))]
-    for inc in INCLUDE_DIRS:
-        cmd += ["-I", str(inc)]
-    proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, timeout=420)
-    out = proc.stdout + proc.stderr
+    try:
+        cmd = [sys.executable, str(ROOT / "tools" / "locate.py"), str(work.relative_to(ROOT))]
+        for inc in INCLUDE_DIRS:
+            cmd += ["-I", str(inc)]
+        proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, timeout=420)
+        out = proc.stdout + proc.stderr
+    finally:
+        work.unlink(missing_ok=True)
 
     summary = re.search(r"(\d+) located, (\d+) ambiguous, (\d+) unlocated", out)
     if summary:
