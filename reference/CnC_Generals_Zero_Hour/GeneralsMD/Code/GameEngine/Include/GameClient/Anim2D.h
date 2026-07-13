@@ -72,13 +72,12 @@ static char *Anim2DModeNames[] =
 // ------------------------------------------------------------------------------------------------
 /** A template of a 2D animation */
 // ------------------------------------------------------------------------------------------------
-class Anim2DTemplate : public MemoryPoolObject
+class Anim2DTemplate
 {
-	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(Anim2DTemplate, "Anim2DTemplate")		
 public:
 
 	Anim2DTemplate( AsciiString name );
-	//virtual ~Anim2DTemplate( void );
+	virtual ~Anim2DTemplate( void );	// BFME: no memory pool for Anim2DTemplate
 
 	AsciiString getName( void ) const { return m_name; }
 	const Image *getFrame( UnsignedShort frameNumber ) const;
@@ -130,18 +129,58 @@ enum Anim2DStatus
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-class Anim2D : public MemoryPoolObject,
-							 public Snapshot
+class Anim2D : public Snapshot		// BFME: no MemoryPoolObject base (single vtable in retail);
+																	// the memory pool glue below is hand-rolled to match
 {
 
 friend class Anim2DCollection;
 
-	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE( Anim2D, "Anim2D" );
+protected:
+	virtual ~Anim2D( void );
+public:
+	enum Anim2DMagicEnum { Anim2D_GLUE_NOT_IMPLEMENTED = 0 };
+	inline void *operator new(size_t s, Anim2DMagicEnum e DECLARE_LITERALSTRING_ARG2)
+	{
+		DEBUG_ASSERTCRASH(s == sizeof(Anim2D), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly"));
+		return Anim2D::getClassMemoryPool()->allocateBlockImplementation(PASS_LITERALSTRING_ARG1);
+	}
+	inline void operator delete(void *p, Anim2DMagicEnum e DECLARE_LITERALSTRING_ARG2)
+	{
+		Anim2D::getClassMemoryPool()->freeBlock(p);
+	}
+protected:
+	inline void *operator new(size_t s)
+	{
+		DEBUG_CRASH(("This operator new should normally never be called... please use new(char*) instead."));
+		DEBUG_ASSERTCRASH(s == sizeof(Anim2D), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly"));
+		throw ERROR_BUG;
+		return 0;
+	}
+	inline void operator delete(void *p)
+	{
+		DEBUG_CRASH(("Please call deleteInstance instead of delete."));
+		Anim2D::getClassMemoryPool()->freeBlock(p);
+	}
+private:
+	virtual MemoryPool *getObjectMemoryPool()
+	{
+		return Anim2D::getClassMemoryPool();
+	}
+public:
+	void deleteInstance()
+	{
+		if (this)
+		{
+			MemoryPool *pool = this->getObjectMemoryPool(); // save this, since the dtor will nuke our vtbl
+			this->~Anim2D();
+			pool->freeBlock((void *)this);
+		}
+	}
+	GCMP_CREATE(Anim2D, "Anim2D", -1, -1)
 
 public:
 
 	Anim2D( Anim2DTemplate *animTemplate, Anim2DCollection *collectionSystem );
-	// virtual destructor prototype provided by memory pool object
 
 	UnsignedShort getCurrentFrame( void ) const { return m_currentFrame; }		///< get our current frame #
 	void setCurrentFrame( UnsignedShort frame );				///< set the current frame #

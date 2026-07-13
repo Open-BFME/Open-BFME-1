@@ -72,7 +72,7 @@ Anim2DTemplate::Anim2DTemplate( AsciiString name )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??1Anim2DTemplate@@MAE@XZ present-unmatched
+// ??1Anim2DTemplate@@UAE@XZ present-unmatched
 Anim2DTemplate::~Anim2DTemplate( void )
 {
 
@@ -586,7 +586,6 @@ void Anim2D::tryNextFrame( void )
 // ------------------------------------------------------------------------------------------------
 /** Set status bit */
 // ------------------------------------------------------------------------------------------------
-// ?setStatus@Anim2D@@QAEXE@Z present-unmatched
 void Anim2D::setStatus( UnsignedByte statusBits )
 {
 
@@ -598,7 +597,6 @@ void Anim2D::setStatus( UnsignedByte statusBits )
 // ------------------------------------------------------------------------------------------------
 /** Clear status bit */
 // ------------------------------------------------------------------------------------------------
-// ?clearStatus@Anim2D@@QAEXE@Z present-unmatched
 void Anim2D::clearStatus( UnsignedByte statusBits )
 {
 
@@ -610,7 +608,6 @@ void Anim2D::clearStatus( UnsignedByte statusBits )
 // ------------------------------------------------------------------------------------------------
 /** Return the "natural" width of the image for our current frame */
 // ------------------------------------------------------------------------------------------------
-// ?getCurrentFrameWidth@Anim2D@@QBEIXZ present-unmatched
 UnsignedInt Anim2D::getCurrentFrameWidth( void ) const
 {
 	const Image *currentFrameImage = m_template->getFrame( m_currentFrame );
@@ -625,7 +622,6 @@ UnsignedInt Anim2D::getCurrentFrameWidth( void ) const
 // ------------------------------------------------------------------------------------------------
 /** Return the "natural" height of the image for our current frame */
 // ------------------------------------------------------------------------------------------------
-// ?getCurrentFrameHeight@Anim2D@@QBEIXZ present-unmatched
 UnsignedInt Anim2D::getCurrentFrameHeight( void ) const
 {
 	const Image *currentFrameImage = m_template->getFrame( m_currentFrame );
@@ -740,7 +736,6 @@ void Anim2D::xfer( Xfer *xfer )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??0Anim2DCollection@@QAE@XZ present-unmatched
 Anim2DCollection::Anim2DCollection( void )
 {
 
@@ -750,7 +745,6 @@ Anim2DCollection::Anim2DCollection( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??1Anim2DCollection@@UAE@XZ present-unmatched
 Anim2DCollection::~Anim2DCollection( void )
 {
 
@@ -766,7 +760,7 @@ Anim2DCollection::~Anim2DCollection( void )
 		nextTemplate = m_templateList->friend_getNextTemplate();
 
 		// delete this template
-		m_templateList->deleteInstance();
+		delete m_templateList;  // BFME: no memory pool for Anim2DTemplate
 
 		// set the head of our list to the next template
 		m_templateList = nextTemplate;
@@ -830,7 +824,6 @@ Anim2DTemplate *Anim2DCollection::findTemplate( const AsciiString& name )
 }  // end findTemplate
 
 //-------------------------------------------------------------------------------------------------
-// ?getNextTemplate@Anim2DCollection@@QBEPAVAnim2DTemplate@@PAV2@@Z present-unmatched
 Anim2DTemplate* Anim2DCollection::getNextTemplate( Anim2DTemplate *animTemplate ) const
 {
 	if( animTemplate )
@@ -848,7 +841,7 @@ Anim2DTemplate *Anim2DCollection::newTemplate( const AsciiString& name )
 {
 
 	// allocate a new template
-	Anim2DTemplate *animTemplate = newInstance(Anim2DTemplate)( name );
+	Anim2DTemplate *animTemplate = new Anim2DTemplate( name );  // BFME: no memory pool for Anim2DTemplate
 
 	// link to our template list
 	animTemplate->friend_setNextTemplate( m_templateList );
@@ -863,7 +856,6 @@ Anim2DTemplate *Anim2DCollection::newTemplate( const AsciiString& name )
 /** Register animation instance with us.  When an animation instance is registered it can
 	* be updated even when it's not drawn */
 // ------------------------------------------------------------------------------------------------
-// ?registerAnimation@Anim2DCollection@@QAEXPAVAnim2D@@@Z present-unmatched
 void Anim2DCollection::registerAnimation( Anim2D *anim )
 {
 
@@ -888,7 +880,6 @@ void Anim2DCollection::registerAnimation( Anim2D *anim )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?unRegisterAnimation@Anim2DCollection@@QAEXPAVAnim2D@@@Z present-unmatched
 void Anim2DCollection::unRegisterAnimation( Anim2D *anim )
 {
 
