@@ -73,7 +73,6 @@
  * HISTORY:                                                                                    * 
  *   08/11/1997 GH  : Created.                                                                 * 
  *=============================================================================================*/
-// ??0HAnimManagerClass@@QAE@XZ present-unmatched
 HAnimManagerClass::HAnimManagerClass(void) 
 {
 	// Create the hash tables
@@ -94,16 +93,14 @@ HAnimManagerClass::HAnimManagerClass(void)
  * HISTORY:                                                                                    * 
  *   08/11/1997 GH  : Created.                                                                 * 
  *=============================================================================================*/
-// ??1HAnimManagerClass@@QAE@XZ present-unmatched
 HAnimManagerClass::~HAnimManagerClass(void)
 {
 	Free_All_Anims();
-	Reset_Missing();	// Jani: Deleting missing animations as well
+	// BFME: retail dtor has no Reset_Missing calls (ZH added them later)
 
 	delete AnimPtrTable;
 	AnimPtrTable = NULL;
 
-	Reset_Missing();
 	delete MissingAnimTable;
 	MissingAnimTable = NULL;
 }
