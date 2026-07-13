@@ -13,7 +13,7 @@ Goal: source code that rebuilds BFME 1's executable byte-for-byte.
 
 ## Status
 
-We currently have C++ functions in `src/` and a patcher which can patch same-size custom functions into `lotrbfme.exe`. This is useful for modding.
+We currently have C++ functions in `Code/` and a patcher which can patch same-size custom functions into `lotrbfme.exe`. This is useful for modding.
 
 ## How You Can Help
 
