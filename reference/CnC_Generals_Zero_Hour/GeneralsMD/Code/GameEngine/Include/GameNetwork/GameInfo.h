@@ -54,6 +54,17 @@ enum
 };
 
 /**
+  * Connection info for a slot - the NAT/Firewall behavior and the
+	* port number the slot's player communicates on.  BFME passes this
+	* around as a unit (GameSlot::setState takes a pointer to one).
+	*/
+struct GameSlotConnectInfo
+{
+	FirewallHelperClass::FirewallBehaviorType m_nat;	///< the NAT/Firewall behavior
+	UnsignedShort m_port;															///< port number
+};
+
+/**
   * GameSlot class - maintains information about the contents of a
 	* game slot.  This persists throughout the game.
 	*/
@@ -72,7 +83,7 @@ public:
 
 	void setState( SlotState state,
 		UnicodeString name = UnicodeString::TheEmptyString,
-		UnsignedInt IP = 0);														///< Set the slot's state (human, AI, open, etc)
+		const GameSlotConnectInfo *connectInfo = NULL);	///< Set the slot's state (human, AI, open, etc)
 	SlotState getState( void ) const { return m_state; }		///< Get the slot state
 
 	void setColor( Int color ) { m_color = color; }
@@ -97,11 +108,11 @@ public:
 	inline void setIP( UnsignedInt IP ) { m_IP = IP; }
 	inline UnsignedInt getIP( void ) const { return m_IP; }
 
-	inline void setPort( UnsignedShort port ) { m_port = port; }
-	inline UnsignedShort getPort( void ) const { return m_port; }
+	inline void setPort( UnsignedShort port ) { m_connectInfo.m_port = port; }
+	inline UnsignedShort getPort( void ) const { return m_connectInfo.m_port; }
 
-	inline void setNATBehavior( FirewallHelperClass::FirewallBehaviorType NATBehavior) { m_NATBehavior = NATBehavior; }
-	inline FirewallHelperClass::FirewallBehaviorType getNATBehavior() const { return m_NATBehavior; }
+	inline void setNATBehavior( FirewallHelperClass::FirewallBehaviorType NATBehavior) { m_connectInfo.m_nat = NATBehavior; }
+	inline FirewallHelperClass::FirewallBehaviorType getNATBehavior() const { return m_connectInfo.m_nat; }
 	
 	void saveOffOriginalInfo( void );
 	inline Int getOriginalPlayerTemplate( void ) const	{ return m_origPlayerTemplate; }
@@ -142,8 +153,7 @@ protected:
 	Int m_origPlayerTemplate;															///< PlayerTemplate
 	UnicodeString m_name;															///< Only valid for human players
 	UnsignedInt m_IP;																	///< Only valid for human players in LAN/WOL
-	UnsignedShort m_port;															///< Only valid for human players in LAN/WOL
-	FirewallHelperClass::FirewallBehaviorType m_NATBehavior;	///< The NAT behavior for this slot's player.
+	GameSlotConnectInfo m_connectInfo;								///< NAT behavior and port for this slot's player.
 	UnsignedInt m_lastFrameInGame;	// only valid for human players
 	Bool m_disconnected;						// only valid for human players
 };

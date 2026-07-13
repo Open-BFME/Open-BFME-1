@@ -607,6 +607,19 @@ private: \
 	} 
 	
 // ----------------------------------------------------------------------------
+// BFME's retail exe has no pool-backed allocations at newInstance sites: the
+// glue's placement operator new routes straight to global operator new there.
+// getClassMemoryPool bodies still exist in retail as dead code (pulled in by
+// vtables); TUs that must emit them (module_pool_glue_bulk.cpp) define
+// ZH_EMIT_POOL_GLUE to keep the ZH pool call, which drags getClassMemoryPool
+// into the object file.
+#ifdef ZH_EMIT_POOL_GLUE
+#define MP_GLUE_ALLOCATE(ARGCLASS) ARGCLASS::getClassMemoryPool()->allocateBlockImplementation(PASS_LITERALSTRING_ARG1)
+#else
+#define MP_GLUE_ALLOCATE(ARGCLASS) ::operator new(s)
+#endif
+
+// ----------------------------------------------------------------------------
 #define MEMORY_POOL_GLUE_WITHOUT_GCMP(ARGCLASS) \
 protected: \
 	virtual ~ARGCLASS(); \
@@ -616,7 +629,7 @@ public: \
 	inline void *operator new(size_t s, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
 	{ \
 		DEBUG_ASSERTCRASH(s == sizeof(ARGCLASS), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly")); \
-		return ARGCLASS::getClassMemoryPool()->allocateBlockImplementation(PASS_LITERALSTRING_ARG1); \
+		return MP_GLUE_ALLOCATE(ARGCLASS); \
 	} \
 public: \
 	/* \
@@ -626,7 +639,7 @@ public: \
 	*/ \
 	inline void operator delete(void *p, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
 	{ \
-		ARGCLASS::getClassMemoryPool()->freeBlock(p); \
+		::operator delete(p); \
 	} \
 protected: \
 	/* \
@@ -644,15 +657,12 @@ protected: \
 	*/ \
 	inline void *operator new(size_t s) \
 	{ \
-		DEBUG_CRASH(("This operator new should normally never be called... please use new(char*) instead.")); \
 		DEBUG_ASSERTCRASH(s == sizeof(ARGCLASS), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly")); \
-		throw ERROR_BUG; \
-		return 0; \
+		return ::operator new(s); \
 	} \
 	inline void operator delete(void *p) \
 	{ \
-		DEBUG_CRASH(("Please call deleteInstance instead of delete.")); \
-		ARGCLASS::getClassMemoryPool()->freeBlock(p); \
+		::operator delete(p); \
 	} \
 private: \
 	virtual MemoryPool *getObjectMemoryPool() \

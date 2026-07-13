@@ -73,7 +73,6 @@ NetCommandWrapperListNode::~NetCommandWrapperListNode() {
 	}
 }
 
-// ?isComplete@NetCommandWrapperListNode@@QAE_NXZ present-unmatched
 Bool NetCommandWrapperListNode::isComplete() {
 	return m_numChunksPresent == m_numChunks;
 }
@@ -174,10 +173,11 @@ Int NetCommandWrapperList::getPercentComplete(UnsignedShort wrappedCommandID)
 	return temp->getPercentComplete();
 }
 
-// ?processWrapper@NetCommandWrapperList@@QAEXPAVNetCommandRef@@@Z present-unmatched
 void NetCommandWrapperList::processWrapper(NetCommandRef *ref) {
 	NetCommandWrapperListNode *temp = m_list;
-	NetWrapperCommandMsg *msg = (NetWrapperCommandMsg *)(ref->getCommand());
+	// BFME quirk: retail dereferences the ref pointer itself here (reading its
+	// vtable slot) rather than calling getCommand(); mirrored for byte parity.
+	NetWrapperCommandMsg *msg = *(NetWrapperCommandMsg **)ref;
 
 	while ((temp != NULL) && (temp->getCommandID() != msg->getWrappedCommandID())) {
 		temp = temp->m_next;

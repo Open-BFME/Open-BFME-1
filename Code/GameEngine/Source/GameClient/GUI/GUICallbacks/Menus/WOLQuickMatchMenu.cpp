@@ -1385,7 +1385,8 @@ void WOLQuickMatchMenuUpdate( WindowLayout * layout, void *userData)
 									AsciiString aName = resp.stagingRoomPlayerNames[i].c_str();
 									UnicodeString uName;
 									uName.translate(aName);
-									slot->setState(SLOT_PLAYER, uName, resp.qmStatus.IP[i]);
+									slot->setState(SLOT_PLAYER, uName);
+								slot->setIP(resp.qmStatus.IP[i]);
 									slot->setColor(resp.qmStatus.color[i]);
 									slot->setPlayerTemplate(resp.qmStatus.side[i]);
 									//slot->setProfileID(0);

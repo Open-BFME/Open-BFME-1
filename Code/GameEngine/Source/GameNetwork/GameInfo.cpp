@@ -75,17 +75,16 @@ void GameSlot::reset()
 	m_startPos = -1;
 	m_playerTemplate = -1;
 	m_teamNumber = -1;
-	m_NATBehavior = FirewallHelperClass::FIREWALL_TYPE_SIMPLE;
+	m_connectInfo.m_nat = FirewallHelperClass::FIREWALL_TYPE_SIMPLE;
 	m_lastFrameInGame = 0;
 	m_disconnected = FALSE;
-	m_port = 0;
+	m_connectInfo.m_port = 0;
 	m_isMuted = FALSE;
 	m_origPlayerTemplate = -1;
 	m_origStartPos = -1;
 	m_origColor = -1;
 }
 
-// ?saveOffOriginalInfo@GameSlot@@QAEXXZ present-unmatched
 void GameSlot::saveOffOriginalInfo( void )
 {
 	DEBUG_LOG(("GameSlot::saveOffOriginalInfo() - orig was color=%d, pos=%d, house=%d\n",
@@ -187,7 +186,6 @@ Int GameSlot::getApparentStartPos( void ) const
 }
 
 
-// ?unAccept@GameSlot@@QAEXXZ present-unmatched
 void GameSlot::unAccept( void )
 {
 	if (isHuman())
@@ -196,7 +194,6 @@ void GameSlot::unAccept( void )
 	}
 }
 
-// ?setMapAvailability@GameSlot@@QAEX_N@Z present-unmatched
 void GameSlot::setMapAvailability( Bool hasMap )
 {
 	if (isHuman())
@@ -205,8 +202,7 @@ void GameSlot::setMapAvailability( Bool hasMap )
 	}
 }
 
-// ?setState@GameSlot@@QAEXW4SlotState@@VUnicodeString@@I@Z present-unmatched
-void GameSlot::setState( SlotState state, UnicodeString name, UnsignedInt IP )
+void GameSlot::setState( SlotState state, UnicodeString name, const GameSlotConnectInfo *connectInfo )
 {
 	if (!(isAI() &&  (state == SLOT_EASY_AI || state == SLOT_MED_AI || state == SLOT_BRUTAL_AI)))
 	{
@@ -252,11 +248,10 @@ void GameSlot::setState( SlotState state, UnicodeString name, UnsignedInt IP )
 		}
 	}
 
-	m_IP = IP;
+	m_connectInfo = *connectInfo;
 }
 
 // Various tests
-// ?isHuman@GameSlot@@QBE_NXZ present-unmatched
 Bool GameSlot::isHuman( void ) const
 {
 	return m_state == SLOT_PLAYER;
@@ -435,7 +430,6 @@ void GameInfo::startGame( Int gameID )
 	m_inProgress = true;
 }
 
-// ?endGame@GameInfo@@QAEXXZ present-unmatched
 void GameInfo::endGame( void )
 {
 	DEBUG_ASSERTCRASH(m_inGame && m_inProgress, ("Ending game without playing one!"));
@@ -1214,7 +1208,8 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
 							//DEBUG_LOG(("ParseAsciiStringToGameInfo - IP address is %x\n", playerIP));
 							
 							//set the state of the slot
-							newSlot[i].setState(SLOT_PLAYER, name, playerIP);
+							newSlot[i].setState(SLOT_PLAYER, name);
+						newSlot[i].setIP(playerIP);
 
 							// parse out the port
 							slotValue = strtok_r(NULL, ",", &slotPos);
