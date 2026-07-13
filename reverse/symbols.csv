@@ -1291,3 +1291,6 @@ _IsStatsConnected,0x009D2B60
 ?moveMouse@Mouse@@IAEXHHH@Z,0x000141A5
 ?update@Mouse@@UAEXXZ,0x0003D7FD
 ??0MissingAnimClass@@QAE@PBD@Z,0x00034559,callers use this thunk (like findMemoryPool 0x3ADD7); real body drift candidate 0x9723BF
+_bfme_timeGetTime@0,0x000481E4,ILT thunk for timeGetTime (non-dllimport call sites in ProcessAnimateWindow.cpp)
+?getVel@AnimateWindow@@QAE?AUCoord2D@@XZ,0x0000E548,ILT thunk -> 0x495610; retail call sites use the thunk
+?winGetPosition@GameWindow@@QAEHPAH0@Z,0x000179BD,ILT thunk -> 0xC9D10; retail call sites use the thunk

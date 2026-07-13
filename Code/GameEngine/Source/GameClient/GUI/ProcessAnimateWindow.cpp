@@ -59,6 +59,12 @@
 #include "GameClient/AnimateWindowManager.h"
 #include "GameClient/GameWindow.h"
 #include "GameClient/Display.h"
+
+// BFME calls timeGetTime without dllimport in this TU: its call sites go
+// through the ILT thunk at 0x481E4 (e8 rel32), not the IAT (ff 15) used by
+// most other TUs. Alias the symbol after the headers so cl emits e8.
+extern "C" DWORD WINAPI bfme_timeGetTime( void );
+#define timeGetTime bfme_timeGetTime
 //-----------------------------------------------------------------------------
 // DEFINES ////////////////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
@@ -820,7 +826,6 @@ Bool ProcessAnimateWindowSlideFromBottom::reverseAnimateWindow( AnimateWindow *a
 // ProcessAnimateWindowSlideFromBottomTimed PUBLIC FUNCTIONS ////////////////////////
 //-----------------------------------------------------------------------------
 
-// ??0ProcessAnimateWindowSlideFromBottomTimed@@QAE@XZ present-unmatched
 ProcessAnimateWindowSlideFromBottomTimed::ProcessAnimateWindowSlideFromBottomTimed( void )
 {
 	m_maxDuration = 1000;
@@ -1557,4 +1562,12 @@ Bool ProcessAnimateWindowSlideFromRightFast::reverseAnimateWindow( AnimateWindow
 		vel.x = -m_maxVel.x;
 	animWin->setVel(vel);
 	return FALSE;
+}
+
+// BFME defines AnimateWindow::getVel out-of-line in this TU (retail 0x495610):
+// the header only declares it, so callers here emit a real call (e8) instead
+// of inlining the two field reads.
+__declspec(noinline) Coord2D AnimateWindow::getVel( void )
+{
+	return m_vel;
 }

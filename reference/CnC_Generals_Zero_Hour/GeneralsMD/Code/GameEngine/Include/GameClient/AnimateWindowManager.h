@@ -198,7 +198,6 @@ private:
 	inline GameWindow  *AnimateWindow::getGameWindow( void ){ return m_win; };
 	inline AnimTypes		AnimateWindow::getAnimType( void )	{ return m_animType; };
 	inline UnsignedInt	AnimateWindow::getDelay( void )			{ return m_delay; };
-	inline Coord2D			AnimateWindow::getVel( void )				{ return m_vel; };
 	inline UnsignedInt	AnimateWindow::getStartTime( void )	{ return m_startTime; };
 	inline UnsignedInt	AnimateWindow::getEndTime( void )		{ return m_endTime; };
 
