@@ -56,7 +56,10 @@ def annotate(path):
     if not ref_hits:
         print(f"{path.name}: no reference original found — skipping regeneration")
         return False
-    path.write_text(HEAD + ref_hits[0].read_text(errors="replace"))
+    # preserve the `// stlport` build opt-in across regeneration (build.py's
+    # source_needs_stlport scans the first 2KB; regen must not silently drop it)
+    keep_stlport = path.exists() and "// stlport" in path.read_text(errors="replace")[:2048]
+    path.write_text(HEAD + ("// stlport\n" if keep_stlport else "") + ref_hits[0].read_text(errors="replace"))
 
     symbols = object_symbols(path.stem)
     lines = path.read_text(errors="replace").splitlines(keepends=True)
