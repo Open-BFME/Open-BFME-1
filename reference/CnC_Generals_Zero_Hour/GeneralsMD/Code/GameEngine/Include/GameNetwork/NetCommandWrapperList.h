@@ -32,9 +32,19 @@
 
 #include "GameNetwork/NetCommandList.h"
 
-class NetCommandWrapperListNode : public MemoryPoolObject
+// BFME: retail dropped the MemoryPoolObject base from these wrappers. Proof:
+// the node ctor @0x676380 has no SEH cleanup frame although its TU is compiled
+// with EH on (processWrapper @0x676600 keeps its frame); under /EHs a ctor gets
+// a cleanup frame iff the unwind must run a user-provided dtor, and
+// MemoryPoolObject's inline-empty virtual dtor is user-provided. The glue macro
+// still supplies both vtable slots (protected virtual dtor, getObjectMemoryPool)
+// and all operators, so layout and sizeof are unchanged; deleteInstance replaces
+// the inherited MemoryPoolObject member.
+class NetCommandWrapperListNode
 {
-	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(NetCommandWrapperListNode, "NetCommandWrapperListNode")		
+	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(NetCommandWrapperListNode, "NetCommandWrapperListNode")
+public:
+	void deleteInstance() { delete this; }
 public:
 	NetCommandWrapperListNode(NetWrapperCommandMsg *msg);
 	//virtual ~NetCommandWrapperListNode();
@@ -59,9 +69,11 @@ protected:
 
 };
 
-class NetCommandWrapperList : public MemoryPoolObject
+class NetCommandWrapperList
 {
-	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(NetCommandWrapperList, "NetCommandWrapperList")		
+	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(NetCommandWrapperList, "NetCommandWrapperList")
+public:
+	void deleteInstance() { delete this; }
 public:
 	NetCommandWrapperList();
 	//virtual ~NetCommandWrapperList();

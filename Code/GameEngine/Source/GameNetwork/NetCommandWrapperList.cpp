@@ -37,7 +37,6 @@
 ////// NetCommandWrapperListNode ///////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// ??0NetCommandWrapperListNode@@QAE@PAVNetWrapperCommandMsg@@@Z present-unmatched
 NetCommandWrapperListNode::NetCommandWrapperListNode(NetWrapperCommandMsg *msg) 
 {
 	//Added By Sadullah Nader
@@ -60,7 +59,6 @@ NetCommandWrapperListNode::NetCommandWrapperListNode(NetWrapperCommandMsg *msg)
 	m_commandID = msg->getWrappedCommandID();
 }
 
-// ??1NetCommandWrapperListNode@@MAE@XZ present-unmatched
 NetCommandWrapperListNode::~NetCommandWrapperListNode() {
 	if (m_chunksPresent != NULL) {
 		delete[] m_chunksPresent;
@@ -134,7 +132,6 @@ NetCommandWrapperList::NetCommandWrapperList() {
 	m_list = NULL;
 }
 
-// ??1NetCommandWrapperList@@MAE@XZ present-unmatched
 NetCommandWrapperList::~NetCommandWrapperList() {
 	NetCommandWrapperListNode *temp;
 	while (m_list != NULL) {
@@ -149,7 +146,6 @@ void NetCommandWrapperList::init() {
 	m_list = NULL;
 }
 
-// ?reset@NetCommandWrapperList@@QAEXXZ present-unmatched
 void NetCommandWrapperList::reset() {
 	NetCommandWrapperListNode *temp;
 	while (m_list != NULL) {
@@ -220,7 +216,6 @@ NetCommandList * NetCommandWrapperList::getReadyCommands()
 	return retlist;
 }
 
-// ?removeFromList@NetCommandWrapperList@@IAEXPAVNetCommandWrapperListNode@@@Z present-unmatched
 void NetCommandWrapperList::removeFromList(NetCommandWrapperListNode *node) {
 	if (node == NULL) {
 		return;
