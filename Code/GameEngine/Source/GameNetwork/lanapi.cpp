@@ -830,7 +830,6 @@ void LANAPI::RequestGameStart( void )
 	OnGameStart();
 }
 
-// ?ResetGameStartTimer@LANAPI@@UAEXXZ present-unmatched
 void LANAPI::ResetGameStartTimer( void )
 {
 	m_gameStartTime = 0;

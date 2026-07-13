@@ -130,7 +130,6 @@ void SubsystemInterface::DRAW(void)
 
 
 //-----------------------------------------------------------------------------
-// ??0SubsystemInterfaceList@@QAE@XZ present-unmatched
 SubsystemInterfaceList::SubsystemInterfaceList()
 {
 }

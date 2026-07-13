@@ -226,14 +226,12 @@ const Image *PlayerTemplate::getFlagWaterMarkImage( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// ?getSideIconImage@PlayerTemplate@@QBEPBVImage@@XZ present-unmatched
 const Image *PlayerTemplate::getSideIconImage( void ) const
 {
 	return TheMappedImageCollection->findImageByName(m_sideIconImage);
 }
 
 //-----------------------------------------------------------------------------
-// ?getGeneralImage@PlayerTemplate@@QBEPBVImage@@XZ present-unmatched
 const Image *PlayerTemplate::getGeneralImage( void ) const
 {
 	return TheMappedImageCollection->findImageByName(m_generalImage);
@@ -271,7 +269,6 @@ const Image *PlayerTemplate::getEnabledImage( void ) const
 /*extern*/ PlayerTemplateStore *ThePlayerTemplateStore = NULL;
 
 //-----------------------------------------------------------------------------
-// ??0PlayerTemplateStore@@QAE@XZ present-unmatched
 PlayerTemplateStore::PlayerTemplateStore() 
 {
 	// nothing
@@ -285,7 +282,6 @@ PlayerTemplateStore::~PlayerTemplateStore()
 }
 
 //-----------------------------------------------------------------------------
-// ?init@PlayerTemplateStore@@UAEXXZ present-unmatched
 void PlayerTemplateStore::init()
 {
 	m_playerTemplates.clear();

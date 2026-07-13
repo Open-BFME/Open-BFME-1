@@ -110,7 +110,6 @@ int RenderInfoClass::Additional_Pass_Count(void)
 	return AdditionalMaterialPassCount;
 }
 
-// ?Peek_Additional_Pass@RenderInfoClass@@QAEPAVMaterialPassClass@@H@Z present-unmatched
 MaterialPassClass * RenderInfoClass::Peek_Additional_Pass(int i)
 {
 	return AdditionalMaterialPassArray[i];
@@ -131,7 +130,6 @@ void RenderInfoClass::Pop_Override_Flags(void)
 	OverrideFlagLevel--;
 }
 
-// ?Current_Override_Flags@RenderInfoClass@@QAEAAW4RINFO_OVERRIDE_FLAGS@1@XZ present-unmatched
 RenderInfoClass::RINFO_OVERRIDE_FLAGS & RenderInfoClass::Current_Override_Flags(void)
 {
 	return OverrideFlag[OverrideFlagLevel];

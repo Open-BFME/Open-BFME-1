@@ -44,7 +44,6 @@ ScienceStore* TheScienceStore = NULL;
 #endif
 
 //-----------------------------------------------------------------------------
-// ?init@ScienceStore@@ present-unmatched
 void ScienceStore::init()
 {
 	DEBUG_ASSERTCRASH(m_sciences.empty(), ("Hmm"));

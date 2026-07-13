@@ -424,7 +424,6 @@ VertexMaterialClass * MaterialCollectorClass::Peek_Vertex_Material(int i)
 	return VertexMaterials[i];
 }
 
-// ?Find_Shader@MaterialCollectorClass@@QAEHABVShaderClass@@@Z present-unmatched
 int MaterialCollectorClass::Find_Shader(const ShaderClass & shader)
 {
 	for (int si=0; si<Shaders.Count(); si++) {

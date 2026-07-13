@@ -5939,7 +5939,6 @@ SpecialAbilityUpdate* Object::findSpecialAbilityUpdate( SpecialPowerType type ) 
 }
 
 // ------------------------------------------------------------------------------------------------
-// ?findSpecialPowerCompletionDie@Object@@QBEPAVSpecialPowerCompletionDie@@XZ present-unmatched
 SpecialPowerCompletionDie* Object::findSpecialPowerCompletionDie() const
 {
 	static NameKeyType key_SpecialPowerCompletionDie = NAMEKEY("SpecialPowerCompletionDie");

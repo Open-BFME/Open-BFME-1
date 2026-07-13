@@ -94,7 +94,6 @@ Thing::~Thing()
 //DECLARE_PERF_TIMER(ThingMatrixStuff)
 
 //=============================================================================
-// ?getTemplate@Thing@@QBEPBVThingTemplate@@XZ present-unmatched
 const ThingTemplate *Thing::getTemplate() const
 {
 	return m_template;

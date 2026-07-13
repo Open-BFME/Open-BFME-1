@@ -591,7 +591,6 @@ TerrainTracksRenderObjClassSystem::TerrainTracksRenderObjClassSystem()
 //=============================================================================
 /** Destructor.  Free all pre-allocated track laying render objects*/
 //=============================================================================
-// ??1TerrainTracksRenderObjClassSystem@@QAE@XZ present-unmatched
 TerrainTracksRenderObjClassSystem::~TerrainTracksRenderObjClassSystem( void )
 {
 

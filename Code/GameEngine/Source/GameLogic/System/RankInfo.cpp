@@ -69,7 +69,6 @@ RankInfoStore::~RankInfoStore()
 
 
 //-----------------------------------------------------------------------------
-// ?init@RankInfoStore@@UAEXXZ present-unmatched
 void RankInfoStore::init()
 {
 	DEBUG_ASSERTCRASH(m_rankInfos.empty(), ("Hmm"));
@@ -103,7 +102,6 @@ void RankInfoStore::reset()
 }
 
 //-----------------------------------------------------------------------------
-// ?getRankLevelCount@RankInfoStore@@QBEHXZ present-unmatched
 Int RankInfoStore::getRankLevelCount() const
 { 
 	return m_rankInfos.size(); 

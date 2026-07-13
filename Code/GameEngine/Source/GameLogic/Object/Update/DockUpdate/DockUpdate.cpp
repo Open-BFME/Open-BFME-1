@@ -219,7 +219,6 @@ Bool DockUpdate::advanceApproachPosition( Object* docker, Coord3D *position, Int
 	return TRUE;
 }
 
-// ?isClearToEnter@DockUpdate@@UBE_NPBVObject@@@Z present-unmatched
 Bool DockUpdate::isClearToEnter( Object const* docker ) const
 {
 	ObjectID dockerID = docker->getID();
@@ -421,7 +420,6 @@ void DockUpdate::cancelDock( Object* docker )
 	}
 }
 
-// ?setDockCrippled@DockUpdate@@UAEX_N@Z present-unmatched
 void DockUpdate::setDockCrippled( Bool setting )
 {
 	// At this level, Crippling means I will accept Approach requests, but I will never grant Enter clearence.

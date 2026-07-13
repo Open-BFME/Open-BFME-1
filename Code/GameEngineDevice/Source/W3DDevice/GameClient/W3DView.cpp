@@ -1468,7 +1468,6 @@ void W3DView::setFadeParameters(Int fadeFrames, Int direction)
 	ScreenCrossFadeFilter::setFadeParameters(fadeFrames,direction);
 }
 
-// ?set3DWireFrameMode@W3DView@@ present-unmatched
 void W3DView::set3DWireFrameMode(Bool enable)
 {
 	m_nextWireFrameEnabled = enable;
@@ -2041,7 +2040,6 @@ void W3DView::setZoomToDefault( void )
 //-------------------------------------------------------------------------------------------------
 /** Set the horizontal field of view angle */
 //-------------------------------------------------------------------------------------------------
-// ?setFieldOfView@W3DView@@ present-unmatched
 void W3DView::setFieldOfView( Real angle )
 {
 	View::setFieldOfView( angle );

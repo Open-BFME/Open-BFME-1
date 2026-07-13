@@ -435,7 +435,6 @@ int MemLogClass::Get_Peak_Allocated_Memory(int category)
 	return _MemoryCounters[category].Get_Peak_Allocated_Memory();
 }
 
-// ?Init@MemLogClass@@QAEXXZ present-unmatched
 void MemLogClass::Init()
 {
 	{
@@ -489,19 +488,16 @@ int WWMemoryLogClass::Get_Category_Count(void)
 	return MEM_COUNT;
 }
 
-// ?Get_Category_Name@WWMemoryLogClass@@SAPBDH@Z present-unmatched
 const char * WWMemoryLogClass::Get_Category_Name(int category)
 {
 	return _MemoryCategoryNames[category];
 }
 
-// ?Get_Current_Allocated_Memory@WWMemoryLogClass@@SAHH@Z present-unmatched
 int WWMemoryLogClass::Get_Current_Allocated_Memory(int category)
 {
 	return Get_Log()->Get_Current_Allocated_Memory(category);
 }
 
-// ?Get_Peak_Allocated_Memory@WWMemoryLogClass@@SAHH@Z present-unmatched
 int WWMemoryLogClass::Get_Peak_Allocated_Memory(int category)
 {
 	return Get_Log()->Get_Peak_Allocated_Memory(category);
@@ -523,13 +519,11 @@ void WWMemoryLogClass::Pop_Active_Category(void)
 #endif //(DISABLE_MEMLOG == 0)
 }
 
-// ?Register_Memory_Allocated@WWMemoryLogClass@@SAHH@Z present-unmatched
 int WWMemoryLogClass::Register_Memory_Allocated(int size)
 {
 	return Get_Log()->Register_Memory_Allocated(size);
 }
 
-// ?Register_Memory_Released@WWMemoryLogClass@@SAXHH@Z present-unmatched
 void WWMemoryLogClass::Register_Memory_Released(int category,int size)
 {
 	Get_Log()->Register_Memory_Released(category,size);
@@ -714,7 +708,6 @@ void * WWMemoryLogClass::Allocate_Memory(size_t size)
  * HISTORY:                                                                                    *
  *   5/29/2001  gth : Created.                                                                 *
  *=============================================================================================*/
-// ?Release_Memory@WWMemoryLogClass@@SAXPAX@Z present-unmatched
 void WWMemoryLogClass::Release_Memory(void *ptr)
 {
 	FreeCount++;

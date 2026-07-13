@@ -482,7 +482,6 @@ AIGroup *AI::findGroup( UnsignedInt id )
 /**
  * Get the next formation id.
  */
-// ?getNextFormationID@AI@@QAE?AW4FormationID@@XZ present-unmatched
 FormationID AI::getNextFormationID(void )
 {
 	FormationID nextVal = m_nextFormationID;

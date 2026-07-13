@@ -204,7 +204,6 @@ void TeamFactory::init( void )
 }
 
 // ------------------------------------------------------------------------
-// ?reset@TeamFactory@@UAEXXZ present-unmatched
 void TeamFactory::reset( void )
 {
 	m_uniqueTeamPrototypeID = TEAM_PROTOTYPE_ID_INVALID;

@@ -73,7 +73,6 @@ void SmudgeManager::init(void)
 
 }
 
-// ?reset@SmudgeManager@@UAEXXZ present-unmatched
 void SmudgeManager::reset(void)
 {
 	SmudgeSet* head;
@@ -100,7 +99,6 @@ SmudgeSet *SmudgeManager::addSmudgeSet(void)
 	return set;
 }
 
-// ?removeSmudgeSet@SmudgeManager@@QAEXAAUSmudgeSet@@@Z present-unmatched
 void SmudgeManager::removeSmudgeSet(SmudgeSet &mySmudge)
 {
 	mySmudge.Remove();	//remove from used list
@@ -112,13 +110,11 @@ SmudgeSet::SmudgeSet(void)
 	m_usedSmudgeCount=0;
 }
 
-// ??1SmudgeSet@@UAE@XZ present-unmatched
 SmudgeSet::~SmudgeSet()
 {
 	reset();
 }
 
-// ?reset@SmudgeSet@@QAEXXZ present-unmatched
 void SmudgeSet::reset(void)
 {
 	Smudge* head;
@@ -145,7 +141,6 @@ Smudge *SmudgeSet::addSmudgeToSet(void)
 	return smudge;
 }
 
-// ?removeSmudgeFromSet@SmudgeSet@@QAEXAAUSmudge@@@Z present-unmatched
 void SmudgeSet::removeSmudgeFromSet(Smudge &mySmudge)
 {
 	mySmudge.Remove();	//remove from used list.

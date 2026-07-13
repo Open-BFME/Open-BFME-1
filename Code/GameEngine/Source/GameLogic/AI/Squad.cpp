@@ -129,7 +129,6 @@ const VecObjectPtr& Squad::getLiveObjects(void)
 }
 
 // getSizeOfGroup /////////////////////////////////////////////////////////////////////////////////
-// ?getSizeOfGroup@Squad@@QBEHXZ present-unmatched
 Int Squad::getSizeOfGroup(void) const
 {
 	return m_objectIDs.size();

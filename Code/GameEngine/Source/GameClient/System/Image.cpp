@@ -173,7 +173,6 @@ Image::~Image( void )
 /** Set a status bit into the existing status, return the previous status
 	* bit collection from before the set */
 //-------------------------------------------------------------------------------------------------
-// ?setStatus@Image@@QAEII@Z present-unmatched
 UnsignedInt Image::setStatus( UnsignedInt bit )
 {
 	UnsignedInt prevStatus = m_status;
@@ -187,7 +186,6 @@ UnsignedInt Image::setStatus( UnsignedInt bit )
 /** Clear a status bit from the existing status, return the previous
 	* status bit collection from before the clear */
 //-------------------------------------------------------------------------------------------------
-// ?clearStatus@Image@@QAEII@Z present-unmatched
 UnsignedInt Image::clearStatus( UnsignedInt bit )
 {
 	UnsignedInt prevStatus = m_status;

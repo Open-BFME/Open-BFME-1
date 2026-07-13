@@ -267,7 +267,6 @@ void CameraClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) const
  * HISTORY:                                                                                    *
  *   5/29/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Set_Transform@CameraClass@@UAEXABVMatrix3D@@@Z present-unmatched
 void CameraClass::Set_Transform(const Matrix3D &m)	
 { 
 	RenderObjClass::Set_Transform(m);
@@ -289,7 +288,6 @@ void CameraClass::Set_Transform(const Matrix3D &m)
  * HISTORY:                                                                                    *
  *   5/29/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Set_Position@CameraClass@@UAEXABVVector3@@@Z present-unmatched
 void CameraClass::Set_Position(const Vector3 &v)
 { 
 	RenderObjClass::Set_Position(v); 
@@ -566,7 +564,6 @@ void CameraClass::Rotate_To_View_Space(Vector3 & dest,const Vector3 & ws_vector)
  * HISTORY:                                                                                    *
  *   8/25/99    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Get_Near_Clip_Bounding_Box@CameraClass@@QBEABVOBBoxClass@@XZ present-unmatched
 const OBBoxClass & CameraClass::Get_Near_Clip_Bounding_Box(void) const
 {
 	Update_Frustum();
@@ -706,7 +703,6 @@ void CameraClass::Device_To_View_Space(const Vector2 & device_coord,Vector3 * se
  * HISTORY:                                                                                    *
  *   12/8/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Device_To_World_Space@CameraClass@@QAEXABVVector2@@PAVVector3@@@Z present-unmatched
 void CameraClass::Device_To_World_Space(const Vector2 & device_coord,Vector3 * world_coord)
 {
 	Vector3 vs;
@@ -764,14 +760,12 @@ void CameraClass::Get_Clip_Planes(float & znear,float & zfar) const
 	zfar = ZFar;
 }
 
-// ?Get_Horizontal_FOV@CameraClass@@QBEMXZ present-unmatched
 float CameraClass::Get_Horizontal_FOV(void) const 
 { 
 	float width = ViewPlane.Max.X - ViewPlane.Min.X;
 	return 2*WWMath::Atan2(width,2.0);
 }
 
-// ?Get_Vertical_FOV@CameraClass@@QBEMXZ present-unmatched
 float CameraClass::Get_Vertical_FOV(void) const 
 { 
 	float height = ViewPlane.Max.Y - ViewPlane.Min.Y;

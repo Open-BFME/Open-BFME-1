@@ -65,7 +65,6 @@ DefaultStaticSortListClass::~DefaultStaticSortListClass(void)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Virtual functions ///////////////////////////////////////////////////////////////////////////////
 
-// ?Add_To_List@DefaultStaticSortListClass@@UAEXPAVRenderObjClass@@I@Z present-unmatched
 void DefaultStaticSortListClass::Add_To_List(RenderObjClass * robj, unsigned int sort_level)
 {
 	if(sort_level < 1 || sort_level > MAX_SORT_LEVEL) {

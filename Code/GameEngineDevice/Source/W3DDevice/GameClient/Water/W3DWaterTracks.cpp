@@ -289,7 +289,6 @@ void WaterTracksObj::init( Real width, Vector2 &start, Vector2 &end, Char *textu
 /** Update state of object - advance animations and other states.
  */
 //=============================================================================
-// ?update@WaterTracksObj@@QAEHH@Z present-unmatched
 Int WaterTracksObj::update(Int msElapsed)
 {
 #ifdef	ALLOW_WATER_TRACK_EDIT
@@ -578,7 +577,6 @@ doesn't need this object anymore.  The track-laying object will be returned
 to pool of available tracks as soon as any remaining track edges have faded out.
 */
 //=============================================================================
-// ?unbindTrack@WaterTracksRenderSystem@@QAEXPAVWaterTracksObj@@@Z present-unmatched
 void WaterTracksRenderSystem::unbindTrack( WaterTracksObj *mod )
 {
 	//this object should return to free store as soon as there is nothing
@@ -641,7 +639,6 @@ WaterTracksRenderSystem::WaterTracksRenderSystem()
 //=============================================================================
 /** Destructor.  Free all pre-allocated track laying render objects*/
 //=============================================================================
-// ??1WaterTracksRenderSystem@@QAE@XZ present-unmatched
 WaterTracksRenderSystem::~WaterTracksRenderSystem( void )
 {
 

@@ -157,7 +157,6 @@ MapObject *MapObject::duplicate(void)
 	return pObj;
 }
 
-// ?setRenderObj@MapObject@@QAEXPAVRenderObjClass@@@Z present-unmatched
 void MapObject::setRenderObj(RenderObjClass *pObj)
 {
 	REF_PTR_SET(m_renderObj, pObj);

@@ -2379,7 +2379,6 @@ void W3DShadowTexture::updateBounds(Vector3 &lightPos, RenderObjClass *robj)
 		box.Translate(-objPos);	//translate box to object space.
 }
 
-// ??0W3DShadowTextureManager@@QAE@XZ present-unmatched
 W3DShadowTextureManager::W3DShadowTextureManager(void) 
 {
 	// Create the hash tables
@@ -2400,7 +2399,6 @@ W3DShadowTextureManager::~W3DShadowTextureManager(void)
 }
 
 /** Release all loaded textures */
-// ?freeAllTextures@W3DShadowTextureManager@@QAEXXZ present-unmatched
 void W3DShadowTextureManager::freeAllTextures(void)
 {
 	// Make an iterator, and release all ptrs
@@ -2415,14 +2413,12 @@ void W3DShadowTextureManager::freeAllTextures(void)
 }
 
 /** Find texture in cache */
-// ?peekTexture@W3DShadowTextureManager@@QAEPAVW3DShadowTexture@@PBD@Z present-unmatched
 W3DShadowTexture * W3DShadowTextureManager::peekTexture(const char * name)
 {
 	return (W3DShadowTexture*)texturePtrTable->Find( name );
 }
 
 /** Get texture from cache and increment its reference count */
-// ?getTexture@W3DShadowTextureManager@@QAEPAVW3DShadowTexture@@PBD@Z present-unmatched
 W3DShadowTexture * W3DShadowTextureManager::getTexture(const char * name)
 {	
 	W3DShadowTexture * text = peekTexture( name );
@@ -2433,7 +2429,6 @@ W3DShadowTexture * W3DShadowTextureManager::getTexture(const char * name)
 }
 
 /** Add texture to cache */
-// ?addTexture@W3DShadowTextureManager@@QAE_NPAVW3DShadowTexture@@@Z present-unmatched
 Bool W3DShadowTextureManager::addTexture(W3DShadowTexture *newTexture)
 {
 	WWASSERT (newTexture != NULL);
@@ -2486,7 +2481,6 @@ void	W3DShadowTextureManager::registerMissing( const char * name )
 	missingTextureTable->Add( NEW MissingTextureClass( name ) );
 }
 
-// ?isMissing@W3DShadowTextureManager@@QAE_NPBD@Z present-unmatched
 Bool	W3DShadowTextureManager::isMissing( const char * name )
 {
 	return ( missingTextureTable->Find( name ) != NULL );

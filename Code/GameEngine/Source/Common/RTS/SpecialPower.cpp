@@ -318,7 +318,6 @@ const SpecialPowerTemplate *SpecialPowerStore::getSpecialPowerTemplateByIndex( U
 //-------------------------------------------------------------------------------------------------
 /** Return the size of the store (WB) */
 //-------------------------------------------------------------------------------------------------
-// ?getNumSpecialPowers@SpecialPowerStore@@ present-unmatched
 Int SpecialPowerStore::getNumSpecialPowers( void )
 {
 

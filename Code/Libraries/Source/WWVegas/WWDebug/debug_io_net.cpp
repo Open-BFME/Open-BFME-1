@@ -129,7 +129,6 @@ DebugIOInterface *DebugIONet::Create(void)
   return new (DebugAllocMemory(sizeof(DebugIONet))) DebugIONet();
 }
 
-// ?Delete@DebugIONet@@UAEXXZ present-unmatched
 void DebugIONet::Delete(void)
 {
   this->~DebugIONet();

@@ -84,7 +84,6 @@ WCHAR *	WideStringClass::m_ResTempPtr[MAX_TEMP_STRING] = {
 //
 ///////////////////////////////////////////////////////////////////
 void
-// ?Get_String@WideStringClass@@AAEXH_N@Z present-unmatched
 WideStringClass::Get_String (int length, bool is_temp)
 {
 	if (!is_temp && length <= 1) {
@@ -196,7 +195,6 @@ WideStringClass::Uninitialised_Grow (int new_len)
 //
 ///////////////////////////////////////////////////////////////////
 void
-// ?Free_String@WideStringClass@@AAEXXZ present-unmatched
 WideStringClass::Free_String (void)
 {
 	if (m_Buffer != m_EmptyString) {

@@ -1279,7 +1279,6 @@ Bool PathfindCell::startPathfind( PathfindCell *goalCell  )
 /**
  * Set the parent pointer.
  */
-// ?setParentCell@PathfindCell@@QAEXPAV1@@Z present-unmatched
 void PathfindCell::setParentCell( PathfindCell* parent  ) 
 { 
 	DEBUG_ASSERTCRASH(m_info, ("Has to have info."));
@@ -1304,7 +1303,6 @@ void PathfindCell::setParentCellHierarchical( PathfindCell* parent  )
 /**
  * Reset the parent cell.
  */
-// ?clearParentCell@PathfindCell@@QAEXXZ present-unmatched
 void PathfindCell::clearParentCell( void  ) 
 { 
 	DEBUG_ASSERTCRASH(m_info, ("Has to have info."));

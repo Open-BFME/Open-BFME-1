@@ -171,7 +171,6 @@ void StreakRendererClass::Set_Texture(TextureClass *texture)
 	REF_PTR_SET(Texture,texture); 
 }
 
-// ?Get_Texture@StreakRendererClass@@QBEPAVTextureClass@@XZ present-unmatched
 TextureClass * StreakRendererClass::Get_Texture(void) const
 {
 	if (Texture != NULL) {

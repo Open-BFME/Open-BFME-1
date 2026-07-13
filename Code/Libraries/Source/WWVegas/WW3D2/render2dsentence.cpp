@@ -108,7 +108,6 @@ Render2DSentenceClass::~Render2DSentenceClass (void)
 //
 ////////////////////////////////////////////////////////////////////////////////////
 void
-// ?Set_Font@Render2DSentenceClass@@QAEXPAVFontCharsClass@@@Z present-unmatched
 Render2DSentenceClass::Set_Font (FontCharsClass *font)
 {
 	Reset ();
@@ -265,7 +264,6 @@ Render2DSentenceClass::Set_Base_Location (const Vector2 &loc)
 //
 ////////////////////////////////////////////////////////////////////////////////////
 void
-// ?Set_Location@Render2DSentenceClass@@QAEXABVVector2@@@Z present-unmatched
 Render2DSentenceClass::Set_Location (const Vector2 &loc)
 { 
 	Location	= loc; 

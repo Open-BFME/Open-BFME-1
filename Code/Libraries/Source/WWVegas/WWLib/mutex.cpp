@@ -60,7 +60,6 @@ bool MutexClass::Lock(int time)
 	#endif
 }
 
-// ?Unlock@MutexClass@@AAEXXZ present-unmatched
 void MutexClass::Unlock()
 {
 	#ifdef _UNIX
@@ -117,7 +116,6 @@ CriticalSectionClass::~CriticalSectionClass()
 	#endif
 }
 
-// ?Lock@CriticalSectionClass@@AAEXXZ present-unmatched
 void CriticalSectionClass::Lock()
 {
 	#ifdef _UNIX
@@ -128,7 +126,6 @@ void CriticalSectionClass::Lock()
 	#endif
 }
 
-// ?Unlock@CriticalSectionClass@@AAEXXZ present-unmatched
 void CriticalSectionClass::Unlock()
 {
 	#ifdef _UNIX

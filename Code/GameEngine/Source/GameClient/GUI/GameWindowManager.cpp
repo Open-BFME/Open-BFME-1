@@ -563,7 +563,6 @@ void GameWindowManager::addWindowToParentAtEnd( GameWindow *window,
 //-------------------------------------------------------------------------------------------------
 /** this gets called from winHide() when a window hides itself */
 //-------------------------------------------------------------------------------------------------
-// ?windowHiding@GameWindowManager@@UAEXPAVGameWindow@@@Z present-unmatched
 void GameWindowManager::windowHiding( GameWindow *window )
 {
 
@@ -593,7 +592,6 @@ void GameWindowManager::windowHiding( GameWindow *window )
 //-------------------------------------------------------------------------------------------------
 /** Hide all windows in a certain range of id's (inclusive) */
 //-------------------------------------------------------------------------------------------------
-// ?hideWindowsInRange@GameWindowManager@@UAEXPAVGameWindow@@HH_N@Z present-unmatched
 void GameWindowManager::hideWindowsInRange( GameWindow *baseWindow, 
 																						Int first, Int last, 
 																						Bool hideFlag )
@@ -615,7 +613,6 @@ void GameWindowManager::hideWindowsInRange( GameWindow *baseWindow,
 //-------------------------------------------------------------------------------------------------
 // Enable all windows in a certain range of id's (inclusive)
 //-------------------------------------------------------------------------------------------------
-// ?enableWindowsInRange@GameWindowManager@@UAEXPAVGameWindow@@HH_N@Z present-unmatched
 void GameWindowManager::enableWindowsInRange( GameWindow *baseWindow, 
 																							Int first, Int last, 
 																							Bool enableFlag )
@@ -1680,7 +1677,6 @@ void GameWindowManager::winSetGrabWindow( GameWindow *window )
 //-------------------------------------------------------------------------------------------------
 /** Explicitly set the grab window */
 //-------------------------------------------------------------------------------------------------
-// ?winSetLoneWindow@GameWindowManager@@UAEXPAVGameWindow@@@Z present-unmatched
 void GameWindowManager::winSetLoneWindow( GameWindow *window )
 {
 	// ignore if we're trying to set the same window
@@ -3785,7 +3781,6 @@ Bool GameWindowManager::initTestGUI( void )
 }  // end initTestGUI
 
 
-// ?winNextTab@GameWindowManager@@UAEXPAVGameWindow@@@Z present-unmatched
 void GameWindowManager::winNextTab( GameWindow *window )
 {
 	if(m_tabList.size() == 0|| m_modalHead)
@@ -3810,7 +3805,6 @@ void GameWindowManager::winNextTab( GameWindow *window )
 	winSetLoneWindow(NULL);
 }
 
-// ?winPrevTab@GameWindowManager@@UAEXPAVGameWindow@@@Z present-unmatched
 void GameWindowManager::winPrevTab( GameWindow *window )
 {
 	if(m_tabList.size() == 0 || m_modalHead)

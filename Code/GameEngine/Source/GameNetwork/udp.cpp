@@ -128,7 +128,6 @@ UDP::UDP()
   fd=0;
 }
 
-// ??1UDP@@QAE@XZ present-unmatched
 UDP::~UDP()
 {
 	if (fd)

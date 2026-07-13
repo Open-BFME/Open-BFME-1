@@ -736,7 +736,6 @@ void ControlBarScheme::addImage( ControlBarSchemeImage *schemeImage )
 //
 // Update the position of the image that's animating
 //-----------------------------------------------------------------------------
-// ?updateAnim@ControlBarScheme@@QAEXPAVControlBarSchemeAnimation@@@Z present-unmatched
 void ControlBarScheme::updateAnim (ControlBarSchemeAnimation * anim)
 {
 	switch(anim->m_animType)

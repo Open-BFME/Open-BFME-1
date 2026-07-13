@@ -353,7 +353,6 @@ bool GameFileClass::Is_Available( int forced )
 //-------------------------------------------------------------------------------------------------
 /** Is the file open. */
 //-------------------------------------------------------------------------------------------------
-// ?Is_Open@GameFileClass@@UBE_NXZ present-unmatched
 bool GameFileClass::Is_Open(void) const
 {
 	return m_theFile != NULL;
@@ -474,7 +473,6 @@ W3DFileSystem::W3DFileSystem(void)
 /** Destructor.  This removes the W3D file factory, so shouldn't be done until
 after W3D is shutdown.  */
 //-------------------------------------------------------------------------------------------------
-// ??1W3DFileSystem@@UAE@XZ present-unmatched
 W3DFileSystem::~W3DFileSystem(void)
 {
 	_TheFileFactory = NULL; // remove the w3d file factory.
@@ -491,7 +489,6 @@ FileClass * W3DFileSystem::Get_File( char const *filename )
 //-------------------------------------------------------------------------------------------------
 /** Releases a file returned by Get_File. */
 //-------------------------------------------------------------------------------------------------
-// ?Return_File@W3DFileSystem@@UAEXPAVFileClass@@@Z present-unmatched
 void W3DFileSystem::Return_File( FileClass *file )
 {
 	delete file;

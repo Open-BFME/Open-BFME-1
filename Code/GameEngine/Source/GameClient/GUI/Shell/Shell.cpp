@@ -561,7 +561,6 @@ void Shell::hideShell( void )
 //-------------------------------------------------------------------------------------------------
 /** Return the top layout on the stack */
 //-------------------------------------------------------------------------------------------------
-// ?top@Shell@@QAEPAVWindowLayout@@XZ present-unmatched
 WindowLayout *Shell::top( void )
 {
 

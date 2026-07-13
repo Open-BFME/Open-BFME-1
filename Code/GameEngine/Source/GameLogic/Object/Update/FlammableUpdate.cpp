@@ -271,7 +271,6 @@ void FlammableUpdate::stopBurningSound()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?wouldIgnite@FlammableUpdate@@QAE_NXZ present-unmatched
 Bool FlammableUpdate::wouldIgnite()
 {
 	if( m_status == FS_NORMAL )

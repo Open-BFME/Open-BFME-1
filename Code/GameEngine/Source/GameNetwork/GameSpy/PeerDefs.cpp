@@ -411,7 +411,6 @@ void GameSpyInfo::removeStagingRoom( GameSpyStagingRoom room )
 	}
 }
 
-// ?hasStagingRoomListChanged@GameSpyInfo@@UAE_NXZ present-unmatched
 Bool GameSpyInfo::hasStagingRoomListChanged( void )
 {
 	Bool val = m_stagingRoomsDirty;
@@ -767,7 +766,6 @@ Bool GameSpyInfo::getDisallowNonAsianText(void )
 	return m_disallowNonAsianText;
 }
 
-// ?setMaxMessagesPerUpdate@GameSpyInfo@@UAEXH@Z present-unmatched
 void GameSpyInfo::setMaxMessagesPerUpdate( Int num )
 {
 	m_maxMessagesPerUpdate = num;

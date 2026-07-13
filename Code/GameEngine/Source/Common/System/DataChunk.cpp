@@ -148,7 +148,6 @@ Bool CachedFileInputStream::absoluteSeek(UnsignedInt pos)
 	return true;
 }
 
-// ?eof@CachedFileInputStream@@UAE_NXZ present-unmatched
 Bool CachedFileInputStream::eof(void)
 {
 	return m_size==m_pos;
@@ -325,13 +324,11 @@ void DataChunkOutput::openDataChunk( char *name, DataChunkVersionType ver )
 // ?closeDataChunk@DataChunkOutput@@QAEXXZ
 // Body in DataChunk_closeDataChunk.asm (exact 118B retail).
 
-// ?writeReal@DataChunkOutput@@QAEXM@Z present-unmatched
 void DataChunkOutput::writeReal( Real r ) 
 { 
 	::fwrite( (const char *)&r, sizeof(float) , 1, m_tmp_file  ); 
 }
 
-// ?writeInt@DataChunkOutput@@QAEXH@Z present-unmatched
 void DataChunkOutput::writeInt( Int i ) 
 { 
 	::fwrite( (const char *)&i, sizeof(Int) , 1, m_tmp_file ); 
@@ -739,7 +736,6 @@ AsciiString DataChunkInput::getChunkLabel( void )
 }
 
 // return version of current data chunk
-// ?getChunkVersion@DataChunkInput@@QAEGXZ present-unmatched
 DataChunkVersionType DataChunkInput::getChunkVersion( void )
 {
 	if (m_chunkStack == NULL)
@@ -753,7 +749,6 @@ DataChunkVersionType DataChunkInput::getChunkVersion( void )
 }		
 
 // return size of data stored in this chunk
-// ?getChunkDataSize@DataChunkInput@@QAEIXZ present-unmatched
 UnsignedInt DataChunkInput::getChunkDataSize( void )
 {
 	if (m_chunkStack == NULL)
@@ -768,7 +763,6 @@ UnsignedInt DataChunkInput::getChunkDataSize( void )
 
 
 // return size of data left to read in this chunk
-// ?getChunkDataSizeLeft@DataChunkInput@@QAEIXZ present-unmatched
 UnsignedInt DataChunkInput::getChunkDataSizeLeft( void )
 {
 	if (m_chunkStack == NULL)
@@ -781,7 +775,6 @@ UnsignedInt DataChunkInput::getChunkDataSizeLeft( void )
 	return m_chunkStack->dataLeft;
 }
 
-// ?atEndOfChunk@DataChunkInput@@QAE_NXZ present-unmatched
 Bool DataChunkInput::atEndOfChunk( void )
 {
 	if (m_chunkStack)

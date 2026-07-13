@@ -244,7 +244,6 @@ WSYS_String	operator+ (const WSYS_String &string1, const Char *string2)
 // WSYS_String::length
 //============================================================================
 
-// ?length@WSYS_String@@QBEHXZ present-unmatched
 Int WSYS_String::length(void) const
 {
 	return strlen( m_data );
@@ -254,7 +253,6 @@ Int WSYS_String::length(void) const
 // WSYS_String::isEmpty
 //============================================================================
 
-// ?isEmpty@WSYS_String@@QBE_NXZ present-unmatched
 Bool WSYS_String::isEmpty(void) const
 {
 	return m_data[0] == 0;
@@ -308,7 +306,6 @@ void WSYS_String::set( const Char *string )
 // WSYS_String::makeUpperCase
 //============================================================================
 
-// ?makeUpperCase@WSYS_String@@QAEXXZ present-unmatched
 void WSYS_String::makeUpperCase( void )
 {
 	Char *chr = m_data;
@@ -324,7 +321,6 @@ void WSYS_String::makeUpperCase( void )
 // WSYS_String::makeLowerCase
 //============================================================================
 
-// ?makeLowerCase@WSYS_String@@QAEXXZ present-unmatched
 void WSYS_String::makeLowerCase( void )
 {
 	Char *chr = m_data;

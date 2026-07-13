@@ -201,7 +201,6 @@ void GameSpyBuddyMessageQueue::endThread( void )
 	m_thread = NULL;
 }
 
-// ?isThreadRunning@GameSpyBuddyMessageQueue@@UAE_NXZ present-unmatched
 Bool GameSpyBuddyMessageQueue::isThreadRunning( void )
 {
 	return (m_thread) ? m_thread->Is_Running() : false;

@@ -174,7 +174,6 @@ SceneClass::~SceneClass(void)
  * HISTORY:                                                                                    *
  *   2/25/99    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Add_Render_Object@SceneClass@@UAEXPAVRenderObjClass@@@Z present-unmatched
 void SceneClass::Add_Render_Object(RenderObjClass * obj)
 {
 	obj->Notify_Added(this);
@@ -197,7 +196,6 @@ void SceneClass::Add_Render_Object(RenderObjClass * obj)
  * HISTORY:                                                                                    *
  *   2/25/99    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Remove_Render_Object@SceneClass@@UAEXPAVRenderObjClass@@@Z present-unmatched
 void SceneClass::Remove_Render_Object(RenderObjClass * obj)
 {
 	obj->Notify_Removed(this);
@@ -687,7 +685,6 @@ SceneIterator * SimpleSceneClass::Create_Iterator(bool onlyvisible)
  * HISTORY:                                                                                    *
  *   3/27/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Destroy_Iterator@SimpleSceneClass@@UAEXPAVSceneIterator@@@Z present-unmatched
 void SimpleSceneClass::Destroy_Iterator(SceneIterator * it)
 {
 	delete it;
@@ -702,13 +699,11 @@ SimpleSceneIterator::SimpleSceneIterator(RefRenderObjListClass * list,bool onlyv
 	OnlyVis = onlyvis;
 }
 
-// ?First@SimpleSceneIterator@@UAEXXZ present-unmatched
 void SimpleSceneIterator::First(void)
 {
 	RobjIterator.First();
 }
 
-// ?Next@SimpleSceneIterator@@UAEXXZ present-unmatched
 void SimpleSceneIterator::Next(void)
 {
 	RobjIterator.Next();
@@ -719,7 +714,6 @@ bool SimpleSceneIterator::Is_Done(void)
 	return RobjIterator.Is_Done();
 }
 
-// ?Current_Item@SimpleSceneIterator@@UAEPAVRenderObjClass@@XZ present-unmatched
 RenderObjClass * SimpleSceneIterator::Current_Item(void)
 {
 	return RobjIterator.Peek_Obj();

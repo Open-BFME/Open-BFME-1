@@ -41,7 +41,6 @@
 //
 // TileData - create a new texture tile .
 //
-// ??0TileData@@QAE@XZ present-unmatched
 TileData::TileData()
 {
 

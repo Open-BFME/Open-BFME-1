@@ -230,7 +230,6 @@ LightClass::LightClass(const LightClass & src) :
  * HISTORY:                                                                                    *
  *   3/21/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ??4LightClass@@QAEAAV0@ABV0@@Z present-unmatched
 LightClass & LightClass::operator = (const LightClass & that)
 {
 	if (this != &that) {
@@ -286,7 +285,6 @@ LightClass::~LightClass(void)
  * HISTORY:                                                                                    *
  *   3/21/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Clone@LightClass@@UBEPAVRenderObjClass@@XZ present-unmatched
 RenderObjClass * LightClass::Clone(void) const
 {
 	return W3DNEW LightClass(*this);
@@ -305,7 +303,6 @@ RenderObjClass * LightClass::Clone(void) const
  * HISTORY:                                                                                    *
  *   2/26/99    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Notify_Added@LightClass@@UAEXPAVSceneClass@@@Z present-unmatched
 void LightClass::Notify_Added(SceneClass * scene)
 {
 	RenderObjClass::Notify_Added(scene);
@@ -325,7 +322,6 @@ void LightClass::Notify_Added(SceneClass * scene)
  * HISTORY:                                                                                    *
  *   2/26/99    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Notify_Removed@LightClass@@UAEXPAVSceneClass@@@Z present-unmatched
 void LightClass::Notify_Removed(SceneClass * scene)
 {
 	scene->Unregister(this,SceneClass::LIGHT);
@@ -346,7 +342,6 @@ void LightClass::Notify_Removed(SceneClass * scene)
  * HISTORY:                                                                                    *
  *   12/8/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Get_Obj_Space_Bounding_Sphere@LightClass@@UBEXAAVSphereClass@@@Z present-unmatched
 void LightClass::Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) const
 {
 	sphere.Center.Set(0,0,0);
@@ -366,7 +361,6 @@ void LightClass::Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) const
  * HISTORY:                                                                                    *
  *   12/8/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Get_Obj_Space_Bounding_Box@LightClass@@UBEXAAVAABoxClass@@@Z present-unmatched
 void LightClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) const
 {
 	float r = Get_Attenuation_Range();

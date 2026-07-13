@@ -914,7 +914,6 @@ RenderObjIterator * WW3DAssetManager::Create_Render_Obj_Iterator(void)
  * HISTORY:                                                                                    *
  *   9/28/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Release_Render_Obj_Iterator@WW3DAssetManager@@UAEXPAVRenderObjIterator@@@Z present-unmatched
 void WW3DAssetManager::Release_Render_Obj_Iterator(RenderObjIterator * it)
 {
 	WWASSERT(it != NULL);

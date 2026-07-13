@@ -1646,7 +1646,6 @@ Int ThingTemplate::calcTimeToBuild( const Player* player) const
 
 //---------------------------------------------------------------------------------------ModuleInfo
 //-------------------------------------------------------------------------------------------------
-// ?friend_getNthData@ModuleInfo@@QAEPAVModuleData@@H@Z present-unmatched
 ModuleData* ModuleInfo::friend_getNthData(Int i)
 {
 	if (i >= 0 && i < m_info.size())

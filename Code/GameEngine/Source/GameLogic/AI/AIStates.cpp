@@ -1037,7 +1037,6 @@ const Coord3D *AIStateMachine::getGoalPathPosition( Int i ) const
  * Set the current goal waypoint. If we reach this waypoint and there 
  * are connections to further points, continue on.
  */
-// ?setGoalWaypoint@AIStateMachine@@QAEXPBVWaypoint@@@Z present-unmatched
 void AIStateMachine::setGoalWaypoint( const Waypoint *way )
 {
 	m_goalWaypoint = way;

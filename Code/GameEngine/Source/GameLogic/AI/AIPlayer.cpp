@@ -2341,7 +2341,6 @@ void AIPlayer::repairStructure(ObjectID structure)
 // ------------------------------------------------------------------------------------------------
 /** select a skillset for the player. */
 // ------------------------------------------------------------------------------------------------
-// ?selectSkillset@AIPlayer@@UAEXH@Z present-unmatched
 void AIPlayer::selectSkillset(Int skillset)
 {
 	DEBUG_ASSERTCRASH(m_skillsetSelector == INVALID_SKILLSET_SELECTION, 

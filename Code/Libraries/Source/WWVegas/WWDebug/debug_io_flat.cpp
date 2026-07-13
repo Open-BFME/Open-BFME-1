@@ -555,7 +555,6 @@ DebugIOInterface *DebugIOFlat::Create(void)
   return new (DebugAllocMemory(sizeof(DebugIOFlat))) DebugIOFlat();
 }
 
-// ?Delete@DebugIOFlat@@UAEXXZ present-unmatched
 void DebugIOFlat::Delete(void)
 {
   this->~DebugIOFlat();

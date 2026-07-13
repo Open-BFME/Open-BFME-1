@@ -249,7 +249,6 @@ BoxRenderObjClass::BoxRenderObjClass(const BoxRenderObjClass & src)
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ??4BoxRenderObjClass@@QAEAAV0@ABV0@@Z present-unmatched
 BoxRenderObjClass & BoxRenderObjClass::operator = (const BoxRenderObjClass & that)
 {
 	if (this != &that) {
@@ -313,7 +312,6 @@ const char * BoxRenderObjClass::Get_Name(void) const
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?Set_Name@BoxRenderObjClass@@UAEXPBD@Z present-unmatched
 void BoxRenderObjClass::Set_Name(const char * name)
 {
 	WWASSERT(name != NULL);
@@ -334,7 +332,6 @@ void BoxRenderObjClass::Set_Name(const char * name)
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?Set_Color@BoxRenderObjClass@@QAEXABVVector3@@@Z present-unmatched
 void BoxRenderObjClass::Set_Color(const Vector3 & color)
 {
 	Color = color;
@@ -795,7 +792,6 @@ void AABoxRenderObjClass::Set_Position(const Vector3 &v)
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?update_cached_box@AABoxRenderObjClass@@MAEXXZ present-unmatched
 void AABoxRenderObjClass::update_cached_box(void)
 {
 	CachedBox.Center = Transform.Get_Translation() + ObjSpaceCenter;
@@ -933,7 +929,6 @@ bool AABoxRenderObjClass::Intersect_OBBox(OBBoxIntersectionTestClass & boxtest)
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?Get_Obj_Space_Bounding_Sphere@AABoxRenderObjClass@@UBEXAAVSphereClass@@@Z present-unmatched
 void AABoxRenderObjClass::Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) const
 {
 	sphere.Init(ObjSpaceCenter,ObjSpaceExtent.Length());
@@ -952,7 +947,6 @@ void AABoxRenderObjClass::Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) co
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?Get_Obj_Space_Bounding_Box@AABoxRenderObjClass@@UBEXAAVAABoxClass@@@Z present-unmatched
 void AABoxRenderObjClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) const
 {
 	box.Init(ObjSpaceCenter,ObjSpaceExtent);
@@ -1051,7 +1045,6 @@ OBBoxRenderObjClass::OBBoxRenderObjClass(const OBBoxClass & box)
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ??4OBBoxRenderObjClass@@QAEAAV0@ABV0@@Z present-unmatched
 OBBoxRenderObjClass & OBBoxRenderObjClass::operator = (const OBBoxRenderObjClass & that)
 {
 	if (this != &that) {
@@ -1194,7 +1187,6 @@ void OBBoxRenderObjClass::Set_Position(const Vector3 &v)
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?update_cached_box@OBBoxRenderObjClass@@MAEXXZ present-unmatched
 void OBBoxRenderObjClass::update_cached_box(void)
 {
 	Matrix3D::Transform_Vector(Transform,ObjSpaceCenter,&CachedBox.Center);
@@ -1215,7 +1207,6 @@ void OBBoxRenderObjClass::update_cached_box(void)
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?Cast_Ray@OBBoxRenderObjClass@@UAE_NAAVRayCollisionTestClass@@@Z present-unmatched
 bool OBBoxRenderObjClass::Cast_Ray(RayCollisionTestClass & raytest)
 {
 	if ((Get_Collision_Type() & raytest.CollisionType) == 0) return false;
@@ -1334,7 +1325,6 @@ bool OBBoxRenderObjClass::Intersect_OBBox(OBBoxIntersectionTestClass & boxtest)
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?Get_Obj_Space_Bounding_Sphere@OBBoxRenderObjClass@@UBEXAAVSphereClass@@@Z present-unmatched
 void OBBoxRenderObjClass::Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) const
 {
 	sphere.Init(ObjSpaceCenter,ObjSpaceExtent.Length());
@@ -1353,7 +1343,6 @@ void OBBoxRenderObjClass::Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) co
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?Get_Obj_Space_Bounding_Box@OBBoxRenderObjClass@@UBEXAAVAABoxClass@@@Z present-unmatched
 void OBBoxRenderObjClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) const
 {
 	box.Init(ObjSpaceCenter,ObjSpaceExtent);

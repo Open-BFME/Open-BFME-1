@@ -210,7 +210,6 @@ GameFont *HeaderTemplateManager::getFontFromTemplate( AsciiString name )
 	return ht->m_font;
 }
 
-// ?getFirstHeader@HeaderTemplateManager@@QAEPAVHeaderTemplate@@XZ present-unmatched
 HeaderTemplate *HeaderTemplateManager::getFirstHeader( void )
 {
 	HeaderTemplateListIt it = m_headerTemplateList.begin();

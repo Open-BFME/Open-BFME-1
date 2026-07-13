@@ -1394,7 +1394,6 @@ RefRenderObjListIterator * RTS3DScene::createLightsIterator(void)
 //=============================================================================
 /** Destroys the iterator returned by createLightsIterator. */
 //=============================================================================
-// ?destroyLightsIterator@RTS3DScene@@QAEXPAV?$RefMultiListIterator@VRenderObjClass@@@@@Z present-unmatched
 void RTS3DScene::destroyLightsIterator(RefRenderObjListIterator * it)
 {
 	delete it;

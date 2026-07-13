@@ -90,7 +90,6 @@ VertexMaterialClass * MatBufferClass::Get_Element(int index)
 	return Array[index];
 }
 
-// ?Peek_Element@MatBufferClass@@QAEPAVVertexMaterialClass@@H@Z present-unmatched
 VertexMaterialClass * MatBufferClass::Peek_Element(int index)
 {
 	return Array[index];
@@ -159,14 +158,12 @@ UVBufferClass::UVBufferClass(const UVBufferClass & that) :
 	CRC = that.CRC;
 }
 
-// ??8UVBufferClass@@QAE_NABV0@@Z present-unmatched
 bool UVBufferClass::operator == (const UVBufferClass & that)
 {
 	// NOTE: this only works if you've properly called Update_CRC after filling the array
 	return (CRC == that.CRC);
 }
 
-// ?Is_Equal_To@UVBufferClass@@QAE_NABV1@@Z present-unmatched
 bool UVBufferClass::Is_Equal_To(const UVBufferClass & that)
 {
 	// NOTE: this only works if you've properly called Update_CRC after filling the array
@@ -174,7 +171,6 @@ bool UVBufferClass::Is_Equal_To(const UVBufferClass & that)
 }
 
 
-// ?Update_CRC@UVBufferClass@@QAEXXZ present-unmatched
 void UVBufferClass::Update_CRC(void)
 {
 	CRC = CRC_Memory((unsigned char *)Get_Array(),Get_Count() * sizeof(Vector2));
@@ -460,7 +456,6 @@ void MeshMatDescClass::Init_Alternate(MeshMatDescClass & default_materials,MeshM
 	}
 }
 
-// ?Is_Empty@MeshMatDescClass@@QAE_NXZ present-unmatched
 bool MeshMatDescClass::Is_Empty(void)
 {
 	for (int array=0; array<MAX_COLOR_ARRAYS; array++) {
@@ -486,7 +481,6 @@ bool MeshMatDescClass::Is_Empty(void)
 	return true;
 }
 
-// ?Set_Single_Material@MeshMatDescClass@@QAEXPAVVertexMaterialClass@@H@Z present-unmatched
 void MeshMatDescClass::Set_Single_Material(VertexMaterialClass * vmat,int pass)
 {
 	REF_PTR_SET(Material[pass],vmat);
@@ -498,7 +492,6 @@ void MeshMatDescClass::Set_Single_Texture(TextureClass * tex,int pass,int stage)
 	REF_PTR_SET(Texture[pass][stage],tex);
 }
 
-// ?Set_Single_Shader@MeshMatDescClass@@QAEXVShaderClass@@H@Z present-unmatched
 void MeshMatDescClass::Set_Single_Shader(ShaderClass shader,int pass)
 {
 	Shader[pass] = shader;
@@ -540,7 +533,6 @@ VertexMaterialClass * MeshMatDescClass::Get_Material(int vidx,int pass) const
 	return NULL;
 }
 
-// ?Get_Shader@MeshMatDescClass@@QBE?AVShaderClass@@HH@Z present-unmatched
 ShaderClass	MeshMatDescClass::Get_Shader(int pidx,int pass) const
 {
 	if (ShaderArray[pass]) {
@@ -583,7 +575,6 @@ TextureClass * MeshMatDescClass::Peek_Texture(int pidx,int pass,int stage) const
 	return Texture[pass][stage];
 }
 
-// ?Get_Texture_Array@MeshMatDescClass@@QAEPAVTexBufferClass@@HH_N@Z present-unmatched
 TexBufferClass * MeshMatDescClass::Get_Texture_Array(int pass,int stage,bool create)
 {
 	if (create && TextureArray[pass][stage] == NULL) {
@@ -623,7 +614,6 @@ void MeshMatDescClass::Make_UV_Array_Unique(int pass,int stage)
 	}
 }
 
-// ?Make_Color_Array_Unique@MeshMatDescClass@@QAEXH@Z present-unmatched
 void MeshMatDescClass::Make_Color_Array_Unique(int array)
 {
 	if ((ColorArray[array] != NULL) && (ColorArray[array]->Num_Refs() > 1)) {
@@ -633,7 +623,6 @@ void MeshMatDescClass::Make_Color_Array_Unique(int array)
 	}
 }
 
-// ?Install_UV_Array@MeshMatDescClass@@QAEXHHPAVVector2@@H@Z present-unmatched
 void MeshMatDescClass::Install_UV_Array(int pass,int stage,Vector2 * uvs,int count)
 {
 	/*

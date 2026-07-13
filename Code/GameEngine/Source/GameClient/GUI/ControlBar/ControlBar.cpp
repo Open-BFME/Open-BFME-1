@@ -738,7 +738,6 @@ const FieldParse CommandSet::m_commandSetFieldParseTable[] =
 };
 
 //-------------------------------------------------------------------------------------------------
-// ?isContextCommand@CommandButton@@QBE_NXZ present-unmatched
 Bool CommandButton::isContextCommand() const
 {
 	return BitTest( m_options, CONTEXTMODE_COMMAND );
@@ -2511,7 +2510,6 @@ void ControlBar::updateCommanBarBorderColors(Color build, Color action, Color up
 
 // ---------------------------------------------------------------------------------------
 // hides the communicator button
-// ?hideCommunicator@ControlBar@@QAEX_N@Z present-unmatched
 void ControlBar::hideCommunicator( Bool b )
 {
 	//sanity
@@ -2671,7 +2669,6 @@ void ControlBar::setLowControlBarConfig( void )
 
 }
 
-// ?setHiddenControlBar@ControlBar@@IAEXXZ present-unmatched
 void ControlBar::setHiddenControlBar( void )
 {
 	m_currentControlBarStage = CONTROL_BAR_STAGE_HIDDEN;

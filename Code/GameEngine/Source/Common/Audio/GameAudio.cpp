@@ -1142,7 +1142,6 @@ AudioHandle AudioManager::allocateNewHandle( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?releaseAudioEventRTS@AudioManager@@ present-unmatched
 void AudioManager::releaseAudioEventRTS( AudioEventRTS *eventToRelease )
 {
 	if( eventToRelease )

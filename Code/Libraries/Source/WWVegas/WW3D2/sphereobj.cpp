@@ -853,7 +853,6 @@ void SphereRenderObjClass::Decrement_LOD(void)
 	if (CurrentLOD > 0) CurrentLOD--;
 }
 
-// ?Get_Cost@SphereRenderObjClass@@UBEMXZ present-unmatched
 float SphereRenderObjClass::Get_Cost(void) const
 {
 	return Get_Num_Polys();	// Currently cost == polys

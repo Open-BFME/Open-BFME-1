@@ -86,7 +86,6 @@
 /** Culls the props, marking the visible flag.  If a prop becomes visible, it sets
 it's sortKey */
 //=============================================================================
-// ?cull@W3DPropBuffer@@IAEXPAVCameraClass@@@Z present-unmatched
 void W3DPropBuffer::cull(CameraClass * camera)
 {
 	Int curProp;
