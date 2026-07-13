@@ -461,7 +461,6 @@ void	HAnimManagerClass::Reset_Missing( void )
 /*
 ** Iterator converter from HashableClass to HAnimClass
 */
-// ?Get_Current_Anim@HAnimManagerIterator@@QAEPAVHAnimClass@@XZ present-unmatched
 HAnimClass * HAnimManagerIterator::Get_Current_Anim( void )	
 { 
 	return (HAnimClass *)Get_Current(); 
