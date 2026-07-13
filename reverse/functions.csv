@@ -7858,3 +7858,8 @@ _$E64,,0x00C6B2C0,30,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Diplomac
 ?gameAcceptTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,,0x004F1430,150,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLGameSetupMenu.cpp,matched,
 ?pingTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,,0x004F14F0,150,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLGameSetupMenu.cpp,matched,
 ?showGameSpyGameOptionsUnderlyingGUIElements@@YAX_N@Z,,0x00503E80,92,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLMapSelectMenu.cpp,matched,
+?setQuitFrame@FrameDataManager@@QAEXI@Z,,0x00670850,14,Code/GameEngine/Source/GameNetwork/FrameDataManager.cpp,matched,
+??2EnumeratedIP@@SAPAXIW4EnumeratedIPMagicEnum@0@@Z,,0x003FD696,14,Code/GameEngine/Source/GameNetwork/IPEnumeration.cpp,matched,
+??3EnumeratedIP@@SAXPAXW4EnumeratedIPMagicEnum@0@@Z,,0x007EFFF0,12,Code/GameEngine/Source/GameNetwork/IPEnumeration.cpp,matched,
+??0IPEnumeration@@QAE@XZ,,0x0039B050,13,Code/GameEngine/Source/GameNetwork/IPEnumeration.cpp,matched,
+??1User@@MAE@XZ,,0x0078CFB0,73,Code/GameEngine/Source/GameNetwork/User.cpp,matched,
