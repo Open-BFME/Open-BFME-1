@@ -4222,3 +4222,13 @@ GameEngineDevice/Source/Win32Device/GameClient/Win32DIMouse.cpp,compile-error,0,
 GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp,compile-error,0,0,0,C2039 'reset' : is not a member of 'DebugDisplayInterface',0
 GameEngineDevice/Source/W3DDevice/GameClient/W3DWebBrowser.cpp,compile-error,0,0,0,C2065 'CComQIPtr' : undeclared identifier,0
 Libraries/Source/WWVegas/WW3D2/FramGrab.cpp,compile-error,0,0,0,"C3861 'AVIStreamSetFormat': identifier not found, even with argument-dependent lookup",0
+Libraries/Source/WWVegas/WWDebug/wwmemlog.cpp,ok,1,5,1,,1
+GameEngine/Source/GameLogic/Object/PartitionManager.cpp,ok,0,49,301,,0
+GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdate.cpp,ok,3,10,53,,3
+Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp,ok,20,5,37,,20
+GameEngine/Source/Common/Dict.cpp,ok,0,0,7,,0
+GameEngine/Source/Common/Thing/ModuleFactory.cpp,ok,0,145,332,,0
+GameEngine/Source/Common/Thing/ThingTemplate.cpp,ok,2,59,234,,2
+GameEngine/Source/Common/System/DataChunk.cpp,ok,0,8,35,,0
+GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp,ok,0,0,51,,0
+GameEngine/Source/GameNetwork/GameInfo.cpp,compile-error,0,0,0,C2065 'm_NATBehavior' : undeclared identifier,0
