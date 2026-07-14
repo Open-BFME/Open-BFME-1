@@ -1006,7 +1006,6 @@ void VertexMaterialClass::Apply(void) const
 	}
 }
 
-// ?Apply_Null@VertexMaterialClass@@ present-unmatched
 void VertexMaterialClass::Apply_Null(void)
 {
 	int i;

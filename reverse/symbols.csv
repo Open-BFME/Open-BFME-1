@@ -2921,3 +2921,4 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ?setEaseTimes@ParabolicEase@@QAEXMM@Z,0x008D6710,pinharvest x1 (body)
 ?setEaseTimes@ParabolicEase@@QAEXMM@Z,0x00964150,pinharvest x1 (body)
 ??0Pinger@@QAE@XZ,0x00029C12,pinharvest x1 (thunk)
+?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z,0x000261E3
