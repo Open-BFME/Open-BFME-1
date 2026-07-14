@@ -25,4 +25,3 @@ Code/GameEngine/Source/GameLogic/Object/Behavior/GrantStealthBehavior.cpp
 Code/GameEngine/Source/Common/RTS/Handicap.cpp
 Code/GameEngine/Source/GameClient/water_transparency.cpp
 # Third beyond-ZH probe target from r1s4; drafts parked with attempt evidence.
-Code/GameEngine/Source/GameLogic/Object/object_defection_helper_pool.cpp

@@ -806,6 +806,11 @@ __declspec(dllimport) int __cdecl wvsprintfW(LPWSTR, LPCWSTR, void *);
 __declspec(dllimport) BOOL WINAPI SetNamedPipeHandleState(HANDLE, LPDWORD, LPDWORD, LPDWORD);
 __declspec(dllimport) BOOL WINAPI EnumThreadWindows(DWORD, void *, LPARAM);
 __declspec(dllimport) BOOL WINAPI IsWindow(HWND);
+__declspec(dllimport) BOOL WINAPI GetWindowRect(HWND, LPRECT);
+__declspec(dllimport) BOOL WINAPI AdjustWindowRect(LPRECT, DWORD, BOOL);
+__declspec(dllimport) HWND WINAPI GetDesktopWindow(void);
+__declspec(dllimport) BOOL WINAPI SetDeviceGammaRamp(HDC, LPVOID);
+__declspec(dllimport) BOOL WINAPI SetRect(LPRECT, int, int, int, int);
 __declspec(dllimport) HANDLE WINAPI CreateNamedPipeA(LPCSTR, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, void *);
 #define CreateNamedPipe CreateNamedPipeA
 }
@@ -851,5 +856,8 @@ inline double sqrt(int x) { return sqrt((double)x); }
 inline double sqrt(unsigned int x) { return sqrt((double)x); }
 inline double sqrt(long x) { return sqrt((double)x); }
 inline double sqrt(unsigned long x) { return sqrt((double)x); }
+
+// real <windows.h> pulls in <mmsystem.h> unless WIN32_LEAN_AND_MEAN
+#include "mmsystem.h"
 
 #endif
