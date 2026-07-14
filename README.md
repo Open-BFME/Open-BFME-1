@@ -22,6 +22,7 @@ On July 13th 2026, we crossed 10% of the way there (by reversed engineered funct
 * [ ] BFME 1 Source Code (10% done)
 * [ ] Network delay fix
 * [ ] Memory fix
+* [ ] Better crash logs
 * [ ] 60/120 FPS
 * [ ] Multi CPU
 * [ ] AC fix
