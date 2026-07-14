@@ -19,14 +19,14 @@ On July 13th 2026, we crossed 10% of the way there (by reversed engineered funct
 
 ## Roadmap
 
-[ ] BFME 1 Source Code (10% done)
-[ ] Network delay fix
-[ ] Memory fix
-[ ] 60/120 FPS
-[ ] Multi CPU
-[ ] AC fix
-[ ] World builder Source Code
-[ ] 16 player maps
+* [ ] BFME 1 Source Code (10% done)
+* [ ] Network delay fix
+* [ ] Memory fix
+* [ ] 60/120 FPS
+* [ ] Multi CPU
+* [ ] AC fix
+* [ ] World builder Source Code
+* [ ] 16 player maps
 
 ping `redbracket` on Discord if there's something else you want to change this roadmap
 
