@@ -498,3 +498,9 @@ debug_except.cpp	blocked	compile-blocked: needs commctrl/dialog shim tier (EndDi
 ?Draw_Block@Render2DTextClass@@QAEXABVRectClass@@K@Z	no-match	drift candidate: decode_calls pins garbage (retail bytes at REL32 sites not call opcodes / targets outside .text) - misplaced candidate, genuine shape drift
 ??1MaterialInfoClass@@UAE@XZ	no-match	drift candidate: decode_calls pins garbage (retail bytes at REL32 sites not call opcodes / targets outside .text) - misplaced candidate, genuine shape drift
 ?read_chunks@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z	no-match	drift candidate: decode_calls pins garbage (retail bytes at REL32 sites not call opcodes / targets outside .text) - misplaced candidate, genuine shape drift
+?Clone@ScreenMapperClass@@UBEPAVTextureMapperClass@@XZ	no-match	drift candidate misplaced: target bytes are mid-function tails/padding, compiled size differs; genuine source drift not a boundary error
+??0EnvironmentMapperClass@@QAE@I@Z	no-match	drift candidate misplaced: target bytes are mid-function tails/padding, compiled size differs; genuine source drift not a boundary error
+??0ClassicEnvironmentMapperClass@@QAE@I@Z	no-match	drift candidate misplaced: target bytes are mid-function tails/padding, compiled size differs; genuine source drift not a boundary error
+?Clone@GridEnvironmentMapperClass@@UBEPAVTextureMapperClass@@XZ	no-match	drift candidate misplaced: target bytes are mid-function tails/padding, compiled size differs; genuine source drift not a boundary error
+?Clone@GridClassicEnvironmentMapperClass@@UBEPAVTextureMapperClass@@XZ	no-match	drift candidate misplaced: target bytes are mid-function tails/padding, compiled size differs; genuine source drift not a boundary error
+??1HAnimManagerClass@@QAE@XZ	no-match	drift candidate misplaced: target bytes are mid-function tails/padding, compiled size differs; genuine source drift not a boundary error
