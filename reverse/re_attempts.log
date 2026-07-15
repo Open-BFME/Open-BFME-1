@@ -1009,3 +1009,6 @@ _$E7	dead	absent from retail .text (masked body-scan over full segment, 0 hits)
 ?Save@LightClass@@UAE_NAAVChunkSaveClass@@@Z	no-match	not emitted in drift-attributed TU (wrong-source artifact of basename map); needs emission from another landed TU
 ?Load@LightClass@@UAE_NAAVChunkLoadClass@@@Z	no-match	not emitted in drift-attributed TU (wrong-source artifact of basename map); needs emission from another landed TU
 ??1MeshLoadContextClass@@EAE@XZ	no-match	not emitted in drift-attributed TU (wrong-source artifact of basename map); needs emission from another landed TU
+_$E28	no-match	Current VS2003 object emits only _$E9 and _$E10; _$E28 is absent, so this drift row is stale/compiler-numbering dependent.
+?emit_ArmorUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z	dead	Corrected Ghidra boundary 0x11D090 is already claimed by matched ArmorUpgrade::friend_newModuleInstance; synthetic emitter is an ICF twin, not a separate retail function.
+_$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is absent, so this static-initializer drift row is stale/compiler-numbering dependent.
