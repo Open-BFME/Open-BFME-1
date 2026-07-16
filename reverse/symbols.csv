@@ -3216,3 +3216,5 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??_ETexProjectClass@@UAEPAXI@Z,0x0004822F,pinharvest x1 (thunk)
 ??0TwiddlerClass@@QAE@XZ,0x000063A2,pinharvest x1 (thunk)
 ??0TwiddlerClass@@QAE@XZ,0x0000CDC9,pinharvest x1 (thunk)
+?Set_Gamma@DX8Wrapper@@SAXMMM_N0@Z,0x00905750
+?Set_Int@RegistryClass@@QAEXPBDH@Z,0x009DC2F0
