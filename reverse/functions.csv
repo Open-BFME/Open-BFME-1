@@ -10174,3 +10174,4 @@ _atanf,,0x0045B6F0,9,Code/Libraries/Source/WWVegas/WW3D2/texproject.cpp,matched,
 ?GadgetTextEntryGetEnabledColor@@YAHPAVGameWindow@@@Z,,0x00857200,8,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DTextEntry.cpp,matched,tiny-locate
 ?init@W3DShadowGeometry@@QAEHPAVRenderObjClass@@@Z,,0x00464830,8,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,tiny-locate
 ?update256@AlphaEdgeTextureClass@@IAEHPAVWorldHeightMap@@@Z,,0x00464830,8,Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTex.cpp,matched,tiny-locate
+?Reset@ClipPolyClass@@QAEXXZ,,0x00702070,8,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPoly.cpp,matched,tiny-locate
