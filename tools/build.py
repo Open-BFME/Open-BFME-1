@@ -229,6 +229,12 @@ def read_object_symbol_bytes(path, symbol_name, expected_size=None):
     raise ValueError(f"symbol not found in object: {symbol_name}")
 
 
+def ledger_object_symbol(row):
+    """Return an explicit TU-local object symbol alias from the notes column."""
+    match = re.search(r"(?:^|;)object-symbol=([^;]+)", row.get("notes", ""))
+    return match.group(1) if match else row["name"]
+
+
 def vc71_root():
     root = Path(os.environ.get("VC71_ROOT", DEFAULT_VC71_ROOT))
     compiler = root / "Vc7" / "bin" / "cl.exe"
@@ -445,7 +451,8 @@ def compile_function(row, symbol_map, output):
     target_rva = int(row["target_rva"], 16)
     target_size = int(row["target_size"])
     target = read_target_bytes(target_rva, target_size)
-    compiled, relocs = read_object_symbol_bytes(output, row["name"], target_size)
+    compiled, relocs = read_object_symbol_bytes(
+        output, ledger_object_symbol(row), target_size)
 
     resolved = bytearray(compiled[:target_size])
     unresolved = []
@@ -644,7 +651,8 @@ def verify_string_refs(rows):
         target_size = int(row["target_size"])
         target = read_target_bytes(target_rva, target_size)
         try:
-            fn_bytes, relocs = read_object_symbol_bytes(obj, row["name"], target_size)
+            fn_bytes, relocs = read_object_symbol_bytes(
+                obj, ledger_object_symbol(row), target_size)
         except ValueError:
             continue
         for offset, rtype, sym in relocs:
@@ -703,7 +711,8 @@ def verify_dir32_consistency(rows):
         trva, tsz = int(row["target_rva"], 16), int(row["target_size"])
         target = read_target_bytes(trva, tsz)
         try:
-            body, relocs = read_object_symbol_bytes(obj, row["name"], tsz)
+            body, relocs = read_object_symbol_bytes(
+                obj, ledger_object_symbol(row), tsz)
         except ValueError:
             continue
         for off, rtype, sym in relocs:
