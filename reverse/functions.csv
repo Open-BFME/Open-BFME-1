@@ -291,6 +291,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??$sign@M@@YAHM@Z,,0x0045B330,49,Code/GameEngine/Source/Common/System/statistics.cpp,matched,
 ??$sort@PAU?$pair@W4ObjectID@@I@_STL@@P6A_NU12@0@Z@_STL@@YAXPAU?$pair@W4ObjectID@@I@0@0P6A_NU10@1@Z@Z,,0x00096510,74,Code/GameEngine/Source/GameLogic/AI/partition_solver.cpp,matched,
 ??$sort_heap@PAU?$pair@W4ObjectID@@I@_STL@@P6A_NU12@0@Z@_STL@@YAXPAU?$pair@W4ObjectID@@I@0@0P6A_NU10@1@Z@Z,,0x00095F30,102,Code/GameEngine/Source/GameLogic/AI/partition_solver.cpp,matched,
+??$sqr@H@@YAHH@Z,,0x00150360,8,Code/GameEngine/Source/GameLogic/Object/Update/MobMemberSlavedUpdate.cpp,matched,
 ??$sqr@M@@YAMM@Z,,0x000B4A80,9,Code/GameEngine/Source/Common/line2_d.cpp,matched,
 ??$sqr@N@@YANN@Z,,0x0087DD50,9,Code/GameEngine/Source/Common/System/Geometry.cpp,matched,
 ??$sum@H@rts@@YAHAAV?$vector@HV?$allocator@H@_STL@@@_STL@@@Z,,0x002F1380,29,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp,matched,
@@ -3882,6 +3883,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?GadgetButtonGetRightDisabledImage@@YAPBVImage@@PAVGameWindow@@@Z,,0x007972A0,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DMainMenu.cpp,matched,
 ?GadgetButtonGetRightDisabledSelectedImage@@YAPBVImage@@PAVGameWindow@@@Z,,0x00797240,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DMainMenu.cpp,matched,
 ?GadgetButtonGetRightEnabledImage@@YAPBVImage@@PAVGameWindow@@@Z,,0x00797120,11,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
+?GadgetButtonGetRightEnabledSelectedImage@@YAPBVImage@@PAVGameWindow@@@Z,,0x007970C0,8,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DMainMenu.cpp,matched,
 ?GadgetButtonGetRightHiliteImage@@YAPBVImage@@PAVGameWindow@@@Z,,0x00797420,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DMainMenu.cpp,matched,
 ?GadgetButtonGetRightHiliteSelectedImage@@YAPBVImage@@PAVGameWindow@@@Z,,0x007973C0,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DMainMenu.cpp,matched,
 ?GadgetButtonSetBorder@@YAXPAVGameWindow@@H_N@Z,,0x004BC9C0,49,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetPushButton.cpp,matched,
@@ -4119,6 +4121,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?GadgetTabControlGetEnabledBorderColorTabFour@@YAHPAVGameWindow@@@Z,,0x00797110,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DTabControl.cpp,matched,
 ?GadgetTabControlGetEnabledBorderColorTabSeven@@YAHPAVGameWindow@@@Z,,0x007971A0,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DTabControl.cpp,matched,
 ?GadgetTabControlGetEnabledBorderColorTabSix@@YAHPAVGameWindow@@@Z,,0x00797170,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DTabControl.cpp,matched,
+?GadgetTabControlGetEnabledBorderColorTabTwo@@YAHPAVGameWindow@@@Z,,0x007970B0,8,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DTabControl.cpp,matched,
 ?GadgetTabControlGetEnabledColorTabFive@@YAHPAVGameWindow@@@Z,,0x00793020,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DTabControl.cpp,matched,
 ?GadgetTabControlGetEnabledColorTabFour@@YAHPAVGameWindow@@@Z,,0x00793010,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DTabControl.cpp,matched,
 ?GadgetTabControlGetEnabledColorTabSeven@@YAHPAVGameWindow@@@Z,,0x00797190,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DTabControl.cpp,matched,
@@ -6039,6 +6042,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?_M_copy@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@@_STL@@AAEPAU?$_Rb_,,0x0002E15E,5,Code/masm_dumps/__M_copy____Rb_tree_VAsciiString__U__pair___CBVAsciiString__UCoord3D____STL__U___Select1st_U__pair___CBVAsciiS_2E15E.asm,matched,MASM exact retail dump
 ?_M_create_node@?$list@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@IAEPAU?$_List_node@UCoord3D@@@2@ABUCoord3D@@@Z,,0x0037E460,42,Code/GameEngine/Source/Common/INI/INIMapCache.cpp,matched,
 ?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z,,0x0082E5F0,85,Code/masm_dumps/__M_deallocate_____node_alloc__00_0A___STL__CAXPAXI_Z_82E5F0.asm,matched,MASM exact retail dump
+?_M_decr@_List_iterator_base@_STL@@QAEXXZ,,0x000F8540,8,Code/GameEngine/Source/GameLogic/Object/Contain/OpenContain.cpp,matched,
 ?_M_decrement@?$_Deque_iterator_base@PAVMapObject@@@_STL@@QAEXXZ,,0x00087ED0,35,Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp,matched,
 ?_M_decrement@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z,,0x0082B8E0,137,Code/masm_dumps/___M_decrement____Rb_global__N__STL__SAPAU_Rb_tree__82B8E0.asm,matched,
 ?_M_do_and@?$_Base_bitset@$00@_STL@@QAEXABU12@@Z,,0x0013CDD0,11,Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp,matched,
@@ -7755,6 +7759,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?isInSection@SectionChecker@@QAE_NXZ,,0x006287C0,41,Code/GameEngine/Source/GameNetwork/GameSpy/GSConfig.cpp,matched,
 ?isInside@Region2D@@QBE_NABVCoord2D@@@Z,0x000457A5,0x0061BA90,66,Code/Libraries/Source/WWVegas/WWMath/region.cpp,matched,checks point inside region
 ?isLauncherRunning@CopyProtect@@SA_NXZ,,0x00102090,49,Code/GameEngine/Source/Common/System/CopyProtection.cpp,matched,
+?isLight@MapObject@@QBE_NXZ,,0x00730310,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp,matched,
 ?isLoadingOrUnloading@RailedTransportDockUpdate@@UAE_NXZ,,0x002CE360,20,Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/RailedTransportDockUpdate.cpp,matched,
 ?isLocalPlayer@Player@@QBE_NXZ,,0x000C96D0,19,Code/GameEngine/Source/Common/RTS/Player.cpp,matched,
 ?isMissing@W3DShadowTextureManager@@QAE_NPBD@Z,,0x007AF050,22,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp,matched,
@@ -8133,6 +8138,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?push_back@?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEXABW4ScienceType@@@Z,,0x000BCD40,50,Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp,matched,
 ?push_back@?$vector@_NV?$allocator@_N@_STL@@@_STL@@QAEX_N@Z,,0x002CCB10,109,Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdate.cpp,matched,
 ?qmProfileIDCallback@@YAXPAXHPBDH0@Z,,0x00642F40,31,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread.cpp,matched,
+?queueParticleRender@W3DParticleSystemManager@@UAEXXZ,,0x0024A270,8,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DParticleSys.cpp,matched,
 ?rad2deg@@YAMM@Z,0x00008BF2,0x007E5950,11,Code/GameEngine/Source/Common/System/Trig.cpp,matched,converts radians to degrees
 ?radarToPixel@W3DRadar@@IAEXPBUICoord2D@@PAU2@HHHH@Z,,0x006C0ED0,78,Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar.cpp,matched,
 ?randomValue@@YAIPAI@Z,,0x00096970,125,Code/GameEngine/Source/Common/System/random_value.cpp,matched,
@@ -8593,6 +8599,10 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?size@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@QBEIXZ,,0x001DE420,25,Code/GameEngine/Source/Common/RTS/Player.cpp,matched,
 ?size@?$vector@VWeaponTemplateSet@@V?$allocator@VWeaponTemplateSet@@@_STL@@@_STL@@QBEIXZ,,0x002E2E40,25,Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp,matched,
 ?size@?$vector@_NV?$allocator@_N@_STL@@@_STL@@QBEIXZ,,0x002CB260,26,Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdate.cpp,matched,
+?skip@ButtonFlashTransition@@UAEXXZ,,0x0059AA80,8,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
+?skip@ControlBarArrowTransition@@UAEXXZ,,0x0059B850,8,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
+?skip@FadeTransition@@UAEXXZ,,0x0059C440,8,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
+?skip@FlashTransition@@UAEXXZ,,0x0059CAB0,8,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
 ?skip@ReverseSoundTransition@@UAEXXZ,,0x0059EF40,15,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
 ?snapClosestGoalPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z,,0x003F89A0,788,Code/GameEngine/Source/GameLogic/AI/AIPathfind_snapClosestGoalPosition.asm,matched,exact 788B via MASM
 ?sort@SimpleObjectIterator@@QAEXW4IterOrderType@@@Z,,0x001DDDC0,282,Code/GameEngine/Source/GameLogic/Object/SimpleObjectIterator.cpp,matched,
