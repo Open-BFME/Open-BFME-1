@@ -1013,3 +1013,6 @@ _$E28	landed	drift-candidate-one-byte-early_true-start-0x00C6E270-exact-50B_curr
 _$E47	no-match	target-at-0x00C71520-is-list-freeing-loop_both-current-49B-initializers-are-single-delete-shape
 _$E56	landed	target-start-0x00C71520_exact-40B-match_via-current-object-symbol-E27
 _$E59	landed	ICF-alias-of-E56-at-0x00C71520_exact-40B-current-object-symbol-E30
+_$E1	blocked	exact-50B-ICF-body-but-name-already-claimed-by-thread.cpp-at-0x00C6E1A0
+_$E4	landed	exact-50B-ICF-alias-of-E28-at-0x00C6E270
+_$E7	landed	exact-50B-ICF-alias-of-E28-at-0x00C6E270

@@ -9221,3 +9221,5 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 _$E28,,0x00C6E270,50,Code/Libraries/Source/WWVegas/WW3D2/dx8caps.cpp,matched,
 _$E56,,0x00C71520,40,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,object-symbol=_$E27
 _$E59,,0x00C71520,40,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,object-symbol=_$E30
+_$E4,,0x00C6E270,50,Code/Libraries/Source/WWVegas/WWLib/cpudetect.cpp,matched,icf-owner-E28
+_$E7,,0x00C6E270,50,Code/Libraries/Source/WWVegas/WWLib/cpudetect.cpp,matched,icf-owner-E28
