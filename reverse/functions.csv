@@ -8933,3 +8933,8 @@ _$E6,,0x00C70930,40,Code/Libraries/Source/WWVegas/WWMath/aabtreecull.cpp,matched
 ?skip@ControlBarArrowTransition@@UAEXXZ,,0x0059B850,8,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
 ?skip@FadeTransition@@UAEXXZ,,0x0059C440,8,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
 ?skip@FlashTransition@@UAEXXZ,,0x0059CAB0,8,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
+??4?$map@GEU?$less@G@_STL@@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAEAAV01@ABV01@@Z,,0x0076D0E0,19,Code/GameEngine/Source/GameNetwork/ConnectionManager.cpp,matched,
+??_GDownloadManager@@UAEPAXI@Z,,0x006279C0,30,Code/GameEngine/Source/GameNetwork/DownloadManager.cpp,matched,
+??_GNetCommandRef@@MAEPAXI@Z,,0x007851A0,30,Code/GameEngine/Source/GameNetwork/NetCommandRef.cpp,matched,
+??_GNetCommandWrapperList@@MAEPAXI@Z,,0x00676820,30,Code/GameEngine/Source/GameNetwork/NetCommandWrapperList.cpp,matched,
+??_GNetWrapperCommandMsg@@MAEPAXI@Z,,0x00674670,30,Code/GameEngine/Source/GameNetwork/NetCommandMsg.cpp,matched,
