@@ -10175,3 +10175,4 @@ _atanf,,0x0045B6F0,9,Code/Libraries/Source/WWVegas/WW3D2/texproject.cpp,matched,
 ?init@W3DShadowGeometry@@QAEHPAVRenderObjClass@@@Z,,0x00464830,8,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,tiny-locate
 ?update256@AlphaEdgeTextureClass@@IAEHPAVWorldHeightMap@@@Z,,0x00464830,8,Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTex.cpp,matched,tiny-locate
 ?Reset@ClipPolyClass@@QAEXXZ,,0x00702070,8,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPoly.cpp,matched,tiny-locate
+??0AAPlaneClass@@QAE@W4AxisEnum@0@M@Z,,0x009E5EB0,18,Code/Libraries/Source/WWVegas/WW3D2/aabtreebuilder.cpp,matched,tiny-locate
