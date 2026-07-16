@@ -157,7 +157,7 @@ def read_object_symbols(data):
     return symbols
 
 
-def read_object_symbol_bytes(path, symbol_name):
+def read_object_symbol_bytes(path, symbol_name, expected_size=None):
     data = path.read_bytes()
     section_count = u16(data, 2)
     section_table = 20
@@ -186,6 +186,21 @@ def read_object_symbol_bytes(path, symbol_name):
                       re.sub(r"\?A0x[0-9A-Fa-f]{8}", "?A0xHASH", s["name"]) == normalized]
         if len(candidates) == 1:
             resolved_name = candidates[0]
+        # Compiler-generated dynamic-initializer ordinals change when globals
+        # differ between the BFME and ZH translation units.  Resolve a stale
+        # retail ordinal only when size identifies one initializer uniquely.
+        elif expected_size is not None and re.fullmatch(r"_\$E\d+", symbol_name):
+            candidates = []
+            for candidate in symbols:
+                if candidate["section"] <= 0 or not re.fullmatch(r"_\$E\d+", candidate["name"]):
+                    continue
+                section = sections[candidate["section"] - 1]
+                start = section["raw_pointer"] + candidate["value"]
+                end = section["raw_pointer"] + section["raw_size"]
+                if len(data[start:end].rstrip(b"\xcc")) == expected_size:
+                    candidates.append(candidate["name"])
+            if len(candidates) == 1:
+                resolved_name = candidates[0]
     index = 0
     while index < len(symbols):
         symbol = symbols[index]
@@ -430,7 +445,7 @@ def compile_function(row, symbol_map, output):
     target_rva = int(row["target_rva"], 16)
     target_size = int(row["target_size"])
     target = read_target_bytes(target_rva, target_size)
-    compiled, relocs = read_object_symbol_bytes(output, row["name"])
+    compiled, relocs = read_object_symbol_bytes(output, row["name"], target_size)
 
     resolved = bytearray(compiled[:target_size])
     unresolved = []
@@ -629,7 +644,7 @@ def verify_string_refs(rows):
         target_size = int(row["target_size"])
         target = read_target_bytes(target_rva, target_size)
         try:
-            fn_bytes, relocs = read_object_symbol_bytes(obj, row["name"])
+            fn_bytes, relocs = read_object_symbol_bytes(obj, row["name"], target_size)
         except ValueError:
             continue
         for offset, rtype, sym in relocs:
@@ -688,7 +703,7 @@ def verify_dir32_consistency(rows):
         trva, tsz = int(row["target_rva"], 16), int(row["target_size"])
         target = read_target_bytes(trva, tsz)
         try:
-            body, relocs = read_object_symbol_bytes(obj, row["name"])
+            body, relocs = read_object_symbol_bytes(obj, row["name"], tsz)
         except ValueError:
             continue
         for off, rtype, sym in relocs:
