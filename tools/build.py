@@ -176,12 +176,22 @@ def read_object_symbol_bytes(path, symbol_name):
         )
 
     symbols = read_object_symbols(data)
+    resolved_name = symbol_name
+    if not any(s["name"] == symbol_name and s["section"] > 0 for s in symbols):
+        # MSVC hashes the absolute source path into anonymous-namespace names,
+        # so the same function gets a different ?A0x........ token in each
+        # clone/worktree. Accept only one otherwise-identical defined symbol.
+        normalized = re.sub(r"\?A0x[0-9A-Fa-f]{8}", "?A0xHASH", symbol_name)
+        candidates = [s["name"] for s in symbols if s["section"] > 0 and
+                      re.sub(r"\?A0x[0-9A-Fa-f]{8}", "?A0xHASH", s["name"]) == normalized]
+        if len(candidates) == 1:
+            resolved_name = candidates[0]
     index = 0
     while index < len(symbols):
         symbol = symbols[index]
         # the same name can appear as a sectionless entry (e.g. weak external)
         # before its real definition; keep scanning for the defined one
-        if symbol["name"] == symbol_name and symbol["section"] > 0:
+        if symbol["name"] == resolved_name and symbol["section"] > 0:
             section = sections[symbol["section"] - 1]
             value = symbol["value"]
             start = section["raw_pointer"] + value
