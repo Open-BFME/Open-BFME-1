@@ -8921,3 +8921,5 @@ _$E6,,0x00C70930,40,Code/Libraries/Source/WWVegas/WWMath/aabtreecull.cpp,matched
 ?clear@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEXXZ,,0x000B7AC0,33,Code/GameEngine/Source/Common/Bezier/BezierSegment.cpp,matched,
 ?erase@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEPAUCoord3D@@PAU3@0@Z,,0x000B78D0,43,Code/GameEngine/Source/Common/Bezier/BezierSegment.cpp,matched,
 ?erase@?$vector@UDetonatorInfo@MinefieldBehavior@@V?$allocator@UDetonatorInfo@MinefieldBehavior@@@_STL@@@_STL@@QAEPAUDetonatorInfo@MinefieldBehavior@@PAU34@0@Z,,0x000BC2A0,43,Code/GameEngine/Source/GameLogic/Object/Behavior/MinefieldBehavior.cpp,matched,
+??$_Construct@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@0@ABU10@@Z,,0x001375A0,66,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp,matched,
+??_GSimpleObjectIterator@@MAEPAXI@Z,,0x001DE080,30,Code/GameEngine/Source/GameLogic/Object/SimpleObjectIterator.cpp,matched,
