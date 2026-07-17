@@ -22,13 +22,19 @@ public class decompile_function extends GhidraScript {
             Address address = imageBase.add(rva);
             Function function = getFunctionAt(address);
             if (function == null) {
-                println("RVA " + raw + ": no Ghidra function starts at " + address);
-                continue;
+                function = getFunctionContaining(address);
+                if (function == null) {
+                    println("RVA " + raw + ": no Ghidra function contains " + address);
+                    continue;
+                }
+                println("RVA " + raw + " falls inside " + function.getName() + " @ "
+                        + function.getEntryPoint());
             }
-            println("RVA " + raw + " " + function.getName() + " @ " + address
+            Address entryAddress = function.getEntryPoint();
+            println("RVA " + raw + " " + function.getName() + " @ " + entryAddress
                     + " size " + function.getBody().getNumAddresses());
             println("REFERENCES TO ENTRY:");
-            ReferenceIterator refs = currentProgram.getReferenceManager().getReferencesTo(address);
+            ReferenceIterator refs = currentProgram.getReferenceManager().getReferencesTo(entryAddress);
             while (refs.hasNext()) {
                 Reference ref = refs.next();
                 Function owner = getFunctionContaining(ref.getFromAddress());
