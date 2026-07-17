@@ -130,6 +130,8 @@ def test_ghidra_candidates_validated(data):
         assert c["confidence"] in ("high", "medium"), f"bad confidence: {c}"
         assert c["command"].startswith("python3 tools/explain_mismatch.py "), c["command"]
     assert data["ghidra_absent"], "live Ghidra queue unexpectedly empty"
+    attempts = [c["attempts"] for c in data["ghidra_absent"]]
+    assert attempts == sorted(attempts), "attempted Ghidra work must follow fresh candidates"
     print(f"PASS Ghidra queue validated: {len(data['ghidra_absent'])} unclaimed candidates")
 
 

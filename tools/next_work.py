@@ -263,10 +263,12 @@ def structural_candidates(mine, claimed, claimed_names, attempts, big=False):
                                 f"--source {source}")})
     if big:
         # byte-yield mode: biggest functions first (still gated by alignment)
-        out.sort(key=lambda c: (-c["size"], -c["aligned_pct"], c["function"]))
+        out.sort(key=lambda c: (c["attempts"], -c["size"],
+                                -c["aligned_pct"], c["function"]))
     else:
         # highest alignment first (closest to matching), small before big at equal alignment
-        out.sort(key=lambda c: (-c["aligned_pct"], c["size"], c["function"]))
+        out.sort(key=lambda c: (c["attempts"], -c["aligned_pct"],
+                                c["size"], c["function"]))
     return out
 
 
@@ -415,8 +417,8 @@ def ghidra_absent_candidates(mine, claimed, claimed_names, attempts):
             "command": (f"python3 tools/explain_mismatch.py '{name}' --rva 0x{rva:08X} "
                         f"--size {target_size} --source {source}"),
         })
-    out.sort(key=lambda c: (c["confidence"] != "high", -len(c["anchors"]),
-                            -c["anchor_score"], c["attempts"], c["target_size"],
+    out.sort(key=lambda c: (c["attempts"], c["confidence"] != "high",
+                            -len(c["anchors"]), -c["anchor_score"], c["target_size"],
                             abs(c["target_size"] - c["source_size"]), c["function"]))
     return out, (f"{len(functions)} Ghidra functions + {len(xrefs)} string literals loaded")
 
