@@ -10400,3 +10400,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?updatePropPosition@W3DPropBuffer@@QAE_NHABUCoord3D@@MM@Z,,0x007026E0,453,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBuffer.cpp,matched,
 ?removeFromSavedIgnoreList@GameSpyInfo@@UAEXH@Z,,0x00635730,118,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs_removeFromSavedIgnoreList.asm,matched,
 ?onObjectCreated@BoneFXDamage@@MAEXXZ,,0x00250880,154,Code/GameEngine/Source/GameLogic/Object/Damage/BoneFXDamage_onObjectCreated.asm,matched,
+?WOLLoginMenuShutdown@@YAXPAVWindowLayout@@PAX@Z,,0x004FFB10,90,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLoginMenu_Shutdown.asm,matched,

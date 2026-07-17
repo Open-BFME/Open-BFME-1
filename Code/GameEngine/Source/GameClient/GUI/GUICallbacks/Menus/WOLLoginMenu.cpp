@@ -730,14 +730,6 @@ void WOLLoginMenuShutdown( WindowLayout *layout, void *userData )
 	isShuttingDown = true;
 	loggedInOK = false;
 	TheWindowManager->clearTabList();
-	if (webBrowserActive)
-	{
-		if (TheWebBrowser != NULL)
-		{
-			TheWebBrowser->closeBrowserWindow(listboxTOS);
-		}
-		webBrowserActive = FALSE;
-	}
 
 	// if we are shutting down for an immediate pop, skip the animations
 	Bool popImmediate = *(Bool *)userData;
@@ -1542,5 +1534,4 @@ WindowMsgHandledType WOLLoginMenuSystem( GameWindow *window, UnsignedInt msg,
 
 	return MSG_HANDLED;
 }// WOLLoginMenuSystem
-
 
