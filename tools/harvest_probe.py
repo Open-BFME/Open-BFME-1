@@ -51,6 +51,13 @@ def apply_recipe(cpp: Path):
     cpp.write_text(head + t)
 
 
+def ensure_winbase_shim():
+    shim = ROOT / "reference" / "shims" / "sweep" / "winbase_shim.h"
+    dest = W3D / "winbase_shim.h"
+    if not dest.exists() and shim.exists():
+        shutil.copy(shim, dest)
+
+
 def resolve_headers(cpp: Path, limit=30):
     for _ in range(limit):
         out = subprocess.run(["python3", str(ROOT / "tools" / "locate.py"), str(cpp.relative_to(ROOT))],
@@ -142,6 +149,7 @@ def main():
     names += args.names
     if not names:
         parser.error("nothing to probe: pass basenames and/or --list LIB")
+    ensure_winbase_shim()
     for n in names:
         probe(n, args.min_located)
 
