@@ -37,8 +37,14 @@ public class decompile_function extends GhidraScript {
             }
             println("DIRECT CALLEES:");
             for (Function callee : function.getCalledFunctions(monitor)) {
-                long calleeRva = callee.getEntryPoint().subtract(imageBase);
-                println("  0x" + Long.toHexString(calleeRva) + " " + callee.getName());
+                Address entry = callee.getEntryPoint();
+                if (entry.getAddressSpace().equals(imageBase.getAddressSpace())) {
+                    long calleeRva = entry.subtract(imageBase);
+                    println("  0x" + Long.toHexString(calleeRva) + " " + callee.getName());
+                }
+                else {
+                    println("  " + entry + " " + callee.getName() + " (external)");
+                }
             }
             DecompileResults result = decompiler.decompileFunction(function, 60, monitor);
             println("DECOMPILE:");
