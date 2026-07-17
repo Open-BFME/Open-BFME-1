@@ -44,13 +44,33 @@ HEAD = (
     "#define Matrix4x4 Matrix4  // BFME renamed it\n"
     "#define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves\n"
 )
+SOURCE_HEADS = {
+    "registry.cpp": '#include "registry_win32.h"\n',
+}
+SOURCE_REPLACEMENTS = {
+    "registry.cpp": (('#include "inisup.h"', '#include <inisup.h>'),),
+}
+
+
+def prepared_source(ref_cpp):
+    text = ref_cpp.read_text(errors="replace")
+    for old, new in SOURCE_REPLACEMENTS.get(ref_cpp.name.casefold(), ()):
+        text = text.replace(old, new)
+    return HEAD + SOURCE_HEADS.get(ref_cpp.name.casefold(), "") + text
 
 
 def land(name, dry_run=False):
     """True when landed or skipped, False when the name failed."""
-    hits = sorted(REF.rglob(f"{name}.cpp"))
+    requested = Path(name.replace("\\", "/"))
+    if requested.suffix.casefold() != ".cpp":
+        requested = requested.with_name(requested.name + ".cpp")
+    if len(requested.parts) > 1:
+        exact = REF / requested
+        hits = [exact] if exact.is_file() else []
+    else:
+        hits = sorted(REF.rglob(requested.name))
     if not hits:
-        print(f"{name}: FAIL — no reference file {name}.cpp under {REF.relative_to(ROOT)}")
+        print(f"{name}: FAIL — no reference file {requested} under {REF.relative_to(ROOT)}")
         return False
     dest = DEST / hits[0].relative_to(REF)
     existing = next(
@@ -64,7 +84,7 @@ def land(name, dry_run=False):
         print(f"{name}: would land {hits[0].relative_to(ROOT)} -> {dest.relative_to(ROOT)}")
         return True
     dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_text(HEAD + hits[0].read_text(errors="replace"))
+    dest.write_text(prepared_source(hits[0]))
 
     proc = subprocess.run(
         [sys.executable, str(ROOT / "tools" / "locate.py"), str(dest.relative_to(ROOT)), "--emit"],
@@ -125,8 +145,7 @@ def main():
         DEST.mkdir(parents=True, exist_ok=True)
     failed = []
     for raw in args.names:
-        base = Path(raw).name
-        name = base[:-4] if base.lower().endswith(".cpp") else base
+        name = raw[:-4] if raw.lower().endswith(".cpp") else raw
         if not land(name, args.dry_run):
             failed.append(name)
     if failed:

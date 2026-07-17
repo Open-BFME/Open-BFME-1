@@ -61,6 +61,19 @@ INCLUDE_DIRS = [
 ]
 
 HEAD = "// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n// stlport\n#define Matrix4x4 Matrix4  // BFME renamed it\n#define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves\n"
+SOURCE_HEADS = {
+    "registry.cpp": '#include "registry_win32.h"\n',
+}
+SOURCE_REPLACEMENTS = {
+    "registry.cpp": (('#include "inisup.h"', '#include <inisup.h>'),),
+}
+
+
+def prepared_source(ref_cpp):
+    text = ref_cpp.read_text(errors="replace")
+    for old, new in SOURCE_REPLACEMENTS.get(ref_cpp.name.casefold(), ()):
+        text = text.replace(old, new)
+    return HEAD + SOURCE_HEADS.get(ref_cpp.name.casefold(), "") + text
 
 
 def candidates(area, names):
@@ -93,7 +106,7 @@ def sweep_one(ref_cpp):
     """Copy with recipe head beside the original (so quoted sibling includes
     resolve exactly as the real compile did), locate, and classify."""
     work = ref_cpp.parent / (".sweep_" + ref_cpp.name)
-    work.write_text(HEAD + ref_cpp.read_text(errors="replace"))
+    work.write_text(prepared_source(ref_cpp))
     try:
         cmd = [sys.executable, str(ROOT / "tools" / "locate.py"), str(work.relative_to(ROOT))]
         for inc in INCLUDE_DIRS:
