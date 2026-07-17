@@ -582,7 +582,6 @@ const OBBoxClass & CameraClass::Get_Near_Clip_Bounding_Box(void) const
  * HISTORY:                                                                                    *
  *   12/8/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Cull_Box@CameraClass@@QBE_NABVAABoxClass@@@Z present-unmatched
 bool CameraClass::Cull_Box(const AABoxClass & box) const
 {
 	const FrustumClass & frustum = Get_Frustum();
