@@ -24,7 +24,7 @@ W3DDevice layers, so the highest-yield use is when a game/device .cpp is brought
 up: run this first to pin its string-referencing functions, then let locate's
 fixpoint cascade to their callees.
 """
-import sys, csv, struct
+import argparse, sys, csv, struct
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -79,11 +79,15 @@ def object_string_symbols(obj_data):
 
 
 def main():
-    args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    emit = "--emit" in sys.argv
-    src = Path(args[0])
+    parser = argparse.ArgumentParser()
+    parser.add_argument("source")
+    parser.add_argument("--emit", action="store_true")
+    parser.add_argument("-I", dest="includes", action="append", default=[])
+    args = parser.parse_args()
+    emit = args.emit
+    src = Path(args.source)
 
-    obj = harvest.compile_obj(src if src.is_absolute() else ROOT / src, [])
+    obj = harvest.compile_obj(src if src.is_absolute() else ROOT / src, args.includes)
     obj_data = obj.read_bytes()
     strmap = object_string_symbols(obj_data)
     xrefs = load_string_xrefs()
@@ -94,7 +98,7 @@ def main():
     candidates = {}  # name -> (rva, size, evidence)
     for sym in build.read_object_symbols(obj_data):
         name = sym["name"]
-        if sym["section"] <= 0 or name in matched:
+        if sym["section"] <= 0 or not name.startswith("?") or name in matched:
             continue
         try:
             body, relocs = build.read_object_symbol_bytes(obj, name)
