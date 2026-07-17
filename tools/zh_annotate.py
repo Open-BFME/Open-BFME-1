@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REF = ROOT / "reference" / "CnC_Generals_Zero_Hour" / "GeneralsMD" / "Code"
 sys.path.insert(0, str(ROOT / "tools"))
 from find_declared_unmatched import mangle_method  # noqa: E402
-from land_zh import HEAD  # noqa: E402  (the one flags-head definition)
+from land_zh import prepared_source  # noqa: E402
 import build  # noqa: E402
 
 
@@ -56,10 +56,7 @@ def annotate(path):
     if not ref_hits:
         print(f"{path.name}: no reference original found — skipping regeneration")
         return False
-    # preserve the `// stlport` build opt-in across regeneration (build.py's
-    # source_needs_stlport scans the first 2KB; regen must not silently drop it)
-    keep_stlport = path.exists() and "// stlport" in path.read_text(errors="replace")[:2048]
-    path.write_text(HEAD + ("// stlport\n" if keep_stlport else "") + ref_hits[0].read_text(errors="replace"))
+    path.write_text(prepared_source(ref_hits[0]))
 
     symbols = object_symbols(path.stem)
     lines = path.read_text(errors="replace").splitlines(keepends=True)
