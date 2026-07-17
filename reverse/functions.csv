@@ -10398,3 +10398,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?getModuleNameKey@W3DDebrisDraw@@UBE?AW4NameKeyType@@XZ,,0x007506A0,104,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cpp,matched,
 ?getClassMemoryPool@W3DDebrisDraw@@CAPAVMemoryPool@@XZ,,0x007506A0,104,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cpp,matched,
 ?updatePropPosition@W3DPropBuffer@@QAE_NHABUCoord3D@@MM@Z,,0x007026E0,453,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBuffer.cpp,matched,
+?removeFromSavedIgnoreList@GameSpyInfo@@UAEXH@Z,,0x00635730,118,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs_removeFromSavedIgnoreList.asm,matched,

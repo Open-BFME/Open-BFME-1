@@ -151,7 +151,7 @@ void GameSpyInfo::readAdditionalDisconnects( void )
 	DEBUG_LOG(("GameSpyInfo::readAdditionalDisconnects() found %d disconnects.\n", m_additionalDisconnects));
 }
 
-// ?getAdditionalDisconnects@GameSpyInfo@@UAEHXZ present-unmatched
+// ?getAdditionalDisconnects@GameSpyInfo@@UAEHXZ
 Int GameSpyInfo::getAdditionalDisconnects( void )
 {
 	DEBUG_LOG(("GameSpyInfo::getAdditionalDisconnects() would have returned %d.  Returning 0 instead.\n", m_additionalDisconnects));
@@ -674,7 +674,9 @@ void GameSpyInfo::addToSavedIgnoreList( Int profileID, AsciiString nick)
 	pref.write();
 }
 
-// ?removeFromSavedIgnoreList@GameSpyInfo@@UAEXH@Z present-unmatched
+// ?removeFromSavedIgnoreList@GameSpyInfo@@UAEXH@Z
+// Retail body is claimed from PeerDefs_removeFromSavedIgnoreList.asm; retain this
+// definition so this translation unit emits its matched map template helpers.
 void GameSpyInfo::removeFromSavedIgnoreList( Int profileID )
 {
 	m_savedIgnoreMap.erase(profileID);
