@@ -7,7 +7,7 @@ The workflow docs: `docs/matching.md` (core byte-matching loop),
 
 ## Session start (once)
 
-1. `git pull` (rebases automatically) — never work on a stale base.
+1. `git pull --rebase origin master` — never work on a stale base.
 2. `python3 tools/check_csv.py` — if it fails, fix the ledger FIRST
    (`python3 tools/dedup_csv.py`, then byte-verify any surviving conflict).
 3. `python3 tools/next_work.py` — your ranked, validated work queue.
@@ -22,11 +22,31 @@ The workflow docs: `docs/matching.md` (core byte-matching loop),
 4. `git commit` — the hook takes seconds (static ledger checks + byte-verify
    of your delta). NEVER `--no-verify`: a bad row committed here becomes
    every other agent's red build.
-5. `git pull` then `git push` — after EVERY commit, not at session end.
-   Push rejected? `git pull` and push again. Merge made `check_csv` fail?
-   `python3 tools/dedup_csv.py`, commit the fix, push.
+5. `git pull --rebase origin master`, `git push`, then
+   `git pull --rebase origin master` AGAIN — after EVERY commit, not at
+   session end. The final pull is mandatory: start the next unit from the
+   latest shared tree. Push rejected? pull, push, and final-pull again. Merge
+   made `check_csv` fail? `python3 tools/dedup_csv.py`, commit the fix, and
+   repeat the pull-push-pull sequence.
 6. Work you don't commit+push is work that evaporates. Bank every win
    immediately; then start the next unit.
+
+## Ghidra queue loop
+
+Repeat this loop while manual reverse-engineering work remains:
+
+1. `python3 tools/next_work.py --tier ghidra` — take the first fresh candidate.
+   If the anchored queue is dry, use `--tier structural`.
+2. Run the candidate's printed `explain_mismatch.py` command, then decompile
+   its RVA with `tools/ghidra/decompile_function.java` (see
+   `tools/ghidra/README.md`). Use Ghidra boundaries, xrefs, callees, and vtables
+   as identity evidence; never trust decompiled C as byte-match proof.
+3. Reconcile one function. Resolve REL32 pins only while call sites still
+   align; after early shape drift, bogus decoded calls are not evidence.
+4. Exact match: `tools/add_match.py`, focused `build.sh`, commit, pull-push-pull.
+   No match: revert source edits, `tools/log_attempt.py`, commit, pull-push-pull.
+5. Re-run the queue. Logged candidates sort behind fresh work; never hand-pick
+   yesterday's blocker while an untried candidate remains.
 
 ## When your current approach runs dry, fall down this ladder — do not stop, do not ask
 
@@ -48,7 +68,7 @@ The workflow docs: `docs/matching.md` (core byte-matching loop),
 5. Resolve REL32-blocked functions: find the callee address, add a
    `name,address` pin to `reverse/symbols.csv` (see docs/matching.md).
 6. Translate a `__asm` block or a small unmatched export to C++
-   (`python3 tools/list_naked_candidates.py src --limit 20`).
+   (`python3 tools/list_naked_candidates.py Code --limit 20`).
 
 ## Tree layout
 
