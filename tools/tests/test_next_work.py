@@ -4,6 +4,7 @@ fixture. Stdlib only, no pytest needed:
 
     python3 tools/tests/test_next_work.py
 """
+import csv
 import json
 import os
 import subprocess
@@ -38,6 +39,7 @@ def test_plain_run():
     proc = run()
     assert proc.returncode == 0, f"plain run failed (rc {proc.returncode}):\n{proc.stderr}"
     for needle in ("== 0. ledger health ==", "== 1. sweep winners", "== 2. drift quick wins",
+                   "== 2c. Ghidra-anchored absent functions",
                    "== 3. shim unblocking", "== 4. rest of the ladder ==",
                    "tools/land_ambiguous.py", "tools/list_naked_candidates.py"):
         assert needle in proc.stdout, f"plain output missing {needle!r}"
@@ -48,30 +50,40 @@ def test_partition():
     full = get_json()
     full_files = {c["file"] for c in full["sweep_winners"]}
     full_funcs = {c["function"] for c in full["drift_quick_wins"]}
+    full_ghidra = {c["function"] for c in full["ghidra_absent"]}
 
-    seen_files, seen_funcs = set(), set()
+    seen_files, seen_funcs, seen_ghidra = set(), set(), set()
     for slot in range(1, POOL + 1):
         part = get_json(slot=slot, pool=POOL)
         files = {c["file"] for c in part["sweep_winners"]}
         funcs = {c["function"] for c in part["drift_quick_wins"]}
+        ghidra = {c["function"] for c in part["ghidra_absent"]}
         assert not files & seen_files, f"slot {slot} sweep items overlap another slot"
         assert not funcs & seen_funcs, f"slot {slot} drift items overlap another slot"
+        assert not ghidra & seen_ghidra, f"slot {slot} Ghidra items overlap another slot"
         seen_files |= files
         seen_funcs |= funcs
+        seen_ghidra |= ghidra
     assert seen_files == full_files, (
         f"union of slot sweep sets != unfiltered set "
         f"(missing {full_files - seen_files}, extra {seen_files - full_files})")
     assert seen_funcs == full_funcs, (
         f"union of slot drift sets != unfiltered set "
         f"(missing {full_funcs - seen_funcs}, extra {seen_funcs - full_funcs})")
+    assert seen_ghidra == full_ghidra, (
+        f"union of slot Ghidra sets != unfiltered set "
+        f"(missing {full_ghidra - seen_ghidra}, extra {seen_ghidra - full_ghidra})")
 
     anyrun = get_json(slot=3, pool=POOL, extra=["--any"])
     assert {c["file"] for c in anyrun["sweep_winners"]} == full_files, "--any must undo the filter"
+    assert {c["function"] for c in anyrun["ghidra_absent"]} == full_ghidra, (
+        "--any must undo the Ghidra filter")
 
     bad = run(["--json"], slot=0, pool=POOL)
     assert bad.returncode != 0 and "AGENT_SLOT" in bad.stderr, "slot 0 must fail loudly"
     print(f"PASS partition: {POOL} slots disjoint, union == unfiltered "
-          f"({len(full_files)} sweep, {len(full_funcs)} drift items)")
+          f"({len(full_files)} sweep, {len(full_funcs)} drift, "
+          f"{len(full_ghidra)} Ghidra items)")
 
 
 def test_sweep_winners_validated(data):
@@ -92,13 +104,33 @@ def test_sweep_winners_validated(data):
 
 def test_json_shape(data):
     for key in ("ledger", "sweep_meta", "slot", "pool", "filtered",
-                "sweep_winners", "drift_quick_wins", "shim_blockers", "pointers"):
+                "sweep_winners", "drift_quick_wins", "ghidra_meta", "ghidra_absent",
+                "shim_blockers", "pointers"):
         assert key in data, f"--json output missing key {key!r}"
     for b in data["shim_blockers"]:
         assert b["files"] >= 1 and b["blocker"], f"bad blocker entry: {b}"
     assert len(data["shim_blockers"]) <= 8, "more than 8 blockers listed"
     print(f"PASS --json: parses, all keys present, {len(data['drift_quick_wins'])} drift wins, "
+          f"{len(data['ghidra_absent'])} Ghidra candidates, "
           f"{len(data['shim_blockers'])} blockers")
+
+
+def test_ghidra_candidates_validated(data):
+    claimed_names, claimed_rvas = set(), set()
+    with (ROOT / "reverse" / "functions.csv").open(newline="") as fh:
+        for row in csv.DictReader(fh):
+            claimed_names.add(row["name"])
+            if row["target_rva"]:
+                claimed_rvas.add(int(row["target_rva"], 16))
+    for c in data["ghidra_absent"]:
+        assert c["function"] not in claimed_names, f"matched function leaked into queue: {c}"
+        assert int(c["target_rva"], 16) not in claimed_rvas, f"claimed RVA leaked: {c}"
+        assert (ROOT / c["source"]).exists(), f"missing candidate source: {c}"
+        assert c["target_size"] > 0 and c["anchors"], f"candidate lacks Ghidra evidence: {c}"
+        assert c["confidence"] in ("high", "medium"), f"bad confidence: {c}"
+        assert c["command"].startswith("python3 tools/explain_mismatch.py "), c["command"]
+    assert data["ghidra_absent"], "live Ghidra queue unexpectedly empty"
+    print(f"PASS Ghidra queue validated: {len(data['ghidra_absent'])} unclaimed candidates")
 
 
 def test_corrupt_ledger():
@@ -134,6 +166,7 @@ def main():
     data = get_json()
     test_json_shape(data)
     test_sweep_winners_validated(data)
+    test_ghidra_candidates_validated(data)
     test_partition()
     test_corrupt_ledger()
     print("ALL TESTS PASSED")
