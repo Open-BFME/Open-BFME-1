@@ -47,6 +47,15 @@ HEAD = (
 )
 SOURCE_HEADS = {
     "registry.cpp": '#include "registry_win32.h"\n',
+    "w3dwater.cpp": """struct ID3DXBuffer {
+    virtual long __stdcall QueryInterface(const void *, void **) = 0;
+    virtual unsigned long __stdcall AddRef(void) = 0;
+    virtual unsigned long __stdcall Release(void) = 0;
+    virtual void * __stdcall GetBufferPointer(void) = 0;
+    virtual unsigned long __stdcall GetBufferSize(void) = 0;
+};
+extern \"C\" __declspec(dllimport) long __stdcall D3DXAssembleShader(const char *, unsigned int, const void *, void *, ID3DXBuffer **, ID3DXBuffer **);
+""",
     "w3dshadermanager.cpp": """#define HEAP_ZERO_MEMORY 8
 extern \"C\" __declspec(dllimport) void * __stdcall GetProcessHeap(void);
 extern \"C\" __declspec(dllimport) void * __stdcall HeapAlloc(void *, unsigned long, unsigned long);
@@ -56,6 +65,20 @@ extern \"C\" __declspec(dllimport) int __stdcall HeapFree(void *, unsigned long,
 SOURCE_REPLACEMENTS = {
     "registry.cpp": (('#include "inisup.h"', '#include <inisup.h>'),),
     "wolwelcomemenu.cpp": (("max(1,atof(pTotal))", "max(1.0,atof(pTotal))"),),
+    "w3dwater.cpp": (
+        (
+            "m_pDev->SetVertexShaderConstant(CV_ZERO,   D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f), 1);",
+            "D3DXVECTOR4 cvZero(0.0f, 0.0f, 0.0f, 0.0f); m_pDev->SetVertexShaderConstant(CV_ZERO, &cvZero, 1);",
+        ),
+        (
+            "m_pDev->SetVertexShaderConstant(CV_ONE,    D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f), 1);",
+            "D3DXVECTOR4 cvOne(1.0f, 1.0f, 1.0f, 1.0f); m_pDev->SetVertexShaderConstant(CV_ONE, &cvOne, 1);",
+        ),
+        (
+            "DX8Wrapper::_Get_D3D_Device8()->SetPixelShaderConstant(0,   D3DXVECTOR4(REFLECTION_FACTOR, REFLECTION_FACTOR, REFLECTION_FACTOR, 1.0f), 1);",
+            "D3DXVECTOR4 reflectionFactor(REFLECTION_FACTOR, REFLECTION_FACTOR, REFLECTION_FACTOR, 1.0f); DX8Wrapper::_Get_D3D_Device8()->SetPixelShaderConstant(0, &reflectionFactor, 1);",
+        ),
+    ),
     "w3dshadermanager.cpp": (
         (
             "DX8Wrapper::_Get_D3D_Device8()->SetPixelShaderConstant(0,   D3DXVECTOR4(0.3f, 0.59f, 0.11f, 1.0f), 1);",
