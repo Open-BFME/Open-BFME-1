@@ -10411,3 +10411,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?UpdateStartButton@@YAXXZ,,0x00505570,197,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu_UpdateStartButton.asm,matched,
 ?hideOptionsGadgets@@YAX_N@Z,,0x00505670,145,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu_hideOptionsGadgets.asm,matched,
 ?hideInfoGadgets@@YAX_N@Z,,0x00505730,61,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu_hideInfoGadgets.asm,matched,
+?parseDrawGroupNumberDefinition@INI@@SAXPAV1@@Z,,0x000B8200,66,Code/GameEngine/Source/Common/INI/INIDrawGroupInfo_parseDrawGroupNumberDefinition.asm,matched,INI parse-table pointer via DrawGroupInfo string and import thunk 0x416EBE
