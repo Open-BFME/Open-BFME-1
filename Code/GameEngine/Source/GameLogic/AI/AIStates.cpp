@@ -4895,7 +4895,6 @@ StateReturnType AIPanicState::update()
 
 
 //----------------------------------------------------------------------------------------------------------
-// ?onExit@AIPanicState@@UAEXW4StateExitType@@@Z present-unmatched
 void AIPanicState::onExit( StateExitType status )
 {
 	Object *obj = getMachineOwner();
@@ -5389,7 +5388,6 @@ void AIAttackFireWeaponState::onExit( StateExitType status )
  * Do nothing for a period of time.
  */
 
-// ?update@AIWaitState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIWaitState::update()
 {
 			/// @todo srj -- find a way to sleep for a number of frames here, if possible
