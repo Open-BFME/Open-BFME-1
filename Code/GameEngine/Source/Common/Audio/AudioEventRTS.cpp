@@ -630,7 +630,6 @@ ObjectID AudioEventRTS::getObjectID( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setDrawableID@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::setDrawableID( DrawableID drawID )
 {
 	if (!(m_ownerType == OT_Drawable || m_ownerType == OT_INVALID)) {
