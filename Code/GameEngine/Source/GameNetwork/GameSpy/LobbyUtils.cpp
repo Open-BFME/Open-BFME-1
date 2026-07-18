@@ -372,10 +372,11 @@ NameKeyType GetGameInfoListBoxID( void )
 	return NAMEKEY_INVALID;
 }
 
+#pragma inline_depth( 0 )
 void GrabWindowInfo( void )
 {
 	isSmall = TRUE;
-	parentID = NAMEKEY( "WOLCustomLobby.wnd:WOLLobbyMenuParent" );
+	parentID = TheNameKeyGenerator->nameToKey( "WOLCustomLobby.wnd:WOLLobbyMenuParent" );
 	parent = TheWindowManager->winGetWindowFromId(NULL, parentID);
 
 	pingImages[0] = TheMappedImageCollection->findImageByName("Ping03");
@@ -388,26 +389,26 @@ void GrabWindowInfo( void )
 //	parentGameListSmallID = NAMEKEY( "WOLCustomLobby.wnd:ParentGameListSmall" );
 //	parentGameListSmall = TheWindowManager->winGetWindowFromId(NULL, parentGameListSmallID);
 
-	parentGameListLargeID = NAMEKEY( "WOLCustomLobby.wnd:ParentGameListLarge" );
+	parentGameListLargeID = TheNameKeyGenerator->nameToKey( "WOLCustomLobby.wnd:ParentGameListLarge" );
 	parentGameListLarge = TheWindowManager->winGetWindowFromId(NULL, parentGameListLargeID);
 
-	listboxLobbyGamesSmallID = NAMEKEY( "WOLCustomLobby.wnd:ListboxGames" );
+	listboxLobbyGamesSmallID = TheNameKeyGenerator->nameToKey( "WOLCustomLobby.wnd:ListboxGames" );
 //	listboxLobbyGamesSmall = TheWindowManager->winGetWindowFromId(NULL, listboxLobbyGamesSmallID);
 //	listboxLobbyGamesSmall->winSetTooltipFunc(gameTooltip);
 
-	listboxLobbyGamesLargeID = NAMEKEY( "WOLCustomLobby.wnd:ListboxGamesLarge" );
+	listboxLobbyGamesLargeID = TheNameKeyGenerator->nameToKey( "WOLCustomLobby.wnd:ListboxGamesLarge" );
 	listboxLobbyGamesLarge = TheWindowManager->winGetWindowFromId(NULL, listboxLobbyGamesLargeID);
 	listboxLobbyGamesLarge->winSetTooltipFunc(gameTooltip);
 //
 //	listboxLobbyGameInfoID = NAMEKEY( "WOLCustomLobby.wnd:ListboxGameInfo" );
 //	listboxLobbyGameInfo = TheWindowManager->winGetWindowFromId(NULL, listboxLobbyGameInfoID);
 
-	buttonSortAlphaID = NAMEKEY("WOLCustomLobby.wnd:ButtonSortAlpha");
-	buttonSortPingID = NAMEKEY("WOLCustomLobby.wnd:ButtonSortPing");
-	buttonSortBuddiesID = NAMEKEY("WOLCustomLobby.wnd:ButtonSortBuddies");
-	windowSortAlphaID = NAMEKEY("WOLCustomLobby.wnd:WindowSortAlpha");
-	windowSortPingID = NAMEKEY("WOLCustomLobby.wnd:WindowSortPing");
-	windowSortBuddiesID = NAMEKEY("WOLCustomLobby.wnd:WindowSortBuddies");
+	buttonSortAlphaID = TheNameKeyGenerator->nameToKey("WOLCustomLobby.wnd:ButtonSortAlpha");
+	buttonSortPingID = TheNameKeyGenerator->nameToKey("WOLCustomLobby.wnd:ButtonSortPing");
+	buttonSortBuddiesID = TheNameKeyGenerator->nameToKey("WOLCustomLobby.wnd:ButtonSortBuddies");
+	windowSortAlphaID = TheNameKeyGenerator->nameToKey("WOLCustomLobby.wnd:WindowSortAlpha");
+	windowSortPingID = TheNameKeyGenerator->nameToKey("WOLCustomLobby.wnd:WindowSortPing");
+	windowSortBuddiesID = TheNameKeyGenerator->nameToKey("WOLCustomLobby.wnd:WindowSortBuddies");
 
 	buttonSortAlpha = TheWindowManager->winGetWindowFromId(parent, buttonSortAlphaID);
 	buttonSortPing = TheWindowManager->winGetWindowFromId(parent, buttonSortPingID);
@@ -418,6 +419,7 @@ void GrabWindowInfo( void )
 
 	showSortIcons();
 }
+#pragma inline_depth( 255 )
 
 void ReleaseWindowInfo( void )
 {

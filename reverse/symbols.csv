@@ -1056,6 +1056,7 @@ name,address,notes
 ?read_vertex_material_ids@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,0x0096D300,rel32 pin for read_material_pass
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x008881D0,BFME releaseBuffer body (inlined ~UnicodeString call sites encode this)
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x009409F0
+?releaseBuffer@AsciiString@@IAEXXZ,0x00887940,Ghidra GrabWindowInfo direct callee
 ?releaseData@Dict@@AAEXXZ,0x00014475
 ?releaseTrack@WaterTracksRenderSystem@@IAEXPAVWaterTracksObj@@@Z,0x0000E250
 ?remove@Dict@@QAE_NW4NameKeyType@@@Z,0x000072B6
@@ -1473,6 +1474,7 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ?winSetEnabledColor@GameWindow@@QAEHHH@Z,0x000262B0,site-decoded x2 (thunk)
 ?winSetEnabledColor@GameWindow@@QAEHHH@Z,0x00014867,site-decoded x2 (thunk)
 ?winSetEnabledColor@GameWindow@@QAEHHH@Z,0x0001EAEC,site-decoded x2 (thunk)
+?winSetTooltipFunc@GameWindow@@QAEHP6AXPAV1@PAVWinInstanceData@@I@Z@Z,0x0003D127,Ghidra GrabWindowInfo call-site thunk
 ?_M_insert_overflow@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@IAEXPAUCoord3D@@ABU3@ABU__false_type@2@I_N@Z,0x00017FB2,site-decoded x1 (thunk)
 ?_M_insert_overflow@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@IAEXPAUCoord3D@@ABU3@ABU__false_type@2@I_N@Z,0x00013E17,site-decoded x1 (thunk)
 ?_M_insert_overflow@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@IAEXPAUCoord3D@@ABU3@ABU__false_type@2@I_N@Z,0x000405FC,site-decoded x1 (thunk)
