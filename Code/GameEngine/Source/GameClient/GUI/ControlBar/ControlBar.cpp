@@ -2054,7 +2054,6 @@ CBCommandStatus ControlBar::processContextSensitiveButtonTransition( GameWindow 
 // ?switchToContext@ControlBar@@IAEXW4ControlBarContext@@PAVDrawable@@@Z
 // Body in ControlBar_switchToContext.asm (exact 869B retail).
 
-// ?setCommandBarBorder@ControlBar@@AAEXPAVGameWindow@@W4CommandButtonMappedBorderType@@@Z present-unmatched
 void ControlBar::setCommandBarBorder( GameWindow *button, CommandButtonMappedBorderType type)
 {
 	if(!button)
