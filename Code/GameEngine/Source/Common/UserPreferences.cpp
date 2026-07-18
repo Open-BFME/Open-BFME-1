@@ -617,7 +617,6 @@ Bool CustomMatchPreferences::usesLongGameList(void)
 	return FALSE;
 }
 
-// ?setUsesLongGameList@CustomMatchPreferences@@QAEX_N@Z present-unmatched
 void CustomMatchPreferences::setUsesLongGameList(Bool val)
 {
 	AsciiString s;

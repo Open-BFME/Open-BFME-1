@@ -10615,3 +10615,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?setUsesSystemMapDir@CustomMatchPreferences@@QAEX_N@Z,,0x000ADB60,170,Code/masm_dumps/CustomMatchPreferences_setUsesSystemMapDir.asm,matched,Ghidra-bound BFME system-map-directory setter
 ?WriteParameter@Parameter@@QAEXAAVDataChunkOutput@@@Z,,0x00351320,167,Code/masm_dumps/Parameter_WriteParameter.asm,matched,Ghidra-bound BFME parameter writer
 ?friend_newModuleData@ArrowStormUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118F30,110,Code/masm_dumps/ArrowStormUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?setUsesLongGameList@CustomMatchPreferences@@QAEX_N@Z,,0x000ADC40,170,Code/masm_dumps/CustomMatchPreferences_setUsesLongGameList.asm,matched,Ghidra-bound BFME long-game-list setter
