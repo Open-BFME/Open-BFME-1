@@ -1547,3 +1547,10 @@ GameEngineDevice/Source/W3DDevice/GameClient/W3DSmudge.cpp,ok,0,1,10,,0
 GameEngineDevice/Source/W3DDevice/GameClient/W3DWebBrowser.cpp,compile-error,0,0,0,C2065 'CComQIPtr' : undeclared identifier,0
 GameEngineDevice/Source/W3DDevice/GameLogic/W3DGameLogic.cpp,ok,0,0,0,,0
 GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogic.cpp,ok,0,4,20,,0
+GameEngineDevice/Source/Win32Device/Common/Win32BIGFileSystem.cpp,ok,0,6,42,,0
+GameEngineDevice/Source/Win32Device/Common/Win32GameEngine.cpp,missing-header,0,0,0,MSS/MSS.h,0
+GameEngineDevice/Source/Win32Device/Common/Win32LocalFile.cpp,ok,0,2,0,,0
+GameEngineDevice/Source/Win32Device/GameClient/Win32DIKeyboard.cpp,ok,0,1,5,,0
+GameEngineDevice/Source/Win32Device/GameClient/Win32Mouse.cpp,ok,0,1,7,,0
+GameEngineDevice/Source/MilesAudioDevice/MilesAudioManager.cpp,missing-header,0,0,0,dsound.h,0
+GameEngineDevice/Source/VideoDevice/Bink/BinkVideoPlayer.cpp,compile-error,0,0,0,C2440 '=' : cannot convert from 'void' to 'Int',0
