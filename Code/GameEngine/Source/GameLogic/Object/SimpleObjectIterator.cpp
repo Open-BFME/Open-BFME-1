@@ -109,7 +109,6 @@ Object *SimpleObjectIterator::nextWithNumeric(Real *num)
 }
 
 //=============================================================================
-// ?reset@SimpleObjectIterator@@AAEXXZ present-unmatched
 void SimpleObjectIterator::reset()
 {
 	m_curClump = m_firstClump;
