@@ -580,7 +580,6 @@ AudioHandle AudioEventRTS::getPlayingHandle( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setPosition@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::setPosition( const Coord3D *pos )
 {
 	if (!pos) {
