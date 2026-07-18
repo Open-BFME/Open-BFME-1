@@ -10501,3 +10501,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?getPosition@Thing@@QBEPBUCoord3D@@XZ,,0x000B6560,4,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound cached-position accessor
 ?friend_newModuleData@HitReactionBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x0011D000,107,Code/masm_dumps/HitReactionBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
 ?findLadder@LadderList@@QAEPBVLadderInfo@@ABVAsciiString@@G@Z,,0x0062A560,447,Code/masm_dumps/LadderList_findLadder.asm,matched,Ghidra-bound retail ladder search body
+?getBoundingCircleRadius@GeometryInfo@@QBEMXZ,,0x005E7B90,4,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound GeometryInfo accessor
