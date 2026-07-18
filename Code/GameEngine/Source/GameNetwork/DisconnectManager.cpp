@@ -497,7 +497,6 @@ void DisconnectManager::sendKeepAlive(ConnectionManager *conMgr) {
 	}
 }
 
-// ?populateDisconnectScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::populateDisconnectScreen(ConnectionManager *conMgr) {
 	for (Int i = 0; i < MAX_SLOTS; ++i) {
 		UnicodeString name = conMgr->getPlayerName(i);
