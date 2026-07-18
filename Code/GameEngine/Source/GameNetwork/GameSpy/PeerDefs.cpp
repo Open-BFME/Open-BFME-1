@@ -771,7 +771,6 @@ void GameSpyInfo::setMaxMessagesPerUpdate( Int num )
 	m_maxMessagesPerUpdate = num;
 }
 
-// ?getMaxMessagesPerUpdate@GameSpyInfo@@UAEHXZ present-unmatched
 Int GameSpyInfo::getMaxMessagesPerUpdate( void )
 {
 	return m_maxMessagesPerUpdate;
