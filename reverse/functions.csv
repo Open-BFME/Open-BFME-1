@@ -10593,3 +10593,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?friend_newModuleData@SiegeAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118CC0,107,Code/masm_dumps/SiegeAIUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
 ?getDisallowNonAsianText@CustomMatchPreferences@@QAE_NXZ,,0x000AC610,95,Code/masm_dumps/CustomMatchPreferences_getDisallowNonAsianText.asm,matched,Unique DisallowNonAsianText preference getter
 ?populateDisconnectScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z,,0x0066BEF0,189,Code/masm_dumps/DisconnectManager_populateDisconnectScreen.asm,matched,Ghidra-bound BFME disconnect-menu population body
+?allOnSameFrame@DisconnectManager@@IAE_NPAVConnectionManager@@@Z,,0x0066C160,195,Code/masm_dumps/DisconnectManager_allOnSameFrame.asm,matched,Ghidra-bound BFME disconnect-frame comparison body

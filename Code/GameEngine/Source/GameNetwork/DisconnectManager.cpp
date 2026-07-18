@@ -675,7 +675,6 @@ void DisconnectManager::recalculatePacketRouterIndex(ConnectionManager *conMgr) 
 	DEBUG_ASSERTCRASH((m_currentPacketRouterIndex < MAX_SLOTS), ("Invalid packet router index"));
 }
 
-// ?allOnSameFrame@DisconnectManager@@IAE_NPAVConnectionManager@@@Z present-unmatched
 Bool DisconnectManager::allOnSameFrame(ConnectionManager *conMgr) {
 	Bool retval = TRUE;
 	for (Int i = 0; (i < MAX_SLOTS) && (retval == TRUE); ++i) {
