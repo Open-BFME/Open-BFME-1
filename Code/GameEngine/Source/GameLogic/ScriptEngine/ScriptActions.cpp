@@ -3955,6 +3955,7 @@ void ScriptActions::doUnfreezeTime(void)
 //-------------------------------------------------------------------------------------------------
 /** Show a military briefing */
 //-------------------------------------------------------------------------------------------------
+// ?doMilitaryCaption@ScriptActions@@IAEXABVAsciiString@@H@Z present-unmatched
 void ScriptActions::doMilitaryCaption(const AsciiString& briefing, Int duration)
 {
 #if defined(_DEBUG) || defined(_INTERNAL)
