@@ -2793,7 +2793,6 @@ enum{
 	RADAR_ATTACK_GLOW_NUM_TIMES = 15  ///< number of times we'll flash
 };
 
-// ?triggerRadarAttackGlow@ControlBar@@QAEXXZ present-unmatched
 void ControlBar::triggerRadarAttackGlow( void )
 {
 	if(!m_radarAttackGlowWindow)
