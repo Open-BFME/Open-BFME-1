@@ -1300,3 +1300,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?doPlaySoundEffect@ScriptActions@@IAEXABVAsciiString@@@Z	landed	Source-order ABI and Ghidra distinguish the one-argument body at 0x002F22A0/266 from the preceding waypoint variant; exact MASM preserves BFME audio dispatch absent from ZH
 ?doMilitaryCaption@ScriptActions@@IAEXABVAsciiString@@H@Z	landed	Unique aligned padded retail hit at 0x00323070/11; existing release source tailcalls TheInGameUI militarySubtitle and compiles masked-identically
 ??_GMetaEventTranslator@@UAEPAXI@Z	landed	Retail vtable thunk and Ghidra anchor the scalar-deleting destructor at 0x005B6B70/30; exact MASM calls the landed complete destructor then conditional global delete
+??0MetaEventTranslator@@QAE@XZ	landed	Adjacent special-member cluster and Ghidra anchor the constructor at 0x005B6B30/42; exact MASM installs the retail derived vtable and initializes three translator-state records

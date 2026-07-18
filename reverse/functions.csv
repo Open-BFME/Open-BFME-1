@@ -10482,3 +10482,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?doPlaySoundEffect@ScriptActions@@IAEXABVAsciiString@@@Z,,0x002F22A0,266,Code/masm_dumps/ScriptActions_doPlaySoundEffect.asm,matched,
 ?doMilitaryCaption@ScriptActions@@IAEXABVAsciiString@@H@Z,,0x00323070,11,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,
 ??_GMetaEventTranslator@@UAEPAXI@Z,,0x005B6B70,30,Code/masm_dumps/MetaEvent_MetaEventTranslator_scalar_deleting_destructor.asm,matched,
+??0MetaEventTranslator@@QAE@XZ,,0x005B6B30,42,Code/masm_dumps/MetaEvent_MetaEventTranslator_constructor.asm,matched,
