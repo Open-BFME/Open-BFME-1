@@ -403,7 +403,6 @@ void GameTextManager::deinit( void )
 // GameTextManager::reset
 //============================================================================
 
-// ?reset@GameTextManager@@UAEXXZ present-unmatched
 void GameTextManager::reset( void )
 {
 	if( m_mapStringInfo != NULL )
