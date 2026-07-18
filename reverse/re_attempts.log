@@ -1268,3 +1268,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ??_GGameTextInterface@@UAEPAXI@Z	no-match	C++ body was exact 30 bytes but resolved base destructor directly; retail deleting destructor calls incremental-link thunk 0x0000E908
 ??_GGameTextInterface@@UAEPAXI@Z	landed	Ghidra vtable anchored 0x00435E00/30; exact existing C++ after additive base-destructor thunk pin
 ??_GMetaMapRec@@MAEPAXI@Z	landed	Ghidra pool vtable anchored true target 0x006F4F20/30; existing protected C++ scalar-deleting destructor is exact
+?bfme_gt_8@GameTextInterface@@UAEXPAX@Z	blocked	Exact Ghidra vtable body 0x009A16D0/3 is covered by existing oversized parseSideInfo row 0x009A15C0-0x009A17C4; overlap guard rejects landing
