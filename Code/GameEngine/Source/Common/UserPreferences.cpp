@@ -876,7 +876,6 @@ Int GameSpyMiscPreferences::getMaxMessagesPerUpdate( void )
 // IgnorePreferences base class 
 //-----------------------------------------------------------------------------
 
-// ??0IgnorePreferences@@QAE@XZ present-unmatched
 IgnorePreferences::IgnorePreferences()
 {
 	AsciiString userPrefFilename;
