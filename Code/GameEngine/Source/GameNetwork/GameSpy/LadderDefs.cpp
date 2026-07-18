@@ -441,7 +441,6 @@ const LadderInfo* LadderList::findLadderByIndex( Int index )
 	return NULL;
 }
 
-// ?getSpecialLadders@LadderList@@QAEPBV?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@XZ present-unmatched
 const LadderInfoList* LadderList::getSpecialLadders( void )
 {
 	return &m_specialLadders;
