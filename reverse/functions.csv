@@ -10473,3 +10473,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??0MetaMapRec@@QAE@XZ,,0x005B7020,11,Code/masm_dumps/MetaEvent_MetaMapRec_retail_constructor.asm,matched,
 ??_GMetaMapRec@@QAEPAXI@Z,,0x005B70E0,30,Code/masm_dumps/MetaEvent_MetaMapRec_retail_scalar_deleting_destructor.asm,matched,
 ?doLocalDefeat@ScriptActions@@IAEXXZ,,0x002F1EC0,246,Code/masm_dumps/ScriptActions_doLocalDefeat.asm,matched,
+?isFinished@AnimateWindow@@QAE_NXZ,,0x004953E0,4,Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp,matched,
