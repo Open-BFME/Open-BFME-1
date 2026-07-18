@@ -92,7 +92,6 @@ void DownloadManager::reset( void )
 {
 }
 
-// ?update@DownloadManager@@QAEJXZ present-unmatched
 HRESULT DownloadManager::update( void )
 {
 	return m_download->PumpMessages();
@@ -188,7 +187,6 @@ HRESULT DownloadManager::OnEnd()
 	return S_OK;
 }
 
-// ?OnQueryResume@DownloadManager@@UAEJXZ present-unmatched
 HRESULT DownloadManager::OnQueryResume()
 {
 	DEBUG_LOG(("DownloadManager::OnQueryResume()\n"));
