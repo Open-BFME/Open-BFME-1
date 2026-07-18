@@ -763,7 +763,6 @@ Bool GameSpyInfo::getDisallowAsianText( void )
 {
 	return m_disallowAsainText;
 }
-// ?getDisallowNonAsianText@GameSpyInfo@@UAE_NXZ present-unmatched
 Bool GameSpyInfo::getDisallowNonAsianText(void )
 {
 	return m_disallowNonAsianText;
