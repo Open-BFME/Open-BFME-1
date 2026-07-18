@@ -894,7 +894,6 @@ void ScriptGroup::addScript(Script *pScr, Int ndx)
 *	Input: DataChunkInput 
 *		
 */
-// ?WriteGroupDataChunk@ScriptGroup@@SAXAAVDataChunkOutput@@PAV1@@Z present-unmatched
 void ScriptGroup::WriteGroupDataChunk(DataChunkOutput &chunkWriter, ScriptGroup *pGroup)
 {
 
