@@ -518,7 +518,6 @@ void CustomMatchPreferences::setPreferredColor(Int val)
 	(*this)["Color"] = s;
 }
 
-// ?getChatSizeSlider@CustomMatchPreferences@@QAEHXZ present-unmatched
 Int CustomMatchPreferences::getChatSizeSlider(void)
 {
 	Int ret;
