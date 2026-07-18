@@ -52,6 +52,23 @@
 #define __PLACEMENT_VEC_NEW_INLINE
 #include <map>
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+
+class HotKeyAsciiStringLess
+{
+public:
+	bool operator()(const AsciiString& lhs, const AsciiString& rhs) const
+	{
+		return lhs.compare(rhs) < 0;
+	}
+};
+
+namespace _STL
+{
+	template <>
+	struct less<AsciiString> : public HotKeyAsciiStringLess
+	{
+	};
+}
 //-----------------------------------------------------------------------------
 // USER INCLUDES //////////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
