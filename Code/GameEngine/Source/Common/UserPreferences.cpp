@@ -849,7 +849,6 @@ Int GameSpyMiscPreferences::getLocale( void )
 	return getInt("Locale", 0);
 }
 
-// ?setLocale@GameSpyMiscPreferences@@QAEXH@Z present-unmatched
 void GameSpyMiscPreferences::setLocale( Int val )
 {
 	setInt("Locale", val);

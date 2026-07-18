@@ -10565,3 +10565,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?friend_newModuleData@SlaveWatcherBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00117540,107,Code/masm_dumps/SlaveWatcherBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
 ?setCopiedFromDefault@ThingTemplate@@QAEXXZ,,0x0013FDB0,71,Code/masm_dumps/ThingTemplate_setCopiedFromDefault.asm,matched,Ghidra-bound BFME ThingTemplate layout body
 ?getLocale@GameSpyMiscPreferences@@QAEHXZ,,0x000A99A0,33,Code/masm_dumps/GameSpyMiscPreferences_getLocale.asm,matched,Unique Locale-string preference getter
+?setLocale@GameSpyMiscPreferences@@QAEXH@Z,,0x000A99D0,36,Code/masm_dumps/GameSpyMiscPreferences_setLocale.asm,matched,Unique Locale-string preference setter
