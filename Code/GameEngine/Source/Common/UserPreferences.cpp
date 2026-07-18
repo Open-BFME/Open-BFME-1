@@ -534,7 +534,6 @@ Int CustomMatchPreferences::getChatSizeSlider(void)
 	return ret;
 }
 
-// ?setChatSizeSlider@CustomMatchPreferences@@QAEXH@Z present-unmatched
 void CustomMatchPreferences::setChatSizeSlider(Int val)
 {
 	AsciiString s;
