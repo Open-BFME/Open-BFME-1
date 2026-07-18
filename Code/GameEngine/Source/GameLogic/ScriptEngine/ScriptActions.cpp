@@ -6089,7 +6089,6 @@ void ScriptActions::doPlayerGrantScience(const AsciiString& playerName, const As
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?doPlayerPurchaseScience@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doPlayerPurchaseScience(const AsciiString& playerName, const AsciiString& scienceName)
 {
 	Player* pPlayer = TheScriptEngine->getPlayerFromAsciiString(playerName);
