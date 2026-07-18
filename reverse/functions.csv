@@ -10650,3 +10650,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?friend_newModuleData@StealthUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0012BF00,58,Code/masm_dumps/StealthUpgrade_friend_newModuleData.asm,matched,Ghidra-bound BFME upgrade module-data factory
 ?isValidObjectTarget@CommandButton@@QBE_NPBVDrawable@@0@Z,,0x0049AE20,67,Code/masm_dumps/CommandButton_isValidObjectTarget_Drawable.asm,matched,Ghidra-corrected BFME Drawable target overload
 ?setPosition@AudioEventRTS@@QAEXPBUCoord3D@@@Z,,0x000B2210,51,Code/masm_dumps/AudioEventRTS_setPosition.asm,matched,Ghidra-bound BFME audio positional setter
+?friend_newModuleData@MaxHealthUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DC80,107,Code/masm_dumps/MaxHealthUpgrade_friend_newModuleData.asm,matched,Ghidra-bound BFME MaxHealthUpgrade module-data factory
