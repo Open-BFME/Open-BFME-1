@@ -1075,6 +1075,7 @@ name,address,notes
 ?selectFriends@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@_N@Z,0x000282B8
 ?sendToManglerFromPort@FirewallHelperClass@@QAE_NIGG_N@Z,0x00022C00
 ?set@LayoutFilename@@QAEXPBDH@Z,0x00887D20
+?set@RetailLayoutString@@QAEXPBDH@Z,0x00887D20
 ?set@UnicodeString@@QAEXABV1@@Z,0x00888530
 ?setConnectionState@NAT@@IAEXHW4NATConnectionState@@@Z,0x00670DC0,processGlobalMessage callee (ILT body)
 ?setDefaultControlBarConfig@ControlBar@@IAEXXZ,0x00043E73
