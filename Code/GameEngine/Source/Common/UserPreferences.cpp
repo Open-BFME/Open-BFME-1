@@ -597,7 +597,6 @@ Bool CustomMatchPreferences::usesSystemMapDir(void)
 	return FALSE;
 }
 
-// ?setUsesSystemMapDir@CustomMatchPreferences@@QAEX_N@Z present-unmatched
 void CustomMatchPreferences::setUsesSystemMapDir(Bool val)
 {
 	AsciiString s;
