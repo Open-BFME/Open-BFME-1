@@ -10562,3 +10562,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?setTerrainDecalOpacity@W3DModelDraw@@UAEXM@Z,,0x0075BDD0,35,Code/masm_dumps/W3DModelDraw_setTerrainDecalOpacity.asm,matched,Vtable-bound BFME terrain-decal layout body
 ?friend_newModuleData@RunOffMapBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001267E0,107,Code/masm_dumps/RunOffMapBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
 ?isPointOnWall@PathfindLayer@@QAE_NPAW4ObjectID@@HPBUCoord3D@@@Z,,0x00299080,257,Code/masm_dumps/PathfindLayer_isPointOnWall.asm,matched,Ghidra-bound BFME wall-layer geometry body
+?friend_newModuleData@SlaveWatcherBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00117540,107,Code/masm_dumps/SlaveWatcherBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
