@@ -10455,3 +10455,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??1GameTextManager@@UAE@XZ,,0x00438430,117,Code/masm_dumps/GameText_GameTextManager_destructor.asm,matched,exact retail destructor via MASM; ZH class has extra 0xA000-byte text buffer
 ??_GGameTextManager@@UAEPAXI@Z,,0x00438610,30,Code/masm_dumps/GameText_GameTextManager_scalar_deleting_destructor.asm,matched,exact retail scalar-deleting destructor via MASM; Ghidra-vtable anchored
 ??1MetaMapRec@@MAE@XZ,,0x006F4C50,114,Code/masm_dumps/MetaEvent_MetaMapRec_destructor.asm,matched,exact Ghidra-bounded retail destructor via MASM; stale queue target corrected
+?update@GameTextManager@@UAEXXZ,,0x00438420,1,Code/GameEngine/Source/GameClient/GameText.cpp,matched,Ghidra-vtable anchored empty update override; exact C++ RET
