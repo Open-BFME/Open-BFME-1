@@ -43,6 +43,7 @@
 #include "Common/ModuleFactory.h"
 #include "Common/NameKeyGenerator.h"
 #include "../../../Include/GameLogic/Module/DamageModule.h"
+#include "../../../Include/GameLogic/Module/CollideModule.h"
 
 // behavior includes
 #include "GameLogic/Module/AutoHealBehavior.h"
