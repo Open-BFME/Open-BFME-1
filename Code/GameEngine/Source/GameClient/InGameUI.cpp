@@ -5618,7 +5618,6 @@ void InGameUI::showIdleWorkerLayout( void )
 //		GadgetButtonSetText(m_idleWorkerWin, number);
 //	}
 }
-// ?hideIdleWorkerLayout@InGameUI@@EAEXXZ present-unmatched
 void InGameUI::hideIdleWorkerLayout( void )
 {
 	if(!m_idleWorkerWin)
@@ -5827,4 +5826,3 @@ WindowMsgHandledType IdleWorkerSystem( GameWindow *window, UnsignedInt msg,
 	return MSG_HANDLED;
 
 }
-
