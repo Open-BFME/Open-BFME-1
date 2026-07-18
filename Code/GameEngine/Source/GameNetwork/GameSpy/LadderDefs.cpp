@@ -50,7 +50,6 @@
 
 LadderList *TheLadderList = NULL;
 
-// ??0LadderInfo@@QAE@XZ present-unmatched
 LadderInfo::LadderInfo()
 {
 	playersPerTeam = 1;

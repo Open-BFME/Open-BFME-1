@@ -1,0 +1,22 @@
+.386
+.model flat
+
+; ??0LadderInfo@@QAE@XZ
+; Exact 161 retail bytes @ 0x00A2A910; initializes the BFME LadderInfo member layout.
+_TEXT SEGMENT
+public ??0LadderInfo@@QAE@XZ
+??0LadderInfo@@QAE@XZ PROC
+    db 06Ah,0FFh,068h,089h,000h,004h,001h,064h,0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,051h,053h,056h,08Bh,0F1h,033h,0DBh,089h,074h,024h,008h
+    db 089h,01Eh,089h,05Ch,024h,014h,089h,05Eh,004h,089h,05Eh,008h,06Ah,00Ch,0C6h,044h
+    db 024h,018h,002h,089h,05Eh,01Ch,0E8h,0F5h,03Bh,020h,000h,089h,000h,089h,040h,004h
+    db 089h,046h,01Ch,06Ah,00Ch,0C6h,044h,024h,01Ch,003h,089h,05Eh,020h,0E8h,0DEh,03Bh
+    db 020h,000h,08Bh,04Ch,024h,014h,089h,000h,089h,040h,004h,089h,046h,020h,089h,05Eh
+    db 024h,089h,05Eh,028h,089h,05Eh,030h,0B8h,001h,000h,000h,000h,089h,046h,00Ch,088h
+    db 046h,018h,088h,046h,019h,088h,046h,01Ah,083h,0C4h,008h,089h,05Eh,010h,089h,05Eh
+    db 014h,088h,05Eh,01Bh,066h,089h,05Eh,02Ch,088h,05Eh,034h,0C7h,046h,038h,0FFh,0FFh
+    db 0FFh,0FFh,08Bh,0C6h,05Eh,05Bh,064h,089h,00Dh,000h,000h,000h,000h,083h,0C4h,010h
+    db 0C3h
+??0LadderInfo@@QAE@XZ ENDP
+_TEXT ENDS
+END
