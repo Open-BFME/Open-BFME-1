@@ -428,7 +428,6 @@ void QuickMatchPreferences::setColor( Int val )
 	setInt("Color", val);
 }
 
-// ?getColor@QuickMatchPreferences@@QAEHXZ present-unmatched
 Int QuickMatchPreferences::getColor( void )
 {
 	return getInt("Color", 0);
