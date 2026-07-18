@@ -542,7 +542,6 @@ void CustomMatchPreferences::setChatSizeSlider(Int val)
 	(*this)["ChatSlider"] = s;
 }
 
-// ?getPreferredFaction@CustomMatchPreferences@@QAEHXZ present-unmatched
 Int CustomMatchPreferences::getPreferredFaction(void)
 {
 	Int ret;
