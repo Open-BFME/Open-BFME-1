@@ -41,6 +41,22 @@
 
 // USER INCLUDES //////////////////////////////////////////////////////////////
 
+#include "Common/GameType.h"
+#include "Common/STLTypedefs.h"
+
+#define _IN_GAME_UI_H_
+class Drawable;
+typedef std::list< Drawable * > DrawableList;
+
+class InGameUI
+{
+public:
+	virtual void anchor();
+
+private:
+	char m_data[ 0x13a8 ];
+};
+
 #include "Common/ThingTemplate.h"
 #include "Common/ThingFactory.h"
 #include "Common/ModuleFactory.h"
@@ -53,6 +69,37 @@
 #include "GameClient/ParticleSys.h"
 #include "GameClient/RayEffect.h"
 #include "W3DDevice/GameClient/W3DAssetManager.h"
+#include "W3DDevice/GameClient/W3DView.h"
+
+#define __W3DINGAMEUI_H_
+class View;
+class RenderObjClass;
+class HAnimClass;
+
+class W3DInGameUI : public InGameUI
+{
+public:
+	W3DInGameUI();
+	virtual ~W3DInGameUI();
+	virtual void init();
+	virtual void update();
+	virtual void reset();
+	virtual void draw();
+
+protected:
+	virtual View *createView();
+	virtual void drawSelectionRegion();
+	virtual void drawMoveHints( View *view );
+	virtual void drawAttackHints( View *view );
+	virtual void drawPlaceAngle( View *view );
+
+private:
+	enum { MAX_RETAIL_MOVE_HINTS = 25 };
+	RenderObjClass *m_moveHintRenderObj[ MAX_RETAIL_MOVE_HINTS ];
+	HAnimClass *m_moveHintAnim[ MAX_RETAIL_MOVE_HINTS ];
+	RenderObjClass *m_buildingPlacementAnchor;
+	RenderObjClass *m_buildingPlacementArrow;
+};
 
 #define __W3DGAMEFONT_H_
 class BFMERetailFontLibrary : public FontLibrary
