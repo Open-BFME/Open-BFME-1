@@ -587,7 +587,6 @@ void CustomMatchPreferences::setPreferredFaction(Int val)
 	(*this)["PlayerTemplate"] = s;
 }
 
-// ?usesSystemMapDir@CustomMatchPreferences@@QAE_NXZ present-unmatched
 Bool CustomMatchPreferences::usesSystemMapDir(void)
 {
 	CustomMatchPreferences::const_iterator it = find("UseSystemMapDir");
