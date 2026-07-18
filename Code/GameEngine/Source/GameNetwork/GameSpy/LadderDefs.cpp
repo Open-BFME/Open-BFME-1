@@ -451,7 +451,6 @@ const LadderInfoList* LadderList::getStandardLadders( void )
 	return &m_standardLadders;
 }
 
-// ?getLocalLadders@LadderList@@QAEPBV?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@XZ present-unmatched
 const LadderInfoList* LadderList::getLocalLadders( void )
 {
 	return &m_localLadders;
