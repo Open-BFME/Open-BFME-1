@@ -1340,3 +1340,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ??_GLadderList@@QAEPAXI@Z	landed	Canonical scalar-delete ABI and unique LadderList destructor call bind the exact 30-byte body; MASM byte-verified
 ?getEnergyProduction@ThingTemplate@@QBEHXZ	landed	Ghidra energy-accessor cluster and member offset bind the exact seven-byte natural C++ match
 ?friend_newModuleData@SpawnBehavior@@SAPAVModuleData@@PAVINI@@@Z	landed	Retail registration and paired thunks identify the exact 110-byte data factory; MASM byte-verified
+?sawFullGameList@GameSpyInfo@@UAEXXZ	landed	Retail vtable slot and padded raw boundary bind the exact five-byte natural C++ match
