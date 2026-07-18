@@ -148,7 +148,6 @@ void GameSpyInfo::setLocalIPs(UnsignedInt internalIP, UnsignedInt externalIP)
 	m_externalIP = externalIP;
 }
 
-// ?readAdditionalDisconnects@GameSpyInfo@@UAEXXZ present-unmatched
 void GameSpyInfo::readAdditionalDisconnects( void )
 {
 	m_additionalDisconnects = GetAdditionalDisconnectsFromUserFile(m_localProfileID);
