@@ -346,7 +346,6 @@ LadderList::LadderList()
 	DEBUG_LOG(("After looking for ladders, we have %d local, %d special && %d normal\n", m_localLadders.size(), m_specialLadders.size(), m_standardLadders.size()));
 }
 
-// ??1LadderList@@QAE@XZ present-unmatched
 LadderList::~LadderList()
 {
 	LadderInfoList::iterator it;
