@@ -61,7 +61,6 @@
 #endif
 
 //-----------------------------------------------------------------------------
-// ??0ProductionPrerequisite@@QAE@XZ present-unmatched
 ProductionPrerequisite::ProductionPrerequisite() 
 {
 	init();
