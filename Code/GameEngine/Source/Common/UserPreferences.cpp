@@ -632,7 +632,6 @@ void CustomMatchPreferences::setUsesLongGameList(Bool val)
 	(*this)["UseLongGameList"] = s;
 }
 
-// ?allowsObservers@CustomMatchPreferences@@QAE_NXZ present-unmatched
 Bool CustomMatchPreferences::allowsObservers(void)
 {
 	CustomMatchPreferences::const_iterator it = find("AllowObservers");

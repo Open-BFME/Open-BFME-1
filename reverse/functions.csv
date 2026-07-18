@@ -10588,3 +10588,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?setCommandBarBorder@ControlBar@@AAEXPAVGameWindow@@W4CommandButtonMappedBorderType@@@Z,,0x0049CE10,153,Code/masm_dumps/ControlBar_setCommandBarBorder.asm,matched,Ghidra-bound BFME five-case border body
 ?usesLongGameList@CustomMatchPreferences@@QAE_NXZ,,0x000AC500,3,Code/GameEngine/Source/Common/UserPreferences.cpp,matched,Source-order pinned unconditional true getter
 ?friend_newModuleData@DestroyEnvironmentUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011C4A0,107,Code/masm_dumps/DestroyEnvironmentUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?allowsObservers@CustomMatchPreferences@@QAE_NXZ,,0x000AC510,95,Code/masm_dumps/CustomMatchPreferences_allowsObservers.asm,matched,Unique AllowObservers preference getter
