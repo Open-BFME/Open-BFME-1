@@ -3337,3 +3337,5 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ?populateObserverInfoWindow@ControlBar@@QAEXXZ,0x000431C1
 ?populateObserverList@ControlBar@@QAEXXZ,0x00036BA1
 ??0BFMERetailFontLibrary@@QAE@XZ,0x0000FDF3
+??0BFMERetailAsciiString@@QAE@PBD@Z,0x00888BC0
+?releaseBuffer@BFMERetailAsciiString@@AAEXXZ,0x00887940

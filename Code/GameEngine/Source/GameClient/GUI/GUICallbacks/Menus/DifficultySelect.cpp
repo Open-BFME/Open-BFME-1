@@ -66,6 +66,23 @@
 
 #include "GameLogic/ScriptEngine.h"
 
+class BFMERetailAsciiString
+{
+public:
+	BFMERetailAsciiString( const char *string );
+	~BFMERetailAsciiString() { releaseBuffer(); }
+
+	const char *str() const
+	{
+		static const char nullCharacter = 0;
+		return m_data ? m_data + 8 : &nullCharacter;
+	}
+
+private:
+	void releaseBuffer();
+	char *m_data;
+};
+
 //-----------------------------------------------------------------------------
 // DEFINES ////////////////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
@@ -128,19 +145,28 @@ static void SetDifficultyRadioButton( void )
 
 void DifficultySelectInit( WindowLayout *layout, void *userData )
 { 
-	AsciiString parentName( "DifficultySelect.wnd:DifficultySelectParent" );
-	NameKeyType parentID = TheNameKeyGenerator->nameToKey( parentName );
+	BFMERetailAsciiString parentName( "DifficultySelect.wnd:DifficultySelectParent" );
+	NameKeyType parentID = TheNameKeyGenerator->nameToKey( parentName.str() );
 	GameWindow *parent = TheWindowManager->winGetWindowFromId( NULL, parentID );
    
 	buttonOkID = TheNameKeyGenerator->nameToKey( "DifficultySelect.wnd:ButtonOk" );
 	buttonOk = TheWindowManager->winGetWindowFromId( parent, buttonOkID );
 	buttonCancelID = TheNameKeyGenerator->nameToKey( "DifficultySelect.wnd:ButtonCancel" );
 	buttonCancel = TheWindowManager->winGetWindowFromId( parent, buttonCancelID );
-	radioButtonEasyAIID = TheNameKeyGenerator->nameToKey( AsciiString("DifficultySelect.wnd:RadioButtonEasy") );
+	{
+		BFMERetailAsciiString name( "DifficultySelect.wnd:RadioButtonEasy" );
+		radioButtonEasyAIID = TheNameKeyGenerator->nameToKey( name.str() );
+	}
 	radioButtonEasyAI = TheWindowManager->winGetWindowFromId( parent, radioButtonEasyAIID );			
-	radioButtonMediumAIID = TheNameKeyGenerator->nameToKey( AsciiString("DifficultySelect.wnd:RadioButtonMedium") );
+	{
+		BFMERetailAsciiString name( "DifficultySelect.wnd:RadioButtonMedium" );
+		radioButtonMediumAIID = TheNameKeyGenerator->nameToKey( name.str() );
+	}
 	radioButtonMediumAI = TheWindowManager->winGetWindowFromId( parent, radioButtonMediumAIID );
-	radioButtonHardAIID = TheNameKeyGenerator->nameToKey( AsciiString("DifficultySelect.wnd:RadioButtonHard") );
+	{
+		BFMERetailAsciiString name( "DifficultySelect.wnd:RadioButtonHard" );
+		radioButtonHardAIID = TheNameKeyGenerator->nameToKey( name.str() );
+	}
 	radioButtonHardAI = TheWindowManager->winGetWindowFromId( parent, radioButtonHardAIID );			
 
 	s_AIDiff = DIFFICULTY_NORMAL;
@@ -303,4 +329,3 @@ WindowMsgHandledType DifficultySelectSystem( GameWindow *window, UnsignedInt msg
 //-----------------------------------------------------------------------------
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
-
