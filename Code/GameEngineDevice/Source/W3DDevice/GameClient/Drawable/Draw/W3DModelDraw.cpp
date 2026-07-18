@@ -2836,7 +2836,6 @@ void W3DModelDraw::setTerrainDecalSize(Real x, Real y)
 	}
 }
 //-------------------------------------------------------------------------------------------------
-// ?setTerrainDecalOpacity@W3DModelDraw@@UAEXM@Z present-unmatched
 void W3DModelDraw::setTerrainDecalOpacity(Real o)
 {
 	if (m_terrainDecal)
@@ -4423,4 +4422,3 @@ void W3DModelDrawModuleData::xfer( Xfer *x )
 void W3DModelDrawModuleData::loadPostProcess( void )
 {
 }
-
