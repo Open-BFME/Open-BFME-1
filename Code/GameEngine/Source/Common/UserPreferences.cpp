@@ -680,7 +680,6 @@ void CustomMatchPreferences::setDisallowAsianText(Bool val)
 
 }
 
-// ?getDisallowNonAsianText@CustomMatchPreferences@@QAE_NXZ present-unmatched
 Bool CustomMatchPreferences::getDisallowNonAsianText( void )
 {
 	CustomMatchPreferences::const_iterator it = find("DisallowNonAsianText");
