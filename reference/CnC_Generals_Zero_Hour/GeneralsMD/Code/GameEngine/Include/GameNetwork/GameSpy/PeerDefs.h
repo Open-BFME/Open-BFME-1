@@ -117,6 +117,9 @@ public:
 	Int m_rankPoints;
 	Int m_side;
 	Int m_preorder;
+#ifdef _BFME_RETAIL_PLAYER_INFO_LAYOUT
+	Int m_bfmeRetailLayout[4];
+#endif
 	Bool isIgnored( void );
 };
 struct AsciiComparator

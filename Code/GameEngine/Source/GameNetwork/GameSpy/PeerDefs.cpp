@@ -24,6 +24,9 @@
 // Author: Matthew D. Campbell, June 2002
 
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
+#define _BFME_RETAIL_PLAYER_INFO_LAYOUT
+#define __PLACEMENT_VEC_NEW_INLINE
+#include <map>
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 #include <set>
 
