@@ -10393,3 +10393,7 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?Find_Z_Mode@DX8Wrapper@@KA_NW4_D3DFORMAT@@0PAW42@@Z,,0x00904120,267,Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp,matched,
 ?getModuleNameKey@FiringTracker@@UBE?AW4NameKeyType@@XZ,,0x001B3050,104,Code/GameEngine/Source/GameLogic/Object/FiringTracker.cpp,matched,
 ?getClassMemoryPool@FiringTracker@@CAPAVMemoryPool@@XZ,,0x001B3050,104,Code/GameEngine/Source/GameLogic/Object/FiringTracker.cpp,matched,
+?getModuleNameKey@W3DTreeDraw@@UBE?AW4NameKeyType@@XZ,,0x0077F2D0,104,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp,matched,
+?getClassMemoryPool@W3DTreeDraw@@CAPAVMemoryPool@@XZ,,0x0077F2D0,104,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp,matched,
+?getModuleNameKey@W3DDebrisDraw@@UBE?AW4NameKeyType@@XZ,,0x007506A0,104,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cpp,matched,
+?getClassMemoryPool@W3DDebrisDraw@@CAPAVMemoryPool@@XZ,,0x007506A0,104,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cpp,matched,

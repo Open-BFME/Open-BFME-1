@@ -1523,3 +1523,27 @@ GameEngine/Source/GameLogic/Object/Upgrade/UpgradeModule.cpp,ok,0,0,14,,0
 GameEngine/Source/GameLogic/Object/Upgrade/WeaponBonusUpgrade.cpp,ok,0,2,4,,0
 GameEngine/Source/GameLogic/Object/Upgrade/WeaponSetUpgrade.cpp,ok,0,2,4,,0
 GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp,compile-error,0,0,0,C2248 'AttackPriorityInfo::~AttackPriorityInfo' : cannot access protected member declared in cla,0
+GameEngineDevice/Source/W3DDevice/Common/System/W3DFunctionLexicon.cpp,ok,0,6,1,,0
+GameEngineDevice/Source/W3DDevice/Common/Thing/W3DThingFactory.cpp,ok,0,1,0,,0
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cpp,ok,2,1,12,,2
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDependencyModelDraw.cpp,ok,0,4,8,,0
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordTankDraw.cpp,ok,0,4,8,,0
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordTruckDraw.cpp,ok,0,4,8,,0
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DPoliceCarDraw.cpp,ok,0,3,5,,0
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DProjectileStreamDraw.cpp,ok,0,5,12,,0
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DRopeDraw.cpp,ok,0,3,18,,0
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DScienceModelDraw.cpp,ok,0,4,4,,0
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTracerDraw.cpp,ok,0,3,9,,0
+GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp,ok,2,3,9,,2
+GameEngineDevice/Source/W3DDevice/GameClient/GUI/W3DGameWindow.cpp,ok,0,7,14,,0
+GameEngineDevice/Source/W3DDevice/GameClient/W3DAssetManagerExposed.cpp,ok,0,0,0,,0
+GameEngineDevice/Source/W3DDevice/GameClient/W3DCustomEdging.cpp,ok,0,0,10,,0
+GameEngineDevice/Source/W3DDevice/GameClient/W3DDebugDisplay.cpp,ok,0,2,5,,0
+GameEngineDevice/Source/W3DDevice/GameClient/W3DDebugIcons.cpp,ok,0,0,0,,0
+GameEngineDevice/Source/W3DDevice/GameClient/W3DDynamicLight.cpp,ok,0,1,5,,0
+GameEngineDevice/Source/W3DDevice/GameClient/W3DGranny.cpp,ok,0,0,0,,0
+GameEngineDevice/Source/W3DDevice/GameClient/W3DInGameUI.cpp,ok,0,1,9,,0
+GameEngineDevice/Source/W3DDevice/GameClient/W3DSmudge.cpp,ok,0,1,10,,0
+GameEngineDevice/Source/W3DDevice/GameClient/W3DWebBrowser.cpp,compile-error,0,0,0,C2065 'CComQIPtr' : undeclared identifier,0
+GameEngineDevice/Source/W3DDevice/GameLogic/W3DGameLogic.cpp,ok,0,0,0,,0
+GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogic.cpp,ok,0,4,20,,0
