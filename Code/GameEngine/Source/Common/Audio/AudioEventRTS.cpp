@@ -742,7 +742,6 @@ AudioPriority AudioEventRTS::getAudioPriority( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setAudioPriority@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::setAudioPriority( AudioPriority newPriority )
 {
 	m_priority = newPriority;

@@ -10634,3 +10634,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?setHandleToKill@AudioEventRTS@@QAEXI@Z,,0x000B2310,10,Code/masm_dumps/AudioEventRTS_setHandleToKill.asm,matched,Ghidra-bound BFME audio kill-handle setter
 ?friend_newModuleData@UnitCrateCollide@@SAPAVModuleData@@PAVINI@@@Z,,0x00125F10,107,Code/masm_dumps/UnitCrateCollide_friend_newModuleData.asm,matched,Ghidra-bound BFME crate module-data factory
 ?reset@GameTextManager@@UAEXXZ,,0x00437500,85,Code/masm_dumps/GameTextManager_reset.asm,matched,Ghidra-corrected BFME text reset body
+?setAudioPriority@AudioEventRTS@@QAEXW4AudioPriority@@@Z,,0x000B23A0,10,Code/masm_dumps/AudioEventRTS_setAudioPriority.asm,matched,Ghidra-bound BFME audio priority setter
