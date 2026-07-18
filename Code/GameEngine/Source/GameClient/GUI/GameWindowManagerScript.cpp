@@ -2422,25 +2422,6 @@ Bool parseInit( char *token, char *buffer, UnsignedInt version, WindowLayoutInfo
 //-------------------------------------------------------------------------------------------------
 /** Parse update for layout file */
 //-------------------------------------------------------------------------------------------------
-Bool parseUpdate( char *token, char *buffer, UnsignedInt version, WindowLayoutInfo *info )
-{
-	char *c;
-	char *seps = " \n\r\t";
-
-	// get string
-	c = strtok( buffer, seps );
-
-	// translate string to function address
-	info->updateNameString = c;
-	info->update = TheFunctionLexicon->winLayoutUpdateFunc( TheNameKeyGenerator->nameToKey( info->updateNameString ) );
-
-	return TRUE;  // success
-
-}  // end parseUpdate
-
-//-------------------------------------------------------------------------------------------------
-/** Parse shutdown for layout file */
-//-------------------------------------------------------------------------------------------------
 class RetailLayoutString
 {
 public:
@@ -2451,6 +2432,28 @@ private:
 	void *m_data;
 };
 
+Bool parseUpdate( char *token, char *buffer, UnsignedInt version, WindowLayoutInfo *info )
+{
+	char *c;
+	char *seps = " \n\r\t";
+
+	// get string
+	c = strtok( buffer, seps );
+
+	// translate string to function address
+	RetailLayoutString *updateName = reinterpret_cast<RetailLayoutString *>(reinterpret_cast<char *>(info) + 0x18);
+	updateName->set( c, c ? strlen(c) : 0 );
+	info->update = TheFunctionLexicon->winLayoutUpdateFunc(
+		TheNameKeyGenerator->nameToKey( updateName->str() ),
+		static_cast<FunctionLexicon::TableIndex>(9) );
+
+	return TRUE;  // success
+
+}  // end parseUpdate
+
+//-------------------------------------------------------------------------------------------------
+/** Parse shutdown for layout file */
+//-------------------------------------------------------------------------------------------------
 Bool parseShutdown( char *token, char *buffer, UnsignedInt version, WindowLayoutInfo *info )
 {
 	char *c;
