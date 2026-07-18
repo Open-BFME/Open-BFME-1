@@ -5206,7 +5206,6 @@ void ScriptActions::doRadarForceEnable(void)
 //-------------------------------------------------------------------------------------------------
 /** doRadarRevertNormal */
 //-------------------------------------------------------------------------------------------------
-// ?doRadarRevertNormal@ScriptActions@@IAEXXZ present-unmatched
 void ScriptActions::doRadarRevertNormal(void)
 {
 	TheRadar->forceOn(false);

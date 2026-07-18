@@ -10477,3 +10477,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?getMetaMapRec@MetaMap@@IAEPAVMetaMapRec@@W4Type@GameMessage@@@Z,,0x005B7110,111,Code/masm_dumps/MetaEvent_MetaMap_getMetaMapRec.asm,matched,
 ?doRadarForceEnable@ScriptActions@@IAEXXZ,,0x002EFD50,10,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,
 ?doDebugMessage@ScriptActions@@IAEXABVAsciiString@@_N@Z,,0x002F20E0,51,Code/masm_dumps/ScriptActions_doDebugMessage.asm,matched,
+?doRadarRevertNormal@ScriptActions@@IAEXXZ,,0x002EFD60,10,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,
