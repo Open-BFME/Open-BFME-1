@@ -764,7 +764,6 @@ Real AudioEventRTS::getVolume( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setVolume@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::setVolume( Real vol )
 {
 	m_volume = vol;
