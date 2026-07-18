@@ -608,7 +608,6 @@ const Coord3D* AudioEventRTS::getPosition( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setObjectID@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::setObjectID( ObjectID objID )
 {
 	if (!(m_ownerType == OT_Object || m_ownerType == OT_INVALID)) {
