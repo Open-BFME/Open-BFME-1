@@ -3251,7 +3251,6 @@ void W3DRoadBuffer::setMap(WorldHeightMap *pMap)
 //=============================================================================
 /** Loads the roads from the map objects. */
 //=============================================================================
-// ?loadRoads@W3DRoadBuffer@@QAEXXZ present-unmatched
 void W3DRoadBuffer::loadRoads()
 {
 	if (!m_initialized) {
@@ -3455,5 +3454,4 @@ void W3DRoadBuffer::drawRoads(CameraClass * camera, TextureClass *cloudTexture, 
 #endif
 	m_curRoadType = 0;
 }
-
 
