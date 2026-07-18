@@ -1261,3 +1261,5 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ??1MetaMapRec@@MAE@XZ	no-match	Queue target 0x006F4C62/86 begins 18 bytes inside true Ghidra function 0x006F4C50/114; C++ also uses ZH member offsets
 ??1MetaMapRec@@MAE@XZ	landed	Ghidra confirmed true target 0x006F4C50/114; exact BFME destructor landed via MASM with retail member offsets
 ?update@GameTextManager@@UAEXXZ	landed	Ghidra vtable anchored true target 0x00438420/1; existing inline C++ emitted exact RET
+?createSnowManager@W3DGameClient@@MAEPAVSnowManager@@XZ	no-match	Initial facade assumed SubsystemInterface was vptr-only; its AsciiString member made SnowManager 0x6c and failed size assertions
+?createSnowManager@W3DGameClient@@MAEPAVSnowManager@@XZ	landed	Matched Ghidra-anchored 0x006FB870/89 as verified ICF alias with retail 0x68/0x9c snow layouts and ctor thunk

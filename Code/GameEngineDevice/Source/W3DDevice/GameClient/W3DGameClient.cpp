@@ -43,6 +43,39 @@
 
 #include "Common/GameType.h"
 #include "Common/STLTypedefs.h"
+#include "Common/SubsystemInterface.h"
+
+#define _SNOW_H_
+class SnowManager : public SubsystemInterface
+{
+public:
+	SnowManager();
+	virtual ~SnowManager();
+	virtual void init();
+	virtual void reset();
+	virtual void updateIniSettings();
+
+private:
+	unsigned char m_retailData[ 0x60 ];
+};
+
+#define _W3DSNOW_H_
+class W3DSnowManager : public SnowManager
+{
+public:
+	W3DSnowManager();
+	virtual ~W3DSnowManager();
+	virtual void init();
+	virtual void reset();
+	virtual void update();
+	virtual void updateIniSettings();
+
+private:
+	unsigned char m_retailData[ 0x34 ];
+};
+
+typedef char BFMERetailSnowManagerSizeCheck[ sizeof( SnowManager ) == 0x68 ? 1 : -1 ];
+typedef char BFMERetailW3DSnowManagerSizeCheck[ sizeof( W3DSnowManager ) == 0x9c ? 1 : -1 ];
 
 #define _IN_GAME_UI_H_
 class Drawable;
