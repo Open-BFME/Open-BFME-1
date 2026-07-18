@@ -1259,7 +1259,6 @@ void ThingTemplate::copyFrom(const ThingTemplate* that)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setCopiedFromDefault@ThingTemplate@@QAEXXZ present-unmatched
 void ThingTemplate::setCopiedFromDefault()
 {
 	m_armorCopiedFromDefault = true;
@@ -1653,4 +1652,3 @@ ModuleData* ModuleInfo::friend_getNthData(Int i)
 	}
 	return NULL;
 }
-
