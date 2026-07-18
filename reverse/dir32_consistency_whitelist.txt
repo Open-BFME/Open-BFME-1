@@ -152,3 +152,13 @@ __imp__ceil
 # arrays are consecutive at 0x12F9CCC and 0x12F9CE0, and exact Ghidra boundaries
 # confirm the matched functions that reference each copy.
 _W3DFilters
+
+# Global singleton pointers / file-scope statics materialized at multiple retail
+# addresses. FiringTracker.cpp's newly-matched getModuleNameKey/getClassMemoryPool
+# references several of these; each reference is from a byte-matched function.
+?TheControlBar@@3PAVControlBar@@A
+?TheFXListStore@@3PAVFXListStore@@A
+?TheNameKeyGenerator@@3PAVNameKeyGenerator@@A
+?TheNullChr@?1??str@UnicodeString@@QBEPBGXZ@4GB
+__PresentParameters
+_m_boundaries
