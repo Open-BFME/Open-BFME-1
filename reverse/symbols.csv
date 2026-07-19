@@ -199,7 +199,7 @@ name,address,notes
 ??0AutoDepositUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00C15D,module ctor (friend_newModuleInstance retail call target)
 ??0AutoFindHealingUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x02E12C,module ctor (friend_newModuleInstance retail call target)
 ??0AutoFindHealingUpdateModuleData@@QAE@XZ,0x0001D4EE,module-glue cascade callee (from retail call site)
-??0AutoHealBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000A0E2
+??0RainOfFireUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000A0E2,retail ModuleFactory cp081 constructor thunk
 ??0AutoHealBehaviorModuleData@@QAE@XZ,0x000287C7
 ??0BFMEAutoLockRef@@QAE@PAVBFMENetworkLock@@I@Z,0x009DB3B0,native BFME lock-ref acquire helper
 ??0BattlePlanUpdateModuleData@@QAE@XZ,0x0003025B
@@ -3260,7 +3260,6 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??0SpyVisionSpecialPowerModuleData@@QAE@XZ,0x00025EBE,derived-ICF
 ??0StatusBitsUpgradeModuleData@@QAE@XZ,0x000028AB,derived-ICF
 ??0StickyBombUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
-??0StructureCollapseUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000A0E2,derived-ICF
 ??0StructureToppleUpdateModuleData@@QAE@XZ,0x000287C7,derived-ICF
 ??0ToppleUpdateModuleData@@QAE@XZ,0x00010B2C,derived-ICF
 ??1?$_List_base@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@XZ,0x008881D0,derived-ICF

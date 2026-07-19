@@ -386,7 +386,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0AutoDepositUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0000C15D,5,Code/masm_dumps/__0AutoDepositUpdate__QAE_PAVThing__PBVModuleData___Z_C15D.asm,matched,MASM exact retail dump
 ??0AutoFindHealingUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0002E12C,5,Code/masm_dumps/__0AutoFindHealingUpdate__QAE_PAVThing__PBVModuleData___Z_2E12C.asm,matched,MASM exact retail dump
 ??0AutoFindHealingUpdateModuleData@@QAE@XZ,,0x0001D4EE,5,Code/masm_dumps/__0AutoFindHealingUpdateModuleData__QAE_XZ_1D4EE.asm,matched,MASM exact retail dump
-??0AutoHealBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0000A0E2,5,Code/masm_dumps/__0AutoHealBehavior__QAE_PAVThing__PBVModuleData___Z_A0E2.asm,matched,MASM exact retail dump
+??0RainOfFireUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0000A0E2,5,Code/masm_dumps/__0RainOfFireUpdate__QAE_PAVThing__PBVModuleData___Z_A0E2.asm,matched,retail factory call binds constructor thunk to RainOfFireUpdate
 ??0AutoHealBehaviorModuleData@@QAE@XZ,,0x000287C7,5,Code/masm_dumps/__0AutoHealBehaviorModuleData__QAE_XZ_287C7.asm,matched,MASM exact retail dump
 ??0AvailableGameInfo@@QAE@XZ,,0x0010DB60,19,Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp,matched,
 ??0BTIntersectStruct@@QAE@ABVOBBoxClass@@ABVTriClass@@@Z,,0x008E6760,367,Code/Libraries/Source/WWVegas/WWMath/colmathobbtri.cpp,matched,
