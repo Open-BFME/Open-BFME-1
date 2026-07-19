@@ -10697,3 +10697,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?friend_newModuleInstance@RampageBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001149C0,96,Code/masm_dumps/RampageBehavior_friend_newModuleInstance.asm,matched,Retail registration proves RampageBehavior instance factory
 ?GadgetListBoxSetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z,,0x004B7260,186,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,BFME list-box and DisplayString layout
 ?advanceNextPlayPortion@AudioEventRTS@@QAEXXZ,,0x000B3320,87,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,BFME audio event layout and play-portion flow
+?hasMoreLoops@AudioEventRTS@@QBE_NXZ,,0x000B28B0,41,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,BFME audio event loop-control layout

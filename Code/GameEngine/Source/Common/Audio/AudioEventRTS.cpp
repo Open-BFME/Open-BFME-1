@@ -544,10 +544,24 @@ void AudioEventRTS::decreaseLoopCount( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?hasMoreLoops@AudioEventRTS@@ present-unmatched
 Bool AudioEventRTS::hasMoreLoops( void ) const
 {
-	return (m_loopCount >= 0);
+	const char *bfmeThis = (const char *)this;
+	if (*(const Byte *)(bfmeThis + 0x45) != 0) {
+		return FALSE;
+	}
+
+	const char *eventInfo = *(const char * const *)(bfmeThis + 0x08);
+	if (eventInfo == NULL) {
+		return TRUE;
+	}
+
+	Int soundCount = *(const Int *)(eventInfo + 0x84);
+	if (soundCount == 0 || soundCount == 3 || (*(const Byte *)(eventInfo + 0x3C) & 1) != 0) {
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 //-------------------------------------------------------------------------------------------------
