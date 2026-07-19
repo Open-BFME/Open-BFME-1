@@ -10875,3 +10875,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??1BridgeBehaviorModuleData@@UAE@XZ,,0x001F5440,147,Code/masm_dumps/BridgeBehaviorModuleData_destructor.asm,matched,Ghidra-corrected retail body via constructor vtable and deleting destructor
 ??1StructureCollapseUpdateModuleData@@UAE@XZ,,0x00128A90,103,Code/masm_dumps/StructureCollapseUpdateModuleData_destructor.asm,matched,Ghidra-corrected retail SEH vector destructor via registration and vtable chain
 ?friend_newModuleData@W3DQuadrupedDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x006BFEB0,110,Code/masm_dumps/W3DQuadrupedDraw_friend_newModuleData.asm,matched,W3D ModuleFactory registration ordinal 0x05 Ghidra corrected owner
+?doPlayerSetOverrideRelationToTeam@ScriptActions@@IAEXABVAsciiString@@0H@Z,,0x002F84C0,102,Code/masm_dumps/ScriptActions_doPlayerSetOverrideRelationToTeam.asm,matched,Ghidra-corrected body via executeAction dispatch thunk
