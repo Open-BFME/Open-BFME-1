@@ -7575,7 +7575,7 @@ _fmodf,,0x00097070,14,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse
 ?friend_newModuleInstance@OCLUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011A7C0,96,Code/masm_dumps/OCLUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x78; Ghidra confirmed
 ?friend_newModuleData@OCLUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011A840,107,Code/masm_dumps/OCLUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x78; Ghidra confirmed
 ?friend_newModuleData@AutoPickUpUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119B30,107,Code/masm_dumps/AutoPickUpUpdate_friend_newModuleData.asm,matched,Retail registration dp098 proves AutoPickUpUpdate data factory
-?friend_newModuleData@ProductionUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118BB0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@ProductionUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011AC90,107,Code/masm_dumps/ProductionUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x82; Ghidra confirmed
 ?friend_newModuleInstance@QueueProductionExitUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001156B0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@SupplyCenterDockUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011AFC0,107,Code/masm_dumps/SupplyCenterDockUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x7C; Ghidra confirmed
 ?friend_newModuleData@RailedTransportDockUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118AA0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
