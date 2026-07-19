@@ -1518,3 +1518,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?GadgetListBoxGetTextAndColor@@YA?AVUnicodeString@@PAVGameWindow@@PAHHH@Z	landed	Ghidra proves export thunk 0x44C0B jumps to unique 288-byte owner 0x4BBB00; BFME GLM_GET_TEXT 0x401A makes native body exact and supersedes thunk-only MASM.
 ?friend_newModuleInstance@RampageBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	Retail RampageBehavior registration thunk 0x401E56 resolves to unique 96-byte Ghidra factory at 0x1149C0.
 ?GadgetListBoxSetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z	landed	Ghidra owner 0x4B7260 is 186 bytes; explicit BFME ListboxData+0x18 and DisplayString slot 6 make native body exact.
+?advanceNextPlayPortion@AudioEventRTS@@QAEXXZ	landed	Ghidra FUN_004b3320 at RVA 0x000B3320 proves BFME state offsets and exact 87-byte control flow

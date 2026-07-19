@@ -488,32 +488,40 @@ PortionToPlay AudioEventRTS::getNextPlayPortion( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?advanceNextPlayPortion@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::advanceNextPlayPortion( void )
 {
-	switch (m_portionToPlayNext) 
+	char *bfmeThis = (char *)this;
+	PortionToPlay *portionToPlayNext = (PortionToPlay *)(bfmeThis + 0x60);
+
+	switch (*portionToPlayNext)
 	{
 		case PP_Attack:
-			m_portionToPlayNext = PP_Sound;
+			*portionToPlayNext = PP_Sound;
 			break;
 		case PP_Sound:
-			if (m_eventInfo && BitTest(m_eventInfo->m_control, AC_ALL)) 
+			if (*(Byte *)(bfmeThis + 0x45) == 0)
 			{
-				if (m_allCount == m_eventInfo->m_sounds.size()) {
-					m_portionToPlayNext = PP_Decay;
+				const char *eventInfo = *(const char **)(bfmeThis + 0x08);
+				if (eventInfo == NULL) {
+					return;
 				}
 
-				// Advance the all count so that we move to the next sound.
-				++m_allCount;
+				Int soundCount = *(const Int *)(eventInfo + 0x84);
+				if (soundCount == 0 || soundCount == 3 || (*(const Byte *)(eventInfo + 0x3C) & 1) != 0) {
+					return;
+				}
 			}
-			if (!m_decayName.isEmpty()) {
-				m_portionToPlayNext = PP_Decay;
-			} else {
-				m_portionToPlayNext = PP_Done;
+
+			{
+				const char *decayName = *(const char **)(bfmeThis + 0x1C);
+				if (decayName != NULL && *(const Short *)(decayName + 4) != 0) {
+					*portionToPlayNext = PP_Decay;
+					return;
+				}
 			}
-			break;
+			// fall through
 		case PP_Decay:
-			m_portionToPlayNext = PP_Done;
+			*portionToPlayNext = PP_Done;
 			break;
 	}
 }
