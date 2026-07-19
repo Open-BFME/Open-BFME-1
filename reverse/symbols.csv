@@ -3116,8 +3116,7 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??0ArchivedDirectoryInfo@@QAE@ABV0@@Z,0x009CA8F0,pinharvest x1 (body)
 ??0ArchivedDirectoryInfo@@QAE@ABV0@@Z,0x009D0DB0,pinharvest x1 (body)
 ??0W3DRopeDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048167,retail W3D factory registration
-??0W3DDebrisDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002A379,pinharvest x1 (thunk)
-??0W3DDebrisDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048338,pinharvest x1 (thunk)
+??0W3DDebrisDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002E98D,retail W3DModuleFactory ordinal 1 ctor thunk
 ??0DetailedArchivedDirectoryInfo@@QAE@ABV0@@Z,0x009CA8F0,pinharvest x1 (body)
 ??0DetailedArchivedDirectoryInfo@@QAE@ABV0@@Z,0x009D0DB0,pinharvest x1 (body)
 ??0W3DProjectileStreamDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002B67,pinharvest x1 (thunk)
