@@ -2610,7 +2610,7 @@ Int GadgetListBoxGetNumEntries( GameWindow *listbox )
 
 	ListboxData *listboxData = (ListboxData *)listbox->winGetUserData();
 	if (listboxData)
-		return listboxData->endPos;
+		return *(Short *)((char *)listboxData + 0x2C);
 
 	return 0;
 }  // end GadgetListBoxGetNumEntries
@@ -2825,4 +2825,3 @@ Int GadgetListBoxGetColumnWidth( GameWindow *listbox, Int column )
 
 	return listboxData->columnWidth[column];
 }  // end GadgetListBoxGetNumColumns
-
