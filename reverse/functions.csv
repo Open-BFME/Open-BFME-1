@@ -3781,7 +3781,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?friend_awakenUpdateModule@GameLogic@@QAEXPAVObject@@PAVUpdateModule@@I@Z,,0x00009944,5,Code/masm_dumps/_friend_awakenUpdateModule_GameLogic__QAEXPAVObject__PAVUpdateModule__I_Z_9944.asm,matched,MASM exact retail dump
 ?friend_getFinalOverride@Overridable@@QAEPAV1@XZ,,0x00048C61,5,Code/masm_dumps/_friend_getFinalOverride_Overridable__QAEPAV1_XZ_48C61.asm,matched,MASM exact retail dump
 ?friend_newModuleData@AutoFindHealingUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119800,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
-?friend_newModuleData@AutoHealBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00119D50,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@AutoHealBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00129E40,54,Code/masm_dumps/AutoHealBehavior_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x00; Ghidra confirmed
 ?friend_newModuleData@BattlePlanUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00117420,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@BeaconClientUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00121BF0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleData@BridgeBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00114810,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
@@ -10466,7 +10466,6 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?checkLadder@LadderList@@AAEXVAsciiString@@H@Z,,0x0062BC60,380,Code/masm_dumps/LadderList_checkLadder.asm,matched,Ghidra-bound retail ladder validation body
 ?getSpecialLadders@LadderList@@QAEPBV?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@XZ,,0x0062A140,4,Code/GameEngine/Source/GameNetwork/GameSpy/LadderDefs.cpp,matched,Ghidra-bound unique accessor
 ?getBehaviorModules@Object@@QBEPAPAVBehaviorModule@@XZ,,0x00478700,7,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound unique accessor
-?friend_newModuleData@GettingBuiltBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00129E40,54,Code/masm_dumps/GettingBuiltBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
 ?getStandardLadders@LadderList@@QAEPBV?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@XZ,,0x0062A150,4,Code/GameEngine/Source/GameNetwork/GameSpy/LadderDefs.cpp,matched,Ghidra-bound unique accessor
 ?getContain@Object@@QBEPAVContainModuleInterface@@XZ,,0x00478710,7,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound unique accessor
 ?friend_newModuleData@BridgeTowerBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00125220,50,Code/masm_dumps/BridgeTowerBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
