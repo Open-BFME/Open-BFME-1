@@ -2275,26 +2275,28 @@ void GadgetListBoxSetFont( GameWindow *g, GameFont *font )
 {
 	ListboxData *listData = (ListboxData *)g->winGetUserData();
 	DisplayString *dString;
+	typedef void (DisplayString::*BFMESetFontFn)( GameFont * );
 
 	// set the font for the display strings all windows have
 	dString = g->winGetInstanceData()->getTextDisplayString();
 	if( dString )
-		dString->setFont( font );
+		(dString->*(*(BFMESetFontFn *)&(*(void ***)dString)[6]))( font );
 	dString = g->winGetInstanceData()->getTooltipDisplayString();
 	if( dString )
-		dString->setFont( font );
+		(dString->*(*(BFMESetFontFn *)&(*(void ***)dString)[6]))( font );
 
 	// listbox specific	
 	if( listData )
 		for( Int i = 0; i < listData->listLength; i++ )
 		{
-			if(listData->listData[i].cell)
+			if((*(ListEntryRow **)((char *)listData + 0x18))[i].cell)
 				for( Int j = 0; j < listData->columns; j++ )
 				{
-					if( listData->listData[i].cell[j].cellType == LISTBOX_TEXT && listData->listData[i].cell[j].data )
+					if( (*(ListEntryRow **)((char *)listData + 0x18))[i].cell[j].cellType == LISTBOX_TEXT &&
+						(*(ListEntryRow **)((char *)listData + 0x18))[i].cell[j].data )
 					{
-						dString = (DisplayString *)listData->listData[i].cell[j].data;
-						dString->setFont( font );
+						dString = (DisplayString *)(*(ListEntryRow **)((char *)listData + 0x18))[i].cell[j].data;
+						(dString->*(*(BFMESetFontFn *)&(*(void ***)dString)[6]))( font );
 					}
 				}
 		}  // end for i
