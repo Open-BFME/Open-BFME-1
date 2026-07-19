@@ -10200,7 +10200,6 @@ _atanf,,0x0045B6F0,9,Code/Libraries/Source/WWVegas/WW3D2/texproject.cpp,matched,
 ?emit_VeterancyCrateCollide@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011F0E0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@VeterancyCrateCollide; Ghidra boundary
 ?emit_WeaponBonusUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D850,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@WeaponBonusUpgrade; Ghidra boundary
 ?emit_WeaponSetUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D8D0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@WeaponSetUpgrade; Ghidra boundary
-?emit_InactiveBody@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@InactiveBody; Ghidra boundary
 ?emit_BeaconClientUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@BeaconClientUpdate; Ghidra boundary
 ?Exists@RegistryClass@@SA_NPBD@Z,,0x009DC1C0,50,Code/Libraries/Source/WWVegas/WWLib/registry.cpp,matched,
 ??0RegistryClass@@QAE@PBD_N@Z,,0x009DC200,123,Code/Libraries/Source/WWVegas/WWLib/registry.cpp,matched,
