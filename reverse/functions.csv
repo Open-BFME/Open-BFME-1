@@ -7521,7 +7521,7 @@ _fmodf,,0x00097070,14,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse
 ?push_back@?$vector@UTransitionInfo@State@@V?$allocator@UTransitionInfo@State@@@_STL@@@_STL@@QAEXABUTransitionInfo@State@@@Z,,0x00069200,64,Code/GameEngine/Source/Common/StateMachine.cpp,matched,
 ?friend_newModuleInstance@CountermeasuresBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117290,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@InstantDeathBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115360,96,Code/masm_dumps/InstantDeathBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory registration cp019; Ghidra-confirmed boundary
-?friend_newModuleInstance@SlowDeathBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001142A0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@SlowDeathBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115470,96,Code/masm_dumps/SlowDeathBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory registration cp020; Ghidra-confirmed boundary
 ?friend_newModuleData@ModelConditionUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DD90,110,Code/masm_dumps/ModelConditionUpgrade_friend_newModuleData.asm,matched,Retail registration dp169 proves ModelConditionUpgrade data factory
 ?friend_newModuleInstance@NeutronMissileSlowDeathBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117290,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@OverchargeBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001170D0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
