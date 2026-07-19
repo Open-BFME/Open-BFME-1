@@ -1948,3 +1948,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?CreateLANGameInfoWindow@@YAXPAVGameWindow@@@Z	no-match	Ghidra corrected boundary to 0x4C8830/176 via Menus/GameInfoWindow.wnd and LanLobby caller; current 190B compile inlines AsciiString buffer setup where retail calls out-of-line ctor 0x888BC0
 ?setUpDownImages@ControlBar@@IAEXXZ	landed	Corrected one-byte-early padding vote to 0x49D160/259; string and three caller semantics prove ownership; exact MASM avoids uniform +0x40 ZH layout drift
 ??0SlowDeathBehavior@@QAE@PAVThing@@PBVModuleData@@@Z	blocked	Factory proves true ctor 0x207B60/321 via thunk 0x447FB and 0x50 allocation; current 194B ZH body lacks four BFME phase-array ranges and fields through +0x4C; corrected two unrelated ctor pins
+?init@ShellMenuSchemeManager@@QAEXXZ	landed	Shell constructor and init vtable path prove 0x580290/1; retail has no ShellMenuScheme INI xrefs, so removed ZH-only loads
