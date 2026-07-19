@@ -193,6 +193,10 @@ public:
 	virtual void slot0( void );
 	virtual void slot1( void );
 	virtual UnicodeString getText( void );
+	virtual void slot3( void );
+	virtual void slot4( void );
+	virtual void slot5( void );
+	virtual void setFont( GameFont *font );
 };
 
 UnicodeString GadgetStaticTextGetText( GameWindow *window )
@@ -218,10 +222,10 @@ void GadgetStaticTextSetFont( GameWindow *g, GameFont *font )
 	// set the font for the display strings all windows have
 	dString = g->winGetInstanceData()->getTextDisplayString();
 	if( dString )
-		dString->setFont( font );
+		((BFMEStaticTextDisplayString *)dString)->setFont( font );
 	dString = g->winGetInstanceData()->getTooltipDisplayString();
 	if( dString )
-		dString->setFont( font );
+		((BFMEStaticTextDisplayString *)dString)->setFont( font );
 
 	// static text specific
 	if( textData )
@@ -229,7 +233,7 @@ void GadgetStaticTextSetFont( GameWindow *g, GameFont *font )
 
 		dString = textData->text;
 		if( dString )
-			dString->setFont( font );
+			((BFMEStaticTextDisplayString *)dString)->setFont( font );
 
 	}  // end if
 

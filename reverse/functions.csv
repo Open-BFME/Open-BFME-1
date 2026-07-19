@@ -10703,3 +10703,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?friend_newModuleInstance@EntEnragedUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011CF80,96,Code/masm_dumps/EntEnragedUpdate_friend_newModuleInstance.asm,matched,Retail registration proves EntEnragedUpdate instance factory
 ?friend_newModuleInstance@HitReactionBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114BE0,96,Code/masm_dumps/HitReactionBehavior_friend_newModuleInstance.asm,matched,Retail registration proves HitReactionBehavior instance factory
 ?GadgetStaticTextGetText@@YA?AVUnicodeString@@PAVGameWindow@@@Z,,0x004BD820,82,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetStaticText.cpp,matched,BFME DisplayString getText virtual slot layout
+?GadgetStaticTextSetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z,,0x004BD5F0,86,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetStaticText.cpp,matched,BFME DisplayString setFont virtual slot layout
