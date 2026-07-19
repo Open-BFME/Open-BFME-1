@@ -10658,3 +10658,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?getHandleToKill@AudioEventRTS@@QBEIXZ,,0x000B2320,4,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,Ghidra-bound BFME audio kill-handle getter
 ?GadgetComboBoxSetEnabledTextColors@@YAXPAVGameWindow@@HH@Z,,0x004B3AC0,58,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,matched,BFME ComboBoxData child-window offsets
 ?getIsLogicalAudio@AudioEventRTS@@QBE_NXZ,,0x000B2340,4,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,Ghidra-bound BFME logical-audio getter
+?GadgetComboBoxSetDisabledTextColors@@YAXPAVGameWindow@@HH@Z,,0x004B3B10,60,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,matched,BFME ComboBoxData disabled-color offsets

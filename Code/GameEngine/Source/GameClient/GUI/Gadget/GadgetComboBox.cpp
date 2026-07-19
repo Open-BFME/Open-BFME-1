@@ -1012,10 +1012,12 @@ void GadgetComboBoxSetDisabledTextColors(GameWindow *comboBox, Color color, Colo
 	if( comboBox == NULL )
 		return;
 
-	if(comboBoxData->listBox)
-		comboBoxData->listBox->winSetDisabledTextColors( color,borderColor);
-	if(comboBoxData->editBox)
-		comboBoxData->editBox->winSetDisabledTextColors(color,borderColor);
+	GameWindow *listBox = *(GameWindow **)((char *)comboBoxData + 0x2C);
+	if(listBox)
+		listBox->winSetDisabledTextColors( color,borderColor);
+	GameWindow *editBox = *(GameWindow **)((char *)comboBoxData + 0x28);
+	if(editBox)
+		editBox->winSetDisabledTextColors(color,borderColor);
 }
 // GadgetComboBoxSetHiliteTextColors ==========================================
 /** Set the Hilite Text Colors for the Sub Gadgets */
