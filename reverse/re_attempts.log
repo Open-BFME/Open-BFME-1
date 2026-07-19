@@ -1609,3 +1609,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?friend_newModuleInstance@SwayClientUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	no-match	Pinned
 ?friend_newModuleInstance@SwayClientUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	ModuleFactory
 ?friend_newModuleInstance@ClearanceTestingSlowDeathBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	ModuleFactory registration cp049 thunk 0x43A008 reaches RVA 0x117290; Ghidra confirms the 96-byte ICF body and 0x54 allocation
+?friend_newModuleInstance@RunOffMapBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	ModuleFactory registration cp050 thunk 0x421995 reaches unique RVA 0x1158E0; Ghidra confirms 96-byte boundary and 0x14 allocation
