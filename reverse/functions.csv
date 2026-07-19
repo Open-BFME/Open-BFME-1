@@ -8678,7 +8678,7 @@ _$E2,,0x00C70930,40,Code/Libraries/Source/WWVegas/WWLib/slnode.cpp,matched,
 ?friend_newModuleData@PartTheHeavensUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011C5B0,110,Code/masm_dumps/PartTheHeavensUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x53; Ghidra confirmed
 ?friend_newModuleInstance@W3DProjectileStreamDraw@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001194C0,96,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
 ?friend_newModuleData@W3DProjectileStreamDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x00118AA0,107,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
-?friend_newModuleInstance@W3DRopeDraw@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B750,96,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
+?friend_newModuleInstance@W3DRopeDraw@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x006BF2E0,96,Code/masm_dumps/W3DRopeDraw_friend_newModuleInstance.asm,matched,retail W3D factory registration; Ghidra confirmed
 ?friend_newModuleInstance@BezierProjectileBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115240,99,Code/masm_dumps/BezierProjectileBehavior_friend_newModuleInstance.asm,matched,Retail registration cp017 uniquely proves BezierProjectileBehavior instance factory
 ?friend_newModuleInstance@W3DTracerDraw@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114200,96,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
 ?friend_newModuleData@W3DPropDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x00114B50,107,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
