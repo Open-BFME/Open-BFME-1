@@ -2040,7 +2040,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?GadgetProgressBarSetEnabledBarImageSmallCenter@@YAXPAVGameWindow@@PBVImage@@@Z,,0x0047A920,17,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?GadgetProgressBarSetHiliteBarBorderColor@@YAXPAVGameWindow@@H@Z,,0x0047AB80,17,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?GadgetRadioSetGroup@@YAXPAVGameWindow@@HH@Z,,0x004BD250,23,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetRadioButton.cpp,matched,
-?GadgetRadioSetSelection@@YAXPAVGameWindow@@_N@Z,,0x00034536,5,Code/masm_dumps/_GadgetRadioSetSelection__YAXPAVGameWindow___N_Z_34536.asm,matched,MASM exact retail dump
+?GadgetRadioSetSelection@@YAXPAVGameWindow@@_N@Z,0x00034536,0x004BD270,38,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetRadioButton.cpp,matched,Native body replaces thunk-only MASM ownership
 ?GadgetSliderGetDisabledSelectedThumbBorderColor@@YAHPAVGameWindow@@@Z,,0x004B6950,26,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?GadgetSliderGetEnabledSelectedThumbBorderColor@@YAHPAVGameWindow@@@Z,,0x004B6910,23,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?GadgetSliderGetHiliteSelectedThumbBorderColor@@YAHPAVGameWindow@@@Z,,0x004B6990,26,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
