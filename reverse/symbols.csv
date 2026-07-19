@@ -3257,7 +3257,6 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??0MissileLauncherBuildingUpdateModuleData@@QAE@XZ,0x0003025B,derived-ICF
 ??0OCLSpecialPowerModuleData@@QAE@XZ,0x0003025B,derived-ICF
 ??0OverchargeBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
-??0SpectreGunshipDeploymentUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000A0E2,derived-ICF
 ??0SpyVisionSpecialPowerModuleData@@QAE@XZ,0x00025EBE,derived-ICF
 ??0StatusBitsUpgradeModuleData@@QAE@XZ,0x000028AB,derived-ICF
 ??0StickyBombUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
