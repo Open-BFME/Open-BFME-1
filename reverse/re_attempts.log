@@ -1743,3 +1743,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?friend_newModuleData@TensileFormationUpdate@@SAPAVModuleData@@PAVINI@@@Z	dead	Removed false 0x118020 claim: TensileFormationUpdate name string is absent from retail and registration audit proves the body belongs to DozerAIUpdate.
 ?friend_newModuleInstance@AttributeModifierAuraUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	Retail registration ordinal 0x79: instance thunk 0x407EC3 resolves unique 0x11A8D0; Ghidra size 96, alloc 0x28.
 ?friend_newModuleData@SupplyCenterDockUpdate@@SAPAVModuleData@@PAVINI@@@Z	landed	Corrected false 0x1171F0 alias: retail registration ordinal 0x7C thunk 0x42B0FD resolves unique 0x11AFC0; Ghidra size 107, alloc 0x1C.
+?friend_newModuleData@MonsterDockUpdate@@SAPAVModuleData@@PAVINI@@@Z	landed	Retail registration ordinal 0x7E: data thunk 0x40FFF1 resolves unique 0x11B1E0; Ghidra size 107, alloc 0x18.
