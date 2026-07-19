@@ -10894,3 +10894,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?setWaypointName@MapObject@@QAEXVAsciiString@@@Z,,0x00087E50,31,Code/masm_dumps/MapObject_setWaypointName.asm,matched,Correct retail body from waypoint key and matched getter sibling cluster
 ?parseStructure@BuildListInfo@@SAXPAVINI@@PAX1PBX@Z,,0x001943D0,204,Code/masm_dumps/BuildListInfo_parseStructure.asm,matched,Exact retail MASM; Structure parser table and AI build-list caller prove ownership
 ?updateAndDrawWorldAnimations@InGameUI@@IAEXXZ,,0x0043F640,450,Code/masm_dumps/InGameUI_updateAndDrawWorldAnimations.asm,matched,Exact retail MASM; preDraw caller and world-animation loop prove ownership
+?addPlayerByTemplate@SidesList@@QAEXVAsciiString@@@Z,,0x0019C590,722,Code/masm_dumps/SidesList_addPlayerByTemplate.asm,matched,Exact retail MASM; faction strings and validateSides caller prove ownership
