@@ -9899,7 +9899,7 @@ _acosf,,0x00873940,10,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadB
 ?friend_newModuleData@CountermeasuresBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00117420,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@BattlePlanUpdate@@SAPAVModuleData@@PAVINI@@@Z
 ?friend_newModuleData@FireWeaponWhenDamagedBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00117420,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@BattlePlanUpdate@@SAPAVModuleData@@PAVINI@@@Z
 ?friend_newModuleData@FireWeaponWhenDeadBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x0012A250,110,Code/masm_dumps/FireWeaponWhenDeadBehavior_friend_newModuleData.asm,matched,retail ModuleFactory dp046 Ghidra confirmed
-?friend_newModuleData@FXListDie@@SAPAVModuleData@@PAVINI@@@Z,,0x0011F9C0,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@MissileAIUpdate@@SAPAVModuleData@@PAVINI@@@Z
+?friend_newModuleData@FXListDie@@SAPAVModuleData@@PAVINI@@@Z,,0x00123590,107,Code/masm_dumps/FXListDie_friend_newModuleData.asm,matched,retail ModuleFactory dp054 Ghidra confirmed
 ?friend_newModuleData@StatusBitsUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x00118020,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@TensileFormationUpdate@@SAPAVModuleData@@PAVINI@@@Z
 ?friend_newModuleData@StructureToppleUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119D50,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@AutoHealBehavior@@SAPAVModuleData@@PAVINI@@@Z
 ??_GTintEnvelope@@MAEPAXI@Z,,0x001B0E60,30,Code/GameEngine/Source/GameClient/Drawable.cpp,matched,icf-owner=??_GUpgrade@@MAEPAXI@Z
