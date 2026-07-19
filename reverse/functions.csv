@@ -10706,3 +10706,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?GadgetStaticTextSetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z,,0x004BD5F0,86,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetStaticText.cpp,matched,BFME DisplayString setFont virtual slot layout
 ?friend_newModuleInstance@ClickReactionBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114CF0,96,Code/masm_dumps/ClickReactionBehavior_friend_newModuleInstance.asm,matched,Retail registration proves ClickReactionBehavior instance factory
 ?calcSleepDelay@LifetimeUpdate@@AAEIII@Z,,0x00297E00,59,Code/GameEngine/Source/GameLogic/Object/Update/LifetimeUpdate.cpp,matched,BFME stores current frame before die frame
+?friend_newModuleInstance@SiegeDockingBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114E00,96,Code/masm_dumps/SiegeDockingBehavior_friend_newModuleInstance.asm,matched,Retail registration proves SiegeDockingBehavior instance factory
