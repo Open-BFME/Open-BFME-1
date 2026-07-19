@@ -670,7 +670,6 @@ void AudioEventRTS::setHandleToKill( AudioHandle handleToKill )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getHandleToKill@AudioEventRTS@@ present-unmatched
 AudioHandle AudioEventRTS::getHandleToKill( void ) const
 {
 	return m_killThisHandle;
