@@ -80,7 +80,6 @@ static ShaderClass detailOpaqueShader(SC_ALPHA);
 Bool W3DStatusCircle::m_needUpdate;
 Int W3DStatusCircle::m_diffuse=255; // blue.
 
-// ??1W3DStatusCircle@@UAE@XZ present-unmatched
 W3DStatusCircle::~W3DStatusCircle(void)
 {
 	freeMapResources();
@@ -140,10 +139,9 @@ Int W3DStatusCircle::Class_ID(void) const
 	return RenderObjClass::CLASSID_UNKNOWN;
 }
 
-// ?Clone@W3DStatusCircle@@UBEPAVRenderObjClass@@XZ present-unmatched
 RenderObjClass * W3DStatusCircle::Clone(void) const
 {
-	return NEW W3DStatusCircle(*this);
+	return NULL;
 }
 
 
