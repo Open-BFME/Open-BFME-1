@@ -656,7 +656,6 @@ void AudioEventRTS::setTimeOfDay( TimeOfDay tod )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getTimeOfDay@AudioEventRTS@@ present-unmatched
 TimeOfDay AudioEventRTS::getTimeOfDay( void ) const
 {
 	return m_timeOfDay;
