@@ -1520,3 +1520,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?GadgetListBoxSetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z	landed	Ghidra owner 0x4B7260 is 186 bytes; explicit BFME ListboxData+0x18 and DisplayString slot 6 make native body exact.
 ?advanceNextPlayPortion@AudioEventRTS@@QAEXXZ	landed	Ghidra FUN_004b3320 at RVA 0x000B3320 proves BFME state offsets and exact 87-byte control flow
 ?hasMoreLoops@AudioEventRTS@@QBE_NXZ	landed	Ghidra FUN_004b28b0 at RVA 0x000B28B0 proves the exact 41-byte BFME loop-control leaf
+?GadgetTextEntrySetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z	landed	Ghidra FUN_008be0a0 at RVA 0x004BE0A0 proves four BFME DisplayString slot-6 calls and exact 99-byte body

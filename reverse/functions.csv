@@ -10698,3 +10698,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?GadgetListBoxSetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z,,0x004B7260,186,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,BFME list-box and DisplayString layout
 ?advanceNextPlayPortion@AudioEventRTS@@QAEXXZ,,0x000B3320,87,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,BFME audio event layout and play-portion flow
 ?hasMoreLoops@AudioEventRTS@@QBE_NXZ,,0x000B28B0,41,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,BFME audio event loop-control layout
+?GadgetTextEntrySetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z,,0x004BE0A0,99,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetTextEntry.cpp,matched,BFME DisplayString virtual slot layout
