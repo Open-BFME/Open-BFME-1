@@ -1522,3 +1522,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?hasMoreLoops@AudioEventRTS@@QBE_NXZ	landed	Ghidra FUN_004b28b0 at RVA 0x000B28B0 proves the exact 41-byte BFME loop-control leaf
 ?GadgetTextEntrySetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z	landed	Ghidra FUN_008be0a0 at RVA 0x004BE0A0 proves four BFME DisplayString slot-6 calls and exact 99-byte body
 ?friend_newModuleInstance@EnragedBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	Retail EnragedBehavior registration thunk 0x0040B294 resolves to unique 96-byte Ghidra factory at RVA 0x00114AD0
+?friend_newModuleInstance@EntEnragedUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	Retail EntEnragedUpdate registration thunk 0x00427DC7 resolves to unique 96-byte Ghidra factory at RVA 0x0011CF80
