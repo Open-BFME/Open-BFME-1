@@ -7618,7 +7618,7 @@ _fmodf,,0x00097070,14,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse
 ?friend_newModuleData@DieModule@@SAPAVModuleData@@PAVINI@@@Z,,0x00114D70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@CreateCrateDie@@SAPAVModuleData@@PAVINI@@@Z,,0x00129A30,107,Code/masm_dumps/CreateCrateDie_friend_newModuleData.asm,matched,retail ModuleFactory dp057 Ghidra confirmed
 ?friend_newModuleData@GrantStealthBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00118BB0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@AutoDepositUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118AA0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@AutoDepositUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00123F20,107,Code/masm_dumps/AutoDepositUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x54; Ghidra confirmed
 ?friend_newModuleData@SpyVisionUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001144C0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?TEST_KINDOFMASK_ANY@@YA_NABV?$BitFlags@$0HE@@@0@Z,,0x00132AB0,15,Code/GameEngine/Source/Common/Thing/Thing.cpp,matched,
 ??4DynamicAudioEventRTS@@QAEAAV0@ABV0@@Z,,0x00133BE0,25,Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp,matched,
