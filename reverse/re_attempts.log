@@ -1922,3 +1922,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?setDefaults@@YAXXZ	dead	BFME plain OptionsMenu callbacks and required control strings are absent; its sole caller OptionsMenuSystem is also absent. Candidate 0x4BDBA5 lies inside unrelated Ghidra function 0x4BDB60/120; locator found no standalone OptionsMenu body.
 ?createNewMessageQueue@GameSpyPeerMessageQueueInterface@@SAPAV1@XZ	landed	Ghidra traces SetUpGameSpy peer-factory thunk to true body 0x64E620/86; exact MASM verifies after false structural vote
 ?createNewGameSpyInfoInterface@GameSpyInfoInterface@@SAPAV1@XZ	landed	Ghidra SetUpGameSpy call chain proves true unclaimed factory body 0x637760/89; exact MASM verified despite BFME GameSpyInfo size drift
+?isAnyKindOf@Thing@@QBE_NABV?$BitFlags@$0HE@@@@Z	landed	Ghidra corrected unrelated 0x77B179/35 vote to true 0x132AE0/41; exact MASM verified with ThingTemplate mask at retail offset 0xC8
