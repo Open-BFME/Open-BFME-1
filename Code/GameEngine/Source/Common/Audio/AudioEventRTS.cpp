@@ -682,7 +682,6 @@ void AudioEventRTS::setShouldFade( Bool shouldFade )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getShouldFade@AudioEventRTS@@ present-unmatched
 Bool AudioEventRTS::getShouldFade( void ) const
 {
 	return m_shouldFade;
