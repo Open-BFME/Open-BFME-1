@@ -7567,7 +7567,7 @@ _fmodf,,0x00097070,14,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse
 ?friend_newModuleData@CleanupHazardUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001171F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@PilotFindVehicleUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001171F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@ParticleUplinkCannonUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011CC80,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@SpectreGunshipUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@ExperienceScalarUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DB70,107,Code/masm_dumps/ExperienceScalarUpgrade_friend_newModuleData.asm,matched,Retail registration dp167 uniquely proves ExperienceScalarUpgrade data factory
 ?friend_newModuleData@UnpauseSpecialPowerUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0011D7C0,107,Code/masm_dumps/UnpauseSpecialPowerUpgrade_friend_newModuleData.asm,matched,Retail registration dp163 uniquely proves UnpauseSpecialPowerUpgrade data factory
 ?friend_newModuleInstance@RadiusDecalUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00113FB0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@NeutronMissileUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118460,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
@@ -7584,7 +7584,6 @@ _fmodf,,0x00097070,14,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse
 ?friend_newModuleInstance@StealthUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117290,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@SpyVisionUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114200,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@FireOCLAfterWeaponCooldownUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114200,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@FireOCLAfterWeaponCooldownUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@ToppleUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117290,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@WeaponBonusUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@WeaponBonusUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001236C0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
@@ -7594,7 +7593,6 @@ _fmodf,,0x00097070,14,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse
 ?friend_newModuleInstance@EMPUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114200,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@InstantDeathBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001153E0,107,Code/masm_dumps/InstantDeathBehavior_friend_newModuleData.asm,matched,Retail registration dp019 uniquely proves InstantDeathBehavior data factory
 ?friend_newModuleInstance@GrantScienceUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@CostModifierUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@GrantUpgradeCreate@@SAPAVModuleData@@PAVINI@@@Z,,0x001171F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@VeterancyGainCreate@@SAPAVModuleData@@PAVINI@@@Z,,0x001170D0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@BoneFXDamage@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
@@ -7617,7 +7615,6 @@ _fmodf,,0x00097070,14,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse
 ?friend_newModuleData@UndeadBody@@SAPAVModuleData@@PAVINI@@@Z,,0x00114D70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@BeaconClientUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@DieModule@@SAPAVModuleData@@PAVINI@@@Z,,0x00114D70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@DeliverPayloadAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@CreateCrateDie@@SAPAVModuleData@@PAVINI@@@Z,,0x001146F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@GrantStealthBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00118BB0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@AutoDepositUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118AA0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,

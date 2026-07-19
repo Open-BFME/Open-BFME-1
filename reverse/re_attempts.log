@@ -1565,3 +1565,8 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?friend_newModuleData@CleanupAreaPower@@SAPAVModuleData@@PAVINI@@@Z	no-match	Removed false unique-body alias at 0x0011D7C0; retail owner is UnpauseSpecialPowerUpgrade
 ?friend_newModuleData@FireWeaponPower@@SAPAVModuleData@@PAVINI@@@Z	no-match	Removed false unique-body alias at 0x0011D7C0; retail owner is UnpauseSpecialPowerUpgrade
 ?friend_newModuleData@SubObjectsUpgrade@@SAPAVModuleData@@PAVINI@@@Z	no-match	Removed false unique-body alias at 0x0011D7C0; retail owner is UnpauseSpecialPowerUpgrade
+?friend_newModuleData@ExperienceScalarUpgrade@@SAPAVModuleData@@PAVINI@@@Z	landed	Retail ModuleFactory dp167 uniquely resolves to 107-byte Ghidra body RVA 0x0011DB70
+?friend_newModuleData@SpectreGunshipUpdate@@SAPAVModuleData@@PAVINI@@@Z	no-match	Removed false unique-body alias at 0x0011DB70; retail owner is ExperienceScalarUpgrade
+?friend_newModuleData@FireOCLAfterWeaponCooldownUpdate@@SAPAVModuleData@@PAVINI@@@Z	no-match	Removed false unique-body alias at 0x0011DB70; retail owner is ExperienceScalarUpgrade
+?friend_newModuleData@CostModifierUpgrade@@SAPAVModuleData@@PAVINI@@@Z	no-match	Removed false unique-body alias at 0x0011DB70; retail owner is ExperienceScalarUpgrade
+?friend_newModuleData@DeliverPayloadAIUpdate@@SAPAVModuleData@@PAVINI@@@Z	no-match	Removed false unique-body alias at 0x0011DB70; retail owner is ExperienceScalarUpgrade
