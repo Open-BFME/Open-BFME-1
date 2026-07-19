@@ -1529,3 +1529,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?GadgetStaticTextGetText@@YA?AVUnicodeString@@PAVGameWindow@@@Z	landed	Ghidra owner 0x004BD820 is 82 bytes; a BFME slot-2 vtable view preserves the hidden UnicodeString return ABI exactly
 ?GadgetStaticTextSetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z	landed	Ghidra owner 0x004BD5F0 is 86 bytes; BFME DisplayString slot-6 overlay makes all three calls exact
 ?friend_newModuleInstance@ClickReactionBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	Retail ClickReactionBehavior registration thunk 0x0042CC28 resolves to unique 96-byte Ghidra factory at RVA 0x00114CF0
+?calcSleepDelay@LifetimeUpdate@@AAEIII@Z	landed	Ghidra FUN_00697e00 at RVA 0x00297E00 proves BFME line 116, debug random-value owner, and current-frame store; native source is exact at 59 bytes

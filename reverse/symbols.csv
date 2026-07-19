@@ -3345,3 +3345,4 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??0W3DTerrainVisual@@QAE@XZ,0x00024DC0
 ?winSetHiliteTextColors@GameWindow@@QAEXHH@Z,0x000268B9
 ?winSetIMECompositeTextColors@GameWindow@@QAEXHH@Z,0x00014C13
+?GetGameLogicRandomValue@@YAHHHPADH@Z,0x00096CF0,LifetimeUpdate calcSleepDelay retail debug owner
