@@ -3800,7 +3800,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?friend_newModuleData@PropagandaTowerBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x0011CB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@RadarUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00124240,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleData@RepairDockUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011B0D0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,recovered from Open-BFME6 overnight session (GLM)
-?friend_newModuleData@StealthUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00128DA0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@StealthUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0012A680,110,Code/masm_dumps/StealthUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration Ghidra confirmed
 ?friend_newModuleData@SupplyWarehouseCripplingBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001171F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
 ?friend_newModuleData@SupplyWarehouseDockUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011BAC0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,recovered from Open-BFME6 overnight session (GLM)
 ?friend_newModuleData@TensileFormationUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118020,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
