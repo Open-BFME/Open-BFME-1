@@ -10921,3 +10921,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??1BoneFXUpdateModuleData@@UAE@XZ,,0x00288490,129,Code/masm_dumps/BoneFXUpdateModuleData_destructor.asm,matched,Exact retail MASM; matched factory ctor vtable and deleting-wrapper chain prove ownership; preserves three BFME vector destructors
 ?setUpDownImages@ControlBar@@IAEXXZ,,0x0049D160,259,Code/masm_dumps/ControlBar_setUpDownImages.asm,matched,Exact retail MASM; source string and three caller paths prove ownership; preserves BFME ControlBar member offsets
 ?init@ShellMenuSchemeManager@@QAEXXZ,,0x00580290,1,Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme.cpp,matched,Retail manager init is a no-op; Shell init caller and unique thunk prove ownership
+?init@VideoPlayer@@UAEXXZ,,0x0081CB30,574,Code/masm_dumps/VideoPlayer_init.asm,matched,Exact contiguous retail MASM; VideoPlayer vtable and derived Bink init prove ownership; preserves BFME video-table construction
