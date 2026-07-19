@@ -1558,3 +1558,10 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?friend_newModuleData@SpawnBehavior@@SAPAVModuleData@@PAVINI@@@Z	landed	Retail ModuleFactory dp021 resolves uniquely to 110-byte body RVA 0x0012AAC0
 ?friend_newModuleData@RadarUpgrade@@SAPAVModuleData@@PAVINI@@@Z	landed	Retail ModuleFactory dp160 resolves uniquely to compact 62-byte Ghidra body RVA 0x0012B530
 ?friend_newModuleData@ObjectCreationUpgrade@@SAPAVModuleData@@PAVINI@@@Z	landed	Retail ModuleFactory dp162 resolves uniquely to 110-byte Ghidra body RVA 0x0011D4A0
+?friend_newModuleData@UnpauseSpecialPowerUpgrade@@SAPAVModuleData@@PAVINI@@@Z	landed	Retail ModuleFactory dp163 uniquely resolves to 107-byte Ghidra body RVA 0x0011D7C0
+?friend_newModuleData@BaikonurLaunchPower@@SAPAVModuleData@@PAVINI@@@Z	no-match	Removed false unique-body alias at 0x0011D7C0; retail owner is UnpauseSpecialPowerUpgrade
+?friend_newModuleData@DefectorSpecialPower@@SAPAVModuleData@@PAVINI@@@Z	no-match	Removed false unique-body alias at 0x0011D7C0; retail owner is UnpauseSpecialPowerUpgrade
+?friend_newModuleData@CashBountyPower@@SAPAVModuleData@@PAVINI@@@Z	no-match	Removed false unique-body alias at 0x0011D7C0; retail owner is UnpauseSpecialPowerUpgrade
+?friend_newModuleData@CleanupAreaPower@@SAPAVModuleData@@PAVINI@@@Z	no-match	Removed false unique-body alias at 0x0011D7C0; retail owner is UnpauseSpecialPowerUpgrade
+?friend_newModuleData@FireWeaponPower@@SAPAVModuleData@@PAVINI@@@Z	no-match	Removed false unique-body alias at 0x0011D7C0; retail owner is UnpauseSpecialPowerUpgrade
+?friend_newModuleData@SubObjectsUpgrade@@SAPAVModuleData@@PAVINI@@@Z	no-match	Removed false unique-body alias at 0x0011D7C0; retail owner is UnpauseSpecialPowerUpgrade
