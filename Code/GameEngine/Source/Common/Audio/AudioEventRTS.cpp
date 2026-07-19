@@ -447,10 +447,9 @@ Real AudioEventRTS::getPitchShift( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getVolumeShift@AudioEventRTS@@ present-unmatched
 Real AudioEventRTS::getVolumeShift( void ) const
 {
-	return m_volumeShift;
+	return *(const Real *)((const char *)this + 0x50);
 }
 
 //-------------------------------------------------------------------------------------------------
