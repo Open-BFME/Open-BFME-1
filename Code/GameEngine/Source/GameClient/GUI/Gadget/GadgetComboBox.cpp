@@ -995,10 +995,12 @@ void GadgetComboBoxSetEnabledTextColors(GameWindow *comboBox, Color color, Color
 		return;
 	
 	ComboBoxData *comboBoxData = (ComboBoxData *)comboBox->winGetUserData();
-	if(comboBoxData->listBox)
-		comboBoxData->listBox->winSetEnabledTextColors( color,borderColor);
-	if(comboBoxData->editBox)
-		comboBoxData->editBox->winSetEnabledTextColors(color,borderColor);
+	GameWindow *listBox = *(GameWindow **)((char *)comboBoxData + 0x2c);
+	if(listBox)
+		listBox->winSetEnabledTextColors( color,borderColor);
+	GameWindow *editBox = *(GameWindow **)((char *)comboBoxData + 0x28);
+	if(editBox)
+		editBox->winSetEnabledTextColors(color,borderColor);
 }
 // GadgetComboBoxSetDisabledTextColors ========================================
 /** Set the Disabled Text Colors for the Sub Gadgets */
@@ -1109,4 +1111,3 @@ Int GadgetComboBoxGetLength( GameWindow *combobox )
 
 	return 0;
 }  // end GadgetListBoxGetListLength
-
