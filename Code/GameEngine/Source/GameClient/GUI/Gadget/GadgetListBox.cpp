@@ -2824,5 +2824,5 @@ Int GadgetListBoxGetColumnWidth( GameWindow *listbox, Int column )
 	if (listboxData->columns <= column || column < 0)
 		return 0;
 
-	return listboxData->columnWidth[column];
+	return (*(Int **)((char *)listboxData + 0x14))[column];
 }  // end GadgetListBoxGetNumColumns
