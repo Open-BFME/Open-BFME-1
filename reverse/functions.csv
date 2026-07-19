@@ -10706,3 +10706,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?friend_newModuleInstance@CaveContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115AB0,99,Code/masm_dumps/CaveContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp023 Ghidra-confirmed
 ?friend_newModuleInstance@OpenContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115960,99,Code/masm_dumps/OpenContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp024 Ghidra confirmed
 ?friend_newModuleInstance@SpawnUnitBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E1D0,96,Code/masm_dumps/SpawnUnitBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory cp025 Ghidra confirmed
+?friend_newModuleInstance@OathbreakersFadeAwayBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E250,96,Code/masm_dumps/OathbreakersFadeAwayBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory cp026 Ghidra confirmed
