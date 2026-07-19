@@ -187,6 +187,14 @@ void GadgetStaticTextSetText( GameWindow *window, UnicodeString text )
 
 }  // end GadgetStaticTextSetText
 
+class BFMEStaticTextDisplayString
+{
+public:
+	virtual void slot0( void );
+	virtual void slot1( void );
+	virtual UnicodeString getText( void );
+};
+
 UnicodeString GadgetStaticTextGetText( GameWindow *window )
 {
 	if(!window)
@@ -194,7 +202,7 @@ UnicodeString GadgetStaticTextGetText( GameWindow *window )
 	TextData *tData = (TextData *)window->winGetUserData();
 	if(!tData)
 		return UnicodeString::TheEmptyString;
-	return tData->text->getText();
+	return ((BFMEStaticTextDisplayString *)tData->text)->getText();
 }
 
 // GadgetStaticTextSetFont ====================================================
