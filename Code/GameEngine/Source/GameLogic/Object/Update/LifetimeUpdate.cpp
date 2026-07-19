@@ -23,3 +23,9 @@ UnsignedInt LifetimeUpdate::calcSleepDelay( UnsignedInt minFrames, UnsignedInt m
 	m_dieFrame = frame + delay;
 	return delay;
 }
+
+void LifetimeUpdate::setLifetimeRange( UnsignedInt minFrames, UnsignedInt maxFrames )
+{
+	UnsignedInt delay = calcSleepDelay( minFrames, maxFrames );
+	setWakeFrame( *(Object **)((char *)this + 8), UPDATE_SLEEP( delay ) );
+}
