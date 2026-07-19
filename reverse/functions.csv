@@ -10370,7 +10370,7 @@ _ceilf,,0x00069750,20,Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/
 ??_G?$VectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAEPAXI@Z,,0x0093E930,94,Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp,matched,
 ?friend_newModuleInstance@ProjectileStreamUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116FC0,99,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@MobMemberSlavedUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116F30,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@SpawnBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B750,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@SpawnBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115590,96,Code/masm_dumps/SpawnBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory registration cp021; Ghidra-confirmed boundary
 _$E25,,0x00C6B2C0,30,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLobbyMenu.cpp,matched,
 _$E30,,0x00C6B2C0,30,Code/GameEngine/Source/GameClient/MapUtil.cpp,matched,
 _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cpp,matched,
