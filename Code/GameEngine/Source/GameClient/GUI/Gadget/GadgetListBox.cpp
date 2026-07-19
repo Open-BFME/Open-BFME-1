@@ -2686,7 +2686,7 @@ void GadgetListBoxSetItemData( GameWindow *listbox, void *data, Int row, Int col
 	pos.y = row;
 
 	if (listbox)
-		TheWindowManager->winSendSystemMsg( listbox, GLM_SET_ITEM_DATA, (WindowMsgData)&pos, (WindowMsgData)data);
+		TheWindowManager->winSendSystemMsg( listbox, 0x4021, (WindowMsgData)&pos, (WindowMsgData)data);
 		
 }// void GadgetListBoxSetItemData( Int index, void *data )
 
