@@ -1707,3 +1707,5 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?friend_newModuleInstance@CivilianSpawnUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	Retail registration ordinal 0x63: instance thunk 0x412F2B resolves unique 0x116AE0; Ghidra size 96, alloc 0x24.
 ?friend_newModuleInstance@SupplyTruckAIUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	Retail registration ordinal 0x5E: instance thunk 0x42EC6C resolves unique 0x11B930; supersedes stale DCE attempt.
 ?friend_newModuleInstance@AIUpdateInterface@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	Retail registration ordinal 0x5B: instance thunk 0x42EDBB resolves unique 0x1167E0; supersedes stale DCE attempt.
+?friend_newModuleData@BattlePlanUpdate@@SAPAVModuleData@@PAVINI@@@Z	landed	Retail registration ordinal 0x66: data thunk 0x44B4E8 resolves unique 0x119D50; corrected false 0x117420 claim.
+?friend_newModuleData@StructureToppleUpdate@@SAPAVModuleData@@PAVINI@@@Z	no-match	Removed false 0x119D50 ownership after BattlePlan registration proved the unique retail body; StructureTopple needs its own registration audit.
