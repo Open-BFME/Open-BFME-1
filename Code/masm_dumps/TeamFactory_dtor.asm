@@ -1,11 +1,11 @@
 .386
 .model flat
 
-; ??1LocomotorSet@@QAE@XZ
-; Retail @ 0x009F2800 size 115
+; ??1TeamFactory@@UAE@XZ
+; Exact 115 retail bytes @ 0x009F2800; TeamFactory vtable slot and scalar deleting dtor prove ownership.
 _TEXT SEGMENT
-public ??1LocomotorSet@@QAE@XZ
-??1LocomotorSet@@QAE@XZ PROC
+public ??1TeamFactory@@UAE@XZ
+??1TeamFactory@@UAE@XZ PROC
     db 06Ah,0FFh,068h,03Fh,01Eh,006h,001h,064h
     db 0A1h,000h,000h,000h,000h,050h,064h,089h
     db 025h,000h,000h,000h,000h,083h,0ECh,008h
@@ -21,6 +21,6 @@ public ??1LocomotorSet@@QAE@XZ
     db 0FAh,0FFh,08Bh,04Ch,024h,010h,05Fh,05Eh
     db 064h,089h,00Dh,000h,000h,000h,000h,083h
     db 0C4h,014h,0C3h
-??1LocomotorSet@@QAE@XZ ENDP
+??1TeamFactory@@UAE@XZ ENDP
 _TEXT ENDS
 END
