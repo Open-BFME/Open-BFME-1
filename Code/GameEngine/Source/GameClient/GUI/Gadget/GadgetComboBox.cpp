@@ -908,7 +908,11 @@ UnicodeString GadgetComboBoxGetText( GameWindow *comboBox )
 	if( BitTest( comboBox->winGetStyle(), GWS_COMBO_BOX ) == FALSE )
 		return UnicodeString::TheEmptyString;
 	
-	return GadgetTextEntryGetText( GadgetComboBoxGetEditBox(comboBox) );
+	ComboBoxData *comboBoxData = (ComboBoxData *)comboBox->winGetUserData();
+	return GadgetTextEntryGetText(
+		comboBoxData && *(GameWindow **)((char *)comboBoxData + 0x28)
+			? *(GameWindow **)((char *)comboBoxData + 0x28)
+			: NULL );
 }
 
 // GadgetComboBoxSetText =======================================================
