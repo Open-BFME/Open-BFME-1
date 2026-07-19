@@ -10712,3 +10712,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?friend_newModuleInstance@HealContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115B40,99,Code/masm_dumps/HealContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp030 Ghidra confirmed
 ?friend_newModuleInstance@HordeContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115D60,99,Code/masm_dumps/HordeContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp031 Ghidra confirmed
 ?friend_newModuleInstance@HorseHordeContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115E70,99,Code/masm_dumps/HorseHordeContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp032 Ghidra confirmed
+?friend_newModuleInstance@AODHordeContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001161D0,99,Code/masm_dumps/AODHordeContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp033 Ghidra confirmed
