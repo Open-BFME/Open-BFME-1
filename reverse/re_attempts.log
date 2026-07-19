@@ -1667,3 +1667,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?friend_newModuleInstance@DelayedLuaEventUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	Retail registration ordinal 0x4C: cp thunk 0x426BC0 resolves 0x11BC70; Ghidra size 96, alloc 0x78, unique reference.
 ?friend_newModuleInstance@LifetimeUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	Retail registration ordinal 0x4D disproves prior DCE claim: cp thunk 0x40720C resolves 0x11A2D0; Ghidra size 96, alloc 0x28, unique reference.
 ?friend_newModuleInstance@OneRingPenaltyUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	Retail registration ordinal 0x4E: cp thunk 0x42CB88 resolves 0x11A3E0; Ghidra size 96, alloc 0x34, unique reference.
+?friend_newModuleInstance@SpecialEnemySenseUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z	landed	Retail registration ordinal 0x4F: cp thunk 0x415BEF resolves 0x11A500; Ghidra size 96, alloc 0x20, unique reference.
