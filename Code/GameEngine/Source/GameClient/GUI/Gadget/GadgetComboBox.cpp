@@ -1048,10 +1048,12 @@ void GadgetComboBoxSetIMECompositeTextColors(GameWindow *comboBox, Color color, 
 	
 	ComboBoxData *comboBoxData = (ComboBoxData *)comboBox->winGetUserData();
 
-	if(comboBoxData->listBox)
-		comboBoxData->listBox->winSetIMECompositeTextColors( color,borderColor);
-	if(comboBoxData->editBox)
-		comboBoxData->editBox->winSetIMECompositeTextColors(color,borderColor);
+	GameWindow *listBox = *(GameWindow **)((char *)comboBoxData + 0x2C);
+	if(listBox)
+		listBox->winSetIMECompositeTextColors( color,borderColor);
+	GameWindow *editBox = *(GameWindow **)((char *)comboBoxData + 0x28);
+	if(editBox)
+		editBox->winSetIMECompositeTextColors(color,borderColor);
 }
 
 // GadgetComboBoxGetSelectedPos ===============================================

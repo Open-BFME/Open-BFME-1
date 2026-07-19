@@ -3344,3 +3344,4 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??1GameTextInterface@@UAE@XZ,0x0000E908
 ??0W3DTerrainVisual@@QAE@XZ,0x00024DC0
 ?winSetHiliteTextColors@GameWindow@@QAEXHH@Z,0x000268B9
+?winSetIMECompositeTextColors@GameWindow@@QAEXHH@Z,0x00014C13
