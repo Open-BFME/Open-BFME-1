@@ -722,10 +722,13 @@ Bool AudioEventRTS::isPositionalAudio( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?isCurrentlyPlaying@AudioEventRTS@@ present-unmatched
 Bool AudioEventRTS::isCurrentlyPlaying( void ) const
 {
-	return TheAudio->isCurrentlyPlaying(m_playingHandle);
+	if( TheAudio == NULL )
+		return FALSE;
+
+	typedef Bool (AudioManager::*IsCurrentlyPlayingProc)( AudioHandle );
+	return (TheAudio->**(IsCurrentlyPlayingProc *)(*(char **)TheAudio + 0xB0))( m_playingHandle );
 }
 
 //-------------------------------------------------------------------------------------------------

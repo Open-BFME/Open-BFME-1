@@ -1483,3 +1483,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?GadgetComboBoxSetHiliteTextColors@@YAXPAVGameWindow@@HH@Z	landed	Ghidra owner RVA 0x004B3B60 size 58; pinned winSetHiliteTextColors 0x268B9; BFME ComboBoxData list +0x2c and edit +0x28 make native C++ exact
 ?GadgetComboBoxSetIMECompositeTextColors@@YAXPAVGameWindow@@HH@Z	landed	Ghidra owner RVA 0x004B3BB0 size 58; pinned winSetIMECompositeTextColors 0x14C13; BFME ComboBoxData list +0x2c and edit +0x28 make native C++ exact
 ?friend_newModuleData@DynamicShroudClearingRangeUpdate@@SAPAVModuleData@@PAVINI@@@Z	landed	Retail registration string and paired thunks identify unique RVA 0x00118130 exact 107-byte data factory; MASM byte-verified
+?isCurrentlyPlaying@AudioEventRTS@@QBE_NXZ	landed	Ghidra owner RVA 0x000B2370 size 27; BFME null guard plus explicit C++ member-function pointer at AudioManager vtable +0xb0 emits exact retail bytes
