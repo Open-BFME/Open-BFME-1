@@ -11855,3 +11855,18 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?OnProgressUpdate@DownloadManagerMunkee@@UAEJHHHH@Z,,0x004C7B60,521,Code/masm_dumps/_str3__OnProgressUpdate_DownloadManagerMunkee_UAEJHHHH_Z_4C7B60.asm,matched,
 ?OptionsMenuInit@@YAXPAVWindowLayout@@PAX@Z,,0x00560280,6966,Code/masm_dumps/_OptionsMenuInit__YAXPAVWindowLayout__PAX_Z_560280.asm,matched,Exact 6966B string-anchored Open-BFME4
 ?loadMapINI@GameLogic@@QAEXVAsciiString@@@Z,,0x00386A30,754,Code/masm_dumps/_loadMapINI_GameLogic__QAEXVAsciiString___Z_386A30.asm,matched,Exact 754B string-anchored Open-BFME4
+?parseSpecialPowerDefinition@SpecialPowerStore@@,,0x000EBE90,639,Code/masm_dumps/_sa__parseSpecialPowerDefinition_SpecialPowerStore___EBE90.asm,matched,Exact 639B string-anchored Open-BFME4
+?updateGenericScripts@Team@@QAEXXZ,,0x000F1430,412,Code/masm_dumps/_sa__updateGenericScripts_Team__QAEXXZ_F1430.asm,matched,Exact 412B string-anchored Open-BFME4
+?loadGame@GameState@@QAE?AW4SaveCode@@UAvailableGameInfo@@@Z,,0x001109CF,521,Code/masm_dumps/_sa__loadGame_GameState__QAE_AW4SaveCode__UAvailableGa_1109CF.asm,matched,Exact 521B string-anchored Open-BFME4
+?populateSaveGameListbox@GameState@@QAEXPAVGameWindow@@W4SaveLoadLayoutType@@@Z,,0x001121A0,1286,Code/masm_dumps/_sa__populateSaveGameListbox_GameState__QAEXPAVGameWin_1121A0.asm,matched,Exact 1286B string-anchored Open-BFME4
+?newDrawable@ThingFactory@@,,0x00139D00,541,Code/masm_dumps/_sa__newDrawable_ThingFactory___139D00.asm,matched,Exact 541B string-anchored Open-BFME4
+?parseModuleName@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z,,0x001458A0,772,Code/masm_dumps/_sa__parseModuleName_ThingTemplate__KAXPAVINI__PAX1PBX_1458A0.asm,matched,Exact 772B string-anchored Open-BFME4
+??0AIDockMachine@@,,0x0014F7C0,826,Code/masm_dumps/_sa___0AIDockMachine___14F7C0.asm,matched,Exact 826B string-anchored Open-BFME4
+??0AIGuardMachine@@,,0x0015D1D0,691,Code/masm_dumps/_sa___0AIGuardMachine___15D1D0.asm,matched,Exact 691B string-anchored Open-BFME4
+?checkReadyTeams@AIPlayer@@MAEXXZ,,0x00162560,722,Code/masm_dumps/_sa__checkReadyTeams_AIPlayer__MAEXXZ_162560.asm,matched,Exact 722B string-anchored Open-BFME4
+?selectTeamToBuild@AIPlayer@@MAE_NXZ,,0x00163220,953,Code/masm_dumps/_sa__selectTeamToBuild_AIPlayer__MAE_NXZ_163220.asm,matched,Exact 953B string-anchored Open-BFME4
+?queueDozer@AIPlayer@@MAEXXZ,,0x001657E0,490,Code/masm_dumps/_sa__queueDozer_AIPlayer__MAEXXZ_1657E0.asm,matched,Exact 490B string-anchored Open-BFME4
+?xfer@AIAttackState@@MAEXPAVXfer@@@Z,,0x00184110,516,Code/masm_dumps/_sa__xfer_AIAttackState__MAEXPAVXfer___Z_184110.asm,matched,Exact 516B string-anchored Open-BFME4
+??0AITNGuardMachine@@,,0x0018AFB0,753,Code/masm_dumps/_sa___0AITNGuardMachine___18AFB0.asm,matched,Exact 753B string-anchored Open-BFME4
+??0Bridge@@,,0x001A98A0,861,Code/masm_dumps/_sa___0Bridge___1A98A0.asm,matched,Exact 861B string-anchored Open-BFME4
+?findLocomotorTemplateVector@AIUpdateModuleData@@,,0x0027EC80,412,Code/masm_dumps/_sa__findLocomotorTemplateVector_AIUpdateModuleData___27EC80.asm,matched,Exact 412B string-anchored Open-BFME4
