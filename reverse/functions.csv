@@ -11156,3 +11156,9 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?setScriptStatus@Object@@QAEXW4ObjectScriptStatusBit@@_N@Z,,0x0002BF2B,5,Code/masm_dumps/_thunk_b209cbfebb47_2BF2B.asm,matched,thunk accessor of ported class
 ?setOrRestoreTeam@Object@@IAEXPAVTeam@@_N@Z,,0x0002BF2B,5,Code/masm_dumps/_thunk_a74b8e6dd098_2BF2B.asm,matched,thunk accessor of ported class (icf alias)
 ?internal_classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,,0x0002BF2B,5,Code/masm_dumps/_thunk_e3a78c6d809d_2BF2B.asm,matched,thunk accessor of ported class (icf alias)
+??0SpyVisionUpdateModuleData@@QAE@XZ,,0x00377D70,614,Code/masm_dumps/SpyVisionUpdateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x1144C0
+??0EmotionTrackerUpdateModuleData@@QAE@XZ,,0x0028F910,537,Code/masm_dumps/EmotionTrackerUpdateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x11CEE0
+??0SpecialAbilityUpdateModuleData@@QAE@XZ,,0x002A5AA0,434,Code/masm_dumps/SpecialAbilityUpdateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x114140
+??0TransitionDamageFXModuleData@@QAE@XZ,,0x002532B0,433,Code/masm_dumps/TransitionDamageFXModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x124770
+??0RiderChangeContainModuleData@@QAE@XZ,,0x00268120,430,Code/masm_dumps/RiderChangeContainModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x1195C0
+??0CritterEmitterUpdateModuleData@@QAE@XZ,,0x001FA3A0,414,Code/masm_dumps/CritterEmitterUpdateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x115730
