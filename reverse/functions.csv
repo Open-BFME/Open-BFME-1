@@ -10979,3 +10979,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?doResizeViewGuardband@ScriptActions@@IAEXMM@Z,,0x002F0800,42,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,View vtable+0x1b8 setGuardBandBias
 ?doSoundOverrideVolume@ScriptActions@@IAEXABVAsciiString@@M@Z,,0x002EFEB0,38,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,Audio vtable+0xa0 volume override fmul 0.01
 ?doAudioSetVolume@ScriptActions@@IAEXW4AudioAffect@@M@Z,,0x002EF830,91,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,Audio vtable+0xd4 setVolume clamp /100
+??1CivilianSpawnUpdateModuleData@@UAE@XZ,,0x0028A530,80,Code/masm_dumps/CivilianSpawnUpdateModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
