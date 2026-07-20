@@ -11245,3 +11245,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??1RiderChangeContainModuleData@@UAE@XZ,,0x00258730,147,Code/masm_dumps/RiderChangeContainModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x268A00 ctor 0x268120 vt 0xCB7858
 ??1DeletionUpdateModuleData@@UAE@XZ,,0x0008AEA0,112,Code/masm_dumps/DeletionUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x8DDB0 ctor 0x8A950 vt 0xC7D5BC
 ??1HijackerUpdateModuleData@@UAE@XZ,,0x0006E320,95,Code/masm_dumps/HijackerUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x6E2F0 ctor 0x6E2B0 vt 0xC75D24
+?doFreezeTime@ScriptEngine@@QAEXXZ,,0x0001FDAC,5,Code/masm_dumps/_thunk_4b46e9768dea_1FDAC.asm,matched,t
