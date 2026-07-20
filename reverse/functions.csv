@@ -11023,3 +11023,6 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??0UpgradeSoundSelectorClientBehaviorModuleData@@QAE@XZ,,0x00608DC0,20,Code/masm_dumps/UpgradeSoundSelectorClientBehaviorModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory ownership
 ??0ModelConditionSoundSelectorClientBehaviorModuleData@@QAE@XZ,,0x00607550,20,Code/masm_dumps/ModelConditionSoundSelectorClientBehaviorModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory ownership
 ??0ExperienceLevelCreateModuleData@@QAE@XZ,,0x0024F7A0,20,Code/masm_dumps/ExperienceLevelCreateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory ownership
+??1PropagandaTowerBehaviorModuleData@@UAE@XZ,,0x0028DD10,137,Code/masm_dumps/PropagandaTowerBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory 0x11CB70 ctor 0x28DC60 ownership
+??1MinefieldBehaviorModuleData@@UAE@XZ,,0x0036CE20,100,Code/masm_dumps/MinefieldBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory 0x1145D0 ctor 0x36CDD0 ownership
+??1PropagandaTowerBehavior@@UAE@XZ,,0x002034F0,67,Code/masm_dumps/PropagandaTowerBehavior_destructor.asm,matched,Exact retail MASM; friend_newModuleInstance factory ownership
