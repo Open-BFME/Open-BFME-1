@@ -6398,10 +6398,54 @@ void ScriptActions::doC3CameraEnableSlaveMode
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?doC3CameraDisableSlaveMode@ScriptActions@@IAEXXZ present-unmatched
+// BFME View vtable +0x9c: cameraDisableSlaveMode.
+class BfmeViewVtbl_9c {
+public:
+	virtual void _v9c_0() = 0;
+	virtual void _v9c_1() = 0;
+	virtual void _v9c_2() = 0;
+	virtual void _v9c_3() = 0;
+	virtual void _v9c_4() = 0;
+	virtual void _v9c_5() = 0;
+	virtual void _v9c_6() = 0;
+	virtual void _v9c_7() = 0;
+	virtual void _v9c_8() = 0;
+	virtual void _v9c_9() = 0;
+	virtual void _v9c_10() = 0;
+	virtual void _v9c_11() = 0;
+	virtual void _v9c_12() = 0;
+	virtual void _v9c_13() = 0;
+	virtual void _v9c_14() = 0;
+	virtual void _v9c_15() = 0;
+	virtual void _v9c_16() = 0;
+	virtual void _v9c_17() = 0;
+	virtual void _v9c_18() = 0;
+	virtual void _v9c_19() = 0;
+	virtual void _v9c_20() = 0;
+	virtual void _v9c_21() = 0;
+	virtual void _v9c_22() = 0;
+	virtual void _v9c_23() = 0;
+	virtual void _v9c_24() = 0;
+	virtual void _v9c_25() = 0;
+	virtual void _v9c_26() = 0;
+	virtual void _v9c_27() = 0;
+	virtual void _v9c_28() = 0;
+	virtual void _v9c_29() = 0;
+	virtual void _v9c_30() = 0;
+	virtual void _v9c_31() = 0;
+	virtual void _v9c_32() = 0;
+	virtual void _v9c_33() = 0;
+	virtual void _v9c_34() = 0;
+	virtual void _v9c_35() = 0;
+	virtual void _v9c_36() = 0;
+	virtual void _v9c_37() = 0;
+	virtual void _v9c_38() = 0;
+	virtual void cameraDisableSlaveMode(void) = 0;
+};
+
 void ScriptActions::doC3CameraDisableSlaveMode( void )
 {
-	TheTacticalView->cameraDisableSlaveMode();
+	((BfmeViewVtbl_9c *)TheTacticalView)->cameraDisableSlaveMode();
 }
 
 //-------------------------------------------------------------------------------------------------
