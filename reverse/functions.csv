@@ -11431,3 +11431,55 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??1LargeGroupBonusUpdate@@UAE@XZ,,0x00297930,812,Code/masm_dumps/LargeGroupBonusUpdate_destructor.asm,matched,Exact 812B SEH module dtor; factory->vtable recovery Open-BFME4
 ??1ReplenishUnitsBehavior@@UAE@XZ,,0x00204B50,628,Code/masm_dumps/ReplenishUnitsBehavior_destructor.asm,matched,Exact 628B SEH module dtor; factory->vtable recovery Open-BFME4
 ??1HordeGarrisonContain@@UAE@XZ,,0x00249820,409,Code/masm_dumps/HordeGarrisonContain_destructor.asm,matched,Exact 409B SEH module dtor; factory->vtable recovery Open-BFME4
+??0AutoDepositUpdateModuleData@@QAE@XZ,,0x00123E90,86,Code/masm_dumps/AutoDepositUpdateModuleData_constructor.asm,matched,Exact 86B @ 0x00123E90; Exact retail MASM ModuleData ctor; unique factory 0x123F20; Open-BFME4+Grok
+??0CashHackSpecialPowerModuleData@@QAE@XZ,,0x00258D70,98,Code/masm_dumps/CashHackSpecialPowerModuleData_constructor.asm,matched,Exact 98B @ 0x00258D70; Exact retail MASM ModuleData ctor; unique factory 0x11FDF0; Open-BFME4+Grok
+??0CivilianSpawnUpdateModuleData@@QAE@XZ,,0x0028A480,92,Code/masm_dumps/CivilianSpawnUpdateModuleData_constructor.asm,matched,Exact 92B @ 0x0028A480; Exact retail MASM ModuleData ctor; unique factory 0x116B60; Open-BFME4+Grok
+??0CommandSetUpgradeModuleData@@QAE@XZ,,0x0012AF80,93,Code/masm_dumps/CommandSetUpgradeModuleData_constructor.asm,matched,Exact 93B @ 0x0012AF80; Exact retail MASM ModuleData ctor; unique factory 0x12B0B0; Open-BFME4+Grok
+??0ContestableContainModuleData@@QAE@XZ,,0x00249B50,86,Code/masm_dumps/ContestableContainModuleData_constructor.asm,matched,Exact 86B @ 0x00249B50; Exact retail MASM ModuleData ctor; unique factory 0x116140; Open-BFME4+Grok
+??0DynamicShroudClearingRangeUpdateModuleData@@QAE@XZ,,0x0028EBF0,93,Code/masm_dumps/DynamicShroudClearingRangeUpdateModuleData_constructor.asm,matched,Exact 93B @ 0x0028EBF0; Exact retail MASM ModuleData ctor; unique factory 0x118130; Open-BFME4+Grok
+??0FXListDieModuleData@@QAE@XZ,,0x001234F0,86,Code/masm_dumps/FXListDieModuleData_constructor.asm,matched,Exact 86B @ 0x001234F0; Exact retail MASM ModuleData ctor; unique factory 0x123590; Open-BFME4+Grok
+??0HeroDieModuleData@@QAE@XZ,,0x00255600,82,Code/masm_dumps/HeroDieModuleData_constructor.asm,matched,Exact 82B @ 0x00255600; Exact retail MASM ModuleData ctor; unique factory 0x124950; Open-BFME4+Grok
+??0MobMemberSlavedUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x001FB5D0,652,Code/masm_dumps/MobMemberSlavedUpdate_constructor.asm,matched,Exact 652B; factory ownership Open-BFME4
+??0ObjectCreationUpgradeModuleData@@QAE@XZ,,0x002D75B0,95,Code/masm_dumps/ObjectCreationUpgradeModuleData_constructor.asm,matched,Exact 95B @ 0x002D75B0; Exact retail MASM ModuleData ctor; unique factory 0x11D4A0; Open-BFME4+Grok
+??0GateOpenAndCloseBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,,0x001FC580,197,Code/masm_dumps/GateOpenAndCloseBehavior_constructor.asm,matched,Exact 197B; factory ownership Open-BFME4
+??0PlayerHealSpecialPowerModuleData@@QAE@XZ,,0x00263BE0,92,Code/masm_dumps/PlayerHealSpecialPowerModuleData_constructor.asm,matched,Exact 92B @ 0x00263BE0; Exact retail MASM ModuleData ctor; unique factory 0x121480; Open-BFME4+Grok
+??0DeployStyleAIUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002B5510,151,Code/masm_dumps/DeployStyleAIUpdate_constructor.asm,matched,Exact 151B; factory ownership Open-BFME4
+??0PlayerUpgradeSpecialPowerModuleData@@QAE@XZ,,0x00264210,95,Code/masm_dumps/PlayerUpgradeSpecialPowerModuleData_constructor.asm,matched,Exact 95B @ 0x00264210; Exact retail MASM ModuleData ctor; unique factory 0x121370; Open-BFME4+Grok
+??0LargeGroupAudioUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00296C80,148,Code/masm_dumps/LargeGroupAudioUpdate_constructor.asm,matched,Exact 148B; factory ownership Open-BFME4
+??0RefundDieModuleData@@QAE@XZ,,0x00123200,105,Code/masm_dumps/RefundDieModuleData_constructor.asm,matched,Exact 105B @ 0x00123200; Exact retail MASM ModuleData ctor; unique factory 0x1232C0; Open-BFME4+Grok
+??0FadeAndDieOrnamentUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00292230,139,Code/masm_dumps/FadeAndDieOrnamentUpdate_constructor.asm,matched,Exact 139B; factory ownership Open-BFME4
+??0RunOffMapBehaviorModuleData@@QAE@XZ,,0x00126760,96,Code/masm_dumps/RunOffMapBehaviorModuleData_constructor.asm,matched,Exact 96B @ 0x00126760; Exact retail MASM ModuleData ctor; unique factory 0x1267E0; Open-BFME4+Grok
+??0ParkingPlaceBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,,0x001F59F0,138,Code/masm_dumps/ParkingPlaceBehavior_constructor.asm,matched,Exact 138B; factory ownership Open-BFME4
+??0ShareExperienceBehaviorModuleData@@QAE@XZ,,0x002056B0,80,Code/masm_dumps/ShareExperienceBehaviorModuleData_constructor.asm,matched,Exact 80B @ 0x002056B0; Exact retail MASM ModuleData ctor; unique factory 0x116C70; Open-BFME4+Grok
+??0W3DRopeDraw@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0075A490,136,Code/masm_dumps/W3DRopeDraw_constructor.asm,matched,Exact 136B; factory ownership Open-BFME4
+??0SpecialEnemySenseUpdateModuleData@@QAE@XZ,,0x00123D00,83,Code/masm_dumps/SpecialEnemySenseUpdateModuleData_constructor.asm,matched,Exact 83B @ 0x00123D00; Exact retail MASM ModuleData ctor; unique factory 0x123D90; Open-BFME4+Grok
+??0CaveContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00219B90,129,Code/masm_dumps/CaveContain_constructor.asm,matched,Exact 129B; factory ownership Open-BFME4
+??0UnitCrateCollideModuleData@@QAE@XZ,,0x00125EA0,88,Code/masm_dumps/UnitCrateCollideModuleData_constructor.asm,matched,Exact 88B @ 0x00125EA0; Exact retail MASM ModuleData ctor; unique factory 0x125F10; Open-BFME4+Grok
+??0TransportContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0022D010,128,Code/masm_dumps/TransportContain_constructor.asm,matched,Exact 128B; factory ownership Open-BFME4
+??0UpgradeDieModuleData@@QAE@XZ,,0x001256A0,82,Code/masm_dumps/UpgradeDieModuleData_constructor.asm,matched,Exact 82B @ 0x001256A0; Exact retail MASM ModuleData ctor; unique factory 0x125710; Open-BFME4+Grok
+??0CleanupHazardUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002D0620,125,Code/masm_dumps/CleanupHazardUpdate_constructor.asm,matched,Exact 125B; factory ownership Open-BFME4
+??0UpgradeModuleModuleData@@QAE@XZ,,0x00128D20,92,Code/masm_dumps/UpgradeModuleModuleData_constructor.asm,matched,Exact 92B @ 0x00128D20; Exact retail MASM ModuleData ctor; unique factory 0x128DA0; Open-BFME4+Grok
+??0RiderChangeContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00229FB0,124,Code/masm_dumps/RiderChangeContain_constructor.asm,matched,Exact 124B; factory ownership Open-BFME4
+??0W3DQuadrupedDrawModuleData@@QAE@XZ,,0x006BFE00,92,Code/masm_dumps/W3DQuadrupedDrawModuleData_constructor.asm,matched,Exact 92B @ 0x006BFE00; Exact retail MASM ModuleData ctor; unique factory 0x6BFEB0; Open-BFME4+Grok
+??0AnimalAIUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002B3090,118,Code/masm_dumps/AnimalAIUpdate_constructor.asm,matched,Exact 118B; factory ownership Open-BFME4
+??0WeaponChangeSpecialPowerModuleModuleData@@QAE@XZ,,0x0026CE40,123,Code/masm_dumps/WeaponChangeSpecialPowerModuleModuleData_constructor.asm,matched,Exact 123B @ 0x0026CE40; Exact retail MASM ModuleData ctor; unique factory 0x120450; Open-BFME4+Grok
+??0ObjectCreationUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002D6D90,116,Code/masm_dumps/ObjectCreationUpgrade_constructor.asm,matched,Exact 116B; factory ownership Open-BFME4
+??0HordeTransportContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0024B6F0,115,Code/masm_dumps/HordeTransportContain_constructor.asm,matched,Exact 115B; factory ownership Open-BFME4
+??0SlavedUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002A4260,112,Code/masm_dumps/SlavedUpdate_constructor.asm,matched,Exact 112B; factory ownership Open-BFME4
+??0HorseHordeContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0024D220,108,Code/masm_dumps/HorseHordeContain_constructor.asm,matched,Exact 108B; factory ownership Open-BFME4
+??0SiegeDeploySpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00266240,107,Code/masm_dumps/SiegeDeploySpecialPower_constructor.asm,matched,Exact 107B; factory ownership Open-BFME4
+??0TunnelContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0022EE70,102,Code/masm_dumps/TunnelContain_constructor.asm,matched,Exact 102B; factory ownership Open-BFME4
+??0SlaughterHordeContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0024E7A0,102,Code/masm_dumps/SlaughterHordeContain_constructor.asm,matched,Exact 102B; factory ownership Open-BFME4
+??0PartTheHeavensUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002999D0,101,Code/masm_dumps/PartTheHeavensUpdate_constructor.asm,matched,Exact 101B; factory ownership Open-BFME4
+??0DestroyEnvironmentUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0028CD70,101,Code/masm_dumps/DestroyEnvironmentUpdate_constructor.asm,matched,Exact 101B; factory ownership Open-BFME4
+??1MobMemberSlavedUpdate@@UAE@XZ,,0x001FB0C0,226,Code/masm_dumps/MobMemberSlavedUpdate_destructor.asm,matched,Exact 226B; factory ownership Open-BFME4
+??1DeployStyleAIUpdate@@UAE@XZ,,0x000D87E0,192,Code/masm_dumps/DeployStyleAIUpdate_destructor.asm,matched,Exact 192B; factory ownership Open-BFME4
+??1W3DRopeDraw@@UAE@XZ,,0x0075A730,143,Code/masm_dumps/W3DRopeDraw_destructor.asm,matched,Exact 143B; factory ownership Open-BFME4
+??1AnimalAIUpdate@@UAE@XZ,,0x0027E5A0,843,Code/masm_dumps/AnimalAIUpdate_destructor.asm,matched,Exact 843B; factory ownership Open-BFME4
+??1HordeTransportContain@@UAE@XZ,,0x0024C530,820,Code/masm_dumps/HordeTransportContain_destructor.asm,matched,Exact 820B; factory ownership Open-BFME4
+??1SlavedUpdate@@UAE@XZ,,0x00113C60,131,Code/masm_dumps/SlavedUpdate_destructor.asm,matched,Exact 131B; factory ownership Open-BFME4
+??1SiegeDeploySpecialPower@@UAE@XZ,,0x002664F0,125,Code/masm_dumps/SiegeDeploySpecialPower_destructor.asm,matched,Exact 125B; factory ownership Open-BFME4
+??1SlaughterHordeContain@@UAE@XZ,,0x0024EB00,329,Code/masm_dumps/SlaughterHordeContain_destructor.asm,matched,Exact 329B; factory ownership Open-BFME4
+??1PartTheHeavensUpdate@@UAE@XZ,,0x00299820,120,Code/masm_dumps/PartTheHeavensUpdate_destructor.asm,matched,Exact 120B; factory ownership Open-BFME4
+??1DestroyEnvironmentUpdate@@UAE@XZ,,0x0028D0C0,422,Code/masm_dumps/DestroyEnvironmentUpdate_destructor.asm,matched,Exact 422B; factory ownership Open-BFME4
+??0MonsterDockUpdateModuleData@@QAE@XZ,,0x002CDCF0,81,Code/masm_dumps/MonsterDockUpdateModuleData_constructor.asm,matched,Exact 81B ModuleData ctor; Open-BFME4+Grok
