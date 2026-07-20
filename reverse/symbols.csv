@@ -3340,3 +3340,7 @@ __ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00
 ?showNamedTimerDisplay@InGameUI@@QAEX_N@Z,0x0043AA90,body showNamedTimerDisplay InGameUI+0x7a1
 ?doUnfreezeTime@ScriptEngine@@QAEXXZ,0x00336F10,pin ScriptActions doUnfreezeTime wrapper (ScriptEngine+0x17624=0)
 ?doUnfreezeTime@ScriptEngine@@QAEXXZ,0x00037524,ILT thunk for doUnfreezeTime body 0x336F10
+?setInputEnabled@BfmeInGameUI_setInputEnabled@@QAEX_N@Z,0x0003EBDF,ILT thunk ScriptActions doEnableInput
+?setInputEnabled@BfmeInGameUI_setInputEnabled@@QAEX_N@Z,0x0043B280,body setInputEnabled
+?setVisibility@BfmeMouse_setVisibility@@QAEX_N@Z,0x00016A68,ILT thunk Mouse setVisibility
+?setVisibility@BfmeMouse_setVisibility@@QAEX_N@Z,0x005A4BA0,body Mouse setVisibility

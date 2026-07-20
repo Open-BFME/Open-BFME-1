@@ -3320,11 +3320,20 @@ void ScriptActions::doDisableInput()
 //-------------------------------------------------------------------------------------------------
 /** doEnableInput */
 //-------------------------------------------------------------------------------------------------
-// ?doEnableInput@ScriptActions@@IAEXXZ present-unmatched
+// BFME: non-virtual calls into setInputEnabled / Mouse::setVisibility ILT thunks.
+class BfmeInGameUI_setInputEnabled {
+public:
+	void setInputEnabled(Bool enable);
+};
+class BfmeMouse_setVisibility {
+public:
+	void setVisibility(Bool visible);
+};
+
 void ScriptActions::doEnableInput()
 {
-	TheInGameUI->setInputEnabled(true);
-	TheMouse->setVisibility(true);
+	((BfmeInGameUI_setInputEnabled *)TheInGameUI)->setInputEnabled(true);
+	((BfmeMouse_setVisibility *)TheMouse)->setVisibility(true);
 }
 
 //-------------------------------------------------------------------------------------------------
