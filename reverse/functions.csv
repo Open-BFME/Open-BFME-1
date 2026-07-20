@@ -11977,3 +11977,6 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?onExit@AIAttackState@@UAEXW4StateExitType@@@Z,,0x00184C00,99,Code/masm_dumps/_sa9__onExit_AIAttackState__UAEXW4StateExitType___Z_184C00.asm,matched,Exact 99B Open-BFME4
 ??0LANPreferences@@,,0x00086480,92,Code/masm_dumps/_sa9___0LANPreferences___86480.asm,matched,Exact 92B Open-BFME4
 ?canAffordUpgrade@UpgradeCenter@@QBE_NPAVPlayer@@PBVUpgradeTemplate@@_N@Z,,0x0010AF70,86,Code/masm_dumps/_sa9__canAffordUpgrade_UpgradeCenter__QBE_NPAVPlayer__P_10AF70.asm,matched,Exact 86B Open-BFME4
+?IsWindowed@Debug@@AAE_NXZ,,0x0088A5F0,78,Code/masm_dumps/_sa10__IsWindowed_Debug__AAE_NXZ_88A5F0.asm,matched,Exact 78B Open-BFME4
+?beginBlock@XferSave@@,,0x0082B820,78,Code/masm_dumps/_sa10__beginBlock_XferSave___82B820.asm,matched,Exact 78B Open-BFME4
+?Get_DX8_Texture_Filter_Name@DX8Wrapper@@,,0x00902EC0,71,Code/masm_dumps/_sa10__Get_DX8_Texture_Filter_Name_DX8Wrapper___902EC0.asm,matched,Exact 71B Open-BFME4
