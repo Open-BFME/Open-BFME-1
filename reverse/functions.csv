@@ -10980,3 +10980,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?doSoundOverrideVolume@ScriptActions@@IAEXABVAsciiString@@M@Z,,0x002EFEB0,38,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,Audio vtable+0xa0 volume override fmul 0.01
 ?doAudioSetVolume@ScriptActions@@IAEXW4AudioAffect@@M@Z,,0x002EF830,91,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,Audio vtable+0xd4 setVolume clamp /100
 ??1CivilianSpawnUpdateModuleData@@UAE@XZ,,0x0028A530,80,Code/masm_dumps/CivilianSpawnUpdateModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
+??1UnitCrateCollideModuleData@@UAE@XZ,,0x001270F0,83,Code/masm_dumps/UnitCrateCollideModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
