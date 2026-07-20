@@ -15911,29 +15911,11 @@ __declspec(naked) ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag>::~Concr
 }
 
 // ??4?$ConcreteModuleTemplate@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag>::operator=(const ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &that)
+// Naked→C++: retail only calls OrthoEmissionVelocityModuleTemplate::operator= then returns *this.
+ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag>::operator=(const ConcreteModuleTemplate<OrthoEmissionVelocityModuleTag> &that)
 {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x56
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0x1f
-        __emit 0x2a
-        __emit 0xa4
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+	((OrthoEmissionVelocityModuleTemplate *)this)->operator=(*(const OrthoEmissionVelocityModuleTemplate *)&that);
+	return *this;
 }
 
 // ?clone@?$ConcreteModuleTemplate@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@UBEPAVOrthoEmissionVelocityModuleTemplate@2@XZ
