@@ -11901,7 +11901,7 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?Get_DX8_Render_State_Name@DX8Wrapper@@SAPBDK@Z,,0x00873DA0,673,Code/masm_dumps/_sa3__Get_DX8_Render_State_Name_DX8Wrapper__SAPBDK_Z_873DA0.asm,matched,Exact 673B string-anchored Open-BFME4
 ?handleQMMatch@PeerThreadClass@@QAEXXZ,,0x00649180,653,Code/masm_dumps/_sa3__handleQMMatch_PeerThreadClass__QAEXXZ_649180.asm,matched,Exact 653B string-anchored Open-BFME4
 ?init@GameTextManager@@UAEXXZ,,0x0051F3A0,3411,Code/masm_dumps/_sa4__init_GameTextManager__UAEXXZ_51F3A0.asm,matched,Exact 3411B Open-BFME4
-??0RankPoints@@,,0x004D9100,1434,Code/masm_dumps/_sa4___0RankPoints___4D9100.asm,matched,Exact 1434B Open-BFME4
+?BattleHonorTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,,0x004D9100,1434,Code/masm_dumps/_s6_BattleHonorTooltip_YAXPAVGameWindow_I_Z_4D9100.asm,matched,Exact 1434B BattleHonorTooltip retarget Open-BFME4+Grok
 ?ParseScript@Script@@SAPAV1@AAVDataChunkInput@@G@Z,,0x0035C0C0,579,Code/masm_dumps/_sa4__ParseScript_Script__SAPAV1_AAVDataChunkInput__G_Z_35C0C0.asm,matched,Exact 579B Open-BFME4
 ?onExit@DozerActionState@@UAEXW4StateExitType@@@Z,,0x002B7870,551,Code/masm_dumps/_sa4__onExit_DozerActionState__UAEXW4StateExitType___Z_2B7870.asm,matched,Exact 551B Open-BFME4
 ?ConstructNetCommandMsgFromRawData@NetPacket@@SAPAVNetCommandRef@@PAEG@Z,,0x00682FF0,515,Code/masm_dumps/_sa4__ConstructNetCommandMsgFromRawData_NetPacket__SAPA_682FF0.asm,matched,Exact 515B Open-BFME4
