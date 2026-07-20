@@ -12162,3 +12162,14 @@ __chkstk,,0x009F6C60,61,Code/masm_dumps/_icf3___chkstk_9F6C60.asm,matched,ICF Op
 ?addSide@SidesList@@QAEXPBVDict@@@Z,,0x000E0640,897,Code/masm_dumps/_sa15__addSide_SidesList__QAEXPBVDict___Z_E0640.asm,matched,sa15 Open-BFME4+Grok Faction
 ?validateAudio@ThingTemplate@@IAEXXZ,,0x0013E2F0,60,Code/masm_dumps/_sa15__validateAudio_ThingTemplate__IAEXXZ_13E2F0.asm,matched,sa15 Open-BFME4+Grok shadows
 ?getPopupReplayLayout@Shell@@QAEPAVWindowLayout@@XZ,,0x0057FEC0,48,Code/masm_dumps/_sa15__getPopupReplayLayout_Shell__QAEPAVWindowLayout__XZ_57FEC0.asm,matched,sa15 Open-BFME4+Grok Menus/PopupReplay.wnd
+??1FrameData@@QAE@XZ,,0x00AFF130,45,Code/masm_dumps/_icf6___1FrameData__QAE_XZ_AFF130.asm,matched,ICF Open-BFME4+Grok
+??1ActiveCategoryStackClass@@UAE@XZ,,0x00AFF130,45,Code/masm_dumps/_icf6___1ActiveCategoryStackClass__UAE_XZ_AFF130.asm,matched,ICF Open-BFME4+Grok
+?Set_Animation@Animatable3DObjClass@@UAEXPAVHAnimComboClass@@@Z,,0x00982330,39,Code/masm_dumps/_sym4__Set_Animation_Animatable3DObjClass__UAEXPAVHAnimComboClass___Z_982330.asm,matched,symbol Open-BFME4+Grok
+?Free_Object_Memory@?$ObjectPoolClass@VPolyRenderTaskClass@@$0BAA@@@QAEXPAVPolyRenderTaskClass@@@Z,,0x009452A0,38,Code/masm_dumps/_sym4__Free_Object_Memory___ObjectPoolClass_VPolyRenderTaskClass___0BAA___QA_9452A0.asm,matched,symbol Open-BFME4+Grok
+?Free_Object_Memory@?$ObjectPoolClass@VMatPassTaskClass@@$0BAA@@@QAEXPAVMatPassTaskClass@@@Z,,0x009453B0,38,Code/masm_dumps/_sym4__Free_Object_Memory___ObjectPoolClass_VMatPassTaskClass___0BAA___QAEXP_9453B0.asm,matched,symbol Open-BFME4+Grok
+?Release_Ref@TextureClass@@QAEXXZ,,0x009EB7A0,36,Code/masm_dumps/_icf6__Release_Ref_TextureClass__QAEXXZ_9EB7A0.asm,matched,ICF Open-BFME4+Grok
+?peerParseQuery@@YAHPAXPADHPAUsockaddr@@@Z,,0x00857570,34,Code/masm_dumps/_sym4__peerParseQuery__YAHPAXPADHPAUsockaddr___Z_857570.asm,matched,symbol Open-BFME4+Grok
+?Intersect_OBBox@MeshGeometryClass@@QAE_NAAVOBBoxIntersectionTestClass@@@Z,,0x00927920,34,Code/masm_dumps/_sym4__Intersect_OBBox_MeshGeometryClass__QAE_NAAVOBBoxIntersectionTestClass_927920.asm,matched,symbol Open-BFME4+Grok
+?Log_DX8_ErrorCode@@YAXI@Z,,0x0087CAC0,25,Code/masm_dumps/_sym4__Log_DX8_ErrorCode__YAXI_Z_87CAC0.asm,matched,symbol Open-BFME4+Grok
+?setInputEnabled@BfmeInGameUI_setInputEnabled@@QAEX_N@Z,,0x0043B280,20,Code/masm_dumps/_sym4__setInputEnabled_BfmeInGameUI_setInputEnabled__QAEX_N_Z_43B280.asm,matched,symbol Open-BFME4+Grok
+_IsStatsConnected,,0x009D2B60,15,Code/masm_dumps/_sym4__IsStatsConnected_9D2B60.asm,matched,symbol Open-BFME4+Grok
