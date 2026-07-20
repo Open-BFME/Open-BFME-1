@@ -788,10 +788,15 @@ void InGameUI::removeNamedTimer( const AsciiString& timerName )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?showNamedTimerDisplay@InGameUI@@QAEX_N@Z present-unmatched
+// ?showNamedTimerDisplay@InGameUI@@QAEX_N@Z
 void InGameUI::showNamedTimerDisplay( Bool show )
 {
-	m_showNamedTimers = show;
+	// BFME m_showNamedTimers at +0x7a1 (ZH layout packs it later).
+	struct BfmeInGameUINamedTimers {
+		UnsignedByte _pad[0x7a1];
+		Bool m_showNamedTimers;
+	};
+	((BfmeInGameUINamedTimers *)this)->m_showNamedTimers = show;
 }
 
 //-------------------------------------------------------------------------------------------------
