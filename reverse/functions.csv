@@ -11240,3 +11240,8 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??0AutoAbilityBehaviorModuleData@@QAE@XZ,,0x001ED6A0,16,Code/masm_dumps/AutoAbilityBehaviorModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x114F90
 ??0SiegeDockingBehaviorModuleData@@QAE@XZ,,0x00205F60,16,Code/masm_dumps/SiegeDockingBehaviorModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x114E80
 ??0SlaveWatcherBehaviorModuleData@@QAE@XZ,,0x002074C0,17,Code/masm_dumps/SlaveWatcherBehaviorModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x117540
+??1ActiveBodyModuleData@@UAE@XZ,,0x00128C50,162,Code/masm_dumps/ActiveBodyModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x210B40 ctor 0x20F7C0 vt 0xCA76C0
+??1SpyVisionUpdateModuleData@@UAE@XZ,,0x003780A0,158,Code/masm_dumps/SpyVisionUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x378070 ctor 0x377D70 vt 0xCE9E78
+??1RiderChangeContainModuleData@@UAE@XZ,,0x00258730,147,Code/masm_dumps/RiderChangeContainModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x268A00 ctor 0x268120 vt 0xCB7858
+??1DeletionUpdateModuleData@@UAE@XZ,,0x0008AEA0,112,Code/masm_dumps/DeletionUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x8DDB0 ctor 0x8A950 vt 0xC7D5BC
+??1HijackerUpdateModuleData@@UAE@XZ,,0x0006E320,95,Code/masm_dumps/HijackerUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x6E2F0 ctor 0x6E2B0 vt 0xC75D24
