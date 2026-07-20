@@ -11803,3 +11803,9 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??0PSPlayerStats@@QAE@ABV0@@Z,,0x00887B60,121,Code/masm_dumps/_leaf___0PSPlayerStats__QAE_ABV0__Z_887B60.asm,matched,Exact 121B present-unmatched leaf Open-BFME4
 ?format_va@UnicodeString@@QAEXPBGPAD@Z,,0x00888930,116,Code/masm_dumps/_leaf__format_va_UnicodeString__QAEXPBGPAD_Z_888930.asm,matched,Exact 116B present-unmatched leaf Open-BFME4
 ?format_va@AsciiString@@QAEXPBDPAD@Z,,0x00888930,116,Code/masm_dumps/_leaf__format_va_AsciiString__QAEXPBDPAD_Z_888930.asm,matched,Exact 116B present-unmatched leaf Open-BFME4
+??1SubsystemInterface@@UAE@XZ,,0x009D19A0,93,Code/masm_dumps/_leaf2___1SubsystemInterface__UAE_XZ_9D19A0.asm,matched,Exact 93B present-unmatched Open-BFME4
+??1DebugIOCon@@UAE@XZ,,0x00890F10,85,Code/masm_dumps/_leaf2___1DebugIOCon__UAE_XZ_890F10.asm,matched,Exact 85B present-unmatched Open-BFME4
+?getGroup@Object@@QAEPAVAIGroup@@XZ,,0x008F9550,71,Code/masm_dumps/_leaf2__getGroup_Object__QAEPAVAIGroup__XZ_8F9550.asm,matched,Exact 71B present-unmatched Open-BFME4
+?add@MultiIniFieldParse@@QAEXPBUFieldParse@@I@Z,,0x00850920,64,Code/masm_dumps/_leaf2__add_MultiIniFieldParse__QAEXPBUFieldPar_850920.asm,matched,Exact 64B present-unmatched Open-BFME4
+?Start_Movie_Capture@WW3D@@SAXPBDM@Z,,0x009E7FD0,53,Code/masm_dumps/_leaf2__Start_Movie_Capture_WW3D__SAXPBDM_Z_9E7FD0.asm,matched,Exact 53B present-unmatched Open-BFME4
+?Free_Definitions@DefinitionMgrClass@@SAXXZ,,0x009CB880,50,Code/masm_dumps/_leaf2__Free_Definitions_DefinitionMgrClass__SA_9CB880.asm,matched,Exact 50B present-unmatched Open-BFME4
