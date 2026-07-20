@@ -11224,3 +11224,9 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??$_Construct@UHideShowSubObjInfo@ModelConditionInfo@@U12@@_STL@@YAXPAUHideShowSubObjInfo@ModelConditionInfo@@ABU12@@Z,,0x0004A818,5,Code/masm_dumps/_thunk_b08fdd21105e_4A818.asm,matched,thunk accessor of ported class
 ?_M_insert_overflow@?$vector@UtConnInfoStruct@@V?$allocator@UtConnInfoStruct@@@_STL@@@_STL@@IAEXPAUtConnInfoStruct@@ABU3@ABU__false_type@2@I_N@Z,,0x0004ABF6,5,Code/masm_dumps/_thunk_e6c3f7bcfa95_4ABF6.asm,matched,thunk accessor of ported class
 ??1Payload@DeliverPayloadNugget@@QAE@XZ,,0x0004B10A,5,Code/masm_dumps/_thunk_eb7f4717a782_4B10A.asm,matched,thunk accessor of ported class
+??0SlowDeathBehaviorModuleData@@QAE@XZ,,0x002093F0,404,Code/masm_dumps/SlowDeathBehaviorModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x1154F0
+??0StructureToppleUpdateModuleData@@QAE@XZ,,0x0012BF50,398,Code/masm_dumps/StructureToppleUpdateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x12C250
+??0ParticleUplinkCannonUpdateModuleData@@QAE@XZ,,0x002A2520,287,Code/masm_dumps/ParticleUplinkCannonUpdateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x11CC80
+??0StealthDetectorUpdateModuleData@@QAE@XZ,,0x001269F0,250,Code/masm_dumps/StealthDetectorUpdateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x126BE0
+??0AutoPickUpUpdateModuleData@@QAE@XZ,,0x002827E0,242,Code/masm_dumps/AutoPickUpUpdateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x119B30
+??0ActiveBodyModuleData@@QAE@XZ,,0x0020F7C0,230,Code/masm_dumps/ActiveBodyModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x11F420
