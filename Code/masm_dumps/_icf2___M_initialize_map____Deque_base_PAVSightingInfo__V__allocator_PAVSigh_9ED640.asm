@@ -1,0 +1,23 @@
+.386
+.model flat
+; ?_M_initialize_map@?$_Deque_base@PAVSightingInfo@@V?$allocator@PAVSightingInfo@@@_STL@@@_STL@@IAEXI@Z
+; Exact 203B @ 0x9ED640; symbol-pin Open-BFME4+Grok
+_TEXT SEGMENT
+public ?_M_initialize_map@?$_Deque_base@PAVSightingInfo@@V?$allocator@PAVSightingInfo@@@_STL@@@_STL@@IAEXI@Z
+?_M_initialize_map@?$_Deque_base@PAVSightingInfo@@V?$allocator@PAVSightingInfo@@@_STL@@@_STL@@IAEXI@Z PROC
+    db 83h, 0ECh, 08h, 53h, 8Bh, 5Ch, 24h, 10h, 0C1h, 0EBh, 05h, 43h, 55h, 8Dh, 43h, 02h
+    db 56h, 89h, 44h, 24h, 0Ch, 83h, 0F8h, 08h, 57h, 8Bh, 0F1h, 0C7h, 44h, 24h, 14h, 08h
+    db 00h, 00h, 00h, 8Dh, 44h, 24h, 10h, 77h, 04h, 8Dh, 44h, 24h, 14h, 8Bh, 00h, 85h
+    db 0C0h, 89h, 46h, 24h, 74h, 1Fh, 0C1h, 0E0h, 02h, 3Dh, 80h, 00h, 00h, 00h, 50h, 76h
+    db 0Ah, 0E8h, 0AAh, 48h, 0E9h, 0FFh, 83h, 0C4h, 04h, 0EBh, 0Ch, 0E8h, 0B0h, 0Eh, 0E4h, 0FFh
+    db 83h, 0C4h, 04h, 0EBh, 02h, 33h, 0C0h, 8Bh, 4Eh, 24h, 2Bh, 0CBh, 0D1h, 0E9h, 8Dh, 3Ch
+    db 88h, 8Dh, 2Ch, 9Fh, 3Bh, 0FDh, 89h, 46h, 20h, 8Bh, 0DFh, 73h, 19h, 8Dh, 49h, 00h
+    db 68h, 80h, 00h, 00h, 00h, 0E8h, 86h, 0Eh, 0E4h, 0FFh, 89h, 03h, 83h, 0C3h, 04h, 83h
+    db 0C4h, 04h, 3Bh, 0DDh, 72h, 0EAh, 8Bh, 44h, 24h, 1Ch, 89h, 7Eh, 0Ch, 8Bh, 3Fh, 89h
+    db 7Eh, 04h, 83h, 0C5h, 0FCh, 81h, 0C7h, 80h, 00h, 00h, 00h, 89h, 7Eh, 08h, 89h, 6Eh
+    db 1Ch, 8Bh, 6Dh, 00h, 89h, 6Eh, 14h, 81h, 0C5h, 80h, 00h, 00h, 00h, 89h, 6Eh, 18h
+    db 8Bh, 56h, 04h, 8Bh, 4Eh, 14h, 89h, 16h, 83h, 0E0h, 1Fh, 5Fh, 8Dh, 14h, 81h, 89h
+    db 56h, 10h, 5Eh, 5Dh, 5Bh, 83h, 0C4h, 08h, 0C2h, 04h, 00h
+?_M_initialize_map@?$_Deque_base@PAVSightingInfo@@V?$allocator@PAVSightingInfo@@@_STL@@@_STL@@IAEXI@Z ENDP
+_TEXT ENDS
+END
