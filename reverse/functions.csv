@@ -12444,3 +12444,5 @@ _IsStatsConnected,,0x009D2B60,15,Code/masm_dumps/_sym4__IsStatsConnected_9D2B60.
 ??_GParticleUplinkCannonUpdateModuleData@@UAEPAXI@Z,,0x002A2690,30,Code/GameEngine/Source/GameLogic/Object/Update/ParticleUplinkCannonUpdate.cpp,matched,
 ??_GProductionUpdateModuleData@@UAEPAXI@Z,,0x0029FC40,30,Code/GameEngine/Source/GameLogic/Object/Update/ProductionUpdate.cpp,matched,
 ??_GToppleUpdateModuleData@@UAEPAXI@Z,,0x002B1580,30,Code/GameEngine/Source/GameLogic/Object/Update/ToppleUpdate.cpp,matched,
+??_GMaxHealthUpgradeModuleData@@UAEPAXI@Z,,0x002D65C0,30,Code/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgrade.cpp,matched,
+??_GModelConditionUpgradeModuleData@@UAEPAXI@Z,,0x002D6AF0,30,Code/GameEngine/Source/GameLogic/Object/Upgrade/ModelConditionUpgrade.cpp,matched,
