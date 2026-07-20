@@ -11778,3 +11778,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??1GrantStealthBehaviorModuleData@@UAE@XZ,,0x00297D60,93,Code/masm_dumps/GrantStealthBehaviorModuleData_destructor.asm,matched,Exact 93B SEH dtor Open-BFME4
 ??1LargeGroupBonusUpdateModuleData@@UAE@XZ,,0x00297D60,93,Code/masm_dumps/LargeGroupBonusUpdateModuleData_destructor.asm,matched,Exact 93B SEH dtor Open-BFME4
 ??0TemporarilyDefectUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002B0AD0,146,Code/masm_dumps/TemporarilyDefectUpdate_constructor.asm,matched,Exact 146B ICF alias Open-BFME4
+?doSetRallyPoint@@YAXPAVObject@@ABUCoord3D@@@Z,,0x00396D40,880,Code/masm_dumps/doSetRallyPoint.asm,matched,Exact 880B @ 0x396D40; string-anchored RallyPoint; Ghidra ENTRY Open-BFME4
