@@ -13807,55 +13807,14 @@ __declspec(naked) ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MOD
 }
 
 // ??4?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAEAAV01@ABV01@@Z
-__declspec(naked) ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::operator=(const ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that)
+// Naked→C++: copy +0x0c byte and +0x10 dword via (that? that+8 : 0) intermediates.
+ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::operator=(const ConcreteModuleTemplate<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that)
 {
-    __asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x12
-        __emit 0x8d
-        __emit 0x51
-        __emit 0x08
-        __emit 0x8a
-        __emit 0x4a
-        __emit 0x04
-        __emit 0x88
-        __emit 0x48
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x89
-        __emit 0x50
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x33
-        __emit 0xd2
-        __emit 0x8a
-        __emit 0x4a
-        __emit 0x04
-        __emit 0x88
-        __emit 0x48
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x89
-        __emit 0x50
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+	const void *src = &that;
+	unsigned char *base = src ? (unsigned char *)src + 8 : 0;
+	*((unsigned char *)this + 0x0c) = base[4];
+	*((unsigned int *)((unsigned char *)this + 0x10)) = *(unsigned int *)(base + 8);
+	return *this;
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVSphereEmissionVolumeModuleTemplate@2@XZ
