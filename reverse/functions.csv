@@ -11854,3 +11854,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?saveGame@GameState@@QAE?AW4SaveCode@@VAsciiString@@VUnicodeString@@W4SaveFileType@@W4SnapshotType@@@Z,,0x00110170,610,Code/masm_dumps/_str3__saveGame_GameState_QAE_AW4SaveCode_VAsciiString_VUnico_110170.asm,matched,
 ?OnProgressUpdate@DownloadManagerMunkee@@UAEJHHHH@Z,,0x004C7B60,521,Code/masm_dumps/_str3__OnProgressUpdate_DownloadManagerMunkee_UAEJHHHH_Z_4C7B60.asm,matched,
 ?OptionsMenuInit@@YAXPAVWindowLayout@@PAX@Z,,0x00560280,6966,Code/masm_dumps/_OptionsMenuInit__YAXPAVWindowLayout__PAX_Z_560280.asm,matched,Exact 6966B string-anchored Open-BFME4
+?loadMapINI@GameLogic@@QAEXVAsciiString@@@Z,,0x00386A30,754,Code/masm_dumps/_loadMapINI_GameLogic__QAEXVAsciiString___Z_386A30.asm,matched,Exact 754B string-anchored Open-BFME4
