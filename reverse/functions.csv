@@ -11960,3 +11960,7 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?doTeamIncreasePriority@ScriptActions@@IAEXABVAsciiString@@@Z,,0x002F3960,196,Code/masm_dumps/_sa7__doTeamIncreasePriority_ScriptActions__IAEXABVAsci_2F3960.asm,matched,Exact 196B Open-BFME4
 ?disband@TeamInQueue@@QAEXXZ,,0x00161A60,180,Code/masm_dumps/_sa7__disband_TeamInQueue__QAEXXZ_161A60.asm,matched,Exact 180B Open-BFME4
 ?addSnapshotBlock@GameState@@AAEXVAsciiString@@PAVSnapshot@@W4SnapshotType@@@Z,,0x003BDB80,155,Code/masm_dumps/_sa7__addSnapshotBlock_GameState__AAEXVAsciiString__PAV_3BDB80.asm,matched,Exact 155B Open-BFME4
+??0Template@@QAE@XZ,,0x00351260,149,Code/masm_dumps/_sa8___0Template__QAE_XZ_351260.asm,matched,Exact 149B Open-BFME4
+?deleteTriggers@PolygonTrigger@@,,0x0074A680,139,Code/masm_dumps/_sa8__deleteTriggers_PolygonTrigger___74A680.asm,matched,Exact 139B Open-BFME4
+??0WaterTransparencySetting@@QAE@XZ,,0x000C3730,139,Code/masm_dumps/_sa8___0WaterTransparencySetting__QAE_XZ_C3730.asm,matched,Exact 139B Open-BFME4
+??0AttackStateMachine@@QAE@PAVObject@@PAVAIAttackState@@VAsciiString@@_N33@Z,,0x0017F570,103,Code/masm_dumps/_sa8___0AttackStateMachine__QAE_PAVObject__PAVAIAttackS_17F570.asm,matched,Exact 103B Open-BFME4
