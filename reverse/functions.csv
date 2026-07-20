@@ -12326,3 +12326,6 @@ _IsStatsConnected,,0x009D2B60,15,Code/masm_dumps/_sym4__IsStatsConnected_9D2B60.
 ?canFireWeapon@ActionManager@@QAE_NPBVObject@@W4WeaponSlotType@@W4CommandSourceType@@@Z,,0x000C4300,37,Code/masm_dumps/_rn9__canFireWeapon_ActionManager__QAE_NPBVObject__W4WeaponSlotType__W4Comm_C4300.asm,matched,reloc-needle Open-BFME4+Grok
 ?removeObject@Radar@@QAEXPAVObject@@@Z,,0x00106C20,49,Code/masm_dumps/_rn9__removeObject_Radar__QAEXPAVObject___Z_106C20.asm,matched,reloc-needle Open-BFME4+Grok
 ?findByTemplateID@ThingFactory@@QAEPBVThingTemplate@@G@Z,,0x00133CC0,40,Code/masm_dumps/_rn9__findByTemplateID_ThingFactory__QAEPBVThingTemplate__G_Z_133CC0.asm,matched,reloc-needle Open-BFME4+Grok
+?clearVisibleSkinList@DX8SkinFVFCategoryContainer@@AAEXXZ,,0x00945D60,72,Code/masm_dumps/_rn10__clearVisibleSkinList_DX8SkinFVFCategoryContainer__AAEXXZ_945D60.asm,matched,reloc-needle Open-BFME4+Grok
+?Add_Visible_Skin@DX8SkinFVFCategoryContainer@@QAEXPAVMeshClass@@@Z,,0x00945DB0,68,Code/masm_dumps/_rn10__Add_Visible_Skin_DX8SkinFVFCategoryContainer__QAEXPAVMeshClass___Z_945DB0.asm,matched,reloc-needle Open-BFME4+Grok
+??6Debug@@QAEAAV0@_N@Z,,0x008897C0,30,Code/masm_dumps/_rn10___6Debug__QAEAAV0__N_Z_8897C0.asm,matched,reloc-needle Open-BFME4+Grok
