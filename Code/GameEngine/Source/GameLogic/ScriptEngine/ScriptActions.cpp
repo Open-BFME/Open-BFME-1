@@ -3954,7 +3954,6 @@ void ScriptActions::doWeather(Bool showWeather)
 //-------------------------------------------------------------------------------------------------
 /** Freeze time */
 //-------------------------------------------------------------------------------------------------
-// ?doFreezeTime@ScriptActions@@IAEXXZ present-unmatched
 void ScriptActions::doFreezeTime(void)
 {
 	TheScriptEngine->doFreezeTime();
