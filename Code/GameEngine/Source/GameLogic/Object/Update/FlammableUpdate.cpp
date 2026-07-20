@@ -198,7 +198,6 @@ UpdateSleepTime FlammableUpdate::calcSleepTime()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?tryToIgnite@FlammableUpdate@@ present-unmatched
 void FlammableUpdate::tryToIgnite()
 {
 	if( m_status == FS_NORMAL )

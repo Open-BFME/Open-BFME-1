@@ -10924,3 +10924,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?init@VideoPlayer@@UAEXXZ,,0x0081CB30,574,Code/masm_dumps/VideoPlayer_init.asm,matched,Exact contiguous retail MASM; VideoPlayer vtable and derived Bink init prove ownership; preserves BFME video-table construction
 ?Thread_Function@GameResultsThreadClass@@UAEXXZ,,0x00641E70,387,Code/masm_dumps/GameResultsThread_Thread_Function.asm,matched,Exact retail MASM; WSA loop global results queue and unique sendGameResults call prove ownership
 ?populateQMColorComboBox@@YAXAAVQuickMatchPreferences@@@Z,,0x00505DB0,406,Code/masm_dumps/populateQMColorComboBox.asm,matched,Exact retail MASM; entry thunk and multiplayer-color tooltip population loop prove ownership
+?tryToIgnite@FlammableUpdate@@QAEXXZ,,0x00293990,961,Code/masm_dumps/FlammableUpdate_tryToIgnite.asm,matched,Ghidra-owned BFME ignition path
