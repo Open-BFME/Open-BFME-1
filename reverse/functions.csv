@@ -12104,3 +12104,32 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?getSpeechVolume@OptionPreferences@@QAEMXZ,,0x00091880,129,Code/masm_dumps/_sa13__getSpeechVolume_OptionPreferences__QAEMXZ_91880.asm,matched,multi-xref Open-BFME4+Grok VoiceVolume
 ?getResolution@OptionPreferences@@QAEXPAH0@Z,,0x00091930,129,Code/masm_dumps/_sa13__getResolution_OptionPreferences__QAEXPAH0_Z_91930.asm,matched,multi-xref Open-BFME4+Grok MusicVolume
 ?getAlternateMouseModeEnabled@OptionPreferences@@QAE_NXZ,,0x00092670,126,Code/masm_dumps/_sa13__getAlternateMouseModeEnabled_OptionPreferences__QAE_NXZ_92670.asm,matched,multi-xref Open-BFME4+Grok GameSpyIPAddress
+??4?$VectorClass@VStringClass@@@@QAEAAV0@ABV0@@Z,,0x00905C80,217,Code/masm_dumps/_sym3___4__VectorClass_VStringClass____QAEAAV0_ABV0__Z_905C80.asm,matched,symbol-pin Open-BFME4+Grok
+??0ArchivedDirectoryInfo@@QAE@ABV0@@Z,,0x009CA8F0,98,Code/masm_dumps/_sym3___0ArchivedDirectoryInfo__QAE_ABV0__Z_9CA8F0.asm,matched,symbol-pin Open-BFME4+Grok
+?Get_Hash_Value@?$HashTemplateKeyClass@VStringClass@@@@SAIABVStringClass@@@Z,,0x0094DBC0,77,Code/masm_dumps/_sym3__Get_Hash_Value___HashTemplateKeyClass_VStringClass____SAIABVStringCla_94DBC0.asm,matched,symbol-pin Open-BFME4+Grok
+?Remove_All@?$SList@VTagBlockIndex@@@@UAEXXZ,,0x009EDD30,63,Code/masm_dumps/_sym3__Remove_All___SList_VTagBlockIndex____UAEXXZ_9EDD30.asm,matched,symbol-pin Open-BFME4+Grok
+?setVisibility@BfmeMouse_setVisibility@@QAEX_N@Z,,0x005A4BA0,61,Code/masm_dumps/_sym3__setVisibility_BfmeMouse_setVisibility__QAEX_N_Z_5A4BA0.asm,matched,symbol-pin Open-BFME4+Grok
+?clearWinList@@YAXAAV?$list@PAVAnimateWindow@@V?$allocator@PAVAnimateWindow@@@_STL@@@_STL@@@Z,,0x0045D660,53,Code/masm_dumps/_sym3__clearWinList__YAXAAV__list_PAVAnimateWindow__V__allocator_PAVAnimateW_45D660.asm,matched,symbol-pin Open-BFME4+Grok
+_InitStatsConnection,,0x009D58C0,47,Code/masm_dumps/_sym3__InitStatsConnection_9D58C0.asm,matched,symbol-pin Open-BFME4+Grok
+??1NodeCompressedMotionStruct@@QAE@XZ,,0x00AFF130,45,Code/masm_dumps/_sym3___1NodeCompressedMotionStruct__QAE_XZ_AFF130.asm,matched,symbol-pin Open-BFME4+Grok
+??4?$VectorClass@VResolutionDescClass@@@@QAEAAV0@ABV0@@Z,,0x0092F810,249,Code/masm_dumps/_icf3___4__VectorClass_VResolutionDescClass____QAEAAV0_ABV0__Z_92F810.asm,matched,ICF Open-BFME4+Grok
+??4?$VectorClass@VProxyClass@@@@QAEAAV0@ABV0@@Z,,0x0092F810,249,Code/masm_dumps/_icf3___4__VectorClass_VProxyClass____QAEAAV0_ABV0__Z_92F810.asm,matched,ICF Open-BFME4+Grok
+??4?$VectorClass@VKeyClass@Curve3DClass@@@@QAEAAV0@ABV0@@Z,,0x0092F810,249,Code/masm_dumps/_icf3___4__VectorClass_VKeyClass_Curve3DClass____QAEAAV0_ABV0__Z_92F810.asm,matched,ICF Open-BFME4+Grok
+??4?$VectorClass@VKeyClass@Curve1DClass@@@@QAEAAV0@ABV0@@Z,,0x0092F810,249,Code/masm_dumps/_icf3___4__VectorClass_VKeyClass_Curve1DClass____QAEAAV0_ABV0__Z_92F810.asm,matched,ICF Open-BFME4+Grok
+??4?$VectorClass@U_ENUM_VALUE@EnumParameterClass@@@@QAEAAV0@ABV0@@Z,,0x0092F810,249,Code/masm_dumps/_icf3___4__VectorClass_U_ENUM_VALUE_EnumParameterClass____QAEAAV0_ABV0__Z_92F810.asm,matched,ICF Open-BFME4+Grok
+??4?$VectorClass@PAVRender2DClass@@@@QAEAAV0@ABV0@@Z,,0x0092F810,249,Code/masm_dumps/_icf3___4__VectorClass_PAVRender2DClass____QAEAAV0_ABV0__Z_92F810.asm,matched,ICF Open-BFME4+Grok
+??4?$VectorClass@H@@QAEAAV0@ABV0@@Z,,0x0092F810,249,Code/masm_dumps/_icf3___4__VectorClass_H__QAEAAV0_ABV0__Z_92F810.asm,matched,ICF Open-BFME4+Grok
+?Cast_OBBox_To_Polys@AABTreeClass@@AAE_NPAUCullNodeStruct@1@AAVOBBoxCollisionTestClass@@@Z,,0x0096AEE0,219,Code/masm_dumps/_icf3__Cast_OBBox_To_Polys_AABTreeClass__AAE_NPAUCullNodeStruct_1_AAVOBBoxCo_96AEE0.asm,matched,ICF Open-BFME4+Grok
+?Cast_AABox_To_Polys@AABTreeClass@@AAE_NPAUCullNodeStruct@1@AAVAABoxCollisionTestClass@@@Z,,0x0096AEE0,219,Code/masm_dumps/_icf3__Cast_AABox_To_Polys_AABTreeClass__AAE_NPAUCullNodeStruct_1_AAVAABoxCo_96AEE0.asm,matched,ICF Open-BFME4+Grok
+?_M_initialize_map@?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@IAEXI@Z,,0x008FA2B0,210,Code/masm_dumps/_icf3___M_initialize_map____Deque_base_VGameResultsRequest__V__allocator_VGa_8FA2B0.asm,matched,ICF Open-BFME4+Grok
+?_M_initialize_map@?$_Deque_base@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@IAEXI@Z,,0x008FA2B0,210,Code/masm_dumps/_icf3___M_initialize_map____Deque_base_VBuddyResponse__V__allocator_VBuddyRe_8FA2B0.asm,matched,ICF Open-BFME4+Grok
+?_M_initialize_map@?$_Deque_base@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@IAEXI@Z,,0x008FA2B0,210,Code/masm_dumps/_icf3___M_initialize_map____Deque_base_VBuddyRequest__V__allocator_VBuddyReq_8FA2B0.asm,matched,ICF Open-BFME4+Grok
+?_M_initialize_map@?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@IAEXI@Z,,0x008FA2B0,210,Code/masm_dumps/_icf3___M_initialize_map____Deque_base_PAVMapObject__V__allocator_PAVMapObje_8FA2B0.asm,matched,ICF Open-BFME4+Grok
+??0BFMERetailAsciiString@@QAE@PBD@Z,,0x00888BC0,72,Code/masm_dumps/_icf3___0BFMERetailAsciiString__QAE_PBD_Z_888BC0.asm,matched,ICF Open-BFME4+Grok
+??0BFMEPlayerTemplateAsciiString@@QAE@PBD@Z,,0x00888BC0,72,Code/masm_dumps/_icf3___0BFMEPlayerTemplateAsciiString__QAE_PBD_Z_888BC0.asm,matched,ICF Open-BFME4+Grok
+??0BFMEAutoLockRef@@QAE@PAVBFMENetworkLock@@I@Z,,0x009DB3B0,72,Code/masm_dumps/_icf3___0BFMEAutoLockRef__QAE_PAVBFMENetworkLock__I_Z_9DB3B0.asm,matched,ICF Open-BFME4+Grok
+__chkstk,,0x009F6C60,61,Code/masm_dumps/_icf3___chkstk_9F6C60.asm,matched,ICF Open-BFME4+Grok
+??4Matrix3@@QAEAAV0@ABVMatrix3D@@@Z,,0x008D9150,61,Code/masm_dumps/_icf3___4Matrix3__QAEAAV0_ABVMatrix3D___Z_8D9150.asm,matched,ICF Open-BFME4+Grok
+?set@RetailLayoutString@@QAEXPBDH@Z,,0x00887D20,50,Code/masm_dumps/_icf3__set_RetailLayoutString__QAEXPBDH_Z_887D20.asm,matched,ICF Open-BFME4+Grok
+?set@LayoutFilename@@QAEXPBDH@Z,,0x00887D20,50,Code/masm_dumps/_icf3__set_LayoutFilename__QAEXPBDH_Z_887D20.asm,matched,ICF Open-BFME4+Grok
+?close@File@@UAEXXZ,,0x009CB880,50,Code/masm_dumps/_icf3__close_File__UAEXXZ_9CB880.asm,matched,ICF Open-BFME4+Grok
