@@ -51,8 +51,6 @@ def main():
         c = cls_of(n)
         if not c or c not in ported:
             continue
-        if '$' in n:  # skip STL-template instances (assembler/folding noise)
-            continue
         b = build.read_target_bytes(a, min(sz, 16))
         # accept either a 5-byte jmp thunk or any small non-thunk body we can
         # replay verbatim as raw bytes (no embedded REL32 calls).
@@ -76,8 +74,19 @@ def main():
         out = (f'.386\n.model flat\n\n; {mang}\n; Retail @ {rva:#08x} size {sz}\n'
                 f'_TEXT SEGMENT\npublic {mang}\n{mang} PROC\n    db {bhex}\n{mang} ENDP\n'
                 f'_TEXT ENDS\nEND\n')
+        # MASM rejects symbols >255 chars (A2043). For long mangled names,
+        # bind the real name to a short token via TEXTEQU and use that as the
+        # public/PROC symbol (the expansion is the linker-visible symbol).
+        if len(mang) > 240:
+            body = (f'.386\n.model flat\n\n; {mang}\n; Retail @ {rva:#08x} size {sz}\n'
+                    f'NAME_ TEXTEQU <{mang}>\n_TEXT SEGMENT\npublic NAME_\n'
+                    f'NAME_ PROC\n    db {bhex}\nNAME_ ENDP\n_TEXT ENDS\nEND\n')
+        else:
+            body = (f'.386\n.model flat\n\n; {mang}\n; Retail @ {rva:#08x} size {sz}\n'
+                    f'_TEXT SEGMENT\npublic {mang}\n{mang} PROC\n    db {bhex}\n'
+                    f'{mang} ENDP\n_TEXT ENDS\nEND\n')
         with open(fn, 'w') as f:
-            f.write(out)
+            f.write(body)
         # First try plain; if it fails because the RVA is already claimed by a
         # matched row (ICF/alias at the same address+size), retry as an
         # icf-owner alias referencing that winner.
