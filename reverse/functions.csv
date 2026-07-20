@@ -12159,3 +12159,6 @@ __chkstk,,0x009F6C60,61,Code/masm_dumps/_icf3___chkstk_9F6C60.asm,matched,ICF Op
 ??_G?$VectorClass@VRenderDeviceDescClass@@@@UAEPAXI@Z,,0x0090B580,97,Code/masm_dumps/_rn1____G__VectorClass_VRenderDeviceDescClass____UAEPAXI_Z_90B580.asm,matched,reloc-needle Open-BFME4+Grok
 ?generateVertexBuffer@WaterRenderObjClass@@IAEJHHH_N@Z,,0x0079EAB0,790,Code/masm_dumps/_rn1__generateVertexBuffer_WaterRenderObjClass__IAEJHHH_N_Z_79EAB0.asm,matched,reloc-needle Open-BFME4+Grok
 ?generateIndexBuffer@WaterRenderObjClass@@IAEJHH@Z,,0x0079EEA0,237,Code/masm_dumps/_rn1__generateIndexBuffer_WaterRenderObjClass__IAEJHH_Z_79EEA0.asm,matched,reloc-needle Open-BFME4+Grok
+?addSide@SidesList@@QAEXPBVDict@@@Z,,0x000E0640,897,Code/masm_dumps/_sa15__addSide_SidesList__QAEXPBVDict___Z_E0640.asm,matched,sa15 Open-BFME4+Grok Faction
+?validateAudio@ThingTemplate@@IAEXXZ,,0x0013E2F0,60,Code/masm_dumps/_sa15__validateAudio_ThingTemplate__IAEXXZ_13E2F0.asm,matched,sa15 Open-BFME4+Grok shadows
+?getPopupReplayLayout@Shell@@QAEPAVWindowLayout@@XZ,,0x0057FEC0,48,Code/masm_dumps/_sa15__getPopupReplayLayout_Shell__QAEPAVWindowLayout__XZ_57FEC0.asm,matched,sa15 Open-BFME4+Grok Menus/PopupReplay.wnd
