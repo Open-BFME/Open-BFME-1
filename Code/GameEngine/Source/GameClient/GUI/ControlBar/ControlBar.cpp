@@ -2054,7 +2054,6 @@ CBCommandStatus ControlBar::processContextSensitiveButtonTransition( GameWindow 
 // ?switchToContext@ControlBar@@IAEXW4ControlBarContext@@PAVDrawable@@@Z
 // Body in ControlBar_switchToContext.asm (exact 869B retail).
 
-// ?setCommandBarBorder@ControlBar@@AAEXPAVGameWindow@@W4CommandButtonMappedBorderType@@@Z present-unmatched
 void ControlBar::setCommandBarBorder( GameWindow *button, CommandButtonMappedBorderType type)
 {
 	if(!button)
@@ -2794,7 +2793,6 @@ enum{
 	RADAR_ATTACK_GLOW_NUM_TIMES = 15  ///< number of times we'll flash
 };
 
-// ?triggerRadarAttackGlow@ControlBar@@QAEXXZ present-unmatched
 void ControlBar::triggerRadarAttackGlow( void )
 {
 	if(!m_radarAttackGlowWindow)
@@ -2805,7 +2803,6 @@ void ControlBar::triggerRadarAttackGlow( void )
 		m_radarAttackGlowWindow->winEnable(FALSE);
 }
 
-// ?updateRadarAttackGlow@ControlBar@@IAEXXZ present-unmatched
 void ControlBar::updateRadarAttackGlow ( void )
 {
 	if(!m_radarAttackGlowOn || !m_radarAttackGlowWindow)

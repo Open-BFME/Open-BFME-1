@@ -1,4 +1,20 @@
 name,address,notes
+??0RetailDamageModuleDataBase@@QAE@XZ,0x00048A3B,DamageModule factory base constructor target
+??_7RetailDamageModuleData@@6B@,0x0108A350,DamageModule factory vtable target
+??0RetailCollideModuleDataBase@@QAE@XZ,0x00048A3B,CollideModule factory base constructor target
+??_7RetailCollideModuleData@@6B@,0x0108A350,CollideModule factory vtable target
+??0RetailUpdateModuleDataBase@@QAE@XZ,0x00048A3B,UpdateModule factory base constructor target
+??_7RetailUpdateModuleData@@6B@,0x0108A350,UpdateModule factory vtable target
+?_M_insert@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@_N@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@_N@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@_N@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVAsciiString@@_N@2@0@Z,0x000086A2,MapUtil bool tree insert thunk
+?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@_N@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@_N@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@_N@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@_N@2@@Z,0x0002DA10,MapUtil bool tree unique insert thunk
+??RHotKeyAsciiStringLess@@QBE_NABVAsciiString@@0@Z,0x00043D42,HotKey retail AsciiString comparator thunk
+?compare@AsciiString@@QBEHABV1@@Z,0x000220C5,HotKey retail StringBase compare thunk
+?_M_insert@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVAsciiString@@VHotKey@@@2@0@Z,0x0003D780,HotKey tree insert thunk
+?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@VHotKey@@@2@@Z,0x00039A54,HotKey tree unique insert thunk
+??RWOLLoginAsciiStringLess@@QBE_NABVAsciiString@@0@Z,0x00043D42,WOLLogin retail AsciiString comparator thunk
+?_M_insert@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@2@0@Z,0x00026283,WOLLogin tree insert thunk
+?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@2@@Z,0x000472C1,WOLLogin tree unique insert thunk
+??0OpenContainModuleData@@QAE@XZ,0x00044030,CaveContain factory constructor target
 ?$S103@?1??getClassMemoryPool@AIUpdateInterface@@CAPAVMemoryPool@@XZ@4IA,0x00EEFE34,pool-glue cascade static (back-solved)
 ?$S105@?1??getClassMemoryPool@PoisonedBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF830,pool-glue cascade static (back-solved)
 ?$S107@?1??getClassMemoryPool@SupplyWarehouseCripplingBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF91C,pool-glue cascade static (back-solved)
@@ -183,7 +199,7 @@ name,address,notes
 ??0AutoDepositUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00C15D,module ctor (friend_newModuleInstance retail call target)
 ??0AutoFindHealingUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x02E12C,module ctor (friend_newModuleInstance retail call target)
 ??0AutoFindHealingUpdateModuleData@@QAE@XZ,0x0001D4EE,module-glue cascade callee (from retail call site)
-??0AutoHealBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000A0E2
+??0RainOfFireUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000A0E2,retail ModuleFactory cp081 constructor thunk
 ??0AutoHealBehaviorModuleData@@QAE@XZ,0x000287C7
 ??0BFMEAutoLockRef@@QAE@PAVBFMENetworkLock@@I@Z,0x009DB3B0,native BFME lock-ref acquire helper
 ??0BattlePlanUpdateModuleData@@QAE@XZ,0x0003025B
@@ -987,6 +1003,7 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@M@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@M@2@@Z,0x00030512,resweep callee back-solved
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@2@@Z,0x000082F6,resweep callee back-solved
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@2@@Z,0x00024ADC
+?_M_insert@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@2@0@Z,0x00032934
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z,0x000290B4,rel32 pin for exact-ambiguous landing
 ?isAbleToBeToppled@ToppleUpdate@@QBE_NXZ,0x0000678A
 ?isCellOnEnd@Bridge@@QAE_NPBURegion2D@@@Z,0x0000DAAD,ILT thunk used by call site
@@ -1055,6 +1072,7 @@ name,address,notes
 ?read_vertex_material_ids@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,0x0096D300,rel32 pin for read_material_pass
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x008881D0,BFME releaseBuffer body (inlined ~UnicodeString call sites encode this)
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x009409F0
+?releaseBuffer@AsciiString@@IAEXXZ,0x00887940,Ghidra GrabWindowInfo direct callee
 ?releaseData@Dict@@AAEXXZ,0x00014475
 ?releaseTrack@WaterTracksRenderSystem@@IAEXPAVWaterTracksObj@@@Z,0x0000E250
 ?remove@Dict@@QAE_NW4NameKeyType@@@Z,0x000072B6
@@ -1073,6 +1091,7 @@ name,address,notes
 ?selectFriends@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@_N@Z,0x000282B8
 ?sendToManglerFromPort@FirewallHelperClass@@QAE_NIGG_N@Z,0x00022C00
 ?set@LayoutFilename@@QAEXPBDH@Z,0x00887D20
+?set@RetailLayoutString@@QAEXPBDH@Z,0x00887D20
 ?set@UnicodeString@@QAEXABV1@@Z,0x00888530
 ?setConnectionState@NAT@@IAEXHW4NATConnectionState@@@Z,0x00670DC0,processGlobalMessage callee (ILT body)
 ?setDefaultControlBarConfig@ControlBar@@IAEXXZ,0x00043E73
@@ -1472,6 +1491,7 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ?winSetEnabledColor@GameWindow@@QAEHHH@Z,0x000262B0,site-decoded x2 (thunk)
 ?winSetEnabledColor@GameWindow@@QAEHHH@Z,0x00014867,site-decoded x2 (thunk)
 ?winSetEnabledColor@GameWindow@@QAEHHH@Z,0x0001EAEC,site-decoded x2 (thunk)
+?winSetTooltipFunc@GameWindow@@QAEHP6AXPAV1@PAVWinInstanceData@@I@Z@Z,0x0003D127,Ghidra GrabWindowInfo call-site thunk
 ?_M_insert_overflow@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@IAEXPAUCoord3D@@ABU3@ABU__false_type@2@I_N@Z,0x00017FB2,site-decoded x1 (thunk)
 ?_M_insert_overflow@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@IAEXPAUCoord3D@@ABU3@ABU__false_type@2@I_N@Z,0x00013E17,site-decoded x1 (thunk)
 ?_M_insert_overflow@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@IAEXPAUCoord3D@@ABU3@ABU__false_type@2@I_N@Z,0x000405FC,site-decoded x1 (thunk)
@@ -1832,19 +1852,17 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??0SpyVisionUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00041547,pinharvest x1 (thunk)
 ??0SpyVisionUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00025581,pinharvest x1 (thunk)
 ??0SpyVisionUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000C199,pinharvest x1 (thunk)
-??0SpyVisionUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00039F9A,pinharvest x1 (thunk)
+??0OneRingPenaltyUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00039F9A,Ghidra-owned constructor thunk
 ??0FireOCLAfterWeaponCooldownUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048B9E,pinharvest x1 (thunk)
 ??0FireOCLAfterWeaponCooldownUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00004D36,pinharvest x1 (thunk)
 ??0FireOCLAfterWeaponCooldownUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00041547,pinharvest x1 (thunk)
 ??0FireOCLAfterWeaponCooldownUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00025581,pinharvest x1 (thunk)
 ??0FireOCLAfterWeaponCooldownUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000C199,pinharvest x1 (thunk)
-??0FireOCLAfterWeaponCooldownUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00039F9A,pinharvest x1 (thunk)
 ??0EMPUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048B9E,pinharvest x1 (thunk)
 ??0EMPUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00004D36,pinharvest x1 (thunk)
 ??0EMPUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00041547,pinharvest x1 (thunk)
 ??0EMPUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00025581,pinharvest x1 (thunk)
 ??0EMPUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000C199,pinharvest x1 (thunk)
-??0EMPUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00039F9A,pinharvest x1 (thunk)
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAU_SBServer@@@2@@Z,0x000296BD,pinharvest x1 (thunk)
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAU_SBServer@@@2@@Z,0x00038703,pinharvest x1 (thunk)
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAU_SBServer@@@2@@Z,0x000254B9,pinharvest x1 (thunk)
@@ -2627,8 +2645,6 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??0ProductionUpdateModuleData@@QAE@XZ,0x0000ECFF,pinharvest x1 (thunk)
 ??0ProductionUpdateModuleData@@QAE@XZ,0x0000E9F8,pinharvest x1 (thunk)
 ?outOfWeaponRangeObject@@YA_NPAVState@@PAX@Z,0x0001745E,pinharvest x1 (thunk)
-?outOfWeaponRangeObject@@YA_NPAVState@@PAX@Z,0x00013C78,pinharvest x1 (thunk)
-?outOfWeaponRangeObject@@YA_NPAVState@@PAX@Z,0x000397AC,pinharvest x1 (thunk)
 ??0MinefieldBehaviorModuleData@@QAE@XZ,0x0002AE6E,pinharvest x1 (thunk)
 ??0MinefieldBehaviorModuleData@@QAE@XZ,0x000331A9,pinharvest x1 (thunk)
 ??0MinefieldBehaviorModuleData@@QAE@XZ,0x00022B15,pinharvest x1 (thunk)
@@ -2704,8 +2720,7 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??0SlavedUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00001CDA,pinharvest x1 (thunk)
 ??0WorkerAIUpdateModuleData@@QAE@XZ,0x00024BFE,pinharvest x1 (thunk)
 ??0WorkerAIUpdateModuleData@@QAE@XZ,0x000386B8,pinharvest x1 (thunk)
-??0BattleBusSlowDeathBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002B0E9,pinharvest x1 (thunk)
-??0BattleBusSlowDeathBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002E98D,pinharvest x1 (thunk)
+??0RubbleRiseUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002B0E9,retail ModuleFactory ordinal 0x88 ctor thunk
 ?setPosition@Mouse@@UAEXHH@Z,0x000418EE,pinharvest x2 (thunk)
 ?performUpgradeFX@UpgradeMuxData@@QBEXPAVObject@@@Z,0x0002EB4F,pinharvest x1 (thunk)
 ?performUpgradeFX@UpgradeMuxData@@QBEXPAVObject@@@Z,0x0002E320,pinharvest x1 (thunk)
@@ -2729,16 +2744,14 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??$_M_find@V?$BitFlags@$0L@@@@?$_Rb_tree@$$CBV?$BitFlags@$0L@@@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@U?$_Select1st@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@3@UMapHelper@?$SparseMatchFinder@VArmorTemplateSet@@V?$BitFlags@$0L@@@@@V?$allocator@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@1@ABV?$BitFlags@$0L@@@@Z,0x0000AE20,pinharvest x1 (thunk)
 ??0SlavedUpdateModuleData@@QAE@XZ,0x0003AE86,pinharvest x1 (thunk)
 ??0SlavedUpdateModuleData@@QAE@XZ,0x000441CA,pinharvest x1 (thunk)
-??0SlowDeathBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003C7B8,pinharvest x1 (thunk)
-??0SlowDeathBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00001C53,pinharvest x1 (thunk)
+??0SlowDeathBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x000447FB,matched factory constructor thunk -> 0x00207B60
 ??0LanguageFilter@@QAE@XZ,0x00022845,pinharvest x1 (thunk)
 ??0LanguageFilter@@QAE@XZ,0x00024DC0,pinharvest x1 (thunk)
 ??0RebuildHoleBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002D40C,pinharvest x1 (thunk)
 ??0RebuildHoleBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00001CDA,pinharvest x1 (thunk)
 ?getGridResolution@WaterRenderObjClass@@QAEXPAM00@Z,0x0001125C,pinharvest x1 (thunk)
 ?getGridResolution@WaterRenderObjClass@@QAEXPAM00@Z,0x000255FE,pinharvest x1 (thunk)
-??0FlammableUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002D40C,pinharvest x1 (thunk)
-??0FlammableUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00001CDA,pinharvest x1 (thunk)
+??0FlammableUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00011ACC,Ghidra-owned constructor thunk
 ??1PingResponse@@QAE@XZ,0x00049E2C,pinharvest x1 (thunk)
 ??1PingResponse@@QAE@XZ,0x00027C00,pinharvest x1 (thunk)
 ?getHeightAboveTerrainOrWater@Thing@@QBEMXZ,0x00001C30,pinharvest x1 (thunk)
@@ -2963,7 +2976,6 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??0W3DTracerDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00041547,pinharvest x1 (thunk)
 ??0W3DTracerDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00025581,pinharvest x1 (thunk)
 ??0W3DTracerDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000C199,pinharvest x1 (thunk)
-??0W3DTracerDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00039F9A,pinharvest x1 (thunk)
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x0003FB61,pinharvest x1 (thunk)
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x00046DE9,pinharvest x1 (thunk)
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x000192A4,pinharvest x1 (thunk)
@@ -3012,12 +3024,6 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??0W3DTankDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0004549E,pinharvest x1 (thunk)
 ??0W3DTankDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002CD86,pinharvest x1 (thunk)
 ??0W3DTankDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00042618,pinharvest x1 (thunk)
-??0W3DOverlordTankDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001FE7E,pinharvest x1 (thunk)
-??0W3DOverlordTankDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00006C85,pinharvest x1 (thunk)
-??0W3DOverlordTankDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x000138C2,pinharvest x1 (thunk)
-??0W3DOverlordTankDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0004549E,pinharvest x1 (thunk)
-??0W3DOverlordTankDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002CD86,pinharvest x1 (thunk)
-??0W3DOverlordTankDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00042618,pinharvest x1 (thunk)
 ??0?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@QAE@ABU01@@Z,0x000451D3,pinharvest x1 (thunk)
 ??0?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@QAE@ABU01@@Z,0x00018ACA,pinharvest x1 (thunk)
 ??0?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@QAE@ABU01@@Z,0x00024BC7,pinharvest x1 (thunk)
@@ -3090,8 +3096,7 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ?GadgetListBoxGetSelected@@YAXPAVGameWindow@@PAH@Z,0x00008945,pinharvest x2 (thunk)
 ?_M_insert_overflow@?$vector@UFlightDeckInfo@FlightDeckBehavior@@V?$allocator@UFlightDeckInfo@FlightDeckBehavior@@@_STL@@@_STL@@IAEXPAUFlightDeckInfo@FlightDeckBehavior@@ABU34@ABU__false_type@2@I_N@Z,0x0000A47A,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@UFlightDeckInfo@FlightDeckBehavior@@V?$allocator@UFlightDeckInfo@FlightDeckBehavior@@@_STL@@@_STL@@IAEXPAUFlightDeckInfo@FlightDeckBehavior@@ABU34@ABU__false_type@2@I_N@Z,0x009F56C0,pinharvest x1 (body)
-??0W3DOverlordTankDrawModuleData@@QAE@XZ,0x00015C21,pinharvest x1 (thunk)
-??0W3DOverlordTankDrawModuleData@@QAE@XZ,0x0000260D,pinharvest x1 (thunk)
+??0AttributeModifierAuraUpdateModuleData@@QAE@XZ,0x00015C21,retail ModuleFactory registration ordinal 0x79
 ?format_va@UnicodeString@@QAEXPBGPAD@Z,0x00888060,pinharvest x1 (body)
 ?format_va@UnicodeString@@QAEXPBGPAD@Z,0x00888930,pinharvest x1 (body)
 ?winSetLayout@GameWindow@@QAEXPAVWindowLayout@@@Z,0x00031881,pinharvest x2 (thunk)
@@ -3105,10 +3110,8 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??0W3DSupplyDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00021CE2,pinharvest x1 (thunk)
 ??0ArchivedDirectoryInfo@@QAE@ABV0@@Z,0x009CA8F0,pinharvest x1 (body)
 ??0ArchivedDirectoryInfo@@QAE@ABV0@@Z,0x009D0DB0,pinharvest x1 (body)
-??0W3DRopeDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00034711,pinharvest x1 (thunk)
-??0W3DRopeDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00035D91,pinharvest x1 (thunk)
-??0W3DDebrisDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002A379,pinharvest x1 (thunk)
-??0W3DDebrisDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048338,pinharvest x1 (thunk)
+??0W3DRopeDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048167,retail W3D factory registration
+??0W3DDebrisDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002E98D,retail W3DModuleFactory ordinal 1 ctor thunk
 ??0DetailedArchivedDirectoryInfo@@QAE@ABV0@@Z,0x009CA8F0,pinharvest x1 (body)
 ??0DetailedArchivedDirectoryInfo@@QAE@ABV0@@Z,0x009D0DB0,pinharvest x1 (body)
 ??0W3DProjectileStreamDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002B67,pinharvest x1 (thunk)
@@ -3239,11 +3242,9 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??0MissileLauncherBuildingUpdateModuleData@@QAE@XZ,0x0003025B,derived-ICF
 ??0OCLSpecialPowerModuleData@@QAE@XZ,0x0003025B,derived-ICF
 ??0OverchargeBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
-??0SpectreGunshipDeploymentUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000A0E2,derived-ICF
 ??0SpyVisionSpecialPowerModuleData@@QAE@XZ,0x00025EBE,derived-ICF
 ??0StatusBitsUpgradeModuleData@@QAE@XZ,0x000028AB,derived-ICF
 ??0StickyBombUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
-??0StructureCollapseUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000A0E2,derived-ICF
 ??0StructureToppleUpdateModuleData@@QAE@XZ,0x000287C7,derived-ICF
 ??0ToppleUpdateModuleData@@QAE@XZ,0x00010B2C,derived-ICF
 ??1?$_List_base@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@XZ,0x008881D0,derived-ICF
@@ -3306,3 +3307,31 @@ __CIfmod,0x009F70CC,hit-decoded x4 (body)
 ??0MobMemberSlavedUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048338,pinharvest x1 (thunk)
 ??0ProjectileStreamUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x000328C6,pinharvest x1 (thunk)
 ??0ProjectileStreamUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001E902,pinharvest x1 (thunk)
+?GadgetListBoxReset@@YAXPAVGameWindow@@@Z,0x0000A3DF
+?PopulateReplayFileListbox@@YAXPAVGameWindow@@@Z,0x000394AA
+?winGetLayout@GameWindow@@QAEPAVWindowLayout@@XZ,0x000402F5
+?_M_insert@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHI@2@0@Z,0x004A52F
+?_M_insert@?$_Rb_tree@HU?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHPAVGameSpyStagingRoom@@@2@0@Z,0x004A52F
+?_M_insert@?$_Rb_tree@HU?$pair@$$CBHVAsciiString@@@_STL@@U?$_Select1st@U?$pair@$$CBHVAsciiString@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHVAsciiString@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHVAsciiString@@@2@0@Z,0x0004517E
+?_M_insert@?$_Rb_tree@HU?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHVGameSpyGroupRoom@@@2@0@Z,0x0003E7E8
+?_M_insert@?$_Rb_tree@JU?$pair@$$CBJVLadderPref@@@_STL@@U?$_Select1st@U?$pair@$$CBJVLadderPref@@@_STL@@@2@U?$less@J@2@V?$allocator@U?$pair@$$CBJVLadderPref@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBJVLadderPref@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBJVLadderPref@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBJVLadderPref@@@2@0@Z,0x00029E92
+?_M_insert@?$_Rb_tree@PAVGameSpyStagingRoom@@PAV1@U?$_Identity@PAVGameSpyStagingRoom@@@_STL@@U?$less@PAVGameSpyStagingRoom@@@3@V?$allocator@PAVGameSpyStagingRoom@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@PAVGameSpyStagingRoom@@U?$_Nonconst_traits@PAVGameSpyStagingRoom@@@_STL@@@2@PAU_Rb_tree_node_base@2@0ABQAVGameSpyStagingRoom@@0@Z,0x0001234B
+?_M_insert@?$_Rb_tree@PBVLadderInfo@@PBV1@U?$_Identity@PBVLadderInfo@@@_STL@@U?$less@PBVLadderInfo@@@3@V?$allocator@PBVLadderInfo@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@PBVLadderInfo@@U?$_Nonconst_traits@PBVLadderInfo@@@_STL@@@2@PAU_Rb_tree_node_base@2@0ABQBVLadderInfo@@0@Z,0x000224CB
+?populateObserverInfoWindow@ControlBar@@QAEXXZ,0x000431C1
+?populateObserverList@ControlBar@@QAEXXZ,0x00036BA1
+??0BFMERetailFontLibrary@@QAE@XZ,0x0000FDF3
+??0BFMERetailAsciiString@@QAE@PBD@Z,0x00888BC0
+?releaseBuffer@BFMERetailAsciiString@@AAEXXZ,0x00887940
+??0W3DInGameUI@@QAE@XZ,0x0003CDB2
+??0W3DSnowManager@@QAE@XZ,0x000216C0
+??1GameTextInterface@@UAE@XZ,0x0000E908
+??0W3DTerrainVisual@@QAE@XZ,0x00024DC0
+?winSetHiliteTextColors@GameWindow@@QAEXHH@Z,0x000268B9
+?winSetIMECompositeTextColors@GameWindow@@QAEXHH@Z,0x00014C13
+?GetGameLogicRandomValue@@YAHHHPADH@Z,0x00096CF0,LifetimeUpdate calcSleepDelay retail debug owner
+??A?$map@W4NameKeyType@@MU?$less@W4NameKeyType@@@_STL@@V?$allocator@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@@_STL@@QAEAAMABW4NameKeyType@@@Z,0x000E24D0,PlayerTemplate cost-change local map operator owner
+??A?$map@VAsciiString@@MU?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@M@_STL@@@3@@_STL@@QAEAAMABVAsciiString@@@Z,0x000D97B0,PlayerTemplate time-change local map operator owner
+__ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00BFAB08,PlayerTemplate time-change retail exception handler
+??0BFMEPlayerTemplateAsciiString@@QAE@PBD@Z,0x00888BC0,PlayerTemplate time-change retail AsciiString constructor owner
+??1BFMEPlayerTemplateAsciiString@@QAE@XZ,0x00887940,PlayerTemplate time-change retail AsciiString release owner
+??0RubbleRiseUpdateModuleData@@QAE@XZ,0x00014DAD,retail ModuleFactory ordinal 0x88 data ctor thunk

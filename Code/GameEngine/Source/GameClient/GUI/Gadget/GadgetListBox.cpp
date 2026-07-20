@@ -2188,7 +2188,7 @@ UnicodeString GadgetListBoxGetTextAndColor( GameWindow *listbox, Color *color, I
 	ICoord2D pos;
 	pos.x = column;
 	pos.y = row;
-	TheWindowManager->winSendSystemMsg( listbox, GLM_GET_TEXT, (WindowMsgData)&pos, (WindowMsgData)&tAndC );
+	TheWindowManager->winSendSystemMsg( listbox, 0x401A, (WindowMsgData)&pos, (WindowMsgData)&tAndC );
 	
 
 		*color = tAndC.color;
@@ -2255,7 +2255,7 @@ Int GadgetListBoxAddEntryImage( GameWindow *listbox, const Image *image,
 	addInfo.height = hight;
 	addInfo.width = width;
 	/// @TODO: Don't do this type cast!
-	index = (Int) TheWindowManager->winSendSystemMsg( listbox, GLM_ADD_ENTRY, (WindowMsgData)&addInfo, color );
+	index = (Int) TheWindowManager->winSendSystemMsg( listbox, 0x4011, (WindowMsgData)&addInfo, color );
 	return (index);
 }  // end GadgetListBoxAddEntryImage
 
@@ -2275,26 +2275,28 @@ void GadgetListBoxSetFont( GameWindow *g, GameFont *font )
 {
 	ListboxData *listData = (ListboxData *)g->winGetUserData();
 	DisplayString *dString;
+	typedef void (DisplayString::*BFMESetFontFn)( GameFont * );
 
 	// set the font for the display strings all windows have
 	dString = g->winGetInstanceData()->getTextDisplayString();
 	if( dString )
-		dString->setFont( font );
+		(dString->*(*(BFMESetFontFn *)&(*(void ***)dString)[6]))( font );
 	dString = g->winGetInstanceData()->getTooltipDisplayString();
 	if( dString )
-		dString->setFont( font );
+		(dString->*(*(BFMESetFontFn *)&(*(void ***)dString)[6]))( font );
 
 	// listbox specific	
 	if( listData )
 		for( Int i = 0; i < listData->listLength; i++ )
 		{
-			if(listData->listData[i].cell)
+			if((*(ListEntryRow **)((char *)listData + 0x18))[i].cell)
 				for( Int j = 0; j < listData->columns; j++ )
 				{
-					if( listData->listData[i].cell[j].cellType == LISTBOX_TEXT && listData->listData[i].cell[j].data )
+					if( (*(ListEntryRow **)((char *)listData + 0x18))[i].cell[j].cellType == LISTBOX_TEXT &&
+						(*(ListEntryRow **)((char *)listData + 0x18))[i].cell[j].data )
 					{
-						dString = (DisplayString *)listData->listData[i].cell[j].data;
-						dString->setFont( font );
+						dString = (DisplayString *)(*(ListEntryRow **)((char *)listData + 0x18))[i].cell[j].data;
+						(dString->*(*(BFMESetFontFn *)&(*(void ***)dString)[6]))( font );
 					}
 				}
 		}  // end for i
@@ -2610,7 +2612,7 @@ Int GadgetListBoxGetNumEntries( GameWindow *listbox )
 
 	ListboxData *listboxData = (ListboxData *)listbox->winGetUserData();
 	if (listboxData)
-		return listboxData->endPos;
+		return *(Short *)((char *)listboxData + 0x2C);
 
 	return 0;
 }  // end GadgetListBoxGetNumEntries
@@ -2630,7 +2632,7 @@ void GadgetListBoxGetSelected( GameWindow *listbox, Int *selectList )
 		return;
 
 	// get selected indeces via system message
-	TheWindowManager->winSendSystemMsg( listbox, GLM_GET_SELECTION, 0, (WindowMsgData)selectList );
+	TheWindowManager->winSendSystemMsg( listbox, 0x4018, 0, (WindowMsgData)selectList );
 
 }  // end GadgetListBoxGetSelected
 
@@ -2646,7 +2648,7 @@ void GadgetListBoxSetSelected( GameWindow *listbox, Int selectIndex )
 		return;
 
 	// set selected index via system message
-	TheWindowManager->winSendSystemMsg( listbox, GLM_SET_SELECTION, (WindowMsgData)(&selectIndex), 1 );
+	TheWindowManager->winSendSystemMsg( listbox, 0x4017, (WindowMsgData)(&selectIndex), 1 );
 
 }  // end GadgetListBoxSetSelected
 
@@ -2659,7 +2661,7 @@ void GadgetListBoxSetSelected( GameWindow *listbox, const Int *selectList, Int s
 	if( listbox == NULL )
 		return;
 	// set selected index via system message
-	TheWindowManager->winSendSystemMsg( listbox, GLM_SET_SELECTION, (WindowMsgData)selectList, selectCount );
+	TheWindowManager->winSendSystemMsg( listbox, 0x4017, (WindowMsgData)selectList, selectCount );
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -2673,7 +2675,7 @@ void GadgetListBoxReset( GameWindow *listbox )
 		return;
 
 	// reset via system message
-	TheWindowManager->winSendSystemMsg( listbox, GLM_DEL_ALL, 0, 0 );
+	TheWindowManager->winSendSystemMsg( listbox, 0x4013, 0, 0 );
 
 }  // end GadgetListBoxReset
 
@@ -2686,7 +2688,7 @@ void GadgetListBoxSetItemData( GameWindow *listbox, void *data, Int row, Int col
 	pos.y = row;
 
 	if (listbox)
-		TheWindowManager->winSendSystemMsg( listbox, GLM_SET_ITEM_DATA, (WindowMsgData)&pos, (WindowMsgData)data);
+		TheWindowManager->winSendSystemMsg( listbox, 0x4021, (WindowMsgData)&pos, (WindowMsgData)data);
 		
 }// void GadgetListBoxSetItemData( Int index, void *data )
 
@@ -2701,7 +2703,7 @@ void *GadgetListBoxGetItemData( GameWindow *listbox, Int row, Int column)
 
 	if (listbox)
 	{
-		TheWindowManager->winSendSystemMsg( listbox, GLM_GET_ITEM_DATA, (WindowMsgData)&pos, (WindowMsgData)&data);
+		TheWindowManager->winSendSystemMsg( listbox, 0x4020, (WindowMsgData)&pos, (WindowMsgData)&data);
 	}
 	return (data);
 	
@@ -2733,7 +2735,8 @@ bool GadgetListBoxIsFull(GameWindow *window)
 		return FALSE;
 
 	Int entry = getListboxBottomEntry(listData);
-	if(listData->listData[entry].listHeight >= listData->displayPos + listData->displayHeight - 5)
+	if((*(ListEntryRow **)((char *)listData + 0x18))[entry].listHeight >=
+	   *(Short *)((char *)listData + 0x44) + *(Short *)((char *)listData + 0x3C) - 5)
 		return TRUE;
 	else
 		return FALSE;
@@ -2823,6 +2826,5 @@ Int GadgetListBoxGetColumnWidth( GameWindow *listbox, Int column )
 	if (listboxData->columns <= column || column < 0)
 		return 0;
 
-	return listboxData->columnWidth[column];
+	return (*(Int **)((char *)listboxData + 0x14))[column];
 }  // end GadgetListBoxGetNumColumns
-

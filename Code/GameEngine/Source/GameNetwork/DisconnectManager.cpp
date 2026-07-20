@@ -497,7 +497,6 @@ void DisconnectManager::sendKeepAlive(ConnectionManager *conMgr) {
 	}
 }
 
-// ?populateDisconnectScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::populateDisconnectScreen(ConnectionManager *conMgr) {
 	for (Int i = 0; i < MAX_SLOTS; ++i) {
 		UnicodeString name = conMgr->getPlayerName(i);
@@ -676,7 +675,6 @@ void DisconnectManager::recalculatePacketRouterIndex(ConnectionManager *conMgr) 
 	DEBUG_ASSERTCRASH((m_currentPacketRouterIndex < MAX_SLOTS), ("Invalid packet router index"));
 }
 
-// ?allOnSameFrame@DisconnectManager@@IAE_NPAVConnectionManager@@@Z present-unmatched
 Bool DisconnectManager::allOnSameFrame(ConnectionManager *conMgr) {
 	Bool retval = TRUE;
 	for (Int i = 0; (i < MAX_SLOTS) && (retval == TRUE); ++i) {
@@ -699,7 +697,6 @@ Bool DisconnectManager::allOnSameFrame(ConnectionManager *conMgr) {
 	return retval;
 }
 
-// ?isLocalPlayerNextPacketRouter@DisconnectManager@@IAE_NPAVConnectionManager@@@Z present-unmatched
 Bool DisconnectManager::isLocalPlayerNextPacketRouter(ConnectionManager *conMgr) {
 	UnsignedInt localSlot = conMgr->getLocalPlayerID();
 	UnsignedInt packetRouterSlot = conMgr->getPacketRouterSlot();

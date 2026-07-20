@@ -1,0 +1,60 @@
+.386
+.model flat
+
+; ?PopupReplayInit@@YAXPAVWindowLayout@@PAX@Z
+; Exact 386 retail bytes @ 0x004DE270; C++ differs only in temp setup scheduling.
+_TEXT SEGMENT
+public ?PopupReplayInit@@YAXPAVWindowLayout@@PAX@Z
+?PopupReplayInit@@YAXPAVWindowLayout@@PAX@Z PROC
+    db 051h,08Bh,00Dh,000h,0D6h,02Eh,001h,056h
+    db 068h,054h,012h,010h,001h,0E8h,055h,0CBh
+    db 0B5h,0FFh,08Bh,00Dh,000h,0D6h,02Eh,001h
+    db 068h,034h,012h,010h,001h,0A3h,04Ch,040h
+    db 02Fh,001h,0E8h,040h,0CBh,0B5h,0FFh,08Bh
+    db 00Dh,000h,0D6h,02Eh,001h,068h,010h,012h
+    db 010h,001h,0A3h,050h,040h,02Fh,001h,0E8h
+    db 02Bh,0CBh,0B5h,0FFh,08Bh,00Dh,000h,0D6h
+    db 02Eh,001h,068h,0E4h,011h,010h,001h,0A3h
+    db 054h,040h,02Fh,001h,0E8h,016h,0CBh,0B5h
+    db 0FFh,08Bh,00Dh,000h,0D6h,02Eh,001h,068h
+    db 0BCh,011h,010h,001h,0A3h,058h,040h,02Fh
+    db 001h,0E8h,001h,0CBh,0B5h,0FFh,08Bh,00Dh
+    db 040h,01Bh,02Fh,001h,08Bh,011h,050h,06Ah
+    db 000h,0FFh,092h,0DCh,000h,000h,000h,08Bh
+    db 00Dh,040h,01Bh,02Fh,001h,08Bh,011h,050h
+    db 0A3h,05Ch,040h,02Fh,001h,0FFh,092h,0B0h
+    db 000h,000h,000h,08Bh,00Dh,000h,0D6h,02Eh
+    db 001h,068h,094h,011h,010h,001h,0E8h,0CCh
+    db 0CAh,0B5h,0FFh,08Bh,00Dh,040h,01Bh,02Fh
+    db 001h,08Bh,011h,050h,06Ah,000h,0FFh,092h
+    db 0DCh,000h,000h,000h,085h,0C0h,0A3h,060h
+    db 040h,02Fh,001h,074h,009h,06Ah,001h,08Bh
+    db 0C8h,0E8h,0FCh,09Bh,0B4h,0FFh,0A1h,040h
+    db 01Bh,02Fh,001h,08Bh,00Dh,000h,0D6h,02Eh
+    db 001h,08Bh,030h,068h,06Ch,011h,010h,001h
+    db 0E8h,092h,0CAh,0B5h,0FFh,08Bh,00Dh,05Ch
+    db 040h,02Fh,001h,050h,051h,08Bh,00Dh,040h
+    db 01Bh,02Fh,001h,0FFh,096h,0DCh,000h,000h
+    db 000h,06Ah,001h,08Bh,0C8h,0E8h,099h,0BEh
+    db 0B6h,0FFh,0A1h,054h,040h,02Fh,001h,08Bh
+    db 00Dh,040h,01Bh,02Fh,001h,08Bh,011h,050h
+    db 06Ah,000h,0FFh,092h,0DCh,000h,000h,000h
+    db 050h,0E8h,02Ch,0B1h,0B5h,0FFh,0A1h,058h
+    db 040h,02Fh,001h,08Bh,00Dh,040h,01Bh,02Fh
+    db 001h,08Bh,011h,083h,0C4h,004h,050h,0A1h
+    db 05Ch,040h,02Fh,001h,050h,0FFh,092h,0DCh
+    db 000h,000h,000h,051h,089h,064h,024h,008h
+    db 08Bh,0CCh,068h,054h,06Eh,033h,001h,08Bh
+    db 0F0h,0E8h,052h,0A0h,03Ah,000h,056h,0E8h
+    db 0C0h,0E4h,0B2h,0FFh,08Bh,00Dh,040h,01Bh
+    db 02Fh,001h,08Bh,011h,083h,0C4h,008h,056h
+    db 0FFh,092h,0B0h,000h,000h,000h,08Bh,015h
+    db 050h,040h,02Fh,001h,08Bh,00Dh,040h,01Bh
+    db 02Fh,001h,08Bh,001h,052h,08Bh,015h,05Ch
+    db 040h,02Fh,001h,052h,0FFh,090h,0DCh,000h
+    db 000h,000h,085h,0C0h,074h,009h,06Ah,000h
+    db 08Bh,0C8h,0E8h,00Ch,0BEh,0B6h,0FFh,05Eh
+    db 059h,0C3h
+?PopupReplayInit@@YAXPAVWindowLayout@@PAX@Z ENDP
+_TEXT ENDS
+END

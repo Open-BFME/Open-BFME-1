@@ -166,12 +166,29 @@ void parseReallyLowMHz(INI* ini)
 	}
 }
 
-// ?parseBenchProfile@INI@@SAXPAV1@@Z present-unmatched
 void INI::parseBenchProfile( INI* ini)
 {
+	struct RetailGameLODManager
+	{
+		char m_pad0[0x1580];
+		BenchProfile m_benchProfiles[MAX_BENCH_PROFILES];
+		char m_pad1[0x44];
+		Int m_numBenchProfiles;
+
+		BenchProfile *newBenchProfile()
+		{
+			if (m_numBenchProfiles < MAX_BENCH_PROFILES)
+			{
+				m_numBenchProfiles++;
+				return &m_benchProfiles[m_numBenchProfiles - 1];
+			}
+			return NULL;
+		}
+	};
+
 	if( TheGameLODManager )
 	{
-			BenchProfile *preset = TheGameLODManager->newBenchProfile();
+		BenchProfile *preset = reinterpret_cast<RetailGameLODManager *>(TheGameLODManager)->newBenchProfile();
 
 			if (preset)
 			{

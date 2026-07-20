@@ -386,7 +386,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0AutoDepositUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0000C15D,5,Code/masm_dumps/__0AutoDepositUpdate__QAE_PAVThing__PBVModuleData___Z_C15D.asm,matched,MASM exact retail dump
 ??0AutoFindHealingUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0002E12C,5,Code/masm_dumps/__0AutoFindHealingUpdate__QAE_PAVThing__PBVModuleData___Z_2E12C.asm,matched,MASM exact retail dump
 ??0AutoFindHealingUpdateModuleData@@QAE@XZ,,0x0001D4EE,5,Code/masm_dumps/__0AutoFindHealingUpdateModuleData__QAE_XZ_1D4EE.asm,matched,MASM exact retail dump
-??0AutoHealBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0000A0E2,5,Code/masm_dumps/__0AutoHealBehavior__QAE_PAVThing__PBVModuleData___Z_A0E2.asm,matched,MASM exact retail dump
+??0RainOfFireUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0000A0E2,5,Code/masm_dumps/__0RainOfFireUpdate__QAE_PAVThing__PBVModuleData___Z_A0E2.asm,matched,retail factory call binds constructor thunk to RainOfFireUpdate
 ??0AutoHealBehaviorModuleData@@QAE@XZ,,0x000287C7,5,Code/masm_dumps/__0AutoHealBehaviorModuleData__QAE_XZ_287C7.asm,matched,MASM exact retail dump
 ??0AvailableGameInfo@@QAE@XZ,,0x0010DB60,19,Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp,matched,
 ??0BTIntersectStruct@@QAE@ABVOBBoxClass@@ABVTriClass@@@Z,,0x008E6760,367,Code/Libraries/Source/WWVegas/WWMath/colmathobbtri.cpp,matched,
@@ -398,7 +398,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0BezFwdIterator@@QAE@XZ,,0x000B6880,60,Code/GameEngine/Source/Common/bez_fwd_iterator.cpp,matched,
 ??0BezierSegment@@QAE@XZ,,0x00043A9A,5,Code/masm_dumps/__0BezierSegment__QAE_XZ_43A9A.asm,matched,MASM exact retail dump
 ??0BoneFXUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0000264E,5,Code/masm_dumps/__0BoneFXUpdate__QAE_PAVThing__PBVModuleData___Z_264E.asm,matched,MASM exact retail dump
-??0BoneFXUpdateModuleData@@QAE@XZ,,0x000C0EA2,332,Code/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdate_0BoneFXUpdateModuleData.asm,matched,exact 332B via MASM
+??0BoneFXUpdateModuleData@@QAE@XZ,,0x00288340,225,Code/masm_dumps/BoneFXUpdateModuleData_constructor.asm,matched,Exact retail MASM; matched factory allocation and constructor thunk prove ownership; replaces stale unrelated 0xC0EA2 claim
 ??0BoxEmissionVolumeInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00036417,0x005D5E30,45,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,
 ??0BoxEmissionVolumeInfo@FXParticleSystem@@QAE@XZ,0x0001A78F,0x005D5E00,23,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,default constructor sets vtable and zeros box half-extents
 ??0BoxEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0002D402,0x005D5FC0,98,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,
@@ -441,7 +441,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0CompositeRenderObjClass@@QAE@ABV0@@Z,,0x00983550,206,Code/Libraries/Source/WWVegas/WW3D2/composite.cpp,matched,
 ??0CompositeRenderObjClass@@QAE@XZ,,0x00982E10,148,Code/Libraries/Source/WWVegas/WW3D2/composite.cpp,matched,
 ??0Condition@@IAE@XZ,,0x0034FDA0,65,Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp,matched,
-??0ControlBar@@QAE@XZ,,0x009F2730,819,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_ctor.asm,matched,exact 819B via MASM (SEH ctor)
+??0ControlBar@@QAE@XZ,,0x009F2730,146,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_ctor.asm,matched,Ghidra-confirmed SEH constructor boundary
 ??0Coord2D@@QAE@ABUCoord2DBase@@@Z,0x00007824,0x007E59E0,19,Code/Libraries/Source/WWVegas/WWMath/coord2d.cpp,matched,copies x/y from Coord2DBase
 ??0Coord2D@@QAE@ABUCoord3DBase@@@Z,0x0001D034,0x003BB840,19,Code/Libraries/Source/WWVegas/WWMath/coord2d.cpp,matched,copies x/y from Coord3DBase
 ??0Coord2D@@QAE@ABV0@@Z,0x00011455,0x0005BD70,19,Code/Libraries/Source/WWVegas/WWMath/coord2d.cpp,matched,copies x/y from Coord2D
@@ -2022,7 +2022,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?GadgetComboBoxSetItemData@@YAXPAVGameWindow@@HPAX@Z,,0x004B3CB0,41,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,matched,
 ?GadgetComboBoxSetMaxChars@@YAXPAVGameWindow@@H@Z,,0x004B3980,28,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,matched,
 ?GadgetComboBoxSetSelectedPos@@YAXPAVGameWindow@@H_N@Z,,0x004B3C70,42,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,matched,
-?GadgetListBoxAddEntryImage@@YAHPAVGameWindow@@PBVImage@@HHHH_NH@Z,,0x0001712A,5,Code/masm_dumps/_GadgetListBoxAddEntryImage__YAHPAVGameWindow__PBVImage__HHHH_NH_Z_1712A.asm,matched,MASM exact retail dump
+?GadgetListBoxAddEntryImage@@YAHPAVGameWindow@@PBVImage@@HHHH_NH@Z,0x0001712A,0x004B71A0,97,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,Native body replaces thunk-only MASM ownership
 ?GadgetListBoxAddEntryImage@@YAHPAVGameWindow@@PBVImage@@HH_NH@Z,,0x004B7220,43,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?GadgetListBoxGetBottomVisibleEntry@@YAHPAVGameWindow@@@Z,,0x004B78B0,27,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?GadgetListBoxGetDownButton@@YAPAVGameWindow@@PAV1@@Z,,0x0047A540,23,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
@@ -2030,7 +2030,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?GadgetListBoxGetListLength@@YAHPAVGameWindow@@@Z,,0x004B77A0,26,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?GadgetListBoxGetNumColumns@@YAHPAVGameWindow@@@Z,,0x004B79B0,25,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?GadgetListBoxGetText@@YA?AVUnicodeString@@PAVGameWindow@@HH@Z,,0x004BBC70,48,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
-?GadgetListBoxGetTextAndColor@@YA?AVUnicodeString@@PAVGameWindow@@PAHHH@Z,,0x00044C0B,5,Code/masm_dumps/_GadgetListBoxGetTextAndColor__YA_AVUnicodeString__PAVGameWindow__PAHHH_Z_44C0B.asm,matched,MASM exact retail dump
+?GadgetListBoxGetTextAndColor@@YA?AVUnicodeString@@PAVGameWindow@@PAHHH@Z,0x00044C0B,0x004BBB00,288,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,Native body replaces thunk-only MASM ownership
 ?GadgetListBoxGetTopVisibleEntry@@YAHPAVGameWindow@@@Z,,0x004B7930,27,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?GadgetListBoxSetAudioFeedback@@YAXPAVGameWindow@@_N@Z,,0x004B7960,25,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?GadgetProgressBarSetDisabledBarBorderColor@@YAXPAVGameWindow@@H@Z,,0x0047AA00,17,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
@@ -2040,7 +2040,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?GadgetProgressBarSetEnabledBarImageSmallCenter@@YAXPAVGameWindow@@PBVImage@@@Z,,0x0047A920,17,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?GadgetProgressBarSetHiliteBarBorderColor@@YAXPAVGameWindow@@H@Z,,0x0047AB80,17,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?GadgetRadioSetGroup@@YAXPAVGameWindow@@HH@Z,,0x004BD250,23,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetRadioButton.cpp,matched,
-?GadgetRadioSetSelection@@YAXPAVGameWindow@@_N@Z,,0x00034536,5,Code/masm_dumps/_GadgetRadioSetSelection__YAXPAVGameWindow___N_Z_34536.asm,matched,MASM exact retail dump
+?GadgetRadioSetSelection@@YAXPAVGameWindow@@_N@Z,0x00034536,0x004BD270,38,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetRadioButton.cpp,matched,Native body replaces thunk-only MASM ownership
 ?GadgetSliderGetDisabledSelectedThumbBorderColor@@YAHPAVGameWindow@@@Z,,0x004B6950,26,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?GadgetSliderGetEnabledSelectedThumbBorderColor@@YAHPAVGameWindow@@@Z,,0x004B6910,23,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?GadgetSliderGetHiliteSelectedThumbBorderColor@@YAHPAVGameWindow@@@Z,,0x004B6990,26,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
@@ -2055,7 +2055,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?GadgetSliderSetHiliteSelectedThumbBorderColor@@YAXPAVGameWindow@@H@Z,,0x0047B9C0,28,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?GadgetSliderSetHiliteThumbBorderColor@@YAXPAVGameWindow@@H@Z,,0x0047B910,28,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?GadgetStaticTextInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004BD480,82,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetStaticText.cpp,matched,
-?GadgetStaticTextSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z,,0x0002C16F,5,Code/masm_dumps/_GadgetStaticTextSetText__YAXPAVGameWindow__VUnicodeString___Z_2C16F.asm,matched,MASM exact retail dump
+?GadgetStaticTextSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z,0x0002C16F,0x004BD7A0,98,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetStaticText.cpp,matched,Native body replaces thunk-only MASM ownership
 ?GadgetTabControlComputeSubPaneSize@@YAXPAVGameWindow@@PAH111@Z,,0x004BDA60,193,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetTabControl.cpp,matched,
 ?GadgetTabControlComputeTabRegion@@YAXPAVGameWindow@@@Z,,0x004BD890,371,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetTabControl.cpp,matched,
 ?GadgetTabControlFixupSubPaneList@@YAXPAVGameWindow@@@Z,,0x004BDC00,87,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetTabControl.cpp,matched,
@@ -3781,12 +3781,12 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?friend_awakenUpdateModule@GameLogic@@QAEXPAVObject@@PAVUpdateModule@@I@Z,,0x00009944,5,Code/masm_dumps/_friend_awakenUpdateModule_GameLogic__QAEXPAVObject__PAVUpdateModule__I_Z_9944.asm,matched,MASM exact retail dump
 ?friend_getFinalOverride@Overridable@@QAEPAV1@XZ,,0x00048C61,5,Code/masm_dumps/_friend_getFinalOverride_Overridable__QAEPAV1_XZ_48C61.asm,matched,MASM exact retail dump
 ?friend_newModuleData@AutoFindHealingUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119800,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
-?friend_newModuleData@AutoHealBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00119D50,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@BattlePlanUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00117420,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@AutoHealBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00129E40,54,Code/masm_dumps/AutoHealBehavior_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x00; Ghidra confirmed
+?friend_newModuleData@BattlePlanUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119D50,110,Code/masm_dumps/BattlePlanUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x66; Ghidra confirmed
 ?friend_newModuleData@BeaconClientUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00121BF0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleData@BridgeBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00114810,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
 ?friend_newModuleData@CommandButtonHuntUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119910,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
-?friend_newModuleData@DozerAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00125340,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@DozerAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118020,107,Code/masm_dumps/DozerAIUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x7F; Ghidra confirmed
 ?friend_newModuleData@FireSpreadUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118240,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
 ?friend_newModuleData@FirestormDynamicGeometryInfoUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118990,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@FlightDeckBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x0011FAD0,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
@@ -3800,20 +3800,20 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?friend_newModuleData@PropagandaTowerBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x0011CB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@RadarUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00124240,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleData@RepairDockUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011B0D0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,recovered from Open-BFME6 overnight session (GLM)
-?friend_newModuleData@StealthUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00128DA0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@StealthUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0012A680,110,Code/masm_dumps/StealthUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration Ghidra confirmed
 ?friend_newModuleData@SupplyWarehouseCripplingBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001171F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
 ?friend_newModuleData@SupplyWarehouseDockUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011BAC0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,recovered from Open-BFME6 overnight session (GLM)
-?friend_newModuleData@TensileFormationUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118020,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@ArmorUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D090,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleInstance@AutoDepositUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011A600,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,friend_newModuleInstance: retail uses global operator new (shim Module.h ::new) + ModuleFactory::init locator
 ?friend_newModuleInstance@AutoFindHealingUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00119780,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,friend_newModuleInstance: retail uses global operator new (shim Module.h ::new) + ModuleFactory::init locator
-?friend_newModuleInstance@AutoHealBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011C310,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@AutoHealBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114200,96,Code/masm_dumps/AutoHealBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x00; Ghidra confirmed
 ?friend_newModuleInstance@BoneFXUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117CC0,99,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleInstance@BridgeScaffoldBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001148B0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,friend_newModuleInstance: retail uses global operator new (shim Module.h ::new) + ModuleFactory::init locator
 ?friend_newModuleInstance@CommandButtonHuntUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00119890,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,friend_newModuleInstance: retail uses global operator new (shim Module.h ::new) + ModuleFactory::init locator
 ?friend_newModuleInstance@CommandSetUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D220,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleInstance@DefaultProductionExitUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117D40,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleInstance@DeletionUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117EF0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,friend_newModuleInstance: retail uses global operator new (shim Module.h ::new) + ModuleFactory::init locator
+?friend_newModuleData@DeletionUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001239B0,58,Code/masm_dumps/DeletionUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration closed body
 ?friend_newModuleInstance@DemoTrapUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001199A0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,friend_newModuleInstance: retail uses global operator new (shim Module.h ::new) + ModuleFactory::init locator
 ?friend_newModuleInstance@DynamicGeometryInfoUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00120D70,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@ExperienceScalarUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011DAF0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
@@ -3823,13 +3823,11 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?friend_newModuleInstance@HealCrateCollide@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011EE50,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleInstance@HeightDieUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00118A20,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,friend_newModuleInstance: retail uses global operator new (shim Module.h ::new) + ModuleFactory::init locator
 ?friend_newModuleInstance@HijackerUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B4F0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
-?friend_newModuleInstance@LaserUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011BB50,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@LocomotorSetUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D3A0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleInstance@MaxHealthUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011DC00,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleInstance@ModelConditionUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011DD10,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleInstance@MoneyCrateCollide@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011EF00,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
-?friend_newModuleInstance@NeutronMissileUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B160,99,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@PhysicsBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116FC0,99,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@PhysicsBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011A9F0,96,Code/masm_dumps/PhysicsBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory registration cp018; Ghidra-confirmed boundary
 ?friend_newModuleInstance@PoisonedBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117050,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,friend_newModuleInstance: retail uses global operator new (shim Module.h ::new) + ModuleFactory::init locator
 ?friend_newModuleInstance@ProneUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011AD30,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleInstance@PropagandaTowerBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116E10,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,friend_newModuleInstance: retail uses global operator new (shim Module.h ::new) + ModuleFactory::init locator
@@ -5040,7 +5038,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?zero@Coord3D@@QAEXXZ,0x00029226,0x00083340,11,Code/Libraries/Source/WWVegas/WWMath/coord3d.cpp,matched,sets x/y/z to zero
 ?zero@ICoord3D@@QAEXXZ,0x000268C3,0x0045B890,11,Code/Libraries/Source/WWVegas/WWMath/icoord.cpp,matched,sets x/y/z to zero
 ?zero@Region3D@@QAEXXZ,0x0003652F,0x000BEC60,20,Code/Libraries/Source/WWVegas/WWMath/region.cpp,matched,sets bounds to zero
-_$E312,,0x00C6B750,23,Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp,matched,
 _BFMENetworkBackendDispatchCatch,,0x0065D6F3,6,Code/GameEngine/Source/GameNetwork/native_network_dispatcher.cpp,matched,native BFME backend dispatcher EH catch thunk; returns cleanup resume VA 0x00A5CAEB
 _BFMENetworkBackendEventCallback@40,,0x006549C0,372,Code/GameEngine/Source/GameNetwork/native_network.cpp,matched,
 _BFMENetworkBackendThreadStart@4,,0x009DB630,25,Code/GameEngine/Source/GameNetwork/native_network.cpp,matched,
@@ -7520,89 +7517,86 @@ _fmodf,,0x00097070,14,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse
 ??A?$map@W4NameKeyType@@PAVTeamPrototype@@U?$less@W4NameKeyType@@@_STL@@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVTeamPrototype@@@_STL@@@4@@_STL@@QAEAAPAVTeamPrototype@@ABW4NameKeyType@@@Z,,0x000A56D0,115,Code/GameEngine/Source/Common/RTS/Team.cpp,matched,
 ?push_back@?$vector@UTransitionInfo@State@@V?$allocator@UTransitionInfo@State@@@_STL@@@_STL@@QAEXABUTransitionInfo@State@@@Z,,0x00069200,64,Code/GameEngine/Source/Common/StateMachine.cpp,matched,
 ?friend_newModuleInstance@CountermeasuresBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117290,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@InstantDeathBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@SlowDeathBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001142A0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@SlowDeathBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DD90,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@InstantDeathBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115360,96,Code/masm_dumps/InstantDeathBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory registration cp019; Ghidra-confirmed boundary
+?friend_newModuleInstance@SlowDeathBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115470,96,Code/masm_dumps/SlowDeathBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory registration cp020; Ghidra-confirmed boundary
+?friend_newModuleData@ModelConditionUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DD90,110,Code/masm_dumps/ModelConditionUpgrade_friend_newModuleData.asm,matched,Retail registration dp169 proves ModelConditionUpgrade data factory
 ?friend_newModuleInstance@NeutronMissileSlowDeathBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117290,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@OverchargeBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001170D0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@RiderChangeContain@@SAPAVModuleData@@PAVINI@@@Z,,0x001195C0,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@FireWeaponWhenDeadBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@GenerateMinefieldBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001156B0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@DynamicPortalBehaviour@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001156B0,96,Code/masm_dumps/DynamicPortalBehaviour_friend_newModuleInstance.asm,matched,retail ModuleFactory cp028 Ghidra confirmed
 ?friend_newModuleInstance@ParkingPlaceBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001148B0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@RebuildHoleBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001156B0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@RebuildHoleBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001171F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@TechBuildingBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001170D0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@MinefieldBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001145D0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@BattleBusSlowDeathBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B6C0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@CreateCrateDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@CreateObjectDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@CrushDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@RubbleRiseUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B6C0,96,Code/masm_dumps/RubbleRiseUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x88; Ghidra confirmed
+?friend_newModuleInstance@CreateCrateDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117760,96,Code/masm_dumps/CreateCrateDie_friend_newModuleInstance.asm,matched,retail ModuleFactory cp057 Ghidra confirmed
+?friend_newModuleInstance@CreateObjectDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001177E0,96,Code/masm_dumps/CreateObjectDie_friend_newModuleInstance.asm,matched,retail ModuleFactory cp059 Ghidra confirmed
+?friend_newModuleInstance@CrushDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117900,96,Code/masm_dumps/CrushDie_friend_newModuleInstance.asm,matched,retail ModuleFactory cp055 Ghidra confirmed
 ?friend_newModuleInstance@DamDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@DamDie@@SAPAVModuleData@@PAVINI@@@Z,,0x00114D70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@DestroyDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@DestroyDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117990,96,Code/masm_dumps/DestroyDie_friend_newModuleInstance.asm,matched,retail ModuleFactory cp053 Ghidra confirmed
 ?friend_newModuleInstance@EjectPilotDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@EjectPilotDie@@SAPAVModuleData@@PAVINI@@@Z,,0x001145D0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@FXListDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@FXListDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117A20,96,Code/masm_dumps/FXListDie_friend_newModuleInstance.asm,matched,retail ModuleFactory cp054 Ghidra confirmed
 ?friend_newModuleInstance@RebuildHoleExposeDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@RebuildHoleExposeDie@@SAPAVModuleData@@PAVINI@@@Z,,0x001145D0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@SpecialPowerCompletionDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@SpecialPowerCompletionDie@@SAPAVModuleData@@PAVINI@@@Z,,0x001146F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@UpgradeDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@UpgradeDie@@SAPAVModuleData@@PAVINI@@@Z,,0x001146F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@KeepObjectDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@SpecialPowerCompletionDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117AA0,96,Code/masm_dumps/SpecialPowerCompletionDie_friend_newModuleInstance.asm,matched,retail ModuleFactory cp060 Ghidra confirmed
+?friend_newModuleData@SpecialPowerCompletionDie@@SAPAVModuleData@@PAVINI@@@Z,,0x001236C0,107,Code/masm_dumps/SpecialPowerCompletionDie_friend_newModuleData.asm,matched,retail ModuleFactory dp060 Ghidra confirmed ICF body
+?friend_newModuleInstance@UpgradeDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117B40,96,Code/masm_dumps/UpgradeDie_friend_newModuleInstance.asm,matched,retail ModuleFactory cp061 Ghidra confirmed
+?friend_newModuleData@UpgradeDie@@SAPAVModuleData@@PAVINI@@@Z,,0x00125710,107,Code/masm_dumps/UpgradeDie_friend_newModuleData.asm,matched,retail ModuleFactory dp061 Ghidra confirmed
+?friend_newModuleInstance@KeepObjectDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117BC0,96,Code/masm_dumps/KeepObjectDie_friend_newModuleInstance.asm,matched,retail ModuleFactory cp062 Ghidra confirmed
+?friend_newModuleData@KeepObjectDie@@SAPAVModuleData@@PAVINI@@@Z,,0x00125340,107,Code/masm_dumps/KeepObjectDie_friend_newModuleData.asm,matched,retail ModuleFactory dp062 Ghidra confirmed ICF body
 ?friend_newModuleData@AnimationSteeringUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00114B50,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@AssistedTargetingUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00114810,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@AssistedTargetingUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/masm_dumps/AssistedTargetingUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory cp063 Ghidra confirmed
+?friend_newModuleData@AssistedTargetingUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001237B0,68,Code/masm_dumps/AssistedTargetingUpdate_friend_newModuleData.asm,matched,retail ModuleFactory dp063 closed body
 ?friend_newModuleData@BaseRegenerateUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00117E40,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@SmartBombTargetHomingUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00113FB0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@DynamicGeometryInfoUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001145D0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@FireWeaponUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001171F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@FlammableUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001156B0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@FlammableUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001146F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@FireWeaponUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001182D0,96,Code/masm_dumps/FireWeaponUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x56; Ghidra confirmed
+?friend_newModuleData@FireWeaponUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118350,107,Code/masm_dumps/FireWeaponUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x56; Ghidra confirmed
+?friend_newModuleInstance@FlammableUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001183E0,96,Code/masm_dumps/FlammableUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x57; Ghidra confirmed
+?friend_newModuleData@FlammableUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118460,107,Code/masm_dumps/FlammableUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x57; Ghidra confirmed
 ?friend_newModuleInstance@TensileFormationUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E880,99,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@HordeUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00114320,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@LaserUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001171F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@GettingBuiltBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00114320,107,Code/masm_dumps/GettingBuiltBehavior_friend_newModuleData.asm,matched,retail registration data thunk 0x444ACB; exact ICF alias
+?friend_newModuleInstance@LaserUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00118D70,96,Code/masm_dumps/LaserUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x5F; Ghidra confirmed
+?friend_newModuleData@LaserUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118DF0,107,Code/masm_dumps/LaserUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x5F; Ghidra confirmed
 ?friend_newModuleInstance@PointDefenseLaserUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00113FB0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@PointDefenseLaserUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001236C0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@CleanupHazardUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011AE40,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@CleanupHazardUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001171F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@PilotFindVehicleUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001171F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@ParticleUplinkCannonUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011CC80,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@SpectreGunshipUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@BaikonurLaunchPower@@SAPAVModuleData@@PAVINI@@@Z,,0x0011D7C0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@RadiusDecalUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00113FB0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@NeutronMissileUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118460,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@OCLUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00113FB0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@OCLUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118AA0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@PhysicsBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00119B30,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@ProductionUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118BB0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@ExperienceScalarUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DB70,107,Code/masm_dumps/ExperienceScalarUpgrade_friend_newModuleData.asm,matched,Retail registration dp167 uniquely proves ExperienceScalarUpgrade data factory
+?friend_newModuleData@UnpauseSpecialPowerUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0011D7C0,107,Code/masm_dumps/UnpauseSpecialPowerUpgrade_friend_newModuleData.asm,matched,Retail registration dp163 uniquely proves UnpauseSpecialPowerUpgrade data factory
+?friend_newModuleInstance@RadiusDecalUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011A580,96,Code/masm_dumps/RadiusDecalUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x50; Ghidra confirmed
+?friend_newModuleData@RadiusDecalUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00123E50,50,Code/masm_dumps/RadiusDecalUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x50; thunk and ret boundary confirmed
+?friend_newModuleInstance@OCLUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011A7C0,96,Code/masm_dumps/OCLUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x78; Ghidra confirmed
+?friend_newModuleData@OCLUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011A840,107,Code/masm_dumps/OCLUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x78; Ghidra confirmed
+?friend_newModuleData@AutoPickUpUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119B30,107,Code/masm_dumps/AutoPickUpUpdate_friend_newModuleData.asm,matched,Retail registration dp098 proves AutoPickUpUpdate data factory
+?friend_newModuleData@ProductionUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011AC90,107,Code/masm_dumps/ProductionUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x82; Ghidra confirmed
 ?friend_newModuleInstance@QueueProductionExitUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001156B0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@SupplyCenterDockUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001171F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@SupplyCenterDockUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011AFC0,107,Code/masm_dumps/SupplyCenterDockUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x7C; Ghidra confirmed
 ?friend_newModuleData@RailedTransportDockUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118AA0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@RailedTransportAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001145D0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@SlavedUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001156B0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@SlavedUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118460,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@StealthUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117290,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@SlavedUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B270,96,Code/masm_dumps/SlavedUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x77; Ghidra confirmed
+?friend_newModuleData@SlavedUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00125A60,106,Code/masm_dumps/SlavedUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x77; thunk and CC boundaries confirmed
+?friend_newModuleInstance@StealthUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B3F0,96,Code/masm_dumps/StealthUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration Ghidra confirmed
 ?friend_newModuleInstance@SpyVisionUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114200,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@FireOCLAfterWeaponCooldownUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114200,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@FireOCLAfterWeaponCooldownUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@ToppleUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117290,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@WeaponBonusUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@ToppleUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011BB50,96,Code/masm_dumps/ToppleUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x4B; Ghidra confirmed
 ?friend_newModuleData@WeaponBonusUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001236C0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@WorkerAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001152C0,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@BezierProjectileBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001152C0,110,Code/masm_dumps/BezierProjectileBehavior_friend_newModuleData.asm,matched,Retail registration dp017 proves BezierProjectileBehavior data factory
+?friend_newModuleData@WorkerAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011C0E0,110,Code/masm_dumps/WorkerAIUpdate_friend_newModuleData.asm,matched,Retail registration dp143 proves WorkerAIUpdate data factory
 ?friend_newModuleData@PowerPlantUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00114B50,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@EMPUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114200,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@ActiveShroudUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x001153E0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@GrantScienceUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@ObjectCreationUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x001153E0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@ModelConditionUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x001153E0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@UnpauseSpecialPowerUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x001153E0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@CostModifierUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@ExperienceScalarUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x001153E0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@InstantDeathBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001153E0,107,Code/masm_dumps/InstantDeathBehavior_friend_newModuleData.asm,matched,Retail registration dp019 uniquely proves InstantDeathBehavior data factory
 ?friend_newModuleData@GrantUpgradeCreate@@SAPAVModuleData@@PAVINI@@@Z,,0x001171F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@VeterancyGainCreate@@SAPAVModuleData@@PAVINI@@@Z,,0x001170D0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@BoneFXDamage@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@TransitionDamageFX@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001157D0,99,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@FireWeaponCollide@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@GiantBirdSlowDeathBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001157D0,99,Code/masm_dumps/GiantBirdSlowDeathBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory registration cp022; Ghidra-confirmed boundary
+?friend_newModuleInstance@FireWeaponCollide@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011EB20,96,Code/masm_dumps/FireWeaponCollide_friend_newModuleInstance.asm,matched,retail ModuleFactory cp190 Ghidra confirmed
 ?friend_newModuleInstance@SquishCollide@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@ConvertToCarBombCrateCollide@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@ConvertToHijackedVehicleCrateCollide@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
@@ -7614,25 +7608,17 @@ _fmodf,,0x00097070,14,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse
 ?friend_newModuleInstance@SabotageSuperweaponCrateCollide@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@SabotageSupplyCenterCrateCollide@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@SabotageSupplyDropzoneCrateCollide@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@InactiveBody@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@ActiveBody@@SAPAVModuleData@@PAVINI@@@Z,,0x00118AA0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@InactiveBody@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011F320,96,Code/masm_dumps/InactiveBody_friend_newModuleInstance.asm,matched,retail ModuleFactory registration Ghidra confirmed
+?friend_newModuleData@InactiveBody@@SAPAVModuleData@@PAVINI@@@Z,,0x00113BE0,47,Code/masm_dumps/InactiveBody_friend_newModuleData.asm,matched,retail registration ICF body
+?friend_newModuleData@ActiveBody@@SAPAVModuleData@@PAVINI@@@Z,,0x0011F420,107,Code/masm_dumps/ActiveBody_friend_newModuleData.asm,matched,canonical data factory shared by four body registrations
 ?friend_newModuleData@HiveStructureBody@@SAPAVModuleData@@PAVINI@@@Z,,0x001145D0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@UndeadBody@@SAPAVModuleData@@PAVINI@@@Z,,0x00114D70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@DefectorSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x0011D7C0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@CashBountyPower@@SAPAVModuleData@@PAVINI@@@Z,,0x0011D7C0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@CleanupAreaPower@@SAPAVModuleData@@PAVINI@@@Z,,0x0011D7C0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@FireWeaponPower@@SAPAVModuleData@@PAVINI@@@Z,,0x0011D7C0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleInstance@BeaconClientUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@DieModule@@SAPAVModuleData@@PAVINI@@@Z,,0x00114D70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@DeliverPayloadAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@CreateCrateDie@@SAPAVModuleData@@PAVINI@@@Z,,0x001146F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@CreateCrateDie@@SAPAVModuleData@@PAVINI@@@Z,,0x00129A30,107,Code/masm_dumps/CreateCrateDie_friend_newModuleData.asm,matched,retail ModuleFactory dp057 Ghidra confirmed
 ?friend_newModuleData@GrantStealthBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00118BB0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@AutoDepositUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118AA0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleData@AutoDepositUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00123F20,107,Code/masm_dumps/AutoDepositUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x54; Ghidra confirmed
 ?friend_newModuleData@SpyVisionUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001144C0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@GrantScienceUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x001153E0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@RadarUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x001153E0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@ReplaceObjectUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x001153E0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleData@SubObjectsUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0011D7C0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?TEST_KINDOFMASK_ANY@@YA_NABV?$BitFlags@$0HE@@@0@Z,,0x00132AB0,15,Code/GameEngine/Source/Common/Thing/Thing.cpp,matched,
 ??4DynamicAudioEventRTS@@QAEAAV0@ABV0@@Z,,0x00133BE0,25,Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp,matched,
 ?countConditionInverseIntersection@?$SparseMatchFinder@VWeaponTemplateSet@@V?$BitFlags@$0BB@@@@@CAHABV?$BitFlags@$0BB@@@0@Z,,0x00132AB0,15,Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp,matched,
@@ -8685,17 +8671,15 @@ _$E2,,0x00C70930,40,Code/Libraries/Source/WWVegas/WWLib/slnode.cpp,matched,
 ?friend_newModuleData@W3DOverlordAircraftDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x0011F9C0,110,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
 ?friend_newModuleData@W3DSupplyDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x00118990,110,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
 ?friend_newModuleData@W3DScienceModelDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x00118990,110,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
-?friend_newModuleInstance@W3DDebrisDraw@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116F30,96,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
+?friend_newModuleInstance@W3DDebrisDraw@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x006BEF40,96,Code/masm_dumps/W3DDebrisDraw_friend_newModuleInstance.asm,matched,retail W3DModuleFactory registration ordinal 1; Ghidra confirmed
 ?friend_newModuleInstance@W3DDefaultDraw@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
 ?friend_newModuleData@W3DLaserDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x00114320,107,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
-?friend_newModuleInstance@W3DTankDraw@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115F30,99,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
-?friend_newModuleData@W3DTankDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x0011C5B0,110,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
-?friend_newModuleInstance@W3DOverlordTankDraw@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115F30,99,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
-?friend_newModuleData@W3DOverlordTankDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x0011A950,110,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
+?friend_newModuleInstance@HordeTransportContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115F30,99,Code/masm_dumps/HordeTransportContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp039 Ghidra confirmed
+?friend_newModuleData@PartTheHeavensUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011C5B0,110,Code/masm_dumps/PartTheHeavensUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x53; Ghidra confirmed
 ?friend_newModuleInstance@W3DProjectileStreamDraw@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001194C0,96,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
 ?friend_newModuleData@W3DProjectileStreamDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x00118AA0,107,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
-?friend_newModuleInstance@W3DRopeDraw@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B750,96,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
-?friend_newModuleInstance@W3DSupplyDraw@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115240,99,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
+?friend_newModuleInstance@W3DRopeDraw@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x006BF2E0,96,Code/masm_dumps/W3DRopeDraw_friend_newModuleInstance.asm,matched,retail W3D factory registration; Ghidra confirmed
+?friend_newModuleInstance@BezierProjectileBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115240,99,Code/masm_dumps/BezierProjectileBehavior_friend_newModuleInstance.asm,matched,Retail registration cp017 uniquely proves BezierProjectileBehavior instance factory
 ?friend_newModuleInstance@W3DTracerDraw@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114200,96,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
 ?friend_newModuleData@W3DPropDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x00114B50,107,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp,matched,
 ?setColorTintEnvelope@Drawable@@QAEXAAVTintEnvelope@@@Z,,0x00761CB0,15,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordAircraftDraw.cpp,matched,
@@ -9200,7 +9184,7 @@ _$E6,,0x00C70930,40,Code/Libraries/Source/WWVegas/WWMath/aabtreecull.cpp,matched
 ?vecDiff_3D@@YAXPBUCoord3D@@0PAU1@@Z,,0x004106E0,37,Code/GameEngine/Source/GameLogic/Object/PartitionManager.cpp,matched,ICF alias of existing matched body
 _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,ICF alias of existing matched body
 ??$clamp@M@?A0xf4c29cab@@YAMMMM@Z,,0x009032B0,45,Code/GameEngine/Source/GameClient/ParabolicEase.cpp,matched,
-_$E33,,0x00C6B750,23,Code/GameEngine/Source/GameClient/MapUtil.cpp,matched,icf-owner-E312
+_$E33,,0x00C6B750,24,Code/GameEngine/Source/GameClient/MapUtil.cpp,matched,MapUtil worldDict initializer exact body
 ?createRayEffectByTemplate@W3DGameClient@@UAEXPBUCoord3D@@0PBVThingTemplate@@@Z,,0x006FBC00,129,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DGameClient.cpp,matched,
 ??_GPopupMessageData@@MAEPAXI@Z,,0x0078D240,30,Code/GameEngine/Source/GameClient/InGameUI.cpp,matched,
 ?parseTransitionToFX@TerrainRoadType@@KAXPAVINI@@PAX1PBX@Z,,0x00601E90,263,Code/masm_dumps/_parseTransitionToFX_TerrainRoadType__KAXPAVINI__PAX1PBX_Z_601E90.asm,matched,
@@ -9897,26 +9881,25 @@ _acosf,,0x00873940,10,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadB
 ?friend_newModuleInstance@BunkerBusterBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117170,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleInstance@SupplyWarehouseCripplingBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
 ?friend_newModuleData@BunkerBusterBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x0011CB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@PropagandaTowerBehavior@@SAPAVModuleData@@PAVINI@@@Z
 ?friend_newModuleData@AIUpdateInterface@@SAPAVModuleData@@PAVINI@@@Z,,0x0011CB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@PropagandaTowerBehavior@@SAPAVModuleData@@PAVINI@@@Z
-?friend_newModuleData@CreateObjectDie@@SAPAVModuleData@@PAVINI@@@Z,,0x0011CB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@PropagandaTowerBehavior@@SAPAVModuleData@@PAVINI@@@Z
+?friend_newModuleData@CreateObjectDie@@SAPAVModuleData@@PAVINI@@@Z,,0x00117860,107,Code/masm_dumps/CreateObjectDie_friend_newModuleData.asm,matched,retail ModuleFactory dp059 Ghidra confirmed
 ?friend_newModuleInstance@HordeUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117170,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleInstance@SupplyWarehouseCripplingBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
-?friend_newModuleData@JetAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118020,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@TensileFormationUpdate@@SAPAVModuleData@@PAVINI@@@Z
-?friend_newModuleData@DemoTrapUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00125340,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@DozerAIUpdate@@SAPAVModuleData@@PAVINI@@@Z
-?friend_newModuleInstance@SpectreGunshipDeploymentUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011C310,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleInstance@AutoHealBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
+?friend_newModuleData@JetAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118020,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@DozerAIUpdate@@SAPAVModuleData@@PAVINI@@@Z
+?friend_newModuleData@DemoTrapUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119A20,107,Code/masm_dumps/DemoTrapUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x61; Ghidra confirmed
 ?friend_newModuleData@MissileLauncherBuildingUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00117420,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@BattlePlanUpdate@@SAPAVModuleData@@PAVINI@@@Z
 ?friend_newModuleInstance@StickyBombUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117170,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleInstance@SupplyWarehouseCripplingBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
-?friend_newModuleInstance@StructureCollapseUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011C310,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleInstance@AutoHealBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
-?friend_newModuleData@ToppleUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011CB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@PropagandaTowerBehavior@@SAPAVModuleData@@PAVINI@@@Z
+?friend_newModuleInstance@StructureCollapseUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B630,96,Code/masm_dumps/StructureCollapseUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x87; Ghidra confirmed
+?friend_newModuleData@StructureCollapseUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00128B10,110,Code/masm_dumps/StructureCollapseUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x87; Ghidra confirmed
+?friend_newModuleData@ToppleUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011BBD0,107,Code/masm_dumps/ToppleUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x4B; Ghidra confirmed
 ?friend_newModuleInstance@CheckpointUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117170,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleInstance@SupplyWarehouseCripplingBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
 ?friend_newModuleInstance@LeafletDropBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117170,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleInstance@SupplyWarehouseCripplingBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
-?friend_newModuleData@CashHackSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00118990,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@FirestormDynamicGeometryInfoUpdate@@SAPAVModuleData@@PAVINI@@@Z
-?friend_newModuleData@OCLSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00117420,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@BattlePlanUpdate@@SAPAVModuleData@@PAVINI@@@Z
+?friend_newModuleData@CashHackSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x0011FDF0,110,Code/masm_dumps/CashHackSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xD6 Ghidra confirmed
+?friend_newModuleData@OCLSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00120230,110,Code/masm_dumps/OCLSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xDA Ghidra confirmed
 ?friend_newModuleData@SpyVisionSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x0011F9C0,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@MissileAIUpdate@@SAPAVModuleData@@PAVINI@@@Z
 ?friend_newModuleData@CountermeasuresBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00117420,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@BattlePlanUpdate@@SAPAVModuleData@@PAVINI@@@Z
 ?friend_newModuleData@FireWeaponWhenDamagedBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00117420,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@BattlePlanUpdate@@SAPAVModuleData@@PAVINI@@@Z
-?friend_newModuleData@FireWeaponWhenDeadBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x0011F9C0,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@MissileAIUpdate@@SAPAVModuleData@@PAVINI@@@Z
-?friend_newModuleData@FXListDie@@SAPAVModuleData@@PAVINI@@@Z,,0x0011F9C0,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@MissileAIUpdate@@SAPAVModuleData@@PAVINI@@@Z
-?friend_newModuleData@StatusBitsUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x00118020,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@TensileFormationUpdate@@SAPAVModuleData@@PAVINI@@@Z
-?friend_newModuleData@StructureToppleUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119D50,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@AutoHealBehavior@@SAPAVModuleData@@PAVINI@@@Z
+?friend_newModuleData@FireWeaponWhenDeadBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x0012A250,110,Code/masm_dumps/FireWeaponWhenDeadBehavior_friend_newModuleData.asm,matched,retail ModuleFactory dp046 Ghidra confirmed
+?friend_newModuleData@FXListDie@@SAPAVModuleData@@PAVINI@@@Z,,0x00123590,107,Code/masm_dumps/FXListDie_friend_newModuleData.asm,matched,retail ModuleFactory dp054 Ghidra confirmed
+?friend_newModuleData@StatusBitsUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x00118020,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@DozerAIUpdate@@SAPAVModuleData@@PAVINI@@@Z
 ??_GTintEnvelope@@MAEPAXI@Z,,0x001B0E60,30,Code/GameEngine/Source/GameClient/Drawable.cpp,matched,icf-owner=??_GUpgrade@@MAEPAXI@Z
 ??1TechAndSupplyImages@@QAE@XZ,,0x0068E6D0,76,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenu.cpp,matched,icf-owner=??1?$pair@$$CBVUnicodeString@@V1@@_STL@@QAE@XZ
 ??$find@U?$_List_iterator@VAsciiString@@U?$_Const_traits@VAsciiString@@@_STL@@@_STL@@VAsciiString@@@_STL@@YA?AU?$_List_iterator@VAsciiString@@U?$_Const_traits@VAsciiString@@@_STL@@@0@U10@0ABVAsciiString@@@Z,,0x005063B0,38,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu.cpp,matched,icf-owner=??$find@U?$_Rb_tree_iterator@HU?$_Const_traits@H@_STL@@@_STL@@H@_STL@@YA?AU?$_Rb_tree_iterator@HU?$_Const_traits@H@_STL@@@0@U10@0ABH@Z
@@ -10163,7 +10146,6 @@ _atanf,,0x0045B6F0,9,Code/Libraries/Source/WWVegas/WW3D2/texproject.cpp,matched,
 ?emit_AutoDepositUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011A600,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@AutoDepositUpdate; Ghidra boundary
 ?emit_ArmorUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D090,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@ArmorUpgrade; Ghidra boundary
 ?emit_AutoFindHealingUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00119780,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@AutoFindHealingUpdate; Ghidra boundary
-?emit_AutoHealBehavior@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011C310,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@AutoHealBehavior; Ghidra boundary
 ?emit_CommandButtonHuntUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00119890,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@CommandButtonHuntUpdate; Ghidra boundary
 ?emit_CommandSetUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D220,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@CommandSetUpgrade; Ghidra boundary
 ?emit_CreateCrateDie@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@CreateCrateDie; Ghidra boundary
@@ -10174,19 +10156,14 @@ _atanf,,0x0045B6F0,9,Code/Libraries/Source/WWVegas/WW3D2/texproject.cpp,matched,
 ?emit_DemoTrapUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001199A0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@DemoTrapUpdate; Ghidra boundary
 ?emit_DestroyDie@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@DestroyDie; Ghidra boundary
 ?emit_ExperienceScalarUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011DAF0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@ExperienceScalarUpgrade; Ghidra boundary
-?emit_FXListDie@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@FXListDie; Ghidra boundary
 ?emit_FireSpreadUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001181C0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@FireSpreadUpdate; Ghidra boundary
-?emit_FireWeaponCollide@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@FireWeaponCollide; Ghidra boundary
 ?emit_FireWeaponWhenDamagedBehavior@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116F30,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@FireWeaponWhenDamagedBehavior; Ghidra boundary
-?emit_FireWeaponWhenDeadBehavior@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@FireWeaponWhenDeadBehavior; Ghidra boundary
 ?emit_FlammableUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001156B0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@FlammableUpdate; Ghidra boundary
 ?emit_FloatUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00118500,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@FloatUpdate; Ghidra boundary
 ?emit_HealCrateCollide@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011EE50,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@HealCrateCollide; Ghidra boundary
 ?emit_HeightDieUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00118A20,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@HeightDieUpdate; Ghidra boundary
 ?emit_HijackerUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B4F0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@HijackerUpdate; Ghidra boundary
 ?emit_InstantDeathBehavior@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@InstantDeathBehavior; Ghidra boundary
-?emit_KeepObjectDie@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@KeepObjectDie; Ghidra boundary
-?emit_LaserUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011BB50,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@LaserUpdate; Ghidra boundary
 ?emit_LocomotorSetUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D3A0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@LocomotorSetUpgrade; Ghidra boundary
 ?emit_MaxHealthUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011DC00,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@MaxHealthUpgrade; Ghidra boundary
 ?emit_ModelConditionUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011DD10,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@ModelConditionUpgrade; Ghidra boundary
@@ -10197,17 +10174,13 @@ _atanf,,0x0045B6F0,9,Code/Libraries/Source/WWVegas/WW3D2/texproject.cpp,matched,
 ?emit_QueueProductionExitUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001156B0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@QueueProductionExitUpdate; Ghidra boundary
 ?emit_RadarUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011AEC0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@RadarUpdate; Ghidra boundary
 ?emit_RadarUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D540,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@RadarUpgrade; Ghidra boundary
-?emit_RadiusDecalUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00113FB0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@RadiusDecalUpdate; Ghidra boundary
 ?emit_RepairDockUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B050,99,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@RepairDockUpdate; Ghidra boundary
 ?emit_SalvageCrateCollide@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011F190,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@SalvageCrateCollide; Ghidra boundary
 ?emit_ShroudCrateCollide@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011EF80,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@ShroudCrateCollide; Ghidra boundary
-?emit_SlavedUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001156B0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@SlavedUpdate; Ghidra boundary
 ?emit_SpawnPointProductionExitUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B470,99,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@SpawnPointProductionExitUpdate; Ghidra boundary
-?emit_SpecialPowerCompletionDie@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@SpecialPowerCompletionDie; Ghidra boundary
 ?emit_SquishCollide@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@SquishCollide; Ghidra boundary
 ?emit_StatusBitsUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D5C0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@StatusBitsUpgrade; Ghidra boundary
 ?emit_StealthDetectorUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B2F0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@StealthDetectorUpdate; Ghidra boundary
-?emit_StealthUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117290,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@StealthUpdate; Ghidra boundary
 ?emit_StealthUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D6C0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@StealthUpgrade; Ghidra boundary
 ?emit_SupplyCenterDockUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011AF40,99,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@SupplyCenterDockUpdate; Ghidra boundary
 ?emit_SupplyCenterProductionExitUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B7E0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@SupplyCenterProductionExitUpdate; Ghidra boundary
@@ -10216,11 +10189,9 @@ _atanf,,0x0045B6F0,9,Code/Libraries/Source/WWVegas/WW3D2/texproject.cpp,matched,
 ?emit_TransitionDamageFX@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001157D0,99,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@TransitionDamageFX; Ghidra boundary
 ?emit_UnitCrateCollide@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011F030,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@UnitCrateCollide; Ghidra boundary
 ?emit_UnpauseSpecialPowerUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D740,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@UnpauseSpecialPowerUpgrade; Ghidra boundary
-?emit_UpgradeDie@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@UpgradeDie; Ghidra boundary
 ?emit_VeterancyCrateCollide@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011F0E0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@VeterancyCrateCollide; Ghidra boundary
 ?emit_WeaponBonusUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D850,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@WeaponBonusUpgrade; Ghidra boundary
 ?emit_WeaponSetUpgrade@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D8D0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@WeaponSetUpgrade; Ghidra boundary
-?emit_InactiveBody@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117C40,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@InactiveBody; Ghidra boundary
 ?emit_BeaconClientUpdate@ModulePoolGlueBulk@@YAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E2D0,96,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,icf-owner=friend_newModuleInstance@BeaconClientUpdate; Ghidra boundary
 ?Exists@RegistryClass@@SA_NPBD@Z,,0x009DC1C0,50,Code/Libraries/Source/WWVegas/WWLib/registry.cpp,matched,
 ??0RegistryClass@@QAE@PBD_N@Z,,0x009DC200,123,Code/Libraries/Source/WWVegas/WWLib/registry.cpp,matched,
@@ -10382,9 +10353,9 @@ _ceilf,,0x00069750,20,Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/
 ?Ceil@WWMath@@SAMM@Z,,0x00069750,20,Code/Libraries/Source/WWVegas/WW3D2/visrasterizer.cpp,matched,
 ?Clear@?$VectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAEXXZ,,0x0093D920,61,Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp,matched,
 ??_G?$VectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAEPAXI@Z,,0x0093E930,94,Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp,matched,
-?friend_newModuleInstance@ProjectileStreamUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116FC0,99,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@FireWeaponWhenDeadBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116FC0,99,Code/masm_dumps/FireWeaponWhenDeadBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory cp046 Ghidra confirmed
 ?friend_newModuleInstance@MobMemberSlavedUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116F30,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
-?friend_newModuleInstance@SpawnBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B750,96,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
+?friend_newModuleInstance@SpawnBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115590,96,Code/masm_dumps/SpawnBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory registration cp021; Ghidra-confirmed boundary
 _$E25,,0x00C6B2C0,30,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLobbyMenu.cpp,matched,
 _$E30,,0x00C6B2C0,30,Code/GameEngine/Source/GameClient/MapUtil.cpp,matched,
 _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cpp,matched,
@@ -10397,3 +10368,566 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?getClassMemoryPool@W3DTreeDraw@@CAPAVMemoryPool@@XZ,,0x0077F2D0,104,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp,matched,
 ?getModuleNameKey@W3DDebrisDraw@@UBE?AW4NameKeyType@@XZ,,0x007506A0,104,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cpp,matched,
 ?getClassMemoryPool@W3DDebrisDraw@@CAPAVMemoryPool@@XZ,,0x007506A0,104,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cpp,matched,
+?updatePropPosition@W3DPropBuffer@@QAE_NHABUCoord3D@@MM@Z,,0x007026E0,453,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBuffer.cpp,matched,
+?removeFromSavedIgnoreList@GameSpyInfo@@UAEXH@Z,,0x00635730,118,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs_removeFromSavedIgnoreList.asm,matched,
+?onObjectCreated@BoneFXDamage@@MAEXXZ,,0x00250880,154,Code/GameEngine/Source/GameLogic/Object/Damage/BoneFXDamage_onObjectCreated.asm,matched,
+?WOLLoginMenuShutdown@@YAXPAVWindowLayout@@PAX@Z,,0x004FFB10,90,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLoginMenu_Shutdown.asm,matched,
+?WOLQuickMatchMenuShutdown@@YAXPAVWindowLayout@@PAX@Z,,0x00507E10,147,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu_Shutdown.asm,matched,
+?GameInfoWindowInit@@YAXPAVWindowLayout@@PAX@Z,,0x004C8910,446,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/GameInfoWindow_Init.asm,matched,
+?PopupReplayInit@@YAXPAVWindowLayout@@PAX@Z,,0x004DE270,386,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay_Init.asm,matched,
+?clearSlotList@GameInfo@@QAEXXZ,,0x0061F520,218,Code/GameEngine/Source/GameNetwork/GameInfo_clearSlotList.asm,matched,
+??0GameState@@QAE@XZ,,0x001111C0,171,Code/GameEngine/Source/Common/System/SaveGame/GameState_ctor.asm,matched,
+??1GameState@@UAE@XZ,,0x00110DF0,503,Code/GameEngine/Source/Common/System/SaveGame/GameState_dtor.asm,matched,
+?PopupReplayUpdate@@YAXPAVWindowLayout@@PAX@Z,,0x004DE180,90,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay_Update.asm,matched,
+?UpdateStartButton@@YAXXZ,,0x00505570,197,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu_UpdateStartButton.asm,matched,
+?hideOptionsGadgets@@YAX_N@Z,,0x00505670,145,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu_hideOptionsGadgets.asm,matched,
+?hideInfoGadgets@@YAX_N@Z,,0x00505730,61,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu_hideInfoGadgets.asm,matched,
+?parseDrawGroupNumberDefinition@INI@@SAXPAV1@@Z,,0x000B8200,66,Code/GameEngine/Source/Common/INI/INIDrawGroupInfo_parseDrawGroupNumberDefinition.asm,matched,INI parse-table pointer via DrawGroupInfo string and import thunk 0x416EBE
+?setTimeOfDay@W3DGameClient@@UAEXW4TimeOfDay@@@Z,,0x006FBCB0,56,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DGameClient_setTimeOfDay.asm,matched,W3DGameClient vtable slot via matched createRayEffect addScorch and setTeamColor anchors
+?clear@DictPair@Dict@@QAEXXZ,,0x000680D0,64,Code/GameEngine/Source/Common/Dict_DictPair_clear.asm,matched,Dict helper cluster via setPrep thunk to setNameAndType at 0x68120
+??1TeamFactory@@UAE@XZ,,0x009F2800,115,Code/masm_dumps/TeamFactory_dtor.asm,matched,TeamFactory primary and secondary vtables plus scalar deleting destructor prove ownership
+?getVetUpgradeName@@YA?AVAsciiString@@W4VeterancyLevel@@@Z,,0x0010AD90,173,Code/GameEngine/Source/Common/System/Upgrade_getVetUpgradeName.asm,matched,Ghidra-confirmed Upgrade_Veterancy_ string helper boundary
+?parseMetaMapDefinition@INI@@SAXPAV1@@Z,,0x005B71A0,143,Code/GameEngine/Source/GameClient/MessageStream/INI_parseMetaMapDefinition.asm,matched,CommandMap INI table pointer and Ghidra-confirmed inlined parser body
+??0ObjectWeaponStatusHelper@@QAE@PAVThing@@PBVModuleData@@@Z,,0x001C1340,107,Code/GameEngine/Source/GameLogic/Object/ObjectWeaponStatusHelper_ctor.asm,matched,Class vtable anchors from matched update and getModuleNameKey
+??0RTS2DScene@@QAE@XZ,,0x00712590,209,Code/GameEngineDevice/Source/W3DDevice/GameClient/RTS2DScene_ctor.asm,matched,RTS2DScene string xref and Ghidra-confirmed constructor boundary
+?friend_newModuleData@ConvertToCarBombCrateCollide@@SAPAVModuleData@@PAVINI@@@Z,,0x00125FD0,129,Code/GameEngine/Source/Common/Thing/ConvertToCarBombCrateCollide_friend_newModuleData.asm,matched,Ghidra-corrected 129-byte factory helper boundary
+?parseAutoChoose@WeaponTemplateSet@@CAXPAVINI@@PAX1PBX@Z,,0x001EACB0,51,Code/GameEngine/Source/GameLogic/Object/WeaponTemplateSet_parseAutoChoose.asm,matched,Corrected one-byte-early queue RVA using INT3 and RET boundaries
+?toggleReplayControls@@YAXXZ,,0x0043A840,73,Code/GameEngine/Source/GameClient/InGameUI_toggleReplayControls.asm,matched,Corrected one-byte-early queue RVA using INT3 and RET boundaries
+?_M_pop_front_aux@?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@IAEXXZ,,0x00641500,60,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
+?_M_pop_front_aux@?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@IAEXXZ,,0x006414B0,55,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
+?pop_front@?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAEXXZ,,0x00641690,80,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
+?pop_front@?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAEXXZ,,0x00641880,75,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
+?pop@?$queue@VGameResultsRequest@@V?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@@_STL@@QAEXXZ,,0x00641880,75,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,icf-owner=?pop_front@?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAEXXZ
+?insert_unique@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHI@2@@Z,,0x00768A00,145,Code/GameEngine/Source/GameLogic/System/GameLogicDispatch.cpp,matched,
+?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHPAVGameSpyStagingRoom@@@2@@Z,,0x00768A00,145,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,icf-owner=?insert_unique@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHI@2@@Z
+?insert_unique@?$_Rb_tree@HU?$pair@$$CBHVAsciiString@@@_STL@@U?$_Select1st@U?$pair@$$CBHVAsciiString@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBHVAsciiString@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHVAsciiString@@@2@@Z,,0x000AA370,145,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,
+?insert_unique@?$_Rb_tree@HU?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHVGameSpyGroupRoom@@@2@@Z,,0x00633BB0,145,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,Ghidra traced string-anchored addGroupRoom through map operator[] and hinted insert
+?insert_unique@?$_Rb_tree@JU?$pair@$$CBJVLadderPref@@@_STL@@U?$_Select1st@U?$pair@$$CBJVLadderPref@@@_STL@@@2@U?$less@J@2@V?$allocator@U?$pair@$$CBJVLadderPref@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBJVLadderPref@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBJVLadderPref@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBJVLadderPref@@@2@@Z,,0x000AAE30,145,Code/GameEngine/Source/Common/UserPreferences.cpp,matched,Ghidra traced anchored LadderPreferences loadProfile through map operator[]
+?insert_unique@?$_Rb_tree@PAVGameSpyStagingRoom@@PAV1@U?$_Identity@PAVGameSpyStagingRoom@@@_STL@@U?$less@PAVGameSpyStagingRoom@@@3@V?$allocator@PAVGameSpyStagingRoom@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@PAVGameSpyStagingRoom@@U?$_Nonconst_traits@PAVGameSpyStagingRoom@@@_STL@@@_STL@@_N@2@ABQAVGameSpyStagingRoom@@@Z,,0x0062CB60,145,Code/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils.cpp,matched,Ghidra traced matched RefreshGameListBox through populateBuddyGames
+?insert_unique@?$_Rb_tree@PBVLadderInfo@@PBV1@U?$_Identity@PBVLadderInfo@@@_STL@@U?$less@PBVLadderInfo@@@3@V?$allocator@PBVLadderInfo@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@PBVLadderInfo@@U?$_Nonconst_traits@PBVLadderInfo@@@_STL@@@_STL@@_N@2@ABQBVLadderInfo@@@Z,,0x004D4CC0,145,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupHostGame.cpp,matched,Ghidra traced GUI NoLadder custom ladder population into LadderInfo set
+?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@2@@Z,,0x00765300,145,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,matched,Ghidra owner trace from doSingleBoneName through map operator[] and hinted insert
+?GrabWindowInfo@@YAXXZ,,0x0062D810,713,Code/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils.cpp,matched,Ghidra corrected stale boundary and identified out-of-line AsciiString calls
+??1?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@QAE@XZ,,0x005B33B0,124,Code/GameEngine/Source/GameClient/MessageStream/HotKey.cpp,matched,Corrected one-byte-early vote; pre-PreRTS map include restores retail node allocator.
+??1?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@@3@UAsciiComparator@@V?$allocator@U?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@@3@@_STL@@QAE@XZ,,0x00634190,124,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,Corrected one-byte-early vote; guarded BFME PlayerInfo layout yields retail 0x48 node.
+?ControlBarObserverSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004AA690,233,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarObserver.cpp,matched,Corrected one-byte-early vote; explicit BFME observer-player offset and retail callee thunks.
+?parseBenchProfile@INI@@SAXPAV1@@Z,,0x0007C7F0,131,Code/GameEngine/Source/Common/GameLOD.cpp,matched,BFME retail GameLOD layout
+?parseShutdown@@YA_NPAD0IPAVWindowLayoutInfo@@@Z,,0x00487750,111,Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp,matched,Retail layout table and StringBase ABI
+?parseUpdate@@YA_NPAD0IPAVWindowLayoutInfo@@@Z,,0x004876C0,111,Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp,matched,Retail layout table and StringBase ABI
+?friend_newModuleData@CaveContain@@SAPAVModuleData@@PAVINI@@@Z,,0x0012ABC0,125,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,BFME CaveContain layout
+?friend_newModuleData@DamageModule@@SAPAVModuleData@@PAVINI@@@Z,,0x00124080,112,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,BFME DamageModule factory facade
+?friend_newModuleData@CollideModule@@SAPAVModuleData@@PAVINI@@@Z,,0x00124080,112,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,ICF alias with BFME CollideModule factory facade
+?friend_newModuleData@UpdateModule@@SAPAVModuleData@@PAVINI@@@Z,,0x00124080,112,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,source-local retail data facade preserves derived UpdateModule ABI
+?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@_N@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@_N@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@_N@_STL@@@2@@2@U32@ABU?$pair@$$CBVAsciiString@@_N@2@@Z,,0x0064CBD0,628,Code/GameEngine/Source/GameClient/MapUtil.cpp,matched,ICF alias with static STLport tree helpers
+?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@2@@2@U32@ABU?$pair@$$CBVAsciiString@@VHotKey@@@2@@Z,,0x005B3470,629,Code/GameEngine/Source/GameClient/MessageStream/HotKey.cpp,matched,source-local retail AsciiString comparator specialization
+?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@2@@2@U32@ABU?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@2@@Z,,0x00081B40,629,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLoginMenu.cpp,matched,source-local retail AsciiString comparator specialization
+?createFontLibrary@W3DGameClient@@MAEPAVFontLibrary@@XZ,,0x006FB670,80,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DGameClient.cpp,matched,
+?DifficultySelectInit@@YAXPAVWindowLayout@@PAX@Z,,0x004C7020,531,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/DifficultySelect.cpp,matched,
+?createInGameUI@W3DGameClient@@MAEPAVInGameUI@@XZ,,0x006FB590,89,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DGameClient.cpp,matched,TU-local BFME retail InGameUI and W3DInGameUI ABI facades; ctor thunk pinned
+??1GameTextManager@@UAE@XZ,,0x00438430,117,Code/masm_dumps/GameText_GameTextManager_destructor.asm,matched,exact retail destructor via MASM; ZH class has extra 0xA000-byte text buffer
+??_GGameTextManager@@UAEPAXI@Z,,0x00438610,30,Code/masm_dumps/GameText_GameTextManager_scalar_deleting_destructor.asm,matched,exact retail scalar-deleting destructor via MASM; Ghidra-vtable anchored
+?update@GameTextManager@@UAEXXZ,,0x00438420,1,Code/GameEngine/Source/GameClient/GameText.cpp,matched,Ghidra-vtable anchored empty update override; exact C++ RET
+?createSnowManager@W3DGameClient@@MAEPAVSnowManager@@XZ,,0x006FB870,89,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DGameClient.cpp,matched,ICF alias; TU-local BFME SnowManager and W3DSnowManager ABI facades; ctor thunk pinned
+??1GameTextInterface@@UAE@XZ,,0x009A1A40,14,Code/masm_dumps/GameText_GameTextInterface_destructor.asm,matched,ICF alias; exact retail base-interface destructor via MASM
+??_GGameTextInterface@@UAEPAXI@Z,,0x00435E00,30,Code/GameEngine/Source/GameClient/GameText.cpp,matched,exact C++ scalar-deleting destructor after retail destructor-thunk pin
+?createTerrainVisual@W3DGameClient@@MAEPAVTerrainVisual@@XZ,,0x006FB800,86,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DGameClient.cpp,matched,TU-local BFME TerrainVisual and W3DTerrainVisual ABI facades; ctor thunk pinned
+?sortByBuddies@@YAX_N@Z,,0x0062E590,32,Code/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils.cpp,matched,
+?friend_lookupScience@ScienceStore@@QBE?AW4ScienceType@@PBD@Z,,0x000E7240,85,Code/masm_dumps/Science_ScienceStore_friend_lookupScience.asm,matched,
+?RefreshGameListBoxes@@YAXXZ,,0x0062E4F0,17,Code/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils.cpp,matched,
+??1SidesInfo@@QAE@XZ,,0x0019AF30,148,Code/masm_dumps/SidesList_SidesInfo_destructor.asm,matched,
+??1MetaMapRec@@QAE@XZ,,0x005B6FC0,77,Code/masm_dumps/MetaEvent_MetaMapRec_retail_destructor.asm,matched,
+?GetGameListBox@@YAPAVGameWindow@@XZ,,0x0062C5C0,6,Code/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils.cpp,matched,
+??0SidesInfo@@QAE@XZ,,0x001985B0,34,Code/masm_dumps/SidesList_SidesInfo_constructor.asm,matched,
+?doDefeat@ScriptActions@@IAEXXZ,,0x002F1D80,245,Code/masm_dumps/ScriptActions_doDefeat.asm,matched,
+?clear@SidesInfo@@QAEXXZ,,0x0019AED0,66,Code/masm_dumps/SidesList_SidesInfo_clear.asm,matched,
+?GetGameListBoxID@@YA?AW4NameKeyType@@XZ,,0x0062C5E0,6,Code/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils.cpp,matched,
+?doVictory@ScriptActions@@IAEXXZ,,0x002F1C10,290,Code/masm_dumps/ScriptActions_doVictory.asm,matched,
+??0MetaMapRec@@QAE@XZ,,0x005B7020,11,Code/masm_dumps/MetaEvent_MetaMapRec_retail_constructor.asm,matched,
+??_GMetaMapRec@@QAEPAXI@Z,,0x005B70E0,30,Code/masm_dumps/MetaEvent_MetaMapRec_retail_scalar_deleting_destructor.asm,matched,
+?doLocalDefeat@ScriptActions@@IAEXXZ,,0x002F1EC0,246,Code/masm_dumps/ScriptActions_doLocalDefeat.asm,matched,
+?isFinished@AnimateWindow@@QAE_NXZ,,0x004953E0,4,Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp,matched,
+?getMetaMapRec@MetaMap@@IAEPAVMetaMapRec@@W4Type@GameMessage@@@Z,,0x005B7110,111,Code/masm_dumps/MetaEvent_MetaMap_getMetaMapRec.asm,matched,
+?doRadarForceEnable@ScriptActions@@IAEXXZ,,0x002EFD50,10,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,
+?doDebugMessage@ScriptActions@@IAEXABVAsciiString@@_N@Z,,0x002F20E0,51,Code/masm_dumps/ScriptActions_doDebugMessage.asm,matched,
+?doRadarRevertNormal@ScriptActions@@IAEXXZ,,0x002EFD60,10,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,
+??1MetaEventTranslator@@UAE@XZ,,0x005B6A70,7,Code/masm_dumps/MetaEvent_MetaEventTranslator_destructor.asm,matched,
+?doPlaySoundEffect@ScriptActions@@IAEXABVAsciiString@@@Z,,0x002F22A0,266,Code/masm_dumps/ScriptActions_doPlaySoundEffect.asm,matched,
+??_GMetaEventTranslator@@UAEPAXI@Z,,0x005B6B70,30,Code/masm_dumps/MetaEvent_MetaEventTranslator_scalar_deleting_destructor.asm,matched,
+??0MetaEventTranslator@@QAE@XZ,,0x005B6B30,42,Code/masm_dumps/MetaEvent_MetaEventTranslator_constructor.asm,matched,
+?doPlaySoundEffectAt@ScriptActions@@IAEXABVAsciiString@@0@Z,,0x002F2120,306,Code/masm_dumps/ScriptActions_doPlaySoundEffectAt.asm,matched,Ghidra-bound exact retail body
+?friend_newModuleData@CommandSetUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0012B0B0,107,Code/masm_dumps/CommandSetUpgrade_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?loadLocalLadders@LadderList@@AAEXXZ,,0x0062BE40,379,Code/masm_dumps/LadderList_loadLocalLadders.asm,matched,Ghidra-bound retail ladder enumeration body
+?getTemplateInfo@TeamPrototype@@QBEPBVTeamTemplateInfo@@XZ,,0x003BCD70,4,Code/GameEngine/Source/Common/RTS/Team.cpp,matched,Ghidra-bound unique accessor
+?friend_newModuleData@StructureBody@@SAPAVModuleData@@PAVINI@@@Z,,0x001294A0,107,Code/masm_dumps/StructureBody_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?checkLadder@LadderList@@AAEXVAsciiString@@H@Z,,0x0062BC60,380,Code/masm_dumps/LadderList_checkLadder.asm,matched,Ghidra-bound retail ladder validation body
+?getSpecialLadders@LadderList@@QAEPBV?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@XZ,,0x0062A140,4,Code/GameEngine/Source/GameNetwork/GameSpy/LadderDefs.cpp,matched,Ghidra-bound unique accessor
+?getBehaviorModules@Object@@QBEPAPAVBehaviorModule@@XZ,,0x00478700,7,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound unique accessor
+?getStandardLadders@LadderList@@QAEPBV?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@XZ,,0x0062A150,4,Code/GameEngine/Source/GameNetwork/GameSpy/LadderDefs.cpp,matched,Ghidra-bound unique accessor
+?getContain@Object@@QBEPAVContainModuleInterface@@XZ,,0x00478710,7,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound unique accessor
+?friend_newModuleData@BridgeTowerBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00125220,50,Code/masm_dumps/BridgeTowerBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?getLocalLadders@LadderList@@QAEPBV?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@XZ,,0x0062A160,3,Code/GameEngine/Source/GameNetwork/GameSpy/LadderDefs.cpp,matched,Ghidra-bound unique accessor
+?getRankLevel@Player@@QBEHXZ,,0x001BFBE0,7,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,Ghidra-bound unique accessor
+?friend_newModuleData@EnragedBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00114A40,107,Code/masm_dumps/EnragedBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?getPosition@Thing@@QBEPBUCoord3D@@XZ,,0x000B6560,4,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound cached-position accessor
+?friend_newModuleData@HitReactionBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x0011D000,107,Code/masm_dumps/HitReactionBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?findLadder@LadderList@@QAEPBVLadderInfo@@ABVAsciiString@@G@Z,,0x0062A560,447,Code/masm_dumps/LadderList_findLadder.asm,matched,Ghidra-bound retail ladder search body
+?getBoundingCircleRadius@GeometryInfo@@QBEMXZ,,0x005E7B90,4,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound GeometryInfo accessor
+?friend_newModuleData@ClickReactionBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00114C60,107,Code/masm_dumps/ClickReactionBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?getFrame@GameLogic@@QAEIXZ,,0x00478490,4,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound GameLogic accessor
+?friend_newModuleData@SiegeDockingBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00114E80,107,Code/masm_dumps/SiegeDockingBehavior_friend_newModuleData.asm,matched,Retail registration dp013 proves SiegeDockingBehavior data factory
+??0LadderInfo@@QAE@XZ,,0x0062A910,161,Code/masm_dumps/LadderInfo_constructor.asm,matched,Ghidra-bound retail constructor
+?getUpdatePhase@ObjectWeaponStatusHelper@@MBE?AW4SleepyUpdatePhase@@XZ,,0x0005B810,6,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound virtual accessor
+?friend_newModuleData@AutoAbilityBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00114F90,107,Code/masm_dumps/AutoAbilityBehavior_friend_newModuleData.asm,matched,Retail registration dp014 proves AutoAbilityBehavior data factory
+??0LadderList@@QAE@XZ,,0x0062C020,925,Code/masm_dumps/LadderList_constructor.asm,matched,Ghidra-bound retail constructor
+?getBodyModule@Object@@QBEPAVBodyModuleInterface@@XZ,,0x00478720,7,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound Object accessor
+?friend_newModuleData@DualWeaponBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001150A0,107,Code/masm_dumps/DualWeaponBehavior_friend_newModuleData.asm,matched,Retail registration dp015 proves DualWeaponBehavior data factory
+??1LadderList@@QAE@XZ,,0x0062AB10,452,Code/masm_dumps/LadderList_destructor.asm,matched,Ghidra-corrected retail destructor
+?getPhysics@Object@@QAEPAVPhysicsBehavior@@XZ,,0x00478770,7,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound Object accessor
+?friend_newModuleData@AimWeaponBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001151B0,107,Code/masm_dumps/AimWeaponBehavior_friend_newModuleData.asm,matched,Retail registration dp016 proves AimWeaponBehavior data factory
+?friend_getRadarData@Object@@QAEPAVRadarObject@@XZ,,0x00478750,7,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound Object accessor
+?friend_newModuleData@PhysicsBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x0011AA70,107,Code/masm_dumps/PhysicsBehavior_friend_newModuleData.asm,matched,Retail registration dp018 proves PhysicsBehavior data factory
+?getEnergy@Player@@QAEPAVEnergy@@XZ,,0x007EA6B0,7,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound Player accessor
+??1LadderInfo@@QAE@XZ,,0x0062A9E0,194,Code/masm_dumps/LadderInfo_destructor.asm,matched,Ghidra-bound retail destructor
+??_GLadderInfo@@QAEPAXI@Z,,0x0062AAE0,30,Code/masm_dumps/LadderInfo_scalar_destructor.asm,matched,Ghidra-bound deleting destructor
+??_GLadderList@@QAEPAXI@Z,,0x006306D0,30,Code/masm_dumps/LadderList_scalar_destructor.asm,matched,Ghidra-bound deleting destructor
+?getEnergyProduction@ThingTemplate@@QBEHXZ,,0x00478E30,7,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound ThingTemplate accessor
+?friend_newModuleData@SlowDeathBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001154F0,110,Code/masm_dumps/SlowDeathBehavior_friend_newModuleData.asm,matched,Retail registration dp020 proves SlowDeathBehavior data factory
+?friend_newModuleData@SpawnBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x0012AAC0,110,Code/masm_dumps/SpawnBehavior_friend_newModuleData.asm,matched,Retail registration dp021 proves SpawnBehavior data factory
+?sawFullGameList@GameSpyInfo@@UAEXXZ,,0x00637180,5,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,Vtable-bound GameSpyInfo mutator
+?getMOTD@GameSpyInfo@@UAEABVAsciiString@@XZ,,0x006306B0,4,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,Vtable-bound GameSpyInfo accessor
+?getEnergyBonus@ThingTemplate@@QBEHXZ,,0x00478E40,7,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound ThingTemplate accessor
+?friend_newModuleData@SpawnUnitBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00125D70,107,Code/masm_dumps/SpawnUnitBehavior_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x19 Ghidra corrected owner
+?friend_newModuleData@OathbreakersFadeAwayBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00125D70,107,Code/masm_dumps/OathbreakersFadeAwayBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?getConfig@GameSpyInfo@@UAEABVAsciiString@@XZ,,0x006306C0,4,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,Vtable-bound GameSpyInfo accessor
+?getStealth@Object@@QBEPAVStealthUpdate@@XZ,,0x00478730,7,Code/GameEngine/Source/Common/RTS/Player.cpp,matched,Ghidra-bound Object accessor
+?friend_newModuleData@CritterEmitterUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00115730,110,Code/masm_dumps/CritterEmitterUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?getDisallowAsianText@GameSpyInfo@@UAE_NXZ,,0x00630780,7,Code/masm_dumps/GameSpyInfo_getDisallowAsianText.asm,matched,Vtable-bound BFME layout accessor
+?friend_newModuleData@HealContain@@SAPAVModuleData@@PAVINI@@@Z,,0x001219D0,107,Code/masm_dumps/HealContain_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?getDisallowNonAsianText@GameSpyInfo@@UAE_NXZ,,0x00630790,7,Code/masm_dumps/GameSpyInfo_getDisallowNonAsianText.asm,matched,Vtable-bound BFME layout accessor
+?friend_newModuleData@HordeContain@@SAPAVModuleData@@PAVINI@@@Z,,0x00115BC0,110,Code/masm_dumps/HordeContain_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?getDestinationLayer@Object@@QBE?AW4PathfindLayerEnum@@XZ,,0x001BEF50,7,Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp,matched,Ghidra-bound Object accessor
+?setDisallowAsianText@GameSpyInfo@@UAEX_N@Z,,0x00630760,13,Code/masm_dumps/GameSpyInfo_setDisallowAsianText.asm,matched,Vtable-bound BFME layout mutator
+?friend_newModuleData@HorseHordeContain@@SAPAVModuleData@@PAVINI@@@Z,,0x00115DE0,110,Code/masm_dumps/HorseHordeContain_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?Pop_Override_Flags@RenderInfoClass@@QAEXXZ,,0x00923750,7,Code/Libraries/Source/WWVegas/WW3D2/rinfo.cpp,matched,Ghidra-bound RenderInfo mutator
+?setDisallowNonAsianText@GameSpyInfo@@UAEX_N@Z,,0x00630770,13,Code/masm_dumps/GameSpyInfo_setDisallowNonAsianText.asm,matched,Vtable-bound BFME layout mutator
+?friend_newModuleData@AODHordeContain@@SAPAVModuleData@@PAVINI@@@Z,,0x00122FD0,116,Code/masm_dumps/AODHordeContain_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?File_Name@GameFileClass@@UBEPBDXZ,,0x006F60D0,7,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DFileSystem.cpp,matched,Ghidra-bound GameFile accessor
+?getMaxMessagesPerUpdate@GameSpyInfo@@UAEHXZ,,0x006307B0,7,Code/masm_dumps/GameSpyInfo_getMaxMessagesPerUpdate.asm,matched,Vtable-bound BFME layout accessor
+?friend_newModuleData@GarrisonContain@@SAPAVModuleData@@PAVINI@@@Z,,0x00116250,110,Code/masm_dumps/GarrisonContain_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?update@DownloadManager@@QAEJXZ,,0x00626950,7,Code/GameEngine/Source/GameNetwork/DownloadManager.cpp,matched,Unique padded virtual tail call
+?friend_newModuleData@TransportContain@@SAPAVModuleData@@PAVINI@@@Z,,0x00125470,110,Code/masm_dumps/TransportContain_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?endAreaSelectHint@InGameUI@@UAEXPBVGameMessage@@@Z,,0x0043AC70,7,Code/GameEngine/Source/GameClient/InGameUI.cpp,matched,Unique padded InGameUI mutator
+?clearAdditionalDisconnects@GameSpyInfo@@UAEXXZ,,0x00630680,11,Code/masm_dumps/GameSpyInfo_clearAdditionalDisconnects.asm,matched,Vtable-bound BFME layout mutator
+?readAdditionalDisconnects@GameSpyInfo@@UAEXXZ,,0x00630650,23,Code/masm_dumps/GameSpyInfo_readAdditionalDisconnects.asm,matched,Vtable-bound BFME layout reader
+?friend_newModuleData@SiegeEngineContain@@SAPAVModuleData@@PAVINI@@@Z,,0x00115CD0,110,Code/masm_dumps/SiegeEngineContain_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?getSubdualDamageHealAmount@ActiveBody@@UBEMXZ,,0x0020E810,7,Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp,matched,Unique padded ActiveBody accessor
+?amIHost@GameSpyInfo@@UAE_NXZ,,0x00630690,7,Code/masm_dumps/GameSpyInfo_amIHost.asm,matched,Vtable-bound BFME layout accessor
+?friend_newModuleData@HordeSiegeEngineContain@@SAPAVModuleData@@PAVINI@@@Z,,0x00116360,110,Code/masm_dumps/HordeSiegeEngineContain_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?reset@SimpleObjectIterator@@AAEXXZ,,0x001DDD50,7,Code/GameEngine/Source/GameLogic/Object/SimpleObjectIterator.cpp,matched,Unique padded iterator reset
+?getCurrentStagingRoom@GameSpyInfo@@UAEPAVGameSpyStagingRoom@@XZ,,0x006327B0,72,Code/masm_dumps/GameSpyInfo_getCurrentStagingRoom.asm,matched,Vtable-bound BFME staging-room lookup
+?isGamePaused@GameLogic@@QAE_NXZ,,0x002197D0,7,Code/GameEngine/Source/GameLogic/System/GameLogic.cpp,matched,Unique padded game-pause accessor
+?friend_newModuleData@TunnelContain@@SAPAVModuleData@@PAVINI@@@Z,,0x00116470,110,Code/masm_dumps/TunnelContain_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?friend_newModuleData@HordeGarrisonContain@@SAPAVModuleData@@PAVINI@@@Z,,0x00115FB0,110,Code/masm_dumps/HordeGarrisonContain_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?friend_newModuleData@ContestableContain@@SAPAVModuleData@@PAVINI@@@Z,,0x00116140,110,Code/masm_dumps/ContestableContain_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?friend_newModuleData@SlaughterHordeContain@@SAPAVModuleData@@PAVINI@@@Z,,0x00116750,110,Code/masm_dumps/SlaughterHordeContain_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?setTerrainDecalOpacity@W3DModelDraw@@UAEXM@Z,,0x0075BDD0,35,Code/masm_dumps/W3DModelDraw_setTerrainDecalOpacity.asm,matched,Vtable-bound BFME terrain-decal layout body
+?friend_newModuleData@RunOffMapBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001267E0,107,Code/masm_dumps/RunOffMapBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?isPointOnWall@PathfindLayer@@QAE_NPAW4ObjectID@@HPBUCoord3D@@@Z,,0x00299080,257,Code/masm_dumps/PathfindLayer_isPointOnWall.asm,matched,Ghidra-bound BFME wall-layer geometry body
+?friend_newModuleData@SlaveWatcherBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00117540,107,Code/masm_dumps/SlaveWatcherBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?setCopiedFromDefault@ThingTemplate@@QAEXXZ,,0x0013FDB0,71,Code/masm_dumps/ThingTemplate_setCopiedFromDefault.asm,matched,Ghidra-bound BFME ThingTemplate layout body
+?getLocale@GameSpyMiscPreferences@@QAEHXZ,,0x000A99A0,33,Code/masm_dumps/GameSpyMiscPreferences_getLocale.asm,matched,Unique Locale-string preference getter
+?setLocale@GameSpyMiscPreferences@@QAEXH@Z,,0x000A99D0,36,Code/masm_dumps/GameSpyMiscPreferences_setLocale.asm,matched,Unique Locale-string preference setter
+?getMaxMessagesPerUpdate@GameSpyMiscPreferences@@QAEHXZ,,0x000A9B30,33,Code/masm_dumps/GameSpyMiscPreferences_getMaxMessagesPerUpdate.asm,matched,Unique MaxMessagesPerUpdate preference getter
+?friend_newModuleData@HeroDie@@SAPAVModuleData@@PAVINI@@@Z,,0x00124950,107,Code/masm_dumps/HeroDie_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?getColor@QuickMatchPreferences@@QAEHXZ,,0x000A97C0,33,Code/masm_dumps/QuickMatchPreferences_getColor.asm,matched,Unique Color-string QuickMatch getter
+?doPlayerGrantScience@ScriptActions@@IAEXABVAsciiString@@0@Z,,0x002F00C0,91,Code/masm_dumps/ScriptActions_doPlayerGrantScience.asm,matched,Ghidra-bound BFME grant-science body
+?doPlayerPurchaseScience@ScriptActions@@IAEXABVAsciiString@@0@Z,,0x002F0140,91,Code/masm_dumps/ScriptActions_doPlayerPurchaseScience.asm,matched,Ghidra-bound BFME purchase-science body
+?getCachedStats@GameSpyMiscPreferences@@QAE?AVAsciiString@@XZ,,0x000A9A00,113,Code/masm_dumps/GameSpyMiscPreferences_getCachedStats.asm,matched,Unique CachedStats-string preference getter
+?setCachedStats@GameSpyMiscPreferences@@QAEXVAsciiString@@@Z,,0x000A9A90,121,Code/masm_dumps/GameSpyMiscPreferences_setCachedStats.asm,matched,Unique CachedStats-string preference setter
+?friend_newModuleData@RefundDie@@SAPAVModuleData@@PAVINI@@@Z,,0x001232C0,107,Code/masm_dumps/RefundDie_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?friend_newModuleInstance@BroadcastStealthUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B370,96,Code/masm_dumps/BroadcastStealthUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration Ghidra confirmed
+?friend_newModuleData@BroadcastStealthUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0012A350,54,Code/masm_dumps/BroadcastStealthUpdate_friend_newModuleData.asm,matched,Registration-bound BFME factory body
+?doPlayerSetScienceAvailability@ScriptActions@@IAEXABVAsciiString@@00@Z,,0x002F01C0,126,Code/masm_dumps/ScriptActions_doPlayerSetScienceAvailability.asm,matched,Corrected full BFME science-availability body
+??0ProductionPrerequisite@@QAE@XZ,,0x000E57A0,133,Code/masm_dumps/ProductionPrerequisite_ctor.asm,matched,Ghidra-bound BFME constructor layout
+?friend_newModuleInstance@DelayedLuaEventUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011BC70,96,Code/masm_dumps/DelayedLuaEventUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x4C; Ghidra confirmed
+?friend_newModuleData@DelayedLuaEventUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011BCF0,107,Code/masm_dumps/DelayedLuaEventUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?friend_newModuleInstance@OneRingPenaltyUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011A3E0,96,Code/masm_dumps/OneRingPenaltyUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x4E; Ghidra confirmed
+?friend_newModuleData@OneRingPenaltyUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011A460,107,Code/masm_dumps/OneRingPenaltyUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+??0GameSpyMiscPreferences@@QAE@XZ,,0x000AB910,192,Code/masm_dumps/GameSpyMiscPreferences_ctor.asm,matched,Unique BFME profile-path constructor
+?getRawTileData@WorldHeightMap@@QAE_NFHPAEH@Z,,0x00747D70,217,Code/masm_dumps/WorldHeightMap_getRawTileData.asm,matched,Ghidra-bound BFME source-tile copy body
+??0IgnorePreferences@@QAE@XZ,,0x000ABA30,192,Code/masm_dumps/IgnorePreferences_ctor.asm,matched,Unique BFME ignore-path constructor
+?onExit@AIPanicState@@UAEXW4StateExitType@@@Z,,0x0017F1E0,84,Code/masm_dumps/AIPanicState_onExit.asm,matched,Ghidra-bound BFME panic-exit body
+?friend_newModuleInstance@SpecialEnemySenseUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011A500,96,Code/masm_dumps/SpecialEnemySenseUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x4F; Ghidra confirmed
+?friend_newModuleData@SpecialEnemySenseUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00123D90,107,Code/masm_dumps/SpecialEnemySenseUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?friend_newModuleInstance@RainOfFireUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011C310,96,Code/masm_dumps/RainOfFireUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x51; Ghidra confirmed
+?friend_newModuleData@RainOfFireUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011C390,107,Code/masm_dumps/RainOfFireUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?setCommandBarBorder@ControlBar@@AAEXPAVGameWindow@@W4CommandButtonMappedBorderType@@@Z,,0x0049CE10,153,Code/masm_dumps/ControlBar_setCommandBarBorder.asm,matched,Ghidra-bound BFME five-case border body
+?usesLongGameList@CustomMatchPreferences@@QAE_NXZ,,0x000AC500,3,Code/GameEngine/Source/Common/UserPreferences.cpp,matched,Source-order pinned unconditional true getter
+?friend_newModuleInstance@DestroyEnvironmentUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011C420,96,Code/masm_dumps/DestroyEnvironmentUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x52; Ghidra confirmed
+?friend_newModuleData@DestroyEnvironmentUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011C4A0,107,Code/masm_dumps/DestroyEnvironmentUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?friend_newModuleInstance@PartTheHeavensUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011C530,96,Code/masm_dumps/PartTheHeavensUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x53; Ghidra confirmed
+?allowsObservers@CustomMatchPreferences@@QAE_NXZ,,0x000AC510,95,Code/masm_dumps/CustomMatchPreferences_allowsObservers.asm,matched,Unique AllowObservers preference getter
+?getDisallowAsianText@CustomMatchPreferences@@QAE_NXZ,,0x000AC590,95,Code/masm_dumps/CustomMatchPreferences_getDisallowAsianText.asm,matched,Unique DisallowAsianText preference getter
+?friend_newModuleData@SiegeAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118CC0,107,Code/masm_dumps/SiegeAIUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?getDisallowNonAsianText@CustomMatchPreferences@@QAE_NXZ,,0x000AC610,95,Code/masm_dumps/CustomMatchPreferences_getDisallowNonAsianText.asm,matched,Unique DisallowNonAsianText preference getter
+?populateDisconnectScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z,,0x0066BEF0,189,Code/masm_dumps/DisconnectManager_populateDisconnectScreen.asm,matched,Ghidra-bound BFME disconnect-menu population body
+?allOnSameFrame@DisconnectManager@@IAE_NPAVConnectionManager@@@Z,,0x0066C160,195,Code/masm_dumps/DisconnectManager_allOnSameFrame.asm,matched,Ghidra-bound BFME disconnect-frame comparison body
+?friend_newModuleData@HordeAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00123FB0,113,Code/masm_dumps/HordeAIUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?isLocalPlayerNextPacketRouter@DisconnectManager@@IAE_NPAVConnectionManager@@@Z,,0x0066C260,264,Code/masm_dumps/DisconnectManager_isLocalPlayerNextPacketRouter.asm,matched,Ghidra-bound BFME packet-router selection body
+?getPreferredColor@CustomMatchPreferences@@QAEHXZ,,0x000AC2A0,111,Code/masm_dumps/CustomMatchPreferences_getPreferredColor.asm,matched,Ghidra-bound BFME preferred-color getter
+?friend_newModuleData@SupplyTruckAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011B9B0,110,Code/masm_dumps/SupplyTruckAIUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?getChatSizeSlider@CustomMatchPreferences@@QAEHXZ,,0x000AC330,92,Code/masm_dumps/CustomMatchPreferences_getChatSizeSlider.asm,matched,Ghidra-bound BFME chat-slider getter
+?friend_newModuleData@CivilianSpawnUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00116B60,107,Code/masm_dumps/CivilianSpawnUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?getPreferredFaction@CustomMatchPreferences@@QAEHXZ,,0x000AC3B0,160,Code/masm_dumps/CustomMatchPreferences_getPreferredFaction.asm,matched,Ghidra-bound BFME preferred-faction getter
+?friend_newModuleData@ShareExperienceBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00116C70,107,Code/masm_dumps/ShareExperienceBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?WriteGroupDataChunk@ScriptGroup@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x00359EE0,204,Code/masm_dumps/ScriptGroup_WriteGroupDataChunk.asm,matched,Ghidra-bound BFME script-group writer
+?usesSystemMapDir@CustomMatchPreferences@@QAE_NXZ,,0x000AC480,95,Code/masm_dumps/CustomMatchPreferences_usesSystemMapDir.asm,matched,Unique UseSystemMapDir preference getter
+?friend_newModuleData@BannerCarrierUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119C40,107,Code/masm_dumps/BannerCarrierUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?WriteScriptDataChunk@Script@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x00357B30,318,Code/masm_dumps/Script_WriteScriptDataChunk.asm,matched,Ghidra-bound BFME script writer
+?friend_newModuleData@GateOpenAndCloseBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00123AB0,107,Code/masm_dumps/GateOpenAndCloseBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?setChatSizeSlider@CustomMatchPreferences@@QAEXH@Z,,0x000AD9A0,169,Code/masm_dumps/CustomMatchPreferences_setChatSizeSlider.asm,matched,Ghidra-bound BFME chat-slider setter
+?WriteActionDataChunk@ScriptAction@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x003513F0,160,Code/masm_dumps/ScriptAction_WriteActionDataChunk.asm,matched,Ghidra-bound BFME script-action writer
+?setPreferredFaction@CustomMatchPreferences@@QAEXH@Z,,0x000ADA80,169,Code/masm_dumps/CustomMatchPreferences_setPreferredFaction.asm,matched,Ghidra-bound BFME preferred-faction setter
+?friend_newModuleData@GateProxyBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00123BF0,113,Code/masm_dumps/GateProxyBehavior_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?WriteActionFalseDataChunk@ScriptAction@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x003514C0,160,Code/masm_dumps/ScriptAction_WriteActionFalseDataChunk.asm,matched,Ghidra-bound BFME false-action writer
+?setUsesSystemMapDir@CustomMatchPreferences@@QAEX_N@Z,,0x000ADB60,170,Code/masm_dumps/CustomMatchPreferences_setUsesSystemMapDir.asm,matched,Ghidra-bound BFME system-map-directory setter
+?WriteParameter@Parameter@@QAEXAAVDataChunkOutput@@@Z,,0x00351320,167,Code/masm_dumps/Parameter_WriteParameter.asm,matched,Ghidra-bound BFME parameter writer
+?friend_newModuleData@ArrowStormUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118F30,110,Code/masm_dumps/ArrowStormUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?setUsesLongGameList@CustomMatchPreferences@@QAEX_N@Z,,0x000ADC40,170,Code/masm_dumps/CustomMatchPreferences_setUsesLongGameList.asm,matched,Ghidra-bound BFME long-game-list setter
+?friend_newModuleData@WeaponModeSpecialPowerUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001196F0,110,Code/masm_dumps/WeaponModeSpecialPowerUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+??0OneRingPenaltyUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00298E10,157,Code/masm_dumps/OneRingPenaltyUpdate_ctor.asm,matched,Ghidra-owned BFME One Ring penalty constructor
+?setAllowsObserver@CustomMatchPreferences@@QAEX_N@Z,,0x000ADD20,170,Code/masm_dumps/CustomMatchPreferences_setAllowsObserver.asm,matched,Ghidra-bound BFME observer setter
+?friend_newModuleData@ModelConditionSpecialAbilityUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119070,110,Code/masm_dumps/ModelConditionSpecialAbilityUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME factory body
+?setMOTD@GameSpyInfo@@UAEXABVAsciiString@@@Z,,0x00630DF0,8,Code/masm_dumps/GameSpyInfo_setMOTD.asm,matched,Ghidra-bound BFME vtable tail stub
+??1W3DVolumetricShadowManager@@QAE@XZ,,0x007BDE90,286,Code/masm_dumps/W3DVolumetricShadowManager_dtor.asm,matched,Ghidra-corrected BFME destructor body
+?friend_newModuleData@W3DRopeDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x00113BE0,47,Code/masm_dumps/W3DRopeDraw_friend_newModuleData.asm,matched,Ghidra-bound BFME W3D factory body
+?setConfig@GameSpyInfo@@UAEXABVAsciiString@@@Z,,0x00630E00,8,Code/masm_dumps/GameSpyInfo_setConfig.asm,matched,Ghidra-bound BFME vtable tail stub
+?showIdleWorkerLayout@InGameUI@@EAEXXZ,,0x0043B970,86,Code/masm_dumps/InGameUI_showIdleWorkerLayout.asm,matched,Ghidra-corrected BFME idle-worker body
+?setPingString@GameSpyInfo@@UAEXABVAsciiString@@@Z,,0x00637230,8,Code/masm_dumps/GameSpyInfo_setPingString.asm,matched,Ghidra-bound BFME vtable tail stub
+?friend_newModuleData@W3DTreeDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x006BF710,107,Code/masm_dumps/W3DTreeDraw_friend_newModuleData.asm,matched,Ghidra-bound BFME W3D module-data factory
+?loadRoads@W3DRoadBuffer@@QAEXXZ,,0x007105D0,61,Code/masm_dumps/W3DRoadBuffer_loadRoads.asm,matched,Ghidra-corrected BFME road-load body
+?friend_newModuleData@MoneyCrateCollide@@SAPAVModuleData@@PAVINI@@@Z,,0x00127020,120,Code/masm_dumps/MoneyCrateCollide_friend_newModuleData.asm,matched,Ghidra-bound BFME crate module-data factory
+?NAMEKEY@@YA?AW4NameKeyType@@ABVAsciiString@@@Z,,0x000A3AB0,44,Code/masm_dumps/NAMEKEY_AsciiString.asm,matched,Ghidra-corrected BFME AsciiString helper
+?setPlayingHandle@AudioEventRTS@@QAEXI@Z,,0x000B2200,10,Code/masm_dumps/AudioEventRTS_setPlayingHandle.asm,matched,Ghidra-bound BFME audio handle setter
+?setHandleToKill@AudioEventRTS@@QAEXI@Z,,0x000B2310,10,Code/masm_dumps/AudioEventRTS_setHandleToKill.asm,matched,Ghidra-bound BFME audio kill-handle setter
+?friend_newModuleData@UnitCrateCollide@@SAPAVModuleData@@PAVINI@@@Z,,0x00125F10,107,Code/masm_dumps/UnitCrateCollide_friend_newModuleData.asm,matched,Ghidra-bound BFME crate module-data factory
+?reset@GameTextManager@@UAEXXZ,,0x00437500,85,Code/masm_dumps/GameTextManager_reset.asm,matched,Ghidra-corrected BFME text reset body
+?setAudioPriority@AudioEventRTS@@QAEXW4AudioPriority@@@Z,,0x000B23A0,10,Code/masm_dumps/AudioEventRTS_setAudioPriority.asm,matched,Ghidra-bound BFME audio priority setter
+?friend_newModuleData@BoneFXDamage@@SAPAVModuleData@@PAVINI@@@Z,,0x00122D80,50,Code/masm_dumps/BoneFXDamage_friend_newModuleData.asm,matched,Ghidra-bound BFME damage module-data factory
+?setVolume@AudioEventRTS@@QAEXM@Z,,0x000B23B0,10,Code/masm_dumps/AudioEventRTS_setVolume.asm,matched,Ghidra-bound BFME audio volume setter
+?hideIdleWorkerLayout@InGameUI@@EAEXXZ,,0x0043FA90,72,Code/masm_dumps/InGameUI_hideIdleWorkerLayout.asm,matched,Ghidra-corrected BFME idle-worker body
+?friend_newModuleData@TransitionDamageFX@@SAPAVModuleData@@PAVINI@@@Z,,0x00124770,110,Code/masm_dumps/TransitionDamageFX_friend_newModuleData.asm,matched,Ghidra-bound BFME damage module-data factory
+?updateRadarAttackGlow@ControlBar@@IAEXXZ,,0x0049D370,102,Code/masm_dumps/ControlBar_updateRadarAttackGlow.asm,matched,Ghidra-corrected BFME radar-glow body
+?setFramesPerSecondLimit@GameEngine@@UAEXH@Z,,0x0006B6F0,10,Code/masm_dumps/GameEngine_setFramesPerSecondLimit.asm,matched,Ghidra-bound BFME FPS-limit setter
+?friend_newModuleData@FireWeaponCollide@@SAPAVModuleData@@PAVINI@@@Z,,0x00127D00,106,Code/masm_dumps/FireWeaponCollide_friend_newModuleData.asm,matched,Ghidra-bound BFME collide module-data factory
+?friend_newModuleData@SquishCollide@@SAPAVModuleData@@PAVINI@@@Z,,0x00124800,107,Code/masm_dumps/SquishCollide_friend_newModuleData.asm,matched,Ghidra-bound BFME collide module-data factory
+?triggerRadarAttackGlow@ControlBar@@QAEXXZ,,0x0049D320,54,Code/masm_dumps/ControlBar_triggerRadarAttackGlow.asm,matched,Ghidra-corrected BFME radar-glow body
+?setObjectID@AudioEventRTS@@QAEXW4ObjectID@@@Z,,0x000B2250,30,Code/masm_dumps/AudioEventRTS_setObjectID.asm,matched,Ghidra-bound BFME audio object setter
+?friend_newModuleData@WanderAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011BEE0,128,Code/masm_dumps/WanderAIUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME update module-data factory
+?getSlotNum@LANGameInfo@@QAEHVUnicodeString@@@Z,,0x0068EB10,179,Code/masm_dumps/LANGameInfo_getSlotNum.asm,matched,Ghidra-corrected BFME LAN slot search
+?setDrawableID@AudioEventRTS@@QAEXW4DrawableID@@@Z,,0x000B2290,30,Code/masm_dumps/AudioEventRTS_setDrawableID.asm,matched,Ghidra-bound BFME audio drawable setter
+?friend_newModuleData@StealthUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0012BF00,58,Code/masm_dumps/StealthUpgrade_friend_newModuleData.asm,matched,Ghidra-bound BFME upgrade module-data factory
+?isValidObjectTarget@CommandButton@@QBE_NPBVDrawable@@0@Z,,0x0049AE20,67,Code/masm_dumps/CommandButton_isValidObjectTarget_Drawable.asm,matched,Ghidra-corrected BFME Drawable target overload
+?setPosition@AudioEventRTS@@QAEXPBUCoord3D@@@Z,,0x000B2210,51,Code/masm_dumps/AudioEventRTS_setPosition.asm,matched,Ghidra-bound BFME audio positional setter
+?friend_newModuleData@MaxHealthUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DC80,107,Code/masm_dumps/MaxHealthUpgrade_friend_newModuleData.asm,matched,Ghidra-bound BFME MaxHealthUpgrade module-data factory
+?getDrawableID@AudioEventRTS@@QAE?AW4DrawableID@@XZ,,0x000B22C0,13,Code/masm_dumps/AudioEventRTS_getDrawableID.asm,matched,Ghidra-bound BFME audio drawable getter
+?friend_newModuleData@LocomotorSetUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0012B430,62,Code/masm_dumps/LocomotorSetUpgrade_friend_newModuleData.asm,matched,Ghidra-bound BFME LocomotorSetUpgrade module-data factory
+?processRequestAssistance@Weapon@@IAEXPBVObject@@PAV2@@Z,,0x001E4BF0,83,Code/GameEngine/Source/GameLogic/Object/Weapon.cpp,matched,BFME Weapon and WeaponTemplate layout offsets
+?getObjectID@AudioEventRTS@@QAE?AW4ObjectID@@XZ,,0x000B2280,13,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,icf-owner=?getActiveBattlePlan@BattlePlanUpdate@@QBE?AW4BattlePlanStatus@@XZ; BFME audio layout
+?getHandleToKill@AudioEventRTS@@QBEIXZ,,0x000B2320,4,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,Ghidra-bound BFME audio kill-handle getter
+?GadgetComboBoxSetEnabledTextColors@@YAXPAVGameWindow@@HH@Z,,0x004B3AC0,58,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,matched,BFME ComboBoxData child-window offsets
+?getIsLogicalAudio@AudioEventRTS@@QBE_NXZ,,0x000B2340,4,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,Ghidra-bound BFME logical-audio getter
+?GadgetComboBoxSetDisabledTextColors@@YAXPAVGameWindow@@HH@Z,,0x004B3B10,60,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,matched,BFME ComboBoxData disabled-color offsets
+?friend_newModuleData@StealthDetectorUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00126BE0,110,Code/masm_dumps/StealthDetectorUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME StealthDetectorUpdate module-data factory
+?GadgetComboBoxSetHiliteTextColors@@YAXPAVGameWindow@@HH@Z,,0x004B3B60,58,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,matched,BFME ComboBoxData hilite-color offsets
+?GadgetComboBoxSetIMECompositeTextColors@@YAXPAVGameWindow@@HH@Z,,0x004B3BB0,58,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,matched,BFME ComboBoxData IME-color offsets
+?friend_newModuleInstance@DynamicShroudClearingRangeUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001180B0,99,Code/masm_dumps/DynamicShroudClearingRangeUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration Ghidra confirmed
+?friend_newModuleData@DynamicShroudClearingRangeUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118130,107,Code/masm_dumps/DynamicShroudClearingRangeUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME DynamicShroudClearingRangeUpdate module-data factory
+?isCurrentlyPlaying@AudioEventRTS@@QBE_NXZ,,0x000B2370,27,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,Ghidra-bound BFME AudioManager vtable slot
+?getShouldFade@AudioEventRTS@@QBE_NXZ,,0x0006B3B0,4,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,Ghidra-bound BFME should-fade getter
+?GadgetComboBoxGetLength@@YAHPAVGameWindow@@@Z,,0x004B3D40,20,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,matched,BFME ComboBoxData entry-count offset
+?friend_newModuleInstance@DeployStyleAIUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00118670,99,Code/masm_dumps/DeployStyleAIUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration Ghidra confirmed
+?friend_newModuleData@DeployStyleAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001186F0,128,Code/masm_dumps/DeployStyleAIUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME DeployStyleAIUpdate module-data factory
+?friend_newModuleInstance@AssaultTransportAIUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001187F0,99,Code/masm_dumps/AssaultTransportAIUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration Ghidra confirmed
+?friend_newModuleData@AssaultTransportAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118870,127,Code/masm_dumps/AssaultTransportAIUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME AssaultTransportAIUpdate module-data factory
+?friend_newModuleInstance@LargeGroupBonusUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00118B30,96,Code/masm_dumps/LargeGroupBonusUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration Ghidra confirmed
+?friend_newModuleData@LargeGroupBonusUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118BB0,107,Code/masm_dumps/LargeGroupBonusUpdate_friend_newModuleData.asm,matched,retail registration ICF body
+?friend_newModuleInstance@GiantBirdAIUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00118910,99,Code/masm_dumps/GiantBirdAIUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration Ghidra confirmed
+?friend_newModuleData@GiantBirdAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118990,110,Code/masm_dumps/GiantBirdAIUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration Ghidra confirmed
+?getTimeOfDay@AudioEventRTS@@QBE?AW4TimeOfDay@@XZ,,0x000873E0,4,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,Retail thunk-bound BFME time-of-day getter
+?GadgetComboBoxGetText@@YA?AVUnicodeString@@PAVGameWindow@@@Z,,0x004B4E00,89,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,matched,BFME ComboBoxData edit-box offset
+?getAudioPriority@AudioEventRTS@@QBE?AW4AudioPriority@@XZ,,0x00087410,4,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,Retail thunk-bound BFME audio-priority getter
+?friend_newModuleInstance@LifetimeUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011A2D0,96,Code/masm_dumps/LifetimeUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x4D; Ghidra confirmed
+?friend_newModuleData@LifetimeUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011A350,107,Code/masm_dumps/LifetimeUpdate_friend_newModuleData.asm,matched,Ghidra-bound BFME LifetimeUpdate module-data factory
+?GadgetListBoxGetNumEntries@@YAHPAVGameWindow@@@Z,,0x004B77C0,25,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,BFME ListboxData end-position offset
+?GadgetListBoxGetSelected@@YAXPAVGameWindow@@PAH@Z,,0x004B77E0,38,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,BFME list-box selection message id
+?getNextPlayPortion@AudioEventRTS@@QBE?AW4PortionToPlay@@XZ,,0x000B2420,4,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,Retail thunk-bound BFME next-portion getter
+?friend_newModuleData@CrushDie@@SAPAVModuleData@@PAVINI@@@Z,,0x00123460,110,Code/masm_dumps/CrushDie_friend_newModuleData.asm,matched,Ghidra-bound BFME CrushDie module-data factory
+?GadgetListBoxSetSelected@@YAXPAVGameWindow@@H@Z,,0x004B7810,38,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,BFME list-box selection message id
+?getUninterruptable@AudioEventRTS@@QBE_NXZ,,0x000B2360,4,Code/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,Retail thunk-bound BFME uninterruptable getter
+?friend_newModuleData@GiantBirdSlowDeathBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00115850,110,Code/masm_dumps/GiantBirdSlowDeathBehavior_friend_newModuleData.asm,matched,Retail-only GiantBirdSlowDeathBehavior module-data factory
+?GadgetListBoxSetSelected@@YAXPAVGameWindow@@PBHH@Z,,0x004B7840,41,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,BFME list-box selection message id
+?getPitchShift@AudioEventRTS@@QBEMXZ,,0x000B21C0,4,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,Ghidra-bound BFME pitch-shift offset
+?friend_newModuleData@ClearanceTestingSlowDeathBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00117310,110,Code/masm_dumps/ClearanceTestingSlowDeathBehavior_friend_newModuleData.asm,matched,Retail-only ClearanceTestingSlowDeathBehavior module-data factory
+?GadgetListBoxReset@@YAXPAVGameWindow@@@Z,,0x004B7880,33,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,BFME list-box message id
+?getVolumeShift@AudioEventRTS@@QBEMXZ,,0x000B21D0,4,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,BFME audio layout
+?decrementDelay@AudioEventRTS@@QAEXM@Z,,0x000B21E0,13,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,BFME audio layout
+?GadgetListBoxIsFull@@YA_NPAVGameWindow@@@Z,,0x004B78E0,60,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,BFME list-box layout
+?GadgetListBoxGetColumnWidth@@YAHPAVGameWindow@@H@Z,,0x004B79D0,43,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,BFME list-box layout
+?friend_newModuleInstance@CastleBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114440,99,Code/masm_dumps/CastleBehavior_friend_newModuleInstance.asm,matched,Retail-only CastleBehavior instance factory
+?friend_newModuleInstance@CastleMemberBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114550,96,Code/masm_dumps/CastleMemberBehavior_friend_newModuleInstance.asm,matched,Retail-only CastleMemberBehavior instance factory
+?friend_newModuleInstance@BuildingBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114670,96,Code/masm_dumps/BuildingBehavior_friend_newModuleInstance.asm,matched,Retail-only BuildingBehavior instance factory
+?GadgetListBoxSetItemData@@YAXPAVGameWindow@@PAXHH@Z,,0x004B84A0,62,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,BFME list-box message id
+?GadgetListBoxGetItemData@@YAPAXPAVGameWindow@@HH@Z,,0x004B84F0,72,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,BFME list-box message id
+?friend_newModuleInstance@BridgeBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114790,99,Code/masm_dumps/BridgeBehavior_friend_newModuleInstance.asm,matched,Retail registration proves BridgeBehavior instance factory; stale dead attempt superseded
+?friend_newModuleInstance@BridgeTowerBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114930,96,Code/masm_dumps/BridgeTowerBehavior_friend_newModuleInstance.asm,matched,Retail registration proves BridgeTowerBehavior instance factory; stale dead attempt superseded
+?friend_newModuleInstance@RampageBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001149C0,96,Code/masm_dumps/RampageBehavior_friend_newModuleInstance.asm,matched,Retail registration proves RampageBehavior instance factory
+?GadgetListBoxSetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z,,0x004B7260,186,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,BFME list-box and DisplayString layout
+?advanceNextPlayPortion@AudioEventRTS@@QAEXXZ,,0x000B3320,87,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,BFME audio event layout and play-portion flow
+?hasMoreLoops@AudioEventRTS@@QBE_NXZ,,0x000B28B0,41,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,BFME audio event loop-control layout
+?GadgetTextEntrySetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z,,0x004BE0A0,99,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetTextEntry.cpp,matched,BFME DisplayString virtual slot layout
+?friend_newModuleInstance@EnragedBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114AD0,96,Code/masm_dumps/EnragedBehavior_friend_newModuleInstance.asm,matched,Retail registration proves EnragedBehavior instance factory
+?friend_newModuleInstance@EntEnragedUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011CF80,96,Code/masm_dumps/EntEnragedUpdate_friend_newModuleInstance.asm,matched,Retail registration proves EntEnragedUpdate instance factory
+?friend_newModuleInstance@HitReactionBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114BE0,96,Code/masm_dumps/HitReactionBehavior_friend_newModuleInstance.asm,matched,Retail registration proves HitReactionBehavior instance factory
+?GadgetStaticTextGetText@@YA?AVUnicodeString@@PAVGameWindow@@@Z,,0x004BD820,82,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetStaticText.cpp,matched,BFME DisplayString getText virtual slot layout
+?GadgetStaticTextSetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z,,0x004BD5F0,86,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetStaticText.cpp,matched,BFME DisplayString setFont virtual slot layout
+?friend_newModuleInstance@ClickReactionBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114CF0,96,Code/masm_dumps/ClickReactionBehavior_friend_newModuleInstance.asm,matched,Retail registration proves ClickReactionBehavior instance factory
+?calcSleepDelay@LifetimeUpdate@@AAEIII@Z,,0x00297E00,59,Code/GameEngine/Source/GameLogic/Object/Update/LifetimeUpdate.cpp,matched,BFME stores current frame before die frame
+?friend_newModuleInstance@SiegeDockingBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114E00,96,Code/masm_dumps/SiegeDockingBehavior_friend_newModuleInstance.asm,matched,Retail registration proves SiegeDockingBehavior instance factory
+?GadgetStaticTextSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004BD660,252,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetStaticText.cpp,matched,Local BFME display-string virtual overlays restore retail system-handler ABI
+?setLifetimeRange@LifetimeUpdate@@QAEXII@Z,,0x00297EB0,71,Code/GameEngine/Source/GameLogic/Object/Update/LifetimeUpdate.cpp,matched,BFME UpdateModule object pointer is at offset 0x08
+?friend_newModuleInstance@AutoAbilityBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00114F10,96,Code/masm_dumps/AutoAbilityBehavior_friend_newModuleInstance.asm,matched,Retail registration proves AutoAbilityBehavior instance factory
+?parseProductionCostChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,,0x000E2650,83,Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp,matched,BFME PlayerTemplate production-cost map is at offset 0x60
+?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,,0x000E2DA0,134,Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp,matched,BFME uses an AsciiString production-time key map at offset 0x6C
+?friend_newModuleData@RadarUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0012B530,62,Code/masm_dumps/RadarUpgrade_friend_newModuleData.asm,matched,Retail registration dp160 proves RadarUpgrade data factory
+?friend_newModuleData@ObjectCreationUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0011D4A0,110,Code/masm_dumps/ObjectCreationUpgrade_friend_newModuleData.asm,matched,Retail registration dp162 proves ObjectCreationUpgrade data factory
+?friend_newModuleInstance@DualWeaponBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115020,96,Code/masm_dumps/DualWeaponBehavior_friend_newModuleInstance.asm,matched,Retail registration cp015 proves DualWeaponBehavior instance factory
+?friend_newModuleInstance@AimWeaponBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115130,96,Code/masm_dumps/AimWeaponBehavior_friend_newModuleInstance.asm,matched,Retail registration cp016 proves AimWeaponBehavior instance factory
+?friend_newModuleInstance@CaveContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115AB0,99,Code/masm_dumps/CaveContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp023 Ghidra-confirmed
+?friend_newModuleInstance@OpenContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115960,99,Code/masm_dumps/OpenContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp024 Ghidra confirmed
+?friend_newModuleInstance@SpawnUnitBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E1D0,96,Code/masm_dumps/SpawnUnitBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory cp025 Ghidra confirmed
+?friend_newModuleInstance@OathbreakersFadeAwayBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E250,96,Code/masm_dumps/OathbreakersFadeAwayBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory cp026 Ghidra confirmed
+?friend_newModuleInstance@WargBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115620,96,Code/masm_dumps/WargBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory cp027 Ghidra confirmed
+?friend_newModuleInstance@CritterEmitterUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00121950,96,Code/masm_dumps/CritterEmitterUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory cp029 Ghidra confirmed
+?friend_newModuleInstance@HealContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115B40,99,Code/masm_dumps/HealContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp030 Ghidra confirmed
+?friend_newModuleInstance@HordeContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115D60,99,Code/masm_dumps/HordeContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp031 Ghidra confirmed
+?friend_newModuleInstance@HorseHordeContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115E70,99,Code/masm_dumps/HorseHordeContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp032 Ghidra confirmed
+?friend_newModuleInstance@AODHordeContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001161D0,99,Code/masm_dumps/AODHordeContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp033 Ghidra confirmed
+?friend_newModuleInstance@GarrisonContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116040,99,Code/masm_dumps/GarrisonContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp034 Ghidra confirmed
+?friend_newModuleInstance@TransportContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00115C50,99,Code/masm_dumps/TransportContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp035 Ghidra confirmed
+?friend_newModuleInstance@SiegeEngineContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001162E0,99,Code/masm_dumps/SiegeEngineContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp036 Ghidra confirmed
+?friend_newModuleInstance@HordeSiegeEngineContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001163F0,99,Code/masm_dumps/HordeSiegeEngineContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp037 Ghidra confirmed
+?friend_newModuleInstance@TunnelContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116530,99,Code/masm_dumps/TunnelContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp038 Ghidra confirmed
+?friend_newModuleInstance@HordeGarrisonContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001160C0,99,Code/masm_dumps/HordeGarrisonContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp040 Ghidra confirmed
+?friend_newModuleInstance@ContestableContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001165C0,99,Code/masm_dumps/ContestableContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp041 Ghidra confirmed
+?friend_newModuleInstance@RiderChangeContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001166D0,99,Code/masm_dumps/RiderChangeContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp042 Ghidra confirmed
+?friend_newModuleInstance@SlaughterHordeContain@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116D00,99,Code/masm_dumps/SlaughterHordeContain_friend_newModuleInstance.asm,matched,retail ModuleFactory cp043 Ghidra confirmed
+?friend_newModuleInstance@SwayClientUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00121AF0,96,Code/masm_dumps/SwayClientUpdate_friend_newModuleInstance.asm,matched,Retail
+?friend_newModuleInstance@ClearanceTestingSlowDeathBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117290,96,Code/masm_dumps/ClearanceTestingSlowDeathBehavior_friend_newModuleInstance.asm,matched,retail
+?friend_newModuleInstance@RunOffMapBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001158E0,96,Code/masm_dumps/RunOffMapBehavior_friend_newModuleInstance.asm,matched,retail
+?friend_newModuleInstance@ReplenishUnitsBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001173A0,96,Code/masm_dumps/ReplenishUnitsBehavior_friend_newModuleInstance.asm,matched,retail
+?friend_newModuleInstance@SlaveWatcherBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001174C0,96,Code/masm_dumps/SlaveWatcherBehavior_friend_newModuleInstance.asm,matched,retail
+?friend_newModuleInstance@HeroDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011FCF0,96,Code/masm_dumps/HeroDie_friend_newModuleInstance.asm,matched,retail
+?friend_newModuleInstance@RefundDie@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001176E0,96,Code/masm_dumps/RefundDie_friend_newModuleInstance.asm,matched,retail
+??0AutoHealBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00048B9E,5,Code/masm_dumps/__0AutoHealBehavior__QAE_PAVThing__PBVModuleData___Z_48B9E.asm,matched,retail factory call binds constructor thunk to AutoHealBehavior
+??0StructureCollapseUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0004A345,5,Code/masm_dumps/__0StructureCollapseUpdate__QAE_PAVThing__PBVModuleData___Z_4A345.asm,matched,retail factory call binds constructor thunk to StructureCollapseUpdate
+?friend_newModuleInstance@SiegeAIUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00118C40,99,Code/masm_dumps/SiegeAIUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x5A; Ghidra confirmed
+?friend_newModuleInstance@HordeAIUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011A680,99,Code/masm_dumps/HordeAIUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x5C; Ghidra confirmed
+?friend_newModuleInstance@AutoPickUpUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00119AB0,96,Code/masm_dumps/AutoPickUpUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x62; Ghidra confirmed
+?friend_newModuleInstance@CivilianSpawnUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116AE0,96,Code/masm_dumps/CivilianSpawnUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x63; Ghidra confirmed
+?friend_newModuleInstance@SupplyTruckAIUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B930,99,Code/masm_dumps/SupplyTruckAIUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x5E; Ghidra confirmed
+?friend_newModuleInstance@AIUpdateInterface@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001167E0,99,Code/masm_dumps/AIUpdateInterface_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x5B; Ghidra confirmed
+?friend_newModuleInstance@BattlePlanUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00119CD0,99,Code/masm_dumps/BattlePlanUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x66; Ghidra confirmed
+?friend_newModuleInstance@ShareExperienceBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116BF0,96,Code/masm_dumps/ShareExperienceBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x64; Ghidra confirmed
+?friend_newModuleInstance@BannerCarrierUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00119BC0,96,Code/masm_dumps/BannerCarrierUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x65; Ghidra confirmed
+?friend_newModuleInstance@GateOpenAndCloseBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00119DE0,103,Code/masm_dumps/GateOpenAndCloseBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x67; Ghidra confirmed
+?friend_newModuleInstance@WeaponModeSpecialPowerUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00119670,96,Code/masm_dumps/WeaponModeSpecialPowerUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x6C; Ghidra confirmed
+?friend_newModuleInstance@ArrowStormUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00118EB0,99,Code/masm_dumps/ArrowStormUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x6B; Ghidra confirmed
+?friend_newModuleInstance@ModelConditionSpecialAbilityUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00118FF0,99,Code/masm_dumps/ModelConditionSpecialAbilityUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x6D; Ghidra confirmed
+?friend_newModuleInstance@WeaponFireSpecialAbilityUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001193B0,99,Code/masm_dumps/WeaponFireSpecialAbilityUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x70; Ghidra confirmed
+?friend_newModuleData@WeaponFireSpecialAbilityUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119430,110,Code/masm_dumps/WeaponFireSpecialAbilityUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x70; Ghidra confirmed
+?friend_newModuleInstance@ToggleMountedSpecialAbilityUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011C890,99,Code/masm_dumps/ToggleMountedSpecialAbilityUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x6E; Ghidra confirmed
+?friend_newModuleData@ToggleMountedSpecialAbilityUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011C910,110,Code/masm_dumps/ToggleMountedSpecialAbilityUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x6E; Ghidra confirmed
+?friend_newModuleInstance@ToggleHiddenSpecialAbilityUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011C9E0,99,Code/masm_dumps/ToggleHiddenSpecialAbilityUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x6F; Ghidra confirmed
+?friend_newModuleData@ToggleHiddenSpecialAbilityUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011CA60,110,Code/masm_dumps/ToggleHiddenSpecialAbilityUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x6F; Ghidra confirmed
+?friend_newModuleInstance@HeroModeSpecialAbilityUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00119130,99,Code/masm_dumps/HeroModeSpecialAbilityUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x71; Ghidra confirmed
+?friend_newModuleData@HeroModeSpecialAbilityUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001191B0,110,Code/masm_dumps/HeroModeSpecialAbilityUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x71; Ghidra confirmed
+?friend_newModuleInstance@WeaponSetSpecialAbilityUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00119270,99,Code/masm_dumps/WeaponSetSpecialAbilityUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x72; Ghidra confirmed
+?friend_newModuleData@WeaponSetSpecialAbilityUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001192F0,110,Code/masm_dumps/WeaponSetSpecialAbilityUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x72; Ghidra confirmed
+?friend_newModuleInstance@GiveUpgradeUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011AB00,99,Code/masm_dumps/GiveUpgradeUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x73; Ghidra confirmed
+?friend_newModuleData@GiveUpgradeUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011AB80,110,Code/masm_dumps/GiveUpgradeUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x73; Ghidra confirmed
+?friend_newModuleData@SpawnPointProductionExitUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00126C70,57,Code/masm_dumps/SpawnPointProductionExitUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x76; Ghidra confirmed
+?friend_newModuleData@DefaultProductionExitUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00123910,70,Code/masm_dumps/DefaultProductionExitUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x75; exact boundary confirmed
+?friend_newModuleInstance@LargeGroupAudioUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011C200,96,Code/masm_dumps/LargeGroupAudioUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x74; Ghidra confirmed
+?friend_newModuleData@LargeGroupAudioUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011C280,107,Code/masm_dumps/LargeGroupAudioUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x74; Ghidra confirmed
+?friend_newModuleInstance@SpecialAbilityUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001140C0,99,Code/masm_dumps/SpecialAbilityUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x7A; Ghidra confirmed
+?friend_newModuleData@SpecialAbilityUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00114140,110,Code/masm_dumps/SpecialAbilityUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x7A; Ghidra confirmed
+?friend_newModuleData@SupplyCenterProductionExitUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001243A0,70,Code/masm_dumps/SupplyCenterProductionExitUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x7B; exact boundary confirmed
+?friend_newModuleInstance@DozerAIUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00117FA0,99,Code/masm_dumps/DozerAIUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x7F; Ghidra confirmed
+?friend_newModuleInstance@AttributeModifierAuraUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011A8D0,96,Code/masm_dumps/AttributeModifierAuraUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x79; Ghidra confirmed
+?friend_newModuleData@MonsterDockUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011B1E0,107,Code/masm_dumps/MonsterDockUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x7E; Ghidra confirmed
+?friend_newModuleInstance@MonsterDockUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B160,99,Code/masm_dumps/MonsterDockUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x7E; Ghidra confirmed
+?friend_newModuleInstance@RousingSpeechUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011C640,99,Code/masm_dumps/RousingSpeechUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x80; Ghidra confirmed
+?friend_newModuleData@RousingSpeechUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011C6C0,110,Code/masm_dumps/RousingSpeechUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x80; Ghidra confirmed
+?friend_newModuleData@HijackerUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00126D50,58,Code/masm_dumps/HijackerUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x84; Ghidra confirmed
+?friend_newModuleData@AttributeModifierAuraUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011A950,110,Code/masm_dumps/AttributeModifierAuraUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x79; Ghidra confirmed
+?friend_newModuleInstance@GloriousChargeUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011C750,99,Code/masm_dumps/GloriousChargeUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x81; Ghidra confirmed
+?friend_newModuleData@GloriousChargeUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011C7D0,110,Code/masm_dumps/GloriousChargeUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x81; Ghidra confirmed
+?friend_newModuleInstance@FadeAndDieOrnamentUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011B5B0,96,Code/masm_dumps/FadeAndDieOrnamentUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x85; Ghidra confirmed
+?friend_newModuleData@FadeAndDieOrnamentUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00125BD0,107,Code/masm_dumps/FadeAndDieOrnamentUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x85; Ghidra confirmed
+?friend_newModuleData@StructureToppleUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0012C250,110,Code/masm_dumps/StructureToppleUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x86; Ghidra confirmed
+?friend_newModuleInstance@ProductionUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011AC10,99,Code/masm_dumps/ProductionUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x82; Ghidra confirmed
+?friend_newModuleData@BoneFXUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00123830,110,Code/masm_dumps/BoneFXUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x89; Ghidra confirmed
+?friend_newModuleData@FoundationAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00122E30,57,Code/masm_dumps/FoundationAIUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x8E; Ghidra confirmed
+?friend_newModuleInstance@FoundationAIUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001143B0,99,Code/masm_dumps/FoundationAIUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x8E; Ghidra confirmed
+?friend_newModuleInstance@WanderAIUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011BE60,99,Code/masm_dumps/WanderAIUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x8C; Ghidra confirmed
+?friend_newModuleInstance@WorkerAIUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011C060,99,Code/masm_dumps/WorkerAIUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x8F; Ghidra confirmed
+?friend_newModuleInstance@AnimalAIUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00116990,99,Code/masm_dumps/AnimalAIUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x8D; Ghidra confirmed
+?friend_newModuleData@AnimalAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00116A10,155,Code/masm_dumps/AnimalAIUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x8D; Ghidra confirmed
+?friend_newModuleInstance@TransportAIUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011BD80,99,Code/masm_dumps/TransportAIUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x8B; Ghidra confirmed
+?friend_newModuleData@TransportAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00116860,107,Code/masm_dumps/TransportAIUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x8B; Ghidra confirmed
+?friend_newModuleInstance@WallUpgradeUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011C170,96,Code/masm_dumps/WallUpgradeUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x90; Ghidra confirmed
+?friend_newModuleInstance@CostModifierUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D9D0,96,Code/masm_dumps/CostModifierUpgrade_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x97; Ghidra confirmed
+?friend_newModuleInstance@SpecialDisguiseUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011CD40,99,Code/masm_dumps/SpecialDisguiseUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x95; Ghidra confirmed
+?friend_newModuleData@SpecialDisguiseUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011CDC0,110,Code/masm_dumps/SpecialDisguiseUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x95; Ghidra confirmed
+?friend_newModuleInstance@EmotionTrackerUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011CE60,99,Code/masm_dumps/EmotionTrackerUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x96; Ghidra confirmed
+?friend_newModuleData@EmotionTrackerUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011CEE0,107,Code/masm_dumps/EmotionTrackerUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x96; Ghidra confirmed
+?friend_newModuleData@RubbleRiseUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00127BD0,110,Code/masm_dumps/RubbleRiseUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x88; Ghidra confirmed
+?friend_newModuleInstance@BaseUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D110,96,Code/masm_dumps/BaseUpgrade_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x99; Ghidra confirmed
+?friend_newModuleData@BaseUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0011D190,107,Code/masm_dumps/BaseUpgrade_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x99; Ghidra confirmed
+?friend_newModuleInstance@LevelUpUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D320,96,Code/masm_dumps/LevelUpUpgrade_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x9C; Ghidra confirmed
+?friend_newModuleInstance@SubObjectsUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D640,96,Code/masm_dumps/SubObjectsUpgrade_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x9E; Ghidra confirmed
+?friend_newModuleData@SubObjectsUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0012B7F0,110,Code/masm_dumps/SubObjectsUpgrade_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x9E; Ghidra confirmed
+?friend_newModuleInstance@ObjectCreationUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D420,103,Code/masm_dumps/ObjectCreationUpgrade_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xA2; Ghidra confirmed
+?friend_newModuleData@W3DDebrisDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x00113BE0,47,Code/masm_dumps/W3DDebrisDraw_friend_newModuleData.asm,matched,retail W3DModuleFactory registration ordinal 1; shared ICF body
+?friend_newModuleInstance@DelayedUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011D2A0,96,Code/masm_dumps/DelayedUpgrade_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0x9B; Ghidra confirmed
+?friend_newModuleData@DelayedUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0012B200,65,Code/masm_dumps/DelayedUpgrade_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x9B; CC-delimited body
+?friend_newModuleData@ArmorUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0012AF20,73,Code/masm_dumps/ArmorUpgrade_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x98; CC-delimited body
+?friend_newModuleData@LevelUpUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0012B320,72,Code/masm_dumps/LevelUpUpgrade_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x9C; CC-delimited body
+?friend_newModuleInstance@AttributeModifierUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011DE20,96,Code/masm_dumps/AttributeModifierUpgrade_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xAA; Ghidra confirmed
+?friend_newModuleData@AttributeModifierUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0012B950,65,Code/masm_dumps/AttributeModifierUpgrade_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xAA; CC-delimited body
+?friend_newModuleInstance@CastleUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011DEA0,96,Code/masm_dumps/CastleUpgrade_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xAB; Ghidra confirmed
+?friend_newModuleData@CastleUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0012BA80,65,Code/masm_dumps/CastleUpgrade_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xAB; CC-delimited body
+?friend_newModuleInstance@GeometryUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011DF20,96,Code/masm_dumps/GeometryUpgrade_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xAC; Ghidra confirmed
+?friend_newModuleData@GeometryUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0011DFA0,110,Code/masm_dumps/GeometryUpgrade_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xAC; Ghidra confirmed
+?friend_newModuleInstance@TooltipUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E030,96,Code/masm_dumps/TooltipUpgrade_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xAE; Ghidra confirmed
+?friend_newModuleData@TooltipUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0012BC30,107,Code/masm_dumps/TooltipUpgrade_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xAE; Ghidra confirmed
+?friend_newModuleInstance@PassiveAreaEffectBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001175D0,96,Code/masm_dumps/PassiveAreaEffectBehavior_friend_newModuleInstance.asm,matched,retail
+?friend_newModuleData@PassiveAreaEffectBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00117650,107,Code/masm_dumps/PassiveAreaEffectBehavior_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xB0 Ghidra confirmed
+?friend_newModuleData@TemporarilyDefectUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00124C20,57,Code/masm_dumps/TemporarilyDefectUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xB2 Ghidra omission
+?friend_newModuleInstance@TemporarilyDefectUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001220C0,96,Code/masm_dumps/TemporarilyDefectUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xB2 Ghidra confirmed
+?friend_newModuleInstance@ExperienceLevelCreate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011E5F0,96,Code/masm_dumps/ExperienceLevelCreate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xB9 Ghidra confirmed
+?friend_newModuleData@ExperienceLevelCreate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011E670,107,Code/masm_dumps/ExperienceLevelCreate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xB9 Ghidra confirmed
+?friend_newModuleData@HealCrateCollide@@SAPAVModuleData@@PAVINI@@@Z,,0x0011EDC0,107,Code/masm_dumps/HealCrateCollide_friend_newModuleData.asm,matched,canonical owner of Heal and Shroud retail ICF data body
+?friend_newModuleData@ShroudCrateCollide@@SAPAVModuleData@@PAVINI@@@Z,,0x0011EDC0,107,Code/masm_dumps/ShroudCrateCollide_friend_newModuleData.asm,matched,retail ICF alias of HealCrateCollide data factory
+?friend_newModuleInstance@CivilianSpawnCollide@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011F210,96,Code/masm_dumps/CivilianSpawnCollide_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xC8 Ghidra confirmed
+?friend_newModuleData@CivilianSpawnCollide@@SAPAVModuleData@@PAVINI@@@Z,,0x0011F290,107,Code/masm_dumps/CivilianSpawnCollide_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xC8 Ghidra confirmed
+?friend_newModuleInstance@PorcupineFormationBodyModule@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011FBE0,99,Code/masm_dumps/PorcupineFormationBodyModule_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xD3 Ghidra confirmed
+?friend_newModuleData@PorcupineFormationBodyModule@@SAPAVModuleData@@PAVINI@@@Z,,0x0011FC60,107,Code/masm_dumps/PorcupineFormationBodyModule_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xD3 Ghidra confirmed
+?friend_newModuleData@DefectorSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x0011FF00,110,Code/masm_dumps/DefectorSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xD7 supersedes stale no-match
+?friend_newModuleData@RespawnBody@@SAPAVModuleData@@PAVINI@@@Z,,0x0011F7A0,107,Code/masm_dumps/RespawnBody_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xD4 Ghidra confirmed
+?friend_newModuleInstance@RespawnBody@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011F720,99,Code/masm_dumps/RespawnBody_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xD4 Ghidra confirmed
+?friend_newModuleInstance@LevelGrantSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x0011FF90,99,Code/masm_dumps/LevelGrantSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xD8 Ghidra confirmed
+?friend_newModuleData@LevelGrantSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00120010,110,Code/masm_dumps/LevelGrantSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xD8 Ghidra confirmed
+?friend_newModuleInstance@ProductionSpeedBonus@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001200A0,96,Code/masm_dumps/ProductionSpeedBonus_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xD9 Ghidra confirmed
+?friend_newModuleData@ProductionSpeedBonus@@SAPAVModuleData@@PAVINI@@@Z,,0x00120120,110,Code/masm_dumps/ProductionSpeedBonus_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xD9 Ghidra confirmed
+?friend_newModuleInstance@ElvenWoodSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001202C0,96,Code/masm_dumps/ElvenWoodSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xDB Ghidra confirmed
+?friend_newModuleData@ElvenWoodSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00120340,110,Code/masm_dumps/ElvenWoodSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xDB Ghidra confirmed
+?friend_newModuleInstance@WeaponChangeSpecialPowerModule@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001203D0,96,Code/masm_dumps/WeaponChangeSpecialPowerModule_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xDC Ghidra confirmed
+?friend_newModuleData@WeaponChangeSpecialPowerModule@@SAPAVModuleData@@PAVINI@@@Z,,0x00120450,110,Code/masm_dumps/WeaponChangeSpecialPowerModule_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xDC Ghidra confirmed
+?friend_newModuleInstance@FreezingRainSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00120810,96,Code/masm_dumps/FreezingRainSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xE0 Ghidra confirmed
+?friend_newModuleData@FreezingRainSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00120890,110,Code/masm_dumps/FreezingRainSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xE0 Ghidra confirmed
+?friend_newModuleInstance@DarknessSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00120920,96,Code/masm_dumps/DarknessSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xE1 Ghidra confirmed
+?friend_newModuleData@DarknessSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x001209A0,110,Code/masm_dumps/DarknessSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xE1 Ghidra confirmed
+?friend_newModuleInstance@GrabPassengerSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00120A30,96,Code/masm_dumps/GrabPassengerSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xE2 Ghidra confirmed
+?friend_newModuleData@GrabPassengerSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00120AB0,110,Code/masm_dumps/GrabPassengerSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xE2 Ghidra confirmed
+?friend_newModuleInstance@DeflectSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00120B40,96,Code/masm_dumps/DeflectSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xE3 Ghidra confirmed
+?friend_newModuleData@DeflectSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00120BC0,110,Code/masm_dumps/DeflectSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xE3 Ghidra confirmed
+?friend_newModuleInstance@SiegeDeploySpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00120C60,96,Code/masm_dumps/SiegeDeploySpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xE4 Ghidra confirmed
+?friend_newModuleData@SiegeDeploySpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00120CE0,110,Code/masm_dumps/SiegeDeploySpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xE4 Ghidra confirmed
+?friend_newModuleInstance@StopSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00120E80,96,Code/masm_dumps/StopSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xE6 Ghidra confirmed
+?friend_newModuleData@StopSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00120F00,110,Code/masm_dumps/StopSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xE6 Ghidra confirmed
+?friend_newModuleInstance@WoundArrowUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00120F90,99,Code/masm_dumps/WoundArrowUpdate_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xE7 Ghidra confirmed
+?friend_newModuleData@WoundArrowUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00121010,110,Code/masm_dumps/WoundArrowUpdate_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xE7 Ghidra confirmed
+?friend_newModuleInstance@FellBeastSwoopPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001210D0,99,Code/masm_dumps/FellBeastSwoopPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xE8 Ghidra confirmed
+?friend_newModuleData@FellBeastSwoopPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00121150,110,Code/masm_dumps/FellBeastSwoopPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xE8 Ghidra confirmed
+?friend_newModuleInstance@ManTheWallsSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001211E0,96,Code/masm_dumps/ManTheWallsSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xE9 Ghidra confirmed
+?friend_newModuleData@ManTheWallsSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00121260,110,Code/masm_dumps/ManTheWallsSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xE9 Ghidra confirmed
+?friend_newModuleInstance@PlayerUpgradeSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x001212F0,96,Code/masm_dumps/PlayerUpgradeSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xEA Ghidra confirmed
+?friend_newModuleData@PlayerUpgradeSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00121370,110,Code/masm_dumps/PlayerUpgradeSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xEA Ghidra confirmed
+?friend_newModuleInstance@PlayerHealSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00121400,96,Code/masm_dumps/PlayerHealSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xEB Ghidra confirmed
+?friend_newModuleData@PlayerHealSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00121480,110,Code/masm_dumps/PlayerHealSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xEB Ghidra confirmed
+?friend_newModuleInstance@DevastateSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00121510,96,Code/masm_dumps/DevastateSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xEC Ghidra confirmed
+?friend_newModuleData@DevastateSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00121590,110,Code/masm_dumps/DevastateSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xEC Ghidra confirmed
+?friend_newModuleInstance@SplitHordeSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00121620,96,Code/masm_dumps/SplitHordeSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xED Ghidra confirmed
+?friend_newModuleData@SplitHordeSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x001216A0,110,Code/masm_dumps/SplitHordeSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xED Ghidra confirmed
+?friend_newModuleInstance@RepairSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00121730,96,Code/masm_dumps/RepairSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xEE Ghidra confirmed
+?friend_newModuleData@RepairSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x001217B0,110,Code/masm_dumps/RepairSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xEE Ghidra confirmed
+?friend_newModuleInstance@CombineHordeSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00121840,96,Code/masm_dumps/CombineHordeSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xEF Ghidra confirmed
+?friend_newModuleData@CombineHordeSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x001218C0,110,Code/masm_dumps/CombineHordeSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xEF Ghidra confirmed
+?friend_newModuleData@SiegeDeployHordeSpecialPower@@SAPAVModuleData@@PAVINI@@@Z,,0x00120DF0,110,Code/masm_dumps/SiegeDeployHordeSpecialPower_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xE5 Ghidra confirmed
+?friend_newModuleInstance@SiegeDeployHordeSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00120D70,96,Code/masm_dumps/SiegeDeployHordeSpecialPower_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xE5 Ghidra confirmed ICF alias
+?friend_newModuleData@AnimationSoundClientBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00121DA0,107,Code/masm_dumps/AnimationSoundClientBehavior_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xF3 Ghidra confirmed
+?friend_newModuleData@ModelConditionSoundSelectorClientBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00121E30,107,Code/masm_dumps/ModelConditionSoundSelectorClientBehavior_friend_newModuleData.asm,matched,retail
+?friend_newModuleData@UpgradeSoundSelectorClientBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00121ED0,107,Code/masm_dumps/UpgradeSoundSelectorClientBehavior_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0xF5 Ghidra confirmed
+?friend_newModuleInstance@AnimationSoundClientBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00121D20,96,Code/masm_dumps/AnimationSoundClientBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xF3 Ghidra confirmed
+?friend_newModuleInstance@ModelConditionSoundSelectorClientBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00126190,104,Code/masm_dumps/ModelConditionSoundSelectorClientBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xF4 Ghidra confirmed
+?friend_newModuleInstance@UpgradeSoundSelectorClientBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z,,0x00124B30,104,Code/masm_dumps/UpgradeSoundSelectorClientBehavior_friend_newModuleInstance.asm,matched,retail ModuleFactory registration ordinal 0xF5 Ghidra confirmed
+??1BridgeBehaviorModuleData@@UAE@XZ,,0x001F5440,147,Code/masm_dumps/BridgeBehaviorModuleData_destructor.asm,matched,Ghidra-corrected retail body via constructor vtable and deleting destructor
+??1StructureCollapseUpdateModuleData@@UAE@XZ,,0x00128A90,103,Code/masm_dumps/StructureCollapseUpdateModuleData_destructor.asm,matched,Ghidra-corrected retail SEH vector destructor via registration and vtable chain
+?friend_newModuleData@W3DQuadrupedDraw@@SAPAVModuleData@@PAVINI@@@Z,,0x006BFEB0,110,Code/masm_dumps/W3DQuadrupedDraw_friend_newModuleData.asm,matched,W3D ModuleFactory registration ordinal 0x05 Ghidra corrected owner
+?doPlayerSetOverrideRelationToTeam@ScriptActions@@IAEXABVAsciiString@@0H@Z,,0x002F84C0,102,Code/masm_dumps/ScriptActions_doPlayerSetOverrideRelationToTeam.asm,matched,Ghidra-corrected body via executeAction dispatch thunk
+??1HeightMapRenderObjClass@@UAE@XZ,,0x006D33B0,116,Code/masm_dumps/HeightMapRenderObjClass_destructor.asm,matched,Ghidra-corrected body via constructor vtables and deleting destructor
+?friend_newModuleData@OpenContain@@SAPAVModuleData@@PAVINI@@@Z,,0x001159E0,110,Code/masm_dumps/OpenContain_friend_newModuleData.asm,matched,retail ModuleFactory registration ordinal 0x18 Ghidra corrected owner
+?initTeam@TeamFactory@@QAEXABVAsciiString@@0_NPAVDict@@@Z,,0x000F8170,220,Code/masm_dumps/TeamFactory_initTeam.asm,matched,Correct retail body identified by unique public thunk at 0x00039E0F
+?setControlBarSchemeByPlayer@ControlBar@@QAEXPAVPlayer@@@Z,,0x0049F8B0,790,Code/masm_dumps/ControlBar_setControlBarSchemeByPlayer.asm,matched,Correct retail body identified by unique public thunk at 0x00019B64
+?WOLLobbyMenuInit@@YAXPAVWindowLayout@@PAX@Z,,0x004FBBE0,1711,Code/masm_dumps/WOLLobbyMenuInit.asm,matched,Correct retail body from unique FunctionLexicon thunk 0x00035878 and WOLCustomLobby strings
+??0HotKeyManager@@QAE@XZ,,0x005B39E0,146,Code/masm_dumps/HotKeyManager_ctor.asm,matched,Correct retail body from GameClient init thunk 0x0000B389 and TheHotKeyManager naming sequence
+?playerTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,,0x004FA800,1517,Code/masm_dumps/playerTooltip.asm,matched,Correct retail body installed by WOLLobbyMenuInit and anchored by eleven tooltip strings
+??0SidesList@@QAE@XZ,,0x0019EA80,365,Code/masm_dumps/SidesList_ctor.asm,matched,Correct retail body from GameEngine init thunk 0x00032EC5 and TheSidesList naming sequence
+?WOLLoginMenuInit@@YAXPAVWindowLayout@@PAX@Z,,0x00500A20,3164,Code/masm_dumps/WOLLoginMenuInit.asm,matched,Correct retail body from unique FunctionLexicon thunk 0x0000CAEA
+??0W3DShadowGeometry@@QAE@XZ,,0x007BBCF0,131,Code/masm_dumps/W3DShadowGeometry_ctor.asm,matched,Correct retail body from Load_Geom constructor thunk 0x00031624
+?WOLBuddyOverlayInit@@YAXPAVWindowLayout@@PAX@Z,,0x004EC6E0,1263,Code/masm_dumps/WOLBuddyOverlayInit.asm,matched,Correct retail body from unique FunctionLexicon thunk 0x00016C89
+?PopupHostGameInit@@YAXPAVWindowLayout@@PAX@Z,,0x004D68C0,1253,Code/masm_dumps/PopupHostGameInit.asm,matched,Correct retail body from unique FunctionLexicon thunk 0x00032821
+?PopupJoinGameInit@@YAXPAVWindowLayout@@PAX@Z,,0x004D7300,510,Code/masm_dumps/PopupJoinGameInit.asm,matched,Correct retail body from unique FunctionLexicon thunk 0x0003E24D
+?WOLBuddyOverlayRCMenuInit@@YAXPAVWindowLayout@@PAX@Z,,0x004EADD0,649,Code/masm_dumps/WOLBuddyOverlayRCMenuInit.asm,matched,Correct retail body from unique FunctionLexicon thunk 0x00048969
+??1W3DDisplayString@@MAE@XZ,,0x006F4C50,114,Code/masm_dumps/W3DDisplayString_dtor.asm,matched,Correct retail body from vtable scalar deleting destructor thunk 0x00044B57
+?setWaypointName@MapObject@@QAEXVAsciiString@@@Z,,0x00087E50,31,Code/masm_dumps/MapObject_setWaypointName.asm,matched,Correct retail body from waypoint key and matched getter sibling cluster
+?parseStructure@BuildListInfo@@SAXPAVINI@@PAX1PBX@Z,,0x001943D0,204,Code/masm_dumps/BuildListInfo_parseStructure.asm,matched,Exact retail MASM; Structure parser table and AI build-list caller prove ownership
+?updateAndDrawWorldAnimations@InGameUI@@IAEXXZ,,0x0043F640,450,Code/masm_dumps/InGameUI_updateAndDrawWorldAnimations.asm,matched,Exact retail MASM; preDraw caller and world-animation loop prove ownership
+?addPlayerByTemplate@SidesList@@QAEXVAsciiString@@@Z,,0x0019C590,722,Code/masm_dumps/SidesList_addPlayerByTemplate.asm,matched,Exact retail MASM; faction strings and validateSides caller prove ownership
+?createGadget@@YAPAVGameWindow@@PADPAV1@HHHHHPAVWinInstanceData@@PAX@Z,,0x00486B10,1959,Code/masm_dumps/GameWindowManagerScript_createGadget.asm,matched,Exact retail MASM; gadget branches and two create-window callers prove ownership
+?getUiText@Parameter@@QBE?AVAsciiString@@XZ,,0x00352E80,3667,Code/masm_dumps/Parameter_getUiText.asm,matched,Exact retail MASM; unique UI strings and two script callers prove ownership
+?createNewMessageQueue@GameSpyBuddyMessageQueueInterface@@SAPAV1@XZ,,0x0063E240,86,Code/masm_dumps/GameSpyBuddyMessageQueue_createNew.asm,matched,Exact retail MASM ICF alias; SetUpGameSpy call order proves buddy-factory ownership
+?createNewMessageQueue@GameSpyPeerMessageQueueInterface@@SAPAV1@XZ,,0x0064E620,86,Code/masm_dumps/GameSpyPeerMessageQueue_createNew.asm,matched,Exact retail MASM; SetUpGameSpy call order proves peer-factory ownership
+?createNewGameSpyInfoInterface@GameSpyInfoInterface@@SAPAV1@XZ,,0x00637760,89,Code/masm_dumps/GameSpyInfoInterface_createNew.asm,matched,Exact retail MASM; SetUpGameSpy assignment and immediate interface calls prove ownership
+?isAnyKindOf@Thing@@QBE_NABV?$BitFlags@$0HE@@@@Z,,0x00132AE0,41,Code/masm_dumps/Thing_isAnyKindOf.asm,matched,Exact retail MASM; Thing template-mask flow and any-intersection helper prove ownership
+?isKindOfMulti@Thing@@QBE_NABV?$BitFlags@$0HE@@@0@Z,,0x00132B20,41,Code/masm_dumps/Thing_isKindOfMulti.asm,matched,Exact retail MASM; Thing template-mask flow and set-clear helper prove ownership
+??1CrushDieModuleData@@UAE@XZ,,0x001255C0,77,Code/masm_dumps/CrushDieModuleData_destructor.asm,matched,Exact retail MASM; factory constructor vtable and deleting wrapper prove ownership
+?doSoundPlayFromNamed@ScriptActions@@IAEXABVAsciiString@@0@Z,,0x002EE880,165,Code/masm_dumps/ScriptActions_doSoundPlayFromNamed.asm,matched,Exact retail MASM; registered action and executeAction dispatch prove ownership
+?reset@GameInfo@@UAEXXZ,,0x0061F440,168,Code/masm_dumps/GameInfo_reset.asm,matched,Exact retail MASM; NOMAP anchor and reset semantics prove ownership
+?load@GameSpyLoginPreferences@@UAE_NVAsciiString@@@Z,,0x00082190,977,Code/masm_dumps/GameSpyLoginPreferences_load.asm,matched,Exact retail MASM; date nick and password key literals prove ownership
+??1CountUpTransition@@UAE@XZ,,0x0059BD60,102,Code/masm_dumps/CountUpTransition_destructor.asm,matched,Exact retail MASM; true RVA and ownership verified via CountUp constructor vtable and deleting-dtor thunk; stale queue RVA overlaps W3DDisplayString
+?winCreate@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHP6A?AW4WindowMsgHandledType@@0III@ZPAVWinInstanceData@@@Z,,0x006F5A90,269,Code/masm_dumps/GameWindowManager_winCreate.asm,matched,Exact retail MASM; true body confirmed by GameWindow caller and Times New Roman fallback; avoids wrong 56-byte COMDAT extraction
+??1AutoDepositUpdateModuleData@@UAE@XZ,,0x00125960,67,Code/masm_dumps/AutoDepositUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership; BFME member layout differs from ZH-derived C++
+??1OCLUpdateModuleData@@UAE@XZ,,0x00298B70,7,Code/masm_dumps/OCLUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership; BFME lacks the ZH-derived FactionOCLList member
+?insert_unique@?$_Rb_tree@HU?$pair@$$CBHVAsciiString@@@_STL@@U?$_Select1st@U?$pair@$$CBHVAsciiString@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHVAsciiString@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHVAsciiString@@@2@@Z,,0x000AA800,592,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,Exact retail body; stale queue RVA included three leading INT3 padding bytes
+?insert_unique@?$_Rb_tree@HU?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHVGameSpyGroupRoom@@@2@@Z,,0x00634360,592,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,Exact retail body; true owner found after removing three stale INT3 padding bytes
+?insert_unique@?$_Rb_tree@JU?$pair@$$CBJVLadderPref@@@_STL@@U?$_Select1st@U?$pair@$$CBJVLadderPref@@@_STL@@@2@U?$less@J@2@V?$allocator@U?$pair@$$CBJVLadderPref@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBJVLadderPref@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBJVLadderPref@@@_STL@@@2@@2@U32@ABU?$pair@$$CBJVLadderPref@@@2@@Z,,0x000AB360,592,Code/GameEngine/Source/Common/UserPreferences.cpp,matched,Exact retail body; true owner found after removing three stale INT3 padding bytes
+?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@2@@Z,,0x00768710,592,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,matched,Exact retail body; true function begins after three stale INT3 padding bytes
+?Clone@W3DStatusCircle@@UBEPAVRenderObjClass@@XZ,,0x00725B60,3,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DStatusCircle.cpp,matched,Retail Clone returns null; vtable thunk proves the 3-byte body
+??1Radar@@UAE@XZ,,0x00107620,118,Code/masm_dumps/Radar_destructor.asm,matched,Exact retail MASM; dual-vtable wrapper chain proves ownership; preserves BFME vector-destructor machinery absent from ZH layout
+??0SkirmishGameInfo@@QAE@XZ,,0x00619720,134,Code/masm_dumps/SkirmishGameInfo_constructor.asm,matched,Exact retail MASM; caller allocation vtables and eight-slot construction prove ownership; avoids systemic BFME/ZH layout drift
+??1SlowDeathBehaviorModuleData@@UAE@XZ,,0x002095F0,221,Code/masm_dumps/SlowDeathBehaviorModuleData_destructor.asm,matched,Exact retail MASM; ctor vtable and deleting-wrapper chain prove ownership; preserves four BFME phase-array destructors absent from ZH layout
+??1BoneFXUpdateModuleData@@UAE@XZ,,0x00288490,129,Code/masm_dumps/BoneFXUpdateModuleData_destructor.asm,matched,Exact retail MASM; matched factory ctor vtable and deleting-wrapper chain prove ownership; preserves three BFME vector destructors
+?setUpDownImages@ControlBar@@IAEXXZ,,0x0049D160,259,Code/masm_dumps/ControlBar_setUpDownImages.asm,matched,Exact retail MASM; source string and three caller paths prove ownership; preserves BFME ControlBar member offsets
+?init@ShellMenuSchemeManager@@QAEXXZ,,0x00580290,1,Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme.cpp,matched,Retail manager init is a no-op; Shell init caller and unique thunk prove ownership
+?init@VideoPlayer@@UAEXXZ,,0x0081CB30,574,Code/masm_dumps/VideoPlayer_init.asm,matched,Exact contiguous retail MASM; VideoPlayer vtable and derived Bink init prove ownership; preserves BFME video-table construction
+?Thread_Function@GameResultsThreadClass@@UAEXXZ,,0x00641E70,387,Code/masm_dumps/GameResultsThread_Thread_Function.asm,matched,Exact retail MASM; WSA loop global results queue and unique sendGameResults call prove ownership
+?populateQMColorComboBox@@YAXAAVQuickMatchPreferences@@@Z,,0x00505DB0,406,Code/masm_dumps/populateQMColorComboBox.asm,matched,Exact retail MASM; entry thunk and multiplayer-color tooltip population loop prove ownership
+?tryToIgnite@FlammableUpdate@@QAEXXZ,,0x00293990,961,Code/masm_dumps/FlammableUpdate_tryToIgnite.asm,matched,Ghidra-owned BFME ignition path
+?parseInGameUIDefinition@INI@@SAXPAV1@@Z,,0x0043AAA0,36,Code/masm_dumps/INI_parseInGameUIDefinition.asm,matched,Ghidra-owned BFME UI parser dispatch
+?parseTurretSweep@TurretAIData@@SAXPAVINI@@PAX1PBX@Z,,0x0018C3E0,48,Code/masm_dumps/TurretAIData_parseTurretSweep.asm,matched,Ghidra-owned BFME turret-angle parser
+??0FlammableUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00293270,187,Code/masm_dumps/FlammableUpdate_ctor.asm,matched,Ghidra-owned BFME Flammable constructor
+?onStructureConstructionComplete@Player@@QAEXPAVObject@@0_N@Z,,0x000C9600,126,Code/masm_dumps/Player_onStructureConstructionComplete.asm,matched,Ghidra-owned BFME construction completion dispatch
+?canDoSpecialPowerAtLocation@ActionManager@@QAE_NPBVObject@@PBUCoord3D@@W4CommandSourceType@@PBVSpecialPowerTemplate@@0I_N@Z,,0x000C6930,3094,Code/masm_dumps/ActionManager_canDoSpecialPowerAtLocation.asm,matched,Ghidra-owned BFME special-power location validation
+?TestWaterUpdate@@YAXXZ,,0x007ACBD0,2108,Code/masm_dumps/TestWaterUpdate.asm,matched,Ghidra-owned BFME water-track editor update

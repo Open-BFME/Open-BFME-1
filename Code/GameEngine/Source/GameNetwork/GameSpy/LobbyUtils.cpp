@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -32,6 +32,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
+#define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/GameEngine.h"
@@ -371,10 +372,11 @@ NameKeyType GetGameInfoListBoxID( void )
 	return NAMEKEY_INVALID;
 }
 
+#pragma inline_depth( 0 )
 void GrabWindowInfo( void )
 {
 	isSmall = TRUE;
-	parentID = NAMEKEY( "WOLCustomLobby.wnd:WOLLobbyMenuParent" );
+	parentID = TheNameKeyGenerator->nameToKey( "WOLCustomLobby.wnd:WOLLobbyMenuParent" );
 	parent = TheWindowManager->winGetWindowFromId(NULL, parentID);
 
 	pingImages[0] = TheMappedImageCollection->findImageByName("Ping03");
@@ -387,26 +389,26 @@ void GrabWindowInfo( void )
 //	parentGameListSmallID = NAMEKEY( "WOLCustomLobby.wnd:ParentGameListSmall" );
 //	parentGameListSmall = TheWindowManager->winGetWindowFromId(NULL, parentGameListSmallID);
 
-	parentGameListLargeID = NAMEKEY( "WOLCustomLobby.wnd:ParentGameListLarge" );
+	parentGameListLargeID = TheNameKeyGenerator->nameToKey( "WOLCustomLobby.wnd:ParentGameListLarge" );
 	parentGameListLarge = TheWindowManager->winGetWindowFromId(NULL, parentGameListLargeID);
 
-	listboxLobbyGamesSmallID = NAMEKEY( "WOLCustomLobby.wnd:ListboxGames" );
+	listboxLobbyGamesSmallID = TheNameKeyGenerator->nameToKey( "WOLCustomLobby.wnd:ListboxGames" );
 //	listboxLobbyGamesSmall = TheWindowManager->winGetWindowFromId(NULL, listboxLobbyGamesSmallID);
 //	listboxLobbyGamesSmall->winSetTooltipFunc(gameTooltip);
 
-	listboxLobbyGamesLargeID = NAMEKEY( "WOLCustomLobby.wnd:ListboxGamesLarge" );
+	listboxLobbyGamesLargeID = TheNameKeyGenerator->nameToKey( "WOLCustomLobby.wnd:ListboxGamesLarge" );
 	listboxLobbyGamesLarge = TheWindowManager->winGetWindowFromId(NULL, listboxLobbyGamesLargeID);
 	listboxLobbyGamesLarge->winSetTooltipFunc(gameTooltip);
 //
 //	listboxLobbyGameInfoID = NAMEKEY( "WOLCustomLobby.wnd:ListboxGameInfo" );
 //	listboxLobbyGameInfo = TheWindowManager->winGetWindowFromId(NULL, listboxLobbyGameInfoID);
 
-	buttonSortAlphaID = NAMEKEY("WOLCustomLobby.wnd:ButtonSortAlpha");
-	buttonSortPingID = NAMEKEY("WOLCustomLobby.wnd:ButtonSortPing");
-	buttonSortBuddiesID = NAMEKEY("WOLCustomLobby.wnd:ButtonSortBuddies");
-	windowSortAlphaID = NAMEKEY("WOLCustomLobby.wnd:WindowSortAlpha");
-	windowSortPingID = NAMEKEY("WOLCustomLobby.wnd:WindowSortPing");
-	windowSortBuddiesID = NAMEKEY("WOLCustomLobby.wnd:WindowSortBuddies");
+	buttonSortAlphaID = TheNameKeyGenerator->nameToKey("WOLCustomLobby.wnd:ButtonSortAlpha");
+	buttonSortPingID = TheNameKeyGenerator->nameToKey("WOLCustomLobby.wnd:ButtonSortPing");
+	buttonSortBuddiesID = TheNameKeyGenerator->nameToKey("WOLCustomLobby.wnd:ButtonSortBuddies");
+	windowSortAlphaID = TheNameKeyGenerator->nameToKey("WOLCustomLobby.wnd:WindowSortAlpha");
+	windowSortPingID = TheNameKeyGenerator->nameToKey("WOLCustomLobby.wnd:WindowSortPing");
+	windowSortBuddiesID = TheNameKeyGenerator->nameToKey("WOLCustomLobby.wnd:WindowSortBuddies");
 
 	buttonSortAlpha = TheWindowManager->winGetWindowFromId(parent, buttonSortAlphaID);
 	buttonSortPing = TheWindowManager->winGetWindowFromId(parent, buttonSortPingID);
@@ -417,6 +419,7 @@ void GrabWindowInfo( void )
 
 	showSortIcons();
 }
+#pragma inline_depth( 255 )
 
 void ReleaseWindowInfo( void )
 {

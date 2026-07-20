@@ -2422,6 +2422,16 @@ Bool parseInit( char *token, char *buffer, UnsignedInt version, WindowLayoutInfo
 //-------------------------------------------------------------------------------------------------
 /** Parse update for layout file */
 //-------------------------------------------------------------------------------------------------
+class RetailLayoutString
+{
+public:
+	void set( const char *text, Int length );
+	const char *str() const { return m_data ? reinterpret_cast<const char *>(m_data) + 8 : ""; }
+
+private:
+	void *m_data;
+};
+
 Bool parseUpdate( char *token, char *buffer, UnsignedInt version, WindowLayoutInfo *info )
 {
 	char *c;
@@ -2431,8 +2441,11 @@ Bool parseUpdate( char *token, char *buffer, UnsignedInt version, WindowLayoutIn
 	c = strtok( buffer, seps );
 
 	// translate string to function address
-	info->updateNameString = c;
-	info->update = TheFunctionLexicon->winLayoutUpdateFunc( TheNameKeyGenerator->nameToKey( info->updateNameString ) );
+	RetailLayoutString *updateName = reinterpret_cast<RetailLayoutString *>(reinterpret_cast<char *>(info) + 0x18);
+	updateName->set( c, c ? strlen(c) : 0 );
+	info->update = TheFunctionLexicon->winLayoutUpdateFunc(
+		TheNameKeyGenerator->nameToKey( updateName->str() ),
+		static_cast<FunctionLexicon::TableIndex>(9) );
 
 	return TRUE;  // success
 
@@ -2450,8 +2463,11 @@ Bool parseShutdown( char *token, char *buffer, UnsignedInt version, WindowLayout
 	c = strtok( buffer, seps );
 
 	// translate string to function address
-	info->shutdownNameString = c;
-	info->shutdown = TheFunctionLexicon->winLayoutShutdownFunc( TheNameKeyGenerator->nameToKey( info->shutdownNameString ) );
+	RetailLayoutString *shutdownName = reinterpret_cast<RetailLayoutString *>(reinterpret_cast<char *>(info) + 0x1c);
+	shutdownName->set( c, c ? strlen(c) : 0 );
+	info->shutdown = TheFunctionLexicon->winLayoutShutdownFunc(
+		TheNameKeyGenerator->nameToKey( shutdownName->str() ),
+		static_cast<FunctionLexicon::TableIndex>(10) );
 
 	return TRUE;  // success
 
@@ -2781,4 +2797,3 @@ GameWindow *GameWindowManager::winCreateFromScript( AsciiString filenameString,
 	return firstWindow;
 
 }  // end WinCreateFromScript
-

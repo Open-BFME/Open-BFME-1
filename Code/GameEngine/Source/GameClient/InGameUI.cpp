@@ -905,7 +905,6 @@ const FieldParse InGameUI::s_fieldParseTable[] =
 //-------------------------------------------------------------------------------------------------
 /** Parse MouseCursor entry */
 //-------------------------------------------------------------------------------------------------
-// ?parseInGameUIDefinition@INI@@SAXPAV1@@Z present-unmatched
 void INI::parseInGameUIDefinition( INI* ini )
 {
 	if( TheInGameUI )
@@ -2198,7 +2197,6 @@ void InGameUI::beginAreaSelectHint( const GameMessage *msg )
 //-------------------------------------------------------------------------------------------------
 /** An area selection has occurred, finish graphical "hint". */
 //-------------------------------------------------------------------------------------------------
-// ?endAreaSelectHint@InGameUI@@UAEXPBVGameMessage@@@Z present-unmatched
 void InGameUI::endAreaSelectHint( const GameMessage *msg )
 {
 	m_isDragSelecting = false;
@@ -5597,7 +5595,6 @@ Int InGameUI::getIdleWorkerCount( void )
 	return m_idleWorkers[index].size();
 }
 
-// ?showIdleWorkerLayout@InGameUI@@EAEXXZ present-unmatched
 void InGameUI::showIdleWorkerLayout( void )
 {
 	if (!m_idleWorkerWin)
@@ -5620,7 +5617,6 @@ void InGameUI::showIdleWorkerLayout( void )
 //		GadgetButtonSetText(m_idleWorkerWin, number);
 //	}
 }
-// ?hideIdleWorkerLayout@InGameUI@@EAEXXZ present-unmatched
 void InGameUI::hideIdleWorkerLayout( void )
 {
 	if(!m_idleWorkerWin)
@@ -5829,5 +5825,3 @@ WindowMsgHandledType IdleWorkerSystem( GameWindow *window, UnsignedInt msg,
 	return MSG_HANDLED;
 
 }
-
-

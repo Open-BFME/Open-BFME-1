@@ -50,7 +50,6 @@
 
 LadderList *TheLadderList = NULL;
 
-// ??0LadderInfo@@QAE@XZ present-unmatched
 LadderInfo::LadderInfo()
 {
 	playersPerTeam = 1;
@@ -262,7 +261,6 @@ static LadderInfo *parseLadder(AsciiString raw)
 	return NULL;
 }
 
-// ??0LadderList@@QAE@XZ present-unmatched
 LadderList::LadderList()
 {
 	//Int profile = TheGameSpyInfo->getLocalProfileID();
@@ -348,7 +346,6 @@ LadderList::LadderList()
 	DEBUG_LOG(("After looking for ladders, we have %d local, %d special && %d normal\n", m_localLadders.size(), m_specialLadders.size(), m_standardLadders.size()));
 }
 
-// ??1LadderList@@QAE@XZ present-unmatched
 LadderList::~LadderList()
 {
 	LadderInfoList::iterator it;
@@ -369,7 +366,6 @@ LadderList::~LadderList()
 	}
 }
 
-// ?findLadder@LadderList@@QAEPBVLadderInfo@@ABVAsciiString@@G@Z present-unmatched
 const LadderInfo* LadderList::findLadder( const AsciiString& addr, UnsignedShort port )
 {
 	LadderInfoList::const_iterator cit;
@@ -441,25 +437,21 @@ const LadderInfo* LadderList::findLadderByIndex( Int index )
 	return NULL;
 }
 
-// ?getSpecialLadders@LadderList@@QAEPBV?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@XZ present-unmatched
 const LadderInfoList* LadderList::getSpecialLadders( void )
 {
 	return &m_specialLadders;
 }
 
-// ?getStandardLadders@LadderList@@QAEPBV?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@XZ present-unmatched
 const LadderInfoList* LadderList::getStandardLadders( void )
 {
 	return &m_standardLadders;
 }
 
-// ?getLocalLadders@LadderList@@QAEPBV?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@XZ present-unmatched
 const LadderInfoList* LadderList::getLocalLadders( void )
 {
 	return &m_localLadders;
 }
 
-// ?loadLocalLadders@LadderList@@AAEXXZ present-unmatched
 void LadderList::loadLocalLadders( void )
 {
 	AsciiString dirname;
@@ -480,7 +472,6 @@ void LadderList::loadLocalLadders( void )
 	}
 }
 
-// ?checkLadder@LadderList@@AAEXVAsciiString@@H@Z present-unmatched
 void LadderList::checkLadder( AsciiString fname, Int index )
 {
 	File *fp = TheFileSystem->openFile(fname.str(), File::READ | File::TEXT);

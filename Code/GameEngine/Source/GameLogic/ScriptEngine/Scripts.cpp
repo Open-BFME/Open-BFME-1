@@ -894,7 +894,6 @@ void ScriptGroup::addScript(Script *pScr, Int ndx)
 *	Input: DataChunkInput 
 *		
 */
-// ?WriteGroupDataChunk@ScriptGroup@@SAXAAVDataChunkOutput@@PAV1@@Z present-unmatched
 void ScriptGroup::WriteGroupDataChunk(DataChunkOutput &chunkWriter, ScriptGroup *pGroup)
 {
 
@@ -1275,7 +1274,6 @@ AsciiString Script::getUiText(void)
 *	Input: DataChunkInput 
 *		
 */
-// ?WriteScriptDataChunk@Script@@SAXAAVDataChunkOutput@@PAV1@@Z present-unmatched
 void Script::WriteScriptDataChunk(DataChunkOutput &chunkWriter, Script *pScript)
 {
 	/**********SCRIPT  DATA ***********************/
@@ -2181,7 +2179,6 @@ AsciiString Parameter::getUiText(void) const
 *	Input: DataChunkInput 
 *		
 */
-// ?WriteParameter@Parameter@@QAEXAAVDataChunkOutput@@@Z present-unmatched
 void Parameter::WriteParameter(DataChunkOutput &chunkWriter)
 {
 
@@ -2495,7 +2492,6 @@ AsciiString ScriptAction::getUiText(void)
 *	Input: DataChunkInput 
 *		
 */
-// ?WriteActionDataChunk@ScriptAction@@SAXAAVDataChunkOutput@@PAV1@@Z present-unmatched
 void ScriptAction::WriteActionDataChunk(DataChunkOutput &chunkWriter, ScriptAction	*pScriptAction)
 {
 	/**********ACTION  DATA ***********************/
@@ -2735,7 +2731,6 @@ Bool ScriptAction::ParseActionDataChunk(DataChunkInput &file, DataChunkInfo *inf
 *	Input: DataChunkInput 
 *		
 */
-// ?WriteActionFalseDataChunk@ScriptAction@@SAXAAVDataChunkOutput@@PAV1@@Z present-unmatched
 void ScriptAction::WriteActionFalseDataChunk(DataChunkOutput &chunkWriter, ScriptAction	*pScriptAction)
 {
 	/**********ACTION  DATA ***********************/

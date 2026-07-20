@@ -441,17 +441,15 @@ void AudioEventRTS::generatePlayInfo( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getPitchShift@AudioEventRTS@@ present-unmatched
 Real AudioEventRTS::getPitchShift( void ) const
 {
-	return m_pitchShift;
+	return *(const Real *)((const char *)this + 0x4C);
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getVolumeShift@AudioEventRTS@@ present-unmatched
 Real AudioEventRTS::getVolumeShift( void ) const
 {
-	return m_volumeShift;
+	return *(const Real *)((const char *)this + 0x50);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -476,46 +474,54 @@ Real AudioEventRTS::getDelay( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?decrementDelay@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::decrementDelay( Real timeToDecrement )
 {
-	m_delay -= timeToDecrement;
+	char *bfmeThis = (char *)this;
+	Real *bfmeDelay = (Real *)(bfmeThis + 0x54);
+	*bfmeDelay -= timeToDecrement;
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getNextPlayPortion@AudioEventRTS@@ present-unmatched
 PortionToPlay AudioEventRTS::getNextPlayPortion( void ) const
 {
 	return m_portionToPlayNext;
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?advanceNextPlayPortion@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::advanceNextPlayPortion( void )
 {
-	switch (m_portionToPlayNext) 
+	char *bfmeThis = (char *)this;
+	PortionToPlay *portionToPlayNext = (PortionToPlay *)(bfmeThis + 0x60);
+
+	switch (*portionToPlayNext)
 	{
 		case PP_Attack:
-			m_portionToPlayNext = PP_Sound;
+			*portionToPlayNext = PP_Sound;
 			break;
 		case PP_Sound:
-			if (m_eventInfo && BitTest(m_eventInfo->m_control, AC_ALL)) 
+			if (*(Byte *)(bfmeThis + 0x45) == 0)
 			{
-				if (m_allCount == m_eventInfo->m_sounds.size()) {
-					m_portionToPlayNext = PP_Decay;
+				const char *eventInfo = *(const char **)(bfmeThis + 0x08);
+				if (eventInfo == NULL) {
+					return;
 				}
 
-				// Advance the all count so that we move to the next sound.
-				++m_allCount;
+				Int soundCount = *(const Int *)(eventInfo + 0x84);
+				if (soundCount == 0 || soundCount == 3 || (*(const Byte *)(eventInfo + 0x3C) & 1) != 0) {
+					return;
+				}
 			}
-			if (!m_decayName.isEmpty()) {
-				m_portionToPlayNext = PP_Decay;
-			} else {
-				m_portionToPlayNext = PP_Done;
+
+			{
+				const char *decayName = *(const char **)(bfmeThis + 0x1C);
+				if (decayName != NULL && *(const Short *)(decayName + 4) != 0) {
+					*portionToPlayNext = PP_Decay;
+					return;
+				}
 			}
-			break;
+			// fall through
 		case PP_Decay:
-			m_portionToPlayNext = PP_Done;
+			*portionToPlayNext = PP_Done;
 			break;
 	}
 }
@@ -538,10 +544,24 @@ void AudioEventRTS::decreaseLoopCount( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?hasMoreLoops@AudioEventRTS@@ present-unmatched
 Bool AudioEventRTS::hasMoreLoops( void ) const
 {
-	return (m_loopCount >= 0);
+	const char *bfmeThis = (const char *)this;
+	if (*(const Byte *)(bfmeThis + 0x45) != 0) {
+		return FALSE;
+	}
+
+	const char *eventInfo = *(const char * const *)(bfmeThis + 0x08);
+	if (eventInfo == NULL) {
+		return TRUE;
+	}
+
+	Int soundCount = *(const Int *)(eventInfo + 0x84);
+	if (soundCount == 0 || soundCount == 3 || (*(const Byte *)(eventInfo + 0x3C) & 1) != 0) {
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -567,7 +587,6 @@ const AudioEventInfo *AudioEventRTS::getAudioEventInfo( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setPlayingHandle@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::setPlayingHandle( AudioHandle handle )
 {
 	m_playingHandle = handle;
@@ -581,7 +600,6 @@ AudioHandle AudioEventRTS::getPlayingHandle( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setPosition@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::setPosition( const Coord3D *pos )
 {
 	if (!pos) {
@@ -609,7 +627,6 @@ const Coord3D* AudioEventRTS::getPosition( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setObjectID@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::setObjectID( ObjectID objID )
 {
 	if (!(m_ownerType == OT_Object || m_ownerType == OT_INVALID)) {
@@ -621,18 +638,17 @@ void AudioEventRTS::setObjectID( ObjectID objID )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getObjectID@AudioEventRTS@@ present-unmatched
 ObjectID AudioEventRTS::getObjectID( void )
 {
-	if (m_ownerType == OT_Object) {
-		return m_objectID;
+	const char *bfmeThis = (const char *)this;
+	if (*(const OwnerType *)(bfmeThis + 0x30) == OT_Object) {
+		return *(const ObjectID *)(bfmeThis + 0x2c);
 	}
 
 	return INVALID_ID;
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setDrawableID@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::setDrawableID( DrawableID drawID )
 {
 	if (!(m_ownerType == OT_Drawable || m_ownerType == OT_INVALID)) {
@@ -644,7 +660,6 @@ void AudioEventRTS::setDrawableID( DrawableID drawID )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getDrawableID@AudioEventRTS@@ present-unmatched
 DrawableID AudioEventRTS::getDrawableID( void )
 {
 	if (m_ownerType == OT_Drawable) {
@@ -661,7 +676,6 @@ void AudioEventRTS::setTimeOfDay( TimeOfDay tod )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getTimeOfDay@AudioEventRTS@@ present-unmatched
 TimeOfDay AudioEventRTS::getTimeOfDay( void ) const
 {
 	return m_timeOfDay;
@@ -669,14 +683,12 @@ TimeOfDay AudioEventRTS::getTimeOfDay( void ) const
 
 
 //-------------------------------------------------------------------------------------------------
-// ?setHandleToKill@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::setHandleToKill( AudioHandle handleToKill )
 {
 	m_killThisHandle = handleToKill;
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getHandleToKill@AudioEventRTS@@ present-unmatched
 AudioHandle AudioEventRTS::getHandleToKill( void ) const
 {
 	return m_killThisHandle;
@@ -689,7 +701,6 @@ void AudioEventRTS::setShouldFade( Bool shouldFade )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getShouldFade@AudioEventRTS@@ present-unmatched
 Bool AudioEventRTS::getShouldFade( void ) const
 {
 	return m_shouldFade;
@@ -702,7 +713,6 @@ void AudioEventRTS::setIsLogicalAudio( Bool isLogicalAudio )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getIsLogicalAudio@AudioEventRTS@@ present-unmatched
 Bool AudioEventRTS::getIsLogicalAudio( void ) const
 {
 	return m_isLogicalAudio;
@@ -730,21 +740,22 @@ Bool AudioEventRTS::isPositionalAudio( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?isCurrentlyPlaying@AudioEventRTS@@ present-unmatched
 Bool AudioEventRTS::isCurrentlyPlaying( void ) const
 {
-	return TheAudio->isCurrentlyPlaying(m_playingHandle);
+	if( TheAudio == NULL )
+		return FALSE;
+
+	typedef Bool (AudioManager::*IsCurrentlyPlayingProc)( AudioHandle );
+	return (TheAudio->**(IsCurrentlyPlayingProc *)(*(char **)TheAudio + 0xB0))( m_playingHandle );
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getAudioPriority@AudioEventRTS@@ present-unmatched
 AudioPriority AudioEventRTS::getAudioPriority( void ) const
 {
 	return m_priority;
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setAudioPriority@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::setAudioPriority( AudioPriority newPriority )
 {
 	m_priority = newPriority;
@@ -767,7 +778,6 @@ Real AudioEventRTS::getVolume( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setVolume@AudioEventRTS@@ present-unmatched
 void AudioEventRTS::setVolume( Real vol )
 {
 	m_volume = vol;

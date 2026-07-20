@@ -7,13 +7,17 @@ Sections, in priority order:
   1. Sweep winners   report.csv files with landable functions not yet in src/zh/
                      -> python3 tools/land_zh.py <Basename>
   2. Drift quick wins  immediate-only / imm+reg literal fixes from drift_report.csv
+  2b. Structural reconciliation  closest source-shape mismatches
+  2c. Ghidra-anchored absent  source literals identify an unclaimed retail function
   3. Shim unblocking  top compile blockers by count — grow reference/shims/sweep/
   4. Rest of the ladder (pointer commands only, nothing computed)
 
-Parallel agents: export AGENT_SLOT=1..AGENT_POOL (pool defaults to 7) and sections
-1-2 show only this agent's deterministic slice (zlib.crc32 of the item key mod pool).
-Pass --any when your slot runs dry. --json emits every section machine-readable
-(full lists; --limit shapes only the text output).
+Parallel agents: export AGENT_SLOT=1..AGENT_POOL (pool defaults to 7), or let
+tools/setup_local_fleet.py install the same values in the worktree's private
+.git/openbfme-worker.json. Sections 1-2 show only this agent's deterministic
+slice (zlib.crc32 of the item key mod pool). Pass --any when your slot runs dry.
+--json emits every section machine-readable (full lists; --limit shapes only
+the text output).
 
 Usage:
   python3 tools/next_work.py [--limit 10] [--json] [--any]
@@ -21,6 +25,7 @@ Usage:
 Exit codes: 0 ok, 1 missing/bad inputs, 2 ledger corrupt.
 """
 import argparse
+import ast
 import csv
 import json
 import os
@@ -37,11 +42,15 @@ META = ROOT / "reverse" / "zh_sweep" / "report.meta"
 DRIFT = ROOT / "reverse" / "zh_sweep" / "drift_report.csv"
 FUNCTIONS = ROOT / "reverse" / "functions.csv"
 ATTEMPTS = ROOT / "reverse" / "re_attempts.log"
+GHIDRA_FUNCTIONS = ROOT / "reverse" / "ghidra_functions.csv"
+STRING_XREFS = ROOT / "reverse" / "string_xrefs.tsv"
+_SOURCE_INDEX = None
+_SOURCE_TEXT = {}
 
 POINTERS = [
     ("python3 tools/land_ambiguous.py",
      "land string-anchored exact-ambiguous drift copies"),
-    ("python3 tools/list_naked_candidates.py src --limit 20",
+    ("python3 tools/list_naked_candidates.py Code --limit 20",
      "rank naked-asm functions worth decompiling to C++"),
 ]
 
@@ -162,7 +171,7 @@ def drift_quick_wins(mine):
         rva = to_int(row["candidate_rva"], 16, f"drift_report.csv candidate_rva for {name}")
         if rva in claimed or not mine(name):
             continue
-        rel = resolve_drift_source(row["source"])
+        rel = resolve_drift_source(row["source"], name)
         if rel is None:
             print(f"warning: drift_report.csv row for {name} names a missing source "
                   f"{row['source']} — stale report, skipped", file=sys.stderr)
@@ -194,10 +203,32 @@ def read_attempts():
     return out
 
 
-def resolve_drift_source(basename):
+def source_index():
+    global _SOURCE_INDEX
+    if _SOURCE_INDEX is None:
+        _SOURCE_INDEX = {}
+        for base in (ROOT / "Code", ROOT / "src"):
+            if not base.exists():
+                continue
+            for path in sorted(base.rglob("*.cpp")):
+                _SOURCE_INDEX.setdefault(path.name.casefold(), []).append(path)
+    return _SOURCE_INDEX
+
+
+def resolve_drift_source(basename, function=None):
     """drift_report source column is a bare basename; landed files live under
-    Code/ (official tree layout); a few remainders sit under src/."""
-    hits = sorted(ROOT.glob(f"Code/**/{basename}")) + sorted(ROOT.glob(f"src/**/{basename}"))
+    Code/ (official tree layout); a few remainders sit under src/. Resolve
+    case-insensitively because drift reports normalize names to lowercase.
+    When duplicate basenames exist, the decorated-symbol marker is decisive."""
+    hits = source_index().get(Path(basename).name.casefold(), [])
+    if function and len(hits) > 1:
+        marked = []
+        for path in hits:
+            text = _SOURCE_TEXT.setdefault(path, path.read_text(errors="replace"))
+            if function + " present-unmatched" in text or function in text:
+                marked.append(path)
+        if marked:
+            hits = marked
     return hits[0].relative_to(ROOT).as_posix() if hits else None
 
 
@@ -220,7 +251,7 @@ def structural_candidates(mine, claimed, claimed_names, attempts, big=False):
         att = attempts.get(name, {"n": 0, "dead": False, "last": ""})
         if att["dead"] or att["n"] >= 3:
             continue
-        source = resolve_drift_source(row["source"])
+        source = resolve_drift_source(row["source"], name)
         if source is None:
             print(f"warning: drift_report.csv row for {name} names a missing source "
                   f"{row['source']} — stale report, skipped", file=sys.stderr)
@@ -234,11 +265,164 @@ def structural_candidates(mine, claimed, claimed_names, attempts, big=False):
                                 f"--source {source}")})
     if big:
         # byte-yield mode: biggest functions first (still gated by alignment)
-        out.sort(key=lambda c: (-c["size"], -c["aligned_pct"], c["function"]))
+        out.sort(key=lambda c: (c["attempts"], -c["size"],
+                                -c["aligned_pct"], c["function"]))
     else:
         # highest alignment first (closest to matching), small before big at equal alignment
-        out.sort(key=lambda c: (-c["aligned_pct"], c["size"], c["function"]))
+        out.sort(key=lambda c: (c["attempts"], -c["aligned_pct"],
+                                c["size"], c["function"]))
     return out
+
+
+def marked_function_literals(text, name):
+    """Return real C/C++ string literals from the function following its
+    `present-unmatched` marker. A small lexer keeps braces and quoted text in
+    comments from leaking literals out of adjacent functions."""
+    marker = name + " present-unmatched"
+    pos = text.find(marker)
+    if pos < 0:
+        return []
+    i = text.find("\n", pos)
+    if i < 0:
+        return []
+    i += 1
+    depth = 0
+    started = False
+    literals = []
+    while i < len(text):
+        if not started and text.startswith("present-unmatched", i):
+            return []
+        if text.startswith("//", i):
+            end = text.find("\n", i + 2)
+            i = len(text) if end < 0 else end + 1
+            continue
+        if text.startswith("/*", i):
+            end = text.find("*/", i + 2)
+            i = len(text) if end < 0 else end + 2
+            continue
+        ch = text[i]
+        if ch in ("'", '"'):
+            quote = ch
+            raw = []
+            i += 1
+            while i < len(text):
+                ch = text[i]
+                if ch == "\\" and i + 1 < len(text):
+                    raw.extend((ch, text[i + 1]))
+                    i += 2
+                    continue
+                i += 1
+                if ch == quote:
+                    break
+                raw.append(ch)
+            if quote == '"':
+                try:
+                    value = ast.literal_eval('"' + "".join(raw) + '"')
+                except (SyntaxError, ValueError):
+                    value = "".join(raw)
+                if isinstance(value, str) and len(value) >= 5:
+                    literals.append(value)
+            continue
+        if ch == "{":
+            depth += 1
+            started = True
+        elif ch == "}" and started:
+            depth -= 1
+            if depth == 0:
+                return literals
+        i += 1
+    return []
+
+
+def read_string_xrefs():
+    out = {}
+    with STRING_XREFS.open(encoding="utf-8", errors="replace") as fh:
+        for line in fh:
+            literal, tab, rvas = line.rstrip("\n").partition("\t")
+            if not tab:
+                continue
+            values = out.setdefault(literal, set())
+            for value in rvas.split(","):
+                if value:
+                    values.add(int(value, 16))
+    return out
+
+
+def ghidra_absent_candidates(mine, claimed, claimed_names, attempts):
+    """Map ZH functions classified `absent` to BFME functions through rare
+    string literals found inside the marked source body. Ghidra already gives
+    each literal's referencing function RVA, exact boundary, and size."""
+    if not GHIDRA_FUNCTIONS.exists() or not STRING_XREFS.exists():
+        return [], ("Ghidra outputs unavailable — generate them per "
+                    "tools/ghidra/README.md")
+
+    _, rows = read_csv(DRIFT, "python3 tools/drift_classify.py")
+    last = {row["function"]: row for row in rows if row["class"] == "absent"}
+    functions = {}
+    with GHIDRA_FUNCTIONS.open(newline="") as fh:
+        for row in csv.DictReader(fh):
+            functions[int(row["rva"], 16)] = row
+    xrefs = read_string_xrefs()
+    source_text = {}
+    out = []
+    for name, row in last.items():
+        if name in claimed_names or not mine(name):
+            continue
+        att = attempts.get(name, {"n": 0, "dead": False, "last": ""})
+        if att["dead"] or att["n"] >= 3:
+            continue
+        hits = source_index().get(Path(row["source"]).name.casefold(), [])
+        if not hits:
+            continue
+        source_rel = resolve_drift_source(row["source"], name)
+        if source_rel is None:
+            continue
+        source_path = ROOT / source_rel
+        text = source_text.setdefault(source_path, source_path.read_text(errors="replace"))
+        literals = set(marked_function_literals(text, name))
+        anchored = {}
+        rarity = {}
+        for literal in literals:
+            refs = xrefs.get(literal, set())
+            # Common UI words and format fragments create misleading cross-file
+            # matches. Multiple rare literals remain useful and rank together.
+            if not refs or len(refs) > 8:
+                continue
+            for rva in refs:
+                if rva not in functions or rva in claimed:
+                    continue
+                anchored.setdefault(rva, set()).add(literal)
+                rarity[rva] = rarity.get(rva, 0.0) + 1.0 / len(refs)
+        viable = []
+        source_size = int(row["size"])
+        for rva, anchors in anchored.items():
+            # One unique/two-way literal or two independent literals is enough
+            # to justify a Ghidra inspection; weaker guesses stay hidden.
+            if len(anchors) < 2 and rarity[rva] < 0.5:
+                continue
+            target_size = int(functions[rva]["size"])
+            viable.append((rva, anchors, rarity[rva], target_size))
+        if not viable:
+            continue
+        viable.sort(key=lambda c: (-len(c[1]), -c[2],
+                                   abs(c[3] - source_size), c[3], c[0]))
+        rva, anchors, anchor_score, target_size = viable[0]
+        confidence = "high" if len(anchors) >= 2 and anchor_score >= 1.0 else "medium"
+        source = source_path.relative_to(ROOT).as_posix()
+        out.append({
+            "function": name, "source": source, "source_size": source_size,
+            "target_rva": f"0x{rva:08X}", "target_size": target_size,
+            "ghidra_name": functions[rva]["name"], "confidence": confidence,
+            "anchors": sorted(anchors), "anchor_score": round(anchor_score, 3),
+            "alternates": len(viable) - 1, "attempts": att["n"],
+            "last_attempt": att["last"],
+            "command": (f"python3 tools/explain_mismatch.py '{name}' --rva 0x{rva:08X} "
+                        f"--size {target_size} --source {source}"),
+        })
+    out.sort(key=lambda c: (c["attempts"], c["confidence"] != "high",
+                            -len(c["anchors"]), -c["anchor_score"], c["target_size"],
+                            abs(c["target_size"] - c["source_size"]), c["function"]))
+    return out, (f"{len(functions)} Ghidra functions + {len(xrefs)} string literals loaded")
 
 
 def shim_blockers(last_report_rows):
@@ -251,11 +435,36 @@ def shim_blockers(last_report_rows):
             for blocker, n in counts.most_common(8)]
 
 
-def partition_env():
+def worker_config(root=ROOT):
+    """Read a worktree-private slot without adding generated files to the tree."""
+    dotgit = root / ".git"
+    if dotgit.is_file():
+        line = dotgit.read_text(encoding="utf-8").strip()
+        if not line.startswith("gitdir: "):
+            raise SystemExit(f"{dotgit}: expected a gitdir pointer")
+        dotgit = Path(line[8:])
+        if not dotgit.is_absolute():
+            dotgit = (root / dotgit).resolve()
+    path = dotgit / "openbfme-worker.json"
+    if not path.exists():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return str(data["slot"]), str(data["pool"])
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        raise SystemExit(f"{path}: invalid worker configuration ({exc})")
+
+
+def partition_env(root=ROOT):
     slot_s = os.environ.get("AGENT_SLOT")
     if slot_s is None:
-        return None, None
-    pool_s = os.environ.get("AGENT_POOL", "7")
+        configured = worker_config(root)
+        if configured is None:
+            return None, None
+        slot_s, configured_pool = configured
+    else:
+        configured_pool = "7"
+    pool_s = os.environ.get("AGENT_POOL", configured_pool)
     try:
         slot, pool = int(slot_s), int(pool_s)
     except ValueError:
@@ -275,9 +484,9 @@ def main():
                     help="machine-readable dump of all sections (full lists, no --limit)")
     ap.add_argument("--any", action="store_true",
                     help="ignore AGENT_SLOT partitioning (when your slot runs dry)")
-    ap.add_argument("--tier", choices=("harvest", "structural"),
+    ap.add_argument("--tier", choices=("harvest", "structural", "ghidra"),
                     help="show only that tier's sections (structural agents pass "
-                         "--tier structural for a deeper list)")
+                         "--tier structural; reverse-engineering agents pass --tier ghidra)")
     ap.add_argument("--big", action="store_true",
                     help="sort structural candidates by size (byte yield) instead of alignment")
     args = ap.parse_args()
@@ -290,15 +499,21 @@ def main():
 
     staleness = sweep_staleness()
     winners, last_report = sweep_winners(mine)
-    drifts = drift_quick_wins(mine)
+    drifts = drift_quick_wins(mine) if args.tier not in ("structural", "ghidra") else []
     claimed, claimed_names = set(), set()
     with FUNCTIONS.open(newline="") as fh:
         for row in csv.DictReader(fh):
             if row["target_rva"]:
                 claimed.add(int(row["target_rva"], 16))
                 claimed_names.add(row["name"])
-    structural = structural_candidates(mine, claimed, claimed_names, read_attempts(),
-                                       big=args.big)
+    attempts = read_attempts()
+    structural = (structural_candidates(mine, claimed, claimed_names, attempts, big=args.big)
+                  if args.tier not in ("harvest", "ghidra") else [])
+    if args.tier not in ("harvest", "structural"):
+        ghidra_absent, ghidra_meta = ghidra_absent_candidates(
+            mine, claimed, claimed_names, attempts)
+    else:
+        ghidra_absent, ghidra_meta = [], "Ghidra tier not requested"
     blockers = shim_blockers(last_report)
 
     if args.json:
@@ -307,6 +522,7 @@ def main():
             "slot": slot, "pool": pool, "filtered": filtered,
             "sweep_winners": winners, "drift_quick_wins": drifts,
             "structural": structural,
+            "ghidra_meta": ghidra_meta, "ghidra_absent": ghidra_absent,
             "shim_blockers": blockers,
             "pointers": [cmd for cmd, _ in POINTERS],
         }, indent=2))
@@ -320,7 +536,7 @@ def main():
         print(f"  [slot {slot}/{pool}: sections 1-2 show only this agent's slice; "
               f"--any shows everything]")
 
-    if args.tier != "structural":
+    if args.tier not in ("structural", "ghidra"):
         print(f"\n== 1. sweep winners still landable ({len(winners)}) ==")
         for c in winners[:args.limit]:
             print(f"  landable {c['landable']:>2}  {c['file']}")
@@ -332,7 +548,7 @@ def main():
             print(f"       {c['source']} @ {c['candidate_rva']}  hint: {c['hint']}")
             print(f"       fix the literal in source, then byte-verify: {c['command']}")
 
-    if args.tier != "harvest":
+    if args.tier not in ("harvest", "ghidra"):
         shown = structural[:args.limit if args.tier != "structural" else args.limit * 3]
         print(f"\n== 2b. structural reconciliation — manual RE ({len(structural)}; "
               f"workflow: docs/structural.md) ==")
@@ -345,7 +561,24 @@ def main():
             print("       log every attempt: python3 tools/log_attempt.py '<symbol>' "
                   "<landed|no-match|dead|blocked> 'what you tried'")
 
-    if args.tier == "structural":
+    if args.tier in (None, "ghidra"):
+        shown = ghidra_absent[:args.limit if args.tier != "ghidra" else args.limit * 3]
+        print(f"\n== 2c. Ghidra-anchored absent functions ({len(ghidra_absent)}; "
+              f"workflow: docs/structural.md) ==")
+        print(f"  {ghidra_meta}")
+        for c in shown:
+            tried = f"  [tried {c['attempts']}x: {c['last_attempt']}]" if c["attempts"] else ""
+            anchors = ", ".join(repr(value) for value in c["anchors"][:3])
+            print(f"  {c['confidence']:<6} {c['target_size']:>5}B {c['function']}{tried}")
+            print(f"       {c['source']} -> {c['target_rva']} {c['ghidra_name']} "
+                  f"({len(c['anchors'])} anchor(s): {anchors}; "
+                  f"{c['alternates']} alternate(s))")
+            print(f"       start: {c['command']}")
+        if ghidra_absent:
+            print("       inspect/decompile the target in Ghidra, verify with add_match.py, "
+                  "and log every attempt")
+
+    if args.tier in ("structural", "ghidra"):
         return
 
     print(f"\n== 3. shim unblocking (top {len(blockers)} blockers) ==")

@@ -160,7 +160,6 @@ Int LANGameInfo::getLocalSlotNum( void ) const
 	return -1;
 }
 
-// ?getSlotNum@LANGameInfo@@QAEHVUnicodeString@@@Z present-unmatched
 Int LANGameInfo::getSlotNum( UnicodeString userName )
 {
 	DEBUG_ASSERTCRASH(m_inGame, ("Looking for game slot while not in game"));
@@ -335,4 +334,3 @@ Bool ParseGameOptionsString(LANGameInfo *game, AsciiString options)
 
 	return false;
 }
-

@@ -908,7 +908,11 @@ UnicodeString GadgetComboBoxGetText( GameWindow *comboBox )
 	if( BitTest( comboBox->winGetStyle(), GWS_COMBO_BOX ) == FALSE )
 		return UnicodeString::TheEmptyString;
 	
-	return GadgetTextEntryGetText( GadgetComboBoxGetEditBox(comboBox) );
+	ComboBoxData *comboBoxData = (ComboBoxData *)comboBox->winGetUserData();
+	return GadgetTextEntryGetText(
+		comboBoxData && *(GameWindow **)((char *)comboBoxData + 0x28)
+			? *(GameWindow **)((char *)comboBoxData + 0x28)
+			: NULL );
 }
 
 // GadgetComboBoxSetText =======================================================
@@ -995,10 +999,12 @@ void GadgetComboBoxSetEnabledTextColors(GameWindow *comboBox, Color color, Color
 		return;
 	
 	ComboBoxData *comboBoxData = (ComboBoxData *)comboBox->winGetUserData();
-	if(comboBoxData->listBox)
-		comboBoxData->listBox->winSetEnabledTextColors( color,borderColor);
-	if(comboBoxData->editBox)
-		comboBoxData->editBox->winSetEnabledTextColors(color,borderColor);
+	GameWindow *listBox = *(GameWindow **)((char *)comboBoxData + 0x2c);
+	if(listBox)
+		listBox->winSetEnabledTextColors( color,borderColor);
+	GameWindow *editBox = *(GameWindow **)((char *)comboBoxData + 0x28);
+	if(editBox)
+		editBox->winSetEnabledTextColors(color,borderColor);
 }
 // GadgetComboBoxSetDisabledTextColors ========================================
 /** Set the Disabled Text Colors for the Sub Gadgets */
@@ -1010,10 +1016,12 @@ void GadgetComboBoxSetDisabledTextColors(GameWindow *comboBox, Color color, Colo
 	if( comboBox == NULL )
 		return;
 
-	if(comboBoxData->listBox)
-		comboBoxData->listBox->winSetDisabledTextColors( color,borderColor);
-	if(comboBoxData->editBox)
-		comboBoxData->editBox->winSetDisabledTextColors(color,borderColor);
+	GameWindow *listBox = *(GameWindow **)((char *)comboBoxData + 0x2C);
+	if(listBox)
+		listBox->winSetDisabledTextColors( color,borderColor);
+	GameWindow *editBox = *(GameWindow **)((char *)comboBoxData + 0x28);
+	if(editBox)
+		editBox->winSetDisabledTextColors(color,borderColor);
 }
 // GadgetComboBoxSetHiliteTextColors ==========================================
 /** Set the Hilite Text Colors for the Sub Gadgets */
@@ -1026,10 +1034,12 @@ void GadgetComboBoxSetHiliteTextColors( GameWindow *comboBox,Color color, Color 
 	
 	ComboBoxData *comboBoxData = (ComboBoxData *)comboBox->winGetUserData();
 	
-	if(comboBoxData->listBox)
-		comboBoxData->listBox->winSetHiliteTextColors( color,borderColor);
-	if(comboBoxData->editBox)
-		comboBoxData->editBox->winSetHiliteTextColors(color,borderColor);
+	GameWindow *listBox = *(GameWindow **)((char *)comboBoxData + 0x2C);
+	if(listBox)
+		listBox->winSetHiliteTextColors( color,borderColor);
+	GameWindow *editBox = *(GameWindow **)((char *)comboBoxData + 0x28);
+	if(editBox)
+		editBox->winSetHiliteTextColors(color,borderColor);
 }
 // GadgetComboBoxSetIMECompositeTextColors ====================================
 /** Set the IME Composite Text Colors Text Colors for the Sub Gadgets */
@@ -1042,10 +1052,12 @@ void GadgetComboBoxSetIMECompositeTextColors(GameWindow *comboBox, Color color, 
 	
 	ComboBoxData *comboBoxData = (ComboBoxData *)comboBox->winGetUserData();
 
-	if(comboBoxData->listBox)
-		comboBoxData->listBox->winSetIMECompositeTextColors( color,borderColor);
-	if(comboBoxData->editBox)
-		comboBoxData->editBox->winSetIMECompositeTextColors(color,borderColor);
+	GameWindow *listBox = *(GameWindow **)((char *)comboBoxData + 0x2C);
+	if(listBox)
+		listBox->winSetIMECompositeTextColors( color,borderColor);
+	GameWindow *editBox = *(GameWindow **)((char *)comboBoxData + 0x28);
+	if(editBox)
+		editBox->winSetIMECompositeTextColors(color,borderColor);
 }
 
 // GadgetComboBoxGetSelectedPos ===============================================
@@ -1105,8 +1117,7 @@ Int GadgetComboBoxGetLength( GameWindow *combobox )
 {
 	ComboBoxData *comboboxData = (ComboBoxData *)combobox->winGetUserData();
 	if (comboboxData)
-		return comboboxData->entryCount;
+		return *(Int *)((char *)comboboxData + 0x20);
 
 	return 0;
 }  // end GadgetListBoxGetListLength
-

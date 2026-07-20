@@ -1,0 +1,38 @@
+.386
+.model flat
+
+; ??0RTS2DScene@@QAE@XZ
+; Retail @ 0x00712590 size 209
+_TEXT SEGMENT
+public ??0RTS2DScene@@QAE@XZ
+??0RTS2DScene@@QAE@XZ PROC
+    db 06Ah,0FFh,068h,089h,0C7h,004h,001h,064h
+    db 0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,083h,0ECh,008h
+    db 056h,08Bh,0F1h,057h,089h,074h,024h,00Ch
+    db 0E8h,08Bh,023h,023h,000h,08Dh,0BEh,008h
+    db 001h,000h,000h,08Bh,0CFh,0C7h,044h,024h
+    db 018h,000h,000h,000h,000h,0E8h,066h,0F4h
+    db 028h,000h,068h,090h,00Bh,012h,001h,08Dh
+    db 04Ch,024h,00Ch,0C6h,044h,024h,01Ch,001h
+    db 0C7h,006h,080h,00Ah,012h,001h,0C7h,007h
+    db 050h,00Ah,012h,001h,0E8h,0D7h,065h,017h
+    db 000h,08Dh,044h,024h,008h,08Dh,08Eh,00Ch
+    db 001h,000h,000h,050h,0C6h,044h,024h,01Ch
+    db 002h,0E8h,092h,056h,017h,000h,08Dh,04Ch
+    db 024h,008h,0C6h,044h,024h,018h,001h,0E8h
+    db 034h,053h,017h,000h,068h,0ECh,000h,000h
+    db 000h,0E8h,01Ah,0F9h,016h,000h,083h,0C4h
+    db 004h,089h,044h,024h,008h,085h,0C0h,0C6h
+    db 044h,024h,018h,003h,074h,009h,08Bh,0C8h
+    db 0E8h,008h,016h,092h,0FFh,0EBh,002h,033h
+    db 0C0h,050h,08Bh,0CEh,0C6h,044h,024h,01Ch
+    db 001h,089h,086h,010h,001h,000h,000h,0E8h
+    db 05Ch,009h,023h,000h,08Bh,04Ch,024h,010h
+    db 0C7h,086h,014h,001h,000h,000h,000h,000h
+    db 000h,000h,05Fh,08Bh,0C6h,05Eh,064h,089h
+    db 00Dh,000h,000h,000h,000h,083h,0C4h,014h
+    db 0C3h
+??0RTS2DScene@@QAE@XZ ENDP
+_TEXT ENDS
+END

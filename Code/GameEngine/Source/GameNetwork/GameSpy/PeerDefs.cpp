@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -23,6 +23,10 @@
 // Generals GameSpy Peer (chat) definitions
 // Author: Matthew D. Campbell, June 2002
 
+#define _BFME_RETAIL_TREE_INSERT_LAYOUT
+#define _BFME_RETAIL_PLAYER_INFO_LAYOUT
+#define __PLACEMENT_VEC_NEW_INLINE
+#include <map>
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 #include <set>
 
@@ -144,21 +148,19 @@ void GameSpyInfo::setLocalIPs(UnsignedInt internalIP, UnsignedInt externalIP)
 	m_externalIP = externalIP;
 }
 
-// ?readAdditionalDisconnects@GameSpyInfo@@UAEXXZ present-unmatched
 void GameSpyInfo::readAdditionalDisconnects( void )
 {
 	m_additionalDisconnects = GetAdditionalDisconnectsFromUserFile(m_localProfileID);
 	DEBUG_LOG(("GameSpyInfo::readAdditionalDisconnects() found %d disconnects.\n", m_additionalDisconnects));
 }
 
-// ?getAdditionalDisconnects@GameSpyInfo@@UAEHXZ present-unmatched
+// ?getAdditionalDisconnects@GameSpyInfo@@UAEHXZ
 Int GameSpyInfo::getAdditionalDisconnects( void )
 {
 	DEBUG_LOG(("GameSpyInfo::getAdditionalDisconnects() would have returned %d.  Returning 0 instead.\n", m_additionalDisconnects));
 	return 0;
 }
 
-// ?clearAdditionalDisconnects@GameSpyInfo@@UAEXXZ present-unmatched
 void GameSpyInfo::clearAdditionalDisconnects( void )
 {
 	m_additionalDisconnects = 0;
@@ -170,13 +172,11 @@ GameSpyInfoInterface* GameSpyInfoInterface::createNewGameSpyInfoInterface( void 
 	return NEW GameSpyInfo;
 }
 
-// ?amIHost@GameSpyInfo@@UAE_NXZ present-unmatched
 Bool GameSpyInfo::amIHost( void )
 {
 	return m_isHosting;
 }
 
-// ?getCurrentStagingRoom@GameSpyInfo@@UAEPAVGameSpyStagingRoom@@XZ present-unmatched
 GameSpyStagingRoom* GameSpyInfo::getCurrentStagingRoom( void )
 {
 	if (m_isHosting || m_joinedStagingRoom)
@@ -485,25 +485,21 @@ void PeerDefs_force_GameSpyStagingRoom_CRC(GameSpyStagingRoom *room, UnsignedInt
 	room->setIniCRC(ini);
 }
 
-// ?setMOTD@GameSpyInfo@@UAEXABVAsciiString@@@Z present-unmatched
 void GameSpyInfo::setMOTD( const AsciiString& motd )
 {
 	m_rawMotd = motd;
 }
 
-// ?getMOTD@GameSpyInfo@@UAEABVAsciiString@@XZ present-unmatched
 const AsciiString& GameSpyInfo::getMOTD( void )
 {
 	return m_rawMotd;
 }
 
-// ?setConfig@GameSpyInfo@@UAEXABVAsciiString@@@Z present-unmatched
 void GameSpyInfo::setConfig( const AsciiString& config )
 {
 	m_rawConfig = config;
 }
 
-// ?getConfig@GameSpyInfo@@UAEABVAsciiString@@XZ present-unmatched
 const AsciiString& GameSpyInfo::getConfig( void )
 {
 	return m_rawConfig;
@@ -674,7 +670,9 @@ void GameSpyInfo::addToSavedIgnoreList( Int profileID, AsciiString nick)
 	pref.write();
 }
 
-// ?removeFromSavedIgnoreList@GameSpyInfo@@UAEXH@Z present-unmatched
+// ?removeFromSavedIgnoreList@GameSpyInfo@@UAEXH@Z
+// Retail body is claimed from PeerDefs_removeFromSavedIgnoreList.asm; retain this
+// definition so this translation unit emits its matched map template helpers.
 void GameSpyInfo::removeFromSavedIgnoreList( Int profileID )
 {
 	m_savedIgnoreMap.erase(profileID);
@@ -743,24 +741,20 @@ Bool PlayerInfo::isIgnored( void )
 // ?loadSavedIgnoreList@GameSpyInfo@@UAEXXZ
 // Body in PeerDefs_loadSavedIgnoreList.asm (exact 162B retail; SEH + field offsets).
 
-// ?setDisallowAsianText@GameSpyInfo@@UAEX_N@Z present-unmatched
 void GameSpyInfo::setDisallowAsianText( Bool val )
 {
 	m_disallowAsainText = val;
 }
 
-// ?setDisallowNonAsianText@GameSpyInfo@@UAEX_N@Z present-unmatched
 void GameSpyInfo::setDisallowNonAsianText( Bool val )
 {
 	m_disallowNonAsianText = val;
 }
 
-// ?getDisallowAsianText@GameSpyInfo@@UAE_NXZ present-unmatched
 Bool GameSpyInfo::getDisallowAsianText( void )
 {
 	return m_disallowAsainText;
 }
-// ?getDisallowNonAsianText@GameSpyInfo@@UAE_NXZ present-unmatched
 Bool GameSpyInfo::getDisallowNonAsianText(void )
 {
 	return m_disallowNonAsianText;
@@ -771,7 +765,6 @@ void GameSpyInfo::setMaxMessagesPerUpdate( Int num )
 	m_maxMessagesPerUpdate = num;
 }
 
-// ?getMaxMessagesPerUpdate@GameSpyInfo@@UAEHXZ present-unmatched
 Int GameSpyInfo::getMaxMessagesPerUpdate( void )
 {
 	return m_maxMessagesPerUpdate;

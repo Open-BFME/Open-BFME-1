@@ -41,6 +41,79 @@
 
 // USER INCLUDES //////////////////////////////////////////////////////////////
 
+#include "Common/GameType.h"
+#include "Common/STLTypedefs.h"
+#include "Common/SubsystemInterface.h"
+
+#define _SNOW_H_
+class SnowManager : public SubsystemInterface
+{
+public:
+	SnowManager();
+	virtual ~SnowManager();
+	virtual void init();
+	virtual void reset();
+	virtual void updateIniSettings();
+
+private:
+	unsigned char m_retailData[ 0x60 ];
+};
+
+#define _W3DSNOW_H_
+class W3DSnowManager : public SnowManager
+{
+public:
+	W3DSnowManager();
+	virtual ~W3DSnowManager();
+	virtual void init();
+	virtual void reset();
+	virtual void update();
+	virtual void updateIniSettings();
+
+private:
+	unsigned char m_retailData[ 0x34 ];
+};
+
+typedef char BFMERetailSnowManagerSizeCheck[ sizeof( SnowManager ) == 0x68 ? 1 : -1 ];
+typedef char BFMERetailW3DSnowManagerSizeCheck[ sizeof( W3DSnowManager ) == 0x9c ? 1 : -1 ];
+
+#define __TERRAINVISUAL_H_
+class TerrainVisual
+{
+public:
+	virtual void anchor();
+
+private:
+	unsigned char m_retailData[ 0x0c ];
+};
+
+#define __W3DTERRAINVISUAL_H_
+class W3DTerrainVisual : public TerrainVisual
+{
+public:
+	W3DTerrainVisual();
+	virtual ~W3DTerrainVisual();
+
+private:
+	unsigned char m_retailData[ 0x10 ];
+};
+
+typedef char BFMERetailTerrainVisualSizeCheck[ sizeof( TerrainVisual ) == 0x10 ? 1 : -1 ];
+typedef char BFMERetailW3DTerrainVisualSizeCheck[ sizeof( W3DTerrainVisual ) == 0x20 ? 1 : -1 ];
+
+#define _IN_GAME_UI_H_
+class Drawable;
+typedef std::list< Drawable * > DrawableList;
+
+class InGameUI
+{
+public:
+	virtual void anchor();
+
+private:
+	char m_data[ 0x13a8 ];
+};
+
 #include "Common/ThingTemplate.h"
 #include "Common/ThingFactory.h"
 #include "Common/ModuleFactory.h"
@@ -49,9 +122,60 @@
 #include "Common/GameLOD.h"
 #include "GameClient/Drawable.h"
 #include "GameClient/GameClient.h"
+#include "GameClient/GameFont.h"
 #include "GameClient/ParticleSys.h"
 #include "GameClient/RayEffect.h"
 #include "W3DDevice/GameClient/W3DAssetManager.h"
+#include "W3DDevice/GameClient/W3DView.h"
+#include "W3DDevice/GameClient/W3DWater.h"
+
+#define __W3DINGAMEUI_H_
+class View;
+class RenderObjClass;
+class HAnimClass;
+
+class W3DInGameUI : public InGameUI
+{
+public:
+	W3DInGameUI();
+	virtual ~W3DInGameUI();
+	virtual void init();
+	virtual void update();
+	virtual void reset();
+	virtual void draw();
+
+protected:
+	virtual View *createView();
+	virtual void drawSelectionRegion();
+	virtual void drawMoveHints( View *view );
+	virtual void drawAttackHints( View *view );
+	virtual void drawPlaceAngle( View *view );
+
+private:
+	enum { MAX_RETAIL_MOVE_HINTS = 25 };
+	RenderObjClass *m_moveHintRenderObj[ MAX_RETAIL_MOVE_HINTS ];
+	HAnimClass *m_moveHintAnim[ MAX_RETAIL_MOVE_HINTS ];
+	RenderObjClass *m_buildingPlacementAnchor;
+	RenderObjClass *m_buildingPlacementArrow;
+};
+
+#define __W3DGAMEFONT_H_
+class BFMERetailFontLibrary : public FontLibrary
+{
+public:
+	BFMERetailFontLibrary();
+	virtual void anchor();
+
+private:
+	char m_data[ 24 ];
+};
+
+class W3DFontLibrary : public BFMERetailFontLibrary
+{
+protected:
+	Bool loadFontData( GameFont *font );
+};
+
 #include "W3DDevice/GameClient/W3DGameClient.h"
 #include "W3DDevice/GameClient/W3DStatusCircle.h"
 #include "W3DDevice/GameClient/W3DScene.h"

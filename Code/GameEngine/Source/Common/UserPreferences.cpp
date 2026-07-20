@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -34,6 +34,7 @@
 //-----------------------------------------------------------------------------
 // SYSTEM INCLUDES ////////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
+#define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 //-----------------------------------------------------------------------------
@@ -427,7 +428,6 @@ void QuickMatchPreferences::setColor( Int val )
 	setInt("Color", val);
 }
 
-// ?getColor@QuickMatchPreferences@@QAEHXZ present-unmatched
 Int QuickMatchPreferences::getColor( void )
 {
 	return getInt("Color", 0);
@@ -494,7 +494,6 @@ UnsignedShort CustomMatchPreferences::getLastLadderPort( void )
 	return atoi(it->second.str());
 }
 
-// ?getPreferredColor@CustomMatchPreferences@@QAEHXZ present-unmatched
 Int CustomMatchPreferences::getPreferredColor(void)
 {
 	Int ret;
@@ -519,7 +518,6 @@ void CustomMatchPreferences::setPreferredColor(Int val)
 	(*this)["Color"] = s;
 }
 
-// ?getChatSizeSlider@CustomMatchPreferences@@QAEHXZ present-unmatched
 Int CustomMatchPreferences::getChatSizeSlider(void)
 {
 	Int ret;
@@ -536,7 +534,6 @@ Int CustomMatchPreferences::getChatSizeSlider(void)
 	return ret;
 }
 
-// ?setChatSizeSlider@CustomMatchPreferences@@QAEXH@Z present-unmatched
 void CustomMatchPreferences::setChatSizeSlider(Int val)
 {
 	AsciiString s;
@@ -544,7 +541,6 @@ void CustomMatchPreferences::setChatSizeSlider(Int val)
 	(*this)["ChatSlider"] = s;
 }
 
-// ?getPreferredFaction@CustomMatchPreferences@@QAEHXZ present-unmatched
 Int CustomMatchPreferences::getPreferredFaction(void)
 {
 	Int ret;
@@ -582,7 +578,6 @@ Int CustomMatchPreferences::getPreferredFaction(void)
 	return ret;
 }
 
-// ?setPreferredFaction@CustomMatchPreferences@@QAEXH@Z present-unmatched
 void CustomMatchPreferences::setPreferredFaction(Int val)
 {
 	AsciiString s;
@@ -590,7 +585,6 @@ void CustomMatchPreferences::setPreferredFaction(Int val)
 	(*this)["PlayerTemplate"] = s;
 }
 
-// ?usesSystemMapDir@CustomMatchPreferences@@QAE_NXZ present-unmatched
 Bool CustomMatchPreferences::usesSystemMapDir(void)
 {
 	CustomMatchPreferences::const_iterator it = find("UseSystemMapDir");
@@ -603,7 +597,6 @@ Bool CustomMatchPreferences::usesSystemMapDir(void)
 	return FALSE;
 }
 
-// ?setUsesSystemMapDir@CustomMatchPreferences@@QAEX_N@Z present-unmatched
 void CustomMatchPreferences::setUsesSystemMapDir(Bool val)
 {
 	AsciiString s;
@@ -611,7 +604,6 @@ void CustomMatchPreferences::setUsesSystemMapDir(Bool val)
 	(*this)["UseSystemMapDir"] = s;
 }
 
-// ?usesLongGameList@CustomMatchPreferences@@QAE_NXZ present-unmatched
 Bool CustomMatchPreferences::usesLongGameList(void)
 {
 	return TRUE;
@@ -625,7 +617,6 @@ Bool CustomMatchPreferences::usesLongGameList(void)
 	return FALSE;
 }
 
-// ?setUsesLongGameList@CustomMatchPreferences@@QAEX_N@Z present-unmatched
 void CustomMatchPreferences::setUsesLongGameList(Bool val)
 {
 	AsciiString s;
@@ -633,7 +624,6 @@ void CustomMatchPreferences::setUsesLongGameList(Bool val)
 	(*this)["UseLongGameList"] = s;
 }
 
-// ?allowsObservers@CustomMatchPreferences@@QAE_NXZ present-unmatched
 Bool CustomMatchPreferences::allowsObservers(void)
 {
 	CustomMatchPreferences::const_iterator it = find("AllowObservers");
@@ -646,7 +636,6 @@ Bool CustomMatchPreferences::allowsObservers(void)
 	return FALSE;
 }
 
-// ?setAllowsObserver@CustomMatchPreferences@@QAEX_N@Z present-unmatched
 void CustomMatchPreferences::setAllowsObserver(Bool val)
 {
 	AsciiString s;
@@ -654,7 +643,6 @@ void CustomMatchPreferences::setAllowsObserver(Bool val)
 	(*this)["AllowObservers"] = s;
 }
 
-// ?getDisallowAsianText@CustomMatchPreferences@@QAE_NXZ present-unmatched
 Bool CustomMatchPreferences::getDisallowAsianText( void )
 {
 	CustomMatchPreferences::const_iterator it = find("DisallowAsianText");
@@ -683,7 +671,6 @@ void CustomMatchPreferences::setDisallowAsianText(Bool val)
 
 }
 
-// ?getDisallowNonAsianText@CustomMatchPreferences@@QAE_NXZ present-unmatched
 Bool CustomMatchPreferences::getDisallowNonAsianText( void )
 {
 	CustomMatchPreferences::const_iterator it = find("DisallowNonAsianText");
@@ -829,7 +816,6 @@ void CustomMatchPreferences::setUseStats( Bool useStats )
 // GameSpyMiscPreferences base class 
 //-----------------------------------------------------------------------------
 
-// ??0GameSpyMiscPreferences@@QAE@XZ present-unmatched
 GameSpyMiscPreferences::GameSpyMiscPreferences()
 {
 	AsciiString userPrefFilename;
@@ -843,25 +829,21 @@ GameSpyMiscPreferences::~GameSpyMiscPreferences()
 {
 }
 
-// ?getLocale@GameSpyMiscPreferences@@QAEHXZ present-unmatched
 Int GameSpyMiscPreferences::getLocale( void )
 {
 	return getInt("Locale", 0);
 }
 
-// ?setLocale@GameSpyMiscPreferences@@QAEXH@Z present-unmatched
 void GameSpyMiscPreferences::setLocale( Int val )
 {
 	setInt("Locale", val);
 }
 
-// ?getCachedStats@GameSpyMiscPreferences@@QAE?AVAsciiString@@XZ present-unmatched
 AsciiString GameSpyMiscPreferences::getCachedStats( void )
 {
 	return getAsciiString("CachedStats", AsciiString::TheEmptyString);
 }
 
-// ?setCachedStats@GameSpyMiscPreferences@@QAEXVAsciiString@@@Z present-unmatched
 void GameSpyMiscPreferences::setCachedStats( AsciiString val )
 {
 	setAsciiString("CachedStats", val);
@@ -873,7 +855,6 @@ Bool GameSpyMiscPreferences::getQuickMatchResLocked( void )
 	return getBool("QMResLock", FALSE);
 }
 
-// ?getMaxMessagesPerUpdate@GameSpyMiscPreferences@@QAEHXZ present-unmatched
 Int GameSpyMiscPreferences::getMaxMessagesPerUpdate( void )
 {
 	return getInt("MaxMessagesPerUpdate", 100);
@@ -882,7 +863,6 @@ Int GameSpyMiscPreferences::getMaxMessagesPerUpdate( void )
 // IgnorePreferences base class 
 //-----------------------------------------------------------------------------
 
-// ??0IgnorePreferences@@QAE@XZ present-unmatched
 IgnorePreferences::IgnorePreferences()
 {
 	AsciiString userPrefFilename;

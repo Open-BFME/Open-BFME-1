@@ -72,6 +72,34 @@
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+class BFMEStaticTextDisplayString
+{
+public:
+	virtual void slot0( void );
+	virtual void setText( UnicodeString text );
+	virtual UnicodeString getText( void );
+	virtual void slot3( void );
+	virtual void slot4( void );
+	virtual void slot5( void );
+	virtual void setFont( GameFont *font );
+};
+
+class BFMEStaticTextDisplayStringManager
+{
+public:
+	virtual void slot0( void );
+	virtual void slot1( void );
+	virtual void slot2( void );
+	virtual void slot3( void );
+	virtual void slot4( void );
+	virtual void slot5( void );
+	virtual void slot6( void );
+	virtual void slot7( void );
+	virtual void slot8( void );
+	virtual void slot9( void );
+	virtual void freeDisplayString( DisplayString *string );
+};
+
 // GadgetStaticTextInput ======================================================
 /** Handle input for text field */
 //=============================================================================
@@ -130,7 +158,7 @@ WindowMsgHandledType GadgetStaticTextSystem( GameWindow *window, UnsignedInt msg
 		{
 			TextData *tData = (TextData *)window->winGetUserData();
 			if (tData && tData->text)
-				*(UnicodeString*)mData2 = tData->text->getText();
+				*(UnicodeString*)mData2 = ((BFMEStaticTextDisplayString *)tData->text)->getText();
 			break;
 		
 		}  // end get label
@@ -142,7 +170,7 @@ WindowMsgHandledType GadgetStaticTextSystem( GameWindow *window, UnsignedInt msg
 			{
 				TextData *tData = (TextData *)window->winGetUserData();
 				if (tData && tData->text)
-					tData->text->setText( *(UnicodeString*)mData1 );
+					((BFMEStaticTextDisplayString *)tData->text)->setText( *(UnicodeString*)mData1 );
 			}
 
       break;
@@ -159,7 +187,7 @@ WindowMsgHandledType GadgetStaticTextSystem( GameWindow *window, UnsignedInt msg
 			TextData *data = (TextData *)window->winGetUserData();
 
 			// free the display string
-			TheDisplayStringManager->freeDisplayString( data->text );
+			((BFMEStaticTextDisplayStringManager *)TheDisplayStringManager)->freeDisplayString( data->text );
 
 			// free text data
 			delete( data );
@@ -194,7 +222,7 @@ UnicodeString GadgetStaticTextGetText( GameWindow *window )
 	TextData *tData = (TextData *)window->winGetUserData();
 	if(!tData)
 		return UnicodeString::TheEmptyString;
-	return tData->text->getText();
+	return ((BFMEStaticTextDisplayString *)tData->text)->getText();
 }
 
 // GadgetStaticTextSetFont ====================================================
@@ -210,10 +238,10 @@ void GadgetStaticTextSetFont( GameWindow *g, GameFont *font )
 	// set the font for the display strings all windows have
 	dString = g->winGetInstanceData()->getTextDisplayString();
 	if( dString )
-		dString->setFont( font );
+		((BFMEStaticTextDisplayString *)dString)->setFont( font );
 	dString = g->winGetInstanceData()->getTooltipDisplayString();
 	if( dString )
-		dString->setFont( font );
+		((BFMEStaticTextDisplayString *)dString)->setFont( font );
 
 	// static text specific
 	if( textData )
@@ -221,7 +249,7 @@ void GadgetStaticTextSetFont( GameWindow *g, GameFont *font )
 
 		dString = textData->text;
 		if( dString )
-			dString->setFont( font );
+			((BFMEStaticTextDisplayString *)dString)->setFont( font );
 
 	}  // end if
 

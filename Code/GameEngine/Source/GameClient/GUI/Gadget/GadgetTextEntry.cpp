@@ -547,14 +547,15 @@ void GadgetTextEntrySetFont( GameWindow *g, GameFont *font )
 {
 	EntryData *entryData = (EntryData *)g->winGetUserData();
 	DisplayString *dString;
+	typedef void (DisplayString::*BFMESetFontFn)( GameFont * );
 
 	// set the font for the display strings all windows have
 	dString = g->winGetInstanceData()->getTextDisplayString();
 	if( dString )
-		dString->setFont( font );
+		(dString->*(*(BFMESetFontFn *)&(*(void ***)dString)[6]))( font );
 	dString = g->winGetInstanceData()->getTooltipDisplayString();
 	if( dString )
-		dString->setFont( font );
+		(dString->*(*(BFMESetFontFn *)&(*(void ***)dString)[6]))( font );
 
 	// text entry specific
 	if( entryData )
@@ -562,10 +563,10 @@ void GadgetTextEntrySetFont( GameWindow *g, GameFont *font )
 
 		dString = entryData->text;
 		if( dString )
-			dString->setFont( font );
+			(dString->*(*(BFMESetFontFn *)&(*(void ***)dString)[6]))( font );
 		dString = entryData->sText;
 		if( dString )
-			dString->setFont( font );
+			(dString->*(*(BFMESetFontFn *)&(*(void ***)dString)[6]))( font );
 
 	}  // end if
 

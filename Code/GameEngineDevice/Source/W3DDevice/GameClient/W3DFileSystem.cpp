@@ -109,7 +109,6 @@ GameFileClass::~GameFileClass()
 //-------------------------------------------------------------------------------------------------
 /** Gets the file name */
 //-------------------------------------------------------------------------------------------------
-// ?File_Name@GameFileClass@@UBEPBDXZ present-unmatched
 char const * GameFileClass::File_Name( void ) const
 {
 

@@ -379,7 +379,6 @@ void ScriptActions::doPlaySoundEffect(const AsciiString& sound)
 //-------------------------------------------------------------------------------------------------
 /** doPlaySoundEffectAt */
 //-------------------------------------------------------------------------------------------------
-// ?doPlaySoundEffectAt@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doPlaySoundEffectAt(const AsciiString& sound, const AsciiString& waypoint)
 {	
 	Waypoint *way = TheTerrainLogic->getWaypointByName(waypoint);
@@ -5198,7 +5197,6 @@ void ScriptActions::doDestroyAllContained(const AsciiString& unitName, Int damag
 //-------------------------------------------------------------------------------------------------
 /** doRadarForceEnable */
 //-------------------------------------------------------------------------------------------------
-// ?doRadarForceEnable@ScriptActions@@IAEXXZ present-unmatched
 void ScriptActions::doRadarForceEnable(void)
 {
 	TheRadar->forceOn(true);
@@ -5207,7 +5205,6 @@ void ScriptActions::doRadarForceEnable(void)
 //-------------------------------------------------------------------------------------------------
 /** doRadarRevertNormal */
 //-------------------------------------------------------------------------------------------------
-// ?doRadarRevertNormal@ScriptActions@@IAEXXZ present-unmatched
 void ScriptActions::doRadarRevertNormal(void)
 {
 	TheRadar->forceOn(false);
@@ -6081,7 +6078,6 @@ void ScriptActions::doMapSetRankLevelLimit(Int level)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?doPlayerGrantScience@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doPlayerGrantScience(const AsciiString& playerName, const AsciiString& scienceName)
 {
 	Player* pPlayer = TheScriptEngine->getPlayerFromAsciiString(playerName);
@@ -6094,7 +6090,6 @@ void ScriptActions::doPlayerGrantScience(const AsciiString& playerName, const As
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?doPlayerPurchaseScience@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doPlayerPurchaseScience(const AsciiString& playerName, const AsciiString& scienceName)
 {
 	Player* pPlayer = TheScriptEngine->getPlayerFromAsciiString(playerName);
@@ -6107,7 +6102,6 @@ void ScriptActions::doPlayerPurchaseScience(const AsciiString& playerName, const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?doPlayerSetScienceAvailability@ScriptActions@@IAEXABVAsciiString@@00@Z present-unmatched
 void ScriptActions::doPlayerSetScienceAvailability( const AsciiString& playerName, const AsciiString& scienceName, const AsciiString& scienceAvailability )
 {
 	Player* player = TheScriptEngine->getPlayerFromAsciiString(playerName);

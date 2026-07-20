@@ -123,7 +123,6 @@ void RenderInfoClass::Push_Override_Flags(RINFO_OVERRIDE_FLAGS flg)
 	OverrideFlag[OverrideFlagLevel]=flg;
 }
 
-// ?Pop_Override_Flags@RenderInfoClass@@QAEXXZ present-unmatched
 void RenderInfoClass::Pop_Override_Flags(void)
 {
 	WWASSERT(OverrideFlagLevel>0);

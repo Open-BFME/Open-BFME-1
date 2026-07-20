@@ -1293,7 +1293,6 @@ void PathfindCell::setParentCell( PathfindCell* parent  )
 /**
  * Set the parent pointer.
  */
-// ?setParentCellHierarchical@PathfindCell@@QAEXPAV1@@Z present-unmatched
 void PathfindCell::setParentCellHierarchical( PathfindCell* parent  ) 
 { 
 	DEBUG_ASSERTCRASH(m_info, ("Has to have info."));
@@ -3839,7 +3838,6 @@ void PathfindLayer::classifyLayerMapCell( Int i, Int j , PathfindCell *cell, Bri
 }
 
 
-// ?isPointOnWall@PathfindLayer@@QAE_NPAW4ObjectID@@HPBUCoord3D@@@Z present-unmatched
 Bool PathfindLayer::isPointOnWall(ObjectID *wallPieces, Int numPieces, const Coord3D *pt)
 {
 	Int i; 

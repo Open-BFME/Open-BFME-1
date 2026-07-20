@@ -150,18 +150,30 @@ AsciiString PlayerTemplate::getStartingUnit( Int i ) const
 	NameKeyType buildTemplateKey = NAMEKEY(ini->getNextToken());
 	Real percentChange = INI::scanPercentToReal(ini->getNextToken());
 
-	self->m_productionCostChanges[buildTemplateKey] = percentChange;
+	(*reinterpret_cast<ProductionChangeMap *>(reinterpret_cast<char *>(self) + 0x60))[buildTemplateKey] = percentChange;
 }
+
+class BFMEPlayerTemplateAsciiString
+{
+public:
+	BFMEPlayerTemplateAsciiString( const char *text );
+	~BFMEPlayerTemplateAsciiString();
+
+private:
+	void *m_data;
+};
 
 //-------------------------------------------------------------------------------------------------
 /*static*/ void PlayerTemplate::parseProductionTimeChange( INI* ini, void *instance, void *store, const void* /*userData*/ )
 {
 	PlayerTemplate* self = (PlayerTemplate*)instance;
 
-	NameKeyType buildTemplateKey = NAMEKEY(ini->getNextToken());
+	typedef std::map< AsciiString, Real, std::less<AsciiString> > BFMEProductionTimeChangeMap;
+	BFMEPlayerTemplateAsciiString buildTemplateKey( ini->getNextToken() );
 	Real percentChange = INI::scanPercentToReal(ini->getNextToken());
 
-	self->m_productionTimeChanges[buildTemplateKey] = percentChange;
+	AsciiString &key = *reinterpret_cast<AsciiString *>(&buildTemplateKey);
+	(*reinterpret_cast<BFMEProductionTimeChangeMap *>(reinterpret_cast<char *>(self) + 0x6C))[key] = percentChange;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -428,4 +440,3 @@ void INI::parsePlayerTemplateDefinition( INI* ini )
 {
 	PlayerTemplateStore::parsePlayerTemplateDefinition(ini);
 }
-

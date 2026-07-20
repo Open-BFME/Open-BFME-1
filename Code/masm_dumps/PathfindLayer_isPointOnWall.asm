@@ -1,0 +1,28 @@
+.386
+.model flat
+
+; ?isPointOnWall@PathfindLayer@@QAE_NPAW4ObjectID@@HPBUCoord3D@@@Z
+; Exact 257 retail bytes @ 0x00699080; tests a point against the BFME wall-layer geometry.
+_TEXT SEGMENT
+public ?isPointOnWall@PathfindLayer@@QAE_NPAW4ObjectID@@HPBUCoord3D@@@Z
+?isPointOnWall@PathfindLayer@@QAE_NPAW4ObjectID@@HPBUCoord3D@@@Z PROC
+    db 083h,0ECh,010h,055h,056h,08Bh,0F1h,08Bh,06Eh,004h,08Bh,00Dh,0D8h,0F1h,02Eh,001h
+    db 057h,08Bh,07Eh,008h,08Dh,045h,008h,050h,0E8h,0C3h,0F4h,0D8h,0FFh,085h,0C0h,00Fh
+    db 084h,0D5h,000h,000h,000h,08Bh,00Dh,048h,0D7h,02Eh,001h,08Bh,049h,014h,085h,0C9h
+    db 074h,008h,08Bh,089h,030h,002h,000h,000h,0EBh,006h,08Bh,08Fh,03Ch,002h,000h,000h
+    db 033h,0D2h,053h,089h,054h,024h,014h,089h,054h,024h,018h,052h,089h,054h,024h,020h
+    db 08Dh,054h,024h,018h,052h,051h,08Bh,00Dh,0D8h,0F1h,02Eh,001h,050h,0E8h,068h,0B8h
+    db 0DAh,0FFh,08Bh,0D8h,085h,0DBh,00Fh,084h,08Dh,000h,000h,000h,08Bh,043h,074h,068h
+    db 0DBh,000h,000h,000h,089h,046h,024h,08Bh,04Fh,038h,08Bh,057h,03Ch,08Bh,047h,040h
+    db 068h,0B8h,006h,00Ch,001h,068h,0DBh,00Fh,049h,040h,068h,0DBh,00Fh,049h,0C0h,089h
+    db 04Ch,024h,024h,089h,054h,024h,028h,089h,044h,024h,02Ch,0E8h,085h,03Bh,0D9h,0FFh
+    db 0D9h,05Ch,024h,020h,08Bh,07Ch,024h,020h,057h,0E8h,0F2h,0A7h,05Dh,000h,0D8h,04Dh
+    db 018h,057h,0D8h,044h,024h,02Ch,0D9h,05Ch,024h,02Ch,0E8h,0D1h,0A7h,05Dh,000h,0D8h
+    db 04Dh,018h,08Bh,00Dh,0CCh,0F4h,02Eh,001h,083h,0C4h,018h,06Ah,000h,0D8h,044h,024h
+    db 01Ch,0D9h,05Ch,024h,01Ch,08Bh,044h,024h,01Ch,08Bh,011h,050h,08Bh,044h,024h,01Ch
+    db 050h,0FFh,052h,018h,0D9h,05Ch,024h,01Ch,08Dh,04Ch,024h,014h,051h,08Bh,0CBh,0E8h
+    db 033h,010h,0DAh,0FFh,08Bh,0D7h,089h,056h,02Ch,05Bh,05Fh,05Eh,05Dh,083h,0C4h,010h
+    db 0C3h
+?isPointOnWall@PathfindLayer@@QAE_NPAW4ObjectID@@HPBUCoord3D@@@Z ENDP
+_TEXT ENDS
+END
