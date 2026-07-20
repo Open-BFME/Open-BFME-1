@@ -12332,3 +12332,7 @@ _IsStatsConnected,,0x009D2B60,15,Code/masm_dumps/_sym4__IsStatsConnected_9D2B60.
 ?updateLoadProgress@GameLogic@@QAEXH@Z,,0x000DB020,3751,Code/masm_dumps/_sa16__updateLoadProgress_GameLogic__QAEXH_Z_DB020.asm,matched,sa16 Open-BFME4+Grok ReplayObserver
 ?repairStructure@Player@@UAEXW4ObjectID@@@Z,,0x000C9720,20,Code/masm_dumps/_rn11__repairStructure_Player__UAEXW4ObjectID___Z_C9720.asm,matched,reloc-needle Open-BFME4+Grok
 ?isRadarWindow@Radar@@QAE_NPAVGameWindow@@@Z,,0x0043A520,29,Code/masm_dumps/_rn11__isRadarWindow_Radar__QAE_NPAVGameWindow___Z_43A520.asm,matched,reloc-needle Open-BFME4+Grok
+?getNextVertexBuffer@W3DBufferManager@@QAEPAUW3DVertexBuffer@1@PAU21@W4VBM_FVF_TYPES@1@@Z,,0x007B7CF0,28,Code/masm_dumps/_rn12__getNextVertexBuffer_W3DBufferManager__QAEPAUW3DVertexBuffer_1_PAU21_W_7B7CF0.asm,matched,reloc-needle Open-BFME4+Grok
+?friend_isSweepEnabled@TurretAI@@QBE_NXZ,,0x0018C9F0,27,Code/masm_dumps/_rn12__friend_isSweepEnabled_TurretAI__QBE_NXZ_18C9F0.asm,matched,reloc-needle Open-BFME4+Grok
+?reverseAnimatewindow@Shell@@QAEXXZ,,0x0057F410,28,Code/masm_dumps/_rn12__reverseAnimatewindow_Shell__QAEXXZ_57F410.asm,matched,reloc-needle Open-BFME4+Grok
+?Get_Diffuse@VertexMaterialClass@@QBEXPAVVector3@@@Z,,0x009219F0,28,Code/masm_dumps/_rn12__Get_Diffuse_VertexMaterialClass__QBEXPAVVector3___Z_9219F0.asm,matched,reloc-needle Open-BFME4+Grok
