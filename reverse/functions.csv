@@ -11935,3 +11935,28 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?init@MainMenuScaleUpTransition@@UAEXPAVGameWindow@@@Z,,0x0059E4E0,234,Code/masm_dumps/_s6__init_MainMenuScaleUpTransition_UAEXPAVGameWindow_Z_59E4E0.asm,matched,Exact 234B 'MainMenu.wnd:WinGrowMarker' Open-BFME4+Grok
 ?getLastLocalFile@DownloadManager@@QAE?AVAsciiString@@XZ,,0x00626DA0,224,Code/masm_dumps/_s6__getLastLocalFile_DownloadManager_QAE_AVAsciiString_XZ_626DA0.asm,matched,Exact 224B 'FTP:LocalFileOpenFailed' Open-BFME4+Grok
 ?init@AudioManager@@,,0x006B8220,953,Code/masm_dumps/_s6__init_AudioManager__6B8220.asm,matched,Exact 953B 'AudioSettings.ini' Open-BFME4+Grok
+?Get_Processor_Manufacturer_Name@CPUDetectClass@@,,0x00A5EAED,228,Code/masm_dumps/_sa6__Get_Processor_Manufacturer_Name_CPUDetectClass___A5EAED.asm,matched,Exact 228B Open-BFME4+Grok
+??0AIAttackFollowWaypointPathState@@QAE@PAVStateMachine@@_N@Z,,0x00183C90,201,Code/masm_dumps/_sa6___0AIAttackFollowWaypointPathState__QAE_PAVStateMa_183C90.asm,matched,Exact 201B Open-BFME4+Grok
+??0AIAttackMoveToState@@QAE@PAVStateMachine@@@Z,,0x00183990,234,Code/masm_dumps/_sa6___0AIAttackMoveToState__QAE_PAVStateMachine___Z_183990.asm,matched,Exact 234B Open-BFME4+Grok
+?doTeamHuntWithCommandButton@ScriptActions@@,,0x002F7B80,211,Code/masm_dumps/_sa6__doTeamHuntWithCommandButton_ScriptActions___2F7B80.asm,matched,Exact 211B Open-BFME4+Grok
+?newCommandButtonOverride@ControlBar@@IAEPAVCommandButton@@PAV2@@Z,,0x004A2150,249,Code/masm_dumps/_sa6__newCommandButtonOverride_ControlBar__IAEPAVComman_4A2150.asm,matched,Exact 249B Open-BFME4+Grok
+?newTerrain@TerrainTypeCollection@@,,0x000A8680,204,Code/masm_dumps/_sa6__newTerrain_TerrainTypeCollection___A8680.asm,matched,Exact 204B Open-BFME4+Grok
+?newUpgrade@UpgradeCenter@@QAEPAVUpgradeTemplate@@ABVAsciiString@@@Z,,0x0010B140,246,Code/masm_dumps/_sa6__newUpgrade_UpgradeCenter__QAEPAVUpgradeTemplate___10B140.asm,matched,Exact 246B Open-BFME4+Grok
+?unitMoved@W3DTreeBuffer@@QAEXPAVObject@@@Z,,0x008EA400,234,Code/masm_dumps/_sa6__unitMoved_W3DTreeBuffer__QAEXPAVObject___Z_8EA400.asm,matched,Exact 234B Open-BFME4+Grok
+?parsePlayerKVPairs@GameSpyPSMessageQueueInterface@@,,0x00659670,3856,Code/masm_dumps/_sa7__parsePlayerKVPairs_GameSpyPSMessageQueueInterface_659670.asm,matched,Exact 3856B Open-BFME4
+?Recolor_Mesh@W3DAssetManager@@,,0x0092DF50,1218,Code/masm_dumps/_sa7__Recolor_Mesh_W3DAssetManager___92DF50.asm,matched,Exact 1218B Open-BFME4
+?CrashDone@Debug@@QAE_N_N@Z,,0x0088BB60,955,Code/masm_dumps/_sa7__CrashDone_Debug__QAE_N_N_Z_88BB60.asm,matched,Exact 955B Open-BFME4
+?update@ParticleSystem@@UAE_NH@Z,,0x005FF310,767,Code/masm_dumps/_sa7__update_ParticleSystem__UAE_NH_Z_5FF310.asm,matched,Exact 767B Open-BFME4
+?RequestGameCreate@LANAPI@@UAEXVUnicodeString@@_N@Z,,0x00687E90,722,Code/masm_dumps/_sa7__RequestGameCreate_LANAPI__UAEXVUnicodeString___N__687E90.asm,matched,Exact 722B Open-BFME4
+?getUiText@Script@@QAE?AVAsciiString@@XZ,,0x00357860,564,Code/masm_dumps/_sa7__getUiText_Script__QAE_AVAsciiString__XZ_357860.asm,matched,Exact 564B Open-BFME4
+?loadD3DCursorTextures@W3DMouse@@,,0x00701330,559,Code/masm_dumps/_sa7__loadD3DCursorTextures_W3DMouse___701330.asm,matched,Exact 559B Open-BFME4
+?flashAsSelected@Drawable@@QAEXPBURGBColor@@@Z,,0x0076E4F0,556,Code/masm_dumps/_sa7__flashAsSelected_Drawable__QAEXPBURGBColor___Z_76E4F0.asm,matched,Exact 556B Open-BFME4
+?action@RepairDockUpdate@@UAE_NPAVObject@@0@Z,,0x001A9110,516,Code/masm_dumps/_sa7__action_RepairDockUpdate__UAE_NPAVObject__0_Z_1A9110.asm,matched,Exact 516B Open-BFME4
+??0TransitionDamageFX@@,,0x00251CF0,374,Code/masm_dumps/_sa7___0TransitionDamageFX___251CF0.asm,matched,Exact 374B Open-BFME4
+??0W3DWaypointBuffer@@,,0x007468B0,297,Code/masm_dumps/_sa7___0W3DWaypointBuffer___7468B0.asm,matched,Exact 297B Open-BFME4
+?newRoad@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z,,0x006026F0,256,Code/masm_dumps/_sa7__newRoad_TerrainRoadCollection__QAEPAVTerrainRoadT_6026F0.asm,matched,Exact 256B Open-BFME4
+?mangleCustomAudioName@Drawable@@QBEXPAVDynamicAudioEventInfo@@@Z,,0x00417330,205,Code/masm_dumps/_sa7__mangleCustomAudioName_Drawable__QBEXPAVDynamicAud_417330.asm,matched,Exact 205B Open-BFME4
+?doTeamDecreasePriority@ScriptActions@@IAEXABVAsciiString@@@Z,,0x002F3A60,196,Code/masm_dumps/_sa7__doTeamDecreasePriority_ScriptActions__IAEXABVAsci_2F3A60.asm,matched,Exact 196B Open-BFME4
+?doTeamIncreasePriority@ScriptActions@@IAEXABVAsciiString@@@Z,,0x002F3960,196,Code/masm_dumps/_sa7__doTeamIncreasePriority_ScriptActions__IAEXABVAsci_2F3960.asm,matched,Exact 196B Open-BFME4
+?disband@TeamInQueue@@QAEXXZ,,0x00161A60,180,Code/masm_dumps/_sa7__disband_TeamInQueue__QAEXXZ_161A60.asm,matched,Exact 180B Open-BFME4
+?addSnapshotBlock@GameState@@AAEXVAsciiString@@PAVSnapshot@@W4SnapshotType@@@Z,,0x003BDB80,155,Code/masm_dumps/_sa7__addSnapshotBlock_GameState__AAEXVAsciiString__PAV_3BDB80.asm,matched,Exact 155B Open-BFME4
