@@ -1712,7 +1712,6 @@ void Player::onStructureCreated( Object *builder, Object *structure )
 //-------------------------------------------------------------------------------------------------
 /// a structure that was under construction has become completed
 //-------------------------------------------------------------------------------------------------
-// ?onStructureConstructionComplete@Player@@QAEXPAVObject@@0_N@Z present-unmatched
 void Player::onStructureConstructionComplete( Object *builder, Object *structure, Bool isRebuild )
 {
 	// When a a structure is completed, it becomes "real" as far as scripting is 
@@ -4634,4 +4633,3 @@ void Player::loadPostProcess( void )
 {
 
 }  // end loadPostProcess
-
