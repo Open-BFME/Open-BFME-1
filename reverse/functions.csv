@@ -12133,3 +12133,20 @@ __chkstk,,0x009F6C60,61,Code/masm_dumps/_icf3___chkstk_9F6C60.asm,matched,ICF Op
 ?set@RetailLayoutString@@QAEXPBDH@Z,,0x00887D20,50,Code/masm_dumps/_icf3__set_RetailLayoutString__QAEXPBDH_Z_887D20.asm,matched,ICF Open-BFME4+Grok
 ?set@LayoutFilename@@QAEXPBDH@Z,,0x00887D20,50,Code/masm_dumps/_icf3__set_LayoutFilename__QAEXPBDH_Z_887D20.asm,matched,ICF Open-BFME4+Grok
 ?close@File@@UAEXXZ,,0x009CB880,50,Code/masm_dumps/_icf3__close_File__UAEXXZ_9CB880.asm,matched,ICF Open-BFME4+Grok
+??0InGameUI@@QAE@XZ,,0x0044B800,1828,Code/masm_dumps/_sa14___0InGameUI__QAE_XZ_44B800.asm,matched,sa14 Open-BFME4+Grok Courier
+?getLocalProfileID@GameSpyBuddyMessageQueue@@UAEHXZ,,0x004EBE30,1771,Code/masm_dumps/_sa14__getLocalProfileID_GameSpyBuddyMessageQueue__UAEHXZ_4EBE30.asm,matched,sa14 Open-BFME4+Grok Loading
+?getLastLadderPort@CustomMatchPreferences@@QAEGXZ,,0x00856900,1617,Code/masm_dumps/_sa14__getLastLadderPort_CustomMatchPreferences__QAEGXZ_856900.asm,matched,sa14 Open-BFME4+Grok UseLongGameList
+?clearUnseenMaps@MapCache@@AAE_NVAsciiString@@@Z,,0x004578EB,1059,Code/masm_dumps/_sa14__clearUnseenMaps_MapCache__AAE_NVAsciiString___Z_4578EB.asm,matched,sa14 Open-BFME4+Grok %s\%s%s
+?postProcessLoad@WeaponStore@@UAEXXZ,,0x0023E5F0,1017,Code/masm_dumps/_sa14__postProcessLoad_WeaponStore__UAEXXZ_23E5F0.asm,matched,sa14 Open-BFME4+Grok NoSound
+?isAGoodIdeaToBuildTeam@AIPlayer@@MAE_NPAVTeamPrototype@@@Z,,0x00167E80,786,Code/masm_dumps/_sa14__isAGoodIdeaToBuildTeam_AIPlayer__MAE_NPAVTeamPrototype___Z_167E80.asm,matched,sa14 Open-BFME4+Grok Team '
+?doDisplayCinematicText@ScriptActions@@IAEXABVAsciiString@@0H@Z,,0x002F3BD0,553,Code/masm_dumps/_sa14__doDisplayCinematicText_ScriptActions__IAEXABVAsciiString__0H_Z_2F3BD0.asm,matched,sa14 Open-BFME4+Grok [Bold]
+?removeSide@SidesList@@QAEXH@Z,,0x000C31B0,363,Code/masm_dumps/_sa14__removeSide_SidesList__QAEXH_Z_C31B0.asm,matched,sa14 Open-BFME4+Grok neutral
+?reset@GameState@@UAEXXZ,,0x00110010,281,Code/masm_dumps/_sa14__reset_GameState__UAEXXZ_110010.asm,matched,sa14 Open-BFME4+Grok %08d%s
+?init@MainMenuMediumScaleUpTransition@@UAEXPAVGameWindow@@@Z,,0x003A4C80,251,Code/masm_dumps/_sa14__init_MainMenuMediumScaleUpTransition__UAEXPAVGameWindow___Z_3A4C80.asm,matched,sa14 Open-BFME4+Grok Medium
+?parsePreferredAgainst@WeaponTemplateSet@@CAXPAVINI@@PAX1PBX@Z,,0x0010FE90,204,Code/masm_dumps/_sa14__parsePreferredAgainst_WeaponTemplateSet__CAXPAVINI__PAX1PBX_Z_10FE90.asm,matched,sa14 Open-BFME4+Grok Weapon
+?sendAProbe@NAT@@IAEXIGH@Z,,0x00671020,179,Code/masm_dumps/_sa14__sendAProbe_NAT__IAEXIGH_Z_671020.asm,matched,sa14 Open-BFME4+Grok PROBE%d
+?ParseScriptListDataChunk@ScriptList@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,,0x00350F50,153,Code/masm_dumps/_sa14__ParseScriptListDataChunk_ScriptList__SA_NAAVDataChunkInput__PAUDataCh_350F50.asm,matched,sa14 Open-BFME4+Grok Script
+?findStaticLODLevel@GameLODManager@@QAE?AW4StaticGameLODLevel@@XZ,,0x00090970,106,Code/masm_dumps/_sa14__findStaticLODLevel_GameLODManager__QAE_AW4StaticGameLODLevel__XZ_90970.asm,matched,sa14 Open-BFME4+Grok StaticGameLOD
+?useCameraInReplays@OptionPreferences@@QAE_NXZ,,0x00090900,87,Code/masm_dumps/_sa14__useCameraInReplays_OptionPreferences__QAE_NXZ_90900.asm,matched,sa14 Open-BFME4+Grok IdealStaticGameLOD
+?getLastLadderPort@QuickMatchPreferences@@QAEGXZ,,0x000ABF10,84,Code/masm_dumps/_sa14__getLastLadderPort_QuickMatchPreferences__QAEGXZ_ABF10.asm,matched,sa14 Open-BFME4+Grok MaxDisconnects
+??1GameEngine@@UAE@XZ,,0x0007AC33,63,Code/masm_dumps/_sa14___1GameEngine__UAE_XZ_7AC33.asm,matched,sa14 Open-BFME4+Grok Uncaught Exception during init
