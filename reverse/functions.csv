@@ -12150,3 +12150,12 @@ __chkstk,,0x009F6C60,61,Code/masm_dumps/_icf3___chkstk_9F6C60.asm,matched,ICF Op
 ?useCameraInReplays@OptionPreferences@@QAE_NXZ,,0x00090900,87,Code/masm_dumps/_sa14__useCameraInReplays_OptionPreferences__QAE_NXZ_90900.asm,matched,sa14 Open-BFME4+Grok IdealStaticGameLOD
 ?getLastLadderPort@QuickMatchPreferences@@QAEGXZ,,0x000ABF10,84,Code/masm_dumps/_sa14__getLastLadderPort_QuickMatchPreferences__QAEGXZ_ABF10.asm,matched,sa14 Open-BFME4+Grok MaxDisconnects
 ??1GameEngine@@UAE@XZ,,0x0007AC33,63,Code/masm_dumps/_sa14___1GameEngine__UAE_XZ_7AC33.asm,matched,sa14 Open-BFME4+Grok Uncaught Exception during init
+?addSuperweapon@InGameUI@@UAEXHABVAsciiString@@W4ObjectID@@PBVSpecialPowerTemplate@@@Z,,0x0044C970,338,Code/masm_dumps/_rn1__addSuperweapon_InGameUI__UAEXHABVAsciiString__W4ObjectID__PBVSpecialP_44C970.asm,matched,reloc-needle Open-BFME4+Grok
+?Update_Obj_Space_Bounding_Volumes@HLodClass@@MAEXXZ,,0x0097C1A0,1481,Code/masm_dumps/_rn1__Update_Obj_Space_Bounding_Volumes_HLodClass__MAEXXZ_97C1A0.asm,matched,reloc-needle Open-BFME4+Grok
+?read_proxy_array@HLodDefClass@@AAE_NAAVChunkLoadClass@@@Z,,0x0097B990,325,Code/masm_dumps/_rn1__read_proxy_array_HLodDefClass__AAE_NAAVChunkLoadClass___Z_97B990.asm,matched,reloc-needle Open-BFME4+Grok
+?add_resolution@RenderDeviceDescClass@@AAEXHHH@Z,,0x00906440,164,Code/masm_dumps/_rn1__add_resolution_RenderDeviceDescClass__AAEXHHH_Z_906440.asm,matched,reloc-needle Open-BFME4+Grok
+??4RenderDeviceDescClass@@QAEAAV0@ABV0@@Z,,0x009078A0,188,Code/masm_dumps/_rn1___4RenderDeviceDescClass__QAEAAV0_ABV0__Z_9078A0.asm,matched,reloc-needle Open-BFME4+Grok
+?Set_Default_Global_Render_States@DX8Wrapper@@KAXXZ,,0x009081D0,211,Code/masm_dumps/_rn1__Set_Default_Global_Render_States_DX8Wrapper__KAXXZ_9081D0.asm,matched,reloc-needle Open-BFME4+Grok
+??_G?$VectorClass@VRenderDeviceDescClass@@@@UAEPAXI@Z,,0x0090B580,97,Code/masm_dumps/_rn1____G__VectorClass_VRenderDeviceDescClass____UAEPAXI_Z_90B580.asm,matched,reloc-needle Open-BFME4+Grok
+?generateVertexBuffer@WaterRenderObjClass@@IAEJHHH_N@Z,,0x0079EAB0,790,Code/masm_dumps/_rn1__generateVertexBuffer_WaterRenderObjClass__IAEJHHH_N_Z_79EAB0.asm,matched,reloc-needle Open-BFME4+Grok
+?generateIndexBuffer@WaterRenderObjClass@@IAEJHH@Z,,0x0079EEA0,237,Code/masm_dumps/_rn1__generateIndexBuffer_WaterRenderObjClass__IAEJHH_Z_79EEA0.asm,matched,reloc-needle Open-BFME4+Grok
