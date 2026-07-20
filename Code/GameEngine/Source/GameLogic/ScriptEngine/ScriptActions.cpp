@@ -213,11 +213,15 @@ void ScriptActions::doQuickVictory( void )
 //-------------------------------------------------------------------------------------------------
 /** doSetInfantryLightingOverride */
 //-------------------------------------------------------------------------------------------------
-// ?doSetInfantryLightingOverride@ScriptActions@@IAEXM@Z present-unmatched
+// BFME packs m_scriptOverrideInfantryLightScale at GlobalData+0xdc8.
+struct BfmeGlobalDataInfantryLight {
+	UnsignedByte _pad[0xdc8];
+	Real m_scriptOverrideInfantryLightScale;
+};
+
 void ScriptActions::doSetInfantryLightingOverride(Real setting)
 {
-	DEBUG_ASSERTCRASH( (setting == -1.0f) || (setting > 0.0f), ("Invalid setting (%d) in Infantry Lighting Override script.", setting) );
-	TheWritableGlobalData->m_scriptOverrideInfantryLightScale = setting;
+	((BfmeGlobalDataInfantryLight *)TheWritableGlobalData)->m_scriptOverrideInfantryLightScale = setting;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -6591,10 +6595,16 @@ void ScriptActions::doEnableOrDisableObjectDifficultyBonuses(Bool enableBonuses)
 }
 
 //-------------------------------------------------------------------------------------------------
+// BFME packs m_ChooseVictimAlwaysUsesNormal at ScriptEngine+0x17635.
+struct BfmeScriptEngineChooseVictim {
+	UnsignedByte _pad[0x17635];
+	Bool m_ChooseVictimAlwaysUsesNormal;
+};
+
 // ?doChooseVictimAlwaysUsesNormal@ScriptActions@@IAEX_N@Z present-unmatched
 void ScriptActions::doChooseVictimAlwaysUsesNormal(Bool enable)
 {
-	TheScriptEngine->setChooseVictimAlwaysUsesNormal(enable);
+	((BfmeScriptEngineChooseVictim *)TheScriptEngine)->m_ChooseVictimAlwaysUsesNormal = enable;
 }
 
 
