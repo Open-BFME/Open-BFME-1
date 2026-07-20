@@ -441,6 +441,17 @@ def load_symbol_map():
     return symbol_map
 
 
+# Sweep environment include dirs (header-only). Added on a *retry* when a source
+# fails to open an include that only exists under the GeneralsMD/reference tree
+# (e.g. the sweep-shim windows.h, or NetworkDefs.h pulled in by it). Off the
+# default path so they never change codegen for the 10k+ already-matched sources.
+_SWEEP_INCLUDE_DIRS = [
+    ROOT / "reference" / "shims" / "sweep",
+    ROOT / "reference" / "CnC_Generals_Zero_Hour" / "GeneralsMD" / "Code",
+    ROOT / "reference" / "CnC_Generals_Zero_Hour" / "GeneralsMD" / "Code" / "Include",
+]
+
+
 def compile_source(source, output):
     output.parent.mkdir(parents=True, exist_ok=True)
     command, env = compiler_command(source, output)
@@ -455,6 +466,16 @@ def compile_source(source, output):
         )
         if result.returncode == 0:
             return
+        # Retry once with the sweep include dirs on the path (header resolution
+        # only — never affects codegen of already-matched sources).
+        if attempt == 0 and any(d.exists() for d in _SWEEP_INCLUDE_DIRS):
+            missing = any("Cannot open include file" in l for l in result.stdout.splitlines())
+            if missing:
+                env = dict(env)
+                extra = ";".join(wine_path(d) for d in _SWEEP_INCLUDE_DIRS if d.exists())
+                env["INCLUDE"] = env["INCLUDE"] + ";" + extra
+                command = list(command) + [f"/I{wine_path(d)}" for d in _SWEEP_INCLUDE_DIRS if d.exists()]
+                continue
         transient = (not result.stdout.strip()
                      or "Application could not be started" in result.stdout
                      or "ShellExecuteEx failed" in result.stdout)
