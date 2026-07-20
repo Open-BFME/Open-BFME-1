@@ -11485,3 +11485,9 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??0MonsterDockUpdateModuleData@@QAE@XZ,,0x002CDCF0,81,Code/masm_dumps/MonsterDockUpdateModuleData_constructor.asm,matched,Exact 81B ModuleData ctor; Open-BFME4+Grok
 ??1RespawnBodyModuleData@@UAE@XZ,,0x00211D40,6838,Code/masm_dumps/RespawnBodyModuleData_destructor.asm,matched,Exact 6838B @ 0x00211D40; Exact retail MASM; ModuleData factory ctor->vtable dtor; ctor 0x2149D0 vt 0xCA9320; Open-BFME4+Grok
 ??1AutoAbilityBehaviorModuleData@@UAE@XZ,,0x001EDCA0,1944,Code/masm_dumps/AutoAbilityBehaviorModuleData_destructor.asm,matched,Exact 1944B @ 0x001EDCA0; Exact retail MASM; ModuleData ctor->vtable SEH dtor; ctor 0x1ED6A0 vt 0xCA1AF4; Open-BFME4+Grok
+??1PlayerHealSpecialPowerModuleData@@UAE@XZ,,0x00268CB0,379,Code/masm_dumps/PlayerHealSpecialPowerModuleData_destructor.asm,matched,Exact 379B ModuleData SEH dtor Open-BFME4
+??1UpgradeModuleModuleData@@UAE@XZ,,0x00128FA0,273,Code/masm_dumps/UpgradeModuleModuleData_destructor.asm,matched,Exact 273B ModuleData SEH dtor Open-BFME4
+??1PlayerUpgradeSpecialPowerModuleData@@UAE@XZ,,0x000658A0,149,Code/masm_dumps/PlayerUpgradeSpecialPowerModuleData_destructor.asm,matched,Exact 149B ModuleData SEH dtor Open-BFME4
+??1CashHackSpecialPowerModuleData@@UAE@XZ,,0x00258E20,120,Code/masm_dumps/CashHackSpecialPowerModuleData_destructor.asm,matched,Exact 120B ModuleData SEH dtor Open-BFME4
+??1WeaponChangeSpecialPowerModuleModuleData@@UAE@XZ,,0x0026CF10,95,Code/masm_dumps/WeaponChangeSpecialPowerModuleModuleData_destructor.asm,matched,Exact 95B ModuleData SEH dtor Open-BFME4
+??1W3DQuadrupedDrawModuleData@@UAE@XZ,,0x006BFF70,89,Code/masm_dumps/W3DQuadrupedDrawModuleData_destructor.asm,matched,Exact 89B ModuleData SEH dtor Open-BFME4
