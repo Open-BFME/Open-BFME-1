@@ -2989,19 +2989,25 @@ void ScriptActions::doTeamRadarCreateEvent(const AsciiString& teamName, Int even
 //-------------------------------------------------------------------------------------------------
 /** doRadarDisable */
 //-------------------------------------------------------------------------------------------------
-// ?doRadarDisable@ScriptActions@@IAEXXZ present-unmatched
+// BFME Radar::hide/forceOn both store at +0x0d (ZH packs the hidden flag one byte earlier).
+struct BfmeRadarHideField {
+	UnsignedByte _pad[0x0d];
+	Bool m_radarHidden;
+};
+
+// ?doRadarDisable@ScriptActions@@IAEXXZ
 void ScriptActions::doRadarDisable(void)
 {
-	TheRadar->hide(true);
+	((BfmeRadarHideField *)TheRadar)->m_radarHidden = true;
 }
 
 //-------------------------------------------------------------------------------------------------
 /** doRadarEnable */
 //-------------------------------------------------------------------------------------------------
-// ?doRadarEnable@ScriptActions@@IAEXXZ present-unmatched
+// ?doRadarEnable@ScriptActions@@IAEXXZ
 void ScriptActions::doRadarEnable(void)
 {
-	TheRadar->hide(false);
+	((BfmeRadarHideField *)TheRadar)->m_radarHidden = false;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -6231,6 +6237,8 @@ static void (GameLogic::* const s_bfmeForceDrawIconEmit)(Bool) =
 	&GameLogic::setDrawIconUI;
 static void (GameLogic::* const s_bfmeForceDynamicLODEmit)(Bool) =
 	&GameLogic::setShowDynamicLOD;
+static void (Radar::* const s_bfmeForceRadarHideEmit)(Bool) = &Radar::hide;
+static void (Radar::* const s_bfmeForceRadarForceOnEmit)(Bool) = &Radar::forceOn;
 
 // ?doOverrideHulkLifetime@ScriptActions@@IAEXM@Z
 void ScriptActions::doOverrideHulkLifetime( Real seconds )
