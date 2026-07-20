@@ -12078,3 +12078,29 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??1SaveLoadSubSystemClass@@UAE@XZ,,0x009D19A0,93,Code/masm_dumps/_icf2___1SaveLoadSubSystemClass__UAE_XZ_9D19A0.asm,matched,ICF of ??1SubsystemInterface@@UAE@XZ Open-BFME4+Grok
 ??1RAMFile@@MAE@XZ,,0x009D19A0,93,Code/masm_dumps/_icf2___1RAMFile__MAE_XZ_9D19A0.asm,matched,ICF of ??1SubsystemInterface@@UAE@XZ Open-BFME4+Grok
 ??1DebugCmdInterfaceDebug@@UAE@XZ,,0x00890F10,85,Code/masm_dumps/_icf2___1DebugCmdInterfaceDebug__UAE_XZ_890F10.asm,matched,ICF of ??1DebugIOFlat@@UAE@XZ Open-BFME4+Grok
+?create@GameSpyConfigInterface@@SAPAV1@VAsciiString@@@Z,,0x0062AD50,3077,Code/masm_dumps/_sa13__create_GameSpyConfigInterface__SAPAV1_VAsciiString___Z_62AD50.asm,matched,multi-xref Open-BFME4+Grok %s\%s\%s.map
+?deleteLoadScreen@GameLogic@@QAEXXZ,,0x0038D100,1473,Code/masm_dumps/_sa13__deleteLoadScreen_GameLogic__QAEXXZ_38D100.asm,matched,multi-xref Open-BFME4+Grok FadeWholeScreen
+?updateBridgeRepair@AIPlayer@@IAEXXZ,,0x00167930,1077,Code/masm_dumps/_sa13__updateBridgeRepair_AIPlayer__IAEXXZ_167930.asm,matched,multi-xref Open-BFME4+Grok ' because team already exists.
+?getIdealStaticGameDetail@OptionPreferences@@QAEHXZ,,0x0007E0F0,942,Code/masm_dumps/_sa13__getIdealStaticGameDetail_OptionPreferences__QAEHXZ_7E0F0.asm,matched,multi-xref Open-BFME4+Grok IdealStaticGameLOD
+?newDisplayString@W3DDisplayStringManager@@UAEPAVDisplayString@@XZ,,0x005A5AE0,774,Code/masm_dumps/_sa13__newDisplayString_W3DDisplayStringManager__UAEPAVDisplayString__XZ_5A5AE0.asm,matched,multi-xref Open-BFME4+Grok Times New Roman
+??1ControlBar@@UAE@XZ,,0x004A9980,679,Code/masm_dumps/_sa13___1ControlBar__UAE_XZ_4A9980.asm,matched,multi-xref Open-BFME4+Grok ControlBar.wnd:ObserverPlayerListWi
+?loadPostProcess@ParticleSystem@@MAEXXZ,,0x000B9EA0,636,Code/masm_dumps/_sa13__loadPostProcess_ParticleSystem__MAEXXZ_B9EA0.asm,matched,multi-xref Open-BFME4+Grok InitialDelay
+?doMoveCameraAlongWaypointPath@ScriptActions@@IAEXABVAsciiString@@MMMM@Z,,0x002F8FD0,563,Code/masm_dumps/_sa13__doMoveCameraAlongWaypointPath_ScriptActions__IAEXABVAsciiString__MMMM_2F8FD0.asm,matched,multi-xref Open-BFME4+Grok  already exists. Failed Create.
+?winPointInChild@GameWindow@@QAEPAV1@HH_N0@Z,,0x00479770,399,Code/masm_dumps/_sa13__winPointInChild_GameWindow__QAEPAV1_HH_N0_Z_479770.asm,matched,multi-xref Open-BFME4+Grok GUIClickDisabled
+?recreateControlBar@InGameUI@@UAEXXZ,,0x00442300,279,Code/masm_dumps/_sa13__recreateControlBar_InGameUI__UAEXXZ_442300.asm,matched,multi-xref Open-BFME4+Grok ControlBar.wnd
+?becomingTeamMember@Player@@QAEXPAVObject@@_N@Z,,0x000D7680,238,Code/masm_dumps/_sa13__becomingTeamMember_Player__QAEXPAVObject___N_Z_D7680.asm,matched,multi-xref Open-BFME4+Grok AutoDepositUpdate
+?findSkirmishSideInfo@SidesList@@QAEPAVSidesInfo@@VAsciiString@@PAH@Z,,0x0035F4E0,224,Code/masm_dumps/_sa13__findSkirmishSideInfo_SidesList__QAEPAVSidesInfo__VAsciiString__PAH_Z_35F4E0.asm,matched,multi-xref Open-BFME4+Grok FactionCivilian
+?xfer@AIAttackSquadState@@MAEXPAVXfer@@@Z,,0x00181C10,210,Code/masm_dumps/_sa13__xfer_AIAttackSquadState__MAEXPAVXfer___Z_181C10.asm,matched,multi-xref Open-BFME4+Grok AIAttackMachine
+?setPreferredColor@CustomMatchPreferences@@QAEXH@Z,,0x000ADE00,170,Code/masm_dumps/_sa13__setPreferredColor_CustomMatchPreferences__QAEXH_Z_ADE00.asm,matched,multi-xref Open-BFME4+Grok DisallowAsianText
+?setDisallowNonAsianText@CustomMatchPreferences@@QAEX_N@Z,,0x000ADEE0,170,Code/masm_dumps/_sa13__setDisallowNonAsianText_CustomMatchPreferences__QAEX_N_Z_ADEE0.asm,matched,multi-xref Open-BFME4+Grok DisallowNonAsianText
+?setNumPlayers@QuickMatchPreferences@@QAEXH@Z,,0x000AD5E0,169,Code/masm_dumps/_sa13__setNumPlayers_QuickMatchPreferences__QAEXH_Z_AD5E0.asm,matched,multi-xref Open-BFME4+Grok NumPlayers
+?setMaxDisconnects@QuickMatchPreferences@@QAEXH@Z,,0x000AD260,169,Code/masm_dumps/_sa13__setMaxDisconnects_QuickMatchPreferences__QAEXH_Z_AD260.asm,matched,multi-xref Open-BFME4+Grok MaxDisconnects
+??0DataChunkOutput@@QAE@PAVOutputStream@@@Z,,0x00102BA0,168,Code/masm_dumps/_sa13___0DataChunkOutput__QAE_PAVOutputStream___Z_102BA0.asm,matched,multi-xref Open-BFME4+Grok _tmpChunk.dat
+?Reset@MeshMatDescClass@@QAEXHHH@Z,,0x006D7BB0,166,Code/masm_dumps/_sa13__Reset_MeshMatDescClass__QAEXHHH_Z_6D7BB0.asm,matched,multi-xref Open-BFME4+Grok MeshMatDescClass::UV
+?addScript@ScriptGroup@@QAEXPAVScript@@H@Z,,0x00352AB0,153,Code/masm_dumps/_sa13__addScript_ScriptGroup__QAEXPAVScript__H_Z_352AB0.asm,matched,multi-xref Open-BFME4+Grok ScriptGroup
+?getScrollFactor@OptionPreferences@@QAEMXZ,,0x000906C0,147,Code/masm_dumps/_sa13__getScrollFactor_OptionPreferences__QAEMXZ_906C0.asm,matched,multi-xref Open-BFME4+Grok ScrollFactor
+?onDie@StructureToppleUpdate@@UAEXPBVDamageInfo@@@Z,,0x002AE520,145,Code/masm_dumps/_sa13__onDie_StructureToppleUpdate__UAEXPBVDamageInfo___Z_2AE520.asm,matched,multi-xref Open-BFME4+Grok BoneFXUpdate
+?clearAvailableGames@GameState@@AAEXXZ,,0x0051E900,136,Code/masm_dumps/_sa13__clearAvailableGames_GameState__AAEXXZ_51E900.asm,matched,multi-xref Open-BFME4+Grok 00000000.sav
+?getSpeechVolume@OptionPreferences@@QAEMXZ,,0x00091880,129,Code/masm_dumps/_sa13__getSpeechVolume_OptionPreferences__QAEMXZ_91880.asm,matched,multi-xref Open-BFME4+Grok VoiceVolume
+?getResolution@OptionPreferences@@QAEXPAH0@Z,,0x00091930,129,Code/masm_dumps/_sa13__getResolution_OptionPreferences__QAEXPAH0_Z_91930.asm,matched,multi-xref Open-BFME4+Grok MusicVolume
+?getAlternateMouseModeEnabled@OptionPreferences@@QAE_NXZ,,0x00092670,126,Code/masm_dumps/_sa13__getAlternateMouseModeEnabled_OptionPreferences__QAE_NXZ_92670.asm,matched,multi-xref Open-BFME4+Grok GameSpyIPAddress
