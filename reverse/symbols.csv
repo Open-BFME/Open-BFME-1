@@ -3338,3 +3338,5 @@ __ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00
 ?doFreezeTime@ScriptEngine@@QAEXXZ,0x00465B80,pin ScriptActions doFreezeTime wrapper
 ?showNamedTimerDisplay@InGameUI@@QAEX_N@Z,0x0001E1A0,ILT thunk for ScriptActions timer display
 ?showNamedTimerDisplay@InGameUI@@QAEX_N@Z,0x0043AA90,body showNamedTimerDisplay InGameUI+0x7a1
+?doUnfreezeTime@ScriptEngine@@QAEXXZ,0x00336F10,pin ScriptActions doUnfreezeTime wrapper (ScriptEngine+0x17624=0)
+?doUnfreezeTime@ScriptEngine@@QAEXXZ,0x00037524,ILT thunk for doUnfreezeTime body 0x336F10

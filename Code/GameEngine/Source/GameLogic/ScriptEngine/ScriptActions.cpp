@@ -3968,7 +3968,6 @@ void ScriptActions::doFreezeTime(void)
 //-------------------------------------------------------------------------------------------------
 /** Unfreeze time */
 //-------------------------------------------------------------------------------------------------
-// ?doUnfreezeTime@ScriptActions@@IAEXXZ present-unmatched
 void ScriptActions::doUnfreezeTime(void)
 {
 	TheScriptEngine->doUnfreezeTime();
@@ -5366,10 +5365,54 @@ void ScriptActions::doSoundEnableType( const AsciiString& soundEventName, Bool e
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?doSoundRemoveAllDisabled@ScriptActions@@IAEXXZ present-unmatched
+// BFME Audio vtable: removeDisabledEvents-like at +0x9c with extra 0 arg.
+class BfmeAudioVtableLayout9c {
+public:
+	virtual void _bfme_audio_slot_0() = 0;
+	virtual void _bfme_audio_slot_1() = 0;
+	virtual void _bfme_audio_slot_2() = 0;
+	virtual void _bfme_audio_slot_3() = 0;
+	virtual void _bfme_audio_slot_4() = 0;
+	virtual void _bfme_audio_slot_5() = 0;
+	virtual void _bfme_audio_slot_6() = 0;
+	virtual void _bfme_audio_slot_7() = 0;
+	virtual void _bfme_audio_slot_8() = 0;
+	virtual void _bfme_audio_slot_9() = 0;
+	virtual void _bfme_audio_slot_10() = 0;
+	virtual void _bfme_audio_slot_11() = 0;
+	virtual void _bfme_audio_slot_12() = 0;
+	virtual void _bfme_audio_slot_13() = 0;
+	virtual void _bfme_audio_slot_14() = 0;
+	virtual void _bfme_audio_slot_15() = 0;
+	virtual void _bfme_audio_slot_16() = 0;
+	virtual void _bfme_audio_slot_17() = 0;
+	virtual void _bfme_audio_slot_18() = 0;
+	virtual void _bfme_audio_slot_19() = 0;
+	virtual void _bfme_audio_slot_20() = 0;
+	virtual void _bfme_audio_slot_21() = 0;
+	virtual void _bfme_audio_slot_22() = 0;
+	virtual void _bfme_audio_slot_23() = 0;
+	virtual void _bfme_audio_slot_24() = 0;
+	virtual void _bfme_audio_slot_25() = 0;
+	virtual void _bfme_audio_slot_26() = 0;
+	virtual void _bfme_audio_slot_27() = 0;
+	virtual void _bfme_audio_slot_28() = 0;
+	virtual void _bfme_audio_slot_29() = 0;
+	virtual void _bfme_audio_slot_30() = 0;
+	virtual void _bfme_audio_slot_31() = 0;
+	virtual void _bfme_audio_slot_32() = 0;
+	virtual void _bfme_audio_slot_33() = 0;
+	virtual void _bfme_audio_slot_34() = 0;
+	virtual void _bfme_audio_slot_35() = 0;
+	virtual void _bfme_audio_slot_36() = 0;
+	virtual void _bfme_audio_slot_37() = 0;
+	virtual void _bfme_audio_slot_38() = 0;
+	virtual void removeDisabledEvents(int unused) = 0;
+};
+
 void ScriptActions::doSoundRemoveAllDisabled()
 {
-	TheAudio->removeDisabledEvents(); 
+	((BfmeAudioVtableLayout9c *)TheAudio)->removeDisabledEvents(0);
 }
 
 //-------------------------------------------------------------------------------------------------
