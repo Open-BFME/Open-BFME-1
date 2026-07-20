@@ -11424,3 +11424,10 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??1DelayedLuaEventUpdate@@UAE@XZ,,0x0028BCB0,116,Code/masm_dumps/DelayedLuaEventUpdate_destructor.asm,matched,Exact 116B @ 0x0028BCB0; Exact retail MASM; instance factory->vtable dtor; del 0x28BFC0 ctor 0x28BEF0 vt 0xCBD3B4
 ??1AutoAbilityBehavior@@UAE@XZ,,0x001ED6E0,116,Code/masm_dumps/AutoAbilityBehavior_destructor.asm,matched,Exact 116B @ 0x001ED6E0; Exact retail MASM; instance factory->vtable dtor; del 0x1ED970 ctor 0x1ED8A0 vt 0xCA1BC4
 ??1AnimationSoundClientBehavior@@UAE@XZ,,0x00604B40,103,Code/masm_dumps/AnimationSoundClientBehavior_destructor.asm,matched,Exact 103B @ 0x00604B40; Exact retail MASM; instance factory->vtable dtor; del 0x604E60 ctor 0x605380 vt 0xD155A0
+??1AutoPickUpUpdate@@UAE@XZ,,0x00281F40,1490,Code/masm_dumps/AutoPickUpUpdate_destructor.asm,matched,Exact 1490B SEH module dtor; factory->vtable recovery Open-BFME4
+??1AttributeModifierAuraUpdate@@UAE@XZ,,0x002803F0,1471,Code/masm_dumps/AttributeModifierAuraUpdate_destructor.asm,matched,Exact 1471B SEH module dtor; factory->vtable recovery Open-BFME4
+??1StealthUpdate@@UAE@XZ,,0x002AC620,1085,Code/masm_dumps/StealthUpdate_destructor.asm,matched,Exact 1085B SEH module dtor; factory->vtable recovery Open-BFME4
+??1CivilianSpawnUpdate@@UAE@XZ,,0x0028A5A0,1025,Code/masm_dumps/CivilianSpawnUpdate_destructor.asm,matched,Exact 1025B SEH module dtor; factory->vtable recovery Open-BFME4
+??1LargeGroupBonusUpdate@@UAE@XZ,,0x00297930,812,Code/masm_dumps/LargeGroupBonusUpdate_destructor.asm,matched,Exact 812B SEH module dtor; factory->vtable recovery Open-BFME4
+??1ReplenishUnitsBehavior@@UAE@XZ,,0x00204B50,628,Code/masm_dumps/ReplenishUnitsBehavior_destructor.asm,matched,Exact 628B SEH module dtor; factory->vtable recovery Open-BFME4
+??1HordeGarrisonContain@@UAE@XZ,,0x00249820,409,Code/masm_dumps/HordeGarrisonContain_destructor.asm,matched,Exact 409B SEH module dtor; factory->vtable recovery Open-BFME4
