@@ -10949,3 +10949,5 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??1BroadcastStealthUpdateModuleData@@UAE@XZ,,0x0012ADF0,80,Code/masm_dumps/BroadcastStealthUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1AutoHealBehaviorModuleData@@UAE@XZ,,0x0012A910,67,Code/masm_dumps/AutoHealBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ?doSetInfantryLightingOverride@ScriptActions@@IAEXM@Z,,0x002EFC10,18,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,GlobalData+0xdc8 infantry light scale
+?doChooseVictimAlwaysUsesNormal@ScriptActions@@IAEX_N@Z,,0x002F08A0,19,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,ScriptEngine+0x17635 choose-victim flag
+??1FadeAndDieOrnamentUpdateModuleData@@UAE@XZ,,0x00126E70,67,Code/masm_dumps/FadeAndDieOrnamentUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership

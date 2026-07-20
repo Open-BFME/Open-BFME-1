@@ -6601,7 +6601,6 @@ struct BfmeScriptEngineChooseVictim {
 	Bool m_ChooseVictimAlwaysUsesNormal;
 };
 
-// ?doChooseVictimAlwaysUsesNormal@ScriptActions@@IAEX_N@Z present-unmatched
 void ScriptActions::doChooseVictimAlwaysUsesNormal(Bool enable)
 {
 	((BfmeScriptEngineChooseVictim *)TheScriptEngine)->m_ChooseVictimAlwaysUsesNormal = enable;
