@@ -11876,3 +11876,27 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?init@ShellGameLoadScreen@@,,0x004920E0,517,Code/masm_dumps/_s4__init_ShellGameLoadScreen__4920E0.asm,matched,Exact string-anchored Open-BFME4+Grok
 ?post_process_fog@MeshModelClass@@IAEXXZ,,0x0096EE60,929,Code/masm_dumps/_s4__post_process_fog_MeshModelClass_IAEXXZ_96EE60.asm,matched,Exact string-anchored Open-BFME4+Grok
 ?selectAllUnitsByTypeAcrossMap@InGameUI@@UAEHV?$BitFlags@$0HE@@@0@Z,,0x00446550,756,Code/masm_dumps/_s4__selectAllUnitsByTypeAcrossMap_InGameUI_UAEHV_BitFlags__446550.asm,matched,Exact string-anchored Open-BFME4+Grok
+?evaluateCondition@ScriptConditions@@UAE_NPAVCondition@@@Z,,0x003307E0,19131,Code/masm_dumps/_sa3__evaluateCondition_ScriptConditions__UAE_NPAVCondi_3307E0.asm,matched,Exact 19131B string-anchored Open-BFME4
+?speedUp@FiringTracker@@AAEXXZ,,0x005AA450,7882,Code/masm_dumps/_sa3__speedUp_FiringTracker__AAEXXZ_5AA450.asm,matched,Exact 7882B string-anchored Open-BFME4
+?validateCachedBones@ModelConditionInfo@@ABEXPAVRenderObjectClass@@@Z,,0x00778590,3983,Code/masm_dumps/_sa3__validateCachedBones_ModelConditionInfo__ABEXPAVRe_778590.asm,matched,Exact 3983B string-anchored Open-BFME4
+??0GameSpyConfig@@QAE@VAsciiString@@@Z,,0x00628BA0,3751,Code/masm_dumps/_sa3___0GameSpyConfig__QAE_VAsciiString___Z_628BA0.asm,matched,Exact 3751B string-anchored Open-BFME4
+?load@W3DBridge@@QAE_NW4BodyDamageType@@@Z,,0x006D8C10,2808,Code/masm_dumps/_sa3__load_W3DBridge__QAE_NW4BodyDamageType___Z_6D8C10.asm,matched,Exact 2808B string-anchored Open-BFME4
+?Compute_Caps@DX8Caps@@QAEXW4WW3DFormat@@ABU_D3DADAPTER_IDENTIFIER9@@PAUIDirect3D9@@@Z,,0x0091C230,2220,Code/masm_dumps/_sa3__Compute_Caps_DX8Caps__QAEXW4WW3DFormat__ABU_D3DAD_91C230.asm,matched,Exact 2220B string-anchored Open-BFME4
+??1DrawableLocoInfo@@MAE@XZ,,0x00415D50,1385,Code/masm_dumps/_sa3___1DrawableLocoInfo__MAE_XZ_415D50.asm,matched,Exact 1385B string-anchored Open-BFME4
+?init@WaterRenderObjClass@@QAEHMMMPAVSceneClass@@W4WaterType@@@Z,,0x007A5200,1383,Code/masm_dumps/_sa3__init_WaterRenderObjClass__QAEHMMMPAVSceneClass__W_7A5200.asm,matched,Exact 1383B string-anchored Open-BFME4
+?deleteTriggers@PolygonTrigger@@QAEXXZ,,0x00748860,1328,Code/masm_dumps/_sa3__deleteTriggers_PolygonTrigger__QAEXXZ_748860.asm,matched,Exact 1328B string-anchored Open-BFME4
+??0LightMapTerrainTextureClass@@QAE@XZ,,0x006CFAE0,1304,Code/masm_dumps/_sa3___0LightMapTerrainTextureClass__QAE_XZ_6CFAE0.asm,matched,Exact 1304B string-anchored Open-BFME4
+?winCreateFromScript@GameWindowManager@@QAEPAVGameWindow@@VAsciiString@@PAPAV2@@Z,,0x00488B80,1212,Code/masm_dumps/_sa3__winCreateFromScript_GameWindowManager__QAEPAVGame_488B80.asm,matched,Exact 1212B string-anchored Open-BFME4
+?Set_Name@GameFileClass@@QAEXPBD@Z,,0x006F63B0,1214,Code/masm_dumps/_sa3__Set_Name_GameFileClass__QAEXPBD_Z_6F63B0.asm,matched,Exact 1214B string-anchored Open-BFME4
+??0SupplyTruckStateMachine@@QAE@PAVObject@@VAsciiString@@@Z,,0x002C6430,1153,Code/masm_dumps/_sa3___0SupplyTruckStateMachine__QAE_PAVObject__VAsciiS_2C6430.asm,matched,Exact 1153B string-anchored Open-BFME4
+?createReplayControl@InGameUI@@IAEXXZ,,0x00440B40,1091,Code/masm_dumps/_sa3__createReplayControl_InGameUI__IAEXXZ_440B40.asm,matched,Exact 1091B string-anchored Open-BFME4
+??0GameSpyGameSlot@@QAE@XZ,,0x00639E50,1078,Code/masm_dumps/_sa3___0GameSpyGameSlot__QAE_XZ_639E50.asm,matched,Exact 1078B string-anchored Open-BFME4
+?doSpeechPlay@ScriptActions@@IAEXABVAsciiString@@_N@Z,,0x006AF840,973,Code/masm_dumps/_sa3__doSpeechPlay_ScriptActions__IAEXABVAsciiString____6AF840.asm,matched,Exact 973B string-anchored Open-BFME4
+??0Weapon@@QAE@XZ,,0x001E74B0,933,Code/masm_dumps/_sa3___0Weapon__QAE_XZ_1E74B0.asm,matched,Exact 933B string-anchored Open-BFME4
+??0ScoreScaleUpTransition@@QAE@XZ,,0x0048B8D0,847,Code/masm_dumps/_sa3___0ScoreScaleUpTransition__QAE_XZ_48B8D0.asm,matched,Exact 847B string-anchored Open-BFME4
+?isSandbox@GameInfo@@QAE_NXZ,,0x00621600,843,Code/masm_dumps/_sa3__isSandbox_GameInfo__QAE_NXZ_621600.asm,matched,Exact 843B string-anchored Open-BFME4
+?newBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@XZ,,0x00602830,779,Code/masm_dumps/_sa3__newBridge_TerrainRoadCollection__QAEPAVTerrainRoa_602830.asm,matched,Exact 779B string-anchored Open-BFME4
+?AssertBegin@Debug@@SAAAV1@PBDH0@Z,,0x0088B530,749,Code/masm_dumps/_sa3__AssertBegin_Debug__SAAAV1_PBDH0_Z_88B530.asm,matched,Exact 749B string-anchored Open-BFME4
+?ReadParameter@Parameter@@SAPAV1@AAVDataChunkInput@@@Z,,0x00357FC0,748,Code/masm_dumps/_sa3__ReadParameter_Parameter__SAPAV1_AAVDataChunkInput_357FC0.asm,matched,Exact 748B string-anchored Open-BFME4
+?Get_DX8_Render_State_Name@DX8Wrapper@@SAPBDK@Z,,0x00873DA0,673,Code/masm_dumps/_sa3__Get_DX8_Render_State_Name_DX8Wrapper__SAPBDK_Z_873DA0.asm,matched,Exact 673B string-anchored Open-BFME4
+?handleQMMatch@PeerThreadClass@@QAEXXZ,,0x00649180,653,Code/masm_dumps/_sa3__handleQMMatch_PeerThreadClass__QAEXXZ_649180.asm,matched,Exact 653B string-anchored Open-BFME4
