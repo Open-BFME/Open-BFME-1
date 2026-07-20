@@ -2910,7 +2910,10 @@ struct BfmeGameLogicScriptFields {
 	Bool m_showBehindBuildingMarkers; // +0x91
 	Bool m_drawIconUI;                // +0x92
 	Bool m_showDynamicLOD;            // +0x93
-	UnsignedByte _pad2[0x4];          // +0x94..+0x97 (unknown bools / padding)
+	Bool m_unknown94;                 // +0x94
+	Bool m_unknown95;                 // +0x95
+	Bool m_evaEnabled;                // +0x96 (ScriptActions::doEvaEnabledDisabled)
+	Bool m_unknown97;                 // +0x97
 	Int m_scriptHulkMaxLifetimeOverride; // +0x98
 };
 
@@ -6203,10 +6206,11 @@ void ScriptActions::doUndoRevealMapAtWaypointPermanent(const AsciiString& lookNa
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?doEvaEnabledDisabled@ScriptActions@@IAEX_N@Z present-unmatched
+// ?doEvaEnabledDisabled@ScriptActions@@IAEX_N@Z
 void ScriptActions::doEvaEnabledDisabled(Bool setEnabled)
 {
-	TheEva->setEvaEnabled(setEnabled);
+	// BFME stores the EVA enabled flag on GameLogic at +0x96 (not TheEva).
+	((BfmeGameLogicScriptFields *)TheGameLogic)->m_evaEnabled = setEnabled;
 }
 
 //-------------------------------------------------------------------------------------------------
