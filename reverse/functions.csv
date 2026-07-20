@@ -12311,3 +12311,5 @@ _IsStatsConnected,,0x009D2B60,15,Code/masm_dumps/_sym4__IsStatsConnected_9D2B60.
 ?screenPixelToWorld@Radar@@QAE_NPBUICoord2D@@PAUCoord3D@@@Z,,0x00107C50,126,Code/masm_dumps/_rn7__screenPixelToWorld_Radar__QAE_NPBUICoord2D__PAUCoord3D___Z_107C50.asm,matched,reloc-needle Open-BFME4+Grok
 ?validate@FunctionLexicon@@QAE_NXZ,,0x00105380,123,Code/masm_dumps/_rn7__validate_FunctionLexicon__QAE_NXZ_105380.asm,matched,reloc-needle Open-BFME4+Grok
 ?newModule@ModuleFactory@@QAEPAVModule@@PAVThing@@ABVAsciiString@@PBVModuleData@@W4ModuleType@@@Z,,0x00127E00,96,Code/masm_dumps/_rn7__newModule_ModuleFactory__QAEPAVModule__PAVThing__ABVAsciiString__PBVM_127E00.asm,matched,reloc-needle Open-BFME4+Grok
+?setTimeOfDay@WaterRenderObjClass@@QAEXW4TimeOfDay@@@Z,,0x0079F590,35,Code/masm_dumps/_rn8__setTimeOfDay_WaterRenderObjClass__QAEXW4TimeOfDay___Z_79F590.asm,matched,reloc-needle Open-BFME4+Grok
+?updateRenderTargetTextures@WaterRenderObjClass@@QAEXPAVCameraClass@@@Z,,0x007A4AF0,61,Code/masm_dumps/_rn8__updateRenderTargetTextures_WaterRenderObjClass__QAEXPAVCameraClass____7A4AF0.asm,matched,reloc-needle Open-BFME4+Grok
