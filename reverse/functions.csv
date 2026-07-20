@@ -12313,3 +12313,16 @@ _IsStatsConnected,,0x009D2B60,15,Code/masm_dumps/_sym4__IsStatsConnected_9D2B60.
 ?newModule@ModuleFactory@@QAEPAVModule@@PAVThing@@ABVAsciiString@@PBVModuleData@@W4ModuleType@@@Z,,0x00127E00,96,Code/masm_dumps/_rn7__newModule_ModuleFactory__QAEPAVModule__PAVThing__ABVAsciiString__PBVM_127E00.asm,matched,reloc-needle Open-BFME4+Grok
 ?setTimeOfDay@WaterRenderObjClass@@QAEXW4TimeOfDay@@@Z,,0x0079F590,35,Code/masm_dumps/_rn8__setTimeOfDay_WaterRenderObjClass__QAEXW4TimeOfDay___Z_79F590.asm,matched,reloc-needle Open-BFME4+Grok
 ?updateRenderTargetTextures@WaterRenderObjClass@@QAEXPAVCameraClass@@@Z,,0x007A4AF0,61,Code/masm_dumps/_rn8__updateRenderTargetTextures_WaterRenderObjClass__QAEXPAVCameraClass____7A4AF0.asm,matched,reloc-needle Open-BFME4+Grok
+?init@SnowManager@@UAEXXZ,,0x0045A970,34,Code/masm_dumps/_rn9__init_SnowManager__UAEXXZ_45A970.asm,matched,reloc-needle Open-BFME4+Grok
+?drawViews@Display@@UAEXXZ,,0x0040DA30,38,Code/masm_dumps/_rn9__drawViews_Display__UAEXXZ_40DA30.asm,matched,reloc-needle Open-BFME4+Grok
+?setFrameCommandCount@FrameDataManager@@QAEXII@Z,,0x00670750,34,Code/masm_dumps/_rn9__setFrameCommandCount_FrameDataManager__QAEXII_Z_670750.asm,matched,reloc-needle Open-BFME4+Grok
+?LookupGameByListOffset@LANAPI@@UAEPAVLANGameInfo@@H@Z,,0x00685150,36,Code/masm_dumps/_rn9__LookupGameByListOffset_LANAPI__UAEPAVLANGameInfo__H_Z_685150.asm,matched,reloc-needle Open-BFME4+Grok
+?onEnter@AIDockProcessDockState@@UAE?AW4StateReturnType@@XZ,,0x0014EEB0,44,Code/masm_dumps/_rn9__onEnter_AIDockProcessDockState__UAE_AW4StateReturnType__XZ_14EEB0.asm,matched,reloc-needle Open-BFME4+Grok
+?setSDEnabled@StealthDetectorUpdate@@QAEX_N@Z,,0x002AB650,34,Code/masm_dumps/_rn9__setSDEnabled_StealthDetectorUpdate__QAEX_N_Z_2AB650.asm,matched,reloc-needle Open-BFME4+Grok
+?stopBurningSound@FlammableUpdate@@IAEXXZ,,0x00293010,31,Code/masm_dumps/_rn9__stopBurningSound_FlammableUpdate__IAEXXZ_293010.asm,matched,reloc-needle Open-BFME4+Grok
+?enableTurret@BattlePlanUpdate@@IAEX_N@Z,,0x00285870,43,Code/masm_dumps/_rn9__enableTurret_BattlePlanUpdate__IAEX_N_Z_285870.asm,matched,reloc-needle Open-BFME4+Grok
+?isTurretInNaturalPosition@BattlePlanUpdate@@IAE_NXZ,,0x002858E0,40,Code/masm_dumps/_rn9__isTurretInNaturalPosition_BattlePlanUpdate__IAE_NXZ_2858E0.asm,matched,reloc-needle Open-BFME4+Grok
+?privateIdle@SupplyTruckAIUpdate@@MAEXW4CommandSourceType@@@Z,,0x002C57E0,42,Code/masm_dumps/_rn9__privateIdle_SupplyTruckAIUpdate__MAEXW4CommandSourceType___Z_2C57E0.asm,matched,reloc-needle Open-BFME4+Grok
+?canFireWeapon@ActionManager@@QAE_NPBVObject@@W4WeaponSlotType@@W4CommandSourceType@@@Z,,0x000C4300,37,Code/masm_dumps/_rn9__canFireWeapon_ActionManager__QAE_NPBVObject__W4WeaponSlotType__W4Comm_C4300.asm,matched,reloc-needle Open-BFME4+Grok
+?removeObject@Radar@@QAEXPAVObject@@@Z,,0x00106C20,49,Code/masm_dumps/_rn9__removeObject_Radar__QAEXPAVObject___Z_106C20.asm,matched,reloc-needle Open-BFME4+Grok
+?findByTemplateID@ThingFactory@@QAEPBVThingTemplate@@G@Z,,0x00133CC0,40,Code/masm_dumps/_rn9__findByTemplateID_ThingFactory__QAEPBVThingTemplate__G_Z_133CC0.asm,matched,reloc-needle Open-BFME4+Grok
