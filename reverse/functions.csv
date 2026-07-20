@@ -11607,3 +11607,5 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??0FellBeastSwoopPowerModuleData@@QAE@XZ,,0x0025CF10,32,Code/masm_dumps/FellBeastSwoopPowerModuleData_constructor.asm,matched,Exact 32B unique factory Open-BFME4
 ??0CombineHordeSpecialPowerModuleData@@QAE@XZ,,0x002598A0,28,Code/masm_dumps/CombineHordeSpecialPowerModuleData_constructor.asm,matched,Exact 28B unique factory Open-BFME4
 ??0SiegeDeployHordeSpecialPowerModuleData@@QAE@XZ,,0x00265D90,25,Code/masm_dumps/SiegeDeployHordeSpecialPowerModuleData_constructor.asm,matched,Exact 25B unique factory Open-BFME4
+??1HordeContainModuleData@@UAE@XZ,,0x00129E90,184,Code/masm_dumps/HordeContainModuleData_destructor.asm,matched,Exact 184B SEH dtor Open-BFME4
+??1DefectorSpecialPowerModuleData@@UAE@XZ,,0x0026AE90,263,Code/masm_dumps/DefectorSpecialPowerModuleData_destructor.asm,matched,Exact 263B SEH dtor Open-BFME4
