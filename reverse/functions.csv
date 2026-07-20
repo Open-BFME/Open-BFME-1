@@ -11017,3 +11017,9 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ??0OneRingPenaltyUpdateModuleData@@QAE@XZ,,0x00298D30,32,Code/masm_dumps/OneRingPenaltyUpdateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; factory 0x11A460
 ??0HealContainModuleData@@QAE@XZ,,0x0028B9E0,32,Code/masm_dumps/HealContainModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; factory 0x1219D0
 ??0DualWeaponBehaviorModuleData@@QAE@XZ,,0x001F7E20,26,Code/masm_dumps/DualWeaponBehaviorModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; factory 0x1150A0
+??0OCLUpdateModuleData@@QAE@XZ,,0x00298920,23,Code/masm_dumps/OCLUpdateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory ownership
+??0FireWeaponUpdateModuleData@@QAE@XZ,,0x00292CB0,23,Code/masm_dumps/FireWeaponUpdateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory ownership
+??0DestroyEnvironmentUpdateModuleData@@QAE@XZ,,0x0028CD30,23,Code/masm_dumps/DestroyEnvironmentUpdateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory ownership
+??0UpgradeSoundSelectorClientBehaviorModuleData@@QAE@XZ,,0x00608DC0,20,Code/masm_dumps/UpgradeSoundSelectorClientBehaviorModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory ownership
+??0ModelConditionSoundSelectorClientBehaviorModuleData@@QAE@XZ,,0x00607550,20,Code/masm_dumps/ModelConditionSoundSelectorClientBehaviorModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory ownership
+??0ExperienceLevelCreateModuleData@@QAE@XZ,,0x0024F7A0,20,Code/masm_dumps/ExperienceLevelCreateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory ownership
