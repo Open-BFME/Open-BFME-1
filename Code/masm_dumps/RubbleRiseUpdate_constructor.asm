@@ -1,0 +1,21 @@
+.386
+.model flat
+; ??0RubbleRiseUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
+; Exact 175B @ 0x002A3640; Exact retail MASM module ctor; unique friend_newModuleInstance factory 0x11B6C0
+_TEXT SEGMENT
+public ??0RubbleRiseUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
+??0RubbleRiseUpdate@@QAE@PAVThing@@PBVModuleData@@@Z PROC
+    db 6Ah, 0FFh, 68h, 0A8h, 26h, 01h, 01h, 64h, 0A1h, 00h, 00h, 00h, 00h, 50h, 64h, 89h
+    db 25h, 00h, 00h, 00h, 00h, 51h, 8Bh, 44h, 24h, 18h, 56h, 8Bh, 0F1h, 8Bh, 4Ch, 24h
+    db 18h, 50h, 51h, 8Bh, 0CEh, 89h, 74h, 24h, 0Ch, 0E8h, 76h, 3Ah, 0D7h, 0FFh, 0C7h, 46h
+    db 0Ch, 0D0h, 0C9h, 09h, 01h, 0C7h, 46h, 10h, 0A0h, 0CBh, 09h, 01h, 83h, 0C9h, 0FFh, 33h
+    db 0C0h, 89h, 46h, 14h, 89h, 4Eh, 18h, 89h, 4Eh, 1Ch, 0C7h, 46h, 20h, 7Ch, 25h, 0Ah
+    db 01h, 0C7h, 06h, 0C4h, 29h, 0Ch, 01h, 0C7h, 46h, 0Ch, 00h, 29h, 0Ch, 01h, 0C7h, 46h
+    db 10h, 0F4h, 28h, 0Ch, 01h, 0C7h, 46h, 20h, 90h, 28h, 0Ch, 01h, 89h, 46h, 24h, 89h
+    db 46h, 2Ch, 89h, 46h, 30h, 89h, 46h, 28h, 89h, 46h, 34h, 89h, 46h, 38h, 89h, 46h
+    db 3Ch, 89h, 46h, 40h, 89h, 46h, 44h, 8Bh, 56h, 08h, 68h, 0FFh, 0FFh, 0FFh, 3Fh, 52h
+    db 8Bh, 0CEh, 89h, 44h, 24h, 18h, 0E8h, 0FFh, 20h, 0D7h, 0FFh, 8Bh, 4Ch, 24h, 08h, 8Bh
+    db 0C6h, 5Eh, 64h, 89h, 0Dh, 00h, 00h, 00h, 00h, 83h, 0C4h, 10h, 0C2h, 08h, 00h
+??0RubbleRiseUpdate@@QAE@PAVThing@@PBVModuleData@@@Z ENDP
+_TEXT ENDS
+END
