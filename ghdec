@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Decompile one or more BFME function RVAs using the analyzed Ghidra project.
+# Usage: ghdec 0x00853F38 0x00C6DF40 ...
+set -u
+GH=/home/wacket/Projects/Open-BFME/build/toolchains/ghidra_12.1.2_PUBLIC
+ROOT=/home/wacket/Projects/Open-BFME-Clones/Open-BFME6
+cd "$ROOT"
+exec "$GH/support/analyzeHeadless" build/toolchains/bfme_ghidra bfme -process lotrbfme.exe -noanalysis \
+  -scriptPath tools/ghidra -postScript decompile_function.java "$@"
