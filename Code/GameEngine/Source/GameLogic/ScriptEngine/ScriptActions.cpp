@@ -4061,19 +4061,59 @@ void ScriptActions::doNamedSetStoppingDistance(const AsciiString& unit, Real sto
 //-------------------------------------------------------------------------------------------------
 /** doDisableSpecialPowerDisplay */
 //-------------------------------------------------------------------------------------------------
-// ?doDisableSpecialPowerDisplay@ScriptActions@@IAEXXZ present-unmatched
+// BFME InGameUI vtable: setSuperweaponDisplayEnabledByScript at +0x90.
+class BfmeInGameUIVtableLayout {
+public:
+	virtual void _bfme_igui_slot_0() = 0;
+	virtual void _bfme_igui_slot_1() = 0;
+	virtual void _bfme_igui_slot_2() = 0;
+	virtual void _bfme_igui_slot_3() = 0;
+	virtual void _bfme_igui_slot_4() = 0;
+	virtual void _bfme_igui_slot_5() = 0;
+	virtual void _bfme_igui_slot_6() = 0;
+	virtual void _bfme_igui_slot_7() = 0;
+	virtual void _bfme_igui_slot_8() = 0;
+	virtual void _bfme_igui_slot_9() = 0;
+	virtual void _bfme_igui_slot_10() = 0;
+	virtual void _bfme_igui_slot_11() = 0;
+	virtual void _bfme_igui_slot_12() = 0;
+	virtual void _bfme_igui_slot_13() = 0;
+	virtual void _bfme_igui_slot_14() = 0;
+	virtual void _bfme_igui_slot_15() = 0;
+	virtual void _bfme_igui_slot_16() = 0;
+	virtual void _bfme_igui_slot_17() = 0;
+	virtual void _bfme_igui_slot_18() = 0;
+	virtual void _bfme_igui_slot_19() = 0;
+	virtual void _bfme_igui_slot_20() = 0;
+	virtual void _bfme_igui_slot_21() = 0;
+	virtual void _bfme_igui_slot_22() = 0;
+	virtual void _bfme_igui_slot_23() = 0;
+	virtual void _bfme_igui_slot_24() = 0;
+	virtual void _bfme_igui_slot_25() = 0;
+	virtual void _bfme_igui_slot_26() = 0;
+	virtual void _bfme_igui_slot_27() = 0;
+	virtual void _bfme_igui_slot_28() = 0;
+	virtual void _bfme_igui_slot_29() = 0;
+	virtual void _bfme_igui_slot_30() = 0;
+	virtual void _bfme_igui_slot_31() = 0;
+	virtual void _bfme_igui_slot_32() = 0;
+	virtual void _bfme_igui_slot_33() = 0;
+	virtual void _bfme_igui_slot_34() = 0;
+	virtual void _bfme_igui_slot_35() = 0;
+	virtual void setSuperweaponDisplayEnabledByScript(Bool enable) = 0;
+};
+
 void ScriptActions::doDisableSpecialPowerDisplay(void)
 {
-	TheInGameUI->setSuperweaponDisplayEnabledByScript(false);
+	((BfmeInGameUIVtableLayout *)TheInGameUI)->setSuperweaponDisplayEnabledByScript(false);
 }
 
 //-------------------------------------------------------------------------------------------------
 /** doEnableSpecialPowerDisplay */
 //-------------------------------------------------------------------------------------------------
-// ?doEnableSpecialPowerDisplay@ScriptActions@@IAEXXZ present-unmatched
 void ScriptActions::doEnableSpecialPowerDisplay(void)
 {
-	TheInGameUI->setSuperweaponDisplayEnabledByScript(true);
+	((BfmeInGameUIVtableLayout *)TheInGameUI)->setSuperweaponDisplayEnabledByScript(true);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -4657,10 +4697,19 @@ void ScriptActions::doTeamUseCommandButtonAbilityAtWaypoint( const AsciiString& 
 //-------------------------------------------------------------------------------------------------
 /** doRadarRefresh */
 //-------------------------------------------------------------------------------------------------
-// ?doRadarRefresh@ScriptActions@@IAEXXZ present-unmatched
+// BFME Radar vtable: refreshTerrain at +0x10.
+class BfmeRadarVtableLayout {
+public:
+	virtual void _bfme_radar_slot_0() = 0;
+	virtual void _bfme_radar_slot_1() = 0;
+	virtual void _bfme_radar_slot_2() = 0;
+	virtual void _bfme_radar_slot_3() = 0;
+	virtual void refreshTerrain(TerrainLogic *terrain) = 0;
+};
+
 void ScriptActions::doRadarRefresh( void )
 {
-	TheRadar->refreshTerrain( TheTerrainLogic );
+	((BfmeRadarVtableLayout *)TheRadar)->refreshTerrain(TheTerrainLogic);
 }
 
 
