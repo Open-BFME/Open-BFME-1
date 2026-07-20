@@ -1,0 +1,37 @@
+.386
+.model flat
+
+; ?Resize@?$VectorClass@UFileInfoStruct@MixFileCreator@@@@UAE_NHPBUFileInfoStruct@MixFileCreator@@@Z
+; Exact 403B @ 0x009302C0 ENTRY Open-BFME4+Grok
+_TEXT SEGMENT
+public ?Resize@?$VectorClass@UFileInfoStruct@MixFileCreator@@@@UAE_NHPBUFileInfoStruct@MixFileCreator@@@Z
+?Resize@?$VectorClass@UFileInfoStruct@MixFileCreator@@@@UAE_NHPBUFileInfoStruct@MixFileCreator@@@Z PROC
+    db 06Ah,0FFh,064h,0A1h,000h,000h,000h,000h,068h,0BCh,0CDh,005h,001h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,083h,0ECh,008h,053h,055h,056h,08Bh,074h,024h,024h,085h
+    db 0F6h,057h,08Bh,0D9h,00Fh,084h,04Bh,001h,000h,000h,08Bh,07Ch,024h,02Ch,085h,0FFh
+    db 0C6h,043h,00Ch,000h,075h,044h,08Dh,004h,0B5h,004h,000h,000h,000h,050h,0E8h,06Dh
+    db 01Ch,0F5h,0FFh,083h,0C4h,004h,089h,044h,024h,014h,085h,0C0h,089h,07Ch,024h,020h
+    db 074h,020h,068h,052h,006h,043h,000h,068h,0D6h,010h,041h,000h,056h,08Dh,068h,004h
+    db 06Ah,004h,055h,089h,030h,0E8h,0BAh,06Bh,00Ch,000h,08Bh,0D5h,089h,054h,024h,010h
+    db 0EBh,032h,033h,0D2h,089h,054h,024h,010h,0EBh,02Ah,089h,07Ch,024h,014h,068h,052h
+    db 006h,043h,000h,068h,0D6h,010h,041h,000h,056h,06Ah,004h,08Dh,06Fh,004h,055h,0C7h
+    db 044h,024h,034h,001h,000h,000h,000h,089h,037h,0E8h,086h,06Bh,00Ch,000h,089h,06Ch
+    db 024h,010h,08Bh,0D5h,085h,0D2h,0C7h,044h,024h,020h,0FFh,0FFh,0FFh,0FFh,0C6h,043h
+    db 00Ch,001h,075h,017h,05Fh,05Eh,05Dh,032h,0C0h,05Bh,08Bh,04Ch,024h,008h,064h,089h
+    db 00Dh,000h,000h,000h,000h,083h,0C4h,014h,0C2h,008h,000h,08Bh,043h,004h,085h,0C0h
+    db 00Fh,084h,08Dh,000h,000h,000h,08Bh,043h,008h,03Bh,0F0h,089h,074h,024h,014h,07Ch
+    db 004h,089h,044h,024h,014h,08Bh,044h,024h,014h,033h,0EDh,085h,0C0h,07Eh,03Eh,090h
+    db 08Bh,073h,004h,08Dh,03Ch,0ADh,000h,000h,000h,000h,08Bh,004h,03Eh,003h,0F7h,085h
+    db 0C0h,074h,004h,066h,0FFh,040h,004h,08Bh,00Ch,017h,085h,0C9h,074h,009h,0E8h,0CDh
+    db 0B3h,00Bh,000h,08Bh,054h,024h,010h,08Bh,044h,024h,014h,08Bh,00Eh,045h,03Bh,0E8h
+    db 089h,00Ch,017h,07Ch,0CBh,08Bh,074h,024h,028h,08Bh,07Ch,024h,02Ch,08Ah,043h,00Dh
+    db 084h,0C0h,074h,02Fh,08Bh,043h,004h,085h,0C0h,074h,021h,08Bh,050h,0FCh,08Dh,068h
+    db 0FCh,068h,052h,006h,043h,000h,052h,06Ah,004h,050h,0E8h,067h,069h,00Ch,000h,055h
+    db 0E8h,0DBh,01Ah,0F5h,0FFh,08Bh,054h,024h,014h,083h,0C4h,004h,0C7h,043h,004h,000h
+    db 000h,000h,000h,033h,0C0h,085h,0FFh,00Fh,094h,0C0h,089h,053h,004h,089h,073h,008h
+    db 088h,043h,00Dh,0EBh,007h,08Bh,003h,08Bh,0CBh,0FFh,050h,00Ch,08Bh,04Ch,024h,018h
+    db 05Fh,05Eh,05Dh,0B0h,001h,05Bh,064h,089h,00Dh,000h,000h,000h,000h,083h,0C4h,014h
+    db 0C2h,008h,000h
+?Resize@?$VectorClass@UFileInfoStruct@MixFileCreator@@@@UAE_NHPBUFileInfoStruct@MixFileCreator@@@Z ENDP
+_TEXT ENDS
+END

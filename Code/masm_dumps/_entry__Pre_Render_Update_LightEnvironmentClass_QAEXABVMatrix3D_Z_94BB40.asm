@@ -1,0 +1,27 @@
+.386
+.model flat
+
+; ?Pre_Render_Update@LightEnvironmentClass@@QAEXABVMatrix3D@@@Z
+; Exact 245B @ 0x0094BB40 ENTRY Open-BFME4+Grok
+_TEXT SEGMENT
+public ?Pre_Render_Update@LightEnvironmentClass@@QAEXABVMatrix3D@@@Z
+?Pre_Render_Update@LightEnvironmentClass@@QAEXABVMatrix3D@@@Z PROC
+    db 053h,056h,08Bh,0F1h,0E8h,0A7h,0F6h,0FFh,0FFh,08Bh,046h,004h,033h,0DBh,085h,0C0h
+    db 07Eh,026h,055h,08Bh,06Ch,024h,010h,057h,08Dh,08Eh,070h,001h,000h,000h,08Dh,07Eh
+    db 014h,055h,057h,0E8h,0C8h,0EEh,0FFh,0FFh,08Bh,046h,004h,043h,083h,0C7h,054h,083h
+    db 0C1h,018h,03Bh,0D8h,07Ch,0EBh,05Fh,05Dh,0D9h,086h,064h,001h,000h,000h,0D8h,015h
+    db 050h,053h,007h,001h,0DFh,0E0h,0F6h,0C4h,005h,07Ah,00Ah,0DDh,0D8h,0D9h,005h,050h
+    db 053h,007h,001h,0EBh,015h,0D8h,015h,034h,053h,007h,001h,0DFh,0E0h,0F6h,0C4h,041h
+    db 075h,008h,0DDh,0D8h,0D9h,005h,034h,053h,007h,001h,0D9h,09Eh,064h,001h,000h,000h
+    db 0D9h,086h,068h,001h,000h,000h,0D8h,015h,050h,053h,007h,001h,0DFh,0E0h,0F6h,0C4h
+    db 005h,07Ah,00Ah,0DDh,0D8h,0D9h,005h,050h,053h,007h,001h,0EBh,015h,0D8h,015h,034h
+    db 053h,007h,001h,0DFh,0E0h,0F6h,0C4h,041h,075h,008h,0DDh,0D8h,0D9h,005h,034h,053h
+    db 007h,001h,0D9h,09Eh,068h,001h,000h,000h,0D9h,086h,06Ch,001h,000h,000h,0D8h,015h
+    db 050h,053h,007h,001h,0DFh,0E0h,0F6h,0C4h,005h,07Ah,011h,0C7h,086h,06Ch,001h,000h
+    db 000h,000h,000h,000h,000h,0DDh,0D8h,05Eh,05Bh,0C2h,004h,000h,0D8h,015h,034h,053h
+    db 007h,001h,0DFh,0E0h,0F6h,0C4h,041h,075h,011h,0C7h,086h,06Ch,001h,000h,000h,000h
+    db 000h,080h,03Fh,0DDh,0D8h,05Eh,05Bh,0C2h,004h,000h,0D9h,09Eh,06Ch,001h,000h,000h
+    db 05Eh,05Bh,0C2h,004h,000h
+?Pre_Render_Update@LightEnvironmentClass@@QAEXABVMatrix3D@@@Z ENDP
+_TEXT ENDS
+END
