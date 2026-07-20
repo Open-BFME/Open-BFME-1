@@ -6188,39 +6188,48 @@ void ScriptActions::doEvaEnabledDisabled(Bool setEnabled)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?doSetOcclusionMode@ScriptActions@@IAEX_N@Z present-unmatched
-void ScriptActions::doSetOcclusionMode(Bool setEnabled)
-{
-	TheGameLogic->setShowBehindBuildingMarkers(setEnabled);
-}
-
-//-------------------------------------------------------------------------------------------------
-// ?doSetDrawIconUIMode@ScriptActions@@IAEX_N@Z present-unmatched
-void ScriptActions::doSetDrawIconUIMode(Bool setEnabled)
-{
-	TheGameLogic->setDrawIconUI(setEnabled);
-}
-
-//-------------------------------------------------------------------------------------------------
-// ?doSetDynamicLODMode@ScriptActions@@IAEX_N@Z present-unmatched
-void ScriptActions::doSetDynamicLODMode(Bool setEnabled)
-{
-	TheGameLogic->setShowDynamicLOD(setEnabled);
-}
-
-//-------------------------------------------------------------------------------------------------
-// BFME stores m_scriptHulkMaxLifetimeOverride at GameLogic+0x98 (retail thiscall setter
-// at 0x2ED1F0); ZH layout / the ICF-folded +0x60 setter are not the retail field.
-struct BfmeGameLogicHulkField {
-	UnsignedByte _pad[0x98];
-	Int m_scriptHulkMaxLifetimeOverride;
+// BFME GameLogic script-UI overrides live at +0x91..+0x98 (ZH member order packs them earlier).
+struct BfmeGameLogicScriptFields {
+	UnsignedByte _pad[0x91];
+	Bool m_showBehindBuildingMarkers; // +0x91
+	Bool m_drawIconUI;                // +0x92
+	Bool m_showDynamicLOD;            // +0x93
+	UnsignedByte _pad2[0x4];          // +0x94..+0x97
+	Int m_scriptHulkMaxLifetimeOverride; // +0x98
 };
 
-// Keep the header-inline setter's out-of-line COMDAT alive for the existing
-// ledger row (?setHulkMaxLifetimeOverride@... @ 0x4CE790) after doOverride stopped
-// calling it. Address-of forces MSVC 7.1 to emit the body.
+// ?doSetOcclusionMode@ScriptActions@@IAEX_N@Z
+void ScriptActions::doSetOcclusionMode(Bool setEnabled)
+{
+	((BfmeGameLogicScriptFields *)TheGameLogic)->m_showBehindBuildingMarkers = setEnabled;
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?doSetDrawIconUIMode@ScriptActions@@IAEX_N@Z
+void ScriptActions::doSetDrawIconUIMode(Bool setEnabled)
+{
+	((BfmeGameLogicScriptFields *)TheGameLogic)->m_drawIconUI = setEnabled;
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?doSetDynamicLODMode@ScriptActions@@IAEX_N@Z
+void ScriptActions::doSetDynamicLODMode(Bool setEnabled)
+{
+	((BfmeGameLogicScriptFields *)TheGameLogic)->m_showDynamicLOD = setEnabled;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+// Keep header-inline setter COMDATs alive for existing ledger rows after the
+// do* wrappers stopped calling them (address-of forces MSVC 7.1 emission).
 static void (GameLogic::* const s_bfmeForceHulkSetterEmit)(Int) =
 	&GameLogic::setHulkMaxLifetimeOverride;
+static void (GameLogic::* const s_bfmeForceBehindMarkersEmit)(Bool) =
+	&GameLogic::setShowBehindBuildingMarkers;
+static void (GameLogic::* const s_bfmeForceDrawIconEmit)(Bool) =
+	&GameLogic::setDrawIconUI;
+static void (GameLogic::* const s_bfmeForceDynamicLODEmit)(Bool) =
+	&GameLogic::setShowDynamicLOD;
 
 // ?doOverrideHulkLifetime@ScriptActions@@IAEXM@Z
 void ScriptActions::doOverrideHulkLifetime( Real seconds )
@@ -6229,13 +6238,13 @@ void ScriptActions::doOverrideHulkLifetime( Real seconds )
 	if( seconds < 0.0f )
 	{
 		// Turn it off.
-		((BfmeGameLogicHulkField *)TheGameLogic)->m_scriptHulkMaxLifetimeOverride = -1;
+		((BfmeGameLogicScriptFields *)TheGameLogic)->m_scriptHulkMaxLifetimeOverride = -1;
 	}
 	else
 	{
 		// Convert real seconds into frames.
 		Int frames = (Int)(seconds * LOGICFRAMES_PER_SECOND);
-		((BfmeGameLogicHulkField *)TheGameLogic)->m_scriptHulkMaxLifetimeOverride = frames;
+		((BfmeGameLogicScriptFields *)TheGameLogic)->m_scriptHulkMaxLifetimeOverride = frames;
 	}
 }
 
