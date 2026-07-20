@@ -10931,3 +10931,4 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?onStructureConstructionComplete@Player@@QAEXPAVObject@@0_N@Z,,0x000C9600,126,Code/masm_dumps/Player_onStructureConstructionComplete.asm,matched,Ghidra-owned BFME construction completion dispatch
 ?canDoSpecialPowerAtLocation@ActionManager@@QAE_NPBVObject@@PBUCoord3D@@W4CommandSourceType@@PBVSpecialPowerTemplate@@0I_N@Z,,0x000C6930,3094,Code/masm_dumps/ActionManager_canDoSpecialPowerAtLocation.asm,matched,Ghidra-owned BFME special-power location validation
 ?TestWaterUpdate@@YAXXZ,,0x007ACBD0,2108,Code/masm_dumps/TestWaterUpdate.asm,matched,Ghidra-owned BFME water-track editor update
+?doOverrideHulkLifetime@ScriptActions@@IAEXM@Z,,0x002F0640,65,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,ghidra+string-adjacent ScriptActions cluster; GameLogic+0x98

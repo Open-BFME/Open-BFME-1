@@ -6209,19 +6209,33 @@ void ScriptActions::doSetDynamicLODMode(Bool setEnabled)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?doOverrideHulkLifetime@ScriptActions@@IAEXM@Z present-unmatched
+// BFME stores m_scriptHulkMaxLifetimeOverride at GameLogic+0x98 (retail thiscall setter
+// at 0x2ED1F0); ZH layout / the ICF-folded +0x60 setter are not the retail field.
+struct BfmeGameLogicHulkField {
+	UnsignedByte _pad[0x98];
+	Int m_scriptHulkMaxLifetimeOverride;
+};
+
+// Keep the header-inline setter's out-of-line COMDAT alive for the existing
+// ledger row (?setHulkMaxLifetimeOverride@... @ 0x4CE790) after doOverride stopped
+// calling it. Address-of forces MSVC 7.1 to emit the body.
+static void (GameLogic::* const s_bfmeForceHulkSetterEmit)(Int) =
+	&GameLogic::setHulkMaxLifetimeOverride;
+
+// ?doOverrideHulkLifetime@ScriptActions@@IAEXM@Z
 void ScriptActions::doOverrideHulkLifetime( Real seconds )
 {
+	// Reload TheGameLogic each arm — retail uses eax then ecx, no cached reg.
 	if( seconds < 0.0f )
 	{
 		// Turn it off.
-		TheGameLogic->setHulkMaxLifetimeOverride(-1);
+		((BfmeGameLogicHulkField *)TheGameLogic)->m_scriptHulkMaxLifetimeOverride = -1;
 	}
 	else
 	{
 		// Convert real seconds into frames.
 		Int frames = (Int)(seconds * LOGICFRAMES_PER_SECOND);
-		TheGameLogic->setHulkMaxLifetimeOverride(frames);
+		((BfmeGameLogicHulkField *)TheGameLogic)->m_scriptHulkMaxLifetimeOverride = frames;
 	}
 }
 
