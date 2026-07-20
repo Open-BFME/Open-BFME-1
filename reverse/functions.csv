@@ -11900,3 +11900,20 @@ _$E27,,0x00C6B2C0,30,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cp
 ?ReadParameter@Parameter@@SAPAV1@AAVDataChunkInput@@@Z,,0x00357FC0,748,Code/masm_dumps/_sa3__ReadParameter_Parameter__SAPAV1_AAVDataChunkInput_357FC0.asm,matched,Exact 748B string-anchored Open-BFME4
 ?Get_DX8_Render_State_Name@DX8Wrapper@@SAPBDK@Z,,0x00873DA0,673,Code/masm_dumps/_sa3__Get_DX8_Render_State_Name_DX8Wrapper__SAPBDK_Z_873DA0.asm,matched,Exact 673B string-anchored Open-BFME4
 ?handleQMMatch@PeerThreadClass@@QAEXXZ,,0x00649180,653,Code/masm_dumps/_sa3__handleQMMatch_PeerThreadClass__QAEXXZ_649180.asm,matched,Exact 653B string-anchored Open-BFME4
+?init@GameTextManager@@UAEXXZ,,0x0051F3A0,3411,Code/masm_dumps/_sa4__init_GameTextManager__UAEXXZ_51F3A0.asm,matched,Exact 3411B Open-BFME4
+??0RankPoints@@,,0x004D9100,1434,Code/masm_dumps/_sa4___0RankPoints___4D9100.asm,matched,Exact 1434B Open-BFME4
+?ParseScript@Script@@SAPAV1@AAVDataChunkInput@@G@Z,,0x0035C0C0,579,Code/masm_dumps/_sa4__ParseScript_Script__SAPAV1_AAVDataChunkInput__G_Z_35C0C0.asm,matched,Exact 579B Open-BFME4
+?onExit@DozerActionState@@UAEXW4StateExitType@@@Z,,0x002B7870,551,Code/masm_dumps/_sa4__onExit_DozerActionState__UAEXW4StateExitType___Z_2B7870.asm,matched,Exact 551B Open-BFME4
+?ConstructNetCommandMsgFromRawData@NetPacket@@SAPAVNetCommandRef@@PAEG@Z,,0x00682FF0,515,Code/masm_dumps/_sa4__ConstructNetCommandMsgFromRawData_NetPacket__SAPA_682FF0.asm,matched,Exact 515B Open-BFME4
+?changeVisualDisguise@StealthUpdate@@,,0x00267D80,433,Code/masm_dumps/_sa4__changeVisualDisguise_StealthUpdate___267D80.asm,matched,Exact 433B Open-BFME4
+?ParseActionFalseDataChunk@ScriptAction@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,,0x002F8A50,413,Code/masm_dumps/_sa4__ParseActionFalseDataChunk_ScriptAction__SA_NAAVDa_2F8A50.asm,matched,Exact 413B Open-BFME4
+??0TurretAI@@QAE@PAVObject@@PBVTurretAIData@@W4WhichTurretType@@@Z,,0x0018DED0,383,Code/masm_dumps/_sa4___0TurretAI__QAE_PAVObject__PBVTurretAIData__W4Whi_18DED0.asm,matched,Exact 383B Open-BFME4
+?setPlayerName@EstablishConnectionsMenu@@,,0x00538700,373,Code/masm_dumps/_sa4__setPlayerName_EstablishConnectionsMenu___538700.asm,matched,Exact 373B Open-BFME4
+?tryUnderAttackEvent@Radar@@,,0x004271B0,373,Code/masm_dumps/_sa4__tryUnderAttackEvent_Radar___4271B0.asm,matched,Exact 373B Open-BFME4
+?postProcessLoad@W3DDisplayStringManager@@UAEXXZ,,0x006F5890,368,Code/masm_dumps/_sa4__postProcessLoad_W3DDisplayStringManager__UAEXXZ_6F5890.asm,matched,Exact 368B Open-BFME4
+?update@DozerActionPickActionPosState@@UAE?AW4StateReturnType@@XZ,,0x002B7450,365,Code/masm_dumps/_sa4__update_DozerActionPickActionPosState__UAE_AW4Stat_2B7450.asm,matched,Exact 365B Open-BFME4
+?getUnicodeVersion@Version@@,,0x000AEE00,331,Code/masm_dumps/_sa4__getUnicodeVersion_Version___AEE00.asm,matched,Exact 331B Open-BFME4
+??0AIGuardRetaliateMachine@@,,0x0015F240,327,Code/masm_dumps/_sa4___0AIGuardRetaliateMachine___15F240.asm,matched,Exact 327B Open-BFME4
+?showRallyPoint@ControlBar@@IAEXPBUCoord3D@@@Z,,0x0049DF00,312,Code/masm_dumps/_sa4__showRallyPoint_ControlBar__IAEXPBUCoord3D___Z_49DF00.asm,matched,Exact 312B Open-BFME4
+?missionSave@GameState@@QAE?AW4SaveCode@@XZ,,0x00110600,311,Code/masm_dumps/_sa4__missionSave_GameState__QAE_AW4SaveCode__XZ_110600.asm,matched,Exact 311B Open-BFME4
+?crc@AI@@UAEXPAVXfer@@@Z,,0x0014B8C0,303,Code/masm_dumps/_sa4__crc_AI__UAEXPAVXfer___Z_14B8C0.asm,matched,Exact 303B Open-BFME4
