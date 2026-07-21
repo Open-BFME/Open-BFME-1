@@ -4807,7 +4807,6 @@ void AIPanicState::loadPostProcess( void )
 /**
  * Panic and run screaming along a waypoint path.
  */
-// ?onEnter@AIPanicState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIPanicState::onEnter()
 {
 	m_currentWaypoint = ((AIStateMachine *)getMachine())->getGoalWaypoint();
