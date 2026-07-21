@@ -12928,3 +12928,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ??1RTS2DScene@@UAE@XZ,,0x00711980,143,Code/GameEngineDevice/Source/W3DDevice/GameClient/RTS2DScene_dtor.asm,matched,true ENTRY via RTS2DScene vtable store; queue 0x9F27F2 was mid-neighbor; MASM exact 143B
 ?W3DCommandBarGridDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,,0x00799FA0,634,Code/masm_dumps/W3DCommandBarGridDraw.asm,matched,FunctionLexicon ILT 0x28484->0x799FA0; MASM exact 634B; drift 0x4BFC8D misplaced mid-fn
 ??1PartitionManager@@UAE@XZ,,0x009F2800,115,Code/masm_dumps/PartitionManager_dtor.asm,matched,True owner via PartitionManager getName string; ICF-alias of mislabeled TeamFactory dtor @0x9F2800
+?ReleaseResources@W3DProjectedShadowManager@@QAEXXZ,,0x007B1450,58,Code/masm_dumps/ReleaseResources_W3DProjectedShadowManager_QAEXXZ_007B1450_28d95344.asm,matched,exact MASM dump; true body 0x7B1450/58 (drift 0x7B4E74 was mid-dtor)
