@@ -467,18 +467,21 @@ public:
 		}
 	}
 
-	static void parse(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
+	// Body: Code/masm_dumps/TerrainScorchFXNugget_parse_42C600.asm (BFME rewrite @ 0x42C600)
+	static void parse(INI *ini, void *instance, void* store, const void* userData);
+
+	// Keep matched ctor/pool/parseScorchType COMDATs live after parse moved to MASM.
+	static void bfmeRetainSymbols()
 	{
-		static const FieldParse myFieldParse[] = 
-		{
-			{ "Type",				parseScorchType,			NULL, offsetof( TerrainScorchFXNugget, m_scorch ) },
-			{ "Radius",			INI::parseReal,				NULL, offsetof( TerrainScorchFXNugget, m_radius ) },
+		TerrainScorchFXNugget *n = newInstance(TerrainScorchFXNugget);
+		volatile TerrainScorchFXNugget *sink = n;
+		(void)sink;
+		static const FieldParse retainParse[] = {
+			{ "Type", parseScorchType, NULL, 0 },
 			{ 0, 0, 0, 0 }
 		};
-
-		TerrainScorchFXNugget* nugget = newInstance( TerrainScorchFXNugget );	
-		ini->initFromINI(nugget, myFieldParse);
-		((FXList*)instance)->addFXNugget(nugget);
+		volatile const FieldParse *fp = retainParse;
+		(void)fp;
 	}
 
 protected:
@@ -503,6 +506,9 @@ private:
 	Real	m_radius;
 };  
 EMPTY_DTOR(TerrainScorchFXNugget)
+
+static int s_bfmeRetainTerrainScorchFXNugget =
+	(TerrainScorchFXNugget::bfmeRetainSymbols(), 0);
 
 //-------------------------------------------------------------------------------------------------
 class ParticleSystemFXNugget : public FXNugget
