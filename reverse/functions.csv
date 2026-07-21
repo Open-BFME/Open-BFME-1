@@ -12890,3 +12890,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?WOLBuddyOverlayRCMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004EFED0,1023,Code/masm_dumps/WOLBuddyOverlayRCMenuSystem.asm,matched,True body 1023B @0x4EFED0 (queue 0x4EFE85 was int3 pad); FunctionLexicon thunk 0x2C417 jmp; exact MASM like RCMenuInit
 ?GadgetListBoxRemoveMultiSelect@@YAXPAVGameWindow@@@Z,,0x004BB890,64,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?insertChat@@YAXVBuddyMessage@@@Z,,0x004EB6B0,596,Code/masm_dumps/insertChat.asm,matched,string-anchor unique [%hs -> %hs] format; true body not drift 0x798602; MASM exact
+??1ImageCollection@@UAE@XZ,,0x005D2C10,139,Code/GameEngine/Source/GameClient/System/Image.cpp,matched,
