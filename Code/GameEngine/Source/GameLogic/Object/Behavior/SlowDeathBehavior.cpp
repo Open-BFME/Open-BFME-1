@@ -451,7 +451,6 @@ void SlowDeathBehavior::beginSlowDeath(const DamageInfo *damageInfo)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?doPhaseStuff@SlowDeathBehavior@@IAEXW4SlowDeathPhaseType@@@Z present-unmatched
 void SlowDeathBehavior::doPhaseStuff(SlowDeathPhaseType sdphase)
 {
 	const SlowDeathBehaviorModuleData* d = getSlowDeathBehaviorModuleData();
