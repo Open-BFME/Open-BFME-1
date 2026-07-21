@@ -301,11 +301,16 @@ void GameLogic::setDefaults( Bool loadingSaveGame )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?isInSinglePlayerGame@GameLogic@@QAE_NXZ present-unmatched
+// BFME: m_gameMode is at +0x10c (ZH header still places it earlier); retail also
+// treats mode 7 as single-player; Recorder::m_gameMode is at +0x2ac.
 Bool GameLogic::isInSinglePlayerGame( void )
 {
-	return (m_gameMode == GAME_SINGLE_PLAYER ||
-		(TheRecorder && TheRecorder->getMode() == RECORDERMODETYPE_PLAYBACK && TheRecorder->getGameMode() == GAME_SINGLE_PLAYER));
+	// Force BFME field offsets without reshaping the shared GameLogic header.
+	const Int mode = *reinterpret_cast<const Int *>(reinterpret_cast<const char *>(this) + 0x10c);
+	return mode == GAME_SINGLE_PLAYER || mode == 7 ||
+		(TheRecorder && TheRecorder->getMode() == RECORDERMODETYPE_PLAYBACK &&
+		 (*reinterpret_cast<const Int *>(reinterpret_cast<const char *>(TheRecorder) + 0x2ac) == GAME_SINGLE_PLAYER ||
+		  *reinterpret_cast<const Int *>(reinterpret_cast<const char *>(TheRecorder) + 0x2ac) == 7));
 }
 
 

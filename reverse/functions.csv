@@ -12955,3 +12955,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?saveCameraInReplays@OptionPreferences@@QAE_NXZ,,0x00090800,95,Code/masm_dumps/_saveCameraInReplays_OptionPreferences_QAE_NXZ_90800.asm,matched,exact 95B MASM; string SaveCameraInReplays; queue 142 was pad+neighbor; AsciiString thin ctor @0x888BC0
 ??_G?$DLListClass@USmudgeSet@@@@UAEPAXI@Z,,0x005D38E0,31,Code/GameEngine/Source/GameClient/System/Smudge.cpp,matched,
 ?_M_create_node@?$list@VBuddyMessage@@V?$allocator@VBuddyMessage@@@_STL@@@_STL@@IAEPAU?$_List_node@VBuddyMessage@@@2@ABVBuddyMessage@@@Z,,0x004EB530,33,Code/masm_dumps/_M_create_node_list_BuddyMessage_4EB530.asm,matched,exact MASM; true body 0x4EB530/33 (queue 0x853ECF mid xfer@GarrisonContain 0x853EC0)
+?isInSinglePlayerGame@GameLogic@@QAE_NXZ,,0x00382B00,64,Code/GameEngine/Source/GameLogic/System/GameLogic.cpp,matched,
