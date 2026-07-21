@@ -2459,18 +2459,27 @@ void GadgetListBoxRemoveMultiSelect( GameWindow *listbox )
 {
 	ListboxData *listData = (ListboxData *)listbox->winGetUserData();
 
-	if( listData->selections )
+	// BFME: only tear down multi-select state when multiSelect is set
+	// (ZH always cleared selections + input). selections lives at +0x38
+	// (ZH ListboxData::selections is +0x30; see GetNumEntries/IsFull).
+	if( listData->multiSelect )
 	{
+		Int **selections = (Int **)((char *)listData + 0x38);
 
-		delete( listData->selections );
-		listData->selections = NULL;
+		if( *selections )
+		{
+
+			delete( *selections );
+			*selections = NULL;
+
+		}  // end if
+
+		listData->multiSelect = FALSE;
+
+		// adjust the input procedure for the listbox
+		listbox->winSetInputFunc( GadgetListBoxInput );
 
 	}  // end if
-
-	listData->multiSelect = FALSE;
-
-	// adjust the input procedure for the listbox
-	listbox->winSetInputFunc( GadgetListBoxInput );
 
 }  // end GadgetListBoxRemoveMultiSelect
 
