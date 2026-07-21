@@ -5973,23 +5973,8 @@ void ScriptActions::doMoveTeamTowardsNearest( const AsciiString& teamName, const
 //-------------------------------------------------------------------------------------------------
 /** doUnitReceiveUpgrade */
 //-------------------------------------------------------------------------------------------------
-// ?doUnitReceiveUpgrade@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::doUnitReceiveUpgrade( const AsciiString& unitName, const AsciiString& upgradeName )
-{
-	Object *obj = TheScriptEngine->getUnitNamed(unitName);
-	if (!obj) {
-		return;
-	}
-
-	const UpgradeTemplate *templ = TheUpgradeCenter->findUpgrade(upgradeName);
-	if (!templ) {
-		return;
-	}
-
-	DEBUG_ASSERTCRASH(obj->affectedByUpgrade(templ), ("Design bug: Unit '%s' was given upgrade '%s', but he is unaffected.", unitName.str(), upgradeName.str()));
-
-	obj->giveUpgrade(templ);
-}
+// ?doUnitReceiveUpgrade@ScriptActions@@IAEXABVAsciiString@@0@Z
+// Body in Code/masm_dumps/ScriptActions_doUnitReceiveUpgrade.asm (exact 117B @ 0x2FE070).
 
 //-------------------------------------------------------------------------------------------------
 /** doSkirmishAttackNearestGroupWithValue */
