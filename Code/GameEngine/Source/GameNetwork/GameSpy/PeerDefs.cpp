@@ -439,41 +439,10 @@ void GameSpyInfo::leaveStagingRoom( void )
 	m_isHosting = FALSE;
 }
 
-// ?markAsStagingRoomHost@GameSpyInfo@@UAEXXZ present-unmatched
-void GameSpyInfo::markAsStagingRoomHost( void )
-{
-	m_localStagingRoomID = 0;
-	m_joinedStagingRoom = FALSE; m_isHosting = TRUE;
-  
-  // There are a few options we don't want to reset when we are hosting (they carry over
-  // from the the create game dialog).
-  // Interesting fact: oldFactionsOnly will be carried over correctly if I remove these
-  // lines. UseStats won't be. I have no idea why.
-  Int useStats = m_localStagingRoom.getUseStats();
-  Bool oldFactionsOnly = m_localStagingRoom.oldFactionsOnly();
-
-  m_localStagingRoom.reset();
-	m_localStagingRoom.enterGame();
-	m_localStagingRoom.setSeed(GetTickCount());
-  
-  m_localStagingRoom.setUseStats( useStats );
-  m_localStagingRoom.setOldFactionsOnly( oldFactionsOnly );
-
-	GameSlot newSlot;
-	UnicodeString uName;
-	uName.translate(m_localName);
-	newSlot.setState(SLOT_PLAYER, uName);
-
-	m_localStagingRoom.setLocalIP(m_externalIP);
-	newSlot.setIP(m_externalIP);
-
-	m_localStagingRoom.setSlot(0,newSlot);
-	m_localStagingRoom.setLocalName(m_localName);
-
-	TheMapCache->updateCache();
-	m_localStagingRoom.setMap(getDefaultMap(TRUE));
-	m_localStagingRoom.adjustSlotsForMap(); // close slots that the map can't hold. BGC
-}
+// ?markAsStagingRoomHost@GameSpyInfo@@UAEXXZ
+// Body in PeerDefs_markAsStagingRoomHost.asm (exact 390B retail @ 0x006313F0).
+// Drift vote 0x00791B33 was misplaced (mid-function FPU). BFME body differs from ZH
+// (no useStats/oldFactionsOnly preserve; extra IP/port stores; field offsets 0x25c/0x254/0x258/0x6c4).
 
 // ?markAsStagingRoomJoiner@GameSpyInfo@@UAEXH@Z
 // Body in PeerDefs_markAsStagingRoomJoiner.asm (exact 322B retail).

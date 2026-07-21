@@ -1,0 +1,61 @@
+.386
+.model flat
+
+; ?markAsStagingRoomHost@GameSpyInfo@@UAEXXZ
+; Exact 390 retail bytes @ 0x006313F0; drift RVA 0x00791B33 was misplaced (FPU mid-body);
+; BFME layout/options differ from ZH — exact via MASM (same path as markAsStagingRoomJoiner)
+_TEXT SEGMENT
+public ?markAsStagingRoomHost@GameSpyInfo@@UAEXXZ
+?markAsStagingRoomHost@GameSpyInfo@@UAEXXZ PROC
+    db 6Ah,0FFh,68h,0E0h,07h,04h,01h,64h
+    db 0A1h,00h,00h,00h,00h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,83h,0ECh,54h
+    db 53h,55h,56h,8Bh,0F1h,8Bh,86h,5Ch
+    db 02h,00h,00h,57h,8Dh,0BEh,5Ch,02h
+    db 00h,00h,33h,0DBh,8Bh,0CFh,89h,9Eh
+    db 0C4h,06h,00h,00h,89h,9Eh,54h,02h
+    db 00h,00h,0C6h,86h,58h,02h,00h,00h
+    db 01h,0FFh,50h,08h,8Bh,0CFh,0E8h,0E2h
+    db 4Ah,9Fh,0FFh,0FFh,15h,0Ch,8Eh,35h
+    db 01h,50h,8Bh,0CFh,0E8h,5Dh,0E0h,9Eh
+    db 0FFh,8Dh,4Ch,24h,20h,0E8h,06h,2Ah
+    db 9Eh,0FFh,89h,5Ch,24h,6Ch,89h,5Ch
+    db 24h,10h,8Dh,6Eh,6Ch,55h,8Dh,4Ch
+    db 24h,14h,0C6h,44h,24h,70h,01h,0E8h
+    db 84h,7Dh,25h,00h,8Dh,4Ch,24h,18h
+    db 51h,51h,8Dh,54h,24h,18h,89h,64h
+    db 24h,1Ch,8Bh,0CCh,52h,89h,5Ch,24h
+    db 24h,66h,89h,5Ch,24h,28h,0E8h,75h
+    db 6Fh,25h,00h,6Ah,05h,8Dh,4Ch,24h
+    db 2Ch,0E8h,08h,0D8h,9Fh,0FFh,8Bh,86h
+    db 4Ch,02h,00h,00h,83h,0ECh,44h,66h
+    db 0C7h,44h,24h,60h,98h,1Fh,8Bh,4Ch
+    db 24h,60h,89h,86h,90h,02h,00h,00h
+    db 89h,84h,24h,94h,00h,00h,00h,89h
+    db 8Eh,94h,02h,00h,00h,89h,8Ch,24h
+    db 98h,00h,00h,00h,8Dh,44h,24h,64h
+    db 8Bh,0CCh,89h,64h,24h,58h,50h,0E8h
+    db 60h,37h,0A0h,0FFh,53h,8Bh,0CFh,0E8h
+    db 5Dh,0C5h,9Eh,0FFh,55h,8Dh,4Ch,24h
+    db 18h,0E8h,7Ah,66h,25h,00h,8Dh,54h
+    db 24h,14h,8Dh,8Eh,80h,06h,00h,00h
+    db 52h,0C6h,44h,24h,70h,02h,0E8h,95h
+    db 67h,25h,00h,8Dh,4Ch,24h,14h,0C6h
+    db 44h,24h,6Ch,01h,0E8h,37h,64h,25h
+    db 00h,8Bh,0Dh,94h,15h,2Fh,01h,0E8h
+    db 0F8h,79h,9Eh,0FFh,51h,8Bh,0C4h,89h
+    db 64h,24h,1Ch,6Ah,01h,50h,0E8h,0BEh
+    db 8Ch,9Dh,0FFh,83h,0C4h,08h,8Bh,0CFh
+    db 0E8h,0AEh,0A0h,9Eh,0FFh,8Bh,17h,8Bh
+    db 0CFh,0FFh,52h,20h,8Dh,4Ch,24h,10h
+    db 88h,5Ch,24h,6Ch,0E8h,8Fh,6Ch,25h
+    db 00h,8Dh,4Ch,24h,4Ch,0C7h,44h,24h
+    db 6Ch,03h,00h,00h,00h,0E8h,0EEh,63h
+    db 25h,00h,8Dh,4Ch,24h,48h,0C7h,44h
+    db 24h,6Ch,0FFh,0FFh,0FFh,0FFh,0E8h,6Dh
+    db 6Ch,25h,00h,8Bh,4Ch,24h,64h,5Fh
+    db 5Eh,5Dh,64h,89h,0Dh,00h,00h,00h
+    db 00h,5Bh,83h,0C4h,60h,0C3h
+?markAsStagingRoomHost@GameSpyInfo@@UAEXXZ ENDP
+_TEXT ENDS
+END
