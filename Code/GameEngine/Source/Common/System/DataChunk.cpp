@@ -153,7 +153,7 @@ Bool CachedFileInputStream::eof(void)
 	return m_size==m_pos;
 }
 
-// ?rewind@CachedFileInputStream@@QAEXXZ present-unmatched
+// ?rewind@CachedFileInputStream@@QAEXXZ
 void CachedFileInputStream::rewind()
 {
 	m_pos=0;
@@ -360,16 +360,10 @@ void DataChunkOutput::writeUnicodeString( UnicodeString theString )
 	::fwrite( theString.str(), len*sizeof(WideChar) , 1, m_tmp_file ); 
 }
 
-// ?writeNameKey@DataChunkOutput@@QAEXW4NameKeyType@@@Z present-unmatched
-void DataChunkOutput::writeNameKey( const NameKeyType key ) 
-{ 
-		AsciiString kname = TheNameKeyGenerator->keyToName(key);
-		Int keyAndType = m_contents.allocateID(kname);
-		keyAndType <<= 8;
-		Dict::DataType t = Dict::DICT_ASCIISTRING;
-		keyAndType |= (t & 0xff);
-		writeInt(keyAndType);
-}
+// ?writeNameKey@DataChunkOutput@@QAEXW4NameKeyType@@@Z
+// Body in DataChunk_writeNameKey.asm (exact 134B retail @ 0x00104300).
+// Queue 0x00454F43 was misplaced (inside MapUtil Player_%d_Start fn @ 0x454EF0).
+
 
 // ?writeDict@DataChunkOutput@@QAEXABVDict@@@Z present-unmatched
 void DataChunkOutput::writeDict( const Dict& d ) 
