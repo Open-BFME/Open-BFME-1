@@ -1,0 +1,49 @@
+.386
+.model flat
+
+; ?insertChat@@YAXVBuddyMessage@@@Z
+; Exact 596 retail bytes @ 0x004EB6B0; unique L"[%hs -> %hs] %s" xref @ 0x4EB76F; SEH body end ret @ 0x4EB903.
+_TEXT SEGMENT
+public ?insertChat@@YAXVBuddyMessage@@@Z
+?insertChat@@YAXVBuddyMessage@@@Z PROC
+    db 6Ah,0FFh,68h,30h,0BDh,02h,01h,64h,0A1h,00h,00h,00h,00h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,83h,0ECh,10h,0A1h,60h,42h,2Fh,01h,85h,0C0h,0C7h
+    db 44h,24h,18h,00h,00h,00h,00h,0Fh,84h,07h,02h,00h,00h,8Bh,0Dh,94h
+    db 71h,2Fh,01h,8Bh,01h,0FFh,50h,54h,8Bh,0Dh,94h,71h,2Fh,01h,8Bh,11h
+    db 0FFh,52h,70h,8Bh,4Ch,24h,24h,3Bh,0C8h,0Fh,94h,0C0h,0C7h,04h,24h,00h
+    db 00h,00h,00h,0C7h,44h,24h,04h,00h,00h,00h,00h,84h,0C0h,0C6h,44h,24h
+    db 18h,02h,0Fh,84h,0AFh,00h,00h,00h,8Bh,44h,24h,34h,85h,0C0h,74h,05h
+    db 83h,0C0h,08h,0EBh,05h,0B8h,8Ch,38h,07h,01h,50h,8Bh,44h,24h,34h,85h
+    db 0C0h,74h,05h,83h,0C0h,08h,0EBh,05h,0B8h,8Bh,38h,07h,01h,8Bh,0Dh,94h
+    db 71h,2Fh,01h,50h,8Bh,01h,8Dh,54h,24h,10h,52h,0FFh,90h,88h,00h,00h
+    db 00h,8Bh,00h,85h,0C0h,0C6h,44h,24h,20h,03h,74h,05h,83h,0C0h,08h,0EBh
+    db 05h,0B8h,8Bh,38h,07h,01h,50h,51h,89h,64h,24h,1Ch,8Bh,0CCh,68h,0FCh
+    db 21h,10h,01h,0E8h,68h,0D6h,39h,00h,8Dh,44h,24h,10h,50h,0E8h,0Eh,0DAh
+    db 39h,00h,83h,0C4h,14h,8Dh,4Ch,24h,08h,0C6h,44h,24h,18h,02h,0E8h,0ADh
+    db 0C1h,39h,00h,8Bh,0Dh,28h,92h,2Bh,01h,6Ah,01h,6Ah,0FFh,6Ah,0FFh,51h
+    db 51h,8Dh,54h,24h,14h,89h,64h,24h,20h,8Bh,0CCh,52h,0E8h,4Fh,0CCh,39h
+    db 00h,0A1h,60h,42h,2Fh,01h,50h,0E8h,0CAh,46h,0B5h,0FFh,8Bh,0Dh,28h,92h
+    db 2Bh,01h,0E9h,0DAh,00h,00h,00h,85h,0C9h,75h,64h,8Dh,4Ch,24h,34h,51h
+    db 8Dh,4Ch,24h,04h,0E8h,57h,0CDh,39h,00h,8Bh,15h,00h,92h,2Bh,01h,6Ah
+    db 01h,6Ah,0FFh,6Ah,0FFh,52h,51h,8Dh,44h,24h,14h,89h,64h,24h,20h,8Bh
+    db 0CCh,50h,0E8h,09h,0CCh,39h,00h,8Bh,0Dh,60h,42h,2Fh,01h,51h,0E8h,83h
+    db 46h,0B5h,0FFh,8Bh,15h,00h,92h,2Bh,01h,83h,0C4h,18h,6Ah,01h,6Ah,01h
+    db 50h,52h,51h,8Dh,44h,24h,18h,89h,64h,24h,20h,8Bh,0CCh,50h,0E8h,0DDh
+    db 0CBh,39h,00h,8Bh,0Dh,60h,42h,2Fh,01h,51h,0E9h,92h,00h,00h,00h,8Bh
+    db 44h,24h,34h,85h,0C0h,74h,05h,83h,0C0h,08h,0EBh,05h,0B8h,8Ch,38h,07h
+    db 01h,50h,8Bh,44h,24h,2Ch,85h,0C0h,74h,05h,83h,0C0h,08h,0EBh,05h,0B8h
+    db 8Bh,38h,07h,01h,50h,51h,89h,64h,24h,18h,8Bh,0CCh,68h,0E4h,21h,10h
+    db 01h,0E8h,7Ah,0D5h,39h,00h,8Dh,54h,24h,0Ch,52h,0E8h,20h,0D9h,39h,00h
+    db 0A1h,20h,92h,2Bh,01h,83h,0C4h,10h,6Ah,01h,6Ah,0FFh,6Ah,0FFh,50h,51h
+    db 8Dh,54h,24h,14h,89h,64h,24h,20h,8Bh,0CCh,52h,0E8h,70h,0CBh,39h,00h
+    db 0A1h,60h,42h,2Fh,01h,50h,0E8h,0EBh,45h,0B5h,0FFh,8Bh,0Dh,20h,92h,2Bh
+    db 01h,83h,0C4h,18h,6Ah,01h,6Ah,01h,50h,51h,51h,8Dh,54h,24h,18h,8Bh
+    db 0CCh,89h,64h,24h,20h,52h,0E8h,45h,0CBh,39h,00h,0A1h,60h,42h,2Fh,01h
+    db 50h,0E8h,0C0h,45h,0B5h,0FFh,83h,0C4h,18h,8Dh,4Ch,24h,04h,0C6h,44h,24h
+    db 18h,01h,0E8h,0F9h,0C8h,39h,00h,8Dh,0Ch,24h,0C6h,44h,24h,18h,00h,0E8h
+    db 0ECh,0C8h,39h,00h,8Dh,4Ch,24h,20h,0C7h,44h,24h,18h,0FFh,0FFh,0FFh,0FFh
+    db 0E8h,50h,5Bh,0B3h,0FFh,8Bh,4Ch,24h,10h,64h,89h,0Dh,00h,00h,00h,00h
+    db 83h,0C4h,1Ch,0C3h
+?insertChat@@YAXVBuddyMessage@@@Z ENDP
+_TEXT ENDS
+END
