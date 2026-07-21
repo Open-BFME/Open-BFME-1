@@ -2127,3 +2127,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?gogoGadgetTabControl@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHPAVWinInstanceData@@PAU_TabControlData@@PAVGameFont@@_N@Z	landed	true body 0x47D090 size 150 (queue 0x47D071 was padding); MASM exact bytes; GWM vtable slot 18; skips ZH draw/owner paths
 ?markAsStagingRoomHost@GameSpyInfo@@UAEXXZ	landed	true body 0x6313F0 size 390 not drift 0x791B33; MASM exact (BFME layout/options diverge from ZH)
 ?resetRank@Player@@QAEXXZ	landed	MASM exact 319B @ 0xD7CA0 (queue 0xD7CAE mid-SEH prologue); C++ blocked by Player field layout (0x258 vs ZH 0x188); identity via unique SCIENCE:GeneralName push
+?isPlayer@GameSlot@@QBE_NVAsciiString@@@Z	landed	queue RVA 0x9DB05F mid FUN_00dd9d90 (type-tag parser); true body 133B @ 0x620210 SEH+translate+StringBase compareNoCase; MASM exact like isUser
