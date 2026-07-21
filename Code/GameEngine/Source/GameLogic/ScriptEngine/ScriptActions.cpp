@@ -6930,33 +6930,10 @@ void ScriptActions::doTeamGuardInTunnelNetwork(const AsciiString& teamName)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?doRemoveCommandBarButton@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::doRemoveCommandBarButton(const AsciiString& buttonName, const AsciiString& objectType)
-{
-	const ThingTemplate *templ = TheThingFactory->findTemplate(objectType);
-	if (!templ) {
-		return;
-	}
-	const CommandSet *cs = TheControlBar->findCommandSet(templ->friend_getCommandSetString());
-	if (!cs) {
-		return;
-	}
-
-	Int slotNum = -1;
-	for (Int i = 0; i < MAX_COMMANDS_PER_SET; ++i) 
-	{
-		if (cs->getCommandButton(i) && (cs->getCommandButton(i)->getName() == buttonName)) 
-		{
-			slotNum = i;
-			break;
-		}
-	}
-	
-	if (slotNum >= 0)
-	{
-		TheGameLogic->setControlBarOverride(templ->friend_getCommandSetString(), slotNum, NULL);
-	}
-}
+// ?doRemoveCommandBarButton@ScriptActions@@IAEXABVAsciiString@@0@Z
+// Body in Code/masm_dumps/ScriptActions_doRemoveCommandBarButton.asm
+// (exact 463B @ 0x2FC570). Queue RVA 0x2FC632 was INSIDE this function.
+// BFME expands ZH: primary CommandSet pass + ThingTemplate+0x294 related sets.
 
 //-------------------------------------------------------------------------------------------------
 // ?doAddCommandBarButton@ScriptActions@@IAEXABVAsciiString@@0H@Z present-unmatched
