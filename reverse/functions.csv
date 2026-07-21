@@ -12514,3 +12514,4 @@ _IsStatsConnected,,0x009D2B60,15,Code/masm_dumps/_sym4__IsStatsConnected_9D2B60.
 ?getMyEnemyPlayerIndex@AISkirmishPlayer@@IAEHXZ,,0x001687B0,63,Code/masm_dumps/_cache__getMyEnemyPlayerIndex_AISkirmishPlayer__IAEHXZ_1687B0.asm,matched,cached-obj needle Open-BFME4+Grok
 ?isFreeToAssist@AssistedTargetingUpdate@@QBE_NXZ,,0x0027FCE0,56,Code/masm_dumps/_cache__isFreeToAssist_AssistedTargetingUpdate__QBE_NXZ_27FCE0.asm,matched,cached-obj needle Open-BFME4+Grok
 ?isGroupAiDead@AIGroup@@QBE_NXZ,,0x00151390,50,Code/masm_dumps/_cache__isGroupAiDead_AIGroup__QBE_NXZ_151390.asm,matched,cached-obj needle Open-BFME4+Grok
+?insert_unique@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@2@U32@ABU?$pair@$$CBGE@2@@Z,,0x009401F0,601,Code/GameEngine/Source/GameNetwork/ConnectionManager.cpp,matched,
