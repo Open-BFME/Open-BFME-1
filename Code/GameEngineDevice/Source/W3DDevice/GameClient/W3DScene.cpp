@@ -1462,12 +1462,9 @@ RTS2DScene::RTS2DScene()
 //=============================================================================
 /** */
 //=============================================================================
-// ??1RTS2DScene@@UAE@XZ present-unmatched
-RTS2DScene::~RTS2DScene()
-{
-	this->Remove_Render_Object(m_status);
-	REF_PTR_RELEASE(m_status);
-}  // end ~RTS2DScene
+// ??1RTS2DScene@@UAE@XZ
+// Body in RTS2DScene_dtor.asm (exact 143B retail @ 0x00711980).
+// Queue 0x009F27F2 was misplaced (inside mov eax,imm;ret + int3 pad).
 
 //=============================================================================
 // RTS2DScene::Custimized_Render
