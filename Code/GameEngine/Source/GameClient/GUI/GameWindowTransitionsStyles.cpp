@@ -241,7 +241,6 @@ void FlashTransition::draw( void )
 	}
 }
 	
-// ?skip@FlashTransition@@UAEXXZ present-unmatched
 void FlashTransition::skip( void )
 {
 	update(FLASHTRANSITION_END);
@@ -622,7 +621,6 @@ void ButtonFlashTransition::draw( void )
 	}
 }
 	
-// ?skip@ButtonFlashTransition@@UAEXXZ present-unmatched
 void ButtonFlashTransition::skip( void )
 {
 	update(BUTTONFLASHTRANSITION_END);
@@ -764,7 +762,6 @@ void FadeTransition::draw( void )
 	}
 }
 	
-// ?skip@FadeTransition@@UAEXXZ present-unmatched
 void FadeTransition::skip( void )
 {
 	update(FADETRANSITION_END);
@@ -806,7 +803,6 @@ void ScaleUpTransition::init( GameWindow *win )
 
 }
 
-// ?update@ScaleUpTransition@@UAEXH@Z present-unmatched
 void ScaleUpTransition::update( Int frame )
 {
 	m_drawState = -1;
@@ -824,37 +820,12 @@ void ScaleUpTransition::update( Int frame )
 			m_isFinished = TRUE;
 		}
 		break;
+	// BFME: no GUILogoMouseOver string/audio in retail; cases 1-5 share hide+drawState.
 	case SCALEUPTRANSITION_1:
-		if(m_isForward)
-		{
-			AudioEventRTS buttonClick("GUILogoMouseOver");
-
-			if( TheAudio )
-			{
-				TheAudio->addAudioEvent( &buttonClick );
-			}  // end if
-
-			
-		}
-
 	case SCALEUPTRANSITION_2:
 	case SCALEUPTRANSITION_3:
 	case SCALEUPTRANSITION_4:
 	case SCALEUPTRANSITION_5:
-//	case SCALEUPTRANSITION_6:
-//	case SCALEUPTRANSITION_7:
-//	case SCALEUPTRANSITION_8:
-//	case SCALEUPTRANSITION_9:
-//	case SCALEUPTRANSITION_10:
-//	case SCALEUPTRANSITION_11:
-//	case SCALEUPTRANSITION_12:
-//	case SCALEUPTRANSITION_13:
-//	case SCALEUPTRANSITION_14:
-//	case SCALEUPTRANSITION_15:
-//	case SCALEUPTRANSITION_16:
-//	case SCALEUPTRANSITION_17:
-//	case SCALEUPTRANSITION_18:
-//	case SCALEUPTRANSITION_19:
 		if(m_win)
 			m_win->winHide(TRUE);
 		m_drawState = frame;
@@ -892,7 +863,6 @@ void ScaleUpTransition::draw( void )
 	TheDisplay->drawImage(image, x,y, x1, y1);
 }
 	
-// ?skip@ScaleUpTransition@@UAEXXZ present-unmatched
 void ScaleUpTransition::skip( void )
 {
 	update(SCALEUPTRANSITION_END);
@@ -1021,7 +991,6 @@ void ScoreScaleUpTransition::draw( void )
 	TheDisplay->drawImage(image, x,y, x1, y1);
 }
 	
-// ?skip@ScoreScaleUpTransition@@UAEXXZ present-unmatched
 void ScoreScaleUpTransition::skip( void )
 {
 	update(SCORESCALEUPTRANSITION_END);
@@ -1388,7 +1357,6 @@ void MainMenuSmallScaleDownTransition::draw( void )
 	TheDisplay->drawImage(image, x,y, x1, y1);
 }
 	
-// ?skip@MainMenuSmallScaleDownTransition@@UAEXXZ present-unmatched
 void MainMenuSmallScaleDownTransition::skip( void )
 {
 	update(MAINMENUSMALLSCALEDOWNTRANSITION_END);
@@ -1855,7 +1823,6 @@ void ControlBarArrowTransition::draw( void )
 	
 }
 	
-// ?skip@ControlBarArrowTransition@@UAEXXZ present-unmatched
 void ControlBarArrowTransition::skip( void )
 {
 	update(CONTROLBARARROWTRANSITION_END);
@@ -1965,7 +1932,6 @@ void FullFadeTransition::draw( void )
 	TheDisplay->drawOpenRect(m_pos.x, m_pos.y, m_size.x, m_size.y , 1.0f, GameMakeColor(60,60,180,alpha));
 }
 	
-// ?skip@FullFadeTransition@@UAEXXZ present-unmatched
 void FullFadeTransition::skip( void )
 {
 	update(FULLFADETRANSITION_END);
