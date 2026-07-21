@@ -1,0 +1,33 @@
+.386
+.model flat
+
+; ?resetRank@Player@@QAEXXZ
+; Exact 319 retail bytes @ 0x000D7CA0
+; Identity: unique push of "SCIENCE:GeneralName"; SEH body clears sciences + resetSciences
+; Queue RVA 0xD7CAE was mid-prologue (true start after int3 pad).
+_TEXT SEGMENT
+public ?resetRank@Player@@QAEXXZ
+?resetRank@Player@@QAEXXZ PROC
+    db 06Ah,0FFh,068h,099h,09Bh,0FFh,000h,064h,0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,083h,0ECh,008h,053h,056h,08Bh,0F1h,033h,0DBh,089h,05Ch
+    db 024h,008h,0B8h,001h,000h,000h,000h,089h,086h,058h,002h,000h,000h,089h,086h,0A0h
+    db 006h,000h,000h,089h,09Eh,05Ch,002h,000h,000h,08Bh,00Dh,014h,010h,02Fh,001h,06Ah
+    db 002h,0E8h,0B9h,032h,0F5h,0FFh,085h,0C0h,074h,00Dh,08Dh,04Eh,028h,051h,08Bh,0C8h
+    db 0E8h,0AFh,0E9h,0F2h,0FFh,0EBh,005h,0B8h,0FFh,0FFh,0FFh,07Fh,089h,086h,068h,002h
+    db 000h,000h,0C7h,086h,06Ch,002h,000h,000h,000h,000h,000h,000h,08Bh,096h,038h,002h
+    db 000h,000h,08Bh,08Eh,034h,002h,000h,000h,08Bh,0C2h,02Bh,0C2h,0C1h,0F8h,002h,085h
+    db 0C0h,07Eh,00Fh,02Bh,0D1h,055h,08Bh,02Ch,00Ah,089h,029h,083h,0C1h,004h,048h,075h
+    db 0F5h,05Dh,089h,08Eh,038h,002h,000h,000h,08Bh,046h,004h,085h,0C0h,074h,008h,08Bh
+    db 080h,0C0h,000h,000h,000h,0EBh,002h,033h,0C0h,08Bh,096h,058h,002h,000h,000h,089h
+    db 086h,064h,002h,000h,000h,08Bh,00Dh,014h,010h,02Fh,001h,052h,0E8h,03Eh,032h,0F5h
+    db 0FFh,085h,0C0h,074h,005h,08Bh,040h,028h,0EBh,002h,033h,0C0h,001h,086h,064h,002h
+    db 000h,000h,08Bh,00Dh,07Ch,014h,02Fh,001h,085h,0C9h,074h,024h,08Bh,001h,06Ah,000h
+    db 068h,06Ch,040h,008h,001h,08Dh,054h,024h,014h,052h,0FFh,050h,028h,0BBh,001h,000h
+    db 000h,000h,0C7h,044h,024h,018h,000h,000h,000h,000h,089h,05Ch,024h,008h,0EBh,005h
+    db 0B8h,054h,06Eh,033h,001h,08Dh,08Eh,070h,002h,000h,000h,050h,0E8h,07Fh,007h,07Bh
+    db 000h,0F6h,0C3h,001h,0C7h,044h,024h,018h,0FFh,0FFh,0FFh,0FFh,074h,009h,08Dh,04Ch
+    db 024h,00Ch,0E8h,009h,004h,07Bh,000h,08Bh,0CEh,0E8h,0D2h,07Fh,0F6h,0FFh,08Bh,04Ch
+    db 024h,010h,05Eh,05Bh,064h,089h,00Dh,000h,000h,000h,000h,083h,0C4h,014h,0C3h
+?resetRank@Player@@QAEXXZ ENDP
+_TEXT ENDS
+END

@@ -2758,21 +2758,8 @@ Bool Player::isCapableOfPurchasingScience(ScienceType science) const
 }
 
 //=============================================================================
-// ?resetRank@Player@@QAEXXZ present-unmatched
-void Player::resetRank()
-{
-	m_rankLevel = 1;
-	m_skillPoints = 0;
-	const RankInfo* nextRank = TheRankInfoStore->getRankInfo(m_rankLevel+1);
-	m_levelUp = nextRank ? nextRank->m_skillPointsNeeded : INT_MAX;
-	m_levelDown = 0;
-	m_sciences.clear();
-	m_sciencePurchasePoints = getPlayerTemplate() ? getPlayerTemplate()->getIntrinsicSciencePurchasePoints() : 0;
-	const RankInfo* curRank = TheRankInfoStore->getRankInfo(m_rankLevel);
-	m_sciencePurchasePoints += curRank ? curRank->m_sciencePurchasePointsGranted : 0;
-	m_generalName = TheGameText? TheGameText->fetch("SCIENCE:GeneralName"):UnicodeString::TheEmptyString;
-	resetSciences();
-}
+// ?resetRank@Player@@QAEXXZ
+// Body in Player_resetRank.asm (exact 319B retail @ 0xD7CA0; queue 0xD7CAE was mid-prologue).
 
 //=============================================================================
 /// returns TRUE if rank level really changed.
