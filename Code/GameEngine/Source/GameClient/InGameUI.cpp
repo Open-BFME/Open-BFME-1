@@ -4883,37 +4883,8 @@ Int InGameUI::selectAllUnitsByTypeAcrossScreen(KindOfMaskType mustBeSet, KindOfM
 // ------------------------------------------------------------------------------------------------
 /** Selects maching units on the screen */
 // ------------------------------------------------------------------------------------------------
-// ?selectMatchingAcrossScreen@InGameUI@@UAEHXZ present-unmatched
-Int InGameUI::selectMatchingAcrossScreen( void )
-{
-	/// When implementing this, obey TheInGameUI->getMaxSelectCount() if it is > 0
-			
-	IRegion2D region;
-	ICoord2D origin;
-	ICoord2D size;
- 
-	TheTacticalView->getOrigin( &origin.x, &origin.y );
-	size.x = TheTacticalView->getWidth();
-	size.y = TheTacticalView->getHeight();
- 
-	buildRegion( &origin, &size, &region );
-
-	Int numSelected = selectMatchingAcrossRegion(&region);
-	if (numSelected == -1)
-	{
-		UnicodeString message = TheGameText->fetch( "GUI:NothingSelected" );
-		TheInGameUI->message( message );
-	}
-	else if (numSelected == 0)
-	{
-	}
-	else
-	{
-		UnicodeString message = TheGameText->fetch( "GUI:SelectedAcrossScreen" );
-		TheInGameUI->message( message );
-	}
-	return numSelected;
-}
+// ?selectMatchingAcrossScreen@InGameUI@@UAEHXZ
+// Body in InGameUI_selectMatchingAcrossScreen.asm (exact 332B retail @ 0x43EF70).
 
 //-------------------------------------------------------------------------------------------------
 // ?selectAllUnitsByTypeAcrossMap@InGameUI@@UAEHV?$BitFlags@$0HE@@@0@Z present-unmatched
