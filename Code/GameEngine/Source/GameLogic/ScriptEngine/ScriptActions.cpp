@@ -1552,29 +1552,10 @@ void ScriptActions::doTeamAttackArea(const AsciiString& teamName, const AsciiStr
 //-------------------------------------------------------------------------------------------------
 /** doTeamAttackNamed */
 //-------------------------------------------------------------------------------------------------
-// ?doTeamAttackNamed@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::doTeamAttackNamed(const AsciiString& teamName, const AsciiString& unitName)
-{
-	Team *theTeam = TheScriptEngine->getTeamNamed( teamName );
-	// The team is the team based on the name, and the calling team (if any) and the team that
-	// triggered the condition.  jba. :)
-	if (!theTeam) {
-		return;
-	}
+// ?doTeamAttackNamed@ScriptActions@@IAEXABVAsciiString@@0@Z
+// Body in ScriptActions_doTeamAttackNamed.asm (exact 144B retail @ 0x2F95A0).
+// Queue RVA 0x3992C6 was INSIDE already-matched logicMessageDispatcher (misplaced drift).
 
-	Object *theVictim = TheScriptEngine->getUnitNamed( unitName );
-	if (!theVictim) {
-		return;
-	}
-
-	AIGroup* theGroup = TheAI->createGroup();
-	if (!theGroup) {
-		return;
-	}
-
-	theTeam->getTeamAsAIGroup(theGroup);
-	theGroup->groupAttackObject(theVictim, NO_MAX_SHOTS_LIMIT, CMD_FROM_SCRIPT);
-}
 
 //-------------------------------------------------------------------------------------------------
 /** doLoadAllTransports */
@@ -6615,6 +6596,10 @@ static void (GameLogic::* const s_bfmeForceDynamicLODEmit)(Bool) =
 	&GameLogic::setShowDynamicLOD;
 static void (Radar::* const s_bfmeForceRadarHideEmit)(Bool) = &Radar::hide;
 static void (Radar::* const s_bfmeForceRadarForceOnEmit)(Bool) = &Radar::forceOn;
+// doTeamAttackNamed moved to MASM — keep AIGroup::groupAttackObject COMDAT
+// (matched row claims this TU as its only emitter).
+static void (AIGroup::* const s_bfmeForceGroupAttackObjectEmit)(Object *, Int, CommandSourceType) =
+	&AIGroup::groupAttackObject;
 
 // ?doOverrideHulkLifetime@ScriptActions@@IAEXM@Z
 void ScriptActions::doOverrideHulkLifetime( Real seconds )
