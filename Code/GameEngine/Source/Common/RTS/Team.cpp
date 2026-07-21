@@ -351,7 +351,6 @@ Team *TeamFactory::findTeamByID( TeamID teamID )
 // ------------------------------------------------------------------------
 /** Creates an inactive team, suitable for adding members to as they are built.
 Call team->setActive() when all members are added. */
-// ?createInactiveTeam@TeamFactory@@QAEPAVTeam@@ABVAsciiString@@@Z present-unmatched
 Team *TeamFactory::createInactiveTeam(const AsciiString& name)
 {
 	TeamPrototype *tp = findTeamPrototype(name);
