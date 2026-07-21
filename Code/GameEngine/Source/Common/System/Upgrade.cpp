@@ -302,12 +302,10 @@ void UpgradeCenter::reset( void )
 //-------------------------------------------------------------------------------------------------
 /** Find upgrade matching name key */
 //-------------------------------------------------------------------------------------------------
-// ?findVeterancyUpgrade@UpgradeCenter@@QBEPBVUpgradeTemplate@@W4VeterancyLevel@@@Z present-unmatched
-const UpgradeTemplate *UpgradeCenter::findVeterancyUpgrade( VeterancyLevel level ) const
-{
-	AsciiString tmp = getVetUpgradeName(level);
-	return findUpgrade(tmp);
-}
+// ?findVeterancyUpgrade@UpgradeCenter@@QBEPBVUpgradeTemplate@@W4VeterancyLevel@@@Z
+// Body in Upgrade_findVeterancyUpgrade.asm (exact 101B retail @ 0x10B480;
+// queue 0x60810D was unrelated bitset loop body).
+
 
 //-------------------------------------------------------------------------------------------------
 /** Find upgrade matching name key */
