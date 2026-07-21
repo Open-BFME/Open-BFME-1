@@ -1308,14 +1308,9 @@ static Bool cannotPossiblyAttackObject( State *thisState, void* userData )
 const UnsignedInt IDLE_COUNTDOWN_DELAY = (LOGICFRAMES_PER_SECOND * 2);
 
 //----------------------------------------------------------------------------------------------
-// ??0AIIdleState@@QAE@PAVStateMachine@@W4AIIdleTargetingType@0@@Z present-unmatched
-AIIdleState::AIIdleState( StateMachine *machine, AIIdleState::AIIdleTargetingType shouldLookForTargets ) : 
-	State( machine,"AIIdleState"), 
-	m_shouldLookForTargets(shouldLookForTargets == AIIdleState::LOOK_FOR_TARGETS)
-{
-		m_inited = FALSE;
-		m_initialSleepOffset = -1;
-}
+// ??0AIIdleState@@QAE@PAVStateMachine@@W4AIIdleTargetingType@0@@Z
+// Body in Code/masm_dumps/AIIdleState_ctor.asm (exact 71B retail @ 0x180320).
+
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */
