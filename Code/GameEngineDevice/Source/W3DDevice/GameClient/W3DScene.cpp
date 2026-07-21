@@ -104,6 +104,20 @@ void W3DScene_force_W3DShroudMaterialPassClass_ctor(W3DShroudMaterialPassClass *
 	new (p) W3DShroudMaterialPassClass();
 }
 
+// Keep DX8Wrapper::Set_Fog COMDAT (was only referenced by removed C++ Render body;
+// 204B matched at 0x00711F30).
+void W3DScene_force_DX8Wrapper_Set_Fog(Bool enable, const Vector3 &color, Real start, Real end)
+{
+	DX8Wrapper::Set_Fog(enable, color, start, end);
+}
+
+// Keep W3DMaskMaterialPassClass::setAllowUninstall COMDAT (only called from removed
+// Render ALPHA_MASK/EXTRA_PASS paths; 10B matched at 0x0079E3F0).
+void W3DScene_force_setAllowUninstall(W3DMaskMaterialPassClass *p, Bool state)
+{
+	p->setAllowUninstall(state);
+}
+
 //=============================================================================
 // RTS3DScene::~RTS3DScene
 //=============================================================================
@@ -629,131 +643,9 @@ void RTS3DScene::updatePlayerColorPasses(void)
 #define ZBias 0.0001f
 
 //DECLARE_PERF_TIMER(NonTerrainRender)
-// ?Render@RTS3DScene@@UAEXAAVRenderInfoClass@@@Z present-unmatched
-void RTS3DScene::Render(RenderInfoClass & rinfo)
-{
-	//USE_PERF_TIMER(NonTerrainRender)
-	DX8Wrapper::Set_Fog(FogEnabled, FogColor, FogStart, FogEnd);
-
-	//Override the behind building selection if it's not available on current hardware (needs stencil).
-	TheWritableGlobalData->m_enableBehindBuildingMarkers = TheWritableGlobalData->m_enableBehindBuildingMarkers && DX8Wrapper::Has_Stencil();
-
-	if (Get_Extra_Pass_Polygon_Mode() == EXTRA_PASS_DISABLE)
-	{
-		if (m_customPassMode == SCENE_PASS_DEFAULT)
-		{	//Regular rendering pass with no effects
-			updatePlayerColorPasses();///@todo: this probably doesn't need to be done each frame.
-			updateFixedLightEnvironments(rinfo);
-			Customized_Render(rinfo);
-			Flush(rinfo);
-		}
-		else
-		if (m_customPassMode == SCENE_PASS_ALPHA_MASK)
-		{
-			//a projected alpha texture which will later be used to determine where
-			//wireframe should be visible.
-			///@todo: Clearing to black may not be needed if the scene already did the clear.
-			DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_ALPHA);
-			DX8Wrapper::Set_DX8_Render_State (D3DRS_ZBIAS, 0);
-			//Since all objects will be rendered with same material, disable resetting until all are done.
-			m_maskMaterialPass->setAllowUninstall(FALSE);
-
-			Customized_Render(rinfo);	//render mask into alpha channel and fill z-buffer with depth values.
-			Flush(rinfo);
-			m_maskMaterialPass->setAllowUninstall(TRUE);
-			m_maskMaterialPass->UnInstall_Materials();
-
-			DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_BLUE|D3DCOLORWRITEENABLE_GREEN|D3DCOLORWRITEENABLE_RED);
-
-			ShaderClass::Invalidate();
-		}
-	}
-	else
-	{
-		Bool old_enable=WW3D::Is_Texturing_Enabled();
-		if (Get_Extra_Pass_Polygon_Mode() == EXTRA_PASS_CLEAR_LINE)
-		{	//render scene with solid black color but have destination alpha store
-			//a projected alpha texture which will later be used to determine where
-			//wireframe should be visible.
-			///@todo: Clearing to black may not be needed if the scene already did the clear.
-// ?Clear@DX8Wrapper@@ present-unmatched
-			DX8Wrapper::Clear(true, false, Vector3(0.0f,0.0f,0.0f),1.0f);	// Clear color but not z
-			DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_ALPHA);
-			DX8Wrapper::Set_DX8_Render_State (D3DRS_ZBIAS, 0);
-			
-			//We're only filling the z-buffer so ignore normal textures and state changes to speed things up.
-			m_customPassMode = SCENE_PASS_ALPHA_MASK;
-			m_maskMaterialPass->setAllowUninstall(FALSE);
-
-			Customized_Render(rinfo);	//render mask into alpha channel and fill z-buffer with depth values.
-			Flush(rinfo);
-
-			m_maskMaterialPass->setAllowUninstall(TRUE);
-			m_maskMaterialPass->UnInstall_Materials();
-			
-			DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_BLUE|D3DCOLORWRITEENABLE_GREEN|D3DCOLORWRITEENABLE_RED);
-			WW3D::Enable_Coloring(0xff008000);
-			WW3D::Enable_Texturing(false);
-			DX8Wrapper::Set_DX8_Render_State(D3DRS_FILLMODE,D3DFILL_WIREFRAME);
-
-			//Move maximum z-buffer value in a little to shift all z-values closer
-			//and thus forcing line to appear on top of previous pass.
-			Real nearZ,farZ;
-			rinfo.Camera.Get_Zbuffer_Range(nearZ, farZ);
-			rinfo.Camera.Set_Zbuffer_Range(nearZ, farZ-ZBias);
-			rinfo.Camera.Apply();
-
-//			DX8Wrapper::Set_DX8_Render_State (D3DRS_ZBIAS, 4);
-			Customized_Render(rinfo);	//render wireframe where z-test passes
-			Flush(rinfo);
-			DX8Wrapper::Set_DX8_Render_State(D3DRS_FILLMODE,D3DFILL_SOLID);
-
-			rinfo.Camera.Set_Zbuffer_Range(nearZ, farZ);
-			rinfo.Camera.Apply();
-
-//			DX8Wrapper::Set_DX8_Render_State (D3DRS_ZBIAS, 0);
-			WW3D::Enable_Texturing(old_enable);
-			WW3D::Enable_Coloring(0);
-
-			ShaderClass::Invalidate();
-		}
-		else
-		{	//old W3D custom rendering code.
-
-			//Disable writes to color buffer to save memory bandwidth - we only need Z.
-			DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,0);
-			DX8Wrapper::Set_DX8_Render_State (D3DRS_ZBIAS, 0);
-			Customized_Render(rinfo);
-			Flush(rinfo);
-			//Re-enable writes to color buffer.
-			DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_BLUE|D3DCOLORWRITEENABLE_GREEN|D3DCOLORWRITEENABLE_RED);
-
-			switch (Get_Extra_Pass_Polygon_Mode()) {
-			case EXTRA_PASS_LINE:
-				WW3D::Enable_Texturing(false);
-				DX8Wrapper::Set_DX8_Render_State(D3DRS_FILLMODE,D3DFILL_WIREFRAME);
-				DX8Wrapper::Set_DX8_Render_State (D3DRS_ZBIAS, 7);
-				Customized_Render(rinfo);
-				break;
-			case EXTRA_PASS_CLEAR_LINE:
-// ?Clear@DX8Wrapper@@ present-unmatched
-				DX8Wrapper::Clear(true, false, Vector3(0.0f,0.0f,0.0f), 0.0f);	// Clear color but not z
-				WW3D::Enable_Texturing(false);
-				WW3D::Enable_Coloring(0xff008000);
-				DX8Wrapper::Set_DX8_Render_State(D3DRS_FILLMODE,D3DFILL_WIREFRAME);
-				DX8Wrapper::Set_DX8_Render_State (D3DRS_ZBIAS, 7);
-				Customized_Render(rinfo);
-				break;
-			}
-			Flush(rinfo);
-			DX8Wrapper::Set_DX8_Render_State(D3DRS_FILLMODE,D3DFILL_SOLID);
-			DX8Wrapper::Set_DX8_Render_State (D3DRS_ZBIAS, 0);
-			WW3D::Enable_Texturing(old_enable);
-			WW3D::Enable_Coloring(0);
-			ShaderClass::Invalidate();
-		}
-	}
-}
+// ?Render@RTS3DScene@@UAEXAAVRenderInfoClass@@@Z
+// Body in W3DScene_Render.asm (exact 368B retail @ 0x00715B70; queue 0x7113D6 was
+// mid-body of 0x7112B0 helper called from Render — BFME drops ZH EXTRA_PASS arms).
 
 //=============================================================================
 // RTS3DScene::Customized_Renderer
