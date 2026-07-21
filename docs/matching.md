@@ -60,9 +60,8 @@ so `float`, `unsigned int`, `int`, and `const char *` land at the target vtable 
 
 BFME is the SAGE engine — its original source largely survives in the vendored
 `reference/CnC_Generals_Zero_Hour/` (GPLv3, same license as this repo). **BFME forks from Zero
-Hour: always port from `GeneralsMD/` (= ZH), never `Generals/`** — proof and the ranked worklist
-live in `reverse/zh_provenance/FINDINGS.md`. Many functions match verbatim; the batch pipeline for
-finding and landing them is `docs/zh_sweep.md`. Reconcile against the binary (the source of truth).
+Hour: always port from `GeneralsMD/` (= ZH), never `Generals/`.** Many functions match verbatim.
+Reconcile against the binary (the source of truth).
 
 For exact function sizes, the full function inventory, and the bulk-port pipeline, see
 `tools/ghidra/README.md`.

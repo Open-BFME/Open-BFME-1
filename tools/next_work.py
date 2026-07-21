@@ -4,17 +4,14 @@ each with the exact command that lands it. No network, no compiling — runs in 
 
 Sections, in priority order:
   0. Ledger health   tools/check_csv.py — a corrupt ledger aborts everything (exit 2)
-  1. Sweep winners   report.csv files with landable functions not yet in src/zh/
-                     -> python3 tools/land_zh.py <Basename>
-  2. Drift quick wins  immediate-only / imm+reg literal fixes from drift_report.csv
-  2b. Structural reconciliation  closest source-shape mismatches
-  2c. Ghidra-anchored absent  source literals identify an unclaimed retail function
-  3. Shim unblocking  top compile blockers by count — grow reference/shims/sweep/
+  1. Drift quick wins  immediate-only / imm+reg literal fixes from drift_report.csv
+  2. Structural reconciliation  closest source-shape mismatches
+  3. Ghidra-anchored absent  source literals identify an unclaimed retail function
   4. Rest of the ladder (pointer commands only, nothing computed)
 
 Parallel agents: export AGENT_SLOT=1..AGENT_POOL (pool defaults to 7), or let
 tools/setup_local_fleet.py install the same values in the worktree's private
-.git/openbfme-worker.json. Sections 1-2 show only this agent's deterministic
+.git/openbfme-worker.json. Ranked sections show only this agent's deterministic
 slice (zlib.crc32 of the item key mod pool). Pass --any when your slot runs dry.
 --json emits every section machine-readable (full lists; --limit shapes only
 the text output).
@@ -32,13 +29,11 @@ import os
 import subprocess
 import sys
 import zlib
-from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REF = ROOT / "reference" / "CnC_Generals_Zero_Hour" / "GeneralsMD" / "Code"
-REPORT = ROOT / "reverse" / "zh_sweep" / "report.csv"
-META = ROOT / "reverse" / "zh_sweep" / "report.meta"
+# drift_report.csv is the shared drift classification (general RE infra, not the
+# retired ZH source-porting sweep) — it feeds the drift/structural/ghidra tiers.
 DRIFT = ROOT / "reverse" / "zh_sweep" / "drift_report.csv"
 FUNCTIONS = ROOT / "reverse" / "functions.csv"
 ATTEMPTS = ROOT / "reverse" / "re_attempts.log"
@@ -72,28 +67,6 @@ def check_ledger():
     return proc.stdout.strip()
 
 
-def sweep_staleness():
-    """report.meta records the sha the sweep ran at. Advisory only — never blocks."""
-    if not META.exists():
-        return None
-    try:
-        ref = json.loads(META.read_text())["ref"]
-    except (ValueError, KeyError) as exc:
-        return f"report.meta is unreadable ({exc}) — cannot judge sweep staleness"
-    known = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "--verify", "--quiet",
-                            f"{ref}^{{commit}}"], capture_output=True)
-    if known.returncode != 0:
-        return f"sweep ran at {ref}, unknown in this clone — staleness unknown"
-    ancestor = subprocess.run(["git", "-C", str(ROOT), "merge-base", "--is-ancestor",
-                               ref, "HEAD"], capture_output=True)
-    behind = subprocess.run(["git", "-C", str(ROOT), "rev-list", "--count",
-                             f"{ref}..HEAD"], capture_output=True, text=True).stdout.strip()
-    if ancestor.returncode == 0:
-        return f"sweep ran at {ref}, {behind} commit(s) behind HEAD"
-    return (f"sweep ran at {ref}, which is NOT an ancestor of HEAD — results may not "
-            f"reflect this branch; re-sweep: python3 tools/sweep_generalsmd.py")
-
-
 def read_csv(path, regen):
     if not path.exists():
         raise SystemExit(f"{path.relative_to(ROOT)} is missing — regenerate it: {regen}")
@@ -116,43 +89,6 @@ def to_int(value, base, what):
         return int(value, base) if base != 10 else int(value)
     except ValueError:
         raise SystemExit(f"{what}: bad value {value!r} — regenerate the report")
-
-
-def sweep_winners(mine):
-    """report.csv is appended incrementally across re-sweeps: the LAST row per file
-    is the current truth (663 files carry stale earlier rows)."""
-    fields, rows = read_csv(REPORT, "python3 tools/sweep_generalsmd.py --area GameEngine/Source")
-    has_landable = "landable" in fields
-    last = {}
-    for row in rows:
-        last[row["file"]] = row
-    legacy_ported = {p.stem.casefold() for p in (ROOT / "src" / "zh").glob("*.cpp")}
-    code_root = ROOT / "Code"
-    landed_paths = {
-        p.relative_to(code_root).as_posix().casefold()
-        for p in code_root.rglob("*.cpp")
-    }
-    out = []
-    for file, row in last.items():
-        if row["status"] != "ok":
-            continue
-        score = (to_int(row["landable"], 10, f"report.csv landable for {file}")
-                 if has_landable and row.get("landable", "") != ""
-                 else to_int(row["located"], 10, f"report.csv located for {file}"))
-        if (score < 1
-                or Path(file).stem.casefold() in legacy_ported
-                or file.casefold() in landed_paths
-                or not mine(file)):
-            continue
-        if not (REF / file).exists():
-            print(f"warning: report.csv names a missing reference file, skipped: {file}",
-                  file=sys.stderr)
-            continue
-        out.append({"file": file, "landable": score, "located": int(row["located"]),
-                    "ambiguous": int(row["ambiguous"]), "unlocated": int(row["unlocated"]),
-                    "command": f"python3 tools/land_zh.py {Path(file).stem}"})
-    out.sort(key=lambda c: (-c["landable"], c["file"]))
-    return out, last
 
 
 def drift_quick_wins(mine):
@@ -425,16 +361,6 @@ def ghidra_absent_candidates(mine, claimed, claimed_names, attempts):
     return out, (f"{len(functions)} Ghidra functions + {len(xrefs)} string literals loaded")
 
 
-def shim_blockers(last_report_rows):
-    counts, examples = Counter(), {}
-    for row in last_report_rows.values():
-        if row["blocker"]:
-            counts[row["blocker"]] += 1
-            examples.setdefault(row["blocker"], []).append(Path(row["file"]).name)
-    return [{"blocker": blocker, "files": n, "examples": examples[blocker][:3]}
-            for blocker, n in counts.most_common(8)]
-
-
 def worker_config(root=ROOT):
     """Read a worktree-private slot without adding generated files to the tree."""
     dotgit = root / ".git"
@@ -497,8 +423,6 @@ def main():
     mine = (lambda key: zlib.crc32(key.encode("utf-8")) % pool == slot - 1) if filtered \
         else (lambda key: True)
 
-    staleness = sweep_staleness()
-    winners, last_report = sweep_winners(mine)
     drifts = drift_quick_wins(mine) if args.tier not in ("structural", "ghidra") else []
     claimed, claimed_names = set(), set()
     with FUNCTIONS.open(newline="") as fh:
@@ -514,35 +438,26 @@ def main():
             mine, claimed, claimed_names, attempts)
     else:
         ghidra_absent, ghidra_meta = [], "Ghidra tier not requested"
-    blockers = shim_blockers(last_report)
 
     if args.json:
         print(json.dumps({
-            "ledger": ledger, "sweep_meta": staleness,
+            "ledger": ledger,
             "slot": slot, "pool": pool, "filtered": filtered,
-            "sweep_winners": winners, "drift_quick_wins": drifts,
+            "drift_quick_wins": drifts,
             "structural": structural,
             "ghidra_meta": ghidra_meta, "ghidra_absent": ghidra_absent,
-            "shim_blockers": blockers,
             "pointers": [cmd for cmd, _ in POINTERS],
         }, indent=2))
         return
 
     print("== 0. ledger health ==")
     print(f"  {ledger}")
-    if staleness:
-        print(f"  {staleness}")
     if filtered:
-        print(f"  [slot {slot}/{pool}: sections 1-2 show only this agent's slice; "
+        print(f"  [slot {slot}/{pool}: ranked sections show only this agent's slice; "
               f"--any shows everything]")
 
     if args.tier not in ("structural", "ghidra"):
-        print(f"\n== 1. sweep winners still landable ({len(winners)}) ==")
-        for c in winners[:args.limit]:
-            print(f"  landable {c['landable']:>2}  {c['file']}")
-            print(f"               {c['command']}")
-
-        print(f"\n== 2. drift quick wins: literal-only diffs ({len(drifts)}) ==")
+        print(f"\n== 1. drift quick wins: literal-only diffs ({len(drifts)}) ==")
         for c in drifts[:args.limit]:
             print(f"  {c['aligned_pct']:>3}% {c['class']:<14} {c['function']}")
             print(f"       {c['source']} @ {c['candidate_rva']}  hint: {c['hint']}")
@@ -550,7 +465,7 @@ def main():
 
     if args.tier not in ("harvest", "ghidra"):
         shown = structural[:args.limit if args.tier != "structural" else args.limit * 3]
-        print(f"\n== 2b. structural reconciliation — manual RE ({len(structural)}; "
+        print(f"\n== 2. structural reconciliation — manual RE ({len(structural)}; "
               f"workflow: docs/structural.md) ==")
         for c in shown:
             tried = f"  [tried {c['attempts']}x: {c['last_attempt']}]" if c["attempts"] else ""
@@ -563,7 +478,7 @@ def main():
 
     if args.tier in (None, "ghidra"):
         shown = ghidra_absent[:args.limit if args.tier != "ghidra" else args.limit * 3]
-        print(f"\n== 2c. Ghidra-anchored absent functions ({len(ghidra_absent)}; "
+        print(f"\n== 3. Ghidra-anchored absent functions ({len(ghidra_absent)}; "
               f"workflow: docs/structural.md) ==")
         print(f"  {ghidra_meta}")
         for c in shown:
@@ -580,13 +495,6 @@ def main():
 
     if args.tier in ("structural", "ghidra"):
         return
-
-    print(f"\n== 3. shim unblocking (top {len(blockers)} blockers) ==")
-    for b in blockers:
-        print(f"  grow reference/shims/sweep/ to unblock {b['files']:>3} files: "
-              f"{b['blocker']}  (e.g. {', '.join(b['examples'])})")
-    if blockers:
-        print("  then re-sweep the unblocked files: python3 tools/sweep_generalsmd.py")
 
     print("\n== 4. rest of the ladder ==")
     for cmd, why in POINTERS:

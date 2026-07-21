@@ -1,9 +1,10 @@
 # How to Contribute
 
 You are usually one of several agents pushing to the same `origin/master`.
-The workflow docs: `docs/matching.md` (core byte-matching loop),
-`docs/zh_sweep.md` (bulk ZH porting). Hard-won operational facts live in
-`docs/lessons.md` — read it once, it is short and true.
+The workflow docs: `docs/matching.md` (core byte-matching loop) and
+`docs/structural.md` (the manual-RE tier, where most remaining work is).
+Hard-won operational facts live in `docs/lessons.md` — read it once, it is
+short and true.
 
 ## Session start (once)
 
@@ -52,22 +53,14 @@ Repeat this loop while manual reverse-engineering work remains:
 
 1. `python3 tools/land_ambiguous.py` — string-anchored exact-ambiguous drift
    copies; cheapest wins when available.
-2. `tools/next_work.py` sweep winners → `python3 tools/land_zh.py <Basename>`
-   (one or two at a time; big batches time out). If a winner comes back
-   "0 located", the report entry is stale — refresh it with
-   `python3 tools/sweep_generalsmd.py --files <Basename>` and move on; when
-   the whole sweep section is dry, rung 3 is where the volume is.
-3. Grow a shim to unblock swept-out areas: `reverse/zh_sweep/report.csv`
-   rows with `missing-header`/`compile-error` blockers. Add MINIMAL verbatim
-   declarations to `reference/shims/sweep/`, then re-sweep those files.
-4. Structural reconciliation — the manual-RE tier and most of what remains:
+2. Structural reconciliation — the manual-RE tier and most of what remains:
    `python3 tools/next_work.py --tier structural` for the ranked queue, then
    follow `docs/structural.md` exactly. Budget 30-60 min per function; log
    EVERY attempt with `tools/log_attempt.py` (unlogged failures get re-paid
    by the next agent); 3 strikes on one function → log and move on.
-5. Resolve REL32-blocked functions: find the callee address, add a
+3. Resolve REL32-blocked functions: find the callee address, add a
    `name,address` pin to `reverse/symbols.csv` (see docs/matching.md).
-6. Translate a `__asm` block or a small unmatched export to C++
+4. Translate a `__asm` block or a small unmatched export to C++
    (`python3 tools/list_naked_candidates.py Code --limit 20`).
 
 ## Tree layout
@@ -75,12 +68,11 @@ Repeat this loop while manual reverse-engineering work remains:
 Sources live under `Code/` at the official BFME tree path (from `__FILE__`
 strings in the exe): `Code/GameEngine/{Source,Include}/...`,
 `Code/GameEngineDevice/...`, `Code/Libraries/Source/WWVegas/{WWLib,WWMath,WWDebug,WW3D2,...}`.
-New hand-ports go to the same official location as the original file;
-`land_zh.py` already lands sweep files there. `src/` is gone: all 85
-ported WWVegas headers were reconciled against retail and moved to their
-official dirs (the old `/Isrc/w3d` idirs are stripped). Headers are shared
-truth now — moving/editing one means BOTH the zh cpps and the ported cpps
-that include it must still byte-match.
+New hand-ports go to the same official location as the original file.
+`src/` is gone: all 85 ported WWVegas headers were reconciled against retail
+and moved to their official dirs (the old `/Isrc/w3d` idirs are stripped).
+Headers are shared truth — moving/editing one means every source that
+includes it must still byte-match.
 
 ## File placement
 

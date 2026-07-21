@@ -2,7 +2,7 @@
 #
 # Everything else in Code/ MUST own at least one byte-verified matched row:
 # source presence is not progress, and a file of present-unmatched markers
-# must not be committable as if it were work (see docs/zh_sweep.md).
+# must not be committable as if it were work.
 # The build fails on any unlisted zero-claim source AND on any stale entry
 # (file deleted, or file gained matched rows). Every entry needs a reason.
 
