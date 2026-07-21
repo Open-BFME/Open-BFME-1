@@ -1514,7 +1514,6 @@ void OrCondition::WriteOrConditionDataChunk(DataChunkOutput &chunkWriter, OrCond
 *	Input: DataChunkInput 
 *		
 */
-// ?ParseOrConditionDataChunk@OrCondition@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z present-unmatched
 Bool OrCondition::ParseOrConditionDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData)
 {
 	Script *pScript = (Script *)userData;
