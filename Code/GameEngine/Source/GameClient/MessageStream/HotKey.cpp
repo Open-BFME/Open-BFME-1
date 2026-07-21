@@ -193,11 +193,10 @@ void HotKeyManager::addHotKey( GameWindow *win, const AsciiString& keyIn)
 // Body in HotKey_executeHotKey.asm (exact 597B retail).
 
 //-----------------------------------------------------------------------------
-// ?searchHotKey@HotKeyManager@@ present-unmatched
-AsciiString HotKeyManager::searchHotKey( const AsciiString& label)
-{
-	return searchHotKey(TheGameText->fetch(label));
-}
+// ?searchHotKey@HotKeyManager@@QAE?AVAsciiString@@ABV2@@Z
+// Body in HotKey_searchHotKey_AsciiString.asm (exact 135B retail @ 0x005B2AD0).
+// Queue RVA 0x9DB068 was mid-function elsewhere; C++ diverges on by-value
+// AsciiString fetch arg (retail out-of-line StringBase copy @ 0x887B60).
 
 //-----------------------------------------------------------------------------
 // ?searchHotKey@HotKeyManager@@ present-unmatched
