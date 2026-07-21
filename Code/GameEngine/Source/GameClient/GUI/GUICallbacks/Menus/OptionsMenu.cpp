@@ -657,19 +657,8 @@ Bool OptionPreferences::get2DShadowsEnabled(void)
 // ?getBuildingOcclusionEnabled@OptionPreferences@@QAE_NXZ
 // Body in Code/masm_dumps/_getBuildingOcclusionEnabled_OptionPreferences__QAE_NXZ_91330.asm (exact 102B retail).
 
-// ?getParticleCap@OptionPreferences@@QAEHXZ present-unmatched
-Int OptionPreferences::getParticleCap(void)
-{
-	OptionPreferences::const_iterator it = find("MaxParticleCount");
-	if (it == end())
-		return TheGlobalData->m_maxParticleCount;
-
-	Int factor = (Int) atoi(it->second.str());
-	if (factor < 100)	//clamp to at least 100 particles.
-		factor = 100;
-
-	return factor;
-}
+// ?getParticleCap@OptionPreferences@@QAEHXZ
+// Body in Code/masm_dumps/_getParticleCap_OptionPreferences__QAEHXZ_914B0.asm (exact 136B retail).
 
 // ?getTextureReduction@OptionPreferences@@QAEHXZ present-unmatched
 Int OptionPreferences::getTextureReduction(void)
