@@ -246,7 +246,7 @@ void FlammableUpdate::doAflameDamage()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?startBurningSound@FlammableUpdate@@IAEXXZ present-unmatched
+// Body matched as MASM dump (see reverse/functions.csv); C++ kept for readability only.
 void FlammableUpdate::startBurningSound()
 {
 	const FlammableUpdateModuleData *data = getFlammableUpdateModuleData();
