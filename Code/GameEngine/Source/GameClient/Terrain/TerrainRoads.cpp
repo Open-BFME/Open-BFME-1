@@ -385,7 +385,6 @@ TerrainRoadType *TerrainRoadCollection::newRoad( AsciiString name )
 //-------------------------------------------------------------------------------------------------
 /** Allocate a new bridge */
 //-------------------------------------------------------------------------------------------------
-// ?newBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z present-unmatched
 TerrainRoadType *TerrainRoadCollection::newBridge( AsciiString name )
 {
 	TerrainRoadType *bridge = newInstance(TerrainRoadType);

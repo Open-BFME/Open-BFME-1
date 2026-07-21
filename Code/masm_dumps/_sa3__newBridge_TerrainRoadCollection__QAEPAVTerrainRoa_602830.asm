@@ -1,10 +1,14 @@
 .386
 .model flat
 ; ?newBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@XZ
+; ?newBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z (ICF alias; true C++ sig)
 ; Exact 779B @ 0x00602830; Open-BFME4
+; Drift vote 0x602836/647 was +6 mid-prologue of this body (misplaced).
 _TEXT SEGMENT
 public ?newBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@XZ
+public ?newBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z
 ?newBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@XZ PROC
+?newBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z LABEL NEAR
     db 6Ah, 0FFh, 68h, 2Bh, 0D3h, 03h, 01h, 64h, 0A1h, 00h, 00h, 00h, 00h, 50h, 64h, 89h
     db 25h, 00h, 00h, 00h, 00h, 83h, 0ECh, 20h, 53h, 55h, 56h, 8Bh, 0E9h, 57h, 89h, 6Ch
     db 24h, 2Ch, 33h, 0F6h, 68h, 4Ch, 01h, 00h, 00h, 89h, 74h, 24h, 3Ch, 0E8h, 0CEh, 0F6h
