@@ -372,18 +372,8 @@ Bool OptionPreferences::usesSystemMapDir(void)
 	return FALSE;
 }
 
-// ?saveCameraInReplays@OptionPreferences@@QAE_NXZ present-unmatched
-Bool OptionPreferences::saveCameraInReplays(void)
-{
-	OptionPreferences::const_iterator it = find("SaveCameraInReplays");
-	if (it == end())
-		return TRUE;
-
-	if (stricmp(it->second.str(), "yes") == 0) {
-		return TRUE;
-	}
-	return FALSE;
-}
+// ?saveCameraInReplays@OptionPreferences@@QAE_NXZ
+// Body in Code/masm_dumps/_saveCameraInReplays_OptionPreferences_QAE_NXZ_90800.asm (exact 95B retail).
 
 // ?useCameraInReplays@OptionPreferences@@QAE_NXZ present-unmatched
 Bool OptionPreferences::useCameraInReplays(void)
