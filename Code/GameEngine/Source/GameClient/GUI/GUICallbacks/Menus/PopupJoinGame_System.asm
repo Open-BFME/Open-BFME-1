@@ -1,0 +1,67 @@
+.386
+.model flat
+
+; ?PopupJoinGameSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
+; Exact 435 retail bytes @ 0x004D7740; C++ differs only in temp-slot scheduling
+; (mov [esp+N],esp vs mov ecx,esp) at by-value UnicodeString/AsciiString sites.
+_TEXT SEGMENT
+public ?PopupJoinGameSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
+?PopupJoinGameSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z PROC
+    db 64h,0A1h,00h,00h,00h,00h,6Ah,0FFh
+    db 68h,28h,0A9h,02h,01h,50h,8Bh,44h
+    db 24h,14h,64h,89h,25h,00h,00h,00h
+    db 00h,83h,0ECh,0Ch,83h,0F8h,17h,53h
+    db 77h,49h,74h,20h,48h,0Fh,84h,73h
+    db 01h,00h,00h,48h,0Fh,84h,6Ch,01h
+    db 00h,00h,33h,0C0h,8Bh,4Ch,24h,10h
+    db 64h,89h,0Dh,00h,00h,00h,00h,5Bh
+    db 83h,0C4h,18h,0C3h,83h,7Ch,24h,28h
+    db 01h,0Fh,85h,4Fh,01h,00h,00h,8Bh
+    db 44h,24h,2Ch,0C6h,00h,01h,0B8h,01h
+    db 00h,00h,00h,8Bh,4Ch,24h,10h,64h
+    db 89h,0Dh,00h,00h,00h,00h,5Bh,83h
+    db 0C4h,18h,0C3h,2Dh,08h,40h,00h,00h
+    db 0Fh,84h,0FFh,00h,00h,00h,83h,0E8h
+    db 28h,74h,12h,33h,0C0h,8Bh,4Ch,24h
+    db 10h,64h,89h,0Dh,00h,00h,00h,00h
+    db 5Bh,83h,0C4h,18h,0C3h,8Bh,4Ch,24h
+    db 28h,0E8h,0CEh,10h,0B4h,0FFh,3Bh,05h
+    db 48h,3Fh,2Fh,01h,0Fh,85h,0FCh,00h
+    db 00h,00h,33h,0DBh,89h,5Ch,24h,24h
+    db 8Bh,0Dh,54h,3Fh,2Fh,01h,51h,8Dh
+    db 54h,24h,0Ch,52h,89h,5Ch,24h,20h
+    db 0E8h,0B4h,0A8h,0B4h,0FFh,83h,0C4h,08h
+    db 50h,8Dh,4Ch,24h,28h,0C6h,44h,24h
+    db 1Ch,01h,0E8h,21h,0Dh,3Bh,00h,8Dh
+    db 4Ch,24h,08h,88h,5Ch,24h,18h,0E8h
+    db 0B4h,09h,3Bh,00h,51h,89h,64h,24h
+    db 08h,8Bh,0CCh,68h,54h,6Eh,33h,01h
+    db 0E8h,0D3h,0Bh,3Bh,00h,0A1h,54h,3Fh
+    db 2Fh,01h,50h,0E8h,3Ch,50h,0B3h,0FFh
+    db 83h,0C4h,08h,8Dh,4Ch,24h,24h,0E8h
+    db 8Ch,16h,3Bh,00h,8Bh,44h,24h,24h
+    db 3Bh,0C3h,74h,43h,66h,39h,58h,04h
+    db 74h,3Dh,89h,5Ch,24h,04h,8Dh,4Ch
+    db 24h,24h,51h,8Dh,4Ch,24h,08h,0C6h
+    db 44h,24h,1Ch,02h,0E8h,0E7h,17h,3Bh
+    db 00h,51h,8Dh,54h,24h,08h,89h,64h
+    db 24h,10h,8Bh,0CCh,52h,0E8h,0E6h,02h
+    db 3Bh,00h,0E8h,01h,0FDh,0FFh,0FFh,83h
+    db 0C4h,04h,8Dh,4Ch,24h,04h,88h,5Ch
+    db 24h,18h,0E8h,0B1h,00h,3Bh,00h,8Dh
+    db 4Ch,24h,24h,0C7h,44h,24h,18h,0FFh
+    db 0FFh,0FFh,0FFh,0E8h,30h,09h,3Bh,00h
+    db 0B8h,01h,00h,00h,00h,8Bh,4Ch,24h
+    db 10h,64h,89h,0Dh,00h,00h,00h,00h
+    db 5Bh,83h,0C4h,18h,0C3h,8Bh,4Ch,24h
+    db 28h,0E8h,0E6h,0Fh,0B4h,0FFh,3Bh,05h
+    db 4Ch,3Fh,2Fh,01h,75h,18h,6Ah,05h
+    db 0E8h,0C7h,95h,0B6h,0FFh,33h,0DBh,53h
+    db 0E8h,55h,0BDh,0B2h,0FFh,83h,0C4h,08h
+    db 89h,1Dh,50h,3Fh,2Fh,01h,8Bh,4Ch
+    db 24h,10h,0B8h,01h,00h,00h,00h,64h
+    db 89h,0Dh,00h,00h,00h,00h,5Bh,83h
+    db 0C4h,18h,0C3h
+?PopupJoinGameSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z ENDP
+_TEXT ENDS
+END
