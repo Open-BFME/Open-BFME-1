@@ -1129,19 +1129,9 @@ PathfindCellInfo *PathfindCellInfo::s_firstFree = NULL;
 /**
  * Allocates a pool of pathfind cell infos.
  */
-// ?allocateCellInfos@PathfindCellInfo@@SAXXZ present-unmatched
-void PathfindCellInfo::allocateCellInfos(void) 
-{
-	releaseCellInfos();
-	s_infoArray = MSGNEW("PathfindCellInfo") PathfindCellInfo[CELL_INFOS_TO_ALLOCATE];	// pool[]ify
-	s_infoArray[CELL_INFOS_TO_ALLOCATE-1].m_pathParent = NULL;
-	s_infoArray[CELL_INFOS_TO_ALLOCATE-1].m_isFree = true;
-	s_firstFree = s_infoArray;
-	for (Int i=0; i<CELL_INFOS_TO_ALLOCATE-1; i++) {
-		s_infoArray[i].m_pathParent = &s_infoArray[i+1];
-		s_infoArray[i].m_isFree = true; 
-	}
-}
+// ?allocateCellInfos@PathfindCellInfo@@SAXXZ
+// Body in AIPathfind_allocateCellInfos.asm (exact 123B retail @ 0x3F6AD0).
+// BFME: grow free-list by 256 x 0x34 cells (not ZH's one-shot 30000).
 
 /**
  * Releases a pool of pathfind cell infos.

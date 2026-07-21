@@ -12938,3 +12938,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?resetRank@Player@@QAEXXZ,,0x000D7CA0,319,Code/GameEngine/Source/Common/RTS/Player_resetRank.asm,matched,exact 319B via MASM; true start 0xD7CA0 (queue 0xD7CAE mid-SEH); SCIENCE:GeneralName unique
 ?isPlayer@GameSlot@@QBE_NVAsciiString@@@Z,,0x00620210,133,Code/masm_dumps/GameSlot_isPlayer_AsciiString.asm,matched,exact 133B MASM; queue 0x9DB05F was mid FUN_00dd9d90; true body SEH+translate+compareNoCase
 ?LANDisplayGameList@@YAXPAVGameWindow@@PAVLANGameInfo@@@Z,,0x0068EBF0,710,Code/masm_dumps/LANDisplayGameList_YAXPAVGameWindow_PAVLANGameInfo_Z_0068EBF0.asm,matched,MASM exact retail; true body via OnGameList call not drift 0x888853
+?allocateCellInfos@PathfindCellInfo@@SAXXZ,,0x003F6AD0,123,Code/GameEngine/Source/GameLogic/AI/AIPathfind_allocateCellInfos.asm,matched,exact 123B MASM BFME grow-by-256 pool at 0x3F6AD0 (queue RVA was int3 pad)
