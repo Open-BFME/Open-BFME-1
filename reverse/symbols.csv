@@ -3399,3 +3399,4 @@ _ShowControlBar,0x00024848,ShowControlBar letterbox
 ?winSetDisabledBorderColor@GameWindow@@QAEHHH@Z,0x0003178C,ILT/thunk used by GadgetComboBoxSetColors
 ?winSetHiliteColor@GameWindow@@QAEHHH@Z,0x000248B1,ILT/thunk used by GadgetComboBoxSetColors
 ?winSetHiliteBorderColor@GameWindow@@QAEHHH@Z,0x000047D2,ILT/thunk used by GadgetComboBoxSetColors
+??1CDManagerInterface@@UAE@XZ,0x00101BA0,CDManagerInterface dtor body (called by ??_G @ 0x101BB0)
