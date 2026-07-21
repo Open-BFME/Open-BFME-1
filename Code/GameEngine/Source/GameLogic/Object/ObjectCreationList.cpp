@@ -1439,6 +1439,10 @@ private:
 	Bool											m_skipIfSignificantlyAirborne;
 
 };  
+// ??1GenericObjectCreationNugget@@MAE@XZ
+// Body: Code/masm_dumps/GenericObjectCreationNugget_dtor_1D8220.asm
+// Exact 144B @ 0x001D8220 (queue 0x000FB453 was mid-function; sizeof 0x148 layout vs ZH).
+// EMPTY_DTOR kept for type completeness; matched body is the MASM dump.
 EMPTY_DTOR(GenericObjectCreationNugget)
 
 // Out-of-line: force-emit ??0AnimSet@GenericObjectCreationNugget and vector helpers
