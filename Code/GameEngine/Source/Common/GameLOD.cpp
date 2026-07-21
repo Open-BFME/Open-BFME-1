@@ -202,33 +202,8 @@ void INI::parseBenchProfile( INI* ini)
 }
 
 /**Parse a description of all the LOD settings for a given detail level*/
-// ?parseLODPreset@INI@@SAXPAV1@@Z present-unmatched
-void INI::parseLODPreset( INI* ini )
-{
-	const char *c;
-	AsciiString name;
-
-	// read the name
-	c = ini->getNextToken();
-	name.set( c );	//name of detail level - low, medium, high
-
-	if( TheGameLODManager )
-	{
-		StaticGameLODLevel index = (StaticGameLODLevel)TheGameLODManager->getStaticGameLODIndex(name);
-		if (index != STATIC_GAME_LOD_UNKNOWN)
-		{
-			LODPresetInfo *preset = TheGameLODManager->newLODPreset(index);
-
-			if (preset)
-			{
-				INI::parseIndexList(ini,NULL,&preset->m_cpuType,CPUNames);
-				INI::parseInt(ini,NULL,&preset->m_mhz,NULL);
-				INI::parseIndexList(ini,NULL,&preset->m_videoType,VideoNames);
-				INI::parseInt(ini,NULL,&preset->m_memory,NULL);
-			}
-		}
-	}
-}
+// ?parseLODPreset@INI@@SAXPAV1@@Z
+// Body in Code/masm_dumps/INI_parseLODPreset_7d2d0.asm (exact 325B retail @ 0x7D2D0).
 
 // ??0GameLODManager@@QAE@XZ present-unmatched
 GameLODManager::GameLODManager(void)
