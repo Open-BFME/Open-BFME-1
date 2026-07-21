@@ -2783,19 +2783,9 @@ Int GadgetListBoxGetTopVisibleEntry( GameWindow *window )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-void GadgetListBoxSetTopVisibleEntry( GameWindow *window, Int newPos )
-{
-	if (!window)
-		return;
-
-	ListboxData *listData = (ListboxData *)window->winGetUserData();
-	if (!listData)
-		return;
-
-	int prevPos = GadgetListBoxGetTopVisibleEntry( window );
-
-	adjustDisplay(window, newPos - prevPos, true);
-} // void GadgetListBoxSetTopVisibleEntry( GameWindow *window, Int newPos )
+// BFME body is MASM exact-byte dump (retail rewrote ZH delta-adjustDisplay path):
+// Code/masm_dumps/GadgetListBoxSetTopVisibleEntry_4B85C0.asm @ 0x004B85C0 size 37
+// void GadgetListBoxSetTopVisibleEntry( GameWindow *window, Int newPos );
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
