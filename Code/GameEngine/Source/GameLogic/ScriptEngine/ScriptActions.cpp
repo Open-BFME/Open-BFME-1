@@ -6044,42 +6044,9 @@ void ScriptActions::doTeamSpinForFramecount( const AsciiString& teamName, Int wa
 //-------------------------------------------------------------------------------------------------
 /** doTeamUseCommandButtonOnNamed */
 //-------------------------------------------------------------------------------------------------
-// ?doTeamUseCommandButtonOnNamed@ScriptActions@@IAEXABVAsciiString@@00@Z present-unmatched
-void ScriptActions::doTeamUseCommandButtonOnNamed( const AsciiString& teamName, const AsciiString& commandAbility, const AsciiString& unitName )
-{
-	Team *team = TheScriptEngine->getTeamNamed(teamName);
-	if (!team) {
-		return;
-	}
-
-	AIGroup *theGroup = TheAI->createGroup();
-	team->getTeamAsAIGroup(theGroup);
-
-	const CommandButton *commandButton = TheControlBar->findCommandButton(commandAbility);
-	if(!commandButton) {
-		return;
-	}
-
-	Object *srcObj = NULL;
-	if (commandButton->getSpecialPowerTemplate()) {
-		srcObj = theGroup->getSpecialPowerSourceObject(commandButton->getSpecialPowerTemplate()->getID());
-	} else {
-		srcObj = theGroup->getCommandButtonSourceObject(commandButton->getCommandType());
-	}
-
-	if (!srcObj) {
-		return;
-	}
-
-	Object *obj = TheScriptEngine->getUnitNamed( unitName );
-	if (!obj) {
-		return;
-	}
-
-	if (commandButton->isValidToUseOn(srcObj, obj, NULL, CMD_FROM_SCRIPT)) {
-		theGroup->groupDoCommandButtonAtObject(commandButton, obj, CMD_FROM_SCRIPT);
-	}
-}
+// ?doTeamUseCommandButtonOnNamed@ScriptActions@@IAEXABVAsciiString@@00@Z
+// Body in ScriptActions_doTeamUseCommandButtonOnNamed.asm (exact 204B retail @ 0x2F54C0).
+// Queue RVA 0x614F9B was INSIDE mislocated NearestKindof MASM claim (INI parser).
 
 //-------------------------------------------------------------------------------------------------
 /** doTeamUseCommandButtonOnNearestEnemy */
