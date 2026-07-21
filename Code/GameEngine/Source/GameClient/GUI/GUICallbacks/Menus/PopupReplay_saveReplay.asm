@@ -1,0 +1,48 @@
+.386
+.model flat
+
+; ?saveReplay@@YAXVUnicodeString@@@Z
+; Exact 519 retail bytes @ 0x004DE8E0
+; Queue RVA 0x0088836A was StringBase mid-body (misplaced); true start via
+; GUI:OverwriteReplayTitle/GUI:LastReplay string xrefs + SEH prologue.
+; C++ blocked: ZH instance getReplayDir (QAE) vs retail static (SA), and
+; ZH inline wcscmp operator== vs retail StringBase::compare call.
+_TEXT SEGMENT
+public ?saveReplay@@YAXVUnicodeString@@@Z
+?saveReplay@@YAXVUnicodeString@@@Z PROC
+    db 06Ah,0FFh,068h,070h,0B1h,002h,001h,064h,0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,083h,0ECh,014h,053h,056h,0C7h,044h,024h,024h,000h,000h
+    db 000h,000h,0C7h,044h,024h,00Ch,000h,000h,000h,000h,08Bh,00Dh,07Ch,014h,02Fh,001h
+    db 08Bh,001h,06Ah,000h,068h,048h,004h,008h,001h,08Dh,054h,024h,018h,052h,0C6h,044h
+    db 024h,030h,001h,0FFh,050h,028h,050h,08Dh,04Ch,024h,030h,0E8h,0BCh,03Dh,0B4h,0FFh
+    db 08Bh,0D8h,0F7h,0DBh,01Ah,0DBh,08Dh,04Ch,024h,010h,0FEh,0C3h,0E8h,08Fh,098h,03Ah
+    db 000h,084h,0DBh,074h,02Fh,08Bh,00Dh,02Ch,0D6h,02Eh,001h,08Dh,044h,024h,010h,050h
+    db 0E8h,071h,0FAh,0B3h,0FFh,050h,08Dh,04Ch,024h,010h,0C6h,044h,024h,028h,002h,0E8h
+    db 02Ch,093h,03Ah,000h,08Dh,04Ch,024h,010h,0C6h,044h,024h,024h,001h,0E8h,0CEh,08Fh
+    db 03Ah,000h,0EBh,00Eh,08Dh,04Ch,024h,02Ch,051h,08Dh,04Ch,024h,010h,0E8h,0CEh,0A6h
+    db 03Ah,000h,08Dh,054h,024h,008h,052h,0E8h,0E8h,055h,0B4h,0FFh,083h,0C4h,004h,08Bh
+    db 044h,024h,00Ch,085h,0C0h,0B3h,003h,088h,05Ch,024h,024h,074h,009h,00Fh,0B7h,048h
+    db 004h,083h,0C0h,008h,0EBh,007h,033h,0C9h,0B8h,08Bh,038h,007h,001h,051h,050h,08Dh
+    db 04Ch,024h,010h,0E8h,0A8h,093h,03Ah,000h,08Dh,044h,024h,010h,050h,0E8h,036h,03Eh
+    db 0B6h,0FFh,083h,0C4h,004h,08Bh,000h,085h,0C0h,0C6h,044h,024h,024h,004h,074h,006h
+    db 00Fh,0B7h,048h,004h,0EBh,002h,033h,0C9h,085h,0C0h,074h,005h,083h,0C0h,008h,0EBh
+    db 005h,0B8h,08Bh,038h,007h,001h,051h,050h,08Dh,04Ch,024h,010h,0E8h,06Fh,093h,03Ah
+    db 000h,08Dh,04Ch,024h,010h,088h,05Ch,024h,024h,0E8h,042h,08Fh,03Ah,000h,08Bh,044h
+    db 024h,008h,085h,0C0h,08Dh,048h,008h,075h,005h,0B9h,08Bh,038h,007h,001h,08Bh,0C1h
+    db 08Dh,070h,001h,08Ah,010h,040h,084h,0D2h,075h,0F9h,02Bh,0C6h,003h,0C1h,050h,051h
+    db 0B9h,06Ch,040h,02Fh,001h,0E8h,06Dh,0C8h,0B4h,0FFh,08Bh,044h,024h,008h,085h,0C0h
+    db 0C7h,005h,068h,040h,02Fh,001h,000h,000h,000h,000h,074h,005h,083h,0C0h,008h,0EBh
+    db 005h,0B8h,08Bh,038h,007h,001h,08Bh,00Dh,048h,0CBh,034h,001h,050h,0E8h,04Eh,09Ch
+    db 04Eh,000h,084h,0C0h,074h,04Eh,08Bh,00Dh,07Ch,014h,02Fh,001h,08Bh,011h,06Ah,000h
+    db 068h,060h,0E4h,08Dh,000h,051h,08Bh,0C4h,089h,064h,024h,020h,06Ah,000h,068h,094h
+    db 012h,010h,001h,050h,0FFh,052h,028h,08Bh,00Dh,07Ch,014h,02Fh,001h,08Bh,011h,051h
+    db 08Bh,0C4h,089h,064h,024h,028h,06Ah,000h,068h,074h,012h,010h,001h,050h,0C6h,044h
+    db 024h,040h,005h,0FFh,052h,028h,088h,05Ch,024h,034h,0E8h,0CAh,0F4h,0B5h,0FFh,083h
+    db 0C4h,010h,0EBh,005h,0E8h,0B7h,0F9h,0FFh,0FFh,08Dh,04Ch,024h,008h,0C6h,044h,024h
+    db 024h,001h,0E8h,089h,08Eh,03Ah,000h,08Dh,04Ch,024h,00Ch,0C6h,044h,024h,024h,000h
+    db 0E8h,07Bh,08Eh,03Ah,000h,08Dh,04Ch,024h,02Ch,0C7h,044h,024h,024h,0FFh,0FFh,0FFh
+    db 0FFh,0E8h,0FAh,096h,03Ah,000h,08Bh,04Ch,024h,01Ch,05Eh,064h,089h,00Dh,000h,000h
+    db 000h,000h,05Bh,083h,0C4h,020h,0C3h
+?saveReplay@@YAXVUnicodeString@@@Z ENDP
+_TEXT ENDS
+END
