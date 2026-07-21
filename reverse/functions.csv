@@ -13001,3 +13001,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ??0AnimateWindowManager@@QAE@XZ,,0x0045D6B0,537,Code/GameEngine/Source/GameClient/GUI/AnimateWindowManager.cpp,matched,
 ?updateSpecialPowerShortcut@ControlBar@@IAEXXZ,,0x0049E240,650,Code/masm_dumps/_updateSpecialPowerShortcut_ControlBar__IAEXXZ_49E240.asm,matched,MASM exact body; queue 0x4A94BE misplaced INSIDE neighbor mid-insn; ID via populate last-call ILT 0x17643
 ??0AIIdleState@@QAE@PAVStateMachine@@W4AIIdleTargetingType@0@@Z,,0x00180320,71,Code/masm_dumps/AIIdleState_ctor.asm,matched,true body @0x180320 (71B); drift 0x186B04 mid-insn inside AIStateMachine; string-anchored AIIdleState + StringBase@0x888BC0
+??0Radar@@QAE@XZ,,0x00107FE0,237,Code/masm_dumps/Radar_constructor.asm,matched,True body 0x107FE0/237 (queue 0x9F271F pad); dual Radar vtables match dtor; MASM exact
