@@ -262,13 +262,9 @@ Int OptionPreferences::getCampaignDifficulty(void)
 	return factor;
 }
 
-// ?setCampaignDifficulty@OptionPreferences@@QAEXH@Z present-unmatched
-void OptionPreferences::setCampaignDifficulty( Int diff )
-{
-	AsciiString prefString;
-	prefString.format("%d", diff );
-	(*this)["CampaignDifficulty"] = prefString;
-}
+// ?setCampaignDifficulty@OptionPreferences@@QAEXH@Z
+// Body in Code/masm_dumps/_setCampaignDifficulty_OptionPreferences__QAEXH_Z_920F0.asm
+// (exact 169B retail @ 0x920F0; queue RVA 0x920FF was mid-SEH prologue).
 
 // ?getLANIPAddress@OptionPreferences@@QAEIXZ
 // Body in OptionsMenu_getLANIPAddress.asm (exact 403B retail).
