@@ -83,33 +83,9 @@ HeaderTemplateManager *TheHeaderTemplateManager = NULL;
 //-----------------------------------------------------------------------------
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
-// ?parseHeaderTemplateDefinition@INI@@SAXPAV1@@Z present-unmatched
-void INI::parseHeaderTemplateDefinition( INI *ini )
-{
-	AsciiString name;
-	HeaderTemplate *hTemplate;
-
-	// read the name
-	const char* c = ini->getNextToken();
-	name.set( c );	
-
-	// find existing item if present
-	hTemplate = TheHeaderTemplateManager->findHeaderTemplate( name );
-	if( hTemplate == NULL )
-	{
-
-		// allocate a new item
-		hTemplate = TheHeaderTemplateManager->newHeaderTemplate( name );
-
-	}  // end if
-	else
-	{
-		DEBUG_CRASH(( "[LINE: %d in '%s'] Duplicate header Template %s found!", ini->getLineNum(), ini->getFilename().str(), name.str() ));
-	}
-	// parse the ini definition
-	ini->initFromINI( hTemplate, TheHeaderTemplateManager->getFieldParse() );
-
-}  // end parseCommandButtonDefinition
+// ?parseHeaderTemplateDefinition@INI@@SAXPAV1@@Z body in
+// Code/masm_dumps/INI_parseHeaderTemplateDefinition_48CBD0.asm (0x0048CBD0/195).
+// Queue 0x009A15AF was prior-fn epilogue+pad; C++ blocked by ZH vs BFME AsciiString.
 
 // ??0HeaderTemplate@@QAE@XZ present-unmatched
 HeaderTemplate::HeaderTemplate( void ) :
