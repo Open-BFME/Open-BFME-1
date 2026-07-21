@@ -1593,7 +1593,7 @@ const Image *ControlBar::getStarImage(void )
 
 
 //-------------------------------------------------------------------------------------------------
-// ?onPlayerRankChanged@ControlBar@@QAEXPBVPlayer@@@Z present-unmatched
+// Matched via Code/masm_dumps/ControlBar_onPlayerRankChanged.asm @ 0x0049DC90
 void ControlBar::onPlayerRankChanged(const Player *p)
 {
 	if (!p->isLocalPlayer())
