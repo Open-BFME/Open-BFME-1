@@ -339,7 +339,6 @@ void GameLogic::destroyAllObjectsImmediate()
 /**GameLogic class destructor, the destruction order should mirror the
  * initialization order */
 // ------------------------------------------------------------------------------------------------
-// ??1GameLogic@@UAE@XZ present-unmatched
 GameLogic::~GameLogic()
 {
 
