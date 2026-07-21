@@ -1458,7 +1458,6 @@ void Drawable::applyPhysicsXform(Matrix3D* mtx)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?calcPhysicsXform@Drawable@@IAE_NAAUPhysicsXformInfo@1@@Z present-unmatched
 Bool Drawable::calcPhysicsXform(PhysicsXformInfo& info)
 {
 	const Object* obj = getObject();
