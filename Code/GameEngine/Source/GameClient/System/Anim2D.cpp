@@ -198,15 +198,9 @@ const Image* Anim2DTemplate::getFrame( UnsignedShort frameNumber ) const
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??1Anim2D@@MAE@XZ present-unmatched
-Anim2D::~Anim2D( void )
-{
-
-	// if we were registered with a system, un-register ourselves
-	if( m_collectionSystem )
-		m_collectionSystem->unRegisterAnimation( this );
-
-}  // end ~Anim2D
+// ??1Anim2D@@MAE@XZ
+// Body in Anim2D_dtor.asm (exact 61B retail @ 0x005BA670; C++ tail-jmps to
+// the wrong Snapshot QAE ICF alias instead of inlining the 7B UAE vtable store).
 
 // ------------------------------------------------------------------------------------------------
 /** Set the current animation frame */
