@@ -727,7 +727,6 @@ void Player::addToPriorityBuildList(AsciiString templateName, Coord3D *pos, Real
 } 
 
 //=============================================================================
-// ?update@Player@@QAEXXZ present-unmatched
 void Player::update()
 {
 	if (m_ai)
