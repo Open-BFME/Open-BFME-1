@@ -356,36 +356,10 @@ Int CampaignManager::getCurrentMissionNumber( void )
 }
 
 //-----------------------------------------------------------------------------
-// ?parseMissionPart@CampaignManager@@ present-unmatched
-void CampaignManager::parseMissionPart( INI* ini, void *instance, void *store, const void *userData )
-{
-	static const FieldParse myFieldParse[] = 
-		{
-			{ "Map",							INI::parseAsciiString,				NULL, offsetof( Mission, m_mapName ) },
-			{ "NextMission",			INI::parseAsciiString,				NULL, offsetof( Mission, m_nextMission ) },
-			{ "IntroMovie",				INI::parseAsciiString,				NULL, offsetof( Mission, m_movieLabel ) },
-			{ "ObjectiveLine0",		INI::parseAsciiString,				NULL, offsetof( Mission, m_missionObjectivesLabel[0] ) },
-      { "ObjectiveLine1",		INI::parseAsciiString,				NULL, offsetof( Mission, m_missionObjectivesLabel[1] ) },
-			{ "ObjectiveLine2",		INI::parseAsciiString,				NULL, offsetof( Mission, m_missionObjectivesLabel[2] ) },
-			{ "ObjectiveLine3",		INI::parseAsciiString,				NULL, offsetof( Mission, m_missionObjectivesLabel[3] ) },
-			{ "ObjectiveLine4",		INI::parseAsciiString,				NULL, offsetof( Mission, m_missionObjectivesLabel[4] ) },
-			{ "BriefingVoice",		INI::parseAudioEventRTS,			NULL, offsetof( Mission, m_briefingVoice ) },
-			{ "UnitNames0",				INI::parseAsciiString,				NULL, offsetof( Mission, m_unitNames[0] ) },
-			{ "UnitNames1",				INI::parseAsciiString,				NULL, offsetof( Mission, m_unitNames[1] ) },
-			{ "UnitNames2",				INI::parseAsciiString,				NULL, offsetof( Mission, m_unitNames[2] ) },
-			{ "GeneralName",			INI::parseAsciiString,			NULL, offsetof( Mission, m_generalName)	},
-			{ "LocationNameLabel",INI::parseAsciiString,				NULL, offsetof( Mission, m_locationNameLabel ) },
-			{ "VoiceLength",			INI::parseInt ,								NULL, offsetof( Mission, m_voiceLength ) },
-
-			{ NULL,							NULL,											NULL, 0 }  // keep this last
-		};
-	AsciiString name;
-	const char* c = ini->getNextToken();
-	name.set( c );	
-
-	Mission *mission = ((Campaign*)instance)->newMission(name );
-	ini->initFromINI(mission, myFieldParse);
-}
+// ?parseMissionPart@CampaignManager@@SAXPAVINI@@PAX1PBX@Z body in
+// Code/masm_dumps/CampaignManager_parseMissionPart_5BCB20.asm (0x005BCB20/161).
+// Drift 0x009A15B3 was int3 pad before unrelated InitFile/InitPath parse body.
+// BFME Mission FieldParse omits GeneralName (retail table @ 0x110F778).
 	
 
 //-----------------------------------------------------------------------------
