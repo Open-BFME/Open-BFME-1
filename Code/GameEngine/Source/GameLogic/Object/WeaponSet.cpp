@@ -199,13 +199,8 @@ WeaponSet::WeaponSet()
 }
 
 //-------------------------------------------------------------------------------------------------
-// ??1WeaponSet@@QAE@XZ present-unmatched
-WeaponSet::~WeaponSet()
-{
-	for (Int i = 0; i < WEAPONSLOT_COUNT; ++i)
-		if (m_weapons[i])
-			m_weapons[i]->deleteInstance();
-}
+// ??1WeaponSet@@QAE@XZ — body in Code/masm_dumps/WeaponSet_destructor.asm (0x1EAD40, 95B)
+// Retail: 4 weapon slots (not ZH's 3), scalar-deleting virtual delete, Snapshot vtbl restore.
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */
