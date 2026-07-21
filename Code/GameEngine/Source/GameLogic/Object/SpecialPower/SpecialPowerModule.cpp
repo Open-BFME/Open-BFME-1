@@ -500,7 +500,7 @@ void SpecialPowerModule::triggerSpecialPower( const Coord3D *location )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?createViewObject@SpecialPowerModule@@ present-unmatched
+// Matched via Code/masm_dumps/SpecialPowerModule_createViewObject.asm @ 0x00269130 (422B)
 void SpecialPowerModule::createViewObject( const Coord3D *location )
 {
 	const SpecialPowerModuleData *modData = getSpecialPowerModuleData();
