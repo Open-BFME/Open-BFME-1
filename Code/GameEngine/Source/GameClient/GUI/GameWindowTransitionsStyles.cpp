@@ -120,7 +120,8 @@ void FlashTransition::init( GameWindow *win )
 
 }
 
-// ?update@FlashTransition@@UAEXH@Z present-unmatched
+// BFME: no GUIBoarderFadeIn audio path (string absent); switch collapses to
+// Fade-like groups — hide TRUE on FADE_IN_*, hide FALSE on FADE_TO_BACKGROUND_*.
 void FlashTransition::update( Int frame )
 {
 	m_drawState = -1;
@@ -132,7 +133,6 @@ void FlashTransition::update( Int frame )
 	switch (frame) {
 	case FLASHTRANSITION_START:
 		{
-			
 			if(m_isForward || !m_win)
 				break;
 			m_win->winHide(TRUE);
@@ -140,16 +140,6 @@ void FlashTransition::update( Int frame )
 		}
 		break;
 	case FLASHTRANSITION_FADE_IN_1:
-		if(m_isForward)
-		{
-			AudioEventRTS buttonClick("GUIBoarderFadeIn");
-
-			if( TheAudio )
-			{
-				TheAudio->addAudioEvent( &buttonClick );
-			}  // end if
-		
-		}
 	case FLASHTRANSITION_FADE_IN_2:
 	case FLASHTRANSITION_FADE_IN_3:
 		{
@@ -179,8 +169,6 @@ void FlashTransition::update( Int frame )
 		}
 		break;
 	}
-	
-	
 }
 
 // ?reverse@FlashTransition@@UAEXXZ present-unmatched
