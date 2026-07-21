@@ -327,7 +327,6 @@ static void calcRandomForce(Real minMag, Real maxMag, Real minPitch, Real maxPit
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?beginSlowDeath@SlowDeathBehavior@@ present-unmatched
 void SlowDeathBehavior::beginSlowDeath(const DamageInfo *damageInfo)
 {
 	if (!isSlowDeathActivated())
