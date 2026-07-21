@@ -9503,7 +9503,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?freeBlock@MemoryPool@@QAEXPAX@Z,,0x0003291B,5,Code/masm_dumps/_thunk_bc6317ccba57_3291B.asm,matched,thunk accessor of ported class (icf alias)
 ?freeBytes@AsciiString@@AAEXXZ,,0x00887940,134,Code/masm_dumps/_icf2__freeBytes_AsciiString__AAEXXZ_887940.asm,matched,ICF of ??1AIUpdateModuleData@@UAE@XZ Open-BFME4+Grok
 ?freeFromW3DMemPool@@YAXPAX0@Z,,0x00132AB0,15,Code/GameEngine/Source/Common/System/GameMemory.cpp,matched,
-?freeMessageResources@InGameUI@@QAEXXZ,,0x0043CDC0,64,Code/masm_dumps/_cache2__freeMessageResources_InGameUI__QAEXXZ_43CDC0.asm,matched,cached-obj2 Open-BFME4+Grok
+?freeMessageResources@InGameUI@@QAEXXZ,,0x0043CDC0,64,Code/GameEngine/Source/GameClient/InGameUI.cpp,matched,cached-obj2 Open-BFME4+Grok asm->cpp depth Open-BFME4+Grok
 ?freeSockets@NameKeyGenerator@@AAEXXZ,,0x000226E7,5,Code/masm_dumps/_thunk_022ca91e9d30_226E7.asm,matched,thunk accessor of ported class
 ?freeZones@ZoneBlock@@IAEXXZ,,0x00012968,5,Code/masm_dumps/_thunk_18d4d4c1ba98_12968.asm,matched,thunk accessor of ported class
 ?friend_addToList@CommandButton@@QAEXPAPAV1@@Z,,0x0049C9E0,14,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp,matched,
@@ -12393,7 +12393,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?showLANGameOptionsUnderlyingGUIElements@@YAX_N@Z,,0x004D00E0,92,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanMapSelectMenu.cpp,matched,
 ?showNamedTimerDisplay@InGameUI@@QAEX_N@Z,,0x0043AA90,13,Code/GameEngine/Source/GameClient/InGameUI.cpp,matched,BFME m_showNamedTimers +0x7a1
 ?showRallyPoint@ControlBar@@IAEXPBUCoord3D@@@Z,,0x0049DF00,312,Code/masm_dumps/_sa4__showRallyPoint_ControlBar__IAEXPBUCoord3D___Z_49DF00.asm,matched,Exact 312B Open-BFME4
-?showReplayControls@@YAXXZ,,0x0043A7F0,32,Code/masm_dumps/_cache2__showReplayControls__YAXXZ_43A7F0.asm,matched,cached-obj2 Open-BFME4+Grok
+?showReplayControls@@YAXXZ,,0x0043A7F0,32,Code/GameEngine/Source/GameClient/InGameUI.cpp,matched,cached-obj2 Open-BFME4+Grok asm->cpp depth Open-BFME4+Grok
 ?showSortIcons@@YAXXZ,,0x0062C4D0,163,Code/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils.cpp,matched,
 ?shutdown@TerrainTracksRenderObjClassSystem@@QAEXXZ,,0x0002C6E7,5,Code/masm_dumps/_shutdown_TerrainTracksRenderObjClassSystem__QAEXXZ_2C6E7.asm,matched,MASM exact retail dump
 ?shutdown@WaterTracksRenderSystem@@QAEXXZ,,0x000319CB,5,Code/masm_dumps/_shutdown_WaterTracksRenderSystem__QAEXXZ_319CB.asm,matched,MASM exact retail dump
@@ -12681,7 +12681,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?winSetLoneWindow@GameWindowManager@@UAEXPAVGameWindow@@@Z,,0x0047D040,51,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?winSetNextInLayout@GameWindow@@QAEHPAV1@@Z,,0x00035CF6,5,Code/masm_dumps/_winSetNextInLayout_GameWindow__QAEHPAV1__Z_35CF6.asm,matched,MASM exact retail dump
 ?winSetNextInLayout@GameWindow@@QAEXPAV1@@Z,,0x001BD6A0,13,Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp,matched,
-?winSetParent@GameWindow@@QAEHPAV1@@Z,,0x00478CB0,84,Code/masm_dumps/_cache2__winSetParent_GameWindow__QAEHPAV1__Z_478CB0.asm,matched,cached-obj2 Open-BFME4+Grok
+?winSetParent@GameWindow@@QAEHPAV1@@Z,,0x00478CB0,84,Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp,matched,cached-obj2 Open-BFME4+Grok asm->cpp depth Open-BFME4+Grok
 ?winSetPosition@GameWindow@@QAEHHH@Z,,0x0001949D,5,Code/masm_dumps/_winSetPosition_GameWindow__QAEHHH_Z_1949D.asm,matched,MASM exact retail dump
 ?winSetPrev@GameWindow@@QAEXPAV1@@Z,,0x00478EB0,15,Code/masm_dumps/_rn13__winSetPrev_GameWindow__QAEXPAV1__Z_478EB0.asm,matched,reloc-needle Open-BFME4+Grok
 ?winSetPrevInLayout@GameWindow@@QAEHPAV1@@Z,,0x00015FB4,5,Code/masm_dumps/_winSetPrevInLayout_GameWindow__QAEHPAV1__Z_15FB4.asm,matched,MASM exact retail dump

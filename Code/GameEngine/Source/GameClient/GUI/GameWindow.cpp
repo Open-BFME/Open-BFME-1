@@ -1168,11 +1168,75 @@ Int GameWindow::winGetWindowId( void )
 // GameWindow::winSetParent ===================================================
 /** Sets this window's parent */
 //=============================================================================
-// ?winSetParent@GameWindow@@QAEHPAV1@@Z present-unmatched
+
+// BFME GameWindowManager::addWindowToParent is vtable +0xcc (slot 51).
+// ZH header places it one slot earlier (+0xc8).
+class GameWindowManager_AddParentSlot {
+public:
+	virtual void _pad0(void) = 0;
+	virtual void _pad1(void) = 0;
+	virtual void _pad2(void) = 0;
+	virtual void _pad3(void) = 0;
+	virtual void _pad4(void) = 0;
+	virtual void _pad5(void) = 0;
+	virtual void _pad6(void) = 0;
+	virtual void _pad7(void) = 0;
+	virtual void _pad8(void) = 0;
+	virtual void _pad9(void) = 0;
+	virtual void _pad10(void) = 0;
+	virtual void _pad11(void) = 0;
+	virtual void _pad12(void) = 0;
+	virtual void _pad13(void) = 0;
+	virtual void _pad14(void) = 0;
+	virtual void _pad15(void) = 0;
+	virtual void _pad16(void) = 0;
+	virtual void _pad17(void) = 0;
+	virtual void _pad18(void) = 0;
+	virtual void _pad19(void) = 0;
+	virtual void _pad20(void) = 0;
+	virtual void _pad21(void) = 0;
+	virtual void _pad22(void) = 0;
+	virtual void _pad23(void) = 0;
+	virtual void _pad24(void) = 0;
+	virtual void _pad25(void) = 0;
+	virtual void _pad26(void) = 0;
+	virtual void _pad27(void) = 0;
+	virtual void _pad28(void) = 0;
+	virtual void _pad29(void) = 0;
+	virtual void _pad30(void) = 0;
+	virtual void _pad31(void) = 0;
+	virtual void _pad32(void) = 0;
+	virtual void _pad33(void) = 0;
+	virtual void _pad34(void) = 0;
+	virtual void _pad35(void) = 0;
+	virtual void _pad36(void) = 0;
+	virtual void _pad37(void) = 0;
+	virtual void _pad38(void) = 0;
+	virtual void _pad39(void) = 0;
+	virtual void _pad40(void) = 0;
+	virtual void _pad41(void) = 0;
+	virtual void _pad42(void) = 0;
+	virtual void _pad43(void) = 0;
+	virtual void _pad44(void) = 0;
+	virtual void _pad45(void) = 0;
+	virtual void _pad46(void) = 0;
+	virtual void _pad47(void) = 0;
+	virtual void _pad48(void) = 0;
+	virtual void _pad49(void) = 0;
+	virtual void _pad50(void) = 0;
+	virtual void addWindowToParent( GameWindow *window, GameWindow *parent ) = 0;
+};
+
+// BFME m_parent at +0x200; addWindowToParent at WM vtable +0xcc.
 Int GameWindow::winSetParent( GameWindow *parent )
 {
+	struct ParentField {
+		unsigned char pad[0x200];
+		GameWindow *parent;
+	};
+	ParentField *self = reinterpret_cast<ParentField *>(this);
 
-	if( m_parent == NULL)
+	if( self->parent == NULL)
 	{
 		// Top level window so unlink it
 		TheWindowManager->unlinkWindow( this );
@@ -1188,14 +1252,15 @@ Int GameWindow::winSetParent( GameWindow *parent )
 
 		// Want to make it a top level window so add to window list
 		TheWindowManager->linkWindow( this );
-		m_parent = NULL;
+		self->parent = NULL;
 
 	}
 	else
 	{
 
-		// Set it's new parent
-		TheWindowManager->addWindowToParent( this, parent );
+		// Set it's new parent (BFME vtable slot)
+		reinterpret_cast<GameWindowManager_AddParentSlot *>(TheWindowManager)
+			->addWindowToParent( this, parent );
 
 	}
 

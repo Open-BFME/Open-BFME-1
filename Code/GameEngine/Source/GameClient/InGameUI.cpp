@@ -229,9 +229,14 @@ static Bool similarUnitSelection( Drawable *test, void *userData )
 // ------------------------------------------------------------------------------------------------
 void showReplayControls( void )
 {
+	// BFME: m_gameMode lives at +0x10c (ZH header still places it earlier).
 	if (m_replayWindow)
 	{
-		Bool show = TheGameLogic->isInReplayGame();
+		struct GameLogicGameModeField {
+			unsigned char pad[0x10c];
+			int gameMode;
+		};
+		Bool show = reinterpret_cast<const GameLogicGameModeField *>(TheGameLogic)->gameMode == GAME_REPLAY;
 		m_replayWindow->winHide(!show);
 	}
 }
@@ -2027,27 +2032,40 @@ void InGameUI::reset( void )
 //-------------------------------------------------------------------------------------------------
 /** Free any resources we used for our messages */
 //-------------------------------------------------------------------------------------------------
-// ?freeMessageResources@InGameUI@@QAEXXZ present-unmatched
+
+// BFME freeDisplayString is DisplayStringManager vtable +0x28 (slot 10).
+class DisplayStringManager_FreeSlot {
+public:
+	virtual void _pad0(void) = 0;
+	virtual void _pad1(void) = 0;
+	virtual void _pad2(void) = 0;
+	virtual void _pad3(void) = 0;
+	virtual void _pad4(void) = 0;
+	virtual void _pad5(void) = 0;
+	virtual void _pad6(void) = 0;
+	virtual void _pad7(void) = 0;
+	virtual void _pad8(void) = 0;
+	virtual void _pad9(void) = 0;
+	virtual void freeDisplayString( DisplayString *string ) = 0;
+};
+
 void InGameUI::freeMessageResources( void )
 {
-	Int i;
-
-	// release display strings and set text to empty
-	for( i = 0; i < MAX_UI_MESSAGES; i++ )
+	// BFME: displayString fields at +0x570, 6 entries of 0x10; fullText immediately before each.
+	unsigned char *esi = reinterpret_cast<unsigned char *>(this) + 0x570;
+	for (int i = 0; i < 6; ++i)
 	{
-
-		// emtpy text
-		m_uiMessages[ i ].fullText.clear();
-
-		// free display string
-		if( m_uiMessages[ i ].displayString )
-			TheDisplayStringManager->freeDisplayString( m_uiMessages[ i ].displayString );
-		m_uiMessages[ i ].displayString = NULL;
-
-		// set timestamp to zero
-		m_uiMessages[ i ].timestamp = 0;
-
-	}  // end for i
+		reinterpret_cast<UnicodeString *>(esi - 4)->~UnicodeString();
+		DisplayString *ds = *reinterpret_cast<DisplayString **>(esi);
+		if (ds)
+		{
+			reinterpret_cast<DisplayStringManager_FreeSlot *>(TheDisplayStringManager)
+				->freeDisplayString(ds);
+		}
+		*reinterpret_cast<DisplayString **>(esi) = NULL;
+		*reinterpret_cast<int *>(esi + 4) = 0;
+		esi += 0x10;
+	}
 
 }  // end freeMessageResources
 
