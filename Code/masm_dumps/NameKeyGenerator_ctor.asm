@@ -1,0 +1,19 @@
+.386
+.model flat
+
+; ??0NameKeyGenerator@@QAE@XZ
+; Exact 120 retail bytes @ 0x00090380
+_TEXT SEGMENT
+public ??0NameKeyGenerator@@QAE@XZ
+??0NameKeyGenerator@@QAE@XZ PROC
+    db 06Ah,0FFh,068h,053h,05Ah,0FFh,000h,064h,0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,083h,0ECh,008h,056h,08Bh,0F1h,057h,089h,074h,024h,008h
+    db 0E8h,08Bh,016h,091h,000h,033h,0FFh,08Dh,08Eh,048h,0BFh,002h,000h,0C7h,006h,084h
+    db 0F9h,007h,001h,089h,079h,004h,089h,079h,008h,089h,07Ch,024h,018h,089h,04Ch,024h
+    db 00Ch,089h,079h,00Ch,06Ah,064h,0C6h,044h,024h,01Ch,001h,089h,079h,010h,0E8h,0CCh
+    db 0A5h,0FAh,0FFh,089h,0BEh,044h,0BFh,002h,000h,08Dh,07Eh,008h,033h,0C0h,0B9h,0CFh
+    db 0AFh,000h,000h,0F3h,0ABh,08Bh,04Ch,024h,010h,05Fh,08Bh,0C6h,05Eh,064h,089h,00Dh
+    db 000h,000h,000h,000h,083h,0C4h,014h,0C3h
+??0NameKeyGenerator@@QAE@XZ ENDP
+_TEXT ENDS
+END

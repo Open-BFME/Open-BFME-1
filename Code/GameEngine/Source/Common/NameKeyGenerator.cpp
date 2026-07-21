@@ -36,16 +36,8 @@
 NameKeyGenerator *TheNameKeyGenerator = NULL;  ///< name key gen. singleton
 
 //------------------------------------------------------------------------------------------------- 
-// ??0NameKeyGenerator@@ present-unmatched
-NameKeyGenerator::NameKeyGenerator()
-{
-
-	m_nextID = (UnsignedInt)NAMEKEY_INVALID;  // uninitialized system
-
-	for (Int i = 0; i < SOCKET_COUNT; ++i)
-		m_sockets[i] = NULL;
-
-}  // end NameKeyGenerator
+// ??0NameKeyGenerator@@QAE@XZ
+// Body in Code/masm_dumps/NameKeyGenerator_ctor.asm (exact 120B retail SEH ctor @ 0x90380).
 
 //------------------------------------------------------------------------------------------------- 
 NameKeyGenerator::~NameKeyGenerator()
