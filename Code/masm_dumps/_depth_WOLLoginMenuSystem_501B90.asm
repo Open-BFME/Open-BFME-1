@@ -1,10 +1,10 @@
 .386
 .model flat
-; ?forgetLogin@GameSpyLoginPreferences@@QAEXVAsciiString@@@Z
-; Exact 7078B @ 0x501B90; Open-BFME4+Grok
+; ?WOLLoginMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
+; Exact 7078B @ 0x501B90; corrected identity Open-BFME4+Grok
 _TEXT SEGMENT
-public ?forgetLogin@GameSpyLoginPreferences@@QAEXVAsciiString@@@Z
-?forgetLogin@GameSpyLoginPreferences@@QAEXVAsciiString@@@Z PROC
+public ?WOLLoginMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
+?WOLLoginMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z PROC
     db 6Ah, 0FFh, 68h, 0DEh, 0DEh, 02h, 01h, 64h, 0A1h, 00h, 00h, 00h, 00h, 50h, 64h, 89h
     db 25h, 00h, 00h, 00h, 00h, 81h, 0ECh, 70h, 03h, 00h, 00h, 53h, 55h, 56h, 33h, 0DBh
     db 57h, 89h, 5Ch, 24h, 40h, 8Bh, 84h, 24h, 94h, 03h, 00h, 00h, 3Dh, 08h, 40h, 00h
@@ -448,6 +448,6 @@ public ?forgetLogin@GameSpyLoginPreferences@@QAEXVAsciiString@@@Z
     db 24h, 40h, 0C7h, 84h, 24h, 88h, 03h, 00h, 00h, 0FFh, 0FFh, 0FFh, 0FFh, 0E8h, 0AEh, 4Ah
     db 38h, 00h, 0B8h, 01h, 00h, 00h, 00h, 8Bh, 8Ch, 24h, 80h, 03h, 00h, 00h, 5Fh, 5Eh
     db 5Dh, 64h, 89h, 0Dh, 00h, 00h
-?forgetLogin@GameSpyLoginPreferences@@QAEXVAsciiString@@@Z ENDP
+?WOLLoginMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z ENDP
 _TEXT ENDS
 END

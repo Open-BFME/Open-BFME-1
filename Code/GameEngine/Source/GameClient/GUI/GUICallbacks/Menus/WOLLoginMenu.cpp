@@ -296,14 +296,14 @@ void GameSpyLoginPreferences::addLogin( AsciiString email, AsciiString nick, Asc
 	m_emailDateMap[email] = date;
 }
 
-// ?forgetLogin@GameSpyLoginPreferences@@QAEXVAsciiString@@@Z present-unmatched
+#pragma inline_depth(0)
 void GameSpyLoginPreferences::forgetLogin( AsciiString email )
 {
 	m_emailNickMap.erase(email);
 	m_emailPasswordMap.erase(email);
 	m_emailDateMap.erase(email);
-
 }
+#pragma inline_depth()
 
 // ?getEmails@GameSpyLoginPreferences@@QAE?AV?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@XZ present-unmatched
 AsciiStringList GameSpyLoginPreferences::getEmails( void )

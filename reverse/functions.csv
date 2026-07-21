@@ -9481,7 +9481,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?floor@@YAMM@Z,,0x00069750,20,Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp,matched,
 ?fmod@@YAMMM@Z,,0x00097070,14,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse.cpp,matched,
 ?forceOn@Radar@@QAEX_N@Z,,0x0034F880,10,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,
-?forgetLogin@GameSpyLoginPreferences@@QAEXVAsciiString@@@Z,,0x00501B90,7078,Code/masm_dumps/_cache__forgetLogin_GameSpyLoginPreferences__QAEXVAsciiString__501B90.asm,matched,cached-obj needle Open-BFME4+Grok
+?WOLLoginMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x00501B90,7078,Code/masm_dumps/_depth_WOLLoginMenuSystem_501B90.asm,matched,WOLLoginMenuSystem exact MASM (was mislabeled forgetLogin) Open-BFME4+Grok
 ?format@?$StringBase@D@@QAAXPBDZZ,0x00888D50,0x888d50,20,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,
 ?format@?$StringBase@G@@QAAXPBGZZ,0x00888F70,0x888f70,20,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,
 ?format@AsciiString@@QAAXPBDZZ,,0x00888D50,20,Code/GameEngine/Source/Common/System/AsciiString.cpp,matched,
@@ -12858,3 +12858,4 @@ _logf,,0x0045B370,11,Code/GameEngine/Source/Common/System/statistics.cpp,matched
 _powf,,0x00097070,14,Code/Libraries/Source/WWVegas/WWMath/vp.cpp,matched,
 _sinf,,0x00873910,7,Code/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,icf-owner=?Sin@@YAMM@Z
 _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,ICF alias of existing matched body
+?forgetLogin@GameSpyLoginPreferences@@QAEXVAsciiString@@@Z,,0x00081FC0,106,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLoginMenu.cpp,matched,true forgetLogin C++ inline_depth0 Open-BFME4+Grok
