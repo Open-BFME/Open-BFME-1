@@ -2079,3 +2079,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?parseName@@YA_NPADPAVWinInstanceData@@0PAX@Z	landed	true body @0x4866F0 size 139 (queue 0x79CEBA was int3 pad in mega-fn); ZH AsciiString set/str +4 vs BFME StringBase +8; MASM exact dump
 ?GadgetComboBoxSetColors@@YAXPAVGameWindow@@HHHHHHHHHHHH@Z	landed	true RVA 0x4B3590 (queue 0x4B3581 was mid-prev-fn); pins ListBoxSetColors+winSet*Border/Hilite; BFME ComboBoxData child offs edit+0x28 drop+0x24 list+0x2c
 ?doAudioFeedback@@YAXPAVGameWindow@@@Z	landed	true body 0x4B85F0 size 153 (queue 0xC6C420 was CRT stubs); MASM exact dump; AudioEventRTS 2-arg TOD=2 + AudioMgr vtbl+0x44
+?gogoMessageBox@GameWindowManager@@UAEPAVGameWindow@@HHHHGVUnicodeString@@0P6AXXZ111_N@Z	landed	true start 0x47EF70 size 1518 (queue off-by-1 RVA 0x47EF71 + pad size 1756); body already matched as truncated MASM; landed full mangling as ICF alias MASM dump
