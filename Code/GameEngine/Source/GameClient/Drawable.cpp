@@ -2909,39 +2909,9 @@ void Drawable::setEmoticon( const AsciiString &name, Int duration )
 }
 
 //------------------------------------------------------------------------------------------------
-// ?drawEmoticon@Drawable@@AAEXPBUIRegion2D@@@Z present-unmatched
-void Drawable::drawEmoticon( const IRegion2D *healthBarRegion )
-{
-	if( hasIconInfo() && getIconInfo()->m_icon[ ICON_EMOTICON ] )
-	{
-		UnsignedInt now = TheGameLogic->getFrame();
-		if( healthBarRegion && getIconInfo()->m_keepTillFrame[ ICON_EMOTICON ] >= now )
-		{
-			//Draw the emoticon.
-			Int barWidth = healthBarRegion->hi.x - healthBarRegion->lo.x;
-			//Int barHeight = healthBarRegion.hi.y - healthBarRegion.lo.y;
-			Int frameWidth = getIconInfo()->m_icon[ ICON_EMOTICON ]->getCurrentFrameWidth();
-			Int frameHeight = getIconInfo()->m_icon[ ICON_EMOTICON ]->getCurrentFrameHeight();
+// ?drawEmoticon@Drawable@@AAEXPBUIRegion2D@@@Z
+// Body in Drawable_drawEmoticon.asm (exact 191B retail @ 0x00414AF0).
 
-#ifdef SCALE_ICONS_WITH_ZOOM_ML
-			// adjust the width to be a % of the health bar region size
-			Int size = REAL_TO_INT( barWidth * 0.3f );
-			frameHeight = REAL_TO_INT((INT_TO_REAL(size) / INT_TO_REAL(frameWidth)) * frameHeight);
-			frameWidth = size;
-#endif			
-			// given our scaled width and height we need to find the top left point to draw the image at
-			ICoord2D screen;
-			screen.x = (Int)(healthBarRegion->lo.x + (barWidth * 0.5f) - (frameWidth * 0.5f));
-			screen.y = healthBarRegion->hi.y - frameHeight;
-			getIconInfo()->m_icon[ ICON_EMOTICON ]->draw( screen.x, screen.y, frameWidth, frameHeight );
-		}
-		else
-		{
-			//Get rid of the emoticon.
-			clearEmoticon();
-		}
-	}
-}
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
