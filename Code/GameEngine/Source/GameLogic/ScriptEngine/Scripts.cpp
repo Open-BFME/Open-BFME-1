@@ -180,8 +180,8 @@ Int ScriptList::m_curId = 0;
 /**
  ScriptList::updateDefaults -  checks for empty script lists, and adds some default stuff
  so you don't get a totally blank screen in the editor.
+ Matched via MASM exact dump @ 0x0035C8A0 (183B); BFME inlines a 0x4c ScriptList ctor.
 */
-// ?updateDefaults@ScriptList@@SAXXZ present-unmatched
 void ScriptList::updateDefaults(void) 
 {
 	Int i;
