@@ -1,10 +1,14 @@
 .386
 .model flat
 ; ?winCreateFromScript@GameWindowManager@@QAEPAVGameWindow@@VAsciiString@@PAPAV2@@Z
+; ?winCreateFromScript@GameWindowManager@@UAEPAVGameWindow@@VAsciiString@@PAVWindowLayoutInfo@@@Z (ICF alias; ZH virtual WindowLayoutInfo* sig)
 ; Exact 1212B @ 0x00488B80; Open-BFME4
+; Drift vote 0x488B73/1348 was 13B int3 pad before true ENTRY; 1348 overran into post-body int3.
 _TEXT SEGMENT
 public ?winCreateFromScript@GameWindowManager@@QAEPAVGameWindow@@VAsciiString@@PAPAV2@@Z
+public ?winCreateFromScript@GameWindowManager@@UAEPAVGameWindow@@VAsciiString@@PAVWindowLayoutInfo@@@Z
 ?winCreateFromScript@GameWindowManager@@QAEPAVGameWindow@@VAsciiString@@PAPAV2@@Z PROC
+?winCreateFromScript@GameWindowManager@@UAEPAVGameWindow@@VAsciiString@@PAVWindowLayoutInfo@@@Z LABEL NEAR
     db 6Ah, 0FFh, 68h, 0BEh, 6Bh, 02h, 01h, 64h, 0A1h, 00h, 00h, 00h, 00h, 50h, 64h, 89h
     db 25h, 00h, 00h, 00h, 00h, 81h, 0ECh, 44h, 01h, 00h, 00h, 53h, 55h, 56h, 57h, 8Bh
     db 84h, 24h, 64h, 01h, 00h, 00h, 33h, 0DBh, 3Bh, 0C3h, 89h, 9Ch, 24h, 5Ch, 01h, 00h

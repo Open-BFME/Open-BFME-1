@@ -2586,7 +2586,6 @@ WindowLayoutInfo::WindowLayoutInfo() :
 	* not be at the head of the window list if there is a modal window active.
 	*/
 //=============================================================================
-// ?winCreateFromScript@GameWindowManager@@ present-unmatched
 GameWindow *GameWindowManager::winCreateFromScript( AsciiString filenameString,
 																										WindowLayoutInfo *info )
 {
