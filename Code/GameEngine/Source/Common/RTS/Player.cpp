@@ -2681,7 +2681,8 @@ Bool Player::addScience(ScienceType science)
 
 //=============================================================================
 // ?addSciencePurchasePoints@Player@@QAEXH@Z present-unmatched
-void Player::addSciencePurchasePoints(Int delta)
+// noinline: retail attemptToPurchaseScience calls this out-of-line (ILT 0xF0F1)
+__declspec(noinline) void Player::addSciencePurchasePoints(Int delta)
 {
 	//DEBUG_LOG(("Adding SciencePurchasePoints %d -> %d\n",m_sciencePurchasePoints,m_sciencePurchasePoints+delta));
 	Int oldSPP = m_sciencePurchasePoints;
@@ -2695,25 +2696,17 @@ void Player::addSciencePurchasePoints(Int delta)
 }
 
 //=============================================================================
-// ?attemptToPurchaseScience@Player@@QAE_NW4ScienceType@@@Z present-unmatched
+// BFME: no AcademyStats / markUIDirty tail (ZH-only); body @ 0xD55B0 size 60
 Bool Player::attemptToPurchaseScience(ScienceType science)
 {
 	if (!isCapableOfPurchasingScience(science))
 	{
-		DEBUG_CRASH(("isCapableOfPurchasingScience: need other prereqs/points to purchase, request is ignored!\n"));
 		return false;
 	}
 
 	Int cost = TheScienceStore->getSciencePurchaseCost(science);
 	addSciencePurchasePoints(-cost);
 	addScience(science);
-
-	getAcademyStats()->recordGeneralsPointsSpent( cost );
-	
-	if( ThePlayerList->getLocalPlayer() == this )
-	{
-		TheControlBar->markUIDirty();
-	}
 
 	return true;
 }
