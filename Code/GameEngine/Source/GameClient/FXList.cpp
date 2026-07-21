@@ -114,17 +114,9 @@ public:
 		TheAudio->addAudioEvent(&sound);
 	}
 
-	virtual void doFXObj(const Object* primary, const Object* secondary = NULL) const
-	{
-		AudioEventRTS sound(m_soundName);
-		if (primary)
-		{
-			sound.setPlayerIndex(primary->getControllingPlayer()->getPlayerIndex());
-			sound.setPosition(primary->getPosition());
-		}
-
-		TheAudio->addAudioEvent(&sound);
-	}
+	// Body: Code/masm_dumps/SoundFXNugget_doFXObj_428A60.asm (BFME rewrite @ 0x428A60/146B)
+	// Retail: name@+0xB4, AudioEventRTS 2-arg, addAudioEvent vtbl+0x44 (not ZH m_soundName@+4).
+	virtual void doFXObj(const Object* primary, const Object* secondary = NULL) const;
 
 
 	static void parse(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
