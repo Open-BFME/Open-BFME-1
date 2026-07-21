@@ -1,0 +1,26 @@
+.386
+.model flat
+
+; ?doDisplayCounter@ScriptActions@@IAEXABVAsciiString@@0@Z
+; Exact 235 retail bytes @ 0x002F9660
+_TEXT SEGMENT
+public ?doDisplayCounter@ScriptActions@@IAEXABVAsciiString@@0@Z
+?doDisplayCounter@ScriptActions@@IAEXABVAsciiString@@0@Z PROC
+    db 06Ah,0FFh,068h,008h,063h,001h,001h,064h,0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,083h,0ECh,00Ch,08Dh,044h,024h,01Ch,050h,08Dh,04Ch,024h
+    db 008h,051h,08Bh,00Dh,06Ch,007h,02Fh,001h,0C7h,044h,024h,01Ch,000h,000h,000h,000h
+    db 0E8h,0A1h,0CCh,0D3h,0FFh,06Ah,001h,08Dh,054h,024h,004h,052h,08Dh,04Ch,024h,00Ch
+    db 0C6h,044h,024h,01Ch,001h,0C6h,044h,024h,008h,02Fh,0E8h,0B1h,0E6h,058h,000h,08Bh
+    db 044h,024h,01Ch,085h,0C0h,074h,009h,00Fh,0B7h,048h,004h,083h,0C0h,008h,0EBh,007h
+    db 033h,0C9h,0B8h,08Bh,038h,007h,001h,051h,050h,08Dh,04Ch,024h,00Ch,0E8h,08Eh,0E6h
+    db 058h,000h,08Bh,044h,024h,020h,06Ah,000h,06Ah,000h,051h,089h,064h,024h,014h,08Bh
+    db 0CCh,050h,0E8h,079h,0E4h,058h,000h,08Bh,00Dh,07Ch,014h,02Fh,001h,08Bh,011h,08Dh
+    db 044h,024h,02Ch,050h,0FFh,052h,024h,050h,08Dh,04Ch,024h,00Ch,051h,08Bh,00Dh,08Ch
+    db 014h,02Fh,001h,0C6h,044h,024h,020h,002h,0E8h,0CEh,0CEh,0D1h,0FFh,08Dh,04Ch,024h
+    db 020h,0C6h,044h,024h,014h,001h,0E8h,0B5h,0EAh,058h,000h,08Dh,04Ch,024h,004h,0C6h
+    db 044h,024h,014h,000h,0E8h,017h,0E2h,058h,000h,08Dh,04Ch,024h,01Ch,0C7h,044h,024h
+    db 014h,0FFh,0FFh,0FFh,0FFh,0E8h,006h,0E2h,058h,000h,08Bh,04Ch,024h,00Ch,064h,089h
+    db 00Dh,000h,000h,000h,000h,083h,0C4h,018h,0C2h,008h,000h
+?doDisplayCounter@ScriptActions@@IAEXABVAsciiString@@0@Z ENDP
+_TEXT ENDS
+END

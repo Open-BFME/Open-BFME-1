@@ -4460,11 +4460,8 @@ void ScriptActions::doGiveMoney(const AsciiString& playerName, Int money)
 //-------------------------------------------------------------------------------------------------
 /** doDisplayCounter */
 //-------------------------------------------------------------------------------------------------
-// ?doDisplayCounter@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::doDisplayCounter(const AsciiString& counterName, const AsciiString& counterText)
-{
-	TheInGameUI->addNamedTimer(counterName, TheGameText->fetch(counterText), false);
-}
+// ?doDisplayCounter@ScriptActions@@IAEXABVAsciiString@@0@Z
+// Body in ScriptActions_doDisplayCounter.asm (exact 235B @ 0x2F9660).
 
 //-------------------------------------------------------------------------------------------------
 /** doHideCounter */
