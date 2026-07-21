@@ -2108,3 +2108,4 @@ _$E47	no-match	Current VS2003 object emits _$E14/15/17/18/20/21/23/24; _$E47 is 
 ?freeRoadBuffers@W3DRoadBuffer@@IAEXXZ	landed	true body 0x70E9C0/166B (dtor 0x70FAF0 ILT 0x43469); queue 0xC5FF90 is SEH unwind stub; MASM exact dump
 ?LookupSmallRankImage@@YAPBVImage@@HH@Z	landed	true body 0x4F9CE0 size 302 (drift 0xC6C3EF int3+CRT stubs); MASM exact; BFME side 2/3/4 only, C++ blocked by AsciiString str+8 and SEH prologue order
 ??0DozerActionDoActionState@@QAE@PAVStateMachine@@W4DozerTask@@@Z	landed	MASM exact 60B @ 0x2B73E0; queue RVA 0x2B755E was mid-inlined fragment in DozerActionStateMachine ctor (matched)
+?getDynamicLODEnabled@OptionPreferences@@QAE_NXZ	landed	queue RVA 0x560C7F is OptionsMenuInit interior (6966B@0x560280); true body string-anchor DynamicLOD @ 0x91130 size 102 (ghidra FUN_00491130); MASM exact dump matched
