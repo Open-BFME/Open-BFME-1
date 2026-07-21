@@ -93,7 +93,6 @@ void LanguageFilter::update() {
 
 wchar_t ignoredChars[] = L"-_*'\"";
 
-// ?filterLine@LanguageFilter@@QAEXAAVUnicodeString@@@Z present-unmatched
 void LanguageFilter::filterLine(UnicodeString &line) 
 {
 	WideChar *buf = NEW WideChar[line.getLength()+1];

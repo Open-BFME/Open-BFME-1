@@ -1,0 +1,38 @@
+.386
+.model flat
+
+; ?filterLine@LanguageFilter@@QAEXAAVUnicodeString@@@Z
+; Exact 410 retail bytes @ 0x0044DB90; queue 0x559AED was mid-function (shape-vote misplace)
+; identity: delims wide string push 0x10F5D74, unHaxor+map find, asterisk 0x2A002A fill
+_TEXT SEGMENT
+public ?filterLine@LanguageFilter@@QAEXAAVUnicodeString@@@Z
+?filterLine@LanguageFilter@@QAEXAAVUnicodeString@@@Z PROC
+    db 06Ah,0FFh,068h,098h,038h,002h,001h,064h,0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,083h,0ECh,010h,055h,056h,08Bh,074h,024h,028h,08Bh,006h
+    db 085h,0C0h,089h,04Ch,024h,014h,074h,006h,00Fh,0B7h,040h,004h,0EBh,002h,033h,0C0h
+    db 08Dh,044h,000h,002h,050h,0E8h,0A6h,043h,043h,000h,08Bh,0E8h,08Bh,006h,083h,0C4h
+    db 004h,085h,0C0h,074h,005h,083h,0C0h,008h,0EBh,005h,0B8h,08Ch,038h,007h,001h,050h
+    db 055h,0FFh,015h,020h,095h,035h,001h,083h,0C4h,008h,056h,08Dh,04Ch,024h,014h,0E8h
+    db 00Ch,0A8h,043h,000h,068h,0F4h,08Ah,008h,001h,08Dh,04Ch,024h,00Ch,0C7h,044h,024h
+    db 024h,000h,000h,000h,000h,0E8h,0D6h,0B1h,043h,000h,053h,0C6h,044h,024h,024h,001h
+    db 057h,068h,074h,05Dh,00Fh,001h,08Dh,04Ch,024h,018h,0E8h,0C1h,0B1h,043h,000h,08Bh
+    db 044h,024h,014h,085h,0C0h,0C6h,044h,024h,028h,002h,074h,005h,083h,0C0h,008h,0EBh
+    db 005h,0B8h,08Ch,038h,007h,001h,050h,08Dh,04Ch,024h,014h,051h,08Dh,04Ch,024h,020h
+    db 0E8h,06Bh,0ADh,043h,000h,08Dh,04Ch,024h,014h,08Ah,0D8h,0C6h,044h,024h,028h,001h
+    db 0E8h,07Bh,0A5h,043h,000h,084h,0DBh,074h,077h,08Bh,044h,024h,010h,085h,0C0h,074h
+    db 005h,083h,0C0h,008h,0EBh,005h,0B8h,08Ch,038h,007h,001h,050h,055h,0FFh,015h,030h
+    db 095h,035h,001h,08Bh,0F8h,083h,0C4h,008h,085h,0FFh,074h,095h,08Bh,044h,024h,010h
+    db 085h,0C0h,074h,006h,00Fh,0B7h,058h,004h,0EBh,002h,033h,0DBh,08Bh,074h,024h,01Ch
+    db 08Dh,054h,024h,010h,052h,08Bh,0CEh,0E8h,07Eh,01Fh,0BFh,0FFh,08Dh,044h,024h,010h
+    db 083h,0C6h,008h,050h,08Bh,0CEh,0E8h,07Ch,04Ch,0BCh,0FFh,03Bh,006h,00Fh,084h,05Eh
+    db 0FFh,0FFh,0FFh,085h,0DBh,00Fh,08Eh,056h,0FFh,0FFh,0FFh,08Bh,0CBh,0D1h,0E9h,0B8h
+    db 02Ah,000h,02Ah,000h,0F3h,0ABh,013h,0C9h,066h,0F3h,0ABh,0E9h,041h,0FFh,0FFh,0FFh
+    db 085h,0EDh,05Fh,05Bh,074h,00Ch,055h,0FFh,015h,024h,095h,035h,001h,083h,0C4h,004h
+    db 0EBh,002h,033h,0C0h,08Bh,04Ch,024h,028h,050h,055h,0E8h,0D1h,0A8h,043h,000h,055h
+    db 0E8h,0FBh,041h,043h,000h,083h,0C4h,004h,08Dh,04Ch,024h,008h,0C6h,044h,024h,020h
+    db 000h,0E8h,0CAh,0A4h,043h,000h,08Dh,04Ch,024h,010h,0C7h,044h,024h,020h,0FFh,0FFh
+    db 0FFh,0FFh,0E8h,0B9h,0A4h,043h,000h,08Bh,04Ch,024h,018h,05Eh,05Dh,064h,089h,00Dh
+    db 000h,000h,000h,000h,083h,0C4h,01Ch,0C2h,004h,000h
+?filterLine@LanguageFilter@@QAEXAAVUnicodeString@@@Z ENDP
+_TEXT ENDS
+END
