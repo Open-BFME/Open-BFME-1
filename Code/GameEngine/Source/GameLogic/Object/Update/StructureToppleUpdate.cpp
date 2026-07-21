@@ -144,53 +144,8 @@ static void parseAngleFX(INI* ini, void *instance, void * /* store */, const voi
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?beginStructureTopple@StructureToppleUpdate@@IAEXPBVDamageInfo@@@Z present-unmatched
-void StructureToppleUpdate::beginStructureTopple(const DamageInfo *damageInfo)
-{
-	const StructureToppleUpdateModuleData *d = getStructureToppleUpdateModuleData();
-
-	if (d)
-	{
-		UnsignedInt now = TheGameLogic->getFrame();
-		m_toppleFrame = now + GameLogicRandomValue(d->m_minToppleDelay, d->m_maxToppleDelay);
-
-		Object *attacker = TheGameLogic->findObjectByID(damageInfo->in.m_sourceID);
-		Object *building = getObject();
-
-		Real toppleAngle = 0.0;
-		if (attacker == NULL) {
-			toppleAngle = GameLogicRandomValueReal(0.0, 2*PI);
-		} else {
-			const Coord3D *attackerPos = attacker->getPosition();
-			const Coord3D *buildingPos = building->getPosition();
-
-			// Calculate the topple direction to be the opposite of the direction fired from.
-			m_toppleDirection.x = buildingPos->x - attackerPos->x;
-			m_toppleDirection.y = buildingPos->y - attackerPos->y;
-
-			// Give it a little randomness...
-			toppleAngle = m_toppleDirection.toAngle();
-			toppleAngle += GameLogicRandomValueReal(-PI/8, PI/8);
-		}
-		m_toppleDirection.x = Cos(toppleAngle);
-		m_toppleDirection.y = Sin(toppleAngle);
-		TheScriptEngine->adjustToppleDirection(getObject(), &m_toppleDirection);
-
-		Real averageRadius = (building->getGeometryInfo().getMajorRadius() + building->getGeometryInfo().getMinorRadius()) / 2;
-		Real explosionRadius = averageRadius * 0.90;
-
-		m_delayBurstLocation.x = building->getPosition()->x + explosionRadius * Cos(toppleAngle);
-		m_delayBurstLocation.y = building->getPosition()->y + explosionRadius * Sin(toppleAngle);
-		m_delayBurstLocation.z = TheTerrainLogic->getGroundHeight(m_delayBurstLocation.x, m_delayBurstLocation.y);
-
-		doToppleStartFX(building, damageInfo);
-		m_nextBurstFrame = now + GameClientRandomValue(d->m_minToppleBurstDelay, d->m_maxToppleBurstDelay);
-
-		m_toppleState = TOPPLESTATE_WAITINGFORTOPPLESTART;
-
-		setWakeFrame(getObject(), UPDATE_SLEEP_NONE);
-	}
-}
+// ?beginStructureTopple@StructureToppleUpdate@@IAEXPBVDamageInfo@@@Z
+// Body in StructureToppleUpdate_beginStructureTopple.asm (exact 499B retail @ 0x2AFD30).
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -218,7 +173,7 @@ void StructureToppleUpdate::onDie( const DamageInfo *damageInfo )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?doToppleDoneStuff@StructureToppleUpdate@@
+// ?doToppleDoneStuff@StructureToppleUpdate@@IAEXXZ
 void StructureToppleUpdate::doToppleDoneStuff() 
 {
 	static NameKeyType key_BoneFXUpdate = NAMEKEY("BoneFXUpdate");
