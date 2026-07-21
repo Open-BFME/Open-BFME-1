@@ -8067,7 +8067,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?WriteOrConditionDataChunk@OrCondition@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x00355C90,64,Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp,matched,
 ?WriteParameter@Parameter@@QAEXAAVDataChunkOutput@@@Z,,0x00351320,167,Code/masm_dumps/Parameter_WriteParameter.asm,matched,Ghidra-bound BFME parameter writer
 ?WriteScriptDataChunk@Script@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x00357B30,318,Code/masm_dumps/Script_WriteScriptDataChunk.asm,matched,Ghidra-bound BFME script writer
-?WriteScriptsDataChunk@ScriptList@@SAXAAVDataChunkOutput@@QAPAV1@H@Z,,0x0035B4B0,121,Code/masm_dumps/_WriteScriptsDataChunk_ScriptList__SAXAAVDataChunk.asm,matched,
+?WriteScriptsDataChunk@ScriptList@@SAXAAVDataChunkOutput@@QAPAV1@H@Z,,0x0035B4B0,121,Code/masm_dumps/_WriteScriptsDataChunk_ScriptList__SAXAAVDataChunk.asm,matched,asm->cpp depth Open-BFME4+Grok
 ?XMP_Hybrid_Mul@@YAXPAG0GH@Z,,0x009E8A70,76,Code/Libraries/Source/WWVegas/WWLib/mpmath.cpp,matched,
 ?XferEnum@Xfer@@UAEAAV1@PBDPAXI@Z,0x009D67B0,0x009D67B0,196,Code/GameEngine/Source/Common/System/Xfer.cpp,matched,xfer enum
 ?XferRawBytes@Xfer@@UAEAAV1@PAXI@Z,0x009D63C0,0x009D63C0,67,Code/GameEngine/Source/Common/System/Xfer.cpp,matched,xfer raw bytes
@@ -11838,7 +11838,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?readToEndOfQuote@GameTextManager@@IAEXPAVFile@@PAD11H@Z,,0x00436390,47,Code/GameEngine/Source/GameClient/GameText.cpp,matched,
 ?readUnicodeString@@YA?AVUnicodeString@@PAU_iobuf@@@Z,,0x000322F4,5,Code/masm_dumps/_readUnicodeString__YA_AVUnicodeString__PAU_iobuf___Z_322F4.asm,matched,MASM exact retail dump
 ?readUnicodeString@RecorderClass@@IAE?AVUnicodeString@@XZ,0x000383D4,0x991f0,34,Code/GameEngine/Source/Common/System/recorder_strings.cpp,matched,
-?readUntilSemicolon@@YAXPAVFile@@PADH@Z,,0x004843E0,110,Code/masm_dumps/__readUntilSemicolon__YAXPAVFile__PADH_Z_4843E0.asm,matched,
+?readUntilSemicolon@@YAXPAVFile@@PADH@Z,,0x004843E0,110,Code/masm_dumps/__readUntilSemicolon__YAXPAVFile__PADH_Z_4843E0.asm,matched,asm->cpp depth Open-BFME4+Grok
 ?readWrapperMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z,,0x00679080,220,Code/GameEngine/Source/GameNetwork/NetPacket.cpp,matched,
 ?read_dcg@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,,0x0096D500,770,Code/masm_dumps/_leaf__read_dcg_MeshModelClass__IAE_AW4WW3DErr_96D500.asm,matched,Exact 770B present-unmatched leaf Open-BFME4
 ?read_dig@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,,0x0096D810,61,Code/Libraries/Source/WWVegas/WW3D2/meshmdlio.cpp,matched,
@@ -12453,7 +12453,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?stdAngleDiff@@YAMMM@Z,,0x0016A310,19,Code/GameEngine/Source/GameLogic/Object/Locomotor.cpp,matched,
 ?stopAllBoneFX@BoneFXUpdate@@QAEXXZ,,0x0002728C,5,Code/masm_dumps/_stopAllBoneFX_BoneFXUpdate__QAEXXZ_2728C.asm,matched,MASM exact retail dump
 ?stopAndRemoveMovie@WindowVideoManager@@QAEXPAVGameWindow@@@Z,,0x00498D10,107,Code/GameEngine/Source/GameClient/window_video_manager.cpp,matched,
-?stopBurningSound@FlammableUpdate@@IAEXXZ,,0x00293010,31,Code/masm_dumps/_rn9__stopBurningSound_FlammableUpdate__IAEXXZ_293010.asm,matched,reloc-needle Open-BFME4+Grok
+?stopBurningSound@FlammableUpdate@@IAEXXZ,,0x00293010,31,Code/GameEngine/Source/GameLogic/Object/Update/FlammableUpdate.cpp,matched,reloc-needle Open-BFME4+Grok asm->cpp depth Open-BFME4+Grok
 ?storeImage@Anim2DTemplate@@QAEXPBVImage@@@Z,,0x005BAF20,201,Code/GameEngine/Source/GameClient/System/Anim2DTemplate_parse_walls.asm,matched,
 ?str@?$StringBase@D@@QBEPBDXZ,0x00037F3D,0x0005F270,16,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,returns pointer to C string data
 ?str@?$StringBase@G@@QBEPBGXZ,0x0002287C,0x0005F290,16,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,returns c-string
@@ -12652,7 +12652,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?winGetWindowFromId@GameWindowManager@@UAEPAVGameWindow@@PAV2@H@Z,,0x0047C970,87,Code/masm_dumps/_rn5__winGetWindowFromId_GameWindowManager__UAEPAVGameWindow__PAV2_H_Z_47C970.asm,matched,reloc-needle Open-BFME4+Grok
 ?winGetWindowId@GameWindow@@QAEHXZ,,0x000188A4,5,Code/masm_dumps/_winGetWindowId_GameWindow__QAEHXZ_188A4.asm,matched,MASM exact retail dump
 ?winHide@GameWindow@@QAEHH@Z,,0x00027F2A,5,Code/masm_dumps/_winHide_GameWindow__QAEHH_Z_27F2A.asm,matched,MASM exact retail dump
-?winIsChild@GameWindow@@QAE_NPAV1@@Z,,0x00478D30,34,Code/masm_dumps/_rn5__winIsChild_GameWindow__QAE_NPAV1__Z_478D30.asm,matched,reloc-needle Open-BFME4+Grok
+?winIsChild@GameWindow@@QAE_NPAV1@@Z,,0x00478D30,34,Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp,matched,reloc-needle Open-BFME4+Grok asm->cpp depth Open-BFME4+Grok
 ?winIsHidden@GameWindow@@QAE_NXZ,,0x0003A5B7,5,Code/masm_dumps/_winIsHidden_GameWindow__QAE_NXZ_3A5B7.asm,matched,MASM exact retail dump
 ?winMakeColor@GameWindowManager@@UAEHEEEE@Z,,0x0047A070,33,Code/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp,matched,
 ?winNextTab@GameWindow@@QAEHXZ,,0x0000D297,5,Code/masm_dumps/_winNextTab_GameWindow__QAEHXZ_D297.asm,matched,MASM exact retail dump

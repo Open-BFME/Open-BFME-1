@@ -1282,20 +1282,21 @@ GameWindow *GameWindow::winGetParent( void )
 // GameWindow::winIsChild =====================================================
 /** Determins if a window is a child/grand-child of a parent */
 //=============================================================================
-// ?winIsChild@GameWindow@@QAE_NPAV1@@Z present-unmatched
+// BFME m_parent at +0x200 (same as winSetParent).
 Bool GameWindow::winIsChild( GameWindow *child )
 {
+	struct ParentField {
+		unsigned char pad[0x200];
+		GameWindow *parent;
+	};
 
 	while( child )
 	{
-
-		if( this == child->m_parent )
+		GameWindow *parent = reinterpret_cast<ParentField *>(child)->parent;
+		if( this == parent )
 			return TRUE;
-
-		// set up tree
-		child = child->m_parent;
-
-	}  // end while
+		child = parent;
+	}
 
 	return FALSE;
 

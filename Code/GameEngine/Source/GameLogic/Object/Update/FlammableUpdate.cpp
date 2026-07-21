@@ -257,13 +257,41 @@ void FlammableUpdate::startBurningSound()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?stopBurningSound@FlammableUpdate@@IAEXXZ present-unmatched
+// BFME m_audioHandle at +0x34; removeAudioEvent at AudioManager vtable +0x4c.
+class AudioManager_RemoveSlot {
+public:
+	virtual void _pad0(void) = 0;
+	virtual void _pad1(void) = 0;
+	virtual void _pad2(void) = 0;
+	virtual void _pad3(void) = 0;
+	virtual void _pad4(void) = 0;
+	virtual void _pad5(void) = 0;
+	virtual void _pad6(void) = 0;
+	virtual void _pad7(void) = 0;
+	virtual void _pad8(void) = 0;
+	virtual void _pad9(void) = 0;
+	virtual void _pad10(void) = 0;
+	virtual void _pad11(void) = 0;
+	virtual void _pad12(void) = 0;
+	virtual void _pad13(void) = 0;
+	virtual void _pad14(void) = 0;
+	virtual void _pad15(void) = 0;
+	virtual void _pad16(void) = 0;
+	virtual void _pad17(void) = 0;
+	virtual void _pad18(void) = 0;
+	virtual void removeAudioEvent( void *handle ) = 0;
+};
 void FlammableUpdate::stopBurningSound()
 {
-	if (m_audioHandle)
+	struct AudioHandleField {
+		unsigned char pad[0x34];
+		void *audioHandle;
+	};
+	AudioHandleField *self = reinterpret_cast<AudioHandleField *>(this);
+	if (self->audioHandle)
 	{
-		TheAudio->removeAudioEvent( m_audioHandle );
-		m_audioHandle = NULL;
+		reinterpret_cast<AudioManager_RemoveSlot *>(TheAudio)->removeAudioEvent( self->audioHandle );
+		self->audioHandle = NULL;
 	}
 }
 
