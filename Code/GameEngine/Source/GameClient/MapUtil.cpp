@@ -983,24 +983,9 @@ Int populateMapListbox( GameWindow *listbox, Bool useSystemMaps, Bool isMultipla
 //-------------------------------------------------------------------------------------------------
 /** Validate a map */
 //-------------------------------------------------------------------------------------------------
-Bool isValidMap( AsciiString mapName, Bool isMultiplayer )
-{
-	if(!TheMapCache || mapName.isEmpty())
-		return FALSE;
-	TheMapCache->updateCache();
-
-	mapName.toLower();
-	MapCache::iterator it = TheMapCache->find(mapName);
-	if (it != TheMapCache->end())
-	{
-		if (isMultiplayer == it->second.m_isMultiplayer)
-		{
-			return TRUE;
-		}
-	}
-
-	return FALSE;
-}  // end isValidMap
+// ?isValidMap@@YA_NVAsciiString@@_N@Z
+// Body in MapUtil_isValidMap.asm (exact 170B retail @ 0x00457ED0).
+// Drift 0x0078935E is mid unrelated fn; ZH isEmpty/dtor shape diverge.
 
 //-------------------------------------------------------------------------------------------------
 /** Find a valid map */
