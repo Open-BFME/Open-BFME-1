@@ -4085,25 +4085,59 @@ void InGameUI::playCameoMovie( const AsciiString& movieName )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?stopCameoMovie@InGameUI@@UAEXXZ present-unmatched
+// Retail InGameUI::stopCameoMovie @ 0x441C50 (178B): thin AsciiString("ControlBar.wnd:RightHUD"),
+// winGetWindowFromId + setVideoBuffer(NULL), then close stream at this+0x568 via vtable+0x1c.
+// No buffer delete. BFME stream interface slot differs from ZH close@+0x0c.
+class BFMERetailAsciiString
+{
+public:
+	BFMERetailAsciiString( const char *string );
+	~BFMERetailAsciiString() { releaseBuffer(); }
+	const char *str() const
+	{
+		static const char nullCharacter = 0;
+		return m_data ? m_data + 8 : &nullCharacter;
+	}
+private:
+	void releaseBuffer();
+	char *m_data;
+};
+
+// BFME VideoStreamInterface: close is vtable slot 7 (+0x1c), not ZH slot 3 (+0x0c).
+class BFMECameoVideoStream
+{
+public:
+	virtual void _slot0( void ) = 0;
+	virtual void _slot1( void ) = 0;
+	virtual void _slot2( void ) = 0;
+	virtual void _slot3( void ) = 0;
+	virtual void _slot4( void ) = 0;
+	virtual void _slot5( void ) = 0;
+	virtual void _slot6( void ) = 0;
+	virtual void close( void ) = 0; // +0x1c
+};
+
 void InGameUI::stopCameoMovie( void )
 {
-//RightHUD
-	//GameWindow *window = TheWindowManager->winGetWindowFromId(NULL,TheNameKeyGenerator->nameToKey( AsciiString("ControlBar.wnd:CameoMovieWindow") ));
-	GameWindow *window = TheWindowManager->winGetWindowFromId(NULL,TheNameKeyGenerator->nameToKey( AsciiString("ControlBar.wnd:RightHUD") ));
-//	window->winHide(FALSE);
-	WinInstanceData *winData = window->winGetInstanceData();
-	winData->setVideoBuffer(NULL);
-	
-	delete m_cameoVideoBuffer;
-	m_cameoVideoBuffer = NULL;
-
-	if ( m_cameoVideoStream )
+	// Keep `this` in edi like retail: declare a second local so esi is free for the window.
+	GameWindow *window;
 	{
-		m_cameoVideoStream->close();
-		m_cameoVideoStream = NULL;
+		BFMERetailAsciiString name( "ControlBar.wnd:RightHUD" );
+		window = TheWindowManager->winGetWindowFromId(
+			NULL, TheNameKeyGenerator->nameToKey( name.str() ) );
+	} // releaseBuffer before winGetInstanceData (retail order)
+
+	WinInstanceData *winData = window->winGetInstanceData();
+	winData->setVideoBuffer( NULL );
+
+	// Retail layout: m_cameoVideoStream @ +0x568 (ZH header offset differs).
+	BFMECameoVideoStream *stream =
+		*reinterpret_cast<BFMECameoVideoStream **>( reinterpret_cast<char *>( this ) + 0x568 );
+	if ( stream )
+	{
+		stream->close();
+		*reinterpret_cast<BFMECameoVideoStream **>( reinterpret_cast<char *>( this ) + 0x568 ) = NULL;
 	}
-	
 }
 
 // ------------------------------------------------------------------------------------------------
