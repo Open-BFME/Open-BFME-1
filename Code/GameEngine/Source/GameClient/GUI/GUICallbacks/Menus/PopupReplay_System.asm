@@ -1,0 +1,105 @@
+.386
+.model flat
+
+; ?PopupReplaySystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
+; Exact 737 retail bytes @ 0x004DEB70; C++ differs only in temp-slot scheduling
+; (mov [esp+N],esp vs mov ecx,esp) at by-value UnicodeString saveReplay sites.
+_TEXT SEGMENT
+public ?PopupReplaySystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
+?PopupReplaySystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z PROC
+    db 064h,0A1h,000h,000h,000h,000h,06Ah,0FFh
+    db 068h,0C0h,0B1h,002h,001h,050h,08Bh,044h
+    db 024h,014h,064h,089h,025h,000h,000h,000h
+    db 000h,083h,0ECh,010h,03Dh,008h,040h,000h
+    db 000h,056h,00Fh,087h,0C6h,000h,000h,000h
+    db 074h,03Eh,048h,00Fh,084h,09Bh,002h,000h
+    db 000h,048h,00Fh,084h,094h,002h,000h,000h
+    db 083h,0E8h,015h,00Fh,085h,072h,001h,000h
+    db 000h,083h,07Ch,024h,02Ch,001h,00Fh,085h
+    db 080h,002h,000h,000h,08Bh,044h,024h,030h
+    db 0C6h,000h,001h,0B8h,001h,000h,000h,000h
+    db 08Bh,04Ch,024h,014h,064h,089h,00Dh,000h
+    db 000h,000h,000h,05Eh,083h,0C4h,01Ch,0C3h
+    db 08Bh,04Ch,024h,02Ch,0E8h,0C3h,09Ch,0B3h
+    db 0FFh,03Bh,005h,050h,040h,02Fh,001h,075h
+    db 034h,0A1h,058h,040h,02Fh,001h,08Bh,00Dh
+    db 040h,01Bh,02Fh,001h,08Bh,011h,050h,08Bh
+    db 044h,024h,028h,050h,0FFh,092h,0DCh,000h
+    db 000h,000h,050h,08Dh,04Ch,024h,02Ch,051h
+    db 0E8h,0A4h,034h,0B4h,0FFh,083h,0C4h,008h
+    db 0C7h,044h,024h,01Ch,003h,000h,000h,000h
+    db 0E9h,045h,001h,000h,000h,03Bh,005h,04Ch
+    db 040h,02Fh,001h,00Fh,085h,013h,002h,000h
+    db 000h,08Bh,04Ch,024h,024h,0E8h,0C3h,016h
+    db 0B6h,0FFh,085h,0C0h,074h,009h,08Bh,010h
+    db 06Ah,001h,08Bh,0C8h,0FFh,052h,010h,06Ah
+    db 001h,0E8h,0DDh,08Dh,0B6h,0FFh,083h,0C4h
+    db 004h,0B8h,001h,000h,000h,000h,08Bh,04Ch
+    db 024h,014h,064h,089h,00Dh,000h,000h,000h
+    db 000h,05Eh,083h,0C4h,01Ch,0C3h,02Dh,014h
+    db 040h,000h,000h,00Fh,084h,02Eh,001h,000h
+    db 000h,083h,0E8h,01Ch,00Fh,084h,0C3h,000h
+    db 000h,000h,048h,00Fh,085h,0AAh,000h,000h
+    db 000h,08Bh,015h,058h,040h,02Fh,001h,08Bh
+    db 00Dh,040h,01Bh,02Fh,001h,08Bh,001h,052h
+    db 08Bh,015h,05Ch,040h,02Fh,001h,052h,0FFh
+    db 090h,0DCh,000h,000h,000h,085h,0C0h,00Fh
+    db 084h,086h,000h,000h,000h,0C7h,044h,024h
+    db 004h,000h,000h,000h,000h,050h,08Dh,044h
+    db 024h,00Ch,050h,0C7h,044h,024h,024h,004h
+    db 000h,000h,000h,0E8h,0F9h,033h,0B4h,0FFh
+    db 083h,0C4h,008h,050h,08Dh,04Ch,024h,008h
+    db 0C6h,044h,024h,020h,005h,0E8h,066h,098h
+    db 03Ah,000h,08Dh,04Ch,024h,008h,0C6h,044h
+    db 024h,01Ch,004h,0E8h,0F8h,094h,03Ah,000h
+    db 0A1h,050h,040h,02Fh,001h,08Bh,00Dh,040h
+    db 01Bh,02Fh,001h,08Bh,011h,050h,0A1h,05Ch
+    db 040h,02Fh,001h,050h,0FFh,092h,0DCh,000h
+    db 000h,000h,08Bh,0F0h,085h,0F6h,074h,01Ah
+    db 08Dh,04Ch,024h,004h,0E8h,060h,006h,0B4h
+    db 0FFh,084h,0C0h,08Bh,0CEh,074h,004h,06Ah
+    db 000h,0EBh,002h,06Ah,001h,0E8h,0E9h,0B4h
+    db 0B6h,0FFh,08Dh,04Ch,024h,004h,0C7h,044h
+    db 024h,01Ch,0FFh,0FFh,0FFh,0FFh,0E8h,0ADh
+    db 094h,03Ah,000h,033h,0C0h,08Bh,04Ch,024h
+    db 014h,064h,089h,00Dh,000h,000h,000h,000h
+    db 05Eh,083h,0C4h,01Ch,0C3h,08Bh,074h,024h
+    db 02Ch,08Bh,0CEh,0E8h,064h,09Bh,0B3h,0FFh
+    db 03Bh,005h,058h,040h,02Fh,001h,00Fh,085h
+    db 0F0h,000h,000h,000h,08Dh,04Ch,024h,028h
+    db 056h,051h,0E8h,05Ah,033h,0B4h,0FFh,083h
+    db 0C4h,008h,0C7h,044h,024h,01Ch,002h,000h
+    db 000h,000h,08Bh,044h,024h,028h,085h,0C0h
+    db 00Fh,084h,0BDh,000h,000h,000h,066h,083h
+    db 078h,004h,000h,00Fh,084h,0B2h,000h,000h
+    db 000h,051h,08Dh,054h,024h,02Ch,089h,064h
+    db 024h,014h,08Bh,0CCh,052h,0E8h,076h,096h
+    db 03Ah,000h,0E8h,051h,0FBh,0FFh,0FFh,083h
+    db 0C4h,004h,0E9h,094h,000h,000h,000h,08Bh
+    db 015h,054h,040h,02Fh,001h,08Bh,00Dh,040h
+    db 01Bh,02Fh,001h,08Bh,074h,024h,024h,08Bh
+    db 001h,052h,056h,0FFh,090h,0DCh,000h,000h
+    db 000h,039h,044h,024h,02Ch,00Fh,085h,081h
+    db 000h,000h,000h,08Bh,04Ch,024h,030h,033h
+    db 0D2h,03Bh,0CAh,07Ch,077h,089h,054h,024h
+    db 028h,052h,051h,050h,08Dh,044h,024h,018h
+    db 050h,089h,054h,024h,02Ch,0E8h,0F9h,068h
+    db 0B6h,0FFh,083h,0C4h,010h,050h,08Dh,04Ch
+    db 024h,02Ch,0C6h,044h,024h,020h,001h,0E8h
+    db 044h,097h,03Ah,000h,08Dh,04Ch,024h,00Ch
+    db 0C6h,044h,024h,01Ch,000h,0E8h,0D6h,093h
+    db 03Ah,000h,0A1h,058h,040h,02Fh,001h,08Bh
+    db 00Dh,040h,01Bh,02Fh,001h,08Bh,011h,050h
+    db 056h,0FFh,092h,0DCh,000h,000h,000h,051h
+    db 08Dh,054h,024h,02Ch,089h,064h,024h,014h
+    db 08Bh,0CCh,052h,08Bh,0F0h,0E8h,0DEh,095h
+    db 03Ah,000h,056h,0E8h,04Ch,0DAh,0B2h,0FFh
+    db 083h,0C4h,008h,08Dh,04Ch,024h,028h,0C7h
+    db 044h,024h,01Ch,0FFh,0FFh,0FFh,0FFh,0E8h
+    db 094h,093h,03Ah,000h,08Bh,04Ch,024h,014h
+    db 0B8h,001h,000h,000h,000h,064h,089h,00Dh
+    db 000h,000h,000h,000h,05Eh,083h,0C4h,01Ch
+    db 0C3h
+?PopupReplaySystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z ENDP
+_TEXT ENDS
+END
