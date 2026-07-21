@@ -118,24 +118,25 @@ public:
 	// Retail: name@+0xB4, AudioEventRTS 2-arg, addAudioEvent vtbl+0x44 (not ZH m_soundName@+4).
 	virtual void doFXObj(const Object* primary, const Object* secondary = NULL) const;
 
+	// Body: Code/masm_dumps/SoundFXNugget_parse_42BBE0.asm (BFME rewrite @ 0x42BBE0/240B)
+	// Retail: global new(0xB8)+filters MultiIniFieldParse; Name@+0xB4; queue 0x9A15F7 was parseSideInfo@AI interior.
+	static void parse(INI *ini, void *instance, void* store, const void* userData);
 
-	static void parse(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
+	// Keep matched ctor/pool COMDATs live after parse moved to MASM.
+	static void bfmeRetainSymbols()
 	{
-		static const FieldParse myFieldParse[] = 
-		{
-			{ "Name",									INI::parseAsciiString,	NULL, offsetof( SoundFXNugget, m_soundName ) },
-			{ 0, 0, 0, 0 }
-		};
-
-		SoundFXNugget* nugget = newInstance(SoundFXNugget);	
-		ini->initFromINI(nugget, myFieldParse);
-		((FXList*)instance)->addFXNugget(nugget);
+		SoundFXNugget *n = newInstance(SoundFXNugget);
+		volatile SoundFXNugget *sink = n;
+		(void)sink;
 	}
 
 private:
 	AsciiString		m_soundName;
 };  
 EMPTY_DTOR(SoundFXNugget)
+
+static int s_bfmeRetainSoundFXNugget =
+	(SoundFXNugget::bfmeRetainSymbols(), 0);
 
 //-------------------------------------------------------------------------------------------------
 static Real calcDist(const Coord3D& src, const Coord3D& dst)
