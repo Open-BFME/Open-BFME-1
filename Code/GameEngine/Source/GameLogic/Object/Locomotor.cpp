@@ -661,30 +661,8 @@ LocomotorTemplate *LocomotorStore::newOverride( LocomotorTemplate *locoTemplate 
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
-// ??0Locomotor@@ present-unmatched
-Locomotor::Locomotor(const LocomotorTemplate* tmpl)
-{
-	m_template = tmpl;
-	m_brakingFactor = 1.0f;
-	m_maxLift = BIGNUM;
-	m_maxSpeed = BIGNUM;
-	m_maxAccel = BIGNUM;
-	m_maxBraking = BIGNUM;
-	m_maxTurnRate = BIGNUM;
-	m_flags = 0;
-	m_closeEnoughDist = m_template->m_closeEnoughDist;
-	setFlag(IS_CLOSE_ENOUGH_DIST_3D, m_template->m_isCloseEnoughDist3D);
-#ifdef CIRCLE_FOR_LANDING
-	m_circleThresh = 0.0f;
-#endif
-	m_preferredHeight = m_template->m_preferredHeight;
-	m_preferredHeightDamping = m_template->m_preferredHeightDamping;
-
-	m_angleOffset = GameLogicRandomValueReal(-PI/6, PI/6);
-	m_offsetIncrement = (PI/40) * (GameLogicRandomValueReal(0.8f, 1.2f)/m_template->m_wanderLengthFactor);
-	setFlag(OFFSET_INCREASING, GameLogicRandomValue(0,1));
-	m_donutTimer = TheGameLogic->getFrame()+DONUT_TIME_DELAY_SECONDS*LOGICFRAMES_PER_SECOND;
-}
+// ??0Locomotor@@IAE@PBVLocomotorTemplate@@@Z
+// Body in Locomotor_ctor_template.asm (exact 539B retail @ 0x001B60E0).
 
 //-------------------------------------------------------------------------------------------------
 // ??0Locomotor@@ present-unmatched
@@ -740,7 +718,7 @@ Locomotor& Locomotor::operator=(const Locomotor& that)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ??1Locomotor@@MAE@XZ present-unmatched
+// ??1Locomotor@@MAE@XZ
 Locomotor::~Locomotor() 
 {
 }

@@ -12905,3 +12905,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?update@ScaleUpTransition@@UAEXH@Z,,0x0059F060,144,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
 ?parseCampaignDefinition@INI@@SAXPAV1@@Z,,0x005BCF20,172,Code/masm_dumps/INI_parseCampaignDefinition_5BCF20.asm,matched,INI theTypeTable Campaign entry; true body 0x5BCF20/172 (drift 0x5EE360 was 7B stub)
 ??1BridgeBehavior@@MAE@XZ,,0x001F36A0,399,Code/masm_dumps/BridgeBehavior_destructor_MAE.asm,matched,icf-owner=??1BridgeBehavior@@UAE@XZ; queue 0x7A5E37 misplaced; true body 399B @ 0x1F36A0; C++ emits MAE protected pool-glue dtor
+??0Locomotor@@IAE@PBVLocomotorTemplate@@@Z,,0x001B60E0,539,Code/GameEngine/Source/GameLogic/Object/Locomotor_ctor_template.asm,matched,exact 539B via MASM; true start 0x1B60E0 (queue was mid-body +0x2D/432)
