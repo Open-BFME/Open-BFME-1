@@ -88,6 +88,12 @@ def main():
     print(f"matched-row delta {ref1} -> {label2}")
     print(f"  +{len(added)}, -{len(removed)} matched rows (not byte-verified — build.sh is proof)")
     print(f"  matched rows total: {len(old)} -> {len(new)}")
+    # Rows exceed distinct addresses: MSVC ICF folds identical template bodies
+    # onto one address, so several mangled names legitimately share a target_rva.
+    # Distinct addresses is the honest "how much of the binary" number.
+    # int() normalizes casing/width so a row written 0x00AB and 0x00ab counts once.
+    print(f"  distinct addresses: {len({int(rva, 16) for _, rva in old})}"
+          f" -> {len({int(rva, 16) for _, rva in new})}")
     print(f"  claimed bytes:      +{sum(s for s, _ in added.values())}"
           f"{'' if not removed else f'  (-{sum(s for s, _ in removed.values())} removed)'}")
     print(f"  unclaimed markers:  {markers:+d}")

@@ -15,11 +15,11 @@ Goal: source code that rebuilds BFME 1's executable byte-for-byte.
 
 We currently have C++ functions in `Code/` and a patcher which can patch same-size custom functions into `lotrbfme.exe`. This is useful for modding.
 
-On July 13th 2026, we crossed 10% of the way there (by reversed engineered function count)
+About **8% of the game's functions** — and **~15% of its code bytes** — have been reverse-engineered and byte-for-byte verified against retail `lotrbfme.exe` (~6,300 of the exe's 78,506 functions). Every function in `reverse/functions.csv` compiles to bytes identical to the original.
 
 ## Roadmap
 
-* [ ] BFME 1 Source Code (10% done)
+* [ ] BFME 1 Source Code (~8% done)
 * [ ] Network delay fix
 * [ ] Memory fix
 * [ ] Better crash logs
@@ -59,5 +59,5 @@ tracked pre-commit hook, which rejects new source functions unless they are list
 The build verifies the baseline, byte-compares tracked source against the original executable, and checks that a no-op patched copy hashes identically. While iterating on one function, verify just its source in a few seconds by passing in the path:
 
 ```bash
-./build.sh src/math/color.cpp   # or a function name
+./build.sh Code/Libraries/Source/WWVegas/WWMath/color.cpp   # or a function name
 ```
