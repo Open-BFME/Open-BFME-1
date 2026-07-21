@@ -93,7 +93,6 @@ Bool LANGameSlot::isLocalPlayer( void ) const
 
 // LANGameInfo ----------------------------------------
 
-// ??0LANGameInfo@@QAE@XZ present-unmatched
 LANGameInfo::LANGameInfo()
 {
 	//Added By Sadullah Nader
