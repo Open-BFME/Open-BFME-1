@@ -84,19 +84,8 @@ PlayerList::PlayerList() :
 }
 
 //-----------------------------------------------------------------------------
-// ??1PlayerList@@ present-unmatched
-PlayerList::~PlayerList() 
-{
-	try {
-		// the world is happier if we reinit things before destroying them,
-		// to avoid debug warnings
-		init();
-	} catch (...) {
-		// nothing
-	}
-	for( Int i = 0; i < MAX_PLAYER_COUNT; ++i )
-		delete m_players[ i ];
-}
+// ??1PlayerList@@UAE@XZ — exact retail body in Code/masm_dumps/PlayerList_destructor.asm
+// BFME dtor differs from ZH: no try/init, MAX_PLAYER_COUNT=32, clears ThePlayerList.
 
 //-----------------------------------------------------------------------------
 // ?getNthPlayer@PlayerList@@ present-unmatched

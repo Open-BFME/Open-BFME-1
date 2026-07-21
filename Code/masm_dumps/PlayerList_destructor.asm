@@ -1,0 +1,20 @@
+.386
+.model flat
+
+; ??1PlayerList@@UAE@XZ
+; Exact 138B @ 0x000DF9A0; vtable@0xC8417C slot0->scalar@0xDFCA0->body; MAX_PLAYER=32; ThePlayerList clear; no try/init
+_TEXT SEGMENT
+public ??1PlayerList@@UAE@XZ
+??1PlayerList@@UAE@XZ PROC
+    db 06Ah,0FFh,068h,04Fh,0A5h,0FFh,000h,064h,0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,083h,0ECh,008h,053h,056h,057h,08Bh,0F9h,089h,07Ch,024h
+    db 010h,0C7h,007h,07Ch,041h,008h,001h,0C7h,047h,008h,068h,041h,008h,001h,0C7h,044h
+    db 024h,01Ch,001h,000h,000h,000h,08Dh,077h,014h,0BBh,020h,000h,000h,000h,08Bh,0FFh
+    db 08Bh,00Eh,085h,0C9h,074h,006h,08Bh,001h,06Ah,001h,0FFh,010h,0C7h,006h,000h,000h
+    db 000h,000h,083h,0C6h,004h,04Bh,075h,0E8h,0C7h,005h,048h,0D7h,02Eh,001h,000h,000h
+    db 000h,000h,08Bh,0CFh,0C7h,047h,008h,044h,037h,007h,001h,0C7h,044h,024h,01Ch,0FFh
+    db 0FFh,0FFh,0FFh,0E8h,028h,020h,08Ch,000h,08Bh,04Ch,024h,014h,05Fh,05Eh,05Bh,064h
+    db 089h,00Dh,000h,000h,000h,000h,083h,0C4h,014h,0C3h
+??1PlayerList@@UAE@XZ ENDP
+_TEXT ENDS
+END
