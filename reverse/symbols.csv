@@ -3394,3 +3394,8 @@ _ShowControlBar,0x00024848,ShowControlBar letterbox
 ?winSetInputFunc@GameWindow@@QAEHP6A?AW4WindowMsgHandledType@@PAV1@III@Z@Z,0x00027BF1,ILT thunk used by GadgetListBoxRemoveMultiSelect
 ??1?$_Rb_tree@IU?$pair@$$CBIPAVImage@@@_STL@@U?$_Select1st@U?$pair@$$CBIPAVImage@@@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBIPAVImage@@@_STL@@@2@@_STL@@QAE@XZ,0x005D2900
 ??1?$_Rb_tree@IU?$pair@$$CBIPAVImage@@@_STL@@U?$_Select1st@U?$pair@$$CBIPAVImage@@@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBIPAVImage@@@_STL@@@2@@_STL@@QAE@XZ,0x0004AB6A
+?GadgetListBoxSetColors@@YAXPAVGameWindow@@HHHHHHHHHHHH@Z,0x000410AB,ILT thunk used by GadgetComboBoxSetColors
+?winSetEnabledBorderColor@GameWindow@@QAEHHH@Z,0x00014867,ILT/thunk used by GadgetComboBoxSetColors
+?winSetDisabledBorderColor@GameWindow@@QAEHHH@Z,0x0003178C,ILT/thunk used by GadgetComboBoxSetColors
+?winSetHiliteColor@GameWindow@@QAEHHH@Z,0x000248B1,ILT/thunk used by GadgetComboBoxSetColors
+?winSetHiliteBorderColor@GameWindow@@QAEHHH@Z,0x000047D2,ILT/thunk used by GadgetComboBoxSetColors

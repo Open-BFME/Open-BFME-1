@@ -748,62 +748,81 @@ void GadgetComboBoxSetColors( GameWindow *comboBox,
 		GadgetComboBoxSetHiliteSelectedItemColor( comboBox, hiliteSelectedItemColor );
 		GadgetComboBoxSetHiliteSelectedItemBorderColor( comboBox, hiliteSelectedItemBorderColor );
 	
-	GameWindow *editBox = GadgetComboBoxGetEditBox(comboBox);
-	if (editBox)
+	// BFME ComboBoxData child window offsets (see retail SetColors @ 0x4B3590):
+	// dropDownButton@+0x24, editBox@+0x28, listBox@+0x2c. Inline ZH getters
+	// use 0x20/0x24/0x28 — load fields by offset so this body matches retail.
+	// Access order matches source: editBox, dropDownButton, listBox.
 	{
-		// enabled
-		GadgetButtonSetEnabledColor( editBox, enabledColor );
-		GadgetButtonSetEnabledBorderColor( editBox, enabledBorderColor );
-		GadgetButtonSetEnabledSelectedColor( editBox, enabledSelectedItemColor );
-		GadgetButtonSetEnabledSelectedBorderColor( editBox, enabledSelectedItemBorderColor );
-		// disabled
-		GadgetButtonSetDisabledColor( editBox, disabledColor );
-		GadgetButtonSetDisabledBorderColor( editBox, disabledBorderColor );
-		GadgetButtonSetDisabledSelectedColor( editBox, disabledSelectedItemColor );
-		GadgetButtonSetDisabledSelectedBorderColor( editBox, disabledSelectedItemBorderColor );
-		// hilite
-		GadgetButtonSetHiliteColor( editBox,hiliteColor );
-		GadgetButtonSetHiliteBorderColor( editBox, hiliteBorderColor );
-		GadgetButtonSetHiliteSelectedColor( editBox, hiliteSelectedItemColor );
-		GadgetButtonSetHiliteSelectedBorderColor( editBox, hiliteSelectedItemBorderColor );
-	}	
+		ComboBoxData *comboBoxData = (ComboBoxData *)comboBox->winGetUserData();
+		GameWindow *editBox = NULL;
+		if( comboBoxData )
+			editBox = *(GameWindow **)((char *)comboBoxData + 0x28);
+		if (editBox)
+		{
+			// enabled
+			GadgetButtonSetEnabledColor( editBox, enabledColor );
+			GadgetButtonSetEnabledBorderColor( editBox, enabledBorderColor );
+			GadgetButtonSetEnabledSelectedColor( editBox, enabledSelectedItemColor );
+			GadgetButtonSetEnabledSelectedBorderColor( editBox, enabledSelectedItemBorderColor );
+			// disabled
+			GadgetButtonSetDisabledColor( editBox, disabledColor );
+			GadgetButtonSetDisabledBorderColor( editBox, disabledBorderColor );
+			GadgetButtonSetDisabledSelectedColor( editBox, disabledSelectedItemColor );
+			GadgetButtonSetDisabledSelectedBorderColor( editBox, disabledSelectedItemBorderColor );
+			// hilite
+			GadgetButtonSetHiliteColor( editBox,hiliteColor );
+			GadgetButtonSetHiliteBorderColor( editBox, hiliteBorderColor );
+			GadgetButtonSetHiliteSelectedColor( editBox, hiliteSelectedItemColor );
+			GadgetButtonSetHiliteSelectedBorderColor( editBox, hiliteSelectedItemBorderColor );
+		}
+	}
 
-	GameWindow *dropDownButton = GadgetComboBoxGetDropDownButton(comboBox);
-	if (dropDownButton)
 	{
-		// enabled
-		GadgetButtonSetEnabledColor( dropDownButton, enabledColor );
-		GadgetButtonSetEnabledBorderColor( dropDownButton, enabledBorderColor );
-		GadgetButtonSetEnabledSelectedColor( dropDownButton, enabledSelectedItemColor );
-		GadgetButtonSetEnabledSelectedBorderColor( dropDownButton, enabledSelectedItemBorderColor );
-		// disabled
-		GadgetButtonSetDisabledColor( dropDownButton, disabledColor );
-		GadgetButtonSetDisabledBorderColor( dropDownButton, disabledBorderColor );
-		GadgetButtonSetDisabledSelectedColor( dropDownButton, disabledSelectedItemColor );
-		GadgetButtonSetDisabledSelectedBorderColor( dropDownButton, disabledSelectedItemBorderColor );
-		// hilite
-		GadgetButtonSetHiliteColor( dropDownButton,hiliteColor );
-		GadgetButtonSetHiliteBorderColor( dropDownButton, hiliteBorderColor );
-		GadgetButtonSetHiliteSelectedColor( dropDownButton, hiliteSelectedItemColor );
-		GadgetButtonSetHiliteSelectedBorderColor( dropDownButton, hiliteSelectedItemBorderColor );
-	}	
+		ComboBoxData *comboBoxData = (ComboBoxData *)comboBox->winGetUserData();
+		GameWindow *dropDownButton = NULL;
+		if( comboBoxData )
+			dropDownButton = *(GameWindow **)((char *)comboBoxData + 0x24);
+		if (dropDownButton)
+		{
+			// enabled
+			GadgetButtonSetEnabledColor( dropDownButton, enabledColor );
+			GadgetButtonSetEnabledBorderColor( dropDownButton, enabledBorderColor );
+			GadgetButtonSetEnabledSelectedColor( dropDownButton, enabledSelectedItemColor );
+			GadgetButtonSetEnabledSelectedBorderColor( dropDownButton, enabledSelectedItemBorderColor );
+			// disabled
+			GadgetButtonSetDisabledColor( dropDownButton, disabledColor );
+			GadgetButtonSetDisabledBorderColor( dropDownButton, disabledBorderColor );
+			GadgetButtonSetDisabledSelectedColor( dropDownButton, disabledSelectedItemColor );
+			GadgetButtonSetDisabledSelectedBorderColor( dropDownButton, disabledSelectedItemBorderColor );
+			// hilite
+			GadgetButtonSetHiliteColor( dropDownButton,hiliteColor );
+			GadgetButtonSetHiliteBorderColor( dropDownButton, hiliteBorderColor );
+			GadgetButtonSetHiliteSelectedColor( dropDownButton, hiliteSelectedItemColor );
+			GadgetButtonSetHiliteSelectedBorderColor( dropDownButton, hiliteSelectedItemBorderColor );
+		}
+	}
 
-	GameWindow * listBox = GadgetComboBoxGetListBox( comboBox );
-	if ( listBox )
 	{
-		GadgetListBoxSetColors(listBox,
-													enabledColor, 
-													enabledBorderColor,
-													enabledSelectedItemColor, 
-													enabledSelectedItemBorderColor,
-													disabledColor, 
-													disabledBorderColor,
-													disabledSelectedItemColor, 
-													disabledSelectedItemBorderColor,
-													hiliteColor, 
-													hiliteBorderColor,
-													hiliteSelectedItemColor, 
-													hiliteSelectedItemBorderColor );
+		ComboBoxData *comboBoxData = (ComboBoxData *)comboBox->winGetUserData();
+		GameWindow * listBox = NULL;
+		if( comboBoxData )
+			listBox = *(GameWindow **)((char *)comboBoxData + 0x2c);
+		if ( listBox )
+		{
+			GadgetListBoxSetColors(listBox,
+														enabledColor,
+														enabledBorderColor,
+														enabledSelectedItemColor,
+														enabledSelectedItemBorderColor,
+														disabledColor,
+														disabledBorderColor,
+														disabledSelectedItemColor,
+														disabledSelectedItemBorderColor,
+														hiliteColor,
+														hiliteBorderColor,
+														hiliteSelectedItemColor,
+														hiliteSelectedItemBorderColor );
+		}
 	}
 }  // end GadgetComboBoxSetColors
 
@@ -1121,3 +1140,10 @@ Int GadgetComboBoxGetLength( GameWindow *combobox )
 
 	return 0;
 }  // end GadgetListBoxGetListLength
+
+// Keep GadgetComboBoxGetDropDownButton COMDAT in this TU (was only referenced by
+// SetColors before the BFME field-offset hardcode; 23B matched at 0x0047A560).
+GameWindow *GadgetComboBox_force_GetDropDownButton(GameWindow *g)
+{
+	return GadgetComboBoxGetDropDownButton(g);
+}
