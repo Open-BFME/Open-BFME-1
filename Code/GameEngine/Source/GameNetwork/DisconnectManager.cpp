@@ -737,23 +737,20 @@ Bool DisconnectManager::hasPlayerTimedOut(Int slot) {
 
 // this function assumes that we are the packet router. (or at least that 
 // we will be after everyone is getting disconnected)
-// ?sendPlayerDestruct@DisconnectManager@@IAEXHPAVConnectionManager@@@Z present-unmatched
+// BFME: DESTROYPLAYER enum is 11 (0x0b), not ZH's 8; no setExecutionFrame.
+// True body @ 0x66B550 (159B); drift 0x9F2463 is a mislocated neighbor.
 void DisconnectManager::sendPlayerDestruct(Int slot, ConnectionManager *conMgr) {
 	UnsignedShort currentID = 0;
-	if (DoesCommandRequireACommandID(NETCOMMANDTYPE_DESTROYPLAYER))
+	if (DoesCommandRequireACommandID((NetCommandType)11))
 	{
 		currentID = GenerateNextCommandID();
 	}
 
-	DEBUG_LOG(("Queueing DestroyPlayer %d for frame %d on frame %d as command %d\n",
-		slot, TheNetwork->getExecutionFrame()+1, TheGameLogic->getFrame(), currentID));
-
 	NetDestroyPlayerCommandMsg *netmsg = newInstance(NetDestroyPlayerCommandMsg);	
-	netmsg->setExecutionFrame(TheNetwork->getExecutionFrame()+1);
 	netmsg->setPlayerID(conMgr->getLocalPlayerID());
 	netmsg->setID(currentID);
 	netmsg->setPlayerIndex(slot);
-	conMgr->sendLocalCommand(netmsg);
+	conMgr->sendLocalCommandDirect(netmsg, 0xff);
 	netmsg->detach();
 }
 
