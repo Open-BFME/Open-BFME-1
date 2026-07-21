@@ -991,7 +991,6 @@ Bool GameState::doesSaveGameExist( AsciiString filename )
 // ------------------------------------------------------------------------------------------------
 /** Get save game info from the filename specified */
 // ------------------------------------------------------------------------------------------------
-// ?getSaveGameInfoFromFile@GameState@@QAEXVAsciiString@@PAVSaveGameInfo@@@Z present-unmatched
 void GameState::getSaveGameInfoFromFile( AsciiString filename, SaveGameInfo *saveGameInfo )
 {
 	AsciiString token;
