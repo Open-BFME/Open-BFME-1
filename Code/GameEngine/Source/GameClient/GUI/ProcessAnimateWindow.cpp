@@ -348,7 +348,9 @@ void ProcessAnimateWindowSlideFromLeft::initAnimateWindow( AnimateWindow *animWi
 }
 #endif
 
-// ?updateAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAE_NPAVAnimateWindow@@@Z present-unmatched
+// Retail body matched via MASM: Code/masm_dumps/updateAnimateWindow_ProcessAnimateWindowSlideFromLeft_495CC0.asm
+// (true body 0x495CC0 via SlideFromLeft vtbl slot3; C++ blocked frame 0x10 + win spill + x87 fcom clamp)
+#if 0
 Bool ProcessAnimateWindowSlideFromLeft::updateAnimateWindow( AnimateWindow *animWin )
 {
 	
@@ -397,6 +399,7 @@ Bool ProcessAnimateWindowSlideFromLeft::updateAnimateWindow( AnimateWindow *anim
 	animWin->setVel(vel);
 	return FALSE;
 }
+#endif
 
 // ?reverseAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAE_NPAVAnimateWindow@@@Z present-unmatched
 Bool ProcessAnimateWindowSlideFromLeft::reverseAnimateWindow( AnimateWindow *animWin )
