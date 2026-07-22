@@ -333,7 +333,6 @@ Bool ScienceStore::playerHasRootPrereqsForScience(const Player* player, ScienceT
 //-----------------------------------------------------------------------------
 /** return a list of the sciences the given player can purchase now, and a list he might be able to purchase in the future, 
 	but currently lacks prereqs or points for. (either might be an empty list) */
-// ?getPurchasableSciences@ScienceStore@@ present-unmatched
 void ScienceStore::getPurchasableSciences(const Player* player, ScienceVec& purchasable, ScienceVec& potentiallyPurchasable) const
 {
 	purchasable.clear();
