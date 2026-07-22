@@ -1,0 +1,64 @@
+.386
+.model flat
+
+; ??0PlayerTemplate@@QAE@XZ
+; Exact 824B retail body @ 0x000E3760; ILT thunk 0x3E6E4 (symbols.csv);
+; queue 0xC6DCD5 was int3 pad (misplaced). MASM exact dump.
+_TEXT SEGMENT
+public ??0PlayerTemplate@@QAE@XZ
+??0PlayerTemplate@@QAE@XZ PROC
+    db 6Ah,0FFh,68h,0F1h,0AEh,0FFh,00h,64h,0A1h,00h,00h,00h,00h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,83h,0ECh,08h,53h,55h,56h,8Bh,0F1h,33h,0DBh,89h
+    db 1Eh,57h,89h,74h,24h,10h,89h,5Eh,04h,89h,5Ch,24h,20h,89h,5Eh,08h
+    db 8Dh,4Eh,0Ch,0C6h,44h,24h,20h,01h,0E8h,0B2h,54h,0F4h,0FFh,0C7h,46h,1Ch
+    db 18h,3Dh,08h,01h,89h,5Eh,20h,89h,5Eh,24h,89h,5Eh,34h,68h,28h,0D8h
+    db 40h,00h,68h,0D9h,7Bh,41h,00h,6Ah,0Ah,6Ah,04h,8Dh,46h,38h,50h,0C6h
+    db 44h,24h,34h,03h,0E8h,1Bh,37h,91h,00h,6Ah,18h,0C6h,44h,24h,24h,04h
+    db 89h,5Eh,60h,0E8h,68h,0ADh,74h,00h,89h,46h,60h,89h,5Eh,64h,88h,18h
+    db 8Bh,4Eh,60h,89h,59h,04h,8Bh,46h,60h,89h,40h,08h,8Bh,46h,60h,83h
+    db 0C4h,04h,89h,40h,0Ch,8Dh,4Eh,6Ch,89h,59h,04h,89h,59h,08h,89h,4Ch
+    db 24h,14h,89h,59h,0Ch,6Ah,64h,0C6h,44h,24h,24h,06h,89h,59h,10h,0E8h
+    db 51h,0FCh,0F4h,0FFh,6Ah,18h,0C6h,44h,24h,24h,07h,89h,9Eh,80h,00h,00h
+    db 00h,0E8h,1Ah,0ADh,74h,00h,89h,86h,80h,00h,00h,00h,89h,9Eh,84h,00h
+    db 00h,00h,88h,18h,8Bh,96h,80h,00h,00h,00h,89h,5Ah,04h,8Bh,86h,80h
+    db 00h,00h,00h,89h,40h,08h,8Bh,86h,80h,00h,00h,00h,83h,0C4h,04h,89h
+    db 40h,0Ch,89h,9Eh,8Ch,00h,00h,00h,89h,9Eh,90h,00h,00h,00h,89h,9Eh
+    db 94h,00h,00h,00h,89h,9Eh,98h,00h,00h,00h,89h,9Eh,9Ch,00h,00h,00h
+    db 89h,9Eh,0A0h,00h,00h,00h,89h,9Eh,0A4h,00h,00h,00h,89h,9Eh,0A8h,00h
+    db 00h,00h,89h,9Eh,0ACh,00h,00h,00h,89h,9Eh,0B0h,00h,00h,00h,89h,9Eh
+    db 0B4h,00h,00h,00h,89h,9Eh,0B8h,00h,00h,00h,88h,9Eh,0BCh,00h,00h,00h
+    db 88h,9Eh,0BDh,00h,00h,00h,89h,9Eh,0C0h,00h,00h,00h,0C7h,86h,0C4h,00h
+    db 00h,00h,3Ch,00h,00h,00h,0C7h,86h,0C8h,00h,00h,00h,64h,00h,00h,00h
+    db 89h,9Eh,0CCh,00h,00h,00h,89h,9Eh,0D0h,00h,00h,00h,89h,9Eh,0D4h,00h
+    db 00h,00h,89h,9Eh,0D8h,00h,00h,00h,89h,9Eh,0DCh,00h,00h,00h,89h,9Eh
+    db 0E0h,00h,00h,00h,8Dh,0AEh,0E4h,00h,00h,00h,89h,5Dh,00h,8Dh,0BEh,0E8h
+    db 00h,00h,00h,89h,1Fh,89h,5Fh,04h,89h,5Fh,08h,89h,9Eh,0F4h,00h,00h
+    db 00h,89h,9Eh,0F8h,00h,00h,00h,89h,9Eh,0FCh,00h,00h,00h,89h,9Eh,00h
+    db 01h,00h,00h,89h,9Eh,04h,01h,00h,00h,89h,9Eh,08h,01h,00h,00h,89h
+    db 9Eh,0Ch,01h,00h,00h,89h,9Eh,10h,01h,00h,00h,89h,9Eh,14h,01h,00h
+    db 00h,88h,9Eh,18h,01h,00h,00h,89h,9Eh,1Ch,01h,00h,00h,89h,9Eh,20h
+    db 01h,00h,00h,53h,68h,1Ch,30h,07h,01h,8Dh,4Eh,08h,0C6h,44h,24h,28h
+    db 20h,0E8h,0CAh,43h,7Ah,00h,53h,68h,1Ch,30h,07h,01h,8Dh,4Eh,34h,0E8h
+    db 0BCh,43h,7Ah,00h,53h,68h,1Ch,30h,07h,01h,8Dh,8Eh,0A4h,00h,00h,00h
+    db 0E8h,0ABh,43h,7Ah,00h,53h,68h,1Ch,30h,07h,01h,8Dh,8Eh,0A8h,00h,00h
+    db 00h,0E8h,9Ah,43h,7Ah,00h,53h,68h,1Ch,30h,07h,01h,8Dh,8Eh,0ACh,00h
+    db 00h,00h,0E8h,89h,43h,7Ah,00h,53h,68h,1Ch,30h,07h,01h,8Dh,8Eh,0B0h
+    db 00h,00h,00h,0E8h,78h,43h,7Ah,00h,53h,68h,1Ch,30h,07h,01h,8Dh,8Eh
+    db 0B8h,00h,00h,00h,0E8h,67h,43h,7Ah,00h,53h,68h,1Ch,30h,07h,01h,8Bh
+    db 0CDh,89h,5Eh,30h,89h,5Eh,2Ch,89h,5Eh,28h,0E8h,51h,43h,7Ah,00h,53h
+    db 68h,1Ch,30h,07h,01h,8Dh,8Eh,0CCh,00h,00h,00h,0E8h,40h,43h,7Ah,00h
+    db 53h,68h,1Ch,30h,07h,01h,8Dh,8Eh,0D0h,00h,00h,00h,0E8h,2Fh,43h,7Ah
+    db 00h,53h,68h,1Ch,30h,07h,01h,8Dh,8Eh,0D4h,00h,00h,00h,0E8h,1Eh,43h
+    db 7Ah,00h,53h,68h,1Ch,30h,07h,01h,8Dh,8Eh,0D8h,00h,00h,00h,0E8h,0Dh
+    db 43h,7Ah,00h,53h,68h,1Ch,30h,07h,01h,8Dh,8Eh,0DCh,00h,00h,00h,0E8h
+    db 0FCh,42h,7Ah,00h,53h,68h,1Ch,30h,07h,01h,8Dh,8Eh,0E0h,00h,00h,00h
+    db 0E8h,0EBh,42h,7Ah,00h,53h,68h,1Ch,30h,07h,01h,8Bh,0CDh,0E8h,0DEh,42h
+    db 7Ah,00h,8Bh,47h,04h,8Bh,0Fh,50h,51h,8Bh,0CFh,0E8h,0C7h,11h,0F4h,0FFh
+    db 53h,68h,1Ch,30h,07h,01h,8Dh,8Eh,0Ch,01h,00h,00h,0E8h,0BFh,42h,7Ah
+    db 00h,53h,68h,1Ch,30h,07h,01h,8Dh,8Eh,10h,01h,00h,00h,0E8h,0AEh,42h
+    db 7Ah,00h,53h,68h,1Ch,30h,07h,01h,8Dh,8Eh,14h,01h,00h,00h,0E8h,9Dh
+    db 42h,7Ah,00h,8Bh,4Ch,24h,18h,5Fh,8Bh,0C6h,5Eh,5Dh,5Bh,64h,89h,0Dh
+    db 00h,00h,00h,00h,83h,0C4h,14h,0C3h
+??0PlayerTemplate@@QAE@XZ ENDP
+_TEXT ENDS
+END
