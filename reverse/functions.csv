@@ -13288,3 +13288,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?canRepairObject@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@@Z,,0x000C5230,316,Code/masm_dumps/ActionManager_canRepairObject.asm,matched,True body 0xC5230/316 (queue 0x5AB05D MISPLACED); thunk 0x338D4 + Dozer/Worker callers; ret 0xC
 ?objectChangedTeam@InGameUI@@UAEXPBVObject@@HH@Z,,0x00449FC0,394,Code/masm_dumps/InGameUI_objectChangedTeam_449FC0.asm,matched,MASM exact; true body via InGameUI vtbl after add/removeSW; queue 0x44C3FA was mid-fn at 0x44C250
 ?setGUICommand@InGameUI@@UAEXPBVCommandButton@@@Z,,0x0043ADE0,212,Code/masm_dumps/InGameUI_setGUICommand.asm,matched,MASM exact; true body 0x43ADE0/212 via InGameUI vtbl slot46 (queue 0x613D76 misplaced maps helper); pending@+0x230 mouseMode@+0x824
+?findArmorTemplateSet@ThingTemplate@@QBEPBVArmorTemplateSet@@ABV?$BitFlags@$0L@@@@Z,,0x00146780,73,Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp,matched,

@@ -1391,10 +1391,16 @@ void ThingTemplate::initForLTA(const AsciiString& name)
 
 
 //=============================================================================
-// ?findArmorTemplateSet@ThingTemplate@@QBEPBVArmorTemplateSet@@ABV?$BitFlags@$07@@@Z present-unmatched
 const ArmorTemplateSet* ThingTemplate::findArmorTemplateSet(const ArmorSetFlags& t) const
 {
-  return m_armorTemplateSetFinder.findBestInfo(m_armorTemplateSets, t);
+	struct BFMEThingTemplateArmorView
+	{
+		char m_padding[0x310];
+		ArmorTemplateSetVector m_sets;
+		ArmorTemplateSetFinder m_finder;
+	};
+	const BFMEThingTemplateArmorView *bfme = reinterpret_cast<const BFMEThingTemplateArmorView *>(this);
+	return bfme->m_finder.findBestInfo(bfme->m_sets, t);
 }
 
 //=============================================================================
