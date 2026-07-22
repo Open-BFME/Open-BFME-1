@@ -89,45 +89,11 @@ static Coord3DList	m_techPositions;
 static Int m_mapDX = 0;
 static Int m_mapDY = 0;
 
-static UnsignedInt calcCRC( AsciiString dirName, AsciiString fname )
-{
-	CRC theCRC;
-	theCRC.clear();
-
-	// Try the official map dir
-	AsciiString asciiFile;
-	char	tempBuf[_MAX_PATH];
-	char	filenameBuf[_MAX_PATH];
-	int length = 0;
-	strcpy(tempBuf, fname.str());
-	length = strlen( tempBuf );
-	if( length >= 4 )
-	{
-		memset( filenameBuf, '\0', _MAX_PATH);
-		strncpy( filenameBuf, tempBuf, length - 4);
-	}
-
-	File *fp;
-	asciiFile = fname;
-	fp = TheFileSystem->openFile(asciiFile.str(), File::READ);
-	if( !fp )
-	{
-		DEBUG_CRASH(("Couldn't open '%s'\n", fname.str()));
-		return 0;
-	}
-
-	UnsignedByte buf[4096];
-	Int num;
-	while ( (num=fp->read(buf, 4096)) > 0 )
-	{
-		theCRC.computeCRC(buf, num);
-	}
-
-	fp->close();
-	fp = NULL;
-
-	return theCRC.get();
-}
+// ?calcCRC@@YAIVAsciiString@@0@Z
+// Body in MapUtil_calcCRC.asm (exact 457B retail @ 0x00450560).
+// Queue 0x00AFDBD3 was mid-body of unrelated SEH fn; true body via addMap call.
+// C++ blocked by File vtable read/close slots + out-of-line CRC helper shape.
+UnsignedInt calcCRC( AsciiString dirName, AsciiString fname );
 
 static Bool ParseObjectDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData)
 {
