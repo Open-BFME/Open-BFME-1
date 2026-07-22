@@ -1131,7 +1131,6 @@ void Player::becomingTeamMember(Object *obj, Bool yes)
 }
 
 //=============================================================================
-// ?becomingLocalPlayer@Player@@QAEX_N@Z present-unmatched
 void Player::becomingLocalPlayer(Bool yes)
 {
 	if (yes)
