@@ -490,18 +490,15 @@ public:
 		return firstTransport;
 	}
 
-	static void parsePayload( INI* ini, void *instance, void *store, const void* /*userData*/ )
-	{
-		DeliverPayloadNugget* self = (DeliverPayloadNugget*)instance;
-		const char* name = ini->getNextToken();
-		const char* countStr = ini->getNextTokenOrNull();
-		Int count = countStr ? INI::scanInt(countStr) : 1;
-		
-		Payload p;
-		p.m_payloadName.set(name);
-		p.m_payloadCount = count;
-		self->m_payload.push_back(p);
-	}
+	// ?parsePayload@DeliverPayloadNugget@@SAXPAVINI@@PAX1PBX@Z
+	// Body: Code/masm_dumps/DeliverPayloadNugget_parsePayload_29FCC0.asm
+	// Exact 217B @ 0x0029FCC0 (queue 0x0029FCBF was leading int3). C++ diverges after
+	// first 53B: retail keeps count in eax + StringBase::set(PBDH) + vector at self+0x1C.
+	static void parsePayload( INI* ini, void *instance, void *store, const void* /*userData*/ );
+
+	// Force-emit Payload ctor + vector push_back COMDATs formerly only reached from
+	// the C++ parsePayload body (now MASM). Decl/def out-of-line after class.
+	static void bfmeForcePayloadComdats();
 
 	static void parse(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
 	{
@@ -566,6 +563,16 @@ private:
 	DeliverPayloadData		m_data;
 };  
 EMPTY_DTOR(DeliverPayloadNugget)
+
+// Out-of-line: keep Payload/vector COMDATs after parsePayload -> MASM.
+void DeliverPayloadNugget::bfmeForcePayloadComdats()
+{
+	Payload p;
+	std::vector<Payload> tmp;
+	tmp.push_back(p);
+}
+void (*bfme_force_DeliverPayloadNugget_Payload_comdats)() =
+	&DeliverPayloadNugget::bfmeForcePayloadComdats;
 
 //-------------------------------------------------------------------------------------------------
 static void calcRandomForce(Real minMag, Real maxMag, Real minPitch, Real maxPitch, Coord3D* force)
