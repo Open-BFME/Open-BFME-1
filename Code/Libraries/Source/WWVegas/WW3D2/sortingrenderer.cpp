@@ -163,7 +163,8 @@ void Sort(TempIndexStruct *begin, TempIndexStruct *end)
 
 class SortingNodeStruct : public DLNodeClass<SortingNodeStruct>
 {
-	W3DMPO_GLUE(SortingNodeStruct)
+	// BFME: global operator new/delete (retail Deinit @0x93BD60 calls 0x881EB0),
+	// not W3DMPO pool free — drop W3DMPO_GLUE (same as MatBuffer/TexBuffer).
 
 public:
 	RenderStateStruct sorting_state;
@@ -628,7 +629,6 @@ void SortingRendererClass::Flush_Sorting_Pool()
 
 // ----------------------------------------------------------------------------
 
-// ?Deinit@SortingRendererClass@@SAXXZ present-unmatched
 void SortingRendererClass::Deinit()
 {
 	SortingNodeStruct *head = NULL;

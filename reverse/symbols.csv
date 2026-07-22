@@ -3415,3 +3415,4 @@ _ShowControlBar,0x00024848,ShowControlBar letterbox
 ?getRelationship@Player@@QBE?AW4Relationship@@PBVTeam@@@Z,0x0003E77A
 ?SignalUIInteraction@@YAXH@Z,0x000348DD
 ?deleteNotificationBox@@YAXXZ,0x000271DD
+??1SortingNodeStruct@@QAE@XZ,0x0093B200
