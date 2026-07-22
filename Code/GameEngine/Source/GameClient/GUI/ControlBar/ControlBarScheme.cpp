@@ -885,23 +885,9 @@ ControlBarSchemeManager::~ControlBarSchemeManager( void )
 //
 // Parse the Image Part of the command bar
 //-----------------------------------------------------------------------------
-// ?parseImagePart@ControlBarSchemeManager@@ present-unmatched
-void ControlBarSchemeManager::parseImagePart(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
-{
-	static const FieldParse myFieldParse[] = 
-		{
-			{ "Position",				INI::parseICoord2D,				NULL, offsetof( ControlBarSchemeImage, m_position ) },
-			{ "Size",						INI::parseICoord2D,				NULL, offsetof( ControlBarSchemeImage, m_size ) },
-      { "ImageName",			INI::parseMappedImage,		NULL, offsetof( ControlBarSchemeImage, m_image ) },
-			{ "Layer",					INI::parseInt,						NULL, offsetof( ControlBarSchemeImage, m_layer ) },
-			{ NULL,							NULL,											NULL, 0 }  // keep this last
-		};
-
-	ControlBarSchemeImage *schemeImage = NEW ControlBarSchemeImage;
-	ini->initFromINI(schemeImage, myFieldParse);
-	((ControlBarScheme*)instance)->addImage(schemeImage);
-
-}
+// ?parseImagePart@ControlBarSchemeManager@@SAXPAVINI@@PAX1PBX@Z
+// Body in ControlBarScheme_parseImagePart.asm (exact 172B retail @ 0x4AE920).
+// Retail inlines addImage + STLport list node alloc; C++ emits call-shaped list insert.
 
 //
 // each animation part contains and image, parse it
