@@ -364,7 +364,7 @@ void GameTextManager::init( void )
 // GameTextManager::deinit
 //============================================================================
 
-// ?deinit@GameTextManager@@UAEXXZ present-unmatched
+// ?deinit@GameTextManager@@UAEXXZ
 void GameTextManager::deinit( void )
 {
 
