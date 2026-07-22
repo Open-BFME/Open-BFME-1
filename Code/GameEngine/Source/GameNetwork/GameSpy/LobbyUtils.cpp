@@ -441,33 +441,16 @@ void ReleaseWindowInfo( void )
 
 typedef std::set<GameSpyStagingRoom *> BuddyGameSet;
 static BuddyGameSet *theBuddyGames = NULL;
-static void populateBuddyGames(void)
+// ?populateBuddyGames@@YAXXZ
+// Body in LobbyUtils_populateBuddyGames.asm (exact 551B retail @ 0x0062CCE0).
+// Drift candidate 0x00542C30 was misplaced (inside unrelated code); true body
+// between matched insert@set @0x62CCA0 and clearBuddyGames @0x62CFC0.
+// Keep set::insert / Rb_tree::insert_unique COMDATs in this TU (were only
+// referenced by the old C++ populateBuddyGames body; 40B+145B matched).
+void populateBuddyGames(void);
+void LobbyUtils_force_BuddyGameSet_insert(BuddyGameSet *s, GameSpyStagingRoom *game)
 {
-	BuddyInfoMap *m = TheGameSpyInfo->getBuddyMap();
-	theBuddyGames = NEW BuddyGameSet;
-	if (!m)
-	{
-		return;
-	}
-	for (BuddyInfoMap::const_iterator bit = m->begin(); bit != m->end(); ++bit)
-	{
-		BuddyInfo info = bit->second;
-		if (info.m_status == GP_STAGING)
-		{
-			StagingRoomMap *srm = TheGameSpyInfo->getStagingRoomList();
-			for (StagingRoomMap::iterator srmIt = srm->begin(); srmIt != srm->end(); ++srmIt)
-			{
-				GameSpyStagingRoom *game = srmIt->second;
-				game->cleanUpSlotPointers();
-				const GameSpyGameSlot *slot = game->getGameSpySlot(0);
-				if (slot && slot->getName() == info.m_locationString)
-				{
-					theBuddyGames->insert(game);
-					break;
-				}
-			}
-		}
-	}
+	s->insert(game);
 }
 
 static void clearBuddyGames(void)
