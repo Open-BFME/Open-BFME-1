@@ -175,7 +175,6 @@ BattlePlanUpdate::BattlePlanUpdate( Thing *thing, const ModuleData* moduleData )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1BattlePlanUpdate@@MAE@XZ present-unmatched
 BattlePlanUpdate::~BattlePlanUpdate( void )
 {
 	TheAudio->removeAudioEvent( m_bombardmentUnpack.getPlayingHandle() );
