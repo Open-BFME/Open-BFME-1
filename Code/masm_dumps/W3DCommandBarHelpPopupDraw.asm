@@ -1,0 +1,65 @@
+.386
+.model flat
+
+; ?W3DCommandBarHelpPopupDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
+; Exact 844B retail @ 0x0079C7E0; SEH ENTRY after int3 pad (queue 0x79C783 was pad).
+; Identity: unique push Helpbox-top/bottom/middle (only .text xrefs).
+_TEXT SEGMENT
+public ?W3DCommandBarHelpPopupDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
+?W3DCommandBarHelpPopupDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z PROC
+    db 64h,0A1h,00h,00h,00h,00h,6Ah,0FFh,68h,0D2h,1Ah,05h,01h,50h,0A0h,4Ch
+    db 6Dh,30h,01h,64h,89h,25h,00h,00h,00h,00h,83h,0ECh,34h,53h,0BBh,01h
+    db 00h,00h,00h,84h,0C3h,56h,75h,4Ch,09h,1Dh,4Ch,6Dh,30h,01h,68h,78h
+    db 79h,12h,01h,8Dh,4Ch,24h,0Ch,0C7h,44h,24h,48h,00h,00h,00h,00h,0E8h
+    db 9Ch,0C3h,0Eh,00h,8Bh,0Dh,24h,69h,2Fh,01h,8Dh,44h,24h,08h,50h,88h
+    db 5Ch,24h,48h,0E8h,0CEh,0Dh,88h,0FFh,8Dh,4Ch,24h,08h,0A3h,48h,6Dh,30h
+    db 01h,0C6h,44h,24h,44h,00h,0E8h,0F5h,0B0h,0Eh,00h,83h,0CEh,0FFh,89h,74h
+    db 24h,44h,0EBh,03h,83h,0CEh,0FFh,0A0h,4Ch,6Dh,30h,01h,0BBh,02h,00h,00h
+    db 00h,84h,0C3h,75h,43h,09h,1Dh,4Ch,6Dh,30h,01h,68h,64h,79h,12h,01h
+    db 8Dh,4Ch,24h,0Ch,89h,5Ch,24h,48h,0E8h,43h,0C3h,0Eh,00h,8Dh,4Ch,24h
+    db 08h,51h,8Bh,0Dh,24h,69h,2Fh,01h,0C6h,44h,24h,48h,03h,0E8h,74h,0Dh
+    db 88h,0FFh,8Dh,4Ch,24h,08h,0A3h,44h,6Dh,30h,01h,88h,5Ch,24h,44h,0E8h
+    db 9Ch,0B0h,0Eh,00h,89h,74h,24h,44h,0A0h,4Ch,6Dh,30h,01h,0BBh,04h,00h
+    db 00h,00h,84h,0C3h,75h,43h,09h,1Dh,4Ch,6Dh,30h,01h,68h,50h,79h,12h
+    db 01h,8Dh,4Ch,24h,0Ch,89h,5Ch,24h,48h,0E8h,0F2h,0C2h,0Eh,00h,8Bh,0Dh
+    db 24h,69h,2Fh,01h,8Dh,54h,24h,08h,52h,0C6h,44h,24h,48h,05h,0E8h,23h
+    db 0Dh,88h,0FFh,8Dh,4Ch,24h,08h,0A3h,40h,6Dh,30h,01h,88h,5Ch,24h,44h
+    db 0E8h,4Bh,0B0h,0Eh,00h,89h,74h,24h,44h,8Bh,74h,24h,4Ch,8Dh,44h,24h
+    db 10h,50h,8Dh,4Ch,24h,10h,51h,8Bh,0CEh,0E8h,3Dh,30h,89h,0FFh,8Dh,54h
+    db 24h,18h,52h,8Dh,44h,24h,18h,50h,8Bh,0CEh,0E8h,9Dh,0A5h,89h,0FFh,8Bh
+    db 0Dh,48h,6Dh,30h,01h,85h,0C9h,0Fh,84h,0EEh,01h,00h,00h,0A1h,44h,6Dh
+    db 30h,01h,85h,0C0h,0Fh,84h,0E1h,01h,00h,00h,8Bh,35h,40h,6Dh,30h,01h
+    db 85h,0F6h,0Fh,84h,0D3h,01h,00h,00h,8Bh,59h,28h,8Bh,4Ch,24h,18h,55h
+    db 8Bh,68h,28h,8Bh,0C1h,2Bh,0C3h,2Bh,0C5h,85h,0C0h,57h,7Fh,64h,8Bh,54h
+    db 24h,18h,8Bh,74h,24h,1Ch,8Bh,3Dh,40h,1Bh,2Fh,01h,8Bh,3Fh,8Bh,0C1h
+    db 03h,0CAh,6Ah,0FFh,2Bh,0C5h,51h,8Bh,0Dh,44h,6Dh,30h,01h,03h,0C2h,8Bh
+    db 54h,24h,1Ch,03h,0F2h,56h,50h,52h,51h,8Bh,0Dh,40h,1Bh,2Fh,01h,0FFh
+    db 97h,0F4h,00h,00h,00h,8Bh,44h,24h,20h,8Bh,4Ch,24h,18h,8Bh,54h,24h
+    db 14h,2Bh,0C3h,2Bh,0C5h,03h,0C1h,8Bh,4Ch,24h,1Ch,6Ah,0FFh,03h,0D8h,53h
+    db 8Dh,34h,11h,56h,50h,52h,8Bh,15h,48h,6Dh,30h,01h,52h,0E9h,49h,01h
+    db 00h,00h,99h,0F7h,7Eh,28h,8Bh,54h,24h,14h,8Bh,7Ch,24h,18h,89h,54h
+    db 24h,24h,8Dh,34h,3Bh,89h,44h,24h,10h,8Bh,44h,24h,1Ch,03h,0C2h,89h
+    db 44h,24h,2Ch,8Bh,44h,24h,10h,85h,0C0h,7Eh,57h,8Bh,15h,40h,6Dh,30h
+    db 01h,8Bh,4Ah,28h,89h,44h,24h,10h,0EBh,06h,8Dh,9Bh,00h,00h,00h,00h
+    db 6Ah,0FFh,8Dh,04h,31h,8Bh,0Dh,40h,1Bh,2Fh,01h,8Bh,39h,50h,8Bh,44h
+    db 24h,34h,50h,8Bh,44h,24h,30h,56h,50h,52h,0FFh,97h,0F4h,00h,00h,00h
+    db 8Bh,15h,40h,6Dh,30h,01h,8Bh,4Ah,28h,8Bh,44h,24h,10h,03h,0F1h,48h
+    db 89h,44h,24h,10h,75h,0CAh,8Bh,7Ch,24h,18h,8Bh,54h,24h,14h,8Bh,4Ch
+    db 24h,20h,8Bh,44h,24h,24h,89h,44h,24h,34h,8Bh,44h,24h,1Ch,03h,0C2h
+    db 89h,44h,24h,3Ch,8Bh,0C1h,2Bh,0C5h,03h,0C7h,89h,44h,24h,40h,8Bh,0C1h
+    db 2Bh,0C6h,2Bh,0C5h,03h,0C7h,85h,0C0h,89h,74h,24h,38h,7Eh,57h,8Bh,0Dh
+    db 70h,12h,2Fh,01h,8Bh,11h,8Dh,44h,24h,34h,50h,0FFh,92h,88h,00h,00h
+    db 00h,8Bh,15h,40h,6Dh,30h,01h,8Bh,42h,28h,8Bh,0Dh,40h,1Bh,2Fh,01h
+    db 8Bh,39h,6Ah,0FFh,03h,0C6h,50h,8Bh,44h,24h,34h,50h,8Bh,44h,24h,30h
+    db 56h,50h,52h,0FFh,97h,0F4h,00h,00h,00h,8Bh,0Dh,70h,12h,2Fh,01h,8Bh
+    db 11h,6Ah,00h,0FFh,92h,90h,00h,00h,00h,8Bh,7Ch,24h,18h,8Bh,54h,24h
+    db 14h,8Bh,4Ch,24h,20h,8Bh,44h,24h,1Ch,8Dh,34h,39h,6Ah,0FFh,2Bh,0CDh
+    db 56h,03h,0CFh,8Bh,3Dh,40h,1Bh,2Fh,01h,8Bh,2Fh,03h,0C2h,50h,51h,8Bh
+    db 0Dh,44h,6Dh,30h,01h,52h,51h,8Bh,0CFh,0FFh,95h,0F4h,00h,00h,00h,8Bh
+    db 44h,24h,14h,8Bh,54h,24h,1Ch,8Bh,74h,24h,18h,6Ah,0FFh,03h,0D0h,03h
+    db 0DEh,53h,52h,56h,50h,0A1h,48h,6Dh,30h,01h,50h,8Bh,0Dh,40h,1Bh,2Fh
+    db 01h,8Bh,39h,0FFh,97h,0F4h,00h,00h,00h,5Fh,5Dh,8Bh,4Ch,24h,3Ch,5Eh
+    db 5Bh,64h,89h,0Dh,00h,00h,00h,00h,83h,0C4h,40h,0C3h
+?W3DCommandBarHelpPopupDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z ENDP
+_TEXT ENDS
+END
