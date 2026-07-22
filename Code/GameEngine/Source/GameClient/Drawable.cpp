@@ -3247,75 +3247,10 @@ void Drawable::drawHealing(const IRegion2D* healthBarRegion)
 // ------------------------------------------------------------------------------------------------
 /** This enthusiastic effect is TEMPORARY for the multiplayer test */
 // ------------------------------------------------------------------------------------------------
-// ?drawEnthusiastic@Drawable@@AAEXPBUIRegion2D@@@Z present-unmatched
-void Drawable::drawEnthusiastic(const IRegion2D* healthBarRegion)
-{
-
-	const Object *obj = getObject();			
-	//
-	// if we are to show effect make sure we have the animation for it allocated, otherwise
-	// free any animation we may have allocated back to the animation memory pool
-	//
-	// only display if have enthusiasm
-	
-	if( obj->testWeaponBonusCondition( WEAPONBONUSCONDITION_ENTHUSIASTIC ) == TRUE &&
-			healthBarRegion != NULL )
-	{
-
-		DrawableIconType iconIndex = ICON_ENTHUSIASTIC;
-
-		if (obj->testWeaponBonusCondition( WEAPONBONUSCONDITION_SUBLIMINAL ) == TRUE )// unless...
-			iconIndex = ICON_ENTHUSIASTIC_SUBLIMINAL;
-
-
-
-
-		if( getIconInfo()->m_icon[ iconIndex ] == NULL )
-			getIconInfo()->m_icon[ iconIndex ] = newInstance(Anim2D)( s_animationTemplates[ iconIndex ], TheAnim2DCollection );
-
-		// draw the animation if present
-		if( getIconInfo()->m_icon[ iconIndex ] != NULL)
-		{
-			
-			//
-			// we are going to draw the healing icon relative to the size of the health bar region
-			// since that region takes into account hit point size and zoom factor of the camera too
-			//
-			Int barWidth = healthBarRegion->hi.x - healthBarRegion->lo.x;// used for position
-
-			// based on our own kind of we have certain icons to display at a size scale
-			Real scale;
-			if( isKindOf( KINDOF_STRUCTURE ) || isKindOf( KINDOF_HUGE_VEHICLE ) )
-				scale = 1.00f;
-			else if( isKindOf( KINDOF_VEHICLE ) )
-				scale = 0.75f;
-			else
-				scale = 0.5f;
- 
-			Int frameWidth = getIconInfo()->m_icon[ iconIndex ]->getCurrentFrameWidth() * scale;
-			Int frameHeight = getIconInfo()->m_icon[ iconIndex ]->getCurrentFrameHeight() * scale;
-
-#ifdef SCALE_ICONS_WITH_ZOOM_ML
-			// adjust the width to be a % of the health bar region size
-			Int size = REAL_TO_INT( barWidth * scale );
-			frameHeight = REAL_TO_INT((INT_TO_REAL(size) / INT_TO_REAL(frameWidth)) * frameHeight);
-			frameWidth = size;
-#endif
-			// given our scaled width and height we need to find the bottom left point to draw the image at
-			ICoord2D screen;
-			screen.x = REAL_TO_INT( healthBarRegion->lo.x + (barWidth * 0.25f) - (frameWidth * 0.5f) );
-			screen.y = healthBarRegion->hi.y + (frameHeight * 0.25);
-			getIconInfo()->m_icon[ iconIndex ]->draw( screen.x, screen.y, frameWidth, frameHeight );
-							
-		}	
-	}
-	else
-	{
-		killIcon(ICON_ENTHUSIASTIC);
-		killIcon(ICON_ENTHUSIASTIC_SUBLIMINAL);
-	}
-
-}
+// ?drawEnthusiastic@Drawable@@AAEXPBUIRegion2D@@@Z
+// Body in Drawable_drawEnthusiastic.asm (exact 511B retail @ 0x0041A780).
+// Queue 0x009A6703/621 was mid-function (not a prologue); true body: SEH + weapon-bonus
+// bit9/15, ICON 0x0B/0x0C, region via Drawable+0x3C4/0x3CC (same family as drawEmoticon).
 
 #ifdef ALLOW_DEMORALIZE
 // ------------------------------------------------------------------------------------------------
