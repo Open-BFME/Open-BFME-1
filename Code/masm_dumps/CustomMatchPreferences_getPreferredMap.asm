@@ -1,0 +1,35 @@
+.386
+.model flat
+
+; ?getPreferredMap@CustomMatchPreferences@@QAE?AVAsciiString@@XZ
+; Exact 377 retail bytes @ 0x004AC690; Map key find/default/isValidMap (BFME LAN-style).
+_TEXT SEGMENT
+public ?getPreferredMap@CustomMatchPreferences@@QAE?AVAsciiString@@XZ
+?getPreferredMap@CustomMatchPreferences@@QAE?AVAsciiString@@XZ PROC
+    db 06Ah,0FFh,068h,0C9h,077h,0FFh,000h,064h,0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,083h,0ECh,00Ch,053h,056h,0C7h,044h,024h,00Ch,000h,000h
+    db 000h,000h,057h,08Bh,0F1h,0C7h,044h,024h,00Ch,000h,000h,000h,000h,0BBh,001h,000h
+    db 000h,000h,068h,084h,0C7h,007h,001h,08Dh,04Ch,024h,018h,089h,05Ch,024h,024h,0E8h
+    db 0ECh,0C4h,07Dh,000h,08Dh,044h,024h,014h,083h,0C6h,004h,050h,08Bh,0CEh,0E8h,0C9h
+    db 0E7h,0F5h,0FFh,08Dh,04Ch,024h,014h,08Bh,0F8h,0E8h,052h,0B2h,07Dh,000h,03Bh,03Eh
+    db 075h,03Fh,08Dh,04Ch,024h,014h,053h,051h,0E8h,0E4h,0DAh,0F5h,0FFh,083h,0C4h,008h
+    db 050h,08Dh,04Ch,024h,010h,0C6h,044h,024h,024h,002h,0E8h,081h,0B5h,07Dh,000h,08Dh
+    db 04Ch,024h,014h,088h,05Ch,024h,020h,0E8h,024h,0B2h,07Dh,000h,08Bh,074h,024h,028h
+    db 08Dh,054h,024h,00Ch,052h,08Bh,0CEh,0E8h,034h,0B4h,07Dh,000h,0E9h,0B0h,000h,000h
+    db 000h,051h,089h,064h,024h,018h,08Bh,0CCh,083h,0C7h,014h,057h,0E8h,01Fh,0B4h,07Dh
+    db 000h,08Dh,044h,024h,018h,050h,0E8h,002h,08Eh,0F9h,0FFh,083h,0C4h,008h,050h,08Dh
+    db 04Ch,024h,010h,0C6h,044h,024h,024h,003h,0E8h,033h,0B5h,07Dh,000h,08Dh,04Ch,024h
+    db 014h,088h,05Ch,024h,020h,0E8h,0D6h,0B1h,07Dh,000h,08Dh,04Ch,024h,00Ch,0E8h,02Dh
+    db 0C5h,07Dh,000h,08Bh,044h,024h,00Ch,085h,0C0h,074h,02Ch,066h,083h,078h,004h,000h
+    db 074h,025h,053h,051h,08Dh,054h,024h,014h,089h,064h,024h,01Ch,08Bh,0CCh,052h,0E8h
+    db 0CCh,0B3h,07Dh,000h,0E8h,04Eh,0E8h,0F5h,0FFh,083h,0C4h,008h,084h,0C0h,074h,007h
+    db 08Dh,044h,024h,00Ch,050h,0EBh,02Fh,08Dh,04Ch,024h,014h,053h,051h,0E8h,02Fh,0DAh
+    db 0F5h,0FFh,083h,0C4h,008h,050h,08Dh,04Ch,024h,010h,0C6h,044h,024h,024h,004h,0E8h
+    db 0CCh,0B4h,07Dh,000h,08Dh,04Ch,024h,014h,088h,05Ch,024h,020h,0E8h,06Fh,0B1h,07Dh
+    db 000h,08Dh,054h,024h,00Ch,052h,08Bh,074h,024h,02Ch,08Bh,0CEh,0E8h,07Fh,0B3h,07Dh
+    db 000h,08Dh,04Ch,024h,00Ch,089h,05Ch,024h,010h,0C6h,044h,024h,020h,000h,0E8h,04Dh
+    db 0B1h,07Dh,000h,08Bh,04Ch,024h,018h,05Fh,08Bh,0C6h,05Eh,064h,089h,00Dh,000h,000h
+    db 000h,000h,05Bh,083h,0C4h,018h,0C2h,004h,000h
+?getPreferredMap@CustomMatchPreferences@@QAE?AVAsciiString@@XZ ENDP
+_TEXT ENDS
+END
