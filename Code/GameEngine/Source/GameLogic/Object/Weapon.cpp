@@ -3003,6 +3003,32 @@ void Weapon::processRequestAssistance( const Object *requestingObject, Object *v
 }
 
 //-------------------------------------------------------------------------------------------------
+// BFME Object layout (proven via retail body @ 0x1E2D60): m_ai @ +0x204, m_weaponSet @ +0x264.
+// getDrawable is virtual vtable+0x28 (ZH header inlines m_drawable @ +0x80).
+// No enclosing-container early-out; turret math gated by WeaponTemplate+0x534 flag.
+struct BFME_Object_AIField {
+	unsigned char pad[0x204];
+	const AIUpdateInterface* ai;
+};
+struct BFME_Object_WeaponSetField {
+	unsigned char pad[0x264];
+	WeaponSet weaponSet;
+};
+class BFME_Object_GetDrawable {
+public:
+	virtual void _v0() = 0;
+	virtual void _v1() = 0;
+	virtual void _v2() = 0;
+	virtual void _v3() = 0;
+	virtual void _v4() = 0;
+	virtual void _v5() = 0;
+	virtual void _v6() = 0;
+	virtual void _v7() = 0;
+	virtual void _v8() = 0;
+	virtual void _v9() = 0;
+	virtual Drawable* getDrawable() const = 0; // vtable +0x28
+};
+
 /*static*/ void Weapon::calcProjectileLaunchPosition(
 	const Object* launcher, 
 	WeaponSlotType wslot, 
@@ -3011,73 +3037,52 @@ void Weapon::processRequestAssistance( const Object *requestingObject, Object *v
 	Coord3D& worldPos
 )
 {
-	if( launcher->getContainedBy() )
-	{
-		// If we are in an enclosing container, our launch position is our actual position.  Yes, I am putting
-		// a minor case and an oft used function, but the major case is huge and full of math.
-		if(launcher->getContainedBy()->getContain()->isEnclosingContainerFor(launcher))
-		{
-			worldTransform = *launcher->getTransformMatrix();
-			Vector3 tmp = worldTransform.Get_Translation();
-			worldPos.x = tmp.X;
-			worldPos.y = tmp.Y;
-			worldPos.z = tmp.Z;
-			return;
-		}
-	}
-
 	Real turretAngle = 0.0f;
 	Real turretPitch = 0.0f;
-	const AIUpdateInterface* ai = launcher->getAIUpdateInterface();
+	const AIUpdateInterface* ai = reinterpret_cast<const BFME_Object_AIField*>(launcher)->ai;
 	WhichTurretType tur = ai ? ai->getWhichTurretForWeaponSlot(wslot, &turretAngle, &turretPitch) : TURRET_INVALID;
-	//CRCDEBUG_LOG(("calcProjectileLaunchPosition(): Turret %d, slot %d, barrel %d for %s\n", tur, wslot, specificBarrelToUse, DescribeObject(launcher).str()));
 
 	Matrix3D attachTransform(true);
 	Coord3D turretRotPos = {0.0f, 0.0f, 0.0f};
 	Coord3D turretPitchPos = {0.0f, 0.0f, 0.0f};
-	const Drawable* draw = launcher->getDrawable();
-	//CRCDEBUG_LOG(("Do we have a drawable? %d\n", (draw != NULL)));
+	const Drawable* draw = reinterpret_cast<const BFME_Object_GetDrawable*>(launcher)->getDrawable();
 	if (!draw || !draw->getProjectileLaunchOffset(wslot, specificBarrelToUse, &attachTransform, tur, &turretRotPos, &turretPitchPos))
 	{
-		//CRCDEBUG_LOG(("ProjectileLaunchPos %d %d not found!\n",wslot, specificBarrelToUse));
-		DEBUG_CRASH(("ProjectileLaunchPos %d %d not found!\n",wslot, specificBarrelToUse));
 		attachTransform.Make_Identity();
 		turretRotPos.zero();
 		turretPitchPos.zero();
 	}
-	if (tur != TURRET_INVALID)
+
+	// Retail only applies turret pitch/yaw when slot weapon's template has flag @ +0x534
+	// (template pointer assumed non-null when weapon is present — no extra null check).
+	const Weapon* slotWeapon = reinterpret_cast<const BFME_Object_WeaponSetField*>(launcher)->weaponSet.getWeaponInWeaponSlot(wslot);
+	if (slotWeapon)
 	{
-		// The attach transform is the pristine front and center position of the fire point
-		// We can't read from the client, so we need to reproduce the actual point that
-		// takes turn and pitch into account.
-		Matrix3D turnAdjustment(1);
-		Matrix3D pitchAdjustment(1);
+		const WeaponTemplate* slotTmpl = *reinterpret_cast<const WeaponTemplate* const*>((const char*)slotWeapon + 4);
+		if (*reinterpret_cast<const Bool*>((const char*)slotTmpl + 0x534) && tur != TURRET_INVALID)
+		{
+			Matrix3D turnAdjustment(1);
+			Matrix3D pitchAdjustment(1);
 
-		// To rotate about a point, move that point to 0,0, rotate, then move it back.
-		// Pre rotate will keep the first twist from screwing the angle of the second pitch
-		pitchAdjustment.Translate( turretPitchPos.x, turretPitchPos.y, turretPitchPos.z );
-		pitchAdjustment.In_Place_Pre_Rotate_Y(-turretPitch);
-		pitchAdjustment.Translate( -turretPitchPos.x, -turretPitchPos.y, -turretPitchPos.z );
+			pitchAdjustment.Translate( turretPitchPos.x, turretPitchPos.y, turretPitchPos.z );
+			pitchAdjustment.In_Place_Pre_Rotate_Y(-turretPitch);
+			pitchAdjustment.Translate( -turretPitchPos.x, -turretPitchPos.y, -turretPitchPos.z );
 
-		turnAdjustment.Translate( turretRotPos.x, turretRotPos.y, turretRotPos.z );
-		turnAdjustment.In_Place_Pre_Rotate_Z(turretAngle);
-		turnAdjustment.Translate( -turretRotPos.x, -turretRotPos.y, -turretRotPos.z );
+			turnAdjustment.Translate( turretRotPos.x, turretRotPos.y, turretRotPos.z );
+			turnAdjustment.In_Place_Pre_Rotate_Z(turretAngle);
+			turnAdjustment.Translate( -turretRotPos.x, -turretRotPos.y, -turretRotPos.z );
 
 #ifdef ALLOW_TEMPORARIES
-		attachTransform = turnAdjustment * pitchAdjustment * attachTransform;
+			attachTransform = turnAdjustment * pitchAdjustment * attachTransform;
 #else
-		Matrix3D tmp = attachTransform;
-		attachTransform.mul(turnAdjustment, pitchAdjustment);
-		attachTransform.postMul(tmp);
+			Matrix3D tmp = attachTransform;
+			attachTransform.mul(turnAdjustment, pitchAdjustment);
+			attachTransform.postMul(tmp);
 #endif
+		}
 	}
 
-//#if defined(_DEBUG) || defined(_INTERNAL)
-//  Real muzzleHeight = attachTransform.Get_Z_Translation();
-//  DEBUG_ASSERTCRASH( muzzleHeight > 0.001f, ("YOUR TURRET HAS A VERY LOW PROJECTILE LAUNCH POSITION, BUT FOUND A VALID BONE. DID YOU PICK THE WRONG ONE? %s", launcher->getTemplate()->getName().str()));
-//#endif
-  
-  launcher->convertBonePosToWorldPos(NULL, &attachTransform, NULL, &worldTransform);
+	launcher->convertBonePosToWorldPos(NULL, &attachTransform, NULL, &worldTransform);
 
 	Vector3 tmp = worldTransform.Get_Translation();
 	worldPos.x = tmp.X;

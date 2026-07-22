@@ -3410,3 +3410,4 @@ _ShowControlBar,0x00024848,ShowControlBar letterbox
 ??1?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@@_STL@@QAE@XZ,0x0004AB6A,LocomotorStore dtor map clear ILT thunk
 ?winSetFont@GameWindow@@UAEXPAVGameFont@@@Z,0x0004047B
 ?GadgetListBoxSetBottomVisibleEntry@@YAXPAVGameWindow@@H@Z,0x004B8550
+?getProjectileLaunchOffset@Drawable@@QBE_NW4WeaponSlotType@@HPAVMatrix3D@@W4WhichTurretType@@PAUCoord3D@@3@Z,0x0041B9C0
