@@ -402,25 +402,8 @@ void AI::addSideInfo(AISideInfo *infoToAdd)
 //-------------------------------------------------------------------------------------------------
 /** Parse GameData entry */
 //-------------------------------------------------------------------------------------------------
-// ?parseAiDataDefinition@AI@@SAXPAVINI@@@Z present-unmatched
-void AI::parseAiDataDefinition( INI* ini )
-{
-	if( TheAI )
-	{
-
-		// 
-		// if the type of loading we're doing creates override data, we need to
-		// be loading into a new override item
-		//
-		if( ini->getLoadType() == INI_LOAD_CREATE_OVERRIDES )
-			TheAI->newOverride();
-
-	}  // end if
-
-	// parse the ini weapon definition
-	ini->initFromINI( TheAI->m_aiData, TheAIFieldParseTable );
-
-}
+// ?parseAiDataDefinition@AI@@SAXPAVINI@@@Z
+// Body in ai_parseAiDataDefinition.asm (exact 50B retail @ 0x0014E580).
 
 
 
