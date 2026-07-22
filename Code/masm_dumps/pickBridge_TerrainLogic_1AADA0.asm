@@ -1,0 +1,30 @@
+.386
+.model flat
+
+; ?pickBridge@TerrainLogic@@UAE_NABVVector3@@0PAV2@@Z
+; Exact 276 retail bytes @ 0x001AADA0
+; true body (queue 0x003D8C32 was int3 pad; only Bridge::pickBridge callers: this + 0x3D8C40)
+_TEXT SEGMENT
+public ?pickBridge@TerrainLogic@@UAE_NABVVector3@@0PAV2@@Z
+?pickBridge@TerrainLogic@@UAE_NABVVector3@@0PAV2@@Z PROC
+    db 083h,0ECh,018h,08Bh,001h,053h,033h,0DBh,057h,089h,05Ch,024h,008h,089h,05Ch,024h
+    db 00Ch,089h,05Ch,024h,010h,0FFh,090h,094h,000h,000h,000h,08Bh,0F8h,085h,0FFh,00Fh
+    db 084h,0CBh,000h,000h,000h,055h,056h,0EBh,007h,08Dh,0A4h,024h,000h,000h,000h,000h
+    db 08Bh,054h,024h,030h,08Bh,044h,024h,02Ch,08Dh,04Ch,024h,01Ch,051h,052h,050h,08Bh
+    db 0CFh,0E8h,0A4h,0F1h,0E9h,0FFh,084h,0C0h,074h,061h,08Bh,077h,060h,085h,0F6h,074h
+    db 03Ah,08Bh,00Dh,098h,008h,02Fh,001h,08Bh,081h,0B4h,000h,000h,000h,08Bh,0A9h,0B8h
+    db 000h,000h,000h,02Bh,0E8h,033h,0D2h,0C1h,0FDh,002h,08Bh,0C6h,0F7h,0F5h,08Bh,089h
+    db 0B4h,000h,000h,000h,08Bh,014h,091h,085h,0D2h,074h,010h,0EBh,003h,08Dh,049h,000h
+    db 039h,072h,004h,074h,059h,08Bh,012h,085h,0D2h,075h,0F5h,033h,0C0h,085h,0DBh,075h
+    db 01Ah,08Bh,04Ch,024h,020h,08Bh,054h,024h,024h,08Bh,0D8h,08Bh,044h,024h,01Ch,089h
+    db 044h,024h,010h,089h,04Ch,024h,014h,089h,054h,024h,018h,08Bh,07Fh,004h,085h,0FFh
+    db 00Fh,085h,07Ah,0FFh,0FFh,0FFh,085h,0DBh,05Eh,05Dh,074h,034h,08Bh,044h,024h,02Ch
+    db 0D9h,044h,024h,008h,08Bh,04Ch,024h,00Ch,0D9h,018h,08Bh,054h,024h,010h,05Fh,089h
+    db 048h,004h,089h,050h,008h,0B0h,001h,05Bh,083h,0C4h,018h,0C2h,00Ch,000h,085h,0D2h
+    db 074h,0A9h,08Bh,04Ah,008h,085h,0C9h,074h,0A2h,08Bh,011h,0FFh,052h,028h,0EBh,09Dh
+    db 0A1h,014h,0F2h,02Eh,001h,08Bh,054h,024h,02Ch,08Bh,048h,00Ch,08Bh,044h,024h,028h
+    db 052h,08Bh,054h,024h,028h,050h,052h,0E8h,0F5h,040h,0E7h,0FFh,05Fh,05Bh,083h,0C4h
+    db 018h,0C2h,00Ch,000h
+?pickBridge@TerrainLogic@@UAE_NABVVector3@@0PAV2@@Z ENDP
+_TEXT ENDS
+END
