@@ -188,29 +188,9 @@ void LANAPI::handleLobbyAnnounce( LANMessage *msg, UnsignedInt senderIP )
 	OnNameChange(player->getIP(), player->getName());
 }
 
-// ?handleRequestGameInfo@LANAPI@@IAEXPAULANMessage@@I@Z present-unmatched
-void LANAPI::handleRequestGameInfo( LANMessage *msg, UnsignedInt senderIP )
-{
-	// In game - are we a game host?
-	if (m_currentGame)
-	{
-		if (m_currentGame->getIP(0) == m_localIP || (m_currentGame->isGameInProgress() && TheNetwork && TheNetwork->isPacketRouter())) // if we're in game we should reply if we're the packet router
-		{
-			LANMessage reply;
-			fillInLANMessage( &reply );
-			reply.LANMessageType = LANMessage::MSG_GAME_ANNOUNCE;
-			
-			AsciiString gameOpts = GameInfoToAsciiString(m_currentGame);
-			strncpy(reply.GameInfo.options,gameOpts.str(),m_lanMaxOptionsLength);
-			wcsncpy(reply.GameInfo.gameName, m_currentGame->getName().str(), g_lanGameNameLength);
-			reply.GameInfo.gameName[g_lanGameNameLength] = 0;
-			reply.GameInfo.inProgress = m_currentGame->isGameInProgress();
-			reply.GameInfo.isDirectConnect = m_currentGame->getIsDirectConnect();
-
-			sendMessage(&reply, senderIP);
-		}
-	}
-}
+// ?handleRequestGameInfo@LANAPI@@IAEXPAULANMessage@@I@Z
+// Body in LANAPIhandlers_handleRequestGameInfo.asm (exact 254B retail @ 0x68B380;
+// queue 0x9DAFF9 was a misplaced unit-tag dispatcher).
 
 // ?handleRequestJoin@LANAPI@@IAEXPAULANMessage@@I@Z
 // Body in LANAPIhandlers_handleRequestJoin.asm (exact 1119B retail).
