@@ -1373,7 +1373,6 @@ Bool ScriptConditions::evaluatePlayerHasPower(Parameter *pPlayerParm)
 //-------------------------------------------------------------------------------------------------
 /** evaluateNamedReachedWaypointsEnd */
 //-------------------------------------------------------------------------------------------------
-// ?evaluateNamedReachedWaypointsEnd@ScriptConditions@@IAE_NPAVParameter@@0@Z present-unmatched
 Bool ScriptConditions::evaluateNamedReachedWaypointsEnd(Parameter *pUnitParm, Parameter* pWaypointPathParm)
 {
 	Object *theObj = TheScriptEngine->getUnitNamed( pUnitParm->getString() );
