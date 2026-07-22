@@ -278,15 +278,9 @@ void GameSpyInfo::joinGroupRoom( Int groupID )
 	}
 }
 
-// ?leaveGroupRoom@GameSpyInfo@@UAEXXZ present-unmatched
-void GameSpyInfo::leaveGroupRoom( void )
-{
-	PeerRequest req;
-	req.peerRequestType = PeerRequest::PEERREQUEST_LEAVEGROUPROOM;
-	TheGameSpyPeerMessageQueue->addRequest(req);
-	setCurrentGroupRoom(0);
-	m_playerInfoMap.clear();
-}
+// ?leaveGroupRoom@GameSpyInfo@@UAEXXZ
+// Body in PeerDefs_leaveGroupRoom.asm (exact 188B retail @ 0x00634CE0).
+
 
 // ?joinBestGroupRoom@GameSpyInfo@@UAEXXZ present-unmatched
 void GameSpyInfo::joinBestGroupRoom( void )
