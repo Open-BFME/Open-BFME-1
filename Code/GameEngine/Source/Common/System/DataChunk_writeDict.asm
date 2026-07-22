@@ -1,0 +1,86 @@
+.386
+.model flat
+
+; ?writeDict@DataChunkOutput@@QAEXABVDict@@@Z
+; Exact 572 retail bytes @ 0x001043B0 (queue 0x001043FB was INSIDE after first fwrite).
+; Identity: after writeNameKey@0x104300+int3; getPairCount; keyToName+allocateID;
+; shl8|type; switch 5 cases DICT_BOOL..UNICODESTRING jumptable @0x1045D8; ret 4.
+; C++ blocked: regalloc (esi/edi) + 564vs572 + unresolved sibling writers + AsciiString SEH same as writeNameKey.
+_TEXT SEGMENT
+public ?writeDict@DataChunkOutput@@QAEXABVDict@@@Z
+?writeDict@DataChunkOutput@@QAEXABVDict@@@Z PROC
+    db 6Ah,0FFh,64h,0A1h,0h,0h,0h,0h
+    db 68h,98h,0CBh,0FFh,0h,50h,64h,89h
+    db 25h,0h,0h,0h,0h,83h,0ECh,10h
+    db 53h,55h,8Bh,6Ch,24h,28h,8Bh,45h
+    db 0h,56h,33h,0F6h,3Bh,0C6h,57h,8Bh
+    db 0D9h,74h,0Ah,0Fh,0B7h,40h,4h,89h
+    db 44h,24h,10h,0EBh,4h,89h,74h,24h
+    db 10h,8Bh,4Bh,4h,51h,6Ah,1h,8Dh
+    db 54h,24h,18h,6Ah,2h,52h,0FFh,15h
+    db 0F4h,93h,35h,1h,83h,0C4h,10h,33h
+    db 0FFh,66h,39h,74h,24h,10h,0Fh,86h
+    db 0B7h,1h,0h,0h,0EBh,2h,33h,0F6h
+    db 8Bh,45h,0h,3Bh,0C6h,74h,15h,3Bh
+    db 0FEh,7Ch,11h,0Fh,0B7h,48h,4h,3Bh
+    db 0F9h,7Dh,9h,8Bh,44h,0F8h,6h,0C1h
+    db 0E8h,8h,0EBh,2h,33h,0C0h,8Bh,0Dh
+    db 0h,0D6h,2Eh,1h,50h,8Dh,54h,24h
+    db 18h,52h,0E8h,3Bh,0A8h,0F3h,0FFh,8Dh
+    db 44h,24h,14h,50h,8Dh,4Bh,8h,89h
+    db 74h,24h,2Ch,0E8h,2Ah,14h,0F1h,0FFh
+    db 3Bh,0C6h,74h,5h,8Bh,70h,0Ch,0EBh
+    db 46h,6Ah,10h,0E8h,0D0h,0DAh,77h,0h
+    db 83h,0C4h,4h,3Bh,0C6h,74h,0Bh,0C7h
+    db 0h,44h,63h,8h,1h,89h,70h,8h
+    db 8Bh,0F0h,8Bh,4Bh,10h,89h,4Eh,0Ch
+    db 8Bh,4Bh,10h,41h,8Dh,54h,24h,14h
+    db 89h,4Bh,10h,8Dh,4Eh,8h,52h,0E8h
+    db 4h,38h,78h,0h,8Bh,43h,8h,89h
+    db 46h,4h,8Bh,43h,0Ch,40h,89h,73h
+    db 8h,89h,43h,0Ch,8Bh,76h,0Ch,8Bh
+    db 45h,0h,0C1h,0E6h,8h,85h,0C0h,8Bh
+    db 0CEh,74h,18h,85h,0FFh,7Ch,14h,0Fh
+    db 0B7h,50h,4h,3Bh,0FAh,7Dh,0Ch,8Bh
+    db 74h,0F8h,6h,81h,0E6h,0FFh,0h,0h
+    db 0h,0EBh,3h,83h,0CEh,0FFh,8Bh,0C6h
+    db 25h,0FFh,0h,0h,0h,0Bh,0C1h,8Bh
+    db 4Bh,4h,51h,6Ah,1h,8Dh,54h,24h
+    db 38h,6Ah,4h,52h,89h,44h,24h,40h
+    db 0FFh,15h,0F4h,93h,35h,1h,83h,0C4h
+    db 10h,83h,0FEh,4h,0Fh,87h,0B2h,0h
+    db 0h,0h,0FFh,24h,0B5h,0D8h,45h,50h
+    db 0h,57h,8Bh,0CDh,0E8h,1Bh,0A3h,0F1h
+    db 0FFh,8Bh,4Bh,4h,51h,6Ah,1h,84h
+    db 0C0h,8Dh,54h,24h,38h,0Fh,95h,0C0h
+    db 6Ah,1h,52h,88h,44h,24h,40h,0FFh
+    db 15h,0F4h,93h,35h,1h,83h,0C4h,10h
+    db 0E9h,7Fh,0h,0h,0h,57h,8Bh,0CDh
+    db 0E8h,0DEh,34h,0F3h,0FFh,89h,44h,24h
+    db 30h,8Bh,43h,4h,50h,6Ah,1h,8Dh
+    db 4Ch,24h,38h,6Ah,4h,51h,0FFh,15h
+    db 0F4h,93h,35h,1h,83h,0C4h,10h,0EBh
+    db 5Bh,57h,8Bh,0CDh,0E8h,0CBh,65h,0F2h
+    db 0FFh,0D9h,5Ch,24h,18h,8Bh,53h,4h
+    db 52h,6Ah,1h,8Dh,44h,24h,20h,6Ah
+    db 4h,50h,0FFh,15h,0F4h,93h,35h,1h
+    db 83h,0C4h,10h,0EBh,37h,57h,8Dh,4Ch
+    db 24h,20h,51h,8Bh,0CDh,0E8h,0A9h,9h
+    db 0F2h,0FFh,50h,8Bh,0CBh,0E8h,3Ch,0A6h
+    db 0F1h,0FFh,8Dh,4Ch,24h,1Ch,0E8h,0B5h
+    db 33h,78h,0h,0EBh,17h,51h,8Bh,0D4h
+    db 89h,64h,24h,34h,57h,52h,8Bh,0CDh
+    db 0E8h,0A7h,5Ch,0F1h,0FFh,8Bh,0CBh,0E8h
+    db 0C3h,1Eh,0F3h,0FFh,8Dh,4Ch,24h,14h
+    db 0C7h,44h,24h,28h,0FFh,0FFh,0FFh,0FFh
+    db 0E8h,8Bh,33h,78h,0h,0Fh,0B7h,44h
+    db 24h,10h,47h,3Bh,0F8h,0Fh,8Ch,4Bh
+    db 0FEh,0FFh,0FFh,8Bh,4Ch,24h,20h,5Fh
+    db 5Eh,5Dh,64h,89h,0Dh,0h,0h,0h
+    db 0h,5Bh,83h,0C4h,1Ch,0C2h,4h,0h
+    db 0F9h,44h,50h,0h,25h,45h,50h,0h
+    db 49h,45h,50h,0h,6Dh,45h,50h,0h
+    db 8Dh,45h,50h,0h
+?writeDict@DataChunkOutput@@QAEXABVDict@@@Z ENDP
+_TEXT ENDS
+END

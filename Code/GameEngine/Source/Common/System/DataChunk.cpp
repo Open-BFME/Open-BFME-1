@@ -365,45 +365,20 @@ void DataChunkOutput::writeUnicodeString( UnicodeString theString )
 // Queue 0x00454F43 was misplaced (inside MapUtil Player_%d_Start fn @ 0x454EF0).
 
 
-// ?writeDict@DataChunkOutput@@QAEXABVDict@@@Z present-unmatched
-void DataChunkOutput::writeDict( const Dict& d ) 
-{ 
-	UnsignedShort len = d.getPairCount();
-	::fwrite( (const char *)&len, sizeof(UnsignedShort) , 1, m_tmp_file );
-	for (int i = 0; i < len; i++)
-	{
-		NameKeyType k = d.getNthKey(i);
-		AsciiString kname = TheNameKeyGenerator->keyToName(k);
+// ?writeDict@DataChunkOutput@@QAEXABVDict@@@Z
+// Body in DataChunk_writeDict.asm (exact 572B retail @ 0x001043B0).
+// Queue 0x001043FB was INSIDE (after first fwrite of pair-count).
 
-		Int keyAndType = m_contents.allocateID(kname);
-		keyAndType <<= 8;
-		Dict::DataType t = d.getNthType(i);
-		keyAndType |= (t & 0xff);
-		writeInt(keyAndType);
-
-		switch(t)
-		{
-			case Dict::DICT_BOOL:
-				writeByte(d.getNthBool(i)?1:0);
-				break;
-			case Dict::DICT_INT:
-				writeInt(d.getNthInt(i));
-				break;
-			case Dict::DICT_REAL:
-				writeReal(d.getNthReal(i));
-				break;
-			case Dict::DICT_ASCIISTRING:
-				writeAsciiString(d.getNthAsciiString(i));
-				break;
-			case Dict::DICT_UNICODESTRING:
-				writeUnicodeString(d.getNthUnicodeString(i));
-				break;
-			default:
-				DEBUG_CRASH(("impossible"));
-				break;
-		}
-	}
+// Force-emit Dict inline accessors matched as out-of-line COMDATs on this TU.
+// Previously only pulled by the C++ writeDict body (now MASM).
+static void bfme_force_dict_accessors(const Dict &d, Int n)
+{
+	(void)d.getPairCount();
+	(void)d.getNthKey(n);
+	(void)d.getNthType(n);
 }
+// Address-of prevents the static helper (and thus the accessor COMDATs) from being dropped.
+void (*bfme_force_dict_accessors_anchor)(const Dict &, Int) = &bfme_force_dict_accessors;
 
 //----------------------------------------------------------------------
 // DataChunkTableOfContents
