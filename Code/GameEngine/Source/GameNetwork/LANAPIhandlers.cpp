@@ -100,70 +100,17 @@ void LANAPI::handleRequestLocations( LANMessage *msg, UnsignedInt senderIP )
 	OnNameChange(player->getIP(), player->getName());
 }
 
-// ?handleGameAnnounce@LANAPI@@IAEXPAULANMessage@@I@Z present-unmatched
-void LANAPI::handleGameAnnounce( LANMessage *msg, UnsignedInt senderIP )
+// ?handleGameAnnounce@LANAPI@@IAEXPAULANMessage@@I@Z
+// Body in LANAPIhandlers_handleGameAnnounce.asm (exact 596B retail @ 0x68C110;
+// true body via update jmp table MSG_GAME_ANNOUNCE; queue 0xC5FB21 misplaced).
+
+// Force-emit GameInfo::setGameInProgress COMDAT (matched @ 0x6B6C0 on this TU).
+// Was only referenced by the C++ handleGameAnnounce body (now MASM).
+static void bfme_force_setGameInProgress(GameInfo *g, Bool v)
 {
-	if (senderIP == m_localIP)
-	{
-		return; // Don't try to update own info
-	}
-	else if (m_currentGame && m_currentGame->isGameInProgress())
-	{
-		return; // Don't care about games if we're playing
-	}
-	else if (senderIP == m_directConnectRemoteIP)
-	{
-
-		if (m_currentGame == NULL)
-		{
-			LANGameInfo *game = LookupGame(UnicodeString(msg->GameInfo.gameName));
-			if (!game)
-			{
-				game = NEW LANGameInfo;
-				game->setName(UnicodeString(msg->GameInfo.gameName));
-				addGame(game);
-			}
-			Bool success = ParseGameOptionsString(game,AsciiString(msg->GameInfo.options));
-			game->setGameInProgress(msg->GameInfo.inProgress);
-			game->setIsDirectConnect(msg->GameInfo.isDirectConnect);
-			game->setLastHeard(timeGetTime());
-			if (!success)
-			{
-				// remove from list
-				removeGame(game);
-				delete game;
-				game = NULL;
-				return;
-			}
-			RequestGameJoin(game, m_directConnectRemoteIP);
-		}
-	}
-	else
-	{
-		LANGameInfo *game = LookupGame(UnicodeString(msg->GameInfo.gameName));
-		if (!game)
-		{
-			game = NEW LANGameInfo;
-			game->setName(UnicodeString(msg->GameInfo.gameName));
-			addGame(game);
-		}
-		Bool success = ParseGameOptionsString(game,AsciiString(msg->GameInfo.options));
-		game->setGameInProgress(msg->GameInfo.inProgress);
-		game->setIsDirectConnect(msg->GameInfo.isDirectConnect);
-		game->setLastHeard(timeGetTime());
-		if (!success)
-		{
-			// remove from list
-			removeGame(game);
-			delete game;
-			game = NULL;
-		}
-
-		OnGameList( m_games );
-	//	if (game == m_currentGame && !m_inLobby)
-	//		OnSlotList(RET_OK, game);
-	}
+	g->setGameInProgress(v);
 }
+void (*bfme_force_setGameInProgress_anchor)(GameInfo *, Bool) = &bfme_force_setGameInProgress;
 
 // ?handleLobbyAnnounce@LANAPI@@IAEXPAULANMessage@@I@Z present-unmatched
 void LANAPI::handleLobbyAnnounce( LANMessage *msg, UnsignedInt senderIP )
