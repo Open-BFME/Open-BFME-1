@@ -748,7 +748,6 @@ void SidesList::addPlayerByTemplate(AsciiString playerTemplateName)
 	addTeam(&d);
 }
 
-// ?validateSides@SidesList@@QAE_NXZ present-unmatched
 Bool SidesList::validateSides()
 {
 	Bool modified = false;
