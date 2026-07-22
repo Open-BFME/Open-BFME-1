@@ -330,7 +330,8 @@ Bool SpecialPowerModule::isReady() const
 	* 0.2f = 20% ready
 	* etc ... */
 //-------------------------------------------------------------------------------------------------
-// ?getPercentReady@SpecialPowerModule@@UBEMXZ present-unmatched
+// Matched via Code/masm_dumps/SpecialPowerModule_getPercentReady.asm @ 0x00268A90 (210B)
+// Retail: early [this+0x14] flag returns 0.0; no ZH 0.99999 paused-at-ready path
 Real SpecialPowerModule::getPercentReady() const
 {
 	if( m_pausedCount > 0 && m_pausedPercent == 1.0f )
