@@ -3256,7 +3256,6 @@ void AIPlayer::loadPostProcess( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??1TeamInQueue@@MAE@XZ present-unmatched
 TeamInQueue::~TeamInQueue()
 {
 	WorkOrder *order, *next;
