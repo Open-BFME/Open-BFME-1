@@ -103,7 +103,6 @@ CashHackSpecialPower::~CashHackSpecialPower( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?doSpecialPowerAtLocation@CashHackSpecialPower@@UAEXPBUCoord3D@@MI@Z present-unmatched
 void CashHackSpecialPower::doSpecialPowerAtLocation( const Coord3D *loc, Real angle, UnsignedInt commandOptions )
 {
 	if (getObject()->isDisabled())
@@ -115,7 +114,6 @@ void CashHackSpecialPower::doSpecialPowerAtLocation( const Coord3D *loc, Real an
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?findAmountToSteal@CashHackSpecialPower@@IBEHXZ present-unmatched
 Int CashHackSpecialPower::findAmountToSteal() const
 {
 	const CashHackSpecialPowerModuleData* d = getCashHackSpecialPowerModuleData();
