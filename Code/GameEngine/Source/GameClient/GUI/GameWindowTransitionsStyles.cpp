@@ -1839,7 +1839,7 @@ FullFadeTransition::~FullFadeTransition( void )
 	
 }
 
-// ?init@FullFadeTransition@@UAEXPAVGameWindow@@@Z present-unmatched
+// matched via Code/masm_dumps/_sa__init_FullFadeTransition_UAEXPAVGameWindow_Z_59D420.asm
 void FullFadeTransition::init( GameWindow *win )
 {
 
