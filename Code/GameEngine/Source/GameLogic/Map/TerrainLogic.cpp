@@ -1347,7 +1347,6 @@ Bool TerrainLogic::loadMap( AsciiString filename, Bool query )
 //-------------------------------------------------------------------------------------------------
 /** Reads in the waypoint chunk */
 //-------------------------------------------------------------------------------------------------
-// ?parseWaypointDataChunk@TerrainLogic@@KA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z present-unmatched
 Bool TerrainLogic::parseWaypointDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData)
 {
 	TerrainLogic *pThis = (TerrainLogic *)userData;
@@ -1703,18 +1702,21 @@ Bridge * TerrainLogic::findBridgeAt( const Coord3D *pLoc) const
 //-------------------------------------------------------------------------------------------------
 /** Finds the bridge at a given x/y coordinate.  On a layer. */
 //-------------------------------------------------------------------------------------------------
-// ?findBridgeLayerAt@TerrainLogic@@UBEPAVBridge@@PBUCoord3D@@W4PathfindLayerEnum@@_N@Z present-unmatched
 Bridge * TerrainLogic::findBridgeLayerAt( const Coord3D *pLoc, PathfindLayerEnum layer, Bool clip) const
 {
-	if (layer == LAYER_GROUND) 
+	// BFME: reject LAYER_GROUND and layers > LAYER_LAST (shared early-exit shape).
+	if (layer == LAYER_GROUND || layer > LAYER_LAST)
 		return NULL;
 
 	Bridge *pBridge = getFirstBridge();
 	while (pBridge) 
 	{
-		if (pBridge->getLayer() == layer && (!clip || pBridge->isPointOnBridge(pLoc))) 
+		if (pBridge->getLayer() == layer)
 		{
-			return(pBridge);
+			if (!clip || pBridge->isPointOnBridge(pLoc))
+			{
+				return(pBridge);
+			}
 		}
 		pBridge = pBridge->getNext();
 	}
