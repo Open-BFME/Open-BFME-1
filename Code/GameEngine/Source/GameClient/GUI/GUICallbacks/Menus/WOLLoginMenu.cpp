@@ -114,7 +114,7 @@ class GameSpyLoginPreferences : public UserPreferences
 {
 public:
 	GameSpyLoginPreferences() { m_emailPasswordMap.clear(); m_emailNickMap.clear(); }
-	virtual ~GameSpyLoginPreferences() { m_emailPasswordMap.clear(); m_emailNickMap.clear(); }
+	virtual ~GameSpyLoginPreferences() {}
 
 	virtual Bool load(AsciiString fname);
 	virtual Bool write(void);
