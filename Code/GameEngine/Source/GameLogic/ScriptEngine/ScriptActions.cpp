@@ -4771,39 +4771,11 @@ void ScriptActions::doNamedUseCommandButtonAbilityOnNamed( const AsciiString& un
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?doNamedUseCommandButtonAbilityAtWaypoint@ScriptActions@@IAEXABVAsciiString@@00@Z present-unmatched
-void ScriptActions::doNamedUseCommandButtonAbilityAtWaypoint( const AsciiString& unit, const AsciiString& ability, const AsciiString& waypoint )
-{
-	Object *theObj = TheScriptEngine->getUnitNamed( unit );
-	Waypoint *pWaypoint = TheTerrainLogic->getWaypointByName( waypoint );
-	
-	//Sanity check
-	if( !theObj || !pWaypoint )
-	{
-		return;
-	}
-
-	const CommandSet *commandSet = TheControlBar->findCommandSet( theObj->getCommandSetString() );
-	if( commandSet )
-	{
-		for( Int i = 0; i < MAX_COMMANDS_PER_SET; i++ )
-		{
-			//Get the command button.
-			const CommandButton *commandButton = commandSet->getCommandButton(i);
-
-			if( commandButton )
-			{
-				if( !commandButton->getName().isEmpty() )
-				{
-					if( commandButton->getName() == ability )
-					{
-						theObj->doCommandButtonAtPosition( commandButton, pWaypoint->getLocation(), CMD_FROM_SCRIPT );
-					}
-				}
-			}
-		}
-	}
-}
+/** doNamedUseCommandButtonAbilityAtWaypoint */
+//-------------------------------------------------------------------------------------------------
+// ?doNamedUseCommandButtonAbilityAtWaypoint@ScriptActions@@IAEXABVAsciiString@@00@Z
+// Body in ScriptActions_doNamedUseCommandButtonAbilityAtWaypoint.asm (exact 169B retail @ 0x2F9F10).
+// Queue RVA 0x5AF3BD was INSIDE mega FUN_009ade90 (mid-call residual), not this body.
 
 //-------------------------------------------------------------------------------------------------
 // ?doNamedUseCommandButtonAbilityUsingWaypointPath@ScriptActions@@IAEXABVAsciiString@@00@Z present-unmatched
