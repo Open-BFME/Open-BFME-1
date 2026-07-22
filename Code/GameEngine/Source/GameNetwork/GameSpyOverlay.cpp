@@ -46,6 +46,24 @@
 void deleteNotificationBox( void );
 static void raiseOverlays( void );
 
+// BFME WindowLayout vtable order (see Code/.../window_layout.h):
+// slot0 runInit, slot1 dtor, slot2 runUpdate (+0x08), slot3 runShutdown (+0x0c),
+// slot4 hide (+0x10), slot5 bringForward (+0x14), slot8 destroyWindows (+0x20).
+// Retail raiseOverlays/RaiseGSMessageBox and CloseAll use this slot map.
+class BFMEOverlayLayoutCloseView
+{
+public:
+	virtual void runInit( void *userData ) {}
+	virtual ~BFMEOverlayLayoutCloseView() {}
+	virtual void runUpdate( void *userData ) {}
+	virtual void runShutdown( void *userData ) {}
+	virtual void hide( int hide ) {}
+	virtual void bringForward( void ) {}
+	virtual void addWindow( void *window ) {}
+	virtual void removeWindow( void *window ) {}
+	virtual void destroyWindows( void ) {}
+};
+
 // Message boxes -------------------------------------
 static GameWindow *messageBoxWindow = NULL;
 static GameWinMsgBoxFunc okFunc = NULL;
@@ -143,15 +161,13 @@ void GSMessageBoxYesNo(UnicodeString title, UnicodeString message, GameWinMsgBox
 /**
 	* If the screen transitions underneath the dialog box, we
 	* need to raise it to keep it visible.
+	*
+	* Retail (0x627C50, 32B): only the overlay bringForward loop. The ZH
+	* messageBoxWindow->winBringToTop() tail is absent from the standalone body.
 	*/
 void RaiseGSMessageBox( void )
 {
 	raiseOverlays();
-
-	if (!messageBoxWindow)
-		return;
-
-	messageBoxWindow->winBringToTop();
 }
 
 // Overlay screens -------------------------------------
@@ -290,31 +306,14 @@ void GameSpyToggleOverlay( GSOverlayType overlay )
 
 void raiseOverlays( void )
 {
+	// Double-load of overlayLayouts[i] yields retail mov eax,[esi]/mov ecx,eax
+	// thiscall shape (single local would load straight into ecx, 30B miss).
 	for (int i=0; i<GSOVERLAY_MAX; ++i)
 	{
-		if (overlayLayouts[(GSOverlayType)i])
-		{
-			overlayLayouts[(GSOverlayType)i]->bringForward();
-		}
+		if (overlayLayouts[i])
+			((BFMEOverlayLayoutCloseView *)overlayLayouts[i])->bringForward();
 	}
 }
-
-// BFME WindowLayout vtable order for the close path (see Code/.../window_layout.h):
-// slot0 runInit, slot1 dtor, slot2 runUpdate, slot3 runShutdown (+0x0c),
-// slot8 destroyWindows (+0x20). Retail inlines GameSpyCloseOverlay into this loop.
-class BFMEOverlayLayoutCloseView
-{
-public:
-	virtual void runInit( void *userData ) {}
-	virtual ~BFMEOverlayLayoutCloseView() {}
-	virtual void runUpdate( void *userData ) {}
-	virtual void runShutdown( void *userData ) {}
-	virtual void hide( int hide ) {}
-	virtual void bringForward( void ) {}
-	virtual void addWindow( void *window ) {}
-	virtual void removeWindow( void *window ) {}
-	virtual void destroyWindows( void ) {}
-};
 
 void GameSpyCloseAllOverlays( void )
 {
