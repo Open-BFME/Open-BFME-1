@@ -63,6 +63,25 @@
 #include "GameNetwork/DownloadManager.h"
 #include "GameNetwork/GameSpy/MainMenuUtils.h"
 
+// Retail StringBase<char> temp ABI for DownloadMenuInput @ 0x4C8360:
+// ctor 0x888BC0, buffer data at +8, dtor via releaseBuffer 0x887940 (same as DifficultySelect).
+class BFMERetailAsciiString
+{
+public:
+	BFMERetailAsciiString( const char *string );
+	~BFMERetailAsciiString() { releaseBuffer(); }
+
+	const char *str() const
+	{
+		static const char nullCharacter = 0;
+		return m_data ? m_data + 8 : &nullCharacter;
+	}
+
+private:
+	void releaseBuffer();
+	char *m_data;
+};
+
 // PRIVATE DATA ///////////////////////////////////////////////////////////////////////////////////
 static NameKeyType buttonCancelID = NAMEKEY_INVALID;
 static NameKeyType staticTextSizeID = NAMEKEY_INVALID;
@@ -328,8 +347,8 @@ WindowMsgHandledType DownloadMenuInput( GameWindow *window, UnsignedInt msg,
 					//
 					if( BitTest( state, KEY_STATE_UP ) )
 					{
-						AsciiString buttonName( "DownloadMenu.wnd:ButtonCancel" );
-						NameKeyType buttonID = TheNameKeyGenerator->nameToKey( buttonName );
+						BFMERetailAsciiString buttonName( "DownloadMenu.wnd:ButtonCancel" );
+						NameKeyType buttonID = TheNameKeyGenerator->nameToKey( buttonName.str() );
 						GameWindow *button = TheWindowManager->winGetWindowFromId( window, buttonID );
 
 						TheWindowManager->winSendSystemMsg( window, GBM_SELECTED, 
