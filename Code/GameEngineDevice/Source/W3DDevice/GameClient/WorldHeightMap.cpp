@@ -2468,46 +2468,38 @@ AsciiString WorldHeightMap::getTerrainNameAt(Real x, Real y)
 static UnsignedByte s_buffer[DATA_LEN_BYTES];
 static UnsignedByte s_blendBuffer[DATA_LEN_BYTES];
 
-// ?getPointerToTileData@WorldHeightMap@@QAEPAEHHH@Z present-unmatched
+class BFMERetailWorldHeightMap
+{
+public:
+	void blendTileData(TBlendTileInfo *blend, Int width);
+};
+
 UnsignedByte * WorldHeightMap::getPointerToTileData(Int xIndex, Int yIndex, Int width) 
 {
-	Int ndx = (yIndex*m_width)+xIndex;
-	if (yIndex<0 || xIndex<0 || xIndex>=m_width || yIndex>=m_height) {
-		return NULL;
-	}
-	if (ndx<0 || ndx>=m_dataSize) {
-		return NULL;
-	}
-	TBlendTileInfo *pBlend = NULL;  
-	Short tileNdx = m_tileNdxes[ndx];
-	if (getRawTileData(tileNdx, width, s_buffer, DATA_LEN_BYTES)) {
-		Short blendTileNdx = m_blendTileNdxes[ndx];
-		if (blendTileNdx>0 && blendTileNdx < NUM_BLEND_TILES) {
-			pBlend = &m_blendedTiles[blendTileNdx];
-			if (getRawTileData(pBlend->blendNdx, width, s_blendBuffer, DATA_LEN_BYTES)) {
-				UnsignedByte *pAlpha = getRGBAlphaDataForWidth(width, pBlend);
-				pAlpha += 3;  // skip over the rgb to the a.
-				Int i, limit;
-				limit = width*width;
-				UnsignedByte *pBlendData = s_blendBuffer;
-				UnsignedByte *pDestData = s_buffer;
-				for (i=0; i<limit; i++) {				
-					Int r,g,b,a;
-					b = *pBlendData++;
-					g = *pBlendData++;
-					r = *pBlendData++; *pBlendData++;
-					a = *pAlpha; pAlpha += 4;
-					*pDestData++ = ((b*a)/255) + (((*pDestData)*(255-a))/255);
-					*pDestData++ = ((g*a)/255) + (((*pDestData)*(255-a))/255);
-					*pDestData++ = ((r*a)/255) + (((*pDestData)*(255-a))/255);
-					*pDestData++ = 255; // just skip alpha.  not really used. jba.
-				}
-			}
+	UnsignedByte *rawThis = (UnsignedByte *)this;
+	Int ndx = yIndex * *(Int *)(rawThis + 0x08) + xIndex;
+	if (yIndex >= 0 && xIndex >= 0 && xIndex < *(Int *)(rawThis + 0x08) &&
+		yIndex < *(Int *)(rawThis + 0x0c) && ndx >= 0 &&
+		ndx < *(Int *)(rawThis + 0x20)) {
+		Short tileNdx = ((Short *)*(UnsignedByte **)(rawThis + 0x8c))[ndx];
+		if (!getRawTileData(tileNdx, width, s_buffer, DATA_LEN_BYTES)) {
+			return NULL;
 		}
-		return(s_buffer);
+		Int blendTileNdx = (*(Int **)(rawThis + 0x90))[ndx];
+		Int extraBlendTileNdx = (*(Int **)(rawThis + 0x98))[ndx];
+		if (!isCliffMappedTexture(xIndex, yIndex) && blendTileNdx > 0 &&
+			blendTileNdx < ((std::vector<TBlendTileInfo> *)(rawThis + 0x80a4))->size()) {
+			((BFMERetailWorldHeightMap *)this)->blendTileData(
+				&(*(std::vector<TBlendTileInfo> *)(rawThis + 0x80a4))[blendTileNdx], width);
+		}
+		if (*(Int *)((UnsignedByte *)TheGlobalData + 0x40) && extraBlendTileNdx > 0 &&
+			extraBlendTileNdx < ((std::vector<TBlendTileInfo> *)(rawThis + 0x80a4))->size()) {
+			((BFMERetailWorldHeightMap *)this)->blendTileData(
+				&(*(std::vector<TBlendTileInfo> *)(rawThis + 0x80a4))[extraBlendTileNdx], width);
+		}
+		return s_buffer;
 	}
-
-	return(NULL);
+	return NULL;
 }
 
 #define K_HORIZ 0
