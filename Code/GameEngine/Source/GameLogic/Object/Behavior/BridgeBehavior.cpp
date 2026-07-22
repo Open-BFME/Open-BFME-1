@@ -1035,7 +1035,6 @@ void BridgeBehavior::setScaffoldData( Object *obj,
 /** Start the bridge repair scaffolding.  If we already have scaffolding this call
 	* is ignored */
 // ------------------------------------------------------------------------------------------------
-// ?createScaffolding@BridgeBehavior@@UAEXXZ present-unmatched
 void BridgeBehavior::createScaffolding( void )
 {
 
