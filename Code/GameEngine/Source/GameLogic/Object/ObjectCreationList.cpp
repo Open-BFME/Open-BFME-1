@@ -192,21 +192,14 @@ public:
 	// Retail: AI@Object+0x204, fields +0x34/+0x38/+0x3c, setWeaponLock on Object, ret 0x10.
 	virtual Object* create( const Object* primaryObj, const Coord3D *primary, const Coord3D* secondary, Real angle, UnsignedInt lifetimeFrames = 0 ) const;
 
-	static void parse(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
-	{
-		static const FieldParse myFieldParse[] = 
-		{
-			{ "NumberOfShots",	INI::parseInt,				NULL, offsetof( AttackNugget, m_numberOfShots ) },
-			{ "WeaponSlot",			INI::parseLookupList,	TheWeaponSlotTypeNamesLookupList, offsetof( AttackNugget, m_weaponSlot ) },
-			{ "DeliveryDecal",				RadiusDecalTemplate::parseRadiusDecalTemplate,	NULL, offsetof( AttackNugget, m_deliveryDecalTemplate ) },
-			{ "DeliveryDecalRadius",	INI::parseReal, NULL, offsetof(AttackNugget, m_deliveryDecalRadius) },
-			{ 0, 0, 0, 0 }
-		};
+	// ?parse@AttackNugget@@SAXPAVINI@@PAX1PBX@Z
+	// Body: Code/masm_dumps/AttackNugget_parse_1D8770.asm
+	// Exact 105B @ 0x001D8770 (queue 0x001D87E2 was INT3 pad after this fn).
+	// C++ blocked: sizeof retail 0x40 vs ZH 0x2c (RadiusDecalTemplate layout @+4..+0x33).
+	static void parse(INI *ini, void *instance, void* /*store*/, const void* /*userData*/);
 
-		AttackNugget* nugget = newInstance(AttackNugget);
-		ini->initFromINI(nugget, myFieldParse);
-		((ObjectCreationList*)instance)->addObjectCreationNugget(nugget);
-	}
+	// Force-emit pool MagicEnum new/delete COMDATs formerly only reached from C++ parse.
+	static void bfmeForcePoolComdats();
 
 private:
 	RadiusDecalTemplate	m_deliveryDecalTemplate;
@@ -215,6 +208,15 @@ private:
 	WeaponSlotType			m_weaponSlot;
 };  
 EMPTY_DTOR(AttackNugget)
+
+// Out-of-line: keep ??2/??3 AttackNugget MagicEnum after parse -> MASM.
+void AttackNugget::bfmeForcePoolComdats()
+{
+	AttackNugget* n = newInstance(AttackNugget);
+	if (n)
+		n->deleteInstance();
+}
+void (*bfme_force_AttackNugget_pool_comdats)() = &AttackNugget::bfmeForcePoolComdats;
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
