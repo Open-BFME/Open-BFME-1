@@ -703,170 +703,13 @@ for arbitrary rays such as those used in AI visbility checks.(2 units on
 opposite corners of the map would check every polygon in the map).
 */
 //=============================================================================
-// ?Cast_Ray@BaseHeightMapRenderObjClass@@UAE_NAAVRayCollisionTestClass@@@Z present-unmatched
-bool BaseHeightMapRenderObjClass::Cast_Ray(RayCollisionTestClass & raytest)
-{
-	TriClass tri;
-	Bool hit = false;
-	Int X,Y;
-	Vector3 normal,P0,P1,P2,P3;
-
-	if (!m_map)
-		return false;	//need valid pointer to heightmap samples
-//HeightSampleType *pData = m_map->getDataPtr();
-	//Clip ray to extents of heightfield
-	AABoxClass hbox;
-	LineSegClass lineseg,lineseg2;
-	CastResultStruct	result;
-	Int StartCellX = 0;
-	Int EndCellX = 0;
- 	Int StartCellY = 0;
-	Int EndCellY = 0;
-	const Int overhang = 2*32+m_map->getBorderSizeInline(); // Allow picking past the edge for scrolling & objects.
- 	Vector3 minPt(MAP_XY_FACTOR*(-overhang), MAP_XY_FACTOR*(-overhang), -MAP_XY_FACTOR);
-	Vector3 maxPt(MAP_XY_FACTOR*(m_map->getXExtent()+overhang), 
-		MAP_XY_FACTOR*(m_map->getYExtent()+overhang), MAP_HEIGHT_SCALE*m_map->getMaxHeightValue()+MAP_XY_FACTOR);
-	MinMaxAABoxClass mmbox(minPt, maxPt);
-	hbox.Init(mmbox);
-
-	lineseg=raytest.Ray;
-
-	//Set initial ray endpoints
-	P0 = raytest.Ray.Get_P0();
-	P1 = raytest.Ray.Get_P1();
-	result.ComputeContactPoint=true;
-
-	Int p;
-	for (p=0; p<3; p++) {
-		//find intersection point of ray and terrain bounding box
-		result.Reset();
-		result.ComputeContactPoint=true;
-		if (CollisionMath::Collide(lineseg,hbox,&result))
-		{	//ray intersects terrain or starts inside the terrain.
-			if (!result.StartBad)	//check if start point inside terrain
-				P0 = result.ContactPoint;			//make intersection point the new start of the ray.
-
-			//reverse direction of original ray and clip again to extent of
-			//heightmap
-			result.Fraction=1.0f;	//reset the result
-			result.StartBad=false;
-			lineseg2.Set(lineseg.Get_P1(),lineseg.Get_P0());	//reverse line segment
-			if (CollisionMath::Collide(lineseg2,hbox,&result))
-			{	if (!result.StartBad)	//check if end point inside terrain
-					P1 = result.ContactPoint;	//make intersection point the new end pont of ray
-			}
-		} else {
-			if (p==0) return(false);
-			break;
-		}
-
-		// Take the 2D bounding box of ray and check heights
-		// inside this box for intersection.
-		if (P0.X > P1.X) {	//flip start/end points
-			StartCellX = REAL_TO_INT_FLOOR(P1.X/MAP_XY_FACTOR);
-			EndCellX = REAL_TO_INT_CEIL(P0.X/MAP_XY_FACTOR);
-		}	else {
-			StartCellX = REAL_TO_INT_FLOOR(P0.X/MAP_XY_FACTOR);
-			EndCellX = REAL_TO_INT_CEIL(P1.X/MAP_XY_FACTOR);
-		}
-		if (P0.Y > P1.Y) {	//flip start/end points
-			StartCellY = REAL_TO_INT_FLOOR(P1.Y/MAP_XY_FACTOR);
-			EndCellY = REAL_TO_INT_CEIL(P0.Y/MAP_XY_FACTOR);
-		}	else {
-			StartCellY = REAL_TO_INT_FLOOR(P0.Y/MAP_XY_FACTOR);
-			EndCellY = REAL_TO_INT_CEIL(P1.Y/MAP_XY_FACTOR);
-		}
-
-		Int i, j, minHt, maxHt;
-
-		minHt = m_map->getMaxHeightValue();
-		maxHt = 0;
-
-		for (j=StartCellY; j<=EndCellY; j++) {
-			for (i=StartCellX; i<=EndCellX; i++) {
-				Short cur = getClipHeight(i+m_map->getBorderSizeInline(),j+m_map->getBorderSizeInline());
-				if (cur<minHt) minHt = cur;
-				if (maxHt<cur) maxHt = cur;
-			}
-		}
-		Vector3 minPt(MAP_XY_FACTOR*(StartCellX-1), MAP_XY_FACTOR*(StartCellY-1), MAP_HEIGHT_SCALE*(minHt-1));
-		Vector3 maxPt(MAP_XY_FACTOR*(EndCellX+1), MAP_XY_FACTOR*(EndCellY+1), MAP_HEIGHT_SCALE*(maxHt+1));
-		MinMaxAABoxClass mmbox(minPt, maxPt);
-		hbox.Init(mmbox);
-	}
-
-	raytest.Result->ComputeContactPoint=true;	//tell CollisionMath that we need point.
-
-	// Adjust indexes into the bordered height map.
-
-	StartCellX += m_map->getBorderSizeInline();
-	EndCellX += m_map->getBorderSizeInline();
-	StartCellY += m_map->getBorderSizeInline();
-	EndCellY += m_map->getBorderSizeInline();
-
-	Int offset;
-	for (offset = 1; offset < 5; offset *= 3) {
-		for (Y=StartCellY-offset; Y<=EndCellY+offset; Y++) { 
-
-			for (X=StartCellX-offset; X<=EndCellX+offset; X++) {
-				//test the 2 triangles in this cell
-				//	3-----2
-				//  |    /|
-				//  |  /  |
-				//	|/    |
-				//  0-----1
-
-				//bottom triangle first
-				P0.X=ADJUST_FROM_INDEX_TO_REAL(X);
-				P0.Y=ADJUST_FROM_INDEX_TO_REAL(Y);
-				P0.Z=MAP_HEIGHT_SCALE*(float)getClipHeight(X, Y);
-
-				P1.X=ADJUST_FROM_INDEX_TO_REAL(X+1);
-				P1.Y=ADJUST_FROM_INDEX_TO_REAL(Y);
-				P1.Z=MAP_HEIGHT_SCALE*(float)getClipHeight(X+1, Y);
-
-				P2.X=ADJUST_FROM_INDEX_TO_REAL(X+1);
-				P2.Y=ADJUST_FROM_INDEX_TO_REAL(Y+1);
-				P2.Z=MAP_HEIGHT_SCALE*(float)getClipHeight(X+1, Y+1);
-
-				P3.X=ADJUST_FROM_INDEX_TO_REAL(X);
-				P3.Y=ADJUST_FROM_INDEX_TO_REAL(Y+1);
-				P3.Z=MAP_HEIGHT_SCALE*(float)getClipHeight(X, Y+1);
-
-
-				tri.V[0] = &P0; 
-				tri.V[1] = &P1;
-				tri.V[2] = &P2;
-				
-				tri.N = &normal;
-
-				tri.Compute_Normal();
-
-				hit = hit || (Bool)CollisionMath::Collide(raytest.Ray, tri, raytest.Result);
-
-				if (raytest.Result->StartBad)
-					return true;
-
-				//top triangle
-				tri.V[0] = &P2; 
-				tri.V[1] = &P3;
-				tri.V[2] = &P0;
-				
-				tri.N = &normal;
-
-				tri.Compute_Normal();
-
-				hit = hit || (Bool)CollisionMath::Collide(raytest.Ray, tri, raytest.Result);
-
-				if (hit)
-					raytest.Result->SurfaceType = SURFACE_TYPE_DEFAULT;	///@todo: WW3D uses this to return dirt, grass, etc.  Do we need this?
-			}
-			// Don't break.  It is possible to intersect 2 triangles, and the second is closer. if (hit) break;
-		}
-		// Don't break.  It is possible to intersect 2 triangles, and the second is closer. if (hit) break;
-	}
-	return hit;
-}
+// ?Cast_Ray@BaseHeightMapRenderObjClass@@UAE_NAAVRayCollisionTestClass@@@Z
+// Body in BaseHeightMap_Cast_Ray.asm (exact 2839B retail @ 0x006CDF90; queue
+// 0x0096A3CA was MISPLACED). m_map@+0x2FF4; field-offset blocks C++.
+// Keep MinMaxAABoxClass(Vector3,Vector3) + LineSegClass::operator= COMDATs
+// in this TU (were only referenced by the old C++ Cast_Ray body).
+static MinMaxAABoxClass _BaseHeightMap_Force_MinMaxAABox(Vector3(0,0,0), Vector3(0,0,0));
+LineSegClass& (LineSegClass::*_BaseHeightMap_Force_LineSeg_eq)(const LineSegClass&) = &LineSegClass::operator=;
 
 //=============================================================================
 // BaseHeightMapRenderObjClass::getHeightMapHeight
@@ -1418,7 +1261,7 @@ Int BaseHeightMapRenderObjClass::Class_ID(void) const
 //=============================================================================
 /** Not used, but required virtual method. */
 //=============================================================================
-// ?Clone@BaseHeightMapRenderObjClass@@UBEPAVRenderObjClass@@XZ present-unmatched
+// ?Clone@BaseHeightMapRenderObjClass@@UBEPAVRenderObjClass@@XZ
 RenderObjClass *	 BaseHeightMapRenderObjClass::Clone(void) const
 {
 	assert(false);
