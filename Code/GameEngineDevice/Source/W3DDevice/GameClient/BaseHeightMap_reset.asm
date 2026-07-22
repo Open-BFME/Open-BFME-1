@@ -1,0 +1,58 @@
+.386
+.model flat
+
+; ?reset@BaseHeightMapRenderObjClass@@UAEXXZ
+; Exact 372 retail bytes @ 0x006D03B0; queue RVA 0x006D041C was INSIDE (+0x6C); field-offset drift blocks C++
+_TEXT SEGMENT
+public ?reset@BaseHeightMapRenderObjClass@@UAEXXZ
+?reset@BaseHeightMapRenderObjClass@@UAEXXZ PROC
+    db 83h,0ECh,08h,56h,8Bh,0F1h,8Bh,8Eh
+    db 94h,30h,00h,00h,57h,33h,0FFh,3Bh
+    db 0CFh,0C6h,86h,0D0h,30h,00h,00h,01h
+    db 74h,05h,0E8h,08h,0DAh,93h,0FFh,8Bh
+    db 8Eh,0B4h,30h,00h,00h,3Bh,0CFh,74h
+    db 05h,0E8h,9Dh,65h,96h,0FFh,8Bh,8Eh
+    db 98h,30h,00h,00h,3Bh,0CFh,74h,05h
+    db 0E8h,85h,59h,97h,0FFh,8Bh,8Eh,9Ch
+    db 30h,00h,00h,3Bh,0CFh,74h,05h,0E8h
+    db 0BFh,94h,95h,0FFh,8Bh,8Eh,0ACh,30h
+    db 00h,00h,3Bh,0CFh,89h,0BEh,0C4h,2Fh
+    db 00h,00h,89h,0BEh,0C8h,2Fh,00h,00h
+    db 89h,0BEh,0CCh,2Fh,00h,00h,89h,0BEh
+    db 0E0h,2Fh,00h,00h,74h,05h,0E8h,0D6h
+    db 32h,96h,0FFh,8Bh,8Eh,0B0h,30h,00h
+    db 00h,3Bh,0CFh,74h,05h,0E8h,27h,3Ah
+    db 93h,0FFh,8Bh,8Eh,0A4h,30h,00h,00h
+    db 3Bh,0CFh,74h,05h,0E8h,0A3h,0A1h,96h
+    db 0FFh,8Bh,8Eh,0A0h,30h,00h,00h,3Bh
+    db 0CFh,74h,05h,0E8h,80h,00h,97h,0FFh
+    db 8Bh,96h,28h,30h,00h,00h,8Dh,8Eh
+    db 20h,30h,00h,00h,83h,0ECh,08h,8Bh
+    db 0C4h,89h,10h,8Bh,51h,0Ch,89h,50h
+    db 04h,8Bh,11h,83h,0ECh,08h,8Bh,0C4h
+    db 89h,10h,8Bh,51h,04h,89h,50h,04h
+    db 8Dh,44h,24h,18h,50h,0E8h,0AFh,91h
+    db 95h,0FFh,8Bh,96h,3Ch,30h,00h,00h
+    db 8Dh,8Eh,34h,30h,00h,00h,83h,0ECh
+    db 08h,8Bh,0C4h,89h,10h,8Bh,51h,0Ch
+    db 89h,50h,04h,8Bh,11h,83h,0ECh,08h
+    db 8Bh,0C4h,89h,10h,8Bh,51h,04h,89h
+    db 50h,04h,8Dh,44h,24h,18h,50h,0E8h
+    db 7Dh,91h,95h,0FFh,8Bh,8Eh,0B8h,30h
+    db 00h,00h,3Bh,0CFh,74h,1Fh,0E8h,89h
+    db 0A5h,93h,0FFh,8Bh,0Dh,0C8h,0D5h,2Eh
+    db 01h,33h,0D2h,8Ah,91h,86h,0Ch,00h
+    db 00h,8Bh,8Eh,0B8h,30h,00h,00h,52h
+    db 0E8h,43h,7Fh,95h,0FFh,8Bh,8Eh,0BCh
+    db 30h,00h,00h,3Bh,0CFh,74h,1Eh,0E8h
+    db 13h,6Eh,95h,0FFh,0A1h,0C8h,0D5h,2Eh
+    db 01h,33h,0C9h,8Ah,88h,0A0h,0Ch,00h
+    db 00h,51h,8Bh,8Eh,0BCh,30h,00h,00h
+    db 0E8h,0F0h,0BAh,93h,0FFh,57h,51h,89h
+    db 64h,24h,10h,8Bh,0CCh,68h,1Ch,30h
+    db 07h,01h,0E8h,0A9h,86h,1Bh,00h,8Bh
+    db 0CEh,0E8h,0C4h,37h,93h,0FFh,5Fh,5Eh
+    db 83h,0C4h,08h,0C3h
+?reset@BaseHeightMapRenderObjClass@@UAEXXZ ENDP
+_TEXT ENDS
+END
