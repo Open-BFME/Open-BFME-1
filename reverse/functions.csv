@@ -13159,3 +13159,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?GadgetListBoxAddMultiSelect@@YAXPAVGameWindow@@@Z,,0x004BB800,109,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?checkForDuplicateColors@@YAXPAVGameInfo@@@Z,,0x00386520,104,Code/masm_dumps/_checkForDuplicateColors__YAXPAVGameInfo___Z_386520.asm,matched,MASM exact retail; true body 0x386520 (queue 0x38651F int3); MultiplayerSettings getNumColors offsets +0x3c/+0x34 vs ZH +0x28/+0x20
 ?updateDisconnectStatus@DisconnectManager@@IAEXPAVConnectionManager@@@Z,,0x0066C3B0,750,Code/masm_dumps/DisconnectManager_updateDisconnectStatus.asm,matched,Exact MASM dump BFME rewrite 750B (ZH shape 370B); ENTRY+call-graph identity
+?update@AIAttackFireWeaponState@@UAE?AW4StateReturnType@@XZ,,0x0017C250,979,Code/masm_dumps/AIAttackFireWeaponState_update.asm,matched,Exact 979B MASM vtable-anchored AIAttackFireWeaponState vt@0xC97DC0 slot6; queue 0x76E86C mid-insn

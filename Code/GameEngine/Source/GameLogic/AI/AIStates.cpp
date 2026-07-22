@@ -5225,7 +5225,6 @@ StateReturnType AIAttackFireWeaponState::onEnter()
  * Fire the owner's weapon once and exit.
  */
 
-// ?update@AIAttackFireWeaponState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIAttackFireWeaponState::update()
 {
 	// contained by AIAttackState, so no separate timer
