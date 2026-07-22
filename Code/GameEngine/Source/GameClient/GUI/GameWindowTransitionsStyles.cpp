@@ -1488,7 +1488,6 @@ CountUpTransition::~CountUpTransition( void )
 	m_win = NULL;
 }
 
-// ?init@CountUpTransition@@UAEXPAVGameWindow@@@Z present-unmatched
 void CountUpTransition::init( GameWindow *win )
 {
 	if(win)
