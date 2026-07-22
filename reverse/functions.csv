@@ -13223,3 +13223,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?findLocomotor@LocomotorSet@@QAEPAVLocomotor@@H@Z,,0x001B5CF0,73,Code/masm_dumps/LocomotorSet_findLocomotor.asm,matched,exact 73B MASM; true body 0x1B5CF0 (queue 0x77B169 mid-cleanup); m_template@Locomotor+4 getFinalOverride@0x22BB surfaces+0x10
 ??0ClassicEnvironmentMapperClass@@QAE@I@Z,,0x00921390,25,Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp,matched,
 ?newMap@Radar@@UAEXPAVTerrainLogic@@@Z,,0x001078B0,323,Code/masm_dumps/Radar_newMap.asm,matched,true body 0x1078B0/323 (queue 0x79CEFC MOTD pad misplaced); LeftHUD helper+getExtent+128x128 avg; MASM exact
+??1VideoPlayer@@UAE@XZ,,0x0081C590,35,Code/masm_dumps/VideoPlayer_destructor.asm,matched,Exact 35B @ 0x81C590; VP vtable 0x112CCC0 slot0 scalar 0x81C7C0 + matched init slot1 prove ownership; clears TheVideoPlayer; C++ blocked by vector<Video> SEH layout
