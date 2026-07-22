@@ -2201,41 +2201,12 @@ UnicodeString GadgetListBoxGetTextAndColor( GameWindow *listbox, Color *color, I
 // GadgetListBoxAddEntryText ==================================================
 /** Add a new string entry into the listbox at the insert position */
 //=============================================================================
-Int GadgetListBoxAddEntryText( GameWindow *listbox,
-														UnicodeString text,
-														Color color, Int row, Int column, Bool overwrite )
-{
-	if (!listbox)
-		return -1;
-	if (text.isEmpty())
-		text = UnicodeString(L" ");
-	Int index;
-	AddMessageStruct addInfo;
-	addInfo.row = row;
-	addInfo.column = column;
-	addInfo.type = LISTBOX_TEXT;
-	addInfo.data = &text;
-	addInfo.overwrite = overwrite;
-	addInfo.height = -1;
-	addInfo.width = -1;
-
-	ListboxData *listData = (ListboxData *)listbox->winGetUserData();
-	Bool wasFull = (listData->listLength <= listData->endPos);
-	Int newEntryOffset = (wasFull)?0:1;
-	Int oldBottomIndex = GadgetListBoxGetBottomVisibleEntry(listbox);
-
-	/// @TODO: Don't do this type cast!
-	index = (Int) TheWindowManager->winSendSystemMsg( listbox, GLM_ADD_ENTRY, (WindowMsgData)&addInfo, color );
-
-	//DEBUG_ASSERTLOG(!listData->scrollIfAtEnd, ("Adding line %d (orig end was %d, newEntryOffset is %d, (%d-%d)?=%d, isFull=%d/%d ll=%d, end=%d\n",
-		//index, oldBottomIndex, newEntryOffset, index, oldBottomIndex, newEntryOffset, wasFull, GadgetListBoxIsFull(listbox), listData->listLength, listData->endPos));
-	if(listData->scrollIfAtEnd && index - oldBottomIndex == newEntryOffset && GadgetListBoxIsFull(listbox))
-	{
-	  GadgetListBoxSetBottomVisibleEntry( listbox, index );
-	}
-
-	return (index);
-}  // end GadgetListBoxAddEntry
+// BFME body is MASM exact-byte dump (MSVC 7.1 cannot emit retail empty-string
+// temp on the listbox arg home with lea rematerialize; rest of body matches
+// with GLM_ADD_ENTRY=0x4011 and ListboxData endPos@+0x2C):
+// Code/masm_dumps/GadgetListBoxAddEntryText_4BB4B0.asm @ 0x004BB4B0 size 357
+// Int GadgetListBoxAddEntryText( GameWindow *listbox, UnicodeString text,
+//     Color color, Int row, Int column, Bool overwrite );
 
 // GadgetListBoxAddEntryImage =================================================
 /** Add a new string entry into the listbox at the insert position */
