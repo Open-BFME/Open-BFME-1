@@ -1,0 +1,95 @@
+.386
+.model flat
+
+; ?renderObjectList@W3DRadar@@IAEXPBVRadarObject@@PAVTextureClass@@_N@Z
+; Exact 1296 retail bytes @ 0x006C43F0
+; Identity: ILT thunk 0x272A5 is called twice by W3DRadar::draw at 0x6C4E0A/0x6C4E17;
+; body traverses RadarObject nodes, handles shroud/stealth, and emits legal-point-guarded pixels.
+; Queue RVA 0x78D467 was inside unrelated code; true boundary ends at ret 0Ch then 0xCC pad.
+_TEXT SEGMENT
+public ?renderObjectList@W3DRadar@@IAEXPBVRadarObject@@PAVTextureClass@@_N@Z
+?renderObjectList@W3DRadar@@IAEXPBVRadarObject@@PAVTextureClass@@_N@Z PROC
+    db 6Ah,0FFh,68h,0DEh,9Fh,04h,01h,64h,0A1h,00h,00h,00h,00h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,83h,0ECh,3Ch,56h,57h,8Bh,7Ch,24h,54h,85h,0FFh
+    db 8Bh,0F1h,89h,74h,24h,14h,0Fh,84h,0D1h,04h,00h,00h,8Bh,4Ch,24h,58h
+    db 83h,39h,00h,0Fh,84h,0C4h,04h,00h,00h,8Dh,44h,24h,0Ch,50h,0E8h,3Dh
+    db 0A2h,24h,00h,8Bh,0Dh,48h,0D7h,2Eh,01h,8Bh,41h,0Ch,85h,0C0h,0C7h,44h
+    db 24h,4Ch,00h,00h,00h,00h,0C7h,44h,24h,20h,00h,00h,00h,00h,74h,07h
+    db 8Bh,50h,24h,89h,54h,24h,20h,0D9h,86h,48h,14h,00h,00h,53h,0D8h,0A6h
+    db 3Ch,14h,00h,00h,89h,7Ch,24h,1Ch,55h,0D8h,3Dh,5Ch,88h,08h,01h,0D9h
+    db 5Ch,24h,2Ch,0D9h,86h,4Ch,14h,00h,00h,0D8h,0A6h,40h,14h,00h,00h,0D8h
+    db 3Dh,5Ch,88h,08h,01h,0D9h,5Ch,24h,34h,8Dh,0A4h,24h,00h,00h,00h,00h
+    db 8Bh,74h,24h,20h,8Bh,0CEh,0E8h,83h,0F5h,96h,0FFh,84h,0C0h,0Fh,85h,24h
+    db 04h,00h,00h,8Bh,76h,04h,8Bh,46h,04h,85h,0C0h,74h,0Ch,8Bh,48h,04h
+    db 85h,0C9h,74h,05h,0E8h,02h,0DEh,93h,0FFh,8Bh,98h,0D4h,00h,00h,00h,8Bh
+    db 44h,24h,28h,0C1h,0EBh,17h,50h,8Bh,0CEh,80h,0E3h,01h,0E8h,4Dh,73h,96h
+    db 0FFh,83h,0F8h,02h,0Fh,9Fh,0C0h,84h,0DBh,88h,44h,24h,12h,75h,3Bh,84h
+    db 0C0h,0Fh,85h,0E0h,03h,00h,00h,8Bh,0CEh,0E8h,40h,0A0h,95h,0FFh,83h,0F8h
+    db 04h,75h,27h,8Bh,0Dh,48h,0D7h,2Eh,01h,8Bh,79h,0Ch,8Bh,0CEh,0E8h,21h
+    db 0C3h,95h,0FFh,3Bh,0C7h,74h,13h,8Bh,0Dh,48h,0D7h,2Eh,01h,0E8h,0CAh,0EBh
+    db 96h,0FFh,84h,0C0h,0Fh,85h,0ADh,03h,00h,00h,0D9h,44h,24h,2Ch,0D8h,4Eh
+    db 38h,0E8h,12h,29h,33h,00h,0D9h,44h,24h,34h,0D8h,4Eh,3Ch,8Bh,0F8h,0E8h
+    db 04h,29h,33h,00h,8Bh,0E8h,8Ah,44h,24h,12h,84h,0C0h,75h,09h,8Bh,54h
+    db 24h,20h,8Bh,42h,0Ch,0EBh,42h,8Bh,44h,24h,1Ch,8Bh,88h,0ACh,14h,00h
+    db 00h,85h,0C9h,75h,2Ah,8Bh,0Dh,48h,0D7h,2Eh,01h,8Bh,41h,14h,85h,0C0h
+    db 0Fh,84h,61h,03h,00h,00h,8Bh,80h,0C4h,01h,00h,00h,50h,0E8h,36h,07h
+    db 96h,0FFh,8Bh,54h,24h,20h,83h,0C4h,04h,89h,82h,0ACh,14h,00h,00h,8Bh
+    db 44h,24h,1Ch,8Bh,80h,0ACh,14h,00h,00h,8Bh,4Ch,24h,64h,51h,50h,0E8h
+    db 0FCh,0C2h,0FFh,0FFh,89h,44h,24h,20h,8Bh,46h,04h,83h,0C4h,08h,85h,0C0h
+    db 74h,0Ch,8Bh,48h,04h,85h,0C9h,74h,05h,0E8h,0Dh,0DDh,93h,0FFh,0F7h,80h
+    db 0D0h,00h,00h,00h,00h,00h,00h,02h,0Fh,84h,0D7h,00h,00h,00h,8Dh,5Ch
+    db 24h,18h,0E8h,0E9h,0FCh,0FFh,0FFh,84h,0C0h,0Fh,84h,0F8h,02h,00h,00h,8Dh
+    db 54h,24h,13h,52h,8Dh,44h,24h,15h,50h,8Bh,44h,24h,20h,8Dh,4Ch,24h
+    db 68h,51h,8Dh,54h,24h,68h,52h,50h,0E8h,9Bh,77h,95h,0FFh,8Ah,44h,24h
+    db 70h,0Fh,0B6h,0C8h,0BAh,0FFh,00h,00h,00h,2Bh,0D1h,8Ah,4Ch,24h,74h,0D1h
+    db 0FAh,02h,0C2h,0Fh,0B6h,0D1h,0BBh,0FFh,00h,00h,00h,2Bh,0DAh,8Ah,54h,24h
+    db 25h,0D1h,0FBh,02h,0CBh,0Fh,0B6h,0F2h,0BBh,0FFh,00h,00h,00h,2Bh,0DEh,8Bh
+    db 74h,24h,30h,0D1h,0FBh,02h,0D3h,33h,0DBh,8Ah,7Ch,24h,27h,88h,44h,24h
+    db 70h,88h,4Ch,24h,74h,68h,58h,0D8h,11h,01h,88h,54h,24h,29h,8Ah,0D8h
+    db 0Fh,0B6h,0C1h,0Fh,0B6h,0CAh,8Bh,54h,24h,30h,52h,8Bh,96h,0A4h,14h,00h
+    db 00h,0C1h,0E3h,08h,0Bh,0D8h,8Bh,86h,0A8h,14h,00h,00h,55h,0C1h,0E3h,08h
+    db 57h,0Bh,0D9h,50h,8Dh,4Ch,24h,3Ch,51h,0E8h,0B2h,0E3h,0FFh,0FFh,8Bh,96h
+    db 0A8h,14h,00h,00h,8Bh,8Eh,0A4h,14h,00h,00h,68h,54h,0D8h,11h,01h,53h
+    db 55h,57h,52h,8Dh,44h,24h,54h,50h,0E8h,43h,0E7h,0FFh,0FFh,83h,0C4h,44h
+    db 0E9h,32h,02h,00h,00h,84h,0DBh,0Fh,84h,0AEh,01h,00h,00h,0F6h,05h,0D8h
+    db 7Fh,2Fh,01h,01h,75h,26h,83h,0Dh,0D8h,7Fh,2Fh,01h,01h,8Bh,0Dh,00h
+    db 0D6h,2Eh,01h,68h,50h,3Ch,08h,01h,0C6h,44h,24h,58h,01h,0E8h,15h,67h
+    db 97h,0FFh,0A3h,0D4h,7Fh,2Fh,01h,0C6h,44h,24h,54h,00h,8Bh,0Dh,0D4h,7Fh
+    db 2Fh,01h,51h,8Bh,0CEh,0E8h,49h,67h,96h,0FFh,8Bh,0D8h,85h,0DBh,0Fh,84h
+    db 0E3h,01h,00h,00h,8Bh,0CEh,0E8h,39h,0C1h,95h,0FFh,50h,8Bh,0CBh,0E8h,0E1h
+    db 0A1h,96h,0FFh,0D8h,4Ch,24h,2Ch,0D8h,0Dh,3Ch,53h,07h,01h,0D8h,05h,30h
+    db 88h,08h,01h,0E8h,30h,27h,33h,00h,50h,55h,57h,8Dh,4Ch,24h,44h,0E8h
+    db 00h,96h,94h,0FFh,8Bh,44h,24h,3Ch,8Bh,54h,24h,18h,8Dh,5Ch,2Dh,00h
+    db 8Bh,6Ch,24h,38h,3Bh,0E8h,8Bh,0FDh,0C6h,44h,24h,54h,02h,89h,15h,44h
+    db 7Fh,2Fh,01h,89h,5Ch,24h,30h,89h,7Ch,24h,24h,74h,4Fh,8Dh,49h,00h
+    db 8Bh,75h,00h,8Bh,7Dh,08h,8Bh,45h,04h,8Dh,5Ch,24h,14h,0E8h,0AEh,0D5h
+    db 0FFh,0FFh,8Bh,4Dh,00h,8Bh,74h,24h,30h,8Bh,7Dh,08h,8Bh,45h,04h,2Bh
+    db 0F1h,0E8h,9Ah,0D5h,0FFh,0FFh,8Bh,44h,24h,24h,8Bh,08h,3Bh,4Dh,00h,7Dh
+    db 04h,89h,6Ch,24h,24h,8Bh,44h,24h,3Ch,83h,0C5h,0Ch,3Bh,0E8h,75h,0C0h
+    db 8Bh,6Ch,24h,38h,8Bh,7Ch,24h,24h,8Bh,5Ch,24h,30h,8Bh,77h,04h,8Bh
+    db 47h,08h,46h,3Bh,0F0h,7Dh,6Ah,85h,0F6h,8Bh,07h,7Ch,27h,85h,0C0h,7Ch
+    db 23h,81h,0FEh,80h,00h,00h,00h,7Dh,1Bh,3Dh,80h,00h,00h,00h,7Dh,14h
+    db 8Bh,54h,24h,18h,52h,50h,56h,8Dh,4Ch,24h,20h,0E8h,40h,86h,23h,00h
+    db 8Bh,6Ch,24h,38h,8Bh,0Fh,8Bh,0C3h,2Bh,0C1h,85h,0F6h,7Ch,2Bh,85h,0C0h
+    db 7Ch,27h,81h,0FEh,80h,00h,00h,00h,7Dh,1Fh,3Dh,80h,00h,00h,00h,7Dh
+    db 18h,8Bh,44h,24h,18h,50h,8Bh,0D3h,2Bh,0D1h,52h,56h,8Dh,4Ch,24h,20h
+    db 0E8h,0Bh,86h,23h,00h,8Bh,6Ch,24h,38h,8Bh,47h,08h,46h,3Bh,0F0h,7Ch
+    db 96h,85h,0EDh,0C6h,44h,24h,54h,00h,0Fh,84h,0B9h,00h,00h,00h,8Bh,4Ch
+    db 24h,40h,2Bh,0CDh,0B8h,0ABh,0AAh,0AAh,2Ah,0F7h,0E9h,0D1h,0FAh,8Bh,0C2h,0C1h
+    db 0E8h,1Fh,03h,0C2h,8Dh,04h,40h,0C1h,0E0h,02h,3Dh,80h,00h,00h,00h,76h
+    db 0Eh,55h,0E8h,79h,0D6h,1Bh,00h,83h,0C4h,04h,0E9h,88h,00h,00h,00h,50h
+    db 55h,0E8h,0AAh,9Dh,16h,00h,83h,0C4h,08h,0EBh,7Ch,8Dh,5Ch,24h,18h,0E8h
+    db 5Ch,0FAh,0FFh,0FFh,84h,0C0h,74h,6Fh,55h,57h,0E8h,54h,33h,98h,0FFh,8Bh
+    db 74h,24h,20h,83h,0C4h,08h,84h,0C0h,74h,0Ch,56h,55h,57h,8Dh,4Ch,24h
+    db 20h,0E8h,8Ah,85h,23h,00h,4Fh,55h,57h,0E8h,35h,33h,98h,0FFh,83h,0C4h
+    db 08h,84h,0C0h,74h,0Ch,56h,55h,57h,8Dh,4Ch,24h,20h,0E8h,6Fh,85h,23h
+    db 00h,4Dh,55h,57h,0E8h,1Ah,33h,98h,0FFh,83h,0C4h,08h,84h,0C0h,74h,0Ch
+    db 56h,55h,57h,8Dh,4Ch,24h,20h,0E8h,54h,85h,23h,00h,47h,55h,57h,0E8h
+    db 0FFh,32h,98h,0FFh,83h,0C4h,08h,84h,0C0h,74h,0Ch,56h,55h,57h,8Dh,4Ch
+    db 24h,20h,0E8h,39h,85h,23h,00h,8Bh,44h,24h,20h,8Bh,40h,08h,85h,0C0h
+    db 89h,44h,24h,20h,0Fh,85h,0B6h,0FBh,0FFh,0FFh,8Dh,4Ch,24h,14h,0C7h,44h
+    db 24h,54h,0FFh,0FFh,0FFh,0FFh,0E8h,0C5h,7Ch,23h,00h,5Dh,5Bh,8Bh,4Ch,24h
+    db 44h,5Fh,5Eh,64h,89h,0Dh,00h,00h,00h,00h,83h,0C4h,48h,0C2h,0Ch,00h
+?renderObjectList@W3DRadar@@IAEXPBVRadarObject@@PAVTextureClass@@_N@Z ENDP
+_TEXT ENDS
+END

@@ -13289,3 +13289,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?objectChangedTeam@InGameUI@@UAEXPBVObject@@HH@Z,,0x00449FC0,394,Code/masm_dumps/InGameUI_objectChangedTeam_449FC0.asm,matched,MASM exact; true body via InGameUI vtbl after add/removeSW; queue 0x44C3FA was mid-fn at 0x44C250
 ?setGUICommand@InGameUI@@UAEXPBVCommandButton@@@Z,,0x0043ADE0,212,Code/masm_dumps/InGameUI_setGUICommand.asm,matched,MASM exact; true body 0x43ADE0/212 via InGameUI vtbl slot46 (queue 0x613D76 misplaced maps helper); pending@+0x230 mouseMode@+0x824
 ?findArmorTemplateSet@ThingTemplate@@QBEPBVArmorTemplateSet@@ABV?$BitFlags@$0L@@@@Z,,0x00146780,73,Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp,matched,
+?renderObjectList@W3DRadar@@IAEXPBVRadarObject@@PAVTextureClass@@_N@Z,,0x006C43F0,1296,Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_renderObjectList.asm,matched,exact 1296B MASM; true body via draw call-pair; queue RVA misplaced
