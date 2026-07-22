@@ -13292,3 +13292,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?renderObjectList@W3DRadar@@IAEXPBVRadarObject@@PAVTextureClass@@_N@Z,,0x006C43F0,1296,Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_renderObjectList.asm,matched,exact 1296B MASM; true body via draw call-pair; queue RVA misplaced
 ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBUCoord3D@@2@Z,,0x003F0340,2347,Code/masm_dumps/internalFindPath_Pathfinder_3F0340.asm,matched,
 ?loadPostProcess@Team@@MAEXXZ,,0x000F1800,265,Code/masm_dumps/Team_loadPostProcess.asm,matched,MASM exact true Team vtable body
+?update@StructureCollapseUpdate@@UAE?AW4UpdateSleepTime@@XZ,,0x002AE950,944,Code/masm_dumps/StructureCollapseUpdate_update.asm,matched,retail MASM; ctor vtable 0x10C4644 slot 0 via thunk 0x002E4C9; Ghidra ENTRY 944
