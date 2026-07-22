@@ -299,11 +299,51 @@ void raiseOverlays( void )
 	}
 }
 
+// BFME WindowLayout vtable order for the close path (see Code/.../window_layout.h):
+// slot0 runInit, slot1 dtor, slot2 runUpdate, slot3 runShutdown (+0x0c),
+// slot8 destroyWindows (+0x20). Retail inlines GameSpyCloseOverlay into this loop.
+class BFMEOverlayLayoutCloseView
+{
+public:
+	virtual void runInit( void *userData ) {}
+	virtual ~BFMEOverlayLayoutCloseView() {}
+	virtual void runUpdate( void *userData ) {}
+	virtual void runShutdown( void *userData ) {}
+	virtual void hide( int hide ) {}
+	virtual void bringForward( void ) {}
+	virtual void addWindow( void *window ) {}
+	virtual void removeWindow( void *window ) {}
+	virtual void destroyWindows( void ) {}
+};
+
 void GameSpyCloseAllOverlays( void )
 {
 	for (int i=0; i<GSOVERLAY_MAX; ++i)
 	{
-		GameSpyCloseOverlay((GSOverlayType)i);
+		GSOverlayType overlay = (GSOverlayType)i;
+		// Release OPTIONS special-case only (DEBUG_LOG cases compile out under NDEBUG).
+		if (overlay == GSOVERLAY_OPTIONS)
+		{
+			if (overlayLayouts[overlay])
+			{
+				SignalUIInteraction(SHELL_SCRIPT_HOOK_OPTIONS_CLOSED);
+			}
+		}
+		BFMEOverlayLayoutCloseView *layout =
+			(BFMEOverlayLayoutCloseView *)overlayLayouts[overlay];
+		if (layout)
+		{
+			layout->runShutdown( NULL );
+			layout = (BFMEOverlayLayoutCloseView *)overlayLayouts[overlay];
+			layout->destroyWindows();
+			layout = (BFMEOverlayLayoutCloseView *)overlayLayouts[overlay];
+			if (layout)
+			{
+				// scalar-deleting dtor at vtable slot 1 (push 1; call [eax+4])
+				delete layout;
+			}
+			overlayLayouts[overlay] = NULL;
+		}
 	}
 
 	// if we're shutting down the rest, chances are we don't want this popping up.
