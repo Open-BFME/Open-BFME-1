@@ -1193,39 +1193,8 @@ void RTS3DScene::flushOccludedObjects(RenderInfoClass & rinfo)
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_AMBIENT,DX8Wrapper::Convert_Color(this->Get_Ambient_Light(),0.0f));
 }
 
-// ?flushTranslucentObjects@RTS3DScene@@IAEXAAVRenderInfoClass@@@Z present-unmatched
-void RTS3DScene::flushTranslucentObjects(RenderInfoClass & rinfo)
-{
-	RenderObjClass *robj;
-	Drawable *draw;
-
-	if (m_translucentObjectsCount)
-	{
-		Int localPlayerIndex = ThePlayerList ? ThePlayerList->getLocalPlayer()->getPlayerIndex() : 0;
-
-		for (Int i=0; i<m_translucentObjectsCount; i++)
-		{
-			robj=m_translucentObjectsBuffer[i];
-			draw = ((DrawableInfo *)robj->Get_User_Data())->m_drawable;
-
-			rinfo.alphaOverride = draw->getEffectiveOpacity();
-
-			renderOneObject(rinfo, robj, localPlayerIndex);//WW3D::Render(*robj,rinfo);
-		}
-
-		//Flush all the submitted translucent objects.
-		TheDX8MeshRenderer.Flush();
-// ?Render_And_Clear_Static_Sort_Lists@WW3D@@ present-unmatched
-		WW3D::Render_And_Clear_Static_Sort_Lists(rinfo);	//draws things like water
-		rinfo.alphaOverride = 1.0f;	//disable forced alpha
-		m_translucentObjectsCount = 0;
-	}
-
-	//Reset scene ambient because we sometimes mess around with it to make objects
-	//glow, etc. when processing drawables.  This is a good place to do it because this
-	//function gets called right after we flush regular render objects.
-	DX8Wrapper::Set_DX8_Render_State(D3DRS_AMBIENT,DX8Wrapper::Convert_Color(this->Get_Ambient_Light(),0.0f));
-}
+// ?flushTranslucentObjects@RTS3DScene@@IAEXAAVRenderInfoClass@@@Z
+// Body in W3DScene_flushTranslucentObjects.asm (exact 392B retail @ 0x00715340).
 
 //=============================================================================
 // RTS3DScene::createLightsIterator
