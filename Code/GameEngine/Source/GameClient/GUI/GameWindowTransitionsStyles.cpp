@@ -1390,7 +1390,6 @@ void TextTypeTransition::init( GameWindow *win )
 	m_frameLength = MIN(length, TEXTTYPETRANSITION_END);
 }
 
-// ?update@TextTypeTransition@@UAEXH@Z present-unmatched
 void TextTypeTransition::update( Int frame )
 {
 	m_drawState = -1;
