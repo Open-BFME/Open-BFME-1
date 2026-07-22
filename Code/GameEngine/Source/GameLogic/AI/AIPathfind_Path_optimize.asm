@@ -1,0 +1,96 @@
+.386
+.model flat
+
+; ?optimize@Path@@QAEXPBVObject@@H_N@Z
+; Exact 669B retail @ 0x00401660 (Ghidra ENTRY; queue 0x433E7A was INSIDE unrelated FUN_00833dc0)
+; Identity: 3-arg thiscall Path+4 m_path Path+0xc m_isOptimized isLinePassable-like ALLOWED_STEPS
+_TEXT SEGMENT
+public ?optimize@Path@@QAEXPBVObject@@H_N@Z
+?optimize@Path@@QAEXPBVObject@@H_N@Z PROC
+    db 83h,0ECh,20h,8Bh,44h,24h,24h,8Bh
+    db 40h,04h,53h,55h,57h,8Bh,0F9h,8Bh
+    db 6Fh,04h,33h,0DBh,3Bh,0C3h,89h,7Ch
+    db 24h,24h,89h,6Ch,24h,14h,75h,04h
+    db 33h,0C0h,0EBh,0Ch,8Bh,48h,04h,3Bh
+    db 0CBh,74h,05h,0E8h,2Bh,0Ch,0C0h,0FFh
+    db 8Bh,80h,0C8h,00h,00h,00h,0C1h,0E8h
+    db 0Bh,24h,01h,3Bh,0EBh,88h,44h,24h
+    db 0Fh,0Fh,84h,3Bh,02h,00h,00h,56h
+    db 0EBh,0Ah,8Bh,6Ch,24h,18h,8Bh,7Ch
+    db 24h,28h,33h,0DBh,8Bh,75h,00h,3Bh
+    db 0F3h,0Fh,84h,30h,02h,00h,00h,8Bh
+    db 55h,20h,8Bh,45h,18h,33h,0C9h,81h
+    db 0FAh,0FFh,0FFh,0FFh,7Fh,0Fh,95h,0C1h
+    db 89h,44h,24h,20h,89h,44h,24h,2Ch
+    db 89h,5Ch,24h,24h,89h,5Ch,24h,14h
+    db 49h,83h,0E1h,03h,89h,4Ch,24h,1Ch
+    db 0EBh,06h,8Bh,44h,24h,20h,8Bh,0FFh
+    db 8Bh,4Ch,24h,24h,8Bh,5Ch,24h,14h
+    db 8Bh,7Ch,24h,1Ch,8Bh,15h,14h,0F2h
+    db 2Eh,01h,41h,83h,0C3h,0Ah,47h,89h
+    db 7Ch,24h,1Ch,50h,89h,4Ch,24h,28h
+    db 8Bh,4Ah,0Ch,8Dh,7Eh,0Ch,89h,5Ch
+    db 24h,18h,57h,32h,0DBh,0E8h,19h,51h
+    db 0C3h,0FFh,84h,0C0h,74h,07h,0B3h,01h
+    db 0E9h,0D1h,00h,00h,00h,0D9h,07h,0D8h
+    db 65h,0Ch,0E8h,01h,57h,5Fh,00h,0D9h
+    db 46h,10h,0D8h,65h,10h,8Bh,0F8h,0E8h
+    db 0F4h,56h,5Fh,00h,85h,0FFh,8Bh,0E8h
+    db 75h,0Fh,8Bh,4Ch,24h,14h,99h,33h
+    db 0C2h,2Bh,0C2h,3Bh,0C1h,75h,02h,0B3h
+    db 01h,85h,0EDh,75h,11h,8Bh,4Ch,24h
+    db 14h,8Bh,0C7h,99h,33h,0C2h,2Bh,0C2h
+    db 3Bh,0C1h,75h,02h,0B3h,01h,8Bh,0C7h
+    db 99h,8Bh,0C8h,33h,0CAh,2Bh,0CAh,8Bh
+    db 0C5h,99h,33h,0C2h,2Bh,0C2h,3Bh,0C8h
+    db 75h,06h,3Bh,4Ch,24h,14h,74h,70h
+    db 84h,0DBh,75h,6Eh,8Bh,46h,20h,0BAh
+    db 0FFh,0FFh,0FFh,7Fh,3Bh,0C2h,75h,0Dh
+    db 83h,7Ch,24h,1Ch,03h,7Dh,02h,0B3h
+    db 01h,3Bh,0C2h,74h,02h,0B3h,01h,8Bh
+    db 06h,33h,0C9h,0EBh,03h,8Dh,49h,00h
+    db 85h,0C0h,74h,0Fh,39h,50h,20h,74h
+    db 02h,0B3h,01h,8Bh,00h,41h,83h,0F9h
+    db 03h,7Eh,0EDh,84h,0DBh,75h,33h,0A1h
+    db 14h,0F2h,2Eh,01h,8Bh,48h,0Ch,8Bh
+    db 54h,24h,3Ch,52h,8Bh,54h,24h,3Ch
+    db 8Dh,46h,0Ch,50h,8Bh,44h,24h,20h
+    db 83h,0C0h,0Ch,50h,8Bh,44h,24h,2Ch
+    db 50h,8Bh,44h,24h,44h,52h,50h,0E8h
+    db 0F4h,36h,0C1h,0FFh,84h,0C0h,74h,02h
+    db 0B3h,01h,8Bh,6Ch,24h,18h,8Bh,4Ch
+    db 24h,2Ch,83h,0F9h,01h,74h,05h,83h
+    db 0F9h,10h,7Ch,74h,8Bh,46h,18h,3Bh
+    db 0C1h,74h,0Dh,89h,44h,24h,20h,83h
+    db 7Ch,24h,14h,1Eh,7Eh,02h,32h,0DBh
+    db 8Ah,44h,24h,13h,84h,0C0h,74h,6Ch
+    db 84h,0DBh,75h,68h,8Bh,4Ch,24h,28h
+    db 0D9h,46h,10h,8Bh,79h,08h,0D8h,67h
+    db 10h,0E8h,0FAh,55h,5Fh,00h,0D9h,46h
+    db 0Ch,0D8h,67h,0Ch,99h,33h,0C2h,2Bh
+    db 0C2h,89h,44h,24h,2Ch,0E8h,0E6h,55h
+    db 5Fh,00h,8Bh,4Ch,24h,2Ch,99h,33h
+    db 0C2h,2Bh,0C2h,03h,0C8h,83h,0F9h,28h
+    db 7Dh,32h,8Bh,15h,14h,0F2h,2Eh,01h
+    db 8Bh,4Ah,0Ch,8Dh,46h,0Ch,50h,8Dh
+    db 45h,0Ch,50h,0E8h,54h,0F6h,0C2h,0FFh
+    db 84h,0C0h,74h,18h,0B3h,01h,0EBh,14h
+    db 8Bh,06h,85h,0C0h,74h,0Eh,39h,48h
+    db 18h,74h,09h,83h,7Ch,24h,14h,1Eh
+    db 7Eh,02h,32h,0DBh,84h,0DBh,8Bh,4Eh
+    db 18h,89h,4Ch,24h,2Ch,74h,16h,8Ah
+    db 46h,1Ch,84h,0C0h,74h,0Fh,89h,75h
+    db 08h,8Bh,36h,85h,0F6h,0Fh,85h,37h
+    db 0FEh,0FFh,0FFh,0EBh,0Fh,83h,7Ch,24h
+    db 24h,01h,7Eh,05h,8Bh,76h,04h,0EBh
+    db 03h,89h,75h,08h,85h,0F6h,89h,74h
+    db 24h,18h,0Fh,85h,0DAh,0FDh,0FFh,0FFh
+    db 8Bh,54h,24h,28h,5Eh,5Fh,5Dh,0C6h
+    db 42h,0Ch,01h,5Bh,83h,0C4h,20h,0C2h
+    db 0Ch,00h,0C6h,47h,0Ch,01h,5Fh,5Dh
+    db 5Bh,83h,0C4h,20h,0C2h,0Ch,00h,5Eh
+    db 0C6h,47h,0Ch,01h,5Fh,5Dh,5Bh,83h
+    db 0C4h,20h,0C2h,0Ch,00h
+?optimize@Path@@QAEXPBVObject@@H_N@Z ENDP
+_TEXT ENDS
+END
