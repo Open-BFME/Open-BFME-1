@@ -3084,20 +3084,49 @@ void ScriptActions::doRadarCreateEvent(Coord3D *pos, Int eventType)
 //-------------------------------------------------------------------------------------------------
 /** doObjectRadarCreateEvent */
 //-------------------------------------------------------------------------------------------------
-// ?doObjectRadarCreateEvent@ScriptActions@@IAEXABVAsciiString@@H@Z present-unmatched
+// BFME ScriptEngine vtable: getUnitNamed at +0x68 (ZH layout emits +0x5c).
+// True body @ 0x2EECA0 (queue 0x6036BF was mid-fn SEH body near 0x603640).
+class BfmeScriptEngineGetUnitNamed {
+public:
+	virtual void _bfme_se_slot_00() = 0;
+	virtual void _bfme_se_slot_01() = 0;
+	virtual void _bfme_se_slot_02() = 0;
+	virtual void _bfme_se_slot_03() = 0;
+	virtual void _bfme_se_slot_04() = 0;
+	virtual void _bfme_se_slot_05() = 0;
+	virtual void _bfme_se_slot_06() = 0;
+	virtual void _bfme_se_slot_07() = 0;
+	virtual void _bfme_se_slot_08() = 0;
+	virtual void _bfme_se_slot_09() = 0;
+	virtual void _bfme_se_slot_10() = 0;
+	virtual void _bfme_se_slot_11() = 0;
+	virtual void _bfme_se_slot_12() = 0;
+	virtual void _bfme_se_slot_13() = 0;
+	virtual void _bfme_se_slot_14() = 0;
+	virtual void _bfme_se_slot_15() = 0;
+	virtual void _bfme_se_slot_16() = 0;
+	virtual void _bfme_se_slot_17() = 0;
+	virtual void _bfme_se_slot_18() = 0;
+	virtual void _bfme_se_slot_19() = 0;
+	virtual void _bfme_se_slot_20() = 0;
+	virtual void _bfme_se_slot_21() = 0;
+	virtual void _bfme_se_slot_22() = 0;
+	virtual void _bfme_se_slot_23() = 0;
+	virtual void _bfme_se_slot_24() = 0;
+	virtual void _bfme_se_slot_25() = 0;
+	virtual Object *getUnitNamed(const AsciiString& unitName) = 0;
+};
+
 void ScriptActions::doObjectRadarCreateEvent(const AsciiString& unitName, Int eventType)
 {
-	// get the building
-	Object *theBuilding = TheScriptEngine->getUnitNamed( unitName );
+	Object *theBuilding = ((BfmeScriptEngineGetUnitNamed *)TheScriptEngine)->getUnitNamed( unitName );
 	if (!theBuilding)
 		return;
-	
-	// get building's position
+
 	const Coord3D *pos = theBuilding->getPosition();
 	if (!pos)
 		return;
-	
-	// create event
+
 	TheRadar->createEvent(pos, (RadarEventType)eventType);
 }
 
