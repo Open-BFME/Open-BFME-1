@@ -771,7 +771,10 @@ Bool ProcessAnimateWindowSlideFromBottom::updateAnimateWindow( AnimateWindow *an
 	return FALSE;
 }
 
-// ?reverseAnimateWindow@ProcessAnimateWindowSlideFromBottom@@UAE_NPAVAnimateWindow@@@Z present-unmatched
+// Retail body matched via MASM: Code/masm_dumps/reverseAnimateWindow_ProcessAnimateWindowSlideFromBottom_4966E0.asm
+// (true body 0x4966E0 via SlideFromBottom vtbl slot4; queue 0x4965B0 is update; C++ blocked by
+// startPos y-then-x spill + fcom-mem clamp + setVel store order)
+#if 0
 Bool ProcessAnimateWindowSlideFromBottom::reverseAnimateWindow( AnimateWindow *animWin )
 {
 	
@@ -827,6 +830,7 @@ Bool ProcessAnimateWindowSlideFromBottom::reverseAnimateWindow( AnimateWindow *a
 	animWin->setVel(vel);
 	return FALSE;
 }
+#endif
 
 
 //-----------------------------------------------------------------------------
