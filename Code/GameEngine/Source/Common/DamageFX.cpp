@@ -278,25 +278,18 @@ DamageFXStore::~DamageFXStore()
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?findDamageFX@DamageFXStore@@ present-unmatched
-const DamageFX *DamageFXStore::findDamageFX(AsciiString name) const
-{
-	NameKeyType namekey = TheNameKeyGenerator->nameToKey(name);
-  DamageFXMap::const_iterator it = m_dfxmap.find(namekey);
-  if (it == m_dfxmap.end()) 
-	{
-		return NULL;
-	}
-	else
-	{
-		return &(*it).second;
-	}
-}
+// ?findDamageFX@DamageFXStore@@QBEPBVDamageFX@@VAsciiString@@@Z
+// body: DamageFXStore_findDamageFX.asm (exact retail @ 0x00067440)
 
 //-------------------------------------------------------------------------------------------------
 // ?init@DamageFXStore@@ present-unmatched
 void DamageFXStore::init()
 {
+	// Force-emit const $_Ht_iterator COMDAT (ICF @ 0x9E5EB0). Was only referenced
+	// by former C++ findDamageFX; matched body is DamageFXStore_findDamageFX.asm.
+	// init remains present-unmatched (ZH empty stub); find of key 0 is a no-op side effect.
+	NameKeyType k = (NameKeyType)0;
+	(void)static_cast<const DamageFXMap &>(m_dfxmap).find(k);
 }
 
 //-------------------------------------------------------------------------------------------------
