@@ -995,7 +995,6 @@ Bool WorldHeightMap::ParseSizeOnlyInChunk(DataChunkInput &file, DataChunkInfo *i
 *	Input: DataChunkInput 
 *		
 */
-// ?ParseSizeOnly@WorldHeightMap@@IAE_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z present-unmatched
 Bool WorldHeightMap::ParseSizeOnly(DataChunkInput &file, DataChunkInfo *info, void *userData)
 {
 	m_width = file.readInt();
