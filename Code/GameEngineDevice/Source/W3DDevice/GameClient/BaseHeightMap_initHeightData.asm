@@ -1,0 +1,117 @@
+.386
+.model flat
+
+; ?initHeightData@BaseHeightMapRenderObjClass@@UAEHHHPAVWorldHeightMap@@PAV?$RefMultiListIterator@VRenderObjClass@@@@_N@Z
+; Retail exact bytes @ 0x006D0590 size 1648
+; Identity: between reset@0x6D03B0 and updateViewImpassableAreas@0x6D0DA0;
+; REF_PTR_SET m_map@+0x2FF4; sole non-setShoreLineDetail caller of updateShorelineTiles@0x6C76B0 via thunk 0x3CA74;
+; ret 0x10 (BFME 4 stack args vs ZH 5 with updateExtraPassTiles).
+_TEXT SEGMENT
+public ?initHeightData@BaseHeightMapRenderObjClass@@UAEHHHPAVWorldHeightMap@@PAV?$RefMultiListIterator@VRenderObjClass@@@@_N@Z
+?initHeightData@BaseHeightMapRenderObjClass@@UAEHHHPAVWorldHeightMap@@PAV?$RefMultiListIterator@VRenderObjClass@@@@_N@Z PROC
+    db 6Ah,0FFh,64h,0A1h,00h,00h,00h,00h,68h,78h,0A6h,04h,01h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,83h,0ECh,3Ch,53h,55h,56h,57h,8Bh,7Ch,24h,64h
+    db 33h,0DBh,3Bh,0FBh,8Bh,0F1h,74h,03h,0FFh,47h,04h,8Bh,8Eh,0F4h,2Fh,00h
+    db 00h,3Bh,0CBh,74h,09h,0FFh,49h,04h,75h,04h,8Bh,01h,0FFh,10h,8Bh,8Eh
+    db 0B8h,30h,00h,00h,3Bh,0CBh,89h,0BEh,0F4h,2Fh,00h,00h,88h,9Eh,0D0h,30h
+    db 00h,00h,74h,15h,0A1h,0C8h,0D5h,2Eh,01h,8Bh,90h,0BCh,01h,00h,00h,52h
+    db 8Bh,0C2h,50h,57h,0E8h,0F6h,4Bh,94h,0FFh,8Bh,8Eh,0BCh,30h,00h,00h,3Bh
+    db 0CBh,74h,1Bh,0A1h,0C8h,0D5h,2Eh,01h,8Bh,90h,0BCh,01h,00h,00h,52h,8Bh
+    db 0C2h,8Bh,96h,0F4h,2Fh,00h,00h,50h,52h,0E8h,7Bh,0E2h,94h,0FFh,8Bh,86h
+    db 0F4h,2Fh,00h,00h,8Bh,8Eh,0ACh,30h,00h,00h,50h,0E8h,0C7h,5Bh,95h,0FFh
+    db 3Bh,0FBh,89h,5Ch,24h,24h,74h,07h,8Bh,4Fh,24h,89h,4Ch,24h,24h,8Bh
+    db 96h,98h,30h,00h,00h,3Bh,0D3h,74h,67h,8Bh,4Fh,10h,8Bh,47h,08h,8Dh
+    db 2Ch,09h,2Bh,0C5h,89h,44h,24h,64h,0DBh,44h,24h,64h,8Bh,47h,0Ch,03h
+    db 0C9h,0D8h,0Dh,74h,5Ch,07h,01h,2Bh,0C1h,89h,44h,24h,64h,81h,0C2h,40h
+    db 14h,00h,00h,0D9h,5Ch,24h,30h,0C7h,44h,24h,28h,00h,00h,00h,00h,0DBh
+    db 44h,24h,64h,8Bh,44h,24h,28h,89h,02h,8Bh,44h,24h,30h,0D8h,0Dh,74h
+    db 5Ch,07h,01h,0C7h,44h,24h,2Ch,00h,00h,00h,00h,8Bh,4Ch,24h,2Ch,89h
+    db 4Ah,04h,0D9h,5Ch,24h,34h,8Bh,4Ch,24h,34h,89h,42h,08h,89h,4Ah,0Ch
+    db 3Bh,0FBh,89h,9Eh,0C4h,30h,00h,00h,0Fh,84h,0F1h,00h,00h,00h,8Bh,4Fh
+    db 0Ch,3Bh,0CBh,8Bh,6Fh,08h,89h,4Ch,24h,28h,0C7h,44h,24h,10h,0FFh,0FFh
+    db 00h,00h,89h,5Ch,24h,14h,0Fh,8Eh,89h,00h,00h,00h,8Dh,44h,2Dh,00h
+    db 33h,0D2h,89h,44h,24h,20h,89h,5Ch,24h,64h,89h,54h,24h,1Ch,89h,4Ch
+    db 24h,20h,3Bh,0EBh,7Eh,52h,8Bh,4Ch,24h,64h,89h,6Ch,24h,18h,0EBh,02h
+    db 33h,0DBh,3Bh,0CBh,7Ch,12h,3Bh,4Fh,20h,7Dh,0Dh,8Bh,47h,24h,3Bh,0C3h
+    db 74h,06h,66h,8Bh,04h,10h,0EBh,02h,33h,0C0h,8Bh,5Ch,24h,10h,0Fh,0B7h
+    db 0C0h,3Bh,0C3h,7Dh,04h,89h,44h,24h,10h,39h,44h,24h,14h,7Dh,04h,89h
+    db 44h,24h,14h,8Bh,44h,24h,18h,83h,0C2h,02h,41h,48h,89h,44h,24h,18h
+    db 75h,0BEh,8Bh,4Ch,24h,28h,33h,0DBh,01h,6Ch,24h,64h,8Bh,54h,24h,1Ch
+    db 8Dh,44h,2Dh,00h,03h,0D0h,8Bh,44h,24h,20h,48h,89h,54h,24h,1Ch,89h
+    db 44h,24h,20h,75h,8Dh,0DBh,44h,24h,10h,57h,49h,51h,0D8h,0Dh,3Ch,65h
+    db 0Fh,01h,4Dh,55h,53h,0D9h,9Eh,0Ch,30h,00h,00h,53h,0DBh,44h,24h,28h
+    db 8Bh,0CEh,0D8h,0Dh,3Ch,65h,0Fh,01h,0D9h,9Eh,10h,30h,00h,00h,0E8h,0E1h
+    db 0C2h,96h,0FFh,0D9h,86h,0CCh,30h,00h,00h,0D9h,86h,1Ch,30h,00h,00h,0DAh
+    db 0E9h,0DFh,0E0h,0F6h,0C4h,44h,7Bh,07h,8Bh,0CEh,0E8h,0D4h,6Eh,95h,0FFh,8Bh
+    db 16h,6Ah,01h,8Bh,0CEh,0FFh,92h,0A0h,01h,00h,00h,39h,5Ch,24h,24h,0C6h
+    db 86h,09h,30h,00h,00h,01h,89h,9Eh,0C8h,2Fh,00h,00h,89h,9Eh,0DCh,00h
+    db 00h,00h,89h,9Eh,0E0h,00h,00h,00h,0Fh,84h,0Bh,04h,00h,00h,39h,9Eh
+    db 90h,30h,00h,00h,0Fh,85h,0FFh,03h,00h,00h,8Bh,06h,8Bh,0CEh,0FFh,90h
+    db 18h,02h,00h,00h,3Bh,0FBh,74h,03h,0FFh,47h,04h,8Bh,8Eh,0F4h,2Fh,00h
+    db 00h,3Bh,0CBh,74h,09h,0FFh,49h,04h,75h,04h,8Bh,11h,0FFh,12h,89h,0BEh
+    db 0F4h,2Fh,00h,00h,8Bh,86h,70h,30h,00h,00h,3Bh,0C3h,8Dh,0BEh,70h,30h
+    db 00h,00h,74h,06h,66h,39h,58h,04h,75h,0Eh,8Dh,86h,80h,30h,00h,00h
+    db 50h,8Bh,0CFh,0E8h,58h,74h,1Bh,00h,8Bh,86h,74h,30h,00h,00h,3Bh,0C3h
+    db 8Dh,8Eh,74h,30h,00h,00h,74h,06h,66h,39h,58h,04h,75h,0Ch,8Dh,96h
+    db 84h,30h,00h,00h,52h,0E8h,36h,74h,1Bh,00h,8Bh,86h,78h,30h,00h,00h
+    db 3Bh,0C3h,8Dh,0AEh,78h,30h,00h,00h,74h,06h,66h,39h,58h,04h,75h,0Eh
+    db 8Dh,86h,88h,30h,00h,00h,50h,8Bh,0CDh,0E8h,12h,74h,1Bh,00h,8Bh,86h
+    db 7Ch,30h,00h,00h,3Bh,0C3h,8Dh,8Eh,7Ch,30h,00h,00h,74h,06h,66h,39h
+    db 58h,04h,75h,0Ch,8Dh,96h,8Ch,30h,00h,00h,52h,0E8h,0F0h,73h,1Bh,00h
+    db 6Ah,14h,89h,5Ch,24h,3Ch,0E8h,95h,0DCh,15h,00h,89h,44h,24h,3Ch,89h
+    db 5Ch,24h,40h,88h,18h,8Bh,44h,24h,3Ch,89h,58h,04h,8Bh,44h,24h,3Ch
+    db 89h,40h,08h,8Bh,44h,24h,3Ch,89h,40h,0Ch,83h,0C4h,04h,89h,5Ch,24h
+    db 44h,0C6h,44h,24h,48h,01h,8Bh,07h,3Bh,0C3h,89h,5Ch,24h,54h,74h,05h
+    db 83h,0C0h,08h,0EBh,05h,0B8h,8Bh,38h,07h,01h,50h,0E8h,0C0h,0B7h,31h,00h
+    db 83h,0C4h,04h,8Dh,4Ch,24h,64h,51h,8Dh,54h,24h,2Ch,52h,8Dh,4Ch,24h
+    db 40h,89h,44h,24h,6Ch,0E8h,09h,0FBh,95h,0FFh,38h,5Ch,24h,2Ch,74h,05h
+    db 0C6h,44h,24h,48h,01h,8Bh,86h,74h,30h,00h,00h,3Bh,0C3h,74h,05h,83h
+    db 0C0h,08h,0EBh,05h,0B8h,8Bh,38h,07h,01h,50h,0E8h,81h,0B7h,31h,00h,83h
+    db 0C4h,04h,89h,44h,24h,64h,8Dh,44h,24h,64h,50h,8Dh,4Ch,24h,2Ch,51h
+    db 8Dh,4Ch,24h,40h,0E8h,0CAh,0FAh,95h,0FFh,38h,5Ch,24h,2Ch,74h,05h,0C6h
+    db 44h,24h,48h,01h,8Bh,45h,00h,3Bh,0C3h,74h,05h,83h,0C0h,08h,0EBh,05h
+    db 0B8h,8Bh,38h,07h,01h,50h,0E8h,45h,0B7h,31h,00h,83h,0C4h,04h,8Dh,54h
+    db 24h,64h,89h,44h,24h,64h,52h,8Dh,44h,24h,2Ch,50h,8Dh,4Ch,24h,40h
+    db 0E8h,8Eh,0FAh,95h,0FFh,38h,5Ch,24h,2Ch,74h,05h,0C6h,44h,24h,48h,01h
+    db 8Bh,86h,7Ch,30h,00h,00h,3Bh,0C3h,74h,05h,83h,0C0h,08h,0EBh,05h,0B8h
+    db 8Bh,38h,07h,01h,50h,0E8h,06h,0B7h,31h,00h,83h,0C4h,04h,8Dh,4Ch,24h
+    db 64h,51h,8Dh,54h,24h,2Ch,52h,8Dh,4Ch,24h,40h,89h,44h,24h,6Ch,0E8h
+    db 4Fh,0FAh,95h,0FFh,38h,5Ch,24h,2Ch,74h,05h,0C6h,44h,24h,48h,01h,68h
+    db 1Ch,0DCh,11h,01h,0E8h,0D7h,0B6h,31h,00h,83h,0C4h,04h,89h,44h,24h,64h
+    db 8Dh,44h,24h,64h,50h,8Dh,4Ch,24h,2Ch,51h,8Dh,4Ch,24h,40h,0E8h,20h
+    db 0FAh,95h,0FFh,38h,5Ch,24h,2Ch,74h,05h,0C6h,44h,24h,48h,01h,8Dh,54h
+    db 24h,38h,52h,0E8h,0B8h,0B0h,31h,00h,8Bh,86h,74h,30h,00h,00h,83h,0C4h
+    db 04h,3Bh,0C3h,74h,05h,83h,0C0h,08h,0EBh,05h,0B8h,8Bh,38h,07h,01h,53h
+    db 53h,50h,8Dh,44h,24h,70h,50h,0E8h,0E4h,0DEh,23h,00h,83h,0C4h,10h,8Bh
+    db 0E8h,8Bh,45h,00h,3Bh,0C3h,0C6h,44h,24h,54h,01h,8Dh,0BEh,58h,30h,00h
+    db 00h,74h,04h,66h,0FFh,40h,04h,8Bh,0Fh,3Bh,0CBh,74h,05h,0E8h,4Eh,0ADh
+    db 31h,00h,8Bh,4Dh,00h,89h,0Fh,8Bh,4Ch,24h,64h,3Bh,0CBh,88h,5Ch,24h
+    db 54h,74h,05h,0E8h,38h,0ADh,31h,00h,89h,3Dh,0DCh,7Fh,2Fh,01h,8Bh,86h
+    db 70h,30h,00h,00h,3Bh,0C3h,74h,05h,83h,0C0h,08h,0EBh,05h,0B8h,8Bh,38h
+    db 07h,01h,53h,53h,50h,8Dh,54h,24h,70h,52h,0E8h,81h,0DEh,23h,00h,83h
+    db 0C4h,10h,8Bh,0F8h,8Bh,07h,3Bh,0C3h,0C6h,44h,24h,54h,02h,74h,04h,66h
+    db 0FFh,40h,04h,8Bh,8Eh,5Ch,30h,00h,00h,3Bh,0CBh,74h,05h,0E8h,0EEh,0ACh
+    db 31h,00h,8Bh,4Ch,24h,64h,3Bh,0CBh,8Bh,07h,89h,86h,5Ch,30h,00h,00h
+    db 88h,5Ch,24h,54h,74h,05h,0E8h,0D5h,0ACh,31h,00h,0E8h,0C0h,25h,23h,00h
+    db 8Bh,86h,78h,30h,00h,00h,3Bh,0C3h,74h,05h,83h,0C0h,08h,0EBh,05h,0B8h
+    db 8Bh,38h,07h,01h,53h,53h,50h,8Dh,4Ch,24h,70h,51h,0E8h,1Fh,0DEh,23h
+    db 00h,83h,0C4h,10h,8Bh,0F8h,8Bh,07h,3Bh,0C3h,0C6h,44h,24h,54h,03h,74h
+    db 04h,66h,0FFh,40h,04h,8Bh,8Eh,64h,30h,00h,00h,3Bh,0CBh,74h,05h,0E8h
+    db 8Ch,0ACh,31h,00h,8Bh,4Ch,24h,64h,3Bh,0CBh,8Bh,17h,89h,96h,64h,30h
+    db 00h,00h,88h,5Ch,24h,54h,74h,05h,0E8h,73h,0ACh,31h,00h,8Bh,86h,7Ch
+    db 30h,00h,00h,3Bh,0C3h,74h,05h,83h,0C0h,08h,0EBh,05h,0B8h,8Bh,38h,07h
+    db 01h,53h,53h,50h,8Dh,44h,24h,70h,50h,0E8h,0C2h,0DDh,23h,00h,83h,0C4h
+    db 10h,8Bh,0F8h,8Bh,07h,3Bh,0C3h,0C6h,44h,24h,54h,04h,74h,04h,66h,0FFh
+    db 40h,04h,8Bh,8Eh,68h,30h,00h,00h,3Bh,0CBh,74h,05h,0E8h,2Fh,0ACh,31h
+    db 00h,8Bh,0Fh,89h,8Eh,68h,30h,00h,00h,8Bh,4Ch,24h,64h,3Bh,0CBh,88h
+    db 5Ch,24h,54h,74h,05h,0E8h,16h,0ACh,31h,00h,53h,6Ah,01h,6Ah,01h,6Ah
+    db 15h,6Ah,01h,68h,00h,01h,00h,00h,8Dh,8Eh,90h,30h,00h,00h,0E8h,1Dh
+    db 0D0h,23h,00h,8Bh,0CEh,0E8h,0D9h,6Ah,95h,0FFh,8Bh,0CEh,0E8h,0A5h,41h,96h
+    db 0FFh,8Bh,0CEh,0E8h,0AFh,4Dh,97h,0FFh,53h,0E8h,02h,07h,25h,00h,89h,86h
+    db 4Ch,30h,00h,00h,8Bh,15h,0DCh,0A6h,2Bh,01h,83h,0C4h,04h,89h,96h,48h
+    db 30h,00h,00h,0E8h,38h,4Fh,23h,00h,8Dh,4Ch,24h,38h,0C7h,44h,24h,54h
+    db 0FFh,0FFh,0FFh,0FFh,0E8h,91h,51h,94h,0FFh,8Bh,4Ch,24h,4Ch,5Fh,5Eh,5Dh
+    db 33h,0C0h,5Bh,64h,89h,0Dh,00h,00h,00h,00h,83h,0C4h,48h,0C2h,10h,00h
+?initHeightData@BaseHeightMapRenderObjClass@@UAEHHHPAVWorldHeightMap@@PAV?$RefMultiListIterator@VRenderObjClass@@@@_N@Z ENDP
+_TEXT ENDS
+END
