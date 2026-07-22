@@ -304,7 +304,9 @@ void ProcessAnimateWindowSlideFromLeft::initReverseAnimateWindow( AnimateWindow 
 
 }
 
-// ?initAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAEXPAVAnimateWindow@@@Z present-unmatched
+// Retail body matched via MASM: Code/masm_dumps/initAnimateWindow_ProcessAnimateWindowSlideFromLeft_495B90.asm
+// (true body 0x495B90 via SlideFromLeft vtbl slot1; C++ blocked by Display getWidth slot + setAnimData shape)
+#if 0
 void ProcessAnimateWindowSlideFromLeft::initAnimateWindow( AnimateWindow *animWin )
 {
 	ICoord2D restPos = {0,0};
@@ -344,6 +346,7 @@ void ProcessAnimateWindowSlideFromLeft::initAnimateWindow( AnimateWindow *animWi
 
 	animWin->setAnimData(startPos, endPos, curPos, restPos, vel, timeGetTime() + animWin->getDelay(), 0);
 }
+#endif
 
 // ?updateAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAE_NPAVAnimateWindow@@@Z present-unmatched
 Bool ProcessAnimateWindowSlideFromLeft::updateAnimateWindow( AnimateWindow *animWin )
