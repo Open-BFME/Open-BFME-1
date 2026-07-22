@@ -1849,12 +1849,14 @@ inline void applyZone(PathfindCell &targetCell, const PathfindCell &sourceCell, 
 }
 
 inline void applyBlockZone(PathfindCell &targetCell, const PathfindCell &sourceCell,
-													 zoneStorageType *zoneEquivalency, Int firstZone, Int sizeOfZE)
+												 zoneStorageType *zoneEquivalency, Int firstZone, Int sizeOfZE)
 {	
-	DEBUG_ASSERTCRASH(sourceCell.getZone()>=firstZone && sourceCell.getZone()<firstZone+sizeOfZE, ("Memory overrun - FATAL ERROR."));
-	Int srcZone = zoneEquivalency[sourceCell.getZone()-firstZone];
-	DEBUG_ASSERTCRASH(targetCell.getZone()>=firstZone && sourceCell.getZone()<firstZone+sizeOfZE, ("Memory overrun - FATAL ERROR."));
-	Int targetZone = zoneEquivalency[targetCell.getZone()-firstZone];
+	zoneStorageType sourceZone = *(const zoneStorageType *)((const char *)&sourceCell + 10);
+	zoneStorageType targetZoneValue = *(const zoneStorageType *)((const char *)&targetCell + 10);
+	DEBUG_ASSERTCRASH(sourceZone>=firstZone && sourceZone<firstZone+sizeOfZE, ("Memory overrun - FATAL ERROR."));
+	Int srcZone = zoneEquivalency[sourceZone-firstZone];
+	DEBUG_ASSERTCRASH(targetZoneValue>=firstZone && sourceZone<firstZone+sizeOfZE, ("Memory overrun - FATAL ERROR."));
+	Int targetZone = zoneEquivalency[targetZoneValue-firstZone];
 	if (targetZone == srcZone) {
 		return; // already match.
 	}

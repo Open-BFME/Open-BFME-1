@@ -13245,3 +13245,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?classifyCells@PathfindLayer@@QAEXXZ,,0x003FC790,1405,Code/GameEngine/Source/GameLogic/AI/AIPathfind_classifyCells.asm,matched,exact 1405B MASM true ENTRY 0x3FC790 (queue 0x73F191 mid-body of host 0x73E050); C++ blocked PathfindCell 0x10 packing
 ?Cast_Ray@BaseHeightMapRenderObjClass@@UAE_NAAVRayCollisionTestClass@@@Z,,0x006CDF90,2839,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_Cast_Ray.asm,matched,exact 2839B MASM @ 0x006CDF90 (true body); queue 0x0096A3CA MISPLACED; m_map+0x2FF4 field-offset blocks C++
 ?setPosition@Thing@@QAEXPBUCoord3D@@@Z,,0x00132CE0,272,Code/GameEngine/Source/Common/Thing/Thing.cpp,matched,
+?applyBlockZone@@YAXAAVPathfindCell@@ABV1@PAGHH@Z,,0x00402890,54,Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp,matched,
