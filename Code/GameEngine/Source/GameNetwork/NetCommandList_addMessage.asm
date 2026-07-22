@@ -1,0 +1,89 @@
+.386
+.model flat
+
+; ?addMessage@NetCommandList@@QAEPAVNetCommandRef@@PAVNetCommandMsg@@@Z
+; Exact 609 retail bytes @ 0x00673200 (queue 0x00673251 was INSIDE SEH body mid-insn).
+; SEH prologue; push 0x14 for NetCommandRef; isEqual/find paths; ret 4.
+_TEXT SEGMENT
+public ?addMessage@NetCommandList@@QAEPAVNetCommandRef@@PAVNetCommandMsg@@@Z
+?addMessage@NetCommandList@@QAEPAVNetCommandRef@@PAVNetCommandMsg@@@Z PROC
+    db 64h,0A1h,00h,00h,00h,00h,6Ah,0FFh
+    db 68h,0ABh,4Fh,04h,01h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,53h,55h,56h
+    db 8Bh,74h,24h,1Ch,33h,0EDh,3Bh,0F5h
+    db 57h,8Bh,0F9h,0Fh,84h,0F8h,01h,00h
+    db 00h,6Ah,14h,0E8h,00h,0EDh,20h,00h
+    db 83h,0C4h,04h,89h,44h,24h,20h,3Bh
+    db 0C5h,89h,6Ch,24h,18h,74h,0Ch,56h
+    db 8Bh,0C8h,0E8h,9Fh,47h,99h,0FFh,8Bh
+    db 0F0h,0EBh,02h,33h,0F6h,39h,6Fh,04h
+    db 0C7h,44h,24h,18h,0FFh,0FFh,0FFh,0FFh
+    db 75h,0Bh,89h,77h,04h,89h,77h,08h
+    db 0E9h,0E2h,01h,00h,00h,8Bh,47h,0Ch
+    db 3Bh,0C5h,0Fh,84h,96h,00h,00h,00h
+    db 8Bh,0Eh,8Bh,58h,04h,8Bh,00h,8Bh
+    db 51h,14h,39h,50h,14h,0Fh,85h,83h
+    db 00h,00h,00h,8Bh,69h,0Ch,39h,68h
+    db 0Ch,75h,79h,66h,8Bh,69h,10h,66h
+    db 39h,68h,10h,73h,6Fh,85h,0DBh,74h
+    db 19h,8Bh,2Bh,39h,55h,14h,7Fh,12h
+    db 8Bh,51h,0Ch,39h,55h,0Ch,77h,0Ah
+    db 66h,8Bh,51h,10h,66h,39h,55h,10h
+    db 76h,52h,51h,50h,8Bh,0CFh,0E8h,0A8h
+    db 56h,99h,0FFh,84h,0C0h,0Fh,85h,4Eh
+    db 01h,00h,00h,85h,0DBh,75h,1Dh,8Bh
+    db 47h,0Ch,8Bh,48h,04h,89h,4Eh,04h
+    db 8Bh,57h,0Ch,89h,56h,08h,8Bh,47h
+    db 0Ch,89h,70h,04h,89h,77h,08h,0E9h
+    db 63h,01h,00h,00h,8Bh,4Fh,0Ch,8Bh
+    db 51h,04h,89h,56h,04h,8Bh,47h,0Ch
+    db 89h,46h,08h,8Bh,4Fh,0Ch,89h,71h
+    db 04h,8Bh,56h,04h,89h,72h,08h,0E9h
+    db 43h,01h,00h,00h,33h,0EDh,8Bh,47h
+    db 08h,8Bh,08h,8Bh,06h,8Bh,50h,14h
+    db 3Bh,51h,14h,7Eh,28h,50h,51h,8Bh
+    db 0CFh,0E8h,45h,56h,99h,0FFh,84h,0C0h
+    db 0Fh,85h,0EBh,00h,00h,00h,8Bh,4Fh
+    db 08h,89h,4Eh,08h,89h,6Eh,04h,8Bh
+    db 57h,08h,89h,72h,04h,89h,77h,08h
+    db 0E9h,0Ah,01h,00h,00h,8Bh,5Fh,04h
+    db 8Bh,0Bh,3Bh,51h,14h,7Dh,29h,50h
+    db 51h,8Bh,0CFh,0E8h,13h,56h,99h,0FFh
+    db 84h,0C0h,0Fh,85h,0B9h,00h,00h,00h
+    db 8Bh,47h,04h,89h,46h,04h,89h,6Eh
+    db 08h,8Bh,4Fh,04h,89h,71h,08h,89h
+    db 77h,04h,0E9h,0D8h,00h,00h,00h,90h
+    db 8Bh,2Bh,8Bh,0Eh,8Bh,51h,14h,3Bh
+    db 55h,14h,7Fh,21h,8Bh,41h,0Ch,3Bh
+    db 45h,0Ch,77h,19h,8Bh,11h,0FFh,52h
+    db 04h,8Bh,55h,00h,8Bh,0CDh,89h,44h
+    db 24h,20h,0FFh,52h,04h,8Bh,4Ch,24h
+    db 20h,3Bh,0C8h,7Eh,33h,8Bh,5Bh,04h
+    db 85h,0DBh,75h,0CCh,8Bh,06h,8Bh,4Fh
+    db 08h,8Bh,09h,50h,51h,8Bh,0CFh,0E8h
+    db 0AFh,55h,99h,0FFh,84h,0C0h,75h,59h
+    db 8Bh,57h,08h,89h,56h,08h,0C7h,46h
+    db 04h,00h,00h,00h,00h,8Bh,47h,08h
+    db 89h,70h,04h,89h,77h,08h,0EBh,77h
+    db 8Bh,47h,04h,3Bh,0D8h,75h,29h,8Bh
+    db 0Eh,8Bh,00h,51h,50h,8Bh,0CFh,0E8h
+    db 7Fh,55h,99h,0FFh,84h,0C0h,75h,29h
+    db 8Bh,4Fh,04h,89h,4Eh,04h,0C7h,46h
+    db 08h,00h,00h,00h,00h,8Bh,57h,04h
+    db 89h,72h,08h,89h,77h,04h,0EBh,47h
+    db 8Bh,06h,8Bh,0Bh,50h,51h,8Bh,0CFh
+    db 0E8h,56h,55h,99h,0FFh,84h,0C0h,74h
+    db 27h,8Bh,0CEh,0E8h,48h,55h,9Ch,0FFh
+    db 56h,0E8h,92h,0EAh,20h,00h,83h,0C4h
+    db 04h,33h,0C0h,8Bh,4Ch,24h,10h,64h
+    db 89h,0Dh,00h,00h,00h,00h,5Fh,5Eh
+    db 5Dh,5Bh,83h,0C4h,0Ch,0C2h,04h,00h
+    db 89h,5Eh,04h,8Bh,43h,08h,89h,46h
+    db 08h,89h,70h,04h,89h,73h,08h,8Bh
+    db 4Ch,24h,10h,89h,77h,0Ch,5Fh,8Bh
+    db 0C6h,5Eh,5Dh,64h,89h,0Dh,00h,00h
+    db 00h,00h,5Bh,83h,0C4h,0Ch,0C2h,04h
+    db 00h
+?addMessage@NetCommandList@@QAEPAVNetCommandRef@@PAVNetCommandMsg@@@Z ENDP
+_TEXT ENDS
+END
