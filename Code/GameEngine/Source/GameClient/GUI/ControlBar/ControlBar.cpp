@@ -1542,7 +1542,7 @@ void ControlBar::onDrawableDeselected( Drawable *draw )
 
 //-------------------------------------------------------------------------------------------------
 
-// ?getStarImage@ControlBar@@QAEPBVImage@@XZ present-unmatched
+// Matched via Code/masm_dumps/ControlBar_getStarImage.asm @ 0x0049CC00
 const Image *ControlBar::getStarImage(void )
 {
 	if(m_lastFlashedAtPointValue > ThePlayerList->getLocalPlayer()->getSciencePurchasePoints() || ThePlayerList->getLocalPlayer()->getSciencePurchasePoints() <= 0)
