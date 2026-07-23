@@ -1,0 +1,106 @@
+.386
+.model flat
+
+; ?populateRandomStartPosition@@YAXPAVGameInfo@@@Z
+; Certified exact 1510B retail body @ RVA 0x00390F90.
+_TEXT SEGMENT
+public ?populateRandomStartPosition@@YAXPAVGameInfo@@@Z
+?populateRandomStartPosition@@YAXPAVGameInfo@@@Z PROC
+    db 6Ah,0FFh,64h,0A1h,00h,00h,00h,00h,8Bh,4Ch,24h,08h,68h,0F6h,0C1h,01h
+    db 01h,50h,64h,89h,25h,00h,00h,00h,00h,81h,0ECh,54h,01h,00h,00h,85h
+    db 0C9h,53h,55h,56h,57h,0Fh,84h,0A2h,05h,00h,00h,51h,8Bh,0C4h,89h,64h
+    db 24h,2Ch,50h,0C7h,44h,24h,28h,08h,00h,00h,00h,0E8h,0BEh,0E2h,0C9h,0FFh
+    db 8Bh,0Dh,94h,15h,2Fh,01h,0E8h,0A5h,88h,0C8h,0FFh,85h,0C0h,89h,44h,24h
+    db 2Ch,74h,07h,8Bh,48h,20h,89h,4Ch,24h,20h,33h,0DBh,8Dh,64h,24h,00h
+    db 8Bh,0D3h,33h,0EDh,0C1h,0E2h,05h,8Dh,44h,14h,64h,89h,44h,24h,14h,90h
+    db 8Bh,44h,24h,2Ch,85h,0C0h,0Fh,84h,0Bh,01h,00h,00h,3Bh,0DDh,0Fh,84h
+    db 03h,01h,00h,00h,8Bh,44h,24h,20h,3Bh,0D8h,0Fh,8Dh,0F7h,00h,00h,00h
+    db 3Bh,0E8h,0Fh,8Dh,0EFh,00h,00h,00h,33h,0C0h,89h,44h,24h,3Ch,89h,84h
+    db 24h,6Ch,01h,00h,00h,89h,44h,24h,40h,8Dh,4Bh,01h,51h,51h,89h,64h
+    db 24h,30h,8Bh,0CCh,68h,0E4h,32h,08h,01h,0C6h,84h,24h,78h,01h,00h,00h
+    db 01h,0E8h,6Ah,7Bh,4Fh,00h,8Dh,54h,24h,44h,52h,0E8h,90h,7Fh,4Fh,00h
+    db 83h,0C4h,0Ch,8Dh,45h,01h,50h,51h,89h,64h,24h,30h,8Bh,0CCh,68h,0E4h
+    db 32h,08h,01h,0E8h,48h,7Bh,4Fh,00h,8Dh,4Ch,24h,48h,51h,0E8h,6Eh,7Fh
+    db 4Fh,00h,8Bh,74h,24h,38h,83h,0C4h,0Ch,8Dh,54h,24h,3Ch,83h,0C6h,38h
+    db 52h,8Bh,0CEh,0E8h,17h,0FAh,0C7h,0FFh,8Bh,0F8h,8Dh,44h,24h,40h,50h,8Bh
+    db 0CEh,0E8h,09h,0FAh,0C7h,0FFh,8Bh,36h,3Bh,0FEh,74h,3Ah,3Bh,0C6h,74h,36h
+    db 0D9h,47h,14h,8Bh,48h,18h,0D9h,47h,18h,89h,4Ch,24h,34h,0D9h,40h,14h
+    db 8Bh,54h,24h,14h,0D9h,0CAh,0D8h,0E2h,0D9h,5Ch,24h,24h,0DDh,0D9h,0D8h,64h
+    db 24h,34h,0D9h,0C0h,0DEh,0C9h,0D9h,44h,24h,24h,0D8h,4Ch,24h,24h,0DEh,0C1h
+    db 0D9h,0FAh,0D9h,1Ah,0EBh,0Ah,8Bh,44h,24h,14h,0C7h,00h,00h,24h,74h,49h
+    db 8Dh,4Ch,24h,40h,0C6h,84h,24h,6Ch,01h,00h,00h,00h,0E8h,3Fh,68h,4Fh
+    db 00h,8Dh,4Ch,24h,3Ch,0C7h,84h,24h,6Ch,01h,00h,00h,0FFh,0FFh,0FFh,0FFh
+    db 0E8h,2Bh,68h,4Fh,00h,0EBh,0Ah,8Bh,4Ch,24h,14h,0C7h,01h,00h,00h,00h
+    db 00h,8Bh,4Ch,24h,14h,45h,83h,0C1h,04h,83h,0FDh,08h,89h,4Ch,24h,14h
+    db 0Fh,8Ch,0CAh,0FEh,0FFh,0FFh,43h,83h,0FBh,08h,0Fh,8Ch,0B0h,0FEh,0FFh,0FFh
+    db 8Bh,5Ch,24h,20h,85h,0DBh,0Fh,9Eh,0C2h,83h,0C8h,0FFh,8Bh,0ACh,24h,74h
+    db 01h,00h,00h,83h,0FBh,01h,0Fh,9Eh,0C1h,83h,0FBh,02h,88h,54h,24h,30h
+    db 0Fh,9Eh,0C2h,83h,0FBh,03h,88h,4Ch,24h,31h,0Fh,9Eh,0C1h,83h,0FBh,04h
+    db 88h,54h,24h,32h,0Fh,9Eh,0C2h,83h,0FBh,05h,88h,4Ch,24h,33h,0Fh,9Eh
+    db 0C1h,83h,0FBh,06h,88h,54h,24h,34h,0Fh,9Eh,0C2h,83h,0FBh,07h,88h,4Ch
+    db 24h,35h,0Fh,9Eh,0C1h,0C6h,44h,24h,13h,00h,89h,44h,24h,44h,89h,44h
+    db 24h,48h,89h,44h,24h,4Ch,89h,44h,24h,50h,89h,44h,24h,54h,89h,44h
+    db 24h,58h,88h,54h,24h,36h,89h,44h,24h,5Ch,88h,4Ch,24h,37h,89h,44h
+    db 24h,60h,33h,0FFh,57h,8Bh,0CDh,0E8h,4Ch,0DAh,0C8h,0FFh,8Bh,0F0h,85h,0F6h
+    db 74h,2Ah,8Bh,0CEh,0E8h,0BAh,0F3h,0CAh,0FFh,84h,0C0h,74h,1Fh,83h,7Eh,14h
+    db 0FEh,74h,19h,8Bh,46h,10h,85h,0C0h,7Ch,12h,3Bh,0C3h,7Dh,0Eh,0C6h,44h
+    db 24h,13h,01h,0C6h,44h,04h,30h,01h,89h,7Ch,84h,44h,47h,83h,0FFh,08h
+    db 7Ch,0C2h,0C7h,44h,24h,1Ch,00h,00h,00h,00h,8Bh,44h,24h,1Ch,8Bh,0FFh
+    db 50h,8Bh,0CDh,0C6h,44h,24h,1Fh,00h,0E8h,0FBh,0D9h,0C8h,0FFh,8Bh,0F8h,85h
+    db 0FFh,89h,7Ch,24h,28h,0Fh,84h,78h,02h,00h,00h,8Bh,0CFh,0E8h,61h,0F3h
+    db 0CAh,0FFh,84h,0C0h,0Fh,84h,69h,02h,00h,00h,83h,7Fh,14h,0FEh,0Fh,84h
+    db 5Fh,02h,00h,00h,8Bh,77h,10h,85h,0F6h,7Ch,08h,3Bh,0F3h,0Fh,8Ch,50h
+    db 02h,00h,00h,8Ah,44h,24h,13h,84h,0C0h,0Fh,84h,0F1h,01h,00h,00h,0D9h
+    db 05h,50h,53h,07h,01h,0B8h,0FFh,0FFh,0FFh,0FFh,33h,0F6h,0D9h,54h,24h,14h
+    db 85h,0DBh,89h,44h,24h,24h,0Fh,8Eh,0C0h,01h,00h,00h,8Dh,64h,24h,00h
+    db 8Ah,44h,34h,30h,84h,0C0h,0Fh,85h,92h,01h,00h,00h,8Bh,44h,24h,24h
+    db 85h,0C0h,0Fh,8Dh,0B9h,00h,00h,00h,8Bh,5Ch,24h,20h,33h,0C0h,83h,0FBh
+    db 04h,89h,74h,24h,24h,7Ch,77h,8Dh,4Ch,24h,31h,0BAh,02h,00h,00h,00h
+    db 0BFh,03h,00h,00h,00h,2Bh,0D1h,2Bh,0F9h,8Dh,0A4h,24h,00h,00h,00h,00h
+    db 80h,7Ch,04h,30h,00h,8Dh,4Ch,04h,31h,74h,0Bh,3Bh,0C6h,74h,07h,8Dh
+    db 2Ch,0F0h,0D8h,44h,0ACh,64h,80h,39h,00h,74h,0Eh,8Dh,68h,01h,3Bh,0EEh
+    db 74h,07h,8Dh,2Ch,0F0h,0D8h,44h,0ACh,68h,80h,79h,01h,00h,74h,0Eh,8Dh
+    db 2Ch,11h,3Bh,0EEh,74h,07h,8Dh,2Ch,0F0h,0D8h,44h,0ACh,6Ch,80h,79h,02h
+    db 00h,74h,0Dh,03h,0CFh,3Bh,0CEh,74h,07h,8Dh,0Ch,0F0h,0D8h,44h,8Ch,70h
+    db 83h,0C0h,04h,8Dh,4Bh,0FDh,3Bh,0C1h,7Ch,0A6h,0D9h,54h,24h,14h,3Bh,0C3h
+    db 0Fh,8Dh,0F8h,00h,00h,00h,8Bh,4Ch,24h,20h,8Dh,9Bh,00h,00h,00h,00h
+    db 8Ah,54h,04h,30h,84h,0D2h,74h,0Bh,3Bh,0C6h,74h,07h,8Dh,14h,0F0h,0D8h
+    db 44h,94h,64h,40h,3Bh,0C1h,7Ch,0E8h,0D9h,54h,24h,14h,0E9h,0CDh,00h,00h
+    db 00h,8Bh,5Ch,24h,1Ch,0C7h,44h,24h,2Ch,00h,00h,00h,00h,33h,0FFh,90h
+    db 8Ah,44h,3Ch,30h,84h,0C0h,0Fh,84h,0A5h,00h,00h,00h,3Bh,0FEh,0Fh,84h
+    db 9Dh,00h,00h,00h,8Bh,0Dh,8Ch,70h,2Fh,01h,0DDh,0D8h,53h,0E8h,96h,0D8h
+    db 0C8h,0FFh,83h,78h,18h,0FFh,7Eh,4Dh,8Bh,44h,0BCh,44h,8Bh,0Dh,8Ch,70h
+    db 2Fh,01h,50h,0E8h,80h,0D8h,0C8h,0FFh,8Bh,0Dh,8Ch,70h,2Fh,01h,8Bh,68h
+    db 18h,53h,0E8h,71h,0D8h,0C8h,0FFh,3Bh,68h,18h,75h,29h,0D9h,44h,24h,14h
+    db 8Dh,0Ch,0F7h,0D8h,54h,8Ch,64h,8Dh,4Ch,8Ch,64h,0C6h,44h,24h,1Bh,01h
+    db 0DFh,0E0h,0F6h,0C4h,41h,75h,4Ah,0DDh,0D8h,89h,74h,24h,24h,0D9h,01h,0D9h
+    db 54h,24h,14h,0EBh,3Ch,8Ah,44h,24h,1Bh,84h,0C0h,75h,30h,0D9h,44h,24h
+    db 2Ch,8Dh,0Ch,0F7h,0D8h,44h,8Ch,64h,0D9h,5Ch,24h,2Ch,0D9h,44h,24h,14h
+    db 0D9h,44h,24h,2Ch,0D8h,0D9h,0DFh,0E0h,0F6h,0C4h,41h,75h,14h,0DDh,0D8h,89h
+    db 74h,24h,24h,0D9h,44h,24h,2Ch,0D9h,54h,24h,14h,0EBh,04h,0D9h,44h,24h
+    db 14h,8Bh,44h,24h,20h,47h,3Bh,0F8h,0Fh,8Ch,42h,0FFh,0FFh,0FFh,8Bh,44h
+    db 24h,20h,46h,3Bh,0F0h,0Fh,8Ch,55h,0FEh,0FFh,0FFh,8Bh,0ACh,24h,74h,01h
+    db 00h,00h,8Bh,7Ch,24h,28h,8Bh,0D8h,8Bh,44h,24h,24h,8Bh,54h,24h,1Ch
+    db 0DDh,0D8h,89h,47h,10h,0C6h,44h,04h,30h,01h,89h,54h,84h,44h,0EBh,53h
+    db 83h,0FEh,0FFh,75h,35h,8Dh,7Bh,0FFh,0EBh,06h,8Dh,9Bh,00h,00h,00h,00h
+    db 68h,0F9h,06h,00h,00h,68h,48h,0AEh,0Eh,01h,57h,6Ah,00h,0E8h,3Ch,07h
+    db 0C7h,0FFh,83h,0C4h,10h,8Bh,0F0h,6Ah,0FFh,56h,8Bh,0CDh,0E8h,23h,6Dh,0CAh
+    db 0FFh,84h,0C0h,75h,0DBh,83h,0FEh,0FFh,74h,0D6h,8Bh,44h,24h,28h,8Bh,4Ch
+    db 24h,1Ch,89h,70h,10h,0C6h,44h,34h,30h,01h,89h,4Ch,0B4h,44h,0C6h,44h
+    db 24h,13h,01h,8Bh,44h,24h,1Ch,40h,83h,0F8h,08h,89h,44h,24h,1Ch,0Fh
+    db 8Ch,5Bh,0FDh,0FFh,0FFh,33h,0DBh,89h,5Ch,24h,28h,33h,0FFh,8Dh,49h,00h
+    db 57h,8Bh,0CDh,0E8h,98h,7Fh,0C9h,0FFh,8Bh,0F0h,8Bh,0CEh,0E8h,0C2h,0F0h,0CAh
+    db 0FFh,84h,0C0h,74h,07h,83h,7Eh,14h,0FEh,74h,01h,43h,47h,83h,0FFh,08h
+    db 7Ch,0DEh,0C7h,44h,24h,1Ch,00h,00h,00h,00h,8Bh,74h,24h,1Ch,89h,5Ch
+    db 24h,28h,56h,8Bh,0CDh,0E8h,1Eh,0D7h,0C8h,0FFh,8Bh,0D8h,85h,0DBh,74h,53h
+    db 8Bh,0CBh,0E8h,8Ch,0F0h,0CAh,0FFh,84h,0C0h,74h,48h,83h,7Bh,14h,0FEh,75h
+    db 42h,8Bh,44h,24h,28h,85h,0C0h,75h,04h,33h,0F6h,0EBh,2Fh,8Bh,7Ch,24h
+    db 20h,4Fh,68h,1Eh,07h,00h,00h,68h,48h,0AEh,0Eh,01h,57h,6Ah,00h,0E8h
+    db 7Ah,06h,0C7h,0FFh,83h,0C4h,10h,8Bh,0F0h,6Ah,0FFh,56h,8Bh,0CDh,0E8h,61h
+    db 6Ch,0CAh,0FFh,84h,0C0h,74h,0DBh,83h,0FEh,0FFh,74h,0D6h,89h,73h,10h,8Bh
+    db 74h,24h,1Ch,46h,83h,0FEh,08h,89h,74h,24h,1Ch,7Ch,95h,8Bh,8Ch,24h
+    db 64h,01h,00h,00h,5Fh,5Eh,5Dh,64h,89h,0Dh,00h,00h,00h,00h,5Bh,81h
+    db 0C4h,60h,01h,00h,00h,0C3h
+?populateRandomStartPosition@@YAXPAVGameInfo@@@Z ENDP
+_TEXT ENDS
+END
