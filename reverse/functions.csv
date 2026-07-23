@@ -13326,3 +13326,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?addShadow@W3DProjectedShadowManager@@QAEPAVW3DProjectedShadow@@PAVRenderObjClass@@PAUShadowTypeInfo@Shadow@@PAVDrawable@@@Z,,0x007B4340,322,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp,matched,
 ?update@AIMoveAndDeleteState@@UAE?AW4StateReturnType@@XZ,,0x0017A530,152,Code/GameEngine/Source/GameLogic/AI/AIStates.cpp,matched,
 ?update@AIEnterState@@UAE?AW4StateReturnType@@XZ,,0x00189240,425,Code/GameEngine/Source/GameLogic/AI/AIStates.cpp,matched,
+?parse@LightPulseFXNugget@@SAXPAVINI@@PAX1PBX@Z,,0x0042BE30,224,Code/masm_dumps/LightPulseFXNugget_parse_42BE30.asm,matched,Certified packet 31; LightPulse parser table ILT and Ghidra ret boundary; retail sha256 794285f856fbf02b8bb4305437cadc3c7f955c41640c3f12f132ec9ffea92e38
