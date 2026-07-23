@@ -13297,3 +13297,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?update@AIFollowPathState@@UAE?AW4StateReturnType@@XZ,,0x00179150,809,Code/masm_dumps/AIFollowPathState_update.asm,matched,
 ?getPointerToTileData@WorldHeightMap@@QAEPAEHHH@Z,,0x0074C920,273,Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp,matched,
 ?createMoveHint@InGameUI@@UAEXPBVGameMessage@@@Z,,0x0043AC80,3,Code/GameEngine/Source/GameClient/InGameUI.cpp,matched,
+?Invalidate@DX8MeshRendererClass@@QAEX_N@Z,,0x00947BD0,289,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer_Invalidate.asm,matched,
