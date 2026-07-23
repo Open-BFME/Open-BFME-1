@@ -13336,3 +13336,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?populateRandomStartPosition@@YAXPAVGameInfo@@@Z,,0x00390F90,1510,Code/masm_dumps/populateRandomStartPosition.asm,matched,Certified packet 37 retail db recovery sha256 bc2162546e1b9a6ba4fefc244e7ab5cfae5b1ff6afc6678e946cefde04b19904
 ?parseDefaultColor@@YA_NPAHPAVFile@@PAD@Z,,0x00485970,143,Code/masm_dumps/parseDefaultColor_YA_NPAHPAVFile_PAD_Z_00485970.asm,matched,Certified packet 43 reviewed ENTRY boundaries callers TRANSPARENT xref and call graph
 ??1MapObject@@MAE@XZ,,0x00088350,236,Code/masm_dumps/MapObject_destructor_MAE_00088350.asm,matched,Certified packet 46; reviewed vtable deleting-destructor chain and ownership teardown
+?reloadWithBonus@Weapon@@IAEXPBVObject@@ABVWeaponBonus@@_N@Z,,0x001E8720,371,Code/masm_dumps/Weapon_reloadWithBonus_1E8720.asm,matched,Certified packet 48 reviewed Ghidra entry and wrapper call-chain recovery
