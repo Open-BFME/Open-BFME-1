@@ -3694,10 +3694,23 @@ StateReturnType AIAttackMoveToState::onEnter()
 }
 
 //----------------------------------------------------------------------------------------------------------
-// ?onExit@AIAttackMoveToState@@UAEXW4StateExitType@@@Z present-unmatched
+class BfmeAttackMoveStateMachineSetState
+{
+public:
+	virtual void _bfme_slot_0() = 0;
+	virtual void _bfme_slot_1() = 0;
+	virtual void _bfme_slot_2() = 0;
+	virtual void _bfme_slot_3() = 0;
+	virtual void _bfme_slot_4() = 0;
+	virtual void _bfme_slot_5() = 0;
+	virtual void _bfme_slot_6() = 0;
+	virtual void _bfme_slot_7() = 0;
+	virtual StateReturnType setState( StateID newStateID ) = 0;
+};
+
 void AIAttackMoveToState::onExit( StateExitType status )
 {
-	m_attackMoveMachine->setState(AI_IDLE);
+	((BfmeAttackMoveStateMachineSetState *)m_attackMoveMachine)->setState(AI_IDLE);
 	AIMoveToState::onExit(status);
 }
 
