@@ -12616,57 +12616,35 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?width@VideoStream@@UAEHXZ,,0x006CF680,3,Code/GameEngine/Source/GameClient/VideoPlayer.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?winBringToTop@GameWindow@@QAEHXZ,,0x0000FE66,5,Code/masm_dumps/_winBringToTop_GameWindow__QAEHXZ_FE66.asm,matched,MASM exact retail dump
 ?winCapture@GameWindowManager@@UAEHPAVGameWindow@@@Z,,0x0047C910,27,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
-?winClearStatus@GameWindow@@QAEII@Z,,0x00027B24,5,Code/masm_dumps/_winClearStatus_GameWindow__QAEII_Z_27B24.asm,matched,MASM exact retail dump
 ?winCreate@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHP6A?AW4WindowMsgHandledType@@0III@ZPAVWinInstanceData@@@Z,,0x006F5A90,269,Code/masm_dumps/GameWindowManager_winCreate.asm,matched,Exact retail MASM; true body confirmed by GameWindow caller and Times New Roman fallback; avoids wrong 56-byte COMDAT extraction
 ?winCreateFromScript@GameWindowManager@@QAEPAVGameWindow@@VAsciiString@@PAPAV2@@Z,,0x00488B80,1212,Code/masm_dumps/_sa3__winCreateFromScript_GameWindowManager__QAEPAVGame_488B80.asm,matched,Exact 1212B string-anchored Open-BFME4
 ?winDestroy@GameWindowManager@@UAEHPAVGameWindow@@@Z,,0x0047CE30,226,Code/masm_dumps/_rn5__winDestroy_GameWindowManager__UAEHPAVGameWindow___Z_47CE30.asm,matched,reloc-needle Open-BFME4+Grok
 ?winEnable@GameWindow@@QAEH_N@Z,,0x0004A1FB,5,Code/masm_dumps/_winEnable_GameWindow__QAEH_N_Z_4A1FB.asm,matched,MASM exact retail dump
 ?winFontHeight@GameWindowManager@@UAEHPAVGameFont@@@Z,,0x0047A060,10,Code/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp,matched,
-?winGetChild@GameWindow@@QAEPAV1@XZ,,0x00017DF5,5,Code/masm_dumps/_winGetChild_GameWindow__QAEPAV1_XZ_17DF5.asm,matched,MASM exact retail dump
 ?winGetDisabledBorderColor@GameWindow@@QAEHH@Z,,0x0047A2A0,17,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?winGetDisabledColor@GameWindow@@QAEHH@Z,,0x0059E4A0,14,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?winGetEnabledBorderColor@GameWindow@@QAEHH@Z,,0x0047A260,14,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?winGetEnabledColor@GameWindow@@QAEHH@Z,,0x00484260,14,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
-?winGetEnabledTextBorderColor@GameWindow@@QAEHXZ,,0x0002D7EA,5,Code/masm_dumps/_winGetEnabledTextBorderColor_GameWindow__QAEHXZ_2D7EA.asm,matched,MASM exact retail dump
 ?winGetFocus@GameWindowManager@@UAEPAVGameWindow@@XZ,,0x00674250,4,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,icf-owner=?getRequestedPlayerID@BFMENetRequestPlayerLeaveCommandMsg@@QAEHXZ
 ?winGetHiliteBorderColor@GameWindow@@QAEHH@Z,,0x0047A2E0,17,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?winGetHiliteColor@GameWindow@@QAEHH@Z,,0x0078CF80,14,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
-?winGetInstanceData@GameWindow@@QAEPAVWinInstanceData@@XZ,,0x00034991,5,Code/masm_dumps/_winGetInstanceData_GameWindow__QAEPAVWinInstanceData__XZ_34991.asm,matched,MASM exact retail dump
-?winGetLayout@GameWindow@@QAEPAVWindowLayout@@XZ,,0x000402F5,5,Code/masm_dumps/_thunk_c52323717951_402F5.asm,matched,thunk accessor of ported class
-?winGetNext@GameWindow@@QAEPAV1@XZ,,0x0000D2B0,5,Code/masm_dumps/_winGetNext_GameWindow__QAEPAV1_XZ_D2B0.asm,matched,MASM exact retail dump
-?winGetNextInLayout@GameWindow@@QAEPAV1@XZ,,0x0002A414,5,Code/masm_dumps/_winGetNextInLayout_GameWindow__QAEPAV1_XZ_2A414.asm,matched,MASM exact retail dump
-?winGetOwner@GameWindow@@QAEPAV1@XZ,,0x0002DBAF,5,Code/masm_dumps/_thunk_9fd2447845c1_2DBAF.asm,matched,thunk accessor of ported class
-?winGetParent@GameWindow@@QAEPAV1@XZ,,0x00014F97,5,Code/masm_dumps/_winGetParent_GameWindow__QAEPAV1_XZ_14F97.asm,matched,MASM exact retail dump
 ?winGetPosition@GameWindow@@QAEHPAH0@Z,,0x000179BD,5,Code/masm_dumps/_thunk_948195a838a4_179BD.asm,matched,thunk accessor of ported class
-?winGetPrev@GameWindow@@QAEPAV1@XZ,,0x0000DDF5,5,Code/masm_dumps/_winGetPrev_GameWindow__QAEPAV1_XZ_DDF5.asm,matched,MASM exact retail dump
-?winGetPrevInLayout@GameWindow@@QAEPAV1@XZ,,0x00005399,5,Code/masm_dumps/_winGetPrevInLayout_GameWindow__QAEPAV1_XZ_5399.asm,matched,MASM exact retail dump
-?winGetScreenPosition@GameWindow@@QAEHPAH0@Z,,0x0002F94B,5,Code/masm_dumps/_winGetScreenPosition_GameWindow__QAEHPAH0_Z_2F94B.asm,matched,MASM exact retail dump
-?winGetSize@GameWindow@@QAEHPAH0@Z,,0x00036EBC,5,Code/masm_dumps/_winGetSize_GameWindow__QAEHPAH0_Z_36EBC.asm,matched,MASM exact retail dump
-?winGetStatus@GameWindow@@QAEIXZ,,0x00023DDA,5,Code/masm_dumps/_winGetStatus_GameWindow__QAEIXZ_23DDA.asm,matched,MASM exact retail dump
-?winGetStyle@GameWindow@@QAEIXZ,,0x00008B52,5,Code/masm_dumps/_winGetStyle_GameWindow__QAEIXZ_8B52.asm,matched,MASM exact retail dump
 ?winGetTextSize@GameWindowManager@@QAEXPAVGameFont@@VUnicodeString@@PAH2H@Z,,0x0047A150,40,Code/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp,matched,
-?winGetUserData@GameWindow@@QAEPAXXZ,,0x00046538,5,Code/masm_dumps/_winGetUserData_GameWindow__QAEPAXXZ_46538.asm,matched,MASM exact retail dump
 ?winGetWindowFromId@GameWindowManager@@UAEPAVGameWindow@@PAV2@H@Z,,0x0047C970,87,Code/masm_dumps/_rn5__winGetWindowFromId_GameWindowManager__UAEPAVGameWindow__PAV2_H_Z_47C970.asm,matched,reloc-needle Open-BFME4+Grok
-?winGetWindowId@GameWindow@@QAEHXZ,,0x000188A4,5,Code/masm_dumps/_winGetWindowId_GameWindow__QAEHXZ_188A4.asm,matched,MASM exact retail dump
 ?winHide@GameWindow@@QAEHH@Z,,0x00027F2A,5,Code/masm_dumps/_winHide_GameWindow__QAEHH_Z_27F2A.asm,matched,MASM exact retail dump
 ?winIsChild@GameWindow@@QAE_NPAV1@@Z,,0x00478D30,34,Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp,matched,reloc-needle Open-BFME4+Grok asm->cpp depth Open-BFME4+Grok
-?winIsHidden@GameWindow@@QAE_NXZ,,0x0003A5B7,5,Code/masm_dumps/_winIsHidden_GameWindow__QAE_NXZ_3A5B7.asm,matched,MASM exact retail dump
 ?winMakeColor@GameWindowManager@@UAEHEEEE@Z,,0x0047A070,33,Code/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp,matched,
-?winNextTab@GameWindow@@QAEHXZ,,0x0000D297,5,Code/masm_dumps/_winNextTab_GameWindow__QAEHXZ_D297.asm,matched,MASM exact retail dump
 ?winNextTab@GameWindowManager@@UAEXPAVGameWindow@@@Z,,0x004838E0,126,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?winPointInChild@GameWindow@@QAEPAV1@HH_N0@Z,,0x00479770,399,Code/masm_dumps/_sa13__winPointInChild_GameWindow__QAEPAV1_HH_N0_Z_479770.asm,matched,multi-xref Open-BFME4+Grok GUIClickDisabled
-?winPrevTab@GameWindow@@QAEHXZ,,0x00010550,5,Code/masm_dumps/_winPrevTab_GameWindow__QAEHXZ_10550.asm,matched,MASM exact retail dump
 ?winPrevTab@GameWindowManager@@UAEXPAVGameWindow@@@Z,,0x00483980,114,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?winProcessKey@GameWindowManager@@UAE?AW4WinInputReturnCode@@EE@Z,,0x0047CB60,103,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,resweep exact post-GWM-fix (exact-ambiguous)
 ?winRelease@GameWindowManager@@UAEHPAVGameWindow@@@Z,,0x0047C940,21,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?winSetDisabledBorderColor@GameWindow@@QAEHHH@Z,,0x004790A0,40,Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp,matched,
 ?winSetDisabledColor@GameWindow@@QAEHHH@Z,,0x00479070,37,Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp,matched,
 ?winSetDisabledImage@GameWindow@@QAEHHPBVImage@@@Z,,0x0000B406,5,Code/masm_dumps/_thunk_027fd80c43a9_B406.asm,matched,thunk accessor of ported class (icf alias)
-?winSetDisabledTextColors@GameWindow@@QAEXHH@Z,,0x0001B694,5,Code/masm_dumps/_winSetDisabledTextColors_GameWindow__QAEXHH_Z_1B694.asm,matched,MASM exact retail dump
 ?winSetEnabledBorderColor@GameWindow@@QAEHHH@Z,,0x00479010,37,Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp,matched,
 ?winSetEnabledColor@GameWindow@@QAEHHH@Z,,0x00478FE0,37,Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp,matched,
 ?winSetEnabledImage@GameWindow@@QAEHHPBVImage@@@Z,,0x00035E09,5,Code/masm_dumps/_winSetEnabledImage_GameWindow__QAEHHPBVImage___Z_35E09.asm,matched,MASM exact retail dump
-?winSetEnabledTextColors@GameWindow@@QAEXHH@Z,,0x00017459,5,Code/masm_dumps/_winSetEnabledTextColors_GameWindow__QAEXHH_Z_17459.asm,matched,MASM exact retail dump
 ?winSetFocus@GameWindowManager@@UAEHPAVGameWindow@@@Z,,0x0047CA80,172,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,resweep exact post-GWM-fix (exact-ambiguous)
 ?winSetHiliteBorderColor@GameWindow@@QAEHHH@Z,,0x00479150,40,Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp,matched,
 ?winSetHiliteColor@GameWindow@@QAEHHH@Z,,0x00479120,37,Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp,matched,
@@ -12686,7 +12664,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?winSetSize@GameWindow@@QAEHHH@Z,,0x000482AC,5,Code/masm_dumps/_winSetSize_GameWindow__QAEHHH_Z_482AC.asm,matched,MASM exact retail dump
 ?winSetStatus@GameWindow@@QAEII@Z,,0x00840FC0,19,Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp,matched,
 ?winSetTooltipFunc@GameWindow@@QAEHP6AXPAV1@PAVWinInstanceData@@I@Z@Z,,0x0003D127,5,Code/masm_dumps/_thunk_17eb35c03d08_3D127.asm,matched,thunk accessor of ported class
-?winSetUserData@GameWindow@@QAEXPAX@Z,,0x00002E69,5,Code/masm_dumps/_winSetUserData_GameWindow__QAEXPAX_Z_2E69.asm,matched,MASM exact retail dump
 ?winTextLabelToText@GameWindowManager@@QAE?AVUnicodeString@@VAsciiString@@@Z,,0x0047E1B0,175,Code/GameEngine/Source/GameClient/GUI/GameWindowManager_winTextLabelToText.asm,matched,exact 175B via MASM (SEH)
 ?windowHiding@GameWindowManager@@UAEXPAVGameWindow@@@Z,,0x0047C7E0,109,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?worldToCell@Pathfinder@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z,,0x000171E8,5,Code/masm_dumps/_worldToCell_Pathfinder__QAE_NPBUCoord3D__PAUICoord2D___Z_171E8.asm,matched,MASM exact retail dump
@@ -13375,3 +13352,26 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?parse@ApplyRandomForceNugget@@SAXPAVINI@@PAX1PBX@Z,,0x001D8800,64,Code/masm_dumps/parse_ApplyRandomForceNugget_1D8800.asm,matched,Certified packet 105 db-only recovery SHA256 ebc7c7a54027fecec86bf786b488908ab8037d65b9303526368a595f41276967
 ?xfer@ScriptList@@MAEXPAVXfer@@@Z,,0x003556A0,400,Code/masm_dumps/xfer_ScriptList_MAEXPAVXfer_Z_003556A0_76e94c51.asm,matched,Certified packet 106 vtable thunk identity; retail sha256 76e94c51960571955350c1034dad16ec4d08b4264a953c395ab3c33077191aca
 ?init@W3DProjectedShadowManager@@QAE_NXZ,,0x007AF630,156,Code/masm_dumps/init_W3DProjectedShadowManager_QAE_NXZ_007AF630_a1e7261b.asm,matched,Certified packet 108 exact retail db recovery sha256 a1e7261bc7da1bdbf3c7db1e609c068d2e7ffe4a1f6859a47e7f3bbbcaf1c5b6
+?winGetInstanceData@GameWindow@@QAEPAVWinInstanceData@@XZ,,0x00478C60,4,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME layout m_instData@0x30 (reconstructed GameWindow.h)
+?winGetUserData@GameWindow@@QAEPAXXZ,,0x00478C70,4,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_userData@0x2c
+?winGetStatus@GameWindow@@QAEIXZ,,0x00478480,4,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_status@0x08
+?winGetWindowId@GameWindow@@QAEHXZ,,0x00478CA0,4,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_instData.m_id@0x34
+?winIsHidden@GameWindow@@QAE_NXZ,,0x00478410,10,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_status@0x08 BitTest HIDDEN
+?winGetStyle@GameWindow@@QAEIXZ,,0x00478490,4,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_instData.m_style@0x3c; ICF twin of getFrame@GameLogic
+?winGetOwner@GameWindow@@QAEPAV1@XZ,,0x00478DA0,4,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_instData.m_owner@0x44
+?winGetNext@GameWindow@@QAEPAV1@XZ,,0x00478DC0,7,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_next@0x1f8
+?winGetPrev@GameWindow@@QAEPAV1@XZ,,0x00478DE0,7,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_prev@0x1fc
+?winGetParent@GameWindow@@QAEPAV1@XZ,,0x00478D20,7,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_parent@0x200
+?winGetChild@GameWindow@@QAEPAV1@XZ,,0x00478D70,7,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_child@0x204
+?winGetLayout@GameWindow@@QAEPAVWindowLayout@@XZ,,0x00478E20,7,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_layout@0x210
+?winGetNextInLayout@GameWindow@@QAEPAV1@XZ,,0x00478E30,7,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_nextLayout@0x208; ICF twin getEnergyProduction
+?winGetPrevInLayout@GameWindow@@QAEPAV1@XZ,,0x00478E40,7,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_prevLayout@0x20c; ICF twin getEnergyBonus
+?winGetSize@GameWindow@@QAEHPAH0@Z,,0x004782A0,33,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_size@0xc
+?winGetScreenPosition@GameWindow@@QAEHPAH0@Z,,0x004781D0,58,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_parent@0x200 walk
+?winSetUserData@GameWindow@@QAEXPAX@Z,,0x00478C80,10,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_userData@0x2c
+?winClearStatus@GameWindow@@QAEII@Z,,0x00478440,17,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_status@0x08
+?winNextTab@GameWindow@@QAEHXZ,,0x004780B0,3,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME stub return WIN_ERR_OK
+?winPrevTab@GameWindow@@QAEHXZ,,0x004780C0,3,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME stub return WIN_ERR_OK
+?winGetEnabledTextBorderColor@GameWindow@@QAEHXZ,,0x00478710,7,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_enabledText.borderColor@0x190; ICF twin getContain
+?winSetEnabledTextColors@GameWindow@@QAEXHH@Z,,0x00478600,43,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_enabledText@0x18c; combo dispatch
+?winSetDisabledTextColors@GameWindow@@QAEXHH@Z,,0x00478640,43,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_disabledText@0x194; combo dispatch
