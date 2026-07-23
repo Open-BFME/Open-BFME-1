@@ -1,0 +1,19 @@
+.386
+.model flat
+
+; ?clear@TeamsInfoRec@@QAEXXZ
+; Exact 115 retail bytes @ RVA 0x001991F0
+_TEXT SEGMENT
+public ?clear@TeamsInfoRec@@QAEXXZ
+?clear@TeamsInfoRec@@QAEXXZ PROC
+    db 083h,0ECh,00Ch,056h,057h,08Bh,0F1h,06Ah,001h,08Dh,04Ch,024h,00Ch,0E8h,027h,0EFh
+    db 0E7h,0FFh,08Bh,056h,00Ch,08Bh,008h,089h,010h,089h,04Eh,00Ch,08Bh,056h,010h,08Bh
+    db 048h,004h,089h,050h,004h,089h,04Eh,010h,08Bh,048h,008h,08Bh,056h,014h,089h,050h
+    db 008h,089h,04Eh,014h,08Dh,04Ch,024h,008h,0E8h,078h,044h,0E9h,0FFh,08Bh,046h,004h
+    db 033h,0FFh,03Bh,0C7h,074h,01Fh,08Bh,006h,08Bh,048h,004h,051h,08Bh,0CEh,0E8h,0EAh
+    db 003h,0E8h,0FFh,08Bh,006h,089h,040h,008h,08Bh,016h,089h,07Ah,004h,08Bh,006h,089h
+    db 040h,00Ch,089h,07Eh,004h,066h,089h,07Eh,018h,066h,089h,07Eh,01Ah,05Fh,05Eh,083h
+    db 0C4h,00Ch,0C3h
+?clear@TeamsInfoRec@@QAEXXZ ENDP
+_TEXT ENDS
+END
