@@ -77,6 +77,24 @@ extern "C" DWORD WINAPI bfme_timeGetTime( void );
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
 
+struct BFMECoord2D
+{
+	Real x;
+	Real y;
+
+	BFMECoord2D( void ) {}
+	BFMECoord2D( const BFMECoord2D &that ) : x(that.x), y(that.y) {}
+	~BFMECoord2D( void ) {}
+};
+
+class BFMEAnimateWindowLayout
+{
+public:
+	void setAnimData( ICoord2D startPos, ICoord2D endPos, ICoord2D curPos,
+										ICoord2D restPos, BFMECoord2D vel,
+										UnsignedInt startTime, UnsignedInt endTime );
+};
+
 
 //-----------------------------------------------------------------------------
 // ProcessAnimateWindowSlideFromRight PUBLIC FUNCTIONS ////////////////////////
@@ -682,14 +700,30 @@ void ProcessAnimateWindowSlideFromBottom::initReverseAnimateWindow( AnimateWindo
 }
 
 
-// ?initAnimateWindow@ProcessAnimateWindowSlideFromBottom@@UAEXPAVAnimateWindow@@@Z present-unmatched
 void ProcessAnimateWindowSlideFromBottom::initAnimateWindow( AnimateWindow *animWin )
 {
+	class BFMEDisplayLayout
+	{
+	public:
+		virtual void slot00( void ) = 0;
+		virtual void slot01( void ) = 0;
+		virtual void slot02( void ) = 0;
+		virtual void slot03( void ) = 0;
+		virtual void slot04( void ) = 0;
+		virtual void slot05( void ) = 0;
+		virtual void slot06( void ) = 0;
+		virtual void slot07( void ) = 0;
+		virtual void slot08( void ) = 0;
+		virtual void slot09( void ) = 0;
+		virtual void slot10( void ) = 0;
+		virtual UnsignedInt getWidth( void ) = 0;
+	};
+
 	ICoord2D restPos = {0,0};
 	ICoord2D startPos = {0,0};
 	ICoord2D curPos = {0,0};
 	ICoord2D endPos = {0,0};
-	Coord2D	vel = {0.0f,0.0f};
+	BFMECoord2D vel;
 	
 	if(!animWin)
 	{
@@ -710,7 +744,7 @@ void ProcessAnimateWindowSlideFromBottom::initAnimateWindow( AnimateWindow *anim
 	endPos.y = restPos.y;
 
 	//set the initial positions for the window. In this case, off the Bottom of the screen
-	Int travelDistance = TheDisplay->getWidth();// / 4 * 3;
+	Int travelDistance = ((BFMEDisplayLayout *)TheDisplay)->getWidth();// / 4 * 3;
 	startPos.x = curPos.x = restPos.x;
 	startPos.y = curPos.y = restPos.y + travelDistance;
 
@@ -718,9 +752,10 @@ void ProcessAnimateWindowSlideFromBottom::initAnimateWindow( AnimateWindow *anim
 	win->winSetPosition(startPos.x, startPos.y);
 
 	//Now initialize the velocities
-	vel = m_maxVel;
+	vel.x = m_maxVel.x;
+	vel.y = m_maxVel.y;
 
-	animWin->setAnimData(startPos, endPos, curPos, restPos, vel, timeGetTime() + animWin->getDelay(), 0);
+	((BFMEAnimateWindowLayout *)animWin)->setAnimData(startPos, endPos, curPos, restPos, vel, timeGetTime() + animWin->getDelay(), 0);
 }
 
 // ?updateAnimateWindow@ProcessAnimateWindowSlideFromBottom@@UAE_NPAVAnimateWindow@@@Z present-unmatched
