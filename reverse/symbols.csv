@@ -3439,3 +3439,8 @@ _ShowControlBar,0x00024848,ShowControlBar letterbox
 ?getTexture@BFMEShadowManagerLayout@@QAEPAVW3DShadowTexture@@PBD@Z,0x0004088B,retail projected-shadow texture lookup ILT thunk
 ?addShadowCore@BFMEShadowManagerLayout@@QAEPAVW3DProjectedShadow@@PAVW3DShadowTexture@@PAVRenderObjClass@@W4ShadowType@@_NMMHMMPAPAV2@3PAVDrawable@@3@Z,0x000193BC,retail projected-shadow 13-argument core ILT thunk
 ?appendNode@Path@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z,0x0003833E,retail Path::appendNode ILT thunk (body 0x0016A4B0)
+?getGoalObject@StateMachine@@QAEPAVObject@@XZ,0x0000E570,retail AIEnterState::update call target
+?friend_setGoalObject@AIUpdateInterface@@QAEXPAVObject@@@Z,0x000125E9,retail AIEnterState::update call target
+?canEnterObject@BFMEActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@W4CanEnterType@@PA_N@Z,0x0002D588,retail five-argument ActionManager ABI thunk (body 0x000C5440)
+?getCanAttackObject@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z,0x00045D90,retail AIEnterState::update call target
+?aiAttackObject@AICommandInterface@@QAEXPAVObject@@HW4CommandSourceType@@@Z,0x0002EDCF,retail AIEnterState::update call target

@@ -13325,3 +13325,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?xfer@TerrainLogic@@MAEXPAVXfer@@@Z,,0x006BE430,45,Code/masm_dumps/TerrainLogic_xfer_6BE430.asm,matched,Certified packet 26 vtable-owned TerrainLogic xfer wrapper exact retail bytes SHA256 bbd9812128df694a4baf5174941c9d9f267c4d3364b406b26c6cbbb97edced32
 ?addShadow@W3DProjectedShadowManager@@QAEPAVW3DProjectedShadow@@PAVRenderObjClass@@PAUShadowTypeInfo@Shadow@@PAVDrawable@@@Z,,0x007B4340,322,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp,matched,
 ?update@AIMoveAndDeleteState@@UAE?AW4StateReturnType@@XZ,,0x0017A530,152,Code/GameEngine/Source/GameLogic/AI/AIStates.cpp,matched,
+?update@AIEnterState@@UAE?AW4StateReturnType@@XZ,,0x00189240,425,Code/GameEngine/Source/GameLogic/AI/AIStates.cpp,matched,

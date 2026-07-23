@@ -92,6 +92,52 @@ public:
 	virtual Real getGroundHeight( Real x, Real y, Coord3D *normal = NULL ) = 0;
 };
 
+template <Int N>
+class BFMEVirtualSlots : public BFMEVirtualSlots<N - 1>
+{
+public:
+	virtual void unused(char (*)[N]) = 0;
+};
+
+template <>
+class BFMEVirtualSlots<0>
+{
+};
+
+class BFMEAIUpdateCommandSource : public BFMEVirtualSlots<128>
+{
+public:
+	virtual CommandSourceType getLastCommandSource() const = 0;
+};
+
+class BFMEObjectAI
+{
+public:
+	AIUpdateInterface *getAI() const
+	{
+		return *(AIUpdateInterface **)((char *)this + 0x204);
+	}
+};
+
+class BFMEContainAdd : public BFMEVirtualSlots<34>
+{
+public:
+	virtual void addToContain(Object *obj) = 0;
+};
+
+class BFMEContainPosition : public BFMEVirtualSlots<81>
+{
+public:
+	virtual const Coord3D *getContainedObjectPosition() const = 0;
+};
+
+class BFMEActionManager
+{
+public:
+	Bool canEnterObject(const Object *obj, const Object *objectToEnter,
+		CommandSourceType commandSource, CanEnterType mode, Bool *full);
+};
+
 //----------------------------------------------------------------------------------------------------------
 // ??0AICommandParms@@QAE@W4AICommandType@@W4CommandSourceType@@@Z present-unmatched
 AICommandParms::AICommandParms(AICommandType cmd, CommandSourceType cmdSource) : 
@@ -6384,13 +6430,12 @@ void AIEnterState::onExit( StateExitType status )
 }
 
 //----------------------------------------------------------------------------------------------------------
-// ?update@AIEnterState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIEnterState::update()
 {
 
 	// update the goal position to coincide with the GoalObject
-	Object* obj = getMachineOwner();
-	Object* goal = getMachineGoalObject();
+	Object *obj = *(Object **)(*(char **)((char *)this + 0x1c) + 0x10);
+	Object *goal = (*(StateMachine **)((char *)this + 0x1c))->getGoalObject();
 	if (goal)
 	{
 		// if our goal is contained by something else, give up. this is for the following bug:
@@ -6398,14 +6443,22 @@ StateReturnType AIEnterState::update()
 		// -- tell the humvee to enter a chinook
 		// -- fly the chinook around; the rangers follow the chinook like dopes
 		// this just bails in this case. (srj)
-		if (goal->getContainedBy() != NULL && goal->isAboveTerrain() && !obj->isAboveTerrain())
+		if (*(Object **)((char *)goal + 0x214) != NULL && goal->isAboveTerrain() && !obj->isAboveTerrain())
 		{
 			return STATE_FAILURE;	
 		}
 
-		m_goalPosition = *goal->getPosition();
-		obj->getAI()->friend_setGoalObject(goal);
-		if (!TheActionManager->canEnterObject(obj, goal, obj->getAI()->getLastCommandSource(), CHECK_CAPACITY))
+		BFMEContainPosition *contain = *(BFMEContainPosition **)((char *)goal + 0x1fc);
+		if (contain)
+			m_goalPosition = *contain->getContainedObjectPosition();
+		else
+			m_goalPosition = *(Coord3D *)((char *)goal + 0x38);
+
+		(*(AIUpdateInterface **)((char *)obj + 0x204))->friend_setGoalObject(goal);
+		if (!((BFMEActionManager *)TheActionManager)->canEnterObject(
+			obj, goal,
+			((BFMEAIUpdateCommandSource *)*(AIUpdateInterface **)((char *)obj + 0x204))->getLastCommandSource(),
+			CHECK_CAPACITY, NULL))
 		{
 			/*
 				special-case: if it's an enemy, try attacking it instead. this is to address this bug: (srj)
@@ -6418,12 +6471,17 @@ StateReturnType AIEnterState::update()
 
 				Expected result: Based on test plan: Instead of just stopping when enemy units garrison building first, they should continue and attack the building.
 			*/
-			if( obj->getRelationship(goal) == ENEMIES && obj->getAI() )
+			if( obj->getRelationship(goal) == ENEMIES && ((BFMEObjectAI *)obj)->getAI() )
 			{
-				CanAttackResult result = TheActionManager->getCanAttackObject(obj, goal, obj->getAI()->getLastCommandSource(), ATTACK_NEW_TARGET);
+				CanAttackResult result = TheActionManager->getCanAttackObject(
+					obj, goal,
+					((BFMEAIUpdateCommandSource *)((BFMEObjectAI *)obj)->getAI())->getLastCommandSource(),
+					ATTACK_NEW_TARGET);
 				if( result == ATTACKRESULT_POSSIBLE || result == ATTACKRESULT_POSSIBLE_AFTER_MOVING )
 				{
-	 				obj->getAI()->aiAttackObject(goal, NO_MAX_SHOTS_LIMIT, obj->getAI()->getLastCommandSource());
+					AIUpdateInterface *ai = *(AIUpdateInterface **)((char *)obj + 0x204);
+					ai->aiAttackObject(goal, NO_MAX_SHOTS_LIMIT,
+						((BFMEAIUpdateCommandSource *)ai)->getLastCommandSource());
 					// weird but true. return state_continue, because if we're here, we're actually an attack state
 					// since we just changed the state, it doesn't really matter what we return here.
 					return STATE_CONTINUE;
@@ -6434,7 +6492,8 @@ StateReturnType AIEnterState::update()
 		}
 
 		// If we are held, then we must have entered the goal.
-		if( getMachineOwner()->isDisabledByType( DISABLED_HELD ) )
+		Object *machineOwner = *(Object **)(*(char **)((char *)this + 0x1c) + 0x10);
+		if( (*(UnsignedByte *)((char *)machineOwner + 0x1a4) & 8) != 0 )
 		{
 			return STATE_SUCCESS;
 		}
@@ -6446,12 +6505,6 @@ StateReturnType AIEnterState::update()
 
 	StateReturnType code = AIInternalMoveToState::update();
 
-	// if it's airborne, wait for it to land
-	if (code == STATE_SUCCESS && goal->isAboveTerrain() && !obj->isAboveTerrain())
-	{
-		code = STATE_CONTINUE;
-	}
-
 	if (code == STATE_SUCCESS) 
 	{
 		// Make sure we entered the container.
@@ -6462,19 +6515,18 @@ StateReturnType AIEnterState::update()
 			if (goal)
 			{
 				// we didn't enter.  See if we're close.
-				Real dx = (obj->getPosition()->x - goal->getPosition()->x);
-				Real dy = (obj->getPosition()->y - goal->getPosition()->y);
-				Real radius = goal->getGeometryInfo().getMinorRadius();
-				if (goal->getGeometryInfo().getGeomType()!=GEOMETRY_BOX) {
-					radius = goal->getGeometryInfo().getMajorRadius();
-				}
+				BFMEContainPosition *positionContain = *(BFMEContainPosition **)((char *)goal + 0x1fc);
+				const Coord3D *goalPosition = positionContain->getContainedObjectPosition();
+				Real dx = (((Coord3D *)((char *)obj + 0x38))->x - goalPosition->x);
+				Real dy = (((Coord3D *)((char *)obj + 0x38))->y - goalPosition->y);
+				Real radius = *(Real *)((char *)goal + 0xbc);
 				Bool closeEnough = dx*dx+dy*dy < sqr(radius);
 				if (closeEnough) {
 					// Grab the container and force ourselves into it.
 					// This case is primarily to handle transports on the map border for scripted setup.
 					// The partition manager doesn't generate collisions in the border area, so we have to
 					// add ourselves.  jba.
-					ContainModuleInterface* contain = goal->getContain();
+					BFMEContainAdd *contain = *(BFMEContainAdd **)((char *)goal + 0x1fc);
 					if (contain)
 					{
 						contain->addToContain(obj);
