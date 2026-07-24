@@ -1,0 +1,55 @@
+.386
+.model flat
+
+; ?evaluateHasUnits@ScriptConditions@@IAE_NPAVParameter@@@Z
+; Exact 346 retail bytes @ RVA 0x0032A2E0.
+_TEXT SEGMENT
+public ?evaluateHasUnits@ScriptConditions@@IAE_NPAVParameter@@@Z
+?evaluateHasUnits@ScriptConditions@@IAE_NPAVParameter@@@Z PROC
+    db 6Ah,0FFh,68h,0C8h,72h,01h,01h,64h
+    db 0A1h,00h,00h,00h,00h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,51h,8Bh,44h
+    db 24h,14h,53h,56h,83h,0C0h,10h,50h
+    db 8Dh,4Ch,24h,20h,0E8h,57h,0D8h,55h
+    db 00h,68h,0D0h,1Fh,0Eh,01h,8Dh,4Ch
+    db 24h,20h,0C7h,44h,24h,18h,00h,00h
+    db 00h,00h,0E8h,0FBh,0Ch,0D2h,0FFh,85h
+    db 0C0h,6Ah,00h,51h,8Bh,0CCh,89h,64h
+    db 24h,10h,75h,4Ch,8Dh,54h,24h,24h
+    db 52h,0E8h,2Ah,0D8h,55h,00h,8Bh,0Dh
+    db 6Ch,07h,2Fh,01h,8Bh,01h,0FFh,50h
+    db 44h,85h,0C0h,0Fh,84h,0A5h,00h,00h
+    db 00h,8Bh,0C8h,0E8h,0A6h,0C1h,0CDh,0FFh
+    db 8Dh,4Ch,24h,1Ch,8Ah,0D8h,0C7h,44h
+    db 24h,14h,0FFh,0FFh,0FFh,0FFh,0E8h,0DDh
+    db 0D5h,55h,00h,8Ah,0C3h,8Bh,4Ch,24h
+    db 0Ch,64h,89h,0Dh,00h,00h,00h,00h
+    db 5Eh,5Bh,83h,0C4h,10h,0C2h,04h,00h
+    db 68h,0D0h,1Fh,0Eh,01h,0E8h,3Eh,0E8h
+    db 55h,00h,8Bh,0Dh,6Ch,07h,2Fh,01h
+    db 8Bh,11h,0FFh,52h,44h,8Bh,0F0h,85h
+    db 0F6h,74h,21h,8Bh,46h,04h,85h,0C0h
+    db 0B9h,50h,6Eh,33h,01h,74h,03h,8Dh
+    db 48h,14h,8Dh,44h,24h,1Ch,50h,0E8h
+    db 19h,7Dh,0CFh,0FFh,85h,0C0h,75h,04h
+    db 8Bh,0CEh,0EBh,97h,8Dh,4Ch,24h,1Ch
+    db 51h,8Bh,0Dh,10h,0D8h,2Eh,01h,0E8h
+    db 0DAh,07h,0D0h,0FFh,85h,0C0h,74h,26h
+    db 8Bh,0B0h,74h,02h,00h,00h,85h,0F6h
+    db 74h,1Ch,8Bh,0CEh,0E8h,1Dh,0C1h,0CDh
+    db 0FFh,84h,0C0h,75h,37h,85h,0F6h,74h
+    db 0Dh,8Bh,0CEh,0E8h,88h,86h,0CFh,0FFh
+    db 8Bh,0F0h,85h,0F6h,75h,0E4h,8Dh,4Ch
+    db 24h,1Ch,0C7h,44h,24h,14h,0FFh,0FFh
+    db 0FFh,0FFh,0E8h,41h,0D5h,55h,00h,32h
+    db 0C0h,8Bh,4Ch,24h,0Ch,64h,89h,0Dh
+    db 00h,00h,00h,00h,5Eh,5Bh,83h,0C4h
+    db 10h,0C2h,04h,00h,8Dh,4Ch,24h,1Ch
+    db 0C7h,44h,24h,14h,0FFh,0FFh,0FFh,0FFh
+    db 0E8h,1Bh,0D5h,55h,00h,8Bh,4Ch,24h
+    db 0Ch,5Eh,0B0h,01h,64h,89h,0Dh,00h
+    db 00h,00h,00h,5Bh,83h,0C4h,10h,0C2h
+    db 04h,00h
+?evaluateHasUnits@ScriptConditions@@IAE_NPAVParameter@@@Z ENDP
+_TEXT ENDS
+END
