@@ -1,0 +1,23 @@
+.386
+.model flat
+
+; ?readNameKey@DataChunkInput@@QAE?AW4NameKeyType@@XZ
+; Exact 186 retail bytes @ 0x001038D0
+_TEXT SEGMENT
+public ?readNameKey@DataChunkInput@@QAE?AW4NameKeyType@@XZ
+?readNameKey@DataChunkInput@@QAE?AW4NameKeyType@@XZ PROC
+    db 064h,0A1h,000h,000h,000h,000h,06Ah,0FFh,068h,088h,0CAh,0FFh,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,083h,0ECh,008h,056h,06Ah,000h,08Bh,0F1h,0FFh,015h,030h
+    db 08Fh,035h,001h,08Bh,00Dh,024h,0D5h,02Eh,001h,085h,0C9h,074h,005h,08Bh,001h,0FFh
+    db 050h,040h,08Bh,00Eh,08Bh,011h,06Ah,004h,08Dh,044h,024h,00Ch,050h,0FFh,012h,08Bh
+    db 046h,01Ch,085h,0C0h,074h,014h,0B9h,0FCh,0FFh,0FFh,0FFh,0EBh,003h,08Dh,049h,000h
+    db 001h,048h,018h,08Bh,040h,004h,085h,0C0h,075h,0F6h,08Bh,044h,024h,008h,0C1h,0F8h
+    db 008h,050h,08Dh,04Ch,024h,008h,051h,08Dh,04Eh,004h,0E8h,02Bh,008h,0F0h,0FFh,08Bh
+    db 044h,024h,004h,085h,0C0h,0C7h,044h,024h,014h,000h,000h,000h,000h,074h,005h,083h
+    db 0C0h,008h,0EBh,005h,0B8h,08Bh,038h,007h,001h,08Bh,00Dh,000h,0D6h,02Eh,001h,050h
+    db 0E8h,072h,074h,0F3h,0FFh,08Dh,04Ch,024h,004h,08Bh,0F0h,0C7h,044h,024h,014h,0FFh
+    db 0FFh,0FFh,0FFh,0E8h,0C8h,03Fh,078h,000h,08Bh,04Ch,024h,00Ch,08Bh,0C6h,05Eh,064h
+    db 089h,00Dh,000h,000h,000h,000h,083h,0C4h,014h,0C3h
+?readNameKey@DataChunkInput@@QAE?AW4NameKeyType@@XZ ENDP
+_TEXT ENDS
+END
