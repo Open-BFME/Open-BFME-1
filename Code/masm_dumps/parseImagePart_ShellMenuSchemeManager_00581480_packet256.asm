@@ -1,0 +1,22 @@
+.386
+.model flat
+
+; ?parseImagePart@ShellMenuSchemeManager@@SAXPAVINI@@PAX1PBX@Z
+; Exact 146 retail bytes @ 0x00581480; certified packet 256
+; SHA-256 f036627e3e3b3b0cd3c65461618a7747ce5dabc375cdd1311302cc49bd4987eb
+_TEXT SEGMENT
+public ?parseImagePart@ShellMenuSchemeManager@@SAXPAVINI@@PAX1PBX@Z
+?parseImagePart@ShellMenuSchemeManager@@SAXPAVINI@@PAX1PBX@Z PROC
+    db 06Ah,0FFh,068h,0CBh,069h,003h,001h,064h,0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,051h,056h,057h,06Ah,018h,0E8h,091h,00Ah,030h,000h,083h
+    db 0C4h,004h,089h,044h,024h,008h,085h,0C0h,0C7h,044h,024h,014h,000h,000h,000h,000h
+    db 074h,00Bh,08Bh,0C8h,0E8h,0C6h,0C5h,0A9h,0FFh,08Bh,0F8h,0EBh,002h,033h,0FFh,08Bh
+    db 04Ch,024h,01Ch,068h,038h,0B6h,010h,001h,057h,0C7h,044h,024h,01Ch,0FFh,0FFh,0FFh
+    db 0FFh,0E8h,0CAh,00Bh,02Dh,000h,085h,0FFh,074h,027h,08Bh,044h,024h,020h,08Bh,070h
+    db 004h,06Ah,00Ch,0E8h,058h,0D0h,02Ah,000h,08Dh,048h,008h,083h,0C4h,004h,085h,0C9h
+    db 074h,002h,089h,039h,08Bh,04Eh,004h,089h,030h,089h,048h,004h,089h,001h,089h,046h
+    db 004h,08Bh,04Ch,024h,00Ch,05Fh,064h,089h,00Dh,000h,000h,000h,000h,05Eh,083h,0C4h
+    db 010h,0C3h
+?parseImagePart@ShellMenuSchemeManager@@SAXPAVINI@@PAX1PBX@Z ENDP
+_TEXT ENDS
+END
