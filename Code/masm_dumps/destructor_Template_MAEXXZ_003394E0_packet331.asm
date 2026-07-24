@@ -1,0 +1,19 @@
+.386
+.model flat
+
+; ??1Template@@MAE@XZ
+; Exact 125 retail bytes @ 0x003394E0; certified packet 331
+_TEXT SEGMENT
+public ??1Template@@MAE@XZ
+??1Template@@MAE@XZ PROC
+    db 06Ah,0FFh,068h,064h,076h,001h,001h,064h,0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,051h,056h,08Bh,0F1h,089h,074h,024h,004h,08Dh,04Eh,078h
+    db 0C7h,044h,024h,010h,003h,000h,000h,000h,0E8h,033h,0E4h,054h,000h,068h,028h,0D8h
+    db 040h,000h,06Ah,00Ch,06Ah,004h,08Dh,046h,014h,050h,0C6h,044h,024h,020h,002h,0E8h
+    db 052h,0D8h,06Bh,000h,08Dh,04Eh,008h,0C6h,044h,024h,010h,001h,0E8h,00Fh,0E4h,054h
+    db 000h,08Dh,04Eh,004h,0C6h,044h,024h,010h,000h,0E8h,002h,0E4h,054h,000h,08Bh,0CEh
+    db 0C7h,044h,024h,010h,0FFh,0FFh,0FFh,0FFh,0E8h,0F3h,0E3h,054h,000h,08Bh,04Ch,024h
+    db 008h,05Eh,064h,089h,00Dh,000h,000h,000h,000h,083h,0C4h,010h,0C3h
+??1Template@@MAE@XZ ENDP
+_TEXT ENDS
+END
