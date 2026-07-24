@@ -1,0 +1,30 @@
+.386
+.model flat
+
+; ?onSpecialPowerCreation@SpecialPowerModule@@UAEXXZ
+; Exact 304 retail bytes @ RVA 0x00269600; certified packet 306.
+_TEXT SEGMENT
+public ?onSpecialPowerCreation@SpecialPowerModule@@UAEXXZ
+?onSpecialPowerCreation@SpecialPowerModule@@UAEXXZ PROC
+    db 06Ah,0FFh,068h,0A8h,0FEh,000h,001h,064h,0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,051h,056h,08Bh,0F1h,08Bh,006h,057h,0FFh,050h,040h,08Bh
+    db 016h,08Bh,0CEh,0FFh,052h,018h,08Bh,050h,004h,085h,0D2h,074h,010h,08Bh,04Ah,004h
+    db 085h,0C9h,074h,007h,0E8h,028h,0F6h,0DDh,0FFh,0EBh,002h,08Bh,0C2h,08Ah,088h,015h
+    db 001h,000h,000h,084h,0C9h,074h,038h,08Bh,04Eh,0F8h,0E8h,0D5h,071h,0DBh,0FFh,08Bh
+    db 0F8h,085h,0FFh,074h,02Ah,0A1h,098h,008h,02Fh,001h,08Bh,040h,03Ch,08Bh,016h,050h
+    db 08Bh,0CEh,0FFh,052h,018h,050h,08Bh,0CFh,0E8h,0EAh,017h,0DAh,0FFh,08Bh,006h,08Bh
+    db 0CEh,0FFh,050h,018h,050h,08Bh,0CFh,0E8h,0B3h,099h,0DAh,0FFh,089h,046h,004h,08Bh
+    db 046h,0F4h,08Ah,048h,00Dh,084h,0C9h,074h,009h,08Bh,016h,06Ah,001h,08Bh,0CEh,0FFh
+    db 052h,028h,08Bh,046h,0F4h,08Bh,048h,008h,08Bh,041h,004h,085h,0C0h,074h,00Eh,08Bh
+    db 048h,004h,085h,0C9h,074h,005h,0E8h,0B6h,0F5h,0DDh,0FFh,08Bh,0C8h,080h,0B9h,014h
+    db 001h,000h,000h,001h,075h,069h,08Bh,04Eh,0F8h,0E8h,066h,071h,0DBh,0FFh,085h,0C0h
+    db 074h,05Dh,08Bh,04Eh,0F8h,06Ah,007h,0E8h,053h,08Eh,0DCh,0FFh,084h,0C0h,074h,04Fh
+    db 08Bh,006h,053h,08Dh,04Ch,024h,00Ch,051h,08Bh,0CEh,0FFh,050h,014h,08Bh,0F8h,08Bh
+    db 04Eh,0F8h,08Bh,05Eh,0F4h,08Bh,071h,074h,0C7h,044h,024h,018h,000h,000h,000h,000h
+    db 0E8h,02Fh,071h,0DBh,0FFh,08Bh,05Bh,008h,08Bh,040h,024h,08Bh,00Dh,08Ch,014h,02Fh
+    db 001h,08Bh,011h,053h,056h,057h,050h,0FFh,092h,084h,000h,000h,000h,08Dh,04Ch,024h
+    db 00Ch,0C7h,044h,024h,018h,0FFh,0FFh,0FFh,0FFh,0E8h,022h,0E2h,061h,000h,05Bh,08Bh
+    db 04Ch,024h,00Ch,05Fh,05Eh,064h,089h,00Dh,000h,000h,000h,000h,083h,0C4h,010h,0C3h
+?onSpecialPowerCreation@SpecialPowerModule@@UAEXXZ ENDP
+_TEXT ENDS
+END
