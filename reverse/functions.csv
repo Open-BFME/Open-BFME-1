@@ -9442,7 +9442,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?findLocomotorTemplate@LocomotorStore@@QBEPBVLocomotorTemplate@@W4NameKeyType@@@Z,,0x001B7040,54,Code/GameEngine/Source/GameLogic/Object/Locomotor.cpp,matched,
 ?findLocomotorTemplateVector@AIUpdateModuleData@@,,0x0027EC80,412,Code/masm_dumps/_sa__findLocomotorTemplateVector_AIUpdateModuleData___27EC80.asm,matched,Exact 412B string-anchored Open-BFME4
 ?findMapping@DataChunkTableOfContents@@AAEPAVMapping@@ABVAsciiString@@@Z,,0x0001587A,5,Code/masm_dumps/_findMapping_DataChunkTableOfContents__AAEPAVMapping__ABVAsciiString___Z_1587A.asm,matched,MASM exact retail dump
-?findModule@Object@@IBEPAVModule@@W4NameKeyType@@@Z,,0x0002AE23,5,Code/masm_dumps/_findModule_Object__IBEPAVModule__W4NameKeyType___Z_2AE23.asm,matched,MASM exact retail dump
+?findModule@Object@@IBEPAVModule@@W4NameKeyType@@@Z,,0x001BEE60,63,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,body of retail ICF thunk 0x2AE23
 ?findModuleTemplate@ModuleFactory@@IAEPBVModuleTemplate@1@ABVAsciiString@@W4ModuleType@@@Z,,0x00127DA0,67,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?findNextSaveFilename@GameState@@AAE?AVAsciiString@@VUnicodeString@@@Z,,0x001103D2,199,Code/masm_dumps/_sa12__findNextSaveFilename_GameState__AAE_AVAsciiString__VUnicodeString___Z_1103D2.asm,matched,string-anchor Open-BFME4+Grok GUI:ErrorSavingGame
 ?findNonConstCommandButton@ControlBar@@IAEPAVCommandButton@@ABVAsciiString@@@Z,,0x00036D27,5,Code/masm_dumps/_thunk_4d5c780b095f_36D27.asm,matched,thunk accessor of ported class (icf alias)
@@ -10397,7 +10397,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getContain@Object@@QBEPAVContainModuleInterface@@XZ,,0x00478710,7,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Ghidra-bound unique accessor
 ?getContainExitInterface@OpenContain@@UAEPAVExitInterface@@XZ,,0x00219650,14,Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain.cpp,matched,
 ?getContainerPipsToShow@RiderChangeContain@@UAE_NAAH0@Z,,0x0022A150,25,Code/GameEngine/Source/GameLogic/Object/Contain/RiderChangeContain.cpp,matched,
-?getControllingPlayer@Object@@QBEPAVPlayer@@XZ,,0x00020824,5,Code/masm_dumps/_getControllingPlayer_Object__QBEPAVPlayer__XZ_20824.asm,matched,MASM exact retail dump
+?getControllingPlayer@Object@@QBEPAVPlayer@@XZ,,0x001BE3F0,18,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,body of retail ICF thunk 0x20824
 ?getCount@ModuleInfo@@QBEHXZ,,0x000EDDC0,25,Code/GameEngine/Source/GameClient/Drawable.cpp,matched,
 ?getCountdownPercent@OCLUpdate@@QBEMXZ,,0x00298890,70,Code/GameEngine/Source/GameLogic/Object/Update/OCLUpdate.cpp,matched,
 ?getCountermeasuresBehaviorInterface@BehaviorModule@@UAEPAVCountermeasuresBehaviorInterface@@XZ,,0x006CF680,3,Code/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehavior.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ

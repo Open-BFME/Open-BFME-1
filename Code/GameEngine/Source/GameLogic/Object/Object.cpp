@@ -1650,14 +1650,16 @@ Relationship Object::getRelationship(const Object *that) const
 //=============================================================================
 // Object::getControllingPlayer
 //=============================================================================
-// ?getControllingPlayer@Object@@QBEPAVPlayer@@XZ present-unmatched
+// BFME m_team at +0x23c (see isLocallyControlled/isNeutralControlled); getTeam()
+// reads the header's drifted m_team offset, so bypass it here as they do.
 Player * Object::getControllingPlayer() const
-{ 
-	const Team* myTeam = this->getTeam();	
-	if (myTeam)
-		return myTeam->getControllingPlayer(); 
-
-	return NULL;
+{
+	struct BFMEObjectTeamField {
+		unsigned char pad[0x23c];
+		Team *team;
+	};
+	const BFMEObjectTeamField *self = reinterpret_cast<const BFMEObjectTeamField *>(this);
+	return self->team ? self->team->getControllingPlayer() : NULL;
 }
 
 //=============================================================================
@@ -2883,28 +2885,40 @@ void Object::calcNaturalRallyPoint(Coord2D *pt)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?findModule@Object@@IBEPAVModule@@W4NameKeyType@@@Z present-unmatched
-Module* Object::findModule(NameKeyType key) const 
+// BFME m_behaviors at +0x1f0 (header's computed offset is drifted; bypass it
+// like isLocallyControlled/isNeutralControlled bypass m_team).
+Module* Object::findModule(NameKeyType key) const
 {
+	struct BFMEObjectBehaviorsField {
+		unsigned char pad[0x1f0];
+		BehaviorModule **behaviors;
+	};
+	BehaviorModule** behaviors = reinterpret_cast<const BFMEObjectBehaviorsField *>(this)->behaviors;
+
+	// BehaviorModule::getModuleNameKey sits at retail vtable slot 4 (+0x10),
+	// not the header's computed slot 2 (+0x8) -- vtable order has drifted
+	// from ZH's Module hierarchy. Dispatch through a shim vtable shape (a
+	// real virtual call, so the compiler emits `call [vtbl+0x10]` directly)
+	// rather than editing the shared Module.h vtable order (out of scope
+	// for Object).
+	struct BFMEBehaviorModuleVtableShim
+	{
+		virtual void bfmeSlot0() = 0;
+		virtual void bfmeSlot1() = 0;
+		virtual void bfmeSlot2() = 0;
+		virtual void bfmeSlot3() = 0;
+		virtual NameKeyType getModuleNameKey() const = 0;
+	};
 	Module* m = NULL;
 
-	for (BehaviorModule** b = m_behaviors; *b; ++b)
+	for (BehaviorModule** b = behaviors; *b; ++b)
 	{
-		if ((*b)->getModuleNameKey() == key)
+		const BFMEBehaviorModuleVtableShim *shim =
+			reinterpret_cast<const BFMEBehaviorModuleVtableShim *>(*b);
+		if (shim->getModuleNameKey() == key)
 		{
-#ifdef INTENSE_DEBUG
-			if (m == NULL)
-			{
-				m = *b;
-			}
-			else
-			{
-				DEBUG_CRASH(("Duplicate modules found for name %s!\n",TheNameKeyGenerator->keyToName(key).str()));
-			}
-#else
 			m = *b;
 			break;
-#endif
 		}
 	}
 
