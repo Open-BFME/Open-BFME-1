@@ -1,0 +1,98 @@
+.386
+.model flat
+
+; ?GadgetPushButtonInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
+; Exact 1383 retail bytes @ 0x004BBFC0; certified packet 355
+_TEXT SEGMENT
+public ?GadgetPushButtonInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
+?GadgetPushButtonInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z PROC
+    db 064h,0a1h,000h,000h,000h,000h,06ah,0ffh,068h,093h,08dh,002h,001h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,081h,0ech,0e4h,000h,000h,000h,053h,055h,056h,08bh,0b4h
+    db 024h,000h,001h,000h,000h,057h,08bh,0ceh,0e8h,0a4h,089h,0b7h,0ffh,08bh,0f8h,08bh
+    db 084h,024h,008h,001h,000h,000h,083h,0c0h,0fbh,083h,0f8h,013h,077h,067h,00fh,0b6h
+    db 080h,050h,0c5h,08bh,000h,0ffh,024h,085h,028h,0c5h,08bh,000h,0f6h,047h,008h,004h
+    db 074h,053h,0e8h,009h,0fdh,0ffh,0ffh,084h,0c0h,074h,04ah,08bh,0ceh,0e8h,016h,0a5h
+    db 0b8h,0ffh,08bh,0e8h,08bh,045h,024h,085h,0c0h,074h,03ah,0ffh,015h,044h,095h,035h
+    db 001h,08bh,0d8h,0a1h,044h,036h,02fh,001h,03bh,0d8h,076h,029h,08bh,0cbh,02bh,0c8h
+    db 03bh,04dh,024h,076h,020h,08bh,00dh,040h,01bh,02fh,001h,08bh,047h,014h,08bh,011h
+    db 06ah,000h,056h,068h,008h,040h,000h,000h,050h,0ffh,092h,0d4h,000h,000h,000h,089h
+    db 01dh,044h,036h,02fh,001h,033h,0c0h,08bh,08ch,024h,0f4h,000h,000h,000h,05fh,05eh
+    db 05dh,064h,089h,00dh,000h,000h,000h,000h,05bh,081h,0c4h,0f0h,000h,000h,000h,0c3h
+    db 08bh,047h,00ch,0f6h,0c4h,004h,0bbh,002h,000h,000h,000h,074h,023h,009h,05fh,008h
+    db 08bh,084h,024h,00ch,001h,000h,000h,08bh,00dh,040h,01bh,02fh,001h,08bh,011h,050h
+    db 08bh,047h,014h,056h,068h,006h,040h,000h,000h,050h,0ffh,092h,0d4h,000h,000h,000h
+    db 08bh,0ceh,0e8h,0e0h,08eh,0b5h,0ffh,085h,0c0h,00fh,084h,05eh,004h,000h,000h,08bh
+    db 0ceh,0e8h,0d1h,08eh,0b5h,0ffh,08bh,0c8h,0e8h,085h,0cah,0b4h,0ffh,0a8h,010h,00fh
+    db 084h,048h,004h,000h,000h,08bh,0ceh,0e8h,0bbh,08eh,0b5h,0ffh,08bh,0c8h,0e8h,0aeh
+    db 088h,0b7h,0ffh,009h,058h,008h,0b8h,001h,000h,000h,000h,0e9h,077h,0ffh,0ffh,0ffh
+    db 08bh,047h,00ch,0f6h,0c4h,004h,0bbh,0fdh,0ffh,0ffh,0ffh,074h,023h,021h,05fh,008h
+    db 08bh,084h,024h,00ch,001h,000h,000h,08bh,00dh,040h,01bh,02fh,001h,08bh,011h,050h
+    db 08bh,047h,014h,056h,068h,007h,040h,000h,000h,050h,0ffh,092h,0d4h,000h,000h,000h
+    db 08bh,0ceh,0e8h,0b3h,07ch,0b6h,0ffh,0a9h,000h,000h,008h,000h,075h,00dh,08bh,047h
+    db 008h,0a8h,004h,074h,006h,083h,0e0h,0fbh,089h,047h,008h,08bh,0ceh,0e8h,055h,08eh
+    db 0b5h,0ffh,085h,0c0h,00fh,084h,0d3h,003h,000h,000h,08bh,0ceh,0e8h,046h,08eh,0b5h
+    db 0ffh,08bh,0c8h,0e8h,0fah,0c9h,0b4h,0ffh,0a8h,010h,00fh,084h,0bdh,003h,000h,000h
+    db 08bh,0ceh,0e8h,030h,08eh,0b5h,0ffh,08bh,0c8h,0e8h,023h,088h,0b7h,0ffh,021h,058h
+    db 008h,0b8h,001h,000h,000h,000h,0e9h,0ech,0feh,0ffh,0ffh,08bh,084h,024h,00ch,001h
+    db 000h,000h,08bh,00dh,040h,01bh,02fh,001h,08bh,011h,050h,08bh,047h,014h,056h,068h
+    db 000h,040h,000h,000h,050h,0ffh,092h,0d4h,000h,000h,000h,0b8h,001h,000h,000h,000h
+    db 0e9h,0c2h,0feh,0ffh,0ffh,08bh,0ceh,0e8h,08ch,0a3h,0b8h,0ffh,06ah,000h,068h,050h
+    db 06eh,033h,001h,08dh,08ch,024h,08ch,000h,000h,000h,08bh,0e8h,0e8h,045h,091h,0b6h
+    db 0ffh,06ah,002h,08dh,08ch,024h,088h,000h,000h,000h,0c7h,084h,024h,000h,001h,000h
+    db 000h,000h,000h,000h,000h,0e8h,005h,06dh,0b6h,0ffh,085h,0edh,074h,027h,08dh,05dh
+    db 01ch,08bh,0cbh,0e8h,0dch,013h,0b7h,0ffh,084h,0c0h,074h,019h,051h,08bh,0cch,089h
+    db 064h,024h,014h,053h,0e8h,0b6h,054h,0b8h,0ffh,08dh,08ch,024h,088h,000h,000h,000h
+    db 0e8h,061h,090h,0b6h,0ffh,08bh,00dh,068h,0d6h,02eh,001h,085h,0c9h,074h,00dh,08bh
+    db 011h,08dh,084h,024h,084h,000h,000h,000h,050h,0ffh,052h,044h,08bh,0ceh,0e8h,0b7h
+    db 07bh,0b6h,0ffh,0a9h,000h,000h,008h,000h,074h,00ch,08bh,047h,008h,0a8h,004h,074h
+    db 008h,083h,0e0h,0fbh,0ebh,006h,08bh,047h,008h,083h,0c8h,004h,089h,047h,008h,0e8h
+    db 0dch,0fah,0ffh,0ffh,084h,0c0h,074h,032h,08bh,084h,024h,00ch,001h,000h,000h,08bh
+    db 07fh,014h,08bh,00dh,040h,01bh,02fh,001h,08bh,011h,050h,056h,068h,008h,040h,000h
+    db 000h,057h,0ffh,092h,0d4h,000h,000h,000h,0ffh,015h,044h,095h,035h,001h,08bh,04dh
+    db 024h,08dh,014h,048h,089h,015h,044h,036h,02fh,001h,08dh,08ch,024h,084h,000h,000h
+    db 000h,0c7h,084h,024h,0fch,000h,000h,000h,0ffh,0ffh,0ffh,0ffh,0e8h,0a4h,0ach,0b6h
+    db 0ffh,0b8h,001h,000h,000h,000h,0e9h,0cch,0fdh,0ffh,0ffh,0f6h,047h,008h,004h,00fh
+    db 084h,0c0h,0fdh,0ffh,0ffh,08bh,0ceh,0e8h,02eh,07bh,0b6h,0ffh,0a9h,000h,000h,008h
+    db 000h,00fh,085h,0aeh,0fdh,0ffh,0ffh,0e8h,064h,0fah,0ffh,0ffh,084h,0c0h,00fh,085h
+    db 0c4h,001h,000h,000h,08bh,094h,024h,00ch,001h,000h,000h,052h,0e9h,09fh,001h,000h
+    db 000h,08bh,0ceh,0e8h,060h,0a2h,0b8h,0ffh,06ah,000h,068h,050h,06eh,033h,001h,08dh
+    db 04ch,024h,01ch,08bh,0e8h,0e8h,01ch,090h,0b6h,0ffh,06ah,002h,08dh,04ch,024h,018h
+    db 0c7h,084h,024h,000h,001h,000h,000h,001h,000h,000h,000h,0e8h,0dfh,06bh,0b6h,0ffh
+    db 085h,0edh,074h,024h,08dh,05dh,01ch,08bh,0cbh,0e8h,0b6h,012h,0b7h,0ffh,084h,0c0h
+    db 074h,016h,051h,08bh,0cch,089h,064h,024h,014h,053h,0e8h,090h,053h,0b8h,0ffh,08dh
+    db 04ch,024h,018h,0e8h,03eh,08fh,0b6h,0ffh,08bh,0ceh,0e8h,0abh,07ah,0b6h,0ffh,0a9h
+    db 000h,000h,002h,000h,00fh,084h,090h,000h,000h,000h,08bh,00dh,068h,0d6h,02eh,001h
+    db 085h,0c9h,074h,00ah,08bh,001h,08dh,054h,024h,014h,052h,0ffh,050h,044h,08bh,0ceh
+    db 0e8h,085h,07ah,0b6h,0ffh,0a9h,000h,000h,008h,000h,074h,00ch,08bh,047h,008h,0a8h
+    db 004h,074h,008h,083h,0e0h,0fbh,0ebh,006h,08bh,047h,008h,083h,0c8h,004h,089h,047h
+    db 008h,0e8h,0aah,0f9h,0ffh,0ffh,084h,0c0h,074h,032h,08bh,094h,024h,00ch,001h,000h
+    db 000h,08bh,07fh,014h,08bh,00dh,040h,01bh,02fh,001h,08bh,001h,052h,056h,068h,009h
+    db 040h,000h,000h,057h,0ffh,090h,0d4h,000h,000h,000h,0ffh,015h,044h,095h,035h,001h
+    db 08bh,04dh,024h,08dh,014h,048h,089h,015h,044h,036h,02fh,001h,08dh,04ch,024h,014h
+    db 0c7h,084h,024h,0fch,000h,000h,000h,0ffh,0ffh,0ffh,0ffh,0e8h,075h,0abh,0b6h,0ffh
+    db 0b8h,001h,000h,000h,000h,0e9h,09dh,0fch,0ffh,0ffh,08dh,04ch,024h,014h,0c7h,084h
+    db 024h,0fch,000h,000h,000h,0ffh,0ffh,0ffh,0ffh,0e8h,057h,0abh,0b6h,0ffh,0e9h,082h
+    db 0fch,0ffh,0ffh,08bh,0ceh,0e8h,0f0h,079h,0b6h,0ffh,0a9h,000h,000h,002h,000h,00fh
+    db 084h,070h,0fch,0ffh,0ffh,0f6h,047h,008h,004h,00fh,084h,066h,0fch,0ffh,0ffh,08bh
+    db 0ceh,0e8h,0d4h,079h,0b6h,0ffh,0a9h,000h,000h,008h,000h,00fh,085h,054h,0fch,0ffh
+    db 0ffh,0e8h,00ah,0f9h,0ffh,0ffh,084h,0c0h,075h,06eh,08bh,094h,024h,00ch,001h,000h
+    db 000h,052h,056h,068h,009h,040h,000h,000h,0ebh,04ch,08bh,09ch,024h,00ch,001h,000h
+    db 000h,083h,0fbh,00fh,00fh,084h,0adh,000h,000h,000h,083h,0fbh,01ch,074h,009h,083h
+    db 0fbh,039h,00fh,085h,01dh,0fch,0ffh,0ffh,0f6h,084h,024h,010h,001h,000h,000h,001h
+    db 074h,044h,0f6h,047h,008h,004h,00fh,084h,0c1h,000h,000h,000h,08bh,0ceh,0e8h,077h
+    db 079h,0b6h,0ffh,0a9h,000h,000h,008h,000h,00fh,085h,0afh,000h,000h,000h,06ah,000h
+    db 056h,068h,008h,040h,000h,000h,08bh,00dh,040h,01bh,02fh,001h,08bh,057h,014h,08bh
+    db 001h,052h,0ffh,090h,0d4h,000h,000h,000h,083h,067h,008h,0fbh,0b8h,001h,000h,000h
+    db 000h,0e9h,0d1h,0fbh,0ffh,0ffh,08bh,0ceh,0e8h,03dh,079h,0b6h,0ffh,0a9h,000h,000h
+    db 008h,000h,074h,035h,08bh,047h,008h,0a8h,004h,074h,005h,083h,0e0h,0fbh,0ebh,003h
+    db 083h,0c8h,004h,08bh,057h,014h,053h,056h,089h,047h,008h,08bh,00dh,040h,01bh,02fh
+    db 001h,08bh,001h,068h,008h,040h,000h,000h,052h,0ffh,090h,0d4h,000h,000h,000h,0b8h
+    db 001h,000h,000h,000h,0e9h,08eh,0fbh,0ffh,0ffh,083h,04fh,008h,004h,0b8h,001h,000h
+    db 000h,000h,0e9h,080h,0fbh,0ffh,0ffh,0f6h,084h,024h,010h,001h,000h,000h,002h,074h
+    db 02ch,0a1h,050h,04ch,02fh,001h,0f6h,040h,008h,010h,08bh,00dh,040h,01bh,02fh,001h
+    db 056h,074h,012h,08bh,011h,0ffh,092h,098h,000h,000h,000h,0b8h,001h,000h,000h,000h
+    db 0e9h,052h,0fbh,0ffh,0ffh,08bh,001h,0ffh,090h,094h,000h,000h,000h,0b8h,001h,000h
+    db 000h,000h,0e9h,040h,0fbh,0ffh,0ffh
+?GadgetPushButtonInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z ENDP
+_TEXT ENDS
+END
