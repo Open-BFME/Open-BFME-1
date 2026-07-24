@@ -1,0 +1,22 @@
+.386
+.model flat
+
+; ??1UpgradeTemplate@@MAE@XZ
+; Exact 170 retail bytes @ 0x0010ACB0; certified packet 262
+_TEXT SEGMENT
+public ??1UpgradeTemplate@@MAE@XZ
+??1UpgradeTemplate@@MAE@XZ PROC
+    db 06Ah,0FFh,068h,083h,0D3h,0FFh,000h,064h,0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,051h,056h,08Bh,0F1h,089h,074h,024h,004h,0C7h,006h,064h
+    db 08Dh,008h,001h,08Dh,08Eh,018h,001h,000h,000h,0C7h,044h,024h,010h,006h,000h,000h
+    db 000h,0E8h,05Ah,0CCh,077h,000h,08Dh,08Eh,010h,001h,000h,000h,0C6h,044h,024h,010h
+    db 005h,0E8h,04Ah,0CCh,077h,000h,08Dh,08Eh,098h,000h,000h,000h,0C6h,044h,024h,010h
+    db 004h,0E8h,02Fh,0C2h,0F1h,0FFh,08Dh,04Eh,028h,0C6h,044h,024h,010h,003h,0E8h,022h
+    db 0C2h,0F1h,0FFh,08Dh,04Eh,024h,0C6h,044h,024h,010h,002h,0E8h,020h,0CCh,077h,000h
+    db 08Dh,04Eh,014h,0C6h,044h,024h,010h,001h,0E8h,013h,0CCh,077h,000h,08Dh,04Eh,010h
+    db 0C6h,044h,024h,010h,000h,0E8h,006h,0CCh,077h,000h,08Dh,04Eh,008h,0C7h,044h,024h
+    db 010h,0FFh,0FFh,0FFh,0FFh,0E8h,0F6h,0CBh,077h,000h,08Bh,04Ch,024h,008h,05Eh,064h
+    db 089h,00Dh,000h,000h,000h,000h,083h,0C4h,010h,0C3h
+??1UpgradeTemplate@@MAE@XZ ENDP
+_TEXT ENDS
+END
