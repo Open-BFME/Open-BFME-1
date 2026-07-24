@@ -1,0 +1,17 @@
+.386
+.model flat
+
+; ??4ScienceInfo@@QAEAAV0@ABV0@@Z
+; Exact 81 retail bytes @ 0x000E85C0; certified packet 320
+_TEXT SEGMENT
+public ??4ScienceInfo@@QAEAAV0@ABV0@@Z
+??4ScienceInfo@@QAEAAV0@ABV0@@Z PROC
+    db 056h,057h,08Bh,07Ch,024h,00Ch,057h,08Bh,0F1h,0E8h,057h,001h,0F6h,0FFh,08Bh,047h
+    db 00Ch,08Dh,04Fh,010h,051h,08Dh,04Eh,010h,089h,046h,00Ch,0E8h,050h,0FFh,079h,000h
+    db 08Dh,057h,014h,052h,08Dh,04Eh,014h,0E8h,044h,0FFh,079h,000h,08Dh,047h,018h,050h
+    db 08Dh,04Eh,018h,0E8h,08Dh,01Bh,0F4h,0FFh,08Bh,04Fh,024h,089h,04Eh,024h,08Bh,057h
+    db 028h,089h,056h,028h,08Ah,047h,02Ch,088h,046h,02Ch,05Fh,08Bh,0C6h,05Eh,0C2h,004h
+    db 000h
+??4ScienceInfo@@QAEAAV0@ABV0@@Z ENDP
+_TEXT ENDS
+END
