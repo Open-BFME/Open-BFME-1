@@ -1,0 +1,22 @@
+.386
+.model flat
+
+; ?parse@?$BitFlags@$0HF@@@QAEXPAVINI@@PAVAsciiString@@@Z
+; Exact 166 retail bytes @ 0x00209240
+_TEXT SEGMENT
+public ?parse@?$BitFlags@$0HF@@@QAEXPAVINI@@PAVAsciiString@@@Z
+?parse@?$BitFlags@$0HF@@@QAEXPAVINI@@PAVAsciiString@@@Z PROC
+    db 083h,0ECh,008h,055h,056h,057h,08Bh,07Ch,024h,01Ch,085h,0FFh,089h,04Ch,024h,010h
+    db 074h,007h,08Bh,0CFh,0E8h,0E7h,0E6h,067h,000h,08Bh,06Ch,024h,018h,06Ah,000h,08Bh
+    db 0CDh,0C6h,044h,024h,013h,000h,0C6h,044h,024h,020h,000h,0E8h,050h,077h,064h,000h
+    db 08Bh,0F0h,085h,0F6h,074h,067h,085h,0FFh,074h,03Ch,08Bh,007h,085h,0C0h,074h,015h
+    db 066h,083h,078h,004h,000h,074h,00Eh,06Ah,001h,068h,01Ch,0EDh,008h,001h,08Bh,0CFh
+    db 0E8h,0CBh,0EAh,067h,000h,085h,0F6h,074h,012h,08Bh,0C6h,08Dh,050h,001h,08Bh,0FFh
+    db 08Ah,008h,040h,084h,0C9h,075h,0F9h,02Bh,0C2h,0EBh,002h,033h,0C0h,050h,056h,08Bh
+    db 0CFh,0E8h,0AAh,0EAh,067h,000h,08Dh,044h,024h,01Ch,050h,08Dh,04Ch,024h,013h,051h
+    db 08Bh,04Ch,024h,018h,056h,0E8h,00Eh,0AEh,0E0h,0FFh,084h,0C0h,074h,00Fh,06Ah,000h
+    db 08Bh,0CDh,0E8h,0E9h,076h,064h,000h,08Bh,0F0h,085h,0F6h,075h,099h,05Fh,05Eh,05Dh
+    db 083h,0C4h,008h,0C2h,008h,000h
+?parse@?$BitFlags@$0HF@@@QAEXPAVINI@@PAVAsciiString@@@Z ENDP
+_TEXT ENDS
+END
