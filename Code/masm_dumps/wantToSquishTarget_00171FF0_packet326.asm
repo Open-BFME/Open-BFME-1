@@ -1,0 +1,22 @@
+.386
+.model flat
+
+; ?wantToSquishTarget@@YA_NPAVState@@PAX@Z
+; Exact 174 retail bytes @ 0x00171FF0; certified packet 326
+_TEXT SEGMENT
+public ?wantToSquishTarget@@YA_NPAVState@@PAX@Z
+?wantToSquishTarget@@YA_NPAVState@@PAX@Z PROC
+    db 08Bh,044h,024h,004h,08Bh,048h,01Ch,056h,08Bh,071h,010h,057h,0E8h,06Fh,0C5h,0E9h
+    db 0FFh,085h,0F6h,08Bh,0F8h,00Fh,084h,08Eh,000h,000h,000h,085h,0FFh,00Fh,084h,086h
+    db 000h,000h,000h,08Bh,046h,004h,085h,0C0h,074h,00Ch,08Bh,048h,004h,085h,0C9h,074h
+    db 005h,0E8h,095h,002h,0E9h,0FFh,08Ah,088h,09Dh,004h,000h,000h,084h,0C9h,074h,069h
+    db 08Bh,087h,014h,002h,000h,000h,085h,0C0h,075h,05Fh,08Bh,08Eh,004h,002h,000h,000h
+    db 085h,0C9h,074h,055h,0E8h,05Ah,026h,0ECh,0FFh,083h,0F8h,0FFh,074h,04Bh,08Bh,00Dh
+    db 014h,0F2h,02Eh,001h,08Bh,051h,014h,08Ah,082h,08Ch,000h,000h,000h,084h,0C0h,074h
+    db 038h,08Bh,0CEh,0E8h,0BCh,0E7h,0EAh,0FFh,085h,0C0h,074h,02Dh,08Bh,0CEh,0E8h,0B1h,0E7h
+    db 0EAh,0FFh,083h,078h,02Ch,001h,075h,020h,06Ah,002h,057h,08Bh,0CEh,0E8h,027h,000h,0EDh
+    db 0FFh,084h,0C0h,074h,012h,06Ah,05Bh,08Bh,0CEh,0E8h,08Fh,004h,0ECh,0FFh,084h,0C0h
+    db 075h,005h,05Fh,0B0h,001h,05Eh,0C3h,05Fh,032h,0C0h,05Eh,0C3h
+?wantToSquishTarget@@YA_NPAVState@@PAX@Z ENDP
+_TEXT ENDS
+END
