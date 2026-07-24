@@ -13426,3 +13426,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ??1TerrainLogic@@UAE@XZ,,0x001ADD90,285,Code/masm_dumps/TerrainLogic_destructor_1ADD90.asm,matched,certified packet 172 exact db-only retail recovery sha256 024971c8cfc8c88bfd3e1380b4d81f7847bcbd909ebb2f33965b3c0adba3ebbd
 ?messageColor@InGameUI@@UAAXPBURGBColor@@VUnicodeString@@ZZ,,0x0043DEF0,9,Code/masm_dumps/InGameUI_messageColor_RGBColor_43DEF0.asm,matched,Certified packet 174 db-only MASM recovery
 ?computeApproachTarget@Weapon@@QBE_NPBVObject@@0PBUCoord3D@@MAAU3@@Z,,0x001E43D0,1042,Code/masm_dumps/computeApproachTarget_Weapon_001E43D0_packet175.asm,matched,Certified packet 175 sealed RVA and SHA-256 ab0690c840949900faa36b2070211d492a9cddcc0b55b6d18e047dc300b6db58
+?insertPlayerInListbox@@YAHABVPlayerInfo@@H@Z,,0x004F9E60,333,Code/masm_dumps/insertPlayerInListbox_4F9E60.asm,matched,certified recovery packet 176 exact retail bytes
