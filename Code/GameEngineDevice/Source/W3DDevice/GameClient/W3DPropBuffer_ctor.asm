@@ -1,0 +1,52 @@
+.386
+.model flat
+
+; ??0W3DPropBuffer@@QAE@XZ
+; Retail @ 0x00702FF0 size 328
+_TEXT SEGMENT
+public ??0W3DPropBuffer@@QAE@XZ
+??0W3DPropBuffer@@QAE@XZ PROC
+    db 6Ah,0FFh,68h,8Fh,0C4h,04h,01h,64h
+    db 0A1h,00h,00h,00h,00h,50h,64h,89h
+    db 25h,00h,00h,00h,00h,83h,0ECh,08h
+    db 53h,56h,8Bh,0F1h,57h,89h,74h,24h
+    db 0Ch,68h,0F6h,4Ch,44h,00h,68h,60h
+    db 46h,40h,00h,68h,0A0h,0Fh,00h,00h
+    db 6Ah,30h,8Dh,7Eh,04h,33h,0DBh,57h
+    db 89h,5Ch,24h,30h,0C7h,06h,0D8h,09h
+    db 12h,01h,0E8h,0ADh,3Eh,2Fh,00h,68h
+    db 0AAh,0C8h,41h,00h,68h,0B1h,0Fh,44h
+    db 00h,6Ah,60h,6Ah,18h,8Dh,86h,0Ch
+    db 0EEh,02h,00h,50h,0C6h,44h,24h,30h
+    db 01h,89h,9Eh,04h,0EEh,02h,00h,88h
+    db 9Eh,08h,0EEh,02h,00h,88h,9Eh,09h
+    db 0EEh,02h,00h,88h,9Eh,0Ah,0EEh,02h
+    db 00h,0E8h,76h,3Eh,2Fh,00h,0C6h,44h
+    db 24h,1Ch,02h,89h,9Eh,0Ch,0F7h,02h
+    db 00h,89h,9Eh,14h,0F7h,02h,00h,8Dh
+    db 86h,1Ch,0EEh,02h,00h,0B9h,60h,00h
+    db 00h,00h,0BAh,00h,00h,80h,3Fh,90h
+    db 89h,58h,0F0h,89h,58h,0F8h,89h,58h
+    db 0FCh,89h,18h,89h,50h,04h,83h,0C0h
+    db 18h,49h,75h,0ECh,0B8h,0A0h,0Fh,00h
+    db 00h,8Dh,0A4h,24h,00h,00h,00h,00h
+    db 89h,1Fh,83h,0C7h,30h,48h,75h,0F8h
+    db 68h,24h,01h,00h,00h,0E8h,6Eh,0EEh
+    db 17h,00h,83h,0C4h,04h,89h,44h,24h
+    db 10h,3Bh,0C3h,0C6h,44h,24h,1Ch,03h
+    db 74h,0Bh,6Ah,01h,8Bh,0C8h,0E8h,0B5h
+    db 8Dh,23h,00h,0EBh,02h,33h,0C0h,6Ah
+    db 3Ch,0C6h,44h,24h,20h,02h,89h,86h
+    db 18h,0F7h,02h,00h,0E8h,3Fh,0EEh,17h
+    db 00h,8Bh,0F8h,83h,0C4h,04h,89h,7Ch
+    db 24h,10h,3Bh,0FBh,0C6h,44h,24h,1Ch
+    db 04h,74h,12h,8Bh,0CFh,0E8h,96h,02h
+    db 23h,00h,0C7h,07h,0C4h,09h,12h,01h
+    db 88h,5Fh,38h,0EBh,02h,33h,0FFh,8Bh
+    db 4Ch,24h,14h,89h,0BEh,10h,0F7h,02h
+    db 00h,5Fh,0C6h,86h,09h,0EEh,02h,00h
+    db 01h,8Bh,0C6h,5Eh,5Bh,64h,89h,0Dh
+    db 00h,00h,00h,00h,83h,0C4h,14h,0C3h
+??0W3DPropBuffer@@QAE@XZ ENDP
+_TEXT ENDS
+END
