@@ -1,0 +1,34 @@
+.386
+.model flat
+
+; ?killThemKillThemAll@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@@Z
+; Exact 358 retail bytes @ 0x005B7690; certified packet 221.
+_TEXT SEGMENT
+public ?killThemKillThemAll@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@@Z
+?killThemKillThemAll@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@@Z PROC
+    db 06Ah,0FFh,068h,030h,092h,003h,001h,064h,0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,051h,053h,056h,057h,08Bh,07Ch,024h,020h,085h,0FFh,08Bh
+    db 0F1h,00Fh,084h,0FCh,000h,000h,000h,08Bh,087h,0FCh,000h,000h,000h,085h,0C0h,00Fh
+    db 084h,0EEh,000h,000h,000h,08Bh,00Dh,08Ch,014h,02Fh,001h,08Bh,001h,0FFh,090h,0F4h
+    db 000h,000h,000h,085h,0C0h,00Fh,08Eh,0EEh,000h,000h,000h,08Bh,00Dh,08Ch,014h,02Fh
+    db 001h,08Bh,011h,0FFh,092h,0F4h,000h,000h,000h,08Bh,00Dh,08Ch,014h,02Fh,001h,08Bh
+    db 0D8h,08Bh,001h,0FFh,090h,0F0h,000h,000h,000h,03Bh,0C3h,00Fh,08Ch,0C8h,000h,000h
+    db 000h,08Ah,046h,020h,084h,0C0h,00Fh,085h,0A7h,000h,000h,000h,0B3h,001h,088h,05Eh
+    db 020h,0C7h,044h,024h,020h,000h,000h,000h,000h,08Bh,00Dh,08Ch,014h,02Fh,001h,08Bh
+    db 011h,0C7h,044h,024h,018h,000h,000h,000h,000h,0FFh,092h,0F4h,000h,000h,000h,08Bh
+    db 00Dh,07Ch,014h,02Fh,001h,050h,08Bh,001h,06Ah,000h,068h,0BCh,059h,00Fh,001h,08Dh
+    db 054h,024h,030h,052h,0FFh,050h,028h,08Bh,000h,085h,0C0h,088h,05Ch,024h,01Ch,074h
+    db 005h,083h,0C0h,008h,0EBh,005h,0B8h,08Ch,038h,007h,001h,051h,08Bh,0CCh,089h,064h
+    db 024h,014h,050h,0E8h,0EBh,0F1h,0A7h,0FFh,08Dh,044h,024h,028h,050h,0E8h,01Eh,01Ah
+    db 02Dh,000h,083h,0C4h,00Ch,08Dh,04Ch,024h,024h,0C6h,044h,024h,018h,000h,0E8h,04Dh
+    db 00Ah,02Dh,000h,051h,08Dh,054h,024h,024h,089h,064h,024h,010h,08Bh,0CCh,052h,0E8h
+    db 06Ch,00Ch,02Dh,000h,0A1h,08Ch,014h,02Fh,001h,08Bh,008h,050h,0FFh,051h,034h,083h
+    db 0C4h,008h,08Dh,04Ch,024h,020h,0C7h,044h,024h,018h,0FFh,0FFh,0FFh,0FFh,0E8h,01Dh
+    db 00Ah,02Dh,000h,032h,0C0h,08Bh,04Ch,024h,010h,064h,089h,00Dh,000h,000h,000h,000h
+    db 05Fh,05Eh,05Bh,083h,0C4h,010h,0C2h,008h,000h,08Bh,04Ch,024h,024h,085h,0C9h,074h
+    db 00Fh,08Bh,097h,0FCh,000h,000h,000h,08Bh,042h,074h,050h,0E8h,00Ch,045h,0A7h,0FFh
+    db 08Bh,04Ch,024h,010h,05Fh,05Eh,0B0h,001h,064h,089h,00Dh,000h,000h,000h,000h,05Bh
+    db 083h,0C4h,010h,0C2h,008h,000h
+?killThemKillThemAll@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@@Z ENDP
+_TEXT ENDS
+END
