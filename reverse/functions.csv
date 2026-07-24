@@ -13375,3 +13375,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?winGetEnabledTextBorderColor@GameWindow@@QAEHXZ,,0x00478710,7,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_enabledText.borderColor@0x190; ICF twin getContain
 ?winSetEnabledTextColors@GameWindow@@QAEXHH@Z,,0x00478600,43,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_enabledText@0x18c; combo dispatch
 ?winSetDisabledTextColors@GameWindow@@QAEXHH@Z,,0x00478640,43,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_disabledText@0x194; combo dispatch
+??1Display@@UAE@XZ,,0x005CB360,402,Code/masm_dumps/Display_destructor_5CB360.asm,matched,Certified packet 109; Display vtable and derived destructor chains; retail sha256 70ba90e47128dd067f1534c8ad52d468cf88aa57081a16a2c8d8a800576e756b
