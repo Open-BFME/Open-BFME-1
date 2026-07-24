@@ -1,0 +1,27 @@
+.386
+.model flat
+
+; ?loadPostProcess@SpecialPowerModule@@MAEXXZ
+; Exact 251 retail bytes @ 0x0026A1A0; certified packet 264
+_TEXT SEGMENT
+public ?loadPostProcess@SpecialPowerModule@@MAEXXZ
+?loadPostProcess@SpecialPowerModule@@MAEXXZ PROC
+    db 06Ah,0FFh,068h,048h,0FFh,000h,001h,064h,0A1h,000h,000h,000h,000h,050h,064h,089h
+    db 025h,000h,000h,000h,000h,051h,053h,08Bh,0D9h,0E8h,0E0h,062h,0DDh,0FFh,08Bh,043h
+    db 018h,085h,0C0h,00Fh,085h,0C2h,000h,000h,000h,08Bh,043h,010h,056h,08Dh,073h,010h
+    db 08Bh,0CEh,0FFh,050h,018h,08Bh,050h,004h,085h,0D2h,074h,010h,08Bh,04Ah,004h,085h
+    db 0C9h,074h,007h,0E8h,079h,0EAh,0DDh,0FFh,0EBh,002h,08Bh,0C2h,08Ah,080h,015h,001h
+    db 000h,000h,03Ch,001h,00Fh,085h,090h,000h,000h,000h,08Bh,016h,08Bh,0CEh,0FFh,052h
+    db 018h,08Bh,050h,004h,085h,0D2h,074h,010h,08Bh,04Ah,004h,085h,0C9h,074h,007h,0E8h
+    db 04Dh,0EAh,0DDh,0FFh,0EBh,002h,08Bh,0C2h,080h,0B8h,014h,001h,000h,000h,001h,075h
+    db 069h,08Bh,04Bh,008h,0E8h,0FBh,065h,0DBh,0FFh,085h,0C0h,074h,05Dh,08Bh,04Bh,008h
+    db 06Ah,007h,0E8h,0E8h,082h,0DCh,0FFh,084h,0C0h,074h,04Fh,08Bh,006h,057h,08Dh,04Ch
+    db 024h,00Ch,051h,08Bh,0CEh,0FFh,050h,014h,08Bh,0F0h,08Bh,04Bh,008h,08Bh,07Bh,004h
+    db 08Bh,059h,074h,0C7h,044h,024h,018h,000h,000h,000h,000h,0E8h,0C4h,065h,0DBh,0FFh
+    db 08Bh,07Fh,008h,08Bh,040h,024h,08Bh,00Dh,08Ch,014h,02Fh,001h,08Bh,011h,057h,053h
+    db 056h,050h,0FFh,092h,084h,000h,000h,000h,08Dh,04Ch,024h,00Ch,0C7h,044h,024h,018h
+    db 0FFh,0FFh,0FFh,0FFh,0E8h,0B7h,0D6h,061h,000h,05Fh,05Eh,08Bh,04Ch,024h,008h,05Bh
+    db 064h,089h,00Dh,000h,000h,000h,000h,083h,0C4h,010h,0C3h
+?loadPostProcess@SpecialPowerModule@@MAEXXZ ENDP
+_TEXT ENDS
+END
