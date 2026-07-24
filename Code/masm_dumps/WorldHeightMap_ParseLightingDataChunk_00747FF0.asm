@@ -1,0 +1,119 @@
+.386
+.model flat
+
+; ?ParseLightingDataChunk@WorldHeightMap@@KA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z
+; Exact 1724 retail bytes @ 0x00747FF0
+_TEXT SEGMENT
+public ?ParseLightingDataChunk@WorldHeightMap@@KA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z
+?ParseLightingDataChunk@WorldHeightMap@@KA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z PROC
+    db 83h,0ECh,24h,53h,55h,8Bh,6Ch,24h,30h,56h,57h,8Bh,0CDh,0E8h,03h,28h
+    db 8Fh,0FFh,8Bh,0Dh,0C8h,0D5h,2Eh,01h,89h,81h,18h,02h,00h,00h,33h,0DBh
+    db 0C7h,44h,24h,10h,00h,00h,00h,00h,0C7h,44h,24h,14h,00h,00h,00h,00h
+    db 0C7h,44h,24h,18h,00h,00h,00h,00h,0C7h,44h,24h,1Ch,00h,00h,00h,00h
+    db 0C7h,44h,24h,20h,00h,00h,00h,00h,0C7h,44h,24h,24h,00h,00h,00h,00h
+    db 0C7h,44h,24h,28h,00h,00h,00h,00h,0C7h,44h,24h,2Ch,00h,00h,00h,00h
+    db 0C7h,44h,24h,30h,00h,00h,80h,0BFh,33h,0C0h,8Dh,9Bh,00h,00h,00h,00h
+    db 8Bh,15h,0C8h,0D5h,2Eh,01h,8Dh,0BCh,10h,18h,05h,00h,00h,0B9h,09h,00h
+    db 00h,00h,8Dh,74h,24h,10h,0F3h,0A5h,8Bh,0Dh,0C8h,0D5h,2Eh,01h,8Dh,0BCh
+    db 08h,90h,02h,00h,00h,0B9h,09h,00h,00h,00h,8Dh,74h,24h,10h,0F3h,0A5h
+    db 8Bh,15h,0C8h,0D5h,2Eh,01h,8Dh,0BCh,10h,3Ch,05h,00h,00h,0B9h,09h,00h
+    db 00h,00h,8Dh,74h,24h,10h,0F3h,0A5h,8Bh,0Dh,0C8h,0D5h,2Eh,01h,8Dh,0BCh
+    db 08h,0B4h,02h,00h,00h,0B9h,09h,00h,00h,00h,8Dh,74h,24h,10h,0F3h,0A5h
+    db 8Bh,15h,0C8h,0D5h,2Eh,01h,8Dh,0BCh,10h,60h,05h,00h,00h,0B9h,09h,00h
+    db 00h,00h,8Dh,74h,24h,10h,0F3h,0A5h,8Bh,0Dh,0C8h,0D5h,2Eh,01h,8Dh,0BCh
+    db 08h,0D8h,02h,00h,00h,83h,0C0h,6Ch,3Dh,0B0h,01h,00h,00h,0B9h,09h,00h
+    db 00h,00h,8Dh,74h,24h,10h,0F3h,0A5h,0Fh,8Ch,62h,0FFh,0FFh,0FFh,89h,5Ch
+    db 24h,38h,8Bh,0CDh,0E8h,0D8h,64h,8Eh,0FFh,8Bh,15h,0C8h,0D5h,2Eh,01h,8Bh
+    db 0CDh,0D9h,9Ch,13h,90h,02h,00h,00h,0E8h,0C4h,64h,8Eh,0FFh,0A1h,0C8h,0D5h
+    db 2Eh,01h,8Bh,0CDh,0D9h,9Ch,03h,94h,02h,00h,00h,0E8h,0B1h,64h,8Eh,0FFh
+    db 8Bh,0Dh,0C8h,0D5h,2Eh,01h,0D9h,9Ch,0Bh,98h,02h,00h,00h,8Bh,0CDh,0E8h
+    db 9Dh,64h,8Eh,0FFh,8Bh,15h,0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,13h,9Ch
+    db 02h,00h,00h,0E8h,89h,64h,8Eh,0FFh,0A1h,0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h
+    db 9Ch,03h,0A0h,02h,00h,00h,0E8h,76h,64h,8Eh,0FFh,8Bh,0Dh,0C8h,0D5h,2Eh
+    db 01h,0D9h,9Ch,0Bh,0A4h,02h,00h,00h,8Bh,0CDh,0E8h,62h,64h,8Eh,0FFh,8Bh
+    db 15h,0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,13h,0A8h,02h,00h,00h,0E8h,4Eh
+    db 64h,8Eh,0FFh,0A1h,0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,03h,0ACh,02h,00h
+    db 00h,0E8h,3Bh,64h,8Eh,0FFh,8Bh,0Dh,0C8h,0D5h,2Eh,01h,0D9h,9Ch,0Bh,0B0h
+    db 02h,00h,00h,8Bh,0CDh,0E8h,27h,64h,8Eh,0FFh,8Bh,15h,0C8h,0D5h,2Eh,01h
+    db 8Bh,0CDh,0D9h,9Ch,13h,18h,05h,00h,00h,0E8h,13h,64h,8Eh,0FFh,0A1h,0C8h
+    db 0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,03h,1Ch,05h,00h,00h,0E8h,00h,64h,8Eh
+    db 0FFh,8Bh,0Dh,0C8h,0D5h,2Eh,01h,0D9h,9Ch,0Bh,20h,05h,00h,00h,8Bh,0CDh
+    db 0E8h,0ECh,63h,8Eh,0FFh,8Bh,15h,0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,13h
+    db 24h,05h,00h,00h,0E8h,0D8h,63h,8Eh,0FFh,0A1h,0C8h,0D5h,2Eh,01h,8Bh,0CDh
+    db 0D9h,9Ch,03h,28h,05h,00h,00h,0E8h,0C5h,63h,8Eh,0FFh,8Bh,0Dh,0C8h,0D5h
+    db 2Eh,01h,0D9h,9Ch,0Bh,2Ch,05h,00h,00h,8Bh,0CDh,0E8h,0B1h,63h,8Eh,0FFh
+    db 8Bh,15h,0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,13h,30h,05h,00h,00h,0E8h
+    db 9Dh,63h,8Eh,0FFh,0A1h,0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,03h,34h,05h
+    db 00h,00h,0E8h,8Ah,63h,8Eh,0FFh,8Bh,0Dh,0C8h,0D5h,2Eh,01h,8Bh,54h,24h
+    db 3Ch,0D9h,9Ch,0Bh,38h,05h,00h,00h,0BFh,02h,00h,00h,00h,66h,39h,7Ah
+    db 08h,0Fh,82h,0C4h,00h,00h,00h,8Dh,73h,24h,8Dh,9Bh,00h,00h,00h,00h
+    db 8Bh,0CDh,0E8h,5Ah,63h,8Eh,0FFh,0A1h,0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch
+    db 06h,18h,05h,00h,00h,0E8h,47h,63h,8Eh,0FFh,8Bh,0Dh,0C8h,0D5h,2Eh,01h
+    db 0D9h,9Ch,0Eh,1Ch,05h,00h,00h,8Bh,0CDh,0E8h,33h,63h,8Eh,0FFh,8Bh,15h
+    db 0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,16h,20h,05h,00h,00h,0E8h,1Fh,63h
+    db 8Eh,0FFh,0A1h,0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,06h,24h,05h,00h,00h
+    db 0E8h,0Ch,63h,8Eh,0FFh,8Bh,0Dh,0C8h,0D5h,2Eh,01h,0D9h,9Ch,0Eh,28h,05h
+    db 00h,00h,8Bh,0CDh,0E8h,0F8h,62h,8Eh,0FFh,8Bh,15h,0C8h,0D5h,2Eh,01h,8Bh
+    db 0CDh,0D9h,9Ch,16h,2Ch,05h,00h,00h,0E8h,0E4h,62h,8Eh,0FFh,0A1h,0C8h,0D5h
+    db 2Eh,01h,8Bh,0CDh,0D9h,9Ch,06h,30h,05h,00h,00h,0E8h,0D1h,62h,8Eh,0FFh
+    db 8Bh,0Dh,0C8h,0D5h,2Eh,01h,0D9h,9Ch,0Eh,34h,05h,00h,00h,8Bh,0CDh,0E8h
+    db 0BDh,62h,8Eh,0FFh,8Bh,15h,0C8h,0D5h,2Eh,01h,0D9h,9Ch,16h,38h,05h,00h
+    db 00h,83h,0C6h,24h,4Fh,0Fh,85h,45h,0FFh,0FFh,0FFh,8Bh,44h,24h,3Ch,66h
+    db 83h,78h,08h,03h,0Fh,82h,0C3h,00h,00h,00h,8Dh,73h,24h,0BFh,02h,00h
+    db 00h,00h,8Bh,0CDh,0E8h,88h,62h,8Eh,0FFh,8Bh,0Dh,0C8h,0D5h,2Eh,01h,0D9h
+    db 9Ch,0Eh,90h,02h,00h,00h,8Bh,0CDh,0E8h,74h,62h,8Eh,0FFh,8Bh,15h,0C8h
+    db 0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,16h,94h,02h,00h,00h,0E8h,60h,62h,8Eh
+    db 0FFh,0A1h,0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,06h,98h,02h,00h,00h,0E8h
+    db 4Dh,62h,8Eh,0FFh,8Bh,0Dh,0C8h,0D5h,2Eh,01h,0D9h,9Ch,0Eh,9Ch,02h,00h
+    db 00h,8Bh,0CDh,0E8h,39h,62h,8Eh,0FFh,8Bh,15h,0C8h,0D5h,2Eh,01h,8Bh,0CDh
+    db 0D9h,9Ch,16h,0A0h,02h,00h,00h,0E8h,25h,62h,8Eh,0FFh,0A1h,0C8h,0D5h,2Eh
+    db 01h,8Bh,0CDh,0D9h,9Ch,06h,0A4h,02h,00h,00h,0E8h,12h,62h,8Eh,0FFh,8Bh
+    db 0Dh,0C8h,0D5h,2Eh,01h,0D9h,9Ch,0Eh,0A8h,02h,00h,00h,8Bh,0CDh,0E8h,0FEh
+    db 61h,8Eh,0FFh,8Bh,15h,0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,16h,0ACh,02h
+    db 00h,00h,0E8h,0EAh,61h,8Eh,0FFh,0A1h,0C8h,0D5h,2Eh,01h,0D9h,9Ch,06h,0B0h
+    db 02h,00h,00h,83h,0C6h,24h,4Fh,0Fh,85h,45h,0FFh,0FFh,0FFh,8Bh,4Ch,24h
+    db 3Ch,66h,83h,79h,08h,04h,0Fh,82h,0C4h,00h,00h,00h,8Bh,0F3h,0BFh,03h
+    db 00h,00h,00h,8Bh,0CDh,0E8h,0B7h,61h,8Eh,0FFh,8Bh,15h,0C8h,0D5h,2Eh,01h
+    db 8Bh,0CDh,0D9h,9Ch,16h,0A0h,07h,00h,00h,0E8h,0A3h,61h,8Eh,0FFh,0A1h,0C8h
+    db 0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,06h,0A4h,07h,00h,00h,0E8h,90h,61h,8Eh
+    db 0FFh,8Bh,0Dh,0C8h,0D5h,2Eh,01h,0D9h,9Ch,0Eh,0A8h,07h,00h,00h,8Bh,0CDh
+    db 0E8h,7Ch,61h,8Eh,0FFh,8Bh,15h,0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,16h
+    db 0ACh,07h,00h,00h,0E8h,68h,61h,8Eh,0FFh,0A1h,0C8h,0D5h,2Eh,01h,8Bh,0CDh
+    db 0D9h,9Ch,06h,0B0h,07h,00h,00h,0E8h,55h,61h,8Eh,0FFh,8Bh,0Dh,0C8h,0D5h
+    db 2Eh,01h,0D9h,9Ch,0Eh,0B4h,07h,00h,00h,8Bh,0CDh,0E8h,41h,61h,8Eh,0FFh
+    db 8Bh,15h,0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,16h,0B8h,07h,00h,00h,0E8h
+    db 2Dh,61h,8Eh,0FFh,0A1h,0C8h,0D5h,2Eh,01h,8Bh,0CDh,0D9h,9Ch,06h,0BCh,07h
+    db 00h,00h,0E8h,1Ah,61h,8Eh,0FFh,8Bh,0Dh,0C8h,0D5h,2Eh,01h,0D9h,9Ch,0Eh
+    db 0C0h,07h,00h,00h,83h,0C6h,24h,4Fh,0Fh,85h,45h,0FFh,0FFh,0FFh,0EBh,58h
+    db 0A1h,0C8h,0D5h,2Eh,01h,8Bh,4Ch,24h,38h,8Dh,0B4h,01h,18h,05h,00h,00h
+    db 8Dh,0BCh,01h,0A0h,07h,00h,00h,8Bh,44h,24h,38h,0B9h,09h,00h,00h,00h
+    db 0F3h,0A5h,8Bh,0Dh,0C8h,0D5h,2Eh,01h,8Dh,0B4h,08h,3Ch,05h,00h,00h,8Dh
+    db 0BCh,08h,0C4h,07h,00h,00h,0B9h,09h,00h,00h,00h,0F3h,0A5h,8Bh,0Dh,0C8h
+    db 0D5h,2Eh,01h,8Dh,0B4h,08h,60h,05h,00h,00h,8Dh,0BCh,08h,0E8h,07h,00h
+    db 00h,0B9h,09h,00h,00h,00h,0F3h,0A5h,8Bh,44h,24h,38h,83h,0C0h,6Ch,83h
+    db 0C3h,6Ch,3Dh,0B0h,01h,00h,00h,89h,44h,24h,38h,0Fh,8Ch,0B1h,0FBh,0FFh
+    db 0FFh,8Bh,74h,24h,3Ch,66h,83h,7Eh,08h,05h,72h,39h,8Bh,0CDh,0E8h,7Eh
+    db 60h,8Eh,0FFh,0D8h,1Dh,34h,53h,07h,01h,0DFh,0E0h,0F6h,0C4h,41h,75h,04h
+    db 0B0h,01h,0EBh,02h,32h,0C0h,8Bh,15h,0C8h,0D5h,2Eh,01h,88h,82h,0BCh,0Dh
+    db 00h,00h,0A1h,0C8h,0D5h,2Eh,01h,8Ah,88h,0BCh,0Dh,00h,00h,88h,0Dh,2Fh
+    db 0F4h,33h,01h,0EBh,14h,8Bh,15h,0C8h,0D5h,2Eh,01h,0C6h,82h,0BCh,0Dh,00h
+    db 00h,00h,0C6h,05h,2Fh,0F4h,33h,01h,00h,66h,83h,7Eh,08h,06h,72h,50h
+    db 8Bh,0CDh,0E8h,4Eh,22h,8Fh,0FFh,8Bh,0Dh,0C8h,0D5h,2Eh,01h,85h,0C0h,0Fh
+    db 95h,0C0h,88h,81h,0BDh,0Dh,00h,00h,8Bh,0CDh,0E8h,12h,60h,8Eh,0FFh,0D9h
+    db 5Ch,24h,3Ch,8Bh,0CDh,0E8h,07h,60h,8Eh,0FFh,0D9h,5Ch,24h,38h,8Bh,0CDh
+    db 0E8h,0FCh,5Fh,8Eh,0FFh,0D9h,1Dh,0D0h,4Fh,2Bh,01h,8Bh,54h,24h,3Ch,8Bh
+    db 44h,24h,38h,89h,15h,0C8h,4Fh,2Bh,01h,0A3h,0CCh,4Fh,2Bh,01h,0EBh,0Dh
+    db 8Bh,0Dh,0C8h,0D5h,2Eh,01h,0C6h,81h,0BDh,0Dh,00h,00h,00h,66h,83h,7Eh
+    db 08h,07h,72h,6Dh,8Bh,0CDh,0E8h,0C6h,5Fh,8Eh,0FFh,0D9h,5Ch,24h,3Ch,8Bh
+    db 0CDh,0E8h,0BBh,5Fh,8Eh,0FFh,0D9h,5Ch,24h,38h,8Bh,0CDh,0E8h,0B0h,5Fh,8Eh
+    db 0FFh,0D9h,1Dh,0E0h,4Fh,2Bh,01h,8Bh,54h,24h,3Ch,8Bh,44h,24h,38h,8Bh
+    db 0CDh,89h,15h,0D8h,4Fh,2Bh,01h,0A3h,0DCh,4Fh,2Bh,01h,0E8h,90h,5Fh,8Eh
+    db 0FFh,0D9h,5Ch,24h,3Ch,8Bh,0CDh,0E8h,85h,5Fh,8Eh,0FFh,0D9h,5Ch,24h,38h
+    db 8Bh,0CDh,0E8h,7Ah,5Fh,8Eh,0FFh,0D9h,1Dh,0F0h,4Fh,2Bh,01h,8Bh,4Ch,24h
+    db 3Ch,8Bh,54h,24h,38h,89h,0Dh,0E8h,4Fh,2Bh,01h,89h,15h,0ECh,4Fh,2Bh
+    db 01h,8Bh,0CDh,0E8h,0E9h,19h,8Fh,0FFh,84h,0C0h,75h,14h,8Bh,0CDh,0E8h,72h
+    db 21h,8Fh,0FFh,8Bh,0Dh,0ECh,6Eh,30h,01h,85h,0C9h,74h,03h,89h,41h,04h
+    db 5Fh,5Eh,5Dh,0B0h,01h,5Bh,83h,0C4h,24h,0C2h,08h,00h
+?ParseLightingDataChunk@WorldHeightMap@@KA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z ENDP
+_TEXT ENDS
+END
