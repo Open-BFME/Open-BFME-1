@@ -14102,13 +14102,13 @@ __declspec(naked) ConcreteModuleTemplate<PointEmissionVolumeModuleTag>::Concrete
 // ??0?$ConcreteModuleTemplate@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
 ConcreteModuleTemplate<PointEmissionVolumeModuleTag>::ConcreteModuleTemplate()
 {
-	volatile unsigned int *vtableSlots = (unsigned int *)this;
-	vtableSlots[1] = 0x0110f9ac;
-	vtableSlots[2] = 0x0110f980;
-	*((volatile unsigned char *)this + 0x0c) = 0;
-	vtableSlots[0] = 0x0111117c;
-	vtableSlots[1] = 0x01111178;
-	vtableSlots[2] = 0x01111164;
+    unsigned char *self = (unsigned char *)this;
+    *(volatile unsigned int *)(self + 0x04) = 0x0110f9ac;
+    *(volatile unsigned int *)(self + 0x08) = 0x0110f980;
+    *(volatile unsigned char *)(self + 0x0c) = 0;
+    *(unsigned int *)self = 0x0111117c;
+    *(unsigned int *)(self + 0x04) = 0x01111178;
+    *(unsigned int *)(self + 0x08) = 0x01111164;
 }
 
 ConcreteModuleTemplate<PointEmissionVolumeModuleTag>::~ConcreteModuleTemplate()
