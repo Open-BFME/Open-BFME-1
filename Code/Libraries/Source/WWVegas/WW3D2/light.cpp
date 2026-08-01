@@ -270,7 +270,6 @@ LightClass & LightClass::operator = (const LightClass & that)
 // ??1LightClass@@UAE@XZ present-unmatched
 LightClass::~LightClass(void)
 {
-	--*reinterpret_cast<int *>(0x0134bc70);
 }
 
 
