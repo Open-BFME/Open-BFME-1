@@ -810,7 +810,17 @@ Bool OptionPreferences::get2DShadowsEnabled(void)
 }
 
 // ?getBuildingOcclusionEnabled@OptionPreferences@@QAE_NXZ
-// Body in Code/masm_dumps/_getBuildingOcclusionEnabled_OptionPreferences__QAE_NXZ_91330.asm (exact 102B retail).
+Bool OptionPreferences::getBuildingOcclusionEnabled(void)
+{
+	OptionPreferences::const_iterator it = find("BuildingOcclusion");
+	if (it == end())
+		return *reinterpret_cast<Bool *>((char *)TheGlobalData + 0x70);
+
+	if (stricmp(it->second.str(), "yes") == 0) {
+		return TRUE;
+	}
+	return FALSE;
+}
 
 // ?getParticleCap@OptionPreferences@@QAEHXZ
 // Body in Code/masm_dumps/_getParticleCap_OptionPreferences__QAEHXZ_914B0.asm (exact 136B retail).
