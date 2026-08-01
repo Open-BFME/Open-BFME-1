@@ -7695,66 +7695,18 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODUL
 }
 
 // ??0?$ConcreteModuleClass@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<OrthoEmissionVelocityModuleTag>::ConcreteModuleClass()
+ConcreteModuleClass<OrthoEmissionVelocityModuleTag>::ConcreteModuleClass()
 {
-    __asm {
-        __emit 0x8b
-        __emit 0x15
-        __emit 0x30
-        __emit 0x6d
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x34
-        __emit 0x6d
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x09
-        __emit 0xa3
-        __emit 0xd4
-        __emit 0x64
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x80
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0x89
-        __emit 0x50
-        __emit 0x04
-        __emit 0x89
-        __emit 0x48
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0xf8
-        __emit 0x64
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x89
-        __emit 0x48
-        __emit 0x0c
-        __emit 0xa3
-        __emit 0xf8
-        __emit 0x64
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xf4
-        __emit 0x13
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc3
-    }
+    const void *first = *reinterpret_cast<void **>(*reinterpret_cast<void **>(0x012f6d34));
+    void **self = reinterpret_cast<void **>(this);
+    const void *second = *reinterpret_cast<void **>(*reinterpret_cast<void **>(0x012f6d30));
+    *reinterpret_cast<void **>(0x012f64d4) = this;
+    self[0] = (void *)0x01110880;
+    self[1] = (void *)second;
+    self[2] = (void *)first;
+    self[3] = *reinterpret_cast<void **>(0x012f64f8);
+    *reinterpret_cast<void **>(0x012f64f8) = this;
+    self[0] = (void *)0x011113f4;
 }
 
 // ??1?$ConcreteModuleClass@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
