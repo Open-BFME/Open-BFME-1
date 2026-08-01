@@ -545,7 +545,7 @@ Short OptionPreferences::getFirewallPortAllocationDelta()
 {
 	OptionPreferences::const_iterator it = find("FirewallPortAllocationDelta");
 	if (it == end()) {
-		return TheGlobalData->m_firewallPortAllocationDelta;
+		return *reinterpret_cast<Short *>((char *)TheGlobalData + 0xB20);
 	}
 
 	Short delta = atoi(it->second.str());
