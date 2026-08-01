@@ -62,6 +62,7 @@ class OutputChunk : public MemoryPoolObject
 {
 	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(OutputChunk, "OutputChunk")		
 public:
+	friend class DataChunkOutput;
 	OutputChunk*	next;
 	UnsignedInt		id;															// chunk symbol type from table of contents
 	Int						filepos;											// position of file at start of data offset
