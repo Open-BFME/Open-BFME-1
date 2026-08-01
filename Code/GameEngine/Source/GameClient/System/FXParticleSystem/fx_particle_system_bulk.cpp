@@ -5991,61 +5991,17 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<6, QUAD_DRAW_MODULE_KEY, Q
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleClass()
+ConcreteModuleClass<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleClass()
 {
-    __asm {
-        __emit 0x8b
-        __emit 0x15
-        __emit 0xb8
-        __emit 0x6c
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0xbc
-        __emit 0x6c
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x09
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x20
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0x89
-        __emit 0x50
-        __emit 0x04
-        __emit 0x89
-        __emit 0x48
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x65
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x89
-        __emit 0x48
-        __emit 0x0c
-        __emit 0xa3
-        __emit 0x00
-        __emit 0x65
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xdc
-        __emit 0x0d
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc3
-    }
+    const void *first = *reinterpret_cast<void **>(*reinterpret_cast<void **>(0x012f6cbc));
+    void **self = reinterpret_cast<void **>(this);
+    const void *second = *reinterpret_cast<void **>(*reinterpret_cast<void **>(0x012f6cb8));
+    self[0] = (void *)0x01110820;
+    self[1] = (void *)second;
+    self[2] = (void *)first;
+    self[3] = *reinterpret_cast<void **>(0x012f6500);
+    *reinterpret_cast<void **>(0x012f6500) = this;
+    self[0] = (void *)0x01110ddc;
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
