@@ -58,8 +58,8 @@ Anim2DCollection *TheAnim2DCollection = NULL;
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ??0Anim2DTemplate@@QAE@VAsciiString@@@Z
-// Body in Anim2DTemplate_ctor_dtor.asm (exact 124B retail; BFME AsciiString
-// copy-ctor is out-of-line, ours inlines -- AsciiString reconciliation wall).
+// Exact C++ body is in Anim2DTemplateCtor.cpp (124B retail; BFME AsciiString
+// assignment and destructor shims).
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
