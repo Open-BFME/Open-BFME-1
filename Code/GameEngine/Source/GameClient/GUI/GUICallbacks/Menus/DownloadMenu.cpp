@@ -98,16 +98,35 @@ static GameWindow * progressBarMunkee = NULL;
 
 static GameWindow *parent = NULL;
 
+class BFMERetailWindowLayout
+{
+public:
+	virtual void runInit( void *userData ) = 0;
+	virtual ~BFMERetailWindowLayout( void ) = 0;
+	virtual void runUpdate( void *userData ) = 0;
+	virtual void runShutdown( void *userData ) = 0;
+	virtual void hide( int hide ) = 0;
+	virtual void bringForward( void ) = 0;
+	virtual void addWindow( GameWindow *window ) = 0;
+	virtual void removeWindow( GameWindow *window ) = 0;
+	virtual void destroyWindows( void ) = 0;
+	void deleteInstance( void ) { delete this; }
+};
+
 static void closeDownloadWindow( void )
 {
 	DEBUG_ASSERTCRASH(parent, ("No Parent"));
 	if (!parent)
 		return;
 
-  WindowLayout *menuLayout = parent->winGetLayout();
-	menuLayout->runShutdown();
-  menuLayout->destroyWindows();
-	menuLayout->deleteInstance();
+	WindowLayout *menuLayout = parent->winGetLayout();
+	typedef void (WindowLayout::*WindowLayoutRunShutdown)( void * );
+	WindowLayoutRunShutdown retainedRunShutdown = &WindowLayout::runShutdown;
+	(void)retainedRunShutdown;
+	BFMERetailWindowLayout *retailLayout = reinterpret_cast<BFMERetailWindowLayout *>( menuLayout );
+	retailLayout->runShutdown( NULL );
+	retailLayout->destroyWindows();
+	retailLayout->deleteInstance();
 	menuLayout = NULL;
 
 	GameWindow *mainWin = TheWindowManager->winGetWindowFromId( NULL, NAMEKEY("MainMenu.wnd:MainMenuParent") );
