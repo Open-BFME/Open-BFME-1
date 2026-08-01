@@ -268,7 +268,6 @@ void DockUpdate::getEnterPosition( Object* docker, Coord3D *position )
 
 }
 
-// ?getDockPosition@DockUpdate@@UAEXPAVObject@@PAUCoord3D@@@Z present-unmatched
 void DockUpdate::getDockPosition( Object* docker, Coord3D *position )
 {
 
@@ -290,7 +289,9 @@ void DockUpdate::getDockPosition( Object* docker, Coord3D *position )
 	}
 
 	// take local space position and convert to world space
-	getObject()->convertBonePosToWorldPos( &m_dockPosition, NULL, position, NULL );
+	Object *retailObject = *(Object **)((char *)this + 0x8);
+	Coord3D *retailDockPosition = (Coord3D *)((char *)this + 0x3c);
+	retailObject->convertBonePosToWorldPos( retailDockPosition, NULL, position, NULL );
 
 }
 
@@ -655,4 +656,3 @@ void DockUpdate::loadPostProcess( void )
 	UpdateModule::loadPostProcess();
 
 }  // end loadPostProcess
-
