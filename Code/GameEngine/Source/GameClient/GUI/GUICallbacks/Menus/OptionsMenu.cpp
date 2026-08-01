@@ -558,12 +558,11 @@ Bool OptionPreferences::getSendDelay(void)
 	return FALSE;
 }
 
-// ?getFirewallBehavior@OptionPreferences@@QAEHXZ present-unmatched
 Int OptionPreferences::getFirewallBehavior()
 {
 	OptionPreferences::const_iterator it = find("FirewallBehavior");
 	if (it == end())
-		return TheGlobalData->m_firewallBehavior;
+		return *reinterpret_cast<Int *>((char *)TheGlobalData + 0xB14);
 
 	Int behavior = atoi(it->second.str());
 	if (behavior < 0)
