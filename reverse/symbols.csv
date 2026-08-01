@@ -1,5 +1,4 @@
 name,address,notes
-?setEmoticon@Drawable@@QAEXABVAsciiString@@H@Z,0x00001A3C,retail call target from doNamedEmoticon
 ?$S103@?1??getClassMemoryPool@AIUpdateInterface@@CAPAVMemoryPool@@XZ@4IA,0x00EEFE34,pool-glue cascade static (back-solved)
 ?$S105@?1??getClassMemoryPool@PoisonedBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF830,pool-glue cascade static (back-solved)
 ?$S107@?1??getClassMemoryPool@SupplyWarehouseCripplingBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF91C,pool-glue cascade static (back-solved)
@@ -3339,6 +3338,7 @@ name,address,notes
 ?setEaseTimes@ParabolicEase@@QAEXMM@Z,0x008D6710,pinharvest x1 (body)
 ?setEaseTimes@ParabolicEase@@QAEXMM@Z,0x008D8800,pinharvest x1 (body)
 ?setEaseTimes@ParabolicEase@@QAEXMM@Z,0x00964150,pinharvest x1 (body)
+?setEmoticon@Drawable@@QAEXABVAsciiString@@H@Z,0x00001A3C,retail call target from doNamedEmoticon
 ?setEventName@AudioEventRTS@@QAEXVAsciiString@@@Z,0x00025266,harvested from parseAudioEventRTS (thunk)
 ?setFPMode@@YAXXZ,0x008FC4C0
 ?setFileID@NetFileProgressCommandMsg@@QAEXG@Z,0x000247EE,ILT thunk; real body 0xA74090
