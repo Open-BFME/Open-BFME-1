@@ -2122,61 +2122,17 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VE
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::ConcreteModuleClass()
+ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::ConcreteModuleClass()
 {
-    __asm {
-        __emit 0x8b
-        __emit 0x15
-        __emit 0x40
-        __emit 0x6d
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x44
-        __emit 0x6d
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x09
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x80
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0x89
-        __emit 0x50
-        __emit 0x04
-        __emit 0x89
-        __emit 0x48
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0xf8
-        __emit 0x64
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x89
-        __emit 0x48
-        __emit 0x0c
-        __emit 0xa3
-        __emit 0xf8
-        __emit 0x64
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xf4
-        __emit 0x0e
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc3
-    }
+    const void *first = *reinterpret_cast<void **>(*reinterpret_cast<void **>(0x012f6d44));
+    void **self = reinterpret_cast<void **>(this);
+    const void *second = *reinterpret_cast<void **>(*reinterpret_cast<void **>(0x012f6d40));
+    self[0] = (void *)0x01110880;
+    self[1] = (void *)second;
+    self[2] = (void *)first;
+    self[3] = *reinterpret_cast<void **>(0x012f64f8);
+    *reinterpret_cast<void **>(0x012f64f8) = this;
+    self[0] = (void *)0x01110ef4;
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$03$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVHemisphericalEmissionVelocityModule@2@VHemisphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
