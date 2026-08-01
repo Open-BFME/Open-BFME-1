@@ -64,16 +64,7 @@ Anim2DCollection *TheAnim2DCollection = NULL;
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ??1Anim2DTemplate@@UAE@XZ
-#pragma inline_depth(0)
-Anim2DTemplate::~Anim2DTemplate( void )
-{
-
-	// delete the images
-	if( m_images )
-		delete [] m_images;
-
-}  // end ~Anim2DTemplate
-#pragma inline_depth(255)
+// Exact C++ body is in Anim2DTemplateDtor.cpp (34B retail; BFME AsciiString shim).
 
 // ------------------------------------------------------------------------------------------------
 /** Field parse table for 2D animation templates */
