@@ -756,6 +756,7 @@ Bool OptionPreferences::getUseHeatEffects(void)
 	return FALSE;
 }
 
+// ?getDynamicLODEnabled@OptionPreferences@@QAE_NXZ present-unmatched
 Bool OptionPreferences::getDynamicLODEnabled(void)
 {
 	OptionPreferences::const_iterator it = find("DynamicLOD");
@@ -769,7 +770,17 @@ Bool OptionPreferences::getDynamicLODEnabled(void)
 }
 
 // ?getFPSLimitEnabled@OptionPreferences@@QAE_NXZ
-// Body in Code/masm_dumps/_getFPSLimitEnabled_OptionPreferences__QAE_NXZ_911B0.asm (exact 102B retail).
+Bool OptionPreferences::getFPSLimitEnabled(void)
+{
+	OptionPreferences::const_iterator it = find("FPSLimit");
+	if (it == end())
+		return *reinterpret_cast<Bool *>((char *)TheGlobalData + 0x1E);
+
+	if (stricmp(it->second.str(), "yes") == 0) {
+		return TRUE;
+	}
+	return FALSE;
+}
 
 
 // ?get3DShadowsEnabled@OptionPreferences@@QAE_NXZ present-unmatched
