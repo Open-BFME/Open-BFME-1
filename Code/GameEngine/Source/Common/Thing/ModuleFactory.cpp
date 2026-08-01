@@ -37,7 +37,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
+#define BFME_USERPREFERENCES_ASCIISTRING_ABI
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+#undef BFME_USERPREFERENCES_ASCIISTRING_ABI
 
 #include "Common/Module.h"
 
@@ -912,7 +914,6 @@ Int ModuleFactory::findModuleInterfaceMask(const AsciiString& name, ModuleType t
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?newModuleDataFromINI@ModuleFactory@@QAEPAVModuleData@@PAVINI@@ABVAsciiString@@W4ModuleType@@1@Z present-unmatched
 ModuleData* ModuleFactory::newModuleDataFromINI(INI* ini, const AsciiString& name, ModuleType type,
 																								const AsciiString& moduleTag)
 {
