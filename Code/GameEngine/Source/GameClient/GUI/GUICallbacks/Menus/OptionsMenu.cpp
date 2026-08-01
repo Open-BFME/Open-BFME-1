@@ -545,7 +545,18 @@ Int OptionPreferences::getStaticGameDetail(void)
 }
 
 // ?getSendDelay@OptionPreferences@@QAE_NXZ
-// Body in Code/masm_dumps/_getSendDelay_OptionPreferences__QAE_NXZ_90AF0.asm (exact 105B retail).
+Bool OptionPreferences::getSendDelay(void)
+{
+	OptionPreferences::const_iterator it = find("SendDelay");
+	if (it == end()) {
+		return *reinterpret_cast<Bool *>((char *)TheGlobalData + 0xB18);
+	}
+
+	if (stricmp(it->second.str(), "yes") == 0) {
+		return TRUE;
+	}
+	return FALSE;
+}
 
 // ?getFirewallBehavior@OptionPreferences@@QAEHXZ present-unmatched
 Int OptionPreferences::getFirewallBehavior()
