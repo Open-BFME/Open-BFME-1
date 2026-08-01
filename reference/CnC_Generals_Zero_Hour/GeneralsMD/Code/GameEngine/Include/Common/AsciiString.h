@@ -400,7 +400,7 @@ inline void AsciiString::releaseBuffer()
 }
 
 // -----------------------------------------------------
-#ifndef BFME_DATACHUNK_OUT_OF_LINE_ASCIISTRING_DTOR
+#if !defined(BFME_DATACHUNK_OUT_OF_LINE_ASCIISTRING_DTOR) && !defined(BFME_GADGET_OUT_OF_LINE_ASCIISTRING_DTOR)
 inline AsciiString::~AsciiString()
 {
 	validate();

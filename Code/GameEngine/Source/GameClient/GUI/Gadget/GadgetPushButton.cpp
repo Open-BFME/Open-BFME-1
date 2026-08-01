@@ -47,7 +47,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // SYSTEM INCLUDES ////////////////////////////////////////////////////////////
+#define BFME_GADGET_OUT_OF_LINE_ASCIISTRING_DTOR
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+#undef BFME_GADGET_OUT_OF_LINE_ASCIISTRING_DTOR
 
 // USER INCLUDES //////////////////////////////////////////////////////////////
 #include "Common/AudioEventRTS.h"
@@ -756,3 +758,14 @@ void *GadgetButtonGetData(GameWindow *g)
 // CS-locked in retail; ZH header inlines releaseBuffer and cannot match):
 // Code/masm_dumps/GadgetButtonSetAltSound_4BC770.asm @ 0x004BC770 size 90
 // void GadgetButtonSetAltSound(GameWindow *g, AsciiString altSound );
+void GadgetButtonSetAltSound(GameWindow *g, AsciiString altSound )
+{
+	if(!g)
+		return;
+	PushButtonData *pData = (PushButtonData *)g->winGetUserData();
+	if(pData)
+	{
+		AsciiString *dest = &pData->altSound;
+		dest->set(altSound);
+	}
+}
