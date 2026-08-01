@@ -6435,8 +6435,34 @@ void ScriptActions::doTeamEmoticon(const AsciiString& teamName, const AsciiStrin
 
 //-------------------------------------------------------------------------------------------------
 // ?doNamedEmoticon@ScriptActions@@IAEXABVAsciiString@@0M@Z
-// Body in Code/masm_dumps/ScriptActions_doNamedEmoticon.asm (exact 66B retail @ 0x2F04F0;
-// queue 0x9DE812 was profiler FUN float math, not this action).
+class BfmeObjectGetDrawable {
+public:
+	virtual void _bfme_object_slot_00() = 0;
+	virtual void _bfme_object_slot_01() = 0;
+	virtual void _bfme_object_slot_02() = 0;
+	virtual void _bfme_object_slot_03() = 0;
+	virtual void _bfme_object_slot_04() = 0;
+	virtual void _bfme_object_slot_05() = 0;
+	virtual void _bfme_object_slot_06() = 0;
+	virtual void _bfme_object_slot_07() = 0;
+	virtual void _bfme_object_slot_08() = 0;
+	virtual void _bfme_object_slot_09() = 0;
+	virtual Drawable *getDrawable() = 0;
+};
+
+void ScriptActions::doNamedEmoticon(const AsciiString& objectName, const AsciiString& emoticonName, Real duration)
+{
+	Object *object = ((BfmeScriptEngineGetUnitNamed *)TheScriptEngine)->getUnitNamed(objectName);
+	if (!object)
+		return;
+
+	Drawable *drawable = ((BfmeObjectGetDrawable *)object)->getDrawable();
+	if (!drawable)
+		return;
+
+	Int frames = (Int)(duration * LOGICFRAMES_PER_SECOND);
+	drawable->setEmoticon(emoticonName, frames);
+}
 
 
 //-------------------------------------------------------------------------------------------------
