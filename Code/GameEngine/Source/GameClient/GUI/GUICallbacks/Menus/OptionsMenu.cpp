@@ -31,7 +31,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
+#define BFME_OPTIONPREFERENCES_ASCIISTRING_ABI
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+#undef BFME_OPTIONPREFERENCES_ASCIISTRING_ABI
 
 #include "GameSpy/ghttp/ghttp.h"
 
@@ -550,17 +552,14 @@ Short OptionPreferences::getFirewallPortAllocationDelta()
 	return delta;
 }
 
-// ?getFirewallPortOverride@OptionPreferences@@QAEGXZ present-unmatched
 UnsignedShort OptionPreferences::getFirewallPortOverride()
 {
 	OptionPreferences::const_iterator it = find("FirewallPortOverride");
 	if (it == end()) {
-		return TheGlobalData->m_firewallPortOverride;
+		return *reinterpret_cast<UnsignedShort *>((char *)TheGlobalData + 0xB1C);
 	}
 
 	Int override = atoi(it->second.str());
-	if (override < 0 || override > 65535)
-		override = 0;
 	return override;
 }
 

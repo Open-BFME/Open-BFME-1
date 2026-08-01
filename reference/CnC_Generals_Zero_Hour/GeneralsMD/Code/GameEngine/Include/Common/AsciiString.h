@@ -360,6 +360,7 @@ inline AsciiString::AsciiString() : m_data(0)
 }
 
 // -----------------------------------------------------
+#ifndef BFME_OPTIONPREFERENCES_ASCIISTRING_ABI
 inline AsciiString::AsciiString(const char* s) : m_data(0)
 {
 	//DEBUG_ASSERTCRASH(isMemoryManagerOfficiallyInited(), ("Initializing AsciiStrings prior to main (ie, as static vars) can cause memory leak reporting problems. Are you sure you want to do this?\n"));
@@ -370,6 +371,7 @@ inline AsciiString::AsciiString(const char* s) : m_data(0)
 	}
 	validate();
 }
+#endif
 
 // -----------------------------------------------------
 inline AsciiString::AsciiString(const AsciiString& stringSrc) : m_data(stringSrc.m_data)
@@ -400,7 +402,7 @@ inline void AsciiString::releaseBuffer()
 }
 
 // -----------------------------------------------------
-#if !defined(BFME_DATACHUNK_OUT_OF_LINE_ASCIISTRING_DTOR) && !defined(BFME_GADGET_OUT_OF_LINE_ASCIISTRING_DTOR)
+#if !defined(BFME_DATACHUNK_OUT_OF_LINE_ASCIISTRING_DTOR) && !defined(BFME_GADGET_OUT_OF_LINE_ASCIISTRING_DTOR) && !defined(BFME_OPTIONPREFERENCES_ASCIISTRING_ABI)
 inline AsciiString::~AsciiString()
 {
 	validate();
@@ -443,7 +445,11 @@ inline const char* AsciiString::str() const
 {
 	validate();
 	static const char TheNullChr = 0;
+#ifdef BFME_OPTIONPREFERENCES_ASCIISTRING_ABI
+	return m_data ? reinterpret_cast<const char*>(m_data) + 8 : &TheNullChr;
+#else
 	return m_data ? peek() : &TheNullChr;
+#endif
 }
 
 // -----------------------------------------------------
