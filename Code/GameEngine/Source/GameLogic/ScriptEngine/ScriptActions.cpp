@@ -4195,7 +4195,7 @@ void ScriptActions::doWeather(Bool showWeather)
 /** Freeze time */
 //-------------------------------------------------------------------------------------------------
 // ?doFreezeTime@ScriptActions@@IAEXXZ
-// Body in ScriptActions_doFreezeTime.asm (exact 11B @ 0x2EF680).
+// Exact C++ tail-jump body is in ScriptActions_doFreezeTime.cpp (11B @ 0x2EF680).
 
 
 //-------------------------------------------------------------------------------------------------

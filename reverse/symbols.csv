@@ -2851,6 +2851,7 @@ name,address,notes
 ?doFreezeTime@ScriptEngine@@QAEXXZ,0x0001FDAC,ILT freeze
 ?doFreezeTime@ScriptEngine@@QAEXXZ,0x00336F00,BFME freeze +0x17624
 ?doFreezeTime@ScriptEngine@@QAEXXZ,0x00465B80,pin ScriptActions doFreezeTime wrapper
+?doFreezeTime@ScriptEngineILT@@QAEXXZ,0x0001FDAC,C++ alias for ScriptActions doFreezeTime tail jump
 ?doFxAtBones@FXListAtBonePosFXNugget@@IBEXPBVObject@@H@Z,0x00010CC6
 ?doNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@@Z,0x0001FC3F
 ?doSend@Transport@@QAE_NXZ,0x00015D3E,ILT thunk; real body 0x6834B0 (from NAT::sendAProbe)
