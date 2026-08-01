@@ -2,12 +2,38 @@
 #include "PreRTS.h"
 #include "ascii_string.h"
 
-class SpecialPowerTemplate
+class Overridable
+{
+public:
+    Overridable *friend_getFinalOverride(void);
+
+    void *m_vptr;
+    Overridable *m_nextOverride;
+};
+
+class SpecialPowerTemplate : public Overridable
 {
 public:
     AsciiString getName() const;
     UnsignedInt getViewObjectDuration() const;
+
+private:
+    unsigned char m_pad[0x100];
+    UnsignedInt m_viewObjectDuration;
 };
+
+UnsignedInt SpecialPowerTemplate::getViewObjectDuration() const
+{
+    const Overridable *first = m_nextOverride;
+    if (first != 0)
+    {
+        const Overridable *second = first->m_nextOverride;
+        if (second != 0)
+            return ((const SpecialPowerTemplate *)const_cast<Overridable *>(second)->friend_getFinalOverride())->m_viewObjectDuration;
+        return ((const SpecialPowerTemplate *)first)->m_viewObjectDuration;
+    }
+    return m_viewObjectDuration;
+}
 
 __declspec(naked) AsciiString SpecialPowerTemplate::getName() const
 {
@@ -64,44 +90,5 @@ __declspec(naked) AsciiString SpecialPowerTemplate::getName() const
         _emit 0C2h
         _emit 004h
         _emit 000h
-    }
-}
-
-__declspec(naked) UnsignedInt SpecialPowerTemplate::getViewObjectDuration() const
-{
-    __asm {
-        _emit 08Bh
-        _emit 041h
-        _emit 004h
-        _emit 085h
-        _emit 0C0h
-        _emit 074h
-        _emit 013h
-        _emit 08Bh
-        _emit 048h
-        _emit 004h
-        _emit 085h
-        _emit 0C9h
-        _emit 074h
-        _emit 005h
-        _emit 0E8h
-        _emit 0FEh
-        _emit 002h
-        _emit 0DEh
-        _emit 0FFh
-        _emit 08Bh
-        _emit 080h
-        _emit 008h
-        _emit 001h
-        _emit 000h
-        _emit 000h
-        _emit 0C3h
-        _emit 08Bh
-        _emit 081h
-        _emit 008h
-        _emit 001h
-        _emit 000h
-        _emit 000h
-        _emit 0C3h
     }
 }
