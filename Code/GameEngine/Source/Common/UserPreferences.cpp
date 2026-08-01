@@ -35,7 +35,9 @@
 // SYSTEM INCLUDES ////////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
+#define BFME_USERPREFERENCES_ASCIISTRING_ABI
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+#undef BFME_USERPREFERENCES_ASCIISTRING_ABI
 
 //-----------------------------------------------------------------------------
 // USER INCLUDES //////////////////////////////////////////////////////////////
@@ -162,7 +164,25 @@ Bool UserPreferences::load(AsciiString fname)
 }
 
 // ?write@UserPreferences@@UAE_NXZ
-// Body in UserPreferences_write.asm (exact 162B retail).
+Bool UserPreferences::write( void )
+{
+	if (m_filename.isEmpty())
+		return false;
+
+	FILE *fp = fopen(m_filename.str(), "w");
+	if (fp)
+	{
+		PreferenceMap::const_iterator it = begin();
+		while (it != end())
+		{
+			fprintf(fp, "%s = %s\n", it->first.str(), it->second.str());
+			++it;
+		}
+		fclose(fp);
+		return true;
+	}
+	return false;
+}
 
 // ?getBool@UserPreferences@@QBE_NVAsciiString@@_N@Z present-unmatched
 Bool UserPreferences::getBool(AsciiString key, Bool defaultValue) const

@@ -421,7 +421,11 @@ inline int AsciiString::getLength() const
 inline Bool AsciiString::isEmpty() const
 {
 	validate();
+#ifdef BFME_USERPREFERENCES_ASCIISTRING_ABI
+	return m_data == NULL || *reinterpret_cast<const unsigned short *>(reinterpret_cast<const char *>(m_data) + 4) == 0;
+#else
 	return m_data == NULL || peek()[0] == 0;
+#endif
 }
 
 // -----------------------------------------------------
@@ -445,7 +449,7 @@ inline const char* AsciiString::str() const
 {
 	validate();
 	static const char TheNullChr = 0;
-#ifdef BFME_OPTIONPREFERENCES_ASCIISTRING_ABI
+#if defined(BFME_OPTIONPREFERENCES_ASCIISTRING_ABI) || defined(BFME_USERPREFERENCES_ASCIISTRING_ABI)
 	return m_data ? reinterpret_cast<const char*>(m_data) + 8 : &TheNullChr;
 #else
 	return m_data ? peek() : &TheNullChr;
