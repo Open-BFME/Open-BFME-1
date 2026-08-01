@@ -4320,61 +4320,17 @@ __declspec(naked) const ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODU
 }
 
 // ??0?$ConcreteModuleClass@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
-__declspec(naked) ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleClass()
+ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleClass()
 {
-    __asm {
-        __emit 0x8b
-        __emit 0x15
-        __emit 0x60
-        __emit 0x6d
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x64
-        __emit 0x6d
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x09
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x8c
-        __emit 0x08
-        __emit 0x11
-        __emit 0x01
-        __emit 0x89
-        __emit 0x50
-        __emit 0x04
-        __emit 0x89
-        __emit 0x48
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0xfc
-        __emit 0x64
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x89
-        __emit 0x48
-        __emit 0x0c
-        __emit 0xa3
-        __emit 0xfc
-        __emit 0x64
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x18
-        __emit 0x0f
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc3
-    }
+    const void *first = *reinterpret_cast<void **>(*reinterpret_cast<void **>(0x012f6d64));
+    void **self = reinterpret_cast<void **>(this);
+    const void *second = *reinterpret_cast<void **>(*reinterpret_cast<void **>(0x012f6d60));
+    self[0] = (void *)0x0111088c;
+    self[1] = (void *)second;
+    self[2] = (void *)first;
+    self[3] = *reinterpret_cast<void **>(0x012f64fc);
+    *reinterpret_cast<void **>(0x012f64fc) = this;
+    self[0] = (void *)0x01110f18;
 }
 
 // ??1?$ConcreteModuleClass@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
