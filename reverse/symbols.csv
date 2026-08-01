@@ -3316,6 +3316,7 @@ name,address,notes
 ?set@?$bitset@$0ED@@_STL@@QAEAAV12@IH@Z,0x007E9FC0,pinharvest x1 (body)
 ?set@?$bitset@$0ED@@_STL@@QAEAAV12@IH@Z,0x007EA320,pinharvest x1 (body)
 ?set@?$bitset@$0ED@@_STL@@QAEAAV12@IH@Z,0x007EA380,pinharvest x1 (body)
+?set@AsciiString@@QAEXABV1@@Z,0x00887C90,retail StringBase<char>::set body used by Dict::setAsciiString
 ?set@LayoutFilename@@QAEXPBDH@Z,0x00887D20
 ?set@RetailLayoutString@@QAEXPBDH@Z,0x00887D20
 ?set@UnicodeString@@QAEXABV1@@Z,0x00887C90,additive; per-TU copy (static 0x01336E2C)
