@@ -467,16 +467,15 @@ Bool OptionPreferences::getDoubleClickAttackMoveEnabled(void)
 	return FALSE;
 }
 
-// ?getScrollFactor@OptionPreferences@@QAEMXZ present-unmatched
 Real OptionPreferences::getScrollFactor(void)
 {
 	OptionPreferences::const_iterator it = find("ScrollFactor");
 	if (it == end())
-		return TheGlobalData->m_keyboardDefaultScrollFactor;
+		return *reinterpret_cast<Real *>((char *)TheGlobalData + 0xBC0);
 
 	Int factor = atoi(it->second.str());
 	if (factor < 0)
-		factor = 0;
+		factor = 1;
 	if (factor > 100)
 		factor = 100;
 	
@@ -558,6 +557,7 @@ Bool OptionPreferences::getSendDelay(void)
 	return FALSE;
 }
 
+// ?getFirewallBehavior@OptionPreferences@@QAEHXZ present-unmatched
 Int OptionPreferences::getFirewallBehavior()
 {
 	OptionPreferences::const_iterator it = find("FirewallBehavior");
