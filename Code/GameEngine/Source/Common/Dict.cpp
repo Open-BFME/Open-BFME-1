@@ -45,7 +45,9 @@
 //-----------------------------------------------------------------------------
 ///////////////////////////////////////////////////////////////////////////////
 
+#define BFME_DICT_OUT_OF_LINE_ASCIISTRING_SET
 #include "PreRTS.h"	// This must go first in EVERY cpp file in the GameEngine
+#undef BFME_DICT_OUT_OF_LINE_ASCIISTRING_SET
 
 #include "Common/Dict.h"
 #include "Common/GameMemory.h"

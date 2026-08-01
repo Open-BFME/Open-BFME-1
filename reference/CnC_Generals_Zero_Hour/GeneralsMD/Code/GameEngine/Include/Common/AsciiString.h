@@ -447,6 +447,7 @@ inline const char* AsciiString::str() const
 }
 
 // -----------------------------------------------------
+#ifndef BFME_DICT_OUT_OF_LINE_ASCIISTRING_SET
 inline void AsciiString::set(const AsciiString& stringSrc)
 {
   //FastCriticalSectionClass::LockClass lock(TheAsciiStringCriticalSection);
@@ -469,6 +470,7 @@ inline void AsciiString::set(const AsciiString& stringSrc)
 	}
 	validate();
 }
+#endif
 
 // -----------------------------------------------------
 inline void AsciiString::set(const char* s)
