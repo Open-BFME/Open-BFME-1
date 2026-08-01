@@ -400,11 +400,13 @@ inline void AsciiString::releaseBuffer()
 }
 
 // -----------------------------------------------------
+#ifndef BFME_DATACHUNK_OUT_OF_LINE_ASCIISTRING_DTOR
 inline AsciiString::~AsciiString()
 {
 	validate();
 	releaseBuffer();
 }
+#endif
 
 // -----------------------------------------------------
 inline int AsciiString::getLength() const

@@ -29,7 +29,9 @@
 // Implementation of Data Chunk save/load system
 // Author: Michael S. Booth, October 2000
 
+#define BFME_DATACHUNK_OUT_OF_LINE_ASCIISTRING_DTOR
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+#undef BFME_DATACHUNK_OUT_OF_LINE_ASCIISTRING_DTOR
 
 #include "stdlib.h"
 #include "string.h"
@@ -419,8 +421,15 @@ void DataChunkOutput::writeUnicodeString( UnicodeString theString )
 }
 
 // ?writeNameKey@DataChunkOutput@@QAEXW4NameKeyType@@@Z
-// Body in DataChunk_writeNameKey.asm (exact 134B retail @ 0x00104300).
-// Queue 0x00454F43 was misplaced (inside MapUtil Player_%d_Start fn @ 0x454EF0).
+void DataChunkOutput::writeNameKey(const NameKeyType key)
+{
+	AsciiString kname = TheNameKeyGenerator->keyToName(key);
+	Int keyAndType = m_contents.allocateID(kname);
+	keyAndType <<= 8;
+	Dict::DataType t = Dict::DICT_ASCIISTRING;
+	keyAndType |= (t & 0xff);
+	writeInt(keyAndType);
+}
 
 
 // ?writeDict@DataChunkOutput@@QAEXABVDict@@@Z
