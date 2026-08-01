@@ -467,6 +467,7 @@ Bool OptionPreferences::getDoubleClickAttackMoveEnabled(void)
 	return FALSE;
 }
 
+// ?getScrollFactor@OptionPreferences@@QAEMXZ present-unmatched
 Real OptionPreferences::getScrollFactor(void)
 {
 	OptionPreferences::const_iterator it = find("ScrollFactor");
@@ -755,12 +756,11 @@ Bool OptionPreferences::getUseHeatEffects(void)
 	return FALSE;
 }
 
-// ?getDynamicLODEnabled@OptionPreferences@@QAE_NXZ present-unmatched
 Bool OptionPreferences::getDynamicLODEnabled(void)
 {
 	OptionPreferences::const_iterator it = find("DynamicLOD");
 	if (it == end())
-		return TheGlobalData->m_enableDynamicLOD;
+		return *reinterpret_cast<Bool *>((char *)TheGlobalData + 0x58);
 
 	if (stricmp(it->second.str(), "yes") == 0) {
 		return TRUE;
