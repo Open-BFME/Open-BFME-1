@@ -668,14 +668,26 @@ void DX8Caps::Compute_Caps(WW3DFormat display_format, const D3DADAPTER_IDENTIFIE
 //
 // ----------------------------------------------------------------------------
 
-// ?Check_Bumpmap_Support@DX8Caps@@AAEXABU_D3DCAPS8@@@Z present-unmatched
+#undef DXLOG
+#define DXLOG(n) CapsWorkString.Format n ; (*reinterpret_cast<StringClass *>(reinterpret_cast<unsigned char *>(this) + 0x2a4)) += CapsWorkString;
 void DX8Caps::Check_Bumpmap_Support(const D3DCAPS8& caps)
 {
-	SupportBumpEnvmap=!!(caps.TextureOpCaps & D3DTEXOPCAPS_BUMPENVMAP);
-	SupportBumpEnvmapLuminance=!!(caps.TextureOpCaps & D3DTEXOPCAPS_BUMPENVMAPLUMINANCE);
-	DXLOG(("Bumpmap support: %s\r\n",SupportBumpEnvmap ? "Yes" : "No"));
-	DXLOG(("Bumpmap luminance support: %s\r\n",SupportBumpEnvmapLuminance ? "Yes" : "No"));
+	struct RetailDX8CapsFields
+	{
+		unsigned char padding[0x13c];
+		bool support_bump_envmap;
+		bool support_bump_envmap_luminance;
+		unsigned char padding_to_caps_log[0x2a4 - 0x13e];
+		StringClass caps_log;
+	};
+	RetailDX8CapsFields *retail = reinterpret_cast<RetailDX8CapsFields *>(this);
+	retail->support_bump_envmap = !!(caps.TextureOpCaps & 0x00200000);
+	retail->support_bump_envmap_luminance = !!(caps.TextureOpCaps & 0x00400000);
+	DXLOG(("Bumpmap support: %s\r\n", retail->support_bump_envmap ? "Yes" : "No"));
+	DXLOG(("Bumpmap luminance support: %s\r\n", retail->support_bump_envmap_luminance ? "Yes" : "No"));
 }
+#undef DXLOG
+#define DXLOG(n) CapsWorkString.Format n ; CapsLog+=CapsWorkString;
 
 // ----------------------------------------------------------------------------
 //
