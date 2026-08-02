@@ -240,6 +240,9 @@ WindowMsgHandledType DifficultySelectInput( GameWindow *window, UnsignedInt msg,
 //-------------------------------------------------------------------------------------------------
 /** MapSelect menu window system callback */
 //-------------------------------------------------------------------------------------------------
+// ?DifficultySelectSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
+// Body in DifficultySelectSystemThunk.cpp (exact 331B retail @ 0x004C72C0).
+#if 0
 WindowMsgHandledType DifficultySelectSystem( GameWindow *window, UnsignedInt msg, 
 																				  WindowMsgData mData1, WindowMsgData mData2 )
 {
@@ -326,6 +329,7 @@ WindowMsgHandledType DifficultySelectSystem( GameWindow *window, UnsignedInt msg
 	return MSG_HANDLED;
 
 }  
+#endif
 //-----------------------------------------------------------------------------
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
