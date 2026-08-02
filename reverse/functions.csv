@@ -12020,7 +12020,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?killStaticImages@Drawable@@SAXXZ,,0x00410AC0,29,Code/GameEngine/Source/GameClient/Drawable.cpp,matched,
 ?killThemKillThemAll@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@@Z,,0x005B7690,358,Code/masm_dumps/SelectionTranslator_killThemKillThemAll.asm,matched,Certified packet 221 db-only retail recovery SHA256 65e4b0b20a3ef39f13503d7860d8b7d863a69a86a16fb04b4c50858438e86b61
 ?killThemKillThemAllWrapper@@YA_NPAVDrawable@@PAX@Z,,0x005B7940,23,Code/GameEngine/Source/GameClient/MessageStream/SelectionXlat.cpp,matched,
-?leaveGroupRoom@GameSpyInfo@@UAEXXZ,,0x00634CE0,188,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs_leaveGroupRoom.asm,matched,exact 188B MASM; true body 0x634CE0 (queue 0x637480 was 35B FUN misplaced)
 ?legalRadarPoint@@YA_NHH@Z,,0x006C1BB0,37,Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar.cpp,matched,
 ?length@?$__char_traits_base@GG@_STL@@SAIPBG@Z,,0x004D43C0,25,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupHostGame.cpp,matched,
 ?length@Coord2D@@QBEMXZ,0x0003CA3D,0x000FB9E0,22,Code/Libraries/Source/WWVegas/WWMath/coord2d.cpp,matched,returns vector length
@@ -14087,3 +14086,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?getVetUpgradeName@@YA?AVAsciiString@@W4VeterancyLevel@@@Z,,0x0010AD90,173,Code/GameEngine/Source/Common/System/GetVetUpgradeNameThunk.cpp,matched,Open-BFME5 exact C++ __emit port of getVetUpgradeName MASM body
 ?winTextLabelToText@GameWindowManager@@QAE?AVUnicodeString@@VAsciiString@@@Z,,0x0047E1B0,175,Code/GameEngine/Source/GameClient/GUI/GameWindowManagerWinTextLabelToTextThunk.cpp,matched,Open-BFME5 exact C++ __emit port of winTextLabelToText MASM body
 ?killPlayer@Player@@QAEXXZ,,0x000CE170,184,Code/GameEngine/Source/Common/RTS/PlayerKillPlayerThunk.cpp,matched,Open-BFME5 exact C++ __emit port of Player killPlayer MASM body
+?leaveGroupRoom@GameSpyInfo@@UAEXXZ,,0x00634CE0,188,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfoLeaveGroupRoomThunk.cpp,matched,Open-BFME5 exact C++ __emit port of GameSpyInfo leaveGroupRoom MASM body

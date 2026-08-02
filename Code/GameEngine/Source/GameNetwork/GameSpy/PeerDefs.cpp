@@ -291,7 +291,7 @@ void GameSpyInfo::joinGroupRoom( Int groupID )
 }
 
 // ?leaveGroupRoom@GameSpyInfo@@UAEXXZ
-// Body in PeerDefs_leaveGroupRoom.asm (exact 188B retail @ 0x00634CE0).
+// Body in GameSpyInfoLeaveGroupRoomThunk.cpp (exact 188B retail @ 0x00634CE0).
 
 
 // ?joinBestGroupRoom@GameSpyInfo@@UAEXXZ present-unmatched
