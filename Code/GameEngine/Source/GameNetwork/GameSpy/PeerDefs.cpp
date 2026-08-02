@@ -450,7 +450,7 @@ void GameSpyInfo::leaveStagingRoom( void )
 // (no useStats/oldFactionsOnly preserve; extra IP/port stores; field offsets 0x25c/0x254/0x258/0x6c4).
 
 // ?markAsStagingRoomJoiner@GameSpyInfo@@UAEXH@Z
-// Body in PeerDefs_markAsStagingRoomJoiner.asm (exact 322B retail).
+// Body in PeerDefsMarkAsStagingRoomJoinerThunk.cpp (exact 322B retail).
 // Keep GameSpyStagingRoom setExeCRC/setIniCRC COMDATs in this TU (were only
 // referenced by the old C++ markAsStagingRoomJoiner body; 13B each matched).
 void PeerDefs_force_GameSpyStagingRoom_CRC(GameSpyStagingRoom *room, UnsignedInt exe, UnsignedInt ini)
