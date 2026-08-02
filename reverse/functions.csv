@@ -12247,7 +12247,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?onExit@AIMoveAwayFromRepulsorsState@@UAEXW4StateExitType@@@Z,,0x00173EE0,54,Code/GameEngine/Source/GameLogic/AI/AIMoveAwayFromRepulsorsState_onExit.cpp,matched,Certified packet 357: true body 0x173EE0 (54B) via vtable 0xC9A368 slot5; queue 0x17F250 was scalar-deleting dtor; BFME State m_machine@+0x1c owner@+0x10; clear PANICKING bit@Object+0x118 + notify@0x2191D
 ?onExit@AIPanicState@@UAEXW4StateExitType@@@Z,,0x0017F1E0,84,Code/masm_dumps/AIPanicState_onExit.asm,matched,Ghidra-bound BFME panic-exit body
 ?onExit@DozerPrimaryIdleState@@UAEXW4StateExitType@@@Z,,0x002B6350,50,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate.cpp,matched,converted exact MASM method dump to clean C++ with BFME retail owner and UI vtable shims
-?onObjectCreated@BoneFXDamage@@MAEXXZ,,0x00250880,154,Code/GameEngine/Source/GameLogic/Object/Damage/BoneFXDamage_onObjectCreated.asm,matched,
 ?onObjectCreated@GarrisonContain@@MAEXXZ,,0x0021EA90,150,Code/masm_dumps/onObjectCreated_GarrisonContain_MAEXXZ_0021EA90_packet325.asm,matched,Certified packet 325 exact retail db body
 ?onPlayerRankChanged@ControlBar@@QAEXPBVPlayer@@@Z,,0x0049DC90,111,Code/masm_dumps/ControlBar_onPlayerRankChanged.asm,matched,exact retail body; queue RVA 0xC6C40A was epilogue/pad misplace
 ?onPowerBrownOutChange@Player@@QAEX_N@Z,,0x000D59F0,63,Code/GameEngine/Source/Common/RTS/Player.cpp,matched,
@@ -14087,3 +14086,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?WOLQuickMatchMenuShutdown@@YAXPAVWindowLayout@@PAX@Z,,0x00507E10,147,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuShutdownThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?gogoGadgetTabControl@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHPAVWinInstanceData@@PAU_TabControlData@@PAVGameFont@@_N@Z,,0x0047D090,150,Code/GameEngine/Source/GameClient/GUI/GameWindowManagerGogoGadgetTabControlThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ??1GameSpyStagingRoom@@QAE@XZ,,0x004FA3D0,151,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyStagingRoomDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
+?onObjectCreated@BoneFXDamage@@MAEXXZ,,0x00250880,154,Code/GameEngine/Source/GameLogic/Object/Damage/BoneFXDamageOnObjectCreatedThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
