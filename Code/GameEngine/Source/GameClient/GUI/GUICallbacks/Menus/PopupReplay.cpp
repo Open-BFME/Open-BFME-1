@@ -125,6 +125,9 @@ static void closeSaveMenu( GameWindow *window )
 //-------------------------------------------------------------------------------------------------
 /** Initialize the SaveLoad menu */
 //-------------------------------------------------------------------------------------------------
+// ?PopupReplayInit@@YAXPAVWindowLayout@@PAX@Z
+// Body in PopupReplayInitThunk.cpp (exact 386B retail @ 0x004DE270).
+#if 0
 void PopupReplayInit( WindowLayout *layout, void *userData )
 {
 
@@ -170,6 +173,7 @@ void PopupReplayInit( WindowLayout *layout, void *userData )
 	}
 
 }  // end SaveLoadMenuInit
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** SaveLoad menu shutdown method */
