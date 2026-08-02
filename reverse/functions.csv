@@ -1304,7 +1304,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0ContestableContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0021BEE0,292,Code/GameEngine/Source/GameLogic/AI/ContestableContainCtorThunk.cpp,matched,Open-BFME5 exact C++ raw contain constructor
 ??0ContestableContainModuleData@@QAE@XZ,,0x00249B50,86,Code/GameEngine/Source/GameLogic/AI/ContestableContainModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
 ??0ContinueState@@QAE@PAVStateMachine@@@Z,,0x00170EA0,46,Code/GameEngine/Source/GameLogic/AI/ContinueStateCtorThunk.cpp,matched,Open-BFME5 exact C++ isolated raw AI state constructor
-??0ControlBar@@QAE@XZ,,0x009F2730,146,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_ctor.asm,matched,Ghidra-confirmed SEH constructor boundary
 ??0ConvertToCarBombCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0024FC20,46,Code/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageCommandCenterCrateCollide.cpp,matched,object-symbol=??0SabotageCommandCenterCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z;C++ alias
 ??0ConvertToCarBombCrateCollideModuleData@@QAE@XZ,,0x00217870,147,Code/GameEngine/Source/GameLogic/AI/ConvertToCarBombCrateCollideModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
 ??0ConvertToHijackedVehicleCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0024FC20,46,Code/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageCommandCenterCrateCollide.cpp,matched,object-symbol=??0SabotageCommandCenterCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z;C++ alias
@@ -14098,3 +14097,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?parseMetaMapDefinition@INI@@SAXPAV1@@Z,,0x005B71A0,143,Code/GameEngine/Source/GameClient/MessageStream/INIMetaMapDefinitionThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ??1RTS2DScene@@UAE@XZ,,0x00711980,143,Code/GameEngineDevice/Source/W3DDevice/GameClient/RTS2DSceneDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?doTeamAttackNamed@ScriptActions@@IAEXABVAsciiString@@0@Z,,0x002F95A0,144,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsDoTeamAttackNamedThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
+??0ControlBar@@QAE@XZ,,0x009F2730,146,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
