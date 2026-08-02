@@ -7063,7 +7063,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Internal_Add_Tail@GenericMultiListClass@@IAE_NPAVMultiListObjectClass@@_N@Z,,0x009DBFE0,125,Code/Libraries/Source/WWVegas/WWLib/multilist.cpp,matched,
 ?Internal_Get_List_Head@GenericMultiListClass@@IAEPAVMultiListObjectClass@@XZ,,0x00710D40,17,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,
 ?Internal_Get_Next@GenericSLNode@@IAEPAXXZ,,0x0010BDB0,3,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DAssetManager.cpp,matched,icf-owner=?getDistributionType@GameClientRandomVariable@@QBE?AW4DistributionType@1@XZ
-?Internal_Remove@GenericMultiListClass@@IAE_NPAVMultiListObjectClass@@@Z,,0x009DC100,104,Code/Libraries/Source/WWVegas/WWLib/GenericMultiListClass_Internal_Remove.asm,matched,exact 104B via MASM (delete tail-duplication wall)
 ?Internal_Remove_List_Head@GenericMultiListClass@@IAEPAVMultiListObjectClass@@XZ,,0x009DC170,27,Code/Libraries/Source/WWVegas/WWLib/multilist.cpp,matched,
 ?Intersect@RenderObjClass@@UAE_NPAVIntersectionClass@@PAVIntersectionResultClass@@@Z,,0x00920850,456,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
 ?IntersectLine2D@@YA_NPBUCoord2D@@000PAU1@@Z,,0x0044EC20,286,Code/GameEngine/Source/Common/line2_d.cpp,matched,
@@ -14098,3 +14097,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?WriteBuildInfo@Debug@@QAEXXZ,,0x0088A492,135,Code/Libraries/Source/WWVegas/WWDebug/debug_debug_WriteBuildInfoThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ??1?$pair@$$CBVUnicodeString@@VAsciiString@@@_STL@@QAE@XZ,,0x000A9B80,76,Code/GameEngine/Source/GameClient/MapUtilUnicodeAsciiPairDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?writeNameKey@DataChunkOutput@@QAEXW4NameKeyType@@@Z,,0x00104300,134,Code/GameEngine/Source/Common/System/DataChunkOutputWriteNameKeyThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
+?Internal_Remove@GenericMultiListClass@@IAE_NPAVMultiListObjectClass@@@Z,,0x009DC100,104,Code/Libraries/Source/WWVegas/WWLib/GenericMultiListClassInternalRemoveThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body

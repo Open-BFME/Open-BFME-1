@@ -142,8 +142,7 @@ bool GenericMultiListClass::Internal_Add_After(MultiListObjectClass * obj,const 
 }
 
 // ?Internal_Remove@GenericMultiListClass@@IAE_NPAVMultiListObjectClass@@@Z
-// Body in GenericMultiListClass_Internal_Remove.asm (exact 104B retail;
-// C++ blocked on delete tail-duplicated into both branches).
+// Body in GenericMultiListClassInternalRemoveThunk.cpp (exact 104B retail).
 
 MultiListObjectClass * GenericMultiListClass::Internal_Remove_List_Head(void)
 {
