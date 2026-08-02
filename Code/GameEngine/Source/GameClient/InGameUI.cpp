@@ -4891,7 +4891,7 @@ Int InGameUI::selectAllUnitsByTypeAcrossMap(KindOfMaskType mustBeSet, KindOfMask
 /** Selects matching units across map */
 //-------------------------------------------------------------------------------------------------
 // ?selectMatchingAcrossMap@InGameUI@@UAEHXZ
-// Body in InGameUI_selectMatchingAcrossMap.asm (exact 298B retail).
+// Body in InGameUISelectMatchingAcrossMapThunk.cpp (exact 298B retail).
 
 //-------------------------------------------------------------------------------------------------
 // ?selectAllUnitsByType@InGameUI@@UAEHV?$BitFlags@$0HE@@@0@Z present-unmatched
