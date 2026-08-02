@@ -2910,7 +2910,7 @@ void ScriptActions::doNamedFlash(const AsciiString& unitName, Int timeInSeconds,
 /** doTeamFlash */
 //-------------------------------------------------------------------------------------------------
 // ?doTeamFlash@ScriptActions@@IAEXABVAsciiString@@HPBURGBColor@@@Z
-// Body in ScriptActions_doTeamFlash.asm (exact 282B retail @ 0x2F3E90).
+// Body in ScriptActionsDoTeamFlashThunk.cpp (exact 282B retail @ 0x2F3E90).
 // Queue RVA 0x933119 was INSIDE mid-fn x87 (misplaced drift); true body sits
 // between doTeamDecreasePriority and doTeamRadarCreateEvent.
 
