@@ -2686,7 +2686,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1?$list@USubsystemLegendEntry@@V?$allocator@USubsystemLegendEntry@@@_STL@@@_STL@@QAE@XZ,,0x00078A60,27,Code/GameEngine/Source/Common/System/SubsystemLegend.cpp,matched,STLport list<Entry> dtor; body identical to the base dtor but a separate COMDAT
 ??1?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@QAE@XZ,,0x000200FE,5,Code/Libraries/Source/WWVegas/WWLib/AsciiStringCoord3DPairDestructorThunk.cpp,matched,5-byte incremental-link STL destructor thunk converted to focused C++ thunk TU
 ??1?$pair@$$CBVUnicodeString@@V1@@_STL@@QAE@XZ,,0x0068E6D0,76,Code/GameEngine/Source/GameNetwork/LANGameInfo.cpp,matched,
-??1?$pair@$$CBVUnicodeString@@VAsciiString@@@_STL@@QAE@XZ,,0x000A9B80,76,Code/GameEngine/Source/GameClient/MapUtil_pair_UnicodeString_AsciiString_dtor.asm,matched,exact 76B MASM; drift 0x9DB088 mid FUN_00dd9d90; retail A then U pair dtor
 ??1?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@QAE@XZ,,0x00009525,5,Code/Libraries/Source/WWVegas/WWLib/NameKeyTypeObjectCreationPairDestructorThunk.cpp,matched,5-byte incremental-link STL destructor thunk converted to focused C++ thunk TU
 ??1?$set@PAVGameSpyStagingRoom@@U?$less@PAVGameSpyStagingRoom@@@_STL@@V?$allocator@PAVGameSpyStagingRoom@@@3@@_STL@@QAE@XZ,,0x0062CC40,5,Code/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils.cpp,matched,STLport template-internal COMDAT emitted by this TU; thunk-dump repointed to real body
 ??1?$vector@PAVLocomotor@@V?$allocator@PAVLocomotor@@@_STL@@@_STL@@QAE@XZ,,0x0058C420,14,Code/GameEngine/Source/GameLogic/Object/Locomotor.cpp,matched,
@@ -14101,3 +14100,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?populateGameFonts@HeaderTemplateManager@@AAEXXZ,,0x0048C480,85,Code/GameEngine/Source/GameClient/GUI/HeaderTemplateManagerPopulateGameFontsThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?closeDataChunk@DataChunkOutput@@QAEXXZ,,0x001024A0,118,Code/GameEngine/Source/Common/System/DataChunkOutputCloseDataChunkThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?writeNameKey@DataChunkOutput@@QAEXW4NameKeyType@@@Z,,0x00104300,134,Code/GameEngine/Source/Common/System/DataChunkOutputWriteNameKeyThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
+??1?$pair@$$CBVUnicodeString@@VAsciiString@@@_STL@@QAE@XZ,,0x000A9B80,76,Code/GameEngine/Source/GameClient/MapUtilUnicodeAsciiPairDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
