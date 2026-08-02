@@ -4819,8 +4819,8 @@ void ScriptActions::doNamedUseCommandButtonAbilityOnNamed( const AsciiString& un
 /** doNamedUseCommandButtonAbilityAtWaypoint */
 //-------------------------------------------------------------------------------------------------
 // ?doNamedUseCommandButtonAbilityAtWaypoint@ScriptActions@@IAEXABVAsciiString@@00@Z
-// Body in ScriptActions_doNamedUseCommandButtonAbilityAtWaypoint.asm (exact 169B retail @ 0x2F9F10).
-// Queue RVA 0x5AF3BD was INSIDE mega FUN_009ade90 (mid-call residual), not this body.
+// Body in ScriptActionsDoNamedUseCommandButtonAbilityAtWaypointThunk.cpp (exact 169B retail @ 0x2F9F10).
+  // Queue RVA 0x5AF3BD was INSIDE mega FUN_009ade90 (mid-call residual), not this body.
 
 //-------------------------------------------------------------------------------------------------
 // ?doNamedUseCommandButtonAbilityUsingWaypointPath@ScriptActions@@IAEXABVAsciiString@@00@Z present-unmatched
