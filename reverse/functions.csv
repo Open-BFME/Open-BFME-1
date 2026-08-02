@@ -13846,7 +13846,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?writeINI@StreakDrawModuleTemplate@FXParticleSystem@@UBEXAAVFile@@I@Z,0x00042465,0x5f85c0,35,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
 ?writeINI@TerrainCollisionModuleTemplate@FXParticleSystem@@UBEXAAVFile@@I@Z,0x00027DD6,0x5fd790,397,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
 ?writeInt@DataChunkOutput@@QAEXH@Z,,0x00102560,25,Code/GameEngine/Source/Common/System/DataChunk.cpp,matched,
-?writeNameKey@DataChunkOutput@@QAEXW4NameKeyType@@@Z,,0x00104300,134,Code/GameEngine/Source/Common/System/DataChunk_writeNameKey.asm,matched,exact 134B MASM; true body 0x104300 (queue 0x454F43 misplaced in MapUtil); keyToName+allocateID+shl8|or3
 ?writeReal@DataChunkOutput@@QAEXM@Z,,0x00102540,25,Code/GameEngine/Source/Common/System/DataChunk.cpp,matched,
 ?writeReportIfMismatched@BFMEDesyncCheck@@QAEXXZ,,0x00065470,501,Code/GameEngine/Source/GameNetwork/native_desync_report.cpp,matched,
 ?xfer@AIAttackSquadState@@MAEXPAVXfer@@@Z,,0x00181C10,210,Code/masm_dumps/_sa13__xfer_AIAttackSquadState__MAEXPAVXfer___Z_181C10.asm,matched,multi-xref Open-BFME4+Grok AIAttackMachine
@@ -14098,3 +14097,6 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?Anim_Update@Animatable3DObjClass@@IAEXABVMatrix3D@@PAVHAnimClass@@M@Z,,0x00981E10,112,Code/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,
 ?Anim_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHAnimClass@@M@Z,,0x00953AD0,987,Code/Libraries/Source/WWVegas/WW3D2/htree.cpp,matched,
 ?clearSlotList@GameInfo@@QAEXXZ,,0x0061F520,218,Code/GameEngine/Source/GameNetwork/GameInfoClearSlotListThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
+?populateGameFonts@HeaderTemplateManager@@AAEXXZ,,0x0048C480,85,Code/GameEngine/Source/GameClient/GUI/HeaderTemplateManagerPopulateGameFontsThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
+?closeDataChunk@DataChunkOutput@@QAEXXZ,,0x001024A0,118,Code/GameEngine/Source/Common/System/DataChunkOutputCloseDataChunkThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
+?writeNameKey@DataChunkOutput@@QAEXW4NameKeyType@@@Z,,0x00104300,134,Code/GameEngine/Source/Common/System/DataChunkOutputWriteNameKeyThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
