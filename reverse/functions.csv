@@ -13777,7 +13777,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?winSetText@GameWindow@@UAEHVUnicodeString@@@Z,,0x00479660,114,Code/masm_dumps/winSetText_GameWindow_UAEHVUnicodeString_Z_479660.asm,matched,Exact 114B MASM; true body 0x479660 (queue 0x6EF270 inside mega-fn; prior 0x43E537 mid-thunk); m_instData+0x30 setText + BFME [this+4] vtbl+0xC; C++ blocked layout/notify
 ?winSetTooltipFunc@GameWindow@@QAEHP6AXPAV1@PAVWinInstanceData@@I@Z@Z,,0x00478EB0,15,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_tooltip@0x1ec
 ?winSetUserData@GameWindow@@QAEXPAX@Z,,0x00478C80,10,Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp,matched,BFME m_userData@0x2c
-?winTextLabelToText@GameWindowManager@@QAE?AVUnicodeString@@VAsciiString@@@Z,,0x0047E1B0,175,Code/GameEngine/Source/GameClient/GUI/GameWindowManager_winTextLabelToText.asm,matched,exact 175B via MASM (SEH)
 ?windowHiding@GameWindowManager@@UAEXPAVGameWindow@@@Z,,0x0047C7E0,109,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?worldToCell@Pathfinder@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z,,0x003D7EC0,156,Code/GameEngine/Source/GameLogic/AI/pathfind_getcell.cpp,matched,clean C++; BFME fast_float_floor calls CRT floor() via dllimport IAT not ZH bit-trick
 ?worldToGridSpace@WaterRenderObjClass@@QAE_NMMAAM0@Z,,0x007303B0,184,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp,matched,
@@ -14087,3 +14086,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?parseImagePart@ControlBarSchemeManager@@SAXPAVINI@@PAX1PBX@Z,,0x004AE920,172,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarSchemeParseImagePartThunk.cpp,matched,Open-BFME5 exact C++ __emit port of ControlBarSchemeManager parseImagePart MASM body
 ?isValidMap@@YA_NVAsciiString@@_N@Z,,0x00457ED0,170,Code/GameEngine/Source/GameClient/MapUtilIsValidMapThunk.cpp,matched,Open-BFME5 exact C++ __emit port of isValidMap MASM body
 ?getVetUpgradeName@@YA?AVAsciiString@@W4VeterancyLevel@@@Z,,0x0010AD90,173,Code/GameEngine/Source/Common/System/GetVetUpgradeNameThunk.cpp,matched,Open-BFME5 exact C++ __emit port of getVetUpgradeName MASM body
+?winTextLabelToText@GameWindowManager@@QAE?AVUnicodeString@@VAsciiString@@@Z,,0x0047E1B0,175,Code/GameEngine/Source/GameClient/GUI/GameWindowManagerWinTextLabelToTextThunk.cpp,matched,Open-BFME5 exact C++ __emit port of winTextLabelToText MASM body

@@ -3350,7 +3350,7 @@ void GameWindowManager::assignDefaultGadgetLook( GameWindow *gadget,
 	* with that label */
 //-------------------------------------------------------------------------------------------------
 // ?winTextLabelToText@GameWindowManager@@QAE?AVUnicodeString@@VAsciiString@@@Z
-// Body in GameWindowManager_winTextLabelToText.asm (exact 175B retail).
+  // Body in GameWindowManagerWinTextLabelToTextThunk.cpp (exact 175B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** find the top window at the given coordinates */
