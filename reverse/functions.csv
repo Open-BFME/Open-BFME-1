@@ -14096,8 +14096,6 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?Anim_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHAnimClass@@M@Z,,0x00953AD0,987,Code/Libraries/Source/WWVegas/WW3D2/htree.cpp,matched,
 ?clearSlotList@GameInfo@@QAEXXZ,,0x0061F520,218,Code/GameEngine/Source/GameNetwork/GameInfoClearSlotListThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?WriteBuildInfo@Debug@@QAEXXZ,,0x0088A492,135,Code/Libraries/Source/WWVegas/WWDebug/debug_debug_WriteBuildInfoThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
-?populateGameFonts@HeaderTemplateManager@@AAEXXZ,,0x0048C480,85,Code/GameEngine/Source/GameClient/GUI/HeaderTemplateManagerPopulateGameFontsThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
-?closeDataChunk@DataChunkOutput@@QAEXXZ,,0x001024A0,118,Code/GameEngine/Source/Common/System/DataChunkOutputCloseDataChunkThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?writeNameKey@DataChunkOutput@@QAEXW4NameKeyType@@@Z,,0x00104300,134,Code/GameEngine/Source/Common/System/DataChunkOutputWriteNameKeyThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ??1?$pair@$$CBVUnicodeString@@VAsciiString@@@_STL@@QAE@XZ,,0x000A9B80,76,Code/GameEngine/Source/GameClient/MapUtilUnicodeAsciiPairDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?populateGameFonts@HeaderTemplateManager@@AAEXXZ,,0x0048C480,85,Code/GameEngine/Source/GameClient/GUI/HeaderTemplateManagerPopulateGameFontsThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
