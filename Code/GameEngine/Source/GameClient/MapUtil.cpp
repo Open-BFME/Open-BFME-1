@@ -145,10 +145,9 @@ static Bool ParseObjectDataChunk(DataChunkInput &file, DataChunkInfo *info, void
 }
 
 // ?ParseObjectsDataChunk@@YA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z
-// Body in MapUtil_ParseObjectsDataChunk.asm (exact 124B retail @ 0x00454A60).
+// Body in MapUtilParseObjectsDataChunkThunk.cpp (exact 124B retail @ 0x00454A60).
 // Queue 0x00AF9ADC was mid jump-table; true body via loadMap ObjectsList callback.
-// C++ blocked by fat AsciiString(const char*) vs retail thin 0x888BC0.
-// Non-static decl so loadMap can take the address; definition is the MASM TU.
+// Non-static decl so loadMap can take the address; definition is the byte-matched thunk TU.
 Bool ParseObjectsDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData);
 
 // Keep ParseObjectDataChunk + MapObject pool-glue COMDATs in this TU (were only
