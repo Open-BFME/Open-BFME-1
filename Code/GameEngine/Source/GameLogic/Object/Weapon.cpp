@@ -1729,63 +1729,7 @@ void WeaponStore::postProcessLoad()
 }  // end postProcessLoad
 
 //-------------------------------------------------------------------------------------------------
-// ?parseWeaponTemplateDefinition@WeaponStore@@SAXPAVINI@@@Z present-unmatched
-// 176 of 223 bytes; the row still points at the MASM dump. Everything through
-// the findWeaponTemplatePrivate call matches, which took three fixes: the name
-// is assigned rather than set() so the strlen inlines, the key goes through
-// nameToKey's const char* overload (retail inlines str() first), and getLoadType
-// reads INI+0x08, so this TU now uses reference/shims/ini_noinline.
-//
-// What is left is one instruction. Retail calls newOverride as
-// "push weapon; call" with no this in ecx and no caller cleanup -- it is relying
-// on ecx still holding TheWeaponStore from the findWeaponTemplatePrivate call
-// immediately before, which the callee at 0x001E9AF0 does read as this
-// (mov ebx, ecx at +30). We emit the mov ecx, [TheWeaponStore] reload that the
-// language requires, six bytes retail does not have, and everything after shifts.
-// Declaring newOverride static removes the reload but then the caller cleans the
-// stack, which retail also does not do -- so neither spelling is right and it
-// wants whatever source shape lets the compiler prove ecx is already live.
-/*static*/ void WeaponStore::parseWeaponTemplateDefinition(INI* ini)
-{
-	AsciiString name;
-
-	// read the weapon name
-	name = ini->getNextToken();
-
-	// find existing item if present -- through the const char* overload, which is
-	// what retail inlines (str() then nameToKey), not the AsciiString one
-	WeaponTemplate *weapon = TheWeaponStore->findWeaponTemplatePrivate( TheNameKeyGenerator->nameToKey( name.str() ) );
-	if (weapon)
-	{
-		if (ini->getLoadType() == INI_LOAD_CREATE_OVERRIDES)
-			weapon = TheWeaponStore->newOverride(weapon);
-		else 
-		{
-			DEBUG_CRASH(("Weapon '%s' already exists, but OVERRIDE not specified", c));
-			return;
-		}
-
-	}
-	else
-	{
-		// no item is present, create a new one
-		weapon = TheWeaponStore->newWeaponTemplate(name);
-	} 
-
-	// parse the ini weapon definition
-	ini->initFromINI(weapon, weapon->getFieldParse());
-
-	if (weapon->m_projectileName.isNone())
-		weapon->m_projectileName.clear();
-
-#if defined(_DEBUG) || defined(_INTERNAL)
-	if (!weapon->getFireSound().getEventName().isEmpty() && weapon->getFireSound().getEventName().compareNoCase("NoSound") != 0) 
-	{ 
-		DEBUG_ASSERTCRASH(TheAudio->isValidAudioEvent(&weapon->getFireSound()), ("Invalid FireSound %s in Weapon '%s'.", weapon->getFireSound().getEventName().str(), weapon->getName().str())); 
-	}
-#endif
-
-}
+// Body in WeaponStoreParseWeaponTemplateDefinitionThunk.cpp (exact 223B retail @ 0x1E9C40).
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
