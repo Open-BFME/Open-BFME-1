@@ -199,28 +199,7 @@ void HotKeyManager::addHotKey( GameWindow *win, const AsciiString& keyIn)
 // AsciiString fetch arg (retail out-of-line StringBase copy @ 0x887B60).
 
 //-----------------------------------------------------------------------------
-// ?searchHotKey@HotKeyManager@@ present-unmatched
-AsciiString HotKeyManager::searchHotKey( const UnicodeString& uStr )
-{
-	if(uStr.isEmpty())
-		return AsciiString::TheEmptyString;
-
-	const WideChar *marker = (const WideChar *)uStr.str();
-	while (marker && *marker)
-	{
-		if (*marker == L'&')
-		{
-			// found a '&' - now look for the next char
-			UnicodeString tmp = UnicodeString::TheEmptyString;
-			tmp.concat(*(marker+1));
-			AsciiString retStr;
-			retStr.translate(tmp);
-			return retStr;
-		}
-		marker++;
-	}
-	return AsciiString::TheEmptyString;	
-}
+// Body in HotKeyManagerSearchHotKeyUnicodeStringThunk.cpp (exact 245B retail @ 0x5B27E0).
 
 //-----------------------------------------------------------------------------
 HotKeyManager *TheHotKeyManager = NULL;
