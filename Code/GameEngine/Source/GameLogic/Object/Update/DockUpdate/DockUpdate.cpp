@@ -237,7 +237,6 @@ Bool DockUpdate::isClearToAdvance( Object const* docker, Int dockerIndex ) const
 	return correctRequest && approachReached && nextSpotFree;
 }
 
-// ?getEnterPosition@DockUpdate@@UAEXPAVObject@@PAUCoord3D@@@Z present-unmatched
 void DockUpdate::getEnterPosition( Object* docker, Coord3D *position )
 {
 
@@ -256,7 +255,8 @@ void DockUpdate::getEnterPosition( Object* docker, Coord3D *position )
 	{
 		if( docker->isUsingAirborneLocomotor() )
 		{
-			*position = *getObject()->getPosition();
+			Object *retailObject = *(Object **)((char *)this + 0x8);
+			*position = *retailObject->getPosition();
 			return;
 		}
 		*position = *docker->getPosition();
@@ -264,7 +264,7 @@ void DockUpdate::getEnterPosition( Object* docker, Coord3D *position )
 	}
 
 	// take local space position and convert to world space
-	getObject()->convertBonePosToWorldPos( &m_enterPosition, NULL, position, NULL );
+	(*(Object **)((char *)this + 0x8))->convertBonePosToWorldPos( &m_enterPosition, NULL, position, NULL );
 
 }
 
