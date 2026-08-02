@@ -134,23 +134,7 @@ static void parseOCL( INI* ini, void *instance, void * /*store*/, const void* /*
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ?beginStructureCollapse@StructureCollapseUpdate@@IAEXPBVDamageInfo@@@Z present-unmatched
-void StructureCollapseUpdate::beginStructureCollapse(const DamageInfo *damageInfo)
-{
-	const StructureCollapseUpdateModuleData *d = getStructureCollapseUpdateModuleData();
-
-
-	Object *building = getObject();
-	UnsignedInt now = TheGameLogic->getFrame();
-	// This has to use a game logic random value since the bursts can spawn debris, and debris is sync'd.
-	m_collapseFrame = now + GameLogicRandomValue(d->m_minCollapseDelay, d->m_maxCollapseDelay);
-
-	doPhaseStuff(SCPHASE_INITIAL, building->getPosition());
-
-	m_collapseState = COLLAPSESTATE_WAITINGFORCOLLAPSESTART;
-	m_currentHeight = 0.0f;
-
-	setWakeFrame(getObject(), UPDATE_SLEEP_NONE);
-}
+// Body in StructureCollapseUpdateBeginStructureCollapseThunk.cpp (exact 214B retail @ 0x2AE7D0).
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
