@@ -2780,7 +2780,7 @@ Bool Player::isScienceHidden( ScienceType t ) const
 
 //=============================================================================
 // ?setScienceAvailability@Player@@QAEXW4ScienceType@@W4ScienceAvailabilityType@@@Z
-// Body in Player_setScienceAvailability.asm (exact 288B retail @ 0xD5640;
+// Body in PlayerSetScienceAvailabilityThunk.cpp (exact 288B retail @ 0xD5640;
 // C++ blocked by Player layout: m_sciencesDisabled/Hidden +0x240/+0x24c vs ZH +0x170/+0x17c).
 
 // Force-emit ScienceVec::erase(iterator) COMDAT claimed on this TU @ 0xCEA00.
