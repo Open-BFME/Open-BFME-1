@@ -953,7 +953,7 @@ Int populateMapListbox( GameWindow *listbox, Bool useSystemMaps, Bool isMultipla
 /** Validate a map */
 //-------------------------------------------------------------------------------------------------
 // ?isValidMap@@YA_NVAsciiString@@_N@Z
-// Body in MapUtil_isValidMap.asm (exact 170B retail @ 0x00457ED0).
+  // Body in MapUtilIsValidMapThunk.cpp (exact 170B retail @ 0x00457ED0).
 // Drift 0x0078935E is mid unrelated fn; ZH isEmpty/dtor shape diverge.
 
 //-------------------------------------------------------------------------------------------------

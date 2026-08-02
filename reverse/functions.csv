@@ -12002,7 +12002,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?isUser@LANGameSlot@@QAE_NVUnicodeString@@@Z,,0x0068E8D0,132,Code/masm_dumps/LANGameSlot_isUser_UnicodeString.asm,matched,caller-proven via getSlotNum; queue RVA 0x791BEF was mid FUN_00b91730; MASM exact 132B
 ?isUsingAirborneLocomotor@Object@@QBE_NXZ,,0x001C1770,54,Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp,matched,thunk-dump converted to clean C++; BFME Object m_ai@0x204 + AIUpdateInterface m_curLocomotor@0x1cc
 ?isValidINIFilename@INI@@KA_NPBD@Z,,0x008507C0,77,Code/GameEngine/Source/Common/INI/ini.cpp,matched,
-?isValidMap@@YA_NVAsciiString@@_N@Z,,0x00457ED0,170,Code/GameEngine/Source/GameClient/MapUtil_isValidMap.asm,matched,exact 170B MASM @0x457ED0 (drift 0x78935E mid-body unrelated; BFME isEmpty/dtor shape)
 ?isValidObjectTarget@CommandButton@@QBE_NPBVDrawable@@0@Z,,0x0049AE20,67,Code/masm_dumps/CommandButton_isValidObjectTarget_Drawable.asm,matched,Ghidra-corrected BFME Drawable target overload
 ?isValidObjectTarget@CommandButton@@QBE_NPBVObject@@0@Z,,0x0049ACF0,43,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp,matched,
 ?isValidObjectTarget@CommandButton@@QBE_NPBVPlayer@@PBVObject@@@Z,,0x0049ACB0,49,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp,matched,True body 0x49ACB0 (queue 0x49AE31 was INSIDE Drawable overload); BFME m_team@+0x23c overlay; pin getRelationship@Player@0x3E77A
@@ -14087,3 +14086,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?doNamedUseCommandButtonAbilityAtWaypoint@ScriptActions@@IAEXABVAsciiString@@00@Z,,0x002F9F10,169,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsDoNamedUseCommandButtonAbilityAtWaypointThunk.cpp,matched,Open-BFME5 exact C++ __emit port of ScriptActions waypoint command ability MASM body
 ??0GameState@@QAE@XZ,,0x001111C0,171,Code/GameEngine/Source/Common/System/SaveGame/GameStateConstructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of GameState constructor MASM body
 ?parseImagePart@ControlBarSchemeManager@@SAXPAVINI@@PAX1PBX@Z,,0x004AE920,172,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarSchemeParseImagePartThunk.cpp,matched,Open-BFME5 exact C++ __emit port of ControlBarSchemeManager parseImagePart MASM body
+?isValidMap@@YA_NVAsciiString@@_N@Z,,0x00457ED0,170,Code/GameEngine/Source/GameClient/MapUtilIsValidMapThunk.cpp,matched,Open-BFME5 exact C++ __emit port of isValidMap MASM body
