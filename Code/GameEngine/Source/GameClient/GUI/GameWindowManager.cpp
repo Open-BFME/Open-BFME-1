@@ -1902,7 +1902,7 @@ GameWindow *GameWindowManager::gogoMessageBox(Int x, Int y, Int width, Int heigh
 /** Create a button GUI control */
 //-------------------------------------------------------------------------------------------------
 // ?gogoGadgetPushButton@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHPAVWinInstanceData@@PAVGameFont@@_N@Z
-// Body in GameWindowManager_gogoGadgetPushButton.asm (exact 241B retail @ 0x0047DC50).
+// Body in GameWindowManagerGogoGadgetPushButtonThunk.cpp (exact 241B retail @ 0x0047DC50).
 // Queue 0x68F0DB was misplaced; true body via GWM vtable slot 14 / createGadget "PUSHBUTTON".
 // Keep getPushButton*DrawFunc COMDATs in this TU (were only referenced by the old C++ body;
 // both ICF to 3B xor-eax/ret at 0x006CF680).
