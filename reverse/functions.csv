@@ -3057,7 +3057,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1QueueProductionExitUpdate@@UAE@XZ,,0x001F8D10,141,Code/masm_dumps/QueueProductionExitUpdate_destructor.asm,matched,Exact 141B SEH dtor Open-BFME4
 ??1QuickMatchPreferences@@UAE@XZ,,0x000AAFA0,11,Code/GameEngine/Source/Common/UserPreferences.cpp,matched,thunk-dump converted to clean C++
 ??1RAMFile@@MAE@XZ,,0x009D19A0,93,Code/masm_dumps/_icf2___1RAMFile__MAE_XZ_9D19A0.asm,matched,ICF of ??1SubsystemInterface@@UAE@XZ Open-BFME4+Grok
-??1RTS2DScene@@UAE@XZ,,0x00711980,143,Code/GameEngineDevice/Source/W3DDevice/GameClient/RTS2DScene_dtor.asm,matched,true ENTRY via RTS2DScene vtable store; queue 0x9F27F2 was mid-neighbor; MASM exact 143B
 ??1RTS3DScene@@UAE@XZ,,0x00C5FD7E,328,Code/masm_dumps/__1RTS3DScene__UAE_XZ.asm,matched,
 ??1Radar@@UAE@XZ,,0x00107620,118,Code/masm_dumps/Radar_destructor.asm,matched,Exact retail MASM; dual-vtable wrapper chain proves ownership; preserves BFME vector-destructor machinery absent from ZH layout
 ??1RadarObject@@MAE@XZ,,0x001B0DB0,79,Code/GameEngine/Source/Common/System/Radar.cpp,matched,icf-owner=??1Upgrade@@MAE@XZ
@@ -14098,3 +14097,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?parseDrawCallback@@YA_NPADPAVWinInstanceData@@0PAX@Z,,0x00486A60,130,Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScriptParseDrawCallbackThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?searchHotKey@HotKeyManager@@QAE?AVAsciiString@@ABV2@@Z,,0x005B2AD0,135,Code/GameEngine/Source/GameClient/MessageStream/HotKeyManagerSearchHotKeyThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?parseMetaMapDefinition@INI@@SAXPAV1@@Z,,0x005B71A0,143,Code/GameEngine/Source/GameClient/MessageStream/INIMetaMapDefinitionThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
+??1RTS2DScene@@UAE@XZ,,0x00711980,143,Code/GameEngineDevice/Source/W3DDevice/GameClient/RTS2DSceneDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
