@@ -202,7 +202,7 @@ const Image* Anim2DTemplate::getFrame( UnsignedShort frameNumber ) const
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ??0Anim2D@@QAE@PAVAnim2DTemplate@@PAVAnim2DCollection@@@Z
-// Body in Anim2D_ctor.asm (exact 297B retail; retail inlines reset()
+// Body in Anim2DConstructorThunk.cpp (exact 297B retail; retail inlines reset()
 // and registerAnimation() and writes BFME-only cached fields +0x2c/+0x30).
 
 // ------------------------------------------------------------------------------------------------
