@@ -3356,7 +3356,7 @@ void GameWindowManager::assignDefaultGadgetLook( GameWindow *gadget,
 /** find the top window at the given coordinates */
 //-------------------------------------------------------------------------------------------------
 // ?getWindowUnderCursor@GameWindowManager@@UAEPAVGameWindow@@HH_N@Z
-// Body in GameWindowManager_getWindowUnderCursor.asm (exact 378B retail; field offsets).
+// Body in GameWindowManagerGetWindowUnderCursorThunk.cpp (exact 378B retail; field offsets).
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
