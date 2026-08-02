@@ -383,7 +383,9 @@ Bool ScriptConditions::evaluateNamedUnitTotallyDead(Parameter *pUnitParm)
 //-------------------------------------------------------------------------------------------------
 /** evaluateHasUnits */
 //-------------------------------------------------------------------------------------------------
-// ?evaluateHasUnits@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
+// ?evaluateHasUnits@ScriptConditions@@IAE_NPAVParameter@@@Z
+// Body in ScriptConditionsEvaluateHasUnitsThunk.cpp (exact 346B retail @ 0x0032A2E0).
+#if 0
 Bool ScriptConditions::evaluateHasUnits(Parameter *pTeamParm)
 {
 	AsciiString desiredTeamName = pTeamParm->getString();
@@ -418,6 +420,7 @@ Bool ScriptConditions::evaluateHasUnits(Parameter *pTeamParm)
 	}
 	return false; // Non existent team has no units. 
 }  
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** evaluateUnitsEntered */
