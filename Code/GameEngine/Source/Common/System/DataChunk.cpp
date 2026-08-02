@@ -629,7 +629,7 @@ void DataChunkInput::registerParser( const AsciiString& label, const AsciiString
 // it is assumed that the file position is at the start of a data chunk
 // (it can be inside a parent chunk) when parse is called.
 // ?parse@DataChunkInput@@QAE_NPAX@Z
-// Body in DataChunk_parse.asm (exact 1006B retail).
+// Body in DataChunkParseThunk.cpp (exact 231B retail @ 0x9D22F0).
 
 // clear the stack
 // ?clearChunkStack@DataChunkInput@@IAEXXZ present-unmatched
