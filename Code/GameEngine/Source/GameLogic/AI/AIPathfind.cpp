@@ -8026,7 +8026,7 @@ Bool Pathfinder::clientSafeQuickDoesPathExist( const LocomotorSet& locomotorSet,
  * True means it is possible given the terrain, but there may be units in the way.
  */
 // ?clientSafeQuickDoesPathExistForUI@Pathfinder@@QAE_NABVLocomotorSet@@PBUCoord3D@@1@Z
-// Body in AIPathfind_clientSafeQuickDoesPathExistForUI.asm (exact 375B retail).
+// Body in PathfinderClientSafeQuickDoesPathExistForUIThunk.cpp (exact 375B retail).
 
 /**
  * Does any path exist from 'from' to 'to' given the locomotor set
