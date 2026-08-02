@@ -4676,7 +4676,7 @@ Bool InGameUI::canSelectedObjectsOverrideSpecialPowerDestination( const Coord3D 
 
 //------------------------------------------------------------------------------
 // ?canSelectedObjectsEffectivelyUseWeapon@InGameUI@@QBE_NPBVCommandButton@@PBVObject@@PBUCoord3D@@W4SelectionRules@1@@Z
-// Body in InGameUI_canSelectedObjectsEffectivelyUseWeapon.asm (exact 269B retail; field offsets).
+// Body in InGameUICanSelectedObjectsEffectivelyUseWeaponThunk.cpp (exact 269B retail @ 0x43EE20).
 
 // ------------------------------------------------------------------------------------------------
 // ?selectAllUnitsByTypeAcrossRegion@InGameUI@@UAEHPAUIRegion2D@@V?$BitFlags@$0HE@@@1@Z present-unmatched

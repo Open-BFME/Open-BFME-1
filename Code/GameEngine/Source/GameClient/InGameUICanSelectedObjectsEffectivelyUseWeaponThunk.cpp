@@ -1,0 +1,302 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+
+class CommandButton
+{
+};
+
+class Object
+{
+};
+
+struct Coord3D
+{
+};
+
+class InGameUI
+{
+public:
+    enum SelectionRules
+    {
+        selectionRulesDummy
+    };
+
+    bool canSelectedObjectsEffectivelyUseWeapon(
+        const CommandButton *, const Object *, const Coord3D *, SelectionRules) const;
+};
+
+// ?canSelectedObjectsEffectivelyUseWeapon@InGameUI@@QBE_NPBVCommandButton@@PBVObject@@PBUCoord3D@@W4SelectionRules@1@@Z
+__declspec(naked) bool InGameUI::canSelectedObjectsEffectivelyUseWeapon(
+    const CommandButton *, const Object *, const Coord3D *, SelectionRules) const
+{
+    __asm {
+        __emit 0x83
+        __emit 0xec
+        __emit 0x08
+        __emit 0x8b
+        __emit 0x44
+        __emit 0x24
+        __emit 0x0c
+        __emit 0x53
+        __emit 0x55
+        __emit 0x8b
+        __emit 0x6c
+        __emit 0x24
+        __emit 0x18
+        __emit 0x56
+        __emit 0x8b
+        __emit 0x70
+        __emit 0x6c
+        __emit 0x8b
+        __emit 0x40
+        __emit 0x18
+        __emit 0x8b
+        __emit 0xd8
+        __emit 0xc1
+        __emit 0xeb
+        __emit 0x05
+        __emit 0x80
+        __emit 0xe3
+        __emit 0x01
+        __emit 0xa8
+        __emit 0x07
+        __emit 0x0f
+        __emit 0x95
+        __emit 0xc0
+        __emit 0x84
+        __emit 0xc0
+        __emit 0x88
+        __emit 0x44
+        __emit 0x24
+        __emit 0x18
+        __emit 0x74
+        __emit 0x04
+        __emit 0x85
+        __emit 0xed
+        __emit 0x74
+        __emit 0x0c
+        __emit 0x84
+        __emit 0xdb
+        __emit 0x74
+        __emit 0x13
+        __emit 0x8b
+        __emit 0x44
+        __emit 0x24
+        __emit 0x20
+        __emit 0x85
+        __emit 0xc0
+        __emit 0x75
+        __emit 0x0b
+        __emit 0x5e
+        __emit 0x5d
+        __emit 0x32
+        __emit 0xc0
+        __emit 0x5b
+        __emit 0x83
+        __emit 0xc4
+        __emit 0x08
+        __emit 0xc2
+        __emit 0x10
+        __emit 0x00
+        __emit 0x8b
+        __emit 0x0d
+        __emit 0x8c
+        __emit 0x14
+        __emit 0x2f
+        __emit 0x01
+        __emit 0x8b
+        __emit 0x01
+        __emit 0x57
+        __emit 0xff
+        __emit 0x90
+        __emit 0xfc
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0x89
+        __emit 0x44
+        __emit 0x24
+        __emit 0x14
+        __emit 0x8b
+        __emit 0x00
+        __emit 0x8b
+        __emit 0x38
+        __emit 0x33
+        __emit 0xc9
+        __emit 0x3b
+        __emit 0xf8
+        __emit 0x89
+        __emit 0x4c
+        __emit 0x24
+        __emit 0x10
+        __emit 0x89
+        __emit 0x4c
+        __emit 0x24
+        __emit 0x20
+        __emit 0x74
+        __emit 0x77
+        __emit 0x8d
+        __emit 0xa4
+        __emit 0x24
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0x8b
+        __emit 0x54
+        __emit 0x24
+        __emit 0x10
+        __emit 0x8a
+        __emit 0x4c
+        __emit 0x24
+        __emit 0x1c
+        __emit 0x8b
+        __emit 0x47
+        __emit 0x08
+        __emit 0x8b
+        __emit 0x80
+        __emit 0xfc
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0x42
+        __emit 0x84
+        __emit 0xc9
+        __emit 0x89
+        __emit 0x54
+        __emit 0x24
+        __emit 0x10
+        __emit 0x75
+        __emit 0x15
+        __emit 0x84
+        __emit 0xdb
+        __emit 0x75
+        __emit 0x23
+        __emit 0x8b
+        __emit 0x0d
+        __emit 0x00
+        __emit 0xd7
+        __emit 0x2e
+        __emit 0x01
+        __emit 0x6a
+        __emit 0x00
+        __emit 0x56
+        __emit 0x50
+        __emit 0xe8
+        __emit 0x90
+        __emit 0x79
+        __emit 0xbc
+        __emit 0xff
+        __emit 0xeb
+        __emit 0x27
+        __emit 0x8b
+        __emit 0x0d
+        __emit 0x00
+        __emit 0xd7
+        __emit 0x2e
+        __emit 0x01
+        __emit 0x56
+        __emit 0x6a
+        __emit 0x00
+        __emit 0x55
+        __emit 0x50
+        __emit 0xe8
+        __emit 0xbe
+        __emit 0x48
+        __emit 0xbc
+        __emit 0xff
+        __emit 0xeb
+        __emit 0x15
+        __emit 0x8b
+        __emit 0x4c
+        __emit 0x24
+        __emit 0x24
+        __emit 0x55
+        __emit 0x56
+        __emit 0x6a
+        __emit 0x00
+        __emit 0x51
+        __emit 0x8b
+        __emit 0x0d
+        __emit 0x00
+        __emit 0xd7
+        __emit 0x2e
+        __emit 0x01
+        __emit 0x50
+        __emit 0xe8
+        __emit 0xa1
+        __emit 0xd2
+        __emit 0xbf
+        __emit 0xff
+        __emit 0x84
+        __emit 0xc0
+        __emit 0x74
+        __emit 0x0c
+        __emit 0x8b
+        __emit 0x44
+        __emit 0x24
+        __emit 0x28
+        __emit 0x85
+        __emit 0xc0
+        __emit 0x74
+        __emit 0x2f
+        __emit 0xff
+        __emit 0x44
+        __emit 0x24
+        __emit 0x20
+        __emit 0x8b
+        __emit 0x54
+        __emit 0x24
+        __emit 0x14
+        __emit 0x8b
+        __emit 0x3f
+        __emit 0x3b
+        __emit 0x3a
+        __emit 0x75
+        __emit 0x90
+        __emit 0x83
+        __emit 0x7c
+        __emit 0x24
+        __emit 0x28
+        __emit 0x01
+        __emit 0x75
+        __emit 0x0e
+        __emit 0x8b
+        __emit 0x44
+        __emit 0x24
+        __emit 0x10
+        __emit 0x85
+        __emit 0xc0
+        __emit 0x7e
+        __emit 0x06
+        __emit 0x39
+        __emit 0x44
+        __emit 0x24
+        __emit 0x20
+        __emit 0x74
+        __emit 0x0c
+        __emit 0x5f
+        __emit 0x5e
+        __emit 0x5d
+        __emit 0x32
+        __emit 0xc0
+        __emit 0x5b
+        __emit 0x83
+        __emit 0xc4
+        __emit 0x08
+        __emit 0xc2
+        __emit 0x10
+        __emit 0x00
+        __emit 0x5f
+        __emit 0x5e
+        __emit 0x5d
+        __emit 0xb0
+        __emit 0x01
+        __emit 0x5b
+        __emit 0x83
+        __emit 0xc4
+        __emit 0x08
+        __emit 0xc2
+        __emit 0x10
+        __emit 0x00
+    }
+}
