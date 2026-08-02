@@ -913,7 +913,7 @@ void ControlBarSchemeManager::parseAnimatingPartImage(INI *ini, void *instance, 
 // parse the animating part of the control bar scheme
 //-----------------------------------------------------------------------------
 // ?parseAnimatingPart@ControlBarSchemeManager@@SAXPAVINI@@PAX1PBX@Z
-// Body in ControlBarScheme_parseAnimatingPart.asm (exact 219B retail @ 0x4AEA00).
+// Body in ControlBarSchemeParseAnimatingPartThunk.cpp (exact 219B retail @ 0x4AEA00).
 // Retail inlines addAnimation+addImage + STLport list node alloc; C++ cannot match.
 
 
