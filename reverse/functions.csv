@@ -1123,7 +1123,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0AlphaVectorStruct@@QAE@ABU0@@Z,,0x00979200,37,Code/Libraries/Source/WWVegas/WW3D2/sphereobj.cpp,matched,
 ??0Anim2D@@QAE@PAVAnim2DTemplate@@PAVAnim2DCollection@@@Z,,0x005BA4D0,297,Code/GameEngine/Source/GameClient/System/Anim2D_ctor.asm,matched,
 ??0Anim2DCollection@@QAE@XZ,,0x005BA370,26,Code/GameEngine/Source/GameClient/System/Anim2D.cpp,matched,
-??0Anim2DTemplate@@QAE@VAsciiString@@@Z,,0x005BAD80,124,Code/GameEngine/Source/GameClient/System/Anim2DTemplate_ctor_dtor.asm,matched,
 ??0AnimSet@GenericObjectCreationNugget@@QAE@XZ,,0x0005C5D0,13,Code/GameEngine/Source/GameLogic/Object/ObjectCreationList.cpp,matched,ICF alias of existing matched body
 ??0AnimalAIUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002B3090,118,Code/GameEngine/Source/GameLogic/AI/AnimalAIUpdateCtorThunk.cpp,matched,Open-BFME5 exact C++ raw AI module constructor
 ??0AnimalAIUpdateModuleData@@QAE@XZ,,0x0027EAE0,283,Code/GameEngine/Source/GameLogic/AI/AnimalAIUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ ICF-primary raw module-data constructor
@@ -14098,3 +14097,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?writeNameKey@DataChunkOutput@@QAEXW4NameKeyType@@@Z,,0x00104300,134,Code/GameEngine/Source/Common/System/DataChunkOutputWriteNameKeyThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?Internal_Remove@GenericMultiListClass@@IAE_NPAVMultiListObjectClass@@@Z,,0x009DC100,104,Code/Libraries/Source/WWVegas/WWLib/GenericMultiListClassInternalRemoveThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?ParseObjectsDataChunk@@YA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,,0x00454A60,124,Code/GameEngine/Source/GameClient/MapUtilParseObjectsDataChunkThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
+??0Anim2DTemplate@@QAE@VAsciiString@@@Z,,0x005BAD80,124,Code/GameEngine/Source/GameClient/System/Anim2DTemplateCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
