@@ -1595,6 +1595,7 @@ name,address,notes
 ??1TimeCodedMorphKeysClass@@QAE@XZ,0x0002BFF3,pinharvest x1 (thunk)
 ??1TimeCodedMorphKeysClass@@QAE@XZ,0x000308D2,pinharvest x1 (thunk)
 ??1TimeCodedMorphKeysClass@@QAE@XZ,0x00048B53,pinharvest x1 (thunk)
+??1TimeCodedMotionChannelClass@@QAE@XZ,0x00978180
 ??1UDP@@QAE@XZ,0x00006591
 ??1UnicodeString@@QAE@XZ,0x008881D0,freeMessageResources depth Open-BFME4+Grok
 ??1UserPreferences@@UAE@XZ,0x0003F25B
