@@ -10098,7 +10098,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?friend_getThingTemplate@WeaponTemplateSet@@QBEPBVThingTemplate@@XZ,,0x0010BDB0,3,Code/GameEngine/Source/GameLogic/Object/WeaponSet.cpp,matched,icf-owner=?getDistributionType@GameClientRandomVariable@@QBE?AW4DistributionType@1@XZ
 ?friend_isSweepEnabled@TurretAI@@QBE_NXZ,,0x0018C9F0,27,Code/GameEngine/Source/GameLogic/AI/TurretAI.cpp,matched,
 ?friend_lookupScience@ScienceStore@@QBE?AW4ScienceType@@PBD@Z,,0x000E7240,85,Code/masm_dumps/Science_ScienceStore_friend_lookupScience.asm,matched,
-?friend_makeVeterancyUpgrade@UpgradeTemplate@@QAEXW4VeterancyLevel@@@Z,,0x0010B010,156,Code/GameEngine/Source/Common/System/Upgrade_friend_makeVeterancyUpgrade.asm,matched,exact 156B MASM; true start 0x10B010 via getVetUpgradeName caller (queue 0x79CE61 was SEH epilogue+int3)
 ?friend_newModuleData@AIUpdateInterface@@SAPAVModuleData@@PAVINI@@@Z,,0x0011CB70,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,icf-owner=?friend_newModuleData@PropagandaTowerBehavior@@SAPAVModuleData@@PAVINI@@@Z
 ?friend_newModuleData@AODHordeContain@@SAPAVModuleData@@PAVINI@@@Z,,0x00122FD0,116,Code/GameEngine/Source/GameLogic/AI/AODHordeContainFriendNewModuleDataThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM factory
 ?friend_newModuleData@ActiveBody@@SAPAVModuleData@@PAVINI@@@Z,,0x0011F420,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,BFME retail allocation-size facade
@@ -14087,3 +14086,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?gogoGadgetTabControl@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHPAVWinInstanceData@@PAU_TabControlData@@PAVGameFont@@_N@Z,,0x0047D090,150,Code/GameEngine/Source/GameClient/GUI/GameWindowManagerGogoGadgetTabControlThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ??1GameSpyStagingRoom@@QAE@XZ,,0x004FA3D0,151,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyStagingRoomDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?onObjectCreated@BoneFXDamage@@MAEXXZ,,0x00250880,154,Code/GameEngine/Source/GameLogic/Object/Damage/BoneFXDamageOnObjectCreatedThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
+?friend_makeVeterancyUpgrade@UpgradeTemplate@@QAEXW4VeterancyLevel@@@Z,,0x0010B010,156,Code/GameEngine/Source/Common/System/UpgradeFriendMakeVeterancyUpgradeThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
