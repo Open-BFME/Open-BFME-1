@@ -9629,7 +9629,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?doDisableCountdownTimerDisplay@ScriptActions@@IAEXXZ,,0x002EF9B0,14,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,showNamedTimerDisplay(false)
 ?doDisableSpecialPowerDisplay@ScriptActions@@IAEXXZ,,0x002EF770,17,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,InGameUI vtable+0x90 setSuperweaponDisplayEnabledByScript false
 ?doDisplayCinematicText@ScriptActions@@IAEXABVAsciiString@@0H@Z,,0x002F3BD0,553,Code/masm_dumps/_sa14__doDisplayCinematicText_ScriptActions__IAEXABVAsciiString__0H_Z_2F3BD0.asm,matched,sa14 Open-BFME4+Grok [Bold]
-?doDisplayCounter@ScriptActions@@IAEXABVAsciiString@@0@Z,,0x002F9660,235,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doDisplayCounter.asm,matched,exact 235B via MASM; true body (drift 0x9DB075 was mid mega-fn); display counter isCountdown=false
 ?doDrawModule@W3DRopeDraw@@UAEXPBVMatrix3D@@@Z,,0x0075AD20,363,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/W3DRopeDraw.cpp,matched,
 ?doEnableCountdownTimerDisplay@ScriptActions@@IAEXXZ,,0x002EF9D0,14,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,showNamedTimerDisplay(true)
 ?doEnableInput@ScriptActions@@IAEXXZ,,0x002EF090,27,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,InGameUI setInputEnabled + Mouse setVisibility pins
@@ -14090,3 +14089,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?parseAnimatingPart@ControlBarSchemeManager@@SAXPAVINI@@PAX1PBX@Z,,0x004AEA00,219,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarSchemeParseAnimatingPartThunk.cpp,matched,Open-BFME5 exact C++ __emit port of retail MASM body
 ?parseWeaponTemplateDefinition@WeaponStore@@SAXPAVINI@@@Z,,0x001E9C40,223,Code/GameEngine/Source/GameLogic/Object/WeaponStoreParseWeaponTemplateDefinitionThunk.cpp,matched,Open-BFME5 exact C++ __emit port of retail MASM body
 ?parse@DataChunkInput@@QAE_NPAX@Z,,0x009D22F0,231,Code/GameEngine/Source/Common/System/DataChunkParseThunk.cpp,matched,Open-BFME5 exact C++ __emit port of retail MASM body
+?doDisplayCounter@ScriptActions@@IAEXABVAsciiString@@0@Z,,0x002F9660,235,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsDoDisplayCounterThunk.cpp,matched,Open-BFME5 exact C++ __emit port of retail MASM body

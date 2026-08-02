@@ -4528,7 +4528,7 @@ void ScriptActions::doGiveMoney(const AsciiString& playerName, Int money)
 /** doDisplayCounter */
 //-------------------------------------------------------------------------------------------------
 // ?doDisplayCounter@ScriptActions@@IAEXABVAsciiString@@0@Z
-// Body in ScriptActions_doDisplayCounter.asm (exact 235B @ 0x2F9660).
+// Body in ScriptActionsDoDisplayCounterThunk.cpp (exact 235B @ 0x2F9660).
 
 //-------------------------------------------------------------------------------------------------
 /** doHideCounter */
