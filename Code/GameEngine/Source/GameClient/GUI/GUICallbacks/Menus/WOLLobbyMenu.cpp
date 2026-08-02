@@ -752,7 +752,7 @@ static void shutdownComplete( WindowLayout *layout )
 //-------------------------------------------------------------------------------------------------
 /** WOL Lobby Menu shutdown method */
 // ?WOLLobbyMenuShutdown@@YAXPAVWindowLayout@@PAX@Z
-// Body in WOLLobbyMenu_WOLLobbyMenuShutdown.asm (exact 299B retail).
+// Body in WOLLobbyMenuShutdownThunk.cpp (exact 299B retail).
 
 static void fillPlayerInfo(const PeerResponse *resp, PlayerInfo *info)
 {
