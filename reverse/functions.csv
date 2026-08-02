@@ -13631,7 +13631,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?updateBounds@W3DShadowTexture@@QAEXAAVVector3@@PAVRenderObjClass@@@Z,,0x007B04A0,2313,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp,matched,renderobjclass vtable fix
 ?updateBridgeRepair@AIPlayer@@IAEXXZ,,0x00167930,1077,Code/masm_dumps/_sa13__updateBridgeRepair_AIPlayer__IAEXXZ_167930.asm,matched,multi-xref Open-BFME4+Grok ' because team already exists.
 ?updateCache@MapCache@@QAEXXZ,,0x00457E70,66,Code/GameEngine/Source/GameClient/MapUtil.cpp,matched,
-?updateCenter@BaseHeightMapRenderObjClass@@UAEXPAVCameraClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,,0x006C8E50,197,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_updateCenter.asm,matched,exact 197B MASM @ 0x006C8E50; Ghidra ENTRY; m_map+0x2FF4 field-offset + BFME buffer shape blocks C++
 ?updateCenter@W3DBridgeBuffer@@QAEXPAVCameraClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,,0x006DA280,53,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeBuffer.cpp,matched,
 ?updateCenter@W3DTerrainBackground@@QAEXPAVCameraClass@@@Z,,0x00728D30,874,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackground.cpp,matched,
 ?updateCircleVB@W3DStatusCircle@@IAEHXZ,,0x007260F0,324,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DStatusCircle.cpp,matched,shaderclass fix
@@ -14089,3 +14088,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?drawEmoticon@Drawable@@AAEXPBUIRegion2D@@@Z,,0x00414AF0,191,Code/GameEngine/Source/GameClient/DrawableDrawEmoticonThunk.cpp,matched,Open-BFME5 exact C++ __emit port of Drawable drawEmoticon MASM body
 ?findDamageFX@DamageFXStore@@QBEPBVDamageFX@@VAsciiString@@@Z,,0x00067440,192,Code/GameEngine/Source/Common/DamageFXStoreFindDamageFXThunk.cpp,matched,Open-BFME5 exact C++ __emit port of DamageFXStore findDamageFX MASM body
 ?storeImage@Anim2DTemplate@@QAEXPBVImage@@@Z,,0x005BAF20,201,Code/GameEngine/Source/GameClient/System/Anim2DTemplateStoreImageThunk.cpp,matched,Open-BFME5 exact C++ __emit port of Anim2DTemplate storeImage MASM body
+?updateCenter@BaseHeightMapRenderObjClass@@UAEXPAVCameraClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,,0x006C8E50,197,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapUpdateCenterThunk.cpp,matched,Open-BFME5 exact C++ __emit port of BaseHeightMapRenderObjClass updateCenter MASM body
