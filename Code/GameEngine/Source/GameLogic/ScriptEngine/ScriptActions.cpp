@@ -6069,7 +6069,7 @@ void ScriptActions::doTeamSpinForFramecount( const AsciiString& teamName, Int wa
 /** doTeamUseCommandButtonOnNamed */
 //-------------------------------------------------------------------------------------------------
 // ?doTeamUseCommandButtonOnNamed@ScriptActions@@IAEXABVAsciiString@@00@Z
-// Body in ScriptActions_doTeamUseCommandButtonOnNamed.asm (exact 204B retail @ 0x2F54C0).
+// Body in ScriptActionsDoTeamUseCommandButtonOnNamedThunk.cpp (exact 204B retail @ 0x2F54C0).
 // Queue RVA 0x614F9B was INSIDE mislocated NearestKindof MASM claim (INI parser).
 
 //-------------------------------------------------------------------------------------------------
