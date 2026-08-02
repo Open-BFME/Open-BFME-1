@@ -4857,7 +4857,7 @@ Int InGameUI::selectAllUnitsByTypeAcrossScreen(KindOfMaskType mustBeSet, KindOfM
 /** Selects maching units on the screen */
 // ------------------------------------------------------------------------------------------------
 // ?selectMatchingAcrossScreen@InGameUI@@UAEHXZ
-// Body in InGameUI_selectMatchingAcrossScreen.asm (exact 332B retail @ 0x43EF70).
+// Body in InGameUISelectMatchingAcrossScreenThunk.cpp (exact 332B retail @ 0x43EF70).
 
 //-------------------------------------------------------------------------------------------------
 // ?selectAllUnitsByTypeAcrossMap@InGameUI@@UAEHV?$BitFlags@$0HE@@@0@Z present-unmatched
