@@ -252,7 +252,7 @@ GameTextInterface* CreateGameTextInterface( void )
 //============================================================================
 
 // ??0GameTextManager@@QAE@XZ
-// Body in GameText_GameTextManager.asm (exact 161B retail).
+// Body in GameTextManagerConstructorThunk.cpp (exact 161B retail).
 
 //============================================================================
 // GameTextManager::~GameTextManager
