@@ -8421,7 +8421,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?WOLQMScoreScreenInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004D3C40,69,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQMScoreScreen.cpp,matched,
 ?WOLQMScoreScreenSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004F0470,141,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQMScoreScreen.cpp,matched,
 ?WOLQuickMatchMenuInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x005054B0,98,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu.cpp,matched,object-symbol=?input@BfmeQuickMatchInputBody@@QAE?AW4WindowMsgHandledType@@III@Z;C++ body converted from exact 98B retail MASM
-?WOLQuickMatchMenuShutdown@@YAXPAVWindowLayout@@PAX@Z,,0x00507E10,147,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu_Shutdown.asm,matched,
 ?WOLQuickMatchMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x0050A470,1177,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu_System.asm,matched,BFME object-form system callback; queue 0x509B57 mid-insn
 ?WOLQuickMatchMenuUpdate@@YAXPAVWindowLayout@@PAX@Z,,0x00506726,4682,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu_Update.asm,matched,BFME object-form update; queue 0x540410 INT3 pad; true body via QM:* strings
 ?WOLStatusMenuInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004D3C40,69,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLStatusMenu.cpp,matched,
@@ -14087,3 +14086,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ??1RTS2DScene@@UAE@XZ,,0x00711980,143,Code/GameEngineDevice/Source/W3DDevice/GameClient/RTS2DSceneDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?doTeamAttackNamed@ScriptActions@@IAEXABVAsciiString@@0@Z,,0x002F95A0,144,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsDoTeamAttackNamedThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ??0ControlBar@@QAE@XZ,,0x009F2730,146,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
+?WOLQuickMatchMenuShutdown@@YAXPAVWindowLayout@@PAX@Z,,0x00507E10,147,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuShutdownThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
