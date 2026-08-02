@@ -13212,7 +13212,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?setMaxDisconnects@QuickMatchPreferences@@QAEXH@Z,,0x000AD260,169,Code/masm_dumps/_sa13__setMaxDisconnects_QuickMatchPreferences__QAEXH_Z_AD260.asm,matched,multi-xref Open-BFME4+Grok MaxDisconnects
 ?setMaxLift@Locomotor@@QAEXM@Z,,0x00674240,10,Code/GameEngine/Source/GameLogic/Object/Behavior/JetSlowDeathBehavior.cpp,matched,icf-owner=?Set_Back_Child@CullNodeStruct@AABTreeClass@@QAEXK@Z
 ?setMaxMessagesPerUpdate@GameSpyInfo@@UAEXH@Z,,0x000FB8A0,13,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,
-?setMaxPing@QuickMatchPreferences@@QAEXH@Z,,0x000AD6C0,169,Code/GameEngine/Source/Common/UserPreferences_setMaxPing.asm,matched,sealed packet exact 169B MASM sha256 90952915d280e24a9d2af1c4bcf59f925332b44430a64828c9ce74a49b8df221
 ?setMaxPoints@QuickMatchPreferences@@QAEXH@Z,,0x000AD340,169,Code/masm_dumps/_sa13__setMaxPoints_QuickMatchPreferences__QAEXH_Z_AD340.asm,matched,Exact retail MASM; MaxPoints string-anchor; sibling setMaxDisconnects/setWaitTime/setNumPlayers
 ?setMaxShotCount@Weapon@@QAEXH@Z,,0x00087470,10,Code/GameEngine/Source/GameLogic/AI/AIStates.cpp,matched,
 ?setMaxTurnRate@Locomotor@@QAEXM@Z,,0x000C8DB0,10,Code/GameEngine/Source/GameLogic/Object/Behavior/JetSlowDeathBehavior.cpp,matched,
@@ -14087,3 +14086,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ??0GameTextManager@@QAE@XZ,,0x00438350,161,Code/GameEngine/Source/GameClient/GameTextManagerConstructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of GameTextManager constructor MASM body
 ?loadSavedIgnoreList@GameSpyInfo@@UAEXXZ,,0x00635310,162,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfoLoadSavedIgnoreListThunk.cpp,matched,Open-BFME5 exact C++ __emit port of GameSpyInfo loadSavedIgnoreList MASM body
 ?getHealthBoxDimensions@Object@@QBE_NAAM0@Z,,0x001C9E64,166,Code/GameEngine/Source/GameLogic/Object/ObjectGetHealthBoxDimensionsThunk.cpp,matched,Open-BFME5 exact C++ __emit port of Object getHealthBoxDimensions MASM body
+?setMaxPing@QuickMatchPreferences@@QAEXH@Z,,0x000AD6C0,169,Code/GameEngine/Source/Common/QuickMatchPreferencesSetMaxPingThunk.cpp,matched,Open-BFME5 exact C++ __emit port of QuickMatchPreferences setMaxPing MASM body

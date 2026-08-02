@@ -405,7 +405,8 @@ Int QuickMatchPreferences::getNumPlayers( void )
 	return atoi(it->second.str());
 }
 
-// ?setMaxPing@QuickMatchPreferences@@QAEXH@Z present-unmatched
+// ?setMaxPing@QuickMatchPreferences@@QAEXH@Z
+// Body in QuickMatchPreferencesSetMaxPingThunk.cpp (exact 169B retail).
 void QuickMatchPreferences::setMaxPing(Int val)
 {
 	AsciiString strVal;
