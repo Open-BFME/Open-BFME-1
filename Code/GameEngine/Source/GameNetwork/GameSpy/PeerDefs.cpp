@@ -445,7 +445,7 @@ void GameSpyInfo::leaveStagingRoom( void )
 }
 
 // ?markAsStagingRoomHost@GameSpyInfo@@UAEXXZ
-// Body in PeerDefs_markAsStagingRoomHost.asm (exact 390B retail @ 0x006313F0).
+// Body in PeerDefsMarkAsStagingRoomHostThunk.cpp (exact 390B retail @ 0x006313F0).
 // Drift vote 0x00791B33 was misplaced (mid-function FPU). BFME body differs from ZH
 // (no useStats/oldFactionsOnly preserve; extra IP/port stores; field offsets 0x25c/0x254/0x258/0x6c4).
 
