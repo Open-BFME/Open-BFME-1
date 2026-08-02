@@ -283,7 +283,8 @@ UnicodeString getUnicodeTimeBuffer(SYSTEMTIME timeVal)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??0GameState@@QAE@XZ present-unmatched
+  // ??0GameState@@QAE@XZ
+  // Body in GameStateConstructorThunk.cpp (exact 171B retail).
 GameState::GameState( void )
 {
 

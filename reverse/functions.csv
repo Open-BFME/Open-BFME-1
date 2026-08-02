@@ -1534,7 +1534,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0GameSpyInfo@@QAE@XZ,,0x00636D90,609,Code/masm_dumps/_rn7___0GameSpyInfo__QAE_XZ_636D90.asm,matched,reloc-needle Open-BFME4+Grok
 ??0GameSpyInfoInterface@@QAE@XZ,,0x00061D90,9,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,ICF alias of existing matched body
 ??0GameSpyMiscPreferences@@QAE@XZ,,0x000AB910,192,Code/masm_dumps/GameSpyMiscPreferences_ctor.asm,matched,Unique BFME profile-path constructor
-??0GameState@@QAE@XZ,,0x001111C0,171,Code/GameEngine/Source/Common/System/SaveGame/GameState_ctor.asm,matched,
 ??0GameWindow@@QAE@XZ,,0x004792F0,156,Code/masm_dumps/GameWindow_default_constructor_004792F0_packet332.asm,matched,Certified packet 332 SHA256 889fc8ecd26fa7027daa5c7542107cdfa86686169e57919bd48c509cd25d3194
 ??0GarrisonContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0021D820,312,Code/GameEngine/Source/GameLogic/AI/GarrisonContainCtorThunk.cpp,matched,Open-BFME5 exact C++ raw contain constructor
 ??0GarrisonContainModuleData@@QAE@XZ,,0x0022F7E0,153,Code/GameEngine/Source/GameLogic/AI/GarrisonContainModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
@@ -14087,3 +14086,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?getHealthBoxDimensions@Object@@QBE_NAAM0@Z,,0x001C9E64,166,Code/GameEngine/Source/GameLogic/Object/ObjectGetHealthBoxDimensionsThunk.cpp,matched,Open-BFME5 exact C++ __emit port of Object getHealthBoxDimensions MASM body
 ?setMaxPing@QuickMatchPreferences@@QAEXH@Z,,0x000AD6C0,169,Code/GameEngine/Source/Common/QuickMatchPreferencesSetMaxPingThunk.cpp,matched,Open-BFME5 exact C++ __emit port of QuickMatchPreferences setMaxPing MASM body
 ?doNamedUseCommandButtonAbilityAtWaypoint@ScriptActions@@IAEXABVAsciiString@@00@Z,,0x002F9F10,169,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsDoNamedUseCommandButtonAbilityAtWaypointThunk.cpp,matched,Open-BFME5 exact C++ __emit port of ScriptActions waypoint command ability MASM body
+??0GameState@@QAE@XZ,,0x001111C0,171,Code/GameEngine/Source/Common/System/SaveGame/GameStateConstructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of GameState constructor MASM body
