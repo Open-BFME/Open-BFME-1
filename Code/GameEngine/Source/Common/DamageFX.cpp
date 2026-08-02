@@ -279,14 +279,14 @@ DamageFXStore::~DamageFXStore()
 
 //-------------------------------------------------------------------------------------------------
 // ?findDamageFX@DamageFXStore@@QBEPBVDamageFX@@VAsciiString@@@Z
-// body: DamageFXStore_findDamageFX.asm (exact retail @ 0x00067440)
+// Body in DamageFXStoreFindDamageFXThunk.cpp (exact 192B retail @ 0x00067440).
 
 //-------------------------------------------------------------------------------------------------
 // ?init@DamageFXStore@@ present-unmatched
 void DamageFXStore::init()
 {
 	// Force-emit const $_Ht_iterator COMDAT (ICF @ 0x9E5EB0). Was only referenced
-	// by former C++ findDamageFX; matched body is DamageFXStore_findDamageFX.asm.
+	// by former C++ findDamageFX; matched body is DamageFXStoreFindDamageFXThunk.cpp.
 	// init remains present-unmatched (ZH empty stub); find of key 0 is a no-op side effect.
 	NameKeyType k = (NameKeyType)0;
 	(void)static_cast<const DamageFXMap &>(m_dfxmap).find(k);
