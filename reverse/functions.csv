@@ -14074,17 +14074,6 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?openFile@ArchiveFileSystem@@UAEPAVFile@@PBDHHH@Z,,0x009CA6E0,253,Code/GameEngine/Source/Common/System/ArchiveFileSystem.cpp,matched,vtable 0x01143A08 slot 6 (ret 0x10); wide form of slot 5 reaching ArchiveFile slot 3
 ?Load_W3D@HRawAnimClass@@QAEHAAVChunkLoadClass@@@Z,,0x0095ACC0,634,Code/Libraries/Source/WWVegas/WW3D2/hrawanim.cpp,matched,
 ?Multiply@Matrix3D@@SAXABV1@0PAV1@@Z,,0x008D80C0,403,Code/Libraries/Source/WWVegas/WWMath/matrix3d.cpp,matched,
-?Contains_Chunks@ChunkLoadClass@@QAEHXZ,,0x009E1470,16,Code/Libraries/Source/WWVegas/WWLib/chunkio.cpp,matched,
-?Cur_Micro_Chunk_Length@ChunkLoadClass@@QAEKXZ,,0x009E14F0,8,Code/Libraries/Source/WWVegas/WWLib/chunkio.cpp,matched,
-?Seek@ChunkLoadClass@@QAEKK@Z,,0x009E1500,180,Code/Libraries/Source/WWVegas/WWLib/chunkio.cpp,matched,
-??0ChunkLoadClass@@QAE@PAVBFMEChunkInput@@@Z,,0x009E1320,91,Code/Libraries/Source/WWVegas/WWLib/chunkio_load_ctor.cpp,matched,
-?Get_Bits_Per_Pixel@@YIIW4WW3DFormat@@@Z,,0x0090C400,180,Code/Libraries/Source/WWVegas/WW3D2/ww3dformat_bits.cpp,matched,
-?Write@ChunkSaveClass@@QAEKABUIOVector4Struct@@@Z,,0x009E1930,15,Code/Libraries/Source/WWVegas/WWLib/chunkio.cpp,matched,
-?Write@ChunkSaveClass@@QAEKABUIOQuaternionStruct@@@Z,,0x009E1940,15,Code/Libraries/Source/WWVegas/WWLib/chunkio.cpp,matched,
-?Is_Animation_Complete@Animatable3DObjClass@@UBE_NXZ,,0x00981CA0,103,Code/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,
-?Simple_Evaluate_Bone@Animatable3DObjClass@@UBE_NHPAVMatrix3D@@@Z,,0x00982C20,202,Code/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,
-?Anim_Update@Animatable3DObjClass@@IAEXABVMatrix3D@@PAVHAnimClass@@M@Z,,0x00981E10,112,Code/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,
-?Anim_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHAnimClass@@M@Z,,0x00953AD0,987,Code/Libraries/Source/WWVegas/WW3D2/htree.cpp,matched,
 ?clearSlotList@GameInfo@@QAEXXZ,,0x0061F520,218,Code/GameEngine/Source/GameNetwork/GameInfoClearSlotListThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ?WriteBuildInfo@Debug@@QAEXXZ,,0x0088A492,135,Code/Libraries/Source/WWVegas/WWDebug/debug_debug_WriteBuildInfoThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ??1?$pair@$$CBVUnicodeString@@VAsciiString@@@_STL@@QAE@XZ,,0x000A9B80,76,Code/GameEngine/Source/GameClient/MapUtilUnicodeAsciiPairDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
