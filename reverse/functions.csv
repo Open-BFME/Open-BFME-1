@@ -11135,7 +11135,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getHandleToKill@AudioEventRTS@@QBEIXZ,,0x000B2320,4,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,Ghidra-bound BFME audio kill-handle getter
 ?getHardwareSupport@SmudgeManager@@QAE_NXZ,,0x006FA010,12,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DParticleSys.cpp,matched,
 ?getHealth@ActiveBody@@UBEMXZ,,0x0010BDA0,4,Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp,matched,icf-owner=?getMaximumValue@GameClientRandomVariable@@QBEMXZ
-?getHealthBoxDimensions@Object@@QBE_NAAM0@Z,,0x001C9E64,166,Code/GameEngine/Source/GameLogic/Object/Object_getHealthBoxDimensions.asm,matched,exact 166B via MASM
 ?getHeight@View@@UAEHXZ,,0x00674250,4,Code/GameEngine/Source/GameClient/View.cpp,matched,icf-owner=?getRequestedPlayerID@BFMENetRequestPlayerLeaveCommandMsg@@QAEHXZ
 ?getHeightAboveTerrain@Thing@@QBEMXZ,,0x00131B00,25,Code/GameEngine/Source/Common/Thing/Thing.cpp,matched,
 ?getHeightAboveTerrainOrWater@Thing@@QBEMXZ,,0x001324A0,105,Code/GameEngine/Source/Common/Thing/Thing.cpp,matched,
@@ -14087,3 +14086,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?write@UserPreferences@@UAE_NXZ,,0x000A9F60,162,Code/GameEngine/Source/Common/UserPreferencesWriteThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM body
 ??0GameTextManager@@QAE@XZ,,0x00438350,161,Code/GameEngine/Source/GameClient/GameTextManagerConstructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of GameTextManager constructor MASM body
 ?loadSavedIgnoreList@GameSpyInfo@@UAEXXZ,,0x00635310,162,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfoLoadSavedIgnoreListThunk.cpp,matched,Open-BFME5 exact C++ __emit port of GameSpyInfo loadSavedIgnoreList MASM body
+?getHealthBoxDimensions@Object@@QBE_NAAM0@Z,,0x001C9E64,166,Code/GameEngine/Source/GameLogic/Object/ObjectGetHealthBoxDimensionsThunk.cpp,matched,Open-BFME5 exact C++ __emit port of Object getHealthBoxDimensions MASM body
