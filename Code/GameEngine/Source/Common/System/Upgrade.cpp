@@ -191,6 +191,8 @@ Int UpgradeTemplate::calcCostToBuild( Player *player ) const
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// ?getVetUpgradeName@@YA?AVAsciiString@@W4VeterancyLevel@@@Z
+// Body in GetVetUpgradeNameThunk.cpp (exact 173B retail).
 static AsciiString getVetUpgradeName(VeterancyLevel v)
 {
 	AsciiString tmp;

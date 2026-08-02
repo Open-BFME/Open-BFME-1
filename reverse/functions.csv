@@ -11617,7 +11617,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getVertexBuffer@SegLineRendererClass@@AAEPAUVertexFormatXYZDUV1@@I@Z,,0x0095FF60,57,Code/Libraries/Source/WWVegas/WW3D2/seglinerenderer.cpp,matched,
 ?getVerticalSliderDrawFunc@GameWindowManager@@QAEP6AXPAVGameWindow@@PAVWinInstanceData@@@ZXZ,,0x006CF680,3,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?getVerticalSliderImageDrawFunc@GameWindowManager@@QAEP6AXPAVGameWindow@@PAVWinInstanceData@@@ZXZ,,0x006CF680,3,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
-?getVetUpgradeName@@YA?AVAsciiString@@W4VeterancyLevel@@@Z,,0x0010AD90,173,Code/GameEngine/Source/Common/System/Upgrade_getVetUpgradeName.asm,matched,Ghidra-confirmed Upgrade_Veterancy_ string helper boundary
 ?getVeterancyLevelFlag@@YA_NIW4VeterancyLevel@@@Z,,0x001FB090,23,Code/GameEngine/Source/GameLogic/Object/Die/DieModule.cpp,matched,
 ?getViewFilterMode@View@@UAE?AW4FilterModes@@XZ,,0x006CF680,3,Code/GameEngine/Source/GameClient/View.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?getViewFilterType@View@@UAE?AW4FilterTypes@@XZ,,0x006CF680,3,Code/GameEngine/Source/GameClient/View.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
@@ -14087,3 +14086,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ??0GameState@@QAE@XZ,,0x001111C0,171,Code/GameEngine/Source/Common/System/SaveGame/GameStateConstructorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of GameState constructor MASM body
 ?parseImagePart@ControlBarSchemeManager@@SAXPAVINI@@PAX1PBX@Z,,0x004AE920,172,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarSchemeParseImagePartThunk.cpp,matched,Open-BFME5 exact C++ __emit port of ControlBarSchemeManager parseImagePart MASM body
 ?isValidMap@@YA_NVAsciiString@@_N@Z,,0x00457ED0,170,Code/GameEngine/Source/GameClient/MapUtilIsValidMapThunk.cpp,matched,Open-BFME5 exact C++ __emit port of isValidMap MASM body
+?getVetUpgradeName@@YA?AVAsciiString@@W4VeterancyLevel@@@Z,,0x0010AD90,173,Code/GameEngine/Source/Common/System/GetVetUpgradeNameThunk.cpp,matched,Open-BFME5 exact C++ __emit port of getVetUpgradeName MASM body
