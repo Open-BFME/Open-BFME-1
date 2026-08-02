@@ -136,7 +136,7 @@ void LANAPI::handleLobbyAnnounce( LANMessage *msg, UnsignedInt senderIP )
 }
 
 // ?handleRequestGameInfo@LANAPI@@IAEXPAULANMessage@@I@Z
-// Body in LANAPIhandlers_handleRequestGameInfo.asm (exact 254B retail @ 0x68B380;
+// Body in LANAPIHandlersHandleRequestGameInfoThunk.cpp (exact 254B retail @ 0x68B380;
 // queue 0x9DAFF9 was a misplaced unit-tag dispatcher).
 
 // ?handleRequestJoin@LANAPI@@IAEXPAULANMessage@@I@Z
