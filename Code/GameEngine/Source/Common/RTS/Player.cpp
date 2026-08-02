@@ -2116,7 +2116,8 @@ void Player::setUnitsShouldHunt(Bool unitsShouldHunt, CommandSourceType source)
 }
 
 //=============================================================================
-// ?killPlayer@Player@@QAEXXZ present-unmatched
+// ?killPlayer@Player@@QAEXXZ
+// Body in PlayerKillPlayerThunk.cpp (exact 184B retail).
 void Player::killPlayer(void)
 {
 	for (PlayerTeamList::iterator it = m_playerTeamPrototypes.begin(); it != m_playerTeamPrototypes.end(); ++it) {
