@@ -2750,7 +2750,7 @@ Bool Player::isCapableOfPurchasingScience(ScienceType science) const
 
 //=============================================================================
 // ?resetRank@Player@@QAEXXZ
-// Body in Player_resetRank.asm (exact 319B retail @ 0xD7CA0; queue 0xD7CAE was mid-prologue).
+// Body in PlayerResetRankThunk.cpp (exact 319B retail @ 0xD7CA0; queue 0xD7CAE was mid-prologue).
 
 //=============================================================================
 /// returns TRUE if rank level really changed.
