@@ -1010,7 +1010,7 @@ const MapMetaData *MapCache::findMap(AsciiString mapName)
 /** Copy a file from a .big archive path to a real directory path */
 // ------------------------------------------------------------------------------------------------
 // ?copyFromBigToDir@@YAXABVAsciiString@@0@Z
-// Body in MapUtil_copyFromBigToDir.asm (exact 303B retail @ 0x004508D0).
+// Body in MapUtilCopyFromBigToDirThunk.cpp (exact 303B retail @ 0x004508D0).
 // Drift 0x00ABFB2C is mid unrelated W3D/allocator fn; C++ blocked by File
 // vtable seek slot and AsciiString::str +8 vs ZH +4.
 void copyFromBigToDir( const AsciiString& infile, const AsciiString& outfile );
