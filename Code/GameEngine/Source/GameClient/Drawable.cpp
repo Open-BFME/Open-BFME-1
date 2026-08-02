@@ -2909,7 +2909,7 @@ void Drawable::setEmoticon( const AsciiString &name, Int duration )
 
 //------------------------------------------------------------------------------------------------
 // ?drawEmoticon@Drawable@@AAEXPBUIRegion2D@@@Z
-// Body in Drawable_drawEmoticon.asm (exact 191B retail @ 0x00414AF0).
+// Body in DrawableDrawEmoticonThunk.cpp (exact 191B retail @ 0x00414AF0).
 
 
 // ------------------------------------------------------------------------------------------------
