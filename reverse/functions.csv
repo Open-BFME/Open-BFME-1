@@ -2355,7 +2355,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "??0LightningEmissionInfo@FXParticleSystem@@QAE@XZ","0x00041E2A","0x005FAFE0","291","Code/GameEngine/Source/GameClient/FXParticleSystem_LightningEmissionInfo_ctor_Thunk.cpp","matched","Open-BFME5 lift 291B retail MASM to standalone C++ thunk"
 "??0LightningEmissionModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z","0x0001FDF7","0x005D6BA0","76","Code/GameEngine/Source/GameClient/System/FXParticleSystem/LightningEmissionModuleTemplateCopyCtorThunk.cpp","matched","Open-BFME5 clean C++ Category+LightningEmissionInfo copy ctor; converted from naked __emit"
 "??0LightningEmissionModuleTemplate@FXParticleSystem@@QAE@XZ","0x0000CC39","0x005D6AD0","144","Code/GameEngine/Source/GameClient/System/FXParticleSystem/LightningEmissionModuleTemplateCtorThunk.cpp","matched","Open-BFME5 exact C++ __emit port of MASM SEH ctor"
-"??0Line3DClass@@QAE@ABVVector3@@0MMMMM@Z","","0x00951870","551","Code/masm_dumps/_rn4___0Line3DClass__QAE_ABVVector3__0MMMMM_Z_951870.asm","matched","reloc-needle Open-BFME4+Grok"
+"??0Line3DClass@@QAE@ABVVector3@@0MMMMM@Z","","0x00951870","551","Code/Libraries/Source/WWVegas/WW3D2/Line3DClassCtor_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_Line3DClassCtor_951870"
 "??0LinearOffsetTextureMapperClass@@QAE@ABV0@@Z","","0x009669A0","103","Code/Libraries/Source/WWVegas/WW3D2/mapper.cpp","matched",""
 "??0LinearOffsetTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z","","0x009668B0","237","Code/Libraries/Source/WWVegas/WW3D2/mapper.cpp","matched",""
 "??0LinearOffsetTextureMapperClass@@QAE@ABVVector2@@0_N0I@Z","","0x009667F0","133","Code/Libraries/Source/WWVegas/WW3D2/mapper.cpp","matched",""
