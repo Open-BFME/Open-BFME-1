@@ -33340,7 +33340,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?read_channel@HCompressedAnimClass@@AAE_NAAVChunkLoadClass@@PAPAVAdaptiveDeltaMotionChannelClass@@@Z,,0x0095B180,101,Code/Libraries/Source/WWVegas/WW3D2/hcanim.cpp,matched,
 ?read_channel@HCompressedAnimClass@@AAE_NAAVChunkLoadClass@@PAPAVTimeCodedMotionChannelClass@@@Z,,0x0095B110,101,Code/Libraries/Source/WWVegas/WW3D2/hcanim.cpp,matched,
 ?read_channel@HRawAnimClass@@AAE_NAAVChunkLoadClass@@PAPAVMotionChannelClass@@_N@Z,,0x00959AE0,119,Code/Libraries/Source/WWVegas/WW3D2/hrawanim.cpp,matched,
-?read_dcg@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,,0x0096D500,770,Code/masm_dumps/_leaf__read_dcg_MeshModelClass__IAE_AW4WW3DErr_96D500.asm,matched,Exact 770B present-unmatched leaf Open-BFME4
+?read_dcg@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,,0x0096D500,770,Code/Libraries/Source/WWVegas/WW3D2/MeshModelClassReadDcgThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact leaf MASM body;object-symbol=_bfme_MeshModelClassReadDcg_96D500
 ?read_dig@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,,0x0096D810,61,Code/Libraries/Source/WWVegas/WW3D2/meshmdlio.cpp,matched,
 ?read_material_pass@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,,0x0096FB60,59,Code/Libraries/Source/WWVegas/WW3D2/meshmdlio.cpp,matched,
 ?read_prelit_material@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,,0x0096FC30,249,Code/Libraries/Source/WWVegas/WW3D2/MeshModelClass_read_prelit_material_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
