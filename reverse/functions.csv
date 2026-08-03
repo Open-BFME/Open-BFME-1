@@ -1203,7 +1203,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0AttributeModifierAuraUpdateModuleData@@QAE@XZ,,0x00280B20,189,Code/GameEngine/Source/GameLogic/AI/AttributeModifierAuraUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
 ??0AttributeModifierUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002D2EB0,53,Code/GameEngine/Source/GameLogic/Object/Upgrade/AttributeModifierUpgrade.cpp,matched,Luna Open-BFME5.0 clean C++ empty UpgradeModule derivative
 ??0AttributeModifierUpgradeModuleData@@QAE@XZ,,0x00129C10,90,Code/GameEngine/Source/GameLogic/AI/AttributeModifierUpgradeModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ ICF-alias raw module-data constructor
-??0AudioSettings@@QAE@XZ,,0x000B4E00,725,Code/masm_dumps/AudioSettings_ctor_000B4E00.asm,matched,Certified packet 142 exact retail db recovery
+??0AudioSettings@@QAE@XZ,,0x000B4E00,725,Code/GameEngine/Source/Common/AudioSettingsCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from certified MASM packet;object-symbol=_bfme_AudioSettingsCtor_0B4E00
 ??0AutoAbilityBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,,0x001ED8A0,155,Code/GameEngine/Source/GameLogic/AI/AutoAbilityBehaviorCtorThunk.cpp,matched,Open-BFME5 exact C++ raw behavior constructor
 ??0AutoAbilityBehaviorModuleData@@QAE@XZ,,0x001ED6A0,16,Code/GameEngine/Source/GameLogic/Object/Behavior/AutoAbilityBehavior.cpp,matched,Exact retail ModuleData constructor emitted as C++.
 ??0AutoDepositUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00280D90,98,Code/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateConstructor.cpp,matched,thunk-dump converted to clean C++ constructor body at destination 0x280D90
