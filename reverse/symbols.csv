@@ -46450,3 +46450,50 @@ g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 ?getSpecialPowerModule@Object@@QBEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF
 ?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6
 ?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37
+?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
+?getSpecialPowerModule@Object@@QBEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF
+?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6
+?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37
+?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
+??0ClientUpdateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,Open-BFME5 SwayClientUpdate base ctor pin
+?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
+??0ClientUpdateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,Open-BFME5 SwayClientUpdate base ctor pin
+??0DrawableModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,SwayClientUpdate base ctor from retail call site
+?getSpecialPowerModule@Object@@QBEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF
+?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6
+?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37
+?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
+?getSpecialPowerModule@Object@@QBEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF
+?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6
+?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37
+?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
+??0ClientUpdateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,Open-BFME5 SwayClientUpdate base ctor pin
+?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
+??0ClientUpdateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,Open-BFME5 SwayClientUpdate base ctor pin
+??0DrawableModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,SwayClientUpdate base ctor from retail call site
+g_windGlobalA,0x012F7004,WindModuleInfo ctor global
+g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
+??0DarknessSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,DarknessSpecialPowerModuleData base ctor
+??0ModuleDataBase@@QAE@XZ,0x00036818,Open-BFME5 Porcupine base pin
+?getSpecialPowerModule@Object@@QBEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF
+?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6
+?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37
+?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
+??0ClientUpdateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,Open-BFME5 SwayClientUpdate base ctor pin
+??0DrawableModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,SwayClientUpdate base ctor from retail call site
+??0FreezingRainSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,FreezingRainSpecialPowerModuleData base ctor
+??0ModuleDataBase_StopSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 StopSpecialPowerModuleData base pin
+??0ModuleDataBase_HordeContainModuleData@@QAE@XZ,0x00044030,Open-BFME5 HordeContainModuleData base pin
+??0SiegeDeploySpecialPowerModuleDataBase@@QAE@XZ,0x00023FE7,SiegeDeploySpecialPowerModuleData base ctor from retail call site
+??0DevastateSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,DevastateSpecialPowerModuleData base ctor
+??0MissileAIUpdateModuleDataBase@@QAE@XZ,0x0003C556,MissileAIUpdateModuleData base ctor
+??0ModuleDataBase_DefectorSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 DefectorSpecialPowerModuleData base pin
+??0ModuleDataBase_CombineHordeSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 CombineHordeSpecialPowerModuleData base pin
+??0GrabPassengerSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,GrabPassengerSpecialPowerModuleData base ctor
+?getSpecialPowerModule@Object@@QBEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF
+?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6
+?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37
+g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
+g_windGlobalA,0x012F7004,WindModuleInfo ctor global
+g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
