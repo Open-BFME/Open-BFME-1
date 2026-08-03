@@ -879,7 +879,7 @@ static void placeNetworkBuildingsForPlayer(Int slotNum, const GameSlot *pSlot, P
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ?getLoadScreen@GameLogic@@AAEPAVLoadScreen@@_N@Z
-// Body in GameLogic_getLoadScreen.asm (exact 487B retail).
+// Body in GameLogicGetLoadScreenThunk.cpp (exact 83B ledger body; dump includes adjacent folded bodies).
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
