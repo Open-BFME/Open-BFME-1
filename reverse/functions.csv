@@ -32673,7 +32673,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?message@InGameUI@@UAAXVUnicodeString@@ZZ,,0x0043DEE0,9,Code/GameEngine/Source/GameClient/InGameUI_message_UnicodeString.cpp,matched,Open-BFME5 exact C++ virtual tail stub
 ?messageCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyMessageArg@@@Z,,0x0000E43A,5,Code/GameEngine/Source/Common/RTS/BuddyThreadClassMessageCallbackThunk.cpp,matched,5-byte incremental-link BuddyThreadClass message callback thunk converted to focused C++ source
 ?messageColor@InGameUI@@UAAXPBURGBColor@@VUnicodeString@@ZZ,,0x0043DEF0,9,Code/GameEngine/Source/GameClient/InGameUIMessageColorThunk.cpp,matched,Open-BFME5 exact C++ ABI thunk replacing MASM dump;object-symbol=?messageColor@InGameUI@@UAAXPBURGBColor@@VUnicodeString@@ZZ
-?militarySubtitle@InGameUI@@UAEXABVAsciiString@@H@Z,,0x00441D30,585,Code/masm_dumps/militarySubtitle_InGameUI_UAEXABVAsciiString_H_Z_00441D30_packet349.asm,matched,Certified packet 349 exact retail db body SHA-256 0497b9effcf396d5176dbffe01f01b9bc6576d950b93804954a1d8c24b372472
+?militarySubtitle@InGameUI@@UAEXABVAsciiString@@H@Z,,0x00441D30,585,Code/GameEngine/Source/GameClient/InGameUI_militarySubtitle_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from certified MASM packet;object-symbol=_bfme_InGameUIMilitarySubtitle_441D30
 ?minInt@@YAHHH@Z,,0x0094A8C0,15,Code/GameEngine/Source/GameLogic/Object/PartitionManager.cpp,matched,ICF alias of existing matched body
 ?minf@@YAMMM@Z,,0x0075B460,25,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp,matched,
 ?missionSave@GameState@@QAE?AW4SaveCode@@XZ,,0x00110600,311,Code/GameEngine/Source/Common/GameState_missionSave_Thunk.cpp,matched,Exact 311B Open-BFME4
