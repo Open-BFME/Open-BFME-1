@@ -2816,7 +2816,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1BridgeBehaviorModuleData@@UAE@XZ,,0x001F5440,147,Code/masm_dumps/BridgeBehaviorModuleData_destructor.asm,matched,Ghidra-corrected retail body via constructor vtable and deleting destructor
 ??1BroadcastStealthUpdate@@UAE@XZ,,0x00289E50,803,Code/masm_dumps/BroadcastStealthUpdate_destructor.asm,matched,Exact 803B @ 0x00289E50; Exact retail MASM; instance factory->vtable dtor; del 0x289E50 ctor 0x289880 vt 0xCBCB3C
 ??1BroadcastStealthUpdateModuleData@@UAE@XZ,,0x0012ADF0,80,Code/masm_dumps/BroadcastStealthUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
-??1BuddyMessage@@QAE@XZ,,0x004EA4B0,90,Code/masm_dumps/_BuddyMessage_dtor_4EA4B0.asm,matched,true body 0x4EA4B0/90 via ??_GBuddyMessage; queue 0x9DB0B4 mid-fn; MASM exact; Open-BFME fleet
+??1BuddyMessage@@QAE@XZ,,0x004EA4B0,90,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyMessageDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1Buffer@@QAE@XZ,,0x009E1E30,40,Code/Libraries/Source/WWVegas/WWLib/buff.cpp,matched,
 ??1BufferPipe@@UAE@XZ,,0x009E2070,76,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,
 ??1BufferStraw@@UAE@XZ,,0x00921790,76,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,definite (call-site resolved)
