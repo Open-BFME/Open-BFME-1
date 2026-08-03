@@ -1,87 +1,55 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
-class INI;
 class ModuleData;
+
+void *__cdecl operator new(unsigned int);
+void __cdecl operator delete(void *);
+
+class DefaultProductionExitUpdateModuleData
+{
+public:
+	DefaultProductionExitUpdateModuleData();
+	virtual ~DefaultProductionExitUpdateModuleData();
+
+private:
+	unsigned int m_gap4;
+	unsigned int m_08;
+	unsigned int m_0c;
+	unsigned int m_10;
+	unsigned int m_14;
+	unsigned int m_18;
+	unsigned int m_1c;
+};
+
+class INI
+{
+public:
+	void initFromINI(void *what, const void *parseTable);
+};
+
+extern "C" char DefaultProductionExitUpdateFieldParse;
 
 class DefaultProductionExitUpdate
 {
 public:
-    static ModuleData *friend_newModuleData(INI *ini);
+	static ModuleData *friend_newModuleData(INI *ini);
 };
 
-// ?friend_newModuleData@DefaultProductionExitUpdate@@SAPAVModuleData@@PAVINI@@@Z
-__declspec(naked) ModuleData *DefaultProductionExitUpdate::friend_newModuleData(INI *)
+DefaultProductionExitUpdateModuleData::DefaultProductionExitUpdateModuleData()
 {
-    __asm {
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x20
-        __emit 0xe8
-        __emit 0x18
-        __emit 0xe6
-        __emit 0x75
-        __emit 0x00
-        __emit 0x33
-        __emit 0xd2
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x3b
-        __emit 0xc2
-        __emit 0x74
-        __emit 0x1c
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x90
-        __emit 0xc9
-        __emit 0x08
-        __emit 0x01
-        __emit 0x89
-        __emit 0x50
-        __emit 0x08
-        __emit 0x89
-        __emit 0x50
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x50
-        __emit 0x10
-        __emit 0x89
-        __emit 0x50
-        __emit 0x14
-        __emit 0x89
-        __emit 0x50
-        __emit 0x18
-        __emit 0x89
-        __emit 0x50
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x3b
-        __emit 0xca
-        __emit 0x74
-        __emit 0x0b
-        __emit 0x68
-        __emit 0x87
-        __emit 0x36
-        __emit 0x42
-        __emit 0x00
-        __emit 0x56
-        __emit 0xe8
-        __emit 0xde
-        __emit 0xe7
-        __emit 0x72
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc3
-    }
+	m_08 = 0;
+	m_0c = 0;
+	m_10 = 0;
+	m_14 = 0;
+	m_18 = 0;
+	m_1c = 0;
+}
+
+// ?friend_newModuleData@DefaultProductionExitUpdate@@SAPAVModuleData@@PAVINI@@@Z
+ModuleData *DefaultProductionExitUpdate::friend_newModuleData(INI *ini)
+{
+	DefaultProductionExitUpdateModuleData *data = new DefaultProductionExitUpdateModuleData;
+	if (ini)
+		ini->initFromINI(data, &DefaultProductionExitUpdateFieldParse);
+	return (ModuleData *)data;
 }
