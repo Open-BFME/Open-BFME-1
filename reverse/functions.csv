@@ -3122,7 +3122,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1PowerPlantUpdateModuleData@@UAE@XZ,,0x000A7210,108,Code/masm_dumps/PowerPlantUpdateModuleData_destructor.asm,matched,Exact 108B SEH dtor Open-BFME4
 ??1ProductionPrerequisite@@QAE@XZ,,0x0003ECC0,5,Code/GameEngine/Source/Common/RTS/ProductionPrerequisiteDestructorThunk.cpp,matched,5-byte incremental-link destructor thunk converted to focused C++ thunk TU
 ??1ProductionSpeedBonus@@UAE@XZ,,0x00268F30,232,Code/masm_dumps/ProductionSpeedBonus_destructor.asm,matched,Exact 232B SEH dtor Open-BFME4
-??1ProductionSpeedBonusModuleData@@UAE@XZ,,0x00264750,79,Code/masm_dumps/ProductionSpeedBonusModuleData_destructor.asm,matched,Exact 79B @ 0x00264750; Exact retail MASM; factory->vtable dtor; del 0x264720 ctor 0x264690 vt 0xCB6930
+??1ProductionSpeedBonusModuleData@@UAE@XZ,,0x00264750,79,Code/GameEngine/Source/GameLogic/AI/ProductionSpeedBonusModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1ProductionUpdate@@UAE@XZ,,0x0029D460,200,Code/masm_dumps/ProductionUpdate_destructor.asm,matched,Exact 200B @ 0x0029D460; Exact retail MASM; instance factory->vtable dtor; del 0x29E300 ctor 0x29C9E0 vt 0xCC0F34
 ??1ProductionUpdateModuleData@@UAE@XZ,,0x0029E260,126,Code/masm_dumps/ProductionUpdateModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
 ??1PropagandaTowerBehavior@@UAE@XZ,,0x002034F0,67,Code/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
