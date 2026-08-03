@@ -14258,3 +14258,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?constructVolume@W3DVolumetricShadow@@IAEXPAVVector3@@MHH@Z,,0x007B82A0,1399,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,
 ??1FXListStore@@UAE@XZ,,0x009F2800,115,Code/GameEngine/Source/GameClient/FXListStoreDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit lift; ICF alias at corrected +4B entry
 ?deleteTriggers@PolygonTrigger@@QAEXXZ,,0x00748860,1328,Code/GameEngine/Source/GameLogic/Map/PolygonTrigger.cpp,matched,object-symbol=?deleteTriggers@PolygonTrigger@@SAXXZ; exact 1328B C++ inline body lifted from MASM; source declares static deleteTriggers
+?parseShotDelay@WeaponTemplate@@CAXPAVINI@@PAX1PBX@Z,,0x001E134F,234,Code/GameEngine/Source/GameLogic/Object/Weapon.cpp,matched,Open-BFME5 retail byte lift from 0x001E134F
