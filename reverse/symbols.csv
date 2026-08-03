@@ -46304,3 +46304,4 @@ g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 ??0ModuleDataBase@@QAE@XZ,0x00036818,Open-BFME5 Porcupine base pin
 ?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
 ??0ClientUpdateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,Open-BFME5 SwayClientUpdate base ctor pin
+??0DrawableModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,SwayClientUpdate base ctor from retail call site
