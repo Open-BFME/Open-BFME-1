@@ -2014,6 +2014,7 @@ name,address,notes
 ??0SpecialPowerCompletionDieModuleData@@QAE@XZ,0x000246CC,pinharvest x1 (thunk)
 ??0SpecialPowerCompletionDieModuleData@@QAE@XZ,0x0004A250,pinharvest x1 (thunk)
 ??0SpecialPowerModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00011E50,BFME constructor body called by special-power module constructors
+??0SpecialPowerModuleData@@QAE@XZ,0x00015C44,DarknessSpecialPowerModuleData base ctor
 ??0SpecialPowerModuleData@@QAE@XZ,0x3f503,FellBeastSwoopPowerModuleData base ctor
 ??0SpectreGunshipUpdateModuleData@@QAE@XZ,0x0000B997,pinharvest x1 (thunk)
 ??0SpectreGunshipUpdateModuleData@@QAE@XZ,0x00016C39,pinharvest x1 (thunk)
