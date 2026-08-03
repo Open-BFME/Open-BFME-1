@@ -1,51 +1,31 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class FreezingRainSpecialPowerModuleData
+// Open-BFME5: FreezingRainSpecialPowerModuleData ctor (same base as Darkness).
+
+class FreezingRainSpecialPowerModuleDataBase
 {
 public:
-    FreezingRainSpecialPowerModuleData();
+	FreezingRainSpecialPowerModuleDataBase();
+	virtual ~FreezingRainSpecialPowerModuleDataBase();
+
+private:
+	unsigned char m_pad[0x20c];
 };
 
-__declspec(naked) FreezingRainSpecialPowerModuleData::FreezingRainSpecialPowerModuleData()
+class FreezingRainSpecialPowerModuleData : public FreezingRainSpecialPowerModuleDataBase
 {
-    __asm {
-        _emit 056h
-        _emit 08Bh
-        _emit 0F1h
-        _emit 0E8h
-        _emit 07Ch
-        _emit 083h
-        _emit 0DBh
-        _emit 0FFh
-        _emit 0C7h
-        _emit 006h
-        _emit 028h
-        _emit 051h
-        _emit 00Bh
-        _emit 001h
-        _emit 0C7h
-        _emit 086h
-        _emit 010h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 020h
-        _emit 041h
-        _emit 0C7h
-        _emit 086h
-        _emit 014h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 08Bh
-        _emit 0C6h
-        _emit 05Eh
-        _emit 0C3h
-    }
+public:
+	FreezingRainSpecialPowerModuleData();
+	virtual ~FreezingRainSpecialPowerModuleData();
+
+private:
+	float m_210;
+	unsigned int m_214;
+};
+
+// ??0FreezingRainSpecialPowerModuleData@@QAE@XZ
+FreezingRainSpecialPowerModuleData::FreezingRainSpecialPowerModuleData()
+{
+	m_210 = 10.0f;
+	m_214 = 0;
 }
