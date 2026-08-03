@@ -1628,6 +1628,7 @@ name,address,notes
 ??1GameMessageList@@UAE@XZ,0x0000E421
 ??1GameResultsRequest@@QAE@XZ,0x00049288
 ??1GameResultsResponse@@QAE@XZ,0x00024352
+??1GameSlot@@QAE@XZ,0x0000B988,Open-BFME5 pin
 ??1GameTextInterface@@UAE@XZ,0x0000E908
 ??1GateOpenAndCloseBehaviorModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 pin
 ??1GateOpenAndCloseBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
@@ -22858,6 +22859,7 @@ name,address,notes
 ?setSize@Shadow@@QAEXMM@Z,0x00040412,pinharvest x1 (thunk)
 ?setSize@ShadowSetSizeShim@@QAEXMM@Z,0x001E4250,Shadow::setSize incremental-link thunk target through a TU-local forwarding shim
 ?setSlot@NetDisconnectVoteCommandMsg@@QAEXE@Z,0x00020739,ILT thunk; real body 0xA73D20
+?setSlotData@GI_SlotObj@@QAEXPAVGameSlot@@@Z,0x000126E8,Open-BFME5 pin
 ?setSortMode@@YAXW4GameSortType@@@Z,0x00048360
 ?setStatus@Object@@QAEXV?$BitFlags@$0CN@@@_N@Z,0x0001366F,hit-decoded x8 (thunk)
 ?setStatus@Object@@QAEXV?$BitFlags@$0CN@@@_N@Z,0x000486EE,hit-decoded x8 (thunk)
@@ -23208,11 +23210,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?parse@LightningEmissionTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00046006,Open-BFME5 pin
-??0PB_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,Open-BFME5 pin
-??0RenderObjectDrawModule@FXParticleSystem@@QAE@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0001C021,Open-BFME5 pin
-??1LGA_MemberObj@@QAE@XZ,0x000181C9,Open-BFME5 pin
-?remove@LGA_Global@@QAEXPAPAX@Z,0x00025C34,Open-BFME5 pin
-?bind@BFX_Member@@QAEHPAVMemoryPool@@@Z,0x0002AE23,Open-BFME5 pin
-??1GameSlot@@QAE@XZ,0x0000B988,Open-BFME5 pin
-?setSlotData@GI_SlotObj@@QAEXPAVGameSlot@@@Z,0x000126E8,Open-BFME5 pin
