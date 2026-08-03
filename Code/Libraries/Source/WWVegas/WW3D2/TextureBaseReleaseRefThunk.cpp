@@ -1,97 +1,65 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
 class TextureBaseClass
 {
 public:
-    void Release_Ref();
+	void Release_Ref();
+	virtual void v00();
+	virtual void v04();
+	virtual void v08();
+	virtual void v0c();
+	virtual void v10();
+	virtual void v14();
+	virtual void v18();
+	virtual void v1c();
+	virtual void Delete_This();
+
+private:
+	unsigned int m_refBits;
 };
 
-__declspec(naked) void TextureBaseClass::Release_Ref()
+// ?Release_Ref@TextureBaseClass@@QAEXXZ
+void TextureBaseClass::Release_Ref()
 {
-    __asm {
-        _emit 0F7h
-        _emit 041h
-        _emit 004h
-        _emit 0FFh
-        _emit 0FFh
-        _emit 000h
-        _emit 000h
-        _emit 074h
-        _emit 01Ah
-        _emit 066h
-        _emit 0FFh
-        _emit 049h
-        _emit 004h
-        _emit 08Bh
-        _emit 041h
-        _emit 004h
-        _emit 0A9h
-        _emit 0FFh
-        _emit 0FFh
-        _emit 000h
-        _emit 000h
-        _emit 075h
-        _emit 00Ch
-        _emit 0A9h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 001h
-        _emit 074h
-        _emit 005h
-        _emit 08Bh
-        _emit 001h
-        _emit 0FFh
-        _emit 060h
-        _emit 020h
-        _emit 0C3h
-    }
+	if ((m_refBits & 0xffff) == 0)
+		return;
+	*reinterpret_cast<unsigned short *>(&m_refBits) =
+		static_cast<unsigned short>(*reinterpret_cast<unsigned short *>(&m_refBits) - 1);
+	if ((m_refBits & 0xffff) != 0)
+		return;
+	if ((m_refBits & 0x1000000) == 0)
+		return;
+	Delete_This();
 }
 
 class TextureClass
 {
 public:
-    void Release_Ref();
+	void Release_Ref();
+	virtual void v00();
+	virtual void v04();
+	virtual void v08();
+	virtual void v0c();
+	virtual void v10();
+	virtual void v14();
+	virtual void v18();
+	virtual void v1c();
+	virtual void Delete_This();
+
+private:
+	unsigned int m_refBits;
 };
 
-__declspec(naked) void TextureClass::Release_Ref()
+// ?Release_Ref@TextureClass@@QAEXXZ
+void TextureClass::Release_Ref()
 {
-    __asm {
-        _emit 0F7h
-        _emit 041h
-        _emit 004h
-        _emit 0FFh
-        _emit 0FFh
-        _emit 000h
-        _emit 000h
-        _emit 074h
-        _emit 01Ah
-        _emit 066h
-        _emit 0FFh
-        _emit 049h
-        _emit 004h
-        _emit 08Bh
-        _emit 041h
-        _emit 004h
-        _emit 0A9h
-        _emit 0FFh
-        _emit 0FFh
-        _emit 000h
-        _emit 000h
-        _emit 075h
-        _emit 00Ch
-        _emit 0A9h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 001h
-        _emit 074h
-        _emit 005h
-        _emit 08Bh
-        _emit 001h
-        _emit 0FFh
-        _emit 060h
-        _emit 020h
-        _emit 0C3h
-    }
+	if ((m_refBits & 0xffff) == 0)
+		return;
+	*reinterpret_cast<unsigned short *>(&m_refBits) =
+		static_cast<unsigned short>(*reinterpret_cast<unsigned short *>(&m_refBits) - 1);
+	if ((m_refBits & 0xffff) != 0)
+		return;
+	if ((m_refBits & 0x1000000) == 0)
+		return;
+	Delete_This();
 }

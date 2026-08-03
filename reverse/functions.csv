@@ -7699,8 +7699,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Release_Memory@WWMemoryLogClass@@SAXPAX@Z,,0x00AFED20,31,Code/Libraries/Source/WWVegas/WWDebug/wwmemlog.cpp,matched,
 ?Release_Ref@RefCountClass@@QAEXXZ,,0x00087540,10,Code/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,
 ?Release_Ref@RefCountClass@@QBEXXZ,,0x00087540,10,Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar.cpp,matched,
-?Release_Ref@TextureBaseClass@@QAEXXZ,,0x009EB7A0,36,Code/Libraries/Source/WWVegas/WW3D2/TextureBaseReleaseRefThunk.cpp,matched,Open-BFME5 exact C++ raw TextureBase release leaf
-?Release_Ref@TextureClass@@QAEXXZ,,0x009EB7A0,36,Code/Libraries/Source/WWVegas/WW3D2/TextureBaseReleaseRefThunk.cpp,matched,Open-BFME5 exact C++ ICF alias release leaf
+?Release_Ref@TextureBaseClass@@QAEXXZ,,0x009EB7A0,36,Code/Libraries/Source/WWVegas/WW3D2/TextureBaseReleaseRefThunk.cpp,matched,Open-BFME5 exact clean C++ TextureBase release leaf
+?Release_Ref@TextureClass@@QAEXXZ,,0x009EB7A0,36,Code/Libraries/Source/WWVegas/WW3D2/TextureBaseReleaseRefThunk.cpp,matched,Open-BFME5 exact clean C++ ICF alias release leaf
 ?Release_Render_Obj_Iterator@WW3DAssetManager@@UAEXPAVRenderObjIterator@@@Z,,0x006F62A0,23,Code/Libraries/Source/WWVegas/WW3D2/assetmgr.cpp,matched,
 ?Remap_Vertex_Material@MaterialRemapperClass@@QAEPAVVertexMaterialClass@@PAV2@@Z,,0x0092EDC0,88,Code/Libraries/Source/WWVegas/WW3D2/matinfo.cpp,matched,
 ?Remove@?$DLNodeClass@USmudge@@@@QAEXXZ,,0x005D3DF0,103,Code/GameEngine/Source/GameClient/System/Smudge.cpp,matched,
