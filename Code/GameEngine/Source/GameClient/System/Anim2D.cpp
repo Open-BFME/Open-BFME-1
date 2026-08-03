@@ -164,7 +164,7 @@ void Anim2DTemplate::parseImage( INI *ini, void *instance, void *store, const vo
 /** Store the image at the next open image slot for the animation */
 // ------------------------------------------------------------------------------------------------
 // ?storeImage@Anim2DTemplate@@QAEXPBVImage@@@Z
-// Body in Anim2DTemplate_parse_walls.asm (exact 201B retail; same release-crash wall).
+// Body in Anim2DTemplateStoreImageThunk.cpp (exact 201B retail).
 
 // ------------------------------------------------------------------------------------------------
 /** Return the Image* for the frame number requested */

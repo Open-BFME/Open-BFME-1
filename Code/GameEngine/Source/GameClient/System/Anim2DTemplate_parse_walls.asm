@@ -1,40 +1,6 @@
 .386
 .model flat
 
-; ?storeImage@Anim2DTemplate@@QAEXPBVImage@@@Z
-; Exact 201 retail bytes @ 0x005BAF20; same release-crash-path wall.
-_TEXT SEGMENT
-public ?storeImage@Anim2DTemplate@@QAEXPBVImage@@@Z
-?storeImage@Anim2DTemplate@@QAEXPBVImage@@@Z PROC
-    db 064h,0A1h,000h,000h,000h,000h,06Ah,0FFh
-    db 068h,0E0h,093h,003h,001h,050h,064h,089h
-    db 025h,000h,000h,000h,000h,083h,0ECh,00Ch
-    db 053h,08Bh,05Ch,024h,020h,085h,0DBh,057h
-    db 08Bh,0F9h,074h,053h,00Fh,0B7h,057h,010h
-    db 033h,0C0h,085h,0D2h,056h,07Eh,012h,08Bh
-    db 077h,00Ch,08Bh,0CEh,083h,039h,000h,074h
-    db 03Ah,040h,083h,0C1h,004h,03Bh,0C2h,07Ch
-    db 0F3h,08Dh,044h,024h,028h,050h,08Bh,0CFh
-    db 0E8h,005h,07Fh,0A5h,0FFh,08Bh,0F0h,08Dh
-    db 04Ch,024h,00Ch,051h,08Bh,0CBh,0C7h,044h
-    db 024h,024h,000h,000h,000h,000h,0E8h,0A5h
-    db 0C0h,0A8h,0FFh,08Bh,00Eh,085h,0C9h,0C6h
-    db 044h,024h,020h,001h,074h,01Ch,083h,0C1h
-    db 008h,0EBh,01Ch,089h,01Ch,086h,05Eh,08Bh
-    db 04Ch,024h,014h,05Fh,05Bh,064h,089h,00Dh
-    db 000h,000h,000h,000h,083h,0C4h,018h,0C2h
-    db 004h,000h,0B9h,08Bh,038h,007h,001h,08Bh
-    db 000h,085h,0C0h,074h,005h,083h,0C0h,008h
-    db 0EBh,005h,0B8h,08Bh,038h,007h,001h,00Fh
-    db 0B7h,057h,010h,052h,051h,050h,068h,040h
-    db 0F3h,010h,001h,08Dh,044h,024h,020h,06Ah
-    db 003h,050h,0E8h,029h,056h,029h,000h,083h
-    db 0C4h,018h,068h,030h,0FCh,01Dh,001h,08Dh
-    db 04Ch,024h,014h,051h,0E8h,017h,0BDh,043h
-    db 000h
-?storeImage@Anim2DTemplate@@QAEXPBVImage@@@Z ENDP
-_TEXT ENDS
-
 ; ?parseImageSequence@Anim2DTemplate@@KAXPAVINI@@PAX1PBX@Z
 ; Exact 381 retail bytes @ 0x005BB150; same release-crash-path wall.
 _TEXT SEGMENT
