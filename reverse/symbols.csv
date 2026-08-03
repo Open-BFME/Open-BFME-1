@@ -46341,3 +46341,8 @@ g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
+??0DarknessSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,DarknessSpecialPowerModuleData base ctor
+??0ModuleDataBase@@QAE@XZ,0x00036818,Open-BFME5 Porcupine base pin
+?getSpecialPowerModule@Object@@QBEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF
+?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6
+?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37
