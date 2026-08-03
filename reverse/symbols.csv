@@ -46289,3 +46289,4 @@ g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 ??0ModuleDataBase_DefectorSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 DefectorSpecialPowerModuleData base pin
 ??0ModuleDataBase_CombineHordeSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 CombineHordeSpecialPowerModuleData base pin
 ??0GrabPassengerSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,GrabPassengerSpecialPowerModuleData base ctor
+?erase@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@QAEPAVProductionPrerequisite@@PAV3@0@Z,0x00010BB3,rel32 pin for ThingTemplate prerequisite vector clear
