@@ -2871,7 +2871,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1DX8PolygonRendererClass@@UAE@XZ,,0x00972AF0,87,Code/Libraries/Source/WWVegas/WW3D2/dx8polygonrenderer.cpp,matched,
 ??1DamageModuleModuleData@@UAE@XZ,,0x0027E4E0,145,Code/GameEngine/Source/Common/DamageModuleModuleDataDestructorThunk.cpp,matched,Exact 145B SEH dtor Open-BFME4
 ??1DarknessSpecialPowerModuleData@@UAE@XZ,,0x002693E0,426,Code/masm_dumps/DarknessSpecialPowerModuleData_destructor.asm,matched,Exact 426B SEH dtor Open-BFME4
-??1DebugCmdInterfaceDebug@@UAE@XZ,,0x00890F10,85,Code/masm_dumps/_icf2___1DebugCmdInterfaceDebug__UAE_XZ_890F10.asm,matched,ICF of ??1DebugIOFlat@@UAE@XZ Open-BFME4+Grok
+??1DebugCmdInterfaceDebug@@UAE@XZ,,0x00890F10,85,Code/GameEngine/Source/Common/DebugCmdInterfaceDebugDestructorThunk.cpp,matched,ICF of ??1DebugIOFlat@@UAE@XZ Open-BFME4+Grok
 ??1DebugIOCon@@UAE@XZ,,0x00890F10,85,Code/masm_dumps/_leaf2___1DebugIOCon__UAE_XZ_890F10.asm,matched,Exact 85B present-unmatched Open-BFME4
 ??1DebugIOFlat@@UAE@XZ,,0x00890F10,85,Code/masm_dumps/_pm___1DebugIOFlat__UAE_XZ_890F10.asm,matched,Exact 85B present-unmatched Open-BFME4
 ??1DebugIONet@@UAE@XZ,,0x00890F10,85,Code/masm_dumps/_pm___1DebugIONet__UAE_XZ_890F10.asm,matched,Exact 85B present-unmatched Open-BFME4
