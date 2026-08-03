@@ -12107,7 +12107,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?intersectTerrain@W3DTerrainVisual@@UAE_NPAUCoord3D@@00@Z,,0x007319F0,296,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp,matched,
 ?intersect_obb_obb@@YA_NAAUObbIntersectionStruct@@@Z,,0x008E2C70,2391,Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp,matched,
 ?invalidateCachedLightPositions@W3DShadowTextureManager@@QAEXXZ,,0x007AEFC0,107,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp,matched,
-?isAGoodIdeaToBuildTeam@AIPlayer@@MAE_NPAVTeamPrototype@@@Z,,0x00167E80,786,Code/masm_dumps/_sa14__isAGoodIdeaToBuildTeam_AIPlayer__MAE_NPAVTeamPrototype___Z_167E80.asm,matched,sa14 Open-BFME4+Grok Team '
+?isAGoodIdeaToBuildTeam@AIPlayer@@MAE_NPAVTeamPrototype@@@Z,,0x00167E80,786,Code/GameEngine/Source/GameLogic/AI/AIPlayerIsAGoodIdeaToBuildTeamThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_AIPlayerIsAGoodIdeaToBuildTeam_167E80
 ?isAI@GameSlot@@QBE_NXZ,,0x0061E5C0,27,Code/GameEngine/Source/GameNetwork/GameInfo.cpp,matched,
 ?isAbleToBeToppled@ToppleUpdate@@QBE_NXZ,,0x002B0FE0,11,Code/GameEngine/Source/GameLogic/Object/Update/ToppleUpdate.cpp,matched,thunk-dump converted to clean C++
 ?isAboveTerrain@Thing@@QBE_NXZ,,0x000C3F00,27,Code/GameEngine/Source/Common/RTS/ActionManager.cpp,matched,
