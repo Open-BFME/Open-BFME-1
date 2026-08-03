@@ -2778,7 +2778,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1AnimateWindowManager@@UAE@XZ,,0x0045D950,238,Code/GameEngine/Source/GameClient/GUI/AnimateWindowManager.cpp,matched,
 ??1AnimationSoundClientBehavior@@UAE@XZ,,0x00604B40,103,Code/GameEngine/Source/Common/AnimationSoundClientBehaviorDestructorThunk.cpp,matched,Exact 103B @ 0x00604B40; Exact retail MASM; instance factory->vtable dtor; del 0x604E60 ctor 0x605380 vt 0xD155A0
 ??1AnimationSoundClientBehaviorModuleData@@UAE@XZ,,0x00606120,67,Code/GameEngine/Source/GameLogic/Object/Behavior/AnimationSoundClientBehaviorModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
-??1AnimationSteeringUpdateModuleData@@UAE@XZ,,0x000A7210,108,Code/masm_dumps/AnimationSteeringUpdateModuleData_destructor.asm,matched,Exact 108B SEH dtor Open-BFME4
+??1AnimationSteeringUpdateModuleData@@UAE@XZ,,0x000A7210,108,Code/GameEngine/Source/Common/AnimationSteeringUpdateModuleDataDestructorThunk.cpp,matched,Exact 108B SEH dtor Open-BFME4
 ??1ArchiveFile@@UAE@XZ,,0x009D0BD0,94,Code/GameEngine/Source/Common/System/ArchiveFile.cpp,matched,closes m_file through File slot 2 then destroys m_rootDirectory at this+8
 ??1ArchiveFileSystem@@UAE@XZ,,0x009CA550,140,Code/GameEngine/Source/Common/System/ArchiveFileSystem.cpp,matched,installs vtable 0x01143A08; reached as the scalar dtor from slot 0 at 0x009CAA50
 ??1ArchivedDirectoryInfo@@QAE@XZ,,0x009CA4F0,89,Code/GameEngine/Source/Common/System/ArchiveFileSystem.cpp,matched,destroys m_files then m_directories then releases m_directoryName
