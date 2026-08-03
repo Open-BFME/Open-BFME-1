@@ -2786,7 +2786,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1ArrowStormUpdateModuleData@@UAE@XZ,,0x00257650,79,Code/GameEngine/Source/Common/ArrowStormUpdateModuleDataDestructorThunk.cpp,matched,Exact 79B SEH dtor factory->vtable Open-BFME4
 ??1AsciiString@@QAE@XZ,0x0000D828,0x0005EE90,5,Code/Libraries/Source/WWVegas/WWLib/ascii_string.cpp,matched,AsciiString destructor
 ??1AssaultTransportAIUpdate@@UAE@XZ,,0x00271DB0,2099,Code/masm_dumps/AssaultTransportAIUpdate_destructor.asm,matched,Exact 2099B SEH dtor Open-BFME4
-??1AssaultTransportAIUpdateModuleData@@UAE@XZ,,0x0027E4E0,145,Code/masm_dumps/AssaultTransportAIUpdateModuleData_destructor.asm,matched,Exact 145B SEH dtor Open-BFME4
+??1AssaultTransportAIUpdateModuleData@@UAE@XZ,,0x0027E4E0,145,Code/GameEngine/Source/Common/AssaultTransportAIUpdateModuleDataDestructorThunk.cpp,matched,Exact 145B SEH dtor Open-BFME4
 ??1AttributeModifierAuraUpdate@@UAE@XZ,,0x002803F0,1471,Code/masm_dumps/AttributeModifierAuraUpdate_destructor.asm,matched,Exact 1471B SEH module dtor; factory->vtable recovery Open-BFME4
 ??1AttributeModifierAuraUpdateModuleData@@UAE@XZ,,0x00280C40,106,Code/GameEngine/Source/Common/AttributeModifierAuraUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
 ??1AudioEventRTS@@UAE@XZ,,0x0002671F,5,Code/GameEngine/Source/Common/AudioEventRTSDestructorThunk.cpp,matched,Focused C++ thunk for AudioEventRTS destructor
