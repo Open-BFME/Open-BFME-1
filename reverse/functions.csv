@@ -3010,7 +3010,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1LanguageFilter@@UAE@XZ,,0x0044E400,150,Code/GameEngine/Source/GameClient/LanguageFilter.cpp,matched,
 ??1LargeGroupAudioUpdateModuleData@@UAE@XZ,,0x00297390,99,Code/masm_dumps/LargeGroupAudioUpdateModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
 ??1LargeGroupBonusUpdate@@UAE@XZ,,0x00297930,812,Code/masm_dumps/LargeGroupBonusUpdate_destructor.asm,matched,Exact 812B SEH module dtor; factory->vtable recovery Open-BFME4
-??1LargeGroupBonusUpdateModuleData@@UAE@XZ,,0x00297D60,93,Code/masm_dumps/LargeGroupBonusUpdateModuleData_destructor.asm,matched,Exact 93B SEH dtor Open-BFME4
+??1LargeGroupBonusUpdateModuleData@@UAE@XZ,,0x00297D60,93,Code/GameEngine/Source/GameLogic/AI/LargeGroupBonusUpdateModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM ICF alias
 ??1LaserUpdateModuleData@@UAE@XZ,,0x006043E0,93,Code/masm_dumps/LaserUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory 0x118DF0 ctor 0x603B90 prove ownership
 ??1LayoutFilename@@QAE@XZ,,0x00887940,134,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,object-symbol=?releaseBuffer@?$StringBase@D@@AAEXXZ;C++ alias
 ??1LevelGrantSpecialPowerModuleData@@UAE@XZ,,0x0025FFF0,79,Code/GameEngine/Source/GameLogic/Object/Upgrade/LevelGrantSpecialPowerModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
