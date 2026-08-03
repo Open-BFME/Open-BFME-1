@@ -2901,7 +2901,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1DynamicAudioEventRTS@@MAE@XZ,,0x0078CFB0,73,Code/GameEngine/Source/Common/INI/INI_stl.cpp,matched,
 ??1DynamicPortalBehaviour@@UAE@XZ,,0x001F8D10,141,Code/GameEngine/Source/Common/DynamicPortalBehaviourDestructorThunk.cpp,matched,Exact 141B SEH dtor Open-BFME4
 ??1DynamicShroudClearingRangeUpdate@@UAE@XZ,,0x0028E630,157,Code/GameEngine/Source/GameLogic/Object/Update/DynamicShroudClearingRangeUpdateDtorThunk.cpp,matched,Exact standalone C++ __emit thunk from certified retail destructor
-??1DynamicShroudClearingRangeUpdateModuleData@@UAE@XZ,,0x0028ECA0,95,Code/masm_dumps/DynamicShroudClearingRangeUpdateModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
+??1DynamicShroudClearingRangeUpdateModuleData@@UAE@XZ,,0x0028ECA0,95,Code/GameEngine/Source/Common/DynamicShroudClearingRangeUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
 ??1ElvenWoodSpecialPowerModuleData@@UAE@XZ,,0x0025CC80,95,Code/masm_dumps/ElvenWoodSpecialPowerModuleData_destructor.asm,matched,Exact 95B SEH dtor factory->vtable Open-BFME4
 ??1EmissionVelocityInfo@FXParticleSystem@@UAE@XZ,0x0003CF47,0x005BD810,7,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??1EmissionVolumeInfo@FXParticleSystem@@UAE@XZ,0x0004AA61,0x005BD6B0,7,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,destructor resets vtable pointer
