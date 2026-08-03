@@ -55,6 +55,8 @@ private:
 	char m_storage[SIZE - sizeof(ModuleData)];
 };
 
+class NeutronBlastBehaviorModuleData;
+
 template <class T> struct BFMEFactoryModuleDataChoice
 {
 	typedef T Type;
@@ -178,6 +180,7 @@ class GarrisonContainModuleData;
 class InternetHackContainModuleData;
 class LaserUpdateModuleData;
 class MaxHealthUpgradeModuleData;
+class NeutronBlastBehaviorModuleData;
 class OCLSpecialPowerModuleData;
 class OCLUpdateModuleData;
 class OpenContainModuleData;
@@ -216,6 +219,7 @@ template <> struct BFMEFactoryInstanceSize<GarrisonContainModuleData> { enum { V
 template <> struct BFMEFactoryInstanceSize<InternetHackContainModuleData> { enum { VALUE = 0x16C }; };
 template <> struct BFMEFactoryInstanceSize<LaserUpdateModuleData> { enum { VALUE = 0x1C }; };
 template <> struct BFMEFactoryInstanceSize<MaxHealthUpgradeModuleData> { enum { VALUE = 0x78 }; };
+template <> struct BFMEFactoryInstanceSize<NeutronBlastBehaviorModuleData> { enum { VALUE = 0x70 }; };
 template <> struct BFMEFactoryInstanceSize<OCLSpecialPowerModuleData> { enum { VALUE = 0x230 }; };
 template <> struct BFMEFactoryInstanceSize<OCLUpdateModuleData> { enum { VALUE = 0x18 }; };
 template <> struct BFMEFactoryInstanceSize<OpenContainModuleData> { enum { VALUE = 0x168 }; };
@@ -260,6 +264,7 @@ BFME_FACTORY_DATA_CHOICE(GarrisonContainModuleData)
 BFME_FACTORY_DATA_CHOICE(InternetHackContainModuleData)
 BFME_FACTORY_DATA_CHOICE(LaserUpdateModuleData)
 BFME_FACTORY_DATA_CHOICE(MaxHealthUpgradeModuleData)
+BFME_FACTORY_DATA_CHOICE(NeutronBlastBehaviorModuleData)
 BFME_FACTORY_DATA_CHOICE(OCLSpecialPowerModuleData)
 BFME_FACTORY_DATA_CHOICE(OCLUpdateModuleData)
 BFME_FACTORY_DATA_CHOICE(OpenContainModuleData)
@@ -330,6 +335,21 @@ public: \
 		return data; \
 	}
 #include "GameLogic/Module/UpdateModule.h"
+
+template <> class BFMEFactoryModuleData<NeutronBlastBehaviorModuleData, 0x70> : public RetailUpdateModuleDataBase
+{
+public:
+	BFMEFactoryModuleData()
+		: m_bfmeNeutronValue(0), m_bfmeNeutronFlags(-1), m_bfmeNeutronEnabled(1)
+	{
+	}
+
+private:
+	unsigned char m_bfmeNeutronValue;
+	int m_bfmeNeutronFlags;
+	unsigned char m_bfmeNeutronEnabled;
+};
+
 #undef MAKE_STANDARD_MODULE_DATA_MACRO_ABC
 #define MAKE_STANDARD_MODULE_DATA_MACRO_ABC( cls, clsmd ) \
 private: \
