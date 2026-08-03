@@ -1,6 +1,4 @@
-// cl: /DNDEBUG /MD /GX- /O2 /Ob2
-
-// Open-BFME5: SwayClientUpdate ctor - ClientUpdateModule base then field inits.
+// cl: /DNDEBUG /MD /EHsc
 
 class Thing;
 class ModuleData;
