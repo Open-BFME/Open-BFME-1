@@ -2160,6 +2160,7 @@ name,address,notes
 ??0UpgradeSoundSelectorClientBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,UpgradeSoundSelectorClientBehavior ctor for friend_new
 ??0UpgradeModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x001F8970,BFME UpgradeModule constructor body
 ??0UpgradeModuleData@@QAE@XZ,0x00049AA3,pinharvest x1 (thunk)
+??0UpgradeModuleDataSub@@QAE@XZ,0x0000F0A6,UpgradeModuleData subobject ctor ILT used by upgrade factories
 ??0UpgradeMuxData@@QAE@XZ,0x000057B8,pinharvest x1 (thunk)
 ??0Vector3HollowSphereRandomizer@@QAE@M@Z,0x00B02350
 ??0Vector3SolidSphereRandomizer@@QAE@M@Z,0x00B02250
