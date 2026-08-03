@@ -4192,3 +4192,4 @@ g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 ??0ModuleDataBase_StopSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 StopSpecialPowerModuleData base pin
 ??0ModuleDataBase_HordeContainModuleData@@QAE@XZ,0x00044030,Open-BFME5 HordeContainModuleData base pin
 ??0SiegeDeploySpecialPowerModuleDataBase@@QAE@XZ,0x00023FE7,SiegeDeploySpecialPowerModuleData base ctor from retail call site
+??0DevastateSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,DevastateSpecialPowerModuleData base ctor
