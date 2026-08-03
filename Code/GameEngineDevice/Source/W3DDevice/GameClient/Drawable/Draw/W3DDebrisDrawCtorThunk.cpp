@@ -1,111 +1,120 @@
 // cl: /DNDEBUG /MD /EHsc
+// Open-BFME5: W3DDebrisDraw constructor reconstructed from retail layout.
 
 class Thing;
 class ModuleData;
 
-class W3DDebrisDraw
+class Slot
+{
+    unsigned long m_value;
+
+public:
+    Slot() {}
+    Slot &operator=(unsigned long value)
+    {
+        m_value = value;
+        return *this;
+    }
+};
+
+class ClientUpdateModule
+{
+protected:
+    unsigned char m_padding04[8];
+
+public:
+    ClientUpdateModule(Thing *, const ModuleData *);
+    virtual ~ClientUpdateModule() {}
+    virtual void f00() = 0;
+    virtual void f01() = 0;
+    virtual void f02() = 0;
+    virtual void f03() = 0;
+    virtual void f04() = 0;
+    virtual void f05() = 0;
+    virtual void f06() = 0;
+    virtual void f07() = 0;
+    virtual void f08() = 0;
+    virtual void f09() = 0;
+    virtual void f10() = 0;
+    virtual void f11() = 0;
+    virtual void f12() = 0;
+    virtual void f13() = 0;
+    virtual void f14() = 0;
+    virtual void f15() = 0;
+    virtual void f16() = 0;
+    virtual void f17() = 0;
+    virtual void f18() = 0;
+    virtual void f19() = 0;
+};
+
+class DebrisDrawInterface
 {
 public:
+    virtual void setModelName(int, int, int) = 0;
+    virtual void setAnimNames(int, int, int, int) = 0;
+};
+
+class W3DDebrisDraw : public ClientUpdateModule, public DebrisDrawInterface
+{
+    Slot m_10;
+    Slot m_14;
+    unsigned long m_18;
+    unsigned long m_1c;
+    unsigned long m_20;
+    unsigned long m_24;
+    unsigned long m_28;
+    unsigned long m_2c;
+    unsigned long m_30;
+    unsigned long m_34;
+    unsigned long m_38;
+    unsigned long m_3c;
+    unsigned char m_40;
+    unsigned char m_padding41[3];
+    unsigned long m_44;
+
+public:
     W3DDebrisDraw(Thing *, const ModuleData *);
+    virtual ~W3DDebrisDraw();
+    virtual void f00();
+    virtual void f01();
+    virtual void f02();
+    virtual void f03();
+    virtual void f04();
+    virtual void f05();
+    virtual void f06();
+    virtual void f07();
+    virtual void f08();
+    virtual void f09();
+    virtual void f10();
+    virtual void f11();
+    virtual void f12();
+    virtual void f13();
+    virtual void f14();
+    virtual void f15();
+    virtual void f16();
+    virtual void f17();
+    virtual void f18();
+    virtual void f19();
+    virtual void setModelName(int, int, int);
+    virtual void setAnimNames(int, int, int, int);
 };
 
 // ??0W3DDebrisDraw@@QAE@PAVThing@@PBVModuleData@@@Z
-__declspec(naked) W3DDebrisDraw::W3DDebrisDraw(Thing *, const ModuleData *)
+W3DDebrisDraw::W3DDebrisDraw(Thing *thing, const ModuleData *moduleData)
+    : ClientUpdateModule(thing, moduleData)
 {
-    __asm {
-        __emit 0x8b;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x56;
-        __emit 0x8b;
-        __emit 0xf1;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x50;
-        __emit 0x51;
-        __emit 0x8b;
-        __emit 0xce;
-        __emit 0xe8;
-        __emit 0xa0;
-        __emit 0x22;
-        __emit 0x8b;
-        __emit 0xff;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x0c;
-        __emit 0xa4;
-        __emit 0x1e;
-        __emit 0x12;
-        __emit 0x01;
-        __emit 0x33;
-        __emit 0xc0;
-        __emit 0xc7;
-        __emit 0x06;
-        __emit 0xc0;
-        __emit 0x1e;
-        __emit 0x12;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x0c;
-        __emit 0xb0;
-        __emit 0x1e;
-        __emit 0x12;
-        __emit 0x01;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x10;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x14;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x18;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x1c;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x20;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x24;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x34;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x38;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x3c;
-        __emit 0x88;
-        __emit 0x46;
-        __emit 0x40;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x44;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x28;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x2c;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x30;
-        __emit 0x8b;
-        __emit 0xc6;
-        __emit 0x5e;
-        __emit 0xc2;
-        __emit 0x08;
-        __emit 0x00;
-    }
+    m_10 = 0;
+    m_14 = 0xffffffff;
+    m_18 = 0;
+    m_1c = 0;
+    m_20 = 0;
+    m_24 = 0;
+    m_34 = 0;
+    m_38 = 0;
+    m_3c = 0;
+    m_40 = 0;
+    m_44 = 0;
+    m_28 = 0;
+    m_2c = 0;
+    m_30 = 0;
 }
