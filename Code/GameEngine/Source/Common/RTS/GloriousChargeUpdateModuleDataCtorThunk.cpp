@@ -1,51 +1,34 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class GloriousChargeUpdateModuleData
+// Open-BFME5: GloriousChargeUpdateModuleData - SpecialPower base + 3 zero dwords.
+
+class SpecialPowerModuleData
 {
 public:
-    GloriousChargeUpdateModuleData();
+	SpecialPowerModuleData();
+	virtual ~SpecialPowerModuleData();
+
+private:
+	unsigned char m_base[0x250];
 };
 
-__declspec(naked) GloriousChargeUpdateModuleData::GloriousChargeUpdateModuleData()
+class GloriousChargeUpdateModuleData : public SpecialPowerModuleData
 {
-    __asm {
-        _emit 056h
-        _emit 08Bh
-        _emit 0F1h
-        _emit 0E8h
-        _emit 03Bh
-        _emit 00Dh
-        _emit 0DEh
-        _emit 0FFh
-        _emit 033h
-        _emit 0C0h
-        _emit 089h
-        _emit 086h
-        _emit 054h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 058h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 05Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 0C7h
-        _emit 006h
-        _emit 028h
-        _emit 054h
-        _emit 00Bh
-        _emit 001h
-        _emit 08Bh
-        _emit 0C6h
-        _emit 05Eh
-        _emit 0C3h
-    }
+public:
+	GloriousChargeUpdateModuleData();
+	virtual ~GloriousChargeUpdateModuleData();
+
+private:
+	unsigned int m_field254;
+	unsigned int m_field258;
+	unsigned int m_field25c;
+};
+
+// ??0GloriousChargeUpdateModuleData@@QAE@XZ
+GloriousChargeUpdateModuleData::GloriousChargeUpdateModuleData()
+	: SpecialPowerModuleData()
+{
+	m_field254 = 0;
+	m_field258 = 0;
+	m_field25c = 0;
 }
