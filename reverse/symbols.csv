@@ -1594,6 +1594,7 @@ name,address,notes
 ??0GameSpyGroupRoom@@QAE@ABV0@@Z,0x00887B60,pinharvest x4 (body)
 ??0GameSpyPSMessageQueue@@QAE@XZ,0x000216C0
 ??0GameWindowManager@@QAE@XZ,0x00041489,W3DGameWindowManager base constructor retail thunk
+??0GameWindowTransitionsHandler@@QAE@XZ,0x000029A5,ILT thunk -> body 0x48BF40; retail GameWindowTransitionsHandler ctor called by GameWindowManager::init on TheTransitionHandler (0x012F3330)
 ??0GenerateMinefieldBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00001CDA,pinharvest x1 (thunk)
 ??0GenerateMinefieldBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002D40C,pinharvest x1 (thunk)
 ??0GenerateMinefieldBehaviorModuleData@@QAE@XZ,0x0002B062
@@ -2119,6 +2120,7 @@ name,address,notes
 ??0UpgradeDieModuleData@@QAE@XZ,0x0004A250,pinharvest x1 (thunk)
 ??0UpgradeModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x001F8970,BFME UpgradeModule constructor body
 ??0UpgradeModuleData@@QAE@XZ,0x00049AA3,pinharvest x1 (thunk)
+??0UpgradeModuleDataSub@@QAE@XZ,0x0000F0A6,UpgradeModuleData subobject ctor ILT used by upgrade factories
 ??0UpgradeMuxData@@QAE@XZ,0x000057B8,pinharvest x1 (thunk)
 ??0Vector3HollowSphereRandomizer@@QAE@M@Z,0x00B02350
 ??0Vector3SolidSphereRandomizer@@QAE@M@Z,0x00B02250
@@ -4122,6 +4124,8 @@ name,address,notes
 ?friend_setDamageToFXString@TerrainRoadType@@QAEXW4BodyDamageType@@HVAsciiString@@@Z,0x00024E0B,ILT thunk -> 0x601b50 (parseTransitionToFX callee)
 ?friend_setGoalObject@AIUpdateInterface@@QAEXPAVObject@@@Z,0x000125E9,retail AIEnterState::update call target
 ?friend_setRepairedToFXString@TerrainRoadType@@QAEXW4BodyDamageType@@HVAsciiString@@@Z,0x0001C693,ILT thunk -> 0x61cc0 (parseTransitionToFX callee)
+?g_quitMenuLayout@@3PAXA,0x012F4AD4,HideQuitMenu layout global
+?g_theWindowManager@@3PAVWindowManager@@A,0x012F19E8,HideQuitMenu WindowManager global
 ?get@BFMERopeDrawableGetPositionShim@@QBEPBUCoord3D@@XZ,0x0041D090,BFME RopeDrawable incremental-link thunk target through a TU-local forwarding shim
 ?get@ObjectGetRelationshipShim@@QBE?AW4Relationship@@PBVObject@@@Z,0x001C7950,Object getRelationship incremental-link thunk target through a TU-local forwarding shim
 ?get@WW3DGetRenderTargetResolutionShim@@SAXAAH00AA_N@Z,0x00906990,WW3D incremental-link static thunk target through a TU-local forwarding shim
@@ -4252,6 +4256,7 @@ name,address,notes
 ?hasScience@Player@@QBE_NW4ScienceType@@@Z,0x0000943F,retail target of playerHasPrereqsForScience inner-loop call; thunk-table entry; real body unresolved
 ?helper@PoisonedBehaviorOwnerShim@@QAE?AW4UpdateSleepTime@@HPAXHH@Z,0x000202A7,PoisonedBehavior update sleep-time helper shim
 ?hidePurchaseScience@ControlBar@@QAEXXZ,0x00020347
+?hideQuitMenu@WindowManager@@QAEXXZ,0x000290D2,HideQuitMenu tail-call target
 ?hideScreen@DisconnectMenu@@QAEXXZ,0x00024D6B,ILT thunk; real body 0x50E5A0 (from DisconnectManager::turnOffScreen)
 ?hideSpecialPowerShortcut@ControlBar@@QAEXXZ,0x00041367
 ?init@CustomAsciiStringShim@@QAEXPBD@Z,0x00888BC0,CustomMatchPreferences getter key constructor shim
@@ -4386,6 +4391,7 @@ name,address,notes
 ?killThemKillThemAll@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@@Z,0x00019F5B
 ?less@AsciiStringLessShim@@SA_NABVAsciiString@@0@Z,0x006451D0,AsciiString less-than incremental-link thunk target through a TU-local forwarding shim
 ?linkWindow@GameWindowManager@@QAEXPAVGameWindow@@@Z,0x0002B87D,winSetParent depth Open-BFME4+Grok
+?load@GameWindowTransitionsHandler@@QAEXXZ,0x00027921,ILT thunk -> body 0x48B8D0; called by GameWindowManager::init on TheTransitionHandler (0x012F3330)
 ?load@INI@@QAEXVAsciiString@@HHPAX@Z,0x00853CB0,retail INI::load(file loadType reload xfer); called by the subsystem loader at 0x000BB310
 ?load@MapCacheLoadStandardMapsShim@@QAEXXZ,0x004507A0,MapCache loadStandardMaps incremental-link thunk target through a TU-local forwarding shim
 ?load@MapCacheLoadUserMapsShim@@QAE_NXZ,0x004577C0,MapCache loadUserMaps incremental-link thunk target through a TU-local forwarding shim
