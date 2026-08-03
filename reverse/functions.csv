@@ -14248,3 +14248,4 @@ _powf,,0x00097070,14,Code/Libraries/Source/WWVegas/WWMath/vp.cpp,matched,
 _sinf,,0x00873910,7,Code/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,icf-owner=?Sin@@YAMM@Z
 _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,ICF alias of existing matched body
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGE@2@@Z,,0x0093FE46,142,Code/Libraries/Source/WWVegas/WWLib/STLUnsignedShortByteTreeInsertUniquePairThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from structural retail candidate
+?Shutdown@DX8MeshRendererClass@@QAEXXZ,,0x00949DB0,18,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,

@@ -2042,13 +2042,10 @@ void DX8MeshRendererClass::Init(void)
 		texture_category_container_list_skin = W3DNEW FVFCategoryList;
 }
 
-// ?Shutdown@DX8MeshRendererClass@@QAEXXZ present-unmatched
 void DX8MeshRendererClass::Shutdown(void)
 {
 	Invalidate(true);
 	Clear_Pending_Delete_Lists();
-	_TempVertexBuffer.Clear();	//free memory
-	_TempNormalBuffer.Clear();
 }
 
 // ----------------------------------------------------------------------------
