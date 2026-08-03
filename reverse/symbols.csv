@@ -1628,6 +1628,7 @@ name,address,notes
 ??1GameMessageList@@UAE@XZ,0x0000E421
 ??1GameResultsRequest@@QAE@XZ,0x00049288
 ??1GameResultsResponse@@QAE@XZ,0x00024352
+??1GameSlot@@QAE@XZ,0x0000B988,Open-BFME5 pin
 ??1GameTextInterface@@UAE@XZ,0x0000E908
 ??1GateOpenAndCloseBehaviorModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 pin
 ??1GateOpenAndCloseBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
@@ -22858,6 +22859,7 @@ name,address,notes
 ?setSize@Shadow@@QAEXMM@Z,0x00040412,pinharvest x1 (thunk)
 ?setSize@ShadowSetSizeShim@@QAEXMM@Z,0x001E4250,Shadow::setSize incremental-link thunk target through a TU-local forwarding shim
 ?setSlot@NetDisconnectVoteCommandMsg@@QAEXE@Z,0x00020739,ILT thunk; real body 0xA73D20
+?setSlotData@GI_SlotObj@@QAEXPAVGameSlot@@@Z,0x000126E8,Open-BFME5 pin
 ?setSortMode@@YAXW4GameSortType@@@Z,0x00048360
 ?setStatus@Object@@QAEXV?$BitFlags@$0CN@@@_N@Z,0x0001366F,hit-decoded x8 (thunk)
 ?setStatus@Object@@QAEXV?$BitFlags@$0CN@@@_N@Z,0x000486EE,hit-decoded x8 (thunk)
