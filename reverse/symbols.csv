@@ -46986,6 +46986,7 @@ name,address,notes
 ??0ArchivedDirectoryInfo@@QAE@XZ,0x009CA460,the only non-allocator call in ArchiveFileSystem::ArchiveFileSystem at 0x009CAA34; m_rootDirectory is the only member needing a constructor
 ??0ArchivedFileInfo@@QAE@XZ,0x009CC650,archive directory entry ctor
 ??0ArmorUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003582D,module ctor (friend_newModuleInstance retail call target)
+??0ArrowStormUpdateModuleDataBase@@QAE@XZ,0x0003F503,ArrowStormUpdateModuleData ctor base
 ??0AsciiString@@AAE@PBD@Z,0x00888BC0,probe: plain-class variant of the StringBase<char> const char* constructor
 ??0AsciiString@@QAE@ABV0@@Z,0x00887B60,pinharvest x4 (body)
 ??0AsciiString@@QAE@PBD@Z,0x00888BC0,pinharvest x4 (body)
@@ -47092,6 +47093,7 @@ name,address,notes
 ??0CommandButtonHuntUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x020DCE,module ctor (friend_newModuleInstance retail call target)
 ??0CommandButtonHuntUpdateModuleData@@QAE@XZ,0x0002E500,module-glue cascade callee (from retail call site)
 ??0CommandSetUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003BB65,module ctor (friend_newModuleInstance retail call target)
+??0ContestableContainModuleDataBase@@QAE@XZ,0x00014565,ContestableContainModuleData ctor base
 ??0ControlBarSchemeImage@@QAE@XZ,0x00028489,parseAnimatingPartImage callee ILT thunk to 0x4ACD00
 ??0ConvertToCarBombCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0ConvertToCarBombCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001F5C3,pinharvest x1 (thunk)
@@ -47287,6 +47289,7 @@ name,address,notes
 ??0GameSpyGroupRoom@@QAE@ABV0@@Z,0x00048329,pinharvest x1 (thunk)
 ??0GameSpyGroupRoom@@QAE@ABV0@@Z,0x00887B60,pinharvest x4 (body)
 ??0GameSpyPSMessageQueue@@QAE@XZ,0x000216C0
+??0GameSpyPeerMessageQueueInterface@@QAE@XZ,0x0000A1B9,createNewMessageQueue ctor call; ILT thunk for body 0x0064D650
 ??0GameWindowManager@@QAE@XZ,0x00041489,W3DGameWindowManager base constructor retail thunk
 ??0GameWindowTransitionsHandler@@QAE@XZ,0x000029A5,ILT thunk -> body 0x48BF40; retail GameWindowTransitionsHandler ctor called by GameWindowManager::init on TheTransitionHandler (0x012F3330)
 ??0GateOpenAndCloseBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000ACE0,GateOpenAndCloseBehavior ctor for friend_new
@@ -47296,6 +47299,7 @@ name,address,notes
 ??0GhostObjectManager@@QAE@XZ,0x00008652
 ??0GhostObjectManager@@QAE@XZ,0x006BC530,real body via thunk 0x2ba49
 ??0GiveUpgradeUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,GiveUpgradeUpdate ctor base call; ILT thunk for SpecialAbilityUpdate ctor (body 0x002A6360)
+??0GiveUpgradeUpdateModuleDataBase@@QAE@XZ,0x0003F503,GiveUpgradeUpdateModuleData ctor base
 ??0GrabPassengerSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,GrabPassengerSpecialPowerModuleData base ctor
 ??0GrantScienceUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x00008878,pinharvest x1 (thunk)
 ??0GrantScienceUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000BAF0,pinharvest x1 (thunk)
@@ -47329,6 +47333,7 @@ name,address,notes
 ??0HiveStructureBodyModuleData@@QAE@XZ,0x00022B15,pinharvest x1 (thunk)
 ??0HiveStructureBodyModuleData@@QAE@XZ,0x0002AE6E,pinharvest x1 (thunk)
 ??0HiveStructureBodyModuleData@@QAE@XZ,0x000331A9,pinharvest x1 (thunk)
+??0HordeGarrisonContainModuleData@@QAE@XZ,0x0000DF7B,HordeGarrisonContain ModuleData ctor
 ??0HordeUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
 ??0HordeUpdateModuleData@@QAE@XZ,0x00014EA2,pinharvest x1 (thunk)
 ??0HordeUpdateModuleData@@QAE@XZ,0x0001BE41,pinharvest x1 (thunk)
@@ -47368,12 +47373,14 @@ name,address,notes
 ??0LaserUpdateModuleData@@QAE@XZ,0x0003E4A5,pinharvest x1 (thunk)
 ??0LeafletDropBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
 ??0LevelGrantSpecialPowerBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME5 LevelGrantSpecialPower base pin
+??0LifetimeUpdateModuleData@@QAE@XZ,0x0002E6D1,LifetimeUpdate ModuleData ctor
 ??0LightningDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x19614,LightningDrawModuleTemplate clone copy-ctor pin
 ??0LightningEmissionModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x19f88,LightningEmissionModuleTemplate clone copy-ctor pin
 ??0LineGroupClass@@QAE@XZ,0x0098E9C0,derived from ParticleBufferClass main ctor aligned call sites
 ??0LockClass@CriticalSectionClass@@QAE@AAV1@@Z,0x009DB4B0
 ??0LockWeaponCreateModuleData@@QAE@XZ,0x000283F3,module-glue cascade callee (from retail call site)
 ??0LocomotorSetUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x000078B5,module ctor (friend_newModuleInstance retail call target)
+??0ManTheWallsSpecialPowerModuleData@@QAE@XZ,0x0001C580,ManTheWallsSpecialPower ModuleData ctor
 ??0MaterialCollectorClass@@QAE@XZ,0x00931070
 ??0MaterialPassClass@@QAE@XZ,0x009333A0
 ??0MaxHealthUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003BEDA,module ctor (friend_newModuleInstance retail call target)
@@ -47625,6 +47632,7 @@ name,address,notes
 ??0RenderObjClass@@QAE@ABV0@@Z,0x0091FFE0,base copy ctor; derived from ParticleBufferClass copy ctor site
 ??0RenderObjClass@@QAE@XZ,0x009204B0,derived from ParticleBufferClass main ctor aligned call sites
 ??0RepairDockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001E8D0,module ctor (friend_newModuleInstance retail call target)
+??0RepairSpecialPowerModuleData@@QAE@XZ,0x0001C486,RepairSpecialPower ModuleData ctor
 ??0ReplaceObjectUpgradeModuleData@@QAE@XZ,0x00010C80,pinharvest x1 (thunk)
 ??0ReplaceObjectUpgradeModuleData@@QAE@XZ,0x00022877,pinharvest x1 (thunk)
 ??0ReplaceObjectUpgradeModuleData@@QAE@XZ,0x00023DCB,pinharvest x1 (thunk)
@@ -47699,6 +47707,7 @@ name,address,notes
 ??0SiegeAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,SiegeAIUpdate ctor base
 ??0SiegeAIUpdateModuleData@@QAE@XZ,0x00010C80,SiegeAIUpdate friend_newModuleData ModuleData ctor ILT
 ??0SiegeDeploySpecialPowerModuleDataBase@@QAE@XZ,0x00023FE7,SiegeDeploySpecialPowerModuleData base ctor from retail call site
+??0SiegeEngineContainModuleData@@QAE@XZ,0x0003D055,SiegeEngineContain ModuleData ctor
 ??0SlavedUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00001CDA,pinharvest x1 (thunk)
 ??0SlavedUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002D40C,pinharvest x1 (thunk)
 ??0SlavedUpdateModuleData@@QAE@XZ,0x0003AE86,pinharvest x1 (thunk)
@@ -47720,6 +47729,7 @@ name,address,notes
 ??0SpawnPointProductionExitUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00023858,module ctor (friend_newModuleInstance retail call target)
 ??0SpawnUnitBehaviorGrandBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,SpawnUnitBehavior ctor grandbase call; ILT thunk for ObjectModule ctor
 ??0SpecialAbilityUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x002A6360,BFME SpecialAbilityUpdate constructor body
+??0SpecialDisguiseUpdateModuleDataBase@@QAE@XZ,0x0003F503,SpecialDisguiseUpdateModuleData ctor base
 ??0SpecialPowerCompletionDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x00008878,pinharvest x1 (thunk)
 ??0SpecialPowerCompletionDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000BAF0,pinharvest x1 (thunk)
 ??0SpecialPowerCompletionDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x00034EDC,pinharvest x1 (thunk)
@@ -47738,6 +47748,7 @@ name,address,notes
 ??0SpectreGunshipUpdateModuleData@@QAE@XZ,0x00016C39,pinharvest x1 (thunk)
 ??0SpectreGunshipUpdateModuleData@@QAE@XZ,0x00025D47,pinharvest x1 (thunk)
 ??0SphereEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0001EDA3,SphereEmissionVolumeModuleTemplate clone copy-ctor pin
+??0SplitHordeSpecialPowerModuleData@@QAE@XZ,0x00014619,SplitHordeSpecialPower ModuleData ctor
 ??0SpyVisionSpecialPowerModuleData@@QAE@XZ,0x00025EBE,derived-ICF
 ??0SpyVisionUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00004D36,pinharvest x1 (thunk)
 ??0SpyVisionUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000C199,pinharvest x1 (thunk)
@@ -47922,6 +47933,8 @@ name,address,notes
 ??0WeaponBonusUpdateModuleData@@QAE@XZ,0x0002DA24,pinharvest x1 (thunk)
 ??0WeaponBonusUpdateModuleData@@QAE@XZ,0x0003CA01,pinharvest x1 (thunk)
 ??0WeaponBonusUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x000375B5,module ctor (friend_newModuleInstance retail call target)
+??0WeaponFireSpecialAbilityUpdateModuleDataBase@@QAE@XZ,0x0003F503,WeaponFireSpecialAbilityUpdateModuleData ctor base
+??0WeaponModeSpecialPowerUpdateModuleDataBase@@QAE@XZ,0x00023FE7,WeaponModeSpecialPowerUpdateModuleData ctor base
 ??0WeaponSetUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003406D,module ctor (friend_newModuleInstance retail call target)
 ??0WeatherSetting@@QAE@XZ,0x000157CB,harvested from parseWeatherDefinition (thunk)
 ??0WorkerAIUpdateModuleData@@QAE@XZ,0x00024BFE,pinharvest x1 (thunk)
@@ -47983,6 +47996,12 @@ name,address,notes
 ??1ArchivedFileInfo@@QAE@XZ,0x009CC600,archive directory entry dtor
 ??1ArrowStormUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base dtor pin
 ??1AsciiString@@QAE@XZ,0x00887940,pinharvest x4 (body)
+??1AttributeHandleStandIn@@QAE@XZ,0x0039D550,Open-BFME5 handle-release dtor (global-pool index) from AttributeModifierAuraUpdateModuleData dtor call site
+??1AttributeModifierAuraUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1AttributeModifierAuraUpdateModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
+??1AttributeModifierAuraUpdateModuleDataMemberC@@QAE@XZ,0x0001A401,Open-BFME5 pin
+??1AttributeModifierAuraUpdateModuleDataMemberD@@QAE@XZ,0x0001B97D,Open-BFME5 pin
+??1AttributeModifierStandIn@@QAE@XZ,0x00129C80,Open-BFME5 nested attribute-modifier struct dtor from AttributeModifierAuraUpdateModuleData dtor call site
 ??1AudioEventRTS@@UAE@XZ,0x0002671F
 ??1AudioEventRTS@@UAE@XZ,0x009409F0,pinharvest x1 (body)
 ??1AutoPickUpUpdateModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
@@ -47992,6 +48011,7 @@ name,address,notes
 ??1BaseUpgradeModuleDataMemberA@@QAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1BaseUpgradeModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1BaseUpgradeModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1BattlePlanUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1BfmeLegendString@@QAE@XZ,0x00887940,SubsystemLegend.cpp AsciiString stand-in dtor; folds with StringBase<char>::releaseBuffer
 ??1BfmeLegendStringVec@@QAE@XZ,0x000658A0,SubsystemLegend.cpp vector<AsciiString> stand-in dtor
 ??1BroadcastStealthUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
@@ -48107,6 +48127,8 @@ name,address,notes
 ??1GateProxyBehaviorModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 pin
 ??1GateProxyBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1GateProxyBehaviorModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
+??1GeometryUpgradeModuleDataMemberA@@QAE@XZ,0x0001B97D,Open-BFME5 pin
+??1GeometryUpgradeModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1GettingBuiltBehaviorModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1GiantBirdSlowDeathBehaviorModuleDataBase@@UAE@XZ,0x00015645,Open-BFME5 base pin
 ??1GiantBirdSlowDeathBehaviorModuleDataMember@@QAE@XZ,0x00026F35,Open-BFME5 pin
@@ -48184,6 +48206,8 @@ name,address,notes
 ??1ParticleSysBoneInfo@@QAE@XZ,0x00022FE3,pinharvest x1 (thunk)
 ??1ParticleSysBoneInfo@@QAE@XZ,0x0004A462,STLport callee exact retail rel32 target (incremental-link thunk); resolves repointed STL template thunk-dump
 ??1ParticleSysBoneInfo@@QAE@XZ,0x0004B10A,pinharvest x1 (thunk)
+??1ParticleUplinkCannonUpdateModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
+??1ParticleUplinkCannonUpdateModuleDataMemberB@@QAE@XZ,0x0001FD43,Open-BFME5 pin
 ??1PassiveAreaEffectBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1PassiveAreaEffectBehaviorModuleDataMemberB@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1Payload@DeliverPayloadNugget@@QAE@XZ,0x0004B10A,rel32 pin for exact-ambiguous landing
@@ -48223,6 +48247,12 @@ name,address,notes
 ??1RegistryClass@@QAE@XZ,0x009DC280,pinharvest x4 (body)
 ??1RenderDeviceDescClass@@QAE@XZ,0x009077B0
 ??1RenderObjClass@@UAE@XZ,0x0091FC10,base dtor; derived from ~ParticleBufferClass call site
+??1RiderChangeContainModuleDataMemberA@@QAE@XZ,0x00026F35,Open-BFME5 pin
+??1RiderChangeContainModuleDataMemberB@@QAE@XZ,0x00026F35,Open-BFME5 pin
+??1RiderChangeContainModuleDataMemberC@@QAE@XZ,0x00026F35,Open-BFME5 pin
+??1RiderChangeContainModuleDataMemberD@@QAE@XZ,0x00026F35,Open-BFME5 pin
+??1RiderChangeContainModuleDataMemberE@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1RiderChangeContainModuleDataMemberF@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1RoadType@@QAE@XZ,0x00012968,pinharvest x1 (thunk)
 ??1RoadType@@QAE@XZ,0x00018FCF,pinharvest x1 (thunk)
 ??1RoadType@@QAE@XZ,0x00033A91,pinharvest x1 (thunk)
@@ -48236,11 +48266,20 @@ name,address,notes
 ??1SaveLoadSubSystemClass@@UAE@XZ,0x0003692B,pinharvest x1 (thunk)
 ??1SaveLoadSubSystemClass@@UAE@XZ,0x009D19A0,pinharvest x1 (body)
 ??1SegLineRendererClass@@QAE@XZ,0x00960030,derived from ~ParticleBufferClass call site
+??1SiegeDeploySpecialPowerModuleDataMemberA@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1Snapshot@@QAE@XZ,0x009A1A40
 ??1SortingNodeStruct@@QAE@XZ,0x0093B200
 ??1SpawnBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1SpawnBehaviorModuleDataMemberB@@QAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1SpecialDisguiseUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base pin
+??1SpyVisionUpdateModuleDataMemberA@@QAE@XZ,0x0002E19A,Open-BFME5 pin
+??1SpyVisionUpdateModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1SpyVisionUpdateModuleDataMemberC@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1SpyVisionUpdateModuleDataMemberD@@QAE@XZ,0x0001A401,Open-BFME5 pin
+??1SpyVisionUpdateModuleDataMemberE@@QAE@XZ,0x0001A401,Open-BFME5 pin
+??1SpyVisionUpdateModuleDataMemberF@@QAE@XZ,0x0001C4DB,Open-BFME5 pin
+??1SpyVisionUpdateModuleDataMemberG@@QAE@XZ,0x00007FB8,Open-BFME5 pin
+??1SpyVisionUpdateModuleDataMemberH@@QAE@XZ,0x00014DF3,Open-BFME5 pin
 ??1StealthDetectorUpdateModuleDataBase@@UAE@XZ,0x00026F35,Open-BFME5 pin
 ??1StealthDetectorUpdateModuleDataMemberA@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1StealthDetectorUpdateModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
@@ -48417,11 +48456,13 @@ name,address,notes
 ??RUnicodeStringLessThan@@QBE_NVUnicodeString@@0@Z,0x000482B1,LanguageFilter map operator[] callee (ILT thunk -> body 0x0044D2A0)
 ??RWOLLoginAsciiStringLess@@QBE_NABVAsciiString@@0@Z,0x00043D42,WOLLogin retail AsciiString comparator thunk
 ??_7AODHordeContainModuleDataVtbl@@6B@,0x01089960,AODHordeContain ModuleData vtbl
+??_7AnimalAIUpdateModuleDataVtbl@@6B@,0x010899F0,AnimalAIUpdate vtbl
 ??_7AssaultTransportAIUpdateModuleDataVtbl@@6B@,0x01089CC0,AssaultTransportAIUpdate vtbl
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
 ??_7DeployStyleAIUpdateModuleDataVtbl@@6B@,0x01089B68,DeployStyleAIUpdate vtbl
 ??_7GateProxyBehaviorModuleDataVtbl@@6B@,0x0108A2A0,GateProxyBehavior ModuleData vtbl
+??_7MoneyCrateCollideModuleDataVtbl@@6B@,0x0108EAA0,MoneyCrateCollide vtbl
 ??_7RAMFile@@6B@,0x01143C58,installed by RAMFile ctor at 0x009D1980 and by the matched ??1RAMFile@@MAE@XZ
 ??_7RawFileClass@@6B@,0x01145548,14 of 17 slots are matched @RawFileClass@@ methods
 ??_7RetailCollideModuleData@@6B@,0x0108A350,CollideModule factory vtable target
@@ -49668,6 +49709,7 @@ name,address,notes
 ?connectCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPConnectResponseArg@@@Z,0x000314AD
 ?construct@AODHordeContainModuleDataBaseShim@@QAEXXZ,0x0000ED77,AODHordeContain ModuleData base
 ?construct@AnimSetConstructShim@_STL@@SAXPAUAnimSet@GenericObjectCreationNugget@@ABU34@@Z,0x00754B20,_STL _Construct AnimSet incremental-link thunk target through a TU-local forwarding shim
+?construct@AnimalAIUpdateModuleDataBaseShim@@QAEXXZ,0x00048A3B,AnimalAIUpdate base
 ?construct@AssaultTransportAIUpdateModuleDataBaseShim@@QAEXXZ,0x00048A3B,AssaultTransportAIUpdate base
 ?construct@AutoHealBehaviorModuleData@@AAEXXZ,0x00285F10,AutoHealBehaviorModuleData real ctor body via 5-byte E9
 ?construct@AutoHealBehaviorModuleData@@QAEXXZ,0x00285F10,AutoHealBehaviorModuleData real ctor body via 5-byte E9
@@ -49708,6 +49750,7 @@ name,address,notes
 ?construct@LightningEmissionTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x0000CC39,LightningEmissionModuleTemplate constructor thunk used through a TU-local layout shim
 ?construct@LineEmissionVolumeModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x00031750,LineEmissionVolumeModule constructor thunk used through a TU-local layout shim
 ?construct@LineEmissionVolumeTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x00004269,LineEmissionVolumeModuleTemplate copy constructor thunk used through a TU-local layout shim
+?construct@MoneyCrateCollideModuleDataBaseShim@@QAEXXZ,0x000441CA,MoneyCrateCollide base
 ?construct@OrthoEmissionVelocityModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x00004692,OrthoEmissionVelocityModule constructor thunk used through a TU-local layout shim
 ?construct@OrthoEmissionVelocityTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0000ADDA,OrthoEmissionVelocityModuleTemplate copy constructor thunk used through a TU-local layout shim
 ?construct@OrthoEmissionVelocityTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x0000FAD3,OrthoEmissionVelocityModuleTemplate constructor thunk used through a TU-local layout shim
@@ -49733,6 +49776,7 @@ name,address,notes
 ?construct@StreakDrawTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x00006FBE,StreakDrawModuleTemplate constructor thunk used through a TU-local layout shim
 ?construct@TerrainCollisionTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0002C3C7,TerrainCollisionModuleTemplate copy constructor thunk used through a TU-local layout shim
 ?construct@TerrainCollisionTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x00012602,TerrainCollisionModuleTemplate constructor thunk used through a TU-local layout shim
+?construct@VeterancyCrateCollideModuleDataBaseShim@@QAEXXZ,0x000441CA,VeterancyCrateCollide base
 ?construct@WanderAIUpdateModuleDataBaseShim@@QAEXXZ,0x00048A3B,WanderAIUpdate base
 ?constructBuddyMessageAt@@YAXPAXABVBuddyMessage@@@Z,0x00020E69,BuddyMessage list _M_create_node value construct
 ?construct_from@CategoryModuleTemplate06BaseCopyShim@FXParticleSystem@@QAEXPBX@Z,0x00026CC9,CMT06 copy base
@@ -50777,6 +50821,8 @@ name,address,notes
 ?xferRandomVariable@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0004570F,RenderObjectDrawModuleInfo::DoXfer raw helper call target
 ?xferSaveData@GameState@@AAEXPAVXfer@@W4SnapshotType@@@Z,0x0010FBD0,GameState save-data walker (CHUNK_GameState/Campaign/LivingWorldLogic/Palantir/Audio); thunk 0x36674
 AODHordeContainFieldParse,0x004334F6,AODHordeContain FieldParse
+AnimalAIUpdateFieldParse,0x00436E30,AnimalAIUpdate FieldParse
+ArrowStormUpdateModuleData_vtbl,0x010B3668,ArrowStormUpdateModuleData main vtbl
 AssaultTransportAIUpdateFieldParse,0x0040A35D,AssaultTransportAIUpdate FieldParse
 CategoryModuleTemplate06_sub_vtbl,0x0110FC94,CMT06 sub vtbl
 CategoryModuleTemplate06_vtbl0,0x0110FC80,CMT06 vtbl0
@@ -50786,6 +50832,7 @@ CategoryModuleTemplate07_vtbl4,0x01073844,CMT07 vtbl4
 CategoryModuleTemplate8_vtbl0,0x01073848,CategoryModuleTemplate8 ctor vtbl at +0
 CategoryModuleTemplate8_vtbl4,0x01073844,CategoryModuleTemplate8 ctor vtbl at +4 final
 CategoryModuleTemplate8_vtbl_temp,0x0107375C,CategoryModuleTemplate8 ctor intermediate vtbl at +4
+ContestableContainModuleData_vtbl,0x010AFE60,ContestableContainModuleData main vtbl
 ConvertToCarBombCrateCollideFieldParse,0x00412751,ConvertToCarBombCrateCollide FieldParse
 DefaultModuleTemplate00FieldParse,0x01113360,DefaultModuleTemplate parse FieldParse
 DefaultModuleTemplate00_sub_vtbl,0x011108CC,DefaultModuleTemplate00 sub vtbl
@@ -50811,14 +50858,26 @@ DefaultProductionExitUpdateFieldParse,0x00423687,DefaultProductionExitUpdate fri
 DeflectSpecialPowerFieldParse,0x0044765E,DeflectSpecialPower FieldParse
 DelayedLuaEventUpdateFieldParse,0x0041B199,DelayedLuaEventUpdate FieldParse
 DeployStyleAIUpdateFieldParse,0x00406708,DeployStyleAIUpdate FieldParse
+ElvenWoodSpecialPowerModuleData_vtbl,0x010B4C38,ElvenWoodSpecialPowerModuleData main vtbl
 GateProxyBehaviorFieldParse,0x004141E1,GateProxyBehavior FieldParse
+GiveUpgradeUpdateModuleData_vtbl,0x010B53D0,GiveUpgradeUpdateModuleData main vtbl
+HordeGarrisonContainFieldParse,0x00405245,HordeGarrisonContain FieldParse
+LifetimeUpdateFieldParse,0x0040490D,LifetimeUpdate FieldParse
+ManTheWallsSpecialPowerFieldParse,0x0043EDEC,ManTheWallsSpecialPower FieldParse
+MoneyCrateCollideFieldParse,0x0042BAEE,MoneyCrateCollide FieldParse
+RepairSpecialPowerFieldParse,0x0043A1DE,RepairSpecialPower FieldParse
 ShareBufferClassUnsignedShort_vtbl_final,0x011135AC,ShareBuffer ushort dtor final vtbl
 ShareBufferClassUnsignedShort_vtbl_interim,0x0113C110,ShareBuffer ushort dtor interim vtbl
 SpawnPointProductionExitUpdateFieldParse,0x00442979,SpawnPoint friend_newModuleData field parse table
+SpecialDisguiseUpdateModuleData_vtbl,0x010B7770,SpecialDisguiseUpdateModuleData main vtbl
+SplitHordeSpecialPowerFieldParse,0x0040D1F7,SplitHordeSpecialPower FieldParse
 SquishCollideFieldParse,0x004173DC,SquishCollide FieldParse
 StealthUpdateFieldParse,0x0041D8F9,StealthUpdate FieldParse
 ToggleHiddenSpecialAbilityUpdateFieldParse,0x0040955C,ToggleHiddenSpecialAbilityUpdate FieldParse
 WanderAIUpdateFieldParse,0x004027DE,WanderAIUpdate FieldParse
+WeaponFireSpecialAbilityUpdateModuleData_vtbl,0x010B8D98,WeaponFireSpecialAbilityUpdateModuleData main vtbl
+WeaponModeSpecialPowerUpdateModuleData_vtbl,0x010C5510,WeaponModeSpecialPowerUpdateModuleData main vtbl
+WeaponStore_vtbl,0x010A13C8,WeaponStore ctor main vtbl
 _D3DXMatrixInverse@12,0x009FB321
 _D3DXVec4Transform@12,0x009FAA48
 _HideControlBar,0x00002847,HideControlBar letterbox
