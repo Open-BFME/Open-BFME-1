@@ -8692,6 +8692,8 @@ name,address,notes
 ?construct_from@DefaultModuleTemplate05SubCopyShim@FXParticleSystem@@QAEXPBX@Z,0x0003BB0B,DMT05 copy sub
 ?construct_from@DefaultModuleTemplate0ABaseCopyShim@FXParticleSystem@@QAEXPBX@Z,0x00025CA7,DMT0A copy base
 ?construct_from@DefaultModuleTemplate0ASubCopyShim@FXParticleSystem@@QAEXPBX@Z,0x000354F4,DMT0A copy sub
+?construct_from@DefaultModuleTemplate00BaseCopyShim@FXParticleSystem@@QAEXPBX@Z,0x000428A7,DefaultModuleTemplate00 copy base
+?construct_from@DefaultModuleTemplate00SubCopyShim@FXParticleSystem@@QAEXPBX@Z,0x0001E04C,DefaultModuleTemplate00 copy sub
 ?construct_from@DefaultModuleTemplate7CopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0000CC4D,DefaultModuleTemplate6 copy-ctor base shim
 ?copy@AsciiCoordTreeCopyShim@_STL@@QAEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@2@PAU32@0@Z,0x000BFF50,incremental-link thunk target through a TU-local forwarding shim
 ?copy@AsciiStringCopyShim@_STL@@SAPAVAsciiString@@PAV3@00ABUrandom_access_iterator_tag@2@PAH@Z,0x006FA270,_STL __copy AsciiString incremental-link thunk target through a TU-local forwarding shim
@@ -9752,6 +9754,9 @@ DelayedLuaEventUpdateFieldParse,0x0041B199,DelayedLuaEventUpdate FieldParse
 ShareBufferClassUnsignedShort_vtbl_final,0x011135AC,ShareBuffer ushort dtor final vtbl
 ShareBufferClassUnsignedShort_vtbl_interim,0x0113C110,ShareBuffer ushort dtor interim vtbl
 DefaultModuleTemplate00FieldParse,0x01113360,DefaultModuleTemplate parse FieldParse
+DefaultModuleTemplate00_sub_vtbl,0x011108CC,DefaultModuleTemplate00 sub vtbl
+DefaultModuleTemplate00_vtbl0,0x011108B8,DefaultModuleTemplate00 outer vtbl0
+DefaultModuleTemplate00_vtbl4,0x011108B4,DefaultModuleTemplate00 outer vtbl4
 DefaultModuleTemplate01FieldParse,0x01114958,DefaultModuleTemplate parse FieldParse
 DefaultModuleTemplate02FieldParse,0x011145B0,DefaultModuleTemplate parse FieldParse
 DefaultModuleTemplate05FieldParse,0x01113594,DefaultModuleTemplate parse FieldParse
