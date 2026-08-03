@@ -2832,7 +2832,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1CameraShakeSystemClass@@QAE@XZ,,0x006D1900,116,Code/GameEngineDevice/Source/W3DDevice/GameClient/camerashakesystem.cpp,matched,
 ??1CameraShakerClass@CameraShakeSystemClass@@UAE@XZ,,0x006D1290,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/camerashakesystem.cpp,matched,thunk-dump converted to clean C++
 ??1CampaignManager@@QAE@XZ,,0x005BC4E0,146,Code/masm_dumps/dtor_CampaignManager_QAE_XZ_005BC4E0_packet294.asm,matched,Certified packet 294 exact retail db body SHA-256 b6b1a8ffab386afc7f4d5b4b8b0cfcaca796fa98cbeed12dc4acbd3a07489dd1
-??1CashHackSpecialPowerModuleData@@UAE@XZ,,0x00258E20,120,Code/masm_dumps/CashHackSpecialPowerModuleData_destructor.asm,matched,Exact 120B ModuleData SEH dtor Open-BFME4
+??1CashHackSpecialPowerModuleData@@UAE@XZ,,0x00258E20,120,Code/GameEngine/Source/Common/CashHackSpecialPowerModuleDataDestructorThunk.cpp,matched,Exact 120B ModuleData SEH dtor Open-BFME4
 ??1CastleBehavior@@UAE@XZ,,0x003728E0,433,Code/masm_dumps/CastleBehavior_destructor.asm,matched,Exact 433B @ 0x003728E0; Exact retail MASM; instance factory->vtable dtor; del 0x374EF0 ctor 0x376250 vt 0xCE9BFC
 ??1CivilianSpawnCollideModuleData@@UAE@XZ,,0x002175C0,67,Code/GameEngine/Source/GameLogic/Object/Collide/CivilianSpawnCollideModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1CivilianSpawnUpdate@@UAE@XZ,,0x0028A5A0,1025,Code/masm_dumps/CivilianSpawnUpdate_destructor.asm,matched,Exact 1025B SEH module dtor; factory->vtable recovery Open-BFME4
