@@ -46257,3 +46257,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0DrawableModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,SwayClientUpdate base ctor from retail call site
 ?erase@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@QAEPAVProductionPrerequisite@@PAV3@0@Z,0x00010BB3,rel32 pin for ThingTemplate prerequisite vector clear
 ?sendMessage@LANAPI@@IAEXPAULANMessage@@I@Z,0x0002B599,rel32 pin for RequestLobbyLeave sendMessage call
+?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
