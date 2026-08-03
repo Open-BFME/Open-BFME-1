@@ -2836,7 +2836,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1CastleBehavior@@UAE@XZ,,0x003728E0,433,Code/masm_dumps/CastleBehavior_destructor.asm,matched,Exact 433B @ 0x003728E0; Exact retail MASM; instance factory->vtable dtor; del 0x374EF0 ctor 0x376250 vt 0xCE9BFC
 ??1CivilianSpawnCollideModuleData@@UAE@XZ,,0x002175C0,67,Code/GameEngine/Source/GameLogic/Object/Collide/CivilianSpawnCollideModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1CivilianSpawnUpdate@@UAE@XZ,,0x0028A5A0,1025,Code/masm_dumps/CivilianSpawnUpdate_destructor.asm,matched,Exact 1025B SEH module dtor; factory->vtable recovery Open-BFME4
-??1CivilianSpawnUpdateModuleData@@UAE@XZ,,0x0028A530,80,Code/masm_dumps/CivilianSpawnUpdateModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
+??1CivilianSpawnUpdateModuleData@@UAE@XZ,,0x0028A530,80,Code/GameEngine/Source/Common/CivilianSpawnUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
 ??1ClearanceTestingSlowDeathBehaviorModuleData@@UAE@XZ,,0x001F73C0,79,Code/GameEngine/Source/GameLogic/AI/ClearanceTestingSlowDeathBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1CollideModuleModuleData@@UAE@XZ,,0x0027E4E0,145,Code/masm_dumps/CollideModuleModuleData_destructor.asm,matched,Exact 145B SEH dtor Open-BFME4
 ??1CommandSetUpgradeModuleData@@UAE@XZ,,0x0012B040,83,Code/masm_dumps/CommandSetUpgradeModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
