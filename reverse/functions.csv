@@ -13749,7 +13749,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?update@MainMenuMediumScaleUpTransition@@UAEXH@Z","","0x0059E010","161","Code/GameEngine/Source/Common/MainMenuMediumScaleUpTransition_updateMethodThunk.cpp","matched","Certified packet 339; Ghidra entry vtable slot constructor chain Medium string xref and ret boundary; retail SHA256 3ee58d8724c86dc1cd9eaee15cd97b2499a862e8d5b11672386c7d9aedab2c29"
 "?update@MainMenuScaleUpTransition@@UAEXH@Z","","0x0059E610","150","Code/GameEngine/Source/Common/MainMenuScaleUpTransition_updateMethodThunk.cpp","matched","Certified packet 340 retail SHA256 a279f021d9dc1d0a9987eac2fb852f65b8868395d6a2aaf4defcec1778a27f4a"
 "?update@MainMenuSmallScaleDownTransition@@UAEXH@Z","","0x0059E910","204","Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp","matched",""
-"?update@NAT@@","","0x0086C0C0","517","Code/masm_dumps/_sa9__update_NAT___86C0C0.asm","matched","Exact 517B Open-BFME4"
+"?update@NAT@@","","0x0086C0C0","517","Code/GameEngine/Source/GameNetwork/NATUpdate_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_NATUpdate_86C0C0"
 "?update@ObjectWeaponStatusHelper@@UAE?AW4UpdateSleepTime@@XZ","","0x001CB9D0","14","Code/GameEngine/Source/GameLogic/Object/Object.cpp","matched",""
 "?update@ParticleSystem@@UAE_NH@Z","","0x005FF310","767","Code/masm_dumps/_sa7__update_ParticleSystem__UAE_NH_Z_5FF310.asm","matched","Exact 767B Open-BFME4"
 "?update@Player@@QAEXXZ","","0x000D9A80","551","Code/GameEngine/Source/Common/RTS/Player_update.asm","matched","MASM exact; true body 0xD9A80/551 (queue 0xD5972 int3); unique MSG_ENABLE_RETALIATION_MODE 0x461"
