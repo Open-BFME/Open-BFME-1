@@ -13245,7 +13245,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?setPlayerIndex@NetDestroyPlayerCommandMsg@@QAEXI@Z","","0x00673B60","10","Code/GameEngine/Source/GameNetwork/NetCommandMsg_ctors.cpp","matched",""
 "?setPlayerMask@NetChatCommandMsg@@QAEXH@Z","","0x00673CC0","10","Code/GameEngine/Source/GameNetwork/NetCommandMsg_ctors.cpp","matched",""
 "?setPlayerMask@NetFileAnnounceCommandMsg@@QAEXE@Z","","0x00674020","10","Code/GameEngine/Source/GameNetwork/NetCommandMsg_ctors.cpp","matched",""
-"?setPlayerName@EstablishConnectionsMenu@@","","0x00538700","373","Code/masm_dumps/_sa4__setPlayerName_EstablishConnectionsMenu___538700.asm","matched","Exact 373B Open-BFME4"
+"?setPlayerName@EstablishConnectionsMenu@@","","0x00538700","373","Code/GameEngine/Source/GameClient/GUI/EstablishConnectionsMenu/EstablishConnectionsMenu_setPlayerName_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_EstablishConnectionsMenu_setPlayerName_538700"
 "?setPlayerStatus@EstablishConnectionsMenu@@QAEXHW4NATConnectionState@@@Z","","0x004B2DC0","268","Code/GameEngine/Source/GameClient/GUI/EstablishConnectionsMenu/EstablishConnectionsMenu.cpp","matched",""
 "?setPlayerTemplate@GameSlot@@QAEXH@Z","","0x003827E0","22","Code/GameEngine/Source/GameNetwork/GameInfo.cpp","matched",""
 "?setPlayingAudioIndex@AudioEventRTS@@QAEXH@Z","","0x004F9500","10","Code/GameEngine/Source/Common/Audio/GameAudio.cpp","matched",""
