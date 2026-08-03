@@ -1,59 +1,43 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc
 
-class MissileAIUpdateModuleData
+// Open-BFME5: MissileAIUpdateModuleData ctor.
+// Base 0x64; fields at +64..+7c with -1 at +70.
+
+class MissileAIUpdateModuleDataBase
+{
+public:
+	MissileAIUpdateModuleDataBase();
+	virtual ~MissileAIUpdateModuleDataBase();
+
+private:
+	unsigned char m_pad[0x60];
+};
+
+class MissileAIUpdateModuleData : public MissileAIUpdateModuleDataBase
 {
 public:
 	MissileAIUpdateModuleData();
+	virtual ~MissileAIUpdateModuleData();
+
+private:
+	unsigned int m_64;
+	unsigned int m_68;
+	unsigned char m_6c;
+	unsigned char m_pad6d[3];
+	unsigned int m_70;
+	unsigned int m_74;
+	unsigned int m_78;
+	unsigned int m_7c;
 };
 
-__declspec(naked) MissileAIUpdateModuleData::MissileAIUpdateModuleData()
+// ??0MissileAIUpdateModuleData@@QAE@XZ
+MissileAIUpdateModuleData::MissileAIUpdateModuleData()
 {
-	__asm {
-		_emit 056h
-		_emit 08Bh
-		_emit 0F1h
-		_emit 0E8h
-		_emit 06Eh
-		_emit 08Eh
-		_emit 0E2h
-		_emit 0FFh
-		_emit 033h
-		_emit 0C0h
-		_emit 089h
-		_emit 046h
-		_emit 064h
-		_emit 089h
-		_emit 046h
-		_emit 068h
-		_emit 088h
-		_emit 046h
-		_emit 06Ch
-		_emit 089h
-		_emit 046h
-		_emit 07Ch
-		_emit 089h
-		_emit 046h
-		_emit 074h
-		_emit 089h
-		_emit 046h
-		_emit 078h
-		_emit 0C7h
-		_emit 006h
-		_emit 098h
-		_emit 085h
-		_emit 00Ah
-		_emit 001h
-		_emit 0C7h
-		_emit 046h
-		_emit 070h
-		_emit 0FFh
-		_emit 0FFh
-		_emit 0FFh
-		_emit 0FFh
-		_emit 08Bh
-		_emit 0C6h
-		_emit 05Eh
-		_emit 0C3h
-	}
+	m_64 = 0;
+	m_68 = 0;
+	m_6c = 0;
+	m_7c = 0;
+	m_74 = 0;
+	m_78 = 0;
+	m_70 = 0xffffffff;
 }
-

@@ -1828,7 +1828,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0MilitarySubtitleData@InGameUI@@QAE@XZ,,0x00061D90,9,Code/GameEngine/Source/GameClient/InGameUI.cpp,matched,ICF alias of existing matched body
 ??0MinMaxAABoxClass@@QAE@ABVVector3@@0@Z,,0x006C9EB0,46,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp,matched,
 ??0MinefieldBehaviorModuleData@@QAE@XZ,,0x00852130,79,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,object-symbol=?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z;ICF alias converted to existing clean C++ body
-??0MissileAIUpdateModuleData@@QAE@XZ,,0x002136E0,45,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/MissileAIUpdateModuleDataConstructor.cpp,matched,thunk-dump converted to clean C++ constructor body at destination 0x2136E0
+??0MissileAIUpdateModuleData@@QAE@XZ,,0x002136E0,45,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/MissileAIUpdateModuleDataConstructor.cpp,matched,Open-BFME5 clean C++ base + field zeros and -1
 ??0MissileLauncherBuildingUpdateModuleData@@QAE@XZ,,0x00852130,79,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,object-symbol=?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z;ICF alias converted to existing clean C++ body
 ??0MissingAnimClass@@QAE@PBD@Z,,0x007BB710,123,Code/Libraries/Source/WWVegas/WW3D2/hanimmgr.cpp,matched,
 ??0MissingTextureClass@@QAE@PBD@Z,,0x007B1050,125,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/MissingTextureClassCtorThunk.cpp,matched,1:1 C++ thunk; exact retail bytes from registerMissing body 0x42C3A->0x7B1050

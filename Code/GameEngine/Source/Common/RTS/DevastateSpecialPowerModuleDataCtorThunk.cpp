@@ -1,57 +1,36 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class DevastateSpecialPowerModuleData
+// Open-BFME5: DevastateSpecialPowerModuleData ctor.
+// Base size 0x210; four zero dwords at +0x210..+0x21c.
+
+class DevastateSpecialPowerModuleDataBase
 {
 public:
-    DevastateSpecialPowerModuleData();
+	DevastateSpecialPowerModuleDataBase();
+	virtual ~DevastateSpecialPowerModuleDataBase();
+
+private:
+	unsigned char m_pad[0x20c];
 };
 
-__declspec(naked) DevastateSpecialPowerModuleData::DevastateSpecialPowerModuleData()
+class DevastateSpecialPowerModuleData : public DevastateSpecialPowerModuleDataBase
 {
-    __asm {
-        _emit 056h
-        _emit 08Bh
-        _emit 0F1h
-        _emit 0E8h
-        _emit 02Ch
-        _emit 0B0h
-        _emit 0DBh
-        _emit 0FFh
-        _emit 033h
-        _emit 0C0h
-        _emit 089h
-        _emit 086h
-        _emit 010h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 014h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 018h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 01Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 0C7h
-        _emit 006h
-        _emit 0C8h
-        _emit 047h
-        _emit 00Bh
-        _emit 001h
-        _emit 08Bh
-        _emit 0C6h
-        _emit 05Eh
-        _emit 0C3h
-    }
+public:
+	DevastateSpecialPowerModuleData();
+	virtual ~DevastateSpecialPowerModuleData();
+
+private:
+	unsigned int m_210;
+	unsigned int m_214;
+	unsigned int m_218;
+	unsigned int m_21c;
+};
+
+// ??0DevastateSpecialPowerModuleData@@QAE@XZ
+DevastateSpecialPowerModuleData::DevastateSpecialPowerModuleData()
+{
+	m_210 = 0;
+	m_214 = 0;
+	m_218 = 0;
+	m_21c = 0;
 }
