@@ -73,7 +73,10 @@ void FastFixedAllocator::DefaultConstructorClosure()
 }
 
 // ?Init@FastFixedAllocator@@QAEXI@Z
-void FastFixedAllocator::Init(unsigned int n)
+void FastFixedAllocator::Init(unsigned int size)
 {
-	esize = (n < sizeof(Link *) ? sizeof(Link *) : n);
+	if (size < 4) {
+		size = 4;
+	}
+	*reinterpret_cast<unsigned int *>(reinterpret_cast<char *>(this) + 4) = size;
 }
