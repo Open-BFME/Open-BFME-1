@@ -2385,7 +2385,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "??0ManTheWallsSpecialPowerModuleData@@QAE@XZ","","0x00852130","79","Code/GameEngine/Source/Common/INI/ini_parsers.cpp","matched","object-symbol=?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z;ICF alias converted to existing clean C++ body"
 "??0MapCache@@QAE@XZ","","0x00078F50","169","Code/GameEngine/Source/GameClient/MapCache_ctor_Thunk.cpp","matched","Open-BFME5 lift 169B retail MASM to standalone C++ thunk"
 "??0MapMetaDataReader@@QAE@XZ","","0x000C0EA0","334","Code/GameEngine/Source/GameClient/MapMetaDataReader_ctor_Thunk.cpp","matched","Open-BFME5 lift 334B retail MASM to standalone C++ thunk"
-"??0MapObject@@QAE@UCoord3D@@VAsciiString@@MHPBVDict@@PBVThingTemplate@@@Z","","0x00088160","386","Code/masm_dumps/MapObject_ctor.asm","matched","True body 0x88160/386; queue 0x88120 was 21B helper. SEH ctor ret 0x20 normalizeAngle color 0xFF00 Dict+0x24 matched MapObject field cluster"
+"??0MapObject@@QAE@UCoord3D@@VAsciiString@@MHPBVDict@@PBVThingTemplate@@@Z","","0x00088160","386","Code/GameEngine/Source/Common/MapObjectCtor_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_MapObjectCtor_88160"
 "??0Mapping@@QAE@XZ","","0x00122DF0","16","Code/GameEngine/Source/Common/System/DataChunk.cpp","matched",""
 "??0MatBufferClass@@QAE@HPBD@Z","","0x0092A160","128","Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp","matched",""
 "??0Material_Override@RenderObjClass@@QAE@XZ","","0x006BCB30","17","Code/GameEngineDevice/Source/W3DDevice/GameLogic/W3DGhostObject.cpp","matched",""
