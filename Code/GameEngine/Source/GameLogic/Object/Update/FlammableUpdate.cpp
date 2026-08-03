@@ -224,17 +224,6 @@ void FlammableUpdate::doAflameDamage()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// Body matched as MASM dump (see reverse/functions.csv); C++ kept for readability only.
-void FlammableUpdate::startBurningSound()
-{
-	const FlammableUpdateModuleData *data = getFlammableUpdateModuleData();
-
-	AudioEventRTS audio(data->m_burningSoundName, getObject()->getID());
-	m_audioHandle = TheAudio->addAudioEvent( &audio );
-}
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
 // BFME m_audioHandle at +0x34; removeAudioEvent at AudioManager vtable +0x4c.
 class AudioManager_RemoveSlot {
 public:
