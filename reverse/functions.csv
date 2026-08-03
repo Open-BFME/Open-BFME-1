@@ -2899,7 +2899,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1DrawableIconInfo@@MAE@XZ,,0x001DDFD0,70,Code/GameEngine/Source/GameClient/Drawable.cpp,matched,
 ??1DrawableLocoInfo@@MAE@XZ,,0x00415D50,1385,Code/masm_dumps/_sa3___1DrawableLocoInfo__MAE_XZ_415D50.asm,matched,Exact 1385B string-anchored Open-BFME4
 ??1DynamicAudioEventRTS@@MAE@XZ,,0x0078CFB0,73,Code/GameEngine/Source/Common/INI/INI_stl.cpp,matched,
-??1DynamicPortalBehaviour@@UAE@XZ,,0x001F8D10,141,Code/masm_dumps/DynamicPortalBehaviour_destructor.asm,matched,Exact 141B SEH dtor Open-BFME4
+??1DynamicPortalBehaviour@@UAE@XZ,,0x001F8D10,141,Code/GameEngine/Source/Common/DynamicPortalBehaviourDestructorThunk.cpp,matched,Exact 141B SEH dtor Open-BFME4
 ??1DynamicShroudClearingRangeUpdate@@UAE@XZ,,0x0028E630,157,Code/GameEngine/Source/GameLogic/Object/Update/DynamicShroudClearingRangeUpdateDtorThunk.cpp,matched,Exact standalone C++ __emit thunk from certified retail destructor
 ??1DynamicShroudClearingRangeUpdateModuleData@@UAE@XZ,,0x0028ECA0,95,Code/masm_dumps/DynamicShroudClearingRangeUpdateModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
 ??1ElvenWoodSpecialPowerModuleData@@UAE@XZ,,0x0025CC80,95,Code/masm_dumps/ElvenWoodSpecialPowerModuleData_destructor.asm,matched,Exact 95B SEH dtor factory->vtable Open-BFME4
