@@ -2070,7 +2070,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0RailedTransportAIUpdateModuleData@@QAE@XZ,,0x00852130,79,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,object-symbol=?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z;ICF alias converted to existing clean C++ body
 ??0RailedTransportDockUpdateModuleData@@QAE@XZ,,0x00852130,79,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,object-symbol=?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z;ICF alias converted to existing clean C++ body
 ??0RainOfFireUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0000A0E2,5,Code/GameEngine/Source/Common/RTS/RainOfFireUpdateCtorThunk.cpp,matched,5-byte incremental-link RainOfFireUpdate constructor thunk converted to focused C++ source
-??0RainOfFireUpdateModuleData@@QAE@XZ,,0x002A08B0,62,Code/GameEngine/Source/GameLogic/AI/RainOfFireUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
+??0RainOfFireUpdateModuleData@@QAE@XZ,,0x002A08B0,62,Code/GameEngine/Source/GameLogic/AI/RainOfFireUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 clean C++ leaf float defaults
 ??0RampageBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00203C20,144,Code/GameEngine/Source/GameLogic/Object/Behavior/RampageBehaviorCtorThunk.cpp,matched,Open-BFME5 exact 144B retail module constructor
 ??0Random2Class@@QAE@I@Z,,0x009E63C0,76,Code/Libraries/Source/WWVegas/WWLib/random.cpp,matched,verbatim Generals WWLib
 ??0Random3Class@@QAE@II@Z,,0x009E5EB0,18,Code/Libraries/Source/WWVegas/WW3D2/seglinerenderer.cpp,matched,tiny-locate
