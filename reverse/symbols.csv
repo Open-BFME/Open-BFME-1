@@ -9726,6 +9726,11 @@ DeflectSpecialPowerFieldParse,0x0044765E,DeflectSpecialPower FieldParse
 DelayedLuaEventUpdateFieldParse,0x0041B199,DelayedLuaEventUpdate FieldParse
 ShareBufferClassUnsignedShort_vtbl_final,0x011135AC,ShareBuffer ushort dtor final vtbl
 ShareBufferClassUnsignedShort_vtbl_interim,0x0113C110,ShareBuffer ushort dtor interim vtbl
+DefaultModuleTemplate00FieldParse,0x01113360,DefaultModuleTemplate parse FieldParse
+DefaultModuleTemplate01FieldParse,0x01114958,DefaultModuleTemplate parse FieldParse
+DefaultModuleTemplate02FieldParse,0x011145B0,DefaultModuleTemplate parse FieldParse
+DefaultModuleTemplate05FieldParse,0x01113594,DefaultModuleTemplate parse FieldParse
+DefaultModuleTemplate0AFieldParse,0x01113460,DefaultModuleTemplate parse FieldParse
 DefaultProductionExitUpdateFieldParse,0x00423687,DefaultProductionExitUpdate friend_newModuleData field parse
 SpawnPointProductionExitUpdateFieldParse,0x00442979,SpawnPoint friend_newModuleData field parse table
 SquishCollideFieldParse,0x004173DC,SquishCollide FieldParse
@@ -50289,5 +50294,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0RunOffMapBehaviorBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,RunOffMapBehavior ctor base call (shared ILT)
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+g_windGlobalA,0x012F7004,WindModuleInfo ctor global
+g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
