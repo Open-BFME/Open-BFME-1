@@ -46428,3 +46428,5 @@ g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 ??0ClientUpdateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,Open-BFME5 SwayClientUpdate base ctor pin
 ??0DrawableModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,SwayClientUpdate base ctor from retail call site
 ??0FreezingRainSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,FreezingRainSpecialPowerModuleData base ctor
+??0ModuleDataBase_StopSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 StopSpecialPowerModuleData base pin
+??0ModuleDataBase_HordeContainModuleData@@QAE@XZ,0x00044030,Open-BFME5 HordeContainModuleData base pin
