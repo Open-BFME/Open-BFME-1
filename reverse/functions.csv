@@ -11469,7 +11469,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?parseCashHackUpgradePair@@YAXPAVINI@@PAX1PBX@Z","","0x00258F10","120","Code/GameEngine/Source/GameLogic/Object/SpecialPower/CashHackSpecialPower.cpp","matched",""
 "?parseChallengeModeDefinition@INI@@SAXPAV1@@Z","","0x0040BFC0","25","Code/GameEngine/Source/GameClient/GUI/ChallengeGenerals.cpp","matched",""
 "?parseChildObjectDefinition@INI@@SAXPAV1@@Z","","0x000C2930","151","Code/GameEngine/Source/Common/INI/INIObject.cpp","matched","BFME-only; passes the second name as childOf - the fourth argument - which is what distinguishes it from ObjectReskin"
-"?parseChildWindows@@YA_NPAVGameWindow@@PAVFile@@PAD@Z","","0x00487B50","850","Code/masm_dumps/GameWindowManagerScript_parseChildWindows.asm","matched","Exact 850B MASM; true start 0x487B50 after int3 pad; C++ blocked File scanString vtable +0x24 vs +0x28"
+"?parseChildWindows@@YA_NPAVGameWindow@@PAVFile@@PAD@Z","","0x00487B50","850","Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript_parseChildWindows_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_GameWindowManagerScriptParseChildWindows_487B50"
 "?parseCloudBreakEffect@@YAXPAVINI@@@Z","","0x0040B270","82","Code/GameEngine/Source/GameClient/CloudBreakEffect.cpp","matched","BFME-only; saved/active override pair then a tail call to the cloud system through vtable slot 9"
 "?parseColor@@YA_NPAHPAD@Z","","0x00484610","115","Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp","matched","resweep exact post-GWM-fix (exact-ambiguous)"
 "?parseColorInt@INI@@SAXPAV1@PAX1PBX@Z","","0x008531E0","409","Code/GameEngine/Source/Common/INI/ini_parsers.cpp","matched","getNextTokenOrNull + scanInt inlined in this TU"
