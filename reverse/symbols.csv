@@ -22557,6 +22557,7 @@ name,address,notes
 ?parse@INIParseDynamicAudioEventRTSShim@@SAXPAVINI@@PAX1PBX@Z,0x000BB9A0,INI parseDynamicAudioEventRTS incremental-link thunk target through a TU-local forwarding shim
 ?parse@INIParseScienceVectorShim@@SAXPAVINI@@PAX1PBX@Z,0x000BCD80,INI parseScienceVector incremental-link thunk target through a TU-local forwarding shim
 ?parse@INIParseSoundsListShim@@SAXPAVINI@@PAX1PBX@Z,0x000B1DF0,INI parseSoundsList incremental-link thunk target through a TU-local forwarding shim
+?parse@LightningEmissionTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00046006,Open-BFME5 pin
 ?parse@TransitionDamageFXModuleDataParseFXListShim@@SAXPAVINI@@PAX1PBX@Z,0x00251ED0,TransitionDamageFXModuleData parseFXList incremental-link thunk target through a TU-local forwarding shim
 ?parse@TransitionDamageFXModuleDataParseObjectCreationListShim@@SAXPAVINI@@PAX1PBX@Z,0x00251F70,TransitionDamageFXModuleData parseObjectCreationList incremental-link thunk target through a TU-local forwarding shim
 ?parseBitString32@INI@@SAXPAV1@PAX1PBX@Z,0x00850E70
@@ -23202,4 +23203,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?parse@LightningEmissionTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00046006,Open-BFME5 pin
