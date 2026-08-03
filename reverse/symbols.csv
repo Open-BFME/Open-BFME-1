@@ -46396,3 +46396,6 @@ g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 ??0FirestormDynamicGeometryInfoUpdateModuleDataBase@@QAE@XZ,0x00048A3B,FirestormDynamicGeometryInfoUpdateModuleData base ctor
 ?construct@AutoHealBehaviorModuleData@@AAEXXZ,0x00285F10,AutoHealBehaviorModuleData real ctor body via 5-byte E9
 ?construct@AutoHealBehaviorModuleData@@QAEXXZ,0x00285F10,AutoHealBehaviorModuleData real ctor body via 5-byte E9
+?getSpecialPowerModule@Object@@QBEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF
+?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6
+?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37
