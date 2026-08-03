@@ -1,65 +1,37 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class ModelConditionSpecialAbilityUpdateModuleData
+// Open-BFME5: ModelConditionSpecialAbilityUpdateModuleData ctor - base 0x254.
+
+class SpecialPowerModuleData
 {
 public:
-    ModelConditionSpecialAbilityUpdateModuleData();
+	SpecialPowerModuleData();
+	virtual ~SpecialPowerModuleData();
+
+private:
+	unsigned char m_base[0x250];
 };
 
-__declspec(naked) ModelConditionSpecialAbilityUpdateModuleData::ModelConditionSpecialAbilityUpdateModuleData()
+class ModelConditionSpecialAbilityUpdateModuleData : public SpecialPowerModuleData
 {
-    __asm {
-        _emit 56h
-        _emit 8Bh
-        _emit 0F1h
-        _emit 0E8h
-        _emit 2Bh
-        _emit 72h
-        _emit 0DAh
-        _emit 0FFh
-        _emit 32h
-        _emit 0C0h
-        _emit 88h
-        _emit 86h
-        _emit 58h
-        _emit 02h
-        _emit 00h
-        _emit 00h
-        _emit 88h
-        _emit 86h
-        _emit 59h
-        _emit 02h
-        _emit 00h
-        _emit 00h
-        _emit 0C7h
-        _emit 06h
-        _emit 00h
-        _emit 00h
-        _emit 0Ch
-        _emit 01h
-        _emit 0C7h
-        _emit 86h
-        _emit 54h
-        _emit 02h
-        _emit 00h
-        _emit 00h
-        _emit 01h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0C7h
-        _emit 86h
-        _emit 5Ch
-        _emit 02h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 48h
-        _emit 42h
-        _emit 8Bh
-        _emit 0C6h
-        _emit 5Eh
-        _emit 0C3h
-    }
+public:
+	ModelConditionSpecialAbilityUpdateModuleData();
+	virtual ~ModelConditionSpecialAbilityUpdateModuleData();
+
+private:
+	unsigned int m_254;
+	unsigned char m_258;
+	unsigned char m_259;
+	unsigned char m_pad25a[2];
+	float m_25c;
+};
+
+// ??0ModelConditionSpecialAbilityUpdateModuleData@@QAE@XZ
+ModelConditionSpecialAbilityUpdateModuleData::ModelConditionSpecialAbilityUpdateModuleData()
+	: SpecialPowerModuleData()
+{
+	m_258 = 0;
+	m_259 = 0;
+	m_254 = 1;
+	m_25c = 50.0f;
 }
