@@ -1,80 +1,23 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/ini /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+//
+// INI::parseDrawGroupNumberDefinition, clean C++ for the former __emit thunk.
+// BFME throws the variadic INIException here, not Zero Hour's plain
+// INI_UNKNOWN_ERROR int: retail builds the 8-byte exception on the stack,
+// calls the (int, const char*, ...) ctor at 0x00850600 with arg count 9 and
+// the stringified condition, then _CxxThrowException through the MSVCR71
+// import thunk.
+#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
-class INI
-{
-public:
-    static void parseDrawGroupNumberDefinition(INI *ini);
-};
+#include "Common/INI.h"
+#include "Common/INIException.h"
+#include "GameClient/DrawGroupInfo.h"
 
-// ?parseDrawGroupNumberDefinition@INI@@SAXPAV1@@Z
-__declspec(naked) void INI::parseDrawGroupNumberDefinition(INI *ini)
+/*static */ void INI::parseDrawGroupNumberDefinition(INI* ini)
 {
-    __asm {
-        __emit 0xa1
-        __emit 0xf8
-        __emit 0x13
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x83
-        __emit 0xec
-        __emit 0x08
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x23
-        __emit 0x68
-        __emit 0x54
-        __emit 0x2b
-        __emit 0x08
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x6a
-        __emit 0x09
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xe3
-        __emit 0x83
-        __emit 0x79
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0x68
-        __emit 0x30
-        __emit 0xfc
-        __emit 0x1d
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x51
-        __emit 0xe8
-        __emit 0xd1
-        __emit 0xea
-        __emit 0x93
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x68
-        __emit 0x58
-        __emit 0x29
-        __emit 0x08
-        __emit 0x01
-        __emit 0x50
-        __emit 0xe8
-        __emit 0x62
-        __emit 0x9e
-        __emit 0x79
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0xc3
-    }
+	if (!TheDrawGroupInfo) {
+		throw INIException(9, "TheDrawGroupInfo==NULL");
+	}
+
+	ini->initFromINI(TheDrawGroupInfo, TheDrawGroupInfo->getFieldParse());
 }
