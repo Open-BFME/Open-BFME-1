@@ -2802,7 +2802,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1BSurface@@UAE@XZ,,0x001279D0,67,Code/Libraries/Source/WWVegas/WW3D2/txt.cpp,matched,
 ??1BannerCarrierUpdateModuleData@@UAE@XZ,,0x00284AA0,375,Code/masm_dumps/BannerCarrierUpdateModuleData_destructor.asm,matched,Exact 375B @ 0x00284AA0; Exact retail MASM; factory->vtable dtor; del 0x285490 ctor 0x284600 vt 0xCBBBB8
 ??1BaseHeightMapRenderObjClass@@UAE@XZ,,0x006CEE90,871,Code/masm_dumps/BaseHeightMapRenderObjClass_dtor_006CEE90.asm,matched,certified packet 222 exact retail db recovery
-??1BaseUpgradeModuleData@@UAE@XZ,,0x002D3D20,96,Code/masm_dumps/BaseUpgradeModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
+??1BaseUpgradeModuleData@@UAE@XZ,,0x002D3D20,96,Code/GameEngine/Source/Common/BaseUpgradeModuleDataDestructorThunk.cpp,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
 ??1BattlePlanUpdate@@MAE@XZ,,0x00285650,182,Code/masm_dumps/BattlePlanUpdate_destructor_MAE.asm,matched,icf-owner=??1BattlePlanUpdate@@UAE@XZ; queue 0x0FB368/461 unrelated; true body 182B @ 0x00285650; C++ emits MAE protected pool-glue dtor
 ??1BattlePlanUpdate@@UAE@XZ,,0x00285650,182,Code/masm_dumps/BattlePlanUpdate_destructor.asm,matched,Exact 182B @ 0x00285650; Exact retail MASM; instance factory->vtable dtor; del 0x285D00 ctor 0x286260 vt 0xCBBF8C
 ??1BattlePlanUpdateModuleData@@UAE@XZ,,0x00286010,239,Code/masm_dumps/BattlePlanUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory 0x119D50 ctor 0x285F10 prove ownership
