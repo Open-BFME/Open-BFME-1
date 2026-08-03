@@ -56,6 +56,7 @@ private:
 };
 
 class NeutronBlastBehaviorModuleData;
+class StickyBombUpdateModuleData;
 
 template <class T> struct BFMEFactoryModuleDataChoice
 {
@@ -220,6 +221,7 @@ template <> struct BFMEFactoryInstanceSize<InternetHackContainModuleData> { enum
 template <> struct BFMEFactoryInstanceSize<LaserUpdateModuleData> { enum { VALUE = 0x1C }; };
 template <> struct BFMEFactoryInstanceSize<MaxHealthUpgradeModuleData> { enum { VALUE = 0x78 }; };
 template <> struct BFMEFactoryInstanceSize<NeutronBlastBehaviorModuleData> { enum { VALUE = 0x70 }; };
+template <> struct BFMEFactoryInstanceSize<StickyBombUpdateModuleData> { enum { VALUE = 0x60 }; };
 template <> struct BFMEFactoryInstanceSize<OCLSpecialPowerModuleData> { enum { VALUE = 0x230 }; };
 template <> struct BFMEFactoryInstanceSize<OCLUpdateModuleData> { enum { VALUE = 0x18 }; };
 template <> struct BFMEFactoryInstanceSize<OpenContainModuleData> { enum { VALUE = 0x168 }; };
@@ -265,6 +267,7 @@ BFME_FACTORY_DATA_CHOICE(InternetHackContainModuleData)
 BFME_FACTORY_DATA_CHOICE(LaserUpdateModuleData)
 BFME_FACTORY_DATA_CHOICE(MaxHealthUpgradeModuleData)
 BFME_FACTORY_DATA_CHOICE(NeutronBlastBehaviorModuleData)
+BFME_FACTORY_DATA_CHOICE(StickyBombUpdateModuleData)
 BFME_FACTORY_DATA_CHOICE(OCLSpecialPowerModuleData)
 BFME_FACTORY_DATA_CHOICE(OCLUpdateModuleData)
 BFME_FACTORY_DATA_CHOICE(OpenContainModuleData)
@@ -350,7 +353,164 @@ private:
 	unsigned char m_bfmeNeutronEnabled;
 };
 
+template <> class BFMEFactoryModuleData<StickyBombUpdateModuleData, 0x60> : public ModuleData
+{
+public:
+	BFMEFactoryModuleData()
+		: m_bfmeStickyAttachToBone(), m_bfmeStickyOffsetZ(10.0f)
+	{
+	}
+
+private:
+	char m_bfmeStickyPadding[0x50];
+	AsciiString m_bfmeStickyAttachToBone;
+	float m_bfmeStickyOffsetZ;
+};
+
 #undef MAKE_STANDARD_MODULE_DATA_MACRO_ABC
+#define MAKE_STANDARD_MODULE_DATA_MACRO_ABC( cls, clsmd ) \
+private: \
+	const clsmd* get##clsmd() const { return (clsmd*)getModuleData(); } \
+public: \
+	static ModuleData* friend_newModuleData(INI*);
+#include "GameLogic/Module/StickyBombUpdate.h"
+#undef MAKE_STANDARD_MODULE_DATA_MACRO_ABC
+
+__declspec(naked) ModuleData* StickyBombUpdate::friend_newModuleData(INI*)
+{
+	__asm {
+		__emit 0x6a;
+		__emit 0xff;
+		__emit 0x68;
+		__emit 0xab;
+		__emit 0x18;
+		__emit 0x00;
+		__emit 0x01;
+		__emit 0x64;
+		__emit 0xa1;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x50;
+		__emit 0x64;
+		__emit 0x89;
+		__emit 0x25;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x51;
+		__emit 0x53;
+		__emit 0x56;
+		__emit 0x6a;
+		__emit 0x60;
+		__emit 0xe8;
+		__emit 0x41;
+		__emit 0xbf;
+		__emit 0x75;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0xf0;
+		__emit 0x83;
+		__emit 0xc4;
+		__emit 0x04;
+		__emit 0x89;
+		__emit 0x74;
+		__emit 0x24;
+		__emit 0x08;
+		__emit 0x33;
+		__emit 0xdb;
+		__emit 0x3b;
+		__emit 0xf3;
+		__emit 0x89;
+		__emit 0x5c;
+		__emit 0x24;
+		__emit 0x14;
+		__emit 0x74;
+		__emit 0x1f;
+		__emit 0x8b;
+		__emit 0xce;
+		__emit 0xe8;
+		__emit 0xc1;
+		__emit 0xe1;
+		__emit 0xf1;
+		__emit 0xff;
+		__emit 0xc7;
+		__emit 0x06;
+		__emit 0x40;
+		__emit 0xe9;
+		__emit 0x08;
+		__emit 0x01;
+		__emit 0x89;
+		__emit 0x5e;
+		__emit 0x54;
+		__emit 0x88;
+		__emit 0x5e;
+		__emit 0x58;
+		__emit 0x88;
+		__emit 0x5e;
+		__emit 0x59;
+		__emit 0xc7;
+		__emit 0x46;
+		__emit 0x5c;
+		__emit 0x0a;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0xeb;
+		__emit 0x02;
+		__emit 0x33;
+		__emit 0xf6;
+		__emit 0x8b;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x1c;
+		__emit 0x3b;
+		__emit 0xcb;
+		__emit 0xc7;
+		__emit 0x44;
+		__emit 0x24;
+		__emit 0x14;
+		__emit 0xff;
+		__emit 0xff;
+		__emit 0xff;
+		__emit 0xff;
+		__emit 0x74;
+		__emit 0x0b;
+		__emit 0x68;
+		__emit 0x51;
+		__emit 0x27;
+		__emit 0x41;
+		__emit 0x00;
+		__emit 0x56;
+		__emit 0xe8;
+		__emit 0xf2;
+		__emit 0xc0;
+		__emit 0x72;
+		__emit 0x00;
+		__emit 0x8b;
+		__emit 0x4c;
+		__emit 0x24;
+		__emit 0x0c;
+		__emit 0x8b;
+		__emit 0xc6;
+		__emit 0x5e;
+		__emit 0x5b;
+		__emit 0x64;
+		__emit 0x89;
+		__emit 0x0d;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x00;
+		__emit 0x83;
+		__emit 0xc4;
+		__emit 0x10;
+		__emit 0xc3;
+	}
+}
+
 #define MAKE_STANDARD_MODULE_DATA_MACRO_ABC( cls, clsmd ) \
 private: \
 	const clsmd* get##clsmd() const { return (clsmd*)getModuleData(); } \
