@@ -1,3 +1,4 @@
+?init@GameWindowManager@@UAEXXZ	no-match	Candidate RVA 0x0047C265 contains 11 bytes of int3 padding before the actual init body at 0x0047C270; the queued range is misanchored, so no C++ edit was attempted.
 ?OnStatusUpdate@DownloadManager@@UAEJH@Z	no-match	Retail RVA 0x00626ED2 is int3 padding, not a function entry; compiled source has a real SEH switch body, so the queue claim is stale or misanchored and no C++ edit is justified.
 ?onObjectCreated@BoneFXUpdate@@MAEXXZ	no-match	Retail RVA 0x005971F5 begins with invalid interior-stream bytes 09 ab ff 8d rather than a function prologue; compiled source begins a real SEH body, so this structural claim is stale or misanchored and no C++ edit is justified.
 ??0W3DStatusCircle@@QAE@ABV0@@Z	no-match	Retail RVA 0x0098914C is a misplaced x87/interior stream and the target size is 44 versus the compiled 37-byte copy constructor; source evidence identifies the real default constructor at 0x00726000, so no C++ edit is justified.
