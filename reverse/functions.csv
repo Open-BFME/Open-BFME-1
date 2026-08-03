@@ -13037,7 +13037,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?setCopiedFromDefault@ThingTemplate@@QAEXXZ","","0x0013FDB0","71","Code/GameEngine/Source/Common/promoted__setCopiedFromDefault_ThingTemplate_QAEXXZ_0013FDB0.cpp","matched","Grok promote masm dump to Code/ naked C++ exact 71B"
 "?setCRCInterval@GameInfo@@QAEXH@Z","","0x000970F0","20","Code/GameEngine/Source/GameNetwork/GameInfo.cpp","matched",""
 "?setCurPos@AnimateWindow@@QAEXUICoord2D@@@Z","","0x004AB800","17","Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp","matched",""
-"?setCurrentFilename@MapTransferLoadScreen@@","","0x00491FA0","250","Code/masm_dumps/_sa5__setCurrentFilename_MapTransferLoadScreen___491FA0.asm","matched","Exact 250B Open-BFME4"
+"?setCurrentFilename@MapTransferLoadScreen@@","","0x00491FA0","250","Code/GameEngine/Source/GameClient/GUI/MapTransferLoadScreenSetCurrentFilename_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_MapTransferLoadScreenSetCurrentFilename_491FA0"
 "?setCurrentFrame@Anim2D@@QAEXG@Z","","0x005BA1D0","30","Code/GameEngine/Source/GameClient/System/Anim2D.cpp","matched",""
 "?setCurrentGatherers@BuildListInfo@@QAEXH@Z","","0x001A1B60","13","Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp","matched",""
 "?setCurrentGroupRoom@GameSpyInfo@@UAEXH@Z","","0x006374D0","61","Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp","matched",""
