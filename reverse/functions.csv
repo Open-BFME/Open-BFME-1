@@ -3164,7 +3164,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1SegLineRendererClass@@QAE@XZ,,0x00960030,28,Code/Libraries/Source/WWVegas/WW3D2/seglinerenderer.cpp,matched,
 ??1SelectionTranslator@@UAE@XZ,,0x005B7BE0,73,Code/GameEngine/Source/GameClient/MessageStream/SelectionXlat.cpp,matched,
 ??1ShareExperienceBehavior@@UAE@XZ,,0x00205AC0,630,Code/masm_dumps/ShareExperienceBehavior_destructor.asm,matched,Exact 630B @ 0x00205AC0; Exact retail MASM; instance factory->vtable dtor; del 0x205AC0 ctor 0x205740 vt 0xCA5FC0
-??1ShareExperienceBehaviorModuleData@@UAE@XZ,,0x002059C0,67,Code/masm_dumps/ShareExperienceBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
+??1ShareExperienceBehaviorModuleData@@UAE@XZ,,0x002059C0,67,Code/GameEngine/Source/GameLogic/AI/ShareExperienceBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1ShellMenuScheme@@QAE@XZ,,0x00580FB0,238,Code/masm_dumps/dtor_ShellMenuScheme_QAE_XZ_00580FB0_packet334.asm,matched,Certified packet 334 sealed retail bytes SHA256 23a41c6e29805dbd06c52b28a4988f53307ef301816d3f60bc5f27824ad83ca4
 ??1ShroudCrateCollideModuleData@@UAE@XZ,,0x00125E40,67,Code/masm_dumps/ShroudCrateCollideModuleData_destructor.asm,matched,Exact 67B SEH dtor Open-BFME4
 ??1SidesInfo@@QAE@XZ,,0x0019AF30,148,Code/masm_dumps/SidesList_SidesInfo_destructor.asm,matched,
