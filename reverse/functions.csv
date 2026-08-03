@@ -7316,7 +7316,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Key_Count@Curve1DClass@@UAEHXZ,,0x00674250,4,Code/Libraries/Source/WWVegas/WWMath/curve.cpp,matched,icf-owner=?getRequestedPlayerID@BFMENetRequestPlayerLeaveCommandMsg@@QAEHXZ
 ?Key_Count@Curve3DClass@@UAEHXZ,,0x00674250,4,Code/Libraries/Source/WWVegas/WWMath/curve.cpp,matched,icf-owner=?getRequestedPlayerID@BFMENetRequestPlayerLeaveCommandMsg@@QAEHXZ
 ?Kill_Old_Particles@ParticleBufferClass@@IAEXXZ,,0x00987FA0,178,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,
-?LANDisplayGameList@@YAXPAVGameWindow@@PAVLANGameInfo@@@Z,,0x0068EBF0,710,Code/masm_dumps/LANDisplayGameList_YAXPAVGameWindow_PAVLANGameInfo_Z_0068EBF0.asm,matched,MASM exact retail; true body via OnGameList call not drift 0x888853
+?LANDisplayGameList@@YAXPAVGameWindow@@PAVLANGameInfo@@@Z,,0x0068EBF0,710,Code/GameEngine/Source/GameNetwork/LANDisplayGameListThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from corrected LAN call-path MASM body;object-symbol=_bfme_LANDisplayGameList_68EBF0
 ?LANEnableStartButton@@YAX_N@Z,,0x004CAF40,31,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanGameOptionsMenu.cpp,matched,
 ?LanGameOptionsMenuInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004CB190,78,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanGameOptionsMenu.cpp,matched,
 ?LanLobbyMenuInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004CB190,78,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanLobbyMenu.cpp,matched,
