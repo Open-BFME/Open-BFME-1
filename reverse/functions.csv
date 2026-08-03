@@ -2849,7 +2849,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1ConvertToCarBombCrateCollideModuleData@@UAE@XZ,,0x00125E40,67,Code/GameEngine/Source/GameLogic/Object/Collide/ConvertToCarBombCrateCollideModuleDataDestructorThunk.cpp,matched,Exact 67B SEH dtor Open-BFME4
 ??1Coord2D@@QAE@XZ,0x0003EAB8,0x0005BD90,1,Code/Libraries/Source/WWVegas/WWMath/coord2d.cpp,matched,empty destructor emits ret
 ??1Coord3D@@QAE@XZ,0x0001364C,0x0005BC40,1,Code/Libraries/Source/WWVegas/WWMath/coord3d.cpp,matched,empty destructor emits ret
-??1CostModifierUpgrade@@UAE@XZ,,0x001F8970,139,Code/masm_dumps/CostModifierUpgrade_destructor.asm,matched,Exact 139B SEH dtor factory->vtable Open-BFME4
+??1CostModifierUpgrade@@UAE@XZ,,0x001F8970,139,Code/GameEngine/Source/Common/CostModifierUpgradeDestructorThunk.cpp,matched,Exact 139B SEH dtor factory->vtable Open-BFME4
 ??1CountUpTransition@@UAE@XZ,,0x0059BD60,102,Code/masm_dumps/CountUpTransition_destructor.asm,matched,Exact retail MASM; true RVA and ownership verified via CountUp constructor vtable and deleting-dtor thunk; stale queue RVA overlaps W3DDisplayString
 ??1CrateSystem@@UAE@XZ,,0x00379A40,204,Code/GameEngine/Source/GameLogic/System/CrateSystem.cpp,matched,
 ??1CreateCrateDie@@UAE@XZ,,0x00379440,320,Code/masm_dumps/CreateCrateDie_destructor.asm,matched,Exact 320B SEH dtor factory->vtable Open-BFME4
