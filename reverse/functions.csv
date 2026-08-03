@@ -2850,7 +2850,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1Coord2D@@QAE@XZ,0x0003EAB8,0x0005BD90,1,Code/Libraries/Source/WWVegas/WWMath/coord2d.cpp,matched,empty destructor emits ret
 ??1Coord3D@@QAE@XZ,0x0001364C,0x0005BC40,1,Code/Libraries/Source/WWVegas/WWMath/coord3d.cpp,matched,empty destructor emits ret
 ??1CostModifierUpgrade@@UAE@XZ,,0x001F8970,139,Code/GameEngine/Source/Common/CostModifierUpgradeDestructorThunk.cpp,matched,Exact 139B SEH dtor factory->vtable Open-BFME4
-??1CountUpTransition@@UAE@XZ,,0x0059BD60,102,Code/masm_dumps/CountUpTransition_destructor.asm,matched,Exact retail MASM; true RVA and ownership verified via CountUp constructor vtable and deleting-dtor thunk; stale queue RVA overlaps W3DDisplayString
+??1CountUpTransition@@UAE@XZ,,0x0059BD60,102,Code/GameEngine/Source/Common/CountUpTransitionDestructorThunk.cpp,matched,Exact retail MASM; true RVA and ownership verified via CountUp constructor vtable and deleting-dtor thunk; stale queue RVA overlaps W3DDisplayString
 ??1CrateSystem@@UAE@XZ,,0x00379A40,204,Code/GameEngine/Source/GameLogic/System/CrateSystem.cpp,matched,
 ??1CreateCrateDie@@UAE@XZ,,0x00379440,320,Code/masm_dumps/CreateCrateDie_destructor.asm,matched,Exact 320B SEH dtor factory->vtable Open-BFME4
 ??1CreateCrateDieModuleData@@UAE@XZ,,0x001299A0,106,Code/masm_dumps/CreateCrateDieModuleData_destructor.asm,matched,Exact 106B @ 0x001299A0; Exact retail MASM; factory->vtable dtor; del 0x129970 ctor 0x1298D0 vt 0xC8EF70
