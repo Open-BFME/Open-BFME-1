@@ -6287,7 +6287,7 @@ void ScriptActions::doTeamUseCommandButtonOnNearestBuildingClass( const AsciiStr
 /** doTeamUseCommandButtonOnNearestObjectType */
 //-------------------------------------------------------------------------------------------------
 // ?doTeamUseCommandButtonOnNearestObjectType@ScriptActions@@IAEXABVAsciiString@@00@Z
-// Body in ScriptActions_doTeamUseCommandButtonOnNearestObjectType.asm (exact 273B retail @ 0x2FE110).
+// Body in ScriptActionsDoTeamUseCommandButtonOnNearestObjectTypeThunk.cpp (exact 273B retail @ 0x2FE110).
 // Queue RVA 0x614F75 was INSIDE mislocated 0x614F8E NearestKindof/INI claim; true body via
 // executeAction case order after BuildingClass (ILT 0x38483). BFME rewrite vs ZH partition path.
 
