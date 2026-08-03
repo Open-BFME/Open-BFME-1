@@ -1,26 +1,32 @@
-// cl: /DNDEBUG /MD /GX- /O2 /Ob2
-
-// Open-BFME5: SwayClientUpdate ctor - ClientUpdateModule base then field inits.
+// cl: /DNDEBUG /MD /EHsc
 
 class Thing;
 class ModuleData;
 
-class ClientUpdateModule
+class DrawableModule
 {
 public:
-	ClientUpdateModule(Thing *, const ModuleData *);
-	virtual ~ClientUpdateModule();
+	virtual ~DrawableModule();
+	DrawableModule(Thing *, const ModuleData *);
 
 private:
-	unsigned char m_base[8];
+	unsigned char m_data[8];
+};
+
+class ClientUpdateModule : public DrawableModule
+{
+public:
+	ClientUpdateModule(Thing *thing, const ModuleData *moduleData)
+		: DrawableModule(thing, moduleData)
+	{
+	}
 };
 
 class SwayClientUpdate : public ClientUpdateModule
 {
 public:
 	SwayClientUpdate(Thing *thing, const ModuleData *moduleData);
-	virtual ~SwayClientUpdate();
-	virtual void clientUpdate(void);
+	virtual void clientUpdate();
 
 private:
 	float m_curValue;
@@ -29,10 +35,10 @@ private:
 	float m_curAngleLimit;
 	float m_leanAngle;
 	short m_curVersion;
-	bool m_swaying;
-	bool m_unused;
-	unsigned int m_pad0;
-	unsigned int m_pad1;
+	unsigned char m_swaying;
+	unsigned char m_unused;
+	unsigned int m_extra0;
+	unsigned int m_extra1;
 };
 
 // ??0SwayClientUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
@@ -44,9 +50,9 @@ SwayClientUpdate::SwayClientUpdate(Thing *thing, const ModuleData *moduleData)
 	m_curDelta = 0;
 	m_curAngleLimit = 0;
 	m_leanAngle = 0;
-	m_unused = false;
-	m_pad0 = 0;
-	m_pad1 = 0;
+	m_unused = 0;
+	m_extra0 = 0;
+	m_extra1 = 0;
 	m_curVersion = -1;
-	m_swaying = true;
+	m_swaying = 1;
 }
