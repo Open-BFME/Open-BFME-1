@@ -2934,7 +2934,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1FoundationAIUpdate@@UAE@XZ,,0x002B9D60,123,Code/masm_dumps/FoundationAIUpdate_destructor.asm,matched,Exact 123B @ 0x002B9D60; Exact retail MASM; instance factory->vtable dtor; del 0x2BA130 ctor 0x2BA040 vt 0xCC734C
 ??1FrameData@@QAE@XZ,,0x00AFF130,45,Code/masm_dumps/_icf6___1FrameData__QAE_XZ_AFF130.asm,matched,ICF Open-BFME4+Grok
 ??1FrameDataManager@@MAE@XZ,,0x00670540,102,Code/GameEngine/Source/GameNetwork/FrameDataManager.cpp,matched,
-??1GameEngine@@UAE@XZ,,0x0007AC33,63,Code/masm_dumps/_sa14___1GameEngine__UAE_XZ_7AC33.asm,matched,sa14 Open-BFME4+Grok Uncaught Exception during init
+??1GameEngine@@UAE@XZ,,0x0007AC33,63,Code/GameEngine/Source/Common/GameEngineDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1GameLogic@@UAE@XZ,,0x0038F080,821,Code/masm_dumps/GameLogic_dtor.asm,matched,Exact 821B MASM; true body 0x38F080 (queue 0x9F265F int3 pad); dual vtbl+init globals; Open-BFME4+Grok
 ??1GameMessageList@@UAE@XZ,,0x0000E421,5,Code/Libraries/Source/WWVegas/WWLib/GameMessageListDestructorThunk.cpp,matched,Focused C++ thunk for GameMessageList destructor
 ??1GameResultsQueue@@UAE@XZ,,0x0063D0F0,225,Code/masm_dumps/__1GameResultsQueue__UAE_XZ_63D0F0.asm,matched,MASM exact dump; true body via createNew vtbl chain (queue 0x9F27D9 was int3 pad)

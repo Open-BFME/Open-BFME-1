@@ -201,49 +201,16 @@ GameEngine::GameEngine( void )
 
 //-------------------------------------------------------------------------------------------------
 // ??1GameEngine@@UAE@XZ present-unmatched
-GameEngine::~GameEngine()
+// ??1GameEngine@@UAE@XZ is emitted by GameEngineDestructorThunk.cpp.
+
+static __declspec(noinline) void gameEngineMapCacheDestructorAnchor(MapCache *cache)
 {
-	//extern std::vector<std::string>	preloadTextureNamesGlobalHack;
-	//preloadTextureNamesGlobalHack.clear();
-
-	delete TheMapCache;
-	TheMapCache = NULL;
-
-//	delete TheShell;
-//	TheShell = NULL;
-
-	TheGameResultsQueue->endThreads();
-
-	TheSubsystemList->shutdownAll();
-	delete TheSubsystemList;
-	TheSubsystemList = NULL;
-
-	delete TheNetwork;
-	TheNetwork = NULL;
-
-	delete TheCommandList;
-	TheCommandList = NULL;
-
-	delete TheNameKeyGenerator;
-	TheNameKeyGenerator = NULL;
-
-	delete TheFileSystem;
-	TheFileSystem = NULL;
-
-	if (TheGameLODManager)
-		delete TheGameLODManager;
-
-	Drawable::killStaticImages();
-
-	_Module.Term();
-
-#ifdef PERF_TIMERS
-	PerfGather::termPerfDump();
-#endif
-
-	// Restore the previous time slice for Windows.
-	timeEndPeriod(1);
+	if (cache != NULL)
+		delete cache;
 }
+
+static void (* volatile gameEngineMapCacheDestructorAnchorPtr)(MapCache *) =
+	gameEngineMapCacheDestructorAnchor;
 
 void GameEngine::setFramesPerSecondLimit( Int fps )
 {
