@@ -2948,6 +2948,7 @@ name,address,notes
 ?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0004AEFD,hit-decoded x3 (thunk)
 ?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x009407B0,hit-decoded x3 (body)
 ?clear@?$StringBase@D@@QAEXXZ,0x00887940,retail StringBase<char>::clear body (folds with releaseBuffer); SubsystemLegendEntry ctor calls it directly not via the 0x000680C0 thunk
+?releaseBuffer@?$StringBase@D@@QAEXXZ,0x00887940,Open-BFME5 public-access alias for retail StringBase<char>::releaseBuffer ICF body
 ?clear@?$_List_base@VQueuedDownload@@V?$allocator@VQueuedDownload@@@_STL@@@_STL@@QAEXXZ,0x000627270,DownloadManager list_base<QueuedDownload> clear clone; ILT thunk 0x3AA1C
 ?clear@?$hashtable@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@@_STL@@QAEXXZ,0x0008F880,NameKeyGenerator aux hash_map hashtable<>::clear() proven via freeSockets tail-jmp
 ?clear@?$hashtable@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEXXZ,0x000458BD
