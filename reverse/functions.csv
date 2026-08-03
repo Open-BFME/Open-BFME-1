@@ -9330,7 +9330,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?clear@ArmorTemplateSet@@QAEXXZ,,0x0013F1A0,11,Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp,matched,
 ?clear@DFX@DamageFX@@QAEXXZ,,0x007FA950,14,Code/GameEngine/Source/Common/DamageFX.cpp,matched,
 ?clear@Dict@@QAEXXZ,,0x00068530,16,Code/GameEngine/Source/Common/Dict.cpp,matched,
-?clear@DictPair@Dict@@QAEXXZ,,0x000680D0,64,Code/GameEngine/Source/Common/DictPairClearThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM DictPair helper
+?clear@DictPair@Dict@@QAEXXZ,,0x000680D0,64,Code/GameEngine/Source/Common/DictPairClearThunk.cpp,matched,Open-BFME5 clean C++ jump-table switch DictPair clear
 ?clear@INILineBuffer@@QAEXXZ,,0x009CBF50,69,Code/GameEngine/Source/Common/INI/INILineBuffer.cpp,matched,erase(begin end) then frees the buffer at this+4 -- the erase copy loop is emitted with a zero trip count
 ?clear@LList@@QAEXXZ,,0x00105C70,59,Code/GameEngine/Source/Common/System/List.cpp,matched,
 ?clear@ModuleInfo@@QAEXXZ,,0x0077AE90,13,Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp,matched,icf-owner=?clear@?$vector@UNugget@ModuleInfo@@V?$allocator@UNugget@ModuleInfo@@@_STL@@@_STL@@QAEXXZ
@@ -14248,3 +14248,4 @@ _powf,,0x00097070,14,Code/Libraries/Source/WWVegas/WWMath/vp.cpp,matched,
 _sinf,,0x00873910,7,Code/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,icf-owner=?Sin@@YAMM@Z
 _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,ICF alias of existing matched body
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGE@2@@Z,,0x0093FE46,142,Code/Libraries/Source/WWVegas/WWLib/STLUnsignedShortByteTreeInsertUniquePairThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from structural retail candidate
+
