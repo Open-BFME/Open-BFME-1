@@ -6742,7 +6742,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?createNetwork@NetworkInterface@@SAPAV1@XZ","","0x0065C1F0","89","Code/GameEngine/Source/GameNetwork/Network.cpp","matched",""
 "?createNewGameResultsInterface@GameResultsInterface@@SAPAV1@XZ","","0x0063E240","86","Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp","matched",""
 "?createNewGameSpyInfoInterface@GameSpyInfoInterface@@SAPAV1@XZ","","0x00637760","89","Code/GameEngine/Source/Common/GameSpyInfoInterface_createNewGameSpyInfoInterface_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump"
-"?createNewMessageQueue@GameSpyBuddyMessageQueueInterface@@SAPAV1@XZ","","0x0063E240","86","Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp","matched","object-symbol=?createNewGameResultsInterface@GameResultsInterface@@SAPAV1@XZ;C++ alias"
+"?createNewMessageQueue@GameSpyBuddyMessageQueueInterface@@SAPAV1@XZ","","0x0063E240","86","Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThread.cpp","matched","C++ factory body replaces 86B MASM dump; shared retail ICF body"
 "?createNewMessageQueue@GameSpyPeerMessageQueueInterface@@SAPAV1@XZ","","0x0064E620","86","Code/GameEngine/Source/Common/GameSpyPeerMessageQueueInterface_createNewMessageQueue_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump"
 "?createNewMessageQueue@GameSpyPSMessageQueueInterface@@SAPAV1@XZ","","0x006FB870","89","Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PersistentStorageThread.cpp","matched",""
 "?createNewPingerInterface@PingerInterface@@SAPAV1@XZ","","0x0065C1F0","89","Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PingThread.cpp","matched",""

@@ -83,9 +83,10 @@ private:
 	RequestQueue m_requests;
 	ResponseQueue m_responses;
 	BuddyThreadClass *m_thread;
+	char m_retailPadding[0x0C];
 };
 
-// ?createNewMessageQueue@GameSpyBuddyMessageQueueInterface@@SAPAV1@XZ present-unmatched
+// ?createNewMessageQueue@GameSpyBuddyMessageQueueInterface@@SAPAV1@XZ
 GameSpyBuddyMessageQueueInterface* GameSpyBuddyMessageQueueInterface::createNewMessageQueue( void )
 {
 	return NEW GameSpyBuddyMessageQueue;
