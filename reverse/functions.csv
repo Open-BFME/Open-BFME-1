@@ -56559,7 +56559,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0GiveUpgradeUpdateModuleData@@QAE@XZ,,0x0025DCF0,72,Code/GameEngine/Source/GameLogic/AI/GiveUpgradeUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
 ??0GloriousChargeUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0025E890,208,Code/GameEngine/Source/Common/RTS/GloriousChargeUpdateCtorThunk.cpp,matched,Exact 208B @ 0x0025E890; Exact retail MASM module ctor; unique friend_newModuleInstance factory 0x11C750
 ??0GloriousChargeUpdateModuleData@@QAE@XZ,,0x25e7c0,38,Code/GameEngine/Source/Common/RTS/GloriousChargeUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 clean C++ SpecialPowerModuleData + three zero fields
-??0GloriousChargeUpdateModuleData@@QAE@XZ,,0x0025E7C0,38,Code/GameEngine/Source/Common/RTS/GloriousChargeUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw special-power data constructor
 ??0GrabPassengerSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0025F0E0,46,Code/GameEngine/Source/GameLogic/Object/SpecialPower/GrabPassengerSpecialPower.cpp,matched,clean C++ empty derived constructor with BFME interface layout
 ??0GrabPassengerSpecialPowerModuleData@@QAE@XZ,,0x0025F260,35,Code/GameEngine/Source/GameLogic/Object/SpecialPower/GrabPassengerSpecialPowerModuleDataConstructorThunk.cpp,matched,Open-BFME5 clean C++ base pin 0x15c44 + zero and bool
 ??0GrantStealthBehaviorModuleData@@QAE@XZ,,0x002978A0,105,Code/GameEngine/Source/GameLogic/AI/GrantStealthBehaviorModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
@@ -57264,7 +57263,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0TemporarilyDefectUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002B0AD0,146,Code/GameEngine/Source/GameLogic/Object/Update/TemporarilyDefectUpdateCtorThunk.cpp,matched,Exact 146B ICF alias Open-BFME4
 ??0TemporarilyDefectUpdateModuleData@@QAE@XZ,,0x00852130,79,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,object-symbol=?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z;ICF alias converted to existing clean C++ body
 ??0TensileFormationUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00252F50,92,Code/GameEngine/Source/GameLogic/Object/Update/TensileFormationUpdateCtorThunk.cpp,matched,Open-BFME5 exact C++ thunk replacing MASM dump
-??0TensileFormationUpdateModuleData@@QAE@XZ,,0x002B65B0,29,Code/GameEngine/Source/GameLogic/Object/Update/TensileFormationUpdateModuleDataConstructor.cpp,matched,Open-BFME5 clean C++ base+three dword zeros
 ??0TensileFormationUpdateModuleData@@QAE@XZ,,0x002B65B0,29,Code/GameEngine/Source/GameLogic/Object/Update/TensileFormationUpdateModuleDataConstructor.cpp,matched,thunk-dump converted to clean C++ constructor body at destination 0x2B65B0
 ??0TerrainCollisionModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,,0x005DE6B0,115,Code/GameEngine/Source/GameClient/System/FXParticleSystem/TerrainCollisionModuleInfoCopyCtorThunk.cpp,matched,Open-BFME5 exact C++ TerrainCollisionModuleInfo copy constructor;object-symbol=??0TerrainCollisionModuleInfo@FXParticleSystem@@QAE@ABV01@@Z;MASM comment size 276 was stale and ledger target is 115
 ??0TerrainCollisionModuleInfo@FXParticleSystem@@QAE@XZ,0x0001EDB7,0x005FD230,95,Code/GameEngine/Source/GameClient/System/FXParticleSystem/TerrainCollisionModuleInfoCtorThunk.cpp,matched,Open-BFME5 exact C++ thunk replacing MASM dump
@@ -57424,7 +57422,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0WinInstanceData@@QAE@XZ,,0x00499B40,111,Code/GameEngine/Source/GameClient/GUI/WinInstanceData.cpp,matched,
 ??0WindModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00047410,0x005BD970,117,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
 ??0WindModuleInfo@FXParticleSystem@@QAE@XZ,0x0003EA9A,0x005FE6C0,112,Code/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp,matched,Open-BFME5 clean C++ wind module info field init
-??0WindModuleInfo@FXParticleSystem@@QAE@XZ,0x0003EA9A,0x005FE6C0,112,Code/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp,matched,Converted to an exact standalone C++ thunk
 ??0WindowLayout@@QAE@XZ,,0x00497C40,99,Code/GameEngine/Source/GameClient/window_layout.cpp,matched,EH function (cl: /EHsc); BFME added vtable vs Generals
 ??0WorkerAIUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002C9ED0,417,Code/masm_dumps/WorkerAIUpdate_constructor.asm,matched,Exact 417B @ 0x002C9ED0; Exact retail MASM module ctor; unique friend_newModuleInstance factory 0x11C060
 ??0WorkerAIUpdateModuleData@@QAE@XZ,,0x0011BF80,141,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact 141B retail module-data constructor
@@ -57875,7 +57872,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1ExperienceTracker@@MAE@XZ,,0x001B0DB0,79,Code/GameEngine/Source/GameLogic/Object/ExperienceTracker.cpp,matched,
 ??1FXBoneInfo@@QAE@XZ,,0x0037E1A0,8,Code/GameEngine/Source/GameLogic/Object/Update/FXBoneInfoDestructor.cpp,matched,thunk-dump converted to clean C++ destructor body at destination 0x37E1A0
 ??1FadeAndDieOrnamentUpdateModuleData@@UAE@XZ,,0x00126E70,67,Code/GameEngine/Source/GameLogic/Object/Die/FadeAndDieOrnamentUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
-??1FadeAndDieOrnamentUpdateModuleData@@UAE@XZ,,0x00126E70,67,Code/masm_dumps/FadeAndDieOrnamentUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1FastFixedAllocator@@QAE@XZ,,0x00B02720,26,Code/Libraries/Source/WWVegas/WWLib/FastFixedAllocatorThunks.cpp,matched,Converted to an exact standalone C++ thunk
 ??1File@@UAE@XZ,,0x009CB8C0,133,Code/GameEngine/Source/Common/System/File.cpp,matched,scalar dtor reached from ??_GFile@@ at 0x009CB950; installs vtable 0x01143AF8
 ??1FileInfoStruct@MixFileCreator@@QAE@XZ,,0x005DBEA0,50,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,object-symbol=??1?$ConcreteModuleTemplate@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@XZ;C++ alias
