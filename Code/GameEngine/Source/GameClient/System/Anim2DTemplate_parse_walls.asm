@@ -1,35 +1,6 @@
 .386
 .model flat
 
-; ?parseNumImages@Anim2DTemplate@@KAXPAVINI@@PAX1PBX@Z
-; Exact 158 retail bytes @ 0x005BAE50; BFME keeps the INI error-crash path in
-; release (formatter + crash reporter), ours strips DEBUG_CRASH.
-_TEXT SEGMENT
-public ?parseNumImages@Anim2DTemplate@@KAXPAVINI@@PAX1PBX@Z
-?parseNumImages@Anim2DTemplate@@KAXPAVINI@@PAX1PBX@Z PROC
-    db 064h,0A1h,000h,000h,000h,000h,08Bh,054h
-    db 024h,004h,06Ah,0FFh,068h,0B8h,093h,003h
-    db 001h,050h,08Bh,044h,024h,01Ch,064h,089h
-    db 025h,000h,000h,000h,000h,083h,0ECh,00Ch
-    db 056h,08Bh,074h,024h,024h,050h,08Dh,04Ch
-    db 024h,028h,051h,056h,052h,0E8h,03Eh,07Ch
-    db 029h,000h,08Bh,044h,024h,034h,083h,0C4h
-    db 010h,083h,0F8h,001h,08Bh,0CEh,073h,048h
-    db 08Dh,044h,024h,004h,050h,0E8h,0D8h,07Fh
-    db 0A5h,0FFh,08Bh,000h,085h,0C0h,0C7h,044h
-    db 024h,018h,000h,000h,000h,000h,074h,005h
-    db 083h,0C0h,008h,0EBh,005h,0B8h,08Bh,038h
-    db 007h,001h,06Ah,001h,050h,068h,0C0h,0F2h
-    db 010h,001h,08Dh,04Ch,024h,014h,06Ah,003h
-    db 051h,0E8h,03Ah,057h,029h,000h,083h,0C4h
-    db 014h,068h,030h,0FCh,01Dh,001h,08Dh,054h
-    db 024h,00Ch,052h,0E8h,028h,0BEh,043h,000h
-    db 050h,0E8h,026h,005h,0A7h,0FFh,08Bh,04Ch
-    db 024h,010h,05Eh,064h,089h,00Dh,000h,000h
-    db 000h,000h,083h,0C4h,018h,0C3h
-?parseNumImages@Anim2DTemplate@@KAXPAVINI@@PAX1PBX@Z ENDP
-_TEXT ENDS
-
 ; ?storeImage@Anim2DTemplate@@QAEXPBVImage@@@Z
 ; Exact 201 retail bytes @ 0x005BAF20; same release-crash-path wall.
 _TEXT SEGMENT

@@ -96,7 +96,7 @@ const FieldParse Anim2DTemplate::s_anim2DFieldParseTable[] =
 /** Parse the number of images we will have in this animation and allocate the array for them */
 // ------------------------------------------------------------------------------------------------
 // ?parseNumImages@Anim2DTemplate@@KAXPAVINI@@PAX1PBX@Z
-// Body in Anim2DTemplate_parse_walls.asm (exact 158B retail; BFME keeps the
+// Body in Anim2DTemplateParseNumImagesThunk.cpp (exact 158B retail; BFME keeps the
 // INI error-crash path in release, ours strips DEBUG_CRASH).
 
 // ------------------------------------------------------------------------------------------------
