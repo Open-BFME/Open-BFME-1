@@ -832,6 +832,7 @@ _HideControlBar,0x00002847,HideControlBar letterbox
 ?construct@RenderObjectUpdateTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x00018101,RenderObjectUpdateModuleTemplate copy constructor thunk used through a TU-local layout shim
 ??$__uninitialized_copy@PBUNugget@ModuleInfo@@PAU12@@_STL@@YAPAUNugget@ModuleInfo@@PBU12@0PAU12@ABU__false_type@0@@Z,0x0001819C,resweep callee back-solved
 ??$__copy@PAVProductionPrerequisite@@PAV1@H@_STL@@YAPAVProductionPrerequisite@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000181A1,resweep callee back-solved
+??1LGA_MemberObj@@QAE@XZ,0x000181C9,Open-BFME5 pin
 ??1PlayerTemplate@@QAE@XZ,0x000181CE,
 ??0W3DTankDrawModuleData@@QAE@XZ,0x00018322,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@U?$pair@UICoord2D@@UCoord3D@@@_STL@@V?$allocator@U?$pair@UICoord2D@@UCoord3D@@@_STL@@@2@@_STL@@IAEXPAU?$pair@UICoord2D@@UCoord3D@@@2@ABU32@ABU__false_type@2@I_N@Z,0x00018421,pinharvest x1 (thunk)
@@ -1003,6 +1004,7 @@ _HideControlBar,0x00002847,HideControlBar letterbox
 ?construct@HemisphericalEmissionVelocityTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x0001BF86,HemisphericalEmissionVelocityModuleTemplate constructor thunk used through a TU-local layout shim
 ?construct@SphericalEmissionVelocityTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x0001BF86,SphericalEmissionVelocityModuleTemplate constructor thunk used through a TU-local layout shim
 ??1FileInfoStruct@MixFileCreator@@QAE@XZ,0x0001BFDB,pinharvest x1 (thunk)
+??0RenderObjectDrawModule@FXParticleSystem@@QAE@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0001C021,Open-BFME5 pin
 ?duplicate@Condition@@QBEPAV1@XZ,0x0001C189,pinharvest x2 (thunk)
 ??$_Destroy@PAUParticleSysBoneInfo@@@_STL@@YAXPAUParticleSysBoneInfo@@0@Z,0x0001C19D,pinharvest x1 (thunk)
 ?b_0001c47c@@YAXXZ,0x0001C47C,gen-thunk body
@@ -1454,6 +1456,7 @@ _ShowControlBar,0x00024848,ShowControlBar letterbox
 ??1Entry@?$HashTemplateClass@VStringClass@@PAVThumbnailClass@@@@QAE@XZ,0x000259EB,pinharvest x1 (thunk)
 ??1StringInfo@@QAE@XZ,0x000259EB,pinharvest x1 (thunk)
 ?getManglerResponse@FirewallHelperClass@@QAEGGH@Z,0x00025A7C,
+?remove@LGA_Global@@QAEXPAPAX@Z,0x00025C34,Open-BFME5 pin
 ?construct_from@DefaultModuleTemplate0ABaseCopyShim@FXParticleSystem@@QAEXPBX@Z,0x00025CA7,DMT0A copy base
 ?findFunction@FunctionLexicon@@IAEPAXW4NameKeyType@@W4TableIndex@1@@Z,0x00025CD4,
 ??0CostModifierUpgradeModuleData@@QAE@XZ,0x00025D47,pinharvest x1 (thunk)
