@@ -9009,10 +9009,7 @@ ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT
 }
 
 // ?clone@?$ConcreteModuleTemplate@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVRenderObjectUpdateModuleTemplate@2@XZ
-RenderObjectUpdateModuleTemplate *ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::clone() const
-{
-    return (RenderObjectUpdateModuleTemplate *)new ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >(*this);
-}
+// Converted to RenderObjectUpdateConcreteModuleTemplateCloneThunk.cpp.
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$01$E?RENDEROBJECT_UPDATE_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_UPDATE_MODULE_NAME@2@3QBDBVRenderObjectUpdateModule@2@VRenderObjectUpdateModuleTemplate@2@VRenderObjectParticleUpdateModule@2@VRenderObjectParticleUpdateModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVRenderObjectUpdateModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
 __declspec(naked) RenderObjectUpdateModule *ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> >::createModule(TrackingPtr<ParticleSystem> &sys)
