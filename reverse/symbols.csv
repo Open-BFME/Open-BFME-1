@@ -46318,3 +46318,8 @@ g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 ??0ModuleDataBase_DefectorSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 DefectorSpecialPowerModuleData base pin
 ??0ModuleDataBase_CombineHordeSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 CombineHordeSpecialPowerModuleData base pin
 ??0GrabPassengerSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,GrabPassengerSpecialPowerModuleData base ctor
+??0ElvenWoodSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,ElvenWood SpecialPower base (shared 0x15c44)
+??0ModelConditionSpecialAbilityUpdateModuleDataBase@@QAE@XZ,0x0003F503,ModelCondition SpecialAbilityUpdate base
+??0ShareBufferClassBase@@QAE@HPBDH@Z,0x00929FC0,TexBufferClass base ShareBuffer-like ctor
+?initFromINI@INI@@QAEXPAXPBX@Z,0x00852130,BridgeTower friend_newModuleData retail call
+?erase@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@QAEPAVProductionPrerequisite@@PAV3@0@Z,0x00010BB3,rel32 pin for ThingTemplate prerequisite vector clear
