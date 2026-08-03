@@ -1657,6 +1657,7 @@ name,address,notes
 ??1HordeSiegeEngineContainModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1HordeUpdateModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1INIMemberA@@QAE@XZ,0x009CBFE0,Open-BFME5 pin
+??1LGA_MemberObj@@QAE@XZ,0x000181C9,Open-BFME5 pin
 ??1LargeGroupBonusUpdateModuleDataBase@@UAE@XZ,0x0001A401,Open-BFME5 pin
 ??1LargeGroupBonusUpdateModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1LargeGroupBonusUpdateModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
@@ -22666,6 +22667,7 @@ name,address,notes
 ?releaseTrack@WaterTracksRenderSystem@@IAEXPAVWaterTracksObj@@@Z,0x0000E250
 ?releaseWindowPointers@@YAXXZ,0x004C3170,pinharvest x1 (body)
 ?remove@Dict@@QAE_NW4NameKeyType@@@Z,0x000072B6
+?remove@LGA_Global@@QAEXPAPAX@Z,0x00025C34,Open-BFME5 pin
 ?removeAllTerrainBibs@BaseHeightMapRenderObjClass@@QAEXXZ,0x0000CC8E,pinharvest x1 (thunk)
 ?removeFromBuildList@SidesInfo@@QAEHPAVBuildListInfo@@@Z,0x0000A5A6
 ?removeGoal@Pathfinder@@QAEXPAVObject@@@Z,0x0002248F,pinharvest x1 (thunk)
@@ -23205,8 +23207,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?parse@LightningEmissionTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00046006,Open-BFME5 pin
-??0PB_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,Open-BFME5 pin
-??0RenderObjectDrawModule@FXParticleSystem@@QAE@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0001C021,Open-BFME5 pin
-??1LGA_MemberObj@@QAE@XZ,0x000181C9,Open-BFME5 pin
-?remove@LGA_Global@@QAEXPAPAX@Z,0x00025C34,Open-BFME5 pin
