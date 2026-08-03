@@ -7230,7 +7230,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?IsLightCRC@Xfer@@UBE_NXZ,0x00028B78,0x007E76A0,3,Code/GameEngine/Source/Common/System/Xfer.cpp,matched,returns false
 ?IsLoading@Xfer@@UBE_NXZ,0x0004A7FA,0x0006B1C0,3,Code/GameEngine/Source/Common/System/Xfer.cpp,matched,returns false
 ?IsStoring@Xfer@@UBE_NXZ,0x0003C286,0x007E7680,3,Code/GameEngine/Source/Common/System/Xfer.cpp,matched,returns false
-?IsWindowed@Debug@@AAE_NXZ,,0x0088A5F0,78,Code/masm_dumps/_sa10__IsWindowed_Debug__AAE_NXZ_88A5F0.asm,matched,Exact 78B Open-BFME4
+?IsWindowed@Debug@@AAE_NXZ,,0x0088A5F0,78,Code/Libraries/Source/WWVegas/WWDebug/DebugIsWindowedThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?Is_ANSI@WideStringClass@@QAE_NXZ,,0x009E7130,40,Code/Libraries/Source/WWVegas/WWLib/widestring.cpp,matched,
 ?Is_Additive@RenderObjClass@@UBEHXZ,,0x006CF800,9,Code/Libraries/Source/WWVegas/WW3D2/nullrobj.cpp,matched,relocated: vtable slot 109 target (was coincidence-match at 0x979380 with pre-fix mask)
 ?Is_Alpha@RenderObjClass@@UBEHXZ,,0x006CF7C0,9,Code/Libraries/Source/WWVegas/WW3D2/nullrobj.cpp,matched,

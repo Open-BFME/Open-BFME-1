@@ -1554,27 +1554,10 @@ static BOOL CALLBACK EnumThreadWndProc(HWND hwnd, LPARAM lParam)
   return FALSE;
 }
 
-// ?IsWindowed@Debug@@AAE_NXZ present-unmatched
-bool Debug::IsWindowed(void)
-{
-  // use cached result if possible
-  if (m_isWindowed)
-    return m_isWindowed>0;
+// Keep this matched callback emitted after IsWindowed moved to its exact thunk.
+static BOOL (CALLBACK * volatile EnumThreadWndProcAnchor)(HWND, LPARAM) = EnumThreadWndProc;
 
-  // find main app window
-  HWND appHWnd=NULL;
-  EnumThreadWindows(GetCurrentThreadId(),EnumThreadWndProc,(LPARAM)&appHWnd);
-  if (!appHWnd)
-  {
-    // couldn't find main window, assume we're windowed anyway
-    m_isWindowed=1;
-    return true;
-  }
-
-  // we assume full screen if WS_CAPTION is not set
-  m_isWindowed=(GetWindowLong(appHWnd,GWL_STYLE)&WS_CAPTION)?1:-1;
-  return m_isWindowed>0;
-}
+// ?IsWindowed@Debug@@AAE_NXZ is emitted by DebugIsWindowedThunk.cpp.
 
 //////////////////////////////////////////////////////////////////////////////
 
