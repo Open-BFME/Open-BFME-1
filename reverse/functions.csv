@@ -11200,7 +11200,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?nextToken@?$StringBase@D@@QAE_NPAV1@PBD@Z","0x008880E0","0x8880e0","186","Code/Libraries/Source/WWVegas/WWLib/string_base.cpp","matched",""
 "?nextToken@?$StringBase@G@@QAE_NPAV1@PBG@Z","0x008889B0","0x8889b0","197","Code/Libraries/Source/WWVegas/WWLib/string_base.cpp","matched",""
 "?nextWithNumeric@SimpleObjectIterator@@QAEPAVObject@@PAM@Z","","0x001DDD10","45","Code/GameEngine/Source/GameLogic/Object/SimpleObjectIterator.cpp","matched",""
-"?nickErrorCallback@PeerThreadClass@@","","0x0064A2E0","1075","Code/masm_dumps/_str2__nickErrorCallback_PeerThreadClass__64A2E0.asm","matched",""
+"?nickErrorCallback@PeerThreadClass@@","","0x0064A2E0","1075","Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread_nickErrorCallback_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_PeerThreadNickErrorCallback_64A2E0"
 "?Node_Count@AABTreeBuilderClass@@QAEHXZ","","0x0096B950","52","Code/Libraries/Source/WWVegas/WW3D2/aabtreebuilder.cpp","matched",""
 "?Node_Count_Recursive@AABTreeBuilderClass@@AAEHPAUCullNodeStruct@1@H@Z","","0x0096B3C0","50","Code/Libraries/Source/WWVegas/WW3D2/aabtreebuilder.cpp","matched",""
 "?nodeCount@LList@@QAEHXZ","","0x00105CC0","54","Code/GameEngine/Source/Common/System/List.cpp","matched",""
