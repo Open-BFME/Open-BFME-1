@@ -2870,7 +2870,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1DX8PolygonRendererClass@@UAE@XZ,,0x00972AF0,87,Code/Libraries/Source/WWVegas/WW3D2/dx8polygonrenderer.cpp,matched,
 ??1DamageModuleModuleData@@UAE@XZ,,0x0027E4E0,145,Code/GameEngine/Source/Common/DamageModuleModuleDataDestructorThunk.cpp,matched,Exact 145B SEH dtor Open-BFME4
 ??1DarknessSpecialPowerModuleData@@UAE@XZ,,0x002693E0,426,Code/GameEngine/Source/Common/DarknessSpecialPowerModuleDataDestructorThunk.cpp,matched,Exact 426B SEH dtor Open-BFME5
-??1DebugCmdInterfaceDebug@@UAE@XZ,,0x00890F10,85,Code/GameEngine/Source/Common/DebugCmdInterfaceDebugDestructorThunk.cpp,matched,ICF of ??1DebugIOFlat@@UAE@XZ Open-BFME4+Grok
+??1DebugCmdInterfaceDebug@@UAE@XZ,,0x00890F10,85,Code/GameEngine/Source/Common/DebugCmdInterfaceDebugDestructorThunk.cpp,matched,Open-BFME5 clean C++ DebugCmdInterfaceDebug dtor (ICF DebugIOFlat FreeConsole)
 ??1DebugIOCon@@UAE@XZ,,0x00890F10,85,Code/GameEngine/Source/Common/DebugIOConDestructorThunk.cpp,matched,Exact 85B present-unmatched Open-BFME4
 ??1DebugIOFlat@@UAE@XZ,,0x00890F10,85,Code/GameEngine/Source/Common/DebugIOFlatDestructorThunk.cpp,matched,Open-BFME5 clean C++ conversion of __emit dtor thunk
 ??1DebugIONet@@UAE@XZ,,0x00890F10,85,Code/GameEngine/Source/Common/DebugIONetDestructorThunk.cpp,matched,Exact 85B present-unmatched Open-BFME4
