@@ -1288,3 +1288,4 @@ and 0x0113A6F8 share slots 0, 4, 5, 6, 7, 8, 10, 11 with slot 0 a plain getter
 rather than a destructor. The handle classes only make sense once it does.
 
 2026-08-03: When lifting an existing MASM dump, compare its emitted bytes to the retail target; this tab-control dump carried an extra 0F 8B pair at +0x43 despite a stale exact-match note.
+2026-08-03: C-linkage runtime helpers can gain a leading underscore in MSVC COFF; use a functions.csv object-symbol alias when the retail ledger name strips it.
