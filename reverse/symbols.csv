@@ -11995,6 +11995,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?getClassMemoryPool@ObjectDefectionHelper@@SAPAVMemoryPool@@XZ,0x0000B9CE,pinharvest x1 (thunk)
 ?getClassMemoryPool@ObjectDefectionHelper@@SAPAVMemoryPool@@XZ,0x0000DBA7,pinharvest x1 (thunk)
 ?getClassMemoryPool@ObjectDefectionHelper@@SAPAVMemoryPool@@XZ,0x009EDD30,pinharvest x1 (body)
+?getClassMemoryPool@ObjectDefectionHelperPoolBody@@SAPAVMemoryPool@@XZ,0x006731A0,Open-BFME5 forwarding thunk target
 ?getColor@MultiplayerSettings@@QAEPAVMultiplayerColorDefinition@@H@Z,0x00021EC2
 ?getCommandID@NetAckBothCommandMsg@@QAEGXZ,0x000074E1
 ?getCommandID@NetAckStage1CommandMsg@@QAEGXZ,0x0002A482

@@ -74,15 +74,15 @@ public:
     __declspec(dllexport) static MemoryPool *getClassMemoryPool();
 };
 
-__declspec(naked) MemoryPool *ObjectDefectionHelper::getClassMemoryPool()
+class ObjectDefectionHelperPoolBody
 {
-    __asm {
-        _emit 0E9h
-        _emit 0CDh
-        _emit 077h
-        _emit 066h
-        _emit 000h
-    }
+public:
+    static MemoryPool *getClassMemoryPool();
+};
+
+MemoryPool *ObjectDefectionHelper::getClassMemoryPool()
+{
+    return ObjectDefectionHelperPoolBody::getClassMemoryPool();
 }
 
 class DX8Wrapper
