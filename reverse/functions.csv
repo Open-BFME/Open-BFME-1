@@ -10015,7 +10015,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?end@?$vector@_NV?$allocator@_N@_STL@@@_STL@@QBE?AU?$_Bit_iter@_NPB_N@2@XZ,,0x002CAC50,18,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu.cpp,matched,
 ?endAreaSelectHint@InGameUI@@UAEXPBVGameMessage@@@Z,,0x0043AC70,7,Code/GameEngine/Source/GameClient/InGameUI.cpp,matched,Unique padded InGameUI mutator
 ?endGame@GameInfo@@QAEXXZ,,0x0061E8A0,9,Code/GameEngine/Source/GameNetwork/GameInfo.cpp,matched,
-?endMenu@EstablishConnectionsMenu@@,,0x00387A50,657,Code/masm_dumps/_sa9__endMenu_EstablishConnectionsMenu___387A50.asm,matched,Exact 657B Open-BFME4
+?endMenu@EstablishConnectionsMenu@@,,0x00387A50,657,Code/GameEngine/Source/GameClient/GUI/EstablishConnectionsMenu/EstablishConnectionsMenuEndMenuThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from certified MASM body;object-symbol=_bfme_EstablishConnectionsMenuEndMenu_387A50
 ?endsWith@?$StringBase@D@@QBE_NABV1@@Z,0x00887870,0x887870,111,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,
 ?endsWith@?$StringBase@D@@QBE_NPBD@Z,0x000109C9,0x00061E30,50,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,
 ?endsWith@?$StringBase@D@@QBE_NPBDH@Z,0x00887630,0x887630,75,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,
