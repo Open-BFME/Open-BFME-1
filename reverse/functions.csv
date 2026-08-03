@@ -11637,7 +11637,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?parseSkillSet@AI@@SAXPAVINI@@PAX1PBX@Z","","0x0014AEC0","26","Code/GameEngine/Source/GameLogic/AI/ai.cpp","matched",""
 "?parseSliderData@@YA_NPADPAVWinInstanceData@@0PAX@Z","","0x00484B10","88","Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp","matched",""
 "?parseSoundsList@INI@@SAXPAV1@PAX1PBX@Z","","0x0002E9C4","5","Code/GameEngine/Source/Common/RTS/INIParseSoundsListThunk.cpp","matched","5-byte incremental-link static INI parser thunk converted to focused C++ source"
-"?parseSpecialPowerDefinition@SpecialPowerStore@@","","0x000EBE90","639","Code/masm_dumps/_sa__parseSpecialPowerDefinition_SpecialPowerStore___EBE90.asm","matched","Exact 639B string-anchored Open-BFME4"
+"?parseSpecialPowerDefinition@SpecialPowerStore@@","","0x000EBE90","639","Code/GameEngine/Source/Common/SpecialPowerStore_parseSpecialPowerDefinition_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_SpecialPowerStoreParseSpecialPowerDefinition_EBE90"
 "?parseSpecialPowerTemplate@INI@@SAXPAV1@PAX1PBX@Z","","0x000BB210","77","Code/GameEngine/Source/Common/INI/ini.cpp","matched","was a 5B thunk claim at 0x0001D77D"
 "?parseStartMoney@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z","","0x000E0AF0","59","Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp","matched",""
 "?parseStaticGameLODDefinition@INI@@SAXPAV1@@Z","","0x0007CEC0","191","Code/GameEngine/Source/Common/GameLOD.cpp","matched","INI block table node binds keyword StaticGameLOD to this address"
