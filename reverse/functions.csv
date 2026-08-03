@@ -6909,7 +6909,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?decrementDataLeft@DataChunkInput@@IAEXH@Z","","0x00102780","29","Code/GameEngine/Source/Common/System/DataChunk.cpp","matched",""
 "?decrementDelay@AudioEventRTS@@QAEXM@Z","","0x000B21E0","13","Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp","matched","BFME audio layout"
 "?Decrypt@PKey@@QBEHPBXHPAX@Z","","0x009EAE10","339","Code/Libraries/Source/WWVegas/WWLib/pk.cpp","matched",""
-"?defect@Object@@QAEXPAVTeam@@I@Z","","0x001D22C0","556","Code/masm_dumps/defect_Object_QAEXPAVTeam_I_Z_001D22C0_packet281.asm","matched","Certified packet 281 retail SHA256 f65b4a883c07e02ef0c72621b5d8fa0920054e3cd216a29ec02c276abdd1bd2f"
+"?defect@Object@@QAEXPAVTeam@@I@Z","","0x001D22C0","556","Code/GameEngine/Source/GameLogic/Object/ObjectDefect_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_ObjectDefect_1D22C0"
 "?Define_FVF@DX8FVFCategoryContainer@@SAIPAVMeshModelClass@@_N@Z","","0x00945980","240","Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp","matched",""
 "?Define_Vendor@DX8Caps@@CA?AW4VendorIdType@1@I@Z","","0x0091A9F0","134","Code/Libraries/Source/WWVegas/WW3D2/dx8caps.cpp","matched",""
 "?deg2rad@@YAMM@Z","0x00018A7F","0x00069780","11","Code/GameEngine/Source/Common/System/Trig.cpp","matched","converts degrees to radians"
