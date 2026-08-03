@@ -8126,7 +8126,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Set_Fog_Func@ShaderClass@@QAEXW4FogFuncType@1@@Z,,0x006C5350,21,Code/Libraries/Source/WWVegas/WW3D2/line3d.cpp,matched,
 ?Set_Fog_Range@SceneClass@@UAEXMM@Z,,0x006FCB70,17,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp,matched,
 ?Set_Font@Render2DSentenceClass@@QAEXPAVFontCharsClass@@@Z,,0x0093D0C0,43,Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.cpp,matched,
-?Set_Force_Visible@RenderObjClass@@UAEXH@Z,,0x0091F890,76,Code/masm_dumps/__Set_Force_Visible_RenderObjClass__UAEXH_Z_91F890.asm,matched,
+?Set_Force_Visible@RenderObjClass@@UAEXH@Z,,0x0091F890,76,Code/Libraries/Source/WWVegas/WW3D2/RenderObjClassSetForceVisibleThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?Set_Frame@HAnimComboClass@@QAEXHM@Z,,0x00973970,20,Code/Libraries/Source/WWVegas/WW3D2/hanim.cpp,matched,
 ?Set_Frame_Keyframes@ParticleEmitterDefClass@@UAEXAAU?$ParticlePropertyStruct@M@@@Z,,0x0098E4E0,85,Code/Libraries/Source/WWVegas/WW3D2/part_ldr.cpp,matched,
 ?Set_Frame_Mode@ParticleEmitterDefClass@@UAEXH@Z,,0x0098D2B0,13,Code/Libraries/Source/WWVegas/WW3D2/part_ldr.cpp,matched,ICF alias of existing matched body
