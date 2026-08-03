@@ -2964,7 +2964,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1GettingBuiltBehaviorModuleData@@UAE@XZ,,0x001FE260,198,Code/masm_dumps/GettingBuiltBehaviorModuleData_destructor.asm,matched,Exact 198B SEH dtor Open-BFME4
 ??1GiantBirdAIUpdate@@UAE@XZ,,0x002C2720,173,Code/masm_dumps/GiantBirdAIUpdate_destructor.asm,matched,Exact 173B @ 0x002C2720; Exact retail MASM; instance factory->vtable dtor; del 0x2C2800 ctor 0x2C2430 vt 0xCC7F40
 ??1GiantBirdSlowDeathBehavior@@UAE@XZ,,0x001FFC10,110,Code/masm_dumps/GiantBirdSlowDeathBehavior_destructor.asm,matched,Exact 110B @ 0x001FFC10; Exact retail MASM; instance factory->vtable dtor; del 0x1FFDE0 ctor 0x1FFB40 vt 0xCA4984
-??1GiantBirdSlowDeathBehaviorModuleData@@UAE@XZ,,0x001FFF50,79,Code/masm_dumps/GiantBirdSlowDeathBehaviorModuleData_destructor.asm,matched,Exact 79B @ 0x001FFF50; Exact retail MASM; factory->vtable dtor; del 0x1FFF20 ctor 0x1FFE40 vt 0xCA49B8
+??1GiantBirdSlowDeathBehaviorModuleData@@UAE@XZ,,0x001FFF50,79,Code/GameEngine/Source/GameLogic/AI/GiantBirdSlowDeathBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1GiveUpgradeUpdateModuleData@@UAE@XZ,,0x0025DE90,120,Code/masm_dumps/GiveUpgradeUpdateModuleData_destructor.asm,matched,Exact 120B SEH dtor factory->vtable Open-BFME4
 ??1GloriousChargeUpdate@@UAE@XZ,,0x0025EA40,159,Code/GameEngine/Source/Common/RTS/GloriousChargeUpdateDtorThunk.cpp,matched,Exact standalone C++ __emit thunk from certified retail destructor
 ??1GrantStealthBehaviorModuleData@@UAE@XZ,,0x00297D60,93,Code/masm_dumps/GrantStealthBehaviorModuleData_destructor.asm,matched,Exact 93B SEH dtor Open-BFME4
