@@ -11684,7 +11684,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?parseWeatherData@@YAXPAVINI@@@Z","","0x0039B380","167","Code/GameEngine/Source/GameClient/WeatherData.cpp","matched","BFME-only and distinct from the Weather block in Snow.cpp; five 8-byte entries at TheGlobalWeatherSystem+0x28 selected by name"
 "?parseWeatherDefinition@INI@@SAXPAV1@@Z","","0x0045B130","306","Code/GameEngine/Source/GameClient/Snow.cpp","matched","INI block table node binds keyword Weather to this address"
 "?parseWin@@YAHQAPADH@Z","","0x00061050","19","Code/GameEngine/Source/Common/CommandLine.cpp","matched",""
-"?parseWindow@@YAPAVGameWindow@@PAVFile@@PAD@Z","","0x00487F80","1328","Code/masm_dumps/GameWindowManagerScript_parseWindow.asm","matched","Exact 1328B MASM; true start 0x487F80 after int3 pad; cold tail past main ret"
+"?parseWindow@@YAPAVGameWindow@@PAVFile@@PAD@Z","","0x00487F80","1328","Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript_parseWindow_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_GameWindowManagerScriptParseWindow_487F80"
 "?parseWindowTransitions@INI@@SAXPAV1@@Z","","0x0048B7C0","172","Code/GameEngine/Source/Common/INI/INIWindowTransition.cpp","matched","asks TheTransitionHandler for a new group and parses into it; the receiver is the singleton the matched GameWindowManager reset and update also use"
 "?ParseWorldDictDataChunk@@YA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z","","0x0044F710","87","Code/GameEngine/Source/GameClient/MapUtil.cpp","matched",""
 "?ParseWorldDictDataChunk@WorldHeightMap@@KA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z","","0x00746F60","44","Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp","matched",""
