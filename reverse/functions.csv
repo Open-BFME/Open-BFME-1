@@ -2854,7 +2854,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1CrateSystem@@UAE@XZ,,0x00379A40,204,Code/GameEngine/Source/GameLogic/System/CrateSystem.cpp,matched,
 ??1CreateCrateDie@@UAE@XZ,,0x00379440,320,Code/masm_dumps/CreateCrateDie_destructor.asm,matched,Exact 320B SEH dtor factory->vtable Open-BFME4
 ??1CreateCrateDieModuleData@@UAE@XZ,,0x001299A0,106,Code/masm_dumps/CreateCrateDieModuleData_destructor.asm,matched,Exact 106B @ 0x001299A0; Exact retail MASM; factory->vtable dtor; del 0x129970 ctor 0x1298D0 vt 0xC8EF70
-??1CreateObjectDieModuleData@@UAE@XZ,,0x002548A0,67,Code/masm_dumps/CreateObjectDieModuleData_destructor.asm,matched,Exact 67B SEH dtor factory->vtable Open-BFME4
+??1CreateObjectDieModuleData@@UAE@XZ,,0x002548A0,67,Code/GameEngine/Source/GameLogic/Object/Die/CreateObjectDieModuleDataDestructorThunk.cpp,matched,Exact 67B SEH dtor factory->vtable Open-BFME4
 ??1CreditsLine@@QAE@XZ,,0x0040C230,134,Code/masm_dumps/_rn7___1CreditsLine__QAE_XZ_40C230.asm,matched,reloc-needle Open-BFME4+Grok
 ??1CriticalSectionClass@@QAE@XZ,,0x009DB450,25,Code/Libraries/Source/WWVegas/WWLib/mutex.cpp,matched,
 ??1CritterEmitterUpdateModuleData@@UAE@XZ,,0x001FA750,175,Code/masm_dumps/CritterEmitterUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x1FA720 ctor 0x1FA3A0 vt 0xCA39F0
