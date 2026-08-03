@@ -46974,6 +46974,7 @@ name,address,notes
 ??0BaikonurLaunchPowerModuleData@@QAE@XZ,0x00037A51,pinharvest x1 (thunk)
 ??0BaikonurLaunchPowerModuleData@@QAE@XZ,0x0003BDE5,pinharvest x1 (thunk)
 ??0BaikonurLaunchPowerModuleData@@QAE@XZ,0x00044FA8,pinharvest x1 (thunk)
+??0BannerCarrierUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003DB36,BannerCarrierUpdate ctor for friend_new
 ??0BaseModuleData@@QAE@XZ,0x00048A3B,TensileFormationUpdateModuleData base ctor
 ??0BaseRegenerateUpdateModuleData@@QAE@XZ,0x0001066D,pinharvest x1 (thunk)
 ??0BaseRegenerateUpdateModuleData@@QAE@XZ,0x00014E20,pinharvest x1 (thunk)
@@ -47024,6 +47025,7 @@ name,address,notes
 ??0CashBountyPowerModuleData@@QAE@XZ,0x00044FA8,pinharvest x1 (thunk)
 ??0CashHackSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z,0x00014245,ModuleFactory retail instance constructor
 ??0CashHackSpecialPowerModuleData@@QAE@XZ,0x0001235A,derived-ICF
+??0CastleMemberBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x000060F5,CastleMemberBehavior ctor for friend_new
 ??0Cftp@@QAE@XZ,0x00885AD0,
 ??0CheckpointUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
 ??0CleanupAreaPowerModuleData@@QAE@XZ,0x0001ABF9,pinharvest x1 (thunk)
@@ -47237,6 +47239,7 @@ name,address,notes
 ??0GameSpyPSMessageQueue@@QAE@XZ,0x000216C0,
 ??0GameWindowManager@@QAE@XZ,0x00041489,W3DGameWindowManager base constructor retail thunk
 ??0GameWindowTransitionsHandler@@QAE@XZ,0x000029A5,ILT thunk -> body 0x48BF40; retail GameWindowTransitionsHandler ctor called by GameWindowManager::init on TheTransitionHandler (0x012F3330)
+??0GateOpenAndCloseBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000ACE0,GateOpenAndCloseBehavior ctor for friend_new
 ??0GenerateMinefieldBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00001CDA,pinharvest x1 (thunk)
 ??0GenerateMinefieldBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002D40C,pinharvest x1 (thunk)
 ??0GenerateMinefieldBehaviorModuleData@@QAE@XZ,0x0002B062,
@@ -47342,6 +47345,7 @@ name,address,notes
 ??0ModelConditionInfo@@QAE@ABU0@@Z,0x0000B537,hit-decoded x2 (thunk)
 ??0ModelConditionInfo@@QAE@ABU0@@Z,0x00887B60,hit-decoded x6 (body)
 ??0ModelConditionInfo@@QAE@ABU0@@Z,0x00887C90,site-decoded x1 (body)
+??0ModelConditionSoundSelectorClientBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,ModelConditionSoundSelectorClientBehavior ctor for friend_new
 ??0ModelConditionSpecialAbilityUpdateModuleDataBase@@QAE@XZ,0x0003F503,ModelCondition SpecialAbilityUpdate base
 ??0ModelConditionUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x00025810,module ctor (friend_newModuleInstance retail call target)
 ??0ModelConditionUpgradeModuleData@@QAE@XZ,0x00010C80,pinharvest x1 (thunk)
@@ -47431,6 +47435,7 @@ name,address,notes
 ??0OCLUpdateModuleData@@QAE@XZ,0x0001ECBD,pinharvest x1 (thunk)
 ??0OCLUpdateModuleData@@QAE@XZ,0x0002C9D0,pinharvest x1 (thunk)
 ??0OCLUpdateModuleData@@QAE@XZ,0x0002E069,pinharvest x1 (thunk)
+??0ObjectCreationUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x000246B8,ObjectCreationUpgrade ctor for friend_new
 ??0ObjectCreationUpgradeModuleData@@QAE@XZ,0x00010C80,pinharvest x1 (thunk)
 ??0ObjectCreationUpgradeModuleData@@QAE@XZ,0x00022877,pinharvest x1 (thunk)
 ??0ObjectCreationUpgradeModuleData@@QAE@XZ,0x00023DCB,pinharvest x1 (thunk)
@@ -47460,6 +47465,7 @@ name,address,notes
 ??0ParticleUplinkCannonUpdateModuleData@@QAE@XZ,0x0000C063,pinharvest x1 (thunk)
 ??0ParticleUplinkCannonUpdateModuleData@@QAE@XZ,0x0002DE75,pinharvest x1 (thunk)
 ??0PhysicsBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x000328C6,
+??0PhysicsBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003C3BC,
 ??0PhysicsBehaviorModuleData@@QAE@XZ,0x00007FF4,pinharvest x1 (thunk)
 ??0PhysicsBehaviorModuleData@@QAE@XZ,0x000103E8,pinharvest x1 (thunk)
 ??0PhysicsBehaviorModuleData@@QAE@XZ,0x0001659F,pinharvest x1 (thunk)
@@ -47778,6 +47784,7 @@ name,address,notes
 ??0UpgradeModuleData@@QAE@XZ,0x00049AA3,pinharvest x1 (thunk)
 ??0UpgradeModuleDataSub@@QAE@XZ,0x0000F0A6,UpgradeModuleData subobject ctor ILT used by upgrade factories
 ??0UpgradeMuxData@@QAE@XZ,0x000057B8,pinharvest x1 (thunk)
+??0UpgradeSoundSelectorClientBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,UpgradeSoundSelectorClientBehavior ctor for friend_new
 ??0Vector3HollowSphereRandomizer@@QAE@M@Z,0x00B02350,
 ??0Vector3SolidSphereRandomizer@@QAE@M@Z,0x00B02250,
 ??0VertexBufferClass@@IAE@IIGI@Z,0x0091DC50,DX8VertexBufferClass ctor base call
