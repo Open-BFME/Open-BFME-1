@@ -7385,7 +7385,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Make_Identity@Quaternion@@QAEXXZ,,0x009523F0,18,Code/Libraries/Source/WWVegas/WW3D2/hcanim.cpp,matched,
 ?Make_UV_Array_Unique@MeshMatDescClass@@QAEXHH@Z,,0x0092C010,158,Code/Libraries/Source/WWVegas/WW3D2/MeshMatDescClassMakeUVArrayUniqueThunk.cpp,matched,Exact standalone C++ __emit thunk from certified retail helper
 ?Make_UV_Array_Unique@MeshModelClass@@QAEXHH@Z,,0x0094DB30,11,Code/Libraries/Source/WWVegas/WW3D2/meshmdl.cpp,matched,
-?Make_Unique@MeshClass@@QAEX_N@Z,,0x0092C400,170,Code/masm_dumps/_sym2__Make_Unique_MeshClass__QAEX_N_Z_92C400.asm,matched,symbol-pin Open-BFME4+Grok
+?Make_Unique@MeshClass@@QAEX_N@Z,,0x0092C400,170,Code/GameEngine/Source/Common/MeshClass_Make_UniqueMethodThunk.cpp,matched,symbol-pin Open-BFME4+Grok
 ?MapSelectMenuInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004D17B0,194,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MapSelectMenu.cpp,matched,
 ?Mapper_ID@TextureMapperClass@@UBEHXZ,,0x006CF680,3,Code/Libraries/Source/WWVegas/WW3D2/mapper.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?Max@WWMath@@SAMMM@Z,,0x006DFAB0,25,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp,matched,
