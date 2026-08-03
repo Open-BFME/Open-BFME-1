@@ -34507,7 +34507,7 @@ _CommUdpPoke,,0x00818A20,146,Code/Libraries/Source/DirtySock/commudp.cpp,matched
 _CommUdpProcess,,0x00817B30,2207,Code/Libraries/Source/DirtySock/commudp.cpp,matched,
 _CommUdpSetup,,0x00818400,253,Code/Libraries/Source/DirtySock/commudp.cpp,matched,
 _D3DXMatrixInverse@12,,0x009FB321,979,Code/masm_dumps/__D3DXMatrixInverse_12_9FB321.asm,matched,
-_D3DXVec4Transform@12,,0x009FAA48,600,Code/masm_dumps/__D3DXVec4Transform_12_9FAA48.asm,matched,
+_D3DXVec4Transform@12,,0x009FAA48,600,Code/Libraries/Source/WWVegas/WWMath/D3DXVec4TransformThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_D3DXVec4Transform_9FAA48
 _DoAnyMapTransfers,,0x0066E070,659,Code/GameEngine/Source/GameNetwork/FileTransfer.cpp,matched,
 _GetArtPreviewFromMap,,0x0066D820,300,Code/GameEngine/Source/GameNetwork/FileTransfer.cpp,matched,
 _GetAssetUsageFromMap,,0x0066DE50,211,Code/GameEngine/Source/GameNetwork/FileTransfer.cpp,matched,
