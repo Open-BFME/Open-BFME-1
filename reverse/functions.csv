@@ -2941,7 +2941,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1GameResultsRequest@@QAE@XZ,,0x004E5C60,155,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,thunk-dump converted to clean C++
 ??1GameResultsResponse@@QAE@XZ,,0x00641300,39,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,thunk-dump converted to clean C++
 ??1GameSpyGameSlot@@QAE@XZ,,0x004FA000,128,Code/masm_dumps/GameSpyGameSlot_destructor.asm,matched,MASM exact; StagingRoom vecdtor identity; queue RVA 0x9DB036 was INSIDE format parser
-??1GameSpyGroupRoom@@QAE@XZ,,0x004F9850,76,Code/masm_dumps/GameSpyGroupRoom_destructor.asm,matched,Certified packet 120 exact retail MASM SHA256 3f883ae20123d0c55b8c341cba46838c9fac9a80f0e2fb4e36480958951e0198
+??1GameSpyGroupRoom@@QAE@XZ,,0x004F9850,76,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGroupRoomDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1GameSpyLoginPreferences@@UAE@XZ,,0x00081E70,108,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLoginMenu.cpp,matched,true dtor C++ empty body; misplaced drift 0x65D371 was inside dispatchEvents; pins Rb_tree map dtors 0xB992/0x29C58
 ??1GameSpyStagingRoom@@QAE@XZ,,0x004FA3D0,151,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs_GameSpyStagingRoom_dtor.asm,matched,Certified packet id 265; Ghidra ENTRY and ret-to-INT3 boundary; removeStagingRoom thunk ownership; exact retail db dump
 ??1GameState@@UAE@XZ,,0x00110DF0,503,Code/GameEngine/Source/Common/System/SaveGame/GameState_dtor.asm,matched,
