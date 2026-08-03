@@ -2319,7 +2319,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0TerrainRoadCollection@@QAE@XZ,,0x00601430,36,Code/GameEngine/Source/GameClient/Terrain/TerrainRoads.cpp,matched,
 ??0TerrainScorchFXNugget@@QAE@XZ,,0x00350020,23,Code/GameEngine/Source/GameClient/FXList.cpp,matched,
 ??0TerrainTypeCollection@@QAE@XZ,,0x000A71C0,25,Code/GameEngine/Source/Common/TerrainTypes.cpp,matched,
-??0TexBufferClass@@QAE@HPBD@Z,,0x0092BA60,61,Code/Libraries/Source/WWVegas/WW3D2/TexBufferClassCtorThunk.cpp,matched,MASM converted to focused C++ constructor thunk
+??0TexBufferClass@@QAE@HPBD@Z,,0x0092BA60,61,Code/Libraries/Source/WWVegas/WW3D2/TexBufferClassCtorThunk.cpp,matched,Open-BFME5 clean C++ ShareBuffer base plus memset zero
 ??0TextTextureClass@@QAE@XZ,,0x0015A230,25,Code/Libraries/Source/WWVegas/WW3D2/txt.cpp,matched,
 ??0TextureLoadTaskListNodeClass@@QAE@XZ,,0x0005C6C0,16,Code/Libraries/Source/WWVegas/WW3D2/textureloader.cpp,matched,icf-owner=??0?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@QAE@XZ
 ??0TextureMapperClass@@QAE@ABV0@@Z,,0x00964490,28,Code/Libraries/Source/WWVegas/WW3D2/mapper.cpp,matched,
