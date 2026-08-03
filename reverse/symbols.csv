@@ -41916,3 +41916,7 @@ ShareBufferClassUnsignedShort_vtbl_final,0x011135AC,ShareBuffer ushort dtor fina
 ?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6
 ?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37
 ?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
+?getSpecialPowerModule@Object@@QBEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF
+?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6
+?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37
+?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
