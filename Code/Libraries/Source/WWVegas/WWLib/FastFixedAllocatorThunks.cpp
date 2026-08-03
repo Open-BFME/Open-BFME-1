@@ -9,55 +9,19 @@ public:
 };
 
 // ??0FastFixedAllocator@@QAE@I@Z
-__declspec(naked) FastFixedAllocator::FastFixedAllocator(unsigned int)
+FastFixedAllocator::FastFixedAllocator(unsigned int size)
 {
-    __asm {
-        __emit 0x8b;
-        __emit 0xc1;
-        __emit 0x33;
-        __emit 0xc9;
-        __emit 0x89;
-        __emit 0x48;
-        __emit 0x08;
-        __emit 0x89;
-        __emit 0x48;
-        __emit 0x0c;
-        __emit 0x89;
-        __emit 0x48;
-        __emit 0x10;
-        __emit 0x89;
-        __emit 0x48;
-        __emit 0x14;
-        __emit 0x89;
-        __emit 0x08;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x04;
-        __emit 0x83;
-        __emit 0xf9;
-        __emit 0x04;
-        __emit 0xc7;
-        __emit 0x40;
-        __emit 0x04;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x73;
-        __emit 0x05;
-        __emit 0xb9;
-        __emit 0x04;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x48;
-        __emit 0x04;
-        __emit 0xc2;
-        __emit 0x04;
-        __emit 0x00;
-    }
+	unsigned int *fields = reinterpret_cast<unsigned int *>(this);
+	fields[2] = 0;
+	fields[3] = 0;
+	fields[4] = 0;
+	fields[5] = 0;
+	fields[0] = 0;
+	fields[1] = 1;
+	if (size < 4) {
+		size = 4;
+	}
+	fields[1] = size;
 }
 
 // ??1FastFixedAllocator@@QAE@XZ
