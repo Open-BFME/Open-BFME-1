@@ -6,28 +6,10 @@ class StringClass
 };
 
 // ?Store_Length@StringClass@@AAEXH@Z
-__declspec(naked) void StringClass::Store_Length(int)
+void StringClass::Store_Length(int length)
 {
-    __asm {
-        __emit 0x8b;
-        __emit 0x01;
-        __emit 0x3b;
-        __emit 0x05;
-        __emit 0x24;
-        __emit 0x91;
-        __emit 0x2d;
-        __emit 0x01;
-        __emit 0x74;
-        __emit 0x07;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x04;
-        __emit 0x89;
-        __emit 0x48;
-        __emit 0xfc;
-        __emit 0xc2;
-        __emit 0x04;
-        __emit 0x00;
-    }
+	unsigned char *data = *reinterpret_cast<unsigned char **>(this);
+	if (data != *reinterpret_cast<unsigned char **>(0x012d9124)) {
+		*reinterpret_cast<int *>(data - 4) = length;
+	}
 }
