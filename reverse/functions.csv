@@ -4873,8 +4873,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??_GBitChannelClass@@QAEPAXI@Z,,0x009594E0,30,Code/Libraries/Source/WWVegas/WW3D2/hrawanim.cpp,matched,
 ??_GBlowPipe@@UAEPAXI@Z,,0x005BF290,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,object-symbol=??_G?$CategoryModuleTemplate@$00@FXParticleSystem@@UAEPAXI@Z;C++ alias
 ??_GBlowfishEngine@@QAEPAXI@Z,,0x005BF290,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,object-symbol=??_G?$CategoryModuleTemplate@$00@FXParticleSystem@@UAEPAXI@Z;C++ alias
-??_GBodyModuleData@@UAEPAXI@Z,,0x005BF290,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,object-symbol=??_G?$CategoryModuleTemplate@$00@FXParticleSystem@@UAEPAXI@Z;C++ alias
-??_GBodyParticleSystem@@MAEPAXI@Z,,0x005BF290,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,object-symbol=??_G?$CategoryModuleTemplate@$00@FXParticleSystem@@UAEPAXI@Z;C++ alias
+??_GBodyModuleData@@UAEPAXI@Z,,0x005BF290,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,object-symbol=??_G?$CategoryModuleTemplate@$00@FXParticleSystem@@UAEPAXI@Z;C++ alias
+??_GBodyParticleSystem@@MAEPAXI@Z,,0x005BF290,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,object-symbol=??_G?$CategoryModuleTemplate@$00@FXParticleSystem@@UAEPAXI@Z;C++ alias
+
 ??_GBoxEmissionVolumeInfo@FXParticleSystem@@UAEPAXI@Z,,0x005D5EA0,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,
 ??_GBoxEmissionVolumeModuleTemplate@FXParticleSystem@@UAEPAXI@Z,,0x005D6080,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,
 ??_GBridgeBehaviorModuleData@@UAEPAXI@Z,,0x001F5800,30,Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp,matched,
@@ -9740,7 +9741,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?deleteRayEffect@RayEffectSystem@@QAEXPBVDrawable@@@Z,,0x005D35A0,56,Code/GameEngine/Source/GameClient/ray_effect.cpp,matched,
 ?deleteShadowVolume@W3DVolumetricShadow@@IAEXH@Z,,0x007BAFA0,142,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,Exact 142B clean C++ deleteShadowVolume; TU-local BFME 0x30 layout shim; MASM removed
 ?deleteTriggers@PolygonTrigger@@,,0x0074A680,139,Code/masm_dumps/_sa8__deleteTriggers_PolygonTrigger___74A680.asm,matched,Exact 139B Open-BFME4
-?deleteTriggers@PolygonTrigger@@QAEXXZ,,0x00748860,1328,Code/masm_dumps/_sa3__deleteTriggers_PolygonTrigger__QAEXXZ_748860.asm,matched,Exact 1328B string-anchored Open-BFME4
 ?deposit@Money@@QAEXI_N@Z,,0x00027D6D,5,Code/Libraries/Source/WWVegas/WWLib/MoneyObjectThunks.cpp,matched,Focused C++ thunk for Money::deposit
 ?depth@IRegion3D@@QBEHXZ,0x00040E53,0x007E6F20,7,Code/Libraries/Source/WWVegas/WWMath/region.cpp,matched,returns integer depth
 ?depth@Region3D@@QBEMXZ,0x0001DB24,0x007E6E30,7,Code/Libraries/Source/WWVegas/WWMath/region.cpp,matched,returns float depth
@@ -14262,3 +14262,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?insert_unique@?$_Rb_tree@IU?$pair@$$CBIPAVState@@@_STL@@U?$_Select1st@U?$pair@$$CBIPAVState@@@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBIPAVState@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBIPAVState@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBIPAVState@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBIPAVState@@@2@@Z,,0x009A41E0,145,Code/GameEngine/Source/Common/StateMachine.cpp,matched,ICF alias; retail tree-insert layout + static stlport
 ?insert_unique@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@_STL@@_N@2@ABU?$pair@QBVThingTemplate@@H@2@@Z,,0x009A41E0,145,Code/GameEngine/Source/GameClient/MessageStream/SelectionXlat.cpp,matched,
 ?CreditsMenuUpdate@@YAXPAVWindowLayout@@PAX@Z,,0x004C6B70,66,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/CreditsMenu.cpp,matched,Open-BFME5 real body at 0x004C6B70 (queue RVA misanchored); BFME calls TheCredits->draw() not update() (6-slot base vtable: draw at +0x14)
+?deleteTriggers@PolygonTrigger@@QAEXXZ,,0x00748860,1328,Code/GameEngine/Source/GameLogic/Map/PolygonTrigger.cpp,matched,object-symbol=?deleteTriggers@PolygonTrigger@@SAXXZ; exact 1328B C++ inline body lifted from MASM; source declares static deleteTriggers
