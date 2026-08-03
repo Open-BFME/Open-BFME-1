@@ -6194,7 +6194,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?ChallengeMenuInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z","","0x004D3C40","69","Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ChallengeMenu.cpp","matched",""
 "?changeBodyDamageState@BoneFXUpdate@@QAEXW4BodyDamageType@@0@Z","","0x00289160","29","Code/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdate.cpp","matched",""
 "?changeGridHeight@WaterRenderObjClass@@QAEXMMM@Z","","0x0079F850","530","Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp","matched",""
-"?changeVisualDisguise@StealthUpdate@@","","0x00267D80","433","Code/masm_dumps/_sa4__changeVisualDisguise_StealthUpdate___267D80.asm","matched","Exact 433B Open-BFME4"
+"?changeVisualDisguise@StealthUpdate@@","","0x00267D80","433","Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdateChangeVisualDisguise_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_StealthUpdateChangeVisualDisguise_267D80"
 "?changeWaterHeight@W3DTerrainVisual@@UAEXMMM@Z","","0x00730B20","15","Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp","matched",""
 "?Check_Driver_Version_Status@DX8Caps@@AAEXXZ","","0x0091BA00","713","Code/Libraries/Source/WWVegas/WW3D2/DX8Caps_Check_Driver_Version_Status.asm","matched",""
 "?Check_Is_Transform_Identity@@YA_NABVMatrix3D@@@Z","","0x0091FF40","121","Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp","matched",""
