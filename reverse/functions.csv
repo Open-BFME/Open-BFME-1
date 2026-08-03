@@ -2885,7 +2885,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1DefaultUpdateModuleInfo@FXParticleSystem@@UAE@XZ,0x00017242,0x005D81B0,7,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??1DefectorSpecialPowerModuleData@@UAE@XZ,,0x0026AE90,263,Code/masm_dumps/DefectorSpecialPowerModuleData_destructor.asm,matched,Exact 263B SEH dtor Open-BFME4
 ??1DefinitionMgrClass@@UAE@XZ,,0x00168710,79,Code/Libraries/Source/WWVegas/WWSaveLoad/definitionmgr.cpp,matched,
-??1DelayedLuaEventUpdate@@UAE@XZ,,0x0028BCB0,116,Code/masm_dumps/DelayedLuaEventUpdate_destructor.asm,matched,Exact 116B @ 0x0028BCB0; Exact retail MASM; instance factory->vtable dtor; del 0x28BFC0 ctor 0x28BEF0 vt 0xCBD3B4
+??1DelayedLuaEventUpdate@@UAE@XZ,,0x0028BCB0,116,Code/GameEngine/Source/Common/DelayedLuaEventUpdateDestructorThunk.cpp,matched,Exact 116B @ 0x0028BCB0; Exact retail MASM; instance factory->vtable dtor; del 0x28BFC0 ctor 0x28BEF0 vt 0xCBD3B4
 ??1DeletionUpdateModuleData@@UAE@XZ,,0x0008AEA0,112,Code/masm_dumps/DeletionUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x8DDB0 ctor 0x8A950 vt 0xC7D5BC
 ??1DeployStyleAIUpdate@@UAE@XZ,,0x000D87E0,192,Code/masm_dumps/DeployStyleAIUpdate_destructor.asm,matched,Exact 192B; factory ownership Open-BFME4
 ??1DeployStyleAIUpdateModuleData@@UAE@XZ,,0x0027E4E0,145,Code/masm_dumps/DeployStyleAIUpdateModuleData_destructor.asm,matched,Exact 145B SEH dtor Open-BFME4
