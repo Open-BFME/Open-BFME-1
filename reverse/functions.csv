@@ -57771,7 +57771,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1BuddyMessage@@QAE@XZ,,0x004EA4B0,90,Code/masm_dumps/_BuddyMessage_dtor_4EA4B0.asm,matched,true body 0x4EA4B0/90 via ??_GBuddyMessage; queue 0x9DB0B4 mid-fn; MASM exact; Open-BFME fleet
 ??1BuddyMessage@@QAE@XZ,,0x004EA4B0,90,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyMessageDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1BroadcastStealthUpdateModuleData@@UAE@XZ,,0x0012ADF0,80,Code/GameEngine/Source/Common/BroadcastStealthUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
-??1BroadcastStealthUpdateModuleData@@UAE@XZ,,0x0012ADF0,80,Code/masm_dumps/BroadcastStealthUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1BuddyMessage@@QAE@XZ,,0x004EA4B0,90,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyMessageDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1BuddyMessage@@QAE@XZ,,0x004EA4B0,90,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyMessageDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1BroadcastStealthUpdateModuleData@@UAE@XZ,,0x0012ADF0,80,Code/masm_dumps/BroadcastStealthUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
