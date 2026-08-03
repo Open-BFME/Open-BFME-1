@@ -66462,6 +66462,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getNameKey@PlayerTemplate@@QBE?AW4NameKeyType@@XZ,,0x0010BDB0,3,Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp,matched,icf-owner=?getDistributionType@GameClientRandomVariable@@QBE?AW4DistributionType@1@XZ
 ?getNaturalDurationInMsec@W3DAnimationInfo@@QBEMXZ,,0x0010BDA0,4,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,matched,icf-owner=?getMaximumValue@GameClientRandomVariable@@QBEMXZ
 ?getNaturalRallyPoint@ExitInterface@@UBE_NAAUCoord3D@@_N@Z,,0x00220670,19,Code/GameEngine/Source/GameLogic/Object/Behavior/ExitInterfaceGetNaturalRallyPointThunk.cpp,matched,Open-BFME5 clean C++ from ZH ExitInterface default body
+?getNaturalRallyPoint@ExitInterface@@UBE_NAAUCoord3D@@_N@Z,,0x00220670,19,Code/GameEngine/Source/GameLogic/Object/Behavior/ExitInterfaceGetNaturalRallyPointThunk.cpp,matched,Open-BFME5 clean C++ from ZH ExitInterface default body
 ?getNewFrame@NetDisconnectScreenOffCommandMsg@@QAEIXZ,,0x00674360,4,Code/GameEngine/Source/GameNetwork/NetCommandMsg.cpp,matched,
 ?getNewPushButtonData@@YAPAU_PushButtonData@@XZ,,0x004BC980,46,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetPushButton.cpp,matched,object-symbol=?getNewPushButtonData@@YAPAU_PushButtonData@@XZ;TU-local retail layout converts thunk dump to clean C++
 ?getNext@?$CategoryModuleClass@$00@FXParticleSystem@@QBEPBV12@XZ,0x00013809,0x005C12F0,4,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_category_accessors.cpp,matched,returns next module in category list
