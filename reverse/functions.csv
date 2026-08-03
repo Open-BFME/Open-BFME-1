@@ -2765,7 +2765,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1AODHordeContain@@UAE@XZ,,0x00230980,273,Code/masm_dumps/AODHordeContain_destructor.asm,matched,Exact 273B @ 0x00230980; Exact retail MASM; instance factory->vtable dtor; del 0x231BB0 ctor 0x230580 vt 0xCAE7A0
 ??1ActiveBodyModuleData@@UAE@XZ,,0x00128C50,162,Code/masm_dumps/ActiveBodyModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x210B40 ctor 0x20F7C0 vt 0xCA76C0
 ??1ActiveCategoryClass@@UAE@XZ,,0x00AFF180,73,Code/Libraries/Source/WWVegas/WWDebug/wwmemlog.cpp,matched,
-??1ActiveCategoryStackClass@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,ICF Open-BFME4+Grok
+??1ActiveCategoryStackClass@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,Open-BFME5 clean C++ VectorClass Clear-style dtor
 ??1AdaptiveDeltaMotionChannelClass@@QAE@XZ,,0x009783C0,51,Code/Libraries/Source/WWVegas/WW3D2/motchan.cpp,matched,
 ??1AggregateDefClass@@UAE@XZ,,0x00981150,58,Code/Libraries/Source/WWVegas/WW3D2/agg_def.cpp,matched,
 ??1Anim2D@@MAE@XZ,,0x005BA670,61,Code/GameEngine/Source/GameClient/System/Anim2D.cpp,matched,C++ explicit list unlink with inline Snapshot vtable stores
