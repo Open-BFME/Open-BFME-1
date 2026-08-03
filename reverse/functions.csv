@@ -12769,7 +12769,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?Set_Freeze_Random@SegLineRendererClass@@QAEXH@Z","","0x00918900","29","Code/Libraries/Source/WWVegas/WW3D2/seglinerenderer.cpp","matched",""
 "?Set_Freeze_Random@SegmentedLineClass@@QAEXH@Z","","0x0094FE50","38","Code/Libraries/Source/WWVegas/WW3D2/segline.cpp","matched",""
 "?Set_Future_Start_Time@ParticleEmitterDefClass@@UAEXM@Z","","0x0098D3B0","13","Code/Libraries/Source/WWVegas/WW3D2/part_ldr.cpp","matched",""
-"?Set_Gamma@DX8Wrapper@@SAXMMM_N0@Z","","0x00905750","568","Code/masm_dumps/_leaf__Set_Gamma_DX8Wrapper__SAXMMM_N0_Z_905750.asm","matched","Exact 568B present-unmatched leaf Open-BFME4"
+"?Set_Gamma@DX8Wrapper@@SAXMMM_N0@Z","","0x00905750","568","Code/Libraries/Source/WWVegas/WW3D2/DX8Wrapper_SetGamma_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_DX8WrapperSetGamma_905750"
 "?Set_Gamma@WW3D@@SAXMMM_N@Z","","0x008FD550","31","Code/Libraries/Source/WWVegas/WW3D2/ww3d.cpp","matched",""
 "?Set_Gravity@ParticleEmitterDefClass@@UAEXM@Z","","0x0035F090","13","Code/Libraries/Source/WWVegas/WW3D2/part_ldr.cpp","matched",""
 "?Set_HAnim@HAnimComboDataClass@@QAEXPAVHAnimClass@@@Z","","0x00973850","37","Code/Libraries/Source/WWVegas/WW3D2/hanim.cpp","matched",""
