@@ -1,45 +1,33 @@
 // cl: /DNDEBUG /MD /EHsc
 
+// Open-BFME5: HealContainModuleData default ctor.
+// Layout: vtable@0, gap@4 (uninit), then seven zeroed dwords @8..0x20.
+
 class HealContainModuleData
 {
 public:
-    HealContainModuleData();
+	HealContainModuleData();
+	virtual ~HealContainModuleData();
+
+private:
+	unsigned int m_gap4;
+	unsigned int m_a;
+	unsigned int m_b;
+	unsigned int m_c;
+	unsigned int m_d;
+	unsigned int m_e;
+	unsigned int m_f;
+	unsigned int m_g;
 };
 
-__declspec(naked) HealContainModuleData::HealContainModuleData()
+// ??0HealContainModuleData@@QAE@XZ
+HealContainModuleData::HealContainModuleData()
 {
-    __asm {
-        _emit 08Bh
-        _emit 0C1h
-        _emit 033h
-        _emit 0C9h
-        _emit 0C7h
-        _emit 000h
-        _emit 0B0h
-        _emit 0D1h
-        _emit 00Bh
-        _emit 001h
-        _emit 089h
-        _emit 048h
-        _emit 008h
-        _emit 089h
-        _emit 048h
-        _emit 00Ch
-        _emit 089h
-        _emit 048h
-        _emit 010h
-        _emit 089h
-        _emit 048h
-        _emit 014h
-        _emit 089h
-        _emit 048h
-        _emit 018h
-        _emit 089h
-        _emit 048h
-        _emit 01Ch
-        _emit 089h
-        _emit 048h
-        _emit 020h
-        _emit 0C3h
-    }
+	m_a = 0;
+	m_b = 0;
+	m_c = 0;
+	m_d = 0;
+	m_e = 0;
+	m_f = 0;
+	m_g = 0;
 }
