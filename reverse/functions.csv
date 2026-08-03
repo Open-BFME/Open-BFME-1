@@ -3180,7 +3180,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1SlaughterHordeContain@@UAE@XZ,,0x0024EB00,329,Code/masm_dumps/SlaughterHordeContain_destructor.asm,matched,Exact 329B; factory ownership Open-BFME4
 ??1SlaughterHordeContainModuleData@@UAE@XZ,,0x0022B220,89,Code/masm_dumps/SlaughterHordeContainModuleData_destructor.asm,matched,Exact 89B @ 0x0022B220; Exact retail MASM; factory->vtable dtor; del 0x22B1F0 ctor 0x22B160 vt 0xCACC00
 ??1SlaveWatcherBehavior@@UAE@XZ,,0x00207580,142,Code/masm_dumps/SlaveWatcherBehavior_destructor.asm,matched,Exact 142B @ 0x00207580; Exact retail MASM; instance factory->vtable dtor; del 0x2076E0 ctor 0x207300 vt 0xCA64DC
-??1SlaveWatcherBehaviorModuleData@@UAE@XZ,,0x00207510,80,Code/masm_dumps/SlaveWatcherBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory 0x117540 ctor 0x2074C0 prove ownership
+??1SlaveWatcherBehaviorModuleData@@UAE@XZ,,0x00207510,80,Code/GameEngine/Source/GameLogic/Object/Behavior/SlaveWatcherBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1SlavedUpdate@@UAE@XZ,,0x00113C60,131,Code/masm_dumps/SlavedUpdate_destructor.asm,matched,Exact 131B; factory ownership Open-BFME4
 ??1SlavedUpdateModuleData@@UAE@XZ,,0x00126980,80,Code/masm_dumps/SlavedUpdateModuleData_destructor.asm,matched,Exact 80B; factory 0x125A60 vtable 0x108E730 slot0->0x126950->thunk 0x1EB96; AsciiString +0x4c/+0x48
 ??1SlowDeathBehaviorModuleData@@UAE@XZ,,0x002095F0,221,Code/masm_dumps/SlowDeathBehaviorModuleData_destructor.asm,matched,Exact retail MASM; ctor vtable and deleting-wrapper chain prove ownership; preserves four BFME phase-array destructors absent from ZH layout
