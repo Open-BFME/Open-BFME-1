@@ -227,7 +227,8 @@ static Object * getSingleObjectFromSelection(const AIGroup *currentlySelectedGro
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?closeWindows@GameLogic@@QAEXXZ present-unmatched
+// ?closeWindows@GameLogic@@QAEXXZ body in GameLogicCloseWindowsThunk.cpp (exact 294B retail @ 0x396950).
+#if 0
 void GameLogic::closeWindows( void )
 {
 	HideDiplomacy();
@@ -249,6 +250,7 @@ void GameLogic::closeWindows( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+#endif
 // ?clearGameData@GameLogic@@QAEX_N@Z present-unmatched
 void GameLogic::clearGameData( Bool showScoreScreen )
 {
