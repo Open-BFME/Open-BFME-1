@@ -492,7 +492,7 @@ name,address,notes
 ??0AutoDepositUpdateModuleData@@QAE@XZ,0x0002E069,pinharvest x1 (thunk)
 ??0AutoFindHealingUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x02E12C,module ctor (friend_newModuleInstance retail call target)
 ??0AutoFindHealingUpdateModuleData@@QAE@XZ,0x0001D4EE,module-glue cascade callee (from retail call site)
-??0AutoHealBehaviorModuleData@@QAE@XZ,0x000287C7
+??0AutoHealBehaviorModuleData@@QAE@XZ,0x1528a,AutoHealBehavior friend_newModuleData ctor
 ??0BFMEAutoLockRef@@QAE@PAVBFMENetworkLock@@I@Z,0x009DB3B0,native BFME lock-ref acquire helper
 ??0BFMENetRequestPlayerLeaveCommandMsg@@QAE@XZ,0x006741F0,the constructor; the ledger row at that address carries native_netcommandmsg.cpp's ?construct@ name for the same body
 ??0BFMENetworkLock@@QAE@PBD@Z,0x009DB320,native BFME network mutex constructor
