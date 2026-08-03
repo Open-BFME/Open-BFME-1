@@ -6961,6 +6961,7 @@ name,address,notes
 ??1CommandSetUpgradeModuleDataBase@@UAE@XZ,0x0001B97D,Open-BFME5 base dtor pin
 ??1CommandSetUpgradeModuleDataMemberA@@QAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1CommandSetUpgradeModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1CommandSetUpgradeModuleDataBase@@UAE@XZ,0x0001B97D,Open-BFME5 base dtor pin
 ??1CompositeRenderObjClass@@UAE@XZ,0x0091FC10
 ??1CriticalSectionClass@@QAE@XZ,0x009DB450
 ??1CullSystemClass@@UAE@XZ,0x008E2150
@@ -7084,8 +7085,11 @@ name,address,notes
 ??1LaserUpdateModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1LayoutFilename@@QAE@XZ,0x00887940
 ??1LevelGrantSpecialPowerModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base pin
+??1GettingBuiltBehaviorModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1HTreeClass@@QAE@XZ,0x00952790
+??1HeroModeSpecialAbilityUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base dtor pin
 ??1HideShowSubObjInfo@ModelConditionInfo@@QAE@XZ,0x0000466F,rel32 pin for exact-ambiguous landing
+??1HordeUpdateModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1LayoutFilename@@QAE@XZ,0x00887940
 ??1LockClass@CriticalSectionClass@@QAE@XZ,0x009DB4D0
 ??1LockClass@MutexClass@@QAE@XZ,0x009DB400
@@ -7228,9 +7232,12 @@ name,address,notes
 ??1UnpauseSpecialPowerUpgradeModuleDataMember@@QAE@XZ,0x0001B97D,UnpauseSpecialPowerUpgradeModuleData dtor member at this+8; ILT thunk for body 0x00129C80
 ??1UpgradeModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1UpgradeSoundSelectorClientBehaviorModuleDataMember@@QAE@XZ,0x0001EA97,UpgradeSoundSelectorClientBehaviorModuleData dtor member +0x8
+??1TransportContainModuleDataBase@@UAE@XZ,0x000376E1,Open-BFME5 base dtor pin
 ??1UDP@@QAE@XZ,0x00006591
 ??1UnicodeString@@QAE@XZ,0x008881D0,freeMessageResources depth Open-BFME4+Grok
+??1UnitCrateCollideModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1UnpauseSpecialPowerUpgradeModuleDataMember@@QAE@XZ,0x0001B97D,UnpauseSpecialPowerUpgradeModuleData dtor member at this+8; ILT thunk for body 0x00129C80
+??1UpgradeModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1UpgradeSoundSelectorClientBehaviorModuleDataMember@@QAE@XZ,0x0001EA97,UpgradeSoundSelectorClientBehaviorModuleData dtor member +0x8
 ??1UserPreferences@@UAE@XZ,0x0003F25B
 ??1Video@@QAE@XZ,0x0001642D
