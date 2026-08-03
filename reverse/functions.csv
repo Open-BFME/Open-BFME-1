@@ -2714,7 +2714,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1?$VectorClass@VActiveCategoryStackClass@@@@UAE@XZ,,0x00AFEF80,73,Code/Libraries/Source/WWVegas/WWDebug/wwmemlog.cpp,matched,
 ??1?$VectorClass@VStringClass@@@@UAE@XZ,,0x0013B3F0,67,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp,matched,
 ??1?$VectorClass@VVector2@@@@UAE@XZ,,0x00AFF130,45,Code/Libraries/Source/WWVegas/WWLib/VectorClassIntDestructor.cpp,matched,clean C++ owned-buffer destructor; ICF alias
-??1?$VectorClass@VVector3@@@@UAE@XZ,,0x00AFF130,45,Code/masm_dumps/_icf___1__VectorClass_VVector3____UAE_XZ_AFF130.asm,matched,ICF alias of ??1ActiveCategoryStackClass@@UAE@XZ Open-BFME4+Grok
+??1?$VectorClass@VVector3@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,Open-BFME5 exact C++ ICF alias;object-symbol=??1ActiveCategoryStackClass@@UAE@XZ
 ??1?$VectorClass@VVector4@@@@UAE@XZ,,0x00AFF130,45,Code/masm_dumps/_icf___1__VectorClass_VVector4____UAE_XZ_AFF130.asm,matched,ICF alias of ??1ActiveCategoryStackClass@@UAE@XZ Open-BFME4+Grok
 ??1?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@XZ,,0x00640990,72,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
 ??1?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@XZ,,0x00640AF0,72,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
