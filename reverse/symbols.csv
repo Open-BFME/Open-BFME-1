@@ -1021,6 +1021,7 @@ name,address,notes
 ??0OverchargeBehaviorModuleData@@QAE@XZ,0x0002EA73,pinharvest x1 (thunk)
 ??0OverchargeBehaviorModuleData@@QAE@XZ,0x0003EE87,pinharvest x1 (thunk)
 ??0OverchargeBehaviorModuleData@@QAE@XZ,0x000485B8,pinharvest x1 (thunk)
+??0PB_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,Open-BFME5 pin
 ??0PSPlayerStats@@QAE@ABV0@@Z,0x00887B60
 ??0PSPlayerStats@@QAE@XZ,0x0003599A,pinharvest x1 (thunk)
 ??0PSPlayerStats@@QAE@XZ,0x0004048A,pinharvest x1 (thunk)
@@ -23202,5 +23203,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?parse@LightningEmissionTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00046006,Open-BFME5 pin
-??0PB_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,Open-BFME5 pin
