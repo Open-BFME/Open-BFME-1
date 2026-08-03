@@ -324,81 +324,14 @@ void WindowVideoManager::pauseMovie( GameWindow *win )
 	
 }
 // ?hideMovie@WindowVideoManager@@QAEXPAVGameWindow@@@Z
-__declspec(naked) void WindowVideoManager::hideMovie(GameWindow *)
+void WindowVideoManager::hideMovie(GameWindow *win)
 {
-	__asm {
-		__emit 0x56;
-		__emit 0x8b;
-		__emit 0x71;
-		__emit 0x0c;
-		__emit 0x57;
-		__emit 0x8b;
-		__emit 0x79;
-		__emit 0x10;
-		__emit 0x2b;
-		__emit 0xfe;
-		__emit 0x8b;
-		__emit 0x74;
-		__emit 0x24;
-		__emit 0x0c;
-		__emit 0x33;
-		__emit 0xd2;
-		__emit 0xc1;
-		__emit 0xff;
-		__emit 0x02;
-		__emit 0x8b;
-		__emit 0xc6;
-		__emit 0xf7;
-		__emit 0xf7;
-		__emit 0x8b;
-		__emit 0x41;
-		__emit 0x0c;
-		__emit 0x8b;
-		__emit 0x14;
-		__emit 0x90;
-		__emit 0x85;
-		__emit 0xd2;
-		__emit 0x74;
-		__emit 0x22;
-		__emit 0x39;
-		__emit 0x72;
-		__emit 0x04;
-		__emit 0x74;
-		__emit 0x0b;
-		__emit 0x8b;
-		__emit 0x12;
-		__emit 0x85;
-		__emit 0xd2;
-		__emit 0x75;
-		__emit 0xf5;
-		__emit 0x5f;
-		__emit 0x5e;
-		__emit 0xc2;
-		__emit 0x04;
-		__emit 0x00;
-		__emit 0x85;
-		__emit 0xd2;
-		__emit 0x74;
-		__emit 0x0e;
-		__emit 0x8b;
-		__emit 0x52;
-		__emit 0x08;
-		__emit 0x85;
-		__emit 0xd2;
-		__emit 0x74;
-		__emit 0x07;
-		__emit 0xc7;
-		__emit 0x42;
-		__emit 0x10;
-		__emit 0x04;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x5f;
-		__emit 0x5e;
-		__emit 0xc2;
-		__emit 0x04;
-		__emit 0x00;
+	WindowVideoMap::iterator it = m_playingVideos.find(win);
+	if(it != m_playingVideos.end())
+	{
+		WindowVideo *winVid = it->second;
+		if(winVid)
+			*reinterpret_cast<int *>(reinterpret_cast<char *>(winVid) + 0x10) = WINDOW_VIDEO_STATE_HIDDEN;
 	}
 }
 
