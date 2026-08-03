@@ -47296,6 +47296,7 @@ name,address,notes
 ??0HordeUpdateModuleData@@QAE@XZ,0x00014EA2,pinharvest x1 (thunk)
 ??0HordeUpdateModuleData@@QAE@XZ,0x0001BE41,pinharvest x1 (thunk)
 ??0HordeUpdateModuleData@@QAE@XZ,0x00030EBD,pinharvest x1 (thunk)
+??0HorseHordeContainBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003A8FF,HorseHordeContain out-of-line base MI ctor
 ??0INIException@@QAA@HPBDZZ,0x00850600,INI retail variadic exception constructor
 ??0Image@@QAE@XZ,0x0000548E,constructed by the MappedImage block right after operator new(0x34) and handed to the matched ImageCollection::addImage(Image *)
 ??0InactiveBody@@QAE@PAVThing@@PBVModuleData@@@Z,0x00008878,pinharvest x1 (thunk)
@@ -47455,6 +47456,8 @@ name,address,notes
 ??0OCLUpdateModuleData@@QAE@XZ,0x0001ECBD,pinharvest x1 (thunk)
 ??0OCLUpdateModuleData@@QAE@XZ,0x0002C9D0,pinharvest x1 (thunk)
 ??0OCLUpdateModuleData@@QAE@XZ,0x0002E069,pinharvest x1 (thunk)
+??0OCU_GrandBase@@QAE@XZ,0x0003D24E,ObjectCreationUpgrade ctor grandbase call; ILT thunk for body 0x002D9B80
+??0OCU_MidGrand@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,ObjectCreationUpgrade ctor mid-base call; ILT thunk for ObjectModule ctor (body 0x00113C60)
 ??0ObjectCreationUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x000246B8,ObjectCreationUpgrade ctor for friend_new
 ??0ObjectCreationUpgradeModuleData@@QAE@XZ,0x00010C80,pinharvest x1 (thunk)
 ??0ObjectCreationUpgradeModuleData@@QAE@XZ,0x00022877,pinharvest x1 (thunk)
@@ -47755,6 +47758,7 @@ name,address,notes
 ??0SupplyWarehouseCripplingBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x037619,module ctor (friend_newModuleInstance retail call target)
 ??0SupplyWarehouseCripplingBehaviorModuleData@@QAE@XZ,0x000261CA,module-glue cascade callee (from retail call site)
 ??0SupplyWarehouseDockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001E902,module ctor (friend_newModuleInstance retail call target)
+??0TC_Base@@QAE@PAVThing@@PBVModuleData@@@Z,0x00036E49,TunnelContain ctor base call; ILT thunk for OpenContain ctor (body 0x002277A0)
 ??0TechBuildingBehaviorModuleData@@QAE@XZ,0x0000FA5B,pinharvest x1 (thunk)
 ??0TechBuildingBehaviorModuleData@@QAE@XZ,0x0002DAA1,pinharvest x1 (thunk)
 ??0TechBuildingBehaviorModuleData@@QAE@XZ,0x0002E500,pinharvest x1 (thunk)
@@ -48147,6 +48151,7 @@ name,address,notes
 ??1ModelArrayClass@HLodClass@@UAE@XZ,0x0003C69B,pinharvest x1 (thunk)
 ??1ModelConditionSoundSelectorClientBehaviorModuleDataMember@@QAE@XZ,0x000241AE,ModelConditionSoundSelectorClientBehaviorModuleData dtor member +0x8
 ??1ModuleDataListStandIn@@QAE@XZ,0x001468A0,Open-BFME5 list-style sentinel container dtor from AnimalAIUpdate-family ModuleData dtor call sites
+??1ModuleTagString@@QAE@XZ,0x00026AB2,ModuleInfo::Nugget m_moduleTag AsciiString-like ILT
 ??1NamedPivotMapClass@@UAE@XZ,0x00974E20,call-target pin: row deleted (ZH drift: element-ctor ptr), callers verify against this rva
 ??1NodeCompressedMotionStruct@@QAE@XZ,0x0002A08B,pinharvest x1 (thunk)
 ??1NodeCompressedMotionStruct@@QAE@XZ,0x0003B8DB,pinharvest x1 (thunk)
@@ -48238,6 +48243,12 @@ name,address,notes
 ??1SpawnBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1SpawnBehaviorModuleDataMemberB@@QAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1SpecialDisguiseUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base pin
+??1SpecialPowerModuleDataMemberA@@QAE@XZ,0x00026F35,Open-BFME5 pin
+??1SpecialPowerModuleDataMemberB@@QAE@XZ,0x00026F35,Open-BFME5 pin
+??1SpecialPowerModuleDataMemberC@@QAE@XZ,0x00026F35,Open-BFME5 pin
+??1SpecialPowerModuleDataMemberD@@QAE@XZ,0x00026F35,Open-BFME5 pin
+??1SpecialPowerModuleDataMemberE@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1SpecialPowerModuleDataMemberF@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1SpyVisionUpdateModuleDataMemberA@@QAE@XZ,0x0002E19A,Open-BFME5 pin
 ??1SpyVisionUpdateModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1SpyVisionUpdateModuleDataMemberC@@QAE@XZ,0x00887940,Open-BFME5 pin
@@ -49221,6 +49232,7 @@ name,address,notes
 ?ZeroStuff@Cftp@@AAEXXZ,0x008853C0,retail Cftp constructor helper
 ?_Init_Filters@TextureFilterClass@@SAXW4TextureFilterMode@1@@Z,0x00920D10,pinharvest x2 (body)
 ?_Invalidate_Textures@WW3D@@SAXXZ,0x008FD790,pinharvest x2 (body)
+?_M_acquire_lock@NodeAllocMutex@_STL@@QAEXXZ,0x0082DA10,node_alloc deallocate lock acquire; thunk to real acquire 0x0082C760
 ?_M_allocate@?$__node_alloc@$00$0A@@_STL@@CAPAXI@Z,0x00082E540,STLport _Node_alloc::_M_allocate called by list<Coord3D> copy ctor
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x000103F7,resweep callee back-solved
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0001F843,rel32 pin for exact-ambiguous landing
@@ -49281,18 +49293,22 @@ name,address,notes
 ?_M_initialize_map@?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,shared deque initialize_map body (4 template instances)
 ?_M_initialize_map@?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,shared deque initialize_map body (4 template instances)
 ?_M_insert@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBGE@2@0@Z,0x0093FD80,
+?_M_insert@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHI@2@0@Z,0x00032934,Open-BFME5 ICF pin for GameLogicDispatch
 ?_M_insert@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHI@2@0@Z,0x004A52F,
 ?_M_insert@?$_Rb_tree@HU?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHPAVGameSpyStagingRoom@@@2@0@Z,0x004A52F,
 ?_M_insert@?$_Rb_tree@HU?$pair@$$CBHVAsciiString@@@_STL@@U?$_Select1st@U?$pair@$$CBHVAsciiString@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHVAsciiString@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHVAsciiString@@@2@0@Z,0x0004517E,
 ?_M_insert@?$_Rb_tree@HU?$pair@$$CBHVBuddyInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBHVBuddyInfo@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVBuddyInfo@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHVBuddyInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVBuddyInfo@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHVBuddyInfo@@@2@0@Z,0x00036CDC,retail BuddyInfo map _M_insert ILT thunk (body 0x004EBC90)
 ?_M_insert@?$_Rb_tree@HU?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHVGameSpyGroupRoom@@@2@0@Z,0x0003E7E8,
 ?_M_insert@?$_Rb_tree@IU?$pair@$$CBIPAVImage@@@_STL@@U?$_Select1st@U?$pair@$$CBIPAVImage@@@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBIPAVImage@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBIPAVImage@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBIPAVImage@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBIPAVImage@@@2@0@Z,0x009A4130,Open-BFME5 Image insert_unique call target
+?_M_insert@?$_Rb_tree@IU?$pair@$$CBIPAVState@@@_STL@@U?$_Select1st@U?$pair@$$CBIPAVState@@@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBIPAVState@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBIPAVState@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBIPAVState@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBIPAVState@@@2@0@Z,0x009A4130
 ?_M_insert@?$_Rb_tree@JU?$pair@$$CBJVLadderPref@@@_STL@@U?$_Select1st@U?$pair@$$CBJVLadderPref@@@_STL@@@2@U?$less@J@2@V?$allocator@U?$pair@$$CBJVLadderPref@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBJVLadderPref@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBJVLadderPref@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBJVLadderPref@@@2@0@Z,0x00029E92,
 ?_M_insert@?$_Rb_tree@PAVGameSpyStagingRoom@@PAV1@U?$_Identity@PAVGameSpyStagingRoom@@@_STL@@U?$less@PAVGameSpyStagingRoom@@@3@V?$allocator@PAVGameSpyStagingRoom@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@PAVGameSpyStagingRoom@@U?$_Nonconst_traits@PAVGameSpyStagingRoom@@@_STL@@@2@PAU_Rb_tree_node_base@2@0ABQAVGameSpyStagingRoom@@0@Z,0x0001234B,
 ?_M_insert@?$_Rb_tree@PAVGameSpyStagingRoom@@PAV1@U?$_Identity@PAVGameSpyStagingRoom@@@_STL@@UGameSortStruct@@V?$allocator@PAVGameSpyStagingRoom@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@PAVGameSpyStagingRoom@@U?$_Nonconst_traits@PAVGameSpyStagingRoom@@@_STL@@@2@PAU_Rb_tree_node_base@2@0ABQAVGameSpyStagingRoom@@0@Z,0x0000FF47,
 ?_M_insert@?$_Rb_tree@PBVLadderInfo@@PBV1@U?$_Identity@PBVLadderInfo@@@_STL@@U?$less@PBVLadderInfo@@@3@V?$allocator@PBVLadderInfo@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@PBVLadderInfo@@U?$_Nonconst_traits@PBVLadderInfo@@@_STL@@@2@PAU_Rb_tree_node_base@2@0ABQBVLadderInfo@@0@Z,0x000224CB,
 ?_M_insert@?$_Rb_tree@PBVThingTemplate@@PBV1@U?$_Identity@PBVThingTemplate@@@_STL@@U?$less@PBVThingTemplate@@@3@V?$allocator@PBVThingTemplate@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@PBVThingTemplate@@U?$_Nonconst_traits@PBVThingTemplate@@@_STL@@@2@PAU_Rb_tree_node_base@2@0ABQBVThingTemplate@@0@Z,0x009A4130,decoded from insert_unique call site
+?_M_insert@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@QBVThingTemplate@@H@2@0@Z,0x009A4130,decoded from SelectionXlat insert_unique call site
 ?_M_insert@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVAsciiString@@UCoord3D@@@2@0@Z,0x000086A2,
+?_M_insert@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@2@0@Z,0x000086A2,Open-BFME5 ICF pin for InGameUI SuperweaponInfo _M_insert
 ?_M_insert@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@2@0@Z,0x00026283,WOLLogin tree insert thunk
 ?_M_insert@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVAsciiString@@VHotKey@@@2@0@Z,0x0003D780,HotKey tree insert thunk
 ?_M_insert@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVAsciiString@@VMapMetaData@@@2@0@Z,0x000086A2,derived-ICF
@@ -49300,6 +49316,7 @@ name,address,notes
 ?_M_insert@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@M@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBW4NameKeyType@@M@2@0@Z,0x004A52F,rel32 pin for PlayerTemplate production-change map
 ?_M_insert@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@2@0@Z,0x00032934,
 ?_M_insert@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@2@0@Z,0x00032934,Open-BFME5 pin
+?_M_insert@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@0@Z,0x00032934,Open-BFME5 pin
 ?_M_insert@?$hashtable@U?$pair@$$CBHW4Relationship@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHW4Relationship@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@2@@_STL@@QAEAAU?$pair@$$CBHW4Relationship@@@2@ABU32@@Z,0x000013E8,rel32 pin for exact-ambiguous landing
 ?_M_insert@?$hashtable@U?$pair@$$CBIW4Relationship@@@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIW4Relationship@@@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@2@@_STL@@QAEAAU?$pair@$$CBIW4Relationship@@@2@ABU32@@Z,0x009EE9B0,resweep callee back-solved
 ?_M_insert@?$hashtable@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEAAU?$pair@QBVGameWindow@@PAVWindowVideo@@@2@ABU32@@Z,0x00032407,rel32 pin for exact-ambiguous landing
@@ -49436,6 +49453,7 @@ name,address,notes
 ?_M_push_back_aux_v@?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@IAEXABVGameResultsResponse@@@Z,0x0004A0B1,
 ?_M_push_back_aux_v@?$deque@VPingRequest@@V?$allocator@VPingRequest@@@_STL@@@_STL@@IAEXABVPingRequest@@@Z,0x0002F6A3,
 ?_M_push_back_aux_v@?$deque@VPingResponse@@V?$allocator@VPingResponse@@@_STL@@@_STL@@IAEXABVPingResponse@@@Z,0x0003C650,
+?_M_release_lock@NodeAllocMutex@_STL@@QAEXXZ,0x0082AD50,node_alloc deallocate lock release; mov [ecx],0 ret spinlock release
 ?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@XZ,0x00013BF6,site-decoded x1 (thunk)
 ?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@XZ,0x0004167D,site-decoded x2 (thunk)
 ?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@XZ,0x00043B8F,site-decoded x1 (thunk)
@@ -49540,6 +49558,7 @@ name,address,notes
 ?addWaypointLink@TerrainLogic@@IAEXHH@Z,0x00038B77,
 ?addWrapperCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0002FF0E,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addWrapperCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0067A9D0,addCommand's jump-table arm for command type 18
+?adjust@ControlBarAdjuster@@QAEXHH@Z,0x000378EE,setSquishedControlBarConfig adjust call; ILT thunk for body 0x004ADE40
 ?adjust@ObjectAdjustModelConditionShim@@QAEXXZ,0x001CA0F0,Object adjustModelConditionForWeaponStatus incremental-link thunk target through a TU-local forwarding shim
 ?adjustDisplay@@YAXPAVGameWindow@@_N@Z,0x004B7B20,BFME-only 2-arg overload (no adjustment param); proven from computeTotalHeight's own bytes (0x4B7ED0: 2 pushes + add esp8) distinct from the general 3-arg adjustDisplay@0x4B7CA0 (addEntry's bytes: 3 pushes + add esp0xc)
 ?adjustModelConditionForWeaponStatus@Object@@QAEXXZ,0x000276D3,ILT thunk; real body 0x5CA0F0
@@ -49577,6 +49596,7 @@ name,address,notes
 ?applyDefinition@INI@@QAEXPAVInGameUI@@PAX@Z,0x008520A0,INI parseInGameUIDefinition callee thiscall apply
 ?applyDifficultyBonuses@ScriptActionsDifficultyListNode@@QAEX_N@Z,0x00016F2C,doEnableOrDisableObjectDifficultyBonuses per-node call; ILT thunk for body 0x001BE7D0
 ?applyTopplingForce@ToppleUpdate@@QAEXPBUCoord3D@@MI@Z,0x0003FC97,
+?arrange@ControlBarArranger@@QAEXHH@Z,0x0001949D,setSquishedControlBarConfig arrange call; ILT thunk for GameWindow::winSetPosition (body 0x004780D0)
 ?assign@DefaultModuleTemplate0AssignShim@FXParticleSystem@@QAEXPBX@Z,0x000111C6,DefaultModuleTemplate<0> assignment thunk used through a TU-local layout shim
 ?assign@DefaultModuleTemplate1AssignShim@FXParticleSystem@@QAEXPBX@Z,0x0001EC36,DefaultModuleTemplate<1> assignment thunk used through a TU-local layout shim
 ?assign@DefaultModuleTemplate2AssignShim@FXParticleSystem@@QAEXPBX@Z,0x00002A09,DefaultModuleTemplate<2> assignment thunk used through a TU-local layout shim
@@ -49852,6 +49872,7 @@ name,address,notes
 ?destroy@UserPreferencesDestructorShim@@QAEXXZ,0x000AAF30,UserPreferences destructor incremental-link thunk target through a TU-local forwarding shim
 ?destroy@W3DAnimationInfoDestructorShim@@QAEXXZ,0x00610080,W3DAnimationInfo dtor incremental-link thunk target through a TU-local forwarding shim
 ?destroy@WindowVideoDestructorShim@@QAEXXZ,0x004981A0,WindowVideo destructor incremental-link thunk target through a TU-local forwarding shim
+?destroyComplete@RenderObjectUpdateModuleTemplate@FXParticleSystem@@QAEXXZ,0x005D96E0,Open-BFME5 direct call pin for scalar destructor wrapper
 ?destroyObject@GameLogic@@QAEXPAVObject@@@Z,0x0001D0DE,ILT thunk; real body 0x78B0C0
 ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z,0x00005696,BoneFXUpdate::killRunningParticleSystems/stopAllBoneFX call target (ILT thunk -> body 0x5C3C10)
 ?detach@NetCommandMsg@@QAEXXZ,0x000200A4,additive; ILT thunk for body 0xA73610
@@ -49969,6 +49990,7 @@ name,address,notes
 ?finish@SidesInfoSegmentShim@@QAEXPAX0@Z,0x00024C17,SidesInfo clear tail helper shim
 ?finishConstruct@BFMENetworkQueue1@@QAEXPAX@Z,0x0002E91F,native BFME queue-1 constructor helper ILT
 ?finishConstruct@BFMENetworkQueue@@QAEXPAX@Z,0x000109D3,native BFME queue-0 constructor helper ILT
+?flushQueue@LANAPIMemberObject@@QAEXXZ,0x00001EC4,RequestLobbyLeave flag call; ILT thunk for Transport::update body 0x00684420
 ?format_va@AsciiString@@QAEXPBDPAD@Z,0x00888060,pinharvest x1 (body)
 ?format_va@AsciiString@@QAEXPBDPAD@Z,0x00888930,pinharvest x1 (body)
 ?format_va@UnicodeString@@QAEXPBGPAD@Z,0x00888060,pinharvest x1 (body)
@@ -50139,6 +50161,7 @@ name,address,notes
 ?groupAttackObjectPrivate@AIGroup@@AAEX_NPAVObject@@HW4CommandSourceType@@@Z,0x00041CD1,
 ?hasPlayerTimedOut@DisconnectManager@@IAE_NH@Z,0x00014AD8,
 ?hasScience@Player@@QBE_NW4ScienceType@@@Z,0x0000943F,retail target of playerHasPrereqsForScience inner-loop call; thunk-table entry; real body unresolved
+?helper@ControlBar@@QAEXXZ,0x00038F4B,setSquishedControlBarConfig helper call; ILT thunk for body 0x004C1920
 ?helper@PoisonedBehaviorOwnerShim@@QAE?AW4UpdateSleepTime@@HPAXHH@Z,0x000202A7,PoisonedBehavior update sleep-time helper shim
 ?hidePurchaseScience@ControlBar@@QAEXXZ,0x00020347,
 ?hideQuitMenu@WindowManager@@QAEXXZ,0x000290D2,HideQuitMenu tail-call target
@@ -50204,6 +50227,7 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@2@U32@ABU?$pair@$$CBGE@2@@Z,0x0000DE77,
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGE@2@@Z,0x0093FE40,
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@2@U32@ABU?$pair@$$CBHI@2@@Z,0x000079EB,rel32 pin for exact-ambiguous landing
+?insert_unique@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHI@2@@Z,0x0003E090,Open-BFME5 ICF pin for GameLogicDispatch
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAU_SBServer@@@2@@Z,0x0000ED2C,pinharvest x1 (thunk)
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAU_SBServer@@@2@@Z,0x000254B9,pinharvest x1 (thunk)
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAU_SBServer@@@2@@Z,0x000296BD,pinharvest x1 (thunk)
@@ -50223,6 +50247,7 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@2@U32@ABU?$pair@QBVThingTemplate@@H@2@@Z,0x0003E22A,ILT thunk used by call site
 ?insert_unique@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@2@U32@ABU?$pair@QBVThingTemplate@@H@2@@Z,0x009A4350,resweep callee back-solved
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@UCoord3D@@@2@@Z,0x0002DA10,
+?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@2@@Z,0x0002DA10,Open-BFME5 ICF pin for InGameUI SuperweaponInfo insert_unique
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@2@@Z,0x000472C1,WOLLogin tree unique insert thunk
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@VHotKey@@@2@@Z,0x00039A54,HotKey tree unique insert thunk
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@VMapMetaData@@@2@@Z,0x0002DA10,derived-ICF
@@ -50239,6 +50264,7 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@2@@Z,0x00024ADC,
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@2@@Z,0x0003E090,Open-BFME5 pin
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z,0x000290B4,rel32 pin for exact-ambiguous landing
+?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z,0x0003E090,Open-BFME5 pin
 ?insert_unique@?$_Rb_tree@W4ObjectID@@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@U?$_Select1st@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@3@U?$less@W4ObjectID@@@3@V?$allocator@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@2@@Z,0x0000ED2C,pinharvest x1 (thunk)
 ?insert_unique@?$_Rb_tree@W4ObjectID@@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@U?$_Select1st@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@3@U?$less@W4ObjectID@@@3@V?$allocator@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@2@@Z,0x000254B9,pinharvest x1 (thunk)
 ?insert_unique@?$_Rb_tree@W4ObjectID@@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@U?$_Select1st@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@3@U?$less@W4ObjectID@@@3@V?$allocator@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@2@@Z,0x000296BD,pinharvest x1 (thunk)
@@ -50420,6 +50446,7 @@ name,address,notes
 ?push_back_aux@DequePushBackAuxVThunkShim@_STL@@QAEXPBX@Z,0x00369710,_STL deque _M_push_back_aux_v incremental-link thunk target through a TU-local forwarding shim
 ?push_back_aux@DequePushBackAuxValueThunksShim@_STL@@QAEXPBX@Z,0x006420E0,_STL deque _M_push_back_aux_v incremental-link thunk target through a TU-local forwarding shim
 ?queue@TransportQueueSendShim@@QAE_NIGPBEH@Z,0x00683830,Transport queueSend incremental-link thunk target through a TU-local forwarding shim
+?queuePacket@LANAPI@@QAEXPAVLANAPIRequestPacket@@H@Z,0x0002B599,RequestLobbyLeave packet call; ILT thunk for LANAPI::sendMessage body 0x00684CF0
 ?queueSend@Transport@@QAE_NIGPBEH@Z,0x00049F80,ILT thunk; real body 0x683830 (from NAT::sendAProbe)
 ?queueSend@Transport@@QAE_NPAUNetPacketAddress@@PBEH@Z,0x00683830,BFME takes the address as a struct pointer, so three args where the reference has four; the ledger row for the four-arg name is the incremental-link thunk
 ?reacquire@W3DVolumetricShadowManagerReAcquireShim@@QAE_NXZ,0x007C1180,W3DVolumetricShadowManager ReAcquireResources incremental-link thunk target through a TU-local forwarding shim
@@ -50540,6 +50567,7 @@ name,address,notes
 ?sendLocalCommandDirect@ConnectionManager@@QAEXPAVNetCommandMsg@@E@Z,0x000411D7,ILT thunk; real body 0xA63300
 ?sendMangledPortNumberToTarget@NAT@@IAEXGPAVGameSlot@@@Z,0x0002ACCA,ILT thunk; real body 0x6718A0
 ?sendMessage@LANAPI@@IAEXPAULANMessage@@I@Z,0x0002B599,rel32 pin for RequestLobbyLeave sendMessage call
+?sendMessage@LANAPI@@QAEXPAULANMessage@@I@Z,0x0002B599,LANAPI::sendMessage(msg, ip) for RequestLobbyLeave
 ?sendToManglerFromPort@FirewallHelperClass@@QAE_NIGG_N@Z,0x00022C00,
 ?sendToManglerFromPort@FirewallHelperClassSendToManglerFromPortShim@@QAE_NIGG_N@Z,0x0066EC50,FirewallHelperClass incremental-link thunk target through a TU-local forwarding shim
 ?set@?$bitset@$0ED@@_STL@@QAEAAV12@IH@Z,0x00019BCD,pinharvest x1 (thunk)
@@ -50705,6 +50733,7 @@ name,address,notes
 ?update@Mouse@@UAEXXZ,0x0003D7FD,
 ?update@ObjectUpdateUpgradeModulesShim@@QAEXXZ,0x001C5800,Object updateUpgradeModules incremental-link thunk target through a TU-local forwarding shim
 ?update@ScreenCrossFadeFilterUpdateFadeLevelShim@@QAE_NXZ,0x007D35B0,ScreenCrossFadeFilter updateFadeLevel incremental-link thunk target through a TU-local forwarding shim
+?update@Transport@@QAEXXZ,0x00001EC4,Transport::update for LANAPI::RequestLobbyLeave forced path
 ?updateFadeLevel@ScreenCrossFadeFilter@@IAE_NXZ,0x00006D0C,
 ?updateMeshVolume@W3DVolumetricShadow@@IAEXHHPBVMatrix3D@@ABVAABoxClass@@M@Z,0x007BE000,certified packet 348; updateMeshVolume body 0x7BE000 (thunk 0xC392 from updateVolumes)
 ?updateNumPlayersOnline@@YAXXZ,0x0050BA40,
@@ -50840,6 +50869,7 @@ HordeGarrisonContainFieldParse,0x00405245,HordeGarrisonContain FieldParse
 LifetimeUpdateFieldParse,0x0040490D,LifetimeUpdate FieldParse
 ManTheWallsSpecialPowerFieldParse,0x0043EDEC,ManTheWallsSpecialPower FieldParse
 MoneyCrateCollideFieldParse,0x0042BAEE,MoneyCrateCollide FieldParse
+RenderObjectDrawModuleInfo_vtbl,0x011112B8,RenderObjectDrawModuleInfo main vtbl
 RepairSpecialPowerFieldParse,0x0043A1DE,RepairSpecialPower FieldParse
 ShareBufferClassUnsignedShort_vtbl_final,0x011135AC,ShareBuffer ushort dtor final vtbl
 ShareBufferClassUnsignedShort_vtbl_interim,0x0113C110,ShareBuffer ushort dtor interim vtbl
@@ -50996,4 +51026,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?destroyComplete@RenderObjectUpdateModuleTemplate@FXParticleSystem@@QAEXXZ,0x005D96E0,Open-BFME5 direct call pin for scalar destructor wrapper

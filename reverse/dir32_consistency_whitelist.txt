@@ -283,3 +283,8 @@ $L36438
 ??_7UpgradeModuleData@@6B@
 ??_7VideoPlayer@@6B@
 ?TheW3DVolumetricShadowManager@@3PAVW3DVolumetricShadowManager@@A
+
+# LOGICFRAMES_PER_MSEC_REAL is emitted as two verified retail static copies:
+# INI duration parsers and Weapon conversion use 0x1082C38, while
+# Weapon::parseShotDelay uses 0x10A0528.
+_LOGICFRAMES_PER_MSEC_REAL
