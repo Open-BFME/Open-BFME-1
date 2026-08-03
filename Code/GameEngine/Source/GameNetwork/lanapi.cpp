@@ -1115,16 +1115,44 @@ void LANAPI::fillInLANMessage( LANMessage *msg )
 	msg->hostName[g_lanHostNameLength] = 0;
 }
 
-// ?RequestLobbyLeave@LANAPI@@UAEX_N@Z present-unmatched
+template <int Slot>
+struct RetailLANAPISlotTag
+{
+};
+
+template <int Slot>
+struct RetailLANAPIVTablePrefix : RetailLANAPIVTablePrefix<Slot - 1>
+{
+	virtual void slot(RetailLANAPISlotTag<Slot>) = 0;
+};
+
+template <>
+struct RetailLANAPIVTablePrefix<0>
+{
+	virtual void slot(RetailLANAPISlotTag<0>) = 0;
+};
+
+struct RetailLANAPI : RetailLANAPIVTablePrefix<48>
+{
+	virtual void fillInLANMessage(LANMessage *) = 0;
+};
+
 void LANAPI::RequestLobbyLeave( Bool forced )
 {
-	LANMessage msg;
+	struct RetailLANMessage
+	{
+		LANMessage message;
+		UnsignedInt retailPadding;
+	};
+	RetailLANMessage request;
+	LANMessage &msg = request.message;
 	msg.LANMessageType = LANMessage::MSG_REQUEST_LOBBY_LEAVE;
-	fillInLANMessage( &msg );
+
+	reinterpret_cast<RetailLANAPI *>(this)->fillInLANMessage(&msg);
 	sendMessage(&msg);
 
 	if (forced)
-		m_transport->update();
+		reinterpret_cast<Transport *>(*reinterpret_cast<UnsignedInt *>(reinterpret_cast<char *>(this) + 0x4C))->update();
 }
 
 // Misc utility functions

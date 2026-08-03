@@ -62719,7 +62719,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?RequestBuddyAdd@@YAXHVAsciiString@@@Z,,0x004EDAD0,818,Code/masm_dumps/RequestBuddyAdd.asm,matched,true body 0x4EDAD0/818 (queue 968 padded int3); unique GUI:BuddyAddReq+Buddy:InviteSent+Buddy:InviteSentToPlayer; MASM exact; C++ blocked AsciiString+8/frame/BuddyMessage
 ?RequestChat@LANAPI@@UAEXVUnicodeString@@W4ChatType@LANAPIInterface@@@Z,,0x006865C0,347,Code/masm_dumps/_rn5__RequestChat_LANAPI__UAEXVUnicodeString__W4ChatType_LANAPIInterface____6865C0.asm,matched,reloc-needle Open-BFME4+Grok
 ?RequestGameCreate@LANAPI@@UAEXVUnicodeString@@_N@Z,,0x00687E90,722,Code/masm_dumps/_sa7__RequestGameCreate_LANAPI__UAEXVUnicodeString___N__687E90.asm,matched,Exact 722B Open-BFME4
-?RequestLobbyLeave@LANAPI@@UAEX_N@Z,,0x006850F0,75,Code/masm_dumps/_rn5__RequestLobbyLeave_LANAPI__UAEX_N_Z_6850F0.asm,matched,reloc-needle Open-BFME4+Grok
 ?Reset@AABTreeBuilderClass@@AAEXXZ,,0x0096B630,118,Code/Libraries/Source/WWVegas/WW3D2/aabtreebuilder.cpp,matched,
 ?Reset@AABTreeClass@@AAEXXZ,,0x0096A5E0,61,Code/Libraries/Source/WWVegas/WW3D2/aabtree.cpp,matched,
 ?Reset@AABTreeIterator@@QAEXXZ,,0x008E21C0,8,Code/Libraries/Source/WWVegas/WWMath/aabtreecull.cpp,matched,icf-owner=?First@AssetIterator@@UAEXXZ
@@ -69212,3 +69211,4 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,ICF alias of existing matched body
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGE@2@@Z,,0x0093FE46,142,Code/Libraries/Source/WWVegas/WWLib/STLUnsignedShortByteTreeInsertUniquePairThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from structural retail candidate
 ?parsePrerequisites@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z,,0x001485B0,63,Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp,matched,Open-BFME5 converted from exact MASM dump
+?RequestLobbyLeave@LANAPI@@UAEX_N@Z,,0x006850F0,75,Code/GameEngine/Source/GameNetwork/lanapi.cpp,matched,Open-BFME5 converted from exact MASM dump
