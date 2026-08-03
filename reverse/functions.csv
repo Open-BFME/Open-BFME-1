@@ -2967,7 +2967,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1GiantBirdSlowDeathBehaviorModuleData@@UAE@XZ,,0x001FFF50,79,Code/GameEngine/Source/GameLogic/AI/GiantBirdSlowDeathBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1GiveUpgradeUpdateModuleData@@UAE@XZ,,0x0025DE90,120,Code/GameEngine/Source/GameLogic/AI/GiveUpgradeUpdateModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1GloriousChargeUpdate@@UAE@XZ,,0x0025EA40,159,Code/GameEngine/Source/Common/RTS/GloriousChargeUpdateDtorThunk.cpp,matched,Exact standalone C++ __emit thunk from certified retail destructor
-??1GrantStealthBehaviorModuleData@@UAE@XZ,,0x00297D60,93,Code/masm_dumps/GrantStealthBehaviorModuleData_destructor.asm,matched,Exact 93B SEH dtor Open-BFME4
+??1GrantStealthBehaviorModuleData@@UAE@XZ,,0x00297D60,93,Code/GameEngine/Source/GameLogic/AI/GrantStealthBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM ICF primary
 ??1GridCullSystemClass@@UAE@XZ,,0x008DCAD0,97,Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp,matched,
 ??1HAnimClass@@UAE@XZ,,0x009736B0,21,Code/Libraries/Source/WWVegas/WW3D2/hanim.cpp,matched,
 ??1HAnimComboClass@@QAE@XZ,,0x00974F10,102,Code/Libraries/Source/WWVegas/WW3D2/hanim.cpp,matched,
