@@ -57585,6 +57585,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1?$DynamicVectorClass@PAUtThreadInfoType@@@@UAE@XZ,,0x00AFF130,45,Code/masm_dumps/_icf___1__DynamicVectorClass_PAUtThreadInfoType____UAE_XZ_AFF130.asm,matched,ICF alias of ??1ActiveCategoryStackClass@@UAE@XZ Open-BFME4+Grok
 ??1?$DynamicVectorClass@PAVDefinitionClass@@@@UAE@XZ,,0x00AFF130,45,Code/masm_dumps/_icf___1__DynamicVectorClass_PAVDefinitionClass____UAE_XZ_AFF130.asm,matched,ICF alias of ??1ActiveCategoryStackClass@@UAE@XZ Open-BFME4+Grok
 ??1?$DynamicVectorClass@PAVRender2DClass@@@@UAE@XZ,,0x00AFF130,45,Code/masm_dumps/_icf___1__DynamicVectorClass_PAVRender2DClass____UAE_XZ_AFF130.asm,matched,ICF alias of ??1ActiveCategoryStackClass@@UAE@XZ Open-BFME4+Grok
+??1?$DynamicVectorClass@PAUtThreadInfoType@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,Open-BFME5 exact C++ ICF alias;object-symbol=??1ActiveCategoryStackClass@@UAE@XZ
+??1?$DynamicVectorClass@PAVDefinitionClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,Open-BFME5 exact C++ ICF alias;object-symbol=??1ActiveCategoryStackClass@@UAE@XZ
+??1?$DynamicVectorClass@PAVRender2DClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,Open-BFME5 exact C++ ICF alias;object-symbol=??1ActiveCategoryStackClass@@UAE@XZ
 ??1?$DynamicVectorClass@PAVTextureClass@@@@UAE@XZ,,0x00AFF130,45,Code/masm_dumps/_icf___1__DynamicVectorClass_PAVTextureClass____UAE_XZ_AFF130.asm,matched,ICF alias of ??1ActiveCategoryStackClass@@UAE@XZ Open-BFME4+Grok
 ??1?$DynamicVectorClass@PAVVertexMaterialClass@@@@UAE@XZ,,0x00AFF130,45,Code/masm_dumps/_icf___1__DynamicVectorClass_PAVVertexMaterialClass____UAE_X_AFF130.asm,matched,ICF alias of ??1ActiveCategoryStackClass@@UAE@XZ Open-BFME4+Grok
 ??1?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAE@XZ,,0x0093E480,67,Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp,matched,icf-owner=??1?$DynamicVectorClass@UFileOffsetStruct@@@@UAE@XZ
@@ -58160,6 +58163,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1SlaughterHordeContainModuleData@@UAE@XZ,,0x0022B220,89,Code/masm_dumps/SlaughterHordeContainModuleData_destructor.asm,matched,Exact 89B @ 0x0022B220; Exact retail MASM; factory->vtable dtor; del 0x22B1F0 ctor 0x22B160 vt 0xCACC00
 ??1SlaveWatcherBehavior@@UAE@XZ,,0x00207580,142,Code/masm_dumps/SlaveWatcherBehavior_destructor.asm,matched,Exact 142B @ 0x00207580; Exact retail MASM; instance factory->vtable dtor; del 0x2076E0 ctor 0x207300 vt 0xCA64DC
 ??1SlaveWatcherBehaviorModuleData@@UAE@XZ,,0x00207510,80,Code/masm_dumps/SlaveWatcherBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory 0x117540 ctor 0x2074C0 prove ownership
+??1SlaveWatcherBehaviorModuleData@@UAE@XZ,,0x00207510,80,Code/GameEngine/Source/GameLogic/Object/Behavior/SlaveWatcherBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1SlavedUpdate@@UAE@XZ,,0x00113C60,131,Code/masm_dumps/SlavedUpdate_destructor.asm,matched,Exact 131B; factory ownership Open-BFME4
 ??1SlavedUpdateModuleData@@UAE@XZ,,0x00126980,80,Code/masm_dumps/SlavedUpdateModuleData_destructor.asm,matched,Exact 80B; factory 0x125A60 vtable 0x108E730 slot0->0x126950->thunk 0x1EB96; AsciiString +0x4c/+0x48
 ??1SlowDeathBehaviorModuleData@@UAE@XZ,,0x002095F0,221,Code/masm_dumps/SlowDeathBehaviorModuleData_destructor.asm,matched,Exact retail MASM; ctor vtable and deleting-wrapper chain prove ownership; preserves four BFME phase-array destructors absent from ZH layout
@@ -58171,6 +58175,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1SpawnBehavior@@UAE@XZ,,0x0020B180,207,Code/masm_dumps/SpawnBehavior_destructor.asm,matched,Exact 207B @ 0x0020B180; Exact retail MASM; instance factory->vtable dtor; del 0x20C020 ctor 0x20AE30 vt 0xCA6CCC
 ??1SpawnBehaviorModuleData@@UAE@XZ,,0x0012AA50,80,Code/masm_dumps/SpawnBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1SpawnUnitBehaviorModuleData@@UAE@XZ,,0x00126F00,80,Code/masm_dumps/SpawnUnitBehaviorModuleData_destructor.asm,matched,Exact 80B SEH dtor Open-BFME4
+??1SpawnBehaviorModuleData@@UAE@XZ,,0x0012AA50,80,Code/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1SpawnUnitBehaviorModuleData@@UAE@XZ,,0x00126F00,80,Code/GameEngine/Source/GameLogic/AI/SpawnUnitBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM ICF alias
 ??1SpecialAbilityUpdate@@UAE@XZ,,0x002AA910,153,Code/masm_dumps/SpecialAbilityUpdate_destructor.asm,matched,Exact 153B @ 0x002AA910; Exact retail MASM; instance factory->vtable dtor; del 0x2AAEC0 ctor 0x2A6360 vt 0xCC37B8
 ??1SpecialAbilityUpdateModuleData@@UAE@XZ,,0x002A5CC0,225,Code/masm_dumps/SpecialAbilityUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x2A6210 ctor 0x2A5AA0 vt 0xCC2D58
@@ -58268,6 +58273,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1W3DProjectileStreamDraw@@UAE@XZ,,0x00369CF0,116,Code/masm_dumps/W3DProjectileStreamDraw_destructor.asm,matched,Exact 116B @ 0x00369CF0; Exact retail MASM; instance factory->vtable dtor; del 0x36A110 ctor 0x369FD0 vt 0xCE92DC
 ??1W3DPropDrawModuleData@@UAE@XZ,,0x000A7210,108,Code/masm_dumps/W3DPropDrawModuleData_destructor.asm,matched,Exact 108B SEH dtor Open-BFME4
 ??1W3DQuadrupedDrawModuleData@@UAE@XZ,,0x006BFF70,89,Code/masm_dumps/W3DQuadrupedDrawModuleData_destructor.asm,matched,Exact 89B ModuleData SEH dtor Open-BFME4
+??1W3DQuadrupedDrawModuleData@@UAE@XZ,,0x006BFF70,89,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DQuadrupedDrawModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1W3DRopeDraw@@UAE@XZ,,0x0075A730,143,Code/masm_dumps/W3DRopeDraw_destructor.asm,matched,Exact 143B; factory ownership Open-BFME4
 ??1W3DShadowGeometryManager@@QAE@XZ,,0x007B0FF0,70,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,
 ??1W3DShadowTextureManager@@QAE@XZ,,0x007B0FF0,70,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp,matched,
@@ -65271,7 +65277,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?friend_newModuleData@AutoAbilityBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00114F90,107,Code/GameEngine/Source/GameLogic/Object/Behavior/AutoAbilityBehaviorFriendNewModuleDataThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM factory
 ?friend_newModuleData@AutoDepositUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00123F20,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,BFME retail allocation-size facade
 ?friend_newModuleData@AutoFindHealingUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119800,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
-?friend_newModuleData@AutoHealBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00129E40,54,Code/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehaviorFriendNewModuleDataThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM factory
+?friend_newModuleData@AutoHealBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00129E40,54,Code/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehaviorFriendNewModuleDataThunk.cpp,matched,Open-BFME5 clean C++ ModuleData factory
 ?friend_newModuleData@AutoPickUpUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119B30,107,Code/GameEngine/Source/GameLogic/AI/AutoPickUpUpdateFriendNewModuleDataThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM factory
 ?friend_newModuleData@BaikonurLaunchPower@@SAPAVModuleData@@PAVINI@@@Z,,0x0011F8B0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@BannerCarrierUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119C40,107,Code/GameEngine/Source/GameLogic/AI/BannerCarrierUpdateFriendNewModuleDataThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM factory
