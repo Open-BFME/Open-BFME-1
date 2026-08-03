@@ -1,74 +1,46 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
-class INI;
+// Open-BFME5: FoundationAIUpdate::friend_newModuleData
+
 class ModuleData;
+
+void *__cdecl operator new(unsigned int);
+void __cdecl operator delete(void *);
+
+class FoundationAIUpdateModuleData
+{
+public:
+	FoundationAIUpdateModuleData();
+	virtual ~FoundationAIUpdateModuleData();
+private:
+	unsigned int m_pad;
+	unsigned int m_field;
+};
+
+class INI
+{
+public:
+	void initFromINI(void *what, const void *parseTable);
+};
+
+extern "C" char FoundationAIUpdateFieldParse;
 
 class FoundationAIUpdate
 {
 public:
-    static ModuleData *friend_newModuleData(INI *ini);
+	static ModuleData *friend_newModuleData(INI *ini);
 };
 
-// ?friend_newModuleData@FoundationAIUpdate@@SAPAVModuleData@@PAVINI@@@Z
-__declspec(naked) ModuleData *FoundationAIUpdate::friend_newModuleData(INI *)
+FoundationAIUpdateModuleData::FoundationAIUpdateModuleData()
 {
-    __asm {
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0xf8
-        __emit 0xf0
-        __emit 0x75
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x11
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xa0
-        __emit 0xae
-        __emit 0x08
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x40
-        __emit 0x08
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0b
-        __emit 0x68
-        __emit 0xe6
-        __emit 0x31
-        __emit 0x42
-        __emit 0x00
-        __emit 0x56
-        __emit 0xe8
-        __emit 0xcb
-        __emit 0xf2
-        __emit 0x72
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc3
-    }
+	m_field = 0;
+}
+
+// ?friend_newModuleData@FoundationAIUpdate@@SAPAVModuleData@@PAVINI@@@Z
+ModuleData *FoundationAIUpdate::friend_newModuleData(INI *ini)
+{
+	FoundationAIUpdateModuleData *data = new FoundationAIUpdateModuleData;
+	if (ini)
+		ini->initFromINI(data, &FoundationAIUpdateFieldParse);
+	return (ModuleData *)data;
 }
