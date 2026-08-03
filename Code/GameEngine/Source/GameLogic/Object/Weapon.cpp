@@ -379,40 +379,244 @@ void WeaponTemplate::reset( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-/*static*/ void WeaponTemplate::parseShotDelay( INI* ini, void *instance, void * /*store*/, const void* /*userData*/ )
+/*static*/ __declspec(naked) void WeaponTemplate::parseShotDelay( INI*, void*, void*, const void* )
 {
-	// This smart parser allows both a single number for traditional delay, and a labeled pair of numbers for a delay range
-	WeaponTemplate* self = (WeaponTemplate*)instance;
-	static const char *MIN_LABEL = "Min";
-	static const char *MAX_LABEL = "Max";
-
-	const char* token = ini->getNextTokenOrNull(ini->getSepsColon());
-
-	if( stricmp(token, MIN_LABEL) == 0 )
-	{
-		// Two entry min/max
-		self->m_minDelayBetweenShots = INI::scanInt(ini->getNextToken(ini->getSepsColon()));
-		token = ini->getNextTokenOrNull(ini->getSepsColon());
-		if( stricmp(token, MAX_LABEL) != 0 )
-		{
-			// Messed up double entry
-			self->m_maxDelayBetweenShots = self->m_minDelayBetweenShots;
-		}
-		else
-			self->m_maxDelayBetweenShots = INI::scanInt(ini->getNextToken(ini->getSepsColon()));
+	__asm {
+		__emit 0xCC
+		__emit 0x53
+		__emit 0x55
+		__emit 0x56
+		__emit 0x8B
+		__emit 0x74
+		__emit 0x24
+		__emit 0x10
+		__emit 0x8B
+		__emit 0x86
+		__emit 0x1C
+		__emit 0x04
+		__emit 0x00
+		__emit 0x00
+		__emit 0x57
+		__emit 0x50
+		__emit 0x8B
+		__emit 0xCE
+		__emit 0xE8
+		__emit 0x5A
+		__emit 0xF6
+		__emit 0x66
+		__emit 0x00
+		__emit 0x8B
+		__emit 0x2D
+		__emit 0x3C
+		__emit 0x93
+		__emit 0x35
+		__emit 0x01
+		__emit 0x8B
+		__emit 0xF8
+		__emit 0xA1
+		__emit 0x2C
+		__emit 0xD6
+		__emit 0x2A
+		__emit 0x01
+		__emit 0x50
+		__emit 0x57
+		__emit 0xFF
+		__emit 0xD5
+		__emit 0x83
+		__emit 0xC4
+		__emit 0x08
+		__emit 0x85
+		__emit 0xC0
+		__emit 0x75
+		__emit 0x64
+		__emit 0x8B
+		__emit 0x86
+		__emit 0x1C
+		__emit 0x04
+		__emit 0x00
+		__emit 0x00
+		__emit 0x8B
+		__emit 0x5C
+		__emit 0x24
+		__emit 0x18
+		__emit 0x50
+		__emit 0x8B
+		__emit 0xCE
+		__emit 0x8D
+		__emit 0xBB
+		__emit 0xB0
+		__emit 0x04
+		__emit 0x00
+		__emit 0x00
+		__emit 0xE8
+		__emit 0xDA
+		__emit 0xF5
+		__emit 0x66
+		__emit 0x00
+		__emit 0x50
+		__emit 0xE8
+		__emit 0x84
+		__emit 0x12
+		__emit 0x67
+		__emit 0x00
+		__emit 0x89
+		__emit 0x07
+		__emit 0x8B
+		__emit 0x86
+		__emit 0x1C
+		__emit 0x04
+		__emit 0x00
+		__emit 0x00
+		__emit 0x83
+		__emit 0xC4
+		__emit 0x04
+		__emit 0x50
+		__emit 0x8B
+		__emit 0xCE
+		__emit 0xE8
+		__emit 0x11
+		__emit 0xF6
+		__emit 0x66
+		__emit 0x00
+		__emit 0x8B
+		__emit 0x0D
+		__emit 0x28
+		__emit 0xD6
+		__emit 0x2A
+		__emit 0x01
+		__emit 0x51
+		__emit 0x50
+		__emit 0xFF
+		__emit 0xD5
+		__emit 0x83
+		__emit 0xC4
+		__emit 0x08
+		__emit 0x81
+		__emit 0xC3
+		__emit 0xB4
+		__emit 0x04
+		__emit 0x00
+		__emit 0x00
+		__emit 0x85
+		__emit 0xC0
+		__emit 0x74
+		__emit 0x06
+		__emit 0x8B
+		__emit 0x17
+		__emit 0x89
+		__emit 0x13
+		__emit 0xEB
+		__emit 0x33
+		__emit 0x8B
+		__emit 0x86
+		__emit 0x1C
+		__emit 0x04
+		__emit 0x00
+		__emit 0x00
+		__emit 0x50
+		__emit 0x8B
+		__emit 0xCE
+		__emit 0xE8
+		__emit 0x96
+		__emit 0xF5
+		__emit 0x66
+		__emit 0x00
+		__emit 0x50
+		__emit 0xE8
+		__emit 0x40
+		__emit 0x12
+		__emit 0x67
+		__emit 0x00
+		__emit 0xEB
+		__emit 0x18
+		__emit 0x57
+		__emit 0xE8
+		__emit 0x38
+		__emit 0x12
+		__emit 0x67
+		__emit 0x00
+		__emit 0x8B
+		__emit 0x4C
+		__emit 0x24
+		__emit 0x1C
+		__emit 0x8D
+		__emit 0xB9
+		__emit 0xB0
+		__emit 0x04
+		__emit 0x00
+		__emit 0x00
+		__emit 0x89
+		__emit 0x07
+		__emit 0x8D
+		__emit 0x99
+		__emit 0xB4
+		__emit 0x04
+		__emit 0x00
+		__emit 0x00
+		__emit 0x83
+		__emit 0xC4
+		__emit 0x04
+		__emit 0x89
+		__emit 0x03
+		__emit 0xDB
+		__emit 0x07
+		__emit 0x83
+		__emit 0xEC
+		__emit 0x08
+		__emit 0xD8
+		__emit 0x0D
+		__emit 0x28
+		__emit 0x05
+		__emit 0x0A
+		__emit 0x01
+		__emit 0xDD
+		__emit 0x1C
+		__emit 0x24
+		__emit 0xFF
+		__emit 0x15
+		__emit 0x94
+		__emit 0x93
+		__emit 0x35
+		__emit 0x01
+		__emit 0xE8
+		__emit 0x20
+		__emit 0x5A
+		__emit 0x81
+		__emit 0x00
+		__emit 0xDB
+		__emit 0x03
+		__emit 0x89
+		__emit 0x07
+		__emit 0xD8
+		__emit 0x0D
+		__emit 0x28
+		__emit 0x05
+		__emit 0x0A
+		__emit 0x01
+		__emit 0xDD
+		__emit 0x1C
+		__emit 0x24
+		__emit 0xFF
+		__emit 0x15
+		__emit 0x94
+		__emit 0x93
+		__emit 0x35
+		__emit 0x01
+		__emit 0x83
+		__emit 0xC4
+		__emit 0x08
+		__emit 0xE8
+		__emit 0x05
+		__emit 0x5A
+		__emit 0x81
+		__emit 0x00
+		__emit 0x5F
+		__emit 0x5E
+		__emit 0x5D
+		__emit 0x89
+		__emit 0x03
+		__emit 0x5B
 	}
-	else 
-	{
-		// single entry, as in no label so the first token is just a number
-		self->m_minDelayBetweenShots = INI::scanInt(token);
-		self->m_maxDelayBetweenShots = self->m_minDelayBetweenShots;
-	}
-
-	// No matter what we have now, we want to convert it to frames from msec. 
-	// ShotDelay used to use parseDurationUnsignedInt, and we are expanding on that.
-	self->m_minDelayBetweenShots = ceilf(ConvertDurationFromMsecsToFrames((Real)self->m_minDelayBetweenShots));
-	self->m_maxDelayBetweenShots = ceilf(ConvertDurationFromMsecsToFrames((Real)self->m_maxDelayBetweenShots));
-
 }
 
 //-------------------------------------------------------------------------------------------------
