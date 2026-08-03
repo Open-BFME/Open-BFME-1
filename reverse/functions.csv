@@ -2858,7 +2858,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1CreditsLine@@QAE@XZ,,0x0040C230,134,Code/masm_dumps/_rn7___1CreditsLine__QAE_XZ_40C230.asm,matched,reloc-needle Open-BFME4+Grok
 ??1CriticalSectionClass@@QAE@XZ,,0x009DB450,25,Code/Libraries/Source/WWVegas/WWLib/mutex.cpp,matched,
 ??1CritterEmitterUpdateModuleData@@UAE@XZ,,0x001FA750,175,Code/masm_dumps/CritterEmitterUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x1FA720 ctor 0x1FA3A0 vt 0xCA39F0
-??1CrushDieModuleData@@UAE@XZ,,0x001255C0,77,Code/masm_dumps/CrushDieModuleData_destructor.asm,matched,Exact retail MASM; factory constructor vtable and deleting wrapper prove ownership
+??1CrushDieModuleData@@UAE@XZ,,0x001255C0,77,Code/GameEngine/Source/GameLogic/AI/CrushDieModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1CullNodeStruct@AABTreeBuilderClass@@QAE@XZ,,0x0096B530,69,Code/Libraries/Source/WWVegas/WW3D2/aabtreebuilder.cpp,matched,
 ??1CullSystemClass@@UAE@XZ,,0x008E2150,7,Code/Libraries/Source/WWVegas/WWMath/cullsys.cpp,matched,
 ??1CullableClass@@UAE@XZ,,0x008E2220,7,Code/Libraries/Source/WWVegas/WWMath/cullsys.cpp,matched,
