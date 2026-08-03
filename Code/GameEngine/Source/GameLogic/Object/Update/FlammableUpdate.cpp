@@ -80,14 +80,6 @@ FlammableUpdateModuleData::FlammableUpdateModuleData()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ??1FlammableUpdate@@MAE@XZ present-unmatched
-FlammableUpdate::~FlammableUpdate( void )
-{
-	stopBurningSound();
-}
-
-//-------------------------------------------------------------------------------------------------
 /** Damage has been dealt, this is an opportunity to reach to that damage */
 //-------------------------------------------------------------------------------------------------
 // ?onDamage@FlammableUpdate@@UAEXPAVDamageInfo@@@Z present-unmatched
