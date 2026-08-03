@@ -142,14 +142,6 @@ PropagandaTowerBehavior::PropagandaTowerBehavior( Thing *thing, const ModuleData
 }  // end PropagandaTowerBehavior
 
 // ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// ??1PropagandaTowerBehavior@@ present-unmatched
-PropagandaTowerBehavior::~PropagandaTowerBehavior( void )
-{
-
-}  // end ~PropagandaTowerBehavior
-
-// ------------------------------------------------------------------------------------------------
 /** Module is being deleted */
 // ------------------------------------------------------------------------------------------------
 // ?onDelete@PropagandaTowerBehavior@@ present-unmatched
