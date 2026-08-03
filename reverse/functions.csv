@@ -2478,7 +2478,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0WorldHeightMap@@IAE@XZ,,0x0074E990,303,Code/masm_dumps/WorldHeightMap_default_ctor.asm,matched,True body @0x74E990 size 303 (queue 0x8361AF was INSIDE unrelated SEH fn). RefCount+NORMAL_DRAW0x81+tile wipe+setupAlphaTiles; MASM exact
 ??0WorldHeightMap@@QAE@PAVChunkInputStream@@_N@Z,,0x0074EB10,352,Code/masm_dumps/WorldHeightMap_stream_ctor_0074EB10.asm,matched,Certified packet 243 exact retail db-only recovery SHA256 fd88fea36c757917716f17cf5c1633f2946944a096525e9c5834b296bb0e0956
 ??0WoundArrowUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0026DFB0,60,Code/GameEngine/Source/GameLogic/Object/Update/WoundArrowUpdate.cpp,matched,Luna Open-BFME5.0 clean C++ SpecialAbilityUpdate constructor
-??0WoundArrowUpdateModuleData@@QAE@XZ,,0x0026DF50,38,Code/GameEngine/Source/Common/RTS/WoundArrowUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw special-power data constructor
+??0WoundArrowUpdateModuleData@@QAE@XZ,,0x0026DF50,38,Code/GameEngine/Source/Common/RTS/WoundArrowUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 clean C++ SpecialPowerModuleData + 100.0f and zero
 ??0WriteLockClass@VertexBufferClass@@QAE@PAV1@H@Z,,0x0091DD70,150,Code/Libraries/Source/WWVegas/WW3D2/VertexBufferWriteLockCtorThunk.cpp,matched,1:1 C++ thunk from certified retail constructor
 ??0Xfer@@QAE@XZ,0x00041BAF,0x007E7660,9,Code/GameEngine/Source/Common/System/Xfer.cpp,matched,constructor sets vtable
 ??0ZigZagLinearOffsetTextureMapperClass@@QAE@ABV0@@Z,,0x00965500,92,Code/Libraries/Source/WWVegas/WW3D2/mapper.cpp,matched,
