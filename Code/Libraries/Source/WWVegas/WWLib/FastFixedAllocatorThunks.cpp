@@ -10,8 +10,11 @@ public:
 	~FastFixedAllocator();
 	void Init(unsigned int);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	// MSVC default-ctor closure (??_F...); object-symbol maps retail name here.
 	void DefaultConstructorClosure();
+=======
+>>>>>>> d27c2f84c (Open-BFME5 convert FastFixedAllocator Init/ctor to clean C++)
 =======
 >>>>>>> d27c2f84c (Open-BFME5 convert FastFixedAllocator Init/ctor to clean C++)
 
@@ -51,7 +54,10 @@ FastFixedAllocator::FastFixedAllocator(unsigned int n)
 
 // ??1FastFixedAllocator@@QAE@XZ
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Walk chunks list; operator-delete each POD node (no Chunk dtor).
+=======
+>>>>>>> d27c2f84c (Open-BFME5 convert FastFixedAllocator Init/ctor to clean C++)
 =======
 >>>>>>> d27c2f84c (Open-BFME5 convert FastFixedAllocator Init/ctor to clean C++)
 FastFixedAllocator::~FastFixedAllocator()
@@ -65,6 +71,7 @@ FastFixedAllocator::~FastFixedAllocator()
 }
 
 // ??_FFastFixedAllocator@@QAEXXZ
+<<<<<<< HEAD
 <<<<<<< HEAD
 // Default-ctor closure for FastFixedAllocator() / FastFixedAllocator(0):
 // zero stats/head/chunks and set esize=4 (sizeof(Link*)).
