@@ -666,7 +666,6 @@ static void parsePrerequisiteScience( INI* ini, void *instance, void * /*store*/
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?parsePrerequisites@ThingTemplate@@ present-unmatched
 void ThingTemplate::parsePrerequisites( INI* ini, void *instance, void *store, const void* userData )
 {
 	ThingTemplate* self = (ThingTemplate*)instance;
@@ -678,12 +677,16 @@ void ThingTemplate::parsePrerequisites( INI* ini, void *instance, void *store, c
 		{ 0, 0, 0, 0 }
 	};
 
-	if (ini->getLoadType() == INI_LOAD_CREATE_OVERRIDES)
+	if (*reinterpret_cast<unsigned int *>(reinterpret_cast<unsigned char *>(ini) + 8) == INI_LOAD_CREATE_OVERRIDES)
 	{
-		self->m_prereqInfo.clear();
+		std::vector<ProductionPrerequisite>* prereqInfo =
+			reinterpret_cast<std::vector<ProductionPrerequisite>*>(reinterpret_cast<unsigned char*>(self) + 0x2C4);
+		prereqInfo->clear();
 	}
 
-	ini->initFromINI(&self->m_prereqInfo, myFieldParse);
+	std::vector<ProductionPrerequisite>* prereqInfo =
+		reinterpret_cast<std::vector<ProductionPrerequisite>*>(reinterpret_cast<unsigned char*>(self) + 0x2C4);
+	ini->initFromINI(prereqInfo, myFieldParse);
 }
 
 //-------------------------------------------------------------------------------------------Static
