@@ -8581,7 +8581,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?WriteOrConditionDataChunk@OrCondition@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x00355C90,64,Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp,matched,
 ?WriteParameter@Parameter@@QAEXAAVDataChunkOutput@@@Z,,0x00351320,167,Code/masm_dumps/Parameter_WriteParameter.asm,matched,Ghidra-bound BFME parameter writer
 ?WriteScriptDataChunk@Script@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x00357B30,318,Code/masm_dumps/Script_WriteScriptDataChunk.asm,matched,Ghidra-bound BFME script writer
-?WriteScriptsDataChunk@ScriptList@@SAXAAVDataChunkOutput@@QAPAV1@H@Z,,0x0035B4B0,121,Code/masm_dumps/_WriteScriptsDataChunk_ScriptList__SAXAAVDataChunk.asm,matched,asm->cpp depth Open-BFME4+Grok
+?WriteScriptsDataChunk@ScriptList@@SAXAAVDataChunkOutput@@QAPAV1@H@Z,,0x0035B4B0,121,Code/GameEngine/Source/Common/ScriptList_WriteScriptsDataChunk_Thunk.cpp,matched,object-symbol=?WriteScriptsDataChunk@ScriptList@@SAXAAVDataChunkOutput@@PBQAV1@H@Z;Exact 121B Open-BFME5
 ?XMP_Hybrid_Mul@@YAXPAG0GH@Z,,0x009E8A70,76,Code/Libraries/Source/WWVegas/WWLib/mpmath.cpp,matched,
 ?XferEnum@Xfer@@UAEAAV1@PBDPAXI@Z,0x009D67B0,0x009D67B0,196,Code/GameEngine/Source/Common/System/Xfer.cpp,matched,xfer enum
 ?XferRawBytes@Xfer@@UAEAAV1@PAXI@Z,0x009D63C0,0x009D63C0,67,Code/GameEngine/Source/Common/System/Xfer.cpp,matched,xfer raw bytes
@@ -11960,7 +11960,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?init@SnowManager@@UAEXXZ,,0x0045A970,34,Code/GameEngine/Source/GameClient/Snow.cpp,matched,Exact clean C++ SnowManager::init; MASM dump removed
 ?init@SubsystemLegend@@UAEXXZ,,0x009A14B0,8,Code/GameEngine/Source/Common/System/SubsystemLegend.cpp,matched,tail-call m_entries.clear() (base slot 1)
 ?init@TeamsInfo@@QAEXPBVDict@@@Z,,0x00191410,28,Code/GameEngine/Source/GameLogic/Map/SidesList.cpp,matched,
-?init@TerrainShaderPixelShader@@EAEHXZ,,0x007E1F60,146,Code/masm_dumps/_sa12__init_TerrainShaderPixelShader__EAEHXZ_7E1F60.asm,matched,string-anchor Open-BFME4+Grok shaders\terrainnoise2.pso
+?init@TerrainShaderPixelShader@@EAEHXZ,,0x007E1F60,146,Code/GameEngine/Source/Common/TerrainShaderPixelShader_init_Thunk.cpp,matched,Exact 146B Open-BFME5
 ?init@TextOnFrameTransition@@UAEXPAVGameWindow@@@Z,,0x005A02B0,23,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
 ?init@TextTypeTransition@@UAEXPAVGameWindow@@@Z,,0x005A07F0,220,Code/masm_dumps/init_TextTypeTransition_UAEXPAVGameWindow_Z_005A07F0_a2419f26.asm,matched,Certified vtable slot and constructor chain recovery; exact retail db bytes SHA256 a2419f2649de4939c78ca27f9528c905e6bb74f08cdfdd43de237dc8e943ef6f
 ?init@Transport@@QAE_NPBUTransportAddress@@@Z,,0x00684200,430,Code/GameEngine/Source/GameNetwork/Transport.cpp,matched,
