@@ -1,4 +1,5 @@
 #pragma once
+#include "INILineBuffer.h"
 #include "ascii_string.h"
 
 class Xfer;
@@ -34,10 +35,10 @@ public:
 	static void parseLookupList(INI* ini, void* instance, void* store, const void* userData);
 
 private:
-	// Not ported. The padding keeps sizeof(INI) at retail's 0x848 so callers that
-	// stack-allocate one get retail's frame; INI::INI() at 0x00851230 writes as
-	// far as [this+0x834].
-	char m_unported[0x848];
+	char m_unknown0[4];                     // +0x00
+	AsciiString m_filename;                 // +0x04
+	char m_unported[0x82c];                 // +0x08 through +0x833
+	INILineBuffer m_lineBuffer;             // +0x834
 };
 // INI::scanLookupList (0x00850A70) walks these in 8-byte strides, matching the
 // name at +0 and taking the value at +4.
