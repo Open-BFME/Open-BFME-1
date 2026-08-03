@@ -3053,7 +3053,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1ModelConditionUpgradeModuleData@@UAE@XZ,,0x002D6B20,67,Code/masm_dumps/ModelConditionUpgradeModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1Module@@MAE@XZ,,0x001B0DB0,79,Code/GameEngine/Source/Common/Thing/Module.cpp,matched,
 ??1ModuleTemplate@FXParticleSystem@@UAE@XZ,0x00015A14,0x0005C7D0,7,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,destructor resets vtable
-??1MoneyCrateCollideModuleData@@UAE@XZ,,0x00125E40,67,Code/masm_dumps/MoneyCrateCollideModuleData_destructor.asm,matched,Exact 67B SEH dtor Open-BFME4
+??1MoneyCrateCollideModuleData@@UAE@XZ,,0x00125E40,67,Code/GameEngine/Source/GameLogic/AI/MoneyCrateCollideModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1MonsterDockUpdateModuleData@@UAE@XZ,,0x002CDD90,67,Code/masm_dumps/MonsterDockUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1MotionChannelClass@@QAE@XZ,,0x00978140,24,Code/Libraries/Source/WWVegas/WW3D2/motchan.cpp,matched,
 ??1MultiListObjectClass@@UAE@XZ,,0x009DC190,37,Code/Libraries/Source/WWVegas/WWLib/multilist.cpp,matched,
