@@ -2795,7 +2795,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1AutoDepositUpdateModuleData@@UAE@XZ,,0x00125960,67,Code/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership; BFME member layout differs from ZH-derived C++
 ??1AutoHealBehaviorModuleData@@UAE@XZ,,0x0012A910,67,Code/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehaviorModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1AutoPickUpUpdate@@UAE@XZ,,0x00281F40,1490,Code/masm_dumps/AutoPickUpUpdate_destructor.asm,matched,Exact 1490B SEH module dtor; factory->vtable recovery Open-BFME4
-??1AutoPickUpUpdateModuleData@@UAE@XZ,,0x00282A80,80,Code/masm_dumps/AutoPickUpUpdateModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor vtable and deleting-wrapper chain prove ownership
+??1AutoPickUpUpdateModuleData@@UAE@XZ,,0x00282A80,80,Code/GameEngine/Source/Common/AutoPickUpUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; unique factory ctor vtable and deleting-wrapper chain prove ownership
 ??1BFMEAutoLockRef@@QAE@XZ,,0x009DB400,22,Code/GameEngine/Source/GameNetwork/native_network.cpp,matched,native BFME lock-ref release helper used by wrapper/backend
 ??1BFMENetRequestGameSpyStatsAuthKeyCommandMsg@@MAE@XZ,,0x00675B80,73,Code/GameEngine/Source/GameNetwork/NetCommandMsg_text.cpp,matched,
 ??1BFMEPlayerTemplateAsciiString@@QAE@XZ,,0x00887940,134,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,object-symbol=?releaseBuffer@?$StringBase@D@@AAEXXZ;C++ alias
