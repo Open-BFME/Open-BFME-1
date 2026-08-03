@@ -2942,7 +2942,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "??0ToppleUpdate@@QAE@PAVThing@@PBVModuleData@@@Z","","0x002B1060","187","Code/GameEngine/Source/GameLogic/Object/Update/ToppleUpdateCtorThunk.cpp","matched","Open-BFME5 MASM lift"
 "??0ToppleUpdateModuleData@@QAE@XZ","","0x002B13A0","123","Code/GameEngine/Source/GameLogic/Object/Update/ToppleUpdateModuleDataCtorThunk.cpp","matched","Exact 123B @ 0x002B13A0; Exact retail MASM ModuleData ctor; unique factory 0x11BBD0; converted to an exact standalone C++ thunk"
 "??0TPropType@@QAE@XZ","","0x002DFCE0","10","Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBuffer.cpp","matched",""
-"??0TransitionDamageFX@@","","0x00251CF0","374","Code/masm_dumps/_sa7___0TransitionDamageFX___251CF0.asm","matched","Exact 374B Open-BFME4"
+"??0TransitionDamageFX@@","","0x00251CF0","374","Code/GameEngine/Source/GameLogic/Object/Damage/TransitionDamageFX_ctor_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_TransitionDamageFX_Constructor_251CF0"
 "??0TransitionDamageFXModuleData@@QAE@XZ","","0x002532B0","433","Code/GameEngine/Source/Common/TransitionDamageFXModuleData_ctor_Thunk.cpp","matched","Exact retail MASM ModuleData ctor; unique factory 0x124770"
 "??0TransitionInfo@State@@QAE@P6A_NPAV1@PAX@ZI1PBD@Z","","0x0009FF40","25","Code/GameEngine/Source/Common/StateMachine.cpp","matched",""
 "??0TranslatorData@MessageStream@@QAE@XZ","","0x0008A240","19","Code/GameEngine/Source/Common/MessageStream.cpp","matched",""
