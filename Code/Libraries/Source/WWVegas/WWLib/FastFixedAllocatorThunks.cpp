@@ -61,36 +61,14 @@ __declspec(naked) FastFixedAllocator::FastFixedAllocator(unsigned int)
 }
 
 // ??1FastFixedAllocator@@QAE@XZ
-__declspec(naked) FastFixedAllocator::~FastFixedAllocator()
+FastFixedAllocator::~FastFixedAllocator()
 {
-    __asm {
-        __emit 0x56;
-        __emit 0x8b;
-        __emit 0x31;
-        __emit 0x85;
-        __emit 0xf6;
-        __emit 0x74;
-        __emit 0x11;
-        __emit 0x8b;
-        __emit 0xc6;
-        __emit 0x8b;
-        __emit 0x36;
-        __emit 0x50;
-        __emit 0xe8;
-        __emit 0x7f;
-        __emit 0xf7;
-        __emit 0xd7;
-        __emit 0xff;
-        __emit 0x83;
-        __emit 0xc4;
-        __emit 0x04;
-        __emit 0x85;
-        __emit 0xf6;
-        __emit 0x75;
-        __emit 0xef;
-        __emit 0x5e;
-        __emit 0xc3;
-    }
+	void *node = *reinterpret_cast<void **>(this);
+	while (node) {
+		void *current = node;
+		node = *reinterpret_cast<void **>(node);
+		::operator delete(current);
+	}
 }
 
 // ??_FFastFixedAllocator@@QAEXXZ
