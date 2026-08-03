@@ -1,37 +1,22 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
-#include "PreRTS.h"
+// cl: /DNDEBUG /MD /EHsc
+
+// Open-BFME5: DestroyEnvironmentUpdateModuleData default ctor.
 
 class DestroyEnvironmentUpdateModuleData
 {
 public:
-    DestroyEnvironmentUpdateModuleData();
+	DestroyEnvironmentUpdateModuleData();
+	virtual ~DestroyEnvironmentUpdateModuleData();
+
+private:
+	unsigned int m_gap4;
+	unsigned int m_08;
+	unsigned int m_0c;
 };
 
-__declspec(naked) DestroyEnvironmentUpdateModuleData::DestroyEnvironmentUpdateModuleData()
+// ??0DestroyEnvironmentUpdateModuleData@@QAE@XZ
+DestroyEnvironmentUpdateModuleData::DestroyEnvironmentUpdateModuleData()
 {
-    __asm {
-        _emit 08Bh
-        _emit 0C1h
-        _emit 0C7h
-        _emit 000h
-        _emit 000h
-        _emit 0DAh
-        _emit 00Bh
-        _emit 001h
-        _emit 0C7h
-        _emit 040h
-        _emit 008h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 0C7h
-        _emit 040h
-        _emit 00Ch
-        _emit 064h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 0C3h
-    }
+	m_08 = 0;
+	m_0c = 100;
 }
