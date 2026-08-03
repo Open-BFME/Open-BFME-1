@@ -12466,7 +12466,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?reverseMotion@BridgeScaffoldBehavior@@UAEXXZ","","0x001F5940","68","Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeScaffoldBehavior.cpp","matched",""
 "?reverseWord@GameTextManager@@IAEXPAD0@Z","","0x00435F70","66","Code/GameEngine/Source/GameClient/GameText.cpp","matched",""
 "?rewind@CachedFileInputStream@@QAEXXZ","","0x00702070","8","Code/GameEngine/Source/Common/System/DataChunk.cpp","matched","tiny-locate"
-"?rewind@FileInputStream@@","","0x001036C0","297","Code/masm_dumps/_sa5__rewind_FileInputStream___1036C0.asm","matched","Exact 297B Open-BFME4"
+"?rewind@FileInputStream@@","","0x001036C0","297","Code/GameEngine/Source/Common/FileInputStream_rewind_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_FileInputStream_rewind_1036C0"
 "?RGB_To_HSV@@YAXAAVVector3@@ABV1@@Z","","0x00106730","302","Code/Libraries/Source/WWVegas/WW3D2/bitmaphandler.cpp","matched",""
 "?Rotate@Coord2D@@QAEAAV1@AAV1@MM@Z","0x00023772","0x007E5BD0","44","Code/Libraries/Source/WWVegas/WWMath/coord2d.cpp","matched","rotates source by sine/cosine into this"
 "?Rotate@Coord2D@@QAEAAV1@ABV1@M@Z","0x0002F1E9","0x007E5B80","61","Code/Libraries/Source/WWVegas/WWMath/coord2d.cpp","matched","rotates source by angle"
