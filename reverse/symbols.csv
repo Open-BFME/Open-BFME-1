@@ -4244,6 +4244,7 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 ??0StreakDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0000F56A,StreakDrawModuleTemplate clone copy-ctor pin
 ??1AnimationSoundClientBehaviorModuleDataMember@@QAE@XZ,0x000142EA,AnimationSoundClientBehaviorModuleData dtor member +0x8
 ??1EnragedBehaviorModuleDataMember@@QAE@XZ,0x00026AB2,EnragedBehaviorModuleData dtor member +0x8
+??1CivilianSpawnUpdateModuleDataMember@@QAE@XZ,0x00026AB2,Open-BFME5 CivilianSpawnUpdate destructor member call target
 ??1ModelConditionSoundSelectorClientBehaviorModuleDataMember@@QAE@XZ,0x000241AE,ModelConditionSoundSelectorClientBehaviorModuleData dtor member +0x8
 ??1UpgradeSoundSelectorClientBehaviorModuleDataMember@@QAE@XZ,0x0001EA97,UpgradeSoundSelectorClientBehaviorModuleData dtor member +0x8
 ??0?$ConcreteModuleTemplate@UOutwardEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x0000E584,OutwardEmissionVelocity clone copy-ctor
