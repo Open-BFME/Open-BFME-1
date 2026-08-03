@@ -7660,7 +7660,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Read@DebugIONet@@UAEHPADH@Z,,0x0088FB90,115,Code/Libraries/Source/WWVegas/WWDebug/debug_io_net.cpp,matched,
 ?Read@RawFileClass@@UAEHPAXH@Z,,0x009E6760,205,Code/Libraries/Source/WWVegas/WWLib/rawfile.cpp,matched,
 ?Read@UDP@@QAEHPAEIPAUsockaddr_in@@@Z,,0x00684630,136,Code/GameEngine/Source/GameNetwork/udp.cpp,matched,
-?ReadParameter@Parameter@@SAPAV1@AAVDataChunkInput@@@Z,,0x00357FC0,748,Code/masm_dumps/_sa3__ReadParameter_Parameter__SAPAV1_AAVDataChunkInput_357FC0.asm,matched,Exact 748B string-anchored Open-BFME4
+?ReadParameter@Parameter@@SAPAV1@AAVDataChunkInput@@@Z,,0x00357FC0,748,Code/GameEngine/Source/GameLogic/ScriptEngine/Parameter_ReadParameter_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=?ReadParameter@Parameter@@SAPAV1@AAVDataChunkInput@@@Z
 ?Read_Color_Keyframe@ParticleEmitterDefClass@@MAE_NAAVChunkLoadClass@@PAMPAVVector3@@@Z,,0x0098DF50,150,Code/Libraries/Source/WWVegas/WW3D2/part_ldr.cpp,matched,
 ?Read_Extra_Info@ParticleEmitterDefClass@@MAE?AW4WW3DErrorType@@AAVChunkLoadClass@@@Z,,0x0098C9A0,26,Code/Libraries/Source/WWVegas/WW3D2/part_ldr.cpp,matched,
 ?Read_Line@@YAHAAVFileClass@@PADHAA_N@Z,,0x009EA6A0,124,Code/Libraries/Source/WWVegas/WWLib/readline.cpp,matched,
