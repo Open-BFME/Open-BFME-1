@@ -8740,7 +8740,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?Get_DX8_Texture_Arg_Name@DX8Wrapper@@SAPBDI@Z","","0x00902B20","157","Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp","matched","true size 157B; row claimed 23B (switch dispatch + case bodies)"
 "?Get_DX8_Texture_Filter_Name@DX8Wrapper@@","","0x00902EC0","71","Code/Libraries/Source/WWVegas/WW3D2/DX8WrapperGetDX8TextureFilterNameThunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=?Get_DX8_Texture_Filter_Name@DX8Wrapper@@SAPBDI@Z"
 "?Get_DX8_Texture_Op_Name@DX8Wrapper@@SAPBDI@Z","","0x00902A00","21","Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp","matched",""
-"?Get_DX8_Texture_Stage_State_Value_Name@DX8Wrapper@@","","0x00906FE0","264","Code/masm_dumps/_sa5__Get_DX8_Texture_Stage_State_Value_Name_DX8Wrapper_906FE0.asm","matched","Exact 264B Open-BFME4"
+"?Get_DX8_Texture_Stage_State_Value_Name@DX8Wrapper@@","","0x00906FE0","264","Code/Libraries/Source/WWVegas/WW3D2/DX8WrapperGetTextureStageStateValueName_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_DX8Wrapper_GetTextureStageStateValueName_906FE0"
 "?Get_DX8_Texture_Transform_Flag_Name@DX8Wrapper@@SAPBDI@Z","","0x00902C50","88","Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp","matched","true size 88B; row claimed 25B (switch dispatch + case bodies)"
 "?Get_DX8_Vertex_Blend_Flag_Name@DX8Wrapper@@SAPBDI@Z","","0x00902F60","74","Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp","matched",""
 "?Get_DX8_ZBuffer_Type_Name@DX8Wrapper@@SAPBDI@Z","","0x00902CB0","39","Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp","matched",""
