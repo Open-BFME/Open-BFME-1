@@ -2772,7 +2772,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1Anim2DCollection@@UAE@XZ,,0x005BA3A0,108,Code/GameEngine/Source/GameClient/System/Anim2D.cpp,matched,
 ??1Anim2DTemplate@@UAE@XZ,,0x005BAE20,34,Code/GameEngine/Source/GameClient/System/Anim2D.cpp,matched,clean C++ replaces MASM destructor
 ??1AnimalAIUpdate@@UAE@XZ,,0x0027E5A0,843,Code/masm_dumps/AnimalAIUpdate_destructor.asm,matched,Exact 843B; factory ownership Open-BFME4
-??1AnimalAIUpdateModuleData@@UAE@XZ,,0x0027E4E0,145,Code/masm_dumps/AnimalAIUpdateModuleData_destructor.asm,matched,Exact 145B SEH dtor Open-BFME4
+??1AnimalAIUpdateModuleData@@UAE@XZ,,0x0027E4E0,145,Code/GameEngine/Source/Common/AnimalAIUpdateModuleDataDestructorThunk.cpp,matched,Exact 145B SEH dtor Open-BFME4
 ??1Animatable3DObjClass@@UAE@XZ,,0x009828E0,114,Code/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,
 ??1AnimateWindow@@UAE@XZ,,0x0045CF30,14,Code/GameEngine/Source/GameClient/GUI/AnimateWindowManager.cpp,matched,
 ??1AnimateWindowManager@@UAE@XZ,,0x0045D950,238,Code/GameEngine/Source/GameClient/GUI/AnimateWindowManager.cpp,matched,
