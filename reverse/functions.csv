@@ -7568,7 +7568,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?firstNode@LList@@QAEPAVLListNode@@XZ","","0x00105950","20","Code/GameEngine/Source/Common/System/List.cpp","matched","ICF alias of existing matched body"
 "?firstWithNumeric@SimpleObjectIterator@@QAEPAVObject@@PAM@Z","","0x001DE040","51","Code/GameEngine/Source/GameLogic/Object/SimpleObjectIterator.cpp","matched",""
 "?flagNeedToRefresh@FirewallHelperClass@@QAEX_N@Z","","0x0066FFD0","274","Code/GameEngine/Source/GameNetwork/FirewallHelper.cpp","matched",""
-"?flashAsSelected@Drawable@@QAEXPBURGBColor@@@Z","","0x0076E4F0","556","Code/masm_dumps/_sa7__flashAsSelected_Drawable__QAEXPBURGBColor___Z_76E4F0.asm","matched","Exact 556B Open-BFME4"
+"?flashAsSelected@Drawable@@QAEXPBURGBColor@@@Z","","0x0076E4F0","556","Code/GameEngine/Source/GameClient/DrawableFlashAsSelected_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_DrawableFlashAsSelected_76E4F0"
 "?flip@?$bitset@$0HF@@_STL@@QAEAAV12@XZ","","0x000E94F0","23","Code/GameEngine/Source/GameClient/Drawable.cpp","matched",""
 "?flip@?$bitset@$0L@@_STL@@QAEAAV12@XZ","","0x00104710","15","Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp","matched",""
 "?flipTheRoad@W3DRoadBuffer@@IAEXPAVRoadSegment@@@Z","","0x00707F30","205","Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp","matched",""
