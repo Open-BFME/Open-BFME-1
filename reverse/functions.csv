@@ -3033,7 +3033,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1MapObject@@MAE@XZ,,0x00088350,236,Code/masm_dumps/MapObject_destructor_MAE_00088350.asm,matched,Certified packet 46; reviewed vtable deleting-destructor chain and ownership teardown
 ??1MatPassTaskClass@@QAE@XZ,,0x009457F0,32,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,
 ??1MaterialCollectorClass@@QAE@XZ,,0x00C5C6A8,21,Code/Libraries/Source/WWVegas/WW3D2/MaterialCollectorClassDestructorThunk.cpp,matched,Open-BFME5 exact C++ destructor thunk replacing MASM dump;object-symbol=??1MaterialCollectorClass@@QAE@XZ
-??1MaxHealthUpgradeModuleData@@UAE@XZ,,0x002D65F0,67,Code/masm_dumps/MaxHealthUpgradeModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
+??1MaxHealthUpgradeModuleData@@UAE@XZ,,0x002D65F0,67,Code/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1MemLogClass@@QAE@XZ,,0x00AFF270,82,Code/Libraries/Source/WWVegas/WWDebug/wwmemlog.cpp,matched,
 ??1MemoryWriteFile@@UAE@XZ,,0x009CB590,94,Code/GameEngine/Source/Common/System/File.cpp,matched,body is one delete -- the rest is the vptr store of 0x01143AA8 then m_pendingName releaseBuffer then ~File
 ??1MeshLoadContextClass@@AAE@XZ,,0x0096FD30,61,Code/Libraries/Source/WWVegas/WW3D2/meshmdlio.cpp,matched,
@@ -3049,12 +3049,12 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1MobMemberSlavedUpdate@@UAE@XZ,,0x001FB0C0,226,Code/masm_dumps/MobMemberSlavedUpdate_destructor.asm,matched,Exact 226B; factory ownership Open-BFME4
 ??1ModelArrayClass@HLodClass@@UAE@XZ,,0x005DB080,50,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,object-symbol=??1?$ConcreteModuleTemplate@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@QAE@XZ;ICF thunk converted to C++ alias
 ??1ModelConditionInfo@@QAE@XZ,,0x0013C3FE,292,Code/masm_dumps/ModelConditionInfo_destructor.asm,matched,Exact retail MASM SEH dtor; member-layout SEH shape not emittable from ZH C++
-??1ModelConditionSoundSelectorClientBehaviorModuleData@@UAE@XZ,,0x00607710,67,Code/masm_dumps/ModelConditionSoundSelectorClientBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory 0x121E30 ctor 0x607550 prove ownership
-??1ModelConditionUpgradeModuleData@@UAE@XZ,,0x002D6B20,67,Code/masm_dumps/ModelConditionUpgradeModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
+??1ModelConditionSoundSelectorClientBehaviorModuleData@@UAE@XZ,,0x00607710,67,Code/GameEngine/Source/GameLogic/Object/Behavior/ModelConditionSoundSelectorClientBehaviorModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory 0x121E30 ctor 0x607550 prove ownership
+??1ModelConditionUpgradeModuleData@@UAE@XZ,,0x002D6B20,67,Code/GameEngine/Source/GameLogic/Object/Upgrade/ModelConditionUpgradeModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1Module@@MAE@XZ,,0x001B0DB0,79,Code/GameEngine/Source/Common/Thing/Module.cpp,matched,
 ??1ModuleTemplate@FXParticleSystem@@UAE@XZ,0x00015A14,0x0005C7D0,7,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,destructor resets vtable
 ??1MoneyCrateCollideModuleData@@UAE@XZ,,0x00125E40,67,Code/GameEngine/Source/GameLogic/AI/MoneyCrateCollideModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
-??1MonsterDockUpdateModuleData@@UAE@XZ,,0x002CDD90,67,Code/masm_dumps/MonsterDockUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
+??1MonsterDockUpdateModuleData@@UAE@XZ,,0x002CDD90,67,Code/GameEngine/Source/GameLogic/Object/Update/MonsterDockUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1MotionChannelClass@@QAE@XZ,,0x00978140,24,Code/Libraries/Source/WWVegas/WW3D2/motchan.cpp,matched,
 ??1MultiListObjectClass@@UAE@XZ,,0x009DC190,37,Code/Libraries/Source/WWVegas/WWLib/multilist.cpp,matched,
 ??1MultiPlayerLoadScreen@@,,0x0052C220,844,Code/masm_dumps/_cache___1MultiPlayerLoadScreen___52C220.asm,matched,cached-obj needle Open-BFME4+Grok
@@ -3142,7 +3142,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1RankInfoStore@@UAE@XZ,,0x003A0BA0,212,Code/masm_dumps/RankInfoStore_destructor.asm,matched,Certified packet 110; Ghidra entry and RankInfoStore deleting-destructor chain; retail SHA-256 bb0ca418f4cb4caee2d814dd70efae958c268784c3d47d1d703cfe9a99c8d3f4
 ??1RawFileClass@@UAE@XZ,,0x009E7080,123,Code/Libraries/Source/WWVegas/WWLib/rawfile.cpp,matched,
 ??1RebuildHoleBehavior@@UAE@XZ,,0x001F8D10,141,Code/masm_dumps/RebuildHoleBehavior_destructor.asm,matched,Exact 141B SEH dtor Open-BFME4
-??1RefundDieModuleData@@UAE@XZ,,0x00125530,67,Code/masm_dumps/RefundDieModuleData_destructor.asm,matched,Exact 67B SEH dtor factory->vtable Open-BFME4
+??1RefundDieModuleData@@UAE@XZ,,0x00125530,67,Code/GameEngine/Source/GameLogic/Object/Die/RefundDieModuleDataDestructorThunk.cpp,matched,Exact 67B SEH dtor factory->vtable Open-BFME4
 ??1Region2D@@QAE@XZ,0x000071DF,0x0005C310,1,Code/Libraries/Source/WWVegas/WWMath/region.cpp,matched,empty destructor emits ret
 ??1Region3D@@QAE@XZ,0x00045746,0x0006B0C0,1,Code/Libraries/Source/WWVegas/WWMath/region.cpp,matched,empty destructor emits ret
 ??1RegistryClass@@QAE@XZ,,0x009DC280,25,Code/Libraries/Source/WWVegas/WWLib/registry.cpp,matched,
