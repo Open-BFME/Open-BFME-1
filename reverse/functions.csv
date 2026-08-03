@@ -1529,7 +1529,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0FastCriticalSectionClass@@QAE@XZ,,0x00061D90,9,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,ICF alias of existing matched body
 ??0FastFixedAllocator@@QAE@I@Z,,0x00B02760,45,Code/Libraries/Source/WWVegas/WWLib/FastFixedAllocatorThunks.cpp,matched,Converted to an exact standalone C++ thunk
 ??0FellBeastSwoopPower@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0025CF40,60,Code/GameEngine/Source/GameLogic/Object/SpecialPower/FellBeastSwoopPowerCtorThunk.cpp,matched,Open-BFME5 exact C++ raw FellBeastSwoopPower constructor
-??0FellBeastSwoopPowerModuleData@@QAE@XZ,,0x0025CF10,32,Code/GameEngine/Source/GameLogic/Object/Update/FellBeastSwoopPowerModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ constructor thunk
+??0FellBeastSwoopPowerModuleData@@QAE@XZ,,0x0025CF10,32,Code/GameEngine/Source/GameLogic/Object/Update/FellBeastSwoopPowerModuleDataCtorThunk.cpp,matched,Open-BFME5 clean C++ SpecialPowerModuleData + two zero fields
 ??0File@@QAE@XZ,,0x009CB7A0,88,Code/GameEngine/Source/Common/System/File.cpp,matched,installs vtable 0x01143AF8 and sets the placeholder name
 ??0FileFactoryClass@@QAE@XZ,,0x00061D90,9,Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp,matched,ICF alias of existing matched body
 ??0FileHeader@TagBlockFile@@QAE@XZ,,0x000CCC50,15,Code/Libraries/Source/WWVegas/WWLib/tagblock.cpp,matched,
