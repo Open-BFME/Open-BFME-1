@@ -50279,6 +50279,7 @@ name,address,notes
 ?open@DataChunkOutputOpenDataChunkShim@@QAEXPADG@Z,0x001041F0,DataChunkOutput openDataChunk incremental-link thunk target through a TU-local forwarding shim
 ?openDataChunk@DataChunkOutput@@QAEXPADG@Z,0x0003A256
 ?openFile@FileSystem@@QAEPAVFile@@PBDH@Z,0x009C8860
+?operator_delete_sized@@YAXPAX@Z,0x00881EF0,ShareBuffer dtor free/delete helper
 ?outOfWeaponRangeObject@@YA_NPAVState@@PAX@Z,0x0001745E,pinharvest x1 (thunk)
 ?parse@BoneFXUpdateModuleDataParseFXListShim@@SAXPAVINI@@PAX1PBX@Z,0x00287BC0,BoneFXUpdateModuleData parseFXList incremental-link thunk target through a TU-local forwarding shim
 ?parse@BoneFXUpdateModuleDataParseObjectCreationListShim@@SAXPAVINI@@PAX1PBX@Z,0x00287D00,BoneFXUpdateModuleData parseObjectCreationList incremental-link thunk target through a TU-local forwarding shim
@@ -50755,6 +50756,8 @@ DefaultModuleTemplate6_vtbl0,0x0111101C,DefaultModuleTemplate6 ctor vtbl anchor
 DefaultModuleTemplate6_vtbl4,0x01111018,DefaultModuleTemplate6 ctor vtbl anchor
 DefaultModuleTemplate6_vtbl8,0x01111004,DefaultModuleTemplate6 ctor vtbl anchor
 DefaultProductionExitUpdateFieldParse,0x00423687,DefaultProductionExitUpdate friend_newModuleData field parse
+ShareBufferClassUnsignedShort_vtbl_final,0x011135AC,ShareBuffer ushort dtor final vtbl
+ShareBufferClassUnsignedShort_vtbl_interim,0x0113C110,ShareBuffer ushort dtor interim vtbl
 SpawnPointProductionExitUpdateFieldParse,0x00442979,SpawnPoint friend_newModuleData field parse table
 _D3DXMatrixInverse@12,0x009FB321
 _D3DXVec4Transform@12,0x009FAA48
