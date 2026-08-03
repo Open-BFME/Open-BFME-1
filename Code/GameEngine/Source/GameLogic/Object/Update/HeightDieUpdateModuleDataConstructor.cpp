@@ -1,47 +1,35 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc
+
+// Open-BFME5: HeightDieUpdateModuleData default ctor.
 
 class HeightDieUpdateModuleData
 {
 public:
 	HeightDieUpdateModuleData();
+	virtual ~HeightDieUpdateModuleData();
+
+private:
+	unsigned int m_gap4;
+	unsigned int m_08;
+	unsigned char m_0c;
+	unsigned char m_0d;
+	unsigned char m_pad0e;
+	unsigned char m_pad0f;
+	float m_10;
+	unsigned char m_14;
+	unsigned char m_pad15;
+	unsigned char m_pad16;
+	unsigned char m_pad17;
+	unsigned int m_18;
 };
 
-__declspec(naked) HeightDieUpdateModuleData::HeightDieUpdateModuleData()
+// ??0HeightDieUpdateModuleData@@QAE@XZ
+HeightDieUpdateModuleData::HeightDieUpdateModuleData()
 {
-	__asm {
-		_emit 08Bh
-		_emit 0C1h
-		_emit 033h
-		_emit 0C9h
-		_emit 0C7h
-		_emit 000h
-		_emit 098h
-		_emit 0F4h
-		_emit 00Bh
-		_emit 001h
-		_emit 089h
-		_emit 048h
-		_emit 008h
-		_emit 088h
-		_emit 048h
-		_emit 00Ch
-		_emit 088h
-		_emit 048h
-		_emit 00Dh
-		_emit 0C7h
-		_emit 040h
-		_emit 010h
-		_emit 000h
-		_emit 000h
-		_emit 080h
-		_emit 0BFh
-		_emit 088h
-		_emit 048h
-		_emit 014h
-		_emit 089h
-		_emit 048h
-		_emit 018h
-		_emit 0C3h
-	}
+	m_08 = 0;
+	m_0c = 0;
+	m_0d = 0;
+	m_10 = -1.0f;
+	m_14 = 0;
+	m_18 = 0;
 }
-
