@@ -1,95 +1,44 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME5: lift PassiveAreaEffectBehaviorModuleData dtor MASM to clean C++.
+// Retail destroys the Buffer member at this+0x20 and the 12-byte member at
+// this+0x14 under one SEH frame, then runs the inlined base dtor.
+
+class PassiveAreaEffectBehaviorModuleDataMember
+{
+public:
+	~PassiveAreaEffectBehaviorModuleDataMember();
+
+private:
+	unsigned char m_data[0xc];
+};
+
+class Buffer
+{
+public:
+	~Buffer();
+};
+
+class PassiveAreaEffectBehaviorModuleDataBase
+{
+public:
+	virtual ~PassiveAreaEffectBehaviorModuleDataBase() {}
+
+private:
+	unsigned char m_pad[0x10];
+};
 
 class __declspec(novtable) PassiveAreaEffectBehaviorModuleData
+	: public PassiveAreaEffectBehaviorModuleDataBase
 {
 public:
 	virtual ~PassiveAreaEffectBehaviorModuleData();
+
+private:
+	PassiveAreaEffectBehaviorModuleDataMember m_member;
+	Buffer m_buffer;
 };
 
 // ??1PassiveAreaEffectBehaviorModuleData@@UAE@XZ
-__declspec(naked) PassiveAreaEffectBehaviorModuleData::~PassiveAreaEffectBehaviorModuleData()
+PassiveAreaEffectBehaviorModuleData::~PassiveAreaEffectBehaviorModuleData()
 {
-	__asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xf3
-        __emit 0xb9
-        __emit 0x00
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x20
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x64
-        __emit 0x7b
-        __emit 0xe1
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x14
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x08
-        __emit 0x42
-        __emit 0xe2
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x44
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-	}
 }
