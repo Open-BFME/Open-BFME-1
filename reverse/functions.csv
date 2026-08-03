@@ -7802,7 +7802,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Reset_Colors@ParticleBufferClass@@QAEXAAU?$ParticlePropertyStruct@VVector3@@@@@Z,,0x00985050,1569,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,
 ?Reset_Device@DX8Wrapper@@SA_N_N@Z,,0x009082B0,962,Code/masm_dumps/_leaf__Reset_Device_DX8Wrapper__SA_N_N_Z_9082B0.asm,matched,Exact 962B present-unmatched leaf Open-BFME4
 ?Reset_Frames@ParticleBufferClass@@QAEXAAU?$ParticlePropertyStruct@M@@@Z,,0x009866E0,1250,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,
-?Reset_Geometry@MeshGeometryClass@@QAEXHH@Z,,0x009268C0,800,Code/masm_dumps/_s4_Reset_Geometry_MeshGeometryClass_QAEXHH_Z_9268C0.asm,matched,Exact string-anchored Open-BFME4+Grok
+?Reset_Geometry@MeshGeometryClass@@QAEXHH@Z,,0x009268C0,800,Code/Libraries/Source/WWVegas/WW3D2/MeshGeometryResetGeometryThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_MeshGeometryResetGeometry_9268C0
 ?Reset_Line@SegLineRendererClass@@QAEXXZ,,0x009600A0,17,Code/Libraries/Source/WWVegas/WW3D2/seglinerenderer.cpp,matched,
 ?Reset_List@?$MultiListClass@VMeshModelClass@@@@QAEXXZ,,0x00712130,38,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,
 ?Reset_List@?$RefMultiListClass@VRenderObjClass@@@@QAEXXZ,,0x00712200,58,Code/Libraries/Source/WWVegas/WW3D2/renderobjectrecycler.cpp,matched,
