@@ -47266,6 +47266,7 @@ name,address,notes
 ??0GrantUpgradeCreateModuleData@@QAE@XZ,0x00038E97,pinharvest x1 (thunk)
 ??0GrantUpgradeCreateModuleData@@QAE@XZ,0x0003E4A5,pinharvest x1 (thunk)
 ??0HTreeClass@@QAE@ABV0@@Z,0x009527C0,derived from HTreeClass::Alter_Avatar_HTree
+??0HealContainBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00036E49,HealContain ctor base call; ILT thunk for OpenContain ctor (body 0x002277A0)
 ??0HealCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x00046407,module ctor (friend_newModuleInstance retail call target)
 ??0HeightDieUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00C199,module ctor (friend_newModuleInstance retail call target)
 ??0HeightDieUpdateModuleData@@QAE@XZ,0x0002C9D0,module-glue cascade callee (from retail call site)
@@ -47915,6 +47916,9 @@ name,address,notes
 ??1AutoPickUpUpdateModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1AutoPickUpUpdateModuleDataMemberB@@QAE@XZ,0x00045016,Open-BFME5 pin
 ??1BFMEPlayerTemplateAsciiString@@QAE@XZ,0x00887940,PlayerTemplate time-change retail AsciiString release owner
+??1BaseUpgradeModuleDataBase@@UAE@XZ,0x0001B97D,Open-BFME5 pin
+??1BaseUpgradeModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1BaseUpgradeModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1BfmeLegendString@@QAE@XZ,0x00887940,SubsystemLegend.cpp AsciiString stand-in dtor; folds with StringBase<char>::releaseBuffer
 ??1BfmeLegendStringVec@@QAE@XZ,0x000658A0,SubsystemLegend.cpp vector<AsciiString> stand-in dtor
 ??1BroadcastStealthUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
@@ -47969,6 +47973,9 @@ name,address,notes
 ??1DebugIOOds@@UAE@XZ,0x00890F10,pinharvest x1 (body)
 ??1DetailedArchivedDirectoryInfo@@QAE@XZ,0x009D0730,site-decoded from ~ArchiveFile: lea ecx
 ??1DieModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
+??1ElvenWoodSpecialPowerModuleDataBase@@UAE@XZ,0x0001D7B4,Open-BFME5 pin
+??1ElvenWoodSpecialPowerModuleDataMemberA@@QAE@XZ,0x00013C00,Open-BFME5 pin
+??1ElvenWoodSpecialPowerModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1EnragedBehaviorModuleDataMember@@QAE@XZ,0x00026AB2,EnragedBehaviorModuleData dtor member +0x8
 ??1Entry@?$HashTemplateClass@VStringClass@@H@@QAE@XZ,0x00013101,pinharvest x1 (thunk)
 ??1Entry@?$HashTemplateClass@VStringClass@@H@@QAE@XZ,0x000259EB,pinharvest x1 (thunk)
@@ -48021,13 +48028,36 @@ name,address,notes
 ??1GameResultsRequest@@QAE@XZ,0x00049288,
 ??1GameResultsResponse@@QAE@XZ,0x00024352,
 ??1GameTextInterface@@UAE@XZ,0x0000E908,
+??1GateOpenAndCloseBehaviorModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 pin
+??1GateOpenAndCloseBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
+??1GateOpenAndCloseBehaviorModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
+??1GateProxyBehaviorModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 pin
+??1GateProxyBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
+??1GateProxyBehaviorModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1GettingBuiltBehaviorModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1GiantBirdSlowDeathBehaviorModuleDataBase@@UAE@XZ,0x00015645,Open-BFME5 base pin
 ??1GiantBirdSlowDeathBehaviorModuleDataMember@@QAE@XZ,0x00026F35,Open-BFME5 pin
+??1GrantStealthBehaviorModuleDataBase@@UAE@XZ,0x0001A401,Open-BFME5 pin
+??1GrantStealthBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
+??1GrantStealthBehaviorModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1HTreeClass@@QAE@XZ,0x00952790,
 ??1HeroModeSpecialAbilityUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base dtor pin
 ??1HideShowSubObjInfo@ModelConditionInfo@@QAE@XZ,0x0000466F,rel32 pin for exact-ambiguous landing
+??1HijackerUpdateModuleDataBase@@UAE@XZ,0x009A1A40,Open-BFME5 base pin
+??1HijackerUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1HijackerUpdateModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1HordeSiegeEngineContainModuleDataBase@@UAE@XZ,0x000179B8,Open-BFME5 pin
+??1HordeSiegeEngineContainModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
+??1HordeSiegeEngineContainModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1HordeUpdateModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
+??1LargeGroupBonusUpdateModuleDataBase@@UAE@XZ,0x0001A401,Open-BFME5 pin
+??1LargeGroupBonusUpdateModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
+??1LargeGroupBonusUpdateModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1LaserUpdateModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 pin
+??1LaserUpdateModuleDataMember4@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1LaserUpdateModuleDataMember8@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1LaserUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1LaserUpdateModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1LayoutFilename@@QAE@XZ,0x00887940,
 ??1LevelGrantSpecialPowerModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base pin
 ??1LockClass@CriticalSectionClass@@QAE@XZ,0x009DB4D0,
@@ -48038,6 +48068,8 @@ name,address,notes
 ??1LogicalDecalClass@MultiFixedPoolDecalSystemClass@@QAE@XZ,0x000408EA,pinharvest x1 (thunk)
 ??1LogicalDecalClass@MultiFixedPoolDecalSystemClass@@QAE@XZ,0x00045CA5,pinharvest x1 (thunk)
 ??1LogicalDecalClass@MultiFixedPoolDecalSystemClass@@QAE@XZ,0x00AFF130,pinharvest x1 (body)
+??1Member4@@QAE@XZ,0x00887940,Open-BFME5 pin Buffer-like
+??1Member8@@QAE@XZ,0x00887940,Open-BFME5 pin Buffer-like
 ??1MemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1MemberB@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1MemoryReadFile@@UAE@XZ,0x009CB460,folded onto File::~File - MemoryReadFile adds no destructible member
@@ -48116,6 +48148,9 @@ name,address,notes
 ??1RoadType@@QAE@XZ,0x0004099E,pinharvest x1 (thunk)
 ??1RoadType@@QAE@XZ,0x00044E2C,pinharvest x1 (thunk)
 ??1RoadType@@QAE@XZ,0x000482ED,pinharvest x1 (thunk)
+??1RousingSpeechUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 pin
+??1RousingSpeechUpdateModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
+??1RousingSpeechUpdateModuleDataMemberB@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1SaveLoadSubSystemClass@@UAE@XZ,0x00029555,pinharvest x1 (thunk)
 ??1SaveLoadSubSystemClass@@UAE@XZ,0x0003692B,pinharvest x1 (thunk)
 ??1SaveLoadSubSystemClass@@UAE@XZ,0x009D19A0,pinharvest x1 (body)
@@ -48124,6 +48159,10 @@ name,address,notes
 ??1SortingNodeStruct@@QAE@XZ,0x0093B200,
 ??1SpawnBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1SpawnBehaviorModuleDataMemberB@@QAE@XZ,0x0001B97D,Open-BFME5 pin
+??1SpecialDisguiseUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base pin
+??1StealthDetectorUpdateModuleDataBase@@UAE@XZ,0x00026F35,Open-BFME5 pin
+??1StealthDetectorUpdateModuleDataMemberA@@QAE@XZ,0x00026F35,Open-BFME5 pin
+??1StealthDetectorUpdateModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1Straw@@UAE@XZ,0x009E1A90,
 ??1StringInfo@@QAE@XZ,0x00013101,pinharvest x1 (thunk)
 ??1StringInfo@@QAE@XZ,0x000259EB,pinharvest x1 (thunk)
@@ -48147,7 +48186,13 @@ name,address,notes
 ??1TimeCodedMorphKeysClass@@QAE@XZ,0x0002BFF3,pinharvest x1 (thunk)
 ??1TimeCodedMorphKeysClass@@QAE@XZ,0x000308D2,pinharvest x1 (thunk)
 ??1TimeCodedMorphKeysClass@@QAE@XZ,0x00048B53,pinharvest x1 (thunk)
+??1TooltipUpgradeModuleDataBase@@UAE@XZ,0x0001B97D,Open-BFME5 pin
+??1TooltipUpgradeModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1TooltipUpgradeModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1TransportContainModuleDataBase@@UAE@XZ,0x000376E1,Open-BFME5 base dtor pin
+??1TunnelContainModuleDataBase@@UAE@XZ,0x000179B8,Open-BFME5 pin
+??1TunnelContainModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
+??1TunnelContainModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1UDP@@QAE@XZ,0x00006591,
 ??1UnicodeString@@QAE@XZ,0x008881D0,freeMessageResources depth Open-BFME4+Grok
 ??1UnitCrateCollideModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
@@ -48163,6 +48208,7 @@ name,address,notes
 ??1W3DLaserDrawModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1W3DModelDrawModuleDataBase@@UAE@XZ,0x0000CAB3,Open-BFME5 pin
 ??1W3DModelDrawModuleDataMember@@QAE@XZ,0x0001A401,Open-BFME5 pin
+??1WeaponChangeSpecialPowerModuleModuleDataBase@@UAE@XZ,0x0001D7B4,Open-BFME5 base pin
 ??1WeaponFireSpecialAbilityUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base dtor pin
 ??1WeaponModeSpecialPowerUpdateModuleDataBase@@UAE@XZ,0x0001BBE4,Open-BFME5 base dtor pin for WeaponModeSpecialPowerUpdateModuleData
 ??1Win32LocalFileSystem@@UAE@XZ,0x009CDE20,what the deleting dtor at 0x009CDE30 calls; the body sets the base vtable 0x01143B78 rather than 0x01143B98 -- Win32LocalFileSystem adds no members so MSVC merged the derived destructor into the base one
@@ -49592,6 +49638,9 @@ name,address,notes
 ?construct@TerrainCollisionTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0002C3C7,TerrainCollisionModuleTemplate copy constructor thunk used through a TU-local layout shim
 ?construct@TerrainCollisionTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x00012602,TerrainCollisionModuleTemplate constructor thunk used through a TU-local layout shim
 ?constructBuddyMessageAt@@YAXPAXABVBuddyMessage@@@Z,0x00020E69,BuddyMessage list _M_create_node value construct
+?construct_from@CategoryModuleTemplate06BaseCopyShim@FXParticleSystem@@QAEXPBX@Z,0x00026CC9,CMT06 copy base
+?construct_from@CategoryModuleTemplate06SubCopyShim@FXParticleSystem@@QAEXPBX@Z,0x00047410,CMT06 copy sub
+?construct_from@CategoryModuleTemplate07BaseCopyShim@FXParticleSystem@@QAEXPBX@Z,0x0003C84E,CMT07 copy base
 ?construct_from@DefaultModuleTemplate00BaseCopyShim@FXParticleSystem@@QAEXPBX@Z,0x000428A7,DefaultModuleTemplate00 copy base
 ?construct_from@DefaultModuleTemplate00SubCopyShim@FXParticleSystem@@QAEXPBX@Z,0x0001E04C,DefaultModuleTemplate00 copy sub
 ?construct_from@DefaultModuleTemplate01BaseCopyShim@FXParticleSystem@@QAEXPBX@Z,0x0001D435,DMT01 copy base
@@ -50617,6 +50666,8 @@ name,address,notes
 ?writeCacheINI@MapCache@@AAEX_N@Z,0x0000E2B4,
 ?writeDrawInfo@FXParticleSystem@@YAXAAVFile@@PBI@Z,0x0004618C,draw module info write thunk
 ?writeDrawTemplateBase@FXParticleSystem@@YAXPBXAAVFile@@PBI@Z,0x000460C9,draw module template base write thunk
+?writeINI_part1@FXParticleSystem@@YAXPBXPAVFile@@PAI@Z,0x000460C9,DefaultModuleTemplate writeINI helper 1
+?writeINI_part2@FXParticleSystem@@YAXPAVFile@@PAI@Z,0x0004618C,DefaultModuleTemplate writeINI helper 2
 ?xferInteger@@YAXAAVXfer@@AAH@Z,0x0002153A,ParticleSystemInfo::DoXfer raw ParticleType enum helper call target
 ?xferInteger@@YAXAAVXfer@@AAH@Z,0x000272CD,ParticleSystemInfo::DoXfer raw ParticlePriorityType enum helper call target
 ?xferInteger@@YAXAAVXfer@@AAH@Z,0x00044FD0,DefaultUpdateModuleInfo m_extra direct xfer helper through a TU-local forwarding declaration
@@ -50625,6 +50676,11 @@ name,address,notes
 ?xferRandomVariable@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0003EE32,H1 GameClientRandomVariable xfer helper (thunk; body 0x0010C4D0) — pinned
 ?xferRandomVariable@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0004570F,RenderObjectDrawModuleInfo::DoXfer raw helper call target
 ?xferSaveData@GameState@@AAEXPAVXfer@@W4SnapshotType@@@Z,0x0010FBD0,GameState save-data walker (CHUNK_GameState/Campaign/LivingWorldLogic/Palantir/Audio); thunk 0x36674
+CategoryModuleTemplate06_sub_vtbl,0x0110FC94,CMT06 sub vtbl
+CategoryModuleTemplate06_vtbl0,0x0110FC80,CMT06 vtbl0
+CategoryModuleTemplate06_vtbl4,0x0110FC7C,CMT06 vtbl4
+CategoryModuleTemplate07_vtbl0,0x01073848,CMT07 vtbl0
+CategoryModuleTemplate07_vtbl4,0x01073844,CMT07 vtbl4
 CategoryModuleTemplate8_vtbl0,0x01073848,CategoryModuleTemplate8 ctor vtbl at +0
 CategoryModuleTemplate8_vtbl4,0x01073844,CategoryModuleTemplate8 ctor vtbl at +4 final
 CategoryModuleTemplate8_vtbl_temp,0x0107375C,CategoryModuleTemplate8 ctor intermediate vtbl at +4
