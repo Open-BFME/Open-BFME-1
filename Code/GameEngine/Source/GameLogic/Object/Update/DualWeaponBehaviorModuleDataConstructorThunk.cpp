@@ -1,41 +1,32 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc
 
-#include "PreRTS.h"
+// Open-BFME5: DualWeaponBehaviorModuleData default ctor.
+// Layout: vtable@0, gap@4 (uninit), dword@8, byte@c, dword@10, byte@14, byte@15.
 
 class DualWeaponBehaviorModuleData
 {
 public:
-    DualWeaponBehaviorModuleData();
+	DualWeaponBehaviorModuleData();
+	virtual ~DualWeaponBehaviorModuleData();
+
+private:
+	unsigned int m_gap4;
+	unsigned int m_u8;
+	unsigned char m_b0c;
+	unsigned char m_pad0d;
+	unsigned char m_pad0e;
+	unsigned char m_pad0f;
+	unsigned int m_u10;
+	unsigned char m_b14;
+	unsigned char m_b15;
 };
 
-__declspec(naked) DualWeaponBehaviorModuleData::DualWeaponBehaviorModuleData()
+// ??0DualWeaponBehaviorModuleData@@QAE@XZ
+DualWeaponBehaviorModuleData::DualWeaponBehaviorModuleData()
 {
-    __asm {
-        _emit 08Bh
-        _emit 0C1h
-        _emit 033h
-        _emit 0C9h
-        _emit 0C7h
-        _emit 000h
-        _emit 068h
-        _emit 034h
-        _emit 00Ah
-        _emit 001h
-        _emit 089h
-        _emit 048h
-        _emit 008h
-        _emit 088h
-        _emit 048h
-        _emit 00Ch
-        _emit 089h
-        _emit 048h
-        _emit 010h
-        _emit 088h
-        _emit 048h
-        _emit 014h
-        _emit 088h
-        _emit 048h
-        _emit 015h
-        _emit 0C3h
-    }
+	m_u8 = 0;
+	m_b0c = 0;
+	m_u10 = 0;
+	m_b14 = 0;
+	m_b15 = 0;
 }
