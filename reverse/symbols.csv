@@ -2826,6 +2826,7 @@ __stringbase_isnotnone_cmp_wchar,0x0041F3D,internal wide-char string not-none co
 ??1NodeCompressedMotionStruct@@QAE@XZ,0x00045CA5,pinharvest x1 (thunk)
 ?getCanAttackObject@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z,0x00045D90,retail AIEnterState::update call target
 ?b_00045f57@@YAXXZ,0x00045F57,gen-thunk body
+?parse@LightningEmissionTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00046006,Open-BFME5 pin
 ??0AnimationSteeringUpdateModuleData@@QAE@XZ,0x0004601A,pinharvest x1 (thunk)
 ??0FloatUpdateModuleData@@QAE@XZ,0x0004601A,module-glue cascade callee (from retail call site)
 ??0PowerPlantUpdateModuleData@@QAE@XZ,0x0004601A,pinharvest x1 (thunk)
