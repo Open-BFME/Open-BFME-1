@@ -13655,7 +13655,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?trim@?$StringBase@D@@QAEXXZ","0x00888CA0","0x888ca0","172","Code/Libraries/Source/WWVegas/WWLib/string_base.cpp","matched",""
 "?trim@?$StringBase@G@@QAEXXZ","0x00888ED0","0x888ed0","147","Code/Libraries/Source/WWVegas/WWLib/string_base.cpp","matched",""
 "?tryConnect@PSThreadClass@@AAE_NXZ","","0x006517B0","29","Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PersistentStorageThread.cpp","matched",""
-"?tryInfiltrationEvent@Radar@@","","0x001083D0","258","Code/masm_dumps/_sa5__tryInfiltrationEvent_Radar___1083D0.asm","matched","Exact 258B Open-BFME4"
+"?tryInfiltrationEvent@Radar@@","","0x001083D0","258","Code/GameEngine/Source/Common/System/RadarTryInfiltrationEvent_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_Radar_tryInfiltrationEvent_1083D0"
 "?tryNextFrame@Anim2D@@IAEXXZ","","0x005BA6C0","268","Code/GameEngine/Source/GameClient/System/Anim2D.cpp","matched",""
 "?tryToIgnite@FlammableUpdate@@QAEXXZ","","0x00293990","961","Code/masm_dumps/FlammableUpdate_tryToIgnite.asm","matched","Ghidra-owned BFME ignition path"
 "?tryToRecruit@Team@@QAEPAVObject@@PBVThingTemplate@@PBUCoord3D@@M@Z","","0x0076E90A","568","Code/GameEngine/Source/Common/RTS/Team_tryToRecruit.asm","matched","exact 568B via MASM"
