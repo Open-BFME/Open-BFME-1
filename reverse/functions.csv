@@ -2890,7 +2890,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1DeployStyleAIUpdate@@UAE@XZ,,0x000D87E0,192,Code/masm_dumps/DeployStyleAIUpdate_destructor.asm,matched,Exact 192B; factory ownership Open-BFME4
 ??1DeployStyleAIUpdateModuleData@@UAE@XZ,,0x0027E4E0,145,Code/masm_dumps/DeployStyleAIUpdateModuleData_destructor.asm,matched,Exact 145B SEH dtor Open-BFME4
 ??1DestroyEnvironmentUpdate@@UAE@XZ,,0x0028D0C0,422,Code/masm_dumps/DestroyEnvironmentUpdate_destructor.asm,matched,Exact 422B; factory ownership Open-BFME4
-??1DieModuleData@@UAE@XZ,,0x00101EB0,86,Code/masm_dumps/DieModuleData_destructor.asm,matched,Exact 86B SEH dtor Open-BFME4
+??1DieModuleData@@UAE@XZ,,0x00101EB0,86,Code/GameEngine/Source/GameLogic/Object/Behavior/DieModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1Display@@UAE@XZ,,0x005CB360,402,Code/masm_dumps/Display_destructor_5CB360.asm,matched,Certified packet 109; Display vtable and derived destructor chains; retail sha256 70ba90e47128dd067f1534c8ad52d468cf88aa57081a16a2c8d8a800576e756b
 ??1DistLODClass@@UAE@XZ,,0x00725F40,86,Code/Libraries/Source/WWVegas/WW3D2/distlod.cpp,matched,
 ??1DownloadManager@@UAE@XZ,,0x00627730,75,Code/GameEngine/Source/GameNetwork/DownloadManager.cpp,matched,
