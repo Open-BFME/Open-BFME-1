@@ -2817,6 +2817,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1BroadcastStealthUpdate@@UAE@XZ,,0x00289E50,803,Code/masm_dumps/BroadcastStealthUpdate_destructor.asm,matched,Exact 803B @ 0x00289E50; Exact retail MASM; instance factory->vtable dtor; del 0x289E50 ctor 0x289880 vt 0xCBCB3C
 ??1BroadcastStealthUpdateModuleData@@UAE@XZ,,0x0012ADF0,80,Code/GameEngine/Source/Common/BroadcastStealthUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1BuddyMessage@@QAE@XZ,,0x004EA4B0,90,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyMessageDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
+??1BroadcastStealthUpdateModuleData@@UAE@XZ,,0x0012ADF0,80,Code/masm_dumps/BroadcastStealthUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
+??1BuddyMessage@@QAE@XZ,,0x004EA4B0,90,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyMessageDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1Buffer@@QAE@XZ,,0x009E1E30,40,Code/Libraries/Source/WWVegas/WWLib/buff.cpp,matched,
 ??1BufferPipe@@UAE@XZ,,0x009E2070,76,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,
 ??1BufferStraw@@UAE@XZ,,0x00921790,76,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,definite (call-site resolved)
@@ -2966,6 +2968,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1GiantBirdSlowDeathBehavior@@UAE@XZ,,0x001FFC10,110,Code/masm_dumps/GiantBirdSlowDeathBehavior_destructor.asm,matched,Exact 110B @ 0x001FFC10; Exact retail MASM; instance factory->vtable dtor; del 0x1FFDE0 ctor 0x1FFB40 vt 0xCA4984
 ??1GiantBirdSlowDeathBehaviorModuleData@@UAE@XZ,,0x001FFF50,79,Code/GameEngine/Source/GameLogic/AI/GiantBirdSlowDeathBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1GiveUpgradeUpdateModuleData@@UAE@XZ,,0x0025DE90,120,Code/GameEngine/Source/GameLogic/AI/GiveUpgradeUpdateModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
+??1GiantBirdSlowDeathBehaviorModuleData@@UAE@XZ,,0x001FFF50,79,Code/GameEngine/Source/GameLogic/AI/GiantBirdSlowDeathBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
+??1GiveUpgradeUpdateModuleData@@UAE@XZ,,0x0025DE90,120,Code/masm_dumps/GiveUpgradeUpdateModuleData_destructor.asm,matched,Exact 120B SEH dtor factory->vtable Open-BFME4
 ??1GloriousChargeUpdate@@UAE@XZ,,0x0025EA40,159,Code/GameEngine/Source/Common/RTS/GloriousChargeUpdateDtorThunk.cpp,matched,Exact standalone C++ __emit thunk from certified retail destructor
 ??1GrantStealthBehaviorModuleData@@UAE@XZ,,0x00297D60,93,Code/masm_dumps/GrantStealthBehaviorModuleData_destructor.asm,matched,Exact 93B SEH dtor Open-BFME4
 ??1GridCullSystemClass@@UAE@XZ,,0x008DCAD0,97,Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp,matched,
