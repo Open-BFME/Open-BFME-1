@@ -1,48 +1,33 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class GrabPassengerSpecialPowerModuleData
+// Open-BFME5: GrabPassengerSpecialPowerModuleData ctor.
+// Base ctor pin 0x15c44 (shared SpecialPowerModuleData body / thunk).
+
+class GrabPassengerSpecialPowerModuleDataBase
 {
 public:
-    GrabPassengerSpecialPowerModuleData();
+	GrabPassengerSpecialPowerModuleDataBase();
+	virtual ~GrabPassengerSpecialPowerModuleDataBase();
+
+private:
+	unsigned char m_base[0x20c];
 };
 
-__declspec(naked) GrabPassengerSpecialPowerModuleData::GrabPassengerSpecialPowerModuleData()
+class GrabPassengerSpecialPowerModuleData : public GrabPassengerSpecialPowerModuleDataBase
 {
-    __asm {
-        _emit 056h
-        _emit 08Bh
-        _emit 0F1h
-        _emit 0E8h
-        _emit 0DCh
-        _emit 069h
-        _emit 0DBh
-        _emit 0FFh
-        _emit 0C7h
-        _emit 006h
-        _emit 048h
-        _emit 058h
-        _emit 00Bh
-        _emit 001h
-        _emit 0C7h
-        _emit 086h
-        _emit 010h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 0C6h
-        _emit 086h
-        _emit 014h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 001h
-        _emit 08Bh
-        _emit 0C6h
-        _emit 05Eh
-        _emit 0C3h
-    }
+public:
+	GrabPassengerSpecialPowerModuleData();
+	virtual ~GrabPassengerSpecialPowerModuleData();
+
+private:
+	unsigned int m_field210;
+	unsigned char m_byte214;
+};
+
+// ??0GrabPassengerSpecialPowerModuleData@@QAE@XZ
+GrabPassengerSpecialPowerModuleData::GrabPassengerSpecialPowerModuleData()
+	: GrabPassengerSpecialPowerModuleDataBase()
+{
+	m_field210 = 0;
+	m_byte214 = 1;
 }
