@@ -9,8 +9,11 @@ public:
 	FastFixedAllocator(unsigned int);
 	~FastFixedAllocator();
 	void Init(unsigned int);
+<<<<<<< HEAD
 	// MSVC default-ctor closure (??_F...); object-symbol maps retail name here.
 	void DefaultConstructorClosure();
+=======
+>>>>>>> 4239fad49 (Open-BFME5 convert FastFixedAllocator Init/ctor to clean C++)
 
 protected:
 	struct Link
