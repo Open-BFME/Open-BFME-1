@@ -2873,7 +2873,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1DarknessSpecialPowerModuleData@@UAE@XZ,,0x002693E0,426,Code/masm_dumps/DarknessSpecialPowerModuleData_destructor.asm,matched,Exact 426B SEH dtor Open-BFME4
 ??1DebugCmdInterfaceDebug@@UAE@XZ,,0x00890F10,85,Code/GameEngine/Source/Common/DebugCmdInterfaceDebugDestructorThunk.cpp,matched,ICF of ??1DebugIOFlat@@UAE@XZ Open-BFME4+Grok
 ??1DebugIOCon@@UAE@XZ,,0x00890F10,85,Code/GameEngine/Source/Common/DebugIOConDestructorThunk.cpp,matched,Exact 85B present-unmatched Open-BFME4
-??1DebugIOFlat@@UAE@XZ,,0x00890F10,85,Code/masm_dumps/_pm___1DebugIOFlat__UAE_XZ_890F10.asm,matched,Exact 85B present-unmatched Open-BFME4
+??1DebugIOFlat@@UAE@XZ,,0x00890F10,85,Code/GameEngine/Source/Common/DebugIOFlatDestructorThunk.cpp,matched,Exact 85B present-unmatched Open-BFME4
 ??1DebugIONet@@UAE@XZ,,0x00890F10,85,Code/masm_dumps/_pm___1DebugIONet__UAE_XZ_890F10.asm,matched,Exact 85B present-unmatched Open-BFME4
 ??1DebugIOOds@@UAE@XZ,,0x00890780,142,Code/masm_dumps/_sym2___1DebugIOOds__UAE_XZ_890780.asm,matched,symbol-pin Open-BFME4+Grok
 ??1DecalPolyClass@@QAE@XZ,,0x0022A2F0,76,Code/Libraries/Source/WWVegas/WW3D2/decalmsh.cpp,matched,
