@@ -1714,7 +1714,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0LList@@QAE@XZ,,0x00105A60,31,Code/GameEngine/Source/Common/System/List.cpp,matched,
 ??0LListNode@@QAE@XZ,,0x001058D0,19,Code/GameEngine/Source/Common/System/List.cpp,matched,
 ??0LODHeapNode@@QAE@PAVRenderObjClass@@M@Z,,0x009E5EB0,18,Code/Libraries/Source/WWVegas/WW3D2/predlod.cpp,matched,tiny-locate
-??0LadderInfo@@QAE@XZ,,0x0062A910,161,Code/masm_dumps/LadderInfo_constructor.asm,matched,Ghidra-bound retail constructor
+??0LadderInfo@@QAE@XZ,,0x0062A910,161,Code/GameEngine/Source/GameNetwork/LadderInfo_ctor_Thunk.cpp,matched,Open-BFME5 lift 161B retail MASM to standalone C++ thunk
 ??0LadderList@@QAE@XZ,,0x0062C020,925,Code/masm_dumps/LadderList_constructor.asm,matched,Ghidra-bound retail constructor
 ??0LadderPref@@QAE@ABV0@@Z,,0x000A9BE0,95,Code/GameEngine/Source/Common/LadderPrefCtorThunk.cpp,matched,Open-BFME5 exact C++ raw LadderPref copy constructor
 ??0LadderPref@@QAE@XZ,,0x0005C6C0,16,Code/GameEngine/Source/Common/UserPreferences.cpp,matched,icf-owner=??0?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@QAE@XZ
@@ -8557,7 +8557,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?WOLQMScoreScreenInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004D3C40,69,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQMScoreScreen.cpp,matched,
 ?WOLQMScoreScreenSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004F0470,141,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQMScoreScreen.cpp,matched,
 ?WOLQuickMatchMenuInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x005054B0,98,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu.cpp,matched,object-symbol=?input@BfmeQuickMatchInputBody@@QAE?AW4WindowMsgHandledType@@III@Z;C++ body converted from exact 98B retail MASM
-?WOLQuickMatchMenuShutdown@@YAXPAVWindowLayout@@PAX@Z,,0x00507E10,147,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu_Shutdown.asm,matched,
+?WOLQuickMatchMenuShutdown@@YAXPAVWindowLayout@@PAX@Z,,0x00507E10,147,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenuShutdown_Thunk.cpp,matched,Open-BFME5 lift 147B retail MASM to standalone C++ thunk
 ?WOLQuickMatchMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x0050A470,1177,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu_System.asm,matched,BFME object-form system callback; queue 0x509B57 mid-insn
 ?WOLQuickMatchMenuUpdate@@YAXPAVWindowLayout@@PAX@Z,,0x00506726,4682,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu_Update.asm,matched,BFME object-form update; queue 0x540410 INT3 pad; true body via QM:* strings
 ?WOLStatusMenuInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004D3C40,69,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLStatusMenu.cpp,matched,
@@ -8934,7 +8934,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?addSide@SidesList@@QAEXPBVDict@@@Z,,0x000E0640,897,Code/masm_dumps/_sa15__addSide_SidesList__QAEXPBVDict___Z_E0640.asm,matched,sa15 Open-BFME4+Grok Faction
 ?addSkirmishTeam@SidesList@@QAEXPBVDict@@@Z,,0x00C50B39,11,Code/GameEngine/Source/GameLogic/Map/SidesList.cpp,matched,
 ?addSmudgeSet@SmudgeManager@@QAEPAUSmudgeSet@@XZ,,0x005D4240,129,Code/GameEngine/Source/Common/SmudgeManager_addSmudgeSet_Thunk.cpp,matched,reloc-needle Open-BFME4+Grok
-?addSnapshotBlock@GameState@@AAEXVAsciiString@@PAVSnapshot@@W4SnapshotType@@@Z,,0x003BDB80,155,Code/masm_dumps/_sa7__addSnapshotBlock_GameState__AAEXVAsciiString__PAV_3BDB80.asm,matched,Exact 155B Open-BFME4
+?addSnapshotBlock@GameState@@AAEXVAsciiString@@PAVSnapshot@@W4SnapshotType@@@Z,,0x003BDB80,155,Code/GameEngine/Source/Common/GameState_addSnapshotBlock_Thunk.cpp,matched,Open-BFME5 lift 155B retail MASM to standalone C++ thunk
 ?addStagingRoom@GameSpyInfo@@UAEXVGameSpyStagingRoom@@@Z,,0x00635120,206,Code/masm_dumps/_rn7__addStagingRoom_GameSpyInfo__UAEXVGameSpyStagingRoom___Z_635120.asm,matched,reloc-needle Open-BFME4+Grok
 ?addSuperweapon@InGameUI@@UAEXHABVAsciiString@@W4ObjectID@@PBVSpecialPowerTemplate@@@Z,,0x0044C970,338,Code/masm_dumps/_rn1__addSuperweapon_InGameUI__UAEXHABVAsciiString__W4ObjectID__PBVSpecialP_44C970.asm,matched,reloc-needle Open-BFME4+Grok
 ?addTeam@SidesList@@QAEXPBVDict@@@Z,,0x00C2787D,11,Code/GameEngine/Source/GameLogic/Map/SidesList.cpp,matched,
@@ -11769,7 +11769,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getType@DictPair@Dict@@QBE?AW4DataType@2@XZ,,0x00067CE0,8,Code/GameEngine/Source/Common/Dict.cpp,matched,
 ?getTypeFromKey@DictPair@Dict@@CA?AW4DataType@2@W4DictPairKeyType@2@@Z,,0x00067CC0,10,Code/GameEngine/Source/Common/Dict.cpp,matched,
 ?getUV@ParticleSystemTemplate@FXParticleSystem@@QBEPBURegion2D@@XZ,0x0002D6E6,0x0005CBA0,7,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,returns UV region pointer
-?getUiText@Condition@@QAE?AVAsciiString@@XZ,,0x00352DB0,160,Code/masm_dumps/_sa12__getUiText_Condition__QAE_AVAsciiString__XZ_352DB0.asm,matched,string-anchor Open-BFME4+Grok Condition
+?getUiText@Condition@@QAE?AVAsciiString@@XZ,,0x00352DB0,160,Code/GameEngine/Source/GameLogic/ScriptEngine/Condition_getUiText_Thunk.cpp,matched,Open-BFME5 lift 160B retail MASM to standalone C++ thunk
 ?getUiText@Parameter@@QBE?AVAsciiString@@XZ,,0x00352E80,3667,Code/masm_dumps/Parameter_getUiText.asm,matched,Exact retail MASM; unique UI strings and two script callers prove ownership
 ?getUiText@Script@@QAE?AVAsciiString@@XZ,,0x00357860,564,Code/masm_dumps/_sa7__getUiText_Script__QAE_AVAsciiString__XZ_357860.asm,matched,Exact 564B Open-BFME4
 ?getUiText@ScriptAction@@QAE?AVAsciiString@@XZ,,0x00356340,395,Code/masm_dumps/ScriptAction_getUiText.asm,matched,Exact MASM 395B @ 0x356340; queue 0x601FFC was mid-ctor. Identity: Script::getUiText THEN/ELSE call 0x38b8b->here; unique [???]; engine vtbl +0x28 getActionTemplate
