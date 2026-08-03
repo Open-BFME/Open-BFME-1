@@ -57240,7 +57240,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0SupplyWarehouseDockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0001E902,5,Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyWarehouseDockUpdateCtorThunk.cpp,matched,5-byte incremental-link constructor thunk converted to focused C++ source
 ??0SupplyWarehouseDockUpdateModuleData@@QAE@XZ,,0x002CFB00,29,Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyWarehouseDockUpdate.cpp,matched,
 ??0Surface@@QAE@HH@Z,,0x0043CD10,25,Code/Libraries/Source/WWVegas/WW3D2/txt.cpp,matched,
-??0SwayClientUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x006044E0,68,Code/GameEngine/Source/GameClient/Drawable/Update/SwayClientUpdateCtorThunk.cpp,matched,Open-BFME5 clean C++ SwayClientUpdate ctor field init
+??0SwayClientUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x006044E0,68,Code/GameEngine/Source/GameClient/Drawable/Update/SwayClientUpdateCtorThunk.cpp,matched,Open-BFME5 clean C++ ClientUpdateModule field init
 ??0SysTimeClass@@QAE@XZ,,0x009E64B0,28,Code/Libraries/Source/WWVegas/WWLib/systimer.cpp,matched,
 ??0TCreateUnitsInfo@@QAE@XZ,,0x001F2A80,10,Code/GameEngine/Source/Common/RTS/Team.cpp,matched,
 ??0TPropType@@QAE@XZ,,0x002DFCE0,10,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBuffer.cpp,matched,
@@ -57889,6 +57889,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1GameResultsResponse@@QAE@XZ,,0x00641300,39,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,thunk-dump converted to clean C++
 ??1GameSpyGameSlot@@QAE@XZ,,0x004FA000,128,Code/masm_dumps/GameSpyGameSlot_destructor.asm,matched,MASM exact; StagingRoom vecdtor identity; queue RVA 0x9DB036 was INSIDE format parser
 ??1GameSpyGroupRoom@@QAE@XZ,,0x004F9850,76,Code/masm_dumps/GameSpyGroupRoom_destructor.asm,matched,Certified packet 120 exact retail MASM SHA256 3f883ae20123d0c55b8c341cba46838c9fac9a80f0e2fb4e36480958951e0198
+??1GameSpyGroupRoom@@QAE@XZ,,0x004F9850,76,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGroupRoomDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1GameSpyLoginPreferences@@UAE@XZ,,0x00081E70,108,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLoginMenu.cpp,matched,true dtor C++ empty body; misplaced drift 0x65D371 was inside dispatchEvents; pins Rb_tree map dtors 0xB992/0x29C58
 ??1GameSpyStagingRoom@@QAE@XZ,,0x004FA3D0,151,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs_GameSpyStagingRoom_dtor.asm,matched,Certified packet id 265; Ghidra ENTRY and ret-to-INT3 boundary; removeStagingRoom thunk ownership; exact retail db dump
 ??1GameState@@UAE@XZ,,0x00110DF0,503,Code/GameEngine/Source/Common/System/SaveGame/GameState_dtor.asm,matched,
@@ -58113,6 +58114,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1SelectionTranslator@@UAE@XZ,,0x005B7BE0,73,Code/GameEngine/Source/GameClient/MessageStream/SelectionXlat.cpp,matched,
 ??1ShareExperienceBehavior@@UAE@XZ,,0x00205AC0,630,Code/masm_dumps/ShareExperienceBehavior_destructor.asm,matched,Exact 630B @ 0x00205AC0; Exact retail MASM; instance factory->vtable dtor; del 0x205AC0 ctor 0x205740 vt 0xCA5FC0
 ??1ShareExperienceBehaviorModuleData@@UAE@XZ,,0x002059C0,67,Code/masm_dumps/ShareExperienceBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
+??1ShareExperienceBehaviorModuleData@@UAE@XZ,,0x002059C0,67,Code/GameEngine/Source/GameLogic/AI/ShareExperienceBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1ShellMenuScheme@@QAE@XZ,,0x00580FB0,238,Code/masm_dumps/dtor_ShellMenuScheme_QAE_XZ_00580FB0_packet334.asm,matched,Certified packet 334 sealed retail bytes SHA256 23a41c6e29805dbd06c52b28a4988f53307ef301816d3f60bc5f27824ad83ca4
 ??1ShroudCrateCollideModuleData@@UAE@XZ,,0x00125E40,67,Code/masm_dumps/ShroudCrateCollideModuleData_destructor.asm,matched,Exact 67B SEH dtor Open-BFME4
 ??1SidesInfo@@QAE@XZ,,0x0019AF30,148,Code/masm_dumps/SidesList_SidesInfo_destructor.asm,matched,
@@ -69206,4 +69208,3 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 ?parsePrerequisites@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z,,0x001485B0,63,Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp,matched,Open-BFME5 converted from exact MASM dump
 _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,ICF alias of existing matched body
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGE@2@@Z,,0x0093FE46,142,Code/Libraries/Source/WWVegas/WWLib/STLUnsignedShortByteTreeInsertUniquePairThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from structural retail candidate
-
