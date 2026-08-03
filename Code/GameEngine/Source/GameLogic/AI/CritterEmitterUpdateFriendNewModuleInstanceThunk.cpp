@@ -10,16 +10,15 @@ void __cdecl operator delete(void *);
 
 class CritterEmitterUpdate
 {
-public:
-	CritterEmitterUpdate(Thing *, const ModuleData *);
-	static Module *friend_newModuleInstance(Thing *, const ModuleData *);
+    unsigned char m_storage[0x28];
 
-private:
-	unsigned char m_pad[0x28];
+public:
+    CritterEmitterUpdate(Thing *, const ModuleData *);
+    static Module *friend_newModuleInstance(Thing *, const ModuleData *);
 };
 
 // ?friend_newModuleInstance@CritterEmitterUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
-Module *CritterEmitterUpdate::friend_newModuleInstance(Thing *thing, const ModuleData *data)
+Module *CritterEmitterUpdate::friend_newModuleInstance(Thing *thing, const ModuleData *moduleData)
 {
-	return (Module *)new CritterEmitterUpdate(thing, data);
+    return (Module *)new CritterEmitterUpdate(thing, moduleData);
 }
