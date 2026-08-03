@@ -10098,7 +10098,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?getUnicodeBuildUser@Version@@","","0x000AF3B0","273","Code/GameEngine/Source/Common/Version_getUnicodeBuildUser_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_Version_getUnicodeBuildUser_AF3B0"
 "?getUnicodeDateBuffer@@YA?AVUnicodeString@@U_SYSTEMTIME@@@Z","","0x0010D7A0","324","Code/GameEngine/Source/Common/getUnicodeDateBuffer_Thunk.cpp","matched","Certified packet 338 reviewed retail body"
 "?getUnicodeString@Dict@@QBE?AVUnicodeString@@W4NameKeyType@@PA_N@Z","","0x00068600","96","Code/GameEngine/Source/Common/Dict.cpp","matched","recovered from Open-BFME4 overnight session (deepseek)"
-"?getUnicodeVersion@Version@@","","0x000AEE00","331","Code/masm_dumps/_sa4__getUnicodeVersion_Version___AEE00.asm","matched","Exact 331B Open-BFME4"
+"?getUnicodeVersion@Version@@","","0x000AEE00","331","Code/GameEngine/Source/Common/Version_getUnicodeVersion_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_Version_getUnicodeVersion_AEE00"
 "?getUninterruptable@AudioEventRTS@@QBE_NXZ","","0x000B2360","4","Code/GameEngine/Source/Common/Audio/GameAudio.cpp","matched","Retail thunk-bound BFME uninterruptable getter"
 "?getUnitDirectionVector2D@Thing@@QBEPBUCoord3D@@XZ","","0x00132140","64","Code/GameEngine/Source/Common/Thing/Thing.cpp","matched",""
 "?getUnitDirectionVector2D@Thing@@QBEXAAUCoord3D@@@Z","","0x00132190","86","Code/GameEngine/Source/Common/Thing/Thing.cpp","matched",""
