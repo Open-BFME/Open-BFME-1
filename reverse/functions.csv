@@ -13425,7 +13425,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?showIdleWorkerLayout@InGameUI@@EAEXXZ","","0x0043B970","86","Code/GameEngine/Source/GameClient/InGameUI.cpp","matched","Exact 86B C++ raw function conversion Open-BFME5"
 "?showLANGameOptionsUnderlyingGUIElements@@YAX_N@Z","","0x004D00E0","92","Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanMapSelectMenu.cpp","matched",""
 "?showNamedTimerDisplay@InGameUI@@QAEX_N@Z","","0x0043AA90","13","Code/GameEngine/Source/GameClient/InGameUI.cpp","matched","BFME m_showNamedTimers +0x7a1"
-"?showNotificationBox@@YAXVAsciiString@@VUnicodeString@@@Z","","0x004ECD10","557","Code/masm_dumps/showNotificationBox_4ECD10.asm","matched","True body 557B @0x4ECD10 (queue 0x784853 pad); ILT 0x37FC9; L[%hs] %s+GUIMessageReceived+Buddy:MessageNotification; exact MASM (BFME rewrite vs ZH popup)"
+"?showNotificationBox@@YAXVAsciiString@@VUnicodeString@@@Z","","0x004ECD10","557","Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScriptShowNotificationBox_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_ShowNotificationBox_4ECD10"
 "?showRallyPoint@ControlBar@@IAEXPBUCoord3D@@@Z","","0x0049DF00","312","Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_showRallyPoint_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump"
 "?showReplayControls@@YAXXZ","","0x0043A7F0","32","Code/GameEngine/Source/GameClient/InGameUI.cpp","matched","cached-obj2 Open-BFME4+Grok asm->cpp depth Open-BFME4+Grok"
 "?ShowReplaySavedPopup@@YAX_N@Z","","0x004DE120","34","Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay.cpp","matched",""
