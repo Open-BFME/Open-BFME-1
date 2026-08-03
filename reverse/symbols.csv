@@ -6228,6 +6228,7 @@ name,address,notes
 ??0GenerateMinefieldBehaviorModuleData@@QAE@XZ,0x0002B062
 ??0GhostObjectManager@@QAE@XZ,0x00008652
 ??0GhostObjectManager@@QAE@XZ,0x006BC530,real body via thunk 0x2ba49
+??0GiveUpgradeUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,GiveUpgradeUpdate ctor base call; ILT thunk for SpecialAbilityUpdate ctor (body 0x002A6360)
 ??0GrabPassengerSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,GrabPassengerSpecialPowerModuleData base ctor
 ??0GrantScienceUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x00008878,pinharvest x1 (thunk)
 ??0GrantScienceUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000BAF0,pinharvest x1 (thunk)
