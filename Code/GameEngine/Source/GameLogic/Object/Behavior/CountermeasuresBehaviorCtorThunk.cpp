@@ -1,91 +1,48 @@
 // cl: /DNDEBUG /MD /EHsc
+// Open-BFME5: CountermeasuresBehavior constructor, reconstructed from retail layout.
+// The first base is represented by its retail ICF owner, SlowDeathBehavior;
+// UpgradeMux models the secondary virtual subobject at +0x50.
 
 class Thing;
 class ModuleData;
 
-class CountermeasuresBehavior
+class SlowDeathBehavior
+{
+protected:
+    unsigned char m_padding04[8];
+    unsigned long m_slot0c;
+    unsigned long m_slot10;
+    unsigned char m_padding14[12];
+    unsigned long m_slot20;
+    unsigned long m_slot24;
+    unsigned char m_padding28[0x28];
+
+public:
+    SlowDeathBehavior(Thing *, const ModuleData *);
+    virtual ~SlowDeathBehavior() {}
+};
+
+class UpgradeMux
+{
+public:
+    virtual ~UpgradeMux() {}
+};
+
+class CountermeasuresBehavior : public SlowDeathBehavior, public UpgradeMux
 {
 public:
     CountermeasuresBehavior(Thing *, const ModuleData *);
 };
 
 // ??0CountermeasuresBehavior@@QAE@PAVThing@@PBVModuleData@@@Z
-__declspec(naked) CountermeasuresBehavior::CountermeasuresBehavior(Thing *, const ModuleData *)
+CountermeasuresBehavior::CountermeasuresBehavior(
+    Thing *thing,
+    const ModuleData *moduleData)
+    : SlowDeathBehavior(thing, moduleData)
 {
-    __asm {
-        __emit 0x8b;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x56;
-        __emit 0x8b;
-        __emit 0xf1;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x50;
-        __emit 0x51;
-        __emit 0x8b;
-        __emit 0xce;
-        __emit 0xe8;
-        __emit 0xa7;
-        __emit 0xd6;
-        __emit 0xe4;
-        __emit 0xff;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x50;
-        __emit 0xd0;
-        __emit 0x2f;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x06;
-        __emit 0xdc;
-        __emit 0x30;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x0c;
-        __emit 0x18;
-        __emit 0x30;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x10;
-        __emit 0x08;
-        __emit 0x30;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x20;
-        __emit 0x04;
-        __emit 0x30;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x24;
-        __emit 0xf0;
-        __emit 0x2f;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x50;
-        __emit 0xe0;
-        __emit 0x2f;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0x8b;
-        __emit 0xc6;
-        __emit 0x5e;
-        __emit 0xc2;
-        __emit 0x08;
-        __emit 0x00;
-    }
+    m_slot0c = 0x010A3018;
+    m_slot10 = 0x010A3008;
+    m_slot20 = 0x010A3004;
+    m_slot24 = 0x010A2FF0;
+    *reinterpret_cast<unsigned long *>(reinterpret_cast<unsigned char *>(this) + 0x50) = 0x010A2FE0;
 }
