@@ -46302,3 +46302,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 ??0DarknessSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,DarknessSpecialPowerModuleData base ctor
 ??0ModuleDataBase@@QAE@XZ,0x00036818,Open-BFME5 Porcupine base pin
+?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
