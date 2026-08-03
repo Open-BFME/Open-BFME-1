@@ -4181,3 +4181,4 @@ _gameTextRelease,0x00881EF0,GameTextManager reset release helper shim
 ??0ClientUpdateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,Open-BFME5 SwayClientUpdate base ctor pin
 ??0DrawableModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,SwayClientUpdate base ctor from retail call site
 ??0SpecialPowerModuleData@@QAE@XZ,0x3f503,FellBeastSwoopPowerModuleData base ctor
+??0BaseModuleData@@QAE@XZ,0x00048A3B,TensileFormationUpdateModuleData base ctor

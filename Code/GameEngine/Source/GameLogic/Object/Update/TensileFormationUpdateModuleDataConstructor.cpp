@@ -1,43 +1,31 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc
 
-class TensileFormationUpdateModuleData
+class BaseModuleData
+{
+public:
+	BaseModuleData();
+	virtual ~BaseModuleData();
+
+private:
+	unsigned char m_pad[0x60];
+};
+
+class TensileFormationUpdateModuleData : public BaseModuleData
 {
 public:
 	TensileFormationUpdateModuleData();
+	virtual ~TensileFormationUpdateModuleData();
+
+private:
+	unsigned int m_64;
+	unsigned int m_68;
+	unsigned int m_6c;
 };
 
-__declspec(naked) TensileFormationUpdateModuleData::TensileFormationUpdateModuleData()
+// ??0TensileFormationUpdateModuleData@@QAE@XZ
+TensileFormationUpdateModuleData::TensileFormationUpdateModuleData()
 {
-	__asm {
-		_emit 056h
-		_emit 08Bh
-		_emit 0F1h
-		_emit 0E8h
-		_emit 083h
-		_emit 024h
-		_emit 0D9h
-		_emit 0FFh
-		_emit 033h
-		_emit 0C0h
-		_emit 089h
-		_emit 046h
-		_emit 064h
-		_emit 089h
-		_emit 046h
-		_emit 068h
-		_emit 089h
-		_emit 046h
-		_emit 06Ch
-		_emit 0C7h
-		_emit 006h
-		_emit 000h
-		_emit 068h
-		_emit 00Ch
-		_emit 001h
-		_emit 08Bh
-		_emit 0C6h
-		_emit 05Eh
-		_emit 0C3h
-	}
+	m_64 = 0;
+	m_68 = 0;
+	m_6c = 0;
 }
-
