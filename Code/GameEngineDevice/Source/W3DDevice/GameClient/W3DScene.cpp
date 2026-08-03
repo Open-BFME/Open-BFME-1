@@ -1309,13 +1309,8 @@ void RTS3DScene::draw( )
 //=============================================================================
 /** */
 //=============================================================================
-// ??0RTS2DScene@@QAE@XZ present-unmatched
-RTS2DScene::RTS2DScene()
-{
-	setName("RTS2DScene");
-	m_status = NEW_REF( W3DStatusCircle, () );
-	Add_Render_Object( m_status );
-}  // end RTS2DScene
+// ??0RTS2DScene@@QAE@XZ
+// Body in RTS2DSceneCtorThunk.cpp (exact 209B retail).
 
 //=============================================================================
 // RTS2DScene::~RTS2DScene
