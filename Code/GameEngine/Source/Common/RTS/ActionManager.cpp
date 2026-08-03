@@ -100,33 +100,9 @@ static Bool appearsToContainFriendlies(const Object* obj, const Object* otherObj
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-static Bool isObjectShroudedForAction ( const Object *source, const Object *target, CommandSourceType commandSource )
-{
-	/// @todo - reenable this when we can avoid breaking scripted actions.
-	// In order to support ai and scripted actions in singler player, we have to disable this for now.
-	// We can re-enable it when we can tell that this is a player generated action.  jba.
-//	return false;
-	// GS Keeping this comment to show we now have commandSource, so everything should be fine again.
-
-	// The target is only shrouded for action if...
-	
-	// the asking player is human
-	// the asking impetus is not from a script
-	// and the target object is Fogged or worse
-
-	if( source && target && source->getControllingPlayer() ) 
-	{
-		if( source->getControllingPlayer()->getPlayerType() == PLAYER_HUMAN 
-			&& commandSource != CMD_FROM_SCRIPT
-			&& target->getShroudedStatus( source->getControllingPlayer()->getPlayerIndex() ) >= OBJECTSHROUD_FOGGED
-			)
-		{
-			return TRUE;
-		}
-	}
-
-	return FALSE;
-}
+// ?isObjectShroudedForAction@@YA_NPBVObject@@0W4CommandSourceType@@@Z is emitted by
+// IsObjectShroudedForActionThunk.cpp.
+Bool isObjectShroudedForAction(const Object *source, const Object *target, CommandSourceType commandSource);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

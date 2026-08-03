@@ -12159,7 +12159,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?isNotEmpty@?$StringBase@G@@QBE_NXZ,0x00038663,0x0052D3E0,38,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,returns true if non-null and non-empty
 ?isNotNone@?$StringBase@D@@QBE_NXZ,0x00888AE0,0x00888AE0,17,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,returns true if string is not the global none string; size trimmed: trailing int3 padding
 ?isNotNone@?$StringBase@G@@QBE_NXZ,0x00888B30,0x00888B30,17,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,returns true if wide string is not the global none string; size trimmed: trailing int3 padding
-?isObjectShroudedForAction@@YA_NPBVObject@@0W4CommandSourceType@@@Z,,0x000C3F80,90,Code/masm_dumps/isObjectShroudedForAction_C3F80.asm,matched,Exact 90B MASM; true ENTRY 0xC3F80 (queue 0xC3F94 mid-jle of BFME early-out on target+0x74); 10 AM callers
+?isObjectShroudedForAction@@YA_NPBVObject@@0W4CommandSourceType@@@Z,,0x000C3F80,90,Code/GameEngine/Source/Common/RTS/IsObjectShroudedForActionThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?isOccupied@GameSlot@@QBE_NXZ,,0x0061E590,32,Code/GameEngine/Source/GameNetwork/GameInfo.cpp,matched,
 ?isOpen@GameSlot@@QBE_NXZ,,0x0061E630,11,Code/GameEngine/Source/GameNetwork/GameInfo.cpp,matched,tiny-locate
 ?isOverride@WeaponTemplate@@QAE_NXZ,,0x001E0B60,11,Code/GameEngine/Source/GameLogic/Object/Weapon.cpp,matched,
