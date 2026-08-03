@@ -1,24 +1,22 @@
 // cl: /DNDEBUG /MD /EHsc
 
+class ScriptEngine
+{
+public:
+	void doFreezeTime(void);
+};
+
+// Retail TheScriptEngine global (DIR32 filled by patcher).
+extern ScriptEngine *TheScriptEngine;
+
 class ScriptActions
 {
 protected:
-    void doFreezeTime(void);
+	void doFreezeTime(void);
 };
 
-__declspec(naked) void ScriptActions::doFreezeTime(void)
+// ?doFreezeTime@ScriptActions@@IAEXXZ
+void ScriptActions::doFreezeTime(void)
 {
-    __asm {
-        _emit 08Bh
-        _emit 00Dh
-        _emit 06Ch
-        _emit 007h
-        _emit 02Fh
-        _emit 001h
-        _emit 0E9h
-        _emit 021h
-        _emit 007h
-        _emit 0D3h
-        _emit 0FFh
-    }
+	TheScriptEngine->doFreezeTime();
 }
