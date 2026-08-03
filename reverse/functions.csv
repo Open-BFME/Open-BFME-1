@@ -10286,7 +10286,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?friend_newModuleData@BattlePlanUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00119D50,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,BFME retail allocation-size facade
 ?friend_newModuleData@BeaconClientUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00121BF0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleData@BezierProjectileBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001152C0,110,Code/GameEngine/Source/GameLogic/AI/BezierProjectileBehaviorFriendNewModuleDataThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM factory
-?friend_newModuleData@BoneFXDamage@@SAPAVModuleData@@PAVINI@@@Z,,0x00122D80,50,Code/GameEngine/Source/GameLogic/Object/Damage/BoneFXDamageFriendNewModuleDataThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM factory
+?friend_newModuleData@BoneFXDamage@@SAPAVModuleData@@PAVINI@@@Z,,0x00122D80,50,Code/GameEngine/Source/GameLogic/Object/Damage/BoneFXDamageFriendNewModuleDataThunk.cpp,matched,Open-BFME5 clean C++ factory new ModuleData plus initFromINI
 ?friend_newModuleData@BoneFXUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00123830,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,BFME retail allocation-size facade
 ?friend_newModuleData@BridgeBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00114810,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
 ?friend_newModuleData@BridgeTowerBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x00125220,50,Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeTowerBehaviorFriendNewModuleDataThunk.cpp,matched,Open-BFME5 clean C++ factory new ModuleData plus initFromINI
@@ -10431,7 +10431,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?friend_newModuleData@QueueProductionExitUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001241B0,88,Code/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/QueueProductionExitUpdateFriendNewModuleDataThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM factory
 ?friend_newModuleData@RadarUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00124240,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue exact match (ctor pinned)
 ?friend_newModuleData@RadarUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0012B530,62,Code/GameEngine/Source/GameLogic/Object/Upgrade/RadarUpgradeFriendNewModuleDataThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM factory
-?friend_newModuleData@RadiusDecalUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00123E50,50,Code/GameEngine/Source/GameLogic/Object/Update/RadiusDecalUpdateFriendNewModuleDataThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM factory
+?friend_newModuleData@RadiusDecalUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00123E50,50,Code/GameEngine/Source/GameLogic/Object/Update/RadiusDecalUpdateFriendNewModuleDataThunk.cpp,matched,Open-BFME5 clean C++ factory new ModuleData plus initFromINI
 ?friend_newModuleData@RailedTransportAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001145D0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@RailedTransportDockUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x00118AA0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?friend_newModuleData@RainOfFireUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011C390,107,Code/GameEngine/Source/Common/RTS/RainOfFireUpdateFriendNewModuleDataThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM factory
