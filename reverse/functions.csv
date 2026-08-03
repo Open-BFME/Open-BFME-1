@@ -2673,7 +2673,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1?$ObjectPoolClass@VPolyRenderTaskClass@@$0BAA@@@QAE@XZ,,0x006D1330,42,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,
 ??1?$RefMultiListClass@VLookupTableClass@@@@UAE@XZ,,0x00712160,118,Code/Libraries/Source/WWVegas/WWMath/lookuptable.cpp,matched,
 ??1?$RefMultiListClass@VRenderObjClass@@@@UAE@XZ,,0x00712160,118,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp,matched,icf-owner=??1?$RefMultiListClass@VLookupTableClass@@@@UAE@XZ
-??1?$ShareBufferClass@G@@UAE@XZ,,0x009240D0,29,Code/Libraries/Source/WWVegas/WWLib/ShareBufferUnsignedShort.cpp,matched,object-symbol=??1ShareBufferClassUnsignedShort@@QAE@XZ;Exact retail ShareBuffer<unsigned short> destructor emitted in dedicated C++ TU.
+??1?$ShareBufferClass@G@@UAE@XZ,,0x009240D0,29,Code/Libraries/Source/WWVegas/WWLib/ShareBufferUnsignedShort.cpp,matched,Open-BFME5 clean C++ ShareBuffer ushort dtor free+dual vtbl;object-symbol=??1ShareBufferClassUnsignedShort@@QAE@XZ
 ??1?$SimpleDynVecClass@VVector3@@@@UAE@XZ,,0x00887940,134,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,object-symbol=?releaseBuffer@?$StringBase@D@@AAEXXZ;C++ alias
 ??1?$SimpleVecClass@E@@UAE@XZ,,0x0078C7E0,41,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,
 ??1?$SimpleVecClass@K@@UAE@XZ,,0x0078C7E0,41,Code/Libraries/Source/WWVegas/WW3D2/decalmsh.cpp,matched,
