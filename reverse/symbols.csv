@@ -793,6 +793,7 @@ _HideControlBar,0x00002847,HideControlBar letterbox
 ??0InstantDeathBehaviorBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,InstantDeathBehavior ctor base call
 ??0OCU_MidGrand@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,ObjectCreationUpgrade ctor mid-base call; ILT thunk for ObjectModule ctor (body 0x00113C60)
 ??0ObjectModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,hit-decoded x2 (thunk)
+??0PB_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,Open-BFME5 pin
 ??0RunOffMapBehaviorBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,RunOffMapBehavior ctor base call (shared ILT)
 ??0SpawnUnitBehaviorGrandBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,SpawnUnitBehavior ctor grandbase call; ILT thunk for ObjectModule ctor
 ?setGridTransform@WaterRenderObjClass@@QAEXPBVMatrix3D@@@Z,0x00017120,pinharvest x1 (thunk)
