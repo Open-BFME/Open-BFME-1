@@ -1286,3 +1286,5 @@ zeroes +4 through +0x20 and +0x34/+0x38 at 0x0090D211, it carries a vtable, the
 D3D texture sits at +0x38, and three sibling vtables at VA 0x0113A668, 0x0113A6B0
 and 0x0113A6F8 share slots 0, 4, 5, 6, 7, 8, 10, 11 with slot 0 a plain getter
 rather than a destructor. The handle classes only make sense once it does.
+
+2026-08-03: When lifting an existing MASM dump, compare its emitted bytes to the retail target; this tab-control dump carried an extra 0F 8B pair at +0x43 despite a stale exact-match note.

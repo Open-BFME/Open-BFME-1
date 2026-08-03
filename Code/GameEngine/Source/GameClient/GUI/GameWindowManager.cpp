@@ -2105,7 +2105,7 @@ GameWindow *GameWindowManager::gogoGadgetRadioButton( GameWindow *parent,
 /** Create a tab control GUI element */
 //-------------------------------------------------------------------------------------------------
 // ?gogoGadgetTabControl@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHPAVWinInstanceData@@PAU_TabControlData@@PAVGameFont@@_N@Z
-// Body in GameWindowManager_gogoGadgetTabControl.asm (exact 150B retail @ 0x0047D090).
+// Body in GameWindowManager_gogoGadgetTabControl_Thunk.cpp (exact 150B retail @ 0x0047D090).
 // Keep getTabControl*DrawFunc COMDATs in this TU (were only referenced by the old C++ body;
 // both ICF to 3B xor-eax/ret at 0x006CF680).
 void GameWindowManager_force_tabControlDrawFuncs(GameWindowManager *m)
