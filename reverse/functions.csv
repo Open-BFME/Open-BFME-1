@@ -11746,7 +11746,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getText1C@BFMENetGameSpyStatsAuthKeyCommandMsg@@QAE?AV?$StringBase@D@@XZ,,0x00675C20,32,Code/GameEngine/Source/GameNetwork/NetCommandMsg_text.cpp,matched,
 ?getText1C@BFMENetRequestGameSpyStatsAuthKeyCommandMsg@@QAE?AV?$StringBase@D@@XZ,,0x006759F0,32,Code/GameEngine/Source/GameNetwork/NetCommandMsg_text.cpp,matched,
 ?getText20@BFMENetGameSpyStatsAuthKeyCommandMsg@@QAE?AV?$StringBase@D@@XZ,,0x00675CB0,32,Code/GameEngine/Source/GameNetwork/NetCommandMsg_text.cpp,matched,
-?getText@DisplayString@@UAE?AVUnicodeString@@XZ,,0x00410080,32,Code/GameEngine/Source/GameClient/DisplayStringGetTextThunk.cpp,matched,Open-BFME5 exact C++ virtual UnicodeString getter thunk
+?getText@DisplayString@@UAE?AVUnicodeString@@XZ,,0x00410080,32,Code/GameEngine/Source/GameClient/DisplayStringGetTextThunk.cpp,matched,Open-BFME5 clean C++ DisplayString::getText return m_text
 ?getText@INILineBuffer@@QBEPBDH@Z,,0x009CBC60,33,Code/GameEngine/Source/Common/INI/INILineBuffer.cpp,matched,index bounded against size() with a signed jge -- no lower bound -- and operator[] re-loads the start pointer
 ?getText@NetChatCommandMsg@@QAE?AV?$StringBase@G@@XZ,,0x00675310,32,Code/GameEngine/Source/GameNetwork/NetCommandMsg_text.cpp,matched,
 ?getText@NetDisconnectChatCommandMsg@@QAE?AV?$StringBase@G@@XZ,,0x006751E0,32,Code/GameEngine/Source/GameNetwork/NetCommandMsg_text.cpp,matched,
