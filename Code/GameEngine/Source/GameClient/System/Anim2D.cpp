@@ -158,7 +158,7 @@ void Anim2DTemplate::parseImage( INI *ini, void *instance, void *store, const vo
 	* we can parse this entry so we know how many images to allocate and look for */
 // ------------------------------------------------------------------------------------------------
 // ?parseImageSequence@Anim2DTemplate@@KAXPAVINI@@PAX1PBX@Z
-// Body in Anim2DTemplate_parse_walls.asm (exact 381B retail; same release-crash wall).
+// Body in Anim2DTemplateParseImageSequenceThunk.cpp (exact 381B retail).
 
 // ------------------------------------------------------------------------------------------------
 /** Store the image at the next open image slot for the animation */
