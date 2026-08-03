@@ -14131,7 +14131,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "__CIacos","","0x009F7256","654","Code/masm_dumps/___CIacos_9F7256.asm","matched",""
 "__CIasin","","0x009F7D86","6","Code/Libraries/Source/WWVegas/WWMath/CIasinThunk.cpp","matched","Open-BFME5 exact C++ CRT import thunk replacing MASM dump;object-symbol=___CIasin"
 "__CIpow","","0x009F6FB2","6","Code/Libraries/Source/WWVegas/WWMath/CIpowThunk.cpp","matched","Open-BFME5 exact C++ CRT import thunk replacing MASM dump;object-symbol=___CIpow"
-"__CxxThrowException@8","","0x00850600","103","Code/masm_dumps/___CxxThrowException_8_850600.asm","matched",""
+"__CxxThrowException@8","","0x00850600","103","Code/GameEngine/Source/Common/CxxThrowException_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_CxxThrowException_850600"
 "__ftol2","","0x009F6E38","117","Code/masm_dumps/___ftol2_9F6E38.asm","matched",""
 "__purecall","","0x006CF680","3","Code/Libraries/Source/WWVegas/WWLib/Except.cpp","matched","icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ"
 "__stringbase_isnone_cmp_char","","0x00075E00","91","Code/Libraries/Source/WWVegas/WWLib/string_base.cpp","matched","object-symbol=?compareNoCase@?$StringBase@D@@QBEHPBD@Z;Thunk-dump converted to clean C++ ICF alias"
