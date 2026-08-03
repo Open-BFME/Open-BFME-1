@@ -46394,3 +46394,5 @@ g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 ?initFromINI@INI@@QAEXPAXPBX@Z,0x00852130,BridgeTower friend_newModuleData retail call
 ??0ModuleDataBase_SiegeDeployHordeSpecialPowerModuleData@@QAE@XZ,0x00023FE7,Open-BFME5 SiegeDeployHordeSpecialPowerModuleData base pin
 ??0FirestormDynamicGeometryInfoUpdateModuleDataBase@@QAE@XZ,0x00048A3B,FirestormDynamicGeometryInfoUpdateModuleData base ctor
+?construct@AutoHealBehaviorModuleData@@AAEXXZ,0x00285F10,AutoHealBehaviorModuleData real ctor body via 5-byte E9
+?construct@AutoHealBehaviorModuleData@@QAEXXZ,0x00285F10,AutoHealBehaviorModuleData real ctor body via 5-byte E9
