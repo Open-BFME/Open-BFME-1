@@ -2018,7 +2018,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0PolyRemover@@QAE@XZ,,0x003FD390,16,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,ICF alias of existing matched body
 ??0PolyRenderTaskClass@@QAE@PAVDX8PolygonRendererClass@@PAVMeshClass@@@Z,,0x00945790,28,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,
 ??0PorcupineFormationBodyModule@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00214170,46,Code/GameEngine/Source/GameLogic/Object/Behavior/PorcupineFormationBodyModule.cpp,matched,Luna Open-BFME5.0 clean C++ empty ActiveBody derivative
-??0PorcupineFormationBodyModuleModuleData@@QAE@XZ,,0x00214470,26,Code/GameEngine/Source/GameLogic/Object/Behavior/PorcupineFormationBodyModuleModuleData.cpp,matched,Exact retail ModuleData constructor emitted in dedicated C++ TU.
+??0PorcupineFormationBodyModuleModuleData@@QAE@XZ,,0x00214470,26,Code/GameEngine/Source/GameLogic/Object/Behavior/PorcupineFormationBodyModuleModuleData.cpp,matched,Open-BFME5 clean C++ Porcupine ModuleData ctor zero fields
 ??0PostLoadableClass@@QAE@XZ,,0x0039B050,13,Code/Libraries/Source/WWVegas/WWMath/curve.cpp,matched,icf-owner=??0IPEnumeration@@QAE@XZ
 ??0PowerPlantUpdateModuleData@@QAE@XZ,,0x000A71C0,25,Code/GameEngine/Source/GameLogic/Object/Update/PowerPlantUpdate.cpp,matched,
 ??0PrereqUnitRec@ProductionPrerequisite@@QAE@XZ,,0x001F2430,10,Code/GameEngine/Source/Common/RTS/ProductionPrerequisite.cpp,matched,

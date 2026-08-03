@@ -1,40 +1,34 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
-#include "PreRTS.h"
+// cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
-class PorcupineFormationBodyModuleModuleData
+// Open-BFME5: PorcupineFormationBodyModuleModuleData ctor - base then zero two dwords.
+
+class ModuleDataBase
 {
 public:
-    PorcupineFormationBodyModuleModuleData();
+	ModuleDataBase();
+	virtual ~ModuleDataBase();
+private:
+	unsigned char m_base[0x58]; // fields at +0x5c after vptr+0x58? 
 };
 
-__declspec(naked) PorcupineFormationBodyModuleModuleData::PorcupineFormationBodyModuleModuleData()
+// Actually retail: after base, zeros +0x5c and +0x60, then sets vtable.
+// Base size is 0x5c if vtable shared... After base call, [esi+0x5c] and [esi+0x60] zeroed.
+// If base includes vptr, base occupies 0..0x5b, fields at 0x5c.
+
+class PorcupineFormationBodyModuleModuleData : public ModuleDataBase
 {
-    __asm {
-        _emit 056h
-        _emit 08Bh
-        _emit 0F1h
-        _emit 0E8h
-        _emit 0A0h
-        _emit 023h
-        _emit 0E2h
-        _emit 0FFh
-        _emit 033h
-        _emit 0C0h
-        _emit 089h
-        _emit 046h
-        _emit 05Ch
-        _emit 089h
-        _emit 046h
-        _emit 060h
-        _emit 0C7h
-        _emit 006h
-        _emit 010h
-        _emit 090h
-        _emit 00Ah
-        _emit 001h
-        _emit 08Bh
-        _emit 0C6h
-        _emit 05Eh
-        _emit 0C3h
-    }
+public:
+	PorcupineFormationBodyModuleModuleData();
+	virtual ~PorcupineFormationBodyModuleModuleData();
+private:
+	unsigned int m_a; // +0x5c
+	unsigned int m_b; // +0x60
+};
+
+// ??0PorcupineFormationBodyModuleModuleData@@QAE@XZ
+PorcupineFormationBodyModuleModuleData::PorcupineFormationBodyModuleModuleData()
+	: ModuleDataBase()
+{
+	m_a = 0;
+	m_b = 0;
 }
