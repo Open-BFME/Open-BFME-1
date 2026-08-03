@@ -1,85 +1,52 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /GX- /O2 /Ob2
+
+// Open-BFME5: SwayClientUpdate ctor - ClientUpdateModule base then field inits.
 
 class Thing;
 class ModuleData;
 
-class SwayClientUpdate
+class ClientUpdateModule
 {
 public:
-    SwayClientUpdate(Thing *, const ModuleData *);
+	ClientUpdateModule(Thing *, const ModuleData *);
+	virtual ~ClientUpdateModule();
+
+private:
+	unsigned char m_base[8];
+};
+
+class SwayClientUpdate : public ClientUpdateModule
+{
+public:
+	SwayClientUpdate(Thing *thing, const ModuleData *moduleData);
+	virtual ~SwayClientUpdate();
+	virtual void clientUpdate(void);
+
+private:
+	float m_curValue;
+	float m_curAngle;
+	float m_curDelta;
+	float m_curAngleLimit;
+	float m_leanAngle;
+	short m_curVersion;
+	bool m_swaying;
+	bool m_unused;
+	unsigned int m_pad0;
+	unsigned int m_pad1;
 };
 
 // ??0SwayClientUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
-__declspec(naked) SwayClientUpdate::SwayClientUpdate(Thing *, const ModuleData *)
+SwayClientUpdate::SwayClientUpdate(Thing *thing, const ModuleData *moduleData)
+	: ClientUpdateModule(thing, moduleData)
 {
-    __asm {
-        __emit 0x8b;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x56;
-        __emit 0x8b;
-        __emit 0xf1;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x50;
-        __emit 0x51;
-        __emit 0x8b;
-        __emit 0xce;
-        __emit 0xe8;
-        __emit 0x80;
-        __emit 0xe3;
-        __emit 0x9f;
-        __emit 0xff;
-        __emit 0x33;
-        __emit 0xc0;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x0c;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x10;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x14;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x18;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x1c;
-        __emit 0x88;
-        __emit 0x46;
-        __emit 0x23;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x24;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x28;
-        __emit 0xc7;
-        __emit 0x06;
-        __emit 0xf0;
-        __emit 0x54;
-        __emit 0x11;
-        __emit 0x01;
-        __emit 0x66;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x20;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xc6;
-        __emit 0x46;
-        __emit 0x22;
-        __emit 0x01;
-        __emit 0x8b;
-        __emit 0xc6;
-        __emit 0x5e;
-        __emit 0xc2;
-        __emit 0x08;
-        __emit 0x00;
-    }
+	m_curValue = 0;
+	m_curAngle = 0;
+	m_curDelta = 0;
+	m_curAngleLimit = 0;
+	m_leanAngle = 0;
+	m_unused = false;
+	m_pad0 = 0;
+	m_pad1 = 0;
+	m_curVersion = -1;
+	m_swaying = true;
 }
