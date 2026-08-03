@@ -11,6 +11,7 @@ public:
 	void Init(unsigned int);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	// MSVC default-ctor closure (??_F...); object-symbol maps retail name here.
 	void DefaultConstructorClosure();
 =======
@@ -19,11 +20,20 @@ public:
 =======
 >>>>>>> d27c2f84c (Open-BFME5 convert FastFixedAllocator Init/ctor to clean C++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> ed1355be6 (Open-BFME5 convert FastFixedAllocator Init/ctor to clean C++)
 =======
 =======
 >>>>>>> d27c2f84c (Open-BFME5 convert FastFixedAllocator Init/ctor to clean C++)
 >>>>>>> 0be1dffcc (Open-BFME5 convert FastFixedAllocator Init/ctor to clean C++)
+=======
+=======
+	// MSVC default-ctor closure (??_F...); object-symbol maps retail name here.
+	void DefaultConstructorClosure();
+=======
+>>>>>>> 4239fad49 (Open-BFME5 convert FastFixedAllocator Init/ctor to clean C++)
+>>>>>>> c8ff54cb8 (Open-BFME5 convert FastFixedAllocator Init/ctor to clean C++)
+>>>>>>> 267bcec08 (Open-BFME5 convert FastFixedAllocator Init/ctor to clean C++)
 
 protected:
 	struct Link
