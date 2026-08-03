@@ -1091,6 +1091,8 @@ name,address,notes
 ??0RAMFile@@QAE@XZ,0x009E6990,pinharvest x1 (body)
 ??0ROUMT_CopyBase@@QAE@ABV0@@Z,0x0001D435,RenderObjectUpdateModuleTemplate copy-ctor primary-base call; ILT thunk for CategoryModuleTemplate<2> copy ctor (body 0x005BF4A0)
 ??0ROUMT_OffsetBase@@QAE@ABV0@@Z,0x000310FC,RenderObjectUpdateModuleTemplate copy-ctor offset-base call; ILT thunk for RenderObjectUpdateModuleInfo copy ctor (body 0x005D92C0)
+??0RS_Base@@QAE@XZ,0x0003F503,Open-BFME5 pin
+??0RS_Member@@QAE@XZ,0x0003747A,Open-BFME5 pin
 ??0RadarUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002A013,module ctor (friend_newModuleInstance retail call target)
 ??0RadarUpdateModuleData@@QAE@XZ,0x0001670C,module-glue cascade callee (from retail call site)
 ??0RadarUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x00020306,module ctor (friend_newModuleInstance retail call target)
