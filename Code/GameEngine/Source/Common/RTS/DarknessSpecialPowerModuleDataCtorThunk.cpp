@@ -3,17 +3,17 @@
 // Open-BFME5: DarknessSpecialPowerModuleData ctor.
 // Base size 0x210; float 10.0f at +0x210; zero at +0x214.
 
-class SpecialPowerModuleData
+class DarknessSpecialPowerModuleDataBase
 {
 public:
-	SpecialPowerModuleData();
-	virtual ~SpecialPowerModuleData();
+	DarknessSpecialPowerModuleDataBase();
+	virtual ~DarknessSpecialPowerModuleDataBase();
 
 private:
 	unsigned char m_pad[0x20c];
 };
 
-class DarknessSpecialPowerModuleData : public SpecialPowerModuleData
+class DarknessSpecialPowerModuleData : public DarknessSpecialPowerModuleDataBase
 {
 public:
 	DarknessSpecialPowerModuleData();
