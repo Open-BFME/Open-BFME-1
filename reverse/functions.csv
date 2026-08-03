@@ -1550,7 +1550,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0FireWeaponWhenDeadBehaviorModuleData@@QAE@XZ,,0x0012A1C0,112,Code/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of 112B ModuleData constructor
 ??0FirestormDynamicGeometryInfoUpdateModuleData@@QAE@XZ,,0x002BC190,59,Code/GameEngine/Source/GameLogic/Object/Update/FirestormDynamicGeometryInfoUpdateModuleDataConstructor.cpp,matched,thunk-dump converted to clean C++ constructor body at destination 0x2BC190
 ??0FirewallHelperClass@@QAE@XZ,,0x0066E3B0,172,Code/GameEngine/Source/GameNetwork/FirewallHelper.cpp,matched,thunk-dump converted to clean C++
-??0FlammableUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00293270,187,Code/masm_dumps/FlammableUpdate_ctor.asm,matched,Ghidra-owned BFME Flammable constructor
+??0FlammableUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00293270,187,Code/GameEngine/Source/GameLogic/Object/Update/FlammableUpdateConstructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??0FlammableUpdateModuleData@@QAE@XZ,,0x00294B20,180,Code/GameEngine/Source/GameLogic/AI/FlammableUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
 ??0FlightDeckBehaviorModuleData@@QAE@XZ,,0x0000CC3E,5,Code/GameEngine/Source/GameLogic/Object/Behavior/FlightDeckBehaviorModuleDataCtorThunk.cpp,matched,5-byte incremental-link constructor thunk converted to focused C++ source
 ??0FlightDeckInfo@FlightDeckBehavior@@QAE@XZ,,0x001DE7E0,22,Code/GameEngine/Source/GameLogic/Object/Behavior/FlightDeckBehavior.cpp,matched,

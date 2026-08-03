@@ -80,20 +80,6 @@ FlammableUpdateModuleData::FlammableUpdateModuleData()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-FlammableUpdate::FlammableUpdate( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
-{
-	m_status = FS_NORMAL;
-	m_aflameEndFrame = 0;
-	m_burnedEndFrame = 0;
-	m_damageEndFrame = 0;
-	m_audioHandle = NULL;
-	m_flameDamageLimit = getFlammableUpdateModuleData()->m_flameDamageLimitData;
-	m_lastFlameDamageDealt = 0;
-
-	setWakeFrame(getObject(), UPDATE_SLEEP_FOREVER);
-}
-
-//-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ??1FlammableUpdate@@MAE@XZ present-unmatched
 FlammableUpdate::~FlammableUpdate( void )
