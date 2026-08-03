@@ -12438,7 +12438,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?Resize@?$VectorClass@PAVTextureClass@@@@UAE_NHPBQAVTextureClass@@@Z","","0x0096CD20","177","Code/Libraries/Source/WWVegas/WW3D2/matinfo.cpp","matched",""
 "?Resize@?$VectorClass@PAVVertexMaterialClass@@@@UAE_NHPBQAVVertexMaterialClass@@@Z","","0x00AFEA70","177","Code/Libraries/Source/WWVegas/WW3D2/matinfo.cpp","matched",""
 "?Resize@?$VectorClass@PAX@@UAE_NHPBQAX@Z","","0x0005E610","177","Code/Libraries/Source/WWVegas/WWLib/msgloop.cpp","matched",""
-"?Resize@?$VectorClass@UFileInfoStruct@MixFileCreator@@@@UAE_NHPBUFileInfoStruct@MixFileCreator@@@Z","","0x009302C0","403","Code/masm_dumps/_entry__Resize_VectorClass_UFileInfoStruct_MixFileCreator_UAE_NHPBU_9302C0.asm","matched",""
+"?Resize@?$VectorClass@UFileInfoStruct@MixFileCreator@@@@UAE_NHPBUFileInfoStruct@MixFileCreator@@@Z","","0x009302C0","403","Code/Libraries/Source/WWVegas/WWLib/MixFileCreatorFileInfoVectorResize_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_MixFileCreatorFileInfoVectorResize_9302C0"
 "?Resize@?$VectorClass@UWeightInfoStruct@NamedPivotMapClass@@@@UAE_NHPBUWeightInfoStruct@NamedPivotMapClass@@@Z","","0x00974A30","376","Code/Libraries/Source/WWVegas/WW3D2/hanim.cpp","matched",""
 "?Resize@?$VectorClass@VActiveCategoryStackClass@@@@UAE_NHPBVActiveCategoryStackClass@@@Z","","0x00AFF3C0","354","Code/Libraries/Source/WWVegas/WWDebug/wwmemlog.cpp","matched",""
 "?Resize@?$VectorClass@VRenderDeviceDescClass@@@@UAE_NHPBVRenderDeviceDescClass@@@Z","","0x0090A9D0","336","Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp","matched",""
