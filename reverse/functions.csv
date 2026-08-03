@@ -3281,7 +3281,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1W3DModelDrawModuleData@@UAE@XZ,,0x00213750,76,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1W3DProjectileStreamDraw@@UAE@XZ,,0x00369CF0,116,Code/masm_dumps/W3DProjectileStreamDraw_destructor.asm,matched,Exact 116B @ 0x00369CF0; Exact retail MASM; instance factory->vtable dtor; del 0x36A110 ctor 0x369FD0 vt 0xCE92DC
 ??1W3DPropDrawModuleData@@UAE@XZ,,0x000A7210,108,Code/masm_dumps/W3DPropDrawModuleData_destructor.asm,matched,Exact 108B SEH dtor Open-BFME4
-??1W3DQuadrupedDrawModuleData@@UAE@XZ,,0x006BFF70,89,Code/masm_dumps/W3DQuadrupedDrawModuleData_destructor.asm,matched,Exact 89B ModuleData SEH dtor Open-BFME4
+??1W3DQuadrupedDrawModuleData@@UAE@XZ,,0x006BFF70,89,Code/GameEngineDevice/Source/W3DDevice/Common/Thing/W3DQuadrupedDrawModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1W3DRopeDraw@@UAE@XZ,,0x0075A730,143,Code/masm_dumps/W3DRopeDraw_destructor.asm,matched,Exact 143B; factory ownership Open-BFME4
 ??1W3DShadowGeometryManager@@QAE@XZ,,0x007B0FF0,70,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,
 ??1W3DShadowTextureManager@@QAE@XZ,,0x007B0FF0,70,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp,matched,
