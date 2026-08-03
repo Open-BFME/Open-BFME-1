@@ -46732,6 +46732,7 @@ name,address,notes
 ??0?$BFMEFactoryModuleData@VUpgradeDieModuleData@@$0DI@@@QAE@XZ,0x0001B905,ModuleFactory retail data facade
 ??0?$BFMEFactoryModuleData@VWorkerAIUpdateModuleData@@$0BAA@@@QAE@XZ,0x00036232,ModuleFactory retail data facade
 ??0?$BFMEW3DFactoryModuleData@VW3DTreeDrawModuleData@@$0GE@@@QAE@XZ,0x00046B5A,W3DModuleFactory retail data facade
+??0?$ConcreteModuleTemplate@UButterflyDrawModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x0003C29F,ButterflyDraw ConcreteModuleTemplate copy ctor ILT
 ??0?$ShareBufferClass@E@@QAE@HPBDH@Z,0x0004B4A7,derived from part_buf matched-caller call sites
 ??0?$ShareBufferClass@I@@QAE@ABV0@@Z,0x0092A090
 ??0?$ShareBufferClass@VShaderClass@@@@QAE@HPBDH@Z,0x0092B940,Get_Shader_Array ShareBuffer 3-arg ctor
@@ -46898,6 +46899,9 @@ name,address,notes
 ??0?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x0004314E,pinharvest x2 (thunk)
 ??0?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x00046ADD,pinharvest x1 (thunk)
 ??0?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x00048667,pinharvest x1 (thunk)
+??0?@V?@@FXParticleSystem@@3QBDB@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?@@2@V?@@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x00020DD3,SphericalEmissionVelocity clone copy-ctor pin
+??0?\@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x00021CB0,OrthoEmissionVelocity clone copy-ctor pin
+??0?\@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x000391A3,Concrete PointEmissionVolume copy ctor pin
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x0000C6E9,pinharvest x1 (thunk)
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x000192A4,pinharvest x1 (thunk)
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x0001D8AE,pinharvest x1 (thunk)
@@ -47428,6 +47432,7 @@ name,address,notes
 ??0OneRingPenaltyUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00039F9A,Ghidra-owned constructor thunk
 ??0OpenContainModuleData@@QAE@XZ,0x00044030,CaveContain factory constructor target
 ??0OptionPreferences@@QAE@XZ,0x0003713C
+??0OrthoEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00021CB0,OrthoEmissionVelocity copy ctor pin
 ??0OverchargeBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
 ??0OverchargeBehaviorModuleData@@QAE@XZ,0x0000FA5B,pinharvest x1 (thunk)
 ??0OverchargeBehaviorModuleData@@QAE@XZ,0x0002DAA1,pinharvest x1 (thunk)
@@ -47471,6 +47476,7 @@ name,address,notes
 ??0PointDefenseLaserUpdateModuleData@@QAE@XZ,0x0002A923,pinharvest x1 (thunk)
 ??0PointDefenseLaserUpdateModuleData@@QAE@XZ,0x0002DA24,pinharvest x1 (thunk)
 ??0PointDefenseLaserUpdateModuleData@@QAE@XZ,0x0003CA01,pinharvest x1 (thunk)
+??0PointEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x000391A3,PointEmissionVolume clone copy-ctor pin
 ??0PointGroupClass@@QAE@XZ,0x00912580,derived from ParticleBufferClass main ctor aligned call sites
 ??0PoisonedBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x041547,module ctor (friend_newModuleInstance retail call target)
 ??0PoisonedBehaviorModuleData@@QAE@XZ,0x0002EA73,module-glue cascade callee (from retail call site)
@@ -47490,6 +47496,7 @@ name,address,notes
 ??0ProneUpdateModuleData@@QAE@XZ,0x0002DABA,module-glue cascade callee (from retail call site)
 ??0PropagandaTowerBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00EF5C,module ctor (friend_newModuleInstance retail call target)
 ??0PropagandaTowerBehaviorModuleData@@QAE@XZ,0x00010B2C
+??0QuadDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0002218D,QuadDrawModuleTemplate clone copy-ctor pin
 ??0QueueProductionExitUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00001CDA,pinharvest x1 (thunk)
 ??0QueueProductionExitUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002D40C,pinharvest x1 (thunk)
 ??0QueuedDownload@@QAE@ABV0@@Z,0x0001005F,pinharvest x1 (thunk)
@@ -47635,6 +47642,7 @@ name,address,notes
 ??0SpawnBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00034711,pinharvest x1 (thunk)
 ??0SpawnBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00035D91,pinharvest x1 (thunk)
 ??0SpawnPointProductionExitUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00023858,module ctor (friend_newModuleInstance retail call target)
+??0SpawnUnitBehaviorGrandBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,SpawnUnitBehavior ctor grandbase call; ILT thunk for ObjectModule ctor
 ??0SpecialAbilityUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x002A6360,BFME SpecialAbilityUpdate constructor body
 ??0SpecialPowerCompletionDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x00008878,pinharvest x1 (thunk)
 ??0SpecialPowerCompletionDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000BAF0,pinharvest x1 (thunk)
@@ -47654,6 +47662,7 @@ name,address,notes
 ??0SpectreGunshipUpdateModuleData@@QAE@XZ,0x0000B997,pinharvest x1 (thunk)
 ??0SpectreGunshipUpdateModuleData@@QAE@XZ,0x00016C39,pinharvest x1 (thunk)
 ??0SpectreGunshipUpdateModuleData@@QAE@XZ,0x00025D47,pinharvest x1 (thunk)
+??0SphereEmissionVolumeModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0001EDA3,SphereEmissionVolumeModuleTemplate clone copy-ctor pin
 ??0SpyVisionSpecialPowerModuleData@@QAE@XZ,0x00025EBE,derived-ICF
 ??0SpyVisionUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00004D36,pinharvest x1 (thunk)
 ??0SpyVisionUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000C199,pinharvest x1 (thunk)
@@ -47679,6 +47688,7 @@ name,address,notes
 ??0StealthUpdateModuleData@@QAE@XZ,0x00049AA3
 ??0StealthUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x00019939,module ctor (friend_newModuleInstance retail call target)
 ??0StickyBombUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
+??0StreakDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0000F56A,StreakDrawModuleTemplate clone copy-ctor pin
 ??0StructureToppleUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00034711,module ctor (friend_newModuleInstance retail call target)
 ??0StructureToppleUpdateModuleData@@QAE@XZ,0x000287C7,derived-ICF
 ??0SubObjectsUpgradeModuleData@@QAE@XZ,0x0001ABF9,pinharvest x1 (thunk)
@@ -47883,6 +47893,7 @@ name,address,notes
 ??1ActiveCategoryStackClass@@UAE@XZ,0x00045CA5,pinharvest x1 (thunk)
 ??1ActiveCategoryStackClass@@UAE@XZ,0x00AFF130,pinharvest x1 (body)
 ??1AnimateWindow@@UAE@XZ,0x0002F973,ILT thunk; retail call sites use the thunk
+??1AnimationSoundClientBehaviorModuleDataMember@@QAE@XZ,0x000142EA,AnimationSoundClientBehaviorModuleData dtor member +0x8
 ??1ArchiveFile@@UAE@XZ,0x009D0BD0,base destructor called by ~Win32BIGFile
 ??1ArchivedDirectoryInfo@@QAE@XZ,0x009CA4F0,first member destructor in ~ArchiveFileSystem at 0x009CA5B6; members destroy in reverse declaration order so m_rootDirectory goes before m_archiveFileMap
 ??1ArchivedFileInfo@@QAE@XZ,0x009CC600,archive directory entry dtor
@@ -47934,6 +47945,7 @@ name,address,notes
 ??1DebugIOOds@@UAE@XZ,0x00890780,pinharvest x1 (body)
 ??1DebugIOOds@@UAE@XZ,0x00890F10,pinharvest x1 (body)
 ??1DetailedArchivedDirectoryInfo@@QAE@XZ,0x009D0730,site-decoded from ~ArchiveFile: lea ecx
+??1EnragedBehaviorModuleDataMember@@QAE@XZ,0x00026AB2,EnragedBehaviorModuleData dtor member +0x8
 ??1Entry@?$HashTemplateClass@VStringClass@@H@@QAE@XZ,0x00013101,pinharvest x1 (thunk)
 ??1Entry@?$HashTemplateClass@VStringClass@@H@@QAE@XZ,0x000259EB,pinharvest x1 (thunk)
 ??1Entry@?$HashTemplateClass@VStringClass@@H@@QAE@XZ,0x00028E9D,pinharvest x1 (thunk)
@@ -48003,6 +48015,7 @@ name,address,notes
 ??1ModelArrayClass@HLodClass@@UAE@XZ,0x000346BC,pinharvest x1 (thunk)
 ??1ModelArrayClass@HLodClass@@UAE@XZ,0x00038410,pinharvest x1 (thunk)
 ??1ModelArrayClass@HLodClass@@UAE@XZ,0x0003C69B,pinharvest x1 (thunk)
+??1ModelConditionSoundSelectorClientBehaviorModuleDataMember@@QAE@XZ,0x000241AE,ModelConditionSoundSelectorClientBehaviorModuleData dtor member +0x8
 ??1NamedPivotMapClass@@UAE@XZ,0x00974E20,call-target pin: row deleted (ZH drift: element-ctor ptr)
 ??1NodeCompressedMotionStruct@@QAE@XZ,0x0002A08B,pinharvest x1 (thunk)
 ??1NodeCompressedMotionStruct@@QAE@XZ,0x0003B8DB,pinharvest x1 (thunk)
@@ -48094,6 +48107,7 @@ name,address,notes
 ??1UDP@@QAE@XZ,0x00006591
 ??1UnicodeString@@QAE@XZ,0x008881D0,freeMessageResources depth Open-BFME4+Grok
 ??1UnpauseSpecialPowerUpgradeModuleDataMember@@QAE@XZ,0x0001B97D,UnpauseSpecialPowerUpgradeModuleData dtor member at this+8; ILT thunk for body 0x00129C80
+??1UpgradeSoundSelectorClientBehaviorModuleDataMember@@QAE@XZ,0x0001EA97,UpgradeSoundSelectorClientBehaviorModuleData dtor member +0x8
 ??1UserPreferences@@UAE@XZ,0x0003F25B
 ??1Video@@QAE@XZ,0x0001642D
 ??1W3DAnimationInfo@@QAE@XZ,0x00020018,ILT thunk used by call site
@@ -49357,6 +49371,7 @@ name,address,notes
 ?apply@ControlBarSetDefaultConfigShim@@QAEXXZ,0x0049E090,ControlBar setDefaultControlBarConfig incremental-link thunk target through a TU-local forwarding shim
 ?apply@ControlBarSetLowConfigShim@@QAEXXZ,0x0049E120,ControlBar setLowControlBarConfig incremental-link thunk target through a TU-local forwarding shim
 ?apply@ToppleUpdateApplyTopplingForceShim@@QAEXPBUCoord3D@@MI@Z,0x002B1BC0,ToppleUpdate applyTopplingForce incremental-link thunk target through a TU-local forwarding shim
+?applyDefinition@INI@@QAEXPAVInGameUI@@PAX@Z,0x008520A0,INI parseInGameUIDefinition callee thiscall apply
 ?applyTopplingForce@ToppleUpdate@@QAEXPBUCoord3D@@MI@Z,0x0003FC97
 ?assign@DefaultModuleTemplate0AssignShim@FXParticleSystem@@QAEXPBX@Z,0x000111C6,DefaultModuleTemplate<0> assignment thunk used through a TU-local layout shim
 ?assign@DefaultModuleTemplate1AssignShim@FXParticleSystem@@QAEXPBX@Z,0x0001EC36,DefaultModuleTemplate<1> assignment thunk used through a TU-local layout shim
@@ -50300,6 +50315,7 @@ name,address,notes
 ?set@?$bitset@$0ED@@_STL@@QAEAAV12@IH@Z,0x007EA320,pinharvest x1 (body)
 ?set@?$bitset@$0ED@@_STL@@QAEAAV12@IH@Z,0x007EA380,pinharvest x1 (body)
 ?set@AsciiString@@QAEXABV1@@Z,0x00887C90,same body the ledger claims as ?set@?$StringBase@D@@QAEXABV1@@Z; operator= inlines to a call to it
+?set@AsciiStringField@@QAEXPAVAsciiString@@@Z,0x0002AF90,AsciiStringField set used by MapObject::setWaypointName
 ?set@Bitset67SetShim@_STL@@QAEAAV?$bitset@$0ED@@2@IH@Z,0x000E9910,incremental-link thunk target through a TU-local forwarding shim
 ?set@DX8TextureStageStateShim@@SAXIKI@Z,0x006C5840,DX8Wrapper incremental-link static thunk target through a TU-local forwarding shim
 ?set@GameFileSetNameShim@@QAEPBDPBD@Z,0x006F63B0,GameFileClass Set_Name incremental-link thunk target through a TU-local forwarding shim
@@ -50315,6 +50331,7 @@ name,address,notes
 ?set@UnicodeString@@QAEXABV1@@Z,0x00887C90,additive; per-TU copy (static 0x01336E2C)
 ?set@UnicodeString@@QAEXABV1@@Z,0x00888530
 ?setAnimData@BFMEAnimateWindowLayout@@QAEXUICoord2D@@000UBFMECoord2D@@II@Z,0x003D5B9,BFME Coord2D ABI layout call to AnimateWindow::setAnimData
+?setAsciiString@Dict@@QAEPAVAsciiString@@V2@@Z,0x00009304,Dict setAsciiString used by MapObject::setWaypointName
 ?setChunkNumber@NetWrapperCommandMsg@@QAEXI@Z,0x0003AE36,ILT thunk; real body 0xA73F10
 ?setConnectionState@NAT@@IAEXHW4NATConnectionState@@@Z,0x00670DC0,processGlobalMessage callee (ILT body)
 ?setControlBarScheme@ControlBarSchemeManager@@QAEXVAsciiString@@@Z,0x004AD880,body from setControlBarSchemeByName call @0x4A00AF via ILT 0xA196
@@ -50686,5 +50703,6 @@ _bfme_timeGetTime@0,0x000481E4,ILT thunk for timeGetTime (non-dllimport call sit
 _gameTextPrepare@16,0x009F6D76,GameTextManager reset prepare helper shim
 _gameTextRelease,0x00881EF0,GameTextManager reset release helper shim
 g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
+g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
