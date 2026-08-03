@@ -1922,7 +1922,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0ObjectWeaponStatusHelper@@QAE@PAVThing@@PBVModuleData@@@Z,,0x001C1340,107,Code/GameEngine/Source/GameLogic/Object/ObjectWeaponStatusHelperCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM ctor
 ??0OneRingPenaltyUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00298E10,157,Code/GameEngine/Source/GameLogic/Object/Update/OneRingPenaltyUpdateCtorThunk.cpp,matched,Exact standalone C++ __emit thunk from certified retail constructor
 ??0OneRingPenaltyUpdateModuleData@@QAE@XZ,,0x00298D30,32,Code/GameEngine/Source/GameLogic/Object/Update/OneRingPenaltyUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ constructor thunk
-??0OpenContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002277A0,722,Code/masm_dumps/OpenContain_constructor.asm,matched,Exact 722B @ 0x002277A0; Exact retail MASM module ctor; unique friend_newModuleInstance factory 0x115960
+??0OpenContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002277A0,722,Code/GameEngine/Source/GameLogic/Object/Contain/OpenContainCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from certified module-constructor MASM body;object-symbol=_bfme_OpenContainCtor_2277A0
 ??0OpenContainModuleData@@QAE@XZ,,0x00227200,398,Code/GameEngine/Source/GameLogic/AI/OpenContainModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ ICF-alias raw module-data constructor
 ??0OptionPreferences@@QAE@XZ,,0x0003713C,5,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionPreferencesCtorThunk.cpp,matched,5-byte incremental-link constructor thunk converted to focused C++ source
 ??0OrphanData@@QAE@XZ,,0x0020A7A0,20,Code/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehavior.cpp,matched,
