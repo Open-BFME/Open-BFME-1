@@ -57241,6 +57241,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0SupplyWarehouseDockUpdateModuleData@@QAE@XZ,,0x002CFB00,29,Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyWarehouseDockUpdate.cpp,matched,
 ??0Surface@@QAE@HH@Z,,0x0043CD10,25,Code/Libraries/Source/WWVegas/WW3D2/txt.cpp,matched,
 ??0SwayClientUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x006044E0,68,Code/GameEngine/Source/GameClient/Drawable/Update/SwayClientUpdateCtorThunk.cpp,matched,Open-BFME5 clean C++ ClientUpdateModule field init
+??0SwayClientUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x006044E0,68,Code/GameEngine/Source/GameClient/Drawable/Update/SwayClientUpdateCtorThunk.cpp,matched,Open-BFME5 exact C++ thunk replacing MASM dump
 ??0SysTimeClass@@QAE@XZ,,0x009E64B0,28,Code/Libraries/Source/WWVegas/WWLib/systimer.cpp,matched,
 ??0TCreateUnitsInfo@@QAE@XZ,,0x001F2A80,10,Code/GameEngine/Source/Common/RTS/Team.cpp,matched,
 ??0TPropType@@QAE@XZ,,0x002DFCE0,10,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBuffer.cpp,matched,
@@ -57863,6 +57864,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1ExperienceScalarUpgradeModuleData@@UAE@XZ,,0x002D51E0,67,Code/masm_dumps/ExperienceScalarUpgradeModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1ExperienceTracker@@MAE@XZ,,0x001B0DB0,79,Code/GameEngine/Source/GameLogic/Object/ExperienceTracker.cpp,matched,
 ??1FXBoneInfo@@QAE@XZ,,0x0037E1A0,8,Code/GameEngine/Source/GameLogic/Object/Update/FXBoneInfoDestructor.cpp,matched,thunk-dump converted to clean C++ destructor body at destination 0x37E1A0
+??1FadeAndDieOrnamentUpdateModuleData@@UAE@XZ,,0x00126E70,67,Code/GameEngine/Source/GameLogic/Object/Die/FadeAndDieOrnamentUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1FadeAndDieOrnamentUpdateModuleData@@UAE@XZ,,0x00126E70,67,Code/masm_dumps/FadeAndDieOrnamentUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1FastFixedAllocator@@QAE@XZ,,0x00B02720,26,Code/Libraries/Source/WWVegas/WWLib/FastFixedAllocatorThunks.cpp,matched,Converted to an exact standalone C++ thunk
 ??1File@@UAE@XZ,,0x009CB8C0,133,Code/GameEngine/Source/Common/System/File.cpp,matched,scalar dtor reached from ??_GFile@@ at 0x009CB950; installs vtable 0x01143AF8
@@ -69210,5 +69212,6 @@ _powf,,0x00097070,14,Code/Libraries/Source/WWVegas/WWMath/vp.cpp,matched,
 _sinf,,0x00873910,7,Code/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,icf-owner=?Sin@@YAMM@Z
 _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,ICF alias of existing matched body
 _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,ICF alias of existing matched body
+?insert_unique@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGE@2@@Z,,0x0093FE46,142,Code/Libraries/Source/WWVegas/WWLib/STLUnsignedShortByteTreeInsertUniquePairThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from structural retail candidate
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGE@2@@Z,,0x0093FE46,142,Code/Libraries/Source/WWVegas/WWLib/STLUnsignedShortByteTreeInsertUniquePairThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from structural retail candidate
 
