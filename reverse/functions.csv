@@ -1419,7 +1419,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0DamageFXStore@@QAE@XZ,,0x00067C10,113,Code/GameEngine/Source/Common/DamageFXStoreCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM ctor; retail hashtable layout preserved
 ??0DamageModuleModuleData@@QAE@XZ,,0x0027EAE0,283,Code/GameEngine/Source/GameLogic/AI/DamageModuleModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ ICF-alias module-data constructor
 ??0DarknessSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00259B80,46,Code/GameEngine/Source/GameLogic/Object/SpecialPower/DarknessSpecialPower.cpp,matched,clean C++ empty derived constructor with BFME interface layout
-??0DarknessSpecialPowerModuleData@@QAE@XZ,,0x00259EB0,38,Code/GameEngine/Source/Common/RTS/DarknessSpecialPowerModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw special-power data constructor
+??0DarknessSpecialPowerModuleData@@QAE@XZ,,0x00259EB0,38,Code/GameEngine/Source/Common/RTS/DarknessSpecialPowerModuleDataCtorThunk.cpp,matched,Open-BFME5 clean C++ SpecialPower base + 10.0f field
 ??0DataChunkInput@@QAE@PAVChunkInputStream@@@Z,,0x001030D0,109,Code/GameEngine/Source/Common/System/DataChunkInputCtorThunk.cpp,matched,Open-BFME5 exact C++ raw DataChunkInput constructor
 ??0DataChunkOutput@@QAE@PAVOutputStream@@@Z,,0x00102BA0,168,Code/GameEngine/Source/Common/System/DataChunkOutputCtorThunk.cpp,matched,Open-BFME5 exact C++ raw DataChunkOutput constructor
 ??0DataChunkTableOfContents@@QAE@XZ,,0x001025D0,20,Code/GameEngine/Source/Common/System/DataChunk.cpp,matched,
