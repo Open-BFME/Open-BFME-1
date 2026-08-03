@@ -10095,7 +10095,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?getUiText@ScriptAction@@QAE?AVAsciiString@@XZ","","0x00356340","395","Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptAction_getUiText_Thunk.cpp","matched","Open-BFME5 MASM lift"
 "?getUnicodeBuildLocation@Version@@","","0x000AF220","273","Code/masm_dumps/_sa5__getUnicodeBuildLocation_Version___AF220.asm","matched","Exact 273B Open-BFME4"
 "?getUnicodeBuildTime@Version@@","","0x000AF080","292","Code/GameEngine/Source/Common/Version_getUnicodeBuildTime_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_Version_getUnicodeBuildTime_AF080"
-"?getUnicodeBuildUser@Version@@","","0x000AF3B0","273","Code/masm_dumps/_sa5__getUnicodeBuildUser_Version___AF3B0.asm","matched","Exact 273B Open-BFME4"
+"?getUnicodeBuildUser@Version@@","","0x000AF3B0","273","Code/GameEngine/Source/Common/Version_getUnicodeBuildUser_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_Version_getUnicodeBuildUser_AF3B0"
 "?getUnicodeDateBuffer@@YA?AVUnicodeString@@U_SYSTEMTIME@@@Z","","0x0010D7A0","324","Code/GameEngine/Source/Common/getUnicodeDateBuffer_Thunk.cpp","matched","Certified packet 338 reviewed retail body"
 "?getUnicodeString@Dict@@QBE?AVUnicodeString@@W4NameKeyType@@PA_N@Z","","0x00068600","96","Code/GameEngine/Source/Common/Dict.cpp","matched","recovered from Open-BFME4 overnight session (deepseek)"
 "?getUnicodeVersion@Version@@","","0x000AEE00","331","Code/masm_dumps/_sa4__getUnicodeVersion_Version___AEE00.asm","matched","Exact 331B Open-BFME4"
