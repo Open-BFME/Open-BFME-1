@@ -1,86 +1,74 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /GX- /O2 /Ob2
+
+// Open-BFME5: SubObjectsUpgrade module ctor
+// UpgradeModule base multi-inheritance vtbls, then global+0x3c to +0x1c, byte +0x20=0.
 
 class Thing;
 class ModuleData;
 
-class SubObjectsUpgrade
+class BehaviorModule
 {
 public:
-    SubObjectsUpgrade(Thing *, const ModuleData *);
+	virtual void behaviorModuleAnchor();
+
+private:
+	unsigned char m_data[8];
+};
+
+class BehaviorModuleInterface
+{
+public:
+	virtual void behaviorModuleInterfaceAnchor();
+};
+
+class UpgradeMux
+{
+public:
+	virtual void upgradeMuxAnchor();
+
+private:
+	bool m_upgradeExecuted;
+};
+
+class ModuleInterface
+{
+public:
+	virtual void moduleInterfaceAnchor();
+};
+
+class UpgradeModule : public BehaviorModule,
+                      public BehaviorModuleInterface,
+                      public UpgradeMux,
+                      public ModuleInterface
+{
+public:
+	UpgradeModule(Thing *thing, const ModuleData *moduleData);
+};
+
+class GlobalThing
+{
+public:
+	unsigned char m_pad[0x3C];
+	unsigned int m_field3c;
+};
+
+// DIR32 global filled from retail.
+extern GlobalThing *g_theWritableGlobalData;
+
+class SubObjectsUpgrade : public UpgradeModule
+{
+public:
+	SubObjectsUpgrade(Thing *thing, const ModuleData *moduleData);
+
+private:
+	unsigned int m_field1c;
+	unsigned char m_byte20;
 };
 
 // ??0SubObjectsUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z
-__declspec(naked) SubObjectsUpgrade::SubObjectsUpgrade(Thing *, const ModuleData *)
+SubObjectsUpgrade::SubObjectsUpgrade(Thing *thing, const ModuleData *moduleData)
+	: UpgradeModule(thing, moduleData)
 {
-    __asm {
-        __emit 0x8b;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x56;
-        __emit 0x8b;
-        __emit 0xf1;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x50;
-        __emit 0x51;
-        __emit 0x8b;
-        __emit 0xce;
-        __emit 0xe8;
-        __emit 0x61;
-        __emit 0x3f;
-        __emit 0xd3;
-        __emit 0xff;
-        __emit 0xc7;
-        __emit 0x06;
-        __emit 0xc4;
-        __emit 0xdf;
-        __emit 0x0c;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x0c;
-        __emit 0x00;
-        __emit 0xdf;
-        __emit 0x0c;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x10;
-        __emit 0xb0;
-        __emit 0xde;
-        __emit 0x0c;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x18;
-        __emit 0x9c;
-        __emit 0xde;
-        __emit 0x0c;
-        __emit 0x01;
-        __emit 0x8b;
-        __emit 0x15;
-        __emit 0x98;
-        __emit 0x08;
-        __emit 0x2f;
-        __emit 0x01;
-        __emit 0x8b;
-        __emit 0x42;
-        __emit 0x3c;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x1c;
-        __emit 0xc6;
-        __emit 0x46;
-        __emit 0x20;
-        __emit 0x00;
-        __emit 0x8b;
-        __emit 0xc6;
-        __emit 0x5e;
-        __emit 0xc2;
-        __emit 0x08;
-        __emit 0x00;
-    }
+	m_field1c = g_theWritableGlobalData->m_field3c;
+	m_byte20 = 0;
 }

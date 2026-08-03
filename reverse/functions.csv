@@ -2273,7 +2273,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0StructureToppleUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00034711,5,Code/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdateCtorThunk.cpp,matched,5-byte incremental-link constructor thunk converted to focused C++ source
 ??0StructureToppleUpdateModuleData@@QAE@XZ,,0x0012BF50,398,Code/masm_dumps/StructureToppleUpdateModuleData_constructor.asm,matched,Exact retail MASM ModuleData ctor; unique factory 0x12C250
 ??0SubObjectArrayClass@HLodDefClass@@QAE@XZ,,0x009789F0,20,Code/Libraries/Source/WWVegas/WW3D2/hlod.cpp,matched,
-??0SubObjectsUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002D83A0,69,Code/GameEngine/Source/GameLogic/Object/Upgrade/SubObjectsUpgradeCtorThunk.cpp,matched,Open-BFME5 exact C++ thunk replacing MASM dump
+??0SubObjectsUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002D83A0,69,Code/GameEngine/Source/GameLogic/Object/Upgrade/SubObjectsUpgradeCtorThunk.cpp,matched,Open-BFME5 clean C++ UpgradeModule multi-inheritance + global field
 ??0SubObjectsUpgradeModuleData@@QAE@XZ,,0x0012B6C0,194,Code/GameEngine/Source/GameLogic/Object/Upgrade/SubObjectsUpgradeModuleDataCtorThunk.cpp,matched,Exact 194B @ 0x0012B6C0; Exact retail MASM ModuleData ctor; unique factory 0x12B7F0
 ??0SubsystemInterface@@QAE@XZ,,0x009A1A30,16,Code/GameEngine/Source/Common/System/SubsystemInterface.cpp,matched,MASM converted to clean C++
 ??0SubsystemInterfaceList@@QAE@XZ,,0x0040D800,22,Code/GameEngine/Source/Common/System/SubsystemInterface.cpp,matched,
