@@ -57772,8 +57772,6 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1BuddyMessage@@QAE@XZ,,0x004EA4B0,90,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyMessageDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1BroadcastStealthUpdateModuleData@@UAE@XZ,,0x0012ADF0,80,Code/GameEngine/Source/Common/BroadcastStealthUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1BuddyMessage@@QAE@XZ,,0x004EA4B0,90,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyMessageDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
-??1BroadcastStealthUpdateModuleData@@UAE@XZ,,0x0012ADF0,80,Code/masm_dumps/BroadcastStealthUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
-??1BuddyMessage@@QAE@XZ,,0x004EA4B0,90,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyMessageDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1Buffer@@QAE@XZ,,0x009E1E30,40,Code/Libraries/Source/WWVegas/WWLib/buff.cpp,matched,
 ??1BufferPipe@@UAE@XZ,,0x009E2070,76,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,
 ??1BufferStraw@@UAE@XZ,,0x00921790,76,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,definite (call-site resolved)
@@ -57849,6 +57847,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1DeployStyleAIUpdateModuleData@@UAE@XZ,,0x0027E4E0,145,Code/masm_dumps/DeployStyleAIUpdateModuleData_destructor.asm,matched,Exact 145B SEH dtor Open-BFME4
 ??1DestroyEnvironmentUpdate@@UAE@XZ,,0x0028D0C0,422,Code/masm_dumps/DestroyEnvironmentUpdate_destructor.asm,matched,Exact 422B; factory ownership Open-BFME4
 ??1DieModuleData@@UAE@XZ,,0x00101EB0,86,Code/masm_dumps/DieModuleData_destructor.asm,matched,Exact 86B SEH dtor Open-BFME4
+??1DieModuleData@@UAE@XZ,,0x00101EB0,86,Code/GameEngine/Source/GameLogic/Object/Behavior/DieModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1Display@@UAE@XZ,,0x005CB360,402,Code/masm_dumps/Display_destructor_5CB360.asm,matched,Certified packet 109; Display vtable and derived destructor chains; retail sha256 70ba90e47128dd067f1534c8ad52d468cf88aa57081a16a2c8d8a800576e756b
 ??1DistLODClass@@UAE@XZ,,0x00725F40,86,Code/Libraries/Source/WWVegas/WW3D2/distlod.cpp,matched,
 ??1DownloadManager@@UAE@XZ,,0x00627730,75,Code/GameEngine/Source/GameNetwork/DownloadManager.cpp,matched,
@@ -57931,7 +57930,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1GiantBirdSlowDeathBehaviorModuleData@@UAE@XZ,,0x001FFF50,79,Code/GameEngine/Source/GameLogic/AI/GiantBirdSlowDeathBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1GiveUpgradeUpdateModuleData@@UAE@XZ,,0x0025DE90,120,Code/GameEngine/Source/GameLogic/AI/GiveUpgradeUpdateModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1GiantBirdSlowDeathBehaviorModuleData@@UAE@XZ,,0x001FFF50,79,Code/GameEngine/Source/GameLogic/AI/GiantBirdSlowDeathBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
-??1GiveUpgradeUpdateModuleData@@UAE@XZ,,0x0025DE90,120,Code/masm_dumps/GiveUpgradeUpdateModuleData_destructor.asm,matched,Exact 120B SEH dtor factory->vtable Open-BFME4
+??1GiveUpgradeUpdateModuleData@@UAE@XZ,,0x0025DE90,120,Code/GameEngine/Source/GameLogic/AI/GiveUpgradeUpdateModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1GloriousChargeUpdate@@UAE@XZ,,0x0025EA40,159,Code/GameEngine/Source/Common/RTS/GloriousChargeUpdateDtorThunk.cpp,matched,Exact standalone C++ __emit thunk from certified retail destructor
 ??1GrantStealthBehaviorModuleData@@UAE@XZ,,0x00297D60,93,Code/masm_dumps/GrantStealthBehaviorModuleData_destructor.asm,matched,Exact 93B SEH dtor Open-BFME4
 ??1GridCullSystemClass@@UAE@XZ,,0x008DCAD0,97,Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp,matched,
@@ -58241,6 +58240,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1UpgradeCenter@@UAE@XZ,,0x0010A8C0,111,Code/masm_dumps/UpgradeCenter_dtor.asm,matched,True body via UpgradeCenter ctor vtable 0x1088D24 scalar dtor chain; queue RVA was int3 pad before ICF TeamFactory/PartitionManager
 ??1UpgradeDieModuleData@@UAE@XZ,,0x001268A0,67,Code/masm_dumps/UpgradeDieModuleData_destructor.asm,matched,Exact 67B SEH dtor factory->vtable Open-BFME4
 ??1UpgradeModuleData@@UAE@XZ,,0x00101EB0,86,Code/masm_dumps/UpgradeModuleData_destructor.asm,matched,Exact 86B SEH dtor Open-BFME4
+??1UpgradeDieModuleData@@UAE@XZ,,0x001268A0,67,Code/GameEngine/Source/GameLogic/Object/Upgrade/UpgradeDieModuleDataDestructorThunk.cpp,matched,Exact 67B SEH dtor factory->vtable Open-BFME4
+??1UpgradeModuleData@@UAE@XZ,,0x00101EB0,86,Code/GameEngine/Source/GameLogic/Object/Upgrade/UpgradeModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM ICF alias
 ??1UpgradeModuleModuleData@@UAE@XZ,,0x00128FA0,273,Code/masm_dumps/UpgradeModuleModuleData_destructor.asm,matched,Exact 273B ModuleData SEH dtor Open-BFME4
 ??1UpgradeSoundSelectorClientBehaviorModuleData@@UAE@XZ,,0x00608F80,67,Code/masm_dumps/UpgradeSoundSelectorClientBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory 0x121ED0 ctor 0x608DC0 prove ownership
 ??1UpgradeTemplate@@MAE@XZ,,0x0010ACB0,170,Code/masm_dumps/UpgradeTemplate_destructor_0010ACB0_packet262.asm,matched,Certified packet 262 exact retail MASM f78745debd90e92551686dc404ec95aed7f2fa59f73073f3484f0f90880b45e3
