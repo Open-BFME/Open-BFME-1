@@ -882,7 +882,7 @@ ControlBarSchemeManager::~ControlBarSchemeManager( void )
 // Parse the Image Part of the command bar
 //-----------------------------------------------------------------------------
 // ?parseImagePart@ControlBarSchemeManager@@SAXPAVINI@@PAX1PBX@Z
-// Body in ControlBarScheme_parseImagePart.asm (exact 172B retail @ 0x4AE920).
+// Body in ControlBarSchemeManager_parseImagePart_Thunk.cpp (exact 172B retail @ 0x4AE920).
 // Retail inlines addImage + STLport list node alloc; C++ emits call-shaped list insert.
 
 //
