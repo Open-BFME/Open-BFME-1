@@ -7890,7 +7890,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?friend_newModuleData@TunnelContain@@SAPAVModuleData@@PAVINI@@@Z","","0x00116470","110","Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp","matched","BFME retail allocation-size facade"
 "?friend_newModuleData@UndeadBody@@SAPAVModuleData@@PAVINI@@@Z","","0x00114D70","107","Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp","matched",""
 "?friend_newModuleData@UnitCrateCollide@@SAPAVModuleData@@PAVINI@@@Z","","0x00125F10","107","Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp","matched","BFME retail allocation-size facade"
-"?friend_newModuleData@UnpauseSpecialPowerUpgrade@@SAPAVModuleData@@PAVINI@@@Z","","0x0011D7C0","107","Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp","matched","object-symbol=?friend_newModuleData@CashBountyPower@@SAPAVModuleData@@PAVINI@@@Z;C++ alias"
+"?friend_newModuleData@UnpauseSpecialPowerUpgrade@@SAPAVModuleData@@PAVINI@@@Z","","0x0011D7C0","107","Code/GameEngine/Source/GameLogic/Object/SpecialPower/UnpauseSpecialPowerUpgradeFriendNewModuleDataThunk.cpp","matched","C++ factory body replaces 107B MASM dump; retail allocation size 0x78"
 "?friend_newModuleData@UpdateModule@@SAPAVModuleData@@PAVINI@@@Z","","0x00124080","112","Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp","matched","source-local retail data facade preserves derived UpdateModule ABI"
 "?friend_newModuleData@UpgradeDie@@SAPAVModuleData@@PAVINI@@@Z","","0x00125710","107","Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp","matched","BFME retail allocation-size facade"
 "?friend_newModuleData@UpgradeModule@@SAPAVModuleData@@PAVINI@@@Z","","0x00128DA0","107","Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp","matched",""
