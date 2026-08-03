@@ -2630,17 +2630,17 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1?$DefaultModuleTemplate@$05@FXParticleSystem@@UAE@XZ,,0x005D5760,50,Code/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultModuleTemplate05DestructorThunk.cpp,matched,Open-BFME5 exact C++ isolated raw default template destructor
 ??1?$DefaultModuleTemplate@$06@FXParticleSystem@@UAE@XZ,,0x005D9910,50,Code/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultModuleTemplate06DestructorThunk.cpp,matched,Open-BFME5 exact C++ isolated raw default template destructor
 ??1?$DefaultModuleTemplate@$0A@@FXParticleSystem@@UAE@XZ,,0x005D5520,50,Code/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultModuleTemplate0ADestructorThunk.cpp,matched,Open-BFME5 exact C++ isolated raw default template destructor
-??1?$DynamicVectorClass@PAUtThreadInfoType@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;Open-BFME5 ICF clean C++
-??1?$DynamicVectorClass@PAVDefinitionClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;Open-BFME5 ICF clean C++
-??1?$DynamicVectorClass@PAVRender2DClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;Open-BFME5 ICF clean C++
-??1?$DynamicVectorClass@PAVTextureClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;Open-BFME5 ICF clean C++
-??1?$DynamicVectorClass@PAVVertexMaterialClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;Open-BFME5 ICF clean C++
+??1?$DynamicVectorClass@PAUtThreadInfoType@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;ICF alias Open-BFME5
+??1?$DynamicVectorClass@PAVDefinitionClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;ICF alias Open-BFME5
+??1?$DynamicVectorClass@PAVRender2DClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;ICF alias Open-BFME5
+??1?$DynamicVectorClass@PAVTextureClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;ICF alias Open-BFME5
+??1?$DynamicVectorClass@PAVVertexMaterialClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;ICF alias Open-BFME5
 ??1?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAE@XZ,,0x0093E480,67,Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp,matched,icf-owner=??1?$DynamicVectorClass@UFileOffsetStruct@@@@UAE@XZ
 ??1?$DynamicVectorClass@UFileOffsetStruct@@@@UAE@XZ,,0x0093E480,67,Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp,matched,
 ??1?$DynamicVectorClass@UPendingSurfaceStruct@Render2DSentenceClass@@@@UAE@XZ,,0x009409A0,67,Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.cpp,matched,
 ??1?$DynamicVectorClass@UWeightInfoStruct@NamedPivotMapClass@@@@UAE@XZ,,0x0093E480,67,Code/Libraries/Source/WWVegas/WW3D2/hanim.cpp,matched,icf-owner=??1?$DynamicVectorClass@UFileOffsetStruct@@@@UAE@XZ
 ??1?$DynamicVectorClass@U_ENUM_VALUE@EnumParameterClass@@@@UAE@XZ,,0x0093E480,67,Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.cpp,matched,
-??1?$DynamicVectorClass@VShaderClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;Open-BFME5 ICF clean C++
+??1?$DynamicVectorClass@VShaderClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;ICF alias Open-BFME5
 ??1?$DynamicVectorClass@VStringClass@@@@UAE@XZ,,0x0013BB30,67,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp,matched,
 ??1?$HashTemplateClass@IPAVMeshClass@@@@QAE@XZ,,0x00690980,36,Code/Libraries/Source/WWVegas/WW3D2/dx8rendererdebugger.cpp,matched,
 ??1?$HashTemplateClass@UEdge@Strip@@PAUTriangle@2@@@QAE@XZ,,0x00690980,36,Code/Libraries/Source/WWVegas/WW3D2/stripoptimizer.cpp,matched,
@@ -2702,10 +2702,10 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1?$SimpleVecClass@VVector4@@@@UAE@XZ,,0x0078C7E0,41,Code/Libraries/Source/WWVegas/WW3D2/meshgeometry.cpp,matched,
 ??1?$StringBase@D@@AAE@XZ,0x00004A34,0x0005E490,5,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,destroy char string base; size trimmed: trailing int3 padding
 ??1?$StringBase@G@@AAE@XZ,0x000160F9,0x0005E4E0,5,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,destroy wide string base; size trimmed: trailing int3 padding
-??1?$VectorClass@H@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;Open-BFME5 ICF clean C++
-??1?$VectorClass@M@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;Open-BFME5 ICF clean C++
-??1?$VectorClass@PAVTextureClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;Open-BFME5 ICF clean C++
-??1?$VectorClass@PAVVertexMaterialClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;Open-BFME5 ICF clean C++
+??1?$VectorClass@H@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;ICF alias Open-BFME5
+??1?$VectorClass@M@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;ICF alias Open-BFME5
+??1?$VectorClass@PAVTextureClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;ICF alias Open-BFME5
+??1?$VectorClass@PAVVertexMaterialClass@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;ICF alias Open-BFME5
 ??1?$VectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAE@XZ,,0x0093E480,67,Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp,matched,icf-owner=??1?$DynamicVectorClass@UFileOffsetStruct@@@@UAE@XZ
 ??1?$VectorClass@UFileOffsetStruct@@@@UAE@XZ,,0x0093E480,67,Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp,matched,icf-owner=??1?$DynamicVectorClass@UFileOffsetStruct@@@@UAE@XZ
 ??1?$VectorClass@UPendingSurfaceStruct@Render2DSentenceClass@@@@UAE@XZ,,0x00940810,67,Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.cpp,matched,
@@ -2713,9 +2713,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1?$VectorClass@U_ENUM_VALUE@EnumParameterClass@@@@UAE@XZ,,0x0093E480,67,Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.cpp,matched,
 ??1?$VectorClass@VActiveCategoryStackClass@@@@UAE@XZ,,0x00AFEF80,73,Code/Libraries/Source/WWVegas/WWDebug/wwmemlog.cpp,matched,
 ??1?$VectorClass@VStringClass@@@@UAE@XZ,,0x0013B3F0,67,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp,matched,
-??1?$VectorClass@VVector2@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;Open-BFME5 ICF clean C++
-??1?$VectorClass@VVector3@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;Open-BFME5 ICF clean C++
-??1?$VectorClass@VVector4@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;Open-BFME5 ICF clean C++
+??1?$VectorClass@VVector2@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;ICF alias Open-BFME5
+??1?$VectorClass@VVector3@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;ICF alias Open-BFME5
+??1?$VectorClass@VVector4@@@@UAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;ICF alias Open-BFME5
 ??1?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@XZ,,0x00640990,72,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
 ??1?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@XZ,,0x00640AF0,72,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
 ??1?$_List_base@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAE@XZ,,0x00076B00,66,Code/GameEngine/Source/Common/INI/INIMapCache.cpp,matched,
@@ -2932,7 +2932,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1FlammableUpdateModuleData@@UAE@XZ,,0x00294C40,80,Code/masm_dumps/FlammableUpdateModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor vtable and deleting-wrapper chain prove ownership
 ??1FontLibrary@@UAE@XZ,,0x00168710,79,Code/GameEngine/Source/GameClient/GUI/GameFont.cpp,matched,
 ??1FoundationAIUpdate@@UAE@XZ,,0x002B9D60,123,Code/masm_dumps/FoundationAIUpdate_destructor.asm,matched,Exact 123B @ 0x002B9D60; Exact retail MASM; instance factory->vtable dtor; del 0x2BA130 ctor 0x2BA040 vt 0xCC734C
-??1FrameData@@QAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;Open-BFME5 ICF clean C++
+??1FrameData@@QAE@XZ,,0x00AFF130,45,Code/GameEngine/Source/Common/ActiveCategoryStackClassDestructorThunk.cpp,matched,object-symbol=??1ActiveCategoryStackClass@@UAE@XZ;ICF alias Open-BFME5
 ??1FrameDataManager@@MAE@XZ,,0x00670540,102,Code/GameEngine/Source/GameNetwork/FrameDataManager.cpp,matched,
 ??1GameEngine@@UAE@XZ,,0x0007AC33,63,Code/GameEngine/Source/Common/GameEngineDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1GameLogic@@UAE@XZ,,0x0038F080,821,Code/masm_dumps/GameLogic_dtor.asm,matched,Exact 821B MASM; true body 0x38F080 (queue 0x9F265F int3 pad); dual vtbl+init globals; Open-BFME4+Grok
@@ -10480,7 +10480,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?friend_newModuleData@StructureToppleUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0012C250,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,BFME retail allocation-size facade
 ?friend_newModuleData@SubObjectsUpgrade@@SAPAVModuleData@@PAVINI@@@Z,,0x0012B7F0,110,Code/GameEngine/Source/GameLogic/Object/Upgrade/SubObjectsUpgradeFriendNewModuleDataThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM factory
 ?friend_newModuleData@SupplyCenterDockUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011AFC0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,BFME retail allocation-size facade
-?friend_newModuleData@SupplyCenterProductionExitUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001243A0,70,Code/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/SupplyCenterProductionExitUpdateFriendNewModuleDataThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM factory
+?friend_newModuleData@SupplyCenterProductionExitUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x001243A0,70,Code/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/SupplyCenterProductionExitUpdateFriendNewModuleDataThunk.cpp,matched,Open-BFME5 clean C++ factory 0x20 ModuleData zero fields
 ?friend_newModuleData@SupplyTruckAIUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011B9B0,110,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,BFME retail allocation-size facade
 ?friend_newModuleData@SupplyWarehouseCripplingBehavior@@SAPAVModuleData@@PAVINI@@@Z,,0x001171F0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,module-glue cascade; located via ModuleFactory::init ModuleTemplate inline-build
 ?friend_newModuleData@SupplyWarehouseDockUpdate@@SAPAVModuleData@@PAVINI@@@Z,,0x0011BAC0,107,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,recovered from Open-BFME6 overnight session (GLM)
