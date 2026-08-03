@@ -5850,6 +5850,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?DiplomacyInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004C3430,59,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Diplomacy.cpp,matched,
 ?Distance@Vector3@@SAMABV1@0@Z,,0x006DFAD0,65,Code/Libraries/Source/WWVegas/WWMath/vector3.cpp,matched,
 ?DoShadows@@YAXAAVRenderInfoClass@@_N@Z,,0x007B73D0,160,Code/GameEngineDevice/Source/W3DDevice/GameClient/DoShadowsThunk.cpp,matched,Open-BFME5 MASM lift DoShadows
+
 ?DoTrees@@YAXAAVRenderInfoClass@@@Z,,0x006CDF50,23,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp,matched,
 ?DoXfer@ButterflyDrawModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z,0x0003967B,0x5f0c70,27,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
 ?DoXfer@DefaultAlphaModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z,0x0002EE88,0x5ee540,74,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
@@ -8574,8 +8575,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Write@OutputStream@DebugIOFlat@@QAEXPBD@Z,,0x00890DD0,92,Code/Libraries/Source/WWVegas/WWDebug/debug_io_flat.cpp,matched,
 ?Write@RawFileClass@@UAEHPBXH@Z,,0x009E6CA0,302,Code/Libraries/Source/WWVegas/WWLib/rawfile.cpp,matched,
 ?Write@UDP@@QAEHPBEIIG@Z,,0x00684A20,130,Code/GameEngine/Source/GameNetwork/udp.cpp,matched,
-?WriteActionDataChunk@ScriptAction@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x003513F0,160,Code/masm_dumps/ScriptAction_WriteActionDataChunk.asm,matched,Ghidra-bound BFME script-action writer
-?WriteActionFalseDataChunk@ScriptAction@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x003514C0,160,Code/masm_dumps/ScriptAction_WriteActionFalseDataChunk.asm,matched,Ghidra-bound BFME false-action writer
+?WriteActionDataChunk@ScriptAction@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x003513F0,160,Code/GameEngine/Source/Common/ScriptAction_WriteActionDataChunk_Thunk.cpp,matched,Ghidra-bound BFME script-action writer
+?WriteActionFalseDataChunk@ScriptAction@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x003514C0,160,Code/GameEngine/Source/Common/ScriptAction_WriteActionFalseDataChunk_Thunk.cpp,matched,Ghidra-bound BFME false-action writer
 ?WriteBuildInfo@Debug@@QAEXXZ,,0x0088A492,135,Code/Libraries/Source/WWVegas/WWDebug/Debug_WriteBuildInfo_Thunk.cpp,matched,Open-BFME5 lift 135B retail method MASM to standalone C++ thunk
 ?WriteGroupDataChunk@ScriptGroup@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x00359EE0,204,Code/masm_dumps/ScriptGroup_WriteGroupDataChunk.asm,matched,Ghidra-bound BFME script-group writer
 ?WriteOrConditionDataChunk@OrCondition@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x00355C90,64,Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp,matched,
@@ -11905,7 +11906,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?init@AudioManager@@,,0x006B8220,953,Code/masm_dumps/_s6__init_AudioManager__6B8220.asm,matched,Exact 953B 'AudioSettings.ini' Open-BFME4+Grok
 ?init@BFMEConnectionManager@@QAEXXZ,,0x00669050,694,Code/GameEngine/Source/GameNetwork/native_connection_timing.cpp,matched,
 ?init@BFMENetwork@@QAEXXZ,,0x006548C0,204,Code/GameEngine/Source/GameNetwork/native_network.cpp,matched,native BFME network wrapper vtable slot +0x04; creates backend and calls backend slot +0x04
-?init@ButtonFlashTransition@@UAEXPAVGameWindow@@@Z,,0x0059B070,161,Code/masm_dumps/_icf__init_ButtonFlashTransition_UAEXPAVGameWindow_Z_59B070.asm,matched,ICF true init @0x59B070/161; unique Gradient push; queue 0x5A07ED was int3+other fn
+?init@ButtonFlashTransition@@UAEXPAVGameWindow@@@Z,,0x0059B070,161,Code/GameEngine/Source/Common/ButtonFlashTransition_init_Thunk.cpp,matched,ICF true init @0x59B070/161; unique Gradient push; queue 0x5A07ED was int3+other fn
 ?init@CDManager@@UAEXXZ,,0x00101C30,1,Code/GameEngine/Source/Common/System/CDManager.cpp,matched,slot 1 of the CDManager vtable; one byte so the slot is the evidence not the body
 ?init@CampaignManager@@QAEXXZ,,0x005BB8C0,118,Code/GameEngine/Source/Common/promoted__init_CampaignManager_QAEXXZ_005BB8C0.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 118B
 ?init@ControlBar@@UAEXXZ,,0x004A0F70,3660,Code/masm_dumps/_str2__init_ControlBar_UAEXXZ_4A0F70.asm,matched,
@@ -11988,7 +11989,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?initMapStringFile@GameTextManager@@UAEXABVAsciiString@@@Z,,0x00438D50,432,Code/masm_dumps/GameTextManager_initMapStringFile_438D50.asm,matched,Certified packet 266 exact retail MASM recovery SHA256 f28f5290eb6cefbc311e91930450f2a92c175984d65d11f145be73d97689d17b
 ?initObserverControls@ControlBar@@QAEXXZ,,0x004A9CD0,1047,Code/masm_dumps/_str__initObserverControls_ControlBar_QAEXXZ_4A9CD0.asm,matched,
 ?initPolygonAssets@W3DMouse@@AAEXXZ,,0x00700950,174,Code/masm_dumps/_rn4__initPolygonAssets_W3DMouse__AAEXXZ_700950.asm,matched,reloc-needle Open-BFME4+Grok
-?initReverseAnimateWindow@ProcessAnimateWindowSlideFromBottomTimed@@UAEXPAVAnimateWindow@@I@Z,,0x00496860,150,Code/masm_dumps/ProcessAnimateWindowSlideFromBottomTimed_initReverseAnimateWindow_496860.asm,matched,Certified packet 199 vtable slot 2 ILT 0x180AC retail sha256 d16c132a59776ef0509a678575f14652168e6c65ddea6872684f8a702cb77eba
+?initReverseAnimateWindow@ProcessAnimateWindowSlideFromBottomTimed@@UAEXPAVAnimateWindow@@I@Z,,0x00496860,150,Code/GameEngine/Source/Common/ProcessAnimateWindowSlideFromBottomTimed_initReverseAnimateWindow_Thunk.cpp,matched,Certified packet 199 vtable slot 2 ILT 0x180AC retail sha256 d16c132a59776ef0509a678575f14652168e6c65ddea6872684f8a702cb77eba
 ?initReverseAnimateWindow@ProcessAnimateWindowSpiral@@UAEXPAVAnimateWindow@@I@Z,,0x00496A70,86,Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp,matched,
 ?initSkirmish@@YAXXZ,,0x004E8830,135,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ScoreScreen.cpp,matched,
 ?initSpecialPowershortcutBar@ControlBar@@QAEXPAVPlayer@@@Z,,0x0049F1C0,766,Code/masm_dumps/_str3__initSpecialPowershortcutBar_ControlBar_QAEXPAVPlayer_Z_49F1C0.asm,matched,
@@ -12412,7 +12413,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?onBodyDamageStateChange@PoisonedBehavior@@UAEXPBVDamageInfo@@W4BodyDamageType@@1@Z,,0x006CF660,3,Code/GameEngine/Source/GameLogic/Object/Behavior/PoisonedBehavior.cpp,matched,icf-owner=?Scale@RenderObjClass@@UAEXMMM@Z
 ?onBodyDamageStateChange@SpawnBehavior@@UAEXPBVDamageInfo@@W4BodyDamageType@@1@Z,,0x006CF660,3,Code/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehavior.cpp,matched,icf-owner=?Scale@RenderObjClass@@UAEXMMM@Z
 ?onBuildComplete@GrantUpgradeCreate@@UAEXXZ,,0x0024F9D0,78,Code/GameEngine/Source/GameLogic/Object/Create/GrantUpgradeCreate.cpp,matched,
-?onCollide@ToppleUpdate@@UAEXPAVObject@@PBUCoord3D@@1@Z,,0x002B12C0,161,Code/masm_dumps/onCollide_ToppleUpdate_UAEXPAVObject_PBUCoord3D_1_Z_002B12C0_e8785e1b.asm,matched,Certified packet 32; vtable slot thunk 0x00028948 to body; retail sha256 e8785e1bacdd68f43b7ed8db67c515f1a9957f6e0fd9ad890a919711e3a93870
+?onCollide@ToppleUpdate@@UAEXPAVObject@@PBUCoord3D@@1@Z,,0x002B12C0,161,Code/GameEngine/Source/Common/ToppleUpdate_onCollide_Thunk.cpp,matched,Certified packet 32; vtable slot thunk 0x00028948 to body; retail sha256 e8785e1bacdd68f43b7ed8db67c515f1a9957f6e0fd9ad890a919711e3a93870
 ?onCreate@GrantUpgradeCreate@@UAEXXZ,,0x0024FB90,109,Code/GameEngine/Source/GameLogic/Object/Create/GrantUpgradeCreate.cpp,matched,certified packet id 363; true body RVA 0x0024FB90 size 109
 ?onDie@SlowDeathBehavior@@UAEXPBVDamageInfo@@@Z,,0x0020A150,842,Code/masm_dumps/SlowDeathBehavior_onDie.asm,matched,Certified packet 11 vtable slot thunk ownership exact retail body SHA256 2699d9d667d933d9a257987982a7662d56ffa05a35eb5f4e98db40369fe831df
 ?onDie@StructureToppleUpdate@@UAEXPBVDamageInfo@@@Z,,0x002AE520,145,Code/GameEngine/Source/Common/StructureToppleUpdate_onDie_Thunk.cpp,matched,multi-xref Open-BFME4+Grok BoneFXUpdate
@@ -12634,7 +12635,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?parseMinorFXList@DamageFX@@CAXPAVINI@@PAX1PBX@Z,,0x00066180,135,Code/GameEngine/Source/Common/DamageFX.cpp,matched,
 ?parseMiscAudio@INI@@SAXPAV1@@Z,,0x000C25B0,30,Code/GameEngine/Source/Common/INI/INIMiscAudio.cpp,matched,MiscAudio block parser; forwards to TheAudio->friend_getMiscAudio() through AudioManager vtable slot 75 (+0x12C) which ZH has non-virtual
 ?parseMiscEvaData@INI@@SAXPAV1@@Z,,0x00422BD0,74,Code/GameEngine/Source/GameClient/Eva.cpp,matched,BFME-only MiscEvaData block; Eva holds it at +0x60 and refuses map.ini overrides via throw INIException(8)
-?parseMissionPart@CampaignManager@@SAXPAVINI@@PAX1PBX@Z,,0x005BCB20,161,Code/masm_dumps/CampaignManager_parseMissionPart_5BCB20.asm,matched,MASM exact; true body string-anchored Mission FieldParse@0x110F778; drift 0x9A15B3 was int3 before unrelated parse
+?parseMissionPart@CampaignManager@@SAXPAVINI@@PAX1PBX@Z,,0x005BCB20,161,Code/GameEngine/Source/Common/CampaignManager_parseMissionPart_Thunk.cpp,matched,MASM exact; true body string-anchored Mission FieldParse@0x110F778; drift 0x9A15B3 was int3 before unrelated parse
 ?parseModuleName@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z,,0x001458A0,772,Code/masm_dumps/_sa__parseModuleName_ThingTemplate__KAXPAVINI__PAX1PBX_1458A0.asm,matched,Exact 772B string-anchored Open-BFME4
 ?parseMouseCursorDefinition@INI@@SAXPAV1@@Z,,0x005A5FA0,185,Code/GameEngine/Source/GameClient/Input/Mouse.cpp,matched,INI block table node binds keyword MouseCursor to this address
 ?parseMouseDefinition@INI@@SAXPAV1@@Z,,0x005A4690,25,Code/GameEngine/Source/GameClient/Input/Mouse.cpp,matched,
@@ -12738,7 +12739,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?parseWaypointData@TerrainLogic@@IAE_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,,0x001A7860,60,Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp,matched,
 ?parseWaypointDataChunk@TerrainLogic@@KA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,,0x001A8BB0,21,Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp,matched,icf-owner=?ParseBlendTileDataChunk@WorldHeightMap@@KA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z
 ?parseWeapon@WeaponTemplateSet@@CAXPAVINI@@PAX1PBX@Z,,0x001EAC70,48,Code/GameEngine/Source/GameLogic/Object/WeaponSet.cpp,matched,
-?parseWeaponBoneName@@YAXPAVINI@@PAX1PBX@Z,,0x007730A0,161,Code/masm_dumps/parseWeaponBoneName_7730A0.asm,matched,FieldParse Weapon*Bone table; true body 161B @ 0x7730A0 (queue 0x880440 was 59B thiscall misplace); MASM exact retail
+?parseWeaponBoneName@@YAXPAVINI@@PAX1PBX@Z,,0x007730A0,161,Code/GameEngine/Source/Common/parseWeaponBoneName_Thunk.cpp,matched,FieldParse Weapon*Bone table; true body 161B @ 0x7730A0 (queue 0x880440 was 59B thiscall misplace); MASM exact retail
 ?parseWeaponBonusSet@WeaponBonusSet@@QAEXPAVINI@@@Z,,0x001E1C20,55,Code/GameEngine/Source/GameLogic/Object/Weapon.cpp,matched,
 ?parseWeaponBonusSet@WeaponBonusSet@@SAXPAVINI@@PAX1PBX@Z,,0x001E3910,15,Code/GameEngine/Source/GameLogic/Object/Weapon.cpp,matched,
 ?parseWeaponBonusSetPtr@WeaponBonusSet@@SAXPAVINI@@PAX1PBX@Z,,0x001E3930,17,Code/GameEngine/Source/GameLogic/Object/Weapon.cpp,matched,
