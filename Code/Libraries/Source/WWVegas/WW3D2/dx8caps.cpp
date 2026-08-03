@@ -467,7 +467,7 @@ DX8Caps::DeviceTypeIntel DX8Caps::Get_Intel_Device(unsigned device_id)
 }
 
 // ??0DX8Caps@@QAE@PAUIDirect3D8@@PAUIDirect3DDevice8@@W4WW3DFormat@@ABU_D3DADAPTER_IDENTIFIER8@@@Z
-// Body in DX8Caps_ctor_device.asm (exact 233B retail @ 0x0091CB00).
+// Body in DX8CapsCtorDeviceThunk.cpp (exact 233B retail @ 0x0091CB00).
 // C++ blocked: BFME class layout (DriverDLL@+0x29c) vs ZH header (+0x144).
 
 // ??0DX8Caps@@ present-unmatched
