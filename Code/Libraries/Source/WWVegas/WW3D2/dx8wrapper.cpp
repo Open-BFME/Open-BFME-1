@@ -4324,19 +4324,8 @@ const char* DX8Wrapper::Get_DX8_Texture_Arg_Name(unsigned value)
 	}
 }
 
-// ?Get_DX8_Texture_Filter_Name@DX8Wrapper@@ present-unmatched
-const char* DX8Wrapper::Get_DX8_Texture_Filter_Name(unsigned value)
-{
-	switch (value) {
-	case D3DTEXF_NONE				: return "D3DTEXF_NONE";
-	case D3DTEXF_POINT			: return "D3DTEXF_POINT";
-	case D3DTEXF_LINEAR			: return "D3DTEXF_LINEAR";
-	case D3DTEXF_ANISOTROPIC	: return "D3DTEXF_ANISOTROPIC";
-	case D3DTEXF_FLATCUBIC		: return "D3DTEXF_FLATCUBIC";
-	case D3DTEXF_GAUSSIANCUBIC	: return "D3DTEXF_GAUSSIANCUBIC";
-	default					      : return "UNKNOWN";
-	}
-}
+// ?Get_DX8_Texture_Filter_Name@DX8Wrapper@@ is emitted by
+// DX8WrapperGetDX8TextureFilterNameThunk.cpp.
 
 const char* DX8Wrapper::Get_DX8_Texture_Address_Name(unsigned value)
 {
