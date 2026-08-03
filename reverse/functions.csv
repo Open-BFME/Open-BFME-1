@@ -2782,7 +2782,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1ArchiveFile@@UAE@XZ,,0x009D0BD0,94,Code/GameEngine/Source/Common/System/ArchiveFile.cpp,matched,closes m_file through File slot 2 then destroys m_rootDirectory at this+8
 ??1ArchiveFileSystem@@UAE@XZ,,0x009CA550,140,Code/GameEngine/Source/Common/System/ArchiveFileSystem.cpp,matched,installs vtable 0x01143A08; reached as the scalar dtor from slot 0 at 0x009CAA50
 ??1ArchivedDirectoryInfo@@QAE@XZ,,0x009CA4F0,89,Code/GameEngine/Source/Common/System/ArchiveFileSystem.cpp,matched,destroys m_files then m_directories then releases m_directoryName
-??1ArrowStormUpdate@@UAE@XZ,,0x00257940,106,Code/masm_dumps/ArrowStormUpdate_destructor.asm,matched,Exact 106B @ 0x00257940; Exact retail MASM; instance factory->vtable dtor; del 0x257C70 ctor 0x2576E0 vt 0xCB37C0
+??1ArrowStormUpdate@@UAE@XZ,,0x00257940,106,Code/GameEngine/Source/Common/ArrowStormUpdateDestructorThunk.cpp,matched,Exact 106B @ 0x00257940; Exact retail MASM; instance factory->vtable dtor; del 0x257C70 ctor 0x2576E0 vt 0xCB37C0
 ??1ArrowStormUpdateModuleData@@UAE@XZ,,0x00257650,79,Code/GameEngine/Source/Common/ArrowStormUpdateModuleDataDestructorThunk.cpp,matched,Exact 79B SEH dtor factory->vtable Open-BFME4
 ??1AsciiString@@QAE@XZ,0x0000D828,0x0005EE90,5,Code/Libraries/Source/WWVegas/WWLib/ascii_string.cpp,matched,AsciiString destructor
 ??1AssaultTransportAIUpdate@@UAE@XZ,,0x00271DB0,2099,Code/masm_dumps/AssaultTransportAIUpdate_destructor.asm,matched,Exact 2099B SEH dtor Open-BFME4
