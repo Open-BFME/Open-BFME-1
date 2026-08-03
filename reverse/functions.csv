@@ -12084,7 +12084,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?refreshDrives@CDManager@@UAEXXZ","","0x00101CC0","43","Code/GameEngine/Source/Common/System/CDManager.cpp","matched",""
 "?RefreshGameListBox@@YAXPAVGameWindow@@_N@Z","","0x0000FD1C","5","Code/GameEngine/Source/GameClient/GUI/GUICallbacks/RefreshGameListBox.cpp","matched","5-byte incremental-link thunk converted from MASM dump to focused C++ source"
 "?RefreshGameListBoxes@@YAXXZ","","0x0062E4F0","17","Code/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils.cpp","matched",""
-"?refreshIgnoreList@@YAXXZ","","0x004EF6D0","539","Code/masm_dumps/refreshIgnoreList.asm","matched","Exact 539B MASM; true body (queue 0x6865F8 INSIDE RequestChat@LANAPI). Identity: SEH dual SavedIgnoreMap/IgnoreList color 0xFFFF6464 GSInfo vcall +0x130/+0x138"
+"?refreshIgnoreList@@YAXXZ","","0x004EF6D0","539","Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyOverlayRefreshIgnoreList_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_WOLBuddyOverlayRefreshIgnoreList_4EF6D0"
 "?refreshInfo@CDDrive@@UAEXXZ","","0x00101BF0","8","Code/GameEngine/Source/Common/System/CDManager.cpp","matched",""
 "?refreshPlayerList@@YAX_N@Z","","0x004FC440","52","Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLobbyMenu.cpp","matched",""
 "?refreshTerrain@Radar@@UAEXPAVTerrainLogic@@@Z","","0x0002F8DD","5","Code/Libraries/Source/WWVegas/WWLib/RadarRefreshTerrainThunk.cpp","matched","ICF-group owner converted to focused C++ thunk TU; remaining alias retains shared target"
