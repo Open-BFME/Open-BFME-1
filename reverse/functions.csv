@@ -1590,7 +1590,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0GameSpyMiscPreferences@@QAE@XZ,,0x000AB910,192,Code/masm_dumps/GameSpyMiscPreferences_ctor.asm,matched,Unique BFME profile-path constructor
 ??0GameState@@QAE@XZ,,0x001111C0,171,Code/GameEngine/Source/Common/System/SaveGame/GameState_ctor.asm,matched,
 ??0GameTextManager@@QAE@XZ,,0x00438350,161,Code/GameEngine/Source/GameClient/GameText_GameTextManager.asm,matched,exact 161B via MASM (SEH ctor)
-??0GameWindow@@QAE@XZ,,0x004792F0,156,Code/masm_dumps/GameWindow_default_constructor_004792F0_packet332.asm,matched,Certified packet 332 SHA256 889fc8ecd26fa7027daa5c7542107cdfa86686169e57919bd48c509cd25d3194
+??0GameWindow@@QAE@XZ,,0x004792F0,156,Code/GameEngine/Source/GameClient/GUI/GameWindowDefaultConstructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??0GarrisonContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0021D820,312,Code/GameEngine/Source/GameLogic/AI/GarrisonContainCtorThunk.cpp,matched,Open-BFME5 exact C++ raw contain constructor
 ??0GarrisonContainModuleData@@QAE@XZ,,0x0022F7E0,153,Code/GameEngine/Source/GameLogic/AI/GarrisonContainModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
 ??0GateOpenAndCloseBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,,0x001FC580,197,Code/GameEngine/Source/GameLogic/Object/Behavior/GateOpenAndCloseBehaviorCtorThunk.cpp,matched,Exact 197B; factory ownership Open-BFME4
@@ -1685,7 +1685,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0ICoord2D@@QAE@XZ,0x00039130,0x00083360,3,Code/Libraries/Source/WWVegas/WWMath/icoord.cpp,matched,empty constructor returns self
 ??0ICoord3D@@QAE@HHH@Z,0x0001E85D,0x0015B8E0,25,Code/Libraries/Source/WWVegas/WWMath/icoord.cpp,matched,sets x/y/z from ints
 ??0ICoord3D@@QAE@XZ,0x0000DEAE,0x00148770,3,Code/Libraries/Source/WWVegas/WWMath/icoord.cpp,matched,empty constructor returns self
-??0INI@@QAE@XZ,,0x00851230,162,Code/masm_dumps/__0INI__QAE_XZ_851230.asm,matched,Ghidra exact boundary and BFME layout-verified body
+??0INI@@QAE@XZ,,0x00851230,162,Code/GameEngine/Source/Common/System/INIDefaultConstructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??0INIClass@@QAE@AAVFileClass@@@Z,,0x009E5DB0,39,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,
 ??0INIClass@@QAE@PBD@Z,,0x009E5DE0,71,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,
 ??0INIClass@@QAE@XZ,,0x009E3700,25,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,
@@ -2001,7 +2001,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0Player@@QAE@H@Z,,0x0022E820,43,Code/GameEngine/Source/Common/RTS/Player.cpp,matched,
 ??0PlayerHealSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002639D0,46,Code/GameEngine/Source/GameLogic/Object/SpecialPower/PlayerHealSpecialPower.cpp,matched,Luna Open-BFME5.0 clean C++ empty derived constructor
 ??0PlayerHealSpecialPowerModuleData@@QAE@XZ,,0x00263BE0,92,Code/GameEngine/Source/GameLogic/AI/PlayerHealSpecialPowerModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
-??0PlayerList@@QAE@XZ,,0x000DFBD0,162,Code/masm_dumps/PlayerList_constructor_000DFBD0_2fb354f7.asm,matched,certified packet 217 sealed SHA-256 2fb354f7 constructor ownership reviewed
+??0PlayerList@@QAE@XZ,,0x000DFBD0,162,Code/GameEngine/Source/Common/RTS/PlayerListConstructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??0PlayerTemplate@@QAE@ABV0@@Z,,0x0001449D,5,Code/GameEngine/Source/Common/RTS/PlayerTemplateCopyCtorThunk.cpp,matched,5-byte incremental-link copy constructor thunk converted to focused C++ source
 ??0PlayerTemplate@@QAE@XZ,,0x000E3760,824,Code/masm_dumps/__0PlayerTemplate__QAE_XZ_E3760.asm,matched,MASM exact; true body 0xE3760/824 via symbols ILT 0x3E6E4; queue 0xC6DCD5 int3 pad
 ??0PlayerTemplateStore@@QAE@XZ,,0x00076F30,29,Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp,matched,
