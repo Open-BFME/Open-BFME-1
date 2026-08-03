@@ -1,95 +1,92 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME5: recurse dirty RenderObjClass parents and refresh transform state.
+
+class Matrix3D
+{
+    unsigned long m_data[12];
+
+public:
+    bool Check_Is_Transform_Identity() const;
+};
 
 class RenderObjClass
 {
+    unsigned long m_refCount;
+    unsigned long m_secondaryVtable;
+    unsigned long m_unknown0c;
+    unsigned long m_bits;
+    unsigned long m_unknown14;
+    Matrix3D m_transform;
+    unsigned char m_padding48[0x34];
+    mutable bool m_isTransformIdentity;
+    unsigned char m_padding7d[7];
+    RenderObjClass *m_container;
+
 public:
-	virtual void Validate_Transform() const;
+    virtual void f00() = 0;
+    virtual void f01() = 0;
+    virtual void f02() = 0;
+    virtual void f03() = 0;
+    virtual void f04() = 0;
+    virtual void f05() = 0;
+    virtual void f06() = 0;
+    virtual void f07() = 0;
+    virtual void f08() = 0;
+    virtual void f09() = 0;
+    virtual void f10() = 0;
+    virtual void f11() = 0;
+    virtual void f12() = 0;
+    virtual void f13() = 0;
+    virtual void f14() = 0;
+    virtual void f15() = 0;
+    virtual void f16() = 0;
+    virtual void f17() = 0;
+    virtual void f18() = 0;
+    virtual void f19() = 0;
+    virtual void f20() = 0;
+    virtual void f21() = 0;
+    virtual void f22() = 0;
+    virtual void f23() = 0;
+    virtual void f24() = 0;
+    virtual void f25() = 0;
+    virtual void f26() = 0;
+    virtual void f27() = 0;
+    virtual void f28() = 0;
+    virtual void f29() = 0;
+    virtual void f30() = 0;
+    virtual void f31() = 0;
+    virtual void f32() = 0;
+    virtual void f33() = 0;
+    virtual void f34() = 0;
+    virtual void f35() = 0;
+    virtual void f36() = 0;
+    virtual void f37() = 0;
+    virtual void f38() = 0;
+    virtual void f39() = 0;
+    virtual void f40() = 0;
+    virtual void Update_Sub_Object_Transforms();
+    virtual void Validate_Transform() const;
+
+    RenderObjClass *Get_Container() const { return m_container; }
+    bool Are_Sub_Object_Transforms_Dirty() const { return (m_bits & 0x00200000) != 0; }
 };
 
 // ?Validate_Transform@RenderObjClass@@UBEXXZ
-__declspec(naked) void RenderObjClass::Validate_Transform() const
+void RenderObjClass::Validate_Transform() const
 {
-	__asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x8b
-        __emit 0x8e
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x41
-        __emit 0x8b
-        __emit 0x51
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x81
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc1
-        __emit 0xea
-        __emit 0x15
-        __emit 0x80
-        __emit 0xe2
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x17
-        __emit 0x8b
-        __emit 0x49
-        __emit 0x10
-        __emit 0xc1
-        __emit 0xe9
-        __emit 0x15
-        __emit 0x80
-        __emit 0xe1
-        __emit 0x01
-        __emit 0x0a
-        __emit 0xd1
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8b
-        __emit 0x81
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x75
-        __emit 0xe9
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x74
-        __emit 0x13
-        __emit 0x8b
-        __emit 0x11
-        __emit 0xff
-        __emit 0x92
-        __emit 0xa4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x18
-        __emit 0xe8
-        __emit 0x85
-        __emit 0xfc
-        __emit 0xff
-        __emit 0xff
-        __emit 0x88
-        __emit 0x46
-        __emit 0x7c
-        __emit 0x5e
-        __emit 0xc3
-	}
+    RenderObjClass *con = Get_Container();
+    bool dirty = false;
+    if (con != 0)
+    {
+        dirty = con->Are_Sub_Object_Transforms_Dirty();
+        while (con->Get_Container() != 0)
+        {
+            dirty |= con->Are_Sub_Object_Transforms_Dirty();
+            con = con->Get_Container();
+        }
+        if (dirty)
+            con->Update_Sub_Object_Transforms();
+    }
+    if (dirty)
+        m_isTransformIdentity = m_transform.Check_Is_Transform_Identity();
 }

@@ -6908,6 +6908,7 @@ name,address,notes
 ??4BoxRenderObjClass@@QAEAAV0@ABV0@@Z,0x00956E40,rel32 pin for exact-ambiguous landing
 ??4HLodClass@@QAEAAV0@ABV0@@Z,0x0097D3B0
 ??4Matrix3@@QAEAAV0@ABVMatrix3D@@@Z,0x008D9150
+?Check_Is_Transform_Identity@Matrix3D@@QBE_NXZ,0x0091FF40,Open-BFME5 member-call pin for RenderObjClass::Validate_Transform
 ??4OBBoxClass@@QAEAAV0@ABV0@@Z,0x009316A0
 ??4PSRequest@@QAEAAV0@ABV0@@Z,0x000336A4,derived-ICF
 ??4PeerRequest@@QAEAAV0@ABV0@@Z,0x000336A4
