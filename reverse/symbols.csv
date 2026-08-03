@@ -6947,6 +6947,8 @@ name,address,notes
 ??1BFMEPlayerTemplateAsciiString@@QAE@XZ,0x00887940,PlayerTemplate time-change retail AsciiString release owner
 ??1BfmeLegendString@@QAE@XZ,0x00887940,SubsystemLegend.cpp AsciiString stand-in dtor; folds with StringBase<char>::releaseBuffer
 ??1BfmeLegendStringVec@@QAE@XZ,0x000658A0,SubsystemLegend.cpp vector<AsciiString> stand-in dtor
+??1BroadcastStealthUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1BroadcastStealthUpdateModuleDataMemberB@@QAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1BuddyMessage@@QAE@XZ,0x00021445
 ??1Buffer@@QAE@XZ,0x0001A401,pinharvest x1 (thunk)
 ??1Buffer@@QAE@XZ,0x00887940,pinharvest x1 (body)
@@ -8694,6 +8696,12 @@ name,address,notes
 ?construct_from@DefaultModuleTemplate0ASubCopyShim@FXParticleSystem@@QAEXPBX@Z,0x000354F4,DMT0A copy sub
 ?construct_from@DefaultModuleTemplate00BaseCopyShim@FXParticleSystem@@QAEXPBX@Z,0x000428A7,DefaultModuleTemplate00 copy base
 ?construct_from@DefaultModuleTemplate00SubCopyShim@FXParticleSystem@@QAEXPBX@Z,0x0001E04C,DefaultModuleTemplate00 copy sub
+?construct_from@DefaultModuleTemplate01BaseCopyShim@FXParticleSystem@@QAEXPBX@Z,0x0001D435,DMT01 copy base
+?construct_from@DefaultModuleTemplate01SubCopyShim@FXParticleSystem@@QAEXPBX@Z,0x000052AE,DMT01 copy sub
+?construct_from@DefaultModuleTemplate05BaseCopyShim@FXParticleSystem@@QAEXPBX@Z,0x00029FF0,DMT05 copy base
+?construct_from@DefaultModuleTemplate05SubCopyShim@FXParticleSystem@@QAEXPBX@Z,0x0003BB0B,DMT05 copy sub
+?construct_from@DefaultModuleTemplate0ABaseCopyShim@FXParticleSystem@@QAEXPBX@Z,0x00025CA7,DMT0A copy base
+?construct_from@DefaultModuleTemplate0ASubCopyShim@FXParticleSystem@@QAEXPBX@Z,0x000354F4,DMT0A copy sub
 ?construct_from@DefaultModuleTemplate7CopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0000CC4D,DefaultModuleTemplate6 copy-ctor base shim
 ?copy@AsciiCoordTreeCopyShim@_STL@@QAEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@2@PAU32@0@Z,0x000BFF50,incremental-link thunk target through a TU-local forwarding shim
 ?copy@AsciiStringCopyShim@_STL@@SAPAVAsciiString@@PAV3@00ABUrandom_access_iterator_tag@2@PAH@Z,0x006FA270,_STL __copy AsciiString incremental-link thunk target through a TU-local forwarding shim
@@ -9753,14 +9761,26 @@ DeflectSpecialPowerFieldParse,0x0044765E,DeflectSpecialPower FieldParse
 DelayedLuaEventUpdateFieldParse,0x0041B199,DelayedLuaEventUpdate FieldParse
 ShareBufferClassUnsignedShort_vtbl_final,0x011135AC,ShareBuffer ushort dtor final vtbl
 ShareBufferClassUnsignedShort_vtbl_interim,0x0113C110,ShareBuffer ushort dtor interim vtbl
+CategoryModuleTemplate8_vtbl0,0x01073848,CategoryModuleTemplate8 ctor vtbl at +0
+CategoryModuleTemplate8_vtbl4,0x01073844,CategoryModuleTemplate8 ctor vtbl at +4 final
+CategoryModuleTemplate8_vtbl_temp,0x0107375C,CategoryModuleTemplate8 ctor intermediate vtbl at +4
 DefaultModuleTemplate00FieldParse,0x01113360,DefaultModuleTemplate parse FieldParse
 DefaultModuleTemplate00_sub_vtbl,0x011108CC,DefaultModuleTemplate00 sub vtbl
 DefaultModuleTemplate00_vtbl0,0x011108B8,DefaultModuleTemplate00 outer vtbl0
 DefaultModuleTemplate00_vtbl4,0x011108B4,DefaultModuleTemplate00 outer vtbl4
 DefaultModuleTemplate01FieldParse,0x01114958,DefaultModuleTemplate parse FieldParse
+DefaultModuleTemplate01_sub_vtbl,0x01110C64,DMT01 sub vtbl
+DefaultModuleTemplate01_vtbl0,0x01110C50,DMT01 vtbl0
+DefaultModuleTemplate01_vtbl4,0x01110C4C,DMT01 vtbl4
 DefaultModuleTemplate02FieldParse,0x011145B0,DefaultModuleTemplate parse FieldParse
 DefaultModuleTemplate05FieldParse,0x01113594,DefaultModuleTemplate parse FieldParse
+DefaultModuleTemplate05_sub_vtbl,0x0111094C,DMT05 sub vtbl
+DefaultModuleTemplate05_vtbl0,0x01110938,DMT05 vtbl0
+DefaultModuleTemplate05_vtbl4,0x01110934,DMT05 vtbl4
 DefaultModuleTemplate0AFieldParse,0x01113460,DefaultModuleTemplate parse FieldParse
+DefaultModuleTemplate0A_sub_vtbl,0x0111090C,DMT0A sub vtbl
+DefaultModuleTemplate0A_vtbl0,0x011108F8,DMT0A vtbl0
+DefaultModuleTemplate0A_vtbl4,0x011108F4,DMT0A vtbl4
 DefaultModuleTemplate6_vtbl0,0x0111101C,DefaultModuleTemplate6 ctor vtbl anchor
 DefaultModuleTemplate6_vtbl4,0x01111018,DefaultModuleTemplate6 ctor vtbl anchor
 DefaultModuleTemplate6_vtbl8,0x01111004,DefaultModuleTemplate6 ctor vtbl anchor
