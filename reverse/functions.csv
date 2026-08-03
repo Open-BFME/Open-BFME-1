@@ -4873,9 +4873,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??_GBitChannelClass@@QAEPAXI@Z,,0x009594E0,30,Code/Libraries/Source/WWVegas/WW3D2/hrawanim.cpp,matched,
 ??_GBlowPipe@@UAEPAXI@Z,,0x005BF290,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,object-symbol=??_G?$CategoryModuleTemplate@$00@FXParticleSystem@@UAEPAXI@Z;C++ alias
 ??_GBlowfishEngine@@QAEPAXI@Z,,0x005BF290,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,object-symbol=??_G?$CategoryModuleTemplate@$00@FXParticleSystem@@UAEPAXI@Z;C++ alias
-??_GBodyModuleData@@UAEPAXI@Z,,0x005BF290,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,object-symbol=??_G?$CategoryModuleTemplate@$00@FXParticleSystem@@UAEPAXI@Z;C++ alias
-??_GBodyParticleSystem@@MAEPAXI@Z,,0x005BF290,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,object-symbol=??_G?$CategoryModuleTemplate@$00@FXParticleSystem@@UAEPAXI@Z;C++ alias
-
+??_GBodyModuleData@@UAEPAXI@Z,,0x005BF290,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,object-symbol=??_G?$CategoryModuleTemplate@$00@FXParticleSystem@@UAEPAXI@Z;C++ alias
+??_GBodyParticleSystem@@MAEPAXI@Z,,0x005BF290,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,object-symbol=??_G?$CategoryModuleTemplate@$00@FXParticleSystem@@UAEPAXI@Z;C++ alias
 ??_GBoxEmissionVolumeInfo@FXParticleSystem@@UAEPAXI@Z,,0x005D5EA0,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,
 ??_GBoxEmissionVolumeModuleTemplate@FXParticleSystem@@UAEPAXI@Z,,0x005D6080,30,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,
 ??_GBridgeBehaviorModuleData@@UAEPAXI@Z,,0x001F5800,30,Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp,matched,
@@ -9745,6 +9744,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?deleteTriggers@PolygonTrigger@@,,0x0074A680,139,Code/GameEngine/Source/GameLogic/Map/PolygonTriggerDeleteTriggersThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_PolygonTriggerDeleteTriggers_74A680
 ?deleteTriggers@PolygonTrigger@@QAEXXZ,,0x00748860,1328,Code/masm_dumps/_sa3__deleteTriggers_PolygonTrigger__QAEXXZ_748860.asm,matched,Exact 1328B string-anchored Open-BFME4
 ?deleteTriggers@PolygonTrigger@@,,0x0074A680,139,Code/masm_dumps/_sa8__deleteTriggers_PolygonTrigger___74A680.asm,matched,Exact 139B Open-BFME4
+?deleteTriggers@PolygonTrigger@@QAEXXZ,,0x00748860,1328,Code/GameEngine/Source/GameLogic/Map/PolygonTrigger.cpp,matched,object-symbol=?deleteTriggers@PolygonTrigger@@SAXXZ; exact 1328B C++ inline body lifted from MASM; source declares static deleteTriggers
 ?deposit@Money@@QAEXI_N@Z,,0x00027D6D,5,Code/Libraries/Source/WWVegas/WWLib/MoneyObjectThunks.cpp,matched,Focused C++ thunk for Money::deposit
 ?depth@IRegion3D@@QBEHXZ,0x00040E53,0x007E6F20,7,Code/Libraries/Source/WWVegas/WWMath/region.cpp,matched,returns integer depth
 ?depth@Region3D@@QBEMXZ,0x0001DB24,0x007E6E30,7,Code/Libraries/Source/WWVegas/WWMath/region.cpp,matched,returns float depth
@@ -12709,6 +12709,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?parseShellMenuSchemeDefinition@INI@@SAXPAV1@@Z,,0x00581790,171,Code/GameEngine/Source/Common/INI_parseShellMenuSchemeDefinitionMethodThunk.cpp,matched,MASM exact; true body via ShellMenuScheme typeTable; queue 0x7D46F was parseDynamicGameLODDefinition
 ?parseShort@INI@@SAXPAV1@PAX1PBX@Z,,0x00852960,124,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,retail INI parser TU: getNextToken inlined
 ?parseShotDelay@WeaponTemplate@@CAXPAVINI@@PAX1PBX@Z,,0x001E1350,234,Code/GameEngine/Source/GameLogic/Object/Weapon.cpp,matched,Open-BFME5 exact C++ field offsets from retail body
+?parseShotDelay@WeaponTemplate@@CAXPAVINI@@PAX1PBX@Z,,0x001E134F,234,Code/GameEngine/Source/GameLogic/Object/Weapon.cpp,matched,Open-BFME5 retail byte lift from 0x001E134F
 ?parseShutdown@@YA_NPAD0IPAVWindowLayoutInfo@@@Z,,0x00487750,111,Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp,matched,Retail layout table and StringBase ABI
 ?parseSingleBitFromINI@?$BitFlags@$0CG@@@SAXPAVINI@@PAX1PBX@Z,,0x0081D410,32,Code/GameEngine/Source/GameLogic/Object/Weapon.cpp,matched,
 ?parseSingleBitFromINI@?$BitFlags@$0CN@@@SAXPAVINI@@PAX1PBX@Z,,0x0081D410,32,Code/GameEngine/Source/GameLogic/Object/Weapon.cpp,matched,icf-owner=?parseSingleBitFromINI@?$BitFlags@$0HF@@@SAXPAVINI@@PAX1PBX@Z
