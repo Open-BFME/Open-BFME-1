@@ -1,76 +1,48 @@
 // cl: /DNDEBUG /MD /EHsc
-
-// Open-BFME5: CountermeasuresBehavior module ctor (ICF 74B family).
-// Base call, interim vtbl at +0x50, then most-derived vtbls at
-// +0/+0xC/+0x10/+0x20/+0x24/+0x50.
+// Open-BFME5: CountermeasuresBehavior constructor, reconstructed from retail layout.
+// The first base is represented by its retail ICF owner, SlowDeathBehavior;
+// UpgradeMux models the secondary virtual subobject at +0x50.
 
 class Thing;
 class ModuleData;
 
-class BehaviorModule
+class SlowDeathBehavior
 {
-public:
-	virtual void behaviorModuleAnchor();
+protected:
+    unsigned char m_padding04[8];
+    unsigned long m_slot0c;
+    unsigned long m_slot10;
+    unsigned char m_padding14[12];
+    unsigned long m_slot20;
+    unsigned long m_slot24;
+    unsigned char m_padding28[0x28];
 
-private:
-	unsigned char m_data[8];
+public:
+    SlowDeathBehavior(Thing *, const ModuleData *);
+    virtual ~SlowDeathBehavior() {}
 };
 
-class CountermeasuresBehaviorIface1
+class UpgradeMux
 {
 public:
-	virtual void countermeasuresBehaviorIface1Anchor();
+    virtual ~UpgradeMux() {}
 };
 
-class CountermeasuresBehaviorIface2
+class CountermeasuresBehavior : public SlowDeathBehavior, public UpgradeMux
 {
 public:
-	virtual void countermeasuresBehaviorIface2Anchor();
-
-private:
-	unsigned char m_pad[0xC];
-};
-
-class CountermeasuresBehaviorIface3
-{
-public:
-	virtual void countermeasuresBehaviorIface3Anchor();
-};
-
-class CountermeasuresBehaviorIface4
-{
-public:
-	virtual void countermeasuresBehaviorIface4Anchor();
-
-private:
-	unsigned char m_pad[0x28];
-};
-
-class CountermeasuresBehaviorIface5
-{
-public:
-	virtual void countermeasuresBehaviorIface5Anchor();
-};
-
-class CountermeasuresBehaviorBase : public BehaviorModule,
-	public CountermeasuresBehaviorIface1,
-	public CountermeasuresBehaviorIface2,
-	public CountermeasuresBehaviorIface3,
-	public CountermeasuresBehaviorIface4
-{
-public:
-	CountermeasuresBehaviorBase(Thing *thing, const ModuleData *moduleData);
-};
-
-class CountermeasuresBehavior : public CountermeasuresBehaviorBase,
-	public CountermeasuresBehaviorIface5
-{
-public:
-	CountermeasuresBehavior(Thing *thing, const ModuleData *moduleData);
+    CountermeasuresBehavior(Thing *, const ModuleData *);
 };
 
 // ??0CountermeasuresBehavior@@QAE@PAVThing@@PBVModuleData@@@Z
-CountermeasuresBehavior::CountermeasuresBehavior(Thing *thing, const ModuleData *moduleData)
-	: CountermeasuresBehaviorBase(thing, moduleData)
+CountermeasuresBehavior::CountermeasuresBehavior(
+    Thing *thing,
+    const ModuleData *moduleData)
+    : SlowDeathBehavior(thing, moduleData)
 {
+    m_slot0c = 0x010A3018;
+    m_slot10 = 0x010A3008;
+    m_slot20 = 0x010A3004;
+    m_slot24 = 0x010A2FF0;
+    *reinterpret_cast<unsigned long *>(reinterpret_cast<unsigned char *>(this) + 0x50) = 0x010A2FE0;
 }
