@@ -13659,7 +13659,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?tryNextFrame@Anim2D@@IAEXXZ","","0x005BA6C0","268","Code/GameEngine/Source/GameClient/System/Anim2D.cpp","matched",""
 "?tryToIgnite@FlammableUpdate@@QAEXXZ","","0x00293990","961","Code/masm_dumps/FlammableUpdate_tryToIgnite.asm","matched","Ghidra-owned BFME ignition path"
 "?tryToRecruit@Team@@QAEPAVObject@@PBVThingTemplate@@PBUCoord3D@@M@Z","","0x0076E90A","568","Code/GameEngine/Source/Common/RTS/Team_tryToRecruit.asm","matched","exact 568B via MASM"
-"?tryUnderAttackEvent@Radar@@","","0x004271B0","373","Code/masm_dumps/_sa4__tryUnderAttackEvent_Radar___4271B0.asm","matched","Exact 373B Open-BFME4"
+"?tryUnderAttackEvent@Radar@@","","0x004271B0","373","Code/GameEngine/Source/Common/System/RadarTryUnderAttackEvent_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_Radar_TryUnderAttackEvent_4271B0"
 "?turnOffScreen@DisconnectManager@@IAEXH@Z","","0x0066B270","57","Code/GameEngine/Source/GameNetwork/DisconnectManager.cpp","matched",""
 "?Un_Project@CameraClass@@QBEXAAVVector3@@ABVVector2@@@Z","","0x00931800","220","Code/Libraries/Source/WWVegas/WW3D2/camera.cpp","matched",""
 "?unAccept@GameSlot@@QAEXXZ","","0x0061EE60","11","Code/GameEngine/Source/GameNetwork/GameInfo.cpp","matched",""
