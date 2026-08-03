@@ -46323,3 +46323,4 @@ g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 ??0ShareBufferClassBase@@QAE@HPBDH@Z,0x00929FC0,TexBufferClass base ShareBuffer-like ctor
 ?initFromINI@INI@@QAEXPAXPBX@Z,0x00852130,BridgeTower friend_newModuleData retail call
 ?erase@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@QAEPAVProductionPrerequisite@@PAV3@0@Z,0x00010BB3,rel32 pin for ThingTemplate prerequisite vector clear
+?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
