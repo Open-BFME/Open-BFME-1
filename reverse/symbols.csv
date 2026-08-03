@@ -1136,6 +1136,7 @@ name,address,notes
 ??0RegistryClass@@QAE@PBD_N@Z,0x009DC200,pinharvest x2 (body)
 ??0RenderObjClass@@QAE@ABV0@@Z,0x0091FFE0,base copy ctor; derived from ParticleBufferClass copy ctor site
 ??0RenderObjClass@@QAE@XZ,0x009204B0,derived from ParticleBufferClass main ctor aligned call sites
+??0RenderObjectDrawModule@FXParticleSystem@@QAE@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0001C021,Open-BFME5 pin
 ??0RepairDockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001E8D0,module ctor (friend_newModuleInstance retail call target)
 ??0RepairSpecialPowerModuleData@@QAE@XZ,0x0001C486,RepairSpecialPower ModuleData ctor
 ??0ReplaceObjectUpgradeModuleData@@QAE@XZ,0x00010C80,pinharvest x1 (thunk)
