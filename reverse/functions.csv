@@ -4724,7 +4724,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "??4?$VectorClass@VModelNodeClass@HLodClass@@@@QAEAAV0@ABV0@@Z","","0x0097ACA0","234","Code/masm_dumps/___4__VectorClass_VModelNodeClass_HLodClass____QAEA_97ACA0.asm","matched",""
 "??4?$VectorClass@VProxyClass@@@@QAEAAV0@ABV0@@Z","","0x0092F810","249","Code/masm_dumps/_icf3___4__VectorClass_VProxyClass____QAEAAV0_ABV0__Z_92F810.asm","matched","ICF Open-BFME4+Grok"
 "??4?$VectorClass@VResolutionDescClass@@@@QAEAAV0@ABV0@@Z","","0x0092F810","249","Code/masm_dumps/_icf3___4__VectorClass_VResolutionDescClass____QAEAAV0_ABV0__Z_92F810.asm","matched","ICF Open-BFME4+Grok"
-"??4?$VectorClass@VStringClass@@@@QAEAAV0@ABV0@@Z","","0x00905C80","217","Code/masm_dumps/_sym3___4__VectorClass_VStringClass____QAEAAV0_ABV0__Z_905C80.asm","matched","symbol-pin Open-BFME4+Grok"
+"??4?$VectorClass@VStringClass@@@@QAEAAV0@ABV0@@Z","","0x00905C80","217","Code/Libraries/Source/WWVegas/WWLib/VectorClassStringAssignThunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_VectorClassStringAssign_905C80"
 "??4?$VectorClass@VTangentsClass@HermiteSpline3DClass@@@@QAEAAV0@ABV0@@Z","","0x0092F810","249","Code/masm_dumps/_sym2___4__VectorClass_VTangentsClass_HermiteSpline3DClass____QAEAAV0_ABV0___92F810.asm","matched","symbol-pin Open-BFME4+Grok"
 "??4_ArcInfoStruct@VehicleCurveClass@@QAEAAU01@ABU01@@Z","","0x006098D0","85","Code/Libraries/Source/WWVegas/WWMath/vehiclecurve.cpp","matched",""
 "??4_Bit_reference@_STL@@QAEAAU01@_N@Z","","0x002CA920","36","Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdate.cpp","matched",""
