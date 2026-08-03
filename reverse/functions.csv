@@ -2869,7 +2869,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1CylindricalEmissionVelocityInfo@FXParticleSystem@@UAE@XZ,0x00038C94,0x005D7700,7,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,empty dtor resets to EmissionVelocityInfo vtable
 ??1CylindricalEmissionVelocityModuleTemplate@FXParticleSystem@@UAE@XZ,0x0004099E,0x005D78F0,50,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,object-symbol=??1?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVCylindricalEmissionVelocityModule@2@VCylindricalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ;C++ alias
 ??1DX8PolygonRendererClass@@UAE@XZ,,0x00972AF0,87,Code/Libraries/Source/WWVegas/WW3D2/dx8polygonrenderer.cpp,matched,
-??1DamageModuleModuleData@@UAE@XZ,,0x0027E4E0,145,Code/masm_dumps/DamageModuleModuleData_destructor.asm,matched,Exact 145B SEH dtor Open-BFME4
+??1DamageModuleModuleData@@UAE@XZ,,0x0027E4E0,145,Code/GameEngine/Source/Common/DamageModuleModuleDataDestructorThunk.cpp,matched,Exact 145B SEH dtor Open-BFME4
 ??1DarknessSpecialPowerModuleData@@UAE@XZ,,0x002693E0,426,Code/masm_dumps/DarknessSpecialPowerModuleData_destructor.asm,matched,Exact 426B SEH dtor Open-BFME4
 ??1DebugCmdInterfaceDebug@@UAE@XZ,,0x00890F10,85,Code/masm_dumps/_icf2___1DebugCmdInterfaceDebug__UAE_XZ_890F10.asm,matched,ICF of ??1DebugIOFlat@@UAE@XZ Open-BFME4+Grok
 ??1DebugIOCon@@UAE@XZ,,0x00890F10,85,Code/masm_dumps/_leaf2___1DebugIOCon__UAE_XZ_890F10.asm,matched,Exact 85B present-unmatched Open-BFME4
