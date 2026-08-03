@@ -3191,7 +3191,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1Snapshot@@UAE@XZ,0x00001C80,0x0005C520,7,Code/GameEngine/Source/Common/System/Snapshot.cpp,matched,sets vtable pointer
 ??1SpawnBehavior@@UAE@XZ,,0x0020B180,207,Code/masm_dumps/SpawnBehavior_destructor.asm,matched,Exact 207B @ 0x0020B180; Exact retail MASM; instance factory->vtable dtor; del 0x20C020 ctor 0x20AE30 vt 0xCA6CCC
 ??1SpawnBehaviorModuleData@@UAE@XZ,,0x0012AA50,80,Code/masm_dumps/SpawnBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
-??1SpawnUnitBehaviorModuleData@@UAE@XZ,,0x00126F00,80,Code/masm_dumps/SpawnUnitBehaviorModuleData_destructor.asm,matched,Exact 80B SEH dtor Open-BFME4
+??1SpawnUnitBehaviorModuleData@@UAE@XZ,,0x00126F00,80,Code/GameEngine/Source/GameLogic/AI/SpawnUnitBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM ICF alias
 ??1SpecialAbilityUpdate@@UAE@XZ,,0x002AA910,153,Code/masm_dumps/SpecialAbilityUpdate_destructor.asm,matched,Exact 153B @ 0x002AA910; Exact retail MASM; instance factory->vtable dtor; del 0x2AAEC0 ctor 0x2A6360 vt 0xCC37B8
 ??1SpecialAbilityUpdateModuleData@@UAE@XZ,,0x002A5CC0,225,Code/masm_dumps/SpecialAbilityUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x2A6210 ctor 0x2A5AA0 vt 0xCC2D58
 ??1SpecialDisguiseUpdate@@UAE@XZ,,0x00137E80,284,Code/masm_dumps/SpecialDisguiseUpdate_destructor.asm,matched,Exact 284B SEH dtor Open-BFME4
