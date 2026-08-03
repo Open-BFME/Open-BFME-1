@@ -11913,7 +11913,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?init@ControlBarArrowTransition@@UAEXPAVGameWindow@@@Z,,0x0059B980,23,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
 ?init@ControlBarResizer@@QAEXXZ,,0x004AAF10,118,Code/GameEngine/Source/Common/promoted__init_ControlBarResizer_QAEXXZ_004AAF10.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 118B
 ?init@ControlBarScheme@@QAEXXZ,,0x004ABA80,3107,Code/masm_dumps/_s4__init_ControlBarScheme_QAEXXZ_4ABA80.asm,matched,Exact string-anchored Open-BFME4+Grok
-?init@ControlBarSchemeManager@@QAEXXZ,,0x004ADD60,177,Code/masm_dumps/_sa12__init_ControlBarSchemeManager__QAEXXZ_4ADD60.asm,matched,string-anchor Open-BFME4+Grok Data\INI\Default\ControlBarScheme.ini
+?init@ControlBarSchemeManager@@QAEXXZ,,0x004ADD60,177,Code/GameEngine/Source/Common/ControlBarSchemeManager_initMethodThunk.cpp,matched,string-anchor Open-BFME4+Grok Data\INI\Default\ControlBarScheme.ini
 ?init@CountUpTransition@@UAEXPAVGameWindow@@@Z,,0x0059BE70,443,Code/masm_dumps/CountUpTransition_init.asm,matched,Exact retail MASM; true body 0x59BE70/443 via CountUp vtable slot1 (init); queue 0x59BE6F was leading int3 pad; BFME layout has Int start/end at +0x10/+0x14 before m_pos
 ?init@CreditsManager@@UAEXXZ,,0x0040C5E0,17,Code/GameEngine/Source/GameClient/Credits.cpp,matched,
 ?init@DirectInputMouse@@UAEXXZ,,0x006BBD20,76,Code/GameEngine/Source/Common/promoted__init_DirectInputMouse_UAEXXZ_006BBD20.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 76B
