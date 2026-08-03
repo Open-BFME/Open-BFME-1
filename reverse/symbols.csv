@@ -46298,3 +46298,4 @@ ShareBufferClassUnsignedShort_vtbl_final,0x011135AC,ShareBuffer ushort dtor fina
 ??0SpecialPowerModuleData@@QAE@XZ,0x3f503,FellBeastSwoopPowerModuleData base ctor
 ??0BaseModuleData@@QAE@XZ,0x00048A3B,TensileFormationUpdateModuleData base ctor
 ?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
+??0ClientUpdateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,Open-BFME5 SwayClientUpdate base ctor pin
