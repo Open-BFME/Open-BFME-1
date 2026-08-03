@@ -5718,6 +5718,7 @@ name,address,notes
 ??0?$BFMEFactoryModuleData@VUpgradeDieModuleData@@$0DI@@@QAE@XZ,0x0001B905,ModuleFactory retail data facade
 ??0?$BFMEFactoryModuleData@VWorkerAIUpdateModuleData@@$0BAA@@@QAE@XZ,0x00036232,ModuleFactory retail data facade
 ??0?$BFMEW3DFactoryModuleData@VW3DTreeDrawModuleData@@$0GE@@@QAE@XZ,0x00046B5A,W3DModuleFactory retail data facade
+??0?$ConcreteModuleTemplate@UButterflyDrawModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x0003C29F,ButterflyDraw ConcreteModuleTemplate copy ctor ILT
 ??0?$ShareBufferClass@E@@QAE@HPBDH@Z,0x0004B4A7,derived from part_buf matched-caller call sites
 ??0?$ShareBufferClass@I@@QAE@ABV0@@Z,0x0092A090
 ??0?$ShareBufferClass@VShaderClass@@@@QAE@HPBDH@Z,0x0092B940,Get_Shader_Array ShareBuffer 3-arg ctor
@@ -5884,6 +5885,7 @@ name,address,notes
 ??0?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x0004314E,pinharvest x2 (thunk)
 ??0?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x00046ADD,pinharvest x1 (thunk)
 ??0?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x00048667,pinharvest x1 (thunk)
+??0?@V?@@FXParticleSystem@@3QBDB@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?@@2@V?@@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x00020DD3,SphericalEmissionVelocity clone copy-ctor pin
 ??0?\@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x00021CB0,OrthoEmissionVelocity clone copy-ctor pin
 ??0?\@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x000391A3,Concrete PointEmissionVolume copy ctor pin
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x0000C6E9,pinharvest x1 (thunk)
