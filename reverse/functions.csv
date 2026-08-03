@@ -10034,7 +10034,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?getStandardLadders@LadderList@@QAEPBV?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@XZ","","0x0062A150","4","Code/GameEngine/Source/GameNetwork/GameSpy/LadderDefs.cpp","matched","Ghidra-bound unique accessor"
 "?getStarImage@ControlBar@@QAEPBVImage@@XZ","","0x0049CC00","208","Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_getStarImage_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump"
 "?getStartCellIndex@PathfindLayer@@QAEXPAUICoord2D@@@Z","","0x004AB7E0","18","Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp","matched",""
-"?getStartingCash@SkirmishPreferences@@","","0x004F1760","267","Code/masm_dumps/_cache__getStartingCash_SkirmishPreferences___4F1760.asm","matched","cached-obj needle Open-BFME4+Grok"
+"?getStartingCash@SkirmishPreferences@@","","0x004F1760","267","Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishPreferencesGetStartingCash_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_SkirmishPreferencesGetStartingCash_4F1760"
 "?getStartPos@AnimateWindow@@QAE?AUICoord2D@@XZ","","0x003ACA10","18","Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp","matched",""
 "?getStartPos@ControlBarSchemeAnimation@@QAE?AUICoord2D@@XZ","","0x003D4D30","18","Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme.cpp","matched",""
 "?getStaticGameLODLevelName@GameLODManager@@QAEPBDW4StaticGameLODLevel@@@Z","","0x0007C370","14","Code/GameEngine/Source/Common/GameLOD.cpp","matched",""
