@@ -11488,7 +11488,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?parseCrateCreationEntry@CrateTemplate@@SAXPAVINI@@PAX1PBX@Z","","0x00379F80","258","Code/GameEngine/Source/Common/CrateTemplate_parseCrateCreationEntryMethodThunk.cpp","matched","Certified packet 305 sealed retail body"
 "?parseCrateTemplateDefinition@CrateSystem@@SAXPAVINI@@@Z","","0x0037A490","232","Code/GameEngine/Source/GameLogic/System/CrateSystem.cpp","matched","find-then-create on TheCrateSystem; two load types take the override branch not one and retail loads m_loadType once there and compares it twice"
 "?parseCredits@INI@@SAXPAV1@@Z","","0x0040BFC0","25","Code/GameEngine/Source/GameClient/Credits.cpp","matched",""
-"?parseCSF@GameTextManager@@IAE_NPBD@Z","","0x00437570","672","Code/masm_dumps/GameTextManager_parseCSF.asm","matched","exact 672B via MASM; true body 0x437570 (SEH memory-buffer CSF parse); queue 0x9D2189 misplaced"
+"?parseCSF@GameTextManager@@IAE_NPBD@Z","","0x00437570","672","Code/GameEngine/Source/Common/GameTextManager_parseCSF_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_GameTextManagerParseCSF_437570"
 "?parseDamageFX@INI@@SAXPAV1@PAX1PBX@Z","","0x000BAFD0","80","Code/GameEngine/Source/Common/INI/ini.cpp","matched","row pointed at a 5B ILT thunk; real body is here"
 "?parseDamageFXDefinition@DamageFXStore@@SAXPAVINI@@@Z","","0x00067A60","77","Code/GameEngine/Source/Common/DamageFX.cpp","matched",""
 "?parseDamageScalar@ArmorTemplate@@SAXPAVINI@@PAX1PBX@Z","","0x001AFD00","28","Code/GameEngine/Source/GameLogic/Object/Armor.cpp","matched","FieldParse token DamageScalar at 0x0109C874 slot 0 - BFME-only name from token"
