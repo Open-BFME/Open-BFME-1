@@ -6961,6 +6961,8 @@ name,address,notes
 ??1CommandSetUpgradeModuleDataBase@@UAE@XZ,0x0001B97D,Open-BFME5 base dtor pin
 ??1CommandSetUpgradeModuleDataMemberA@@QAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1CommandSetUpgradeModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1ClearanceTestingSlowDeathBehaviorModuleDataBase@@UAE@XZ,0x00015645,Open-BFME5 base pin
+??1ClearanceTestingSlowDeathBehaviorModuleDataMember@@QAE@XZ,0x000309F4,Open-BFME5 pin
 ??1CommandSetUpgradeModuleDataBase@@UAE@XZ,0x0001B97D,Open-BFME5 base dtor pin
 ??1CompositeRenderObjClass@@UAE@XZ,0x0091FC10
 ??1CriticalSectionClass@@QAE@XZ,0x009DB450
@@ -7086,11 +7088,14 @@ name,address,notes
 ??1LayoutFilename@@QAE@XZ,0x00887940
 ??1LevelGrantSpecialPowerModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base pin
 ??1GettingBuiltBehaviorModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
+??1GiantBirdSlowDeathBehaviorModuleDataBase@@UAE@XZ,0x00015645,Open-BFME5 base pin
+??1GiantBirdSlowDeathBehaviorModuleDataMember@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1HTreeClass@@QAE@XZ,0x00952790
 ??1HeroModeSpecialAbilityUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base dtor pin
 ??1HideShowSubObjInfo@ModelConditionInfo@@QAE@XZ,0x0000466F,rel32 pin for exact-ambiguous landing
 ??1HordeUpdateModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1LayoutFilename@@QAE@XZ,0x00887940
+??1LevelGrantSpecialPowerModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base pin
 ??1LockClass@CriticalSectionClass@@QAE@XZ,0x009DB4D0
 ??1LockClass@MutexClass@@QAE@XZ,0x009DB400
 ??1LogicalDecalClass@MultiFixedPoolDecalSystemClass@@QAE@XZ,0x0002A08B,pinharvest x1 (thunk)
