@@ -1,84 +1,43 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class SiegeDeploySpecialPowerModuleData
+// Open-BFME5: SiegeDeploySpecialPowerModuleData ctor.
+// Base size 0x1d0; zeros; bools; floats 500.0f / 200.0f.
+
+class SiegeDeploySpecialPowerModuleDataBase
 {
 public:
-    SiegeDeploySpecialPowerModuleData();
+	SiegeDeploySpecialPowerModuleDataBase();
+	virtual ~SiegeDeploySpecialPowerModuleDataBase();
+
+private:
+	unsigned char m_pad[0x1cc];
 };
 
-__declspec(naked) SiegeDeploySpecialPowerModuleData::SiegeDeploySpecialPowerModuleData()
+class SiegeDeploySpecialPowerModuleData : public SiegeDeploySpecialPowerModuleDataBase
 {
-    __asm {
-        __emit 0x56;
-        __emit 0x8b;
-        __emit 0xf1;
-        __emit 0xe8;
-        __emit 0x8f;
-        __emit 0xdb;
-        __emit 0xdb;
-        __emit 0xff;
-        __emit 0x33;
-        __emit 0xc0;
-        __emit 0x89;
-        __emit 0x86;
-        __emit 0xd0;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x86;
-        __emit 0xd4;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x88;
-        __emit 0x86;
-        __emit 0xd9;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x88;
-        __emit 0x86;
-        __emit 0xda;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xc7;
-        __emit 0x06;
-        __emit 0x98;
-        __emit 0x75;
-        __emit 0x0b;
-        __emit 0x01;
-        __emit 0xc6;
-        __emit 0x86;
-        __emit 0xd8;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x86;
-        __emit 0xdc;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xfa;
-        __emit 0x43;
-        __emit 0xc7;
-        __emit 0x86;
-        __emit 0xe0;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x48;
-        __emit 0x43;
-        __emit 0x8b;
-        __emit 0xc6;
-        __emit 0x5e;
-        __emit 0xc3;
-    }
+public:
+	SiegeDeploySpecialPowerModuleData();
+	virtual ~SiegeDeploySpecialPowerModuleData();
+
+private:
+	unsigned int m_1d0;
+	unsigned int m_1d4;
+	unsigned char m_1d8;
+	unsigned char m_1d9;
+	unsigned char m_1da;
+	unsigned char m_pad1db;
+	float m_1dc;
+	float m_1e0;
+};
+
+// ??0SiegeDeploySpecialPowerModuleData@@QAE@XZ
+SiegeDeploySpecialPowerModuleData::SiegeDeploySpecialPowerModuleData()
+{
+	m_1d0 = 0;
+	m_1d4 = 0;
+	m_1d9 = 0;
+	m_1da = 0;
+	m_1d8 = 1;
+	m_1dc = 500.0f;
+	m_1e0 = 200.0f;
 }
