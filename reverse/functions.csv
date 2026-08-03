@@ -2461,7 +2461,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0WeaponModeSpecialPowerUpdateModuleData@@QAE@XZ,,0x002B2CF0,54,Code/GameEngine/Source/GameLogic/Object/Update/WeaponModeSpecialPowerUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw WeaponModeSpecialPowerUpdateModuleData constructor
 ??0WeaponRecoilInfo@W3DModelDraw@@QAE@XZ,,0x0005C5D0,13,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,matched,ICF alias of existing matched body
 ??0WeaponSetSpecialAbilityUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0026DC50,53,Code/GameEngine/Source/GameLogic/Object/Update/WeaponSetSpecialAbilityUpdate.cpp,matched,Luna Open-BFME5.0 clean C++ empty SpecialAbilityUpdate derivative
-??0WeaponSetSpecialAbilityUpdateModuleData@@QAE@XZ,,0x0026DC20,32,Code/GameEngine/Source/GameLogic/Object/Update/WeaponSetSpecialAbilityUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ constructor thunk
+??0WeaponSetSpecialAbilityUpdateModuleData@@QAE@XZ,,0x0026DC20,32,Code/GameEngine/Source/GameLogic/Object/Update/WeaponSetSpecialAbilityUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 clean C++ SpecialPowerModuleData + two zero fields
 ??0WeaponSetUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002DA4E0,53,Code/GameEngine/Source/GameLogic/Object/Upgrade/WeaponSetUpgradeConstructor.cpp,matched,thunk-dump converted to clean C++ constructor body at destination 0x2DA4E0
 ??0WeaponStore@@QAE@XZ,,0x001E5290,29,Code/GameEngine/Source/GameLogic/Object/WeaponStoreCtorThunk.cpp,matched,Open-BFME5 exact C++ constructor thunk; Weapon.cpp retains STL COMDAT carrier
 ??0WeightInfoStruct@NamedPivotMapClass@@QAE@XZ,,0x00061D90,9,Code/Libraries/Source/WWVegas/WW3D2/hanim.cpp,matched,ICF alias of existing matched body
