@@ -1318,7 +1318,7 @@ name,address,notes
 ??0AutoDepositUpdateModuleData@@QAE@XZ,0x0002E069,pinharvest x1 (thunk)
 ??0AutoFindHealingUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x02E12C,module ctor (friend_newModuleInstance retail call target)
 ??0AutoFindHealingUpdateModuleData@@QAE@XZ,0x0001D4EE,module-glue cascade callee (from retail call site)
-??0AutoHealBehaviorModuleData@@QAE@XZ,0x1528a,AutoHealBehavior friend_newModuleData ctor
+??0AutoHealBehaviorModuleData@@QAE@XZ,0x000287C7
 ??0BFMEAutoLockRef@@QAE@PAVBFMENetworkLock@@I@Z,0x009DB3B0,native BFME lock-ref acquire helper
 ??0BFMENetRequestPlayerLeaveCommandMsg@@QAE@XZ,0x006741F0,the constructor; the ledger row at that address carries native_netcommandmsg.cpp's ?construct@ name for the same body
 ??0BFMENetworkLock@@QAE@PBD@Z,0x009DB320,native BFME network mutex constructor
@@ -1361,7 +1361,6 @@ name,address,notes
 ??0BoxRenderObjClass@@QAE@ABUW3dBoxStruct@@@Z,0x00956D30
 ??0BridgeBehaviorModuleData@@QAE@XZ,0x0001F7F3,module-glue cascade callee (from retail call site)
 ??0BridgeScaffoldBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x01002D,module ctor (friend_newModuleInstance retail call target)
-??0BroadcastStealthUpdateModuleData@@QAE@XZ,0x1e907,BroadcastStealth friend_newModuleData ctor
 ??0BuddyInfo@@QAE@ABV0@@Z,0x0000C815,pinharvest x1 (thunk)
 ??0BuddyInfo@@QAE@ABV0@@Z,0x000242D5,pinharvest x1 (thunk)
 ??0BuddyInfo@@QAE@ABV0@@Z,0x0003B647,pinharvest x1 (thunk)
@@ -1569,7 +1568,6 @@ name,address,notes
 ??0FireWeaponWhenDeadBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0004B510,pinharvest x1 (thunk)
 ??0FireWeaponWhenDeadBehaviorModuleData@@QAE@XZ,0x00025EBE,derived-ICF
 ??0FirestormDynamicGeometryInfoUpdateModuleData@@QAE@XZ,0x0001235A
-??0FirestormDynamicGeometryInfoUpdateModuleDataBase@@QAE@XZ,0x00048A3B,FirestormDynamicGeometryInfoUpdateModuleData base ctor
 ??0FirewallHelperClass@@QAE@XZ,0x00003AD5
 ??0FlammableUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00011ACC,Ghidra-owned constructor thunk
 ??0FlammableUpdateModuleData@@QAE@XZ,0x0000497B,pinharvest x1 (thunk)
@@ -1707,7 +1705,6 @@ name,address,notes
 ??0ModuleDataBase_CombineHordeSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 CombineHordeSpecialPowerModuleData base pin
 ??0ModuleDataBase_DefectorSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 DefectorSpecialPowerModuleData base pin
 ??0ModuleDataBase_HordeContainModuleData@@QAE@XZ,0x00044030,Open-BFME5 HordeContainModuleData base pin
-??0ModuleDataBase_SiegeDeployHordeSpecialPowerModuleData@@QAE@XZ,0x00023FE7,Open-BFME5 SiegeDeployHordeSpecialPowerModuleData base pin
 ??0ModuleDataBase_StopSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 StopSpecialPowerModuleData base pin
 ??0Money@@QAE@ABV0@@Z,0x00018ACA,site-decoded x1 (thunk)
 ??0Money@@QAE@ABV0@@Z,0x00024BC7,site-decoded x1 (thunk)
@@ -4893,8 +4890,6 @@ name,address,notes
 ?xferRandomVariable@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0003EE32,H1 GameClientRandomVariable xfer helper (thunk; body 0x0010C4D0) — pinned, ideally matched in game_client_random_variable.cpp
 ?xferRandomVariable@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0004570F,RenderObjectDrawModuleInfo::DoXfer raw helper call target
 ?xferSaveData@GameState@@AAEXPAVXfer@@W4SnapshotType@@@Z,0x0010FBD0,GameState save-data walker (CHUNK_GameState/Campaign/LivingWorldLogic/Palantir/Audio); thunk 0x36674
-DefaultProductionExitUpdateFieldParse,0x00423687,DefaultProductionExitUpdate friend_newModuleData field parse
-SpawnPointProductionExitUpdateFieldParse,0x00442979,SpawnPoint friend_newModuleData field parse table
 _D3DXMatrixInverse@12,0x009FB321
 _D3DXVec4Transform@12,0x009FAA48
 _HideControlBar,0x00002847,HideControlBar letterbox
