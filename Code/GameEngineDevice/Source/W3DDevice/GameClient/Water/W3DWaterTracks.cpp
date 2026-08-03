@@ -1017,7 +1017,7 @@ WaterTracksObj *WaterTracksRenderSystem::findTrack(Vector2 &start, Vector2 &end,
 	return NULL;
 }
 // ?saveTracks@WaterTracksRenderSystem@@QAEXXZ
-// Body in W3DWaterTracks_saveTracks.asm (exact 251B retail).
+// Body in W3DWaterTracksSaveTracksThunk.cpp (exact 251B retail).
 
 // ?loadTracks@WaterTracksRenderSystem@@QAEXXZ present-unmatched
 void WaterTracksRenderSystem::loadTracks(void)
