@@ -50289,3 +50289,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0RunOffMapBehaviorBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,RunOffMapBehavior ctor base call (shared ILT)
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+g_windGlobalA,0x012F7004,WindModuleInfo ctor global
+g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
