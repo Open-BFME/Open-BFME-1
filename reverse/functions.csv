@@ -2469,7 +2469,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0Win32LocalFile@@QAE@XZ,,0x009D1930,18,Code/GameEngine/Source/Common/System/File.cpp,matched,adds no members - a base call and a vptr store for 0x01143C10 - which is what Win32LocalFileSystem openFile allocates 0x18 bytes for
 ??0WinInstanceData@@QAE@XZ,,0x00499B40,111,Code/GameEngine/Source/GameClient/GUI/WinInstanceData.cpp,matched,
 ??0WindModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00047410,0x005BD970,117,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
-??0WindModuleInfo@FXParticleSystem@@QAE@XZ,0x0003EA9A,0x005FE6C0,112,Code/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp,matched,Converted to an exact standalone C++ thunk
+??0WindModuleInfo@FXParticleSystem@@QAE@XZ,0x0003EA9A,0x005FE6C0,112,Code/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp,matched,Open-BFME5 clean C++ wind module info field init
 ??0WindowLayout@@QAE@XZ,,0x00497C40,99,Code/GameEngine/Source/GameClient/window_layout.cpp,matched,EH function (cl: /EHsc); BFME added vtable vs Generals
 ??0WorkerAIUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002C9ED0,417,Code/masm_dumps/WorkerAIUpdate_constructor.asm,matched,Exact 417B @ 0x002C9ED0; Exact retail MASM module ctor; unique friend_newModuleInstance factory 0x11C060
 ??0WorkerAIUpdateModuleData@@QAE@XZ,,0x0011BF80,141,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact 141B retail module-data constructor
