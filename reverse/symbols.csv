@@ -6036,6 +6036,7 @@ name,address,notes
 ??0CastleMemberBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x000060F5,CastleMemberBehavior ctor for friend_new
 ??0Cftp@@QAE@XZ,0x00885AD0
 ??0CheckpointUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
+??0CivilianSpawnCollideBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,CivilianSpawnCollide ctor base
 ??0CleanupAreaPowerModuleData@@QAE@XZ,0x0001ABF9,pinharvest x1 (thunk)
 ??0CleanupAreaPowerModuleData@@QAE@XZ,0x00037A51,pinharvest x1 (thunk)
 ??0CleanupAreaPowerModuleData@@QAE@XZ,0x0003BDE5,pinharvest x1 (thunk)
@@ -6171,6 +6172,7 @@ name,address,notes
 ??0EjectPilotDieModuleData@@QAE@XZ,0x0002AE6E,pinharvest x1 (thunk)
 ??0EjectPilotDieModuleData@@QAE@XZ,0x000331A9,pinharvest x1 (thunk)
 ??0ElvenWoodSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,ElvenWood SpecialPower base (shared 0x15c44)
+??0ExperienceLevelCreateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00026CAB,ExperienceLevelCreate ctor base
 ??0ExperienceScalarUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x000380D2,module ctor (friend_newModuleInstance retail call target)
 ??0ExperienceScalarUpgradeModuleData@@QAE@XZ,0x00010C80,pinharvest x1 (thunk)
 ??0ExperienceScalarUpgradeModuleData@@QAE@XZ,0x00022877,pinharvest x1 (thunk)
@@ -10569,6 +10571,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?Cast_OBBox_Recursive@AABTreeClass@@AAE_NPAUCullNodeStruct@1@AAVOBBoxCollisionTestClass@@@Z,0x0096B100,derived-ICF
 ?Cast_OBBox_To_Polys@AABTreeClass@@AAE_NPAUCullNodeStruct@1@AAVOBBoxCollisionTestClass@@@Z,0x0096AEE0,derived-ICF
 ?Cast_Ray_To_Polys@AABTreeClass@@AAE_NPAUCullNodeStruct@1@AAVRayCollisionTestClass@@@Z,0x0096ADC0
+?Check_Is_Transform_Identity@Matrix3D@@QBE_NXZ,0x0091FF40,Open-BFME5 member-call pin for RenderObjClass::Validate_Transform
 ?Clear@?$VectorClass@M@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)
 ?Clear@?$VectorClass@M@@UAEXXZ,0x0000DBA7,pinharvest x1 (thunk)
 ?Clear@?$VectorClass@M@@UAEXXZ,0x009EDD30,pinharvest x1 (body)
@@ -12279,6 +12282,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?muxDataProcessUpgradeRemoval@UpgradeMuxData@@QBEXPAVObject@@@Z,0x0002E320,pinharvest x1 (thunk)
 ?muxDataProcessUpgradeRemoval@UpgradeMuxData@@QBEXPAVObject@@@Z,0x0002EB4F,pinharvest x1 (thunk)
 ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@ABVAsciiString@@@Z,0x0004A1DD,pinharvest x4 (thunk)
+?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z,0x0001EDE9,site-decoded x1 (thunk)
 ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z,0x0003ADD7,site-decoded x1 (thunk)
 ?nameToLowercaseKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z,0x00006DB6,findImageByName call target (incremental-link thunk)
 ?newCommandButton@ControlBar@@IAEPAVCommandButton@@ABVAsciiString@@@Z,0x0001B329,create branch of the CommandButton block parser; body 0x0049DDB0 sits between the matched onPlayerRankChanged and showRallyPoint in ControlBar code
@@ -12407,6 +12411,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?release@DictReleaseDataShim@@QAEXXZ,0x000681C0,Dict releaseData incremental-link thunk target through a TU-local forwarding shim
 ?release@DistLODClassFreeShim@@QAEXXZ,0x00725B70,DistLODClass incremental-link Free target through a TU-local layout shim
 ?release@W3DShadowContainerShim@@QAEXXZ,0x0001E344,W3DProjectedShadowManager ReleaseResources container helper shim
+?releaseBuffer@?$StringBase@D@@QAEXXZ,0x00887940,Open-BFME5 public-access alias for retail StringBase<char>::releaseBuffer ICF body
 ?releaseBuffer@AsciiString@@IAEXXZ,0x00887940,Ghidra GrabWindowInfo direct callee
 ?releaseBuffer@BFMERetailAsciiString@@AAEXXZ,0x00887940
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x0000D828,site-decoded x9 (thunk)
