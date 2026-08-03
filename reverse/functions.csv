@@ -10503,7 +10503,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?init@ScriptEngine@@UAEXXZ","","0x003107F0","57072","Code/GameEngine/Source/GameLogic/ScriptEngine/script_engine.cpp","matched","real C++ (was naked asm); 542 action templates via a curTemplate cached base"
 "?Init@SegLineRendererClass@@QAEXABUW3dEmitterLinePropertiesStruct@@@Z","","0x00960190","237","Code/Libraries/Source/WWVegas/WW3D2/seglinerenderer.cpp","matched",""
 "?init@Shell@@UAEXXZ","","0x0057F0A0","13","Code/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp","matched",""
-"?init@ShellGameLoadScreen@@","","0x004920E0","517","Code/masm_dumps/_s4__init_ShellGameLoadScreen__4920E0.asm","matched","Exact string-anchored Open-BFME4+Grok"
+"?init@ShellGameLoadScreen@@","","0x004920E0","517","Code/GameEngine/Source/GameClient/GUI/ShellGameLoadScreenInit_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_ShellGameLoadScreenInit_4920E0"
 "?init@ShellMenuSchemeManager@@QAEXXZ","","0x00580290","1","Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme.cpp","matched","Retail manager init is a no-op; Shell init caller and unique thunk prove ownership"
 "?init@SnowManager@@UAEXXZ","","0x0045A970","34","Code/GameEngine/Source/GameClient/Snow.cpp","matched","Exact clean C++ SnowManager::init; MASM dump removed"
 "?Init@SphereClass@@QAEXABVVector3@@M@Z","","0x0042E380","30","Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp","matched",""
