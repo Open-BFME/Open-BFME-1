@@ -3197,7 +3197,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1SpecialDisguiseUpdate@@UAE@XZ,,0x00137E80,284,Code/masm_dumps/SpecialDisguiseUpdate_destructor.asm,matched,Exact 284B SEH dtor Open-BFME4
 ??1SpecialDisguiseUpdateModuleData@@UAE@XZ,,0x00267A90,95,Code/masm_dumps/SpecialDisguiseUpdateModuleData_destructor.asm,matched,Exact 95B SEH dtor factory->vtable Open-BFME4
 ??1SpecialEnemySenseUpdate@@UAE@XZ,,0x002AB0F0,543,Code/masm_dumps/SpecialEnemySenseUpdate_destructor.asm,matched,Exact 543B @ 0x002AB0F0; Exact retail MASM; instance factory->vtable dtor; del 0x2AB0F0 ctor 0x2AAF30 vt 0xCC3880
-??1SpecialEnemySenseUpdateModuleData@@UAE@XZ,,0x00125890,67,Code/masm_dumps/SpecialEnemySenseUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
+??1SpecialEnemySenseUpdateModuleData@@UAE@XZ,,0x00125890,67,Code/GameEngine/Source/GameLogic/Object/Update/SpecialEnemySenseUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1SpecialPowerCompletionDie@@UAE@XZ,,0x00255FD0,124,Code/masm_dumps/SpecialPowerCompletionDie_destructor.asm,matched,Exact 124B SEH dtor factory->vtable Open-BFME4
 ??1SpecialPowerModule@@MAE@XZ,,0x00268F30,232,Code/masm_dumps/SpecialPowerModule_destructor.asm,matched,Exact 232B ICF alias; true body 0x268F30 not queue pad 0x268F28; ctor-paired vtables 0x10B7C3C
 ??1SpecialPowerStore@@UAE@XZ,,0x000EBD30,219,Code/masm_dumps/SpecialPowerStore_destructor.asm,matched,Certified packet 329 vtable destructor chain and retail boundary hash dd831bc42554b7a6cbdabdd5b01b386808e324afcd5c363566dbaaf80ec53eaa
@@ -3248,7 +3248,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1TintEnvelope@@MAE@XZ,,0x001B0DB0,79,Code/GameEngine/Source/GameClient/Drawable.cpp,matched,icf-owner=??1Upgrade@@MAE@XZ
 ??1TooltipUpgrade@@UAE@XZ,,0x00418B50,142,Code/masm_dumps/TooltipUpgrade_destructor.asm,matched,Exact 142B SEH dtor factory->vtable Open-BFME4
 ??1TooltipUpgradeModuleData@@UAE@XZ,,0x0012BBB0,96,Code/masm_dumps/TooltipUpgradeModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
-??1ToppleUpdateModuleData@@UAE@XZ,,0x002B15B0,67,Code/masm_dumps/ToppleUpdateModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor vtable and deleting-wrapper chain prove ownership
+??1ToppleUpdateModuleData@@UAE@XZ,,0x002B15B0,67,Code/GameEngine/Source/GameLogic/Object/Update/ToppleUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; unique factory ctor vtable and deleting-wrapper chain prove ownership
 ??1TransitionDamageFXModuleData@@UAE@XZ,,0x00253500,197,Code/masm_dumps/TransitionDamageFXModuleData_destructor.asm,matched,Exact retail MASM; factory→vtable dtor; del 0x2534D0 ctor 0x2532B0 vt 0xCB2690
 ??1TranslatorData@MessageStream@@QAE@XZ,,0x0008A260,15,Code/GameEngine/Source/Common/MessageStream.cpp,matched,
 ??1TransportAIUpdate@@UAE@XZ,,0x00271DB0,2099,Code/masm_dumps/TransportAIUpdate_destructor.asm,matched,Exact 2099B SEH dtor Open-BFME4
@@ -3259,14 +3259,14 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1UDP@@QAE@XZ,,0x00A3C88D,14,Code/GameEngine/Source/GameNetwork/udp.cpp,matched,
 ??1UnicodeString@@QAE@XZ,0x0003B304,0x0005EEA0,5,Code/Libraries/Source/WWVegas/WWLib/unicode_string.cpp,matched,UnicodeString destructor
 ??1UnitCrateCollideModuleData@@UAE@XZ,,0x001270F0,83,Code/masm_dumps/UnitCrateCollideModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
-??1UnpauseSpecialPowerUpgradeModuleData@@UAE@XZ,,0x002D9A10,67,Code/masm_dumps/UnpauseSpecialPowerUpgradeModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor vtable and deleting-wrapper chain prove ownership
+??1UnpauseSpecialPowerUpgradeModuleData@@UAE@XZ,,0x002D9A10,67,Code/GameEngine/Source/GameLogic/Object/Upgrade/UnpauseSpecialPowerUpgradeModuleDataDestructorThunk.cpp,matched,Exact retail MASM; unique factory ctor vtable and deleting-wrapper chain prove ownership
 ??1UpdateModuleModuleData@@UAE@XZ,,0x0027E4E0,145,Code/masm_dumps/UpdateModuleModuleData_destructor.asm,matched,Exact 145B SEH dtor Open-BFME4
 ??1Upgrade@@MAE@XZ,,0x001B0DB0,79,Code/GameEngine/Source/Common/System/Upgrade.cpp,matched,
 ??1UpgradeCenter@@UAE@XZ,,0x0010A8C0,111,Code/masm_dumps/UpgradeCenter_dtor.asm,matched,True body via UpgradeCenter ctor vtable 0x1088D24 scalar dtor chain; queue RVA was int3 pad before ICF TeamFactory/PartitionManager
-??1UpgradeDieModuleData@@UAE@XZ,,0x001268A0,67,Code/masm_dumps/UpgradeDieModuleData_destructor.asm,matched,Exact 67B SEH dtor factory->vtable Open-BFME4
+??1UpgradeDieModuleData@@UAE@XZ,,0x001268A0,67,Code/GameEngine/Source/GameLogic/Object/Upgrade/UpgradeDieModuleDataDestructorThunk.cpp,matched,Exact 67B SEH dtor factory->vtable Open-BFME4
 ??1UpgradeModuleData@@UAE@XZ,,0x00101EB0,86,Code/masm_dumps/UpgradeModuleData_destructor.asm,matched,Exact 86B SEH dtor Open-BFME4
 ??1UpgradeModuleModuleData@@UAE@XZ,,0x00128FA0,273,Code/masm_dumps/UpgradeModuleModuleData_destructor.asm,matched,Exact 273B ModuleData SEH dtor Open-BFME4
-??1UpgradeSoundSelectorClientBehaviorModuleData@@UAE@XZ,,0x00608F80,67,Code/masm_dumps/UpgradeSoundSelectorClientBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory 0x121ED0 ctor 0x608DC0 prove ownership
+??1UpgradeSoundSelectorClientBehaviorModuleData@@UAE@XZ,,0x00608F80,67,Code/GameEngine/Source/GameLogic/Object/Behavior/UpgradeSoundSelectorClientBehaviorModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory 0x121ED0 ctor 0x608DC0 prove ownership
 ??1UpgradeTemplate@@MAE@XZ,,0x0010ACB0,170,Code/masm_dumps/UpgradeTemplate_destructor_0010ACB0_packet262.asm,matched,Certified packet 262 exact retail MASM f78745debd90e92551686dc404ec95aed7f2fa59f73073f3484f0f90880b45e3
 ??1User@@MAE@XZ,,0x0078CFB0,73,Code/GameEngine/Source/GameNetwork/User.cpp,matched,
 ??1UserPreferences@@UAE@XZ,,0x0003F25B,5,Code/GameEngine/Source/Common/UserPreferencesDestructorThunk.cpp,matched,Focused C++ thunk for UserPreferences destructor
