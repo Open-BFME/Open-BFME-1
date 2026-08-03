@@ -46,8 +46,16 @@ def dedup_functions(path):
     for key, group in groups.items():
         finalists = [r for r in group if rank(r) == min(rank(r) for r in group)]
         if len({r["source"] for r in finalists}) > 1:
-            ambiguous.append((key, sorted({r["source"] for r in finalists})))
-            continue
+            existing_sources = {r["source"] for r in finalists
+                                if (ROOT / r["source"]).is_file()}
+            if len(existing_sources) == 1:
+                # A union merge can retain a row for a source deleted by the
+                # conversion commit.  The sole surviving source is the only
+                # ledger owner that can be byte-verified in this checkout.
+                finalists = [r for r in finalists if r["source"] in existing_sources]
+            else:
+                ambiguous.append((key, sorted({r["source"] for r in finalists})))
+                continue
         # Same source, so only notes differ: keep the most informative one.
         best[key] = max(finalists, key=lambda r: (len(r["notes"]), r["notes"]))
 
@@ -86,6 +94,8 @@ def dedup_symbols(path):
         if not line.strip():
             continue
         parts = next(csv.reader(io.StringIO(line)))
+        if parts[:2] == ["name", "address"]:
+            continue
         key = (parts[0], parts[1] if len(parts) > 1 else "")
         if key not in best or (-len(line), line) < (-len(best[key]), best[key]):
             best[key] = line
