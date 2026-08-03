@@ -1670,7 +1670,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0HordeAIUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002C43A0,141,Code/GameEngine/Source/GameLogic/AI/HordeAIUpdateCtorThunk.cpp,matched,Open-BFME5 exact C++ raw AI module constructor
 ??0HordeAIUpdateModuleData@@QAE@XZ,,0x0027EAE0,283,Code/GameEngine/Source/GameLogic/AI/HordeAIUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ ICF-alias raw module-data constructor
 ??0HordeContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0023EAF0,819,Code/masm_dumps/HordeContain_constructor.asm,matched,Exact 819B @ 0x0023EAF0; Exact retail MASM module ctor; unique friend_newModuleInstance factory 0x115D60
-??0HordeContainModuleData@@QAE@XZ,,0x00220530,28,Code/GameEngine/Source/GameLogic/Object/Update/HordeUpdateModuleData.cpp,matched,Exact retail ModuleData constructor emitted in dedicated C++ TU.
+??0HordeContainModuleData@@QAE@XZ,,0x00220530,28,Code/GameEngine/Source/GameLogic/Object/Update/HordeUpdateModuleData.cpp,matched,Open-BFME5 clean C++ ModuleData ctor
 ??0HordeGarrisonContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00248F90,175,Code/GameEngine/Source/GameLogic/AI/HordeGarrisonContainCtorThunk.cpp,matched,Open-BFME5 exact C++ raw contain constructor
 ??0HordeGarrisonContainModuleData@@QAE@XZ,,0x00852130,79,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,object-symbol=?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z;ICF alias converted to existing clean C++ body
 ??0HordeSiegeEngineContain@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0024A560,307,Code/GameEngine/Source/GameLogic/AI/HordeSiegeEngineContainCtorThunk.cpp,matched,Open-BFME5 exact C++ raw contain constructor
@@ -2257,7 +2257,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0StepLinearOffsetTextureMapperClass@@QAE@ABVVector2@@M_N0I@Z,,0x00965000,116,Code/Libraries/Source/WWVegas/WW3D2/mapper.cpp,matched,
 ??0StickyBombUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0020D5C0,154,Code/GameEngine/Source/GameLogic/Object/Update/StickyBombUpdateCtorThunk.cpp,matched,Open-BFME5 exact 154B ICF-alias constructor
 ??0StopSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0026B340,53,Code/GameEngine/Source/GameLogic/Object/Upgrade/StopSpecialPowerCtorThunk.cpp,matched,Open-BFME5 exact C++ raw StopSpecialPower constructor
-??0StopSpecialPowerModuleData@@QAE@XZ,,0x0026B5B0,28,Code/GameEngine/Source/GameLogic/Object/SpecialPower/StopSpecialPowerModuleData.cpp,matched,Exact retail ModuleData constructor emitted in dedicated C++ TU.
+??0StopSpecialPowerModuleData@@QAE@XZ,,0x0026B5B0,28,Code/GameEngine/Source/GameLogic/Object/SpecialPower/StopSpecialPowerModuleData.cpp,matched,Open-BFME5 clean C++ ModuleData ctor
 ??0StreakDrawModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x00007fea,0x005d8600,11,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,copy constructor sets vtable pointer
 ??0StreakDrawModuleInfo@FXParticleSystem@@QAE@XZ,0x00018796,0x005F7EF0,9,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,default constructor sets vtable pointer
 ??0StreakDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00033B59,0x005D8790,62,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
