@@ -5888,7 +5888,9 @@ name,address,notes
 ??0?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x0004314E,pinharvest x2 (thunk)
 ??0?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x00046ADD,pinharvest x1 (thunk)
 ??0?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x00048667,pinharvest x1 (thunk)
+??0?@V?@@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x0002D06A,DefaultModuleTag clone copy-ctor pin
 ??0?@V?@@FXParticleSystem@@3QBDB@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?@@2@V?@@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x00020DD3,SphericalEmissionVelocity clone copy-ctor pin
+??0?@V?@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x0001ADFC,DefaultModuleTag clone copy-ctor pin
 ??0?\@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x00021CB0,OrthoEmissionVelocity clone copy-ctor pin
 ??0?\@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x000391A3,Concrete PointEmissionVolume copy ctor pin
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x0000C6E9,pinharvest x1 (thunk)
