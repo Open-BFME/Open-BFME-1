@@ -531,6 +531,9 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0?$CategoryModuleTemplate@$06@FXParticleSystem@@QAE@XZ,,0x005C1A30,106,Code/GameEngine/Source/GameClient/System/FXParticleSystem/CategoryModuleTemplate06CtorThunk.cpp,matched,Open-BFME5 exact C++ isolated raw category template constructor
 ??0?$CategoryModuleTemplate@$07@FXParticleSystem@@QAE@ABV01@@Z,,0x0005E3A0,52,Code/GameEngine/Source/GameClient/System/FXParticleSystem/CategoryModuleTemplate07CopyCtorThunk.cpp,matched,Open-BFME5 clean C++ CategoryModuleTemplate07 copy ctor
 ??0?$CategoryModuleTemplate@$07@FXParticleSystem@@QAE@XZ,,0x0005E340,31,Code/GameEngine/Source/GameClient/System/FXParticleSystem/CategoryModuleTemplate8CtorThunk.cpp,matched,Open-BFME5 clean C++ CategoryModuleTemplate8 dual-vtbl ctor; interim sub + bools + final vtbls
+??0?$CategoryModuleTemplate@$07@FXParticleSystem@@QAE@XZ,,0x0005E340,31,Code/GameEngine/Source/GameClient/System/FXParticleSystem/CategoryModuleTemplate8CtorThunk.cpp,matched,Open-BFME5 clean C++ CategoryModuleTemplate8 dual-vtbl ctor; interim sub + bools + final vtbls
+
+??0?$CategoryModuleTemplate@$07@FXParticleSystem@@QAE@XZ,,0x0005E340,31,Code/GameEngine/Source/GameClient/System/FXParticleSystem/CategoryModuleTemplate8CtorThunk.cpp,matched,Open-BFME5 exact C++ template constructor thunk; retail ordinal $07 is Category 8
 ??0?$CategoryModuleTemplate@$0A@@FXParticleSystem@@QAE@ABV01@@Z,0x00025CA7,0x0005D9A0,32,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,calls TemplateBase copy ctor then sets derived vtables
 ??0?$CategoryModuleTemplate@$0A@@FXParticleSystem@@QAE@XZ,0x00007252,0x0005D950,23,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,vtable setup for two bases
 ??0?$CategoryModuleTemplateBase@$00@FXParticleSystem@@QAE@ABV01@@Z,0x00046DE9,0x005BF130,25,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,vtable setup for two bases
@@ -7515,6 +7518,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?ParseObjectsDataChunk@@YA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,,0x00454A60,124,Code/GameEngine/Source/GameClient/MapUtil_ParseObjectsDataChunk_Thunk.cpp,matched,Open-BFME5 lift 124B retail MASM to standalone C++ thunk
 ?ParseOrConditionDataChunk@OrCondition@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,,0x0035B700,176,Code/GameEngine/Source/GameLogic/ScriptEngine/OrCondition_ParseOrConditionDataChunk_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?ParseScript@Script@@SAPAV1@AAVDataChunkInput@@G@Z,,0x0035C0C0,579,Code/GameEngine/Source/GameLogic/ScriptEngine/Script_ParseScript_Thunk.cpp,matched,Open-BFME5 MASM lift
+?ParseOrConditionDataChunk@OrCondition@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,,0x0035B700,176,Code/masm_dumps/OrCondition_ParseOrConditionDataChunk_35B700.asm,matched,Exact 176B @0x35B700; queue 0xAB6ADE misplaced; ILT 0x16568->body; Condition+new(0xC)
+?ParseScript@Script@@SAPAV1@AAVDataChunkInput@@G@Z,,0x0035C0C0,579,Code/masm_dumps/_sa4__ParseScript_Script__SAPAV1_AAVDataChunkInput__G_Z_35C0C0.asm,matched,Exact 579B Open-BFME4
 ?ParseScriptListDataChunk@ScriptList@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,,0x00350F50,153,Code/GameEngine/Source/Common/ScriptList_ParseScriptListDataChunkThunk.cpp,matched,Open-BFME5 MASM lift ParseScriptListDataChunk
 ?ParseScriptsDataChunk@ScriptList@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,,0x0035BFB0,211,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptList_ParseScriptsDataChunk_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?ParseSizeOnly@@YA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,,0x00454220,152,Code/GameEngine/Source/GameClient/MapUtil.cpp,matched,
@@ -8582,6 +8587,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?WriteActionFalseDataChunk@ScriptAction@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x003514C0,160,Code/GameEngine/Source/Common/ScriptAction_WriteActionFalseDataChunk_Thunk.cpp,matched,Ghidra-bound BFME false-action writer
 ?WriteBuildInfo@Debug@@QAEXXZ,,0x0088A490,137,Code/Libraries/Source/WWVegas/WWDebug/Debug_WriteBuildInfo_Thunk.cpp,matched,Open-BFME5 clean C++ conversion of __emit thunk; re-anchored 2 bytes earlier to the real push prologue
 ?WriteGroupDataChunk@ScriptGroup@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x00359EE0,204,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptGroup_WriteGroupDataChunk_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
+?WriteGroupDataChunk@ScriptGroup@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x00359EE0,204,Code/masm_dumps/ScriptGroup_WriteGroupDataChunk.asm,matched,Ghidra-bound BFME script-group writer
 ?WriteOrConditionDataChunk@OrCondition@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x00355C90,64,Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp,matched,
 ?WriteParameter@Parameter@@QAEXAAVDataChunkOutput@@@Z,,0x00351320,167,Code/GameEngine/Source/GameLogic/ScriptEngine/Parameter_WriteParameter_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?WriteScriptDataChunk@Script@@SAXAAVDataChunkOutput@@PAV1@@Z,,0x00357B30,318,Code/GameEngine/Source/GameLogic/ScriptEngine/Script_WriteScriptDataChunk_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
