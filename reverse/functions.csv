@@ -33623,7 +33623,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?setAttackInfo@AIUpdateInterface@@QAEXPBVAttackPriorityInfo@@@Z,,0x001F1EF0,10,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,
 ?setAudioPriority@AudioEventRTS@@QAEXW4AudioPriority@@@Z,,0x000B23A0,10,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,MASM converted to clean C++
 ?setBackCrushed@ActiveBody@@UAEX_N@Z,,0x007AE650,13,Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp,matched,
-?setBattlePlan@BattlePlanUpdate@@IAEXW4BattlePlanStatus@@@Z,,0x00285920,747,Code/masm_dumps/setBattlePlan_BattlePlanUpdate_00285920_packet240.asm,matched,Certified packet 240 exact retail db recovery SHA256 dd675b6207fce1ff1bfffdd5391e415203c699301eae6b654ac4af22e41bc65d
+?setBattlePlan@BattlePlanUpdate@@IAEXW4BattlePlanStatus@@@Z,,0x00285920,747,Code/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetBattlePlanThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from certified MASM packet;object-symbol=_bfme_BattlePlanUpdateSetBattlePlan_285920
 ?setBool@Dict@@QAEXW4NameKeyType@@_N@Z,,0x000687D0,33,Code/GameEngine/Source/Common/Dict.cpp,matched,
 ?setBoundingBox@Geometry@@QAEXABVAABoxClass@@@Z,,0x007BA190,42,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,
 ?setBoundingBox@W3DShadowTexture@@QAEXAAVAABoxClass@@@Z,,0x007AE7A0,42,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp,matched,
