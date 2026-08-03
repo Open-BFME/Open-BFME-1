@@ -3160,7 +3160,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1RubbleRiseUpdateModuleData@@UAE@XZ,,0x00128BD0,103,Code/masm_dumps/RubbleRiseUpdateModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
 ??1ScienceInfo@@MAE@XZ,,0x000E8520,127,Code/masm_dumps/ScienceInfo_destructor.asm,matched,MASM exact: true body 0xE8520 (queue 0x6F4C1A misplaced); FieldParse+parseScience ctor identity; BFME sizeof 0x30 one ScienceVec+costMP depooled
 ??1ScriptConditions@@UAE@XZ,,0x003244B0,106,Code/masm_dumps/ScriptConditions_dtor.asm,matched,True body via ctor vtbl 0x10E1F44; queue 0x9F27F1 was PartitionManager getName+pad+matched dtor
-??1ScriptGroup@@MAE@XZ,,0x00352950,71,Code/masm_dumps/ScriptGroup_dtor.asm,matched,True body via vtbl 0x10E855C ScriptGroup string; queue 0x9F2799 was inside matched ControlBar ctor
+??1ScriptGroup@@MAE@XZ,,0x00352950,71,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptGroupDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1SegLineRendererClass@@QAE@XZ,,0x00960030,28,Code/Libraries/Source/WWVegas/WW3D2/seglinerenderer.cpp,matched,
 ??1SelectionTranslator@@UAE@XZ,,0x005B7BE0,73,Code/GameEngine/Source/GameClient/MessageStream/SelectionXlat.cpp,matched,
 ??1ShareExperienceBehavior@@UAE@XZ,,0x00205AC0,630,Code/masm_dumps/ShareExperienceBehavior_destructor.asm,matched,Exact 630B @ 0x00205AC0; Exact retail MASM; instance factory->vtable dtor; del 0x205AC0 ctor 0x205740 vt 0xCA5FC0

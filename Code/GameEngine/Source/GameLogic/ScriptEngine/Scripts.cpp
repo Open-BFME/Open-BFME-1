@@ -674,34 +674,6 @@ m_nextGroup(NULL)
 	m_groupName.format("Script Group %d", ScriptList::getNextID());
 }
 
-/**
-  Dtor - The script list deletes the rest of the list, but we have to loop & delete
-	sll the script groups in out list.
-*/
-// Matched via Code/masm_dumps/ScriptGroup_dtor.asm @ 0x00352950 (71B).
-// C++ kept for TU completeness; retail BFME body is a 0x10-byte class that frees
-// owned ptrs at +8/+4 (not the ZH m_firstScript/m_nextGroup deleteInstance walk).
-// Queue RVA 0x9F2799 was misplaced inside matched ControlBar ctor @ 0x9F2730.
-ScriptGroup::~ScriptGroup(void) 
-{
-	if (m_firstScript) {
-		// Delete the first script.  m_firstScript deletes the entire list.
-		m_firstScript->deleteInstance();
-		m_firstScript = NULL;
-	}
-	if (m_nextGroup) {
-		// Delete all the subsequent groups in our list.
-		ScriptGroup *cur = m_nextGroup;
-		ScriptGroup *next;
-		while (cur) {
-			next = cur->getNext();
-			cur->setNextGroup(NULL); // prevents recursion. 
-			cur->deleteInstance();
-			cur = next; 
-		}
-	}
-}
-
 // ------------------------------------------------------------------------------------------------
 /** CRC */
 // ------------------------------------------------------------------------------------------------
