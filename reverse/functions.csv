@@ -12139,7 +12139,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?isInRegionWithZ@Region3D@@QBE_NPBVCoord3D@@@Z,0x000427D0,0x007E6E40,92,Code/Libraries/Source/WWVegas/WWMath/region.cpp,matched,checks point inside x/y/z bounds
 ?isInSection@SectionChecker@@QAE_NXZ,,0x006287C0,41,Code/GameEngine/Source/GameNetwork/GameSpy/GSConfig.cpp,matched,
 ?isInSinglePlayerGame@GameLogic@@QAE_NXZ,,0x00382B00,64,Code/GameEngine/Source/GameLogic/System/GameLogic.cpp,matched,
-?isInside@Object@@QBE_NPBVPolygonTrigger@@@Z,,0x001BEA90,65,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,Exact 65B C++ raw function conversion Open-BFME5
+?isInside@Object@@QBE_NPBVPolygonTrigger@@@Z,,0x001BEA90,65,Code/GameEngine/Source/GameLogic/Object/ObjectIsInsideThunk.cpp,matched,Open-BFME5 clean C++ ZH loop retail Object offsets
 ?isInside@Region2D@@QBE_NABVCoord2D@@@Z,0x000457A5,0x0061BA90,66,Code/Libraries/Source/WWVegas/WWMath/region.cpp,matched,checks point inside region
 ?isKindOfMulti@Thing@@QBE_NABV?$BitFlags@$0HE@@@0@Z,,0x00132B20,41,Code/GameEngine/Source/Common/Thing/Thing.cpp,matched,converted exact MASM method dump to clean C++ with BFME retail ThingTemplate kindof shim
 ?isLauncherRunning@CopyProtect@@SA_NXZ,,0x00102090,49,Code/GameEngine/Source/Common/System/CopyProtection.cpp,matched,
