@@ -1431,6 +1431,8 @@ name,address,notes
 ??1BfmeLegendStringVec@@QAE@XZ,0x000658A0,SubsystemLegend.cpp vector<AsciiString> stand-in dtor
 ??1BuddyMessage@@QAE@XZ,0x00021445
 ??1Buffer@@QAE@XZ,0x0001A401,pinharvest x1 (thunk)
+??1AnimationSoundMember@@QAE@XZ,0x000142EA,Open-BFME5 AnimationSound destructor member call target
+??1UpgradeVector@@QAE@XZ,0x0001A401,Open-BFME5 ShareExperience destructor member call target
 ??1Buffer@@QAE@XZ,0x00887940,pinharvest x1 (body)
 ??1Buffer@@QAE@XZ,0x009E1E60
 ??1BufferStraw@@UAE@XZ,0x00921790
