@@ -1,23 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
-#include "PreRTS.h"
+// cl: /DNDEBUG /MD /EHsc
 
-extern "C" __declspec(naked) int IsStatsConnected()
+// Open-BFME5: IsStatsConnected returns nonzero when connection id is not -1.
+
+extern int g_statsConnection;
+
+extern "C" int IsStatsConnected(void)
 {
-    __asm {
-        _emit 08Bh
-        _emit 00Dh
-        _emit 038h
-        _emit 090h
-        _emit 02Dh
-        _emit 001h
-        _emit 033h
-        _emit 0C0h
-        _emit 083h
-        _emit 0F9h
-        _emit 0FFh
-        _emit 00Fh
-        _emit 095h
-        _emit 0C0h
-        _emit 0C3h
-    }
+	return g_statsConnection != -1;
 }

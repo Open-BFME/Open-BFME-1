@@ -14161,7 +14161,7 @@ _GetSoloINIFromMap,,0x0066DD40,211,Code/GameEngine/Source/GameNetwork/FileTransf
 _GetStrFileFromMap,,0x0066DC30,211,Code/GameEngine/Source/GameNetwork/FileTransfer.cpp,matched,
 _HUFF_decode@12,,0x00822EB0,20,Code/Libraries/Source/Compression/EAC/huffdecode.cpp,matched,
 _InitStatsConnection,,0x009D58C0,47,Code/GameEngine/Source/Common/promoted_InitStatsConnection_009D58C0.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 47B
-_IsStatsConnected,,0x009D2B60,15,Code/GameEngine/Source/Common/System/StatsConnection.cpp,matched,Exact retail stats connection query emitted in dedicated C++ TU.
+_IsStatsConnected,,0x009D2B60,15,Code/GameEngine/Source/Common/System/StatsConnection.cpp,matched,Open-BFME5 clean C++ IsStatsConnected global != -1
 _NetGameUtilControl,,0x0080E5E0,219,Code/Libraries/Source/DirtySock/netgameutil.cpp,matched,
 _ProtoMangleCreate,,0x00804150,245,Code/Libraries/Source/DirtySock/protomangle.cpp,matched,
 _ProtoMangleDestroy,,0x00804330,80,Code/Libraries/Source/DirtySock/protomangle.cpp,matched,
