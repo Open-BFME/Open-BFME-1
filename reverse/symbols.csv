@@ -46445,3 +46445,8 @@ g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 ??0ElvenWoodSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,ElvenWood SpecialPower base (shared 0x15c44)
 ??0ModelConditionSpecialAbilityUpdateModuleDataBase@@QAE@XZ,0x0003F503,ModelCondition SpecialAbilityUpdate base
 ??0ShareBufferClassBase@@QAE@HPBDH@Z,0x00929FC0,TexBufferClass base ShareBuffer-like ctor
+?initFromINI@INI@@QAEXPAXPBX@Z,0x00852130,BridgeTower friend_newModuleData retail call
+??0ModuleDataBase_SiegeDeployHordeSpecialPowerModuleData@@QAE@XZ,0x00023FE7,Open-BFME5 SiegeDeployHordeSpecialPowerModuleData base pin
+?getSpecialPowerModule@Object@@QBEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF
+?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6
+?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37
