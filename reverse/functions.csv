@@ -5364,7 +5364,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z","","0x0082E5F0","85","Code/Libraries/Source/WWVegas/WWLib/node_alloc_M_deallocateThunk.cpp","matched","Open-BFME5 MASM lift node_alloc _M_deallocate"
 "?_M_decr@_List_iterator_base@_STL@@QAEXXZ","","0x000F8540","8","Code/GameEngine/Source/GameLogic/Object/Contain/OpenContain.cpp","matched",""
 "?_M_decrement@?$_Deque_iterator_base@PAVMapObject@@@_STL@@QAEXXZ","","0x00087ED0","35","Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp","matched",""
-"?_M_decrement@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z","","0x0082B8E0","137","Code/masm_dumps/___M_decrement____Rb_global__N__STL__SAPAU_Rb_tree__82B8E0.asm","matched",""
+"?_M_decrement@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z","","0x0082B8E0","137","Code/Libraries/Source/WWVegas/WWLib/STLRbGlobalBoolDecrement_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_STLRbGlobalBool_Decrement_82B8E0"
 "?_M_destroy_nodes@?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@IAEXPAPAVGameResultsRequest@@0@Z","","0x006404B0","45","Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp","matched","MASM converted to clean C++"
 "?_M_do_and@?$_Base_bitset@$00@_STL@@QAEXABU12@@Z","","0x0013CDD0","11","Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp","matched",""
 "?_M_do_count@?$_Base_bitset@$00@_STL@@QBEIXZ","","0x0013CDE0","35","Code/GameEngine/Source/GameLogic/Object/Object.cpp","matched",""
