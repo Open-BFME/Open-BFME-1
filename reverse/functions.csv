@@ -84941,6 +84941,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0DefaultStaticSortListClass@@QAE@XZ,,0x00958110,98,Code/Libraries/Source/WWVegas/WW3D2/static_sort_list.cpp,matched,
 ??0DefaultUpdateModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x000052AE,0x005D81C0,135,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
 ??0DefaultUpdateModuleInfo@FXParticleSystem@@QAE@XZ,0x0004506B,0x005FF750,181,Code/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultUpdateModuleInfoCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM SEH ctor
+??0DefectorSpecialPowerModuleData@@QAE@XZ,,0x0025A110,28,Code/GameEngine/Source/GameLogic/Object/Upgrade/DefectorSpecialPowerModuleData.cpp,matched,Open-BFME5 clean C++ ModuleData ctor
 ??0DefectorSpecialPowerModuleData@@QAE@XZ,,0x0025A110,28,Code/GameEngine/Source/GameLogic/Object/Upgrade/DefectorSpecialPowerModuleData.cpp,matched,Exact retail ModuleData constructor emitted in dedicated C++ TU.
 ??0DeflectSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0025A1B0,82,Code/GameEngine/Source/GameLogic/Object/SpecialPower/DeflectSpecialPowerConstructorThunk.cpp,matched,Exact 82B unique factory Open-BFME4
 ??0DeflectSpecialPowerModuleData@@QAE@XZ,,0x00852130,79,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,object-symbol=?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z;ICF alias converted to existing clean C++ body
@@ -85576,6 +85577,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0RailedTransportAIUpdateModuleData@@QAE@XZ,,0x00852130,79,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,object-symbol=?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z;ICF alias converted to existing clean C++ body
 ??0RailedTransportDockUpdateModuleData@@QAE@XZ,,0x00852130,79,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,object-symbol=?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z;ICF alias converted to existing clean C++ body
 ??0RainOfFireUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0000A0E2,5,Code/GameEngine/Source/Common/RTS/RainOfFireUpdateCtorThunk.cpp,matched,5-byte incremental-link RainOfFireUpdate constructor thunk converted to focused C++ source
+??0RainOfFireUpdateModuleData@@QAE@XZ,,0x002A08B0,62,Code/GameEngine/Source/GameLogic/AI/RainOfFireUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 clean C++ leaf float defaults
 ??0RainOfFireUpdateModuleData@@QAE@XZ,,0x002A08B0,62,Code/GameEngine/Source/GameLogic/AI/RainOfFireUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
 ??0RampageBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00203C20,144,Code/GameEngine/Source/GameLogic/Object/Behavior/RampageBehaviorCtorThunk.cpp,matched,Open-BFME5 exact 144B retail module constructor
 ??0Random2Class@@QAE@I@Z,,0x009E63C0,76,Code/Libraries/Source/WWVegas/WWLib/random.cpp,matched,verbatim Generals WWLib
@@ -86489,6 +86491,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1GiveUpgradeUpdateModuleData@@UAE@XZ,,0x0025DE90,120,Code/GameEngine/Source/GameLogic/AI/GiveUpgradeUpdateModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1GiantBirdSlowDeathBehaviorModuleData@@UAE@XZ,,0x001FFF50,79,Code/GameEngine/Source/GameLogic/AI/GiantBirdSlowDeathBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1GiveUpgradeUpdateModuleData@@UAE@XZ,,0x0025DE90,120,Code/GameEngine/Source/GameLogic/AI/GiveUpgradeUpdateModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
+??1GiantBirdSlowDeathBehaviorModuleData@@UAE@XZ,,0x001FFF50,79,Code/masm_dumps/GiantBirdSlowDeathBehaviorModuleData_destructor.asm,matched,Exact 79B @ 0x001FFF50; Exact retail MASM; factory->vtable dtor; del 0x1FFF20 ctor 0x1FFE40 vt 0xCA49B8
+??1GiveUpgradeUpdateModuleData@@UAE@XZ,,0x0025DE90,120,Code/masm_dumps/GiveUpgradeUpdateModuleData_destructor.asm,matched,Exact 120B SEH dtor factory->vtable Open-BFME4
 ??1GloriousChargeUpdate@@UAE@XZ,,0x0025EA40,159,Code/GameEngine/Source/Common/RTS/GloriousChargeUpdateDtorThunk.cpp,matched,Exact standalone C++ __emit thunk from certified retail destructor
 ??1GrantStealthBehaviorModuleData@@UAE@XZ,,0x00297D60,93,Code/masm_dumps/GrantStealthBehaviorModuleData_destructor.asm,matched,Exact 93B SEH dtor Open-BFME4
 ??1GridCullSystemClass@@UAE@XZ,,0x008DCAD0,97,Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp,matched,
@@ -97810,3 +97814,6 @@ _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3D
 _tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,ICF alias of existing matched body
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGE@2@@Z,,0x0093FE46,142,Code/Libraries/Source/WWVegas/WWLib/STLUnsignedShortByteTreeInsertUniquePairThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from structural retail candidate
 ?parsePrerequisites@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z,,0x001485B0,63,Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp,matched,Open-BFME5 converted from exact MASM dump
+_tanf,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,ICF alias of existing matched body
+?insert_unique@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGE@2@@Z,,0x0093FE46,142,Code/Libraries/Source/WWVegas/WWLib/STLUnsignedShortByteTreeInsertUniquePairThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from structural retail candidate
+
