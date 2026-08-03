@@ -5849,7 +5849,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?DifficultySelectSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004C72C0,331,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/DifficultySelect_System.asm,matched,Exact MASM: identity via GUI name table DifficultySelectSystem->thunk 0x4B38F->0x4C72C0/331; queue 0x79CE5C misplaced mid-epilogue; C++ SEH+OptionPreferences shape diverges
 ?DiplomacyInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004C3430,59,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Diplomacy.cpp,matched,
 ?Distance@Vector3@@SAMABV1@0@Z,,0x006DFAD0,65,Code/Libraries/Source/WWVegas/WWMath/vector3.cpp,matched,
-?DoShadows@@YAXAAVRenderInfoClass@@_N@Z,,0x007B73D0,160,Code/masm_dumps/DoShadows_007B73D0.asm,matched,certified packet 144 exact retail db dump sha256 17115bdde5a218eece0a39aea62151c336a67ac8acf96f0668b91815c5c49c8f
+?DoShadows@@YAXAAVRenderInfoClass@@_N@Z,,0x007B73D0,160,Code/GameEngineDevice/Source/W3DDevice/GameClient/DoShadowsThunk.cpp,matched,Open-BFME5 MASM lift DoShadows
 ?DoTrees@@YAXAAVRenderInfoClass@@@Z,,0x006CDF50,23,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp,matched,
 ?DoXfer@ButterflyDrawModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z,0x0003967B,0x5f0c70,27,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
 ?DoXfer@DefaultAlphaModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z,0x0002EE88,0x5ee540,74,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
