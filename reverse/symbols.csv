@@ -50300,3 +50300,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+g_windGlobalA,0x012F7004,WindModuleInfo ctor global
+g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
