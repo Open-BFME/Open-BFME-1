@@ -264,3 +264,22 @@ _CapsWorkString
 # that reference it are byte-verified and both are right; a DIR32 slot is filled from
 # the target, so neither could have caught the other being wrong either way.
 ??_7?$DynamicVectorClass@VResolutionDescClass@@@@6B@
+
+# Shared retail link-site artifacts surfaced after the merged ledger cleanup:
+# local compiler labels and independent COMDAT/base-chain copies retain distinct
+# addresses while every contributing function remains byte-verified.
+$L36438
+??1BoneFXElement@@QAE@XZ
+??1RubbleRiseElement@@QAE@XZ
+??1StructureCollapseElement@@QAE@XZ
+??_7ActiveCategoryStackClass@@6B@
+??_7DeletionUpdateModuleData@@6B@
+??_7DieModuleData@@6B@
+??_7HijackerUpdateModuleData@@6B@
+??_7ModuleData@@6B@
+??_7OCLUpdateModuleData@@6B@
+??_7SpawnPointProductionExitUpdateModuleData@@6B@
+??_7SupplyCenterProductionExitUpdateModuleData@@6B@
+??_7UpgradeModuleData@@6B@
+??_7VideoPlayer@@6B@
+?TheW3DVolumetricShadowManager@@3PAVW3DVolumetricShadowManager@@A
