@@ -11091,7 +11091,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?makeDecoratedNameKey@ModuleFactory@@KA?AW4NameKeyType@@ABVAsciiString@@W4ModuleType@@@Z","","0x00126260","80","Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp","matched","thunk-dump converted to clean C++; needs BFME 8-byte string header (reference/shims/asciistring8) for the inlined AsciiString::str()"
 "?makeEmpty@SimpleObjectIterator@@QAEXXZ","","0x00015479","5","Code/Libraries/Source/WWVegas/WWLib/MiscThunkGroup.cpp","matched","Focused C++ thunk for SimpleObjectIterator::makeEmpty"
 "?makeLowerCase@WSYS_String@@QAEXXZ","","0x0010A250","38","Code/GameEngine/Source/Common/System/String.cpp","matched",""
-"?makeStateMachine@SupplyTruckAIUpdate@@","","0x002C5DB0","99","Code/masm_dumps/_sa9__makeStateMachine_SupplyTruckAIUpdate___2C5DB0.asm","matched","Exact 99B Open-BFME4"
+"?makeStateMachine@SupplyTruckAIUpdate@@","","0x002C5DB0","99","Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate_makeStateMachine_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_SupplyTruckAIUpdate_makeStateMachine_2C5DB0"
 "?makeUpperCase@WSYS_String@@QAEXXZ","","0x0010A220","38","Code/GameEngine/Source/Common/System/String.cpp","matched",""
 "?mangleCustomAudioName@Drawable@@QBEXPAVDynamicAudioEventInfo@@@Z","","0x00417330","205","Code/GameEngine/Source/Common/Drawable_mangleCustomAudioName_Thunk.cpp","matched","Exact 205B Open-BFME4"
 "?map_indices_to_address@GridCullSystemClass@@IAEHHHH@Z","","0x008DCF80","23","Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp","matched",""
