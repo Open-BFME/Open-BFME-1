@@ -60,7 +60,7 @@ def dedup_functions(path):
         best[key] = max(finalists, key=lambda r: (len(r["notes"]), r["notes"]))
 
     if ambiguous:
-        print(f"dedup_csv: {len(ambiguous)} row(s) claimed by more than one source — "
+        print(f"dedup_csv: {len(ambiguous)} row(s) claimed by more than one source "
               "refusing to guess (nothing written):", file=sys.stderr)
         for (rva, name), sources in sorted(ambiguous, key=lambda a: a[0][1]):
             print(f"  - {name} @ 0x{rva:08X}", file=sys.stderr)
