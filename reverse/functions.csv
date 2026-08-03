@@ -2838,7 +2838,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1CivilianSpawnUpdate@@UAE@XZ,,0x0028A5A0,1025,Code/masm_dumps/CivilianSpawnUpdate_destructor.asm,matched,Exact 1025B SEH module dtor; factory->vtable recovery Open-BFME4
 ??1CivilianSpawnUpdateModuleData@@UAE@XZ,,0x0028A530,80,Code/GameEngine/Source/Common/CivilianSpawnUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
 ??1ClearanceTestingSlowDeathBehaviorModuleData@@UAE@XZ,,0x001F73C0,79,Code/GameEngine/Source/GameLogic/AI/ClearanceTestingSlowDeathBehaviorModuleDataDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
-??1CollideModuleModuleData@@UAE@XZ,,0x0027E4E0,145,Code/masm_dumps/CollideModuleModuleData_destructor.asm,matched,Exact 145B SEH dtor Open-BFME4
+??1CollideModuleModuleData@@UAE@XZ,,0x0027E4E0,145,Code/GameEngine/Source/Common/CollideModuleModuleDataDestructorThunk.cpp,matched,Exact 145B SEH dtor Open-BFME4
 ??1CommandSetUpgradeModuleData@@UAE@XZ,,0x0012B040,83,Code/masm_dumps/CommandSetUpgradeModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1CompositeRenderObjClass@@UAE@XZ,,0x00982EC0,108,Code/Libraries/Source/WWVegas/WW3D2/composite.cpp,matched,
 ??1ContestableContain@@UAE@XZ,,0x0021B6F0,189,Code/masm_dumps/ContestableContain_destructor.asm,matched,Exact 189B @ 0x0021B6F0; Exact retail MASM; instance factory->vtable dtor; del 0x21C050 ctor 0x21BEE0 vt 0xCAB3C0
