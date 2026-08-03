@@ -1091,6 +1091,8 @@ name,address,notes
 ??0RAMFile@@QAE@XZ,0x009E6990,pinharvest x1 (body)
 ??0ROUMT_CopyBase@@QAE@ABV0@@Z,0x0001D435,RenderObjectUpdateModuleTemplate copy-ctor primary-base call; ILT thunk for CategoryModuleTemplate<2> copy ctor (body 0x005BF4A0)
 ??0ROUMT_OffsetBase@@QAE@ABV0@@Z,0x000310FC,RenderObjectUpdateModuleTemplate copy-ctor offset-base call; ILT thunk for RenderObjectUpdateModuleInfo copy ctor (body 0x005D92C0)
+??0RS_Base@@QAE@XZ,0x0003F503,Open-BFME5 pin
+??0RS_Member@@QAE@XZ,0x0003747A,Open-BFME5 pin
 ??0RadarUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002A013,module ctor (friend_newModuleInstance retail call target)
 ??0RadarUpdateModuleData@@QAE@XZ,0x0001670C,module-glue cascade callee (from retail call site)
 ??0RadarUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x00020306,module ctor (friend_newModuleInstance retail call target)
@@ -23210,13 +23212,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?parse@LightningEmissionTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00046006,Open-BFME5 pin
-??0PB_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,Open-BFME5 pin
-??0RenderObjectDrawModule@FXParticleSystem@@QAE@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0001C021,Open-BFME5 pin
-??1LGA_MemberObj@@QAE@XZ,0x000181C9,Open-BFME5 pin
-?remove@LGA_Global@@QAEXPAPAX@Z,0x00025C34,Open-BFME5 pin
-?bind@BFX_Member@@QAEHPAVMemoryPool@@@Z,0x0002AE23,Open-BFME5 pin
-??1GameSlot@@QAE@XZ,0x0000B988,Open-BFME5 pin
-?setSlotData@GI_SlotObj@@QAEXPAVGameSlot@@@Z,0x000126E8,Open-BFME5 pin
-??0RS_Base@@QAE@XZ,0x0003F503,Open-BFME5 pin
-??0RS_Member@@QAE@XZ,0x0003747A,Open-BFME5 pin
