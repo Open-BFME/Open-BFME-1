@@ -1,50 +1,26 @@
 // cl: /DNDEBUG /MD /EHsc
 
+// Open-BFME5: AimWeaponBehaviorModuleData default ctor.
+
 class AimWeaponBehaviorModuleData
 {
 public:
-    AimWeaponBehaviorModuleData();
+	AimWeaponBehaviorModuleData();
+	virtual ~AimWeaponBehaviorModuleData();
+
+private:
+	unsigned int m_gap4;
+	float m_08;
+	float m_0c;
+	unsigned int m_10;
+	unsigned int m_14;
 };
 
-__declspec(naked) AimWeaponBehaviorModuleData::AimWeaponBehaviorModuleData()
+// ??0AimWeaponBehaviorModuleData@@QAE@XZ
+AimWeaponBehaviorModuleData::AimWeaponBehaviorModuleData()
 {
-    __asm {
-        _emit 08Bh
-        _emit 0C1h
-        _emit 0C7h
-        _emit 000h
-        _emit 048h
-        _emit 018h
-        _emit 00Ah
-        _emit 001h
-        _emit 0C7h
-        _emit 040h
-        _emit 008h
-        _emit 0CDh
-        _emit 0CCh
-        _emit 04Ch
-        _emit 0BDh
-        _emit 0C7h
-        _emit 040h
-        _emit 00Ch
-        _emit 0CDh
-        _emit 0CCh
-        _emit 04Ch
-        _emit 03Dh
-        _emit 0C7h
-        _emit 040h
-        _emit 010h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 0C7h
-        _emit 040h
-        _emit 014h
-        _emit 0FFh
-        _emit 0FFh
-        _emit 07Fh
-        _emit 07Fh
-        _emit 0C3h
-    }
+	m_08 = -0.05f;
+	m_0c = 0.05f;
+	m_10 = 0;
+	m_14 = 0x7f7fffff;
 }
