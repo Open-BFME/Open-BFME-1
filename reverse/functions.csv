@@ -10173,7 +10173,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?findMessage@NetCommandList@@QAEPAVNetCommandRef@@GE@Z,,0x00672F50,78,Code/GameEngine/Source/GameNetwork/NetCommandList.cpp,matched,
 ?findMessage@NetCommandList@@QAEPAVNetCommandRef@@PAVNetCommandMsg@@@Z,,0x00673500,46,Code/GameEngine/Source/GameNetwork/NetCommandList.cpp,matched,Open-BFME5 C++ conversion of NetCommandList findMessage
 ?findModule@Object@@IBEPAVModule@@W4NameKeyType@@@Z,,0x001BEE60,63,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,body of retail ICF thunk 0x2AE23
-?findModuleInterfaceMask@ModuleFactory@@QAEHABVAsciiString@@W4ModuleType@@@Z,,0x00129100,84,Code/GameEngine/Source/Common/ModuleFactory_findModuleInterfaceMask_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
+?findModuleInterfaceMask@ModuleFactory@@QAEHABVAsciiString@@W4ModuleType@@@Z,,0x00129100,84,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,Open-BFME5 exact C++ body; BFME length-word emptiness and retail +0xc mask layout
 ?findModuleTemplate@ModuleFactory@@IAEPBVModuleTemplate@1@ABVAsciiString@@W4ModuleType@@@Z,,0x00127DA0,67,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ?findNextSaveFilename@GameState@@AAE?AVAsciiString@@VUnicodeString@@@Z,,0x001103D2,199,Code/GameEngine/Source/Common/System/SaveGame/GameState_findNextSaveFilename_Thunk.cpp,matched,Open-BFME5 lift 199B retail MASM to standalone C++ thunk
 ?findNonConstCommandButton@ControlBar@@IAEPAVCommandButton@@ABVAsciiString@@@Z,,0x004A0270,126,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarFields.cpp,matched,clean C++ body at thunk destination 0x004A0270 exact 126B match

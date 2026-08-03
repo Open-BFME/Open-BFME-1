@@ -905,7 +905,7 @@ Int ModuleFactory::findModuleInterfaceMask(const AsciiString& name, ModuleType t
 	const ModuleTemplate* moduleTemplate = findModuleTemplate(name, type);
 	if (moduleTemplate)
 	{
-		return moduleTemplate->m_whichInterfaces;
+		return *reinterpret_cast<const Int *>(reinterpret_cast<const char *>(moduleTemplate) + 0xc);
 	}
 
 	return 0;
