@@ -1343,7 +1343,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0CollisionTestClass@@QAE@PAUCastResultStruct@@H@Z,,0x00588710,25,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,
 ??0ColmathStatsStruct@CollisionMath@@QAE@XZ,,0x008E2110,46,Code/Libraries/Source/WWVegas/WWMath/colmath.cpp,matched,
 ??0CombineHordeSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002596F0,46,Code/GameEngine/Source/GameLogic/Object/Upgrade/CombineHordeSpecialPower.cpp,matched,clean C++ empty derived constructor with BFME interface layout
-??0CombineHordeSpecialPowerModuleData@@QAE@XZ,,0x002598A0,28,Code/GameEngine/Source/GameLogic/Object/Upgrade/CombineHordeSpecialPowerModuleData.cpp,matched,Exact retail ModuleData constructor emitted in dedicated C++ TU.
+??0CombineHordeSpecialPowerModuleData@@QAE@XZ,,0x002598A0,28,Code/GameEngine/Source/GameLogic/Object/Upgrade/CombineHordeSpecialPowerModuleData.cpp,matched,Open-BFME5 clean C++ ModuleData ctor
 ??0CommandButtonHuntUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00020DCE,5,Code/GameEngine/Source/GameLogic/Object/Update/CommandButtonHuntUpdateCtorThunk.cpp,matched,5-byte incremental-link constructor thunk converted to focused C++ source
 ??0CommandButtonHuntUpdateModuleData@@QAE@XZ,,0x0028AAE0,17,Code/GameEngine/Source/GameLogic/Object/Update/CommandButtonHuntUpdate.cpp,matched,exact 17B no-call ModuleData ctor; m_scanFrames=5(BFME) m_scanRange=9999f; moduledata shim; replaces 5B thunk @0x2E500
 ??0CommandSetUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002D41A0,53,Code/GameEngine/Source/GameLogic/Object/Upgrade/CommandSetUpgradeConstructor.cpp,matched,thunk-dump converted to clean C++ constructor body at destination 0x2D41A0
@@ -1436,7 +1436,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0DefaultStaticSortListClass@@QAE@XZ,,0x00958110,98,Code/Libraries/Source/WWVegas/WW3D2/static_sort_list.cpp,matched,
 ??0DefaultUpdateModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x000052AE,0x005D81C0,135,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
 ??0DefaultUpdateModuleInfo@FXParticleSystem@@QAE@XZ,0x0004506B,0x005FF750,181,Code/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultUpdateModuleInfoCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of MASM SEH ctor
-??0DefectorSpecialPowerModuleData@@QAE@XZ,,0x0025A110,28,Code/GameEngine/Source/GameLogic/Object/Upgrade/DefectorSpecialPowerModuleData.cpp,matched,Exact retail ModuleData constructor emitted in dedicated C++ TU.
+??0DefectorSpecialPowerModuleData@@QAE@XZ,,0x0025A110,28,Code/GameEngine/Source/GameLogic/Object/Upgrade/DefectorSpecialPowerModuleData.cpp,matched,Open-BFME5 clean C++ ModuleData ctor
 ??0DeflectSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0025A1B0,82,Code/GameEngine/Source/GameLogic/Object/SpecialPower/DeflectSpecialPowerConstructorThunk.cpp,matched,Exact 82B unique factory Open-BFME4
 ??0DeflectSpecialPowerModuleData@@QAE@XZ,,0x00852130,79,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,object-symbol=?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z;ICF alias converted to existing clean C++ body
 ??0DelayedLuaEventUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0028BEF0,161,Code/GameEngine/Source/GameLogic/ScriptEngine/DelayedLuaEventUpdateCtorThunk.cpp,matched,Exact 161B @ 0x0028BEF0; Exact retail MASM module ctor; unique friend_newModuleInstance factory 0x11BC70

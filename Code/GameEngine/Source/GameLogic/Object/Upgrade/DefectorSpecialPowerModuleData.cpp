@@ -1,42 +1,28 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
-#include "PreRTS.h"
+// cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
-class DefectorSpecialPowerModuleData
+// Open-BFME5: DefectorSpecialPowerModuleData ctor.
+
+class ModuleDataBase_DefectorSpecialPowerModuleData
 {
 public:
-    DefectorSpecialPowerModuleData();
+	ModuleDataBase_DefectorSpecialPowerModuleData();
+	virtual ~ModuleDataBase_DefectorSpecialPowerModuleData();
+private:
+	unsigned char m_base[524];
 };
 
-__declspec(naked) DefectorSpecialPowerModuleData::DefectorSpecialPowerModuleData()
+class DefectorSpecialPowerModuleData : public ModuleDataBase_DefectorSpecialPowerModuleData
 {
-    __asm {
-        _emit 056h
-        _emit 08Bh
-        _emit 0F1h
-        _emit 0E8h
-        _emit 02Ch
-        _emit 0BBh
-        _emit 0DBh
-        _emit 0FFh
-        _emit 0C7h
-        _emit 006h
-        _emit 0F0h
-        _emit 042h
-        _emit 00Bh
-        _emit 001h
-        _emit 0C7h
-        _emit 086h
-        _emit 010h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 08Bh
-        _emit 0C6h
-        _emit 05Eh
-        _emit 0C3h
-    }
+public:
+	DefectorSpecialPowerModuleData();
+	virtual ~DefectorSpecialPowerModuleData();
+private:
+	unsigned int m_field;
+};
+
+// ??0DefectorSpecialPowerModuleData@@QAE@XZ
+DefectorSpecialPowerModuleData::DefectorSpecialPowerModuleData()
+	: ModuleDataBase_DefectorSpecialPowerModuleData()
+{
+	m_field = 0;
 }
