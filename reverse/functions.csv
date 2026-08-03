@@ -6509,7 +6509,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Get_Buffer@StringClass@@QAEPADH@Z,,0x0091FDB0,19,Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp,matched,
 ?Get_CRC@TagBlockIndex@@QAEIXZ,,0x0010BDB0,3,Code/Libraries/Source/WWVegas/WWLib/tagblock.cpp,matched,icf-owner=?getDistributionType@GameClientRandomVariable@@QBE?AW4DistributionType@1@XZ
 ?Get_Category_Name@WWMemoryLogClass@@SAPBDH@Z,,0x0013A450,12,Code/Libraries/Source/WWVegas/WWDebug/wwmemlog.cpp,matched,
-?Get_Char_Spacing@FontCharsClass@@QAEHG@Z,,0x009414D0,94,Code/masm_dumps/__Get_Char_Spacing_FontCharsClass__QAEHG_Z_9414D0.asm,matched,
+?Get_Char_Spacing@FontCharsClass@@QAEHG@Z,,0x009414D0,94,Code/Libraries/Source/WWVegas/WW3D2/FontCharsClassGetCharSpacingThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?Get_Clip_Planes@CameraClass@@QBEXAAM0@Z,,0x00931390,27,Code/Libraries/Source/WWVegas/WW3D2/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
 ?Get_Collision_Type@RenderObjClass@@UBEHXZ,,0x006CF940,12,Code/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,vtable slot 119
 ?Get_Color@SegmentedLineClass@@QAEXAAVVector3@@@Z,,0x0094FB80,33,Code/Libraries/Source/WWVegas/WW3D2/segline.cpp,matched,

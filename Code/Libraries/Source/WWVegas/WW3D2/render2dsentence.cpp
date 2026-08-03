@@ -1312,19 +1312,8 @@ FontCharsClass::Get_Char_Width (WCHAR ch)
 //	Get_Char_Spacing
 //
 ////////////////////////////////////////////////////////////////////////////////////
-int
-// ?Get_Char_Spacing@FontCharsClass@@QAEHG@Z present-unmatched
-FontCharsClass::Get_Char_Spacing (WCHAR ch)
-{
-	const FontCharsClassCharDataStruct	* data = Get_Char_Data( ch );
-	if ( data != NULL ) {
-		if ( data->Width != 0 ) {
-			return data->Width - PixelOverlap - CharOverhang;
-		}
-	}
-
-	return 0;
-}
+// ?Get_Char_Spacing@FontCharsClass@@QAEHG@Z is emitted by
+// FontCharsClassGetCharSpacingThunk.cpp.
 
 
 ////////////////////////////////////////////////////////////////////////////////////
