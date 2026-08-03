@@ -2795,7 +2795,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "??0SineLinearOffsetTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z","","0x00964DE0","223","Code/Libraries/Source/WWVegas/WW3D2/mapper.cpp","matched",""
 "??0SineLinearOffsetTextureMapperClass@@QAE@ABVVector3@@0ABVVector2@@I@Z","","0x00964D40","119","Code/Libraries/Source/WWVegas/WW3D2/mapper.cpp","matched",""
 "??0SkirmishGameInfo@@QAE@XZ","","0x00619720","134","Code/GameEngine/Source/GameNetwork/SkirmishGameInfoCtorThunk.cpp","matched","Open-BFME5 exact 134B default constructor"
-"??0SkirmishPreferences@@","","0x0009F850","377","Code/masm_dumps/_sa5___0SkirmishPreferences___9F850.asm","matched","Exact 377B Open-BFME4"
+"??0SkirmishPreferences@@","","0x0009F850","377","Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishPreferencesCtor_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_SkirmishPreferencesCtor_9F850"
 "??0SlaughterHordeContain@@QAE@PAVThing@@PBVModuleData@@@Z","","0x0024E7A0","102","Code/GameEngine/Source/GameLogic/AI/SlaughterHordeContainCtorThunk.cpp","matched","Open-BFME5 exact C++ thunk replacing MASM dump"
 "??0SlaughterHordeContainModuleData@@QAE@XZ","","0x0022B160","110","Code/GameEngine/Source/GameLogic/AI/SlaughterHordeContainModuleDataCtorThunk.cpp","matched","Open-BFME5 exact C++ thunk replacing MASM dump"
 "??0SlavedUpdate@@QAE@PAVThing@@PBVModuleData@@@Z","","0x002A4260","112","Code/GameEngine/Source/GameLogic/Object/Update/SlavedUpdateCtorThunk.cpp","matched","Open-BFME5 exact 112B constructor"
