@@ -2834,7 +2834,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1CampaignManager@@QAE@XZ,,0x005BC4E0,146,Code/masm_dumps/dtor_CampaignManager_QAE_XZ_005BC4E0_packet294.asm,matched,Certified packet 294 exact retail db body SHA-256 b6b1a8ffab386afc7f4d5b4b8b0cfcaca796fa98cbeed12dc4acbd3a07489dd1
 ??1CashHackSpecialPowerModuleData@@UAE@XZ,,0x00258E20,120,Code/masm_dumps/CashHackSpecialPowerModuleData_destructor.asm,matched,Exact 120B ModuleData SEH dtor Open-BFME4
 ??1CastleBehavior@@UAE@XZ,,0x003728E0,433,Code/masm_dumps/CastleBehavior_destructor.asm,matched,Exact 433B @ 0x003728E0; Exact retail MASM; instance factory->vtable dtor; del 0x374EF0 ctor 0x376250 vt 0xCE9BFC
-??1CivilianSpawnCollideModuleData@@UAE@XZ,,0x002175C0,67,Code/masm_dumps/CivilianSpawnCollideModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
+??1CivilianSpawnCollideModuleData@@UAE@XZ,,0x002175C0,67,Code/GameEngine/Source/GameLogic/Object/Collide/CivilianSpawnCollideModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1CivilianSpawnUpdate@@UAE@XZ,,0x0028A5A0,1025,Code/masm_dumps/CivilianSpawnUpdate_destructor.asm,matched,Exact 1025B SEH module dtor; factory->vtable recovery Open-BFME4
 ??1CivilianSpawnUpdateModuleData@@UAE@XZ,,0x0028A530,80,Code/masm_dumps/CivilianSpawnUpdateModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor+dtor vtable chain proves ownership
 ??1ClearanceTestingSlowDeathBehaviorModuleData@@UAE@XZ,,0x001F73C0,79,Code/masm_dumps/ClearanceTestingSlowDeathBehaviorModuleData_destructor.asm,matched,Exact 79B @ 0x001F73C0; Exact retail MASM; factory->vtable dtor; del 0x1F7390 ctor 0x1F72D0 vt 0xCA3128
@@ -2846,7 +2846,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1ControlBarScheme@@QAE@XZ,,0x004ADBD0,128,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme.cpp,matched,
 ??1ControlBarSchemeAnimation@@QAE@XZ,,0x004ACDF0,12,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme.cpp,matched,
 ??1ControlBarSchemeManager@@QAE@XZ,,0x004AE850,166,Code/masm_dumps/_rn7___1ControlBarSchemeManager__QAE_XZ_4AE850.asm,matched,reloc-needle Open-BFME4+Grok
-??1ConvertToCarBombCrateCollideModuleData@@UAE@XZ,,0x00125E40,67,Code/masm_dumps/ConvertToCarBombCrateCollideModuleData_destructor.asm,matched,Exact 67B SEH dtor Open-BFME4
+??1ConvertToCarBombCrateCollideModuleData@@UAE@XZ,,0x00125E40,67,Code/GameEngine/Source/GameLogic/Object/Collide/ConvertToCarBombCrateCollideModuleDataDestructorThunk.cpp,matched,Exact 67B SEH dtor Open-BFME4
 ??1Coord2D@@QAE@XZ,0x0003EAB8,0x0005BD90,1,Code/Libraries/Source/WWVegas/WWMath/coord2d.cpp,matched,empty destructor emits ret
 ??1Coord3D@@QAE@XZ,0x0001364C,0x0005BC40,1,Code/Libraries/Source/WWVegas/WWMath/coord3d.cpp,matched,empty destructor emits ret
 ??1CostModifierUpgrade@@UAE@XZ,,0x001F8970,139,Code/masm_dumps/CostModifierUpgrade_destructor.asm,matched,Exact 139B SEH dtor factory->vtable Open-BFME4
@@ -2914,10 +2914,10 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1Entry@?$HashTemplateClass@VStringClass@@PAVTextureClass@@@@QAE@XZ,,0x00013101,5,Code/Libraries/Source/WWVegas/WWLib/HashTemplateEntryDestructorThunk.cpp,matched,object-symbol=??1Entry@?$HashTemplateClass@VStringClass@@H@@QAE@XZ;ICF alias converted to focused C++ thunk TU
 ??1Entry@?$HashTemplateClass@VStringClass@@PAVThumbnailClass@@@@QAE@XZ,,0x00013101,5,Code/Libraries/Source/WWVegas/WWLib/HashTemplateEntryDestructorThunk.cpp,matched,object-symbol=??1Entry@?$HashTemplateClass@VStringClass@@H@@QAE@XZ;ICF alias converted to focused C++ thunk TU
 ??1EventModuleInfo@FXParticleSystem@@IAE@XZ,0x0002A298,0x0005C8B0,1,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,empty protected destructor
-??1ExperienceScalarUpgradeModuleData@@UAE@XZ,,0x002D51E0,67,Code/masm_dumps/ExperienceScalarUpgradeModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
+??1ExperienceScalarUpgradeModuleData@@UAE@XZ,,0x002D51E0,67,Code/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1ExperienceTracker@@MAE@XZ,,0x001B0DB0,79,Code/GameEngine/Source/GameLogic/Object/ExperienceTracker.cpp,matched,
 ??1FXBoneInfo@@QAE@XZ,,0x0037E1A0,8,Code/GameEngine/Source/GameLogic/Object/Update/FXBoneInfoDestructor.cpp,matched,thunk-dump converted to clean C++ destructor body at destination 0x37E1A0
-??1FadeAndDieOrnamentUpdateModuleData@@UAE@XZ,,0x00126E70,67,Code/masm_dumps/FadeAndDieOrnamentUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
+??1FadeAndDieOrnamentUpdateModuleData@@UAE@XZ,,0x00126E70,67,Code/GameEngine/Source/GameLogic/Object/Die/FadeAndDieOrnamentUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1FastFixedAllocator@@QAE@XZ,,0x00B02720,26,Code/Libraries/Source/WWVegas/WWLib/FastFixedAllocatorThunks.cpp,matched,Converted to an exact standalone C++ thunk
 ??1File@@UAE@XZ,,0x009CB8C0,133,Code/GameEngine/Source/Common/System/File.cpp,matched,scalar dtor reached from ??_GFile@@ at 0x009CB950; installs vtable 0x01143AF8
 ??1FileInfoStruct@MixFileCreator@@QAE@XZ,,0x005DBEA0,50,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,object-symbol=??1?$ConcreteModuleTemplate@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@XZ;C++ alias
@@ -2926,7 +2926,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1FileSystem@@UAE@XZ,,0x000E3F80,82,Code/GameEngine/Source/Common/System/FileSystem.cpp,matched,
 ??1FireWeaponCollide@@UAE@XZ,,0x00216220,121,Code/masm_dumps/FireWeaponCollide_destructor.asm,matched,Exact 121B @ 0x00216220; Exact retail MASM; instance factory->vtable dtor; del 0x2164F0 ctor 0x216430 vt 0xCA9BF4
 ??1FireWeaponUpdate@@UAE@XZ,,0x00292B50,121,Code/masm_dumps/FireWeaponUpdate_destructor.asm,matched,Exact 121B @ 0x00292B50; Exact retail MASM; instance factory->vtable dtor; del 0x292DD0 ctor 0x292CF0 vt 0xCBED34
-??1FireWeaponWhenDeadBehaviorModuleData@@UAE@XZ,,0x0012AD60,67,Code/masm_dumps/FireWeaponWhenDeadBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
+??1FireWeaponWhenDeadBehaviorModuleData@@UAE@XZ,,0x0012AD60,67,Code/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1FirewallHelperClass@@UAE@XZ,,0x0066EE20,72,Code/GameEngine/Source/GameNetwork/FirewallHelper.cpp,matched,
 ??1FlammableUpdate@@UAE@XZ,,0x00293440,141,Code/GameEngine/Source/GameLogic/Object/Update/FlammableUpdateDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??1FlammableUpdateModuleData@@UAE@XZ,,0x00294C40,80,Code/masm_dumps/FlammableUpdateModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor vtable and deleting-wrapper chain prove ownership
