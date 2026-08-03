@@ -46312,3 +46312,4 @@ g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 ??0ModuleDataBase_CombineHordeSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 CombineHordeSpecialPowerModuleData base pin
 ??0GrabPassengerSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,GrabPassengerSpecialPowerModuleData base ctor
 ?clear@UnicodeString@@QAEXXZ,0x008881D0,retail UnicodeString::clear body called from DictPair::clear
+??0ClientUpdateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,Open-BFME5 SwayClientUpdate base ctor pin
