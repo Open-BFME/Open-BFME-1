@@ -1534,8 +1534,6 @@ name,address,notes
 ??1CommandSetUpgradeModuleDataMemberA@@QAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1CommandSetUpgradeModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1CompositeRenderObjClass@@UAE@XZ,0x0091FC10
-??1CountUpBuffer@@QAE@XZ,0x008881D0,Open-BFME5 pin
-??1CountUpTransitionBase@@UAE@XZ,0x0001AA9B,Open-BFME5 pin
 ??1CriticalSectionClass@@QAE@XZ,0x009DB450
 ??1CullSystemClass@@UAE@XZ,0x008E2150
 ??1CustomMatchPreferences@@UAE@XZ,0x00041F6A
@@ -1714,8 +1712,6 @@ name,address,notes
 ??1ParticleSysBoneInfo@@QAE@XZ,0x00022FE3,pinharvest x1 (thunk)
 ??1ParticleSysBoneInfo@@QAE@XZ,0x0004A462,STLport callee exact retail rel32 target (incremental-link thunk); resolves repointed STL template thunk-dump
 ??1ParticleSysBoneInfo@@QAE@XZ,0x0004B10A,pinharvest x1 (thunk)
-??1ParticleSystemTemplateBase@FXParticleSystem@@UAE@XZ,0x00002F5E,Open-BFME5 pin
-??1ParticleSystemTemplateMemberA@FXParticleSystem@@QAE@XZ,0x000244BF,Open-BFME5 pin
 ??1ParticleUplinkCannonUpdateModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1ParticleUplinkCannonUpdateModuleDataMemberB@@QAE@XZ,0x0001FD43,Open-BFME5 pin
 ??1PassiveAreaEffectBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
@@ -1845,8 +1841,6 @@ name,address,notes
 ??1Video@@QAE@XZ,0x0001642D
 ??1W3DAnimationInfo@@QAE@XZ,0x00020018,ILT thunk used by call site
 ??1W3DAnimationInfo@@QAE@XZ,0x00034AE0,STLport callee exact retail rel32 target (incremental-link thunk); resolves repointed STL template thunk-dump
-??1W3DDisplayStringBase@@UAE@XZ,0x0000D823,Open-BFME5 pin
-??1W3DDisplayStringMemberB@@QAE@XZ,0x009409F0,Open-BFME5 pin
 ??1W3DLaserDrawModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1W3DModelDrawModuleDataBase@@UAE@XZ,0x0000CAB3,Open-BFME5 pin
 ??1W3DModelDrawModuleDataMember@@QAE@XZ,0x0001A401,Open-BFME5 pin
