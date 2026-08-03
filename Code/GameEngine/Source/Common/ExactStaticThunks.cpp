@@ -23,15 +23,15 @@ public:
     __declspec(dllexport) static AsciiString getCommandTypeAsAsciiString(Type);
 };
 
-__declspec(naked) AsciiString GameMessage::getCommandTypeAsAsciiString(Type)
+class GameMessageCommandNameBody
 {
-    __asm {
-        _emit 0E9h
-        _emit 0E0h
-        _emit 0ABh
-        _emit 004h
-        _emit 000h
-    }
+public:
+    static AsciiString getCommandTypeAsAsciiString(GameMessage::Type);
+};
+
+AsciiString GameMessage::getCommandTypeAsAsciiString(Type type)
+{
+    return GameMessageCommandNameBody::getCommandTypeAsAsciiString(type);
 }
 
 class AI

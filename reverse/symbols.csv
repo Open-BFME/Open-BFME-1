@@ -12001,6 +12001,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?getCommandID@NetAckStage1CommandMsg@@QAEGXZ,0x0002A482
 ?getCommandID@NetAckStage2CommandMsg@@QAEGXZ,0x00005975
 ?getCommandTypeAsAsciiString@GameMessage@@SA?AVAsciiString@@W4Type@1@@Z,0x00040A1B
+?getCommandTypeAsAsciiString@GameMessageCommandNameBody@@SA?AVAsciiString@@W4Type@GameMessage@@@Z,0x0008B600,Open-BFME5 forwarding thunk target
 ?getControllingPlayer@Object@@QBEPAVPlayer@@XZ,0x00020824
 ?getControllingPlayer@Team@@QBEPAVPlayer@@XZ,0x0002369B
 ?getCursorIndex@Mouse@@QAEHABVAsciiString@@@Z,0x00043A13,harvested from parseMouseCursorDefinition (thunk)
