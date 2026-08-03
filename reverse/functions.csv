@@ -2924,7 +2924,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1FilePipe@@UAE@XZ,,0x009E7DC0,104,Code/Libraries/Source/WWVegas/WWLib/xpipe.cpp,matched,
 ??1FileStraw@@UAE@XZ,,0x009E1C50,104,Code/Libraries/Source/WWVegas/WWLib/xstraw.cpp,matched,
 ??1FileSystem@@UAE@XZ,,0x000E3F80,82,Code/GameEngine/Source/Common/System/FileSystem.cpp,matched,
-??1FireWeaponCollide@@UAE@XZ,,0x00216220,121,Code/masm_dumps/FireWeaponCollide_destructor.asm,matched,Exact 121B @ 0x00216220; Exact retail MASM; instance factory->vtable dtor; del 0x2164F0 ctor 0x216430 vt 0xCA9BF4
+??1FireWeaponCollide@@UAE@XZ,,0x00216220,121,Code/GameEngine/Source/Common/FireWeaponCollideDestructorThunk.cpp,matched,Exact 121B @ 0x00216220; Exact retail MASM; instance factory->vtable dtor; del 0x2164F0 ctor 0x216430 vt 0xCA9BF4
 ??1FireWeaponUpdate@@UAE@XZ,,0x00292B50,121,Code/masm_dumps/FireWeaponUpdate_destructor.asm,matched,Exact 121B @ 0x00292B50; Exact retail MASM; instance factory->vtable dtor; del 0x292DD0 ctor 0x292CF0 vt 0xCBED34
 ??1FireWeaponWhenDeadBehaviorModuleData@@UAE@XZ,,0x0012AD60,67,Code/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1FirewallHelperClass@@UAE@XZ,,0x0066EE20,72,Code/GameEngine/Source/GameNetwork/FirewallHelper.cpp,matched,
