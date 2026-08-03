@@ -59,8 +59,8 @@ Anim2DCollection *TheAnim2DCollection = NULL;
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ??0Anim2DTemplate@@QAE@VAsciiString@@@Z
-// Body in Anim2DTemplate_ctor_dtor.asm (exact 124B retail; BFME AsciiString
-// copy-ctor is out-of-line, ours inlines -- AsciiString reconciliation wall).
+// Body in Anim2DTemplateCtorThunk.cpp (exact 124B retail; BFME AsciiString
+// copy-ctor is out-of-line, so the thunk preserves the retail byte shape).
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
