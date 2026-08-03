@@ -2875,7 +2875,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1DebugIOCon@@UAE@XZ,,0x00890F10,85,Code/GameEngine/Source/Common/DebugIOConDestructorThunk.cpp,matched,Exact 85B present-unmatched Open-BFME4
 ??1DebugIOFlat@@UAE@XZ,,0x00890F10,85,Code/GameEngine/Source/Common/DebugIOFlatDestructorThunk.cpp,matched,Exact 85B present-unmatched Open-BFME4
 ??1DebugIONet@@UAE@XZ,,0x00890F10,85,Code/GameEngine/Source/Common/DebugIONetDestructorThunk.cpp,matched,Exact 85B present-unmatched Open-BFME4
-??1DebugIOOds@@UAE@XZ,,0x00890780,142,Code/masm_dumps/_sym2___1DebugIOOds__UAE_XZ_890780.asm,matched,symbol-pin Open-BFME4+Grok
+??1DebugIOOds@@UAE@XZ,,0x00890780,142,Code/GameEngine/Source/Common/DebugIOOdsDestructorThunk.cpp,matched,symbol-pin Open-BFME4+Grok
 ??1DecalPolyClass@@QAE@XZ,,0x0022A2F0,76,Code/Libraries/Source/WWVegas/WW3D2/decalmsh.cpp,matched,
 ??1DefaultAlphaModuleInfo@FXParticleSystem@@UAE@XZ,0x0001AFAF,0x005D4F50,7,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,destructor resets vtable pointer
 ??1DefaultColorModuleInfo@FXParticleSystem@@UAE@XZ,0x0001B82E,0x005D52D0,7,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,destructor resets vtable pointer
