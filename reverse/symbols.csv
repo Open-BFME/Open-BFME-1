@@ -48383,6 +48383,7 @@ name,address,notes
 ??RMapHelper@?$SparseMatchFinder@VWeaponTemplateSet@@V?$BitFlags@$0BB@@@@@QBE_NABV?$BitFlags@$0BB@@@0@Z,0x00010B1D,resweep callee back-solved
 ??RUnicodeStringLessThan@@QBE_NVUnicodeString@@0@Z,0x000482B1,LanguageFilter map operator[] callee (ILT thunk -> body 0x0044D2A0)
 ??RWOLLoginAsciiStringLess@@QBE_NABVAsciiString@@0@Z,0x00043D42,WOLLogin retail AsciiString comparator thunk
+??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7RAMFile@@6B@,0x01143C58,installed by RAMFile ctor at 0x009D1980 and by the matched ??1RAMFile@@MAE@XZ
 ??_7RawFileClass@@6B@,0x01145548,14 of 17 slots are matched @RawFileClass@@ methods
 ??_7RetailCollideModuleData@@6B@,0x0108A350,CollideModule factory vtable target
