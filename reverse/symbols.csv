@@ -46308,3 +46308,12 @@ g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 ??0FreezingRainSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,FreezingRainSpecialPowerModuleData base ctor
 ??0ModuleDataBase_StopSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 StopSpecialPowerModuleData base pin
 ??0ModuleDataBase_HordeContainModuleData@@QAE@XZ,0x00044030,Open-BFME5 HordeContainModuleData base pin
+??0SiegeDeploySpecialPowerModuleDataBase@@QAE@XZ,0x00023FE7,SiegeDeploySpecialPowerModuleData base ctor from retail call site
+??0DevastateSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,DevastateSpecialPowerModuleData base ctor
+??0MissileAIUpdateModuleDataBase@@QAE@XZ,0x0003C556,MissileAIUpdateModuleData base ctor
+??0ModuleDataBase_DefectorSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 DefectorSpecialPowerModuleData base pin
+??0ModuleDataBase_CombineHordeSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 CombineHordeSpecialPowerModuleData base pin
+??0GrabPassengerSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,GrabPassengerSpecialPowerModuleData base ctor
+?getSpecialPowerModule@Object@@QBEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF
+?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6
+?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37
