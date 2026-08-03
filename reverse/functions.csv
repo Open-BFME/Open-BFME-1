@@ -1824,7 +1824,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0MeshSaveContextClass@@QAE@XZ,,0x0096CAD0,28,Code/Libraries/Source/WWVegas/WW3D2/meshmdlio.cpp,matched,
 ??0MetaEventTranslator@@QAE@XZ,,0x005B6B30,42,Code/GameEngine/Source/GameClient/MessageStream/MetaEvent.cpp,matched,retail BFME layout offsets + loop; clean C++
 ??0MetaMap@@QAE@XZ,,0x000A71C0,25,Code/GameEngine/Source/GameClient/MessageStream/MetaEvent.cpp,matched,
-??0MetaMapRec@@QAE@XZ,,0x005B7020,11,Code/GameEngine/Source/GameClient/MessageStream/MetaMapRecConstructorThunk.cpp,matched,Open-BFME5 exact C++ constructor byte prefix replacing MASM dump;object-symbol=??0MetaMapRec@@QAE@XZ
+??0MetaMapRec@@QAE@XZ,,0x005B7020,11,Code/GameEngine/Source/GameClient/MessageStream/MetaMapRecConstructorThunk.cpp,matched,Open-BFME5 clean C++ MetaMapRec ctor zeros +0x1c +0x20
 ??0MilitarySubtitleData@InGameUI@@QAE@XZ,,0x00061D90,9,Code/GameEngine/Source/GameClient/InGameUI.cpp,matched,ICF alias of existing matched body
 ??0MinMaxAABoxClass@@QAE@ABVVector3@@0@Z,,0x006C9EB0,46,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp,matched,
 ??0MinefieldBehaviorModuleData@@QAE@XZ,,0x00852130,79,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,object-symbol=?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z;ICF alias converted to existing clean C++ body
@@ -2777,7 +2777,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1AnimateWindow@@UAE@XZ,,0x0045CF30,14,Code/GameEngine/Source/GameClient/GUI/AnimateWindowManager.cpp,matched,
 ??1AnimateWindowManager@@UAE@XZ,,0x0045D950,238,Code/GameEngine/Source/GameClient/GUI/AnimateWindowManager.cpp,matched,
 ??1AnimationSoundClientBehavior@@UAE@XZ,,0x00604B40,103,Code/masm_dumps/AnimationSoundClientBehavior_destructor.asm,matched,Exact 103B @ 0x00604B40; Exact retail MASM; instance factory->vtable dtor; del 0x604E60 ctor 0x605380 vt 0xD155A0
-??1AnimationSoundClientBehaviorModuleData@@UAE@XZ,,0x00606120,67,Code/masm_dumps/AnimationSoundClientBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
+??1AnimationSoundClientBehaviorModuleData@@UAE@XZ,,0x00606120,67,Code/GameEngine/Source/GameLogic/Object/Behavior/AnimationSoundClientBehaviorModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1AnimationSteeringUpdateModuleData@@UAE@XZ,,0x000A7210,108,Code/masm_dumps/AnimationSteeringUpdateModuleData_destructor.asm,matched,Exact 108B SEH dtor Open-BFME4
 ??1ArchiveFile@@UAE@XZ,,0x009D0BD0,94,Code/GameEngine/Source/Common/System/ArchiveFile.cpp,matched,closes m_file through File slot 2 then destroys m_rootDirectory at this+8
 ??1ArchiveFileSystem@@UAE@XZ,,0x009CA550,140,Code/GameEngine/Source/Common/System/ArchiveFileSystem.cpp,matched,installs vtable 0x01143A08; reached as the scalar dtor from slot 0 at 0x009CAA50
@@ -2792,8 +2792,8 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1AudioEventRTS@@UAE@XZ,,0x0002671F,5,Code/GameEngine/Source/Common/AudioEventRTSDestructorThunk.cpp,matched,Focused C++ thunk for AudioEventRTS destructor
 ??1AutoAbilityBehavior@@UAE@XZ,,0x001ED6E0,116,Code/masm_dumps/AutoAbilityBehavior_destructor.asm,matched,Exact 116B @ 0x001ED6E0; Exact retail MASM; instance factory->vtable dtor; del 0x1ED970 ctor 0x1ED8A0 vt 0xCA1BC4
 ??1AutoAbilityBehaviorModuleData@@UAE@XZ,,0x001EDCA0,1944,Code/masm_dumps/AutoAbilityBehaviorModuleData_destructor.asm,matched,Exact 1944B @ 0x001EDCA0; Exact retail MASM; ModuleData ctor->vtable SEH dtor; ctor 0x1ED6A0 vt 0xCA1AF4; Open-BFME4+Grok
-??1AutoDepositUpdateModuleData@@UAE@XZ,,0x00125960,67,Code/masm_dumps/AutoDepositUpdateModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership; BFME member layout differs from ZH-derived C++
-??1AutoHealBehaviorModuleData@@UAE@XZ,,0x0012A910,67,Code/masm_dumps/AutoHealBehaviorModuleData_destructor.asm,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
+??1AutoDepositUpdateModuleData@@UAE@XZ,,0x00125960,67,Code/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership; BFME member layout differs from ZH-derived C++
+??1AutoHealBehaviorModuleData@@UAE@XZ,,0x0012A910,67,Code/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehaviorModuleDataDestructorThunk.cpp,matched,Exact retail MASM; factory ctor vtable and deleting-wrapper chain prove ownership
 ??1AutoPickUpUpdate@@UAE@XZ,,0x00281F40,1490,Code/masm_dumps/AutoPickUpUpdate_destructor.asm,matched,Exact 1490B SEH module dtor; factory->vtable recovery Open-BFME4
 ??1AutoPickUpUpdateModuleData@@UAE@XZ,,0x00282A80,80,Code/masm_dumps/AutoPickUpUpdateModuleData_destructor.asm,matched,Exact retail MASM; unique factory ctor vtable and deleting-wrapper chain prove ownership
 ??1BFMEAutoLockRef@@QAE@XZ,,0x009DB400,22,Code/GameEngine/Source/GameNetwork/native_network.cpp,matched,native BFME lock-ref release helper used by wrapper/backend

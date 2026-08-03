@@ -1,26 +1,21 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc
 
-#include "PreRTS.h"
+// Open-BFME5: MetaMapRec default ctor zeros two dwords at +0x1c and +0x20.
 
 class MetaMapRec
 {
 public:
-    MetaMapRec();
+	MetaMapRec();
+
+private:
+	unsigned char m_pad[0x1c];
+	unsigned int m_a;
+	unsigned int m_b;
 };
 
-__declspec(naked) MetaMapRec::MetaMapRec()
+// ??0MetaMapRec@@QAE@XZ
+MetaMapRec::MetaMapRec()
 {
-    __asm {
-        _emit 08Bh
-        _emit 0C1h
-        _emit 033h
-        _emit 0C9h
-        _emit 089h
-        _emit 048h
-        _emit 01Ch
-        _emit 089h
-        _emit 048h
-        _emit 020h
-        _emit 0C3h
-    }
+	m_a = 0;
+	m_b = 0;
 }
