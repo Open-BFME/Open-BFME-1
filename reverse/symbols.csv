@@ -46377,3 +46377,4 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?construct@AutoHealBehaviorModuleData@@AAEXXZ,0x00285F10,AutoHealBehaviorModuleData real ctor body via 5-byte E9
 ?construct@AutoHealBehaviorModuleData@@QAEXXZ,0x00285F10,AutoHealBehaviorModuleData real ctor body via 5-byte E9
+?erase@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@QAEPAVProductionPrerequisite@@PAV3@0@Z,0x00010BB3,rel32 pin for ThingTemplate prerequisite vector clear
