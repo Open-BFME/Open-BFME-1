@@ -8950,7 +8950,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?Get_PowerVR_Device@DX8Caps@@CA?AW4DeviceTypePowerVR@1@I@Z","","0x001B4040","13","Code/Libraries/Source/WWVegas/WW3D2/dx8caps.cpp","matched",""
 "?Get_Preset@VertexMaterialClass@@SAPAV1@W4PresetType@1@@Z","","0x009212C0","22","Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp","matched",""
 "?Get_Primary_Gradient@ShaderClass@@QBE?AW4PriGradientType@1@XZ","","0x00910D70","9","Code/Libraries/Source/WWVegas/WW3D2/w3d_util.cpp","matched",""
-"?Get_Processor_Manufacturer_Name@CPUDetectClass@@","","0x00A5EAED","228","Code/masm_dumps/_sa6__Get_Processor_Manufacturer_Name_CPUDetectClass___A5EAED.asm","matched","Exact 228B Open-BFME4+Grok"
+"?Get_Processor_Manufacturer_Name@CPUDetectClass@@","","0x00A5EAED","228","Code/Libraries/Source/WWVegas/WWLib/CPUDetectGetProcessorManufacturerName_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_CPUDetect_GetProcessorManufacturerName_A5EAED"
 "?Get_Projection_Matrix@CameraClass@@QAEABVMatrix4@@XZ","","0x00932540","16","Code/Libraries/Source/WWVegas/WW3D2/camera.cpp","matched",""
 "?Get_Projection_Matrix@CameraClass@@QAEXPAVMatrix4@@@Z","","0x00932320","159","Code/Libraries/Source/WWVegas/WW3D2/camera.cpp","matched","RenderObjClass +0x34 (camera shim)"
 "?Get_Projection_Object_ID@TexProjectClass@@UBEPAXXZ","","0x006CF680","3","Code/Libraries/Source/WWVegas/WW3D2/texproject.cpp","matched","icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ"
