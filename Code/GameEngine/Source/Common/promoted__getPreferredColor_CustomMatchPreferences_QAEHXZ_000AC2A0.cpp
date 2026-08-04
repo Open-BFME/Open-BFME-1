@@ -1,124 +1,103 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// Grok promote from masm_dumps — retail 0x000AC2A0 size 111
-// was: Code/masm_dumps/CustomMatchPreferences_getPreferredColor.asm
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// Lift the CustomMatchPreferences::getPreferredColor naked dump to clean C++.
+//
+// Preferences getter bounded by the colour table: a missing key and an
+// out-of-range value share the same answer, -1, so both fall through to one
+// trailing return. The key lives in its own scope so it dies after the lookup
+// and before the end() comparison, which is the order retail uses.
+//
+// getNumColors is a lazy inline accessor -- retail loads the count at +0x3C and,
+// only when it is still zero, seeds it from +0x34 before comparing. That
+// conditional store is the accessor, not part of this function's logic.
+//
+// Retail pins the layout: the map is at this+0x04 and its first word is the end
+// sentinel, the mapped AsciiString is at node+0x14, and str() inlines to
+// "m_data ? m_data+8 : empty".
+//
+// /EHs-c- because the build default only clears the /EHc half, and the key's
+// destructor would otherwise pull in an SEH prologue retail does not have.
 
-class CustomMatchPreferences { public: int getPreferredColor(void); };
+extern "C" __declspec(dllimport) int __cdecl atoi(const char *);
+
+class AsciiStringData
+{
+public:
+	unsigned char m_unreconstructed_00[8];
+	char m_chars[1];									///< retail this+0x08
+};
+
+class AsciiString
+{
+public:
+	AsciiString(const char *);
+	~AsciiString();
+
+	const char *str(void) const { return m_data ? m_data->m_chars : ""; }
+
+private:
+	AsciiStringData *m_data;
+};
+
+struct PreferenceNode
+{
+	unsigned char m_unreconstructed_00[0x14];
+	AsciiString m_value;								///< retail this+0x14
+};
+
+class PreferenceMap
+{
+public:
+	PreferenceNode *find(const AsciiString &) const;
+	PreferenceNode *end(void) const { return m_end; }
+
+private:
+	PreferenceNode *m_end;								///< retail this+0x00
+};
+
+class MultiplayerSettings
+{
+public:
+	int getNumColors(void)
+	{
+		if (m_numColors == 0)
+			m_numColors = m_colorCount;
+		return m_numColors;
+	}
+
+private:
+	unsigned char m_unreconstructed_00[0x34];
+	int m_colorCount;									///< retail this+0x34
+	unsigned char m_unreconstructed_38[4];
+	int m_numColors;									///< retail this+0x3C
+};
+
+extern MultiplayerSettings *TheMultiplayerSettings;		///< retail [0x012ED5FC]
+
+class CustomMatchPreferences
+{
+public:
+	int getPreferredColor(void);
+
+private:
+	unsigned char m_unreconstructed_00[4];
+	PreferenceMap m_prefs;								///< retail this+0x04
+};
 
 // ?getPreferredColor@CustomMatchPreferences@@QAEHXZ
-__declspec(naked) int CustomMatchPreferences::getPreferredColor(void)
+int CustomMatchPreferences::getPreferredColor(void)
 {
-__asm {
-		_emit 051h
-		_emit 056h
-		_emit 057h
-		_emit 08Bh
-		_emit 0F1h
-		_emit 068h
-		_emit 050h
-		_emit 0C7h
-		_emit 007h
-		_emit 001h
-		_emit 08Dh
-		_emit 04Ch
-		_emit 024h
-		_emit 00Ch
-		_emit 0E8h
-		_emit 00Dh
-		_emit 0C9h
-		_emit 07Dh
-		_emit 000h
-		_emit 08Dh
-		_emit 044h
-		_emit 024h
-		_emit 008h
-		_emit 083h
-		_emit 0C6h
-		_emit 004h
-		_emit 050h
-		_emit 08Bh
-		_emit 0CEh
-		_emit 0E8h
-		_emit 0EAh
-		_emit 0EBh
-		_emit 0F5h
-		_emit 0FFh
-		_emit 08Dh
-		_emit 04Ch
-		_emit 024h
-		_emit 008h
-		_emit 08Bh
-		_emit 0F8h
-		_emit 0E8h
-		_emit 073h
-		_emit 0B6h
-		_emit 07Dh
-		_emit 000h
-		_emit 03Bh
-		_emit 03Eh
-		_emit 074h
-		_emit 037h
-		_emit 08Bh
-		_emit 07Fh
-		_emit 014h
-		_emit 085h
-		_emit 0FFh
-		_emit 08Dh
-		_emit 047h
-		_emit 008h
-		_emit 075h
-		_emit 005h
-		_emit 0B8h
-		_emit 08Bh
-		_emit 038h
-		_emit 007h
-		_emit 001h
-		_emit 050h
-		_emit 0FFh
-		_emit 015h
-		_emit 084h
-		_emit 093h
-		_emit 035h
-		_emit 001h
-		_emit 083h
-		_emit 0C4h
-		_emit 004h
-		_emit 083h
-		_emit 0F8h
-		_emit 0FFh
-		_emit 07Ch
-		_emit 019h
-		_emit 08Bh
-		_emit 015h
-		_emit 0FCh
-		_emit 0D5h
-		_emit 02Eh
-		_emit 001h
-		_emit 08Bh
-		_emit 072h
-		_emit 03Ch
-		_emit 085h
-		_emit 0F6h
-		_emit 08Dh
-		_emit 04Ah
-		_emit 03Ch
-		_emit 075h
-		_emit 005h
-		_emit 08Bh
-		_emit 052h
-		_emit 034h
-		_emit 089h
-		_emit 011h
-		_emit 03Bh
-		_emit 001h
-		_emit 07Ch
-		_emit 003h
-		_emit 083h
-		_emit 0C8h
-		_emit 0FFh
-		_emit 05Fh
-		_emit 05Eh
-		_emit 059h
-		_emit 0C3h
+	PreferenceNode *it;
+	{
+		AsciiString key("Color");
+		it = m_prefs.find(key);
 	}
-}
 
+	if (it != m_prefs.end())
+	{
+		int value = atoi(it->m_value.str());
+		if (value >= -1 && value < TheMultiplayerSettings->getNumColors())
+			return value;
+	}
+
+	return -1;
+}
