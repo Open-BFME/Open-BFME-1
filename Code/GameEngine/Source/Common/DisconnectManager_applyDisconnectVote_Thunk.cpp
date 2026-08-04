@@ -1,98 +1,74 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /MD /EHs-c-
+// Lift the DisconnectManager::applyDisconnectVote __emit thunk to clean C++.
+//
+// Zero Hour's DisconnectManager.cpp carries the body; the DEBUG_LOG compiles
+// away, leaving the vote record and the menu update. Shares its whole tail with
+// resetPlayersVotes, so the same layout applies: m_playerVotes is [8][8] of
+// 8-byte entries at this+0x30 with a byte vote at +0x00 and a frame at +0x04,
+// and the `lea eax,[eax+esi*8]` then `[ecx+eax*8+0x30]` pair is just the
+// [slot][fromSlot] index folded into one address.
+//
+// Same two BFME differences as the sibling: countVotesForPlayer takes the
+// ConnectionManager as a second argument, and the menu pointer is null-checked.
 
-class ConnectionManager;
+typedef int Int;
+typedef unsigned int UnsignedInt;
+typedef unsigned char Bool;
+
+enum { MAX_SLOTS = 8 };
+
+class ConnectionManager
+{
+public:
+	UnsignedInt getLocalPlayerID(void);						///< ILT thunk at 0x0004A291
+};
+
+class DisconnectMenu
+{
+public:
+	void updateVotes(Int slot, Int numVotes);				///< ILT thunk at 0x00031DB8
+};
+
+extern DisconnectMenu *TheDisconnectMenu;					///< retail [0x012F4964]
+
+struct PlayerVote
+{
+	Bool vote;												///< retail this+0x00
+	UnsignedInt frame;										///< retail this+0x04
+};
+
 class DisconnectManager
 {
 protected:
-	void applyDisconnectVote(int, unsigned int, int, ConnectionManager *);
+	void applyDisconnectVote(Int, UnsignedInt, Int, ConnectionManager *);
+
+	Int countVotesForPlayer(Int playerID, ConnectionManager *conMgr);	///< ILT thunk at 0x00003751
+
+	Int translatedSlotPosition(Int slot, Int localSlot) const
+	{
+		if (slot < localSlot)
+			return slot;
+		if (slot == localSlot)
+			return -1;
+		return slot - 1;
+	}
+
+private:
+	unsigned char m_unreconstructed_00[0x30];
+	PlayerVote m_playerVotes[MAX_SLOTS][MAX_SLOTS];			///< retail this+0x30
 };
 
 // ?applyDisconnectVote@DisconnectManager@@IAEXHIHPAVConnectionManager@@@Z
-__declspec(naked) void DisconnectManager::applyDisconnectVote(int, unsigned int, int, ConnectionManager *)
+void DisconnectManager::applyDisconnectVote(Int slot, UnsignedInt frame, Int fromSlot,
+											ConnectionManager *conMgr)
 {
-	__asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x08
-        __emit 0x53
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x74
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x8d
-        __emit 0x04
-        __emit 0xf0
-        __emit 0x57
-        __emit 0x56
-        __emit 0xc6
-        __emit 0x44
-        __emit 0xc1
-        __emit 0x30
-        __emit 0x01
-        __emit 0x89
-        __emit 0x54
-        __emit 0xc1
-        __emit 0x34
-        __emit 0xe8
-        __emit 0x1b
-        __emit 0x7e
-        __emit 0x99
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0x8b
-        __emit 0xd8
-        __emit 0xe8
-        __emit 0x52
-        __emit 0xe9
-        __emit 0x9d
-        __emit 0xff
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x7c
-        __emit 0x03
-        __emit 0x74
-        __emit 0x17
-        __emit 0x4e
-        __emit 0x83
-        __emit 0xfe
-        __emit 0xff
-        __emit 0x74
-        __emit 0x11
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x64
-        __emit 0x49
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x07
-        __emit 0x53
-        __emit 0x56
-        __emit 0xe8
-        __emit 0x5c
-        __emit 0x64
-        __emit 0x9c
-        __emit 0xff
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0xc2
-        __emit 0x10
-        __emit 0x00
+	m_playerVotes[slot][fromSlot].vote = 1;
+	m_playerVotes[slot][fromSlot].frame = frame;
+
+	Int numVotes = countVotesForPlayer(slot, conMgr);
+	Int transSlot = translatedSlotPosition(slot, conMgr->getLocalPlayerID());
+	if (transSlot != -1 && TheDisconnectMenu)
+	{
+		TheDisconnectMenu->updateVotes(transSlot, numVotes);
 	}
 }
