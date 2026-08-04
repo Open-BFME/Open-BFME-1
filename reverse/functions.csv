@@ -71820,7 +71820,7 @@ _asinf,,0x00873950,10,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W
 ?Is_Complete@ParticleBufferClass@@UAE_NXZ,,0x00984BA0,39,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,
 ?Generate_APT@ParticleBufferClass@@IAEXPAPAV?$ShareBufferClass@I@@AAI@Z,,0x00984BD0,205,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,
 ?Combine_Color_And_Alpha@ParticleBufferClass@@IAEXXZ,,0x00984CB0,357,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,
-?On_Frame_Update@ParticleBufferClass@@UAEXXZ,,0x00984E20,58,Code/GameEngine/Source/Common/promoted_On_Frame_Update_ParticleBufferClass_UAEXXZ_00984E20.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 58B
+?On_Frame_Update@ParticleBufferClass@@UAEXXZ,,0x00984E20,58,Code/GameEngine/Source/Common/promoted_On_Frame_Update_ParticleBufferClass_UAEXXZ_00984E20.cpp,matched,clean C++ conversion; ZH part_buf.cpp body with WWPROFILE/WWASSERT compiled away; cached-bounds flag bit 0x20000 at this+0x10; Scene this+0x80; Emitter this+0x254
 ?Prepare_LOD@ParticleBufferClass@@UAEXAAVCameraClass@@@Z,,0x00984E60,437,Code/Libraries/Source/WWVegas/WW3D2/ParticleBufferClass_Prepare_LOD_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM
 ?Set_LOD_Level@ParticleBufferClass@@UAEXH@Z,,0x00985020,46,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,
 ?Reset_Colors@ParticleBufferClass@@QAEXAAU?$ParticlePropertyStruct@VVector3@@@@@Z,,0x00985050,1569,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,
