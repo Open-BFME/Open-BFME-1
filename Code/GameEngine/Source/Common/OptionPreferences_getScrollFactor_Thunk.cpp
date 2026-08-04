@@ -1,161 +1,96 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// Lift the OptionPreferences::getScrollFactor naked dump to clean C++.
+//
+// Float-returning preferences getter: a missing key returns the stored scroll
+// factor at GlobalData+0xBC0 directly, while a present one is clamped as an
+// integer and only then scaled, which is why retail keeps the value on the
+// stack and fild/fmuls it in both clamp arms.
+// The key lives in its own scope so it dies after the lookup and before the
+// end() comparison, which is the order retail uses.
+//
+// Retail pins the layout: the map is at this+0x04 and its first word is the end
+// sentinel, the mapped AsciiString is at node+0x14, and str() inlines to
+// "m_data ? m_data+8 : empty".
+//
+// /EHs-c- because the build default only clears the /EHc half, and the key's
+// destructor would otherwise pull in an SEH prologue retail does not have.
 
-class OptionPreferences {
+extern "C" __declspec(dllimport) int __cdecl atoi(const char *);
+
+class AsciiStringData
+{
 public:
-	float getScrollFactor();
+	unsigned char m_unreconstructed_00[8];
+	char m_chars[1];									///< retail this+0x08
+};
+
+class AsciiString
+{
+public:
+	AsciiString(const char *);
+	~AsciiString();
+
+	const char *str(void) const { return m_data ? m_data->m_chars : ""; }
+
+private:
+	AsciiStringData *m_data;
+};
+
+struct PreferenceNode
+{
+	unsigned char m_unreconstructed_00[0x14];
+	AsciiString m_value;								///< retail this+0x14
+};
+
+class PreferenceMap
+{
+public:
+	PreferenceNode *find(const AsciiString &) const;
+	PreferenceNode *end(void) const { return m_end; }
+
+private:
+	PreferenceNode *m_end;								///< retail this+0x00
+};
+
+class GlobalData
+{
+public:
+	unsigned char m_unreconstructed_00[0xBC0];
+	float m_scrollFactor;								///< retail this+0xBC0
+};
+
+extern GlobalData *TheWritableGlobalData;				///< retail [0x012ED5C8]
+
+class OptionPreferences
+{
+public:
+	float getScrollFactor(void);
+
+private:
+	unsigned char m_unreconstructed_00[4];
+	PreferenceMap m_prefs;								///< retail this+0x04
 };
 
 // ?getScrollFactor@OptionPreferences@@QAEMXZ
-__declspec(naked) float OptionPreferences::getScrollFactor()
+float OptionPreferences::getScrollFactor(void)
 {
-	__asm {
-		__emit 0x51
-		__emit 0x56
-		__emit 0x57
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x68
-		__emit 0x0c
-		__emit 0xfa
-		__emit 0x07
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xe8
-		__emit 0xed
-		__emit 0x84
-		__emit 0x7f
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x83
-		__emit 0xc6
-		__emit 0x04
-		__emit 0x50
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0xca
-		__emit 0xa7
-		__emit 0xf7
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x08
-		__emit 0x8b
-		__emit 0xf8
-		__emit 0xe8
-		__emit 0x53
-		__emit 0x72
-		__emit 0x7f
-		__emit 0x00
-		__emit 0x3b
-		__emit 0x3e
-		__emit 0x75
-		__emit 0x10
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0xc8
-		__emit 0xd5
-		__emit 0x2e
-		__emit 0x01
-		__emit 0xd9
-		__emit 0x81
-		__emit 0xc0
-		__emit 0x0b
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x7f
-		__emit 0x14
-		__emit 0x85
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x47
-		__emit 0x08
-		__emit 0x75
-		__emit 0x05
-		__emit 0xb8
-		__emit 0x8b
-		__emit 0x38
-		__emit 0x07
-		__emit 0x01
-		__emit 0x50
-		__emit 0xff
-		__emit 0x15
-		__emit 0x84
-		__emit 0x93
-		__emit 0x35
-		__emit 0x01
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x7d
-		__emit 0x16
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xdb
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0xd8
-		__emit 0x0d
-		__emit 0xec
-		__emit 0xc6
-		__emit 0x07
-		__emit 0x01
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x83
-		__emit 0xf8
-		__emit 0x64
-		__emit 0x7e
-		__emit 0x08
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x64
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xdb
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0xd8
-		__emit 0x0d
-		__emit 0xec
-		__emit 0xc6
-		__emit 0x07
-		__emit 0x01
-		__emit 0x59
-		__emit 0xc3
+	PreferenceNode *it;
+	{
+		AsciiString key("ScrollFactor");
+		it = m_prefs.find(key);
 	}
+
+	if (it == m_prefs.end())
+		return TheWritableGlobalData->m_scrollFactor;
+
+	int value = atoi(it->m_value.str());
+
+	// Note the floor is 1, not 0: a negative preference clamps up to the
+	// smallest usable scroll rate rather than to none at all.
+	if (value < 0)
+		value = 1;
+	else if (value > 100)
+		value = 100;
+
+	return value * 0.019999999552965164f;
 }

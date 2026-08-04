@@ -57807,7 +57807,7 @@ __stringbase_isnone_cmp_char,,0x00075E00,91,Code/Libraries/Source/WWVegas/WWLib/
 ??_GOptionPreferences@@UAEPAXI@Z,,0x00090470,30,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionsMenu.cpp,matched,
 ?compareNoCase@?$StringBase@D@@QBEHABV1@@Z,0x00027471,0x00090570,91,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,
 ?getCampaignDifficulty@OptionPreferences@@QAEHXZ,,0x00090630,114,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionsMenu.cpp,matched,thunk-dump converted to exact C++ TU codegen body
-?getScrollFactor@OptionPreferences@@QAEMXZ,,0x000906C0,147,Code/GameEngine/Source/Common/OptionPreferences_getScrollFactor_Thunk.cpp,matched,multi-xref Open-BFME4+Grok ScrollFactor
+?getScrollFactor@OptionPreferences@@QAEMXZ,,0x000906C0,147,Code/GameEngine/Source/Common/OptionPreferences_getScrollFactor_Thunk.cpp,matched,clean C++ conversion; float getter; missing key returns GlobalData+0xBC0 directly while a present value is clamped to 1..100 as an integer and only then scaled by 0.02
 ?usesSystemMapDir@OptionPreferences@@QAE_NXZ,,0x00090780,95,Code/GameEngine/Source/Common/promoted__usesSystemMapDir_OptionPreferences_QAE_NXZ_00090780.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 95B
 ?saveCameraInReplays@OptionPreferences@@QAE_NXZ,,0x00090800,95,Code/GameEngine/Source/Common/promoted__saveCameraInReplays_OptionPreferences_QAE_NXZ_00090800.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 95B
 ?useCameraInReplays@OptionPreferences@@QAE_NXZ,,0x00090900,87,Code/GameEngine/Source/Common/promoted__useCameraInReplays_OptionPreferences_QAE_NXZ_00090900.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 87B
