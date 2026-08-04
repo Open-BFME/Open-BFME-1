@@ -60707,7 +60707,7 @@ _atan2f,,0x001486E0,11,Code/GameEngine/Source/GameClient/Drawable.cpp,matched,
 ?create@FireWeaponNugget@@UBEPAVObject@@PBV2@PBUCoord3D@@1MI@Z,,0x001D5EA0,24,Code/GameEngine/Source/GameLogic/Object/ObjectCreationList.cpp,matched,
 ?create@ObjectCreationNugget@@UBEPAVObject@@PBV2@0I@Z,,0x001D63B0,24,Code/GameEngine/Source/GameLogic/Object/ObjectCreationList.cpp,matched,
 ?m@Gen_001d6440@@QAEXXZ,,0x001D6440,7,Code/gen_small/fun_001.cpp,matched,gen-shim;skeleton=store-imm-0;ghidra=FUN_005d6440
-?create@ApplyRandomForceNugget@@UBEPAVObject@@PBV2@0I@Z,,0x001D64B0,70,Code/GameEngine/Source/Common/ApplyRandomForceNuggetCreateThunk.cpp,matched,Certified packet 298 exact retail bytes SHA256 40e0e7abb6a36d49fb449166623a71831df74d4cf8330e602871b9c6ec265bff
+?create@ApplyRandomForceNugget@@UBEPAVObject@@PBV2@0I@Z,,0x001D64B0,70,Code/GameEngine/Source/Common/ApplyRandomForceNuggetCreateThunk.cpp,matched,clean C++ conversion; four float params at this+0x04..0x10 identified from the matched calcRandomForce signature; physics at Object+0x208; no return statement since retail has no value-returning path
 ?calcRandomForce@@YAXMMMMPAUCoord3D@@@Z,,0x001D6510,321,Code/GameEngine/Source/GameLogic/calcRandomForce_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?m@Gen_001d66e0@@QAEXXZ,,0x001D66E0,7,Code/gen_small/fun_001.cpp,matched,gen-shim;skeleton=store-imm-0;ghidra=FUN_005d66e0
 ?m@Gen_001d6950@@QAEPAXHH@Z,,0x001D6950,11,Code/gen_small/fun_001.cpp,matched,gen-shim;skeleton=this-store-arg2;ghidra=FUN_005d6950
