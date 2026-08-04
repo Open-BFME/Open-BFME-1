@@ -12535,7 +12535,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?Scale@Matrix3D@@QAEXMMM@Z","","0x005F6800","91","Code/Libraries/Source/WWVegas/WW3D2/sphereobj.cpp","matched",""
 "?Scale@MeshClass@@UAEXM@Z","","0x0092CFA0","113","Code/Libraries/Source/WWVegas/WW3D2/mesh.cpp","matched",""
 "?Scale@MeshClass@@UAEXMMM@Z","","0x0092D020","98","Code/Libraries/Source/WWVegas/WW3D2/mesh.cpp","matched",""
-"?Scale@MeshGeometryClass@@QAEXABVVector3@@@Z","","0x00925610","583","Code/masm_dumps/_sym1__Scale_MeshGeometryClass__QAEXABVVector3___Z_925610.asm","matched","symbol-pin Open-BFME4+Grok"
+"?Scale@MeshGeometryClass@@QAEXABVVector3@@@Z","","0x00925610","583","Code/Libraries/Source/WWVegas/WW3D2/MeshGeometryClass_Scale_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_MeshGeometryClassScale_925610"
 "?Scale@ParticleBufferClass@@UAEXM@Z","","0x00983660","229","Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp","matched",""
 "?Scale@ParticleEmitterClass@@UAEXM@Z","","0x0097EE50","124","Code/GameEngine/Source/Common/ParticleEmitterClass_ScaleMethodThunk.cpp","matched","reloc-needle Open-BFME4+Grok"
 "?Scale@Quaternion@@QAEXM@Z","","0x008DB510","41","Code/Libraries/Source/WWVegas/WWMath/quat.cpp","matched",""
