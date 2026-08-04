@@ -60271,7 +60271,7 @@ _atan2f,,0x001486E0,11,Code/GameEngine/Source/GameClient/Drawable.cpp,matched,
 ?chooseVictim@AIAttackSquadState@@QAEPAVObject@@XZ,,0x0017D2F0,949,Code/GameEngine/Source/GameLogic/AI/AIAttackSquadStateChooseVictimThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?onExit@AIEnterState@@UAEXW4StateExitType@@@Z,,0x0017DA00,103,Code/GameEngine/Source/Common/AIEnterState_onExit_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?update@AIHuntState@@UAE?AW4StateReturnType@@XZ,,0x0017E480,800,Code/masm_dumps/AIHuntState_update_17E480.asm,matched,Certified packet 152 exact retail MASM SHA256 80b88dde9572dbde5a8ad4b63b7d6ec0817a76928ab797f5922d383a00fad311
-?onExit@AIPanicState@@UAEXW4StateExitType@@@Z,,0x0017F1E0,84,Code/GameEngine/Source/Common/AIPanicState_onExit_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
+?onExit@AIPanicState@@UAEXW4StateExitType@@@Z,,0x0017F1E0,84,Code/GameEngine/Source/Common/AIPanicState_onExit_Thunk.cpp,matched,clean C++ conversion; ZH outer shape plus BFME gate on bit 0x2000 at Object+0x98; machine at this+0x1C and owner at machine+0x10; two callees left address-named
 ?j_0017f280@@YAXXZ,,0x0017F280,5,Code/gen_small/thunks_036.cpp,matched,gen-thunk;target=thunk_FUN_004a1b30
 ?j_0017f2c0@@YAXXZ,,0x0017F2C0,5,Code/gen_small/thunks_036.cpp,matched,gen-thunk;target=thunk_FUN_004a1b30
 ?j_0017f300@@YAXXZ,,0x0017F300,5,Code/gen_small/thunks_036.cpp,matched,gen-thunk;target=thunk_FUN_004a1b30
