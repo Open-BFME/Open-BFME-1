@@ -14163,7 +14163,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "_CommUDPWrite","","0x00817030","203","Code/Libraries/Source/DirtySock/commudp.cpp","matched",""
 "_cosf","","0x00873920","7","Code/GameEngine/Source/Common/Audio/GameAudio.cpp","matched","icf-owner=?Cos@@YAMM@Z"
 "_D3DXMatrixInverse@12","","0x009FB321","979","Code/masm_dumps/__D3DXMatrixInverse_12_9FB321.asm","matched",""
-"_D3DXVec4Transform@12","","0x009FAA48","600","Code/masm_dumps/__D3DXVec4Transform_12_9FAA48.asm","matched",""
+"_D3DXVec4Transform@12","","0x009FAA48","600","Code/GameEngine/Source/Common/System/d3dx8math_D3DXVec4Transform_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_D3DXVec4Transform_9FAA48"
 "_DoAnyMapTransfers","","0x0066E070","659","Code/GameEngine/Source/GameNetwork/FileTransfer.cpp","matched",""
 "_doFileTransfer","","0x0066CE60","814","Code/GameEngine/Source/GameNetwork/FileTransfer.cpp","matched",""
 "_floorf","","0x001066D0","20","Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp","matched",""
