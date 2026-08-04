@@ -68113,3 +68113,4 @@ _luaK_goiftrue,0x0099F6C0,pinned from cond @0x99CC40 which is byte-exact apart f
 ?getCurrentWeapon@Object@@QAEPAVWeapon@@PAW4WeaponSlotType@@@Z,0x00031A7F,ILT thunk to 0x1BE230; pinned from TurretAI::isOwnersCurWeaponOnTurret @0x18D0D0
 ?healObject@TunnelTracker@@SAXPAVObject@@PAX@Z,0x000387B2,ILT thunk to 0xF8640; pinned from TunnelTracker::healObjects @0xF8D10
 ?isNone@AsciiString@@QBE_NXZ,0x008881A0,same body the ledger claims as StringBase<char>::isNone; pinned from findSingleSubObj @0x761F40
+?updateDrawableSupplyStatus@Drawable@@QAEXHH@Z,0x00031615,ILT thunk to Drawable::updateDrawableSupplyStatus at 0x00411E50

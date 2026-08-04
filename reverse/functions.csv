@@ -62178,7 +62178,7 @@ _atan2f,,0x001486E0,11,Code/GameEngine/Source/GameClient/Drawable.cpp,matched,
 ?m@Gen_002cf600@@QAEXXZ,,0x002CF600,7,Code/gen_small/fun_002.cpp,matched,gen-shim;skeleton=store-imm-0;ghidra=FUN_006cf600
 ?m@Gen_002cf6f0@@QAEPADXZ,,0x002CF6F0,14,Code/gen_small/fun_002.cpp,matched,gen-shim;skeleton=adjustor;ghidra=FUN_006cf6f0
 ?getClassMemoryPool@SupplyWarehouseDockUpdate@@CAPAVMemoryPool@@XZ,,0x002CF760,104,Code/GameEngine/Source/GameLogic/Object/module_pool_glue_bulk.cpp,matched,pool-glue cascade; copy proven by verify_string_refs
-?setCashValue@SupplyWarehouseDockUpdate@@QAEXH@Z,,0x002CFA50,81,Code/GameEngine/Source/Common/promoted__setCashValue_SupplyWarehouseDockUpdate_QAEXH_Z_002CFA50.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 81B
+?setCashValue@SupplyWarehouseDockUpdate@@QAEXH@Z,,0x002CFA50,81,Code/GameEngine/Source/Common/promoted__setCashValue_SupplyWarehouseDockUpdate_QAEXH_Z_002CFA50.cpp,matched,clean C++ conversion; ZH body; m_baseValuePerSupplyBox at GlobalData+0xB24; m_boxesStored at this+0x88; getDrawable on object vtable +0x28; ceil needs dllimport
 ??0SupplyWarehouseDockUpdateModuleData@@QAE@XZ,,0x002CFB00,29,Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyWarehouseDockUpdate.cpp,matched,
 ?m@Gen_002cfb60@@QAEXXZ,,0x002CFB60,7,Code/gen_small/fun_002.cpp,matched,gen-shim;skeleton=store-imm-0;ghidra=FUN_006cfb60
 ?setDockCrippled@SupplyWarehouseDockUpdate@@UAEX_N@Z,,0x002CFB70,142,Code/GameEngine/Source/Common/SupplyWarehouseDockUpdate_setDockCrippledMethodThunk.cpp,matched,Certified packet 45 constructor-vtable owned exact retail bytes SHA256 0b3482d73f54d3619916ccd9555de4c661b919e84b19f12c0f9f0dca5d927e22
