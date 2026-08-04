@@ -1399,3 +1399,5 @@ So the +4 the box constructors want cannot come from the end of
 The two constructors stay as their naked thunk TUs, which do not depend on the
 vtable at all, so no bytes are lost by leaving this alone. 495 bytes of matched
 code outrank the 314 the conversion would have bought.
+
+CRT functions reached under /MD are imported, so retail calls them indirectly through the IAT (ff 15); declare them __declspec(dllimport) or the compiler emits a direct rel32 that is one byte shorter and shifts every rel32 after it (hit on ceil in SupplyWarehouseDockUpdate::setCashValue).
