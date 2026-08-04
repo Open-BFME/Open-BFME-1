@@ -68121,3 +68121,4 @@ _luaK_goiftrue,0x0099F6C0,pinned from cond @0x99CC40 which is byte-exact apart f
 ?unidentified_000F20F0@Object@@QAEXHH@Z,0x00019C54,UNIDENTIFIED two-arg body at 0x000F20F0; address-derived name; do not treat as an identity
 ?init@Mouse@@UAEXXZ,0x0000245A,ILT thunk to Mouse::init; base call from DirectInputMouse::init
 ?openMouse@DirectInputMouse@@AAEXXZ,0x00042A7D,ILT thunk to DirectInputMouse::openMouse
+?unidentified_0001FC99@@YAHPBDPAI@Z,0x0001FC99,UNIDENTIFIED cdecl shader loader; address-derived name; loads shaders\monochrome.pso for ScreenBWFilter::init

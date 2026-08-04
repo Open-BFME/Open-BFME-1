@@ -68715,7 +68715,7 @@ _log10f,,0x00799CE0,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUI
 ?init@FlatTerrainShaderPixelShader@@UAEHXZ,,0x007C7DC0,212,Code/GameEngineDevice/Source/W3DDevice/GameClient/FlatTerrainShaderPixelShader_init_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?canRenderToTexture@W3DShaderManager@@SA_NXZ,,0x007D0A60,27,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp,matched,
 ?preRender@W3DFilterInterface@@UAE_NAA_NAAW4CustomScenePassModes@@@Z,,0x007D0AC0,12,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp,matched,
-?init@ScreenBWFilter@@UAEHXZ,,0x007D0AF0,91,Code/GameEngine/Source/Common/promoted__init_ScreenBWFilter_UAEHXZ_007D0AF0.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 91B
+?init@ScreenBWFilter@@UAEHXZ,,0x007D0AF0,91,Code/GameEngine/Source/Common/promoted__init_ScreenBWFilter_UAEHXZ_007D0AF0.cpp,matched,clean C++ conversion; shader handle at this+0x04; gates on device/pixel-shader globals and chipset tier; loads shaders monochrome.pso; nested ifs with one trailing return so the failure epilogue lands after the success block
 ??XRectClass@@QAEAAV0@M@Z,,0x007D1E90,43,Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.cpp,matched,
 ?preRender@ScreenCrossFadeFilter@@UAE_NAA_NAAW4CustomScenePassModes@@@Z,,0x007D36B0,45,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp,matched,
 ?init@ScreenCrossFadeFilter@@UAEHXZ,,0x007D3760,268,Code/GameEngine/Source/Common/ScreenCrossFadeFilter_initMethodThunk.cpp,matched,Exact 268B Open-BFME4

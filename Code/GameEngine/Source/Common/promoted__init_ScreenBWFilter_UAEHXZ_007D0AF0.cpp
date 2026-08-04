@@ -1,104 +1,67 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// Grok promote from masm_dumps — retail 0x007D0AF0 size 91
-// was: Code/masm_dumps/_sa12__init_ScreenBWFilter__UAEHXZ_7D0AF0.asm
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// Lift the ScreenBWFilter::init naked dump to clean C++.
+//
+// BFME-only filter, so the shape comes from the call sites: bail unless the
+// device and pixel-shader globals are both live, unless the chipset is known,
+// and unless it is at least the pixel-shader tier; then load the monochrome
+// pixel shader into the handle at this+0x04 and publish the filter pointer.
+//
+// W3DShaderManager::getChipset was already pinned by other work. The shader
+// loader at 0x0001FC99 is an unidentified cdecl body, so it is declared under
+// an address-derived name and the symbols.csv note says so.
+//
+// The string literal is proven by the build's verify_string_refs gate: it has
+// to byte-equal "shaders\\monochrome.pso" at the referenced address.
 
-class ScreenBWFilter { public: virtual int init(void); };
+typedef int Int;
+
+enum ChipsetType
+{
+	DC_UNKNOWN = 0
+};
+
+class W3DShaderManager
+{
+public:
+	static ChipsetType getChipset(void);					///< ILT thunk at 0x000162A7
+};
+
+// Unidentified cdecl loader at 0x0001FC99: (filename, handle-out) -> negative on failure.
+Int unidentified_0001FC99(const char *filename, unsigned int *handle);
+
+extern void *g_deviceGlobal;								///< retail [0x012F9D04]
+extern void *g_pixelShaderGlobal;							///< retail [0x012F9D0C]
+extern Int g_filterFrameGlobal;								///< retail [0x013071B4]
+extern void *g_activeFilterGlobal;							///< retail [0x012F9CD0]
+extern Int g_filterState;									///< retail [0x012BC100]
+
+class ScreenBWFilter
+{
+public:
+	virtual Int init(void);
+
+private:
+	unsigned int m_shader;									///< retail this+0x04
+};
 
 // ?init@ScreenBWFilter@@UAEHXZ
-__declspec(naked) int ScreenBWFilter::init(void)
+Int ScreenBWFilter::init(void)
 {
-__asm {
-		_emit 056h
-		_emit 08Dh
-		_emit 071h
-		_emit 004h
-		_emit 0C7h
-		_emit 006h
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 0A1h
-		_emit 004h
-		_emit 09Dh
-		_emit 02Fh
-		_emit 001h
-		_emit 085h
-		_emit 0C0h
-		_emit 0C7h
-		_emit 005h
-		_emit 0B4h
-		_emit 071h
-		_emit 030h
-		_emit 001h
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 074h
-		_emit 03Ah
-		_emit 0A1h
-		_emit 00Ch
-		_emit 09Dh
-		_emit 02Fh
-		_emit 001h
-		_emit 085h
-		_emit 0C0h
-		_emit 074h
-		_emit 031h
-		_emit 0E8h
-		_emit 08Ch
-		_emit 057h
-		_emit 084h
-		_emit 0FFh
-		_emit 085h
-		_emit 0C0h
-		_emit 074h
-		_emit 028h
-		_emit 083h
-		_emit 0F8h
-		_emit 003h
-		_emit 07Ch
-		_emit 023h
-		_emit 056h
-		_emit 068h
-		_emit 070h
-		_emit 089h
-		_emit 012h
-		_emit 001h
-		_emit 0E8h
-		_emit 06Ah
-		_emit 0F1h
-		_emit 084h
-		_emit 0FFh
-		_emit 083h
-		_emit 0C4h
-		_emit 008h
-		_emit 085h
-		_emit 0C0h
-		_emit 07Ch
-		_emit 011h
-		_emit 0C7h
-		_emit 005h
-		_emit 0D0h
-		_emit 09Ch
-		_emit 02Fh
-		_emit 001h
-		_emit 000h
-		_emit 0C1h
-		_emit 02Bh
-		_emit 001h
-		_emit 0B8h
-		_emit 001h
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 05Eh
-		_emit 0C3h
-		_emit 033h
-		_emit 0C0h
-		_emit 05Eh
-		_emit 0C3h
-	}
-}
+	m_shader = 0;
+	g_filterFrameGlobal = 0;
 
+	if (g_deviceGlobal != 0 && g_pixelShaderGlobal != 0)
+	{
+		ChipsetType chipset = W3DShaderManager::getChipset();
+		if (chipset != DC_UNKNOWN && chipset >= 3)
+		{
+			if (unidentified_0001FC99("shaders\\monochrome.pso", &m_shader) >= 0)
+			{
+				g_activeFilterGlobal = &g_filterState;
+				return 1;
+			}
+		}
+	}
+
+	return 0;
+}
