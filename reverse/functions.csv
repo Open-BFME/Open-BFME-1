@@ -6134,7 +6134,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?calcSleepTime@FlammableUpdate@@IAE?AW4UpdateSleepTime@@XZ","","0x00292FAD","71","Code/GameEngine/Source/GameLogic/Object/Update/FlammableUpdate.cpp","matched",""
 "?calcSleepTime@PoisonedBehavior@@IAE?AW4UpdateSleepTime@@XZ","","0x00202930","45","Code/GameEngine/Source/GameLogic/Object/Behavior/PoisonedBehavior.cpp","matched",""
 "?calcSleepTime@StealthUpdate@@IBE?AW4UpdateSleepTime@@XZ","","0x002AC090","18","Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdate.cpp","matched",""
-"?calcTimeToBuild@ThingTemplate@@QBEHPBVPlayer@@@Z","","0x00144AB0","619","Code/masm_dumps/ThingTemplate_calcTimeToBuild.asm","matched","MASM exact; true body 0x144AB0 (queue 0x1AE7B0 mid-fn); BFME ret8 2-arg"
+"?calcTimeToBuild@ThingTemplate@@QBEHPBVPlayer@@@Z","","0x00144AB0","619","Code/GameEngine/Source/Common/Thing/ThingTemplate_calcTimeToBuild_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_ThingTemplateCalcTimeToBuild_144AB0"
 "?Calculate_Cost_Value_Arrays@HLodClass@@UBEHMPAM0@Z","","0x00978E10","247","Code/Libraries/Source/WWVegas/WW3D2/hlod.cpp","matched",""
 "?Calculate_Cost_Value_Arrays@ParticleBufferClass@@UBEHMPAM0@Z","","0x00983850","468","Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp","matched",""
 "?Calculate_Cost_Value_Arrays@RenderObjClass@@UBEHMPAM0@Z","","0x0091F9E0","36","Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp","matched",""
