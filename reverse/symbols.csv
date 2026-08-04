@@ -68116,3 +68116,4 @@ _luaK_goiftrue,0x0099F6C0,pinned from cond @0x99CC40 which is byte-exact apart f
 ?updateDrawableSupplyStatus@Drawable@@QAEXHH@Z,0x00031615,ILT thunk to Drawable::updateDrawableSupplyStatus at 0x00411E50
 ?Check_Is_Transform_Identity@@YI_NABVMatrix3D@@@Z,0x0091FF40,register-convention alias of the static inline Check_Is_Transform_Identity; same body as the cdecl-mangled row
 ?applyMotiveForce@PhysicsBehavior@@QAEXPBUCoord3D@@@Z,0x0002A284,ILT thunk to PhysicsBehavior::applyMotiveForce at 0x0029AC40
+?find@PreferenceMap@@QBEPAUPreferenceNode@@ABVAsciiString@@@Z,0x0000AEAC,ILT thunk to the AsciiString-keyed preferences map find at 0x00080600
