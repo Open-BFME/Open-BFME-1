@@ -63765,7 +63765,7 @@ _atanf,,0x0045B6F0,9,Code/Libraries/Source/WWVegas/WW3D2/texproject.cpp,matched,
 ??0ScoreScaleUpTransition@@QAE@XZ,,0x0048B8D0,847,Code/masm_dumps/_sa3___0ScoreScaleUpTransition__QAE_XZ_48B8D0.asm,matched,Exact 847B string-anchored Open-BFME4
 ?getFirstHeader@HeaderTemplateManager@@QAEPAVHeaderTemplate@@XZ,,0x0048C420,15,Code/GameEngine/Source/GameClient/GUI/HeaderTemplate.cpp,matched,
 ?getNextHeader@HeaderTemplateManager@@QAEPAVHeaderTemplate@@PAV2@@Z,,0x0048C440,42,Code/GameEngine/Source/GameClient/GUI/HeaderTemplate.cpp,matched,
-?populateGameFonts@HeaderTemplateManager@@AAEXXZ,,0x0048C480,85,Code/GameEngine/Source/GameClient/GUI/HeaderTemplateManagerPopulateGameFontsThunk.cpp,matched,Open-BFME5 exact C++ __emit port of certified MASM body
+?populateGameFonts@HeaderTemplateManager@@AAEXXZ,,0x0048C480,85,Code/GameEngine/Source/GameClient/GUI/HeaderTemplateManagerPopulateGameFontsThunk.cpp,matched,clean C++ conversion; verbatim ZH HeaderTemplate.cpp loop; list header at this+0x00 with nodes linking +0x00 and element +0x08; HeaderTemplate m_font +0x00 m_fontName +0x08 m_point +0x0C m_bold +0x10; adjustFontSize returns Int so the size goes through fild
 ?j_0048c520@@YAXXZ,,0x0048C520,5,Code/gen_small/thunks_037.cpp,matched,gen-thunk;target=thunk_FUN_0088c390
 ?j_0048ca80@@YAXXZ,,0x0048CA80,5,Code/gen_small/thunks_037.cpp,matched,gen-thunk;target=thunk_FUN_0088c480
 ?newHeaderTemplate@HeaderTemplateManager@@QAEPAVHeaderTemplate@@VAsciiString@@@Z,,0x0048CAD0,204,Code/GameEngine/Source/Common/HeaderTemplateManager_newHeaderTemplate_Thunk.cpp,matched,true body 0x48CAD0/204; queue 0xB026CE was dtor-interior; caller parseHeaderTemplateDefinition ILT 0x470E6; MASM ZH list push_front shape

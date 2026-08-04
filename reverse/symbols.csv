@@ -68122,3 +68122,5 @@ _luaK_goiftrue,0x0099F6C0,pinned from cond @0x99CC40 which is byte-exact apart f
 ?init@Mouse@@UAEXXZ,0x0000245A,ILT thunk to Mouse::init; base call from DirectInputMouse::init
 ?openMouse@DirectInputMouse@@AAEXXZ,0x00042A7D,ILT thunk to DirectInputMouse::openMouse
 ?unidentified_0001FC99@@YAHPBDPAI@Z,0x0001FC99,UNIDENTIFIED cdecl shader loader; address-derived name; loads shaders\monochrome.pso for ScreenBWFilter::init
+?adjustFontSize@GlobalLanguageData@@QAEHH@Z,0x00004E67,ILT thunk to GlobalLanguageData::adjustFontSize; returns Int in BFME
+?getFont@FontLibrary@@QAEPAVGameFont@@PAVAsciiString@@ME@Z,0x0000ABC3,ILT thunk to FontLibrary::getFont from HeaderTemplateManager::populateGameFonts
