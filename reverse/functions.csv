@@ -12515,7 +12515,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?Save_Registry_Values@RegistryClass@@CAXPAXPADPAVINIClass@@@Z","","0x009DC5F0","474","Code/Libraries/Source/WWVegas/WWLib/registry.cpp","matched",""
 "?Save_W3D@SubObjectArrayClass@HLodDefClass@@QAE_NAAVChunkSaveClass@@@Z","","0x00978B90","289","Code/Libraries/Source/WWVegas/WW3D2/hlod.cpp","matched",""
 "?saveCameraInReplays@OptionPreferences@@QAE_NXZ","","0x00090800","95","Code/GameEngine/Source/Common/promoted__saveCameraInReplays_OptionPreferences_QAE_NXZ_00090800.cpp","matched","Grok promote masm dump to Code/ naked C++ exact 95B"
-"?saveGame@GameState@@QAE?AW4SaveCode@@VAsciiString@@VUnicodeString@@W4SaveFileType@@W4SnapshotType@@@Z","","0x00110170","610","Code/masm_dumps/_str3__saveGame_GameState_QAE_AW4SaveCode_VAsciiString_VUnico_110170.asm","matched",""
+"?saveGame@GameState@@QAE?AW4SaveCode@@VAsciiString@@VUnicodeString@@W4SaveFileType@@W4SnapshotType@@@Z","","0x00110170","610","Code/GameEngine/Source/Common/System/SaveGame/GameState_saveGame_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_GameStateSaveGame_110170"
 "?saveLockGhostObjects@GhostObjectManager@@QAEX_N@Z","","0x0010CF20","10","Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp","matched",""
 "?saveOffOriginalInfo@GameSlot@@QAEXXZ","","0x0061E560","19","Code/GameEngine/Source/GameNetwork/GameInfo.cpp","matched",""
 "?saveReplay@@YAXVUnicodeString@@@Z","","0x004DE8E0","519","Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay_saveReplay.asm","matched","Exact MASM: true body @0x4DE8E0 (queue 0x88836A misplaced StringBase); C++ blocked ZH QAE getReplayDir+wcscmp op== vs retail SA+StringBase::compare"
