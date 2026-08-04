@@ -68130,3 +68130,4 @@ _luaK_goiftrue,0x0099F6C0,pinned from cond @0x99CC40 which is byte-exact apart f
 ?getVoteFrame@NetCommandMsg@@QAEIXZ,0x00013F20,ILT thunk to the disconnect-vote message vote frame accessor
 ?getSlot@NetCommandMsg@@QAEEXZ,0x000058B7,ILT thunk to the disconnect-vote message slot accessor; returns a byte
 ?applyDisconnectVote@DisconnectManager@@IAEXHIHPAVConnectionManager@@@Z,0x000215AD,ILT thunk to DisconnectManager::applyDisconnectVote at 0x0066B910
+?sendVoteCommand@DisconnectManager@@IAEXHPAVConnectionManager@@@Z,0x0002EE79,ILT thunk to DisconnectManager::sendVoteCommand
