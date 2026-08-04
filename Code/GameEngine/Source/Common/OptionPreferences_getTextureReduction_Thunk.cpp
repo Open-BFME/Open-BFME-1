@@ -1,153 +1,101 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// Lift the OptionPreferences::getTextureReduction naked dump to clean C++.
+//
+// Preferences getter whose default is computed rather than read: a missing key
+// derives a percentage from the texture-reduction level at GlobalData+0x68, so
+// both paths join before the shared 0..100 clamp instead of returning early.
+// The key lives in its own scope so it dies after the lookup and before the
+// end() comparison, which is the order retail uses.
+//
+// Retail pins the layout: the map is at this+0x04 and its first word is the end
+// sentinel, the mapped AsciiString is at node+0x14, and str() inlines to
+// "m_data ? m_data+8 : empty".
+//
+// /EHs-c- because the build default only clears the /EHc half, and the key's
+// destructor would otherwise pull in an SEH prologue retail does not have.
 
-class OptionPreferences {
+extern "C" __declspec(dllimport) int __cdecl atoi(const char *);
+
+class AsciiStringData
+{
 public:
-	int getTextureReduction();
+	unsigned char m_unreconstructed_00[8];
+	char m_chars[1];									///< retail this+0x08
+};
+
+class AsciiString
+{
+public:
+	AsciiString(const char *);
+	~AsciiString();
+
+	const char *str(void) const { return m_data ? m_data->m_chars : ""; }
+
+private:
+	AsciiStringData *m_data;
+};
+
+struct PreferenceNode
+{
+	unsigned char m_unreconstructed_00[0x14];
+	AsciiString m_value;								///< retail this+0x14
+};
+
+class PreferenceMap
+{
+public:
+	PreferenceNode *find(const AsciiString &) const;
+	PreferenceNode *end(void) const { return m_end; }
+
+private:
+	PreferenceNode *m_end;								///< retail this+0x00
+};
+
+class GlobalData
+{
+public:
+	unsigned char m_unreconstructed_00[0x68];
+	int m_textureReduction;								///< retail this+0x68
+};
+
+extern GlobalData *TheWritableGlobalData;				///< retail [0x012ED5C8]
+
+class OptionPreferences
+{
+public:
+	int getTextureReduction(void);
+
+private:
+	unsigned char m_unreconstructed_00[4];
+	PreferenceMap m_prefs;								///< retail this+0x04
 };
 
 // ?getTextureReduction@OptionPreferences@@QAEHXZ
-__declspec(naked) int OptionPreferences::getTextureReduction()
+int OptionPreferences::getTextureReduction(void)
 {
-	__asm {
-		__emit 0x51
-		__emit 0x56
-		__emit 0x57
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x68
-		__emit 0xb0
-		__emit 0x6d
-		__emit 0x07
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xe8
-		__emit 0xcd
-		__emit 0x75
-		__emit 0x7f
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x83
-		__emit 0xc6
-		__emit 0x04
-		__emit 0x50
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0xaa
-		__emit 0x98
-		__emit 0xf7
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x08
-		__emit 0x8b
-		__emit 0xf8
-		__emit 0xe8
-		__emit 0x33
-		__emit 0x63
-		__emit 0x7f
-		__emit 0x00
-		__emit 0x3b
-		__emit 0x3e
-		__emit 0x75
-		__emit 0x2b
-		__emit 0x8b
-		__emit 0x15
-		__emit 0xc8
-		__emit 0xd5
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x42
-		__emit 0x68
-		__emit 0xb9
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x2b
-		__emit 0xc8
-		__emit 0x89
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x08
-		__emit 0xdb
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0xd8
-		__emit 0x0d
-		__emit 0xa8
-		__emit 0xfa
-		__emit 0x07
-		__emit 0x01
-		__emit 0xd8
-		__emit 0x05
-		__emit 0x3c
-		__emit 0x53
-		__emit 0x07
-		__emit 0x01
-		__emit 0xe8
-		__emit 0xfe
-		__emit 0x57
-		__emit 0x96
-		__emit 0x00
-		__emit 0xeb
-		__emit 0x19
-		__emit 0x8b
-		__emit 0x7f
-		__emit 0x14
-		__emit 0x85
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x47
-		__emit 0x08
-		__emit 0x75
-		__emit 0x05
-		__emit 0xb8
-		__emit 0x8b
-		__emit 0x38
-		__emit 0x07
-		__emit 0x01
-		__emit 0x50
-		__emit 0xff
-		__emit 0x15
-		__emit 0x84
-		__emit 0x93
-		__emit 0x35
-		__emit 0x01
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x7d
-		__emit 0x04
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x83
-		__emit 0xf8
-		__emit 0x64
-		__emit 0x7e
-		__emit 0x05
-		__emit 0xb8
-		__emit 0x64
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x59
-		__emit 0xc3
+	PreferenceNode *it;
+	{
+		AsciiString key("TextureReduction");
+		it = m_prefs.find(key);
 	}
+
+	int value;
+	if (it == m_prefs.end())
+	{
+		// Two is the least-reduced setting, so the stored level maps onto a
+		// percentage; the 0.5f is the rounding term ahead of the truncation.
+		value = (int)((2 - TheWritableGlobalData->m_textureReduction) * 50.0f + 0.5f);
+	}
+	else
+	{
+		value = atoi(it->m_value.str());
+	}
+
+	if (value < 0)
+		return 0;
+
+	if (value > 100)
+		return 100;
+
+	return value;
 }

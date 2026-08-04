@@ -1,150 +1,99 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// Lift the OptionPreferences::getParticleCap naked dump to clean C++.
+//
+// Preferences getter whose default is computed rather than read: a missing key
+// derives the slider position from the particle cap at GlobalData+0xB8C. Unlike
+// the texture-reduction sibling that path returns early, since the computed
+// value skips the 0..100 clamp entirely.
+// The key lives in its own scope so it dies after the lookup and before the
+// end() comparison, which is the order retail uses.
+//
+// Retail pins the layout: the map is at this+0x04 and its first word is the end
+// sentinel, the mapped AsciiString is at node+0x14, and str() inlines to
+// "m_data ? m_data+8 : empty".
+//
+// /EHs-c- because the build default only clears the /EHc half, and the key's
+// destructor would otherwise pull in an SEH prologue retail does not have.
 
-class OptionPreferences {
+extern "C" __declspec(dllimport) int __cdecl atoi(const char *);
+
+class AsciiStringData
+{
 public:
-	int getParticleCap();
+	unsigned char m_unreconstructed_00[8];
+	char m_chars[1];									///< retail this+0x08
+};
+
+class AsciiString
+{
+public:
+	AsciiString(const char *);
+	~AsciiString();
+
+	const char *str(void) const { return m_data ? m_data->m_chars : ""; }
+
+private:
+	AsciiStringData *m_data;
+};
+
+struct PreferenceNode
+{
+	unsigned char m_unreconstructed_00[0x14];
+	AsciiString m_value;								///< retail this+0x14
+};
+
+class PreferenceMap
+{
+public:
+	PreferenceNode *find(const AsciiString &) const;
+	PreferenceNode *end(void) const { return m_end; }
+
+private:
+	PreferenceNode *m_end;								///< retail this+0x00
+};
+
+class GlobalData
+{
+public:
+	unsigned char m_unreconstructed_00[0xB8C];
+	int m_maxParticleCount;								///< retail this+0xB8C
+};
+
+extern GlobalData *TheWritableGlobalData;				///< retail [0x012ED5C8]
+
+class OptionPreferences
+{
+public:
+	int getParticleCap(void);
+
+private:
+	unsigned char m_unreconstructed_00[4];
+	PreferenceMap m_prefs;								///< retail this+0x04
 };
 
 // ?getParticleCap@OptionPreferences@@QAEHXZ
-__declspec(naked) int OptionPreferences::getParticleCap()
+int OptionPreferences::getParticleCap(void)
 {
-	__asm {
-		__emit 0x51
-		__emit 0x56
-		__emit 0x57
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x68
-		__emit 0x84
-		__emit 0x6b
-		__emit 0x07
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xe8
-		__emit 0xfd
-		__emit 0x76
-		__emit 0x7f
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x83
-		__emit 0xc6
-		__emit 0x04
-		__emit 0x50
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0xda
-		__emit 0x99
-		__emit 0xf7
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x08
-		__emit 0x8b
-		__emit 0xf8
-		__emit 0xe8
-		__emit 0x63
-		__emit 0x64
-		__emit 0x7f
-		__emit 0x00
-		__emit 0x3b
-		__emit 0x3e
-		__emit 0x75
-		__emit 0x26
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0xc8
-		__emit 0xd5
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x91
-		__emit 0x8c
-		__emit 0x0b
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xea
-		__emit 0x64
-		__emit 0x89
-		__emit 0x54
-		__emit 0x24
-		__emit 0x08
-		__emit 0xdb
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0xd8
-		__emit 0x0d
-		__emit 0xa4
-		__emit 0xfa
-		__emit 0x07
-		__emit 0x01
-		__emit 0xe8
-		__emit 0x35
-		__emit 0x59
-		__emit 0x96
-		__emit 0x00
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x7f
-		__emit 0x14
-		__emit 0x85
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x47
-		__emit 0x08
-		__emit 0x75
-		__emit 0x05
-		__emit 0xb8
-		__emit 0x8b
-		__emit 0x38
-		__emit 0x07
-		__emit 0x01
-		__emit 0x50
-		__emit 0xff
-		__emit 0x15
-		__emit 0x84
-		__emit 0x93
-		__emit 0x35
-		__emit 0x01
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x7d
-		__emit 0x06
-		__emit 0x5f
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x5e
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x83
-		__emit 0xf8
-		__emit 0x64
-		__emit 0x7e
-		__emit 0x05
-		__emit 0xb8
-		__emit 0x64
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x59
-		__emit 0xc3
+	PreferenceNode *it;
+	{
+		AsciiString key("MaxParticleCount");
+		it = m_prefs.find(key);
 	}
+
+	if (it == m_prefs.end())
+	{
+		// The stored cap spans 100..2999, so subtracting the floor and scaling
+		// by 1/29 maps it back onto the 0..100 slider.
+		return (int)((TheWritableGlobalData->m_maxParticleCount - 100) * 0.03448275849223137f);
+	}
+
+	int value = atoi(it->m_value.str());
+
+	if (value < 0)
+		return 0;
+
+	if (value > 100)
+		return 100;
+
+	return value;
 }
