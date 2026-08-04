@@ -68126,3 +68126,7 @@ _luaK_goiftrue,0x0099F6C0,pinned from cond @0x99CC40 which is byte-exact apart f
 ?getFont@FontLibrary@@QAEPAVGameFont@@PAVAsciiString@@ME@Z,0x0000ABC3,ILT thunk to FontLibrary::getFont from HeaderTemplateManager::populateGameFonts
 ?countVotesForPlayer@DisconnectManager@@IAEHHPAVConnectionManager@@@Z,0x00003751,ILT thunk; BFME takes the ConnectionManager as a second argument unlike ZH's one-arg form
 ?updateVotes@DisconnectMenu@@QAEXHH@Z,0x00031DB8,ILT thunk to DisconnectMenu::updateVotes
+?isPlayerInGame@DisconnectManager@@IAE_NHPAVConnectionManager@@@Z,0x0003A648,ILT thunk to DisconnectManager::isPlayerInGame
+?getVoteFrame@NetCommandMsg@@QAEIXZ,0x00013F20,ILT thunk to the disconnect-vote message vote frame accessor
+?getSlot@NetCommandMsg@@QAEEXZ,0x000058B7,ILT thunk to the disconnect-vote message slot accessor; returns a byte
+?applyDisconnectVote@DisconnectManager@@IAEXHIHPAVConnectionManager@@@Z,0x000215AD,ILT thunk to DisconnectManager::applyDisconnectVote at 0x0066B910
