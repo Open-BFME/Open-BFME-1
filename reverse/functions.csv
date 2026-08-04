@@ -70488,7 +70488,7 @@ _asinf,,0x00873950,10,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W
 ?Get_Scene@RenderObjClass@@UAEPAVSceneClass@@XZ,,0x00920180,20,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,
 ?Set_Transform@RenderObjClass@@UAEXABVMatrix3D@@@Z,,0x009201A0,125,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,
 ?Set_Position@RenderObjClass@@UAEXABVVector3@@@Z,,0x00920220,74,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,
-?Validate_Transform@RenderObjClass@@UBEXXZ,,0x00920270,80,Code/GameEngine/Source/Common/RenderObjClass_Validate_Transform_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
+?Validate_Transform@RenderObjClass@@UBEXXZ,,0x00920270,80,Code/GameEngine/Source/Common/RenderObjClass_Validate_Transform_Thunk.cpp,matched,clean C++ conversion; verbatim ZH rendobj.cpp body; Bits this+0x10 with SUBOBJ_TRANSFORMS_DIRTY bit 21; Transform this+0x18; IsTransformIdentity this+0x7C; Container this+0x84; Check_Is_Transform_Identity takes the matrix in ecx
 ?Get_Position@RenderObjClass@@QBE?AVVector3@@XZ,,0x009202C0,33,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,MASM converted to clean C++
 ?Get_Obj_Space_Bounding_Sphere@RenderObjClass@@UBEXAAVSphereClass@@@Z,,0x009203F0,24,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,
 ?Get_Obj_Space_Bounding_Box@ParticleEmitterClass@@UBEXAAVAABoxClass@@@Z,,0x00920410,26,Code/Libraries/Source/WWVegas/WW3D2/part_emt.cpp,matched,
