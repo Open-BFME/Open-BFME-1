@@ -28,8 +28,20 @@ def main():
     ap.add_argument("--src-dir", default="Code")
     args = ap.parse_args()
 
+    # The Ghidra inventory is gitignored, so a fresh clone does not have it and
+    # this tool is the first rung of the work ladder. Say which file is missing
+    # and how to make it instead of dying on an unhandled FileNotFoundError.
+    inventory = ROOT / "reverse" / "ghidra_functions.csv"
+    if not inventory.exists():
+        raise SystemExit(
+            f"{inventory.relative_to(ROOT).as_posix()} not found — this tool needs the Ghidra\n"
+            "inventory to size the candidate copies. It is a generated, gitignored file;\n"
+            "regenerate it per tools/ghidra/README.md, or pick another rung of the ladder\n"
+            "(python3 tools/next_work.py)."
+        )
+
     ghidra = {}
-    with (ROOT / "reverse" / "ghidra_functions.csv").open(newline="") as fh:
+    with inventory.open(newline="") as fh:
         for row in csv.DictReader(fh):
             ghidra[int(row["rva"], 16)] = int(row["size"])
     matched = {r["name"] for r in build.load_all_function_rows()}
