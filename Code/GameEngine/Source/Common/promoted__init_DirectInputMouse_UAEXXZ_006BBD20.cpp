@@ -1,89 +1,61 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// Grok promote from masm_dumps — retail 0x006BBD20 size 76
-// was: Code/masm_dumps/_rn4__init_DirectInputMouse__UAEXXZ_6BBD20.asm
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// Lift the DirectInputMouse::init naked dump to clean C++.
+//
+// Verbatim Zero Hour Win32DIMouse.cpp: chain to the base init, open the mouse,
+// then push the window cursor to the position the system already holds. Retail
+// pins what ZH leaves symbolic -- m_currMouse.pos.x/y sit at this+0x4D10 and
+// this+0x4D14, and ApplicationHWnd is the global at 0x012ED238.
+//
+// ClientToScreen and SetCursorPos are declared dllimport so the calls stay
+// indirect through the import table, which is how retail reaches them.
 
-class DirectInputMouse { public: virtual void init(void); };
+struct POINT
+{
+	long x;
+	long y;
+};
+
+typedef void *HWND;
+
+extern "C" __declspec(dllimport) int __stdcall ClientToScreen(HWND, POINT *);
+extern "C" __declspec(dllimport) int __stdcall SetCursorPos(int, int);
+
+extern HWND ApplicationHWnd;								///< retail [0x012ED238]
+
+class Mouse
+{
+public:
+	virtual void init(void);								///< ILT thunk at 0x0000245A
+
+protected:
+	unsigned char m_unreconstructed_04[0x4D10 - 4];
+	long m_currMousePosX;									///< retail this+0x4D10
+	long m_currMousePosY;									///< retail this+0x4D14
+};
+
+class DirectInputMouse : public Mouse
+{
+public:
+	virtual void init(void);
+
+private:
+	void openMouse(void);									///< ILT thunk at 0x00042A7D
+};
 
 // ?init@DirectInputMouse@@UAEXXZ
-__declspec(naked) void DirectInputMouse::init(void)
+void DirectInputMouse::init(void)
 {
-__asm {
-		_emit 083h
-		_emit 0ECh
-		_emit 008h
-		_emit 056h
-		_emit 08Bh
-		_emit 0F1h
-		_emit 0E8h
-		_emit 02Fh
-		_emit 067h
-		_emit 094h
-		_emit 0FFh
-		_emit 08Bh
-		_emit 0CEh
-		_emit 0E8h
-		_emit 04Bh
-		_emit 06Dh
-		_emit 098h
-		_emit 0FFh
-		_emit 08Bh
-		_emit 086h
-		_emit 010h
-		_emit 04Dh
-		_emit 000h
-		_emit 000h
-		_emit 08Bh
-		_emit 08Eh
-		_emit 014h
-		_emit 04Dh
-		_emit 000h
-		_emit 000h
-		_emit 08Dh
-		_emit 054h
-		_emit 024h
-		_emit 004h
-		_emit 089h
-		_emit 044h
-		_emit 024h
-		_emit 004h
-		_emit 0A1h
-		_emit 038h
-		_emit 0D2h
-		_emit 02Eh
-		_emit 001h
-		_emit 052h
-		_emit 050h
-		_emit 089h
-		_emit 04Ch
-		_emit 024h
-		_emit 010h
-		_emit 0FFh
-		_emit 015h
-		_emit 0ACh
-		_emit 08Fh
-		_emit 035h
-		_emit 001h
-		_emit 08Bh
-		_emit 04Ch
-		_emit 024h
-		_emit 008h
-		_emit 08Bh
-		_emit 054h
-		_emit 024h
-		_emit 004h
-		_emit 051h
-		_emit 052h
-		_emit 0FFh
-		_emit 015h
-		_emit 070h
-		_emit 090h
-		_emit 035h
-		_emit 001h
-		_emit 05Eh
-		_emit 083h
-		_emit 0C4h
-		_emit 008h
-		_emit 0C3h
-	}
-}
+	POINT p;
 
+	// extending functionality from our base class
+	Mouse::init();
+
+	// open the mouse and create the direct input interfaces we need
+	openMouse();
+
+	// move the window mouse to the location we have initialized in our system
+	p.x = m_currMousePosX;
+	p.y = m_currMousePosY;
+	ClientToScreen(ApplicationHWnd, &p);
+	SetCursorPos(p.x, p.y);
+}

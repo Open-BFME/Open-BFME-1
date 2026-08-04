@@ -67106,7 +67106,7 @@ _DoAnyMapTransfers,,0x0066E070,659,Code/GameEngine/Source/GameNetwork/FileTransf
 ?mapDirectInputMouse@DirectInputMouse@@IAEXPAUMouseIO@@PAU_DIDEVICEOBJECTDATA@@@Z,,0x006BB700,138,Code/GameEngineDevice/Source/Win32Device/GameClient/Win32DIMouse.cpp,matched,
 ?update@DirectInputMouse@@UAEXXZ,,0x006BB8E0,64,Code/GameEngineDevice/Source/Win32Device/GameClient/Win32DIMouse.cpp,matched,
 ?setPosition@DirectInputMouse@@UAEXHH@Z,,0x006BB980,70,Code/GameEngineDevice/Source/Win32Device/GameClient/Win32DIMouse.cpp,matched,
-?init@DirectInputMouse@@UAEXXZ,,0x006BBD20,76,Code/GameEngine/Source/Common/promoted__init_DirectInputMouse_UAEXXZ_006BBD20.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 76B
+?init@DirectInputMouse@@UAEXXZ,,0x006BBD20,76,Code/GameEngine/Source/Common/promoted__init_DirectInputMouse_UAEXXZ_006BBD20.cpp,matched,clean C++ conversion; verbatim ZH Win32DIMouse.cpp body; m_currMouse.pos.x/y at this+0x4D10/0x4D14; ApplicationHWnd global at 0x012ED238; ClientToScreen and SetCursorPos need dllimport for the IAT calls
 ?j_006bc0c0@@YAXXZ,,0x006BC0C0,5,Code/gen_small/thunks_037.cpp,matched,gen-thunk;target=thunk_FUN_009a4410
 ?Set_Sub_Object_Transforms_Dirty@RenderObjClass@@QAEX_N@Z,,0x006BC670,33,Code/Libraries/Source/WWVegas/WW3D2/hlod.cpp,matched,
 ?Set_Hierarchy_Valid@Animatable3DObjClass@@IBEX_N@Z,,0x006BC6A0,13,Code/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,
