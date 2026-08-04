@@ -1,105 +1,80 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// Grok promote from masm_dumps — retail 0x000AC330 size 92
-// was: Code/masm_dumps/CustomMatchPreferences_getChatSizeSlider.asm
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// Lift the CustomMatchPreferences::getChatSizeSlider naked dump to clean C++.
+//
+// Preferences getter with a clamp: a missing key and an out-of-range value share
+// the same answer, 45, so both fall through to one trailing return. The key
+// lives in its own scope so it dies after the lookup and before the end()
+// comparison, which is the order retail uses.
+//
+// Retail pins the layout: the map is at this+0x04 and its first word is the end
+// sentinel, the mapped AsciiString is at node+0x14, and str() inlines to
+// "m_data ? m_data+8 : empty".
+//
+// /EHs-c- because the build default only clears the /EHc half, and the key's
+// destructor would otherwise pull in an SEH prologue retail does not have.
 
-class CustomMatchPreferences { public: int getChatSizeSlider(void); };
+extern "C" __declspec(dllimport) int __cdecl atoi(const char *);
+
+class AsciiStringData
+{
+public:
+	unsigned char m_unreconstructed_00[8];
+	char m_chars[1];									///< retail this+0x08
+};
+
+class AsciiString
+{
+public:
+	AsciiString(const char *);
+	~AsciiString();
+
+	const char *str(void) const { return m_data ? m_data->m_chars : ""; }
+
+private:
+	AsciiStringData *m_data;
+};
+
+struct PreferenceNode
+{
+	unsigned char m_unreconstructed_00[0x14];
+	AsciiString m_value;								///< retail this+0x14
+};
+
+class PreferenceMap
+{
+public:
+	PreferenceNode *find(const AsciiString &) const;
+	PreferenceNode *end(void) const { return m_end; }
+
+private:
+	PreferenceNode *m_end;								///< retail this+0x00
+};
+
+class CustomMatchPreferences
+{
+public:
+	int getChatSizeSlider(void);
+
+private:
+	unsigned char m_unreconstructed_00[4];
+	PreferenceMap m_prefs;								///< retail this+0x04
+};
 
 // ?getChatSizeSlider@CustomMatchPreferences@@QAEHXZ
-__declspec(naked) int CustomMatchPreferences::getChatSizeSlider(void)
+int CustomMatchPreferences::getChatSizeSlider(void)
 {
-__asm {
-		_emit 051h
-		_emit 056h
-		_emit 057h
-		_emit 08Bh
-		_emit 0F1h
-		_emit 068h
-		_emit 0D8h
-		_emit 011h
-		_emit 008h
-		_emit 001h
-		_emit 08Dh
-		_emit 04Ch
-		_emit 024h
-		_emit 00Ch
-		_emit 0E8h
-		_emit 07Dh
-		_emit 0C8h
-		_emit 07Dh
-		_emit 000h
-		_emit 08Dh
-		_emit 044h
-		_emit 024h
-		_emit 008h
-		_emit 083h
-		_emit 0C6h
-		_emit 004h
-		_emit 050h
-		_emit 08Bh
-		_emit 0CEh
-		_emit 0E8h
-		_emit 05Ah
-		_emit 0EBh
-		_emit 0F5h
-		_emit 0FFh
-		_emit 08Dh
-		_emit 04Ch
-		_emit 024h
-		_emit 008h
-		_emit 08Bh
-		_emit 0F8h
-		_emit 0E8h
-		_emit 0E3h
-		_emit 0B5h
-		_emit 07Dh
-		_emit 000h
-		_emit 03Bh
-		_emit 03Eh
-		_emit 074h
-		_emit 022h
-		_emit 08Bh
-		_emit 07Fh
-		_emit 014h
-		_emit 085h
-		_emit 0FFh
-		_emit 08Dh
-		_emit 047h
-		_emit 008h
-		_emit 075h
-		_emit 005h
-		_emit 0B8h
-		_emit 08Bh
-		_emit 038h
-		_emit 007h
-		_emit 001h
-		_emit 050h
-		_emit 0FFh
-		_emit 015h
-		_emit 084h
-		_emit 093h
-		_emit 035h
-		_emit 001h
-		_emit 083h
-		_emit 0C4h
-		_emit 004h
-		_emit 085h
-		_emit 0C0h
-		_emit 07Ch
-		_emit 005h
-		_emit 083h
-		_emit 0F8h
-		_emit 064h
-		_emit 07Eh
-		_emit 005h
-		_emit 0B8h
-		_emit 02Dh
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 05Fh
-		_emit 05Eh
-		_emit 059h
-		_emit 0C3h
+	PreferenceNode *it;
+	{
+		AsciiString key("ChatSlider");
+		it = m_prefs.find(key);
 	}
-}
 
+	if (it != m_prefs.end())
+	{
+		int value = atoi(it->m_value.str());
+		if (value >= 0 && value <= 100)
+			return value;
+	}
+
+	return 45;
+}
