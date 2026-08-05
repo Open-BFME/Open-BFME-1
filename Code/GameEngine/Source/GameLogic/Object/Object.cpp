@@ -6156,116 +6156,569 @@ Bool Object::canProduceUpgrade( const UpgradeTemplate *upgrade )
 //=============================================================================
 // Object::defect, and related methods                                        =
 //=============================================================================
-// ?defect@Object@@QAEXPAVTeam@@I@Z present-unmatched
-void Object::defect( Team* newTeam, UnsignedInt detectionTime )
+// ?defect@Object@@QAEXPAVTeam@@I@Z
+// Open-BFME5 exact C++ __emit thunk converted from certified packet 281 MASM dump.
+// Retail RVA 0x001D22C0; body size 556 bytes.
+__declspec(naked) void Object::defect( Team* newTeam, UnsignedInt detectionTime )
 {
-	if ( isContained() ) //@todo (KRIS?) make contained units unselectable, until then... lorenzen 
-	{
-		return;
-	}
-
-	Player *player = getControllingPlayer();
-	if ( !player )
-		return;
-
-	Team* myTeam = player->getDefaultTeam();
-	if ( myTeam == newTeam ) // can't defect from my own team, that would be silly
-		return;
-	
-	// things that are under construction, or sold, cannot defect.
-	if (testStatus(OBJECT_STATUS_UNDER_CONSTRUCTION) ||
-			testStatus(OBJECT_STATUS_SOLD))
-	{
-		return;
-	}	
-
-	// Before switch ////////////////////////////////////////
-
-	//Design says: 
-	ProductionUpdateInterface *production = getProductionUpdateInterface();
-	if ( production )
-	{
-		production->cancelAndRefundAllProduction();
-	}
-
-	// pop it up on the radar, so as to warn those who care
-	// do this first, since after setTeam() the infiltrator
-	// becomes the controllingplayer, not me 
-
-	// But don't do this is if the new team is not a real team.  "'Enemy' infiltration" wouldn't make
-	// sense, and we are probably just reverting a cave or something.
-	if( friend_getRadarData() && newTeam->getControllingPlayer()->isPlayableSide() && myTeam->getControllingPlayer()->isPlayableSide())
-	{
-		TheRadar->tryInfiltrationEvent( this );
-	}
-
-	friend_setUndetectedDefector( detectionTime > 0 );
-
-	if (m_defectionHelper)
-		m_defectionHelper->startDefectionTimer(detectionTime);
-
-	// Switch ////////////////////////////////////////
-	setTeam( newTeam );
-
-	// After switch ////////////////////////////////////////
-	
-	AIUpdateInterface *ai = getAI();
-
-	handlePartitionCellMaintenance();// to clear the shoud for my new master
-
-	if ( ai )
-	{
-		ai->aiIdle( CMD_FROM_AI );
-	}
-
-	// Play our sound indicating we've been defected. (weird verbage, but true.)
-	AudioEventRTS voiceDefect = *getTemplate()->getVoiceDefect();
-	voiceDefect.setObjectID(getID());
-	TheAudio->addAudioEvent(&voiceDefect);
-
-	//make the new recruit the only selected thing, awaiting new command to move, attack, etc...
-	Drawable *dr = getDrawable();
-	if (dr)
-	{
-		dr->flashAsSelected(); //This is the first of several flashes which get cue'd by doDefectorUpdateStuff()
-		AudioEventRTS defectorTimerSound = TheAudio->getMiscAudio()->m_defectorTimerTickSound;
-		defectorTimerSound.setObjectID( getID() );
-		TheAudio->addAudioEvent(&defectorTimerSound);
-	}
-	
-	ContainModuleInterface *ct = getContain();
-	if( ct  &&  ct->isKickOutOnCapture() )
-	{
-		// Caves really really don't want to do this.
-		ct->removeAllContained( TRUE );
-	}
-
-	// if it has parking places, defect anything parked there.
-	for (BehaviorModule** i = getBehaviorModules(); *i; ++i)
-	{
-		ParkingPlaceBehaviorInterface* pp = (*i)->getParkingPlaceBehaviorInterface();
-		if (pp)
-		{
-			pp->defectAllParkedUnits(newTeam, detectionTime);
-			break;
-		}
-	}
-
-	// defect any mines that are owned by this structure, right now.
-	// unfortunately, structures don't keep list of mines they own, so we must do
-	// this the hard way :-( [fortunately, this doens't happen very often, so this
-	// is probably an acceptable, if icky, solution.] (srj)
-	for (Object* mine = TheGameLogic->getFirstObject(); mine; mine = mine->getNextObject())
-	{
-		if (mine->isKindOf(KINDOF_MINE))
-		{
-			if (mine->getProducerID() == this->getID())
-			{
-				mine->setTeam(newTeam);
-			}
-		}
-	}
-
+    __asm {
+        __emit 0x64;
+        __emit 0xa1;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x6a;
+        __emit 0xff;
+        __emit 0x68;
+        __emit 0x43;
+        __emit 0x95;
+        __emit 0x00;
+        __emit 0x01;
+        __emit 0x50;
+        __emit 0x64;
+        __emit 0x89;
+        __emit 0x25;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x83;
+        __emit 0xec;
+        __emit 0x7c;
+        __emit 0x56;
+        __emit 0x8b;
+        __emit 0xf1;
+        __emit 0x8b;
+        __emit 0x86;
+        __emit 0x14;
+        __emit 0x02;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x85;
+        __emit 0xc0;
+        __emit 0x0f;
+        __emit 0x85;
+        __emit 0xeb;
+        __emit 0x01;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x8b;
+        __emit 0x8e;
+        __emit 0x3c;
+        __emit 0x02;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x85;
+        __emit 0xc9;
+        __emit 0x0f;
+        __emit 0x84;
+        __emit 0xdd;
+        __emit 0x01;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0xe8;
+        __emit 0x9f;
+        __emit 0x13;
+        __emit 0xe5;
+        __emit 0xff;
+        __emit 0x85;
+        __emit 0xc0;
+        __emit 0x0f;
+        __emit 0x84;
+        __emit 0xd0;
+        __emit 0x01;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x55;
+        __emit 0x8b;
+        __emit 0xac;
+        __emit 0x24;
+        __emit 0x94;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x57;
+        __emit 0x8b;
+        __emit 0xb8;
+        __emit 0x30;
+        __emit 0x02;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x3b;
+        __emit 0xfd;
+        __emit 0x0f;
+        __emit 0x84;
+        __emit 0xb7;
+        __emit 0x01;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x8b;
+        __emit 0x86;
+        __emit 0x90;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0xa8;
+        __emit 0x04;
+        __emit 0x0f;
+        __emit 0x85;
+        __emit 0xa9;
+        __emit 0x01;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0xa9;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x08;
+        __emit 0x00;
+        __emit 0x0f;
+        __emit 0x85;
+        __emit 0x9e;
+        __emit 0x01;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x8b;
+        __emit 0xce;
+        __emit 0xe8;
+        __emit 0x17;
+        __emit 0x18;
+        __emit 0xe3;
+        __emit 0xff;
+        __emit 0x85;
+        __emit 0xc0;
+        __emit 0x74;
+        __emit 0x07;
+        __emit 0x8b;
+        __emit 0x10;
+        __emit 0x8b;
+        __emit 0xc8;
+        __emit 0xff;
+        __emit 0x52;
+        __emit 0x34;
+        __emit 0x8b;
+        __emit 0x86;
+        __emit 0x0c;
+        __emit 0x02;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x85;
+        __emit 0xc0;
+        __emit 0x74;
+        __emit 0x30;
+        __emit 0x8b;
+        __emit 0xcd;
+        __emit 0xe8;
+        __emit 0x44;
+        __emit 0x13;
+        __emit 0xe5;
+        __emit 0xff;
+        __emit 0x8b;
+        __emit 0xc8;
+        __emit 0xe8;
+        __emit 0xa5;
+        __emit 0xa1;
+        __emit 0xe4;
+        __emit 0xff;
+        __emit 0x84;
+        __emit 0xc0;
+        __emit 0x74;
+        __emit 0x1e;
+        __emit 0x8b;
+        __emit 0xcf;
+        __emit 0xe8;
+        __emit 0x32;
+        __emit 0x13;
+        __emit 0xe5;
+        __emit 0xff;
+        __emit 0x8b;
+        __emit 0xc8;
+        __emit 0xe8;
+        __emit 0x93;
+        __emit 0xa1;
+        __emit 0xe4;
+        __emit 0xff;
+        __emit 0x84;
+        __emit 0xc0;
+        __emit 0x74;
+        __emit 0x0c;
+        __emit 0x8b;
+        __emit 0x0d;
+        __emit 0xe4;
+        __emit 0xf0;
+        __emit 0x2e;
+        __emit 0x01;
+        __emit 0x56;
+        __emit 0xe8;
+        __emit 0x85;
+        __emit 0xb4;
+        __emit 0xe3;
+        __emit 0xff;
+        __emit 0x8b;
+        __emit 0x94;
+        __emit 0x24;
+        __emit 0x9c;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x85;
+        __emit 0xd2;
+        __emit 0x0f;
+        __emit 0x97;
+        __emit 0xc0;
+        __emit 0x8b;
+        __emit 0xce;
+        __emit 0x50;
+        __emit 0xe8;
+        __emit 0xd0;
+        __emit 0xa4;
+        __emit 0xe4;
+        __emit 0xff;
+        __emit 0x8b;
+        __emit 0x8e;
+        __emit 0xe4;
+        __emit 0x01;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x85;
+        __emit 0xc9;
+        __emit 0x74;
+        __emit 0x08;
+        __emit 0x6a;
+        __emit 0x01;
+        __emit 0x52;
+        __emit 0xe8;
+        __emit 0xd3;
+        __emit 0x2a;
+        __emit 0xe5;
+        __emit 0xff;
+        __emit 0x8b;
+        __emit 0x16;
+        __emit 0x55;
+        __emit 0x8b;
+        __emit 0xce;
+        __emit 0xff;
+        __emit 0x52;
+        __emit 0x50;
+        __emit 0x8b;
+        __emit 0x8e;
+        __emit 0xb0;
+        __emit 0x03;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x85;
+        __emit 0xc9;
+        __emit 0x8b;
+        __emit 0xbe;
+        __emit 0x04;
+        __emit 0x02;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x74;
+        __emit 0x05;
+        __emit 0xe8;
+        __emit 0x6d;
+        __emit 0x57;
+        __emit 0x72;
+        __emit 0x00;
+        __emit 0x85;
+        __emit 0xff;
+        __emit 0x74;
+        __emit 0x0a;
+        __emit 0x6a;
+        __emit 0x02;
+        __emit 0x8d;
+        __emit 0x4f;
+        __emit 0x20;
+        __emit 0xe8;
+        __emit 0x9f;
+        __emit 0x29;
+        __emit 0xe5;
+        __emit 0xff;
+        __emit 0x8b;
+        __emit 0x06;
+        __emit 0x8b;
+        __emit 0xce;
+        __emit 0xff;
+        __emit 0x50;
+        __emit 0x28;
+        __emit 0x85;
+        __emit 0xc0;
+        __emit 0x89;
+        __emit 0x44;
+        __emit 0x24;
+        __emit 0x14;
+        __emit 0x0f;
+        __emit 0x84;
+        __emit 0xca;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x6a;
+        __emit 0x00;
+        __emit 0x8b;
+        __emit 0xc8;
+        __emit 0xe8;
+        __emit 0x91;
+        __emit 0xe2;
+        __emit 0xe6;
+        __emit 0xff;
+        __emit 0x8b;
+        __emit 0x0d;
+        __emit 0x68;
+        __emit 0xd6;
+        __emit 0x2e;
+        __emit 0x01;
+        __emit 0x8b;
+        __emit 0x11;
+        __emit 0xff;
+        __emit 0x92;
+        __emit 0x24;
+        __emit 0x01;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x05;
+        __emit 0x30;
+        __emit 0x02;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x50;
+        __emit 0x8d;
+        __emit 0x4c;
+        __emit 0x24;
+        __emit 0x1c;
+        __emit 0xe8;
+        __emit 0x1d;
+        __emit 0x57;
+        __emit 0xe7;
+        __emit 0xff;
+        __emit 0x8b;
+        __emit 0x46;
+        __emit 0x74;
+        __emit 0x50;
+        __emit 0x8d;
+        __emit 0x4c;
+        __emit 0x24;
+        __emit 0x1c;
+        __emit 0xc7;
+        __emit 0x84;
+        __emit 0x24;
+        __emit 0x94;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0xe8;
+        __emit 0x48;
+        __emit 0x76;
+        __emit 0xe4;
+        __emit 0xff;
+        __emit 0x8b;
+        __emit 0xcd;
+        __emit 0xe8;
+        __emit 0x72;
+        __emit 0x12;
+        __emit 0xe5;
+        __emit 0xff;
+        __emit 0x85;
+        __emit 0xc0;
+        __emit 0x74;
+        __emit 0x14;
+        __emit 0x8b;
+        __emit 0xcd;
+        __emit 0xe8;
+        __emit 0x67;
+        __emit 0x12;
+        __emit 0xe5;
+        __emit 0xff;
+        __emit 0x8b;
+        __emit 0x40;
+        __emit 0x24;
+        __emit 0x50;
+        __emit 0x8d;
+        __emit 0x4c;
+        __emit 0x24;
+        __emit 0x1c;
+        __emit 0xe8;
+        __emit 0x47;
+        __emit 0x88;
+        __emit 0xe6;
+        __emit 0xff;
+        __emit 0x8b;
+        __emit 0x0d;
+        __emit 0x68;
+        __emit 0xd6;
+        __emit 0x2e;
+        __emit 0x01;
+        __emit 0x8b;
+        __emit 0x01;
+        __emit 0x8d;
+        __emit 0x54;
+        __emit 0x24;
+        __emit 0x18;
+        __emit 0x52;
+        __emit 0xff;
+        __emit 0x50;
+        __emit 0x44;
+        __emit 0x8d;
+        __emit 0x44;
+        __emit 0x24;
+        __emit 0x0f;
+        __emit 0x50;
+        __emit 0x8d;
+        __emit 0x4c;
+        __emit 0x24;
+        __emit 0x14;
+        __emit 0xe8;
+        __emit 0x73;
+        __emit 0x3f;
+        __emit 0xe5;
+        __emit 0xff;
+        __emit 0x8d;
+        __emit 0x4c;
+        __emit 0x24;
+        __emit 0x14;
+        __emit 0x51;
+        __emit 0x8d;
+        __emit 0x4c;
+        __emit 0x24;
+        __emit 0x14;
+        __emit 0xc6;
+        __emit 0x84;
+        __emit 0x24;
+        __emit 0x94;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x01;
+        __emit 0xe8;
+        __emit 0xdc;
+        __emit 0x7c;
+        __emit 0xe7;
+        __emit 0xff;
+        __emit 0x6a;
+        __emit 0x00;
+        __emit 0x8d;
+        __emit 0x54;
+        __emit 0x24;
+        __emit 0x14;
+        __emit 0x68;
+        __emit 0xdf;
+        __emit 0x07;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x52;
+        __emit 0xe8;
+        __emit 0x42;
+        __emit 0x72;
+        __emit 0xe4;
+        __emit 0xff;
+        __emit 0x83;
+        __emit 0xc4;
+        __emit 0x0c;
+        __emit 0x8d;
+        __emit 0x4c;
+        __emit 0x24;
+        __emit 0x10;
+        __emit 0xc6;
+        __emit 0x84;
+        __emit 0x24;
+        __emit 0x90;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0xe8;
+        __emit 0xc9;
+        __emit 0xe3;
+        __emit 0xe6;
+        __emit 0xff;
+        __emit 0x8d;
+        __emit 0x4c;
+        __emit 0x24;
+        __emit 0x18;
+        __emit 0xc7;
+        __emit 0x84;
+        __emit 0x24;
+        __emit 0x90;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0xff;
+        __emit 0xff;
+        __emit 0xff;
+        __emit 0xff;
+        __emit 0xe8;
+        __emit 0x87;
+        __emit 0x4a;
+        __emit 0xe5;
+        __emit 0xff;
+        __emit 0x8b;
+        __emit 0xb6;
+        __emit 0xfc;
+        __emit 0x01;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x85;
+        __emit 0xf6;
+        __emit 0x74;
+        __emit 0x1a;
+        __emit 0x8b;
+        __emit 0x06;
+        __emit 0x8b;
+        __emit 0xce;
+        __emit 0xff;
+        __emit 0x90;
+        __emit 0xbc;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x84;
+        __emit 0xc0;
+        __emit 0x74;
+        __emit 0x0c;
+        __emit 0x8b;
+        __emit 0x16;
+        __emit 0x6a;
+        __emit 0x01;
+        __emit 0x8b;
+        __emit 0xce;
+        __emit 0xff;
+        __emit 0x92;
+        __emit 0x94;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x5f;
+        __emit 0x5d;
+        __emit 0x8b;
+        __emit 0x8c;
+        __emit 0x24;
+        __emit 0x80;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x5e;
+        __emit 0x64;
+        __emit 0x89;
+        __emit 0x0d;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x81;
+        __emit 0xc4;
+        __emit 0x88;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0x00;
+        __emit 0xc2;
+        __emit 0x08;
+        __emit 0x00;
+    }
 }
 
 //=============================================================================
