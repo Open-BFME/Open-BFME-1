@@ -8733,7 +8733,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "?Get_DX8_Patch_Edge_Style_Name@DX8Wrapper@@SAPBDI@Z","","0x00902FB0","30","Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp","matched",""
 "?Get_DX8_Render_State_Name@DX8Wrapper@@SAPBDK@Z","","0x00873DA0","673","Code/masm_dumps/_sa3__Get_DX8_Render_State_Name_DX8Wrapper__SAPBDK_Z_873DA0.asm","matched","Exact 673B string-anchored Open-BFME4"
 "?Get_DX8_Render_State_Value_Name@DX8Wrapper@@","","0x009095A0","5155","Code/masm_dumps/_str2__Get_DX8_Render_State_Value_Name_DX8Wrapper__9095A0.asm","matched",""
-"?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z","","0x00907BE0","652","Code/masm_dumps/_Get_DX8_Render_State_Value_Name_DX8Wrapper__SAXAAVStringClass__KI_Z_907BE0.asm","matched","MASM exact retail dump"
+"?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z","","0x00907BE0","652","Code/Libraries/Source/WWVegas/WW3D2/DX8Wrapper_GetRenderStateValueName_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_DX8WrapperGetRenderStateValueName_907BE0"
 "?Get_DX8_Shade_Mode_Name@DX8Wrapper@@SAPBDI@Z","","0x00902D10","37","Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp","matched",""
 "?Get_DX8_Stencil_Op_Name@DX8Wrapper@@SAPBDI@Z","","0x00902E10","17","Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp","matched",""
 "?Get_DX8_Texture_Address_Name@DX8Wrapper@@SAPBDI@Z","","0x00902C00","17","Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp","matched",""
