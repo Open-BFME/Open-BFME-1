@@ -2442,7 +2442,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "??0MissingAnimClass@@QAE@PBD@Z","","0x007BB710","123","Code/Libraries/Source/WWVegas/WW3D2/hanimmgr.cpp","matched",""
 "??0MissingTextureClass@@QAE@PBD@Z","","0x007B1050","125","Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/MissingTextureClassCtorThunk.cpp","matched","1:1 C++ thunk; exact retail bytes from registerMissing body 0x42C3A->0x7B1050"
 "??0Mission@@QAE@XZ","","0x005BB9B0","164","Code/GameEngine/Source/GameClient/Mission_ctor_Thunk.cpp","matched","Open-BFME5 lift 164B retail MASM to standalone C++ thunk"
-"??0MobMemberSlavedUpdate@@QAE@PAVThing@@PBVModuleData@@@Z","","0x001FB5D0","652","Code/masm_dumps/MobMemberSlavedUpdate_constructor.asm","matched","Exact 652B; factory ownership Open-BFME4"
+"??0MobMemberSlavedUpdate@@QAE@PAVThing@@PBVModuleData@@@Z","","0x001FB5D0","652","Code/GameEngine/Source/GameLogic/Object/Update/MobMemberSlavedUpdate_Constructor_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_MobMemberSlavedUpdateConstructor_1FB5D0"
 "??0ModalWindow@@QAE@XZ","","0x00061D90","9","Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp","matched","ICF alias of existing matched body"
 "??0ModelArrayClass@HLodClass@@QAE@XZ","","0x0097C970","50","Code/Libraries/Source/WWVegas/WW3D2/hlod.cpp","matched",""
 "??0ModelConditionInfo@@QAE@ABU0@@Z","","0x00887C90","135","Code/Libraries/Source/WWVegas/WWLib/string_base.cpp","matched","object-symbol=?set@?$StringBase@D@@QAEXABV1@@Z;C++ alias"
