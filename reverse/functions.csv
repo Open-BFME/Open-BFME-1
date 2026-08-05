@@ -2906,7 +2906,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "??0SwayClientUpdate@@QAE@PAVThing@@PBVModuleData@@@Z","","0x006044E0","68","Code/GameEngine/Source/GameClient/Drawable/Update/SwayClientUpdateCtorThunk.cpp","matched","Open-BFME5 clean C++ ClientUpdateModule field init"
 "??0SysTimeClass@@QAE@XZ","","0x009E64B0","28","Code/Libraries/Source/WWVegas/WWLib/systimer.cpp","matched",""
 "??0TCreateUnitsInfo@@QAE@XZ","","0x001F2A80","10","Code/GameEngine/Source/Common/RTS/Team.cpp","matched",""
-"??0Team@@QAE@PAVTeamPrototype@@I@Z","","0x000F7790","631","Code/masm_dumps/Team_ctor.asm","matched","True body 0xF7790 631B MASM; queue 0xF7849 was INSIDE; string creating team instance"
+"??0Team@@QAE@PAVTeamPrototype@@I@Z","","0x000F7790","631","Code/GameEngine/Source/Common/RTS/Team_Constructor_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_TeamConstructor_F7790"
 "??0TeamFactory@@QAE@XZ","","0x000F2250","130","Code/GameEngine/Source/Common/RTS/TeamFactoryCtorThunk.cpp","matched","1:1 C++ thunk from certified TeamFactory vtable body"
 "??0TeamsInfo@@QAE@XZ","","0x00191460","14","Code/GameEngine/Source/GameLogic/Map/SidesList.cpp","matched",""
 "??0TeamsInfoRec@@QAE@XZ","","0x0005C5D0","13","Code/GameEngine/Source/GameLogic/Map/SidesList.cpp","matched","icf-owner=??0?$DLNodeClass@USmudge@@@@QAE@XZ"
