@@ -14128,7 +14128,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 "_$E94","","0x00C6A930","23","Code/GameEngine/Source/Common/GameEngine.cpp","matched",""
 "__alloca_probe","","0x009F6C60","61","Code/Libraries/Source/WWVegas/WWLib/StackProbeBodyThunk.cpp","matched","Open-BFME5 exact C++ ICF alias;object-symbol=?StackProbeBodyThunk@@YAXXZ"
 "__chkstk","","0x009F6C60","61","Code/Libraries/Source/WWVegas/WWLib/StackProbeBodyThunk.cpp","matched","Open-BFME5 exact C++ ICF alias;object-symbol=?StackProbeBodyThunk@@YAXXZ"
-"__CIacos","","0x009F7256","654","Code/masm_dumps/___CIacos_9F7256.asm","matched",""
+"__CIacos","","0x009F7256","654","Code/GameEngine/Source/Common/System/CIacos_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_CIacos_9F7256"
 "__CIasin","","0x009F7D86","6","Code/Libraries/Source/WWVegas/WWMath/CIasinThunk.cpp","matched","Open-BFME5 exact C++ CRT import thunk replacing MASM dump;object-symbol=___CIasin"
 "__CIpow","","0x009F6FB2","6","Code/Libraries/Source/WWVegas/WWMath/CIpowThunk.cpp","matched","Open-BFME5 exact C++ CRT import thunk replacing MASM dump;object-symbol=___CIpow"
 "__CxxThrowException@8","","0x00850600","103","Code/GameEngine/Source/Common/CxxThrowException_Thunk.cpp","matched","Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_CxxThrowException_850600"
