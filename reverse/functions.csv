@@ -5670,7 +5670,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Compute_Axis_Aligned_Extent@OBBoxClass@@QBEXPAVVector3@@@Z,,0x008DCD20,225,Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp,matched,
 ?Compute_Bounding_Box@AABTreeBuilderClass@@AAEXPAUCullNodeStruct@1@@Z,,0x0096C0D0,357,Code/Libraries/Source/WWVegas/WW3D2/aabtreebuilder.cpp,matched,
 ?Compute_CRC@VertexMaterialClass@@ABEKXZ,,0x00920EF0,141,Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp,matched,reloc-needle Open-BFME4+Grok
-?Compute_Caps@DX8Caps@@QAEXW4WW3DFormat@@ABU_D3DADAPTER_IDENTIFIER9@@PAUIDirect3D9@@@Z,,0x0091C230,2220,Code/masm_dumps/_sa3__Compute_Caps_DX8Caps__QAEXW4WW3DFormat__ABU_D3DAD_91C230.asm,matched,Exact 2220B string-anchored Open-BFME4
+?Compute_Caps@DX8Caps@@QAEXW4WW3DFormat@@ABU_D3DADAPTER_IDENTIFIER9@@PAUIDirect3D9@@@Z,,0x0091C230,2220,Code/Libraries/Source/WWVegas/WW3D2/DX8CapsComputeCapsThunk.cpp,matched,Exact string-anchored retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_DX8CapsComputeCaps_91C230
 ?Compute_Intersection@PlaneClass@@QBE_NABVVector3@@0PAM@Z,,0x001A1CF0,130,Code/Libraries/Source/WWVegas/WW3D2/visrasterizer.cpp,matched,
 ?Compute_Normal@TriClass@@QAEXXZ,,0x006CB2B0,189,Code/Libraries/Source/WWVegas/WW3D2/aabtree.cpp,matched,
 ?Compute_Plane_Score@AABTreeBuilderClass@@AAE?AUSplitChoiceStruct@1@HPAHABVAAPlaneClass@@@Z,,0x0096BEA0,529,Code/Libraries/Source/WWVegas/WW3D2/aabtreebuilder.cpp,matched,
