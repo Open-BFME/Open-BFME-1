@@ -10834,7 +10834,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?gameAcceptTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,,0x004F1430,150,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLGameSetupMenu.cpp,matched,
 ?gameTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,,0x0062CFF0,1656,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGameTooltipThunk.cpp,matched,true start 0x62CFF0 after leading int3;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_GameSpyGameTooltip_62CFF0;sha256=bf319658bec45caa6b7f8d3f2d3b022e2b6f10619d313cf485964f6e0993cd6d
 ?gameWinDrawFunc@FunctionLexicon@@QAEP6AXPAVGameWindow@@PAVWinInstanceData@@@ZW4NameKeyType@@W4TableIndex@1@@Z,,0x00105420,76,Code/GameEngine/Source/Common/System/FunctionLexicon.cpp,matched,
-?gatherDebugStats@W3DDisplay@@,,0x006F0300,4490,Code/masm_dumps/_str__gatherDebugStats_W3DDisplay__6F0300.asm,matched,
+?gatherDebugStats@W3DDisplay@@,,0x006F0300,4490,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayGatherDebugStatsThunk.cpp,matched,Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_W3DDisplayGatherDebugStats_6F0300
 ?generateEdgePairs@DiscreteCircle@@IAEXHHH@Z,,0x00069250,194,Code/GameEngine/Source/Common/discrete_circle.cpp,matched,
 ?generateGameSpyGameResultsPacket@GameSpyStagingRoom@@,,0x0085E420,233,Code/GameEngine/Source/Common/GameSpyStagingRoomGenerateGameResultsPacketThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_GameSpyStagingRoomGenerateGameResultsPacket_85E420
 ?generateIndexBuffer@WaterRenderObjClass@@IAEJHH@Z,,0x0079EEA0,237,Code/GameEngineDevice/Source/W3DDevice/GameClient/WaterRenderObjClass_generateIndexBuffer_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
