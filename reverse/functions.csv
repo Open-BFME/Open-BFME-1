@@ -7600,7 +7600,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?PopupLadderSelectInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004D7D10,80,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupLadderSelect.cpp,matched,
 ?PopupReplayInit@@YAXPAVWindowLayout@@PAX@Z,,0x004DE270,386,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplayInit_Thunk.cpp,matched,Open-BFME5 lift 386B retail MASM to standalone C++ thunk
 ?PopupReplayInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004DEFE0,93,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay.cpp,matched,resweep exact post-GWM-fix (exact-ambiguous)
-?PopupReplaySystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004DEB70,737,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay_System.asm,matched,Exact MASM: C++ only temp-slot mov-esp order at saveReplay by-value sites
+?PopupReplaySystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004DEB70,737,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay_System_Thunk.cpp,matched,object-symbol=_bfme_PopupReplaySystem_4DEB70; Open-BFME5 exact C++ lift of 737-byte ASM function
 ?PopupReplayUpdate@@YAXPAVWindowLayout@@PAX@Z,,0x004DE180,90,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay.cpp,matched,C++ local vtable shim preserves BFME virtual WindowLayout::hide dispatch
 ?PostStaticInit@Debug@@CAXXZ,0x0088AF60,0x0088AF60,841,Code/Libraries/Source/WWVegas/WWDebug/PostStaticInitThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_PostStaticInit_Debug_88AF60;true ENTRY 0x88AF60/841
 ?Power@VectorProcessorClass@@SAXPAM0MH@Z,,0x00B00190,56,Code/Libraries/Source/WWVegas/WWMath/vp.cpp,matched,
