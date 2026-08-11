@@ -7740,7 +7740,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Remove_Tail@?$DLListClass@VSortingNodeStruct@@@@QAEXXZ,,0x009394F0,41,Code/Libraries/Source/WWVegas/WW3D2/sortingrenderer.cpp,matched,
 ?Remove_Tail@?$DLListClass@VThumbnailManagerClass@@@@QAEXXZ,,0x005D3F00,41,Code/Libraries/Source/WWVegas/WW3D2/texturethumbnail.cpp,matched,
 ?Render@Animatable3DObjClass@@UAEXAAVRenderInfoClass@@@Z,,0x00982A60,86,Code/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,
-?Render@LineGroupClass@@QAEXAAVRenderInfoClass@@@Z,,0x0098ED30,4100,Code/masm_dumps/__Render_LineGroupClass__QAEXAAVRenderInfoClass___Z_98ED30.asm,matched,
+?Render@LineGroupClass@@QAEXAAVRenderInfoClass@@@Z,,0x0098ED30,4100,Code/Libraries/Source/WWVegas/WW3D2/LineGroupClassRenderThunk.cpp,matched,Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_LineGroupRender_98ED30
 ?Render@OBBoxRenderObjClass@@UAEXAAVRenderInfoClass@@@Z,,0x00957D00,263,Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp,matched,exact-ambiguous COMDAT pinned by string anchor
 ?Render@ParticleBufferClass@@UAEXAAVRenderInfoClass@@@Z,,0x0098BE50,184,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,
 ?Render@PointGroupClass@@QAEXAAVRenderInfoClass@@H@Z,,0x00917B70,662,Code/Libraries/Source/WWVegas/WW3D2/PointGroupClassRenderThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_PointGroupClassRender_917B70
