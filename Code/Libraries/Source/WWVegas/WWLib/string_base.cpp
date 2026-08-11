@@ -6,6 +6,26 @@
 #define _DLL
 #include <string.h>
 
+class DebugStringOutputShim
+{
+public:
+    virtual void pad00();
+    virtual void pad01();
+    virtual void pad02();
+    virtual void pad03();
+    virtual void pad04();
+    virtual void pad05();
+    virtual void pad06();
+    virtual void pad07();
+    virtual void pad08();
+    virtual void pad09();
+    virtual void pad10();
+    virtual void pad11();
+    virtual void pad12();
+    virtual void pad13();
+    virtual DebugStringOutputShim &write(const char *text);
+};
+
 static int stringLength(const char *s)
 {
     return (int)strlen(s);
@@ -7767,62 +7787,11 @@ bool operator!=(const StringBase<wchar_t> &left, const StringBase<wchar_t> &righ
     return left.compare(right) != 0;
 }
 
-__declspec(naked) Debug &operator<<(Debug &debug, const StringBase<char> &str)
+Debug &operator<<(Debug &debug, const StringBase<char> &str)
 {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x14
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x16
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xff
-        __emit 0x52
-        __emit 0x38
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc3
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x16
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xff
-        __emit 0x52
-        __emit 0x38
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc3
-    }
+    DebugStringOutputShim &output = *(DebugStringOutputShim *)&debug;
+    output.write(str.str());
+    return debug;
 }
 
 template <>
@@ -7857,4 +7826,3 @@ bool StringBase<char>::startsWith(const StringBase<char> &str) const
     const char *data = str.m_data ? str.m_data->data : "";
     return startsWith(data, len);
 }
-
