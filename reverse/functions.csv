@@ -34076,7 +34076,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?sortFarToNear@SimpleObjectIterator@@CAMPAVClump@1@0@Z,,0x001DDF40,15,Code/GameEngine/Source/GameLogic/Object/SimpleObjectIterator.cpp,matched,
 ?sortNearToFar@SimpleObjectIterator@@CAMPAVClump@1@0@Z,,0x001DDF20,15,Code/GameEngine/Source/GameLogic/Object/SimpleObjectIterator.cpp,matched,
 ?sortPairs@Dict@@AAEXXZ,,0x00067FA0,190,Code/GameEngine/Source/Common/Dict.cpp,matched,
-?speedUp@FiringTracker@@AAEXXZ,,0x005AA450,7882,Code/masm_dumps/_sa3__speedUp_FiringTracker__AAEXXZ_5AA450.asm,matched,Exact 7882B string-anchored Open-BFME4
+?speedUp@FiringTracker@@AAEXXZ,,0x005AA450,7882,Code/GameEngine/Source/GameLogic/Object/FiringTracker_speedUp_Thunk.cpp,matched,object-symbol=_bfme_FiringTrackerSpeedUp_5AA450; Open-BFME5 exact lift of complete 7882-byte ledger range
 ?spin@LockClass@FastCriticalSectionClass@@CIXPAI@Z,,0x006D10E0,48,Code/Libraries/Source/WWVegas/WWLib/FastCriticalSectionSpin.cpp,matched,incremental thunk @0x26FA8; standalone codegen-blocked C++ emits exact 48B retail spin loop
 ?splitSegmentAtT@BezierSegment@@QBEXMAAV1@0@Z,,0x000B6FA0,627,Code/GameEngine/Source/Common/bezier_segment.cpp,matched,
 ?start@BezFwdIterator@@QAEXXZ,,0x000B6630,374,Code/GameEngine/Source/Common/Bezier/BezFwdIterator.cpp,matched,
