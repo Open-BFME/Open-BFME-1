@@ -9214,7 +9214,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?buildSpecificAITeam@AIPlayer@@UAEXPAVTeamPrototype@@_N@Z,,0x001650F0,1335,Code/masm_dumps/_str__buildSpecificAITeam_AIPlayer_UAEXPAVTeamPrototype__N_Z_1650F0.asm,matched,
 ?buildTerrainTexture@W3DRadar@@IAEXPAVTerrainLogic@@@Z,,0x0002248F,5,Code/Libraries/Source/WWVegas/WWLib/W3DRadarBuildTerrainTextureThunk.cpp,matched,ICF-group owner converted to focused C++ thunk TU; remaining alias retains shared target
 ?buildTransformMatrix@Matrix3D@@QAEXABVVector3@@0@Z,,0x008D6BC0,401,Code/Libraries/Source/WWVegas/WWMath/matrix3d.cpp,matched,
-?buildUpgrade@AIPlayer@@QAEXABVAsciiString@@@Z,,0x001636D0,1089,Code/masm_dumps/_str__buildUpgrade_AIPlayer_QAEXABVAsciiString_Z_1636D0.asm,matched,
+?buildUpgrade@AIPlayer@@QAEXABVAsciiString@@@Z,,0x001636D0,1089,Code/GameEngine/Source/GameLogic/AI/AIPlayerBuildUpgradeThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_AIPlayerBuildUpgrade_1636D0;true ENTRY 0x1636D0/1089
 ?buttonTriggersOnMouseDown@@YA_NPAVGameWindow@@@Z,,0x004BBD20,36,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetPushButton.cpp,matched,
 ?byteAdjust@FirewallHelperClass@@AAEXPAUManglerData@@@Z,,0x0066E500,80,Code/GameEngine/Source/GameNetwork/FirewallHelper.cpp,matched,
 ?calcCRC@@YAIVAsciiString@@0@Z,,0x00450560,457,Code/GameEngine/Source/GameClient/MapUtil_calcCRC.asm,matched,MASM exact: true body 0x450560 via addMap call 0x4572D6; queue 0xAFDBD3 misplaced mid-fn. C++ blocked File vtable read+0xC/close+0x8 vs ZH +0x10/+0xC + out-of-line CRC@0x65250
