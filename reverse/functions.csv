@@ -6961,7 +6961,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?HUFF_writecode@@YAXPAUHuffEncodeContext@@PAUHUFFMemStruct@@I@Z,,0x0081F9E0,55,Code/Libraries/Source/Compression/EAC/huffencode.cpp,matched,
 ?HUFF_writeexp@@YAXPAUHuffEncodeContext@@PAUHUFFMemStruct@@I@Z,,0x0081F980,90,Code/Libraries/Source/Compression/EAC/huffencode.cpp,matched,
 ?HUFF_writenum@@YAXPAUHuffEncodeContext@@PAUHUFFMemStruct@@I@Z,,0x0081F820,348,Code/Libraries/Source/Compression/EAC/huffencode.cpp,matched,
-?HandleBuddyResponses@@YAXXZ,,0x004EE510,3624,Code/masm_dumps/HandleBuddyResponses_4EE510.asm,matched,True body 3624B @0x4EE510 (queue 0x627A03 misplaced); Buddy:*Notification string xrefs; exact MASM
+?HandleBuddyResponses@@YAXXZ,,0x004EE510,3624,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/HandleBuddyResponsesThunk.cpp,matched,True body 3624B @0x4EE510 (queue 0x627A03 misplaced); Buddy:*Notification string xrefs;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_HandleBuddyResponses_4EE510
 ?HandleCustomLadderSelection@@YAXH@Z,,0x004D3E80,141,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupHostGame.cpp,matched,
 ?HandleNumPlayersOnline@@YAXH@Z,,0x0050C130,29,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLWelcomeMenu.cpp,matched,
 ?HandleQMLadderSelection@@YAXH@Z,,0x00505300,142,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLQuickMatchMenu.cpp,matched,
