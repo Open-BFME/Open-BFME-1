@@ -33175,7 +33175,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?preloadAssets@ControlBar@@QAEXW4TimeOfDay@@@Z,,0x0026FD50,13,Code/GameEngine/Source/GameClient/ControlBarPreloadAssets.cpp,matched,Exact retail ControlBar preload thunk emitted in dedicated C++ TU.
 ?preloadRoadSegment@W3DRoadBuffer@@IAEXPAVRoadSegment@@@Z,,0x0070AD70,285,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp,matched,
 ?preloadRoadsInVertexAndIndexBuffers@W3DRoadBuffer@@IAEXXZ,,0x0070FDA0,184,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp,matched,
-?prepFile@INI@@IAEXVAsciiString@@W4INILoadType@@@Z,,0x00853610,1037,Code/masm_dumps/prepFile_INI_IAEXVAsciiString_W4INILoadType_Z_853610.asm,matched,ret 8 - two args - and it tests m_file on entry; load is 0x00853A20
+?prepFile@INI@@IAEXVAsciiString@@W4INILoadType@@@Z,,0x00853610,1037,Code/GameEngine/Source/Common/INI/INI_prepFile_Thunk.cpp,matched,object-symbol=_bfme_INIPrepFile_853610; Open-BFME5 exact lift of complete 1037-byte ledger range
 ?prepareForMP_or_Skirmish@SidesList@@QAEXXZ,,0x00352810,153,Code/GameEngine/Source/Common/SidesList_prepareForMP_or_SkirmishMethodThunk.cpp,matched,string-anchor Open-BFME4+Grok PlayerScriptsList
 ?prepareNewGame@GameLogic@@QAEXHW4GameDifficulty@@H@Z,,0x00397190,234,Code/GameEngine/Source/GameLogic/System/GameLogic_prepareNewGame_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?prependViewToList@View@@MAEPAV1@PAV1@@Z,,0x0006F0C0,12,Code/GameEngine/Source/GameClient/View.cpp,matched,
