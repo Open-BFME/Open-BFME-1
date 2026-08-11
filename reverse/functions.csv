@@ -5474,7 +5474,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Bind@UDP@@QAEHIG@Z,,0x00684900,223,Code/GameEngine/Source/GameNetwork/udp.cpp,matched,
 ?Bind@UDP@@QAEHPBDG@Z,,0x00684AD0,115,Code/GameEngine/Source/GameNetwork/udp.cpp,matched,
 ?Blend_Update@Animatable3DObjClass@@IAEXABVMatrix3D@@PAVHAnimClass@@M1MM@Z,,0x00981E80,59,Code/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,
-?Blend_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHAnimClass@@M1MM@Z,,0x009546B0,1746,Code/masm_dumps/__Blend_Update_HTreeClass__QAEXABVMatrix3D__PAVHAni_9546B0.asm,matched,
+?Blend_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHAnimClass@@M1MM@Z,,0x009546B0,1746,Code/Libraries/Source/WWVegas/WW3D2/HTreeClass_BlendUpdate_Thunk.cpp,matched,Exact retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_HTreeClassBlendUpdate_9546B0
 ?BlitBackward@?$BlitPlain@E@@UBEXPAXPBXH@Z,,0x0006B150,27,Code/Libraries/Source/WWVegas/WWLib/xsurface.cpp,matched,
 ?BuddyControlSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004ED400,1390,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/BuddyControlSystemThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from certified retail MASM body;object-symbol=_bfme_BuddyControlSystem_4ED400;MASM SHA256 017a21b18103144110f5d494b5c7a24ba5ae4148934df6ada22baeec179842d2
 ?Buffer_Needs_Data@CRCEngine@@IBE_NXZ,,0x006F6120,11,Code/Libraries/Source/WWVegas/WWLib/crc.cpp,matched,
