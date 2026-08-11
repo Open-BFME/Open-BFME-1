@@ -31397,7 +31397,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?link_object@GridCullSystemClass@@IAEXPAVCullableClass@@@Z,,0x008DECE0,189,Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp,matched,
 ?link_object@GridCullSystemClass@@IAEXPAVCullableClass@@H@Z,,0x008DDBE0,121,Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp,matched,
 ?link_object_to_list@GridCullSystemClass@@IAEXPAPAVCullableClass@@PAV2@@Z,,0x008DD8D0,42,Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp,matched,
-?load@GameSpyLoginPreferences@@UAE_NVAsciiString@@@Z,,0x00082190,977,Code/masm_dumps/GameSpyLoginPreferences_load.asm,matched,Exact retail MASM; date nick and password key literals prove ownership
+?load@GameSpyLoginPreferences@@UAE_NVAsciiString@@@Z,,0x00082190,977,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/GameSpyLoginPreferencesLoadThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from literal-anchored MASM body;object-symbol=_bfme_GameSpyLoginPreferencesLoad_82190;true ENTRY 0x82190/977
 ?load@INI@@QAEXVAsciiString@@W4INILoadType@@PAVXfer@@@Z,,0x00853A20,259,Code/GameEngine/Source/Common/INI/ini.cpp,matched,the INI entry point; two catch handlers - the INIException one rebuilds and rethrows while the catch-all unPrepFiles - and the tail inlines unPrepFile which is what puts zero in ebx
 ?load@ImageCollection@@QAEXH@Z,,0x005D23A0,600,Code/GameEngine/Source/Common/ImageCollection_loadMethodThunk.cpp,matched,string-anchor Open-BFME4+Grok Data\INI\MappedImages\TextureSize_%d
 ?load@W3DBridge@@QAE_NW4BodyDamageType@@@Z,,0x006D8C10,2836,Code/masm_dumps/_sa3__load_W3DBridge__QAE_NW4BodyDamageType___Z_6D8C10.asm,matched,true size 2836B; row claimed 2808B
