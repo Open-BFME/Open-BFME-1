@@ -33800,7 +33800,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?setLosses@GameSpyGameSlot@@QAEXH@Z,,0x004F9520,10,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLobbyMenu.cpp,matched,
 ?setLowControlBarConfig@ControlBar@@IAEXXZ,,0x0002FA6D,5,Code/GameEngine/Source/Common/RTS/ControlBarSetLowConfigThunk.cpp,matched,5-byte incremental-link ControlBar protected member thunk converted to focused C++ source
 ?setMOTD@GameSpyInfo@@UAEXABVAsciiString@@@Z,,0x00630DF0,8,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,MASM converted to clean C++
-?setMap@GameInfo@@QAEXVAsciiString@@@Z,,0x00620510,1213,Code/masm_dumps/_sa9__setMap_GameInfo__QAEXVAsciiString___Z_620510.asm,matched,Exact 1213B Open-BFME4
+?setMap@GameInfo@@QAEXVAsciiString@@@Z,,0x00620510,1213,Code/GameEngine/Source/GameNetwork/GameInfoSetMapThunk.cpp,matched,Exact 1213B Open-BFME4;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_GameInfoSetMap_620510;sha256=85fdf6691ef766603e79d7db95aff99e3bce23d7d7eb7c033fef303b5d9c8659
 ?setMap@W3DRoadBuffer@@QAEXPAVWorldHeightMap@@@Z,,0x00704890,39,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp,matched,
 ?setMapAvailability@GameSlot@@QAEX_N@Z,,0x0061EE70,16,Code/GameEngine/Source/GameNetwork/GameInfo.cpp,matched,
 ?setMapContentsMask@GameInfo@@QAEXH@Z,,0x001BD300,10,Code/GameEngine/Source/GameNetwork/GameInfo.cpp,matched,
