@@ -6189,7 +6189,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?GadgetProgressBarSetHiliteImageSmallCenter@@YAXPAVGameWindow@@PBVImage@@@Z,,0x0047A4E0,17,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?GadgetProgressBarSetProgress@@YAXPAVGameWindow@@H@Z,,0x004BBCF0,38,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetProgressBar.cpp,matched,
 ?GadgetProgressBarSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004BBCB0,42,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetProgressBar.cpp,matched,
-?GadgetPushButtonInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004BBFC0,1383,Code/masm_dumps/GadgetPushButtonInput_004BBFC0_packet355.asm,matched,Certified packet 355 exact retail db recovery
+?GadgetPushButtonInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004BBFC0,1383,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetPushButtonInputThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from certified retail MASM body;object-symbol=_bfme_GadgetPushButtonInput_4BBFC0;packet 355
 ?GadgetRadioButtonInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004BCFD0,47,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetRadioButton.cpp,matched,
 ?GadgetRadioButtonSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004BD2A0,270,Code/GameEngine/Source/GameClient/GUI/GadgetRadioButtonSystem_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?GadgetRadioGetDisabledBorderColor@@YAHPAVGameWindow@@@Z,,0x0047B4C0,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DRadioButton.cpp,matched,
