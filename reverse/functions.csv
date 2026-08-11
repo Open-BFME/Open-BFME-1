@@ -2059,7 +2059,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0RGBColorKeyframe@FXParticleSystem@@QAE@XZ,0x00029677,0x0005C700,16,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,sets channels and frame to zero
 ??0RObjIterator@@QAE@XZ,,0x003FD390,16,Code/Libraries/Source/WWVegas/WW3D2/assetmgr.cpp,matched,ICF alias of existing matched body
 ??0RTS2DScene@@QAE@XZ,,0x00712590,209,Code/GameEngineDevice/Source/W3DDevice/GameClient/RTS2DScene_Ctor_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
-??0RTS3DScene@@QAE@XZ,,0x00A1FDCD,940,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene_0RTS3DScene.asm,matched,exact 940B via MASM
+??0RTS3DScene@@QAE@XZ,,0x00A1FDCD,940,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene_RTS3DScene_ctor_Thunk.cpp,matched,exact 940B via C++;object-symbol=_bfme_RTS3DSceneCtor_A1FDCD
 ??0Radar@@QAE@XZ,,0x00107FE0,237,Code/GameEngine/Source/Common/System/RadarCtorThunk.cpp,matched,Open-BFME5 exact C++ raw Radar constructor
 ??0RadarUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002A01E0,83,Code/GameEngine/Source/GameLogic/Object/Update/RadarUpdateConstructor.cpp,matched,thunk-dump converted to clean C++ constructor body at destination 0x2A01E0
 ??0RadarUpdateModuleData@@QAE@XZ,,0x002A01C0,13,Code/GameEngine/Source/GameLogic/Object/Update/RadarUpdate.cpp,matched,exact 13B no-call ModuleData ctor (m_radarExtendTime=0); moduledata shim; replaces 5B thunk @0x1670C
