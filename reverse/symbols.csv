@@ -21886,6 +21886,7 @@ name,address,notes
 ?construct@HordeAIUpdateModuleDataBaseShim@@QAEXXZ,0x00048A3B,HordeAIUpdate factory base construct
 ?construct@LifeEventTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x00020342,LifeEventModuleTemplate copy constructor thunk used through a TU-local layout shim
 ?construct@LifeEventTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x0004B024,LifeEventModuleTemplate constructor thunk used through a TU-local layout shim
+?construct@LightningDrawModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0002A76B,LightningDrawModule constructor thunk used through a TU-local layout shim
 ?construct@LightningDrawTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0004A89F,LightningDrawModuleTemplate copy constructor thunk used through a TU-local layout shim
 ?construct@LightningDrawTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x0003B2AA,LightningDrawModuleTemplate constructor thunk used through a TU-local layout shim
 ?construct@LightningEmissionTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x0000CC39,LightningEmissionModuleTemplate constructor thunk used through a TU-local layout shim
