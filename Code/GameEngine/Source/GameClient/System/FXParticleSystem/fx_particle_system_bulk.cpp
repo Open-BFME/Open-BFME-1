@@ -366,6 +366,20 @@ public:
     void construct();
 };
 
+class SphericalEmissionVelocityTemplateFactoryShim {
+public:
+    SphericalEmissionVelocityTemplateFactoryShim()
+    {
+        ((SphericalEmissionVelocityTemplateCtorShim *)this)->construct();
+        *(volatile unsigned int *)this = 0x011110cc;
+        *(volatile unsigned int *)((unsigned char *)this + 4) = 0x011110c8;
+        *(volatile unsigned int *)((unsigned char *)this + 8) = 0x011110b4;
+    }
+
+private:
+    unsigned char m_storage[0x18];
+};
+
 class LightningEmissionTemplateCtorShim {
 public:
     void construct();
@@ -2707,104 +2721,9 @@ __declspec(naked) SphericalEmissionVelocityModuleTemplate *ConcreteModuleClass<M
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVSphericalEmissionVelocityModuleTemplate@2@XZ
-__declspec(naked) SphericalEmissionVelocityModuleTemplate *ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::createTemplate() const
+SphericalEmissionVelocityModuleTemplate *ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::createTemplate() const
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x6b
-        __emit 0xb3
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x18
-        __emit 0xe8
-        __emit 0x32
-        __emit 0x11
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x6e
-        __emit 0xb1
-        __emit 0xa3
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xcc
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0xc8
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0xb4
-        __emit 0x10
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
+    return (SphericalEmissionVelocityModuleTemplate *)new SphericalEmissionVelocityTemplateFactoryShim;
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$03$E?SPHERICAL_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERICAL_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@2@XZ
