@@ -34204,7 +34204,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?update@CDManager@@UAEXXZ,,0x00101C40,33,Code/GameEngine/Source/Common/System/CDManager.cpp,matched,slot 5 of the CDManager vtable via tools/subsystem_virtuals.py; 33 real bytes so the body proves it too
 ?update@CleanUpState@@UAE?AW4StateReturnType@@XZ,,0x006CF680,3,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeliverPayloadAIUpdate.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?update@ContinueState@@UAE?AW4StateReturnType@@XZ,,0x006CF680,3,Code/GameEngine/Source/GameLogic/AI/AIStates.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
-?update@ControlBar@@,,0x0049FC90,818,Code/masm_dumps/_str3__update_ControlBar__49FC90.asm,matched,
+?update@ControlBar@@,,0x0049FC90,818,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarUpdateThunk.cpp,matched,Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_ControlBarUpdate_49FC90
 ?update@ControlBarArrowTransition@@UAEXH@Z,,0x0059B810,39,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
 ?update@ControlBarScheme@@QAEXXZ,,0x004AD410,136,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme.cpp,matched,
 ?update@CountUpTransition@@UAEXH@Z,,0x0059C0A0,430,Code/GameEngine/Source/Common/CountUpTransition_updateMethodThunk.cpp,matched,Exact retail MASM; true body 0x59C0A0/430 via CountUp vtable@0xD0C688 slot2 (update); queue 0x59C06B was leading int3 pad
