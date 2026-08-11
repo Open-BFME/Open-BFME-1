@@ -1766,7 +1766,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0LockClass@FastCriticalSectionClass@@QAE@AAV1@@Z,,0x006D1140,20,Code/Libraries/Source/WWVegas/WWLib/wwstring.cpp,matched,
 ??0LockClass@MutexClass@@QAE@AAV1@H@Z,,0x009DB3B0,72,Code/Libraries/Source/WWVegas/WWLib/mutex.cpp,matched,
 ??0LockWeaponCreateModuleData@@QAE@XZ,,0x0024FE00,13,Code/GameEngine/Source/GameLogic/Object/Create/LockWeaponCreate.cpp,matched,exact 13B no-call ModuleData ctor; moduledata shim; replaces 5B thunk @0x283F3
-??0Locomotor@@IAE@PBVLocomotorTemplate@@@Z,,0x001B60E0,539,Code/GameEngine/Source/GameLogic/Object/Locomotor_ctor_template.asm,matched,exact 539B via MASM; true start 0x1B60E0 (queue was mid-body +0x2D/432)
+??0Locomotor@@IAE@PBVLocomotorTemplate@@@Z,,0x001B60E0,539,Code/GameEngine/Source/GameLogic/Object/Locomotor_ctor_template_Thunk.cpp,matched,object-symbol=_bfme_LocomotorTemplateCtor_1B60E0; Open-BFME5 exact C++ lift of 539-byte ASM constructor
 ??0LocomotorSetUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002D6160,53,Code/GameEngine/Source/GameLogic/Object/Upgrade/LocomotorSetUpgradeConstructor.cpp,matched,thunk-dump converted to clean C++ constructor body at destination 0x2D6160
 ??0LocomotorSetUpgradeModuleData@@QAE@XZ,,0x00129C10,90,Code/GameEngine/Source/GameLogic/AI/LocomotorSetUpgradeModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ ICF-alias module-data constructor
 ??0LocomotorStore@@QAE@XZ,,0x005D30E0,105,Code/GameEngine/Source/GameLogic/Object/Locomotor.cpp,matched,
