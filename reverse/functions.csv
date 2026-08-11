@@ -2355,7 +2355,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0TurretAIIdleScanState@@QAE@PAVTurretStateMachine@@@Z,,0x0018D9A0,53,Code/GameEngine/Source/GameLogic/AI/TurretAIIdleScanStateCtorThunk.cpp,matched,Open-BFME5 exact C++ raw TurretAIIdleScanState constructor
 ??0TurretAIIdleState@@QAE@PAVTurretStateMachine@@@Z,,0x0018D930,53,Code/GameEngine/Source/GameLogic/AI/TurretAIIdleStateCtorThunk.cpp,matched,Open-BFME5 exact C++ raw TurretAIIdleState constructor
 ??0TurretAIRecenterTurretState@@QAE@PAVTurretStateMachine@@@Z,,0x0018DA80,46,Code/GameEngine/Source/GameLogic/AI/TurretAIRecenterTurretStateCtorThunk.cpp,matched,Open-BFME5 exact C++ raw TurretAIRecenterTurretState constructor
-??0TurretStateMachine@@QAE@PAVTurretAI@@PAVObject@@VAsciiString@@@Z,,0x0018DB84,658,Code/GameEngine/Source/GameLogic/AI/TurretAI_TurretStateMachine.asm,matched,exact 658B via MASM
+??0TurretStateMachine@@QAE@PAVTurretAI@@PAVObject@@VAsciiString@@@Z,,0x0018DB84,658,Code/GameEngine/Source/GameLogic/AI/TurretAI_TurretStateMachine_Thunk.cpp,matched,object-symbol=_bfme_TurretStateMachineCtor_18DB84; Open-BFME5 exact C++ lift of 658-byte ASM constructor
 ??0UDP@@QAE@XZ,,0x00684530,38,Code/GameEngine/Source/GameNetwork/udp.cpp,matched,
 ??0UIMessage@InGameUI@@QAE@XZ,,0x00061D90,9,Code/GameEngine/Source/GameClient/InGameUI.cpp,matched,ICF alias of existing matched body
 ??0UVBufferClass@@QAE@ABV0@@Z,,0x0092BAD0,33,Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp,matched,
