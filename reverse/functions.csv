@@ -5911,7 +5911,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?ExceptionFilter@DebugExceptionhandler@@SGJPAU_EXCEPTION_POINTERS@@@Z,,0x0088E5F0,728,Code/Libraries/Source/WWVegas/WWDebug/DebugExceptionhandlerExceptionFilterThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from symbol-pinned MASM body;object-symbol=_bfme_DebugExceptionhandlerExceptionFilter_88E5F0
 ?ExecCommand@Debug@@AAEXPBD0@Z,,0x0088ABA0,788,Code/Libraries/Source/WWVegas/WWDebug/DebugExecCommandThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_DebugExecCommand_88ABA0
 ?Execute@DebugIOCon@@UAEXAAVDebug@@PBD_NIPBQBD@Z,,0x00891200,239,Code/Libraries/Source/WWVegas/WWDebug/DebugIOCon_Execute_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
-?Execute@DebugIOFlat@@UAEXAAVDebug@@PBD_NIPBQBD@Z,,0x00890810,1460,Code/masm_dumps/_str__Execute_DebugIOFlat_UAEXAAVDebug_PBD_NIPBQBD_Z_890810.asm,matched,true size 1460B; row claimed 1250B
+?Execute@DebugIOFlat@@UAEXAAVDebug@@PBD_NIPBQBD@Z,,0x00890810,1460,Code/Libraries/Source/WWVegas/WWDebug/DebugIOFlatExecuteThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_DebugIOFlatExecute_890810;true ENTRY 0x890810/1460
 ?Execute@DebugIONet@@UAEXAAVDebug@@PBD_NIPBQBD@Z,,0x0088FCE0,283,Code/Libraries/Source/WWVegas/WWDebug/DebugIONet_Execute_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?Exists@RegistryClass@@SA_NPBD@Z,,0x009DC1C0,50,Code/Libraries/Source/WWVegas/WWLib/registry.cpp,matched,
 ?ExpandMagic@DebugIOFlat@@CAXPBD0PAD@Z,,0x008900A0,701,Code/Libraries/Source/WWVegas/WWDebug/DebugIOFlat_ExpandMagic.asm,matched,
