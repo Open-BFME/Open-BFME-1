@@ -11407,7 +11407,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getLocalAddr@UDP@@QAEHAAIAAG@Z,,0x006845C0,25,Code/GameEngine/Source/GameNetwork/udp.cpp,matched,
 ?getLocalLadders@LadderList@@QAEPBV?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@XZ,,0x0062A160,3,Code/GameEngine/Source/GameNetwork/GameSpy/LadderDefs.cpp,matched,Ghidra-bound unique accessor
 ?getLocalPlayerID@ConnectionManager@@QAEIXZ,,0x00663740,7,Code/GameEngine/Source/GameNetwork/ConnectionManager.cpp,matched,thunk-dump converted to clean C++; ConnectionManager layout TU-shimmed (reference/shims/connectionmanager)
-?getLocalProfileID@GameSpyBuddyMessageQueue@@UAEHXZ,,0x004EBE30,1771,Code/masm_dumps/_sa14__getLocalProfileID_GameSpyBuddyMessageQueue__UAEHXZ_4EBE30.asm,matched,sa14 Open-BFME4+Grok Loading
+?getLocalProfileID@GameSpyBuddyMessageQueue@@UAEHXZ,,0x004EBE30,1771,Code/GameEngine/Source/GameNetwork/GameSpyBuddyMessageQueueGetLocalProfileIDThunk.cpp,matched,sa14 Open-BFME4+Grok Loading;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_GameSpyBuddyMessageQueueGetLocalProfileID_4EBE30
 ?getLocale@GameSpyMiscPreferences@@QAEHXZ,,0x000A99A0,33,Code/GameEngine/Source/Common/UserPreferences.cpp,matched,Open-BFME5 exact C++ raw getter; locale preference key and zero default preserved
 ?getMOTD@GameSpyInfo@@UAEABVAsciiString@@XZ,,0x006306B0,4,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,Vtable-bound GameSpyInfo accessor
 ?getManglerLocation@GameSpyConfig@@UAE_NHAAVAsciiString@@AAG@Z,,0x00628580,68,Code/GameEngine/Source/GameNetwork/GameSpy/GSConfig.cpp,matched,
