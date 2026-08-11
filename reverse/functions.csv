@@ -7602,7 +7602,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?PopupReplayInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004DEFE0,93,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay.cpp,matched,resweep exact post-GWM-fix (exact-ambiguous)
 ?PopupReplaySystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004DEB70,737,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay_System.asm,matched,Exact MASM: C++ only temp-slot mov-esp order at saveReplay by-value sites
 ?PopupReplayUpdate@@YAXPAVWindowLayout@@PAX@Z,,0x004DE180,90,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay.cpp,matched,C++ local vtable shim preserves BFME virtual WindowLayout::hide dispatch
-?PostStaticInit@Debug@@CAXXZ,0x0088AF60,0x0088AF60,841,Code/masm_dumps/__PostStaticInit_Debug__CAXXZ_88AF60.asm,matched,
+?PostStaticInit@Debug@@CAXXZ,0x0088AF60,0x0088AF60,841,Code/Libraries/Source/WWVegas/WWDebug/PostStaticInitThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_PostStaticInit_Debug_88AF60;true ENTRY 0x88AF60/841
 ?Power@VectorProcessorClass@@SAXPAM0MH@Z,,0x00B00190,56,Code/Libraries/Source/WWVegas/WWMath/vp.cpp,matched,
 ?PreStaticInit@Debug@@CAPAV1@XZ,0x00889500,0x00889500,114,Code/GameEngine/Source/Common/debug.cpp,matched,Debug PreStaticInit singleton allocator
 ?Pre_Render_Update@LightEnvironmentClass@@QAEXABVMatrix3D@@@Z,,0x0094BB40,245,Code/Libraries/Source/WWVegas/WW3D2/LightEnvironmentClass_Pre_Render_Update_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
