@@ -5663,7 +5663,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Collide@CollisionMath@@SA_NABVOBBoxClass@@ABVVector3@@ABVTriClass@@1PAUCastResultStruct@@@Z,,0x008E7180,4528,Code/Libraries/Source/WWVegas/WWMath/colmathobbtri.cpp,matched,ICF of ?Collide@CollisionMath@@SA_NABVOBBoxClass@@ABVVector3@@ABVTriClass@@1PAUCastResu Open-BFME4+Grok
 ?Combine_Color_And_Alpha@ParticleBufferClass@@IAEXXZ,,0x00984CB0,357,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,
 ?Combo_Update@Animatable3DObjClass@@IAEXABVMatrix3D@@PAVHAnimComboClass@@@Z,,0x00981EC0,39,Code/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,
-?Combo_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHAnimComboClass@@@Z,,0x00954D90,1753,Code/masm_dumps/__Combo_Update_HTreeClass__QAEXABVMatrix3D__PAVHAni_954D90.asm,matched,
+?Combo_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHAnimComboClass@@@Z,,0x00954D90,1753,Code/Libraries/Source/WWVegas/WW3D2/HTreeClass_ComboUpdate_Thunk.cpp,matched,Exact retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_HTreeClassComboUpdate_954D90
 ?CommandRequiresAck@@YAHPAVNetCommandMsg@@@Z,,0x00682DB0,116,Code/GameEngine/Source/GameNetwork/NetworkUtil_CommandRequiresAck.cpp,matched,
 ?CommandRequiresDirectSend@@YAHPAVNetCommandMsg@@@Z,,0x00682E80,86,Code/GameEngine/Source/GameNetwork/NetworkUtil_CommandRequiresAck.cpp,matched,
 ?Compare_No_Case@StringClass@@QBEHPBD@Z,,0x0093CB20,20,Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp,matched,
