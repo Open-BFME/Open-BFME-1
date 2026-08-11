@@ -9034,7 +9034,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?assign@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAEAAV12@PBD0@Z,,0x000A5810,152,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,MASM converted to clean C++
 ?assign@?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@QAEAAV12@PBG0@Z,,0x004D5600,174,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupHostGame.cpp,matched,
 ?assign@?$char_traits@D@_STL@@SAXAADABD@Z,,0x000A30F0,13,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,
-?assignDefaultGadgetLook@GameWindowManager@@UAEXPAVGameWindow@@PAVGameFont@@_N@Z,,0x004800FC,9955,Code/masm_dumps/_assignDefaultGadgetLook_GameWindowManager__UAEXPA.asm,matched,true size 9955B; previous row claimed 7853B
+?assignDefaultGadgetLook@GameWindowManager@@UAEXPAVGameWindow@@PAVGameFont@@_N@Z,,0x004800FC,9955,Code/GameEngine/Source/GameClient/GUI/GameWindowManager_assignDefaultGadgetLook_Thunk.cpp,matched,object-symbol=_bfme_GameWindowManagerAssignDefaultGadgetLook_4800FC; Open-BFME5 exact lift of complete 9955-byte ledger range; previous row claimed 7853B
 ?asyncGethostbynameThreadFunc@@YGKPAX@Z,,0x0062E6D0,34,Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cpp,matched,
 ?atEndOfChunk@DataChunkInput@@QAE_NXZ,,0x00102760,19,Code/GameEngine/Source/Common/System/DataChunk.cpp,matched,
 ?atEndOfFile@DataChunkInput@@QAE_NXZ,,0x00102320,13,Code/GameEngine/Source/Common/System/DataChunk.cpp,matched,
