@@ -32969,7 +32969,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?parseImageOffset@@YA_NPADPAVWinInstanceData@@0PAX@Z,,0x004846A0,67,Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp,matched,
 ?parseImagePart@ControlBarSchemeManager@@SAXPAVINI@@PAX1PBX@Z,,0x004AE920,172,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarSchemeManager_parseImagePart_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?parseImagePart@ShellMenuSchemeManager@@SAXPAVINI@@PAX1PBX@Z,,0x00581480,146,Code/GameEngine/Source/Common/ShellMenuSchemeManager_parseImagePart_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
-?parseImageSequence@Anim2DTemplate@@KAXPAVINI@@PAX1PBX@Z,,0x005BB150,381,Code/GameEngine/Source/GameClient/System/Anim2DTemplate_parse_walls.asm,matched,
+?parseImageSequence@Anim2DTemplate@@KAXPAVINI@@PAX1PBX@Z,,0x005BB150,381,Code/GameEngine/Source/GameClient/System/Anim2DTemplate_parseImageSequence_Thunk.cpp,matched,exact 381B via C++;object-symbol=_bfme_Anim2DTemplateParseImageSequence_5BB150
 ?parseImageStatus@Image@@SAXPAVINI@@PAX1PBX@Z,,0x005D2000,51,Code/GameEngine/Source/GameClient/System/Image.cpp,matched,
 ?parseInGameUIDefinition@INI@@SAXPAV1@@Z,,0x0043AAA0,36,Code/GameEngine/Source/GameClient/INIParseInGameUIDefinitionThunk.cpp,matched,Open-BFME5 clean C++ InGameUI null-check virtual 0x158 then applyDefinition
 ?parseIndexList@INI@@SAXPAV1@PAX1PBX@Z,,0x00851050,91,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,retail INI parser TU: getNextToken inlined
