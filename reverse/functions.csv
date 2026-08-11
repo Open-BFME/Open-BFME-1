@@ -33164,7 +33164,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?postDraw@InGameUI@@UAEXXZ,,0x004469F0,3333,Code/GameEngine/Source/GameClient/InGameUIPostDrawThunk.cpp,matched,Exact retail postDraw format anchors and timer semantics;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_InGameUIPostDraw_4469F0
 ?postMul@Matrix3D@@QAEXABV1@@Z,,0x001E0E80,338,Code/Libraries/Source/WWVegas/WW3D2/pivot.cpp,matched,
 ?postProcessLoad@W3DDisplayStringManager@@UAEXXZ,,0x006F5890,368,Code/GameEngine/Source/Common/W3DDisplayStringManager_postProcessLoadMethodThunk.cpp,matched,Exact 368B Open-BFME4
-?postProcessLoad@WeaponStore@@UAEXXZ,,0x0023E5F0,1017,Code/masm_dumps/_sa14__postProcessLoad_WeaponStore__UAEXXZ_23E5F0.asm,matched,sa14 Open-BFME4+Grok NoSound
+?postProcessLoad@WeaponStore@@UAEXXZ,,0x0023E5F0,1017,Code/GameEngine/Source/GameLogic/WeaponStore_postProcessLoad_Thunk.cpp,matched,object-symbol=_bfme_WeaponStorePostProcessLoad_23E5F0; Open-BFME5 exact lift of complete 1017-byte ledger range
 ?post_process_fog@MeshModelClass@@IAEXXZ,,0x0096EE60,929,Code/Libraries/Source/WWVegas/WW3D2/MeshModelPostProcessFogThunk.cpp,matched,Exact string-anchored Open-BFME4+Grok;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_MeshModelPostProcessFog_96EE60;sha256=2caf0d3d49d87067a7ba0e99fafe8f2d46df744985727f6d8e10409e82f51a0e
 ?preAuthCDCallback@@YAXHHHPADPAX@Z,,0x00651810,27,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PersistentStorageThread.cpp,matched,
 ?preMul@Matrix3D@@QAEXABV1@@Z,,0x007598C0,302,Code/Libraries/Source/WWVegas/WW3D2/htree.cpp,matched,
