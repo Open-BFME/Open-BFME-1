@@ -10194,7 +10194,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?findObjectCreationList@ObjectCreationListStore@@QBEPBVObjectCreationList@@PBD@Z,,0x001D7440,89,Code/GameEngine/Source/GameLogic/Object/ObjectCreationList.cpp,matched,
 ?findObjectToRepair@@YAPAVObject@@PAV1@@Z,,0x002B82D0,505,Code/GameEngine/Source/Common/findObjectToRepair_Thunk.cpp,matched,Certified packet 85 direct repair-search callee SHA256 a83dc6d663009226cf652695902d3f2680cb589604e1c0da563659d23654609e
 ?findPairByKey@Dict@@ABEPAUDictPair@1@W4NameKeyType@@@Z,,0x00067D90,75,Code/GameEngine/Source/Common/Dict.cpp,matched,
-?findPath@Pathfinder@@EAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBUCoord3D@@2@Z,,0x003F2F60,1016,Code/masm_dumps/findPath_Pathfinder_003F2F60_packet170.asm,matched,Certified packet 170 reviewed Ghidra entry vtable ownership diagnostics and internalFindPath call; SHA256 4cb112faf57f32084f6377380a5490b0232d9f2880632d4b3f03cbf3d3275973
+?findPath@Pathfinder@@EAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBUCoord3D@@2@Z,,0x003F2F60,1016,Code/GameEngine/Source/GameLogic/AI/PathfinderFindPathThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from certified packet 170 exact MASM body;object-symbol=_bfme_PathfinderFindPath_3F2F60;true ENTRY 0x3F2F60/1016
 ?findPlayerTemplate@PlayerTemplateStore@@QBEPBVPlayerTemplate@@W4NameKeyType@@@Z,,0x000E0F30,996,Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp,matched,
 ?findPlayerWithNameKey@PlayerList@@QAEPAVPlayer@@W4NameKeyType@@@Z,,0x000DF260,52,Code/GameEngine/Source/Common/RTS/PlayerList.cpp,matched,
 ?findPreviousCondition@OrCondition@@QAEPAVCondition@@PAV2@@Z,,0x0034FD70,34,Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp,matched,
