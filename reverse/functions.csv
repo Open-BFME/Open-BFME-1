@@ -2448,7 +2448,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0WaterTransparencySetting@@QAE@XZ,,0x000C3730,139,Code/GameEngine/Source/Common/INI/WaterTransparencySettingCtorThunk.cpp,matched,Open-BFME5 exact 139B default constructor
 ??0WaypointMap@@QAE@ABV0@@Z,,0x000C1170,27,Code/GameEngine/Source/Common/INI/INIMapCache.cpp,matched,
 ??0WaypointMap@@QAE@XZ,,0x0019EA30,54,Code/GameEngine/Source/Common/INI/INIMapCache.cpp,matched,
-??0Weapon@@QAE@XZ,,0x001E74B0,933,Code/masm_dumps/_sa3___0Weapon__QAE_XZ_1E74B0.asm,matched,Exact 933B string-anchored Open-BFME4
+??0Weapon@@QAE@XZ,,0x001E74B0,933,Code/GameEngine/Source/GameLogic/Object/WeaponCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_WeaponCtor_1E74B0
 ??0WeaponBarrelInfo@ModelConditionInfo@@QAE@ABU01@@Z,,0x0075E480,97,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,matched,
 ??0WeaponBarrelInfo@ModelConditionInfo@@QAE@XZ,,0x0075F040,54,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,matched,
 ??0WeaponBonusUpdateModuleData@@QAE@XZ,,0x00123620,82,Code/GameEngine/Source/GameLogic/Object/Behavior/WeaponBonusUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of 82B ICF constructor
