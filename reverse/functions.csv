@@ -9750,7 +9750,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?deleteRayEffect@RayEffectSystem@@QAEXPBVDrawable@@@Z,,0x005D35A0,56,Code/GameEngine/Source/GameClient/ray_effect.cpp,matched,
 ?deleteShadowVolume@W3DVolumetricShadow@@IAEXH@Z,,0x007BAFA0,142,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,Exact 142B clean C++ deleteShadowVolume; TU-local BFME 0x30 layout shim; MASM removed
 ?deleteTriggers@PolygonTrigger@@,,0x0074A680,139,Code/GameEngine/Source/GameLogic/Map/PolygonTriggerDeleteTriggersThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_PolygonTriggerDeleteTriggers_74A680
-?deleteTriggers@PolygonTrigger@@QAEXXZ,,0x00748860,1328,Code/masm_dumps/_sa3__deleteTriggers_PolygonTrigger__QAEXXZ_748860.asm,matched,Exact 1328B string-anchored Open-BFME4
+?deleteTriggers@PolygonTrigger@@QAEXXZ,,0x00748860,1328,Code/GameEngine/Source/GameLogic/Map/PolygonTriggerDeleteTriggersMethodThunk.cpp,matched,Exact 1328B string-anchored Open-BFME4;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_PolygonTriggerDeleteTriggersMethod_748860;sha256=f3d33da565b02d9e01381d5ab6c53d042907ee53fca1e63a6c0fa4c2e16be408
 ?deposit@Money@@QAEXI_N@Z,,0x00027D6D,5,Code/Libraries/Source/WWVegas/WWLib/MoneyObjectThunks.cpp,matched,Focused C++ thunk for Money::deposit
 ?depth@IRegion3D@@QBEHXZ,0x00040E53,0x007E6F20,7,Code/Libraries/Source/WWVegas/WWMath/region.cpp,matched,returns integer depth
 ?depth@Region3D@@QBEMXZ,0x0001DB24,0x007E6E30,7,Code/Libraries/Source/WWVegas/WWMath/region.cpp,matched,returns float depth
