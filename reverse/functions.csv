@@ -11878,7 +11878,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?handleObjectsOnBridgeOnDie@BridgeBehavior@@IAEXXZ,,0x001F4F40,712,Code/GameEngine/Source/Common/BridgeBehavior_handleObjectsOnBridgeOnDieMethodThunk.cpp,matched,Certified packet 49; reviewed entry boundary call-chain and SHA-256 evidence
 ?handleQMMatch@PeerThreadClass@@QAEXXZ,,0x00649180,653,Code/GameEngine/Source/Common/PeerThreadClass_handleQMMatchMethodThunk.cpp,matched,Exact 653B string-anchored Open-BFME4
 ?handleRequestGameInfo@LANAPI@@IAEXPAULANMessage@@I@Z,,0x0068B380,254,Code/GameEngine/Source/GameNetwork/LANAPI_handleRequestGameInfo_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
-?handleRequestJoin@LANAPI@@IAEXPAULANMessage@@I@Z,,0x005A565D,1119,Code/GameEngine/Source/GameNetwork/LANAPIhandlers_handleRequestJoin.asm,matched,exact 1119B via MASM
+?handleRequestJoin@LANAPI@@IAEXPAULANMessage@@I@Z,,0x005A565D,1119,Code/GameEngine/Source/GameNetwork/LANAPIhandlers_handleRequestJoin_Thunk.cpp,matched,exact 1119B via C++;object-symbol=_bfme_LANAPIHandleRequestJoin_5A565D
 ?handleRequestLocations@LANAPI@@IAEXPAULANMessage@@I@Z,,0x0068AEF0,600,Code/GameEngine/Source/GameNetwork/LANAPIhandleRequestLocationsThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from sealed certified MASM packet;object-symbol=_bfme_LANAPIHandleRequestLocations_68AEF0
 ?handleWeaponFireFX@Drawable@@QAE_NW4WeaponSlotType@@HPBVFXList@@MMMPBUCoord3D@@M@Z,,0x00411730,23,Code/GameEngine/Source/GameClient/Drawable.cpp,matched,
 ?hasAnyFreeBlocks@MemoryPoolBlob@@QAE_NXZ,,0x003CB9E0,11,Code/GameEngine/Source/Common/System/GameMemory.cpp,matched,
