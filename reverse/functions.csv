@@ -7148,7 +7148,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?InitRandom@@YAXI@Z,,0x00096BA0,188,Code/GameEngine/Source/Common/System/random_value.cpp,matched,
 ?InitRandom@@YAXXZ,,0x00096A80,227,Code/GameEngine/Source/Common/System/random_value.cpp,matched,
 ?Init_AMD_Processor_Type@CPUDetectClass@@CAXXZ,,0x009DE1C0,164,Code/Libraries/Source/WWVegas/WWLib/cpudetect.cpp,matched,
-?Init_Alternate@MeshMatDescClass@@QAEXAAV1@0@Z,,0x00929410,1047,Code/masm_dumps/_leaf__Init_Alternate_MeshMatDescClass__QAEXAA_929410.asm,matched,Exact 1047B present-unmatched leaf Open-BFME4
+?Init_Alternate@MeshMatDescClass@@QAEXAAV1@0@Z,,0x00929410,1047,Code/Libraries/Source/WWVegas/WW3D2/MeshMatDescInitAlternateThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact leaf MASM body;object-symbol=_bfme_MeshMatDescInitAlternate_929410
 ?Init_CPUID_Instruction@CPUDetectClass@@CAXXZ,,0x009DE370,65,Code/Libraries/Source/WWVegas/WWLib/cpudetect.cpp,matched,
 ?Init_Cache@CPUDetectClass@@CAXXZ,,0x009DECE0,300,Code/Libraries/Source/WWVegas/WWLib/cpudetect.cpp,matched,
 ?Init_Compact_Log@CPUDetectClass@@CAXXZ,,0x009DFD60,477,Code/Libraries/Source/WWVegas/WWLib/cpudetect.cpp,matched,
