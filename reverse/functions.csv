@@ -9612,7 +9612,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?createNewMessageQueue@GameSpyPeerMessageQueueInterface@@SAPAV1@XZ,,0x0064E620,86,Code/GameEngine/Source/Common/GameSpyPeerMessageQueueInterface_createNewMessageQueue_Thunk.cpp,matched,Open-BFME5 clean C++ conversion of __emit thunk
 ?createNewPingerInterface@PingerInterface@@SAPAV1@XZ,,0x0065C1F0,89,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PingThread.cpp,matched,
 ?createRayEffectByTemplate@W3DGameClient@@UAEXPBUCoord3D@@0PBVThingTemplate@@@Z,,0x006FBC00,129,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DGameClient.cpp,matched,
-?createReplayControl@InGameUI@@IAEXXZ,,0x00440B40,1091,Code/masm_dumps/_sa3__createReplayControl_InGameUI__IAEXXZ_440B40.asm,matched,Exact 1091B string-anchored Open-BFME4
+?createReplayControl@InGameUI@@IAEXXZ,,0x00440B40,1091,Code/GameEngine/Source/GameClient/InGameUICreateReplayControlThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_InGameUICreateReplayControl_440B40;true ENTRY 0x440B40/1091
 ?createRoomCallback@@YAXPAXHW4PEERJoinResult@@W4RoomType@@0@Z,,0x00642CD0,15,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread.cpp,matched,
 ?createScaffolding@BridgeBehavior@@UAEXXZ,,0x001F3F10,2122,Code/masm_dumps/BridgeBehavior_createScaffolding.asm,matched,Exact 2122B @ 0x1F3F10; queue 0x1F3E2F/2391 misplaced (int3+helpers); true SEH body m_scaffoldPresent@+0x45d; C++ 2391B shape-divergent
 ?createSlaveSystem@ParticleSystemTemplate@FXParticleSystem@@QBE?AV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@_N@Z,0x0003A373,0x5cb220,246,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
