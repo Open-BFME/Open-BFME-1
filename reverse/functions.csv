@@ -31439,7 +31439,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?log10@@YAMM@Z,,0x00799CF0,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DControlBar.cpp,matched,
 ?log@@YAMM@Z,,0x0045B380,11,Code/GameEngine/Source/Common/System/statistics.cpp,matched,
 ?logN@@YAMMM@Z,,0x00799F70,27,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DControlBar.cpp,matched,
-?logicMessageDispatcher@GameLogic@@,,0x00397540,11543,Code/masm_dumps/_str2__logicMessageDispatcher_GameLogic__397540.asm,matched,
+?logicMessageDispatcher@GameLogic@@,,0x00397540,11543,Code/GameEngine/Source/GameLogic/GameLogic_logicMessageDispatcher_Thunk.cpp,matched,object-symbol=_bfme_GameLogicLogicMessageDispatcher_397540; Open-BFME5 exact lift of complete 11543-byte ledger range
 ?loopNext@LListNode@@QAEPAV1@XZ,,0x00105990,27,Code/GameEngine/Source/Common/System/List.cpp,matched,
 ?loopPrev@LListNode@@QAEPAV1@XZ,,0x001059C0,29,Code/GameEngine/Source/Common/System/List.cpp,matched,
 ?lower_bound@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@2@ABG@Z,,0x0037B5C0,45,Code/GameEngine/Source/GameNetwork/ConnectionManager.cpp,matched,
