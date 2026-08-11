@@ -34069,7 +34069,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?skip@ReverseSoundTransition@@UAEXXZ,,0x0059EF40,15,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
 ?skip@ScaleUpTransition@@UAEXXZ,,0x0059EAF0,8,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,tiny-locate
 ?skip@ScoreScaleUpTransition@@UAEXXZ,,0x0059EAF0,8,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,tiny-locate
-?snapClosestGoalPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z,,0x003F89A0,1007,Code/GameEngine/Source/GameLogic/AI/AIPathfind_snapClosestGoalPosition.asm,matched,true size 1007B; previous row claimed 788B
+?snapClosestGoalPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z,,0x003F89A0,1007,Code/GameEngine/Source/GameLogic/AI/AIPathfind_snapClosestGoalPosition_Thunk.cpp,matched,exact 1007B via C++;object-symbol=_bfme_PathfinderSnapClosestGoalPosition_3F89A0
 ?sort@?$list@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@V?$allocator@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@2@@_STL@@QAEXXZ,,0x0037FCB0,15,Code/Libraries/Source/WWVegas/WW3D2/w3d_dep.cpp,matched,icf-owner=?unique@?$list@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@V?$allocator@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@2@@_STL@@QAEXXZ
 ?sort@SimpleObjectIterator@@QAEXW4IterOrderType@@@Z,,0x001DDDC0,282,Code/GameEngine/Source/GameLogic/Object/SimpleObjectIterator.cpp,matched,
 ?sortByBuddies@@YAX_N@Z,,0x0062E590,32,Code/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils.cpp,matched,
