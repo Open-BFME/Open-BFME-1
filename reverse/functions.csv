@@ -34212,7 +34212,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?update@DockUpdate@@UAE?AW4UpdateSleepTime@@XZ,,0x002CB0A0,323,Code/GameEngine/Source/Common/DockUpdate_update_Thunk.cpp,matched,string-anchor Open-BFME4+Grok DockWaiting
 ?update@DockingState@@UAE?AW4StateReturnType@@XZ,,0x006CF680,3,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?update@DownloadManager@@QAEJXZ,,0x00626950,7,Code/GameEngine/Source/GameNetwork/DownloadManager.cpp,matched,Unique padded virtual tail call
-?update@DozerActionDoActionState@@UAE?AW4StateReturnType@@XZ,,0x002B8FF0,1936,Code/masm_dumps/_str__update_DozerActionDoActionState_UAE_AW4StateReturnType_2B8FF0.asm,matched,
+?update@DozerActionDoActionState@@UAE?AW4StateReturnType@@XZ,,0x002B8FF0,1936,Code/GameEngine/Source/GameLogic/Object/Update/DozerActionDoActionStateUpdateThunk.cpp,matched,Exact string-anchored retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_DozerActionDoActionStateUpdate_2B8FF0
 ?update@DozerActionPickActionPosState@@UAE?AW4StateReturnType@@XZ,,0x002B8E10,372,Code/GameEngine/Source/Common/DozerActionPickActionPosState_update_Thunk.cpp,matched,MASM exact 372B @ 0x2B8E10; vtbl slot6 thunk 0x2CE8F; queue 0x2CE79D was pad
 ?update@FadeTransition@@UAEXH@Z,,0x0059C370,118,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
 ?update@FireSpreadUpdate@@UAE?AW4UpdateSleepTime@@XZ,,0x00292900,386,Code/GameEngine/Source/Common/FireSpreadUpdate_update_Thunk.cpp,matched,Certified packet 72 vtable constructor string-xref and call-graph identity; exact retail SHA-256 6a71c5e83d7ca45c374732cdce369ea3e446c94b4af94efcda26c8c054c6c29d
