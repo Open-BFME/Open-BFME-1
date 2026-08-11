@@ -2080,7 +2080,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0RandomTextureMapperClass@@QAE@ABVINIClass@@PBDI@Z,,0x00965CE0,220,Code/Libraries/Source/WWVegas/WW3D2/mapper.cpp,matched,
 ??0RandomTextureMapperClass@@QAE@MABVVector2@@I@Z,,0x00965C00,186,Code/Libraries/Source/WWVegas/WW3D2/mapper.cpp,matched,
 ??0RankInfoStore@@QAE@XZ,,0x00076EC0,29,Code/GameEngine/Source/Common/GameEngine.cpp,matched,
-??0RankPoints@@,,0x004D9DF0,1394,Code/masm_dumps/_sa9___0RankPoints___4D9DF0.asm,matched,Exact 1394B Open-BFME4
+??0RankPoints@@,,0x004D9DF0,1394,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/RankPointsCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_RankPointsCtor_4D9DF0
 ??0RawFileClass@@QAE@PBD@Z,,0x009E6A20,144,Code/Libraries/Source/WWVegas/WWLib/rawfile.cpp,matched,
 ??0RawFileClass@@QAE@XZ,,0x009E6990,108,Code/Libraries/Source/WWVegas/WWLib/rawfile.cpp,matched,installs 0x01145548 whose slots are 14 matched @RawFileClass@@ methods incl ??_GRawFileClass@@UAEPAXI@Z - was recorded as ??0RAMFile@@QAE@XZ which belongs to the File subclass at 0x009D1980
 ??0RayCollisionTestClass@@QAE@ABV0@ABVMatrix3D@@@Z,,0x0092C8B0,60,Code/Libraries/Source/WWVegas/WW3D2/mesh.cpp,matched,
