@@ -5956,7 +5956,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Flush@Base64Pipe@@UAEHXZ,,0x009E7B20,87,Code/Libraries/Source/WWVegas/WWLib/b64pipe.cpp,matched,
 ?Flush@OutputStream@DebugIOFlat@@QAEXXZ,,0x0088FFE0,183,Code/Libraries/Source/WWVegas/WWDebug/debug_io_flat.cpp,matched,
 ?Flush@Pipe@@UAEHXZ,,0x009E7970,17,Code/Libraries/Source/WWVegas/WWLib/pipe.cpp,matched,
-?Flush@RTS3DScene@@QAEXAAVRenderInfoClass@@@Z,,0x007158F0,511,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene_Flush.asm,matched,exact 511B via MASM; drift 0x7159CB was mid-body
+?Flush@RTS3DScene@@QAEXAAVRenderInfoClass@@@Z,,0x007158F0,511,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene_Flush_Thunk.cpp,matched,object-symbol=_bfme_RTS3DSceneFlush_7158F0; Open-BFME5 exact C++ lift of 511-byte ASM function
 ?Flush@SortingRendererClass@@SAXXZ,,0x0093A810,2531,Code/Libraries/Source/WWVegas/WW3D2/sortingrenderer_Flush.asm,matched,exact 2531B via MASM
 ?Format@StringClass@@QAAHPBDZZ,,0x009DBB90,151,Code/Libraries/Source/WWVegas/WWLib/wwstring.cpp,matched,
 ?Format@WideStringClass@@QAAHPBGZZ,,0x009E7580,88,Code/Libraries/Source/WWVegas/WWLib/widestring.cpp,matched,
