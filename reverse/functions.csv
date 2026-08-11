@@ -3058,7 +3058,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??1MonsterDockUpdateModuleData@@UAE@XZ,,0x002CDD90,67,Code/GameEngine/Source/GameLogic/Object/Update/MonsterDockUpdateModuleDataDestructorThunk.cpp,matched,Open-BFME5 clean C++ member-then-base SEH ModuleData dtor
 ??1MotionChannelClass@@QAE@XZ,,0x00978140,24,Code/Libraries/Source/WWVegas/WW3D2/motchan.cpp,matched,
 ??1MultiListObjectClass@@UAE@XZ,,0x009DC190,37,Code/Libraries/Source/WWVegas/WWLib/multilist.cpp,matched,
-??1MultiPlayerLoadScreen@@,,0x0052C220,844,Code/masm_dumps/_cache___1MultiPlayerLoadScreen___52C220.asm,matched,cached-obj needle Open-BFME4+Grok
+??1MultiPlayerLoadScreen@@,,0x0052C220,844,Code/GameEngine/Source/GameClient/GUI/MultiPlayerLoadScreenDestructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_MultiPlayerLoadScreenDtor_52C220
 ??1MultiplayerSettings@@UAE@XZ,,0x0008F0E0,102,Code/GameEngine/Source/Common/MultiplayerSettingsDestructorThunk.cpp,matched,MASM exact retail dtor; true body 0x8F0E0 (queue 0x9F282F misplaced inside 0x9F2800)
 ??1NameKeyGenerator@@UAE@XZ,,0x00168710,79,Code/GameEngine/Source/Common/NameKeyGenerator.cpp,matched,
 ??1NamedPivotMapClass@@UAE@XZ,,0x00974E20,176,Code/Libraries/Source/WWVegas/WW3D2/hanim.cpp,matched,
