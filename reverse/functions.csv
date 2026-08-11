@@ -9746,7 +9746,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?deleteAllFonts@FontLibrary@@IAEXXZ,,0x000309CC,5,Code/Libraries/Source/WWVegas/WWLib/MiscThunkGroup.cpp,matched,Focused C++ thunk for FontLibrary::deleteAllFonts
 ?deleteCondition@OrCondition@@QAEXPAVCondition@@@Z,,0x0034FD40,31,Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp,matched,
 ?deleteListResources@Radar@@IAEXXZ,,0x0002C976,5,Code/GameEngine/Source/Common/RTS/RadarDeleteListResourcesThunk.cpp,matched,5-byte incremental-link Radar protected member thunk converted to focused C++ source
-?deleteLoadScreen@GameLogic@@QAEXXZ,,0x0038D100,1473,Code/masm_dumps/_sa13__deleteLoadScreen_GameLogic__QAEXXZ_38D100.asm,matched,multi-xref Open-BFME4+Grok FadeWholeScreen
+?deleteLoadScreen@GameLogic@@QAEXXZ,,0x0038D100,1473,Code/GameEngine/Source/GameLogic/GameLogic_deleteLoadScreen_Thunk.cpp,matched,object-symbol=_bfme_GameLogicDeleteLoadScreen_38D100; Open-BFME5 exact lift of complete 1473-byte ledger range
 ?deleteRayEffect@RayEffectSystem@@QAEXPBVDrawable@@@Z,,0x005D35A0,56,Code/GameEngine/Source/GameClient/ray_effect.cpp,matched,
 ?deleteShadowVolume@W3DVolumetricShadow@@IAEXH@Z,,0x007BAFA0,142,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,Exact 142B clean C++ deleteShadowVolume; TU-local BFME 0x30 layout shim; MASM removed
 ?deleteTriggers@PolygonTrigger@@,,0x0074A680,139,Code/GameEngine/Source/GameLogic/Map/PolygonTriggerDeleteTriggersThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_PolygonTriggerDeleteTriggers_74A680
