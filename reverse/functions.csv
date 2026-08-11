@@ -33558,7 +33558,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?selectMatchingAcrossMap@InGameUI@@UAEHXZ,,0x00448729,298,Code/GameEngine/Source/GameClient/InGameUI_selectMatchingAcrossMap_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?selectMatchingAcrossScreen@InGameUI@@UAEHXZ,,0x0043EF70,332,Code/GameEngine/Source/GameClient/InGameUI_selectMatchingAcrossScreen_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?selectSkillset@AIPlayer@@UAEXH@Z,,0x001E1040,10,Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp,matched,
-?selectTeamToBuild@AIPlayer@@MAE_NXZ,,0x00163220,953,Code/masm_dumps/_sa__selectTeamToBuild_AIPlayer__MAE_NXZ_163220.asm,matched,Exact 953B string-anchored Open-BFME4
+?selectTeamToBuild@AIPlayer@@MAE_NXZ,,0x00163220,953,Code/GameEngine/Source/GameLogic/AI/AIPlayerSelectTeamToBuildThunk.cpp,matched,Exact 953B string-anchored Open-BFME4;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_AIPlayerSelectTeamToBuild_163220;sha256=16654a53da7459e10f8943f92bf7dc86c16d6b8667623d088ec4c4c730457af3
 ?selectTeamToReinforce@AIPlayer@@MAE_NH@Z,,0x00167080,1243,Code/masm_dumps/_str__selectTeamToReinforce_AIPlayer_MAE_NH_Z_167080.asm,matched,
 ?sendAProbe@NAT@@IAEXIGH@Z,,0x00671020,179,Code/GameEngine/Source/GameNetwork/NAT_sendAProbeThunk.cpp,matched,Open-BFME5 MASM lift
 ?sendDisconnectChatCommand@BFMEConnectionManager@@QAEXPAX@Z,,0x00666900,207,Code/GameEngine/Source/GameNetwork/native_connection_timing.cpp,matched,
