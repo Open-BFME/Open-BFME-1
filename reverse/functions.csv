@@ -6128,7 +6128,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?GadgetListBoxGetTextAndColor@@YA?AVUnicodeString@@PAVGameWindow@@PAHHH@Z,0x00044C0B,0x004BBB00,288,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,Native body replaces thunk-only MASM ownership
 ?GadgetListBoxGetTopVisibleEntry@@YAHPAVGameWindow@@@Z,,0x004B7930,27,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?GadgetListBoxIsFull@@YA_NPAVGameWindow@@@Z,,0x004B78E0,60,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,BFME list-box layout
-?GadgetListBoxMultiInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004B9A50,908,Code/masm_dumps/GadgetListBoxMultiInput_4B9A50.asm,matched,Exact MASM: true ENTRY 0x4B9A50/908 (queue 0x4B9A4F int3); FunctionLexicon ILT 0x356E8; C++ blocked regalloc+GWM_MOUSE_POS
+?GadgetListBoxMultiInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004B9A50,908,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBoxMultiInputThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_GadgetListBoxMultiInput_4B9A50;true ENTRY 0x4B9A50;ILT 0x356E8;GWM_MOUSE_POS
 ?GadgetListBoxRemoveMultiSelect@@YAXPAVGameWindow@@@Z,,0x004BB890,64,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?GadgetListBoxReset@@YAXPAVGameWindow@@@Z,,0x004B7880,33,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,BFME list-box message id
 ?GadgetListBoxSetAudioFeedback@@YAXPAVGameWindow@@_N@Z,,0x004B7960,25,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
