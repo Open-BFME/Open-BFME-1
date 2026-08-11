@@ -34159,7 +34159,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?tryInfiltrationEvent@Radar@@,,0x001083D0,258,Code/GameEngine/Source/Common/RadarTryInfiltrationEventThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_RadarTryInfiltrationEvent_1083D0
 ?tryNextFrame@Anim2D@@IAEXXZ,,0x005BA6C0,268,Code/GameEngine/Source/GameClient/System/Anim2D.cpp,matched,
 ?tryToIgnite@FlammableUpdate@@QAEXXZ,,0x00293990,961,Code/GameEngine/Source/GameLogic/Object/Update/FlammableUpdateTryToIgniteThunk.cpp,matched,Exact retail BFME ignition recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_FlammableUpdateTryToIgnite_293990
-?tryToRecruit@Team@@QAEPAVObject@@PBVThingTemplate@@PBUCoord3D@@M@Z,,0x0076E90A,568,Code/GameEngine/Source/Common/RTS/Team_tryToRecruit.asm,matched,exact 568B via MASM
+?tryToRecruit@Team@@QAEPAVObject@@PBVThingTemplate@@PBUCoord3D@@M@Z,,0x0076E90A,568,Code/GameEngine/Source/Common/RTS/Team_tryToRecruit_Thunk.cpp,matched,object-symbol=_bfme_TeamTryToRecruit_76E90A; Open-BFME5 exact C++ lift of 568-byte ASM function
 ?tryUnderAttackEvent@Radar@@,,0x004271B0,373,Code/GameEngine/Source/Common/System/RadarTryUnderAttackEventThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_RadarTryUnderAttackEvent_4271B0
 ?turnOffScreen@DisconnectManager@@IAEXH@Z,,0x0066B270,57,Code/GameEngine/Source/GameNetwork/DisconnectManager.cpp,matched,
 ?unAccept@GameSlot@@QAEXXZ,,0x0061EE60,11,Code/GameEngine/Source/GameNetwork/GameInfo.cpp,matched,
