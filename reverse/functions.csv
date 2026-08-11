@@ -1265,7 +1265,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0BoxRenderObjClass@@QAE@ABUW3dBoxStruct@@@Z,,0x00956D30,262,Code/Libraries/Source/WWVegas/WW3D2/BoxRenderObjClassConstructorThunk.cpp,matched,Exact 262B C++ raw constructor thunk Open-BFME5
 ??0BoxRenderObjClass@@QAE@ABV0@@Z,,0x00957790,87,Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp,matched,
 ??0BoxRenderObjClass@@QAE@XZ,,0x00956C70,127,Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp,matched,
-??0Bridge@@,,0x001A98A0,861,Code/masm_dumps/_sa___0Bridge___1A98A0.asm,matched,Exact 861B string-anchored Open-BFME4
+??0Bridge@@,,0x001A98A0,861,Code/GameEngine/Source/Common/BridgeCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_BridgeCtor_1A98A0
 ??0BridgeBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,,0x001F3390,379,Code/GameEngine/Source/GameLogic/AI/BridgeBehaviorCtorThunk.cpp,matched,Open-BFME5 exact C++ raw behavior constructor
 ??0BridgeBehaviorModuleData@@QAE@XZ,,0x0001F7F3,5,Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorModuleDataCtorThunk.cpp,matched,5-byte incremental-link constructor thunk converted to focused C++ source
 ??0BridgeFXInfo@@QAE@XZ,,0x000ED560,10,Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp,matched,
