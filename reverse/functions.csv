@@ -34242,7 +34242,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?update@SupplyTruckIdleState@@UAE?AW4StateReturnType@@XZ,,0x006CF680,3,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?update@TextTypeTransition@@UAEXH@Z,,0x005A0910,180,Code/GameEngine/Source/GameClient/GUI/TextTypeTransition_update_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?update@Transport@@QAE_NXZ,,0x00684420,78,Code/GameEngine/Source/GameNetwork/Transport.cpp,matched,
-?update@VictoryConditions@@,,0x0035F920,986,Code/masm_dumps/_str__update_VictoryConditions__35F920.asm,matched,
+?update@VictoryConditions@@,,0x0035F920,986,Code/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditionsUpdateThunk.cpp,matched,Exact string-anchored retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_VictoryConditionsUpdate_35F920
 ?update@WaterTracksObj@@QAEHH@Z,,0x007AAB80,15,Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp,matched,
 ?updateAndDrawWorldAnimations@InGameUI@@IAEXXZ,,0x0043F640,450,Code/GameEngine/Source/Common/InGameUI_updateAndDrawWorldAnimationsMethodThunk.cpp,matched,Exact retail MASM; preDraw caller and world-animation loop prove ownership
 ?updateAnim@ControlBarScheme@@QAEXPAVControlBarSchemeAnimation@@@Z,,0x004AC9B0,19,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme.cpp,matched,
