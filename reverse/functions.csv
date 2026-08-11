@@ -5367,7 +5367,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Add@NamedPivotMapClass@@QAEXPBDM@Z,,0x00973F40,76,Code/Libraries/Source/WWVegas/WW3D2/hanim.cpp,matched,
 ?Add@RenderObjClass@@UAEXPAVSceneClass@@@Z,,0x0091FBA0,21,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,
 ?Add@Vector3@@SAXABV1@0PAV1@@Z,,0x004106B0,37,Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp,matched,
-?AddOutput@Debug@@AAEXPBDI@Z,,0x0088A8F0,675,Code/Libraries/Source/WWVegas/WWDebug/debug_debug_AddOutput.asm,matched,exact 675B via MASM
+?AddOutput@Debug@@AAEXPBDI@Z,,0x0088A8F0,675,Code/Libraries/Source/WWVegas/WWDebug/debug_debug_AddOutput_Thunk.cpp,matched,object-symbol=_bfme_DebugAddOutput_88A8F0; Open-BFME5 exact C++ lift of 675-byte ASM function
 ?AddPatternEntry@Debug@@AAEXI_NPBD@Z,,0x0088A300,147,Code/GameEngine/Source/Common/Debug_AddPatternEntry_Thunk.cpp,matched,Exact 147B Open-BFME5
 ?Add_Anim@HAnimManagerClass@@QAE_NPAVHAnimClass@@@Z,,0x007B9B30,23,Code/Libraries/Source/WWVegas/WW3D2/hanimmgr.cpp,matched,
 ?Add_Box@MinMaxAABoxClass@@QAEXABVAABoxClass@@@Z,,0x00979230,237,Code/Libraries/Source/WWVegas/WWMath/aabox.cpp,matched,
