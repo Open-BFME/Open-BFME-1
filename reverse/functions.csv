@@ -8937,7 +8937,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?addScorch@W3DGameClient@@UAEXPBUCoord3D@@MW4Scorches@@@Z,,0x006FBBB0,58,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DGameClient.cpp,matched,
 ?addScript@ScriptGroup@@QAEXPAVScript@@H@Z,,0x00352AB0,153,Code/GameEngine/Source/Common/ScriptGroup_addScript_Thunk.cpp,matched,multi-xref Open-BFME4+Grok ScriptGroup
 ?addShadow@W3DProjectedShadowManager@@QAEPAVW3DProjectedShadow@@PAVRenderObjClass@@PAUShadowTypeInfo@Shadow@@PAVDrawable@@@Z,,0x007B4340,322,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp,matched,
-?addSide@SidesList@@QAEXPBVDict@@@Z,,0x000E0640,897,Code/masm_dumps/_sa15__addSide_SidesList__QAEXPBVDict___Z_E0640.asm,matched,sa15 Open-BFME4+Grok Faction
+?addSide@SidesList@@QAEXPBVDict@@@Z,,0x000E0640,897,Code/GameEngine/Source/GameLogic/Map/SidesListAddSideThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_SidesListAddSide_E0640;true ENTRY 0xE0640/897;Faction anchor
 ?addSkirmishTeam@SidesList@@QAEXPBVDict@@@Z,,0x00C50B39,11,Code/GameEngine/Source/GameLogic/Map/SidesList.cpp,matched,
 ?addSmudgeSet@SmudgeManager@@QAEPAUSmudgeSet@@XZ,,0x005D4240,129,Code/GameEngine/Source/Common/SmudgeManager_addSmudgeSet_Thunk.cpp,matched,reloc-needle Open-BFME4+Grok
 ?addSnapshotBlock@GameState@@AAEXVAsciiString@@PAVSnapshot@@W4SnapshotType@@@Z,,0x003BDB80,155,Code/GameEngine/Source/Common/GameState_addSnapshotBlock_Thunk.cpp,matched,Open-BFME5 lift 155B retail MASM to standalone C++ thunk
