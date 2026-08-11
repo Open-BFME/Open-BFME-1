@@ -8904,7 +8904,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?addEntry@@YAHPAVUnicodeString@@HHHPAVGameWindow@@_N@Z,,0x004B86B0,518,Code/GameEngine/Source/Common/addEntry_Thunk.cpp,matched,MASM exact retail dump; true body 0x4B86B0 (queue 0x4B86AF was int3 pad); BFME ListboxData offsets + ebx-convention moveRowsDown
 ?addEntry@SubsystemLegend@@QAEXABUSubsystemLegendEntry@@@Z,,0x009A1500,49,Code/GameEngine/Source/Common/System/SubsystemLegend.cpp,matched,m_entries.push_back(entry) fully inlined; proves m_entries sits at +0x08
 ?addGameToAvailableList@@YAXVAsciiString@@PAX@Z,,0x00111C40,280,Code/GameEngine/Source/Common/addGameToAvailableList_Thunk.cpp,matched,Certified packet 97 db-only retail recovery
-?addGroupRoom@GameSpyInfo@@UAEXVGameSpyGroupRoom@@@Z,,0x00636650,1238,Code/masm_dumps/_sa11__addGroupRoom_GameSpyInfo__UAEXVGameSpyGroupRoom___Z_636650.asm,matched,string-anchor Open-BFME4+Grok quickmatch
+?addGroupRoom@GameSpyInfo@@UAEXVGameSpyGroupRoom@@@Z,,0x00636650,1238,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfoAddGroupRoomThunk.cpp,matched,string-anchor Open-BFME4+Grok quickmatch;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_GameSpyInfoAddGroupRoom_636650;sha256=e22f04eb46a9f05d436f487889caff2d36068daad7fe25c7ca36e6d717e12214
 ?addImage@ImageCollection@@QAEXPAVImage@@@Z,,0x005D3410,133,Code/GameEngine/Source/Common/ImageCollection_addImage_Thunk.cpp,matched,certified packet 107 exact retail db dump sha256 ab3c6160
 ?addItem@LList@@QAEXHPAX@Z,,0x00105B80,63,Code/GameEngine/Source/Common/System/List.cpp,matched,
 ?addItemToHead@LList@@QAEXPAX@Z,,0x00105BD0,62,Code/GameEngine/Source/Common/System/List.cpp,matched,
