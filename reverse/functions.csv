@@ -1581,7 +1581,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0GameResultsRequest@@QAE@XZ,,0x004E5C00,68,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
 ??0GameResultsResponse@@QAE@ABV0@@Z,,0x00641850,35,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
 ??0GameSpyBuddyMessageQueue@@QAE@XZ,,0x0063E080,190,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameSpyBuddyMessageQueueCtorThunk.cpp,matched,Exact 190B C++ raw constructor thunk Open-BFME5
-??0GameSpyConfig@@QAE@VAsciiString@@@Z,,0x00628BA0,3751,Code/masm_dumps/_sa3___0GameSpyConfig__QAE_VAsciiString___Z_628BA0.asm,matched,Exact 3751B string-anchored Open-BFME4
+??0GameSpyConfig@@QAE@VAsciiString@@@Z,,0x00628BA0,3751,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyConfigCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_GameSpyConfigCtor_628BA0
 ??0GameSpyGameSlot@@QAE@XZ,,0x00639E50,1078,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGameSlotCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_GameSpyGameSlotCtor_639E50
 ??0GameSpyGroupRoom@@QAE@ABV0@@Z,,0x00887B60,121,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,object-symbol=??0?$StringBase@D@@AAE@ABV0@@Z;C++ alias
 ??0GameSpyGroupRoom@@QAE@XZ,,0x004FF9B0,106,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGroupRoomCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of true body
