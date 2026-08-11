@@ -9285,7 +9285,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?checkReadyTeams@AIPlayer@@MAEXXZ,,0x00162560,722,Code/GameEngine/Source/Common/AIPlayer_checkReadyTeamsMethodThunk.cpp,matched,Exact 722B string-anchored Open-BFME4
 ?chooseVictim@AIAttackSquadState@@QAEPAVObject@@XZ,,0x0017D2F0,949,Code/GameEngine/Source/GameLogic/AI/AIAttackSquadChooseVictimThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from certified packet 310 exact MASM body;object-symbol=_bfme_AIAttackSquadChooseVictim_17D2F0;true ENTRY 0x17D2F0/949
 ?clamp_indices_to_grid@GridCullSystemClass@@IAEXPAH00@Z,,0x008DCE70,82,Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp,matched,
-?classifyCells@PathfindLayer@@QAEXXZ,,0x003FC790,1405,Code/GameEngine/Source/GameLogic/AI/AIPathfind_classifyCells.asm,matched,exact 1405B MASM true ENTRY 0x3FC790 (queue 0x73F191 mid-body of host 0x73E050); C++ blocked PathfindCell 0x10 packing
+?classifyCells@PathfindLayer@@QAEXXZ,,0x003FC790,1405,Code/GameEngine/Source/GameLogic/AI/AIPathfind_classifyCells_Thunk.cpp,matched,exact 1405B via C++;object-symbol=_bfme_PathfindLayerClassifyCells_3FC790
 ?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,,0x00701FB0,103,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,object-symbol=?Add@?$SimpleDynVecClass@VVector3@@@@QAE_NABVVector3@@H@Z;C++ alias
 ?clear@?$BitFlags@$0ED@@@QAEXXZ,,0x001262E0,11,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,
 ?clear@?$BitFlags@$0HE@@@QAEXXZ,,0x001C3B80,14,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarObserver.cpp,matched,
