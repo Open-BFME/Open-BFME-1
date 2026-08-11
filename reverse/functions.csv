@@ -32831,7 +32831,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?openFile@Win32LocalFileSystem@@UAEPAVFile@@PBDH@Z,,0x009CDD70,22,Code/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem_openFile.cpp,matched,vtable 0x01143B98 slot 2 reached by byte-matched FileSystem::openFile; forwards to the four-argument slot 3 at 0x009CDF50
 ?openLiveHandle@BFMENetworkBackend@@QAEXXZ,,0x009DB650,54,Code/GameEngine/Source/GameNetwork/native_network.cpp,matched,
 ?openSpareSocket@FirewallHelperClass@@QAE_NG@Z,,0x0066EA30,194,Code/GameEngine/Source/GameNetwork/FirewallHelper.cpp,matched,
-?optimize@Path@@QAEXPBVObject@@H_N@Z,,0x00401660,669,Code/GameEngine/Source/GameLogic/AI/AIPathfind_Path_optimize.asm,matched,exact 669B MASM; true body 0x401660 (queue 0x433E7A INSIDE FUN_00833dc0)
+?optimize@Path@@QAEXPBVObject@@H_N@Z,,0x00401660,669,Code/GameEngine/Source/GameLogic/AI/AIPathfind_Path_optimize_Thunk.cpp,matched,object-symbol=_bfme_PathOptimize_401660; Open-BFME5 exact C++ lift of 669-byte ASM function
 ?paralyzeTroop@@YAXPAVObject@@PAX@Z,,0x00285580,70,Code/GameEngine/Source/GameLogic/Object/Update/ParalyzeTroopBodyThunk.cpp,matched,Open-BFME5 exact C++ body;object-symbol=?ParalyzeTroopBodyThunk@@YAXXZ
 ?parse@?$BitFlags@$0BB@@@QAEXPAVINI@@PAVAsciiString@@@Z,,0x001EB490,166,Code/GameEngine/Source/Common/BitFlags17ParseThunk.cpp,matched,Open-BFME5 MASM lift BitFlags<17>::parse
 ?parse@?$BitFlags@$0HF@@@QAEXPAVINI@@PAVAsciiString@@@Z,,0x00209240,166,Code/GameEngine/Source/Common/BitFlagsHFParseThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_BitFlagsHFParse_209240
