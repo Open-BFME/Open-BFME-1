@@ -11787,7 +11787,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getTypeFromKey@DictPair@Dict@@CA?AW4DataType@2@W4DictPairKeyType@2@@Z,,0x00067CC0,10,Code/GameEngine/Source/Common/Dict.cpp,matched,
 ?getUV@ParticleSystemTemplate@FXParticleSystem@@QBEPBURegion2D@@XZ,0x0002D6E6,0x0005CBA0,7,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,returns UV region pointer
 ?getUiText@Condition@@QAE?AVAsciiString@@XZ,,0x00352DB0,160,Code/GameEngine/Source/GameLogic/ScriptEngine/Condition_getUiText_Thunk.cpp,matched,Open-BFME5 lift 160B retail MASM to standalone C++ thunk
-?getUiText@Parameter@@QBE?AVAsciiString@@XZ,,0x00352E80,3667,Code/masm_dumps/Parameter_getUiText.asm,matched,Exact retail MASM; unique UI strings and two script callers prove ownership
+?getUiText@Parameter@@QBE?AVAsciiString@@XZ,,0x00352E80,3667,Code/GameEngine/Source/GameLogic/ScriptEngine/ParameterGetUiTextThunk.cpp,matched,Exact retail body; unique UI strings and two script callers prove ownership;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_ParameterGetUiText_352E80
 ?getUiText@Script@@QAE?AVAsciiString@@XZ,,0x00357860,564,Code/GameEngine/Source/GameLogic/ScriptEngine/Script_getUiText_Thunk.cpp,matched,Open-BFME5 MASM lift
 ?getUiText@ScriptAction@@QAE?AVAsciiString@@XZ,,0x00356340,395,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptAction_getUiText_Thunk.cpp,matched,Open-BFME5 MASM lift
 ?getUnicodeBuildLocation@Version@@,,0x000AF220,273,Code/GameEngine/Source/Common/VersionGetUnicodeBuildLocationThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_VersionGetUnicodeBuildLocation_AF220
