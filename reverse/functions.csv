@@ -33524,7 +33524,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?saveGame@GameState@@QAE?AW4SaveCode@@VAsciiString@@VUnicodeString@@W4SaveFileType@@W4SnapshotType@@@Z,,0x00110170,610,Code/GameEngine/Source/Common/System/SaveGame/GameState_saveGame_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from string-anchored MASM body;object-symbol=_bfme_GameStateSaveGame_110170
 ?saveLockGhostObjects@GhostObjectManager@@QAEX_N@Z,,0x0010CF20,10,Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp,matched,
 ?saveOffOriginalInfo@GameSlot@@QAEXXZ,,0x0061E560,19,Code/GameEngine/Source/GameNetwork/GameInfo.cpp,matched,
-?saveReplay@@YAXVUnicodeString@@@Z,,0x004DE8E0,519,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay_saveReplay.asm,matched,Exact MASM: true body @0x4DE8E0 (queue 0x88836A misplaced StringBase); C++ blocked ZH QAE getReplayDir+wcscmp op== vs retail SA+StringBase::compare
+?saveReplay@@YAXVUnicodeString@@@Z,,0x004DE8E0,519,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay_saveReplay_Thunk.cpp,matched,object-symbol=_bfme_SaveReplay_4DE8E0; Open-BFME5 exact C++ lift of 519-byte ASM function
 ?saveTracks@WaterTracksRenderSystem@@QAEXXZ,,0x007AC680,251,Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterTracksRenderSystem_saveTracks_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?sawFullGameList@GameSpyInfo@@UAEXXZ,,0x00637180,5,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,Vtable-bound GameSpyInfo mutator
 ?scale@Coord3D@@QAEXM@Z,0x000236AF,0x000B6CD0,31,Code/Libraries/Source/WWVegas/WWMath/coord3d.cpp,matched,scales x/y/z in place
