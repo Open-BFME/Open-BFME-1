@@ -2004,7 +2004,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0PlayerHealSpecialPowerModuleData@@QAE@XZ,,0x00263BE0,92,Code/GameEngine/Source/GameLogic/AI/PlayerHealSpecialPowerModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
 ??0PlayerList@@QAE@XZ,,0x000DFBD0,162,Code/GameEngine/Source/Common/RTS/PlayerListConstructorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??0PlayerTemplate@@QAE@ABV0@@Z,,0x0001449D,5,Code/GameEngine/Source/Common/RTS/PlayerTemplateCopyCtorThunk.cpp,matched,5-byte incremental-link copy constructor thunk converted to focused C++ source
-??0PlayerTemplate@@QAE@XZ,,0x000E3760,824,Code/masm_dumps/__0PlayerTemplate__QAE_XZ_E3760.asm,matched,MASM exact; true body 0xE3760/824 via symbols ILT 0x3E6E4; queue 0xC6DCD5 int3 pad
+??0PlayerTemplate@@QAE@XZ,,0x000E3760,824,Code/GameEngine/Source/Common/RTS/PlayerTemplateCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_PlayerTemplateCtor_0E3760;true body 0xE3760/824;ILT 0x3E6E4;queue 0xC6DCD5 int3 pad
 ??0PlayerTemplateStore@@QAE@XZ,,0x00076F30,29,Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp,matched,
 ??0PlayerUpgradeSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00263F50,46,Code/GameEngine/Source/GameLogic/Object/SpecialPower/PlayerUpgradeSpecialPower.cpp,matched,Luna Open-BFME5.0 clean C++ empty derived constructor
 ??0PlayerUpgradeSpecialPowerModuleData@@QAE@XZ,,0x00264210,95,Code/GameEngine/Source/GameLogic/AI/PlayerUpgradeSpecialPowerModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
