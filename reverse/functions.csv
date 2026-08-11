@@ -7474,7 +7474,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Open_Chunk@ChunkLoadClass@@QAE_NXZ,,0x009E1380,96,Code/Libraries/Source/WWVegas/WWLib/chunkio.cpp,matched,Luna Open-BFME5.0 clean C++ BFME loader layout
 ?Open_Micro_Chunk@ChunkLoadClass@@QAE_NXZ,,0x009E17C0,46,Code/Libraries/Source/WWVegas/WWLib/chunkio.cpp,matched,Luna Open-BFME5.0 clean C++ BFME loader layout
 ?Open_W3D_File@@YAPAXPAX0PBD@Z,,0x006F6BA0,204,Code/GameEngineDevice/Source/W3DDevice/GameClient/Open_W3D_File.cpp,matched,BFME W3D open helper for Load hierarchy/anim exact 204B @ 0x6F6BA0
-?OptionsMenuInit@@YAXPAVWindowLayout@@PAX@Z,,0x00560280,7212,Code/masm_dumps/_OptionsMenuInit__YAXPAVWindowLayout__PAX_Z_560280.asm,matched,true size 7212B; row claimed 6966B
+?OptionsMenuInit@@YAXPAVWindowLayout@@PAX@Z,,0x00560280,7212,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionsMenuInitThunk.cpp,matched,true size 7212B; row claimed 6966B;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_OptionsMenuInit_560280
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVAABoxClass@@0@Z,,0x008DD740,274,Code/Libraries/Source/WWVegas/WWMath/gridcull.cpp,matched,
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVAABoxClass@@ABVLineSegClass@@@Z,,0x008D9B30,909,Code/Libraries/Source/WWVegas/WWMath/colmathaabox.cpp,matched,
 ?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVAABoxClass@@ABVOBBoxClass@@@Z,,0x008E22F0,27,Code/Libraries/Source/WWVegas/WWMath/colmathobbox.cpp,matched,
