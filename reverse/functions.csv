@@ -1911,7 +1911,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0OathbreakersFadeAwayBehaviorModuleData@@QAE@XZ,,0x00125CE0,114,Code/GameEngine/Source/GameLogic/AI/OathbreakersFadeAwayBehaviorModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw ICF-primary module-data constructor
 ??0ObbCollisionStruct@@QAE@ABVOBBoxClass@@ABVVector3@@01@Z,,0x008E3760,218,Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp,matched,
 ??0ObbIntersectionStruct@@QAE@ABVOBBoxClass@@0@Z,,0x008E2A20,153,Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp,matched,
-??0Object@@QAE@PBVThingTemplate@@ABV?$BitFlags@$0CN@@@PAVTeam@@@Z,,0x001D29A0,4246,Code/masm_dumps/_str2__0Object_QAE_PBVThingTemplate_ABV_BitFlags_0CN_PAVTeam__1D29A0.asm,matched,
+??0Object@@QAE@PBVThingTemplate@@ABV?$BitFlags@$0CN@@@PAVTeam@@@Z,,0x001D29A0,4246,Code/GameEngine/Source/GameLogic/Object/ObjectConstructorThunk.cpp,matched,Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_ObjectConstructor_1D29A0
 ??0ObjectCreationList@@QAE@ABV0@@Z,,0x001D7680,76,Code/GameEngine/Source/GameLogic/Object/ObjectCreationList.cpp,matched,
 ??0ObjectCreationList@@QAE@XZ,,0x0005C5D0,13,Code/GameEngine/Source/GameLogic/Object/ObjectCreationList.cpp,matched,ICF alias of existing matched body
 ??0ObjectCreationListStore@@QAE@XZ,,0x001DAD50,114,Code/GameEngine/Source/GameLogic/Object/ObjectCreationList.cpp,matched,
