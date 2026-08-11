@@ -7526,7 +7526,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?ParseWorldDictDataChunk@@YA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,,0x0044F710,87,Code/GameEngine/Source/GameClient/MapUtil.cpp,matched,
 ?ParseWorldDictDataChunk@WorldHeightMap@@KA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,,0x00746F60,44,Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp,matched,
 ?Parse_Mapping_Args@VertexMaterialClass@@QAEXABUW3dVertexMaterialStruct@@PAD1@Z,,0x00922990,70,Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp,matched,
-?ParticleSystemDebugDisplay@@YAXPAVDebugDisplayInterface@@PAXPAU_iobuf@@@Z,,0x005CA370,1345,Code/masm_dumps/_entry__ParticleSystemDebugDisplay_YAXPAVDebugDisplayInterface_PAXP_5CA370.asm,matched,
+?ParticleSystemDebugDisplay@@YAXPAVDebugDisplayInterface@@PAXPAU_iobuf@@@Z,,0x005CA370,1345,Code/GameEngine/Source/GameClient/System/ParticleSystemDebugDisplayThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_ParticleSystemDebugDisplay_5CA370;true ENTRY 0x5CA370/1345
 ?PassMessagesToParentSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x0047C220,53,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?Peek_Additional_Pass@RenderInfoClass@@QAEPAVMaterialPassClass@@H@Z,,0x00923720,11,Code/Libraries/Source/WWVegas/WW3D2/rinfo.cpp,matched,
 ?Peek_Anim@HAnimManagerClass@@QAEPAVHAnimClass@@PBD@Z,,0x007B9AD0,27,Code/Libraries/Source/WWVegas/WW3D2/hanimmgr.cpp,matched,
