@@ -5914,7 +5914,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Execute@DebugIOFlat@@UAEXAAVDebug@@PBD_NIPBQBD@Z,,0x00890810,1460,Code/Libraries/Source/WWVegas/WWDebug/DebugIOFlatExecuteThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_DebugIOFlatExecute_890810;true ENTRY 0x890810/1460
 ?Execute@DebugIONet@@UAEXAAVDebug@@PBD_NIPBQBD@Z,,0x0088FCE0,283,Code/Libraries/Source/WWVegas/WWDebug/DebugIONet_Execute_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?Exists@RegistryClass@@SA_NPBD@Z,,0x009DC1C0,50,Code/Libraries/Source/WWVegas/WWLib/registry.cpp,matched,
-?ExpandMagic@DebugIOFlat@@CAXPBD0PAD@Z,,0x008900A0,701,Code/Libraries/Source/WWVegas/WWDebug/DebugIOFlat_ExpandMagic.asm,matched,
+?ExpandMagic@DebugIOFlat@@CAXPBD0PAD@Z,,0x008900A0,701,Code/Libraries/Source/WWVegas/WWDebug/DebugIOFlat_ExpandMagic_Thunk.cpp,matched,object-symbol=_bfme_DebugIOFlatExpandMagic_8900A0; Open-BFME5 exact C++ lift of 701-byte ASM function
 ?Export@AABTreeBuilderClass@@QAEXAAVChunkSaveClass@@@Z,,0x0096BD00,394,Code/Libraries/Source/WWVegas/WW3D2/aabtreebuilder.cpp,matched,
 ?FVF_Info@DynamicVBAccessClass@@QBEABVFVFInfoClass@@XZ,,0x0010BDB0,3,Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp,matched,icf-owner=?getDistributionType@GameClientRandomVariable@@QBE?AW4DistributionType@1@XZ
 ?Fabs@WWMath@@SAMM@Z,,0x003D5300,18,Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp,matched,
