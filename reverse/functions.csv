@@ -9919,7 +9919,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?draw@ShellMenuSchemeManager@@QAEXXZ,,0x00580D60,13,Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme.cpp,matched,
 ?drawBridges@W3DBridgeBuffer@@QAEXPAVCameraClass@@_NPAVTextureClass@@@Z,,0x00938FF7,909,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeBuffer_drawBridges.asm,matched,exact 909B via MASM
 ?drawCircle@DiscreteCircle@@QAEXP6AXHHHPAX@Z0@Z,,0x00068AF0,84,Code/GameEngine/Source/Common/discrete_circle.cpp,matched,
-?drawContained@Drawable@@AAEXPBUIRegion2D@@@Z,,0x00414E40,833,Code/GameEngine/Source/GameClient/Drawable_drawContained.asm,matched,exact 833B MASM true body 0x414E40 (queue 0x76E986 INSIDE W3DModelDraw asset-error FUN_0076E7F0); container pips green/blue dual-loop; region Drawable+0x3C4; after drawAmmo@0x414BE0 icon switch case1
+?drawContained@Drawable@@AAEXPBUIRegion2D@@@Z,,0x00414E40,833,Code/GameEngine/Source/GameClient/Drawable_drawContained_Thunk.cpp,matched,exact 833B via C++;object-symbol=_bfme_DrawableDrawContained_414E40
 ?drawDrawable@@YAXPAVDrawable@@PAX@Z,,0x00132AB0,15,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp,matched,
 ?drawEmoticon@Drawable@@AAEXPBUIRegion2D@@@Z,,0x00414AF0,191,Code/GameEngine/Source/GameClient/Drawable_drawEmoticon_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?drawEnthusiastic@Drawable@@AAEXPBUIRegion2D@@@Z,,0x0041A780,511,Code/GameEngine/Source/GameClient/Drawable_drawEnthusiastic_Thunk.cpp,matched,object-symbol=_bfme_DrawableDrawEnthusiastic_41A780; Open-BFME5 exact C++ lift of 511-byte ASM function
