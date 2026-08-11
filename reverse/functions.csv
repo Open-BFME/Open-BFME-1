@@ -34126,7 +34126,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?swap@?$list@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@V?$allocator@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@2@@_STL@@QAEXAAV12@@Z,,0x0037E660,17,Code/Libraries/Source/WWVegas/WW3D2/w3d_dep.cpp,matched,
 ?swap@?$map@GEU?$less@G@_STL@@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAEXAAV12@@Z,,0x000BF020,35,Code/GameEngine/Source/GameNetwork/ConnectionManager.cpp,matched,
 ?switchControlBarStage@ControlBar@@QAEXW4ControlBarStages@@@Z,,0x0049F140,98,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp,matched,
-?switchToContext@ControlBar@@IAEXW4ControlBarContext@@PAVDrawable@@@Z,,0x0049E901,869,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_switchToContext.asm,matched,exact 869B via MASM
+?switchToContext@ControlBar@@IAEXW4ControlBarContext@@PAVDrawable@@@Z,,0x0049E901,869,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_switchToContext_Thunk.cpp,matched,exact 869B via C++;object-symbol=_bfme_ControlBarSwitchToContext_49E901
 ?tan@@YAMM@Z,,0x00873930,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,ICF alias of existing matched body
 ?testFlagBit@@YA_NHH@Z,,0x006958A0,22,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,matched,
 ?testGrab@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x0047D750,13,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
