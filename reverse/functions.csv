@@ -33948,7 +33948,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?setStartingCash@LANPreferences@@,,0x004CEC00,1686,Code/masm_dumps/_cache__setStartingCash_LANPreferences___4CEC00.asm,matched,cached-obj needle Open-BFME4+Grok
 ?setState@GameSlot@@QAEXW4SlotState@@VUnicodeString@@PBUGameSlotConnectInfo@@@Z,,0x0061F210,440,Code/GameEngine/Source/GameNetwork/GameInfo.cpp,matched,
 ?setStatus@Anim2D@@QAEXE@Z,,0x005BA2D0,15,Code/GameEngine/Source/GameClient/System/Anim2D.cpp,matched,
-?setStatus@BattlePlanUpdate@@IAEXW4TransitionStatus@@@Z,,0x00286440,1298,Code/masm_dumps/setStatus_BattlePlanUpdate_00286440_packet227.asm,matched,Certified packet 227 db-only retail recovery SHA-256 6e55aee0e3e3bca8c83c8cd464431d935ab1de1481926bcd5b1ff003fb0ac5be
+?setStatus@BattlePlanUpdate@@IAEXW4TransitionStatus@@@Z,,0x00286440,1298,Code/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetStatusThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from certified packet 227 MASM body;object-symbol=_bfme_BattlePlanUpdateSetStatus_286440;true ENTRY 0x286440/1298;sha256=6e55aee0e3e3bca8c83c8cd464431d935ab1de1481926bcd5b1ff003fb0ac5be
 ?setStatus@Image@@QAEII@Z,,0x005D1C10,19,Code/GameEngine/Source/GameClient/System/Image.cpp,matched,
 ?setStatus@Object@@QAEXV?$BitFlags@$0CN@@@_N@Z,,0x0001366F,5,Code/Libraries/Source/WWVegas/WWLib/ObjectSetStatusThunk.cpp,matched,ICF-group owner converted to focused C++ thunk TU; remaining alias retains shared target
 ?setSuperweaponDisplayEnabledByScript@InGameUI@@UAEX_N@Z,,0x0043AA60,15,Code/GameEngine/Source/GameClient/InGameUI.cpp,matched,
