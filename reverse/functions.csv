@@ -34270,7 +34270,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?updateMenuActions@@YAXXZ,,0x004DEF10,157,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupSaveLoad.cpp,matched,
 ?updateMips@TileData@@QAEXXZ,,0x006D6900,105,Code/GameEngineDevice/Source/W3DDevice/GameClient/TileData.cpp,matched,
 ?updateNemesis@TunnelTracker@@QAEXPBVObject@@@Z,,0x000F90D0,124,Code/GameEngine/Source/GameLogic/Object/TunnelTrackerUpdateNemesisThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
-?updateNumPlayersOnline@@YAXXZ,,0x0050BA40,1421,Code/masm_dumps/_sym1__updateNumPlayersOnline__YAXXZ_50BA40.asm,matched,symbol-pin Open-BFME4+Grok
+?updateNumPlayersOnline@@YAXXZ,,0x0050BA40,1421,Code/GameEngine/Source/GameClient/UpdateNumPlayersOnlineThunk.cpp,matched,symbol-pin Open-BFME4+Grok;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_UpdateNumPlayersOnline_50BA40
 ?updateOCLTimerTextDisplay@ControlBar@@IAEXIM@Z,,0x004AA7C0,358,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_updateOCLTimerTextDisplay_Thunk.cpp,matched,Open-BFME5 lift 358B retail MASM to standalone C++ thunk
 ?updateObjValuesFromMapProperties@Object@@QAEXPAVDict@@@Z,,0x001D0610,1951,Code/GameEngine/Source/GameLogic/Object/ObjectUpdateObjValuesFromMapPropertiesThunk.cpp,matched,Certified packet 86 exact retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_ObjectUpdateObjValuesFromMapProperties_1D0610;sha256=56f927edaef7d221087371da921ad2655aa010fbe2b5a612a70182c03431de27
 ?updatePropPosition@W3DPropBuffer@@QAE_NHABUCoord3D@@MM@Z,,0x007026E0,453,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBuffer.cpp,matched,
