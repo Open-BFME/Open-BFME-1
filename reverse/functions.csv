@@ -34265,7 +34265,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?updateFadeLevel@ScreenCrossFadeFilter@@IAE_NXZ,,0x00006D0C,5,Code/GameEngine/Source/Common/RTS/ScreenCrossFadeFilterUpdateFadeLevelThunk.cpp,matched,5-byte incremental-link ScreenCrossFadeFilter protected member thunk converted to focused C++ source
 ?updateFileProgress@BFMEConnectionManager@@QAEXXZ,,0x00669A00,265,Code/GameEngine/Source/GameNetwork/native_connection_timing.cpp,matched,
 ?updateGenericScripts@Team@@QAEXXZ,,0x000F1430,412,Code/GameEngine/Source/Common/Team_updateGenericScriptsMethodThunk.cpp,matched,Exact 412B string-anchored Open-BFME4
-?updateInternal@AIAttackApproachTargetState@@AAE?AW4StateReturnType@@XZ,,0x001827C0,1398,Code/masm_dumps/updateInternal_AIAttackApproachTargetState_1827C0.asm,matched,Certified packet 136 exact retail MASM recovery SHA256 a13136e89bddbc2c431f9e79dd5212fc9bbbb670ddb5ccede62740f11a06198c
+?updateInternal@AIAttackApproachTargetState@@AAE?AW4StateReturnType@@XZ,,0x001827C0,1398,Code/GameEngine/Source/GameLogic/AI/AIAttackApproachTargetStateUpdateInternalThunk.cpp,matched,Certified packet 136 exact retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_AIAttackApproachTargetStateUpdateInternal_1827C0;sha256=a13136e89bddbc2c431f9e79dd5212fc9bbbb670ddb5ccede62740f11a06198c
 ?updateLoadProgress@GameLogic@@QAEXH@Z,,0x000DB020,3751,Code/masm_dumps/_sa16__updateLoadProgress_GameLogic__QAEXH_Z_DB020.asm,matched,sa16 Open-BFME4+Grok ReplayObserver
 ?updateMenuActions@@YAXXZ,,0x004DEF10,157,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupSaveLoad.cpp,matched,
 ?updateMips@TileData@@QAEXXZ,,0x006D6900,105,Code/GameEngineDevice/Source/W3DDevice/GameClient/TileData.cpp,matched,
