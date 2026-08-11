@@ -5476,7 +5476,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Blend_Update@Animatable3DObjClass@@IAEXABVMatrix3D@@PAVHAnimClass@@M1MM@Z,,0x00981E80,59,Code/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,
 ?Blend_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHAnimClass@@M1MM@Z,,0x009546B0,1746,Code/masm_dumps/__Blend_Update_HTreeClass__QAEXABVMatrix3D__PAVHAni_9546B0.asm,matched,
 ?BlitBackward@?$BlitPlain@E@@UBEXPAXPBXH@Z,,0x0006B150,27,Code/Libraries/Source/WWVegas/WWLib/xsurface.cpp,matched,
-?BuddyControlSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004ED400,1390,Code/masm_dumps/BuddyControlSystem_4ED400.asm,matched,Certified packet 165 exact retail db dump SHA256 017a21b18103144110f5d494b5c7a24ba5ae4148934df6ada22baeec179842d2
+?BuddyControlSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004ED400,1390,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/BuddyControlSystemThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from certified retail MASM body;object-symbol=_bfme_BuddyControlSystem_4ED400;MASM SHA256 017a21b18103144110f5d494b5c7a24ba5ae4148934df6ada22baeec179842d2
 ?Buffer_Needs_Data@CRCEngine@@IBE_NXZ,,0x006F6120,11,Code/Libraries/Source/WWVegas/WWLib/crc.cpp,matched,
 ?Build_AABTree@AABTreeBuilderClass@@QAEXHPAVVector3i16@@HPAVVector3@@@Z,,0x0096C6D0,327,Code/Libraries/Source/WWVegas/WW3D2/aabtreebuilder.cpp,matched,
 ?Build_AABTree@AABTreeBuilderClass@@QAEXHPAVVector3i@@HPAVVector3@@@Z,,0x0096C820,358,Code/Libraries/Source/WWVegas/WW3D2/aabtreebuilder.cpp,matched,
