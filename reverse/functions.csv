@@ -12049,7 +12049,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?insert@?$vector@_NV?$allocator@_N@_STL@@@_STL@@QAEXU?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@2@I_N@Z,,0x002CCBA0,36,Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdate.cpp,matched,
 ?insert@LListNode@@QAEXPAV1@@Z,,0x001058F0,23,Code/GameEngine/Source/Common/System/List.cpp,matched,
 ?insertChat@@YAXVBuddyMessage@@@Z,,0x004EB6B0,596,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyOverlayInsertChatThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from string-anchored MASM dump;object-symbol=_bfme_WOLBuddyOverlayInsertChat_4EB6B0
-?insertGame@@YAHPAVGameWindow@@PAVGameSpyStagingRoom@@_N@Z,,0x0062DB90,1487,Code/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils_insertGame.asm,matched,exact 1487B MASM; true body @0x62DB90 (queue 0x62DA40 was inside GrabWindowInfo); string anchors Password/Observer/GUI:UnknownLadder/NoLadder
+?insertGame@@YAHPAVGameWindow@@PAVGameSpyStagingRoom@@_N@Z,,0x0062DB90,1487,Code/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils_insertGame_Thunk.cpp,matched,exact 1487B via C++;object-symbol=_bfme_LobbyInsertGame_62DB90
 ?insertMessage@GameMessageList@@UAEXPAVGameMessage@@0@Z,,0x0008A530,48,Code/GameEngine/Source/Common/MessageStream.cpp,matched,
 ?insertPlayerInListbox@@YAHABVPlayerInfo@@H@Z,,0x004F9E60,333,Code/GameEngine/Source/Common/insertPlayerInListbox_Thunk.cpp,matched,certified recovery packet 176 exact retail bytes
 ?insertTee@W3DRoadBuffer@@IAEXVVector2@@HM@Z,,0x00007522,5,Code/GameEngine/Source/Common/RTS/W3DRoadBufferInsertTeeThunk.cpp,matched,5-byte incremental-link W3DRoadBuffer protected member thunk converted to focused C++ source
