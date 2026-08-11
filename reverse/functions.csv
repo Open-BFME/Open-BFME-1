@@ -33870,7 +33870,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?setPlayingHandle@AudioEventRTS@@QAEXI@Z,,0x000B2200,10,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,MASM converted to clean C++
 ?setPort@GameSlot@@QAEXG@Z,,0x00673F70,12,Code/GameEngine/Source/GameNetwork/GameInfo.cpp,matched,
 ?setPortraitByImage@ControlBar@@IAEXPBVImage@@@Z,,0x0049CF10,164,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp,matched,
-?setPortraitByObject@ControlBar@@IAEXPAVObject@@@Z,,0x0059A664,832,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_setPortraitByObject.asm,matched,true size 832B; row claimed 739B
+?setPortraitByObject@ControlBar@@IAEXPAVObject@@@Z,,0x0059A664,832,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_setPortraitByObject_Thunk.cpp,matched,exact 832B via C++;object-symbol=_bfme_ControlBarSetPortraitByObject_59A664
 ?setPosition@AudioEventRTS@@QAEXPBUCoord3D@@@Z,,0x000B2210,51,Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,direct C++ positional audio setter with retail layout offsets replaces MASM dump
 ?setPosition@DirectInputMouse@@UAEXHH@Z,,0x006BB980,70,Code/GameEngineDevice/Source/Win32Device/GameClient/Win32DIMouse.cpp,matched,
 ?setPosition@Drawable@@QAEXPBUCoord3D@@@Z,,0x004116F0,5,Code/GameEngine/Source/GameClient/Drawable.cpp,matched,thunk-dump converted to clean C++
