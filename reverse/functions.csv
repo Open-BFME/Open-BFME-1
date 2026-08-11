@@ -31435,7 +31435,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?lock@File@@UAEXXZ,,0x009CB760,36,Code/GameEngine/Source/Common/System/File.cpp,matched,BFME-only File virtual slot 15; CreateMutexA/WaitForSingleObject; vtable 0x01143AF8
 ?lockGhostObjects@GhostObjectManager@@QAEX_N@Z,,0x00427440,10,Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp,matched,
 ?locoSetMatches@@YA_NHI@Z,,0x000EC7E0,24,Code/GameEngine/Source/Common/RTS/Team.cpp,matched,
-?locoUpdate_moveTowardsPosition@Locomotor@@QAEXPAVObject@@ABUCoord3D@@MMPA_N@Z,,0x002BAFB8,1701,Code/GameEngine/Source/GameLogic/Object/Locomotor_locoUpdate_moveTowardsPosition.asm,matched,true size 1701B; row claimed 1103B
+?locoUpdate_moveTowardsPosition@Locomotor@@QAEXPAVObject@@ABUCoord3D@@MMPA_N@Z,,0x002BAFB8,1701,Code/GameEngine/Source/GameLogic/Object/Locomotor_locoUpdate_moveTowardsPosition_Thunk.cpp,matched,exact 1701B via C++;object-symbol=_bfme_LocomotorMoveTowardsPosition_2BAFB8
 ?log10@@YAMM@Z,,0x00799CF0,11,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DControlBar.cpp,matched,
 ?log@@YAMM@Z,,0x0045B380,11,Code/GameEngine/Source/Common/System/statistics.cpp,matched,
 ?logN@@YAMMM@Z,,0x00799F70,27,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DControlBar.cpp,matched,
