@@ -5445,7 +5445,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?As_Named_Pivot_Map@PivotMapClass@@UAEPAVNamedPivotMapClass@@XZ,,0x006CF680,3,Code/Libraries/Source/WWVegas/WW3D2/hanim.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?As_TextureClass@TextureBaseClass@@UAEPAVTextureClass@@XZ,,0x006CF680,3,Code/Libraries/Source/WWVegas/WW3D2/texture.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?As_VolumeTextureClass@TextureBaseClass@@UAEPAVVolumeTextureClass@@XZ,,0x006CF680,3,Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTex.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
-?AssertBegin@Debug@@SAAAV1@PBDH0@Z,,0x0088B530,948,Code/masm_dumps/_sa3__AssertBegin_Debug__SAAAV1_PBDH0_Z_88B530.asm,matched,true size 948B; row claimed 749B
+?AssertBegin@Debug@@SAAAV1@PBDH0@Z,,0x0088B530,948,Code/Libraries/Source/WWVegas/WWDebug/DebugAssertBeginThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_DebugAssertBegin_88B530;true ENTRY 0x88B530/948
 ?Assign_Index@AABTreeBuilderClass@@AAEHPAUCullNodeStruct@1@H@Z,,0x0096B370,52,Code/Libraries/Source/WWVegas/WW3D2/aabtreebuilder.cpp,matched,
 ?Atan2@WWMath@@SAMMM@Z,,0x005F0980,11,Code/Libraries/Source/WWVegas/WW3D2/camera.cpp,matched,
 ?Atan@WWMath@@SAMM@Z,,0x0045B6F0,9,Code/Libraries/Source/WWVegas/WW3D2/texproject.cpp,matched,icf-owner=_atanf
