@@ -11945,7 +11945,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?init@GameLogic@@UAEXXZ,,0x0038A1F0,1014,Code/masm_dumps/_sa11__init_GameLogic__UAEXXZ_38A1F0.asm,matched,string-anchor Open-BFME4+Grok ThePartitionManager
 ?init@GameSpyLoadScreen@@,,0x00493120,2717,Code/masm_dumps/_str2__init_GameSpyLoadScreen__493120.asm,matched,
 ?init@GameState@@UAEXXZ,,0x001112D0,1368,Code/GameEngine/Source/Common/System/SaveGame/GameStateInitThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from certified packet 117 MASM body;object-symbol=_bfme_GameStateInit_1112D0;true ENTRY 0x1112D0/1368;sha256=562361f290ec5b0bcbadf7a4db6adc0d907a84c3697d7a6209b3afd9cf24be14
-?init@GameTextManager@@UAEXXZ,,0x0051F3A0,3411,Code/masm_dumps/_sa4__init_GameTextManager__UAEXXZ_51F3A0.asm,matched,Exact 3411B Open-BFME4
+?init@GameTextManager@@UAEXXZ,,0x0051F3A0,3411,Code/GameEngine/Source/GameClient/GameTextManagerInitThunk.cpp,matched,Exact retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_GameTextManagerInit_51F3A0
 ?init@GameWindowManager@@UAEXXZ,,0x0047C270,104,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,
 ?init@HotKeyManager@@UAEXXZ,,0x005B38D0,52,Code/GameEngine/Source/GameClient/MessageStream/HotKey.cpp,matched,
 ?init@LanguageFilter@@UAEXXZ,,0x0044E7A0,310,Code/GameEngine/Source/Common/LanguageFilter_init_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
