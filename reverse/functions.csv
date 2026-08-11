@@ -8028,7 +8028,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?SetOutputBuffer@UDP@@QAEHI@Z,,0x006847E0,42,Code/GameEngine/Source/GameNetwork/udp.cpp,matched,
 ?SetPolygonIndex@Geometry@@QAEHJPAF@Z,,0x007B7FF0,59,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,
 ?SetPrefixAndRadix@Debug@@QAEXPBDH@Z,,0x00889B60,117,Code/GameEngine/Source/Common/Debug_SetPrefixAndRadix_Thunk.cpp,matched,Exact 117B Open-BFME5
-?SetUpGameSpy@@YAXPBD0@Z,,0x006377D0,723,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs_SetUpGameSpy.asm,matched,exact 723B MASM; true start after createNew @0x637760; queue RVA was inside createNew
+?SetUpGameSpy@@YAXPBD0@Z,,0x006377D0,723,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs_SetUpGameSpy_Thunk.cpp,matched,object-symbol=_bfme_SetUpGameSpy_6377D0; Open-BFME5 exact C++ lift of 723-byte ASM function
 ?SetVertex@Geometry@@QAEPBVVector3@@HPBV2@@Z,,0x007B8060,35,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,
 ?SetVertexBuffer@RoadSegment@@QAEXPAUVertexFormatXYZDUV1@@H@Z,,0x00704B40,356,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp,matched,
 ?SetVictorious@CampaignManager@@QAEX_N@Z,,0x006DAB10,10,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,
