@@ -385,6 +385,20 @@ public:
     void construct();
 };
 
+class LightningEmissionTemplateFactoryShim {
+public:
+    LightningEmissionTemplateFactoryShim()
+    {
+        ((LightningEmissionTemplateCtorShim *)this)->construct();
+        *(volatile unsigned int *)this = 0x01111258;
+        *(volatile unsigned int *)((unsigned char *)this + 4) = 0x01111254;
+        *(volatile unsigned int *)((unsigned char *)this + 8) = 0x01111240;
+    }
+
+private:
+    unsigned char m_storage[0x94];
+};
+
 class ButterflyDrawTemplateCtorShim {
 public:
     void construct();
@@ -3640,107 +3654,9 @@ __declspec(naked) LightningEmissionModuleTemplate *ConcreteModuleClass<ModuleTag
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVLightningEmissionModuleTemplate@2@XZ
-__declspec(naked) LightningEmissionModuleTemplate *ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createTemplate() const
+LightningEmissionModuleTemplate *ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::createTemplate() const
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x4b
-        __emit 0xb5
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x68
-        __emit 0x94
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x7f
-        __emit 0x02
-        __emit 0x2a
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x6e
-        __emit 0xaf
-        __emit 0xa2
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x58
-        __emit 0x12
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x54
-        __emit 0x12
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0x40
-        __emit 0x12
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
+    return (LightningEmissionModuleTemplate *)new LightningEmissionTemplateFactoryShim;
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@2@XZ
