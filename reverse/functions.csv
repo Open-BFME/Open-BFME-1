@@ -5525,7 +5525,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Ceil@WWMath@@SAMM@Z,,0x00069750,20,Code/Libraries/Source/WWVegas/WW3D2/visrasterizer.cpp,matched,
 ?ChallengeMenuInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004D3C40,69,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ChallengeMenu.cpp,matched,
 ?CheckReOpenPlayerInfo@@YAXXZ,,0x00628270,27,Code/GameEngine/Source/GameNetwork/GameSpyOverlay.cpp,matched,
-?Check_Driver_Version_Status@DX8Caps@@AAEXXZ,,0x0091BA00,713,Code/Libraries/Source/WWVegas/WW3D2/DX8Caps_Check_Driver_Version_Status.asm,matched,
+?Check_Driver_Version_Status@DX8Caps@@AAEXXZ,,0x0091BA00,713,Code/Libraries/Source/WWVegas/WW3D2/DX8Caps_Check_Driver_Version_Status_Thunk.cpp,matched,object-symbol=_bfme_DX8CapsCheckDriverVersionStatus_91BA00; Open-BFME5 exact C++ lift of 713-byte ASM function
 ?Check_Is_Transform_Identity@@YA_NABVMatrix3D@@@Z,,0x0091FF40,121,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,
 ?Check_Shader_Support@DX8Caps@@AAEXABU_D3DCAPS8@@@Z,,0x0091B9A0,95,Code/Libraries/Source/WWVegas/WW3D2/dx8caps.cpp,matched,reloc-needle Open-BFME4+Grok
 ?Chunk_Type@MeshLoaderClass@@UAEHXZ,,0x006CF680,3,Code/Libraries/Source/WWVegas/WW3D2/proto.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
