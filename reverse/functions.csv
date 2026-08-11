@@ -10169,7 +10169,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?findFunction@FunctionLexicon@@IAEPAXW4NameKeyType@@W4TableIndex@1@@Z,,0x00105280,76,Code/GameEngine/Source/Common/System/FunctionLexicon.cpp,matched,thunk-dump converted to clean C++ lookup; retail table count is 12
 ?findGameMessageMetaType@MetaMap@@IAE?AW4Type@GameMessage@@PBD@Z,,0x005B6AD0,69,Code/GameEngine/Source/GameClient/MessageStream/MetaEvent.cpp,matched,
 ?findGoodBuildOrRepairPosition@DozerAIUpdate@@SA_NPBVObject@@0AAUCoord3D@@@Z,,0x002B6C40,445,Code/GameEngine/Source/Common/DozerAIUpdate_findGoodBuildOrRepairPosition_Thunk.cpp,matched,Exact 445B @ 0x2B6C40; queue 0x2B6C20 was prior-fn tail; BFME thiscall; callers in AndTarget@0x2B8890
-?findGroundPath@Pathfinder@@QAEPAVPath@@PBUCoord3D@@0H_N@Z,,0x003F2160,2045,Code/GameEngine/Source/GameLogic/AI/AIPathfind_findGroundPath.asm,matched,MASM exact retail; true body 0x3F2160/2045 (queue 0x9DE1BB was int3+CPUDetect Init_AMD); ret 0x10 zoneMgr@+0xc9c clearPassable hierarchical
+?findGroundPath@Pathfinder@@QAEPAVPath@@PBUCoord3D@@0H_N@Z,,0x003F2160,2045,Code/GameEngine/Source/GameLogic/AI/AIPathfind_findGroundPath_Thunk.cpp,matched,exact 2045B via C++;object-symbol=_bfme_PathfinderFindGroundPath_3F2160
 ?findGroup@AI@@QAEPAVAIGroup@@I@Z,,0x0014B830,54,Code/GameEngine/Source/GameLogic/AI/ai.cpp,matched,
 ?findIdleWorker@InGameUI@@EAEPAVObject@@PAV2@@Z,,0x0043F880,21,Code/GameEngine/Source/GameClient/InGameUI.cpp,matched,
 ?findImageByName@ImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z,,0x005D2CF0,84,Code/GameEngine/Source/GameClient/System/Image.cpp,matched,thunk-dump converted to clean C++; needs BFME 8-byte string header (reference/shims/asciistring8) for the inlined AsciiString::str()
