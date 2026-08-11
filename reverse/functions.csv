@@ -34219,7 +34219,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?update@FlashTransition@@UAEXH@Z,,0x0059C9C0,137,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
 ?update@GameTextManager@@UAEXXZ,,0x00438420,1,Code/GameEngine/Source/GameClient/GameText.cpp,matched,Ghidra-vtable anchored empty update override; exact C++ RET
 ?update@GameWindowManager@@UAEXXZ,,0x0047C320,21,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,processDestroyList then TheTransitionHandler->update() through slot 5 not ZH slot 4
-?update@InGameUI@@,,0x004410C0,1234,Code/masm_dumps/_str2__update_InGameUI__4410C0.asm,matched,
+?update@InGameUI@@,,0x004410C0,1234,Code/GameEngine/Source/GameClient/InGameUIUpdateThunk.cpp,matched,Exact string-anchored retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_InGameUIUpdate_4410C0
 ?update@LANAPI@@,,0x006870F0,2030,Code/masm_dumps/_str__update_LANAPI__6870F0.asm,matched,
 ?update@LanguageFilter@@UAEXXZ,,0x0044CB30,1,Code/GameEngine/Source/GameClient/LanguageFilter.cpp,matched,slot 5 of the LanguageFilter vtable; one byte so the slot is the evidence
 ?update@LocomotorStore@@UAEXXZ,,0x005D2CE0,1,Code/GameEngine/Source/GameLogic/Object/Locomotor.cpp,matched,slot 5 of LocomotorStore vtable 0x01110104; slot order pinned by SubsystemLegend own vtable where slot 1 is init slot 4 reset slot 5 update - corroborated by PlayerList and TeamFactory
