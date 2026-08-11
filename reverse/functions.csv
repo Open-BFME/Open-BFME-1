@@ -34229,7 +34229,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?update@NAT@@,,0x0086C0C0,517,Code/GameEngine/Source/GameNetwork/NATUpdateThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_NATUpdate_86C0C0
 ?update@ObjectWeaponStatusHelper@@UAE?AW4UpdateSleepTime@@XZ,,0x001CB9D0,14,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,
 ?update@ParticleSystem@@UAE_NH@Z,,0x005FF310,767,Code/GameEngine/Source/GameClient/System/ParticleSystemUpdateThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_ParticleSystemUpdate_5FF310
-?update@Player@@QAEXXZ,,0x000D9A80,551,Code/GameEngine/Source/Common/RTS/Player_update.asm,matched,MASM exact; true body 0xD9A80/551 (queue 0xD5972 int3); unique MSG_ENABLE_RETALIATION_MODE 0x461
+?update@Player@@QAEXXZ,,0x000D9A80,551,Code/GameEngine/Source/Common/RTS/Player_update_Thunk.cpp,matched,object-symbol=_bfme_PlayerUpdate_D9A80; Open-BFME5 exact C++ lift of 551-byte ASM function
 ?update@PlayerTemplateStore@@UAEXXZ,,0x000E0BD0,1,Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp,matched,slot 5 of the PlayerTemplateStore vtable; one byte so the slot is the evidence
 ?update@PoisonedBehavior@@UAE?AW4UpdateSleepTime@@XZ,,0x00202BD0,48,Code/GameEngine/Source/Common/promoted_update_PoisonedBehavior_UAE_AW4UpdateSleepTime_XZ_00202BD0.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 48B
 ?update@ReverseSoundTransition@@UAEXH@Z,,0x0059EED0,52,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,MASM converted to exact __emit C++
