@@ -5386,7 +5386,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Add_Prototype_Impl@AssetRegistry@@QAEXPAX@Z,,0x009EF1A0,224,Code/GameEngineDevice/Source/W3DDevice/GameClient/Add_Prototype_Impl.cpp,matched,BFME registry Add_Prototype impl exact 224B @ 0x9EF1A0
 ?Add_Render_Object@SceneClass@@UAEXPAVRenderObjClass@@@Z,,0x00942C10,15,Code/Libraries/Source/WWVegas/WW3D2/scene.cpp,matched,
 ?Add_Render_Task@DX8TextureCategoryClass@@QAEXPAVDX8PolygonRendererClass@@PAVMeshClass@@@Z,,0x009465F0,87,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,reloc-needle Open-BFME4+Grok
-?Add_Rigid_Mesh_To_Container@@YAXPAV?$MultiListClass@VDX8FVFCategoryContainer@@@@IPAVMeshModelClass@@@Z,,0x009476F0,277,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer_Add_Rigid_Mesh_To_Container.asm,matched,exact 277B MASM; C++ layout-blocked SortLevel/Is_Sorting/sizeof
+?Add_Rigid_Mesh_To_Container@@YAXPAV?$MultiListClass@VDX8FVFCategoryContainer@@@@IPAVMeshModelClass@@@Z,,0x009476F0,277,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer_Add_Rigid_Mesh_To_Container_Thunk.cpp,matched,object-symbol=_bfme_AddRigidMeshToContainer_9476F0; Open-BFME5 exact C++ lift of 277-byte ASM function
 ?Add_Shader@MaterialCollectorClass@@QAEXVShaderClass@@@Z,,0x009300D0,89,Code/Libraries/Source/WWVegas/WW3D2/matinfo.cpp,matched,
 ?Add_Shader@MeshLoadContextClass@@AAEHVShaderClass@@@Z,,0x0096E930,85,Code/Libraries/Source/WWVegas/WW3D2/meshmdlio.cpp,matched,
 ?Add_Size@ChunkHeader@@QAEXK@Z,,0x009E1780,36,Code/Libraries/Source/WWVegas/WWLib/chunkio.cpp,matched,
