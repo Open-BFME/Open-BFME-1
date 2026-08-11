@@ -7650,7 +7650,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Randomize@?$Int@$0EA@@@QAEXAAVStraw@@ABV1@1@Z,,0x009EA7D0,40,Code/Libraries/Source/WWVegas/WWLib/pk.cpp,matched,
 ?Raw_Seek@RawFileClass@@IAEHHH@Z,,0x009E6910,115,Code/Libraries/Source/WWVegas/WWLib/rawfile.cpp,matched,
 ?ReAcquireResources@W3DVolumetricShadowManager@@QAE_NXZ,,0x0000F9B6,5,Code/Libraries/Source/WWVegas/WWLib/W3DVolumetricShadowManagerReAcquireThunk.cpp,matched,Focused C++ thunk for W3DVolumetricShadowManager::ReAcquireResources
-?ReAcquireResources@WaterRenderObjClass@@QAEXXZ,,0x007A0500,891,Code/masm_dumps/_sa11__ReAcquireResources_WaterRenderObjClass__QAEXXZ_7A0500.asm,matched,string-anchor Open-BFME4+Grok shaders\wave.pso
+?ReAcquireResources@WaterRenderObjClass@@QAEXXZ,,0x007A0500,891,Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterReAcquireResourcesThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_WaterReAcquireResources_7A0500;true ENTRY 0x7A0500/891;shaders\wave.pso anchor
 ?Re_Color@Line3DClass@@QAEXMMM@Z,,0x00951840,45,Code/Libraries/Source/WWVegas/WW3D2/line3d.cpp,matched,
 ?Re_Orthogonalize@Matrix3@@QAEXXZ,,0x008D96B0,525,Code/Libraries/Source/WWVegas/WWMath/matrix3.cpp,matched,
 ?Re_Orthogonalize@Matrix3D@@QAEXXZ,,0x008D8260,534,Code/Libraries/Source/WWVegas/WWMath/matrix3d.cpp,matched,
