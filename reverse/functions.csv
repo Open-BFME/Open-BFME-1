@@ -1142,7 +1142,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0AIMoveOutOfTheWayState@@QAE@PAVStateMachine@@@Z,,0x0017F350,46,Code/GameEngine/Source/GameLogic/AI/AIMoveOutOfTheWayStateCtorThunk.cpp,matched,Open-BFME5 exact C++ isolated raw AI state constructor
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,,0x00173430,50,Code/GameEngine/Source/GameLogic/AI/AIMoveToStateCtorThunk.cpp,matched,Open-BFME5 exact C++ isolated raw AI state constructor
 ??0AIPanicState@@QAE@PAVStateMachine@@@Z,,0x0017FBE0,82,Code/GameEngine/Source/GameLogic/AI/AIPanicStateCtorThunk.cpp,matched,Open-BFME5 exact C++ isolated raw AI state constructor
-??0AIStateMachine@@QAE@PAVObject@@VAsciiString@@@Z,,0x00185A20,4930,Code/masm_dumps/__0AIStateMachine__QAE_PAVObject__VAsciiString___Z_185A20.asm,matched,Exact 4930B string-anchored Open-BFME4
+??0AIStateMachine@@QAE@PAVObject@@VAsciiString@@@Z,,0x00185A20,4930,Code/GameEngine/Source/GameLogic/AI/AIStateMachineCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_AIStateMachineCtor_185A20
 ??0AITNGuardMachine@@,,0x0018AFB0,753,Code/GameEngine/Source/GameLogic/AI/AITNGuardMachineCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_AITNGuardMachineCtor_18AFB0
 ??0AITunnelNetworkGuardState@@QAE@PAVStateMachine@@@Z,,0x001717B0,53,Code/GameEngine/Source/GameLogic/AI/AITunnelNetworkGuardStateCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of certified MASM ctor
 ??0AIUpdateInterface@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0027F4B0,1237,Code/GameEngine/Source/GameLogic/AI/AIUpdateInterfaceCtorThunk.cpp,matched,Open-BFME5 exact C++ raw AI interface module constructor
