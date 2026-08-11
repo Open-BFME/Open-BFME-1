@@ -33109,7 +33109,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?parseWeatherData@@YAXPAVINI@@@Z,,0x0039B380,167,Code/GameEngine/Source/GameClient/WeatherData.cpp,matched,BFME-only and distinct from the Weather block in Snow.cpp; five 8-byte entries at TheGlobalWeatherSystem+0x28 selected by name
 ?parseWeatherDefinition@INI@@SAXPAV1@@Z,,0x0045B130,306,Code/GameEngine/Source/GameClient/Snow.cpp,matched,INI block table node binds keyword Weather to this address
 ?parseWin@@YAHQAPADH@Z,,0x00061050,19,Code/GameEngine/Source/Common/CommandLine.cpp,matched,
-?parseWindow@@YAPAVGameWindow@@PAVFile@@PAD@Z,,0x00487F80,1328,Code/masm_dumps/GameWindowManagerScript_parseWindow.asm,matched,Exact 1328B MASM; true start 0x487F80 after int3 pad; cold tail past main ret
+?parseWindow@@YAPAVGameWindow@@PAVFile@@PAD@Z,,0x00487F80,1328,Code/GameEngine/Source/GameClient/GUI/ParseWindowThunk.cpp,matched,Exact 1328B true start 0x487F80 after int3 pad with cold tail;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_ParseWindow_487F80;sha256=57b3dda4aaa7f4e14cbd0b575b57d8c877bbefd86c3e023bf0ee9cdaa3e81f2a
 ?parseWindowTransitions@INI@@SAXPAV1@@Z,,0x0048B7C0,172,Code/GameEngine/Source/Common/INI/INIWindowTransition.cpp,matched,asks TheTransitionHandler for a new group and parses into it; the receiver is the singleton the matched GameWindowManager reset and update also use
 ?pauseCountdown@SpecialPowerModule@@UAEX_N@Z,,0x0026A770,84,Code/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule.cpp,matched,recovered from Open-BFME4 overnight session (deepseek)
 ?peek@?$StringBase@D@@ABEPADXZ,0x0002B26A,0x0005E5B0,6,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,returns pointer to data
