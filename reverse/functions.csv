@@ -11920,7 +11920,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?inWeaponRangeObject@@YA_NPAVState@@PAX@Z,,0x00171FD0,24,Code/GameEngine/Source/GameLogic/AI/AIStates.cpp,matched,
 ?iniParseObjectFilter@@YAXPAVINI@@PAX1PBX@Z,,0x00039865,5,Code/GameEngine/Source/GameLogic/ScriptEngine/iniParseObjectFilter.cpp,matched,5-byte incremental-link thunk converted from MASM dump to focused C++ source
 ?init@AnimateWindowManager@@UAEXXZ,,0x0045DA80,31,Code/GameEngine/Source/GameClient/GUI/AnimateWindowManager.cpp,matched,
-?init@AudioManager@@,,0x006B8220,953,Code/masm_dumps/_s6__init_AudioManager__6B8220.asm,matched,Exact 953B 'AudioSettings.ini' Open-BFME4+Grok
+?init@AudioManager@@,,0x006B8220,953,Code/GameEngine/Source/Common/Audio/AudioManagerInitThunk.cpp,matched,Exact 953B AudioSettings.ini anchored Open-BFME4+Grok;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_AudioManagerInit_6B8220;sha256=b6b6fcfb861fc83ed806e940b71dfa0f69c52b4e9fdcd3a5aa72aee77f4ba05d
 ?init@BFMEConnectionManager@@QAEXXZ,,0x00669050,694,Code/GameEngine/Source/GameNetwork/native_connection_timing.cpp,matched,
 ?init@BFMENetwork@@QAEXXZ,,0x006548C0,204,Code/GameEngine/Source/GameNetwork/native_network.cpp,matched,native BFME network wrapper vtable slot +0x04; creates backend and calls backend slot +0x04
 ?init@ButtonFlashTransition@@UAEXPAVGameWindow@@@Z,,0x0059B070,161,Code/GameEngine/Source/Common/ButtonFlashTransition_init_Thunk.cpp,matched,ICF true init @0x59B070/161; unique Gradient push; queue 0x5A07ED was int3+other fn
