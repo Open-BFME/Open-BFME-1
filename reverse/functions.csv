@@ -11952,7 +11952,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?init@MainMenuMediumScaleUpTransition@@UAEXPAVGameWindow@@@Z,,0x003A4C80,251,Code/GameEngine/Source/Common/MainMenuMediumScaleUpTransition_init_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?init@MainMenuScaleUpTransition@@UAEXPAVGameWindow@@@Z,,0x0059E4E0,234,Code/GameEngine/Source/GameClient/GUI/MainMenuScaleUpTransition_init_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?init@MainMenuSmallScaleDownTransition@@UAEXPAVGameWindow@@@Z,,0x0059EC20,325,Code/GameEngine/Source/Common/MainMenuSmallScaleDownTransition_initMethodThunk.cpp,matched,Exact 325B @0x59EC20 true body (queue 0x59EC1F was int3 pad+oversize); Small concat SEH Open-BFME
-?init@MapTransferLoadScreen@@,,0x00492C40,988,Code/masm_dumps/_str__init_MapTransferLoadScreen__492C40.asm,matched,
+?init@MapTransferLoadScreen@@,,0x00492C40,988,Code/GameEngine/Source/GameClient/GUI/MapTransferLoadScreenInitThunk.cpp,matched,Exact string-anchored retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_MapTransferLoadScreenInit_492C40
 ?init@ModuleFactory@@UAEXXZ,,0x0012C2E0,18040,Code/GameEngine/Source/Common/System/module_factory.cpp,matched,
 ?init@Money@@QAEXXZ,,0x008E21C0,8,Code/GameEngine/Source/Common/RTS/Player.cpp,matched,ICF alias of existing matched body
 ?init@MultiPlayerLoadScreen@@,,0x00492400,1688,Code/masm_dumps/_str2__init_MultiPlayerLoadScreen__492400.asm,matched,
