@@ -7683,7 +7683,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Register_Memory_Released@MemLogClass@@QAEXHH@Z,,0x00AFE890,99,Code/Libraries/Source/WWVegas/WWDebug/wwmemlog.cpp,matched,
 ?Register_Memory_Released@WWMemoryLogClass@@SAXHH@Z,,0x00AFFA90,23,Code/Libraries/Source/WWVegas/WWDebug/wwmemlog.cpp,matched,
 ?Register_Mesh_Prototype@@YAXPBDHH@Z,,0x00971060,124,Code/Libraries/Source/WWVegas/WW3D2/Register_Mesh_Prototype.cpp,matched,BFME MESH Load_Prototype register exact 124B @ 0x971060
-?Register_Mesh_Type@DX8MeshRendererClass@@QAEXPAVMeshModelClass@@@Z,,0x00A08180,528,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer_Register_Mesh_Type.asm,matched,exact 528B via MASM
+?Register_Mesh_Type@DX8MeshRendererClass@@QAEXPAVMeshModelClass@@@Z,,0x00A08180,528,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer_Register_Mesh_Type_Thunk.cpp,matched,object-symbol=_bfme_DX8MeshRendererRegisterMeshType_A08180; Open-BFME5 exact C++ lift of 528-byte ASM function
 ?Register_Missing@HAnimManagerClass@@QAEXPBD@Z,,0x007BB850,101,Code/Libraries/Source/WWVegas/WW3D2/hanimmgr.cpp,matched,
 ?Register_Missing@W3DShadowGeometryManager@@QAEXPBD@Z,,0x007B1190,102,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,
 ?Register_Particle_Prototype@@YAXPBDHH@Z,,0x00971440,124,Code/Libraries/Source/WWVegas/WW3D2/Register_Particle_Prototype.cpp,matched,BFME PART Load_Prototype register exact 124B @ 0x971440
