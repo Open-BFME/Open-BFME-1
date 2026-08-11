@@ -32679,7 +32679,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?missionSave@GameState@@QAE?AW4SaveCode@@XZ,,0x00110600,311,Code/GameEngine/Source/Common/GameState_missionSave_Thunk.cpp,matched,Exact 311B Open-BFME4
 ?move@?$__char_traits_base@DH@_STL@@SAPADPADPBDI@Z,,0x000A32D0,23,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,
 ?move@?$__char_traits_base@GG@_STL@@SAPAGPAGPBGI@Z,,0x004D4100,25,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupHostGame.cpp,matched,
-?moveAllies@Pathfinder@@QAE_NPAVObject@@PAVPath@@@Z,,0x003EBA30,1268,Code/masm_dumps/moveAllies_Pathfinder_QAE_NPAVObject_PAVPath_Z_003EBA30_49772ebf.asm,matched,Certified packet 188 true body via reviewed caller thunk and ret 0x0C boundary
+?moveAllies@Pathfinder@@QAE_NPAVObject@@PAVPath@@@Z,,0x003EBA30,1268,Code/GameEngine/Source/GameLogic/AI/PathfinderMoveAlliesThunk.cpp,matched,Certified packet 188 true body via reviewed caller thunk and ret 0x0C boundary;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_PathfinderMoveAllies_3EBA30;sha256=49772ebf983cc39d47c7cc2dea6106b7c1af2f92002417641458065c79ffdaa2
 ?moveAlliesAwayFromDestination@Pathfinder@@QAEXPAVObject@@ABUCoord3D@@@Z,,0x003F2EC0,127,Code/GameEngine/Source/Common/Pathfinder_moveAlliesAwayFromDestination_Thunk.cpp,matched,Certified packet 291 exact retail db body SHA-256 1992ff7bd47f6858497a79ebe942be761d02ad48fc4cb780f548412a53235528
 ?moveRoadSegTo@W3DRoadBuffer@@IAEXHH@Z,,0x0070B040,223,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp,matched,thunk-dump converted to clean C++ (source already ported from ZH reference)
 ?moveRowsDown@@YAHPAU_ListboxData@@H@Z,,0x004B6C30,212,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
