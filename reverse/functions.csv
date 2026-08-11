@@ -11678,7 +11678,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getRequestedPlayerID@BFMENetRequestPlayerLeaveCommandMsg@@QAEHXZ,,0x00674250,4,Code/GameEngine/Source/GameNetwork/native_netcommandmsg.cpp,matched,native BFME request-player-leave payload getter at +0x1c
 ?getRequiredScience@SpecialPowerModule@@UBE?AW4ScienceType@@XZ,,0x00268A30,33,Code/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule.cpp,matched,
 ?getRequiredScience@SpecialPowerTemplate@@QBE?AW4ScienceType@@XZ,,0x000EB4C0,27,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp,matched,
-?getRequiresList@ProductionPrerequisite@@QBE?AVUnicodeString@@PBVPlayer@@@Z,,0x000E4BE0,1037,Code/masm_dumps/_str__getRequiresList_ProductionPrerequisite_QBE_AVUnicodeSt_E4BE0.asm,matched,
+?getRequiresList@ProductionPrerequisite@@QBE?AVUnicodeString@@PBVPlayer@@@Z,,0x000E4BE0,1037,Code/GameEngine/Source/Common/RTS/ProductionPrerequisiteGetRequiresListThunk.cpp,matched,Exact string-anchored retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_ProductionPrerequisiteGetRequiresList_E4BE0
 ?getResolution@OptionPreferences@@QAEXPAH0@Z,,0x00091930,129,Code/GameEngine/Source/Common/OptionPreferences_getResolution_Thunk.cpp,matched,Open-BFME5 lift 129B retail method MASM to standalone C++ thunk
 ?getResponse@GameResultsQueue@@UAE_NAAVGameResultsResponse@@@Z,,0x00642510,237,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,reloc-needle Open-BFME4+Grok asm->cpp depth Open-BFME4+Grok
 ?getResponse@GameSpyBuddyMessageQueue@@UAE_NAAVBuddyResponse@@@Z,,0x0063C840,167,Code/GameEngine/Source/Common/GameSpyBuddyMessageQueue_getResponse_Thunk.cpp,matched,reloc-needle Open-BFME4+Grok
