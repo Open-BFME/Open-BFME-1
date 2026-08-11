@@ -33977,7 +33977,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?setTower@BridgeBehavior@@UAEXW4BridgeTowerType@@PAVObject@@@Z,,0x001F1F70,42,Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp,matched,
 ?setTowerObjectID@Bridge@@QAEXW4ObjectID@@W4BridgeTowerType@@@Z,,0x001F1F00,15,Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp,matched,
 ?setTransformMatrix@Thing@@QAEXPBVMatrix3D@@@Z,,0x00023D49,5,Code/Libraries/Source/WWVegas/WWLib/ThingShadowTransformThunks.cpp,matched,Focused C++ thunk for Thing::setTransformMatrix
-?setTriggerAreaFlagsForChangeInPosition@Object@@IAEXXZ,,0x001C8E7D,749,Code/GameEngine/Source/GameLogic/Object/Object_setTriggerAreaFlagsForChangeInPosition.asm,matched,exact 749B via MASM
+?setTriggerAreaFlagsForChangeInPosition@Object@@IAEXXZ,,0x001C8E7D,749,Code/GameEngine/Source/GameLogic/Object/Object_setTriggerAreaFlagsForChangeInPosition_Thunk.cpp,matched,object-symbol=_bfme_ObjectSetTriggerAreaFlagsForPositionChange_1C8E7D; Open-BFME5 exact C++ lift of 749-byte ASM function
 ?setTurning@PhysicsBehavior@@QAEXW4PhysicsTurningType@@@Z,,0x005BD440,10,Code/GameEngine/Source/GameLogic/Object/Locomotor.cpp,matched,
 ?setUV@Image@@QAEXPAURegion2D@@@Z,,0x0044F5A0,36,Code/GameEngine/Source/GameClient/System/Image.cpp,matched,
 ?setUV@ParticleSystemTemplate@FXParticleSystem@@QAEXPBURegion2D@@@Z,0x00036D5E,0x0005CB70,39,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,copies UV region if non-null
