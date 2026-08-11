@@ -1696,7 +1696,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0IRegion3D@@QAE@XZ,0x0002F270,0x007E6F30,3,Code/Libraries/Source/WWVegas/WWMath/region.cpp,matched,empty constructor returns self
 ??0IgnorePreferences@@QAE@XZ,,0x000ABA30,192,Code/GameEngine/Source/GameNetwork/GameSpy/IgnorePreferences_Ctor_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??0ImageCollection@@QAE@XZ,,0x005D30E0,105,Code/GameEngine/Source/GameClient/System/Image.cpp,matched,ICF alias of ??0LocomotorStore@@QAE@XZ; corrected body begins after one-byte int3 padding
-??0InGameUI@@QAE@XZ,,0x0044B800,1828,Code/masm_dumps/_sa14___0InGameUI__QAE_XZ_44B800.asm,matched,sa14 Open-BFME4+Grok Courier
+??0InGameUI@@QAE@XZ,,0x0044B800,1828,Code/GameEngine/Source/GameClient/InGameUICtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_InGameUICtor_44B800;sa14 Courier
 ??0InactiveBody@@QAE@PAVThing@@PBVModuleData@@@Z,,0x00213BF0,126,Code/GameEngine/Source/GameLogic/Object/Body/InactiveBodyCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit port of 126B constructor
 ??0InputChunk@@QAE@XZ,,0x00061D90,9,Code/GameEngine/Source/Common/System/DataChunk.cpp,matched,ICF alias of existing matched body
 ??0InputLightStruct@LightEnvironmentClass@@QAE@ABU01@@Z,,0x0094AD80,139,Code/Libraries/Source/WWVegas/WW3D2/lightenvironment.cpp,matched,
