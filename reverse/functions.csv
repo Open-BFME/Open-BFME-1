@@ -8910,7 +8910,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?addItemToHead@LList@@QAEXPAX@Z,,0x00105BD0,62,Code/GameEngine/Source/Common/System/List.cpp,matched,
 ?addItemToTail@LList@@QAEXPAX@Z,,0x00105C20,64,Code/GameEngine/Source/Common/System/List.cpp,matched,
 ?addLocomotor@LocomotorSet@@QAEXPBVLocomotorTemplate@@@Z,,0x001BAD80,52,Code/GameEngine/Source/GameLogic/Object/Locomotor.cpp,matched,
-?addMap@MapCache@@AAE_NVAsciiString@@0PAUFileInfo@@_N@Z,,0x00456A90,1178,Code/masm_dumps/_sa11__addMap_MapCache__AAE_NVAsciiString__0PAUFileInfo___N_Z_456A90.asm,matched,string-anchor Open-BFME4+Grok Star-Bronze
+?addMap@MapCache@@AAE_NVAsciiString@@0PAUFileInfo@@_N@Z,,0x00456A90,1178,Code/GameEngine/Source/GameClient/MapCacheAddMapThunk.cpp,matched,string-anchor Open-BFME4+Grok Star-Bronze;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_MapCacheAddMap_456A90;sha256=a0b5994f9d440e046a8585b1bcb1b91808b37edd216e9004299c8b1956e8e330
 ?addMessage@NetCommandList@@QAEPAVNetCommandRef@@PAVNetCommandMsg@@@Z,,0x00673200,609,Code/GameEngine/Source/GameNetwork/NetCommandList_addMessage.asm,matched,MASM exact 609B @ 0x673200; queue 0x673251 was mid-SEH body; push 0x14 NetCommandRef; ret 4
 ?addMessageText@InGameUI@@IAEXABVUnicodeString@@PBURGBColor@@@Z,,0x0043DF00,388,Code/GameEngine/Source/GameClient/InGameUI_addMessageText_Thunk.cpp,matched,Open-BFME5 lift 388B retail MASM to standalone C++ thunk
 ?addModuleInternal@ModuleFactory@@IAEXPBX00HABVAsciiString@@H@Z,,0x00129AC0,69,Code/GameEngine/Source/Common/System/module_factory.cpp,matched,ModuleFactory::addModuleInternal shared body
