@@ -12207,7 +12207,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?isPriorityVisible@Radar@@QBE_NW4RadarPriorityType@@@Z,,0x00107280,23,Code/GameEngine/Source/Common/System/Radar.cpp,matched,
 ?isQueueEmpty@Connection@@QAE_NXZ,,0x00661C90,12,Code/GameEngine/Source/GameNetwork/Connection.cpp,matched,
 ?isRadarWindow@Radar@@QAE_NPAVGameWindow@@@Z,,0x0043A520,29,Code/GameEngine/Source/Common/System/RadarIsRadarWindowThunk.cpp,matched,Open-BFME5 clean C++ Radar::isRadarWindow
-?isRepairMostImportant@DozerPrimaryStateMachine@@SA_NPAVState@@PAX@Z,,0x002B64E0,77,Code/GameEngine/Source/Common/DozerPrimaryStateMachine_isRepairMostImportant_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
+?isRepairMostImportant@DozerPrimaryStateMachine@@SA_NPAVState@@PAX@Z,,0x002B64E0,77,Code/GameEngine/Source/Common/DozerPrimaryStateMachine_isRepairMostImportant_Thunk.cpp,matched,Open-BFME5 native C++ exact virtual-dispatch predicate
 ?isSamePosition@@YA_NPBUCoord3D@@00@Z,,0x0016AA70,69,Code/GameEngine/Source/GameLogic/AI/AIStates.cpp,matched,
 ?isSandbox@GameInfo@@QAE_NXZ,,0x00621600,843,Code/GameEngine/Source/GameNetwork/GameInfoSandboxThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from string-anchored MASM body;object-symbol=_bfme_GameInfoIsSandbox_621600;true ENTRY 0x621600/843
 ?isScienceGrantable@ScienceStore@@QBE_NW4ScienceType@@@Z,,0x000E6DE0,25,Code/GameEngine/Source/Common/RTS/Science.cpp,matched,thunk-dump converted to clean C++; true body 0xE6DE0 (25B ending before int3 pad at 0xE6DF9)
