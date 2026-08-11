@@ -7142,7 +7142,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Init@SegLineRendererClass@@QAEXABUW3dEmitterLinePropertiesStruct@@@Z,,0x00960190,237,Code/Libraries/Source/WWVegas/WW3D2/seglinerenderer.cpp,matched,
 ?Init@SphereClass@@QAEXABVVector3@@M@Z,,0x0042E380,30,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp,matched,
 ?Init@WWMath@@SAXXZ,,0x008D8E90,157,Code/Libraries/Source/WWVegas/WWMath/wwmath.cpp,matched,BFME drift: no LookupTableMgrClass::Init() call
-?InitBuddyControls@@YAXH@Z,,0x004EA9D0,776,Code/masm_dumps/InitBuddyControls.asm,matched,Exact MASM; true body 0x4EA9D0 size 776 (queue 0x8CC0A misplaced). Identity: Diplomacy/WOLBuddy TextEntryChat string xrefs + SEH. C++ blocked by AsciiString +8 payload/regalloc (prior attempt).
+?InitBuddyControls@@YAXH@Z,,0x004EA9D0,776,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/InitBuddyControlsThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_InitBuddyControls_4EA9D0;true ENTRY 0x4EA9D0/776;Diplomacy/WOLBuddy TextEntryChat identity
 ?InitDbghelp@@YAXXZ,,0x0088C550,329,Code/Libraries/Source/WWVegas/WWDebug/debug_stack.cpp,matched,resweep exact post-GWM-fix (exact-ambiguous)
 ?InitGameLogicRandom@@YAXI@Z,,0x00096C90,72,Code/GameEngine/Source/Common/System/random_value.cpp,matched,
 ?InitRandom@@YAXI@Z,,0x00096BA0,188,Code/GameEngine/Source/Common/System/random_value.cpp,matched,
