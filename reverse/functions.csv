@@ -6088,7 +6088,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?GadgetComboBoxSetMaxDisplay@@YAXPAVGameWindow@@H@Z,,0x004B39B0,17,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,matched,
 ?GadgetComboBoxSetSelectedPos@@YAXPAVGameWindow@@H_N@Z,,0x004B3C70,42,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBox.cpp,matched,
 ?GadgetComboBoxSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z,,0x004B4E70,157,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBoxSetTextThunk.cpp,matched,Exact standalone C++ __emit thunk from certified retail helper
-?GadgetComboBoxSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004B42F0,2153,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBoxSystem.asm,matched,Exact 2153B MASM; Ghidra ENTRY not assigned 2352; thunk 0x43A887 proves identity; ZH C++ frame 0x2C vs retail 0xA4
+?GadgetComboBoxSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004B42F0,2153,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetComboBoxSystem_Thunk.cpp,matched,exact 2153B via C++;object-symbol=_bfme_GadgetComboBoxSystem_4B42F0
 ?GadgetListBoxAddEntryImage@@YAHPAVGameWindow@@PBVImage@@HHHH_NH@Z,0x0001712A,0x004B71A0,97,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,Native body replaces thunk-only MASM ownership
 ?GadgetListBoxAddEntryImage@@YAHPAVGameWindow@@PBVImage@@HH_NH@Z,,0x004B7220,43,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetListBox.cpp,matched,
 ?GadgetListBoxAddEntryText@@YAHPAVGameWindow@@VUnicodeString@@HHH_N@Z,,0x004BB4B0,357,Code/GameEngine/Source/Common/GadgetListBoxAddEntryText_Thunk.cpp,matched,Exact MASM: retail GLM_ADD_ENTRY 0x4011 endPos+0x2C; C++ blocked on empty-string temp arg-home shape
