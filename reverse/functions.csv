@@ -34235,7 +34235,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?update@ReverseSoundTransition@@UAEXH@Z,,0x0059EED0,52,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,MASM converted to exact __emit C++
 ?update@ScaleUpTransition@@UAEXH@Z,,0x0059F060,144,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
 ?update@StealthDetectorUpdate@@,,0x002AB690,1954,Code/masm_dumps/_str__update_StealthDetectorUpdate__2AB690.asm,matched,
-?update@StructureCollapseUpdate@@UAE?AW4UpdateSleepTime@@XZ,,0x002AE950,944,Code/masm_dumps/StructureCollapseUpdate_update.asm,matched,retail MASM; ctor vtable 0x10C4644 slot 0 via thunk 0x002E4C9; Ghidra ENTRY 944
+?update@StructureCollapseUpdate@@UAE?AW4UpdateSleepTime@@XZ,,0x002AE950,944,Code/GameEngine/Source/GameLogic/Object/Update/StructureCollapseUpdateThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from ctor-vtable-anchored MASM body;object-symbol=_bfme_StructureCollapseUpdate_2AE950;true ENTRY 0x2AE950/944
 ?update@StructureToppleUpdate@@UAE?AW4UpdateSleepTime@@XZ,,0x008F7E80,1211,Code/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdate_update.asm,matched,true size 1211B; row claimed 769B
 ?update@SubsystemLegend@@UAEXXZ,,0x00078B40,1,Code/GameEngine/Source/Common/System/SubsystemLegend.cpp,matched,empty override (base slot 5)
 ?update@SupplyTruckBusyState@@UAE?AW4StateReturnType@@XZ,,0x006CF680,3,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
