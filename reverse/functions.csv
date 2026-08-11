@@ -32934,7 +32934,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?parseDebugCommandMap@@YAXPAVINI@@@Z,,0x005B7030,129,Code/GameEngine/Source/GameClient/DebugCommandMap.cpp,matched,reads the entry name and discards it then parses into a local that is also discarded - the release build validates syntax and stores nothing
 ?parseDefaultColor@@YA_NPAHPAVFile@@PAD@Z,,0x00485970,143,Code/GameEngine/Source/Common/parseDefaultColor_Thunk.cpp,matched,Certified packet 43 reviewed ENTRY boundaries callers TRANSPARENT xref and call graph
 ?parseDrawCallback@@YA_NPADPAVWinInstanceData@@0PAX@Z,,0x00486A60,130,Code/GameEngine/Source/GameClient/GUI/parseDrawCallback_Thunk.cpp,matched,Open-BFME5 lift 130B retail method MASM to standalone C++ thunk
-?parseDrawData@@YA_NPADPAVWinInstanceData@@0PAX@Z,,0x00485EE0,1221,Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript_parseDrawData.asm,matched,exact 1221B via MASM (structural near-match)
+?parseDrawData@@YA_NPADPAVWinInstanceData@@0PAX@Z,,0x00485EE0,1221,Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript_parseDrawData_Thunk.cpp,matched,exact 1221B via C++;object-symbol=_bfme_ParseDrawData_485EE0
 ?parseDrawGroupNumberDefinition@INI@@SAXPAV1@@Z,,0x000B8200,66,Code/GameEngine/Source/Common/INI/INIDrawGroupNumberDefinitionThunk.cpp,matched,Open-BFME5 clean C++ conversion of __emit parse thunk
 ?parseDurationReal@INI@@SAXPAV1@PAX1PBX@Z,,0x000B9C30,33,Code/GameEngine/Source/Common/INI/ini.cpp,matched,
 ?parseDurationUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z,,0x000B9C60,67,Code/GameEngine/Source/Common/INI/ini.cpp,matched,
