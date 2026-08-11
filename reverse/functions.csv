@@ -8508,7 +8508,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Validate_Transform@RenderObjClass@@UBEXXZ,,0x00920270,80,Code/GameEngine/Source/Common/RenderObjClass_Validate_Transform_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?Value@CRCEngine@@IBEJXZ,,0x009E8020,17,Code/Libraries/Source/WWVegas/WWLib/crc.cpp,matched,
 ?Version1@Xfer@@QAEXXZ,0x000429C9,0x000C7E90,21,Code/GameEngine/Source/Common/System/Xfer.cpp,matched,xfer version 1 marker
-?Visibility_Check@RTS3DScene@@UAEXPAVCameraClass@@@Z,,0x009446F0,1075,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene_Visibility_Check.asm,matched,exact 1075B via MASM
+?Visibility_Check@RTS3DScene@@UAEXPAVCameraClass@@@Z,,0x009446F0,1075,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene_Visibility_Check_Thunk.cpp,matched,exact 1075B via C++;object-symbol=_bfme_RTS3DSceneVisibilityCheck_9446F0
 ?W3DCameoMovieDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,,0x00799D00,148,Code/GameEngine/Source/Common/W3DCameoMovieDraw_Thunk.cpp,matched,Exact 148B Open-BFME5
 ?W3DCommandBarGenExpDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,,0x0079B7D0,983,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DCommandBarGenExpDrawThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_W3DCommandBarGenExpDraw_79B7D0;true ENTRY 0x79B7D0/983
 ?W3DCommandBarGridDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,,0x00799FA0,634,Code/GameEngine/Source/GameClient/GUI/ControlBar/W3DCommandBarGridDrawThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from FunctionLexicon-identified MASM body;object-symbol=_bfme_W3DCommandBarGridDraw_799FA0
