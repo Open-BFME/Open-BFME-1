@@ -2303,7 +2303,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0TTriggerInfo@@QAE@XZ,,0x001BD370,19,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,
 ??0Team@@QAE@PAVTeamPrototype@@I@Z,,0x000F7790,631,Code/GameEngine/Source/Common/RTS/TeamCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from certified SEH MASM constructor;object-symbol=_bfme_TeamCtor_0F7790
 ??0TeamFactory@@QAE@XZ,,0x000F2250,130,Code/GameEngine/Source/Common/RTS/TeamFactoryCtorThunk.cpp,matched,1:1 C++ thunk from certified TeamFactory vtable body
-??0TeamTemplateInfo@@QAE@PAVDict@@@Z,,0x000EFEB0,2992,Code/masm_dumps/TeamTemplateInfo_ctor.asm,matched,MASM exact: true body @0xEFEB0 (queue 0xEFCB7 was mid-gap); TeamPrototype embeds TTI@+0x12c; vtbl near TeamTemplateInfo str; BFME MAX_GENERIC_SCRIPTS=32 blocks ZH C++
+??0TeamTemplateInfo@@QAE@PAVDict@@@Z,,0x000EFEB0,2992,Code/GameEngine/Source/Common/TeamTemplateInfoCtorThunk.cpp,matched,Exact true retail body at 0xEFEB0;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_TeamTemplateInfoCtor_EFEB0
 ??0TeamsInfo@@QAE@XZ,,0x00191460,14,Code/GameEngine/Source/GameLogic/Map/SidesList.cpp,matched,
 ??0TeamsInfoRec@@QAE@XZ,,0x0005C5D0,13,Code/GameEngine/Source/GameLogic/Map/SidesList.cpp,matched,icf-owner=??0?$DLNodeClass@USmudge@@@@QAE@XZ
 ??0TechBuildingBehaviorModuleData@@QAE@XZ,,0x0008A430,26,Code/GameEngine/Source/GameLogic/Object/Behavior/TechBuildingBehavior.cpp,matched,
