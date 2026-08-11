@@ -11178,7 +11178,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getCreate@BehaviorModule@@UAEPAVCreateModuleInterface@@XZ,,0x006CF680,3,Code/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehavior.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?getCreate@CreateModule@@UAEPAVCreateModuleInterface@@XZ,,0x0011A150,14,Code/GameEngine/Source/GameLogic/Object/Create/CreateModule.cpp,matched,
 ?getCurPos@AnimateWindow@@QAE?AUICoord2D@@XZ,,0x00495310,18,Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp,matched,
-?getCurrentBonePositions@W3DModelDraw@@UBEHPBDHPAUCoord3D@@PAVMatrix3D@@H@Z,,0x0075FC70,1276,Code/masm_dumps/getCurrentBonePositions_W3DModelDraw_0075FC70.asm,matched,MASM exact; true ENTRY 0x75FC70/1276 (queue 0x75FC9F INSIDE+0x2F); %s%02d MAX_BONE=64 ret0x14
+?getCurrentBonePositions@W3DModelDraw@@UBEHPBDHPAUCoord3D@@PAVMatrix3D@@H@Z,,0x0075FC70,1276,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawCurrentBonePositionsThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from SEH-entry MASM body;object-symbol=_bfme_W3DModelDrawCurrentBonePositions_75FC70;true ENTRY 0x75FC70/1276;ret0x14
 ?getCurrentFrameHeight@Anim2D@@QBEIXZ,,0x005BA340,33,Code/GameEngine/Source/GameClient/System/Anim2D.cpp,matched,
 ?getCurrentFrameWidth@Anim2D@@QBEIXZ,,0x005BA310,33,Code/GameEngine/Source/GameClient/System/Anim2D.cpp,matched,
 ?getCurrentMissionNumber@CampaignManager@@QAEHXZ,,0x005BBDB0,41,Code/GameEngine/Source/GameClient/System/CampaignManager.cpp,matched,
