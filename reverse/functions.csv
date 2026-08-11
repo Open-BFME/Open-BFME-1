@@ -1716,7 +1716,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0LListNode@@QAE@XZ,,0x001058D0,19,Code/GameEngine/Source/Common/System/List.cpp,matched,
 ??0LODHeapNode@@QAE@PAVRenderObjClass@@M@Z,,0x009E5EB0,18,Code/Libraries/Source/WWVegas/WW3D2/predlod.cpp,matched,tiny-locate
 ??0LadderInfo@@QAE@XZ,,0x0062A910,161,Code/GameEngine/Source/GameNetwork/LadderInfo_ctor_Thunk.cpp,matched,Open-BFME5 lift 161B retail MASM to standalone C++ thunk
-??0LadderList@@QAE@XZ,,0x0062C020,925,Code/masm_dumps/LadderList_constructor.asm,matched,Ghidra-bound retail constructor
+??0LadderList@@QAE@XZ,,0x0062C020,925,Code/GameEngine/Source/GameNetwork/GameSpy/LadderListCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from Ghidra-bound retail constructor;object-symbol=_bfme_LadderListCtor_62C020
 ??0LadderPref@@QAE@ABV0@@Z,,0x000A9BE0,95,Code/GameEngine/Source/Common/LadderPrefCtorThunk.cpp,matched,Open-BFME5 exact C++ raw LadderPref copy constructor
 ??0LadderPref@@QAE@XZ,,0x0005C6C0,16,Code/GameEngine/Source/Common/UserPreferences.cpp,matched,icf-owner=??0?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@QAE@XZ
 ??0LadderPreferences@@QAE@XZ,,0x000ACB60,139,Code/GameEngine/Source/Common/UserPreferences.cpp,matched,
