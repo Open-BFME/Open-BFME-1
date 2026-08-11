@@ -34118,7 +34118,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?strtrim@@YAPADPAD@Z,,0x009E7EB0,102,Code/Libraries/Source/WWVegas/WWLib/trim.cpp,matched,
 ?sub@Coord3D@@QAEXPBU1@@Z,,0x000C3CE0,31,Code/GameEngine/Source/Common/Audio/GameSounds.cpp,matched,
 ?sub@Coord3D@@QAEXPBUCoord3DBase@@@Z,0x00045084,0x000C3CE0,31,Code/Libraries/Source/WWVegas/WWMath/coord3d.cpp,matched,subtracts Coord3DBase pointer
-?subdivision_util@StreakRendererClass@@AAEXIPBVVector3@@PBMPAIPAV2@PAM@Z,,0x0095CA00,1141,Code/masm_dumps/_rn4__subdivision_util_StreakRendererClass__AAEXIPBVVector3__PBMPAIPAV2_PAM_95CA00.asm,matched,reloc-needle Open-BFME4+Grok
+?subdivision_util@StreakRendererClass@@AAEXIPBVVector3@@PBMPAIPAV2@PAM@Z,,0x0095CA00,1141,Code/Libraries/Source/WWVegas/WW3D2/StreakRenderer_subdivision_util_Thunk.cpp,matched,object-symbol=_bfme_StreakRendererSubdivisionUtil_95CA00; Open-BFME5 exact lift of complete 1141-byte ledger range
 ?submul@@YAMABVVector4@@MMM@Z,,0x00131F30,29,Code/Libraries/Source/WWVegas/WW3D2/pivot.cpp,matched,
 ?swap@?$StringBase@D@@QAEXAAV1@@Z,0x0002E4E7,0x0006F4E0,17,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,swap m_data pointers
 ?swap@?$StringBase@G@@QAEXAAV1@@Z,0x000325F1,0x004B22E0,17,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,swap m_data pointers
