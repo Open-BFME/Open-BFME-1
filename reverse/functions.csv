@@ -4176,7 +4176,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??4GameResultsRequest@@QAEAAV0@ABV0@@Z,,0x00641DC0,73,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
 ??4GameResultsResponse@@QAEAAV0@ABV0@@Z,,0x00641E20,52,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
 ??4GameSlot@@QAEAAV0@ABV0@@Z,,0x004F08C0,82,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,
-??4HLodClass@@QAEAAV0@ABV0@@Z,,0x0097D3B0,932,Code/masm_dumps/_sym1___4HLodClass__QAEAAV0_ABV0__Z_97D3B0.asm,matched,symbol-pin Open-BFME4+Grok
+??4HLodClass@@QAEAAV0@ABV0@@Z,,0x0097D3B0,932,Code/Libraries/Source/WWVegas/WW3D2/HLodClassAssignmentThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from symbol-pinned MASM body;object-symbol=_bfme_HLodClassAssignment_97D3B0
 ??4HemisphericalEmissionVelocityModuleTemplate@FXParticleSystem@@QAEAAV01@ABV01@@Z,0x0003AB66,0x5d7590,44,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
 ??4ICoord2D@@QAEAAU0@ABU0@@Z,0x00009011,0x007E6D70,19,Code/Libraries/Source/WWVegas/WWMath/icoord.cpp,matched,copies x/y from ICoord2D
 ??4ICoord2D@@QAEAAU0@ABUICoord2DBase@@@Z,0x00001C21,0x00477BA0,19,Code/Libraries/Source/WWVegas/WWMath/icoord.cpp,matched,copies x/y from ICoord2DBase
