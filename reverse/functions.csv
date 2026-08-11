@@ -11323,7 +11323,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getHeight@View@@UAEHXZ,,0x00674250,4,Code/GameEngine/Source/GameClient/View.cpp,matched,icf-owner=?getRequestedPlayerID@BFMENetRequestPlayerLeaveCommandMsg@@QAEHXZ
 ?getHeightAboveTerrain@Thing@@QBEMXZ,,0x00131B00,25,Code/GameEngine/Source/Common/Thing/Thing.cpp,matched,
 ?getHeightAboveTerrainOrWater@Thing@@QBEMXZ,,0x001324A0,105,Code/GameEngine/Source/Common/Thing/Thing.cpp,matched,
-?getHeightMapHeight@BaseHeightMapRenderObjClass@@QBEMMMPAUCoord3D@@@Z,,0x006CBB50,957,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_getHeightMapHeight.asm,matched,exact 957B MASM @ 0x006CBB50; queue 0x00B020E9 misplaced (int3 pad+stub); m_map+0x2FF4 U16 height blocks C++
+?getHeightMapHeight@BaseHeightMapRenderObjClass@@QBEMMMPAUCoord3D@@@Z,,0x006CBB50,957,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_getHeightMapHeight_Thunk.cpp,matched,exact 957B via C++;object-symbol=_bfme_BaseHeightMapGetHeightMapHeight_6CBB50
 ?getHordeUpdateInterface@BehaviorModule@@UAEPAVHordeUpdateInterface@@XZ,,0x006CF680,3,Code/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehavior.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?getHorizontalSliderDrawFunc@GameWindowManager@@QAEP6AXPAVGameWindow@@PAVWinInstanceData@@@ZXZ,,0x006CF680,3,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?getHorizontalSliderImageDrawFunc@GameWindowManager@@QAEP6AXPAVGameWindow@@PAVWinInstanceData@@@ZXZ,,0x006CF680,3,Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
