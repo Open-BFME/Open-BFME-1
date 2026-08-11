@@ -9539,7 +9539,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?createFileSystem@GameEngine@@MAEPAVFileSystem@@XZ,,0x006BADB0,86,Code/GameEngine/Source/Common/GameEngine.cpp,matched,
 ?createFirewallHelper@@YAPAVFirewallHelperClass@@XZ,,0x0066EBC0,27,Code/GameEngine/Source/GameNetwork/FirewallHelper.cpp,matched,
 ?createFontLibrary@W3DGameClient@@MAEPAVFontLibrary@@XZ,,0x006FB670,80,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DGameClient.cpp,matched,
-?createGadget@@YAPAVGameWindow@@PADPAV1@HHHHHPAVWinInstanceData@@PAX@Z,,0x00486B10,1959,Code/masm_dumps/GameWindowManagerScript_createGadget.asm,matched,Exact retail MASM; gadget branches and two create-window callers prove ownership
+?createGadget@@YAPAVGameWindow@@PADPAV1@HHHHHPAVWinInstanceData@@PAX@Z,,0x00486B10,1959,Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScriptCreateGadgetThunk.cpp,matched,Exact retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_GameWindowManagerScriptCreateGadget_486B10
 ?createGameDisplay@W3DGameClient@@MAEPAVDisplay@@XZ,,0x006BA9A0,89,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DGameClient.cpp,matched,
 ?createGarrisonHint@InGameUI@@UAEXPBVGameMessage@@@Z,,0x0043ACA0,21,Code/GameEngine/Source/GameClient/InGameUI.cpp,matched,
 ?createGhostObjectManager@GameLogic@@EAEPAVGhostObjectManager@@XZ,,0x006BAE20,86,Code/GameEngine/Source/GameLogic/System/GameLogic.cpp,matched,
