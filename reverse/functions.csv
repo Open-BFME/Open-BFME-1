@@ -32724,7 +32724,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?nextToken@?$StringBase@D@@QAE_NPAV1@PBD@Z,0x008880E0,0x8880e0,186,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,
 ?nextToken@?$StringBase@G@@QAE_NPAV1@PBG@Z,0x008889B0,0x8889b0,197,Code/Libraries/Source/WWVegas/WWLib/string_base.cpp,matched,
 ?nextWithNumeric@SimpleObjectIterator@@QAEPAVObject@@PAM@Z,,0x001DDD10,45,Code/GameEngine/Source/GameLogic/Object/SimpleObjectIterator.cpp,matched,
-?nickErrorCallback@PeerThreadClass@@,,0x0064A2E0,1075,Code/masm_dumps/_str2__nickErrorCallback_PeerThreadClass__64A2E0.asm,matched,
+?nickErrorCallback@PeerThreadClass@@,,0x0064A2E0,1075,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadNickErrorCallbackThunk.cpp,matched,Exact string-anchored retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_PeerThreadNickErrorCallback_64A2E0
 ?nodeCount@LList@@QAEHXZ,,0x00105CC0,54,Code/GameEngine/Source/Common/System/List.cpp,matched,
 ?normAngle@@YAXAAM@Z,,0x0073A900,134,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp,matched,true size 134B; row claimed 118B
 ?normalize@Coord2D@@QAEXXZ,0x0000650F,0x0014FF40,60,Code/Libraries/Source/WWVegas/WWMath/coord2d.cpp,matched,normalizes vector in place with zero check
