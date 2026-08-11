@@ -33357,7 +33357,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?reallySaveReplay@@YAXXZ,,0x004DE460,922,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay_reallySaveReplay_Thunk.cpp,matched,exact 922B via C++;object-symbol=_bfme_ReallySaveReplay_4DE460
 ?recalculate@LineSegClass@@IAEXXZ,,0x003FE770,203,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,
 ?recreateControlBar@InGameUI@@UAEXXZ,,0x00442300,279,Code/GameEngine/Source/Common/InGameUI_recreateControlBarMethodThunk.cpp,matched,multi-xref Open-BFME4+Grok ControlBar.wnd
-?recruitSpecificAITeam@AIPlayer@@UAEXPAVTeamPrototype@@M@Z,,0x001699C2,1654,Code/GameEngine/Source/GameLogic/AI/AIPlayer_recruitSpecificAITeam.asm,matched,exact 1654B via MASM
+?recruitSpecificAITeam@AIPlayer@@UAEXPAVTeamPrototype@@M@Z,,0x001699C2,1654,Code/GameEngine/Source/GameLogic/AI/AIPlayer_recruitSpecificAITeam_Thunk.cpp,matched,exact 1654B via C++;object-symbol=_bfme_AIPlayerRecruitSpecificAITeam_1699C2
 ?refcompress@@YAHPAEH0HH@Z,,0x0081EF80,1095,Code/Libraries/Source/Compression/EAC/refencode.cpp,matched,real C++; needed galloc/gfree as __cdecl dllimports (they are IAT slots)
 ?refreshDrives@CDManager@@UAEXXZ,,0x00101CC0,43,Code/GameEngine/Source/Common/System/CDManager.cpp,matched,
 ?refreshIgnoreList@@YAXXZ,,0x004EF6D0,539,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyOverlayRefreshIgnoreListThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_WOLBuddyOverlayRefreshIgnoreList_4EF6D0
