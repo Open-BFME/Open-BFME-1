@@ -9923,7 +9923,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?drawDrawable@@YAXPAVDrawable@@PAX@Z,,0x00132AB0,15,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp,matched,
 ?drawEmoticon@Drawable@@AAEXPBUIRegion2D@@@Z,,0x00414AF0,191,Code/GameEngine/Source/GameClient/Drawable_drawEmoticon_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?drawEnthusiastic@Drawable@@AAEXPBUIRegion2D@@@Z,,0x0041A780,511,Code/GameEngine/Source/GameClient/Drawable_drawEnthusiastic_Thunk.cpp,matched,object-symbol=_bfme_DrawableDrawEnthusiastic_41A780; Open-BFME5 exact C++ lift of 511-byte ASM function
-?drawEvents@W3DRadar@@IAEXHHHH@Z,,0x006C3170,729,Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_drawEvents.asm,matched,exact 729B MASM; true body (queue 0xC6E2C9 misplaced mid-stub)
+?drawEvents@W3DRadar@@IAEXHHHH@Z,,0x006C3170,729,Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_drawEvents_Thunk.cpp,matched,object-symbol=_bfme_W3DRadarDrawEvents_6C3170; Open-BFME5 exact C++ lift of 729-byte ASM function
 ?drawScorches@BaseHeightMapRenderObjClass@@IAEXXZ,,0x006CA660,247,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapRenderObjClass_drawScorches_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?drawSkinnyBorder@@YAXHHHH@Z,,0x0079BCA0,2304,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DControlBarDrawSkinnyBorderThunk.cpp,matched,certified packet 353 exact retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_W3DControlBarDrawSkinnyBorder_79BCA0
 ?drawViewBox@W3DRadar@@IAEXHHHH@Z,,0x00784783,984,Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_drawViewBox.asm,matched,exact 984B via MASM
