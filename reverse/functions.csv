@@ -34178,7 +34178,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?unlock@File@@UAEXXZ,,0x009CB790,15,Code/GameEngine/Source/Common/System/File.cpp,matched,BFME-only File virtual slot 16; ReleaseMutex; vtable 0x01143AF8
 ?unselectOtherRadioOfGroup@@YAXHHPAVGameWindow@@@Z,,0x004BCF70,68,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetRadioButton.cpp,matched,
 ?update256@AlphaEdgeTextureClass@@IAEHPAVWorldHeightMap@@@Z,,0x00464830,8,Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTex.cpp,matched,tiny-locate
-?update@AIAttackFireWeaponState@@UAE?AW4StateReturnType@@XZ,,0x0017C250,979,Code/masm_dumps/AIAttackFireWeaponState_update.asm,matched,Exact 979B MASM vtable-anchored AIAttackFireWeaponState vt@0xC97DC0 slot6; queue 0x76E86C mid-insn
+?update@AIAttackFireWeaponState@@UAE?AW4StateReturnType@@XZ,,0x0017C250,979,Code/GameEngine/Source/GameLogic/AI/AIAttackFireWeaponStateUpdateThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from vtable-anchored MASM body;object-symbol=_bfme_AIAttackFireWeaponStateUpdate_17C250;true ENTRY 0x17C250/979
 ?update@AIBusyState@@UAE?AW4StateReturnType@@XZ,,0x006CF680,3,Code/GameEngine/Source/GameLogic/AI/AIStates.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?update@AIEnterState@@UAE?AW4StateReturnType@@XZ,,0x00189240,425,Code/GameEngine/Source/GameLogic/AI/AIStates.cpp,matched,
 ?update@AIFollowPathState@@UAE?AW4StateReturnType@@XZ,,0x00179150,809,Code/masm_dumps/AIFollowPathState_update.asm,matched,
