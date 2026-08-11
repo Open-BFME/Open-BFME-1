@@ -34403,7 +34403,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?worldToGridSpace@WaterRenderObjClass@@QAE_NMMAAM0@Z,,0x007303B0,184,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp,matched,
 ?worldToRadar@Radar@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z,,0x00106D20,120,Code/GameEngine/Source/Common/System/Radar.cpp,matched,
 ?wouldIgnite@FlammableUpdate@@QAE_NXZ,,0x00293040,9,Code/GameEngine/Source/GameLogic/Object/Update/FlammableUpdate.cpp,matched,
-?write@GameSpyLoginPreferences@@UAE_NXZ,,0x00080F40,927,Code/masm_dumps/GameSpyLoginPreferences_write.asm,matched,Certified packet 59 exact retail db recovery
+?write@GameSpyLoginPreferences@@UAE_NXZ,,0x00080F40,927,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/GameSpyLoginPreferencesWriteThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from certified packet 59 MASM body;object-symbol=_bfme_GameSpyLoginPreferencesWrite_80F40;true ENTRY 0x80F40/927;sha256=5b9d0f4abac004f8b78a1f08e8432f34e39a880c8b9dcb70207d9c27c894dd65
 ?write@MemoryReadFile@@UAEHPBXH@Z,,0x009CB0E0,6,Code/GameEngine/Source/Common/System/File.cpp,matched,MemoryReadFile vtable 0x01143A38 - class named by its ctor string
 ?write@MemoryWriteFile@@UAEHPBXH@Z,,0x009CB240,135,Code/GameEngine/Source/Common/System/File.cpp,matched,MemoryWriteFile vtable 0x01143AA8 - class named by its ctor string
 ?write@SkirmishPreferences@@,,0x004559A0,830,Code/masm_dumps/_str3__write_SkirmishPreferences__4559A0.asm,matched,
