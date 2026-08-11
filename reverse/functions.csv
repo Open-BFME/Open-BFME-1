@@ -5467,7 +5467,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Base64_Encode@@YAHPBXHPAXH@Z,,0x009EB560,264,Code/Libraries/Source/WWVegas/WWLib/base64.cpp,matched,
 ?Base_Update@Animatable3DObjClass@@IAEXABVMatrix3D@@@Z,,0x00981DE0,34,Code/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,
 ?Base_Update@HTreeClass@@QAEXABVMatrix3D@@@Z,,0x009528D0,212,Code/Libraries/Source/WWVegas/WW3D2/htree.cpp,matched,MASM dump -> C++; true size 212 not 101; BFME adds PivotFade=1.0f at pivot+0xAC
-?BattleHonorTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,,0x004D9100,1434,Code/masm_dumps/_s6_BattleHonorTooltip_YAXPAVGameWindow_I_Z_4D9100.asm,matched,Exact 1434B BattleHonorTooltip retarget Open-BFME4+Grok
+?BattleHonorTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,,0x004D9100,1434,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/BattleHonorTooltipThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_BattleHonorTooltip_4D9100
 ?Begin_Chunk@ChunkSaveClass@@QAE_NK@Z,,0x009E16F0,138,Code/Libraries/Source/WWVegas/WWLib/chunkio.cpp,matched,
 ?Begin_Micro_Chunk@ChunkSaveClass@@QAE_NK@Z,,0x009E1950,76,Code/Libraries/Source/WWVegas/WWLib/chunkio.cpp,matched,
 ?Bias@RawFileClass@@UAEXHH@Z,,0x009E6EE0,309,Code/Libraries/Source/WWVegas/WWLib/rawfile.cpp,matched,
