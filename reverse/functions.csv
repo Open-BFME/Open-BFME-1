@@ -7745,7 +7745,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Render@ParticleBufferClass@@UAEXAAVRenderInfoClass@@@Z,,0x0098BE50,184,Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,
 ?Render@PointGroupClass@@QAEXAAVRenderInfoClass@@H@Z,,0x00917B70,662,Code/Libraries/Source/WWVegas/WW3D2/PointGroupClassRenderThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump;object-symbol=_bfme_PointGroupClassRender_917B70
 ?Render@RTS3DScene@@UAEXAAVRenderInfoClass@@@Z,,0x00715B70,368,Code/GameEngineDevice/Source/W3DDevice/GameClient/RTS3DScene_Render_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM
-?Render@Render2DClass@@QAEXXZ,,0x00933E50,2015,Code/masm_dumps/__Render_Render2DClass__QAEXXZ_933E50.asm,matched,
+?Render@Render2DClass@@QAEXXZ,,0x00933E50,2015,Code/Libraries/Source/WWVegas/WW3D2/Render2D_Render_Thunk.cpp,matched,Exact retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_Render2DClassRender_933E50
 ?Render@Render2DSentenceClass@@QAEXXZ,,0x0093EB20,40,Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.cpp,matched,
 ?Render@SegmentedLineClass@@UAEXAAVRenderInfoClass@@@Z,,0x00950C90,93,Code/Libraries/Source/WWVegas/WW3D2/segline.cpp,matched,
 ?RenderDynamicMeshVolume@W3DVolumetricShadow@@IAEXHHPBVMatrix3D@@@Z,,0x007BC270,1269,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadowDynamicMeshThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from certified packet 314 MASM body;object-symbol=_bfme_W3DVolumetricShadowDynamicMesh_7BC270;true ENTRY 0x7BC270/1269;sha256=6d3ba20ca6a2d52225fd425588f2f337103ebae5b6b6c73125beb71d436ae3cb
