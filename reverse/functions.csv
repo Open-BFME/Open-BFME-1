@@ -33929,7 +33929,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?setShowDynamicLOD@GameLogic@@QAEX_N@Z,,0x0021A270,10,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,
 ?setShowFullVersion@Version@@QAEX_N@Z,,0x000607D0,10,Code/GameEngine/Source/Common/CommandLine.cpp,matched,
 ?setShroudClearFrame@Drawable@@QAEXI@Z,,0x00410860,13,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp,matched,
-?setShroudLevel@W3DRadar@@UAEXHHW4CellShroudStatus@@@Z,,0x006C2710,626,Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_setShroudLevel.asm,matched,exact MASM body via W3DRadar ctor vtable slot 11; queue RVA misplaced
+?setShroudLevel@W3DRadar@@UAEXHHW4CellShroudStatus@@@Z,,0x006C2710,626,Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_setShroudLevel_Thunk.cpp,matched,object-symbol=_bfme_W3DRadarSetShroudLevel_6C2710; Open-BFME5 exact C++ lift of 626-byte ASM function
 ?setShroudRange@Object@@QAEXM@Z,,0x00918ED0,13,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,
 ?setSize@Shadow@@QAEXMM@Z,,0x0002133C,5,Code/Libraries/Source/WWVegas/WWLib/ThingShadowTransformThunks.cpp,matched,Focused C++ thunk for Shadow::setSize
 ?setSkillPointsModifier@Player@@QAEXM@Z,,0x00360740,13,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,
