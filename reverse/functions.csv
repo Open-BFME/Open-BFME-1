@@ -5922,7 +5922,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Fast_Cos@WWMath@@SAMM@Z,,0x007A6380,174,Code/Libraries/Source/WWVegas/WWMath/wwmath.cpp,matched,force-emit anchor
 ?Fast_Is_Float_Positive@WWMath@@SA_NABM@Z,,0x008DB180,15,Code/Libraries/Source/WWVegas/WWMath/colmathfrustum.cpp,matched,
 ?Fast_Sin@WWMath@@SAMM@Z,,0x00723E50,168,Code/Libraries/Source/WWVegas/WWMath/wwmath.cpp,matched,force-emit anchor
-?Fast_Slerp@@YAXAAVQuaternion@@ABV1@1M@Z,,0x008DC4C0,942,Code/masm_dumps/__Fast_Slerp__YAXAAVQuaternion__ABV1_1M_Z_8DC4C0.asm,matched,
+?Fast_Slerp@@YAXAAVQuaternion@@ABV1@1M@Z,,0x008DC4C0,942,Code/Libraries/Source/WWVegas/WWMath/FastSlerpThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_FastSlerp_8DC4C0
 ?File_Name@GameFileClass@@UBEPBDXZ,,0x006F60D0,7,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DFileSystem.cpp,matched,Ghidra-bound GameFile accessor
 ?Filename_From_Asset_Name@@YA?AVStringClass@@PBD@Z,,0x00920770,210,Code/Libraries/Source/WWVegas/WW3D2/rendobj.cpp,matched,
 ?FillBufferWithKeepAliveCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z,,0x00677200,46,Code/GameEngine/Source/GameNetwork/NetPacket_fill.cpp,matched,
