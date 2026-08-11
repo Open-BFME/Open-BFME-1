@@ -1232,7 +1232,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0BannerCarrierUpdateModuleData@@QAE@XZ,,0x00284600,160,Code/GameEngine/Source/GameLogic/AI/BannerCarrierUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
 ??0Base64Pipe@@QAE@W4CodeControl@0@@Z,,0x009E1EE0,29,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,sibling (vtable ptr copied from target)
 ??0Base64Straw@@QAE@W4CodeControl@0@@Z,,0x009E1F20,29,Code/Libraries/Source/WWVegas/WWLib/ini.cpp,matched,sibling
-??0BaseHeightMapRenderObjClass@@QAE@XZ,,0x006CFAE0,1304,Code/masm_dumps/BaseHeightMapRenderObjClass_ctor_006CFAE0.asm,matched,exact 1304B MASM @ 0x006CFAE0; queue 0x00A3B6FB MISPLACED (00 00 00); true SEH ENTRY; mislabeled LightMap void-ctor twin (ZH is 2-arg); vtbls match ??1BaseHeightMap; TheTerrainRenderObject@0x12F7FE0; size twin of owner (true ret +1306/1307)
+??0BaseHeightMapRenderObjClass@@QAE@XZ,,0x006CFAE0,1304,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapRenderObjClassCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_BaseHeightMapRenderObjClassCtor_6CFAE0;true SEH entry;LightMap row is mislabeled twin
 ??0BaseRegenerateUpdateModuleData@@QAE@XZ,,0x00852130,79,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,object-symbol=?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z;ICF alias converted to existing clean C++ body
 ??0BaseUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002D3800,53,Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgrade.cpp,matched,Luna Open-BFME5.0 clean C++ empty UpgradeModule derivative
 ??0BaseUpgradeModuleData@@QAE@XZ,,0x002D3C50,127,Code/GameEngine/Source/GameLogic/AI/BaseUpgradeModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ raw module-data constructor
@@ -1740,7 +1740,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0LifetimeUpdateModuleData@@QAE@XZ,,0x00410240,26,Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp,matched,
 ??0LightClass@@QAE@ABV0@@Z,,0x0093BFB0,307,Code/Libraries/Source/WWVegas/WW3D2/light.cpp,matched,trimmed oversized claim into sibling
 ??0LightClass@@QAE@W4LightType@0@@Z,,0x0093BE90,249,Code/Libraries/Source/WWVegas/WW3D2/light.cpp,matched,trimmed oversized claim into sibling
-??0LightMapTerrainTextureClass@@QAE@XZ,,0x006CFAE0,1304,Code/masm_dumps/_sa3___0LightMapTerrainTextureClass__QAE_XZ_6CFAE0.asm,matched,Exact 1304B string-anchored Open-BFME4
+??0LightMapTerrainTextureClass@@QAE@XZ,,0x006CFAE0,1304,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapRenderObjClassCtorThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk alias to BaseHeightMapRenderObjClass retail body;object-symbol=_bfme_BaseHeightMapRenderObjClassCtor_6CFAE0;mislabeled LightMap twin
 ??0LightningDrawModuleInfo@FXParticleSystem@@QAE@ABV01@@Z,0x0002AD4C,0x005D8F00,97,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
 ??0LightningDrawModuleInfo@FXParticleSystem@@QAE@XZ,0x0002FB8F,0x005F41B0,137,Code/GameEngine/Source/GameClient/System/FXParticleSystem/LightningDrawModuleInfoCtorThunk.cpp,matched,1:1 C++ thunk moved from bulk TU prologue drift
 ??0LightningDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0004A89F,0x005D9170,62,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp,matched,
