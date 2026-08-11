@@ -11386,7 +11386,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getLastDamageTimestamp@BodyModule@@UBEIXZ,,0x006CF680,3,Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?getLastHealingTimestamp@BodyModule@@UBEIXZ,,0x006CF680,3,Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?getLastLadderAddr@CustomMatchPreferences@@QAE?AVAsciiString@@XZ,,0x000AC1B0,98,Code/GameEngine/Source/Common/CustomMatchPreferences_getLastLadderAddr_Thunk.cpp,matched,certified packet 292; reviewed Ghidra entry and custom-ladder caller chain; retail sha256 69c5a0f80fb1336e3c6811133b257efa82bfdaca706bab5e0fa3689ffcd8534e
-?getLastLadderPort@CustomMatchPreferences@@QAEGXZ,,0x00856900,1617,Code/masm_dumps/_sa14__getLastLadderPort_CustomMatchPreferences__QAEGXZ_856900.asm,matched,sa14 Open-BFME4+Grok UseLongGameList
+?getLastLadderPort@CustomMatchPreferences@@QAEGXZ,,0x00856900,1617,Code/GameEngine/Source/GameNetwork/CustomMatchPreferences_getLastLadderPort_Thunk.cpp,matched,object-symbol=_bfme_CustomMatchPreferencesGetLastLadderPort_856900; Open-BFME5 exact lift of complete 1617-byte ledger range
 ?getLastLadderPort@QuickMatchPreferences@@QAEGXZ,,0x000ABF10,84,Code/GameEngine/Source/Common/QuickMatchPreferences_getLastLadderPort_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?getLastLocalFile@DownloadManager@@QAE?AVAsciiString@@XZ,,0x00626DA0,224,Code/GameEngine/Source/Common/DownloadManager_getLastLocalFile_Thunk.cpp,matched,Exact 224B 'FTP:LocalFileOpenFailed' Open-BFME4+Grok
 ?getLastReplayFileName@RecorderClass@@QAE?AVAsciiString@@XZ,0x0001E3C6,0x98b40,33,Code/GameEngine/Source/Common/Recorder.cpp,matched,
