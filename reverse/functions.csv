@@ -1164,7 +1164,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0AlphaVectorStruct@@QAE@ABU0@@Z,,0x00979200,37,Code/Libraries/Source/WWVegas/WW3D2/sphereobj.cpp,matched,
 ??0Anim2D@@QAE@PAVAnim2DTemplate@@PAVAnim2DCollection@@@Z,,0x005BA4D0,297,Code/GameEngine/Source/Common/Anim2D_Ctor_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??0Anim2DCollection@@QAE@XZ,,0x005BA370,26,Code/GameEngine/Source/GameClient/System/Anim2D.cpp,matched,
-??0Anim2DTemplate@@QAE@VAsciiString@@@Z,,0x005BAD80,124,Code/GameEngine/Source/GameClient/System/Anim2DTemplate_ctor_dtor.asm,matched,
+??0Anim2DTemplate@@QAE@VAsciiString@@@Z,,0x005BAD80,124,Code/GameEngine/Source/GameClient/System/Anim2DTemplate_ctor_Thunk.cpp,matched,object-symbol=_bfme_Anim2DTemplateCtor_5BAD80; Open-BFME5 exact C++ lift of 124-byte ASM constructor
 ??0AnimSet@GenericObjectCreationNugget@@QAE@XZ,,0x0005C5D0,13,Code/GameEngine/Source/GameLogic/Object/ObjectCreationList.cpp,matched,ICF alias of existing matched body
 ??0AnimalAIUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,,0x002B3090,118,Code/GameEngine/Source/GameLogic/AI/AnimalAIUpdateCtorThunk.cpp,matched,Open-BFME5 exact C++ raw AI module constructor
 ??0AnimalAIUpdateModuleData@@QAE@XZ,,0x0027EAE0,283,Code/GameEngine/Source/GameLogic/AI/AnimalAIUpdateModuleDataCtorThunk.cpp,matched,Open-BFME5 exact C++ ICF-primary raw module-data constructor
