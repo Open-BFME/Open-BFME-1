@@ -1955,7 +1955,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ??0ParticleEmitterLoaderClass@@QAE@XZ,,0x00061D90,9,Code/Libraries/Source/WWVegas/WW3D2/part_ldr.cpp,matched,ICF alias of existing matched body
 ??0ParticleEmitterPrototypeClass@@QAE@PAVParticleEmitterDefClass@@@Z,,0x00149F90,25,Code/Libraries/Source/WWVegas/WW3D2/part_ldr.cpp,matched,
 ??0ParticleSysBoneInfo@@QAE@XZ,,0x00061D90,9,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,matched,ICF alias of existing matched body
-??0ParticleSystem@@QAE@PBVParticleSystemTemplate@@W4ParticleSystemID@@_N@Z,,0x005CF850,1426,Code/GameEngine/Source/GameClient/System/ParticleSys_ParticleSystem_ctor.asm,matched,exact 1426B MASM; true body via createParticleSystem factory 0x5C33E0 new(0x1E0); queue 0x6E2296 misplaced helper epilogue
+??0ParticleSystem@@QAE@PBVParticleSystemTemplate@@W4ParticleSystemID@@_N@Z,,0x005CF850,1426,Code/GameEngine/Source/GameClient/System/ParticleSys_ParticleSystem_ctor_Thunk.cpp,matched,exact 1426B via C++;object-symbol=_bfme_ParticleSystemCtor_5CF850
 ??0ParticleSystemFXNugget@@QAE@XZ,,0x00429F80,350,Code/GameEngine/Source/GameClient/ParticleSystemFXNugget_ctor_Thunk.cpp,matched,Open-BFME5 lift 350B retail MASM to standalone C++ thunk
 ??0ParticleSystemInfo@FXParticleSystem@@QAE@ABV01@@Z,0x000199E8,0x0005EF60,415,Code/GameEngine/Source/Common/FXParticleSystem_ParticleSystemInfo_CopyCtor_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ??0ParticleSystemInfo@FXParticleSystem@@QAE@XZ,0x0003128C,0x005C1DD0,168,Code/GameEngine/Source/GameClient/FXParticleSystem_ParticleSystemInfoCtor_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
