@@ -520,6 +520,20 @@ public:
     void construct();
 };
 
+class TerrainCollisionTemplateFactoryShim {
+public:
+    TerrainCollisionTemplateFactoryShim()
+    {
+        ((TerrainCollisionTemplateCtorShim *)this)->construct();
+        *(volatile unsigned int *)this = 0x01111450;
+        *(volatile unsigned int *)((unsigned char *)this + 4) = 0x0111144c;
+        *(volatile unsigned int *)((unsigned char *)this + 0x0c) = 0x01111438;
+    }
+
+private:
+    unsigned char m_storage[0x28];
+};
+
 class TerrainCollisionTemplateCopyCtorShim {
 public:
     void construct(const void *source);
@@ -6331,104 +6345,9 @@ __declspec(naked) TerrainCollisionModuleTemplate *ConcreteModuleClass<ModuleTag<
 }
 
 // ?createTemplate@?$ConcreteModuleClass@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEPAVTerrainCollisionModuleTemplate@2@XZ
-__declspec(naked) TerrainCollisionModuleTemplate *ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::createTemplate() const
+TerrainCollisionModuleTemplate *ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> >::createTemplate() const
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xbb
-        __emit 0xb8
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x28
-        __emit 0xe8
-        __emit 0x92
-        __emit 0xd6
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x74
-        __emit 0x1d
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x4a
-        __emit 0xdd
-        __emit 0xa2
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x50
-        __emit 0x14
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x04
-        __emit 0x4c
-        __emit 0x14
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x0c
-        __emit 0x38
-        __emit 0x14
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
+    return (TerrainCollisionModuleTemplate *)new TerrainCollisionTemplateFactoryShim;
 }
 
 // ?getClass@?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UBEABV?$ConcreteModuleClass@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@2@XZ
