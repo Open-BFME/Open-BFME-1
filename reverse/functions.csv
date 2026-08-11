@@ -33945,7 +33945,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?setStartPos@AnimateWindow@@QAEXUICoord2D@@@Z,,0x00495370,17,Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp,matched,
 ?setStartPos@ControlBarSchemeAnimation@@QAEXUICoord2D@@@Z,,0x00495390,17,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme.cpp,matched,
 ?setStartTime@AnimateWindow@@QAEXI@Z,,0x0016A9D0,10,Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp,matched,
-?setStartingCash@LANPreferences@@,,0x004CEC00,1686,Code/masm_dumps/_cache__setStartingCash_LANPreferences___4CEC00.asm,matched,cached-obj needle Open-BFME4+Grok
+?setStartingCash@LANPreferences@@,,0x004CEC00,1686,Code/GameEngine/Source/GameNetwork/LANPreferencesSetStartingCashThunk.cpp,matched,cached-obj needle Open-BFME4+Grok;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_LANPreferencesSetStartingCash_4CEC00
 ?setState@GameSlot@@QAEXW4SlotState@@VUnicodeString@@PBUGameSlotConnectInfo@@@Z,,0x0061F210,440,Code/GameEngine/Source/GameNetwork/GameInfo.cpp,matched,
 ?setStatus@Anim2D@@QAEXE@Z,,0x005BA2D0,15,Code/GameEngine/Source/GameClient/System/Anim2D.cpp,matched,
 ?setStatus@BattlePlanUpdate@@IAEXW4TransitionStatus@@@Z,,0x00286440,1298,Code/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetStatusThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from certified packet 227 MASM body;object-symbol=_bfme_BattlePlanUpdateSetStatus_286440;true ENTRY 0x286440/1298;sha256=6e55aee0e3e3bca8c83c8cd464431d935ab1de1481926bcd5b1ff003fb0ac5be
