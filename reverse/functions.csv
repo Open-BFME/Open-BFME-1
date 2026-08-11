@@ -7184,7 +7184,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?Insert_Before@?$DLNodeClass@USmudge@@@@QAEXPAV1@@Z,,0x005D3940,44,Code/GameEngine/Source/GameClient/System/Smudge.cpp,matched,
 ?Insert_Before@?$DLNodeClass@USmudgeSet@@@@QAEXPAV1@@Z,,0x005D39E0,44,Code/GameEngine/Source/GameClient/System/Smudge.cpp,matched,
 ?Insert_Before@?$DLNodeClass@VSortingNodeStruct@@@@QAEXPAV1@@Z,,0x00938B60,44,Code/Libraries/Source/WWVegas/WW3D2/sortingrenderer.cpp,matched,
-?Insert_Triangles@SortingRendererClass@@SAXABVSphereClass@@GGGG@Z,,0x0093B340,1257,Code/masm_dumps/__Insert_Triangles_SortingRendererClass__SAXABVSphe_93B340.asm,matched,
+?Insert_Triangles@SortingRendererClass@@SAXABVSphereClass@@GGGG@Z,,0x0093B340,1257,Code/Libraries/Source/WWVegas/WW3D2/SortingRendererInsertTrianglesThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from measured 1257-byte MASM payload;object-symbol=_bfme_SortingRendererInsertTriangles_93B340;true ENTRY 0x93B340/1257
 ?Install_UV_Array@MeshMatDescClass@@QAEXHHPAVVector2@@H@Z,,0x0092A560,355,Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp,matched,
 ?InternalWrite@OutputStream@DebugIOFlat@@AAEXPBDI@Z,,0x008906B0,204,Code/Libraries/Source/WWVegas/WWDebug/debug_io_flat.cpp,matched,
 ?Internal_Add@GenericMultiListClass@@IAE_NPAVMultiListObjectClass@@_N@Z,,0x009DBF60,125,Code/Libraries/Source/WWVegas/WWLib/multilist.cpp,matched,
