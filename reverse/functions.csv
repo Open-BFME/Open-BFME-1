@@ -34008,7 +34008,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?setWaterAttenuationFactors@W3DTerrainVisual@@UAEXPBVWaterHandle@@MMMM@Z,,0x00730A20,35,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp,matched,
 ?setWaterGridHeightClamps@W3DTerrainVisual@@UAEXPBVWaterHandle@@MM@Z,,0x00730A00,25,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp,matched,
 ?setWaterGridResolution@W3DTerrainVisual@@UAEXPBVWaterHandle@@MMM@Z,,0x00730AC0,30,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp,matched,
-?setWaterHeight@TerrainLogic@@UAEXPBVWaterHandle@@MM_N@Z,,0x001AC560,905,Code/masm_dumps/setWaterHeight_TerrainLogic_001AC560_c663f9ef.asm,matched,certified packet 185 vtable slot 28 and ret boundary sha256 c663f9ef
+?setWaterHeight@TerrainLogic@@UAEXPBVWaterHandle@@MM_N@Z,,0x001AC560,905,Code/GameEngine/Source/GameLogic/Map/TerrainLogicSetWaterHeightThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from certified packet 185 vtable-owned MASM body;object-symbol=_bfme_TerrainLogicSetWaterHeight_1AC560;true ENTRY 0x1AC560/905;sha256=c663f9ef4690a82bad13f7551d5a65c5e36b975b9d1ad5ab66e7cad06dbbf7bc
 ?setWaterTransform@W3DTerrainVisual@@UAEXPBVMatrix3D@@@Z,,0x00730990,15,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp,matched,
 ?setWaterTransform@W3DTerrainVisual@@UAEXPBVWaterHandle@@MMMM@Z,,0x00730A20,35,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp,matched,
 ?setWaypointID@MapObject@@QAEXH@Z,,0x00087E20,31,Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp,matched,
