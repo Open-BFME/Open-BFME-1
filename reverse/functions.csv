@@ -33277,7 +33277,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?queueParticleRender@W3DParticleSystemManager@@UAEXXZ,,0x0024A270,8,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DParticleSys.cpp,matched,
 ?queueSend@Transport@@QAE_NIGPBEH@Z,,0x00049F80,5,Code/GameEngine/Source/GameNetwork/TransportQueueSendThunk.cpp,matched,Open-BFME5 exact ILT thunk; real body 0x683830
 ?queueSend@Transport@@QAE_NPAUNetPacketAddress@@PBEH@Z,,0x00683830,164,Code/GameEngine/Source/GameNetwork/Transport_queueSend.cpp,matched,
-?queueSupplyTruck@AIPlayer@@,,0x00165D50,2330,Code/masm_dumps/_str__queueSupplyTruck_AIPlayer__165D50.asm,matched,
+?queueSupplyTruck@AIPlayer@@,,0x00165D50,2330,Code/GameEngine/Source/GameLogic/AI/AIPlayer_queueSupplyTruck_Thunk.cpp,matched,object-symbol=_bfme_AIPlayerQueueSupplyTruck_165D50; Open-BFME5 exact lift of complete 2330-byte ledger range
 ?rad2deg@@YAMM@Z,0x00008BF2,0x007E5950,11,Code/GameEngine/Source/Common/System/Trig.cpp,matched,converts radians to degrees
 ?radarToPixel@W3DRadar@@IAEXPBUICoord2D@@PAU2@HHHH@Z,,0x006C0ED0,78,Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar.cpp,matched,
 ?randomValue@@YAIPAI@Z,,0x00096970,125,Code/GameEngine/Source/Common/System/random_value.cpp,matched,
