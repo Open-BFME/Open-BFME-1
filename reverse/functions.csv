@@ -9366,7 +9366,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?clearStatus@Anim2D@@QAEXE@Z,,0x005BA2F0,17,Code/GameEngine/Source/GameClient/System/Anim2D.cpp,matched,
 ?clearStatus@Image@@QAEII@Z,,0x005D1C30,17,Code/GameEngine/Source/GameClient/System/Image.cpp,matched,
 ?clearStatus@Object@@QAEXV?$BitFlags@$0CN@@@@Z,,0x0019A720,20,Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp,matched,
-?clearUnseenMaps@MapCache@@AAE_NVAsciiString@@@Z,,0x004578EB,1059,Code/masm_dumps/_sa14__clearUnseenMaps_MapCache__AAE_NVAsciiString___Z_4578EB.asm,matched,sa14 Open-BFME4+Grok %s\%s%s
+?clearUnseenMaps@MapCache@@AAE_NVAsciiString@@@Z,,0x004578EB,1059,Code/GameEngine/Source/GameClient/MapCache_clearUnseenMaps_Thunk.cpp,matched,object-symbol=_bfme_MapCacheClearUnseenMaps_4578EB; Open-BFME5 exact 1059-byte MASM lift
 ?clearVeterancyLevelFlag@@YAIIW4VeterancyLevel@@@Z,,0x000B8DD0,21,Code/GameEngine/Source/Common/INI/ini.cpp,matched,
 ?clearVisibleSkinList@DX8SkinFVFCategoryContainer@@AAEXXZ,,0x00945D60,72,Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp,matched,converted exact MASM method dump to clean C++ with BFME retail field shim
 ?clearWinList@@YAXAAV?$list@PAVAnimateWindow@@V?$allocator@PAVAnimateWindow@@@_STL@@@_STL@@@Z,,0x0045D660,53,Code/GameEngine/Source/GameClient/GUI/AnimateWindowManager.cpp,matched,MASM converted to clean C++
