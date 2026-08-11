@@ -8421,7 +8421,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?TEST_KINDOFMASK_MULTI@@YA_NABV?$BitFlags@$0HE@@@00@Z,,0x000E9FB0,20,Code/GameEngine/Source/Common/RTS/Player.cpp,matched,
 ?Tail@?$DLListClass@USmudgeSet@@@@QAEPAUSmudgeSet@@XZ,,0x005D3920,14,Code/GameEngine/Source/GameClient/System/Smudge.cpp,matched,
 ?Tan@@YAMM@Z,0x00873930,0x00873930,9,Code/GameEngine/Source/Common/System/Trig.cpp,matched,returns tangent of radians
-?TearDownGameSpy@@YAXXZ,,0x00633390,607,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs_TearDownGameSpy.asm,matched,exact 607B MASM; ghidra ENTRY (queue size 575 wrong); ZH C++ blocked by GameSpyInfo vtbl+PSPlayerStats frame
+?TearDownGameSpy@@YAXXZ,,0x00633390,607,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs_TearDownGameSpy_Thunk.cpp,matched,object-symbol=_bfme_TearDownGameSpy_633390; Open-BFME5 exact C++ lift of 607-byte ASM function
 ?Tell@FileClass@@UAEHXZ,,0x006F5FC0,10,Code/Libraries/Source/WWVegas/WWLib/bufffile.cpp,matched,
 ?TestWaterUpdate@@YAXXZ,,0x007ACBD0,2108,Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/TestWaterUpdateThunk.cpp,matched,Ghidra-owned BFME water-track editor update;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_TestWaterUpdate_7ACBD0
 ?Test_Z_Mode@DX8Wrapper@@KA_NW4_D3DFORMAT@@00@Z,,0x009022C0,70,Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp,matched,
