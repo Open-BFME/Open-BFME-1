@@ -11413,7 +11413,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?getManglerLocation@GameSpyConfig@@UAE_NHAAVAsciiString@@AAG@Z,,0x00628580,68,Code/GameEngine/Source/GameNetwork/GameSpy/GSConfig.cpp,matched,
 ?getManglerName@FirewallHelperClass@@SAXHPAD@Z,,0x0066EF00,127,Code/GameEngine/Source/GameNetwork/FirewallHelper.cpp,matched,
 ?getManglerResponse@FirewallHelperClass@@QAEGGH@Z,,0x0066E570,521,Code/GameEngine/Source/GameNetwork/FirewallHelper.cpp,matched,thunk-dump converted to clean C++ body at destination 0x0066E570
-?getMapPreviewImage@@YAPAVImage@@VAsciiString@@@Z,,0x004516E0,1212,Code/masm_dumps/getMapPreviewImage_YAPAVImage_VAsciiString_Z_004516E0_packet354.asm,matched,certified packet 354 sealed RVA and SHA-256 reviewed identity evidence
+?getMapPreviewImage@@YAPAVImage@@VAsciiString@@@Z,,0x004516E0,1212,Code/GameEngine/Source/GameClient/MapPreviewImageThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from certified packet 354 MASM body;object-symbol=_bfme_GetMapPreviewImage_4516E0;true ENTRY 0x4516E0/1212;sha256=9e1f1ab9f145efa57501eb2055639eb7c47e339e687c96994a1743856d26259a
 ?getMaxCellHeight@BaseHeightMapRenderObjClass@@QBEMMM@Z,,0x006C6CB0,290,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapRenderObjClass_getMaxCellHeight_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?getMaxDisconnectFrame@DisconnectManager@@IAEIXZ,,0x0066B620,99,Code/GameEngine/Source/GameNetwork/DisconnectManager.cpp,matched,repointed off its 5B ILT thunk onto the real body
 ?getMaxManglerRetries@GameSpyConfig@@UAEHXZ,,0x00674250,4,Code/GameEngine/Source/GameNetwork/GameSpy/GSConfig.cpp,matched,icf-owner=?getRequestedPlayerID@BFMENetRequestPlayerLeaveCommandMsg@@QAEHXZ
