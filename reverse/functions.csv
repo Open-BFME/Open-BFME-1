@@ -33023,7 +33023,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?parsePerVetLevelPSys@@YAXPAVINI@@PAX1PBX@Z,,0x001E1130,70,Code/GameEngine/Source/GameLogic/Object/Weapon.cpp,matched,
 ?parsePercentToReal@@YAXPAVINI@@PAX1PBX@Z,,0x000B81B0,64,Code/GameEngine/Source/Common/INI/INIDrawGroupInfo.cpp,matched,
 ?parsePercentToReal@INI@@SAXPAV1@PAX1PBX@Z,,0x00852EE0,102,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,scanPercentToReal inlined in this TU
-?parsePlayerKVPairs@GameSpyPSMessageQueueInterface@@,,0x00659670,3856,Code/masm_dumps/_sa7__parsePlayerKVPairs_GameSpyPSMessageQueueInterface_659670.asm,matched,Exact 3856B Open-BFME4
+?parsePlayerKVPairs@GameSpyPSMessageQueueInterface@@,,0x00659670,3856,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameSpyPSParsePlayerKVPairsThunk.cpp,matched,Exact 3856B body;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_GameSpyPSParsePlayerKVPairs_659670
 ?parsePlayerTemplateDefinition@PlayerTemplateStore@@SAXPAVINI@@@Z,,0x000E4210,284,Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp,matched,
 ?parsePositiveNonZeroReal@INI@@SAXPAV1@PAX1PBX@Z,,0x00852B80,144,Code/GameEngine/Source/Common/INI/ini_parsers.cpp,matched,BFME throws INIException with a formatted message
 ?parsePreferredAgainst@WeaponTemplateSet@@CAXPAVINI@@PAX1PBX@Z,,0x0010FE90,204,Code/GameEngine/Source/GameLogic/Object/Weapon/WeaponTemplateSet_parsePreferredAgainst_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
