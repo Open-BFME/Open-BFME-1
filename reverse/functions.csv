@@ -6373,7 +6373,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?GameSpyIsOverlayOpen@@YA_NW4GSOverlayType@@@Z,,0x00627B40,19,Code/GameEngine/Source/GameNetwork/GameSpyOverlay.cpp,matched,
 ?GameSpyOpenOverlay@@YAXW4GSOverlayType@@@Z,,0x0002BA21,5,Code/GameEngine/Source/GameNetwork/GameSpyOpenOverlayThunk.cpp,matched,5-byte incremental-link global thunk converted to focused C++ source
 ?GameSpyPlayerInfoOverlayInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004D3C40,69,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupPlayerInfo.cpp,matched,
-?GameSpyPlayerInfoOverlaySystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004D99C0,816,Code/masm_dumps/_rn7__GameSpyPlayerInfoOverlaySystem__YA_AW4WindowMsgHandledType__PAVGameWi_4D99C0.asm,matched,reloc-needle Open-BFME4+Grok
+?GameSpyPlayerInfoOverlaySystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004D99C0,816,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/GameSpyPlayerInfoOverlaySystemThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_GameSpyPlayerInfoOverlaySystem_4D99C0
 ?GameSpyToggleOverlay@@YAXW4GSOverlayType@@@Z,,0x00628240,29,Code/GameEngine/Source/GameNetwork/GameSpyOverlay.cpp,matched,
 ?GameWinDefaultInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x006CF680,3,Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
 ?GameWinDefaultSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x006CF680,3,Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp,matched,icf-owner=?Get_Sort_Level@RenderObjClass@@UBEHXZ
