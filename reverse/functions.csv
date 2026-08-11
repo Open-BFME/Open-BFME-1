@@ -6444,7 +6444,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?GetSnapshotName@WindModuleInfo@FXParticleSystem@@UAEPBDXZ,0x00003CA1,0x005BD950,6,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,returns class name
 ?GetStatus@UDP@@QAE?AW4sockStat@1@XZ,,0x006846F0,138,Code/GameEngine/Source/GameNetwork/udp.cpp,matched,
 ?GetSymbol@Signature@DebugStackwalk@@SAXIPADI@Z,,0x0088C6E0,635,Code/Libraries/Source/WWVegas/WWDebug/debug_stack.cpp,matched,signed comparison fix
-?GetSymbol@Signature@DebugStackwalk@@SAXIPADIPAI0I10I11@Z,,0x0088C960,1105,Code/Libraries/Source/WWVegas/WWDebug/DebugStackwalk_GetSymbol.asm,matched,true size 1105B; previous row claimed 729B
+?GetSymbol@Signature@DebugStackwalk@@SAXIPADIPAI0I10I11@Z,,0x0088C960,1105,Code/Libraries/Source/WWVegas/WWDebug/DebugStackwalk_GetSymbol_Thunk.cpp,matched,exact 1105B via C++;object-symbol=_bfme_DebugStackwalkGetSymbol_88C960
 ?GetTranslationVector@Matrix4D@@QBEAAVCoord3D@@AAV2@@Z,0x00017210,0x007E6CE0,24,Code/Libraries/Source/WWVegas/WWMath/matrix4d.cpp,matched,copies translation vector
 ?GetValue@?$DefaultModuleKey@$00@FXParticleSystem@@CAPBDXZ,,0x005DFB50,193,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_module_keys.cpp,matched,DefaultModuleKey<1> key = Default+GetKey(1)
 ?GetValue@?$DefaultModuleKey@$01@FXParticleSystem@@CAPBDXZ,,0x005E0300,193,Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_module_keys.cpp,matched,DefaultModuleKey<2> key = Default+GetKey(2)
