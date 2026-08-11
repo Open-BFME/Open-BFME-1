@@ -11941,7 +11941,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?init@FrameData@@QAEXXZ,,0x00670170,135,Code/GameEngine/Source/GameNetwork/FrameData.cpp,matched,
 ?init@FrameDataManager@@QAEXXZ,,0x006705C0,72,Code/GameEngine/Source/GameNetwork/FrameDataManager.cpp,matched,
 ?init@FullFadeTransition@@UAEXPAVGameWindow@@@Z,,0x0059D420,95,Code/GameEngine/Source/Common/FullFadeTransition_init_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
-?init@GameEngine@@,,0x00079060,7123,Code/masm_dumps/_str2__init_GameEngine__79060.asm,matched,true size 7123B; previous row claimed only 6689B (no padding before ~GameEngine)
+?init@GameEngine@@,,0x00079060,7123,Code/GameEngine/Source/Common/GameEngineInitThunk.cpp,matched,true size 7123B; previous row claimed only 6689B (no padding before ~GameEngine);Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_GameEngineInit_79060
 ?init@GameLogic@@UAEXXZ,,0x0038A1F0,1014,Code/masm_dumps/_sa11__init_GameLogic__UAEXXZ_38A1F0.asm,matched,string-anchor Open-BFME4+Grok ThePartitionManager
 ?init@GameSpyLoadScreen@@,,0x00493120,2717,Code/GameEngine/Source/GameClient/GameSpyLoadScreenInitThunk.cpp,matched,Exact string-anchored retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_GameSpyLoadScreenInit_493120
 ?init@GameState@@UAEXXZ,,0x001112D0,1368,Code/GameEngine/Source/Common/System/SaveGame/GameStateInitThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk from certified packet 117 MASM body;object-symbol=_bfme_GameStateInit_1112D0;true ENTRY 0x1112D0/1368;sha256=562361f290ec5b0bcbadf7a4db6adc0d907a84c3697d7a6209b3afd9cf24be14
