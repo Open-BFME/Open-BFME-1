@@ -9217,7 +9217,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?buildUpgrade@AIPlayer@@QAEXABVAsciiString@@@Z,,0x001636D0,1089,Code/GameEngine/Source/GameLogic/AI/AIPlayerBuildUpgradeThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from exact MASM body;object-symbol=_bfme_AIPlayerBuildUpgrade_1636D0;true ENTRY 0x1636D0/1089
 ?buttonTriggersOnMouseDown@@YA_NPAVGameWindow@@@Z,,0x004BBD20,36,Code/GameEngine/Source/GameClient/GUI/Gadget/GadgetPushButton.cpp,matched,
 ?byteAdjust@FirewallHelperClass@@AAEXPAUManglerData@@@Z,,0x0066E500,80,Code/GameEngine/Source/GameNetwork/FirewallHelper.cpp,matched,
-?calcCRC@@YAIVAsciiString@@0@Z,,0x00450560,457,Code/GameEngine/Source/GameClient/MapUtil_calcCRC.asm,matched,MASM exact: true body 0x450560 via addMap call 0x4572D6; queue 0xAFDBD3 misplaced mid-fn. C++ blocked File vtable read+0xC/close+0x8 vs ZH +0x10/+0xC + out-of-line CRC@0x65250
+?calcCRC@@YAIVAsciiString@@0@Z,,0x00450560,457,Code/GameEngine/Source/GameClient/MapUtil_calcCRC_Thunk.cpp,matched,object-symbol=_bfme_CalcCRC_450560; Open-BFME5 exact C++ lift of 457-byte ASM function
 ?calcDeltaScroll@W3DView@@AAEXAAUCoord2D@@@Z,,0x0073B6B0,157,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewCalcDeltaScrollThunk.cpp,matched,Exact standalone C++ __emit thunk from certified retail helper
 ?calcDistSqr@@YAMABUCoord3D@@0@Z,,0x0021DD60,47,Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain.cpp,matched,
 ?calcDistSquared@@YAMABUCoord3D@@0@Z,,0x0087DE90,39,Code/GameEngine/Source/Common/System/Geometry.cpp,matched,
