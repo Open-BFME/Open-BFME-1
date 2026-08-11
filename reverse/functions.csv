@@ -9911,7 +9911,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?done@?$DLINK_ITERATOR@VTeam@@@@QBE_NXZ,,0x00087940,10,Code/GameEngine/Source/Common/RTS/Player.cpp,matched,
 ?done@?$DLINK_ITERATOR@VTeamInQueue@@@@QBE_NXZ,,0x000C9EB0,10,Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp,matched,
 ?done@BezFwdIterator@@QAE_NXZ,,0x000B6540,17,Code/GameEngine/Source/Common/bez_fwd_iterator.cpp,matched,
-?downloadFile@DownloadManagerMunkee@@UAEJVAsciiString@@00000_N@Z,,0x004F1C4A,805,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/DownloadMenu_downloadFile.asm,matched,exact 805B via MASM
+?downloadFile@DownloadManagerMunkee@@UAEJVAsciiString@@00000_N@Z,,0x004F1C4A,805,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/DownloadMenu_DownloadManagerMunkee_downloadFile_Thunk.cpp,matched,exact 805B via C++;object-symbol=_bfme_DownloadManagerMunkeeDownloadFile_4F1C4A
 ?downloadNextQueuedFile@DownloadManager@@QAEJXZ,,0x00038F00,5,Code/GameEngine/Source/GameClient/DownloadManagerThunks.cpp,matched,Focused C++ thunk for DownloadManager queue advance
 ?draw@Anim2D@@QAEXHHHH@Z,,0x005BABA0,22,Code/GameEngine/Source/GameClient/System/Anim2D.cpp,matched,
 ?draw@ControlBarArrowTransition@@UAEXXZ,,0x0059BAB0,362,Code/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
