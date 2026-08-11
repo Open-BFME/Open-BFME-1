@@ -11926,7 +11926,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?init@ButtonFlashTransition@@UAEXPAVGameWindow@@@Z,,0x0059B070,161,Code/GameEngine/Source/Common/ButtonFlashTransition_init_Thunk.cpp,matched,ICF true init @0x59B070/161; unique Gradient push; queue 0x5A07ED was int3+other fn
 ?init@CDManager@@UAEXXZ,,0x00101C30,1,Code/GameEngine/Source/Common/System/CDManager.cpp,matched,slot 1 of the CDManager vtable; one byte so the slot is the evidence not the body
 ?init@CampaignManager@@QAEXXZ,,0x005BB8C0,118,Code/GameEngine/Source/Common/promoted__init_CampaignManager_QAEXXZ_005BB8C0.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 118B
-?init@ControlBar@@UAEXXZ,,0x004A0F70,3660,Code/masm_dumps/_str2__init_ControlBar_UAEXXZ_4A0F70.asm,matched,
+?init@ControlBar@@UAEXXZ,,0x004A0F70,3660,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarInitThunk.cpp,matched,Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_ControlBarInit_4A0F70
 ?init@ControlBarArrowTransition@@UAEXPAVGameWindow@@@Z,,0x0059B980,23,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp,matched,
 ?init@ControlBarResizer@@QAEXXZ,,0x004AAF10,118,Code/GameEngine/Source/Common/promoted__init_ControlBarResizer_QAEXXZ_004AAF10.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 118B
 ?init@ControlBarScheme@@QAEXXZ,,0x004ABA80,3107,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarSchemeInitThunk.cpp,matched,Exact string-anchored retail recovery;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_ControlBarSchemeInit_4ABA80
