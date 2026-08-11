@@ -33136,7 +33136,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?popFront@BFMENetworkQueue@@QAEXXZ,,0x0002491A,5,Code/Libraries/Source/WWVegas/WWLib/BFMENetworkQueuePopThunks.cpp,matched,Focused C++ thunk for BFMENetworkQueue::popFront
 ?popQueue0@BFMENetwork@@QAE_NPAVBFMENetworkQueueItem@@@Z,,0x0065ADE0,164,Code/GameEngine/Source/GameNetwork/native_network.cpp,matched,native BFME network wrapper slot +0x14; pops dispatcher queue +0x14
 ?popQueue1@BFMENetwork@@QAE_NPAVBFMENetworkQueueItem1@@@Z,,0x00658E20,164,Code/GameEngine/Source/GameNetwork/native_network.cpp,matched,native BFME network wrapper slot +0x1c; pops callback queue +0x3c
-?popSleepyUpdate@GameLogic@@AAEXXZ,,0x0038C1E0,2876,Code/masm_dumps/_sa11__popSleepyUpdate_GameLogic__AAEXXZ_38C1E0.asm,matched,string-anchor Open-BFME4+Grok GLAInfantryAngryMobNexus
+?popSleepyUpdate@GameLogic@@AAEXXZ,,0x0038C1E0,2876,Code/GameEngine/Source/GameLogic/GameLogic_popSleepyUpdate_Thunk.cpp,matched,object-symbol=_bfme_GameLogicPopSleepyUpdate_38C1E0; Open-BFME5 exact lift of complete 2876-byte ledger range
 ?popWindow@@YAPAVGameWindow@@XZ,,0x004845D0,26,Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp,matched,
 ?pop_front@?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAEXXZ,,0x00641880,75,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
 ?pop_front@?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAEXXZ,,0x00641690,80,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
