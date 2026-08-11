@@ -32815,7 +32815,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?onStructureConstructionComplete@Player@@QAEXPAVObject@@0_N@Z,,0x000C9600,126,Code/GameEngine/Source/Common/Player_onStructureConstructionComplete_Thunk.cpp,matched,Ghidra-owned BFME construction completion dispatch
 ?onStructureProduced@AIPlayer@@UAEXPAVObject@@0@Z,,0x00162D30,613,Code/GameEngine/Source/GameLogic/AI/AIPlayer_onStructureProduced_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from certified MASM packet;object-symbol=_bfme_AIPlayerOnStructureProduced_162D30
 ?onStructureUndone@Player@@QAEXPAVObject@@@Z,,0x00C3546B,11,Code/GameEngine/Source/Common/RTS/Player.cpp,matched,
-?onVeterancyLevelChanged@Object@@QAEXW4VeterancyLevel@@0_N@Z,,0x0037F2AD,711,Code/GameEngine/Source/GameLogic/Object/Object_onVeterancyLevelChanged.asm,matched,exact 711B via MASM
+?onVeterancyLevelChanged@Object@@QAEXW4VeterancyLevel@@0_N@Z,,0x0037F2AD,711,Code/GameEngine/Source/GameLogic/Object/Object_onVeterancyLevelChanged_Thunk.cpp,matched,object-symbol=_bfme_ObjectOnVeterancyLevelChanged_37F2AD; Open-BFME5 exact C++ lift of 711-byte ASM function
 ?open@CachedFileInputStream@@QAE_NVAsciiString@@@Z,,0x00102A60,253,Code/GameEngine/Source/Common/CachedFileInputStream_open_Thunk.cpp,matched,Certified packet 268; Ghidra entry and ret4 boundary; constructor thunk and file-decompression call graph; retail SHA256 268da9848f4677cab7d4e2fe0fca88e8021b442690bd569e2ad86c174a2a59e3
 ?open@File@@UAE_NPBDH@Z,,0x009CB800,118,Code/GameEngine/Source/Common/System/File.cpp,matched,File vtable slot 1
 ?open@MemoryReadFile@@UAE_NPBDH@Z,,0x009CB080,5,Code/GameEngine/Source/Common/System/File.cpp,matched,MemoryReadFile vtable 0x01143A38 - class named by its ctor string
