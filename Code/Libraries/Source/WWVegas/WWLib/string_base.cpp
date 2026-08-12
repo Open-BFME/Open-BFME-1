@@ -7432,61 +7432,6 @@ __declspec(naked) void StringBase<wchar_t>::trim()
     }
 }
 
-__declspec(naked) void StringBase<char>::concat(const StringBase<char> &str)
-{
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x06
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x50
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xd2
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x0d
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0x52
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xc0
-        __emit 0x53
-        __emit 0x82
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x52
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xb1
-        __emit 0x53
-        __emit 0x82
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
 
 __declspec(naked) void StringBase<wchar_t>::concat(const StringBase<wchar_t> &str)
 {
@@ -7727,4 +7672,11 @@ bool StringBase<char>::startsWithNoCase(const StringBase<char> &str) const
     const int len = str.m_data ? str.m_data->length : 0;
     const char *data = str.m_data ? &str.m_data->data[0] : "";
     return startsWithNoCase(data, len);
+}
+
+void StringBase<char>::concat(const StringBase<char> &str)
+{
+    const int len = str.m_data ? str.m_data->length : 0;
+    const char *data = str.m_data ? &str.m_data->data[0] : "";
+    concat(data, len);
 }
