@@ -94384,7 +94384,7 @@ _parlist,,0x0099BD30,254,Code/Libraries/Source/Lua/lparser.c,matched,Open-BFME5 
 ?d_0009c6f0@@YAXXZ,,0x0009C6F0,247,Code/gen_small/dumps_000.cpp,matched,gen-dump;ghidra=FUN_0049c6f0
 ?d_0009de50@@YAXXZ,,0x0009DE50,247,Code/gen_small/dumps_000.cpp,matched,gen-dump;ghidra=FUN_0049de50
 ?d_000f5592@@YAXXZ,,0x000F5592,247,Code/gen_small/dumps_000.cpp,matched,gen-dump;ghidra=FUN_004f5592
-?d_0018d120@@YAXXZ,,0x0018D120,247,Code/gen_small/dumps_000.cpp,matched,gen-dump;ghidra=FUN_0058d120
+?setTurretTargetObject@TurretAI@@QAEXPAVObject@@_N@Z,,0x0018D120,247,Code/GameEngine/Source/GameLogic/AI/TurretAI_setTurretTargetObject_Thunk.cpp,matched,Open-BFME5 exact C++ conversion of generated retail dump
 ?d_001a3bd0@@YAXXZ,,0x001A3BD0,247,Code/gen_small/dumps_000.cpp,matched,gen-dump;ghidra=FUN_005a3bd0
 ?d_001cbae0@@YAXXZ,,0x001CBAE0,247,Code/gen_small/dumps_000.cpp,matched,gen-dump;ghidra=FUN_005cbae0
 ?d_002e4180@@YAXXZ,,0x002E4180,247,Code/gen_small/dumps_000.cpp,matched,gen-dump;ghidra=FUN_006e4180
