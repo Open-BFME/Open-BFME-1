@@ -22129,6 +22129,7 @@ name,address,notes
 ?find@GameLogicFindControlBarOverrideShim@@QBE_NABVAsciiString@@HAAPBVCommandButton@@@Z,0x00391B30,GameLogic findControlBarOverride incremental-link thunk target through a TU-local forwarding shim
 ?find@ParticleSystemHashtableFindShim@_STL@@QBEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@ABVAsciiString@@@Z,0x005C76A0,incremental-link thunk target through a TU-local forwarding shim
 ?find@SparseBitFlagsTreeFindShim@_STL@@QBEPAU?$_Rb_tree_node@U?$pair@$$CBV?$BitFlags@$0LL@@@PBVWeaponTemplateSet@@@_STL@@@2@ABV?$BitFlags@$0LL@@@@Z,0x00141220,SparseMatchFinder tree _M_find incremental-link thunk target through a TU-local forwarding shim
+?find@SuperweaponMap@@QAEPAUSuperweaponMapNode@@ABVAsciiString@@@Z,0x0000DCFB,InGameUI findSWInfo map lookup target
 ?find@UpgradeCenterFindUpgradeShim@@QBEPBVUpgradeTemplate@@ABVAsciiString@@@Z,0x0010B0E0,UpgradeCenter findUpgrade incremental-link thunk target through a TU-local forwarding shim
 ?find@WeaponTemplateBitFlagsFindShim@_STL@@QBEPAU?$_Rb_tree_node@U?$pair@$$CBV?$BitFlags@$0BB@@@PBVWeaponTemplateSet@@@_STL@@@2@ABV?$BitFlags@$0BB@@@@Z,0x00141220,incremental-link thunk target through a TU-local forwarding shim
 ?findArmorTemplate@ArmorStore@@QBEPBVArmorTemplate@@VAsciiString@@@Z,0x00022FC5,parseArmorTemplate call target (incremental-link thunk); resolves repointed INI parser thunk-dump

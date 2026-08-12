@@ -1,95 +1,72 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
 
-class SuperweaponInfo;
 class AsciiString;
 class SpecialPowerTemplate;
 enum ObjectID { OBJECT_ID_INVALID = 0 };
 
+class SuperweaponInfo
+{
+private:
+    unsigned char m_padding[0x18];
+
+public:
+    ObjectID m_id;
+};
+
+struct SuperweaponListNode
+{
+    SuperweaponListNode *next;
+    void *previous;
+    SuperweaponInfo *value;
+};
+
+struct SuperweaponList
+{
+    SuperweaponListNode *head;
+};
+
+struct SuperweaponMapNode
+{
+    unsigned char padding[0x14];
+    SuperweaponList list;
+};
+
+class SuperweaponMap
+{
+public:
+    SuperweaponMapNode *find(const AsciiString &name);
+    SuperweaponMapNode *end() const { return sentinel; }
+
+private:
+    SuperweaponMapNode *sentinel;
+    void *root;
+    unsigned int size;
+};
+
 class InGameUI
 {
 protected:
-    SuperweaponInfo *findSWInfo(int, const AsciiString &, ObjectID, const SpecialPowerTemplate *);
+    SuperweaponInfo *findSWInfo(int playerIndex, const AsciiString &powerName,
+                                ObjectID id, const SpecialPowerTemplate *powerTemplate);
+
+private:
+    unsigned char m_padding[0x5cc];
+    SuperweaponMap m_superweapons[16];
 };
 
 // ?findSWInfo@InGameUI@@IAEPAVSuperweaponInfo@@HABVAsciiString@@W4ObjectID@@PBVSpecialPowerTemplate@@@Z
-__declspec(naked) SuperweaponInfo *InGameUI::findSWInfo(int, const AsciiString &, ObjectID, const SpecialPowerTemplate *)
+SuperweaponInfo *InGameUI::findSWInfo(int playerIndex, const AsciiString &powerName,
+                                     ObjectID id, const SpecialPowerTemplate *)
 {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x56
-        __emit 0x8d
-        __emit 0x04
-        __emit 0x40
-        __emit 0x8d
-        __emit 0xb4
-        __emit 0x81
-        __emit 0xcc
-        __emit 0x05
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x70
-        __emit 0x3e
-        __emit 0xbc
-        __emit 0xff
-        __emit 0x3b
-        __emit 0x06
-        __emit 0x74
-        __emit 0x1f
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x01
-        __emit 0x3b
-        __emit 0xc1
-        __emit 0x74
-        __emit 0x16
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x64
-        __emit 0x24
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x70
-        __emit 0x08
-        __emit 0x39
-        __emit 0x56
-        __emit 0x18
-        __emit 0x74
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x3b
-        __emit 0xc1
-        __emit 0x75
-        __emit 0xf2
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x10
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x08
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x10
-        __emit 0x00
+    SuperweaponMap &map = m_superweapons[playerIndex];
+    SuperweaponMapNode *mapIt = map.find(powerName);
+    if (mapIt != map.end()) {
+        SuperweaponListNode *end = mapIt->list.head;
+        for (SuperweaponListNode *listIt = end->next; listIt != end; listIt = listIt->next) {
+            if (listIt->value->m_id == id) {
+                return listIt->value;
+            }
+        }
     }
+    return 0;
 }
