@@ -8986,7 +8986,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?allow@PartitionFilterFlammable@@UAE_NPAVObject@@@Z,,0x002925C0,144,Code/GameEngine/Source/GameLogic/Object/Update/FireSpreadUpdate.cpp,matched,
 ?allow@PartitionFilterPlayerAffiliation@@MAE_NPAVObject@@@Z,,0x001DD140,86,Code/GameEngine/Source/Common/PartitionFilterPlayerAffiliation_allow_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
 ?allow@PartitionFilterPolygonTrigger@@MAE_NPAVObject@@@Z,,0x001DD490,64,Code/GameEngine/Source/GameLogic/Object/PartitionManager.cpp,matched,exact C++ polygon check with BFME field offset and pinned call
-?allow@PartitionFilterRelationship@@UAE_NPAVObject@@@Z,,0x001DC980,51,Code/GameEngine/Source/GameLogic/Object/PartitionManager.cpp,matched,Open-BFME5 exact C++ __emit port of certified 51-byte retail method
+?allow@PartitionFilterRelationship@@UAE_NPAVObject@@@Z,,0x001DC980,51,Code/GameEngine/Source/GameLogic/Object/PartitionManager.cpp,matched,Open-BFME5 exact semantic C++ port of certified 51-byte retail method
 ?allowedToContinue@DisconnectManager@@QAE_NXZ,,0x0066B2C0,8,Code/GameEngine/Source/GameNetwork/DisconnectManager.cpp,matched,
 ?allowsObservers@CustomMatchPreferences@@QAE_NXZ,,0x000AC510,95,Code/GameEngine/Source/Common/promoted__allowsObservers_CustomMatchPreferences_QAE_NXZ_000AC510.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 95B
 ?amIHost@GameSpyInfo@@UAE_NXZ,,0x00630690,7,Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,MASM converted to clean C++
