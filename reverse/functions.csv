@@ -33997,7 +33997,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?setVeterancyLevelFlag@@YAIIW4VeterancyLevel@@@Z,,0x000B8DB0,17,Code/GameEngine/Source/Common/INI/ini.cpp,matched,
 ?setVideoBuffer@WinInstanceData@@QAEXPAVVideoBuffer@@@Z,,0x00499840,13,Code/GameEngine/Source/GameClient/GUI/WinInstanceData.cpp,matched,icf-owner=?friend_setPartitionData@Object@@QAEXPAVPartitionData@@@Z
 ?setViewFilterPos@W3DView@@UAEXPBUCoord3D@@@Z,,0x0073B5C0,39,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp,matched,
-?setVisibility@BfmeMouse_setVisibility@@QAEX_N@Z,,0x005A4BA0,61,Code/GameEngine/Source/Common/promoted__setVisibility_BfmeMouse_setVisibility_QAEX_N_Z_005A4BA0.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 61B
+?setVisibility@BfmeMouse_setVisibility@@QAEX_N@Z,,0x005A4BA0,61,Code/GameEngine/Source/Common/promoted__setVisibility_BfmeMouse_setVisibility_QAEX_N_Z_005A4BA0.cpp,matched,Open-BFME5 exact semantic C++ mouse visibility update
 ?setVisible@SnowManager@@QAEX_N@Z,,0x0045A9A0,10,Code/GameEngine/Source/GameClient/Snow.cpp,matched,
 ?setVisibleState@Geometry@@QAEXW4VisibleState@1@@Z,,0x004F9510,10,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,
 ?setVisionRange@Object@@QAEXM@Z,,0x0098D2C0,13,Code/GameEngine/Source/GameLogic/Object/Object.cpp,matched,

@@ -1,74 +1,47 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// Grok promote from masm_dumps — retail 0x005A4BA0 size 61
-// was: Code/masm_dumps/_sym3__setVisibility_BfmeMouse_setVisibility__QAEX_N_Z_5A4BA0.asm
 
-class BfmeMouse_setVisibility { public: void setVisibility(bool); };
+#define DECLARE_TEN_SLOTS(prefix) \
+    virtual void slot##prefix##0(); \
+    virtual void slot##prefix##1(); \
+    virtual void slot##prefix##2(); \
+    virtual void slot##prefix##3(); \
+    virtual void slot##prefix##4(); \
+    virtual void slot##prefix##5(); \
+    virtual void slot##prefix##6(); \
+    virtual void slot##prefix##7(); \
+    virtual void slot##prefix##8(); \
+    virtual void slot##prefix##9()
+
+class BfmeMouse_setVisibility
+{
+public:
+    DECLARE_TEN_SLOTS(0);
+    DECLARE_TEN_SLOTS(1);
+    virtual void slot20();
+    virtual void slot21();
+    virtual void slot22();
+    virtual void applyVisibility(bool, unsigned char *);
+
+    void setVisibility(bool);
+
+private:
+    unsigned char padding[0x4d9d];
+    unsigned char currentCursor;
+    unsigned char currentState;
+    unsigned char pendingCursor;
+    unsigned char pendingState;
+    bool hasPendingState;
+};
+
+#undef DECLARE_TEN_SLOTS
 
 // ?setVisibility@BfmeMouse_setVisibility@@QAEX_N@Z
-__declspec(naked) void BfmeMouse_setVisibility::setVisibility(bool)
+void BfmeMouse_setVisibility::setVisibility(bool visible)
 {
-__asm {
-		_emit 08Ah
-		_emit 081h
-		_emit 0A5h
-		_emit 04Dh
-		_emit 000h
-		_emit 000h
-		_emit 084h
-		_emit 0C0h
-		_emit 074h
-		_emit 01Fh
-		_emit 08Ah
-		_emit 081h
-		_emit 0A3h
-		_emit 04Dh
-		_emit 000h
-		_emit 000h
-		_emit 08Ah
-		_emit 091h
-		_emit 0A4h
-		_emit 04Dh
-		_emit 000h
-		_emit 000h
-		_emit 088h
-		_emit 081h
-		_emit 0A1h
-		_emit 04Dh
-		_emit 000h
-		_emit 000h
-		_emit 088h
-		_emit 091h
-		_emit 0A2h
-		_emit 04Dh
-		_emit 000h
-		_emit 000h
-		_emit 0C6h
-		_emit 081h
-		_emit 0A5h
-		_emit 04Dh
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 08Bh
-		_emit 001h
-		_emit 08Dh
-		_emit 091h
-		_emit 0A2h
-		_emit 04Dh
-		_emit 000h
-		_emit 000h
-		_emit 052h
-		_emit 08Bh
-		_emit 054h
-		_emit 024h
-		_emit 008h
-		_emit 052h
-		_emit 0FFh
-		_emit 050h
-		_emit 05Ch
-		_emit 0C2h
-		_emit 004h
-		_emit 000h
-	}
+    if (hasPendingState) {
+        currentCursor = pendingCursor;
+        currentState = pendingState;
+        hasPendingState = false;
+    }
+    applyVisibility(visible, &currentState);
 }
-
