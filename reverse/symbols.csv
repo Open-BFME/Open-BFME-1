@@ -1468,6 +1468,9 @@ name,address,notes
 ??0LaserUpdateModuleData@@QAE@XZ,0x0003E4A5,pinharvest x1 (thunk)
 ??0LeafletDropBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
 ??0LevelGrantSpecialPowerBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME5 LevelGrantSpecialPower base pin
+??0LevelGrantSpecialPowerBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME5 LevelGrantSpecialPower base pin
+??0MonsterDockDataMember@@QAE@XZ,0x0003747A,Open-BFME5 MonsterDock member constructor pin
+??0RousingSpeechSpecialAbilityBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME5 RousingSpeech shared special-ability base constructor pin
 ??0LifetimeUpdateModuleData@@QAE@XZ,0x0002E6D1,LifetimeUpdate ModuleData ctor
 ??0LightningDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x19614,LightningDrawModuleTemplate clone copy-ctor pin
 ??0LightningEmissionModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x19f88,LightningEmissionModuleTemplate clone copy-ctor pin
