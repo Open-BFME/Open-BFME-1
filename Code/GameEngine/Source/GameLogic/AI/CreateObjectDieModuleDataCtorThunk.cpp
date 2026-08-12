@@ -1,122 +1,66 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class CreateObjectDieModuleData
+// Open-BFME5: CreateObjectDieModuleData constructor lifted from retail.
+
+class Snapshot
 {
 public:
-    CreateObjectDieModuleData();
+	Snapshot() {}
+	virtual ~Snapshot() {}
+
+private:
+	unsigned char m_data[4];
 };
 
-__declspec(naked) CreateObjectDieModuleData::CreateObjectDieModuleData()
+class InstantDeathDieMuxData
 {
-    __asm {
-        _emit 6Ah
-        _emit 0FFh
-        _emit 68h
-        _emit 6Bh
-        _emit 0EBh
-        _emit 00h
-        _emit 01h
-        _emit 64h
-        _emit 0A1h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 50h
-        _emit 64h
-        _emit 89h
-        _emit 25h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 51h
-        _emit 56h
-        _emit 8Bh
-        _emit 0F1h
-        _emit 89h
-        _emit 74h
-        _emit 24h
-        _emit 04h
-        _emit 8Dh
-        _emit 4Eh
-        _emit 08h
-        _emit 0C7h
-        _emit 44h
-        _emit 24h
-        _emit 10h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0C7h
-        _emit 06h
-        _emit 78h
-        _emit 0AFh
-        _emit 08h
-        _emit 01h
-        _emit 0E8h
-        _emit 0D1h
-        _emit 29h
-        _emit 0DBh
-        _emit 0FFh
-        _emit 8Dh
-        _emit 4Eh
-        _emit 38h
-        _emit 0C7h
-        _emit 06h
-        _emit 60h
-        _emit 2Bh
-        _emit 0Bh
-        _emit 01h
-        _emit 0C7h
-        _emit 44h
-        _emit 24h
-        _emit 10h
-        _emit 01h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0C7h
-        _emit 01h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0C6h
-        _emit 44h
-        _emit 24h
-        _emit 10h
-        _emit 02h
-        _emit 0C7h
-        _emit 46h
-        _emit 34h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0E8h
-        _emit 05h
-        _emit 31h
-        _emit 63h
-        _emit 00h
-        _emit 8Bh
-        _emit 4Ch
-        _emit 24h
-        _emit 08h
-        _emit 8Bh
-        _emit 0C6h
-        _emit 5Eh
-        _emit 64h
-        _emit 89h
-        _emit 0Dh
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 83h
-        _emit 0C4h
-        _emit 10h
-        _emit 0C3h
-    }
+public:
+	InstantDeathDieMuxData();
+
+private:
+	unsigned char m_data[0x2c];
+};
+
+class DieModuleData : public Snapshot
+{
+public:
+	DieModuleData() {}
+	virtual ~DieModuleData();
+
+private:
+	InstantDeathDieMuxData m_dieMuxData;
+};
+
+class CreateObjectDieOCLName
+{
+public:
+	CreateObjectDieOCLName()
+		: m_data(0)
+	{
+	}
+
+	~CreateObjectDieOCLName();
+	void releaseBuffer();
+
+private:
+	char *m_data;
+};
+
+class CreateObjectDieModuleData : public DieModuleData
+{
+public:
+	CreateObjectDieModuleData();
+	virtual ~CreateObjectDieModuleData();
+
+private:
+	unsigned int m_transferPreviousHealth;
+	CreateObjectDieOCLName m_ocl;
+};
+
+// ??0CreateObjectDieModuleData@@QAE@XZ
+CreateObjectDieModuleData::CreateObjectDieModuleData()
+	: DieModuleData(), m_ocl()
+{
+	m_transferPreviousHealth = 0;
+	m_ocl.releaseBuffer();
 }
