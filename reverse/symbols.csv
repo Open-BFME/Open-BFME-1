@@ -22304,6 +22304,7 @@ name,address,notes
 ?getText@INILineBuffer@@QBEPBDH@Z,0x009CBC60,the INI line array accessor readLine copies from
 ?getTexture@BFMEShadowManagerLayout@@QAEPAVW3DShadowTexture@@PBD@Z,0x0004088B,retail projected-shadow texture lookup ILT thunk
 ?getTexture@BFMEShadowManagerLayoutGetTextureShim@@QAEPAVW3DShadowTexture@@PBD@Z,0x007AFD10,BFME ShadowManager incremental-link thunk target through a TU-local forwarding shim
+?getTotalDisconnectsFromFile@@YIHH@Z,0x004DB0B0,GetAdditionalDisconnectsFromUserFile internal fastcall helper
 ?getTotalDataLength@NetWrapperCommandMsg@@QAEIXZ,0x0000F70E,ILT thunk; real body 0xA73F40 (mov eax,[ecx+0x28];ret)
 ?getUpgradeActivationMasks@UpgradeMuxData@@QBEXAAV?$BitFlags@$0IA@@@0@Z,0x0002644F,pinharvest x1 (thunk)
 ?getUserMapDir@MapCache@@QBE?AVAsciiString@@XZ,0x000139E9,
