@@ -1,111 +1,58 @@
 // cl: /DNDEBUG /MD /EHsc
 
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic(_ReadWriteBarrier)
+
 class Thing;
 class ModuleData;
 
+class W3DDebrisDrawBaseShim
+{
+public:
+    void construct(Thing *, const ModuleData *);
+};
+
 class W3DDebrisDraw
 {
+    volatile unsigned int primaryVtable;
+    unsigned int baseData0;
+    unsigned int baseData1;
+    volatile unsigned int secondaryVtable;
+    void * volatile renderObject;
+    volatile int state;
+    void * volatile animations[4];
+    void * volatile tailObjects[3];
+    volatile unsigned int frames;
+    void * volatile shadow;
+    void * volatile finalEffect;
+    volatile bool finalStop;
+    unsigned char padding[3];
+    volatile unsigned int trailingState;
+
 public:
     W3DDebrisDraw(Thing *, const ModuleData *);
 };
 
 // ??0W3DDebrisDraw@@QAE@PAVThing@@PBVModuleData@@@Z
-__declspec(naked) W3DDebrisDraw::W3DDebrisDraw(Thing *, const ModuleData *)
+W3DDebrisDraw::W3DDebrisDraw(Thing *thing, const ModuleData *moduleData)
 {
-    __asm {
-        __emit 0x8b;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x56;
-        __emit 0x8b;
-        __emit 0xf1;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x50;
-        __emit 0x51;
-        __emit 0x8b;
-        __emit 0xce;
-        __emit 0xe8;
-        __emit 0xa0;
-        __emit 0x22;
-        __emit 0x8b;
-        __emit 0xff;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x0c;
-        __emit 0xa4;
-        __emit 0x1e;
-        __emit 0x12;
-        __emit 0x01;
-        __emit 0x33;
-        __emit 0xc0;
-        __emit 0xc7;
-        __emit 0x06;
-        __emit 0xc0;
-        __emit 0x1e;
-        __emit 0x12;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x0c;
-        __emit 0xb0;
-        __emit 0x1e;
-        __emit 0x12;
-        __emit 0x01;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x10;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x14;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x18;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x1c;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x20;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x24;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x34;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x38;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x3c;
-        __emit 0x88;
-        __emit 0x46;
-        __emit 0x40;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x44;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x28;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x2c;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x30;
-        __emit 0x8b;
-        __emit 0xc6;
-        __emit 0x5e;
-        __emit 0xc2;
-        __emit 0x08;
-        __emit 0x00;
-    }
+    reinterpret_cast<W3DDebrisDrawBaseShim *>(this)->construct(thing, moduleData);
+    secondaryVtable = 0x01121ea4;
+    _ReadWriteBarrier();
+    primaryVtable = 0x01121ec0;
+    secondaryVtable = 0x01121eb0;
+    renderObject = 0;
+    state = -1;
+    animations[0] = 0;
+    animations[1] = 0;
+    animations[2] = 0;
+    animations[3] = 0;
+    frames = 0;
+    shadow = 0;
+    finalEffect = 0;
+    finalStop = false;
+    trailingState = 0;
+    tailObjects[0] = 0;
+    tailObjects[1] = 0;
+    tailObjects[2] = 0;
 }
