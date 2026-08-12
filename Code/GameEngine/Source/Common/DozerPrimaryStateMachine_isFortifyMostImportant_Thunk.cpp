@@ -1,95 +1,101 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
 
-class State;
+#define DECLARE_TEN_SLOTS(prefix) \
+    virtual void slot##prefix##0(); \
+    virtual void slot##prefix##1(); \
+    virtual void slot##prefix##2(); \
+    virtual void slot##prefix##3(); \
+    virtual void slot##prefix##4(); \
+    virtual void slot##prefix##5(); \
+    virtual void slot##prefix##6(); \
+    virtual void slot##prefix##7(); \
+    virtual void slot##prefix##8(); \
+    virtual void slot##prefix##9()
+
+class DozerAIInterface
+{
+public:
+    virtual void slot0();
+    virtual void slot1();
+    virtual void slot2();
+    virtual void slot3();
+    virtual void slot4();
+    virtual int getMostRecentCommand();
+};
+
+class AIUpdateInterface
+{
+public:
+    DECLARE_TEN_SLOTS(0);
+    DECLARE_TEN_SLOTS(1);
+    DECLARE_TEN_SLOTS(2);
+    DECLARE_TEN_SLOTS(3);
+    DECLARE_TEN_SLOTS(4);
+    DECLARE_TEN_SLOTS(5);
+    DECLARE_TEN_SLOTS(6);
+    virtual void slot70();
+    virtual void slot71();
+    virtual void slot72();
+    virtual void slot73();
+    virtual void slot74();
+    virtual void slot75();
+    virtual void slot76();
+    virtual void slot77();
+    virtual void slot78();
+    virtual DozerAIInterface *getDozerAIInterface();
+    DECLARE_TEN_SLOTS(8);
+    virtual void slot90();
+    virtual void slot91();
+    virtual void slot92();
+    virtual void slot93();
+    virtual void slot94();
+    virtual void slot95();
+    virtual bool isIdle();
+};
+
+#undef DECLARE_TEN_SLOTS
+
+class Object
+{
+public:
+    unsigned char padding[0x204];
+    AIUpdateInterface *aiUpdate;
+};
+
+class StateMachine
+{
+public:
+    unsigned char padding[0x10];
+    Object *owner;
+};
+
+class State
+{
+public:
+    unsigned char padding[0x1c];
+    StateMachine *machine;
+};
+
 class DozerPrimaryStateMachine
 {
 public:
-	static bool __cdecl isFortifyMostImportant(State *, void *);
+    static bool __cdecl isFortifyMostImportant(State *, void *);
 };
 
 // ?isFortifyMostImportant@DozerPrimaryStateMachine@@SA_NPAVState@@PAX@Z
-__declspec(naked) bool __cdecl DozerPrimaryStateMachine::isFortifyMostImportant(State *, void *)
+bool __cdecl DozerPrimaryStateMachine::isFortifyMostImportant(State *state, void *)
 {
-	__asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0x51
-        __emit 0x10
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xb2
-        __emit 0x04
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x75
-        __emit 0x04
-        __emit 0x32
-        __emit 0xc0
-        __emit 0x5e
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x06
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xff
-        __emit 0x90
-        __emit 0x3c
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf8
-        __emit 0x85
-        __emit 0xff
-        __emit 0x75
-        __emit 0x05
-        __emit 0x5f
-        __emit 0x32
-        __emit 0xc0
-        __emit 0x5e
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x16
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xff
-        __emit 0x92
-        __emit 0x80
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0xed
-        __emit 0x8b
-        __emit 0x07
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xff
-        __emit 0x50
-        __emit 0x14
-        __emit 0x83
-        __emit 0xe8
-        __emit 0x02
-        __emit 0xf7
-        __emit 0xd8
-        __emit 0x1b
-        __emit 0xc0
-        __emit 0x5f
-        __emit 0x40
-        __emit 0x5e
-        __emit 0xc3
-	}
+    Object *dozer = state->machine->owner;
+    AIUpdateInterface *ai = dozer->aiUpdate;
+    if (!ai)
+        return false;
+
+    DozerAIInterface *dozerAI = ai->getDozerAIInterface();
+    if (!dozerAI)
+        return false;
+
+    if (!ai->isIdle())
+        return false;
+
+    return dozerAI->getMostRecentCommand() == 2;
 }

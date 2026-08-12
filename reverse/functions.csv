@@ -12150,7 +12150,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?isFinished@AnimateWindow@@QAE_NXZ,,0x004953E0,4,Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp,matched,
 ?isFinished@AnimateWindowManager@@QAE_NXZ,,0x0049CA30,11,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp,matched,
 ?isForcedAttack@@YA_NW4AbleToAttackType@@@Z,,0x001EAB70,8,Code/GameEngine/Source/GameLogic/Object/WeaponSet.cpp,matched,
-?isFortifyMostImportant@DozerPrimaryStateMachine@@SA_NPAVState@@PAX@Z,,0x002B6540,79,Code/GameEngine/Source/Common/DozerPrimaryStateMachine_isFortifyMostImportant_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
+?isFortifyMostImportant@DozerPrimaryStateMachine@@SA_NPAVState@@PAX@Z,,0x002B6540,79,Code/GameEngine/Source/Common/DozerPrimaryStateMachine_isFortifyMostImportant_Thunk.cpp,matched,Open-BFME5 exact semantic C++ dozer fortify predicate
 ?isFreeToAssist@AssistedTargetingUpdate@@QBE_NXZ,,0x0027FCE0,56,Code/GameEngine/Source/Common/promoted__isFreeToAssist_AssistedTargetingUpdate_QBE_NXZ_0027FCE0.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 56B
 ?isFreeToExit@QueueProductionExitUpdate@@IBE_NXZ,,0x002D04F0,21,Code/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/QueueProductionExitUpdate.cpp,matched,
 ?isGamePaused@GameLogic@@QAE_NXZ,,0x002197D0,7,Code/GameEngine/Source/GameLogic/System/GameLogic.cpp,matched,Unique padded game-pause accessor
