@@ -21877,6 +21877,7 @@ name,address,notes
 ?construct@DefaultModule3CtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x00022AFC,DefaultModule<3> constructor thunk used through a TU-local layout shim
 ?construct@DefaultModuleTemplate3CopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x00014B46,DefaultModuleTemplate<3> copy constructor thunk used through a TU-local layout shim
 ?construct@DefaultModuleTemplate3CtorShim@FXParticleSystem@@QAEXXZ,0x0004B47A,DefaultModuleTemplate<3> constructor thunk used through a TU-local layout shim
+?construct@DefaultModule6CtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x000391F3,DefaultModule<6> constructor thunk used through a TU-local layout shim
 ?construct@DefaultModuleTemplate6CopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x000410BA,DefaultModuleTemplate<6> copy constructor thunk used through a TU-local layout shim
 ?construct@DefaultModuleTemplate6CtorShim@FXParticleSystem@@QAEXXZ,0x0002FC2A,DefaultModuleTemplate<6> constructor thunk used through a TU-local layout shim
 ?construct@DefaultModuleTemplate7CopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x00031EFD,DefaultModuleTemplate<7> copy constructor thunk used through a TU-local layout shim

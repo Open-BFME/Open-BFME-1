@@ -179,6 +179,25 @@ private:
     unsigned char m_storage[0x3c];
 };
 
+class DefaultModule6CtorShim {
+public:
+    void construct(TrackingPtr<ParticleSystem> &sys, const void *source);
+};
+
+class DefaultModule6FactoryShim {
+public:
+    DefaultModule6FactoryShim(TrackingPtr<ParticleSystem> &sys, const void *source)
+    {
+        ((DefaultModule6CtorShim *)this)->construct(sys, source);
+        *(volatile unsigned int *)this = 0x01111db4;
+        *(volatile unsigned int *)((unsigned char *)this + 0x14) = 0x01111db0;
+        *(volatile unsigned int *)((unsigned char *)this + 0x18) = 0x01111d9c;
+    }
+
+private:
+    unsigned char m_storage[0x1c];
+};
+
 class DefaultModuleTemplate1CtorShim {
 public:
     void construct();
@@ -7353,116 +7372,9 @@ ConcreteModuleTemplate<DefaultModuleTag<6> > &ConcreteModuleTemplate<DefaultModu
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@UAEPAV?$DefaultModule@$05@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) DefaultModule<6> *ConcreteModuleTemplate<DefaultModuleTag<6> >::createModule(TrackingPtr<ParticleSystem> &sys)
+DefaultModule<6> *ConcreteModuleTemplate<DefaultModuleTag<6> >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xdb
-        __emit 0xba
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x57
-        __emit 0x6a
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0xf9
-        __emit 0xe8
-        __emit 0x8f
-        __emit 0x97
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x74
-        __emit 0x23
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x57
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x32
-        __emit 0x0a
-        __emit 0xa5
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xb4
-        __emit 0x1d
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x14
-        __emit 0xb0
-        __emit 0x1d
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x18
-        __emit 0x9c
-        __emit 0x1d
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    return (DefaultModule<6> *)new DefaultModule6FactoryShim(sys, this);
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z
