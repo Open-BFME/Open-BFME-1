@@ -1,136 +1,61 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 
-class CreateCrateDieModuleData
+// Open-BFME5: CreateCrateDieModuleData constructor lifted from retail.
+
+#include <list>
+
+class AsciiString
 {
 public:
-    CreateCrateDieModuleData();
+	~AsciiString();
+
+private:
+	char *m_data;
 };
 
-__declspec(naked) CreateCrateDieModuleData::CreateCrateDieModuleData()
+class Snapshot
 {
-    __asm {
-        _emit 6Ah
-        _emit 0FFh
-        _emit 68h
-        _emit 0Bh
-        _emit 1Fh
-        _emit 00h
-        _emit 01h
-        _emit 64h
-        _emit 0A1h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 50h
-        _emit 64h
-        _emit 89h
-        _emit 25h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 51h
-        _emit 56h
-        _emit 8Bh
-        _emit 0F1h
-        _emit 57h
-        _emit 89h
-        _emit 74h
-        _emit 24h
-        _emit 08h
-        _emit 8Dh
-        _emit 4Eh
-        _emit 08h
-        _emit 0C7h
-        _emit 44h
-        _emit 24h
-        _emit 14h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0C7h
-        _emit 06h
-        _emit 78h
-        _emit 0AFh
-        _emit 08h
-        _emit 01h
-        _emit 0E8h
-        _emit 0E0h
-        _emit 0D8h
-        _emit 0EDh
-        _emit 0FFh
-        _emit 0C7h
-        _emit 06h
-        _emit 70h
-        _emit 0EFh
-        _emit 08h
-        _emit 01h
-        _emit 8Dh
-        _emit 7Eh
-        _emit 34h
-        _emit 6Ah
-        _emit 0Ch
-        _emit 0C7h
-        _emit 44h
-        _emit 24h
-        _emit 18h
-        _emit 01h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0C7h
-        _emit 07h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0E8h
-        _emit 1Eh
-        _emit 4Ch
-        _emit 70h
-        _emit 00h
-        _emit 89h
-        _emit 00h
-        _emit 89h
-        _emit 40h
-        _emit 04h
-        _emit 83h
-        _emit 0C4h
-        _emit 04h
-        _emit 89h
-        _emit 07h
-        _emit 8Bh
-        _emit 0CFh
-        _emit 0C6h
-        _emit 44h
-        _emit 24h
-        _emit 14h
-        _emit 02h
-        _emit 0E8h
-        _emit 0D3h
-        _emit 0F6h
-        _emit 0EEh
-        _emit 0FFh
-        _emit 8Bh
-        _emit 4Ch
-        _emit 24h
-        _emit 0Ch
-        _emit 5Fh
-        _emit 8Bh
-        _emit 0C6h
-        _emit 5Eh
-        _emit 64h
-        _emit 89h
-        _emit 0Dh
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 83h
-        _emit 0C4h
-        _emit 10h
-        _emit 0C3h
-    }
+public:
+	Snapshot() {}
+	virtual ~Snapshot() {}
+
+private:
+	unsigned char m_data[4];
+};
+
+class InstantDeathDieMuxData
+{
+public:
+	InstantDeathDieMuxData();
+
+private:
+	unsigned char m_data[0x2c];
+};
+
+class DieModuleData : public Snapshot
+{
+public:
+	DieModuleData() {}
+	virtual ~DieModuleData();
+
+private:
+	InstantDeathDieMuxData m_dieMuxData;
+};
+
+class CreateCrateDieModuleData : public DieModuleData
+{
+public:
+	CreateCrateDieModuleData();
+	virtual ~CreateCrateDieModuleData();
+
+private:
+	std::list<AsciiString> m_crateNameList;
+};
+
+// ??0CreateCrateDieModuleData@@QAE@XZ
+CreateCrateDieModuleData::CreateCrateDieModuleData()
+	: DieModuleData(), m_crateNameList()
+{
+	m_crateNameList.clear();
 }
