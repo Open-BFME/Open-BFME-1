@@ -1092,71 +1092,40 @@ AIUpdateModuleData *ThingTemplate::friend_getAIModuleInfo(void)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?validateAudio@ThingTemplate@@IAEXXZ
-__declspec(naked) void ThingTemplate::validateAudio()
+struct RetailShadowStringData
 {
-	__asm {
-		__emit 0x8b;
-		__emit 0x41;
-		__emit 0x4c;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x56;
-		__emit 0x8d;
-		__emit 0x71;
-		__emit 0x4c;
-		__emit 0x74;
-		__emit 0x07;
-		__emit 0x66;
-		__emit 0x83;
-		__emit 0x78;
-		__emit 0x04;
-		__emit 0x00;
-		__emit 0x75;
-		__emit 0x28;
-		__emit 0x83;
-		__emit 0xc1;
-		__emit 0x60;
-		__emit 0xe8;
-		__emit 0xc6;
-		__emit 0x05;
-		__emit 0x74;
-		__emit 0x00;
-		__emit 0x84;
-		__emit 0xc0;
-		__emit 0x8b;
-		__emit 0xce;
-		__emit 0x74;
-		__emit 0x0e;
-		__emit 0x6a;
-		__emit 0x07;
-		__emit 0x68;
-		__emit 0xec;
-		__emit 0x40;
-		__emit 0x09;
-		__emit 0x01;
-		__emit 0xe8;
-		__emit 0x04;
-		__emit 0x9a;
-		__emit 0x74;
-		__emit 0x00;
-		__emit 0x5e;
-		__emit 0xc3;
-		__emit 0x6a;
-		__emit 0x06;
-		__emit 0x68;
-		__emit 0xe4;
-		__emit 0x40;
-		__emit 0x09;
-		__emit 0x01;
-		__emit 0xe8;
-		__emit 0xf6;
-		__emit 0x99;
-		__emit 0x74;
-		__emit 0x00;
-		__emit 0x5e;
-		__emit 0xc3;
-	}
+	unsigned int references;
+	unsigned short length;
+};
+
+class RetailShadowString
+{
+public:
+	bool isEmpty() const { return m_data == NULL || m_data->length == 0; }
+	void set(const char *text, int length);
+
+private:
+	RetailShadowStringData *m_data;
+};
+
+class RetailShadowSelector
+{
+public:
+	bool usePluralShadow();
+};
+
+// ?validateAudio@ThingTemplate@@IAEXXZ
+void ThingTemplate::validateAudio()
+{
+	RetailShadowString *shadow = reinterpret_cast<RetailShadowString *>(reinterpret_cast<char *>(this) + 0x4c);
+	if (!shadow->isEmpty())
+		return;
+
+	RetailShadowSelector *selector = reinterpret_cast<RetailShadowSelector *>(reinterpret_cast<char *>(this) + 0x60);
+	if (selector->usePluralShadow())
+		shadow->set("shadows", 7);
+	else
+		shadow->set("shadow", 6);
 }
 
 //-------------------------------------------------------------------------------------------------
