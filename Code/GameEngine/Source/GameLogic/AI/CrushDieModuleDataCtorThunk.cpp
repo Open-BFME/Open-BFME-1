@@ -1,148 +1,70 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class CrushDieModuleData
+// Open-BFME5: CrushDieModuleData constructor lifted from retail.
+
+class Snapshot
 {
 public:
-    CrushDieModuleData();
+	Snapshot() {}
+	virtual ~Snapshot() {}
+
+private:
+	unsigned char m_data[4];
 };
 
-__declspec(naked) CrushDieModuleData::CrushDieModuleData()
+class InstantDeathDieMuxData
 {
-    __asm {
-        _emit 6Ah
-        _emit 0FFh
-        _emit 68h
-        _emit 70h
-        _emit 13h
-        _emit 00h
-        _emit 01h
-        _emit 64h
-        _emit 0A1h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 50h
-        _emit 64h
-        _emit 89h
-        _emit 25h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 51h
-        _emit 56h
-        _emit 8Bh
-        _emit 0F1h
-        _emit 89h
-        _emit 74h
-        _emit 24h
-        _emit 04h
-        _emit 8Dh
-        _emit 4Eh
-        _emit 08h
-        _emit 0C7h
-        _emit 44h
-        _emit 24h
-        _emit 10h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0C7h
-        _emit 06h
-        _emit 78h
-        _emit 0AFh
-        _emit 08h
-        _emit 01h
-        _emit 0E8h
-        _emit 31h
-        _emit 3Eh
-        _emit 0EEh
-        _emit 0FFh
-        _emit 68h
-        _emit 35h
-        _emit 6Fh
-        _emit 42h
-        _emit 00h
-        _emit 68h
-        _emit 53h
-        _emit 0F1h
-        _emit 42h
-        _emit 00h
-        _emit 6Ah
-        _emit 04h
-        _emit 6Ah
-        _emit 70h
-        _emit 8Dh
-        _emit 46h
-        _emit 34h
-        _emit 50h
-        _emit 0C7h
-        _emit 44h
-        _emit 24h
-        _emit 24h
-        _emit 01h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0C7h
-        _emit 06h
-        _emit 0D8h
-        _emit 0B5h
-        _emit 08h
-        _emit 01h
-        _emit 0E8h
-        _emit 0Ch
-        _emit 3Bh
-        _emit 8Dh
-        _emit 00h
-        _emit 8Bh
-        _emit 4Ch
-        _emit 24h
-        _emit 08h
-        _emit 0B8h
-        _emit 64h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 89h
-        _emit 86h
-        _emit 0F4h
-        _emit 01h
-        _emit 00h
-        _emit 00h
-        _emit 89h
-        _emit 86h
-        _emit 0F8h
-        _emit 01h
-        _emit 00h
-        _emit 00h
-        _emit 89h
-        _emit 86h
-        _emit 0FCh
-        _emit 01h
-        _emit 00h
-        _emit 00h
-        _emit 89h
-        _emit 86h
-        _emit 00h
-        _emit 02h
-        _emit 00h
-        _emit 00h
-        _emit 8Bh
-        _emit 0C6h
-        _emit 5Eh
-        _emit 64h
-        _emit 89h
-        _emit 0Dh
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 83h
-        _emit 0C4h
-        _emit 10h
-        _emit 0C3h
-    }
+public:
+	InstantDeathDieMuxData();
+
+private:
+	unsigned char m_data[0x2c];
+};
+
+class DieModuleData : public Snapshot
+{
+public:
+	DieModuleData() {}
+	virtual ~DieModuleData();
+
+private:
+	InstantDeathDieMuxData m_dieMuxData;
+};
+
+class AudioEventRTS
+{
+public:
+	AudioEventRTS();
+	~AudioEventRTS();
+
+private:
+	unsigned char m_data[0x70];
+};
+
+enum CrushType
+{
+	TOTAL_CRUSH,
+	BACK_END_CRUSH,
+	FRONT_END_CRUSH,
+	NO_CRUSH,
+	CRUSH_COUNT
+};
+
+class CrushDieModuleData : public DieModuleData
+{
+public:
+	CrushDieModuleData();
+	virtual ~CrushDieModuleData();
+
+private:
+	AudioEventRTS m_crushSounds[CRUSH_COUNT];
+	int m_crushSoundPercent[CRUSH_COUNT];
+};
+
+// ??0CrushDieModuleData@@QAE@XZ
+CrushDieModuleData::CrushDieModuleData()
+	: DieModuleData()
+{
+	for (int i = 0; i < CRUSH_COUNT; ++i)
+		m_crushSoundPercent[i] = 100;
 }
