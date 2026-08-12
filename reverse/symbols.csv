@@ -23234,3 +23234,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?construct@DeflectSpecialPowerBaseShim@@QAEXPAVThing@@PBVModuleData@@@Z,0x0001DD40,DeflectSpecialPower semantic C++ base module constructor
 ?set@RetailShadowString@@QAEXPBDH@Z,0x00887D20,ThingTemplate shadow-name StringBase set
 ?usePluralShadow@RetailShadowSelector@@QAE_NXZ,0x0087E8D0,ThingTemplate retail shadow selector
+?TheSupplyWarehouseGlobalData@@3PAUSupplyWarehouseGlobalData@@A,0x00EED5C8,SupplyWarehouse cash-value global data pointer
+?updateDrawableSupplyStatus@Drawable@@QAEXHH@Z,0x00031615,SupplyWarehouse semantic C++ drawable status update
