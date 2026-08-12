@@ -9606,7 +9606,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?createNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@0M0@Z,,0x0002C8EA,5,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineCreateNamedMapRevealThunk.cpp,matched,Focused C++ thunk for ScriptEngine createNamedMapReveal
 ?createNetwork@NetworkInterface@@SAPAV1@XZ,,0x0065C1F0,89,Code/GameEngine/Source/GameNetwork/Network.cpp,matched,
 ?createNewGameResultsInterface@GameResultsInterface@@SAPAV1@XZ,,0x0063E240,86,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,
-?createNewGameSpyInfoInterface@GameSpyInfoInterface@@SAPAV1@XZ,,0x00637760,89,Code/GameEngine/Source/Common/GameSpyInfoInterface_createNewGameSpyInfoInterface_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
+?createNewGameSpyInfoInterface@GameSpyInfoInterface@@SAPAV1@XZ,,0x00637760,89,Code/GameEngine/Source/Common/GameSpyInfoInterface_createNewGameSpyInfoInterface_Thunk.cpp,matched,Open-BFME5 exact semantic C++ GameSpyInfo factory
 ?createNewMessageQueue@GameSpyBuddyMessageQueueInterface@@SAPAV1@XZ,,0x0063E240,86,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp,matched,object-symbol=?createNewGameResultsInterface@GameResultsInterface@@SAPAV1@XZ;C++ alias
 ?createNewMessageQueue@GameSpyPSMessageQueueInterface@@SAPAV1@XZ,,0x006FB870,89,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PersistentStorageThread.cpp,matched,
 ?createNewMessageQueue@GameSpyPeerMessageQueueInterface@@SAPAV1@XZ,,0x0064E620,86,Code/GameEngine/Source/Common/GameSpyPeerMessageQueueInterface_createNewMessageQueue_Thunk.cpp,matched,Open-BFME5 clean C++ conversion of __emit thunk
