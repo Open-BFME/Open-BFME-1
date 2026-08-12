@@ -21847,6 +21847,7 @@ name,address,notes
 ?concat@AsciiString@@QAEXPBD@Z,0x0003ADD7,hit-decoded x2 (thunk)
 ?concat@AsciiString@@QAEXPBD@Z,0x00888060,hit-decoded x2 (body)
 ?concat@AsciiString@@QAEXPBD@Z,0x00888930,hit-decoded x2 (body)
+?concat@AsciiString@@QAEXPBDH@Z,0x00887D60,DataChunkOutput constructor length-aware concat body
 ?connectCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPConnectResponseArg@@@Z,0x000314AD,
 ?construct@AODHordeContainModuleDataBaseShim@@QAEXXZ,0x0000ED77,AODHordeContain ModuleData base
 ?construct@AnimSetConstructShim@_STL@@SAXPAUAnimSet@GenericObjectCreationNugget@@ABU34@@Z,0x00754B20,_STL _Construct AnimSet incremental-link thunk target through a TU-local forwarding shim

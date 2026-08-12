@@ -1,184 +1,70 @@
 // cl: /DNDEBUG /MD /EHsc
 
+#include <stdio.h>
+
 class OutputStream;
+
+struct AsciiStringData
+{
+    int m_refCount;
+    int m_numChars;
+};
+
+extern "C" char g_NAMEKEY_empty_string;
+
+class AsciiString
+{
+public:
+    ~AsciiString();
+    void concat(const char *text, int length);
+
+    const char *str() const
+    {
+        return m_data != 0 ? reinterpret_cast<const char *>(m_data) + 8 : &g_NAMEKEY_empty_string;
+    }
+
+private:
+    AsciiStringData *m_data;
+};
+
+class GlobalData
+{
+public:
+    AsciiString getPath_UserData() const;
+};
+
+extern GlobalData *TheGlobalData;
+
+class DataChunkTableOfContents
+{
+public:
+    DataChunkTableOfContents() : m_list(0), m_listLength(0), m_nextID(1), m_headerOpened(false) {}
+    ~DataChunkTableOfContents();
+
+private:
+    void *m_list;
+    int m_listLength;
+    unsigned int m_nextID;
+    bool m_headerOpened;
+};
 
 class DataChunkOutput
 {
 public:
-    DataChunkOutput(OutputStream *);
+    DataChunkOutput(OutputStream *output);
+
+private:
+    OutputStream *m_pOut;
+    FILE *m_tmp_file;
+    DataChunkTableOfContents m_contents;
+    void *m_chunkStack;
 };
 
-__declspec(naked) DataChunkOutput::DataChunkOutput(OutputStream *)
+// ??0DataChunkOutput@@QAE@PAVOutputStream@@@Z
+DataChunkOutput::DataChunkOutput(OutputStream *output) : m_pOut(output)
 {
-    __asm {
-        _emit 06Ah
-        _emit 0FFh
-        _emit 068h
-        _emit 053h
-        _emit 0C9h
-        _emit 0FFh
-        _emit 000h
-        _emit 064h
-        _emit 0A1h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 050h
-        _emit 064h
-        _emit 089h
-        _emit 025h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 051h
-        _emit 08Bh
-        _emit 044h
-        _emit 024h
-        _emit 014h
-        _emit 053h
-        _emit 056h
-        _emit 08Bh
-        _emit 0F1h
-        _emit 089h
-        _emit 006h
-        _emit 033h
-        _emit 0DBh
-        _emit 089h
-        _emit 074h
-        _emit 024h
-        _emit 008h
-        _emit 089h
-        _emit 05Eh
-        _emit 008h
-        _emit 089h
-        _emit 05Eh
-        _emit 00Ch
-        _emit 0C7h
-        _emit 046h
-        _emit 010h
-        _emit 001h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 088h
-        _emit 05Eh
-        _emit 014h
-        _emit 08Dh
-        _emit 04Ch
-        _emit 024h
-        _emit 01Ch
-        _emit 051h
-        _emit 08Bh
-        _emit 00Dh
-        _emit 0C8h
-        _emit 0D5h
-        _emit 02Eh
-        _emit 001h
-        _emit 089h
-        _emit 05Ch
-        _emit 024h
-        _emit 018h
-        _emit 0E8h
-        _emit 000h
-        _emit 0DBh
-        _emit 0F0h
-        _emit 0FFh
-        _emit 06Ah
-        _emit 00Dh
-        _emit 068h
-        _emit 034h
-        _emit 063h
-        _emit 008h
-        _emit 001h
-        _emit 08Dh
-        _emit 04Ch
-        _emit 024h
-        _emit 024h
-        _emit 0C6h
-        _emit 044h
-        _emit 024h
-        _emit 01Ch
-        _emit 001h
-        _emit 0E8h
-        _emit 061h
-        _emit 051h
-        _emit 078h
-        _emit 000h
-        _emit 08Bh
-        _emit 044h
-        _emit 024h
-        _emit 01Ch
-        _emit 03Bh
-        _emit 0C3h
-        _emit 074h
-        _emit 005h
-        _emit 083h
-        _emit 0C0h
-        _emit 008h
-        _emit 0EBh
-        _emit 005h
-        _emit 0B8h
-        _emit 08Bh
-        _emit 038h
-        _emit 007h
-        _emit 001h
-        _emit 068h
-        _emit 060h
-        _emit 0FFh
-        _emit 007h
-        _emit 001h
-        _emit 050h
-        _emit 0FFh
-        _emit 015h
-        _emit 0BCh
-        _emit 093h
-        _emit 035h
-        _emit 001h
-        _emit 083h
-        _emit 0C4h
-        _emit 008h
-        _emit 08Dh
-        _emit 04Ch
-        _emit 024h
-        _emit 01Ch
-        _emit 089h
-        _emit 046h
-        _emit 004h
-        _emit 089h
-        _emit 05Eh
-        _emit 018h
-        _emit 088h
-        _emit 05Ch
-        _emit 024h
-        _emit 014h
-        _emit 0E8h
-        _emit 00Dh
-        _emit 04Dh
-        _emit 078h
-        _emit 000h
-        _emit 08Bh
-        _emit 04Ch
-        _emit 024h
-        _emit 00Ch
-        _emit 08Bh
-        _emit 0C6h
-        _emit 05Eh
-        _emit 05Bh
-        _emit 064h
-        _emit 089h
-        _emit 00Dh
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 083h
-        _emit 0C4h
-        _emit 010h
-        _emit 0C2h
-        _emit 004h
-        _emit 000h
-    }
+    AsciiString tmpFileName = TheGlobalData->getPath_UserData();
+    tmpFileName.concat("_tmpChunk.dat", 13);
+    m_tmp_file = fopen(tmpFileName.str(), "wb");
+    m_chunkStack = 0;
 }
-
