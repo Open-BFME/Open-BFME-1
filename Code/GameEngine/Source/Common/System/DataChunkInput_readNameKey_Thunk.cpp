@@ -1,202 +1,130 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
 
-enum NameKeyType {};
+extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long milliseconds);
+
+enum NameKeyType
+{
+};
+
+struct AsciiStringData
+{
+    int m_refCount;
+    int m_numChars;
+};
+
+extern "C" char g_NAMEKEY_empty_string;
+
+class AsciiString
+{
+public:
+    ~AsciiString();
+
+    const char *str() const
+    {
+        return m_data != 0 ? reinterpret_cast<const char *>(m_data) + 8 : &g_NAMEKEY_empty_string;
+    }
+
+    AsciiStringData *m_data;
+};
+
+class NameKeyGenerator
+{
+public:
+    NameKeyType nameToKey(const char *name);
+    NameKeyType nameToKey(const AsciiString &name) { return nameToKey(name.str()); }
+};
+
+extern NameKeyGenerator *TheNameKeyGenerator;
+
+class GameEngine
+{
+public:
+    virtual void slot00() = 0;
+    virtual void slot01() = 0;
+    virtual void slot02() = 0;
+    virtual void slot03() = 0;
+    virtual void slot04() = 0;
+    virtual void slot05() = 0;
+    virtual void slot06() = 0;
+    virtual void slot07() = 0;
+    virtual void slot08() = 0;
+    virtual void slot09() = 0;
+    virtual void slot10() = 0;
+    virtual void slot11() = 0;
+    virtual void slot12() = 0;
+    virtual void slot13() = 0;
+    virtual void slot14() = 0;
+    virtual void slot15() = 0;
+    virtual void serviceWindowsOS() = 0;
+};
+
+extern GameEngine *TheGameEngine;
+
+class ChunkInputStream
+{
+public:
+    virtual int read(char *data, int size) = 0;
+};
+
+class InputChunk
+{
+public:
+    virtual ~InputChunk() {}
+
+    InputChunk *next;
+    unsigned int id;
+    unsigned short version;
+    unsigned short padding;
+    int chunkStart;
+    int dataSize;
+    int dataLeft;
+};
+
+class DataChunkTableOfContents
+{
+public:
+    AsciiString getName(unsigned int id);
+
+private:
+    void *m_list;
+    int m_listLength;
+    unsigned int m_nextID;
+    bool m_headerOpened;
+};
+
 class DataChunkInput
 {
 public:
-	NameKeyType readNameKey();
+    NameKeyType readNameKey();
+
+private:
+    __forceinline int readIntInline()
+    {
+        Sleep(0);
+        if (TheGameEngine != 0) {
+            TheGameEngine->serviceWindowsOS();
+        }
+
+        int value;
+        m_file->read(reinterpret_cast<char *>(&value), sizeof(value));
+        for (InputChunk *chunk = m_chunkStack; chunk != 0; chunk = chunk->next) {
+            chunk->dataLeft -= sizeof(value);
+        }
+        return value;
+    }
+
+    ChunkInputStream *m_file;
+    DataChunkTableOfContents m_contents;
+    int m_fileposOfFirstChunk;
+    void *m_parserList;
+    InputChunk *m_chunkStack;
 };
 
 // ?readNameKey@DataChunkInput@@QAE?AW4NameKeyType@@XZ
-__declspec(naked) NameKeyType DataChunkInput::readNameKey()
+NameKeyType DataChunkInput::readNameKey()
 {
-	__asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x88
-        __emit 0xca
-        __emit 0xff
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xec
-        __emit 0x08
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xff
-        __emit 0x15
-        __emit 0x30
-        __emit 0x8f
-        __emit 0x35
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x24
-        __emit 0xd5
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8b
-        __emit 0x01
-        __emit 0xff
-        __emit 0x50
-        __emit 0x40
-        __emit 0x8b
-        __emit 0x0e
-        __emit 0x8b
-        __emit 0x11
-        __emit 0x6a
-        __emit 0x04
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x50
-        __emit 0xff
-        __emit 0x12
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x1c
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x14
-        __emit 0xb9
-        __emit 0xfc
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xeb
-        __emit 0x03
-        __emit 0x8d
-        __emit 0x49
-        __emit 0x00
-        __emit 0x01
-        __emit 0x48
-        __emit 0x18
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x75
-        __emit 0xf6
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0xc1
-        __emit 0xf8
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x04
-        __emit 0xe8
-        __emit 0x2b
-        __emit 0x08
-        __emit 0xf0
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x05
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x05
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x00
-        __emit 0xd6
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x50
-        __emit 0xe8
-        __emit 0x72
-        __emit 0x74
-        __emit 0xf3
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0xc8
-        __emit 0x3f
-        __emit 0x78
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x14
-        __emit 0xc3
-	}
+    int keyAndType = readIntInline();
+    keyAndType >>= 8;
+    AsciiString name = m_contents.getName(keyAndType);
+    return TheNameKeyGenerator->nameToKey(name);
 }
