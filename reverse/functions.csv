@@ -34081,7 +34081,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?splitSegmentAtT@BezierSegment@@QBEXMAAV1@0@Z,,0x000B6FA0,627,Code/GameEngine/Source/Common/bezier_segment.cpp,matched,
 ?start@BezFwdIterator@@QAEXXZ,,0x000B6630,374,Code/GameEngine/Source/Common/Bezier/BezFwdIterator.cpp,matched,
 ?startBurningSound@FlammableUpdate@@IAEXXZ,,0x00293520,113,Code/GameEngine/Source/GameLogic/Object/Update/FlammableUpdateStartBurningSoundThunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
-?startDefectionTimer@ObjectDefectionHelper@@QAEXI_N@Z,,0x002562F0,82,Code/GameEngine/Source/Common/ObjectDefectionHelper_startDefectionTimer_Thunk.cpp,matched,Open-BFME5 exact C++ __emit thunk converted from MASM dump
+?startDefectionTimer@ObjectDefectionHelper@@QAEXI_N@Z,,0x002562F0,82,Code/GameEngine/Source/Common/ObjectDefectionHelper_startDefectionTimer_Thunk.cpp,matched,Open-BFME5 exact semantic C++ defection timer and wake-frame scheduling
 ?startMoveSound@AIInternalMoveToState@@AAEXXZ,,0x0016E6C0,566,Code/GameEngine/Source/Common/AIInternalMoveToState_startMoveSoundMethodThunk.cpp,matched,MASM exact retail dump; true body via onEnter last call (queue 0xFB2BC was int3 pad)
 ?startNewGame@GameLogic@@QAEX_N@Z,,0x00394260,7640,Code/GameEngine/Source/GameLogic/GameLogic_startNewGame_Thunk.cpp,matched,object-symbol=_bfme_GameLogicStartNewGame_394260; Open-BFME5 exact lift of complete 7640-byte ledger range
 ?startPowerRecharge@SpecialPowerModule@@UAEXXZ,,0x0026AE00,112,Code/GameEngine/Source/Common/promoted__startPowerRecharge_SpecialPowerModule_UAEXXZ_0026AE00.cpp,matched,Grok promote masm dump to Code/ naked C++ exact 112B
