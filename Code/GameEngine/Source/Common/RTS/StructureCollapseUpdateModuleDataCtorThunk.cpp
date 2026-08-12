@@ -1,238 +1,96 @@
 // cl: /DNDEBUG /MD /EHsc
+// Open-BFME5: retail-layout C++ conversion of StructureCollapseUpdateModuleData.
 
-class StructureCollapseUpdateModuleData
+class Snapshot
 {
 public:
-    StructureCollapseUpdateModuleData();
+	Snapshot() {}
+	virtual ~Snapshot() {}
+
+private:
+	unsigned int m_pad;
+};
+
+class StructureCollapseBaseData
+{
+public:
+	StructureCollapseBaseData();
+
+private:
+	unsigned char m_data[0x2c];
+};
+
+class StructureCollapseFXVector
+{
+public:
+	StructureCollapseFXVector();
+	~StructureCollapseFXVector();
+
+private:
+	unsigned char m_data[0x0c];
+};
+
+class StructureCollapseOCLVector
+{
+public:
+	StructureCollapseOCLVector();
+	~StructureCollapseOCLVector();
+
+private:
+	unsigned char m_data[0x0c];
+};
+
+class StructureCollapseUpdateModuleData : public Snapshot
+{
+public:
+	StructureCollapseUpdateModuleData();
+	virtual ~StructureCollapseUpdateModuleData();
+
+private:
+	StructureCollapseBaseData m_baseData;	// +0x08
+	volatile unsigned int m_minCollapseDelay;	// +0x34
+	volatile unsigned int m_maxCollapseDelay;	// +0x38
+	volatile unsigned int m_minBurstDelay;		// +0x3c
+	unsigned int m_maxBurstDelay;			// +0x40
+	volatile float m_collapseDamping;		// +0x44
+	volatile float m_maxShudder;			// +0x48
+	volatile int m_bigBurstFrequency;		// +0x4c
+	StructureCollapseFXVector m_fxs[5];	// +0x50
+	StructureCollapseOCLVector m_ocls[5]; // +0x8c
+	volatile unsigned int m_dieData0;		// +0xc8
+	volatile unsigned int m_dieData1;
+	volatile unsigned int m_dieData2;
+	volatile unsigned int m_dieData3;
+	volatile unsigned int m_dieData4;
+	volatile unsigned int m_dieData5;
+	volatile unsigned int m_dieData6;
+	volatile unsigned int m_dieData7;
+	volatile unsigned int m_dieData8;
+	volatile unsigned int m_dieData9;		// +0xec
+	volatile unsigned char m_dieDataFlag;	// +0xf0
+	unsigned char m_padF1[3];
+	volatile unsigned int m_dieDataTail;	// +0xf4
 };
 
 // ??0StructureCollapseUpdateModuleData@@QAE@XZ
-__declspec(naked) StructureCollapseUpdateModuleData::StructureCollapseUpdateModuleData()
+StructureCollapseUpdateModuleData::StructureCollapseUpdateModuleData()
 {
-    __asm {
-        __emit 0x6a;
-        __emit 0xff;
-        __emit 0x68;
-        __emit 0x8e;
-        __emit 0x1c;
-        __emit 0x00;
-        __emit 0x01;
-        __emit 0x64;
-        __emit 0xa1;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x50;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x25;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x51;
-        __emit 0x53;
-        __emit 0x56;
-        __emit 0x8b;
-        __emit 0xf1;
-        __emit 0x57;
-        __emit 0x89;
-        __emit 0x74;
-        __emit 0x24;
-        __emit 0x0c;
-        __emit 0x33;
-        __emit 0xff;
-        __emit 0x8d;
-        __emit 0x4e;
-        __emit 0x08;
-        __emit 0x89;
-        __emit 0x7c;
-        __emit 0x24;
-        __emit 0x18;
-        __emit 0xc7;
-        __emit 0x06;
-        __emit 0xe8;
-        __emit 0xeb;
-        __emit 0x08;
-        __emit 0x01;
-        __emit 0xe8;
-        __emit 0x71;
-        __emit 0xe8;
-        __emit 0xed;
-        __emit 0xff;
-        __emit 0x68;
-        __emit 0x3b;
-        __emit 0x2d;
-        __emit 0x42;
-        __emit 0x00;
-        __emit 0x68;
-        __emit 0xb1;
-        __emit 0x7d;
-        __emit 0x44;
-        __emit 0x00;
-        __emit 0x6a;
-        __emit 0x05;
-        __emit 0x6a;
-        __emit 0x0c;
-        __emit 0x8d;
-        __emit 0x46;
-        __emit 0x50;
-        __emit 0x50;
-        __emit 0xe8;
-        __emit 0x5a;
-        __emit 0xe5;
-        __emit 0x8c;
-        __emit 0x00;
-        __emit 0x68;
-        __emit 0x77;
-        __emit 0x74;
-        __emit 0x41;
-        __emit 0x00;
-        __emit 0x68;
-        __emit 0x5c;
-        __emit 0x47;
-        __emit 0x43;
-        __emit 0x00;
-        __emit 0x6a;
-        __emit 0x05;
-        __emit 0x6a;
-        __emit 0x0c;
-        __emit 0x8d;
-        __emit 0x8e;
-        __emit 0x8c;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xbb;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x51;
-        __emit 0x88;
-        __emit 0x5c;
-        __emit 0x24;
-        __emit 0x2c;
-        __emit 0xe8;
-        __emit 0x37;
-        __emit 0xe5;
-        __emit 0x8c;
-        __emit 0x00;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0x89;
-        __emit 0x7e;
-        __emit 0x34;
-        __emit 0x89;
-        __emit 0x7e;
-        __emit 0x38;
-        __emit 0x89;
-        __emit 0x7e;
-        __emit 0x4c;
-        __emit 0x89;
-        __emit 0x7e;
-        __emit 0x48;
-        __emit 0x89;
-        __emit 0x7e;
-        __emit 0x44;
-        __emit 0x89;
-        __emit 0xbe;
-        __emit 0xf4;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x3c;
-        __emit 0x0f;
-        __emit 0x27;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xc6;
-        __emit 0x86;
-        __emit 0xf0;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xc8;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xdc;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xcc;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xe0;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xd0;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xe4;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xd4;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xe8;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xd8;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xec;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x5f;
-        __emit 0x8b;
-        __emit 0xc6;
-        __emit 0x5e;
-        __emit 0x5b;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x0d;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xc4;
-        __emit 0x10;
-        __emit 0xc3;
-    }
+	m_minCollapseDelay = 0;
+	m_maxCollapseDelay = 0;
+	m_bigBurstFrequency = 0;
+	m_maxShudder = 0.0f;
+	m_collapseDamping = 0.0f;
+	m_dieDataTail = 0;
+	m_minBurstDelay = 9999;
+	m_dieDataFlag = 0;
+	m_dieData0 = 1;
+	m_dieData5 = 1;
+	m_dieData1 = 1;
+	m_dieData6 = 1;
+	m_dieData2 = 1;
+	m_dieData7 = 1;
+	m_dieData3 = 1;
+	m_dieData8 = 1;
+	m_dieData4 = 1;
+	m_dieData9 = 1;
 }
