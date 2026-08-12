@@ -23231,3 +23231,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?applyForce@ApplyRandomForcePhysicsShim@@QAEPAVObject@@PBUCoord3D@@@Z,0x0002A284,ApplyRandomForceNugget physics force-application incremental thunk
 ?calcApplyRandomForce@@YAXMMMMPAUCoord3D@@@Z,0x001D6510,ApplyRandomForceNugget semantic C++ random-force helper
 ?construct@W3DDebrisDrawBaseShim@@QAEXPAVThing@@PBVModuleData@@@Z,0x00002874,W3DDebrisDraw semantic C++ base DrawableModule constructor
+?construct@DeflectSpecialPowerBaseShim@@QAEXPAVThing@@PBVModuleData@@@Z,0x0001DD40,DeflectSpecialPower semantic C++ base module constructor

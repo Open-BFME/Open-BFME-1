@@ -1,99 +1,47 @@
 // cl: /DNDEBUG /MD /EHsc
 
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic(_ReadWriteBarrier)
+
 class Thing;
 class ModuleData;
 
+class DeflectSpecialPowerBaseShim
+{
+public:
+    void construct(Thing *, const ModuleData *);
+};
+
 class DeflectSpecialPower
 {
+    volatile unsigned int primaryVtable;
+    unsigned char padding0[8];
+    volatile unsigned int interfaceVtable0;
+    volatile unsigned int interfaceVtable1;
+    unsigned char padding1[12];
+    volatile unsigned int interfaceVtable2;
+    volatile unsigned int interfaceVtable3;
+    unsigned char padding2[16];
+    volatile unsigned int interfaceVtable4;
+    volatile bool active;
+    volatile bool ready;
+
 public:
     DeflectSpecialPower(Thing *, const ModuleData *);
 };
 
 // ??0DeflectSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z
-__declspec(naked) DeflectSpecialPower::DeflectSpecialPower(Thing *, const ModuleData *)
+DeflectSpecialPower::DeflectSpecialPower(Thing *thing, const ModuleData *moduleData)
 {
-    __asm {
-        __emit 0x8b;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x56;
-        __emit 0x8b;
-        __emit 0xf1;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x50;
-        __emit 0x51;
-        __emit 0x8b;
-        __emit 0xce;
-        __emit 0xe8;
-        __emit 0x7c;
-        __emit 0x3b;
-        __emit 0xdc;
-        __emit 0xff;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x38;
-        __emit 0xe4;
-        __emit 0x1d;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0x32;
-        __emit 0xc0;
-        __emit 0x88;
-        __emit 0x46;
-        __emit 0x3c;
-        __emit 0x88;
-        __emit 0x46;
-        __emit 0x3d;
-        __emit 0xc7;
-        __emit 0x06;
-        __emit 0xec;
-        __emit 0x44;
-        __emit 0x0b;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x0c;
-        __emit 0x28;
-        __emit 0x44;
-        __emit 0x0b;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x10;
-        __emit 0x1c;
-        __emit 0x44;
-        __emit 0x0b;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x20;
-        __emit 0xf0;
-        __emit 0x43;
-        __emit 0x0b;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x24;
-        __emit 0x78;
-        __emit 0x43;
-        __emit 0x0b;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x38;
-        __emit 0x58;
-        __emit 0x43;
-        __emit 0x0b;
-        __emit 0x01;
-        __emit 0x8b;
-        __emit 0xc6;
-        __emit 0x5e;
-        __emit 0xc2;
-        __emit 0x08;
-        __emit 0x00;
-    }
+    reinterpret_cast<DeflectSpecialPowerBaseShim *>(this)->construct(thing, moduleData);
+    interfaceVtable4 = 0x010a1de4;
+    _ReadWriteBarrier();
+    active = false;
+    ready = false;
+    primaryVtable = 0x010b44ec;
+    interfaceVtable0 = 0x010b4428;
+    interfaceVtable1 = 0x010b441c;
+    interfaceVtable2 = 0x010b43f0;
+    interfaceVtable3 = 0x010b4378;
+    interfaceVtable4 = 0x010b4358;
 }
