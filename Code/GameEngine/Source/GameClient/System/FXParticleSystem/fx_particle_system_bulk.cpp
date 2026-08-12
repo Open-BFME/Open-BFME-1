@@ -566,6 +566,25 @@ private:
     unsigned char m_storage[0x5c];
 };
 
+class StreakDrawModuleCtorShim {
+public:
+    void construct(TrackingPtr<ParticleSystem> &sys, const void *source);
+};
+
+class StreakDrawModuleFactoryShim {
+public:
+    StreakDrawModuleFactoryShim(TrackingPtr<ParticleSystem> &sys, const void *source)
+    {
+        ((StreakDrawModuleCtorShim *)this)->construct(sys, source);
+        *(volatile unsigned int *)this = 0x01111df0;
+        *(volatile unsigned int *)((unsigned char *)this + 0x14) = 0x01111dec;
+        *(volatile unsigned int *)((unsigned char *)this + 0x18) = 0x01111dd8;
+    }
+
+private:
+    unsigned char m_storage[0x1c];
+};
+
 class RenderObjectDrawTemplateCopyCtorShim {
 public:
     void construct(const void *source);
@@ -9049,116 +9068,9 @@ StreakDrawModuleTemplate *ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE
 }
 
 // ?createModule@?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UAEPAVStreakDrawModule@2@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@@Z
-__declspec(naked) StreakDrawModule *ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createModule(TrackingPtr<ParticleSystem> &sys)
+StreakDrawModule *ConcreteModuleTemplate<ModuleTag<6, STREAK_DRAW_MODULE_KEY, STREAK_DRAW_MODULE_NAME, StreakDrawModule, StreakDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::createModule(TrackingPtr<ParticleSystem> &sys)
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xfb
-        __emit 0xba
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x57
-        __emit 0x6a
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0xf9
-        __emit 0xe8
-        __emit 0xff
-        __emit 0x96
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x74
-        __emit 0x23
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x57
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xd1
-        __emit 0xe3
-        __emit 0xa5
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xf0
-        __emit 0x1d
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x14
-        __emit 0xec
-        __emit 0x1d
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x18
-        __emit 0xd8
-        __emit 0x1d
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
+    return (StreakDrawModule *)new StreakDrawModuleFactoryShim(sys, this);
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z

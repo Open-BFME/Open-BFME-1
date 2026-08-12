@@ -21917,6 +21917,7 @@ name,address,notes
 ?construct@SphericalEmissionVelocityTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x00003DF5,SphericalEmissionVelocityModuleTemplate copy constructor thunk used through a TU-local layout shim
 ?construct@SphericalEmissionVelocityTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x0001BF86,SphericalEmissionVelocityModuleTemplate constructor thunk used through a TU-local layout shim
 ?construct@StreakDrawTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x00033B59,StreakDrawModuleTemplate copy constructor thunk used through a TU-local layout shim
+?construct@StreakDrawModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x00046C22,StreakDrawModule constructor thunk used through a TU-local layout shim
 ?construct@StreakDrawTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x00006FBE,StreakDrawModuleTemplate constructor thunk used through a TU-local layout shim
 ?construct@TerrainCollisionTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0002C3C7,TerrainCollisionModuleTemplate copy constructor thunk used through a TU-local layout shim
 ?construct@TerrainCollisionTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x00012602,TerrainCollisionModuleTemplate constructor thunk used through a TU-local layout shim
