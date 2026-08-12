@@ -519,6 +519,7 @@ name,address,notes
 ??0?$BFMEFactoryModuleData@VTransportContainModuleData@@$0BHM@@@QAE@XZ,0x00014565,ModuleFactory retail data facade
 ??0?$BFMEFactoryModuleData@VTunnelContainModuleData@@$0CEI@@@QAE@XZ,0x00002315,ModuleFactory retail data facade
 ??0?$BFMEFactoryModuleData@VUnitCrateCollideModuleData@@$0FM@@@QAE@XZ,0x0000DA4E,ModuleFactory retail data facade
+??0CrateCollideModuleData@@QAE@XZ,0x000441CA,Open-BFME5 UnitCrateCollide base constructor pin
 ??0?$BFMEFactoryModuleData@VUpgradeDieModuleData@@$0DI@@@QAE@XZ,0x0001B905,ModuleFactory retail data facade
 ??0?$BFMEFactoryModuleData@VWaveGuideUpdateModuleData@@$0BGM@@@QAE@XZ,0x00030945,Open-BFME5 exact factory storage constructor pin (ICF alias with ChinookAIUpdate/InternetHackContain)
 ??0?$BFMEFactoryModuleData@VWorkerAIUpdateModuleData@@$0BAA@@@QAE@XZ,0x00036232,ModuleFactory retail data facade
