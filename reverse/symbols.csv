@@ -21911,6 +21911,7 @@ name,address,notes
 ?construct@PointEmissionVolumeTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0000FECA,PointEmissionVolumeModuleTemplate copy constructor thunk used through a TU-local layout shim
 ?construct@PrereqUnitRecConstructShim@_STL@@SAXPAUPrereqUnitRec@ProductionPrerequisite@@ABU34@@Z,0x00582750,_STL _Construct PrereqUnitRec incremental-link thunk target through a TU-local forwarding shim
 ?construct@ProductionPrerequisiteConstructShim@_STL@@SAXPAVProductionPrerequisite@@ABV3@@Z,0x00784DB0,_STL _Construct ProductionPrerequisite incremental-link thunk target through a TU-local forwarding shim
+?construct@ModelConditionInfoConstructShim@_STL@@SAXPAUModelConditionInfo@@ABU3@@Z,0x000375CE,ModelConditionInfo _Construct incremental-link thunk used by the semantic fill loop
 ?construct@QuadDrawModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x00047AAF,QuadDrawModule constructor thunk used through a TU-local layout shim
 ?construct@QuadDrawTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x00005222,QuadDrawModuleTemplate copy constructor thunk used through a TU-local layout shim
 ?construct@QuadDrawTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x0001D278,QuadDrawModuleTemplate constructor thunk used through a TU-local layout shim
