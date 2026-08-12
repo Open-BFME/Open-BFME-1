@@ -3110,6 +3110,7 @@ name,address,notes
 ?aiAttackObject@AICommandInterface@@QAEXPAVObject@@HW4CommandSourceType@@@Z,0x0002EDCF,retail AIEnterState::update call target
 ?allocArg@GameMessage@@AAEPAUArgument@1@XZ,0x0002CC8C,GameMessage::allocArg private helper not yet converted to C++; retail target of the append*Argument leaves' call
 ?allocate@__new_alloc@_STL@@SAPAXI@Z,0x0082E540,stlport static-lib allocate (SEH body; not operator new @ 0x881F30)
+?allocateID@DataChunkTableOfContents@@QAEIABVAsciiString@@@Z,0x0003EAA4,DataChunkOutput::writeNameKey retail call target
 ?allocate_and_copy@HideShowSubObjInfoAllocateAndCopyShim@_STL@@QAEPAUHideShowSubObjInfo@ModelConditionInfo@@IPBU34@0@Z,0x003B4C80,_STL vector _M_allocate_and_copy HideShowSubObjInfo incremental-link thunk target through a TU-local forwarding shim
 ?allocate_and_copy@ModuleInfoNuggetAllocateAndCopyShim@_STL@@QAEPAUNugget@ModuleInfo@@IPBU34@0@Z,0x0076B3B0,_STL vector _M_allocate_and_copy ModuleInfo Nugget incremental-link thunk target through a TU-local forwarding shim
 ?allocate_and_copy@ObjectPointerAllocateAndCopyShim@_STL@@QAEPAPAVObject@@IPBQAV3@0@Z,0x004A0140,_STL vector _M_allocate_and_copy Object* incremental-link thunk target through a TU-local forwarding shim
