@@ -1,100 +1,61 @@
 // cl: /DNDEBUG /MD /EHsc
 
+// Open-BFME5: OathbreakersFadeAwayBehavior module constructor.
+
 class Thing;
 class ModuleData;
+class Object;
 
-class OathbreakersFadeAwayBehavior
+class PB_DeepBase
 {
 public:
-    OathbreakersFadeAwayBehavior(Thing *, const ModuleData *);
+	PB_DeepBase(Thing *, const ModuleData *);
+	virtual ~PB_DeepBase();
+
+protected:
+	void *m_f04;
+	Object *m_object;
 };
 
-__declspec(naked) OathbreakersFadeAwayBehavior::OathbreakersFadeAwayBehavior(Thing *, const ModuleData *)
+class OathbreakersFadeAwayBehaviorIface1
 {
-    __asm {
-        __emit 0x8b;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x56;
-        __emit 0x8b;
-        __emit 0xf1;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x50;
-        __emit 0x51;
-        __emit 0x8b;
-        __emit 0xce;
-        __emit 0xe8;
-        __emit 0x20;
-        __emit 0x55;
-        __emit 0xe1;
-        __emit 0xff;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x0c;
-        __emit 0xd0;
-        __emit 0xc9;
-        __emit 0x09;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x10;
-        __emit 0xa0;
-        __emit 0xcb;
-        __emit 0x09;
-        __emit 0x01;
-        __emit 0x83;
-        __emit 0xc8;
-        __emit 0xff;
-        __emit 0x33;
-        __emit 0xc9;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x18;
-        __emit 0x89;
-        __emit 0x46;
-        __emit 0x1c;
-        __emit 0x89;
-        __emit 0x4e;
-        __emit 0x14;
-        __emit 0xc7;
-        __emit 0x06;
-        __emit 0x24;
-        __emit 0x51;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x0c;
-        __emit 0x60;
-        __emit 0x50;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x10;
-        __emit 0x54;
-        __emit 0x50;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0x88;
-        __emit 0x4e;
-        __emit 0x20;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x24;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x80;
-        __emit 0x3f;
-        __emit 0x8b;
-        __emit 0xc6;
-        __emit 0x5e;
-        __emit 0xc2;
-        __emit 0x08;
-        __emit 0x00;
-    }
+public:
+	virtual void slot();
+};
+
+class OathbreakersFadeAwayBehaviorIface2
+{
+public:
+	virtual void slot();
+};
+
+class UpdateModule : public PB_DeepBase,
+	public OathbreakersFadeAwayBehaviorIface1,
+	public OathbreakersFadeAwayBehaviorIface2
+{
+public:
+	UpdateModule(Thing *thing, const ModuleData *moduleData)
+		: PB_DeepBase(thing, moduleData), m_f14(0), m_f18(-1), m_f1c(-1) {}
+
+private:
+	unsigned int m_f14;
+	int m_f18;
+	int m_f1c;
+};
+
+class OathbreakersFadeAwayBehavior : public UpdateModule
+{
+public:
+	OathbreakersFadeAwayBehavior(Thing *, const ModuleData *);
+	virtual ~OathbreakersFadeAwayBehavior();
+
+private:
+	bool m_f20;
+	float m_f24;
+};
+
+// ??0OathbreakersFadeAwayBehavior@@QAE@PAVThing@@PBVModuleData@@@Z
+OathbreakersFadeAwayBehavior::OathbreakersFadeAwayBehavior(Thing *thing, const ModuleData *moduleData)
+	: UpdateModule(thing, moduleData), m_f20(false), m_f24(1.0f)
+{
 }
