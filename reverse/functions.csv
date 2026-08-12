@@ -9525,7 +9525,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?countTiles@WorldHeightMap@@SAHPAVInputStream@@PA_N@Z,,0x00747010,44,Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp,matched,
 ?countVotesForPlayer@DisconnectManager@@IAEHH@Z,,0x00003751,5,Code/GameEngine/Source/GameNetwork/DisconnectManagerCountVotesForPlayerThunk.cpp,matched,Open-BFME5 exact ILT thunk; real body 0x66B720
 ?crc@AI@@UAEXPAVXfer@@@Z,,0x0014B8C0,303,Code/GameEngine/Source/Common/AI_crc_Thunk.cpp,matched,Exact 303B Open-BFME4
-?create@ApplyRandomForceNugget@@UBEPAVObject@@PBV2@0I@Z,,0x001D64B0,70,Code/GameEngine/Source/Common/ApplyRandomForceNuggetCreateThunk.cpp,matched,Certified packet 298 exact retail bytes SHA256 40e0e7abb6a36d49fb449166623a71831df74d4cf8330e602871b9c6ec265bff
+?create@ApplyRandomForceNugget@@UBEPAVObject@@PBV2@0I@Z,,0x001D64B0,70,Code/GameEngine/Source/Common/ApplyRandomForceNuggetCreateThunk.cpp,matched,Open-BFME5 exact semantic C++ random-force calculation and physics application
 ?create@AttackNugget@@UBEPAVObject@@PBV2@PBUCoord3D@@1MI@Z,,0x001D7BC0,334,Code/GameEngine/Source/Common/AttackNugget_create_Thunk.cpp,matched,Exact 334B MASM; true body via RadiusDecalUpdate+vtbl thunk 0xBD25; queue 0x3992F7 mid-fn; C++ blocked Object AI+0x204 RadiusDecalTemplate layout
 ?create@FireWeaponNugget@@UBEPAVObject@@PBV2@PBUCoord3D@@1MI@Z,,0x001D5EA0,24,Code/GameEngine/Source/GameLogic/Object/ObjectCreationList.cpp,matched,
 ?create@GameSpyConfigInterface@@SAPAV1@VAsciiString@@@Z,,0x0062AD50,3077,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyConfigInterfaceCreateThunk.cpp,matched,multi-xref %s\%s\%s.map;Open-BFME5 byte-exact C++ __emit thunk;object-symbol=_bfme_GameSpyConfigInterfaceCreate_62AD50

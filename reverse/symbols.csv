@@ -23228,3 +23228,5 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?setWakeFrame@ObjectDefectionWakeFrameShim@@QAEXPAVObject@@I@Z,0x000157DA,ObjectDefectionHelper semantic C++ tail-call shim to UpdateModule setWakeFrame
+?applyForce@ApplyRandomForcePhysicsShim@@QAEPAVObject@@PBUCoord3D@@@Z,0x0002A284,ApplyRandomForceNugget physics force-application incremental thunk
+?calcApplyRandomForce@@YAXMMMMPAUCoord3D@@@Z,0x001D6510,ApplyRandomForceNugget semantic C++ random-force helper
