@@ -21889,6 +21889,7 @@ name,address,notes
 ?construct@LightningDrawModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0002A76B,LightningDrawModule constructor thunk used through a TU-local layout shim
 ?construct@LightningDrawTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0004A89F,LightningDrawModuleTemplate copy constructor thunk used through a TU-local layout shim
 ?construct@LightningDrawTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x0003B2AA,LightningDrawModuleTemplate constructor thunk used through a TU-local layout shim
+?construct@LightningEmissionModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x00024C8F,LightningEmissionModule constructor thunk used through a TU-local layout shim
 ?construct@LightningEmissionTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x0000CC39,LightningEmissionModuleTemplate constructor thunk used through a TU-local layout shim
 ?construct@LineEmissionVolumeModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x00031750,LineEmissionVolumeModule constructor thunk used through a TU-local layout shim
 ?construct@LineEmissionVolumeTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x00004269,LineEmissionVolumeModuleTemplate copy constructor thunk used through a TU-local layout shim
