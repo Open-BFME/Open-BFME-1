@@ -22653,6 +22653,7 @@ name,address,notes
 ?queueSend@Transport@@QAE_NIGPBEH@Z,0x00049F80,ILT thunk; real body 0x683830 (from NAT::sendAProbe)
 ?queueSend@Transport@@QAE_NPAUNetPacketAddress@@PBEH@Z,0x00683830,BFME takes the address as a struct pointer, so three args where the reference has four; the ledger row for the four-arg name is the incremental-link thunk
 ?reacquire@W3DVolumetricShadowManagerReAcquireShim@@QAE_NXZ,0x007C1180,W3DVolumetricShadowManager ReAcquireResources incremental-link thunk target through a TU-local forwarding shim
+?read@DataChunkTableOfContents@@QAEXAAVChunkInputStream@@@Z,0x00012698,DataChunkInput constructor retail call target
 ?read@UDPReadShim@@QAEHPAEIPAUsockaddr_in@@@Z,0x00684630,UDP Read incremental-link thunk target through a TU-local forwarding shim
 ?readChatMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z,0x0067E760,identified by the NetChatCommandMsg constructor it calls; source is one instruction pair off
 ?readDict@DataChunkInput@@QAE?AVDict@@XZ,0x00022683,
