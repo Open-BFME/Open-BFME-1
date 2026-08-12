@@ -12234,7 +12234,7 @@ name,export_rva,target_rva,target_size,source,status,notes
 ?isValidRelationshipTarget@CommandButton@@QBE_NW4Relationship@@@Z,,0x0049AC50,77,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp,matched,
 ?isValidScience@ScienceStore@@QBE_NW4ScienceType@@@Z,,0x000E6EC0,19,Code/GameEngine/Source/Common/RTS/Science.cpp,matched,
 ?isWaypoint@MapObject@@QBE_NXZ,,0x00087420,10,Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp,matched,
-?isWeaponSlotOnTurretAndAimingAtTarget@AIUpdateInterface@@QBE_NW4WeaponSlotType@@PBVObject@@@Z,,0x0026EA90,76,Code/GameEngine/Source/Common/AIUpdateInterface_isWeaponSlotOnTurretAndAimingAtTarget_Thunk.cpp,matched,Exact 76B SEH body Open-BFME5
+?isWeaponSlotOnTurretAndAimingAtTarget@AIUpdateInterface@@QBE_NW4WeaponSlotType@@PBVObject@@@Z,,0x0026EA90,76,Code/GameEngine/Source/Common/AIUpdateInterface_isWeaponSlotOnTurretAndAimingAtTarget_Thunk.cpp,matched,Open-BFME5 exact semantic C++ two-turret aiming query
 ?isZero3D@@YA_NABUCoord3D@@@Z,,0x005F85F0,66,Code/GameEngine/Source/GameLogic/Object/Update/PhysicsUpdate.cpp,matched,
 ?iterateObjects@Player@@QBEXP6AXPAVObject@@PAX@Z1@Z,,0x0002F1CB,5,Code/GameEngine/Source/Common/RTS/PlayerRadarAndIterationThunks.cpp,matched,5-byte incremental-link Player const member thunk converted to focused C++ source
 ?j_00001005@@YAXXZ,,0x00001005,5,Code/gen_small/thunks_000.cpp,matched,gen-thunk;target=FUN_004874e0

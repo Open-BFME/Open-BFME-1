@@ -23237,3 +23237,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?TheSupplyWarehouseGlobalData@@3PAUSupplyWarehouseGlobalData@@A,0x00EED5C8,SupplyWarehouse cash-value global data pointer
 ?updateDrawableSupplyStatus@Drawable@@QAEXHH@Z,0x00031615,SupplyWarehouse semantic C++ drawable status update
 ??0GameSpyInfo@@QAE@XZ,0x0002A513,GameSpyInfo semantic C++ constructor thunk
+?isWeaponSlotOnTurret@TurretAI@@QBE_NW4WeaponSlotType@@@Z,0x00039D24,AIUpdate semantic C++ turret slot query
+?isTryingToAimAtTarget@TurretAI@@QBE_NPBVObject@@@Z,0x000079D7,AIUpdate semantic C++ turret target query
