@@ -106830,7 +106830,6 @@ $CHOKE$18875,,0x009F8391,78,build/toolchains/vs2003/Program Files/Microsoft Visu
 ?d_00109c10@@YAXXZ,,0x00109C10,197,Code/gen_asm/d_00104e40.asm,matched,gen-dump;ghidra=FUN_00509c10
 ?d_00109eb0@@YAXXZ,,0x00109EB0,136,Code/gen_asm/d_00104e40.asm,matched,gen-dump;ghidra=FUN_00509eb0
 ?d_00109f60@@YAXXZ,,0x00109F60,110,Code/gen_asm/d_00104e40.asm,matched,gen-dump;ghidra=FUN_00509f60
-?d_00109ff0@@YAXXZ,,0x00109FF0,110,Code/gen_asm/d_00104e40.asm,matched,gen-dump;ghidra=FUN_00509ff0
 ?d_0010a680@@YAXXZ,,0x0010A680,17,Code/gen_asm/d_00104e40.asm,matched,gen-dump;ghidra=FUN_0050a680
 ?d_0010a7a0@@YAXXZ,,0x0010A7A0,29,Code/gen_asm/d_00104e40.asm,matched,gen-dump;ghidra=FUN_0050a7a0
 ?d_0010a850@@YAXXZ,,0x0010A850,89,Code/gen_asm/d_00104e40.asm,matched,gen-dump;ghidra=FUN_0050a850
@@ -157933,3 +157932,4 @@ _pushclosure,,0x0099B1B0,142,Code/Libraries/Source/Lua/lparser.c,matched,vendore
 _chunk,,0x0099D2D0,128,Code/Libraries/Source/Lua/lparser.c,matched,vendored=lua-4.0.1; EA-patched TK_TRUE/TK_FALSE+OP_PUSHBOOL; reloc-named
 _luaK_adjuststack,,0x0099F010,441,Code/Libraries/Source/Lua/lcode.c,matched,vendored=lua-4.0.1; EA-patched TK_TRUE/TK_FALSE+OP_PUSHBOOL; reloc-named
 ?initTeam@TeamFactory@@QAEXABVAsciiString@@0_NPAVDict@@@Z,,0x000F8170,220,Code/GameEngine/Source/Common/RTS/TeamFactoryCtorThunk.cpp,matched,clean C++; findTeamPrototype and createInactiveTeam both take owner then name
+?GetRegistryMapPackVersion@@YAIXZ,,0x00109FF0,110,Code/GameEngine/Source/Common/System/RegistryMapPackVersion.cpp,matched,Open-BFME5 clean C++ conversion from original SAGE registry source
