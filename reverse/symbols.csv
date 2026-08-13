@@ -23248,3 +23248,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?TheSpecialPowerStore@@3PAVSpecialPowerStore@@A,0x00EED80C,retail global SpecialPowerStore pointer
 ?canUseSpecialPower@SpecialPowerStore@@QAE_NPAVObject@@PBVSpecialPowerTemplate@@@Z,0x0002E4A3,retail special-power availability check
 ?getSpecialPowerModule@Object@@QAEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF,retail Object special-power module lookup
+?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
