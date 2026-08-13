@@ -265,6 +265,7 @@ name,address,notes
 ??$_M_allocate_and_copy@PBVProductionPrerequisite@@@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@IAEPAVProductionPrerequisite@@IPBV2@0@Z,0x00014961
 ??$_M_allocate_and_copy@PBVW3DAnimationInfo@@@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEPAVW3DAnimationInfo@@IPBV2@0@Z,0x0003D3C5,ILT thunk used by call site
 ??$_M_find@G@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@1@ABG@Z,0x00003071
+??$_M_find@U?$pair@HH@_STL@@@?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@1@ABU?$pair@HH@1@@Z,0x000EE500,call displacement in addTeamPrototypeToList @0x000F3DFA
 ??$_M_find@U?$pair@W4NameKeyType@@W41@@_STL@@@?$_Rb_tree@U?$pair@W4NameKeyType@@W41@@_STL@@U?$pair@$$CBU?$pair@W4NameKeyType@@W41@@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@W4NameKeyType@@W41@@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@W4NameKeyType@@W41@@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@W4NameKeyType@@W41@@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBU?$pair@W4NameKeyType@@W41@@_STL@@PAVTeamPrototype@@@_STL@@@1@ABU?$pair@W4NameKeyType@@W41@@1@@Z,0x000EE500,removeTeamPrototypeFromList pair-key find body
 ??$_M_find@V?$BitFlags@$0BB@@@@?$_Rb_tree@$$CBV?$BitFlags@$0BB@@@U?$pair@$$CBV?$BitFlags@$0BB@@@PBVWeaponTemplateSet@@@_STL@@U?$_Select1st@U?$pair@$$CBV?$BitFlags@$0BB@@@PBVWeaponTemplateSet@@@_STL@@@3@UMapHelper@?$SparseMatchFinder@VWeaponTemplateSet@@V?$BitFlags@$0BB@@@@@V?$allocator@U?$pair@$$CBV?$BitFlags@$0BB@@@PBVWeaponTemplateSet@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBV?$BitFlags@$0BB@@@PBVWeaponTemplateSet@@@_STL@@@1@ABV?$BitFlags@$0BB@@@@Z,0x00042D1B,resweep callee back-solved
 ??$_M_find@V?$BitFlags@$0L@@@@?$_Rb_tree@$$CBV?$BitFlags@$0L@@@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@U?$_Select1st@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@3@UMapHelper@?$SparseMatchFinder@VArmorTemplateSet@@V?$BitFlags@$0L@@@@@V?$allocator@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@1@ABV?$BitFlags@$0L@@@@Z,0x0000AE20,pinharvest x1 (thunk)
@@ -273,6 +274,7 @@ name,address,notes
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@1@ABVAsciiString@@@Z,0x00010AAF
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V1@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@V1@@_STL@@@1@ABVAsciiString@@@Z,0x0000AEAC,getDateForEmail map find thunk (ILT->0x80600)
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@1@ABVAsciiString@@@Z,0x009C9AA0,directory-tree lookup ArchiveFileSystem::doesFileExist calls at 0x009CA1D8
+??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@ABEPAU?$_Rb_tree_node@VAsciiString@@@1@ABVAsciiString@@@Z,0x00003071
 ??$_M_find@VAsciiString@@@?$hashtable@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@ABEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@1@ABVAsciiString@@@Z,0x0000F727
 ??$_M_find@VAsciiString@@@?$hashtable@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@@2@@_STL@@ABEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@@1@ABVAsciiString@@@Z,0x00018C73,GameLogic::findBuildableStatusOverride retail REL32 target
 ??$_M_insert_dispatch@U?$_List_iterator@HU?$_Const_traits@H@_STL@@@_STL@@@?$list@HV?$allocator@H@_STL@@@_STL@@QAEXU?$_List_iterator@HU?$_Nonconst_traits@H@_STL@@@1@U?$_List_iterator@HU?$_Const_traits@H@_STL@@@1@1ABU__false_type@1@@Z,0x0009F340,gen-tgrid shared callee
@@ -430,7 +432,9 @@ name,address,notes
 ??$fill@PAPAVObject@@PAV1@@_STL@@YAXPAPAVObject@@0ABQAV1@@Z,0x0003C7F9,ILT thunk used by call site
 ??$fill@PAPAXPAX@_STL@@YAXPAPAX0ABQAX@Z,0x0000A060,vector<void*>::_M_fill_insert REL32 call via ILT thunk
 ??$fill@PAUGen_t_0074e320_p16pod@@U1@@_STL@@YAXPAUGen_t_0074e320_p16pod@@0ABU1@@Z,0x00749270,gen-tgrid payload member
+??$find@H@?$_Rb_tree@HHU?$_Identity@H@_STL@@U?$less@H@2@V?$allocator@H@2@@_STL@@QBE?AU?$_Rb_tree_iterator@HU?$_Const_traits@H@_STL@@@1@ABH@Z,0x00041DAD
 ??$find@H@?$_Rb_tree@HU?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@1@ABH@Z,0x0001990C
+??$find@H@?$_Rb_tree@HU?$pair@$$CBHVAsciiString@@@_STL@@U?$_Select1st@U?$pair@$$CBHVAsciiString@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHVAsciiString@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@1@ABH@Z,0x0000C31F
 ??$find@H@?$_Rb_tree@HU?$pair@$$CBHVBuddyInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBHVBuddyInfo@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVBuddyInfo@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHVBuddyInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVBuddyInfo@@@_STL@@@2@@1@ABH@Z,0x0002BAC6
 ??$find@I@?$_Rb_tree@IU?$pair@$$CBIPAVImage@@@_STL@@U?$_Select1st@U?$pair@$$CBIPAVImage@@@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBIPAVImage@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBIPAVImage@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBIPAVImage@@@_STL@@@2@@1@ABI@Z,0x00032C1D,findImageByName STL find call target (incremental-link thunk)
 ??$find@W4NameKeyType@@@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@2@@1@ABW4NameKeyType@@@Z,0x0003AD0F,pinharvest x1 (thunk)
@@ -585,6 +589,8 @@ name,address,notes
 ??0?$VectorClass@VVector2@@@@QAE@HPBVVector2@@@Z,0x0001D16F,site-decoded x1 (thunk)
 ??0?$VectorClass@VVector2@@@@QAE@HPBVVector2@@@Z,0x00906240,site-decoded x1 (body)
 ??0?$VectorClass@VVector4@@@@QAE@HPBVVector4@@@Z,0x00906240,call-target pin: row deleted (ZH drift: element-ctor ptr), callers verify against this rva
+??0?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@QAE@ABV01@@Z,0x000F3AA0,copy ctor; call displacement in TeamFactory::clear @0x000F6CC1
+??0?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@QAE@ABV01@@Z,0x0000EAF2
 ??0?$_STLP_alloc_proxy@IHV?$allocator@H@_STL@@@_STL@@QAE@ABV?$allocator@H@1@I@Z,0x00087F10,gen-tgrid shared callee
 ??0?$_STLP_alloc_proxy@IPAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z,0x008F9A30,rel32 pin for exact-ambiguous landing
 ??0?$_STLP_alloc_proxy@IPAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVPartitionCell@@@1@I@Z,0x008F9A60,rel32 pin for exact-ambiguous landing
@@ -783,6 +789,7 @@ name,address,notes
 ??0?$_Vector_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAE@IABV?$allocator@PAVObject@@@1@@Z,0x0004485F,pinharvest x1 (thunk)
 ??0?$_Vector_base@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@QAE@IABV?$allocator@PAVObjectCreationNugget@@@1@@Z,0x0001D949,resweep callee back-solved
 ??0?$_Vector_base@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@QAE@IABV?$allocator@PAVObjectCreationNugget@@@1@@Z,0x0003F418,resweep callee back-solved
+??0?$_Vector_base@PAXV?$allocator@PAX@_STL@@@_STL@@QAE@IABV?$allocator@PAX@1@@Z,0x000212D3
 ??0?$_Vector_base@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@QAE@IABV?$allocator@PBVLocomotorTemplate@@@1@@Z,0x00001DA7,pinharvest x1 (thunk)
 ??0?$_Vector_base@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@QAE@IABV?$allocator@PBVLocomotorTemplate@@@1@@Z,0x0001D949,pinharvest x1 (thunk)
 ??0?$_Vector_base@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@QAE@IABV?$allocator@PBVLocomotorTemplate@@@1@@Z,0x00020EA0,pinharvest x3 (thunk)
@@ -1510,6 +1517,7 @@ name,address,notes
 ??0Money@@QAE@ABV0@@Z,0x000451D3,site-decoded x1 (thunk)
 ??0MoneyCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003E48C,module ctor (friend_newModuleInstance retail call target)
 ??0MonsterDockDataMember@@QAE@XZ,0x0003747A,Open-BFME5 MonsterDock member constructor pin
+??0Mouse@@QAE@XZ,0x0004A8BD
 ??0MultiplayerColorDefinition@@QAE@ABV0@@Z,0x0000C815,pinharvest x1 (thunk)
 ??0MultiplayerColorDefinition@@QAE@ABV0@@Z,0x000242D5,pinharvest x1 (thunk)
 ??0MultiplayerColorDefinition@@QAE@ABV0@@Z,0x0003B647,pinharvest x1 (thunk)
@@ -1901,6 +1909,7 @@ name,address,notes
 ??0SupplyWarehouseCripplingBehaviorModuleData@@QAE@XZ,0x000261CA,module-glue cascade callee (from retail call site)
 ??0SupplyWarehouseDockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001E902,module ctor (friend_newModuleInstance retail call target)
 ??0TC_Base@@QAE@PAVThing@@PBVModuleData@@@Z,0x00036E49,TunnelContain ctor base call; ILT thunk for OpenContain ctor (body 0x002277A0)
+??0TeamPrototype@@QAE@PAVTeamFactory@@ABVAsciiString@@1PAVPlayer@@_NPAVDict@@H@Z,0x000F3E40,call displacement in initTeam @0x000F8213
 ??0TechBuildingBehaviorModuleData@@QAE@XZ,0x0000FA5B,pinharvest x1 (thunk)
 ??0TechBuildingBehaviorModuleData@@QAE@XZ,0x0002DAA1,pinharvest x1 (thunk)
 ??0TechBuildingBehaviorModuleData@@QAE@XZ,0x0002E500,pinharvest x1 (thunk)
@@ -2072,7 +2081,10 @@ name,address,notes
 ??1?$_List_base@PAVResizerWindow@@V?$allocator@PAVResizerWindow@@@_STL@@@_STL@@QAE@XZ,0x000361BA,ILT thunk; retail call sites use the thunk
 ??1?$_List_base@UGen_p8pod@@V?$allocator@UGen_p8pod@@@_STL@@@_STL@@QAE@XZ,0x000078C4,ContestableContain list member destructor call target (tg_0021aed0)
 ??1?$_List_base@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@XZ,0x008881D0,derived-ICF
+??1?$_Rb_tree@HHU?$_Identity@H@_STL@@U?$less@H@2@V?$allocator@H@2@@_STL@@QAE@XZ,0x00032FD3
+??1?$_Rb_tree@HU?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@_STL@@QAE@XZ,0x0001D9A3
 ??1?$_Rb_tree@HU?$pair@$$CBHVAsciiString@@@_STL@@U?$_Select1st@U?$pair@$$CBHVAsciiString@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@_STL@@QAE@XZ,0x0000E02F,SavedIgnoreMap temporary destructor pin
+??1?$_Rb_tree@HU?$pair@$$CBHVBuddyInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBHVBuddyInfo@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVBuddyInfo@@@_STL@@@2@@_STL@@QAE@XZ,0x0001BAC2
 ??1?$_Rb_tree@IU?$pair@$$CBIPAVImage@@@_STL@@U?$_Select1st@U?$pair@$$CBIPAVImage@@@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBIPAVImage@@@_STL@@@2@@_STL@@QAE@XZ,0x0004AB6A
 ??1?$_Rb_tree@IU?$pair@$$CBIPAVImage@@@_STL@@U?$_Select1st@U?$pair@$$CBIPAVImage@@@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBIPAVImage@@@_STL@@@2@@_STL@@QAE@XZ,0x005D2900
 ??1?$_Rb_tree@IU?$pair@$$CBI_N@_STL@@U?$_Select1st@U?$pair@$$CBI_N@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBI_N@_STL@@@2@@_STL@@QAE@XZ,0x0001481C,pinharvest x1 (thunk)
@@ -2080,7 +2092,9 @@ name,address,notes
 ??1?$_Rb_tree@JU?$pair@$$CBJVLadderPref@@@_STL@@U?$_Select1st@U?$pair@$$CBJVLadderPref@@@_STL@@@2@U?$less@J@2@V?$allocator@U?$pair@$$CBJVLadderPref@@@_STL@@@2@@_STL@@QAE@XZ,0x000192CC
 ??1?$_Rb_tree@PAVGameSpyStagingRoom@@PAV1@U?$_Identity@PAVGameSpyStagingRoom@@@_STL@@U?$less@PAVGameSpyStagingRoom@@@3@V?$allocator@PAVGameSpyStagingRoom@@@3@@_STL@@QAE@XZ,0x00018EF3,RefreshGameListBox EH-unwind cleanup dtor for sgl (default less<T*> comparator instantiation)
 ??1?$_Rb_tree@PAVGameSpyStagingRoom@@PAV1@U?$_Identity@PAVGameSpyStagingRoom@@@_STL@@UGameSortStruct@@V?$allocator@PAVGameSpyStagingRoom@@@3@@_STL@@QAE@XZ,0x000471DB,RefreshGameListBox normal-exit dtor for sgl (GameSortStruct comparator)
+??1?$_Rb_tree@PAVGameWindow@@PAV1@U?$_Identity@PAVGameWindow@@@_STL@@U?$less@PAVGameWindow@@@3@V?$allocator@PAVGameWindow@@@3@@_STL@@QAE@XZ,0x00045AE8
 ??1?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE@XZ,0x0003D61D
+??1?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@QAE@XZ,0x000EF540,call displacement in TeamFactory::clear @0x000F6D33
 ??1?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@@3@@_STL@@QAE@XZ,0x009C9C40,second member destructor in ~ArchiveFileSystem at 0x009CA5C5 -- m_archiveFileMap
 ??1?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V1@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@QAE@XZ,0x0000B992
 ??1?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAE@XZ,0x00029C58
@@ -2148,6 +2162,7 @@ name,address,notes
 ??1?$pair@$$CBHUGen_t_0094c8e0_p16cd@@@_STL@@QAE@XZ,0x0094BFD0,gen-tgrid payload member
 ??1?$pair@$$CBHUGen_t_009cf380_p16cd@@@_STL@@QAE@XZ,0x009CEFB0,gen-tgrid payload member
 ??1?$pair@$$CBHUGen_t_009d8230_p12cd@@@_STL@@QAE@XZ,0x009D7D80,gen-tgrid payload member
+??1?$pair@$$CBHVAsciiString@@@_STL@@QAE@XZ,0x0000240F
 ??1?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@QAE@XZ,0x00021274
 ??1?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@QAE@XZ,0x00041C5E,repointed: thunk to the real body at 0x631920 used by the 0x34-node tree
 ??1?$pair@$$CBJVLadderPref@@@_STL@@QAE@XZ,0x0002517B
@@ -5282,6 +5297,7 @@ name,address,notes
 ??1ModelConditionSoundSelectorClientBehaviorModuleDataMember@@QAE@XZ,0x000241AE,ModelConditionSoundSelectorClientBehaviorModuleData dtor member +0x8
 ??1ModuleDataListStandIn@@QAE@XZ,0x001468A0,Open-BFME5 list-style sentinel container dtor from AnimalAIUpdate-family ModuleData dtor call sites
 ??1ModuleTagString@@QAE@XZ,0x00026AB2,ModuleInfo::Nugget m_moduleTag AsciiString-like ILT
+??1Mouse@@UAE@XZ,0x000437F2
 ??1MultiplayerColorDefinition@@QAE@XZ,0x00887940,Open-BFME5 retail color-definition string destructor body
 ??1MultiplayerColorList@@QAE@XZ,0x0004A01B,Open-BFME5 retail multiplayer color-map destructor thunk
 ??1NamedPivotMapClass@@UAE@XZ,0x00974E20,call-target pin: row deleted (ZH drift: element-ctor ptr), callers verify against this rva
@@ -5578,6 +5594,7 @@ name,address,notes
 ??4WaterTransparencySetting@@QAEAAV0@ABV0@@Z,0x00026729,harvested from parseWaterTransparencyDefinition (thunk)
 ??4WeatherSetting@@QAEAAV0@ABV0@@Z,0x00046C04,harvested from parseWeatherDefinition (thunk)
 ??8?$VectorClass@H@@UBE_NABV0@@Z,0x00AFEDF0
+??8@YAHABVMatrix4x4@@0@Z,0x00B01950,zh-sweep callee pin derived from retail REL32 displacement
 ??8@YA_NABVAsciiString@@0@Z,0x00015898,pinharvest x1 (thunk)
 ??8@YA_NABVAsciiString@@0@Z,0x00046803,pinharvest x1 (thunk)
 ??8@YA_NABVAsciiString@@0@Z,0x008574E0,pinharvest x1 (body)
@@ -5591,6 +5608,7 @@ name,address,notes
 ??A?$map@HVAsciiString@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHVAsciiString@@@_STL@@@3@@_STL@@QAEAAVAsciiString@@ABH@Z,0x000488B0,REL32 pin from GameSpyInfo::addToSavedIgnoreList @0x635670
 ??A?$map@HVMultiplayerColorDefinition@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHVMultiplayerColorDefinition@@@_STL@@@3@@_STL@@QAEAAVMultiplayerColorDefinition@@ABH@Z,0x00036403,REL32 pin for MultiplayerSettings::getColor map lookup
 ??A?$map@IPAVImage@@U?$less@I@_STL@@V?$allocator@U?$pair@$$CBIPAVImage@@@_STL@@@3@@_STL@@QAEAAPAVImage@@ABI@Z,0x0002A52C,REL32 pin from ImageCollection::addImage @0x5D3410
+??A?$map@U?$pair@HH@_STL@@PAVTeamPrototype@@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@QAEAAPAVTeamPrototype@@ABU?$pair@HH@1@@Z,0x000F3A20,call displacement in addTeamPrototypeToList @0x000F3E0A
 ??A?$map@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@HU?$less@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@H@_STL@@@2@@_STL@@QAEAAHABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@1@@Z,0x00017ADF
 ??A?$map@VAsciiString@@MU?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@M@_STL@@@3@@_STL@@QAEAAMABVAsciiString@@@Z,0x000D97B0,PlayerTemplate time-change local map operator owner
 ??A?$map@VAsciiString@@PAVArchiveFile@@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@@4@@_STL@@QAEAAPAVArchiveFile@@ABVAsciiString@@@Z,0x00063960,ArchiveFileSystem::openFile reaches it through the ILT thunk at 0x00038B22; folded with the map<AsciiString bool> operator[] the ledger already claims there
@@ -5782,6 +5800,7 @@ name,address,notes
 ?Anim_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHAnimClass@@M@Z,0x00953AD0,generic per-pivot evaluator
 ?Anim_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHRawAnimClass@@M@Z,0x00953EB0,uncompressed-animation evaluator
 ?AppendDebugMessage@ScriptEngine@@QAEXABVAsciiString@@_N@Z,0x00028CE0,TeamInQueue disband call pin
+?Apply@ScaleTextureMapperClass@@UAEXH@Z,0x00966490,zh-sweep callee pin derived from retail REL32 displacement
 ?BFMEComputeCRC@@YAIPBEII@Z,0x00065250,the packet CRC; body written in native_packet_crc.cpp, one reassociation short of clean
 ?BFMEGetWaterTrackTexture@@YA?AVBFMEWaterTrackTextureHandle@@PADHH@Z,0x0090E910,retail 4-byte texture handle return used by WaterTracksObj::init
 ?BFMENetworkAllocate@@YAPAXI@Z,0x00881F30,native BFME wrapper-list allocation call target
@@ -6036,6 +6055,7 @@ name,address,notes
 ?MD5Update@@YAXPAUMD5_CTX@@PAEI@Z,0x0086AE20
 ?Make_Geometry_Unique@MeshModelClass@@QAEXXZ,0x0094EE80
 ?Make_Unique@MeshClass@@QAEX_N@Z,0x0092C400
+?Make_Unique@VertexMaterialClass@@QAEXXZ,0x00920ED0,zh-sweep callee pin derived from retail REL32 displacement
 ?MessageBoxOk@@YAPAVGameWindow@@VUnicodeString@@0P6AXXZ@Z,0x0004A340,ILT thunk used by call site
 ?Multiply@Matrix3D@@SAXABV1@0PAV1@@Z,0x008D80C0,rel32 pin for exact-ambiguous landing
 ?Needs_Vertex_Normals@MeshModelClass@@QAE_NXZ,0x0094E0B0,
@@ -6083,6 +6103,7 @@ name,address,notes
 ?Raw_Seek@RawFileClass@@IAEHHH@Z,0x009E6910
 ?ReAcquireResources@W3DProjectedShadowManager@@QAE_NXZ,0x00026D1E,pinharvest x1 (thunk)
 ?ReAcquireResources@W3DVolumetricShadowManager@@QAE_NXZ,0x0000F9B6,pinharvest x1 (thunk)
+?Re_Hash@?$HashTemplateClass@UTriangleSide@@USideIndexInfo@@@@AAEXXZ,0x0094F120,zh-sweep callee pin derived from retail REL32 displacement
 ?Read@ChunkLoadClass@@QAEKPAXK@Z,0x009E15C0
 ?Read@UDP@@QAEHPAEIPAUsockaddr_in@@@Z,0x00039EBE,ILT thunk; real body 0x684630 (recvfrom; identity confirmed, register allocation still differs)
 ?RefreshGameListBox@@YAXPAVGameWindow@@_N@Z,0x0000FD1C
@@ -6310,6 +6331,7 @@ name,address,notes
 ?Set_Transform@RenderObjClass@@UAEXABVMatrix3D@@@Z,0x00982110,pinharvest x1 (body)
 ?Set_Transform@RenderObjClass@@UAEXABVMatrix3D@@@Z,0x00982130,pinharvest x1 (body)
 ?Set_Transform@RenderObjClass@@UAEXABVMatrix3D@@@Z,0x00982330,pinharvest x1 (body)
+?Set_UV_Source@VertexMaterialClass@@QAEXHH@Z,0x00921250,zh-sweep callee pin derived from retail REL32 displacement
 ?Set_Vertex_Buffer@DX8Wrapper@@SAXABVDynamicVBAccessClass@@@Z,0x00904510,DynamicVB binding ABI for BoxRenderObjClass::render_box
 ?ShowControlBar@@YAXH@Z,0x00024848,ShowControlBar int
 ?ShowControlBar@@YAX_N@Z,0x00024848,ILT/body ShowControlBar for letterbox
@@ -6869,6 +6891,7 @@ name,address,notes
 ?_M_erase@?$_Rb_tree@HU?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBHVGameSpyGroupRoom@@@_STL@@@2@@Z,0x0003EA2C,REL32 pin: the recursive call goes through this thunk to 0x632FC0
 ?_M_erase@?$_Rb_tree@JU?$pair@$$CBJVLadderPref@@@_STL@@U?$_Select1st@U?$pair@$$CBJVLadderPref@@@_STL@@@2@U?$less@J@2@V?$allocator@U?$pair@$$CBJVLadderPref@@@_STL@@@2@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBJVLadderPref@@@_STL@@@2@@Z,0x00033000,retail ILT target of LadderPref tree destructor thunk 0x000192CC
 ?_M_erase@?$_Rb_tree@PAXPAXU?$_Identity@PAX@_STL@@U?$less@PAX@2@V?$allocator@PAX@2@@_STL@@AAEXPAU?$_Rb_tree_node@PAX@2@@Z,0x000EE330,gen-tgrid shared callee
+?_M_erase@?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@Z,0x000EE380,call displacement in TeamFactory::clear @0x000F6CDD
 ?_M_erase@?$_Rb_tree@UGen_t_0008e900_m40cd@@U1@U?$_Identity@UGen_t_0008e900_m40cd@@@_STL@@U?$less@UGen_t_0008e900_m40cd@@@3@V?$allocator@UGen_t_0008e900_m40cd@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@UGen_t_0008e900_m40cd@@@2@@Z,0x0008E900,family-emit payload member
 ?_M_erase@?$_Rb_tree@UGen_t_0008eb60_m40cd@@U1@U?$_Identity@UGen_t_0008eb60_m40cd@@@_STL@@U?$less@UGen_t_0008eb60_m40cd@@@3@V?$allocator@UGen_t_0008eb60_m40cd@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@UGen_t_0008eb60_m40cd@@@2@@Z,0x0008E900,family-emit payload member
 ?_M_erase@?$_Rb_tree@UGen_t_000ef440_k4@@U1@U?$_Identity@UGen_t_000ef440_k4@@@_STL@@U?$less@UGen_t_000ef440_k4@@@3@V?$allocator@UGen_t_000ef440_k4@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@UGen_t_000ef440_k4@@@2@@Z,0x000EE330,gen-tgrid payload member
@@ -7133,6 +7156,7 @@ name,address,notes
 ?_M_insert@?$hashtable@U?$pair@$$CBHH@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHH@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHH@_STL@@@2@@_STL@@QAEAAU?$pair@$$CBHH@2@ABU32@@Z,0x000D3430,family-emit shared callee
 ?_M_insert@?$hashtable@U?$pair@$$CBHW4Relationship@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHW4Relationship@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@2@@_STL@@QAEAAU?$pair@$$CBHW4Relationship@@@2@ABU32@@Z,0x000013E8,rel32 pin for exact-ambiguous landing
 ?_M_insert@?$hashtable@U?$pair@$$CBIW4Relationship@@@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIW4Relationship@@@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@2@@_STL@@QAEAAU?$pair@$$CBIW4Relationship@@@2@ABU32@@Z,0x009EE9B0,resweep callee back-solved
+?_M_insert@?$hashtable@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@@_STL@@QAEAAU?$pair@$$CBW4NameKeyType@@VDamageFX@@@2@ABU32@@Z,0x0001545B
 ?_M_insert@?$hashtable@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEAAU?$pair@QBVGameWindow@@PAVWindowVideo@@@2@ABU32@@Z,0x00032407,rel32 pin for exact-ambiguous landing
 ?_M_insert_aux@?$vector@_NV?$allocator@_N@_STL@@@_STL@@IAEXU?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@2@_N@Z,0x0002CB5B
 ?_M_insert_overflow@?$vector@EV?$allocator@E@_STL@@@_STL@@IAEXPAEABEABU__true_type@2@I_N@Z,0x0002F20C
@@ -7154,6 +7178,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXPAPAXABQAXABU__true_type@2@I_N@Z,0x0001CBFC,vector<void*>::_M_fill_insert REL32 call via ILT thunk
 ?_M_insert_overflow@?$vector@PBVFXList@@V?$allocator@PBVFXList@@@_STL@@@_STL@@IAEXPAPBVFXList@@ABQBV3@ABU__true_type@2@I_N@Z,0x00044FC1
 ?_M_insert_overflow@?$vector@PBVModuleData@@V?$allocator@PBVModuleData@@@_STL@@@_STL@@IAEXPAPBVModuleData@@ABQBV3@ABU__true_type@2@I_N@Z,0x00043333,pinned from newModuleDataFromINI @0x1295F0 which is byte-exact apart from this call
+?_M_insert_overflow@?$vector@PBVObjectCreationList@@V?$allocator@PBVObjectCreationList@@@_STL@@@_STL@@IAEXPAPBVObjectCreationList@@ABQBV3@ABU__true_type@2@I_N@Z,0x00044FC1,call displacement in parseOCL @0x00209859
 ?_M_insert_overflow@?$vector@U?$pair@PAVSubsystemInterface@@PAX@_STL@@V?$allocator@U?$pair@PAVSubsystemInterface@@PAX@_STL@@@2@@_STL@@IAEXPAU?$pair@PAVSubsystemInterface@@PAX@2@ABU32@ABU__false_type@2@I_N@Z,0x009A1E50,vector<pair<SubsystemInterface* void*>> growth path called by SubsystemInterfaceList::initSubsystem
 ?_M_insert_overflow@?$vector@U?$pair@UICoord2D@@UCoord3D@@@_STL@@V?$allocator@U?$pair@UICoord2D@@UCoord3D@@@_STL@@@2@@_STL@@IAEXPAU?$pair@UICoord2D@@UCoord3D@@@2@ABU32@ABU__false_type@2@I_N@Z,0x00009052,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@U?$pair@UICoord2D@@UCoord3D@@@_STL@@V?$allocator@U?$pair@UICoord2D@@UCoord3D@@@_STL@@@2@@_STL@@IAEXPAU?$pair@UICoord2D@@UCoord3D@@@2@ABU32@ABU__false_type@2@I_N@Z,0x0000CDEC,pinharvest x1 (thunk)
@@ -67260,6 +67285,7 @@ name,address,notes
 ?clear@?$_List_base@UGen_t_006a3900_p4cd@@V?$allocator@UGen_t_006a3900_p4cd@@@_STL@@@_STL@@QAEXXZ,0x0069E7A0,gen-tgrid payload member
 ?clear@?$_List_base@UGen_t_00754a30_p12cd@@V?$allocator@UGen_t_00754a30_p12cd@@@_STL@@@_STL@@QAEXXZ,0x007546F0,gen-tgrid payload member
 ?clear@?$_List_base@UGen_t_00754dc0_p12cd@@V?$allocator@UGen_t_00754dc0_p12cd@@@_STL@@@_STL@@QAEXXZ,0x007546F0,gen-tgrid payload member
+?clear@?$_List_base@UcrateCreationEntry@@V?$allocator@UcrateCreationEntry@@@_STL@@@_STL@@QAEXXZ,0x000331AE
 ?clear@?$_List_base@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAEXXZ,0x0001900B,LadderInfo AsciiString list clear helper pin
 ?clear@?$_List_base@VQueuedDownload@@V?$allocator@VQueuedDownload@@@_STL@@@_STL@@QAEXXZ,0x00627270,DownloadManager list_base<QueuedDownload> clear clone; ILT thunk 0x3AA1C
 ?clear@?$hashtable@U?$pair@$$CBHUGen_t_00067540_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00067540_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00067540_p12cd@@@_STL@@@2@@_STL@@QAEXXZ,0x00067040,gen-tgrid payload member
@@ -67521,6 +67547,7 @@ name,address,notes
 ?createDirectory@FileSystem@@QAE_NVAsciiString@@@Z,0x009C8DC0
 ?createEvent@Radar@@QAEXPBUCoord3D@@W4RadarEventType@@M@Z,0x00008B8E
 ?createGroup@AI@@QAEPAVAIGroup@@XZ,0x0003B570,doTeamAttackNamed BFME createGroup thunk
+?createInactiveTeam@TeamFactory@@QAEPAVTeam@@ABVAsciiString@@0@Z,0x000F7AB0,call displacement in initTeam @0x000F8232 (via thunk 0xD15C)
 ?createMemoryPool@MemoryPoolFactory@@QAEPAVMemoryPool@@PBDHHH@Z,0x0003ADD7,pool-glue cascade callee (ICF-folded with findMemoryPool)
 ?createNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@0M0@Z,0x0002C8EA
 ?create_node@AnimateWindowListCreateNodeShim@_STL@@QAEPAU?$_List_node@PAVAnimateWindow@@@2@ABQAVAnimateWindow@@@Z,0x0045DAE0,incremental-link thunk target through a TU-local forwarding shim
@@ -67634,6 +67661,7 @@ name,address,notes
 ?erase@?$_Rb_tree@UGen_t_00635b30_k4@@U?$pair@$$CBUGen_t_00635b30_k4@@UGen_t_00635b30_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBUGen_t_00635b30_k4@@UGen_t_00635b30_p12cd@@@_STL@@@3@U?$less@UGen_t_00635b30_k4@@@3@V?$allocator@U?$pair@$$CBUGen_t_00635b30_k4@@UGen_t_00635b30_p12cd@@@_STL@@@3@@_STL@@QAEXU?$_Rb_tree_iterator@U?$pair@$$CBUGen_t_00635b30_k4@@UGen_t_00635b30_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBUGen_t_00635b30_k4@@UGen_t_00635b30_p12cd@@@_STL@@@2@@2@0@Z,0x00633760,gen-tgrid payload member
 ?erase@?$_Rb_tree@UGen_t_00693a30_k4@@U?$pair@$$CBUGen_t_00693a30_k4@@UGen_t_00693a30_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBUGen_t_00693a30_k4@@UGen_t_00693a30_p12cd@@@_STL@@@3@U?$less@UGen_t_00693a30_k4@@@3@V?$allocator@U?$pair@$$CBUGen_t_00693a30_k4@@UGen_t_00693a30_p12cd@@@_STL@@@3@@_STL@@QAEXU?$_Rb_tree_iterator@U?$pair@$$CBUGen_t_00693a30_k4@@UGen_t_00693a30_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBUGen_t_00693a30_k4@@UGen_t_00693a30_p12cd@@@_STL@@@2@@2@0@Z,0x00692C40,gen-tgrid payload member
 ?erase@?$_Rb_tree@UGen_t_006af670_k4@@U?$pair@$$CBUGen_t_006af670_k4@@UGen_t_006af670_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBUGen_t_006af670_k4@@UGen_t_006af670_p12cd@@@_STL@@@3@U?$less@UGen_t_006af670_k4@@@3@V?$allocator@U?$pair@$$CBUGen_t_006af670_k4@@UGen_t_006af670_p12cd@@@_STL@@@3@@_STL@@QAEXU?$_Rb_tree_iterator@U?$pair@$$CBUGen_t_006af670_k4@@UGen_t_006af670_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBUGen_t_006af670_k4@@UGen_t_006af670_p12cd@@@_STL@@@2@@2@0@Z,0x006A7610,gen-tgrid payload member
+?erase@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@QAEIABVAsciiString@@@Z,0x00041AEC
 ?erase@?$hashtable@U?$pair@$$CBHUGen_t_000d3140_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000d3140_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000d3140_p12cd@@@_STL@@@2@@_STL@@QAEXABU?$_Ht_iterator@U?$pair@$$CBHUGen_t_000d3140_p12cd@@@_STL@@U?$_Const_traits@U?$pair@$$CBHUGen_t_000d3140_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000d3140_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000d3140_p12cd@@@_STL@@@2@@2@@Z,0x000D0BC0,gen-tgrid payload member
 ?erase@?$hashtable@U?$pair@$$CBHUGen_t_000d81e0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000d81e0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000d81e0_p12cd@@@_STL@@@2@@_STL@@QAEXABU?$_Ht_iterator@U?$pair@$$CBHUGen_t_000d81e0_p12cd@@@_STL@@U?$_Const_traits@U?$pair@$$CBHUGen_t_000d81e0_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000d81e0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000d81e0_p12cd@@@_STL@@@2@@2@@Z,0x000D64A0,gen-tgrid payload member
 ?erase@?$hashtable@U?$pair@$$CBHUGen_t_000f73d0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000f73d0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000f73d0_p12cd@@@_STL@@@2@@_STL@@QAEXABU?$_Ht_iterator@U?$pair@$$CBHUGen_t_000f73d0_p12cd@@@_STL@@U?$_Const_traits@U?$pair@$$CBHUGen_t_000f73d0_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000f73d0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000f73d0_p12cd@@@_STL@@@2@@2@@Z,0x000F6B50,gen-tgrid payload member
@@ -67737,6 +67765,7 @@ name,address,notes
 ?findRoad@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z,0x00019DC6,walks the list at collection+0x08; identical 246-byte body to findBridge which walks +0x0c. Called by the Road block whose create branch is the already-matched newRoad
 ?findSpecialPowerTemplate@SpecialPowerStore@@QAEPBVSpecialPowerTemplate@@VAsciiString@@@Z,0x00020F04,harvested from parseSpecialPowerTemplate (thunk)
 ?findSpecialPowerWithOverridableDestinationActive@Object@@QBEPAVSpecialPowerUpdateInterface@@W4SpecialPowerType@@@Z,0x00039766
+?findTeamPrototype@TeamFactory@@QAEPAVTeamPrototype@@ABVAsciiString@@0@Z,0x000EFE10,call displacement in initTeam @0x000F8195
 ?findTemplate@BFMEThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z,0x00028560,INI retail ThingFactory facade
 ?findTemplate@ThingFactory@@QAEPAVThingTemplate@@ABVAsciiString@@@Z,0x00028560,SpawnBehavior retail findTemplate ILT
 ?findTerrain@TerrainTypeCollection@@QAEPAVTerrainType@@VAsciiString@@@Z,0x0000DBD9,first of the find-then-create pair in the Terrain block parser; the second call on the same receiver is the already-matched newTerrain and ZH declares findTerrain immediately above it with the same signature
@@ -67921,6 +67950,7 @@ name,address,notes
 ?getTexture@BFMEShadowManagerLayout@@QAEPAVW3DShadowTexture@@PBD@Z,0x0004088B,retail projected-shadow texture lookup ILT thunk
 ?getTexture@BFMEShadowManagerLayoutGetTextureShim@@QAEPAVW3DShadowTexture@@PBD@Z,0x007AFD10,BFME ShadowManager incremental-link thunk target through a TU-local forwarding shim
 ?getTotalDataLength@NetWrapperCommandMsg@@QAEIXZ,0x0000F70E,ILT thunk; real body 0xA73F40 (mov eax,[ecx+0x28];ret)
+?getUiStrings@Template@@QBEHQAVAsciiString@@@Z,0x0002BAE9
 ?getUncompressedSize@CompressionManager@@SAHPBXH@Z,0x0081E6D0,CachedFileInputStream open retail uncompressed-size query
 ?getUpgradeActivationMasks@UpgradeMuxData@@QBEXAAV?$BitFlags@$0IA@@@0@Z,0x0002644F,pinharvest x1 (thunk)
 ?getUserMapDir@MapCache@@QBE?AVAsciiString@@XZ,0x000139E9
@@ -68033,6 +68063,7 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGUGen_t_00668150_m12pod@@@_STL@@U?$_Select1st@U?$pair@$$CBGUGen_t_00668150_m12pod@@@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGUGen_t_00668150_m12pod@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGUGen_t_00668150_m12pod@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGUGen_t_00668150_m12pod@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGUGen_t_00668150_m12pod@@@2@@Z,0x00667C80,family-emit payload member
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGUGen_t_00668440_m12pod@@@_STL@@U?$_Select1st@U?$pair@$$CBGUGen_t_00668440_m12pod@@@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGUGen_t_00668440_m12pod@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGUGen_t_00668440_m12pod@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGUGen_t_00668440_m12pod@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGUGen_t_00668440_m12pod@@@2@@Z,0x00667E20,family-emit payload member
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGUGen_t_00668a90_m12pod@@@_STL@@U?$_Select1st@U?$pair@$$CBGUGen_t_00668a90_m12pod@@@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGUGen_t_00668a90_m12pod@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGUGen_t_00668a90_m12pod@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGUGen_t_00668a90_m12pod@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGUGen_t_00668a90_m12pod@@@2@@Z,0x00668810,family-emit payload member
+?insert_unique@?$_Rb_tree@HHU?$_Identity@H@_STL@@U?$less@H@2@V?$allocator@H@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@HU?$_Nonconst_traits@H@_STL@@@_STL@@_N@2@ABH@Z,0x00009B10
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@2@U32@ABU?$pair@$$CBHI@2@@Z,0x000079EB,rel32 pin for exact-ambiguous landing
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHI@2@@Z,0x0003E090,Open-BFME5 ICF pin for GameLogicDispatch
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAU_SBServer@@@2@@Z,0x0000ED2C,pinharvest x1 (thunk)
@@ -68098,6 +68129,7 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@VHotKey@@@2@@Z,0x00039A54,HotKey tree unique insert thunk
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@VMapMetaData@@@2@@Z,0x0002DA10,derived-ICF
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@_N@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@_N@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@_N@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@_N@2@@Z,0x0002DA10,MapUtil bool tree unique insert thunk
+?insert_unique@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@_STL@@_N@2@ABVAsciiString@@@Z,0x0001BC02
 ?insert_unique@?$_Rb_tree@VUnicodeString@@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@UUnicodeStringLessThan@@V?$allocator@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVUnicodeString@@_N@_STL@@@2@@2@U32@ABU?$pair@$$CBVUnicodeString@@_N@2@@Z,0x00015E1F,LanguageFilter map operator[] callee (ILT thunk -> body 0x0044DE70)
 ?insert_unique@?$_Rb_tree@VUnicodeString@@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@UUnicodeStringLessThan@@V?$allocator@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVUnicodeString@@_N@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVUnicodeString@@_N@2@@Z,0x00013EC1,LanguageFilter structural recursive callee
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@M@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@M@2@@Z,0x00030512,resweep callee back-solved
@@ -68181,6 +68213,7 @@ name,address,notes
 ?isTryingToAimAtTarget@TurretAI@@QBE_NPBVObject@@@Z,0x000079D7,ILT thunk to TurretAI::isTryingToAimAtTarget at 0x0018D080
 ?isTurretInNaturalPosition@AIUpdateInterface@@QBE_NW4WhichTurretType@@@Z,0x00043F45,REL32 pin from BattlePlanUpdate::isTurretInNaturalPosition body
 ?isTurretInNaturalPosition@TurretAI@@QBE_NXZ,0x0003E469,ILT thunk to 0x18C8E0; pinned from AIUpdateInterface::isTurretInNaturalPosition @0x26EA60
+?isUser@LANGameSlot@@QAE_NVUnicodeString@@@Z,0x0068E8D0,byte-scan placement of the LANGameSlot user compare
 ?isUsingAirborneLocomotor@Object@@QBE_NXZ,0x0000A001,ILT thunk to 0x001C1770
 ?isWeaponSlotOnTurret@TurretAI@@QBE_NW4WeaponSlotType@@@Z,0x00039D24,ILT thunk to TurretAI::isWeaponSlotOnTurret at 0x0018C7A0
 ?iterateCellsAlongLine@Pathfinder@@AAEXPBUICoord2D@@0W4PathfindLayerEnum@@PAUMADStruct@@@Z,0x00014092,ILT thunk to the cell-space line walk at 0x003ED9F0; ZH's role but not ZH's signature -- cell coordinates and no callback
@@ -68600,6 +68633,7 @@ name,address,notes
 ?setConnectionStateRetail@NAT@@IAEXHH@Z,0x0002EBD1,NAT retail setConnectionState import thunk
 ?setControlBarScheme@ControlBarSchemeManager@@QAEXVAsciiString@@@Z,0x004AD880,body from setControlBarSchemeByName call @0x4A00AF via ILT 0xA196
 ?setControlBarSchemeByPlayerTemplate@ControlBarSchemeManager@@QAEXPBVPlayerTemplate@@_N@Z,0x000378EE,REL32 pin: retail calls this through the incremental-link thunk at 0x378EE which jumps to 0x4ADE40
+?setCursor@Mouse@@UAEXW4MouseCursor@1@@Z,0x0000E520
 ?setCursorTooltip@Mouse@@QAEXVUnicodeString@@HPBURGBColor@@M@Z,0x000346E9,pinharvest x4 (thunk)
 ?setData@NetWrapperCommandMsg@@QAEXPAEI@Z,0x00049ECC,ILT thunk; real body 0xA73E70
 ?setDataOffset@NetWrapperCommandMsg@@QAEXI@Z,0x00023709,ILT thunk; real body 0xA73EF0
@@ -68645,6 +68679,7 @@ name,address,notes
 ?setLeavingPlayerID@NetPlayerLeaveCommandMsg@@QAEXE@Z,0x00030C56,pinharvest x1 (thunk)
 ?setLeavingPlayerID@NetPlayerLeaveCommandMsg@@QAEXE@Z,0x0003C44D,pinharvest x1 (thunk)
 ?setLowControlBarConfig@ControlBar@@IAEXXZ,0x0002FA6D
+?setMouseLimits@Mouse@@UAEXXZ,0x00002A63
 ?setName@Image@@QAEXVAsciiString@@@Z,0x0003EDBA,thunk to 0x000C2420; the body is byte-identical to three other setName instantiations so the call site is what pins it - the MappedImage parser at 0x000C2480 calls this one
 ?setNameAndType@DictPair@Dict@@QAEXW4NameKeyType@@W4DataType@2@@Z,0x00038D02,retail DictPair::setNameAndType body (unclaimed, called by setPrep/remove)
 ?setNewFrame@NetDisconnectScreenOffCommandMsg@@QAEXI@Z,0x0000930E,pinharvest x1 (thunk)
@@ -68778,6 +68813,8 @@ name,address,notes
 ?updateFadeLevel@ScreenCrossFadeFilter@@IAE_NXZ,0x00006D0C
 ?updateMeshVolume@W3DVolumetricShadow@@IAEXHHPBVMatrix3D@@ABVAABoxClass@@M@Z,0x007BE000,certified packet 348; updateMeshVolume body 0x7BE000 (thunk 0xC392 from updateVolumes)
 ?updateNumPlayersOnline@@YAXXZ,0x0050BA40
+?updatePlayback@RecorderClass@@QAEXXZ,0x00099110,zh-sweep callee pin derived from retail REL32 displacement
+?updateRecord@RecorderClass@@QAEXXZ,0x0009BFE0,zh-sweep callee pin derived from retail REL32 displacement
 ?updateUpgradeModules@Object@@QAEXXZ,0x00027FCF,ILT thunk used by giveUpgrade call site
 ?updateVotes@DisconnectMenu@@QAEXHH@Z,0x00031DB8,ILT thunk to DisconnectMenu::updateVotes
 ?upper_bound@AsciiStringTreeUpperBoundShim@_STL@@QBEPAU?$_Rb_tree_node@VAsciiString@@@2@ABVAsciiString@@@Z,0x000804D0,incremental-link thunk target through a TU-local forwarding shim
@@ -68942,6 +68979,7 @@ _BucketNew,0x009D5D10,vendored=gamespy-2004
 _CanReceiveOnSocket,0x00854680,vendored=gamespy-2004
 _D3DXMatrixInverse@12,0x009FB321
 _D3DXVec4Transform@12,0x009FAA48
+_DirectInput8Create@20,0x009F9AF0
 _DumpBucketSet,0x009D5BF0,vendored=gamespy-2004
 _FreeKeyList,0x00867A60,vendored=gamespy-2004
 _FreePopularValues,0x008679D0,vendored=gamespy-2004
@@ -68969,6 +69007,9 @@ _TableMap,0x00866F90,vendored=gamespy-2004
 _TableMapSafe2,0x00867060,vendored=gamespy-2004
 _TableNew2,0x00866D80,vendored=gamespy-2004
 _TableRemove,0x00866ED0,vendored=gamespy-2004
+_TensileFormationUpdate_vtbl0,0x00CB265C,Open-BFME5 TensileFormationUpdate primary vtable
+_TensileFormationUpdate_vtbl10,0x00CB2588,Open-BFME5 TensileFormationUpdate tertiary vtable
+_TensileFormationUpdate_vtblC,0x00CB2598,Open-BFME5 TensileFormationUpdate secondary vtable
 _TheAIParseDefinitionAI,0x012EF214,AI parse definition TheAI global pointer shim
 _UCS2ToAsciiString,0x0085C570,vendored=gamespy-2004
 _UCS2ToUTF8String,0x0085C290,vendored=gamespy-2004
@@ -69124,6 +69165,7 @@ _current_time,0x008542E0,vendored=gamespy-2004
 _deflate@8,0x00AAD683,vendored=libpng-1.0.5
 _deflateReset@4,0x00AAE588,vendored=libpng-1.0.5
 _discharge,0x0099F1D0,vendored=lua-4.0.1
+_explist1,0x0099B370,call displacement in localstat @0x0099BB0B
 _free_pool@8,0x00AAA7E0,vendored=jpeg-6b
 _gameTextPrepare@16,0x009F6D76,GameTextManager reset prepare helper shim
 _gameTextRelease,0x00881EF0,GameTextManager reset release helper shim
@@ -69175,6 +69217,7 @@ _gpiSendFromBuffer,0x008F2F60,vendored=gamespy-2004
 _gpiSendOrBufferStringLen,0x008F2C70,vendored=gamespy-2004
 _gpiSetError,0x008ECA20,vendored=gamespy-2004
 _gpiSetErrorString,0x008ECA50,vendored=gamespy-2004
+_gpiSetInfod,0x008F1DD0,tail jmp displacement in gpSetInfod @0x008EA13C
 _gpiStartConnect,0x008ECD00,vendored=gamespy-2004
 _gpiStartProfileSearch,0x008EDDB0,vendored=gamespy-2004
 _gpiTransfersHandlePong,0x008F53C0,vendored=gamespy-2004
@@ -69243,6 +69286,7 @@ _setnodevector,0x00999580,vendored=lua-4.0.1
 _setsockopt@20,0x0081BE50,vendored=gamespy-2004
 _shutdown@8,0x0081BE44,vendored=gamespy-2004
 _socket@12,0x0081BE1A,vendored=gamespy-2004
+_stat,0x0099D0C0,pin _stat from _chunk call site @0x99D2FC (retail target 0x99D0C0)
 _str_checkname,0x0099AC90,vendored=lua-4.0.1
 _strzcpy,0x008EC880,vendored=gamespy-2004
 _subexpr,0x0099CA60,vendored=lua-4.0.1
@@ -69254,801 +69298,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?unidentified_00025CD4@WindowLookupShim@@QAEPAXHH@Z,0x00025CD4,UNIDENTIFIED lookup on the global at 0x012ED88C taking a name key and a flag; address-derived name; do not treat as an identity
-?prefMapIncrement@@YAPAUPrefMapNodeShim@@PAU1@@Z,0x0082B870,alias for the STL tree stepper already pinned here as _Rb_global<bool>::_M_increment
-?Internal_Add@GenericMultiListClass@@IAE_NPAVMultiListObjectClass@@_N@Z,0x009DBF60,head-insert twin of Internal_Remove at 0x009DC100; ret 8 for (obj onlyonce)
-?Allocate_Object_Memory@?$ObjectPoolClass@VMatPassTaskClass@@$0BAA@@@QAEPAVMatPassTaskClass@@XZ,0x009452D0,
-?Draw_Strip@DX8Wrapper@@SAXGGGG@Z,0x00906E40,
-?Draw_Triangles@DX8Wrapper@@SAXGGGG@Z,0x00906DF0,
-??1?$vector@VBFMERetailAsciiString@@V?$allocator@VBFMERetailAsciiString@@@_STL@@@_STL@@QAE@XZ,0x000658A0,vector<AsciiString> dtor; the address is claimed as ??1PlayerUpgradeSpecialPowerModuleData which ICF folded onto it
-??_7DebugIOFlat@@6B@,0x0113517C,vptr stored at entry of ??1DebugIOFlat 0x00890780
-??_7DebugIOInterface@@6B@,0x01135044,base vptr restored at exit of ??1DebugIOFlat 0x00890780
-??_7AITunnelNetworkGuardState@@6B@,0x00C982B8,vptr stored by ??0AITunnelNetworkGuardState 0x001717B0 right after the State base ctor
-??_7StatusBitsUpgradeModuleData@@6B@,0x00C8F4F0,vptr stored by the factory at 0x0012B650 whose field-parse pointer resolves to ?buildFieldParse@StatusBitsUpgradeModuleData
-??_7FireWeaponCollideModuleData@@6B@,0x00C8EB50,vptr stored by ?friend_newModuleData@FireWeaponCollide 0x00127D00 into the object it allocates
-??0WindowTransitionINI@@QAE@XZ,0x00851230,TU-local BFME INI ABI declaration for GameWindowTransitionsHandler::load
-??1WindowTransitionINI@@QAE@XZ,0x008512E0,TU-local BFME INI ABI declaration for GameWindowTransitionsHandler::load
-?loadFile@WindowTransitionINI@@QAEXVWindowTransitionAsciiString@@W4WindowTransitionINILoadType@@PAVXfer@@@Z,0x00853A20,TU-local BFME INI loadFile ABI declaration for GameWindowTransitionsHandler::load
-??A?$hash_map@W4NameKeyType@@P6APAVTransition@@XZU?$hash@W4NameKeyType@@@rts@@U?$equal_to@W4NameKeyType@@@4@V?$allocator@U?$pair@$$CBW4NameKeyType@@P6APAVTransition@@XZ@_STL@@@_STL@@@_STL@@QAEAAP6APAVTransition@@XZABW4NameKeyType@@@Z,0x0000F2FE,TU-local factory map member uses the retail STLport operator[] thunk
-_ghiResetBuffer,0x0087DA30,vendored=gamespy-2004
-_ghiProcessIncomingFileData,0x0087BF30,vendored=gamespy-2004
-??0BoxDynamicVBAccessClass@@QAE@IIGI@Z,0x0091F730,TU-local DynamicVB ABI for BoxRenderObjClass::render_box
-??0WriteLockClass@BoxDynamicVBAccessClass@@QAE@PAV1@@Z,0x0091F160,TU-local DynamicVB lock ABI for BoxRenderObjClass::render_box
-??1WriteLockClass@BoxDynamicVBAccessClass@@QAE@XZ,0x0091F240,TU-local DynamicVB lock ABI for BoxRenderObjClass::render_box
-??1BoxDynamicVBAccessClass@@QAE@XZ,0x0091D9E0,TU-local DynamicVB ABI for BoxRenderObjClass::render_box
-?BoxSetTexture@@YAXIAAPAVTextureBaseClass@@@Z,0x00905AC0,TU-local texture binding ABI for BoxRenderObjClass::render_box
-??0WriteLockClass@DynamicIBAccessClass@@QAE@PAV1@@Z,0x0091D410,DynamicIB lock ABI for BoxRenderObjClass::render_box
-??1WriteLockClass@DynamicIBAccessClass@@QAE@XZ,0x0091D4E0,DynamicIB lock ABI for BoxRenderObjClass::render_box
-??1DynamicIBAccessClass@@QAE@XZ,0x0091D350,DynamicIB ABI for BoxRenderObjClass::render_box
-?Set_Vertex_Buffer@DX8Wrapper@@SAXABVDynamicVBAccessClass@@@Z,0x00904510,DynamicVB binding ABI for BoxRenderObjClass::render_box
-?Draw_Triangles@DX8Wrapper@@SAXIGGGG@Z,0x00906D70,BoxRenderObjClass::render_box draw ABI
-?_M_insert@?$_Rb_tree@VUnicodeString@@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@UUnicodeStringLessThan@@V?$allocator@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVUnicodeString@@_N@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVUnicodeString@@_N@2@0@Z,0x000417B8,LanguageFilter structural candidate callee
-?insert_unique@?$_Rb_tree@VUnicodeString@@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@UUnicodeStringLessThan@@V?$allocator@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVUnicodeString@@_N@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVUnicodeString@@_N@2@@Z,0x00013EC1,LanguageFilter structural recursive callee
-?adjustStacking@W3DRoadBuffer@@IAEXHH@Z,0x0000448F,ILT thunk pin for insertCrossTypeJoins
-?find@CustomPreferenceMapShim@@QAEPAUCustomMapNodeShim@@ABVAsciiString@@@Z,0x0000AEAC
-?shutdownComplete@@YAXPAVWindowLayout@@@Z,0x004FFA40,WOLLoginMenuShutdown static helper
-?reverse@GameWindowTransitionsHandler@@QAEXVAsciiString@@@Z,0x0048AEC0,WOLLoginMenuShutdown transition helper
-??0DrawModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,Open-BFME5 W3DRopeDraw constructor base-call pin
-??0ObjectWeaponStatusHelperBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00021BE8,ObjectWeaponStatusHelper ctor base call
-?setWakeFrame@ObjectWeaponStatusHelperBase@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
-??0GeometryUpgradeBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000C315,GeometryUpgrade ctor base call
-??1SimpleSceneClass@@UAE@XZ,0x00943E70,Open-BFME5 RTS2DScene destructor base-call pin
-??0WeaponModeSpecialPowerUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001DD40,WeaponModeSpecialPowerUpdate ctor base call
-?setWakeFrame@WeaponModeSpecialPowerUpdateBase@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
-?createGroup@AI@@QAEPAVAIGroup@@XZ,0x0003B570,doTeamAttackNamed BFME createGroup thunk
-?getTeamAsAIGroup@Team@@QAEXPAVAIGroup@@@Z,0x00022EC1,doTeamAttackNamed BFME Team::getTeamAsAIGroup thunk
-??0BridgeTowerBehaviorBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,BridgeTowerBehavior ctor base call
-??APassMap@@QAEAAVAsciiString@@ABV1@@Z,0x0003E6DA,GameSpyLoginPreferences password map operator[] ILT
-?find@PassMap@@QAEPAUPassMapNode@@ABVAsciiString@@@Z,0x0000AEAC,GameSpyLoginPreferences password map find ILT
-??0SpecialDisguiseUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,SpecialDisguiseUpdate ctor base call
-??0RiderChangeContainBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00049378,RiderChangeContain ctor base call
-??0AnimalAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,AnimalAIUpdate ctor base call
-??0TransportContainBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00036E49,TransportContain ctor base call
-??0HordeTransportContainBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000023A1,HordeTransportContain ctor base call
-??0HordeAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,HordeAIUpdate ctor base call
-?setWakeFrame@HordeAIUpdateBase@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
-??0AssaultTransportAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,AssaultTransportAIUpdate ctor base call
-?call_0002105d@AssaultTransportAIUpdateBase@@IAEXXZ,0x0002105D,unnamed body 0x002B4320 via ILT thunk
-??0InactiveBodyBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,InactiveBody ctor base call
-?call_00030887@Object@@QAEXH@Z,0x00030887,unnamed body 0x001C7E60 via ILT thunk
-??0CaveContainBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00036E49,CaveContain ctor base call
-??0DeployStyleAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,DeployStyleAIUpdate ctor base call
-??0DeployStyleAIUpdateMember@@QAE@XZ,0x0001A9B0,DeployStyleAIUpdate member ctor at this+0x340
-??0?$StringBase@D@@AAE@ABV0@@Z,0x00887B60,ScriptActions doPlayerSetOverrideRelationToTeam AsciiString temporary copy
-?setTeamRelationship@Player@@QAEXPBVTeam@@W4Relationship@@@Z,0x000147D6,ScriptActions doPlayerSetOverrideRelationToTeam Player member call
-
-?releaseBuffer@AsciiString@@AAEXXZ,0x00887940,same body already pinned as ?releaseBuffer@BFMERetailAsciiString and ??1AsciiString; BFMERetailAsciiString is this tree's stand-in name for the same class
-?releaseBuffer@CreateObjectDieOCLName@@QAEXXZ,0x00887940,Open-BFME5 CreateObjectDie OCL string release pin
-??1W3DRopeDrawRootBase@@UAE@XZ,0x0002B8C8,W3DRopeDraw destructor drawable-root-base call through retail ILT
-?tossSegments@W3DRopeDraw@@AAEXXZ,0x0002C020,W3DRopeDraw destructor member call through retail ILT
-?construct@QueueProductionExitUpdateBase@@QAEXPAVThing@@PBVModuleData@@@Z,0x0000C315,Open-BFME5 TU-local UpdateModule base-constructor pin
-??0AttackNugget@@QAE@XZ,0x00022B42,Open-BFME5 retail ILT target for AttackNugget parser constructor call
-
-??0AIInternalMoveToState@@QAE@PAVStateMachine@@VAsciiString@@@Z,0x0014F280,base ctor of 13 retail State subclasses; the reference declares exactly those classes deriving from AIInternalMoveToState and its ctor takes (StateMachine* AsciiString) by value which matches the copy-then-pass at this address
-??0TurretState@@IAE@PAVTurretStateMachine@@VAsciiString@@@Z,0x0018D890,base ctor of the five retail TurretAI states; the reference declares TurretState with exactly those children and its ctor is protected taking TurretStateMachine* and AsciiString by value
-?setText@WinInstanceDataShim@@QAEXVUnicodeString@@@Z,0x00004205,WinInstanceData::setText via ILT thunk
-?WriteGroupDataChunk@@YAXAAVDataChunkOutput@@PAVScriptList@@PAVScriptGroup@@@Z,0x000285D3,ScriptList group writer via ILT thunk
-?WriteScriptDataChunk@@YAXAAVDataChunkOutput@@PAVScriptList@@PAVScript@@@Z,0x00002310,ScriptList script writer via ILT thunk
-?registerParser@DataChunkInput@@QAEXABVAsciiString@@PAUDataChunkInfo@@P6A_NAAV1@1PAX@ZH@Z,0x00015BD1,DataChunkInput::registerParser via ILT thunk
-?parse@DataChunkInput@@QAE_NPAX@Z,0x00028BFA,DataChunkInput::parse via ILT thunk
-?addArgType@GameMessageParser@@IAEXHH@Z,0x0000B569,GameMessageParser::addArgType via ILT thunk
-?getArgumentDataType@GameMessage@@QAEHH@Z,0x0001A3D4,GameMessage::getArgumentDataType via ILT thunk
-?getCommandSetString@Object@@QBEABVAsciiString@@XZ,0x00029DC0,Object::getCommandSetString via ILT thunk
-?findCommandSet@ControlBar@@QAEPBVCommandSet@@ABVAsciiString@@@Z,0x00048CCA,ControlBar::findCommandSet via ILT thunk
-?doCommandButton@Object@@QAEXPBVCommandButton@@HH@Z,0x000063CF,Object::doCommandButton via ILT thunk
-?getCommandButton@CommandSetShim@@QBEPBVCommandButton@@H@Z,0x00003F80,CommandSet::getCommandButton via ILT thunk
-?compare@AsciiStringCompareShim@@QBEHABVAsciiString@@@Z,0x000220C5,AsciiString::compare via ILT thunk
-?updateCache@MapCache@@QAEXXZ,0x00018F0C,isValidMap cache refresh thunk
-?find@MapCache@@QAEPAUMapCacheNode@@ABVAsciiString@@@Z,0x000263D7,isValidMap lookup thunk
-?setIsLogicalAudio@AudioEventRTS@@QAEX_N@Z,0x00008206,doSoundPlayFromNamed logical-audio ILT thunk
-?setPlayerIndex@AudioEventRTS@@QAEXH@Z,0x0003AC88,doSoundPlayFromNamed player-index ILT thunk
-?GameSpyCloseAllOverlays@@YAXXZ,0x0000F5AB,Shell push overlay-close thunk
-?shutdownComplete@Shell@@QAEXPAVWindowLayout@@H@Z,0x00002F1D,Shell push immediate-completion thunk
-?isLocalPlayer@Player@@QBE_NXZ,0x00013877,Player::isLocalPlayer via ILT thunk
-?setGroup@TransitionHandler@@QAEXVAsciiString@@H@Z,0x00045C28,TransitionHandler::setGroup via ILT thunk
-?freeBridgeBuffers@W3DBridgeBuffer@@AAEXXZ,0x00003E59,W3DBridgeBuffer::freeBridgeBuffers via ILT thunk
-?allocateBridgeBuffers@W3DBridgeBuffer@@AAEXXZ,0x0002EF2D,W3DBridgeBuffer::allocateBridgeBuffers via ILT thunk
-?_Rebalance@?$_Rb_global@_N@_STL@@SAXPAU_Rb_tree_node_base@2@AAPAU32@@Z,0x0082C9D0,insert-side twin of the _Rebalance_for_erase pin 0x190 later; called by every matched _Rb_tree _M_insert instantiation; body opens x->_M_color=red
-?allocateSlotStorage@W3DBufferManager@@IAEPAUW3DVertexBufferSlot@1@W4VBM_FVF_TYPES@1@H@Z,0x0000A2E0,W3DBufferManager::getSlot(VBM_FVF_TYPES Int) REL32 call via ILT thunk
-?allocateSlotStorage@W3DBufferManager@@IAEPAUW3DIndexBufferSlot@1@H@Z,0x000304AE,W3DBufferManager::getSlot(Int) REL32 call via ILT thunk
-??$fill@PAPAXPAX@_STL@@YAXPAPAX0ABQAX@Z,0x0000A060,vector<void*>::_M_fill_insert REL32 call via ILT thunk
-?_M_insert_overflow@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXPAPAXABQAXABU__true_type@2@I_N@Z,0x0001CBFC,vector<void*>::_M_fill_insert REL32 call via ILT thunk
-?erase@?$list@UcrateCreationEntry@@V?$allocator@UcrateCreationEntry@@@_STL@@@_STL@@QAE?AU?$_List_iterator@UcrateCreationEntry@@U?$_Nonconst_traits@UcrateCreationEntry@@@_STL@@@2@U32@0@Z,0x00006569,REL32 call via ILT thunk
-??$_M_insert_dispatch@U?$_List_iterator@UcrateCreationEntry@@U?$_Const_traits@UcrateCreationEntry@@@_STL@@@_STL@@@?$list@UcrateCreationEntry@@V?$allocator@UcrateCreationEntry@@@_STL@@@_STL@@QAEXU?$_List_iterator@UcrateCreationEntry@@U?$_Nonconst_traits@UcrateCreationEntry@@@_STL@@@1@U?$_List_iterator@UcrateCreationEntry@@U?$_Const_traits@UcrateCreationEntry@@@_STL@@@1@1ABU__false_type@1@@Z,0x00013322,REL32 call via ILT thunk
-?equal_range@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@_STL@@U12@@2@ABG@Z,0x009EC410,REL32 call via ILT thunk
-?erase@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAEXU?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@2@0@Z,0x009EC370,REL32 call via ILT thunk
-??$__find_if@PADU?$_Eq_char_bound@V?$char_traits@D@_STL@@@_STL@@@_STL@@YAPADPAD0U?$_Eq_char_bound@V?$char_traits@D@_STL@@@0@ABUrandom_access_iterator_tag@0@@Z,0x0000C379,REL32 call via ILT thunk
-??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x0000E68D,HordeSiegeEngineContain list member destructor call target (second COMDAT copy)
-??1SiegeEngineContainBase@@UAE@XZ,0x0003FF49,SiegeEngineContain/HordeSiegeEngineContain shared base destructor call target
-??1?$_List_base@UGen_p8pod@@V?$allocator@UGen_p8pod@@@_STL@@@_STL@@QAE@XZ,0x000078C4,ContestableContain list member destructor call target (tg_0021aed0)
-??1?$_List_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAE@XZ,0x0000E68D,OpenContain m_containList destructor call target
-??1Gen_dtor_00113d40@@UAE@XZ,0x00047C53,OpenContain base destructor call target
-??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x000383CF,HordeContain list member destructor call target (third COMDAT copy 0x0020ACD0)
-?removeEntry@ProductionUpdate@@AAEXPAVProductionEntry@@@Z,0x0002F3C4,ProductionUpdate destructor queue-drain call target
-?stopDocking@SiegeDockingBehavior@@AAEXXZ,0x00018F89,SiegeDockingBehavior destructor body call target
-??1CritterEmitterUpdateModuleDataInner@@QAE@XZ,0x0001B97D,CritterEmitterUpdateModuleData 0x08 member destructor call target
-??1CritterEmitterUpdateModuleDataUnknownB4@@QAE@XZ,0x00038055,CritterEmitterUpdateModuleData 0xB4 member destructor call target
-?isDataCompressed@CompressionManager@@SA_NPBXH@Z,0x0081E980,CachedFileInputStream open retail compression probe
-?getUncompressedSize@CompressionManager@@SAHPBXH@Z,0x0081E6D0,CachedFileInputStream open retail uncompressed-size query
-?decompressData@CompressionManager@@SAHPBXHPAXH@Z,0x0081E890,CachedFileInputStream open retail decompression call
-??A?$map@W4NameKeyType@@W4VeterancyLevel@@U?$less@W4NameKeyType@@@_STL@@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@4@@_STL@@QAEAAW4VeterancyLevel@@ABW4NameKeyType@@@Z,0x00019F33,Open-BFME5 production-veterancy map operator thunk
-?LoadAndCreateD3DShader@W3DShaderManager@@SAJPBDPAK@Z,0x0001FC99,FlatTerrainShaderPixelShader retail two-argument loader thunk
-?removeAll_TeamBuildQueue@AIPlayer@@IAEXP6AXPAVTeamInQueue@@@Z@Z,0x000497DD,Open-BFME5 AIPlayer destructor queue cleanup callee
-?removeAll_TeamReadyQueue@AIPlayer@@IAEXP6AXPAVTeamInQueue@@@Z@Z,0x00012B20,Open-BFME5 AIPlayer destructor ready-queue cleanup callee
-?getOrStartSpecialPowerReadyFrame@Player@@QAEIPBVSpecialPowerTemplate@@@Z,0x0001302F,Open-BFME5 SpecialPowerModule ready-frame shared-power callee
-??0UnicodeString@@QAE@PBG@Z,0x00888DE0,Open-BFME5 GameTextManager failed-message constructor callee
-??0UpgradeTemplate@@QAE@XZ,0x0001D39A,UpgradeCenter newUpgrade retail constructor thunk
-??4UpgradeTemplate@@QAEAAV0@ABV0@@Z,0x000047B4,UpgradeCenter newUpgrade retail copy-assignment thunk
-?nameToKey@NameKeyGenerator@@QAEHPBD@Z,0x0003ADD7,UpgradeCenter newUpgrade retail name-key thunk
-?construct@DefaultModule6CtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x000391F3,Default draw module category-6 retail constructor thunk
-??0GameInfo@@QAE@XZ,0x0002D5BF,SkirmishGameInfo retail base-constructor thunk
-?findImageByName@MappedImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z,0x0001D606
-?addPublicBone@ModelConditionInfo@@QBEXABVAsciiString@@@Z,0x00005BCD
-?getShroudClearingRange@Object@@QBEMXZ,0x000326CD
-?setPosition@RadiusDecal@@QAEXABUCoord3D@@@Z,0x00007E50
-?setOpacity@RadiusDecal@@QAEXM@Z,0x0003F2A1
-?Collide@CollisionMath@@YA_NAAVAABoxCollisionTestData@@AAVTriClass@@@Z,0x008E85F0,AABTree AA-box compact collision helper
-?Init_Caps@DX8Caps@@AAEXPAUIDirect3DDevice8@@@Z,0x0091B6E0
-?Compute_Caps@DX8Caps@@AAEXW4WW3DFormat@@ABU_D3DADAPTER_IDENTIFIER8@@@Z,0x0091C230
-??0RadiusDecal@@QAE@XZ,0x00036DD1
-?setWakeFrame@UpdateModule@@QAEXPAVObject@@I@Z,0x000157DA
-?_M_initialize_map@?$_Deque_base@VPingRequest@@V?$allocator@VPingRequest@@@_STL@@@_STL@@IAEXI@Z,0x0001FD7A
-?_M_initialize_map@?$_Deque_base@VPingResponse@@V?$allocator@VPingResponse@@@_STL@@@_STL@@IAEXI@Z,0x0001E8C6
-?isContextCommand@CommandButton@@QBE_NXZ,0x0004B1DC,InGameUI retail call uses the import thunk to FUN_0089AE80
-?parse@StreakDrawTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x0002BCBA,Streak draw template parse call pin
-?construct@StreakDrawModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x00046C22,Streak draw module base constructor call pin
-?setConnectionStateRetail@NAT@@IAEXHH@Z,0x0002EBD1,NAT retail setConnectionState import thunk
-?getControllingPlayer@TeamPrototype@@QBEPAVPlayer@@XZ,0x0000F2DB,TeamInQueue disband call pin
-?AppendDebugMessage@ScriptEngine@@QAEXABVAsciiString@@_N@Z,0x00028CE0,TeamInQueue disband call pin
-?transferUnitsTo@Team@@QAEXPAV1@@Z,0x00020E55,TeamInQueue disband call pin
-?concat@AsciiString@@QAEXPBDH@Z,0x00887D60,TeamInQueue disband call pin
-??1BannerCarrierString@@QAE@XZ,0x00887940,BannerCarrier object-name string destructor
-??1BannerCarrierUpgrade@@QAE@XZ,0x000438AB,BannerCarrier upgrade destructor thunk
-?Collide@CollisionMath@@YA_NAAVOBBoxCollisionTestData@@AAVTriClass@@@Z,0x008E85F0,AABTree OB-box compact collision helper
-??0SpawnBehaviorFourthBase@@QAE@XZ,0x0003D24E,SpawnBehavior fourth interface base constructor ILT
-?findTemplate@ThingFactory@@QAEPAVThingTemplate@@ABVAsciiString@@@Z,0x00028560,SpawnBehavior retail findTemplate ILT
-?_bfme_assign@EvaCheckInfoVec@@QAEXABV1@@Z,0x00031DBD,ILT thunk to the retail vector<EvaCheckInfo> copy-assign at 0x004263D0; unidentified beyond its shape
-?resize@EvaCheckVec@@QAEXH@Z,0x000153D4,ILT thunk to the retail vector<EvaCheck> resize-with-default at 0x00426100; unidentified beyond its shape
-?_bfme_releaseElements@EvaSideSoundsVec@@QAEXXZ,0x00037BF0,ILT thunk to the retail Eva side-sound element release loop at 0x00424300; unidentified beyond its shape
-?_bfme_copyElements@EvaSideSoundsVec@@QAEXABV1@@Z,0x00033E1A,ILT thunk to the retail Eva side-sound element deep-copy at 0x00424380; unidentified beyond its shape
-?markMPLocalDefeatWindowShown@ScriptEngine@@QAEXXZ,0x00002ACC,local defeat retail ILT
-?doDisableInput@ScriptActions@@IAEXXZ,0x00039595,defeat action retail ILT
-?BfmeShouldShowGameOverEvent@@YA_NXZ,0x000271AB,BFME defeat event selector ILT
-?construct@QuadDrawModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x00047AAF,Open-BFME5 QuadDrawModule retail constructor
-?construct@ButterflyDrawModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0000AF1F,Open-BFME5 ButterflyDrawModule retail constructor
-?construct@LightningDrawModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0002A76B,Open-BFME5 LightningDrawModule retail constructor
-?construct@TerrainCollisionModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x00028E4D,Open-BFME5 TerrainCollisionModule retail constructor
-?construct@LifeEventModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x00034C57,Open-BFME5 LifeEventModule retail constructor
-?construct@DefaultModule2CtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0003331B,Open-BFME5 DefaultModule2 retail constructor
-?construct@DefaultModule0CtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x00033550,Open-BFME5 DefaultModule0 retail constructor
-?construct@DefaultModule7CtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x000237FE,Open-BFME5 DefaultModule7 retail constructor
-?parse@ButterflyDrawTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x0004391E,Open-BFME5 ButterflyDrawTemplate retail parser
-?parse@HemisphericalEmissionVelocityTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x0002337B,Open-BFME5 HemisphericalEmissionVelocityTemplate retail parser
-?parse@SphericalEmissionVelocityTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x0002337B,Open-BFME5 SphericalEmissionVelocityTemplate retail parser
-?construct@DefaultModule1CtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x00040214,Open-BFME5 DefaultModule1 retail constructor
-??1HordeContainMember14@@QAE@XZ,0x00026AB2,Open-BFME5 HordeContain member at 0x158 destructor
-??1HordeContainMember38@@QAE@XZ,0x000225E3,Open-BFME5 HordeContain member at 0x120 destructor
-?cleanup@HordeContainOwnedBuffer@@AAEXXZ,0x00047B4F,Open-BFME5 HordeContain owned-buffer cleanup
-?freeHordeContainOwnedBuffer@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 HordeContain owned-buffer deallocator
-??1HordeContainMember4A@@QAE@XZ,0x0001A401,Open-BFME5 HordeContain four-byte member destructor
-??1HordeContainMember70@@QAE@XZ,0x00026F35,Open-BFME5 HordeContain 0x70-byte member destructor
-??_7HordeContainModuleDataBase@@6B@,0x01073744,Open-BFME5 HordeContain base vtable
-?TheGameLogic@@3PAVGameLogic@@A,0x00EF0898,GameLogic* global; the same 0x012F0898 the matched ?doEvaEnabledDisabled@ScriptActions@@IAEX_N@Z writes at +0x96
-?_bfme_serviceHighestPriorityCheck@Eva@@AAEXXZ,0x0000F32B,ILT thunk to the retail Eva check-servicing body at 0x004237E0 called from Eva::update; unidentified beyond its shape
-?parse@RenderObjectDrawTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00037713,Open-BFME5 RenderObjectDrawTemplate retail parser
-??1EvaCheckInfoVec@@QAE@XZ,0x00002D15,ILT thunk to the retail vector<EvaCheckInfo> destructor at 0x00426220; unidentified beyond its shape
-??1EvaSideSoundsVec@@QAE@XZ,0x0003763C,ILT thunk to the retail Eva side-sound container destructor at 0x00424890; unidentified beyond its shape
-?parse@CylindricalEmissionVelocityTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x0002DE7A,Open-BFME5 CylindricalEmissionVelocityTemplate retail parser
-?parse@OutwardEmissionVelocityTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x0001F3E3,Open-BFME5 OutwardEmissionVelocityTemplate retail parser
-?parse@SphereEmissionVolumeTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00034847,Open-BFME5 SphereEmissionVolumeTemplate retail parser
-?parse@LineEmissionVolumeTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00033807,Open-BFME5 LineEmissionVolumeTemplate retail parser
-?parse@LifeEventTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x0003F553,Open-BFME5 LifeEventModuleTemplate retail parser
-?parse@OrthoEmissionVelocityTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x0002FEEB,Open-BFME5 OrthoEmissionVelocityTemplate retail parser
-?registerParser@DataChunkInput@@QAEXABVAsciiString@@0P6A_NAAV1@PAUDataChunkInfo@@PAX@Z3@Z,0x00015BD1,Open-BFME5 DataChunkInput parser registration ILT
-?ParseConditionDataChunk@Condition@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,0x00449292,Open-BFME5 Condition parser function pointer
-??0AudioEventRTS@@QAE@PAXH@Z,0x00025306,Open-BFME5 AudioEventRTS retail constructor
-?construct@ShaderVectorBaseCtorShim@@QAEXHH@Z,0x009305D0,Open-BFME5 shader vector retail base constructor
-?construct@TextureVectorBaseCtorShim@@QAEXHH@Z,0x0092FBA0,Open-BFME5 texture vector retail base constructor
-??1UpgradeStringMember@@QAE@XZ,0x00887940,Open-BFME5 UpgradeTemplate string member destructor
-??1UpgradeAudioMember@@UAE@XZ,0x00026F35,Open-BFME5 UpgradeTemplate audio member destructor
-?init@TerrainShader2Stage@@QAEHXZ,0x00023272,Open-BFME5 terrain two-stage shader initializer ILT
-?OpenBFME5_netCRCInterval@@3HA,0x012A7040,Open-BFME5 retail network CRC interval global
-__imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
-?set@AsciiString@@AAEXABV1@@Z,0x00887C90,Open-BFME5 private AsciiString copy-set body
-?clear@?$_List_base@UBridgeFXInfo@@V?$allocator@UBridgeFXInfo@@@_STL@@@_STL@@QAEXXZ,0x0001E9ED,Open-BFME5 BridgeFXInfo STLPort list clear body
-?clear@?$_List_base@UBridgeOCLInfo@@V?$allocator@UBridgeOCLInfo@@@_STL@@@_STL@@QAEXXZ,0x000034F9,Open-BFME5 BridgeOCLInfo STLPort list clear body
-??1ObjectCreationListMap@@QAE@XZ,0x0001D110,Open-BFME5 retail ObjectCreationList map destructor body
-??1InstantDeathBehaviorModuleDataAllocator@@QAE@XZ,0x00017391,Open-BFME5 retail trailing allocator destructor body
-??1EmotionTrackerUpdateEntry@@QAE@XZ,0x00028FCE,Open-BFME5 retail emotion-tracker entry destructor body
-??1EmotionTrackerUpdateName@@QAE@XZ,0x0001A401,Open-BFME5 retail emotion-tracker string destructor thunk
-?deleteInstance@ScriptGroupPoolObject@@QAEXH@Z,0x00002338,Open-BFME5 retail pooled ScriptGroup deletion thunk
-?deleteInstance@ScriptPoolObject@@QAEXH@Z,0x00022039,Open-BFME5 retail pooled Script deletion thunk
-??1MultiplayerColorDefinition@@QAE@XZ,0x00887940,Open-BFME5 retail color-definition string destructor body
-??1MultiplayerColorList@@QAE@XZ,0x0004A01B,Open-BFME5 retail multiplayer color-map destructor thunk
-??0MeshModelClass@@QAE@ABV0@@Z,0x0094EC20,Open-BFME5 retail MeshModelClass copy constructor pin
-?notifyOfObjectCreationOrDestruction@ScriptEngine@@QAEXXZ,0x0003B15B,Open-BFME5 retail script notification thunk
-?removeObjectFromPathfindMap@Pathfinder@@QAEXPAVObject@@@Z,0x00006D7F,Open-BFME5 retail pathfinder removal thunk
-?addObjectToPathfindMap@Pathfinder@@QAEXPAVObject@@@Z,0x0000B81B,Open-BFME5 retail pathfinder addition thunk
-?friend_adjustPowerForPlayer@Object@@QAEX_N@Z,0x00021297,Open-BFME5 retail object power adjustment thunk
-?getStructureCompletionInterface@Object@@QAEPAVStructureCompletionInterface@@XZ,0x000351D9,Open-BFME5 retail unidentified structure interface getter thunk
-?resetNextMoodCheckTime@AIUpdateInterface@@QAEXXZ,0x00022C82,Open-BFME5 retail AI mood-check reset thunk
-??1ObjectModule@@UAE@XZ,0x00047C53,Open-BFME5 FireWeaponCollide base destructor ILT pin
-??1PB_DeepBase@@UAE@XZ,0x00047C53,Open-BFME5 SlaveWatcherBehavior base destructor ILT pin
-??1W3DProjectileStreamResources@@QAE@XZ,0x00027EAD,Open-BFME5 W3DProjectileStreamDraw resource cleanup ILT pin
-??1GiantBirdNestedTail@@QAE@XZ,0x00021E18,Open-BFME5 GiantBird nested-tail destructor ILT pin
-??1GiantBirdMemberB@@QAE@XZ,0x00013449,Open-BFME5 GiantBird second member destructor ILT pin
-??1GiantBirdMemberA@@QAE@XZ,0x00008B61,Open-BFME5 GiantBird first member destructor ILT pin
-??1GiantBirdAIBase@@UAE@XZ,0x0001C774,Open-BFME5 GiantBird update base destructor ILT pin
-??1GameResultsThreadAux@@QAE@XZ,0x009DB400,Open-BFME5 GameResultsQueue auxiliary destructor
-?shutdown@GameResultsThread@@QAEXXZ,0x009DB5A0,Open-BFME5 GameResultsQueue worker shutdown
-??1GameResultsCounter@@QAE@XZ,0x009DB350,Open-BFME5 GameResultsQueue counter destructor
-??1GameResultsResponseQueue@@QAE@XZ,0x0003D889,Open-BFME5 GameResultsQueue response queue destructor ILT
-??1GameResultsRequestQueue@@QAE@XZ,0x00031462,Open-BFME5 GameResultsQueue request queue destructor ILT
-??1GameResultsMutex@@QAE@XZ,0x009DB350,Open-BFME5 GameResultsQueue mutex destructor
-_ghiAppendCharToBuffer,0x0087D980,GameSpy ghttp buffer append char retail callee
-_ghiPostGetContentType,0x0087CD80,GameSpy ghttp post content type retail callee
-_ghiSendBuffer,0x0087DA50,GameSpy ghttp send buffer retail callee
-?Get_DX8_Texture_Stage_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z,0x00906FE0,DX8 texture-stage snapshot value-name retail callee
-??1Gen_uw_00001190@@QAE@XZ,0x00001190,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000011e5@@QAE@XZ,0x000011E5,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00001307@@QAE@XZ,0x00001307,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00001429@@QAE@XZ,0x00001429,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000014d8@@QAE@XZ,0x000014D8,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00001631@@QAE@XZ,0x00001631,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00001b36@@QAE@XZ,0x00001B36,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00001c80@@QAE@XZ,0x00001C80,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00001d2a@@QAE@XZ,0x00001D2A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00001f87@@QAE@XZ,0x00001F87,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00002199@@QAE@XZ,0x00002199,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000240f@@QAE@XZ,0x0000240F,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000256d@@QAE@XZ,0x0000256D,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00002883@@QAE@XZ,0x00002883,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00002bc6@@QAE@XZ,0x00002BC6,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00002de2@@QAE@XZ,0x00002DE2,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00002f86@@QAE@XZ,0x00002F86,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000033b9@@QAE@XZ,0x000033B9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000039c7@@QAE@XZ,0x000039C7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00003b6b@@QAE@XZ,0x00003B6B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000466f@@QAE@XZ,0x0000466F,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000046f6@@QAE@XZ,0x000046F6,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000047d7@@QAE@XZ,0x000047D7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00004c87@@QAE@XZ,0x00004C87,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00004fbb@@QAE@XZ,0x00004FBB,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000512d@@QAE@XZ,0x0000512D,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00005277@@QAE@XZ,0x00005277,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000057c2@@QAE@XZ,0x000057C2,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00005880@@QAE@XZ,0x00005880,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000060f0@@QAE@XZ,0x000060F0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00006253@@QAE@XZ,0x00006253,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000065a0@@QAE@XZ,0x000065A0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000066c7@@QAE@XZ,0x000066C7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00006bfe@@QAE@XZ,0x00006BFE,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00006c4e@@QAE@XZ,0x00006C4E,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00006fe1@@QAE@XZ,0x00006FE1,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00007545@@QAE@XZ,0x00007545,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000076a3@@QAE@XZ,0x000076A3,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00007860@@QAE@XZ,0x00007860,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00007923@@QAE@XZ,0x00007923,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00007928@@QAE@XZ,0x00007928,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00007bda@@QAE@XZ,0x00007BDA,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00007bdf@@QAE@XZ,0x00007BDF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00007d83@@QAE@XZ,0x00007D83,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00007edc@@QAE@XZ,0x00007EDC,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000803a@@QAE@XZ,0x0000803A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000081fc@@QAE@XZ,0x000081FC,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00008229@@QAE@XZ,0x00008229,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00008297@@QAE@XZ,0x00008297,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000089a4@@QAE@XZ,0x000089A4,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00008a44@@QAE@XZ,0x00008A44,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00008a99@@QAE@XZ,0x00008A99,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00008b84@@QAE@XZ,0x00008B84,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000954d@@QAE@XZ,0x0000954D,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000096b5@@QAE@XZ,0x000096B5,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000099d0@@QAE@XZ,0x000099D0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00009c4b@@QAE@XZ,0x00009C4B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00009dc7@@QAE@XZ,0x00009DC7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00009e17@@QAE@XZ,0x00009E17,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000a826@@QAE@XZ,0x0000A826,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000ab78@@QAE@XZ,0x0000AB78,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000abff@@QAE@XZ,0x0000ABFF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000ac2c@@QAE@XZ,0x0000AC2C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000b05f@@QAE@XZ,0x0000B05F,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000b109@@QAE@XZ,0x0000B109,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000b3a7@@QAE@XZ,0x0000B3A7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000b488@@QAE@XZ,0x0000B488,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000b898@@QAE@XZ,0x0000B898,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000b988@@QAE@XZ,0x0000B988,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000ba5f@@QAE@XZ,0x0000BA5F,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000bfaf@@QAE@XZ,0x0000BFAF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000c045@@QAE@XZ,0x0000C045,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000c5f9@@QAE@XZ,0x0000C5F9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000cbc6@@QAE@XZ,0x0000CBC6,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000cd1a@@QAE@XZ,0x0000CD1A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000d378@@QAE@XZ,0x0000D378,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000d828@@QAE@XZ,0x0000D828,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000db9d@@QAE@XZ,0x0000DB9D,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000dcf1@@QAE@XZ,0x0000DCF1,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000de68@@QAE@XZ,0x0000DE68,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000de81@@QAE@XZ,0x0000DE81,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000e746@@QAE@XZ,0x0000E746,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000ea43@@QAE@XZ,0x0000EA43,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000eea3@@QAE@XZ,0x0000EEA3,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000f2e5@@QAE@XZ,0x0000F2E5,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000f56f@@QAE@XZ,0x0000F56F,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000f600@@QAE@XZ,0x0000F600,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0000fc9f@@QAE@XZ,0x0000FC9F,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00010073@@QAE@XZ,0x00010073,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00010384@@QAE@XZ,0x00010384,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000109ce@@QAE@XZ,0x000109CE,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00010b3b@@QAE@XZ,0x00010B3B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00010cb7@@QAE@XZ,0x00010CB7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00011284@@QAE@XZ,0x00011284,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000118b0@@QAE@XZ,0x000118B0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00011987@@QAE@XZ,0x00011987,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00011a81@@QAE@XZ,0x00011A81,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00011e9b@@QAE@XZ,0x00011E9B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00012418@@QAE@XZ,0x00012418,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001252b@@QAE@XZ,0x0001252B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00012585@@QAE@XZ,0x00012585,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00012ad0@@QAE@XZ,0x00012AD0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00012b16@@QAE@XZ,0x00012B16,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00012bb6@@QAE@XZ,0x00012BB6,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00012cbf@@QAE@XZ,0x00012CBF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00012d78@@QAE@XZ,0x00012D78,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00012eb3@@QAE@XZ,0x00012EB3,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00013156@@QAE@XZ,0x00013156,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00013228@@QAE@XZ,0x00013228,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001341c@@QAE@XZ,0x0001341C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001378c@@QAE@XZ,0x0001378C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000137d7@@QAE@XZ,0x000137D7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00013994@@QAE@XZ,0x00013994,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00013e76@@QAE@XZ,0x00013E76,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000141a0@@QAE@XZ,0x000141A0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000150a0@@QAE@XZ,0x000150A0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00015415@@QAE@XZ,0x00015415,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000154f6@@QAE@XZ,0x000154F6,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001566d@@QAE@XZ,0x0001566D,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001570d@@QAE@XZ,0x0001570D,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000158f7@@QAE@XZ,0x000158F7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00015a0f@@QAE@XZ,0x00015A0F,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00015c76@@QAE@XZ,0x00015C76,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00015f5f@@QAE@XZ,0x00015F5F,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00015f8c@@QAE@XZ,0x00015F8C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00016004@@QAE@XZ,0x00016004,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00016018@@QAE@XZ,0x00016018,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001627a@@QAE@XZ,0x0001627A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001642d@@QAE@XZ,0x0001642D,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001652c@@QAE@XZ,0x0001652C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000165b3@@QAE@XZ,0x000165B3,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000167cf@@QAE@XZ,0x000167CF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00016cd4@@QAE@XZ,0x00016CD4,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00016d5b@@QAE@XZ,0x00016D5B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00016de7@@QAE@XZ,0x00016DE7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00016fe0@@QAE@XZ,0x00016FE0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00017396@@QAE@XZ,0x00017396,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000173a0@@QAE@XZ,0x000173A0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000177c9@@QAE@XZ,0x000177C9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000178e6@@QAE@XZ,0x000178E6,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000179cc@@QAE@XZ,0x000179CC,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000179d6@@QAE@XZ,0x000179D6,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00017a71@@QAE@XZ,0x00017A71,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000181c9@@QAE@XZ,0x000181C9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000181f1@@QAE@XZ,0x000181F1,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00018336@@QAE@XZ,0x00018336,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000185a2@@QAE@XZ,0x000185A2,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000188d6@@QAE@XZ,0x000188D6,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00018949@@QAE@XZ,0x00018949,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00018d1d@@QAE@XZ,0x00018D1D,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00018e80@@QAE@XZ,0x00018E80,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00018f25@@QAE@XZ,0x00018F25,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00018fcf@@QAE@XZ,0x00018FCF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00019029@@QAE@XZ,0x00019029,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00019353@@QAE@XZ,0x00019353,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000193e9@@QAE@XZ,0x000193E9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000195fb@@QAE@XZ,0x000195FB,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00019b41@@QAE@XZ,0x00019B41,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001a253@@QAE@XZ,0x0001A253,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001a389@@QAE@XZ,0x0001A389,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001a401@@QAE@XZ,0x0001A401,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001a41f@@QAE@XZ,0x0001A41F,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001a5dc@@QAE@XZ,0x0001A5DC,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001a6ae@@QAE@XZ,0x0001A6AE,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001aad2@@QAE@XZ,0x0001AAD2,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001aae1@@QAE@XZ,0x0001AAE1,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001ae4c@@QAE@XZ,0x0001AE4C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001af00@@QAE@XZ,0x0001AF00,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001b658@@QAE@XZ,0x0001B658,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001b6bc@@QAE@XZ,0x0001B6BC,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001b8c9@@QAE@XZ,0x0001B8C9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001ba72@@QAE@XZ,0x0001BA72,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001bb6c@@QAE@XZ,0x0001BB6C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001bbcb@@QAE@XZ,0x0001BBCB,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001bc11@@QAE@XZ,0x0001BC11,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001c3cd@@QAE@XZ,0x0001C3CD,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001c954@@QAE@XZ,0x0001C954,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001ca5d@@QAE@XZ,0x0001CA5D,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001ce8b@@QAE@XZ,0x0001CE8B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001cffd@@QAE@XZ,0x0001CFFD,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001d2ff@@QAE@XZ,0x0001D2FF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001db56@@QAE@XZ,0x0001DB56,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001dc05@@QAE@XZ,0x0001DC05,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001de6c@@QAE@XZ,0x0001DE6C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001dffc@@QAE@XZ,0x0001DFFC,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001e0e2@@QAE@XZ,0x0001E0E2,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001e227@@QAE@XZ,0x0001E227,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001e2fe@@QAE@XZ,0x0001E2FE,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001e36c@@QAE@XZ,0x0001E36C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001e7b8@@QAE@XZ,0x0001E7B8,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001e961@@QAE@XZ,0x0001E961,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001ee8e@@QAE@XZ,0x0001EE8E,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001f069@@QAE@XZ,0x0001F069,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001f532@@QAE@XZ,0x0001F532,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001fbf4@@QAE@XZ,0x0001FBF4,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001fcad@@QAE@XZ,0x0001FCAD,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001fd0c@@QAE@XZ,0x0001FD0C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001ff78@@QAE@XZ,0x0001FF78,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0001ff96@@QAE@XZ,0x0001FF96,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00020018@@QAE@XZ,0x00020018,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000200fe@@QAE@XZ,0x000200FE,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00020108@@QAE@XZ,0x00020108,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000205a9@@QAE@XZ,0x000205A9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002061c@@QAE@XZ,0x0002061C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00020c2a@@QAE@XZ,0x00020C2A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00021274@@QAE@XZ,0x00021274,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00021445@@QAE@XZ,0x00021445,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00021d14@@QAE@XZ,0x00021D14,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00022390@@QAE@XZ,0x00022390,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000224d0@@QAE@XZ,0x000224D0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00022750@@QAE@XZ,0x00022750,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00023335@@QAE@XZ,0x00023335,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000233da@@QAE@XZ,0x000233DA,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00023885@@QAE@XZ,0x00023885,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00023989@@QAE@XZ,0x00023989,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000239a2@@QAE@XZ,0x000239A2,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00023ae2@@QAE@XZ,0x00023AE2,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00023afb@@QAE@XZ,0x00023AFB,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00023e7f@@QAE@XZ,0x00023E7F,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00024352@@QAE@XZ,0x00024352,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000243c0@@QAE@XZ,0x000243C0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000244dd@@QAE@XZ,0x000244DD,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000248e3@@QAE@XZ,0x000248E3,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00024929@@QAE@XZ,0x00024929,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00024c30@@QAE@XZ,0x00024C30,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00024eec@@QAE@XZ,0x00024EEC,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00025289@@QAE@XZ,0x00025289,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000257ed@@QAE@XZ,0x000257ED,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00025c1b@@QAE@XZ,0x00025C1B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00025c25@@QAE@XZ,0x00025C25,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00025c4d@@QAE@XZ,0x00025C4D,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00025eb9@@QAE@XZ,0x00025EB9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00026233@@QAE@XZ,0x00026233,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00026459@@QAE@XZ,0x00026459,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00026562@@QAE@XZ,0x00026562,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002688c@@QAE@XZ,0x0002688C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000269b3@@QAE@XZ,0x000269B3,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00026ab2@@QAE@XZ,0x00026AB2,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00026d37@@QAE@XZ,0x00026D37,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00026f35@@QAE@XZ,0x00026F35,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00027309@@QAE@XZ,0x00027309,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002765b@@QAE@XZ,0x0002765B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000278e5@@QAE@XZ,0x000278E5,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00027af7@@QAE@XZ,0x00027AF7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00027c00@@QAE@XZ,0x00027C00,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00027c41@@QAE@XZ,0x00027C41,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00028092@@QAE@XZ,0x00028092,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00028411@@QAE@XZ,0x00028411,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000289bb@@QAE@XZ,0x000289BB,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000289de@@QAE@XZ,0x000289DE,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002905a@@QAE@XZ,0x0002905A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000290dc@@QAE@XZ,0x000290DC,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00029230@@QAE@XZ,0x00029230,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00029573@@QAE@XZ,0x00029573,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000298ca@@QAE@XZ,0x000298CA,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000298e8@@QAE@XZ,0x000298E8,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00029a41@@QAE@XZ,0x00029A41,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00029a69@@QAE@XZ,0x00029A69,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00029fe6@@QAE@XZ,0x00029FE6,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002a081@@QAE@XZ,0x0002A081,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002a153@@QAE@XZ,0x0002A153,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002a554@@QAE@XZ,0x0002A554,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002a6d0@@QAE@XZ,0x0002A6D0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002a8ba@@QAE@XZ,0x0002A8BA,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002ab2b@@QAE@XZ,0x0002AB2B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002ab7b@@QAE@XZ,0x0002AB7B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002ac39@@QAE@XZ,0x0002AC39,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002aee1@@QAE@XZ,0x0002AEE1,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002b517@@QAE@XZ,0x0002B517,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002b93b@@QAE@XZ,0x0002B93B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002bf8a@@QAE@XZ,0x0002BF8A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002bfc6@@QAE@XZ,0x0002BFC6,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002c124@@QAE@XZ,0x0002C124,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002c223@@QAE@XZ,0x0002C223,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002c2a0@@QAE@XZ,0x0002C2A0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002c3bd@@QAE@XZ,0x0002C3BD,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002c471@@QAE@XZ,0x0002C471,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002c935@@QAE@XZ,0x0002C935,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002c9ad@@QAE@XZ,0x0002C9AD,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002cc78@@QAE@XZ,0x0002CC78,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002cfbb@@QAE@XZ,0x0002CFBB,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002d3f3@@QAE@XZ,0x0002D3F3,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002de43@@QAE@XZ,0x0002DE43,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002e69a@@QAE@XZ,0x0002E69A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002e866@@QAE@XZ,0x0002E866,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002e947@@QAE@XZ,0x0002E947,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002e9a6@@QAE@XZ,0x0002E9A6,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002e9d3@@QAE@XZ,0x0002E9D3,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002ec1c@@QAE@XZ,0x0002EC1C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002f487@@QAE@XZ,0x0002F487,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002f99b@@QAE@XZ,0x0002F99B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002fa86@@QAE@XZ,0x0002FA86,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002fabd@@QAE@XZ,0x0002FABD,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0002feb4@@QAE@XZ,0x0002FEB4,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00030652@@QAE@XZ,0x00030652,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000307fb@@QAE@XZ,0x000307FB,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000308a0@@QAE@XZ,0x000308A0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000309ef@@QAE@XZ,0x000309EF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000309f4@@QAE@XZ,0x000309F4,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00030daf@@QAE@XZ,0x00030DAF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00030ed1@@QAE@XZ,0x00030ED1,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00030fdf@@QAE@XZ,0x00030FDF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00031160@@QAE@XZ,0x00031160,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000312b9@@QAE@XZ,0x000312B9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003151b@@QAE@XZ,0x0003151B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00031ef3@@QAE@XZ,0x00031EF3,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00031f39@@QAE@XZ,0x00031F39,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00032042@@QAE@XZ,0x00032042,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003210a@@QAE@XZ,0x0003210A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000321b4@@QAE@XZ,0x000321B4,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003239e@@QAE@XZ,0x0003239E,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00032402@@QAE@XZ,0x00032402,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000327d6@@QAE@XZ,0x000327D6,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003292a@@QAE@XZ,0x0003292A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00032d03@@QAE@XZ,0x00032D03,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00032d85@@QAE@XZ,0x00032D85,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00032fc4@@QAE@XZ,0x00032FC4,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000336c7@@QAE@XZ,0x000336C7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003372b@@QAE@XZ,0x0003372B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00033a23@@QAE@XZ,0x00033A23,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00033c17@@QAE@XZ,0x00033C17,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00033d57@@QAE@XZ,0x00033D57,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00033f6e@@QAE@XZ,0x00033F6E,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000343ba@@QAE@XZ,0x000343BA,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00034496@@QAE@XZ,0x00034496,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00034ae0@@QAE@XZ,0x00034AE0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00034f04@@QAE@XZ,0x00034F04,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000351b6@@QAE@XZ,0x000351B6,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000358cd@@QAE@XZ,0x000358CD,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00035deb@@QAE@XZ,0x00035DEB,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00035e72@@QAE@XZ,0x00035E72,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003621e@@QAE@XZ,0x0003621E,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00036237@@QAE@XZ,0x00036237,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000362fa@@QAE@XZ,0x000362FA,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000362ff@@QAE@XZ,0x000362FF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000364a3@@QAE@XZ,0x000364A3,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000364a8@@QAE@XZ,0x000364A8,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00036566@@QAE@XZ,0x00036566,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00036af7@@QAE@XZ,0x00036AF7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00037416@@QAE@XZ,0x00037416,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000374c5@@QAE@XZ,0x000374C5,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003771d@@QAE@XZ,0x0003771D,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00037a92@@QAE@XZ,0x00037A92,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00037d12@@QAE@XZ,0x00037D12,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00038415@@QAE@XZ,0x00038415,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00038b40@@QAE@XZ,0x00038B40,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00038dac@@QAE@XZ,0x00038DAC,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000390f9@@QAE@XZ,0x000390F9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000395d1@@QAE@XZ,0x000395D1,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000396ee@@QAE@XZ,0x000396EE,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000398fb@@QAE@XZ,0x000398FB,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00039d7e@@QAE@XZ,0x00039D7E,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003a7b0@@QAE@XZ,0x0003A7B0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003a873@@QAE@XZ,0x0003A873,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003a95e@@QAE@XZ,0x0003A95E,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003ab2f@@QAE@XZ,0x0003AB2F,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003ae2c@@QAE@XZ,0x0003AE2C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003b2b9@@QAE@XZ,0x0003B2B9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003b304@@QAE@XZ,0x0003B304,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003b386@@QAE@XZ,0x0003B386,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003b56b@@QAE@XZ,0x0003B56B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003b589@@QAE@XZ,0x0003B589,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003b7ff@@QAE@XZ,0x0003B7FF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003b8c7@@QAE@XZ,0x0003B8C7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003b8fe@@QAE@XZ,0x0003B8FE,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003b999@@QAE@XZ,0x0003B999,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003b9d5@@QAE@XZ,0x0003B9D5,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003ba57@@QAE@XZ,0x0003BA57,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003be17@@QAE@XZ,0x0003BE17,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003c051@@QAE@XZ,0x0003C051,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003c272@@QAE@XZ,0x0003C272,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003caab@@QAE@XZ,0x0003CAAB,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003d041@@QAE@XZ,0x0003D041,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003d1b8@@QAE@XZ,0x0003D1B8,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003d659@@QAE@XZ,0x0003D659,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003dc3a@@QAE@XZ,0x0003DC3A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003dd11@@QAE@XZ,0x0003DD11,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003e068@@QAE@XZ,0x0003E068,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003e0cc@@QAE@XZ,0x0003E0CC,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003e2cf@@QAE@XZ,0x0003E2CF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003e815@@QAE@XZ,0x0003E815,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003eab8@@QAE@XZ,0x0003EAB8,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003eafe@@QAE@XZ,0x0003EAFE,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003eb53@@QAE@XZ,0x0003EB53,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003ecc0@@QAE@XZ,0x0003ECC0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003efb3@@QAE@XZ,0x0003EFB3,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003f148@@QAE@XZ,0x0003F148,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003f1a7@@QAE@XZ,0x0003F1A7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003f25b@@QAE@XZ,0x0003F25B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003f292@@QAE@XZ,0x0003F292,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003f38c@@QAE@XZ,0x0003F38C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003f4fe@@QAE@XZ,0x0003F4FE,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003f6d4@@QAE@XZ,0x0003F6D4,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003f855@@QAE@XZ,0x0003F855,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003f95e@@QAE@XZ,0x0003F95E,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003ff03@@QAE@XZ,0x0003FF03,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0003ff85@@QAE@XZ,0x0003FF85,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004003e@@QAE@XZ,0x0004003E,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000400d9@@QAE@XZ,0x000400D9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004010b@@QAE@XZ,0x0004010B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00040110@@QAE@XZ,0x00040110,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000401c9@@QAE@XZ,0x000401C9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00040264@@QAE@XZ,0x00040264,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00040363@@QAE@XZ,0x00040363,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000404c6@@QAE@XZ,0x000404C6,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000407b9@@QAE@XZ,0x000407B9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00040a4d@@QAE@XZ,0x00040A4D,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00040b15@@QAE@XZ,0x00040B15,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00040db3@@QAE@XZ,0x00040DB3,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00041137@@QAE@XZ,0x00041137,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004133a@@QAE@XZ,0x0004133A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004185d@@QAE@XZ,0x0004185D,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00041948@@QAE@XZ,0x00041948,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00041a01@@QAE@XZ,0x00041A01,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00041b91@@QAE@XZ,0x00041B91,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00041c5e@@QAE@XZ,0x00041C5E,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00041e11@@QAE@XZ,0x00041E11,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00041ed9@@QAE@XZ,0x00041ED9,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00041f6a@@QAE@XZ,0x00041F6A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00042839@@QAE@XZ,0x00042839,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00042a96@@QAE@XZ,0x00042A96,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00043423@@QAE@XZ,0x00043423,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000435f4@@QAE@XZ,0x000435F4,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000436df@@QAE@XZ,0x000436DF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004429c@@QAE@XZ,0x0004429C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00044373@@QAE@XZ,0x00044373,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000444e5@@QAE@XZ,0x000444E5,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000444ea@@QAE@XZ,0x000444EA,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00044611@@QAE@XZ,0x00044611,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000448d2@@QAE@XZ,0x000448D2,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00044b07@@QAE@XZ,0x00044B07,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00044b39@@QAE@XZ,0x00044B39,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00044bb1@@QAE@XZ,0x00044BB1,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004515b@@QAE@XZ,0x0004515B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000451c4@@QAE@XZ,0x000451C4,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00045773@@QAE@XZ,0x00045773,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00045e26@@QAE@XZ,0x00045E26,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00046088@@QAE@XZ,0x00046088,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000463ad@@QAE@XZ,0x000463AD,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004653d@@QAE@XZ,0x0004653D,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004689e@@QAE@XZ,0x0004689E,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00046b82@@QAE@XZ,0x00046B82,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00046c8b@@QAE@XZ,0x00046C8B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000470f5@@QAE@XZ,0x000470F5,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004723f@@QAE@XZ,0x0004723F,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00047488@@QAE@XZ,0x00047488,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004769f@@QAE@XZ,0x0004769F,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004773a@@QAE@XZ,0x0004773A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000479d3@@QAE@XZ,0x000479D3,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00047aa0@@QAE@XZ,0x00047AA0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00047d6b@@QAE@XZ,0x00047D6B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00048487@@QAE@XZ,0x00048487,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004884c@@QAE@XZ,0x0004884C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00048964@@QAE@XZ,0x00048964,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00048c1b@@QAE@XZ,0x00048C1B,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00048d47@@QAE@XZ,0x00048D47,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00048dbf@@QAE@XZ,0x00048DBF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00048dd3@@QAE@XZ,0x00048DD3,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00049012@@QAE@XZ,0x00049012,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00049288@@QAE@XZ,0x00049288,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_000495b7@@QAE@XZ,0x000495B7,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00049dff@@QAE@XZ,0x00049DFF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00049e2c@@QAE@XZ,0x00049E2C,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004a133@@QAE@XZ,0x0004A133,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004a197@@QAE@XZ,0x0004A197,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004a241@@QAE@XZ,0x0004A241,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004a462@@QAE@XZ,0x0004A462,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004a6ec@@QAE@XZ,0x0004A6EC,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004aacf@@QAE@XZ,0x0004AACF,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004ae49@@QAE@XZ,0x0004AE49,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004b10a@@QAE@XZ,0x0004B10A,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0004b2f4@@QAE@XZ,0x0004B2F4,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00841b80@@QAE@XZ,0x00841B80,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00842550@@QAE@XZ,0x00842550,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00851340@@QAE@XZ,0x00851340,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00893e70@@QAE@XZ,0x00893E70,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0089cc70@@QAE@XZ,0x0089CC70,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_008fb410@@QAE@XZ,0x008FB410,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_008fc5b0@@QAE@XZ,0x008FC5B0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_008ff880@@QAE@XZ,0x008FF880,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0091cef0@@QAE@XZ,0x0091CEF0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0091d350@@QAE@XZ,0x0091D350,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0091d4e0@@QAE@XZ,0x0091D4E0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0091d9e0@@QAE@XZ,0x0091D9E0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0091de10@@QAE@XZ,0x0091DE10,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0091f240@@QAE@XZ,0x0091F240,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00921790@@QAE@XZ,0x00921790,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00928190@@QAE@XZ,0x00928190,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00928610@@QAE@XZ,0x00928610,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00937390@@QAE@XZ,0x00937390,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00944bc0@@QAE@XZ,0x00944BC0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_00946170@@QAE@XZ,0x00946170,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0094bfd0@@QAE@XZ,0x0094BFD0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_0096be90@@QAE@XZ,0x0096BE90,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009812e0@@QAE@XZ,0x009812E0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009a4280@@QAE@XZ,0x009A4280,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009ca8a0@@QAE@XZ,0x009CA8A0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009cc600@@QAE@XZ,0x009CC600,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009cefb0@@QAE@XZ,0x009CEFB0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009d0730@@QAE@XZ,0x009D0730,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009d0a50@@QAE@XZ,0x009D0A50,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009d83d0@@QAE@XZ,0x009D83D0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009d8d00@@QAE@XZ,0x009D8D00,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009db400@@QAE@XZ,0x009DB400,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009db4d0@@QAE@XZ,0x009DB4D0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009dc280@@QAE@XZ,0x009DC280,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009e1f00@@QAE@XZ,0x009E1F00,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009e1f40@@QAE@XZ,0x009E1F40,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009e24b0@@QAE@XZ,0x009E24B0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009e45f0@@QAE@XZ,0x009E45F0,gen-uw-pin dtor target read from the retail funclet bytes
-??1Gen_uw_009f5690@@QAE@XZ,0x009F5690,gen-uw-pin dtor target read from the retail funclet bytes
-?getLayer@BfmeSpawnPointCreationObject@@QBE?AW4PathfindLayerEnum@@XZ,0x0003A391,SpawnPoint exit BFME object layer accessor
-?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z,0x00035E0E,SpawnPoint exit BFME object layer setter
-?addObjectToPathfindMap@BfmeSpawnPointPathfinder@@QAEXPAVObject@@@Z,0x0000B81B,SpawnPoint exit BFME one-argument pathfinder insertion
-?clearFlag@ScriptEngine@@QAEXABVAsciiString@@@Z,0x0001B6F3,ScriptEngine clearTeamFlags retail ILT thunk
-?decompress@AdaptiveDeltaMotionChannelClass@@AAEXKPAM@Z,0x00977DB0,AdaptiveDeltaMotionChannelClass getframe retail two-argument decompress
-?clear@?$_List_base@UcrateCreationEntry@@V?$allocator@UcrateCreationEntry@@@_STL@@@_STL@@QAEXXZ,0x000331AE
-??0Mouse@@QAE@XZ,0x0004A8BD
-??1Mouse@@UAE@XZ,0x000437F2
-?setCursor@Mouse@@UAEXW4MouseCursor@1@@Z,0x0000E520
-?setMouseLimits@Mouse@@UAEXXZ,0x00002A63
-_DirectInput8Create@20,0x009F9AF0
-?_M_insert@?$hashtable@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@@_STL@@QAEAAU?$pair@$$CBW4NameKeyType@@VDamageFX@@@2@ABU32@@Z,0x0001545B
-??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@ABEPAU?$_Rb_tree_node@VAsciiString@@@1@ABVAsciiString@@@Z,0x00003071
-??$find@H@?$_Rb_tree@HHU?$_Identity@H@_STL@@U?$less@H@2@V?$allocator@H@2@@_STL@@QBE?AU?$_Rb_tree_iterator@HU?$_Const_traits@H@_STL@@@1@ABH@Z,0x00041DAD
-??$find@H@?$_Rb_tree@HU?$pair@$$CBHVAsciiString@@@_STL@@U?$_Select1st@U?$pair@$$CBHVAsciiString@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHVAsciiString@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@1@ABH@Z,0x0000C31F
-??0?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@QAE@ABV01@@Z,0x0000EAF2
-??1?$_Rb_tree@HHU?$_Identity@H@_STL@@U?$less@H@2@V?$allocator@H@2@@_STL@@QAE@XZ,0x00032FD3
-??1?$_Rb_tree@HU?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@_STL@@QAE@XZ,0x0001D9A3
-??1?$_Rb_tree@HU?$pair@$$CBHVBuddyInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBHVBuddyInfo@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVBuddyInfo@@@_STL@@@2@@_STL@@QAE@XZ,0x0001BAC2
-??1?$_Rb_tree@PAVGameWindow@@PAV1@U?$_Identity@PAVGameWindow@@@_STL@@U?$less@PAVGameWindow@@@3@V?$allocator@PAVGameWindow@@@3@@_STL@@QAE@XZ,0x00045AE8
-??1?$pair@$$CBHVAsciiString@@@_STL@@QAE@XZ,0x0000240F
-?erase@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@QAEIABVAsciiString@@@Z,0x00041AEC
-?insert_unique@?$_Rb_tree@HHU?$_Identity@H@_STL@@U?$less@H@2@V?$allocator@H@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@HU?$_Nonconst_traits@H@_STL@@@_STL@@_N@2@ABH@Z,0x00009B10
-?insert_unique@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@_STL@@_N@2@ABVAsciiString@@@Z,0x0001BC02
-?getUiStrings@Template@@QBEHQAVAsciiString@@@Z,0x0002BAE9
-??0?$_Vector_base@PAXV?$allocator@PAX@_STL@@@_STL@@QAE@IABV?$allocator@PAX@1@@Z,0x000212D3
-??8@YAHABVMatrix4x4@@0@Z,0x00B01950,zh-sweep callee pin derived from retail REL32 displacement
-?Apply@ScaleTextureMapperClass@@UAEXH@Z,0x00966490,zh-sweep callee pin derived from retail REL32 displacement
-?Make_Unique@VertexMaterialClass@@QAEXXZ,0x00920ED0,zh-sweep callee pin derived from retail REL32 displacement
-?Re_Hash@?$HashTemplateClass@UTriangleSide@@USideIndexInfo@@@@AAEXXZ,0x0094F120,zh-sweep callee pin derived from retail REL32 displacement
-?Set_UV_Source@VertexMaterialClass@@QAEXHH@Z,0x00921250,zh-sweep callee pin derived from retail REL32 displacement
-?updatePlayback@RecorderClass@@QAEXXZ,0x00099110,zh-sweep callee pin derived from retail REL32 displacement
-?updateRecord@RecorderClass@@QAEXXZ,0x0009BFE0,zh-sweep callee pin derived from retail REL32 displacement
-?_M_insert_overflow@?$vector@PBVObjectCreationList@@V?$allocator@PBVObjectCreationList@@@_STL@@@_STL@@IAEXPAPBVObjectCreationList@@ABQBV3@ABU__true_type@2@I_N@Z,0x00044FC1,call displacement in parseOCL @0x00209859
-_explist1,0x0099B370,call displacement in localstat @0x0099BB0B
-_gpiSetInfod,0x008F1DD0,tail jmp displacement in gpSetInfod @0x008EA13C
-?isUser@LANGameSlot@@QAE_NVUnicodeString@@@Z,0x0068E8D0,byte-scan placement of the LANGameSlot user compare
-??0?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@QAE@ABV01@@Z,0x000F3AA0,copy ctor; call displacement in TeamFactory::clear @0x000F6CC1
-??1?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@QAE@XZ,0x000EF540,call displacement in TeamFactory::clear @0x000F6D33
-?_M_erase@?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@Z,0x000EE380,call displacement in TeamFactory::clear @0x000F6CDD
-??$_M_find@U?$pair@HH@_STL@@@?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@1@ABU?$pair@HH@1@@Z,0x000EE500,call displacement in addTeamPrototypeToList @0x000F3DFA
-??A?$map@U?$pair@HH@_STL@@PAVTeamPrototype@@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@QAEAAPAVTeamPrototype@@ABU?$pair@HH@1@@Z,0x000F3A20,call displacement in addTeamPrototypeToList @0x000F3E0A
-_stat,0x0099D0C0,pin _stat from _chunk call site @0x99D2FC (retail target 0x99D0C0)
-?findTeamPrototype@TeamFactory@@QAEPAVTeamPrototype@@ABVAsciiString@@0@Z,0x000EFE10,call displacement in initTeam @0x000F8195
-??0TeamPrototype@@QAE@PAVTeamFactory@@ABVAsciiString@@1PAVPlayer@@_NPAVDict@@H@Z,0x000F3E40,call displacement in initTeam @0x000F8213
-?createInactiveTeam@TeamFactory@@QAEPAVTeam@@ABVAsciiString@@0@Z,0x000F7AB0,call displacement in initTeam @0x000F8232 (via thunk 0xD15C)
-??0Gen_dtor_000edca0@@QAE@XZ,0x00019CF9,Open-BFME5 DelayedLuaEventUpdate member constructor ILT pin
-?entEnragedInitialValue@@YAHHIPBXH@Z,0x00001BAE,Open-BFME5 EntEnragedUpdate initialization helper ILT pin
-g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-_TensileFormationUpdate_vtbl0,0x00CB265C,Open-BFME5 TensileFormationUpdate primary vtable
-_TensileFormationUpdate_vtblC,0x00CB2598,Open-BFME5 TensileFormationUpdate secondary vtable
-_TensileFormationUpdate_vtbl10,0x00CB2588,Open-BFME5 TensileFormationUpdate tertiary vtable
