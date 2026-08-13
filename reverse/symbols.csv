@@ -23245,3 +23245,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0GameSpyInfo@@QAE@XZ,0x0002A513,GameSpyInfo semantic C++ constructor thunk
 ?isWeaponSlotOnTurret@TurretAI@@QBE_NW4WeaponSlotType@@@Z,0x00039D24,AIUpdate semantic C++ turret slot query
 ?isTryingToAimAtTarget@TurretAI@@QBE_NPBVObject@@@Z,0x000079D7,AIUpdate semantic C++ turret target query
+?TheSpecialPowerStore@@3PAVSpecialPowerStore@@A,0x00EED80C,retail global SpecialPowerStore pointer
+?canUseSpecialPower@SpecialPowerStore@@QAE_NPAVObject@@PBVSpecialPowerTemplate@@@Z,0x0002E4A3,retail special-power availability check
+?getSpecialPowerModule@Object@@QAEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF,retail Object special-power module lookup
