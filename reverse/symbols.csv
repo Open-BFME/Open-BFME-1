@@ -69281,3 +69281,4 @@ _stat,0x0099D0C0,pin _stat from _chunk call site @0x99D2FC (retail target 0x99D0
 ?findTeamPrototype@TeamFactory@@QAEPAVTeamPrototype@@ABVAsciiString@@0@Z,0x000EFE10,call displacement in initTeam @0x000F8195
 ??0TeamPrototype@@QAE@PAVTeamFactory@@ABVAsciiString@@1PAVPlayer@@_NPAVDict@@H@Z,0x000F3E40,call displacement in initTeam @0x000F8213
 ?createInactiveTeam@TeamFactory@@QAEPAVTeam@@ABVAsciiString@@0@Z,0x000F7AB0,call displacement in initTeam @0x000F8232 (via thunk 0xD15C)
+?GetUnsignedIntFromRegistry@@YA_NVAsciiString@@0AAI@Z,0x00109A20,GetRegistryVersion registry read via thunk 0x125CB
