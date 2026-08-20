@@ -72450,3 +72450,4 @@ _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdec
 ?insert_unique@?$_Rb_tree@PAVGameWindow@@PAV1@U?$_Identity@PAVGameWindow@@@_STL@@U?$less@PAVGameWindow@@@3@V?$allocator@PAVGameWindow@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@PAVGameWindow@@U?$_Nonconst_traits@PAVGameWindow@@@_STL@@@_STL@@_N@2@ABQAVGameWindow@@@Z,0x00625940,Open-BFME5 set<GameWindow*> insert_unique; the call at 0x00626073 through link thunk 0x0001F0C3 resolves here
 ?newMap@TerrainLogic@@UAEX_N@Z,0x00003FE4,Open-BFME5 ILT 0x00003FE4 to TerrainLogic::newMap
 ?loadRoadsAndBridges@@YAXPAX_N@Z,0x00021B7A,Open-BFME5 ILT 0x00021B7A used by W3DTerrainLogic::newMap
+?_M_erase@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@Z,0x0004412A,Open-BFME5 ILT used by PeerThreadClass::clearServers
