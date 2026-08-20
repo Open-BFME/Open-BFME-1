@@ -4149,3 +4149,4 @@ find-declared-unmatched-read-macro-bodies		82	tooling	THE FIFTH INSTANCE TONIGHT
 ?d_006fcf10@@YAXXZ	0x006FCF10	33	no-match	copy +0xC0/+0xC4/+0xC8 to out-struct; retail fld C8/C4 + mov C0, compiled all integer movs. t=6min model=grok-executor
 ?d_00703ef0@@YAXXZ	0x00703EF0	13	no-match	nullable tail virtual; retail jz to xor-eax, compiled jnz around it. goto fail same polarity. t=8min model=grok-executor
 ?d_006e94e0@@YAXXZ	0x006E94E0	53	no-match	byte flag plus cmp-float-1.0 plus fucompp vs global; branch/x87 shape not reached from if/return. t=8min model=grok-executor
+?d_00703ef0@@YAXXZ	0x00703EF0	13	void	retract no-match; concurrent agent landed the body at 5356dba20
