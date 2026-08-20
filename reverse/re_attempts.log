@@ -4144,3 +4144,8 @@ find-declared-unmatched-read-macro-bodies		82	tooling	THE FIFTH INSTANCE TONIGHT
 ?d_00c19748@@YAXXZ	0x00C19748	39	not-convertible	compiler Unwind funclet null-check member+4 tail-jmp Snapshot dtor. ZH packet is 60B parent not this 39B body. t=25min model=grok
 ??0W3DOverlordTankDrawModuleData@@QAE@XZ	0x00429460	32	blocked	vptr scheduling wall: retail vptr then zeros; MSVC sinks vptr after same-valued zeros. t=15min model=grok
 ?clearServers@PeerThreadClass@@QAEXXZ	0x006ABC00	58	refuted	bytes match map clear at +0x1B8 but name retracted; landed as Gen_006abc00. t=20min model=grok
+?d_006efef0@@YAXXZ	0x006EFEF0	50	no-match	ctor C7-zero +0/+4 then lea edx,[eax+8] ten stores; sequential assigns and nested/array tail all flatten to xor-ecx stores via eax. t=8min model=grok-executor
+?d_00717970@@YAXXZ	0x00717970	61	no-match	two-global mode mapper; simplified if/return and literal v=2 clamp both miss retail ecx rewrite plus jl chain. t=8min model=grok-executor
+?d_006fcf10@@YAXXZ	0x006FCF10	33	no-match	copy +0xC0/+0xC4/+0xC8 to out-struct; retail fld C8/C4 + mov C0, compiled all integer movs. t=6min model=grok-executor
+?d_00703ef0@@YAXXZ	0x00703EF0	13	no-match	nullable tail virtual; retail jz to xor-eax, compiled jnz around it. goto fail same polarity. t=8min model=grok-executor
+?d_006e94e0@@YAXXZ	0x006E94E0	53	no-match	byte flag plus cmp-float-1.0 plus fucompp vs global; branch/x87 shape not reached from if/return. t=8min model=grok-executor
