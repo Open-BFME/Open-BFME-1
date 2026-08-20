@@ -72451,3 +72451,5 @@ _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdec
 ?newMap@TerrainLogic@@UAEX_N@Z,0x00003FE4,Open-BFME5 ILT 0x00003FE4 to TerrainLogic::newMap
 ?loadRoadsAndBridges@@YAXPAX_N@Z,0x00021B7A,Open-BFME5 ILT 0x00021B7A used by W3DTerrainLogic::newMap
 ?_M_erase@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@Z,0x0004412A,Open-BFME5 ILT used by PeerThreadClass::clearServers
+?extraAfterFmod@W3DSnowManager@@QAEXXZ,0x00008F2B,Open-BFME5 ILT 0x00008F2B used by W3DSnowManager::update
+?extraTail@W3DSnowManager@@QAEXXZ,0x000092AF,Open-BFME5 ILT 0x000092AF used by W3DSnowManager::update
