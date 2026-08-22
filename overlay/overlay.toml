@@ -1,0 +1,28 @@
+# The overlay: features that are patched into retail lotrbfme.exe.
+#
+# Features always stack. There is no mix-and-match and no per-feature build —
+# `python3 tools/modbuild.py --dist` produces exactly one executable at
+# overlay/dist/lotrbfme.exe, and two features claiming the same address is a
+# hard build error rather than a last-writer-wins merge.
+#
+# Nothing here is part of the byte-exact decomp. The overlay never touches
+# Code/ or reverse/, so ./build.sh and both git hooks are unaffected by it —
+# that separation is what keeps the byte gate meaningful.
+#
+# Mechanism: tools/cave.py appends a .bfmemod section to the image and installs
+# a 5-byte jmp-rel32 at the target, relocating the instructions it displaces.
+# A feature therefore needs only an address and a struct layout — the target
+# does NOT have to be decompiled. That is what makes the ~65% of .text still
+# held as raw retail bytes reachable.
+
+base = "bfme1.workshop-vanilla-1.03"
+
+# Applied in this order. The numeric prefix is the order, not decoration.
+features = [
+    "020-gameresult",
+]
+
+# 010 is deliberately unused: it was reserved for a test-harness feature
+# (-noDraw plus per-frame logic CRC) that turned out not to be needed. Driving
+# the real game with synthetic clicks and asserting on screenshots covers the
+# journey, and the feature's own output file covers the outcome.

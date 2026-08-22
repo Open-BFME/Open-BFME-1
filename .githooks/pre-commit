@@ -63,9 +63,15 @@ done < <(git diff --cached --name-only --diff-filter=ACMRT)
 # (plus reference/shims/ for shim headers, reference/CnC_Generals_Zero_Hour/ for
 # restoring vendored EA reference source, and tools/tests/ for fixtures).
 # No src/, no invented layouts, no sources at the repo root.
+#
+# overlay/ is allowed too, and deliberately is NOT under Code/. It holds mod
+# payloads that are patched into a copy of the retail image, never compiled
+# into the byte-exact rebuild -- keeping them out of Code/ is what stops a mod
+# from ever influencing the byte gate. They would fail this check as .asm
+# files, so the list names the tree explicitly rather than being bypassed.
 while IFS= read -r path; do
     case "$path" in
-        Code/GameEngine/*|Code/GameEngineDevice/*|Code/Libraries/*|Code/gen_small/*|Code/gen_asm/*|Code/masm_dumps/*|reference/shims/*|reference/CnC_Generals_Zero_Hour/*|tools/tests/*|build/toolchains/*) ;;
+        Code/GameEngine/*|Code/GameEngineDevice/*|Code/Libraries/*|Code/gen_small/*|Code/gen_asm/*|Code/masm_dumps/*|reference/shims/*|reference/CnC_Generals_Zero_Hour/*|tools/tests/*|build/toolchains/*|overlay/*) ;;
         *) fail "source added outside official tree: $path — see AGENTS.md 'File placement'" ;;
     esac
 done < <(git diff --cached --name-only --diff-filter=A | grep -E '\.(cpp|c|h|hpp|asm)$' || true)

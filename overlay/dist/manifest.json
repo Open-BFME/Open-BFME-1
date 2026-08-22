@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "bfme1.overlay",
+  "name": "BFME1 overlay build",
+  "note": "Retail lotrbfme.exe with a .bfmemod code cave appended and the overlay features detoured into it. Rebuild with python3 tools/modbuild.py --dist",
+  "baseline": {
+    "path": "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe",
+    "sha256": "c1a907c44b84df129c1f18dc7365ea25ba438f9b8f39a374b86ed852936ff0a9",
+    "size": 16433152
+  },
+  "output": {
+    "path": "overlay/dist/lotrbfme.exe",
+    "sha256": "045a3b82ff3263d2f2d12d2679846c8b181019646af00a82ea596ce1c2a2e2fc",
+    "size": 16498688
+  },
+  "cave": {
+    "section": ".bfmemod",
+    "rva": "0x01016000",
+    "size": "0x10000",
+    "used": 1035
+  },
+  "features": [
+    {
+      "name": "020-gameresult",
+      "target_rva": "0x0035F920"
+    }
+  ]
+}

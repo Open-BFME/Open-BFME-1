@@ -3,6 +3,11 @@
 baselines/** -text
 build/toolchains/vs2003/** -text
 
+# The built overlay executable. Same reasoning as baselines/: it is a byte-exact
+# artifact whose hash is recorded in overlay/dist/manifest.json, and any EOL
+# normalization would corrupt it.
+overlay/dist/** -text
+
 # Append-mostly ledgers written concurrently by many agents. The built-in union
 # merge driver combines both sides' added lines instead of emitting conflict
 # markers, so parallel row appends never conflict. Run tools/dedup_csv.py after
