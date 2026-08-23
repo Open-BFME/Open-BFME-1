@@ -22,7 +22,44 @@ from pathlib import Path
 
 from PIL import Image, ImageChops
 
-BUTTON_STRIP = (243, 915, 1270, 975)
+# Everything is expressed as a FRACTION of the game's client area, never as a
+# screen coordinate. Re-deriving fifteen hardcoded points every time the
+# resolution changes is how a harness rots; this way -xres/-yres are free.
+# Measured once against a 1024x768 client, then divided through.
+UI = {
+    "MULTIPLAYER":  (0.2676, 0.9570),
+    "SOLO_PLAY":    (0.1123, 0.9570),
+    "SKIRMISH":     (0.4033, 0.9570),
+    "NETWORK":      (0.4199, 0.9570),
+    "FIREWALL_OK":  (0.4141, 0.6302),
+    "CREATE_GAME":  (0.4150, 0.9557),
+    "PLAY_GAME":    (0.4150, 0.9557),
+    "START_GAME":   (0.4170, 0.9557),
+    "JOIN_GAME":    (0.5820, 0.9557),
+    "CANCEL":       (0.5820, 0.9557),   # HOST GAME screen, beside PLAY GAME
+    # BACK is NOT in a fixed column -- its position depends on how many buttons
+    # the screen has. Assuming one position walked a run into the LOAD screen
+    # and left it stuck there.
+    "BACK_2BTN":    (0.5820, 0.9557),   # skirmish setup: START GAME | BACK
+    "BACK_4BTN":    (0.7920, 0.9570),   # solo play: CAMPAIGN|SKIRMISH|LOAD|BACK
+    "BACK_FAR":     (0.9420, 0.9460),   # load screen: BACK at the far right
+    # Interior widgets do NOT scale the same way the button strip does -- the
+    # game reflows them. These two were re-measured at 640x480; if the strip
+    # points ever drift, suspect the same thing.
+    "GAME_ROW1":    (0.4350, 0.3250),
+    "NICKNAME":     (0.4280, 0.5300),
+    "ESC_EXIT":     (0.5020, 0.5768),
+    "CONFIRM_YES":  (0.4121, 0.5625),
+    "DIALOG_OK":    (0.5010, 0.5938),
+    "PROFILE_NAME": (0.4209, 0.4987),
+    "PROFILE_OK":   (0.4209, 0.5990),
+}
+
+# The button strip, as a fraction of the client area rather than a pixel box.
+STRIP_FRAC = (0.0, 0.9193, 1.0, 0.9974)
+
+# wine's own decoration inside the virtual desktop
+WINE_BORDER, WINE_TITLE = 3, 26
 
 
 class Driver:
@@ -86,24 +123,68 @@ class Driver:
             time.sleep(poll)
         return None
 
+    # --- geometry ------------------------------------------------------
+    def client_rect(self, name="Lord of the Rings"):
+        """(x, y, w, h) of the game's client area on this display, derived from
+        the window rather than assumed, so any -xres/-yres works."""
+        r = self._run("xdotool", "search", "--name", name)
+        if not r.stdout.strip():
+            raise RuntimeError(f"no window matching {name!r} on {self.display}")
+        wid = r.stdout.split()[0]
+        g = self._run("xdotool", "getwindowgeometry", wid).stdout
+        pos = [t for t in g.split() if "," in t][0]
+        size = [t for t in g.split() if "x" in t and t[0].isdigit()][0]
+        px, py = (int(v) for v in pos.split(","))
+        pw, ph = (int(v) for v in size.split("x"))
+        return (px + WINE_BORDER, py + WINE_TITLE,
+                pw - 2 * WINE_BORDER, ph - WINE_BORDER - WINE_TITLE)
+
+    def at(self, name):
+        """Screen coordinate of a named UI point at the current resolution."""
+        fx, fy = UI[name]
+        x, y, w, h = self.client_rect()
+        return int(x + fx * w), int(y + fy * h)
+
+    def tap(self, name, settle=1.0):
+        x, y = self.at(name)
+        self.click(x, y, settle=settle)
+        return x, y
+
+    def strip_box(self):
+        x, y, w, h = self.client_rect()
+        f = STRIP_FRAC
+        return (int(x + f[0] * w), int(y + f[1] * h),
+                int(x + f[2] * w), int(y + f[3] * h))
+
     def screen_score(self, ref_path, box=None):
         """Mean absolute pixel difference against a reference. 0 == identical.
 
         References in ref/ are stored pre-cropped to BUTTON_STRIP — that strip
         is the only region the match uses, and storing whole 1280x1024 frames
         cost 2.8 MB to compare 60 pixel rows."""
-        box = box or BUTTON_STRIP
+        box = box or self.strip_box()
         ref = Image.open(ref_path).convert("RGB")
-        if ref.size != (box[2] - box[0], box[3] - box[1]):
-            ref = ref.crop(box)
         cur = self._grab().crop(box)
+        # References are stored at whatever resolution they were captured at;
+        # compare like for like rather than assuming they match this run.
+        if ref.size != cur.size:
+            ref = ref.resize(cur.size)
         diff = ImageChops.difference(ref, cur)
         px = list(diff.getdata())
         return sum(sum(p) for p in px) / (len(px) * 3)
 
+    def park(self):
+        """Move the pointer off the button strip before comparing screens.
+        A button under the cursor draws highlighted, and the strip is precisely
+        what the match reads -- leaving the pointer there adds ~9 to every
+        score and fails a screen that is in fact correct."""
+        x, y, w, h = self.client_rect()
+        self.move(int(x + w * 0.5), int(y + h * 0.35))
+
     def wait_for_screen(self, ref_path, tol=8.0, timeout=180, poll=2.0, box=None):
         """Block until the screen matches `ref_path`. Raises with the best score
         seen, so a failure says how close it got rather than just timing out."""
+        self.park()
         deadline = time.time() + timeout
         best = 1e9
         while time.time() < deadline:

@@ -201,10 +201,29 @@ cannot service the lobby heartbeat. Measured progression:
 | duplicate | namespace each | 3rd refused — **"Your serial is already in use"** |
 | distinct | shared stack | **3 seat**, then one drops |
 
-Four software-rendered instances is more than this configuration sustains. Real
-GPU rendering (what `~/bfme-test/launch-sandbox.sh` does, on a live display) or
-a much smaller resolution is what a 4-human test needs. Two clients are stable
-and have run full matches repeatedly; that is the supported size here.
+**Dropping to `-xres 640 -yres 480` fixes it.** Quartering the pixels quarters
+what llvmpipe has to do: CPU per client falls from ~200% to ~140%, and all four
+clients seat — including the third, which had never once succeeded at 1024x768
+in any serial or namespace configuration. Three then stay stable indefinitely;
+the fourth still drops sometimes, so a 4-human match wants GPU rendering, but
+three humans on teams is reliable.
+
+Two consequences for the harness, both now in `driver.py`:
+
+* **Coordinates are fractions of the detected client area, never screen pixels.**
+  `client_rect()` reads the window and `at()`/`tap()` map a named UI point onto
+  it, so changing resolution costs nothing. Re-deriving fifteen constants by
+  hand is how a harness rots.
+* **Interior widgets do not scale like the button strip.** The nickname field
+  and the game-list rows sit at different fractions at 640x480 than at
+  1024x768; the game reflows them. Only the bottom button strip is
+  proportional. And `BACK` is not in a fixed column at all — it moves with the
+  number of buttons on the screen, and assuming otherwise walked a run into the
+  LOAD screen and stranded it there.
+* **Park the pointer before matching a screen.** A button under the cursor
+  draws highlighted, and the button strip is exactly what the match reads —
+  leaving the pointer on it adds ~9 to every score and fails a screen that is
+  in fact correct.
 
 Before reaching that, these were eliminated, each by its own run: a 2-player map
 (it was Black Gate, "Number of Players: 4"); the host having started the game
