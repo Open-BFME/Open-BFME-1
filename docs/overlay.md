@@ -11,44 +11,44 @@ converted**, which puts the ~65% of `.text` still held as raw retail bytes in
 reach. `DllCharacteristics` is `0x0000`, so absolute addressing is safe.
 
 The one feature detours `VictoryConditions::update` (`0x0035F920`) and
-`ConnectionManager::sendPlayerLeaveCommands` (`0x00665C10`) — both still
-`__emit` byte-lifts — writing the JSONL of `docs/game-quitting.md`. No new
-imports needed. The overlay never touches `Code/` and never joins the byte-exact
-rebuild: a mod must not move the byte gate.
+`ConnectionManager::sendPlayerLeaveCommands` (`0x00665C10`), writing the JSONL
+of `docs/game-quitting.md`. Both bodies are `__declspec(naked)` `__asm` lifts —
+matched in the ledger, no semantics to edit — which is the only reason a detour
+is needed; convert one properly and its detour disappears. The overlay never
+touches `Code/` and never joins the byte-exact rebuild: a mod must not move the
+byte gate.
 
 ## Addresses worth keeping
 
-**`PlayerLeaveStatus` at `TheGameLogic+0x1B0`, stride `0x1C`:** `+0x00` leave
-status, `+0x04` leave frame, `+0x08` defeat frame, `+0x0C` victory frame (lies),
-`+0x10` empty flag, `+0x14` slot index (255 unassigned), `+0x18` AsciiString,
-chars at `+8`. `FINDINGS.md` reads as if the name were at `+0x14`; it is not.
+**`PlayerLeaveStatus` at `TheGameLogic+0x1B0`, stride `0x1C`** — full layout in
+`reverse/game_end/FINDINGS.md`, but note the AsciiString is at `+0x18` with its
+chars at `+8`, not at `+0x14` as FINDINGS reads.
 
-**The mouse is `DirectInputMouse`** (`0x006BB7F0`), which decides whether
-synthetic input works at all. **`d3d9.dll` is not statically imported**:
-`LoadLibrary`/`GetProcAddress` at RVA `0x90AD09`, every device call funnelling
-through `DX8CALL()` — 34 entry points, so a Vulkan backend is a bounded
-interface.
+**`d3d9.dll` is not statically imported**: `LoadLibrary`/`GetProcAddress` at RVA
+`0x90AD09`, every device call funnelling through `DX8CALL()` — 34 entry points,
+so a Vulkan backend is a bounded interface. **The mouse is `DirectInputMouse`**
+(`0x006BB7F0`), which decides whether synthetic input works.
 
 **Strings live bit-inverted** in `lang/english.big` → `lotr.csf`, so grep finds
 nothing and you guess from the English. "Game has already started" is
-`LAN:ErrorGameGone` — your row is stale — *not* `LAN:ErrorGameStarted`
-("Sorry, this game has already started."). Opposite meanings.
+`LAN:ErrorGameGone` — your row is stale — *not* `LAN:ErrorGameStarted`. Opposite
+meanings.
 
 ## Fields that lie
 
 `victoryFrame` and `defeatCount` (`VictoryConditions+0xC0`) are **removed**: the
-first is machine-local, the second read 2 on one machine and 8 on the other for
-the same match.
+first is machine-local, the second read 2 on one machine and 8 on another for
+one match.
 
 **Key on `teamWon`** — one alliance remains and some undefeated player is p *or
 p's ally*, so a player who quit long before the win still reads `teamWon=1`.
 Emit the raw value beside the decoded one: a wrong offset gave `namePtr: 255`,
-visibly wrong instead of plausibly empty.
+visibly wrong rather than plausibly empty.
 
 ## Gotchas that shipped into a binary
 
-All covered by `test_cave.py`/`test_overlay_build.py`, each watched failing with
-its bug put back.
+All covered by `test_cave.py`/`test_overlay_build.py`, each watched failing
+with its bug restored.
 
 1. Section `Characteristics` belong at `+0x24`; one field late they read `0`.
 2. yasm `-f bin` aligns its section — an unaligned `org` pads and the
@@ -59,8 +59,8 @@ its bug put back.
 6. Gate on state that is false *after* the match. The leave entry fires when a
    player leaves a finished match too, so `d_started` or the network status
    (still 1 on the score screen) appends a spurious `leave` to every game.
-7. A flag with no assertion behind it looks exactly like a working one:
-   `--probe` passed while doing nothing after a rewrite dropped its `%ifndef`.
+7. A flag with no assertion behind it looks like a working one: `--probe`
+   passed doing nothing after a rewrite dropped its `%ifndef`.
 
 ## Building
 
@@ -70,5 +70,5 @@ python3 -m pytest tools/tests/test_cave.py tools/tests/test_overlay_build.py \
                  tools/tests/test_game_records.py
 ```
 
-Producing `reverse/game_end/measured.jsonl` means playing real LAN matches:
-see `docs/lan-testing.md`.
+Producing `measured.jsonl` means playing real LAN matches — see
+`docs/lan-testing.md`.

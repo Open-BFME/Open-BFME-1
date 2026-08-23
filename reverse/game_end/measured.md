@@ -25,18 +25,16 @@ team 2; a 1v1 is P1 against P3.
 
 ## What these establish
 
-**Crash and freeze are the same record.** Rows 3/4 and 7/8 both yield `leave=2`,
+**Crash and freeze are the same record** — rows 3/4 and 7/8 all yield `leave=2`,
 host and joiner alike.
 
 **Match shape, not seat, decides whether a quitter writes an `end`.** A 1v1 quit
-ends the match, so the quitter is still in-game and records its own defeat one
-frame later (rows 2, 6). In a 2v2 whose team fights on, none (rows 27, 30).
+ends the match, so the quitter records its own defeat one frame later (rows 2,
+6). In a 2v2 whose team fights on, none (rows 27, 30).
 
 **A quitter keeps its team's win** — row 27's P2 and row 30's host are both
-`defeated=1` and `teamWon=1` in every survivor's record, reconstructed from
-team-mates alone.
+`defeated=1` and `teamWon=1` in every survivor's record.
 
 **The `-pre-fix` rows are the red evidence.** Pre-detour, a 2v2 quitter's file
-held `start` alone — identical to row 3's SIGKILLed client. With the detour,
-`start` alone means crashed, `start+leave` means quit. Neither can be
+held `start` alone, identical to row 3's SIGKILLed client. Neither can be
 regenerated without reverting the exe.
