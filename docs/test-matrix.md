@@ -16,12 +16,23 @@ lost" and "a joiner lost" are different code paths, not a relabelling.
 
 ## Exit modes
 
-| Code | Action | Own record | Seen by others as |
-|------|--------|-----------|-------------------|
-| **D** | Demolish citadel | writes `defeat` | `leave=0`, `defeated=1`, real `defeatFrame` |
-| **Q** | ESC → Exit (graceful quit) | **none** | `leave=1` + `leaveFrame` |
-| **K** | `kill -9` (crash) | **none** | expected `leave=1` or `2` — **unmeasured** |
-| **F** | `kill -STOP` (freeze/hang) | none while stopped | expected `leave=2` (voted out) — **unmeasured** |
+Every client that entered the match has a file with a `start` line — flushed as
+soon as a local slot exists. What varies is whether an `end` line follows, so
+"no record" below always means *no `end` record*, never an absent file.
+
+| Code | Action | Own file | Seen by others as |
+|------|--------|----------|-------------------|
+| **D** | Demolish citadel | `start` + `end` (`defeat`) | `leave=0`, `defeated=1`, real `defeatFrame` |
+| **Q** | ESC → Exit (graceful quit) | `start` alone if the match continues; `start` + `end` if the match ends at the quit | `leave=1` + `leaveFrame` |
+| **K** | `kill -9` (crash) | `start` alone | expected `leave=1` or `2` — **unmeasured** |
+| **F** | `kill -STOP` (freeze/hang) | `start` alone | expected `leave=2` (voted out) — **unmeasured** |
+
+Quit has two shapes because of the leaver-waits case. In a 1v1 the quit ends the
+match, so the leaver is still in the in-game state and does write an `end` — a
+measured 1v1 shows `leave=1`, `leaveFrame=355`, `defeatFrame=356`, defeated one
+frame after leaving. In a 2v2 whose team fights on, no `end` is written and the
+file holds `start` alone — byte-identical to having crashed. That collapse is
+what the `quitGame` detour exists to fix.
 
 **F is the important one and the only one that reaches the vote path in a live
 match.** K closes the client's sockets as the kernel reaps it, so peers get an
