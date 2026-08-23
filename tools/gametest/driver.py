@@ -59,7 +59,7 @@ UI = {
     # it defeats them instantly, with leave=0, so the record is a genuine loss
     # rather than a quit. There is no confirmation prompt.
     "CITADEL":      (0.5000, 0.4250),
-    "DEMOLISH":     (0.2090, 0.9520),
+    "DEMOLISH":     (0.1953, 0.9544),
 }
 
 # The button strip, as a fraction of the client area rather than a pixel box.

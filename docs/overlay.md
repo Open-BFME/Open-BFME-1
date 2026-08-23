@@ -301,52 +301,70 @@ it: that function has no rel32 callers and no dword references anywhere in the
 13MB of `.text` — it is unreferenced, like the ladder-results path. Whatever
 raises the dialog in a running game reaches it some other way.
 
-## Four clients on one machine: a lobby yes, a match no
+## Four real clients, one 2v2, four agreeing records
 
-Four real clients now reach one 2v2 lobby with teams set correctly. The match
-itself still does not start, and the two problems have opposite fixes, which is
-why this took so long to see.
+A 2v2 between four real clients on one machine plays to a result, and all four
+machines write records that agree. Four things were needed, and each hid the
+next.
 
-**Seating needs one address per client.** Separate WINEPREFIXes are enough for
-two clients. Beyond that, joiners are admitted to the roster and dropped seconds
-later with "player was not responding" -- which reads as a performance problem
-and is not one. Ports are not the cause: each client takes its own from
-8086-8089 without help. The LAN peer table is keyed on the address, so joiners
-behind a single IP collide. Give each client its own network namespace and the
-host's chat log stays empty where it used to fill with drop notices.
+**One address per client.** Separate WINEPREFIXes carry two clients. Past that,
+joiners are admitted and then dropped as "player was not responding" -- which
+reads as a performance problem and is not one. The source says why: the host
+tracks each slot's liveness by address (`getPlayerLastHeard`, weeding lobby
+players at `s_resendDelta*2` = 20s), and `LANAPI.cpp` assigns every slot the
+same port with the comment *"LAN game, everyone has a unique IP, so it's ok to
+use the same port"*. Behind one address the announcements all attribute to one
+slot and the rest age out. `lan4-netns.sh` gives each client its own stack
+inside an unprivileged user namespace -- no root, nothing touched on the host,
+gone when the run ends.
 
-That no longer needs root. `lan4-netns.sh` builds the bridge and one veth per
-client inside an unprivileged user namespace, so it touches nothing on the host
-and disappears with the process. X11 is reached over `/tmp/.X11-unix`, which no
-network namespace affects.
+**A hostname that resolves to that address.** The game picks the address it
+binds its game transport to with `gethostname()` + `gethostbyname()`
+(IPEnumeration.cpp). In a namespace that answers `::1`, which the namespace does
+not have. Each namespace gets its own UTS namespace and a matching `/etc/hosts`
+entry -- and `nsswitch.conf` must be overridden too, because the stock order
+puts `resolve [!UNAVAIL=return]` ahead of `files`, so systemd-resolved answers
+first and `/etc/hosts` is never read.
 
-**The match then failed for a while, and it was the harness.** Every client
-reached "Starting the game...", the host carried on alone, and each joiner
-reported that the host had left. That reads exactly like the in-game mesh
-failing to form, and it was written up that way. It was not. `br0` lives in the
-outer namespace and every client's veth is plugged into it, so when the seating
-script returned -- about eight seconds after clicking PLAY GAME -- the outer
-namespace was destroyed, the bridge went with it, and all four clients lost
-their network mid-match. A raw-socket capture inside a namespace showed traffic
-from both peers right up to `PLAY GAME + 8s` and then `recv: Network is down`.
-The rig now holds the namespace open (`BFME_HOLD`) and matches play.
+**Each player sets their own team.** The host's team dropdowns for other players
+are inert. They fail silently, and the game starts as a free-for-all while the
+script reports success.
 
-Two real findings came out of chasing it. The game chooses the address it binds
-its transport to with `gethostname()` + `gethostbyname()` (IPEnumeration.cpp), so
-each namespace needs a hostname that resolves to its own address -- and
-`nsswitch.conf` has to be overridden too, because the stock order puts
-`resolve [!UNAVAIL=return]` ahead of `files` and systemd-resolved answers first,
-returning `::1`. And the LAN lobby is broadcast-only: announcements go to
-255.255.255.255 sprayed across ports 8086-8091, which is why clients on
-different ports still find each other, and why nothing unicast appears until a
-match actually forms.
+**Let the lobby settle, then keep the wire in.** Clicking PLAY GAME a second
+after the last team change leaves the host in the match and the joiners in the
+lobby; twelve seconds is enough. And the harness must not exit: `br0` lives in
+the outer namespace with every client's veth plugged into it, so when the
+seating script returned the bridge was destroyed and all four clients lost the
+network mid-match. That looked exactly like the in-game mesh failing to form and
+was written up that way for a while. A raw-socket capture inside a namespace
+settled it -- traffic from both peers right up to `PLAY GAME + 8s`, then
+`recv: Network is down`.
 
-**Two other things the lobby needs, both real.** Each player must set their own
-team: the host's dropdowns for other players are inert, they fail silently, and
-the game starts as a free-for-all with a script that looks like it worked. And
-the host must let team changes settle -- about twelve seconds -- before clicking
-PLAY GAME, or the start races the changes and every joiner is left behind in the
-lobby.
+Two smaller things worth keeping. The LAN lobby is broadcast-only: announcements
+go to 255.255.255.255 sprayed across ports 8086-8091, which is why clients
+holding different ports still see each other, and why no unicast appears until a
+match forms. And BFME already ships generous in-game timeouts -- patch 2.22 sets
+`NetworkDisconnectTime=15000`, `NetworkPlayerTimeoutTime=100000`,
+`NetworkKeepAliveDelay=360` -- all INI-settable through `TheGlobalData`, so a
+slower machine can be accommodated without touching the exe.
+
+### What the four records say
+
+Demolishing a citadel defeats that player instantly with `leave=0`, so the
+record is a genuine loss rather than a quit. The button is tiny: it is the pale
+icon at the lower left of the palantir ring, and it only responds within a pixel
+or two of its centre -- a click four pixels high produces no tooltip and no
+effect, silently.
+
+    machine   result    frame   players (defeated/teamWon)
+    P1_T1     victory    3757   P1:d0/w1  P2:d0/w1  P3:d1/w0  P4:d1/w0
+    P2_T1     victory    3757   P1:d0/w1  P2:d0/w1  P3:d1/w0  P4:d1/w0
+    P3_T2     defeat     3757   P1:d0/w1  P2:d0/w1  P3:d1/w0  P4:d1/w0
+    P4_T2     defeat     3757   P1:d0/w1  P2:d0/w1  P3:d1/w0  P4:d1/w0
+
+All four agree on the end frame, on both defeat frames (P3 at 2583, P4 at 3757),
+and on `teamWon`, with `leave=0` for everyone and `desync=0`. A reconciler
+keying on `teamWon` gets the same answer from any of the four.
 
 ## Two harness bugs that manufactured evidence
 
