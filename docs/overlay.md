@@ -165,9 +165,12 @@ and LAN discovery and a full match work between them on the host network with
 no network namespaces. Symptom of getting the prefix wrong: the second client
 exits instantly with no error.
 
-**Never clone a wine prefix for a multi-client test — the CD key comes with it.**
-This cost hours. Two clients always worked; a third was refused every time, and
-the message was a lie:
+**Seating more than two clients needs BOTH a distinct CD key per prefix AND a
+network namespace per client. Neither alone is enough — measured.**
+
+Never clone a wine prefix for a multi-client test: the CD key comes with it.
+Two clients always worked; a third was refused every time, and the message
+depended on the network setup:
 
 | network setup | what the third client was told |
 |---|---|
@@ -181,11 +184,16 @@ Middle-earth\ergc`. `wine1` and `wine2` had been created independently with
 sequential keys (`…ED06`, `…ED07`), which is exactly why two clients were always
 fine and the third never was. Give every prefix its own `ergc` value.
 
-Note what the namespaces actually bought: not a fix, but an *accurate error
-message*. Sharing one stack made the game report a stale-lobby condition
-instead of the duplicate serial. That is worth remembering the next time a
-symptom looks like the network — the misleading message was itself a
-consequence of the shared stack.
+The duplicate serial is real and had to be fixed. But fixing it is *not*
+sufficient: with all four prefixes on distinct keys and every client back on the
+shared host stack, the third is refused again, and the message reverts to the
+misleading "Game has already started". So there are two independent obstacles,
+and the shared stack both blocks the join and disguises the reason.
+
+The honest state: distinct serials plus namespaces has not yet been run together.
+That is the one combination left, and until it is measured this is not solved —
+recording it that way rather than claiming a root cause that a single further
+run disproved, which is what happened here the first time.
 
 Before reaching that, these were eliminated, each by its own run: a 2-player map
 (it was Black Gate, "Number of Players: 4"); the host having started the game
