@@ -301,6 +301,68 @@ it: that function has no rel32 callers and no dword references anywhere in the
 13MB of `.text` — it is unreferenced, like the ladder-results path. Whatever
 raises the dialog in a running game reaches it some other way.
 
+## Four clients on one machine: a lobby yes, a match no
+
+Four real clients now reach one 2v2 lobby with teams set correctly. The match
+itself still does not start, and the two problems have opposite fixes, which is
+why this took so long to see.
+
+**Seating needs one address per client.** Separate WINEPREFIXes are enough for
+two clients. Beyond that, joiners are admitted to the roster and dropped seconds
+later with "player was not responding" -- which reads as a performance problem
+and is not one. Ports are not the cause: each client takes its own from
+8086-8089 without help. The LAN peer table is keyed on the address, so joiners
+behind a single IP collide. Give each client its own network namespace and the
+host's chat log stays empty where it used to fill with drop notices.
+
+That no longer needs root. `lan4-netns.sh` builds the bridge and one veth per
+client inside an unprivileged user namespace, so it touches nothing on the host
+and disappears with the process. X11 is reached over `/tmp/.X11-unix`, which no
+network namespace affects.
+
+**But the match will not start inside those namespaces.** Every client reaches
+"Starting the game...", then the joiners fall back to the lobby reporting "host
+has left" while the host sits alone on the disconnect screen and eventually
+scores the game to itself. Measured, not assumed:
+
+* It is not load or memory. Two clients fail identically, and two clients on
+  this machine is trivial. Four-client runs happened to coincide with the host
+  swapping hard, which made memory look guilty for a while; the two-client
+  control cleared it.
+* It is not reachability. Every pair of namespaces pings, in both directions,
+  and lobby discovery, chat, the roster and team changes all cross the same
+  bridge correctly.
+* It is not the missing default route. Adding one via the bridge changes
+  nothing, so the game is not choosing its advertised address by route lookup.
+
+So the lobby protocol is happy with the bridge and the in-game mesh is not.
+Something the game does on entering a match behaves differently in a namespace
+than on a shared stack -- and on a shared stack matches do play, which is how
+every result record in this repo was produced. That is the open question, and
+the next move on it is a packet capture inside one namespace at the moment of
+start, not another round of UI poking.
+
+**Two other things the lobby needs, both real.** Each player must set their own
+team: the host's dropdowns for other players are inert, they fail silently, and
+the game starts as a free-for-all with a script that looks like it worked. And
+the host must let team changes settle -- about twelve seconds -- before clicking
+PLAY GAME, or the start races the changes and every joiner is left behind in the
+lobby.
+
+## Two harness bugs that manufactured evidence
+
+Both produced confident, wrong results for a long time, and both are the same
+mistake: believing a check that was never watched failing.
+
+The retry loop around joining ended with an unconditional `break`, so three
+attempts were one attempt. Every "the fourth seat is refused" conclusion rested
+on a single try.
+
+The seated check compared the button strip along the bottom of the screen. A
+JOIN FAILED dialog *dims* that strip, so the strip differs, so the check read
+"not on the lobby any more" and reported the join as successful. It now matches
+the "CUSTOM GAME LOBBY" sub-header, which sits above anything a modal covers.
+
 ## An accidental measurement for the game_end track
 
 `reverse/game_end/FINDINGS.md` lists three machines that can wait at game end

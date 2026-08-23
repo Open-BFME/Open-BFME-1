@@ -220,6 +220,21 @@ class Driver:
             f"{timeout}s (best score {best:.1f}, tolerance {tol})")
 
     # --- input ---------------------------------------------------------
+    def place(self, name="Lord of the Rings"):
+        """Move the game window flush to the desktop origin.
+
+        Wine places it at -80,-92 inside its virtual desktop, so the left and
+        top of the game -- the player-name column and the team dropdowns -- sit
+        outside the screen and cannot be captured or clicked. Nothing warns you:
+        the buttons along the bottom still work, so a run seats players happily
+        and only fails when it reaches for something up there."""
+        r = self._run("xdotool", "search", "--name", name)
+        wins = r.stdout.split()
+        if not wins:
+            raise RuntimeError(f"{self.display}: no window named {name!r} to place")
+        self._run("xdotool", "windowmove", wins[0], "0", "0")
+        time.sleep(0.5)
+
     def focus(self, name="Lord of the Rings"):
         r = self._run("xdotool", "search", "--name", name)
         if not r.stdout.strip():
