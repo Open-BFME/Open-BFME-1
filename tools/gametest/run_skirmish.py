@@ -41,7 +41,7 @@ d.wait_for_screen(REF / "solo-play.png", tol=TOL, timeout=60)
 d.shot("solo-play")
 
 d.click(656, 944, settle=2)                                    # SKIRMISH
-d.wait_for_screen(REF / "skirmish-setup.png", tol=TOL, timeout=90)
+d.dismiss_profile_prompt(REF / "skirmish-setup.png", tol=TOL)
 d.shot("skirmish-setup")
 
 d.click(670, 943, settle=3)                                    # START GAME

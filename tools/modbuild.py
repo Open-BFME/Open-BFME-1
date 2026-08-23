@@ -46,7 +46,7 @@ def build_gameresult(pe, feature_dir, probe=False):
         ("FMT_START",  '{"ev":"start","t":%d,"slot":%d}\n'),
         ("FMT_END",    '{"ev":"end","t":%d,"slot":%d,"frame":%d,"result":"%s",'
                        '"observer":%d,"desync":%d,"slots":['),
-        ("FMT_SLOT",   '{"leave":%d,"leaveFrame":%d,"defeatFrame":%d,"victoryFrame":%d,'
+        ("FMT_SLOT",   '{"leave":%d,"leaveFrame":%d,"defeatFrame":%d,'
                        '"slotIndex":%d,"namePtr":%d,"name":"%s"}'),
         ("COMMA",      ','),
         ("MID",        '],"players":['),

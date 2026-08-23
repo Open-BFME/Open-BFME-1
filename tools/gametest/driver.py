@@ -126,6 +126,26 @@ class Driver:
         time.sleep(0.4)
         return wid
 
+    def dismiss_profile_prompt(self, ref_setup, name="tester", tol=8.0):
+        """A wine prefix with no skirmish profile opens a modal "Create Profile"
+        over the skirmish setup screen, dimming the button strip so the screen
+        match fails with no explanation. Detect that by the match failing, fill
+        the dialog in, and then require the real screen -- so a prefix's first
+        run works and a genuinely wrong screen still fails loudly.
+
+        Returns True if a profile was created."""
+        try:
+            self.wait_for_screen(ref_setup, tol=tol, timeout=25)
+            return False
+        except RuntimeError:
+            pass
+        self.shot("profile-prompt")
+        self.click(674, 592, settle=1)          # the name field
+        self.type(name)
+        self.click(674, 669, settle=3)          # ACCEPT
+        self.wait_for_screen(ref_setup, tol=tol, timeout=60)
+        return True
+
     def move(self, x, y):
         self._run("xdotool", "mousemove", str(x), str(y))
         time.sleep(0.3)

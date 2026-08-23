@@ -204,14 +204,20 @@ start:
     push edx                           ; name
     push dword [d_nameptr]             ; raw AsciiString pointer, for auditing
     push dword [edi + 0x14]            ; slot index, 255 when unassigned
-    push dword [edi + 0x0C]            ; victory frame
+    ; +0x0C (victory frame) is deliberately NOT emitted. It is machine-local --
+    ; a player who left before it was written records 0 where the survivor
+    ; records the real frame -- and it is never written at all in skirmish, so
+    ; the AI that won one still showed 0. Everything it could convey is already
+    ; carried by teamWon/defeated/leave/leaveFrame/defeatFrame, all of which
+    ; agree across machines. A field that looks authoritative and is not is
+    ; worse than an absent one.
     push dword [edi + 0x08]            ; defeat frame
     push dword [edi + 0x04]            ; leave frame
     push dword [edi + 0x00]            ; leave status: 1 graceful, 2 voted out
     push s_fmt_slot
     push dword [d_file]
     call dword [IAT_fprintf]
-    add  esp, 36
+    add  esp, 32
     inc  ebp
     cmp  ebp, LEAVE_SLOTS
     jl   .slot_loop
