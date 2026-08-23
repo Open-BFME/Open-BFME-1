@@ -2,7 +2,7 @@
 
 One entry per row, written from the model of the engine *before* the row is run,
 so tools/tests/test_game_records.py holds a measurement against a prediction
-rather than against itself. run_row.py reads the same dict; a row is spelled
+rather than against itself. the rig at dginovker/bfme-lan-rig reads the same dict; a row is spelled
 here and nowhere else.
 
 A measurement that contradicts its row is a finding about the engine. Change a
