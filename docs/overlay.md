@@ -241,6 +241,27 @@ explanation. `driver.py:dismiss_profile_prompt` handles it.
 `DISPLAY` at import time; every "host" action in a scripted two-client run was
 silently going to the joiner's screen, screenshots included.
 
+## An accidental measurement for the game_end track
+
+`reverse/game_end/FINDINGS.md` lists three machines that can wait at game end
+and says of the quit freeze: "Which one the quit freeze is" is open, pending a
+LAN test. One got measured here by accident.
+
+In a three-human match (P1 hosting, P2 and P3 on the other team), P2 quit and
+then **P1 — the host, and therefore the packet router — quit**. FINDINGS
+predicts what follows: "the survivors of a router that quit... hold a request
+the router never answers and fall through to the DisconnectManager's timeout
+path." Observed: the surviving client keeps simulating (the screen keeps
+changing, resources keep accruing) but never reaches `m_endFrame`, so it never
+records a result. Still stalled 6+ minutes after the router left, against the
+10 000 ms in `hasLeaveRequestTimedOut` and the 30 000 ms in `Connection::doSend`
+— so neither of those is what a router-quit survivor is waiting on.
+
+Practical consequence for anyone testing game end over LAN: **do not let the
+host be the player who quits.** Keep the router alive and quit from a joiner,
+or the match never resolves and the test measures nothing. This was a
+test-design mistake here, and it cost a full seating cycle.
+
 ## Gotchas that cost a build
 
 Each of these shipped into a binary and was caught only by disassembling the
