@@ -160,11 +160,23 @@ a reference, which discriminates every menu tested (min off-diagonal score
 13.9, tolerance 8).
 
 **Two clients need two `WINEPREFIX`es, and nothing more.** The single-instance
-mutex is per wineserver, so separate prefixes let two full clients run at once —
-and LAN discovery works between them on the host network. **No network
-namespaces were required**, which is the opposite of what the pre-existing
-`~/bfme-test/` rig assumed. Symptom of getting this wrong: the second client
+mutex is per wineserver, so separate prefixes let two full clients run at once,
+and LAN discovery and a full match work between them on the host network with
+no network namespaces. Symptom of getting the prefix wrong: the second client
 exits instantly with no error.
+
+**Three or more clients do NOT work this way — this is unresolved.** A host plus
+one joiner is reliable and has been run repeatedly. The *second* joiner is
+refused with "Game has already started", every time, and refreshing its game
+list to the correct `2/4` first does not help. Ports are not the cause: each
+client gets its own from the range (`8086`, `8087`, `8088`, `8089`, verified
+with `ss -uln`), all bound on `docker0` since wine takes the first interface.
+Four clients also drove load average to ~53 on 16 cores until each was pinned
+with `taskset -c` to its own quarter, which brought it to ~30 and is worth doing
+regardless. The pre-existing `~/bfme-test/netns-setup.sh` gives each instance
+its own network stack and needs root; that is the next thing to try, and the
+reason it exists may well be exactly this. Do not assume the 2-client result
+generalises — it does not.
 
 **A fresh prefix has no skirmish profile** and opens a modal "Create Profile"
 over the setup screen, dimming the button strip so a screen match fails with no
