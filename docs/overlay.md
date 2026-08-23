@@ -264,28 +264,42 @@ Two things that make a matrix cheap to run once discovered:
   a match it has not; clicking a row that is not there yet silently does
   nothing, and the join reports success anyway.
 
-## The 4th-client refusal: what is pinned so far
+## Read the error string before diagnosing the error
 
-A host plus three joiners is reliable; the fourth is refused with "Game has
-already started". Everything environmental has been eliminated by measurement —
-distinct CD keys, network namespaces, port availability, resolution, renderer,
-load, join ordering, list freshness, and a fresh client restart. It is a
-netcode question, not a testing one, so these are the addresses to start from:
+A host plus three joiners was reliable; the fourth was refused, and the refusal
+survived every environmental fix — distinct CD keys, network namespaces, port
+availability, resolution, renderer, load, join ordering, and a fresh client
+restart. All of that was aimed at the wrong target, because the error had been
+identified by eye rather than by lookup.
 
-* The message is the localisation key `LAN:ErrorGameStarted` at VA `0x0111B790`.
-* It is **error code 6**. The client maps a code 0..9 to a message through a
-  jump table at RVA `0x00688C58`; the dispatch is at RVA `0x00688B50`
-  (`cmp eax, 9` / `jmp [eax*4 + 0xA88C58]`). Neighbouring codes: 2 GameFull,
-  3 DuplicateName, 8 GameGone.
-* That dispatch has **no rel32 callers and no data references anywhere in the
-  image** — the same shape as the ladder-results path, which is also present
-  and never executed. Worth confirming before building on: if the LAN error
-  path is genuinely unreferenced, the refusal seen in-game comes from somewhere
-  else entirely and this table is a dead end.
+The dialog reads **"Game has already started"**. The obvious key, and the one
+this was chased against for a long time, is `LAN:ErrorGameStarted`. That key's
+text is **"Sorry, this game has already started."** — different string. The one
+that matches the dialog exactly is `LAN:ErrorGameGone`.
 
-What has NOT been established is who *sends* code 6. That is host-side, and
-`BFMEConnectionManager`'s slot handling (`processIncomingCommand` `0x0066A3F0`,
-pinned in reverse/game_end/FINDINGS.md) is where to look.
+Those two mean opposite things. *Game started* is a refusal on state: the match
+is under way, do not admit anyone. *Game gone* is a refusal on identity: the
+game you asked to join is not in the host's list any more. A LAN client joins
+the row it has, and the host's advertisement changes as players take slots — so
+a row selected before an earlier player was seated is stale by the time it is
+clicked, and the host answers "gone". The failure was never about the fourth
+seat; it was about the age of the row.
+
+Two things follow for anyone testing this. Select the row again on every
+attempt, from a fresh broadcast — re-clicking JOIN on a row already on screen
+re-sends the same stale identity and fails identically forever. And decode the
+string table rather than reading the screen: strings live bit-inverted in
+`lang/english.big` -> `lang\english\lotr.csf`, so grep finds nothing and the
+temptation is to guess from the English. `LAN:ErrorGameFull`,
+`LAN:ErrorDuplicateName`, and `LAN:ErrorGameExists` are all similarly easy to
+confuse by sight.
+
+The client-side table that maps an error code to one of these keys is at RVA
+`0x00688B50`, dispatching through a jump table at `0x00688C58` (code 2 GameFull,
+3 DuplicateName, 6 GameStarted, 8 GameGone). Worth knowing before building on
+it: that function has no rel32 callers and no dword references anywhere in the
+13MB of `.text` — it is unreferenced, like the ladder-results path. Whatever
+raises the dialog in a running game reaches it some other way.
 
 ## An accidental measurement for the game_end track
 
