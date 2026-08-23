@@ -8,6 +8,13 @@
 # alone rather than guessed at.
 set -uo pipefail
 
+# The name pattern is only a cheap first pass -- the environ check below is the
+# real gate, so it must be a SUPERSET. It used to be /lotrbfme|desktop=bfme|
+# wineserver/, which missed every wine service process a run leaves behind
+# (services.exe, rpcss.exe, plugplay.exe, svchost.exe). 398 of those accumulated
+# across four prefixes in one session and stopped a client from ever opening its
+# window, which surfaces as a seating failure nowhere near its cause.
+#
 # An argument starting with / is a WINEPREFIX rather than a display. Matching on
 # display alone is not enough: wineserver is per-prefix and outlives the client,
 # so a run whose display is already gone leaves a server behind, and the next
@@ -16,7 +23,7 @@ set -uo pipefail
 [ $# -ge 1 ] || { echo "usage: $0 :79 [:80 ...] [/path/to/wineprefix ...]" >&2; exit 1; }
 
 killed=0
-for pid in $(ps -eo pid,args | awk '/lotrbfme|desktop=bfme|wineserver/ && !/awk/ {print $1}'); do
+for pid in $(ps -eo pid,args | awk '/wine|\.exe/ && !/awk/ {print $1}'); do
     env_file="/proc/$pid/environ"
     [ -r "$env_file" ] || continue          # not ours to touch
     disp=$(tr '\0' '\n' < "$env_file" 2>/dev/null | sed -n 's/^DISPLAY=//p' | head -1)

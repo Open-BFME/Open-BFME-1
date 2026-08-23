@@ -45,10 +45,20 @@ every peer, and only the packet router turns it into the frame-synchronised
 **PLAYERLEAVE** (10) / **DESTROYPLAYER** (11) pair the others execute.
 
 **The leaver does not wait.** It posts `MSG_CLEAR_GAME_DATA` and is on the
-score screen a tick later — so **a quitter writes no `end` record**. This is
-the single most important consequence of the whole path, and it is why the
-`end` record carries all eight slots rather than just the local verdict: a
-quitter's or a crasher's fate is recoverable from any surviving machine.
+score screen a tick later. Whether it still writes an `end` record depends on
+whether the match outlives it:
+
+* **The match ends at the quit** — a 1v1, or the last opponent leaving. The
+  leaver is still in the in-game state and *does* write its own `end`. Row 2
+  measured it: the quitter recorded `defeat`, `leave=1`, `leaveFrame=57`,
+  `defeatFrame=58`, defeated one frame after leaving.
+* **The match continues** — a 2v2 whose team fights on. No `end` is written and
+  the file holds `start` alone, which is byte-identical to what a crashed client
+  leaves.
+
+That second case is why the `end` record carries all eight slots rather than
+just the local verdict: a quitter's or a crasher's fate stays recoverable from
+any surviving machine.
 
 Three machines do wait: a leaver whose game ended while still in the in-game
 state (10 s fallback); a leaving packet router, which holds its own leave until
@@ -60,12 +70,43 @@ in `Connection::doSend` (`0x00661F10`), and the INI-driven
 
 ### Leave codes
 
-| Value | Meaning | Seen |
+| Value | Meaning | Measured in |
 |---|---|---|
-| 0 | never left — played to the end, won or lost | yes |
-| 1 | graceful quit | yes |
-| 2 | voted out by the others | only on players who never finished loading |
+| 0 | never left — played to the end, won or lost | every row; the survivor of rows 3, 4, 7 and 8 |
+| 1 | graceful quit through the pause menu | row 2 — `leaveFrame=57`, `defeatFrame=58` |
+| 2 | stopped answering and was dropped | rows 3, 4, 7 and 8 |
 
 Demolishing your own citadel is **not** a quit: it defeats you instantly with
 `leave=0`, `defeated=1` and a real `defeatFrame`. It is the only way to make a
 player lose on demand, and the resulting record is a genuine loss.
+
+**A crash and a freeze are the same record.** Row 3 SIGKILLs a joiner and row 4
+SIGSTOPs one; rows 7 and 8 do the same two things to the host. The kernel closes
+a killed client's sockets, so its peers see the connection go, while a frozen
+one's sockets stay open and silent and its peers can only time it out — and the
+survivors write the same thing in all four cases:
+
+| Row | Who went | How | What the survivor recorded |
+|---|---|---|---|
+| 3 | joiner | SIGKILL | `leave=2 leaveFrame=32 defeatFrame=33 defeated=1 teamWon=0`, end frame 33 |
+| 4 | joiner | SIGSTOP | `leave=2 leaveFrame=32 defeatFrame=33 defeated=1 teamWon=0`, end frame 33 |
+| 7 | host | SIGKILL | `leave=2 leaveFrame=22 defeatFrame=25 defeated=1 teamWon=0`, end frame 25 |
+| 8 | host | SIGSTOP | `leave=2 leaveFrame=24 defeatFrame=25 defeated=1 teamWon=0`, end frame 25 |
+
+So `leave=2` means *stopped answering*, and nothing in the record says whether
+the process died or hung, nor whether it was the host or a joiner. Losing the
+host is not a special case for the survivor: it takes the match with it either
+way, and the survivor still wins it.
+
+This is also the first time `leave=2` has been measured on players who were
+fully in the match. It had only ever been seen on players who never finished
+loading, which is why it was read as "voted out by the others"; these four rows
+show the same code on the ordinary disconnect path.
+
+Neither a killed nor a frozen client writes an `end` of its own — all four rows
+leave the missing machine holding nothing but its `start` line, which is exactly
+what that line is for. **A resumed frozen client writes nothing either**:
+measured in rows 4 and 8, forty-five seconds after `SIGCONT` both files still
+held only `start`. Freezing therefore costs nothing beyond the obligation to
+thaw the process before the row ends, since a client left stopped holds its wine
+prefix open.
