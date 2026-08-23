@@ -101,8 +101,58 @@ enum ObjectScriptStatusBit
 	OBJECT_STATUS_SCRIPT_UNPOWERED	= 0x02
 };
 
+class PolygonTrigger;
+enum KindOfType;
+
+struct TriggerInfo
+{
+	const PolygonTrigger*	pTrigger;										///< +0x00
+	Bool									entered;										///< +0x04
+	Bool									exited;											///< +0x05
+	Bool									isInside;										///< +0x06
+	UnsignedByte					_bfme_pad;									///< +0x07
+};
+
+class Thing
+{
+public:
+	Bool isKindOf( KindOfType k ) const;
+};
+
+enum ObjectStatusTypes
+{
+	OBJECT_STATUS_NONE = 0
+};
+
+struct ObjectStatusMaskType
+{
+	enum { NUM_WORDS = 6 };
+	UnsignedInt m_words[NUM_WORDS];
+
+	Bool test( ObjectStatusTypes s ) const
+	{
+		return (m_words[(UnsignedInt)s >> 5] & (1UL << ((UnsignedInt)s & 31))) != 0;
+	}
+};
+
+enum SpecialPowerType
+{
+	SPECIAL_POWER_INVALID = -1
+};
+
+struct SpecialPowerMaskType
+{
+	enum { NUM_WORDS = 6 };
+	UnsignedInt m_words[NUM_WORDS];
+
+	Bool test( SpecialPowerType s ) const
+	{
+		return (m_words[(UnsignedInt)s >> 5] & (1UL << ((UnsignedInt)s & 31))) != 0;
+	}
+};
+
 // ---------------------------------------------------
-class Object
+class Object : public Thing
 {
 public:
 
@@ -128,24 +178,43 @@ public:
 	void removeUpgrade( const UpgradeTemplate *upgradeT );
 	void updateUpgradeModules( void );
 
+	Bool didEnter( const PolygonTrigger *pTrigger ) const;
+	Bool didExit( const PolygonTrigger *pTrigger ) const;
+	Bool testStatus( ObjectStatusTypes s ) const;
+	Bool hasSpecialPower( SpecialPowerType type ) const;
+
+protected:
+
+	Bool didEnterOrExit( void ) const;
+
 private:
 
 	enum { FOREVER = 0x3fffffff };
 
 	UnsignedByte							_bfme_vtbl[4];
 	const ThingTemplate*			m_template;						///< 0x004 (Thing base)
-	UnsignedByte							_bfme_pad_008[0x1e8];
+	UnsignedByte							_bfme_pad_008[0x108];
+	ObjectStatusMaskType			m_status;							///< 0x110
+	UnsignedByte							_bfme_pad_128[0xc8];
 	BehaviorModule**					m_behaviors;					///< 0x1f0
 	UnsignedByte							_bfme_pad_1f4[8];
 	ContainModuleInterface*		m_contain;						///< 0x1fc
 	UnsignedByte							_bfme_pad_200[4];
 	AIUpdateInterface*				m_ai;									///< 0x204
-	UnsignedByte							_bfme_pad_208[0x1c];
+	UnsignedByte							_bfme_pad_208[0xc];
+	const Object*							m_containedBy;				///< 0x214
+	UnsignedByte							_bfme_pad_218[0xc];
 	UpgradeMaskType						m_objectUpgradesCompleted;	///< 0x224
-	UnsignedByte							_bfme_pad_23c[0x107];
-	UnsignedByte							m_scriptStatus;				///< 0x343
-	UnsignedByte							_bfme_pad_344[0x6c];
-	PartitionData*						m_partitionData;			///< 0x3b0
+	UnsignedByte							_bfme_pad_23c[0x84];
+	SpecialPowerMaskType			m_specialPowerBits;		///< 0x2c0
+	TriggerInfo								m_triggerInfo[5];						///< 0x2d8
+	UnsignedInt								m_enteredOrExitedFrame;			///< 0x300
+	UnsignedByte							_bfme_pad_304[0x3f];
+	UnsignedByte							m_scriptStatus;							///< 0x343
+	UnsignedByte							_bfme_pad_344[2];
+	Char											m_numTriggerAreasActive;		///< 0x346
+	UnsignedByte							_bfme_pad_347[0x69];
+	PartitionData*						m_partitionData;						///< 0x3b0
 
 };  // end class Object
 

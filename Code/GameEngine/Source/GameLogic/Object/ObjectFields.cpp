@@ -335,13 +335,34 @@ __declspec(naked) Real Locomotor::getRudderCorrectionDegree( void ) const
 	}
 }
 
+enum KindOfType
+{
+	KINDOF_INERT = 24
+};
+
+struct KindOfMaskType
+{
+	UnsignedInt m_words[1];
+
+	UnsignedInt getword( size_t pos ) const { return m_words[pos / 32]; }
+	static UnsignedInt maskbit( size_t pos ) { return 1UL << (pos % 32); }
+
+	Bool test( size_t pos ) const
+	{
+		return (getword(pos) & maskbit(pos)) != 0;
+	}
+};
+
 //-------------------------------------------------------------------------------------------------
-/// ThingTemplate stand-in: an Overridable with a flag word at +0xd4.
+/// ThingTemplate stand-in: an Overridable with KindOfMaskType at +0xd0.
 class ThingTemplate : public Overridable
 {
 public:
-	UnsignedByte	_bfme_tt_pad[0xcc];
-	UnsignedInt		_bfme_tt_flags;										///< +0xd4, bit 0x1000 gates the upgrade broadcast
+	Bool isKindOf( KindOfType t ) const { return m_kindof.test(t); }
+
+	UnsignedByte		_bfme_tt_pad[0xc8];
+	KindOfMaskType	m_kindof;														///< +0xd0, bit 24 = KINDOF_INERT
+	UnsignedInt			_bfme_tt_flags;											///< +0xd4, bit 0x1000 gates the upgrade broadcast
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -552,3 +573,103 @@ SpecialPowerUpdateInterface* Object::findSpecialPowerWithOverridableDestinationA
 	}
 	return NULL;
 }
+
+//-------------------------------------------------------------------------------------------------
+class GameLogic
+{
+public:
+	UnsignedInt getFrame( void ) const { return m_frame; }
+
+	UnsignedByte	_bfme_gl_pad[0x3c];
+	UnsignedInt		m_frame;
+};
+
+extern GameLogic* TheGameLogic;
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// ?isKindOf@Thing@@QBE_NW4KindOfType@@@Z
+Bool Thing::isKindOf( KindOfType k ) const
+{
+	const Overridable* tmpl = *(const Overridable* const*)((const char*)this + 4);
+	if (tmpl != NULL)
+		tmpl = tmpl->getFinalOverride();
+	return ((const ThingTemplate*)tmpl)->isKindOf(k);
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?didEnterOrExit@Object@@IBE_NXZ
+Bool Object::didEnterOrExit( void ) const
+{
+	if (isKindOf(KINDOF_INERT))
+		return FALSE;
+
+	UnsignedInt now = TheGameLogic->getFrame();
+	return (m_enteredOrExitedFrame == now || m_enteredOrExitedFrame == now - 1);
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?didEnter@Object@@QBE_NPBVPolygonTrigger@@@Z
+Bool Object::didEnter( const PolygonTrigger *pTrigger ) const
+{
+	if (!didEnterOrExit())
+		return false;
+
+	for (Int i = 0; i < m_numTriggerAreasActive; ++i)
+	{
+		if (m_triggerInfo[i].entered && m_triggerInfo[i].pTrigger == pTrigger)
+			return true;
+	}
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?didExit@Object@@QBE_NPBVPolygonTrigger@@@Z
+Bool Object::didExit( const PolygonTrigger *pTrigger ) const
+{
+	if (!didEnterOrExit())
+		return false;
+
+	for (Int i = 0; i < m_numTriggerAreasActive; ++i)
+	{
+		if (m_triggerInfo[i].exited && m_triggerInfo[i].pTrigger == pTrigger)
+			return true;
+	}
+	return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?testStatus@Object@@QBE_NW4ObjectStatusTypes@@@Z
+Bool Object::testStatus( ObjectStatusTypes s ) const
+{
+	if( m_status.test( s ) )
+		return TRUE;
+
+	const Overridable* tmpl = m_template;
+	if( tmpl != NULL )
+		tmpl = tmpl->getFinalOverride();
+
+	const Object* obj = this;
+	if( (((const ThingTemplate*)tmpl)->_bfme_tt_flags & 0x1000) == 0 )
+	{
+		obj = m_containedBy;
+		if( obj == NULL || !obj->isKindOf( (KindOfType)0x6c ) )
+			return FALSE;
+	}
+
+	if( obj != NULL )
+	{
+		return obj->m_status.test( s );
+	}
+
+	return FALSE;
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?hasSpecialPower@Object@@QBE_NW4SpecialPowerType@@@Z
+Bool Object::hasSpecialPower( SpecialPowerType type ) const
+{
+	return m_specialPowerBits.test( type );
+}
+
+
