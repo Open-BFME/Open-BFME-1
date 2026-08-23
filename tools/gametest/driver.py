@@ -82,18 +82,33 @@ class Driver:
                               capture_output=True, text=True)
 
     # --- capture -------------------------------------------------------
+    def _capture(self, path):
+        """Grab the whole screen.
+
+        `import -window root` works on a real X server but returns nothing under
+        Xwayland, because the X root is not what the Wayland compositor
+        composites into. xwd works on both, so it is the only path used here --
+        the GPU-backed headless display is Xwayland, and silently capturing a
+        blank root would have made every screen match fail for no visible
+        reason."""
+        xwd = subprocess.run(["xwd", "-root", "-silent"],
+                             env=dict(os.environ, DISPLAY=self.display),
+                             capture_output=True)
+        if xwd.returncode != 0 or not xwd.stdout:
+            raise RuntimeError(f"xwd failed on {self.display}: {xwd.stderr[:200]}")
+        conv = subprocess.run(["convert", "xwd:-", str(path)],
+                              input=xwd.stdout, capture_output=True)
+        if conv.returncode != 0:
+            raise RuntimeError(f"convert failed: {conv.stderr[:200]}")
+        return path
+
     def shot(self, label=""):
         self.n += 1
         p = self.out / f"{self.n:02d}-{label or 'shot'}.png"
-        r = self._run("import", "-window", "root", str(p))
-        if r.returncode != 0:
-            raise RuntimeError(f"import failed on {self.display}: {r.stderr}")
-        return p
+        return self._capture(p)
 
     def _grab(self):
-        p = self.out / ".tmp.png"
-        self._run("import", "-window", "root", str(p))
-        return Image.open(p).convert("RGB")
+        return Image.open(self._capture(self.out / ".tmp.png")).convert("RGB")
 
     # --- waiting -------------------------------------------------------
     def wait_stable(self, quiet=1.5, timeout=60, poll=0.5):
