@@ -48,6 +48,11 @@ echo "  $N stacks up: 10.99.0.1-$N"
 
 R='C:\users\wacket\AppData\Roaming\My Battle for Middle-earth Files\GameResult.jsonl'
 GAMEDIR="$HOME/.wine/drive_c/BFME1"
+# Install the shipped artifact here, beside the path that launches it. Without
+# this step the rig plays whatever a past build happened to leave in the game
+# directory, and every record it produces is evidence about an unknown binary.
+cp "$REPO/overlay/dist/lotrbfme.exe" "$GAMEDIR/lotrbfme.t4.exe"
+echo "  installed overlay/dist/lotrbfme.exe -> $GAMEDIR/lotrbfme.t4.exe"
 CPUS=(0-3 4-7 8-11 12-15)
 DISPS=($DISPLAYS)
 for i in $(seq 1 $N); do
@@ -69,13 +74,6 @@ LAUNCH
 done
 echo "  $N clients launched"
 
-if [ -n "${BFME_SNIFF:-}" ]; then
-    for i in $(seq 1 $N); do
-        ip netns exec "g$i" python3 "$REPO/tools/gametest/sniff.py" "v${i}b" \
-            "$REPO/build/gametest/logs/sniff$i.log" &
-    done
-    echo "  sniffing"
-fi
 sleep 40
 python3 -u tools/gametest/run_lan4.py $DISPLAYS "$SHOTDIR"
 rc=$?

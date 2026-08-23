@@ -24,11 +24,19 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+import rows  # noqa: E402
 from driver import Driver  # noqa: E402
 
 REF = HERE / "ref640"
 TOL = 8.0
 ATTEMPTS = 5
+
+# Which matrix seats N clients take, so names and teams are spelled once, in
+# rows.py. A 1v1 is P1 against P3 rather than P1 against P2: the matrix keeps
+# the host/joiner asymmetry by pairing the host with a team-2 joiner, and the
+# measured record is filed under the seat name, so a second client called
+# P2_T1 would land the 1v1 rows under a seat their row never declared.
+SEATS = {2: ("P1", "P3"), 3: ("P1", "P3", "P4"), 4: ("P1", "P2", "P3", "P4")}
 
 
 def to_lobby(d, name):
@@ -107,15 +115,16 @@ def set_team(d, row, team):
 
 def main(displays, shotdir):
     displays = [d for d in displays if d]
-    names = ["P1_T1", "P2_T1", "P3_T2", "P4_T2"][:len(displays)]
-    teams = {2: (1, 2), 3: (1, 2, 2), 4: (1, 1, 2, 2)}[len(displays)]
+    seats = SEATS[len(displays)]
+    names = [rows.NAMES[seat] for seat in seats]
+    teams = [rows.TEAMS[seat] for seat in seats]
     shotdir = Path(shotdir)
     drivers = {n: Driver(shotdir / n, n[:2], display=p)
                for n, p in zip(names, displays)}
 
     with ThreadPoolExecutor(max_workers=4) as pool:
         list(pool.map(lambda n: to_lobby(drivers[n], n), names))
-    print("  all four at the lobby", flush=True)
+    print(f"  all {len(names)} at the lobby", flush=True)
 
     h = drivers[names[0]]
     h.tap("CREATE_GAME", settle=6)

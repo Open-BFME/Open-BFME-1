@@ -7,9 +7,9 @@
 # address, so the second and third joiners behind one IP are admitted to the
 # roster and then dropped as "not responding" while the first keeps its seat.
 #
-# The older netns-setup.sh needed sudo for a host bridge. This does the same
-# thing inside an unprivileged user namespace: root there is only root there, so
-# it touches nothing on a shared machine and evaporates when the run ends.
+# The bridge lives inside an unprivileged user namespace rather than on the host,
+# so this needs no sudo: root there is only root there, it touches nothing on a
+# shared machine, and it evaporates when the run ends.
 # X11 is reached over /tmp/.X11-unix, which no network namespace affects.
 set -euo pipefail
 [ $# -ge 3 ] || { echo "usage: $0 :2 [:3 ...] <shotdir>" >&2; exit 1; }

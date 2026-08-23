@@ -17,6 +17,12 @@ __pycache__/
 # tier reports "outputs unavailable". Regenerating them needs Ghidra plus a
 # JDK 21, which no drive-by contributor will do. 2.8MB against the 256MB of
 # toolchains and baselines this repo already ships.
+# The game-test rig's local configuration: X display numbers DETECTED by
+# gpu-displays.sh and absolute wine prefix paths. Machine-specific by
+# construction, and committing it would drive whatever holds those numbers on
+# the next machine.
+.env
+
 reverse/.add_match.lock
 reverse/zh_sweep/locate_state.json
 

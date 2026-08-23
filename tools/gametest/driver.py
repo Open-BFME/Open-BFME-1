@@ -68,6 +68,15 @@ STRIP_FRAC = (0.0, 0.9193, 1.0, 0.9974)
 # wine's own decoration inside the virtual desktop
 WINE_BORDER, WINE_TITLE = 3, 26
 
+# An X server with nothing mapped has nothing composited, and GetImage on its
+# root answers BadMatch rather than a blank frame -- which is the state of every
+# display between its compositor starting and the client opening its first
+# window. Callers must not ask a display whose client has already gone for a
+# screenshot: there the window is never coming back and this only delays the
+# failure by MAP_TIMEOUT.
+NOTHING_MAPPED = b"BadMatch"
+MAP_TIMEOUT = 180
+
 
 class Driver:
     def __init__(self, outdir, prefix="s", display=None):
@@ -90,12 +99,27 @@ class Driver:
         composites into. xwd works on both, so it is the only path used here --
         the GPU-backed headless display is Xwayland, and silently capturing a
         blank root would have made every screen match fail for no visible
-        reason."""
-        xwd = subprocess.run(["xwd", "-root", "-silent"],
-                             env=dict(os.environ, DISPLAY=self.display),
-                             capture_output=True)
-        if xwd.returncode != 0 or not xwd.stdout:
-            raise RuntimeError(f"xwd failed on {self.display}: {xwd.stderr[:200]}")
+        reason.
+
+        A BadMatch means the display has nothing mapped yet, which is a client
+        that has not opened its window rather than a capture that failed, so it
+        is waited out. Only that one error is, and only until MAP_TIMEOUT: a
+        display that never gets a window then says exactly that, instead of
+        quoting an X opcode at whoever reads the log."""
+        deadline = time.time() + MAP_TIMEOUT
+        while True:
+            xwd = subprocess.run(["xwd", "-root", "-silent"],
+                                 env=dict(os.environ, DISPLAY=self.display),
+                                 capture_output=True)
+            if xwd.returncode == 0 and xwd.stdout:
+                break
+            if NOTHING_MAPPED not in xwd.stderr:
+                raise RuntimeError(f"xwd failed on {self.display}: {xwd.stderr[:200]}")
+            if time.time() > deadline:
+                raise RuntimeError(
+                    f"{self.display}: nothing mapped for {MAP_TIMEOUT}s, so there is "
+                    f"no screen to capture -- no client ever opened a window here")
+            time.sleep(2)
         conv = subprocess.run(["convert", "xwd:-", str(path)],
                               input=xwd.stdout, capture_output=True)
         if conv.returncode != 0:

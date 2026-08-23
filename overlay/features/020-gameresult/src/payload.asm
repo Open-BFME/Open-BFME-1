@@ -50,14 +50,16 @@ org CODE_VA
 %define VT_ISLOCALALLIEDDEFEAT  0x38
 %define VT_AMIOBSERVER          0x40
 
-; Scratch/data laid out by modbuild.py; keep both sides in step.
-%define d_started      (DATA_VA + 0)
-%define d_ended        (DATA_VA + 4)
-%define d_result       (DATA_VA + 8)
-%define d_file         (DATA_VA + 12)
-%define d_nameptr      (DATA_VA + 16)
-%define d_pathbuf      (DATA_VA + 20)      ; 512 bytes
-%define d_strings      (DATA_VA + 532)
+; Scratch/data laid out by modbuild.py, which emits every offset below; the
+; quitGame payload shares this block, so no number here is written twice.
+%define d_started      (DATA_VA + OFF_D_STARTED)
+%define d_ended        (DATA_VA + OFF_D_ENDED)
+%define d_result       (DATA_VA + OFF_D_RESULT)
+%define d_file         (DATA_VA + OFF_D_FILE)
+%define d_nameptr      (DATA_VA + OFF_D_NAMEPTR)
+%define d_left         (DATA_VA + OFF_D_LEFT)
+%define d_pathbuf      (DATA_VA + OFF_D_PATHBUF)
+%define d_strings      (DATA_VA + OFF_STRINGS)
 
 %define s_fmt_start    (d_strings + OFF_FMT_START)
 %define s_fmt_end      (d_strings + OFF_FMT_END)
@@ -104,6 +106,10 @@ start:
     cmp  dword [d_started], 0
     jne  .done
     mov  dword [d_started], 1
+    ; One leave record per match: quit.asm sets d_left, and this -- the single
+    ; frame a match's start record is written on -- is the only thing that
+    ; clears it.
+    mov  dword [d_left], 0
     call open_file
     test eax, eax
     jz   .done

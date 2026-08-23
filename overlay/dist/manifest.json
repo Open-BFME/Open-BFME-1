@@ -10,19 +10,23 @@
   },
   "output": {
     "path": "overlay/dist/lotrbfme.exe",
-    "sha256": "24bf901c2411868ec4f6f6c7388ea23c04d4c90f871ab67e7b8766c928e5a35c",
+    "sha256": "216ed636f854e74e29458361824b68f718209f174f92c1c73e7b2f2205d25b8c",
     "size": 16498688
   },
   "cave": {
     "section": ".bfmemod",
     "rva": "0x01016000",
     "size": "0x10000",
-    "used": 1597
+    "used": 1918
   },
   "features": [
     {
       "name": "020-gameresult",
       "target_rva": "0x0035F920"
+    },
+    {
+      "name": "020-gameresult",
+      "target_rva": "0x00665C10"
     }
   ]
 }

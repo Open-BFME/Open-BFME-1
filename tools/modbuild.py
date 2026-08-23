@@ -21,7 +21,11 @@ BASELINE = ROOT / "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
 OUT = ROOT / "build/overlay/lotrbfme.exe"
 DIST = ROOT / "overlay/dist"
 
-TARGET_UPDATE = 0x0035F920  # VictoryConditions::update
+TARGET_UPDATE = 0x0035F920    # VictoryConditions::update
+# ConnectionManager::sendPlayerLeaveCommands -- the leave entry an in-game
+# exit actually takes. Network::quitGame 0x006822E0 is the one the ledger
+# points at and a four-client probe recorded it firing zero times.
+TARGET_SENDLEAVE = 0x00665C10
 
 
 def yasm(src, defines, out):
@@ -39,11 +43,33 @@ def cstr(s):
     return s.encode() + b"\0"
 
 
+def payload(pe, src, defines, target):
+    """Assemble one payload against the address it will really be placed at,
+    then detour `target` through it.
+
+    detour() allocates payload, relocated prologue and jump-back together, so
+    that address is only knowable once every earlier blob is down. Getting it
+    wrong is silent while every org is 16-aligned and every jump inside the
+    payload is relative, and catastrophic the moment either stops holding --
+    yasm's bin output pads a blob whose org is unaligned, which shifts the entry
+    point away from the address the trampoline jumps to. So it is checked."""
+    defines["CODE_VA"] = hex(pe.image_base + pe.next_rva())
+    with tempfile.NamedTemporaryFile(suffix=".bin", delete=False) as t:
+        code = yasm(src, defines, t.name)
+    at = pe.detour(target, payload=code)
+    if pe.image_base + at != int(defines["CODE_VA"], 16):
+        raise SystemExit(
+            f"{src.name} was assembled at org {defines['CODE_VA']} but placed at "
+            f"0x{pe.image_base + at:08X}")
+    return dict(target=target, code_rva=at, code_len=len(code))
+
+
 def build_gameresult(pe, feature_dir, probe=False):
-    """Lay out the feature's data, assemble its code against that layout,
-    then detour VictoryConditions::update through it."""
+    """Lay out the feature's data, assemble both its payloads against that
+    layout, then detour VictoryConditions::update and the leave entry."""
     strings = [
         ("FMT_START",  '{"ev":"start","t":%d,"slot":%d}\n'),
+        ("FMT_LEAVE",  '{"ev":"leave","t":%d,"slot":%d,"frame":%d}\n'),
         ("FMT_END",    '{"ev":"end","t":%d,"slot":%d,"frame":%d,"result":"%s",'
                        '"observer":%d,"desync":%d,"slots":['),
         ("FMT_SLOT",   '{"leave":%d,"leaveFrame":%d,"defeatFrame":%d,'
@@ -61,26 +87,31 @@ def build_gameresult(pe, feature_dir, probe=False):
         ("UNDECIDED",  'undecided'),
         ("EMPTY",      ''),
     ]
-    SCRATCH = 532                     # 5 dwords + a 512-byte path buffer
-    pool, offsets = bytearray(), {}
+    # Both payloads share one scratch block, so its offsets are emitted as
+    # defines rather than spelled in each .asm: a number written twice drifts.
+    scratch = [("STARTED", 4), ("ENDED", 4), ("RESULT", 4), ("FILE", 4),
+               ("NAMEPTR", 4), ("LEFT", 4), ("PATHBUF", 512)]
+    offsets, scratch_len = {}, 0
+    for name, size in scratch:
+        offsets["OFF_D_" + name] = scratch_len
+        scratch_len += size
+    offsets["OFF_STRINGS"] = scratch_len
+
+    pool = bytearray()
     for name, text in strings:
         offsets["OFF_" + name] = len(pool)
         pool += text.encode() + b"\0"
 
-    data_rva = pe.alloc(bytes(bytearray(SCRATCH) + pool))
-    defines = {
-        "DATA_VA": hex(pe.image_base + data_rva),
-        "CODE_VA": hex(pe.image_base + pe.next_rva()),
-        **offsets,
-    }
+    data_rva = pe.alloc(bytes(bytearray(scratch_len) + pool))
+    defines = {"DATA_VA": hex(pe.image_base + data_rva), **offsets}
     if probe:
         defines["PROBE"] = 1
-    with tempfile.NamedTemporaryFile(suffix=".bin", delete=False) as t:
-        code = yasm(feature_dir / "src/payload.asm", defines, t.name)
 
-    cave_at = pe.detour(TARGET_UPDATE, payload=code)
-    return dict(data_rva=data_rva, code_rva=cave_at, code_len=len(code),
-                data_len=SCRATCH + len(pool), target=TARGET_UPDATE)
+    src = feature_dir / "src"
+    return dict(data_rva=data_rva, data_len=scratch_len + len(pool), detours=[
+        payload(pe, src / "payload.asm", defines, TARGET_UPDATE),
+        payload(pe, src / "leave.asm", defines, TARGET_SENDLEAVE),
+    ])
 
 
 FEATURES = {"020-gameresult": build_gameresult}
@@ -110,13 +141,15 @@ def main():
         if fn is None:
             raise SystemExit(f"unknown feature: {name}")
         info = fn(pe, ROOT / "overlay/features" / name, probe=a.probe)
-        t = info["target"]
-        if t in claimed:
-            raise SystemExit(
-                f"address conflict: {name} and {claimed[t]} both claim 0x{t:08X}")
-        claimed[t] = name
-        print(f"  {name}: detour 0x{t:08X} -> cave 0x{info['code_rva']:08X} "
-              f"({info['code_len']} B code, {info['data_len']} B data)")
+        for d in info["detours"]:
+            t = d["target"]
+            if t in claimed:
+                raise SystemExit(
+                    f"address conflict: {name} and {claimed[t]} both claim 0x{t:08X}")
+            claimed[t] = name
+            print(f"  {name}: detour 0x{t:08X} -> cave 0x{d['code_rva']:08X} "
+                  f"({d['code_len']} B code)")
+        print(f"  {name}: {info['data_len']} B data @ RVA 0x{info['data_rva']:08X}")
 
     out = Path(a.output)
     out.parent.mkdir(parents=True, exist_ok=True)
