@@ -53,6 +53,13 @@ UI = {
     "DIALOG_OK":    (0.5010, 0.5938),
     "PROFILE_NAME": (0.4209, 0.4987),
     "PROFILE_OK":   (0.4209, 0.5990),
+    # In-game. Selecting the citadel (camera starts centred on it) fills the
+    # palantir ring; DEMOLISH -- "Destroys your Citadel" -- is the pale icon at
+    # its lower left. This is the only way to make a player lose on demand:
+    # it defeats them instantly, with leave=0, so the record is a genuine loss
+    # rather than a quit. There is no confirmation prompt.
+    "CITADEL":      (0.5000, 0.4250),
+    "DEMOLISH":     (0.2090, 0.9520),
 }
 
 # The button strip, as a fraction of the client area rather than a pixel box.

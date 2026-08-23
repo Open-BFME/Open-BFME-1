@@ -241,6 +241,29 @@ explanation. `driver.py:dismiss_profile_prompt` handles it.
 `DISPLAY` at import time; every "host" action in a scripted two-client run was
 silently going to the joiner's screen, screenshots included.
 
+## Making a player lose on demand
+
+Selecting the citadel fills the palantir ring, and the pale icon at its lower
+left is **Demolish — "Destroys your Citadel"**. No confirmation prompt. This is
+what makes a win/loss matrix affordable: it defeats a player instantly, with
+`leave=0`, so the record is a genuine loss rather than a quit — and every
+multiplayer loss measured before it came from someone quitting, which is a
+different row entirely.
+
+Caveat, unconfirmed: it destroys only the citadel. In one run the player was
+defeated instantly; in another they kept playing with no citadel, and the
+difference looked like other structures having been built by then (command cap
+400 vs 200). Demolish alone is not a guaranteed defeat once a base exists.
+
+Two things that make a matrix cheap to run once discovered:
+
+* **After the score screen every client lands back in the network lobby.** The
+  host creates a new game and the others rejoin — no main-menu walk. A reseat
+  is ~2 minutes instead of ~40.
+* **The game list has to have populated before the join click.** Straight after
+  a match it has not; clicking a row that is not there yet silently does
+  nothing, and the join reports success anyway.
+
 ## An accidental measurement for the game_end track
 
 `reverse/game_end/FINDINGS.md` lists three machines that can wait at game end
