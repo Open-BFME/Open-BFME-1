@@ -100,10 +100,16 @@ The question each row asks is whether the departed player is still credited
 | 29 | P2 frozen, then B both demolish | win | — | loss | loss | frozen winner, `leave=2` + `teamWon=1` |
 | 30 | **P1 (host) quits**, then B both demolish | — | win | loss | loss | host leaves and its team still wins |
 | 31 | **P1 (host) killed**, then B both demolish | — | win | loss | loss | no host, no host record |
-| 32 | Both A quit, then B both demolish | — | — | loss | loss | winners silent, losers name the winner |
+| ~~32~~ | ~~Both A quit, then B demolish~~ | | | | | **dropped — incoherent, see below** |
 
-Row 32 is the sharpest: the only surviving records are from the **losing** side,
-and the reconciler has to read `teamWon` on players who wrote nothing.
+Row 32 was dropped. `processDestroyPlayerCommand` issues `MSG_SELF_DESTRUCT`
+for a departing player, so quitting *is* defeat: once both of Team A quit,
+Team B has already won and never gets to demolish. The row cannot happen.
+
+The same reasoning kills the whole category. "Winners silent, losers recording"
+is impossible by construction — to win you must remain, and remaining means you
+are present to write the record. The only genuine zero-record case is everyone
+leaving, which row 9 covers.
 
 ## Not covered, and why
 
