@@ -184,16 +184,27 @@ Middle-earth\ergc`. `wine1` and `wine2` had been created independently with
 sequential keys (`…ED06`, `…ED07`), which is exactly why two clients were always
 fine and the third never was. Give every prefix its own `ergc` value.
 
-The duplicate serial is real and had to be fixed. But fixing it is *not*
-sufficient: with all four prefixes on distinct keys and every client back on the
-shared host stack, the third is refused again, and the message reverts to the
-misleading "Game has already started". So there are two independent obstacles,
-and the shared stack both blocks the join and disguises the reason.
+Fixing the serial raised the ceiling from two clients to three, and then the
+real wall showed itself: **clients that seat successfully get dropped again**,
+which is the "player was not responding" message the host prints. This was
+mistaken for a join limit for a long time because the symptom looks identical
+from the joiner's side.
 
-The honest state: distinct serials plus namespaces has not yet been run together.
-That is the one combination left, and until it is measured this is not solved —
-recording it that way rather than claiming a root cause that a single further
-run disproved, which is what happened here the first time.
+The wall is environment capacity, not the game and not the mod. Xvfb renders
+through `llvmpipe`, so each client burns ~200% CPU rasterising while the box's
+two real GPUs (`/dev/dri/card1`, `card2`) sit idle; load reaches ~40 and clients
+cannot service the lobby heartbeat. Measured progression:
+
+| serials | network | outcome |
+|---|---|---|
+| duplicate | shared stack | 2 seat, 3rd refused — "Game has already started" |
+| duplicate | namespace each | 3rd refused — **"Your serial is already in use"** |
+| distinct | shared stack | **3 seat**, then one drops |
+
+Four software-rendered instances is more than this configuration sustains. Real
+GPU rendering (what `~/bfme-test/launch-sandbox.sh` does, on a live display) or
+a much smaller resolution is what a 4-human test needs. Two clients are stable
+and have run full matches repeatedly; that is the supported size here.
 
 Before reaching that, these were eliminated, each by its own run: a 2-player map
 (it was Black Gate, "Number of Players: 4"); the host having started the game
