@@ -320,27 +320,26 @@ client inside an unprivileged user namespace, so it touches nothing on the host
 and disappears with the process. X11 is reached over `/tmp/.X11-unix`, which no
 network namespace affects.
 
-**But the match will not start inside those namespaces.** Every client reaches
-"Starting the game...", then the joiners fall back to the lobby reporting "host
-has left" while the host sits alone on the disconnect screen and eventually
-scores the game to itself. Measured, not assumed:
+**The match then failed for a while, and it was the harness.** Every client
+reached "Starting the game...", the host carried on alone, and each joiner
+reported that the host had left. That reads exactly like the in-game mesh
+failing to form, and it was written up that way. It was not. `br0` lives in the
+outer namespace and every client's veth is plugged into it, so when the seating
+script returned -- about eight seconds after clicking PLAY GAME -- the outer
+namespace was destroyed, the bridge went with it, and all four clients lost
+their network mid-match. A raw-socket capture inside a namespace showed traffic
+from both peers right up to `PLAY GAME + 8s` and then `recv: Network is down`.
+The rig now holds the namespace open (`BFME_HOLD`) and matches play.
 
-* It is not load or memory. Two clients fail identically, and two clients on
-  this machine is trivial. Four-client runs happened to coincide with the host
-  swapping hard, which made memory look guilty for a while; the two-client
-  control cleared it.
-* It is not reachability. Every pair of namespaces pings, in both directions,
-  and lobby discovery, chat, the roster and team changes all cross the same
-  bridge correctly.
-* It is not the missing default route. Adding one via the bridge changes
-  nothing, so the game is not choosing its advertised address by route lookup.
-
-So the lobby protocol is happy with the bridge and the in-game mesh is not.
-Something the game does on entering a match behaves differently in a namespace
-than on a shared stack -- and on a shared stack matches do play, which is how
-every result record in this repo was produced. That is the open question, and
-the next move on it is a packet capture inside one namespace at the moment of
-start, not another round of UI poking.
+Two real findings came out of chasing it. The game chooses the address it binds
+its transport to with `gethostname()` + `gethostbyname()` (IPEnumeration.cpp), so
+each namespace needs a hostname that resolves to its own address -- and
+`nsswitch.conf` has to be overridden too, because the stock order puts
+`resolve [!UNAVAIL=return]` ahead of `files` and systemd-resolved answers first,
+returning `::1`. And the LAN lobby is broadcast-only: announcements go to
+255.255.255.255 sprayed across ports 8086-8091, which is why clients on
+different ports still find each other, and why nothing unicast appears until a
+match actually forms.
 
 **Two other things the lobby needs, both real.** Each player must set their own
 team: the host's dropdowns for other players are inert, they fail silently, and

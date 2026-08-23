@@ -76,7 +76,7 @@ def join(d, name, shots, stagger=0.0):
         time.sleep(8)
         d.shot(f"{name}-try{attempt}")
         if not in_lobby(d):
-            print(f"  {name}: seated on attempt {attempt}", flush=True)
+            print(f"  {name}: seated on attempt {attempt} MARK {time.time():.2f}", flush=True)
             return attempt
         print(f"  {name}: attempt {attempt} refused, dismissing", flush=True)
         d.tap("DIALOG_OK", settle=3)
@@ -154,6 +154,7 @@ def main(displays, shotdir):
     # "host has left" -- the clients disagreed about the game they were joining.
     time.sleep(12)
     h.shot("teams-set")
+    print(f"MARK play-game {time.time():.2f}", flush=True)
     h.tap("PLAY_GAME", settle=8)
     h.shot("play-clicked")
     print("PLAY GAME clicked", flush=True)
