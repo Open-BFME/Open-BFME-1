@@ -264,6 +264,29 @@ Two things that make a matrix cheap to run once discovered:
   a match it has not; clicking a row that is not there yet silently does
   nothing, and the join reports success anyway.
 
+## The 4th-client refusal: what is pinned so far
+
+A host plus three joiners is reliable; the fourth is refused with "Game has
+already started". Everything environmental has been eliminated by measurement —
+distinct CD keys, network namespaces, port availability, resolution, renderer,
+load, join ordering, list freshness, and a fresh client restart. It is a
+netcode question, not a testing one, so these are the addresses to start from:
+
+* The message is the localisation key `LAN:ErrorGameStarted` at VA `0x0111B790`.
+* It is **error code 6**. The client maps a code 0..9 to a message through a
+  jump table at RVA `0x00688C58`; the dispatch is at RVA `0x00688B50`
+  (`cmp eax, 9` / `jmp [eax*4 + 0xA88C58]`). Neighbouring codes: 2 GameFull,
+  3 DuplicateName, 8 GameGone.
+* That dispatch has **no rel32 callers and no data references anywhere in the
+  image** — the same shape as the ladder-results path, which is also present
+  and never executed. Worth confirming before building on: if the LAN error
+  path is genuinely unreferenced, the refusal seen in-game comes from somewhere
+  else entirely and this table is a dead end.
+
+What has NOT been established is who *sends* code 6. That is host-side, and
+`BFMEConnectionManager`'s slot handling (`processIncomingCommand` `0x0066A3F0`,
+pinned in reverse/game_end/FINDINGS.md) is where to look.
+
 ## An accidental measurement for the game_end track
 
 `reverse/game_end/FINDINGS.md` lists three machines that can wait at game end
