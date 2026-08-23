@@ -87,10 +87,21 @@ fourth. It sits in a path 1.03 never executes (`populatePlayerInfo`'s only
 callers run from a `.wnd` layout the image does not contain). Do not build a
 match key on it.
 
-**A quitter *does* write its own end record.** FINDINGS says the leaver "does
-not wait: it posts `MSG_CLEAR_GAME_DATA` and is on the score screen a tick
-later", which reads as "leaves no trace". Measured, the engine still sets
-`m_endFrame` on the leaving machine before teardown, and the record lands.
+**A quitter usually writes NO end record — and a 1v1 will tell you otherwise.**
+FINDINGS says the leaver "does not wait: it posts `MSG_CLEAR_GAME_DATA` and is
+on the score screen a tick later". In a measured LAN 1v1 the quitter *did* write
+a full end record, which looked like FINDINGS being pessimistic. It was not: the
+game there ended one frame after the quit (leave 287, end 288), so the leaving
+machine's last `update` still saw `m_endFrame` set. In a measured 2v2 the quit
+happened at frame 355 and the match ran to 1849 — the quitter wrote a start
+record and nothing else.
+
+So a leaver's file is normally the same shape as a crashed machine's: `start`
+with no `end`. **Distinguish them from a survivor's file, not the leaver's** —
+`slots[N].leave == 1` means that player quit, `leave == 0` with no `defeatFrame`
+means they vanished. This is the single strongest argument for every record
+carrying all eight slots rather than the local verdict: in that 2v2 the quitter's
+fate *and its team's win* exist only in the survivor's file.
 
 ## Fields that lie
 
@@ -110,10 +121,20 @@ slots incremented by every true return of `hasSinglePlayerBeenDefeated`, not a
 player count.
 
 **`teamWon` — keep, and key on this one.** From `hasAchievedVictory(p)`: *"one
-alliance remains and some undefeated player is p **or p's ally**"*. It stays
-true for a player who quit or died while their side went on to win, and it was
-identical on both machines in every measured match. It is the field a
-reconciler should use.
+alliance remains and some undefeated player is p **or p's ally**"*. It was
+identical on both machines in the 1v1 (the only match where both produced an end
+record), and a 2v2 shows it doing the job it exists for:
+
+```
+2v2, Team 1 = joiner + Easy Army, Team 2 = host + Hard Army; host quits
+  slot[1] 'host'  leave=1 leaveFrame=355 defeatFrame=356
+  player[1]       defeated=1  teamWon=1     <- quit at 355, team won at 1849
+  player[3]       defeated=0  teamWon=1     <- the ally that actually won it
+  player[0]/[2]   defeated=1  teamWon=0     <- the losing side
+```
+
+A player who quit 1,500 frames before the win still reads `teamWon=1`. Nothing
+else in the record says that.
 
 The general rule: **emit the raw value next to the decoded one.** When the name
 lookup read the wrong offset it produced `namePtr: 255, name: ""` — visibly
