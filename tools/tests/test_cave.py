@@ -7,9 +7,10 @@ the source and silent at build time:
 
   * the new section's Characteristics were packed at +0x28 instead of +0x24,
     so the cave came out neither readable nor executable;
-  * yasm's `-f bin` aligns its output section, so an `org` at a non-4-aligned
-    address emitted three leading pad bytes and the trampoline landed three
-    bytes short of the payload's first instruction;
+  * a blob built for one address and placed at another: the assembler of the
+    day padded a section whose org was unaligned, and the trampoline landed
+    three bytes short of the payload's first instruction. Every relative
+    operand a blob carries has the same failure;
   * the payload's exit ran off the end of its own code and fell through into
     the helper functions emitted after it, because the relocated prologue is
     appended after the WHOLE blob, helpers included.
@@ -71,8 +72,9 @@ def test_appending_twice_is_refused(pe):
 
 
 def test_allocation_is_aligned(pe):
-    """yasm pads a section whose org is unaligned, which silently moves the
-    entry point away from the address the trampoline was built to jump to."""
+    """A blob is built for the address next_rva() promised, so an allocator
+    that merely appends moves the entry point away from where the trampoline
+    was built to jump to."""
     pe.alloc(b"\x01" * 3)          # deliberately leaves cave_used at 3
     rva = pe.alloc(b"\x02" * 4)
     assert rva % 16 == 0, "allocations must be aligned, not merely sequential"
@@ -90,10 +92,10 @@ def test_next_rva_predicts_where_alloc_lands(pe):
 def test_trampoline_lands_on_the_first_payload_instruction(pe):
     """The end-to-end version of the alignment bug: follow the installed jmp and
     require the very first byte to be the payload, not padding."""
-    # Allocate an UNALIGNED amount first. modbuild always places the feature's
-    # data before its code, so a detour that resolves its landing address from
-    # a raw cave_used rather than next_rva() only diverges once something has
-    # been allocated -- detouring an empty cave hides the bug entirely.
+    # Allocate an UNALIGNED amount first. modbuild lays the feature's payload
+    # down before it detours anything, so a detour that resolves its landing
+    # address from a raw cave_used rather than next_rva() only diverges once
+    # something has been allocated -- detouring an empty cave hides the bug.
     pe.alloc(b"\xAA" * 313)
     assert pe.cave_used % 16 != 0, "the fixture must leave the cursor unaligned"
     payload = bytes([0x60, 0x9C, 0x90, 0x61, 0x9D])   # pushad/pushfd/nop/popad/popfd
@@ -124,6 +126,36 @@ def test_exit_reaches_the_relocated_prologue_not_the_bytes_after_the_payload(pe)
     assert tail.mnemonic == "jmp"
     assert int(tail.op_str, 16) - pe.image_base == UPDATE + n, \
         "control must resume just past the bytes the trampoline overwrote"
+
+
+def test_the_generated_shim_calls_the_entry_it_was_built_for(pe):
+    """The shim's `call` is relative, so it is only correct at the one address
+    it was emitted for -- and that address is a prediction made before the bytes
+    exist. Built for one place and written to another, it lands on whatever
+    happens to be at the wrong displacement, which is a payload that runs
+    something else entirely.
+
+    Detoured at an unaligned cursor, which is the only way the prediction and
+    the placement can diverge."""
+    entry = pe.image_base + pe.alloc(bytes([0xC3]))     # a payload that returns
+    pe.alloc(b"\xAA" * 313)                            # leave the cursor unaligned
+    start = pe.detour_call(UPDATE, entry)
+
+    ins = _disasm(pe, start, 16)
+    call = next(i for i in ins if i.mnemonic == "call")
+    assert int(call.op_str, 16) == entry, \
+        "the shim's call does not reach the entry it was built for"
+    assert [i.mnemonic for i in ins[:4]] == ["pushal", "pushfd", "cld", "push"]
+
+
+def test_a_shim_built_for_the_wrong_address_is_refused(pe):
+    """The prediction is checked rather than trusted: next_rva() moving between
+    building the shim and placing it must be a build error, not a call into the
+    middle of something."""
+    entry = pe.image_base + pe.alloc(bytes([0xC3]))
+    pe.next_rva = lambda align=16: PE.next_rva(pe, align) + 16   # a stale prediction
+    with pytest.raises(CaveError, match="but placed at"):
+        pe.detour_call(UPDATE, entry)
 
 
 def test_displaced_bytes_are_fully_replaced_or_padded(pe):

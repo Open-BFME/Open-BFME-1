@@ -17,7 +17,10 @@ from capstone import CS_ARCH_X86, CS_MODE_32, Cs
 SECTION_NAME = ".bfmemod"
 CHARACTERISTICS = 0xE0000020  # CODE | EXECUTE | READ | WRITE
 JMP_REL32 = 0xE9
+CALL_REL32 = 0xE8
 NOP = 0x90
+PUSHAD, POPAD, PUSHFD, POPFD, CLD, PUSH_ECX = 0x60, 0x61, 0x9C, 0x9D, 0xFC, 0x51
+ADD_ESP_4 = bytes([0x83, 0xC4, 0x04])
 
 
 class CaveError(RuntimeError):
@@ -115,16 +118,16 @@ class PE:
         return (v + a - 1) // a * a
 
     def next_rva(self, align=16):
-        """Where the next aligned allocation will land. Callers that must
-        assemble against their own address need this before they have bytes."""
+        """Where the next aligned allocation will land. Callers that must build
+        a blob against its own address need this before they have bytes."""
         return self.cave_rva + self._align(self.cave_used, align)
 
     def alloc(self, blob, align=16):
         """Bump-allocate bytes inside the cave. Returns the RVA written to.
 
-        Alignment is not cosmetic: yasm's bin output pads a section whose org
-        is unaligned, which silently shifts the entry point away from the
-        address the trampoline was built to jump to.
+        Alignment is not cosmetic: a blob is built for the address next_rva()
+        promised, and every relative branch inside it is wrong the moment it is
+        placed anywhere else.
         """
         if not hasattr(self, "cave_rva"):
             raise CaveError("add_cave() must run before alloc()")
@@ -201,12 +204,49 @@ class PE:
         body = bytearray(payload) + moved + tail
         jmp_from = start + len(body)
         body += bytes([JMP_REL32]) + struct.pack("<i", back - (jmp_from + 5))
-        self.alloc(bytes(body))
+        at = self.alloc(bytes(body))
+        if at != start:
+            # Every relative operand in the blob -- the shim's call, the
+            # relocated prologue's, the jump back -- was emitted for `start`.
+            # Placed anywhere else they all point somewhere arbitrary.
+            raise CaveError(f"the blob for 0x{target_rva:X} was built for RVA "
+                            f"0x{start:08X} but placed at 0x{at:08X}")
 
         trampoline = bytes([JMP_REL32]) + struct.pack("<i", start - (target_rva + 5))
         trampoline += bytes([NOP]) * (n - 5)
         self.write(target_rva, trampoline)
         return start
+
+    # --- the shim ------------------------------------------------------
+    def shim(self, entry_va, at_va):
+        """The overlay's only machine code: save everything, call `entry_va`,
+        put everything back.
+
+        A detour interrupts an arbitrary function mid-body, so a payload has to
+        leave every register and every flag exactly as it found them. The `cld`
+        is not decoration: MSVC 7.1 compiles a struct copy to an inline
+        `rep movsd`, which reads the direction flag it never sets, and the
+        `popfd` puts the caller's value back either way. `ecx` is handed over
+        as the payload's one argument because that is the thiscall `this` of
+        whatever was hooked; a payload that does not want it ignores it.
+
+        Generated rather than written: this is the whole reason a feature can be
+        one .cpp file, and hand-maintaining it per feature is how the two blobs
+        this replaced both grew their own copy of the same mistake.
+        """
+        body = bytearray([PUSHAD, PUSHFD, CLD, PUSH_ECX])
+        body += bytes([CALL_REL32]) + struct.pack("<i", entry_va - (at_va + len(body) + 5))
+        body += ADD_ESP_4 + bytes([POPFD, POPAD])   # cdecl: the caller pops
+        return bytes(body)
+
+    def detour_call(self, target_rva, entry_va):
+        """Detour `target_rva` through a generated shim into `entry_va`.
+
+        The shim's `call` is relative, so it has to be emitted for the address
+        it will really sit at. detour() takes that address from the same cursor
+        and refuses the blob if the two ever disagree."""
+        return self.detour(target_rva,
+                           payload=self.shim(entry_va, self.image_base + self.next_rva()))
 
     def save(self, out):
         out = Path(out)

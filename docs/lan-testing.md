@@ -7,8 +7,9 @@ python3 -m pytest tools/tests/test_cave.py tools/tests/test_overlay_build.py \
                  tools/tests/test_game_records.py
 ```
 
-`test_cave` and `test_overlay_build` need the committed baseline exe plus `yasm`
-and `capstone`; they disassemble what the build actually produced.
+`test_cave` needs the committed baseline exe and `capstone`; `test_overlay_build`
+also builds the feature, so it needs wine and the MSVC 7.1 toolchain. Both
+disassemble what the build actually produced.
 `test_game_records` reads `reverse/game_end/measured.jsonl` and holds every row
 against the prediction `tools/tests/rows.py` declared before it ran. None of
 them launch the game.

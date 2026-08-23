@@ -10,11 +10,17 @@ at a target, relocating the displaced instructions into the cave and returning.
 converted**, which puts the ~65% of `.text` still held as raw retail bytes in
 reach. `DllCharacteristics` is `0x0000`, so absolute addressing is safe.
 
+**A feature is one `.cpp`; no hand-written machine code survives.**
+`tools/modbuild.py` compiles it with the game's own MSVC 7.1, relocates the
+linked image into the cave, and reaches each entry through a shim `cave.py`
+*generates* (`pushad/pushfd/cld/push ecx/call`). There is no loader and no CRT,
+so the link is naked and fails on any unresolved external.
+
 The one feature detours `VictoryConditions::update` (`0x0035F920`) and
 `ConnectionManager::sendPlayerLeaveCommands` (`0x00665C10`), writing the JSONL
-of `docs/game-quitting.md`. Both bodies are `__declspec(naked)` `__asm` lifts —
-matched in the ledger, no semantics to edit — which is the only reason a detour
-is needed; convert one properly and its detour disappears. The overlay never
+of `docs/game-quitting.md`. Both targets are `__declspec(naked)` `__asm` lifts
+in the ledger — no semantics to edit — which is the only reason a detour is
+needed; convert one properly and its detour disappears. The overlay never
 touches `Code/` and never joins the byte-exact rebuild: a mod must not move the
 byte gate.
 
@@ -51,24 +57,23 @@ All covered by `test_cave.py`/`test_overlay_build.py`, each watched failing
 with its bug restored.
 
 1. Section `Characteristics` belong at `+0x24`; one field late they read `0`.
-2. yasm `-f bin` aligns its section — an unaligned `org` pads and the
-   trampoline lands short. Align every allocation.
-3. Resolve the landing address before emitting, not after.
-4. The relocated prologue follows the *whole* blob; jump past your helpers.
-5. `fputs(str, FILE*)` takes the string first; `fprintf` does not.
-6. Gate on state that is false *after* the match. The leave entry fires when a
-   player leaves a finished match too, so `d_started` or the network status
-   (still 1 on the score screen) appends a spurious `leave` to every game.
-7. A flag with no assertion behind it looks like a working one: `--probe`
-   passed doing nothing after a rewrite dropped its `%ifndef`.
+2. Resolve a blob's landing address before emitting it. Built for one address
+   and placed at another, every relative operand in it points at nothing.
+3. There is no CRT. A local over a page, 64-bit arithmetic or a float compile
+   to `__chkstk`/`__alldiv`/`__ftol2`, which nothing can resolve.
+4. `fputs(str, FILE*)` takes the string first; `fprintf` does not.
+5. Gate on state that is false *after* the match: the leave entry fires when a
+   player leaves a finished one too. Anything that only says "a match was in
+   progress" appends a spurious `leave` to every completed game.
+6. A flag with no assertion behind it looks like a working one: `--probe`
+   passed doing nothing after a rewrite dropped its guard.
+7. `link.exe` stamps the export directory with the clock. Left in, the
+   committed artifact is a different file on every rebuild.
 
 ## Building
 
 ```bash
-python3 tools/modbuild.py --dist    # -> overlay/dist/lotrbfme.exe
-python3 -m pytest tools/tests/test_cave.py tools/tests/test_overlay_build.py \
-                 tools/tests/test_game_records.py
+python3 tools/modbuild.py --dist    # -> overlay/dist/lotrbfme.exe (needs wine)
 ```
 
-Producing `measured.jsonl` means playing real LAN matches — see
-`docs/lan-testing.md`.
+Tests, and what producing `measured.jsonl` costs: `docs/lan-testing.md`.
