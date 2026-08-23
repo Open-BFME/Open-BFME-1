@@ -53,14 +53,15 @@ def build_gameresult(pe, feature_dir, probe=False):
         ("TAIL",       ']}\n'),
         ("FMT_PLAYER", '{"player":%d,"defeated":%d,"teamWon":%d}'),
         ("ENVNAME",    'BFME_RESULT_PATH'),
-        ("DEFPATH",    'GameResult.jsonl'),
+        ("APPDATA",    'APPDATA'),
+        ("FMT_PATH",   '%s\\My Battle for Middle-earth Files\\GameResult.jsonl'),
         ("MODE",       'a'),
         ("VICTORY",    'victory'),
         ("DEFEAT",     'defeat'),
         ("UNDECIDED",  'undecided'),
         ("EMPTY",      ''),
     ]
-    SCRATCH = 20                      # started, ended, result, file, nameptr
+    SCRATCH = 532                     # 5 dwords + a 512-byte path buffer
     pool, offsets = bytearray(), {}
     for name, text in strings:
         offsets["OFF_" + name] = len(pool)

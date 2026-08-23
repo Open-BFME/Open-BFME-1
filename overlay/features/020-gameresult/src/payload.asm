@@ -31,6 +31,7 @@ org CODE_VA
 %define IAT_fflush   0x013593A8
 %define IAT_getenv   0x013593FC
 %define IAT_time     0x013594F0
+%define IAT_sprintf  0x0135948C
 
 %define TheGameLogic 0x012F0898         ; FINDINGS: GameLogic global
 %define GL_DESYNC    0x6C               ; desync byte
@@ -55,7 +56,8 @@ org CODE_VA
 %define d_result       (DATA_VA + 8)
 %define d_file         (DATA_VA + 12)
 %define d_nameptr      (DATA_VA + 16)
-%define d_strings      (DATA_VA + 20)
+%define d_pathbuf      (DATA_VA + 20)      ; 512 bytes
+%define d_strings      (DATA_VA + 532)
 
 %define s_fmt_start    (d_strings + OFF_FMT_START)
 %define s_fmt_end      (d_strings + OFF_FMT_END)
@@ -63,7 +65,8 @@ org CODE_VA
 %define s_comma        (d_strings + OFF_COMMA)
 %define s_tail         (d_strings + OFF_TAIL)
 %define s_envname      (d_strings + OFF_ENVNAME)
-%define s_defpath      (d_strings + OFF_DEFPATH)
+%define s_appdata      (d_strings + OFF_APPDATA)
+%define s_fmt_path     (d_strings + OFF_FMT_PATH)
 %define s_mode         (d_strings + OFF_MODE)
 %define s_victory      (d_strings + OFF_VICTORY)
 %define s_defeat       (d_strings + OFF_DEFEAT)
@@ -282,13 +285,28 @@ start:
 ; ---- helpers: all cdecl, all clobber eax/ecx/edx only ----------------
 ; open_file: append mode, so records accumulate instead of overwriting.
 ; Returns FILE* in eax (also stashed at d_file), 0 on failure.
+; Two cases, not a fallback chain: an explicit BFME_RESULT_PATH wins, otherwise
+; the record lands beside the player's replays in
+;   %APPDATA%\My Battle for Middle-earth Files\GameResult.jsonl
+; which is per-user, always writable, and per-wine-prefix -- so two clients on
+; one host separate themselves with no configuration at all. The game's install
+; directory (the process cwd) is the wrong default: it is shared between
+; instances and read-only on a real Program Files install.
 open_file:
     push s_envname
     call dword [IAT_getenv]
     add  esp, 4
     test eax, eax
     jnz  .got
-    mov  eax, s_defpath
+    push s_appdata
+    call dword [IAT_getenv]
+    add  esp, 4
+    push eax
+    push s_fmt_path
+    push d_pathbuf
+    call dword [IAT_sprintf]
+    add  esp, 12
+    mov  eax, d_pathbuf
 .got:
     push s_mode
     push eax
