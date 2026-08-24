@@ -75622,3 +75622,4 @@ _Rva00811310,0x00811310,Y4 lane: SHA-1 block transform, the counterpart of the u
 ??_7DelayedLuaEventList@@6B@,0x01085E10,Open-BFME5 vtable the DelayedLuaEventList constructor at 0x000EDBB0 stores at +0
 ?_M_range_initialize@?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@AAEXPBG0ABUforward_iterator_tag@2@@Z,0x00013796,Open-BFME5 ILT the wide basic_string copy constructor at 0x004FB220 calls; it jumps to the 106-byte body at 0x004FA770
 ?gen00032943@@YAXPAX000@Z,0x00032943,address-derived callee of the 27-byte explicit-this forwarder family; target read from the REL32 at its call sites
+_ciChannelEntering,0x00871850,gamespy-chat: marks channel as entering
