@@ -356,19 +356,22 @@ def test_void_retracts_the_row_it_names_and_nothing_else():
     false_locator, measured = 0x0099D2E0, 0x0099D670
 
     def fresh(void_enabled):
-        re_log._BY_BOUNDARY = re_log._LATEST = None
+        re_log._reset()
         re_log.VOID_STATUS = "void" if void_enabled else "__void_disabled__"
         re_log._load()
 
     try:
         fresh(True)
-        assert not re_log.is_dead_end("_LoadInt", false_locator, boundary_moved=True), (
-            "the retracted boundary still suppresses candidates")
-        assert re_log.is_dead_end("_LoadInt", measured, boundary_moved=True), (
+        assert re_log.standing_status("_LoadInt", false_locator,
+                                      boundary_moved=True) is None, (
+            "the retracted boundary still governs candidates")
+        assert re_log.standing_status("_LoadInt", measured,
+                                      boundary_moved=True) == "blocked", (
             "voiding the typo also released the boundary that WAS measured")
 
         fresh(False)
-        assert re_log.is_dead_end("_LoadInt", false_locator, boundary_moved=True), (
+        assert re_log.standing_status("_LoadInt", false_locator,
+                                      boundary_moved=True) == "blocked", (
             "this test cannot fail on the broken code, so it proves nothing")
     finally:
         fresh(True)
@@ -396,11 +399,12 @@ def test_void_is_positional_so_a_later_verdict_still_stands(tmp_path, monkeypatc
         "?Sym@@QAEXXZ\t0x00401000\t16\tblocked\tmeasured this time\r\n",
         encoding="utf-8")
     monkeypatch.setattr(re_log, "RE_ATTEMPTS", log)
-    re_log._BY_BOUNDARY = re_log._LATEST = None
+    re_log._reset()
     try:
-        assert re_log.is_dead_end("?Sym@@QAEXXZ", 0x00401000, boundary_moved=True)
+        assert re_log.standing_status("?Sym@@QAEXXZ", 0x00401000,
+                                      boundary_moved=True) == "blocked"
     finally:
-        re_log._BY_BOUNDARY = re_log._LATEST = None
+        re_log._reset()
     print("PASS void retracts earlier rows only; a later verdict survives it")
 
 
