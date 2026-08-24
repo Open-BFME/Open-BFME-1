@@ -43,13 +43,26 @@ RE_ATTEMPTS = ROOT / "reverse" / "re_attempts.log"
 # back ten times. Anything unrecognised is treated as an annotation, so a new
 # status word leaks a candidate rather than burying one.
 DEAD_END_STATUSES = frozenset({
-    "no-match", "blocked", "not-convertible", "refuted", "attempted",
-    "negative", "abandoned", "no-boundary", "mis-anchored?", "identity-suspect",
+    "no-match", "not-convertible", "refuted",
+    "negative", "no-boundary", "mis-anchored?", "identity-suspect",
+})
+# A deferral is NOT a dead end, and conflating the two retired 535 symbols the
+# project cannot finish without. Every retail byte needs a C++ equivalent, so
+# "I could not match it" can only ever mean "not this session": the SEH-frame,
+# register-allocation and inlining-depth walls these rows record are properties
+# of the attempt, not proofs about the function. Worse, they were recorded by
+# agents working a body SOLO, and AGENTS.md's measured land rate is 19.5% solo
+# against 46.5% with ten or more siblings landed -- so a deferral is stale by
+# construction the moment its file drains. These come back; DEAD_END_STATUSES
+# stays for findings about the BOUNDARY (not a function, wrong anchor, refuted
+# identity), which re-serving cannot fix.
+DEFERRED_STATUSES = frozenset({
+    "blocked", "attempted", "abandoned",
 })
 RESOLVED_STATUSES = frozenset({
     "converted", "solved", "mapped", "landed",
 })
-VERDICT_STATUSES = DEAD_END_STATUSES | RESOLVED_STATUSES
+VERDICT_STATUSES = DEAD_END_STATUSES | RESOLVED_STATUSES | DEFERRED_STATUSES
 
 # `void` is not a verdict about the symbol — it is a retraction of the row it
 # names, and the only way an append-only log can take back an address that was
@@ -63,6 +76,7 @@ VOID_STATUS = "void"
 
 _BY_BOUNDARY = None   # {symbol: {rva|None: latest status}}
 _LATEST = None        # {symbol: latest status seen at any boundary}
+_ATTEMPTS = None      # {symbol: how many deferral rows it carries}
 
 
 def _parse(fields):
@@ -80,10 +94,10 @@ def _parse(fields):
 
 
 def _load():
-    global _BY_BOUNDARY, _LATEST
+    global _BY_BOUNDARY, _LATEST, _ATTEMPTS
     if _BY_BOUNDARY is not None:
         return
-    _BY_BOUNDARY, _LATEST = {}, {}
+    _BY_BOUNDARY, _LATEST, _ATTEMPTS = {}, {}, {}
     if not RE_ATTEMPTS.exists():
         return
     rows = []
@@ -118,14 +132,45 @@ def _load():
             continue
         _BY_BOUNDARY.setdefault(symbol, {})[rva] = status
         _LATEST[symbol] = status
+        if status in DEFERRED_STATUSES:
+            _ATTEMPTS[symbol] = _ATTEMPTS.get(symbol, 0) + 1
 
 
 def is_dead_end(symbol, rva=None, *, boundary_moved=False):
-    """True when serving `symbol` at `rva` would rerun a finished investigation.
+    """True when the standing verdict is a finding about the BOUNDARY.
 
-    `boundary_moved` is the caller's evidence that this candidate's address was
-    re-derived since the log was written (a drift snap): a verdict recorded
-    against a *different* boundary does not retire it. A verdict recorded
+    Only these retire a candidate: re-serving cannot turn "this RVA is not a
+    function" into a match. An agent's failure to match a real body is
+    is_deferred, not this. See standing_status for the boundary rules.
+    """
+    return standing_status(symbol, rva,
+                           boundary_moved=boundary_moved) in DEAD_END_STATUSES
+
+
+def is_deferred(symbol, rva=None, *, boundary_moved=False):
+    """True when the standing verdict is an agent's deferral, not a boundary finding.
+
+    Serving this again is correct -- see DEFERRED_STATUSES -- but it goes behind
+    every never-attempted candidate, so a body nobody has tried always outranks
+    one that already cost somebody an attempt.
+    """
+    return standing_status(symbol, rva,
+                           boundary_moved=boundary_moved) in DEFERRED_STATUSES
+
+
+def attempts(symbol):
+    """How many deferral rows `symbol` carries, for ordering and for reporting."""
+    _load()
+    return _ATTEMPTS.get(symbol, 0)
+
+
+def standing_status(symbol, rva=None, *, boundary_moved=False):
+    """The verdict that currently stands for `symbol` at `rva`, or None.
+
+    The boundary rules live here alone so every caller reads the log the same
+    way. `boundary_moved` is the caller's evidence that this candidate's address
+    was re-derived since the log was written (a drift snap): a verdict recorded
+    against a *different* boundary does not govern it. A verdict recorded
     against no boundary at all still does, because it is a finding about the
     symbol rather than about an address -- reading it the other way leaked 377
     already-investigated candidates back into the queue, every drift candidate
@@ -134,12 +179,12 @@ def is_dead_end(symbol, rva=None, *, boundary_moved=False):
     _load()
     verdicts = _BY_BOUNDARY.get(symbol)
     if not verdicts:
-        return False
+        return None
     if rva is not None and rva in verdicts:
-        return verdicts[rva] in DEAD_END_STATUSES
+        return verdicts[rva]
     if boundary_moved and None not in verdicts:
-        return False
-    return _LATEST.get(symbol) in DEAD_END_STATUSES
+        return None
+    return _LATEST.get(symbol)
 
 
 def _voidable(symbol, rva_text):

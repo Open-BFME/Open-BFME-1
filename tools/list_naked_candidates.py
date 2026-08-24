@@ -262,11 +262,15 @@ def rank_candidates(candidates):
 
 
 def drop_logged(candidates):
-    """Remove candidates the fleet has already investigated, per re_attempts.log.
+    """Remove candidates whose BOUNDARY the fleet has already refuted.
 
     This tool had no such filter, which is why one dump could be drawn and
     re-analysed by independent agents over and over — ??0FastAllocatorGeneral
-    was logged fourteen times and suppressed none of them."""
+    was logged fourteen times and suppressed none of them.
+
+    An agent's deferral is not a refutation: the dump still has to become C++,
+    so those are kept and tagged `deferred_attempts` for select_candidate to
+    order behind untried work. See tools/re_log.py."""
     kept, dropped = [], 0
     for item in candidates:
         rva = item.get("rva")
@@ -277,6 +281,8 @@ def drop_logged(candidates):
         if item["symbol"] and re_log.is_dead_end(item["symbol"], rva):
             dropped += 1
             continue
+        if item["symbol"] and re_log.is_deferred(item["symbol"], rva):
+            item["deferred_attempts"] = re_log.attempts(item["symbol"])
         kept.append(item)
     return kept, dropped
 
@@ -325,6 +331,9 @@ def select_candidate(candidates):
     rank_candidates(candidates)
     if not candidates:
         return None, {"pool": 0}
+    untried = [item for item in candidates if not item.get("deferred_attempts")]
+    if untried:
+        candidates = untried
     packets = packet_rvas()
     led = [item for item in candidates if candidate_packet(item, packets)]
     if led:

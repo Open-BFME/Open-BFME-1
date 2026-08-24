@@ -509,20 +509,27 @@ def drop_logged(candidates):
     reports the count so a shrunken queue is visibly explained, not mistaken
     for an exhausted tier.
 
-    A logged verdict is terminal for automatic selection — workers must not
-    rediscover a recorded dead end; --include-logged reopens it for humans.
-    It describes the boundary that agent actually examined, so a row only
-    retires a candidate while the boundary still matches: where the log
+    Only a BOUNDARY finding is terminal for automatic selection — workers must
+    not rediscover a recorded dead end; --include-logged reopens it for humans.
+    Such a verdict describes the boundary that agent actually examined, so it
+    retires a candidate only while the boundary still matches: where the log
     records the RVA (5-field shape) that comparison is exact. Where it records
     none, there is no boundary to have moved and the verdict stands however
-    the hint reads. See tools/re_log.py."""
+    the hint reads.
+
+    An agent's deferral (blocked/attempted/abandoned) is never terminal: every
+    retail byte still needs C++, so those candidates are kept and tagged
+    `deferred_attempts` instead, which weighted_choice reads to serve them only
+    once nothing untried is left. See tools/re_log.py."""
     kept, dropped = [], 0
     for candidate in candidates:
-        if re_log.is_dead_end(
-                candidate["function"], _candidate_rva(candidate),
-                boundary_moved="drift-corrected" in candidate.get("hint", "")):
+        moved = "drift-corrected" in candidate.get("hint", "")
+        rva = _candidate_rva(candidate)
+        if re_log.is_dead_end(candidate["function"], rva, boundary_moved=moved):
             dropped += 1
             continue
+        if re_log.is_deferred(candidate["function"], rva, boundary_moved=moved):
+            candidate["deferred_attempts"] = re_log.attempts(candidate["function"])
         kept.append(candidate)
     return kept, dropped
 
@@ -643,12 +650,43 @@ def candidate_weight(candidate):
         candidate.get("size") or candidate.get("target_size") or 1)
 
 
+def deferred_note(candidates):
+    """One line about deferred candidates in the pool, or None.
+
+    A deferral is served last, not hidden, so a pool that looks empty of fresh
+    work must say so rather than silently drawing a body somebody already
+    reverted once.
+    """
+    n = sum(1 for c in candidates if c.get("deferred_attempts"))
+    if not n:
+        return None
+    return (f"re_attempts: {n} candidate(s) carry an earlier deferral and are "
+            f"drawn only once untried work runs out")
+
+
 def weighted_choice(candidates):
     """Draw one candidate with probability proportional to candidate_weight.
 
     Still random, so concurrent contributors still rarely collide — collision
     avoidance never required a flat distribution.
+
+    Candidates carrying a deferral (an earlier agent hit a codegen wall and
+    reverted) are drawn from only when nothing untried is left, rather than
+    reweighted: tools/yield_model records what predicts landing and attempt
+    count is not among the measured features, so biasing the fitted draw on it
+    would be exactly the unmeasured weight that module warns against. Ordering
+    is a scheduling rule and claims nothing about probability. It also lets the
+    sibling effect do the work -- by the time the untried queue drains, the
+    file's other bodies have landed, which is the condition under which the
+    measured land rate more than doubles.
     """
+    fresh = [c for c in candidates if not c.get("deferred_attempts")]
+    if fresh:
+        candidates = fresh
+    else:
+        candidates = sorted(candidates, key=lambda c: c["deferred_attempts"])
+        fewest = candidates[0]["deferred_attempts"]
+        candidates = [c for c in candidates if c["deferred_attempts"] == fewest]
     weights = [candidate_weight(c) for c in candidates]
     cutoff = secrets.randbelow(sum(weights))
     for candidate, weight in zip(candidates, weights):
@@ -1096,8 +1134,9 @@ def main():
     label, candidates = selected_queue(args.tier, drifts, structural, ghidra_absent,
                                        anchored, named, packets)
     candidate = weighted_choice(candidates) if candidates else None
+    deferred = sum(1 for c in candidates if c.get("deferred_attempts"))
     meta = {"pool": len(candidates), "suppressed_logged": suppressed,
-            "shard": shard_meta}
+            "deferred_pool": deferred, "shard": shard_meta}
     if args.json:
         meta = dict(meta, cluster=[
             c["function"] for c in cluster_of(candidate, candidates)]) \
@@ -1109,6 +1148,9 @@ def main():
     if suppressed:
         print(f"re_attempts: {suppressed} candidate(s) hidden as already "
               f"investigated (--include-logged to show)")
+    note = deferred_note(candidates)
+    if note:
+        print(note)
     if validator_note(structural_meta):
         print(validator_note(structural_meta))
     if candidate is None:
