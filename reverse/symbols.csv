@@ -75626,3 +75626,4 @@ _ciChannelEntering,0x00871850,gamespy-chat: marks channel as entering
 _ciGetChannelCallbacks,0x00871AC0,gamespy-chat: retrieves channel callbacks
 _ciInChannel,0x00871C40,gamespy-chat: checks if client is in channel
 _ciGetChannelMode,0x00871C90,gamespy-chat: retrieves channel mode
+_ciSetChannelMode,0x00871D10,gamespy-chat: sets channel mode
