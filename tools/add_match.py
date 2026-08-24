@@ -120,6 +120,20 @@ def lookup_export_rva(root, name):
     return ""
 
 
+def remove_stash(rva, root):
+    """Drop the banked attempt for `rva` now that real C++ owns the address.
+
+    Only ever called after verification passes: the revert paths above restore
+    the tree, and a stash deleted there would take the next agent's head start
+    with it. tools/add_match_batch.py writes the ledger on its own and does NOT
+    call this, so a batch landing leaves its stash for check_csv to flag.
+    """
+    stash = Path(root) / "reverse" / "attempts" / f"0x{rva:08x}.cpp"
+    if stash.exists():
+        stash.unlink()
+        print(f"add_match: cleared banked attempt {stash.relative_to(Path(root)).as_posix()}")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -319,6 +333,7 @@ def main():
         fail(f"verification failed (exit {result.returncode}) — append and "
              "marker strip REVERTED; nothing was changed")
     print("add_match: verified OK — row is live")
+    remove_stash(rva, args.root)
 
 
 if __name__ == "__main__":

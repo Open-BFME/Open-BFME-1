@@ -261,6 +261,19 @@ def rank_candidates(candidates):
     return candidates
 
 
+def stash_for_item(item):
+    """(repo-relative stash path, score) for this candidate, or None."""
+    try:
+        rva = int(item["rva"], 16) if item.get("rva") else None
+    except ValueError:
+        rva = None
+    found = re_log.stash_for(rva) if rva is not None else None
+    if not found:
+        return None
+    path, score = found
+    return path.relative_to(build.ROOT).as_posix(), score
+
+
 def drop_logged(candidates):
     """Remove candidates whose BOUNDARY the fleet has already refuted.
 
@@ -504,8 +517,12 @@ def main():
                 }
             )
 
+    # NOT re_attempts.log: that file goes through drop_logged below, which
+    # honours latest-verdict-wins. This reader knows only the 3-field shape and
+    # no ordering, so feeding it the log would let a stale `no-match` silently
+    # out-vote the `partial` that released the candidate.
     retired = (set() if args.include_logged else
-               logged_no_match([RE_ATTEMPTS, *args.exclude_file]))
+               logged_no_match(args.exclude_file))
     retired_count = sum(candidate["symbol"] in retired for candidate in candidates)
     candidates = [candidate for candidate in candidates
                   if candidate["symbol"] not in retired]
@@ -524,6 +541,9 @@ def main():
         for candidate in candidates:
             item = {key: value for key, value in candidate.items() if key != "bytes"}
             item["bytes_hex"] = candidate["bytes"].hex()
+            stash = stash_for_item(candidate)
+            if stash:
+                item["stash"], item["score"] = stash
             serializable.append(item)
         print(json.dumps({"candidates": serializable,
                           "excluded_matched": already_matched,
@@ -542,6 +562,10 @@ def main():
             print(f"  START HERE: {meta['packet'].relative_to(build.ROOT)} — Zero Hour's "
                   "own source for this body, named and nearly aligned. Port it, then "
                   "close the gap against the disassembly the packet quotes.")
+        stash = stash_for_item(selected)
+        if stash:
+            print(f"  stash: {stash[0]} (score {stash[1]}) — a previous attempt "
+                  f"got this far; start from it")
         if selected["tracked"]:
             print(f"  verify: ./build.sh '{selected['symbol']}'")
         # The queue now serves gen_dump waves, whose bodies byte-verify by

@@ -124,3 +124,104 @@ def test_shipped_tombstone_file_parses():
     entries = check_csv.tombstones()
     assert entries, "reverse/deleted_rows.csv produced no entries"
     assert all(isinstance(rva, int) and reason for (_, rva), reason in entries.items()), entries
+
+
+# --- banked near-miss attempts (reverse/attempts/) -------------------------
+# check_attempts reads the state being gated through known_sources/read_ledger,
+# so these drive it with both stubbed rather than writing into the real repo.
+
+def _attempts_harness(monkeypatch, tmp_path, stash_body, ledger_rows=(),
+                      sources=()):
+    """Point check_attempts at one synthetic stash plus a synthetic ledger."""
+    rel = "reverse/attempts/0x000c8220.cpp"
+    files = {rel: stash_body}
+    files.update(sources)
+    for path, text in files.items():
+        target = tmp_path / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(text, encoding="utf-8")
+
+    ledger = (HEADER + "\r\n" + "".join(ledger_rows)).encode("utf-8")
+    monkeypatch.setattr(check_csv, "ROOT", tmp_path)
+    monkeypatch.setattr(check_csv, "known_sources", lambda spec: set(files))
+    monkeypatch.setattr(check_csv, "read_ledger",
+                        lambda path, spec: ledger if str(path).endswith("functions.csv")
+                        else Path(path).read_bytes())
+    problems = []
+    check_csv.check_attempts(None, problems)
+    return problems
+
+
+GOOD_HEADER = ("// ?readFromDict@Handicap@@QAEXPBVDict@@@Z\n"
+               "// partial score=0.99 date=2026-08-24\n")
+
+
+def test_attempts_accepts_a_well_formed_stash(tmp_path, monkeypatch):
+    problems = _attempts_harness(monkeypatch, tmp_path,
+                                 GOOD_HEADER + "void f() {}\n")
+    assert problems == [], problems
+
+
+def test_attempts_rejects_an_unparsable_header(tmp_path, monkeypatch):
+    problems = _attempts_harness(monkeypatch, tmp_path,
+                                 "// sym\n// no score\nvoid f() {}\n")
+    assert any("line 2 must read" in p for p in problems), problems
+
+
+def test_attempts_rejects_an_oversize_body(tmp_path, monkeypatch):
+    problems = _attempts_harness(monkeypatch, tmp_path,
+                                 GOOD_HEADER + "x" * (64 * 1024 + 1))
+    assert any("over 65536" in p for p in problems), problems
+
+
+def test_attempts_rejects_a_stash_whose_rva_has_real_cpp(tmp_path, monkeypatch):
+    """It landed: the body the stash was for now exists as authored C++."""
+    src = "Code/GameEngine/Source/Common/Handicap.cpp"
+    problems = _attempts_harness(
+        monkeypatch, tmp_path, GOOD_HEADER + "void f() {}\n",
+        ledger_rows=[f"?readFromDict@Handicap@@QAEXPBVDict@@@Z,,0x000C8220,362,{src},matched,\r\n"],
+        sources={src: "void Handicap::readFromDict(const Dict *d) { real(); }\n"})
+    assert any("already has real C++" in p for p in problems), problems
+
+
+def test_attempts_exempts_a_dump_backed_rva(tmp_path, monkeypatch):
+    """THE dump-lane regression guard, shaped on the real Handicap row.
+
+    Every candidate list_naked_candidates serves is already status=matched --
+    a naked transcription lands byte-verified -- so a bare matched-check would
+    reject exactly the stashes this feature exists to serve.
+    """
+    src = "Code/GameEngine/Source/Common/Handicap_readFromDict_Thunk.cpp"
+    problems = _attempts_harness(
+        monkeypatch, tmp_path, GOOD_HEADER + "void f() {}\n",
+        ledger_rows=[f"?readFromDict@Handicap@@QAEXPBVDict@@@Z,,0x000C8220,362,{src},matched,string-anchor Open-BFME4+Grok BUILDCOST\r\n"],
+        sources={src: "__declspec(naked) void Handicap::readFromDict(Dict const *)\n"
+                      "{ __asm { __emit 0x6a } }\n"})
+    assert problems == [], problems
+
+
+def test_attempts_rejects_a_misnamed_file(tmp_path, monkeypatch):
+    rel = "reverse/attempts/handicap.cpp"
+    target = tmp_path / rel
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(GOOD_HEADER + "void f() {}\n", encoding="utf-8")
+    monkeypatch.setattr(check_csv, "ROOT", tmp_path)
+    monkeypatch.setattr(check_csv, "known_sources", lambda spec: {rel})
+    monkeypatch.setattr(check_csv, "read_ledger",
+                        lambda path, spec: (HEADER + "\r\n").encode("utf-8"))
+    problems = []
+    check_csv.check_attempts(None, problems)
+    assert any("must be the lowercase rva" in p for p in problems), problems
+
+
+def test_attempts_exempts_an_asm_backed_rva(tmp_path, monkeypatch):
+    """A Code/gen_asm/*.asm row is retail re-encoded by extension alone: it
+    carries no __declspec(naked)/__emit token, so a body-text-only test reads
+    it as real C++ and rejects the stash. Caught by the pre-commit hook on the
+    first real seeding, not by review."""
+    src = "Code/gen_asm/d_00435170.asm"
+    problems = _attempts_harness(
+        monkeypatch, tmp_path, GOOD_HEADER + "void f() {}\n",
+        ledger_rows=[f"?d_00439280@@YAXXZ,,0x000C8220,82,{src},matched,gen-dump\r\n"],
+        sources={src: "d_00439280 PROC\n  db 0x55\nd_00439280 ENDP\n"})
+    assert problems == [], problems

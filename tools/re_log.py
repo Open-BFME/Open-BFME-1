@@ -30,6 +30,8 @@ way to take back a row — an address typed rather than measured stayed live
 forever, and the follow-up row could only ask a human to disregard it. `void`
 is the one status that retracts rather than decides; see VOID_STATUS.
 """
+import re
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -56,9 +58,14 @@ DEAD_END_STATUSES = frozenset({
 # construction the moment its file drains. These come back; DEAD_END_STATUSES
 # stays for findings about the BOUNDARY (not a function, wrong anchor, refuted
 # identity), which re-serving cannot fix.
+# `partial` is a deferral that also hands the next agent what the attempt
+# produced: the body is banked under reverse/attempts/<rva>.cpp and served
+# beside the candidate. Same class because it is the same fact about the
+# world -- an agent failed to match a real body -- and re-serving is correct.
 DEFERRED_STATUSES = frozenset({
-    "blocked", "attempted", "abandoned",
+    "blocked", "attempted", "abandoned", "partial",
 })
+STASH_STATUS = "partial"          # the one status that may carry a banked body
 RESOLVED_STATUSES = frozenset({
     "converted", "solved", "mapped", "landed",
 })
@@ -77,6 +84,14 @@ VOID_STATUS = "void"
 _BY_BOUNDARY = None   # {symbol: {rva|None: latest status}}
 _LATEST = None        # {symbol: latest status seen at any boundary}
 _ATTEMPTS = None      # {symbol: how many deferral rows it carries}
+
+
+def _reset():
+    """Drop the parsed index. Tests repoint RE_ATTEMPTS at a tmpdir, and
+    monkeypatch restores the attribute but not the cache built from it -- so
+    this belongs both before the repoint and in the test's finally."""
+    global _BY_BOUNDARY, _LATEST, _ATTEMPTS
+    _BY_BOUNDARY = _LATEST = _ATTEMPTS = None
 
 
 def _parse(fields):
@@ -215,11 +230,80 @@ def _voidable(symbol, rva_text):
     return False
 
 
+STASH_LIMIT = 64 * 1024
+# The range lives in the pattern so a hand-edited 5.0 is caught on read, not
+# quietly ranked above every honest stash.
+_STASH_SCORE = re.compile(r"^// partial score=(0(?:\.\d+)?|1(?:\.0+)?) date=\d{4}-\d{2}-\d{2}$")
+
+
+def _stash_path(rva):
+    """Beside the log, so repointing RE_ATTEMPTS in a test moves the stash too."""
+    return RE_ATTEMPTS.parent / "attempts" / f"0x{rva:08x}.cpp"
+
+
+def stash_for(rva):
+    """Return (path, score) for the attempt body banked at `rva`, else None.
+
+    The only reader of the header: serving ranks on the score and hygiene
+    validates the same two lines, and a second parser would let them disagree
+    about what a stash is. A file that exists but does not parse raises -- a
+    banked body whose score had to be guessed would be ranked on a lie.
+    """
+    path = _stash_path(rva)
+    if not path.exists():
+        return None
+    lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    score = _STASH_SCORE.match(lines[1]) if len(lines) > 1 else None
+    if not score:
+        raise ValueError(
+            f"{path}: line 2 must read '// partial score=<0..1> date=<iso>', "
+            f"got {lines[1:2]}. Rewrite it or delete the stash.")
+    return path, float(score.group(1))
+
+
 def stats():
     """Return (symbols carrying a live dead-end verdict, total symbols logged)."""
     _load()
     dead = sum(1 for status in _LATEST.values() if status in DEAD_END_STATUSES)
     return dead, len(_LATEST)
+
+
+def _take(argv, flag):
+    """Pull a trailing `--flag value` pair out of argv; returns (argv, value)."""
+    if flag not in argv:
+        return argv, None
+    at = argv.index(flag)
+    if at + 1 >= len(argv):
+        raise SystemExit(f"{flag} needs a value after it.")
+    return argv[:at] + argv[at + 2:], argv[at + 1]
+
+
+def _bank(symbol, rva_text, source_text, score_text):
+    """Copy an attempt body under reverse/attempts/ and return its evidence tokens.
+
+    Runs before the log row is appended: an orphan stash is visible to hygiene
+    and deletable, whereas a row pointing at a file that was never written sends
+    the next agent looking for evidence that does not exist.
+    """
+    if not 0.0 <= float(score_text) <= 1.0:
+        raise SystemExit(
+            f"--score {score_text} is outside 0..1. It is the fraction of the "
+            f"body believed right, and serving ranks the frontier on it.")
+    source = Path(source_text)
+    if not source.is_file():
+        raise SystemExit(f"--stash {source_text}: no such file to bank.")
+    size = source.stat().st_size
+    if not 0 < size <= STASH_LIMIT:
+        raise SystemExit(
+            f"--stash {source_text}: {size} bytes, outside 1..{STASH_LIMIT}. "
+            f"An empty body banks nothing; a huge one is not one function.")
+    score = float(score_text)
+    target = _stash_path(int(rva_text, 16))
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(
+        f"// {symbol}\n// partial score={score} date={date.today().isoformat()}\n"
+        .encode("utf-8") + source.read_bytes())
+    return f"score={score} stash={target.relative_to(RE_ATTEMPTS.parent.parent).as_posix()}"
 
 
 def _record(argv):
@@ -232,6 +316,12 @@ def _record(argv):
 
     Usage:
       python3 tools/re_log.py record <symbol> <rva> <size> <status> <evidence...>
+                                     [--stash <file> --score <0..1>]
+
+    `<status> = partial` is a near miss: the candidate stays servable and the
+    two flags bank the body you are about to revert as reverse/attempts/<rva>.cpp
+    for whoever draws it next. They come as a pair and only with `partial`;
+    `partial` on its own is a legal facts-only row.
 
     `<status> = void` retracts an earlier row instead of adding a verdict: pass
     the SAME symbol and rva as the row being taken back, and say in the evidence
@@ -241,6 +331,8 @@ def _record(argv):
     model=haiku ...") — that is what lets the selection weights in
     tools/yield_model.py be refit from outcomes instead of guessed.
     """
+    argv, stash_text = _take(argv, "--stash")
+    argv, score_text = _take(argv, "--score")
     if len(argv) < 5:
         raise SystemExit(_record.__doc__)
     symbol, rva_text, size_text, status = argv[0], argv[1], argv[2], argv[3]
@@ -248,7 +340,8 @@ def _record(argv):
     if status not in VERDICT_STATUSES and status != VOID_STATUS:
         raise SystemExit(
             f"unknown status {status!r}. Dead ends: {sorted(DEAD_END_STATUSES)}; "
-            f"resolutions: {sorted(RESOLVED_STATUSES)}; retraction: "
+            f"resolutions: {sorted(RESOLVED_STATUSES)}; frontier: "
+            f"deferrals: {sorted(DEFERRED_STATUSES)}; retraction: "
             f"{VOID_STATUS!r}. An unrecognised status "
             f"would be ignored by every queue, so it is refused here.")
     if status == VOID_STATUS and not _voidable(symbol, rva_text):
@@ -257,6 +350,17 @@ def _record(argv):
             f"A void that matches no row is a typo about a typo, and would sit "
             f"in the log forever looking like it had retracted something.")
     int(rva_text, 16), int(size_text)          # fail loudly on malformed fields
+    if (stash_text is None) != (score_text is None):
+        raise SystemExit(
+            "--stash and --score are one pair: a banked body nothing can rank "
+            "never gets served, and a score pointing at no body ranks nothing.")
+    if stash_text is not None:
+        if status != STASH_STATUS:
+            raise SystemExit(
+                f"--stash/--score belong to {STASH_STATUS!r}, not "
+                f"{status!r}: a dead end has nothing worth handing on, and a "
+                f"landed body belongs in Code/.")
+        evidence = f"{evidence} {_bank(symbol, rva_text, stash_text, score_text)}"
     row = f"{symbol}\t{rva_text}\t{size_text}\t{status}\t{evidence}\r\n"
     with RE_ATTEMPTS.open("ab") as handle:
         handle.write(row.encode("utf-8"))

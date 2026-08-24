@@ -11,6 +11,7 @@ Exit 0: both ledgers clean. Exit 1: every problem printed with the fix.
 import argparse
 import csv
 import io
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -274,6 +275,78 @@ def check_symbols(raw, problems):
     return len(rows) - 1
 
 
+ATTEMPTS_DIR = "reverse/attempts/"
+ATTEMPT_NAME = re.compile(r"^0x[0-9a-f]{8}\.cpp$")
+ATTEMPT_LIMIT = 64 * 1024
+
+
+def _attempt_paths(spec):
+    """Stash files as they exist in the state being gated, never on disk.
+
+    A working-tree scan would fail an unrelated `--ref` push over a stray
+    uncommitted file, so this reads the same source of truth known_sources does.
+    """
+    return sorted(p for p in known_sources(spec)
+                  if p.startswith(ATTEMPTS_DIR) and p != ATTEMPTS_DIR)
+
+
+def check_attempts(spec, problems):
+    """Validate banked near-miss bodies under reverse/attempts/.
+
+    A stash is evidence handed to the next agent, so a malformed one is worse
+    than none: it gets served at a score nobody measured. Absent directory means
+    nothing banked yet, which is the normal state and passes.
+    """
+    paths = _attempt_paths(spec)
+    if not paths:
+        return 0
+    import re_log
+
+    matched = {}
+    for row in csv.reader(io.StringIO(read_ledger(FUNCTIONS, spec).decode(
+            "utf-8", errors="replace"))):
+        if len(row) == 7 and row[5] == "matched":
+            matched.setdefault(row[2].lower(), []).append((row[0], row[4]))
+
+    for rel in paths:
+        name = rel[len(ATTEMPTS_DIR):]
+        if not ATTEMPT_NAME.match(name):
+            problems.append(
+                f"{rel}: name must be the lowercase rva it banks, e.g. "
+                f"0x000c8220.cpp — serving looks the stash up by address.")
+            continue
+        blob = read_ledger(ROOT / rel, spec)
+        if len(blob) > ATTEMPT_LIMIT:
+            problems.append(f"{rel}: {len(blob)} bytes, over {ATTEMPT_LIMIT}. "
+                            f"That is not one function body; delete it.")
+        lines = blob.decode("utf-8", errors="replace").splitlines()
+        if len(lines) < 2 or not re_log._STASH_SCORE.match(lines[1]):
+            problems.append(
+                f"{rel}: line 2 must read '// partial score=<0..1> date=<iso>'. "
+                f"An unreadable score cannot be ranked; rewrite or delete it.")
+            continue
+        rva = name[:-len(".cpp")]
+        claims = matched.get(rva, [])
+        # A stash on a matched rva is an orphan ONLY when real C++ already owns
+        # it. Every dump candidate is matched by construction -- a naked
+        # transcription lands byte-verified -- and converting those is exactly
+        # what a stash is for, so the dump lane must survive this check.
+        for sym, source in claims:
+            # Same two-part test progress.py uses to route a row to its `dump`
+            # lane: an .asm/.lib row is retail re-encoded by extension alone,
+            # and a .cpp row is one when its body is a naked/__emit lift.
+            if Path(source).suffix.lower() in (".asm", ".s", ".lib"):
+                continue
+            text = read_ledger(ROOT / source, spec).decode("utf-8", errors="replace")
+            if "__declspec(naked)" in text or "_emit" in text:
+                continue
+            problems.append(
+                f"{rel}: {rva} already has real C++ at {source} ({sym}). "
+                f"It landed — delete the stash.")
+            break
+    return len(paths)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -288,6 +361,7 @@ def main():
     problems = []
     n_funcs = check_functions(read_ledger(FUNCTIONS, spec), problems, known_sources(spec))
     n_syms = check_symbols(read_ledger(SYMBOLS, spec), problems)
+    check_attempts(spec, problems)
 
     if problems:
         print(f"check_csv: {len(problems)} problem(s):", file=sys.stderr)

@@ -46,11 +46,17 @@ staged_sources=()
 ledger_changed=0
 wide_change=0
 baseline_changed=0
+attempts_changed=0
 while IFS= read -r path; do
     case "$path" in
         Code/*.cpp) staged_sources+=("$path") ;;
         reverse/pin_consistency_baseline.csv) baseline_changed=1 ;;
         reverse/functions.csv|reverse/symbols.csv) ledger_changed=1 ;;
+        # A stash-only commit changes no ledger and no source, so without this
+        # it takes the early exit below and check_csv never validates the very
+        # file it just added. It stays out of the byte-verify set: a banked
+        # body is evidence, not a compiled source.
+        reverse/attempts/*) attempts_changed=1 ;;
         # A header or shim recompiles many TUs while changing NO ledger rows,
         # so the delta byte-verify below would prove nothing. Any such change
         # forces the full gate — this is exactly how a layout-shim experiment
@@ -69,15 +75,20 @@ done < <(git diff --cached --name-only --diff-filter=ACMRT)
 # into the byte-exact rebuild -- keeping them out of Code/ is what stops a mod
 # from ever influencing the byte gate. They would fail this check as .asm
 # files, so the list names the tree explicitly rather than being bypassed.
+#
+# reverse/attempts/ is named for the same reason: a banked near-miss body is
+# evidence for the next agent, never a compiled source, so it must sit outside
+# Code/ where verify_source_claims would demand matched rows for it.
 while IFS= read -r path; do
     case "$path" in
-        Code/GameEngine/*|Code/GameEngineDevice/*|Code/Libraries/*|Code/gen_small/*|Code/gen_asm/*|Code/masm_dumps/*|reference/shims/*|reference/CnC_Generals_Zero_Hour/*|tools/tests/*|build/toolchains/*|overlay/*) ;;
+        Code/GameEngine/*|Code/GameEngineDevice/*|Code/Libraries/*|Code/gen_small/*|Code/gen_asm/*|Code/masm_dumps/*|reference/shims/*|reference/CnC_Generals_Zero_Hour/*|tools/tests/*|build/toolchains/*|overlay/*|reverse/attempts/*) ;;
         *) fail "source added outside official tree: $path — see AGENTS.md 'File placement'" ;;
     esac
 done < <(git diff --cached --name-only --diff-filter=A | grep -E '\.(cpp|c|h|hpp|asm)$' || true)
 
 if [ "${#staged_sources[@]}" -eq 0 ] && [ "$ledger_changed" -eq 0 ] \
-   && [ "$wide_change" -eq 0 ] && [ "$baseline_changed" -eq 0 ]; then
+   && [ "$wide_change" -eq 0 ] && [ "$baseline_changed" -eq 0 ] \
+   && [ "$attempts_changed" -eq 0 ]; then
     exit 0
 fi
 

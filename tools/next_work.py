@@ -504,6 +504,36 @@ def _candidate_rva(candidate):
         return None
 
 
+def annotate_stashes(candidates):
+    """Hang the banked attempt on every candidate that has one.
+
+    Done once here rather than at each output site, so the JSON, the ranked
+    view and the selected view cannot disagree about what is banked.
+    """
+    for candidate in candidates:
+        rva = _candidate_rva(candidate)
+        found = re_log.stash_for(rva) if rva is not None else None
+        if found:
+            path, score = found
+            candidate["stash"] = path.relative_to(ROOT).as_posix()
+            candidate["score"] = score
+    return candidates
+
+
+def stash_line(candidate):
+    """The one-line pointer at a banked body, or None. Printed beside `start:`."""
+    if "stash" not in candidate:
+        return None
+    return (f"       stash: {candidate['stash']} (score {candidate['score']}) "
+            f"— a previous attempt got this far; start from it")
+
+
+def _print_stash(candidate):
+    line = stash_line(candidate)
+    if line:
+        print(line)
+
+
 def drop_logged(candidates):
     """Filter one queue, returning (kept, dropped_count). Never silent: main()
     reports the count so a shrunken queue is visibly explained, not mistaken
@@ -906,12 +936,14 @@ def print_candidate(label, candidate, meta, candidates=()):
         print(f"       {candidate['target_rva']} — Zero Hour's own body for this "
               f"address already agrees on {candidate['aligned_pct']}% of the "
               f"non-relocation bytes")
+        _print_stash(candidate)
         print(f"       start: read {candidate['packet']}, port {candidate['source']}")
         return
     if label == "reloc-named unclaimed function":
         print(f"  {candidate['size']:>5}B  {candidate['function']}")
         print(f"       {candidate['target_rva']} ({candidate['notes']}) — named by a "
               f"byte-true call in {candidate['source']}")
+        _print_stash(candidate)
         print(f"       start: {candidate['command']}")
         # No file cluster here: the whole point of this tier is that the body
         # has no source file yet, so there is no translation unit to drain and
@@ -927,6 +959,7 @@ def print_candidate(label, candidate, meta, candidates=()):
               f"{candidate['function']}")
         print(f"       {candidate['source']} @ {candidate['candidate_rva']}  "
               f"hint: {candidate['hint']}")
+        _print_stash(candidate)
         print(f"       fix the literal in source, then byte-verify: {candidate['command']}")
     elif label == "structural reconciliation":
         print(f"  {candidate['aligned_pct']:>3}% {candidate['size']:>5}B "
@@ -939,6 +972,7 @@ def print_candidate(label, candidate, meta, candidates=()):
         if shared > 0:
             print(f"       {shared} other drifted name(s) claim this same address; "
                   f"the body decides which one it is")
+        _print_stash(candidate)
         print(f"       start: {candidate['command']}")
     elif label == "string-anchored unclaimed function":
         print(f"  {candidate['confidence']:<6} {candidate['size']:>5}B "
@@ -948,6 +982,7 @@ def print_candidate(label, candidate, meta, candidates=()):
               + (f" (+{candidate['alternates']} other file(s))"
                  if candidate['alternates'] else ""))
         print(f"       local source: {candidate['source']}")
+        _print_stash(candidate)
         print(f"       start: {candidate['command']}")
     else:
         anchors = ", ".join(repr(value) for value in candidate["anchors"][:3])
@@ -956,6 +991,7 @@ def print_candidate(label, candidate, meta, candidates=()):
         print(f"       {candidate['source']} -> {candidate['target_rva']} "
               f"{candidate['ghidra_name']} ({len(candidate['anchors'])} anchor(s): "
               f"{anchors}; {candidate['alternates']} alternate(s))")
+        _print_stash(candidate)
         print(f"       start: {candidate['command']}")
     print_cluster(candidate, candidates)
 
@@ -977,6 +1013,7 @@ def print_ranked(args, ledger, drifts, structural, ghidra_meta, ghidra_absent,
             print(f"  {candidate['size']:>5}B  {candidate['function']}")
             print(f"       {candidate['target_rva']} named by a call in "
                   f"{candidate['source']} ({candidate['notes']})")
+            _print_stash(candidate)
             print(f"       start: {candidate['command']}")
 
     if args.tier not in ("named", "structural", "ghidra"):
@@ -1000,6 +1037,7 @@ def print_ranked(args, ledger, drifts, structural, ghidra_meta, ghidra_absent,
                   + (f"  (+{shared} name(s) at this address)" if shared > 0 else ""))
             print(f"       {candidate['source']} @ {candidate['candidate_rva']}  "
                   f"hint: {candidate['hint']}")
+            _print_stash(candidate)
             print(f"       start: {candidate['command']}")
 
     if args.tier in (None, "ghidra"):
@@ -1014,6 +1052,7 @@ def print_ranked(args, ledger, drifts, structural, ghidra_meta, ghidra_absent,
             print(f"       {candidate['source']} -> {candidate['target_rva']} "
                   f"{candidate['ghidra_name']} ({len(candidate['anchors'])} anchor(s): "
                   f"{anchors}; {candidate['alternates']} alternate(s))")
+            _print_stash(candidate)
             print(f"       start: {candidate['command']}")
 
     if args.tier in ("named", "structural", "ghidra"):
@@ -1100,6 +1139,8 @@ def main():
     structural = apply_shard(structural, args.shard)
     ghidra_absent = apply_shard(ghidra_absent, args.shard)
     anchored = apply_shard(anchored, args.shard)
+    for queue in (named, drifts, structural, ghidra_absent, anchored):
+        annotate_stashes(queue)
     shard_meta = (None if args.shard is None else
                   {"index": args.shard[0], "count": args.shard[1]})
 
