@@ -75628,3 +75628,4 @@ _ciInChannel,0x00871C40,gamespy-chat: checks if client is in channel
 _ciGetChannelMode,0x00871C90,gamespy-chat: retrieves channel mode
 _ciSetChannelMode,0x00871D10,gamespy-chat: sets channel mode
 _ciSetChannelPassword,0x00871D80,gamespy-chat: sets channel password
+?clear@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@@_STL@@QAEXXZ,0x009CAC00,Open-BFME5 clear the ArchivedDirectoryInfo tree destructor at 0x009C9570 calls; the ledger already carries this address under a machine-derived template name
