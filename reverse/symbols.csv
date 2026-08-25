@@ -11810,6 +11810,7 @@ name,address,notes
 ?addDisconnectPlayerCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0067B750,addCommand's jump-table arm for command type 25
 ?addDisconnectScreenOffCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00023079,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addDisconnectScreenOffCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00679810,addCommand's jump-table arm for command type 28
+?addChatLog@Rva007F1F60Feedback@@QAEXPAVRva007E8810Message@@PBURva007F2080ChatLog@@H@Z,0x007F2080,V2 lane: FESL feedback request chat-log array serializer
 ?addDisconnectVoteCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x000422F8,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addDisconnectVoteCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0067B480,addCommand's jump-table arm for command type 26
 ?addDrawableToLookupTable@GameClient@@QAEXPAVDrawable@@@Z,0x0003CC4A,Open-BFME5 setID retail REL32 pin
@@ -11864,6 +11865,7 @@ name,address,notes
 ?addString@Rva007E8810Message@@QAEXPBD0@Z,0x007E8A10,V2 lane: FESL message append key/value string field
 ?addSupplyCenter@ResourceGatheringManager@@QAEXPAVObject@@@Z,0x0001E23B,Open-BFME5 ILT from zh_sweep packet 002503b0
 ?addSupplyWarehouse@ResourceGatheringManager@@QAEXPAVObject@@@Z,0x00028646,pinned by SupplyWarehouseCreate::onCreate packet 002505a0
+?addTargetIds@Rva007F1F60Feedback@@QAEXPAVRva007E8810Message@@PBURva007F2010TargetId@@H@Z,0x007F2010,V2 lane: FESL feedback request target-id array serializer
 ?addTeam@TeamsInfoRec@@QAEXPBVDict@@@Z,0x0000D828,pinharvest x4 (thunk)
 ?addTeam@TeamsInfoRec@@QAEXPBVDict@@@Z,0x0003275E,pinharvest x2 (thunk)
 ?addTimeOutGameStartMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00037263,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
