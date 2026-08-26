@@ -3694,6 +3694,7 @@ name,address,notes
 ??0_bfme_AptGameWindow@@QAE@PAX@Z,0x00465310,mechanics-derived name: GameWindow ctor ILT 0x0001B9FA then vtable 0x010F711C and the secondary vtable 0x010F7118 at +0x218; zeroes +0x21c..+0x248; AsciiString +0x24c; +0x250 = -1; byte +0x254; constructed inside the APT screen ctors 0x0052C660 0x0055D150 0x00563370 0x0056A2F0 (BfmeAptScreenQuitMenu) 0x0056E980; ILT 0x00039B6C
 ??0file_auto_ptr@@QAE@PAVFileFactoryClass@@PBD@Z,0x009DD4F0
 ??0ios_base@_STL@@IAE@XZ,0x0083F6B0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Streams.cpp
+??0locale@_STL@@QAE@ABV01@@Z,0x00832150,STLport 4.5.3 locale copy constructor; address read from the retail pubimbue REL32 displacement
 ??0locale@_STL@@QAE@XZ,0x00832120,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ??1?$SimpleDynVecClass@VVector3@@@@UAE@XZ,0x00887940
 ??1?$StringBase@D@@AAE@XZ,0x00887940,NetCommandMsg_text.cpp setters call the destructor body directly; the ledger row at 0x0005E490 is its incremental-link thunk
@@ -9108,6 +9109,7 @@ name,address,notes
 ??4WeatherSetting@@QAEAAV0@ABV0@@Z,0x00046C04,harvested from parseWeatherDefinition (thunk)
 ??4Y3AssignTail_005CBEE0@@QAEAAV0@ABV0@@Z,0x005CBEE0,Y4 lane: restored pin a concurrent whole-file rewrite of reverse/symbols.csv dropped; address is the one the Y3 lane encodes in its own address-derived name and the byte gate confirms it
 ??4_ArcInfoStruct@VehicleCurveClass@@QAEAAU01@ABU01@@Z,0x00933C60,additive pin -- second copy of the assignment op compiled against a 116-byte _ArcInfoStruct (packet 009347c0)
+??4locale@_STL@@QAEABV01@ABV01@@Z,0x00832180,STLport 4.5.3 locale assignment; address read from the retail pubimbue REL32 displacement
 ??8?$VectorClass@H@@UBE_NABV0@@Z,0x00AFEDF0
 ??8@YAHABVMatrix4x4@@0@Z,0x00B01950,zh-sweep callee pin derived from retail REL32 displacement
 ??8@YA_NABUGen_t_00642f90_m12cd@@0@Z,0x008574E0,family-emit payload member
