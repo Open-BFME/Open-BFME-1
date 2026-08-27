@@ -3597,7 +3597,6 @@ void Weapon::loadPostProcess( void )
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
-// ?appendBonuses@WeaponBonus@@QBEXAAV1@@Z present-unmatched
 void WeaponBonus::appendBonuses(WeaponBonus& bonus) const
 {
 	Real *destination = bonus.m_field;
