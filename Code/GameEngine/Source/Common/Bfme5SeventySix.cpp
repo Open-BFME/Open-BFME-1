@@ -26,23 +26,40 @@ void Gen_0078D130::bfmeAdjust(int firstX, int firstY, int secondX, int secondY)
 class BfmeCellFC
 {
 public:
-	int m_bfmeFirst;					// +0x00
-	int m_bfmeSecond;					// +0x04
+	~BfmeCellFC();
+
+	unsigned char m_bfmeKind;				// +0x00
+	unsigned char m_bfmeGap[3];				// +0x01
+	int m_bfmeValue;					// +0x04
 };
+
+BfmeCellFC::~BfmeCellFC()
+{
+}
 
 class Gen_008812D0
 {
 public:
+	~Gen_008812D0();
 	BfmeCellFC *bfmeAt(int x, int y) const;
 	void bfmeGetCellRange(BfmeCellFC **first, BfmeCellFC **last,
 		int x1, int x2, int y);
 
 private:
-	int m_bfmeHead[8];					// +0x00
+	float m_bfmeOriginX;					// +0x00
+	float m_bfmeOriginY;					// +0x04
+	unsigned char m_bfmeHead[0x14];			// +0x08
+	float m_bfmeCellSizeInv;				// +0x1C
 	int m_bfmeWidth;					// +0x20
 	int m_bfmeHeight;					// +0x24
 	BfmeCellFC *m_bfmeCells;				// +0x28
 };
+
+// ??1Gen_008812D0@@QAE@XZ
+Gen_008812D0::~Gen_008812D0()
+{
+	delete[] m_bfmeCells;
+}
 
 // ?bfmeAt@Gen_008812D0@@QBEPAVBfmeCellFC@@HH@Z
 BfmeCellFC *Gen_008812D0::bfmeAt(int x, int y) const
