@@ -72647,6 +72647,7 @@ name,address,notes
 ?bfmeIsSet@BfmeGameOverGateA@@QAE_NXZ,0x000330DC,Open-BFME5 ILT the first early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012ED748 is unidentified
 ?bfmeIsSet@BfmeGameOverGateB@@QAE_NXZ,0x0000CFC7,Open-BFME5 ILT the second early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012F076C is unidentified
 ?bfmeIterate@BfmeIterableObject@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x0003DB68,Open-BFME5 ILT the per-object visit in Player::iterateObjects at 0x000CDCF0 calls; it jumps to 0x000EE770
+?bfmeVisit@BfmeInnerIterable@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x000EDAB0,"address-derived inner-list visitor callee of BfmeIterableObject::bfmeIterate; retail reaches it through the low-RVA thunk at 0x0002DC1D"
 ?bfmeLookupA@@YAHPAX@Z,0x0000B1AE,Open-BFME5 ILT the bit setter at 0x001C3FB0 looks up through
 ?bfmeLookupB@@YAHPAX@Z,0x000052CC,Open-BFME5 ILT the bit setter at 0x001C4020 looks up through
 ?bfmeLookupC@@YAHPAX@Z,0x00031246,Open-BFME5 ILT the bit setter at 0x0020EC60 looks up through

@@ -1,4 +1,5 @@
 name,target_rva,reason
+?d_000ee770@@YAXXZ,0x000EE770,"gen-dump placeholder superseded by the recovered BfmeIterableObject::bfmeIterate identity and exact C++ body"
 ?d_0040eff0@@YAXXZ,0x0040EFF0,"gen-dump placeholder superseded by the recovered Display::bfmeStopMovie identity and exact C++ body"
 ?d_005ef9a0@@YAXXZ,0x005EF9A0,"gen-dump placeholder superseded by the recovered BfmeSubAccept_00007289 identity and exact C++ body"
 ?d_005ee650@@YAXXZ,0x005EE650,"gen-dump placeholder superseded by the recovered BfmeSubAccept_000061B3 identity and exact C++ body"

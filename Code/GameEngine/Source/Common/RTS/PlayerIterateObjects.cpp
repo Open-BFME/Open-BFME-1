@@ -25,11 +25,44 @@ class Object;
 
 typedef void (*ObjectIterateFunc)(Object *object, void *userData);
 
+class BfmeInnerIterable
+{
+public:
+	Int bfmeVisit(ObjectIterateFunc func, void *userData);
+};
+
+class Gen_000c8a30
+{
+public:
+	Int m(void);
+};
+
 class BfmeIterableObject
 {
 public:
 	Int bfmeIterate(ObjectIterateFunc func, void *userData);	// ILT 0x0003DB68
+
+private:
+	char m_bfmeHead[0x274];
+	BfmeInnerIterable *m_bfmeInnerList;				// +0x274
 };
+
+// ?bfmeIterate@BfmeIterableObject@@QAEHP6AXPAVObject@@PAX@Z1@Z		70 bytes
+Int BfmeIterableObject::bfmeIterate(ObjectIterateFunc func, void *userData)
+{
+	BfmeInnerIterable *node = m_bfmeInnerList;
+
+	while (node)
+	{
+		if (!node->bfmeVisit(func, userData))
+			return 0;
+
+		if (node)
+			node = (BfmeInnerIterable *)((Gen_000c8a30 *)node)->m();
+	}
+
+	return 1;
+}
 
 class BfmeObjectListNode
 {
