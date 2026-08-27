@@ -378,10 +378,10 @@ void	VertexMaterialClass::Set_Shininess(float shin)
 	Material->Power=shin;
 }
 
-// ?Get_Opacity@VertexMaterialClass@@QBEMXZ present-unmatched
 float	VertexMaterialClass::Get_Opacity(void) const
 {
-	return Material->Diffuse.a;
+	const D3DMATERIAL8 *material = *reinterpret_cast<const D3DMATERIAL8 *const *>(reinterpret_cast<const char *>(this) + 8);
+	return material->Diffuse.a;
 }
 
 // ?Set_Opacity@VertexMaterialClass@@QAEXM@Z present-unmatched
