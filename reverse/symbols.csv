@@ -20037,8 +20037,6 @@ name,address,notes
 ?b_000ffe20@@YAXXZ,0x000FFE20,gen-thunk body
 ?b_000ffe30@@YAXXZ,0x000FFE30,gen-thunk body
 ?b_00100300@@YAXXZ,0x00100300,gen-thunk body
-?bfmeAssign@BfmeCopySubA@@QAEXPAU1@@Z,0x000FF8F0,Open-BFME5 helper assignment body used by BfmeCopyElementA
-?bfmeAssign@BfmeCopySubB@@QAEXPAU1@@Z,0x000FFA60,Open-BFME5 helper assignment body used by BfmeCopyElementA
 ?b_001003c0@@YAXXZ,0x001003C0,gen-thunk body
 ?b_00100570@@YAXXZ,0x00100570,gen-thunk body
 ?b_00100580@@YAXXZ,0x00100580,gen-thunk body
@@ -72218,6 +72216,8 @@ name,address,notes
 ?bfmeAssign@BfmeCopyElementD@@QAEXPAU1@@Z,0x00024BA9,Open-BFME5 the element assign the copy loops call
 ?bfmeAssign@BfmeCopyElementE@@QAEXPAU1@@Z,0x0001F753,Open-BFME5 the element assign the copy loops call
 ?bfmeAssign@BfmeCopyElementF@@QAEXPAU1@@Z,0x0001B1D5,Open-BFME5 the element assign the copy loops call
+?bfmeAssign@BfmeCopySubA@@QAEXPAU1@@Z,0x000FF8F0,Open-BFME5 helper assignment body used by BfmeCopyElementA
+?bfmeAssign@BfmeCopySubB@@QAEXPAU1@@Z,0x000FFA60,Open-BFME5 helper assignment body used by BfmeCopyElementA
 ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z,0x0000C0A4,Open-BFME5 ILT thunk to body 0x00497CE0; ??0BfmeQuickMatchScreenBase@@QAE@PAX@Z at 0x00470620 calls it on this with its own argument as the last thing it does; address-derived name
 ?bfmeBegin@BfmeSetupRecord@@QAEXXZ,0x007E8AC0,Open-BFME5 the member the two-field setup stubs call first
 ?bfmeBegin@BfmeSetupTarget@@QAEXXZ,0x007E8AC0,Open-BFME5 the member the setup stubs at 0x007E95A0 and siblings call first
