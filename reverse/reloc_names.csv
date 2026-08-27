@@ -1001,7 +1001,7 @@ _Rva0051D1E0Forward,0x0051D1E0,149,Code/GameEngine/Source/Common/Rva0051D2A0Forw
 ?selectFriends@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@_N@Z,0x005B8230,407,Code/GameEngine/Source/GameClient/MessageStream/SelectionXlat.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_005bbdf0@@UAE@XZ,0x005BBA80,187,Code/gen_small/dtors_006.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_005bc790@@UAE@XZ,0x005BC020,186,Code/gen_small/dtors_006.cpp,reloc-derived;call-sites=1;identity=generated
-?destroy@ParticleSystem@@QAEXXZ,0x005C1FB0,52,Code/GameEngine/Source/GameClient/ParticleSystemManager_destroyByID.cpp,reloc-derived;call-sites=1;identity=real
+?destroy@ParticleSystem@@QAEXXZ,0x005C1FB0,52,Code/GameEngine/Source/GameClient/ParticleSystem_destroy.cpp,reloc-derived;call-sites=1;identity=real
 ?u1Check_005C2CD0@@YA_NPAX@Z,0x005C2CD0,96,Code/GameEngine/Source/Common/U1ZeroingCtorAndInserters.cpp,reloc-derived;call-sites=1;identity=real
 ?findParticleSystemByID@ParticleSystemManager@@AAE?AVBfmeParticleSystemHandle@@W4ParticleSystemID@@@Z,0x005C3B30,171,Code/GameEngine/Source/GameClient/ParticleSystemManager_destroyByID.cpp,reloc-derived;call-sites=1;identity=real
 ?apply@T1Recv_005C47D0@@QAEXPAVT1Arg_005C47D0@@@Z,0x005C47D0,399,Code/GameEngine/Source/Common/T1ReceiverSwappingThunks.cpp,reloc-derived;call-sites=1;identity=real
