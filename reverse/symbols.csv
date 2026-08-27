@@ -1184,6 +1184,7 @@ name,address,notes
 ??0?$VectorClass@VProxyClass@@@@QAE@HPBVProxyClass@@@Z,0x009080A0,pinharvest x1 (body)
 ??0?$VectorClass@VProxyClass@@@@QAE@HPBVProxyClass@@@Z,0x0092FBA0,pinharvest x1 (body)
 ??0?$VectorClass@VProxyClass@@@@QAE@HPBVProxyClass@@@Z,0x009305D0,pinharvest x1 (body)
+??0?$VectorClass@VRender2DBatchClass@@@@QAE@HPBVRender2DBatchClass@@@Z,0x00933D30,Render2D ctor TU-scoped alias for BFME ProxyClass vector base ctor
 ??0?$VectorClass@VRenderDeviceDescClass@@@@QAE@HPBVRenderDeviceDescClass@@@Z,0x000187AF,pinharvest x1 (thunk)
 ??0?$VectorClass@VRenderDeviceDescClass@@@@QAE@HPBVRenderDeviceDescClass@@@Z,0x0001D16F,pinharvest x1 (thunk)
 ??0?$VectorClass@VRenderDeviceDescClass@@@@QAE@HPBVRenderDeviceDescClass@@@Z,0x00906240,pinharvest x1 (body)
