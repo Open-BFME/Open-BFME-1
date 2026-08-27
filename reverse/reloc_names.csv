@@ -1471,7 +1471,7 @@ _piProcessIncoming,0x00873170,271,Code/GameEngine/Source/GameNetwork/GameSpy/pee
 ??1Gen_dtor_00881180@@UAE@XZ,0x00880FC0,115,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ?bfmeAccept@BfmeSinkA@@QAEXPAVBfmeFlagTarget@@@Z,0x008815A0,453,Code/GameEngine/Source/Common/S3InsertAndDescribe.cpp,reloc-derived;call-sites=1;identity=real
 ?bfmeConfigure@Gen_008812D0@@QAEXURegion3D@@M@Z,0x00881800,659,Code/GameEngine/Source/Common/Bfme5SeventySix.cpp,reloc-derived;call-sites=1;identity=generated
-?_bfme_debugRecordCallsite@@YAXH@Z,0x008896A0,33,Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp,reloc-derived;call-sites=6;identity=real
+?_bfme_debugRecordCallsite@@YAXH@Z,0x008896A0,33,Code/GameEngine/Source/Common/Debug_recordCallsite.cpp,reloc-derived;call-sites=6;identity=real
 ?SimpleMatch@Debug@@SA_NPBD0@Z,0x0088A3A0,132,Code/Libraries/Source/WWVegas/WWDebug/debug_io_flat.cpp,reloc-derived;call-sites=2;identity=real
 _d_0088d240,0x0088D240,437,Code/GameEngine/Source/Common/Bfme/Rva00889760.cpp,reloc-derived;call-sites=1;identity=real
 ?Rva0088EB90@@YAPAXPAXI@Z,0x0088EB90,188,Code/GameEngine/Source/Common/Bfme/Rva00889C90.cpp,reloc-derived;call-sites=1;identity=generated
