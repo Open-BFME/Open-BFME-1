@@ -77145,7 +77145,6 @@ _GdipGetImageWidth@8,0x009F6BCE,gdiplus.dll import stub (direct REL32 call site;
 _GdiplusShutdown@4,0x009F6C10,gdiplus.dll import stub (direct REL32 call site; see U3GdiplusTokenHolder.cpp)
 _Gen00881EF0,0x00881EF0,address-derived callee of a guarded cdecl release-and-clear; one pointer argument popped by the caller; the ledger also names this address operator delete[] but the call site does not prove which
 _GenBase009EB7D0_vtbl,0x01145744,GenBase009EB7D0 base vftable used by its retail constructor
-_Made001E5A20_vtbl,0x010CE8FC,Made001E5A20 vftable used by its recovered constructor
 _GetChallenge,0x009D39A0,gstats.c GetChallenge(statsgame_t): NULL game -> g_statsgame 0x0134D478; still NULL -> create_challenge(connid 0x0134D47C ^ 0x38F371E6 into static challenge[9] 0x0134D06C) and return it; else game->challenge = game+0x10; callers _BFMENetworkBackendEventCallback@40 0x00654A21 and BFMEConnectionManager::update 0x0066AC0B/0x0066AC31 which compares the result with NULLGAME
 _HideControlBar,0x00002847,HideControlBar letterbox
 _InitStatsConnection,0x009D58C0
@@ -77153,6 +77152,7 @@ _IsStatsConnected,0x009D2B60
 _MD5Final,0x0086AEE0,vendored=gamespy-2004
 _MD5Init,0x0086A400,vendored=gamespy-2004
 _MD5Update,0x0086AE20,vendored=gamespy-2004
+_Made001E5A20_vtbl,0x010CE8FC,Made001E5A20 vftable used by its recovered constructor
 _Netbios@4,0x0081BDD8,Y2 lane: Netbios import thunk (gen-import ?ji_0081bdd8@@YAXXZ names the same address)
 _NewBucketSet,0x009D5BB0,vendored=gamespy-2004
 _ProcessAdHocData,0x00868E40,vendored=gamespy-2004
