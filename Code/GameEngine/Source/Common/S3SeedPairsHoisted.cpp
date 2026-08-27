@@ -48,7 +48,7 @@ public:
 	virtual void bfmeTakeAt60(void *item);		// slot 24, vtable+0x60
 	virtual void bfmeSlot25(void);
 	virtual void bfmeTakeAt68(void *item);		// slot 26, vtable+0x68
-	virtual void bfmeTakeAt6C(void *item);		// slot 27, vtable+0x6C
+	virtual BfmeSeedTarget *bfmeTakeAt6C(void *item);		// slot 27, vtable+0x6C
 	virtual void bfmeSlot28(void);
 	virtual void bfmeTakeAt74(void *item);		// slot 29, vtable+0x74
 	virtual void bfmeTakeAt78(void *item);		// slot 30, vtable+0x78
@@ -71,12 +71,20 @@ public:
 	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00016B85
 };
 
-void bfmeHandOver_00001A50(BfmeSeedTarget *target, void *item);		// ILT 0x00001A50
+__declspec(noinline) void bfmeHandOver_00001A50(BfmeSeedTarget *target, void *item);		// ILT 0x00001A50
 void bfmeHandOver_0000C9B4(BfmeSeedTarget *target, void *item);		// ILT 0x0000C9B4
 void bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item);		// ILT 0x0000FFE2
 void bfmeHandOver_00012C65(BfmeSeedTarget *target, void *item);		// ILT 0x00012C65
 void bfmeHandOver_000353C8(BfmeSeedTarget *target, void *item);		// ILT 0x000353C8
 void bfmeHandOver_00044FD0(BfmeSeedTarget *target, void *item);		// ILT 0x00044FD0
+
+// ?bfmeHandOver_00001A50@@YAXPAVBfmeSeedTarget@@PAX@Z		39 bytes
+__declspec(noinline) void bfmeHandOver_00001A50(BfmeSeedTarget *target, void *item)
+{
+	target = target->bfmeTakeAt6C(item);
+	target = target->bfmeTakeAt6C((char *)item + 4);
+	target->bfmeTakeAt6C((char *)item + 8);
+}
 
 class Gen_000E6910
 {
