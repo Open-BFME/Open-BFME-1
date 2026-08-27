@@ -2484,7 +2484,6 @@ name,address,notes
 ??0GenBase009A1A30@@QAE@XZ,0x009A1A30,base constructor called by the 18-byte vptr-only derived constructors in MidVptrOnlyDerivedCtors.cpp
 ??0GenBase009CA9E0@@QAE@XZ,0x009CA9E0,base constructor called by the 18-byte vptr-only derived constructors in MidVptrOnlyDerivedCtors.cpp
 ??0GenBase009EB7D0@@QAE@XZ,0x009EB7D0,base constructor called by the 18-byte vptr-only derived constructors in MidVptrOnlyDerivedCtors.cpp
-_GenBase009EB7D0_vtbl,0x01145744,GenBase009EB7D0 base vftable used by its retail constructor
 ??0GenNode_006fa270@@QAE@ABU0@@Z,0x005C2170,copy constructor of the twelve-byte intrusive list node GenNode_006fa270 (Gen_006fa270.cpp); splices this onto owner+0x98/+0x9C exactly as that file's setOwner does; target read from the REL32 at its call sites
 ??0Gen_dtor_000edca0@@QAE@XZ,0x00019CF9,Open-BFME5 DelayedLuaEventUpdate member constructor ILT pin
 ??0Gen_dtor_002aaec0@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME5 RousingSpeechUpdate retail base constructor ILT
@@ -72744,6 +72743,7 @@ _GenBase009EB7D0_vtbl,0x01145744,GenBase009EB7D0 base vftable used by its retail
 ?bfmeReset@BfmeItemS@@QAEXXZ,0x00036A9D,Open-BFME5 the ICF thunk (to 0x00436A9D) the clear at 0x003CFBA0 calls per item
 ?bfmeReset@BfmeMapObjectExtra@@QAEXXZ,0x00033F46,Open-BFME5 the thiscall WorldHeightMap::freeListOfMapObjects at 0x00746E90 tail-jumps into on the global object at 0x012ED5E0
 ?bfmeReset@BfmeStopOther@@QAEXPAX@Z,0x0002A88D,Open-BFME5 the reset the stop-and-reset bodies at 0x0015BA80 and siblings tail-jump to
+?bfmeReset@Gen_008812D0@@QAEXXZ,0x008811A0,Open-BFME5 semantic no-op reset hook called immediately before the Taint grid region is cleared
 ?bfmeRestart@Gen_0018BC70@@AAEXXZ,0x0003F1FC,Open-BFME5 the ICF thunk (to 0x0043F1FC) the compaction at 0x0018BC70 calls when its flag is set
 ?bfmeResume@Gen_0018BC70@@AAEXXZ,0x0000764E,Open-BFME5 the ICF thunk (to 0x0040764E) the compaction at 0x0018BC70 calls when its flag is clear
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
@@ -76837,11 +76837,11 @@ _GenBase009EB7D0_vtbl,0x01145744,GenBase009EB7D0 base vftable used by its retail
 ?unidentified_00015235@WindowManager@@QAEXHPBDHPBXHHHH@Z,0x00015235,DisconnectMenu setPlayerName invokes HideKickButton through the established scripted-UI dispatcher ILT
 ?unidentified_0001FC99@@YAHPBDPAI@Z,0x0001FC99,UNIDENTIFIED cdecl shader loader; address-derived name; loads shaders\monochrome.pso for ScreenBWFilter::init
 ?unidentified_0001e0ab@GameLogicShim@@QAE_NXZ,0x0001E0AB,ILT thunk -> body 0x00382C20: true when TheGameLogic mode is 1/2/5 or TheRecorder plays back a multiplayer session; gates the score-screen fade in hideEndGame; address-derived shim name
+?unidentified_0002181E@Object@@QAEXABVModelConditionFlags@@H@Z,0x0002181E,UNIDENTIFIED Object helper reached by the address-derived body at 0x000F20F0
 ?unidentified_00025CD4@WindowLookupShim@@QAEPAXHH@Z,0x00025CD4,UNIDENTIFIED lookup on the global at 0x012ED88C taking a name key and a flag; address-derived name; do not treat as an identity
 ?unidentified_0003ADD7@NameKeyGeneratorShim@@QAEHPBD@Z,0x0003ADD7,UNIDENTIFIED characters-to-key call used by Player::getProductionCostChangePercent; address-derived name; ICF-folded so the existing findMemoryPool and concat pins share these bytes but describe other call sites
 ?unidentified_000CFE80@Player@@QAE?AW4ScienceAvailabilityType@@ABVAsciiString@@@Z,0x00030260,UNIDENTIFIED availability-name lookup at 0x000CFE80; address-derived name; do not treat as an identity; a Player member here rather than the ScienceStore member Zero Hour uses
 ?unidentified_000F20F0@Object@@QAEXHH@Z,0x00019C54,UNIDENTIFIED two-arg body at 0x000F20F0; address-derived name; do not treat as an identity
-?unidentified_0002181E@Object@@QAEXABVModelConditionFlags@@H@Z,0x0002181E,UNIDENTIFIED Object helper reached by the address-derived body at 0x000F20F0
 ?unidentified_001BFE20@Object@@QBEPAVPlayer@@XZ,0x0000D3B9,UNIDENTIFIED accessor at 0x001BFE20 reads Object+0x1FC and tail-calls its virtual +0x68; address-derived name; do not treat as an identity; distinct from Object::getControllingPlayer at 0x001BE3F0
 ?unidentified_0034DB40@ScriptEngine@@QAEGABVAsciiString@@@Z,0x000230B5,UNIDENTIFIED mask resolver at 0x0034DB40 forwarding to TheScriptEngine virtual +0x4C; address-derived name; do not treat as an identity; distinct from the doGiveMoney resolver at 0x0034CB60
 ?unlinkChildWindow@GameWindowManager@@QAEXPAVGameWindow@@@Z,0x00015A55,winSetParent depth Open-BFME4+Grok
@@ -77116,6 +77116,7 @@ _GdipGetImagePixelFormat@8,0x009F6BDA,gdiplus.dll import stub (direct REL32 call
 _GdipGetImageWidth@8,0x009F6BCE,gdiplus.dll import stub (direct REL32 call site; see T3GdiplusImageMembers.cpp)
 _GdiplusShutdown@4,0x009F6C10,gdiplus.dll import stub (direct REL32 call site; see U3GdiplusTokenHolder.cpp)
 _Gen00881EF0,0x00881EF0,address-derived callee of a guarded cdecl release-and-clear; one pointer argument popped by the caller; the ledger also names this address operator delete[] but the call site does not prove which
+_GenBase009EB7D0_vtbl,0x01145744,GenBase009EB7D0 base vftable used by its retail constructor
 _GetChallenge,0x009D39A0,gstats.c GetChallenge(statsgame_t): NULL game -> g_statsgame 0x0134D478; still NULL -> create_challenge(connid 0x0134D47C ^ 0x38F371E6 into static challenge[9] 0x0134D06C) and return it; else game->challenge = game+0x10; callers _BFMENetworkBackendEventCallback@40 0x00654A21 and BFMEConnectionManager::update 0x0066AC0B/0x0066AC31 which compares the result with NULLGAME
 _HideControlBar,0x00002847,HideControlBar letterbox
 _InitStatsConnection,0x009D58C0
@@ -77837,4 +77838,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeReset@Gen_008812D0@@QAEXXZ,0x008811A0,Open-BFME5 semantic no-op reset hook called immediately before the Taint grid region is cleared
