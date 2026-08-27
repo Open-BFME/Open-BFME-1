@@ -77821,3 +77821,11 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?_bfme_shouldSkipClientFrameCall@GameEngine@@AAE_NXZ,0x000358EB,ILT entry used by GameEngine::_bfme_updateClientSubsystems for _bfme_shouldSkipClientFrame body 0x0006B830
+?deleteLoadScreen@GameLogicClientUpdate@@QAEXXZ,0x00040791,ILT used by GameEngine::_bfme_updateClientSubsystems for GameLogic::deleteLoadScreen body 0x0038D100
+?TheGameClientClientUpdate@@3PAVClientFrameSubsystem@@A,0x012F1464,GameClient pointer used by GameEngine::_bfme_updateClientSubsystems
+?TheRadarClientUpdate@@3PAVRadarSubsystem@@A,0x012EF0E4,Radar pointer used by GameEngine::_bfme_updateClientSubsystems
+?BfmeSkippedClientFrames@@3HA,0x012ED504,skipped client-frame counter used by GameEngine::_bfme_updateClientSubsystems
+?BfmeSavedClientFrame@@3HA,0x012ED508,saved GameClient frame used by GameEngine::_bfme_updateClientSubsystems and the execute pacing gate
+?TheAudioClientUpdate@@3PAVClientSubsystem@@A,0x012ED668,Audio subsystem pointer used by GameEngine::_bfme_updateClientSubsystems
+?BfmeTimedOpInputLocked@@3HA,0x012ED530,timed-operation input lock state used by GameEngine::_bfme_updateClientSubsystems

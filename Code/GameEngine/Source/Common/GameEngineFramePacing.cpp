@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GX
 
 class NetworkInterface
 {
@@ -12,7 +12,7 @@ public:
 	virtual void slot06(void) = 0;
 	virtual void slot07(void) = 0;
 	virtual void slot08(void) = 0;
-	virtual void slot09(void) = 0;
+	virtual void liteupdate(int phase) = 0;
 	virtual void update(int phase) = 0;
 	virtual void slot11(void) = 0;
 	virtual void slot12(void) = 0;
@@ -79,9 +79,11 @@ class GameEngine
 {
 public:
 	virtual void _bfme_updateNetworkAndLogic(int phase);
+	virtual void _bfme_updateClientSubsystems(void);
 
 private:
 	bool _bfme_shouldSkipClientFrame(void);
+	bool _bfme_shouldSkipClientFrameCall(void);
 
 	char m_head[0x2c];
 	int m_clientFramePeriod;
@@ -89,6 +91,131 @@ private:
 	char m_gap38[8];
 	float m_clientFrameLimit;
 };
+
+class ClientSubsystem
+{
+public:
+	virtual void slot00(void);
+	virtual void slot01(void);
+	virtual void slot02(void);
+	virtual void slot03(void);
+	virtual void slot04(void);
+	virtual void update(void);
+};
+
+struct ClientSubsystemVtable
+{
+	void *m_slots00[5];
+	void (__fastcall *update)(ClientSubsystem *subsystem, ClientSubsystemVtable *vtable);
+};
+
+struct ClientSubsystemVtableEax
+{
+	void *m_slots00[5];
+	void (__fastcall *update)(ClientSubsystem *subsystem);
+};
+
+struct NetworkDispatchVtable
+{
+	void *m_slots00[9];
+	void (__fastcall *liteupdate)(NetworkInterface *network, NetworkDispatchVtable *vtable, int phase);
+};
+
+class ClientFrameSubsystem
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot01(void) = 0;
+	virtual void slot02(void) = 0;
+	virtual void slot03(void) = 0;
+	virtual void slot04(void) = 0;
+	virtual void update(void) = 0;
+	virtual void slot06(void) = 0;
+	virtual void slot07(void) = 0;
+	virtual void slot08(void) = 0;
+	virtual void setFrame(int frame) = 0;
+	virtual void slot10(void) = 0;
+	virtual void slot11(void) = 0;
+	virtual void slot12(void) = 0;
+	virtual void slot13(void) = 0;
+	virtual void slot14(void) = 0;
+	virtual void slot15(void) = 0;
+	virtual void slot16(void) = 0;
+	virtual void slot17(void) = 0;
+	virtual void slot18(void) = 0;
+	virtual void slot19(void) = 0;
+	virtual void slot20(void) = 0;
+	virtual void slot21(void) = 0;
+	virtual void slot22(void) = 0;
+	virtual void slot23(void) = 0;
+	virtual void slot24(void) = 0;
+	virtual void slot25(void) = 0;
+	virtual int getFrame(void) = 0;
+
+	char m_gap04[0xc0];
+	bool m_advanceFrame;
+};
+
+class RadarSubsystem
+{
+public:
+	char m_gap00[4];
+	ClientSubsystem m_update;
+};
+
+class GameLogicClientUpdate
+{
+public:
+	void deleteLoadScreen(void);
+};
+
+class MessageStream
+{
+public:
+	void propagateMessages(void);
+};
+
+class BFMEDesyncCheck
+{
+public:
+	BFMEDesyncCheck();
+	~BFMEDesyncCheck() { writeReportIfMismatched(); }
+	void writeReportIfMismatched(void);
+};
+
+class BfmeInGameUI_setInputEnabled
+{
+public:
+	void setEngineInputEnabled(bool enabled);
+};
+
+class Mouse
+{
+public:
+	void _bfme_setEngineVisibility(bool visible);
+};
+
+unsigned int _bfme_updateTimedOps(void);
+
+#define GameLogicClient (*(GameLogicClientUpdate **)0x012F0898)
+extern ClientFrameSubsystem *TheGameClientClientUpdate;
+#define GameClientSubsystem TheGameClientClientUpdate
+#define WindowManagerSubsystem (*(ClientSubsystem **)0x012F19E8)
+extern RadarSubsystem *TheRadarClientUpdate;
+#define Radar TheRadarClientUpdate
+#define MessageStreamSubsystem (*(MessageStream **)0x012ED5EC)
+#define InputLockSubsystem (*(ClientSubsystem **)0x012F4C50)
+#define InGameUISubsystem (*(BfmeInGameUI_setInputEnabled **)0x012F148C)
+#define MouseSubsystem (*(Mouse **)0x012F4C5C)
+extern ClientSubsystem *TheAudioClientUpdate;
+#define AudioSubsystem TheAudioClientUpdate
+#define AuxiliarySubsystem (*(ClientSubsystem **)0x012ED84C)
+extern int BfmeSavedClientFrame;
+extern int BfmeSkippedClientFrames;
+#define SavedClientFrame BfmeSavedClientFrame
+#define SkippedClientFrames BfmeSkippedClientFrames
+extern int BfmeTimedOpInputLocked;
+#define TimedOpInputLocked BfmeTimedOpInputLocked
 
 bool GameEngine::_bfme_shouldSkipClientFrame(void)
 {
@@ -159,4 +286,63 @@ void GameEngine::_bfme_updateNetworkAndLogic(int phase)
 		logic->update(phase);
 	else
 		TheGameClient[0xc4] = 0;
+}
+
+void GameEngine::_bfme_updateClientSubsystems(void)
+{
+	GameLogicClient->deleteLoadScreen();
+
+	if (GameClientSubsystem->m_advanceFrame)
+	{
+		GameClientSubsystem->setFrame(GameClientSubsystem->getFrame() + 1);
+	}
+
+	WindowManagerSubsystem->update();
+	if (**(int **)0x012A7244 == 0 && _bfme_shouldSkipClientFrameCall())
+	{
+		int skippedClientFrames = SkippedClientFrames;
+		ClientFrameSubsystem *client = GameClientSubsystem;
+		SkippedClientFrames = skippedClientFrames + 1;
+		SavedClientFrame = client->getFrame();
+		return;
+	}
+
+	BFMEDesyncCheck desyncCheck;
+	Radar->m_update.update();
+	GameClientSubsystem->update();
+	MessageStreamSubsystem->propagateMessages();
+
+	unsigned int timedOps = _bfme_updateTimedOps();
+	int inputLocked = timedOps & 1;
+	if (inputLocked)
+		InputLockSubsystem->update();
+
+	if (inputLocked != TimedOpInputLocked)
+	{
+		if (inputLocked)
+		{
+			InGameUISubsystem->setEngineInputEnabled(false);
+			MouseSubsystem->_bfme_setEngineVisibility(false);
+		}
+		else
+		{
+			InGameUISubsystem->setEngineInputEnabled(true);
+			if ((timedOps & 4) == 0)
+				MouseSubsystem->_bfme_setEngineVisibility(true);
+		}
+	}
+
+	ClientSubsystem *audio = AudioSubsystem;
+	ClientSubsystemVtable *audioVtable = *(ClientSubsystemVtable **)audio;
+	TimedOpInputLocked = inputLocked;
+	audioVtable->update(audio, audioVtable);
+	ClientSubsystem *auxiliary = AuxiliarySubsystem;
+	ClientSubsystemVtableEax *auxiliaryVtable = *(ClientSubsystemVtableEax **)auxiliary;
+	auxiliaryVtable->update(auxiliary);
+	if (TheNetwork != 0)
+	{
+		NetworkInterface *network = TheNetwork;
+		NetworkDispatchVtable *networkVtable = *(NetworkDispatchVtable **)network;
+		networkVtable->liteupdate(network, networkVtable, 0);
+	}
 }
