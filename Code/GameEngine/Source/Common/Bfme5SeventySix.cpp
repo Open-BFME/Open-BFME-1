@@ -1,6 +1,26 @@
 // Six more: a delta adjustment, two bounds-checked cell-range operations, a
 // hash-bucket lookup, an append to a global table, and another clamped read.
 
+typedef float Real;
+
+extern "C" __declspec(dllimport) double __cdecl floor(double value);
+
+__forceinline Real bfmeFloatFloorFC(Real value)
+{
+	return (Real)floor((double)value);
+}
+
+__forceinline long bfmeFloatToLongFC(Real value)
+{
+	long result;
+	__asm
+	{
+		fld [value]
+		fistp [result]
+	}
+	return result;
+}
+
 class Gen_0078D130
 {
 public:
@@ -47,6 +67,7 @@ public:
 	BfmeCellFC *bfmeAt(int x, int y) const;
 	void bfmeGetCellRange(BfmeCellFC **first, BfmeCellFC **last,
 		int x1, int x2, int y);
+	BfmeCellFC *bfmeCellAtWorld(Real x, Real y) const;
 	void bfmeVisitCells(void);
 
 private:
@@ -93,6 +114,22 @@ void Gen_008812D0::bfmeGetCellRange(BfmeCellFC **first,
 		*first = row + x1;
 
 	*last += x2 < m_bfmeWidth ? x2 + 1 : m_bfmeWidth;
+}
+
+// ?bfmeCellAtWorld@Gen_008812D0@@QBEPAVBfmeCellFC@@MM@Z
+BfmeCellFC *Gen_008812D0::bfmeCellAtWorld(Real worldX, Real worldY) const
+{
+	int x = bfmeFloatToLongFC(bfmeFloatFloorFC(
+		(worldX - m_bfmeOriginX) * m_bfmeCellSizeInv));
+	if (x < 0 || x >= m_bfmeWidth)
+		return 0;
+
+	int y = bfmeFloatToLongFC(bfmeFloatFloorFC(
+		(worldY - m_bfmeOriginY) * m_bfmeCellSizeInv));
+	if (y < 0 || y >= m_bfmeHeight)
+		return 0;
+
+	return &m_bfmeCells[y * m_bfmeWidth + x];
 }
 
 // ?bfmeVisitCells@Gen_008812D0@@QAEXXZ
