@@ -23819,3 +23819,4 @@ dup_59eb90,0x0059EB90,"not AttackNugget: its constructor target is 0x0059EB00 no
 ?d_003aee70@@YAXXZ,0x003AEE70,"gen-dump placeholder superseded by the recovered identity ?bfmeEnter@Glo012F1024Item@@QAEXXZ in Code/GameEngine/Source/Common/Glo012F1024Entry_bfmeStep.cpp"
 ?d_001e1ca0@@YAXXZ,0x001E1CA0,"gen-dump placeholder superseded by the recovered identity ?bfmeApplyBonuses@WeaponBonusSet@@QBEXIAAVWeaponBonus@@@Z in Code/GameEngine/Source/GameLogic/Object/Weapon/Weapon_computeBonus.cpp"
 ?d_00497ce0@@YAXXZ,0x00497CE0,"gen-dump placeholder superseded by the recovered identity ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z in Code/GameEngine/Source/GameClient/GUI/BfmeQuickMatchScreenBaseConstructor.cpp"
+?d_002dac10@@YAXXZ,0x002DAC10,"gen-dump placeholder superseded by the recovered identity ??0Made001E5A20@@QAE@XZ in Code/GameEngine/Source/Common/Q4MakeNotifyLink.cpp"

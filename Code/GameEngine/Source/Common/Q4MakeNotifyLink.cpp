@@ -94,7 +94,40 @@ struct Tail001E6240
 	char m_60, m_61, m_62, m_pad63;
 };
 
-Q4_MAKE_AND_LINK( 001E5A20, 0x68, Made001E5A20 )
+extern "C" char Made001E5A20_vtbl;
+
+class __declspec(novtable) Made001E5A20 : public GenBase002DF2B0
+{
+public:
+	__declspec(noinline) Made001E5A20();
+	virtual void slot();
+
+	volatile int m_58;
+	volatile int m_5c;
+	volatile int m_60;
+	volatile float m_64;
+};
+
+void q4Notify001E5A20(void *a, Made001E5A20 *m, int c, int d);
+
+void Rva001E5A20(void *a, Q4Owner001E5A20 *b)
+{
+	Made001E5A20 *m = new Made001E5A20;
+	m->m_owner = b;
+	q4Notify001E5A20(a, m, 0, 0);
+	m->m_flag = b->m_flag;
+	b->m_list.push_back(m);
+}
+
+Made001E5A20::Made001E5A20()
+{
+	int zero = 0;
+	*reinterpret_cast<char *volatile *>(this) = &Made001E5A20_vtbl;
+	m_58 = zero;
+	m_60 = zero;
+	m_5c = 15;
+	m_64 = 3.14159274f;
+}
 Q4_MAKE_AND_LINK( 001E5AF0, 0x68, Made001E5AF0 )
 Q4_MAKE_AND_LINK( 001E5BC0, 0x68, Made001E5BC0 )
 Q4_MAKE_AND_LINK_TAIL( 001E5E30, Made001E5E30, Tail001E5E30 )
