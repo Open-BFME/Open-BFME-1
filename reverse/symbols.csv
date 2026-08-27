@@ -3951,6 +3951,8 @@ name,address,notes
 ??1BfmeDBaseA@@UAE@XZ,0x00033F6E,Open-BFME5 the first base destructor the clearing destructor at 0x0042B9F0 chains to
 ??1BfmeDelayedLuaEvent@@QAE@XZ,0x00041362,Open-BFME5 ILT the DelayedLuaEventList constructor at 0x000EDBB0 hands to the EH vector constructor iterator as the element destructor
 ??1BfmeDirtyBase@@UAE@XZ,0x007EB6C0,Open-BFME5 the shared base destructor nine DirtySock scalar deleting destructors call
+??1BfmeDropObjectA@@QAE@XZ,0x00895260,opaque 24-byte child destructor called by bfmeDropA
+??1BfmeDropObjectB@@QAE@XZ,0x00895F00,opaque 16-byte child destructor called by bfmeDropB
 ??1BfmeDtorBaseF@@UAE@XZ,0x009A1A40,Open-BFME5 the out-of-line base destructor the chained destructor at 0x00076C80 calls
 ??1BfmeDtorBaseG@@UAE@XZ,0x0004243D,Open-BFME5 the out-of-line base destructor the chained destructor at 0x000B5240 calls
 ??1BfmeDtorBaseH@@UAE@XZ,0x000033F0,Open-BFME5 the out-of-line base destructor the chained destructor at 0x00428730 calls
@@ -72321,8 +72323,6 @@ name,address,notes
 ?bfmeDrop@Rva003D8530Owner@@QAEXPAX@Z,0x00016DB0,Open-BFME5 ILT thunk to body 0x003D8530; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it on the sub-object at +0x0C of _TheAIParseDefinitionAI for each live slot whose kind is one of four; address-derived name
 ?bfmeDropA@@YAXPAX@Z,0x00895320,Open-BFME5 the drop the cleanup at 0x00783A50 calls
 ?bfmeDropB@@YAXPAX@Z,0x008961C0,Open-BFME5 the drop the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
-??1BfmeDropObjectA@@QAE@XZ,0x00895260,opaque 24-byte child destructor called by bfmeDropA
-??1BfmeDropObjectB@@QAE@XZ,0x00895F00,opaque 16-byte child destructor called by bfmeDropB
 ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z,0x0002CB79,Open-BFME5 ILT thunk to body 0x00417710; Gen_00417cb0::tail at 0x00417A70 calls it on this with the source result and its own argument; address-derived name in the same synthetic family as the class
 ?bfmeEnable@BfmeElemW@@QAEXHH@Z,0x000482AC,Open-BFME5 the ICF thunk (to 0x004482AC) the clear at 0x004B1720 calls on each element with a pair of ones
 ?bfmeEnter@Glo012F1024Item@@QAEXXZ,0x0000BC5D,Open-BFME5 ILT thunk to body 0x003AEE70; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 calls it on the 0xDC-byte item the advanced index selects; address-derived name
