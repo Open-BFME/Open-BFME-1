@@ -77,6 +77,8 @@ struct BfmePointFC
 
 struct Region3D
 {
+	__forceinline Region3D() {}
+
 	__forceinline Region3D(const Region3D &other)
 	{
 		x_min = other.x_min;
@@ -87,7 +89,7 @@ struct Region3D
 		z_max = other.z_max;
 	}
 
-	~Region3D();
+	__forceinline ~Region3D() {}
 
 	Real width() const { return x_max - x_min; }
 	Real height() const { return y_max - y_min; }
@@ -104,6 +106,7 @@ class Gen_008812D0
 {
 public:
 	~Gen_008812D0();
+	void bfmeReset();
 	void bfmeConfigure(Region3D region, Real cellSize);
 	void bfmeSetRegion(const Region3D *region, Real cellSize);
 	BfmeCellFC *bfmeAt(int x, int y) const;
@@ -143,6 +146,7 @@ private:
 class BfmeTaintManager
 {
 public:
+	void bfmeResetGrid();
 	void bfmeApplyCircleWorld(const BfmePointFC *point, Real radius,
 		int amount, bool absolute);
 
@@ -168,6 +172,21 @@ void Gen_008812D0::bfmeSetRegion(const Region3D *region, Real cellSize)
 	{
 		bfmeConfigure(*region, cellSize);
 	}
+}
+
+// ?bfmeResetGrid@BfmeTaintManager@@QAEXXZ
+void BfmeTaintManager::bfmeResetGrid()
+{
+	m_bfmeGrid->bfmeReset();
+
+	Region3D region;
+	region.x_min = 0.0f;
+	region.y_min = 0.0f;
+	region.z_min = 0.0f;
+	region.x_max = 0.0f;
+	region.y_max = 0.0f;
+	region.z_max = 0.0f;
+	m_bfmeGrid->bfmeSetRegion(&region, 0.0f);
 }
 
 // ?bfmeAt@Gen_008812D0@@QBEPAVBfmeCellFC@@HH@Z
