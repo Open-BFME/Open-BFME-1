@@ -89,6 +89,8 @@ public:
 	virtual void Clear();
 	virtual int ID(T const *ptr);
 	virtual int ID(T const &object);
+	int Length() const { return VectorMax; }
+	T &operator[](int index) { return Vector[index]; }
 
 protected:
 	T *Vector;
@@ -108,6 +110,7 @@ public:
 	virtual void Clear();
 	virtual int ID(T const *ptr);
 	virtual int ID(T const &object);
+	bool Add(T const &object);
 
 protected:
 	int ActiveCount;
@@ -201,6 +204,25 @@ void DynamicVectorClass<T>::Clear()
 }
 
 template<class T>
+bool DynamicVectorClass<T>::Add(T const &object)
+{
+	if (ActiveCount >= this->Length())
+	{
+		if ((this->IsAllocated || !this->VectorMax) && GrowthStep > 0)
+		{
+			if (!Resize(this->Length() + GrowthStep))
+				return false;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	(*this)[ActiveCount++] = object;
+	return true;
+}
+
+template<class T>
 DynamicVectorClass<T>::DynamicVectorClass(unsigned size, T const *array)
 	: VectorClass<T>(size, array)
 {
@@ -215,4 +237,6 @@ template VectorClass<TextureStatisticsStruct>::VectorClass(
 template bool VectorClass<TextureStatisticsStruct>::Resize(
 	int, TextureStatisticsStruct const *);
 template void DynamicVectorClass<TextureStatisticsStruct>::Clear();
+template bool DynamicVectorClass<TextureStatisticsStruct>::Add(
+	TextureStatisticsStruct const &);
 template VectorClass<TextureStatisticsStruct>::~VectorClass();
