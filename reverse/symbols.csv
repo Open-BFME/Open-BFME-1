@@ -10422,7 +10422,6 @@ name,address,notes
 ?TheGameLogic@@3PAVGameLogic@@A,0x00EF0898,GameLogic* global; the same 0x012F0898 the matched ?doEvaEnabledDisabled@ScriptActions@@IAEX_N@Z writes at +0x96
 ?TheGameLogic@@3PAVGameLogicFrameSlice@@A,0x012F0898,game logic global used for the current frame slice in AI target dispatch
 ?TheGameLogic@@3PAVGameLogicPortraitShim@@A,0x012F0898,BFME portrait selector game-logic global
-?TheNetwork@@3PAVNetworkInterface@@A,0x012F7714,BFME NetworkInterface global used by the GameEngine frame-pacing path
 ?TheGameSpyBuddyMessageQueue@@3PAVGameSpyBuddyMessageQueueInterface@@A,0x00EF71B4,Buddy message queue global used by independently identified callback and queue methods
 ?TheGameSpyInfo@@3PAVGameSpyInfo@@A,0x012F7194,GameSpyInfo* global used by the 0x0052CE60 virtual wrapper
 ?TheGameText@@3PAVGameTextInterface@@A,0x012F147C,GameTextInterface* global read by LANAPI::OnGameStartTimer
@@ -10452,6 +10451,7 @@ name,address,notes
 ?TheModelConditionUpgradePool@?1??getClassMemoryPool@ModelConditionUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0590,pool-glue cascade static (back-solved)
 ?TheMoneyCrateCollidePool@?1??getClassMemoryPool@MoneyCrateCollide@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFA10,pool-glue cascade static (back-solved)
 ?TheNameKeyGenerator@@3PAVNameKeyGenerator@@A,0x012ED600,BFME global name-key generator pointer
+?TheNetwork@@3PAVNetworkInterface@@A,0x012F7714,BFME NetworkInterface global used by the GameEngine frame-pacing path
 ?TheOCLSpecialPowerPool@?1??getClassMemoryPool@OCLSpecialPower@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFCE4,pool-glue cascade static (back-solved)
 ?TheObjectCreationListStore@@3PAVObjectCreationListStore@@A,0x012EF738,ObjectCreationListStore* global read by InstantDeathBehavior parseOCL
 ?TheObjectCreationUpgradePool@?1??getClassMemoryPool@ObjectCreationUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0598,pool-glue cascade static (back-solved)
