@@ -2080,8 +2080,8 @@ name,address,notes
 ??0BfmeLegendString@@QAE@PBD@Z,0x00888BC0,SubsystemLegend.cpp AsciiString stand-in ctor from const char*
 ??0BfmeLegendStringVec@@QAE@ABU0@@Z,0x000D2E70,SubsystemLegend.cpp vector<AsciiString> stand-in copy ctor
 ??0BfmeLivingWorldAnimObject@@QAE@ABVAsciiString@@@Z,0x000089E0,LivingWorld animation object constructor ILT decoded from findAnimObject retail callsite
-??0BfmeMade_0045DC70@@QAE@PAX@Z,0x00043063,Open-BFME5 the constructor the make-from-argument body at 0x0045DC70 runs on its fresh block
 ??0BfmeMadeBase_0045DC70@@QAE@PAX@Z,0x00028F8D,base constructor thunk called by BfmeMade_0045DC70
+??0BfmeMade_0045DC70@@QAE@PAX@Z,0x00043063,Open-BFME5 the constructor the make-from-argument body at 0x0045DC70 runs on its fresh block
 ??0BfmeMade_00494200@@QAE@PAX@Z,0x00028F8D,Open-BFME5 the constructor the make-from-argument body at 0x00494200 runs on its fresh block
 ??0BfmeMade_0078D390@@QAE@PAX@Z,0x0003707E,Open-BFME5 the constructor the make-from-argument body at 0x0078D390 runs on its fresh block
 ??0BfmeMade_0078F520@@QAE@PAX@Z,0x0003707E,Open-BFME5 the constructor the make-from-argument body at 0x0078F520 runs on its fresh block
