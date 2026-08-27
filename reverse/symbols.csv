@@ -74608,6 +74608,7 @@ name,address,notes
 ?bfmeVal1240@BfmeE1240@@QAEHXZ,0x00898300,pin
 ?bfmeVal1243@BfmeE1243@@QAEPAXXZ,0x00898300,pin
 ?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
+?bfmeUpdate@BfmeCellFC@@QAEXH_N@Z,0x00881BE0,Open-BFME5 semantic identity for exact address-derived cell update body at 0x00881BE0
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVecCtor1030@@YGXPAX0HHP6AXXZ1@Z,0x009F7036,pin
 ?bfmeVecDtor936B@@YGXPAXIHP6GX0@Z@Z,0x009F6D76,pin
