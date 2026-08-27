@@ -23822,3 +23822,4 @@ dup_59eb90,0x0059EB90,"not AttackNugget: its constructor target is 0x0059EB00 no
 ?d_002dac10@@YAXXZ,0x002DAC10,"gen-dump placeholder superseded by the recovered identity ??0Made001E5A20@@QAE@XZ in Code/GameEngine/Source/Common/Q4MakeNotifyLink.cpp"
 ?d_00100300@@YAXXZ,0x00100300,"gen-dump placeholder superseded by the recovered identity ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z in Code/GameEngine/Source/Common/S3StrideCopyLoops.cpp"
 ?d_00279780@@YAXXZ,0x00279780,"gen-dump placeholder superseded by the recovered identity ?bfmeStateFlags@BfmeObjectAI@@QAEIXZ in Code/GameEngine/Source/GameLogic/AI/AI_getAdjustedVisionRangeForObject.cpp"
+?d_00141cd0@@YAXXZ,0x00141CD0,"gen-dump placeholder superseded by the real identity of these bytes: ??6AssetList@@QAEAAV0@ABV0@@Z, byte-verified from Code/GameEngine/Source/GameClient/AssetListOperatorInsert.cpp over the same 31-byte range. The Code/gen_asm/d_00138250.asm dump reproduces those bytes but carries no identity."

@@ -34,6 +34,7 @@ typedef Rva001408C0Target *(__cdecl *FindPrototypeFn)(const char *name);
 class AssetList
 {
 public:
+	AssetList &operator <<(const AssetList &other);
 	AssetList &operator <<(const AsciiString &name);
 
 private:
@@ -50,5 +51,14 @@ AssetList &AssetList::operator <<(const AsciiString &name)
 	{
 		m_changed = true;
 	}
+	return *this;
+}
+
+// ??6AssetList@@QAEAAV0@ABV0@@Z
+AssetList &AssetList::operator <<(const AssetList &other)
+{
+	m_prototypes.insert(other.m_prototypes.begin(),
+		other.m_prototypes.end());
+	m_changed = true;
 	return *this;
 }
