@@ -76374,6 +76374,7 @@ name,address,notes
 ?resolve@RvaC4390Second@@QAEPAURvaC4390First@@H@Z,0x00035995,Open-BFME5 relation resolver call pin
 ?restoreGlobalDataFields@RecorderClass@@QAEXXZ,0x0000BD1B,BFME-only RecorderClass entry ReplayMenuShutdown opens with; ILT thunk to body 0x00097360
 ?revalidateOccupiers@SpawnPointProductionExitUpdate@@AAEXXZ,0x0002374A
+?revealMapForPlayer@PartitionManagerImpl008F8D60@@QAEXH@Z,0x008F8D60,BFME PartitionManager implementation delegate target from the public wrapper at 0x008F73D0
 ?revealMapForPlayerPermanently@PartitionManager@@QAEXH@Z,0x008F73E0,REL32 pin from ScriptActions::doBorderSwitch @0x2EFC50
 ?reverse@GameWindowTransitionsHandler@@QAEXVAsciiString@@@Z,0x0048AEC0,WOLLoginMenuShutdown transition helper
 ?run@BitFlagsCountInverseIntersectionShim@@QBEHABV1@@Z,0x00786BD0,BitFlags countInverseIntersection incremental-link thunk target through a TU-local forwarding shim

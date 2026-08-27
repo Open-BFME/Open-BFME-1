@@ -23753,3 +23753,4 @@ uw_000970d0,0x000970D0,gen-funclet no longer has an emitting owner after the exa
 ?d_008a0690@@YAXXZ,0x008A0690,"gen-* placeholder resurrected by the union merge of PR #94 onto master; the real identity ?bfmeIndexOf@Gen_008A0690@@QBEHPAX@Z owns this range."
 ?d_008a06c0@@YAXXZ,0x008A06C0,"gen-* placeholder resurrected by the union merge of PR #94 onto master; the real identity ?bfmeIndexOf@Gen_008A06C0@@QBEHPAX@Z owns this range."
 ?d_009779a0@@YAXXZ,0x009779A0,"gen-* placeholder resurrected by the union merge of PR #94 onto master; the real identity ?bfmeSlots@Gen_009779A0@@QBEHXZ owns this range."
+?m@Gen_008f73d0@@QAEXXZ,0x008F73D0,gen-shim delegate placeholder superseded by the byte-verified real PartitionManager::revealMapForPlayer identity.
