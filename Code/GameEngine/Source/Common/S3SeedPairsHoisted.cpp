@@ -62,8 +62,31 @@ public:
 class BfmeSubAccept_00007289
 {
 public:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00007289
+	__declspec(noinline) void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00007289
 };
+
+// ?bfmeAccept@BfmeSubAccept_00007289@@QAEXPAVBfmeSeedTarget@@@Z		97 bytes
+__declspec(noinline) void BfmeSubAccept_00007289::bfmeAccept(BfmeSeedTarget *target)
+{
+	if (!target->bfmeSkip())
+	{
+		BfmeSeedPair pair;
+		pair.m_bfmeFirst = 1;
+		pair.m_bfmeSecond = 1;
+
+		target->bfmeSeed(&pair);
+		char *item = (char *)this + 0x10;
+
+		for (int count = 8; count != 0; --count)
+		{
+			target->bfmeTakeAt3C(item - 0xC);
+			target->bfmeTakeAt74(item);
+			item += 0x10;
+		}
+
+		target->bfmeTakeAt6C((char *)this + 0x84);
+	}
+}
 
 class BfmeSubAccept_00016B85
 {
