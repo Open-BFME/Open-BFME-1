@@ -1,4 +1,5 @@
 name,target_rva,reason
+?d_005ee650@@YAXXZ,0x005EE650,"gen-dump placeholder superseded by the recovered BfmeSubAccept_000061B3 identity and exact C++ body"
 ?GadgetListBoxSetColors@@YAXPAVGameWindow@@HHHHHHHHHHHH@Z,0x000410AB,"five-byte incremental-link thunk claim retracted so the exact BFME body at 0x004B6D40 can carry the name; the thunk bytes return to the gen-thunk pool."
 ?d_00823190@@YAXXZ,0x00823190,"gen-dump placeholder superseded by the real identity of ?LZHLDecompress@@YAHPAXPAEPAIPBE2@Z, byte-verified from the LZH wrapper source over the same 30-byte range."
 # Rows deleted on purpose because byte-evidence proved them wrong. functions.csv
