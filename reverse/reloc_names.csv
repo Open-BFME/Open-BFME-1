@@ -735,7 +735,7 @@ _BfmePathfindMapUpdate@12,0x003FA5B0,3951,Code/GameEngine/Source/GameLogic/AI/Pa
 ?resize@?$hashtable@URva0046AF20Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva0046AF20ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva0046AF20Value@@@7@@_STL@@QAEXI@Z,0x004695C0,415,Code/Libraries/Source/WWVegas/WWLib/RvaHashInsertAsciiString.cpp,reloc-derived;call-sites=1;identity=generated
 ?bfme_showBackground@WindowManager@@QAEXH@Z,0x00469A10,95,Code/GameEngine/Source/GameClient/AptScreenFactories.cpp,reloc-derived;call-sites=1;identity=real
 ?h0046B2B0@Glo00EF19E8@@QAEXH@Z,0x0046B2B0,105,Code/GameEngine/Source/Common/R1ForwardToStoredObject.cpp,reloc-derived;call-sites=2;identity=real
-?bfme_setAptText@WindowManager@@QAEXABVAsciiString@@ABVUnicodeString@@@Z,0x0046CBF0,49,Code/GameEngine/Source/GameClient/AptScreenFactories.cpp,reloc-derived;call-sites=2;identity=real
+?bfme_setAptText@WindowManager@@QAEXABVAsciiString@@ABVUnicodeString@@@Z,0x0046CBF0,49,Code/GameEngine/Source/GameClient/WindowManager_setAptText.cpp,reloc-derived;call-sites=2;identity=real
 ??1Gen_dtor_0046e820@@UAE@XZ,0x0046D8E0,317,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
 ??0GenBase0046E5E0@@QAE@XZ,0x0046E5E0,455,Code/GameEngine/Source/Common/MidVptrOnlyDerivedCtors.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_004705f0@@UAE@XZ,0x00470360,109,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
