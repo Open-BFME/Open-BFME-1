@@ -81077,6 +81077,7 @@ g_bfmeGateBT,0x012F9D04,Open-BFME5 the gate the probe at 0x007D74B0 tests
 g_bfmeHalfBX,0x012D71A8,Open-BFME5 the half size the setter at 0x00938A50 derives
 g_bfmeHeadCA,0x012F3350,Open-BFME5 the list head the destructor at 0x004902A0 unhooks itself from
 g_bfmeHeadDX,0x013379A0,Open-BFME5 the list head the push at 0x00897300 writes
+g_bfmeGateBT,0x012F9D04,Open-BFME5 the gate the probe at 0x007D74B0 tests
 g_bfmeHolderBP,0x012F1464,Open-BFME5 the singleton the setter at 0x002F0DD0 writes its flag into
 g_bfmeHolderBQ,0x012F1464,Open-BFME5 the singleton the setter at 0x002F0DF0 writes its second flag into
 g_bfmeHolderBS,0x012EF4CC,Open-BFME5 the singleton the clear at 0x002ED870 also clears a flag in
@@ -81097,6 +81098,7 @@ g_bfmeOwnerBR,0x012F060C,Open-BFME5 the singleton the mark at 0x002E2B50 reaches
 g_bfmePointersFE,0x012F9CA4,Open-BFME5 the pointers the reset at 0x007CCD90 sets
 g_bfmeProbeBT,0x012F9D0C,Open-BFME5 the volatile global the probe at 0x007D74B0 reads and throws away
 g_bfmeOwnerBR,0x012F060C,Open-BFME5 the singleton the mark at 0x002E2B50 reaches its target through
+g_bfmeProbeBT,0x012F9D0C,Open-BFME5 the volatile global the probe at 0x007D74B0 reads and throws away
 g_bfmeScaleBK,0x01075C70,Open-BFME5 the scale the difference at 0x001B48B0 multiplies by
 g_bfmeScaleEG,0x010F693C,Open-BFME5 the scale the angle at 0x0045B850 divides by its argument
 g_bfmeSecondCF,0x010F6394,Open-BFME5 the second factor the scale at 0x00458430 multiplies by
