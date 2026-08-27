@@ -171,13 +171,27 @@ extern "C" __declspec(dllimport) int __cdecl sprintf(
 
 int untranslatedSlotPosition( int slot, int localSlot );
 
-class GameWindow;
+class GameWindow
+{
+public:
+	void *winGetUserData();
+};
 UnicodeString GadgetTextEntryGetText( GameWindow *textEntry );
 void GadgetTextEntrySetText( GameWindow *textEntry, UnicodeString text );
 void GadgetListBoxReset( GameWindow *listBox );
-void BfmeGadgetListBoxSetAudioFeedback( GameWindow *listBox, bool enabled );
+__declspec(noinline) void BfmeGadgetListBoxSetAudioFeedback( GameWindow *listBox, bool enabled );
 int GadgetListBoxAddEntryText( GameWindow *listBox, UnicodeString text, int color,
 	int row, int column = -1, bool overwrite = true );
+
+// ?BfmeGadgetListBoxSetAudioFeedback@@YAXPAVGameWindow@@_N@Z
+__declspec(noinline) void BfmeGadgetListBoxSetAudioFeedback( GameWindow *listBox, bool enabled )
+{
+	if ( listBox )
+	{
+		unsigned char *userData = (unsigned char *)listBox->winGetUserData();
+		userData[ 0x10 ] = (unsigned char)enabled;
+	}
+}
 
 class GameTextInterface
 {
