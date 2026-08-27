@@ -19,21 +19,42 @@ typedef float Real;
 
 extern const Real BfmeZeroRange;				// 0x01075350
 
-class BfmeObjectAI
+class BfmeObjectAI;
+
+class Player
 {
 public:
-	UnsignedInt bfmeStateFlags(void);			// ILT 0x0001BB3F
+	char m_bfmeHead[0x2C];
+	void *m_bfme2c;                                      // +0x2C
 };
 
 class Object
 {
 public:
+	Player *getControllingPlayer(void) const;			// ILT 0x00020824
 	Real getVisionRange(void) const;			// ILT 0x00014B4B
 
 	char m_bfmeHeadA[0xBC];
 	Real m_bfmeVisionBonus;					// +0x00BC
 	char m_bfmeHeadB[0x204 - 0xC0];
 	BfmeObjectAI *m_bfmeAI;					// +0x0204
+};
+
+class BfmeObjectAI
+{
+public:
+	__declspec(noinline) UnsignedInt bfmeStateFlags(void);
+	__declspec(noinline) int bfmeStateValue(void);
+
+private:
+	char m_bfmeHead[0x08];
+	Object *m_bfmeObject;						// +0x08
+	char m_bfmeGap0C[0x24];
+	void *m_bfme30;						// +0x30
+	char m_bfmeGap34[0x184];
+	unsigned char m_bfme1b8;					// +0x1B8
+	char m_bfmeGap1B9[0x2F];
+	void *m_bfme1e8;						// +0x1E8
 };
 
 class BfmeAIFactors
@@ -52,6 +73,60 @@ public:
 };
 
 extern "C" BfmeAIRoot *TheAIParseDefinitionAI;			// 0x012EF214
+
+// ?bfmeStateFlags@BfmeObjectAI@@QAEIXZ
+UnsignedInt BfmeObjectAI::bfmeStateFlags(void)
+{
+	if (!m_bfme30)
+		return 0;
+
+	Player *player = m_bfmeObject->getControllingPlayer();
+	if (!player)
+		return 0;
+
+	UnsignedInt result;
+	if (!player->m_bfme2c)
+	{
+		result = 1;
+	}
+	else
+	{
+		switch (bfmeStateValue())
+		{
+			case -3:
+				result = 0x2002;
+				break;
+
+			case -2:
+				result = 0x0102;
+				break;
+
+			case -1:
+				result = 0x0202;
+				break;
+
+			case 1:
+				result = 0x0802;
+				break;
+
+			case 2:
+				result = 0x1002;
+				break;
+
+			default:
+				result = 0x0402;
+				break;
+		}
+	}
+
+	if (m_bfme1b8 & 8)
+		return result | 0x40;
+
+	if (m_bfme1e8)
+		return result | 0x20;
+
+	return result | 0x10;
+}
 
 class AI
 {

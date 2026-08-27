@@ -23821,3 +23821,4 @@ dup_59eb90,0x0059EB90,"not AttackNugget: its constructor target is 0x0059EB00 no
 ?d_00497ce0@@YAXXZ,0x00497CE0,"gen-dump placeholder superseded by the recovered identity ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z in Code/GameEngine/Source/GameClient/GUI/BfmeQuickMatchScreenBaseConstructor.cpp"
 ?d_002dac10@@YAXXZ,0x002DAC10,"gen-dump placeholder superseded by the recovered identity ??0Made001E5A20@@QAE@XZ in Code/GameEngine/Source/Common/Q4MakeNotifyLink.cpp"
 ?d_00100300@@YAXXZ,0x00100300,"gen-dump placeholder superseded by the recovered identity ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z in Code/GameEngine/Source/Common/S3StrideCopyLoops.cpp"
+?d_00279780@@YAXXZ,0x00279780,"gen-dump placeholder superseded by the recovered identity ?bfmeStateFlags@BfmeObjectAI@@QAEIXZ in Code/GameEngine/Source/GameLogic/AI/AI_getAdjustedVisionRangeForObject.cpp"
