@@ -19,7 +19,7 @@ public:
 	virtual void behaviorModuleInterfaceAnchor();
 };
 
-class DamageModuleInterface
+class BfmeDamageModuleInterface
 {
 public:
 	virtual void damageModuleInterfaceAnchor();
@@ -34,7 +34,7 @@ public:
 // 60-byte retail body matches without any [this+0x14] store.
 class DamageModule : public ObjectModule,
 	public BehaviorModuleInterface,
-	public DamageModuleInterface
+	public BfmeDamageModuleInterface
 {
 public:
 	DamageModule( Thing *thing, const ModuleData *moduleData );

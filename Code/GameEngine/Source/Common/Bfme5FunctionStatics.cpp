@@ -59,13 +59,13 @@ void bfmeEnsure_005D9AE0(void)
 	static BfmeStaticThingA theBfmeThing;
 }
 
-// ?bfmeEnsure_005D9B50@@YAXXZ
+// ?bfmeEnsure_005D9B50@@YAXXZ present-unmatched
 void bfmeEnsure_005D9B50(void)
 {
 	static BfmeStaticThingB theBfmeThing;
 }
 
-// ?bfmeEnsure_005D9BC0@@YAXXZ
+// ?bfmeEnsure_005D9BC0@@YAXXZ present-unmatched
 void bfmeEnsure_005D9BC0(void)
 {
 	static BfmeStaticThingC theBfmeThing;
@@ -83,7 +83,7 @@ void bfmeEnsure_005D9CA0(void)
 	static BfmeStaticThingE theBfmeThing;
 }
 
-// ?bfmeEnsure_005D9D10@@YAXXZ
+// ?bfmeEnsure_005D9D10@@YAXXZ present-unmatched
 void bfmeEnsure_005D9D10(void)
 {
 	static BfmeStaticThingF theBfmeThing;

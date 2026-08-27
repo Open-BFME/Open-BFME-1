@@ -314,7 +314,7 @@ void W3DBufferManager::releaseSlot(W3DIndexBufferSlot *ibSlot)
 	m_W3DIndexBufferSlots[sizeIndex]=ibSlot;
 }
 
-static int FVFTypeIndexList[ W3DBufferManager::MAX_FVF ] =
+static int SlotFVFTypeIndexList[ W3DBufferManager::MAX_FVF ] =
 {
 	0x002, 0x042, 0x102, 0x142, 0x202, 0x242,
 	0x012, 0x052, 0x112, 0x152, 0x212, 0x252,
@@ -362,7 +362,7 @@ W3DBufferManager::W3DVertexBufferSlot *W3DBufferManager::allocateSlotStorage(
 
 		Int vbSize = size < 16384 ? 16384 : size;
 		pVB->m_DX8VertexBuffer = new DX8VertexBufferClass(
-			FVFTypeIndexList[ fvfType ], (unsigned short)vbSize,
+			SlotFVFTypeIndexList[ fvfType ], (unsigned short)vbSize,
 			DX8VertexBufferClass::USAGE_DEFAULT );
 		pVB->m_format = fvfType;
 		pVB->m_startFreeIndex = size;

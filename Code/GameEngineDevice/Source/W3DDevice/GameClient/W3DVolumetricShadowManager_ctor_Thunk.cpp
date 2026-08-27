@@ -3,7 +3,7 @@
 class W3DShadowGeometryManager { char m_storage[8]; public: W3DShadowGeometryManager(); };
 class W3DBufferManager { char m_storage[0x4265c]; public: W3DBufferManager(); };
 extern W3DBufferManager *TheW3DBufferManager;
-struct ShadowPool { bool allocate(int, int); int available; };
+struct ShadowPool { bool allocate(int, int); char m_storage[8]; int available; };
 extern ShadowPool ShadowPoolA;
 extern ShadowPool ShadowPoolB;
 extern int ShadowPoolALimit;

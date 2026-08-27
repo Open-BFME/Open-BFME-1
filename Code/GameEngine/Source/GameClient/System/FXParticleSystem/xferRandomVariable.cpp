@@ -27,12 +27,12 @@ public:
 
 	void setRange(float low, float high, DistributionType type);
 
-	static const char *DistributionTypeNames[];
-
 	DistributionType m_type;
 	float m_low;
 	float m_high;
 };
+
+extern const char *BfmeXferDistributionTypeNames[];
 
 Xfer &xferRandomVariable(Xfer &xfer, GameClientRandomVariable &var)
 {
@@ -58,7 +58,7 @@ Xfer &xferRandomVariable(Xfer &xfer, GameClientRandomVariable &var)
 
 	xfer.xferReal(&locals.low);
 	xfer.xferReal(&locals.high);
-	xfer.xferEnum(GameClientRandomVariable::DistributionTypeNames, &type, 4);
+	xfer.xferEnum(BfmeXferDistributionTypeNames, &type, 4);
 
 	if (!xfer.isSaving()) {
 		var.setRange(locals.low, locals.high, type);

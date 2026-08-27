@@ -29,13 +29,13 @@ GODupBase::GODupBase()
 {
 }
 
-class GhostObjectManagerDup : public GODupBase
+class Gen_006BC530 : public GODupBase
 {
 public:
-	GhostObjectManagerDup();
+	Gen_006BC530();
 };
 
-// ?GhostObjectManagerDup::GhostObjectManagerDup present-unmatched
-GhostObjectManagerDup::GhostObjectManagerDup()
+// ??0Gen_006BC530@@QAE@XZ present-unmatched
+Gen_006BC530::Gen_006BC530()
 {
 }

@@ -27,6 +27,8 @@
 
 extern float g_Va0112E8AC;
 extern float g_Va0112E8B0;
+extern float g_Va0113BD7C;
+extern float g_Va0113BD80;
 extern float g_Va01307200;
 extern float g_Va01340574;
 
@@ -87,12 +89,12 @@ float Rva00694C80GetFloat( void )
 
 float Rva006CF590GetFloat( void )
 {
-	return 3.402823466e+38F;
+	return g_Va0113BD7C;
 }
 
 float Rva006CF5A0GetFloat( void )
 {
-	return -1.0f;
+	return g_Va0113BD80;
 }
 
 float Rva006DAB40GetFloat( void )
@@ -112,6 +114,5 @@ float Rva007CC3C0GetFloat( void )
 
 float Rva009558E0GetFloat( void )
 {
-	return -1.0f;
+	return g_Va0113BD80;
 }
-

@@ -11,7 +11,7 @@
 typedef bool Bool;
 
 class CampaignManager;
-extern CampaignManager *TheCampaignManager;
+extern CampaignManager *TheBfmeLivingWorldCampaignState;
 
 class BfmeCampaignManagerVictoriousSlice
 {
@@ -28,5 +28,5 @@ public:
 
 Bool BfmeLivingWorldManager::isCampaignVictorious( void )
 {
-	return ((BfmeCampaignManagerVictoriousSlice *)TheCampaignManager)->m_victorious;
+	return ((BfmeCampaignManagerVictoriousSlice *)TheBfmeLivingWorldCampaignState)->m_victorious;
 }

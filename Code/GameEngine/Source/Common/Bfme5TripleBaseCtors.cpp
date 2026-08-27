@@ -21,10 +21,11 @@ private:
 };
 
 class BfmeBasePA { public: virtual void bfmeSlotA(void); };
+template <int RetailCopy>
 class BfmeBasePB { public: virtual void bfmeSlotB(void); };
 
 
-class Gen_00200AE0 : public BfmeBaseP0, public BfmeBasePA, public BfmeBasePB
+class Gen_00200AE0 : public BfmeBaseP0, public BfmeBasePA, public BfmeBasePB<0>
 {
 public:
 	Gen_00200AE0(void *first, void *second);
@@ -33,7 +34,7 @@ public:
 	virtual void bfmeSlotB(void);
 };
 
-class Gen_00216300 : public BfmeBaseP0, public BfmeBasePA, public BfmeBasePB
+class Gen_00216300 : public BfmeBaseP0, public BfmeBasePA, public BfmeBasePB<1>
 {
 public:
 	Gen_00216300(void *first, void *second);
@@ -42,7 +43,7 @@ public:
 	virtual void bfmeSlotB(void);
 };
 
-class Gen_00250690 : public BfmeBaseP0, public BfmeBasePA, public BfmeBasePB
+class Gen_00250690 : public BfmeBaseP0, public BfmeBasePA, public BfmeBasePB<2>
 {
 public:
 	Gen_00250690(void *first, void *second);
@@ -51,7 +52,7 @@ public:
 	virtual void bfmeSlotB(void);
 };
 
-class Gen_00253C30 : public BfmeBaseP0, public BfmeBasePA, public BfmeBasePB
+class Gen_00253C30 : public BfmeBaseP0, public BfmeBasePA, public BfmeBasePB<3>
 {
 public:
 	Gen_00253C30(void *first, void *second);

@@ -19,7 +19,7 @@ public:
 extern Glo012F7048CampaignGateMode *Glo012F7048;
 
 class CampaignManager;
-extern CampaignManager *TheCampaignManager;
+extern CampaignManager *TheBfmeLivingWorldCampaignState;
 
 class BfmeCampaignManagerFlag78Slice
 {
@@ -42,7 +42,7 @@ Bool Rva0060D480CampaignGate::isOpen( void ) const
 {
 	if ( Glo012F7048->m_mode == 1
 		&& !m_blocked
-		&& !((BfmeCampaignManagerFlag78Slice *)TheCampaignManager)->m_flag78 )
+		&& !((BfmeCampaignManagerFlag78Slice *)TheBfmeLivingWorldCampaignState)->m_flag78 )
 		return true;
 	return false;
 }

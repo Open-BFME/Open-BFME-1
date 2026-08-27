@@ -38,9 +38,9 @@ private:
     int m_f1c;
 };
 
-class CollideModuleInterface { public: virtual void slot(); };
+class BfmeToppleCollideModuleInterface { public: virtual void slot(); };
 
-class ToppleUpdate : public UpdateModule, public CollideModuleInterface
+class ToppleUpdate : public UpdateModule, public BfmeToppleCollideModuleInterface
 {
 public:
     ToppleUpdate(Thing *, const ModuleData *);

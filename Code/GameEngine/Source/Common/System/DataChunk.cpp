@@ -31,6 +31,9 @@
 
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
+// ??0OutputChunk@@QAE@XZ present-unmatched
+// ??0Mapping@@QAE@XZ present-unmatched
+
 #include "stdlib.h"
 #include "string.h"
 #include "Compression.h"

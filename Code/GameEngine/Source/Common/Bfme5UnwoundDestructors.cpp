@@ -29,6 +29,7 @@ private:
 	int m_bfmeValue;
 };
 
+template <int RetailCopy>
 class BfmeDtorBase
 {
 public:
@@ -38,7 +39,7 @@ private:
 	int m_bfmeFields[2];					// +0x04
 };
 
-class Gen_00837480 : public BfmeDtorBase
+class Gen_00837480 : public BfmeDtorBase<0>
 {
 public:
 	virtual ~Gen_00837480(void);
@@ -47,7 +48,7 @@ private:
 	BfmeDtorMemberA m_bfmeMember;				// +0x0C
 };
 
-class Gen_008374F0 : public BfmeDtorBase
+class Gen_008374F0 : public BfmeDtorBase<0>
 {
 public:
 	virtual ~Gen_008374F0(void);
@@ -56,7 +57,7 @@ private:
 	BfmeDtorMemberA m_bfmeMember;				// +0x0C
 };
 
-class Gen_00837560 : public BfmeDtorBase
+class Gen_00837560 : public BfmeDtorBase<0>
 {
 public:
 	virtual ~Gen_00837560(void);
@@ -65,7 +66,7 @@ private:
 	BfmeDtorMemberA m_bfmeMember;				// +0x0C
 };
 
-class Gen_008375D0 : public BfmeDtorBase
+class Gen_008375D0 : public BfmeDtorBase<0>
 {
 public:
 	virtual ~Gen_008375D0(void);
@@ -74,7 +75,7 @@ private:
 	BfmeDtorMemberA m_bfmeMember;				// +0x0C
 };
 
-class Gen_009D9C00 : public BfmeDtorBase
+class Gen_009D9C00 : public BfmeDtorBase<1>
 {
 public:
 	virtual ~Gen_009D9C00(void);

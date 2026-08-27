@@ -96,6 +96,7 @@ void FXNugget::doFXObj(const Object* primary, const Object* secondary) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// ??0SoundFXNugget@@QAE@XZ present-unmatched
 class SoundFXNugget : public FXNugget
 {
 	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(SoundFXNugget, "SoundFXNugget")		
@@ -380,6 +381,7 @@ class ViewShakeFXNugget : public FXNugget
 	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(ViewShakeFXNugget, "ViewShakeFXNugget")		
 public:
 
+	// ??0ViewShakeFXNugget@@QAE@XZ present-unmatched
 	ViewShakeFXNugget() : m_shake(View::SHAKE_NORMAL)
 	{
 	}
@@ -438,6 +440,8 @@ class TerrainScorchFXNugget : public FXNugget
 	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(TerrainScorchFXNugget, "TerrainScorchFXNugget")		
 public:
 
+	// ??0TerrainScorchFXNugget@@QAE@XZ present-unmatched
+	// ?a_003500a0@@YAXXZ present-unmatched
 	TerrainScorchFXNugget() : m_scorch(-1), m_radius(0)
 	{
 	}

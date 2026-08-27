@@ -171,13 +171,13 @@ void bfmeEnsure005E83F0( void )
 	static BfmeLatch005E83F0 s_latch;
 }
 
-// ?bfmeEnsure005E8420@@YAXXZ		guard 0x00EF6C48, atexit helper 0x00C70800
+// ?bfmeEnsure005E8420@@YAXXZ present-unmatched; guard 0x00EF6C48, atexit helper 0x00C70800
 void bfmeEnsure005E8420( void )
 {
 	static BfmeLatch005E8420 s_latch;
 }
 
-// ?bfmeEnsure005E8450@@YAXXZ		guard 0x00EF6C4C, atexit helper 0x00C707F0
+// ?bfmeEnsure005E8450@@YAXXZ present-unmatched; guard 0x00EF6C4C, atexit helper 0x00C707F0
 void bfmeEnsure005E8450( void )
 {
 	static BfmeLatch005E8450 s_latch;
@@ -195,7 +195,7 @@ void bfmeEnsure005E84B0( void )
 	static BfmeLatch005E84B0 s_latch;
 }
 
-// ?bfmeEnsure005E84E0@@YAXXZ		guard 0x00EF6C58, atexit helper 0x00C707C0
+// ?bfmeEnsure005E84E0@@YAXXZ present-unmatched; guard 0x00EF6C58, atexit helper 0x00C707C0
 void bfmeEnsure005E84E0( void )
 {
 	static BfmeLatch005E84E0 s_latch;
@@ -237,13 +237,13 @@ void bfmeEnsure005E8600( void )
 	static BfmeLatch005E8600 s_latch;
 }
 
-// ?bfmeEnsure005E8630@@YAXXZ		guard 0x00EF6C74, atexit helper 0x00C70750
+// ?bfmeEnsure005E8630@@YAXXZ present-unmatched; guard 0x00EF6C74, atexit helper 0x00C70750
 void bfmeEnsure005E8630( void )
 {
 	static BfmeLatch005E8630 s_latch;
 }
 
-// ?bfmeEnsure005E8660@@YAXXZ		guard 0x00EF6C78, atexit helper 0x00C70740
+// ?bfmeEnsure005E8660@@YAXXZ present-unmatched; guard 0x00EF6C78, atexit helper 0x00C70740
 void bfmeEnsure005E8660( void )
 {
 	static BfmeLatch005E8660 s_latch;
@@ -261,7 +261,7 @@ void bfmeEnsure005E86C0( void )
 	static BfmeLatch005E86C0 s_latch;
 }
 
-// ?bfmeEnsure005E86F0@@YAXXZ		guard 0x00EF6C84, atexit helper 0x00C70710
+// ?bfmeEnsure005E86F0@@YAXXZ present-unmatched; guard 0x00EF6C84, atexit helper 0x00C70710
 void bfmeEnsure005E86F0( void )
 {
 	static BfmeLatch005E86F0 s_latch;

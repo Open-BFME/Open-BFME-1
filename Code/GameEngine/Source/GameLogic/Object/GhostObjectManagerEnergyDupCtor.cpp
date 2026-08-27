@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: per-TU GhostObjectManager constructor at retail 0x007E87F0.
+// Model the duplicate with a unique C++ type because its separately emitted
+// vtable is not the canonical GhostObjectManager vtable in this executable.
 //
 // The sibling Energy constructor analysis identifies this body's folded
 // vtable and the Snapshot copy at 0x007E86B0.  The reference member order
@@ -17,10 +19,10 @@ public:
 	virtual void loadPostProcess() {}
 };
 
-class GhostObjectManager : public Snapshot
+class GhostObjectManagerEnergyDup : public Snapshot
 {
 public:
-	GhostObjectManager();
+	GhostObjectManagerEnergyDup();
 
 private:
 	int m_localPlayer;
@@ -28,7 +30,8 @@ private:
 	Bool m_saveLockGhostObjects;
 };
 
-GhostObjectManager::GhostObjectManager()
+// ??0GhostObjectManagerEnergyDup@@QAE@XZ present-unmatched
+GhostObjectManagerEnergyDup::GhostObjectManagerEnergyDup()
 {
 	m_lockGhostObjects = 0;
 	m_saveLockGhostObjects = 0;

@@ -34,7 +34,8 @@ public:
 
 class BfmeR0 { public: virtual void bfmeSlot0(void); private: int m_bfmeFields[4]; };
 class BfmeRA { public: virtual void bfmeSlotA(void); };
-class BfmeRB { public: virtual void bfmeSlotB(void); };
+class BfmeRB_005F2D20 { public: virtual void bfmeSlotB(void); };
+class BfmeRB_005F6530 { public: virtual void bfmeSlotB(void); };
 
 class BfmeRMiddle : public BfmeR0, public BfmeRA
 {
@@ -42,7 +43,7 @@ public:
 	BfmeRMiddle(void *first, void *second);			// retail 0x00041CBD
 };
 
-class Gen_005F2D20 : public BfmeRMiddle, public BfmeRB
+class Gen_005F2D20 : public BfmeRMiddle, public BfmeRB_005F2D20
 {
 public:
 	Gen_005F2D20(void *first, void *second);
@@ -51,7 +52,7 @@ public:
 	virtual void bfmeSlotB(void);
 };
 
-class Gen_005F6530 : public BfmeRMiddle, public BfmeRB
+class Gen_005F6530 : public BfmeRMiddle, public BfmeRB_005F6530
 {
 public:
 	Gen_005F6530(void *first, void *second);

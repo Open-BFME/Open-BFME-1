@@ -16,11 +16,11 @@ struct IRegion2D
 // declaration MSVC 7.1 folds these array expressions onto scalar new.
 void *operator new[](unsigned int size);
 
-class ZoneBlock
+class PathfindZoneBlock
 {
 public:
-	ZoneBlock();
-	~ZoneBlock();
+	PathfindZoneBlock();
+	~PathfindZoneBlock();
 
 private:
 	char m_retailLayout[0x228];
@@ -41,12 +41,12 @@ private:
 	unsigned char m_statePadding[2];
 	int m_currentZone;
 	char m_pathfinderStorage[0x2361c];
-	ZoneBlock *m_blockOfZoneBlocks;
-	ZoneBlock **m_zoneBlocks;
+	PathfindZoneBlock *m_blockOfZoneBlocks;
+	PathfindZoneBlock **m_zoneBlocks;
 	ICoord2D m_zoneBlockExtent;
 };
 
-typedef char ZoneBlockSizeMustMatchRetail[(sizeof(ZoneBlock) == 0x228) ? 1 : -1];
+typedef char ZoneBlockSizeMustMatchRetail[(sizeof(PathfindZoneBlock) == 0x228) ? 1 : -1];
 
 void PathfindZoneManager::allocateBlocks(const IRegion2D &globalBounds)
 {
@@ -60,8 +60,8 @@ void PathfindZoneManager::allocateBlocks(const IRegion2D &globalBounds)
 	m_zoneBlockExtent.x = (globalBounds.hi.x - globalBounds.lo.x + zoneBlockSize) / zoneBlockSize;
 	m_zoneBlockExtent.y = (globalBounds.hi.y - globalBounds.lo.y + zoneBlockSize) / zoneBlockSize;
 
-	m_blockOfZoneBlocks = new ZoneBlock[m_zoneBlockExtent.x * m_zoneBlockExtent.y];
-	m_zoneBlocks = new ZoneBlock *[m_zoneBlockExtent.x];
+	m_blockOfZoneBlocks = new PathfindZoneBlock[m_zoneBlockExtent.x * m_zoneBlockExtent.y];
+	m_zoneBlocks = new PathfindZoneBlock *[m_zoneBlockExtent.x];
 	for (int i = 0; i < m_zoneBlockExtent.x; ++i)
 		m_zoneBlocks[i] = &m_blockOfZoneBlocks[i * m_zoneBlockExtent.y];
 }

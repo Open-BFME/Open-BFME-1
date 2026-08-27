@@ -1,5 +1,12 @@
 void * __cdecl operator new( unsigned int size );
 void __cdecl f_00881eb0( void *block );
+class BfmeReportWeightScaleHolder
+{
+public:
+	static const float value;
+};
+
+const float BfmeReportWeightScaleHolder::value = 30.0f;
 
 // Two __thiscall members that look one object up through a stored owner and
 // then read a flag out of whatever comes back:
@@ -58,7 +65,7 @@ private:
 	struct Report
 	{
 		Report( int count, float weight ) :
-			m_weight( static_cast< int >( weight * 30.0f ) ),
+			m_weight( static_cast< int >( weight * BfmeReportWeightScaleHolder::value ) ),
 			m_count( count )
 		{
 		}

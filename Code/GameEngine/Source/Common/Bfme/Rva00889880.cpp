@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c- /Oy-
 
-extern "C" __declspec(dllimport) char* __cdecl _itoa( int, char*, int );
+extern "C" char* (__cdecl *BfmeItoaImport)( int, char*, int );
 
 class Rva00889880Class
 {
@@ -30,7 +30,7 @@ Rva00889880Class* Rva00889880Class::d_00889880( int val )
 	if ( val )
 	{
 		char buf[12];
-		print( (const char*)0x01132DD4 )->print( _itoa( val, buf, 16 ) );
+		print( (const char*)0x01132DD4 )->print( BfmeItoaImport( val, buf, 16 ) );
 	}
 	else
 	{

@@ -37,10 +37,10 @@ private:
 	char m_bfmePad[0x08 - 0x04];
 };
 
-class UnitCrateCollideModuleData : public Snapshot
+class Gen_002F1B10 : public Snapshot
 {
 public:
-	UnitCrateCollideModuleData();
+	Gen_002F1B10();
 
 	virtual void bfmeSlot0(void);
 
@@ -50,8 +50,8 @@ private:
 	AsciiString m_bfmeName;					// +0x0C
 };
 
-// ??0UnitCrateCollideModuleData@@QAE@XZ
-UnitCrateCollideModuleData::UnitCrateCollideModuleData()
+// ??0Gen_002F1B10@@QAE@XZ present-unmatched
+Gen_002F1B10::Gen_002F1B10()
 {
 	m_bfme08 = false;
 

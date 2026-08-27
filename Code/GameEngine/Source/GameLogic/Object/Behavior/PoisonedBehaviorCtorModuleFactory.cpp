@@ -22,7 +22,7 @@ protected:
 
 class PB_Iface1 { public: virtual void slot(); };
 class PB_Iface2 { public: virtual void slot(); };
-class DamageModuleInterface
+class PB_DamageInterface_002029F0
 {
 public:
     virtual void onDamage();
@@ -46,10 +46,10 @@ private:
     int m_f1C;
 };
 
-class PoisonedBehavior : public UpdateModule, public DamageModuleInterface
+class Gen_002029F0 : public UpdateModule, public PB_DamageInterface_002029F0
 {
 public:
-    PoisonedBehavior(Thing *, const ModuleData *);
+    Gen_002029F0(Thing *, const ModuleData *);
 
 private:
     unsigned int m_poisonDamageFrame;
@@ -58,8 +58,8 @@ private:
     DeathType m_deathType;
 };
 
-// ??0PoisonedBehavior@@QAE@PAVThing@@PBVModuleData@@@Z
-PoisonedBehavior::PoisonedBehavior(Thing *thing, const ModuleData *moduleData)
+// ??0Gen_002029F0@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
+Gen_002029F0::Gen_002029F0(Thing *thing, const ModuleData *moduleData)
     : UpdateModule(thing, moduleData), m_poisonDamageFrame(0),
       m_poisonOverallStopFrame(0), m_poisonDamageAmount(0.0f),
       m_deathType(DEATH_POISONED)

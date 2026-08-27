@@ -27,6 +27,13 @@ public:
 };
 
 extern BfmeThresholdSource *TheBfmeThresholdSource;			// 0x012ED5C8
+class BfmeCachedThresholdScaleHolder
+{
+public:
+	static const Real value;
+};
+
+const Real BfmeCachedThresholdScaleHolder::value = 0.5f;
 
 class Gen_00131b70
 {
@@ -52,7 +59,7 @@ int Gen_00131b70::bfmeExceeds(Real value)
 		m_bfmeFlags |= 2;
 	}
 
-	if (value + m_bfmeCached > TheBfmeThresholdSource->m_bfmeLimit * 0.5f)
+	if (value + m_bfmeCached > TheBfmeThresholdSource->m_bfmeLimit * BfmeCachedThresholdScaleHolder::value)
 		return 1;
 
 	return 0;
