@@ -94,8 +94,8 @@ name,target_rva,target_size,source,notes
 ?bfmeHandOver_0000FFE2@@YAXPAVBfmeSeedTarget@@PAX@Z,0x000E66F0,267,Code/GameEngine/Source/Common/S3SeedPairsDeferred.cpp,reloc-derived;call-sites=6;identity=real
 ?bfmeRelease@BfmeRefAB@@QAEPAV1@XZ,0x000E6CC0,39,Code/GameEngine/Source/Common/Bfme5DropAndHandOver.cpp,reloc-derived;call-sites=3;identity=real
 ??1ScienceVecStandIn@@QAE@XZ,0x000E80F0,203,Code/GameEngine/Source/Common/ScienceInfoDestructorThunk.cpp,reloc-derived;call-sites=1;identity=real
-?getTotalBuildingsDestroyed@ScoreKeeper@@QAEHXZ,0x000E8A70,40,Code/GameEngine/Source/Common/StatsCollector.cpp,reloc-derived;call-sites=1;identity=real
-?getTotalUnitsDestroyed@ScoreKeeper@@QAEHXZ,0x000E8AB0,40,Code/GameEngine/Source/Common/StatsCollector.cpp,reloc-derived;call-sites=1;identity=real
+?getTotalBuildingsDestroyed@ScoreKeeper@@QAEHXZ,0x000E8A70,40,Code/GameEngine/Source/Common/ScoreKeeper_totalDestroyed.cpp,reloc-derived;call-sites=1;identity=real
+?getTotalUnitsDestroyed@ScoreKeeper@@QAEHXZ,0x000E8AB0,40,Code/GameEngine/Source/Common/ScoreKeeper_totalDestroyed.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_000e9fe0@@UAE@XZ,0x000E9A40,150,Code/gen_small/dtors_000.cpp,reloc-derived;call-sites=1;identity=generated
 ?bfmeIterate@BfmeIterableObject@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x000EE770,70,Code/GameEngine/Source/Common/RTS/PlayerIterateObjects.cpp,reloc-derived;call-sites=1;identity=real
 ?hasAnyBuildFacility@Team@@QBE_NXZ,0x000EF340,96,Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyBuildFacility.cpp,reloc-derived;call-sites=1;identity=real
