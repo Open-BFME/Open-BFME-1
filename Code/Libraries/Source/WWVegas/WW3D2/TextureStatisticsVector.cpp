@@ -5,6 +5,11 @@
 // declarations local so the original out-of-line VectorClass constructor call
 // is preserved by the compiler.
 
+#include <new.h>
+
+extern void *__cdecl operator new[](size_t size);
+extern void __cdecl operator delete[](void *pointer);
+
 class TextureBaseClass
 {
 public:
@@ -15,6 +20,11 @@ public:
 class TextureClass : public TextureBaseClass
 {
 };
+
+void TextureBaseClass::Add_Ref()
+{
+	++*reinterpret_cast<unsigned short *>(reinterpret_cast<char *>(this) + 4);
+}
 
 template<class T>
 class RefCountPtr
@@ -105,6 +115,24 @@ protected:
 };
 
 template<class T>
+VectorClass<T>::VectorClass(unsigned size, T const *array)
+	: Vector(0), VectorMax(size), IsValid(true), IsAllocated(false)
+{
+	if (size)
+	{
+		if (array)
+		{
+			Vector = new ((void *)array) T[size];
+		}
+		else
+		{
+			Vector = new T[size];
+			IsAllocated = true;
+		}
+	}
+}
+
+template<class T>
 VectorClass<T>::~VectorClass()
 {
 	VectorClass<T>::Clear();
@@ -138,6 +166,8 @@ DynamicVectorClass<T>::DynamicVectorClass(unsigned size, T const *array)
 }
 
 template DynamicVectorClass<TextureStatisticsStruct>::DynamicVectorClass(
+	unsigned, TextureStatisticsStruct const *);
+template VectorClass<TextureStatisticsStruct>::VectorClass(
 	unsigned, TextureStatisticsStruct const *);
 template void DynamicVectorClass<TextureStatisticsStruct>::Clear();
 template VectorClass<TextureStatisticsStruct>::~VectorClass();
