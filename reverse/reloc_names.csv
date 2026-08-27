@@ -503,7 +503,7 @@ name,target_rva,target_size,source,notes
 ??0?$pair@$$CBUGen_t_00381c30_k4@@UGen_t_00381c30_p12cd@@@_STL@@QAE@ABU01@@Z,0x00381B60,166,Code/gen_small/tgrid_112.cpp,reloc-derived;call-sites=1;identity=generated
 ?isInMultiplayerOrSkirmishGame@GameLogicPortraitShim@@QAE_NXZ,0x00382C20,73,Code/GameEngine/Source/GameClient/GUI/ControlBar/GetSelectedPortraitImage_Thunk.cpp,reloc-derived;call-sites=1;identity=real
 ?setGamePaused@BfmeGameLogicPause@@QAEX_NH0@Z,0x00383490,300,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupSaveLoad.cpp,reloc-derived;call-sites=4;identity=real
-?bfmeRemove@BfmeManagerP@@QAEXPAVBfmeOwnedP@@@Z,0x003854C0,54,Code/GameEngine/Source/Common/Bfme5UnregisterClears.cpp,reloc-derived;call-sites=1;identity=real
+?bfmeRemove@BfmeManagerP@@QAEXPAVBfmeOwnedP@@@Z,0x003854C0,54,Code/GameEngine/Source/Common/Bfme5ManagerRemove.cpp,reloc-derived;call-sites=1;identity=real
 ?Gen003859B0@@YAHHH@Z,0x003859B0,216,Code/GameEngine/Source/Common/BigObfHookWrappers.cpp,reloc-derived;call-sites=1;identity=generated
 ?Gen00385AE0@@YAHHH@Z,0x00385AE0,216,Code/GameEngine/Source/Common/BigObfHookWrappers.cpp,reloc-derived;call-sites=1;identity=generated
 ?_M_bkt_num_key@?$hashtable@URva0038ED80Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva0038ED80ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva0038ED80Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x00388520,41,Code/Libraries/Source/WWVegas/WWLib/RvaHashInsertAsciiString.cpp,reloc-derived;call-sites=1;identity=generated
