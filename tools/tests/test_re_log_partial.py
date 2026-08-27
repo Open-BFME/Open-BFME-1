@@ -160,10 +160,15 @@ def test_stash_refused_on_any_other_status(log, tmp_path):
     assert refusal is not None and "belong to" in refusal, refusal
 
 
-def test_partial_without_flags_is_a_legal_facts_only_row(log):
-    """Facts outlive bodies -- a partial that banks only evidence is valid."""
-    assert record(SYM, "0x00401000", "16", "partial",
-                  "callee at 0x401200 confirmed; body shape still wrong") is None
+def test_partial_without_a_body_is_refused(log):
+    """The body IS the verdict. Measured over the first 95 partial rows, a
+    bodyless `partial` landed 5.1% against 7.5% for an outright dead end -- it
+    performed worse than saying nothing -- and it was two thirds of all usage
+    because it was the cheaper thing to type. So it is refused, with the
+    honest alternative named in the message."""
+    refusal = record(SYM, "0x00401000", "16", "partial",
+                     "callee at 0x401200 confirmed; body shape still wrong")
+    assert refusal is not None, "a partial with no banked body was accepted"
+    assert "requires --stash" in refusal and "blocked" in refusal, refusal
     re_log._reset()
-    assert not re_log.is_dead_end(SYM, RVA)
     assert re_log.stash_for(RVA) is None

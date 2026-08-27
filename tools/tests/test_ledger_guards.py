@@ -225,3 +225,34 @@ def test_attempts_exempts_an_asm_backed_rva(tmp_path, monkeypatch):
         ledger_rows=[f"?d_00439280@@YAXXZ,,0x000C8220,82,{src},matched,gen-dump\r\n"],
         sources={src: "d_00439280 PROC\n  db 0x55\nd_00439280 ENDP\n"})
     assert problems == [], problems
+
+
+def test_orphan_ratchet_refuses_one_more_than_baseline(tmp_path, monkeypatch):
+    """A new row-less Code/*.cpp is refused; the existing backlog is not.
+
+    verify_source_claims already catches these, but it runs only in the FULL
+    gate, which no commit or push hook invokes -- which is how 6 of them
+    accumulated over three weeks while every routine gate stayed green.
+    """
+    src = "Code/GameEngine/Source/Common/Real.cpp"
+    ledger = (HEADER + "\r\n"
+              + f"?f@@YAXXZ,,0x00401000,16,{src},matched,\r\n").encode("utf-8")
+    monkeypatch.setattr(check_csv, "read_ledger", lambda path, spec: ledger)
+
+    def run(paths, baseline):
+        monkeypatch.setattr(check_csv, "known_sources", lambda spec: set(paths))
+        monkeypatch.setattr(check_csv, "ORPHAN_BASELINE", baseline)
+        problems = []
+        check_csv.check_orphans(None, problems)
+        return problems
+
+    # The claimed source alone is clean at any baseline.
+    assert run([src], 0) == []
+    # One orphan is tolerated while the baseline still covers it...
+    assert run([src, "Code/GameEngine/Source/Common/Orphan.cpp"], 1) == []
+    # ...and refused the moment it exceeds it, naming the file.
+    problems = run([src, "Code/GameEngine/Source/Common/Orphan.cpp"], 0)
+    assert any("own no matched row" in p and "Orphan.cpp" in p for p in problems), problems
+    # Generated trees are machine output and never count as orphans.
+    assert run([src, "Code/gen_asm/d_00401000.asm",
+                "Code/gen_small/uw_gen_0.cpp"], 0) == []

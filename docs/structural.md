@@ -31,13 +31,14 @@ compiles to a different shape. Expect 30-60 minutes per function.
 4. If exact, `python3 tools/add_match.py '<sym>' <rva> <size> <src>` validates,
    appends, strips the marker and re-verifies; then bank the unit.
 5. If it did not land, bank it before reverting:
-   `re_log.py record '<sym>' <rva> <size> partial '<remaining diff>' --stash
-   <src> --score <0..1>`. Then revert; keep no nonmatching body in `Code/`.
+   `re_log.py record '<sym>' <rva> <size> partial '<diff>' --stash <src>
+   --score <0..1>` — both flags required, else `blocked`. Then revert; keep no
+   nonmatching body in `Code/`.
 
 An interior-only body is probably inlined; identical already-claimed bytes are
 probably ICF-folded. Compiler-only machinery (SEH array-constructor,
-`_initterm` stubs) may need the existing naked-assembly precedent. Each time:
-verify the evidence, revert the experiment, take another candidate.
+`_initterm` stubs) may need the naked-assembly precedent. Each time: verify the
+evidence, revert the experiment, take another candidate.
 
 ## Escalation beyond drift rows
 

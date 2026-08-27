@@ -7,7 +7,7 @@ history, one `git show` away.
 
 ## Work selection
 
-An explicit request or assigned lane overrides the queue. Otherwise:
+An explicit request or assigned lane overrides the queue:
 
 1. `git pull --rebase origin master`
 2. `python3 tools/check_csv.py` — repair ledger errors before other work
@@ -17,7 +17,7 @@ An explicit request or assigned lane overrides the queue. Otherwise:
 4. `python3 tools/next_work.py` for identity/structural work; it explains its
    own tiers.
 
-A tier reporting zero candidates is exhausted, not broken. Regenerate:
+A tier reporting zero candidates is exhausted, not broken. Regenerate with
 `tools/drift_classify.py`, `tools/anchor_unclaimed.py`, `./build.sh`.
 
 Finish or revert each body before the next.
@@ -62,24 +62,25 @@ enforces this in both hooks, and the push hook scans your whole outgoing range
 
 Ghidra boundaries, xrefs and vtables are identity evidence; decompiled C is
 not byte-match proof. After several failed shapes or ~30 minutes without byte
-progress, take a fresh candidate — never leave a nonmatching reconstruction in
+progress take a fresh candidate, never leaving a nonmatching reconstruction in
 `Code/`. Record the verdict:
 `python3 tools/re_log.py record <symbol> <rva> <size> <status> <evidence>`
 (never hand-edit `reverse/re_attempts.log`); cite the real boundary and
 include `t=<minutes>` and your model.
 
-**Close, not exact? Bank it.** Use status
-`partial '<what is still wrong>' --stash <your .cpp> --score <0..1>`: the
-candidate stays servable and the next agent is handed your body instead of
-starting cold. `partial` with no flags banks the facts alone — callee pins and
-layout offsets outlive the body that found them.
+**Close, not exact? Bank the body.**
+`partial '<what is wrong>' --stash <your .cpp> --score <0..1>` keeps the
+candidate servable and starts the next agent from your body, not cold. Both
+flags are required: over 95 rows, a `partial` describing the near miss without
+banking it landed 5.1% against 7.5% for silence. No body, no `partial` —
+record `blocked`.
 
 ## Placement and integrity
 
 - Game source under `Code/`; MASM dumps in `Code/masm_dumps/`; scratch
   untracked under `build/`. Banked attempts (`reverse/attempts/<rva>.cpp`) are
-  evidence, never progress: nothing compiles them, `add_match` deletes one when
-  its address lands, `check_csv` flags one left over.
+  evidence, never progress: nothing compiles them, `add_match` deletes one on
+  landing, `check_csv` flags leftovers.
 - Prefer TU-scoped shims over shared-header edits.
 - Progress = `matched` `reverse/functions.csv` rows backed by real source and
   byte verification. Markers and prose are not.
@@ -93,7 +94,7 @@ layout offsets outlive the body that found them.
 - No fallback paths; they conceal mismatches.
 - Never load `reverse/functions.csv`, `ghidra_functions.csv` or `exports.csv`
   wholesale; use `rg` or narrow filters.
-- Preserve unrelated dirty-tree work; revert only your failed attempt.
+- Preserve unrelated dirty-tree work; revert only your own attempt.
 
 ## Generated claims
 

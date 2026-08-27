@@ -347,6 +347,43 @@ def check_attempts(spec, problems):
     return len(paths)
 
 
+# Orphans that already exist: 6 .cpp under Code/ own no matched row, the oldest
+# added 2026-08-03. They fail build.py's verify_source_claims, but that runs only
+# in the FULL gate -- which no commit or push hook invokes -- so they accumulated
+# silently for weeks while every routine gate stayed green. This is a ratchet,
+# not a clean-up: it cannot fail the fleet today, and it refuses the 7th.
+# It may only ever be LOWERED, never raised to get green.
+ORPHAN_BASELINE = 6
+
+
+def check_orphans(spec, problems):
+    """Refuse a NEW Code/*.cpp that owns no matched row.
+
+    A source with no row is presence pretending to be progress: nothing compiles
+    it, nothing verifies it, and the only check that catches it is one the
+    workflow never runs. Counting rather than listing keeps this a few lines and
+    keeps the existing backlog someone else's to clear.
+    """
+    claimed = set()
+    for row in csv.reader(io.StringIO(
+            read_ledger(FUNCTIONS, spec).decode("utf-8", errors="replace"))):
+        if len(row) == 7 and row[5] == "matched":
+            claimed.add(row[4])
+    orphans = sorted(
+        path for path in known_sources(spec)
+        if path.startswith("Code/") and path.endswith(".cpp")
+        and not path.startswith(("Code/gen_asm/", "Code/gen_small/"))
+        and path not in claimed)
+    if len(orphans) > ORPHAN_BASELINE:
+        problems.append(
+            f"{len(orphans)} Code/*.cpp own no matched row, over the "
+            f"{ORPHAN_BASELINE} already known. Byte-match one function in your "
+            f"new file or delete it -- source presence is not progress. "
+            f"Never raise ORPHAN_BASELINE to get green; it only goes down. "
+            f"Orphans: {', '.join(orphans)}")
+    return len(orphans)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -362,13 +399,15 @@ def main():
     n_funcs = check_functions(read_ledger(FUNCTIONS, spec), problems, known_sources(spec))
     n_syms = check_symbols(read_ledger(SYMBOLS, spec), problems)
     check_attempts(spec, problems)
+    n_orphans = check_orphans(spec, problems)
 
     if problems:
         print(f"check_csv: {len(problems)} problem(s):", file=sys.stderr)
         for p in problems:
             print(f"  - {p}", file=sys.stderr)
         raise SystemExit(1)
-    print(f"check_csv: OK (functions.csv {n_funcs} rows, symbols.csv {n_syms} rows)")
+    print(f"check_csv: OK (functions.csv {n_funcs} rows, symbols.csv {n_syms} rows"
+          + (f", {n_orphans} known row-less source(s))" if n_orphans else ")"))
 
 
 if __name__ == "__main__":

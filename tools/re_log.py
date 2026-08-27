@@ -320,8 +320,8 @@ def _record(argv):
 
     `<status> = partial` is a near miss: the candidate stays servable and the
     two flags bank the body you are about to revert as reverse/attempts/<rva>.cpp
-    for whoever draws it next. They come as a pair and only with `partial`;
-    `partial` on its own is a legal facts-only row.
+    for whoever draws it next. They are REQUIRED for `partial` and legal on no
+    other status -- a partial without a body measured worse than silence.
 
     `<status> = void` retracts an earlier row instead of adding a verdict: pass
     the SAME symbol and rva as the row being taken back, and say in the evidence
@@ -354,6 +354,17 @@ def _record(argv):
         raise SystemExit(
             "--stash and --score are one pair: a banked body nothing can rank "
             "never gets served, and a score pointing at no body ranks nothing.")
+    # Measured over the first 95 partial rows: banking a body lands 25.0% of the
+    # time, while a bodyless `partial` lands 5.1% -- BELOW the 7.5% of an
+    # outright dead end. Two thirds of usage was the bodyless form, because it
+    # was the cheaper thing to type. So the body is the verdict: without one,
+    # say `blocked` and let the queue re-serve it on its own terms.
+    if status == STASH_STATUS and stash_text is None:
+        raise SystemExit(
+            f"{STASH_STATUS!r} requires --stash <file> --score <0..1>. A row "
+            f"that only describes the near miss measured WORSE than recording "
+            f"nothing (5.1% vs 7.5% landing). Bank the body you are about to "
+            f"revert, or record `blocked` with your evidence instead.")
     if stash_text is not None:
         if status != STASH_STATUS:
             raise SystemExit(
