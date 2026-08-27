@@ -925,7 +925,6 @@ public:
 };
 
 // ?Set_Position@AABoxRenderObjClass@@UAEXABVVector3@@@Z matched 27 bytes (Open-BFME5)
-// ?AABoxRenderObjClass::Set_Position present-unmatched
 void AABoxRenderObjClass::Set_Position(const Vector3 &v)
 {
 	reinterpret_cast<RetailAABoxRenderObjBase *>(this)->Set_Position_Retail(v);
