@@ -53,6 +53,14 @@ public:
 		Referent = other.Referent;
 		return *this;
 	}
+	void Clear()
+	{
+		if (Referent != 0)
+		{
+			Referent->Release_Ref();
+			Referent = 0;
+		}
+	}
 	bool operator==(RefCountPtr const &other) const { return Referent == other.Referent; }
 	bool operator!=(RefCountPtr const &other) const { return Referent != other.Referent; }
 
@@ -204,6 +212,18 @@ void DynamicVectorClass<T>::Clear()
 }
 
 template<class T>
+bool DynamicVectorClass<T>::Resize(int newsize, T const *array)
+{
+	if (VectorClass<T>::Resize(newsize, array))
+	{
+		if (this->Length() < ActiveCount)
+			ActiveCount = this->Length();
+		return true;
+	}
+	return false;
+}
+
+template<class T>
 bool DynamicVectorClass<T>::Add(T const &object)
 {
 	if (ActiveCount >= this->Length())
@@ -240,3 +260,28 @@ template void DynamicVectorClass<TextureStatisticsStruct>::Clear();
 template bool DynamicVectorClass<TextureStatisticsStruct>::Add(
 	TextureStatisticsStruct const &);
 template VectorClass<TextureStatisticsStruct>::~VectorClass();
+
+static int texture_memory;
+static int texture_count;
+static int lightmap_texture_memory;
+static int lightmap_texture_count;
+static int procedural_texture_memory;
+static int procedural_texture_count;
+static int record_count;
+static int texture_change_count;
+static RefCountPtr<TextureClass> latest_texture;
+static DynamicVectorClass<TextureStatisticsStruct> texture_statistics;
+
+void Record_Texture_Begin()
+{
+	texture_memory = 0;
+	texture_count = 0;
+	lightmap_texture_memory = 0;
+	lightmap_texture_count = 0;
+	procedural_texture_memory = 0;
+	procedural_texture_count = 0;
+	record_count = 0;
+	texture_change_count = 0;
+	latest_texture.Clear();
+	texture_statistics.Resize(0);
+}
