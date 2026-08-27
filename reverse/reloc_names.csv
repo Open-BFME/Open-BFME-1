@@ -775,7 +775,7 @@ _BfmePathfindMapUpdate@12,0x003FA5B0,3951,Code/GameEngine/Source/GameLogic/AI/Pa
 ??0Gen0048D200@@QAE@XZ,0x0048D200,161,Code/GameEngine/Source/Common/Q4NewNiladicFactories.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_0048dea0@@UAE@XZ,0x0048D8B0,216,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_0048f590@@UAE@XZ,0x0048F3E0,232,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
-?bfmeDestroyRange@@YAXPAH0VBfmeAllocL@@@Z,0x0048F9E0,53,Code/GameEngine/Source/Common/Bfme5DestroyRangeClear.cpp,reloc-derived;call-sites=1;identity=real
+?bfmeDestroyRange@@YAXPAH0VBfmeAllocL@@@Z,0x0048F9E0,53,Code/GameEngine/Source/Common/Bfme5DestroyRange.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_00491030@@UAE@XZ,0x00490350,97,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_00491060@@UAE@XZ,0x00490470,107,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_00491260@@UAE@XZ,0x00490890,197,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
