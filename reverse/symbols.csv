@@ -72919,6 +72919,7 @@ name,address,notes
 ?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0004ADE0,hit-decoded x3 (thunk)
 ?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0004AEFD,hit-decoded x3 (thunk)
 ?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x009407B0,hit-decoded x3 (body)
+?cleanUpReplayFile@RecorderClass@@QAEXXZ,0x0003CC9A,Recorder cleanup invoked by the GameEngine::execute catch-all path
 ?cleanUpSlotPointers@GameSpyStagingRoom@@QAEXXZ,0x00022507,addStagingRoom call target (incremental-link thunk)
 ?cleanup@Gen0013BF00Owner@@QAEXXZ,0x0013BF00,no-argument __thiscall member run first by the 27-byte node-pool release family (Q2NodePoolReleases.cpp); target read from the call site REL32 through its incremental-link thunk; address-derived name; identity not recovered
 ?cleanup@Gen0056D960Owner@@QAEXXZ,0x0056D960,no-argument __thiscall member run first by the 27-byte node-pool release family (Q2NodePoolReleases.cpp); target read from the call site REL32 through its incremental-link thunk; address-derived name; identity not recovered
