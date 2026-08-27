@@ -13,6 +13,8 @@
 // address-derived names rather than invented ones -- the symbols.csv notes say
 // so, and only the addresses are load-bearing.
 
+#include <string.h>
+
 typedef int Int;
 
 enum StateExitType
@@ -28,6 +30,22 @@ enum KindOfType
 enum ModelConditionFlagType
 {
 	MODELCONDITION_FIRST = 0
+};
+
+class ModelConditionFlags
+{
+public:
+	ModelConditionFlags()
+	{
+		memset( m_bits, 0, sizeof( m_bits ) );
+	}
+
+	void set(ModelConditionFlagType bit)
+	{
+		m_bits[ (unsigned int)bit >> 5 ] |= 1u << ( (unsigned int)bit & 0x1f );
+	}
+
+	unsigned int m_bits[ 3 ];
 };
 
 class Object;
@@ -51,11 +69,19 @@ public:
 	void clearModelConditionState(ModelConditionFlagType);	///< ILT thunk at 0x00031F7A
 
 	// Unidentified two-argument body at 0x000F20F0, reached via 0x00019C54.
-	void unidentified_000F20F0(Int, Int);
+	__declspec(noinline) void unidentified_000F20F0(Int, Int);
+	__declspec(noinline) void unidentified_0002181E(const ModelConditionFlags &, Int);
 
 	unsigned char m_unreconstructed_00[0x98];
 	unsigned int m_statusBits;								///< retail this+0x98
 };
+
+void Object::unidentified_000F20F0(Int index, Int value)
+{
+	ModelConditionFlags flags;
+	flags.set((ModelConditionFlagType)index);
+	unidentified_0002181E(flags, value);
+}
 
 class AIInternalMoveToState
 {
