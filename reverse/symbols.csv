@@ -81292,3 +81292,21 @@ g_bfmeGridWaterHandle,0x012EF4D4,TerrainLogic getWaterHandle retail grid-water s
 ?bfmeApplyCircle@Gen_008812D0@@QAEXHHHH_N@Z,0x00881B90,Open-BFME5 semantic identity for the exact TaintManager grid circle-update wrapper already claimed under an address-derived class
 ?bfmeGetAllocator003D32D0@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QBE?AV?$allocator@PAX@2@XZ,0x0002CE4E,Open-BFME5 address-scoped STLport get_allocator ILT to body 0x003D32D0 used by the key-map copy constructor
 ??0?$Rva003D3540VectorBase@PAXV?$allocator@PAX@_STL@@@_STL@@QAE@IABV?$allocator@PAX@1@@Z,0x0000799B,Open-BFME5 address-scoped STLport vector-base constructor ILT to body 0x003D3540 used by the key-map copy constructor
+?bfmeReset@Gen_008812D0@@QAEXXZ,0x008811A0,Open-BFME5 semantic no-op reset hook called immediately before the Taint grid region is cleared
+?j_0003152a@Glo012F1024Item@@QAEXXZ,0x0003152A,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_000250d6@Glo012F1024Item@@QAEXXZ,0x000250D6,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0001eb9b@Glo012F1024Item@@QAEXXZ,0x0001EB9B,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0000df76@Glo012F1024Item@@QAEXXZ,0x0000DF76,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00008053@Glo012F1024Item@@QAEXXZ,0x00008053,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0000d1d4@Glo012F1024Item@@QAEXXZ,0x0000D1D4,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00010712@Glo012F1024Item@@QAEXXZ,0x00010712,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0002d3e4@Glo012F1024Item@@QAEXXZ,0x0002D3E4,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0000ca59@Glo012F1024Item@@QAE_NXZ,0x0000CA59,"conditional direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00008c0b@Glo012F1028Type@@QAEXXZ,0x00008C0B,"conditional global notification thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0002a969@Glo012F1024Item@@QAEXXZ,0x0002A969,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00021f26@Glo012F1024Item@@QAEXXZ,0x00021F26,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0002eeec@Glo012F1024Item@@QAEXXZ,0x0002EEEC,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00019eca@Glo012F1024Item@@QAEXXZ,0x00019ECA,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00040c32@Glo012F1024Item@@QAEXXZ,0x00040C32,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00036124@Glo012F1024Item@@QAEXXZ,0x00036124,"tail-called retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00010bcc@Glo012F1024Item@@QAEXXZ,0x00010BCC,"tail-called continuation of ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
