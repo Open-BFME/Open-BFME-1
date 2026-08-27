@@ -593,7 +593,7 @@ name,target_rva,target_size,source,notes
 ?bfmeFinish@Glo012F1028Sub@@AAEXPAVGlo012F1028Item@@H@Z,0x003CA7C0,423,Code/GameEngine/Source/Common/Glo012F1028Sub_bfmeNotify.cpp,reloc-derived;call-sites=1;identity=real
 ?drop@Gen003C8A50@@QAEXPAVGen003C8A50Result@@@Z,0x003CA9D0,662,Code/GameEngine/Source/Common/V4GuardedLookupFieldReads.cpp,reloc-derived;call-sites=1;identity=generated
 ?consume@Gen003BF540Owner@@QAE_NPAVGen003BD8D0Built@@@Z,0x003CAE40,89,Code/GameEngine/Source/Common/V4MirroredFlagUpdate.cpp,reloc-derived;call-sites=1;identity=generated
-?bfmeUnguardedInsertAT@@YAXPAPAVBfmeRecAT@@PAV1@VBfmeCompAT@@@Z,0x003CC570,58,Code/GameEngine/Source/Common/Bfme5LinearInsertRanked.cpp,reloc-derived;call-sites=1;identity=real
+?bfmeUnguardedInsertAT@@YAXPAPAVBfmeRecAT@@PAV1@VBfmeCompAT@@@Z,0x003CC570,58,Code/GameEngine/Source/Common/Bfme5UnguardedInsertAT.cpp,reloc-derived;call-sites=1;identity=real
 ??0?$pair@$$CBUGen_t_003cd920_k4@@UGen_t_003cd920_p12cd@@@_STL@@QAE@ABU01@@Z,0x003CC780,212,Code/gen_small/tgrid_114.cpp,reloc-derived;call-sites=1;identity=generated
 ?call@Gen000135B1@@QAEXPAVY1ForEachArg@@0@Z,0x003CCE80,227,Code/GameEngine/Source/Common/Y1MemberVectorForEach.cpp,reloc-derived;call-sites=1;identity=generated
 ?Gen003CDD00@@YAXPAPAHHHPAHUQ3HeapCompare@@@Z,0x003CDD00,131,Code/GameEngine/Source/Common/Q3HeapAlgorithmFamily.cpp,reloc-derived;call-sites=5;identity=generated

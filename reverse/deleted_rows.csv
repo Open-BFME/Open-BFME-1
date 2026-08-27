@@ -8,6 +8,7 @@ name,target_rva,reason
 #
 # If you later PROVE one of these is real, delete its line here in the same
 # commit that re-adds the row, and say what the proof was.
+?d_003cc570@@YAXXZ,0x003CC570,gen-dump placeholder superseded by the recovered bfmeUnguardedInsertAT identity and exact C++ body
 ??1?$VectorClass@E@@UAE@XZ,0x00AFF130,retail vtable for VectorClass<unsigned char> is 0x113ac74 (proven by pointgr.cpp ctor) but the folded body at 0x00AFF130 loads 0x11bc44c; ICF folds only identical code so this cannot be that body
 ??1?$VectorClass@PAUtThreadInfoType@@@@UAE@XZ,0x00AFF130,vtable is 0x113a0fc (proven by Except.cpp ctor) not the 0x11bc44c this body loads
 ??1?$VectorClass@PAVDefinitionClass@@@@UAE@XZ,0x00AFF130,vtable is 0x113a0fc (proven by definitionmgr.cpp ctor) not the 0x11bc44c this body loads
