@@ -75824,6 +75824,23 @@ name,address,notes
 ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAUViewAttackBlockedStruct@@@Z,0x0000CC1B,ILT thunk to the cell-space line walk at 0x003E3190 reached only from its world-space forwarder
 ?iterateObjects@Player@@QBEXP6AXPAVObject@@PAX@Z1@Z,0x0002F1CB
 ?iterateObjects@PlayerIterateObjectsShim@@QBEXP6AXPAVObject@@PAX@Z1@Z,0x000CDCF0,Player::iterateObjects incremental-link thunk target through a TU-local forwarding shim
+?j_00008053@Glo012F1024Item@@QAEXXZ,0x00008053,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00008c0b@Glo012F1028Type@@QAEXXZ,0x00008C0B,"conditional global notification thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0000ca59@Glo012F1024Item@@QAE_NXZ,0x0000CA59,"conditional direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0000d1d4@Glo012F1024Item@@QAEXXZ,0x0000D1D4,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0000df76@Glo012F1024Item@@QAEXXZ,0x0000DF76,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00010712@Glo012F1024Item@@QAEXXZ,0x00010712,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00010bcc@Glo012F1024Item@@QAEXXZ,0x00010BCC,"tail-called continuation of ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00019eca@Glo012F1024Item@@QAEXXZ,0x00019ECA,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0001eb9b@Glo012F1024Item@@QAEXXZ,0x0001EB9B,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00021f26@Glo012F1024Item@@QAEXXZ,0x00021F26,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_000250d6@Glo012F1024Item@@QAEXXZ,0x000250D6,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0002a969@Glo012F1024Item@@QAEXXZ,0x0002A969,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0002d3e4@Glo012F1024Item@@QAEXXZ,0x0002D3E4,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0002eeec@Glo012F1024Item@@QAEXXZ,0x0002EEEC,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0003152a@Glo012F1024Item@@QAEXXZ,0x0003152A,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00036124@Glo012F1024Item@@QAEXXZ,0x00036124,"tail-called retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_00040c32@Glo012F1024Item@@QAEXXZ,0x00040C32,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
 ?keyToName@NameKeyGenerator@@QAE?AVAsciiString@@W4NameKeyType@@@Z,0x0003EC7A
 ?kill@Object@@QAEXW4DamageType@@W4DeathType@@@Z,0x00014506,ILT thunk to Object::kill
 ?killRunningParticleSystems@BoneFXUpdate@@IAEXXZ,0x0000628F
@@ -77848,20 +77865,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?j_0003152a@Glo012F1024Item@@QAEXXZ,0x0003152A,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_000250d6@Glo012F1024Item@@QAEXXZ,0x000250D6,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_0001eb9b@Glo012F1024Item@@QAEXXZ,0x0001EB9B,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_0000df76@Glo012F1024Item@@QAEXXZ,0x0000DF76,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00008053@Glo012F1024Item@@QAEXXZ,0x00008053,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_0000d1d4@Glo012F1024Item@@QAEXXZ,0x0000D1D4,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00010712@Glo012F1024Item@@QAEXXZ,0x00010712,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_0002d3e4@Glo012F1024Item@@QAEXXZ,0x0002D3E4,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_0000ca59@Glo012F1024Item@@QAE_NXZ,0x0000CA59,"conditional direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00008c0b@Glo012F1028Type@@QAEXXZ,0x00008C0B,"conditional global notification thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_0002a969@Glo012F1024Item@@QAEXXZ,0x0002A969,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00021f26@Glo012F1024Item@@QAEXXZ,0x00021F26,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_0002eeec@Glo012F1024Item@@QAEXXZ,0x0002EEEC,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00019eca@Glo012F1024Item@@QAEXXZ,0x00019ECA,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00040c32@Glo012F1024Item@@QAEXXZ,0x00040C32,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00036124@Glo012F1024Item@@QAEXXZ,0x00036124,"tail-called retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00010bcc@Glo012F1024Item@@QAEXXZ,0x00010BCC,"tail-called continuation of ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
