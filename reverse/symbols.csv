@@ -2484,6 +2484,7 @@ name,address,notes
 ??0GenBase009A1A30@@QAE@XZ,0x009A1A30,base constructor called by the 18-byte vptr-only derived constructors in MidVptrOnlyDerivedCtors.cpp
 ??0GenBase009CA9E0@@QAE@XZ,0x009CA9E0,base constructor called by the 18-byte vptr-only derived constructors in MidVptrOnlyDerivedCtors.cpp
 ??0GenBase009EB7D0@@QAE@XZ,0x009EB7D0,base constructor called by the 18-byte vptr-only derived constructors in MidVptrOnlyDerivedCtors.cpp
+_GenBase009EB7D0_vtbl,0x01145744,GenBase009EB7D0 base vftable used by its retail constructor
 ??0GenNode_006fa270@@QAE@ABU0@@Z,0x005C2170,copy constructor of the twelve-byte intrusive list node GenNode_006fa270 (Gen_006fa270.cpp); splices this onto owner+0x98/+0x9C exactly as that file's setOwner does; target read from the REL32 at its call sites
 ??0Gen_dtor_000edca0@@QAE@XZ,0x00019CF9,Open-BFME5 DelayedLuaEventUpdate member constructor ILT pin
 ??0Gen_dtor_002aaec0@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME5 RousingSpeechUpdate retail base constructor ILT

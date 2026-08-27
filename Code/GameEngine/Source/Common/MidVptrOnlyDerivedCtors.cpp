@@ -40,6 +40,43 @@
 	{                                                                     \
 	}
 
+// ??0GenBase009EB7D0@@QAE@XZ
+// This base is the one non-empty member of the otherwise vptr-only family.
+// Keep the halfword clear and the bitfield updates in their retail order;
+// the late vptr write is the base constructor's own vftable store.
+extern "C" char GenBase009EB7D0_vtbl;
+
+class __declspec(novtable) GenBase009EB7D0
+{
+public:
+	__declspec(noinline) GenBase009EB7D0();
+	virtual void handle();
+
+private:
+	unsigned int m_flags;
+	unsigned int m_zero08;
+	unsigned int m_zero0c;
+	unsigned int m_zero10;
+};
+
+GenBase009EB7D0::GenBase009EB7D0()
+{
+	unsigned char *base = reinterpret_cast<unsigned char *>(this);
+	unsigned int value;
+
+	*reinterpret_cast<unsigned short volatile *>(base + 4) = 0;
+	value = *reinterpret_cast<unsigned int volatile *>(base + 4);
+	value &= 0xff07ffffu;
+	value |= 0x00070000u;
+	*reinterpret_cast<unsigned int volatile *>(base + 4) = value;
+	value &= 0xf8ffffffu;
+	*reinterpret_cast<char *volatile *>(base) = &GenBase009EB7D0_vtbl;
+	*reinterpret_cast<unsigned int volatile *>(base + 4) = value;
+	*reinterpret_cast<unsigned int volatile *>(base + 8) = 0;
+	*reinterpret_cast<unsigned int volatile *>(base + 0xc) = 0;
+	*reinterpret_cast<unsigned int volatile *>(base + 0x10) = 0;
+}
+
 BFME_VPTR_BASE( GenBase00101D50 )
 BFME_VPTR_BASE( GenBase00101E20 )
 BFME_VPTR_BASE( GenBase00138960 )
@@ -52,7 +89,6 @@ BFME_VPTR_BASE( GenBase008AD3F0 )
 BFME_VPTR_BASE( GenBase00944940 )
 BFME_VPTR_BASE( GenBase009A1A30 )
 BFME_VPTR_BASE( GenBase009CA9E0 )
-BFME_VPTR_BASE( GenBase009EB7D0 )
 
 BFME_VPTR_DERIVED( Rva0006B0D0, GenBase009A1A30 )
 BFME_VPTR_DERIVED( Rva000C3FF0, GenBase009A1A30 )
