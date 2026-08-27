@@ -48,7 +48,6 @@ private:
 	bool m_killWhenNoLongerAttacking;
 };
 
-// ?createRadiusDecal@RadiusDecalUpdate@@QAEXABVRadiusDecalTemplate@@MABUCoord3D@@@Z present-unmatched under that name — the body is claimed at 0x002A0750, but by a gen-named row that carries the real symbol only in its object-symbol field; repointing it is a retraction and belongs in its own commit
 void RadiusDecalUpdate::createRadiusDecal(const RadiusDecalTemplate &tmpl, float radius, const Coord3D &pos)
 {
 	m_deliveryDecal.clear();
