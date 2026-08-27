@@ -81140,6 +81140,8 @@ g_bfmeVtableCZ,0x0112D210,Open-BFME5 the table the constructor at 0x0081E480 ins
 g_bfmeVtableDQa,0x010F9AD8,Open-BFME5 the base table the constructor at 0x00490500 installs first
 g_bfmeVtableDQb,0x010F9B0C,Open-BFME5 the derived table the constructor at 0x00490500 installs second
 g_bfmeZeroCY,0x01075350,Open-BFME5 the constant the ratio at 0x0075F3D0 falls back to
+g_bfmeTableDstBQ,0x012B50A0,Open-BFME5 the table the copy at 0x00421E20 writes
+g_bfmeTableSrcBQ,0x012B5040,Open-BFME5 the table the copy at 0x00421E20 reads
 g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
