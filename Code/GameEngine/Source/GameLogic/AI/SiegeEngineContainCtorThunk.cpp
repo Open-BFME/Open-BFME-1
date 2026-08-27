@@ -1,290 +1,105 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+
+// Open-BFME5: SiegeEngineContain module ctor.
+//
+// This is the retail OpenContain multiple-inheritance slice.  The base
+// constructor is the shared ILT already identified as HordeTransport's base
+// constructor; keeping that ABI name also makes the call resolve to the
+// existing 0x23A1 pin.  The three STLport members are laid out from the
+// matching destructor: list at +0xE4, map at +0xF0, and list at +0xFC.
+
+#include <list>
+#include <map>
 
 class Thing;
 class ModuleData;
 
-class SiegeEngineContain
+class OpenContainPrimaryBase
 {
 public:
-    SiegeEngineContain(Thing *, const ModuleData *);
+	virtual ~OpenContainPrimaryBase() {}
+
+private:
+	unsigned char m_pad[8];
+};
+
+template <int Number>
+class OpenContainSecondaryBase
+{
+public:
+	virtual ~OpenContainSecondaryBase() {}
+};
+
+class OpenContainWideSecondaryBase
+{
+public:
+	virtual ~OpenContainWideSecondaryBase() {}
+
+private:
+	unsigned char m_pad[12];
+};
+
+class __declspec(novtable) OpenContain
+	: public OpenContainPrimaryBase,
+	  public OpenContainSecondaryBase<1>,
+	  public OpenContainWideSecondaryBase,
+	  public OpenContainSecondaryBase<2>,
+	  public OpenContainSecondaryBase<3>,
+	  public OpenContainSecondaryBase<4>,
+	  public OpenContainSecondaryBase<5>,
+	  public OpenContainSecondaryBase<6>,
+	  public OpenContainSecondaryBase<7>
+{
+public:
+	virtual ~OpenContain() {}
+
+private:
+	unsigned char m_pad[0x9c];
+};
+
+class SiegeEngineContainTenthBase
+{
+public:
+	virtual ~SiegeEngineContainTenthBase() {}
+};
+
+// The 0x23A1 body is shared with HordeTransportContainBase in the retail
+// image, so use its established decorated identity for this ABI slice.
+class __declspec(novtable) HordeTransportContainBase
+	: public OpenContain,
+	  public SiegeEngineContainTenthBase
+{
+public:
+	HordeTransportContainBase(Thing *, const ModuleData *);
+	virtual ~HordeTransportContainBase();
+
+private:
+	unsigned char m_pad[0x0c];
+};
+
+struct Gen_t_00223550_p4pod { int a[1]; };
+bool operator==(const Gen_t_00223550_p4pod&, const Gen_t_00223550_p4pod&);
+bool operator<(const Gen_t_00223550_p4pod&, const Gen_t_00223550_p4pod&);
+
+class SiegeEngineContain : public HordeTransportContainBase
+{
+public:
+	SiegeEngineContain(Thing *, const ModuleData *);
+	virtual ~SiegeEngineContain();
+
+private:
+	_STL::list<int> m_listA;
+	int m_e8;
+	bool m_ec;
+	_STL::map<int, Gen_t_00223550_p4pod> m_map;
+	_STL::list<int> m_listB;
 };
 
 // ??0SiegeEngineContain@@QAE@PAVThing@@PBVModuleData@@@Z
-__declspec(naked) SiegeEngineContain::SiegeEngineContain(Thing *, const ModuleData *)
+SiegeEngineContain::SiegeEngineContain(Thing *thing, const ModuleData *moduleData)
+	: HordeTransportContainBase(thing, moduleData), m_listB(_STL::allocator<int>())
 {
-    __asm {
-        __emit 0x6a;
-        __emit 0xff;
-        __emit 0x68;
-        __emit 0x94;
-        __emit 0xd6;
-        __emit 0x00;
-        __emit 0x01;
-        __emit 0x64;
-        __emit 0xa1;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x50;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x25;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x51;
-        __emit 0x8b;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x18;
-        __emit 0x53;
-        __emit 0x56;
-        __emit 0x8b;
-        __emit 0xf1;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x1c;
-        __emit 0x50;
-        __emit 0x51;
-        __emit 0x8b;
-        __emit 0xce;
-        __emit 0x89;
-        __emit 0x74;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0xe8;
-        __emit 0x22;
-        __emit 0x67;
-        __emit 0xdd;
-        __emit 0xff;
-        __emit 0x33;
-        __emit 0xdb;
-        __emit 0xc7;
-        __emit 0x06;
-        __emit 0x88;
-        __emit 0xd0;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x0c;
-        __emit 0xc0;
-        __emit 0xcf;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x10;
-        __emit 0xb0;
-        __emit 0xcf;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x20;
-        __emit 0x08;
-        __emit 0xce;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x24;
-        __emit 0xe8;
-        __emit 0xcd;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x28;
-        __emit 0xe4;
-        __emit 0xcd;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x2c;
-        __emit 0xd4;
-        __emit 0xcd;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x30;
-        __emit 0x98;
-        __emit 0xcd;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x46;
-        __emit 0x34;
-        __emit 0x88;
-        __emit 0xcd;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0xc7;
-        __emit 0x86;
-        __emit 0xd4;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x84;
-        __emit 0xcd;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0x6a;
-        __emit 0x0c;
-        __emit 0x89;
-        __emit 0x5c;
-        __emit 0x24;
-        __emit 0x18;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xe4;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xe8;
-        __emit 0x66;
-        __emit 0x28;
-        __emit 0x60;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x40;
-        __emit 0x04;
-        __emit 0x89;
-        __emit 0x86;
-        __emit 0xe4;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x6a;
-        __emit 0x18;
-        __emit 0xc6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x1c;
-        __emit 0x01;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xf0;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xe8;
-        __emit 0x49;
-        __emit 0x28;
-        __emit 0x60;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x86;
-        __emit 0xf0;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xf4;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x88;
-        __emit 0x18;
-        __emit 0x8b;
-        __emit 0x96;
-        __emit 0xf0;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x5a;
-        __emit 0x04;
-        __emit 0x8b;
-        __emit 0x86;
-        __emit 0xf0;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x40;
-        __emit 0x08;
-        __emit 0x8b;
-        __emit 0x86;
-        __emit 0xf0;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x40;
-        __emit 0x0c;
-        __emit 0x6a;
-        __emit 0x0c;
-        __emit 0xc6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x20;
-        __emit 0x02;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xfc;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xe8;
-        __emit 0x0e;
-        __emit 0x28;
-        __emit 0x60;
-        __emit 0x00;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x18;
-        __emit 0x89;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x40;
-        __emit 0x04;
-        __emit 0x89;
-        __emit 0x86;
-        __emit 0xfc;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xc4;
-        __emit 0x0c;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0xe8;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x88;
-        __emit 0x9e;
-        __emit 0xec;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x8b;
-        __emit 0xc6;
-        __emit 0x5e;
-        __emit 0x5b;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x0d;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xc4;
-        __emit 0x10;
-        __emit 0xc2;
-        __emit 0x08;
-        __emit 0x00;
-    }
+	m_e8 = 0;
+	m_ec = false;
 }
