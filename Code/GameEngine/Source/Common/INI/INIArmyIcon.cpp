@@ -17,14 +17,29 @@
 #include <vector>
 
 class BfmeArmyIcon
+;
+
+class BfmeArmyIconBase
 {
 public:
-	BfmeArmyIcon( const AsciiString &name );
-	static const FieldParse m_fieldParseTable[];
+	BfmeArmyIconBase( AsciiString name );
 
 private:
 	char m_storage[ 0x18 ];
 };
+
+class BfmeArmyIcon : public BfmeArmyIconBase
+{
+public:
+	__declspec(noinline) BfmeArmyIcon( const AsciiString &name );
+	static const FieldParse m_fieldParseTable[];
+};
+
+// ??0BfmeArmyIcon@@QAE@ABVAsciiString@@@Z
+__declspec(noinline) BfmeArmyIcon::BfmeArmyIcon( const AsciiString &name )
+	: BfmeArmyIconBase( name )
+{
+}
 
 class BfmeLivingWorldManagerIcons
 {
