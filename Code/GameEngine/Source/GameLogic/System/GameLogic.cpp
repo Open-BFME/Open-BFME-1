@@ -7384,7 +7384,8 @@ struct BFMEGameLogicProcessProgressView
 {
 	char m_pad000[0x118];
 	class BFMELoadScreenProcessProgressView *m_loadScreen;
-	char m_pad11c[0x0c];
+	char m_pad11c[0x04];
+	Bool m_progressComplete[MAX_SLOTS];
 	UnsignedInt m_progressCompleteTimeout[MAX_SLOTS];
 };
 
@@ -7413,22 +7414,22 @@ void GameLogic::processProgress(Int playerId, Int percentage)
 /** Whenever we get a progress complete packet for a Net Game,
 	* Set a flag that that player is ready */
 // ------------------------------------------------------------------------------------------------
-// ?processProgressComplete@GameLogic@@QAEXH@Z present-unmatched
 void GameLogic::processProgressComplete(Int playerId)
 {
+	BFMEGameLogicProcessProgressView *logic = reinterpret_cast<BFMEGameLogicProcessProgressView *>(this);
 	if(playerId < 0 || playerId >= MAX_SLOTS)
 	{
 		DEBUG_ASSERTCRASH(FALSE,("GameLogic::processProgressComplete, Invalid playerid was passed in %d\n", playerId));
 		return;
 	}
-	if(m_progressComplete[playerId] == TRUE)
+	if(logic->m_progressComplete[playerId] == TRUE)
 	{
 		DEBUG_LOG(("GameLogic::processProgressComplete, playerId %d is marked TRUE already yet we're trying to mark him as true again\n", playerId));
 		return;
 	}
 	DEBUG_LOG(("Progress Complete for Player %d\n", playerId));
-	m_progressComplete[playerId] = TRUE;
-	lastHeardFrom(playerId);
+	logic->m_progressComplete[playerId] = TRUE;
+	logic->m_progressCompleteTimeout[playerId] = bfme_timeGetTime();
 }
 
 // ------------------------------------------------------------------------------------------------
