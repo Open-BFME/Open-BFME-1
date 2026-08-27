@@ -24,7 +24,28 @@ public:
 	BFME_VIRTUAL_EIGHT(72, 73, 74, 75, 76, 77, 78, 79)
 	BFME_VIRTUAL_EIGHT(80, 81, 82, 83, 84, 85, 86, 87)
 	BFME_VIRTUAL_EIGHT(88, 89, 90, 91, 92, 93, 94, 95)
-	BFME_VIRTUAL_EIGHT(96, 97, 98, 99, 100, 101, 102, 103)
+	virtual void Dummy96();
+	virtual void Dummy97();
+	virtual void Dummy98();
+	virtual void Dummy99();
+	virtual void Set_Hidden(int onoff)
+	{
+		if (onoff) {
+			Bits &= ~0x2000UL;
+		} else {
+			Bits |= 0x2000UL;
+		}
+	}
+	virtual void Set_Visible(int onoff, int sceneToken);
+	virtual void Set_Animation_Hidden(int onoff)
+	{
+		if (onoff) {
+			Bits &= ~0x4000UL;
+		} else {
+			Bits |= 0x4000UL;
+		}
+	}
+	virtual void Set_Force_Visible(int onoff);
 	BFME_VIRTUAL_EIGHT(104, 105, 106, 107, 108, 109, 110, 111)
 	BFME_VIRTUAL_EIGHT(112, 113, 114, 115, 116, 117, 118, 119)
 	BFME_VIRTUAL_EIGHT(120, 121, 122, 123, 124, 125, 126, 127)
@@ -32,15 +53,29 @@ public:
 	virtual void Dummy129();
 	virtual void Dummy130();
 	virtual void Dummy131();
-	virtual void Set_Visible(int onoff, int sceneToken);
+	virtual void Dummy132();
+
+protected:
+	unsigned char PaddingToBits[12];
+	unsigned long Bits;
 };
 
 class RingRenderObjClass : public RenderObjClass
 {
 public:
+	virtual void Set_Hidden(int onoff);
 	virtual void Set_Visible(int onoff, int sceneToken = 0);
+	virtual void Set_Animation_Hidden(int onoff);
+	virtual void Set_Force_Visible(int onoff);
 	virtual void Update_On_Visibilty();
 };
+
+// ?Set_Hidden@RingRenderObjClass@@UAEXH@Z
+void RingRenderObjClass::Set_Hidden(int onoff)
+{
+	RenderObjClass::Set_Hidden(onoff);
+	Update_On_Visibilty();
+}
 
 // ?Set_Visible@RingRenderObjClass@@UAEXHH@Z
 void RingRenderObjClass::Set_Visible(int onoff, int sceneToken)
