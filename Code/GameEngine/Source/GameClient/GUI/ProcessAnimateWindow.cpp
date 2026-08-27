@@ -1071,7 +1071,6 @@ Bool ProcessAnimateWindowSlideFromBottomTimed::reverseAnimateWindow( AnimateWind
 // ProcessAnimateWindowSpiral PUBLIC FUNCTIONS ////////////////////////
 //-----------------------------------------------------------------------------
 
-// ??0ProcessAnimateWindowSpiral@@QAE@XZ present-unmatched
 ProcessAnimateWindowSpiral::ProcessAnimateWindowSpiral( void )
 {
 	m_maxR = reinterpret_cast<BFMEDisplayWidthSlot *>(TheDisplay)->getWidth() / 2;
