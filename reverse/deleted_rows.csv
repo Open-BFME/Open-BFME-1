@@ -23757,3 +23757,4 @@ uw_000970d0,0x000970D0,gen-funclet no longer has an emitting owner after the exa
 ?Set_Hidden@RingRenderObjClass@@UAEXH@Z,0x0097EA00,wrong Ring identity retracted; constructor and vftable xrefs prove ParticleEmitterClass owns the exact wrapper.
 ?Set_Visible@RingRenderObjClass@@UAEXHH@Z,0x0097EA40,wrong Ring identity retracted; constructor and vftable xrefs prove ParticleEmitterClass owns the exact wrapper.
 ?Set_Animation_Hidden@RingRenderObjClass@@UAEXH@Z,0x0097EA70,wrong Ring identity retracted; constructor and vftable xrefs prove ParticleEmitterClass owns the exact wrapper.
+?d_003cd390@@YAXXZ,0x003CD390,"gen-dump placeholder superseded by the real identity of these bytes: ?bfmeCollectKeyMap@Rva003CD390KeySource@@QAE?AVLargeGroupAudioKeyMap@@XZ, byte-verified from Code/GameEngine/Source/Common/Rva003CD390KeySourceCollectKeyMap.cpp over the same 142-byte range. The Code/gen_asm/d_003ca7c0.asm dump reproduces those bytes but carries no identity."
