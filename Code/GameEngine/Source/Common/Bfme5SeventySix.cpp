@@ -37,6 +37,9 @@ BfmeCellFC::~BfmeCellFC()
 {
 }
 
+typedef void (__cdecl *BfmeCellVisitorFC)(int x, int y,
+	unsigned char kind);
+
 class Gen_008812D0
 {
 public:
@@ -44,6 +47,7 @@ public:
 	BfmeCellFC *bfmeAt(int x, int y) const;
 	void bfmeGetCellRange(BfmeCellFC **first, BfmeCellFC **last,
 		int x1, int x2, int y);
+	void bfmeVisitCells(void);
 
 private:
 	float m_bfmeOriginX;					// +0x00
@@ -53,6 +57,7 @@ private:
 	int m_bfmeWidth;					// +0x20
 	int m_bfmeHeight;					// +0x24
 	BfmeCellFC *m_bfmeCells;				// +0x28
+	BfmeCellVisitorFC m_bfmeVisitor;			// +0x2C
 };
 
 // ??1Gen_008812D0@@QAE@XZ
@@ -88,6 +93,25 @@ void Gen_008812D0::bfmeGetCellRange(BfmeCellFC **first,
 		*first = row + x1;
 
 	*last += x2 < m_bfmeWidth ? x2 + 1 : m_bfmeWidth;
+}
+
+// ?bfmeVisitCells@Gen_008812D0@@QAEXXZ
+void Gen_008812D0::bfmeVisitCells(void)
+{
+	BfmeCellFC *end = m_bfmeCells + m_bfmeWidth * m_bfmeHeight;
+	int x = 0;
+	int y = 0;
+
+	for (BfmeCellFC *cell = m_bfmeCells; cell != end; ++cell)
+	{
+		m_bfmeVisitor(x, y, cell->m_bfmeKind);
+		++x;
+		if (x == m_bfmeWidth)
+		{
+			x = 0;
+			++y;
+		}
+	}
 }
 
 class BfmeNodeFC
