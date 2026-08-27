@@ -73810,6 +73810,7 @@ name,address,notes
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
 ?g_bfmeUnsignedByteFormat@@3QBDB,0x011442BC,address-derived unsigned-byte format string from the DIR32 operand at retail 0x009D943A
+?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
 ?g_bfmeWordFormat@@3QBDB,0x011442A8,address-derived word format string from the DIR32 operand at retail 0x009D93C0
 ?g_defaultRespawnPolicy@@3URespawnPolicy@@A,0x012ED8B8,RespawnBody default six-dword policy
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
