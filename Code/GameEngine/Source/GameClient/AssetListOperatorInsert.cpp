@@ -55,6 +55,7 @@ AssetList &AssetList::operator <<(const AsciiString &name)
 	}
 	return *this;
 }
+<<<<<<< HEAD
 
 // ??6AssetList@@QAEAAV0@ABV0@@Z
 AssetList &AssetList::operator <<(const AssetList &other)
