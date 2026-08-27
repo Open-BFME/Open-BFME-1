@@ -9967,7 +9967,6 @@ name,address,notes
 ?Is_Running@ThreadClass@@QAE_NXZ,0x009DB590
 ?LZHLCreateDecompressor@@YAPAXXZ,0x00823170,LZH-Light decompressor factory wrapper
 ?LZHLDecompress@@YAHPAXPAEPAIPBE2@Z,0x00823190,LZH-Light decompression wrapper
-?decompress@LZHLDecompressor@@QAEHPAEPAIPBE1@Z,0x00826920,LZH-Light decompressor member body entry; retail body begins after the 12-byte alignment pad before 0x00826920
 ?LZHLDestroyDecompressor@@YAXPAX@Z,0x00823230,LZH-Light decompressor destroy wrapper
 ?Load@INIClass@@QAEHAAVStraw@@@Z,0x009E4680
 ?LoadAndCreateD3DShader@W3DShaderManager@@SAJPBDPAK@Z,0x0001FC99,FlatTerrainShaderPixelShader retail two-argument loader thunk
@@ -73282,6 +73281,7 @@ name,address,notes
 ?d_008859d0@Rva00886A20Class@@QAEXPBDPAD@Z,0x008859D0,pin
 ?deallocate@?$__node_alloc@$00$0A@@_STL@@SAXPAXI@Z,0x0001D35E,Open-BFME5 ILT the wide basic_string reserve at 0x00839590 frees the old block through
 ?decompress@AdaptiveDeltaMotionChannelClass@@AAEXKPAM@Z,0x00977DB0,AdaptiveDeltaMotionChannelClass getframe retail two-argument decompress
+?decompress@LZHLDecompressor@@QAEHPAEPAIPBE1@Z,0x00826920,LZH-Light decompressor member body entry; retail body begins after the 12-byte alignment pad before 0x00826920
 ?decompressData@CompressionManager@@SAHPBXHPAXH@Z,0x0081E890,CachedFileInputStream open retail decompression call
 ?defineState@StateMachine@@IAEXIPAVState@@IIPBUStateConditionInfo@@@Z,0x000A2030,hand-decoded from DozerPrimaryStateMachine ctor @0x2B7870 (5 call sites, one per defineState() in the reference source, args match: stateID/state-ptr/successID/failureID/conditions-ptr); call site encodes thunk 0x3D1B3 (thunk_FUN_004a2030) -- pinned to the real body
 ?deleteAllFonts@FontLibrary@@IAEXXZ,0x000309CC,pinharvest x1 (thunk)
