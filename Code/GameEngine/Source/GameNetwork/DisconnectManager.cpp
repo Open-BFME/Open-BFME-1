@@ -65,6 +65,18 @@ public:
 	Bool hasPingSuccessRatioAtLeast(Real ratio);
 };
 
+// BFME keeps the packet-router fallback plan at this address in its expanded
+// ConnectionManager.  The published header's member is not layout-compatible
+// here, so keep this view private to the reconstructed accessor.
+class BFMEConnectionRouterLayout
+{
+private:
+	char m_bfmePad0[0x12030];
+
+public:
+	UnsignedInt m_packetRouterFallback[MAX_SLOTS];
+};
+
 // BFME's NetworkInterface puts voteForPlayerDisconnect at vtable slot 31.
 class BFMENetworkVoteFacade
 {
@@ -79,6 +91,18 @@ public:
 	virtual void slot28(); virtual void slot29(); virtual void slot30();
 	virtual void voteForPlayerDisconnect(Int slot);
 };
+
+// ?getNextPacketRouterSlot@ConnectionManager@@QAEII@Z		40 bytes
+__declspec(noinline) UnsignedInt ConnectionManager::getNextPacketRouterSlot(UnsignedInt playerID)
+{
+	BFMEConnectionRouterLayout *layout = (BFMEConnectionRouterLayout *)this;
+	Int index = 0;
+	while ((index < (MAX_SLOTS - 1)) && (layout->m_packetRouterFallback[index] != playerID)) {
+		++index;
+	}
+	++index;
+	return layout->m_packetRouterFallback[index];
+}
 
 extern Int g_bfmeDisconnectPingResult;
 
