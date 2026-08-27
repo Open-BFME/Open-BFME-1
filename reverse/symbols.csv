@@ -14758,7 +14758,6 @@ name,address,notes
 ?b_0007b890@@YAXXZ,0x0007B890,gen-thunk body
 ?b_0007b8b0@@YAXXZ,0x0007B8B0,gen-thunk body
 ?b_0007b8e0@@YAXXZ,0x0007B8E0,gen-thunk body
-?update@BfmeTimedOpNode@@QAEIXZ,0x0007B8E0,address-derived timed-operation node update callee decoded from the direct REL32 in _bfme_updateTimedOps
 ?b_0007b990@@YAXXZ,0x0007B990,gen-thunk body
 ?b_0007b9e0@@YAXXZ,0x0007B9E0,gen-thunk body
 ?b_0007ba00@@YAXXZ,0x0007BA00,gen-thunk body
@@ -76864,6 +76863,7 @@ name,address,notes
 ?update@AIInternalMoveToStateUpdateShim@@QAE?AW4StateReturnType@@XZ,0x00172E70,AIInternalMoveToState::update incremental-link thunk target through a TU-local forwarding shim
 ?update@AIMoveOutOfTheWayStateUpdateShim@@QAE?AW4StateReturnType@@XZ,0x000488F6,AIMoveOutOfTheWayState::update incremental-link thunk target through a TU-local forwarding shim
 ?update@AIUpdateInterface@@UAE?AW4UpdateSleepTime@@XZ,0x00028772,Open-BFME5 ILT from zh_sweep packet 002c5740
+?update@BfmeTimedOpNode@@QAEIXZ,0x0007B8E0,address-derived timed-operation node update callee decoded from the direct REL32 in _bfme_updateTimedOps
 ?update@GameLogic@@UAEXXZ,0x0038DA10,the main logic tick; calls setFPMode popSleepyUpdate getCRC RecorderClass::getMode and VictorySystem::update at 0x0038DC4D; reached through ILT 0x0003A9C7 and loads TheNetwork 0x012F7714
 ?update@MapTransferLoadScreen@@QAEXH@Z,0x0050FF30,E tier 1 via the corrected TheNetwork vcall seed: the non-virtual update(Int percent) of the APT-era screen _doFileTransfer 0x0066CE60 drives - called with ecx = ls at 0x0066CED0 (ls->update(0)) and 0x0066D11A (ls->update(fileTransferPercent)) exactly at ZH FileTransfer.cpp:54/124 right after ls->processTimeout = ILT 0x000362B9 -> 0x00510130 (ledger ?processTimeout@MapTransferLoadScreen@@); body inlines ZH MapTransferLoadScreen::update + LoadScreen::update: TheNetwork(0x012F7714)->update(FALSE) at 0x0050FF3F; TheMouse 0x012F4C5C setCursorTooltip(TheEmptyString -1 NULL 1.0f) 0x005A56F0; TheGameEngine +0x40 serviceWindowsOS; TheWindowManager/g_theWindowManager +0x14; TheDisplay +0x14 update and +0x1C draw; the percent arg and this are unused
 ?update@MapTransferLoadScreen@@UAEXH@Z,0x00491F70,E tier 1 via the corrected TheNetwork vcall seed: vtable 0x010F9B60 slot 1 (+0x04) via ILT 0x0003EB21 beside ?init@MapTransferLoadScreen@@ at slot 2 (+0x08 -> 0x00492C40); body is ZH LoadScreen.cpp:2030 MapTransferLoadScreen::update(Int percent) with liteupdate replaced by TheNetwork(0x012F7714)->update(FALSE) (vslot +0x28 at 0x00491F81) then LoadScreen::update(percent) 0x004914C0 via ILT 0x00003FE4
