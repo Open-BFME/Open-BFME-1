@@ -81096,6 +81096,7 @@ g_bfmeOffsetDF,0x01098AD4,Open-BFME5 the offset the clamped difference at 0x001E
 g_bfmeOwnerBR,0x012F060C,Open-BFME5 the singleton the mark at 0x002E2B50 reaches its target through
 g_bfmePointersFE,0x012F9CA4,Open-BFME5 the pointers the reset at 0x007CCD90 sets
 g_bfmeProbeBT,0x012F9D0C,Open-BFME5 the volatile global the probe at 0x007D74B0 reads and throws away
+g_bfmeOwnerBR,0x012F060C,Open-BFME5 the singleton the mark at 0x002E2B50 reaches its target through
 g_bfmeScaleBK,0x01075C70,Open-BFME5 the scale the difference at 0x001B48B0 multiplies by
 g_bfmeScaleEG,0x010F693C,Open-BFME5 the scale the angle at 0x0045B850 divides by its argument
 g_bfmeSecondCF,0x010F6394,Open-BFME5 the second factor the scale at 0x00458430 multiplies by
