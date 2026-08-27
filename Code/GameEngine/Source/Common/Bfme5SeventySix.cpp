@@ -60,6 +60,12 @@ BfmeCellFC::~BfmeCellFC()
 typedef void (__cdecl *BfmeCellVisitorFC)(int x, int y,
 	unsigned char kind);
 
+struct BfmePointFC
+{
+	Real x;
+	Real y;
+};
+
 class Gen_008812D0
 {
 public:
@@ -69,6 +75,7 @@ public:
 		int x1, int x2, int y);
 	BfmeCellFC *bfmeCellAtWorld(Real x, Real y) const;
 	void bfmeVisitCells(void);
+	int bfmeValueAtWorld(const BfmePointFC *point) const;
 
 private:
 	float m_bfmeOriginX;					// +0x00
@@ -149,6 +156,13 @@ void Gen_008812D0::bfmeVisitCells(void)
 			++y;
 		}
 	}
+}
+
+// ?bfmeValueAtWorld@Gen_008812D0@@QBEHPBUBfmePointFC@@@Z
+int Gen_008812D0::bfmeValueAtWorld(const BfmePointFC *point) const
+{
+	BfmeCellFC *cell = bfmeCellAtWorld(point->x, point->y);
+	return cell ? cell->m_bfmeValue : 0;
 }
 
 class BfmeNodeFC
