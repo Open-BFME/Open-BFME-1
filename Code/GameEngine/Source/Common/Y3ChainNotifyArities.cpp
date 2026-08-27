@@ -132,8 +132,21 @@ public:
 class Y3NotifyTail_005C5A50
 {
 public:
-	void notifyAll( void *argument );
+	__declspec(noinline) void notifyAll( void *argument );
+
+	Y3Item1 *m_h0;
+	Y3Item1 *m_h1;
+	Y3Item1 **m_begin;
+	Y3Item1 **m_end;
 };
+
+void Y3NotifyTail_005C5A50::notifyAll( void *argument )
+{
+	Y3_NOTIFY_HEAD( 0 )
+	Y3_NOTIFY_HEAD( 1 )
+	for ( Y3Item1 **it = m_begin; it != m_end; ++it )
+		( *it )->update( argument );
+}
 
 // ---- tails that are defined here (out of line, as retail has them) --------
 
