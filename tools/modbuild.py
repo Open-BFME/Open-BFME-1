@@ -54,6 +54,15 @@ TARGET_SENDFRAMEINFO = 0x00665D10   # ConnectionManager::sendFrameInfo()
 # displaced are the `mov ecx,[TheNetwork]` that liteupdate is called through.
 TARGET_CLIENTTAIL = 0x0006BA44
 
+# 040-horplus. These are post-operation hook sites, so the retail camera
+# methods run first and the payload only adjusts the resulting view plane.
+# The BFME W3DView::setWidth epilogue leaves ESI as the view at 0x0073DDF8;
+# CameraClass::Set_Aspect_Ratio returns at 0x00931365; and
+# CameraClass::Set_Transform leaves ESI as the camera at 0x00931304.
+TARGET_HORPLUS_WIDTH_TAIL = 0x0073DDF8
+TARGET_HORPLUS_ASPECT_RETURN = 0x00931365
+TARGET_HORPLUS_TRANSFORM_TAIL = 0x00931304
+
 # No CRT startup, no exceptions, no RTTI, no runtime library at all. /GS is off
 # by default in 7.1 and it rejects /GS-, so there is nothing to turn off there.
 # Warnings are errors: this build discards compiler output on success, so a
@@ -82,8 +91,8 @@ CRT_HELPERS = {
     "__alldiv": "64-bit division; the payload has no 64-bit arithmetic",
     "__allrem": "64-bit remainder; the payload has no 64-bit arithmetic",
     "__aullshr": "64-bit shift; the payload has no 64-bit arithmetic",
-    "__ftol2": "float-to-integer conversion; the payload has no floating point",
-    "__fltused": "floating point anywhere in the TU; the payload has none",
+    "__ftol2": "float-to-integer conversion; keep payload conversions integer-only",
+    "__fltused": "floating point marker; provide only a local CRT-free definition",
 }
 
 
@@ -113,8 +122,16 @@ def undefined_externals(obj):
     empty. The link fails on one anyway, but only as `LNK2001 __chkstk`, which
     says nothing about which line of C++ asked for it."""
     symbols = toolchain.read_object_symbols(Path(obj).read_bytes())
-    return sorted({s["name"] for s in symbols
-                   if s["section"] == 0 and s["value"] == 0 and s["name"]})
+    defined = {s["name"] for s in symbols if s["section"] > 0 and s["name"]}
+    unresolved = {s["name"] for s in symbols
+                  if s["section"] == 0 and s["value"] == 0 and s["name"]}
+    # MSVC emits a second undefined __fltused record when a /Zl translation
+    # unit provides the conventional local _fltused marker. The linker resolves
+    # that marker from this same object; do not turn this one compiler marker
+    # into a general exemption for unresolved payload references.
+    if "__fltused" in defined:
+        unresolved.discard("__fltused")
+    return sorted(unresolved)
 
 
 def compile_payload(source, obj, probe=False):
@@ -265,6 +282,14 @@ def build_earlysend(pe, feature_dir, probe=False):
     ), probe=probe)
 
 
+def build_horplus(pe, feature_dir, probe=False):
+    return build_feature(pe, feature_dir / "src/horplus.cpp", "horplus_set_width_tail", (
+        (TARGET_HORPLUS_WIDTH_TAIL, "horplus_set_width_tail", ("esi",)),
+        (TARGET_HORPLUS_ASPECT_RETURN, "horplus_set_aspect_return", ("ecx",)),
+        (TARGET_HORPLUS_TRANSFORM_TAIL, "horplus_set_transform_tail", ("esi",)),
+    ), probe=probe)
+
+
 FEATURES = {"020-gameresult": build_gameresult,
             # Promoted once its spike came back green: twelve rig matches, no
             # retail match overlapping any fixed one, and the logic rate
@@ -276,6 +301,7 @@ FEATURES = {"020-gameresult": build_gameresult,
 # Promote one into FEATURES when it has.
 UNSHIPPED = {
     "030-netlatprobe": (build_netlatprobe, "an instrument: it writes tens of lines a second"),
+    "040-horplus": (build_horplus, "a development camera modernization; build it to its own path"),
 }
 
 

@@ -34,6 +34,19 @@ TARGETS = (
 
 
 class HorPlusFovTest(TestCase):
+    def test_native_plane_scaling_keeps_fullscreen_43_vertical_extent(self):
+        reference_half_height = tan(REFERENCE_HORIZONTAL_FOV / 2.0) / REFERENCE_DISPLAY_ASPECT
+        for name, display_width, display_height in TARGETS:
+            with self.subTest(name=name):
+                display_aspect = display_width / display_height
+                current_half_width = tan(REFERENCE_HORIZONTAL_FOV / 2.0)
+                current_half_height = current_half_width / display_aspect
+                display_scale = display_aspect / REFERENCE_DISPLAY_ASPECT
+
+                self.assertAlmostEqual(
+                    current_half_height * display_scale, reference_half_height, places=7)
+                self.assertGreaterEqual(current_half_width * display_scale, current_half_width)
+
     def test_hor_plus_preserves_default_tactical_vertical_fov(self):
         for name, display_width, display_height in TARGETS:
             with self.subTest(name=name):
