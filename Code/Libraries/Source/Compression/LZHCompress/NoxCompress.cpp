@@ -1,6 +1,15 @@
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /EHs-c-
 // Recovered from the EA Generals reference.  The three LZH-Light wrapper
 // calls are pinned to the matching retail wrapper bodies in this executable.
+
+class LZHLDecompressor
+{
+public:
+	LZHLDecompressor();
+
+private:
+	unsigned char m_unreconstructed_00[ 0x98 ];
+};
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -11,6 +20,11 @@ typedef void *LZHL_DHANDLE;
 LZHL_DHANDLE LZHLCreateDecompressor();
 int LZHLDecompress(LZHL_DHANDLE, UnsignedByte *, UnsignedInt *, const UnsignedByte *, UnsignedInt *);
 void LZHLDestroyDecompressor(LZHL_DHANDLE);
+
+LZHL_DHANDLE LZHLCreateDecompressor()
+{
+	return new LZHLDecompressor;
+}
 
 Bool DecompressMemory(void *inBufferVoid, Int inSize, void *outBufferVoid, Int& outSize)
 {
