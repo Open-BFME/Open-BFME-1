@@ -33115,7 +33115,6 @@ name,address,notes
 ?b_002796c0@@YAXXZ,0x002796C0,gen-thunk body
 ?b_00279750@@YAXXZ,0x00279750,gen-thunk body
 ?b_00279780@@YAXXZ,0x00279780,gen-thunk body
-?bfmeStateValue@BfmeObjectAI@@QAEHXZ,0x000187A0,Open-BFME5 helper state query body used by BfmeObjectAI::bfmeStateFlags
 ?b_00279850@@YAXXZ,0x00279850,gen-thunk body
 ?b_00279a50@@YAXXZ,0x00279A50,gen-thunk body
 ?b_0027a2f0@@YAXXZ,0x0027A2F0,gen-thunk body
@@ -72764,6 +72763,7 @@ name,address,notes
 ?bfmeStart@Gen_00844340@@QAEXPAX0PAPAX@Z,0x0002A531,Open-BFME5 the starter the SEH constructor at 0x00844340 calls
 ?bfmeStart@Gen_008443A0@@QAEXPAX0PAPAX@Z,0x00042BB8,Open-BFME5 the starter the SEH constructor at 0x008443A0 calls
 ?bfmeStateFlags@BfmeObjectAI@@QAEIXZ,0x0001BB3F,Open-BFME5 ILT thunk to body 0x00279780; ?getAdjustedVisionRangeForObject@AI@@SAMPBVObject@@H@Z at 0x0014A620 reads the AI state word through it; address-derived name
+?bfmeStateValue@BfmeObjectAI@@QAEHXZ,0x000187A0,Open-BFME5 helper state query body used by BfmeObjectAI::bfmeStateFlags
 ?bfmeStep1@Gen_004410A0@@AAEXXZ,0x000459CB,Open-BFME5 ILT the three-step runner at 0x004410A0 calls first
 ?bfmeStep1@Gen_0077F000@@AAEXXZ,0x00039428,Open-BFME5 ILT the three-step runner at 0x0077F000 calls first
 ?bfmeStep1@Gen_007892D0@@AAEXXZ,0x000270FC,Open-BFME5 ILT the three-step runner at 0x007892D0 calls first
