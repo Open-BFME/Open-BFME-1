@@ -63,7 +63,6 @@ private:
 	bool m_dieCalled;
 };
 
-// ?attemptDamage@InactiveBody@@UAEXPAVDamageInfo@@@Z present-unmatched under that name — the body is claimed at 0x00213E40, but by a gen-named row that carries the real symbol only in its object-symbol field; repointing it is a retraction and belongs in its own commit
 void InactiveBody::attemptDamage(DamageInfo *damageInfo)
 {
 	if (!damageInfo) {
