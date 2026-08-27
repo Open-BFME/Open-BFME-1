@@ -4,7 +4,7 @@
 // clear -- while the block itself is only read once, because the store into
 // the member and the destination of the clear are the same value.
 
-extern "C" __declspec(dllimport) void * __cdecl malloc(unsigned int bytes);
+extern void * (*WideAllocPtr)(unsigned int bytes);
 
 extern "C" void * __cdecl memset(void *block, int value, unsigned int bytes);
 
@@ -23,7 +23,7 @@ private:
 // ?bfmeAllocate@Gen_0089C9E0@@QAEXXZ
 void Gen_0089C9E0::bfmeAllocate(void)
 {
-	m_bfmeBlock = (char *)malloc(m_bfmeCount * 8);
+	m_bfmeBlock = (char *)WideAllocPtr(m_bfmeCount * 8);
 
 	memset(m_bfmeBlock, 0, m_bfmeCount * 8);
 }

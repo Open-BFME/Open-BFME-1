@@ -6,7 +6,7 @@
 // the head both appear twice -- because only the construction is guarded, and
 // that guard is the one the new expression itself emits.
 
-extern "C" __declspec(dllimport) void * __cdecl malloc(unsigned int bytes);
+extern void * (*WideAllocPtr)(unsigned int bytes);
 
 class BfmeRefBC
 {
@@ -19,7 +19,7 @@ class BfmeNodeBC
 public:
 	void *operator new(unsigned int bytes)
 	{
-		return malloc(bytes);
+		return WideAllocPtr(bytes);
 	}
 
 	BfmeNodeBC(BfmeRefBC *value)

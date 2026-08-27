@@ -1,6 +1,6 @@
-// Open-BFME: subobject reset wrapper reconstructed from retail RVA 0x000874A0.
+// The IAT slot is KERNEL32 InterlockedIncrement; the method name is address-derived.
 
-extern "C" __declspec(dllimport) void __stdcall Rva01358D0CReset(void *body);
+extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long volatile *addend);
 
 class Rva000874A0Object
 {
@@ -10,5 +10,5 @@ public:
 
 void Rva000874A0Object::reset(void)
 {
-    Rva01358D0CReset(reinterpret_cast<char *>(this) + 4);
+    InterlockedIncrement(reinterpret_cast<long volatile *>(reinterpret_cast<char *>(this) + 4));
 }

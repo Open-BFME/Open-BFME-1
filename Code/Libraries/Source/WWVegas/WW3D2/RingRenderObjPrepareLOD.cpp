@@ -6,6 +6,9 @@
 
 class CameraClass;
 
+extern float g_Va0113BD7C;
+extern float g_Va0113BD80;
+
 #define BFME_VIRTUAL_EIGHT(a, b, c, d, e, f, g, h) \
 	virtual void Dummy##a(); virtual void Dummy##b(); \
 	virtual void Dummy##c(); virtual void Dummy##d(); \
@@ -70,7 +73,7 @@ void RingRenderObjClass::Prepare_LOD(CameraClass &camera)
 float RingRenderObjClass::Get_Value(void) const
 {
 	if (CurrentLOD == 0) {
-		return 3.402823466e+38F;
+		return g_Va0113BD7C;
 	}
 
 	float polygon_count = (float)Get_Num_Polys();
@@ -83,7 +86,7 @@ float RingRenderObjClass::Get_Value(void) const
 float RingRenderObjClass::Get_Post_Increment_Value(void) const
 {
 	if (CurrentLOD == LODCount) {
-		return -1.0F;
+		return g_Va0113BD80;
 	}
 
 	float polygon_count = (float)Get_Num_Polys() * 2.0F;

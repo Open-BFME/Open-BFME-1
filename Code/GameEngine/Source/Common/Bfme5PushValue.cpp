@@ -1,14 +1,14 @@
 // The same push at the head of a list, with a plain value in the node instead
 // of a counted reference.
 
-extern "C" __declspec(dllimport) void * __cdecl malloc(unsigned int bytes);
+extern void * (*WideAllocPtr)(unsigned int bytes);
 
 class BfmeNodeBD
 {
 public:
 	void *operator new(unsigned int bytes)
 	{
-		return malloc(bytes);
+		return WideAllocPtr(bytes);
 	}
 
 	BfmeNodeBD(int value)

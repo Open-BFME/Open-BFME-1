@@ -1,7 +1,7 @@
 // A constructor that remembers how many elements it was asked for, starts
 // empty and takes a block of that many words.
 
-extern "C" __declspec(dllimport) void * __cdecl malloc(unsigned int bytes);
+extern void * (*WideAllocPtr)(unsigned int bytes);
 
 class Gen_008A3070
 {
@@ -21,5 +21,5 @@ Gen_008A3070::Gen_008A3070(int count)
 
 	m_bfmeUsed = 0;
 
-	m_bfmeBlock = malloc(count * 4);
+	m_bfmeBlock = WideAllocPtr(count * 4);
 }

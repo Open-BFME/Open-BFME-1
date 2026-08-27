@@ -6,14 +6,14 @@
 // path is the allocator returning nothing, with the null propagated into the
 // store.
 
-extern "C" __declspec(dllimport) void * __cdecl malloc(unsigned int bytes);
+extern void * (*WideAllocPtr)(unsigned int bytes);
 
 class BfmeThingBE
 {
 public:
 	void *operator new(unsigned int bytes)
 	{
-		return malloc(bytes);
+		return WideAllocPtr(bytes);
 	}
 
 	void operator delete(void *block);
@@ -47,7 +47,7 @@ void __cdecl bfmeArenaReady(void);				// retail 0x00897050
 // ?bfmeArenaInit@@YAXI@Z
 void __cdecl bfmeArenaInit(unsigned int size)
 {
-	char *block = (char *)malloc(0x4000);
+	char *block = (char *)WideAllocPtr(0x4000);
 
 	g_bfmeArenaStart = block;
 	g_bfmeArenaCursor = block;

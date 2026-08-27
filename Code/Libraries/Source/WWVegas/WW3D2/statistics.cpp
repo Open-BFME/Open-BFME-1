@@ -78,15 +78,21 @@ void Debug_Statistics::Begin_Statistics()
 
 void Debug_Statistics::End_Statistics()
 {
+	static int end_dx8_polygons;
+	static int end_dx8_vertices;
+	static int end_sorting_polygons;
+	static int end_sorting_vertices;
+	static int end_draw_calls;
+
 	::Record_Texture_End();
 	last_frame_dx8_skin_polygons = dx8_skin_polygons;
 	last_frame_dx8_skin_vertices = dx8_skin_vertices;
 	last_frame_dx8_skin_renders = dx8_skin_renders;
-	last_frame_dx8_polygons = dx8_polygons;
-	last_frame_dx8_vertices = dx8_vertices;
-	last_frame_sorting_polygons = sorting_polygons;
-	last_frame_sorting_vertices = sorting_vertices;
-	last_frame_draw_calls = draw_calls;
+	last_frame_dx8_polygons = end_dx8_polygons;
+	last_frame_dx8_vertices = end_dx8_vertices;
+	last_frame_sorting_polygons = end_sorting_polygons;
+	last_frame_sorting_vertices = end_sorting_vertices;
+	last_frame_draw_calls = end_draw_calls;
 	last_frame_dx8_renders = dx8_renders;
 	DX8Wrapper::End_Statistics();
 }

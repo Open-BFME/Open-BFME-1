@@ -107,13 +107,13 @@ private:
 	int m_bfmeField;
 };
 
-class BfmeBaseR
+class BfmeBaseR_003643C0
 {
 public:
-	virtual ~BfmeBaseR(void) {}
+	virtual ~BfmeBaseR_003643C0(void) {}
 };
 
-class Gen_003643C0 : public BfmeBaseR
+class Gen_003643C0 : public BfmeBaseR_003643C0
 {
 public:
 	virtual ~Gen_003643C0(void);
@@ -144,7 +144,13 @@ private:
 	int m_bfmeField;
 };
 
-class Gen_009D83D0 : public BfmeBaseR
+class BfmeBaseR_009D83D0
+{
+public:
+	virtual ~BfmeBaseR_009D83D0(void) {}
+};
+
+class Gen_009D83D0 : public BfmeBaseR_009D83D0
 {
 public:
 	virtual ~Gen_009D83D0(void);
