@@ -76887,6 +76887,7 @@ name,address,notes
 ?value@Rva003608F0FloatElement@@QAEMXZ,0x0002CC5F,address-derived float element callee; target read directly from RVA 0x00361420 rel32 call
 ?valueFor@Rva00368C10Values@@QBEHPBVRva00368C10Mask@@@Z,0x00021323,retail jump thunk to the byte-verified seven-bit value lookup at 0x00368C10
 ?vectorLargeAllocate@_STL@@YAPAXI@Z,0x00881F30,Open-BFME5 Coord3D vector large allocator
+??0SortingIndexBufferClass@@QAE@G@Z,0x0091D270,constructor callee of Allocate_Sorting_Dynamic_Buffer at 0x0091D6B0
 ?vectorLargeDeallocate@_STL@@YAXPAX@Z,0x00881EB0,Open-BFME5 the large-block free the narrow basic_string reserve at 0x0053A100 uses
 ?vectorSmallAllocate@_STL@@YAPAXI@Z,0x0082E540,Open-BFME5 Coord3D vector small allocator
 ?vectorSmallDeallocate@_STL@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 STLport vector small-block deallocator
