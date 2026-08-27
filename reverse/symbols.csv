@@ -2785,6 +2785,7 @@ name,address,notes
 ??0LanguageFilter@@QAE@XZ,0x00024DC0,pinharvest x1 (thunk)
 ??0LargeGroupAudio@@QAE@XZ,0x003CEF00,Open-BFME5 on-demand constructor of the subsystem at 0x012F1044
 ??0LargeGroupAudioKeyMap@@QAE@ABV0@@Z,0x0002F06D,Open-BFME5 ILT thunk to body 0x003D3BB0; ??0LargeGroupAudioUnusedKnownKeys@@QAE@ABV0@@Z at 0x003CD590 copy-constructs its member at +0x0C through it; address-derived name
+??0LargeGroupAudioKeyMap@@QAE@XZ,0x0001E84E,Open-BFME5 ILT thunk to default constructor body 0x003D3BA0
 ??0LargeGroupAudioUnusedKnownKeys@@QAE@ABV0@@Z,0x003CD590,Open-BFME5 clone constructor the override path news up
 ??0LargeGroupAudioUnusedKnownKeysBase@@QAE@ABV0@@Z,0x0001DE26,Open-BFME5 ILT thunk to body 0x000948E0; ??0LargeGroupAudioUnusedKnownKeys@@QAE@ABV0@@Z at 0x003CD590 runs it on this with the source before installing its own vtable; address-derived name
 ??0LargeGroupBonusDeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,LargeGroupBonus base constructor ILT
@@ -3357,6 +3358,7 @@ name,address,notes
 ??0Snapshot@@QAE@XZ,0x007E86B0,per-TU copy (Energy TU); called by ??0Energy@@QAE@XZ at 0x00808880
 ??0Snapshot@@QAE@XZ,0x009A1A30,per-TU copy (ModuleFactory TU)
 ??0Snapshot@@QAE@XZ,0x009A3A30,per-TU copy (ModuleFactory TU)
+??0SortingIndexBufferClass@@QAE@G@Z,0x0091D270,constructor callee of Allocate_Sorting_Dynamic_Buffer at 0x0091D6B0
 ??0SpawnBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00034711,pinharvest x1 (thunk)
 ??0SpawnBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00035D91,pinharvest x1 (thunk)
 ??0SpawnBehaviorFourthBase@@QAE@XZ,0x0003D24E,SpawnBehavior fourth interface base constructor ILT
@@ -76887,7 +76889,6 @@ name,address,notes
 ?value@Rva003608F0FloatElement@@QAEMXZ,0x0002CC5F,address-derived float element callee; target read directly from RVA 0x00361420 rel32 call
 ?valueFor@Rva00368C10Values@@QBEHPBVRva00368C10Mask@@@Z,0x00021323,retail jump thunk to the byte-verified seven-bit value lookup at 0x00368C10
 ?vectorLargeAllocate@_STL@@YAPAXI@Z,0x00881F30,Open-BFME5 Coord3D vector large allocator
-??0SortingIndexBufferClass@@QAE@G@Z,0x0091D270,constructor callee of Allocate_Sorting_Dynamic_Buffer at 0x0091D6B0
 ?vectorLargeDeallocate@_STL@@YAXPAX@Z,0x00881EB0,Open-BFME5 the large-block free the narrow basic_string reserve at 0x0053A100 uses
 ?vectorSmallAllocate@_STL@@YAPAXI@Z,0x0082E540,Open-BFME5 Coord3D vector small allocator
 ?vectorSmallDeallocate@_STL@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 STLport vector small-block deallocator
