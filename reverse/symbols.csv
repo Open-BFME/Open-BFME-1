@@ -77444,6 +77444,7 @@ _assignment,0x0099CB80,vendored=lua-4.0.1
 _atexit,0x009F6E26,CRT atexit (registers static destructors)
 _atoi,0x009F6DEE,Y2 lane: atoi import thunk (gen-import ?ji_009f6dee@@YAXXZ names the same address)
 _audioManagerAddEventHelper@16,0x00020B08,AudioManager::addAudioEvent stdcall helper pin
+_bfmeArrayNew,0x00881F70,address-derived array allocator target from the direct REL32 call at retail 0x009D6259
 _bfmeDirectInput8Create@20,0x009F9AF0,undecorated alias for the DirectInput8Create import stub (see Win32DIKeyboardOpen.cpp)
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
 _bfmeTryActivate@12,0x009D8460,address-derived stdcall helper target from the direct REL32 call at retail 0x009D6310
