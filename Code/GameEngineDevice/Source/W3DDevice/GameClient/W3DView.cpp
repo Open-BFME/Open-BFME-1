@@ -94,6 +94,8 @@
 #include "WW3D2/PredLod.h"
 #include "WW3D2/WW3D.h"
 
+#include "W3DViewHorPlus.h"
+
 #include "W3DDevice/GameClient/camerashakesystem.h"
 
 #include "WinMain.h"  /** @todo Remove this, it's only here because we
@@ -156,6 +158,26 @@ static Real getHeightAroundPos(Real x, Real y)
 	return terrainHeightMax;
 }
 
+#if BFME_ENABLE_HOR_PLUS_WIDESCREEN
+// Set both FOV components explicitly.  CameraClass's -1 vertical-FOV mode
+// recreates the legacy Vert- behavior by shrinking the vertical view as the
+// tactical viewport gets wider.
+static void setHorPlusTacticalViewPlane(CameraClass *camera, Int width, Int height,
+	Real referenceHorizontalFov)
+{
+	if (camera == NULL || TheDisplay == NULL || width <= 0 || height <= 0 ||
+		TheDisplay->getWidth() == 0 || TheDisplay->getHeight() == 0)
+		return;
+
+	Real viewportAspect = (Real)width / (Real)height;
+	Real displayAspect = (Real)TheDisplay->getWidth() / (Real)TheDisplay->getHeight();
+	Real referenceAspect = calculateHorPlusReferenceViewportAspect(viewportAspect, displayAspect);
+	Real verticalFov = calculateReferenceVerticalFov(referenceAspect, referenceHorizontalFov);
+	Real horizontalFov = calculateHorPlusHorizontalFov(viewportAspect, referenceAspect, referenceHorizontalFov);
+	camera->Set_View_Plane(horizontalFov, verticalFov);
+}
+#endif
+
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -217,6 +239,11 @@ void W3DView::setHeight(Int height)
  	m_3DCamera->Get_Viewport(vMin,vMax);
  	vMax.Y=(Real)(m_originY+height)/(Real)TheDisplay->getHeight();
  	m_3DCamera->Set_Viewport(vMin,vMax);
+
+#if BFME_ENABLE_HOR_PLUS_WIDESCREEN
+	setHorPlusTacticalViewPlane(m_3DCamera, getWidth(), height,
+		m_FOV * (Real)getWidth() / (Real)TheDisplay->getWidth());
+#endif
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -234,9 +261,16 @@ void W3DView::setWidth(Int width)
  	vMax.X=(Real)(m_originX+width)/(Real)TheDisplay->getWidth();
  	m_3DCamera->Set_Viewport(vMin,vMax);
 
+#if BFME_ENABLE_HOR_PLUS_WIDESCREEN
+	// Keep the retail vertical framing for the matching 4:3 viewport, then
+	// expand the horizontal view plane for the actual tactical aspect.
+	setHorPlusTacticalViewPlane(m_3DCamera, width, getHeight(),
+		m_FOV * (Real)width / (Real)TheDisplay->getWidth());
+#else
 	//we want to maintain the same scale, so we'll need to adjust the fov.
 	//default W3D fov for full-screen is 50 degrees.
 	m_3DCamera->Set_View_Plane((Real)width/(Real)TheDisplay->getWidth()*DEG_TO_RADF(50.0f),-1);
+#endif
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -644,7 +678,10 @@ void W3DView::setCameraTransform( void )
 		}
 	}
 
-#if defined(_DEBUG) || defined(_INTERNAL)
+#if BFME_ENABLE_HOR_PLUS_WIDESCREEN
+	setHorPlusTacticalViewPlane(m_3DCamera, getWidth(), getHeight(),
+		m_FOV * (Real)getWidth() / (Real)TheDisplay->getWidth());
+#elif defined(_DEBUG) || defined(_INTERNAL)
 	m_3DCamera->Set_View_Plane( m_FOV, -1 );
 #endif
 
@@ -3443,4 +3480,3 @@ void W3DView::Add_Camera_Shake (const Coord3D & position,float radius,float dura
 
 	CameraShakerSystem.Add_Camera_Shake(vpos,radius,duration,power);
 }
-
