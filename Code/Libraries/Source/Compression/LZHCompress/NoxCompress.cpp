@@ -2,28 +2,35 @@
 // Recovered from the EA Generals reference.  The three LZH-Light wrapper
 // calls are pinned to the matching retail wrapper bodies in this executable.
 
-class LZHLDecompressor
-{
-public:
-	LZHLDecompressor();
-
-private:
-	unsigned char m_unreconstructed_00[ 0x98 ];
-};
-
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef unsigned char UnsignedByte;
 typedef bool Bool;
 typedef void *LZHL_DHANDLE;
 
+class LZHLDecompressor
+{
+public:
+	LZHLDecompressor();
+	int decompress( UnsignedByte *, UnsignedInt *, const UnsignedByte *, UnsignedInt * );
+
+private:
+	unsigned char m_unreconstructed_00[ 0x98 ];
+};
+
 LZHL_DHANDLE LZHLCreateDecompressor();
-int LZHLDecompress(LZHL_DHANDLE, UnsignedByte *, UnsignedInt *, const UnsignedByte *, UnsignedInt *);
+__declspec(noinline) int LZHLDecompress(LZHL_DHANDLE, UnsignedByte *, UnsignedInt *, const UnsignedByte *, UnsignedInt *);
 void LZHLDestroyDecompressor(LZHL_DHANDLE);
 
 LZHL_DHANDLE LZHLCreateDecompressor()
 {
 	return new LZHLDecompressor;
+}
+
+__declspec(noinline) int LZHLDecompress( LZHL_DHANDLE handle, UnsignedByte *dst, UnsignedInt *dstSz,
+	const UnsignedByte *src, UnsignedInt *srcSz )
+{
+	return ( (LZHLDecompressor *)handle )->decompress( dst, dstSz, src, srcSz );
 }
 
 Bool DecompressMemory(void *inBufferVoid, Int inSize, void *outBufferVoid, Int& outSize)
