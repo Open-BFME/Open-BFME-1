@@ -33117,6 +33117,7 @@ name,address,notes
 ?b_002796c0@@YAXXZ,0x002796C0,gen-thunk body
 ?b_00279750@@YAXXZ,0x00279750,gen-thunk body
 ?b_00279780@@YAXXZ,0x00279780,gen-thunk body
+?bfmeStateValue@BfmeObjectAI@@QAEHXZ,0x000187A0,Open-BFME5 helper state query body used by BfmeObjectAI::bfmeStateFlags
 ?b_00279850@@YAXXZ,0x00279850,gen-thunk body
 ?b_00279a50@@YAXXZ,0x00279A50,gen-thunk body
 ?b_0027a2f0@@YAXXZ,0x0027A2F0,gen-thunk body
