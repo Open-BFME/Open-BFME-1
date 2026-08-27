@@ -133,6 +133,49 @@ VectorClass<T>::VectorClass(unsigned size, T const *array)
 }
 
 template<class T>
+bool VectorClass<T>::Resize(int newsize, T const *array)
+{
+	if (newsize)
+	{
+		T *newptr;
+		IsValid = false;
+		if (!array)
+		{
+			newptr = new T[newsize];
+		}
+		else
+		{
+			newptr = new ((void *)array) T[newsize];
+		}
+		IsValid = true;
+		if (!newptr)
+			return false;
+
+		if (Vector != 0)
+		{
+			int copycount = (newsize < VectorMax) ? newsize : VectorMax;
+			for (int index = 0; index < copycount; ++index)
+				newptr[index] = Vector[index];
+
+			if (IsAllocated)
+			{
+				delete [] Vector;
+				Vector = 0;
+			}
+		}
+
+		Vector = newptr;
+		VectorMax = newsize;
+		IsAllocated = (Vector && !array);
+	}
+	else
+	{
+		Clear();
+	}
+	return true;
+}
+
+template<class T>
 VectorClass<T>::~VectorClass()
 {
 	VectorClass<T>::Clear();
@@ -169,5 +212,7 @@ template DynamicVectorClass<TextureStatisticsStruct>::DynamicVectorClass(
 	unsigned, TextureStatisticsStruct const *);
 template VectorClass<TextureStatisticsStruct>::VectorClass(
 	unsigned, TextureStatisticsStruct const *);
+template bool VectorClass<TextureStatisticsStruct>::Resize(
+	int, TextureStatisticsStruct const *);
 template void DynamicVectorClass<TextureStatisticsStruct>::Clear();
 template VectorClass<TextureStatisticsStruct>::~VectorClass();
