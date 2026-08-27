@@ -81287,3 +81287,7 @@ g_bfmeGridWaterHandle,0x012EF4D4,TerrainLogic getWaterHandle retail grid-water s
 ?TheAudioClientUpdate@@3PAVClientSubsystem@@A,0x012ED668,Audio subsystem pointer used by GameEngine::_bfme_updateClientSubsystems
 ?BfmeTimedOpInputLocked@@3HA,0x012ED530,timed-operation input lock state used by GameEngine::_bfme_updateClientSubsystems
 ??1LargeGroupAudioKeyMap@@QAE@XZ,0x000181C9,Open-BFME5 ILT to body 0x003D4490 called on collector temporaries and the class member at +0x0C
+?bfmeUpdate@BfmeCellFC@@QAEXH_N@Z,0x00881BE0,Open-BFME5 semantic identity for exact address-derived cell update body at 0x00881BE0
+?bfmeApplyCircle@Gen_008812D0@@QAEXHHHH_N@Z,0x00881B90,Open-BFME5 semantic identity for the exact TaintManager grid circle-update wrapper already claimed under an address-derived class
+?bfmeGetAllocator003D32D0@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QBE?AV?$allocator@PAX@2@XZ,0x0002CE4E,Open-BFME5 address-scoped STLport get_allocator ILT to body 0x003D32D0 used by the key-map copy constructor
+??0?$Rva003D3540VectorBase@PAXV?$allocator@PAX@_STL@@@_STL@@QAE@IABV?$allocator@PAX@1@@Z,0x0000799B,Open-BFME5 address-scoped STLport vector-base constructor ILT to body 0x003D3540 used by the key-map copy constructor
