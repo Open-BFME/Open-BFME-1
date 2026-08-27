@@ -990,7 +990,7 @@ _Rva0051D1E0Forward,0x0051D1E0,149,Code/GameEngine/Source/Common/Rva0051D2A0Forw
 ??1Gen_dtor_005a3d80@@UAE@XZ,0x005A3B20,120,Code/gen_small/dtors_006.cpp,reloc-derived;call-sites=1;identity=generated
 ?_M_insert_overflow@?$vector@UGen_t_005a3db0_p8pod@@V?$allocator@UGen_t_005a3db0_p8pod@@@_STL@@@_STL@@IAEXPAUGen_t_005a3db0_p8pod@@ABU3@ABU__false_type@2@I_N@Z,0x005A3C00,302,Code/gen_small/tgrid_134.cpp,reloc-derived;call-sites=1;identity=generated
 ?gen005A40E0@Gen005A40E0_005A3FD0@@QAEXXZ,0x005A40E0,210,Code/GameEngine/Source/Common/TailPairForwarders.cpp,reloc-derived;call-sites=1;identity=generated
-?_bfme_setEngineVisibility@Mouse@@QAEX_N@Z,0x005A4B50,61,Code/GameEngine/Source/Common/GameEngineFramePacing.cpp,reloc-derived;call-sites=1;identity=real
+?_bfme_setEngineVisibility@Mouse@@QAEX_N@Z,0x005A4B50,61,Code/GameEngine/Source/Common/promoted__bfme_setEngineVisibility_Mouse_QAEX_N_Z_005A4B50.cpp,reloc-derived;call-sites=1;identity=real
 ?setCursorTooltip@Mouse@@QAEXVUnicodeString@@HPBURGBColor@@M@Z,0x005A56F0,481,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupPlayerInfo.cpp,reloc-derived;call-sites=3;identity=real
 ?setMouseText@Mouse@@QAEXVUnicodeString@@PBURGBAColorInt@@1@Z,0x005A5950,178,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanGameOptionsMenu.cpp,reloc-derived;call-sites=1;identity=real
 ?setCursor@Mouse@@UAEXW4MouseCursor@1@@Z,0x005A5A30,140,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse.cpp,reloc-derived;call-sites=2;identity=real
