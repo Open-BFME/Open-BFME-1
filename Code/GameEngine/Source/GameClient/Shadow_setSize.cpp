@@ -16,10 +16,16 @@
 typedef int Int;
 typedef float Real;
 
+struct BfmeShadowPartNode;
+
 class BfmeShadowPart
 {
 public:
-	void bfmeSetSize(Real width, Real height);		// ILT 0x00022D86
+	__declspec(noinline) void bfmeSetSize(Real width, Real height);		// ILT 0x00022D86
+
+private:
+	char m_bfmePad[0x4];
+	BfmeShadowPartNode *m_bfmeClients;
 };
 
 class BfmeShadowClient
@@ -37,12 +43,39 @@ public:
 	virtual void bfmeSetSize(Real width, Real height) = 0;	// slot 9, vtable+0x24
 };
 
+class BfmeShadowPartClient
+{
+public:
+	virtual void _bfme_slot0(void) = 0;
+	virtual void _bfme_slot1(void) = 0;
+	virtual void _bfme_slot2(void) = 0;
+	virtual void bfmeSetSize(Real width, Real height) = 0;	// slot 3, vtable+0x0C
+};
+
 struct BfmeShadowNode
 {
 	BfmeShadowNode *m_bfmeNext;				// +0x00
 	BfmeShadowNode *m_bfmePrev;				// +0x04
 	BfmeShadowClient *m_bfmeClient;				// +0x08
 };
+
+struct BfmeShadowPartNode
+{
+	BfmeShadowPartNode *m_bfmeNext;
+	BfmeShadowPartNode *m_bfmePrev;
+	BfmeShadowPartClient *m_bfmeClient;
+};
+
+// ?bfmeSetSize@BfmeShadowPart@@QAEXMM@Z		47 bytes
+__declspec(noinline) void BfmeShadowPart::bfmeSetSize(Real width, Real height)
+{
+	for (BfmeShadowPartNode *node = m_bfmeClients->m_bfmeNext;
+		node != m_bfmeClients;
+		node = node->m_bfmeNext)
+	{
+		node->m_bfmeClient->bfmeSetSize(width, height);
+	}
+}
 
 class Shadow
 {
