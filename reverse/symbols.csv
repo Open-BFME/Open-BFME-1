@@ -9230,6 +9230,7 @@ name,address,notes
 ??_7Gen0082AF20@@6B@,0x00D2E90C,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AF20
 ??_7Gen0082AF40@@6B@,0x00D2E918,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AF40
 ??_7Gen0082AF60@@6B@,0x00D2E924,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AF60
+??_7Gen009D8CA0@@6B@,0x01144180,address-derived vftable operand written by the constructor at retail 0x009D8CB7
 ??_7HordeContainModuleDataBase@@6B@,0x01073744,Open-BFME5 HordeContain base vtable
 ??_7LargeGroupAudioUnusedKnownKeys@@6B@,0x010EE0FC,Open-BFME5 vftable the copy constructor at 0x003CD590 installs over the base one
 ??_7LargeGroupBonusIface1@@6B@,0x0109C9D0,LargeGroupBonus first update interface vtable
