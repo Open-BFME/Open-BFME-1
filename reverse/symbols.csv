@@ -73802,6 +73802,7 @@ name,address,notes
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
 ?g_bfmeDisconnectPingResult@@3HA,0x012B9810,standalone disconnect ping-result state read and set by updateDisconnectStatus after the sub-ten-percent ratio check
+?g_bfmeWordFormat@@3QBDB,0x011442A8,address-derived word format string from the DIR32 operand at retail 0x009D93C0
 ?g_defaultRespawnPolicy@@3URespawnPolicy@@A,0x012ED8B8,RespawnBody default six-dword policy
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
