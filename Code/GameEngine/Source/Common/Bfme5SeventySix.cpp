@@ -1,5 +1,5 @@
-// Five more: a delta adjustment, a bounds-checked cell address, a hash-bucket
-// lookup, an append to a global table, and another clamped read.
+// Six more: a delta adjustment, two bounds-checked cell-range operations, a
+// hash-bucket lookup, an append to a global table, and another clamped read.
 
 class Gen_0078D130
 {
@@ -34,6 +34,8 @@ class Gen_008812D0
 {
 public:
 	BfmeCellFC *bfmeAt(int x, int y) const;
+	void bfmeGetCellRange(BfmeCellFC **first, BfmeCellFC **last,
+		int x1, int x2, int y);
 
 private:
 	int m_bfmeHead[8];					// +0x00
@@ -49,6 +51,26 @@ BfmeCellFC *Gen_008812D0::bfmeAt(int x, int y) const
 		return &m_bfmeCells[m_bfmeWidth * y + x];
 
 	return 0;
+}
+
+// ?bfmeGetCellRange@Gen_008812D0@@QAEXPAPAVBfmeCellFC@@0HHH@Z
+void Gen_008812D0::bfmeGetCellRange(BfmeCellFC **first,
+	BfmeCellFC **last, int x1, int x2, int y)
+{
+	if (x2 < 0 || x1 >= m_bfmeWidth || y < 0 || y >= m_bfmeHeight)
+	{
+		*last = 0;
+		*first = 0;
+		return;
+	}
+
+	BfmeCellFC *row = m_bfmeCells + y * m_bfmeWidth;
+	*last = row;
+	*first = row;
+	if (x1 > 0)
+		*first = row + x1;
+
+	*last += x2 < m_bfmeWidth ? x2 + 1 : m_bfmeWidth;
 }
 
 class BfmeNodeFC
