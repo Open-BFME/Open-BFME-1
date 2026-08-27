@@ -6409,3 +6409,4 @@ _Rva00813A50	0x00813A50	595	partial	t=25min model=GPT-5 retail logic, stack layo
 ?bfmeAny@Gen_00208330@@QBEEXZ	0x00208330	20	converted	scan of ten slots answering one on the first hit; exact
 ?bfmeTouch@Gen_0016D560@@QAEHXZ	0x0016D560	24	partial	stamp taken with a bump of five when the field is already set. Size is exact at 24 and the instruction stream matches; retail reuses eax for the guard read and keeps the stamp in edx, this build has them the other way round.
 ?d_006994f0@@YAXXZ	0x006994F0	21	no-match	t=15 memset and loop forms emit extra mov edx ecx before rep stosd target needs direct ecx address schedule
+?d_0026f5a0@@YAXXZ	0x0026F5A0	18	no-match	t=5 nested carrier pointer and virtual slot 0x30 modeled exactly through guard but MSVC emits mov edx ecx vtable schedule instead of retail mov eax ecx
