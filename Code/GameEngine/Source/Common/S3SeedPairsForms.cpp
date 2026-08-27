@@ -28,7 +28,7 @@ class BfmeSeedTarget
 {
 public:
 	virtual void bfmeSlot0(void);
-	virtual void bfmeSlot1(void);
+	virtual bool bfmeSlot1(void);
 	virtual void bfmeSlot2(void);
 	virtual void bfmeSlot3(void);
 	virtual bool bfmeSkip(void);		// slot 4, vtable+0x10
@@ -71,10 +71,24 @@ public:
 	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000061B3
 };
 
+class BfmeSubAcceptRef
+{
+public:
+	virtual void bfmeSlot0(void);
+	virtual void bfmeSlot1(void);
+	virtual void bfmeRelease(void);
+};
+
 class BfmeSubAccept_0001DE5D
 {
 public:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x0001DE5D
+	__declspec(noinline) void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x0001DE5D
+
+private:
+	void *m_bfmeHead;
+	BfmeSubAcceptRef *m_bfmeRef;
+	bool m_bfmeOwned;
+	char m_bfmePad[0x7];
 };
 
 class BfmeSubAccept_00029DAC
@@ -106,6 +120,19 @@ class BfmeSubAccept_0003EA86
 public:
 	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x0003EA86
 };
+
+// ?bfmeAccept@BfmeSubAccept_0001DE5D@@QAEXPAVBfmeSeedTarget@@@Z		49 bytes
+__declspec(noinline) void BfmeSubAccept_0001DE5D::bfmeAccept(BfmeSeedTarget *target)
+{
+	if (target->bfmeSlot1())
+	{
+		m_bfmeHead = 0;
+		if (m_bfmeRef)
+			m_bfmeRef->bfmeRelease();
+		m_bfmeRef = 0;
+		m_bfmeOwned = true;
+	}
+}
 
 void bfmeHandOver_0000C9B4(BfmeSeedTarget *target, void *item);		// ILT 0x0000C9B4
 void bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item);		// ILT 0x0000FFE2
@@ -461,7 +488,6 @@ private:
 
 	char m_bfmePad0[0x20];
 	BfmeSubAccept_0001DE5D m_bfmeSub0;		// +0x20
-	char m_bfmePad1[0xF];
 	char m_bfmeItem1;				// +0x30
 };
 
