@@ -12,13 +12,22 @@
 // seven bytes it saves.
 
 
-class BfmeMade_0045DC70
+class BfmeMadeBase_0045DC70
 {
 public:
-	BfmeMade_0045DC70(void *owner);			// retail 0x00043063
+	BfmeMadeBase_0045DC70(void *owner);
 
 private:
-	int m_bfmeFields[0x9B];
+	char m_bfmeFields[0x268];
+};
+
+class BfmeMade_0045DC70 : public BfmeMadeBase_0045DC70
+{
+public:
+	__declspec(noinline) BfmeMade_0045DC70(void *owner);	// retail 0x00043063
+
+private:
+	int m_bfmeTail;
 };
 
 class BfmeMade_00494200
@@ -61,6 +70,14 @@ private:
 BfmeMade_0045DC70 * __stdcall bfmeMake_0045DC70(void *owner)
 {
 	return new BfmeMade_0045DC70(owner);
+}
+
+// ??0BfmeMade_0045DC70@@QAE@PAX@Z
+__declspec(noinline) BfmeMade_0045DC70::BfmeMade_0045DC70(void *owner)
+	: BfmeMadeBase_0045DC70(owner)
+{
+	*(volatile unsigned int *)this = 0x010F7160;
+	m_bfmeTail = 0;
 }
 
 // ?bfmeMake_00494200@@YGPAVBfmeMade_00494200@@PAX@Z
