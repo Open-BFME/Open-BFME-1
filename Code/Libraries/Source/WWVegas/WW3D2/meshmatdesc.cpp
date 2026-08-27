@@ -518,7 +518,6 @@ void MeshMatDescClass::Set_Single_Shader(ShaderClass shader,int pass)
 	Shader[pass] = shader;
 }
 
-// ?Set_Material@MeshMatDescClass@@QAEXHPAVVertexMaterialClass@@H@Z present-unmatched
 void MeshMatDescClass::Set_Material(int vidx,VertexMaterialClass * vmat,int pass)
 {
 	MatBufferClass * mats = Get_Material_Array(pass,true);
