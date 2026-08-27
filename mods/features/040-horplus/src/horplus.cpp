@@ -5,7 +5,8 @@
 // loader or CRT behind it. The only floating-point math here is multiply and
 // divide. The retail CameraClass::Set_View_Plane routine at RVA 0x00931780
 // supplies the tangent operation, after which this payload scales the native
-// view-plane half-extents by the display aspect relative to the 4:3 reference.
+// view-plane half-extents by the display aspect relative to the BFME 4:3
+// tactical reference.
 // MSVC 7.1 emits its floating-point presence marker for these operations, so
 // the local definition below satisfies that marker without providing a runtime
 // library function. modbuild.py accepts this one self-defined compiler marker;
@@ -31,9 +32,13 @@ enum {
 };
 
 // BFME globals confirmed by the reconstructed Display/ControlBar sources:
-// TheDisplay is 0x012F1270 and TheTacticalView is 0x012F1600. BFME's
-// W3DView layout puts m_3DCamera at +0x104. TheDisplay's getWidth/getHeight
-// are vtable slots +0x2C/+0x30, as shown by the matched setWidth assembly.
+// TheDisplay is 0x012F1270 and TheTacticalView is 0x012F1600. BFME's W3DView
+// layout puts m_3DCamera at +0x104.
+// TheDisplay's getWidth/getHeight are vtable slots +0x2C/+0x30, as shown by
+// the matched setWidth assembly. The hooks below are all W3DView-local and
+// receive that view in ESI. The one CameraClass transform hook below is only
+// for BFME's direct scripted/locked-camera transform path and uses the proven
+// tactical-view identity to exclude every other camera.
 #define TheDisplay (*(void **)0x012F1270)
 #define TheTacticalView (*(void **)0x012F1600)
 
@@ -107,20 +112,28 @@ extern "C" __declspec(dllexport) void __cdecl horplus_set_width_tail(void *view)
 	apply_hor_plus(view);
 }
 
-// CameraClass::Set_Aspect_Ratio return at RVA 0x00931365. ECX remains the
-// camera through this no-call retail body; the pointer gate excludes all other
-// camera instances and leaves the 2D/UI/cinematic cameras alone.
-extern "C" __declspec(dllexport) void __cdecl horplus_set_aspect_return(void *camera)
+// BFME W3DView::setHeight continues at RVA 0x0073DC3E immediately after its
+// direct CameraClass::Set_Aspect_Ratio call. ESI is still the W3DView here.
+extern "C" __declspec(dllexport) void __cdecl horplus_set_height_tail(void *view)
 {
-	void *view = TheTacticalView;
-	if (view != 0 && field_pointer(view, VIEW_CAMERA) == camera)
-		apply_hor_plus(view);
+	apply_hor_plus(view);
 }
 
-// CameraClass::Set_Transform epilogue at RVA 0x00931304: ESI is the camera
-// saved by the retail body. This runs after buildCameraTransform has updated
-// m_FOV, covering real zoom and the shared scripted/slaved camera path.
-extern "C" __declspec(dllexport) void __cdecl horplus_set_transform_tail(void *camera)
+// BFME's reconstructed W3DView camera-transform body is the matched
+// anonymous retail routine at RVA 0x007423B0. It writes the retail plane at
+// RVA 0x00742551, calls CameraClass::Set_Transform through vtable +0x54, and
+// reaches RVA 0x00742609 with ESI still the W3DView. This is the final
+// projection point in that path, after both writes and the transform update.
+extern "C" __declspec(dllexport) void __cdecl horplus_set_camera_tail(void *view)
+{
+	apply_hor_plus(view);
+}
+
+// W3DView::update has one direct m_3DCamera->Set_Transform path for a locked
+// drawable/scripted camera instead of going through the common transform
+// routine above. CameraClass::Set_Transform returns at RVA 0x00931304 with
+// ESI as the camera; retain this narrowly filtered fallback for that path.
+extern "C" __declspec(dllexport) void __cdecl horplus_set_direct_transform_tail(void *camera)
 {
 	void *view = TheTacticalView;
 	if (view != 0 && field_pointer(view, VIEW_CAMERA) == camera)

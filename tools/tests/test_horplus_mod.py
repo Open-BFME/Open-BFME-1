@@ -19,7 +19,12 @@ capstone = pytest.importorskip("capstone")
 import modbuild  # noqa: E402
 from cave import PE  # noqa: E402
 
-TARGETS = (0x0073DDF8, 0x00931365, 0x00931304)
+TARGETS = {
+    0x0073DC3E: 0x0073DC44,
+    0x0073DDF8: 0x0073DDFD,
+    0x00742609: 0x0074260E,
+    0x00931304: 0x00931309,
+}
 
 pytestmark = [
     pytest.mark.skipif(not EXE.exists(), reason="retail baseline not present"),
@@ -57,7 +62,7 @@ def test_horplus_payload_has_no_unresolved_runtime_symbols():
         assert modbuild.undefined_externals(obj) == []
 
 
-def test_horplus_patches_three_post_operation_sites_and_reaches_the_cave(built):
+def test_horplus_patches_post_operation_sites_and_reaches_the_cave(built):
     pe = built
     cave = next(section for section in pe.sections() if section["name"] == ".bfmemod")
     cave_start = pe.image_base + cave["vaddr"]
@@ -69,7 +74,7 @@ def test_horplus_patches_three_post_operation_sites_and_reaches_the_cave(built):
     md = _md()
     shim_targets = []
 
-    for target in TARGETS:
+    for target, resume in TARGETS.items():
         detour = pe.read(target, 5)
         assert detour[0] == 0xE9, f"0x{target:08X} was not replaced by a rel32 detour"
         shim = target + 5 + struct.unpack("<i", detour[1:])[0]
@@ -83,7 +88,29 @@ def test_horplus_patches_three_post_operation_sites_and_reaches_the_cave(built):
         # exact five-byte stolen tail, preserving the retail epilogue path.
         back = next(ins for ins in instructions if ins.mnemonic == "jmp"
                     and ins.address > call.address)
-        assert int(back.op_str, 16) - pe.image_base == target + 5
+        assert int(back.op_str, 16) - pe.image_base == resume
 
     assert len(set(shim_targets)) == len(TARGETS)
     assert pe.data != bytearray(EXE.read_bytes())
+
+
+def test_horplus_sites_follow_retail_projection_writes():
+    pe = PE(EXE)
+    # setHeight: direct Set_Aspect_Ratio call at 0x0073DC39, then the hook
+    # receives ESI as the view before retail updates the viewport.
+    assert pe.read(0x0073DC39, 5)[0] == 0xE8
+    assert pe.read(0x0073DC3E, 6) == b"\x8b\x86\x04\x01\x00\x00"
+
+    # setWidth: direct Set_View_Plane call ends at the hooked epilogue.
+    assert pe.read(0x0073DDF3, 5)[0] == 0xE8
+    assert pe.read(0x0073DDF8, 5) == b"\x5f\x5e\x83\xc4\x18"
+
+    # BFME camera-transform path: Set_View_Plane, then vtable +0x54
+    # (CameraClass::Set_Transform), then the proposed final hook.
+    assert pe.read(0x00742551, 5)[0] == 0xE8
+    assert pe.read(0x00742605, 4) == b"\x52\xff\x50\x54"
+    assert pe.read(0x00742609, 5) == b"\xa1\xe0\x7f\x2f\x01"
+
+    # The direct locked/scripted-camera transform path is the only global
+    # CameraClass hook retained; its payload filters against TheTacticalView.
+    assert pe.read(0x00931304, 5) == b"\x5e\xc2\x04\x00\xcc"
