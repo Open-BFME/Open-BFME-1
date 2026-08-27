@@ -194,6 +194,46 @@ void BfmeRangeUpdaterFC::operator()(int firstX, int lastX, int y)
 	}
 }
 
+// ?bfmeRasterCircleFC@@YAXHHHVBfmeRangeUpdaterFC@@@Z
+void __cdecl bfmeRasterCircleFC(int centerX, int centerY, const int radius,
+	BfmeRangeUpdaterFC updater)
+{
+	int x = 0;
+	int y = radius;
+	int d = (1 - radius) << 1;
+	int firstX = centerX;
+	int lastX = centerX;
+
+	for (;;)
+	{
+		if (d + y > 0)
+		{
+			if (y == 0 && radius == 1)
+			{
+				++x;
+				++lastX;
+				--firstX;
+			}
+
+			updater(firstX, lastX, centerY + y);
+			if (y == 0)
+				return;
+
+			updater(firstX, lastX, centerY - y);
+			--y;
+			d -= ((y << 1) - 1);
+		}
+
+		if (x > d)
+		{
+			++x;
+			++lastX;
+			--firstX;
+			d += ((x << 1) + 1);
+		}
+	}
+}
+
 class BfmeNodeFC
 {
 public:
