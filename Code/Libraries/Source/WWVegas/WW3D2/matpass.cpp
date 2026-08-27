@@ -90,14 +90,8 @@ bool MaterialPassClass::EnablePerPolygonCulling = true;
  *   12/9/99    gth : Created.                                                                 *
  *	  06/27/02   kjm : Changes to max texture stage caps															*
  *=============================================================================================*/
-// ??1MaterialPassClass@@ present-unmatched
-MaterialPassClass::~MaterialPassClass(void)
-{
-	for (int i=0; i<MAX_TEX_STAGES; i++) {
-		REF_PTR_RELEASE(Texture[i]);
-	}
-	REF_PTR_RELEASE(Material);
-}
+// The exact BFME destructor is implemented in MaterialPassClassDestructor.cpp,
+// whose local declaration preserves BFME's owning texture-stage wrappers.
 
 
 /***********************************************************************************************
