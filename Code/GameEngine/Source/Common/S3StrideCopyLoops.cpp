@@ -11,12 +11,54 @@
 // across the eight bodies -- 0x38, 0x5C, 0x70, 0x8C, 0xB4 and 0xB8 -- and the
 // three that need a dword displacement for that add are the six bytes longer.
 
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
+struct BfmeCopySubA
+{
+	void bfmeAssign(BfmeCopySubA *source);		// retail 0x000FF8F0
+
+	char m_bfmeBytes[0x0C];
+};
+
+struct BfmeCopySubB
+{
+	void bfmeAssign(BfmeCopySubB *source);		// retail 0x000FFA60
+
+	char m_bfmeBytes[0x0C];
+};
+
+struct BfmeCopyWords
+{
+	int m_bfmeFirst;
+	int m_bfmeSecond;
+	int m_bfmeThird;
+};
+
+struct BfmeCopyTail
+{
+	int m_bfmeFirst;
+	int m_bfmeSecond;
+	int m_bfmeThird;
+};
 
 struct BfmeCopyElementA
 {
-	void bfmeAssign(BfmeCopyElementA *source);		// retail 0x00003828
+	int m_bfmeHead;
+	unsigned char m_bfme04;
+	int m_bfme08;
+	int m_bfme0c;
+	int m_bfme10;
+	int m_bfme14;
+	BfmeCopyWords m_bfme18;
+	int m_bfme24;
+	int m_bfme28;
+	BfmeCopySubA m_bfme2c;
+	BfmeCopySubB m_bfme38;
+	BfmeCopyTail m_bfme44;
+	BfmeCopyWords m_bfme50;
 
-	char m_bfmeBytes[0x5C];
+	BfmeCopyElementA *bfmeAssign(BfmeCopyElementA *source);		// retail 0x00003828
 };
 
 struct BfmeCopyElementB
@@ -53,6 +95,25 @@ struct BfmeCopyElementF
 
 	char m_bfmeBytes[0x38];
 };
+
+BfmeCopyElementA *BfmeCopyElementA::bfmeAssign(BfmeCopyElementA *source)
+{
+	m_bfme04 = source->m_bfme04;
+	m_bfme08 = source->m_bfme08;
+	m_bfme0c = source->m_bfme0c;
+	m_bfme10 = source->m_bfme10;
+	m_bfme14 = source->m_bfme14;
+	m_bfme18 = source->m_bfme18;
+	m_bfme24 = source->m_bfme24;
+	m_bfme28 = source->m_bfme28;
+	m_bfme2c.bfmeAssign(&source->m_bfme2c);
+	m_bfme38.bfmeAssign(&source->m_bfme38);
+	m_bfme44 = source->m_bfme44;
+	// Retail finishes this aggregate copy before scheduling the final tail copy.
+	_ReadWriteBarrier();
+	m_bfme50 = source->m_bfme50;
+	return this;
+}
 
 // ?bfmeCopy_00138800@@YAPAUBfmeCopyElementA@@PAU1@00@Z
 BfmeCopyElementA *bfmeCopy_00138800(BfmeCopyElementA *first, BfmeCopyElementA *last, BfmeCopyElementA *dest)

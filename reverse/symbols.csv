@@ -20037,6 +20037,8 @@ name,address,notes
 ?b_000ffe20@@YAXXZ,0x000FFE20,gen-thunk body
 ?b_000ffe30@@YAXXZ,0x000FFE30,gen-thunk body
 ?b_00100300@@YAXXZ,0x00100300,gen-thunk body
+?bfmeAssign@BfmeCopySubA@@QAEXPAU1@@Z,0x000FF8F0,Open-BFME5 helper assignment body used by BfmeCopyElementA
+?bfmeAssign@BfmeCopySubB@@QAEXPAU1@@Z,0x000FFA60,Open-BFME5 helper assignment body used by BfmeCopyElementA
 ?b_001003c0@@YAXXZ,0x001003C0,gen-thunk body
 ?b_00100570@@YAXXZ,0x00100570,gen-thunk body
 ?b_00100580@@YAXXZ,0x00100580,gen-thunk body
@@ -72209,7 +72211,7 @@ name,address,notes
 ?bfmeApplyBonuses@WeaponBonusSet@@QBEXIAAVWeaponBonus@@@Z,0x0002272D,Open-BFME5 ILT thunk to body 0x001E1CA0; ?computeBonus@Weapon@@IBEXPBVObject@@IAAVWeaponBonus@@@Z at 0x001E2840 calls it twice on the set from TheWritableGlobalData +0xB94 and on the one at +0x4A8 of the template at this+4; address-derived name
 ?bfmeApplyCircle@Gen_008812D0@@QAEXHHHH_N@Z,0x00881B90,Open-BFME5 semantic identity for the exact TaintManager grid circle-update wrapper already claimed under an address-derived class
 ?bfmeArenaReady@@YAXXZ,0x00897050,Open-BFME5 the routine the arena initialiser at 0x00897120 tail-calls
-?bfmeAssign@BfmeCopyElementA@@QAEXPAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
+?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
 ?bfmeAssign@BfmeCopyElementB@@QAEXPAU1@@Z,0x0000D4CC,Open-BFME5 the element assign the copy loops call
 ?bfmeAssign@BfmeCopyElementC@@QAEXPAU1@@Z,0x000470F0,Open-BFME5 the element assign the copy loops call
 ?bfmeAssign@BfmeCopyElementD@@QAEXPAU1@@Z,0x00024BA9,Open-BFME5 the element assign the copy loops call
