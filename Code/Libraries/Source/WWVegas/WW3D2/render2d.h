@@ -123,6 +123,7 @@ public:
 	// Add Quad
 	void	Add_Quad( const Vector2 & v0, const Vector2 & v1, const Vector2 & v2, const Vector2 & v3, const RectClass & uv, unsigned long color = 0xFFFFFFFF  );
 	void	Add_Quad_Backfaced( const Vector2 & v0, const Vector2 & v1, const Vector2 & v2, const Vector2 & v3, const RectClass & uv, unsigned long color = 0xFFFFFFFF  );
+	void	Add_Quad( const RectClass & screen, const RectClass & uv, unsigned long color0, unsigned long color1, unsigned long color2, unsigned long color3 );
 	void	Add_Quad( const RectClass & screen, const RectClass & uv, unsigned long color = 0xFFFFFFFF  );
 	void	Add_Quad( const Vector2 & v0, const Vector2 & v1, const Vector2 & v2, const Vector2 & v3, unsigned long color = 0xFFFFFFFF  );
 	void	Add_Quad( const RectClass & screen, unsigned long color = 0xFFFFFFFF );

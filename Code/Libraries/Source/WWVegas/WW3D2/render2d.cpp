@@ -512,13 +512,9 @@ void	Render2DClass::Add_Quad_HGradient( const RectClass & screen, unsigned long 
 }
 
 
-// ?Add_Quad@Render2DClass@@ present-unmatched
 void	Render2DClass::Add_Quad( const RectClass & screen, const RectClass & uv, unsigned long color )
 {
-	Internal_Add_Quad_Indicies( Vertices.Count() );
-	Internal_Add_Quad_Vertices( screen );
-	Internal_Add_Quad_UVs( uv );
-	Internal_Add_Quad_Colors( color );
+	Add_Quad( screen, uv, color, color, color, color );
 }
 
 // ?Add_Quad@Render2DClass@@ present-unmatched
@@ -935,4 +931,3 @@ Vector2	Render2DTextClass::Get_Text_Extents( const WCHAR * text )
 
 	return extent;
 }
-
