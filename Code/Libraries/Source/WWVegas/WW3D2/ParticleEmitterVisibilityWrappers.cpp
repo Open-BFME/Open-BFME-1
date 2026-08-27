@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
-// BFME's RingRenderObjClass visibility wrapper. The retail class has two more
-// virtual slots than the later public header; this TU models the exact ABI
-// slice without changing that shared vendored declaration.
+
+// BFME's ParticleEmitterClass visibility wrappers. Retail's RenderObjClass
+// interface has an extra Set_Visible scene token relative to the later public
+// header, so this focused TU models the exact ABI without changing that shared
+// vendored declaration.
 
 #define BFME_VIRTUAL_EIGHT(a, b, c, d, e, f, g, h) \
 	virtual void Dummy##a(); virtual void Dummy##b(); \
@@ -26,7 +28,7 @@ public:
 	BFME_VIRTUAL_EIGHT(88, 89, 90, 91, 92, 93, 94, 95)
 	virtual void Dummy96();
 	virtual void Dummy97();
-	virtual void Dummy98();
+	virtual void Set_Visible(int onoff, int sceneToken);
 	virtual void Dummy99();
 	virtual void Set_Hidden(int onoff)
 	{
@@ -36,7 +38,7 @@ public:
 			Bits |= 0x2000UL;
 		}
 	}
-	virtual void Set_Visible(int onoff, int sceneToken);
+	virtual void Dummy101();
 	virtual void Set_Animation_Hidden(int onoff)
 	{
 		if (onoff) {
@@ -45,11 +47,11 @@ public:
 			Bits |= 0x4000UL;
 		}
 	}
+	virtual void Dummy103();
 	virtual void Set_Force_Visible(int onoff);
-	BFME_VIRTUAL_EIGHT(104, 105, 106, 107, 108, 109, 110, 111)
-	BFME_VIRTUAL_EIGHT(112, 113, 114, 115, 116, 117, 118, 119)
-	BFME_VIRTUAL_EIGHT(120, 121, 122, 123, 124, 125, 126, 127)
-	virtual void Dummy128();
+	BFME_VIRTUAL_EIGHT(105, 106, 107, 108, 109, 110, 111, 112)
+	BFME_VIRTUAL_EIGHT(113, 114, 115, 116, 117, 118, 119, 120)
+	BFME_VIRTUAL_EIGHT(121, 122, 123, 124, 125, 126, 127, 128)
 	virtual void Dummy129();
 	virtual void Dummy130();
 	virtual void Dummy131();
@@ -60,7 +62,7 @@ protected:
 	unsigned long Bits;
 };
 
-class RingRenderObjClass : public RenderObjClass
+class ParticleEmitterClass : public RenderObjClass
 {
 public:
 	virtual void Set_Hidden(int onoff);
@@ -70,22 +72,22 @@ public:
 	virtual void Update_On_Visibilty();
 };
 
-// ?Set_Hidden@RingRenderObjClass@@UAEXH@Z
-void RingRenderObjClass::Set_Hidden(int onoff)
+// ?Set_Hidden@ParticleEmitterClass@@UAEXH@Z
+void ParticleEmitterClass::Set_Hidden(int onoff)
 {
 	RenderObjClass::Set_Hidden(onoff);
 	Update_On_Visibilty();
 }
 
-// ?Set_Visible@RingRenderObjClass@@UAEXHH@Z
-void RingRenderObjClass::Set_Visible(int onoff, int sceneToken)
+// ?Set_Visible@ParticleEmitterClass@@UAEXHH@Z
+void ParticleEmitterClass::Set_Visible(int onoff, int sceneToken)
 {
 	RenderObjClass::Set_Visible(onoff, sceneToken);
 	Update_On_Visibilty();
 }
 
-// ?Set_Animation_Hidden@RingRenderObjClass@@UAEXH@Z
-void RingRenderObjClass::Set_Animation_Hidden(int onoff)
+// ?Set_Animation_Hidden@ParticleEmitterClass@@UAEXH@Z
+void ParticleEmitterClass::Set_Animation_Hidden(int onoff)
 {
 	RenderObjClass::Set_Animation_Hidden(onoff);
 	Update_On_Visibilty();

@@ -23754,3 +23754,6 @@ uw_000970d0,0x000970D0,gen-funclet no longer has an emitting owner after the exa
 ?d_008a06c0@@YAXXZ,0x008A06C0,"gen-* placeholder resurrected by the union merge of PR #94 onto master; the real identity ?bfmeIndexOf@Gen_008A06C0@@QBEHPAX@Z owns this range."
 ?d_009779a0@@YAXXZ,0x009779A0,"gen-* placeholder resurrected by the union merge of PR #94 onto master; the real identity ?bfmeSlots@Gen_009779A0@@QBEHXZ owns this range."
 ?m@Gen_008f73d0@@QAEXXZ,0x008F73D0,gen-shim delegate placeholder superseded by the byte-verified real PartitionManager::revealMapForPlayer identity.
+?Set_Hidden@RingRenderObjClass@@UAEXH@Z,0x0097EA00,wrong Ring identity retracted; constructor and vftable xrefs prove ParticleEmitterClass owns the exact wrapper.
+?Set_Visible@RingRenderObjClass@@UAEXHH@Z,0x0097EA40,wrong Ring identity retracted; constructor and vftable xrefs prove ParticleEmitterClass owns the exact wrapper.
+?Set_Animation_Hidden@RingRenderObjClass@@UAEXH@Z,0x0097EA70,wrong Ring identity retracted; constructor and vftable xrefs prove ParticleEmitterClass owns the exact wrapper.
