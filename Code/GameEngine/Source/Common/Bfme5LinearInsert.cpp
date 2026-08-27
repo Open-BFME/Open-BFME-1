@@ -160,7 +160,22 @@ void __cdecl bfmeLinearInsertAR(int *first, int *last, int value, BfmeCompAR com
 
 typedef bool (__cdecl *BfmeCompareAS)(int left, int right);
 
-void __cdecl bfmeUnguardedInsertAS(int *last, int value, BfmeCompareAS compare);
+void __cdecl bfmeUnguardedInsertAS(int *last, int value, BfmeCompareAS compare)
+
+{
+	int *next = last - 1;
+
+	while (compare(value, *next))
+	{
+		*last = *next;
+
+		last = next;
+
+		--next;
+	}
+
+	*last = value;
+}
 								// retail thunk 0x0004727B -> 0x0044727B
 
 // ?bfmeLinearInsertAS@@YAXPAH0HP6A_NHH@Z@Z
