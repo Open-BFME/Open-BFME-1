@@ -16,7 +16,14 @@ class RingRenderObjClass
 {
 public:
 	BFME_VIRTUAL_EIGHT(0, 1, 2, 3, 4, 5, 6, 7)
-	BFME_VIRTUAL_EIGHT(8, 9, 10, 11, 12, 13, 14, 15)
+	virtual void Dummy8();
+	virtual void Dummy9();
+	virtual int Get_Num_Polys(void) const;
+	virtual void Dummy11();
+	virtual void Dummy12();
+	virtual void Dummy13();
+	virtual void Dummy14();
+	virtual void Dummy15();
 	BFME_VIRTUAL_EIGHT(16, 17, 18, 19, 20, 21, 22, 23)
 	BFME_VIRTUAL_EIGHT(24, 25, 26, 27, 28, 29, 30, 31)
 	BFME_VIRTUAL_EIGHT(32, 33, 34, 35, 36, 37, 38, 39)
@@ -31,7 +38,14 @@ public:
 	virtual void Dummy69();
 	virtual void Dummy70();
 	virtual void Prepare_LOD(CameraClass &camera);
-	BFME_VIRTUAL_EIGHT(72, 73, 74, 75, 76, 77, 78, 79)
+	virtual void Dummy72();
+	virtual void Dummy73();
+	virtual void Dummy74();
+	virtual float Get_Cost(void) const;
+	virtual float Get_Value(void) const;
+	virtual float Get_Post_Increment_Value(void) const;
+	virtual void Dummy78();
+	virtual void Dummy79();
 	BFME_VIRTUAL_EIGHT(80, 81, 82, 83, 84, 85, 86, 87)
 	virtual void Dummy88();
 	virtual float Get_Screen_Size(CameraClass &camera);
@@ -50,6 +64,19 @@ void RingRenderObjClass::Prepare_LOD(CameraClass &camera)
 {
 	ScreenArea = Get_Screen_Size(camera);
 	CurrentLOD = CurrentLOD >= LODCount ? LODCount : CurrentLOD;
+}
+
+// ?Get_Value@RingRenderObjClass@@UBEMXZ
+float RingRenderObjClass::Get_Value(void) const
+{
+	if (CurrentLOD == 0) {
+		return 3.402823466e+38F;
+	}
+
+	float polygon_count = (float)Get_Num_Polys();
+	float coverage =
+		(1.0F - 0.5F / (polygon_count * polygon_count)) * ScreenArea;
+	return coverage / Get_Cost();
 }
 
 #undef BFME_VIRTUAL_EIGHT
