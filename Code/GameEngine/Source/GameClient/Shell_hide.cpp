@@ -46,11 +46,53 @@ public:
 
 extern Glo012F3344Type *Glo012F3344;				// 0x012F3344
 
+class UnicodeString
+{
+	protected:
+	friend class Display;
+	void releaseBuffer();
+};
+
 class Display
 {
 public:
-	void bfmeStopMovie(void);				// ILT 0x0001992F
+	__declspec(noinline) void bfmeStopMovie(void);				// ILT 0x0001992F
+
+private:
+	char m_bfmeHead[0x64];
+	UnsignedInt m_bfmeMovieFields[18];
+	UnicodeString m_bfmeMovieName;
+	char m_bfmePadAfterMovieName[0x17];
+	UnsignedInt m_bfmeMovieFieldC4;
+	UnsignedInt m_bfmeMovieFieldC8;
 };
+
+// ?bfmeStopMovie@Display@@QAEXXZ		112 bytes
+__declspec(noinline) void Display::bfmeStopMovie(void)
+{
+	m_bfmeMovieFields[0] = 0;
+	m_bfmeMovieFields[1] = 0;
+	m_bfmeMovieFields[2] = 0;
+	m_bfmeMovieFields[3] = 0;
+	m_bfmeMovieFields[4] = 0;
+	m_bfmeMovieFields[5] = 0;
+	m_bfmeMovieFields[6] = 0;
+	m_bfmeMovieFields[7] = 0;
+	m_bfmeMovieFields[8] = 0;
+	m_bfmeMovieFields[9] = 0;
+	m_bfmeMovieFields[10] = 0;
+	m_bfmeMovieFields[11] = 0;
+	m_bfmeMovieFields[12] = 0;
+	m_bfmeMovieFields[13] = 0;
+	m_bfmeMovieFields[14] = 0;
+	m_bfmeMovieFields[15] = 0;
+	m_bfmeMovieFields[16] = 0;
+	m_bfmeMovieFields[17] = 0;
+	m_bfmeMovieFieldC4 = 0;
+	m_bfmeMovieFieldC8 = 0;
+
+	m_bfmeMovieName.releaseBuffer();
+}
 
 extern Display *TheDisplay;					// 0x012F1270
 

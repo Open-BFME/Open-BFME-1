@@ -1,4 +1,5 @@
 name,target_rva,reason
+?d_0040eff0@@YAXXZ,0x0040EFF0,"gen-dump placeholder superseded by the recovered Display::bfmeStopMovie identity and exact C++ body"
 ?d_005ef9a0@@YAXXZ,0x005EF9A0,"gen-dump placeholder superseded by the recovered BfmeSubAccept_00007289 identity and exact C++ body"
 ?d_005ee650@@YAXXZ,0x005EE650,"gen-dump placeholder superseded by the recovered BfmeSubAccept_000061B3 identity and exact C++ body"
 ?GadgetListBoxSetColors@@YAXPAVGameWindow@@HHHHHHHHHHHH@Z,0x000410AB,"five-byte incremental-link thunk claim retracted so the exact BFME body at 0x004B6D40 can carry the name; the thunk bytes return to the gen-thunk pool."
