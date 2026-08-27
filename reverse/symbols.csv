@@ -12270,6 +12270,8 @@ name,address,notes
 ?addWrapperCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0067A9D0,addCommand's jump-table arm for command type 18
 ?adjust@ControlBarAdjuster@@QAEXHH@Z,0x000378EE,setSquishedControlBarConfig adjust call; ILT thunk for body 0x004ADE40
 ?adjust@ObjectAdjustModelConditionShim@@QAEXXZ,0x001CA0F0,Object adjustModelConditionForWeaponStatus incremental-link thunk target through a TU-local forwarding shim
+?adjust@Rva000C7DA0@@QAEHH@Z,0x000C7D10,address-derived helper called by the accumulator at 0x000C7DA0
+?adjust@Rva000C7DC0@@QAEHH@Z,0x000C7D10,address-derived helper called by the accumulator at 0x000C7DC0
 ?adjustDisplay@@YAXPAVGameWindow@@H_N@Z,0x004B7CA0,general 3-arg overload; 3 pushes + add esp 0xc at the GadgetListBoxSetBottomVisibleEntry call site 0x004B857A
 ?adjustDisplay@@YAXPAVGameWindow@@_N@Z,0x004B7B20,BFME-only 2-arg overload (no adjustment param); proven from computeTotalHeight's own bytes (0x4B7ED0: 2 pushes + add esp8) distinct from the general 3-arg adjustDisplay@0x4B7CA0 (addEntry's bytes: 3 pushes + add esp0xc)
 ?adjustFontSize@GlobalLanguageData@@QAEHH@Z,0x00004E67,ILT thunk to GlobalLanguageData::adjustFontSize; returns Int in BFME
