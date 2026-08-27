@@ -47,6 +47,7 @@ class BfmeCellFC
 {
 public:
 	~BfmeCellFC();
+	void bfmeUpdate(int amount, bool absolute);
 
 	unsigned char m_bfmeKind;				// +0x00
 	unsigned char m_bfmeGap[3];				// +0x01
@@ -77,6 +78,8 @@ public:
 	void bfmeVisitCells(void);
 	int bfmeValueAtWorld(const BfmePointFC *point) const;
 
+	friend class BfmeRangeUpdaterFC;
+
 private:
 	float m_bfmeOriginX;					// +0x00
 	float m_bfmeOriginY;					// +0x04
@@ -86,6 +89,17 @@ private:
 	int m_bfmeHeight;					// +0x24
 	BfmeCellFC *m_bfmeCells;				// +0x28
 	BfmeCellVisitorFC m_bfmeVisitor;			// +0x2C
+};
+
+class BfmeRangeUpdaterFC
+{
+public:
+	__declspec(noinline) void operator()(int firstX, int lastX, int y);
+
+private:
+	Gen_008812D0 *m_bfmeGrid;
+	int m_bfmeAmount;
+	bool m_bfmeAbsolute;
 };
 
 // ??1Gen_008812D0@@QAE@XZ
@@ -163,6 +177,21 @@ int Gen_008812D0::bfmeValueAtWorld(const BfmePointFC *point) const
 {
 	BfmeCellFC *cell = bfmeCellAtWorld(point->x, point->y);
 	return cell ? cell->m_bfmeValue : 0;
+}
+
+// ??RBfmeRangeUpdaterFC@@QAEXHHH@Z
+void BfmeRangeUpdaterFC::operator()(int firstX, int lastX, int y)
+{
+	BfmeCellFC *first;
+	BfmeCellFC *last;
+	m_bfmeGrid->bfmeGetCellRange(&first, &last, firstX, lastX, y);
+
+	for (BfmeCellFC *cell = first; cell != last; ++cell)
+	{
+		cell->bfmeUpdate(m_bfmeAmount, m_bfmeAbsolute);
+		m_bfmeGrid->m_bfmeVisitor(firstX, y, cell->m_bfmeKind);
+		++firstX;
+	}
 }
 
 class BfmeNodeFC
