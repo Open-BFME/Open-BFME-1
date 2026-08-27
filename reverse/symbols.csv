@@ -81078,6 +81078,7 @@ g_bfmeHalfBX,0x012D71A8,Open-BFME5 the half size the setter at 0x00938A50 derive
 g_bfmeHeadCA,0x012F3350,Open-BFME5 the list head the destructor at 0x004902A0 unhooks itself from
 g_bfmeHeadDX,0x013379A0,Open-BFME5 the list head the push at 0x00897300 writes
 g_bfmeFactorBW,0x01075D80,Open-BFME5 the factor the scale at 0x008793D0 multiplies by
+g_bfmeFourthEB,0x012D7190,Open-BFME5 the fourth word the global reset at 0x009336B0 sets
 g_bfmeFullBX,0x012D71AC,Open-BFME5 the size the setter at 0x00938A50 writes
 g_bfmeGameCW,0x012F706C,Open-BFME5 the singleton the flag test at 0x00609320 reads
 g_bfmeGateBT,0x012F9D04,Open-BFME5 the gate the probe at 0x007D74B0 tests
