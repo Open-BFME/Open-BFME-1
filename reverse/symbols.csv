@@ -1115,6 +1115,7 @@ name,address,notes
 ??0?$HeaderTemplateStringBase@D@@AAE@ABV0@@Z,0x00887B60,Open-BFME5 HeaderTemplateManager init relocation
 ??0?$HeaderTemplateStringBase@D@@AAE@PBD@Z,0x00888BC0,Open-BFME5 HeaderTemplateManager init relocation
 ??0?$NATProbeStringBase@D@@QAE@PBD@Z,0x00888BC0,NAT sendAProbe string constructor body
+??0?$Rva003D3540VectorBase@PAXV?$allocator@PAX@_STL@@@_STL@@QAE@IABV?$allocator@PAX@1@@Z,0x0000799B,Open-BFME5 address-scoped STLport vector-base constructor ILT to body 0x003D3540 used by the key-map copy constructor
 ??0?$ShareBufferClass@E@@QAE@HPBDH@Z,0x0004B4A7,derived from part_buf matched-caller call sites
 ??0?$ShareBufferClass@I@@QAE@ABV0@@Z,0x0092A090
 ??0?$ShareBufferClass@PAVVertexMaterialClass@@@@QAE@ABV0@@Z,0x00929D40,packet 0092a1e0 pin
@@ -72510,6 +72511,7 @@ name,address,notes
 ?bfmeGen00029C35@Gen_00529B10@@QAEXH@Z,0x00029C35,address-derived helper; target read from the first REL32 in the guarded eight-index loop at 0x00529B10
 ?bfmeGen0002D38A@Gen_00529B10@@QAEXH@Z,0x0002D38A,address-derived helper; target read from the third REL32 in the guarded eight-index loop at 0x00529B10
 ?bfmeGen0002EA91@Gen_00529B10@@QAEXH_N@Z,0x0002EA91,address-derived helper; target read from the second REL32 in the guarded eight-index loop at 0x00529B10
+?bfmeGetAllocator003D32D0@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QBE?AV?$allocator@PAX@2@XZ,0x0002CE4E,Open-BFME5 address-scoped STLport get_allocator ILT to body 0x003D32D0 used by the key-map copy constructor
 ?bfmeGetAllocator@Gen_000bb890@@ABE?AVBfmeAllocator@@XZ,0x0001E2A4,Open-BFME5 ILT the copy constructor at 0x000BB890 gets its allocator through
 ?bfmeGetAllocator@Gen_000ce890@@ABE?AVBfmeAllocator@@XZ,0x00008BED,Open-BFME5 ILT the copy constructor at 0x000CE890 gets its allocator through
 ?bfmeGetAllocator@Gen_0036e170@@ABE?AVBfmeAllocator@@XZ,0x000441BB,Open-BFME5 ILT the copy constructor at 0x0036E170 gets its allocator through
@@ -77832,5 +77834,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeGetAllocator003D32D0@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QBE?AV?$allocator@PAX@2@XZ,0x0002CE4E,Open-BFME5 address-scoped STLport get_allocator ILT to body 0x003D32D0 used by the key-map copy constructor
-??0?$Rva003D3540VectorBase@PAXV?$allocator@PAX@_STL@@@_STL@@QAE@IABV?$allocator@PAX@1@@Z,0x0000799B,Open-BFME5 address-scoped STLport vector-base constructor ILT to body 0x003D3540 used by the key-map copy constructor
