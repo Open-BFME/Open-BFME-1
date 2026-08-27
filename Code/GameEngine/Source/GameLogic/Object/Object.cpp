@@ -6306,7 +6306,6 @@ public:
 	virtual BFMESpecialPowerUpdateInterface *getSpecialPowerUpdateInterface();
 };
 
-// ?findSpecialAbilityUpdate@Object@@QBEPAVSpecialAbilityUpdate@@W4SpecialPowerType@@@Z present-unmatched
 SpecialAbilityUpdate* Object::findSpecialAbilityUpdate( SpecialPowerType type ) const
 {
 	BehaviorModule **behaviors = *reinterpret_cast<BehaviorModule ***>(
