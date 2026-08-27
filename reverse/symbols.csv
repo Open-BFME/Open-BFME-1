@@ -14758,6 +14758,7 @@ name,address,notes
 ?b_0007b890@@YAXXZ,0x0007B890,gen-thunk body
 ?b_0007b8b0@@YAXXZ,0x0007B8B0,gen-thunk body
 ?b_0007b8e0@@YAXXZ,0x0007B8E0,gen-thunk body
+?update@BfmeTimedOpNode@@QAEIXZ,0x0007B8E0,address-derived timed-operation node update callee decoded from the direct REL32 in _bfme_updateTimedOps
 ?b_0007b990@@YAXXZ,0x0007B990,gen-thunk body
 ?b_0007b9e0@@YAXXZ,0x0007B9E0,gen-thunk body
 ?b_0007ba00@@YAXXZ,0x0007BA00,gen-thunk body

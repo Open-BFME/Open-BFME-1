@@ -11,6 +11,7 @@ name,target_rva,reason
 ?d_005a4b50@@YAXXZ,0x005A4B50,gen-dump placeholder superseded by the recovered Mouse engine-visibility setter identity and exact C++ body
 ?d_003cc570@@YAXXZ,0x003CC570,gen-dump placeholder superseded by the recovered bfmeUnguardedInsertAT identity and exact C++ body
 ?d_0047d9c0@@YAXXZ,0x0047D9C0,gen-dump placeholder superseded by the recovered bfmeUnguardedInsertAS identity and exact C++ body
+?d_0007b990@@YAXXZ,0x0007B990,gen-dump placeholder superseded by the recovered _bfme_updateTimedOps identity and exact C++ body
 ??1?$VectorClass@E@@UAE@XZ,0x00AFF130,retail vtable for VectorClass<unsigned char> is 0x113ac74 (proven by pointgr.cpp ctor) but the folded body at 0x00AFF130 loads 0x11bc44c; ICF folds only identical code so this cannot be that body
 ??1?$VectorClass@PAUtThreadInfoType@@@@UAE@XZ,0x00AFF130,vtable is 0x113a0fc (proven by Except.cpp ctor) not the 0x11bc44c this body loads
 ??1?$VectorClass@PAVDefinitionClass@@@@UAE@XZ,0x00AFF130,vtable is 0x113a0fc (proven by definitionmgr.cpp ctor) not the 0x11bc44c this body loads
