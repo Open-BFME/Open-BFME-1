@@ -1,0 +1,25 @@
+// Open-BFME: reference-array release reconstructed from retail RVA 0x008C5CB0.
+
+class Rva008C5CB0Reference
+{
+public:
+    virtual void slot00();
+    virtual void release();
+};
+
+class Rva008C5CB0Owner
+{
+public:
+    void releaseLast();
+
+private:
+    int m_count;
+    unsigned char m_padding[4];
+    Rva008C5CB0Reference** m_references;
+};
+
+void Rva008C5CB0Owner::releaseLast()
+{
+    m_references[m_count - 1]->release();
+    --m_count;
+}
