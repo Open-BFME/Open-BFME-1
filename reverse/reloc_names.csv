@@ -766,7 +766,7 @@ _BfmePathfindMapUpdate@12,0x003FA5B0,3951,Code/GameEngine/Source/GameLogic/AI/Pa
 ?Gen00483B90@@YAXPAUQ3SortElem4@@0UQ3SortCompare@@@Z,0x00483B90,109,Code/GameEngine/Source/Common/Q3IntrosortFamilies.cpp,reloc-derived;call-sites=2;identity=generated
 ??1Gen_dtor_00489c60@@UAE@XZ,0x00489BE0,95,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
 ?findGroup@BFMETransitionHandler@@QAEPAVBFMETransitionGroup@@VBFMETransitionAsciiString@@@Z,0x0048A520,307,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitions_getNewGroup.cpp,reloc-derived;call-sites=1;identity=real
-??0BFMETransitionGroup@@QAE@XZ,0x0048AAD0,56,Code/GameEngine/Source/GameClient/GUI/GameWindowTransitions_getNewGroup.cpp,reloc-derived;call-sites=1;identity=real
+??0BFMETransitionGroup@@QAE@XZ,0x0048AAD0,56,Code/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_0048acc0@@UAE@XZ,0x0048AB20,190,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
 ?setGroup@TransitionHandler@@QAEXVAsciiString@@H@Z,0x0048AD80,249,Code/GameEngine/Source/Common/ControlBar_onPlayerRankChanged_Thunk.cpp,reloc-derived;call-sites=1;identity=real
 ?reverse@GameWindowTransitionsHandler@@QAEXVAsciiString@@@Z,0x0048AEC0,230,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanGameOptionsMenu.cpp,reloc-derived;call-sites=6;identity=real
