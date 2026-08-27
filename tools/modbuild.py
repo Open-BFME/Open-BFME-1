@@ -64,6 +64,22 @@ TARGET_HORPLUS_WIDTH_TAIL = 0x0073DDF8
 TARGET_HORPLUS_CAMERA_TAIL = 0x00742609
 TARGET_HORPLUS_DIRECT_TRANSFORM_TAIL = 0x00931304
 
+# 041-ultrawide-ui.  The parser entry is hooked before its retail width/height
+# scaling, and its internal tail is after retail has stored root x/y.  The
+# scheme entries are the three exact BFME ControlBarSchemeManager bodies; the
+# tails are their common exits after ControlBarScheme::init has consumed the
+# temporary logical Display width.  ControlBar::init's tail follows both
+# marker-position writes.
+TARGET_UI_PARSE_ENTRY = 0x004854F0
+TARGET_UI_PARSE_TAIL = 0x0048569B
+TARGET_UI_SCHEME_BY_NAME_ENTRY = 0x004AD880
+TARGET_UI_SCHEME_BY_NAME_TAIL = 0x004AD913
+TARGET_UI_SCHEME_BY_TEMPLATE_ENTRY = 0x004ADE40
+TARGET_UI_SCHEME_BY_TEMPLATE_TAIL = 0x004ADFF1
+TARGET_UI_SCHEME_BY_PLAYER_ENTRY = 0x004AE080
+TARGET_UI_SCHEME_BY_PLAYER_TAIL = 0x004AE2B9
+TARGET_UI_CONTROLBAR_INIT_TAIL = 0x004A1DA6
+
 # No CRT startup, no exceptions, no RTTI, no runtime library at all. /GS is off
 # by default in 7.1 and it rejects /GS-, so there is nothing to turn off there.
 # Warnings are errors: this build discards compiler output on success, so a
@@ -292,6 +308,20 @@ def build_horplus(pe, feature_dir, probe=False):
     ), probe=probe)
 
 
+def build_ultrawide_ui(pe, feature_dir, probe=False):
+    return build_feature(pe, feature_dir / "src/ultrawide_ui.cpp", "ui_parse_begin", (
+        (TARGET_UI_PARSE_ENTRY, "ui_parse_begin", ("stack:0", "stack:1", "stack:2", "stack:3")),
+        (TARGET_UI_PARSE_TAIL, "ui_parse_end", ("ebp",)),
+        (TARGET_UI_SCHEME_BY_NAME_ENTRY, "ui_scheme_begin", ("ecx",)),
+        (TARGET_UI_SCHEME_BY_NAME_TAIL, "ui_scheme_end", ()),
+        (TARGET_UI_SCHEME_BY_TEMPLATE_ENTRY, "ui_scheme_begin", ("ecx",)),
+        (TARGET_UI_SCHEME_BY_TEMPLATE_TAIL, "ui_scheme_end", ()),
+        (TARGET_UI_SCHEME_BY_PLAYER_ENTRY, "ui_scheme_begin", ("ecx",)),
+        (TARGET_UI_SCHEME_BY_PLAYER_TAIL, "ui_scheme_end", ()),
+        (TARGET_UI_CONTROLBAR_INIT_TAIL, "ui_controlbar_markers", ("ebp",)),
+    ), probe=probe)
+
+
 FEATURES = {"020-gameresult": build_gameresult,
             # Promoted once its spike came back green: twelve rig matches, no
             # retail match overlapping any fixed one, and the logic rate
@@ -304,6 +334,7 @@ FEATURES = {"020-gameresult": build_gameresult,
 UNSHIPPED = {
     "030-netlatprobe": (build_netlatprobe, "an instrument: it writes tens of lines a second"),
     "040-horplus": (build_horplus, "a development camera modernization; build it to its own path"),
+    "041-ultrawide-ui": (build_ultrawide_ui, "a development centered UI modernization; build it to its own path"),
 }
 
 
