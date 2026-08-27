@@ -126,7 +126,7 @@ name,target_rva,target_size,source,notes
 ??$__copy_backward@PAUGen_t_000fd5c0_p128pod@@PAU1@H@_STL@@YAPAUGen_t_000fd5c0_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000FCF70,123,Code/gen_small/tgrid_133.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_000fe210@@UAE@XZ,0x000FDB40,139,Code/gen_small/dtors_000.cpp,reloc-derived;call-sites=1;identity=generated
 ??0?$pair@$$CBUGen_t_00138860_k4@@UGen_t_00138860_p12cd@@@_STL@@QAE@ABU01@@Z,0x000FFD10,194,Code/gen_small/tgrid_105.cpp,reloc-derived;call-sites=1;identity=generated
-?bfmeAssign@BfmeCopyElementA@@QAEXPAU1@@Z,0x00100300,147,Code/GameEngine/Source/Common/S3StrideCopyLoops.cpp,reloc-derived;call-sites=2;identity=real
+?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00100300,147,Code/GameEngine/Source/Common/S3StrideCopyLoops.cpp,reloc-derived;call-sites=2;identity=real
 ?readDict@DataChunkInput@@QAE?AVDict@@XZ,0x001039C0,561,Code/GameEngine/Source/GameClient/MapUtil.cpp,reloc-derived;call-sites=2;identity=real
 ?parse@DataChunkInput@@QAE_NPAX@Z,0x00103DE0,820,Code/GameEngine/Source/GameClient/MapUtil_ParseObjectsDataChunk_Thunk.cpp,reloc-derived;call-sites=2;identity=real
 ?localPixelToRadar@Radar@@QAE_NPBUICoord2D@@PAU2@@Z,0x00107AB0,327,Code/GameEngine/Source/Common/System/Radar.cpp,reloc-derived;call-sites=2;identity=real
