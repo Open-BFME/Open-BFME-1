@@ -54,14 +54,15 @@ TARGET_SENDFRAMEINFO = 0x00665D10   # ConnectionManager::sendFrameInfo()
 # displaced are the `mov ecx,[TheNetwork]` that liteupdate is called through.
 TARGET_CLIENTTAIL = 0x0006BA44
 
-# 040-horplus. These are post-operation hook sites, so the retail camera
+# 040-horplus. These are post-operation hook sites, so the retail W3DView
 # methods run first and the payload only adjusts the resulting view plane.
-# The BFME W3DView::setWidth epilogue leaves ESI as the view at 0x0073DDF8;
-# CameraClass::Set_Aspect_Ratio returns at 0x00931365; and
-# CameraClass::Set_Transform leaves ESI as the camera at 0x00931304.
+# setHeight continues with ESI as the W3DView at 0x0073DC3E; setWidth leaves
+# ESI as the W3DView at 0x0073DDF8; and BFME's camera-transform path reaches
+# 0x00742609 with ESI as the W3DView after its final CameraClass transform.
+TARGET_HORPLUS_HEIGHT_TAIL = 0x0073DC3E
 TARGET_HORPLUS_WIDTH_TAIL = 0x0073DDF8
-TARGET_HORPLUS_ASPECT_RETURN = 0x00931365
-TARGET_HORPLUS_TRANSFORM_TAIL = 0x00931304
+TARGET_HORPLUS_CAMERA_TAIL = 0x00742609
+TARGET_HORPLUS_DIRECT_TRANSFORM_TAIL = 0x00931304
 
 # No CRT startup, no exceptions, no RTTI, no runtime library at all. /GS is off
 # by default in 7.1 and it rejects /GS-, so there is nothing to turn off there.
@@ -284,9 +285,10 @@ def build_earlysend(pe, feature_dir, probe=False):
 
 def build_horplus(pe, feature_dir, probe=False):
     return build_feature(pe, feature_dir / "src/horplus.cpp", "horplus_set_width_tail", (
+        (TARGET_HORPLUS_HEIGHT_TAIL, "horplus_set_height_tail", ("esi",)),
         (TARGET_HORPLUS_WIDTH_TAIL, "horplus_set_width_tail", ("esi",)),
-        (TARGET_HORPLUS_ASPECT_RETURN, "horplus_set_aspect_return", ("ecx",)),
-        (TARGET_HORPLUS_TRANSFORM_TAIL, "horplus_set_transform_tail", ("esi",)),
+        (TARGET_HORPLUS_CAMERA_TAIL, "horplus_set_camera_tail", ("esi",)),
+        (TARGET_HORPLUS_DIRECT_TRANSFORM_TAIL, "horplus_set_direct_transform_tail", ("esi",)),
     ), probe=probe)
 
 
