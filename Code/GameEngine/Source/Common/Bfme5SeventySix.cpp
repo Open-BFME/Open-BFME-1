@@ -75,36 +75,47 @@ struct BfmePointFC
 	Real y;
 };
 
+struct Coord3D
+{
+	Real x;
+	Real y;
+	Real z;
+
+	void zero()
+	{
+		x = 0.0f;
+		y = 0.0f;
+		z = 0.0f;
+	}
+};
+
 struct Region3D
 {
 	__forceinline Region3D() {}
 
 	__forceinline Region3D(const Region3D &other)
 	{
-		x_min = other.x_min;
-		y_min = other.y_min;
-		z_min = other.z_min;
-		x_max = other.x_max;
-		y_max = other.y_max;
-		z_max = other.z_max;
+		lo.x = other.lo.x;
+		lo.y = other.lo.y;
+		lo.z = other.lo.z;
+		hi.x = other.hi.x;
+		hi.y = other.hi.y;
+		hi.z = other.hi.z;
 	}
 
 	__forceinline ~Region3D() {}
 
-	Real width() const { return x_max - x_min; }
-	Real height() const { return y_max - y_min; }
+	Real width() const { return hi.x - lo.x; }
+	Real height() const { return hi.y - lo.y; }
 
-	Real x_min;
-	Real y_min;
-	Real z_min;
-	Real x_max;
-	Real y_max;
-	Real z_max;
+	Coord3D lo;
+	Coord3D hi;
 };
 
 class Gen_008812D0
 {
 public:
+	Gen_008812D0();
 	~Gen_008812D0();
 	void bfmeReset();
 	void bfmeConfigure(Region3D region, Real cellSize);
@@ -121,9 +132,7 @@ public:
 	friend class BfmeTaintManager;
 
 private:
-	float m_bfmeOriginX;					// +0x00
-	float m_bfmeOriginY;					// +0x04
-	unsigned char m_bfmeHead[0x10];			// +0x08
+	Region3D m_bfmeRegion;					// +0x00
 	Real m_bfmeCellSize;					// +0x18
 	float m_bfmeCellSizeInv;				// +0x1C
 	int m_bfmeWidth;					// +0x20
@@ -155,6 +164,20 @@ private:
 	Gen_008812D0 *m_bfmeGrid;				// +0x0C
 };
 
+// ??0Gen_008812D0@@QAE@XZ
+Gen_008812D0::Gen_008812D0()
+{
+	m_bfmeRegion.lo.zero();
+	m_bfmeWidth = 0;
+	m_bfmeHeight = 0;
+	m_bfmeCells = 0;
+	m_bfmeVisitor = 0;
+	m_bfmeCellSize = 1.0f;
+	m_bfmeRegion.hi.zero();
+
+	bfmeConfigure(m_bfmeRegion, 1.0f);
+}
+
 // ??1Gen_008812D0@@QAE@XZ
 Gen_008812D0::~Gen_008812D0()
 {
@@ -180,12 +203,8 @@ void BfmeTaintManager::bfmeResetGrid()
 	m_bfmeGrid->bfmeReset();
 
 	Region3D region;
-	region.x_min = 0.0f;
-	region.y_min = 0.0f;
-	region.z_min = 0.0f;
-	region.x_max = 0.0f;
-	region.y_max = 0.0f;
-	region.z_max = 0.0f;
+	region.lo.zero();
+	region.hi.zero();
 	m_bfmeGrid->bfmeSetRegion(&region, 0.0f);
 }
 
@@ -222,12 +241,12 @@ void Gen_008812D0::bfmeGetCellRange(BfmeCellFC **first,
 BfmeCellFC *Gen_008812D0::bfmeCellAtWorld(Real worldX, Real worldY) const
 {
 	int x = bfmeFloatToLongFC(bfmeFloatFloorFC(
-		(worldX - m_bfmeOriginX) * m_bfmeCellSizeInv));
+		(worldX - m_bfmeRegion.lo.x) * m_bfmeCellSizeInv));
 	if (x < 0 || x >= m_bfmeWidth)
 		return 0;
 
 	int y = bfmeFloatToLongFC(bfmeFloatFloorFC(
-		(worldY - m_bfmeOriginY) * m_bfmeCellSizeInv));
+		(worldY - m_bfmeRegion.lo.y) * m_bfmeCellSizeInv));
 	if (y < 0 || y >= m_bfmeHeight)
 		return 0;
 
@@ -322,10 +341,10 @@ void BfmeTaintManager::bfmeApplyCircleWorld(const BfmePointFC *point,
 	int cellRadius = bfmeFloatToLongFC(bfmeFloatCeilFC(
 		radius * m_bfmeGrid->m_bfmeCellSizeInv));
 	int y = bfmeFloatToLongFC(bfmeFloatFloorFC(
-		(point->y - m_bfmeGrid->m_bfmeOriginY)
+		(point->y - m_bfmeGrid->m_bfmeRegion.lo.y)
 			* m_bfmeGrid->m_bfmeCellSizeInv));
 	int x = bfmeFloatToLongFC(bfmeFloatFloorFC(
-		(point->x - m_bfmeGrid->m_bfmeOriginX)
+		(point->x - m_bfmeGrid->m_bfmeRegion.lo.x)
 			* m_bfmeGrid->m_bfmeCellSizeInv));
 
 	m_bfmeGrid->bfmeApplyCircle(x, y, cellRadius, amount, absolute);
