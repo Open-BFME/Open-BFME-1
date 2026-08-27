@@ -84,4 +84,11 @@ void RingRenderObjClass::Set_Visible(int onoff, int sceneToken)
 	Update_On_Visibilty();
 }
 
+// ?Set_Animation_Hidden@RingRenderObjClass@@UAEXH@Z
+void RingRenderObjClass::Set_Animation_Hidden(int onoff)
+{
+	RenderObjClass::Set_Animation_Hidden(onoff);
+	Update_On_Visibilty();
+}
+
 #undef BFME_VIRTUAL_EIGHT
