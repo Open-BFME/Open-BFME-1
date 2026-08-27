@@ -79,4 +79,17 @@ float RingRenderObjClass::Get_Value(void) const
 	return coverage / Get_Cost();
 }
 
+// ?Get_Post_Increment_Value@RingRenderObjClass@@UBEMXZ
+float RingRenderObjClass::Get_Post_Increment_Value(void) const
+{
+	if (CurrentLOD == LODCount) {
+		return -1.0F;
+	}
+
+	float polygon_count = (float)Get_Num_Polys() * 2.0F;
+	float coverage =
+		(1.0F - 0.5F / (polygon_count * polygon_count)) * ScreenArea;
+	return coverage / polygon_count;
+}
+
 #undef BFME_VIRTUAL_EIGHT
