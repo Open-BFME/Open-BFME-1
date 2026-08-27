@@ -1679,7 +1679,6 @@ ParticleEmitterDefClass::Save_Blur_Time_Keyframes (ChunkSaveClass & chunk_save)
 }
 
 bool
-// ?ParticleEmitterDefClass::Save_Extra_Info present-unmatched
 ParticleEmitterDefClass::Save_Extra_Info (ChunkSaveClass & chunk_save)
 {
 	// Assume error
