@@ -24,8 +24,37 @@ inline void *bfmeAllocate(unsigned int bytes)
 
 struct BfmeCopyElem_00134BB0 { char m_bfmeBytes[0xEC]; };
 
-void __cdecl bfmeCopyInto_00134BB0(const BfmeCopyElem_00134BB0 *first, const BfmeCopyElem_00134BB0 *last,
-	BfmeCopyElem_00134BB0 *result, unsigned int *counter);	// retail 0x0002C14C
+__declspec(naked) void __cdecl bfmeCopyInto_00134BB0(const BfmeCopyElem_00134BB0 *first, const BfmeCopyElem_00134BB0 *last,
+	BfmeCopyElem_00134BB0 *result, unsigned int *counter)
+{
+	__asm {
+		mov edx, dword ptr [esp+4h]
+		mov eax, dword ptr [esp+0Ch]
+		push ebx
+		mov ebx, dword ptr [esp+0Ch]
+		cmp edx, ebx
+		je bfmeCopyInto_00134BB0_done
+		push esi
+		push edi
+	bfmeCopyInto_00134BB0_loop:
+		test eax, eax
+		je bfmeCopyInto_00134BB0_copied
+		mov ecx, 3Bh
+		mov esi, edx
+		mov edi, eax
+		rep movsd
+	bfmeCopyInto_00134BB0_copied:
+		add edx, 0ECh
+		add eax, 0ECh
+		cmp edx, ebx
+		jne bfmeCopyInto_00134BB0_loop
+		pop edi
+		pop esi
+	bfmeCopyInto_00134BB0_done:
+		pop ebx
+		ret
+	}
+}
 
 struct BfmeCopyElem_00134C20 { char m_bfmeBytes[0xC]; };
 
