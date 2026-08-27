@@ -9390,6 +9390,7 @@ name,address,notes
 ?Add_Engine_Ref@VertexBufferClass@@QBEXXZ,0x0091D9C0,pinharvest x1 (body)
 ?Add_Fill_Light@LightEnvironmentClass@@QAEXXZ,0x0094ACB0,retail callee for Calculate_Fill_Light
 ?Add_Head@?$DLListClass@USmudgeSet@@@@QAEXPAV?$DLNodeClass@USmudgeSet@@@@@Z,0x000362D2
+?Add_Line@Render2DClass@@QAEXABVVector2@@0MK@Z,0x0002A92D,Render2DClass::Add_Outline four direct calls to the retail link thunk
 ?Add_Prototype_Impl@AssetRegistry@@QAEXPAX@Z,0x009EF1A0,Add_Prototype thiscall impl body
 ?Add_To_Collection@CullSystemClass@@IAEXPAVCullableClass@@@Z,0x008E21D0
 ?Add_To_Static_Sort_List@WW3D@@SAXPAVRenderObjClass@@I@Z,0x008FD4C0
