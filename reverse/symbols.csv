@@ -77445,6 +77445,7 @@ _atoi,0x009F6DEE,Y2 lane: atoi import thunk (gen-import ?ji_009f6dee@@YAXXZ name
 _audioManagerAddEventHelper@16,0x00020B08,AudioManager::addAudioEvent stdcall helper pin
 _bfmeDirectInput8Create@20,0x009F9AF0,undecorated alias for the DirectInput8Create import stub (see Win32DIKeyboardOpen.cpp)
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
+_bfmeTryActivate@12,0x009D8460,address-derived stdcall helper target from the direct REL32 call at retail 0x009D6310
 _bfme_MallocAlloc0OomMalloc_82B820,0x0082B820,STLport __malloc_alloc<0>::_S_oom_malloc callee of allocate at 0x0082C580
 _bfme_acos,0x009F7256,internal acos helper called by ACos
 _bfme_asin,0x009F7D86,internal asin helper called by ASin
