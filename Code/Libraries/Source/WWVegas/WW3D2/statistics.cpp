@@ -26,20 +26,35 @@
 namespace Debug_Statistics
 {
 	void Begin_Statistics();
+	void End_Statistics();
 	void Record_Sorting_Polys_And_Vertices(int pcount, int vcount);
 	class ShaderClass;
 	void Record_DX8_Polys_And_Vertices(int pcount, int vcount, const ShaderClass &shader);
 	extern int dx8_polygons;
 	extern int dx8_vertices;
 	extern int dx8_renders;
+	extern int dx8_skin_polygons;
+	extern int dx8_skin_vertices;
+	extern int dx8_skin_renders;
+	extern int last_frame_dx8_skin_polygons;
+	extern int last_frame_dx8_skin_vertices;
+	extern int last_frame_dx8_skin_renders;
+	extern int last_frame_dx8_polygons;
+	extern int last_frame_dx8_vertices;
+	extern int last_frame_dx8_renders;
+	extern int last_frame_sorting_polygons;
+	extern int last_frame_sorting_vertices;
+	extern int last_frame_draw_calls;
 }
 
 void Record_Texture_Begin();
+void Record_Texture_End();
 
 class DX8Wrapper
 {
 	public:
 	static void Begin_Statistics();
+	static void End_Statistics();
 };
 
 static int sorting_polygons;
@@ -59,6 +74,21 @@ void Debug_Statistics::Begin_Statistics()
 	*reinterpret_cast<int *>(0x01346e68) = 0;
 	::Record_Texture_Begin();
 	DX8Wrapper::Begin_Statistics();
+}
+
+void Debug_Statistics::End_Statistics()
+{
+	::Record_Texture_End();
+	last_frame_dx8_skin_polygons = dx8_skin_polygons;
+	last_frame_dx8_skin_vertices = dx8_skin_vertices;
+	last_frame_dx8_skin_renders = dx8_skin_renders;
+	last_frame_dx8_polygons = dx8_polygons;
+	last_frame_dx8_vertices = dx8_vertices;
+	last_frame_sorting_polygons = sorting_polygons;
+	last_frame_sorting_vertices = sorting_vertices;
+	last_frame_draw_calls = draw_calls;
+	last_frame_dx8_renders = dx8_renders;
+	DX8Wrapper::End_Statistics();
 }
 
 void Debug_Statistics::Record_Sorting_Polys_And_Vertices(int pcount,int vcount)
