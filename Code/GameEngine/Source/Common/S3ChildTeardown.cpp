@@ -1,3 +1,4 @@
+// cl: /EHs-c-
 // Eight more bodies in two shapes.
 //
 // 0x00783A50, 0x008925F0, 0x00892CA0 and 0x00893990 test a pointer member,
@@ -14,9 +15,9 @@
 // child, not a constant the body computes.
 
 int bfmeCheckA(void *p);					// retail 0x00894D90
-void bfmeDropA(void *p);					// retail 0x00895320
+__declspec(noinline) void bfmeDropA(void *p);		// retail 0x00895320
 int bfmeCheckB(void *p);					// retail 0x00894DB0
-void bfmeDropB(void *p);					// retail 0x008961C0
+__declspec(noinline) void bfmeDropB(void *p);		// retail 0x008961C0
 
 extern void (*TheBfmeFree)(void *p, unsigned int bytes);	// 0x01337830
 
@@ -35,6 +36,28 @@ class BfmeChildB
 {
 public:
 	~BfmeChildB(void);					// retail 0x0089CC70
+
+	void operator delete(void *p, unsigned int bytes) { TheBfmeFree(p, bytes); }
+
+private:
+	char m_bfmePad[0x10];
+};
+
+class BfmeDropObjectA
+{
+public:
+	~BfmeDropObjectA(void);
+
+	void operator delete(void *p, unsigned int bytes) { TheBfmeFree(p, bytes); }
+
+private:
+	char m_bfmePad[0x18];
+};
+
+class BfmeDropObjectB
+{
+public:
+	~BfmeDropObjectB(void);
 
 	void operator delete(void *p, unsigned int bytes) { TheBfmeFree(p, bytes); }
 
@@ -126,6 +149,18 @@ private:
 	char m_bfmeHead[0x10 - 4];
 	BfmeChildB *m_bfmeChild;				// +0x10
 };
+
+// ?bfmeDropA@@YAXPAX@Z
+__declspec(noinline) void bfmeDropA(void *p)
+{
+	delete (BfmeDropObjectA *)p;
+}
+
+// ?bfmeDropB@@YAXPAX@Z
+__declspec(noinline) void bfmeDropB(void *p)
+{
+	delete (BfmeDropObjectB *)p;
+}
 
 // ?bfmeCleanup@Gen_00783A50@@QAEXXZ
 void Gen_00783A50::bfmeCleanup(void)
