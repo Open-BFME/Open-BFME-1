@@ -1,3 +1,5 @@
+// cl: /GX
+
 // Six more: a delta adjustment, two bounds-checked cell-range operations, a
 // hash-bucket lookup, an append to a global table, and another clamped read.
 
@@ -73,10 +75,37 @@ struct BfmePointFC
 	Real y;
 };
 
+struct Region3D
+{
+	__forceinline Region3D(const Region3D &other)
+	{
+		x_min = other.x_min;
+		y_min = other.y_min;
+		z_min = other.z_min;
+		x_max = other.x_max;
+		y_max = other.y_max;
+		z_max = other.z_max;
+	}
+
+	~Region3D();
+
+	Real width() const { return x_max - x_min; }
+	Real height() const { return y_max - y_min; }
+
+	Real x_min;
+	Real y_min;
+	Real z_min;
+	Real x_max;
+	Real y_max;
+	Real z_max;
+};
+
 class Gen_008812D0
 {
 public:
 	~Gen_008812D0();
+	void bfmeConfigure(Region3D region, Real cellSize);
+	void bfmeSetRegion(const Region3D *region, Real cellSize);
 	BfmeCellFC *bfmeAt(int x, int y) const;
 	void bfmeGetCellRange(BfmeCellFC **first, BfmeCellFC **last,
 		int x1, int x2, int y);
@@ -91,7 +120,8 @@ public:
 private:
 	float m_bfmeOriginX;					// +0x00
 	float m_bfmeOriginY;					// +0x04
-	unsigned char m_bfmeHead[0x14];			// +0x08
+	unsigned char m_bfmeHead[0x10];			// +0x08
+	Real m_bfmeCellSize;					// +0x18
 	float m_bfmeCellSizeInv;				// +0x1C
 	int m_bfmeWidth;					// +0x20
 	int m_bfmeHeight;					// +0x24
@@ -125,6 +155,19 @@ private:
 Gen_008812D0::~Gen_008812D0()
 {
 	delete[] m_bfmeCells;
+}
+
+// ?bfmeSetRegion@Gen_008812D0@@QAEXPBURegion3D@@M@Z
+void Gen_008812D0::bfmeSetRegion(const Region3D *region, Real cellSize)
+{
+	if (cellSize <= 0.0f)
+		cellSize = m_bfmeCellSize;
+
+	if (!(region->width() < 0.0f)
+		&& !(region->height() < 0.0f))
+	{
+		bfmeConfigure(*region, cellSize);
+	}
 }
 
 // ?bfmeAt@Gen_008812D0@@QBEPAVBfmeCellFC@@HH@Z
