@@ -25,6 +25,7 @@
 
 namespace Debug_Statistics
 {
+	void Begin_Statistics();
 	void Record_Sorting_Polys_And_Vertices(int pcount, int vcount);
 	class ShaderClass;
 	void Record_DX8_Polys_And_Vertices(int pcount, int vcount, const ShaderClass &shader);
@@ -33,9 +34,32 @@ namespace Debug_Statistics
 	extern int dx8_renders;
 }
 
+void Record_Texture_Begin();
+
+class DX8Wrapper
+{
+	public:
+	static void Begin_Statistics();
+};
+
 static int sorting_polygons;
 static int sorting_vertices;
 static int draw_calls;
+
+void Debug_Statistics::Begin_Statistics()
+{
+	*reinterpret_cast<int *>(0x01346e64) = 0;
+	*reinterpret_cast<int *>(0x01346df0) = 0;
+	*reinterpret_cast<int *>(0x01346e0c) = 0;
+	*reinterpret_cast<int *>(0x01346e14) = 0;
+	*reinterpret_cast<int *>(0x01346e18) = 0;
+	*reinterpret_cast<int *>(0x01346e60) = 0;
+	*reinterpret_cast<int *>(0x01346e58) = 0;
+	*reinterpret_cast<int *>(0x01346e6c) = 0;
+	*reinterpret_cast<int *>(0x01346e68) = 0;
+	::Record_Texture_Begin();
+	DX8Wrapper::Begin_Statistics();
+}
 
 void Debug_Statistics::Record_Sorting_Polys_And_Vertices(int pcount,int vcount)
 {

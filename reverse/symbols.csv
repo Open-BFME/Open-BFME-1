@@ -10031,6 +10031,7 @@ name,address,notes
 ?Re_Hash@?$HashTemplateClass@UTriangleSide@@USideIndexInfo@@@@AAEXXZ,0x0094F120,zh-sweep callee pin derived from retail REL32 displacement
 ?Read@ChunkLoadClass@@QAEKPAXK@Z,0x009E15C0
 ?Read@UDP@@QAEHPAEIPAUsockaddr_in@@@Z,0x00039EBE,ILT thunk; real body 0x684630 (recvfrom; identity confirmed, register allocation still differs)
+?Record_Texture_Begin@@YAXXZ,0x00937890,Debug_Statistics::Begin_Statistics retail texture-recording helper call
 ?RefreshGameListBox@@YAXPAVGameWindow@@_N@Z,0x0000FD1C
 ?Registry_Load_Render_Device@DX8Wrapper@@KA_NPBDPADHAAH2222@Z,0x00903FE0,pinharvest x1 (body)
 ?Registry_Save_Render_Device@DX8Wrapper@@KA_NPBDHHHH_NH@Z,0x00903ED0,pinharvest x1 (body)
