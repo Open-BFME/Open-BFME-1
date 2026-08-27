@@ -4,10 +4,16 @@
 typedef float Real;
 
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
+extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 
 __forceinline Real bfmeFloatFloorFC(Real value)
 {
 	return (Real)floor((double)value);
+}
+
+__forceinline Real bfmeFloatCeilFC(Real value)
+{
+	return (Real)ceil((double)value);
 }
 
 __forceinline long bfmeFloatToLongFC(Real value)
@@ -77,8 +83,10 @@ public:
 	BfmeCellFC *bfmeCellAtWorld(Real x, Real y) const;
 	void bfmeVisitCells(void);
 	int bfmeValueAtWorld(const BfmePointFC *point) const;
+	void bfmeApplyCircle(int x, int y, int radius, int amount, bool absolute);
 
 	friend class BfmeRangeUpdaterFC;
+	friend class BfmeTaintManager;
 
 private:
 	float m_bfmeOriginX;					// +0x00
@@ -100,6 +108,17 @@ private:
 	Gen_008812D0 *m_bfmeGrid;
 	int m_bfmeAmount;
 	bool m_bfmeAbsolute;
+};
+
+class BfmeTaintManager
+{
+public:
+	void bfmeApplyCircleWorld(const BfmePointFC *point, Real radius,
+		int amount, bool absolute);
+
+private:
+	unsigned char m_bfmeHead[0x0C];				// +0x00
+	Gen_008812D0 *m_bfmeGrid;				// +0x0C
 };
 
 // ??1Gen_008812D0@@QAE@XZ
@@ -232,6 +251,22 @@ void __cdecl bfmeRasterCircleFC(int centerX, int centerY, const int radius,
 			d += ((x << 1) + 1);
 		}
 	}
+}
+
+// ?bfmeApplyCircleWorld@BfmeTaintManager@@QAEXPBUBfmePointFC@@MH_N@Z
+void BfmeTaintManager::bfmeApplyCircleWorld(const BfmePointFC *point,
+	Real radius, int amount, bool absolute)
+{
+	int cellRadius = bfmeFloatToLongFC(bfmeFloatCeilFC(
+		radius * m_bfmeGrid->m_bfmeCellSizeInv));
+	int y = bfmeFloatToLongFC(bfmeFloatFloorFC(
+		(point->y - m_bfmeGrid->m_bfmeOriginY)
+			* m_bfmeGrid->m_bfmeCellSizeInv));
+	int x = bfmeFloatToLongFC(bfmeFloatFloorFC(
+		(point->x - m_bfmeGrid->m_bfmeOriginX)
+			* m_bfmeGrid->m_bfmeCellSizeInv));
+
+	m_bfmeGrid->bfmeApplyCircle(x, y, cellRadius, amount, absolute);
 }
 
 class BfmeNodeFC

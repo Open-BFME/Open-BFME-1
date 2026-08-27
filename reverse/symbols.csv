@@ -77831,3 +77831,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?bfmeApplyCircle@Gen_008812D0@@QAEXHHHH_N@Z,0x00881B90,Open-BFME5 semantic identity for the exact TaintManager grid circle-update wrapper already claimed under an address-derived class
