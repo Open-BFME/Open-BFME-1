@@ -23816,3 +23816,4 @@ dup_59eb90,0x0059EB90,"not AttackNugget: its constructor target is 0x0059EB00 no
 ?bfmeEnsure005E8630@@YAXXZ,0x005E8630,"compiler-local _$E26 resolves here to 0x01070750, versus 0x0106FEF0 in WOLLobbyMenu.cpp; the external-looking label is not one retail function"
 ?bfmeEnsure005E8660@@YAXXZ,0x005E8660,"compiler-local _$E28 resolves here to 0x01070740, versus 0x0106FEF0 in MainMenuUtils.cpp; the external-looking label is not one retail function"
 ?bfmeEnsure005E86F0@@YAXXZ,0x005E86F0,"compiler-local _$E34 resolves here to 0x01070710, versus 0x0106FFF0 in MapUtil.cpp; the external-looking label is not one retail function"
+?d_003aee70@@YAXXZ,0x003AEE70,"gen-dump placeholder superseded by the recovered identity ?bfmeEnter@Glo012F1024Item@@QAEXXZ in Code/GameEngine/Source/Common/Glo012F1024Entry_bfmeStep.cpp"
