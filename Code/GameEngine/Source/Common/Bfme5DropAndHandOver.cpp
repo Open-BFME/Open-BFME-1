@@ -11,8 +11,26 @@ extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination, const
 class BfmeRefAB
 {
 public:
-	BfmeRefAB *bfmeRelease(void);				// retail thunk 0x00032D1C -> 0x00432D1C
+	virtual ~BfmeRefAB(void);
+
+	__declspec(noinline) BfmeRefAB *bfmeRelease(void);	// retail thunk 0x00032D1C -> 0x00432D1C
+
+	BfmeRefAB *m_bfmeRef;
+	bool m_bfmeOwned;
 };
+
+// ?bfmeRelease@BfmeRefAB@@QAEPAV1@XZ
+__declspec(noinline) BfmeRefAB *BfmeRefAB::bfmeRelease(void)
+{
+	if (m_bfmeOwned)
+	{
+		delete this;
+		return 0;
+	}
+	if (m_bfmeRef)
+		m_bfmeRef = m_bfmeRef->bfmeRelease();
+	return this;
+}
 
 class BfmeElemAB
 {
