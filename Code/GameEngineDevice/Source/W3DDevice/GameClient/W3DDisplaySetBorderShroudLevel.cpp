@@ -3,6 +3,8 @@
 class BaseHeightMapResetShroud
 {
 public:
+	void notifyShroudChanged30B8();
+	void notifyShroudChanged30BC();
 	void setBorderShroudLevel30B8(unsigned char level);
 	void setBorderShroudLevel30BC(unsigned char level);
 	void setShroudLevel30B8(int x, int y, unsigned char level, bool immediate);
@@ -27,7 +29,7 @@ public:
 		return m_shroud30BC;
 	}
 
-	void notifyShroudChanged006e();
+	__declspec(noinline) void notifyShroudChanged006e();
 };
 
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
@@ -68,6 +70,21 @@ public:
 	virtual void setShroudLevel(int x, int y, CellShroudStatus setting);
 	virtual void setShroudLevel30BC(int x, int y, int level);
 };
+
+// ?notifyShroudChanged006e@BaseHeightMapRenderObjClass@@QAEXXZ
+__declspec(noinline) void BaseHeightMapRenderObjClass::notifyShroudChanged006e()
+{
+	BaseHeightMapResetShroud *shroud30BC =
+		*(BaseHeightMapResetShroud **)((unsigned char *)this + 0x309c);
+	if (shroud30BC) {
+		shroud30BC->notifyShroudChanged30BC();
+	}
+	BaseHeightMapResetShroud *shroud30B8 =
+		*(BaseHeightMapResetShroud **)((unsigned char *)this + 0x3098);
+	if (shroud30B8) {
+		shroud30B8->notifyShroudChanged30B8();
+	}
+}
 
 // ?setBorderShroudLevel@W3DDisplay@@UAEXE@Z
 void W3DDisplay::setBorderShroudLevel(unsigned char level)

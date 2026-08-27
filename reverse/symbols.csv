@@ -75982,6 +75982,8 @@ name,address,notes
 ?notifyOfObjectCreationOrDestruction@ScriptEngine@@QAEXXZ,0x0003B15B,Open-BFME5 retail script notification thunk
 ?notifyScriptEngine@SpecialPowerCompletionDie@@QAEXXZ,0x00017981,Open-BFME5 ILT from zh_sweep packet 00256070
 ?notifyShroudChanged006e@BaseHeightMapRenderObjClass@@QAEXXZ,0x00036F43,W3DDisplay terrain shroud-notification target read from retail REL32
+?notifyShroudChanged30BC@BaseHeightMapResetShroud@@QAEXXZ,0x00028B55,retail thunk called for the +0x309C shroud child by notifyShroudChanged006e
+?notifyShroudChanged30B8@BaseHeightMapResetShroud@@QAEXXZ,0x00005371,retail thunk called for the +0x3098 shroud child by notifyShroudChanged006e
 ?notifyTargetOfProbe@NAT@@IAEXPAVGameSlot@@@Z,0x00028D1C,probed call target (incremental-link thunk)
 ?nstrdup@@YAPADPBD@Z,0x009E6410
 ?objectEnteringInfluence@Energy@@QAEXPAVObject@@@Z,0x0000F402,Open-BFME5 retail Energy entering-influence ILT
