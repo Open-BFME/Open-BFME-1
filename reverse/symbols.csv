@@ -1159,6 +1159,7 @@ name,address,notes
 ??0?$VectorClass@USentenceDataStruct@Render2DSentenceClass@@@@QAE@HPBUSentenceDataStruct@Render2DSentenceClass@@@Z,0x009080A0,pinharvest x1 (body)
 ??0?$VectorClass@USentenceDataStruct@Render2DSentenceClass@@@@QAE@HPBUSentenceDataStruct@Render2DSentenceClass@@@Z,0x0092FBA0,pinharvest x1 (body)
 ??0?$VectorClass@USentenceDataStruct@Render2DSentenceClass@@@@QAE@HPBUSentenceDataStruct@Render2DSentenceClass@@@Z,0x009305D0,pinharvest x1 (body)
+??0?$VectorClass@UTextureStatisticsStruct@@@@QAE@IPBUTextureStatisticsStruct@@@Z,0x009374A0,DynamicVectorClass<TextureStatisticsStruct> retail base-constructor REL32 target
 ??0?$VectorClass@U_ENUM_VALUE@EnumParameterClass@@@@QAE@HPBU_ENUM_VALUE@EnumParameterClass@@@Z,0x000187AF,pinharvest x1 (thunk)
 ??0?$VectorClass@U_ENUM_VALUE@EnumParameterClass@@@@QAE@HPBU_ENUM_VALUE@EnumParameterClass@@@Z,0x0001D16F,pinharvest x1 (thunk)
 ??0?$VectorClass@U_ENUM_VALUE@EnumParameterClass@@@@QAE@HPBU_ENUM_VALUE@EnumParameterClass@@@Z,0x00906240,pinharvest x1 (body)
