@@ -9510,12 +9510,15 @@ name,address,notes
 ?BfmeRva0076B160FillN@_STL@@YAPAURva0076B160Element@@PAU2@IABU2@ABU__false_type@1@@Z,0x00044094,Open-BFME5 ILT for the 12-byte-element _STL::__uninitialized_fill_n at 0x0075E8B0
 ?BfmeRva009F56C0Copy@_STL@@YAPAURva009F56C0Element@@PAU2@00ABU__false_type@1@@Z,0x009F4580,Open-BFME5 the 24-byte-element _STL::__uninitialized_copy this body calls directly
 ?BfmeRva009F56C0FillN@_STL@@YAPAURva009F56C0Element@@PAU2@IABU2@ABU__false_type@1@@Z,0x009F45D0,Open-BFME5 the 24-byte-element _STL::__uninitialized_fill_n this body calls directly
+?BfmeSavedClientFrame@@3HA,0x012ED508,saved GameClient frame used by GameEngine::_bfme_updateClientSubsystems and the execute pacing gate
 ?BfmeSegInfoUninitializedCopy@_STL@@YAPAUSegInfo@W3DRopeDraw@@PBU23@0PAU23@ABU__false_type@1@@Z,0x00017765,Open-BFME5 ILT for the shared 16-byte-element _STL::__uninitialized_copy at 0x00759FB0
 ?BfmeSegInfoUninitializedFillN@_STL@@YAPAUSegInfo@W3DRopeDraw@@PAU23@IABU23@ABU__false_type@1@@Z,0x00042334,Open-BFME5 ILT for _STL::__uninitialized_fill_n on W3DRopeDraw SegInfo at 0x0075A000
 ?BfmeShouldShowGameOverEvent@@YA_NXZ,0x000271AB,BFME defeat event selector ILT
+?BfmeSkippedClientFrames@@3HA,0x012ED504,skipped client-frame counter used by GameEngine::_bfme_updateClientSubsystems
 ?BfmeTheEmptyAudioEvent@@3VAudioEventRTS@@A,0x012F1318,Open-BFME5 the shared empty audio event ThingTemplate::getSound at 0x00416FA0 falls back to; getPerUnitSound at 0x00416FE0 uses the same global
 ?BfmeTheMapObjectExtra@@3VBfmeMapObjectExtra@@A,0x012ED5E0,Open-BFME5 the global object freeListOfMapObjects at 0x00746E90 resets; loaded as an immediate address so it is an object not a pointer
 ?BfmeTheMapObjectListHolder@@3PAVBfmeMapObjectListHolder@@A,0x012ED5DC,Open-BFME5 holds the map-object list head that freeListOfMapObjects at 0x00746E90 frees and clears
+?BfmeTimedOpInputLocked@@3HA,0x012ED530,timed-operation input lock state used by GameEngine::_bfme_updateClientSubsystems
 ?BfmeTransitionInfoUninitializedCopy@_STL@@YAPAUTransitionInfo@State@@PBU23@0PAU23@ABU__false_type@1@@Z,0x0001AB72,Open-BFME5 ILT for the shared 12-byte-element _STL::__uninitialized_copy at 0x000A0AE0
 ?BfmeTransitionInfoUninitializedFillN@_STL@@YAPAUTransitionInfo@State@@PAU23@IABU23@ABU__false_type@1@@Z,0x0001D60B,Open-BFME5 ILT for _STL::__uninitialized_fill_n on State TransitionInfo at 0x000A0B30
 ?BfmeWeaponRecoilInfoUninitializedCopy@_STL@@YAPAUWeaponRecoilInfo@W3DModelDraw@@PAU23@00ABU__false_type@1@@Z,0x00027525,Open-BFME5 ILT for _STL::__uninitialized_copy on W3DModelDraw WeaponRecoilInfo at 0x0020E2C0
@@ -10382,6 +10385,7 @@ name,address,notes
 ?TheAssaultTransportAIUpdatePool@?1??getClassMemoryPool@AssaultTransportAIUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0244,pool-glue cascade static (back-solved)
 ?TheAssistedTargetingUpdatePool@?1??getClassMemoryPool@AssistedTargetingUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFE38,pool-glue cascade static (back-solved)
 ?TheAudio@@3PAVAudioManager@@A,0x00EED668,AudioManager* global read by the OptionPreferences volume getters
+?TheAudioClientUpdate@@3PAVClientSubsystem@@A,0x012ED668,Audio subsystem pointer used by GameEngine::_bfme_updateClientSubsystems
 ?TheAutoDepositUpdatePool@?1??getClassMemoryPool@AutoDepositUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFE50,pool-glue cascade static (back-solved)
 ?TheAutoFindHealingUpdatePool@?1??getClassMemoryPool@AutoFindHealingUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFE58,pool-glue cascade static (back-solved)
 ?TheAutoHealBehaviorPool@?1??getClassMemoryPool@AutoHealBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF764,pool-glue cascade static (back-solved)
@@ -10422,6 +10426,7 @@ name,address,notes
 ?TheFireWeaponWhenDeadBehaviorPool@?1??getClassMemoryPool@FireWeaponWhenDeadBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF7CC,pool-glue cascade static (back-solved)
 ?TheFlammableUpdatePool@?1??getClassMemoryPool@FlammableUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFF60,pool-glue cascade static (back-solved)
 ?TheFloatUpdatePool@?1??getClassMemoryPool@FloatUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFF80,pool-glue cascade static (back-solved)
+?TheGameClientClientUpdate@@3PAVClientFrameSubsystem@@A,0x012F1464,GameClient pointer used by GameEngine::_bfme_updateClientSubsystems
 ?TheGameEngine@@3PAVGameEngine@@A,0x012ED524,BFME TheGameEngine*; DataChunk Sleep(0)+serviceWindowsOS yield sites
 ?TheGameLODManager@@3PAVGameLODManager@@A,0x012ED5AC,GameLODManager* global
 ?TheGameLogic@@3PAVGameLogic@@A,0x00EF0898,GameLogic* global; the same 0x012F0898 the matched ?doEvaEnabledDisabled@ScriptActions@@IAEX_N@Z writes at +0x96
@@ -10469,6 +10474,7 @@ name,address,notes
 ?ThePropagandaTowerBehaviorPool@?1??getClassMemoryPool@PropagandaTowerBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF834,pool-glue cascade static (back-solved)
 ?TheQueueProductionExitUpdatePool@?1??getClassMemoryPool@QueueProductionExitUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF04FC,pool-glue cascade static (back-solved)
 ?TheRadar@@3PAVRadar@@A,0x012EF0E4,Radar* global; identified by engine-init constructor-tag string "TheRadar" at RVA 0x0761dc pushed immediately before ctor call that stores to this address (WinMain-style subsystem construction block at 0x47a08b-0x47a09a, alongside TheRecorder@0x12ed62c and TheVictoryConditions@0x12f079c constructed the same way)
+?TheRadarClientUpdate@@3PAVRadarSubsystem@@A,0x012EF0E4,Radar pointer used by GameEngine::_bfme_updateClientSubsystems
 ?TheRadarUpdatePool@?1??getClassMemoryPool@RadarUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0018,pool-glue cascade static (back-solved)
 ?TheRadarUpgradePool@?1??getClassMemoryPool@RadarUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF05B8,pool-glue cascade static (back-solved)
 ?TheRadiusDecalUpdatePool@?1??getClassMemoryPool@RadiusDecalUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0020,pool-glue cascade static (back-solved)
@@ -12138,6 +12144,7 @@ name,address,notes
 ?_bfme_setEngineVisibility@Mouse@@QAEX_N@Z,0x005A4B50,twin of the ledgered setVisibility 0x005A4BA0: same vcall +0x5C(visible &flag) but with the +0x4DA1 flag instead of +0x4DA2; 24 engine/screen callers (GameEngine +0x80 body 0x0006BA23 startNewGame 0x003943F8 deleteLoadScreen 0x0038D688) while doDisableInput uses +0x4DA2
 ?_bfme_setFileTransferMode@Network@@UAEXXZ,0x00681A20,vtable 0x0111A968 slot 26 (+0x68) via ILT 0x0003B656; if (m_conMgr) conMgr+0x12114=1; called at the top of _doFileTransfer 0x0066CE94; the byte is the Bool update@BFMEConnectionManager passes to Connection::doSend 0x00661F10 at 0x0066ADAA; paired with slot 27
 ?_bfme_shouldSkipClientFrame@GameEngine@@AAE_NXZ,0x0006B830,GameEngine member called only by the +0x80 body 0x0006B96D: with TheNetwork and logic time scale 0x012A72A4 >= 1 and this+0x30 != 1 compares the frame counter +0x34 against +0x30 using TheNetwork->getFramePacingStatus (vcall +0x40 > 1 / > 3) and the float +0x40; true makes the caller skip the client update and bump the counter 0x012ED504
+?_bfme_shouldSkipClientFrameCall@GameEngine@@AAE_NXZ,0x000358EB,ILT entry used by GameEngine::_bfme_updateClientSubsystems for _bfme_shouldSkipClientFrame body 0x0006B830
 ?_bfme_showAptScreen@WindowManager@@QAEXABVAsciiString@@PAVRefCountClass@@@Z,0x00464ED0,mechanics-derived name: if g_theWindowManager 0x012F19E8 push_back(name) on the vector at this+8/+0xc (grow via ILT 0x0003827B) then 0x0046DA70(name) with the refcounted listener addref/release; ILT 0x000338ED
 ?_bfme_showAptScreen@_bfme_AptGameWindow@@QAEXABVAsciiString@@VRva0050F8B0FunctorHolder@@@Z,0x000338ED,DisconnectScreen constructor registers its fscommand callbacks through this ILT
 ?_bfme_showAptScreenWithArg@WindowManager@@QAEXABVAsciiString@@PAXPAVRefCountClass@@@Z,0x00464FE0,mechanics-derived name: same shape as 0x00464ED0 on the vector at this+0x14/+0x18 and 0x0046DBC0(name; arg); ILT 0x0000ACFE
@@ -73279,6 +73286,7 @@ name,address,notes
 ?deleteInstance@ScriptGroupPoolObject@@QAEXH@Z,0x00002338,Open-BFME5 retail pooled ScriptGroup deletion thunk
 ?deleteInstance@ScriptPoolObject@@QAEXH@Z,0x00022039,Open-BFME5 retail pooled Script deletion thunk
 ?deleteListResources@Radar@@IAEXXZ,0x0002C976
+?deleteLoadScreen@GameLogicClientUpdate@@QAEXXZ,0x00040791,ILT used by GameEngine::_bfme_updateClientSubsystems for GameLogic::deleteLoadScreen body 0x0038D100
 ?deleteNotificationBox@@YAXXZ,0x000271DD
 ?deposit@Money@@QAEXI_N@Z,0x00027D6D
 ?deposit@MoneyDepositShim@@QAEXI_N@Z,0x000C8730,Money::deposit incremental-link thunk target through a TU-local forwarding shim
@@ -77821,11 +77829,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?_bfme_shouldSkipClientFrameCall@GameEngine@@AAE_NXZ,0x000358EB,ILT entry used by GameEngine::_bfme_updateClientSubsystems for _bfme_shouldSkipClientFrame body 0x0006B830
-?deleteLoadScreen@GameLogicClientUpdate@@QAEXXZ,0x00040791,ILT used by GameEngine::_bfme_updateClientSubsystems for GameLogic::deleteLoadScreen body 0x0038D100
-?TheGameClientClientUpdate@@3PAVClientFrameSubsystem@@A,0x012F1464,GameClient pointer used by GameEngine::_bfme_updateClientSubsystems
-?TheRadarClientUpdate@@3PAVRadarSubsystem@@A,0x012EF0E4,Radar pointer used by GameEngine::_bfme_updateClientSubsystems
-?BfmeSkippedClientFrames@@3HA,0x012ED504,skipped client-frame counter used by GameEngine::_bfme_updateClientSubsystems
-?BfmeSavedClientFrame@@3HA,0x012ED508,saved GameClient frame used by GameEngine::_bfme_updateClientSubsystems and the execute pacing gate
-?TheAudioClientUpdate@@3PAVClientSubsystem@@A,0x012ED668,Audio subsystem pointer used by GameEngine::_bfme_updateClientSubsystems
-?BfmeTimedOpInputLocked@@3HA,0x012ED530,timed-operation input lock state used by GameEngine::_bfme_updateClientSubsystems
