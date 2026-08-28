@@ -470,132 +470,6 @@ Bool OptionPreferences::getDoubleClickAttackMoveEnabled(void)
 	return FALSE;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getScrollFactor_Thunk.cpp
-// ?getScrollFactor@OptionPreferences@@QAEMXZ present-unmatched
-Real OptionPreferences::getScrollFactor(void)
-{
-	OptionPreferences::const_iterator it = find("ScrollFactor");
-	if (it == end())
-		return TheGlobalData->m_keyboardDefaultScrollFactor;
-
-	Int factor = atoi(it->second.str());
-	if (factor < 0)
-		factor = 0;
-	if (factor > 100)
-		factor = 100;
-	
-	return factor/100.0f;
-}
-
-// ?usesSystemMapDir@OptionPreferences@@QAE_NXZ
-// Body in Code/masm_dumps/_usesSystemMapDir_OptionPreferences_QAE_NXZ_90780.asm (exact 95B retail).
-
-// ?saveCameraInReplays@OptionPreferences@@QAE_NXZ
-// Body in Code/masm_dumps/_saveCameraInReplays_OptionPreferences_QAE_NXZ_90800.asm (exact 95B retail).
-
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__useCameraInReplays_OptionPreferences_QAE_NXZ_00090900.cpp
-// ?useCameraInReplays@OptionPreferences@@QAE_NXZ present-unmatched
-Bool OptionPreferences::useCameraInReplays(void)
-{
-	OptionPreferences::const_iterator it = find("UseCameraInReplays");
-	if (it == end())
-		return TRUE;
-
-	if (stricmp(it->second.str(), "yes") == 0) {
-		return TRUE;
-	}
-	return FALSE;
-}
-
-// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getIdealStaticGameDetail_Thunk.cpp
-// ?getIdealStaticGameDetail@OptionPreferences@@QAEHXZ present-unmatched
-Int OptionPreferences::getIdealStaticGameDetail(void)
-{
-	OptionPreferences::const_iterator it = find("IdealStaticGameLOD");
-	if (it == end())
-		return STATIC_GAME_LOD_UNKNOWN;
-
-	return TheGameLODManager->getStaticGameLODIndex(it->second);
-}
-
-// ?getStaticGameDetail@OptionPreferences@@QAEHXZ present-unmatched
-Int OptionPreferences::getStaticGameDetail(void)
-{
-	OptionPreferences::const_iterator it = find("StaticGameLOD");
-	if (it == end())
-		return TheGameLODManager->getStaticLODLevel();
-
-	return TheGameLODManager->getStaticGameLODIndex(it->second);
-}
-
-// ?getSendDelay@OptionPreferences@@QAE_NXZ
-// Body in Code/masm_dumps/_getSendDelay_OptionPreferences__QAE_NXZ_90AF0.asm (exact 105B retail).
-
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getFirewallBehavior_OptionPreferences_QAEHXZ_00090B80.cpp
-// ?getFirewallBehavior@OptionPreferences@@QAEHXZ present-unmatched
-Int OptionPreferences::getFirewallBehavior()
-{
-	OptionPreferences::const_iterator it = find("FirewallBehavior");
-	if (it == end())
-		return TheGlobalData->m_firewallBehavior;
-
-	Int behavior = atoi(it->second.str());
-	if (behavior < 0)
-	{
-		behavior = 0;
-	}
-	return behavior;
-}
-
-// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getFirewallPortAllocationDelta_Thunk.cpp
-// ?getFirewallPortAllocationDelta@OptionPreferences@@QAEFXZ present-unmatched
-Short OptionPreferences::getFirewallPortAllocationDelta()
-{
-	OptionPreferences::const_iterator it = find("FirewallPortAllocationDelta");
-	if (it == end()) {
-		return TheGlobalData->m_firewallPortAllocationDelta;
-	}
-
-	Short delta = atoi(it->second.str());
-	return delta;
-}
-
-// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getFirewallPortOverride_Thunk.cpp
-// ?getFirewallPortOverride@OptionPreferences@@QAEGXZ present-unmatched
-UnsignedShort OptionPreferences::getFirewallPortOverride()
-{
-	OptionPreferences::const_iterator it = find("FirewallPortOverride");
-	if (it == end()) {
-		return TheGlobalData->m_firewallPortOverride;
-	}
-
-	Int override = atoi(it->second.str());
-	if (override < 0 || override > 65535)
-		override = 0;
-	return override;
-}
-
-// ?getFirewallNeedToRefresh@OptionPreferences@@QAE_NXZ
-// Body in Code/masm_dumps/_getFirewallNeedToRefresh_OptionPreferences__QAE_NXZ_90D00.asm (exact 113B retail).
-
-// ?getPreferred3DProvider@OptionPreferences@@QAE?AVAsciiString@@XZ present-unmatched
-AsciiString OptionPreferences::getPreferred3DProvider(void)
-{
-	OptionPreferences::const_iterator it = find("3DAudioProvider");
-	if (it == end())
-		return TheAudio->getAudioSettings()->m_preferred3DProvider[MAX_HW_PROVIDERS];
-	return it->second;
-}
-
-// ?getSpeakerType@OptionPreferences@@QAE?AVAsciiString@@XZ present-unmatched
-AsciiString OptionPreferences::getSpeakerType(void)
-{
-	OptionPreferences::const_iterator it = find("SpeakerType");
-	if (it == end())
-		return TheAudio->translateUnsignedIntToSpeakerType(TheAudio->getAudioSettings()->m_defaultSpeakerType2D);
-	return it->second;
-}
-
 // The preference getters below read the mapped value's characters in place and
 // drive the lookup key with explicit init/destroy calls rather than an object
 // with a destructor: retail has no unwind frame here, and a destructor would
@@ -633,6 +507,14 @@ struct BfmeGlobalDataFlags
 	Bool m_useHeatEffects;					///< retail this+0x1d
 	UnsignedByte m_unreconstructed_1e[0x58 - 0x1e];
 	Bool m_dynamicLODEnabled;				///< retail this+0x58
+	UnsignedByte m_unreconstructed_59[0xb14 - 0x59];
+	Int m_firewallBehavior;					///< retail this+0xb14
+	UnsignedByte m_unreconstructed_b18[0xb1c - 0xb18];
+	UnsignedShort m_firewallPortOverride;			///< retail this+0xb1c
+	UnsignedByte m_unreconstructed_b1e[0xb20 - 0xb1e];
+	Short m_firewallPortAllocationDelta;			///< retail this+0xb20
+	UnsignedByte m_unreconstructed_b22[0xbc0 - 0xb22];
+	Real m_scrollFactor;					///< retail this+0xbc0
 };
 
 // TheAudio reaches its settings through vtable slot 72; the three default volumes
@@ -722,6 +604,157 @@ public:
 	virtual void _a120_71() = 0;
 	virtual const BfmeAudioSettings *getAudioSettings( void ) = 0;
 };
+
+// The floor is 1, not 0: a negative preference clamps up to the smallest usable
+// scroll rate rather than to none at all, and the scale is 0.02, not a hundredth.
+// ?getScrollFactor@OptionPreferences@@QAEMXZ
+Real OptionPreferences::getScrollFactor(void)
+{
+	CustomAsciiStringShim key;
+	key.init("ScrollFactor");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
+		return ((const BfmeGlobalDataFlags *)TheWritableGlobalData)->m_scrollFactor;
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	Int value = atoi(text);
+	if (value < 0)
+		value = 1;
+	else if (value > 100)
+		value = 100;
+	return value * 0.019999999552965164f;
+}
+
+// ?usesSystemMapDir@OptionPreferences@@QAE_NXZ
+// Body in Code/masm_dumps/_usesSystemMapDir_OptionPreferences_QAE_NXZ_90780.asm (exact 95B retail).
+
+// ?saveCameraInReplays@OptionPreferences@@QAE_NXZ
+// Body in Code/masm_dumps/_saveCameraInReplays_OptionPreferences_QAE_NXZ_90800.asm (exact 95B retail).
+
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__useCameraInReplays_OptionPreferences_QAE_NXZ_00090900.cpp
+// ?useCameraInReplays@OptionPreferences@@QAE_NXZ present-unmatched
+Bool OptionPreferences::useCameraInReplays(void)
+{
+	OptionPreferences::const_iterator it = find("UseCameraInReplays");
+	if (it == end())
+		return TRUE;
+
+	if (stricmp(it->second.str(), "yes") == 0) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getIdealStaticGameDetail_Thunk.cpp
+// ?getIdealStaticGameDetail@OptionPreferences@@QAEHXZ present-unmatched
+Int OptionPreferences::getIdealStaticGameDetail(void)
+{
+	OptionPreferences::const_iterator it = find("IdealStaticGameLOD");
+	if (it == end())
+		return STATIC_GAME_LOD_UNKNOWN;
+
+	return TheGameLODManager->getStaticGameLODIndex(it->second);
+}
+
+// ?getStaticGameDetail@OptionPreferences@@QAEHXZ present-unmatched
+Int OptionPreferences::getStaticGameDetail(void)
+{
+	OptionPreferences::const_iterator it = find("StaticGameLOD");
+	if (it == end())
+		return TheGameLODManager->getStaticLODLevel();
+
+	return TheGameLODManager->getStaticGameLODIndex(it->second);
+}
+
+// ?getSendDelay@OptionPreferences@@QAE_NXZ
+// Body in Code/masm_dumps/_getSendDelay_OptionPreferences__QAE_NXZ_90AF0.asm (exact 105B retail).
+
+// ?getFirewallBehavior@OptionPreferences@@QAEHXZ
+Int OptionPreferences::getFirewallBehavior()
+{
+	CustomAsciiStringShim key;
+	key.init("FirewallBehavior");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
+		return ((const BfmeGlobalDataFlags *)TheWritableGlobalData)->m_firewallBehavior;
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	Int value = atoi(text);
+	if (value < 0)
+		value = 0;
+	return value;
+}
+
+// ?getFirewallPortAllocationDelta@OptionPreferences@@QAEFXZ
+Short OptionPreferences::getFirewallPortAllocationDelta()
+{
+	CustomAsciiStringShim key;
+	key.init("FirewallPortAllocationDelta");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
+		return ((const BfmeGlobalDataFlags *)TheWritableGlobalData)->m_firewallPortAllocationDelta;
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	return atoi(text);
+}
+
+// ?getFirewallPortOverride@OptionPreferences@@QAEGXZ
+UnsignedShort OptionPreferences::getFirewallPortOverride()
+{
+	CustomAsciiStringShim key;
+	key.init("FirewallPortOverride");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
+		return ((const BfmeGlobalDataFlags *)TheWritableGlobalData)->m_firewallPortOverride;
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	return atoi(text);
+}
+
+// ?getFirewallNeedToRefresh@OptionPreferences@@QAE_NXZ
+// Body in Code/masm_dumps/_getFirewallNeedToRefresh_OptionPreferences__QAE_NXZ_90D00.asm (exact 113B retail).
+
+// ?getPreferred3DProvider@OptionPreferences@@QAE?AVAsciiString@@XZ present-unmatched
+AsciiString OptionPreferences::getPreferred3DProvider(void)
+{
+	OptionPreferences::const_iterator it = find("3DAudioProvider");
+	if (it == end())
+		return TheAudio->getAudioSettings()->m_preferred3DProvider[MAX_HW_PROVIDERS];
+	return it->second;
+}
+
+// ?getSpeakerType@OptionPreferences@@QAE?AVAsciiString@@XZ present-unmatched
+AsciiString OptionPreferences::getSpeakerType(void)
+{
+	OptionPreferences::const_iterator it = find("SpeakerType");
+	if (it == end())
+		return TheAudio->translateUnsignedIntToSpeakerType(TheAudio->getAudioSettings()->m_defaultSpeakerType2D);
+	return it->second;
+}
 
 // BFME has no relative-2D-volume scaling on the missing-key path.
 // ?getSoundVolume@OptionPreferences@@QAEMXZ
