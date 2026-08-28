@@ -78528,7 +78528,7 @@ _bfmeFmtStrDZE,0x00C7C7B4,pin
 _bfmeFmtStrDZF,0x00C7C7B4,pin
 _bfmeFmtStrEAA,0x00C7C7B4,pin
 _bfmeFmtStrEAC,0x00C7C7B4,pin
-_bfmeGlobalTable12A6918,0x012A6918,pin
+_bfmeGlobalTable12A6918,0x00EA6918,pin
 _bfmeInfoDCE,0x00CEA6A8,pin
 _bfmeInfoDCF,0x00D14768,pin
 _bfmeInfoDCG,0x00D16D70,pin
