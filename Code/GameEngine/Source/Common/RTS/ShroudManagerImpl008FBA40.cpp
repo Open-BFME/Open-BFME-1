@@ -68,18 +68,28 @@ private:
 	friend class ShroudManagerImpl008FBA40;
 };
 
+struct ShroudManagerImpl008FBA40PlayerState
+{
+	unsigned short status;
+	unsigned short counters[2];
+};
+
 class ShroudManagerImpl008FBA40Element
 {
 public:
 	ShroudManagerImpl008FBA40Element();
 	~ShroudManagerImpl008FBA40Element();
+	void adjustPlayerCounter008FC1F0(int playerIndex, int counterIndex,
+		int amount);
 	void updatePlayerCells008FC3B0(ShroudManagerImpl008FBA40 *manager,
 		int playerIndex);
 	void updatePlayerCells008FC450(ShroudManagerImpl008FBA40 *manager,
 		int playerIndex);
 
 private:
-	char state[0x68];
+	ShroudManagerImpl008FBA40Node *cellNodes;
+	ShroudManagerImpl008FBA40PlayerState playerStates[16];
+	int unknown64;
 };
 
 class ShroudManagerImpl008FBA40
@@ -207,4 +217,17 @@ void ShroudManagerImpl008FBA40::setRegion(const Region3D *newRegion, Real cellSi
 	{
 		configure(*newRegion, cellSize);
 	}
+}
+
+void ShroudManagerImpl008FBA40Element::adjustPlayerCounter008FC1F0(
+	int playerIndex, int counterIndex, int amount)
+{
+	unsigned short *counter =
+		&playerStates[playerIndex].counters[counterIndex];
+	amount += *counter;
+	if (amount < 0)
+		amount = 0;
+	else if (amount > 0xffff)
+		amount = 0xffff;
+	*counter = (unsigned short)amount;
 }
