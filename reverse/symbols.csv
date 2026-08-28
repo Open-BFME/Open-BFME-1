@@ -74707,6 +74707,7 @@ name,address,notes
 ?getControllingPlayer@TeamPrototype@@QBEPAVPlayer@@XZ,0x0000F2DB,TeamInQueue disband call pin
 ?getCountdownPercent@OCLUpdate@@QAEMXZ,0x00047069,Open-BFME5 ILT; ?updateContextOCLTimer@ControlBar@@AAEXXZ at 0x004AA980 passes its result to the text display
 ?getCurNemesis@TunnelTracker@@QAEPAVObject@@XZ,0x00025766,REL32 pin from TunnelTracker::updateNemesis @0xF90D0
+?getCurWeaponLockedStatus@BFMEWeaponSetLockShim@@QBEHXZ,0x000201E4,Object isCurWeaponLocked retail ILT to the raw BFME WeaponSet lock-state accessor at 0x001EAF40
 ?getCurrentVictim@AIUpdateInterface@@QBEPAVObject@@XZ,0x000261A2,GarrisonContain target victim ILT
 ?getCurrentVictimPos@AIUpdateInterface@@QBEPBUCoord3D@@XZ,0x00030634,GarrisonContain target position ILT
 ?getCurrentWeapon@Object@@QAEPAVWeapon@@PAW4WeaponSlotType@@@Z,0x00031A7F,ILT thunk to 0x1BE230; pinned from TurretAI::isOwnersCurWeaponOnTurret @0x18D0D0
