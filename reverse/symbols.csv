@@ -73058,6 +73058,7 @@ name,address,notes
 ?bfmeGetEHA@BfmeObjEHA@@QAEPAUBfmeSubEHA@@XZ,0x00046538,pin
 ?bfmeGetEME@BfmeObjEME@@QAEPAXPAX@Z,0x009EED20,pin
 ?bfmeGetENK@BfmeObjENK@@QAEPAUBfmeSubENK@@XZ,0x00046538,pin
+?bfmeGetESA@BfmeObjESA@@QAEPAUBfmeSubESA@@XZ,0x00020824,pin
 ?bfmeGetFinalOverride@BfmeSubInnerEFF@@QAEPAXXZ,0x000022BB,pin
 ?bfmeGetHordeMemberCount@Object@@QBEHXZ,0x00030715,Open-BFME5 ILT thunk to body 0x001BFDF0; Object m_contain at +0x1FC asks virtual slot +0x68 for a horde interface then calls its count slot +0x150 with false; bfme prefix records unrecovered retail spelling
 ?bfmeGetID@BfmeDrawableWithID@@QAEIXZ,0x00009B01,Open-BFME5 ILT both drawable lookup-table wrappers at 0x00431C20 and 0x00430B50 read the id through
@@ -73223,6 +73224,7 @@ name,address,notes
 ?bfmeLookBBB@@YAPAXPAX@Z,0x0082B8E0,pin
 ?bfmeLookEBE@BfmeGlobEBE@@QAEPAXPAX@Z,0x0001F253,pin
 ?bfmeLookEFJ@BfmeGlobEFJ@@QAEPAVBfmeResEFJ@@PAVBfmeSubEFJ@@@Z,0x00028560,pin
+?bfmeLookESC@BfmeGlobESC@@QAEGHHH@Z,0x00044C60,pin
 ?bfmeLookRH@@YGHPAX0@Z,0x007F76F0,pin
 ?bfmeLookupA@@YAHPAX@Z,0x0000B1AE,Open-BFME5 ILT the bit setter at 0x001C3FB0 looks up through
 ?bfmeLookupB@@YAHPAX@Z,0x000052CC,Open-BFME5 ILT the bit setter at 0x001C4020 looks up through
@@ -74816,6 +74818,8 @@ name,address,notes
 ?g_bfmeObjEMHa@@3PAVBfmeGlobEMHa@@A,0x00F06EEC,pin
 ?g_bfmeObjEMHb@@3PAVBfmeGlobEMHb@@A,0x00F06EEC,pin
 ?g_bfmeObjENG@@3PAVBfmeGlobENG@@A,0x00EF076C,pin
+?g_bfmeObjESCa@@3PAVBfmeGlobESC@@A,0x00EED748,pin
+?g_bfmeObjESCb@@3PAVBfmeGlobESC@@A,0x00EED748,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
