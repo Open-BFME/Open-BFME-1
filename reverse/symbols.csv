@@ -73137,6 +73137,7 @@ name,address,notes
 ?bfmeHelper98FDE0@@YAXPAXH@Z,0x0098FDE0,pin
 ?bfmeHelper990410@@YAXPAXN@Z,0x00990410,pin
 ?bfmeHelper996070@@YAXPAX00PBD@Z,0x00996070,pin
+?bfmeHelperB20@@YAXPAX0@Z,0x002EFB20,pin
 ?bfmeHitAEA@BfmeEntryAEA@@QAE_NPAUBfmeKeyAEA@@PAX@Z,0x008017E0,pin
 ?bfmeIdAIA@BfmeThingAIA@@QAEPAXXZ,0x00020824,pin
 ?bfmeIdALA@BfmeKeyALA@@QAEPAUBfmeIdALA@@XZ,0x00020824,pin
@@ -74894,7 +74895,11 @@ name,address,notes
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
 ?g_lastPacketRouterStallFrame@@3IA,0x012F7704,last packet-router frame that triggered the native frame-stall gate
 ?g_mgr12EF1D8@@3PAUBfmeMgrContainerF1D@@A,0x012EF1D8,pin
+?g_mgr12F076C@@3PAVBfmeMgrF07@@A,0x012F076C,pin
+?g_mgr12F0898@@3PAVBfmeMgr089@@A,0x012F0898,pin
+?g_mgr12F148C@@3PAVBfmeMgrF14@@A,0x012F148C,pin
 ?g_mgr12F33F8@@3PAVBfmeMgr412@@A,0x00EF33F8,pin
+?g_mgr12F4B98@@3PAUBfmeMgr112@@A,0x012F4B98,pin
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
 ?g_obj12F060C@@3PAUBfmeObj2B1@@A,0x00EF060C,pin
 ?g_quitMenuLayout@@3PAXA,0x012F4AD4,HideQuitMenu layout global
@@ -77643,11 +77648,14 @@ name,address,notes
 ?second@Rva003C0E40@@QAEXH@Z,0x003BEBA0,second half of the chained pair at 0x003C0E40; address-derived name
 ?secondaryValueFor@Rva0036AF30Item@@QBEHPBVObject@@@Z,0x0003E1A3,retail jump thunk to the byte-verified secondary state lookup at 0x00369120
 ?selectFriends@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@_N@Z,0x000282B8
+?send@BfmeMgr089@@QAEXPAX0@Z,0x0002836C,pin
+?send@BfmeSub2B8_112@@QAEXPAXH@Z,0x0000E700,pin
 ?send@ConnectionManagerSendFrameDataShim@@QAEXII@Z,0x00664D20,ConnectionManager sendFrameDataToPlayer incremental-link thunk target through a TU-local forwarding shim
 ?send@NATSendMangledPortShim@@QAEXGPAVGameSlot@@@Z,0x006718A0,NAT sendMangledPortNumberToTarget incremental-link thunk target through a TU-local forwarding shim
 ?send@TransportDoSendShim@@QAE_NXZ,0x006834B0,Transport doSend incremental-link thunk target through a TU-local forwarding shim
 ?sendChat@DisconnectMenu@@QAEXVUnicodeString@@@Z,0x0050EE90,EXTRA(not in W3 list) ZH sendChat twin: TheLanguageFilter 0x012F1570 ->filterLine 0x0044DB90 when set then TheNetwork 0x012F7714 slot +0x54 sendDisconnectChat 0x006824C0; callers onQuit 0x0050F21B and onChatEnterText 0x0050F35B; ILT 0x0003E98C
 ?sendChat@Network@@UAEXVUnicodeString@@H@Z,0x00682440,vtable 0x0111A968 slot 20 (+0x50) via ILT 0x0002B512; copies the UnicodeString (??0?$StringBase@G copy ctor 0x00888400) and calls conMgr 0x006675E0 with (text playerMask) ret 8 = ZH sendChat(text playerMask); caller in-game chat 0x005142B8; NOTE callee 0x006675E0 is ledgered ?sendDisconnectVoteCommand@BFMEConnectionManager@@QAEXHI@Z yet receives a UnicodeString by value (identity-suspect for that row)
+?sendCode@BfmeObjF3E@@QAEXHPAX@Z,0x0002BF2B,pin
 ?sendDisconnectChat@ConnectionManager@@QAEXVUnicodeString@@@Z,0x00001B54,link thunk; the address Network::sendDisconnectChat at 0x006824C0 encodes
 ?sendDisconnectCommand@DisconnectManager@@IAEXHPAVConnectionManager@@@Z,0x000407EB,DisconnectManager status update command dispatch through ILT to the existing 0x0066B9F0 body
 ?sendDisconnectFrameCommand@BFMEConnectionManager@@QAEXXZ,0x000402D7,DisconnectManager status update notification call through ILT to the existing 0x00663910 body
