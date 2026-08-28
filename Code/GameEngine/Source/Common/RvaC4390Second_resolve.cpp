@@ -39,16 +39,19 @@ public:
 
 enum KindOfType { BFME_KINDOF_6C = 0x6C };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
 	Bool isKindOf(KindOfType kind) const;			// ILT 0x0003251F
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:

@@ -8,6 +8,7 @@
 // makes them __stdcall. The call is a plain call rather than a tail jump
 // because the ret still has an argument to pop.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

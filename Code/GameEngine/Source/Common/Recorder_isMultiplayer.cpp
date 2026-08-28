@@ -44,12 +44,14 @@ enum
 	GAME_NONE
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
 {
 public:
 	Bool isOccupied(void) const;			// ILT 0x00040593
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameInfo
 {
 public:
@@ -64,6 +66,7 @@ extern GameInfo *TheSkirmishGameInfo;			// 0x012F7094
 class Network;
 extern Network *TheNetwork;				// 0x012F7714
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -76,6 +79,7 @@ private:
 
 extern GameLogic *TheGameLogic;				// 0x012F0898
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass
 {
 public:

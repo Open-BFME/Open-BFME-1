@@ -22,6 +22,7 @@
 // vptr store; the two are not yet reconciled, so the four bytes are left
 // unnamed here rather than committed either way.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfoInput
 {
 public:
@@ -32,6 +33,7 @@ private:
 	char m_unreconstructed_00[0x4c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfoOutput
 {
 public:
@@ -40,6 +42,7 @@ public:
 	bool m_noEffect;								///< retail DamageInfo+0x58
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfo
 {
 public:

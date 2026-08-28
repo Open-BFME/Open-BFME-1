@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?canPlayerGarrison@ActionManager@@QAE_NPBVPlayer@@PBVObject@@W4CommandSourceType@@@Z: Code/GameEngine/Source/Common/RTS/ActionManager.cpp
 
 // FILE: ActionManagerCanPlayerGarrison.cpp //////////////////////////////////
 //
@@ -42,12 +43,14 @@ enum Relationship { ENEMIES = 0, NEUTRAL, ALLIES };
 
 class Team;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
 	Relationship getRelationship( const Team *that ) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class ContainModuleInterface
 {
 public:
@@ -121,12 +124,14 @@ public:
 // isKindOf is Thing's, not Object's -- the pinned name is
 // ?isKindOf@Thing@@QBE_NW4KindOfType@@@Z and the call passes `this' unadjusted,
 // so Thing is the primary base.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
 	Bool isKindOf( KindOfType t ) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 public:
@@ -148,6 +153,7 @@ private:
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ActionManager.h
 class ActionManager
 {
 public:

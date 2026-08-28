@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?doThisConnectionRound@NAT@@IAEXXZ: Code/GameEngine/Source/GameNetwork/nat.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) NAT

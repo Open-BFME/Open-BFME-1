@@ -6,9 +6,11 @@
 // per-element _Construct is DECLARED WITHOUT A BODY so it stays out of line,
 // exactly as retail calls it.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ProductionPrerequisite.h
 class ProductionPrerequisite
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ProductionPrerequisite.h
 	struct PrereqUnitRec
 	{
 		int m_raw[3];

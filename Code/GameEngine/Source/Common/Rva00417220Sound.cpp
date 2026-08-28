@@ -2,6 +2,7 @@
 
 class AudioEventRTS;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
 	const AudioEventRTS *bfmeLookupSound(int index) const;

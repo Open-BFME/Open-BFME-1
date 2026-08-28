@@ -22,6 +22,7 @@ enum ObjectEnterExitType
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class ContainModuleInterface
 {
 public:
@@ -41,6 +42,7 @@ public:
 	virtual void onObjectWantsToEnterOrExit(Object *obj, ObjectEnterExitType wants); // vtable +0x34
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -51,6 +53,7 @@ private:
 	ContainModuleInterface *m_contain; // retail this+0x1fc
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -59,6 +62,7 @@ public:
 
 extern GameLogic *TheGameLogic; // retail global [0x012f0898]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -70,6 +74,7 @@ private:
 	Object *m_owner; // retail this+0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
@@ -85,6 +90,7 @@ private:
 	void *m_unreconstructed_tail; // keeps derived data at this+0x24
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIExitState : public State
 {
 public:

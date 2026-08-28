@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Shutdown@DX8Wrapper@@: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) DX8Wrapper

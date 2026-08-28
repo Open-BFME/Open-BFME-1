@@ -14,6 +14,7 @@ public:
 	~InstantDeathBehaviorModuleDataAllocator();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -23,6 +24,7 @@ private:
 	unsigned char m_data[4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModuleData : public Snapshot
 {
 public:

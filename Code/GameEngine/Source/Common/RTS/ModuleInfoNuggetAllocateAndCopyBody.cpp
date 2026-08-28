@@ -10,9 +10,11 @@
 // so this call site pins to that ILT without disturbing the _Construct name
 // the ledger already pins elsewhere.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ModuleInfo
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 	struct Nugget
 	{
 	private:

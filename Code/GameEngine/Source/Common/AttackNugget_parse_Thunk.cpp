@@ -4,6 +4,7 @@
 class INI;
 typedef void (*INIFieldParseProc)(INI *, void *, void *, const void *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 struct FieldParse
 {
 	const char *token;
@@ -12,6 +13,7 @@ struct FieldParse
 	int offset;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -21,6 +23,7 @@ public:
 	static void parseReal(INI *, void *, void *, const void *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/RadiusDecal.h
 class RadiusDecalTemplate
 {
 public:
@@ -30,12 +33,14 @@ private:
 	unsigned char m_retailLayout[0x30];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectCreationList.h
 class ObjectCreationNugget
 {
 public:
 	virtual void create();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectCreationList.h
 class ObjectCreationList
 {
 public:

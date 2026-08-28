@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ??0TunnelTracker@@: Code/GameEngine/Source/Common/RTS/TunnelTracker.cpp
 // Open-BFME: TunnelTracker::TunnelTracker, retail 0x000F8980, 140 bytes.
 //
 // The reference's constructor body -- four counters zeroed, in the reference's
@@ -29,6 +30,7 @@ class Xfer;
 // Empty, but with a destructor: the unwind state is raised before the first
 // list is built, which only happens when something ahead of the members already
 // needs unwinding.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameMemory.h
 class MemoryPoolObject
 {
 public:
@@ -36,6 +38,7 @@ public:
 	~MemoryPoolObject();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/TunnelTracker.h
 class TunnelTracker : public MemoryPoolObject
 {
 public:

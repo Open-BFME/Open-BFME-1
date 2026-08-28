@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ??1OpenContain@@: Code/GameEngine/Source/GameLogic/Object/Contain/OpenContain.cpp
 
 // OpenContain's destructor, lifted from its MASM dump to C++.
 //
@@ -47,6 +48,7 @@ struct Gen_t_002237f0_p4pod { int a[1]; };
 bool operator==(const Gen_t_002237f0_p4pod&, const Gen_t_002237f0_p4pod&);
 bool operator<(const Gen_t_002237f0_p4pod&, const Gen_t_002237f0_p4pod&);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -54,6 +56,7 @@ public:
 	void *m_containedBy;								///< retail this+0x214
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -73,30 +76,35 @@ private:
 	const void *m_moduleData;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModuleInterface
 {
 public:
 	virtual void getBehaviorModuleInterface() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleInterface
 {
 public:
 	virtual void updateModuleInterface() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule : public Gen_dtor_00113d40
 {
 private:
 	void *m_object;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule : public ObjectModule, public BehaviorModuleInterface
 {
 public:
 	virtual ~BehaviorModule() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public BehaviorModule, public UpdateModuleInterface
 {
 public:

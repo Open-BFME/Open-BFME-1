@@ -16,6 +16,7 @@
 // in the body it lands after the +0x0C zero, because that one comes out of a
 // member constructor and those all run first.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getCurNemesis@TunnelTracker@@: Code/GameEngine/Source/Common/RTS/TunnelTracker.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -18,6 +20,7 @@ public:
 	bool isStealthedAndUndetected(const Object *viewer) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -31,6 +34,7 @@ private:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/TunnelTracker.h
 class TunnelTracker
 {
 public:

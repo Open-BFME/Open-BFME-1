@@ -25,6 +25,7 @@ public:
 
 typedef BitFlags<116> KindOfMaskType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:

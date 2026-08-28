@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getBattlePlansActiveSpecific@Player@@QBEHW4BattlePlanStatus@@@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
 // Open-BFME5: lift the retail Player::getBattlePlansActiveSpecific MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_PlayerGetBattlePlansActiveSpecific_1C4310()

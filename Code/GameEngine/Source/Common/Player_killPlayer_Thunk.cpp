@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?killPlayer@Player@@QAEXXZ: Code/GameEngine/Source/Common/RTS/Player.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

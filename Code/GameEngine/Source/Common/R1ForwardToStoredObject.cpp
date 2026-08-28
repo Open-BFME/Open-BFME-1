@@ -30,6 +30,7 @@
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -136,6 +137,7 @@ void Rva0025FA60::go()
 	BFME_VSLOT4( P##c )                                                   \
 	BFME_VSLOT4( P##d )
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
 public:

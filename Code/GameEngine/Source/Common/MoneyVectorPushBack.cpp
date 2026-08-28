@@ -3,6 +3,7 @@
 
 class Xfer;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -15,6 +16,7 @@ protected:
 	virtual void loadPostProcess() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Money.h
 class Money : public Snapshot
 {
 protected:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?winPointInChild@GameWindow@@QAEPAV1@HH_N0@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class GameWindow { public: GameWindow * winPointInChild(int, int, bool, bool); };

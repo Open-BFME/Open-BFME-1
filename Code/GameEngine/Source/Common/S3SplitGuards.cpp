@@ -74,6 +74,7 @@ private:
 	Gen_00684b90Holder *m_bfmeHolder;				// +0x40E04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

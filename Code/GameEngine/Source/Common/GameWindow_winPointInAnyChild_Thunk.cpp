@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?winPointInAnyChild@GameWindow@@QAEPAV1@HH_N0@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // Open-BFME5: GameWindow::winPointInAnyChild, retail 0x00479970, converted out
 // of a machine byte dump. The reference body ports unchanged.
 //
@@ -33,18 +34,21 @@ typedef unsigned int UnsignedInt;
 
 enum { WIN_STATUS_HIDDEN = 0x00000010 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;													///< +0x00
 	Int y;													///< +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct IRegion2D
 {
 	ICoord2D lo;											///< +0x00
 	ICoord2D hi;											///< +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:

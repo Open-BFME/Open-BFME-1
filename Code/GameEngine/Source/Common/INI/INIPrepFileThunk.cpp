@@ -1,3 +1,5 @@
+// readable body of ?prepFile@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?prepFile@INI@@IAEXVAsciiString@@W4INILoadType@@@Z: Code/GameEngine/Source/Common/INI/ini.cpp
 class AsciiString {};
 
 enum INILoadType
@@ -5,6 +7,7 @@ enum INILoadType
 	INI_LOAD_INVALID
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 protected:

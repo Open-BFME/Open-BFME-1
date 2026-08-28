@@ -25,6 +25,7 @@ public:
 
 typedef BitFlags<192> KindOfMaskType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:
@@ -33,6 +34,7 @@ public:
 
 typedef _STL::list<TeamPrototype *> PlayerTeamList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

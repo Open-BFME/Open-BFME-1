@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?countObjectsByThingTemplate@Player@@QBEXHPBQBVThingTemplate@@_NPAH1@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
 // Open-BFME: Player::countObjectsByThingTemplate, retail 0x000CDD50, 84 bytes.
 //
 // The reference's body unchanged: zero the caller's counts, then hand all five
@@ -14,6 +15,7 @@ typedef bool Bool;
 
 class ThingTemplate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:
@@ -22,6 +24,7 @@ public:
 
 typedef _STL::list<TeamPrototype *> PlayerTeamList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

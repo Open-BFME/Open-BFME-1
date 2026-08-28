@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getPasswordForEmail@GameSpyLoginPreferences@@QAE?AVAsciiString@@V2@@Z: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLoginMenu.cpp
 // Open-BFME5: lift GameSpyLoginPreferences::getPasswordForEmail to clean C++.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -30,6 +32,7 @@ private:
 	PassMapNode *m_header;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class UserPreferences
 {
 public:

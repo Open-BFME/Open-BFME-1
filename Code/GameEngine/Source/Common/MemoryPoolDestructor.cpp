@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1MemoryPool@@: Code/GameEngine/Source/Common/System/GameMemory.cpp
 
 // Open-BFME5: MemoryPool's destructor, retail 0x001F84C0, 115 bytes. The body
 // carried only a machine byte-dump row; the symbols.csv pin names it, and the

@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?reset@GameInfo@@UAEXXZ: Code/GameEngine/Source/GameNetwork/GameInfo.cpp
 // Open-BFME5: retail GameInfo reset in C++.
 
 extern "C" __declspec(dllimport) unsigned long __stdcall GetTickCount();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -18,6 +20,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
 {
 public:

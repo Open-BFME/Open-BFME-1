@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1AudioEventRTS@@: Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp
 
 // Open-BFME5: AudioEventRTS' destructor, retail 0x000CFA40, 77 bytes. The body
 // carried only a machine byte-dump row; reverse/reloc_names.csv holds the name
@@ -11,6 +12,7 @@
 // that is __declspec(novtable), the same shape the ModuleData destructors in
 // the ledger carry.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -20,6 +22,7 @@ private:
 	char *m_bfmeData;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:

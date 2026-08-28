@@ -26,6 +26,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -35,6 +36,7 @@ public:
 	StringBase<char> m_string;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
 class INIException
 {
 public:
@@ -48,6 +50,7 @@ private:
 
 class Anim2DTemplate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Anim2D.h
 class Anim2DCollection
 {
 public:
@@ -56,6 +59,7 @@ public:
 
 extern Anim2DCollection *TheAnim2DCollection;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

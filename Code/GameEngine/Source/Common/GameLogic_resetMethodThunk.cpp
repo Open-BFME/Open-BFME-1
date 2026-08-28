@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?reset@GameLogic@@UAEXXZ: Code/GameEngine/Source/GameLogic/System/GameLogic.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) GameLogic

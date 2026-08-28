@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?parseObjectCreationList@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseObjectCreationList@INI@@SAXPAV1@PAX1PBX@Z: Code/GameEngine/Source/Common/INI/ini.cpp
 
 // INI::parseObjectCreationList, retail 0x000B8F10. A field parser: read the next
 // token, look it up in the store at 0x012EF70C, and write the result through the
@@ -10,6 +12,7 @@
 
 class ObjectCreationList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -18,6 +21,7 @@ public:
 	static void parseObjectCreationList( INI *ini, void *instance, void *store, const void *userData );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectCreationList.h
 class ObjectCreationListStore
 {
 public:

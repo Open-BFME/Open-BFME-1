@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1GameWindow@@MAE@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) GameWindow

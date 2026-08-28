@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getIdealStaticGameDetail@OptionPreferences@@QAEHXZ: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionsMenu.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class OptionPreferences {
 public:
 	int getIdealStaticGameDetail();

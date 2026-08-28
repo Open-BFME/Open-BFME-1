@@ -18,6 +18,7 @@
 typedef int Int;
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -25,6 +26,7 @@ public:
 	Int winGetScreenPosition(Int *x, Int *y);				///< ILT thunk at 0x0002F94B
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class FullFadeTransition
 {
 public:

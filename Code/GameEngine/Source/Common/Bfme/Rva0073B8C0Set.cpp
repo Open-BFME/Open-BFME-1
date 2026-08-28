@@ -1,5 +1,6 @@
 // 24-byte setter, 15-byte subobject virtual tail-call, 72-byte reset, and 58-byte property setter
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:
@@ -29,6 +30,7 @@ extern GameMessageDispatcher *TheGameMessageDispatcher;
 
 // The retail object at 0x012ED5C8 is the established GlobalData singleton;
 // this TU-local view names only the +0x188 scalar read proven by 0x0073B9C0.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:

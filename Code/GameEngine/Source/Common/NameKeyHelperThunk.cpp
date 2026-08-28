@@ -7,6 +7,7 @@ enum NameKeyType
 	NAMEKEY_INVALID = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 struct AsciiStringData
 {
 	int m_refCount;
@@ -14,12 +15,14 @@ struct AsciiStringData
 	// char payload follows at +8
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
 	AsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:

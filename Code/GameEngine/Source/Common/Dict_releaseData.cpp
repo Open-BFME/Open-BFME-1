@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?releaseData@Dict@@: Code/GameEngine/Source/Common/Dict.cpp
 // Open-BFME: Dict::releaseData, retail 0x000681C0, 156 bytes. The body carried
 // no ledger row; its name sat on a 5-byte thunk.
 //
@@ -20,6 +21,7 @@ typedef bool Bool;
 
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -28,6 +30,7 @@ private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -36,6 +39,7 @@ private:
 	unsigned short *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
 class Dict
 {
 public:
@@ -51,6 +55,7 @@ public:
 
 	enum DictPairKeyType { DICTPAIRKEY_ILLEGAL = 0 };
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
 	struct DictPair
 	{
 		DictPairKeyType m_key;					// this+0x00, type in the low byte
@@ -89,6 +94,7 @@ public:
 		}
 	};
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
 	struct DictPairData
 	{
 		unsigned short m_refCount;				// this+0x00

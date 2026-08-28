@@ -3,18 +3,21 @@
 // Standalone TU for Dict::DictPair::clear (retail jump-table switch).
 // Types: DICT_BOOL=0, DICT_INT=1, DICT_REAL=2, DICT_ASCIISTRING=3, DICT_UNICODESTRING=4.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
 	void clear();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
 	void clear();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
 class Dict
 {
 public:
@@ -27,6 +30,7 @@ public:
 		DICT_UNICODESTRING = 4
 	};
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
 	class DictPair
 	{
 	public:

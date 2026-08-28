@@ -7,6 +7,7 @@
 // deadline, then hands over 1. Both arms end in the same two-argument thiscall,
 // which MSVC 7.1 tail-jumps because the callee's `ret 8` matches this frame's.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -23,6 +24,7 @@ public:
 
 extern GameLogicFrameSource *TheGameLogic;		///< retail [0x012F0898]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ObjectDefectionHelper.h
 class ObjectDefectionHelper
 {
 public:

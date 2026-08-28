@@ -72,6 +72,7 @@ public:
 	BfmeIterableObject *m_bfmeObject;				// +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

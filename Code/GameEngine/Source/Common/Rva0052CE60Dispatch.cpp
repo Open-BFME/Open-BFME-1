@@ -1,5 +1,6 @@
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefsImplementation.h
 class GameSpyInfo
 {
 public:

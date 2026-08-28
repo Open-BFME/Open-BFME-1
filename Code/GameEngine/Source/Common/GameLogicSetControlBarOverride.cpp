@@ -1,3 +1,4 @@
+// readable body of ?setControlBarOverride@GameLogic@@QAEXABVAsciiString@@HPBVCommandButton@@@Z: Code/GameEngine/Source/GameLogic/System/GameLogic.cpp
 #include <string.h>
 
 class CommandButton;
@@ -10,6 +11,7 @@ struct BfmeAsciiStringBuffer
 	char data[1];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -31,6 +33,7 @@ public:
 	const CommandButton *&findOrInsert(const AsciiString &key);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 private:

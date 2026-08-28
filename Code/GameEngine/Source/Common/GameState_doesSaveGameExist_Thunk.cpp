@@ -1,9 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?doesSaveGameExist@GameState@@QAE_NVAsciiString@@@Z: Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp
 // Open-BFME5: BFME checks the resolved save path through FileSystem directly.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 	struct AsciiStringData
 	{
 		unsigned short m_refCount;
@@ -31,6 +34,7 @@ public:
 
 extern FileSystem *TheFileSystem;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameState.h
 class GameState
 {
 public:

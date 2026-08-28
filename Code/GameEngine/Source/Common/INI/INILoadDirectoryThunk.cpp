@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?loadDirectory@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
 // Open-BFME5: lift the exact retail INI::loadDirectory MASM body.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 };
@@ -14,6 +16,7 @@ enum INILoadType
     INI_LOAD_CREATE_OVERRIDES = 2
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

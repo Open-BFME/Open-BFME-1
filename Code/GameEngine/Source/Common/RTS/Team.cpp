@@ -67,6 +67,7 @@ TeamFactory *TheTeamFactory = NULL;
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamRelationMapConstructor.cpp
 // ??0TeamRelationMap@@QAE@XZ present-unmatched
 TeamRelationMap::TeamRelationMap( void )
 {
@@ -192,6 +193,7 @@ TeamFactory::TeamFactory()
 #endif
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamFactoryCtorThunk.cpp
 // ??1TeamFactory@@UAE@XZ present-unmatched
 TeamFactory::~TeamFactory()
 {
@@ -220,6 +222,7 @@ void TeamFactory::update( void )
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamFactoryCtorThunk.cpp
 // ?clear@TeamFactory@@QAEXXZ present-unmatched
 void TeamFactory::clear()
 {
@@ -234,6 +237,7 @@ void TeamFactory::clear()
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/TeamFactory_initFromSides_Thunk.cpp
 // ?initFromSides@TeamFactory@@QAEXPAVSidesList@@@Z present-unmatched
 void TeamFactory::initFromSides(SidesList *sides)
 {
@@ -253,6 +257,7 @@ void TeamFactory::initFromSides(SidesList *sides)
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamFactoryCtorThunk.cpp
 // ?initTeam@TeamFactory@@QAEXABVAsciiString@@0_NPAVDict@@@Z present-unmatched
 void TeamFactory::initTeam(const AsciiString& name, const AsciiString& owner, Bool isSingleton, Dict *d)
 {
@@ -269,6 +274,7 @@ void TeamFactory::initTeam(const AsciiString& name, const AsciiString& owner, Bo
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamFactoryCtorThunk.cpp
 // ?addTeamPrototypeToList@TeamFactory@@QAEXPAVTeamPrototype@@@Z present-unmatched
 void TeamFactory::addTeamPrototypeToList(TeamPrototype* team)
 {
@@ -322,6 +328,7 @@ TeamPrototype *TeamFactory::findTeamPrototypeByID( TeamPrototypeID id )
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamFactory_findTeamByID.cpp
 // ?findTeamByID@TeamFactory@@QAEPAVTeam@@I@Z present-unmatched
 Team *TeamFactory::findTeamByID( TeamID teamID )
 {
@@ -638,6 +645,7 @@ fclose( fp );
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamTemplateInfoConstructorThunk.cpp
 // ??0TeamTemplateInfo@@QAE@PAVDict@@@Z present-unmatched
 TeamTemplateInfo::TeamTemplateInfo(Dict *d) :
 	m_numUnitsInfo(0)
@@ -934,6 +942,7 @@ void TeamPrototype::setControllingPlayer(Player *newController)
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototype_countObjectsByThingTemplate.cpp
 // ?countObjectsByThingTemplate@TeamPrototype@@QBEXHPBQBVThingTemplate@@_NPAH1@Z present-unmatched
 void TeamPrototype::countObjectsByThingTemplate(Int numTmplates, const ThingTemplate* const* things, Bool ignoreDead, Int *counts, Bool ignoreUnderConstruction) const
 {
@@ -944,6 +953,7 @@ void TeamPrototype::countObjectsByThingTemplate(Int numTmplates, const ThingTemp
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototype_teamAboutToBeDeleted.cpp
 // ?teamAboutToBeDeleted@TeamPrototype@@QAEXPAVTeam@@@Z present-unmatched
 void TeamPrototype::teamAboutToBeDeleted(Team* team)
 {
@@ -1008,6 +1018,7 @@ void TeamPrototype::decreaseAIPriorityForFailure(void) const
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototype_countBuildings.cpp
 // ?countBuildings@TeamPrototype@@QAEHXZ present-unmatched
 Int TeamPrototype::countBuildings(void)
 {
@@ -1087,6 +1098,7 @@ Bool TeamPrototype::hasAnyBuildings(KindOfMaskType kindOf) const
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp
 // ?hasAnyUnits@TeamPrototype@@QBE_NXZ present-unmatched
 Bool TeamPrototype::hasAnyUnits() const
 {
@@ -1109,6 +1121,7 @@ Bool TeamPrototype::hasAnyObjects() const
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototype_updateState.cpp
 // ?updateState@TeamPrototype@@QAEXXZ present-unmatched
 void TeamPrototype::updateState(void) 
 {
@@ -1154,6 +1167,7 @@ void TeamPrototype::updateState(void)
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyBuildFacility.cpp
 // ?hasAnyBuildFacility@TeamPrototype@@QBE_NXZ present-unmatched
 Bool TeamPrototype::hasAnyBuildFacility() const
 {
@@ -1426,6 +1440,7 @@ Team::Team(TeamPrototype *proto, TeamID id ) :
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TeamDestructorThunk.cpp
 // ??1Team@@MAE@XZ present-unmatched
 Team::~Team()
 {
@@ -1464,6 +1479,7 @@ Team::~Team()
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamGetControllingPlayerThunk.cpp
 // ?getControllingPlayer@Team@@QBEPAVPlayer@@XZ present-unmatched
 Player *Team::getControllingPlayer() const
 {
@@ -2408,6 +2424,7 @@ void Team::deleteTeam(Bool ignoreDead)
 
 // ------------------------------------------------------------------------
 /* Transfer our units to new team. */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Team_transferUnitsTo_Thunk.cpp
 // ?transferUnitsTo@Team@@QAEXPAV1@@Z present-unmatched
 void Team::transferUnitsTo(Team *newTeam)
 {
@@ -2573,6 +2590,7 @@ Bool Team::hasAnyBuildFacility() const
 
 // ------------------------------------------------------------------------
 //DECLARE_PERF_TIMER(updateGenericScripts)
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Team_updateGenericScriptsMethodThunk.cpp
 // ?updateGenericScripts@Team@@QAEXXZ present-unmatched
 void Team::updateGenericScripts(void)
 {
@@ -2749,6 +2767,7 @@ void Team::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Team_loadPostProcessMethodThunk.cpp
 // ?loadPostProcess@Team@@MAEXXZ present-unmatched
 void Team::loadPostProcess( void )
 {

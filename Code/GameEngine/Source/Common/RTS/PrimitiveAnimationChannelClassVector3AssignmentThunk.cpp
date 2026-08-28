@@ -3,6 +3,7 @@
 class Vector3;
 
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/prim_anim.h
 class PrimitiveAnimationChannelClass
 {
 public:

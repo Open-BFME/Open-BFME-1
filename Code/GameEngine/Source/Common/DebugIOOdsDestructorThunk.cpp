@@ -3,6 +3,7 @@
 
 void DebugFreeMemory(void *ptr);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/internal_io.h
 class DebugIOFlat
 {
 public:
@@ -13,19 +14,23 @@ public:
     };
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_io.h
 class DebugIOInterface
 {
 public:
     virtual ~DebugIOInterface() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/internal_io.h
 class DebugIOOds : public DebugIOInterface
 {
+    // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/internal_io.h
     struct SplitListEntry
     {
         SplitListEntry *next;
     };
 
+    // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/internal_io.h
     struct StreamListEntry
     {
         StreamListEntry *next;

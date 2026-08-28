@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?hasAnyBuildFacility@Player@@QBE_NXZ: Code/GameEngine/Source/Common/RTS/Player.cpp
 // Open-BFME: Player::hasAnyBuildFacility, retail 0x000CE100, 48 bytes.
 //
 // The reference's body unchanged: ask each team prototype in turn. The
@@ -11,6 +12,7 @@
 typedef int Int;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:
@@ -19,6 +21,7 @@ public:
 
 typedef _STL::list<TeamPrototype *> PlayerTeamList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

@@ -415,6 +415,7 @@ Bool ActionManager::canGetHealedAt( const Object *obj, const Object *healDest, C
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ActionManager_canRepairObject_Thunk.cpp
 // ?canRepairObject@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@@Z present-unmatched
 Bool ActionManager::canRepairObject( const Object *obj, const Object *objectToRepair, CommandSourceType commandSource ) 
 {
@@ -486,6 +487,7 @@ Bool ActionManager::canRepairObject( const Object *obj, const Object *objectToRe
 // ------------------------------------------------------------------------------------------------
 /** Can 'obj' resume the construction of 'objectBeingConstructed' */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ActionManager_canResumeConstructionOf_Thunk.cpp
 // ?canResumeConstructionOf@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@@Z present-unmatched
 Bool ActionManager::canResumeConstructionOf( const Object *obj, 
 																						 const Object *objectBeingConstructed, 
@@ -5174,6 +5176,7 @@ Bool ActionManager::canGarrison( const Object *obj, const Object *target, Comman
 }
 
 //------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/ActionManagerCanPlayerGarrison.cpp
 // ?canPlayerGarrison@ActionManager@@QAE_NPBVPlayer@@PBVObject@@W4CommandSourceType@@@Z present-unmatched
 Bool ActionManager::canPlayerGarrison( const Player *player, const Object *target, CommandSourceType commandSource )
 {

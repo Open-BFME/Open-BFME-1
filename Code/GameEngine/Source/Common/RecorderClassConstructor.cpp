@@ -34,6 +34,7 @@ private:
 	void *m_bfmePointer;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -45,6 +46,7 @@ private:
 	int m_bfmeState;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass : public SubsystemInterface
 {
 public:

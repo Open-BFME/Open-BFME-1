@@ -15,12 +15,14 @@
 #include "Common/INI.h"
 #include "Common/INIException.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class CommandSet
 {
 public:
 	static const FieldParse m_commandSetFieldParseTable[];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 	friend class INI;

@@ -11,6 +11,7 @@ enum NameKeyType
     FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
 class Dict
 {
 public:

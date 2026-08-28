@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?populateSpecialPowerShortcut@ControlBar@@IAEXPAVPlayer@@@Z: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Player;

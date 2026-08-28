@@ -105,6 +105,7 @@ void BezFwdIterator::start(void)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/bez_fwd_iterator.cpp
 // ?done@BezFwdIterator@@QAE_NXZ present-unmatched
 Bool BezFwdIterator::done(void)
 {
@@ -119,6 +120,7 @@ const Coord3D& BezFwdIterator::getCurrent(void) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/bez_fwd_iterator.cpp
 // ?next@BezFwdIterator@@QAEXXZ present-unmatched
 void BezFwdIterator::next(void)
 {

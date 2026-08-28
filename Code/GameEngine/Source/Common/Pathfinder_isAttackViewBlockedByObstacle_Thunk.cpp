@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@ABUCoord3D@@01@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Object; struct Coord3D;

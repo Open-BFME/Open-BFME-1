@@ -46,6 +46,7 @@
 
 struct FieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class MultiIniFieldParse
 {
 public:
@@ -66,6 +67,7 @@ private:
 	unsigned int Count;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

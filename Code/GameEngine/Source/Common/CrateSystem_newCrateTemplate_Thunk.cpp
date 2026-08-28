@@ -1,10 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?newCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z: Code/GameEngine/Source/GameLogic/System/CrateSystem.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 };
 class CrateTemplate;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/CrateSystem.h
 class CrateSystem
 {
 public:

@@ -2,6 +2,7 @@
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class INI;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/CampaignManager.h
 class CampaignManager
 {
 public:

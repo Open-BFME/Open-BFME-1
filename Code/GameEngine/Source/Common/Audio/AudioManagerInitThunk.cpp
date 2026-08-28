@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?init@AudioManager@@: Code/GameEngine/Source/Common/Audio/GameAudio.cpp
 // Open-BFME5: lift the exact retail AudioManager::init MASM body.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
 public:

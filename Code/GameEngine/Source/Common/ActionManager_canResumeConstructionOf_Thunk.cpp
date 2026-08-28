@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?canResumeConstructionOf@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@@Z: Code/GameEngine/Source/Common/RTS/ActionManager.cpp
 // Lift ActionManager::canResumeConstructionOf to clean C++.
 //
 // Zero Hour's shape: reject null objects, require the actor to be the right kind,
@@ -33,12 +34,14 @@ enum CommandSourceType
 	CMD_FROM_PLAYER = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
 	Bool isKindOf(KindOfType kind) const;					///< ILT thunk at 0x0003251F
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 public:
@@ -56,6 +59,7 @@ public:
 	unsigned char m_flags344;								///< retail this+0x344
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ActionManager.h
 class ActionManager
 {
 public:

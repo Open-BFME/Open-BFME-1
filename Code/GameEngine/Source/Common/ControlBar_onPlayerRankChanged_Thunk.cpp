@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onPlayerRankChanged@ControlBar@@QAEXPBVPlayer@@@Z: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 // Open-BFME5: lift the ControlBar::onPlayerRankChanged MASM dump to clean C++.
 //
 // Zero Hour's body is ControlBar.cpp:1675 and BFME kept it, with two changes
@@ -24,6 +25,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : public StringBase<char>
 {
 public:
@@ -31,6 +33,7 @@ public:
 	~AsciiString() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -42,6 +45,7 @@ public:
 	int getSciencePurchasePoints(void) const { return m_sciencePurchasePoints; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
@@ -51,6 +55,7 @@ public:
 	Player *m_localPlayer;			///< retail list+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:
@@ -71,6 +76,7 @@ extern PlayerList *ThePlayerList;			///< retail [0x012ED748]
 extern TransitionHandler *TheTransitionHandler;	///< retail [0x012F3330]
 extern InGameUI *TheInGameUI;				///< retail [0x012F148C]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:

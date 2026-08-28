@@ -27,6 +27,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -39,16 +40,19 @@ public:
 
 class ParticleSystemTemplate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 struct ParticleSysBoneInfo
 {
 	AsciiString boneName;
 	ParticleSystemTemplate *particleSystemTemplate;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 class ModelConditionInfo
 {
 public:
 	// The same eight-byte shape: one AsciiString and one dword.
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 	struct HideShowSubObjInfo
 	{
 		AsciiString subObjName;

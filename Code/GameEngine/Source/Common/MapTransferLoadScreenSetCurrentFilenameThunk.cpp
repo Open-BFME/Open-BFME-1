@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setCurrentFilename@MapTransferLoadScreen@@: Code/GameEngine/Source/GameClient/GUI/LoadScreen.cpp
 // Open-BFME5: lift the retail setCurrentFilename MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_MapTransferLoadScreenSetCurrentFilename_491FA0()

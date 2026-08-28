@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?addUpgrade@Player@@QAEPAVUpgrade@@PBVUpgradeTemplate@@W4UpgradeStatusType@@@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
 
 typedef unsigned int UnsignedInt;
 
@@ -9,6 +10,7 @@ enum UpgradeStatusType
 	UPGRADE_STATUS_COMPLETE
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeTemplate
 {
 public:
@@ -21,6 +23,7 @@ private:
 	friend class Player;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class Upgrade
 {
 public:
@@ -62,6 +65,7 @@ private:
 	friend class Player;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

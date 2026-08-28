@@ -67,12 +67,14 @@ typedef bool Bool;
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi( const char *left, const char *right );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
 	static Int scanIndexList( const char *token, const char *const *names );	// retail 0x008509E0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
 class INIException
 {
 public:

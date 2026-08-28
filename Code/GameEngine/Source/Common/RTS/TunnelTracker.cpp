@@ -53,6 +53,7 @@
 
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TunnelTracker_ctor.cpp
 // ??0TunnelTracker@@ present-unmatched
 TunnelTracker::TunnelTracker()
 {
@@ -132,6 +133,7 @@ void TunnelTracker::updateNemesis(const Object *target)
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TunnelTrackerGetCurNemesis.cpp
 // ?getCurNemesis@TunnelTracker@@ present-unmatched
 Object *TunnelTracker::getCurNemesis(void)
 {
@@ -213,6 +215,7 @@ Bool TunnelTracker::isInContainer( Object *obj )
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Contain/TunnelTracker_onTunnelCreated.cpp
 // ?onTunnelCreated@TunnelTracker@@ present-unmatched
 void TunnelTracker::onTunnelCreated( const Object *newTunnel )
 {
@@ -268,6 +271,7 @@ void TunnelTracker::healObjects(Real frames)
 
 // ------------------------------------------------------------------------
 	// heal one object within the tunnel network system
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TunnelTracker_healObject.cpp
 // ?healObject@TunnelTracker@@ present-unmatched
 void TunnelTracker::healObject( Object *obj, void *frames)
 {

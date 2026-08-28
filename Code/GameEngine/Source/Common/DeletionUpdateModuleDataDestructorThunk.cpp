@@ -16,6 +16,7 @@ public:
 	unsigned int m_04;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DeletionUpdate.h
 class DeletionUpdateModuleData : public DeletionUpdateModuleDataBase
 {
 public:

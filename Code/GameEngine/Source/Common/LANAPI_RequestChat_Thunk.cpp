@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?RequestChat@LANAPI@@UAEXVUnicodeString@@W4ChatType@LANAPIInterface@@@Z: Code/GameEngine/Source/GameNetwork/lanapi.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class UnicodeString {};
 class LANAPIInterface { public: enum ChatType {}; };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class LANAPI
 {
 public:

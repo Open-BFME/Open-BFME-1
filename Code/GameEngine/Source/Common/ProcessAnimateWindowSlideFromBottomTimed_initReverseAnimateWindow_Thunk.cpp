@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?initReverseAnimateWindow@ProcessAnimateWindowSlideFromBottomTimed@@UAEXPAVAnimateWindow@@I@Z: Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
 // Open-BFME5: convert the retail animation initializer to clean C++.
 
 typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
@@ -22,12 +24,14 @@ struct BFMECoord2D
 	~BFMECoord2D( void ) {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
 	Int winSetPosition( Int x, Int y );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/AnimateWindowManager.h
 class AnimateWindow
 {
 public:
@@ -42,6 +46,7 @@ private:
 	GameWindow *m_gameWindow;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display
 {
 public:
@@ -83,6 +88,7 @@ extern "C" __declspec(noinline) UnsignedInt __stdcall bfme_timeGetTime( void )
 	return *reinterpret_cast<UnsignedInt *>(0x012ed898);
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ProcessAnimateWindow.h
 class ProcessAnimateWindowSlideFromBottomTimed
 {
 public:

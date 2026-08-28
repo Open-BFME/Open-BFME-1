@@ -1,5 +1,36 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ob1 /Ireference/shims/ini /Ireference/shims/xfer /Ireference/shims/ini_parser /Ireference/shims/gameaudio /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
+// readable body of ?isEndOfBlock@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?isValidINIFilename@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?load@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseAccelerationReal@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseAndTranslateLabel@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseAngularVelocityReal@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseArmorTemplate@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseAsciiString@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseAudioEventRTS@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseCoord2D@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseCoord3D@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseDamageFX@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseDamageTypeFlags@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseDeathTypeFlags@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseDurationReal@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseDurationUnsignedInt@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseDurationUnsignedShort@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseFXList@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseGameClientRandomVariable@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseICoord2D@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseMappedImage@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseParticleSystemTemplate@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseQuotedAsciiString@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseSpecialPowerTemplate@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseThingTemplate@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseUpgradeTemplate@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseVelocityReal@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseVeterancyLevelFlags@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseWeaponTemplate@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?readLine@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?unPrepFile@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -227,6 +258,7 @@ Bool INI::isValidINIFilename( const char *filename )
 // Body in Code/masm_dumps/loadDirectory_INI_QAEXVAsciiString_NW4INILoadType_PAVXfer_Z_853F10.asm (exact 700B retail @ 0x00853F10).
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/INIPrepFileThunk.cpp
 // ?prepFile@INI@@IAEXVAsciiString@@W4INILoadType@@@Z present-unmatched
 void INI::prepFile( AsciiString filename, INILoadType loadType )
 {
@@ -567,6 +599,7 @@ void INI::parseQuotedAsciiString( INI* ini, void * /*instance*/, void *store, co
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI_getNextAsciiString_Thunk.cpp
 // ?getNextAsciiString@INI@@ present-unmatched
 AsciiString INI::getNextAsciiString()
 {
@@ -764,6 +797,7 @@ void INI::parseICoord2D( INI* ini, void * /*instance*/, void *store, const void*
 //-------------------------------------------------------------------------------------------------
 /** Parse an audio event and assign to the 'AudioEventRTS*' at store */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/INIParseDynamicAudioEventRTSThunk.cpp
 // ?parseDynamicAudioEventRTS@INI@@SAXPAV1@PAX1PBX@Z present-unmatched
 void INI::parseDynamicAudioEventRTS( INI *ini, void * /*instance*/, void *store, const void* userData )
 {
@@ -939,6 +973,7 @@ void INI::parseDamageFX( INI* ini, void * /*instance*/, void *store, const void*
 //-------------------------------------------------------------------------------------------------
 /** Parse an ObjectCreationList and assign to the 'ObjectCreationList *' at store */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/INI_parseObjectCreationList.cpp
 // ?parseObjectCreationList@INI@@SAXPAV1@PAX1PBX@Z present-unmatched
 void INI::parseObjectCreationList( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1194,6 +1229,7 @@ void INI::parseVeterancyLevelFlags(INI *ini, void *, void *store, const void *)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/INIParseSoundsListThunk.cpp
 // ?parseSoundsList@INI@@SAXPAV1@PAX1PBX@Z present-unmatched
 void INI::parseSoundsList( INI* ini, void *instance, void *store, const void* /*userData*/ )
 {

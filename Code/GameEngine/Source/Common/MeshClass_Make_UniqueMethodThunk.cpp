@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: retail-layout C++ conversion of MeshClass::Make_Unique.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmdl.h
 class MeshModelClass
 {
 public:
@@ -11,6 +12,7 @@ public:
 	char Data[0xC0];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mesh.h
 class MeshClass
 {
 public:

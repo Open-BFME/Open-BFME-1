@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?teamAboutToBeDeleted@TeamPrototype@@QAEXPAVTeam@@@Z: Code/GameEngine/Source/Common/RTS/Team.cpp
 
 // TeamPrototype::teamAboutToBeDeleted, retail 0x000F4090, 57 bytes. Zero Hour's
 // body unchanged: tell every team on the instance list to drop its override
@@ -16,6 +17,7 @@ typedef UnsignedInt TeamID;
 
 enum { TEAM_ID_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
@@ -58,6 +60,7 @@ private:
 	Team *m_cur;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:

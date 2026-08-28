@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?getSoundVolume@OptionPreferences@@QAEMXZ: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionsMenu.cpp
 // Lift the OptionPreferences::getSoundVolume naked dump to clean C++.
 //
 // The preferences-getter opening is the family's, but both ends are new. The
@@ -23,6 +24,7 @@
 
 extern "C" __declspec(dllimport) double __cdecl atof(const char *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiStringData
 {
 public:
@@ -30,6 +32,7 @@ public:
 	char m_chars[1];									///< retail this+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -58,6 +61,7 @@ private:
 	PreferenceNode *m_end;								///< retail this+0x00
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioSettings.h
 class AudioSettings
 {
 public:
@@ -67,6 +71,7 @@ public:
 
 // Only the virtual at +0x120 is reconstructed; the slots ahead of it are
 // declared to place it and are never defined or called.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
 public:
@@ -148,6 +153,7 @@ public:
 
 extern AudioManager *TheAudio;							///< retail [0x012ED668]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class OptionPreferences
 {
 public:

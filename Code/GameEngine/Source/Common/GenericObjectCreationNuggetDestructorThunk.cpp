@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: retail-layout C++ conversion of the GenericObjectCreationNugget destructor.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
@@ -32,6 +33,7 @@ public:
 	~GenericObjectCreationNuggetAnimSets();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 private:
@@ -41,6 +43,7 @@ public:
 	virtual ~AudioEventRTS();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectCreationList.h
 class ObjectCreationNugget
 {
 public:

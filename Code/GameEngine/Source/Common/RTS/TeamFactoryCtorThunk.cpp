@@ -1,5 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ??1TeamFactory@@UAE@XZ: Code/GameEngine/Source/Common/RTS/Team.cpp
+// readable body of ?addTeamPrototypeToList@TeamFactory@@QAEXPAVTeamPrototype@@@Z: Code/GameEngine/Source/Common/RTS/Team.cpp
+// readable body of ?clear@TeamFactory@@QAEXXZ: Code/GameEngine/Source/Common/RTS/Team.cpp
+// readable body of ?initTeam@TeamFactory@@QAEXABVAsciiString@@0_NPAVDict@@@Z: Code/GameEngine/Source/Common/RTS/Team.cpp
 
 // TeamFactory's default constructor, lifted from its MASM dump to C++.
 //
@@ -39,6 +43,7 @@
 // Code/GameEngine/Source/Common/System/SubsystemInterface.cpp (already
 // matched), so the ctor below is declared, never defined, and resolves
 // there as an external call.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -57,6 +62,7 @@ private:
 // defined right here (inline) so the compiler folds the call away, exactly
 // as retail's bytes show -- only the resulting vptr store reaches the
 // target function.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -81,6 +87,7 @@ public:
 // way - only a body that uses the key can tell them apart.
 // Enough of AsciiString to reproduce str(): retail inlines it as
 // `p ? p + 8 : ""` at 0x000F3DAA and 0x000F3DCA.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -90,6 +97,7 @@ private:
 };
 
 enum NameKeyType { NAMEKEY_INVALID = 0 };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -103,6 +111,7 @@ class Team;
 class TeamFactory;
 
 // getNeutralPlayer is inlined at 0x000F81D3 as a read of this+0x14.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
@@ -113,6 +122,7 @@ public:
 extern PlayerList *ThePlayerList;
 
 // The two AsciiStrings the key is built from sit at +0x10 and +0x14.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:
@@ -128,6 +138,7 @@ public:
 };
 typedef std::pair<int, int> BfmeTeamPrototypeKey;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamFactory : public SubsystemInterface, public Snapshot
 {
 public:

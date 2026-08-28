@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?newMap@Player@@QAEXXZ: Code/GameEngine/Source/Common/RTS/Player.cpp
 
 // Open-BFME5: Player::newMap, retail 0x000C9200, 43 bytes. The body carried
 // only a machine byte-dump row; reverse/reloc_names.csv carries the name with
@@ -27,6 +28,7 @@ public:
 	void bfmeNewMap(Int field, Bool flag);			// ILT 0x00018679 -> 0x000C7A30
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

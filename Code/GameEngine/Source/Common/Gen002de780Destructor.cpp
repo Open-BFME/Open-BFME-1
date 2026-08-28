@@ -11,6 +11,7 @@
 // 0x00887940.  The name here is address-derived on purpose -- it disclaims
 // identity rather than asserting one.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

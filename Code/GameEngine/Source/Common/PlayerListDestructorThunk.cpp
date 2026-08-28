@@ -3,6 +3,7 @@
 #define Matrix4x4 Matrix4
 #define __PLACEMENT_VEC_NEW_INLINE
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -12,6 +13,7 @@ private:
 	void *m_name;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -21,12 +23,14 @@ public:
 	virtual void loadPostProcess() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
 	virtual ~Player();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList : public SubsystemInterface, public Snapshot
 {
 public:

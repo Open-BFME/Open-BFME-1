@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?findMultiplayerColorDefinitionByName@MultiplayerSettings@@: Code/GameEngine/Source/Common/MultiplayerSettings.cpp
 // Open-BFME: MultiplayerSettings::findMultiplayerColorDefinitionByName, retail
 // 0x0008E760, 275 bytes.
 //
@@ -20,6 +21,7 @@
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -58,6 +60,7 @@ inline bool operator==(const AsciiString &left, const AsciiString &right)
 	return left.compare(right) == 0;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MultiplayerSettings.h
 class MultiplayerColorDefinition
 {
 public:
@@ -70,6 +73,7 @@ private:
 typedef _STL::map<Int, MultiplayerColorDefinition> MultiplayerColorList;
 typedef MultiplayerColorList::iterator MultiplayerColorIter;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MultiplayerSettings.h
 class MultiplayerSettings
 {
 public:

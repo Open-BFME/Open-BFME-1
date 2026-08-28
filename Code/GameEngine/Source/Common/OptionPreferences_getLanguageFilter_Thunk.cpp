@@ -60,6 +60,7 @@ struct GlobalDataShim
 
 extern GlobalDataShim *TheGlobalData;				///< retail [0x012ED5C8]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class OptionPreferences
 {
 public:

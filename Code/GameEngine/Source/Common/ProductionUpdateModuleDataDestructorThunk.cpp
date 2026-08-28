@@ -43,6 +43,7 @@ private:
 	RefCountedThing *m_ptr;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -62,6 +63,7 @@ private:
 	unsigned char m_pad[8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ProductionUpdate.h
 class ProductionUpdateModuleData : public Snapshot
 {
 public:

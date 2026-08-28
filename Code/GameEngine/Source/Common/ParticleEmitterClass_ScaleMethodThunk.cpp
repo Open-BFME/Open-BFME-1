@@ -28,6 +28,7 @@ public:
 	Vector3 &operator *= (float k) { X = X * k; Y = Y * k; Z = Z * k; return *this; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/v3_rnd.h
 class Vector3Randomizer
 {
 public:
@@ -39,6 +40,7 @@ public:
 	virtual void Scale(float scale);					///< vtable +0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_buf.h
 class ParticleBufferClass
 {
 public:
@@ -137,6 +139,7 @@ public:
 	virtual void Scale(float scale);					///< vtable +0x16C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_emt.h
 class ParticleEmitterClass
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getPreferredMap@CustomMatchPreferences@@QAE?AVAsciiString@@XZ: Code/GameEngine/Source/Common/UserPreferences.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class AsciiString {};

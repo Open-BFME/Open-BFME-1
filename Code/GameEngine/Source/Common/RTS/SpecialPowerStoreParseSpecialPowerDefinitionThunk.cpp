@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?parseSpecialPowerDefinition@SpecialPowerStore@@: Code/GameEngine/Source/Common/RTS/SpecialPower.cpp
 // Open-BFME5: lift the retail SpecialPowerStore::parseSpecialPowerDefinition MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_SpecialPowerStoreParseSpecialPowerDefinition_0EBE90()

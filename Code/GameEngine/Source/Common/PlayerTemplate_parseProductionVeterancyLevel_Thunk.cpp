@@ -19,6 +19,7 @@ public:
     const T *str() const { return m_text ? m_text + 8 : ""; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
     char *m_text;
@@ -35,6 +36,7 @@ public:
     }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -42,6 +44,7 @@ public:
     static int scanIndexList(const char *token, const char *const *names);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -71,6 +74,7 @@ typedef _STL::map<NameKeyType, VeterancyLevel, _STL::less<NameKeyType>,
                                               VeterancyLevel> > >
     ProductionVeterancyMap;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerTemplate.h
 class PlayerTemplate
 {
 protected:

@@ -4,6 +4,7 @@
 // 0x003B7D30, 109 bytes. Four AsciiString members and the eight-byte gap
 // between the third and fourth member reproduce the retail unwind states.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

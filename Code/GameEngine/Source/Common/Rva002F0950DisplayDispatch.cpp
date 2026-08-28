@@ -1,5 +1,6 @@
 // Open-BFME: Display constant dispatch reconstructed from retail RVA 0x002F0950.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?loadPostProcess@ParticleSystem@@MAEXXZ: Code/GameEngine/Source/GameClient/System/ParticleSys.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) ParticleSystem

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?deinit@GameTextManager@@UAEXXZ: Code/GameEngine/Source/GameClient/GameText.cpp
 // Lift the GameTextManager::deinit naked dump to clean C++.
 //
 // Zero Hour's GameText.cpp body; the DEBUG_LOGs around the missing-string walk
@@ -19,11 +20,13 @@
 typedef int Int;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 	void *m_data;

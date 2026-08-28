@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Build_Textures@Render2DSentenceClass@@AAEXXZ: Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) Render2DSentenceClass

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GX
+// readable body of ?update@GameEngine@@UAEXXZ: Code/GameEngine/Source/Common/GameEngine.cpp
 
 typedef unsigned int UnsignedInt;
 
@@ -15,6 +16,7 @@ public:
 	virtual void update(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -79,6 +81,7 @@ struct ClientFrameState
 #define One (*(const float *)0x01075334)
 #define MillisecondsToSeconds (*(const double *)0x01075D80)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameEngine.h
 class GameEngine
 {
 public:

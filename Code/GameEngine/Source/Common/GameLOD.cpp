@@ -345,6 +345,7 @@ void GameLODManager::refreshCustomStaticLODLevel(void)
 }
 
 /**Convert LOD name to an index*/
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameLODManagerGetStaticGameLODIndex.cpp
 // ?getStaticGameLODIndex@GameLODManager@@QAEHVAsciiString@@@Z present-unmatched
 Int GameLODManager::getStaticGameLODIndex(AsciiString name)
 {
@@ -434,6 +435,7 @@ const char *GameLODManager::getStaticGameLODLevelName(StaticGameLODLevel level)
 
 /**Function which calculates the recommended LOD level for current hardware
 configuration.*/
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameLODManager_findStaticLODLevel_Thunk.cpp
 // ?findStaticLODLevel@GameLODManager@@QAE?AW4StaticGameLODLevel@@XZ present-unmatched
 StaticGameLODLevel GameLODManager::findStaticLODLevel(void)
 {

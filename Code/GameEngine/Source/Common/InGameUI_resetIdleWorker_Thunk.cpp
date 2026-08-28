@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/shims/languagefilter /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?resetIdleWorker@InGameUI@@EAEXXZ: Code/GameEngine/Source/GameClient/InGameUI.cpp
 
 // Blank the idle-worker caption if the window exists, reset the index, then
 // clear thirty-two lists.
@@ -20,6 +21,7 @@ class GameWindow;
 
 void GadgetRadioSetText(GameWindow *window, UnicodeString text);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:

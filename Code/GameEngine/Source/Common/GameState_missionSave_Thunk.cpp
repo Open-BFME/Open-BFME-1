@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?missionSave@GameState@@QAE?AW4SaveCode@@XZ: Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 enum SaveCode { };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameState.h
 class GameState
 {
 public:

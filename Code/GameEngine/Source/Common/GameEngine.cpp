@@ -199,6 +199,7 @@ GameEngine::GameEngine( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameEngineDestructorThunk.cpp
 // ??1GameEngine@@UAE@XZ present-unmatched
 // ??1GameEngine@@UAE@XZ is emitted by GameEngineDestructorThunk.cpp.
 
@@ -220,8 +221,10 @@ void GameEngine::setFramesPerSecondLimit( Int fps )
 /** -----------------------------------------------------------------------------------------------
  * Initialize the game engine by initializing the GameLogic and GameClient.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameEngineInitThunk.cpp
 // ?init@GameEngine@@ present-unmatched
 void GameEngine::init( void ) {} /// @todo: I changed this to take argc & argv so we can parse those after the GDF is loaded.  We need to rethink this immediately as it is a nasty hack
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameEngineInitThunk.cpp
 // ?init@GameEngine@@ present-unmatched
 void GameEngine::init( int argc, char *argv[] )
 {
@@ -681,6 +684,7 @@ void GameEngine::init( int argc, char *argv[] )
 /** -----------------------------------------------------------------------------------------------
 	* Reset all necessary parts of the game engine to be ready to accept new game data 
 	*/
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameEngineReset.cpp
 // ?reset@GameEngine@@UAEXXZ present-unmatched
 void GameEngine::reset( void )
 {
@@ -719,6 +723,7 @@ DECLARE_PERF_TIMER(GameEngine_update)
  * @todo Allow the client to run as fast as possible, but limit the execution
  * of TheNetwork and TheGameLogic to a fixed framerate.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameEngineUpdate.cpp
 // ?update@GameEngine@@UAEXXZ present-unmatched
 void GameEngine::update( void )
 { 

@@ -18,6 +18,7 @@
 // value-returning path, so the diagnostic is the point rather than a defect.
 #pragma warning(disable : 4716)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -25,12 +26,14 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/PhysicsUpdate.h
 class PhysicsBehavior
 {
 public:
 	void applyMotiveForce(const Coord3D *force);		///< ILT thunk at 0x0002A284
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

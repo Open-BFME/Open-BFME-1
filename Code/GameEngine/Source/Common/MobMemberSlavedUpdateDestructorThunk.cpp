@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ??1MobMemberSlavedUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/MobMemberSlavedUpdate.cpp
 
 // MobMemberSlavedUpdate's destructor, lifted from its MASM dump to C++.
 //
@@ -24,30 +25,35 @@ private:
 	const void *m_moduleData;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModuleInterface
 {
 public:
 	virtual void getBehaviorModuleInterface() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleInterface
 {
 public:
 	virtual void updateModuleInterface() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule : public Gen_dtor_00113d40
 {
 private:
 	void *m_object;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule : public ObjectModule, public BehaviorModuleInterface
 {
 public:
 	virtual ~BehaviorModule() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public BehaviorModule, public UpdateModuleInterface
 {
 public:

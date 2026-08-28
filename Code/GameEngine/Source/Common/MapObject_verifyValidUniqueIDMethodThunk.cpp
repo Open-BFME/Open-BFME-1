@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?verifyValidUniqueID@MapObject@@QAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) MapObject

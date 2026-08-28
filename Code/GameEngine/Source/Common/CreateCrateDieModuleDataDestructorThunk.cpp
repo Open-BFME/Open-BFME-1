@@ -4,6 +4,7 @@
 
 #include <list>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -22,6 +23,7 @@ private:
 	unsigned char m_pad[0x30];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CreateCrateDie.h
 class CreateCrateDieModuleData : public CreateCrateDieModuleDataBase
 {
 public:

@@ -19,6 +19,7 @@ public:
 	~EmotionTrackerUpdateEntry();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleData
 {
 public:

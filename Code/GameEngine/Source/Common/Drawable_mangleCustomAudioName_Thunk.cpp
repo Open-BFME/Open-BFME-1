@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?mangleCustomAudioName@Drawable@@QBEXPAVDynamicAudioEventInfo@@@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class DynamicAudioEventInfo;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:

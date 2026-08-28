@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getSlotNum@LANGameInfo@@QAEHVUnicodeString@@@Z: Code/GameEngine/Source/GameNetwork/LANGameInfo.cpp
 
 typedef bool Bool;
 typedef int Int;
@@ -14,6 +15,7 @@ private:
 	friend class UnicodeString;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -28,6 +30,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameSlot
 {
 public:
@@ -37,6 +40,7 @@ private:
 	unsigned char m_data[0x68];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameInfo
 {
 public:

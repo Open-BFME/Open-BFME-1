@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?animateSpecialPowerShortcut@ControlBar@@QAEX_N@Z: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 // Lift the ControlBar::animateSpecialPowerShortcut naked dump to clean C++.
 //
 // Zero Hour's ControlBar.cpp body, unchanged. The dontAnimate flag does not
@@ -19,12 +20,14 @@ typedef bool Bool;
 
 enum { WIN_ANIMATION_SLIDE_RIGHT = 1 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
 	void *winGetUserData(void);							///< ILT thunk at 0x00046538
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/AnimateWindowManager.h
 class AnimateWindowManager
 {
 public:
@@ -40,6 +43,7 @@ public:
 	void reverseAnimateWindow(void);					///< ILT thunk at 0x00027B65
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:

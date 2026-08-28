@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1RTS3DScene@@UAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) RTS3DScene

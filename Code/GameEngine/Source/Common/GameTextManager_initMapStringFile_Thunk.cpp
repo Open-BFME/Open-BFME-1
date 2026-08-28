@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?initMapStringFile@GameTextManager@@UAEXABVAsciiString@@@Z: Code/GameEngine/Source/GameClient/GameText.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class AsciiString;

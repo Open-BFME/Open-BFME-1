@@ -30,6 +30,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -40,6 +41,7 @@ public:
 	StringBase<char> m_string;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ModuleInfo
 {
 public:
@@ -47,6 +49,7 @@ public:
 	// through StringBase<char>::set, the twelve bytes at +4 through
 	// vector<AsciiString>::operator= at 0x000DE2C0, and moves one dword from
 	// +0x10 -- twenty bytes in all, which is the stride.
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 	struct Nugget
 	{
 		AsciiString first;

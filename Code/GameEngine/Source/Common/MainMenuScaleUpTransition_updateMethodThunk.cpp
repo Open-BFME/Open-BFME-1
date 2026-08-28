@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?update@MainMenuScaleUpTransition@@UAEXH@Z: Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp
 // Lift the MainMenuScaleUpTransition::update naked dump to clean C++.
 //
 // Zero Hour's GameWindowTransitionsStyles.cpp body with two BFME differences.
@@ -21,12 +22,14 @@
 typedef int Int;
 typedef unsigned char Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
 	void winHide(Bool hide);							///< ILT thunk at 0x00027F2A
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class MainMenuScaleUpTransition
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getApparentControllingPlayer@GarrisonContain@@UBEPBVPlayer@@PBV2@@Z: Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain.cpp
 
 // BFME GarrisonContain::getApparentControllingPlayer, 0x0021E340.
 //
@@ -20,6 +21,7 @@ class Team;
 class Player;
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -31,18 +33,21 @@ private:
 	Team *m_defaultTeam;			// +0x230
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	Player *getControllingPlayer() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
 	Player *getControllingPlayer() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule
 {
 public:
@@ -62,12 +67,14 @@ protected:
 	char m_pad[0x20 - 0x0c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class ContainModuleInterface
 {
 public:
 	virtual const Player *getApparentControllingPlayer(const Player *observingPlayer) const = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GarrisonContain.h
 class GarrisonContain : public GarrisonContainPrimary, public ContainModuleInterface
 {
 public:

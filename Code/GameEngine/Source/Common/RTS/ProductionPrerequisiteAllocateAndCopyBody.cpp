@@ -10,6 +10,7 @@
 // the same _Construct whose inlined copy constructor stores the vtable at +0,
 // a dword at +4, a byte at +8 and copy-constructs the member at +0xC.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ProductionPrerequisite.h
 class ProductionPrerequisite
 {
 private:

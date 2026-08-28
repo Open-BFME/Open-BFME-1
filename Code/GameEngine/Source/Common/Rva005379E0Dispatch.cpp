@@ -10,6 +10,7 @@ public:
 	virtual unsigned char slot10();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefsImplementation.h
 class GameSpyInfo
 {
 public:

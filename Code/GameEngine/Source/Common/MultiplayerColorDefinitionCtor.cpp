@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -10,6 +11,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor
 {
 	float red;
@@ -26,6 +28,7 @@ struct RGBColor
 
 typedef int Color;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MultiplayerSettings.h
 class MultiplayerColorDefinition
 {
 public:

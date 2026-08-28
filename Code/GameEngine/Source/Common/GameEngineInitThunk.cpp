@@ -1,3 +1,4 @@
+// readable body of ?init@GameEngine@@: Code/GameEngine/Source/Common/GameEngine.cpp
 // Exact full retail bytes for GameEngine::init at 0x00079060.
 // Kept separate so GameEngine.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_GameEngine_init_79060()

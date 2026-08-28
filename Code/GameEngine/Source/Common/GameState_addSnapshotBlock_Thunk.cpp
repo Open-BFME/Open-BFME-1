@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?addSnapshotBlock@GameState@@AAEXVAsciiString@@PAVSnapshot@@W4SnapshotType@@@Z: Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class AsciiString {};
 class Snapshot;
 enum SnapshotType { SnapshotType_dummy = 0 };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameState.h
 class GameState {
 private:
 	void addSnapshotBlock(AsciiString, Snapshot *, SnapshotType);

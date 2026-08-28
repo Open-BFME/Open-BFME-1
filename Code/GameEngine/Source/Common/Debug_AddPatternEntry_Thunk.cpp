@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Oy-
+// readable body of ?AddPatternEntry@Debug@@AAEXI_NPBD@Z: Code/Libraries/Source/WWVegas/WWDebug/debug_debug.cpp
 // Lift the Debug::AddPatternEntry naked dump to clean C++.
 //
 // Zero Hour's debug_debug.cpp body with one BFME addition: after copying the
@@ -23,6 +24,7 @@ extern "C" __declspec(dllimport) char *__cdecl _strlwr(char *);
 
 void *DebugAllocMemory(unsigned int size);				///< ILT thunk at 0x0088EB30
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
 class Debug
 {
 private:

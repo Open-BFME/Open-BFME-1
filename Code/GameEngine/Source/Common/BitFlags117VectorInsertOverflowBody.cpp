@@ -16,6 +16,7 @@
 // on it.
 
 template <int Count>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 private:

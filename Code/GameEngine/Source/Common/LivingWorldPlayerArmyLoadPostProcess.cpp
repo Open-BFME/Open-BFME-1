@@ -8,6 +8,7 @@ struct Rva00365830StringHeader
 	char m_text[ 1 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

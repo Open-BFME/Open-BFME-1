@@ -10,6 +10,7 @@
 // so this call site pins to that ILT without disturbing the _Construct name
 // the ledger already pins elsewhere.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 struct ParticleSysBoneInfo
 {
 private:

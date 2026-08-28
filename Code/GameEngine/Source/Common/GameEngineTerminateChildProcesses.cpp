@@ -6,6 +6,7 @@ typedef int BOOL;
 extern "C" __declspec(dllimport) BOOL __stdcall TerminateProcess(
 	HANDLE process, unsigned int exitCode);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameEngine.h
 class GameEngine
 {
 public:

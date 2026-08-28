@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?removeMilitarySubtitle@InGameUI@@UAEXXZ: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // Lift the InGameUI::removeMilitarySubtitle naked dump to clean C++.
 //
 // Zero Hour's InGameUI.cpp body with one BFME addition. ZH frees only the
@@ -26,6 +27,7 @@ typedef unsigned int UnsignedInt;
 
 class DisplayString;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -35,6 +37,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayStringManager.h
 class DisplayStringManager
 {
 public:
@@ -54,6 +57,7 @@ public:
 
 extern DisplayStringManager *TheDisplayStringManager;		///< retail [0x012F12CC]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:
@@ -165,6 +169,7 @@ public:
 private:
 	enum { MAX_SUBTITLE_LINES = 8 };
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 	struct MilitarySubtitleData
 	{
 		// declared out of line: without this MSVC inlines the implicit

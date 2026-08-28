@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?onExit@AIEnterState@@UAEXW4StateExitType@@@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Lift the AIEnterState::onExit __emit thunk to clean C++.
 //
 // Verbatim Zero Hour AIStates.cpp: chain to the base onExit, stop the pathfinder
@@ -20,6 +21,7 @@ enum ObjectEnterExitType { WANTS_NEITHER = 0, WANTS_TO_ENTER = 1, WANTS_TO_EXIT 
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class Locomotor
 {
 public:
@@ -36,6 +38,7 @@ private:
 	unsigned int m_flags;							///< retail this+0x40
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -48,6 +51,7 @@ private:
 	Locomotor *m_curLocomotor;						///< retail this+0x1CC
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class ContainModuleInterface
 {
 public:
@@ -67,6 +71,7 @@ public:
 	virtual void onObjectWantsToEnterOrExit(Object *obj, ObjectEnterExitType wants);	///< vtable +0x34
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -80,6 +85,7 @@ private:
 	AIUpdateInterface *m_ai;						///< retail this+0x204
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -88,6 +94,7 @@ public:
 
 extern GameLogic *TheGameLogic;						///< retail [0x012F0898]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -95,6 +102,7 @@ public:
 	Object *m_owner;								///< retail this+0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
 {
 public:
@@ -107,6 +115,7 @@ protected:
 	StateMachine *m_machine;						///< retail this+0x1C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIEnterState : public AIInternalMoveToState
 {
 public:

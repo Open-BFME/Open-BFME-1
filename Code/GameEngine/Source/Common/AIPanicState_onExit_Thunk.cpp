@@ -50,6 +50,7 @@ public:
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -57,12 +58,14 @@ public:
 	Object *m_owner;										///< retail this+0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
 	bool isKindOf(KindOfType) const;						///< ILT thunk at 0x0003251F
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 public:
@@ -83,6 +86,7 @@ void Object::unidentified_000F20F0(Int index, Int value)
 	unidentified_0002181E(flags, value);
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
 {
 public:
@@ -95,6 +99,7 @@ protected:
 	StateMachine *m_machine;								///< retail this+0x1C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIPanicState : public AIInternalMoveToState
 {
 public:

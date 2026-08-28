@@ -1,6 +1,8 @@
+// readable body of ?friend_adjustPowerForPlayer@Object@@QAEX_N@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 class Object;
 class Player;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -15,6 +17,7 @@ struct ThingTemplatePowerABI
 	int energyProduction;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Energy.h
 class Energy
 {
 public:
@@ -30,6 +33,7 @@ private:
 	Player *m_player;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 	public:
@@ -38,12 +42,14 @@ class Player
 	Energy energy;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
 	Player *getControllingPlayer() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 friend class Energy;

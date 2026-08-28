@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ??1INI@@QAE@XZ: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // Open-BFME5: INI dtor. members @+0x04 and @+0x834.
 
 class Buffer
@@ -17,6 +19,7 @@ private:
 	unsigned char m_pad[4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?setTeamRelationship@Player@@QAEXPBVTeam@@W4Relationship@@@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
 // Player::setTeamRelationship, retail 0x000D7640.
 //
 // Zero Hour's body verbatim. BFME's TeamRelationMap carries a single vtable
@@ -28,6 +29,7 @@ typedef _STL::hash_map< Int, Int, _STL::hash< Int >, _STL::equal_to< Int >,
 
 enum Relationship { ENEMIES = 0, NEUTRAL = 1, ALLIES = 2 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
@@ -38,6 +40,7 @@ private:
 	Int m_id;											///< retail this+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamRelationMap
 {
 public:
@@ -46,6 +49,7 @@ public:
 	TeamRelationMapType m_map;							///< retail this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onExit@AIAttackState@@UAEXW4StateExitType@@@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 enum StateExitType { EXIT_NORMAL = 0 };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIAttackState
 {
 public:

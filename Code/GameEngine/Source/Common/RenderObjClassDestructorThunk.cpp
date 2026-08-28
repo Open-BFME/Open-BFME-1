@@ -12,6 +12,7 @@
 // the decrement is a plain dec rather than an interlocked one. There is no null
 // test before the virtual call because Delete_This is an ordinary virtual on a
 // pointer already known good, not a delete expression.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -27,6 +28,7 @@ public:
 	int m_numRefs;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/persist.h
 class PersistClass
 {
 public:
@@ -36,6 +38,7 @@ private:
 	int m_04;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListObjectClass
 {
 public:

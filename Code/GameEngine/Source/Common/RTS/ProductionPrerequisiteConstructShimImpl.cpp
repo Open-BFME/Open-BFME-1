@@ -2,6 +2,7 @@
 
 inline void *operator new(unsigned int, void *place) { return place; }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ProductionPrerequisite.h
 class ProductionPrerequisite
 {
 public:

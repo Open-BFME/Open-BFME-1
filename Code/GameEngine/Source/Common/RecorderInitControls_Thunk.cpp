@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -15,18 +16,21 @@ private:
 	const char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
 	int nameToKey(const char *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
 	void winHide(bool);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:
@@ -50,6 +54,7 @@ public:
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern GameWindowManager *TheWindowManager;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass
 {
 public:

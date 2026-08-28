@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?moveAlliesAwayFromDestination@Pathfinder@@QAEXPAVObject@@ABUCoord3D@@@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 // Lift the Pathfinder::moveAlliesAwayFromDestination naked dump to clean C++.
 //
 // Zero Hour's AIPathfind.cpp body with three BFME changes, two of which the
@@ -22,11 +23,13 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x, y, z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x, y;
@@ -36,12 +39,14 @@ enum PathfindLayerEnum { LAYER_GROUND = 1 };
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
 	Int getIgnoredObstacleID(void);						///< ILT thunk at 0x0001A36B
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -57,6 +62,7 @@ private:
 	AIUpdateInterface *m_ai;							///< retail this+0x204
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -72,6 +78,7 @@ struct MADStruct
 	Int ignoreID;										///< retail this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:

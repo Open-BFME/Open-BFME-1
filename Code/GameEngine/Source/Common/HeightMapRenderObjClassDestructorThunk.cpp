@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1HeightMapRenderObjClass@@UAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/HeightMap.cpp
 // Open-BFME5: lift HeightMapRenderObjClass destructor to standalone C++.
 
 class HeightMapRenderObjClass;
@@ -44,6 +45,7 @@ public:
 
 extern HeightMapRenderObjClass *TheHeightMap;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/HeightMap.h
 class HeightMapRenderObjClass : public BaseHeightMapRenderObjClass
 {
 public:

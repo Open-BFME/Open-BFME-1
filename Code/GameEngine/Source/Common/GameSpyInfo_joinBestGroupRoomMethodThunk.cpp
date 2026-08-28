@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?joinBestGroupRoom@GameSpyInfo@@UAEXXZ: Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) GameSpyInfo

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1BaseHeightMapRenderObjClass@@UAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) BaseHeightMapRenderObjClass

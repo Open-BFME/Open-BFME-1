@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getAsciiString@Dict@@: Code/GameEngine/Source/Common/Dict.cpp
 // Open-BFME: Dict::getAsciiString, retail 0x00068580, 96 bytes.
 
 typedef int Int;
@@ -7,6 +8,7 @@ typedef bool Bool;
 
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -19,6 +21,7 @@ private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
 class Dict
 {
 public:
@@ -37,6 +40,7 @@ public:
 private:
 	enum DictPairKeyType { DICTPAIRKEY_ILLEGAL = 0 };
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
 	struct DictPair
 	{
 		DictPairKeyType m_key;					// this+0x00, type in the low byte

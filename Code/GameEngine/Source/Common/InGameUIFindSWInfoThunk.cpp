@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?findSWInfo@InGameUI@@IAEPAVSuperweaponInfo@@HABVAsciiString@@W4ObjectID@@PBVSpecialPowerTemplate@@@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // Lift the InGameUI::findSWInfo __emit thunk to clean C++.
 //
 // Retail indexes a 12-byte-per-player map array at this+0x5CC (the
@@ -12,6 +13,7 @@ class AsciiString;
 class SpecialPowerTemplate;
 enum ObjectID { OBJECT_ID_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class SuperweaponInfo
 {
 public:
@@ -41,6 +43,7 @@ public:
 	unsigned char m_unreconstructed_04[8];		///< keeps the whole map 12 bytes wide
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 protected:

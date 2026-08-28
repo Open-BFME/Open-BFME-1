@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?findUpgrade@UpgradeCenter@@QBEPBVUpgradeTemplate@@ABVAsciiString@@@Z: Code/GameEngine/Source/Common/System/Upgrade.cpp
 
 // UpgradeCenter::findUpgrade, retail 0x0010B0E0. A name-to-key call and a
 // linked-list walk.
@@ -14,6 +15,7 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -34,6 +36,7 @@ public:
 
 extern NameKeyGeneratorShim *TheNameKeyGeneratorShim;	///< retail [0x012ED600]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeTemplate
 {
 public:
@@ -43,6 +46,7 @@ public:
 	UpgradeTemplate *m_next;				// +0x108
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeCenter
 {
 public:

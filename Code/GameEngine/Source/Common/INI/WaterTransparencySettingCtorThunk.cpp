@@ -28,6 +28,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -44,6 +45,7 @@ private:
 	bool m_isOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Water.h
 class WaterTransparencySetting : public Overridable
 {
 public:

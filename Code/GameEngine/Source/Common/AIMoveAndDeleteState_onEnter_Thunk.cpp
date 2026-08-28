@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onEnter@AIMoveAndDeleteState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME1: lift the retail AIMoveAndDeleteState::onEnter body to C++.
 //
 // The vendored ZH StateMachine.h disagrees with this build's real layout:
@@ -13,6 +14,7 @@ enum StateReturnType
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -20,12 +22,14 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	const Coord3D *getPosition(void) const { return (const Coord3D *)((const unsigned char *)this + 0x38); }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -40,6 +44,7 @@ private:
 	unsigned char m_locked;                    // offset 0x40
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
 {
 public:
@@ -57,6 +62,7 @@ protected:
 	unsigned char m_adjustDestinations;        // offset 0x4C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIMoveAndDeleteState : public AIInternalMoveToState
 {
 public:

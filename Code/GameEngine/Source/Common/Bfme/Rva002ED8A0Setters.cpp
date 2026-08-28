@@ -1,5 +1,6 @@
 // 25-byte setter, 18-byte global write, and 36-byte audio dispatch
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/VictoryConditions.h
 class VictoryConditionsInterface
 {
 public:
@@ -45,6 +46,7 @@ void Rva002ED8A0::setByte08( bool val )
 	}
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 struct GlobalData
 {
 	char  m_pad[ 0xA28 ];
@@ -57,6 +59,7 @@ void __stdcall setFloatA28( float val )
 	TheWritableGlobalData->m_valA28 = val;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
 public:

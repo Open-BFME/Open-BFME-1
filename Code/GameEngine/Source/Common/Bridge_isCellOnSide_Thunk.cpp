@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?isCellOnSide@Bridge@@QAE_NPBURegion2D@@@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 struct Region2D;

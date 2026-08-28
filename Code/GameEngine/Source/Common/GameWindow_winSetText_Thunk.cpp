@@ -24,6 +24,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>
 {
 public:
@@ -48,6 +49,7 @@ public:
 	virtual void onTextChanged(UnicodeString *text);	///< vtable +0xC
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:

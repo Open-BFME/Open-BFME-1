@@ -21,6 +21,7 @@
 // The SEH frame is not ours: /EHsc gives `new GlobalData` a funclet so the
 // allocation is released if the constructor throws.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:

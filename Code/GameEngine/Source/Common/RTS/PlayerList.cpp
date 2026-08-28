@@ -72,6 +72,7 @@
 /*extern*/ PlayerList *ThePlayerList = NULL;
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerListConstructorThunk.cpp
 // ??0PlayerList@@ present-unmatched
 PlayerList::PlayerList() :
 	m_local(NULL),
@@ -88,7 +89,6 @@ PlayerList::PlayerList() :
 // BFME dtor differs from ZH: no try/init, MAX_PLAYER_COUNT=32, clears ThePlayerList.
 
 //-----------------------------------------------------------------------------
-// ?getNthPlayer@PlayerList@@ present-unmatched
 // This TU's own copy is never claimed (the real ?getNthPlayer@PlayerList@@QAEPAVPlayer@@H@Z
 // row is matched from PlayerListSetLocalPlayer.cpp), but it still gets inlined into
 // getEachPlayerFromMask below within this TU, so its bound has to agree with retail's
@@ -235,6 +235,7 @@ void PlayerList::newGame()
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerListSetLocalPlayer.cpp
 // ?init@PlayerList@@ present-unmatched
 void PlayerList::init()
 {
@@ -269,6 +270,7 @@ void PlayerList::newMap()
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerListUpdate.cpp
 // ?teamAboutToBeDeleted@PlayerList@@ present-unmatched
 // ?teamAboutToBeDeleted@PlayerList@@QAEXPAVTeam@@@Z — exact retail body in
 // PlayerListUpdate.cpp, with ::update and ::updateTeamStates; all three need
@@ -300,6 +302,7 @@ Team *PlayerList::validateTeam( AsciiString owner )
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerListSetLocalPlayer.cpp
 // ?setLocalPlayer@PlayerList@@ present-unmatched
 void PlayerList::setLocalPlayer(Player *player)
 {

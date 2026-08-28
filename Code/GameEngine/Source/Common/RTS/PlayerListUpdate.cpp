@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?teamAboutToBeDeleted@PlayerList@@: Code/GameEngine/Source/Common/RTS/PlayerList.cpp
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -48,6 +49,7 @@
 // Local spelling of just enough of the class graph to place m_players at +0x14:
 // SubsystemInterface contributes a vptr and its AsciiString member (8 bytes),
 // Snapshot a second vptr (4), then m_local and m_playerCount.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -57,6 +59,7 @@ private:
 	void *m_name;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -68,6 +71,7 @@ public:
 
 class Team;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -76,6 +80,7 @@ public:
 	bool removeTeamRelationship(const Team *that);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList : public SubsystemInterface, public Snapshot
 {
 public:

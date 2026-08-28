@@ -26,6 +26,7 @@
 #include "Common/INI.h"
 #include "Common/INIException.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/TerrainRoads.h
 class TerrainRoadType
 {
 public:
@@ -42,6 +43,7 @@ private:
 	Bool m_isBridge;			// 0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/TerrainRoads.h
 class TerrainRoadCollection
 {
 public:

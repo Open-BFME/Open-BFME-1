@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?startMoveSound@AIInternalMoveToState@@AAEXXZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) AIInternalMoveToState

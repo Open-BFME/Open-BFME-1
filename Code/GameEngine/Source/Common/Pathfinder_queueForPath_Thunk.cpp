@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-
+// readable body of ?queueForPath@Pathfinder@@QAE_NW4ObjectID@@@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 // Open-BFME5: lift Pathfinder::queueForPath __emit thunk to clean C++.
 // Retail is 102 bytes at 0x003D5540 (the old 96B claim is truncated): scan
 // the ring from head to tail for a duplicate, then append unless full.
@@ -7,6 +8,7 @@
 
 enum ObjectID { OBJECT_ID_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:

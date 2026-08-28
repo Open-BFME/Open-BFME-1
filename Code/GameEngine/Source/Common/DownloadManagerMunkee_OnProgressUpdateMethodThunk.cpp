@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?OnProgressUpdate@DownloadManagerMunkee@@UAEJHHHH@Z: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/DownloadMenu.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) DownloadManagerMunkee

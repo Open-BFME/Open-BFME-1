@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?updateAndDrawWorldAnimations@InGameUI@@IAEXXZ: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) InGameUI

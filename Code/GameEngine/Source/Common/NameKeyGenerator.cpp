@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/shims/namekeygenerator /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
+// readable body of ?createMemoryPool@MemoryPoolFactory@@: Code/GameEngine/Source/Common/System/GameMemory.cpp
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -114,6 +115,7 @@ NameKeyType NameKeyGenerator::nameToKey(const AsciiString& name)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/NameKeyGenerator_keyToName.cpp
 // ?keyToName@NameKeyGenerator@@ present-unmatched
 // BFME's real body (0x8FD30) does NOT walk m_sockets -- it looks the key up in the
 // reverse key->Bucket hash_map instead (see NameKeyGenerator.h shim; the aux
@@ -139,6 +141,8 @@ NameKeyType NameKeyGenerator::nameToKey(const AsciiString& name)
 // near-miss; nameToKey(const char*)'s success below shows the AsciiString/
 // aux-hash_map reconstruction itself is sound, so this is specifically a
 // `hash_map::find()`-inlining-shape gap.
+// byte-exact reconstruction: Code/GameEngine/Source/Common/NameKeyGenerator_keyToName.cpp
+// ?keyToName@NameKeyGenerator@@QAE?AVAsciiString@@W4NameKeyType@@@Z present-unmatched
 AsciiString NameKeyGenerator::keyToName(NameKeyType key)
 {
 	for (Int i = 0; i < SOCKET_COUNT; ++i)

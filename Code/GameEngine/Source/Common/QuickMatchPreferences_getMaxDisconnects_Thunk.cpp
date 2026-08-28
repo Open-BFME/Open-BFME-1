@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?getMaxDisconnects@QuickMatchPreferences@@QAEHXZ: Code/GameEngine/Source/Common/UserPreferences.cpp
 // Lift the QuickMatchPreferences::getMaxDisconnects __emit thunk to clean C++.
 //
 // This body was filed as QuickMatchPreferences::getLastLadderPort returning
@@ -53,6 +54,7 @@ struct CustomPreferenceMapShim
 	CustomMapNodeShim *find(CustomAsciiStringShim *key);	///< ILT thunk at 0x0000AEAC
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/QuickmatchPreferences.h
 class QuickMatchPreferences
 {
 public:
