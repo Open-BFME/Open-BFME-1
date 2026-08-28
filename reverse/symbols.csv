@@ -73004,6 +73004,7 @@ name,address,notes
 ?bfmeOneBTC@BfmeThingBTC@@QAEXPAX@Z,0x00023D30,pin
 ?bfmeOneBUD@BfmeSubBUD@@QAEXXZ,0x00022C73,pin
 ?bfmeOneBVB@BfmeSubBVB@@QAEXXZ,0x0002DF65,pin
+?bfmeOneBZB@@YAXPAX@Z,0x009A5B80,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73177,6 +73178,7 @@ name,address,notes
 ?bfmeTwoBTC@BfmeSinkBTC@@QAEXPAVBfmeThingBTC@@@Z,0x0001D0DE,pin
 ?bfmeTwoBUD@BfmeOwnerBUD@@QAEXXZ,0x0002EAD2,pin
 ?bfmeTwoBVB@BfmeSubBVB@@QAEXPAV1@@Z,0x0002C6C4,pin
+?bfmeTwoBZB@@YAXPAX@Z,0x009A5980,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
