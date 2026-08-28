@@ -72421,6 +72421,10 @@ name,address,notes
 ?bfmeDoBJD@@YGXPAX0PAPAX@Z,0x0002648B,pin
 ?bfmeDoBJE@BfmeSubBJE@@QAEXPAX@Z,0x0092F910,pin
 ?bfmeDoBJF@BfmeSubBJF@@QAEXPAX0H@Z,0x00006C58,pin
+?bfmeDoBKA@@YAXPAXH@Z,0x008FE0E0,pin
+?bfmeDoBKC@BfmeSubBKC@@QAEXPAXH@Z,0x00033433,pin
+?bfmeDoBKD@@YGXPAUBfmeThingBKD@@PAUBfmeSubBKD@@HPAX@Z,0x00023042,pin
+?bfmeDoBKG@BfmeSubBKG@@QAEXPAX0@Z,0x007E88D0,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -72920,6 +72924,8 @@ name,address,notes
 ?bfmeNotifyBridge@PathfindLayer@@AAEXXZ,0x0003B250,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is set
 ?bfmeNotifyPlain@PathfindLayer@@AAEXXZ,0x0003A03F,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is null
 ?bfmeOneAPA@@YGPAXPAXPAH@Z,0x009F6BF2,pin
+?bfmeOneBKE@@YGXPAX@Z,0x0090C610,pin
+?bfmeOneBKF@BfmePartBKF@@QAEXXZ,0x0090DF10,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73066,6 +73072,7 @@ name,address,notes
 ?bfmeTest@Rva2225E0Filter@@AAE_NPAVBfmeOverridable@@_N@Z,0x0001B437,Open-BFME5 ILT the filter test whose result Rva2225E0Filter::accepts at 0x003A04A0 returns
 ?bfmeTryANA@BfmeThingANA@@QAEHPAX0@Z,0x0003381B,pin
 ?bfmeTwoAPA@@YGPAXPAXPAH@Z,0x009F6BEC,pin
+?bfmeTwoBKE@@YAXPAX@Z,0x00038389,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -74144,6 +74151,7 @@ name,address,notes
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
 ?g_bfmeUnsignedShortFormat@@3QBDB,0x01144328,address-derived unsigned-short format string from retail 0x009D95BF
 ?g_bfmeWhatBGE@@3PAXA,0x00EC3BB8,pin
+?g_bfmeWhatBKG@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWordFormat@@3QBDB,0x011442A8,address-derived word format string from the DIR32 operand at retail 0x009D93C0
 ?g_bfmeWorldRV@@3PAUBfmeWorldRV@@A,0x00EF33F8,pin
 ?g_defaultRespawnPolicy@@3URespawnPolicy@@A,0x012ED8B8,RespawnBody default six-dword policy
