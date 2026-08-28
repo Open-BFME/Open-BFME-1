@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?evaluateSkirmishSuppliesWithinDistancePerimeter@ScriptConditions@@: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
 // Open-BFME5: lift MASM dump ScriptConditions::evaluateSkirmishSuppliesWithinDistancePerimeter to C++ thunk.
 
 class Parameter;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptConditions.h
 class ScriptConditions
 {
 protected:

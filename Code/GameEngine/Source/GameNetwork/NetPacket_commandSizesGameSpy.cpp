@@ -60,6 +60,7 @@ public:
 	StringBase<char> getText20(void);	// ILT thunk 0x00019EC5
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 protected:

@@ -1,4 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?messageCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyMessageArg@@@Z: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThread.cpp
+// readable body of ?requestCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyRequestArg@@@Z: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThread.cpp
+// readable body of ?statusCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyStatusArg@@@Z: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThread.cpp
 
 #include <string.h>
 #include <wchar.h>
@@ -95,6 +98,7 @@ void getInfoResponseForRequest(GPConnection *, GPGetInfoResponseArg *, void *);
 void getNickForMessage(GPConnection *, GPGetInfoResponseArg *, void *);
 void getInfoResponseForStatus(GPConnection *, GPGetInfoResponseArg *, void *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/BuddyThread.h
 struct BuddyResponse
 {
 	enum ResponseType
@@ -135,6 +139,7 @@ struct BuddyResponse
 	} arg;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/BuddyThread.h
 class GameSpyBuddyMessageQueueInterface
 {
 public:

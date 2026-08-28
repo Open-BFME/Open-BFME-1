@@ -21,6 +21,7 @@ protected:
 class RRU_Iface1 { public: virtual void slot(); };
 class RRU_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public RRU_DeepBase, public RRU_Iface1, public RRU_Iface2
 {
 public:

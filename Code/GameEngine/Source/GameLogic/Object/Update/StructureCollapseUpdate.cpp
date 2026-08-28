@@ -67,6 +67,7 @@ static const char *TheStructureCollapsePhaseNames[] =
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/StructureCollapseUpdateCtorModuleFactoryBody.cpp
 // ??0StructureCollapseUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 StructureCollapseUpdate::StructureCollapseUpdate( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {
@@ -225,6 +226,7 @@ void StructureCollapseUpdate::onDie( const DamageInfo *damageInfo )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/StructureCollapseUpdateUpdateThunk.cpp
 // ?update@StructureCollapseUpdate@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
 UpdateSleepTime StructureCollapseUpdate::update( void )
 {

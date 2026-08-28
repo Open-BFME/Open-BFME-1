@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?doDefeat@ScriptActions@@IAEXXZ: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -10,6 +12,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 	unsigned char m_pad[0x118];
@@ -17,6 +20,7 @@ public:
 	Bool m_existingState;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -60,6 +64,7 @@ public:
 extern BfmeGameClient *TheGameClient;
 extern unsigned char BfmeDefeatScreenTable[];
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/CampaignManager.h
 class CampaignManager
 {
 	unsigned char m_pad[0x1d];
@@ -70,6 +75,7 @@ extern CampaignManager *TheCampaignManager;
 
 Bool __cdecl BfmeShouldShowGameOverEvent();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

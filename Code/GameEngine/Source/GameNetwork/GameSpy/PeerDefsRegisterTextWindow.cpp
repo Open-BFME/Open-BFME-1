@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?registerTextWindow@GameSpyInfo@@: Code/GameEngine/Source/GameNetwork/GameSpy/Chat.cpp
 
 // FILE: PeerDefsRegisterTextWindow.cpp //////////////////////////////////////
 //
@@ -88,6 +89,7 @@ typedef _STL::_Rb_tree<GameWindow *, GameWindow *, _STL::_Identity<GameWindow *>
 
 typedef char BFMETextWindowSetSizeCheck[ sizeof( TextWindowSet ) == 12 ? 1 : -1 ];
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefsImplementation.h
 class GameSpyInfo
 {
 public:

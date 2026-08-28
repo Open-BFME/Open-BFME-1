@@ -1,3 +1,4 @@
+// readable body of ?Thread_Function@BuddyThreadClass@@UAEXXZ: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThread.cpp
 // Exact retail bytes for BuddyThreadClass::Thread_Function at 0x0063D210.
 // Kept separate so BuddyThread.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_BuddyThread_ThreadFunction_63D210()

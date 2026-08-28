@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?GetChatCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?GetDisconnectChatCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?GetFileAnnounceCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?GetFileCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
 // NetPacket's per-command size helpers, retail 0x0067D370 and neighbours. Each
 // one is Zero Hour's body arithmetic for arithmetic; which is which comes from
@@ -50,18 +54,21 @@ private:
 
 class NetCommandMsg;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectChatCommandMsg
 {
 public:
 	StringBase<WideChar> getText(void);	// ILT thunk 0x00015901
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetChatCommandMsg
 {
 public:
 	StringBase<WideChar> getText(void);		// ILT thunk 0x00025338
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileCommandMsg
 {
 public:
@@ -69,12 +76,14 @@ public:
 	UnsignedInt getFileLength(void);		// ILT thunk 0x0001E7BD
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileAnnounceCommandMsg
 {
 public:
 	StringBase<char> getPortableFilename(void);	// ILT thunk 0x0003D50F
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 protected:

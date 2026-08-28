@@ -635,6 +635,7 @@ Short FirewallHelperClass::getSourcePortAllocationDelta() {
 	strcpy(nameBuf, host.str());
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/FirewallHelperClassDetectionBeginUpdateThunk.cpp
 // ?detectionBeginUpdate@FirewallHelperClass@@QAE_NXZ present-unmatched
 Bool FirewallHelperClass::detectionBeginUpdate() {
 //	UnsignedShort mangler_port = MANGLER_PORT;
@@ -1276,6 +1277,7 @@ Bool FirewallHelperClass::detectionTest5Update() {
  * HISTORY:                                                                                    *
  *   3/15/01 4:45PM ST : Created                                                               *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/FirewallHelper_getNATPortAllocationScheme.cpp
 // ?getNATPortAllocationScheme@FirewallHelperClass@@AAEHHPAG0AA_N1@Z present-unmatched
 // Real body 0x0066E870, 242 bytes (ghidra says 235; it stops short of the ret).
 // The algorithm below is retail's, read off that body, and it is nothing like

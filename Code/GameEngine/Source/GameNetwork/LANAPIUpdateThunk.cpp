@@ -1,3 +1,4 @@
+// readable body of ?update@LANAPI@@: Code/GameEngine/Source/GameNetwork/lanapi.cpp
 // Exact retail bytes for the LANAPI::update row at 0x006870F0.
 extern "C" __declspec(naked) void bfme_LANAPI_update_6870F0()
 {

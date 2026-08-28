@@ -19,6 +19,7 @@ protected:
 class HDU_Iface1 { public: virtual void slot(); };
 class HDU_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public HDU_DeepBase, public HDU_Iface1, public HDU_Iface2
 {
 public:
@@ -35,6 +36,7 @@ private:
     int m_updateState;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
     float x;
@@ -42,6 +44,7 @@ struct Coord3D
     float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/HeightDieUpdate.h
 class HeightDieUpdate : public UpdateModule
 {
 public:

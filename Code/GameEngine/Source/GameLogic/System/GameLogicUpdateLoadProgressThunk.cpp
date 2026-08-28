@@ -1,3 +1,4 @@
+// readable body of ?updateLoadProgress@GameLogic@@QAEXH@Z: Code/GameEngine/Source/GameLogic/System/GameLogic.cpp
 // Exact retail bytes for GameLogic::updateLoadProgress at 0x000DB020.
 // Kept separate so GameLogic.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_GameLogic_updateLoadProgress_DB020()

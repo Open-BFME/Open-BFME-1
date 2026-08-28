@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0BattlePlanUpdate@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdate.cpp
 // Open-BFME5: lift MASM dump BattlePlanUpdate ctor to C++ thunk.
 
 class Thing;
 class ModuleData;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BattlePlanUpdate.h
 class BattlePlanUpdate
 {
 public:

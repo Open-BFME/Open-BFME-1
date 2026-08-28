@@ -1,3 +1,4 @@
+// readable body of ?logicMessageDispatcher@GameLogic@@: Code/GameEngine/Source/GameLogic/System/GameLogicDispatch.cpp
 // Exact retail bytes for GameLogic::logicMessageDispatcher at 0x00397540.
 // Kept separate so GameLogicDispatch.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_GameLogic_logicMessageDispatcher_397540()

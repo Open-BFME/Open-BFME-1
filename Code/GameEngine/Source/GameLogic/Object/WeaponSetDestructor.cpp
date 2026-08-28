@@ -20,6 +20,7 @@ private:
 	unsigned int m_04;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/WeaponSet.h
 class WeaponSet : public WeaponSetBase
 {
 public:

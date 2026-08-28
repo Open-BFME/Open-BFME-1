@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getStatus@Weapon@@QBE?AW4WeaponStatus@@XZ: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
 
 // Open-BFME5: Weapon::getStatus, retail 0x001E6EE0, 38 bytes. The body carried
 // only a machine byte-dump row; reverse/reloc_names.csv holds the name with
@@ -16,6 +17,7 @@ typedef bool Bool;
 
 enum WeaponStatus { BFME_WEAPON_STATUS_NONE = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:

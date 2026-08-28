@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0TurretAI@@QAE@PAVObject@@PBVTurretAIData@@W4WhichTurretType@@@Z: Code/GameEngine/Source/GameLogic/AI/TurretAI.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Object;
 class TurretAIData;
 enum WhichTurretType { WhichTurretType_dummy=0 };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TurretAI.h
 class TurretAI {
 public:
 	TurretAI(Object *, const TurretAIData *, WhichTurretType);

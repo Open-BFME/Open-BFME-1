@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?cleanUpSlotPointers@GameSpyStagingRoom@@: Code/GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp
 
 // GameSpyStagingRoom::cleanUpSlotPointers, retail 0x00637CE0. Eight calls to
 // GameInfo::setSlotPointer, a name the ledger already has, handing each slot's
@@ -10,18 +11,21 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
 {
 public:
 	unsigned char m_unmodelled_00[ 0x78 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameInfo
 {
 public:
 	void setSlotPointer( Int index, GameSlot *slot );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/StagingRoomGameInfo.h
 class GameSpyStagingRoom : public GameInfo
 {
 public:

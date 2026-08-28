@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?connectionUpdate@NAT@@IAE?AW4NATConnectionState@@XZ: Code/GameEngine/Source/GameNetwork/nat.cpp
 // Open-BFME5: lift the exact retail NAT::connectionUpdate MASM body.
 
 enum NATConnectionState {};
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NAT.h
 class NAT
 {
 protected:

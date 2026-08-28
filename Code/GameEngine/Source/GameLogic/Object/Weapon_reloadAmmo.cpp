@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?reloadAmmo@Weapon@@QAEXPBVObject@@@Z: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
 // Open-BFME: Weapon::reloadAmmo, retail 0x001E9DE0, 95 bytes.
 //
 // The reference's three lines: a default WeaponBonus, computeBonus, then
@@ -15,6 +16,7 @@ typedef bool Bool;
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponBonus
 {
 public:
@@ -45,6 +47,7 @@ private:
 	Real m_field[FIELD_COUNT];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:

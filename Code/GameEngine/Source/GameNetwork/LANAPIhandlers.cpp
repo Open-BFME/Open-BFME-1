@@ -43,6 +43,7 @@
 #include "GameNetwork/LANAPICallbacks.h"
 #include "GameClient/MapUtil.h"
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPIHandleRequestLocationsThunk.cpp
 // ?handleRequestLocations@LANAPI@@IAEXPAULANMessage@@I@Z present-unmatched
 void LANAPI::handleRequestLocations( LANMessage *msg, UnsignedInt senderIP )
 {
@@ -112,6 +113,7 @@ static void bfme_force_setGameInProgress(GameInfo *g, Bool v)
 }
 void (*bfme_force_setGameInProgress_anchor)(GameInfo *, Bool) = &bfme_force_setGameInProgress;
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_handleLobbyAnnounce_Thunk.cpp
 // ?handleLobbyAnnounce@LANAPI@@IAEXPAULANMessage@@I@Z present-unmatched
 void LANAPI::handleLobbyAnnounce( LANMessage *msg, UnsignedInt senderIP )
 {
@@ -1661,6 +1663,7 @@ void LANAPI::handleGameOptions( LANMessage *msg, UnsignedInt senderIP )
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_handleInActive_Thunk.cpp
 // ?handleInActive@LANAPI@@IAEXPAULANMessage@@I@Z present-unmatched
 void LANAPI::handleInActive(LANMessage *msg, UnsignedInt senderIP) {
 	if (m_inLobby || (m_currentGame == NULL) || (m_currentGame->isGameInProgress())) {

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?doTeamHuntWithCommandButton@ScriptActions@@: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // Open-BFME5: lift the exact retail ScriptActions::doTeamHuntWithCommandButton body to C++.
 
 // ?doTeamHuntWithCommandButton@ScriptActions@@

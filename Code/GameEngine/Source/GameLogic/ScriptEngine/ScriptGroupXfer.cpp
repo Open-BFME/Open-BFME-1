@@ -8,6 +8,7 @@
 
 #include "xfer.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class ScriptGroup
 {
 public:

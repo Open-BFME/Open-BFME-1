@@ -47,6 +47,7 @@
 //#include "GameLogic/PartitionManager.h"
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateCtorModuleFactoryBody.cpp
 // ??0DefaultProductionExitUpdate@@ present-unmatched
 DefaultProductionExitUpdate::DefaultProductionExitUpdate( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {

@@ -91,6 +91,7 @@ void StealthDetectorUpdateModuleData::buildFieldParse(MultiIniFieldParse& p)
 }
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdateConstructor.cpp
 // ??0StealthDetectorUpdate@@ present-unmatched
 StealthDetectorUpdate::StealthDetectorUpdate( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {
@@ -154,6 +155,7 @@ Bool PartitionFilterStealthedOrStealthGarrisoned::allow( Object *objOther)
 //-------------------------------------------------------------------------------------------------
 /** The update callback. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdateThunk.cpp
 // ?update@StealthDetectorUpdate@@ present-unmatched
 UpdateSleepTime StealthDetectorUpdate::update( void )
 {

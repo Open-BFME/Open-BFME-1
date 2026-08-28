@@ -70,6 +70,7 @@ RepairDockUpdateModuleData::RepairDockUpdateModuleData( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/RepairDockUpdateConstructor.cpp
 // ??0RepairDockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 RepairDockUpdate::RepairDockUpdate( Thing *thing, const ModuleData* moduleData )
 								: DockUpdate( thing, moduleData )
@@ -93,6 +94,7 @@ RepairDockUpdate::~RepairDockUpdate( void )
 	* Return TRUE to continue the docking process
 	* Return FALSE to complete the dockin process */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RepairDockUpdate_action_Thunk.cpp
 // ?action@RepairDockUpdate@@UAE_NPAVObject@@0@Z present-unmatched
 Bool RepairDockUpdate::action( Object *docker, Object *drone )
 {

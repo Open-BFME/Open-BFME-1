@@ -119,6 +119,7 @@ VictoryConditionsInterface * createVictoryConditions( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions_create.cpp
 // ??0VictoryConditions@@ present-unmatched
 VictoryConditions::VictoryConditions()
 {
@@ -133,6 +134,7 @@ void VictoryConditions::init( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
 // ?reset@VictoryConditions@@ present-unmatched
 void VictoryConditions::reset( void )
 {
@@ -152,6 +154,7 @@ void VictoryConditions::reset( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditionsUpdateThunk.cpp
 // ?update@VictoryConditions@@ present-unmatched
 void VictoryConditions::update( void )
 {
@@ -249,6 +252,7 @@ void VictoryConditions::update( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
 // ?hasAchievedVictory@VictoryConditions@@ present-unmatched
 Bool VictoryConditions::hasAchievedVictory(Player *player)
 {
@@ -269,6 +273,7 @@ Bool VictoryConditions::hasAchievedVictory(Player *player)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
 // ?hasBeenDefeated@VictoryConditions@@ present-unmatched
 Bool VictoryConditions::hasBeenDefeated(Player *player)
 {
@@ -282,6 +287,7 @@ Bool VictoryConditions::hasBeenDefeated(Player *player)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
 // ?hasSinglePlayerBeenDefeated@VictoryConditions@@ present-unmatched
 Bool VictoryConditions::hasSinglePlayerBeenDefeated(Player *player)
 {
@@ -317,6 +323,7 @@ Bool VictoryConditions::hasSinglePlayerBeenDefeated(Player *player)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
 // ?cachePlayerPtrs@VictoryConditions@@ present-unmatched
 void VictoryConditions::cachePlayerPtrs( void )
 {
@@ -353,6 +360,7 @@ void VictoryConditions::cachePlayerPtrs( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
 // ?isLocalAlliedVictory@VictoryConditions@@ present-unmatched
 Bool VictoryConditions::isLocalAlliedVictory( void )
 {
@@ -363,6 +371,7 @@ Bool VictoryConditions::isLocalAlliedVictory( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
 // ?isLocalAlliedDefeat@VictoryConditions@@ present-unmatched
 Bool VictoryConditions::isLocalAlliedDefeat( void )
 {
@@ -373,6 +382,7 @@ Bool VictoryConditions::isLocalAlliedDefeat( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
 // ?isLocalDefeat@VictoryConditions@@ present-unmatched
 Bool VictoryConditions::isLocalDefeat( void )
 {

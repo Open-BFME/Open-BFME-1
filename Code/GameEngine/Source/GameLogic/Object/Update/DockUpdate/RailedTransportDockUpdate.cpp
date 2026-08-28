@@ -50,6 +50,7 @@ enum { UNLOAD_ALL = -1 };
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ??0RailedTransportDockUpdateModuleData@@QAE@XZ present-unmatched
 RailedTransportDockUpdateModuleData::RailedTransportDockUpdateModuleData( void )
 {
@@ -460,6 +461,7 @@ static void getFirstContain( Object *obj, void *userData )
 // ------------------------------------------------------------------------------------------------
 /** Start the next object contained by us as "unloading and coming out" */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/UpdateInitializationThunks.cpp
 // ?unloadNext@RailedTransportDockUpdate@@IAEXXZ present-unmatched
 void RailedTransportDockUpdate::unloadNext( void )
 {

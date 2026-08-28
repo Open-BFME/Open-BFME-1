@@ -1,4 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// readable body of ?getLocalSlotNum@GameSpyStagingRoom@@: Code/GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp
+// readable body of ?reset@GameSpyStagingRoom@@: Code/GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp
+// readable body of ?resetAccepted@GameSpyStagingRoom@@: Code/GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp
+// readable body of ?setPingString@GameSpyGameSlot@@: Code/GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp
+// readable body of ?setPingString@GameSpyStagingRoom@@: Code/GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp
 
 #include "string_base.h"
 
@@ -10,6 +15,7 @@ typedef statsgame_s *statsgame_t;
 
 extern "C" void FreeGame(statsgame_t game);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -32,6 +38,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
 class GameSpyInfoInterface
 {
 public:
@@ -110,12 +117,14 @@ public:
 
 extern GameSpyInfoInterface *TheGameSpyInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
 {
 public:
 	Bool isPlayer(AsciiString userName) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameInfo
 {
 public:
@@ -146,6 +155,7 @@ private:
 	Int m_ping;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/StagingRoomGameInfo.h
 class GameSpyStagingRoom : public GameInfo
 {
 public:

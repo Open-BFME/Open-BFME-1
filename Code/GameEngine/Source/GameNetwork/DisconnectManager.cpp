@@ -469,6 +469,7 @@ void DisconnectManager::processPacketRouterAck(NetCommandMsg *msg, ConnectionMan
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManagerProcessDisconnectVoteThunk.cpp
 // ?processDisconnectVote@DisconnectManager@@IAEXPAVNetCommandMsg@@PAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::processDisconnectVote(NetCommandMsg *msg, ConnectionManager *conMgr) {
 	NetDisconnectVoteCommandMsg *cmdMsg = (NetDisconnectVoteCommandMsg *)msg;
@@ -540,6 +541,7 @@ __declspec(noinline) void DisconnectManager::processDisconnectScreenOff(NetComma
 	turnOffScreen(conMgr->getLocalPlayerID());
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DisconnectManager_applyDisconnectVote_Thunk.cpp
 // ?applyDisconnectVote@DisconnectManager@@IAEXHIHPAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::applyDisconnectVote(Int slot, UnsignedInt frame, Int fromSlot, ConnectionManager *conMgr) {
 	m_playerVotes[slot][fromSlot].vote = TRUE;
@@ -605,6 +607,8 @@ void DisconnectManager::sendKeepAlive(ConnectionManager *conMgr) {
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManager_populateDisconnectScreen_Thunk.cpp
+// ?populateDisconnectScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::populateDisconnectScreen(ConnectionManager *conMgr) {
 	for (Int i = 0; i < MAX_SLOTS; ++i) {
 		UnicodeString name = conMgr->getPlayerName(i);
@@ -688,6 +692,7 @@ void DisconnectManager::turnOffScreen(Int localSlot) {
 	m_timeOfDisconnectScreenOn = 0;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManagerTurnOnScreenBfme.cpp
 // ?turnOnScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::turnOnScreen(ConnectionManager *conMgr) {
 	TheDisconnectMenu->showScreen();
@@ -704,6 +709,7 @@ void DisconnectManager::turnOnScreen(ConnectionManager *conMgr) {
 	DEBUG_LOG(("DisconnectManager::turnOnScreen - turned on screen at time %d\n", m_timeOfDisconnectScreenOn));
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManager_disconnectPlayer_Thunk.cpp
 // ?disconnectPlayer@DisconnectManager@@IAEXHPAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::disconnectPlayer(Int slot, ConnectionManager *conMgr) {
 	DEBUG_LOG(("DisconnectManager::disconnectPlayer - Disconnecting slot number %d on frame %d\n", slot, TheGameLogic->getFrame()));
@@ -782,6 +788,7 @@ void DisconnectManager::sendVoteCommand(Int slot, ConnectionManager *conMgr) {
 	msg->detach();
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DisconnectManager_voteForPlayerDisconnect_Thunk.cpp
 // ?voteForPlayerDisconnect@DisconnectManager@@QAEXHPAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::voteForPlayerDisconnect(Int slot, ConnectionManager *conMgr) {
 	Int transSlot = untranslatedSlotPosition(slot, conMgr->getLocalPlayerID());
@@ -806,6 +813,8 @@ void DisconnectManager::recalculatePacketRouterIndex(ConnectionManager *conMgr) 
 	DEBUG_ASSERTCRASH((m_currentPacketRouterIndex < MAX_SLOTS), ("Invalid packet router index"));
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManager_allOnSameFrame_Thunk.cpp
+// ?allOnSameFrame@DisconnectManager@@IAE_NPAVConnectionManager@@@Z present-unmatched
 Bool DisconnectManager::allOnSameFrame(ConnectionManager *conMgr) {
 	Bool retval = TRUE;
 	for (Int i = 0; (i < MAX_SLOTS) && (retval == TRUE); ++i) {
@@ -939,6 +948,7 @@ void DisconnectManager::playerHasAdvancedAFrame(Int slot, UnsignedInt frame) {
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManagerCountVotesForPlayerThunk.cpp
 // ?countVotesForPlayer@DisconnectManager@@IAEHH@Z present-unmatched
 Int DisconnectManager::countVotesForPlayer(Int slot) {
 	if ((slot < 0) || (slot >= MAX_SLOTS)) {
@@ -956,6 +966,7 @@ Int DisconnectManager::countVotesForPlayer(Int slot) {
 	return retval;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DisconnectManager_resetPlayersVotes_Thunk.cpp
 // ?resetPlayersVotes@DisconnectManager@@IAEXHIPAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::resetPlayersVotes(Int playerID, UnsignedInt frame, ConnectionManager *conMgr) {
 	DEBUG_LOG(("DisconnectManager::resetPlayersVotes - resetting player %d's votes on frame %d\n", playerID, frame));

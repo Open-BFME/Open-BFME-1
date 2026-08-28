@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?friend_findCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z: Code/GameEngine/Source/GameLogic/System/CrateSystem.cpp
 // Open-BFME: CrateSystem::friend_findCrateTemplate, retail 0x003795E0, 320
 // bytes.
 //
@@ -38,6 +39,7 @@ struct BfmeAsciiStringData
 	UnsignedShort m_pad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -89,6 +91,7 @@ protected:
 	LocomotorOverridable *m_nextOverride;			// this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/CrateSystem.h
 class CrateTemplate : public LocomotorOverridable
 {
 public:
@@ -113,6 +116,7 @@ private:
 	CrateTemplate *m_ptr;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/CrateSystem.h
 class CrateSystem
 {
 public:

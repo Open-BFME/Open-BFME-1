@@ -44,6 +44,7 @@
 #include "GameLogic/Module/FireSpreadUpdate.h"
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/FlammableUpdateModuleDataCtorThunk.cpp
 // ??0FlammableUpdateModuleData@@QAE@XZ present-unmatched
 FlammableUpdateModuleData::FlammableUpdateModuleData()
 {

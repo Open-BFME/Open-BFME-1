@@ -72,6 +72,7 @@ static const char* TheOCLCreateLocTypeNames[] =
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/OCLSpecialPowerModuleDataCtorThunk.cpp
 // ??0OCLSpecialPowerModuleData@@QAE@XZ present-unmatched
 OCLSpecialPowerModuleData::OCLSpecialPowerModuleData( void )
 {
@@ -119,6 +120,7 @@ static void parseOCLUpgradePair( INI* ini, void * /*instance*/, void *store, con
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/SpecialPower/OCLSpecialPowerConstructor.cpp
 // ??0OCLSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 OCLSpecialPower::OCLSpecialPower( Thing *thing, const ModuleData *moduleData )
 							 : SpecialPowerModule( thing, moduleData )

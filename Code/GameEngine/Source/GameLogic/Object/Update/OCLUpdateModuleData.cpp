@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0OCLUpdateModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Update/OCLUpdate.cpp
 
 // Open-BFME5: OCLUpdateModuleData default ctor.
 // Zero order: +0xc, +0x10, +0x8, byte +0x14.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/OCLUpdate.h
 class OCLUpdateModuleData
 {
 public:

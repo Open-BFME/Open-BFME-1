@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?findLocomotorTemplateVector@AIUpdateModuleData@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // Open-BFME5: lift the retail AIUpdateModuleData::findLocomotorTemplateVector MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_AIUpdateFindLocomotorTemplateVector_27EC80()

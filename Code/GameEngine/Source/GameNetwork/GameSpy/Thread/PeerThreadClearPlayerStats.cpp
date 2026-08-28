@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?clearPlayerStats@PeerThreadClass@@: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread.cpp
 
 // FILE: PeerThreadClearPlayerStats.cpp ///////////////////////////////////////
 //

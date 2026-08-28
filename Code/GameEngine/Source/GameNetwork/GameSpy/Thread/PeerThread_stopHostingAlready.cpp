@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?stopHostingAlready@PeerThreadClass@@: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread.cpp
 // Open-BFME: PeerThreadClass::stopHostingAlready, retail 0x0064C9E0, 96 bytes.
 //
 // The reference's body with one BFME line in the middle: after peerStopGame the

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0VictoryConditions@@: Code/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp
 // victory_conditions_create.cpp -- the EH-framed VictoryConditions bodies.
 //
 // Split from victory_conditions.cpp deliberately: retail's constructor,
@@ -15,12 +16,14 @@ typedef bool Bool;
 
 class Player;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -38,6 +41,7 @@ protected:
 	AsciiString m_name;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/VictoryConditions.h
 class VictoryConditionsInterface : public SubsystemInterface
 {
 public:

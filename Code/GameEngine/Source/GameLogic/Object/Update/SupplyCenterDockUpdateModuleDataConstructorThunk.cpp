@@ -3,6 +3,7 @@
 // Open-BFME5: SupplyCenterDockUpdateModuleData ctor.
 // Base size 0x10; then float@10, int@14=-1, float@18.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DockUpdate.h
 class DockUpdateModuleData
 {
 public:
@@ -13,6 +14,7 @@ private:
 	unsigned char m_pad[0x0c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyCenterDockUpdate.h
 class SupplyCenterDockUpdateModuleData : public DockUpdateModuleData
 {
 public:

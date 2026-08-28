@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0ToppleUpdate@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngine/Source/GameLogic/Object/Update/ToppleUpdate.cpp
 // ModuleFactory's 0x58-byte allocation proves the BFME layout. The fields
 // through +0x50 follow the Zero Hour source; +0x54 is BFME-only state that
 // retail initializes in the same zeroing run.
@@ -22,6 +23,7 @@ protected:
 class TU_Iface1 { public: virtual void slot(); };
 class TU_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public TU_DeepBase, public TU_Iface1, public TU_Iface2
 {
 public:
@@ -40,6 +42,7 @@ private:
 
 class BfmeToppleCollideModuleInterface { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ToppleUpdate.h
 class ToppleUpdate : public UpdateModule, public BfmeToppleCollideModuleInterface
 {
 public:

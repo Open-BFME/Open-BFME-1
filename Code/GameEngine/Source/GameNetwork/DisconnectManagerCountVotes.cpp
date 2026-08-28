@@ -3,6 +3,7 @@
 typedef bool Bool;
 enum { MAX_SLOTS = 8 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/ConnectionManager.h
 class ConnectionManager
 {
 public:
@@ -17,6 +18,7 @@ struct PlayerVote
 	unsigned int frame;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/DisconnectManager.h
 class DisconnectManager
 {
 protected:

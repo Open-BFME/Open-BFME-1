@@ -10,6 +10,7 @@ enum UpdateSleepTime { UPDATE_SLEEP_DUMMY };
 
 int GetGameLogicRandomValue(int, int, char *, int);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -36,6 +37,7 @@ protected:
 class DU_Iface1 { public: virtual void slot(); };
 class DU_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public DU_DeepBase, public DU_Iface1, public DU_Iface2
 {
 public:
@@ -53,6 +55,7 @@ private:
     int m_f1c;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DeletionUpdate.h
 class DeletionUpdateModuleData
 {
 private:
@@ -63,6 +66,7 @@ public:
     unsigned int m_maxFrames;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DeletionUpdate.h
 class DeletionUpdate : public UpdateModule
 {
 public:

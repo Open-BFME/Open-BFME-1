@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?readGameMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
 // NetPacket::readGameMessage, 0x0067E3F0, 433 bytes.
 //
@@ -39,6 +40,7 @@ enum GameMessageArgumentDataType
 
 class NetCommandMsg;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetGameCommandMsg
 {
 public:
@@ -54,6 +56,7 @@ public:
 	UnsignedInt m_gameMessageFields[5];				// this+0x1C .. +0x2F
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
 class GameMessageParserArgumentType
 {
 public:
@@ -67,6 +70,7 @@ public:
 	Int m_argCount;									// this+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
 class GameMessageParser
 {
 public:
@@ -81,6 +85,7 @@ public:
 	Int m_argTypeCount;								// this+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 protected:

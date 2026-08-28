@@ -85,6 +85,7 @@ private:
 	BuddyThreadClass *m_thread;
 };
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp
 // ?createNewMessageQueue@GameSpyBuddyMessageQueueInterface@@SAPAV1@XZ present-unmatched
 GameSpyBuddyMessageQueueInterface* GameSpyBuddyMessageQueueInterface::createNewMessageQueue( void )
 {
@@ -164,6 +165,7 @@ void callbackWrapper( GPConnection *con, void *arg, void *param )
 
 //-------------------------------------------------------------------------
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameSpyBuddyMessageQueueCtorThunk.cpp
 // ??0GameSpyBuddyMessageQueue@@QAE@XZ present-unmatched
 GameSpyBuddyMessageQueue::GameSpyBuddyMessageQueue()
 {
@@ -267,6 +269,7 @@ BuddyThreadClass* GameSpyBuddyMessageQueue::getThread( void )
 	return m_thread;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyGetLocalProfileIDThunk.cpp
 // ?getLocalProfileID@GameSpyBuddyMessageQueue@@UAEHXZ present-unmatched
 GPProfile GameSpyBuddyMessageQueue::getLocalProfileID( void )
 {
@@ -275,6 +278,7 @@ GPProfile GameSpyBuddyMessageQueue::getLocalProfileID( void )
 
 //-------------------------------------------------------------------------
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadFunctionThunk.cpp
 // ?Thread_Function@BuddyThreadClass@@UAEXXZ present-unmatched
 void BuddyThreadClass::Thread_Function()
 {
@@ -404,6 +408,7 @@ void BuddyThreadClass::Thread_Function()
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/BuddyThreadClassErrorCallbackThunk.cpp
 // ?errorCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPErrorArg@@@Z present-unmatched
 void BuddyThreadClass::errorCallback( GPConnection *con, GPErrorArg *arg )
 {
@@ -523,6 +528,7 @@ static void getNickForMessage( GPConnection *con, GPGetInfoResponseArg *arg, voi
 	strcpy(resp->arg.message.nick, arg->nick);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadCallbacks.cpp
 // ?messageCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyMessageArg@@@Z present-unmatched
 void BuddyThreadClass::messageCallback( GPConnection *con, GPRecvBuddyMessageArg *arg )
 {
@@ -541,6 +547,7 @@ void BuddyThreadClass::messageCallback( GPConnection *con, GPRecvBuddyMessageArg
 	TheGameSpyBuddyMessageQueue->addResponse( messageResponse );
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/BuddyThreadClassConnectCallbackThunk.cpp
 // ?connectCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPConnectResponseArg@@@Z present-unmatched
 void BuddyThreadClass::connectCallback( GPConnection *con, GPConnectResponseArg *arg )
 {
@@ -642,6 +649,7 @@ static void getInfoResponseForRequest( GPConnection *con, GPGetInfoResponseArg *
 	strcpy(resp->arg.request.countrycode, arg->countrycode);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadCallbacks.cpp
 // ?requestCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyRequestArg@@@Z present-unmatched
 void BuddyThreadClass::requestCallback( GPConnection *con, GPRecvBuddyRequestArg *arg )
 {
@@ -670,6 +678,7 @@ static void getInfoResponseForStatus(GPConnection * connection, GPGetInfoRespons
 	strcpy(resp->arg.status.countrycode, arg->countrycode);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadCallbacks.cpp
 // ?statusCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyStatusArg@@@Z present-unmatched
 void BuddyThreadClass::statusCallback( GPConnection *con, GPRecvBuddyStatusArg *arg )
 {

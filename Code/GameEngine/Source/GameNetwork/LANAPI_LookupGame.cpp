@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?LookupGame@LANAPI@@UAEPAVLANGameInfo@@VUnicodeString@@@Z: Code/GameEngine/Source/GameNetwork/lanapi.cpp
 
 // Retail 0x00688520, LANAPI vtable slot 42 -- slot 41 is OnNameChange and slot
 // 43 LookupGameByListOffset, both already ledgered, which brackets it.
@@ -29,6 +30,7 @@ struct BfmeUnicodeStringData
 	// WideChar text[] at +8
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -71,6 +73,7 @@ protected:
 	BfmeUnicodeStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameInfo
 {
 public:
@@ -80,6 +83,7 @@ public:
 	LANGameInfo *m_next;			// +0x398
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class LANAPI
 {
 public:

@@ -56,6 +56,7 @@ const Int MAX_IDX = 32;
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdateCtorThunk.cpp
 // ??0BoneFXUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 BoneFXUpdate::BoneFXUpdate( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {
@@ -148,6 +149,7 @@ static void parseGameLogicRandomDelay( INI *ini, void *instance, GameLogicRandom
 /** In the form of:
 	* <BodyDamageState>FXList<index> = Bone:<BoneName> OnlyOnce:<Yes|No> <Min delay> <Max delay> FXList:<FXListName> */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/BoneFXUpdateModuleDataParseFXListThunk.cpp
 // ?parseFXList@BoneFXUpdateModuleData@@SAXPAVINI@@PAX1PBX@Z present-unmatched
 void BoneFXUpdateModuleData::parseFXList( INI *ini, void *instance, 
 																								void *store, const void *userData )
@@ -191,6 +193,7 @@ void BoneFXUpdateModuleData::parseFXList( INI *ini, void *instance,
 /** In the form of:
 	* <BodyDamageState>OCL<index> = Bone:<BoneName> OnlyOnce:<Yes|No> <Min delay> <Max delay> OCL:<OCLName> */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/BoneFXUpdateModuleDataParseObjectCreationListThunk.cpp
 // ?parseObjectCreationList@BoneFXUpdateModuleData@@SAXPAVINI@@PAX1PBX@Z present-unmatched
 void BoneFXUpdateModuleData::parseObjectCreationList( INI *ini, void *instance, 
 																														void *store, const void *userData )
@@ -234,6 +237,7 @@ void BoneFXUpdateModuleData::parseObjectCreationList( INI *ini, void *instance,
 /** In the form of:
 	* <BodyDamageState>ParticleSystem<index> = <Bone:BoneName> OnlyOnce:<Yes|No> <Min delay> <Max delay> PSys:<PSysName> */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/FXModuleDataParseParticleSystemThunks.cpp
 // ?parseParticleSystem@BoneFXUpdateModuleData@@SAXPAVINI@@PAX1PBX@Z present-unmatched
 void BoneFXUpdateModuleData::parseParticleSystem( INI *ini, void *instance, 
 																												void *store, const void *userData )
@@ -275,6 +279,7 @@ void BoneFXUpdateModuleData::parseParticleSystem( INI *ini, void *instance,
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BoneFXUpdate_update_Thunk.cpp
 // ?update@BoneFXUpdate@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
 UpdateSleepTime BoneFXUpdate::update( void )
 {
@@ -307,6 +312,7 @@ UpdateSleepTime BoneFXUpdate::update( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/UpdateInitializationThunks.cpp
 // ?initTimes@BoneFXUpdate@@IAEXXZ present-unmatched
 void BoneFXUpdate::initTimes() {
 	Int i;

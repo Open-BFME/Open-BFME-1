@@ -32,6 +32,7 @@ private:
 	unsigned char m_flag;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -40,6 +41,7 @@ public:
 
 extern "C" char LocomotorSetUpgradeFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/LocomotorSetUpgrade.h
 class LocomotorSetUpgrade
 {
 public:

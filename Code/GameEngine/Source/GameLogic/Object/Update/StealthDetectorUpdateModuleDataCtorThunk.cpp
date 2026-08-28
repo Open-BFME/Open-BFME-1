@@ -3,6 +3,7 @@
 
 #include <bitset>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -13,6 +14,7 @@ private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 private:
@@ -24,6 +26,7 @@ public:
 };
 
 template <unsigned int BitCount>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -40,6 +43,7 @@ private:
 
 typedef BitFlags<192> KindOfMaskType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleData
 {
 public:
@@ -49,6 +53,7 @@ private:
 	unsigned int m_moduleTagNameKey;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StealthDetectorUpdate.h
 class StealthDetectorUpdateModuleData : public UpdateModuleData
 {
 public:

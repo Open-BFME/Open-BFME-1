@@ -2,6 +2,7 @@
 
 // Open-BFME5: DynamicShroudClearingRangeUpdateModuleData constructor.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/RadiusDecal.h
 class RadiusDecalTemplate
 {
 public:
@@ -21,6 +22,7 @@ private:
 	unsigned int m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DynamicShroudClearingRangeUpdate.h
 class DynamicShroudClearingRangeUpdateModuleData
 	: public DynamicShroudClearingRangeUpdateModuleDataBase
 {

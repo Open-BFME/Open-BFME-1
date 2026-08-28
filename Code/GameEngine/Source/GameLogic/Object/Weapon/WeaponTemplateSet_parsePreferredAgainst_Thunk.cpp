@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?parsePreferredAgainst@WeaponTemplateSet@@CAXPAVINI@@PAX1PBX@Z: Code/GameEngine/Source/GameLogic/Object/WeaponSet.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class INI;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/WeaponSet.h
 class WeaponTemplateSet
 {
 private:

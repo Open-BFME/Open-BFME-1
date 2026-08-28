@@ -11,6 +11,7 @@
 // ?getMinimumAttackRange@WeaponTemplate@@QBEMXZ at 0x001E15D0, whose field sits
 // 0x24 away from where that file puts it.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -23,12 +24,14 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponTemplate
 {
 public:
 	AsciiString getName(void) const;				///< ILT 0x0002D70E
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:

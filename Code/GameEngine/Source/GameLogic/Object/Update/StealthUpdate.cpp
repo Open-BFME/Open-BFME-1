@@ -71,6 +71,7 @@
 //#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
 #endif
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdateModuleDataCtorThunk.cpp
 // ??0StealthUpdateModuleData@@ present-unmatched
 StealthUpdateModuleData::StealthUpdateModuleData()
 {
@@ -135,6 +136,7 @@ void StealthUpdateModuleData::buildFieldParse(MultiIniFieldParse& p)
 }
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdate_ctor_Thunk.cpp
 // ??0StealthUpdate@@ present-unmatched
 StealthUpdate::StealthUpdate( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {
@@ -180,6 +182,7 @@ StealthUpdate::StealthUpdate( Thing *thing, const ModuleData* moduleData ) : Upd
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/StealthUpdateDestructorThunk.cpp
 // ??1StealthUpdate@@ present-unmatched
 StealthUpdate::~StealthUpdate( void )
 {
@@ -999,6 +1002,7 @@ void StealthUpdate::disguiseAsObject( const Object *target )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdateChangeVisualDisguiseThunk.cpp
 // ?changeVisualDisguise@StealthUpdate@@ present-unmatched
 void StealthUpdate::changeVisualDisguise()
 {

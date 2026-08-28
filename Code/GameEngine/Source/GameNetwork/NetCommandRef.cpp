@@ -38,9 +38,11 @@ static UnsignedInt refNum = 0;
  * Constructor.  Attach to the given network command.
  */
 #ifdef DEBUG_NETCOMMANDREF
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetCommandRef_dtor.cpp
 // ??0NetCommandRef@@QAE@PAVNetCommandMsg@@@Z present-unmatched
 NetCommandRef::NetCommandRef(NetCommandMsg *msg, char *filename, int line)
 #else
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetCommandRef_dtor.cpp
 // ??0NetCommandRef@@QAE@PAVNetCommandMsg@@@Z present-unmatched
 NetCommandRef::NetCommandRef(NetCommandMsg *msg)
 #endif

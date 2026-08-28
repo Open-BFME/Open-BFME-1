@@ -12,6 +12,7 @@ typedef unsigned int UnsignedInt;
 
 struct FieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class MultiIniFieldParse
 {
 public:
@@ -20,6 +21,7 @@ public:
 
 extern const FieldParse TheSpecialPowerModuleDataFieldParse[];		// 0x01124F90
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerModule.h
 class SpecialPowerModuleData
 {
 public:

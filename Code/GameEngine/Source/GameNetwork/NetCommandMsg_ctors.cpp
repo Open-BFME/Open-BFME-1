@@ -65,6 +65,7 @@ enum NetCommandType
 	NETCOMMANDTYPE_DISCONNECTSCREENOFF = 28
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -101,6 +102,7 @@ NetCommandMsg::NetCommandMsg()
 	m_commandType = NETCOMMANDTYPE_UNKNOWN;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetKeepAliveCommandMsg : public NetCommandMsg
 {
 public:
@@ -113,6 +115,7 @@ NetKeepAliveCommandMsg::NetKeepAliveCommandMsg() : NetCommandMsg()
 }
 
 // 0x673AA0, 45 bytes
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetPlayerLeaveCommandMsg : public NetCommandMsg
 {
 public:
@@ -129,6 +132,7 @@ NetPlayerLeaveCommandMsg::NetPlayerLeaveCommandMsg() : NetCommandMsg()
 }
 
 // 0x673B10, 45 bytes
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDestroyPlayerCommandMsg : public NetCommandMsg
 {
 public:
@@ -145,6 +149,7 @@ NetDestroyPlayerCommandMsg::NetDestroyPlayerCommandMsg() : NetCommandMsg()
 }
 
 // 0x673BD0, 42 bytes
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectKeepAliveCommandMsg : public NetCommandMsg
 {
 public:
@@ -158,6 +163,7 @@ NetDisconnectKeepAliveCommandMsg::NetDisconnectKeepAliveCommandMsg() : NetComman
 }
 
 // 0x673C20, 48 bytes
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectPlayerCommandMsg : public NetCommandMsg
 {
 public:
@@ -176,6 +182,7 @@ NetDisconnectPlayerCommandMsg::NetDisconnectPlayerCommandMsg() : NetCommandMsg()
 }
 
 // 0x673CD0, 48 bytes
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectVoteCommandMsg : public NetCommandMsg
 {
 public:
@@ -194,6 +201,7 @@ NetDisconnectVoteCommandMsg::NetDisconnectVoteCommandMsg() : NetCommandMsg()
 }
 
 // 0x673D60, 45 bytes
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetProgressCommandMsg : public NetCommandMsg
 {
 public:
@@ -208,6 +216,7 @@ NetProgressCommandMsg::NetProgressCommandMsg() : NetCommandMsg()
 }
 
 // 0x674030, 49 bytes
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileProgressCommandMsg : public NetCommandMsg
 {
 public:
@@ -228,6 +237,7 @@ NetFileProgressCommandMsg::NetFileProgressCommandMsg() : NetCommandMsg()
 }
 
 // 0x6740C0, 45 bytes
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectFrameCommandMsg : public NetCommandMsg
 {
 public:
@@ -243,6 +253,7 @@ NetDisconnectFrameCommandMsg::NetDisconnectFrameCommandMsg() : NetCommandMsg()
 }
 
 // 0x674310, 45 bytes
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectScreenOffCommandMsg : public NetCommandMsg
 {
 public:
@@ -258,6 +269,7 @@ NetDisconnectScreenOffCommandMsg::NetDisconnectScreenOffCommandMsg() : NetComman
 }
 
 // 0x6750E0, 45 bytes
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectChatCommandMsg : public NetCommandMsg
 {
 public:
@@ -272,6 +284,7 @@ NetDisconnectChatCommandMsg::NetDisconnectChatCommandMsg() : NetCommandMsg()
 }
 
 // 0x675210, 48 bytes
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetChatCommandMsg : public NetCommandMsg
 {
 public:
@@ -292,6 +305,7 @@ NetChatCommandMsg::NetChatCommandMsg() : NetCommandMsg()
 // does not have: at +0x20 it keeps the execution frame of the command being
 // acknowledged, which the copying constructor takes from the source message and
 // the default constructor leaves at -1, matching m_executionFrame's own default.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetAckStage1CommandMsg : public NetCommandMsg
 {
 public:
@@ -326,6 +340,7 @@ NetAckStage1CommandMsg::NetAckStage1CommandMsg(NetCommandMsg *msg) : NetCommandM
 // (+0x1C..+0x34); assignment order is the reference's, which is why the stores
 // come out as type, numChunks, data, totalDataLength, chunkNumber, dataLength,
 // dataOffset, wrappedCommandID.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetWrapperCommandMsg : public NetCommandMsg
 {
 public:
@@ -353,6 +368,7 @@ NetWrapperCommandMsg::NetWrapperCommandMsg() : NetCommandMsg()
 }
 
 // 0x006737A0 (47B) and 0x00673740 (68B), type ACKBOTH. Same three-field shape as AckStage1.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetAckBothCommandMsg : public NetCommandMsg
 {
 public:
@@ -385,6 +401,7 @@ NetAckBothCommandMsg::NetAckBothCommandMsg(NetCommandMsg *msg) : NetCommandMsg()
 
 
 // 0x006739B0 (51B) and 0x00673950 (70B), type ACKSTAGE2. Same three-field shape as AckStage1.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetAckStage2CommandMsg : public NetCommandMsg
 {
 public:
@@ -503,6 +520,7 @@ void NetFileProgressCommandMsg::setProgress(Int v) { m_progress = v; }
 // freshly allocated buffer at +0x20, in that order. Only the portable form of
 // the path is stored -- getRealFilename converts on the way out, which is what
 // puts the payload pair at +0x20/+0x24 rather than the reference's +0x24/+0x28.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileCommandMsg : public NetCommandMsg
 {
 public:
@@ -520,6 +538,7 @@ UnsignedByte *NetFileCommandMsg::getFileData() { return m_data; }
 // NetFileAnnounceCommandMsg announces a file to a subset of players. Its two
 // scalars are packed rather than aligned to dwords -- the id is a word at +0x20
 // and the mask a byte immediately after it at +0x22.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileAnnounceCommandMsg : public NetCommandMsg
 {
 public:

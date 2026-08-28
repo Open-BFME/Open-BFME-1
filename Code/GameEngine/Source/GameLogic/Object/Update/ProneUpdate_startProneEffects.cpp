@@ -34,6 +34,7 @@ enum ObjectStatusTypes
 };
 
 template<int NUMBITS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -58,6 +59,7 @@ typedef BitFlags<86> ObjectStatusMaskType;			// 86: the setStatus body sanitizes
 
 #define MAKE_OBJECT_STATUS_MASK(k) ObjectStatusMaskType(ObjectStatusMaskType::kInit, (k))
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -78,6 +80,7 @@ private:
 	ModelConditionFlags m_conditionFlags;				// +0x110
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ProneUpdate.h
 class ProneUpdate
 {
 private:

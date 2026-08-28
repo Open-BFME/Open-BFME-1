@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?changeVisualDisguise@StealthUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdate.cpp
 // Open-BFME5: lift the retail StealthUpdate::changeVisualDisguise MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_StealthUpdateChangeVisualDisguise_267D80()

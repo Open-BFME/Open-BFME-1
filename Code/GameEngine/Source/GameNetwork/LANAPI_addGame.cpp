@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?addGame@LANAPI@@IAEXPAVLANGameInfo@@@Z: Code/GameEngine/Source/GameNetwork/lanapi.cpp
 
 // LANAPI::addGame, 0x00686DF0, 376 bytes.
 //
@@ -44,6 +45,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -58,6 +60,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameInfo
 {
 public:
@@ -70,6 +73,7 @@ public:
 	LANGameInfo *m_next;					// this+0x398
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class LANAPI
 {
 protected:

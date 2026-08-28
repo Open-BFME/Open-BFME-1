@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?recenterTurret@BattlePlanUpdate@@IAEXXZ: Code/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdate.cpp
 // Open-BFME5: BattlePlanUpdate::recenterTurret, retail 0x002858B0.
 //
 // The Zero Hour body unchanged. Two offsets are BFME's:
@@ -22,6 +23,7 @@ enum WhichTurretType
 	TURRET_INVALID = -1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -29,6 +31,7 @@ public:
 	void recenterTurret(WhichTurretType tur);					///< ILT 0x0000D0A8
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -36,6 +39,7 @@ public:
 	AIUpdateInterface *m_ai;									///< retail this+0x204
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BattlePlanUpdate.h
 class BattlePlanUpdate
 {
 protected:

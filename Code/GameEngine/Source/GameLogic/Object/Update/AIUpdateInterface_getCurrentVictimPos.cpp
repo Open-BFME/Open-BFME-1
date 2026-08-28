@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getCurrentVictimPos@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
 // AIUpdateInterface::getCurrentVictimPos, retail 0x00279640.  BFME places
 // the owning Object at +0x08, the state machine at +0x30, and the current
@@ -6,6 +7,7 @@
 // modeled at the retail offsets so this ABI slice retains the source behavior
 // without changing the shared Zero Hour AIUpdate layout.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -19,6 +21,7 @@ enum
 	OBJECT_STATUS_IS_ATTACKING = 0x00400000
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -26,6 +29,7 @@ public:
 	unsigned int m_status;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 private:
@@ -39,6 +43,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 private:

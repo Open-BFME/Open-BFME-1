@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?newTask@DozerAIUpdate@@UAEXW4DozerTask@@PAVObject@@@Z: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate.cpp
 // Open-BFME5: lift the exact retail DozerAIUpdate::newTask body to C++.
 
 // ?newTask@DozerAIUpdate@@UAEXW4DozerTask@@PAVObject@@@Z

@@ -25,6 +25,7 @@ struct BfmeNetAddress
 	UnsignedShort m_port;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameInfo
 {
 public:
@@ -33,6 +34,7 @@ public:
 	UnsignedShort m_hostPort;		// +0x8C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class LANAPI
 {
 public:

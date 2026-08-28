@@ -10,6 +10,7 @@
 // modelled as an inline accessor rather than a call; getArgumentDataType and
 // addArgType are unnamed in the ledger and pinned at their ILT thunks.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:
@@ -26,6 +27,7 @@ enum GameMessageArgumentDataType
 	ARGUMENTDATATYPE_UNKNOWN = 12
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
 class GameMessageParser
 {
 public:

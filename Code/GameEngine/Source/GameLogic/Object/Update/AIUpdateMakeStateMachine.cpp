@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?makeStateMachine@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
 // FILE: AIUpdateMakeStateMachine.cpp /////////////////////////////////////////
 //
@@ -33,6 +34,7 @@ private:
 	friend class AsciiString;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -58,6 +60,7 @@ class Object;
 
 // 0x70 bytes.  Only the size and the constructor are claimed; nothing here
 // knows what the machine holds.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIStateMachine
 {
 public:
@@ -66,6 +69,7 @@ private:
 	char m_bfmeBody[0x70];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 protected:
@@ -76,12 +80,14 @@ protected:
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TransportAIUpdate.h
 class TransportAIUpdate : public AIUpdateInterface
 {
 protected:
 	virtual AIStateMachine *makeStateMachine();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WanderAIUpdate.h
 class WanderAIUpdate : public AIUpdateInterface
 {
 protected:

@@ -1,12 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
 // BFME script handles keep older versions alive so editor references remain stable.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkOutput
 {
 public:
@@ -39,6 +41,7 @@ struct ScriptRecord
 	ScriptData *data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class ScriptList
 {
 private:
@@ -48,6 +51,7 @@ private:
 	friend void WriteScriptDataChunk(DataChunkOutput &, ScriptList *, Script *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Script
 {
 private:

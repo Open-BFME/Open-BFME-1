@@ -44,6 +44,7 @@
 
 // This function assumes that all of the fields are either of default value or are
 // present in the raw data.
+// byte-exact reconstruction: Code/GameEngine/Source/Common/NetPacket_ConstructNetCommandMsgFromRawData_Thunk.cpp
 // ?ConstructNetCommandMsgFromRawData@NetPacket@@SAPAVNetCommandRef@@PAEG@Z present-unmatched
 NetCommandRef * NetPacket::ConstructNetCommandMsgFromRawData(UnsignedByte *data, UnsignedShort dataLength) {
 	NetCommandType commandType = NETCOMMANDTYPE_GAMECOMMAND;
@@ -236,6 +237,7 @@ NetPacketList NetPacket::ConstructBigCommandPacketList(NetCommandRef *ref) {
 	return packetList;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_GetBufferSizeNeededForCommand.cpp
 // ?GetBufferSizeNeededForCommand@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
 UnsignedInt NetPacket::GetBufferSizeNeededForCommand(NetCommandMsg *msg) {
 	// This is where the fun begins...
@@ -306,6 +308,7 @@ UnsignedInt NetPacket::GetBufferSizeNeededForCommand(NetCommandMsg *msg) {
 	return 0;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_GetBufferSizeNeededForCommand.cpp
 // ?GetGameCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
 UnsignedInt NetPacket::GetGameCommandSize(NetCommandMsg *msg) {
 	NetGameCommandMsg *cmdMsg = (NetGameCommandMsg *)msg;
@@ -546,6 +549,7 @@ UnsignedInt NetPacket::GetPacketRouterAckCommandSize(NetCommandMsg *msg) {
 	return msglen;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_commandSizes.cpp
 // ?GetDisconnectChatCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
 UnsignedInt NetPacket::GetDisconnectChatCommandSize(NetCommandMsg *msg) {
 	Int msglen = 0;
@@ -583,6 +587,7 @@ UnsignedInt NetPacket::GetDisconnectVoteCommandSize(NetCommandMsg *msg) {
 	return msglen;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_commandSizes.cpp
 // ?GetChatCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
 UnsignedInt NetPacket::GetChatCommandSize(NetCommandMsg *msg) {
 	Int msglen = 0;
@@ -673,6 +678,7 @@ UnsignedInt NetPacket::GetWrapperCommandSize(NetCommandMsg *msg) {
 	return msglen;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_commandSizes.cpp
 // ?GetFileCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
 UnsignedInt NetPacket::GetFileCommandSize(NetCommandMsg *msg) {
 	NetFileCommandMsg *filemsg = (NetFileCommandMsg *)msg;
@@ -691,6 +697,7 @@ UnsignedInt NetPacket::GetFileCommandSize(NetCommandMsg *msg) {
 	return msglen;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_commandSizes.cpp
 // ?GetFileAnnounceCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
 UnsignedInt NetPacket::GetFileAnnounceCommandSize(NetCommandMsg *msg) {
 	NetFileAnnounceCommandMsg *filemsg = (NetFileAnnounceCommandMsg *)msg;
@@ -975,6 +982,7 @@ void NetPacket::FillBufferWithGameCommand(UnsignedByte *buffer, NetCommandRef *m
 	gmsg = NULL;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillAck.cpp
 // ?FillBufferWithAckCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithAckCommand(UnsignedByte *buffer, NetCommandRef *msg) {
 //		DEBUG_LOG(("NetPacket::FillBufferWithAckCommand - adding ack for command %d for player %d\n", cmdMsg->getCommandID(), msg->getCommand()->getPlayerID()));
@@ -1020,6 +1028,7 @@ void NetPacket::FillBufferWithAckCommand(UnsignedByte *buffer, NetCommandRef *ms
 	//		DEBUG_LOG(("outgoing - added ACK, original player %d, command id %d\n", origPlayerID, cmdID));
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillFrame.cpp
 // ?FillBufferWithFrameCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithFrameCommand(UnsignedByte *buffer, NetCommandRef *msg) {
 	NetFrameCommandMsg *cmdMsg = (NetFrameCommandMsg *)(msg->getCommand());
@@ -1074,6 +1083,7 @@ void NetPacket::FillBufferWithFrameCommand(UnsignedByte *buffer, NetCommandRef *
 //		DEBUG_LOG(("outgoing - added frame %d, player %d, command count = %d, command id = %d\n", cmdMsg->getExecutionFrame(), cmdMsg->getPlayerID(), cmdMsg->getCommandCount(), cmdMsg->getID()));
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillPlayerLeaveDestroy.cpp
 // ?FillBufferWithPlayerLeaveCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithPlayerLeaveCommand(UnsignedByte *buffer, NetCommandRef *msg) {
 	NetPlayerLeaveCommandMsg *cmdMsg = (NetPlayerLeaveCommandMsg *)(msg->getCommand());
@@ -1231,6 +1241,7 @@ void NetPacket::FillBufferWithRunAheadCommand(UnsignedByte *buffer, NetCommandRe
 //		DEBUG_LOG(("NetPacket - added run ahead command, frame %d, player id %d command id %d\n", m_lastFrame, m_lastPlayerID, m_lastCommandID));
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillPlayerLeaveDestroy.cpp
 // ?FillBufferWithDestroyPlayerCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithDestroyPlayerCommand(UnsignedByte *buffer, NetCommandRef *msg) {
 	NetDestroyPlayerCommandMsg *cmdMsg = (NetDestroyPlayerCommandMsg *)(msg->getCommand());
@@ -1282,6 +1293,7 @@ void NetPacket::FillBufferWithDestroyPlayerCommand(UnsignedByte *buffer, NetComm
 	offset += sizeof(UnsignedInt);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fill.cpp
 // ?FillBufferWithKeepAliveCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithKeepAliveCommand(UnsignedByte *buffer, NetCommandRef *msg) {
 	NetKeepAliveCommandMsg *cmdMsg = (NetKeepAliveCommandMsg *)(msg->getCommand());
@@ -1448,6 +1460,7 @@ void NetPacket::FillBufferWithPacketRouterAckCommand(UnsignedByte *buffer, NetCo
 	++offset;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillDisconnectChat.cpp
 // ?FillBufferWithDisconnectChatCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithDisconnectChatCommand(UnsignedByte *buffer, NetCommandRef *msg) {
 	NetDisconnectChatCommandMsg *cmdMsg = (NetDisconnectChatCommandMsg *)(msg->getCommand());
@@ -1535,6 +1548,7 @@ void NetPacket::FillBufferWithDisconnectVoteCommand(UnsignedByte *buffer, NetCom
 	offset += sizeof(voteFrame);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillChatCommand.cpp
 // ?FillBufferWithChatCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithChatCommand(UnsignedByte *buffer, NetCommandRef *msg) {
 	NetChatCommandMsg *cmdMsg = (NetChatCommandMsg *)(msg->getCommand());
@@ -1594,6 +1608,7 @@ void NetPacket::FillBufferWithChatCommand(UnsignedByte *buffer, NetCommandRef *m
 	offset += sizeof(Int);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillProgress.cpp
 // ?FillBufferWithProgressMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithProgressMessage(UnsignedByte *buffer, NetCommandRef *msg) {
 	NetProgressCommandMsg *cmdMsg = (NetProgressCommandMsg *)(msg->getCommand());
@@ -1625,6 +1640,7 @@ void NetPacket::FillBufferWithProgressMessage(UnsignedByte *buffer, NetCommandRe
 	++offset;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillCompletion.cpp
 // ?FillBufferWithLoadCompleteMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithLoadCompleteMessage(UnsignedByte *buffer, NetCommandRef *msg) {
 	NetCommandMsg *cmdMsg = (NetCommandMsg *)(msg->getCommand());
@@ -1659,6 +1675,7 @@ void NetPacket::FillBufferWithLoadCompleteMessage(UnsignedByte *buffer, NetComma
 	++offset;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillCompletion.cpp
 // ?FillBufferWithTimeOutGameStartMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithTimeOutGameStartMessage(UnsignedByte *buffer, NetCommandRef *msg) {
 	NetCommandMsg *cmdMsg = (NetCommandMsg *)(msg->getCommand());
@@ -1692,6 +1709,7 @@ void NetPacket::FillBufferWithTimeOutGameStartMessage(UnsignedByte *buffer, NetC
 	++offset;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillFileMessage.cpp
 // ?FillBufferWithFileMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithFileMessage(UnsignedByte *buffer, NetCommandRef *msg) {
 	NetFileCommandMsg *cmdMsg = (NetFileCommandMsg *)(msg->getCommand());
@@ -1742,6 +1760,7 @@ void NetPacket::FillBufferWithFileMessage(UnsignedByte *buffer, NetCommandRef *m
 	offset += cmdMsg->getFileLength();
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillFileAnnounce.cpp
 // ?FillBufferWithFileAnnounceMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithFileAnnounceMessage(UnsignedByte *buffer, NetCommandRef *msg) {
 	NetFileAnnounceCommandMsg *cmdMsg = (NetFileAnnounceCommandMsg *)(msg->getCommand());
@@ -1836,6 +1855,7 @@ void NetPacket::FillBufferWithFileProgressMessage(UnsignedByte *buffer, NetComma
 	offset += sizeof(progress);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillDisconnectFrames.cpp
 // ?FillBufferWithDisconnectFrameMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithDisconnectFrameMessage(UnsignedByte *buffer, NetCommandRef *msg) {
 	NetDisconnectFrameCommandMsg *cmdMsg = (NetDisconnectFrameCommandMsg *)(msg->getCommand());
@@ -1875,6 +1895,7 @@ void NetPacket::FillBufferWithDisconnectFrameMessage(UnsignedByte *buffer, NetCo
 	offset += sizeof(disconnectFrame);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillDisconnectFrames.cpp
 // ?FillBufferWithDisconnectScreenOffMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithDisconnectScreenOffMessage(UnsignedByte *buffer, NetCommandRef *msg) {
 	NetDisconnectScreenOffCommandMsg *cmdMsg = (NetDisconnectScreenOffCommandMsg *)(msg->getCommand());
@@ -1957,6 +1978,7 @@ void NetPacket::FillBufferWithFrameResendRequestMessage(UnsignedByte *buffer, Ne
 /**
  * Constructor
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_init.cpp
 // ??0NetPacket@@ present-unmatched
 NetPacket::NetPacket() {
 	init();
@@ -1965,6 +1987,7 @@ NetPacket::NetPacket() {
 /**
  * Constructor given raw transport data.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_init.cpp
 // ??0NetPacket@@ present-unmatched
 NetPacket::NetPacket(TransportMessage *msg) {
 	init();
@@ -1989,6 +2012,7 @@ NetPacket::~NetPacket() {
 /**
  * Initialize all the member variable values.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_init.cpp
 // ?init@NetPacket@@QAEXXZ present-unmatched
 void NetPacket::init() {
 	m_addr = 0;
@@ -2028,6 +2052,7 @@ void NetPacket::setAddress(Int addr, Int port) {
  * Adds this command to the packet.  Returns false if there wasn't enough room
  * in the packet for this message, true otherwise.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addCommand.cpp
 // ?addCommand@NetPacket@@QAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addCommand(NetCommandRef *msg) {
 	// This is where the fun begins...
@@ -2523,6 +2548,7 @@ Bool NetPacket::addFileCommand(NetCommandRef *msg) {
 	return FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_isRoomForFileAndChat.cpp
 // ?isRoomForFileMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::isRoomForFileMessage(NetCommandRef *msg) {
 	Int len = 0;
@@ -2634,6 +2660,7 @@ Bool NetPacket::addFileAnnounceCommand(NetCommandRef *msg) {
 	return FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_isRoomForFileAndChat.cpp
 // ?isRoomForFileAnnounceMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::isRoomForFileAnnounceMessage(NetCommandRef *msg) {
 	Int len = 0;
@@ -2665,6 +2692,7 @@ Bool NetPacket::isRoomForFileAnnounceMessage(NetCommandRef *msg) {
 	return TRUE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addFileProgressCommand.cpp
 // ?addFileProgressCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addFileProgressCommand(NetCommandRef *msg) {
 	Bool needNewCommandID = FALSE;
@@ -2767,6 +2795,7 @@ Bool NetPacket::isRoomForFileProgressMessage(NetCommandRef *msg) {
 	return TRUE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addWrapperCommand.cpp
 // ?addWrapperCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addWrapperCommand(NetCommandRef *msg) {
 	Bool needNewCommandID = FALSE;
@@ -3160,6 +3189,7 @@ Bool NetPacket::addProgressMessage(NetCommandRef *msg) {
 /**
  * Returns true if there is room in the packet for this command.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_isRoomForProgressFamily.cpp
 // ?isRoomForProgressMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::isRoomForProgressMessage(NetCommandRef *msg) {
 	Int len = 0;
@@ -3367,6 +3397,7 @@ Bool NetPacket::addDisconnectChatCommand(NetCommandRef *msg) {
 	return FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_isRoomForFileAndChat.cpp
 // ?isRoomForDisconnectChatMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::isRoomForDisconnectChatMessage(NetCommandRef *msg) {
 	Int len = 0;
@@ -3486,6 +3517,7 @@ Bool NetPacket::addChatCommand(NetCommandRef *msg) {
 	return FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_isRoomForFileAndChat.cpp
 // ?isRoomForChatMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::isRoomForChatMessage(NetCommandRef *msg) {
 	Bool needNewCommandID = FALSE;
@@ -4419,6 +4451,7 @@ Bool NetPacket::addPlayerLeaveCommand(NetCommandRef *msg) {
 /**
  * Returns true if there is enough room in the packet to fit this message.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_isRoomForProgressFamily.cpp
 // ?isRoomForPlayerLeaveMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::isRoomForPlayerLeaveMessage(NetCommandRef *msg) {
 	Int len = 0;
@@ -4724,6 +4757,7 @@ Bool NetPacket::isAckRepeat(NetCommandRef *msg) {
 	return FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_ackRepeats.cpp
 // ?isAckBothRepeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::isAckBothRepeat(NetCommandRef *msg) {
 	NetAckBothCommandMsg *ack = (NetAckBothCommandMsg *)(msg->getCommand());
@@ -4740,6 +4774,7 @@ Bool NetPacket::isAckBothRepeat(NetCommandRef *msg) {
 	return TRUE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_ackRepeats.cpp
 // ?isAckStage1Repeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::isAckStage1Repeat(NetCommandRef *msg) {
 	NetAckStage2CommandMsg *ack = (NetAckStage2CommandMsg *)(msg->getCommand());
@@ -4756,6 +4791,7 @@ Bool NetPacket::isAckStage1Repeat(NetCommandRef *msg) {
 	return TRUE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_ackRepeats.cpp
 // ?isAckStage2Repeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::isAckStage2Repeat(NetCommandRef *msg) {
 	NetAckStage2CommandMsg *ack = (NetAckStage2CommandMsg *)(msg->getCommand());
@@ -4775,6 +4811,7 @@ Bool NetPacket::isAckStage2Repeat(NetCommandRef *msg) {
 /**
  * Adds this game command to the packet.  Returns true if successful.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addGameCommand.cpp
 // ?addGameCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addGameCommand(NetCommandRef *msg) {
 	Bool retval = FALSE;
@@ -4942,6 +4979,7 @@ void NetPacket::writeGameMessageArgumentToPacket(GameMessageArgumentDataType typ
 /**
  * Returns true if there is enough room in this packet for this message.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addGameCommand.cpp
 // ?isRoomForGameMessage@NetPacket@@IAE_NPAVNetCommandRef@@PAVGameMessage@@@Z present-unmatched
 Bool NetPacket::isRoomForGameMessage(NetCommandRef *msg, GameMessage *gmsg) {
 	// Calculate how much space the NetCommandMsg will take in this packet.
@@ -5285,6 +5323,7 @@ NetCommandList * NetPacket::getCommandList() {
 /**
  * Reads the data portion of a game message from the given position in the packet.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_readGameMessage.cpp
 // ?readGameMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z present-unmatched
 NetCommandMsg * NetPacket::readGameMessage(UnsignedByte *data, Int &i) 
 {
@@ -5435,6 +5474,7 @@ void NetPacket::readGameMessageArgumentFromPacket(GameMessageArgumentDataType ty
 /**
  * Reads the data portion of the ack message at this position in the packet.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_read.cpp
 // ?readAckBothMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z present-unmatched
 NetCommandMsg * NetPacket::readAckBothMessage(UnsignedByte *data, Int &i) {
 	NetAckBothCommandMsg *msg = newInstance(NetAckBothCommandMsg);
@@ -5459,6 +5499,7 @@ NetCommandMsg * NetPacket::readAckBothMessage(UnsignedByte *data, Int &i) {
 /**
  * Reads the data portion of the ack message at this position in the packet.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_read.cpp
 // ?readAckStage1Message@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z present-unmatched
 NetCommandMsg * NetPacket::readAckStage1Message(UnsignedByte *data, Int &i) {
 	NetAckStage1CommandMsg *msg = newInstance(NetAckStage1CommandMsg);
@@ -5483,6 +5524,7 @@ NetCommandMsg * NetPacket::readAckStage1Message(UnsignedByte *data, Int &i) {
 /**
  * Reads the data portion of the ack message at this position in the packet.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_read.cpp
 // ?readAckStage2Message@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z present-unmatched
 NetCommandMsg * NetPacket::readAckStage2Message(UnsignedByte *data, Int &i) {
 	NetAckStage2CommandMsg *msg = newInstance(NetAckStage2CommandMsg);
@@ -5507,6 +5549,7 @@ NetCommandMsg * NetPacket::readAckStage2Message(UnsignedByte *data, Int &i) {
 /**
  * Reads the data portion of the frame message at this position in the packet.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_read.cpp
 // ?readFrameMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z present-unmatched
 NetCommandMsg * NetPacket::readFrameMessage(UnsignedByte *data, Int &i) {
 	NetFrameCommandMsg *msg = newInstance(NetFrameCommandMsg);
@@ -5794,6 +5837,7 @@ NetCommandMsg * NetPacket::readWrapperMessage(UnsignedByte *data, Int &i) {
 	return msg;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_read.cpp
 // ?readFileMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z present-unmatched
 NetCommandMsg * NetPacket::readFileMessage(UnsignedByte *data, Int &i) {
 	NetFileCommandMsg *msg = newInstance(NetFileCommandMsg);
@@ -5822,6 +5866,7 @@ NetCommandMsg * NetPacket::readFileMessage(UnsignedByte *data, Int &i) {
 	return msg;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_read.cpp
 // ?readFileAnnounceMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z present-unmatched
 NetCommandMsg * NetPacket::readFileAnnounceMessage(UnsignedByte *data, Int &i) {
 	NetFileAnnounceCommandMsg *msg = newInstance(NetFileAnnounceCommandMsg);

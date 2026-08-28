@@ -6,6 +6,7 @@ class ModuleData;
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyCenterProductionExitUpdate.h
 class SupplyCenterProductionExitUpdateModuleData
 {
 public:
@@ -17,6 +18,7 @@ private:
 	int m0, m1, m2, m3, m4, m5;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -25,6 +27,7 @@ public:
 
 extern "C" char SupplyCenterProductionExitUpdateFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyCenterProductionExitUpdate.h
 class SupplyCenterProductionExitUpdate
 {
 public:

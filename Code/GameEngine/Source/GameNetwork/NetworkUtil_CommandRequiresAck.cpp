@@ -59,6 +59,7 @@ enum NetCommandType
 	NETCOMMANDTYPE_DISCONNECTSCREENOFF				// 28
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:

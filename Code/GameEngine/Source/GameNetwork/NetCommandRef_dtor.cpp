@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ??0NetCommandRef@@QAE@PAVNetCommandMsg@@@Z: Code/GameEngine/Source/GameNetwork/NetCommandRef.cpp
 
 // NetCommandRef::~NetCommandRef, 0x00676280, 12 bytes.
 //
@@ -22,6 +23,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef unsigned char UnsignedByte;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -29,6 +31,7 @@ public:
 	void detach();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 public:

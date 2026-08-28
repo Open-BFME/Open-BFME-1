@@ -283,6 +283,7 @@ void NetCommandWrapperList::processWrapper(NetCommandRef *ref) {
 	temp->copyChunkData(msg);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetCommandWrapperList_getReadyCommands.cpp
 // ?getReadyCommands@NetCommandWrapperList@@QAEPAVNetCommandList@@XZ present-unmatched
 NetCommandList * NetCommandWrapperList::getReadyCommands() 
 {

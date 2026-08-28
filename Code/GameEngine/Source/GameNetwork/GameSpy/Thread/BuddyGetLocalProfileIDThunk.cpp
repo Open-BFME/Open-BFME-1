@@ -1,3 +1,4 @@
+// readable body of ?getLocalProfileID@GameSpyBuddyMessageQueue@@UAEHXZ: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThread.cpp
 // Exact retail bytes for the GameSpyBuddyMessageQueue profile row at 0x004EBE30.
 extern "C" __declspec(naked) void bfme_BuddyMessageQueue_getLocalProfileID_4EBE30()
 {

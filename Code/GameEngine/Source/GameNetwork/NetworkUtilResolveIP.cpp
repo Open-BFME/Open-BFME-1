@@ -33,6 +33,7 @@ extern "C" __declspec(dllimport) struct hostent * __stdcall gethostbyname(const 
 
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

@@ -17,6 +17,7 @@
 // StringBase<char> would collide with the StringBase<wchar_t> that Network.cpp's
 // languagefilter shim defines.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/ConnectionManager.h
 class ConnectionManager
 {
 public:

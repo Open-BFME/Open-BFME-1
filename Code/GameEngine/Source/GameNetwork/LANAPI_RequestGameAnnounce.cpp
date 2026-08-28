@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?RequestGameAnnounce@LANAPI@@UAEXXZ: Code/GameEngine/Source/GameNetwork/lanapi.cpp
 
 // Retail 0x00685FC0, LANAPI vtable slot 23 -- between RequestGameOptions at 20
 // and RequestGameCreate at 22, whose row is already ledgered, in Zero Hour's
@@ -32,6 +33,7 @@ struct BfmeUnicodeStringData
 	UnsignedShort m_pad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -45,6 +47,7 @@ protected:
 	BfmeUnicodeStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 struct LANMessage
 {
 	Int LANMessageType;				// +0x00
@@ -62,6 +65,7 @@ struct BfmeNetAddress
 	UnsignedShort m_port;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameInfo
 {
 public:
@@ -121,6 +125,7 @@ public:
 
 extern Network *TheNetwork;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class LANAPI
 {
 public:

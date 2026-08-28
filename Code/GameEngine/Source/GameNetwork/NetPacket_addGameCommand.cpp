@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?addGameCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?isRoomForGameMessage@NetPacket@@IAE_NPAVNetCommandRef@@PAVGameMessage@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
 // NetPacket::addGameCommand, 0x0067CA00, 855 bytes -- addCommand's jump-table
 // arm for command type 4, and the biggest of the family.
@@ -79,6 +81,7 @@ union GameMessageArgumentType
 	UnsignedByte raw[16];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:
@@ -96,6 +99,7 @@ public:
 	UnsignedByte m_argCount;						// this+0x18
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
 class GameMessageParserArgumentType
 {
 public:
@@ -109,6 +113,7 @@ public:
 	Int m_argCount;								// this+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
 class GameMessageParser
 {
 public:
@@ -123,6 +128,7 @@ public:
 	Int m_argTypeCount;							// this+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -140,12 +146,14 @@ public:
 	Int m_referenceCount;							// this+0x18
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetGameCommandMsg : public NetCommandMsg
 {
 public:
 	GameMessage *constructGameMessage(void);				// retail 0x00675ED0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 public:
@@ -169,6 +177,7 @@ struct NetPacketAddress
 	UnsignedShort port;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 public:

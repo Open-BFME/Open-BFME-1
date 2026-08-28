@@ -3,6 +3,7 @@
 // EA's class declaration and the clean destructor independently place the
 // UpgradeModuleData subobject at +0x08 and its AsciiString at +0x70.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -42,6 +43,7 @@ protected:
 	CommandSetUpgradeModuleDataBase m_upgradeModuleData;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CommandSetUpgrade.h
 class CommandSetUpgradeModuleData : public CommandSetUpgradeModuleDataIntermediateBase
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?handleRequestLocations@LANAPI@@IAEXPAULANMessage@@I@Z: Code/GameEngine/Source/GameNetwork/LANAPIhandlers.cpp
 // Open-BFME5: lift the retail LANAPI::handleRequestLocations MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_LANAPIHandleRequestLocations_68AEF0()

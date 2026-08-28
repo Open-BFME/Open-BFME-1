@@ -25,6 +25,7 @@
 // those seven carry reference names; BFME's five -1 words have no counterpart
 // there and nothing in this body says what they are, so they stay unnamed.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -37,6 +38,7 @@ private:
 	unsigned char m_isAllocatedOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -57,6 +59,7 @@ private:
 	void *m_endOfStorage;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/RankInfo.h
 class RankInfo : public Overridable
 {
 public:

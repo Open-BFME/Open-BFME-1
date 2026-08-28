@@ -102,6 +102,7 @@ static const ModelConditionFlagType theWaitingToCloseFlags[DOOR_COUNT_MAX] =
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/ProductionUpdateModuleDataCtorThunk.cpp
 // ??0ProductionUpdateModuleData@@ present-unmatched
 ProductionUpdateModuleData::ProductionUpdateModuleData( void )
 {
@@ -191,6 +192,7 @@ ProductionEntry::~ProductionEntry( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/ProductionUpdate_ctor_Thunk.cpp
 // ??0ProductionUpdate@@ present-unmatched
 ProductionUpdate::ProductionUpdate( Thing *thing, const ModuleData* moduleData ) : 
 									UpdateModule( thing, moduleData )

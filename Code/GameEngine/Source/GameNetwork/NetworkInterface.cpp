@@ -19,6 +19,7 @@
 // Its own TU: Network.cpp opts into the languagefilter shim, which these two
 // bodies do not need.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetworkInterface.h
 class NetworkInterface : public SubsystemInterface
 {
 public:

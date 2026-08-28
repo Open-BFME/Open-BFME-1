@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?ParseActionDataChunk@ScriptAction@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp
 // Open-BFME7: isolated port of Scripts.cpp's ScriptAction::ParseActionDataChunk
 // for retail 0x00358FE0. The shared Scripts.cpp TU already compiles this body to
 // retail's exact instruction shape -- down to the alignment nop before the loop
@@ -20,6 +21,7 @@
 class DataChunkInput;
 struct DataChunkInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class ScriptAction
 {
 public:
@@ -37,6 +39,7 @@ private:
 	ScriptAction *m_nextAction;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Script
 {
 public:

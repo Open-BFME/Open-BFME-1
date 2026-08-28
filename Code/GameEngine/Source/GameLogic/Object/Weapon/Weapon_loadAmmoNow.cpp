@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?loadAmmoNow@Weapon@@QAEXPBVObject@@@Z: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
 
 // Open-BFME5: Weapon::loadAmmoNow, retail 0x001E9D60, 95 bytes. The body
 // carried only a machine byte-dump row; the symbols.csv pin names it, and both
@@ -20,6 +21,7 @@ typedef float Real;
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponBonus
 {
 public:
@@ -36,6 +38,7 @@ public:
 	Real m_bfmeA, m_bfmeB, m_bfmeC, m_bfmeD, m_bfmeE, m_bfmeF;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:

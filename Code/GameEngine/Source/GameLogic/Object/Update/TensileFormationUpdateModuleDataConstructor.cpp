@@ -10,6 +10,7 @@ private:
 	unsigned char m_pad[0x60];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TensileFormationUpdate.h
 class TensileFormationUpdateModuleData : public BaseModuleData
 {
 public:

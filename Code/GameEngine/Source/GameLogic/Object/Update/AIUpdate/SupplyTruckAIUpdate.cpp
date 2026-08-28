@@ -76,6 +76,7 @@ enum {
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdateMakeStateMachineThunk.cpp
 // ?makeStateMachine@SupplyTruckAIUpdate@@ present-unmatched
 AIStateMachine* SupplyTruckAIUpdate::makeStateMachine()
 {
@@ -83,6 +84,7 @@ AIStateMachine* SupplyTruckAIUpdate::makeStateMachine()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/SupplyTruckAIUpdateCtorThunk.cpp
 // ??0SupplyTruckAIUpdate@@ present-unmatched
 SupplyTruckAIUpdate::SupplyTruckAIUpdate( Thing *thing, const ModuleData* moduleData ) : AIUpdateInterface( thing, moduleData )
 {
@@ -99,6 +101,7 @@ SupplyTruckAIUpdate::SupplyTruckAIUpdate( Thing *thing, const ModuleData* module
 } 
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SupplyTruckAIUpdateDestructorThunk.cpp
 // ??1SupplyTruckAIUpdate@@ present-unmatched
 SupplyTruckAIUpdate::~SupplyTruckAIUpdate( void )
 {
@@ -107,6 +110,7 @@ SupplyTruckAIUpdate::~SupplyTruckAIUpdate( void )
 
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp
 // ?update@SupplyTruckAIUpdate@@ present-unmatched
 UpdateSleepTime SupplyTruckAIUpdate::update( void )
 {
@@ -121,6 +125,7 @@ UpdateSleepTime SupplyTruckAIUpdate::update( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp
 // ?isCurrentlyFerryingSupplies@SupplyTruckAIUpdate@@ present-unmatched
 Bool SupplyTruckAIUpdate::isCurrentlyFerryingSupplies() const
 {
@@ -257,6 +262,7 @@ __declspec(naked) void SupplyTruckAIUpdate::privateIdle(CommandSourceType)
 }
 
 //----------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp
 // ?privateDock@SupplyTruckAIUpdate@@ present-unmatched
 void SupplyTruckAIUpdate::privateDock( Object *dock, CommandSourceType cmdSource )
 {
@@ -454,6 +460,7 @@ TheInGameUI->DEBUG_addFloatingText("entering idle state", getMachineOwner()->get
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckStateMachineConstructorThunk.cpp
 // ??0SupplyTruckStateMachine@@ present-unmatched
 SupplyTruckStateMachine::SupplyTruckStateMachine( Object *owner ) : StateMachine( owner, "SupplyTruckStateMachine" )
 {

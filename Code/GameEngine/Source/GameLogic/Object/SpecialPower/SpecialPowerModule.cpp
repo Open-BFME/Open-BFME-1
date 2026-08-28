@@ -207,6 +207,7 @@ void SpecialPowerModule::resolveSpecialPower( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SpecialPowerModule_onSpecialPowerCreationMethodThunk.cpp
 // ?onSpecialPowerCreation@SpecialPowerModule@@UAEXXZ present-unmatched
 void SpecialPowerModule::onSpecialPowerCreation( void )
 {
@@ -296,6 +297,7 @@ Bool SpecialPowerModule::isModuleForPower( const SpecialPowerTemplate *specialPo
 //-------------------------------------------------------------------------------------------------
 /** Is this special power ready to use */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule_isReady_Thunk.cpp
 // ?isReady@SpecialPowerModule@@UBE_NXZ present-unmatched
 Bool SpecialPowerModule::isReady() const
 {
@@ -400,6 +402,7 @@ Bool SpecialPowerModule::isScriptOnly() const
 /** A special power has been used ... start the recharge process by computing the frame
 	* we will become fully available on in the future again */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__startPowerRecharge_SpecialPowerModule_UAEXXZ_0026AE00.cpp
 // ?startPowerRecharge@SpecialPowerModule@@UAEXXZ present-unmatched
 void SpecialPowerModule::startPowerRecharge()
 {
@@ -442,6 +445,7 @@ void SpecialPowerModule::startPowerRecharge()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModuleInitiateIntentThunk.cpp
 // ?initiateIntentToDoSpecialPower@SpecialPowerModule@@IAE_NPBVObject@@PBUCoord3D@@PBVWaypoint@@I@Z present-unmatched
 Bool SpecialPowerModule::initiateIntentToDoSpecialPower( const Object *targetObj, const Coord3D *targetPos, const Waypoint *way, UnsignedInt commandOptions )
 {
@@ -801,6 +805,7 @@ void SpecialPowerModule::pauseCountdown( Bool pause )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SpecialPowerModule_getReadyFrame_Thunk.cpp
 // ?getReadyFrame@SpecialPowerModule@@UBEIXZ present-unmatched
 UnsignedInt SpecialPowerModule::getReadyFrame( void ) const
 {
@@ -872,6 +877,7 @@ void SpecialPowerModule::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SpecialPowerModule_loadPostProcessMethodThunk.cpp
 // ?loadPostProcess@SpecialPowerModule@@MAEXXZ present-unmatched
 void SpecialPowerModule::loadPostProcess( void )
 {

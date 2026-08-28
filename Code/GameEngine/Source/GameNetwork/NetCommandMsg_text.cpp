@@ -76,6 +76,7 @@ enum NetCommandType
 	NETCOMMANDTYPE_FILEANNOUNCE = 20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -100,6 +101,7 @@ protected:
 	Int m_referenceCount;							// this+0x18
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectChatCommandMsg : public NetCommandMsg
 {
 public:
@@ -126,6 +128,7 @@ UnicodeString NetDisconnectChatCommandMsg::getText()
 	return m_text;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetChatCommandMsg : public NetCommandMsg
 {
 public:
@@ -253,6 +256,7 @@ void BFMENetGameSpyStatsAuthKeyCommandMsg::setText20(AsciiString text)
 // set() here reproduces retail; writing = would add that hop.
 void __cdecl operator delete[](void *block) throw();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameState.h
 class GameState
 {
 public:
@@ -262,6 +266,7 @@ public:
 
 GameState *TheGameState;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileCommandMsg : public NetCommandMsg
 {
 public:
@@ -303,6 +308,7 @@ void NetFileCommandMsg::setRealFilename(AsciiString filename)
 	m_portableFilename = TheGameState->realMapPathToPortableMapPath(filename);
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileAnnounceCommandMsg : public NetCommandMsg
 {
 public:

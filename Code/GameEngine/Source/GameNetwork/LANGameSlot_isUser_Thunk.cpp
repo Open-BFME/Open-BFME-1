@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?isUser@LANGameSlot@@: Code/GameEngine/Source/GameNetwork/LANGameInfo.cpp
 // Open-BFME5: LANGameSlot::isUser(UnicodeString) as clean C++ in its own TU.
 //
 // The body is one line of LANGameInfo.cpp, but it cannot be converted there:
@@ -45,6 +46,7 @@ private:
 	T *m_str;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>
 {
 public:
@@ -68,6 +70,7 @@ enum SlotState
 	SLOT_PLAYER
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
 {
 public:
@@ -80,6 +83,7 @@ protected:
 	UnicodeString m_name;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameSlot : public GameSlot
 {
 public:

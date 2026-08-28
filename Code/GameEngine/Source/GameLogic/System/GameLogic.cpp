@@ -109,6 +109,7 @@ enum WaypointID
 	INVALID_WAYPOINT_ID = 0x7FFFFFFF
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Waypoint : public MemoryPoolObject
 {
 	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(Waypoint, "Waypoint")		
@@ -155,6 +156,7 @@ public:
 	void setLocationZ(Real z) { m_location.z = z; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class BridgeInfo 
 {
 public:
@@ -172,6 +174,7 @@ public:
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Bridge : public MemoryPoolObject
 {
 	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(Bridge, "Bridge")		
@@ -213,6 +216,7 @@ public:
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic : public Snapshot,
 										 public SubsystemInterface
 {
@@ -629,6 +633,7 @@ GameLogic::~GameLogic()
 // ------------------------------------------------------------------------------------------------
 /** (re)initialize the instance. */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/System/GameLogicInitThunk.cpp
 // ?init@GameLogic@@UAEXXZ present-unmatched
 void GameLogic::init( void )
 {
@@ -690,6 +695,7 @@ void GameLogic::init( void )
 //-------------------------------------------------------------------------------------------------
 /** Reset the game logic systems */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameLogic_resetMethodThunk.cpp
 // ?reset@GameLogic@@UAEXXZ present-unmatched
 void GameLogic::reset( void )
 {
@@ -2549,6 +2555,7 @@ __declspec(naked) static void populateRandomStartPosition(GameInfo *)
 // ------------------------------------------------------------------------------------------------
 /** Update the load screen progress */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/System/GameLogicUpdateLoadProgressThunk.cpp
 // ?updateLoadProgress@GameLogic@@QAEXH@Z present-unmatched
 void GameLogic::updateLoadProgress( Int progress )
 {
@@ -4046,6 +4053,7 @@ __declspec(naked) void GameLogic::deleteLoadScreen(void)
 /** Entry point for starting a new game, the engine is already in clean state at this
 	* point and ready to load up with all the data */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/System/GameLogicStartNewGameThunk.cpp
 // ?startNewGame@GameLogic@@QAEX_N@Z present-unmatched
 void GameLogic::startNewGame( Bool loadingSaveGame )
 {
@@ -5333,6 +5341,7 @@ static void findAndSelectCommandCenter(Object *obj, void* alreadyFound)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameLogic_loadMapINIMethodThunk.cpp
 // ?loadMapINI@GameLogic@@QAEXVAsciiString@@@Z present-unmatched
 void GameLogic::loadMapINI( AsciiString mapName )
 {
@@ -5910,6 +5919,7 @@ UpdateModulePtr GameLogic::peekSleepyUpdate() const
 }
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/masm_dumps/_sa11__popSleepyUpdate_GameLogic__AAEXXZ_38C1E0.asm
 // ?popSleepyUpdate@GameLogic@@AAEXXZ present-unmatched
 void GameLogic::popSleepyUpdate()
 {
@@ -5940,6 +5950,7 @@ void GameLogic::popSleepyUpdate()
 // this should be called only by UpdateModule, thanks.
 // ------------------------------------------------------------------------------------------------
 //DECLARE_PERF_TIMER(friend_awakenUpdateModule)
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/GameLogicAwakenUpdateModuleThunk.cpp
 // ?friend_awakenUpdateModule@GameLogic@@QAEXPAVObject@@PAVUpdateModule@@I@Z present-unmatched
 void GameLogic::friend_awakenUpdateModule(Object* obj, UpdateModulePtr u, UnsignedInt whenToWakeUp)
 {
@@ -6812,6 +6823,7 @@ ObjectID GameLogic::allocateObjectID( void )
 // ------------------------------------------------------------------------------------------------
 /** Add object ID to the lookup table */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/System/GameLogicObjectLookupTable.cpp
 // ?addObjectToLookupTable@GameLogic@@QAEXPAVObject@@@Z present-unmatched
 void GameLogic::addObjectToLookupTable( Object *obj )
 {
@@ -6833,6 +6845,7 @@ void GameLogic::addObjectToLookupTable( Object *obj )
 // ------------------------------------------------------------------------------------------------
 /** Remove object from the ID lookup table */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/System/GameLogicObjectLookupTable.cpp
 // ?removeObjectFromLookupTable@GameLogic@@QAEXPAVObject@@@Z present-unmatched
 void GameLogic::removeObjectFromLookupTable( Object *obj )
 {
@@ -7123,6 +7136,7 @@ __declspec(naked) void GameLogic::destroyObject( Object * )
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 Bool inCRCGen = FALSE;
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameLogic_getCRC_Thunk.cpp
 // ?getCRC@GameLogic@@QAEIHVAsciiString@@@Z present-unmatched
 UnsignedInt GameLogic::getCRC( Int mode, AsciiString deepCRCFileName )
 {
@@ -7563,6 +7577,7 @@ Bool GameLogic::findBuildableStatusOverride(const ThingTemplate* tt, BuildableSt
 }
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameLogicSetControlBarOverride.cpp
 // ?setControlBarOverride@GameLogic@@QAEXABVAsciiString@@HPBVCommandButton@@@Z present-unmatched
 void GameLogic::setControlBarOverride(const AsciiString& commandSetName, Int slot, ConstCommandButtonPtr commandButton)
 {
@@ -7573,6 +7588,7 @@ void GameLogic::setControlBarOverride(const AsciiString& commandSetName, Int slo
 }
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/System/GameLogicFindControlBarOverrideThunk.cpp
 // ?findControlBarOverride@GameLogic@@QBE_NABVAsciiString@@HAAPBVCommandButton@@@Z present-unmatched
 Bool GameLogic::findControlBarOverride(const AsciiString& commandSetName, Int slot, ConstCommandButtonPtr& commandButton) const
 {

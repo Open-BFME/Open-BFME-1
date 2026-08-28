@@ -1,4 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?isAckBothRepeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?isAckStage1Repeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?isAckStage2Repeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 // BFME ACK repeat checks use the de-pooled NetCommandRef layout and retain the
 // source player in each ACK message at +0x20.  The inherited ZH declarations
 // omit that BFME comparison, so this TU keeps the recovered ABI slice local.
@@ -17,6 +20,7 @@ enum NetCommandType
 	NETCOMMANDTYPE_ACKSTAGE2 = 2
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -28,6 +32,7 @@ public:
 	NetCommandType m_commandType;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 public:
@@ -39,6 +44,7 @@ public:
 	UnsignedByte m_relay;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetAckBothCommandMsg
 {
 public:
@@ -51,6 +57,7 @@ public:
 	UnsignedInt m_ackPlayerID;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetAckStage1CommandMsg
 {
 public:
@@ -63,6 +70,7 @@ public:
 	UnsignedInt m_ackPlayerID;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetAckStage2CommandMsg
 {
 public:
@@ -75,6 +83,7 @@ public:
 	UnsignedInt m_ackPlayerID;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 protected:

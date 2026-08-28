@@ -243,6 +243,7 @@ void GameLogic::clearGameData( Bool showScoreScreen )
 // ------------------------------------------------------------------------------------------------
 /** Prepare for a new game */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/System/GameLogic_prepareNewGame_Thunk.cpp
 // ?prepareNewGame@GameLogic@@QAEXHW4GameDifficulty@@H@Z present-unmatched
 void GameLogic::prepareNewGame( Int gameMode, GameDifficulty diff, Int rankPoints )
 {
@@ -286,6 +287,7 @@ void GameLogic::prepareNewGame( Int gameMode, GameDifficulty diff, Int rankPoint
   * appropriate objects.
 	* @todo Rename this to "CommandProcessor", or similiar. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/System/GameLogicMessageDispatcherThunk.cpp
 // ?logicMessageDispatcher@GameLogic@@ present-unmatched
 void GameLogic::logicMessageDispatcher( GameMessage *msg, void *userData )
 {

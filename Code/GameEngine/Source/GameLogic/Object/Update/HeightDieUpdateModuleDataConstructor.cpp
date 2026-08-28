@@ -2,6 +2,7 @@
 
 // Open-BFME5: HeightDieUpdateModuleData default ctor.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/HeightDieUpdate.h
 class HeightDieUpdateModuleData
 {
 public:

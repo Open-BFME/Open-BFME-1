@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0MobMemberSlavedUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/MobMemberSlavedUpdate.cpp
 // Open-BFME5: lift the retail MobMemberSlavedUpdate constructor MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_MobMemberSlavedUpdateCtor_1FB5D0()

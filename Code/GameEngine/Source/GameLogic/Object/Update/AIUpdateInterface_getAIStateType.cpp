@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getAIStateType@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
 // AIUpdateInterface::getAIStateType, retail 0x0026F8F0. Zero Hour's one-liner -
 // the current state id off the state machine, cast - with the machine's own
@@ -17,6 +18,7 @@ enum StateID
 	INVALID_STATE_ID = 999999
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
@@ -30,6 +32,7 @@ private:
 	StateID m_id;							// +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -55,6 +58,7 @@ private:
 	State *m_currentState;					// +0x58
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:

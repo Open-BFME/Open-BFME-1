@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?findSpecialPowerTemplatePrivate@SpecialPowerStore@@: Code/GameEngine/Source/Common/RTS/SpecialPower.cpp
 // Open-BFME: SpecialPowerStore::findSpecialPowerTemplatePrivate, retail
 // 0x000EBA20, 298 bytes.
 //
@@ -22,6 +23,7 @@
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -60,12 +62,14 @@ inline bool operator==(const AsciiString &left, const AsciiString &right)
 	return left.compare(right) == 0;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
 class SpecialPowerTemplate
 {
 public:
 	AsciiString getName(void) const;			// ILT 0x00005682, returns by value
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
 class SpecialPowerStore
 {
 protected:

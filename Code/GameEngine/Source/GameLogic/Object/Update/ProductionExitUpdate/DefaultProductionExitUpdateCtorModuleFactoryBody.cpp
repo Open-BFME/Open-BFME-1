@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0DefaultProductionExitUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdate.cpp
 // ModuleFactory reaches this constructor body through ILT 0x00025581. The
 // explicit retail layout keeps this per-TU copy independent of Zero Hour's
 // incompatible UpdateModule layout.
@@ -22,6 +23,7 @@ protected:
 class DPEU_Iface1 { public: virtual void slot(); };
 class DPEU_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public DPEU_DeepBase, public DPEU_Iface1, public DPEU_Iface2
 {
 public:
@@ -38,12 +40,14 @@ private:
     int m_f1c;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class ExitInterface
 {
 public:
     virtual void exitObject();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 class Coord3D
 {
 public:
@@ -60,6 +64,7 @@ private:
     float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DefaultProductionExitUpdate.h
 class DefaultProductionExitUpdate : public UpdateModule, public ExitInterface
 {
 public:

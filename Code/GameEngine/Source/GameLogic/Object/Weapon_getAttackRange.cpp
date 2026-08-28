@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getAttackRange@Weapon@@QBEMPBVObject@@@Z: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
 // Open-BFME: Weapon::getAttackRange, retail 0x001E2B50, 98 bytes.
 //
 // The reference's three-line body -- a default WeaponBonus, computeBonus, then
@@ -24,6 +25,7 @@ typedef bool Bool;
 
 struct Coord3D { Real x, y, z; };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -34,6 +36,7 @@ private:
 	Coord3D m_position;			// this+0x38
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponBonus
 {
 public:
@@ -64,12 +67,14 @@ private:
 	Real m_field[FIELD_COUNT];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponTemplate
 {
 public:
 	Real getAttackRange(const Object *source, const WeaponBonus &bonus, const Coord3D *sourcePos) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:

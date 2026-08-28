@@ -22,6 +22,7 @@ protected:
 class FU_Iface1 { public: virtual void slot(); };
 class FU_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public FU_DeepBase, public FU_Iface1, public FU_Iface2
 {
 public:
@@ -41,6 +42,7 @@ private:
 
 class DamageModuleInterface { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FlammableUpdate.h
 class FlammableUpdateModuleData
 {
 private:
@@ -50,6 +52,7 @@ public:
     float m_flameDamageLimit;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FlammableUpdate.h
 class FlammableUpdate : public UpdateModule, public DamageModuleInterface
 {
 public:

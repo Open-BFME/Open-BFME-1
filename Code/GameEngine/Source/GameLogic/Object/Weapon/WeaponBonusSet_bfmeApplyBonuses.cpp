@@ -5,6 +5,7 @@ typedef float Real;
 
 extern Real g_bfmeDefaultBU;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponBonus
 {
 public:
@@ -17,6 +18,7 @@ public:
 	Real m_field[6];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponBonusSet
 {
 public:

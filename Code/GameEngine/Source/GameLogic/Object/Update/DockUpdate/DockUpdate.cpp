@@ -434,6 +434,7 @@ void DockUpdate::setDockCrippled( Bool setting )
 	m_dockCrippled = setting;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DockUpdate_update_Thunk.cpp
 // ?update@DockUpdate@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
 UpdateSleepTime DockUpdate::update()
 {
@@ -466,6 +467,7 @@ UpdateSleepTime DockUpdate::update()
 	return UPDATE_SLEEP_NONE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdateComputeApproachPositionThunk.cpp
 // ?computeApproachPosition@DockUpdate@@IAE?AUCoord3D@@HPAVObject@@@Z present-unmatched
 Coord3D DockUpdate::computeApproachPosition( Int positionIndex, Object *forWhom )
 {

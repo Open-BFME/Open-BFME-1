@@ -123,6 +123,7 @@ public:
 const Int DEFAULT_UPDATE_RATE = LOGICFRAMES_PER_SECOND;
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/HordeUpdateModuleDataCtorThunk.cpp
 // ??0HordeUpdateModuleData@@ present-unmatched
 HordeUpdateModuleData::HordeUpdateModuleData() :
 	m_updateRate(DEFAULT_UPDATE_RATE),

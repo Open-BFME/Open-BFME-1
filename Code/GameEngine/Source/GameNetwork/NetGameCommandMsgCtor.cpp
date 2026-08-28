@@ -14,6 +14,7 @@ enum NetCommandType
 	NETCOMMANDTYPE_GAMECOMMAND = 4
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -52,6 +53,7 @@ protected:
 // ODR violation and a second ledger claim on one mangled name; the declaration
 // above is enough for the base-ctor call below to resolve at link time.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetGameCommandMsg : public NetCommandMsg
 {
 public:

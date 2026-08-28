@@ -90,6 +90,7 @@ void ToppleUpdateModuleData::buildFieldParse(MultiIniFieldParse& p)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/ToppleUpdateCtorThunk.cpp
 // ??0ToppleUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 ToppleUpdate::ToppleUpdate( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {
@@ -129,6 +130,7 @@ static Real angleClosestTo(Real a1, Real a2, Real desired)
 //-------------------------------------------------------------------------------------------------
 ///< Start the toppling process by giving a force vector
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/ToppleUpdateApplyTopplingForceThunk.cpp
 // ?applyTopplingForce@ToppleUpdate@@ present-unmatched
 void ToppleUpdate::applyTopplingForce( const Coord3D* toppleDirection, Real toppleSpeed,
 																			 UnsignedInt options )
@@ -355,6 +357,7 @@ UpdateSleepTime ToppleUpdate::update()
 //-------------------------------------------------------------------------------------------------
 /** Do the collision */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ToppleUpdate_onCollide_Thunk.cpp
 // ?onCollide@ToppleUpdate@@UAEXPAVObject@@PBUCoord3D@@1@Z present-unmatched
 void ToppleUpdate::onCollide( Object *other, const Coord3D *loc, const Coord3D *normal )
 {

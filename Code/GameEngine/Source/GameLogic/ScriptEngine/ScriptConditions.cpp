@@ -383,6 +383,7 @@ Bool ScriptConditions::evaluateNamedUnitTotallyDead(Parameter *pUnitParm)
 //-------------------------------------------------------------------------------------------------
 /** evaluateHasUnits */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_evaluateHasUnits_Thunk.cpp
 // ?evaluateHasUnits@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
 Bool ScriptConditions::evaluateHasUnits(Parameter *pTeamParm)
 {
@@ -422,6 +423,7 @@ Bool ScriptConditions::evaluateHasUnits(Parameter *pTeamParm)
 //-------------------------------------------------------------------------------------------------
 /** evaluateUnitsEntered */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_insideArea.cpp
 // ?evaluateTeamInsideAreaPartially@ScriptConditions@@IAE_NPAVParameter@@00@Z present-unmatched
 Bool ScriptConditions::evaluateTeamInsideAreaPartially(Parameter *pTeamParm, Parameter *pTriggerAreaParm, Parameter *pTypeParm)
 {
@@ -442,6 +444,7 @@ Bool ScriptConditions::evaluateTeamInsideAreaPartially(Parameter *pTeamParm, Par
 //-------------------------------------------------------------------------------------------------
 /** evaluateNamedInsideArea */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_insideArea.cpp
 // ?evaluateNamedInsideArea@ScriptConditions@@IAE_NPAVParameter@@0@Z present-unmatched
 Bool ScriptConditions::evaluateNamedInsideArea(Parameter *pUnitParm, Parameter *pTriggerAreaParm )
 {
@@ -684,6 +687,7 @@ Bool ScriptConditions::evaluateNamedOutsideArea(Parameter *pUnitParm, Parameter 
 //-------------------------------------------------------------------------------------------------
 /** evaluateTeamInsideAreaEntirely */ 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_insideArea.cpp
 // ?evaluateTeamInsideAreaEntirely@ScriptConditions@@IAE_NPAVParameter@@00@Z present-unmatched
 Bool ScriptConditions::evaluateTeamInsideAreaEntirely(Parameter *pTeamParm, Parameter *pTriggerParm, Parameter *pTypeParm)
 {// This is actually TeamInside(...)
@@ -1284,6 +1288,7 @@ Bool ScriptConditions::evaluateMissionAttempts(Parameter *pPlayerParm, Parameter
 //-------------------------------------------------------------------------------------------------
 /** evaluateNamedOwnedByPlayer */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptConditions_evaluateNamedOwnedByPlayer_Thunk.cpp
 // ?evaluateNamedOwnedByPlayer@ScriptConditions@@IAE_NPAVParameter@@0@Z present-unmatched
 Bool ScriptConditions::evaluateNamedOwnedByPlayer(Parameter *pUnitParm, Parameter *pPlayerParm)
 {
@@ -1511,6 +1516,7 @@ Bool ScriptConditions::evaluateSpeechHasCompleted(Parameter *pSpeechParm)
 //-------------------------------------------------------------------------------------------------
 /** evaluateAudioHasCompleted */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptConditions_evaluateAudioHasCompleted_Thunk.cpp
 // ?evaluateAudioHasCompleted@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
 Bool ScriptConditions::evaluateAudioHasCompleted(Parameter *pAudioParm)
 {
@@ -2290,6 +2296,7 @@ Bool ScriptConditions::evaluateSkirmishPlayerIsFaction(Parameter *pSkirmishPlaye
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_evaluateSkirmishSuppliesWithinDistancePerimeter_Thunk.cpp
 // ?evaluateSkirmishSuppliesWithinDistancePerimeter@ScriptConditions@@ present-unmatched
 Bool ScriptConditions::evaluateSkirmishSuppliesWithinDistancePerimeter(Parameter *pSkirmishPlayerParm, Parameter *pDistanceParm, Parameter *pLocationParm, Parameter *pValueParm)
 {
@@ -2831,6 +2838,7 @@ Bool ScriptConditions::evaluatePlayerLostObjectType(Parameter *pPlayerParm, Para
 //-------------------------------------------------------------------------------------------------
 /** Evaluate a condition */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/script_conditions.cpp
 // ?evaluateCondition@ScriptConditions@@UAE_NPAVCondition@@@Z present-unmatched
 Bool ScriptConditions::evaluateCondition( Condition *pCondition )
 {

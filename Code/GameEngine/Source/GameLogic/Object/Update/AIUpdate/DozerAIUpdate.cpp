@@ -184,6 +184,7 @@ void DozerActionPickActionPosState::loadPostProcess( void )
 //-------------------------------------------------------------------------------------------------
 /** Pick a position around the target */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DozerActionPickActionPosState_update_Thunk.cpp
 // ?update@DozerActionPickActionPosState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType DozerActionPickActionPosState::update( void )
 {
@@ -3399,6 +3400,7 @@ Bool DozerPrimaryStateMachine::isBuildMostImportant( State *thisState, void* use
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DozerPrimaryStateMachine_isRepairMostImportant_Thunk.cpp
 // ?isRepairMostImportant@DozerPrimaryStateMachine@@SA_NPAVState@@PAX@Z present-unmatched
 Bool DozerPrimaryStateMachine::isRepairMostImportant( State *thisState, void* userData )
 {
@@ -3425,6 +3427,7 @@ Bool DozerPrimaryStateMachine::isRepairMostImportant( State *thisState, void* us
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DozerPrimaryStateMachine_isFortifyMostImportant_Thunk.cpp
 // ?isFortifyMostImportant@DozerPrimaryStateMachine@@SA_NPAVState@@PAX@Z present-unmatched
 Bool DozerPrimaryStateMachine::isFortifyMostImportant( State *thisState, void* userData )
 {
@@ -3455,6 +3458,7 @@ Bool DozerPrimaryStateMachine::isFortifyMostImportant( State *thisState, void* u
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdateModuleDataCtorThunk.cpp
 // ??0DozerAIUpdateModuleData@@QAE@XZ present-unmatched
 DozerAIUpdateModuleData::DozerAIUpdateModuleData( void )
 {
@@ -3485,6 +3489,7 @@ void DozerAIUpdateModuleData::buildFieldParse( MultiIniFieldParse& p)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/DozerAIUpdateCtorThunk.cpp
 // ??0DozerAIUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 DozerAIUpdate::DozerAIUpdate( Thing *thing, const ModuleData* moduleData ) : 
 							 AIUpdateInterface( thing, moduleData )
@@ -4024,6 +4029,7 @@ void DozerAIUpdate::privateResumeConstruction( Object *obj, CommandSourceType cm
 //-------------------------------------------------------------------------------------------------
 /** Issue and order to the dozer */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate_newTask_Thunk.cpp
 // ?newTask@DozerAIUpdate@@UAEXW4DozerTask@@PAVObject@@@Z present-unmatched
 void DozerAIUpdate::newTask( DozerTask task, Object *target )
 {
@@ -4522,6 +4528,7 @@ void DozerAIUpdate::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DozerAIUpdate_xferMethodThunk.cpp
 // ?xfer@DozerAIUpdate@@MAEXPAVXfer@@@Z present-unmatched
 void DozerAIUpdate::xfer( Xfer *xfer )
 {

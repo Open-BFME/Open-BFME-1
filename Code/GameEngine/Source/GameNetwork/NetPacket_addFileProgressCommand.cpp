@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?addFileProgressCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
 // Retail 0x0067A700 -- addFileProgressCommand. Named by the call it opens
 // with: ?isRoomForFileProgressMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z at
@@ -26,6 +27,7 @@ enum { MAX_PACKET_SIZE = 0x1DC };
 // NetCommandMsg's field set is the one NetPacket_addCommand.cpp already pins
 // from a matched dispatcher: vptr, timestamp, frame, player, id, type, and the
 // reference count that closes it out at 0x1C.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -43,6 +45,7 @@ public:
 	Int m_referenceCount;							// this+0x18
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 public:
@@ -66,6 +69,7 @@ struct NetPacketAddress
 	UnsignedShort port;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 public:
@@ -90,6 +94,7 @@ public:
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileProgressCommandMsg : public NetCommandMsg
 {
 public:

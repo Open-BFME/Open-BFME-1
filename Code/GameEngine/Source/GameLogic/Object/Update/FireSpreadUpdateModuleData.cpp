@@ -3,6 +3,7 @@
 // Open-BFME5: FireSpreadUpdateModuleData default ctor.
 // Zero order: +0xc, +0x10, +0x8, +0x14.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FireSpreadUpdate.h
 class FireSpreadUpdateModuleData
 {
 public:

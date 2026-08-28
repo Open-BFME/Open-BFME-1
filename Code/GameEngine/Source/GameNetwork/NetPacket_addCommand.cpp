@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?addCommand@NetPacket@@QAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
 // NetPacket::addCommand, 0x006811B0, 408 bytes including its jump table.
 //
@@ -62,6 +63,7 @@ enum NetCommandType
 	NETCOMMANDTYPE_DISCONNECTSCREENOFF = 28
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -75,6 +77,7 @@ public:
 	NetCommandType m_commandType;					// this+0x14
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 public:
@@ -83,6 +86,7 @@ public:
 	NetCommandMsg *m_msg;							// this+0x00
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?privateDock@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
 // AIUpdateInterface::privateDock, retail 0x00271760. Zero Hour's four
 // statements, one for one: refuse an immobile object, clear the state machine,
@@ -18,12 +19,14 @@ enum StateID
 	AI_DOCK = 14
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	Bool isMobile() const;						// ILT thunk at 0x00017607
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -44,6 +47,7 @@ public:
 	virtual void setGoalObject( Object *obj );	// +0x38
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 protected:

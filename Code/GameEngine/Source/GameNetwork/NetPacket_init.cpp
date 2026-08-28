@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ??0NetPacket@@: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?init@NetPacket@@QAEXXZ: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
 // NetPacket::init, 0x00677700, 82 bytes.
 //
@@ -46,11 +48,13 @@ class NetCommandMsg;
 // carries a CRC and a magic number, and retail's data run starts at +4. The
 // three trailing fields land at +0x404, +0x408 and +0x40C, which is what pins
 // the payload at 0x400 bytes.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetworkDefs.h
 struct TransportMessageHeader
 {
 	UnsignedInt crc;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetworkDefs.h
 struct TransportMessage
 {
 	TransportMessageHeader header;					// +0x000
@@ -62,6 +66,7 @@ struct TransportMessage
 
 void __cdecl operator delete(void *block) throw();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 public:
@@ -89,6 +94,7 @@ struct NetPacketAddress
 	UnsignedShort port;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 public:

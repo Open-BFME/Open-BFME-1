@@ -34,6 +34,7 @@ enum { MAX_SLOTS = 8 };
 
 // Only the one field retail writes here is modelled; everything before it is
 // opaque. Connection is not a MemoryPoolObject in BFME, so there is no vptr.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/Connection.h
 class Connection
 {
 public:
@@ -41,6 +42,7 @@ public:
 	UnsignedInt m_frameGrouping;					// this+0x344
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/ConnectionManager.h
 class ConnectionManager
 {
 public:

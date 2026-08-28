@@ -8,6 +8,7 @@ public:
 	int getAllocationSize();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameMemory.h
 class MemoryPoolFactory {
 public:
 	MemoryPool *createMemoryPool(const char *name, int size, int initial, int overflow);
@@ -17,6 +18,7 @@ public:
 extern MemoryPoolFactory *TheMemoryPoolFactory;
 extern void *TheObjectDefectionHelperPoolPtr;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ObjectDefectionHelper.h
 class ObjectDefectionHelper {
 public:
 	virtual ~ObjectDefectionHelper();

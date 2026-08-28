@@ -1,3 +1,5 @@
+// readable body of ?postProcessLoad@WeaponStore@@UAEXXZ: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponStore
 {
 public:

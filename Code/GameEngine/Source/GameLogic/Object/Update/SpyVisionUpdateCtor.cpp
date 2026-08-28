@@ -41,6 +41,7 @@ public:
     virtual void slot();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public PB_DeepBase, public PB_Iface1, public PB_Iface2
 {
 public:
@@ -102,6 +103,7 @@ extern int __cdecl spyVisionRandom(int minimum, int maximum,
                                    const char *file, int line);
 extern const char g_spyVisionSourceFile;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpyVisionUpdate.h
 class SpyVisionUpdate : public UpdateModule,
                         public SpyVisionUpgradeMux,
                         public SpyVisionUpdateInterface

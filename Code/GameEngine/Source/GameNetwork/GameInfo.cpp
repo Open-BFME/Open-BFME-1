@@ -283,6 +283,7 @@ Bool GameSlot::isOpen( void ) const
 
 // GameInfo ----------------------------------------
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameInfo_ctor.cpp
 // ??0GameInfo@@QAE@XZ present-unmatched
 GameInfo::GameInfo()
 {
@@ -299,6 +300,7 @@ void GameInfo::init( void )
 	reset();
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameInfo_resetMethodThunk.cpp
 // ?reset@GameInfo@@UAEXXZ present-unmatched
 void GameInfo::reset( void )
 {
@@ -346,6 +348,7 @@ void GameInfo::markPlayerAsPreorder(Int index)
 }
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameInfo_clearSlotList_Thunk.cpp
 // ?clearSlotList@GameInfo@@QAEXXZ present-unmatched
 void GameInfo::clearSlotList( void )
 {
@@ -497,6 +500,7 @@ Int GameInfo::getLocalSlotNum( void ) const
 	return -1;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameInfo_getSlotNum_Thunk.cpp
 // ?getSlotNum@GameInfo@@QBEHVAsciiString@@@Z present-unmatched
 Int GameInfo::getSlotNum( AsciiString userName ) const
 {
@@ -525,6 +529,7 @@ Bool GameInfo::amIHost( void ) const
 	return getConstSlot(0)->isPlayer(m_localIP);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameInfoSetMapThunk.cpp
 // ?setMap@GameInfo@@QAEXVAsciiString@@@Z present-unmatched
 void GameInfo::setMap( AsciiString mapName )
 {

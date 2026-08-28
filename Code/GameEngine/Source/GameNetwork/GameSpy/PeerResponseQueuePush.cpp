@@ -10,6 +10,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <queue>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerThread.h
 class PeerResponse
 {
 	char m_bfmeBody[0x330];					// the stride the cursor steps by
