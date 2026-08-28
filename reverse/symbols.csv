@@ -72855,6 +72855,7 @@ name,address,notes
 ?bfmeFreeArrDLI@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrDLJ@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrDMA@@YAXPAX@Z,0x00881EF0,pin
+?bfmeFreeArrDMC@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeBIB@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeBOF@@YAXPAX@Z,0x00012E90,pin
 ?bfmeFreeBOG@@YAXPAX@Z,0x000126FC,pin
@@ -72884,6 +72885,7 @@ name,address,notes
 ?bfmeFreeDLI@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeDLJ@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeDMA@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeDMC@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
 ?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
@@ -73491,6 +73493,7 @@ name,address,notes
 ?bfmeVecDtorDLI@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVecDtorDLJ@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVecDtorDMA@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
+?bfmeVecDtorDMC@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVisit@BfmeInnerIterable@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x000EDAB0,"address-derived inner-list visitor callee of BfmeIterableObject::bfmeIterate; retail reaches it through the low-RVA thunk at 0x0002DC1D"
 ?bfmeVisit@Gen_0038D000@@AAEXPAVBfmeNodeR@@@Z,0x0001D0DE,Open-BFME5 the ICF thunk (to 0x0038B0C0) the clear at 0x0038D000 calls on this per node
 ?bfmeWakeAutoPickup@Object@@QAEXH@Z,0x00004930,Open-BFME5 Object helper ILT thunk to body 0x001BFEF0; MSG_WAKE_AUTO_PICKUP dispatch and AutoPickUpUpdate vtables prove button-number selection and wake semantics
@@ -78265,6 +78268,7 @@ _bfmeDtorCbDLH,0x0002F2A2,pin
 _bfmeDtorCbDLI,0x0000D59E,pin
 _bfmeDtorCbDLJ,0x0001D9EE,pin
 _bfmeDtorCbDMA,0x0001364C,pin
+_bfmeDtorCbDMC,0x008F9330,pin
 _bfmeDtorDAA,0x0000D828,pin
 _bfmeDtorDAB,0x0003D4B0,pin
 _bfmeDtorDAC,0x00030652,pin
