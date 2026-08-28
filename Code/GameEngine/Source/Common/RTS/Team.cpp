@@ -1479,11 +1479,28 @@ Team::~Team()
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamGetControllingPlayerThunk.cpp
-// ?getControllingPlayer@Team@@QBEPAVPlayer@@XZ present-unmatched
+// BFME keeps the prototype at Team+0x04 and its owning player at
+// TeamPrototype+0x08, where the vendored header lands them at +0x08 and +0x0c,
+// and retail guards the prototype rather than dereferencing it blind.
+struct BfmeTeamPrototypeOwner
+{
+	UnsignedByte m_unreconstructed_00[0x08];
+	Player *m_owningPlayer;					///< retail prototype+0x08
+};
+
+struct BfmeTeamProtoField
+{
+	UnsignedByte m_unreconstructed_00[0x04];
+	BfmeTeamPrototypeOwner *m_proto;			///< retail this+0x04
+};
+
+// ?getControllingPlayer@Team@@QBEPAVPlayer@@XZ
 Player *Team::getControllingPlayer() const
 {
-	return m_proto->getControllingPlayer();
+	const BfmeTeamProtoField *self = (const BfmeTeamProtoField *)this;
+	if (!self->m_proto)
+		return NULL;
+	return self->m_proto->m_owningPlayer;
 }
 
 // ------------------------------------------------------------------------
