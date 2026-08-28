@@ -72428,6 +72428,7 @@ name,address,notes
 ?bfmeConstruct_007690F0@@YAXPAUBfmeCopy_007690F0@@PBU1@@Z,0x0002B7AB,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x007690F0 calls per pass
 ?bfmeCopyBZD@@YAXPADPBDI@Z,0x009F70BA,pin
 ?bfmeCopyBaseCND@BfmeBaseCND@@QAEXPAU1@@Z,0x000171CA,pin
+?bfmeCopyBaseCNI@BfmeBaseCNI@@QAEXPAU1@@Z,0x000171CA,pin
 ?bfmeCopyCEB@@YAXPADPBDI@Z,0x009F70BA,pin
 ?bfmeCopyInto_00134BB0@@YAXPBUBfmeCopyElem_00134BB0@@0PAU1@PAI@Z,0x0002C14C,Open-BFME5 the copier the allocate-and-delegate body at 0x00134BB0 hands its range and block to
 ?bfmeCopyInto_00134C20@@YAXPBUBfmeCopyElem_00134C20@@0PAU1@PAI@Z,0x00031E4E,Open-BFME5 the copier the allocate-and-delegate body at 0x00134C20 hands its range and block to
@@ -78120,6 +78121,8 @@ _bfmeVftCIA,0x00C827DC,pin
 _bfmeVftCJA,0x00C827DC,pin
 _bfmeVftCNDa,0x00C85DE4,pin
 _bfmeVftCNDb,0x00C85DBC,pin
+_bfmeVftCNIa,0x00C85DE4,pin
+_bfmeVftCNIb,0x00C85DBC,pin
 _bfmeVftSA,0x00C8F4F0,pin
 _bfmeVftSE,0x00D0C64C,pin
 _bfmeVftSF,0x00D0C878,pin
