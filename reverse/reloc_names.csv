@@ -271,6 +271,8 @@ name,target_rva,target_size,source,notes
 ?_M_insert_overflow@?$vector@UGen_t_001fa830_p12cd@@V?$allocator@UGen_t_001fa830_p12cd@@@_STL@@@_STL@@IAEXPAUGen_t_001fa830_p12cd@@ABU3@ABU__false_type@2@I_N@Z,0x001FA5B0,281,Code/gen_small/tgrid_107.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_001fad50@@UAE@XZ,0x001FAD80,25,Code/gen_small/dtors_002.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_001fc680@@UAE@XZ,0x001FC330,56,Code/gen_small/dtors_002.cpp,reloc-derived;call-sites=1;identity=generated
+?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x001FC7E0,253,Code/GameEngine/Source/Common/BfmeThreeHundredSeventySix.cpp,reloc-derived;call-sites=1;identity=real
+?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x001FD1C0,715,Code/GameEngine/Source/Common/BfmeThreeHundredSeventySix.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_001ff190@@UAE@XZ,0x001FEB50,178,Code/gen_small/dtors_002.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_00200350@@UAE@XZ,0x00200160,25,Code/gen_small/dtors_002.cpp,reloc-derived;call-sites=1;identity=generated
 ??1InstantDeathBehaviorModuleDataAllocator@@QAE@XZ,0x00201590,143,Code/GameEngine/Source/Common/InstantDeathBehaviorModuleDataDestructorThunk.cpp,reloc-derived;call-sites=1;identity=real
@@ -289,6 +291,7 @@ name,target_rva,target_size,source,notes
 ?handle@Gen0021CE60@@QAEXH@Z,0x0021CE60,214,Code/GameEngine/Source/Common/R1ForwardToStoredObject.cpp,reloc-derived;call-sites=1;identity=generated
 ?bfmeAccept@Gen_00248BE0@@AAEXPAVBfmeSeedTarget@@@Z,0x0021DAA0,400,Code/GameEngine/Source/Common/S3VersionBlocks.cpp,reloc-derived;call-sites=1;identity=generated
 ?findClosestFreeGarrisonPointIndex@GarrisonContain@@IAEHHPBUCoord3D@@@Z,0x0021DDA0,653,Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainTrackTargets.cpp,reloc-derived;call-sites=1;identity=real
+?bfmeFinishYC@BfmeThingYC@@QAEXPAX@Z,0x0021E4E0,48,Code/GameEngine/Source/Common/BfmeThreeHundredSeventyFive.cpp,reloc-derived;call-sites=1;identity=real
 ?bfmeAccept@Gen_0022A170@@AAEXPAVBfmeSeedTarget@@@Z,0x0022C2A0,559,Code/GameEngine/Source/Common/S3SeedPairsSweep.cpp,reloc-derived;call-sites=1;identity=generated
 ?finish@Rva0022BDE0Obj@@QAEXPAVObject@@@Z,0x0022E340,987,Code/GameEngine/Source/Common/Rva0022BDE0Apply.cpp,reloc-derived;call-sites=1;identity=generated
 ??$__copy_backward@PAUGen_t_00234a50_p128pod@@PAU1@H@_STL@@YAPAUGen_t_00234a50_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00233B60,79,Code/gen_small/tgrid_133.cpp,reloc-derived;call-sites=1;identity=generated
@@ -1456,7 +1459,7 @@ _ciFilterCleanup,0x0086C370,35,Code/GameEngine/Source/GameNetwork/GameSpy/chat/c
 _ciCleanupCallbacks,0x008702F0,84,Code/GameEngine/Source/GameNetwork/GameSpy/chat/chatDisconnectAll.c,reloc-derived;call-sites=1;identity=real
 _ciAddCallback_,0x00870350,3869,Code/GameEngine/Source/GameNetwork/GameSpy/chat/chatDisconnect.c,reloc-derived;call-sites=2;identity=real
 _piProcessIncoming,0x00873170,271,Code/GameEngine/Source/GameNetwork/GameSpy/peer/peerPing.c,reloc-derived;call-sites=1;identity=real
-?calcPitches@GeometryInfo@@QBEXABUCoord3D@@ABV1@0AAM2@Z,0x0087EC20,159,Code/GameEngine/Source/GameLogic/Object/Weapon.cpp,reloc-derived;call-sites=1;identity=real
+?getMaxHeightBelowPosition@GeometryInfo@@QBEMXZ,0x0087E070,84,Code/GameEngine/Source/Common/GeometryInfoCalcPitches.cpp,reloc-derived;call-sites=1;identity=real
 ?_M_insert_overflow@?$vector@VMoney@@V?$allocator@VMoney@@@_STL@@@_STL@@IAEXPAVMoney@@ABV3@ABU__false_type@2@I_N@Z,0x0087FBE0,237,Code/GameEngine/Source/Common/MoneyVectorPushBack.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_00881180@@UAE@XZ,0x00880FC0,115,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ?bfmeAccept@BfmeSinkA@@QAEXPAVBfmeFlagTarget@@@Z,0x008815A0,453,Code/GameEngine/Source/Common/S3InsertAndDescribe.cpp,reloc-derived;call-sites=1;identity=real

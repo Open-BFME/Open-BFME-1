@@ -298,6 +298,33 @@ public:
 	virtual Int getLocalSlotNum( void ) = 0;
 };
 
+// The generic GameInfo path uses the same BFME virtual slots as LANGameInfo,
+// but the const view is a distinct type in this translation unit.  BFME moved
+// amIHost and getLocalSlotNum to slots 4 and 5; the vendored header's direct
+// declarations would otherwise emit the reference offsets 0x08 and 0x0c.
+class BfmeVirtualGameInfo
+{
+public:
+	virtual void slot0() = 0;
+	virtual void slot4() = 0;
+	virtual void slot8() = 0;
+	virtual void slotC() = 0;
+	virtual Bool amIHost( void ) const = 0;
+	virtual Int getLocalSlotNum( void ) const = 0;
+};
+
+// GameSlot::getPlayerTemplate is an inline BFME field read at +0x14.  Keep the
+// existing GameSlot type for direct calls such as isAI(); only this shifted
+// layout needs the facade.
+class BfmeGameSlotLayout
+{
+	unsigned char m_unmodelled[0x14];
+	Int m_playerTemplate;
+
+public:
+	Int getPlayerTemplate( void ) const { return m_playerTemplate; }
+};
+
 static Int getNextSelectablePlayer(Int start)
 {
 	LANGameInfo *game = ((BfmeVirtualLanApi *)TheLAN)->GetMyGame();
@@ -318,9 +345,10 @@ static Int getNextSelectablePlayer(Int start)
 
 static Int getFirstSelectablePlayer(const GameInfo *game)
 {
-	const GameSlot *slot = game->getConstSlot(game->getLocalSlotNum());
-	if (!game->amIHost() || slot && slot->getPlayerTemplate() != PLAYERTEMPLATE_OBSERVER)
-		return game->getLocalSlotNum();
+	const BfmeVirtualGameInfo *bfmeGame = (const BfmeVirtualGameInfo *)game;
+	const GameSlot *slot = game->getConstSlot(bfmeGame->getLocalSlotNum());
+	if (!bfmeGame->amIHost() || slot && ((const BfmeGameSlotLayout *)slot)->getPlayerTemplate() != PLAYERTEMPLATE_OBSERVER)
+		return bfmeGame->getLocalSlotNum();
 
 	for (Int i=0; i<MAX_SLOTS; ++i)
 	{
@@ -329,7 +357,7 @@ static Int getFirstSelectablePlayer(const GameInfo *game)
 			return i;
 	}
 
-	return game->getLocalSlotNum();
+	return bfmeGame->getLocalSlotNum();
 }
 
 void updateMapStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], Bool onLoadScreen = FALSE );
