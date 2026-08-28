@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// Field names come from retail's own INI field table joined to upstream's
+// parse table on the key: retail supplies every offset, upstream only the
+// word. The offsets were derived from this class's declaration sequence and
+// type sizes, never read out of the old placeholder names.
 // Open-BFME5: MetaMapRec dtor. dual CountUpBuffer @+0x1c/+0x20.
 
 class CountUpBuffer
@@ -16,8 +20,8 @@ public:
 	~MetaMapRec();
 private:
 	unsigned char m_gap[0x1c];
-	CountUpBuffer m_a;
-	CountUpBuffer m_b;
+	CountUpBuffer m_description;
+	CountUpBuffer m_displayName;
 };
 
 // ??1MetaMapRec@@QAE@XZ
