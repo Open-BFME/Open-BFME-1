@@ -1,56 +1,49 @@
 // cl: /DNDEBUG /MD /GX
 
+extern "C" __declspec(dllimport) int __stdcall QueryPerformanceFrequency(__int64 *frequency);
+extern "C" __declspec(dllimport) int __stdcall QueryPerformanceCounter(__int64 *counter);
+
 class BFMENativeNetwork
 {
 public:
 	void *construct();
 	int getFramePacingStatus();
 	int getFrameAdvanceCount();
+	void baseConstruct();
+
+private:
+	void *m_vtable;
+	unsigned int m_unknown04;
+	void *m_connectionManager;
+	int m_state;
+	__int64 m_performanceFrequency;
+	__int64 m_lastPerformanceCounter;
+	__int64 m_accumulator;
+	bool m_stallTimerRunning;
+	char m_unknown29[3];
+	unsigned int m_stallCount;
+	unsigned int m_unknown30;
+	bool m_flag34;
+	bool m_flag35;
+	char m_unknown36[2];
+	int m_lastValue;
 };
 
-__declspec(naked) void *BFMENativeNetwork::construct()
+void *BFMENativeNetwork::construct()
 {
-	__asm {
-		push ebx
-		push esi
-		mov esi, ecx
-		__emit 0E8h
-		__emit 077h
-		__emit 001h
-		__emit 032h
-		__emit 000h
-		xor ebx, ebx
-		lea eax, [esi+10h]
-		push eax
-		mov dword ptr [esi], 0111A968h
-		mov dword ptr [esi+08h], ebx
-		mov dword ptr [esi+0Ch], ebx
-		mov dword ptr [esi+20h], ebx
-		mov dword ptr [esi+24h], ebx
-		mov byte ptr [esi+35h], bl
-		__emit 0FFh
-		__emit 015h
-		__emit 0B8h
-		__emit 08Eh
-		__emit 035h
-		__emit 001h
-		lea ecx, [esi+18h]
-		push ecx
-		__emit 0FFh
-		__emit 015h
-		__emit 0B4h
-		__emit 08Eh
-		__emit 035h
-		__emit 001h
-		mov byte ptr [esi+34h], bl
-		mov byte ptr [esi+28h], bl
-		mov dword ptr [esi+2Ch], ebx
-		mov dword ptr [esi+38h], 0FFFFFFFFh
-		mov eax, esi
-		pop esi
-		pop ebx
-		ret
-	}
+	baseConstruct();
+	m_vtable = (void *)0x0111A968;
+	m_connectionManager = 0;
+	m_state = 0;
+	m_accumulator = 0;
+	m_flag35 = false;
+	QueryPerformanceFrequency(&m_performanceFrequency);
+	QueryPerformanceCounter(&m_lastPerformanceCounter);
+	m_flag34 = false;
+	m_stallTimerRunning = false;
+	m_stallCount = 0;
+	m_lastValue = -1;
+	return this;
 }
 
 // Vtable slot +0x3C. Returns how many logic frames the sim may advance now:
