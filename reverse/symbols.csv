@@ -76371,6 +76371,8 @@ name,address,notes
 ?reset@W3DShroud@@QAEXXZ,0x0000AA4C,BFME adjustTerrainLOD shroud call; ILT body 0x0071B4B0
 ?resetAll@Y3ResetTail_005C5A00@@QAEXXZ,0x005C5A00,Y4 lane: restored pin a concurrent whole-file rewrite of reverse/symbols.csv dropped; address is the one the Y3 lane encodes in its own address-derived name and the byte gate confirms it
 ?resetAll@SubsystemInterfaceList@@QAEXXZ,0x009A1D20,GameEngine::reset direct call at 0x0006E80C; ZH SubsystemInterfaceList reset-all implementation iterates registered subsystems in reverse order
+?beginUpdate@PreClientUpdate@@QAEXXZ,0x00018F8E,GameEngine::update direct call at 0x0006E931; provisional behavior-derived name for the pre-client pacing gate object at 0x012F076C
+?finishUpdate@PreClientUpdate@@QAE_NXZ,0x00003783,GameEngine::update direct call at 0x0006E93C; returns the client-frame skip gate consumed immediately after the client subsystem update
 ?resetModes@LookAtTranslator@@QAEXXZ,0x00048626,Open-BFME5 the tail call of doDisableInput with ecx = TheLookAtTranslator at 0x012F4C84; jumps to 0x005B5440
 ?resetNextMoodCheckTime@AIUpdateInterface@@QAEXXZ,0x00022C82,Open-BFME5 retail AI mood-check reset thunk
 ?resetPlayersVotes@DisconnectManager@@IAEXHIPAVConnectionManager@@@Z,0x000333E3,DisconnectManager frame processing resets stale votes through the ILT to the existing 0x0066B7B0 body
