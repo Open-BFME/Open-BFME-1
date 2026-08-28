@@ -12122,6 +12122,7 @@ name,address,notes
 ?_bfme_isAliveAndPlaying@Player@@QBE_NXZ,0x000C9A20,Player member: !TheVictoryConditions->hasSinglePlayerBeenDefeated(this) && !m_isPlayerDead(+0x680) && !TheInGameUI+0x12BE && TheGameLogic+0x6B && frame != 0; callers Player radar/power helpers 0x000CBFA0 0x000CC0B0(removeRadar) 0x000CC1C0 0x000CC2C0 gate audio/UI feedback on it
 ?_bfme_isClientFrameFrozen@ScriptEngine@@QAE_NXZ,0x00003783,ILT used by GameEngine::update at 0x0006E93C; client-frame debug gate body is 0x00336F50
 ?isTimeFrozenDebug@ScriptEngine@@QAE_NXZ,0x0003F23D,ILT for the logic-frame debug freeze gate body at 0x00336F20
+?isTimeFast@ScriptEngine@@QAE_NXZ,0x0000A8A8,ILT for the ScriptEngine fast-mode query at 0x00336FB0
 ?_bfme_isEvil@Player@@QBE_NXZ,0x00267FA0,returns m_playerTemplate(+4)->+0x118 or false; PlayerTemplate field table 0x010847E0 maps INI token Evil (parseBool) to offset 0x118; update calls it at 0x0035FC1A for the evil flag of showEndGameScreen and doVictory inlines the same read at 0x002F1C70
 ?_bfme_isInLivingWorldCampaign@GameLogic@@QAE_NXZ,0x00382B50,GameLogic member: (mode 0 or 7 or a playback of those via TheRecorder getMode==1 and Recorder+0x2AC or mode 6) and TheLivingWorldLogic 0x012F1028 +0x2C; update uses it at 0x0035FAA5 to show GUI:YouHaveBeenDefeated instead of the MP message; 16 callers
 ?_bfme_isInMultiplayerOrSkirmishGame@GameLogic@@QAE_NXZ,0x00382C20,GameLogic member: mode LAN(1) INTERNET(5) SKIRMISH(2) or a playback of those (Recorder+0x2AC); hideEndGameScreen 0x0035F7B3 uses it for MPorSkirmishFadeToScoreScreen; 31 callers
