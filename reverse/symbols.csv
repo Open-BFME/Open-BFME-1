@@ -72438,6 +72438,7 @@ name,address,notes
 ?bfmeDoBNC@BfmeSubBNC@@QAEXPAX0@Z,0x00040412,pin
 ?bfmeDoBNE@BfmeOuterBNE@@QAEXXZ,0x0004908F,pin
 ?bfmeDoBNH@@YAXPAVBfmeThingBNH@@PAXHH@Z,0x0090E910,pin
+?bfmeDoBOE@BfmeSinkBOE@@QAEXPAX0@Z,0x00020E3C,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -72503,6 +72504,7 @@ name,address,notes
 ?bfmeFindBBA@BfmeSubBBA@@QAEPAUBfmeGotBBA@@XZ,0x00046538,pin
 ?bfmeFindBEC@BfmeSubBEC@@QAEPAVBfmeGotBEC@@XZ,0x0000F498,pin
 ?bfmeFindBHF@BfmeSubBHF@@QAEPAUBfmeGotBHF@@XZ,0x00046538,pin
+?bfmeFindBOB@BfmeSubBOB@@QAEPAUBfmeGotBOB@@XZ,0x00048C61,pin
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
 ?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
 ?bfmeFindRecord@FontLibraryBFMERetail@@AAEPAUBfmeFontRecord@@PAVAsciiString@@M@Z,0x000035A3,Open-BFME5 ILT thunk to body 0x00476E20; FontLibraryBFMERetail::getFont at 0x004772D0 calls it on this with the name and size and reads a byte at +8 of what it returns; address-derived name
@@ -72692,6 +72694,8 @@ name,address,notes
 ?bfmeForward@Gen_00C71580Target@@QAEXXZ,0x009DB7A0,Open-BFME5 the member the singleton forwarder at 0x00C71580 tail-jumps to
 ?bfmeFreeAEC@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeBIB@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeFreeBOF@@YAXPAX@Z,0x00012E90,pin
+?bfmeFreeBOG@@YAXPAX@Z,0x000126FC,pin
 ?bfmeFreeBlock@@YAXPAX@Z,0x00881EF0,Open-BFME5 the free the derived destructors at 0x00924090 and its siblings call
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
@@ -72873,6 +72877,7 @@ name,address,notes
 ?bfmeMakeBLC@BfmeSinkBLC@@QAEPAXPAX@Z,0x0003ADD7,pin
 ?bfmeMakeBMD@BfmeSinkBMD@@QAEPAXPAX@Z,0x0002F95A,pin
 ?bfmeMakeBNG@@YAPAXPAX0@Z,0x00002B8F,pin
+?bfmeMakeBOA@@YAPAXPAX@Z,0x0082B8E0,pin
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
@@ -72942,6 +72947,7 @@ name,address,notes
 ?bfmeOneAPA@@YGPAXPAXPAH@Z,0x009F6BF2,pin
 ?bfmeOneBKE@@YGXPAX@Z,0x0090C610,pin
 ?bfmeOneBKF@BfmePartBKF@@QAEXXZ,0x0090DF10,pin
+?bfmeOneBOF@BfmeThingBOF@@QAEXXZ,0x00014182,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73080,6 +73086,7 @@ name,address,notes
 ?bfmeTailBHH@@YAXPAUBfmeThingBHH@@@Z,0x008646C0,pin
 ?bfmeTailBLE@BfmeSubBLE@@QAEXXZ,0x0001D17E,pin
 ?bfmeTailBNF@BfmeThingBNF@@QAEXXZ,0x00020B80,pin
+?bfmeTailBOC@@YGXH@Z,0x00020509,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
@@ -73094,6 +73101,7 @@ name,address,notes
 ?bfmeTryANA@BfmeThingANA@@QAEHPAX0@Z,0x0003381B,pin
 ?bfmeTwoAPA@@YGPAXPAXPAH@Z,0x009F6BEC,pin
 ?bfmeTwoBKE@@YAXPAX@Z,0x00038389,pin
+?bfmeTwoBOF@BfmeThingBOF@@QAEXXZ,0x00004156,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -74165,6 +74173,7 @@ name,address,notes
 ?g_bfmeSinkBLD@@3PAVBfmeSinkBLD@@A,0x00EF4B98,pin
 ?g_bfmeSinkBMD@@3PAVBfmeSinkBMD@@A,0x00EEF188,pin
 ?g_bfmeSinkBMF@@3PAVBfmeSinkBMF@@A,0x00EF1028,pin
+?g_bfmeSinkBOE@@3PAVBfmeSinkBOE@@A,0x00EF1260,pin
 ?g_bfmeSinkSB@@3PAVBfmeSinkSB@@A,0x00EED668,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
