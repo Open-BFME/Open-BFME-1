@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?getNextMission@Campaign@@QAEPAVMission@@PAV2@@Z: Code/GameEngine/Source/GameClient/System/CampaignManager.cpp
 // Open-BFME: Campaign::getNextMission, retail 0x005BC270, 319 bytes.
 //
 // The reference's body unchanged: take the campaign's first mission name when
@@ -32,6 +33,7 @@ struct BfmeAsciiStringData
 	UnsignedShort m_pad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -67,6 +69,7 @@ private:
 	BfmeAsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/CampaignManager.h
 class Mission
 {
 public:
@@ -79,6 +82,7 @@ public:
 typedef _STL::list<Mission *> MissionList;
 typedef MissionList::iterator MissionListIt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/CampaignManager.h
 class Campaign
 {
 public:

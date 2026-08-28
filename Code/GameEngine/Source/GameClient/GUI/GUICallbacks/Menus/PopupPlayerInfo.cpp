@@ -263,6 +263,7 @@ void GetAdditionalDisconnectsFromUserFile(PSPlayerStats *stats)
 }
 
 // default values
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/RankPointsConstructorThunk.cpp
 // ??0RankPoints@@ present-unmatched
 RankPoints::RankPoints(void)
 {

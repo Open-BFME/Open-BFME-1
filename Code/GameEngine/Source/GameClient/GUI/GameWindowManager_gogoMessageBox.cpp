@@ -43,6 +43,7 @@ enum {
 // Retail's AsciiString is the StringBase<char> shim: the assignment lands on
 // set(const StringBase<char> &) at 0x00887C90 and concat on the (str, len)
 // overload at 0x00887D60, with the const char * constructor at 0x00888BC0.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -93,6 +94,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -112,6 +114,7 @@ struct ICoord2D { Int x, y; };
 
 typedef void (*GameWinMsgBoxFunc)( void );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 struct WindowMessageBoxData
 {
 	GameWinMsgBoxFunc yesCallback;
@@ -122,6 +125,7 @@ struct WindowMessageBoxData
 
 class WindowLayoutInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -141,6 +145,7 @@ public:
 	void *m_clearedOnCreate;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -148,6 +153,7 @@ public:
 };
 
 // Padded to retail's slot numbers; only the four the body calls are named.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:

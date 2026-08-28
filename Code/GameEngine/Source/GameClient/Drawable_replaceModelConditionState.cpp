@@ -20,6 +20,7 @@ public:
 		const ModelConditionFlags &set );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
 public:
@@ -47,6 +48,7 @@ public:
 
 extern AudioManager *TheAudio;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class ObjectDrawInterface
 {
 public:
@@ -73,6 +75,7 @@ public:
 		Bool force, UnsignedInt value );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class DrawModule
 {
 public:
@@ -118,6 +121,7 @@ public:
 	virtual ObjectDrawInterface *getObjectDrawInterface();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class DynamicAudioEventRTS
 {
 public:
@@ -129,6 +133,7 @@ class DrawableBase
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable : public DrawableBase
 {
 public:

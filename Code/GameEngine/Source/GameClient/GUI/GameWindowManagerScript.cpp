@@ -6406,6 +6406,7 @@ Bool parseLayoutBlock( File *inFile, char *buffer, UnsignedInt version, WindowLa
 /** Load window(s) from a .wnd definition file and wrap within a
 	* new window layout */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameWindowManager_winCreateLayout_Thunk.cpp
 // ?winCreateLayout@GameWindowManager@@UAEPAVWindowLayout@@VAsciiString@@@Z present-unmatched
 WindowLayout *GameWindowManager::winCreateLayout( AsciiString filename )
 {
@@ -6431,6 +6432,7 @@ WindowLayout *GameWindowManager::winCreateLayout( AsciiString filename )
 /** Free up the memory used by static strings.  Normally this memory
 is freed by the string destructor but we do it here to make the
 memory leak detection code happy.*/
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowManager_freeStaticStrings.cpp
 // ?freeStaticStrings@GameWindowManager@@UAEXXZ present-unmatched
 void GameWindowManager::freeStaticStrings(void)
 {

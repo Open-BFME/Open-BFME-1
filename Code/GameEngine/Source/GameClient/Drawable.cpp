@@ -216,6 +216,7 @@ DrawableLocoInfo::DrawableLocoInfo()
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DrawableLocoInfoDestructorThunk.cpp
 // ??1DrawableLocoInfo@@MAE@XZ present-unmatched
 DrawableLocoInfo::~DrawableLocoInfo()
 {
@@ -1397,6 +1398,7 @@ void Drawable::onLevelStart()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/DrawableFlashAsSelectedThunk.cpp
 // ?flashAsSelected@Drawable@@QAEXPBURGBColor@@@Z present-unmatched
 void Drawable::flashAsSelected( const RGBColor *color ) ///< drawable takes care of the details if you spec no color
 {
@@ -1454,6 +1456,8 @@ void Drawable::applyPhysicsXform(Matrix3D* mtx)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Drawable_calcPhysicsXform_Thunk.cpp
+// ?calcPhysicsXform@Drawable@@IAE_NAAUPhysicsXformInfo@1@@Z present-unmatched
 Bool Drawable::calcPhysicsXform(PhysicsXformInfo& info)
 {
 	const Object* obj = getObject();
@@ -4779,6 +4783,7 @@ void Drawable::setStealthLook(StealthLookType look)
 //-------------------------------------------------------------------------------------------------
 /** default draw is to just call the database defined draw */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/BitFlagsBBCountInverseIntersectionThunk.cpp
 // ?draw@Drawable@@QAEXPAVView@@@Z present-unmatched
 void Drawable::draw( View *view )
 {
@@ -5851,6 +5856,7 @@ void Drawable::drawHealthBar(const IRegion2D* healthBarRegion)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/DrawableClearAndSetModelConditionStateThunk.cpp
 // ?clearAndSetModelConditionState@Drawable@@QAEXW4ModelConditionFlagType@@0@Z present-unmatched
 void Drawable::clearAndSetModelConditionState( ModelConditionFlagType clr, ModelConditionFlagType set )
 {
@@ -6016,6 +6022,7 @@ const GeometryInfo& Drawable::getDrawableGeometryInfo() const
 // ------------------------------------------------------------------------------------------------
 /** Set the id for this drawable */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Drawable_setID_Thunk.cpp
 // ?setID@Drawable@@QAEXW4DrawableID@@@Z present-unmatched
 void Drawable::setID( DrawableID id )
 {
@@ -6044,6 +6051,7 @@ void Drawable::setID( DrawableID id )
 // ------------------------------------------------------------------------------------------------
 /** Return drawable ID, this ID is only good on the client */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/DrawableFields.cpp
 // ?getID@Drawable@@QBE?AW4DrawableID@@XZ present-unmatched
 DrawableID Drawable::getID( void ) const
 {
@@ -6087,6 +6095,7 @@ void Drawable::friend_bindToObject( Object *obj ) ///< bind this drawable to an 
 	// we can update our model, etc., if necessary. NOTE, we don't guarantee
 	// that the new team is different from the old team, nor do we guarantee
 	// that the team is nonnull.
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Drawable_changedTeam.cpp
 // ?changedTeam@Drawable@@QAEXXZ present-unmatched
 void Drawable::changedTeam()
 {
@@ -6218,6 +6227,7 @@ const Matrix3D *Drawable::getTransformMatrix( void ) const
  * Set and clear the drawable's caption text
  */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Drawable_setCaptionText_Thunk.cpp
 // ?setCaptionText@Drawable@@QAEXABVUnicodeString@@@Z present-unmatched
 void Drawable::setCaptionText( const UnicodeString& captionText )
 {
@@ -6304,6 +6314,7 @@ const AudioEventInfo * Drawable::getBaseSoundAmbientInfo() const
 /** 
  * Produce a unique-across-entire-level name for this audio event
  */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Drawable_mangleCustomAudioName_Thunk.cpp
 // ?mangleCustomAudioName@Drawable@@QBEXPAVDynamicAudioEventInfo@@@Z present-unmatched
 void Drawable::mangleCustomAudioName( DynamicAudioEventInfo * audioToMangle ) const
 {
@@ -6542,6 +6553,7 @@ void Drawable::enableAmbientSoundFromScript( Bool enable )
 //-------------------------------------------------------------------------------------------------
 /** add self to the linked list */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Drawable_prependToList.cpp
 // ?prependToList@Drawable@@QAEXPAPAV1@@Z present-unmatched
 void Drawable::prependToList(Drawable **pListHead)
 {
@@ -6617,6 +6629,7 @@ void Drawable::updateDrawableClipStatus( UnsignedInt shotsRemaining, UnsignedInt
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Drawable_updateDrawableSupplyStatus.cpp
 // ?updateDrawableSupplyStatus@Drawable@@QAEXHH@Z present-unmatched
 void Drawable::updateDrawableSupplyStatus( Int maxSupply, Int currentSupply )
 {
@@ -6726,6 +6739,7 @@ void Drawable::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Drawable_xferDrawableModules_Thunk.cpp
 // ?xferDrawableModules@Drawable@@IAEXPAVXfer@@@Z present-unmatched
 void Drawable::xferDrawableModules( Xfer *xfer )
 {
@@ -7357,6 +7371,7 @@ void Drawable::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/DrawableLoadPostProcessThunk.cpp
 // ?loadPostProcess@Drawable@@MAEXXZ present-unmatched
 void Drawable::loadPostProcess( void )
 {
@@ -7453,6 +7468,7 @@ void TintEnvelope::play(const RGBColor *peak, UnsignedInt atackFrames, UnsignedI
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/TintEnvelopeRates.cpp
 // ?setAttackFrames@TintEnvelope@@AAEXI@Z present-unmatched
 void TintEnvelope::setAttackFrames(UnsignedInt frames) 
 {
@@ -7463,6 +7479,7 @@ void TintEnvelope::setAttackFrames(UnsignedInt frames)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/TintEnvelopeRates.cpp
 // ?setDecayFrames@TintEnvelope@@AAEXI@Z present-unmatched
 void TintEnvelope::setDecayFrames( UnsignedInt frames )
 {

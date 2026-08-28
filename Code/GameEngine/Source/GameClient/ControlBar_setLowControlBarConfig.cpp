@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setLowControlBarConfig@ControlBar@@IAEXXZ: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 // Open-BFME: ControlBar::setLowControlBarConfig, retail 0x0049E120, 136 bytes.
 //
 // The reference's body once its commented-out head is gone: record the stage,
@@ -24,6 +25,7 @@ enum { CP_MASTER = 0, CP_COUNT = 8 };
 
 struct ICoord2D { Int x, y; };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display
 {
 public:
@@ -44,6 +46,7 @@ public:
 
 extern Display *TheDisplay;					// 0x012F1270
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/View.h
 class View
 {
 public:
@@ -68,6 +71,7 @@ public:
 
 extern View *TheTacticalView;					// 0x012F1600
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -75,6 +79,7 @@ public:
 	Int winHide(Bool hide);				// ILT 0x00027F2A
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 protected:

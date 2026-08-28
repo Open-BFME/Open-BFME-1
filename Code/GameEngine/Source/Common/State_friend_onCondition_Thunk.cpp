@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
+// readable body of ?friend_onCondition@State@@: Code/GameEngine/Source/Common/StateMachine.cpp
 // Open-BFME7: State::friend_onCondition, retail 0x000A1FB0, zh_sweep packet
 // 000a1fb0.
 //
@@ -30,12 +31,14 @@ class StateMachine;
 
 typedef bool (*StateTransFuncPtr)( State *state, void *userData );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
 	void friend_onCondition( StateTransFuncPtr test, StateID toStateID, void *userData, const char *description = 0 );
 
 private:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 	struct TransitionInfo
 	{
 		StateTransFuncPtr	test;								///< +0x00

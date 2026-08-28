@@ -639,6 +639,7 @@ Bool ProcessAnimateWindowSlideFromTop::updateAnimateWindow( AnimateWindow *animW
 // Retail body matched via MASM: Code/masm_dumps/reverseAnimateWindow_ProcessAnimateWindowSlideFromTop_496260.asm
 // (true body 0x496260 via SlideFromTop vtbl slot4; queue 0x4965AC was int3 before unrelated 0x4965B0)
 #if 0
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindowSlideFromTop_reverseAnimateWindow_Thunk.cpp
 // ?reverseAnimateWindow@ProcessAnimateWindowSlideFromTop@@UAE_NPAVAnimateWindow@@@Z present-unmatched
 Bool ProcessAnimateWindowSlideFromTop::reverseAnimateWindow( AnimateWindow *animWin )
 {
@@ -920,6 +921,7 @@ ProcessAnimateWindowSlideFromBottomTimed::ProcessAnimateWindowSlideFromBottomTim
 // ??1ProcessAnimateWindowSlideFromBottomTimed@@UAE@XZ present-unmatched
 ProcessAnimateWindowSlideFromBottomTimed::~ProcessAnimateWindowSlideFromBottomTimed( void ) { }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ProcessAnimateWindowSlideFromBottomTimed_initReverseAnimateWindow_Thunk.cpp
 // ?initReverseAnimateWindow@ProcessAnimateWindowSlideFromBottomTimed@@UAEXPAVAnimateWindow@@I@Z present-unmatched
 void ProcessAnimateWindowSlideFromBottomTimed::initReverseAnimateWindow( AnimateWindow *animWin, UnsignedInt maxDelay )
 {
@@ -1060,6 +1062,7 @@ Bool ProcessAnimateWindowSlideFromBottomTimed::updateAnimateWindow( AnimateWindo
 	return FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // ?reverseAnimateWindow@ProcessAnimateWindowSlideFromBottomTimed@@UAE_NPAVAnimateWindow@@@Z present-unmatched
 Bool ProcessAnimateWindowSlideFromBottomTimed::reverseAnimateWindow( AnimateWindow *animWin )
 {
@@ -1589,6 +1592,7 @@ Bool ProcessAnimateWindowSlideFromRightFast::updateAnimateWindow( AnimateWindow 
 	return FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindowSlideFromRightFast_reverseAnimateWindow_Thunk.cpp
 // ?reverseAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAE_NPAVAnimateWindow@@@Z present-unmatched
 Bool ProcessAnimateWindowSlideFromRightFast::reverseAnimateWindow( AnimateWindow *animWin )
 {

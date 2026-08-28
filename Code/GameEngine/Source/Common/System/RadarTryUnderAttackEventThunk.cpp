@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?tryUnderAttackEvent@Radar@@: Code/GameEngine/Source/Common/System/Radar.cpp
 // Open-BFME5: lift the retail Radar::tryUnderAttackEvent MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_RadarTryUnderAttackEvent_4271B0()

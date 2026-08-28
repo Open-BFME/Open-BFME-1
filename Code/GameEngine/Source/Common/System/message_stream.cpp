@@ -39,6 +39,7 @@ GameMessage::GameMessage(Type type)
 struct GameMessageLocationRaw { Real x, y, z; };
 struct GameMessagePixelRegionRaw { Int x_min, y_min, x_max, y_max; };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 struct GameMessage::Argument {
 	void *m_vtbl;
 	Argument *m_next;

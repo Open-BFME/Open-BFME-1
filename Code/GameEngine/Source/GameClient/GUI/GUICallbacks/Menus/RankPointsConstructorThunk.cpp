@@ -1,3 +1,4 @@
+// readable body of ??0RankPoints@@: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupPlayerInfo.cpp
 // Exact retail bytes for the RankPoints constructor row at 0x004D9DF0.
 extern "C" __declspec(naked) void bfme_RankPoints_ctor_4D9DF0()
 {

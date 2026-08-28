@@ -143,6 +143,7 @@ StreamingArchiveFile::~StreamingArchiveFile()
 //=================================================================
 
 //DECLARE_PERF_TIMER(StreamingArchiveFile)
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/StreamingArchiveFile_openThunk.cpp
 // ?open@StreamingArchiveFile@@ present-unmatched
 Bool StreamingArchiveFile::open( const Char *filename, Int access )
 {
@@ -161,6 +162,7 @@ Bool StreamingArchiveFile::open( const Char *filename, Int access )
 // StreamingArchiveFile::open
 //============================================================================
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/StreamingArchiveFile_openThunk.cpp
 // ?open@StreamingArchiveFile@@ present-unmatched
 Bool StreamingArchiveFile::open( File *file )
 {
@@ -223,6 +225,7 @@ void StreamingArchiveFile::close( void )
 // StreamingArchiveFile::read 
 //=================================================================
 // if buffer is null, just advance the current position by 'bytes'
+// byte-exact reconstruction: Code/GameEngine/Source/Common/StreamingArchiveFileRead.cpp
 // ?read@StreamingArchiveFile@@ present-unmatched
 Int StreamingArchiveFile::read( void *buffer, Int bytes )
 {

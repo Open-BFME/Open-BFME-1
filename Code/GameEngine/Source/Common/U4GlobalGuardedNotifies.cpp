@@ -106,6 +106,7 @@ void U4Inner00604C00::detach( void )
 
 // ---------------------------------------------------------------- 0x0060C2C0
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WW3D/pluglib/WWmatrix3.h
 class Matrix3
 {
 };

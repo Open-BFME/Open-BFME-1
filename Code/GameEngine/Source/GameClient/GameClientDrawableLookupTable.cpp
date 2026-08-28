@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?addDrawableToLookupTable@GameClient@@: Code/GameEngine/Source/GameClient/GameClient.cpp
+// readable body of ?removeDrawableFromLookupTable@GameClient@@: Code/GameEngine/Source/GameClient/GameClient.cpp
 
 // Open-BFME5: the two drawable lookup-table wrappers, retail 0x00431C20 (43
 // bytes) and 0x00430B50 (37 bytes). Both carried only machine byte-dump rows;
@@ -26,6 +28,7 @@ public:
 	DrawableID bfmeGetID(void);				// ILT 0x00009B01
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameClient.h
 class GameClient
 {
 public:

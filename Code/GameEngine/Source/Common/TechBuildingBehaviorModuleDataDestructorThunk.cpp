@@ -11,6 +11,7 @@ public:
 	unsigned int m_zero; // +0x0c cleared before delete
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleData
 {
 public:
@@ -18,6 +19,7 @@ public:
 	unsigned int m_04;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TechBuildingBehavior.h
 class TechBuildingBehaviorModuleData : public UpdateModuleData
 {
 public:

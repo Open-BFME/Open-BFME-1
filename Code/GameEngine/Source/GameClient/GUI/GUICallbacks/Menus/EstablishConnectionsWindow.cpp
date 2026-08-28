@@ -13,12 +13,14 @@
 // button's control id at 0x012F39C0. The second is the file-scope buttonQuitID
 // the Zero Hour source initialises in the window's init callback.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
 	int winGetWindowId( void );					///< ILT 0x000188A4
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/EstablishConnectionsMenu.h
 class EstablishConnectionsMenu
 {
 public:

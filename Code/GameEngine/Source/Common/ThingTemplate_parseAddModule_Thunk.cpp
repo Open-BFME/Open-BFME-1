@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?parseAddModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z: Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp
 // Lift the ThingTemplate::parseAddModule __emit thunk to clean C++.
 //
 // Zero Hour's body, with the one BFME difference the bytes make plain: ZH throws
@@ -22,6 +23,7 @@ typedef int Int;
 
 struct FieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
 class INIException
 {
 public:
@@ -33,6 +35,7 @@ private:
 	const char *m_msg;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -47,6 +50,7 @@ enum ModuleParseMode
 	MODULEPARSE_ADD_REMOVE_REPLACE = 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
 protected:

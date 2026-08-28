@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?init@ScreenBWFilter@@UAEHXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp
 // Lift the ScreenBWFilter::init naked dump to clean C++.
 //
 // BFME-only filter, so the shape comes from the call sites: bail unless the
@@ -20,6 +21,7 @@ enum ChipsetType
 	DC_UNKNOWN = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShaderManager.h
 class W3DShaderManager
 {
 public:
@@ -35,6 +37,7 @@ extern Int g_filterFrameGlobal;								///< retail [0x013071B4]
 extern void *g_activeFilterGlobal;							///< retail [0x012F9CD0]
 extern Int g_filterState;									///< retail [0x012BC100]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShaderManager.h
 class ScreenBWFilter
 {
 public:

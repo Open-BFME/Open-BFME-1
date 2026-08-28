@@ -280,6 +280,7 @@ Eva::Eva() :
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/EvaDestructor.cpp
 // ??1Eva@@ present-unmatched
 Eva::~Eva()
 {
@@ -291,6 +292,7 @@ Eva::~Eva()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/EvaInit.cpp
 // ?init@Eva@@ present-unmatched
 void Eva::init()
 {
@@ -301,6 +303,7 @@ void Eva::init()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/EvaReset.cpp
 // ?reset@Eva@@ present-unmatched
 void Eva::reset()
 {
@@ -323,6 +326,7 @@ void Eva::reset()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/EvaUpdate.cpp
 // ?update@Eva@@ present-unmatched
 void Eva::update()
 {
@@ -435,6 +439,7 @@ void Eva::setShouldPlay(EvaMessage messageToPlay)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/EvaSetEvaEnabled.cpp
 // ?setEvaEnabled@Eva@@ present-unmatched
 void Eva::setEvaEnabled(Bool enabled)
 {

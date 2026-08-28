@@ -12,6 +12,7 @@ struct AptPlayerStatusWindow
 	bool m_hidden;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
 struct Shell
 {
 	unsigned char m_head[0x50];

@@ -24,6 +24,7 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -74,6 +75,7 @@ public:
 
 extern ObjectPoolClass<HAnimComboDataClass, 256> TheHAnimComboDataPool;	///< retail [0x0134BC4C]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanim.h
 class HAnimComboDataClass
 {
 public:
@@ -113,6 +115,7 @@ private:
 	Int ActiveCount;									///< retail this+0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanim.h
 class HAnimComboClass
 {
 public:

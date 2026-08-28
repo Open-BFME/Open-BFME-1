@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?loadPostProcess@Upgrade@@MAEXXZ: Code/GameEngine/Source/Common/System/Upgrade.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) Upgrade

@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
+// readable body of ?getTemplate@Thing@@QBEPBVThingTemplate@@XZ: Code/GameEngine/Source/Common/Thing/Thing_isKindOf.cpp
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -253,6 +254,7 @@ void Thing::setPosition( const Coord3D *pos )
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/ThingShadowTransformThunks.cpp
 // ?setOrientation@Thing@@QAEXM@Z present-unmatched
 void Thing::setOrientation( Real angle )
 {
@@ -332,6 +334,7 @@ void Thing::setTransformMatrix( const Matrix3D *mx )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Thing/Thing_isKindOf.cpp
 // ?isKindOf@Thing@@QBE_NW4KindOfType@@@Z present-unmatched
 Bool Thing::isKindOf(KindOfType t) const 
 { 

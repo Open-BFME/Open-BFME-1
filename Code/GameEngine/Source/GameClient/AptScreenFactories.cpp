@@ -116,12 +116,14 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 struct UnicodeStringData
 {
 	unsigned int m_refCount;
 	unsigned short m_length;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -151,6 +153,7 @@ private:
 	UnicodeStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>
 {
 public:
@@ -171,6 +174,7 @@ extern "C" __declspec(dllimport) int __cdecl sprintf(
 
 int untranslatedSlotPosition( int slot, int localSlot );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -204,6 +208,7 @@ public:
 
 extern GameTextInterface *TheGameText;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetworkInterface.h
 class NetworkInterface
 {
 public:
@@ -232,6 +237,7 @@ public:
 extern NetworkInterface *TheNetwork;
 
 // DisconnectScreen.apt, retail 0x00104D40, object 0x26C bytes.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisconnectMenu.h
 class DisconnectMenu
 {
 public:
@@ -692,6 +698,7 @@ void * __stdcall createAptScreenSpellStore( void *context )
 	return new BfmeAptScreenSpellStore( context );
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:

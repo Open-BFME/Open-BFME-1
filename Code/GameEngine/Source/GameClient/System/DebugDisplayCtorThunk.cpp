@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0DebugDisplay@@: Code/GameEngine/Source/GameClient/System/DebugDisplay.cpp
+// readable body of ?reset@DebugDisplay@@: Code/GameEngine/Source/GameClient/System/DebugDisplay.cpp
 // Open-BFME5: DebugDisplay::DebugDisplay, retail 0x005BD1C0, converted out of a
 // machine byte dump. The reference constructor is one initialiser list and a
 // call to reset(); reset() is inlined here, so all four of its calls are in
@@ -29,6 +31,7 @@ typedef unsigned int Color;
 
 enum { WHITE = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DebugDisplay.h
 class DebugDisplayInterface
 {
 public:
@@ -36,6 +39,7 @@ public:
 	virtual void bfmeRetailSlot01( void ) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DebugDisplay.h
 class DebugDisplay : public DebugDisplayInterface
 {
 

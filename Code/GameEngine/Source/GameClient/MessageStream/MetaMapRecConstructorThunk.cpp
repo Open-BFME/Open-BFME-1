@@ -2,6 +2,7 @@
 
 // Open-BFME5: MetaMapRec default ctor zeros two dwords at +0x1c and +0x20.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MetaEvent.h
 class MetaMapRec
 {
 public:

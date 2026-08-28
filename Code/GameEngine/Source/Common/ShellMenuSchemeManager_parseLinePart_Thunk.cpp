@@ -1,14 +1,17 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
+// readable body of ?parseLinePart@ShellMenuSchemeManager@@: Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme.cpp
 
 #include <list>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
 	void initFromINI(void *, const void *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ShellMenuScheme.h
 class ShellMenuSchemeLine
 {
 public:
@@ -27,6 +30,7 @@ private:
 	unsigned int m_color;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ShellMenuScheme.h
 class ShellMenuScheme
 {
 private:
@@ -39,6 +43,7 @@ private:
 
 extern const unsigned char g_shellMenuSchemeLineFieldParse[];
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ShellMenuScheme.h
 class ShellMenuSchemeManager
 {
 public:

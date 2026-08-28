@@ -2,6 +2,7 @@
 // Open-BFME-DS01: lift retail bytes to standalone C++ thunk.
 
 class AnimateWindow;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ProcessAnimateWindow.h
 class ProcessAnimateWindowSlideFromTopFast
 {
 public:

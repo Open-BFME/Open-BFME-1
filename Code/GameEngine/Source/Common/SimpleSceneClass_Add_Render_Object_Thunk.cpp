@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Add_Render_Object@SimpleSceneClass@@UAEXPAVRenderObjClass@@@Z: Code/Libraries/Source/WWVegas/WW3D2/scene.cpp
 
 // The Add twin of Remove_Render_Object, promoted from its byte dump. It notifies
 // the object through the virtual at +0x64, adds its list node to the scene list
@@ -12,6 +13,7 @@
 // reaches it.
 class SceneClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListObjectClass
 {
 public:
@@ -19,6 +21,7 @@ public:
 	void *m_next;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class GenericMultiListClass
 {
 protected:
@@ -149,6 +152,7 @@ public:
 	MultiListObjectClass m_node;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SimpleSceneClass
 {
 public:

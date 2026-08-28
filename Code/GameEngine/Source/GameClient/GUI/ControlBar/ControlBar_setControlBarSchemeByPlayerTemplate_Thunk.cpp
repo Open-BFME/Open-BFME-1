@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setControlBarSchemeByPlayerTemplate@ControlBar@@: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
+// readable body of ?update@ControlBar@@: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 // Open-BFME5: lift the exact retail ControlBar scheme-selection body to C++.
 
 // ?setControlBarSchemeByPlayerTemplate@ControlBar@@QAEXPBVPlayerTemplate@@@Z

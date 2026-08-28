@@ -30,6 +30,7 @@ enum { LOGICFRAMES_PER_SECOND = 5 };
 
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -38,6 +39,7 @@ public:
 
 extern NameKeyGenerator *TheNameKeyGenerator;			///< retail [0x012ED600]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -46,6 +48,7 @@ public:
 
 void GadgetButtonSetEnabledImage(GameWindow *win, const Image *image);	///< ILT thunk at 0x00038A23
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -56,6 +59,7 @@ private:
 	Int m_sciencePurchasePoints;						///< retail this+0x264
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
@@ -68,6 +72,7 @@ private:
 
 extern PlayerList *ThePlayerList;						///< retail [0x012ED748]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -81,6 +86,7 @@ private:
 extern GameLogic *TheGameLogic;							///< retail [0x012F0898]
 
 // Only the lookup is reconstructed; the slots ahead of it place it.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:
@@ -145,6 +151,7 @@ public:
 
 extern GameWindowManager *TheWindowManager;				///< retail [0x012F1B40]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:

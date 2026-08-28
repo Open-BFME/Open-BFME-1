@@ -14,6 +14,7 @@ typedef int Int;
 typedef unsigned char UnsignedByte;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 struct GameMessageArgument
 {
 	virtual ~GameMessageArgument();				// pool object vptr, this+0x00
@@ -22,6 +23,7 @@ struct GameMessageArgument
 	char m_bfme_body[0x1C - 0x08];				// sizeof is the pushed 0x1C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 protected:

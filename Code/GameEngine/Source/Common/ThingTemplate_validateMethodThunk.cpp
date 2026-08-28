@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?validate@ThingTemplate@@QAEXXZ: Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) ThingTemplate

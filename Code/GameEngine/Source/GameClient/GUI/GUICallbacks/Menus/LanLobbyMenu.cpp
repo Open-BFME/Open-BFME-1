@@ -289,6 +289,7 @@ Money LANPreferences::getStartingCash(void) const
   return money;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LANPreferencesSetStartingCashThunk.cpp
 // ?setStartingCash@LANPreferences@@ present-unmatched
 void LANPreferences::setStartingCash( const Money & startingCash )
 {

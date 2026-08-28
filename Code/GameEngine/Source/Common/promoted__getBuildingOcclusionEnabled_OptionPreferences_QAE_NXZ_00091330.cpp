@@ -21,6 +21,7 @@
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *, const char *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiStringData
 {
 public:
@@ -28,6 +29,7 @@ public:
 	char m_chars[1];									///< retail this+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -56,6 +58,7 @@ private:
 	PreferenceNode *m_end;								///< retail this+0x00
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -65,6 +68,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;				///< retail [0x012ED5C8]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class OptionPreferences
 {
 public:

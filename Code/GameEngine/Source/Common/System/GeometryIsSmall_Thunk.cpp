@@ -21,6 +21,7 @@
 // full field layout here, just that one offset and a private
 // calcBoundingStuff() to tail-call into (already matched at 0x0087EE60).
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -28,6 +29,7 @@ public:
 	static bool scanBool(const char* token);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Geometry.h
 class GeometryInfo
 {
 public:

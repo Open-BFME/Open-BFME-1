@@ -1196,6 +1196,7 @@ ShellGameLoadScreen::~ShellGameLoadScreen( void )
 	m_progressBar = NULL;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ShellGameLoadScreenInitThunk.cpp
 // ?init@ShellGameLoadScreen@@ present-unmatched
 void ShellGameLoadScreen::init( GameInfo *game )
 {
@@ -1331,6 +1332,7 @@ MultiPlayerLoadScreen::MultiPlayerLoadScreen( void )
 	}
 }
 	
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MultiPlayerLoadScreen_destructor_Thunk.cpp
 // ??1MultiPlayerLoadScreen@@ present-unmatched
 MultiPlayerLoadScreen::~MultiPlayerLoadScreen( void )
 {
@@ -1350,6 +1352,7 @@ MultiPlayerLoadScreen::~MultiPlayerLoadScreen( void )
 //	TheAudio->stopAudio( AudioAffect_Music );
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/MultiPlayerLoadScreenInitThunk.cpp
 // ?init@MultiPlayerLoadScreen@@ present-unmatched
 void MultiPlayerLoadScreen::init( GameInfo *game )
 {
@@ -1633,6 +1636,7 @@ GameSpyLoadScreen::~GameSpyLoadScreen( void )
 
 extern Int GetAdditionalDisconnectsFromUserFile(Int playerID);
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameSpyLoadScreenInitThunk.cpp
 // ?init@GameSpyLoadScreen@@ present-unmatched
 void GameSpyLoadScreen::init( GameInfo *game )
 {
@@ -1997,6 +2001,7 @@ MapTransferLoadScreen::~MapTransferLoadScreen( void )
 	m_timeoutText = NULL;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/MapTransferLoadScreenInitThunk.cpp
 // ?init@MapTransferLoadScreen@@ present-unmatched
 void MapTransferLoadScreen::init( GameInfo *game )
 {
@@ -2141,6 +2146,7 @@ void MapTransferLoadScreen::processTimeout(Int secondsLeft)
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/MapTransferLoadScreenSetCurrentFilenameThunk.cpp
 // ?setCurrentFilename@MapTransferLoadScreen@@ present-unmatched
 void MapTransferLoadScreen::setCurrentFilename(AsciiString filename)
 {

@@ -25,6 +25,7 @@ class CommandButton;
 
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -36,6 +37,7 @@ extern NameKeyGenerator *TheNameKeyGenerator;			///< retail [0x012ED600]
 // BFME's string data header is 8 bytes, so the characters begin at m_data+8.
 struct AsciiStringData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -48,6 +50,7 @@ private:
 	AsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:
@@ -112,6 +115,7 @@ public:
 
 extern GameWindowManager *TheWindowManager;				///< retail [0x012F1B40]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:

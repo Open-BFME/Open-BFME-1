@@ -183,6 +183,7 @@ void GlobalLanguage::init( void )
 void GlobalLanguage::reset( void ) {}
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GlobalLanguage_parseFontDesc.cpp
 // ?parseFontDesc@GlobalLanguage@@ present-unmatched
 void GlobalLanguage::parseFontDesc(INI *ini, void *instance, void *store, const void* userData)
 {

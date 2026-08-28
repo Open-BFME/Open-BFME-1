@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ??1SpecialPowerStore@@: Code/GameEngine/Source/Common/RTS/SpecialPower.cpp
 
 // Delete every element, clear the vector, zero one field, then let the member
 // and the base tear themselves down.
@@ -13,12 +14,14 @@
 // range copy once both ends are the same pointer.
 #include <vector>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
 class SpecialPowerTemplate
 {
 public:
 	virtual ~SpecialPowerTemplate();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -28,6 +31,7 @@ private:
 	int m_04;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
 class SpecialPowerStore : public SubsystemInterface
 {
 public:

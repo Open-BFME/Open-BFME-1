@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?processCommandTransitionUI@ControlBar@@: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarCommandProcessing.cpp
 // Open-BFME7: isolated port of ControlBarCommandProcessing.cpp's
 // ControlBar::processCommandTransitionUI for retail 0x004A6520. The shared TU
 // already compiles the Zero Hour body to retail's exact instruction shape --
@@ -45,6 +46,7 @@ enum ControlBarContext
 
 // Only the offset of the Object field matters here; retail reads it directly,
 // so getObject() is inline in BFME too.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
@@ -55,6 +57,7 @@ private:
 	Object *m_object;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 protected:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/campaignmanagerascii /ICode/Libraries/Source/WWVegas/WWLib
+// readable body of ??0RadiusDecalTemplate@@: Code/GameEngine/Source/GameClient/RadiusDecal.cpp
 
 // RadiusDecalTemplate's constructor, retail 0x00458830.
 //
@@ -14,6 +15,7 @@
 // throb time, no colour, and visible to the owning player only.
 #include "Common/AsciiString.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/RadiusDecal.h
 class RadiusDecalTemplate
 {
 public:

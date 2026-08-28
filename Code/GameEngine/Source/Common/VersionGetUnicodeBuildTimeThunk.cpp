@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getUnicodeBuildTime@Version@@: Code/GameEngine/Source/Common/version.cpp
 // Open-BFME5: lift the retail Version::getUnicodeBuildTime MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_VersionGetUnicodeBuildTime_AF080()

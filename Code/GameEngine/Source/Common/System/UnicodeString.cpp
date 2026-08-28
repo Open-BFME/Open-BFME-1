@@ -63,6 +63,7 @@
 
 // -----------------------------------------------------
 #ifdef _DEBUG
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarObserver.cpp
 // ?validate@UnicodeString@@ present-unmatched
 void UnicodeString::validate() const
 {
@@ -74,6 +75,7 @@ void UnicodeString::validate() const
 #endif
 
 // -----------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/unicode_string.cpp
 // ??0UnicodeString@@ present-unmatched
 UnicodeString::UnicodeString(const UnicodeString& stringSrc) : m_data(stringSrc.m_data)
 {
@@ -133,6 +135,7 @@ void UnicodeString::ensureUniqueBufferOfSize(int numCharsNeeded, Bool preserveDa
 
 
 // -----------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/UnicodeString_releaseBufferMethodThunk.cpp
 // ?releaseBuffer@UnicodeString@@ present-unmatched
 void UnicodeString::releaseBuffer()
 {
@@ -150,6 +153,7 @@ void UnicodeString::releaseBuffer()
 }
 
 // -----------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/unicode_string.cpp
 // ??0UnicodeString@@ present-unmatched
 UnicodeString::UnicodeString(const WideChar* s) : m_data(0)
 {
@@ -162,6 +166,7 @@ UnicodeString::UnicodeString(const WideChar* s) : m_data(0)
 }
 
 // -----------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/string_base.cpp
 // ?set@UnicodeString@@ present-unmatched
 void UnicodeString::set(const UnicodeString& stringSrc)
 {
@@ -179,6 +184,7 @@ void UnicodeString::set(const UnicodeString& stringSrc)
 }
 
 // -----------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/string_base.cpp
 // ?set@UnicodeString@@ present-unmatched
 void UnicodeString::set(const WideChar* s)
 {
@@ -210,6 +216,7 @@ WideChar* UnicodeString::getBufferForRead(Int len)
 }
 
 // -----------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/unicode_string.cpp
 // ?translate@UnicodeString@@ present-unmatched
 void UnicodeString::translate(const AsciiString& stringSrc)
 {
@@ -322,6 +329,7 @@ void UnicodeString::format(const WideChar* format, ...)
 }
 
 // -----------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/string_base.cpp
 // ?format_va@UnicodeString@@ present-unmatched
 void UnicodeString::format_va(const UnicodeString& format, va_list args)
 {
@@ -334,6 +342,7 @@ void UnicodeString::format_va(const UnicodeString& format, va_list args)
 }
 
 // -----------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/string_base.cpp
 // ?format_va@UnicodeString@@ present-unmatched
 void UnicodeString::format_va(const WideChar* format, va_list args)
 {

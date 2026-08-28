@@ -1,3 +1,4 @@
+// readable body of ?init@ControlBar@@UAEXXZ: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 // Exact retail bytes for ControlBar::init at 0x004A0F70.
 // Kept separate so ControlBar.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_ControlBar_init_4A0F70()

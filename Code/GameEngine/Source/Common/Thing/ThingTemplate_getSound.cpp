@@ -12,6 +12,7 @@ typedef int Int;
 
 class AudioEventRTS;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
 public:

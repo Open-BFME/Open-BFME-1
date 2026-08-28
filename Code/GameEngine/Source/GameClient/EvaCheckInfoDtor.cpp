@@ -42,6 +42,7 @@ private:
 	void *m_owned2;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameMemory.h
 class MemoryPoolObject
 {
 protected:
@@ -50,6 +51,7 @@ protected:
 	virtual ~MemoryPoolObject() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 class EvaCheckInfo : public MemoryPoolObject
 {
 public:

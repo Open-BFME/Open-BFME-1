@@ -283,6 +283,7 @@ UnicodeString getUnicodeTimeBuffer(SYSTEMTIME timeVal)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/SaveGame/GameState_ctor_Thunk.cpp
 // ??0GameState@@QAE@XZ present-unmatched
 GameState::GameState( void )
 {
@@ -294,6 +295,7 @@ GameState::GameState( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/SaveGame/GameStateDtorThunk.cpp
 // ??1GameState@@UAE@XZ present-unmatched
 GameState::~GameState( void )
 {
@@ -1692,6 +1694,7 @@ __declspec(naked) void GameState::init(void)
 // ------------------------------------------------------------------------------------------------
 /** Reset */
 // ------------------------------------------------------------------------------------------------a
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameState_resetMethodThunk.cpp
 // ?reset@GameState@@UAEXXZ present-unmatched
 void GameState::reset( void )
 {
@@ -1709,6 +1712,7 @@ void GameState::reset( void )
 // ------------------------------------------------------------------------------------------------
 /** Clear any available games entries */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameState_clearAvailableGamesMethodThunk.cpp
 // ?clearAvailableGames@GameState@@AAEXXZ present-unmatched
 void GameState::clearAvailableGames( void )
 {
@@ -1728,6 +1732,7 @@ void GameState::clearAvailableGames( void )
 // ------------------------------------------------------------------------------------------------
 /** Add a snapshot and block name pair to the systems used to load and save */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameState_addSnapshotBlock_Thunk.cpp
 // ?addSnapshotBlock@GameState@@AAEXVAsciiString@@PAVSnapshot@@W4SnapshotType@@@Z present-unmatched
 void GameState::addSnapshotBlock( AsciiString blockName, Snapshot *snapshot, SnapshotType which )
 {
@@ -1789,6 +1794,7 @@ static void findHighFileNumber( AsciiString filename, void *userData )
 // ------------------------------------------------------------------------------------------------
 /** Given the save files on disk, find the "next" filename to use when saving a game */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/SaveGame/GameState_findNextSaveFilename_Thunk.cpp
 // ?findNextSaveFilename@GameState@@AAE?AVAsciiString@@VUnicodeString@@@Z present-unmatched
 AsciiString GameState::findNextSaveFilename( UnicodeString desc )
 {
@@ -1892,6 +1898,7 @@ AsciiString GameState::findNextSaveFilename( UnicodeString desc )
 /** Save the current state of the engine in a save file
 	* NOTE: filename is a *filename only* */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/SaveGame/GameStateSaveGameThunk.cpp
 // ?saveGame@GameState@@QAE?AW4SaveCode@@VAsciiString@@VUnicodeString@@W4SaveFileType@@W4SnapshotType@@@Z present-unmatched
 SaveCode GameState::saveGame( AsciiString filename, UnicodeString desc, 
 															SaveFileType saveType, SnapshotType which )
@@ -1981,6 +1988,7 @@ SaveCode GameState::saveGame( AsciiString filename, UnicodeString desc,
 // ------------------------------------------------------------------------------------------------
 /** A mission save */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameState_missionSave_Thunk.cpp
 // ?missionSave@GameState@@QAE?AW4SaveCode@@XZ present-unmatched
 SaveCode GameState::missionSave( void )
 {
@@ -2004,6 +2012,7 @@ SaveCode GameState::missionSave( void )
 // ------------------------------------------------------------------------------------------------
 /** Load the save game pointed to by filename */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/SaveGame/GameStateLoadGameThunk.cpp
 // ?loadGame@GameState@@QAE?AW4SaveCode@@UAvailableGameInfo@@@Z present-unmatched
 SaveCode GameState::loadGame( AvailableGameInfo gameInfo )
 {
@@ -2121,6 +2130,7 @@ SaveCode GameState::loadGame( AvailableGameInfo gameInfo )
 }  // end loadGame
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameState_getSaveDirectory.cpp
 // ?getSaveDirectory@GameState@@QBE?AVAsciiString@@XZ present-unmatched
 AsciiString GameState::getSaveDirectory() const
 {
@@ -2130,6 +2140,7 @@ AsciiString GameState::getSaveDirectory() const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/SaveGame/GameState_getFilePathInSaveDirectory.cpp
 // ?getFilePathInSaveDirectory@GameState@@QBE?AVAsciiString@@ABV2@@Z present-unmatched
 AsciiString GameState::getFilePathInSaveDirectory(const AsciiString& leaf) const
 {
@@ -2229,6 +2240,7 @@ const char* PORTABLE_MAPS				= "Maps\\";
 const char* PORTABLE_USER_MAPS	= "UserData\\Maps\\";
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/SaveGame/GameStateRealMapPathToPortableMapPathThunk.cpp
 // ?realMapPathToPortableMapPath@GameState@@QBE?AVAsciiString@@ABV2@@Z present-unmatched
 AsciiString GameState::realMapPathToPortableMapPath(const AsciiString& in) const
 {
@@ -2260,6 +2272,7 @@ AsciiString GameState::realMapPathToPortableMapPath(const AsciiString& in) const
 }
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/SaveGame/GameStatePortableMapPathToRealMapPathThunk.cpp
 // ?portableMapPathToRealMapPath@GameState@@QBE?AVAsciiString@@ABV2@@Z present-unmatched
 AsciiString GameState::portableMapPathToRealMapPath(const AsciiString& in) const
 {
@@ -2298,6 +2311,7 @@ AsciiString GameState::portableMapPathToRealMapPath(const AsciiString& in) const
 // ------------------------------------------------------------------------------------------------
 /** Does the save game file exist */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameState_doesSaveGameExist_Thunk.cpp
 // ?doesSaveGameExist@GameState@@QAE_NVAsciiString@@@Z present-unmatched
 Bool GameState::doesSaveGameExist( AsciiString filename ) 
 {

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0ShellMenuSchemeImage@@QAE@XZ: Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme.cpp
 
 // Open-BFME5: ShellMenuSchemeImage::ShellMenuSchemeImage, retail 0x005807D0,
 // 74 bytes. The body carried only a machine byte-dump row;
@@ -23,6 +24,7 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
@@ -46,6 +48,7 @@ private:
 	T *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ShellMenuScheme.h
 class ShellMenuSchemeImage
 {
 public:

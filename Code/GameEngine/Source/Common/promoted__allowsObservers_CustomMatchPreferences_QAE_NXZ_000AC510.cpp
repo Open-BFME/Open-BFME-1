@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?allowsObservers@CustomMatchPreferences@@QAE_NXZ: Code/GameEngine/Source/Common/UserPreferences.cpp
 // Grok promote from masm_dumps — retail 0x000AC510 size 95
 // was: Code/masm_dumps/CustomMatchPreferences_allowsObservers.asm
 

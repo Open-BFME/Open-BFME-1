@@ -91,6 +91,7 @@ ShellMenuSchemeLine::~ShellMenuSchemeLine( void )
 {
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuSchemeImageConstructor.cpp
 // ??0ShellMenuSchemeImage@@QAE@XZ present-unmatched
 ShellMenuSchemeImage::ShellMenuSchemeImage( void )
 {
@@ -106,12 +107,14 @@ ShellMenuSchemeImage::~ShellMenuSchemeImage( void )
 	m_image = NULL;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuSchemeCtor.cpp
 // ??0ShellMenuScheme@@QAE@XZ present-unmatched
 ShellMenuScheme::ShellMenuScheme( void )
 {
 	
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ShellMenuSchemeDestructorThunk.cpp
 // ??1ShellMenuScheme@@QAE@XZ present-unmatched
 ShellMenuScheme::~ShellMenuScheme( void )
 {
@@ -187,6 +190,7 @@ void ShellMenuScheme::draw( void )
 
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuSchemeCtor.cpp
 // ??0ShellMenuSchemeManager@@QAE@XZ present-unmatched
 ShellMenuSchemeManager::ShellMenuSchemeManager( void )
 {
@@ -210,6 +214,7 @@ ShellMenuSchemeManager::~ShellMenuSchemeManager( void )
 	
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ShellMenuSchemeManager_parseImagePart_Thunk.cpp
 // ?parseImagePart@ShellMenuSchemeManager@@ present-unmatched
 void ShellMenuSchemeManager::parseImagePart(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
 {
@@ -227,6 +232,7 @@ void ShellMenuSchemeManager::parseImagePart(INI *ini, void *instance, void* /*st
 
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ShellMenuSchemeManager_parseLinePart_Thunk.cpp
 // ?parseLinePart@ShellMenuSchemeManager@@ present-unmatched
 void ShellMenuSchemeManager::parseLinePart(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
 {
@@ -246,6 +252,7 @@ void ShellMenuSchemeManager::parseLinePart(INI *ini, void *instance, void* /*sto
 
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ShellMenuSchemeManager_newShellMenuScheme_Thunk.cpp
 // ?newShellMenuScheme@ShellMenuSchemeManager@@QAEPAVShellMenuScheme@@VAsciiString@@@Z present-unmatched
 ShellMenuScheme *ShellMenuSchemeManager::newShellMenuScheme(AsciiString name)
 {
@@ -274,6 +281,7 @@ void ShellMenuSchemeManager::init( void )
 {
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/ShellMenuScheme_set.cpp
 // ?setShellMenuScheme@ShellMenuSchemeManager@@QAEXVAsciiString@@@Z present-unmatched
 void ShellMenuSchemeManager::setShellMenuScheme( AsciiString name )
 {

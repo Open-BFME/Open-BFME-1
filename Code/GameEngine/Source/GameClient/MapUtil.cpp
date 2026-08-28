@@ -299,6 +299,7 @@ AsciiString MapCache::getMapDir() const
 	return AsciiString("Maps"); 
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/MapCacheGetUserMapDirThunk.cpp
 // ?getUserMapDir@MapCache@@QBE?AVAsciiString@@XZ present-unmatched
 AsciiString MapCache::getUserMapDir() const
 {
@@ -313,6 +314,7 @@ AsciiString MapCache::getMapExtension() const
 	return AsciiString("map");
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/MapCacheWriteCacheINIThunk.cpp
 // ?writeCacheINI@MapCache@@AAEX_N@Z present-unmatched
 void MapCache::writeCacheINI( Bool userDir )
 {
@@ -425,6 +427,7 @@ void MapCache::updateCache( void )
 #endif
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/MapCacheClearUnseenMapsThunk.cpp
 // ?clearUnseenMaps@MapCache@@AAE_NVAsciiString@@@Z present-unmatched
 Bool MapCache::clearUnseenMaps( AsciiString dirName )
 {
@@ -447,6 +450,7 @@ Bool MapCache::clearUnseenMaps( AsciiString dirName )
 	return erasedSomething;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/MapCacheLoadStandardMapsThunk.cpp
 // ?loadStandardMaps@MapCache@@AAEXXZ present-unmatched
 void MapCache::loadStandardMaps(void)
 {
@@ -466,6 +470,7 @@ void MapCache::loadStandardMaps(void)
 #endif
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/MapCacheLoadUserMapsThunk.cpp
 // ?loadUserMaps@MapCache@@AAE_NXZ present-unmatched
 Bool MapCache::loadUserMaps()
 {
@@ -586,6 +591,7 @@ Bool MapCache::loadUserMaps()
 }
 
 //Bool MapCache::addMap( AsciiString dirName, AsciiString fname, WinTimeStamp timestamp, UnsignedInt filesize, Bool isOfficial )
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/MapCacheAddMapThunk.cpp
 // ?addMap@MapCache@@AAE_NVAsciiString@@0PAUFileInfo@@_N@Z present-unmatched
 Bool MapCache::addMap( AsciiString dirName, AsciiString fname, FileInfo *fileInfo, Bool isOfficial)
 {

@@ -1,3 +1,4 @@
+// readable body of ??0InGameUI@@QAE@XZ: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // Exact retail bytes for ??0InGameUI@@QAE@XZ at 0x0044B800.
 extern "C" __declspec(naked) void bfme_InGameUI_ctor_44B800()
 {

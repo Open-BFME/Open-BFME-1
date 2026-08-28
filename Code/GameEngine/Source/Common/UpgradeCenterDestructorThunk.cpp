@@ -10,6 +10,7 @@
 // The base destructor is called rather than inlined, so it is declared without a
 // body here, and this class's own vptr is stored at entry as every destructor
 // does.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeTemplate
 {
 public:
@@ -22,12 +23,14 @@ private:
 	UpgradeTemplate *m_next;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
 	virtual ~SubsystemInterface();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeCenter : public SubsystemInterface
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?setCashValue@SupplyWarehouseDockUpdate@@QAEXH@Z: Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyWarehouseDockUpdate.cpp
 // Lift the SupplyWarehouseDockUpdate::setCashValue naked dump to clean C++.
 //
 // Zero Hour's SupplyWarehouseDockUpdate.cpp carries this body: convert a cash
@@ -18,12 +19,14 @@ typedef int Int;
 // import table (`ff 15`) rather than with a direct rel32.
 extern "C" __declspec(dllimport) double __cdecl ceil(double);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
 	void updateDrawableSupplyStatus(Int maxBoxes, Int currentBoxes);	///< ILT thunk at 0x00031615
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -40,6 +43,7 @@ public:
 	virtual Drawable *getDrawable(void) const;							///< vtable +0x28
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -49,6 +53,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;								///< retail [0x012ED5C8]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyWarehouseDockUpdate.h
 class SupplyWarehouseDockUpdateModuleData
 {
 public:
@@ -56,6 +61,7 @@ public:
 	Int m_startingBoxesData;											///< retail this+0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyWarehouseDockUpdate.h
 class SupplyWarehouseDockUpdate
 {
 public:

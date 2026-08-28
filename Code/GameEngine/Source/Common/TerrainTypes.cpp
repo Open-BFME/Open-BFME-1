@@ -119,6 +119,7 @@ TerrainTypeCollection::~TerrainTypeCollection( void )
 //-------------------------------------------------------------------------------------------------
 /** Find a terrain type given the name */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainTypes_findTerrain.cpp
 // ?findTerrain@TerrainTypeCollection@@ present-unmatched
 TerrainType *TerrainTypeCollection::findTerrain( AsciiString name )
 {
@@ -140,6 +141,7 @@ TerrainType *TerrainTypeCollection::findTerrain( AsciiString name )
 //-------------------------------------------------------------------------------------------------
 /** Allocate a new type, assign the name, and tie to type list */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainTypeCollectionNewTerrainThunk.cpp
 // ?newTerrain@TerrainTypeCollection@@ present-unmatched
 TerrainType *TerrainTypeCollection::newTerrain( AsciiString name )
 {

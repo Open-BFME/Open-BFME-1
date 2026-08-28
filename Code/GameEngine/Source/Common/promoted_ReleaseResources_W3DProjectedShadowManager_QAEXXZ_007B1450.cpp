@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?ReleaseResources@W3DProjectedShadowManager@@QAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp
 // Grok promote from masm_dumps — retail 0x007B1450 size 58
 // was: Code/masm_dumps/ReleaseResources_W3DProjectedShadowManager_QAEXXZ_007B1450_28d95344.asm
 

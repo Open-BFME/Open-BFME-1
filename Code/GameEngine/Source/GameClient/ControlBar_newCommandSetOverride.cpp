@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?newCommandSetOverride@ControlBar@@IAEPAVCommandSet@@PAV2@@Z: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 // Open-BFME: ControlBar::newCommandSetOverride, retail 0x0049DE40, 147 bytes.
 //
 // The reference's body, and the same override-copy guard
@@ -17,12 +18,14 @@ typedef bool Bool;
 // Raised only while an override is being copied over its original.
 extern Bool TheBfmeOverrideCopyInProgress;			// 0x012ED611
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -36,6 +39,7 @@ protected:
 	Bool m_isOverride;					// this+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class CommandSet : public Overridable
 {
 public:
@@ -49,6 +53,7 @@ private:
 	char m_bfme_body[0x64 - 0x10];				// sizeof(CommandSet) is the pushed 0x64
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 protected:

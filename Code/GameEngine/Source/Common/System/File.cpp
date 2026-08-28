@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/ini /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
+// readable body of ?Free_Definitions@DefinitionMgrClass@@: Code/Libraries/Source/WWVegas/WWSaveLoad/definitionmgr.cpp
 //
 // The File base class. Its three subclasses' vtables all carry
 // ?close@File@@UAEXXZ at slot 2, which is what identifies the family, and BFME's
@@ -351,6 +352,7 @@ __declspec(noinline) RAMFile::RAMFile()
 // has no m_mutex at +0x10. Its constructor came out zeroing +0x1c through +0x28
 // where retail zeroes +0x20 through +0x28 -- the whole class shifted down by the
 // missing word.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StreamingArchiveFile.h
 class StreamingArchiveFile : public RAMFile
 {
 public:
@@ -386,6 +388,7 @@ StreamingArchiveFile::StreamingArchiveFile()
 // LocalFile, 0x01143D38. It adds one word to File and initialises it to -1,
 // which is INVALID_HANDLE_VALUE -- so this is the class that owns the OS file
 // handle, and File's own +0x10 (the mutex) is not it.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/LocalFile.h
 class LocalFile : public File
 {
 public:
@@ -419,6 +422,7 @@ __declspec(noinline) LocalFile::LocalFile()
 // Win32LocalFile, 0x01143C10. It adds no members of its own -- the constructor
 // is a base call and a vptr store, nothing else -- which is what
 // Win32LocalFileSystem::openFile allocates 0x18 bytes for.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32LocalFile.h
 class Win32LocalFile : public LocalFile
 {
 public:

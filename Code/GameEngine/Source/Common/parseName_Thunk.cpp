@@ -19,6 +19,7 @@ typedef bool Bool;
 extern "C" __declspec(dllimport) char *__cdecl strstr(const char *haystack, const char *needle);
 extern "C" unsigned int __cdecl strlen(const char *s);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -41,6 +42,7 @@ public:
 
 extern NameKeyGeneratorShim *TheNameKeyGeneratorShim;	///< retail [0x012ED600]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 class WinInstanceData
 {
 public:

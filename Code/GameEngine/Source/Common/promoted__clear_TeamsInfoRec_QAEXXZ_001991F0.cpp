@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?clear@TeamsInfoRec@@QAEXXZ: Code/GameEngine/Source/GameLogic/Map/SidesList.cpp
 // Grok promote from masm_dumps — retail 0x001991F0 size 115
 // was: Code/masm_dumps/TeamsInfoRec_clear.asm
 

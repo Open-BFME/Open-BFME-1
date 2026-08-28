@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
+// readable body of ??0StateMachine@@: Code/GameEngine/Source/Common/StateMachine.cpp
 // Open-BFME5: StateMachine::StateMachine, retail 0x000A1BD0 (180 bytes).
 //
 // The pin ??0StateMachine@@QAE@PAVObject@@VAsciiString@@@Z was previously
@@ -19,6 +20,7 @@ class Object;
 
 // Local replica: retail calls the destructor out of line (0x00887940), so the
 // vendored header's inline releaseBuffer() body must not be visible here.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -34,6 +36,7 @@ public:
 	virtual ~StateMachineBase();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine : public StateMachineBase
 {
 public:

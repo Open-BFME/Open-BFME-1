@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?getChatSizeSlider@CustomMatchPreferences@@QAEHXZ: Code/GameEngine/Source/Common/UserPreferences.cpp
 // Lift the CustomMatchPreferences::getChatSizeSlider naked dump to clean C++.
 //
 // Preferences getter with a clamp: a missing key and an out-of-range value share
@@ -15,6 +16,7 @@
 
 extern "C" __declspec(dllimport) int __cdecl atoi(const char *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiStringData
 {
 public:
@@ -22,6 +24,7 @@ public:
 	char m_chars[1];									///< retail this+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -50,6 +53,7 @@ private:
 	PreferenceNode *m_end;								///< retail this+0x00
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/CustomMatchPreferences.h
 class CustomMatchPreferences
 {
 public:

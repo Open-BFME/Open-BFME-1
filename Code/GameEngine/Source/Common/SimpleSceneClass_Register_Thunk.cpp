@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Register@SimpleSceneClass@@UAEXPAVRenderObjClass@@W4RegType@SceneClass@@@Z: Code/Libraries/Source/WWVegas/WW3D2/scene.cpp
 
 // The Add mirror of Unregister: five cases on RegType over the same 24-byte
 // scene lists running from +0x5C, confirmed by Add_Render_Object,
@@ -19,6 +20,7 @@
 // the shape; the wrapper is where the name lives, not where the code does.
 class RenderObjClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListObjectClass
 {
 public:
@@ -26,6 +28,7 @@ public:
 	void *m_next;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class GenericMultiListClass
 {
 	// The primitives stay protected so they mangle as I-- , which is how the
@@ -56,12 +59,14 @@ class RenderObjClass : public RenderObjBase, public MultiListObjectClass
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SceneClass
 {
 public:
 	enum RegType { };
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SimpleSceneClass
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?deleteAllFonts@FontLibrary@@IAEXXZ: Code/GameEngine/Source/GameClient/GUI/GameFont.cpp
 
 // Open-BFME5: FontLibrary::deleteAllFonts, retail 0x00722190, 90 bytes, from
 // the thunk queue -- the name sat on a five-byte thunk and this is the body it
@@ -33,6 +34,7 @@ public:
 	Int m_bfmeRefCount;					// +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameFont.h
 class FontLibrary
 {
 protected:

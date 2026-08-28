@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?getMetaMapRec@MetaMap@@IAEPAVMetaMapRec@@W4Type@GameMessage@@@Z: Code/GameEngine/Source/GameClient/MessageStream/MetaEvent.cpp
 // Lift the MetaMap::getMetaMapRec __emit thunk to clean C++.
 //
 // Verbatim Zero Hour MetaEvent.cpp: look for an existing record for this message
@@ -18,12 +19,14 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:
 	enum Type { MSG_INVALID = 0 };
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -41,6 +44,7 @@ enum MappableKeyModState { NONE = 0 };
 enum CommandUsableInType { COMMANDUSABLE_NONE = 0 };
 enum MetaMapCategory { CATEGORY_MISC = 6 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MetaEvent.h
 class MetaMapRec
 {
 public:
@@ -55,6 +59,7 @@ public:
 	UnicodeString m_displayName;							///< retail this+0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MetaEvent.h
 class MetaMap
 {
 protected:

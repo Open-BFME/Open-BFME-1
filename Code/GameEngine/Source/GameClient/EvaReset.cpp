@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?reset@Eva@@: Code/GameEngine/Source/GameClient/Eva.cpp
 // Open-BFME5: Eva::reset, spelled against the retail BFME layout.
 //
 // BFME's Eva is not Zero Hour's.  Retail keeps two pristine "default" copies of
@@ -23,6 +24,7 @@ typedef int Int;
 
 // Retail per-message check record, 24 bytes: two frame stamps this body
 // invalidates and a "played" flag at +0x14.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 struct EvaCheck
 {
 	float m_triggeredOnFrame;
@@ -34,6 +36,7 @@ struct EvaCheck
 
 // Retail parsed check-info record; only its 28-byte stride matters here, and
 // the stride is what turns the vector extent into the check count.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 struct EvaCheckInfo
 {
 	char m_raw[ 28 ];
@@ -93,6 +96,7 @@ public:
 	char m_raw[ 0x14 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 class Eva
 {
 public:

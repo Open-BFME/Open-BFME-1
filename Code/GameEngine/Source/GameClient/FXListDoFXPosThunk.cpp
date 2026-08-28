@@ -1,3 +1,4 @@
+// readable body of ?doFXPos@FXList@@IBEXPBUCoord3D@@PBVMatrix3D@@M0M@Z: Code/GameEngine/Source/GameClient/FXList.cpp
 // TU-scoped slice for FXList::doFXPos.  Retail splits this into an
 // incremental-link thunk (0x0003E360) and the loop body (0x001D6770); the body
 // is reached only through the thunk, so it is modelled here as a forwarding
@@ -11,6 +12,7 @@ typedef float Real;
 // ABI slice of FXNugget.  Slot 0 stands for the MemoryPoolObject virtual that
 // FXNugget inherits; doFXPos is slot 1, which is the `call [eax+4]` retail
 // makes on each element.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXNugget
 {
 public:
@@ -18,6 +20,7 @@ public:
 	virtual void doFXPos(const Coord3D *, const Matrix3D *, Real, const Coord3D *, Real) const = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXList
 {
 protected:

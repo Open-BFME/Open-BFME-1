@@ -1,3 +1,5 @@
+// readable body of ?createReplayControl@InGameUI@@IAEXXZ: Code/GameEngine/Source/GameClient/InGameUI.cpp
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 protected:

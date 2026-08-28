@@ -9,6 +9,7 @@ private:
 	unsigned char m_pad[4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MetaEvent.h
 class MetaMapRec
 {
 public:

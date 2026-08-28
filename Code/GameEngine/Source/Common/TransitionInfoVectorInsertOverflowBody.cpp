@@ -17,9 +17,11 @@
 // Retail hands the helpers' empty dispatch tag the address of its own trailing
 // bool argument rather than spending a frame slot on it.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 	struct TransitionInfo
 	{
 		unsigned char m_data[12];

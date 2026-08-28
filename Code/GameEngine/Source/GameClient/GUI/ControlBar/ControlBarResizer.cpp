@@ -104,6 +104,7 @@ ControlBarResizer::~ControlBarResizer( void )
 	m_resizerWindowsList.clear();
 }
 	
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__init_ControlBarResizer_QAEXXZ_004AAF10.cpp
 // ?init@ControlBarResizer@@QAEXXZ present-unmatched
 void ControlBarResizer::init( void )
 {

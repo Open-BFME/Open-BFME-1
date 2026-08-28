@@ -1,12 +1,15 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?init@TextTypeTransition@@UAEXPAVGameWindow@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
 	Int y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -28,6 +31,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -36,6 +40,7 @@ public:
 };
 
 class DisplayString;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayStringManager.h
 class DisplayStringManager
 {
 public:
@@ -48,6 +53,7 @@ extern DisplayStringManager *TheDisplayStringManager;
 
 UnicodeString GadgetStaticTextGetText(GameWindow *window);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class TextTypeTransition
 {
 public:

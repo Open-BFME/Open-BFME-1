@@ -28,6 +28,7 @@ extern "C" __declspec(dllimport) unsigned int __cdecl fwrite(const void *buffer,
 
 enum { SEEK_SET_ = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class OutputChunk
 {
 public:
@@ -39,6 +40,7 @@ public:
 	Int filepos;										///< retail this+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkOutput
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?makeEmpty@SimpleObjectIterator@@QAEXXZ: Code/GameEngine/Source/GameLogic/Object/SimpleObjectIterator.cpp
 
 // Open-BFME5: SimpleObjectIterator::makeEmpty, retail 0x0040AD80, 88 bytes,
 // from the thunk queue -- the name sat on a five-byte thunk and this is the
@@ -71,6 +72,7 @@ public:
 	Int m_bfmeKey;						// +0x38
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectIter.h
 class SimpleObjectIterator
 {
 public:

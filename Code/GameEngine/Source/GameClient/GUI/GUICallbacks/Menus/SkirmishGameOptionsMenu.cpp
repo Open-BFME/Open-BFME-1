@@ -183,6 +183,7 @@ static Int getNextSelectablePlayer(Int start)
 	return -1;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishPreferencesCtorThunk.cpp
 // ??0SkirmishPreferences@@ present-unmatched
 SkirmishPreferences::SkirmishPreferences( void )
 {
@@ -195,12 +196,14 @@ SkirmishPreferences::~SkirmishPreferences()
 {
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SkirmishPreferences_getSlotList.cpp
 // ?getSlotList@SkirmishPreferences@@ present-unmatched
 AsciiString SkirmishPreferences::getSlotList(void)
 {
 	return getAsciiString("SlotList", AsciiString::TheEmptyString);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SkirmishPreferences_setSlotList.cpp
 // ?setSlotList@SkirmishPreferences@@ present-unmatched
 void SkirmishPreferences::setSlotList(void)
 {
@@ -330,6 +333,7 @@ void SkirmishPreferences::setSuperweaponRestricted( Bool superweaponRestricted )
 }
 
 static const char startingCashKey[] = "StartingCash";
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SkirmishPreferencesGetStartingCashThunk.cpp
 // ?getStartingCash@SkirmishPreferences@@ present-unmatched
 Money SkirmishPreferences::getStartingCash(void) const
 {
@@ -357,6 +361,7 @@ void SkirmishPreferences::setStartingCash( const Money & startingCash )
 
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishPreferences_write_Thunk.cpp
 // ?write@SkirmishPreferences@@ present-unmatched
 Bool SkirmishPreferences::write(void)
 {

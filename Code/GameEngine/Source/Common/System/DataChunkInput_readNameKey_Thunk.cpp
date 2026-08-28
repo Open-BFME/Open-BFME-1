@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?readNameKey@DataChunkInput@@QAE?AW4NameKeyType@@XZ: Code/GameEngine/Source/Common/System/DataChunk.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 enum NameKeyType {};
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkInput
 {
 public:

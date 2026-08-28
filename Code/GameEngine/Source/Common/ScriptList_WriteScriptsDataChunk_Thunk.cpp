@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?WriteScriptsDataChunk@ScriptList@@SAXAAVDataChunkOutput@@QAPAV1@H@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp
 // Open-BFME5: lift the ScriptList::WriteScriptsDataChunk MASM dump to clean C++.
 //
 // Zero Hour keeps the per-list body in WriteScriptListDataChunk
@@ -9,6 +10,7 @@
 // array syntax: ScriptList *const [] picks up a top-level const and mangles QB,
 // where the ledger row wants PB.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkOutput
 {
 public:
@@ -23,6 +25,7 @@ class ScriptList;
 void WriteGroupDataChunk(DataChunkOutput &chunkWriter, ScriptList *list, ScriptGroup *group);
 void WriteScriptDataChunk(DataChunkOutput &chunkWriter, ScriptList *list, Script *script);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class ScriptList
 {
 public:

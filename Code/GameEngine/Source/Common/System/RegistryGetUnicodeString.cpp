@@ -25,6 +25,7 @@ extern "C" __declspec(dllimport) long __stdcall RegQueryValueExW(
 
 #include "Common/AsciiString.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:

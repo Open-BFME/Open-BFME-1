@@ -6,6 +6,7 @@
 // m_weldingFXBone sit at exactly those offsets after 8 base bytes and the
 // 16 int/real fields from the GeneralsMD SlavedUpdate.h layout.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	char *m_str;
@@ -13,6 +14,7 @@ public:
 	~AsciiString();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleData
 {
 public:

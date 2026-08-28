@@ -1,3 +1,4 @@
+// readable body of ?setStartingCash@LANPreferences@@: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanLobbyMenu.cpp
 // Exact retail bytes for the LANPreferences::setStartingCash row at 0x004CEC00.
 extern "C" __declspec(naked) void bfme_LANPreferences_setStartingCash_4CEC00()
 {

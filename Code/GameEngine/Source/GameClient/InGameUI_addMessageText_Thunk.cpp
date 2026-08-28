@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?addMessageText@InGameUI@@IAEXABVUnicodeString@@PBURGBColor@@@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class UnicodeString {};
 struct RGBColor;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI {
 protected:
 	void addMessageText(const UnicodeString &, const RGBColor *);

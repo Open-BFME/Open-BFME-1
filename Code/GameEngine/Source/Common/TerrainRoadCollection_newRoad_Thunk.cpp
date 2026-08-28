@@ -1,10 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?newRoad@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z: Code/GameEngine/Source/GameClient/Terrain/TerrainRoads.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 };
 class TerrainRoadType;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/TerrainRoads.h
 class TerrainRoadCollection
 {
 public:

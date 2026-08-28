@@ -233,6 +233,7 @@ enum Detail
 };
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_ctor.cpp
 // ??0OptionPreferences@@QAE@XZ present-unmatched
 OptionPreferences::OptionPreferences( void )
 {
@@ -395,12 +396,14 @@ __declspec(naked) Int OptionPreferences::getCampaignDifficulty(void)
 // ?getLANIPAddress@OptionPreferences@@QAEIXZ
 // Body in OptionsMenu_getLANIPAddress.asm (exact 403B retail).
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_setLANIPAddress_Thunk.cpp
 // ?setLANIPAddress@OptionPreferences@@ present-unmatched
 void OptionPreferences::setLANIPAddress( AsciiString IP )
 {
 	(*this)["IPAddress"] = IP;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_setLANIPAddress_Thunk.cpp
 // ?setLANIPAddress@OptionPreferences@@ present-unmatched
 void OptionPreferences::setLANIPAddress( UnsignedInt IP )
 {
@@ -412,12 +415,14 @@ void OptionPreferences::setLANIPAddress( UnsignedInt IP )
 // ?getOnlineIPAddress@OptionPreferences@@QAEIXZ
 // Body in OptionsMenu_getOnlineIPAddress.asm (exact 397B retail).
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_setOnlineIPAddress_Thunk.cpp
 // ?setOnlineIPAddress@OptionPreferences@@ present-unmatched
 void OptionPreferences::setOnlineIPAddress( AsciiString IP )
 {
 	(*this)["GameSpyIPAddress"] = IP;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_setOnlineIPAddress_Thunk.cpp
 // ?setOnlineIPAddress@OptionPreferences@@ present-unmatched
 void OptionPreferences::setOnlineIPAddress( UnsignedInt IP )
 {
@@ -465,6 +470,7 @@ Bool OptionPreferences::getDoubleClickAttackMoveEnabled(void)
 	return FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getScrollFactor_Thunk.cpp
 // ?getScrollFactor@OptionPreferences@@QAEMXZ present-unmatched
 Real OptionPreferences::getScrollFactor(void)
 {
@@ -487,6 +493,7 @@ Real OptionPreferences::getScrollFactor(void)
 // ?saveCameraInReplays@OptionPreferences@@QAE_NXZ
 // Body in Code/masm_dumps/_saveCameraInReplays_OptionPreferences_QAE_NXZ_90800.asm (exact 95B retail).
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__useCameraInReplays_OptionPreferences_QAE_NXZ_00090900.cpp
 // ?useCameraInReplays@OptionPreferences@@QAE_NXZ present-unmatched
 Bool OptionPreferences::useCameraInReplays(void)
 {
@@ -500,6 +507,7 @@ Bool OptionPreferences::useCameraInReplays(void)
 	return FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getIdealStaticGameDetail_Thunk.cpp
 // ?getIdealStaticGameDetail@OptionPreferences@@QAEHXZ present-unmatched
 Int OptionPreferences::getIdealStaticGameDetail(void)
 {
@@ -523,6 +531,7 @@ Int OptionPreferences::getStaticGameDetail(void)
 // ?getSendDelay@OptionPreferences@@QAE_NXZ
 // Body in Code/masm_dumps/_getSendDelay_OptionPreferences__QAE_NXZ_90AF0.asm (exact 105B retail).
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getFirewallBehavior_OptionPreferences_QAEHXZ_00090B80.cpp
 // ?getFirewallBehavior@OptionPreferences@@QAEHXZ present-unmatched
 Int OptionPreferences::getFirewallBehavior()
 {
@@ -538,6 +547,7 @@ Int OptionPreferences::getFirewallBehavior()
 	return behavior;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getFirewallPortAllocationDelta_Thunk.cpp
 // ?getFirewallPortAllocationDelta@OptionPreferences@@QAEFXZ present-unmatched
 Short OptionPreferences::getFirewallPortAllocationDelta()
 {
@@ -550,6 +560,7 @@ Short OptionPreferences::getFirewallPortAllocationDelta()
 	return delta;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getFirewallPortOverride_Thunk.cpp
 // ?getFirewallPortOverride@OptionPreferences@@QAEGXZ present-unmatched
 UnsignedShort OptionPreferences::getFirewallPortOverride()
 {
@@ -585,6 +596,7 @@ AsciiString OptionPreferences::getSpeakerType(void)
 	return it->second;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getSoundVolume_Thunk.cpp
 // ?getSoundVolume@OptionPreferences@@QAEMXZ present-unmatched
 Real OptionPreferences::getSoundVolume(void)
 {
@@ -631,6 +643,7 @@ Real OptionPreferences::get3DSoundVolume(void)
 	return volume;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getSpeechVolume_Thunk.cpp
 // ?getSpeechVolume@OptionPreferences@@QAEMXZ present-unmatched
 Real OptionPreferences::getSpeechVolume(void)
 {
@@ -698,6 +711,7 @@ Bool OptionPreferences::getTreesEnabled(void)
 	return FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getExtraAnimationsDisabled_OptionPreferences_QAE_NXZ_000910B0.cpp
 // ?getExtraAnimationsDisabled@OptionPreferences@@QAE_NXZ present-unmatched
 Bool OptionPreferences::getExtraAnimationsDisabled(void)
 {
@@ -711,6 +725,7 @@ Bool OptionPreferences::getExtraAnimationsDisabled(void)
 	return TRUE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getUseHeatEffects_OptionPreferences_QAE_NXZ_00092070.cpp
 // ?getUseHeatEffects@OptionPreferences@@QAE_NXZ present-unmatched
 Bool OptionPreferences::getUseHeatEffects(void)
 {
@@ -724,6 +739,7 @@ Bool OptionPreferences::getUseHeatEffects(void)
 	return FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getDynamicLODEnabled_OptionPreferences_QAE_NXZ_00091130.cpp
 // ?getDynamicLODEnabled@OptionPreferences@@QAE_NXZ present-unmatched
 Bool OptionPreferences::getDynamicLODEnabled(void)
 {
@@ -773,6 +789,7 @@ Bool OptionPreferences::get2DShadowsEnabled(void)
 // ?getParticleCap@OptionPreferences@@QAEHXZ
 // Body in Code/masm_dumps/_getParticleCap_OptionPreferences__QAEHXZ_914B0.asm (exact 136B retail).
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getTextureReduction_Thunk.cpp
 // ?getTextureReduction@OptionPreferences@@QAEHXZ present-unmatched
 Int OptionPreferences::getTextureReduction(void)
 {
@@ -815,6 +832,7 @@ void OptionPreferences::getResolution(Int *xres, Int *yres)
 	*yres=selectedYRes;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getMusicVolume_Thunk.cpp
 // ?getMusicVolume@OptionPreferences@@QAEMXZ present-unmatched
 Real OptionPreferences::getMusicVolume(void)
 {

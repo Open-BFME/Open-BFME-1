@@ -175,6 +175,7 @@ Mission *Campaign::getMission( AsciiString missionName )
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/System/Campaign_getNextMission.cpp
 // ?getNextMission@Campaign@@QAEPAVMission@@PAV2@@Z present-unmatched
 Mission *Campaign::getNextMission( Mission *current)
 {
@@ -218,6 +219,7 @@ CampaignManager::CampaignManager( void )
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/CampaignManagerDestructorThunk.cpp
 // ??1CampaignManager@@QAE@XZ present-unmatched
 CampaignManager::~CampaignManager( void )
 {
@@ -236,6 +238,7 @@ CampaignManager::~CampaignManager( void )
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__init_CampaignManager_QAEXXZ_005BB8C0.cpp
 // ?init@CampaignManager@@QAEXXZ present-unmatched
 void CampaignManager::init( void )
 {
@@ -487,6 +490,7 @@ void CampaignManager::loadPostProcess( void )
 
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Mission_ctor_Thunk.cpp
 // ??0Mission@@QAE@XZ present-unmatched
 Mission::Mission( void )
 {
@@ -494,6 +498,7 @@ Mission::Mission( void )
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/MissionDestructorThunk.cpp
 // ??1Mission@@MAE@XZ present-unmatched
 Mission::~Mission( void )
 {

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?militarySubtitle@InGameUI@@UAEXABVAsciiString@@H@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // Open-BFME5: lift the retail InGameUI::militarySubtitle MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_InGameUIMilitarySubtitle_441D30()

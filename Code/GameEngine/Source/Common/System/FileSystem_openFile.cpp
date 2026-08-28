@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?openFile@FileSystem@@: Code/GameEngine/Source/Common/System/FileSystem.cpp
 //
 // FileSystem::openFile retail 0x009C8860 size 394 -- recovered as C++ rather
 // than left as 394 emitted bytes.
@@ -92,6 +93,7 @@ private:
 
 // Slot layouts stay attached to their call sites, because those are what the
 // emitted offsets come from.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ArchiveFileSystem.h
 class ArchiveFileSystem
 {
 public:
@@ -107,6 +109,7 @@ public:
 	virtual File *openFile( const char *filename, int access ) = 0;					// slot 5 = +0x14
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/LocalFileSystem.h
 class LocalFileSystem
 {
 public:

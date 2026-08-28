@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1SupplyTruckAIUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate.cpp
 // Open-BFME5: lift SupplyTruckAIUpdate dtor __emit thunk to clean C++.
 // Primary base (0x340 bytes) carries the four interface subobjects at
 // +0x0C/+0x10/+0x20/+0x24; SupplyTruckAIInterface is the secondary direct
@@ -20,6 +21,7 @@ class ST_Iface2 { public: virtual void vslot(); private: unsigned char m_pad[0xC
 class ST_Iface3 { public: virtual void vslot(); };
 class ST_Iface4 { public: virtual void vslot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public ST_RootBase, public ST_Iface1, public ST_Iface2, public ST_Iface3, public ST_Iface4
 {
 public:
@@ -43,6 +45,7 @@ public:
     ~ST_MemberObj();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyTruckAIUpdate.h
 class SupplyTruckAIUpdate : public AIUpdateInterface, public ST_SupplyTruckAIInterface
 {
 public:

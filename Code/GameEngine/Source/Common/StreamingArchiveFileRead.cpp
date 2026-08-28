@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?read@StreamingArchiveFile@@: Code/GameEngine/Source/Common/System/StreamingArchiveFile.cpp
 // Clean C++ conversion of BFME StreamingArchiveFile::read at retail RVA 0x009D21F0.
 
 typedef int Int;
@@ -41,6 +42,7 @@ protected:
 	Int m_size;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StreamingArchiveFile.h
 class StreamingArchiveFile : public RAMFile
 {
 public:

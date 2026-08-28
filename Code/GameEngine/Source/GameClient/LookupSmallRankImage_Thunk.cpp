@@ -13,6 +13,7 @@ public:
 	const Image *findImageByName(const AsciiString &name);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/RankPointValue.h
 class RankPoints
 {
 public:

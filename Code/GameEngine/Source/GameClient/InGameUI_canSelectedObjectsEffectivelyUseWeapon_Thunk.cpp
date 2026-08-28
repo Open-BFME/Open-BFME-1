@@ -4,6 +4,7 @@
 class CommandButton;
 class Object;
 struct Coord3D;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:

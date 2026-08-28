@@ -25,6 +25,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : public StringBase<char>
 {
 public:
@@ -34,6 +35,7 @@ public:
 
 typedef bool (*DataChunkParser)(DataChunkInput &file, DataChunkInfo *info, void *userData);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkInput
 {
 public:

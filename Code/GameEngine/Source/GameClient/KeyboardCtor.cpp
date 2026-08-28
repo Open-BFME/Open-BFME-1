@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0Keyboard@@: Code/GameEngine/Source/GameClient/Input/Keyboard.cpp
 // Open-BFME5: Keyboard::Keyboard at retail 0x005A3AC0 (69B).
 //
 // Structure, unchanged from the earlier attempts: SubsystemInterface is eight
@@ -36,6 +37,7 @@
 
 #include <string.h>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -63,6 +65,7 @@ struct KeyboardShiftState
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Keyboard.h
 class Keyboard : public SubsystemInterface
 {
 public:

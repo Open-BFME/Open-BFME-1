@@ -1,3 +1,4 @@
+// readable body of ?init@GameSpyLoadScreen@@: Code/GameEngine/Source/GameClient/GUI/LoadScreen.cpp
 // Exact retail bytes for the GameSpyLoadScreen::init row at 0x00493120.
 extern "C" __declspec(naked) void bfme_GameSpyLoadScreen_init_493120()
 {

@@ -19,6 +19,7 @@
 typedef int Int;
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	// Only the size matters here: the comparison is a call.
@@ -36,6 +37,7 @@ struct BfmeUpgradeInfo
 	Int m_bfmeThird;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AutoDepositUpdate.h
 struct upgradePair
 {
 	typedef AsciiString first_type;

@@ -22,6 +22,7 @@
 typedef int Int;
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 struct EvaCheck
 {
 	EvaCheck() : m_unmodelled_00( -1.0f ), m_unmodelled_04( -1.0f )

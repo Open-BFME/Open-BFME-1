@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?doPlayerGrantScience@ScriptActions@@IAEXABVAsciiString@@0@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // Lift the ScriptActions::doPlayerGrantScience __emit thunk to clean C++.
 //
 // Zero Hour resolves one Player from the name and grants the science to it.
@@ -25,18 +26,21 @@ enum ScienceType
 	SCIENCE_INVALID = -1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
 	void grantScience(ScienceType science);						///< ILT thunk at 0x0000C33D
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
 	Player *getEachPlayerFromMask(UnsignedShort &mask);			///< ILT thunk at 0x0002EE60
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Science.h
 class ScienceStore
 {
 public:
@@ -53,6 +57,7 @@ extern ScienceStore *TheScienceStore;								///< retail [0x012ED7AC]
 extern BfmeScriptEngine_getPlayerMaskFromAsciiString *TheScriptEngine;	///< retail [0x012F076C]
 extern PlayerList *ThePlayerList;									///< retail [0x012ED748]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

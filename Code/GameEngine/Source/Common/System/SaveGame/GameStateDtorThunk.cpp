@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1GameState@@UAE@XZ: Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp
 // Open-BFME5: lift the exact retail GameState destructor body to C++.
 
 // ??1GameState@@UAE@XZ

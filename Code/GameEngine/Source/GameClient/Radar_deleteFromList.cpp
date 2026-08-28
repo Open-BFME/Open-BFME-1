@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?deleteFromList@Radar@@IAE_NPAVObject@@PAPAVRadarObject@@@Z: Code/GameEngine/Source/Common/System/Radar.cpp
 
 // Radar::deleteFromList, retail 0x00106BC0. A singly-linked removal with the
 // previous node carried in the register the return value later uses.
@@ -12,6 +13,7 @@
 
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Radar.h
 class RadarObject
 {
 public:
@@ -21,6 +23,7 @@ public:
 	RadarObject *m_next;					// +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -28,6 +31,7 @@ public:
 	RadarObject *m_radarObject;				// +0x20C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Radar.h
 class Radar
 {
 protected:

@@ -14,6 +14,7 @@ class UpgradeTemplate;
 
 enum VeterancyLevel { LEVEL_REGULAR = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -27,6 +28,7 @@ private:
 
 AsciiString getVetUpgradeName(VeterancyLevel level);		///< retail body at 0x0010AD90
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeCenter
 {
 public:

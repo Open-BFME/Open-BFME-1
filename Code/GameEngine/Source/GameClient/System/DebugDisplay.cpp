@@ -105,6 +105,7 @@
 // DebugDisplay::DebugDisplay
 //============================================================================
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/System/DebugDisplayCtorThunk.cpp
 // ??0DebugDisplay@@ present-unmatched
 DebugDisplay::DebugDisplay()
 : m_width(0),
@@ -117,6 +118,7 @@ DebugDisplay::DebugDisplay()
 // DebugDisplay::reset
 //============================================================================
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/System/DebugDisplayCtorThunk.cpp
 // ?reset@DebugDisplay@@ present-unmatched
 void DebugDisplay::reset( void )
 {

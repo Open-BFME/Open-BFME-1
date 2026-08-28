@@ -48,6 +48,7 @@
 #endif
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp
 // ??0RadiusDecalTemplate@@ present-unmatched
 RadiusDecalTemplate::RadiusDecalTemplate() : 
 	m_shadowType(SHADOW_ALPHA_DECAL), 
@@ -141,6 +142,7 @@ void RadiusDecalTemplate::xferRadiusDecalTemplate( Xfer *xfer )
 }
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_ctor.cpp
 // ??0RadiusDecal@@ present-unmatched
 RadiusDecal::RadiusDecal() : 
 	m_template(NULL), 
@@ -150,6 +152,7 @@ RadiusDecal::RadiusDecal() :
 }
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_ctor.cpp
 // ??0RadiusDecal@@ present-unmatched
 RadiusDecal::RadiusDecal(const RadiusDecal& that) : 
 	m_template(NULL), 
@@ -187,6 +190,7 @@ void RadiusDecal::xferRadiusDecal( Xfer *xfer )
 }
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_clear.cpp
 // ?clear@RadiusDecal@@ present-unmatched
 void RadiusDecal::clear()
 {
@@ -200,6 +204,7 @@ void RadiusDecal::clear()
 }
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_dtor.cpp
 // ??1RadiusDecal@@ present-unmatched
 RadiusDecal::~RadiusDecal()
 {
@@ -242,6 +247,7 @@ void RadiusDecal::setOpacity( Real o )
 }
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_setPosition.cpp
 // ?setPosition@RadiusDecal@@ present-unmatched
 void RadiusDecal::setPosition(const Coord3D& pos)
 {

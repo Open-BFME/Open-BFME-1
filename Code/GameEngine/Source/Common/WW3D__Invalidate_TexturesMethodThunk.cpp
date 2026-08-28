@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?_Invalidate_Textures@WW3D@@: Code/Libraries/Source/WWVegas/WW3D2/ww3d.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) WW3D

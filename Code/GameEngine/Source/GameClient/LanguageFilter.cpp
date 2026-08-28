@@ -41,6 +41,7 @@
 
 LanguageFilter *TheLanguageFilter = NULL;
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/LanguageFilterCtor.cpp
 // ??0LanguageFilter@@QAE@XZ present-unmatched
 LanguageFilter::LanguageFilter() 
 {

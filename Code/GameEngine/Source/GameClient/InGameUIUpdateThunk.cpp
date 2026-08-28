@@ -1,3 +1,4 @@
+// readable body of ?update@InGameUI@@: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // Exact retail bytes for InGameUI::update at 0x004410C0.
 // Kept separate so InGameUI.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_InGameUI_update_4410C0()

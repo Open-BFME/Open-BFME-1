@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?writeAsciiString@DataChunkOutput@@QAEXABVAsciiString@@@Z: Code/GameEngine/Source/Common/System/DataChunk.cpp
 // Open-BFME: DataChunkOutput::writeAsciiString, retail 0x00102C80, 97 bytes.
 //
 // The reference's three lines unchanged: the length as a halfword, then that
@@ -23,6 +24,7 @@ struct BfmeAsciiStringData
 	UnsignedShort m_pad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -33,6 +35,7 @@ private:
 	BfmeAsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkOutput
 {
 public:

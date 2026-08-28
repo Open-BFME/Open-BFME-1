@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?newMap@Radar@@UAEXPAVTerrainLogic@@@Z: Code/GameEngine/Source/Common/System/Radar.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class TerrainLogic;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Radar.h
 class Radar
 {
 public:

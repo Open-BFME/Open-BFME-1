@@ -1,5 +1,7 @@
+// readable body of ?clearUnseenMaps@MapCache@@AAE_NVAsciiString@@@Z: Code/GameEngine/Source/GameClient/MapUtil.cpp
 class AsciiString {};
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MapUtil.h
 class MapCache
 {
 private:

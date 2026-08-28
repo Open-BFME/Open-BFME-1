@@ -1,3 +1,4 @@
+// readable body of ?evaluateContextUI@ControlBar@@: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 // Exact retail bytes for ?evaluateContextUI@ControlBar@@IAEXXZ at 0x004A2500.
 extern "C" __declspec(naked) void bfme_ControlBar_evaluateContextUI_4A2500()
 {

@@ -19,6 +19,7 @@
 
 class DetailedArchivedDirectoryInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ArchiveFileSystem.h
 class ArchivedFileInfo
 {
 public:
@@ -31,6 +32,7 @@ public:
 typedef std::map<AsciiString, DetailedArchivedDirectoryInfo> DetailedArchivedDirectoryInfoMap;
 typedef std::map<AsciiString, ArchivedFileInfo> ArchivedFileInfoMap;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ArchiveFileSystem.h
 class DetailedArchivedDirectoryInfo
 {
 public:

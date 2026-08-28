@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1StealthUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdate.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) StealthUpdate

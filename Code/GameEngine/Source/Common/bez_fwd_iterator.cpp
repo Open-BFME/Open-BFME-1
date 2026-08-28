@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/Precompiled /ICode/GameEngine/Source/Common/System /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
+// readable body of ?done@BezFwdIterator@@QAE_NXZ: Code/GameEngine/Source/Common/Bezier/BezFwdIterator.cpp
+// readable body of ?next@BezFwdIterator@@QAEXXZ: Code/GameEngine/Source/Common/Bezier/BezFwdIterator.cpp
 #include <vector>
 /*
 **	Command & Conquer Generals Zero Hour(tm)

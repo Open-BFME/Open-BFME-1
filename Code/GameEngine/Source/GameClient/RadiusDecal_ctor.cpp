@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0RadiusDecal@@: Code/GameEngine/Source/GameClient/RadiusDecal.cpp
 
 // RadiusDecal's constructor, retail 0x004582F0. Four fields and no base call:
 // three zeroed and the flag at +0x08 set true, which is the state clear() and
@@ -6,6 +7,7 @@
 
 class RadiusDecalShadow;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/RadiusDecal.h
 class RadiusDecal
 {
 public:

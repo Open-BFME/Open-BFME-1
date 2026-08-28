@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?drawWindow@GameWindowManager@@IAEHPAVGameWindow@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -22,6 +23,7 @@ public:
 	virtual void draw(GameWindow *window, void *instanceData);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -46,6 +48,7 @@ private:
 	GameWindow *m_child;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 protected:

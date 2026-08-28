@@ -14,6 +14,7 @@
 #include "PreRTS.h"
 #include "Common/AsciiString.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Anim2D.h
 class Anim2DTemplate
 {
 public:
@@ -26,6 +27,7 @@ private:
 	Int m_08, m_0c, m_10, m_14, m_18;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Anim2D.h
 class Anim2DCollection
 {
 public:

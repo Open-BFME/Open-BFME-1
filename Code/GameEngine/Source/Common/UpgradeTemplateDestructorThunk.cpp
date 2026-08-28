@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1UpgradeTemplate@@MAE@XZ: Code/GameEngine/Source/Common/System/Upgrade.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class UpgradeStringMember
@@ -19,6 +20,7 @@ private:
     unsigned char m_data[0x6c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeTemplate
 {
 protected:

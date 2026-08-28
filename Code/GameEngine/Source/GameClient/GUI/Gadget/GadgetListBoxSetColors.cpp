@@ -8,6 +8,7 @@
 typedef int Color;
 
 struct Image;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 struct WinDrawData
 {
 	const Image *image;
@@ -15,6 +16,7 @@ struct WinDrawData
 	Color borderColor;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:

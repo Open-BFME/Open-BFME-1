@@ -18,6 +18,7 @@
 // /EHs-c- because the build default only clears the /EHc half, and the two
 // locals' destructors would otherwise pull in an SEH prologue retail lacks.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -47,6 +48,7 @@ private:
 	PreferenceNode *m_end;								///< retail this+0x00
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class OptionPreferences
 {
 public:

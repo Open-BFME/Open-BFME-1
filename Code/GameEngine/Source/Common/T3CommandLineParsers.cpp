@@ -29,6 +29,7 @@ typedef unsigned int UnsignedInt;
 
 extern "C" __declspec(dllimport) int __cdecl atoi(const char *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:

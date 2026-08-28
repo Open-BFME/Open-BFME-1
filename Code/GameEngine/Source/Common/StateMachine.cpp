@@ -58,6 +58,7 @@
 /**
  * Constructor
  */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/StateConstructor.cpp
 // ??0State@@ present-unmatched
 State::State( StateMachine *machine, AsciiString name )	
 #ifdef STATE_MACHINE_DEBUG
@@ -74,6 +75,7 @@ State::State( StateMachine *machine, AsciiString name )
 /**
  * Add another state transition condition for this state
  */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/State_friend_onCondition_Thunk.cpp
 // ?friend_onCondition@State@@ present-unmatched
 void State::friend_onCondition( StateTransFuncPtr test, StateID toStateID, void* userData, const char* description )
 {
@@ -213,6 +215,7 @@ StateReturnType State::friend_checkForTransitions( StateReturnType status )
 /**
  * Given a return code, handle state transitions
  */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/State_friend_checkForSleepTransitions_Thunk.cpp
 // ?friend_checkForSleepTransitions@State@@ present-unmatched
 StateReturnType State::friend_checkForSleepTransitions( StateReturnType status )
 {
@@ -272,6 +275,7 @@ StateReturnType State::friend_checkForSleepTransitions( StateReturnType status )
 /**
  * Constructor
  */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/StateMachineCtorThunk.cpp
 // ??0StateMachine@@ present-unmatched
 StateMachine::StateMachine( Object *owner, AsciiString name )
 {
@@ -820,6 +824,7 @@ void StateMachine::internalSetGoalObject( const Object *obj )
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/StateMachine_getGoalObject.cpp
 // ?getGoalObject@StateMachine@@ present-unmatched
 Object *StateMachine::getGoalObject() 
 { 
@@ -827,6 +832,7 @@ Object *StateMachine::getGoalObject()
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/StateMachine_getGoalObject.cpp
 // ?getGoalObject@StateMachine@@ present-unmatched
 const Object *StateMachine::getGoalObject() const
 { 
@@ -834,6 +840,7 @@ const Object *StateMachine::getGoalObject() const
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/StateMachine_setGoalPosition.cpp
 // ?setGoalPosition@StateMachine@@ present-unmatched
 void StateMachine::setGoalPosition( const Coord3D *pos ) 
 { 

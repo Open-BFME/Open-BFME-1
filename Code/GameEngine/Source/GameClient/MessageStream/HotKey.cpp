@@ -89,6 +89,7 @@ namespace _STL
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/HotKeyTranslator_translateGameMessage_Thunk.cpp
 // ?translateGameMessage@HotKeyTranslator@@UAE?AW4GameMessageDisposition@@PBVGameMessage@@@Z present-unmatched
 GameMessageDisposition HotKeyTranslator::translateGameMessage(const GameMessage *msg)
 {
@@ -133,6 +134,7 @@ GameMessageDisposition HotKeyTranslator::translateGameMessage(const GameMessage 
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Source/GameClient/MessageStream/HotKey.cpp
 // ??0HotKey@@ present-unmatched
 HotKey::HotKey()
 {

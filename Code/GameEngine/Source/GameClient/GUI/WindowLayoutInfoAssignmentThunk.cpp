@@ -24,6 +24,7 @@ typedef void (*WindowLayoutInitFunc)(WindowLayout *, void *);
 typedef void (*WindowLayoutUpdateFunc)(WindowLayout *, void *);
 typedef void (*WindowLayoutShutdownFunc)(WindowLayout *, void *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -43,6 +44,7 @@ private:
 	unsigned char m_unreconstructed_00[12];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class WindowLayoutInfo
 {
 public:

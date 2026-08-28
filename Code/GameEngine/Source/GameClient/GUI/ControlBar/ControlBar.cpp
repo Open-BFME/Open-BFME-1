@@ -240,6 +240,7 @@ void ControlBar::markUIDirty( void )
 // Body in Code/masm_dumps/_str3__populatePurchaseScience_ControlBar_IAEXPAVPlayer_Z_4A0B90.asm (exact 783B retail @ 0x004A0B90).
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBar_updateContextPurchaseScience_Thunk.cpp
 // ?updateContextPurchaseScience@ControlBar@@IAEXXZ present-unmatched
 void ControlBar::updateContextPurchaseScience( void )
 {
@@ -690,6 +691,7 @@ CommandSet::~CommandSet( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBarDestructorThunk.cpp
 // ??1ControlBar@@UAE@XZ present-unmatched
 ControlBar::~ControlBar( void )
 {
@@ -768,6 +770,7 @@ void ControlBarPopupDescriptionUpdateFunc( WindowLayout *layout, void *param );
 //-------------------------------------------------------------------------------------------------
 /** Initialzie the control bar, this is our interface to the context sinsitive GUI */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarInitThunk.cpp
 // ?init@ControlBar@@UAEXXZ present-unmatched
 void ControlBar::init( void )
 {
@@ -1013,6 +1016,7 @@ void ControlBar::init( void )
 //-------------------------------------------------------------------------------------------------
 /** Reset the context sensitive control bar GUI */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBar_resetMethodThunk.cpp
 // ?reset@ControlBar@@UAEXXZ present-unmatched
 void ControlBar::reset( void )
 {
@@ -1103,6 +1107,7 @@ void ControlBar::reset( void )
 /** Update phase, we can track if our selected object is destroyed, update button
 	* percentages, status, enabled status etc */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_setControlBarSchemeByPlayerTemplate_Thunk.cpp
 // ?update@ControlBar@@ present-unmatched
 void ControlBar::update( void )
 {
@@ -1399,6 +1404,8 @@ const Image *ControlBar::getStarImage(void )
 
 //-------------------------------------------------------------------------------------------------
 // Matched via Code/masm_dumps/ControlBar_onPlayerRankChanged.asm @ 0x0049DC90
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBar_onPlayerRankChanged_Thunk.cpp
+// ?onPlayerRankChanged@ControlBar@@QAEXPBVPlayer@@@Z present-unmatched
 void ControlBar::onPlayerRankChanged(const Player *p)
 {
 	if (!p->isLocalPlayer())
@@ -1438,6 +1445,7 @@ void ControlBar::onPlayerSciencePurchasePointsChanged(const Player *p)
 	* and perform all UI manipulations to make the GUI show to the user what we want them
 	* to see */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarEvaluateContextUIThunk.cpp
 // ?evaluateContextUI@ControlBar@@ present-unmatched
 void ControlBar::evaluateContextUI( void )
 {
@@ -1643,6 +1651,7 @@ void ControlBar::evaluateContextUI( void )
 //-------------------------------------------------------------------------------------------------
 /** Find a command button of the given name if present */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_findNonConstCommandButton.cpp
 // ?findNonConstCommandButton@ControlBar@@IAEPAVCommandButton@@ABVAsciiString@@@Z present-unmatched
 CommandButton *ControlBar::findNonConstCommandButton( const AsciiString& name )
 {
@@ -1658,6 +1667,7 @@ CommandButton *ControlBar::findNonConstCommandButton( const AsciiString& name )
 //-------------------------------------------------------------------------------------------------
 /** Allocate a new command button, assign name, and tie to list */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarNewCommandSet.cpp
 // ?newCommandButton@ControlBar@@IAEPAVCommandButton@@ABVAsciiString@@@Z present-unmatched
 CommandButton *ControlBar::newCommandButton( const AsciiString& name )
 {
@@ -1749,6 +1759,7 @@ CommandButton *ControlBar::newCommandButtonOverride( CommandButton *buttonToOver
 //-------------------------------------------------------------------------------------------------
 /** Find existing command set by name */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarFields.cpp
 // ?findNonConstCommandSet@ControlBar@@AAEPAVCommandSet@@ABVAsciiString@@@Z present-unmatched
 CommandSet* ControlBar::findNonConstCommandSet( const AsciiString& name )
 {
@@ -1788,6 +1799,7 @@ const CommandSet *ControlBar::findCommandSet( const AsciiString& name )
 //-------------------------------------------------------------------------------------------------
 /** Allocate a new command set, link to list, initialize to default, and return it */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarNewCommandSet.cpp
 // ?newCommandSet@ControlBar@@IAEPAVCommandSet@@ABVAsciiString@@@Z present-unmatched
 CommandSet *ControlBar::newCommandSet( const AsciiString& name )
 {
@@ -1803,6 +1815,7 @@ CommandSet *ControlBar::newCommandSet( const AsciiString& name )
 //-------------------------------------------------------------------------------------------------
 /** Create an overridden command set. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/ControlBar_newCommandSetOverride.cpp
 // ?newCommandSetOverride@ControlBar@@IAEPAVCommandSet@@PAV2@@Z present-unmatched
 CommandSet *ControlBar::newCommandSetOverride( CommandSet *setToOverride )
 {
@@ -1859,6 +1872,8 @@ CBCommandStatus ControlBar::processContextSensitiveButtonTransition( GameWindow 
 // ?switchToContext@ControlBar@@IAEXW4ControlBarContext@@PAVDrawable@@@Z
 // Body in ControlBar_switchToContext.asm (exact 869B retail).
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_setCommandBarBorder_Thunk.cpp
+// ?setCommandBarBorder@ControlBar@@AAEXPAVGameWindow@@W4CommandButtonMappedBorderType@@@Z present-unmatched
 void ControlBar::setCommandBarBorder( GameWindow *button, CommandButtonMappedBorderType type)
 {
 	if(!button)
@@ -2076,6 +2091,7 @@ void ControlBar::setPortraitByImage( const Image *image )
 /** Show a rally point marker at the world location specified.  If no location is specified
 	* any marker that we might have visible is hidden */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_showRallyPoint_Thunk.cpp
 // ?showRallyPoint@ControlBar@@IAEXPBUCoord3D@@@Z present-unmatched
 void ControlBar::showRallyPoint( const Coord3D *loc )
 {
@@ -2137,6 +2153,7 @@ void ControlBar::showRallyPoint( const Coord3D *loc )
 // ?setControlBarSchemeByPlayer@ControlBar@@ exact retail body is emitted by
 // ControlBarSetControlBarSchemeByPlayerThunk.cpp.
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_setControlBarSchemeByPlayerTemplate_Thunk.cpp
 // ?setControlBarSchemeByPlayerTemplate@ControlBar@@ present-unmatched
 void ControlBar::setControlBarSchemeByPlayerTemplate( const PlayerTemplate *pt)
 {
@@ -2191,6 +2208,7 @@ void ControlBar::setControlBarSchemeByPlayerTemplate( const PlayerTemplate *pt)
 // (Not switchControlBarStage — inlined recorder check. C++ blocked on AsciiString by-value shape.)
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/ControlBarPreloadAssets.cpp
 // ?preloadAssets@ControlBar@@QAEXW4TimeOfDay@@@Z present-unmatched
 void ControlBar::preloadAssets( TimeOfDay timeOfDay )
 {
@@ -2413,6 +2431,7 @@ void ControlBar::setSquishedControlBarConfig( void )
 	m_controlBarSchemeManager->setControlBarSchemeByPlayerTemplate(ThePlayerList->getLocalPlayer()->getPlayerTemplate(), TRUE);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/ControlBar_setLowControlBarConfig.cpp
 // ?setLowControlBarConfig@ControlBar@@IAEXXZ present-unmatched
 void ControlBar::setLowControlBarConfig( void )
 {
@@ -2486,6 +2505,7 @@ void ControlBar::updateCommandMarkerImage( const Image *image )
 	if(cmdButton)
 		((BFMERetailCommandButton*)cmdButton)->setButtonImage(image);
 }
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarUpdateSlotExitImageThunk.cpp
 // ?updateSlotExitImage@ControlBar@@QAEXPBVImage@@@Z present-unmatched
 void ControlBar::updateSlotExitImage( const Image *image )
 {
@@ -2615,6 +2635,8 @@ __declspec(noinline) void ControlBar::triggerRadarAttackGlow( void )
 		retail->glowWindow->winEnable(FALSE);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBar_updateRadarAttackGlow_Thunk.cpp
+// ?updateRadarAttackGlow@ControlBar@@IAEXXZ present-unmatched
 void ControlBar::updateRadarAttackGlow ( void )
 {
 	if(!m_radarAttackGlowOn || !m_radarAttackGlowWindow)
@@ -2636,6 +2658,7 @@ void ControlBar::updateRadarAttackGlow ( void )
 }
 // ?initSpecialPowershortcutBar@ControlBar@@QAEXPAVPlayer@@@Z
 // Body in Code/masm_dumps/_str3__initSpecialPowershortcutBar_ControlBar_QAEXPAVPlayer_Z_49F1C0.asm (exact 766B retail @ 0x0049F1C0).
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBar_populateSpecialPowerShortcutMethodThunk.cpp
 // ?populateSpecialPowerShortcut@ControlBar@@IAEXPAVPlayer@@@Z present-unmatched
 void ControlBar::populateSpecialPowerShortcut( Player *player)
 {
@@ -2893,6 +2916,7 @@ Bool ControlBar::hasAnyShortcutSelection() const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBar_updateSpecialPowerShortcutMethodThunk.cpp
 // ?updateSpecialPowerShortcut@ControlBar@@IAEXXZ present-unmatched
 void ControlBar::updateSpecialPowerShortcut( void )
 {
@@ -3076,6 +3100,7 @@ void ControlBar::drawSpecialPowerShortcutMultiplierText()
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBar_animateSpecialPowerShortcutMethodThunk.cpp
 // ?animateSpecialPowerShortcut@ControlBar@@QAEX_N@Z present-unmatched
 void ControlBar::animateSpecialPowerShortcut( Bool isOn )
 {
@@ -3104,6 +3129,7 @@ void ControlBar::animateSpecialPowerShortcut( Bool isOn )
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBar_showSpecialPowerShortcutMethodThunk.cpp
 // ?showSpecialPowerShortcut@ControlBar@@QAEXXZ present-unmatched
 void ControlBar::showSpecialPowerShortcut( void )
 {

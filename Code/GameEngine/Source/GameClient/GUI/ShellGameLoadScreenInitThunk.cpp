@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?init@ShellGameLoadScreen@@: Code/GameEngine/Source/GameClient/GUI/LoadScreen.cpp
 // Open-BFME5: lift the retail ShellGameLoadScreen::init MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_ShellGameLoadScreenInit_4920E0()

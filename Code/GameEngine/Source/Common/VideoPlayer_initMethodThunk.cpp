@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?init@VideoPlayer@@UAEXXZ: Code/GameEngine/Source/GameClient/VideoPlayer.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) VideoPlayer

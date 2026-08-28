@@ -70,6 +70,7 @@ extern const FieldParse ParticleSystemFXNuggetFieldParse[];
 extern const FieldParse CursorParticleSystemFXNuggetFieldParse[];
 extern const FieldParse BuffNuggetFXNuggetFieldParse[];
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class MultiIniFieldParse
 {
 public:
@@ -89,18 +90,21 @@ private:
 	unsigned int Count;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
 	void initFromINIMulti(void *, const MultiIniFieldParse &);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXNugget
 {
 public:
 	char m_unreconstructed_00[ 0xb4 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXList
 {
 public:

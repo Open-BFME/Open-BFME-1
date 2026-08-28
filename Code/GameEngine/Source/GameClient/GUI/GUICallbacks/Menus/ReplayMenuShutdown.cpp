@@ -13,12 +13,14 @@ typedef bool Bool;
 
 class WindowLayout;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
 class Shell
 {
 public:
     void shutdownComplete(WindowLayout *layout, Bool impendingPush);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class GameWindowTransitionsHandler
 {
 public:
@@ -30,6 +32,7 @@ public:
 // RecorderClass::getMode at 0x0006BCCA), and the body at 0x00097360 copies two
 // file statics back into TheWritableGlobalData. It has no other call site in the
 // image, so the call shape is all of it that can be recovered.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?init@WinInstanceData@@QAEXXZ: Code/GameEngine/Source/GameClient/GUI/WinInstanceData.cpp
 // Open-BFME: WinInstanceData::init, retail 0x00499850, 596 bytes.
 //
 // The reference's body unchanged, with its draw-data loop fully unrolled --
@@ -34,6 +35,7 @@ class VideoBuffer;
 
 struct ICoord2D { Int x, y; };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 struct WinDrawData
 {
 	const Image *image;
@@ -49,6 +51,7 @@ struct WinTextDrawData
 
 class DisplayString;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayStringManager.h
 class DisplayStringManager
 {
 public:
@@ -67,6 +70,7 @@ public:
 
 extern DisplayStringManager *TheDisplayStringManager;		// 0x012F12CC
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -78,6 +82,7 @@ private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 class WinInstanceData
 {
 public:

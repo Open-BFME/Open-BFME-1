@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?setDockCrippled@SupplyWarehouseDockUpdate@@UAEX_N@Z: Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyWarehouseDockUpdate.cpp
 // Lift the SupplyWarehouseDockUpdate::setDockCrippled naked dump to clean C++.
 //
 // Zero Hour's SupplyWarehouseDockUpdate.cpp body, unchanged. The base call is
@@ -24,6 +25,7 @@ enum DamageType { DAMAGE_UNRESISTABLE = 8 };
 enum DeathType { DEATH_NORMAL = 0 };
 enum CommandSourceType { CMD_FROM_AI = 2 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyTruckAIUpdate.h
 class SupplyTruckAIInterface
 {
 public:
@@ -44,6 +46,7 @@ public:
 
 // Non-polymorphic, so it keeps its place after the primary base and lands at
 // +0x20 of the AI interface -- which is the adjustment retail applies.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
@@ -143,10 +146,12 @@ private:
 	unsigned char m_unreconstructed_04[0x20 - 4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public AIPrimaryInterface, public AICommandInterface
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -160,6 +165,7 @@ private:
 	AIUpdateInterface *m_ai;							///< retail this+0x204
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -168,12 +174,14 @@ public:
 
 extern GameLogic *TheGameLogic;							///< retail [0x012F0898]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DockUpdate.h
 class DockUpdate
 {
 public:
 	virtual void setDockCrippled(Bool setting);			///< ILT thunk at 0x0003B912
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyWarehouseDockUpdate.h
 class SupplyWarehouseDockUpdate : public DockUpdate
 {
 public:

@@ -6,6 +6,7 @@ typedef unsigned int UnsignedInt;
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class Module
 {
 public:
@@ -16,6 +17,7 @@ private:
 	void *m_drawable;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ClientUpdateModule.h
 class ClientUpdateModule : public Module
 {
 public:
@@ -30,6 +32,7 @@ public:
 	virtual void selectSound() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameClient.h
 class GameClient
 {
 public:

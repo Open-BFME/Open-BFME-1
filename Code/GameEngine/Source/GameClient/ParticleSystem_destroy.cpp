@@ -1,6 +1,8 @@
+// readable body of ?destroy@ParticleSystem@@QAEXXZ: Code/GameEngine/Source/GameClient/System/ParticleSys.cpp
 // Tear down the particle-system chain rooted at +0x160.  The flag at +0x1A8
 // is set before the chain is walked and again after the final helper call.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 class ParticleSystem
 {
 public:

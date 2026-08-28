@@ -198,6 +198,7 @@ HRESULT DownloadManagerMunkee::OnEnd()
 
 static time_t lastUpdate = 0;
 static Int timeLeft = 0;
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DownloadManagerMunkee_OnProgressUpdateMethodThunk.cpp
 // ?OnProgressUpdate@DownloadManagerMunkee@@UAEJHHHH@Z present-unmatched
 HRESULT DownloadManagerMunkee::OnProgressUpdate( Int bytesread, Int totalsize, Int timetaken, Int timeleft )
 {

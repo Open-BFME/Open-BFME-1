@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setEvaEnabled@Eva@@: Code/GameEngine/Source/GameClient/Eva.cpp
 // Open-BFME5: Eva::setEvaEnabled, spelled against the retail BFME layout.
 //
 // BFME's Eva is not Zero Hour's.  Retail keeps one 24-byte per-message check
@@ -18,6 +19,7 @@ typedef bool Bool;
 
 // Retail per-message check record: 24 bytes, the frame stamp this body
 // invalidates living at +0x04.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 struct EvaCheck
 {
 	float m_triggeredOnFrame;
@@ -25,6 +27,7 @@ struct EvaCheck
 	char  m_rest[ 0x10 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 class Eva
 {
 public:

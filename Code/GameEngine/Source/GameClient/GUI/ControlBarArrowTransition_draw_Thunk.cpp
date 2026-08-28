@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?draw@ControlBarArrowTransition@@UAEXXZ: Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class ControlBarArrowTransition
 {
 public:

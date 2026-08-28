@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1RadiusDecal@@: Code/GameEngine/Source/GameClient/RadiusDecal.cpp
 
 // RadiusDecal's destructor, retail 0x00458340 - thirty-four bytes identical to
 // clear() at 0x00458310, which the linker did not fold. Spelled as a destructor
@@ -17,6 +18,7 @@ public:
 	virtual void release() = 0;				// +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/RadiusDecal.h
 class RadiusDecal
 {
 public:

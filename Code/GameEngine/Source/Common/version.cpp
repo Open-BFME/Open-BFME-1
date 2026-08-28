@@ -91,6 +91,7 @@ AsciiString Version::getAsciiVersion( void )
 	return version;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/VersionGetUnicodeVersionThunk.cpp
 // ?getUnicodeVersion@Version@@ present-unmatched
 UnicodeString Version::getUnicodeVersion( void )
 {
@@ -148,6 +149,7 @@ AsciiString Version::getAsciiBuildTime( void )
 	return timeStr;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/VersionGetUnicodeBuildTimeThunk.cpp
 // ?getUnicodeBuildTime@Version@@ present-unmatched
 UnicodeString Version::getUnicodeBuildTime( void )
 {
@@ -168,6 +170,7 @@ AsciiString Version::getAsciiBuildLocation( void )
 	return AsciiString(m_buildLocation);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/VersionGetUnicodeBuildLocationThunk.cpp
 // ?getUnicodeBuildLocation@Version@@ present-unmatched
 UnicodeString Version::getUnicodeBuildLocation( void )
 {
@@ -186,6 +189,7 @@ AsciiString Version::getAsciiBuildUser( void )
 	return AsciiString(m_buildUser);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/VersionGetUnicodeBuildUserThunk.cpp
 // ?getUnicodeBuildUser@Version@@ present-unmatched
 UnicodeString Version::getUnicodeBuildUser( void )
 {

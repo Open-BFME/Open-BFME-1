@@ -1,3 +1,4 @@
+// readable body of ?init@MultiPlayerLoadScreen@@: Code/GameEngine/Source/GameClient/GUI/LoadScreen.cpp
 // Exact retail bytes for the MultiPlayerLoadScreen::init row at 0x00492400.
 extern "C" __declspec(naked) void bfme_MultiPlayerLoadScreen_init_492400()
 {

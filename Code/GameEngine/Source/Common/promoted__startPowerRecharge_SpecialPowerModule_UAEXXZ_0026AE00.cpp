@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?startPowerRecharge@SpecialPowerModule@@UAEXXZ: Code/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule.cpp
 // Grok promote from masm_dumps — retail 0x0026AE00 size 112
 // was: Code/masm_dumps/_rn7__startPowerRecharge_SpecialPowerModule__UAEXXZ_26AE00.asm
 

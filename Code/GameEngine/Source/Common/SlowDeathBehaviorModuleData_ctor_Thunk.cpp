@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0SlowDeathBehaviorModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehavior.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class SlowDeathBehaviorModuleData { public: SlowDeathBehaviorModuleData(); };

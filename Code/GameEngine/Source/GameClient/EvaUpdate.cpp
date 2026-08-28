@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?update@Eva@@: Code/GameEngine/Source/GameClient/Eva.cpp
 // Open-BFME5: Eva::update, spelled against the retail BFME layout.
 //
 // BFME's Eva is not Zero Hour's.  Retail runs one countdown pair per live check
@@ -35,6 +36,7 @@ extern AudioManager *TheAudio;
 
 // Only the frame counter at +0x3c is load-bearing here; retail reads it inline
 // rather than calling an accessor.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -49,6 +51,7 @@ extern GameLogic *TheGameLogic;
 
 // Retail per-message check record, 24 bytes: two millisecond countdowns and a
 // played flag at +0x14.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 struct EvaCheck
 {
 	Real m_timeUntilExpire;
@@ -57,6 +60,7 @@ struct EvaCheck
 };
 
 // Retail parsed check-info record; only its 28-byte stride matters here.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 struct EvaCheckInfo
 {
 	char m_raw[ 28 ];
@@ -82,6 +86,7 @@ public:
 	EvaCheck *m_capacity;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 class Eva
 {
 public:

@@ -3,6 +3,7 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -11,6 +12,7 @@ public:
 	static int scanIndexList(const char *token, const char *const *names);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 class ModelConditionInfo
 {
 public:

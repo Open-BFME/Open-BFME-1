@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?init@Eva@@: Code/GameEngine/Source/GameClient/Eva.cpp
 
 // Eva::init, 0x00426680, 258 bytes.
 //
@@ -70,6 +71,7 @@ private:
 public:
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -92,6 +94,7 @@ enum INILoadType
 	INI_LOAD_OVERWRITE = 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -140,6 +143,7 @@ private:
 	char m_unported[0x14];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 struct EvaCheck
 {
 	EvaCheck( void )
@@ -168,6 +172,7 @@ private:
 	char m_unported[0x0c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 class Eva
 {
 public:

@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onDie@StructureToppleUpdate@@UAEXPBVDamageInfo@@@Z: Code/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdate.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class DamageInfo;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StructureToppleUpdate.h
 class StructureToppleUpdate
 {
 public:

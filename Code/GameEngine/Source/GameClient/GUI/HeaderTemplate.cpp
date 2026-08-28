@@ -282,6 +282,7 @@ void HeaderTemplateManager::headerNotifyResolutionChange( void )
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/HeaderTemplateManagerPopulateGameFontsThunk.cpp
 // ?populateGameFonts@HeaderTemplateManager@@AAEXXZ present-unmatched
 void HeaderTemplateManager::populateGameFonts( void )
 {

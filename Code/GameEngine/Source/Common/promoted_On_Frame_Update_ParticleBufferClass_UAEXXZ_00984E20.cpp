@@ -15,6 +15,7 @@ class ParticleBufferClass;
 
 enum RegisterType { ON_FRAME_UPDATE = 0, LIGHT = 1, RELEASE = 2 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SceneClass
 {
 public:
@@ -35,6 +36,7 @@ public:
 	virtual void Register(ParticleBufferClass *, int);	///< vtable +0x38
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_emt.h
 class ParticleEmitterClass
 {
 public:
@@ -171,6 +173,7 @@ public:
 	virtual void Emit(void);							///< vtable +0x208
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_buf.h
 class ParticleBufferClass
 {
 public:

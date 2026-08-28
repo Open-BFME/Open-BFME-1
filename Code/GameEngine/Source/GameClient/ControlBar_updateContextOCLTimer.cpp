@@ -23,6 +23,7 @@ enum { LOGICFRAMES_PER_SECOND = 5 };
 
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -33,6 +34,7 @@ extern NameKeyGenerator *TheNameKeyGenerator;			// 0x012ED600
 
 #define NAMEKEY(x) (TheNameKeyGenerator->nameToKey(x))
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/OCLUpdate.h
 class OCLUpdate
 {
 public:
@@ -40,12 +42,14 @@ public:
 	Real getCountdownPercent(void);				// ILT 0x00047069
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	OCLUpdate *findUpdateModule(NameKeyType key);		// ILT 0x0002AE23
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
@@ -56,6 +60,7 @@ private:
 	Object *m_object;					// this+0xFC
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 private:

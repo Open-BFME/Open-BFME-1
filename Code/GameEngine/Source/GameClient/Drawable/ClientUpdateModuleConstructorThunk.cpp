@@ -13,6 +13,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class DrawableModule
 {
 public:
@@ -24,6 +25,7 @@ private:
 	void *m_drawable;								///< retail this+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ClientUpdateModule.h
 class ClientUpdateModule : public DrawableModule
 {
 public:

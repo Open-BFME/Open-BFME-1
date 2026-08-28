@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Remove_Render_Object@SimpleSceneClass@@UAEXPAVRenderObjClass@@@Z: Code/Libraries/Source/WWVegas/WW3D2/scene.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 //
 // Re-identified from ?Unregister@SimpleSceneClass@@. That name's arguments size
@@ -9,6 +10,7 @@
 // lists and releases its references.
 
 class RenderObjClass;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SimpleSceneClass
 {
 public:

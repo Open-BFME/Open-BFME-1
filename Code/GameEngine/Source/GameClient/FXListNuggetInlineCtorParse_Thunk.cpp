@@ -56,6 +56,7 @@ extern const FieldParse AttachedModelFXNuggetFieldParse[];
 extern const FieldParse LaserFXNuggetFieldParse[];
 extern const FieldParse TerrainScorchFXNuggetFieldParse[];
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class MultiIniFieldParse
 {
 public:
@@ -75,12 +76,14 @@ private:
 	unsigned int Count;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
 	void initFromINIMulti(void *, const MultiIniFieldParse &);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXNugget
 {
 public:
@@ -91,6 +94,7 @@ public:
 	char m_unreconstructed_08[ 0xb4 - 8 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXList
 {
 public:

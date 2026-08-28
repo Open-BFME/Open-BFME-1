@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?doGiveMoney@ScriptActions@@IAEXABVAsciiString@@H@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // Lift the ScriptActions::doGiveMoney __emit thunk to clean C++.
 //
 // Zero Hour resolves one Player from the name and adjusts its money. BFME
@@ -17,6 +18,7 @@ typedef unsigned short UnsignedShort;
 
 class AsciiString;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Money.h
 class Money
 {
 public:
@@ -24,6 +26,7 @@ public:
 	void deposit(UnsignedInt amount, bool playSound);			///< ILT thunk at 0x00027D6D
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -34,6 +37,7 @@ private:
 	Money m_money;												///< retail this+0x48
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
@@ -49,6 +53,7 @@ public:
 extern BfmeScriptEngine_getPlayerMaskFromAsciiString *TheScriptEngine;	///< retail [0x012F076C]
 extern PlayerList *ThePlayerList;										///< retail [0x012ED748]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

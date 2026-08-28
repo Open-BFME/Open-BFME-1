@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?removeNamedTimer@InGameUI@@QAEXABVAsciiString@@@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // Open-BFME: InGameUI::removeNamedTimer, retail 0x0044A1B0, 113 bytes.
 //
 // The reference's body unchanged: look the timer up by name, free its display
@@ -16,6 +17,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -29,6 +31,7 @@ private:
 
 class DisplayString;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayStringManager.h
 class DisplayStringManager
 {
 public:
@@ -42,6 +45,7 @@ public:
 
 extern DisplayStringManager *TheDisplayStringManager;		// 0x012F12CC
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 struct NamedTimerInfo
 {
 	virtual ~NamedTimerInfo();				// pool object vptr, this+0x00
@@ -53,6 +57,7 @@ struct NamedTimerInfo
 typedef _STL::map<AsciiString, NamedTimerInfo *> NamedTimerMap;
 typedef NamedTimerMap::iterator NamedTimerMapIt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:

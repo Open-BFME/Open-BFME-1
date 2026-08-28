@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
+// readable body of ?tossSegments@W3DRopeDraw@@AAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/W3DRopeDraw.cpp
+// readable body of ?xfer@W3DRopeDraw@@MAEXPAVXfer@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/W3DRopeDraw.cpp
 // Open-BFME5: convert the retail W3DRopeDraw destructor to clean C++.
 
 #include <vector>
@@ -7,6 +9,7 @@
 // The drawable module's root base occupies twelve bytes before W3DRopeDraw's
 // secondary interface subobject.  The middle base destructor resets the
 // primary vtable, then calls this root destructor through 0x0002B8C8.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor
 {
 	float red;
@@ -16,6 +19,7 @@ struct RGBColor
 
 typedef unsigned char XferVersion;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Xfer.h
 class Xfer
 {
 public:
@@ -83,12 +87,14 @@ public:
 	virtual void Remove_Render_Object(void *obj);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
 class W3DDisplay
 {
 public:
 	static BFME3DScene *m_3DScene;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/line3d.h
 class Line3DClass
 {
 public:
@@ -111,6 +117,7 @@ struct W3DRopeDrawSegInfo
 	float wobbleAxisY;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DRopeDraw.h
 class W3DRopeDraw : public W3DRopeDrawDrawModule, public W3DRopeDrawInterface
 {
 public:

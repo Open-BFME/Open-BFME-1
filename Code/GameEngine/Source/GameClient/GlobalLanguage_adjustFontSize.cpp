@@ -38,6 +38,7 @@ __forceinline long fast_float2long_round( float f )
 
 #define REAL_TO_INT_FLOOR(x)	(fast_float2long_round((Real)floor((double)(x))))
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:

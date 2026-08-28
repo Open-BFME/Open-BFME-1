@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1SidesInfo@@QAE@XZ: Code/GameEngine/Source/GameLogic/Map/SidesList.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/SidesList.h
 class BuildListInfo
 {
 public:
@@ -7,6 +9,7 @@ public:
 	void deleteInstance() { if (this) delete this; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
 class Dict
 {
 	public:
@@ -31,6 +34,7 @@ public:
 	unsigned char m_pad[8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class ScriptList
 {
 public:
