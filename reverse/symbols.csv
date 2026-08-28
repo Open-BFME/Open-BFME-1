@@ -74281,6 +74281,7 @@ name,address,notes
 ?bfmeStartTD@BfmeSubTD@@QAEXPAX@Z,0x00047B27,pin
 ?bfmeStartTE@BfmeSubTE@@QAEXXZ,0x0000F0A6,pin
 ?bfmeStartTI@BfmeSubTI@@QAEXXZ,0x0000F0A6,pin
+?bfmeStartSA@BfmeSubSA@@QAEXXZ,0x0000F0A6,pin
 ?bfmeStateFlags@BfmeObjectAI@@QAEIXZ,0x0001BB3F,Open-BFME5 ILT thunk to body 0x00279780; ?getAdjustedVisionRangeForObject@AI@@SAMPBVObject@@H@Z at 0x0014A620 reads the AI state word through it; address-derived name
 ?bfmeStateValue@BfmeObjectAI@@QAEHXZ,0x000187A0,Open-BFME5 helper state query body used by BfmeObjectAI::bfmeStateFlags
 ?bfmeStep1034@BfmeH1034@@QAEXXZ,0x00006906,pin
@@ -76412,6 +76413,7 @@ name,address,notes
 ?g_bfmeUiDZF@@3PAVBfmeUiDZF@@A,0x00EF19E8,pin
 ?g_bfmeUiEAA@@3PAVBfmeUiEAA@@A,0x00EF19E8,pin
 ?g_bfmeUiEAC@@3PAVBfmeUiEAC@@A,0x00EF19E8,pin
+?g_bfmeSinkSB@@3PAVBfmeSinkSB@@A,0x00EED668,pin
 ?g_bfmeUnicodeStringFormat@@3QBDB,0x0114451C,address-derived UnicodeString format string from retail 0x009D9AAC
 ?g_bfmeUnsignedByteFormat@@3QBDB,0x011442BC,address-derived unsigned-byte format string from the DIR32 operand at retail 0x009D943A
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
@@ -80667,6 +80669,7 @@ _bfmeVftVG,0x00CC0D90,pin
 _bfmeVftVH,0x00CE1F3C,pin
 _bfmeVftXB,0x00C9BFC8,pin
 _bfmeVftZD,0x00CC7968,pin
+_bfmeVftSA,0x00C8F4F0,pin
 _bfme_MallocAlloc0OomMalloc_82B820,0x0082B820,STLport __malloc_alloc<0>::_S_oom_malloc callee of allocate at 0x0082C580
 _bfme_acos,0x009F7256,internal acos helper called by ACos
 _bfme_asin,0x009F7D86,internal asin helper called by ASin
