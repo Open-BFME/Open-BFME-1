@@ -72393,6 +72393,7 @@ name,address,notes
 ?bfmeFinish@Gen_0081DC90@@QAEXXZ,0x0081DBE0,Open-BFME5 the body call the vector-member destructor at 0x0081DC90 makes before its members go
 ?bfmeFinish@Glo012F1028Sub@@AAEXPAVGlo012F1028Item@@H@Z,0x00038910,Open-BFME5 ILT thunk to body 0x003CA7C0; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on this with the item and a zero; address-derived name
 ?bfmeFlush@Rva003D8530Owner@@QAEXXZ,0x00009787,Open-BFME5 ILT thunk to body 0x003D55C0; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it once on the same sub-object after the slot loop; address-derived name
+?bfmeFlushQO@BfmeThingQO@@QAEXH@Z,0x0088A230,pin
 ?bfmeForward@Gen_0002644FTarget@@QAEXXZ,0x0002644F,Open-BFME5 ILT the three negative-displacement forwarders at 0x001FB570 0x001FBF60 and 0x00204450 all jump to
 ?bfmeForward@Gen_0005C450Target@@QAEXXZ,0x00018205,Open-BFME5 the member the singleton forwarder at 0x0005C450 tail-jumps to
 ?bfmeForward@Gen_000C9770Target@@QAEXPAX@Z,0x000107D5,Open-BFME5 the callee the guarded delegate at 0x000C9770 tail-jumps to
