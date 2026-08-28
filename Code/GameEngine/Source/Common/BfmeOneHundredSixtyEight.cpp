@@ -13,6 +13,7 @@ class BfmeGridAL
 {
 public:
 	void bfmeClearAL();
+	void bfmeFillAL();
 	unsigned char bfmeNearAL(int across, int along) const;
 	unsigned char bfmeFarAL(int across, int along) const;
 
@@ -28,6 +29,15 @@ void BfmeGridAL::bfmeClearAL()
 	for (int column = 0; column < m_bfmeWide; ++column) {
 		for (int row = 0; row < m_bfmeHigh; ++row) {
 			m_bfmeColumns[column][row].m_bfmeMark = 0;
+		}
+	}
+}
+
+void BfmeGridAL::bfmeFillAL()
+{
+	for (int column = 0; column < m_bfmeWide; ++column) {
+		for (int row = 0; row < m_bfmeHigh; ++row) {
+			m_bfmeColumns[column][row].m_bfmeMark = 1;
 		}
 	}
 }
