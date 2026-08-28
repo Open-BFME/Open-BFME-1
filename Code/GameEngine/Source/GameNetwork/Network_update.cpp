@@ -1,9 +1,19 @@
 // cl: /DNDEBUG /MD /GX
 
+enum PlayerLeaveCode
+{
+	PLAYER_LEAVE_CODE_CLIENT
+};
+
 class ConnectionManager
 {
 public:
-	void disconnectLocalPlayer(void);
+	PlayerLeaveCode disconnectPlayer(int slot);
+	__declspec(noinline) void disconnectLocalPlayer(void);
+
+private:
+	unsigned char m_unmodelled_00000[0x12028];
+	int m_localSlot;
 };
 
 class BFMEConnectionManager
@@ -36,6 +46,15 @@ public:
 };
 
 extern MessageStream *TheMessageStream;
+
+void ConnectionManager::disconnectLocalPlayer(void)
+{
+	for (int slot = 0; slot < 8; ++slot)
+	{
+		if (slot != m_localSlot)
+			disconnectPlayer(slot);
+	}
+}
 
 class Network
 {
