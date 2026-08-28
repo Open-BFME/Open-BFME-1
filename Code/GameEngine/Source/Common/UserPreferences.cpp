@@ -328,16 +328,55 @@ void QuickMatchPreferences::setMaxDisconnects(Int val)
 	(*this)["MaxDisconnects"] = strVal;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/QuickMatchPreferences_getMaxDisconnects_Thunk.cpp
-// ?getMaxDisconnects@QuickMatchPreferences@@QAEHXZ present-unmatched
+// BFME's preference getters read the mapped value's characters in place instead
+// of copying an AsciiString out, and they carry no unwind frame: the key is a
+// plain object driven by explicit init/destroy calls rather than one with a
+// destructor, and the map pointer is formed only after the key is built, which
+// is why retail keeps plain `this` in esi across the constructor and only then
+// does `add esi,4`. The map's header node doubles as its end sentinel.
+struct CustomAsciiStringShim
+{
+	void *m_data;
+	void init( const char *s );
+	void destroy( void );
+};
+
+struct CustomStringDataShim
+{
+	UnsignedByte m_header[8];					///< characters follow at +8
+};
+
+struct CustomMapNodeShim
+{
+	UnsignedByte m_unreconstructed_00[0x14];
+	CustomStringDataShim *m_value;				///< retail node+0x14
+};
+
+struct CustomPreferenceMapShim
+{
+	CustomMapNodeShim *m_header;
+	CustomMapNodeShim *find( CustomAsciiStringShim *key );
+};
+
+// ?getMaxDisconnects@QuickMatchPreferences@@QAEHXZ
 Int QuickMatchPreferences::getMaxDisconnects( void )
 {
-	QuickMatchPreferences::const_iterator it = find("MaxDisconnects");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("MaxDisconnects");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 	{
 		return 0;
 	}
-	return atoi(it->second.str());
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	return atoi(text);
 }
 
 void QuickMatchPreferences::setMaxPoints(Int val)
@@ -347,16 +386,25 @@ void QuickMatchPreferences::setMaxPoints(Int val)
 	(*this)["MaxPoints"] = strVal;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getMaxPoints_QuickMatchPreferences_QAEHXZ_000ABF80.cpp
-// ?getMaxPoints@QuickMatchPreferences@@QAEHXZ present-unmatched
+// ?getMaxPoints@QuickMatchPreferences@@QAEHXZ
 Int QuickMatchPreferences::getMaxPoints( void )
 {
-	QuickMatchPreferences::const_iterator it = find("MaxPoints");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("MaxPoints");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 	{
 		return 1000;
 	}
-	return atoi(it->second.str());
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	return atoi(text);
 }
 
 void QuickMatchPreferences::setMinPoints(Int val)
@@ -366,16 +414,25 @@ void QuickMatchPreferences::setMinPoints(Int val)
 	(*this)["MinPoints"] = strVal;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getMinPoints_QuickMatchPreferences_QAEHXZ_000ABFF0.cpp
-// ?getMinPoints@QuickMatchPreferences@@QAEHXZ present-unmatched
+// ?getMinPoints@QuickMatchPreferences@@QAEHXZ
 Int QuickMatchPreferences::getMinPoints( void )
 {
-	QuickMatchPreferences::const_iterator it = find("MinPoints");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("MinPoints");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 	{
 		return 0;
 	}
-	return atoi(it->second.str());
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	return atoi(text);
 }
 
 void QuickMatchPreferences::setWaitTime(Int val)
@@ -385,16 +442,25 @@ void QuickMatchPreferences::setWaitTime(Int val)
 	(*this)["WaitTime"] = strVal;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getWaitTime_QuickMatchPreferences_QAEHXZ_000AC060.cpp
-// ?getWaitTime@QuickMatchPreferences@@QAEHXZ present-unmatched
+// ?getWaitTime@QuickMatchPreferences@@QAEHXZ
 Int QuickMatchPreferences::getWaitTime( void )
 {
-	QuickMatchPreferences::const_iterator it = find("WaitTime");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("WaitTime");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 	{
 		return 0;
 	}
-	return atoi(it->second.str());
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	return atoi(text);
 }
 
 void QuickMatchPreferences::setNumPlayers(Int val)
@@ -404,16 +470,25 @@ void QuickMatchPreferences::setNumPlayers(Int val)
 	(*this)["NumPlayers"] = strVal;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getNumPlayers_QuickMatchPreferences_QAEHXZ_000AC0D0.cpp
-// ?getNumPlayers@QuickMatchPreferences@@QAEHXZ present-unmatched
+// ?getNumPlayers@QuickMatchPreferences@@QAEHXZ
 Int QuickMatchPreferences::getNumPlayers( void )
 {
-	QuickMatchPreferences::const_iterator it = find("NumPlayers");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("NumPlayers");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 	{
 		return 0;	// first in list, 1v1
 	}
-	return atoi(it->second.str());
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	return atoi(text);
 }
 
 void QuickMatchPreferences::setMaxPing(Int val)
@@ -423,16 +498,25 @@ void QuickMatchPreferences::setMaxPing(Int val)
 	(*this)["MaxPing"] = strVal;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getMaxPing_QuickMatchPreferences_QAEHXZ_000AC140.cpp
-// ?getMaxPing@QuickMatchPreferences@@QAEHXZ present-unmatched
+// ?getMaxPing@QuickMatchPreferences@@QAEHXZ
 Int QuickMatchPreferences::getMaxPing( void )
 {
-	QuickMatchPreferences::const_iterator it = find("MaxPing");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("MaxPing");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 	{
-		return 5;
+		return -1;
 	}
-	return atoi(it->second.str());
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	return atoi(text);
 }
 
 void QuickMatchPreferences::setColor( Int val )
