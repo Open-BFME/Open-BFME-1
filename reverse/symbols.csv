@@ -12218,6 +12218,8 @@ name,address,notes
 ?accepts@Rva001DB720Predicate@@QAE_NPAVThingTemplate@@@Z,0x00007B4E,incremental-link thunk called by the 0x001DB720 template-name scan
 ?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z,0x0001DA34,Open-BFME5 filter predicate call pin
 ?accepts@U4Filter@@QBE_NPBUU4Elem@@@Z,0x00606BF0,U4 lane: element predicate called by both scan loops at 0x00606DC0 and 0x00607000; address-derived name
+?actionA@BfmeObjE10@@QAEXH@Z,0x000348EC,pin
+?actionB@BfmeObjE10@@QAEXH@Z,0x000122AB,pin
 ?active@Rva000DF7F0Player@@QBE_NXZ,0x000179BD,Open-BFME5 fresh thiscall bool at ILT of !query 0x000DF7F0
 ?add@DynamicVectorAddPtrPairShim@@QAE_NABUPtrPairStruct@PointerRemapClass@@@Z,0x000D0AE0,DynamicVectorClass Add PtrPair incremental-link thunk target through a TU-local forwarding shim
 ?add@GenActionSink@@QAEXPAXPBDH1HHHH@Z,0x00015235,S3 action-sink forwarder family callee (address-derived name)
@@ -73974,6 +73976,7 @@ name,address,notes
 ?clear@?$hashtable@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEXXZ,0x000458BD
 ?clear@AsciiString@@QAEXXZ,0x00887940,retail AsciiString::clear body called from DictPair::copyFrom
 ?clear@BfmeLegendString@@QAEXXZ,0x00887940,SubsystemLegend.cpp AsciiString stand-in clear(); retail AsciiString::clear body
+?clear@BfmeThing152@@QAEXXZ,0x00039595,pin
 ?clear@Buffer@@QAEXXZ,0x00887940,Open-BFME5 W3DTreeDrawModuleData retail string-buffer clear pin
 ?clear@CrateTemplateCrateList@@QAEXXZ,0x000331AE,Open-BFME5 incremental-link thunk to the node-list clear body at 0x00379940 that CrateTemplate::~CrateTemplate calls twice
 ?clear@DamageFX@@QAEXXZ,0x00044297
@@ -74665,6 +74668,7 @@ name,address,notes
 ?findSpecialPowerTemplateByID@SpecialPowerStore@@QAEPBVSpecialPowerTemplate@@I@Z,0x000034B8,Open-BFME5 ILT thunk to the body already matched at 0x000EB690; ?getSpecialPowerSourceObject@AIGroup@@QAEPAVObject@@I@Z at 0x001513D0 reaches it through this thunk
 ?findSpecialPowerTemplatePrivate@SpecialPowerStore@@IAEPAVSpecialPowerTemplate@@VAsciiString@@@Z,0x00004822,link thunk; the address findSpecialPowerTemplate at 0x000BA930 encodes
 ?findSpecialPowerWithOverridableDestinationActive@Object@@QBEPAVSpecialPowerUpdateInterface@@W4SpecialPowerType@@@Z,0x00039766
+?findSub@BfmeObj9E0@@QAEPAVBfmeSubVfn9E0@@H@Z,0x0001B185,pin
 ?findSupplyCenter@AIPlayer@@IAEPAVObject@@H@Z,0x0001E0FB,Open-BFME5 ILT; called by ?isSupplySourceSafe@AIPlayer@@QAE_NH@Z at 0x00166A10
 ?findTarget@BfmeFinder78E@@QAEPAVBfmeTarget78E@@XZ,0x00020824,pin
 ?findTeamPrototype@TeamFactory@@QAEPAVTeamPrototype@@ABVAsciiString@@0@Z,0x000EFE10,call displacement in initTeam @0x000F8195
@@ -74707,6 +74711,7 @@ name,address,notes
 ?format_va@AsciiString@@QAEXPBDPAD@Z,0x00888930,pinharvest x1 (body)
 ?format_va@UnicodeString@@QAEXPBGPAD@Z,0x00888060,pinharvest x1 (body)
 ?format_va@UnicodeString@@QAEXPBGPAD@Z,0x00888930,pinharvest x1 (body)
+?forwardVal@BfmeMgr2B0@@QAEXPAX@Z,0x000201DA,pin
 ?freeAllBuffers@W3DBufferManager@@QAEXXZ,0x00023349,Open-BFME5 ILT the GenAlpha shadow-resource release tail-jumps through
 ?freeAllSlots@W3DBufferManager@@QAEXXZ,0x00018188,link thunk; the address freeAllBuffers at 0x007ADAD0 encodes
 ?freeBlock@MemoryPool@@QAEXPAX@Z,0x00003873,pinharvest x1 (thunk)
@@ -74899,10 +74904,16 @@ name,address,notes
 ?g_mgr12F076C@@3PAVBfmeMgrF07@@A,0x00EF076C,pin
 ?g_mgr12F0898@@3PAVBfmeMgr089@@A,0x00EF0898,pin
 ?g_mgr12F148C@@3PAVBfmeMgrF14@@A,0x00EF148C,pin
+?g_mgr12EF1D8@@3PAUBfmeMgrContainerF1D@@A,0x012EF1D8,pin
+?g_mgr12F076C@@3PAVBfmeMgrF07@@A,0x012F076C,pin
+?g_mgr12F0898@@3PAVBfmeMgr089@@A,0x012F0898,pin
+?g_mgr12F148C@@3PAVBfmeMgrF14@@A,0x012F148C,pin
+?g_mgr12F1600@@3PAVBfmeMgr160@@A,0x012F1600,pin
 ?g_mgr12F33F8@@3PAVBfmeMgr412@@A,0x00EF33F8,pin
 ?g_mgr12F4B98@@3PAUBfmeMgr112@@A,0x00EF4B98,pin
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
 ?g_obj12F060C@@3PAUBfmeObj2B1@@A,0x00EF060C,pin
+?g_obj12F1024@@3PAUBfmeObj1024@@A,0x012F1024,pin
 ?g_quitMenuLayout@@3PAXA,0x012F4AD4,HideQuitMenu layout global
 ?g_rva0051B5F0Large@@3URva0051B5F0Large@@A,0x00D05FBC,Open-BFME5 packed thirteen-byte preset global
 ?g_rva0051B5F0Medium@@3URva0051B5F0Medium@@A,0x00D05FB0,Open-BFME5 packed ten-byte preset global
@@ -77021,6 +77032,7 @@ name,address,notes
 ?lookup@GenTable@@QAEMH@Z,0x000184B2,S3 table-lookup-with-fallback family callee (address-derived name)
 ?lookup@Rva00368B80Registry@@QAEPAURva00368B80LookupResult@@I@Z,0x0001DBBA,REL32 bounds-checked pointer lookup target from 0x00368B91
 ?lookup@TerrainCollisionEventFXLookupShim@FXParticleSystem@@QBEPBVFXList@@PBD@Z,0x0001669E,TerrainCollisionModuleInfo event FX lookup thunk used through a TU-local layout shim
+?lookupByField@BfmeMgr2B0@@QAEPAUBfmeNode2B0@@PAX@Z,0x0003A751,pin
 ?lookupStatForPlayer@PeerThreadClass@@QAEHW4RoomType@@PBD1@Z,0x00647DD0,ZH PeerThread.cpp:371 line for line: packStatKey(nick;key) into a std::string via 0x00647CD0; roomType 1 (GroupRoom) searches the map at this+0x94 roomType 2 (StagingRoom) the map at this+0xa0 (_M_find ILT 0x0002E159); returns node+0x1c or 0; nine calls from getPlayerInfo 0x0064AA70 via ILT 0x0003733A
 ?lower_bound@AsciiStringTreeLowerBoundShim@_STL@@QBEPAU?$_Rb_tree_node@VAsciiString@@@2@ABVAsciiString@@@Z,0x00633900,incremental-link thunk target through a TU-local forwarding shim
 ?m0003CAD3@Q1Receiver012F4820@@QAEXH@Z,0x0003CAD3,address-derived callee of the global-guarded forward family; target read from the REL32 at its call site 0x005091B0
@@ -77473,6 +77485,7 @@ name,address,notes
 ?reset30B8@BaseHeightMapResetShroud@@QAEXXZ,0x0000AA4C,BaseHeightMap reset call for BFME shroud at this+0x30B8
 ?reset30BC@BaseHeightMapResetShroud@@QAEXXZ,0x000272FF,BaseHeightMap reset call for BFME shroud at this+0x30BC
 ?reset@?$bitset@$0BEA@@_STL@@QAEAAV12@XZ,0x0002194A,address-derived call target from the exact 320-bit INI token sink at 0x00208810; ILT fronts the shared bitset reset body at 0x001C2B80
+?reset@BfmeMgr089_152@@QAEXXZ,0x00003486,pin
 ?reset@ConnectionManager@@QAEXXZ,0x00665350,EXTRA - 494-byte body with NO ledger row and NO Ghidra function (gap 0x00665350..0x0066553E): ZH reset line for line - delete m_transport +0x12024; destroy the eight Connections and FrameDataManagers; (re)create+reset m_pendingCommands +0x12104 m_relayedCommands +0x12108 NetCommandWrapperList +0x1210C; m_localSlot=m_packetRouterSlot=-1; id list +0x12030=-1 and +0x12060/+0x12080/+0x120A0/+0x120C0=0; clears +0x12110
 ?reset@ControlBarScheme@@QAEXXZ,0x0002E2D5
 ?reset@FrameData@@QAEXXZ,0x0003BB6F,ICF-folded onto init; ZH's reset is just a call to init
