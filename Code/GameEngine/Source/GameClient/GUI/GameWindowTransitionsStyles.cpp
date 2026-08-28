@@ -493,7 +493,6 @@ void ButtonFlashTransition::update( Int frame )
 	
 }
 
-// ?reverse@ButtonFlashTransition@@UAEXXZ present-unmatched
 void ButtonFlashTransition::reverse( void )
 {
 	m_isFinished = FALSE;
