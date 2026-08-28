@@ -5,6 +5,7 @@
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
+#include <list>
 
 typedef float Real;
 typedef unsigned int UnsignedInt;
@@ -120,6 +121,20 @@ public:
 	virtual ObjectID getTowerID(int towerType);
 };
 
+class BridgeScaffoldBehaviorInterface
+{
+public:
+	virtual void unused00();
+	virtual void unused01();
+	virtual int getCurrentMotion() const;
+};
+
+class BridgeScaffoldBehavior
+{
+public:
+	static BridgeScaffoldBehaviorInterface *getBridgeScaffoldBehaviorInterfaceFromObject(Object *object);
+};
+
 class DamageInfo
 {
 public:
@@ -140,10 +155,15 @@ class BridgeBehavior
 public:
 	virtual void onHealing(DamageInfo *damageInfo);
 	virtual void onDamage(DamageInfo *damageInfo);
+	virtual bool isScaffoldInMotion();
 	Object *getObject() const
 	{
 		return *(Object **)((unsigned char *)this - 0x1C);
 	}
+
+private:
+	unsigned char m_unreconstructed04[0x460 - 0x04];
+	_STL::list<ObjectID> m_scaffoldObjectIDList;
 };
 
 // ?onHealing@BridgeBehavior@@UAEXPAVDamageInfo@@@Z
@@ -166,6 +186,25 @@ void BridgeBehavior::onHealing(DamageInfo *damageInfo)
 			}
 		}
 	}
+}
+
+// ?isScaffoldInMotion@BridgeBehavior@@UAE_NXZ
+bool BridgeBehavior::isScaffoldInMotion()
+{
+	for (_STL::list<ObjectID>::iterator it = m_scaffoldObjectIDList.begin();
+		it != m_scaffoldObjectIDList.end(); ++it)
+	{
+		Object *object = TheGameLogic->findObjectByIDInline(*it);
+		if (object == 0)
+			continue;
+
+		BridgeScaffoldBehaviorInterface *scaffold =
+			BridgeScaffoldBehavior::getBridgeScaffoldBehaviorInterfaceFromObject(object);
+		if (scaffold && scaffold->getCurrentMotion() != 0)
+			return true;
+	}
+
+	return false;
 }
 
 // ?onDamage@BridgeBehavior@@UAEXPAVDamageInfo@@@Z
