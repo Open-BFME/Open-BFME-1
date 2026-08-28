@@ -3341,6 +3341,7 @@ name,address,notes
 ??0ShareBufferClassBase@@QAE@HPBDH@Z,0x00929FC0,TexBufferClass base ShareBuffer-like ctor
 ??0ShellMenuSchemeImage@@QAE@XZ,0x0001DA7F,ShellMenuSchemeImage constructor via ILT thunk
 ??0ShroudCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x00026F1C,module ctor (friend_newModuleInstance retail call target)
+??0ShroudManagerImpl008FBA40Element@@QAE@XZ,0x008F92F0,RVA 0x008FBB50 single-element array constructor callback
 ??0SidesInfoSub@@QAE@H@Z,0x00002ECD,SidesInfo subobject ctor with int arg
 ??0SiegeAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,SiegeAIUpdate ctor base
 ??0SiegeAIUpdateModuleData@@QAE@XZ,0x00010C80,SiegeAIUpdate friend_newModuleData ModuleData ctor ILT
@@ -8792,6 +8793,8 @@ name,address,notes
 ??1ScienceVecStandIn@@QAE@XZ,0x00016B58,ScienceInfo ScienceVec destructor ILT
 ??1ScriptActions@@UAE@XZ,0x00013E9E,ILT for the ScriptActions destructor body at 0x002F1B80
 ??1SegLineRendererClass@@QAE@XZ,0x00960030,derived from ~ParticleBufferClass call site
+??1ShroudManagerImpl008FBA40Element@@QAE@XZ,0x008F9330,RVA 0x008FBA40 element-array destructor callback
+??1ShroudManagerImpl008FBA40Node@@QAE@XZ,0x008F8340,RVA 0x008FBA40 node-chain destructor call target
 ??1SiegeDeploySpecialPowerModuleDataMemberA@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1SiegeEngineContainBase@@UAE@XZ,0x0003FF49,SiegeEngineContain/HordeSiegeEngineContain shared base destructor call target
 ??1SimpleSceneClass@@UAE@XZ,0x00943E70,Open-BFME5 RTS2DScene destructor base-call pin
@@ -73443,6 +73446,7 @@ name,address,notes
 ?bfmeTailDFA@BfmeThingDFA@@QAEPAV1@XZ,0x0083FB50,pin
 ?bfmeTailDFG@BfmeThingDFG@@QAEPAV1@XZ,0x0083FB50,pin
 ?bfmeTailDFH@BfmeThingDFH@@QAEPAV1@XZ,0x0083FB50,pin
+?bfmeTailDSA@BfmeThingDSA@@QAEPAXPAX@Z,0x000294E7,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
@@ -73857,6 +73861,7 @@ name,address,notes
 ?concat@AsciiString@@QAEXPBD@Z,0x00888930,hit-decoded x2 (body)
 ?concat@AsciiString@@QAEXPBDH@Z,0x00887D60,TeamInQueue disband call pin
 ?concat@UnicodeString@@QAEXPBGH@Z,0x00888600,Apt disconnect-screen quit message uses the StringBase<unsigned short> concat body
+?configure@ShroudManagerImpl008FBA40@@QAEXURegion3D@@M@Z,0x008FB5F0,RVA 0x008FBAD0 validated Region3D configure call target
 ?connectCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPConnectResponseArg@@@Z,0x000314AD
 ?construct@AODHordeContainModuleDataBaseShim@@QAEXXZ,0x0000ED77,AODHordeContain ModuleData base
 ?construct@AnimSetConstructShim@_STL@@SAXPAUAnimSet@GenericObjectCreationNugget@@ABU34@@Z,0x00754B20,_STL _Construct AnimSet incremental-link thunk target through a TU-local forwarding shim
@@ -78903,7 +78908,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??1ShroudManagerImpl008FBA40Node@@QAE@XZ,0x008F8340,RVA 0x008FBA40 node-chain destructor call target
-??1ShroudManagerImpl008FBA40Element@@QAE@XZ,0x008F9330,RVA 0x008FBA40 element-array destructor callback
-?configure@ShroudManagerImpl008FBA40@@QAEXURegion3D@@M@Z,0x008FB5F0,RVA 0x008FBAD0 validated Region3D configure call target
-??0ShroudManagerImpl008FBA40Element@@QAE@XZ,0x008F92F0,RVA 0x008FBB50 single-element array constructor callback
