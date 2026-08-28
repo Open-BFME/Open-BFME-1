@@ -72251,6 +72251,11 @@ name,address,notes
 ?bfmeBaseTB@BfmeThingTB@@QAEXHH@Z,0x00899F00,pin
 ?bfmeBaseTC@BfmeThingTC@@QAEXXZ,0x00021FFD,pin
 ?bfmeBaseTF@BfmeThingTF@@QAEXH@Z,0x009DB4E0,pin
+?bfmeBaseTG@BfmeThingTG@@QAEXHH@Z,0x00899F00,pin
+?bfmeBaseTH@BfmeThingTH@@QAEXPAX@Z,0x00016013,pin
+?bfmeBaseTJ@BfmeThingTJ@@QAEXPAX0@Z,0x00002874,pin
+?bfmeBaseTK@BfmeThingTK@@QAEXXZ,0x009CB970,pin
+?bfmeBaseTL@BfmeThingTL@@QAEXPAXH@Z,0x0083FB60,pin
 ?bfmeBaseUpdate@Gen009D6330@@QAEXPAXPBXI@Z,0x009D6E50,address-derived base update target from the direct REL32 call at retail 0x009D634E
 ?bfmeBegin@BfmeSetupRecord@@QAEXXZ,0x007E8AC0,Open-BFME5 the member the two-field setup stubs call first
 ?bfmeBegin@BfmeSetupTarget@@QAEXXZ,0x007E8AC0,Open-BFME5 the member the setup stubs at 0x007E95A0 and siblings call first
@@ -72858,6 +72863,7 @@ name,address,notes
 ?bfmeStartSA@BfmeSubSA@@QAEXXZ,0x0000F0A6,pin
 ?bfmeStartTD@BfmeSubTD@@QAEXPAX@Z,0x00047B27,pin
 ?bfmeStartTE@BfmeSubTE@@QAEXXZ,0x0000F0A6,pin
+?bfmeStartTI@BfmeSubTI@@QAEXXZ,0x0000F0A6,pin
 ?bfmeStateFlags@BfmeObjectAI@@QAEIXZ,0x0001BB3F,Open-BFME5 ILT thunk to body 0x00279780; ?getAdjustedVisionRangeForObject@AI@@SAMPBVObject@@H@Z at 0x0014A620 reads the AI state word through it; address-derived name
 ?bfmeStateValue@BfmeObjectAI@@QAEHXZ,0x000187A0,Open-BFME5 helper state query body used by BfmeObjectAI::bfmeStateFlags
 ?bfmeStep1@Gen_004410A0@@AAEXXZ,0x000459CB,Open-BFME5 ILT the three-step runner at 0x004410A0 calls first
@@ -77612,6 +77618,12 @@ _bfmeVftTC,0x00D051EC,pin
 _bfmeVftTD,0x00C82DE0,pin
 _bfmeVftTE,0x00C8F3E8,pin
 _bfmeVftTF,0x00D1936C,pin
+_bfmeVftTG,0x00D37270,pin
+_bfmeVftTH,0x00C9DEF0,pin
+_bfmeVftTI,0x00CCD9B0,pin
+_bfmeVftTJ,0x00D21BA8,pin
+_bfmeVftTK,0x00D43B3C,pin
+_bfmeVftTL,0x00D2FBDC,pin
 _bfme_MallocAlloc0OomMalloc_82B820,0x0082B820,STLport __malloc_alloc<0>::_S_oom_malloc callee of allocate at 0x0082C580
 _bfme_acos,0x009F7256,internal acos helper called by ACos
 _bfme_asin,0x009F7D86,internal asin helper called by ASin
