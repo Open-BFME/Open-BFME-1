@@ -26,6 +26,7 @@ struct FieldParse;
 
 enum { INI_LOAD_CREATE_OVERRIDES = 2 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -38,6 +39,7 @@ private:
 	int m_loadType;										// +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:

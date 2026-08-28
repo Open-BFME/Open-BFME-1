@@ -76,6 +76,7 @@ struct CustomPreferenceMapShim
 struct R4GlobalDataShim { unsigned char m_bytes[ 0x1000 ]; };
 extern R4GlobalDataShim *TheGlobalData;             ///< retail [0x012ED5C8]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class OptionPreferences
 {
 public:

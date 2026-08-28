@@ -31,12 +31,14 @@ enum DynamicGameLODLevel
 	DYNAMIC_GAME_LOD_COUNT = 5
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameLOD.h
 struct DynamicGameLODInfo
 {
 	int m_minFPS;									///< first dword of the entry
 	int m_unreconstructed_04[3];					///< entry is 0x10 bytes
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameLOD.h
 class GameLODManager
 {
 public:

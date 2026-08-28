@@ -97,6 +97,7 @@ void Gen_00613CC0::bfmeClear(void)
 
 class Gen_0081DBE0;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 protected:

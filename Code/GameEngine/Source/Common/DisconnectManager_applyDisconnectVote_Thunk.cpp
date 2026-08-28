@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?applyDisconnectVote@DisconnectManager@@IAEXHIHPAVConnectionManager@@@Z: Code/GameEngine/Source/GameNetwork/DisconnectManager.cpp
 // Lift the DisconnectManager::applyDisconnectVote __emit thunk to clean C++.
 //
 // Zero Hour's DisconnectManager.cpp carries the body; the DEBUG_LOG compiles
@@ -17,12 +18,14 @@ typedef unsigned char Bool;
 
 enum { MAX_SLOTS = 8 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/ConnectionManager.h
 class ConnectionManager
 {
 public:
 	UnsignedInt getLocalPlayerID(void);						///< ILT thunk at 0x0004A291
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisconnectMenu.h
 class DisconnectMenu
 {
 public:
@@ -37,6 +40,7 @@ struct PlayerVote
 	UnsignedInt frame;										///< retail this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/DisconnectManager.h
 class DisconnectManager
 {
 protected:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?generateGameSpyGameResultsPacket@GameSpyStagingRoom@@: Code/GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp
 // Open-BFME5: lift the retail generateGameSpyGameResultsPacket MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_GameSpyStagingRoomGenerateGameResultsPacket_85E420()

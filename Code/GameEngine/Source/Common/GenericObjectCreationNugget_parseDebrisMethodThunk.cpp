@@ -5,6 +5,7 @@ struct FieldParse;
 extern const FieldParse GenericObjectCreationNuggetCommonFields[];
 extern const FieldParse GenericObjectCreationNuggetDebrisFields[];
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class MultiIniFieldParse
 {
 public:
@@ -24,6 +25,7 @@ private:
 	unsigned int Count;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -44,6 +46,7 @@ private:
 	char RetailTail[0x33];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectCreationList.h
 class ObjectCreationList
 {
 public:

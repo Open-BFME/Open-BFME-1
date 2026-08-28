@@ -22,6 +22,7 @@
 // ecx is never touched, so these are written __stdcall; a member that ignores
 // this would produce the same bytes and the image cannot separate the two.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	char m_bfmeBody[0x04];

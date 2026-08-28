@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onEnter@AIFollowWaypointPathState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 enum StateReturnType { STATE_CONTINUE = 0 };

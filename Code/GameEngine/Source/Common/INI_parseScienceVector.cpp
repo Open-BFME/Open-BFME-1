@@ -21,6 +21,7 @@ enum ScienceType { SCIENCE_INVALID = -1 };
 // BFME does not call INI::scanScience here: the token goes to the science
 // store, whose pointer sits at 0x012ED7AC, through
 // ScienceStore::friend_lookupScience at 0x000E7240.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Science.h
 class ScienceStore
 {
 public:
@@ -31,6 +32,7 @@ extern ScienceStore *TheScienceStore;
 
 typedef _STL::vector<ScienceType> ScienceVec;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

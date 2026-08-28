@@ -13,6 +13,7 @@ public:
 	SteeringNode *m_next;	// +0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleData
 {
 public:
@@ -20,6 +21,7 @@ public:
 	unsigned int m_04;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AnimationSteeringUpdate.h
 class AnimationSteeringUpdateModuleData : public UpdateModuleData
 {
 public:

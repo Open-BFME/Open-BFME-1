@@ -8,6 +8,7 @@ public:
 	void prependDirtyModule(PartitionData *node);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionData
 {
 	PartitionDirtyListOwner *m_owner;

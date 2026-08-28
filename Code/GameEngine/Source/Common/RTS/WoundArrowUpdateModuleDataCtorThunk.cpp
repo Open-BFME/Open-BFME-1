@@ -2,6 +2,7 @@
 
 // Open-BFME5: WoundArrowUpdateModuleData - base + float 100.0f + zero dword.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerModule.h
 class SpecialPowerModuleData
 {
 public:

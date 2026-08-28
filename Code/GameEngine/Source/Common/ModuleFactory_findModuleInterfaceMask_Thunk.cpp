@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?findModuleInterfaceMask@ModuleFactory@@QAEHABVAsciiString@@W4ModuleType@@@Z: Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp
 // Lift the ModuleFactory::findModuleInterfaceMask naked dump to clean C++.
 //
 // Zero Hour's body, with findModuleTemplate inlined into it -- retail has no
@@ -29,6 +30,7 @@ typedef int NameKeyType;
 
 enum ModuleType { MODULETYPE_FIRST = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiStringData
 {
 public:
@@ -36,6 +38,7 @@ public:
 	unsigned short m_len;								///< retail this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -45,6 +48,7 @@ private:
 	AsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ModuleFactory.h
 class ModuleTemplate
 {
 public:
@@ -78,6 +82,7 @@ private:
 	ModuleTemplateNode *m_header;						///< retail this+0x00
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ModuleFactory.h
 class ModuleFactory
 {
 public:

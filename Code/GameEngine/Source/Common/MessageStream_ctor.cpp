@@ -7,6 +7,7 @@
 // immediate, so retail's vftable store lands between them rather than ahead of
 // both. That is the scheduler and not an order the source asks for.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -18,6 +19,7 @@ private:
 	unsigned char m_unmodelled_04[4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class MessageStream : public SubsystemInterface
 {
 public:

@@ -7,6 +7,7 @@ typedef int Bool;
 enum ScienceType {};
 typedef std::vector<ScienceType> ScienceVec;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
@@ -22,6 +23,7 @@ protected:
 	Character *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>
 {
 public:
@@ -35,6 +37,7 @@ public:
 	static const UnicodeString TheEmptyString;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerTemplate.h
 class PlayerTemplate
 {
 public:
@@ -48,6 +51,7 @@ private:
 	int m_intrinsicSciencePurchasePoints;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/RankInfo.h
 class RankInfo
 {
 public:
@@ -57,6 +61,7 @@ public:
 	int m_sciencePurchasePointsGranted;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/RankInfo.h
 class RankInfoStore
 {
 public:
@@ -82,6 +87,7 @@ public:
 extern RankInfoStore *TheRankInfoStore;
 extern GameTextInterface *TheGameText;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

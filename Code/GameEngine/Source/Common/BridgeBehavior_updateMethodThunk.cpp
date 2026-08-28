@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?update@BridgeBehavior@@UAE?AW4UpdateSleepTime@@XZ: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 enum UpdateSleepTime { UPDATE_SLEEP_NONE = 0 };

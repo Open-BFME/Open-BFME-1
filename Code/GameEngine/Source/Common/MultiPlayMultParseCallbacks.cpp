@@ -46,6 +46,7 @@ typedef float Real;
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi( const char *, const char * );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

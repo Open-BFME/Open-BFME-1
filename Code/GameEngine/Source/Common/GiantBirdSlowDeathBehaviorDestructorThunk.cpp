@@ -40,6 +40,7 @@ public:
     virtual void slowDeathBehaviorDieAnchor();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SlowDeathBehavior.h
 class SlowDeathBehaviorInterface
 {
 public:

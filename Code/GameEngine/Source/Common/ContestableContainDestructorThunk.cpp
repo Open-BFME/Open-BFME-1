@@ -79,6 +79,7 @@ private:
 	unsigned char m_pad[0x3c4];					///< out to sizeof() == 0x3FC
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 class Coord3D
 {
 public:

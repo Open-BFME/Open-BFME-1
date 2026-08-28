@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?update@DozerActionPickActionPosState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 enum StateReturnType {};

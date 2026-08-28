@@ -41,6 +41,7 @@ Int rva000D46E0CountVisit( Rva000D46E0Object *object, void *userData )
 class Object;
 typedef void ( *PlayerObjectVisit )( Object *object, void *userData );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

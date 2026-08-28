@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?getLastLadderAddr@CustomMatchPreferences@@QAE?AVAsciiString@@XZ: Code/GameEngine/Source/Common/UserPreferences.cpp
 // Lift the CustomMatchPreferences::getLastLadderAddr __emit thunk to clean C++.
 //
 // Same preferences skeleton as getMaxDisconnects and getLanguageFilter: a plain
@@ -12,6 +13,7 @@
 // and ends `ret 4`. Both exits copy-construct into that buffer: the empty string
 // global on a miss, and the value at node+0x14 on a hit.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -44,6 +46,7 @@ struct CustomPreferenceMapShim
 	CustomMapNodeShim *find(CustomAsciiStringShim *key);	///< ILT thunk at 0x0000AEAC
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/CustomMatchPreferences.h
 class CustomMatchPreferences
 {
 public:

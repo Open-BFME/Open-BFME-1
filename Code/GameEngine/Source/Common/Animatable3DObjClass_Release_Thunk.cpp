@@ -20,6 +20,7 @@
 // subtraction has already set the flags that the following je reads, so MSVC
 // picks the encoding that leaves them alone.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -48,6 +49,7 @@ enum
 	DOUBLE_ANIM = 3
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/animobj.h
 class Animatable3DObjClass
 {
 protected:

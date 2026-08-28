@@ -1,6 +1,8 @@
+// readable body of ?getRequiresList@ProductionPrerequisite@@QBE?AVUnicodeString@@PBVPlayer@@@Z: Code/GameEngine/Source/Common/RTS/ProductionPrerequisite.cpp
 class UnicodeString {};
 class Player;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ProductionPrerequisite.h
 class ProductionPrerequisite
 {
 public:

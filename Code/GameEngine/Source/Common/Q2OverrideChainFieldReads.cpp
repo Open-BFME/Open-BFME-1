@@ -52,6 +52,7 @@
 
 // Declared, never defined: the body is matched at 0x00087A80 from
 // Code/GameEngine/Source/Common/INI/INIWater.cpp.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:

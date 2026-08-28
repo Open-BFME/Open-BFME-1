@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?getMusicVolume@OptionPreferences@@QAEMXZ: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionsMenu.cpp
 // Lift OptionPreferences::getMusicVolume to clean C++.
 //
 // This body was filed as getResolution taking two Int pointers. It takes none:
@@ -61,6 +62,7 @@ struct AudioSettingsShim
 	Real m_musicVolume;								///< retail settings+0x88
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
 public:
@@ -141,6 +143,7 @@ public:
 
 extern AudioManager *TheAudio;						///< retail [0x012ED668]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class OptionPreferences
 {
 public:

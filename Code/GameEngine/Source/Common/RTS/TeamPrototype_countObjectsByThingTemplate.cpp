@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?countObjectsByThingTemplate@TeamPrototype@@QBEXHPBQBVThingTemplate@@_NPAH1@Z: Code/GameEngine/Source/Common/RTS/Team.cpp
 
 // TeamPrototype::countObjectsByThingTemplate, retail 0x000F4030, 76 bytes.
 // Zero Hour's body: hand all five arguments to every team on the instance list.
@@ -13,6 +14,7 @@ typedef bool Bool;
 
 class ThingTemplate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
@@ -50,6 +52,7 @@ private:
 	Team *m_cur;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:

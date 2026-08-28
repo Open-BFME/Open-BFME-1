@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ??1RankInfoStore@@UAE@XZ: Code/GameEngine/Source/GameLogic/System/RankInfo.cpp
 
 // Delete every element, clear the vector, then let the member and the base tear
 // themselves down.
@@ -14,12 +15,14 @@
 // with itself, and a branch that can never be taken.
 #include <vector>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/RankInfo.h
 class RankInfo
 {
 public:
 	virtual ~RankInfo();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -29,6 +32,7 @@ private:
 	int m_04;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/RankInfo.h
 class RankInfoStore : public SubsystemInterface
 {
 public:

@@ -13,6 +13,7 @@
 // an ordinary virtual member. Declaring the base destructor virtual gives UAE
 // and the symbol is then not found at all.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

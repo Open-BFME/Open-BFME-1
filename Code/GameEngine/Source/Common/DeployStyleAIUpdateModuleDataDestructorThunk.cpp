@@ -7,6 +7,7 @@
 // AsciiStrings at +0x44 (state 2) and +0x30 (state 1), and a sentinel-list
 // container at +0x08 (state 0), then the base vftable store.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	char *m_str;
@@ -27,6 +28,7 @@ public:
 
 #include <vector>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 public:
@@ -34,6 +36,7 @@ public:
 	unsigned int m_04;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DeployStyleAIUpdate.h
 class DeployStyleAIUpdateModuleData : public ModuleData
 {
 public:

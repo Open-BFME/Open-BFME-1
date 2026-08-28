@@ -17,6 +17,7 @@
 // later, with nothing claiming the gap. Callers enter at the earlier address,
 // so that row's boundary is worth rechecking.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 struct ModelConditionInfo
 {
 	char m_unreconstructed_00[0x128];

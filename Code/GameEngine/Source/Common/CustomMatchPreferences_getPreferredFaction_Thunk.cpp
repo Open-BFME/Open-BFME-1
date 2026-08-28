@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?getPreferredFaction@CustomMatchPreferences@@QAEHXZ: Code/GameEngine/Source/Common/UserPreferences.cpp
 // Lift the CustomMatchPreferences::getPreferredFaction naked dump to clean C++.
 //
 // The preferences-getter opening is the family's; the tail validates the stored
@@ -25,6 +26,7 @@ typedef int Int;
 
 extern "C" __declspec(dllimport) int __cdecl atoi(const char *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiStringData
 {
 public:
@@ -32,6 +34,7 @@ public:
 	char m_chars[1];									///< retail this+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -61,6 +64,7 @@ private:
 };
 
 // 292 bytes total; only the playable flag is reconstructed.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerTemplate.h
 class PlayerTemplate
 {
 public:
@@ -69,6 +73,7 @@ public:
 	unsigned char m_unreconstructed_BE[292 - 0xBE];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerTemplate.h
 class PlayerTemplateStore
 {
 public:
@@ -84,6 +89,7 @@ private:
 
 extern PlayerTemplateStore *ThePlayerTemplateStore;		///< retail [0x012ED750]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/CustomMatchPreferences.h
 class CustomMatchPreferences
 {
 public:

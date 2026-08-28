@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ??1ObjectCreationListStore@@UAE@XZ: Code/GameEngine/Source/GameLogic/Object/ObjectCreationList.cpp
 // Open-BFME5: clean C++ lift of the retail ObjectCreationListStore destructor.
 
 #include <vector>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -13,6 +15,7 @@ private:
 	int m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectCreationList.h
 class ObjectCreationNugget
 {
 public:
@@ -29,6 +32,7 @@ private:
 	void *m_data[3];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectCreationList.h
 class ObjectCreationListStore : public SubsystemInterface
 {
 public:

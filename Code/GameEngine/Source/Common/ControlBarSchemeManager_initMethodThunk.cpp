@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?init@ControlBarSchemeManager@@QAEXXZ: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) ControlBarSchemeManager

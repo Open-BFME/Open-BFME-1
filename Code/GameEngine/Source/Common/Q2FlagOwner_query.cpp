@@ -21,6 +21,7 @@ typedef bool Bool;
 class AudioEventRTS;
 class Q2FlagOwner;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
 private:

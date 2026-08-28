@@ -14,12 +14,14 @@
 #include "PreRTS.h"
 #include "Common/INI.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class CommandButton
 {
 public:
 	static const FieldParse m_commandButtonFieldParseTable[];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 	friend class INI;

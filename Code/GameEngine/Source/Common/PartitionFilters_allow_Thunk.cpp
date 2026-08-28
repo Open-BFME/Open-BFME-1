@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0PartitionFilterPossibleToAttack@@QAE@W4AbleToAttackType@@PBVObject@@W4CommandSourceType@@@Z: Code/GameEngine/Source/GameLogic/Object/PartitionManager.cpp
 // Open-BFME5: partition filter bodies whose member offsets PartitionManager.cpp
 // cannot reproduce -- PartitionFilterIrregularArea::allow,
 // PartitionFilterPlayer::allow, and PartitionFilterPossibleToAttack's
@@ -32,6 +33,7 @@ enum CommandSourceType { COMMAND_SOURCE_UNRECONSTRUCTED };
 
 bool PointInsideArea2D(const Coord3D *pt, const Coord3D *area, int numPoints);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -48,6 +50,7 @@ private:
 	unsigned char m_unreconstructed_00[0x38];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionFilterIrregularArea
 {
 protected:
@@ -61,6 +64,7 @@ private:
 
 // Members land at +0x04 with nothing between them and the vtable pointer --
 // this is the filter that shows the shared base is a bare vptr.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionFilterPossibleToAttack
 {
 public:
@@ -76,6 +80,7 @@ private:
 	CommandSourceType m_commandSource;					///< retail this+0x0c
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionFilterPlayer
 {
 protected:

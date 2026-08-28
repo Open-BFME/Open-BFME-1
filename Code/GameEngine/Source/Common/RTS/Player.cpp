@@ -710,6 +710,7 @@ Bool Player::removePlayerRelationship(const Player *that)
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_setTeamRelationship.cpp
 // ?setTeamRelationship@Player@@QAEXPBVTeam@@W4Relationship@@@Z present-unmatched
 void Player::setTeamRelationship(const Team *that, Relationship r)
 {
@@ -837,6 +838,7 @@ void Player::update()
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_newMap.cpp
 // ?newMap@Player@@QAEXXZ present-unmatched
 void Player::newMap()
 {
@@ -1140,6 +1142,7 @@ void Player::initFromDict(const Dict* d)
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Player_becomingTeamMember_Thunk.cpp
 // ?becomingTeamMember@Player@@QAEXPAVObject@@_N@Z present-unmatched
 void Player::becomingTeamMember(Object *obj, Bool yes) 
 { 
@@ -1684,6 +1687,7 @@ Bool Player::getAiBaseCenter(Coord3D *pos)
 //-------------------------------------------------------------------------------------------------
 /** Repair bridge or structure. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerRepairStructure.cpp
 // ?repairStructure@Player@@UAEXW4ObjectID@@@Z present-unmatched
 void Player::repairStructure(ObjectID structureID)
 {
@@ -1785,6 +1789,8 @@ void Player::onStructureCreated( Object *builder, Object *structure )
 //-------------------------------------------------------------------------------------------------
 /// a structure that was under construction has become completed
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Player_onStructureConstructionComplete_Thunk.cpp
+// ?onStructureConstructionComplete@Player@@QAEXPAVObject@@0_N@Z present-unmatched
 void Player::onStructureConstructionComplete( Object *builder, Object *structure, Bool isRebuild )
 {
 	// When a a structure is completed, it becomes "real" as far as scripting is 
@@ -1929,6 +1935,7 @@ void Player::iterateObjects( ObjectIterateFunc func, void *userData ) const
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_countObjectsByThingTemplate.cpp
 // ?countObjectsByThingTemplate@Player@@QBEXHPBQBVThingTemplate@@_NPAH1@Z present-unmatched
 void Player::countObjectsByThingTemplate(Int numTmplates, const ThingTemplate* const * things, Bool ignoreDead, Int *counts, Bool ignoreUnderConstruction ) const
 {
@@ -2059,6 +2066,7 @@ Bool Player::hasAnyObjects(void) const
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_hasAnyBuildFacility.cpp
 // ?hasAnyBuildFacility@Player@@QBE_NXZ present-unmatched
 Bool Player::hasAnyBuildFacility(void) const
 {
@@ -2072,6 +2080,7 @@ Bool Player::hasAnyBuildFacility(void) const
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_updateTeamStates.cpp
 // ?updateTeamStates@Player@@QAEXXZ present-unmatched
 void Player::updateTeamStates(void) 
 {
@@ -2197,6 +2206,7 @@ void Player::setUnitsShouldHunt(Bool unitsShouldHunt, CommandSourceType source)
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Player_killPlayer_Thunk.cpp
 // ?killPlayer@Player@@QAEXXZ present-unmatched
 void Player::killPlayer(void)
 {
@@ -2591,6 +2601,7 @@ Bool Player::calcClosestConstructionZoneLocation( const ThingTemplate *construct
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_doBountyForKill_Thunk.cpp
 // ?doBountyForKill@Player@@QAEXPBVObject@@0@Z present-unmatched
 void Player::doBountyForKill(const Object* killer, const Object* victim)
 {
@@ -2698,6 +2709,7 @@ void Player::resetSciences()
 
 //=============================================================================
 /// returns TRUE if sciences were gained/lost.
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerAddScienceThunk.cpp
 // ?addScience@Player@@AAE_NW4ScienceType@@@Z present-unmatched
 Bool Player::addScience(ScienceType science)
 {
@@ -2751,6 +2763,7 @@ Bool Player::addScience(ScienceType science)
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_addSciencePurchasePoints.cpp
 // ?addSciencePurchasePoints@Player@@QAEXH@Z present-unmatched
 // noinline: retail attemptToPurchaseScience calls this out-of-line (ILT 0xF0F1)
 __declspec(noinline) void Player::addSciencePurchasePoints(Int delta)
@@ -2795,6 +2808,7 @@ Bool Player::grantScience(ScienceType science)
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerFields.cpp
 // ?isCapableOfPurchasingScience@Player@@QBE_NW4ScienceType@@@Z present-unmatched
 Bool Player::isCapableOfPurchasingScience(ScienceType science) const
 {
@@ -2838,6 +2852,7 @@ Bool Player::isCapableOfPurchasingScience(ScienceType science) const
 // Body in Player_setRankLevel.asm (exact 395B retail).
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerFields.cpp
 // ?hasScience@Player@@QBE_NW4ScienceType@@@Z present-unmatched
 Bool Player::hasScience(ScienceType t) const
 {
@@ -3090,6 +3105,7 @@ Bool Player::hasUpgradeInProduction( const UpgradeTemplate *upgradeTemplate )
 //=================================================================================================
 /** Give the player an upgrade or change status on an existing upgrade entry */
 //=================================================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_addUpgrade.cpp
 // ?addUpgrade@Player@@QAEPAVUpgrade@@PBVUpgradeTemplate@@W4UpgradeStatusType@@@Z present-unmatched
 Upgrade *Player::addUpgrade( const UpgradeTemplate *upgradeTemplate, UpgradeStatusType status )
 {
@@ -3206,6 +3222,7 @@ void Player::removeUpgrade( const UpgradeTemplate *upgradeTemplate )
 
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_okToPlayRadarEdgeSound.cpp
 // ?okToPlayRadarEdgeSound@Player@@QAE_NXZ present-unmatched
 Bool Player::okToPlayRadarEdgeSound( void )
 {
@@ -3221,6 +3238,7 @@ Bool Player::okToPlayRadarEdgeSound( void )
 //-------------------------------------------------------------------------------------------------
 /** The parameter object has just aquired a radar */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Player_addRadar_Thunk.cpp
 // ?addRadar@Player@@QAEX_N@Z present-unmatched
 void Player::addRadar( Bool disableProof )
 {
@@ -3244,6 +3262,7 @@ void Player::addRadar( Bool disableProof )
 //-------------------------------------------------------------------------------------------------
 /** The parameter object has is taking its radar away from the player */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Player_removeRadar_Thunk.cpp
 // ?removeRadar@Player@@QAEX_N@Z present-unmatched
 void Player::removeRadar( Bool disableProof )
 {
@@ -3266,6 +3285,7 @@ void Player::removeRadar( Bool disableProof )
 }  // end removeRadar
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_radar.cpp
 // ?disableRadar@Player@@QAEXXZ present-unmatched
 void Player::disableRadar()
 {
@@ -3283,6 +3303,7 @@ void Player::disableRadar()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_radar.cpp
 // ?enableRadar@Player@@QAEXXZ present-unmatched
 void Player::enableRadar()
 {
@@ -3300,6 +3321,7 @@ void Player::enableRadar()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerFields.cpp
 // ?hasRadar@Player@@QBE_NXZ present-unmatched
 Bool Player::hasRadar() const
 {
@@ -3473,6 +3495,7 @@ void Player::friend_applyDifficultyBonusesForObject(Object* obj, Bool apply) con
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_doesObjectQualifyForBattlePlan_Thunk.cpp
 // ?doesObjectQualifyForBattlePlan@Player@@QBE_NPAVObject@@@Z present-unmatched
 Bool Player::doesObjectQualifyForBattlePlan( Object *obj ) const
 {
@@ -3569,6 +3592,7 @@ void Player::changeBattlePlan( BattlePlanStatus plan, Int delta, BattlePlanBonus
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerGetBattlePlansActiveSpecificThunk.cpp
 // ?getBattlePlansActiveSpecific@Player@@QBEHW4BattlePlanStatus@@@Z present-unmatched
 Int Player::getBattlePlansActiveSpecific( BattlePlanStatus plan ) const
 {
@@ -3670,6 +3694,7 @@ static void localApplyBattlePlanBonusesToObject( Object *obj, void *userData )
 //-------------------------------------------------------------------------------------------------
 //New object or converted object gaining our current battle plan bonuses.
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Player_becomingTeamMember_Thunk.cpp
 // ?applyBattlePlanBonusesForObject@Player@@QBEXPAVObject@@@Z present-unmatched
 void Player::applyBattlePlanBonusesForObject( Object *obj ) const
 {
@@ -3700,6 +3725,7 @@ void Player::removeBattlePlanBonusesForObject( Object *obj ) const
 //-------------------------------------------------------------------------------------------------
 //Battle plan bonuses changing, so apply to all of our objects!
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Player_applyBattlePlanBonusesForPlayerObjects_Thunk.cpp
 // ?applyBattlePlanBonusesForPlayerObjects@Player@@QAEXPBVBattlePlanBonuses@@@Z present-unmatched
 void Player::applyBattlePlanBonusesForPlayerObjects( const BattlePlanBonuses *bonus )
 {

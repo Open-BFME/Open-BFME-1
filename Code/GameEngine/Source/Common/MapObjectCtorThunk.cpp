@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0MapObject@@QAE@UCoord3D@@VAsciiString@@MHPBVDict@@PBVThingTemplate@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp
 // Open-BFME5: lift the retail MapObject constructor MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_MapObjectCtor_088160()

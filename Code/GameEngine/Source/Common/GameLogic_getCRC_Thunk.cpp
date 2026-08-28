@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getCRC@GameLogic@@QAEIHVAsciiString@@@Z: Code/GameEngine/Source/GameLogic/System/GameLogic.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class AsciiString {};

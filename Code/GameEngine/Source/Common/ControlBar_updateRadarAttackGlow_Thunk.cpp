@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?updateRadarAttackGlow@ControlBar@@IAEXXZ: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 // Lift the ControlBar::updateRadarAttackGlow __emit thunk to clean C++.
 //
 // Verbatim Zero Hour ControlBar.cpp: count the glow down, switch the window
@@ -20,6 +21,7 @@ typedef int Int;
 enum { WIN_STATUS_ENABLED = 0x00000008 };
 enum { RADAR_ATTACK_GLOW_NUM_TIMES = 15 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -27,6 +29,7 @@ public:
 	unsigned int winGetStatus(void);						///< ILT thunk at 0x00023DDA
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 protected:

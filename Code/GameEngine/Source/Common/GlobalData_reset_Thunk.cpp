@@ -10,6 +10,7 @@
 // the scalar deleting destructor in slot 0 taking the delete flag, so the class
 // is polymorphic and its destructor is the first virtual.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:

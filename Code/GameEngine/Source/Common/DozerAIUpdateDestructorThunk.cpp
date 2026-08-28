@@ -14,6 +14,7 @@ class DozerIface2 { public: virtual void vslot(); private: unsigned char m_pad[0
 class DozerIface3 { public: virtual void vslot(); };
 class DozerIface4 { public: virtual void vslot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public DozerRootBase, public DozerIface1, public DozerIface2,
 	public DozerIface3, public DozerIface4
 {
@@ -26,6 +27,7 @@ private:
 
 class DozerAIInterface { public: virtual void vslot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DozerAIUpdate.h
 class DozerPrimaryStateMachine
 {
 public:
@@ -41,6 +43,7 @@ private:
 	unsigned char m_pad[0x6C];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DozerAIUpdate.h
 class DozerAIUpdate : public AIUpdateInterface, public DozerAIInterface
 {
 protected:

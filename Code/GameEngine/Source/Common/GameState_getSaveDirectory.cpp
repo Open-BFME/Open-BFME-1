@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getSaveDirectory@GameState@@QBE?AVAsciiString@@XZ: Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp
 
 // Open-BFME5: GameState::getSaveDirectory, retail 0x0010DC70, 131 bytes. The
 // body carried only a machine byte-dump row; the symbols.csv pin names it.
@@ -9,6 +10,7 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -22,6 +24,7 @@ private:
 	char *m_bfmeData;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -30,6 +33,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;			// 0x012ED5C8
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameState.h
 class GameState
 {
 public:

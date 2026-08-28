@@ -1,11 +1,15 @@
+// readable body of ?parseParticleSystem@BoneFXUpdateModuleData@@SAXPAVINI@@PAX1PBX@Z: Code/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdate.cpp
+// readable body of ?parseParticleSystem@TransitionDamageFXModuleData@@: Code/GameEngine/Source/GameLogic/Object/Damage/TransitionDamageFX.cpp
 class INI;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BoneFXUpdate.h
 class BoneFXUpdateModuleData
 {
 public:
 	static void parseParticleSystem(INI *, void *, void *, const void *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TransitionDamageFX.h
 class TransitionDamageFXModuleData
 {
 public:

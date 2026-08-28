@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?healObject@TunnelTracker@@: Code/GameEngine/Source/Common/RTS/TunnelTracker.cpp
 // Open-BFME: TunnelTracker::healObject, retail 0x000F8640, 144 bytes.
 //
 // The reference's body unchanged: fill in a healing DamageInfo, then either
@@ -25,6 +26,7 @@ typedef bool Bool;
 enum DamageType { DAMAGE_HEALING = 7 };			// BFME's numbering, not the reference's 10
 enum DeathType { DEATH_NORMAL = 0, DEATH_NONE = 1 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfoInput
 {
 	char m_bfme_head[0x10];				// in+0x00 .. +0x0F, untouched
@@ -34,6 +36,7 @@ struct DamageInfoInput
 	Real m_amount;					// in+0x1C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfo
 {
 	DamageInfo();					// ILT 0x0002C9D5
@@ -42,6 +45,7 @@ struct DamageInfo
 	char m_bfme_tail[0x5C - 0x20];			// sizeof(DamageInfo) is the whole frame
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 class BodyModuleInterface
 {
 public:
@@ -54,6 +58,7 @@ public:
 	virtual Real getMaxHealth(void) const = 0;			// slot 6, vtable+0x18
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -67,6 +72,7 @@ private:
 	UnsignedInt m_containedByFrame;			// this+0x21C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -79,6 +85,7 @@ private:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/TunnelTracker.h
 class TunnelTracker
 {
 public:

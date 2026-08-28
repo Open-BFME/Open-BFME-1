@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?showSpecialPowerShortcut@ControlBar@@QAEXXZ: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 // Lift the ControlBar::showSpecialPowerShortcut naked dump to clean C++.
 //
 // Zero Hour's ControlBar.cpp body with one BFME simplification: ZH's final
@@ -22,6 +23,7 @@ typedef bool Bool;
 
 class Player;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -29,6 +31,7 @@ public:
 	void winHide(unsigned char hide);					// matches the pin already in symbols.csv							///< ILT thunk at 0x00027F2A
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -41,6 +44,7 @@ private:
 
 extern ScriptEngine *TheScriptEngine;					///< retail [0x012F076C]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -48,6 +52,7 @@ public:
 	Int hasAnyShortcutSpecialPower(void);				///< ILT thunk at 0x0002331C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
@@ -60,6 +65,7 @@ private:
 
 extern PlayerList *ThePlayerList;						///< retail [0x012ED748]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:

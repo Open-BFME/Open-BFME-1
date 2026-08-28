@@ -18,6 +18,7 @@ typedef int Int;
 
 extern "C" unsigned int __cdecl strlen(const char *s);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -27,6 +28,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -35,6 +37,7 @@ public:
 	static Int scanInt(const char *s);					///< ILT thunk at 0x00852620
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GarrisonContain.h
 class GarrisonContainModuleData
 {
 public:

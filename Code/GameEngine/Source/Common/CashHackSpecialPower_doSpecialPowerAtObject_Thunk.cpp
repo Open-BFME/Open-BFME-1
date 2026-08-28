@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?doSpecialPowerAtObject@CashHackSpecialPower@@UAEXPAVObject@@I@Z: Code/GameEngine/Source/GameLogic/Object/SpecialPower/CashHackSpecialPower.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Object;

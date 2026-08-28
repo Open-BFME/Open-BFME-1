@@ -23,6 +23,7 @@ public:
     void *m_object;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/RebuildHoleBehavior.h
 class RebuildHoleBehaviorInterface
 {
 public:

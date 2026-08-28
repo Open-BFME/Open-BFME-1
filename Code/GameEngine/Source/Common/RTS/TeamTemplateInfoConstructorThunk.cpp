@@ -1,3 +1,4 @@
+// readable body of ??0TeamTemplateInfo@@QAE@PAVDict@@@Z: Code/GameEngine/Source/Common/RTS/Team.cpp
 // Exact retail bytes for ??0TeamTemplateInfo@@QAE@PAVDict@@@Z at 0x000EFEB0.
 extern "C" __declspec(naked) void bfme_TeamTemplateInfo_ctor_EFEB0()
 {

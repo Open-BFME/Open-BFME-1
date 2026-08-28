@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?addSciencePurchasePoints@Player@@QAEXH@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
 
 // Player::addSciencePurchasePoints, retail 0x000C9960. Zero Hour's body with
 // one BFME statement in front of it: points EARNED, as opposed to spent, are
@@ -24,6 +25,7 @@ public:
 	void _bfme_recordPointsEarned( Int points );	// ILT thunk at 0x0001B969
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:
@@ -32,6 +34,7 @@ public:
 
 extern ControlBar *TheControlBar;					// 0x012F33F8
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

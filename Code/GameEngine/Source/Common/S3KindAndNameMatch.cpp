@@ -9,6 +9,7 @@
 //
 // Both exits set the whole register, so the return is int.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

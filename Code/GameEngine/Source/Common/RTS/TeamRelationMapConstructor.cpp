@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ??0TeamRelationMap@@QAE@XZ: Code/GameEngine/Source/Common/RTS/Team.cpp
 
 #include <vector>
 
@@ -30,6 +31,7 @@ private:
 	unsigned int m_size;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamRelationMap : public TeamRelationPoolObject
 {
 public:

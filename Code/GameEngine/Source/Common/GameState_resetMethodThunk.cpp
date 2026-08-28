@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?reset@GameState@@UAEXXZ: Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) GameState

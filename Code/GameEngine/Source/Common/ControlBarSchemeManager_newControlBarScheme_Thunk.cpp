@@ -1,10 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?newControlBarScheme@ControlBarSchemeManager@@QAEPAVControlBarScheme@@VAsciiString@@@Z: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 };
 class ControlBarScheme;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBarScheme.h
 class ControlBarSchemeManager
 {
 public:

@@ -1,5 +1,36 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ob1 /Ireference/shims/ini_inline /Ireference/shims/ini /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
+// readable body of ??0DamDieModuleData@@: Code/GameEngine/Source/GameLogic/Object/Die/DamDie.cpp
+// readable body of ??0EjectPilotDieModuleData@@: Code/GameEngine/Source/GameLogic/Object/Die/EjectPilotDie.cpp
+// readable body of ??0HiveStructureBodyModuleData@@: Code/GameEngine/Source/GameLogic/Object/Body/HiveStructureBody.cpp
+// readable body of ??0JetAIUpdateModuleData@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/JetAIUpdate.cpp
+// readable body of ??0MinefieldBehaviorModuleData@@: Code/GameEngine/Source/GameLogic/Object/Behavior/MinefieldBehavior.cpp
+// readable body of ??0RailedTransportDockUpdateModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/RailedTransportDockUpdate.cpp
+// readable body of ??0RebuildHoleExposeDieModuleData@@: Code/GameEngine/Source/GameLogic/Object/Die/RebuildHoleExposeDie.cpp
+// readable body of ??0W3DModelDrawModuleData@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp
+// readable body of ??0W3DOverlordAircraftDrawModuleData@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordAircraftDraw.cpp
+// readable body of ?getNextSubToken@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?initFromINI@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?initFromINIMultiProc@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseAngleReal@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseAsciiStringVector@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseAsciiStringVectorAppend@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseBitInInt32@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseBool@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseByteSizedIndexList@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseColorInt@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseIndexList@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseInt@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseLookupList@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parsePercentToReal@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parsePositiveNonZeroReal@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseRGBAColorInt@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseRGBColor@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseReal@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseShort@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseUnsignedByte@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseUnsignedInt@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseUnsignedShort@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
 //
 // The other half of retail's INI reader. BFME compiles INI's field parsers in
 // two translation units and the split is visible in the binary: these eleven sit
@@ -167,6 +198,7 @@ const char* INI::getNextSubToken(const char* expected)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI_parseBitString32_Thunk.cpp
 // ?parseBitString32@INI@@SAXPAV1@PAX1PBX@Z present-unmatched
 void INI::parseBitString32( INI* ini, void * /*instance*/, void *store, const void* userData )
 {
@@ -337,6 +369,7 @@ void INI::parseColorInt( INI* ini, void * /*instance*/, void *store, const void*
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI_getNextQuotedAsciiString_Thunk.cpp
 // ?getNextQuotedAsciiString@INI@@QAE?AVAsciiString@@XZ present-unmatched
 AsciiString INI::getNextQuotedAsciiString()
 {
@@ -509,6 +542,7 @@ void bfme_force_multi_ini_field_parse_add_emission(MultiIniFieldParse &p, const 
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/INIDefaultConstructorThunk.cpp
 // ??0INI@@QAE@XZ present-unmatched
 INI::INI( void )
 {
@@ -533,6 +567,7 @@ INI::INI( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INIDestructorThunk.cpp
 // ??1INI@@QAE@XZ present-unmatched
 INI::~INI( void )
 {

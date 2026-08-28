@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?canRepairObject@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@@Z: Code/GameEngine/Source/Common/RTS/ActionManager.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 enum CommandSourceType { };
 class Object;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ActionManager.h
 class ActionManager
 {
 public:

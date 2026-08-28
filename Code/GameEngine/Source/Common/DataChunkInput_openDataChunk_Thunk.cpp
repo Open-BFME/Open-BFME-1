@@ -1,9 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?openDataChunk@DataChunkInput@@QAE?AVAsciiString@@PAG@Z: Code/GameEngine/Source/Common/System/DataChunk.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkInput
 {
 public:

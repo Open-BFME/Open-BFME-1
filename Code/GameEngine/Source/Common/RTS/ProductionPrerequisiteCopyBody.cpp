@@ -11,6 +11,7 @@
 // a single byte copied at +4, then four dwords from +8 to +0x14 -- so an
 // AsciiString, a Bool with its three bytes of padding, and four words.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -20,6 +21,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ProductionPrerequisite.h
 class ProductionPrerequisite
 {
 public:

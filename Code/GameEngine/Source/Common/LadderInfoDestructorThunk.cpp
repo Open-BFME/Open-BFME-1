@@ -7,6 +7,7 @@
 #include "Common/AsciiString.h"
 #include "Common/STLTypedefs.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/LadderDefs.h
 class LadderInfo
 {
 public:

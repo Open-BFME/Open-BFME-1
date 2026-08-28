@@ -168,6 +168,7 @@ static const BlockParse theTypeTable[] =
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?isValidINIFilename@INI@@ present-unmatched
 Bool INI::isValidINIFilename( const char *filename )
 {
@@ -197,6 +198,7 @@ Bool INI::isValidINIFilename( const char *filename )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/INIDefaultConstructorThunk.cpp
 // ??0INI@@ present-unmatched
 INI::INI( void )
 {
@@ -221,6 +223,7 @@ INI::INI( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INIDestructorThunk.cpp
 // ??1INI@@ present-unmatched
 INI::~INI( void )
 {
@@ -232,6 +235,7 @@ INI::~INI( void )
 	* If we are to load subdirectories, we will load them *after* we load all the
 	* files in the current directory */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/INILoadDirectoryThunk.cpp
 // ?loadDirectory@INI@@ present-unmatched
 void INI::loadDirectory( AsciiString dirName, Bool subdirs, INILoadType loadType, Xfer *pXfer )
 {
@@ -281,6 +285,7 @@ void INI::loadDirectory( AsciiString dirName, Bool subdirs, INILoadType loadType
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/INIPrepFileThunk.cpp
 // ?prepFile@INI@@ present-unmatched
 void INI::prepFile( AsciiString filename, INILoadType loadType )
 {
@@ -314,6 +319,7 @@ void INI::prepFile( AsciiString filename, INILoadType loadType )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?unPrepFile@INI@@ present-unmatched
 void INI::unPrepFile()
 {
@@ -369,6 +375,7 @@ static INIFieldParseProc findFieldParse(const FieldParse* parseTable, const char
 //-------------------------------------------------------------------------------------------------
 /** Load and parse an INI file */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?load@INI@@ present-unmatched
 void INI::load( AsciiString filename, INILoadType loadType, Xfer *pXfer )
 {
@@ -440,6 +447,7 @@ void INI::load( AsciiString filename, INILoadType loadType, Xfer *pXfer )
 /** Read a line from the already open file.  Any comments will be remved and
 	* therefore ignored from any given line */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?readLine@INI@@ present-unmatched
 void INI::readLine( void )
 {
@@ -513,6 +521,7 @@ void INI::readLine( void )
 //-------------------------------------------------------------------------------------------------
 /** Parse UnsignedByte from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseUnsignedByte@INI@@ present-unmatched
 void INI::parseUnsignedByte( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -529,6 +538,7 @@ void INI::parseUnsignedByte( INI* ini, void * /*instance*/, void *store, const v
 //-------------------------------------------------------------------------------------------------
 /** Parse signed short from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseShort@INI@@ present-unmatched
 void INI::parseShort( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -545,6 +555,7 @@ void INI::parseShort( INI* ini, void * /*instance*/, void *store, const void* /*
 //-------------------------------------------------------------------------------------------------
 /** Parse unsigned short from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseUnsignedShort@INI@@ present-unmatched
 void INI::parseUnsignedShort( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -561,6 +572,7 @@ void INI::parseUnsignedShort( INI* ini, void * /*instance*/, void *store, const 
 //-------------------------------------------------------------------------------------------------
 /** Parse integer from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseInt@INI@@ present-unmatched
 void INI::parseInt( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -572,6 +584,7 @@ void INI::parseInt( INI* ini, void * /*instance*/, void *store, const void* /*us
 //-------------------------------------------------------------------------------------------------
 /** Parse unsigned integer from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseUnsignedInt@INI@@ present-unmatched
 void INI::parseUnsignedInt( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -583,6 +596,7 @@ void INI::parseUnsignedInt( INI* ini, void * /*instance*/, void *store, const vo
 //-------------------------------------------------------------------------------------------------
 /** Parse real from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseReal@INI@@ present-unmatched
 void INI::parseReal( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -594,6 +608,7 @@ void INI::parseReal( INI* ini, void * /*instance*/, void *store, const void* /*u
 //-------------------------------------------------------------------------------------------------
 /** Parse real from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parsePositiveNonZeroReal@INI@@ present-unmatched
 void INI::parsePositiveNonZeroReal( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -611,6 +626,7 @@ void INI::parsePositiveNonZeroReal( INI* ini, void * /*instance*/, void *store, 
 /** Parse a degree value (0 to 360) and store the radian value of that degree
 	* in a Real */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseAngleReal@INI@@ present-unmatched
 void INI::parseAngleReal( INI *ini, void * /*instance*/, 
 																			void *store, const void *userData )
@@ -626,6 +642,7 @@ void INI::parseAngleReal( INI *ini, void * /*instance*/,
 /** Parse an angular velocity in degrees-per-sec and store the rads-per-frame value of that degree
 	* in a Real */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseAngularVelocityReal@INI@@ present-unmatched
 void INI::parseAngularVelocityReal( INI *ini, void * /*instance*/, 
 																			void *store, const void *userData )
@@ -641,6 +658,7 @@ void INI::parseAngularVelocityReal( INI *ini, void * /*instance*/,
 /** Parse Bool from buffer and assign at location 'store'.  The buffer token must
 	* be in the form of a string "Yes" or "No" (case is ignored) */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseBool@INI@@ present-unmatched
 void INI::parseBool( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -651,6 +669,7 @@ void INI::parseBool( INI* ini, void * /*instance*/, void *store, const void* /*u
 /** Parse Bool from buffer; if true, or in MASK, otherwise and out MASK. The buffer token must
 	* be in the form of a string "Yes" or "No" (case is ignored) */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseBitInInt32@INI@@ present-unmatched
 void INI::parseBitInInt32( INI *ini, void *instance, void *store, const void* userData )
 {
@@ -684,6 +703,7 @@ void INI::parseBitInInt32( INI *ini, void *instance, void *store, const void* us
 //-------------------------------------------------------------------------------------------------
 /** Parse an *ASCII* string from buffer and assign at location 'store' */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseAsciiString@INI@@ present-unmatched
 void INI::parseAsciiString( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -697,6 +717,7 @@ We don't really need this function, but parseString() is broken and we want to l
 maintain existing code.
  */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseQuotedAsciiString@INI@@ present-unmatched
 void INI::parseQuotedAsciiString( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -706,6 +727,7 @@ void INI::parseQuotedAsciiString( INI* ini, void * /*instance*/, void *store, co
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseAsciiStringVector@INI@@ present-unmatched
 void INI::parseAsciiStringVector( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -719,6 +741,7 @@ void INI::parseAsciiStringVector( INI* ini, void * /*instance*/, void *store, co
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseAsciiStringVectorAppend@INI@@ present-unmatched
 void INI::parseAsciiStringVectorAppend( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -750,6 +773,7 @@ void INI::parseAsciiStringVectorAppend( INI* ini, void * /*instance*/, void *sto
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI_getNextQuotedAsciiString_Thunk.cpp
 // ?getNextQuotedAsciiString@INI@@ present-unmatched
 AsciiString INI::getNextQuotedAsciiString()
 {
@@ -800,6 +824,7 @@ AsciiString INI::getNextQuotedAsciiString()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI_getNextAsciiString_Thunk.cpp
 // ?getNextAsciiString@INI@@ present-unmatched
 AsciiString INI::getNextAsciiString()
 {
@@ -846,6 +871,7 @@ AsciiString INI::getNextAsciiString()
 /** Parse a string label, get the *translated* actual text from the label and store
 	* into a *UNICODE* string. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseAndTranslateLabel@INI@@ present-unmatched
 void INI::parseAndTranslateLabel( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -866,6 +892,7 @@ void INI::parseAndTranslateLabel( INI* ini, void * /*instance*/, void *store, co
 /** Parse a string label assumed as an image as part of the image collection.  Translate
 	* to an image pointer for storage */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseMappedImage@INI@@ present-unmatched
 void INI::parseMappedImage( INI *ini, void * /*instance*/, void *store, const void *userData )
 {
@@ -912,6 +939,7 @@ void INI::parseMappedImage( INI *ini, void * /*instance*/, void *store, const vo
 /** Parse a percent in int or real form such as "23%" or "95.4%" and assign
 	* to location 'store' as a number from 0.0 to 1.0 */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parsePercentToReal@INI@@ present-unmatched
 void INI::parsePercentToReal( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -943,6 +971,7 @@ void INI::parseBitString8( INI* ini, void * /*instance*/, void *store, const voi
 	* in the buffer, if the token is in the userData table of strings, we will set the
 	* according bit flag for it */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI_parseBitString32_Thunk.cpp
 // ?parseBitString32@INI@@ present-unmatched
 void INI::parseBitString32( INI* ini, void * /*instance*/, void *store, const void* userData )
 {
@@ -1018,6 +1047,7 @@ void INI::parseBitString32( INI* ini, void * /*instance*/, void *store, const vo
 	* RGB_COLOR = R:100 G:114 B:245
 	* and store in "RGBColor" structure pointed to by 'store' */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseRGBColor@INI@@ present-unmatched
 void INI::parseRGBColor( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1046,6 +1076,7 @@ void INI::parseRGBColor( INI* ini, void * /*instance*/, void *store, const void*
 	* RGB_COLOR = R:100 G:114 B:245 [A:233]
 	* and store in "RGBAColorInt" structure pointed to by 'store' */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseRGBAColorInt@INI@@ present-unmatched
 void INI::parseRGBAColorInt( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1099,6 +1130,7 @@ void INI::parseRGBAColorInt( INI* ini, void * /*instance*/, void *store, const v
 	* RGB_COLOR = R:100 G:114 B:245 [A:233]
 	* and store in "Color" structure pointed to by 'store' */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseColorInt@INI@@ present-unmatched
 void INI::parseColorInt( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1147,6 +1179,7 @@ void INI::parseColorInt( INI* ini, void * /*instance*/, void *store, const void*
 /** Parse a 3D coordinate of reals in the form of:
 	* FIELD_NAME = X:400 Y:-214.3 Z:8.6 */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseCoord3D@INI@@ present-unmatched
 void INI::parseCoord3D( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1162,6 +1195,7 @@ void INI::parseCoord3D( INI* ini, void * /*instance*/, void *store, const void* 
 /** Parse a 2D coordinate of reals in the form of:
 	* FIELD_NAME = X:400 Y:-214.3 */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseCoord2D@INI@@ present-unmatched
 void INI::parseCoord2D( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1176,6 +1210,7 @@ void INI::parseCoord2D( INI* ini, void * /*instance*/, void *store, const void* 
 /** Parse a 2D coordinate of Ints in the form of:
 	* FIELD_NAME = X:400 Y:-214 */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseICoord2D@INI@@ present-unmatched
 void INI::parseICoord2D( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1189,6 +1224,7 @@ void INI::parseICoord2D( INI* ini, void * /*instance*/, void *store, const void*
 //-------------------------------------------------------------------------------------------------
 /** Parse an audio event and assign to the 'AudioEventRTS*' at store */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/INIParseDynamicAudioEventRTSThunk.cpp
 // ?parseDynamicAudioEventRTS@INI@@ present-unmatched
 void INI::parseDynamicAudioEventRTS( INI *ini, void * /*instance*/, void *store, const void* userData )
 {
@@ -1218,6 +1254,7 @@ void INI::parseDynamicAudioEventRTS( INI *ini, void * /*instance*/, void *store,
 //-------------------------------------------------------------------------------------------------
 /** Parse an audio event and assign to the 'AudioEventRTS*' at store */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseAudioEventRTS@INI@@ present-unmatched
 void INI::parseAudioEventRTS( INI *ini, void * /*instance*/, void *store, const void* userData )
 {
@@ -1236,6 +1273,7 @@ void INI::parseAudioEventRTS( INI *ini, void * /*instance*/, void *store, const 
 //-------------------------------------------------------------------------------------------------
 /** Parse an ThingTemplate and assign to the 'ThingTemplate *' at store */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseThingTemplate@INI@@ present-unmatched
 void INI::parseThingTemplate( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1267,6 +1305,7 @@ void INI::parseThingTemplate( INI* ini, void * /*instance*/, void *store, const 
 //-------------------------------------------------------------------------------------------------
 /** Parse an ArmorTemplate and assign to the 'ArmorTemplate *' at store */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseArmorTemplate@INI@@ present-unmatched
 void INI::parseArmorTemplate( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1292,6 +1331,7 @@ void INI::parseArmorTemplate( INI* ini, void * /*instance*/, void *store, const 
 //-------------------------------------------------------------------------------------------------
 /** Parse an WeaponTemplate and assign to the 'WeaponTemplate *' at store */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseWeaponTemplate@INI@@ present-unmatched
 void INI::parseWeaponTemplate( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1310,6 +1350,7 @@ void INI::parseWeaponTemplate( INI* ini, void * /*instance*/, void *store, const
 //-------------------------------------------------------------------------------------------------
 /** Parse an FXList and assign to the 'FXList *' at store */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseFXList@INI@@ present-unmatched
 void INI::parseFXList( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1328,6 +1369,7 @@ void INI::parseFXList( INI* ini, void * /*instance*/, void *store, const void* /
 //-------------------------------------------------------------------------------------------------
 /** Parse a particle system and assign to 'ParticleSystemTemplate *' at store */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseParticleSystemTemplate@INI@@ present-unmatched
 void INI::parseParticleSystemTemplate( INI *ini, void * /*instance*/, void *store, const void *userData )
 {
@@ -1346,6 +1388,7 @@ void INI::parseParticleSystemTemplate( INI *ini, void * /*instance*/, void *stor
 //-------------------------------------------------------------------------------------------------
 /** Parse an DamageFX and assign to the 'DamageFX *' at store */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseDamageFX@INI@@ present-unmatched
 void INI::parseDamageFX( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1371,6 +1414,7 @@ void INI::parseDamageFX( INI* ini, void * /*instance*/, void *store, const void*
 //-------------------------------------------------------------------------------------------------
 /** Parse an ObjectCreationList and assign to the 'ObjectCreationList *' at store */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/INI_parseObjectCreationList.cpp
 // ?parseObjectCreationList@INI@@ present-unmatched
 void INI::parseObjectCreationList( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1389,6 +1433,7 @@ void INI::parseObjectCreationList( INI* ini, void * /*instance*/, void *store, c
 //-------------------------------------------------------------------------------------------------
 /** Parse a upgrade template string and store as template pointer */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseUpgradeTemplate@INI@@ present-unmatched
 void INI::parseUpgradeTemplate( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1411,6 +1456,7 @@ void INI::parseUpgradeTemplate( INI* ini, void * /*instance*/, void *store, cons
 //-------------------------------------------------------------------------------------------------
 /** Parse a special power template string and store as template pointer */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseSpecialPowerTemplate@INI@@ present-unmatched
 void INI::parseSpecialPowerTemplate( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1457,6 +1503,7 @@ void INI::parseSpecialPowerTemplate( INI* ini, void * /*instance*/, void *store,
 	* NOTE: Is is assumed that we are going to store the index into
 	*				a 4 byte integer.  This works well for INT and ENUM definitions */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseIndexList@INI@@ present-unmatched
 void INI::parseIndexList( INI* ini, void * /*instance*/, void *store, const void* userData )
 {
@@ -1471,6 +1518,7 @@ void INI::parseIndexList( INI* ini, void * /*instance*/, void *store, const void
 	* NOTE: Is is assumed that we are going to store the index into
 	*				a 4 byte integer.  This works well for INT and ENUM definitions */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseByteSizedIndexList@INI@@ present-unmatched
 void INI::parseByteSizedIndexList( INI* ini, void * /*instance*/, void *store, const void* userData )
 {
@@ -1491,6 +1539,7 @@ void INI::parseByteSizedIndexList( INI* ini, void * /*instance*/, void *store, c
 	* NOTE: Is is assumed that we are going to store the index into
 	*				a 4 byte integer.  This works well for INT and ENUM definitions */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?parseLookupList@INI@@ present-unmatched
 void INI::parseLookupList( INI* ini, void * /*instance*/, void *store, const void* userData )
 {
@@ -1520,6 +1569,7 @@ void MultiIniFieldParse::add(const FieldParse* f, UnsignedInt e)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?initFromINI@INI@@ present-unmatched
 void INI::initFromINI( void *what, const FieldParse* parseTable )
 {
@@ -1529,6 +1579,7 @@ void INI::initFromINI( void *what, const FieldParse* parseTable )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?initFromINIMultiProc@INI@@ present-unmatched
 void INI::initFromINIMultiProc( void *what, BuildMultiIniFieldProc proc )
 {
@@ -1736,6 +1787,7 @@ void INI::initFromINIMulti( void *what, const MultiIniFieldParse& parseTableList
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ?getNextSubToken@INI@@ present-unmatched
 const char* INI::getNextSubToken(const char* expected)
 {
@@ -1750,6 +1802,7 @@ const char* INI::getNextSubToken(const char* expected)
  * Parse a "random variable".
  * The format is "FIELD = low high [distribution]".
  */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseGameClientRandomVariable@INI@@ present-unmatched
 void INI::parseGameClientRandomVariable( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1775,6 +1828,7 @@ void INI::parseGameClientRandomVariable( INI* ini, void * /*instance*/, void *st
 
 //-------------------------------------------------------------------------------------------------
 // parse a duration in msec and convert to duration in frames
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseDurationReal@INI@@ present-unmatched
 void INI::parseDurationReal( INI *ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1784,6 +1838,7 @@ void INI::parseDurationReal( INI *ini, void * /*instance*/, void *store, const v
 
 //-------------------------------------------------------------------------------------------------
 // parse a duration in msec and convert to duration in integral number of frames, (unsignedint) rounding UP
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseDurationUnsignedInt@INI@@ present-unmatched
 void INI::parseDurationUnsignedInt( INI *ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1793,6 +1848,7 @@ void INI::parseDurationUnsignedInt( INI *ini, void * /*instance*/, void *store, 
 
 // ------------------------------------------------------------------------------------------------
 // parse a duration in msec and convert to duration in integral number of frames, (unsignedshort) rounding UP
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseDurationUnsignedShort@INI@@ present-unmatched
 void INI::parseDurationUnsignedShort( INI *ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1802,6 +1858,7 @@ void INI::parseDurationUnsignedShort( INI *ini, void * /*instance*/, void *store
 
 //-------------------------------------------------------------------------------------------------
 // parse acceleration in (dist/sec) and convert to (dist/frame)
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseVelocityReal@INI@@ present-unmatched
 void INI::parseVelocityReal( INI *ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1812,6 +1869,7 @@ void INI::parseVelocityReal( INI *ini, void * /*instance*/, void *store, const v
 
 //-------------------------------------------------------------------------------------------------
 // parse acceleration in (dist/sec^2) and convert to (dist/frame^2)
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseAccelerationReal@INI@@ present-unmatched
 void INI::parseAccelerationReal( INI *ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
@@ -1822,6 +1880,7 @@ void INI::parseAccelerationReal( INI *ini, void * /*instance*/, void *store, con
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseVeterancyLevelFlags@INI@@ present-unmatched
 void INI::parseVeterancyLevelFlags(INI* ini, void* /*instance*/, void* store, const void* /*userData*/)
 {
@@ -1860,6 +1919,7 @@ void INI::parseVeterancyLevelFlags(INI* ini, void* /*instance*/, void* store, co
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/INIParseSoundsListThunk.cpp
 // ?parseSoundsList@INI@@ present-unmatched
 void INI::parseSoundsList( INI* ini, void *instance, void *store, const void* /*userData*/ )
 {
@@ -1877,6 +1937,7 @@ void INI::parseSoundsList( INI* ini, void *instance, void *store, const void* /*
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseDamageTypeFlags@INI@@ present-unmatched
 void INI::parseDamageTypeFlags(INI* ini, void* /*instance*/, void* store, const void* /*userData*/)
 {
@@ -1915,6 +1976,7 @@ void INI::parseDamageTypeFlags(INI* ini, void* /*instance*/, void* store, const 
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?parseDeathTypeFlags@INI@@ present-unmatched
 void INI::parseDeathTypeFlags(INI* ini, void* /*instance*/, void* store, const void* /*userData*/)
 {
@@ -2015,6 +2077,7 @@ Bool INI::isDeclarationOfType( AsciiString blockType, AsciiString blockName, cha
 //-------------------------------------------------------------------------------------------------
 // parse the line and return whether the given line is a Block declaration of the form
 // [whitespace] end [EOL]
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?isEndOfBlock@INI@@ present-unmatched
 Bool INI::isEndOfBlock( char *bufferToCheck )
 {

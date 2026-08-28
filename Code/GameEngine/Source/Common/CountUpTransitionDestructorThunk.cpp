@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1CountUpTransition@@UAE@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp
 // Open-BFME5: CountUpTransition dtor.
 // Early derived vtbl, zero +0x0c, dual Buffer @+0x2c/+0x30, base dtor.
 
@@ -16,6 +17,7 @@ public:
 	virtual ~CountUpTransitionBase();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class CountUpTransition : public CountUpTransitionBase
 {
 public:

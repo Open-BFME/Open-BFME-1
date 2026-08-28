@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?isFortifyMostImportant@DozerPrimaryStateMachine@@SA_NPAVState@@PAX@Z: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate.cpp
 // Lift the ?isFortifyMostImportant@DozerPrimaryStateMachine@@SA_NPAVState@@PAX@Z __emit thunk to clean C++.
 //
 // Zero Hour's DozerAIUpdate.cpp carries this predicate, and retail keeps its
@@ -20,6 +21,7 @@ enum DozerTask
 	DOZER_TASK_FORTIFY
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DozerAIUpdate.h
 class DozerAIInterface
 {
 public:
@@ -31,6 +33,7 @@ public:
 	virtual DozerTask getMostRecentCommand(void);		///< vtable +0x14
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -151,6 +154,7 @@ struct DozerStateMachineOwner
 	DozerStateOwner *m_machine;						///< retail this+0x1C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DozerAIUpdate.h
 class DozerPrimaryStateMachine
 {
 public:

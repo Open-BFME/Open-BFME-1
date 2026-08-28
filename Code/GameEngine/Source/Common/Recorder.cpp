@@ -14,6 +14,7 @@ static const char replayDir[] = "Replays\\";
 
 // TheGameLogic->getFrame() inlines to the frame word at +0x3C of the global,
 // same layout as the rest of the family (see DisconnectManager_voteForPlayerDisconnect_Thunk.cpp).
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -59,6 +60,7 @@ enum GameMessageArgumentDataType
 };
 
 // Layout confirmed by NetPacket_readGameMessage.cpp: m_vptr, m_next, m_type, m_argCount.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
 class GameMessageParserArgumentType
 {
 public:
@@ -76,6 +78,7 @@ public:
 // deleting destructor is retail's vtable slot 0 (BFME's MemoryPoolObject
 // deleteInstance reduces to a plain `delete`, unlike ZH's pooled version --
 // see reverse/re_attempts.log for the same drift on other MemoryPoolObjects).
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
 class GameMessageParser
 {
 public:
@@ -92,6 +95,7 @@ public:
 
 // getType/getPlayerIndex/getArgumentCount are inlined field reads; getArgument
 // and getArgumentDataType leave calls in the bytes and are pinned ILT thunks.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:
@@ -110,6 +114,7 @@ public:
     int getArgumentDataType(Int index);                               ///< ILT 0x0001A3D4
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString {
 public:
     AsciiString() { base()->StringBase<char>::StringBase(); }
@@ -130,6 +135,7 @@ private:
     StringBase<char>::Header *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData {
 public:
     AsciiString getPath_UserData() const;
@@ -144,6 +150,7 @@ enum RecorderModeType {
     RECORDERMODETYPE_NONE
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass {
 public:
     char m_pad0[0xc];

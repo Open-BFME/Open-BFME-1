@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?keyToName@NameKeyGenerator@@: Code/GameEngine/Source/Common/NameKeyGenerator.cpp
+// readable body of ?keyToName@NameKeyGenerator@@QAE?AVAsciiString@@W4NameKeyType@@@Z: Code/GameEngine/Source/Common/NameKeyGenerator.cpp
 // Open-BFME: NameKeyGenerator::keyToName, retail 0x0008FD30, 119 bytes.
 //
 // BFME replaced the reference's two nested loops over a fixed socket array
@@ -31,6 +33,7 @@ enum NameKeyType
 	NAMEKEY_INVALID = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -43,6 +46,7 @@ private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class Bucket
 {
 public:
@@ -60,6 +64,7 @@ struct NameKeyHashFn
 
 typedef _STL::hash_map<NameKeyType, Bucket *, NameKeyHashFn, _STL::equal_to<NameKeyType> > NameKeyHash;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:

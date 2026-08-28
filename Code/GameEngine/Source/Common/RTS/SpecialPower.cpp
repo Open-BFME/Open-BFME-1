@@ -140,6 +140,7 @@ const char* SpecialPowerMaskType::s_bitNameList[] =
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/SpecialPowerStoreParseSpecialPowerDefinitionThunk.cpp
 // ?parseSpecialPowerDefinition@SpecialPowerStore@@ present-unmatched
 void SpecialPowerStore::parseSpecialPowerDefinition( INI *ini )
 {
@@ -216,6 +217,7 @@ void SpecialPowerStore::parseSpecialPowerDefinition( INI *ini )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SpecialPowerTemplateCtorThunk.cpp
 // ??0SpecialPowerTemplate@@ present-unmatched
 SpecialPowerTemplate::SpecialPowerTemplate()
 {
@@ -235,6 +237,7 @@ SpecialPowerTemplate::SpecialPowerTemplate()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SpecialPowerTemplateDestructorThunk.cpp
 // ??1SpecialPowerTemplate@@ present-unmatched
 SpecialPowerTemplate::~SpecialPowerTemplate()
 {
@@ -256,6 +259,7 @@ SpecialPowerStore::SpecialPowerStore( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SpecialPowerStoreDestructorThunk.cpp
 // ??1SpecialPowerStore@@ present-unmatched
 SpecialPowerStore::~SpecialPowerStore( void )
 {
@@ -274,6 +278,7 @@ SpecialPowerStore::~SpecialPowerStore( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/SpecialPowerStore_findSpecialPowerTemplatePrivate.cpp
 // ?findSpecialPowerTemplatePrivate@SpecialPowerStore@@ present-unmatched
 SpecialPowerTemplate* SpecialPowerStore::findSpecialPowerTemplatePrivate( AsciiString name )
 {
@@ -328,6 +333,7 @@ Int SpecialPowerStore::getNumSpecialPowers( void )
 //-------------------------------------------------------------------------------------------------
 /** does the object (and therefore the player) meet all the requirements to use this power */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SpecialPowerStore_canUseSpecialPower_Thunk.cpp
 // ?canUseSpecialPower@SpecialPowerStore@@ present-unmatched
 Bool SpecialPowerStore::canUseSpecialPower( Object *obj, const SpecialPowerTemplate *specialPowerTemplate )
 {

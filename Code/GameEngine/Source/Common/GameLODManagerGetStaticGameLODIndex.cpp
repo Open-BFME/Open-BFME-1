@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getStaticGameLODIndex@GameLODManager@@QAEHVAsciiString@@@Z: Code/GameEngine/Source/Common/GameLOD.cpp
 
 typedef int Int;
 
@@ -6,6 +7,7 @@ extern "C" __declspec(dllimport) int __cdecl _strnicmp(
 	const char *left, const char *right, unsigned count);
 extern "C" unsigned __cdecl strlen(const char *text);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -47,6 +49,7 @@ private:
 
 extern const char *StaticGameLODNames[6];
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameLOD.h
 class GameLODManager
 {
 public:

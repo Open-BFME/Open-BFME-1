@@ -1,4 +1,5 @@
 // 23-byte and 32-byte cleanup routines, 62-byte reset, 109-byte update, and 81-byte destructor
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:

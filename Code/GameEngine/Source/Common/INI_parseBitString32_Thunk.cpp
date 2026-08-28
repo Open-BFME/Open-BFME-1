@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?parseBitString32@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseBitString32@INI@@SAXPAV1@PAX1PBX@Z: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class INI { public: static void parseBitString32(INI *, void *, void *, void const *); };

@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: retail-layout C++ conversion of StructureCollapseUpdateModuleData.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -40,6 +41,7 @@ private:
 	unsigned char m_data[0x0c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StructureCollapseUpdate.h
 class StructureCollapseUpdateModuleData : public Snapshot
 {
 public:

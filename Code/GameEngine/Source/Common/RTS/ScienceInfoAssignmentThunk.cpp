@@ -10,6 +10,7 @@ private:
 	unsigned char m_data[0x0c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -28,6 +29,7 @@ private:
 	void *m_end;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Science.h
 class ScienceInfo : public ScienceInfoBase
 {
 public:

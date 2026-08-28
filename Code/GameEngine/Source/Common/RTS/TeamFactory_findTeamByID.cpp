@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?findTeamByID@TeamFactory@@QAEPAVTeam@@I@Z: Code/GameEngine/Source/Common/RTS/Team.cpp
 // Open-BFME: TeamFactory::findTeamByID, retail 0x000EF060, 90 bytes.
 //
 // Zero Hour's body unchanged: reject the invalid id, then walk every prototype
@@ -23,6 +24,7 @@ typedef UnsignedInt TeamID;
 
 enum { TEAM_ID_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
@@ -49,6 +51,7 @@ private:
 	Team *m_cur;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:
@@ -64,6 +67,7 @@ private:
 
 // The two bases TeamFactoryCtorThunk.cpp models: a vptr and one pointer, then
 // a second vptr, putting the map at +0x0c.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -78,6 +82,7 @@ private:
 	void *m_name;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -91,6 +96,7 @@ public:
 
 typedef std::pair<int, int> BfmeTeamPrototypeKey;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamFactory : public SubsystemInterface, public Snapshot
 {
 public:

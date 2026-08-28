@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?load@ImageCollection@@QAEXH@Z: Code/GameEngine/Source/GameClient/System/Image.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) ImageCollection

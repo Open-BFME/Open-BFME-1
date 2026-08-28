@@ -5,6 +5,7 @@
 // retail alternates between them, which is what a single loop body produces.
 // 0x7f7fffff is FLT_MAX.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 public:

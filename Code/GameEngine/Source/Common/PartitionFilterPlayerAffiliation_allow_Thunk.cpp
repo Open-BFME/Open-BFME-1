@@ -24,12 +24,14 @@ enum AllowPlayerRelationship
 	ALLOW_NEUTRAL		= 0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
 	Relationship getRelationship(const Team *that) const;	///< pinned at 0x0003E77A
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -40,6 +42,7 @@ private:
 	Team *m_team;											///< retail this+0x23C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionFilterPlayerAffiliation
 {
 protected:

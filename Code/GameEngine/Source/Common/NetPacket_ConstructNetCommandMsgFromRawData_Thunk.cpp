@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?ConstructNetCommandMsgFromRawData@NetPacket@@SAPAVNetCommandRef@@PAEG@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class NetCommandRef;

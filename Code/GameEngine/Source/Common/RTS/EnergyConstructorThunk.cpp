@@ -22,6 +22,7 @@
 // set vtable" body is boilerplate shared by every Snapshot subclass with N
 // scalar members; N is the only discriminator these bytes carry.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -33,6 +34,7 @@ public:
 
 class Player;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Energy.h
 class Energy : public Snapshot
 {
 public:

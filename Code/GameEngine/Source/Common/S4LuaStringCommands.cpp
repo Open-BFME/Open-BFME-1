@@ -56,6 +56,7 @@ struct lua_State;
 extern "C" int lua_gettop( lua_State *L );
 extern "C" const char *lua_tostring( lua_State *L, int index );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

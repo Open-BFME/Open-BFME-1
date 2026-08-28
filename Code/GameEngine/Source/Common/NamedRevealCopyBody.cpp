@@ -20,6 +20,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <algorithm>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -29,6 +30,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 struct NamedReveal
 {
 	AsciiString m_bfmeName;					// +0x00

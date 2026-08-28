@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?action@RepairDockUpdate@@UAE_NPAVObject@@0@Z: Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/RepairDockUpdate.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Object;

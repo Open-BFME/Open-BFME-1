@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?init@PlayerList@@: Code/GameEngine/Source/Common/RTS/PlayerList.cpp
+// readable body of ?setLocalPlayer@PlayerList@@: Code/GameEngine/Source/Common/RTS/PlayerList.cpp
 // Open-BFME5: PlayerList::setLocalPlayer, retail 0x000DF3C0, 97 bytes,
 // converted out of Code/gen_asm/d_000d6fb0.asm. zh_sweep packet 000df3c0
 // carries the earlier investigation; this finishes it.
@@ -40,6 +42,7 @@ typedef int Int;
 class AsciiString;
 class Team;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -49,6 +52,7 @@ private:
 	void *m_name;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -62,6 +66,7 @@ class PlayerTemplate;
 
 typedef unsigned short PlayerMaskType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -102,6 +107,7 @@ struct T_008f8c30 { void m( Int tag, SubsystemRefreshProc3 refresh ); };
 extern ShroudManager *TheShroudManager;
 extern Gen_012ED5C0 *g_012ED5C0;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList : public SubsystemInterface, public Snapshot
 {
 public:

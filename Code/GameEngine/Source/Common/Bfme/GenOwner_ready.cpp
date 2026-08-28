@@ -65,6 +65,7 @@ public:
 	virtual BfmeReadyResult *fetch(void);			// vtable +0xA4
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -76,6 +77,7 @@ public:
 	BfmeReadyInterface *m_interface;			// Object+0x200
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:

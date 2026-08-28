@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?okToPlayRadarEdgeSound@Player@@QAE_NXZ: Code/GameEngine/Source/Common/RTS/Player.cpp
 
 // Open-BFME5: Player::okToPlayRadarEdgeSound, retail 0x000C9A20, 75 bytes. The
 // body carried only a machine byte-dump row; the name is the symbols.csv pin.
@@ -19,6 +20,7 @@ typedef bool Bool;
 
 class Player;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/VictoryConditions.h
 class VictoryConditionsInterface
 {
 public:
@@ -36,6 +38,7 @@ public:
 	virtual Bool bfmeIsPlayerOut(Player *player) = 0;	// slot 11, vtable+0x2C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:
@@ -56,6 +59,7 @@ extern VictoryConditionsInterface *TheVictoryConditions;	// 0x012F079C
 extern InGameUI *TheInGameUI;					// 0x012F148C
 extern GameLogicFrameSlice *TheGameLogic;			// 0x012F0898
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

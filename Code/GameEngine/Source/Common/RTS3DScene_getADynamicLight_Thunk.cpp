@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getADynamicLight@RTS3DScene@@QAEPAVW3DDynamicLight@@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class W3DDynamicLight;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
 class RTS3DScene
 {
 public:

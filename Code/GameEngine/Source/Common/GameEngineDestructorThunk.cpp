@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1GameEngine@@UAE@XZ: Code/GameEngine/Source/Common/GameEngine.cpp
 
 class __declspec(novtable) GameEngine
 {

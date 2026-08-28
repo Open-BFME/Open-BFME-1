@@ -11,6 +11,7 @@ public:
     virtual ~DebugCmdInterfaceDebugBase() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/internal.h
 class DebugCmdInterfaceDebug : public DebugCmdInterfaceDebugBase
 {
 public:

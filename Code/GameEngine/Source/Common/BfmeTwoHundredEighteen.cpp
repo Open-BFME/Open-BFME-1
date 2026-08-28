@@ -4,6 +4,7 @@
 // hands the redraw the last word of the frame, the longer pair tail-jumps into
 // it with a fresh zero in the argument slot.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameEngine.h
 class GameEngine
 {
 public:
@@ -26,6 +27,7 @@ public:
 	virtual void bfmeStepJV(void) = 0;		///< retail slot 16, [vptr+0x40]
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -34,6 +36,7 @@ public:
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display
 {
 public:

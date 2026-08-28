@@ -4,6 +4,7 @@
 // is independently anchored by the adjacent exact Team wrapper and the
 // Object weapon-set field at +0x264: prev/next are +0x25C/+0x260.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

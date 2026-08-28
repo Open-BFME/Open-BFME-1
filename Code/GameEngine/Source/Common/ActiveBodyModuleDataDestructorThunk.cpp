@@ -23,6 +23,7 @@
 // vector elements: trivially destructible, so only their size reaches the bytes
 struct Gen_p12pod { int a[3]; };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

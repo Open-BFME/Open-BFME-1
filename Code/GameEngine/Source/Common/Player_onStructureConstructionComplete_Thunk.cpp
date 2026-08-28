@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onStructureConstructionComplete@Player@@QAEXPAVObject@@0_N@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
 // Open-BFME5: retail-layout C++ conversion of construction completion dispatch.
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -13,6 +15,7 @@ private:
 	unsigned int FrameObjectCountChanged;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 private:
@@ -22,6 +25,7 @@ public:
 	unsigned int Frame;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:
@@ -29,6 +33,7 @@ public:
 	void addObjectToPathfindMap(Object *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 private:
@@ -38,6 +43,7 @@ public:
 	Pathfinder *PathfinderInstance;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class AIPlayer
 {
 public:
@@ -61,6 +67,7 @@ public:
 	virtual void onConstructionComplete(Object *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -68,6 +75,7 @@ public:
 	StructureCompletionInterface *getStructureCompletionInterface();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 private:
@@ -77,6 +85,7 @@ public:
 	bool UIDirty;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

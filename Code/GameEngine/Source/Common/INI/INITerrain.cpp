@@ -13,12 +13,14 @@
 #include "PreRTS.h"
 #include "Common/INI.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/TerrainTypes.h
 class TerrainType
 {
 public:
 	static const FieldParse m_terrainTypeFieldParseTable[];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/TerrainTypes.h
 class TerrainTypeCollection
 {
 public:

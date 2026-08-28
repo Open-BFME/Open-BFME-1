@@ -32,6 +32,7 @@
 // Names are address-derived, the field is typed `int` because the load is a
 // plain dword, and the four bytes ahead of the OVERRIDE member are unattributed.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:

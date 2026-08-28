@@ -217,6 +217,7 @@ AudioManager::~AudioManager()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Audio/AudioManagerInitThunk.cpp
 // ?init@AudioManager@@ present-unmatched
 void AudioManager::init()
 {
@@ -420,6 +421,7 @@ void AudioManager::getInfoForAudioEvent( const AudioEventRTS *eventToFindAndFill
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWAudio/AudioManagerAddAudioEventThunk.cpp
 // ?addAudioEvent@AudioManager@@ present-unmatched
 AudioHandle AudioManager::addAudioEvent(const AudioEventRTS *eventToAdd)
 {
@@ -984,6 +986,7 @@ void AudioManager::refreshCachedVariables()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AudioManager_getAudioLengthMS_Thunk.cpp
 // ?getAudioLengthMS@AudioManager@@ present-unmatched
 Real AudioManager::getAudioLengthMS( const AudioEventRTS *event )
 {

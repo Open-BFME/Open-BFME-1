@@ -27,6 +27,7 @@ public:
 
 extern BfmeSpecialPowerAllowanceStore *TheBfmeSpecialPowerAllowanceStore;	// 0x012F0FF8
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

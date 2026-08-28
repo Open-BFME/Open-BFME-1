@@ -27,6 +27,7 @@ typedef unsigned int ObjectID;
 
 // Only Object::getID() is reachable from these two bodies; the id lives at
 // retail Object+0x74.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -36,6 +37,7 @@ private:
 	ObjectID m_id;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ResourceGatheringManager.h
 class ResourceGatheringManager
 {
 public:

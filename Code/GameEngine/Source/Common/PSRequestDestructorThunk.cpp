@@ -3,6 +3,7 @@
 
 #include <string>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PersistentStorageThread.h
 class PSPlayerStats
 {
 public:
@@ -12,6 +13,7 @@ private:
 	char m_data[0x1C4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PersistentStorageThread.h
 class PSRequest
 {
 public:

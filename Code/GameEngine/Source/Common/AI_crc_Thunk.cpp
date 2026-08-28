@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?crc@AI@@UAEXPAVXfer@@@Z: Code/GameEngine/Source/GameLogic/AI/ai.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Xfer;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:

@@ -19,6 +19,7 @@
 typedef int Int;
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -60,6 +61,7 @@ struct CostMapShim
 	CostMapIteratorShim find(const Int &key);		///< ILT thunk at 0x0001D980
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

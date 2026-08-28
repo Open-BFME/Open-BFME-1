@@ -6,6 +6,7 @@ extern "C" __declspec(dllimport) void * __cdecl memmove( void *destination, cons
 // links and the compacted four-byte index range are likewise named only for
 // the operations visible in this body; the original owner identity is absent.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?doesObjectQualifyForBattlePlan@Player@@QBE_NPAVObject@@@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
 // Open-BFME5: Player::doesObjectQualifyForBattlePlan, retail 0x000C9AB0,
 // zh_sweep packet 000c9ab0.
 //
@@ -25,6 +26,7 @@ enum { KINDOF_COUNT = 116 };
 // 16 bytes, matching the BitFlags<116> that Thing::isAnyKindOf is matched
 // against; only the width matters here.
 template <int numBits>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 private:
@@ -33,16 +35,19 @@ private:
 
 typedef BitFlags<KINDOF_COUNT> KindOfMaskType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
 	Bool isAnyKindOf( const KindOfMaskType &mask ) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BattlePlanUpdate.h
 class BattlePlanBonuses
 {
 public:
@@ -52,6 +57,7 @@ public:
 	KindOfMaskType	m_invalidKindOf;					///< +0x2C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

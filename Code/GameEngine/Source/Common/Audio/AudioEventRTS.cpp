@@ -3,6 +3,7 @@
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
 // stlport
+// readable body of ?validate@AsciiString@@: Code/GameEngine/Source/Common/System/AsciiString.cpp
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -268,6 +269,7 @@ AudioEventRTS::AudioEventRTS( const AudioEventRTS& right )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/string_base.cpp
 // ??4AudioEventRTS@@ present-unmatched
 AudioEventRTS& AudioEventRTS::operator=( const AudioEventRTS& right )
 {
@@ -311,6 +313,7 @@ AudioEventRTS& AudioEventRTS::operator=( const AudioEventRTS& right )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AudioEventRTSDestructor.cpp
 // ??1AudioEventRTS@@ present-unmatched
 AudioEventRTS::~AudioEventRTS()
 {

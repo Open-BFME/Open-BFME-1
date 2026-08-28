@@ -123,6 +123,7 @@ public:
 	BfmeElemN **m_bfmeEnd;					// +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 protected:

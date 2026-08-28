@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0RiderChangeContainModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Contain/RiderChangeContain.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class RiderChangeContainModuleData { public: RiderChangeContainModuleData(); };

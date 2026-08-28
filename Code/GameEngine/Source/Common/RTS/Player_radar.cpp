@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?disableRadar@Player@@QAEXXZ: Code/GameEngine/Source/Common/RTS/Player.cpp
+// readable body of ?enableRadar@Player@@QAEXXZ: Code/GameEngine/Source/Common/RTS/Player.cpp
 // Open-BFME: the two halves of the player's radar switch,
 //
 //   0x000CC1C0  disableRadar  193 bytes
@@ -24,6 +26,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
@@ -36,6 +39,7 @@ private:
 	char m_bfme_body[0x70];					// sizeof(AudioEventRTS), the frame's whole local block
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MiscAudio.h
 struct MiscAudio
 {
 	char m_bfme_head[0x150];				// the sounds ahead of these two
@@ -43,6 +47,7 @@ struct MiscAudio
 	AudioEventRTS m_radarOfflineSound;			// this+0x1C0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
 public:
@@ -124,6 +129,7 @@ public:
 
 extern AudioManager *TheAudio;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

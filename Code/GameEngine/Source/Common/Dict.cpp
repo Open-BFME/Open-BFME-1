@@ -166,6 +166,7 @@ Dict::DictPair* Dict::findPairByKey(NameKeyType key) const
 }
 
 // -----------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/DictEnsureUniqueThunk.cpp
 // ?ensureUnique@Dict@@ present-unmatched
 Dict::DictPair *Dict::ensureUnique(int numPairsNeeded, Bool preserveData, DictPair *pairToTranslate)
 {
@@ -225,6 +226,7 @@ void Dict::clear()
 }
 
 // -----------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Dict_releaseData.cpp
 // ?releaseData@Dict@@ present-unmatched
 void Dict::releaseData()
 {
@@ -332,6 +334,7 @@ Real Dict::getReal(NameKeyType key, Bool *exists/*=NULL*/) const
 }
 
 // -----------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Dict_getAsciiString.cpp
 // ?getAsciiString@Dict@@ present-unmatched
 AsciiString Dict::getAsciiString(NameKeyType key, Bool *exists/*=NULL*/) const
 {

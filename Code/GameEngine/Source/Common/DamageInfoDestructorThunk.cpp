@@ -15,6 +15,7 @@
 // and +8 spacing without any vtable involved, and it is why Snapshot's own
 // destructor has to be a real out-of-line, non-inline call instead of
 // folding away entirely.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -24,14 +25,17 @@ private:
 	unsigned long m_snapshotData;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfoInput : public Snapshot
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfoOutput : public Snapshot
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfo : public Snapshot
 {
 public:

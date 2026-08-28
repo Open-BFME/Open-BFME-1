@@ -10,6 +10,7 @@
 // pointer pair (lea+mov, push esi/edi) rather than three direct [ecx+off]/[eax+off]
 // moves, and only spelling it as a nested aggregate here reproduces that shape.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfoInput
 {
 public:

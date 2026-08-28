@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?updateState@TeamPrototype@@QAEXXZ: Code/GameEngine/Source/Common/RTS/Team.cpp
 
 // TeamPrototype::updateState, retail 0x000F71C0, 143 bytes. Zero Hour's body:
 // update every team on the instance list, then sweep the empty ones away.
@@ -19,6 +20,7 @@ typedef bool Bool;
 
 class Team;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -28,6 +30,7 @@ public:
 
 class TeamPrototype;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
@@ -51,6 +54,7 @@ public:
 	Bool m_active;						// Team+0x31
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamFactory
 {
 public:
@@ -87,6 +91,7 @@ private:
 	Team *m_cur;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:

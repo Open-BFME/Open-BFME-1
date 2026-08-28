@@ -14,6 +14,7 @@
 // class: written as members the compiler folds the offsets onto this and drops
 // the two leas.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -52,6 +53,7 @@ private:
 
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/CrateSystem.h
 struct crateCreationEntry
 {
 	char m_bfmeBody[0x0C];
@@ -62,6 +64,7 @@ struct BfmeCrateChances
 	int m_bfmeA, m_bfmeB, m_bfmeC, m_bfmeD, m_bfmeE, m_bfmeF;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/CrateSystem.h
 class CrateTemplate : public ScienceInfoBase
 {
 public:

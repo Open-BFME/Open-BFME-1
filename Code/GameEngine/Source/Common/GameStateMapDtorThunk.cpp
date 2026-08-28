@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1GameStateMap@@: Code/GameEngine/Source/Common/System/SaveGame/GameStateMap.cpp
 // Open-BFME5: lift the retail GameStateMap destructor MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_GameStateMapDtor_112BF0()

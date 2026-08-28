@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?transferUnitsTo@Team@@QAEXPAV1@@Z: Code/GameEngine/Source/Common/RTS/Team.cpp
 // Open-BFME5: Team::transferUnitsTo, retail 0x000EC9B0, zh_sweep packet 000ec9b0.
 //
 // The Zero Hour body unchanged in shape -- bail on self or null, then hand the
@@ -18,6 +19,7 @@
 
 class Team;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -46,6 +48,7 @@ public:
 	virtual void setTeam( Team *team ) = 0;					///< slot 20, [vtbl+0x50]
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:

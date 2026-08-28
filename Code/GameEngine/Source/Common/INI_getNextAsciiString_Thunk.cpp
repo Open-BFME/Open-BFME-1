@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getNextAsciiString@INI@@: Code/GameEngine/Source/Common/INI/ini.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class AsciiString {};

@@ -51,6 +51,7 @@ public:
 	virtual void slot();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
 class SpecialAbilityUpdate : public GloriousChargeUpdateUpdateModule,
 	public GloriousChargeUpdateSpecialPowerUpdateInterface
 {

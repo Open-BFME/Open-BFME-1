@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GX
+// readable body of ?reset@GameEngine@@UAEXXZ: Code/GameEngine/Source/Common/GameEngine.cpp
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
@@ -8,12 +9,14 @@ typedef void *HANDLE;
 
 extern "C" __declspec(dllimport) UnsignedInt __stdcall timeGetTime(void);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
 	UnsignedInt winClearStatus(UnsignedInt status);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
 class WindowLayout
 {
 public:
@@ -31,6 +34,7 @@ public:
 	GameWindow *m_firstWindow;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:
@@ -64,6 +68,7 @@ public:
 	virtual WindowLayout *winCreateLayout(AsciiString filename);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -71,12 +76,14 @@ public:
 	int m_gameMode;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterfaceList
 {
 public:
 	void resetAll(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetworkInterface.h
 class NetworkInterface
 {
 public:
@@ -97,6 +104,7 @@ void InitGameLogicRandom(UnsignedInt seed);
 #define TheNetwork (*(NetworkInterface **)0x012F7714)
 #define ResetSink (*(Rva00065A40 **)0x012ED4FC)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameEngine.h
 class GameEngine
 {
 public:

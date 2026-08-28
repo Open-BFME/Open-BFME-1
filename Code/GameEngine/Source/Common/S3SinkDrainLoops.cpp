@@ -46,12 +46,14 @@ typedef int Int;
 
 extern "C" __declspec( dllimport ) int __cdecl _strcmpi( const char *, const char * );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
 	static Int scanIndexList( const char *, const char *const * );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
 class INIException
 {
 public:

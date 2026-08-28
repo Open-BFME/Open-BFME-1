@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1Radar@@UAE@XZ: Code/GameEngine/Source/Common/System/Radar.cpp
 // Open-BFME5: lift the retail Radar destructor to clean C++.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -24,6 +26,7 @@ public:
     int m_referenceCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Radar.h
 struct RadarEvent
 {
     int m_type;
@@ -47,6 +50,7 @@ struct RadarEvent
     }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Radar.h
 class Radar : public Snapshot, public SubsystemInterface
 {
 protected:

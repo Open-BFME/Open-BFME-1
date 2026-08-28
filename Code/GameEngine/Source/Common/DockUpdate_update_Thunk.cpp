@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?update@DockUpdate@@UAE?AW4UpdateSleepTime@@XZ: Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdate.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 enum UpdateSleepTime { };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DockUpdate.h
 class DockUpdate
 {
 public:

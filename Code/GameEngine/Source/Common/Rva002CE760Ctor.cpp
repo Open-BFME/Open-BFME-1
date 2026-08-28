@@ -1,5 +1,6 @@
 // cl: /O2 /Ob0
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DockUpdate.h
 class DockUpdateModuleData
 {
 public:

@@ -58,6 +58,7 @@ inline Vector3 operator - (const Vector3 &a, const Vector3 &b)
 	return Vector3(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabox.h
 class AABoxClass
 {
 public:
@@ -65,6 +66,7 @@ public:
 	Vector3 Extent;										///< retail this+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshgeometry.h
 class MeshGeometryClass
 {
 public:

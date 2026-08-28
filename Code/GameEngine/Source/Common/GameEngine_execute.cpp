@@ -17,6 +17,7 @@ enum RecorderModeType
 extern "C" UnsignedInt __stdcall bfme_timeGetTime(void);
 extern "C" __declspec(dllimport) void __stdcall Sleep(UnsignedInt milliseconds);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass
 {
 public:
@@ -25,6 +26,7 @@ public:
 	void cleanUpReplayFile(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StatsCollector.h
 class StatsCollector
 {
 public:
@@ -34,6 +36,7 @@ public:
 
 extern StatsCollector *RetailStatsCollector;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -64,6 +67,7 @@ public:
 	virtual int getTimeMultiplier(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetworkInterface.h
 class NetworkInterface
 {
 public:
@@ -88,6 +92,7 @@ public:
 
 extern NetworkInterface *TheNetwork;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameClient.h
 class GameClient
 {
 public:
@@ -103,6 +108,7 @@ public:
 	virtual UnsignedInt getFrame(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GlobalLanguage.h
 class GlobalLanguage
 {
 public:
@@ -141,6 +147,7 @@ public:
 
 void _bfme_debugRecordCallsite(int kind);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameEngine.h
 class GameEngine
 {
 public:

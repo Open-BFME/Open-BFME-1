@@ -9,6 +9,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ObjectHelper.h
 class ObjectHelper
 {
 public:
@@ -19,6 +20,7 @@ extern "C" char ObjectDefectionHelper_vtbl0;	///< retail 0x0109E574
 extern "C" char ObjectDefectionHelper_vtbl0C;	///< retail 0x0109E4B0
 extern "C" char ObjectDefectionHelper_vtbl10;	///< retail 0x0109E4A0
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ObjectDefectionHelper.h
 class ObjectDefectionHelper : public ObjectHelper
 {
 public:

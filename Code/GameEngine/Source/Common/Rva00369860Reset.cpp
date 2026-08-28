@@ -24,6 +24,7 @@ public:
 class BfmeVisionBonusSource;
 class Rva00369860State;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 	friend class Rva00369860State;

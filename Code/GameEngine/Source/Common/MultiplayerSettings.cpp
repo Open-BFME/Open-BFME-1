@@ -71,6 +71,7 @@ const FieldParse MultiplayerSettings::m_multiplayerSettingsFieldParseTable[] =
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/INIMultiplayer.cpp
 // ??0MultiplayerSettings@@ present-unmatched
 MultiplayerSettings::MultiplayerSettings()
 {
@@ -127,6 +128,7 @@ MultiplayerColorDefinition * MultiplayerSettings::getColor(Int which)
 	return NULL;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/MultiplayerSettings_findMultiplayerColorDefinitionByName.cpp
 // ?findMultiplayerColorDefinitionByName@MultiplayerSettings@@ present-unmatched
 MultiplayerColorDefinition * MultiplayerSettings::findMultiplayerColorDefinitionByName(AsciiString name)
 {

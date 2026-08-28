@@ -27,6 +27,7 @@ enum NameKeyType { NAMEKEY_INVALID = 0 };
 
 // Spelled locally so that str() is the inlined m_data ? m_data->peek() : ""
 // retail emits, and so that no header pulls in the one-argument overload.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -36,6 +37,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -47,6 +49,7 @@ extern NameKeyGenerator *TheNameKeyGenerator;	///< retail [0x012ED600]
 typedef std::pair<NameKeyType, NameKeyType> BfmeTeamPrototypeKey;
 typedef std::map<BfmeTeamPrototypeKey, TeamPrototype *, std::less<BfmeTeamPrototypeKey> > BfmeTeamPrototypeMap;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamFactory
 {
 public:

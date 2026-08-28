@@ -15,6 +15,7 @@ public:
     void set(const StringBase<T> &that);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
     char *m_text;
@@ -53,12 +54,14 @@ typedef _STL::map<AsciiString, AsciiString, _STL::less<AsciiString>,
                   _STL::allocator<_STL::pair<const AsciiString, AsciiString> > >
     PreferenceMap;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class UserPreferences : public PreferenceMap
 {
 public:
     virtual ~UserPreferences();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class OptionPreferences : public UserPreferences
 {
 public:

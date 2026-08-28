@@ -63,6 +63,7 @@
 // The exact retail constructor is emitted by ProductionPrerequisiteCtorThunk.cpp.
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/ProductionPrerequisiteDestructorThunk.cpp
 // ??1ProductionPrerequisite@@QAE@XZ present-unmatched
 ProductionPrerequisite::~ProductionPrerequisite()
 {
@@ -234,6 +235,7 @@ void ProductionPrerequisite::addUnitPrereq( const std::vector<AsciiString>& unit
 //-------------------------------------------------------------------------------------------------
 // returns an asciistring which is a list of all the prerequisites
 // not satisfied yet
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/ProductionPrerequisiteGetRequiresListThunk.cpp
 // ?getRequiresList@ProductionPrerequisite@@QBE?AVUnicodeString@@PBVPlayer@@@Z present-unmatched
 UnicodeString ProductionPrerequisite::getRequiresList(const Player *player) const
 {

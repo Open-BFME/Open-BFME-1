@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?open@CachedFileInputStream@@QAE_NVAsciiString@@@Z: Code/GameEngine/Source/Common/System/DataChunk.cpp
 // Open-BFME5: lift the retail cached-file open/decompression path to C++.
 
 typedef int Int;
 typedef bool Bool;
 void *operator new[](unsigned int size);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -39,6 +41,7 @@ public:
 	File *openFile(const char *name, Int mode);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression/Compression.h
 class CompressionManager
 {
 public:
@@ -49,6 +52,7 @@ public:
 
 extern FileSystem *TheFileSystem;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MapReaderWriterInfo.h
 class CachedFileInputStream
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?allow@PartitionFilterRepulsor@@MAE_NPAVObject@@@Z: Code/GameEngine/Source/GameLogic/Object/PartitionManager.cpp
 // Isolated thunk for PartitionFilterRepulsor::allow. The Zero Hour source
 // (PartitionManager.cpp) compiles to bytes that are 94.8% aligned with
 // retail but disagree on three points, all layout/enum drift documented by
@@ -18,12 +19,14 @@
 enum Relationship { ENEMIES = 0 };
 enum KindOfType { KINDOF_STRUCTURE_ = 7 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
 	bool isKindOf(KindOfType kindOf) const;			// pinned ILT @0x0003251F
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 public:
@@ -37,6 +40,7 @@ public:
 	unsigned char m_privateStatus;						///< retail this+0x344, bit 0 = EFFECTIVELY_DEAD
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionFilterRepulsor
 {
 protected:

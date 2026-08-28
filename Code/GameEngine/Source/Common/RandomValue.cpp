@@ -414,6 +414,7 @@ Real GameClientRandomVariable::getValue( void ) const
 /**
 	define the range of random values, and the distribution of values
 */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/random_value.cpp
 // ?setRange@GameLogicRandomVariable@@ present-unmatched
 void GameLogicRandomVariable::setRange( Real low, Real high, DistributionType type )
 {

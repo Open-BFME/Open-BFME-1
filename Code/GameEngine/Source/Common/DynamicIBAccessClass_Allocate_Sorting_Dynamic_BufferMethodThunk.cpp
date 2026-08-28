@@ -1,9 +1,12 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?Allocate_Sorting_Dynamic_Buffer@DynamicIBAccessClass@@QAEXXZ: Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/always.h
 class W3DMPO
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -31,6 +34,7 @@ private:
     mutable int NumRefs;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class IndexBufferClass : public W3DMPO, public RefCountClass
 {
 protected:
@@ -41,6 +45,7 @@ protected:
     unsigned type;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class SortingIndexBufferClass : public IndexBufferClass
 {
 public:
@@ -50,6 +55,7 @@ protected:
     unsigned short *index_buffer;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class DynamicIBAccessClass : public W3DMPO
 {
 public:

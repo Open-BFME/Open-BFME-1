@@ -15,6 +15,7 @@
 #include "PreRTS.h"
 #include "Common/INI.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Image.h
 class Image
 {
 public:
@@ -29,6 +30,7 @@ private:
 	char m_unknown08[ 0x34 - 0x08 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Image.h
 class ImageCollection
 {
 public:

@@ -318,6 +318,7 @@ const ScienceInfo* ScienceStore::findScienceInfo(ScienceType st) const
 // to match.
 class GameLogic;
 extern GameLogic* TheGameLogic;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass
 {
 public:

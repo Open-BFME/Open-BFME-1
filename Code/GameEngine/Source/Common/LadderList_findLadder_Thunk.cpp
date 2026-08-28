@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/shims/campaignmanagerascii /ICode/Libraries/Source/WWVegas/WWLib
+// readable body of ?findLadder@LadderList@@QAEPBVLadderInfo@@ABVAsciiString@@G@Z: Code/GameEngine/Source/GameNetwork/GameSpy/LadderDefs.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 #include "Common/AsciiString.h"
@@ -16,6 +17,7 @@ struct LadderListNode
 
 // Only the tail of LadderInfo that findLadder actually touches: address at
 // +0x28, port at +0x2c (proven by the retail body's field offsets).
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/LadderDefs.h
 class LadderInfo
 {
 public:
@@ -24,6 +26,7 @@ public:
 	unsigned short port;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/LadderDefs.h
 class LadderList
 {
 public:

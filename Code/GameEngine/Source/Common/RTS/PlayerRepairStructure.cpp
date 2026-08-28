@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?repairStructure@Player@@UAEXW4ObjectID@@@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
 // Open-BFME5: Player::repairStructure, retail 0x000C9720, 20 bytes.
 //
 // The Zero Hour body verbatim -- forward to the AI player when there is one.
@@ -7,6 +8,7 @@
 
 enum ObjectID { OBJECT_ID_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class AIPlayer
 {
 public:
@@ -28,6 +30,7 @@ public:
 	virtual void repairStructure(ObjectID structureID);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
