@@ -58,7 +58,7 @@ public:
 	virtual void bfmeSlot1(void) = 0;
 	virtual void bfmeSlot2(void) = 0;
 	virtual void bfmeSlot3(void) = 0;
-	virtual void bfmeSlot4(void) = 0;
+	virtual unsigned char bfmeSetPlayerTemplate(GameSlot *slot, int playerTemplate) = 0;
 	virtual bool bfmeSetColor(GameSlot *slot, int color) = 0;
 	virtual void bfmeSlot6(void) = 0;
 	virtual void bfmeSlot7(void) = 0;
@@ -70,6 +70,7 @@ class Gen_00525EE0
 {
 public:
 	void bfmeRefresh(void);
+	bool bfmeApplyPlayerTemplate(int index);
 	bool bfmeApplyColor(int index);
 	unsigned short bfmeCountReadyPlayers(void);
 
@@ -82,7 +83,8 @@ private:
 	bool m_pending;
 	unsigned char m_unmodelled18[0x90];
 	GameWindow *m_colorCombos[8];
-	unsigned char m_unmodelledC8[0x5C];
+	GameWindow *m_playerTemplateCombos[8];
+	unsigned char m_unmodelledE8[0x3C];
 	bool m_isMultiplayer;
 	unsigned char m_unmodelled125[7];
 	bool m_ready[8];
@@ -107,6 +109,35 @@ void Gen_00525EE0::bfmeRefresh(void)
 		if (map && map->m_isMultiplayer)
 			m_isMultiplayer = true;
 	}
+}
+
+// Apply the selected player-template value when it differs from the slot.
+// ?bfmeApplyPlayerTemplate@Gen_00525EE0@@QAE_NH@Z
+bool Gen_00525EE0::bfmeApplyPlayerTemplate(int index)
+{
+	if (m_first && !m_owner->bfmeContains(m_first))
+		m_first = 0;
+
+	if (m_second && !m_owner->bfmeContains(m_second))
+		m_second = 0;
+
+	if (!m_first)
+		return false;
+
+	m_pending = false;
+	GameWindow *combo = m_playerTemplateCombos[index];
+	int selected;
+	GadgetComboBoxGetSelectedPos(combo, &selected);
+	int playerTemplate = (int)GadgetComboBoxGetItemData(combo, selected);
+	if (playerTemplate < -2)
+		return false;
+	GameSlot *slot = m_first->getSlot(index);
+	if (!slot)
+		return false;
+	if (playerTemplate == slot->getPlayerTemplate())
+		return false;
+
+	return m_owner->bfmeSetPlayerTemplate(slot, playerTemplate);
 }
 
 // The controller validates both cached game records before applying a combo
