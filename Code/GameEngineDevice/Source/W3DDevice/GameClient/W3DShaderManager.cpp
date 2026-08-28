@@ -1988,13 +1988,12 @@ Int TerrainShader2Stage::set(Int pass)
 	return TRUE;
 }
 
-// ?init@TerrainShader8Stage@@EAEHXZ present-unmatched
 Int TerrainShader8Stage::init( void )
 {	
 	ChipsetType res;
 
 	//this shader will also use the 2Stage shader for some of the passes so initialize it too.
-	if (terrainShader2Stage.init() && (res=W3DShaderManager::getChipset()) >= DC_TNT && res <= DC_GEFORCE2)
+	if (terrainShader2Stage.init() && (res=W3DShaderManager::getChipset()) <= (ChipsetType)1)
 	{
 		W3DShaders[W3DShaderManager::ST_TERRAIN_BASE]=&terrainShader8Stage;
 		W3DShadersPassCount[W3DShaderManager::ST_TERRAIN_BASE]=1;
