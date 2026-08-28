@@ -72450,6 +72450,8 @@ name,address,notes
 ?bfmeDoBRB@BfmeSinkBRB@@QAEXPAUBfmeSubBRB@@PAX@Z,0x0003D712,pin
 ?bfmeDoBRD@BfmeThingBRD@@QAEXPAX00@Z,0x0002A1B2,pin
 ?bfmeDoBRE@BfmeSubBRE@@QAEXPAX@Z,0x0002AFEF,pin
+?bfmeDoBSC@BfmeThingBSC@@QAEXPAXH@Z,0x000157DA,pin
+?bfmeDoBSD@@YAXPAUBfmeSubBSD@@PAX@Z,0x00041AFB,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -72867,6 +72869,7 @@ name,address,notes
 ?bfmeIsSet@BfmeGameOverGateB@@QAE_NXZ,0x0000CFC7,Open-BFME5 ILT the second early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012F076C is unidentified
 ?bfmeIterate@BfmeIterableObject@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x0003DB68,Open-BFME5 ILT the per-object visit in Player::iterateObjects at 0x000CDCF0 calls; it jumps to 0x000EE770
 ?bfmeJoinAKD@BfmeInnerAKD@@QAEXPAXHH@Z,0x00014FDD,pin
+?bfmeJoinBSE@@YAPAXPAX0@Z,0x00042FA0,pin
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
 ?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
@@ -72964,6 +72967,7 @@ name,address,notes
 ?bfmeOneBOF@BfmeThingBOF@@QAEXXZ,0x00014182,pin
 ?bfmeOneBPE@BfmeSubBPE@@QAEXXZ,0x000461CD,pin
 ?bfmeOneBRA@BfmeThingBRA@@QAEXXZ,0x0002CB10,pin
+?bfmeOneBSB@BfmeThingBSB@@QAEXPAUBfmePartBSB@@0@Z,0x0001D0D4,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73036,6 +73040,7 @@ name,address,notes
 ?bfmeSetBPC@BfmeThingBPC@@QAEXH@Z,0x0001E402,pin
 ?bfmeSetBPD@BfmeSubBPD@@QAEXPAX@Z,0x00887B60,pin
 ?bfmeSetBRC@BfmeSubBRC@@QAEXPAX@Z,0x0002F333,pin
+?bfmeSetBSF@BfmeSubBSF@@QAEXPAX@Z,0x00887B60,pin
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
 ?bfmeSetQQ@BfmeThingQQ@@QAEXPBDI@Z,0x0088A8F0,pin
 ?bfmeSetQR@BfmeThingQR@@QAEXPBDI@Z,0x0088A8F0,pin
@@ -73088,6 +73093,7 @@ name,address,notes
 ?bfmeStepBQA@BfmeThingBQA@@QAEXXZ,0x0000F966,pin
 ?bfmeStepBQC@BfmeSubBQC@@QAEXXZ,0x0002E1C7,pin
 ?bfmeStepBRF@BfmeThingBRF@@QAEXXZ,0x00047B6D,pin
+?bfmeStepBSA@BfmeThingBSA@@QAEXXZ,0x0000705E,pin
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
@@ -73125,6 +73131,7 @@ name,address,notes
 ?bfmeTwoBKE@@YAXPAX@Z,0x00038389,pin
 ?bfmeTwoBOF@BfmeThingBOF@@QAEXXZ,0x00004156,pin
 ?bfmeTwoBRA@BfmeThingBRA@@QAE_NXZ,0x00030495,pin
+?bfmeTwoBSB@BfmeThingBSB@@QAEXXZ,0x000293E3,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -74147,6 +74154,7 @@ name,address,notes
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
 ?g_bfmeClockAHB@@3PAUBfmeClockAHB@@A,0x00EF0898,pin
 ?g_bfmeClockAZA@@3PAUBfmeClockAZA@@A,0x00EF0898,pin
+?g_bfmeClockBSA@@3PAUBfmeClockBSA@@A,0x00EF0898,pin
 ?g_bfmeClockYD@@3PAUBfmeClockYD@@A,0x00EF0898,pin
 ?g_bfmeCoord2DFormat@@3QBDB,0x011443F8,address-derived Coord2D format string from retail 0x009D9789
 ?g_bfmeCoord3DFormat@@3QBDB,0x01144348,address-derived Coord3D format string from retail 0x009D9650
