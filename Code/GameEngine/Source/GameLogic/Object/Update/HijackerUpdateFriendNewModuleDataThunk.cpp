@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
+// Field names come from retail's own INI field table joined to upstream's
+// parse table on the key: retail supplies every offset, upstream only the
+// word. The offsets were derived from this class's declaration sequence and
+// type sizes, never read out of the old placeholder names.
 
 class INI;
 class ModuleData;
@@ -15,8 +19,8 @@ public:
 
 private:
 	int m_unused;
-	int m_a;
-	int m_b;
+	int m_attachToBone;
+	int m_parachuteName;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
@@ -36,8 +40,8 @@ public:
 };
 
 HijackerUpdateModuleData::HijackerUpdateModuleData()
-	: m_a(0)
-	, m_b(0)
+	: m_attachToBone(0)
+	, m_parachuteName(0)
 {
 }
 
