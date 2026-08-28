@@ -5,7 +5,8 @@ class ScriptAction
 public:
 	enum ScriptActionType
 	{
-		VICTORY = 3
+		VICTORY = 3,
+		DEFEAT = 4
 	};
 
 	ScriptAction(ScriptActionType type);
@@ -27,6 +28,7 @@ class ScriptEngine
 {
 public:
 	void debugVictory(void);
+	void debugDefeat(void);
 };
 
 #define TheScriptActions (*(ScriptActions **)0x012F0620)
@@ -34,5 +36,11 @@ public:
 void ScriptEngine::debugVictory(void)
 {
 	ScriptAction *action = new ScriptAction(ScriptAction::VICTORY);
+	TheScriptActions->executeAction(action);
+}
+
+void ScriptEngine::debugDefeat(void)
+{
+	ScriptAction *action = new ScriptAction(ScriptAction::DEFEAT);
 	TheScriptActions->executeAction(action);
 }
