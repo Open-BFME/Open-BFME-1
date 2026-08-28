@@ -72602,6 +72602,7 @@ name,address,notes
 ?bfmeDoBUA@BfmeInnerBUA@@QAEXPAX@Z,0x00024D70,pin
 ?bfmeDoBUC@BfmeSubBUC@@QAEXPAX000@Z,0x00002A59,pin
 ?bfmeDoBVC@BfmeSubBVC@@QAEXPAX000@Z,0x00001C17,pin
+?bfmeDoDZD@BfmeThingDZD@@QAEXXZ,0x00022999,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -74680,6 +74681,7 @@ name,address,notes
 ?g_bfmeTwoAOA@@3PAVBfmeTwoAOA@@A,0x00EED600,pin
 ?g_bfmeTwoAQA@@3PAVBfmeTwoAQA@@A,0x00EF1028,pin
 ?g_bfmeTwoATC@@3PAUBfmeTwoATC@@A,0x00EF4B58,pin
+?g_bfmeUiDZD@@3PAVBfmeUiDZD@@A,0x00EF7194,pin
 ?g_bfmeUnicodeStringFormat@@3QBDB,0x0114451C,address-derived UnicodeString format string from retail 0x009D9AAC
 ?g_bfmeUnsignedByteFormat@@3QBDB,0x011442BC,address-derived unsigned-byte format string from the DIR32 operand at retail 0x009D943A
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
@@ -78372,6 +78374,7 @@ __imp__bfmeSetDWI@8,0x00F58F64,pin
 __imp__bfmeStartDWB@4,0x00F58D0C,pin
 __imp__bfmeStatusDXD@4,0x00F5958C,pin
 __imp__bfmeTickDYA@0,0x00F59544,pin
+__imp__bfmeTickDZC@0,0x00F59544,pin
 __imp__bfmeUseDWL@4,0x00F59210,pin
 __imp__fopen,0x013593BC,pin
 __imp__ftell,0x013593EC,pin
