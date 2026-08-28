@@ -72273,6 +72273,7 @@ name,address,notes
 ?bfmeAskCCE@BfmeOuterCCE@@QAE_NXZ,0x0004425B,pin
 ?bfmeAskCFC@BfmeOuterCFC@@QAE_NXZ,0x0004425B,pin
 ?bfmeAskCLE@BfmeSubCLE@@QAEPAVBfmeXCLE@@H@Z,0x00009C41,pin
+?bfmeAskCOF@BfmeThingCOF@@QAE_NXZ,0x00011F77,pin
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
 ?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
@@ -73147,6 +73148,7 @@ name,address,notes
 ?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
 ?bfmeRunBEA@BfmeSubBEA@@QAEXXZ,0x0003DAA5,pin
 ?bfmeRunCLE@BfmeXCLE@@QAE_NPAVBfmeSubCLE@@PAXH@Z,0x0002E85C,pin
+?bfmeRunCOF@BfmeThingCOF@@QAEXPAX000@Z,0x0001BB21,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
