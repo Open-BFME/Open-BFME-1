@@ -72629,6 +72629,7 @@ name,address,notes
 ?bfmeFirstAKB@BfmeThingAKB@@QAE_NPAH@Z,0x00006EF1,pin
 ?bfmeFirstRK@BfmeThingRK@@QAEXXZ,0x00020B80,pin
 ?bfmeFlagCWB@@3IA,0x00EF1034,pin
+?bfmeFlagCWC@@3IA,0x00EF14A4,pin
 ?bfmeFlush@Rva003D8530Owner@@QAEXXZ,0x00009787,Open-BFME5 ILT thunk to body 0x003D55C0; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it once on the same sub-object after the slot loop; address-derived name
 ?bfmeFlushQO@BfmeThingQO@@QAEXH@Z,0x0088A230,pin
 ?bfmeFormatAPB@@YAXPADHPAX@Z,0x00850600,pin
@@ -72922,6 +72923,7 @@ name,address,notes
 ?bfmeIdAIA@BfmeThingAIA@@QAEPAXXZ,0x00020824,pin
 ?bfmeIdALA@BfmeKeyALA@@QAEPAUBfmeIdALA@@XZ,0x00020824,pin
 ?bfmeIdCWB@@3HA,0x00EF102C,pin
+?bfmeIdCWC@@3HA,0x00EF14A0,pin
 ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z,0x0003E0B3,Open-BFME5 ILT thunk to body 0x0039BBD0; ?_bfme_allows@BfmeSpecialPowerAllowanceStore@@QAEE... at 0x0039BE50 asks it about the template first and allows everything when it answers negative; address-derived name
 ?bfmeInit000078A1@@YAXXZ,0x000078A1,Open-BFME5 ILT the initialiser the run-once latch at 0x005E85A0 calls
 ?bfmeInit0000B686@@YAXXZ,0x0000B686,Open-BFME5 ILT the initialiser the run-once latch at 0x005E8570 calls
@@ -73073,6 +73075,7 @@ name,address,notes
 ?bfmeNextBDD@@YAXPAUBfmeSlotBDD@@@Z,0x0003D4E7,pin
 ?bfmeNextBDD@@YGXPAUBfmeSlotBDD@@@Z,0x0003D4E7,pin
 ?bfmeNextCWB@@3HA,0x00EF1030,pin
+?bfmeNextCWC@@3HA,0x00EF1030,pin
 ?bfmeNodeAllocLarge@@YAPAXI@Z,0x00881F30,Open-BFME5 the STLport large-block allocator the 0x84-byte clone-node body calls
 ?bfmeNodeAllocSmall@@YAPAXI@Z,0x0082E540,Open-BFME5 the STLport node allocator the red-black clone-node bodies call
 ?bfmeNoteWD@BfmeThingWD@@QAEXXZ,0x0002191D,pin
