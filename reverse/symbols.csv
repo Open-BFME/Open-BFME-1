@@ -72205,6 +72205,7 @@ name,address,notes
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
 ?bfmeAddANB@BfmeSinkANB@@QAEXPAVBfmeThingANB@@PAX@Z,0x008520A0,pin
 ?bfmeAddBFC@BfmeSinkBFC@@QAEXPAUBfmeSubBFC@@@Z,0x0001D606,pin
+?bfmeAddCFE@BfmeSubCFE@@QAEXPAXH@Z,0x0003D735,pin
 ?bfmeAllocATA@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocATD@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocAVC@@YAPAXI@Z,0x0082E540,pin
