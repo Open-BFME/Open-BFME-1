@@ -73485,6 +73485,7 @@ name,address,notes
 ?bfmeFreeBXE@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeBigCFA@@YAXPAD@Z,0x00881EB0,pin
 ?bfmeFreeBigCFB@@YAXPAD@Z,0x00881EB0,pin
+?bfmeFreeBIB@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeBlock@@YAXPAX@Z,0x00881EF0,Open-BFME5 the free the derived destructors at 0x00924090 and its siblings call
 ?bfmeFreeCAD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeCBF@@YAXPAX@Z,0x00881EB0,pin
