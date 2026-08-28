@@ -72812,6 +72812,7 @@ name,address,notes
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
 ?bfmeGet_002198b0@BfmeChainResult@@QAEPAXXZ,0x00036165,Open-BFME5 ILT the lookup at 0x002198B0 tail-jumps through
 ?bfmeGet_002198d0@BfmeChainResult@@QAEPAXXZ,0x000456E2,Open-BFME5 ILT the lookup at 0x002198D0 tail-jumps through
+?bfmeGlobalCGD@@YAXXZ,0x009A3AD0,pin
 ?bfmeGrab@BfmeSourceA@@QAEPAXPAPAX@Z,0x00019876,Open-BFME5 ILT the vector assignment at 0x00095A50 grabs through
 ?bfmeGrab@BfmeSourceB@@QAEPAXPAPAX@Z,0x000314E9,Open-BFME5 ILT the vector assignment at 0x000B54C0 grabs through
 ?bfmeGrab@BfmeSourceC@@QAEPAXPAPAX@Z,0x0002EBC2,Open-BFME5 ILT the vector assignment at 0x002F8980 grabs through
@@ -73059,6 +73060,7 @@ name,address,notes
 ?bfmeOneCED@BfmeThingCED@@QAE_NXZ,0x00046E3E,pin
 ?bfmeOneCEF@BfmeThingCEF@@QAEXXZ,0x00004075,pin
 ?bfmeOneCFD@BfmeOuterCFD@@QAEXXZ,0x0000F966,pin
+?bfmeOneCGD@BfmeThingCGD@@QAEXXZ,0x009A2FE0,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73256,6 +73258,7 @@ name,address,notes
 ?bfmeTwoCED@BfmeThingCED@@QAE_NXZ,0x0001B31A,pin
 ?bfmeTwoCEF@BfmeThingCEF@@QAEXXZ,0x00031FCF,pin
 ?bfmeTwoCFD@BfmeOuterCFD@@QAEXXZ,0x0001011D,pin
+?bfmeTwoCGD@BfmeThingCGD@@QAEXXZ,0x009A30B0,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
