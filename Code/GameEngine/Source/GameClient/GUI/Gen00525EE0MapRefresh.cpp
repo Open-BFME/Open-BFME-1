@@ -19,10 +19,13 @@ void *GadgetComboBoxGetItemData(GameWindow *window, int selected);
 class GameSlot
 {
 public:
+	bool isHuman(void) const;
+	int getPlayerTemplate(void) const { return m_playerTemplate; }
 	int getColor(void) const { return m_color; }
 
 private:
-	unsigned char m_unmodelled[0x18];
+	unsigned char m_unmodelled[0x14];
+	int m_playerTemplate;
 	int m_color;
 };
 
@@ -68,6 +71,7 @@ class Gen_00525EE0
 public:
 	void bfmeRefresh(void);
 	bool bfmeApplyColor(int index);
+	unsigned short bfmeCountReadyPlayers(void);
 
 private:
 	unsigned char m_unmodelled[4];
@@ -80,6 +84,8 @@ private:
 	GameWindow *m_colorCombos[8];
 	unsigned char m_unmodelledC8[0x5C];
 	bool m_isMultiplayer;
+	unsigned char m_unmodelled125[7];
+	bool m_ready[8];
 };
 
 // The enclosing type has no exposed retail spelling; the real GameInfo,
@@ -129,4 +135,34 @@ bool Gen_00525EE0::bfmeApplyColor(int index)
 		return false;
 
 	return m_owner->bfmeSetColor(slot, color);
+}
+
+// Count the ready, playable human slots in the validated game record.
+// ?bfmeCountReadyPlayers@Gen_00525EE0@@QAEGXZ
+unsigned short Gen_00525EE0::bfmeCountReadyPlayers(void)
+{
+	if (m_first && !m_owner->bfmeContains(m_first))
+		m_first = 0;
+
+	if (m_second && !m_owner->bfmeContains(m_second))
+		m_second = 0;
+
+	if (!m_first)
+		return 0;
+
+	int count = 0;
+	volatile bool *ready = m_ready;
+	int index = 0;
+	int remaining = 8;
+	do
+	{
+		GameSlot *slot = m_first->getSlot(index);
+		if (slot && slot->isHuman() && slot->getPlayerTemplate() != -2 && *ready)
+			++count;
+		++index;
+		++ready;
+	}
+	while (--remaining);
+
+	return (unsigned short)count;
 }
