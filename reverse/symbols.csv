@@ -73037,6 +73037,7 @@ name,address,notes
 ?bfmeMakeBZA@@YAPAVBfmeCacheBZA@@PAVBfmeThingBZA@@@Z,0x007F4810,pin
 ?bfmeMakeCGE@@YAHPAVBfmeSubCGE@@@Z,0x0097F5D0,pin
 ?bfmeMakeDFC@BfmeOtherDFC@@QAEPAXPAXH@Z,0x007E8900,pin
+?bfmeMakeDFI@BfmeOtherDFI@@QAEPAXPAXH@Z,0x007E8900,pin
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
@@ -78167,6 +78168,7 @@ _bfmeInfoDCE,0x00CEA6A8,pin
 _bfmeInfoDCF,0x00D14768,pin
 _bfmeInfoDCG,0x00D16D70,pin
 _bfmeInfoDFC,0x00D2B4E8,pin
+_bfmeInfoDFI,0x00D2B554,pin
 _bfmeLitZD,0x00CC79BC,pin
 _bfmeObjDAA,0x00EEF430,pin
 _bfmeObjDAB,0x00EF1608,pin
