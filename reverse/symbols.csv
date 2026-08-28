@@ -72439,6 +72439,7 @@ name,address,notes
 ?bfmeCallDSP@BfmeOwnerDSP@@QAEXPAX@Z,0x0003DB77,pin
 ?bfmeCallDUB@BfmeSubDUB@@QAEXXZ,0x0002DF65,pin
 ?bfmeCallDUL@@YGXPAXPBX@Z,0x0001D467,pin
+?bfmeCallDXB@BfmeSubDXB@@QAEXXZ,0x009F68C6,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -72686,6 +72687,7 @@ name,address,notes
 ?bfmeErase@BfmeShroudList@@QAEXPAVBfmeListHeader@@@Z,0x00016ED2,Open-BFME5 ILT thunk; ?reset30BC@BaseHeightMapResetShroud@@QAEXXZ at 0x00727450 hands it the first node of the list at +0x44 before putting the header back to itself; address-derived name
 ?bfmeErase@S4Mem005879C0@@AAEXPAX@Z,0x00037353,Open-BFME5 ILT thunk; ??1S4Mem005879C0@@QAE@XZ at 0x005879C0 hands it the field at +4 of its header before putting the header back to itself; address-derived name
 ?bfmeEraseFrom@BfmeListW@@QAEXPAVBfmeNodeW@@@Z,0x00037AB5,Open-BFME5 the ICF thunk (to 0x00437AB5) the list clear at 0x004B1720 erases through
+?bfmeFailDXE@@YGXH@Z,0x00AFD540,pin
 ?bfmeFind@BfmeChainOwner@@QAEPAVBfmeChainResult@@H@Z,0x0002F52C,Open-BFME5 ILT the four lookups around 0x002197E0 call
 ?bfmeFind@BfmeFinder@@QAEPAXXZ,0x000265A8,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 call
 ?bfmeFind@Gen_003C02B0@@AAEPAVBfmeItemAN@@H@Z,0x00032A56,Open-BFME5 the ICF thunk (to 0x00432A56) the remove at 0x003C02B0 looks its item up through
@@ -73469,6 +73471,7 @@ name,address,notes
 ?bfmeTailDSB@BfmeThingDSB@@QAE_NXZ,0x0002FE05,pin
 ?bfmeTailDTK@BfmeThingDTK@@QAEXXZ,0x0001C75B,pin
 ?bfmeTailDTL@BfmeThingDTK@@QAEXXZ,0x0001C75B,pin
+?bfmeTailDXC@BfmeThingDXC@@QAEXXZ,0x0000B488,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
@@ -74587,6 +74590,7 @@ name,address,notes
 ?g_BFMEIndexBufferDebug@@3PAVBFMEIndexBufferDebugClass@@A,0x01336E5C,retail DX8 error path dispatches through the shared game debug manager global
 ?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
+?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
 ?g_bfmeBufDWG@@3PAXA,0x00F378D0,pin
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
@@ -78332,12 +78336,17 @@ __imp__bfmeDoDWH@0,0x00F596D8,pin
 __imp__bfmeEnterDVC@4,0x00F58D18,pin
 __imp__bfmeEnterDWA@4,0x00F58D18,pin
 __imp__bfmeEnterDWD@4,0x00F58D18,pin
+__imp__bfmeFreeDXC,0x00F593A0,pin
 __imp__bfmeInitDWA@4,0x00F58E5C,pin
+__imp__bfmeInitDXB@4,0x00F58D0C,pin
 __imp__bfmeLeaveDVC@4,0x00F58E74,pin
 __imp__bfmeLeaveDWD@4,0x00F58E74,pin
+__imp__bfmeMaskDXF@4,0x00F58DAC,pin
 __imp__bfmeOnDWJ@4,0x00F59090,pin
+__imp__bfmeQueryDXE@4,0x00F591B4,pin
 __imp__bfmeSetDWI@8,0x00F58F64,pin
 __imp__bfmeStartDWB@4,0x00F58D0C,pin
+__imp__bfmeStatusDXD@4,0x00F5958C,pin
 __imp__bfmeUseDWL@4,0x00F59210,pin
 __imp__fopen,0x013593BC,pin
 __imp__ftell,0x013593EC,pin
