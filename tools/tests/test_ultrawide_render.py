@@ -25,18 +25,10 @@ import modbuild  # noqa: E402
 from cave import PE  # noqa: E402
 
 HOOKS = (
-    modbuild.TARGET_UI_PARSE_ENTRY,
-    modbuild.TARGET_UI_PARSE_TAIL,
-    modbuild.TARGET_UI_SCHEME_BY_NAME_ENTRY,
-    modbuild.TARGET_UI_SCHEME_BY_NAME_TAIL,
-    modbuild.TARGET_UI_SCHEME_BY_TEMPLATE_ENTRY,
-    modbuild.TARGET_UI_SCHEME_BY_TEMPLATE_TAIL,
-    modbuild.TARGET_UI_SCHEME_BY_PLAYER_ENTRY,
-    modbuild.TARGET_UI_SCHEME_BY_PLAYER_TAIL,
-    modbuild.TARGET_UI_CONTROLBAR_INIT_TAIL,
     modbuild.TARGET_UI_COORDINATE_RANGE,
     modbuild.TARGET_UI_SENTENCE_VIEWPORT,
     modbuild.TARGET_UI_RENDER_VIEWPORT,
+    modbuild.TARGET_UI_COPY_SURFACE,
 )
 
 
@@ -47,9 +39,13 @@ def ui_band(width, height):
 
 
 def ui_coordinate_range(width, height):
-    """Return the physical inclusive/exclusive Render2D coordinate interval."""
+    """Return the full physical logical range retained by Render2D."""
+    return 0, width
+
+
+def map_x(x, width, height):
     left, band = ui_band(width, height)
-    return left, left + band
+    return left + (x * band) // width
 
 
 @pytest.mark.parametrize("width,height,expected_left,expected_band", [
@@ -91,10 +87,24 @@ def test_reference_compatibility():
     assert band / 768 == pytest.approx(4.0 / 3.0)
 
 
-def test_renderer_range_matches_already_centered_window_coordinates():
-    assert ui_coordinate_range(1920, 1080) == (240, 1680)
-    assert ui_coordinate_range(3440, 1440) == (760, 2680)
-    assert ui_coordinate_range(5120, 1440) == (1600, 3520)
+def test_renderer_range_retains_physical_layout_and_viewport_scales_it():
+    assert ui_coordinate_range(1920, 1080) == (0, 1920)
+    assert ui_coordinate_range(3440, 1440) == (0, 3440)
+    assert map_x(0, 3440, 1440) == 760
+    assert map_x(3440, 3440, 1440) == 2680
+    assert map_x(1720, 3440, 1440) == 1720
+
+
+@pytest.mark.parametrize("width,height", [
+    (1920, 1080), (2560, 1080), (3440, 1440), (3840, 1600),
+    (5120, 1440),
+])
+def test_ui_rectangle_is_scaled_and_centred(width, height):
+    left, band = ui_band(width, height)
+    x0, x1 = 100, width - 100
+    assert map_x(x0, width, height) == left + (x0 * band) // width
+    assert map_x(x1, width, height) == left + (x1 * band) // width
+    assert map_x(x1, width, height) - map_x(x0, width, height) < x1 - x0
 
 
 def test_extreme_diagnostic_is_unmistakable():
@@ -109,10 +119,9 @@ def test_payload_avoids_trigonometry_and_documents_renderer_order():
     assert "tan(" not in text
     assert "atan" not in text
     assert "Set_Coordinate_Range" in text
-    assert "ui_parse_begin" in text
-    assert "ui_scheme_begin" in text
-    assert "physical centred interval" in text
-    assert "range->left" in text
+    assert "ui_copy_surface" in text
+    assert "full physical screen range" in text
+    assert "range->right" in text
     assert "00933FD0" in text
     assert "00934AD5" in text
     assert "copySurfaceRects006e" in text
@@ -161,4 +170,6 @@ def test_binary_contains_renderer_detours_and_retail_viewport_call():
                and any(j.mnemonic == "call" and j.op_str == "eax"
                        for j in instructions[n + 1:n + 6])
                for n, i in enumerate(instructions))
+    assert any(i.mnemonic == "imul" and "0x" in i.op_str
+               for i in instructions)
     assert pe.data != baseline.data
