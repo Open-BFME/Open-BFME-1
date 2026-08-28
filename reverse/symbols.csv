@@ -72545,6 +72545,7 @@ name,address,notes
 ?bfmeDtorCHA@BfmeRefCHA@@QAEXXZ,0x009DB400,pin
 ?bfmeDtorCHB@BfmeRefCHB@@QAEXXZ,0x0003FA7B,pin
 ?bfmeDtorCHC@BfmeRefCHC@@QAEXXZ,0x009DB4D0,pin
+?bfmeDtorCJH@BfmeSubCJH@@QAEXXZ,0x009DB400,pin
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUF@BfmeThingUF@@QAEXXZ,0x00AB8350,pin
@@ -72779,6 +72780,7 @@ name,address,notes
 ?bfmeFreeCHB@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeCHC@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeCJD@BfmePoolCJD@@QAEXPAX@Z,0x00035EE5,pin
+?bfmeFreeCJH@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
 ?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
@@ -73239,6 +73241,7 @@ name,address,notes
 ?bfmeTailBOC@@YGXH@Z,0x00020509,pin
 ?bfmeTailCAA@BfmeThingCAA@@QAEXXZ,0x000428AC,pin
 ?bfmeTailCHG@@YAXPAX000@Z,0x0001F596,pin
+?bfmeTailCJH@BfmeThingCJH@@QAEXXZ,0x009DB5A0,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
