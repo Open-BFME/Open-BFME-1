@@ -12,6 +12,7 @@ struct BfmeCellAL
 class BfmeGridAL
 {
 public:
+	void bfmeClearAL();
 	unsigned char bfmeNearAL(int across, int along) const;
 	unsigned char bfmeFarAL(int across, int along) const;
 
@@ -21,6 +22,15 @@ private:
 	int m_bfmeWide;				// 0x2362c
 	int m_bfmeHigh;				// 0x23630
 };
+
+void BfmeGridAL::bfmeClearAL()
+{
+	for (int column = 0; column < m_bfmeWide; ++column) {
+		for (int row = 0; row < m_bfmeHigh; ++row) {
+			m_bfmeColumns[column][row].m_bfmeMark = 0;
+		}
+	}
+}
 
 unsigned char BfmeGridAL::bfmeNearAL(int across, int along) const
 {
