@@ -278,6 +278,7 @@ name,address,notes
 ??$_Construct@UEvaSideSounds@@U1@@_STL@@YAXPAUEvaSideSounds@@ABU1@@Z,0x0001B275,pinharvest x1 (thunk)
 ??$_Construct@UEvaSideSounds@@U1@@_STL@@YAXPAUEvaSideSounds@@ABU1@@Z,0x000350A3,pinharvest x1 (thunk)
 ??$_Construct@UEvaSideSounds@@U1@@_STL@@YAXPAUEvaSideSounds@@ABU1@@Z,0x0004ACFA,pinharvest x1 (thunk)
+??$_Construct@UFactionVictoryParameters@@U1@@_STL@@YAXPAUFactionVictoryParameters@@ABU1@@Z,0x0000CED2,ILT target 0x001DE970 copies the AsciiString and five scalar fields of the 0x18-byte FactionVictoryParameters used by VictorySystem::init
 ??$_Construct@UGen_t_000638c0_p4cd@@U1@@_STL@@YAXPAUGen_t_000638c0_p4cd@@ABU1@@Z,0x000620B0,gen-tgrid payload member
 ??$_Construct@UGen_t_00096350_p8cd@@U1@@_STL@@YAXPAUGen_t_00096350_p8cd@@ABU1@@Z,0x000952A0,gen-tgrid payload member
 ??$_Construct@UGen_t_000a8780_p8cd@@U1@@_STL@@YAXPAUGen_t_000a8780_p8cd@@ABU1@@Z,0x000A7980,gen-tgrid payload member
@@ -11551,6 +11552,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@UEvaSideSounds@@V?$allocator@UEvaSideSounds@@@_STL@@@_STL@@IAEXPAUEvaSideSounds@@ABU3@ABU__false_type@2@I_N@Z,0x00020C98,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@UEvaSideSounds@@V?$allocator@UEvaSideSounds@@@_STL@@@_STL@@IAEXPAUEvaSideSounds@@ABU3@ABU__false_type@2@I_N@Z,0x0002EC58,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@UEvaSideSounds@@V?$allocator@UEvaSideSounds@@@_STL@@@_STL@@IAEXPAUEvaSideSounds@@ABU3@ABU__false_type@2@I_N@Z,0x00048356,pinharvest x1 (thunk)
+?_M_insert_overflow@?$vector@UFactionVictoryParameters@@V?$allocator@UFactionVictoryParameters@@@_STL@@@_STL@@IAEXPAUFactionVictoryParameters@@ABU3@ABU__false_type@2@I_N@Z,0x0000303A,ILT target 0x001DFFF0 is the 0x18-byte nontrivial STLport vector grow path called by VictorySystem::init
 ?_M_insert_overflow@?$vector@UFlightDeckInfo@FlightDeckBehavior@@V?$allocator@UFlightDeckInfo@FlightDeckBehavior@@@_STL@@@_STL@@IAEXPAUFlightDeckInfo@FlightDeckBehavior@@ABU34@ABU__false_type@2@I_N@Z,0x0000A47A,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@UFlightDeckInfo@FlightDeckBehavior@@V?$allocator@UFlightDeckInfo@FlightDeckBehavior@@@_STL@@@_STL@@IAEXPAUFlightDeckInfo@FlightDeckBehavior@@ABU34@ABU__false_type@2@I_N@Z,0x009F56C0,pinharvest x1 (body)
 ?_M_insert_overflow@?$vector@UGen_t_000638c0_p4cd@@V?$allocator@UGen_t_000638c0_p4cd@@@_STL@@@_STL@@IAEXPAUGen_t_000638c0_p4cd@@ABU3@ABU__false_type@2@I_N@Z,0x00063700,gen-tgrid payload member
@@ -73274,6 +73276,7 @@ name,address,notes
 ?bfmeOneDUC@BfmeSubDUC@@QAEXXZ,0x009600A0,pin
 ?bfmeOneDUI@BfmeThingDUI@@QAEXXZ,0x0001E47F,pin
 ?bfmeOneDVB@BfmeSubDVB@@QAEXPAX0@Z,0x000431A3,pin
+?bfmeOneDWB@BfmeThingDWB@@QAEXXZ,0x00017EEF,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -74593,6 +74596,7 @@ name,address,notes
 ?g_bfmeCoord3DFormat@@3QBDB,0x01144348,address-derived Coord3D format string from retail 0x009D9650
 ?g_bfmeCountBBD@@3HA,0x00F0BD30,pin
 ?g_bfmeCountSI@@3HA,0x00EED240,pin
+?g_bfmeCsDWC@@3UBfmeCsDWA@@A,0x00F36E60,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDisconnectPingResult@@3HA,0x012B9810,standalone disconnect ping-result state read and set by updateDisconnectStatus after the sub-ten-percent ratio check
@@ -78319,7 +78323,10 @@ __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
 __imp__bfmeEnterDVC@4,0x00F58D18,pin
+__imp__bfmeEnterDWA@4,0x00F58D18,pin
+__imp__bfmeInitDWA@4,0x00F58E5C,pin
 __imp__bfmeLeaveDVC@4,0x00F58E74,pin
+__imp__bfmeStartDWB@4,0x00F58D0C,pin
 __imp__fopen,0x013593BC,pin
 __imp__ftell,0x013593EC,pin
 __imp__itoa,0x0135935C,pin
