@@ -72306,6 +72306,7 @@ name,address,notes
 ?bfmeBaseBWC@BfmeThingBWC@@QAEXPAX@Z,0x00887B60,pin
 ?bfmeBaseCCF@BfmeThingCCF@@QAEXXZ,0x009A1A30,pin
 ?bfmeBaseCEC@BfmeThingCEC@@QAEXPAX@Z,0x00887B60,pin
+?bfmeBaseCGA@BfmeThingCGA@@QAEXPAX@Z,0x00887B60,pin
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
 ?bfmeBaseSJ@BfmeThingSJ@@QAEXH@Z,0x0090E3D0,pin
 ?bfmeBaseSK@BfmeThingSK@@QAEXH@Z,0x009DB4E0,pin
