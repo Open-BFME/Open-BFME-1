@@ -75,7 +75,6 @@ protected:
 
 // Inline in retail: the body below appears once for ACKBOTH and once for
 // ACKSTAGE1 rather than as a call.
-// ?processAckStage1@BFMEConnectionManager@@IAEXPAVNetCommandMsg@@@Z absent-from-retail
 void BFMEConnectionManager::processAckStage1(NetCommandMsg *msg) {
 	UnsignedByte playerID = msg->getPlayerID();
 	NetCommandRef *ref = 0;
