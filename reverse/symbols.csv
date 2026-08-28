@@ -72589,6 +72589,7 @@ name,address,notes
 ?bfmeFindBHF@BfmeSubBHF@@QAEPAUBfmeGotBHF@@XZ,0x00046538,pin
 ?bfmeFindBOB@BfmeSubBOB@@QAEPAUBfmeGotBOB@@XZ,0x00048C61,pin
 ?bfmeFindBPA@BfmeThingBPA@@QAEPAUBfmeGotBPA@@PAX@Z,0x0001DB92,pin
+?bfmeFindCRA@BfmeTableCRA@@QAEPAUBfmeMidCRA@@PAX@Z,0x0001F253,pin
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
 ?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
 ?bfmeFindRecord@FontLibraryBFMERetail@@AAEPAUBfmeFontRecord@@PAVAsciiString@@M@Z,0x000035A3,Open-BFME5 ILT thunk to body 0x00476E20; FontLibraryBFMERetail::getFont at 0x004772D0 calls it on this with the name and size and reads a byte at +8 of what it returns; address-derived name
@@ -73286,6 +73287,7 @@ name,address,notes
 ?bfmeTheCBD@@3HA,0x00F379BC,pin
 ?bfmeTheCBE@@3PAVBfmeGlobalCBE@@A,0x00EED5C8,pin
 ?bfmeTheCHE@@3PAUBfmeGlobalCHE@@A,0x00EF0898,pin
+?bfmeTheCRA@@3PAVBfmeTableCRA@@A,0x00EF0898,pin
 ?bfmeTheOneCHF@@3PAVBfmeOneCHF@@A,0x00EF1024,pin
 ?bfmeThePoolCJD@@3VBfmePoolCJD@@A,0x00F4FB38,pin
 ?bfmeTheTwoCHF@@3PAVBfmeTwoCHF@@A,0x00EF1028,pin
