@@ -72698,6 +72698,8 @@ name,address,notes
 ?bfmeDtorDLJ@BfmeThingDLJ@@QAEXXZ,0x0001D9EE,pin
 ?bfmeDtorDUJ@BfmeThingDUJ@@QAEXXZ,0x00026F35,pin
 ?bfmeDtorDXG@BfmeThingDXG@@QAEXXZ,0x00893990,pin
+?bfmeDtorEHBa@BfmeSubEHBa@@QAEXXZ,0x00016004,pin
+?bfmeDtorEHBb@BfmeSubEHBb@@QAEXXZ,0x0003D2B7,pin
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUF@BfmeThingUF@@QAEXXZ,0x00AB8350,pin
@@ -72978,6 +72980,7 @@ name,address,notes
 ?bfmeFreeDME@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeDXK@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeECH@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeEHB@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
 ?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
@@ -73014,6 +73017,7 @@ name,address,notes
 ?bfmeGetCrewSpeedMultiplier@Object@@QBEMXZ,0x000277AA,Open-BFME5 ILT thunk to body 0x001BF020; null m_contain at +0x1FC returns 1.0 otherwise tail-forwards to ContainModuleInterface slot 48 (+0xC0); bfme prefix records unrecovered retail spelling
 ?bfmeGetCurrentVictimIfAttacking@Object@@QBEPAV1@XZ,0x0000B366,Open-BFME5 ILT thunk to body 0x001BE070; Object m_ai at +0x204; AIUpdateInterface isAttacking slot 97 (+0x184) gates the pinned getCurrentVictim call; bfme prefix records unrecovered retail spelling
 ?bfmeGetEBN@BfmeObjEBN@@QAEPAUBfmeSubEBN@@XZ,0x00046538,pin
+?bfmeGetEHA@BfmeObjEHA@@QAEPAUBfmeSubEHA@@XZ,0x00046538,pin
 ?bfmeGetHordeMemberCount@Object@@QBEHXZ,0x00030715,Open-BFME5 ILT thunk to body 0x001BFDF0; Object m_contain at +0x1FC asks virtual slot +0x68 for a horde interface then calls its count slot +0x150 with false; bfme prefix records unrecovered retail spelling
 ?bfmeGetID@BfmeDrawableWithID@@QAEIXZ,0x00009B01,Open-BFME5 ILT both drawable lookup-table wrappers at 0x00431C20 and 0x00430B50 read the id through
 ?bfmeGetLastDamagePlayerIndex@Object@@QBEHXZ,0x0000515A,Open-BFME5 ILT thunk to body 0x001BF060; BodyModuleInterface last-damage slot 15 supplies sourcePlayerMask resolved through PlayerList and returned as Player index; bfme prefix records unrecovered retail spelling
@@ -73390,6 +73394,8 @@ name,address,notes
 ?bfmeRunDGE@BfmeSubDGE@@QAEXPAX@Z,0x00002716,pin
 ?bfmeRunDGH@BfmeSubDGH@@QAEXPAX@Z,0x00036F7A,pin
 ?bfmeRunDGI@BfmeSubDGI@@QAEXPAX@Z,0x000223C2,pin
+?bfmeRunEHDa@BfmeNodeEHD@@QAEXXZ,0x0000D8AA,pin
+?bfmeRunEHDb@BfmeNodeEHD@@QAEXXZ,0x00008026,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
