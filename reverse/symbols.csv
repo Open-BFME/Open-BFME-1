@@ -72309,6 +72309,7 @@ name,address,notes
 ?bfmeBaseCIA@BfmeThingCIA@@QAEXXZ,0x0001BB7B,pin
 ?bfmeBaseCJA@BfmeThingCJA@@QAEXPAX@Z,0x00013C73,pin
 ?bfmeBaseCKA@BfmeThingCKA@@QAEXPAU1@@Z,0x0001071C,pin
+?bfmeBaseCLA@BfmeThingCLA@@QAEXPAX@Z,0x00029311,pin
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
 ?bfmeBaseSJ@BfmeThingSJ@@QAEXH@Z,0x0090E3D0,pin
 ?bfmeBaseSK@BfmeThingSK@@QAEXH@Z,0x009DB4E0,pin
