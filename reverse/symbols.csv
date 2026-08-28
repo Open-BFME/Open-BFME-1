@@ -73548,6 +73548,7 @@ name,address,notes
 ?bfmeVecDtorDMC@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVecDtorDMD@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVecDtorDME@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
+?bfmeVecDtorDSE@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVisit@BfmeInnerIterable@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x000EDAB0,"address-derived inner-list visitor callee of BfmeIterableObject::bfmeIterate; retail reaches it through the low-RVA thunk at 0x0002DC1D"
 ?bfmeVisit@Gen_0038D000@@AAEXPAVBfmeNodeR@@@Z,0x0001D0DE,Open-BFME5 the ICF thunk (to 0x0038B0C0) the clear at 0x0038D000 calls on this per node
 ?bfmeWakeAutoPickup@Object@@QAEXH@Z,0x00004930,Open-BFME5 Object helper ILT thunk to body 0x001BFEF0; MSG_WAKE_AUTO_PICKUP dispatch and AutoPickUpUpdate vtables prove button-number selection and wake semantics
@@ -78332,6 +78333,7 @@ _bfmeDtorCbDMB,0x00001C80,pin
 _bfmeDtorCbDMC,0x008F9330,pin
 _bfmeDtorCbDMD,0x00015A14,pin
 _bfmeDtorCbDME,0x00038D2A,pin
+_bfmeDtorCbDSE,0x0001364C,pin
 _bfmeDtorDAA,0x0000D828,pin
 _bfmeDtorDAB,0x0003D4B0,pin
 _bfmeDtorDAC,0x00030652,pin
