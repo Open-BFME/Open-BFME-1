@@ -73190,7 +73190,6 @@ name,address,notes
 ?bfmeUnregister@@YAXPAVBfmeSecondZ@@@Z,0x00035328,Open-BFME5 the unregister the two-member vector destructor at 0x0035B8A0 calls on its second member
 ?bfmeUnregisterY@@YAXPAVBfmeSecondY@@@Z,0x0002F0EF,Open-BFME5 the unregister the two-member vector destructor at 0x0035B960 calls on its second member
 ?bfmeUpdate@BfmeCellFC@@QAEXH_N@Z,0x00881BE0,Open-BFME5 semantic identity for exact address-derived cell update body at 0x00881BE0
-?bfmeUpdateCellsTouchedNow@PartitionData@@QAEXXZ,0x008F8BF0,Open-BFME5 direct body called by Object wrapper 0x001BFD70; unlinks this PartitionData from dirty-list links at +0x14/+0x18 then tail-calls updateCellsTouched at 0x008F8800; bfme prefix records unrecovered retail spelling
 ?bfmeUseRT@BfmeSlotRT@@QAEXXZ,0x0003A427,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVisit@BfmeInnerIterable@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x000EDAB0,"address-derived inner-list visitor callee of BfmeIterableObject::bfmeIterate; retail reaches it through the low-RVA thunk at 0x0002DC1D"
@@ -74190,6 +74189,7 @@ name,address,notes
 ?friend_setDamageToFXString@TerrainRoadType@@QAEXW4BodyDamageType@@HVAsciiString@@@Z,0x00024E0B,ILT thunk -> 0x601b50 (parseTransitionToFX callee)
 ?friend_setGoalObject@AIUpdateInterface@@QAEXPAVObject@@@Z,0x000125E9,retail AIEnterState::update call target
 ?friend_setRepairedToFXString@TerrainRoadType@@QAEXW4BodyDamageType@@HVAsciiString@@@Z,0x0001C693,ILT thunk -> 0x61cc0 (parseTransitionToFX callee)
+?friend_updateCellsTouched@PartitionData@@QAEXXZ,0x008F8BF0,Open-BFME5 canonical public facade called by Object wrapper 0x001BFD70; BFME unlinks dirty-list links at +0x14/+0x18 before tail-calling private updateCellsTouched at 0x008F8800
 ?g_00861ed0@@YAXHHHHHHHHHHHHHHHHHHHHH@Z,0x00861ED0,Open-BFME5 address-derived name; direct call target of 0x00862460; 21 dword args; identity not asserted
 ?g_01075954@@3MC,0x01075954,accessor-batch external float
 ?g_BFMEIndexBufferDebug@@3PAVBFMEIndexBufferDebugClass@@A,0x01336E5C,retail DX8 error path dispatches through the shared game debug manager global
@@ -77386,6 +77386,7 @@ name,address,notes
 ?update@Transport@@QAEXXZ,0x00001EC4,Transport::update for LANAPI::RequestLobbyLeave forced path
 ?update@VictorySystem@@UAEXXZ,0x001DFBA0,vtable 0x0109FD8C slot 5 (+0x14) via ILT 0x0000C630; called from the GameLogic update body 0x0038DA10 at 0x0038DC4D; early-out until +0x100; active grid (+0x104 0/1 -> +0xF8/+0xFC) fed to 0x001B1AD0 then 0x001DFAA0 and 0x001DE3C0
 ?updateCache@MapCache@@QAEXXZ,0x00018F0C,isValidMap cache refresh thunk
+?updateCellsTouched@PartitionData@@AAEXXZ,0x008F8800,Open-BFME5 private cell-rebuild body reached by the canonical public friend_updateCellsTouched facade at 0x008F8BF0
 ?updateCenter@BaseHeightMapUpdateBridge@@QAEXPAVCameraClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,0x00015C49,BaseHeightMap retail bridge update thunk
 ?updateCenter@BaseHeightMapUpdateCamera@@QAEXPAVCameraClass@@@Z,0x00017C56,BaseHeightMap retail terrain update thunk
 ?updateCenter@BaseHeightMapUpdateNoArgs@@QAEXXZ,0x0003BECB,BaseHeightMap retail road update thunk

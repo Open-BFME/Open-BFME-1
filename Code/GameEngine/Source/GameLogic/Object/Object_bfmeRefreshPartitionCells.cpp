@@ -8,14 +8,15 @@
 // at slot 4 (+0x10). The duplicate lookup below intentionally reproduces the
 // two retail virtual-base dispatches.
 //
-// The final call unlinks PartitionData from the dirty list and then updates its
-// touched cells. The BFME-only Object wrapper and that combined callee have no
-// surviving source spellings, so their bfme-prefixed names are descriptive.
+// The final canonical friend_updateCellsTouched facade unlinks PartitionData
+// from the dirty list and then updates its touched cells. The BFME-only Object
+// wrapper has no surviving source spelling, so its bfme-prefixed name remains
+// descriptive.
 
 class PartitionData
 {
 public:
-	void bfmeUpdateCellsTouchedNow();
+	void friend_updateCellsTouched();
 };
 
 // The stand-in prefix exists only to put Object's virtual-base pointer at the
@@ -46,5 +47,5 @@ public:
 void Object::bfmeRefreshPartitionCells()
 {
 	if (friend_getPartitionData())
-		friend_getPartitionData()->bfmeUpdateCellsTouchedNow();
+		friend_getPartitionData()->friend_updateCellsTouched();
 }
