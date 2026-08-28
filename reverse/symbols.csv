@@ -72778,6 +72778,7 @@ name,address,notes
 ?bfmeFreeCHA@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeCHB@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeCHC@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeCJD@BfmePoolCJD@@QAEXPAX@Z,0x00035EE5,pin
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
 ?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
@@ -73253,6 +73254,7 @@ name,address,notes
 ?bfmeTheCBE@@3PAVBfmeGlobalCBE@@A,0x00EED5C8,pin
 ?bfmeTheCHE@@3PAUBfmeGlobalCHE@@A,0x00EF0898,pin
 ?bfmeTheOneCHF@@3PAVBfmeOneCHF@@A,0x00EF1024,pin
+?bfmeThePoolCJD@@3VBfmePoolCJD@@A,0x00F4FB38,pin
 ?bfmeTheTwoCHF@@3PAVBfmeTwoCHF@@A,0x00EF1028,pin
 ?bfmeThenBXF@BfmeThingBXF@@QAEXH@Z,0x0004067E,pin
 ?bfmeThreeBUD@BfmeOwnerBUD@@QAEXXZ,0x00041AD8,pin
