@@ -178,7 +178,6 @@ extern CComModule _Module;
 //-------------------------------------------------------------------------------------------------
 static void updateTGAtoDDS();
 
-// ?getFramesPerSecondLimit@GameEngine@@UAEHXZ present-unmatched
 Int GameEngine::getFramesPerSecondLimit( void )
 {
 	return m_maxFPS;
