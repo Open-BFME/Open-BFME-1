@@ -3046,7 +3046,6 @@ public:
 	void addObjectToPathfindMap( Object *obj );
 };
 
-// ?friend_notifyOfNewMapBoundary@Object@@QAEXXZ present-unmatched
 void Object::friend_notifyOfNewMapBoundary(void)
 {
 	ThePartitionManager->registerObject(this);
