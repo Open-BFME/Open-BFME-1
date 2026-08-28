@@ -72435,6 +72435,7 @@ name,address,notes
 ?bfmeCallDSI@BfmeSubDSI@@QAEXPAPAX@Z,0x000013ED,pin
 ?bfmeCallDSP@BfmeOwnerDSP@@QAEXPAX@Z,0x0003DB77,pin
 ?bfmeCallDUB@BfmeSubDUB@@QAEXXZ,0x0002DF65,pin
+?bfmeCallDUL@@YGXPAXPBX@Z,0x0001D467,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -78388,6 +78389,11 @@ _bfmeObjDAD,0x00EF8798,pin
 _bfmeObjDAE,0x00F38480,pin
 _bfmeRegZB,0x00EF1094,pin
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
+_bfmeStrDULa,0x00D1D7F0,pin
+_bfmeStrDULb,0x00D1D800,pin
+_bfmeStrDULc,0x00D1D810,pin
+_bfmeStrDULd,0x00D1D820,pin
+_bfmeStrDULe,0x00D1D834,pin
 _bfmeTagANB,0x00C9E038,pin
 _bfmeTagAPB,0x00DDFC30,pin
 _bfmeTagBNH,0x00D1DC1C,pin
