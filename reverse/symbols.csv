@@ -72256,6 +72256,8 @@ name,address,notes
 ?bfmeBaseAGB@BfmeThingAGB@@QAEXPAX0@Z,0x000170E4,pin
 ?bfmeBaseARC@BfmeThingARC@@QAEXXZ,0x009A1A30,pin
 ?bfmeBaseARD@BfmeThingARD@@QAEXPAX0@Z,0x00021BE8,pin
+?bfmeBaseASA@BfmeThingASA@@QAEXPAX@Z,0x000399F5,pin
+?bfmeBaseASC@BfmeThingASC@@QAEXPAX@Z,0x00047B27,pin
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
 ?bfmeBaseSJ@BfmeThingSJ@@QAEXH@Z,0x0090E3D0,pin
 ?bfmeBaseSK@BfmeThingSK@@QAEXH@Z,0x009DB4E0,pin
@@ -72795,6 +72797,7 @@ name,address,notes
 ?bfmeLookup_001c6340@@YAHPAX@Z,0x00026A3F,Open-BFME5 ILT the bit setter at 0x001C6340 calls
 ?bfmeLookup_001c63d0@@YAHPAX@Z,0x0004B218,Open-BFME5 ILT the bit setter at 0x001C63D0 calls
 ?bfmeMakeALA@@YAPAXPAX@Z,0x00024CA8,pin
+?bfmeMakeASB@@YAPAXHH@Z,0x000283D5,pin
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
@@ -77735,6 +77738,12 @@ _bfmeVftARCc,0x00CEA21C,pin
 _bfmeVftARDa,0x00C9E7B4,pin
 _bfmeVftARDb,0x00C9E6F0,pin
 _bfmeVftARDc,0x00C9E6E4,pin
+_bfmeVftASAa,0x00CEAD58,pin
+_bfmeVftASAb,0x00CF3558,pin
+_bfmeVftASAc,0x00CF3554,pin
+_bfmeVftASCa,0x00C817AC,pin
+_bfmeVftASCb,0x00D1BD58,pin
+_bfmeVftASCc,0x00D1BD54,pin
 _bfmeVftSA,0x00C8F4F0,pin
 _bfmeVftSE,0x00D0C64C,pin
 _bfmeVftSF,0x00D0C878,pin
