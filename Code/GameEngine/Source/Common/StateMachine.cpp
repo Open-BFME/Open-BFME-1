@@ -215,8 +215,25 @@ StateReturnType State::friend_checkForTransitions( StateReturnType status )
 /**
  * Given a return code, handle state transitions
  */
-// byte-exact reconstruction: Code/GameEngine/Source/Common/State_friend_checkForSleepTransitions_Thunk.cpp
-// ?friend_checkForSleepTransitions@State@@ present-unmatched
+// BFME shifts State's members back four bytes: the transition vector sits at
+// +0x10 and the owning machine at +0x1c, where the vendored header lands them at
+// +0x14 and +0x20. TransitionInfo is private to State, so the view restates its
+// three release-build fields rather than naming it.
+struct BfmeTransitionInfo
+{
+	StateTransFuncPtr test;
+	StateID toStateID;
+	void *userData;
+};
+
+struct BfmeStateFields
+{
+	UnsignedByte m_unreconstructed_00[0x10];
+	std::vector<BfmeTransitionInfo> m_transitions;		///< retail this+0x10
+	StateMachine *m_machine;				///< retail this+0x1c
+};
+
+// ?friend_checkForSleepTransitions@State@@QAE?AW4StateReturnType@@W42@@Z
 StateReturnType State::friend_checkForSleepTransitions( StateReturnType status )
 {
 	static Int checkfortransitionsnum = 0;
@@ -231,10 +248,11 @@ StateReturnType State::friend_checkForSleepTransitions( StateReturnType status )
 	DEBUG_ASSERTCRASH(IS_STATE_SLEEP(status), ("Please only pass sleep states here"));
 
 	// check transition condition list
-	if (m_transitions.empty())
+	BfmeStateFields *self = (BfmeStateFields *)this;
+	if (self->m_transitions.empty())
 		return status;
 
-	for(std::vector<TransitionInfo>::const_iterator it = m_transitions.begin(); it != m_transitions.end(); ++it)
+	for(std::vector<BfmeTransitionInfo>::const_iterator it = self->m_transitions.begin(); it != self->m_transitions.end(); ++it)
 	{
 		if (!it->test( this, it->userData ))
 			continue;
@@ -261,7 +279,7 @@ StateReturnType State::friend_checkForSleepTransitions( StateReturnType status )
 		else
 		{
 			// move to new state
-			return getMachine()->internalSetState( it->toStateID );
+			return self->m_machine->internalSetState( it->toStateID );
 		}
 	}
 
