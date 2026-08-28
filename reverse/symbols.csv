@@ -76422,6 +76422,7 @@ name,address,notes
 ?reset@NetCommandList@@QAEXXZ,0x00015479,pinharvest x1 (thunk)
 ?reset@NetCommandList@@QAEXXZ,0x00037565,pinharvest x1 (thunk)
 ?reset@Network@@UAEXXZ,0x00681910,vtable 0x0111A968 slot 4 (+0x10 = SubsystemInterface::reset position) via ILT 0x0003CF1A; body is mov eax [ecx] / jmp [eax+4] = this->init() = ZH Network::reset(){init();}; ICF class ?dup_00681910 so the pin is address-specific
+?reset@PathfindCell@@QAEXXZ,0x0002C106,Open-BFME5 ILT thunk to body 0x003F6EC0; BFME PathfindCell reset helper
 ?reset@Rva007E8810Message@@QAEXXZ,0x007E8AC0,V2 lane: FESL message reset(); same body the tree also names ?run@Rva007E8AC0@@QAEXXZ
 ?reset@SidesInfoSegmentShim@@QAEXXZ,0x00033F46,SidesInfo clear first segment helper shim
 ?reset@TerrainLogic@@UAEXXZ,0x0001B707,Open-BFME5 ILT fronts unclaimed 183-byte body 0x001ACF90; called by W3DTerrainLogic init/reset
