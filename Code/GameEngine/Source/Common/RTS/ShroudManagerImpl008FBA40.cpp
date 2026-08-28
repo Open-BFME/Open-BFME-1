@@ -56,6 +56,18 @@ public:
 	~ShroudManagerImpl008FBA40Node();
 };
 
+class ShroudManagerImpl008FBA40;
+
+class PartitionData
+{
+public:
+	void unlink();
+
+private:
+	void updateCellsTouched();
+	friend class ShroudManagerImpl008FBA40;
+};
+
 class ShroudManagerImpl008FBA40Element
 {
 public:
@@ -71,6 +83,7 @@ class ShroudManagerImpl008FBA40
 public:
 	ShroudManagerImpl008FBA40();
 	~ShroudManagerImpl008FBA40();
+	void drainPending();
 	void reset();
 	void setRegion(const Region3D *region, Real cellSize);
 	void configure(Region3D region, Real cellSize);
@@ -84,13 +97,15 @@ private:
 	int height;
 	ShroudManagerImpl008FBA40Element *elements;
 	ShroudManagerImpl008FBA40Node *nodes;
-	void *unknown34;
+	PartitionData *pendingPartitionData;
 	int unknown38;
 	_STL::deque<Gen_t_008fb350_p12pod, _STL::allocator<Gen_t_008fb350_p12pod> > records;
 	int unknown64;
 	bool enabled;
 	char padding69[3];
 	void *refreshCallback;
+
+	void processPending(bool drainAll);
 };
 
 ShroudManagerImpl008FBA40::ShroudManagerImpl008FBA40()
@@ -100,7 +115,7 @@ ShroudManagerImpl008FBA40::ShroudManagerImpl008FBA40()
 	  height(0),
 	  elements(0),
 	  nodes(0),
-	  unknown34(0),
+	  pendingPartitionData(0),
 	  unknown38(0),
 	  records(),
 	  unknown64(-1),
@@ -118,6 +133,19 @@ ShroudManagerImpl008FBA40::~ShroudManagerImpl008FBA40()
 		delete nodes;
 
 	delete[] elements;
+}
+
+void ShroudManagerImpl008FBA40::drainPending()
+{
+	++unknown38;
+	while (pendingPartitionData)
+	{
+		PartitionData *partitionData = pendingPartitionData;
+		partitionData->unlink();
+		partitionData->updateCellsTouched();
+	}
+
+	processPending(true);
 }
 
 void ShroudManagerImpl008FBA40::reset()
