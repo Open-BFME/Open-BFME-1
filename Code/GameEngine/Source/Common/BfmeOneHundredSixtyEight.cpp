@@ -14,6 +14,7 @@ class BfmeGridAL
 public:
 	void bfmeClearAL();
 	void bfmeFillAL();
+	void bfmeSetAL(int across, int along, unsigned char mark);
 	unsigned char bfmeNearAL(int across, int along) const;
 	unsigned char bfmeFarAL(int across, int along) const;
 
@@ -40,6 +41,18 @@ void BfmeGridAL::bfmeFillAL()
 			m_bfmeColumns[column][row].m_bfmeMark = 1;
 		}
 	}
+}
+
+void BfmeGridAL::bfmeSetAL(int across, int along, unsigned char mark)
+{
+	if (across < 0 || along < 0)
+		return;
+
+	int column = across / 16;
+	int row = along / 16;
+
+	if (column < m_bfmeWide && row < m_bfmeHigh)
+		m_bfmeColumns[column][row].m_bfmeMark = mark;
 }
 
 unsigned char BfmeGridAL::bfmeNearAL(int across, int along) const
