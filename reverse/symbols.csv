@@ -79367,3 +79367,7 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?getBridgeScaffoldBehaviorInterfaceFromObject@BridgeScaffoldBehavior@@SAPAVBridgeScaffoldBehaviorInterface@@PAVObject@@@Z,0x00046F8D,ILT thunk proven by BridgeBehavior scaffold-list callers at 0x001F3C30 and 0x001F3D40
+?friend_changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z,0x0002847F,ILT spelling used by BridgeBehavior::removeScaffolding to preserve the retail indirection
+?xfer@UpdateModule@@MAEXPAVXfer@@@Z,0x000044C1,UpdateModule xfer ILT called by BridgeBehavior::xfer
+?friend_xferObjectID@@YAXPAVXfer@@PAW4ObjectID@@@Z,0x0000C9B4,ObjectID xfer ILT called by BridgeBehavior::xfer
