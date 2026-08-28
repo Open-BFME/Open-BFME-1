@@ -73166,6 +73166,7 @@ name,address,notes
 ?bfmeStepBVA@BfmeThingBVA@@QAEXPAV1@@Z,0x00015280,pin
 ?bfmeStepCBC@BfmeThingCBC@@QAEXH@Z,0x008D2130,pin
 ?bfmeStepCBD@BfmeThingCBD@@QAEXH@Z,0x008D2130,pin
+?bfmeStepCDA@BfmeThingCDA@@QAEXXZ,0x00047B6D,pin
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
