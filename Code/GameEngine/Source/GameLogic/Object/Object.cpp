@@ -2968,7 +2968,6 @@ void Object::setID( ObjectID id )
 }  // end setID
 
 // ------------------------------------------------------------------------------------------------
-// ?calculateHeightAboveTerrain@Object@@MBEMXZ present-unmatched
 // BFME: m_layer lives at +0x314 and TerrainLogic::getLayerHeight is vtable
 // slot 7 (+0x1c), not the header's slot 6 (+0x18).
 Real Object::calculateHeightAboveTerrain(void) const 
@@ -2985,11 +2984,11 @@ Real Object::calculateHeightAboveTerrain(void) const
 		virtual Real getLayerHeight( Real x, Real y, PathfindLayerEnum layer, Coord3D *pos, Bool clip ) = 0;
 	};
 
-	const PathfindLayerEnum layer =
-		*reinterpret_cast<const PathfindLayerEnum *>( reinterpret_cast<const char *>(this) + 0x314 );
 	const Coord3D* pos = getPosition();
 	Real terrainZ = reinterpret_cast<BFMETerrainLayerHeightShim *>( TheTerrainLogic )
-		->getLayerHeight( pos->x, pos->y, layer, NULL, true );
+		->getLayerHeight( pos->x, pos->y,
+			*reinterpret_cast<const PathfindLayerEnum *>( reinterpret_cast<const char *>(this) + 0x314 ),
+			NULL, true );
 	Real myZ = pos->z;
 	return myZ - terrainZ;
 }
