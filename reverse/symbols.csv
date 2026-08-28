@@ -73115,6 +73115,7 @@ name,address,notes
 ?bfmeStart@Gen_00654F20@@QAEXPAX0PAPAX@Z,0x0002648B,Open-BFME5 the starter the SEH constructor at 0x00654F20 calls
 ?bfmeStart@Gen_00844340@@QAEXPAX0PAPAX@Z,0x0002A531,Open-BFME5 the starter the SEH constructor at 0x00844340 calls
 ?bfmeStart@Gen_008443A0@@QAEXPAX0PAPAX@Z,0x00042BB8,Open-BFME5 the starter the SEH constructor at 0x008443A0 calls
+?bfmeStartAllSpecialPowerRecharges@Object@@QBEXXZ,0x00026490,Open-BFME5 ILT thunk to body 0x001BE820; walks Object behaviors at +0x1F0 and calls special-power interface slot +0x40 after the behavior-interface query at +0x1C; bfme prefix records unrecovered retail spelling
 ?bfmeStartSA@BfmeSubSA@@QAEXXZ,0x0000F0A6,pin
 ?bfmeStartTD@BfmeSubTD@@QAEXPAX@Z,0x00047B27,pin
 ?bfmeStartTE@BfmeSubTE@@QAEXXZ,0x0000F0A6,pin
