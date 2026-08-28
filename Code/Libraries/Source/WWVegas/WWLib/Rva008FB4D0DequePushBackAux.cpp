@@ -88,3 +88,30 @@ template void deque<Gen_t_008fb4d0_p20pod, allocator<Gen_t_008fb4d0_p20pod> >::_
 template void deque<Gen_t_008fb4d0_p20pod, allocator<Gen_t_008fb4d0_p20pod> >::push_back(
 	const Gen_t_008fb4d0_p20pod &);
 }
+
+class Rva008FBCB0P20Queue
+{
+public:
+	void append(int value1, int value2, int value3, int marker);
+
+private:
+	int base;
+	char unknown[0x34];
+	int offset;
+	_STL::deque<Gen_t_008fb4d0_p20pod, _STL::allocator<Gen_t_008fb4d0_p20pod> > values;
+};
+
+void Rva008FBCB0P20Queue::append(int value1, int value2, int value3, int marker)
+{
+	if (marker != 0 && value3 >= 0)
+	{
+		Gen_t_008fb4d0_p20pod value;
+		value.value[1] = value1;
+		value.value[2] = value2;
+		value.value[3] = value3;
+		value.value[4] = marker & 0xffff;
+		// This producer's field order preserves the retail compiler's register schedule.
+		value.value[0] = base + offset;
+		values.push_back(value);
+	}
+}
