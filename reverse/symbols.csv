@@ -73055,6 +73055,7 @@ name,address,notes
 ?bfmeDrop1105@BfmeK1105@@QAEXXZ,0x0000CEA5,pin
 ?bfmeDrop1106@BfmeK1106@@QAEXXZ,0x00006D61,pin
 ?bfmeDrop988@BfmeReg988@@QAEXPAVBfmeE988@@@Z,0x00010F46,pin
+?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDrop@BfmeSinkAM@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the remove at 0x003BEBA0 tells about the entry
 ?bfmeDrop@Rva003D8530Owner@@QAEXPAX@Z,0x00016DB0,Open-BFME5 ILT thunk to body 0x003D8530; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it on the sub-object at +0x0C of _TheAIParseDefinitionAI for each live slot whose kind is one of four; address-derived name
 ?bfmeDropA@@YAXPAX@Z,0x00895320,Open-BFME5 the drop the cleanup at 0x00783A50 calls
