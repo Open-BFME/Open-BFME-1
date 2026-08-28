@@ -73001,6 +73001,7 @@ name,address,notes
 ?bfmeNotify@Glo012F1028Sub@@QAEXXZ,0x0002DE89,Open-BFME5 ILT thunk to body 0x003CAD20; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 tail-jumps into it from both arms on the sub-object at +0x28 of the global at 0x012F1028; address-derived name
 ?bfmeNotifyBridge@PathfindLayer@@AAEXXZ,0x0003B250,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is set
 ?bfmeNotifyPlain@PathfindLayer@@AAEXXZ,0x0003A03F,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is null
+?bfmeNowCBE@@YAPAXXZ,0x008FD440,pin
 ?bfmeOnceBXF@BfmeThingBXF@@QAEXXZ,0x0000E3AE,pin
 ?bfmeOneAPA@@YGPAXPAXPAH@Z,0x009F6BF2,pin
 ?bfmeOneBKE@@YGXPAX@Z,0x0090C610,pin
@@ -73092,6 +73093,7 @@ name,address,notes
 ?bfmeSetBSF@BfmeSubBSF@@QAEXPAX@Z,0x00887B60,pin
 ?bfmeSetBTB@BfmeSubBTB@@QAEXPAX0@Z,0x00025306,pin
 ?bfmeSetBZC@BfmeSubBZC@@QAEXH@Z,0x00802C30,pin
+?bfmeSetCBE@@YAXPAXH@Z,0x008FE0E0,pin
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
 ?bfmeSetOneCAC@BfmePairCAC@@QAEXHH@Z,0x0004A43A,pin
 ?bfmeSetQQ@BfmeThingQQ@@QAEXPBDI@Z,0x0088A8F0,pin
@@ -73187,6 +73189,7 @@ name,address,notes
 ?bfmeTheBZF@@3PAVBfmeGlobalBZF@@A,0x00EF1028,pin
 ?bfmeTheCBC@@3HA,0x00F379BC,pin
 ?bfmeTheCBD@@3HA,0x00F379BC,pin
+?bfmeTheCBE@@3PAVBfmeGlobalCBE@@A,0x00EED5C8,pin
 ?bfmeThenBXF@BfmeThingBXF@@QAEXH@Z,0x0004067E,pin
 ?bfmeThreeBUD@BfmeOwnerBUD@@QAEXXZ,0x00041AD8,pin
 ?bfmeThreeBZF@BfmeGlobalBZF@@QAEXH@Z,0x00029357,pin
