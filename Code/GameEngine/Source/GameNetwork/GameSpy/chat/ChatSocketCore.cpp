@@ -63,6 +63,7 @@ int __stdcall shutdown(unsigned int socket, int how);
 int __stdcall closesocket(unsigned int socket);
 int __stdcall send(unsigned int socket, const char *buffer, int length, int flags);
 int __stdcall recv(unsigned int socket, char *buffer, int length, int flags);
+int __stdcall WSAGetLastError(void);
 void GSISocketSelect(unsigned int socket, int *readFlag, int *writeFlag, int *exceptFlag);
 void gs_crypt(unsigned char *buffer, int length, gs_crypt_key *key);
 
@@ -136,6 +137,7 @@ static void ciSocketThinkRecv(ciSocket *socket)
 		char *position = socket->inputQueue.buffer + socket->inputQueue.length;
 		int result = recv(socket->sock, position, 4096, 0);
 		if (result <= 0) {
+			WSAGetLastError();
 			socket->connectState = ciDisconnected;
 			return;
 		}
