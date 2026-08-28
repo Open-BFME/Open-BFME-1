@@ -72926,6 +72926,7 @@ name,address,notes
 ?bfmeMakeBOA@@YAPAXPAX@Z,0x0082B8E0,pin
 ?bfmeMakeBTE@BfmeSlotBTE@@QAEPAPAXPAX@Z,0x00045EB7,pin
 ?bfmeMakeBTE@BfmeSlotBTE@@QAEPAXPAX@Z,0x00045EB7,pin
+?bfmeMakeBZA@@YAPAVBfmeCacheBZA@@PAVBfmeThingBZA@@@Z,0x007F4810,pin
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
