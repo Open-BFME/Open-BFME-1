@@ -12422,6 +12422,7 @@ name,address,notes
 ?at@Gen_00064730@@QAEPAVGen003BBA00Element@@H@Z,0x00064800,indexed accessor of the sub-object at +0xC used by 0x003BBA00; address-derived name
 ?at@ModuleTemplateMapOperatorShim@@QAEAAVModuleTemplate@ModuleFactory@@ABH@Z,0x001296E0,ModuleTemplateMap operator[] incremental-link thunk target through a TU-local forwarding shim
 ?attach@Gen_dtor_007f6d20@@QAEXPAX@Z,0x008002C0,V2 lane: one-pointer element setter called per element by the three list setters in V2FeslElementLists.cpp
+?attach@NetCommandMsg@@QAEXXZ,0x0000D3A0,ILT thunk for body 0x00673600
 ?attach@Rva00061BB0Owner@@AAEXPAX@Z,0x00850670,one-argument __thiscall callee of the 0x00061BB0 constructor (U3_small_ctors.cpp); identity not recovered
 ?attach@Rva00065C50Owner@@AAEXPAX@Z,0x009D6290,one-argument __thiscall callee of the 0x00065C50 constructor (U3_small_ctors.cpp); identity not recovered
 ?attachFile@ArchiveFile@@QAEXPAVFile@@@Z,0x009CE560,closes any previous file then stores the new one
@@ -72575,8 +72576,8 @@ name,address,notes
 ?bfmeDeleteSelf@BfmeOwnedD@@QAEPAXI@Z,0x0000E4A8,Open-BFME5 the ICF thunk (to 0x001CBDC0) the element clear at 0x0038A6F0 calls with a flag of 1
 ?bfmeDestroyRange12@@YAXPAUBfmeElem12@@0PAD@Z,0x00014AA1,Open-BFME5 the element destroy helper the vector destroy at 0x006FA4E0 hands its range to
 ?bfmeDestroyRange2@@YAXPAH0PAD@Z,0x000096FB,Open-BFME5 the element destroy helper the vector destroy at 0x006A76E0 hands its range to
-?bfmeDestroyRange@@YAXPAH0PAD@Z,0x000247E9,Open-BFME5 the element destroy helper the vector destroy at 0x000BCBC0 hands its range to
 ?bfmeDestroyRange@@YADPAH0VBfmeAllocL@@@Z,0x0002376D,Open-BFME5 the ICF thunk (to 0x0042376D) the clear at 0x0048FA30 destroys its range with
+?bfmeDestroyRange@@YAXPAH0PAD@Z,0x000247E9,Open-BFME5 the element destroy helper the vector destroy at 0x000BCBC0 hands its range to
 ?bfmeDestroyRange@@YAXPAVBfmeVecAW@@@Z,0x00034DC9,Open-BFME5 the ICF thunk (to 0x00434DC9) the clear at 0x003D41D0 destroys its elements through
 ?bfmeDetachCFF@BfmeOwnerCFF@@QAEXPAVBfmeThingCFF@@@Z,0x0004B367,pin
 ?bfmeDispatchA@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x000075D6,Open-BFME5 ILT the range dispatcher at 0x002610F0 calls
@@ -74222,7 +74223,6 @@ name,address,notes
 ?destroyObject@GameLogic@@QAEXPAVObject@@@Z,0x0001D0DE,ILT thunk; real body 0x78B0C0
 ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z,0x00005696,BoneFXUpdate::killRunningParticleSystems/stopAllBoneFX call target (ILT thunk -> body 0x5C3C10)
 ?destroyPath@AIUpdateInterface@@QAEXXZ,0x000065E1,requestApproachPath retail ILT reaches the 0x0026F080 path destructor body
-?attach@NetCommandMsg@@QAEXXZ,0x0000D3A0,ILT thunk for body 0x00673600
 ?detach@NetCommandMsg@@QAEXXZ,0x000200A4,additive; ILT thunk for body 0xA73610
 ?detach@NetCommandMsg@@QAEXXZ,0x009EB7A0
 ?detailAlphaShader@@3VShaderClass@@A,0x012BA78C,W3DBibBuffer renderBibs TU-local shader object
