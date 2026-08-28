@@ -1107,6 +1107,7 @@ name,address,notes
 ??0?$BFMEW3DFactoryModuleData@VW3DTreeDrawModuleData@@$0GE@@@QAE@XZ,0x00046B5A,W3DModuleFactory retail data facade
 ??0?$BannerStringBase@D@@AAE@PBD@Z,0x00888BC0,BannerUI one-dword retail string constructor alias used for by-value APT window arguments
 ??0?$BitFlags@$0BDA@@@QAE@W4BogusInitType@0@HHH@Z,0x00048FDB,Open-BFME5 canonical BitFlags<304> three-index ModelConditionFlags constructor ILT thunk to body 0x001C5D40; called for construction states 0x42..0x44
+??0?$BitFlags@$0BDA@@@QAE@W4BogusInitType@0@HHHH@Z,0x0004284D,Open-BFME5 canonical BitFlags<304> four-index ModelConditionFlags constructor ILT thunk to body 0x001C5DE0; called by StructureCollapseUpdate
 ??0?$BitFlags@$0HE@@@QAE@W4BitFlagsInitType@@HHH@Z,0x0003284E,Open-BFME5 ILT thunk to body 0x002BD5A0; ?isNonFactionStructure@Object@@QBE_NXZ at 0x0032A220 builds its second function-local static mask with three flag indices through it; address-derived arity
 ??0?$BitFlags@$0HE@@@QAE@W4BitFlagsInitType@@HHHHH@Z,0x00031133,Open-BFME5 ILT thunk to body 0x003274A0; ?isNonFactionStructure@Object@@QBE_NXZ at 0x0032A220 builds its first function-local static mask with five flag indices through it; address-derived arity
 ??0?$BitFlags@$0MA@@@QAE@W4BogusInitType@0@H@Z,0x0004511A,Open-BFME5 canonical BitFlags<192> one-index constructor ILT thunk to body 0x001C5450; Object upgrade-mask caller and 192-bit serialization prove specialization
