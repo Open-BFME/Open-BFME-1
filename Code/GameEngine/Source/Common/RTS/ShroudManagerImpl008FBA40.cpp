@@ -89,6 +89,11 @@ struct ShroudManagerImpl008FBA40PlayerState
 	unsigned short counters[2];
 };
 
+__forceinline int shroudStatusFromCount(unsigned short status)
+{
+	return status == 0xffff ? 2 : status == 0;
+}
+
 typedef void (__cdecl *ShroudManagerImpl008FBA40RefreshCallback)(
 	int x, int y, int status);
 
@@ -99,6 +104,8 @@ public:
 	~ShroudManagerImpl008FBA40Element();
 	void adjustPlayerCounter008FC1F0(int playerIndex, int counterIndex,
 		int amount);
+	void updatePlayerCells008FC300(ShroudManagerImpl008FBA40 *manager,
+		int playerIndex);
 	void updatePlayerCells008FC3B0(ShroudManagerImpl008FBA40 *manager,
 		int playerIndex);
 	void updatePlayerCells008FC450(ShroudManagerImpl008FBA40 *manager,
@@ -284,6 +291,33 @@ void ShroudManagerImpl008FBA40Element::updatePlayerCells008FC3B0(
 	--playerState.status;
 	int newStatus = playerState.status == 0xffff
 		? 2 : playerState.status == 0;
+	if (newStatus != oldStatus)
+	{
+		for (ShroudManagerImpl008FBA40Node *node = cellNodes;
+			node; node = node->next)
+		{
+			node->object->playerState[playerIndex] = 0;
+		}
+
+		if (playerIndex == manager->unknown64)
+		{
+			int index = this - manager->elements;
+			manager->refreshCallback(index % manager->width,
+				index / manager->width, newStatus);
+		}
+	}
+}
+
+void ShroudManagerImpl008FBA40Element::updatePlayerCells008FC300(
+	ShroudManagerImpl008FBA40 *manager, int playerIndex)
+{
+	ShroudManagerImpl008FBA40PlayerState &playerState =
+		playerStates[playerIndex];
+	int oldStatus = shroudStatusFromCount(playerState.status);
+	++playerState.status;
+	if (playerState.status == 0)
+		playerState.status = 1;
+	int newStatus = shroudStatusFromCount(playerState.status);
 	if (newStatus != oldStatus)
 	{
 		for (ShroudManagerImpl008FBA40Node *node = cellNodes;
