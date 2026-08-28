@@ -72308,6 +72308,7 @@ name,address,notes
 ?bfmeBaseCGA@BfmeThingCGA@@QAEXPAX@Z,0x00887B60,pin
 ?bfmeBaseCIA@BfmeThingCIA@@QAEXXZ,0x0001BB7B,pin
 ?bfmeBaseCJA@BfmeThingCJA@@QAEXPAX@Z,0x00013C73,pin
+?bfmeBaseCKA@BfmeThingCKA@@QAEXPAU1@@Z,0x0001071C,pin
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
 ?bfmeBaseSJ@BfmeThingSJ@@QAEXH@Z,0x0090E3D0,pin
 ?bfmeBaseSK@BfmeThingSK@@QAEXH@Z,0x009DB4E0,pin
@@ -72429,12 +72430,14 @@ name,address,notes
 ?bfmeCopyInto_003B3E00@@YAXPBUBfmeCopyElem_003B3E00@@0PAU1@PAI@Z,0x0002846B,Open-BFME5 the copier the allocate-and-delegate body at 0x003B3E00 hands its range and block to
 ?bfmeCopyInto_005716D0@@YAXPBUBfmeCopyElem_005716D0@@0PAU1@PAI@Z,0x00027782,Open-BFME5 the copier the allocate-and-delegate body at 0x005716D0 hands its range and block to
 ?bfmeCopyOneCDF@BfmePartCDF@@QAEXPAU1@@Z,0x0000D8A5,pin
+?bfmeCopyOneCKA@BfmePartCKA@@QAEXPAU1@@Z,0x00018A70,pin
 ?bfmeCopySlotA@@YAXPAUBfmeSlotA@@PAX@Z,0x00002A8B,Open-BFME5 the copy the bounded appends call
 ?bfmeCopySlotB@@YAXPAUBfmeSlotB@@PAX@Z,0x0003BB51,Open-BFME5 the copy the bounded appends call
 ?bfmeCopySlotC@@YAXPAUBfmeSlotC@@PAX@Z,0x00045877,Open-BFME5 the copy the bounded appends call
 ?bfmeCopySlotD@@YAXPAUBfmeSlotD@@PAX@Z,0x00026BAC,Open-BFME5 the copy the bounded appends call
 ?bfmeCopySlotE@@YAXPAUBfmeSlotE@@PAX@Z,0x0001870F,Open-BFME5 the copy the bounded appends call
 ?bfmeCopyTwoCDF@BfmePartCDF@@QAEXPAU1@@Z,0x0003B5C5,pin
+?bfmeCopyTwoCKA@BfmePartCKA@@QAEXPAU1@@Z,0x000434DC,pin
 ?bfmeCreateInactiveTeam@TeamFactory@@AAEPAVTeam@@ABVAsciiString@@0@Z,0x0000D15C,retail REL32 at 0x000F7CAB targets the two-name createInactiveTeam ILT at 0x0000D15C
 ?bfmeDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 the sentinel deallocator the list-member destructors at 0x0009F7A0 and 0x00080950 call
 ?bfmeDefer@Gen_002d60a0@@AAE_NPAVObject@@@Z,0x0000204F,Open-BFME5 ILT the guard at 0x002D60A0 tail-jumps through; it jumps to 0x002D9D00
