@@ -72202,6 +72202,7 @@ name,address,notes
 ?bfmeAllocQF@@YAPAXHI@Z,0x00030940,pin
 ?bfmeAllocQG@@YAPAXHI@Z,0x00030940,pin
 ?bfmeAllocQL@@YAPAXHPAX@Z,0x00030940,pin
+?bfmeAllocQT@@YAPAXHPAX@Z,0x00030940,pin
 ?bfmeAllocate@Gen_007b9e80@@AAE_NHH@Z,0x0003FC7E,Open-BFME5 the allocate the reserve at 0x007B9E80 calls
 ?bfmeAllocate@Gen_009073d0@@AAE_NHH@Z,0x00905DC0,Open-BFME5 the allocate the reserve at 0x009073D0 calls
 ?bfmeAllocate@Gen_00930d00@@AAE_NHH@Z,0x009304A0,Open-BFME5 the allocate the reserve at 0x00930D00 calls
