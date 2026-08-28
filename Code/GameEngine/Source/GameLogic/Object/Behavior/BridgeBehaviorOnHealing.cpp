@@ -4,6 +4,7 @@
 
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
+#include <math.h>
 #include <hash_map>
 #include <list>
 
@@ -18,6 +19,8 @@ enum DeathType { DEATH_NORMAL = 0 };
 
 struct Coord3D
 {
+	Real length() const { return (Real)sqrt(x * x + y * y + z * z); }
+
 	Real x;
 	Real y;
 	Real z;
@@ -25,6 +28,12 @@ struct Coord3D
 
 class DamageInfo;
 class Xfer;
+
+class Thing
+{
+public:
+	void setOrientation(Real angle);
+};
 
 class UpdateModule
 {
@@ -89,6 +98,7 @@ public:
 	virtual void unused15();
 	virtual void attemptHealing(Real amount, Object *source);
 	void kill(DamageType damageType, DeathType deathType);
+	void setPosition(const Coord3D *position);
 
 	bool isBridgeTower() const
 	{
@@ -152,10 +162,13 @@ public:
 class BridgeScaffoldBehaviorInterface
 {
 public:
-	virtual void unused00();
-	virtual void unused01();
+	virtual void setPositions(const Coord3D *sunkenPosition,
+		const Coord3D *risePosition, const Coord3D *buildPosition);
+	virtual void setMotion(int motion);
 	virtual int getCurrentMotion() const;
 	virtual void reverseMotion();
+	virtual void setLateralSpeed(Real speed);
+	virtual void setVerticalSpeed(Real speed);
 };
 
 class BridgeScaffoldBehavior
@@ -310,6 +323,9 @@ public:
 protected:
 	virtual void xfer(Xfer *xfer);
 	void handleObjectsOnBridgeOnDie();
+	void setScaffoldData(Object *object, Real *angle, Real *sunkenHeight,
+		const Coord3D *risePosition, const Coord3D *buildPosition,
+		const Coord3D *bridgeCenter);
 
 public:
 	Object *getObject() const
@@ -471,6 +487,46 @@ void BridgeBehavior::onDie(const DamageInfo *)
 	BridgeBehavior *primary = (BridgeBehavior *)((unsigned char *)this - 0x28);
 	primary->handleObjectsOnBridgeOnDie();
 	*(UnsignedInt *)((unsigned char *)this + 0x45C) = TheGameLogic->getFrame();
+}
+
+// ?setScaffoldData@BridgeBehavior@@IAEXPAVObject@@PAM1PBUCoord3D@@22@Z
+void BridgeBehavior::setScaffoldData(Object *object, Real *angle, Real *sunkenHeight,
+	const Coord3D *risePosition, const Coord3D *buildPosition,
+	const Coord3D *bridgeCenter)
+{
+	if (object == 0 || angle == 0 || risePosition == 0 || buildPosition == 0)
+		return;
+
+	const unsigned char *moduleData = *(const unsigned char **)
+		((const unsigned char *)this + 0x04);
+	BridgeScaffoldBehaviorInterface *scaffold =
+		BridgeScaffoldBehavior::getBridgeScaffoldBehaviorInterfaceFromObject(object);
+
+	Real fudge = 8.0f;
+	Coord3D sunkenPosition;
+	sunkenPosition.x = risePosition->x;
+	sunkenPosition.y = risePosition->y;
+	sunkenPosition.z = risePosition->z - *sunkenHeight - fudge;
+	object->setPosition(&sunkenPosition);
+	scaffold->setPositions(&sunkenPosition, risePosition, buildPosition);
+	scaffold->setMotion(1);
+	((Thing *)object)->setOrientation(*angle);
+
+	Real lateralSpeed = *(const Real *)(moduleData + 0x08);
+	Coord3D buildToCenter;
+	Coord3D riseToCenter;
+	buildToCenter.x = buildPosition->x - risePosition->x;
+	buildToCenter.y = buildPosition->y - risePosition->y;
+	buildToCenter.z = buildPosition->z - risePosition->z;
+	riseToCenter.x = bridgeCenter->x - risePosition->x;
+	riseToCenter.y = bridgeCenter->y - risePosition->y;
+	riseToCenter.z = bridgeCenter->z - risePosition->z;
+	Real buildDistance = buildToCenter.length();
+	Real riseDistance = riseToCenter.length();
+	scaffold->setLateralSpeed(
+		lateralSpeed * (buildDistance / riseDistance));
+	Real verticalSpeed = *(const Real *)(moduleData + 0x0C);
+	scaffold->setVerticalSpeed(verticalSpeed);
 }
 
 // ?onDamage@BridgeBehavior@@UAEXPAVDamageInfo@@@Z
