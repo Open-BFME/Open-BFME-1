@@ -72770,6 +72770,7 @@ name,address,notes
 ?bfmeIsSet@BfmeGameOverGateA@@QAE_NXZ,0x000330DC,Open-BFME5 ILT the first early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012ED748 is unidentified
 ?bfmeIsSet@BfmeGameOverGateB@@QAE_NXZ,0x0000CFC7,Open-BFME5 ILT the second early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012F076C is unidentified
 ?bfmeIterate@BfmeIterableObject@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x0003DB68,Open-BFME5 ILT the per-object visit in Player::iterateObjects at 0x000CDCF0 calls; it jumps to 0x000EE770
+?bfmeJoinAKD@BfmeInnerAKD@@QAEXPAXHH@Z,0x00014FDD,pin
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLookRH@@YGHPAX0@Z,0x007F76F0,pin
 ?bfmeLookupA@@YAHPAX@Z,0x0000B1AE,Open-BFME5 ILT the bit setter at 0x001C3FB0 looks up through
@@ -73990,6 +73991,8 @@ name,address,notes
 ?g_bfmeIntegerFormat@@3QBDB,0x011442DC,address-derived integer format string from the DIR32 operand at retail 0x009D94B8
 ?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
+?g_bfmeLookAKC@@3PAVBfmeLookAKC@@A,0x00EF076C,pin
+?g_bfmeLookAKD@@3PAVBfmeLookAKD@@A,0x00EF076C,pin
 ?g_bfmeLookRP@@3PAVBfmeLookRP@@A,0x00EF076C,pin
 ?g_bfmeLookRQ@@3PAVBfmeLookRQ@@A,0x00EF076C,pin
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
@@ -77672,6 +77675,7 @@ _atoi,0x009F6DEE,Y2 lane: atoi import thunk (gen-import ?ji_009f6dee@@YAXXZ name
 _audioManagerAddEventHelper@16,0x00020B08,AudioManager::addAudioEvent stdcall helper pin
 _bfmeAppend,0x009D9180,address-derived varargs formatting helper target from the direct REL32 calls at retail 0x009D936D and 0x009D9386
 _bfmeArrayNew,0x00881F70,address-derived array allocator target from the direct REL32 call at retail 0x009D6259
+_bfmeCbAKC,0x00032155,pin
 _bfmeDeleteBlock,0x00881EF0,address-derived release target from the direct REL32 call at retail 0x009D1A4C
 _bfmeDirectInput8Create@20,0x009F9AF0,undecorated alias for the DirectInput8Create import stub (see Win32DIKeyboardOpen.cpp)
 _bfmeLitZD,0x00CC79BC,pin
