@@ -72258,6 +72258,7 @@ name,address,notes
 ?bfmeAskBUB@BfmeSinkBUB@@QAE_NPAX@Z,0x0001E64B,pin
 ?bfmeAskBUE@BfmeOuterBUE@@QAE_NXZ,0x0004425B,pin
 ?bfmeAskBVF@BfmeOuterBVF@@QAE_NXZ,0x0004425B,pin
+?bfmeAskBVG@BfmeOuterBVG@@QAE_NXZ,0x0004425B,pin
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
 ?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
