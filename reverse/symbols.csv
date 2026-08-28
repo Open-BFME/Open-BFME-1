@@ -72341,6 +72341,7 @@ name,address,notes
 ?bfmeAskEME@BfmeObjEME@@QAE_NPAX@Z,0x009ECA00,pin
 ?bfmeAskEZF@@YG_NHPAUBfmeSubEZF@@@Z,0x0001B6D0,pin
 ?bfmeAskFBD@BfmeObjFBD@@QAE_NXZ,0x0002188C,pin
+?bfmeAskFDH@BfmeOwnFDH@@QAEDH@Z,0x000225F7,pin
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
 ?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
@@ -73252,6 +73253,7 @@ name,address,notes
 ?bfmeLookEFJ@BfmeGlobEFJ@@QAEPAVBfmeResEFJ@@PAVBfmeSubEFJ@@@Z,0x00028560,pin
 ?bfmeLookESC@BfmeGlobESC@@QAEGHHH@Z,0x00044C60,pin
 ?bfmeLookEUA@BfmeGlobBEUA@@QAEPAUBfmeItemEUA@@PAH@Z,0x0002EE60,pin
+?bfmeLookFDA@BfmeGlobFDA@@QAEPAUBfmeResFDA@@PAUBfmeSubFDA@@@Z,0x00028560,pin
 ?bfmeLookRH@@YGHPAX0@Z,0x007F76F0,pin
 ?bfmeLookupA@@YAHPAX@Z,0x0000B1AE,Open-BFME5 ILT the bit setter at 0x001C3FB0 looks up through
 ?bfmeLookupB@@YAHPAX@Z,0x000052CC,Open-BFME5 ILT the bit setter at 0x001C4020 looks up through
@@ -73413,6 +73415,7 @@ name,address,notes
 ?bfmeOneEEA@BfmeThingEEA@@QAEXXZ,0x00017BAC,pin
 ?bfmeOneEEC@BfmeThingEEC@@QAEXPBDH@Z,0x00850920,pin
 ?bfmeOneEFF@@YAPAXPAXH@Z,0x00990250,pin
+?bfmeOneFDD@BfmeOwnFDD@@QAEXXZ,0x0003C8D0,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73492,6 +73495,7 @@ name,address,notes
 ?bfmeRunEZF@BfmeGlobEZF@@QAEXXZ,0x00009EC1,pin
 ?bfmeRunFAA@BfmeSubFAA@@QAEXH@Z,0x00030887,pin
 ?bfmeRunFBG@BfmeItemFBG@@QAEXH@Z,0x00031228,pin
+?bfmeRunFDB@BfmeThingFDB@@QAEXPAX@Z,0x00048F36,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
@@ -73713,6 +73717,7 @@ name,address,notes
 ?bfmeTwoEEC@BfmeThingEEC@@QAEXPAX@Z,0x00850920,pin
 ?bfmeTwoEFF@@YAXHPAX@Z,0x0001327D,pin
 ?bfmeTwoEFFb@@YAXHPAX@Z,0x0001327D,pin
+?bfmeTwoFDD@BfmeSubFDD@@QAEXPAXH@Z,0x0003926B,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -73741,6 +73746,7 @@ name,address,notes
 ?bfmeUseDXJ@BfmeSubDXJ@@QAEXH@Z,0x00021468,pin
 ?bfmeUseEFJ@BfmeResEFJ@@QAEXPAX0@Z,0x00017A12,pin
 ?bfmeUseEGE@BfmeResEGE@@QAEXH@Z,0x000032AB,pin
+?bfmeUseFDE@BfmeThingFDE@@QAEXPAX@Z,0x0000A254,pin
 ?bfmeUseRT@BfmeSlotRT@@QAEXXZ,0x0003A427,pin
 ?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
@@ -74894,6 +74900,7 @@ name,address,notes
 ?g_bfmeObjFBA@@3PAUBfmeGlobFBA@@A,0x00EF0898,pin
 ?g_bfmeObjFBB@@3PAVBfmeGlobFBB@@A,0x00EED700,pin
 ?g_bfmeObjFBD@@3PAVBfmeGlobFBD@@A,0x00EF0898,pin
+?g_bfmeObjFDA@@3PAVBfmeGlobFDA@@A,0x00EEF1D8,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
