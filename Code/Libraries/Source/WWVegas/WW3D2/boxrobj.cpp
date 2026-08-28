@@ -723,7 +723,6 @@ void BoxRenderObjClass::render_box(RenderInfoClass & rinfo,const Vector3 & cente
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
 // byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/AABoxRenderObjClassCtorThunk.cpp
-// ??0AABoxRenderObjClass@@ present-unmatched
 AABoxRenderObjClass::AABoxRenderObjClass(void)
 {
 	update_cached_box();
