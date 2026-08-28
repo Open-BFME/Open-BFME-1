@@ -1,5 +1,4 @@
 name,address,notes
-?j_0001d6c4@BfmeSingletonH@@QAEXXZ,0x0001D6C4,BFME stop-helper layout alias; retail loads the singleton into ECX before this thunk
 ?$S103@?1??getClassMemoryPool@AIUpdateInterface@@CAPAVMemoryPool@@XZ@4IA,0x00EEFE34,pool-glue cascade static (back-solved)
 ?$S105@?1??getClassMemoryPool@PoisonedBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF830,pool-glue cascade static (back-solved)
 ?$S107@?1??getClassMemoryPool@SupplyWarehouseCripplingBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF91C,pool-glue cascade static (back-solved)
@@ -72757,6 +72756,7 @@ name,address,notes
 ?bfmeFreeBXD@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeBXE@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeBigCFA@@YAXPAD@Z,0x00881EB0,pin
+?bfmeFreeBigCFB@@YAXPAD@Z,0x00881EB0,pin
 ?bfmeFreeBlock@@YAXPAX@Z,0x00881EF0,Open-BFME5 the free the derived destructors at 0x00924090 and its siblings call
 ?bfmeFreeCAD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeCBF@@YAXPAX@Z,0x00881EB0,pin
@@ -72766,6 +72766,7 @@ name,address,notes
 ?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
 ?bfmeFreeSizedXC@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeSmallCFA@@YAXPADI@Z,0x0082E5F0,pin
+?bfmeFreeSmallCFB@@YAXPADI@Z,0x0082E5F0,pin
 ?bfmeFreeUB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeUD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
@@ -76388,6 +76389,7 @@ name,address,notes
 ?j_00010712@Glo012F1024Item@@QAEXXZ,0x00010712,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
 ?j_00010bcc@Glo012F1024Item@@QAEXXZ,0x00010BCC,"tail-called continuation of ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
 ?j_00019eca@Glo012F1024Item@@QAEXXZ,0x00019ECA,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
+?j_0001d6c4@BfmeSingletonH@@QAEXXZ,0x0001D6C4,BFME stop-helper layout alias; retail loads the singleton into ECX before this thunk
 ?j_0001eb9b@Glo012F1024Item@@QAEXXZ,0x0001EB9B,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
 ?j_00021f26@Glo012F1024Item@@QAEXXZ,0x00021F26,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
 ?j_000250d6@Glo012F1024Item@@QAEXXZ,0x000250D6,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
