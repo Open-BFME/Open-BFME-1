@@ -9590,6 +9590,7 @@ name,address,notes
 ?Combine_Color_And_Alpha@ParticleBufferClass@@IAEXXZ,0x00984CB0,derived from Render_Particles call sites
 ?Combo_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHAnimComboClass@@@Z,0x00954D90
 ?CommandRequiresAck@@YA_NPAVNetCommandMsg@@@Z,0x00682DB0,same body as the Int-returning ledger row; callers declare it Bool and test al, the definition widens to the whole register
+?CommandRequiresDirectSend@@YA_NPAVNetCommandMsg@@@Z,0x0001F154,caller-typed Bool declaration through the ILT thunk for the Int body at 0x00682E80
 ?Compute_Caps@DX8Caps@@AAEXW4WW3DFormat@@ABU_D3DADAPTER_IDENTIFIER8@@@Z,0x0091C230
 ?Compute_Current_Frame@Animatable3DObjClass@@IBEMPAM@Z,0x00982540,called by Simple_Evaluate_Bone
 ?Compute_Ram_Size@AABTreeClass@@QAEHXZ,0x0096A630,callee of byte-verified MeshGeometryClass::Compute_Ram_Size
@@ -74221,6 +74222,7 @@ name,address,notes
 ?destroyObject@GameLogic@@QAEXPAVObject@@@Z,0x0001D0DE,ILT thunk; real body 0x78B0C0
 ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z,0x00005696,BoneFXUpdate::killRunningParticleSystems/stopAllBoneFX call target (ILT thunk -> body 0x5C3C10)
 ?destroyPath@AIUpdateInterface@@QAEXXZ,0x000065E1,requestApproachPath retail ILT reaches the 0x0026F080 path destructor body
+?attach@NetCommandMsg@@QAEXXZ,0x0000D3A0,ILT thunk for body 0x00673600
 ?detach@NetCommandMsg@@QAEXXZ,0x000200A4,additive; ILT thunk for body 0xA73610
 ?detach@NetCommandMsg@@QAEXXZ,0x009EB7A0
 ?detailAlphaShader@@3VShaderClass@@A,0x012BA78C,W3DBibBuffer renderBibs TU-local shader object
