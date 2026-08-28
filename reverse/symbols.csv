@@ -12125,6 +12125,7 @@ name,address,notes
 ?isTimeFast@ScriptEngine@@QAE_NXZ,0x0000A8A8,ILT for the ScriptEngine fast-mode query at 0x00336FB0
 ??0ScriptAction@@QAE@W4ScriptActionType@0@@Z,0x0003BA16,ILT for the ScriptAction type-taking constructor body at 0x00356040
 ?debugVictory@ScriptEngine@@QAEXXZ,0x000240BE,ILT for the ScriptEngine debug victory action at 0x00337080
+?debugDefeat@ScriptEngine@@QAEXXZ,0x000184D5,ILT for the ScriptEngine debug defeat action at 0x00337100
 ?_bfme_isEvil@Player@@QBE_NXZ,0x00267FA0,returns m_playerTemplate(+4)->+0x118 or false; PlayerTemplate field table 0x010847E0 maps INI token Evil (parseBool) to offset 0x118; update calls it at 0x0035FC1A for the evil flag of showEndGameScreen and doVictory inlines the same read at 0x002F1C70
 ?_bfme_isInLivingWorldCampaign@GameLogic@@QAE_NXZ,0x00382B50,GameLogic member: (mode 0 or 7 or a playback of those via TheRecorder getMode==1 and Recorder+0x2AC or mode 6) and TheLivingWorldLogic 0x012F1028 +0x2C; update uses it at 0x0035FAA5 to show GUI:YouHaveBeenDefeated instead of the MP message; 16 callers
 ?_bfme_isInMultiplayerOrSkirmishGame@GameLogic@@QAE_NXZ,0x00382C20,GameLogic member: mode LAN(1) INTERNET(5) SKIRMISH(2) or a playback of those (Recorder+0x2AC); hideEndGameScreen 0x0035F7B3 uses it for MPorSkirmishFadeToScoreScreen; 31 callers
