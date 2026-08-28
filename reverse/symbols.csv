@@ -72757,6 +72757,7 @@ name,address,notes
 ?bfmeGetBonus@Object@@QBE_NHPAM@Z,0x0000BECE,Open-BFME5 ILT thunk to body 0x001BFDB0; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 queries bonus 6 on the source object through it with an out pointer; address-derived name
 ?bfmeGetBonusSource@Object@@ABEPAVBfmeVisionBonusSource@@XZ,0x000202ED,Open-BFME5 ILT Object::getVisionRange at 0x001C17C0 asks for the bonus source through
 ?bfmeGetBoxAFB@BfmeThingAFB@@QAEPAUBfmeBoxAFB@@XZ,0x000202ED,pin
+?bfmeGetCrewSpeedMultiplier@Object@@QBEMXZ,0x000277AA,Open-BFME5 ILT thunk to body 0x001BF020; null m_contain at +0x1FC returns 1.0 otherwise tail-forwards to ContainModuleInterface slot 48 (+0xC0); bfme prefix records unrecovered retail spelling
 ?bfmeGetID@BfmeDrawableWithID@@QAEIXZ,0x00009B01,Open-BFME5 ILT both drawable lookup-table wrappers at 0x00431C20 and 0x00430B50 read the id through
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
