@@ -72197,6 +72197,8 @@ name,address,notes
 ?bfmeAllocBlock@@YAPAXI@Z,0x009A5920,Open-BFME5 the allocator the calloc at 0x009A59D0 gets its block from
 ?bfmeAllocNode@@YAPAXI@Z,0x0082E540,Open-BFME5 the 16-byte allocator the node makers at 0x0046A070 0x0046B1C0 and 0x00927760 call
 ?bfmeAllocPV@@YAPAXHI@Z,0x00030940,pin
+?bfmeAllocQA@@YAPAXHI@Z,0x00030940,pin
+?bfmeAllocQB@@YAPAXHI@Z,0x00030940,pin
 ?bfmeAllocate@Gen_007b9e80@@AAE_NHH@Z,0x0003FC7E,Open-BFME5 the allocate the reserve at 0x007B9E80 calls
 ?bfmeAllocate@Gen_009073d0@@AAE_NHH@Z,0x00905DC0,Open-BFME5 the allocate the reserve at 0x009073D0 calls
 ?bfmeAllocate@Gen_00930d00@@AAE_NHH@Z,0x009304A0,Open-BFME5 the allocate the reserve at 0x00930D00 calls
@@ -72237,6 +72239,7 @@ name,address,notes
 ?bfmeBegin@Glo012F1028Sub@@AAEXPAVGlo012F1028Item@@@Z,0x0003BF2F,Open-BFME5 ILT thunk to body 0x003C7010; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on this with each item of the vector at +0x30 of its holder; address-derived name
 ?bfmeBigAllocPR@@YAPAXI@Z,0x00037C54,pin
 ?bfmeBigFreePM@@YAXPAX@Z,0x0002AB35,pin
+?bfmeBigFreePZ@@YAXPAX@Z,0x0002AB35,pin
 ?bfmeBlendTileEmit@@YAXPAD0HH@Z,0x00747940,Open-BFME5 the 180-byte cdecl emitter the blendTileData at 0x0074A240 finishes with
 ?bfmeBlendTileFits@@YG_NGHPADH@Z,0x000274A8,Open-BFME5 ILT the blendTileData at 0x0074A240 tests through
 ?bfmeBlendTileOffset@BFMERetailWorldHeightMapBlendTileDataShim@@AAEHHPAUTBlendTileInfo@@@Z,0x0003D965,Open-BFME5 ILT the blendTileData at 0x0074A240 asks for its offset through
@@ -72801,6 +72804,7 @@ name,address,notes
 ?bfmeSlot@BfmeDrawableLookupTable@@QAEPAPAVDrawable@@ABI@Z,0x00034A95,Open-BFME5 ILT addDrawableToLookupTable at 0x00431C20 asks for the slot through
 ?bfmeSmallAllocPR@@YAPAXI@Z,0x0082E450,pin
 ?bfmeSmallFreePM@@YAXPAXI@Z,0x0082E4F0,pin
+?bfmeSmallFreePZ@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeStart@Gen_0049A330@@QAEXPAX0PAPAX@Z,0x00014100,Open-BFME5 the starter the SEH constructor at 0x0049A330 calls
 ?bfmeStart@Gen_00654F20@@QAEXPAX0PAPAX@Z,0x0002648B,Open-BFME5 the starter the SEH constructor at 0x00654F20 calls
 ?bfmeStart@Gen_00844340@@QAEXPAX0PAPAX@Z,0x0002A531,Open-BFME5 the starter the SEH constructor at 0x00844340 calls
