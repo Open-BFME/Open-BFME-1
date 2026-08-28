@@ -73852,6 +73852,7 @@ name,address,notes
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
+?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeW0@@YAIII@Z,0x0004B28B,Open-BFME5 ILT the variant ctor at 0x00390830 calls
 ?bfmeMakeW1@@YAIII@Z,0x00002B8F,Open-BFME5 ILT the variant ctor at 0x003CA5F0 calls
 ?bfmeMakeW2@@YAIII@Z,0x00025225,Open-BFME5 ILT the variant ctor at 0x0054F770 calls
