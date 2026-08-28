@@ -40,6 +40,18 @@ DEFAULT_ROOT = Path(__file__).resolve().parents[1]
 LEDGER = "reverse/functions.csv"
 LEDGER_COLUMNS = ["name", "export_rva", "target_rva", "target_size", "source",
                   "status", "notes"]
+# A cold cache means scanning every tracked source, which is minutes with no
+# output -- indistinguishable from a hang, and that is exactly how it gets read:
+# a fresh worktree's first --staged run was mistaken for a blocked build lock and
+# cost two killed commits before anyone suspected this tool. So a full scan says
+# so, once. A commit touches a handful of files, so a miss count above this is a
+# cold or wholesale-stale cache rather than ordinary work.
+#
+# The notice goes to stderr and nowhere else: stdout is parsed -- the trailer
+# lands verbatim in commit messages and the table is asserted on -- so it stays
+# byte-identical whether the cache is warm or cold.
+SCAN_NOTICE_MIN = 100
+
 SRC_EXT = (".cpp", ".c", ".h", ".inl")
 TU_EXT = (".cpp", ".c")
 FLAT_AREAS = ("gen_asm", "gen_small", "masm_dumps", "stlport")
@@ -336,10 +348,20 @@ def fold(areas, sources, ledger):
     return areas
 
 
+def announce_scan(missing, total):
+    """One stderr line before a full scan, so silence is never the only signal."""
+    if missing > SCAN_NOTICE_MIN:
+        print(f"readability: cold cache, scanning {missing} of {total} sources "
+              f"(slow once; cached under build/readability/ for later runs)",
+              file=sys.stderr)
+
+
 def measure_worktree(root, cache):
     """(area -> counters, tracked source count) for the files on disk."""
     paths = tracked_sources(root)
     hashes = worktree_hashes(root, [*paths, LEDGER])
+    announce_scan(sum(1 for path in paths if hashes[path] not in cache.files),
+                  len(paths))
     scanned = []
     for path in paths:
         sha = hashes[path]
@@ -363,6 +385,7 @@ def measure_blobs(root, revision, cache):
         fail(f"{label} has no {LEDGER}")
     sources = {path: sha for path, sha in blobs.items() if path.endswith(SRC_EXT)}
     wanted = sorted({sha for sha in sources.values() if sha not in cache.files})
+    announce_scan(len(wanted), len(sources))
     for sha, raw in read_blobs(root, wanted):
         cache.put(cache.files, sha, scan(decode(raw)))
     ledger_sha = blobs[LEDGER]

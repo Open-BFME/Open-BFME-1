@@ -323,3 +323,35 @@ def test_a_commit_that_moves_nothing_says_so(tmp_path):
     root = world(tmp_path)
     commit(root)
     assert cli(root, "--staged").stdout == "readability: no measurable change\n"
+
+
+def test_a_cold_scan_says_so_on_stderr_and_a_warm_one_is_silent(tmp_path):
+    """A cold cache scans every source, which is minutes of no output and reads
+    as a hang -- a fresh worktree's first run was mistaken for a blocked build
+    lock. It gets one stderr line, and only stderr: stdout carries the trailer
+    into commit messages and is asserted on elsewhere, so it must not move."""
+    root = world(tmp_path, fillers=metric.SCAN_NOTICE_MIN + 5)
+
+    cold = cli(root)
+    assert cold.returncode == 0, cold.stderr
+    assert "cold cache" in cold.stderr
+    assert cold.stderr.count("\n") == 1, f"expected one line, got {cold.stderr!r}"
+
+    warm = cli(root)
+    assert warm.returncode == 0, warm.stderr
+    assert warm.stderr == ""
+    assert warm.stdout == cold.stdout
+
+
+def test_a_handful_of_changed_files_scans_quietly(tmp_path):
+    """The per-commit case must stay silent, or the notice becomes noise on every
+    commit and stops meaning anything."""
+    root = world(tmp_path, fillers=metric.SCAN_NOTICE_MIN + 5)
+    commit(root)
+    cli(root)                                   # warm the cache
+    (root / AREA / "filler0.cpp").write_text(FILLER.format(n=0) + "\nvoid extra(void)\n{\n}\n")
+    stage(root, f"{AREA}/filler0.cpp")
+
+    done = cli(root, "--staged")
+    assert done.returncode == 0, done.stderr
+    assert done.stderr == ""
