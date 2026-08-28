@@ -9985,6 +9985,7 @@ name,address,notes
 ?Intersection_Test@CollisionMath@@SA_NABVSphereClass@@ABVOBBoxClass@@@Z,0x008E3600,derived-ICF
 ?Inv_Sqrt@WWMath@@SIMM@Z,0x00027A43,WWMath::Inv_Sqrt (naked __fastcall) incremental-link thunk (body 0x00131C90); called by Quaternion::Normalize and Axis_To_Quat, owned by wwmath.cpp
 ?Invalidate_Cached_Render_States@DX8Wrapper@@SAXXZ,0x00903C50,End_Render depth Open-BFME4+Grok
+?IsCommandSynchronized@@YA_NW4NetCommandType@@@Z,0x00001FB9,caller-typed Bool declaration through the ILT thunk for the Int body at 0x00682E50
 ?Is_Bone_Captured@HTreeClass@@QBE_NH@Z,0x00952A40
 ?Is_Running@ThreadClass@@QAE_NXZ,0x009DB590
 ?LZHLCreateDecompressor@@YAPAXXZ,0x00823170,LZH-Light decompressor factory wrapper
@@ -12274,6 +12275,7 @@ name,address,notes
 ?addKeepAliveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0067BC40,addCommand's jump-table arm for command type 12
 ?addLoadCompleteMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0002ED4D,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addLoadCompleteMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0067AFD0,addCommand's jump-table arm for command type 16
+?addNetCommandMsg@FrameDataManager@@QAEPAVNetCommandRef@@PAVNetCommandMsg@@@Z,0x0002FB5D,ILT thunk for body 0x00670640
 ?addNoFlyZone@AerialPathfinder@@QAEXPAVPolygonTrigger@@M@Z,0x00148C10,Open-BFME5 callee of parseAerialPathfindNoFlyZone; appends {area,height} to the list at TheAerialPathfinder+0xC
 ?addNugget@EmotionSystem@@QAEXPAVEmotionNugget@@@Z,0x000170D0,derived from the REL32 displacement at 0x0037B8A0
 ?addObjectCreationNugget@ObjectCreationList@@QAEXPAVObjectCreationNugget@@@Z,0x00040C50,Open-BFME5 parseDebris retail incremental thunk
@@ -77531,6 +77533,7 @@ name,address,notes
 ?sendMangledPortNumberToTarget@NAT@@IAEXGPAVGameSlot@@@Z,0x0002ACCA,ILT thunk; real body 0x6718A0
 ?sendMessage@LANAPI@@IAEXPAULANMessage@@I@Z,0x0002B599,thunk to 0x684CF0; pinned by RequestLobbyLeave @0x6850F0 which is byte-exact apart from this call
 ?sendMessage@LANAPI@@QAEXPAULANMessage@@I@Z,0x0002B599,LANAPI::sendMessage(msg, ip) for RequestLobbyLeave
+?sendNetCommandMsg@Connection@@QAEXPAVNetCommandMsg@@E@Z,0x00026D3C,ILT thunk for body 0x006624A0
 ?sendNetCommandMsg@Connection@@QAEXPAVNetCommandMsg@@E@Z,0x006624A0,ZH twin exact: function-static NetPacket at 0x012F76FC; NEW_NETCOMMANDREF 0x00676240; NetPacket::addCommand 0x006811B0; ConstructBigCommandPacketList 0x006814B0 split path; addMessage 0x00673200 + setRelay at ref+0xC; callers queueLocalCommand relayCommand sendLocalCommandDirect sendLocalCommand via ILT 0x00026D3C
 ?sendPlayerDestruct@DisconnectManager@@IAEXHPAVConnectionManager@@@Z,0x0004B0B0,DisconnectManager status update destruction dispatch through ILT to the existing 0x0066B550 body
 ?sendToManglerFromPort@FirewallHelperClass@@QAE_NIGG_N@Z,0x00022C00
