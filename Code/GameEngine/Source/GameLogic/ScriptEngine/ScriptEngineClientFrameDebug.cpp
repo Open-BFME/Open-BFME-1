@@ -3,6 +3,7 @@
 class ScriptEngine
 {
 public:
+	bool isTimeFrozenDebug(void);
 	bool _bfme_isClientFrameFrozen(void);
 
 private:
@@ -12,6 +13,14 @@ private:
 
 #define TheScriptDebugWindowDLL (*(void **)0x012F0758)
 #define ClientCanAppContinue (*(bool *)0x012F075C)
+#define LogicCanAppContinue (*(bool *)0x012F075D)
+
+bool ScriptEngine::isTimeFrozenDebug(void)
+{
+	if (m_useLogicDebugFrame && TheScriptDebugWindowDLL)
+		return !LogicCanAppContinue;
+	return false;
+}
 
 bool ScriptEngine::_bfme_isClientFrameFrozen(void)
 {
