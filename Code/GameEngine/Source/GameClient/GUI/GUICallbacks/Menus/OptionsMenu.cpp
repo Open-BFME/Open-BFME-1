@@ -711,43 +711,111 @@ Bool OptionPreferences::getTreesEnabled(void)
 	return FALSE;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getExtraAnimationsDisabled_OptionPreferences_QAE_NXZ_000910B0.cpp
-// ?getExtraAnimationsDisabled@OptionPreferences@@QAE_NXZ present-unmatched
+// The preference getters below read the mapped value's characters in place and
+// drive the lookup key with explicit init/destroy calls rather than an object
+// with a destructor: retail has no unwind frame here, and a destructor would
+// demand one. The map's header node doubles as its end sentinel.
+struct CustomAsciiStringShim
+{
+	void *m_data;
+	void init( const char *s );
+	void destroy( void );
+};
+
+struct CustomStringDataShim
+{
+	UnsignedByte m_header[8];				///< characters follow at +8
+};
+
+struct CustomMapNodeShim
+{
+	UnsignedByte m_unreconstructed_00[0x14];
+	CustomStringDataShim *m_value;				///< retail node+0x14
+};
+
+struct CustomPreferenceMapShim
+{
+	CustomMapNodeShim *m_header;
+	CustomMapNodeShim *find( CustomAsciiStringShim *key );
+};
+
+// The defaults come from TheWritableGlobalData, whose flags BFME keeps at these
+// three offsets.
+struct BfmeGlobalDataFlags
+{
+	UnsignedByte m_unreconstructed_00[0x1c];
+	Bool m_extraAnimationsDisabled;				///< retail this+0x1c
+	Bool m_useHeatEffects;					///< retail this+0x1d
+	UnsignedByte m_unreconstructed_1e[0x58 - 0x1e];
+	Bool m_dynamicLODEnabled;				///< retail this+0x58
+};
+
+// ?getExtraAnimationsDisabled@OptionPreferences@@QAE_NXZ
 Bool OptionPreferences::getExtraAnimationsDisabled(void)
 {
-	OptionPreferences::const_iterator it = find("ExtraAnimations");
-	if (it == end())
-		return TheGlobalData->m_useDrawModuleLOD;
+	CustomAsciiStringShim key;
+	key.init("ExtraAnimations");
 
-	if (stricmp(it->second.str(), "yes") == 0) {
-		return FALSE;	//we are enabling extra animations, so disabled LOD
-	}
-	return TRUE;
-}
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getUseHeatEffects_OptionPreferences_QAE_NXZ_00092070.cpp
-// ?getUseHeatEffects@OptionPreferences@@QAE_NXZ present-unmatched
-Bool OptionPreferences::getUseHeatEffects(void)
-{
-	OptionPreferences::const_iterator it = find("HeatEffects");
-	if (it == end())
-		return TheGlobalData->m_useHeatEffects;
+	if (node == map->m_header)
+		return ((const BfmeGlobalDataFlags *)TheWritableGlobalData)->m_extraAnimationsDisabled;
 
-	if (stricmp(it->second.str(), "yes") == 0) {
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	if (stricmp(text, "yes") != 0)
+	{
 		return TRUE;
 	}
 	return FALSE;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getDynamicLODEnabled_OptionPreferences_QAE_NXZ_00091130.cpp
-// ?getDynamicLODEnabled@OptionPreferences@@QAE_NXZ present-unmatched
+// This one compares case-sensitively, which /Oi turns into a repe cmpsb over the
+// four bytes of "yes" rather than a call.
+// ?getUseHeatEffects@OptionPreferences@@QAE_NXZ
+Bool OptionPreferences::getUseHeatEffects(void)
+{
+	CustomAsciiStringShim key;
+	key.init("HeatEffects");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
+		return ((const BfmeGlobalDataFlags *)TheWritableGlobalData)->m_useHeatEffects;
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	if (strcmp(text, "yes") == 0)
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
+
+// ?getDynamicLODEnabled@OptionPreferences@@QAE_NXZ
 Bool OptionPreferences::getDynamicLODEnabled(void)
 {
-	OptionPreferences::const_iterator it = find("DynamicLOD");
-	if (it == end())
-		return TheGlobalData->m_enableDynamicLOD;
+	CustomAsciiStringShim key;
+	key.init("DynamicLOD");
 
-	if (stricmp(it->second.str(), "yes") == 0) {
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
+		return ((const BfmeGlobalDataFlags *)TheWritableGlobalData)->m_dynamicLODEnabled;
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	if (stricmp(text, "yes") == 0)
+	{
 		return TRUE;
 	}
 	return FALSE;
