@@ -72372,6 +72372,7 @@ name,address,notes
 ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z,0x0002CB79,Open-BFME5 ILT thunk to body 0x00417710; Gen_00417cb0::tail at 0x00417A70 calls it on this with the source result and its own argument; address-derived name in the same synthetic family as the class
 ?bfmeEnable@BfmeElemW@@QAEXHH@Z,0x000482AC,Open-BFME5 the ICF thunk (to 0x004482AC) the clear at 0x004B1720 calls on each element with a pair of ones
 ?bfmeEnter@Glo012F1024Item@@QAEXXZ,0x0000BC5D,Open-BFME5 ILT thunk to body 0x003AEE70; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 calls it on the 0xDC-byte item the advanced index selects; address-derived name
+?bfmeEquivalencyIndex@PathfindMovementProfile@@QBEHXZ,0x00046B55,Open-BFME5 ILT thunk to the exact movement-profile equivalency index at 0x00402120
 ?bfmeErase@AnimationSoundClientBehaviorModuleDataMember@@AAEXPAX@Z,0x000082D3,Open-BFME5 ILT thunk; ??1AnimationSoundClientBehaviorModuleDataMember@@QAE@XZ at 0x00605E60 hands it the field at +4 of its header before putting the header back to itself; address-derived name
 ?bfmeErase@BfmeDrawableLookupTable@@QAEXABI@Z,0x00043F31,Open-BFME5 ILT removeDrawableFromLookupTable at 0x00430B50 erases through
 ?bfmeErase@BfmeShroudList@@QAEXPAVBfmeListHeader@@@Z,0x00016ED2,Open-BFME5 ILT thunk; ?reset30BC@BaseHeightMapResetShroud@@QAEXXZ at 0x00727450 hands it the first node of the list at +0x44 before putting the header back to itself; address-derived name
