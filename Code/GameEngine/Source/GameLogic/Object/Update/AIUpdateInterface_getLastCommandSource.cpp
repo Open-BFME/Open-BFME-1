@@ -7,6 +7,7 @@ class AIUpdateInterface
 {
 public:
 	virtual CommandSourceType getLastCommandSource() const;
+	virtual void notifyVictimIsDead();
 
 private:
 	// BFME carries eight fewer bytes than the Zero Hour interface before this field.
@@ -18,4 +19,9 @@ private:
 CommandSourceType AIUpdateInterface::getLastCommandSource() const
 {
 	return m_lastCommandSource;
+}
+
+// ?notifyVictimIsDead@AIUpdateInterface@@UAEXXZ
+void AIUpdateInterface::notifyVictimIsDead()
+{
 }
