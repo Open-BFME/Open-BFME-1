@@ -81328,3 +81328,6 @@ g_bfmeGridWaterHandle,0x012EF4D4,TerrainLogic getWaterHandle retail grid-water s
 ??$insert_unique@U?$_Rb_tree_iterator@PAURva001408C0Target@@U?$_Const_traits@PAURva001408C0Target@@@_STL@@@_STL@@@?$_Rb_tree@PAURva001408C0Target@@PAU1@U?$_Identity@PAURva001408C0Target@@@_STL@@U?$less@PAURva001408C0Target@@@3@V?$allocator@PAURva001408C0Target@@@3@@_STL@@QAEXU?$_Rb_tree_iterator@PAURva001408C0Target@@U?$_Const_traits@PAURva001408C0Target@@@_STL@@@1@0@Z,0x0003AFD0,AssetList set range-insert ILT to body 0x00140CA0
 ?bfmeAllocBAA@@YAPAXI@Z,0x0082E540,pin
 ?bfmeDropBAB@BfmeOwnerBAB@@QAEXPAX@Z,0x007F9590,pin
+?setCameraTransform@W3DView@@AAEXXZ,0x000312A0,BFME thunk reached by W3DView::setPitch
+?_M_reallocate_map@?$deque@UGen_t_008fb570_p8pod@@V?$allocator@UGen_t_008fb570_p8pod@@@_STL@@@_STL@@IAEXI_N@Z,0x008FABB0,RVA 0x008FB570 exact auxiliary call target
+??$_Construct@UGen_t_008fb570_p8pod@@U1@@_STL@@YAXPAUGen_t_008fb570_p8pod@@ABU1@@Z,0x008F9C70,RVA 0x008FB570 exact auxiliary call target
