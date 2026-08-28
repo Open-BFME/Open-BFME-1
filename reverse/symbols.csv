@@ -72339,6 +72339,7 @@ name,address,notes
 ?bfmeAskEGFb@BfmeSubEGF@@QAE_NXZ,0x0003D3B6,pin
 ?bfmeAskEME@BfmeObjEME@@QAE_NPAX@Z,0x009ECA00,pin
 ?bfmeAskEZF@@YG_NHPAUBfmeSubEZF@@@Z,0x0001B6D0,pin
+?bfmeAskFBD@BfmeObjFBD@@QAE_NXZ,0x0002188C,pin
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
 ?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
@@ -72497,6 +72498,8 @@ name,address,notes
 ?bfmeCallENI@BfmeHolderENI@@QAEXPAX@Z,0x0002DC86,pin
 ?bfmeCallENJ@@YAXPAX0@Z,0x00004C37,pin
 ?bfmeCallEOD@BfmeThingEOD@@QAEXPAX@Z,0x00887B60,pin
+?bfmeCallFBB@BfmeGlobFBB@@QAEDPAX00@Z,0x0000F844,pin
+?bfmeCallFBC@BfmeObjFBC@@QAEDPAX0H0@Z,0x00005C4A,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -72786,6 +72789,7 @@ name,address,notes
 ?bfmeFindEGCb@BfmeSubEGCb@@QAEPAUBfmeResEGC@@PAX@Z,0x00014D49,pin
 ?bfmeFindEVB@BfmeGlobEVB@@QAEPAUBfmeObjEVB@@PAX@Z,0x0001F253,pin
 ?bfmeFindEZC@BfmeSubEZC@@QAEPAUBfmeResEZC@@PAX@Z,0x00037D6C,pin
+?bfmeFindFBD@BfmeGlobFBD@@QAEPAUBfmeObjFBD@@PAX@Z,0x0001F253,pin
 ?bfmeFindItemE63@@YAPAUBfmeItemE63@@H@Z,0x0000E6E7,pin
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
 ?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
@@ -73484,6 +73488,7 @@ name,address,notes
 ?bfmeRunEZA@BfmeItemEZA@@QAEXXZ,0x0001BF40,pin
 ?bfmeRunEZF@BfmeGlobEZF@@QAEXXZ,0x00009EC1,pin
 ?bfmeRunFAA@BfmeSubFAA@@QAEXH@Z,0x00030887,pin
+?bfmeRunFBG@BfmeItemFBG@@QAEXH@Z,0x00031228,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
@@ -73725,6 +73730,7 @@ name,address,notes
 ?bfmeUpdEGA@BfmeSubEGA@@QAEPAUBfmeThingEGA@@XZ,0x00048C61,pin
 ?bfmeUpdEGB@BfmeSubEGB@@QAEPAUBfmeThingEGB@@XZ,0x00048C61,pin
 ?bfmeUpdEOG@BfmeNodeEOG@@QAEPAU1@XZ,0x00048C61,pin
+?bfmeUpdFBA@BfmeThingFBA@@QAEXPAX@Z,0x00021ABC,pin
 ?bfmeUpdate@BfmeCellFC@@QAEXH_N@Z,0x00881BE0,Open-BFME5 semantic identity for exact address-derived cell update body at 0x00881BE0
 ?bfmeUpdateCHE@BfmeThingCHE@@QAEXXZ,0x00004A70,pin
 ?bfmeUpdateCMB@BfmeThingCMB@@QAEXXZ,0x00032231,pin
@@ -74880,6 +74886,9 @@ name,address,notes
 ?g_bfmeObjEYA@@3PAUBfmeGlobEYA@@A,0x00EED5C8,pin
 ?g_bfmeObjEZF@@3PAVBfmeGlobEZF@@A,0x00EF33F8,pin
 ?g_bfmeObjFAF@@3PAUBfmeGlobFAF@@A,0x00EF7014,pin
+?g_bfmeObjFBA@@3PAUBfmeGlobFBA@@A,0x00EF0898,pin
+?g_bfmeObjFBB@@3PAVBfmeGlobFBB@@A,0x00EED700,pin
+?g_bfmeObjFBD@@3PAVBfmeGlobFBD@@A,0x00EF0898,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
