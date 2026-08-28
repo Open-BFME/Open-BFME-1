@@ -12385,6 +12385,7 @@ name,address,notes
 ?appendTeamIDArgument@GameMessage@@QAEXI@Z,0x0000C522,GameMessage::appendTeamIDArgument thunk
 ?appendTimestampArgument@GameMessage@@QAEXI@Z,0x0000D558,GameMessage::appendTimestampArgument thunk
 ?appendWideCharArgument@GameMessage@@QAEXABG@Z,0x000028C9,GameMessage::appendWideCharArgument thunk
+?apply@BfmeSub210_4B0@@QAEXMH@Z,0x000326F5,pin
 ?apply@ControlBarSetDefaultConfigShim@@QAEXXZ,0x0049E090,ControlBar setDefaultControlBarConfig incremental-link thunk target through a TU-local forwarding shim
 ?apply@ControlBarSetLowConfigShim@@QAEXXZ,0x0049E120,ControlBar setLowControlBarConfig incremental-link thunk target through a TU-local forwarding shim
 ?apply@Gen00006D20@@QAEXPAVY1RangeWrapper@@@Z,0x00006D20,element callee of the 0x003D08F0 dispatch loop reached via incremental-link thunk; address-derived name
@@ -73538,15 +73539,19 @@ name,address,notes
 ?bfmeStep1_004647E0@@YAXXZ,0x0002B314,Open-BFME5 ILT the pair runner at 0x004647E0 calls first
 ?bfmeStep1_00589680@@YAXXZ,0x0003643A,Open-BFME5 ILT the pair runner at 0x00589680 calls first
 ?bfmeStep1_009A75E0@@YAXXZ,0x009B3A00,Open-BFME5 the routine the pair runner at 0x009A75E0 calls first
+?bfmeStep1_250@@YAXPAX@Z,0x00863FF0,pin
 ?bfmeStep2@Gen_004410A0@@AAEXXZ,0x0000B613,Open-BFME5 ILT the three-step runner at 0x004410A0 calls second
 ?bfmeStep2@Gen_0077F000@@AAEXXZ,0x0002398E,Open-BFME5 ILT the three-step runner at 0x0077F000 calls second
 ?bfmeStep2@Gen_007892D0@@AAEXXZ,0x0003879E,Open-BFME5 ILT the three-step runner at 0x007892D0 calls second
 ?bfmeStep2_004647E0@@YAXXZ,0x00039F1D,Open-BFME5 ILT the pair runner at 0x004647E0 tail-jumps to
 ?bfmeStep2_00589680@@YAXXZ,0x000216D9,Open-BFME5 ILT the pair runner at 0x00589680 tail-jumps to
 ?bfmeStep2_009A75E0@@YAXXZ,0x009B3B40,Open-BFME5 the routine the pair runner at 0x009A75E0 tail-jumps to
+?bfmeStep2_250@@YAXPAX@Z,0x008632F0,pin
 ?bfmeStep3@Gen_004410A0@@AAEXXZ,0x0002E8CA,Open-BFME5 ILT the three-step runner at 0x004410A0 tail-jumps to
 ?bfmeStep3@Gen_0077F000@@AAEXXZ,0x0001B32E,Open-BFME5 ILT the three-step runner at 0x0077F000 tail-jumps to
 ?bfmeStep3@Gen_007892D0@@AAEXXZ,0x0004264A,Open-BFME5 ILT the three-step runner at 0x007892D0 tail-jumps to
+?bfmeStep3_250@@YAXPAX@Z,0x00862820,pin
+?bfmeStep4_250@@YAXPAX@Z,0x00864280,pin
 ?bfmeStep@Glo012F1024Entry@@QAEXXZ,0x00015F50,Open-BFME5 ILT thunk to body 0x003A7320; ?step@Glo012F1024Type@@QAEXXZ at 0x003B3900 tail-jumps into it on the selected 32-byte entry; address-derived name
 ?bfmeStepAED@BfmeSubAED@@QAEXH@Z,0x00015546,pin
 ?bfmeStepARA@BfmeThingARA@@QAEXXZ,0x000312A0,pin
@@ -73619,6 +73624,7 @@ name,address,notes
 ?bfmeTailWC@BfmeInnerWC@@QAEXH@Z,0x00007513,pin
 ?bfmeTailZC@BfmeThingZC@@QAEXXZ,0x0003672D,pin
 ?bfmeTake@BfmeSinkAB@@QAEXPAVBfmeVecAB@@@Z,0x00014E1B,Open-BFME5 the ICF thunk (to 0x00414E1B) the body at 0x003CFC90 hands its first vector to
+?bfmeTarget861210@@YAXPAX0PBD@Z,0x00861210,pin
 ?bfmeTellRB@BfmeNodeRB@@QAEXPAX@Z,0x000021CB,pin
 ?bfmeTellRP@BfmeFoundRP@@QAEXPAX@Z,0x00030553,pin
 ?bfmeTest@Rva2225E0Filter@@AAE_NPAVBfmeOverridable@@_N@Z,0x0001B437,Open-BFME5 ILT the filter test whose result Rva2225E0Filter::accepts at 0x003A04A0 returns
@@ -74917,6 +74923,7 @@ name,address,notes
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
 ?g_obj12F060C@@3PAUBfmeObj2B1@@A,0x00EF060C,pin
 ?g_obj12F1024@@3PAUBfmeObj1024@@A,0x00EF1024,pin
+?g_processVal13596B8@@3P6GXH@ZA,0x013596B8,pin
 ?g_quitMenuLayout@@3PAXA,0x012F4AD4,HideQuitMenu layout global
 ?g_rva0051B5F0Large@@3URva0051B5F0Large@@A,0x00D05FBC,Open-BFME5 packed thirteen-byte preset global
 ?g_rva0051B5F0Medium@@3URva0051B5F0Medium@@A,0x00D05FB0,Open-BFME5 packed ten-byte preset global
@@ -78599,6 +78606,7 @@ __ehhandler$?getClassMemoryPool@WeaponSetUpgrade@@CAPAVMemoryPool@@XZ,0x00C14DFE
 __ehhandler$?getClassMemoryPool@WorkerAIUpdate@@CAPAVMemoryPool@@XZ,0x00C140BE,pool-glue cascade static (back-solved)
 __ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00BFAB08,PlayerTemplate time-change retail exception handler
 __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
+__imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x013596D8,pin
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
 __imp__bfmeCloseDWE@4,0x00F590C8,pin
