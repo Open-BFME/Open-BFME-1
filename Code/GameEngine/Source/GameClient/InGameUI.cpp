@@ -9349,23 +9349,63 @@ void InGameUI::popupMessage( const AsciiString& identifier, Int x, Int y, Int wi
 //-------------------------------------------------------------------------------------------------
 /** take care of the logic of clearing the popupMessageData */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_clearPopupMessageData.cpp
-// ?clearPopupMessageData@InGameUI@@QAEXXZ present-unmatched
+// BFME's setGamePaused takes three arguments and gets the music flag inverted,
+// with a trailing TRUE the reference has no room for. Both objects go through
+// the scalar deleting destructor MSVC emits for `delete` -- the layout's at
+// vtable slot 1, the message data's at slot 0 -- not the pool helper, and
+// m_popupMessageData at +0x12A8 is reloaded before every use.
+class BfmePopupWindowLayout
+{
+public:
+	virtual void _wl0() = 0;
+	virtual ~BfmePopupWindowLayout() = 0;
+	virtual void _wl2() = 0;
+	virtual void _wl3() = 0;
+	virtual void _wl4() = 0;
+	virtual void _wl5() = 0;
+	virtual void _wl6() = 0;
+	virtual void _wl7() = 0;
+	virtual void destroyWindows( void ) = 0;
+};
+
+struct BfmePopupMessageData
+{
+	virtual ~BfmePopupMessageData() = 0;
+	UnsignedByte _head[0x18 - 4];
+	Bool pause;
+	Bool pauseMusic;
+	UnsignedByte _gap[0x1C - 0x1A];
+	BfmePopupWindowLayout *layout;
+};
+
+struct BfmeInGameUIPopup
+{
+	UnsignedByte _pad[0x12A8];
+	BfmePopupMessageData *m_popupMessageData;
+};
+
+class BfmeGameLogicPause
+{
+public:
+	void setGamePaused( Bool pause, Int pauseInput, Bool pauseMusic );
+};
+
+// ?clearPopupMessageData@InGameUI@@QAEXXZ
 void InGameUI::clearPopupMessageData( void )
 {
-	if(!m_popupMessageData)
+	BfmeInGameUIPopup *self = (BfmeInGameUIPopup *)this;
+	if(!self->m_popupMessageData)
 		return;
-	if(m_popupMessageData->layout)
+	if(self->m_popupMessageData->layout)
 	{
-		m_popupMessageData->layout->destroyWindows();
-		m_popupMessageData->layout->deleteInstance();
-		m_popupMessageData->layout = NULL;
+		self->m_popupMessageData->layout->destroyWindows();
+		delete self->m_popupMessageData->layout;
+		self->m_popupMessageData->layout = NULL;
 	}
-	if( m_popupMessageData->pause )
-		TheGameLogic->setGamePaused(FALSE, m_popupMessageData->pauseMusic);
-	m_popupMessageData->deleteInstance();
-	m_popupMessageData = NULL;
-	
+	if( self->m_popupMessageData->pause )
+		((BfmeGameLogicPause *)TheGameLogic)->setGamePaused(FALSE, !self->m_popupMessageData->pauseMusic, TRUE);
+	delete self->m_popupMessageData;
+	self->m_popupMessageData = NULL;
 }
 
 //-------------------------------------------------------------------------------------------------
