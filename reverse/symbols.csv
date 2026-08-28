@@ -2795,6 +2795,7 @@ name,address,notes
 ??0LANPreferences@@QAE@XZ,0x00025B80,PopulateRemoteIPComboBox direct-call ILT thunk to LANPreferences constructor
 ??0LGAU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,LargeGroupAudioUpdate constructor calls the shared ObjectModule constructor ILT
 ??0LList@@QAE@XZ,0x000057B8
+??0LU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,LifetimeUpdate constructor calls the shared ObjectModule constructor ILT
 ??0LanguageFilter@@QAE@XZ,0x00022845,pinharvest x1 (thunk)
 ??0LanguageFilter@@QAE@XZ,0x00024DC0,pinharvest x1 (thunk)
 ??0LargeGroupAudio@@QAE@XZ,0x003CEF00,Open-BFME5 on-demand constructor of the subsystem at 0x012F1044
@@ -2813,7 +2814,6 @@ name,address,notes
 ??0LaserUpdateModuleData@@QAE@XZ,0x0003E4A5,pinharvest x1 (thunk)
 ??0LeafletDropBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
 ??0LevelGrantSpecialPowerBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME5 LevelGrantSpecialPower base pin
-??0LU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,LifetimeUpdate constructor calls the shared ObjectModule constructor ILT
 ??0LifetimeUpdateModuleData@@QAE@XZ,0x0002E6D1,LifetimeUpdate ModuleData ctor
 ??0LightPulseFXNugget@@QAE@XZ,0x00021175,LightPulse parser calls this constructor ILT; target resolves to the 0x00828E10 body
 ??0LightningDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x19614,LightningDrawModuleTemplate clone copy-ctor pin
