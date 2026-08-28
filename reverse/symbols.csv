@@ -76937,6 +76937,7 @@ name,address,notes
 ?performUpgradeFX@UpgradeMuxData@@QBEXPAVObject@@@Z,0x0002EB4F,pinharvest x1 (thunk)
 ?pick@BridgeAreaEffectsRandomPositionShim@@QAEXPAVTerrainRoadType@@PBVBridgeInfo@@PAUCoord3D@@@Z,0x000406FB,BridgeBehavior doAreaEffects retail call at 0x001F249D forwards through the incremental thunk to getRandomSurfacePosition
 ?playMessageReceivedSound@BFMEConnectionManager@@SAXXZ,0x00662CE0,static helper: TheAudio(0x012ED668 pinned)->slot+0x124() then slot+0x44 (= addAudioEvent; vtable 0x0111C0C0+0x44 -> 0x006B9A40) on the MiscAudio event at +0xC40; replaces ZH's GUIMessageReceived in disconnectPlayer (0x006663C9) and GUICommunicatorIncoming in processChat (0x00667211)
+?playMoveVoiceResponse@AIUpdateInterface@@IAEXPBUCoord3D@@@Z,0x000462EA,BFME AIUpdate movement-voice helper ILT; call target decoded from the four privateFollowWaypointPath bodies and body 0x00273300 builds a one-drawable list before the voice-response dispatcher
 ?playerChangedNickCallback@@YAXPAXW4RoomType@@PBD20@Z,0x0064B240,PeerCallbacks struct slot +0x34 (playerChangedNick) filled at 0x0064FC7A; PeerResponse type 0xc with the two nick strings (arg4 newNick then arg3 oldNick via std::string assign ILT 0x0002B297) roomType and getPlayerInfo 0x0064AA70; addResponse +0x20 on 0x012F71C8
 ?playerFromParam@ScriptConditions@@IAEPAVPlayer@@PAVParameter@@@Z,0x00025347,Open-BFME5 ILT; called by ?evaluateSkirmishSupplySourceAttacked@ScriptConditions@@IAE_NPAVParameter@@@Z at 0x000F9700
 ?playerHasPrereqsForScience@ScienceStore@@QBE_NPBVPlayer@@W4ScienceType@@@Z,0x0000DCDD
@@ -77438,6 +77439,7 @@ name,address,notes
 ?setGameMessageType@NetGameCommandMsg@@QAEXH@Z,0x00673730,identified from readGameMessage's call site
 ?setGamePaused@BfmeGameLogicPause@@QAEX_NH0@Z,0x00006F50,BFME three-argument GameLogic::setGamePaused; ILT thunk to body 0x00383490
 ?setGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z,0x0000314D,Open-BFME5 ILT; called by ?onExit@AIMoveAndEvacuateState@@UAEXW4StateExitType@@@Z at 0x0017A340
+?setGoalWaypoint@AIStateMachine@@QAEXPBVWaypoint@@@Z,0x00036192,BFME AIStateMachine::setGoalWaypoint ILT decoded from the four privateFollowWaypointPath call sites; body is matched at 0x0026EDC0
 ?setGridChangeAttenuationFactors@WaterRenderObjClass@@QAEXMMMM@Z,0x000088F0,pinharvest x1 (thunk)
 ?setGridChangeAttenuationFactors@WaterRenderObjClass@@QAEXMMMM@Z,0x00023628,pinharvest x1 (thunk)
 ?setGridHeightClamps@WaterRenderObjClass@@QAEXMM@Z,0x0003387F
