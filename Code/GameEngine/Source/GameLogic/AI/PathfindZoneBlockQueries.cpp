@@ -21,6 +21,7 @@ class PathfindZoneManager
 {
 public:
 	Bool bfmeInteractsWithBridge(Int cellX, Int cellY) const;
+	Bool bfmeHasWaypoints(Int cellX, Int cellY) const;
 
 private:
 	unsigned char m_prefix[0x23628];
@@ -39,4 +40,17 @@ Bool PathfindZoneManager::bfmeInteractsWithBridge(Int cellX, Int cellY) const
 		return false;
 
 	return m_zoneBlocks[blockX][blockY].m_interactsWithBridge;
+}
+
+Bool PathfindZoneManager::bfmeHasWaypoints(Int cellX, Int cellY) const
+{
+	if (cellX < 0 || cellY < 0)
+		return false;
+
+	Int blockX = cellX / 16;
+	Int blockY = cellY / 16;
+	if (blockX >= m_zoneBlockExtent.x || blockY >= m_zoneBlockExtent.y)
+		return false;
+
+	return m_zoneBlocks[blockX][blockY].m_numWaypoints > 0;
 }
