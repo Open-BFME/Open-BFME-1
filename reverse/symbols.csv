@@ -73150,6 +73150,7 @@ name,address,notes
 ?bfmeStepBTA@BfmeThingBTA@@QAEXXZ,0x000106AE,pin
 ?bfmeStepBVA@BfmeThingBVA@@QAEXPAV1@@Z,0x00015280,pin
 ?bfmeStepCBC@BfmeThingCBC@@QAEXH@Z,0x008D2130,pin
+?bfmeStepCBD@BfmeThingCBD@@QAEXH@Z,0x008D2130,pin
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
@@ -73185,6 +73186,7 @@ name,address,notes
 ?bfmeTest@Rva2225E0Filter@@AAE_NPAVBfmeOverridable@@_N@Z,0x0001B437,Open-BFME5 ILT the filter test whose result Rva2225E0Filter::accepts at 0x003A04A0 returns
 ?bfmeTheBZF@@3PAVBfmeGlobalBZF@@A,0x00EF1028,pin
 ?bfmeTheCBC@@3HA,0x00F379BC,pin
+?bfmeTheCBD@@3HA,0x00F379BC,pin
 ?bfmeThenBXF@BfmeThingBXF@@QAEXH@Z,0x0004067E,pin
 ?bfmeThreeBUD@BfmeOwnerBUD@@QAEXXZ,0x00041AD8,pin
 ?bfmeThreeBZF@BfmeGlobalBZF@@QAEXH@Z,0x00029357,pin
