@@ -72242,6 +72242,7 @@ name,address,notes
 ?bfmeBigAllocPR@@YAPAXI@Z,0x00037C54,pin
 ?bfmeBigFreePM@@YAXPAX@Z,0x0002AB35,pin
 ?bfmeBigFreePZ@@YAXPAX@Z,0x0002AB35,pin
+?bfmeBigFreeQJ@@YAXPAX@Z,0x0002AB35,pin
 ?bfmeBlendTileEmit@@YAXPAD0HH@Z,0x00747940,Open-BFME5 the 180-byte cdecl emitter the blendTileData at 0x0074A240 finishes with
 ?bfmeBlendTileFits@@YG_NGHPADH@Z,0x000274A8,Open-BFME5 ILT the blendTileData at 0x0074A240 tests through
 ?bfmeBlendTileOffset@BFMERetailWorldHeightMapBlendTileDataShim@@AAEHHPAUTBlendTileInfo@@@Z,0x0003D965,Open-BFME5 ILT the blendTileData at 0x0074A240 asks for its offset through
@@ -72810,6 +72811,7 @@ name,address,notes
 ?bfmeSmallAllocPR@@YAPAXI@Z,0x0082E450,pin
 ?bfmeSmallFreePM@@YAXPAXI@Z,0x0082E4F0,pin
 ?bfmeSmallFreePZ@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeSmallFreeQJ@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeStart@Gen_0049A330@@QAEXPAX0PAPAX@Z,0x00014100,Open-BFME5 the starter the SEH constructor at 0x0049A330 calls
 ?bfmeStart@Gen_00654F20@@QAEXPAX0PAPAX@Z,0x0002648B,Open-BFME5 the starter the SEH constructor at 0x00654F20 calls
 ?bfmeStart@Gen_00844340@@QAEXPAX0PAPAX@Z,0x0002A531,Open-BFME5 the starter the SEH constructor at 0x00844340 calls
