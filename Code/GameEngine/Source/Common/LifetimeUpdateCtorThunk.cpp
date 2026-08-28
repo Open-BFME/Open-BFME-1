@@ -1,298 +1,189 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
 
-class Thing;
+typedef unsigned int UnsignedInt;
+typedef bool Bool;
+
 class ModuleData;
+enum UpdateSleepTime { UPDATE_SLEEP_DUMMY };
+enum KindOfType { KINDOF_HULK = 81 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/LifetimeUpdate.h
-class LifetimeUpdate
+int GetGameLogicRandomValue(int, int, char *, int);
+
+class GameLogic
+{
+public:
+    UnsignedInt getFrame() const { return m_frame; }
+    int getHulkMaxLifetimeOverride() const { return m_hulkMaxLifetimeOverride; }
+
+private:
+    unsigned char m_pad00[0x3c];
+    UnsignedInt m_frame;
+    unsigned char m_pad40[0x58];
+    int m_hulkMaxLifetimeOverride;
+};
+
+extern GameLogic *TheGameLogic;
+
+class Overridable
+{
+public:
+    virtual ~Overridable();
+    const Overridable *getFinalOverride() const
+    {
+        if (m_nextOverride != 0)
+            return m_nextOverride->getFinalOverride();
+        return this;
+    }
+
+private:
+    Overridable *m_nextOverride;
+};
+
+class ThingTemplate : public Overridable
+{
+public:
+    Bool isKindOf(KindOfType kind) const
+    {
+        return (m_kindOf[(UnsignedInt)kind >> 5]
+                & (1U << ((UnsignedInt)kind & 31))) != 0;
+    }
+
+private:
+    unsigned char m_pad08[0xc0];
+    UnsignedInt m_kindOf[3];
+};
+
+template <class T> class OVERRIDE
+{
+public:
+    const T *operator*() const
+    {
+        if (m_overridable == 0)
+            return 0;
+        return (const T *)m_overridable->getFinalOverride();
+    }
+
+    operator const T *() const { return operator*(); }
+
+private:
+    const T *m_overridable;
+};
+
+class Thing
+{
+public:
+    virtual ~Thing();
+
+    const ThingTemplate *getTemplate() const
+    {
+        return m_template;
+    }
+
+    Bool isKindOf(KindOfType kind) const
+    {
+        return getTemplate()->isKindOf(kind);
+    }
+
+private:
+    OVERRIDE<ThingTemplate> m_template;
+};
+
+class Object : public Thing {};
+
+class LU_DeepBase
+{
+public:
+    LU_DeepBase(Thing *, const ModuleData *);
+    virtual ~LU_DeepBase();
+
+protected:
+    const ModuleData *m_moduleData;
+    Object *m_object;
+};
+
+class LU_Iface1 { public: virtual void slot(); };
+class LU_Iface2 { public: virtual void slot(); };
+
+class UpdateModule : public LU_DeepBase, public LU_Iface1, public LU_Iface2
+{
+public:
+    UpdateModule(Thing *thing, const ModuleData *moduleData)
+        : LU_DeepBase(thing, moduleData),
+          m_nextCallFrameAndPhase(0), m_indexInLogic(-1), m_updateState(-1)
+    {
+    }
+
+protected:
+    void setWakeFrame(Object *, UpdateSleepTime);
+    Object *getObject() const { return m_object; }
+    const ModuleData *getModuleData() const { return m_moduleData; }
+
+private:
+    UnsignedInt m_nextCallFrameAndPhase;
+    int m_indexInLogic;
+    int m_updateState;
+};
+
+class LifetimeUpdateModuleData
+{
+private:
+    unsigned char m_pad00[8];
+
+public:
+    UnsignedInt m_minFrames;
+    UnsignedInt m_maxFrames;
+    bool m_startDisabled;
+};
+
+class LifetimeUpdate : public UpdateModule
 {
 public:
     LifetimeUpdate(Thing *, const ModuleData *);
+
+private:
+    UnsignedInt calcSleepDelay(UnsignedInt, UnsignedInt);
+    __forceinline UnsignedInt calcSleepDelayInline(UnsignedInt, UnsignedInt);
+    UnsignedInt m_dieFrame;
+    UnsignedInt m_birthFrame;
 };
 
-// ??0LifetimeUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
-__declspec(naked) LifetimeUpdate::LifetimeUpdate(Thing *, const ModuleData *)
+__forceinline UnsignedInt LifetimeUpdate::calcSleepDelayInline(
+    UnsignedInt minFrames, UnsignedInt maxFrames)
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x68
-        __emit 0x1f
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x50
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xce
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x10
-        __emit 0xe8
-        __emit 0x15
-        __emit 0xf0
-        __emit 0xd7
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x0c
-        __emit 0xd0
-        __emit 0xc9
-        __emit 0x09
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x10
-        __emit 0xa0
-        __emit 0xcb
-        __emit 0x09
-        __emit 0x01
-        __emit 0x33
-        __emit 0xd2
-        __emit 0x89
-        __emit 0x56
-        __emit 0x14
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x18
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x1c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x7e
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x06
-        __emit 0xcc
-        __emit 0xff
-        __emit 0x0b
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x0c
-        __emit 0x08
-        __emit 0xff
-        __emit 0x0b
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x10
-        __emit 0xfc
-        __emit 0xfe
-        __emit 0x0b
-        __emit 0x01
-        __emit 0x89
-        __emit 0x56
-        __emit 0x20
-        __emit 0x89
-        __emit 0x56
-        __emit 0x24
-        __emit 0x80
-        __emit 0x7f
-        __emit 0x10
-        __emit 0x01
-        __emit 0x89
-        __emit 0x54
-        __emit 0x24
-        __emit 0x14
-        __emit 0x75
-        __emit 0x07
-        __emit 0x68
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0x3f
-        __emit 0xeb
-        __emit 0x78
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x08
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x3b
-        __emit 0xc2
-        __emit 0x75
-        __emit 0x04
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xeb
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x04
-        __emit 0x3b
-        __emit 0xca
-        __emit 0x74
-        __emit 0x05
-        __emit 0xe8
-        __emit 0x81
-        __emit 0xa1
-        __emit 0xd6
-        __emit 0xff
-        __emit 0xf7
-        __emit 0x80
-        __emit 0xd0
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x02
-        __emit 0x00
-        __emit 0x74
-        __emit 0x1d
-        __emit 0xa1
-        __emit 0x98
-        __emit 0x08
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x88
-        __emit 0x98
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xf9
-        __emit 0xff
-        __emit 0x74
-        __emit 0x0d
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x50
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x0c
-        __emit 0xd8
-        __emit 0xd9
-        __emit 0xff
-        __emit 0xeb
-        __emit 0x32
-        __emit 0x8b
-        __emit 0x47
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x7f
-        __emit 0x08
-        __emit 0x6a
-        __emit 0x74
-        __emit 0x68
-        __emit 0xb8
-        __emit 0xfd
-        __emit 0x0b
-        __emit 0x01
-        __emit 0x50
-        __emit 0x57
-        __emit 0xe8
-        __emit 0x37
-        __emit 0x9a
-        __emit 0xd6
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0x83
-        __emit 0xf8
-        __emit 0x01
-        __emit 0x73
-        __emit 0x05
-        __emit 0xb8
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x98
-        __emit 0x08
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x49
-        __emit 0x3c
-        __emit 0x89
-        __emit 0x4e
-        __emit 0x24
-        __emit 0x03
-        __emit 0xc8
-        __emit 0x89
-        __emit 0x4e
-        __emit 0x20
-        __emit 0x50
-        __emit 0x8b
-        __emit 0x56
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xce
-        __emit 0x52
-        __emit 0xe8
-        __emit 0x39
-        __emit 0xd6
-        __emit 0xd7
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x5f
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
-    }
+    UnsignedInt delay = GetGameLogicRandomValue(
+        minFrames, maxFrames,
+        "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\LifetimeUpdate.cpp",
+        116);
+    if (delay < 1)
+        delay = 1;
+
+    UnsignedInt frame = TheGameLogic->getFrame();
+    m_birthFrame = frame;
+    m_dieFrame = frame + delay;
+    return delay;
 }
 
+// ??0LifetimeUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
+LifetimeUpdate::LifetimeUpdate(Thing *thing, const ModuleData *moduleData)
+    : UpdateModule(thing, moduleData), m_dieFrame(0), m_birthFrame(0)
+{
+    const LifetimeUpdateModuleData *data =
+        (const LifetimeUpdateModuleData *)getModuleData();
+
+    UnsignedInt delay;
+    if (data->m_startDisabled == true)
+    {
+        setWakeFrame(getObject(), (UpdateSleepTime)0x3fffffff);
+    }
+    else
+    {
+        if (getObject()->isKindOf(KINDOF_HULK)
+            && TheGameLogic->getHulkMaxLifetimeOverride() != -1)
+            delay = calcSleepDelay(TheGameLogic->getHulkMaxLifetimeOverride(),
+                                   TheGameLogic->getHulkMaxLifetimeOverride());
+        else
+            delay = calcSleepDelayInline(data->m_minFrames, data->m_maxFrames);
+
+        setWakeFrame(getObject(), (UpdateSleepTime)delay);
+    }
+}
