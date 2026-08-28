@@ -73161,6 +73161,7 @@ name,address,notes
 ?bfmeTailBLE@BfmeSubBLE@@QAEXXZ,0x0001D17E,pin
 ?bfmeTailBNF@BfmeThingBNF@@QAEXXZ,0x00020B80,pin
 ?bfmeTailBOC@@YGXH@Z,0x00020509,pin
+?bfmeTailCAA@BfmeThingCAA@@QAEXXZ,0x000428AC,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
