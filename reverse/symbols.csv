@@ -72202,6 +72202,7 @@ name,address,notes
 ?bfmeAllocATA@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocATD@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocAVC@@YAPAXI@Z,0x0082E540,pin
+?bfmeAllocBAA@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocBlock@@YAPAXI@Z,0x009A5920,Open-BFME5 the allocator the calloc at 0x009A59D0 gets its block from
 ?bfmeAllocNode@@YAPAXI@Z,0x0082E540,Open-BFME5 the 16-byte allocator the node makers at 0x0046A070 0x0046B1C0 and 0x00927760 call
 ?bfmeAllocPV@@YAPAXHI@Z,0x00030940,pin
@@ -72241,6 +72242,8 @@ name,address,notes
 ?bfmeAskAIA@BfmeThingAIA@@QAE_NH@Z,0x0003251F,pin
 ?bfmeAskAMB@BfmeGateAMB@@QAE_NPAXPAUBfmeKeyAMB@@@Z,0x000357D8,pin
 ?bfmeAskAOA@BfmeThingAOA@@QAE_NXZ,0x0002C714,pin
+?bfmeAskBBC@@YA_NXZ,0x0002C82C,pin
+?bfmeAskBBC@BfmeThingBBC@@QAE_NXZ,0x0002C82C,pin
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
 ?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
@@ -72423,6 +72426,7 @@ name,address,notes
 ?bfmeDropAUD@BfmeListAUD@@QAEXPAX@Z,0x00016ED2,pin
 ?bfmeDropAVA@BfmeListAVA@@QAEXPAX@Z,0x0004A91C,pin
 ?bfmeDropB@@YAXPAX@Z,0x008961C0,Open-BFME5 the drop the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
+?bfmeDropBAB@BfmeOwnerBAB@@QAEXPAX@Z,0x007F9590,pin
 ?bfmeDropRN@BfmeThingRN@@QAEXH@Z,0x00031F7A,pin
 ?bfmeDropRS@BfmeThingRS@@QAEXH@Z,0x00031F7A,pin
 ?bfmeDropUC@BfmeSubUC@@QAEXPAVBfmeThingUC@@@Z,0x0081C3D0,pin
@@ -72435,6 +72439,9 @@ name,address,notes
 ?bfmeDtorUF@BfmeThingUF@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorVA@BfmeThingVA@@QAEXXZ,0x00034833,pin
 ?bfmeDtorVB@BfmeThingVB@@QAEXPAX@Z,0x009F6BC8,pin
+?bfmeElseBBC@@YAXXZ,0x0000F36C,pin
+?bfmeElseBBC@BfmeThingBBC@@QAEXXZ,0x0000F36C,pin
+?bfmeElseBBD@@YAXXZ,0x00842C00,pin
 ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z,0x0002CB79,Open-BFME5 ILT thunk to body 0x00417710; Gen_00417cb0::tail at 0x00417A70 calls it on this with the source result and its own argument; address-derived name in the same synthetic family as the class
 ?bfmeEnable@BfmeElemW@@QAEXHH@Z,0x000482AC,Open-BFME5 the ICF thunk (to 0x004482AC) the clear at 0x004B1720 calls on each element with a pair of ones
 ?bfmeEnsureWA@BfmeThingWA@@QAEXXZ,0x0002DE02,pin
@@ -72450,6 +72457,7 @@ name,address,notes
 ?bfmeFind@Gen_003C02B0@@AAEPAVBfmeItemAN@@H@Z,0x00032A56,Open-BFME5 the ICF thunk (to 0x00432A56) the remove at 0x003C02B0 looks its item up through
 ?bfmeFindAKB@BfmeSubAKB@@QAEPAVBfmeFoundAKB@@H@Z,0x0001B185,pin
 ?bfmeFindAWB@BfmeKeyAWB@@QAEPAUBfmeNodeAWB@@XZ,0x00046538,pin
+?bfmeFindBBA@BfmeSubBBA@@QAEPAUBfmeGotBBA@@XZ,0x00046538,pin
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
 ?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
 ?bfmeFindRecord@FontLibraryBFMERetail@@AAEPAUBfmeFontRecord@@PAVAsciiString@@M@Z,0x000035A3,Open-BFME5 ILT thunk to body 0x00476E20; FontLibraryBFMERetail::getFont at 0x004772D0 calls it on this with the name and size and reads a byte at +8 of what it returns; address-derived name
@@ -72798,6 +72806,7 @@ name,address,notes
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
 ?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
+?bfmeLookBBB@@YAPAXPAX@Z,0x0082B8E0,pin
 ?bfmeLookRH@@YGHPAX0@Z,0x007F76F0,pin
 ?bfmeLookupA@@YAHPAX@Z,0x0000B1AE,Open-BFME5 ILT the bit setter at 0x001C3FB0 looks up through
 ?bfmeLookupB@@YAHPAX@Z,0x000052CC,Open-BFME5 ILT the bit setter at 0x001C4020 looks up through
@@ -72920,6 +72929,7 @@ name,address,notes
 ?bfmeRestart@Gen_0018BC70@@AAEXXZ,0x0003F1FC,Open-BFME5 the ICF thunk (to 0x0043F1FC) the compaction at 0x0018BC70 calls when its flag is set
 ?bfmeResume@Gen_0018BC70@@AAEXXZ,0x0000764E,Open-BFME5 the ICF thunk (to 0x0040764E) the compaction at 0x0018BC70 calls when its flag is clear
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
+?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
@@ -74029,6 +74039,7 @@ name,address,notes
 ?g_bfmeClockYD@@3PAUBfmeClockYD@@A,0x00EF0898,pin
 ?g_bfmeCoord2DFormat@@3QBDB,0x011443F8,address-derived Coord2D format string from retail 0x009D9789
 ?g_bfmeCoord3DFormat@@3QBDB,0x01144348,address-derived Coord3D format string from retail 0x009D9650
+?g_bfmeCountBBD@@3HA,0x00F0BD30,pin
 ?g_bfmeCountSI@@3HA,0x00EED240,pin
 ?g_bfmeDisconnectPingResult@@3HA,0x012B9810,standalone disconnect ping-result state read and set by updateDisconnectStatus after the sub-ten-percent ratio check
 ?g_bfmeDoneAPB@@3_NA,0x00EED4E6,pin
@@ -78239,5 +78250,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeAllocBAA@@YAPAXI@Z,0x0082E540,pin
-?bfmeDropBAB@BfmeOwnerBAB@@QAEXPAX@Z,0x007F9590,pin
