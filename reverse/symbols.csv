@@ -72807,6 +72807,7 @@ name,address,notes
 ?bfmeRestart@Gen_0018BC70@@AAEXXZ,0x0003F1FC,Open-BFME5 the ICF thunk (to 0x0043F1FC) the compaction at 0x0018BC70 calls when its flag is set
 ?bfmeResume@Gen_0018BC70@@AAEXXZ,0x0000764E,Open-BFME5 the ICF thunk (to 0x0040764E) the compaction at 0x0018BC70 calls when its flag is clear
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
+?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
 ?bfmeSetQQ@BfmeThingQQ@@QAEXPBDI@Z,0x0088A8F0,pin
