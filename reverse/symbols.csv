@@ -72248,6 +72248,8 @@ name,address,notes
 ?bfmeAskBEB@BfmeSubBEB@@QAE_NXZ,0x00034211,pin
 ?bfmeAskBEE@BfmeThingBEE@@QAE_NXZ,0x000042BE,pin
 ?bfmeAskBFD@BfmeSubBFD@@QAE_NXZ,0x00048928,pin
+?bfmeAskBIA@BfmeSubBIA@@QAEHXZ,0x000022BB,pin
+?bfmeAskBIC@BfmeSubBIC@@QAEHXZ,0x0002CA61,pin
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
 ?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
@@ -72411,6 +72413,8 @@ name,address,notes
 ?bfmeDoBGE@BfmeSubBGE@@QAEXPAXH@Z,0x007E8900,pin
 ?bfmeDoBHA@BfmeThingBHA@@QAEXPAXH@Z,0x000157DA,pin
 ?bfmeDoBHE@BfmeSubBHE@@QAEXXZ,0x0000F15F,pin
+?bfmeDoBID@BfmeSubBID@@QAEXPAX@Z,0x0002F333,pin
+?bfmeDoBIE@@YGXPAUBfmeThingBIE@@PAUBfmeSubBIE@@PAX@Z,0x00005484,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -72664,6 +72668,7 @@ name,address,notes
 ?bfmeForward@Gen_00C71570Target@@QAEXXZ,0x009DB7A0,Open-BFME5 the member the singleton forwarder at 0x00C71570 tail-jumps to
 ?bfmeForward@Gen_00C71580Target@@QAEXXZ,0x009DB7A0,Open-BFME5 the member the singleton forwarder at 0x00C71580 tail-jumps to
 ?bfmeFreeAEC@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeBIB@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeBlock@@YAXPAX@Z,0x00881EF0,Open-BFME5 the free the derived destructors at 0x00924090 and its siblings call
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
@@ -72840,6 +72845,8 @@ name,address,notes
 ?bfmeMakeBCE@@YAPAXXZ,0x007F4D50,pin
 ?bfmeMakeBFA@@YGPAPAXPAX@Z,0x00036CFA,pin
 ?bfmeMakeBFA@@YGPAXPAX@Z,0x00036CFA,pin
+?bfmeMakeBIF@BfmeSubBIF@@QAEPAPAXPAX@Z,0x000100A0,pin
+?bfmeMakeBIF@BfmeSubBIF@@QAEPAXPAX@Z,0x000100A0,pin
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
