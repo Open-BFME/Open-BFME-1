@@ -44,6 +44,7 @@ public:
 	static void parseDurationReal(INI *, void *, void *, const void *);
 	static void parseFXList(INI *, void *, void *, const void *);
 	static void parseObjectCreationList(INI *, void *, void *, const void *);
+	static void parseParticleSystemTemplate(INI *, void *, void *, const void *);
 
 private:
 	char m_prefix[0x41c];
@@ -52,8 +53,17 @@ private:
 
 class GameClientRandomVariable
 {
+public:
+	enum DistributionType
+	{
+		CONSTANT,
+		UNIFORM
+	};
+
+	void setRange(Real low, Real high, DistributionType type = UNIFORM);
+
 private:
-	int m_type;
+	DistributionType m_type;
 	Real m_low;
 	Real m_high;
 };
@@ -77,6 +87,7 @@ private:
 
 class FXList;
 class ObjectCreationList;
+class ParticleSystemTemplate;
 
 struct BoneLocInfo
 {
@@ -101,6 +112,11 @@ struct BoneOCLInfo : public BaseBoneListInfo
 	const ObjectCreationList *ocl;
 };
 
+struct BoneParticleSystemInfo : public BaseBoneListInfo
+{
+	const ParticleSystemTemplate *particleSystemTemplate;
+};
+
 class BoneFXUpdateModuleDataParseFXListShim
 {
 public:
@@ -111,6 +127,12 @@ class BoneFXUpdateModuleDataParseObjectCreationListShim
 {
 public:
 	static void parse(INI *, void *, void *, const void *);
+};
+
+class BoneFXParseParticleSystemShim
+{
+public:
+	static void parseParticleSystem(INI *, void *, void *, const void *);
 };
 
 static void parseFXLocInfo(INI *ini, void *, BoneLocInfo *locInfo)
@@ -134,6 +156,19 @@ static void parseGameLogicRandomDelay(
 	INI::parseDurationReal(ini, instance, &min, 0);
 	INI::parseDurationReal(ini, instance, &max, 0);
 	delay->setRange(min, max, GameLogicRandomVariable::UNIFORM);
+}
+
+static void parseGameClientRandomDelay(
+	INI *ini,
+	void *instance,
+	GameClientRandomVariable *delay)
+{
+	Real min;
+	Real max;
+
+	INI::parseDurationReal(ini, instance, &min, 0);
+	INI::parseDurationReal(ini, instance, &max, 0);
+	delay->setRange(min, max, GameClientRandomVariable::UNIFORM);
 }
 
 void BoneFXUpdateModuleDataParseFXListShim::parse(
@@ -182,4 +217,32 @@ void BoneFXUpdateModuleDataParseObjectCreationListShim::parse(
 		throw INIException(3, "'ocl' expected");
 
 	INI::parseObjectCreationList(ini, instance, &info->ocl, 0);
+}
+
+void BoneFXParseParticleSystemShim::parseParticleSystem(
+	INI *ini,
+	void *instance,
+	void *store,
+	const void *)
+{
+	BoneParticleSystemInfo *info = static_cast<BoneParticleSystemInfo *>(store);
+
+	parseFXLocInfo(ini, instance, &info->locInfo);
+
+	const char *token = ini->getNextToken(ini->getSepsColon());
+	if (_strcmpi(token, "onlyonce") != 0)
+		throw INIException(3, "'onlyonce' expected");
+
+	INI::parseBool(ini, instance, &info->onlyOnce, 0);
+	parseGameClientRandomDelay(ini, instance, &info->gameClientDelay);
+
+	token = ini->getNextToken(ini->getSepsColon());
+	if (_strcmpi(token, "psys") != 0)
+		throw INIException(3, "'psys' expected");
+
+	INI::parseParticleSystemTemplate(
+		ini,
+		instance,
+		&info->particleSystemTemplate,
+		0);
 }
