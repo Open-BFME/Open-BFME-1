@@ -20,11 +20,13 @@ class GameSlot
 {
 public:
 	bool isHuman(void) const;
+	int getStartPosition(void) const { return m_startPosition; }
 	int getPlayerTemplate(void) const { return m_playerTemplate; }
 	int getColor(void) const { return m_color; }
 
 private:
-	unsigned char m_unmodelled[0x14];
+	unsigned char m_unmodelled[0x10];
+	int m_startPosition;
 	int m_playerTemplate;
 	int m_color;
 };
@@ -61,7 +63,7 @@ public:
 	virtual unsigned char bfmeSetPlayerTemplate(GameSlot *slot, int playerTemplate) = 0;
 	virtual bool bfmeSetColor(GameSlot *slot, int color) = 0;
 	virtual void bfmeSlot6(void) = 0;
-	virtual void bfmeSlot7(void) = 0;
+	virtual bool bfmeSetStartPosition(GameSlot *slot, int startPosition) = 0;
 	virtual void bfmeSlot8(void) = 0;
 	virtual bool bfmeContains(GameInfo *game) = 0;
 };
@@ -70,6 +72,7 @@ class Gen_00525EE0
 {
 public:
 	void bfmeRefresh(void);
+	bool bfmeApplyStartPosition(int index, int startPosition);
 	bool bfmeApplyPlayerTemplate(int index);
 	bool bfmeApplyColor(int index);
 	unsigned short bfmeCountReadyPlayers(void);
@@ -79,7 +82,10 @@ private:
 	Gen00525EE0Owner *m_owner;
 	GameInfo *m_first;
 	GameInfo *m_second;
-	unsigned char m_unmodelled10[7];
+	unsigned char m_unmodelled10[3];
+	bool m_startPositionChanged;
+	bool m_multiplayerStartPositionChanged;
+	unsigned char m_unmodelled15[2];
 	bool m_pending;
 	unsigned char m_unmodelled18[0x90];
 	GameWindow *m_colorCombos[8];
@@ -109,6 +115,48 @@ void Gen_00525EE0::bfmeRefresh(void)
 		if (map && map->m_isMultiplayer)
 			m_isMultiplayer = true;
 	}
+}
+
+// Apply a unique start position and remember changes that need propagation.
+// ?bfmeApplyStartPosition@Gen_00525EE0@@QAE_NHH@Z
+bool Gen_00525EE0::bfmeApplyStartPosition(int index, int startPosition)
+{
+	if (m_first && !m_owner->bfmeContains(m_first))
+		m_first = 0;
+
+	if (m_second && !m_owner->bfmeContains(m_second))
+		m_second = 0;
+
+	if (!m_first)
+		return false;
+
+	m_pending = false;
+	GameSlot *slot = m_first->getSlot(index);
+	if (!slot)
+		return false;
+	if (startPosition == slot->getStartPosition())
+		return false;
+
+	if (startPosition >= 0)
+	{
+		for (int otherIndex = 0; otherIndex < 8; ++otherIndex)
+		{
+			if (otherIndex == index)
+				continue;
+			GameSlot *other = m_first->getSlot(otherIndex);
+			if (other && other->getStartPosition() == startPosition)
+				return false;
+		}
+	}
+
+	bool changed = m_owner->bfmeSetStartPosition(slot, startPosition);
+	if (changed)
+	{
+		m_startPositionChanged = true;
+		if (m_isMultiplayer)
+			m_multiplayerStartPositionChanged = true;
+	}
+	return changed;
 }
 
 // Apply the selected player-template value when it differs from the slot.
