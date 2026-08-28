@@ -73457,6 +73457,8 @@ name,address,notes
 ?bfmeTailDFH@BfmeThingDFH@@QAEPAV1@XZ,0x0083FB50,pin
 ?bfmeTailDSA@BfmeThingDSA@@QAEPAXPAX@Z,0x000294E7,pin
 ?bfmeTailDSB@BfmeThingDSB@@QAE_NXZ,0x0002FE05,pin
+?bfmeTailDTK@BfmeThingDTK@@QAEXXZ,0x0001C75B,pin
+?bfmeTailDTL@BfmeThingDTK@@QAEXXZ,0x0001C75B,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
