@@ -74895,12 +74895,12 @@ name,address,notes
 ?g_global12EF1D8@@3PAXA,0x00EEF1D8,pin
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
 ?g_lastPacketRouterStallFrame@@3IA,0x012F7704,last packet-router frame that triggered the native frame-stall gate
-?g_mgr12EF1D8@@3PAUBfmeMgrContainerF1D@@A,0x012EF1D8,pin
-?g_mgr12F076C@@3PAVBfmeMgrF07@@A,0x012F076C,pin
-?g_mgr12F0898@@3PAVBfmeMgr089@@A,0x012F0898,pin
-?g_mgr12F148C@@3PAVBfmeMgrF14@@A,0x012F148C,pin
+?g_mgr12EF1D8@@3PAUBfmeMgrContainerF1D@@A,0x00EEF1D8,pin
+?g_mgr12F076C@@3PAVBfmeMgrF07@@A,0x00EF076C,pin
+?g_mgr12F0898@@3PAVBfmeMgr089@@A,0x00EF0898,pin
+?g_mgr12F148C@@3PAVBfmeMgrF14@@A,0x00EF148C,pin
 ?g_mgr12F33F8@@3PAVBfmeMgr412@@A,0x00EF33F8,pin
-?g_mgr12F4B98@@3PAUBfmeMgr112@@A,0x012F4B98,pin
+?g_mgr12F4B98@@3PAUBfmeMgr112@@A,0x00EF4B98,pin
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
 ?g_obj12F060C@@3PAUBfmeObj2B1@@A,0x00EF060C,pin
 ?g_quitMenuLayout@@3PAXA,0x012F4AD4,HideQuitMenu layout global
