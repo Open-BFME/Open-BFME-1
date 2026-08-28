@@ -72042,6 +72042,7 @@ name,address,notes
 ?begin@?$hashtable@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@U?$_Nonconst_traits@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@2@XZ,0x0003EE14
 ?begin@FirewallHelperDetectionBeginUpdateShim@@QAE_NXZ,0x0066EFA0,FirewallHelperClass detectionBeginUpdate incremental-link thunk target through a TU-local forwarding shim
 ?_bfme_updateClientDebugFrame@ScriptEngine@@QAEXXZ,0x00018F8E,ILT used by GameEngine::update at 0x0006E931; client-frame debug update body is 0x00339B90
+?_bfme_updateDebugWindowInputs@@YAXXZ,0x00337200,called by the client and logic debug-frame refresh routines before publishing the frame number and querying CanAppContinue
 ?bfmeAccept@BfmeSinkA@@QAEXPAVBfmeFlagTarget@@@Z,0x008815A0,Open-BFME5 the sink the describe at 0x00881040 hands its target to
 ?bfmeAccept@BfmeSinkB@@QAEXPAVBfmeFlagTarget@@@Z,0x008FB0B0,Open-BFME5 the sink the describe at 0x008F7650 hands its target to
 ?bfmeAccept@BfmeSinkC@@QAEXPAVBfmeFlagTarget@@@Z,0x009A2FC0,Open-BFME5 the sink the describe at 0x009A2700 hands its target to
