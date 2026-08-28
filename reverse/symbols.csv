@@ -73495,6 +73495,7 @@ name,address,notes
 ?clearAndSet@ModelConditionFlags@@QAEXABV1@0@Z,0x0000AF06,Drawable::replaceModelConditionState calls the retail ModelConditionFlags clear-and-set ILT
 ?clearAndSetModelConditionFlags@Object@@QAEXABVModelConditionFlags@@PBV2@@Z,0x001C7370,Open-BFME5 the member clearModelConditionState forwards its one-bit mask to with a null set-mask; unnamed in the image
 ?clearAndSetModelConditionState@Drawable@@QAEXW4ModelConditionFlagType@@0@Z,0x0001C8D2
+?clearAt@Rva0028EF00Clear@@QAEXH@Z,0x0004B443,Open-BFME5 ILT thunk to exact body 0x0028EF00; BfmeSubAED chain-tail forwarder at 0x001C1FF0 calls it with the original integer argument
 ?clearCommandsExceptFrom@Connection@@QAEXH@Z,0x00661C30,ZH twin exact: walks m_netCommandList(+0x18)->first; keeps refs whose msg->playerID(+0xC)==arg; removeMessage 0x00672EC0 then ~NetCommandRef 0x00676280 + operator delete; sole caller beginPlayerLeave 0x0066735F (local-leave branch) via ILT 0x00022A61
 ?clearDisabled@Object@@QAE_NW4DisabledType@@@Z,0x0003C06A,ILT thunk used by setScriptStatus call site
 ?clearFlag@ScriptEngine@@QAEXABVAsciiString@@@Z,0x0001B6F3,ScriptEngine clearTeamFlags retail ILT thunk

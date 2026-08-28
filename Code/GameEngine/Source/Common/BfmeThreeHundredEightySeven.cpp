@@ -128,12 +128,21 @@ public:
 	virtual BfmeTargetAED *bfmeFindAED();
 };
 
+class Rva0028EF00Clear
+{
+public:
+	void clearAt(int what);
+};
+
 class BfmeSubAED
 {
 public:
-	void bfmeStepAED(int what);
-	unsigned char m_bfmeHead[0x1fc];
+	__declspec(noinline) void bfmeStepAED(int what);
+	unsigned char m_bfmeHead[0x1f8];
+	Rva0028EF00Clear *m_bfmeClear;
 	BfmeFinderAED *m_bfmeFinder;
+	unsigned char m_bfmeMiddle[0x14];
+	BfmeSubAED *m_bfmeNext;
 };
 
 struct BfmeOwnerAED
@@ -163,4 +172,14 @@ void BfmeThingAED::bfmeGoAED(void *what)
 	if (target == 0)
 		return;
 	target->bfmeSendAED(0);
+}
+
+void BfmeSubAED::bfmeStepAED(int what)
+{
+	BfmeSubAED *last = this;
+	while (last->m_bfmeNext != 0)
+		last = last->m_bfmeNext;
+
+	if (last->m_bfmeClear != 0)
+		last->m_bfmeClear->clearAt(what);
 }
