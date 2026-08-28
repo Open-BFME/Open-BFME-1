@@ -76919,6 +76919,7 @@ name,address,notes
 ?setProgress@NetFileProgressCommandMsg@@QAEXH@Z,0x000153B6,ILT thunk; real body 0xA740B0
 ?setQuitting@Connection@@QAEXI@Z,0x00661CA0,ZH setQuitting plus a quit-frame argument: stores arg at Connection+0 (the -1 sentinel doSend/sendNetCommandMsg test) and timeGetTime at +4; callers beginPlayerLeave 0x00667371/0x00667393 pass TheGameLogic->getFrame()+1 via ILT 0x0004845A
 ?setRange@GameClientRandomVariable@FXParticleSystem@@QAEXMMW4DistributionType@12@@Z,0x00006C58,DefaultUpdateModuleInfo random-range setter ILT
+?setRange@GameLogicRandomVariable@@QAEXMMW4DistributionType@1@@Z,0x0004AD54,BoneFX parser calls the retail incremental-link thunk
 ?setReal@UserPreferences@@QAEXVAsciiString@@M@Z,0x000A9650,formats the Real through 0x000A9170 ("%g" VA 0x01080F24 after fld/fstp qword) then the setAsciiString virtual +0x1c; ILT 0x000445C1 used by setTimePlayed 0x0009C220; twin of the pinned setInt body 0x000A96F0 which formats "%d" through 0x000A9010
 ?setReceivingDifficultyBonus@Object@@QAEX_N@Z,0x00016F2C,doEnableOrDisableObjectDifficultyBonuses call target (incremental-link thunk)
 ?setScienceAvailability@Player@@QAEXW4ScienceType@@W4ScienceAvailabilityType@@@Z,0x00010DED,ILT thunk to Player::setScienceAvailability; identity from Zero Hour ScriptActions.cpp
