@@ -74280,6 +74280,7 @@ name,address,notes
 ?doFreezeTime@ScriptEngine@@QAEXXZ,0x00465B80,pin ScriptActions doFreezeTime wrapper
 ?doFxAtBones@FXListAtBonePosFXNugget@@IBEXPBVObject@@H@Z,0x00010CC6
 ?doGameStart@@YAXXZ,0x004D1B00,Open-BFME5 MapSelectMenu.cpp file-static; target of the rel32 at 0x004D1BE8 inside MapSelectMenuUpdate. Also referenced from 0x004D1B0C which reads the same startGame flag 0x012F3E6D. MainMenu.cpp declares a static of this name too - if that one ever needs pinning it is a second row here, not an edit to this one
+?doInit@BfmeThing3E0@@QAEXXZ,0x0003FA30,pin
 ?doInit@BfmeThingDE0@@QAEXXZ,0x0003FA30,pin
 ?doNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@@Z,0x0001FC3F
 ?doNamedMapReveal@ScriptEnginedoNamedMapRevealShim@@QAEXABVAsciiString@@@Z,0x0034D200,ScriptEngine::doNamedMapReveal incremental-link thunk target through a TU-local forwarding shim
@@ -74527,6 +74528,7 @@ name,address,notes
 ?evaluateNamedInsideArea@ScriptConditions@@IAE_NPAVParameter@@0@Z,0x0000696F
 ?evaluateTeamInsideAreaEntirely@ScriptConditions@@IAE_NPAVParameter@@00@Z,0x00013219
 ?evaluateTeamInsideAreaPartially@ScriptConditions@@IAE_NPAVParameter@@00@Z,0x0004A8E0
+?execute@BfmeSub58_E80@@QAE_NPAXH@Z,0x0001DA34,pin
 ?extraAfterFmod@W3DSnowManager@@QAEXXZ,0x00008F2B,Open-BFME5 ILT 0x00008F2B used by W3DSnowManager::update
 ?extraTail@W3DSnowManager@@QAEXXZ,0x000092AF,Open-BFME5 ILT 0x000092AF used by W3DSnowManager::update
 ?f_00881eb0@@YAXPAX@Z,0x00881EB0,gen-shim call target
@@ -76965,6 +76967,7 @@ name,address,notes
 ?localPixelToRadar@RadarLocalPixelToRadarShim@@QAE_NPBUICoord2D@@PAU2@@Z,0x00107AB0,Radar incremental-link thunk target through a TU-local forwarding shim
 ?lookForInnerTarget@AIGuardMachine@@QAE_NXZ,0x000317A5,Open-BFME5 retail guard inner-target scan
 ?lookup@BfmeMgr412@@QAEPAVBfmeObj412@@PAX@Z,0x00048CCA,pin
+?lookup@BfmeSubEntry960@@QAEHPAHPAPAX@Z,0x0002C746,pin
 ?lookup@GenTable@@QAEMH@Z,0x000184B2,S3 table-lookup-with-fallback family callee (address-derived name)
 ?lookup@Rva00368B80Registry@@QAEPAURva00368B80LookupResult@@I@Z,0x0001DBBA,REL32 bounds-checked pointer lookup target from 0x00368B91
 ?lookup@TerrainCollisionEventFXLookupShim@FXParticleSystem@@QBEPBVFXList@@PBD@Z,0x0001669E,TerrainCollisionModuleInfo event FX lookup thunk used through a TU-local layout shim
@@ -77505,6 +77508,7 @@ name,address,notes
 ?revealMapForPlayer@PartitionManagerImpl008F8D60@@QAEXH@Z,0x008F8D60,BFME PartitionManager implementation delegate target from the public wrapper at 0x008F73D0
 ?revealMapForPlayerPermanently@PartitionManager@@QAEXH@Z,0x008F73E0,REL32 pin from ScriptActions::doBorderSwitch @0x2EFC50
 ?reverse@GameWindowTransitionsHandler@@QAEXVAsciiString@@@Z,0x0048AEC0,WOLLoginMenuShutdown transition helper
+?run@BfmeSub58_ACF@@QAE_NPAX0@Z,0x00004633,pin
 ?run@BitFlagsCountInverseIntersectionShim@@QBEHABV1@@Z,0x00786BD0,BitFlags countInverseIntersection incremental-link thunk target through a TU-local forwarding shim
 ?run@BitFlagsHFCountInverseIntersectionShim@@QBEHABV1@@Z,0x00421830,BitFlags@117 countInverseIntersection incremental-link thunk target through a TU-local forwarding shim
 ?run@BuddyThreadClassConnectCallbackShim@@QAEXPAVGPConnection@@PAUGPConnectResponseArg@@@Z,0x0063E490,BuddyThreadClass connectCallback incremental-link thunk target through a TU-local forwarding shim
@@ -78025,6 +78029,8 @@ name,address,notes
 ?use_facet@Rva005380A0@@QAEPAXPBX@Z,0x008321D0,Open-BFME5 thiscall of cdecl locale wrapper
 ?use_facet@Rva005C0FD0@@QAEPAXPBX@Z,0x008321D0,Open-BFME5 thiscall of cdecl locale wrapper
 ?validMovementTerrain@Pathfinder@@QAE_NHPBVLocomotor@@PBUCoord3D@@@Z,0x0001B405,ILT thunk to the pathfinder terrain check at 0x003D85C0
+?validate@BfmeThingACF@@QAE_NPAX0@Z,0x0001D813,pin
+?validate@BfmeThingE80@@QAE_NPAX0@Z,0x0001D813,pin
 ?value00683900@Gen00683900@@QBEMXZ,0x00034AF4,S2 float getter tail-jumped to from 0x00681C10; ILT thunk to body 0x00683900
 ?value00683C00@Gen00683900@@QBEMXZ,0x0004AB79,S2 float getter tail-jumped to from 0x00681C70; ILT thunk to body 0x00683C00
 ?value00683D80@Gen00683900@@QBEMXZ,0x00026B7A,S2 float getter tail-jumped to from 0x00681CA0; ILT thunk to body 0x00683D80
