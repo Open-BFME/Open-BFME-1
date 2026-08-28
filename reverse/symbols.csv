@@ -72324,6 +72324,7 @@ name,address,notes
 ?bfmeAskDSK@BfmeThingDSK@@QAE_NXZ,0x0002D538,pin
 ?bfmeAskEGFa@BfmeSubEGF@@QAE_NXZ,0x0002C4DA,pin
 ?bfmeAskEGFb@BfmeSubEGF@@QAE_NXZ,0x0003D3B6,pin
+?bfmeAskEME@BfmeObjEME@@QAE_NPAX@Z,0x009ECA00,pin
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
 ?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
@@ -72467,6 +72468,12 @@ name,address,notes
 ?bfmeCallEFC@@YGXPAUBfmeAEFC@@M@Z,0x0001536B,pin
 ?bfmeCallEIB@BfmeOtherEIB@@QAEXPAH@Z,0x00887B60,pin
 ?bfmeCallELE@@YAXPAX0@Z,0x0002FF36,pin
+?bfmeCallEMA@@YAXPAXPAUBfmeThingEMA@@PAUBfmeSubEMA@@@Z,0x0076E4F0,pin
+?bfmeCallEMB@@YAXPAXP6AXXZPAPAX@Z,0x00867010,pin
+?bfmeCallEMC@BfmeObjEMC@@QAEXPAX00@Z,0x007E8A80,pin
+?bfmeCallEMD@BfmeObjEMD@@QAEXPAX00@Z,0x00825680,pin
+?bfmeCallEMGa@@YGXPAXH@Z,0x00019E6B,pin
+?bfmeCallEMGb@@YGXHPAX@Z,0x00019E6B,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -72636,6 +72643,8 @@ name,address,notes
 ?bfmeDoDZD@BfmeThingDZD@@QAEXXZ,0x00022999,pin
 ?bfmeDoECKa@BfmeHeldECKa@@QAEXXZ,0x007EAA70,pin
 ?bfmeDoECKb@BfmeHeldECKb@@QAEXXZ,0x007EAB40,pin
+?bfmeDoEMHa@BfmeGlobEMHa@@QAEXXZ,0x0002BCCE,pin
+?bfmeDoEMHb@BfmeGlobEMHb@@QAEXXZ,0x00033FC3,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -73031,6 +73040,7 @@ name,address,notes
 ?bfmeGetCurrentVictimIfAttacking@Object@@QBEPAV1@XZ,0x0000B366,Open-BFME5 ILT thunk to body 0x001BE070; Object m_ai at +0x204; AIUpdateInterface isAttacking slot 97 (+0x184) gates the pinned getCurrentVictim call; bfme prefix records unrecovered retail spelling
 ?bfmeGetEBN@BfmeObjEBN@@QAEPAUBfmeSubEBN@@XZ,0x00046538,pin
 ?bfmeGetEHA@BfmeObjEHA@@QAEPAUBfmeSubEHA@@XZ,0x00046538,pin
+?bfmeGetEME@BfmeObjEME@@QAEPAXPAX@Z,0x009EED20,pin
 ?bfmeGetFinalOverride@BfmeSubInnerEFF@@QAEPAXXZ,0x000022BB,pin
 ?bfmeGetHordeMemberCount@Object@@QBEHXZ,0x00030715,Open-BFME5 ILT thunk to body 0x001BFDF0; Object m_contain at +0x1FC asks virtual slot +0x68 for a horde interface then calls its count slot +0x150 with false; bfme prefix records unrecovered retail spelling
 ?bfmeGetID@BfmeDrawableWithID@@QAEIXZ,0x00009B01,Open-BFME5 ILT both drawable lookup-table wrappers at 0x00431C20 and 0x00430B50 read the id through
@@ -74760,6 +74770,9 @@ name,address,notes
 ?g_bfmeObjEGE@@3PAVBfmeObjEGE@@A,0x00EED5EC,pin
 ?g_bfmeObjELB@@3PAVBfmeObjELB@@A,0x00EF4AAC,pin
 ?g_bfmeObjELH@@3PAUBfmeObjELH@@A,0x00F40534,pin
+?g_bfmeObjEME@@3PAVBfmeObjEME@@A,0x00F4FAAC,pin
+?g_bfmeObjEMHa@@3PAVBfmeGlobEMHa@@A,0x00F06EEC,pin
+?g_bfmeObjEMHb@@3PAVBfmeGlobEMHb@@A,0x00F06EEC,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
@@ -74808,6 +74821,7 @@ name,address,notes
 ?g_bfmeWordFormat@@3QBDB,0x011442A8,address-derived word format string from the DIR32 operand at retail 0x009D93C0
 ?g_bfmeWorldRV@@3PAUBfmeWorldRV@@A,0x00EF33F8,pin
 ?g_bfmeXEBK@@3PAXA,0x00EC3C58,pin
+?g_bfmeXEMC@@3PAXA,0x00EC3B2C,pin
 ?g_defaultRespawnPolicy@@3URespawnPolicy@@A,0x012ED8B8,RespawnBody default six-dword policy
 ?g_global12EF1D8@@3PAXA,0x00EEF1D8,pin
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
@@ -78532,6 +78546,7 @@ _audioManagerAddEventHelper@16,0x00020B08,AudioManager::addAudioEvent stdcall he
 _bfmeAppend,0x009D9180,address-derived varargs formatting helper target from the direct REL32 calls at retail 0x009D936D and 0x009D9386
 _bfmeArrayNew,0x00881F70,address-derived array allocator target from the direct REL32 call at retail 0x009D6259
 _bfmeCbAKC,0x00032155,pin
+_bfmeCbEMB,0x00863440,pin
 _bfmeConst1075350,0x00C75350,pin
 _bfmeDeleteBlock,0x00881EF0,address-derived release target from the direct REL32 call at retail 0x009D1A4C
 _bfmeDirectInput8Create@20,0x009F9AF0,undecorated alias for the DirectInput8Create import stub (see Win32DIKeyboardOpen.cpp)
