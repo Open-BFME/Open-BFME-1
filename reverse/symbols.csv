@@ -72237,6 +72237,7 @@ name,address,notes
 ?bfmeArenaReady@@YAXXZ,0x00897050,Open-BFME5 the routine the arena initialiser at 0x00897120 tail-calls
 ?bfmeAskAIA@BfmeThingAIA@@QAE_NH@Z,0x0003251F,pin
 ?bfmeAskAMB@BfmeGateAMB@@QAE_NPAXPAUBfmeKeyAMB@@@Z,0x000357D8,pin
+?bfmeAskAOA@BfmeThingAOA@@QAE_NXZ,0x0002C714,pin
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
 ?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
@@ -72777,6 +72778,7 @@ name,address,notes
 ?bfmeJoinAKD@BfmeInnerAKD@@QAEXPAXHH@Z,0x00014FDD,pin
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
+?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
 ?bfmeLookRH@@YGHPAX0@Z,0x007F76F0,pin
 ?bfmeLookupA@@YAHPAX@Z,0x0000B1AE,Open-BFME5 ILT the bit setter at 0x001C3FB0 looks up through
 ?bfmeLookupB@@YAHPAX@Z,0x000052CC,Open-BFME5 ILT the bit setter at 0x001C4020 looks up through
@@ -74009,6 +74011,7 @@ name,address,notes
 ?g_bfmeLookRQ@@3PAVBfmeLookRQ@@A,0x00EF076C,pin
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
+?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
@@ -74022,6 +74025,8 @@ name,address,notes
 ?g_bfmeSinkAAA@@3PAVBfmeSinkAAA@@A,0x00EF33F8,pin
 ?g_bfmeSinkAAB@@3PAVBfmeSinkAAB@@A,0x00EF33F8,pin
 ?g_bfmeSinkSB@@3PAVBfmeSinkSB@@A,0x00EED668,pin
+?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
+?g_bfmeTwoAOA@@3PAVBfmeTwoAOA@@A,0x00EED600,pin
 ?g_bfmeUnicodeStringFormat@@3QBDB,0x0114451C,address-derived UnicodeString format string from retail 0x009D9AAC
 ?g_bfmeUnsignedByteFormat@@3QBDB,0x011442BC,address-derived unsigned-byte format string from the DIR32 operand at retail 0x009D943A
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
@@ -77696,6 +77701,7 @@ _bfmeRegZB,0x00EF1094,pin
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
 _bfmeTagANB,0x00C9E038,pin
 _bfmeTextAIB,0x00C94960,pin
+_bfmeTextAOA,0x00C88860,pin
 _bfmeTryActivate@12,0x009D8460,address-derived stdcall helper target from the direct REL32 call at retail 0x009D6310
 _bfmeVftAGBa,0x00C9C9D0,pin
 _bfmeVftAGBb,0x00CA372C,pin
