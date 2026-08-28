@@ -10471,6 +10471,7 @@ name,address,notes
 ?TheMessageStream@@3PAVMessageStream@@A,0x012ED5EC,Open-BFME5 doDisableInput appends a message through virtual slot 0x34 on this global
 ?TheModelConditionUpgradePool@?1??getClassMemoryPool@ModelConditionUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0590,pool-glue cascade static (back-solved)
 ?TheMoneyCrateCollidePool@?1??getClassMemoryPool@MoneyCrateCollide@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFA10,pool-glue cascade static (back-solved)
+?TheMouse@@3PAVMouse@@A,0x012F4C5C,Open-BFME5 Mouse global used by InGameUI::setScrolling; capture/release and cursor vtable slots match the canonical interface
 ?TheNameKeyGenerator@@3PAVNameKeyGenerator@@A,0x012ED600,BFME global name-key generator pointer
 ?TheNetwork@@3PAVNetworkInterface@@A,0x012F7714,BFME NetworkInterface global used by the GameEngine frame-pacing path
 ?TheOCLSpecialPowerPool@?1??getClassMemoryPool@OCLSpecialPower@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFCE4,pool-glue cascade static (back-solved)
