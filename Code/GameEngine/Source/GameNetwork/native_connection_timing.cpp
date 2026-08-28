@@ -12,6 +12,11 @@ public:
 	unsigned int getFrameCommandCount(unsigned int frame);
 };
 
+struct BFMEConnectionState
+{
+	int m_openState;
+};
+
 // Retail's real ConnectionManager, named so these two bodies carry their true
 // mangled names; the BFME-native helpers below keep the BFMEConnectionManager
 // name because theirs are unknown.
@@ -39,7 +44,7 @@ public:
 	void *construct();
 	void init();
 	void computePlayerFrameRatios();
-	Bool isPlayerInGame(int slot);
+	int isPlayerInGame(int slot);
 	Bool isPlayerSlotActive(int slot);
 	void markPlayerInGame(void *msg);
 	void relayCommand(void *ref);
@@ -74,9 +79,15 @@ public:
 	void resendFrameRangeToPlayer(int playerID, unsigned int startFrame, unsigned int endFrame);
 
 private:
-	char m_unknown00[0x12028];
+	char m_unknown00[4];
+	BFMEConnectionState *m_connections[8];
+	char m_unknown24[0x12004];
 	int m_localSlot;
-	char m_unknown1202C[0xB8];
+	int m_packetRouterSlot;
+	char m_unknown12030[0x30];
+	unsigned int m_playerLatestFrame[8];
+	int m_playerState[8];
+	char m_unknown120A0[0x44];
 	FrameDataManager *m_frameData[8];
 };
 
@@ -2241,28 +2252,19 @@ L00_664843:
 // A slot is in the game when its per-player state at this+0x12080 is exactly 1
 // and either it is our own slot or its Connection at this+0x04 is open (the
 // dword at Connection+0 is the -1 sentinel).
-__declspec(naked) Bool BFMEConnectionManager::isPlayerInGame(int slot)
+int BFMEConnectionManager::isPlayerInGame(int slot)
 {
-	__asm {
-		mov eax, dword ptr [esp+4h]
-		cmp eax, 8h
-		jae L00_662C10
-		cmp dword ptr [ecx+eax*4+12080h], 1h
-		jne L00_662C10
-		cmp eax, dword ptr [ecx+12028h]
-		je L01_662C08
-		mov eax, dword ptr [ecx+eax*4+4h]
-		test eax, eax
-		je L00_662C10
-		cmp dword ptr [eax], 0FFFFFFFFh
-		jne L00_662C10
-L01_662C08:
-		mov eax, 1h
-		ret 4h
-L00_662C10:
-		xor eax, eax
-		ret 4h
-	}
+	if ((unsigned int)slot >= 8 || m_playerState[slot] != 1)
+		goto notInGame;
+	if (slot == m_localSlot)
+		goto inGame;
+	BFMEConnectionState *connection = m_connections[slot];
+	if (connection == 0 || connection->m_openState != -1)
+		goto notInGame;
+inGame:
+	return 1;
+notInGame:
+	return 0;
 }
 
 // Same test as isPlayerInGame but accepting states 1 through 3, so a player who
