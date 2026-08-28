@@ -43,6 +43,7 @@ public:
 	static void parseBool(INI *, void *, void *, const void *);
 	static void parseDurationReal(INI *, void *, void *, const void *);
 	static void parseFXList(INI *, void *, void *, const void *);
+	static void parseObjectCreationList(INI *, void *, void *, const void *);
 
 private:
 	char m_prefix[0x41c];
@@ -75,6 +76,7 @@ private:
 };
 
 class FXList;
+class ObjectCreationList;
 
 struct BoneLocInfo
 {
@@ -94,7 +96,18 @@ struct BoneFXListInfo : public BaseBoneListInfo
 	const FXList *fx;
 };
 
+struct BoneOCLInfo : public BaseBoneListInfo
+{
+	const ObjectCreationList *ocl;
+};
+
 class BoneFXUpdateModuleDataParseFXListShim
+{
+public:
+	static void parse(INI *, void *, void *, const void *);
+};
+
+class BoneFXUpdateModuleDataParseObjectCreationListShim
 {
 public:
 	static void parse(INI *, void *, void *, const void *);
@@ -145,4 +158,28 @@ void BoneFXUpdateModuleDataParseFXListShim::parse(
 		throw INIException(3, "'fxlist' expected");
 
 	INI::parseFXList(ini, instance, &info->fx, 0);
+}
+
+void BoneFXUpdateModuleDataParseObjectCreationListShim::parse(
+	INI *ini,
+	void *instance,
+	void *store,
+	const void *)
+{
+	BoneOCLInfo *info = static_cast<BoneOCLInfo *>(store);
+
+	parseFXLocInfo(ini, instance, &info->locInfo);
+
+	const char *token = ini->getNextToken(ini->getSepsColon());
+	if (_strcmpi(token, "onlyonce") != 0)
+		throw INIException(3, "'onlyonce' expected");
+
+	INI::parseBool(ini, instance, &info->onlyOnce, 0);
+	parseGameLogicRandomDelay(ini, instance, &info->gameLogicDelay);
+
+	token = ini->getNextToken(ini->getSepsColon());
+	if (_strcmpi(token, "ocl") != 0)
+		throw INIException(3, "'ocl' expected");
+
+	INI::parseObjectCreationList(ini, instance, &info->ocl, 0);
 }
