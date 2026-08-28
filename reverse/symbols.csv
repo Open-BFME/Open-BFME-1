@@ -72377,6 +72377,7 @@ name,address,notes
 ?bfmeDrop@Rva003D8530Owner@@QAEXPAX@Z,0x00016DB0,Open-BFME5 ILT thunk to body 0x003D8530; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it on the sub-object at +0x0C of _TheAIParseDefinitionAI for each live slot whose kind is one of four; address-derived name
 ?bfmeDropA@@YAXPAX@Z,0x00895320,Open-BFME5 the drop the cleanup at 0x00783A50 calls
 ?bfmeDropB@@YAXPAX@Z,0x008961C0,Open-BFME5 the drop the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
+?bfmeDropRN@BfmeThingRN@@QAEXH@Z,0x00031F7A,pin
 ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z,0x0002CB79,Open-BFME5 ILT thunk to body 0x00417710; Gen_00417cb0::tail at 0x00417A70 calls it on this with the source result and its own argument; address-derived name in the same synthetic family as the class
 ?bfmeEnable@BfmeElemW@@QAEXHH@Z,0x000482AC,Open-BFME5 the ICF thunk (to 0x004482AC) the clear at 0x004B1720 calls on each element with a pair of ones
 ?bfmeEnter@Glo012F1024Item@@QAEXXZ,0x0000BC5D,Open-BFME5 ILT thunk to body 0x003AEE70; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 calls it on the 0xDC-byte item the advanced index selects; address-derived name
@@ -72822,6 +72823,7 @@ name,address,notes
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
+?bfmeSendRM@BfmeSinkRM@@QAEXPAXH@Z,0x00006613,pin
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
 ?bfmeSetQQ@BfmeThingQQ@@QAEXPBDI@Z,0x0088A8F0,pin
 ?bfmeSetQR@BfmeThingQR@@QAEXPBDI@Z,0x0088A8F0,pin
@@ -73888,6 +73890,7 @@ name,address,notes
 ?g_bfmeIRegion3DFormat@@3QBDB,0x011443C8,address-derived IRegion3D format string from retail 0x009D9745
 ?g_bfmeInt64Format@@3QBDB,0x011442EC,address-derived int64 format string from retail 0x009D9503
 ?g_bfmeIntegerFormat@@3QBDB,0x011442DC,address-derived integer format string from the DIR32 operand at retail 0x009D94B8
+?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
