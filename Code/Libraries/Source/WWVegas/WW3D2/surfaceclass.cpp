@@ -61,6 +61,9 @@
 #include "bound.h"
 #include <d3dx8.h>
 
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
 class BFMEIndexBufferDebugStream
 {
 public:
@@ -88,13 +91,26 @@ public:
 	virtual BFMEIndexBufferDebugStream *Get_Stream(void *owner, void *context);
 };
 
+struct BFMESurfaceDescription008FC5C0
+{
+	unsigned format;
+	unsigned type;
+	unsigned usage;
+	unsigned pool;
+	unsigned multiSampleType;
+	unsigned multiSampleQuality;
+	unsigned width;
+	unsigned height;
+};
+
 class BFMESurfaceResource008FC560
 {
 public:
 	virtual void Slot00(); virtual void Slot04(); virtual void Slot08(); virtual void Slot0C();
 	virtual void Slot10(); virtual void Slot14(); virtual void Slot18(); virtual void Slot1C();
 	virtual void Slot20(); virtual void Slot24(); virtual void Slot28(); virtual void Slot2C();
-	virtual void Slot30(); virtual void Slot34();
+	virtual unsigned long __stdcall GetDesc(BFMESurfaceDescription008FC5C0 *description);
+	virtual void Slot34();
 	virtual unsigned long __stdcall UnlockRect();
 };
 
@@ -307,15 +323,19 @@ SurfaceClass::~SurfaceClass(void)
 	}
 }
 
-// ?Get_Description@SurfaceClass@@ present-unmatched
 void SurfaceClass::Get_Description(SurfaceDescription &surface_desc)
 {
-	D3DSURFACE_DESC d3d_desc;
-	::ZeroMemory(&d3d_desc, sizeof(D3DSURFACE_DESC));
-	DX8_ErrorCode(D3DSurface->GetDesc(&d3d_desc));
-	surface_desc.Format = D3DFormat_To_WW3DFormat(d3d_desc.Format);
-	surface_desc.Height = d3d_desc.Height;
-	surface_desc.Width = d3d_desc.Width;
+	BFMESurfaceDescription008FC5C0 d3d_desc;
+	::ZeroMemory(&d3d_desc, sizeof(d3d_desc));
+	_ReadWriteBarrier();
+	BFMESurfaceResource008FC560 *surface =
+		*reinterpret_cast<BFMESurfaceResource008FC560 **>(this);
+	if (surface) {
+		BFME_Surface_ErrorCode(surface->GetDesc(&d3d_desc));
+		surface_desc.Format = static_cast<WW3DFormat>(d3d_desc.format);
+		surface_desc.Height = d3d_desc.height;
+		surface_desc.Width = d3d_desc.width;
+	}
 }
 
 // ?Lock@SurfaceClass@@ present-unmatched
