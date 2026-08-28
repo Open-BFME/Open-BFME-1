@@ -73107,6 +73107,7 @@ name,address,notes
 ?bfmeStepBRF@BfmeThingBRF@@QAEXXZ,0x00047B6D,pin
 ?bfmeStepBSA@BfmeThingBSA@@QAEXXZ,0x0000705E,pin
 ?bfmeStepBTA@BfmeThingBTA@@QAEXXZ,0x000106AE,pin
+?bfmeStepBVA@BfmeThingBVA@@QAEXPAV1@@Z,0x00015280,pin
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
@@ -77029,6 +77030,7 @@ name,address,notes
 ?setBorderShroudLevel30B8@BaseHeightMapResetShroud@@QAEXE@Z,0x00028420,BaseHeightMap border-level call for BFME shroud at this+0x30B8
 ?setBorderShroudLevel30BC@BaseHeightMapResetShroud@@QAEXE@Z,0x0000BFF5,BaseHeightMap border-level call for BFME shroud at this+0x30BC
 ?setButtonImage@BFMERetailCommandButton@@QAEXPBVImage@@@Z,0x0002A7ED,Open-BFME5 ControlBar retail out-of-line button image setter thunk
+?setCameraTransform@W3DView@@AAEXXZ,0x000312A0,BFME thunk reached by W3DView::setPitch
 ?setChunkNumber@NetWrapperCommandMsg@@QAEXI@Z,0x0003AE36,ILT thunk; real body 0xA73F10
 ?setColor@Shadow@@QAEXH@Z,0x00459880,resolved via direct disassembly of retail bytes at RadiusDecalTemplate::createRadiusDecal; only non-virtual call in the function
 ?setConnectionState@NAT@@IAEXHW4NATConnectionState@@@Z,0x00670DC0,processGlobalMessage callee (ILT body)
@@ -78407,4 +78409,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?setCameraTransform@W3DView@@AAEXXZ,0x000312A0,BFME thunk reached by W3DView::setPitch
