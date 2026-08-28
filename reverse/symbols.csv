@@ -72317,6 +72317,8 @@ name,address,notes
 ?bfmeAskDHB@BfmeOuterDHB@@QAE_NXZ,0x0004425B,pin
 ?bfmeAskDHC@BfmeOuterDHC@@QAE_NXZ,0x0004425B,pin
 ?bfmeAskDSK@BfmeThingDSK@@QAE_NXZ,0x0002D538,pin
+?bfmeAskEGFa@BfmeSubEGF@@QAE_NXZ,0x0002C4DA,pin
+?bfmeAskEGFb@BfmeSubEGF@@QAE_NXZ,0x0003D3B6,pin
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
 ?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
@@ -73622,6 +73624,7 @@ name,address,notes
 ?bfmeUseDXI@BfmeGlobDXI@@QAEXH@Z,0x0004159C,pin
 ?bfmeUseDXJ@BfmeSubDXJ@@QAEXH@Z,0x00021468,pin
 ?bfmeUseEFJ@BfmeResEFJ@@QAEXPAX0@Z,0x00017A12,pin
+?bfmeUseEGE@BfmeResEGE@@QAEXH@Z,0x000032AB,pin
 ?bfmeUseRT@BfmeSlotRT@@QAEXXZ,0x0003A427,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVecDtorDLA@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
@@ -74701,6 +74704,7 @@ name,address,notes
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
 ?g_bfmeModeAZC@@3PAUBfmeModeAZC@@A,0x00EF0FE0,pin
+?g_bfmeObj2EGE@@3PAVBfmeObj2EGE@@A,0x00EF148C,pin
 ?g_bfmeObjDXI@@3PAVBfmeGlobDXI@@A,0x00EF4B70,pin
 ?g_bfmeObjDXJ@@3PAUBfmeHeldDXJ@@A,0x00EF4B98,pin
 ?g_bfmeObjDYF@@3PAVBfmeGlobDYF@@A,0x00EF4C5C,pin
@@ -74713,6 +74717,7 @@ name,address,notes
 ?g_bfmeObjEDC@@3PAVBfmeObjEDC@@A,0x00EF7FE0,pin
 ?g_bfmeObjEFJ@@3PAVBfmeGlobEFJ@@A,0x00EEF1D8,pin
 ?g_bfmeObjEGD@@3PAVBfmeObjEGD@@A,0x00EF1B40,pin
+?g_bfmeObjEGE@@3PAVBfmeObjEGE@@A,0x00EED5EC,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
