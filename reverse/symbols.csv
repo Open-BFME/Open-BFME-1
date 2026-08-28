@@ -74788,6 +74788,7 @@ name,address,notes
 ?friend_setGoalObject@AIUpdateInterface@@QAEXPAVObject@@@Z,0x000125E9,retail AIEnterState::update call target
 ?friend_setRepairedToFXString@TerrainRoadType@@QAEXW4BodyDamageType@@HVAsciiString@@@Z,0x0001C693,ILT thunk -> 0x61cc0 (parseTransitionToFX callee)
 ?friend_updateCellsTouched@PartitionData@@QAEXXZ,0x008F8BF0,Open-BFME5 canonical public facade called by Object wrapper 0x001BFD70; BFME unlinks dirty-list links at +0x14/+0x18 before tail-calling private updateCellsTouched at 0x008F8800
+?friend_xferObjectID@@YAXPAVXfer@@PAW4ObjectID@@@Z,0x0000C9B4,ObjectID xfer ILT called by BridgeBehavior::xfer
 ?g_00861ed0@@YAXHHHHHHHHHHHHHHHHHHHHH@Z,0x00861ED0,Open-BFME5 address-derived name; direct call target of 0x00862460; 21 dword args; identity not asserted
 ?g_01075954@@3MC,0x01075954,accessor-batch external float
 ?g_BFMEIndexBufferDebug@@3PAVBFMEIndexBufferDebugClass@@A,0x01336E5C,retail DX8 error path dispatches through the shared game debug manager global
@@ -78273,6 +78274,7 @@ name,address,notes
 ?xfer@?$BitFlags@$0BN@@@QAEXPAVXfer@@@Z,0x000335BE,Open-BFME5 BitFlags<29>::xfer ILT thunk to body 0x001C41C0; exact 29-bit pack loop transfers a four-byte payload through Xfer::xferUser
 ?xfer@?$BitFlags@$0L@@@QAEXPAVXfer@@@Z,0x00042AC3,Open-BFME5 BitFlags<11>::xfer ILT thunk to body 0x001C4150; exact 11-bit pack loop transfers a two-byte payload through Xfer::xferUser
 ?xfer@?$BitFlags@$0MA@@@QAEXPAVXfer@@@Z,0x0000335F,Open-BFME5 BitFlags<192>::xfer ILT thunk to body 0x001C4F00; Object::xfer passes its proven six-dword upgrade-completion mask at Object+0x224
+?xfer@UpdateModule@@MAEXPAVXfer@@@Z,0x000044C1,UpdateModule xfer ILT called by BridgeBehavior::xfer
 ?xfer@W3DRopeDrawDrawModule@@MAEXPAVXfer@@@Z,0x0002FD88,
 ?xferInteger@@YAXAAVXfer@@AAH@Z,0x0002153A,ParticleSystemInfo::DoXfer raw ParticleType enum helper call target
 ?xferInteger@@YAXAAVXfer@@AAH@Z,0x000272CD,ParticleSystemInfo::DoXfer raw ParticlePriorityType enum helper call target
@@ -79367,7 +79369,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?getBridgeScaffoldBehaviorInterfaceFromObject@BridgeScaffoldBehavior@@SAPAVBridgeScaffoldBehaviorInterface@@PAVObject@@@Z,0x00046F8D,ILT thunk proven by BridgeBehavior scaffold-list callers at 0x001F3C30 and 0x001F3D40
-?friend_changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z,0x0002847F,ILT spelling used by BridgeBehavior::removeScaffolding to preserve the retail indirection
-?xfer@UpdateModule@@MAEXPAVXfer@@@Z,0x000044C1,UpdateModule xfer ILT called by BridgeBehavior::xfer
-?friend_xferObjectID@@YAXPAVXfer@@PAW4ObjectID@@@Z,0x0000C9B4,ObjectID xfer ILT called by BridgeBehavior::xfer
