@@ -73164,6 +73164,7 @@ name,address,notes
 ?bfmeRegisterDAB@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterDAC@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterDAD@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
+?bfmeRegisterDAE@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterHouseColor@@YAXPBD0@Z,0x00900D70,the two-argument __cdecl function the HouseColor parser hands its two strings to; unnamed in the image
 ?bfmeRelease@BfmeRefAB@@QAEPAV1@XZ,0x00032D1C,Open-BFME5 the ICF thunk (to 0x00432D1C) the drop helper at 0x003CFC90 gives a borrowed reference back through
 ?bfmeRelease@BfmeSharedBlock@@QAEXXZ,0x009EB7A0,Open-BFME5 the shared-block release the refcounted assignments at 0x005D1E50 and its siblings call
@@ -78138,12 +78139,14 @@ _bfmeDtorDAA,0x0000D828,pin
 _bfmeDtorDAB,0x0003D4B0,pin
 _bfmeDtorDAC,0x00030652,pin
 _bfmeDtorDAD,0x00030652,pin
+_bfmeDtorDAE,0x00891B80,pin
 _bfmeEmptyANB,0x00C7301C,pin
 _bfmeLitZD,0x00CC79BC,pin
 _bfmeObjDAA,0x00EEF430,pin
 _bfmeObjDAB,0x00EF1608,pin
 _bfmeObjDAC,0x00F41148,pin
 _bfmeObjDAD,0x00EF8798,pin
+_bfmeObjDAE,0x00F38480,pin
 _bfmeRegZB,0x00EF1094,pin
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
 _bfmeTagANB,0x00C9E038,pin
