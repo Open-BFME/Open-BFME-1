@@ -535,7 +535,6 @@ FunctionLexicon::~FunctionLexicon( void )
 //-------------------------------------------------------------------------------------------------
 /** Initialize our dictionary of funtion pointers and symbols */
 //-------------------------------------------------------------------------------------------------
-// ?init@FunctionLexicon@@UAEXXZ present-unmatched
 void FunctionLexicon::init( void )
 {
 
@@ -547,9 +546,15 @@ void FunctionLexicon::init( void )
 	loadTable( gameWinInputTable,						TABLE_GAME_WIN_INPUT );
 	loadTable( gameWinTooltipTable,					TABLE_GAME_WIN_TOOLTIP );
 
-	loadTable( winLayoutInitTable,					TABLE_WIN_LAYOUT_INIT );
-	loadTable( winLayoutUpdateTable,				TABLE_WIN_LAYOUT_UPDATE );
-	loadTable( winLayoutShutdownTable,			TABLE_WIN_LAYOUT_SHUTDOWN );
+	// BFME keeps the layout callback tables in the retail data image at these
+	// addresses.  The first four tables above are the ordinary source tables;
+	// these five slots include the two BFME-only layout tables and the device
+	// layout table that the retail init routine registers between them.
+	loadTable( reinterpret_cast<TableEntry *>(0x012A9308), (TableIndex)6 );
+	loadTable( reinterpret_cast<TableEntry *>(0x012A9960), (TableIndex)7 );
+	loadTable( reinterpret_cast<TableEntry *>(0x012A9B10), (TableIndex)9 );
+	loadTable( reinterpret_cast<TableEntry *>(0x012A9C40), (TableIndex)10 );
+	loadTable( reinterpret_cast<TableEntry *>(0x012A93D4), (TableIndex)11 );
 
 	validate();
 
