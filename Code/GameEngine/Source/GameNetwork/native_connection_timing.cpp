@@ -13,6 +13,16 @@ class GameLogic
 
 extern GameLogic *TheGameLogic;
 
+class GlobalData
+{
+public:
+	char unknown[0xCB4];
+	unsigned int networkRunAheadSlack;
+};
+
+extern GlobalData *TheWritableGlobalData;
+extern unsigned int g_lastPacketRouterStallFrame;
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/FrameDataManager.h
 class FrameDataManager
 {
@@ -280,96 +290,31 @@ earlyFrameTimeout:
 	}
 }
 
-__declspec(naked) Bool BFMEConnectionManager::hasPacketRouterFrameStall()
+// The router stalls once an open peer outside slot states 1 through 3 falls
+// farther behind than NetworkRunAheadSlack. During startup the horizon is 3.
+Bool BFMEConnectionManager::hasPacketRouterFrameStall()
 {
-	__asm {
-		mov eax, dword ptr [ecx+12028h]
-		cmp eax, dword ptr [ecx+1202Ch]
-		je localIsRouter
-		xor al, al
-		ret
-localIsRouter:
-		__emit 08Bh
-		__emit 015h
-		__emit 098h
-		__emit 008h
-		__emit 02Fh
-		__emit 001h
-		push ebx
-		mov ebx, dword ptr [edx+3Ch]
-		cmp ebx, 5
-		push edi
-		jbe useStartupDelay
-		__emit 0A1h
-		__emit 0C8h
-		__emit 0D5h
-		__emit 02Eh
-		__emit 001h
-		mov edi, dword ptr [eax+0CB4h]
-		jmp haveDelay
-useStartupDelay:
-		mov edi, 3
-haveDelay:
-		push esi
-		xor esi, esi
-		lea eax, [ecx+04h]
-		__emit 08Dh
-		__emit 0A4h
-		__emit 024h
-		__emit 000h
-		__emit 000h
-		__emit 000h
-		__emit 000h
-scanPlayers:
-		mov edx, dword ptr [eax]
-		test edx, edx
-		je nextPlayer
-		cmp dword ptr [edx], 0FFFFFFFFh
-		jne nextPlayer
-		cmp esi, 8
-		jae testFrameAge
-		mov edx, dword ptr [eax+1207Ch]
-		cmp edx, 1
-		jl testFrameAge
-		cmp edx, 3
-		jle nextPlayer
-testFrameAge:
-		mov edx, dword ptr [eax+1205Ch]
-		add edx, edi
-		cmp edx, ebx
-		jb stalled
-nextPlayer:
-		inc esi
-		add eax, 4
-		cmp esi, 8
-		jl scanPlayers
-		pop esi
-		pop edi
-		xor al, al
-		pop ebx
-		ret
-stalled:
-		mov esi, dword ptr [ecx+esi*4+12060h]
-		__emit 03Bh
-		__emit 035h
-		__emit 004h
-		__emit 077h
-		__emit 02Fh
-		__emit 001h
-		je sameStalledFrame
-		__emit 089h
-		__emit 035h
-		__emit 004h
-		__emit 077h
-		__emit 02Fh
-		__emit 001h
-sameStalledFrame:
-		pop esi
-		pop edi
-		mov al, 1
-		pop ebx
-		ret
+	if (m_localSlot != m_packetRouterSlot)
+		return false;
+
+	unsigned int frame = TheGameLogic->frame;
+	unsigned int slack = frame > 5 ? TheWritableGlobalData->networkRunAheadSlack : 3;
+	int slot = 0;
+	BFMEConnectionState **connectionSlot = m_connections;
+	for (; slot < 8; ++slot, ++connectionSlot) {
+		BFMEConnectionState *connection = *connectionSlot;
+		if (connection != 0 && connection->m_openState == -1 &&
+			!((unsigned int)slot < 8 &&
+				*(int *)((char *)connectionSlot + 0x1207C) >= 1 &&
+				*(int *)((char *)connectionSlot + 0x1207C) <= 3) &&
+			*(unsigned int *)((char *)connectionSlot + 0x1205C) + slack < frame) {
+			unsigned int stalledFrame = m_playerLatestFrame[slot];
+			if (stalledFrame != g_lastPacketRouterStallFrame)
+				g_lastPacketRouterStallFrame = stalledFrame;
+			return true;
+		}
 	}
+	return false;
 }
 
 __declspec(naked) void BFMEConnectionManager::processRequestFrameDataCommand(void *msg)
