@@ -75301,6 +75301,7 @@ name,address,notes
 ?getVoteFrame@NetCommandMsg@@QAEIXZ,0x00013F20,ILT thunk to the disconnect-vote message vote frame accessor
 ?getVotesNeededToKick@DisconnectManager@@IAEHHPAVConnectionManager@@@Z,0x0002FA63,Open-BFME5 ILT; behaviour-derived name - takes the translated slot and the connection manager and returns the threshold ?isPlayerVotedOut@DisconnectManager@@IAE_NHPAVConnectionManager@@@Z at 0x0066BC30 compares the vote count against where ZH has getNumPlayers()-1
 ?getWakeFrame@UpdateModule@@IBE?AW4UpdateSleepTime@@XZ,0x000176C5,Open-BFME5 ILT fronts unclaimed 24-byte body 0x002B2020; called by ?friend_notifyStateMachineChanged@AIUpdateInterface@@UAEXXZ at 0x0026ED10
+?getWeaponSetFlags@Object@@QBEABVWeaponSetFlags@@XZ,0x000209FA,BFME Object weapon-set flags accessor ILT; caller 0x002737B0 tests bit 8 before issuing an attack-object command
 ?getWinStreak@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,0x0009CA10,by-value side prefix + "WinStreak" at VA 0x010804E8 then getInt ILT 0x000443B9 (pinned) -> 0x000A9490 with default 0; ret 4; ZH SkirmishBattleHonors::getWinStreak
 ?getWins@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,0x0009C650,by-value side prefix + "Wins" at VA 0x010804B4 then getInt ILT 0x000443B9 (pinned) -> 0x000A9490 with default 0; ret 4; ZH SkirmishBattleHonors::getWins
 ?getWorstLossStreak@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,0x0009CDD0,by-value side prefix + "WorstLostStreak" at VA 0x01080528 then getInt ILT 0x000443B9 (pinned) -> 0x000A9490 with default 0; ret 4; ZH SkirmishBattleHonors::getWorstLossStreak
@@ -76953,6 +76954,7 @@ name,address,notes
 ?perform@Gen00903090@@QAEXXZ,0x00903090,address-derived callee of the 12-byte this-returning forwarder family; target read from the REL32 at its call sites
 ?performUpgradeFX@UpgradeMuxData@@QBEXPAVObject@@@Z,0x0002EB4F,pinharvest x1 (thunk)
 ?pick@BridgeAreaEffectsRandomPositionShim@@QAEXPAVTerrainRoadType@@PBVBridgeInfo@@PAUCoord3D@@@Z,0x000406FB,BridgeBehavior doAreaEffects retail call at 0x001F249D forwards through the incremental thunk to getRandomSurfacePosition
+?playAttackVoiceResponse@AIUpdateInterface@@IAEXPAVObject@@@Z,0x00002EF0,BFME AIUpdate attack-voice helper ILT; 0x002737B0 passes the state machine goal for direct player or script commands
 ?playMessageReceivedSound@BFMEConnectionManager@@SAXXZ,0x00662CE0,static helper: TheAudio(0x012ED668 pinned)->slot+0x124() then slot+0x44 (= addAudioEvent; vtable 0x0111C0C0+0x44 -> 0x006B9A40) on the MiscAudio event at +0xC40; replaces ZH's GUIMessageReceived in disconnectPlayer (0x006663C9) and GUICommunicatorIncoming in processChat (0x00667211)
 ?playMoveVoiceResponse@AIUpdateInterface@@IAEXPBUCoord3D@@@Z,0x000462EA,BFME AIUpdate movement-voice helper ILT; call target decoded from the four privateFollowWaypointPath bodies and body 0x00273300 builds a one-drawable list before the voice-response dispatcher
 ?playerChangedNickCallback@@YAXPAXW4RoomType@@PBD20@Z,0x0064B240,PeerCallbacks struct slot +0x34 (playerChangedNick) filled at 0x0064FC7A; PeerResponse type 0xc with the two nick strings (arg4 newNick then arg3 oldNick via std::string assign ILT 0x0002B297) roomType and getPlayerInfo 0x0064AA70; addResponse +0x20 on 0x012F71C8
@@ -77455,6 +77457,7 @@ name,address,notes
 ?setFullyObscuredByShroud@W3DModelDraw@@UAEX_N@Z,0x0003EF77,ILT; base call from W3DTankTruckDraw::setFullyObscuredByShroud
 ?setGameMessageType@NetGameCommandMsg@@QAEXH@Z,0x00673730,identified from readGameMessage's call site
 ?setGamePaused@BfmeGameLogicPause@@QAEX_NH0@Z,0x00006F50,BFME three-argument GameLogic::setGamePaused; ILT thunk to body 0x00383490
+?setGoalObject@StateMachine@@QAEXPBVObject@@@Z,0x00035A1C,StateMachine goal-object setter ILT; caller 0x002737B0 sets the attack victim and body 0x001705A0 updates the safetied pointer
 ?setGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z,0x0000314D,Open-BFME5 ILT; called by ?onExit@AIMoveAndEvacuateState@@UAEXW4StateExitType@@@Z at 0x0017A340
 ?setGoalWaypoint@AIStateMachine@@QAEXPBVWaypoint@@@Z,0x00036192,BFME AIStateMachine::setGoalWaypoint ILT decoded from the four privateFollowWaypointPath call sites; body is matched at 0x0026EDC0
 ?setGridChangeAttenuationFactors@WaterRenderObjClass@@QAEXMMMM@Z,0x000088F0,pinharvest x1 (thunk)
