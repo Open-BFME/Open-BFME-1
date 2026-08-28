@@ -823,8 +823,41 @@ void ParticleBufferClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) const
 
 
 // ?Prepare_LOD@ParticleBufferClass@@UAEXAAVCameraClass@@@Z
-// Body in ParticleBufferClass_Prepare_LOD.asm (exact 437B retail; C++ blocked on
-// rendobj vtable slot map for this-vcalls).
+// BFME omits Zero Hour's final PredictiveLODOptimizerClass::Add_Object call.
+void ParticleBufferClass::Prepare_LOD(CameraClass &camera)
+{
+	if (Is_Not_Hidden_At_All() == false) {
+		return;
+	}
+
+	Vector3 cam = camera.Get_Position();
+	ViewportClass viewport = camera.Get_Viewport();
+	Vector2 vpr_min, vpr_max;
+	camera.Get_View_Plane(vpr_min, vpr_max);
+	float width_factor = viewport.Width() / (vpr_max.X - vpr_min.X);
+	float height_factor = viewport.Height() / (vpr_max.Y - vpr_min.Y);
+
+	const SphereClass & sphere = Get_Bounding_Sphere();
+	float dist = (sphere.Center - cam).Length();
+	float bounding_sphere_projected_radius = 0.0f;
+	float particle_projected_radius = 0.0f;
+	if (dist) {
+		float oo_dist = 1.0f / dist;
+		bounding_sphere_projected_radius = sphere.Radius * oo_dist;
+		particle_projected_radius = MaxSize * oo_dist;
+	}
+
+	float bs_rad_sq = bounding_sphere_projected_radius * bounding_sphere_projected_radius;
+	float p_rad_sq = particle_projected_radius * particle_projected_radius * MaxNum;
+	float proj_area = WWMATH_PI * MIN(bs_rad_sq, p_rad_sq) * width_factor * height_factor;
+
+	ProjectedArea = 0.9f * ProjectedArea + 0.1f * proj_area;
+
+	int minlod = Calculate_Cost_Value_Arrays(ProjectedArea, Value, Cost);
+
+	if (Get_LOD_Level() < minlod) Set_LOD_Level(minlod);
+
+}
 
 
 void ParticleBufferClass::Increment_LOD(void)
