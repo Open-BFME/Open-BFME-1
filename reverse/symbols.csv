@@ -72282,6 +72282,7 @@ name,address,notes
 ?bfmeAskCSF@BfmeSubCSF@@QAE_NXZ,0x00017607,pin
 ?bfmeAskCSG@BfmeSubCSG@@QAE_NXZ,0x00017607,pin
 ?bfmeAskCSH@BfmeSubCSH@@QAE_NXZ,0x00017607,pin
+?bfmeAskCTA@BfmeSubCTA@@QAE_NXZ,0x00017607,pin
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
 ?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
@@ -73357,6 +73358,7 @@ name,address,notes
 ?bfmeWriteAlt@BfmeSetupRecord@@QAEXPBDH@Z,0x007E88D0,Open-BFME5 the alternate write the setup stub at 0x007F26A0 finishes with
 ?bfmeWriteNCSG@BfmeOutCSG@@QAEXPAX@Z,0x00036192,pin
 ?bfmeWriteNCSH@BfmeOutCSH@@QAEXPAX@Z,0x00036192,pin
+?bfmeWriteNCTA@BfmeOutCTA@@QAEXPAX@Z,0x0000314D,pin
 ?bfme_appendGameOverDetails@GameLogic@@QAEXXZ,0x00387A50,once-only (+0x68 flag): formats Game Over Details and per slot Victory/Defeat frame Quit frame (graceful|voted out|n/a) from the PlayerLeaveStatus[8] records at +0x1b0 copying status into Player+0x484 and appending to the last AsciiString of the vector at +0x54..+0x58; ecx = this = GameLogic at the call 0x00397789; the ledger name ?endMenu@EstablishConnectionsMenu@@ for this 657 B body is wrong; reached via ILT 0x0004A10B
 ?bfme_getPlayerLeaveStatus@GameLogic@@QAEPAUPlayerLeaveStatus@@H@Z,0x00383B90,slot < 8 returns this+0x1b0+slot*0x1c else NULL; neighbour of 0x00383BC0 on the same record array
 ?bfme_hideBackground@WindowManager@@QAEX_N@Z,0x0000BD7F,DisconnectScreen destructor calls the established background helper through this ILT
