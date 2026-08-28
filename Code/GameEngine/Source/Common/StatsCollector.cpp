@@ -47,6 +47,8 @@ class GlobalData
 public:
 	unsigned char m_unmodelled00[ 8 ];
 	AsciiString m_mapName;
+	unsigned char m_unmodelled0C[ 0xCCC - 0x0C ];
+	Int m_playStats;
 };
 
 extern GlobalData *TheWritableGlobalData;
@@ -247,10 +249,12 @@ public:
 	void endScrollTime();
 	void collectMsgStats( const GameMessage *msg );
 	void collectUnitCountStats();
+	void update();
 
 private:
 	void writeInitialFileInfo();
 	void writeStatInfo();
+	void collectScoreKeeperStats();
 	AsciiString m_statsFileName;
 	UnsignedInt m_moneyWithdrawn;
 	UnsignedInt m_moneyDeposited;
@@ -306,6 +310,45 @@ StatsCollector::StatsCollector()
 	m_timeCount = 0;
 	m_lastUpdate = 0;
 	m_startFrame = TheGameLogic->getFrame();
+}
+
+void StatsCollector::update()
+{
+	if( m_lastUpdate + TheWritableGlobalData->m_playStats * 5 > TheGameLogic->getFrame() )
+		return;
+
+	collectUnitCountStats();
+
+	if( m_isScrolling )
+	{
+		m_scrollTime += TheGameLogic->getFrame() - m_scrollBeginTime;
+		m_scrollBeginTime = TheGameLogic->getFrame();
+	}
+
+	m_timeCount += TheWritableGlobalData->m_playStats;
+	writeStatInfo();
+	m_buildCommands = 0;
+	m_moveCommands = 0;
+	m_attackCommands = 0;
+	m_scrollMapCommands = 0;
+	m_aiUnits = 0;
+	m_playerUnits = 0;
+	m_scrollTime = 0;
+	m_moneyDeposited = 0;
+	m_moneyWithdrawn = 0;
+	m_scoreKeeperMoneySpent = 0;
+	m_scoreKeeperMoneyEarned = 0;
+	m_scoreKeeperUnitsDestroyed = 0;
+	m_scoreKeeperUnitsBuilt = 0;
+	m_scoreKeeperUnitsLost = 0;
+	m_scoreKeeperBuildingsDestroyed = 0;
+	m_scoreKeeperBuildingsBuilt = 0;
+	m_scoreKeeperBuildingsLost = 0;
+	m_alliesKilled = 0;
+	m_neutralsKilled = 0;
+	m_enemiesKilled = 0;
+	collectScoreKeeperStats();
+	m_lastUpdate = TheGameLogic->getFrame();
 }
 
 void StatsCollector::writeInitialFileInfo()
