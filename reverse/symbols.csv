@@ -79261,3 +79261,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??$__linear_insert@PAUS4SortElem12@@U1@US4Cmp00531FA0@@@_STL@@YAXPAUS4SortElem12@@0U1@US4Cmp00531FA0@@@Z,0x0002389E,Open-BFME5 ILT called by the S4SortElem12 insertion sort at 0x00531720
+??$__linear_insert@PAUS4SortElem12@@U1@US4Cmp00574DF0@@@_STL@@YAXPAUS4SortElem12@@0U1@US4Cmp00574DF0@@@Z,0x0002B8F5,Open-BFME5 ILT called by the S4SortElem12 insertion sort at 0x00574250
