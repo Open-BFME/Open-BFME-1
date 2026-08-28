@@ -72216,6 +72216,7 @@ name,address,notes
 ?bfmeAllocBlock@@YAPAXI@Z,0x009A5920,Open-BFME5 the allocator the calloc at 0x009A59D0 gets its block from
 ?bfmeAllocDGD@@YAPAXI@Z,0x007F0130,pin
 ?bfmeAllocDGF@@YAPAXI@Z,0x007F0130,pin
+?bfmeAllocDGG@@YAPAXI@Z,0x007F0130,pin
 ?bfmeAllocNode@@YAPAXI@Z,0x0082E540,Open-BFME5 the 16-byte allocator the node makers at 0x0046A070 0x0046B1C0 and 0x00927760 call
 ?bfmeAllocPV@@YAPAXHI@Z,0x00030940,pin
 ?bfmeAllocQA@@YAPAXHI@Z,0x00030940,pin
@@ -72992,6 +72993,7 @@ name,address,notes
 ?bfmeInitCMC@BfmeItemCMC@@QAEXPAX@Z,0x00027B01,pin
 ?bfmeInitDGD@BfmeThingDGD@@QAEPAV1@PAX@Z,0x007F7FA0,pin
 ?bfmeInitDGF@BfmeThingDGF@@QAEPAV1@PAX@Z,0x007F8730,pin
+?bfmeInitDGG@BfmeThingDGG@@QAEPAV1@PAX@Z,0x007FA990,pin
 ?bfmeInitSubBWD@BfmeSubBWD@@QAEXXZ,0x0000F0A6,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
