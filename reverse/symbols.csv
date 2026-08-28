@@ -73006,6 +73006,7 @@ name,address,notes
 ?bfmeOneBUD@BfmeSubBUD@@QAEXXZ,0x00022C73,pin
 ?bfmeOneBVB@BfmeSubBVB@@QAEXXZ,0x0002DF65,pin
 ?bfmeOneBZB@@YAXPAX@Z,0x009A5B80,pin
+?bfmeOneBZF@BfmeSubBZF@@QAEXXZ,0x0000E458,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73169,8 +73170,10 @@ name,address,notes
 ?bfmeTellRB@BfmeNodeRB@@QAEXPAX@Z,0x000021CB,pin
 ?bfmeTellRP@BfmeFoundRP@@QAEXPAX@Z,0x00030553,pin
 ?bfmeTest@Rva2225E0Filter@@AAE_NPAVBfmeOverridable@@_N@Z,0x0001B437,Open-BFME5 ILT the filter test whose result Rva2225E0Filter::accepts at 0x003A04A0 returns
+?bfmeTheBZF@@3PAVBfmeGlobalBZF@@A,0x00EF1028,pin
 ?bfmeThenBXF@BfmeThingBXF@@QAEXH@Z,0x0004067E,pin
 ?bfmeThreeBUD@BfmeOwnerBUD@@QAEXXZ,0x00041AD8,pin
+?bfmeThreeBZF@BfmeGlobalBZF@@QAEXH@Z,0x00029357,pin
 ?bfmeTryANA@BfmeThingANA@@QAEHPAX0@Z,0x0003381B,pin
 ?bfmeTwoAPA@@YGPAXPAXPAH@Z,0x009F6BEC,pin
 ?bfmeTwoBKE@@YAXPAX@Z,0x00038389,pin
@@ -73181,6 +73184,7 @@ name,address,notes
 ?bfmeTwoBUD@BfmeOwnerBUD@@QAEXXZ,0x0002EAD2,pin
 ?bfmeTwoBVB@BfmeSubBVB@@QAEXPAV1@@Z,0x0002C6C4,pin
 ?bfmeTwoBZB@@YAXPAX@Z,0x009A5980,pin
+?bfmeTwoBZF@BfmeGlobalBZF@@QAEXXZ,0x0001BC75,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
