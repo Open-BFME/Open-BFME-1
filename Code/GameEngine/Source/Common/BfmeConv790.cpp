@@ -11,6 +11,7 @@ struct BfmeThingDWD
 {
 	int bfmeLockDWD();
 	void bfmeUnlockDWD();
+	void bfmeReleaseDWD();
 	BfmeCsDWD *m_bfmeCs;
 	char m_bfmeHeld;
 };
@@ -26,4 +27,13 @@ void BfmeThingDWD::bfmeUnlockDWD()
 {
 	bfmeLeaveDWD(m_bfmeCs);
 	m_bfmeHeld = 0;
+}
+
+void BfmeThingDWD::bfmeReleaseDWD()
+{
+	if (m_bfmeHeld)
+	{
+		bfmeLeaveDWD(m_bfmeCs);
+		m_bfmeHeld = 0;
+	}
 }
