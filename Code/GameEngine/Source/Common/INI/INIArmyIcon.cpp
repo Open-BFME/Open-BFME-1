@@ -25,8 +25,20 @@ public:
 	BfmeArmyIconBase( AsciiString name );
 
 private:
-	char m_storage[ 0x18 ];
+	AsciiString m_name;
+	volatile int m_fields[ 5 ];
 };
+
+// ??0BfmeArmyIconBase@@QAE@VAsciiString@@@Z
+__declspec(noinline) BfmeArmyIconBase::BfmeArmyIconBase( AsciiString name )
+	: m_name( name )
+{
+	m_fields[ 0 ] = 0;
+	m_fields[ 1 ] = 0;
+	m_fields[ 2 ] = 0;
+	m_fields[ 3 ] = 0;
+	m_fields[ 4 ] = 0;
+}
 
 class BfmeArmyIcon : public BfmeArmyIconBase
 {
