@@ -73080,6 +73080,7 @@ name,address,notes
 ?bfmeSetBRC@BfmeSubBRC@@QAEXPAX@Z,0x0002F333,pin
 ?bfmeSetBSF@BfmeSubBSF@@QAEXPAX@Z,0x00887B60,pin
 ?bfmeSetBTB@BfmeSubBTB@@QAEXPAX0@Z,0x00025306,pin
+?bfmeSetBZC@BfmeSubBZC@@QAEXH@Z,0x00802C30,pin
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
 ?bfmeSetQQ@BfmeThingQQ@@QAEXPBDI@Z,0x0088A8F0,pin
 ?bfmeSetQR@BfmeThingQR@@QAEXPBDI@Z,0x0088A8F0,pin
