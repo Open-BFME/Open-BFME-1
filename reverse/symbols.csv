@@ -74595,6 +74595,7 @@ name,address,notes
 ?g_BFMEIndexBufferDebug@@3PAVBFMEIndexBufferDebugClass@@A,0x01336E5C,retail DX8 error path dispatches through the shared game debug manager global
 ?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
+?g_bfmeAccDYB@@3HA,0x00EED8A4,pin
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
 ?g_bfmeBufDWG@@3PAXA,0x00F378D0,pin
@@ -74625,6 +74626,7 @@ name,address,notes
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
 ?g_bfmeIRegion2DFormat@@3QBDB,0x0114445C,address-derived IRegion2D format string from retail 0x009D985E
 ?g_bfmeIRegion3DFormat@@3QBDB,0x011443C8,address-derived IRegion3D format string from retail 0x009D9745
+?g_bfmeInitDYB@@3DA,0x00EED8B0,pin
 ?g_bfmeInt64Format@@3QBDB,0x011442EC,address-derived int64 format string from retail 0x009D9503
 ?g_bfmeIntegerFormat@@3QBDB,0x011442DC,address-derived integer format string from the DIR32 operand at retail 0x009D94B8
 ?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
@@ -74667,6 +74669,7 @@ name,address,notes
 ?g_bfmeSinkBTC@@3PAVBfmeSinkBTC@@A,0x00EF0898,pin
 ?g_bfmeSinkBUB@@3PAVBfmeSinkBUB@@A,0x00EF0888,pin
 ?g_bfmeSinkSB@@3PAVBfmeSinkSB@@A,0x00EED668,pin
+?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
 ?g_bfmeTwoAOA@@3PAVBfmeTwoAOA@@A,0x00EED600,pin
@@ -78342,12 +78345,14 @@ __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
 __imp__bfmeCloseDWE@4,0x00F590C8,pin
 __imp__bfmeCloseDXK@4,0x00F591A8,pin
 __imp__bfmeCmpDWK,0x00F5933C,pin
+__imp__bfmeCpyDYC,0x00F593C8,pin
 __imp__bfmeCvtDXI,0x00F59384,pin
 __imp__bfmeDoDWH@0,0x00F596D8,pin
 __imp__bfmeEnterDVC@4,0x00F58D18,pin
 __imp__bfmeEnterDWA@4,0x00F58D18,pin
 __imp__bfmeEnterDWD@4,0x00F58D18,pin
 __imp__bfmeFreeDXC,0x00F593A0,pin
+__imp__bfmeFreeDYC,0x00F593A8,pin
 __imp__bfmeInitDWA@4,0x00F58E5C,pin
 __imp__bfmeInitDXB@4,0x00F58D0C,pin
 __imp__bfmeLeaveDVC@4,0x00F58E74,pin
@@ -78358,6 +78363,7 @@ __imp__bfmeQueryDXE@4,0x00F591B4,pin
 __imp__bfmeSetDWI@8,0x00F58F64,pin
 __imp__bfmeStartDWB@4,0x00F58D0C,pin
 __imp__bfmeStatusDXD@4,0x00F5958C,pin
+__imp__bfmeTickDYA@0,0x00F59544,pin
 __imp__bfmeUseDWL@4,0x00F59210,pin
 __imp__fopen,0x013593BC,pin
 __imp__ftell,0x013593EC,pin
