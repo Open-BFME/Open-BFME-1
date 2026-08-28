@@ -81,6 +81,7 @@ class Gen_00525EE0
 {
 public:
 	void bfmeRefresh(void);
+	int bfmeFindRepresentativeSlot(void);
 	int bfmeFindAvailableStartPosition(int firstIndex);
 	bool bfmeApplyStartPosition(int index, int startPosition);
 	bool bfmeApplyPlayerTemplate(int index);
@@ -125,6 +126,34 @@ void Gen_00525EE0::bfmeRefresh(void)
 		if (map && map->m_isMultiplayer)
 			m_isMultiplayer = true;
 	}
+}
+
+// Prefer the local slot, except that a hosting observer is represented by the
+// first AI slot when one exists.
+// ?bfmeFindRepresentativeSlot@Gen_00525EE0@@QAEHXZ
+int Gen_00525EE0::bfmeFindRepresentativeSlot(void)
+{
+	if (m_first && !m_owner->bfmeContains(m_first))
+		m_first = 0;
+
+	if (m_second && !m_owner->bfmeContains(m_second))
+		m_second = 0;
+
+	if (!m_first)
+		return 0;
+
+	const GameSlot *local = m_first->getConstSlot(m_first->getLocalSlotNum());
+	if (m_first->amIHost() && (!local || local->getPlayerTemplate() == -2))
+	{
+		for (int index = 0; index < 8; ++index)
+		{
+			const GameSlot *slot = m_first->getConstSlot(index);
+			if (slot && slot->isAI())
+				return index;
+		}
+		return m_first->getLocalSlotNum();
+	}
+	return m_first->getLocalSlotNum();
 }
 
 // Find the next unassigned local/AI slot whose start position can be changed.
