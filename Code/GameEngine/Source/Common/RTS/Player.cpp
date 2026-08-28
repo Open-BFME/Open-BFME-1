@@ -1687,13 +1687,19 @@ Bool Player::getAiBaseCenter(Coord3D *pos)
 //-------------------------------------------------------------------------------------------------
 /** Repair bridge or structure. */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerRepairStructure.cpp
-// ?repairStructure@Player@@UAEXW4ObjectID@@@Z present-unmatched
+// BFME keeps the AI player at +0x220; the vendored header lands it at +0x150.
+struct BfmePlayerAiField
+{
+	UnsignedByte m_unreconstructed_00[0x220];
+	AIPlayer *m_ai;						///< retail this+0x220
+};
+
+// ?repairStructure@Player@@UAEXW4ObjectID@@@Z
 void Player::repairStructure(ObjectID structureID)
 {
-	if (m_ai) 
+	if (((BfmePlayerAiField *)this)->m_ai) 
 	{
-		m_ai->repairStructure(structureID); 
+		((BfmePlayerAiField *)this)->m_ai->repairStructure(structureID); 
 	}
 }
 
@@ -1934,9 +1940,16 @@ void Player::iterateObjects( ObjectIterateFunc func, void *userData ) const
 	}
 }
 
+// BFME's team-prototype list sits at +0x288; the vendored header lands it at
+// +0x1a0. Both walkers below read it through this view.
+struct BfmePlayerTeamFields
+{
+	UnsignedByte m_unreconstructed_00[0x288];
+	Player::PlayerTeamList m_playerTeamPrototypes;		///< retail this+0x288
+};
+
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_countObjectsByThingTemplate.cpp
-// ?countObjectsByThingTemplate@Player@@QBEXHPBQBVThingTemplate@@_NPAH1@Z present-unmatched
+// ?countObjectsByThingTemplate@Player@@QBEXHPBQBVThingTemplate@@_NPAH1@Z
 void Player::countObjectsByThingTemplate(Int numTmplates, const ThingTemplate* const * things, Bool ignoreDead, Int *counts, Bool ignoreUnderConstruction ) const
 {
 	Int i;
@@ -1944,8 +1957,9 @@ void Player::countObjectsByThingTemplate(Int numTmplates, const ThingTemplate* c
 	for (i = 0; i < numTmplates; ++i)
 		counts[i] = 0;
 
-	for (PlayerTeamList::const_iterator it = m_playerTeamPrototypes.begin(); 
-			 it != m_playerTeamPrototypes.end(); 
+	const BfmePlayerTeamFields *self = (const BfmePlayerTeamFields *)this;
+	for (PlayerTeamList::const_iterator it = self->m_playerTeamPrototypes.begin(); 
+			 it != self->m_playerTeamPrototypes.end(); 
 			 ++it)
 	{	
 		(*it)->countObjectsByThingTemplate(numTmplates, things, ignoreDead, counts, ignoreUnderConstruction);
@@ -2066,12 +2080,12 @@ Bool Player::hasAnyObjects(void) const
 }
 
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_hasAnyBuildFacility.cpp
-// ?hasAnyBuildFacility@Player@@QBE_NXZ present-unmatched
+// ?hasAnyBuildFacility@Player@@QBE_NXZ
 Bool Player::hasAnyBuildFacility(void) const
 {
-	for (PlayerTeamList::const_iterator it = m_playerTeamPrototypes.begin(); 
-			 it != m_playerTeamPrototypes.end(); ++it)
+	const BfmePlayerTeamFields *self = (const BfmePlayerTeamFields *)this;
+	for (PlayerTeamList::const_iterator it = self->m_playerTeamPrototypes.begin(); 
+			 it != self->m_playerTeamPrototypes.end(); ++it)
 	{	
 		if ((*it)->hasAnyBuildFacility())
 			return true;
@@ -2080,12 +2094,12 @@ Bool Player::hasAnyBuildFacility(void) const
 }
 
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_updateTeamStates.cpp
-// ?updateTeamStates@Player@@QAEXXZ present-unmatched
+// ?updateTeamStates@Player@@QAEXXZ
 void Player::updateTeamStates(void) 
 {
-	for (PlayerTeamList::const_iterator it = m_playerTeamPrototypes.begin(); 
-			 it != m_playerTeamPrototypes.end(); ++it)
+	const BfmePlayerTeamFields *self = (const BfmePlayerTeamFields *)this;
+	for (PlayerTeamList::const_iterator it = self->m_playerTeamPrototypes.begin(); 
+			 it != self->m_playerTeamPrototypes.end(); ++it)
 	{	
 		(*it)->updateState();
 	}
