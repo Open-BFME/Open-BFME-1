@@ -74767,6 +74767,7 @@ name,address,notes
 ?friend_adjustPowerForPlayer@Object@@QAEX_N@Z,0x00021297,Open-BFME5 retail object power adjustment thunk
 ?friend_applyDifficultyBonusesForObject@Player@@QAEXPAVObject@@_N@Z,0x0002278C,Open-BFME5 the incremental-link thunk Object setReceivingDifficultyBonus calls; Zero Hour names the same call
 ?friend_awakenUpdateModule@GameLogic@@QAEXPAVObject@@PAVUpdateModule@@I@Z,0x00009944
+?friend_changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z,0x0002847F,ILT spelling used by BridgeBehavior::removeScaffolding to preserve the retail indirection
 ?friend_findCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z,0x0000D8BE,first of the find-then-create pair in the CrateData block; the second call on the same receiver is the already-matched newCrateTemplate and ZH declares this one beside it
 ?friend_getFinalOverride@BfmeOverridable@@QAEPAV1@XZ,0x000022BB,Open-BFME5 ILT the override walk in Rva2225E0Filter::accepts at 0x003A04A0 recurses through
 ?friend_getFinalOverride@LocomotorOverridable@@QAEPAV1@XZ,0x000022BB,ILT thunk to the locomotor override-chain walker at 0x00087A80; a distinct body from the SpecialPowerTemplate walker at 0x00097880
@@ -75500,6 +75501,7 @@ name,address,notes
 ?getModelIndices@W3DBridge@@IAEHPAGHHPAVMeshClass@@@Z,0x0003881B
 ?getModelVertices@W3DBridge@@IAEHPAUVertexFormatXYZNDUV1@@HMAAVVector3@@111ABVMatrix3D@@PAVMeshClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,0x0001B14E
 ?getModelVertices@W3DBridgeGetModelVerticesShim@@QAEHPAUVertexFormatXYZNDUV1@@HMAAVVector3@@111ABVMatrix3D@@PAVMeshClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,0x006D7EA0,W3DBridge incremental-link thunk target through a TU-local forwarding shim
+?getMoodMatrixValue@AIUpdateInterface@@QBEIXZ,0x0001BB3F,AIUpdate retail caller and pristine mood-filter body identify ILT to 0x00279780
 ?getNATPortAllocationScheme@FirewallHelperClass@@AAEHHPAG0AA_N1@Z,0x00012F3F
 ?getNATPortAllocationScheme@FirewallHelperClassGetNATPortAllocationSchemeShim@@QAEHHPAG0AA_N1@Z,0x0066E870,FirewallHelperClass incremental-link thunk target through a TU-local forwarding shim
 ?getName@Anim2DTemplate@@QBE?AVAsciiString@@XZ,0x00012E72,ILT thunk to the Anim2D template name accessor
@@ -79339,6 +79341,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?getMoodMatrixValue@AIUpdateInterface@@QBEIXZ,0x0001BB3F,AIUpdate retail caller and pristine mood-filter body identify ILT to 0x00279780
-?getBridgeScaffoldBehaviorInterfaceFromObject@BridgeScaffoldBehavior@@SAPAVBridgeScaffoldBehaviorInterface@@PAVObject@@@Z,0x00046F8D,ILT thunk proven by BridgeBehavior scaffold-list callers at 0x001F3C30 and 0x001F3D40
-?friend_changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z,0x0002847F,ILT spelling used by BridgeBehavior::removeScaffolding to preserve the retail indirection
