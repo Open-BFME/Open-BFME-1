@@ -72252,6 +72252,7 @@ name,address,notes
 ?bfmeApplyCVA@BfmeThingCVA@@QAEXXZ,0x00022999,pin
 ?bfmeApplyCVB@BfmeThingCVB@@QAEXXZ,0x00022999,pin
 ?bfmeApplyCVC@BfmeThingCVC@@QAEXXZ,0x00022999,pin
+?bfmeApplyCVD@BfmeThingCVD@@QAEXXZ,0x00022999,pin
 ?bfmeApplyCircle@Gen_008812D0@@QAEXHHHH_N@Z,0x00881B90,Open-BFME5 semantic identity for the exact TaintManager grid circle-update wrapper already claimed under an address-derived class
 ?bfmeApplySpecialModelCondition@Object@@QAEXHPBXH@Z,0x0001191E,Open-BFME5 ILT thunk to body 0x001C1FB0; follows Object m_next at +0x214 to the chain tail and forwards three arguments through the SMC helper at +0x1F8; bfme prefix records unrecovered retail spelling
 ?bfmeApplyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,Open-BFME5 TintDrawableFXNugget retail tint helper ILT; body 0x00412040
