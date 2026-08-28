@@ -72250,6 +72250,8 @@ name,address,notes
 ?bfmeAskBFD@BfmeSubBFD@@QAE_NXZ,0x00048928,pin
 ?bfmeAskBIA@BfmeSubBIA@@QAEHXZ,0x000022BB,pin
 ?bfmeAskBIC@BfmeSubBIC@@QAEHXZ,0x0002CA61,pin
+?bfmeAskBJA@BfmeThingBJA@@QAE_NXZ,0x0002D538,pin
+?bfmeAskBJB@BfmeThingBJB@@QAE_NXZ,0x0002D538,pin
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
 ?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
@@ -72415,6 +72417,10 @@ name,address,notes
 ?bfmeDoBHE@BfmeSubBHE@@QAEXXZ,0x0000F15F,pin
 ?bfmeDoBID@BfmeSubBID@@QAEXPAX@Z,0x0002F333,pin
 ?bfmeDoBIE@@YGXPAUBfmeThingBIE@@PAUBfmeSubBIE@@PAX@Z,0x00005484,pin
+?bfmeDoBJC@BfmeSubBJC@@QAEXPAX@Z,0x0001ABD1,pin
+?bfmeDoBJD@@YGXPAX0PAPAX@Z,0x0002648B,pin
+?bfmeDoBJE@BfmeSubBJE@@QAEXPAX@Z,0x0092F910,pin
+?bfmeDoBJF@BfmeSubBJF@@QAEXPAX0H@Z,0x00006C58,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
