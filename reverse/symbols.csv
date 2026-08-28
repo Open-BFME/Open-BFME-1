@@ -8546,6 +8546,7 @@ name,address,notes
 ??1PartitionCell@@QAE@XZ,0x00032C95,Open-BFME5 retail PartitionCell destructor
 ??1PassiveAreaEffectBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1PassiveAreaEffectBehaviorModuleDataMemberB@@QAE@XZ,0x0001A401,Open-BFME5 pin
+??1Path@@MAE@XZ,0x0000CA68,AIUpdateInterface::destroyPath retail call reaches the matched Path destructor body at 0x003FEB80 through this ILT
 ??1Payload@DeliverPayloadNugget@@QAE@XZ,0x0004B10A,rel32 pin for exact-ambiguous landing
 ??1PendingSurfaceStruct@Render2DSentenceClass@@QAE@XZ,0x00001F96,hit-decoded x7 (thunk)
 ??1PendingSurfaceStruct@Render2DSentenceClass@@QAE@XZ,0x00016018,hit-decoded x7 (thunk)
