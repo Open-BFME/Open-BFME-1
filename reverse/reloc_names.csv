@@ -222,6 +222,7 @@ name,target_rva,target_size,source,notes
 ??0LocomotorTemplate@@QAE@XZ,0x001B52C0,41,Code/GameEngine/Source/GameLogic/Object/LocomotorStore_newOverride_Thunk.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_001b60b0@@UAE@XZ,0x001B5550,101,Code/gen_small/dtors_002.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_001b7e00@@UAE@XZ,0x001B6F20,209,Code/gen_small/dtors_002.cpp,reloc-derived;call-sites=1;identity=generated
+?bfmeFinishANB@BfmeThingANB@@QAEXPAVBfmeSinkANB@@PAX@Z,0x001BD0D0,240,Code/GameEngine/Source/Common/BfmeConv412.cpp,reloc-derived;call-sites=1;identity=real
 ?bfmeGetBonusSource@Object@@ABEPAVBfmeVisionBonusSource@@XZ,0x001BF830,111,Code/GameEngine/Source/Common/Rva00369860Reset.cpp,reloc-derived;call-sites=3;identity=real
 ?setTransformMatrix@Thing@@QAEXPBVMatrix3D@@@Z,0x001C16A0,155,Code/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdate.cpp,reloc-derived;call-sites=1;identity=real
 ?bfmeStepAED@BfmeSubAED@@QAEXH@Z,0x001C1FF0,46,Code/GameEngine/Source/Common/BfmeThreeHundredEightySeven.cpp,reloc-derived;call-sites=1;identity=real
@@ -293,6 +294,7 @@ name,target_rva,target_size,source,notes
 ?bfmeAccept@Gen_00248BE0@@AAEXPAVBfmeSeedTarget@@@Z,0x0021DAA0,400,Code/GameEngine/Source/Common/S3VersionBlocks.cpp,reloc-derived;call-sites=1;identity=generated
 ?findClosestFreeGarrisonPointIndex@GarrisonContain@@IAEHHPBUCoord3D@@@Z,0x0021DDA0,653,Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainTrackTargets.cpp,reloc-derived;call-sites=1;identity=real
 ?bfmeFinishYC@BfmeThingYC@@QAEXPAX@Z,0x0021E4E0,48,Code/GameEngine/Source/Common/BfmeThreeHundredSeventyFive.cpp,reloc-derived;call-sites=1;identity=real
+?bfmeFinishAGA@BfmeThingAGA@@QAEXPAX@Z,0x00227BE0,48,Code/GameEngine/Source/Common/BfmeConv400.cpp,reloc-derived;call-sites=1;identity=real
 ?bfmeAccept@Gen_0022A170@@AAEXPAVBfmeSeedTarget@@@Z,0x0022C2A0,559,Code/GameEngine/Source/Common/S3SeedPairsSweep.cpp,reloc-derived;call-sites=1;identity=generated
 ?finish@Rva0022BDE0Obj@@QAEXPAVObject@@@Z,0x0022E340,987,Code/GameEngine/Source/Common/Rva0022BDE0Apply.cpp,reloc-derived;call-sites=1;identity=generated
 ??$__copy_backward@PAUGen_t_00234a50_p128pod@@PAU1@H@_STL@@YAPAUGen_t_00234a50_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00233B60,79,Code/gen_small/tgrid_133.cpp,reloc-derived;call-sites=1;identity=generated
@@ -324,8 +326,10 @@ name,target_rva,target_size,source,notes
 ?destroyPath@AIUpdateInterface@@QAEXXZ,0x0026F080,70,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp,reloc-derived;call-sites=1;identity=real
 ?requestSafePath@AIUpdateInterface@@QAEXW4ObjectID@@@Z,0x002709B0,316,Code/GameEngine/Source/GameLogic/AI/AIMoveAwayFromRepulsorsState_onEnter_Thunk.cpp,reloc-derived;call-sites=1;identity=real
 ?bfmeFind@BfmeFinder@@QAEPAXXZ,0x00272F70,105,Code/GameEngine/Source/Common/S3BitSetAndFind.cpp,reloc-derived;call-sites=3;identity=real
+?bfmeStopAHA@BfmeSubAHA@@QAEXH@Z,0x00273960,88,Code/GameEngine/Source/Common/BfmeConv404.cpp,reloc-derived;call-sites=1;identity=real
 ?bfmeStateValue@BfmeObjectAI@@QAEHXZ,0x00279670,52,Code/GameEngine/Source/GameLogic/AI/AI_getAdjustedVisionRangeForObject.cpp,reloc-derived;call-sites=1;identity=real
 ??1GiantBirdMemberA@@QAE@XZ,0x0027AF40,146,Code/GameEngine/Source/Common/GiantBirdAIUpdateDestructorThunk.cpp,reloc-derived;call-sites=1;identity=real
+?bfmeFirstAKB@BfmeThingAKB@@QAE_NPAH@Z,0x0027C1A0,101,Code/GameEngine/Source/Common/BfmeConv408.cpp,reloc-derived;call-sites=1;identity=real
 ?attackOrdinaryTarget@AIStateTargetDispatch@@QAEXPAVThing@@@Z,0x0027CF60,972,Code/GameEngine/Source/GameLogic/AI/AIUpdateTargetDispatch_Thunk.cpp,reloc-derived;call-sites=1;identity=real
 ?attackOptimizedTarget@AIStateTargetDispatch@@QAEXPAVThing@@@Z,0x0027E070,194,Code/GameEngine/Source/GameLogic/AI/AIUpdateTargetDispatch_Thunk.cpp,reloc-derived;call-sites=1;identity=real
 ??1Mem0027E9C0@@QAE@XZ,0x0027E9C0,227,Code/GameEngine/Source/Common/BigTwoMemberDtors.cpp,reloc-derived;call-sites=1;identity=real
@@ -673,10 +677,7 @@ _BfmePathfindMapUpdate@12,0x003FA5B0,3951,Code/GameEngine/Source/GameLogic/AI/Pa
 ??$__copy_backward@PAUGen_t_00426060_p128pod@@PAU1@H@_STL@@YAPAUGen_t_00426060_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00425AE0,105,Code/gen_small/tgrid_134.cpp,reloc-derived;call-sites=1;identity=generated
 ?_M_insert_overflow@?$vector@URva00426C00Element@@V?$allocator@URva00426C00Element@@@_STL@@@_STL@@IAEXPAURva00426C00Element@@ABU3@ABU__false_type@2@I_N@Z,0x00426870,286,Code/Libraries/Source/WWVegas/WWLib/RvaVectorPushBack.cpp,reloc-derived;call-sites=1;identity=real
 ?doFXObj@FXList@@QBEXPBVObject@@0@Z,0x00428180,163,Code/GameEngine/Source/Common/Thing/UpgradeMuxData.cpp,reloc-derived;call-sites=1;identity=real
-??0RayEffectFXNugget@@QAE@XZ,0x00428BC0,127,Code/GameEngine/Source/GameClient/FXListNuggetParse_Thunk.cpp,reloc-derived;call-sites=1;identity=real
 ??0DynamicDecalFXNugget@@QAE@XZ,0x00428FA0,130,Code/GameEngine/Source/GameClient/FXListNuggetParse_Thunk.cpp,reloc-derived;call-sites=1;identity=real
-??0TintDrawableFXNugget@@QAE@XZ,0x00429CC0,80,Code/GameEngine/Source/GameClient/FXListNuggetParse_Thunk.cpp,reloc-derived;call-sites=1;identity=real
-??0FXListAtBonePosFXNugget@@QAE@XZ,0x00429E30,95,Code/GameEngine/Source/GameClient/FXListNuggetParse_Thunk.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_0042a170@@UAE@XZ,0x0042A1A0,127,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
 ?reallyDoFX@ParticleSystemFXNugget@@IBEXPBUCoord3D@@PBVMatrix3D@@PBVObject@@2@Z,0x0042A270,3002,Code/GameEngine/Source/GameClient/FXList.cpp,reloc-derived;call-sites=2;identity=real
 ??0CursorParticleSystemFXNugget@@QAE@XZ,0x0042B280,171,Code/GameEngine/Source/GameClient/FXListNuggetParse_Thunk.cpp,reloc-derived;call-sites=1;identity=real
