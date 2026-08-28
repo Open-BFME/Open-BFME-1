@@ -25,10 +25,18 @@ import modbuild  # noqa: E402
 from cave import PE  # noqa: E402
 
 HOOKS = (
+    modbuild.TARGET_UI_PARSE_ENTRY,
+    modbuild.TARGET_UI_PARSE_TAIL,
+    modbuild.TARGET_UI_SCHEME_BY_NAME_ENTRY,
+    modbuild.TARGET_UI_SCHEME_BY_NAME_TAIL,
+    modbuild.TARGET_UI_SCHEME_BY_TEMPLATE_ENTRY,
+    modbuild.TARGET_UI_SCHEME_BY_TEMPLATE_TAIL,
+    modbuild.TARGET_UI_SCHEME_BY_PLAYER_ENTRY,
+    modbuild.TARGET_UI_SCHEME_BY_PLAYER_TAIL,
+    modbuild.TARGET_UI_CONTROLBAR_INIT_TAIL,
     modbuild.TARGET_UI_COORDINATE_RANGE,
     modbuild.TARGET_UI_SENTENCE_VIEWPORT,
     modbuild.TARGET_UI_RENDER_VIEWPORT,
-    modbuild.TARGET_UI_COPY_SURFACE,
 )
 
 
@@ -36,6 +44,12 @@ def ui_band(width, height):
     """Return (centred left, logical width) using the naked payload policy."""
     band = min(width, height * 4 // 3)
     return (width - band) // 2, band
+
+
+def ui_coordinate_range(width, height):
+    """Return the physical inclusive/exclusive Render2D coordinate interval."""
+    left, band = ui_band(width, height)
+    return left, left + band
 
 
 @pytest.mark.parametrize("width,height,expected_left,expected_band", [
@@ -77,6 +91,12 @@ def test_reference_compatibility():
     assert band / 768 == pytest.approx(4.0 / 3.0)
 
 
+def test_renderer_range_matches_already_centered_window_coordinates():
+    assert ui_coordinate_range(1920, 1080) == (240, 1680)
+    assert ui_coordinate_range(3440, 1440) == (760, 2680)
+    assert ui_coordinate_range(5120, 1440) == (1600, 3520)
+
+
 def test_extreme_diagnostic_is_unmistakable():
     width, height = 3440, 1440
     left, band = width // 4, width // 2
@@ -89,6 +109,10 @@ def test_payload_avoids_trigonometry_and_documents_renderer_order():
     assert "tan(" not in text
     assert "atan" not in text
     assert "Set_Coordinate_Range" in text
+    assert "ui_parse_begin" in text
+    assert "ui_scheme_begin" in text
+    assert "physical centred interval" in text
+    assert "range->left" in text
     assert "00933FD0" in text
     assert "00934AD5" in text
     assert "copySurfaceRects006e" in text
