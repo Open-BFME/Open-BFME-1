@@ -72434,6 +72434,10 @@ name,address,notes
 ?bfmeDoBLF@@YAXPAUBfmeSubBLF@@PAXH@Z,0x009F70BA,pin
 ?bfmeDoBMC@BfmeSubBMC@@QAEXPAUBfmePartBMC@@0@Z,0x00008E68,pin
 ?bfmeDoBMF@BfmeSinkBMF@@QAEXHH@Z,0x0002054F,pin
+?bfmeDoBNA@@YGHPAX@Z,0x000294E7,pin
+?bfmeDoBNC@BfmeSubBNC@@QAEXPAX0@Z,0x00040412,pin
+?bfmeDoBNE@BfmeOuterBNE@@QAEXXZ,0x0004908F,pin
+?bfmeDoBNH@@YAXPAVBfmeThingBNH@@PAXHH@Z,0x0090E910,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -72868,6 +72872,7 @@ name,address,notes
 ?bfmeMakeBIF@BfmeSubBIF@@QAEPAXPAX@Z,0x000100A0,pin
 ?bfmeMakeBLC@BfmeSinkBLC@@QAEPAXPAX@Z,0x0003ADD7,pin
 ?bfmeMakeBMD@BfmeSinkBMD@@QAEPAXPAX@Z,0x0002F95A,pin
+?bfmeMakeBNG@@YAPAXPAX0@Z,0x00002B8F,pin
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
@@ -73074,6 +73079,7 @@ name,address,notes
 ?bfmeTailBHG@@YAXXZ,0x00006D52,pin
 ?bfmeTailBHH@@YAXPAUBfmeThingBHH@@@Z,0x008646C0,pin
 ?bfmeTailBLE@BfmeSubBLE@@QAEXXZ,0x0001D17E,pin
+?bfmeTailBNF@BfmeThingBNF@@QAEXXZ,0x00020B80,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
@@ -77841,6 +77847,7 @@ _bfmeRegZB,0x00EF1094,pin
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
 _bfmeTagANB,0x00C9E038,pin
 _bfmeTagAPB,0x00DDFC30,pin
+_bfmeTagBNH,0x00D1DC1C,pin
 _bfmeTextAIB,0x00C94960,pin
 _bfmeTextAOA,0x00C88860,pin
 _bfmeTextAPB,0x00C75230,pin
