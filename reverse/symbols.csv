@@ -72464,6 +72464,7 @@ name,address,notes
 ?bfmeCallEEA@BfmeSubEEA@@QAEXXZ,0x0002DF65,pin
 ?bfmeCallEFC@@YGXPAUBfmeAEFC@@M@Z,0x0001536B,pin
 ?bfmeCallEIB@BfmeOtherEIB@@QAEXPAH@Z,0x00887B60,pin
+?bfmeCallELE@@YAXPAX0@Z,0x0002FF36,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -72499,6 +72500,8 @@ name,address,notes
 ?bfmeClear@BfmeListA@@QAEXXZ,0x00021CD3,Open-BFME5 the out-of-line list clear the destructor at 0x0009F7A0 calls
 ?bfmeClear@BfmeListB@@QAEXXZ,0x0001900B,Open-BFME5 the out-of-line list clear the destructor at 0x00080950 calls
 ?bfmeClearEFG@BfmeThingEFG@@QAEXXZ,0x0001D4B7,pin
+?bfmeClearELAa@BfmeThingELAa@@QAEXXZ,0x0004278A,pin
+?bfmeClearELAa@BfmeThingELAb@@QAEXXZ,0x0004278A,pin
 ?bfmeClearMembers@@YAXPAVLGA_MemberObj@@@Z,0x00034DC9,Open-BFME5 ILT thunk to body 0x003D4080; ??1LGA_MemberObj@@QAE@XZ at 0x003D4490 calls it on this as a cdecl of one pointer before its member vector is released; address-derived name
 ?bfmeClearPP@BfmeThingPP@@QAEXXZ,0x0082AE40,pin
 ?bfmeClose@Gen009D1A40@@QAEXXZ,0x009CB880,address-derived close target from the tail REL32 jump at retail 0x009D1A5D
@@ -72987,6 +72990,8 @@ name,address,notes
 ?bfmeFreeDXK@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeECH@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeEHB@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeFreeELA@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeELD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
 ?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
@@ -73539,6 +73544,10 @@ name,address,notes
 ?bfmeTailDTK@BfmeThingDTK@@QAEXXZ,0x0001C75B,pin
 ?bfmeTailDTL@BfmeThingDTK@@QAEXXZ,0x0001C75B,pin
 ?bfmeTailDXC@BfmeThingDXC@@QAEXXZ,0x0000B488,pin
+?bfmeTailELB@BfmeObjELB@@QAEXH@Z,0x00049E1D,pin
+?bfmeTailELC@BfmeSubELC@@QAEXH@Z,0x00020B5D,pin
+?bfmeTailELGa@BfmeSubELGa@@QAEXPAX@Z,0x000468D0,pin
+?bfmeTailELGb@BfmeSubELGb@@QAEXPAX@Z,0x00032975,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
@@ -74698,6 +74707,7 @@ name,address,notes
 ?g_bfmeCoord2DFormat@@3QBDB,0x011443F8,address-derived Coord2D format string from retail 0x009D9789
 ?g_bfmeCoord3DFormat@@3QBDB,0x01144348,address-derived Coord3D format string from retail 0x009D9650
 ?g_bfmeCountBBD@@3HA,0x00F0BD30,pin
+?g_bfmeCountELH@@3HA,0x00F40594,pin
 ?g_bfmeCountSI@@3HA,0x00EED240,pin
 ?g_bfmeCsDWC@@3UBfmeCsDWA@@A,0x00F36E60,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
@@ -74746,6 +74756,8 @@ name,address,notes
 ?g_bfmeObjEFJ@@3PAVBfmeGlobEFJ@@A,0x00EEF1D8,pin
 ?g_bfmeObjEGD@@3PAVBfmeObjEGD@@A,0x00EF1B40,pin
 ?g_bfmeObjEGE@@3PAVBfmeObjEGE@@A,0x00EED5EC,pin
+?g_bfmeObjELB@@3PAVBfmeObjELB@@A,0x00EF4AAC,pin
+?g_bfmeObjELH@@3PAUBfmeObjELH@@A,0x00F40534,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
