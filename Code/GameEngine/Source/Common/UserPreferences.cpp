@@ -1086,18 +1086,32 @@ __declspec(naked) void GameSpyMiscPreferences::setLocale( Int )
 	}
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/GameSpyMiscPreferences_getCachedStats_Thunk.cpp
-// ?getCachedStats@GameSpyMiscPreferences@@QAE?AVAsciiString@@XZ present-unmatched
+// BFME reaches both preference accessors virtually -- getPref at slot 6 (+0x18)
+// and setPref at slot 7 (+0x1c). They are one apart, which is what cross-checks
+// the two slot numbers against each other.
+class BfmeGameSpyMiscPrefsVtbl
+{
+public:
+	virtual void _gsp0( void ) = 0;
+	virtual void _gsp1( void ) = 0;
+	virtual void _gsp2( void ) = 0;
+	virtual void _gsp3( void ) = 0;
+	virtual void _gsp4( void ) = 0;
+	virtual void _gsp5( void ) = 0;
+	virtual AsciiString getPref( AsciiString key, AsciiString defaultValue ) = 0;
+	virtual void setPref( AsciiString key, AsciiString value ) = 0;
+};
+
+// ?getCachedStats@GameSpyMiscPreferences@@QAE?AVAsciiString@@XZ
 AsciiString GameSpyMiscPreferences::getCachedStats( void )
 {
-	return getAsciiString("CachedStats", AsciiString::TheEmptyString);
+	return ((BfmeGameSpyMiscPrefsVtbl *)this)->getPref("CachedStats", AsciiString::TheEmptyString);
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/GameSpyMiscPreferences_setCachedStats_Thunk.cpp
-// ?setCachedStats@GameSpyMiscPreferences@@QAEXVAsciiString@@@Z present-unmatched
+// ?setCachedStats@GameSpyMiscPreferences@@QAEXVAsciiString@@@Z
 void GameSpyMiscPreferences::setCachedStats( AsciiString val )
 {
-	setAsciiString("CachedStats", val);
+	((BfmeGameSpyMiscPrefsVtbl *)this)->setPref("CachedStats", val);
 }
 
 __declspec(naked) Bool GameSpyMiscPreferences::getQuickMatchResLocked( void )
