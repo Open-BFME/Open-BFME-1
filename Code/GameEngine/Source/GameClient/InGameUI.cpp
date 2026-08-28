@@ -2873,32 +2873,61 @@ DrawableID InGameUI::getMousedOverDrawableID( void ) const
 //-------------------------------------------------------------------------------------------------
 /// set right-click scroll mode
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUISetScrolling.cpp
-// ?setScrolling@InGameUI@@UAEX_N@Z present-unmatched
+// BFME omits the two TacticalView camera-unlock calls the later Zero Hour source
+// makes here. Only setMouseCursor's null test survives inline; capture and
+// releaseCapture are reached unguarded, which is what pairs the single hoisted
+// load of TheMouse with two of the three calls.
+// BFME m_isScrolling at +0x820, and the Mouse vtable puts setCursor/capture/
+// releaseCapture at slots 14/15/16 rather than where the ZH header lands them.
+struct BfmeInGameUIScrolling {
+	UnsignedByte _pad[0x820];
+	Bool m_isScrolling;
+};
+
+class BfmeMouseVtbl {
+public:
+	virtual void _m0() = 0;
+	virtual void _m1() = 0;
+	virtual void _m2() = 0;
+	virtual void _m3() = 0;
+	virtual void _m4() = 0;
+	virtual void _m5() = 0;
+	virtual void _m6() = 0;
+	virtual void _m7() = 0;
+	virtual void _m8() = 0;
+	virtual void _m9() = 0;
+	virtual void _m10() = 0;
+	virtual void _m11() = 0;
+	virtual void _m12() = 0;
+	virtual void _m13() = 0;
+	virtual void setCursor( Mouse::MouseCursor cursor ) = 0;
+	virtual void capture( void ) = 0;
+	virtual void releaseCapture( void ) = 0;
+};
+
+// ?setScrolling@InGameUI@@UAEX_N@Z
 void InGameUI::setScrolling( Bool isScrolling )
 {
-	if (m_isScrolling == isScrolling)
+	BfmeInGameUIScrolling *self = (BfmeInGameUIScrolling *)this;
+	if (self->m_isScrolling == isScrolling)
 	{
 		return;
 	}
 
 	if (isScrolling)
 	{
-		TheMouse->capture();
-		setMouseCursor( Mouse::SCROLL );
-
-		// break any camera locks
-		TheTacticalView->setCameraLock( INVALID_ID );
-		TheTacticalView->setCameraLockDrawable( NULL );
+		((BfmeMouseVtbl *)TheMouse)->capture();
+		if (TheMouse)
+			((BfmeMouseVtbl *)TheMouse)->setCursor( Mouse::SCROLL );
 	}
 	else
 	{
-		setMouseCursor( Mouse::ARROW );
-		TheMouse->releaseCapture();
+		if (TheMouse)
+			((BfmeMouseVtbl *)TheMouse)->setCursor( Mouse::ARROW );
+		((BfmeMouseVtbl *)TheMouse)->releaseCapture();
 	}
 
-	m_isScrolling = isScrolling;
-
+	self->m_isScrolling = isScrolling;
 }
 
 //-------------------------------------------------------------------------------------------------
