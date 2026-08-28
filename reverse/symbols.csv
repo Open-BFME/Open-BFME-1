@@ -72623,6 +72623,7 @@ name,address,notes
 ?bfmeFindDEB@BfmeThingDEB@@QAEPAUBfmeSubDEB@@XZ,0x00017DF5,pin
 ?bfmeFindDEC@BfmeThingDEC@@QAEPAUBfmeSubDEC@@XZ,0x00017DF5,pin
 ?bfmeFindDGE@@YGPAVBfmeSubDGE@@PAX@Z,0x0004446D,pin
+?bfmeFindDGH@@YGPAVBfmeSubDGH@@PAX@Z,0x00032786,pin
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
 ?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
 ?bfmeFindRecord@FontLibraryBFMERetail@@AAEPAUBfmeFontRecord@@PAVAsciiString@@M@Z,0x000035A3,Open-BFME5 ILT thunk to body 0x00476E20; FontLibraryBFMERetail::getFont at 0x004772D0 calls it on this with the name and size and reads a byte at +8 of what it returns; address-derived name
@@ -73217,6 +73218,7 @@ name,address,notes
 ?bfmeRunDFE@BfmeGlobalDFE@@QAEXHH@Z,0x0003921B,pin
 ?bfmeRunDFF@BfmeGlobalDFF@@QAEXHH@Z,0x0002054F,pin
 ?bfmeRunDGE@BfmeSubDGE@@QAEXPAX@Z,0x00002716,pin
+?bfmeRunDGH@BfmeSubDGH@@QAEXPAX@Z,0x00036F7A,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
