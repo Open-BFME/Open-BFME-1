@@ -6278,16 +6278,49 @@ void ScriptActions::doSkirmishCommandButtonOnMostValuable( const AsciiString& te
 //-------------------------------------------------------------------------------------------------
 /** doTeamSpinForFramecount */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamSpinForFramecount.cpp
-// ?doTeamSpinForFramecount@ScriptActions@@IAEXABVAsciiString@@H@Z present-unmatched
+// The two calls go to two different globals, not one. The team comes from
+// TheScriptEngine; the tail call goes to 0x00EF0888, which GameEngine::init
+// names TheExperienceLevelSystem by pushing that literal immediately before the
+// address. An earlier landing wrote TheScriptEngine for both and survived the
+// byte gate, which masks DIR32 sites -- so the two globals are written apart.
+// The member's own name is not recovered, so it stays address-anchored.
+class ExperienceLevelSystem
+{
+public:
+	void rva00381050(Team *team, Int frames);					///< ILT thunk at 0x00027237
+};
+
+extern ExperienceLevelSystem *TheExperienceLevelSystem;			///< retail [0x00EF0888]
+
+// Retail reaches the team lookup through vtable slot 26; the ZH header lands
+// getTeamNamed at slot 14, so the call comes out [eax+0x38] instead of
+// [eax+0x68]. Slot 26 is the same slot BFMERetailScriptEngineVTable above names
+// getUnitNamed -- the two bodies disagree about which member owns it and neither
+// body settles it, so each keeps the spelling its own evidence supports.
+class BFMERetailScriptEngineGetTeamNamed
+{
+public:
+	virtual void slot0() = 0;   virtual void slot1() = 0;   virtual void slot2() = 0;
+	virtual void slot3() = 0;   virtual void slot4() = 0;   virtual void slot5() = 0;
+	virtual void slot6() = 0;   virtual void slot7() = 0;   virtual void slot8() = 0;
+	virtual void slot9() = 0;   virtual void slot10() = 0;  virtual void slot11() = 0;
+	virtual void slot12() = 0;  virtual void slot13() = 0;  virtual void slot14() = 0;
+	virtual void slot15() = 0;  virtual void slot16() = 0;  virtual void slot17() = 0;
+	virtual void slot18() = 0;  virtual void slot19() = 0;  virtual void slot20() = 0;
+	virtual void slot21() = 0;  virtual void slot22() = 0;  virtual void slot23() = 0;
+	virtual void slot24() = 0;  virtual void slot25() = 0;
+	virtual Team *getTeamNamed(const AsciiString &name) = 0;
+};
+
+// ?doTeamSpinForFramecount@ScriptActions@@IAEXABVAsciiString@@H@Z
 void ScriptActions::doTeamSpinForFramecount( const AsciiString& teamName, Int waitForFrames )
 {
-	Team *team = TheScriptEngine->getTeamNamed(teamName);
+	Team *team = ((BFMERetailScriptEngineGetTeamNamed *)TheScriptEngine)->getTeamNamed(teamName);
 	if (!team) {
 		return;
 	}
 
-	TheScriptEngine->setSequentialTimer(team, waitForFrames);
+	TheExperienceLevelSystem->rva00381050(team, waitForFrames);
 }
 
 //-------------------------------------------------------------------------------------------------
