@@ -72239,6 +72239,7 @@ name,address,notes
 ?bfmeAllocECMb@@YAPAXI@Z,0x00881F30,pin
 ?bfmeAllocEECa@@YGPAXI@Z,0x00019326,pin
 ?bfmeAllocEECb@@YGPAXI@Z,0x0002698B,pin
+?bfmeAllocEFA@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocNode@@YAPAXI@Z,0x0082E540,Open-BFME5 the 16-byte allocator the node makers at 0x0046A070 0x0046B1C0 and 0x00927760 call
 ?bfmeAllocPV@@YAPAXHI@Z,0x00030940,pin
 ?bfmeAllocQA@@YAPAXHI@Z,0x00030940,pin
@@ -72396,6 +72397,7 @@ name,address,notes
 ?bfmeCalcBXG@@YAHHI@Z,0x000222AF,pin
 ?bfmeCalcBXH@@YAHHI@Z,0x000222AF,pin
 ?bfmeCalcEBH@BfmeThingEBH@@QAEMM@Z,0x0001FEEC,pin
+?bfmeCalcEFC@@YGMH@Z,0x0001FEEC,pin
 ?bfmeCallCCH@@YAHPAX0H@Z,0x00009084,pin
 ?bfmeCallCIB@@YAHPAX000@Z,0x007EC5C0,pin
 ?bfmeCallCIC@@YAHPAX000@Z,0x007ECE60,pin
@@ -73018,6 +73020,7 @@ name,address,notes
 ?bfmeGetCurrentVictimIfAttacking@Object@@QBEPAV1@XZ,0x0000B366,Open-BFME5 ILT thunk to body 0x001BE070; Object m_ai at +0x204; AIUpdateInterface isAttacking slot 97 (+0x184) gates the pinned getCurrentVictim call; bfme prefix records unrecovered retail spelling
 ?bfmeGetEBN@BfmeObjEBN@@QAEPAUBfmeSubEBN@@XZ,0x00046538,pin
 ?bfmeGetEHA@BfmeObjEHA@@QAEPAUBfmeSubEHA@@XZ,0x00046538,pin
+?bfmeGetFinalOverride@BfmeSubInnerEFF@@QAEPAXXZ,0x000022BB,pin
 ?bfmeGetHordeMemberCount@Object@@QBEHXZ,0x00030715,Open-BFME5 ILT thunk to body 0x001BFDF0; Object m_contain at +0x1FC asks virtual slot +0x68 for a horde interface then calls its count slot +0x150 with false; bfme prefix records unrecovered retail spelling
 ?bfmeGetID@BfmeDrawableWithID@@QAEIXZ,0x00009B01,Open-BFME5 ILT both drawable lookup-table wrappers at 0x00431C20 and 0x00430B50 read the id through
 ?bfmeGetLastDamagePlayerIndex@Object@@QBEHXZ,0x0000515A,Open-BFME5 ILT thunk to body 0x001BF060; BodyModuleInterface last-damage slot 15 supplies sourcePlayerMask resolved through PlayerList and returned as Player index; bfme prefix records unrecovered retail spelling
@@ -73147,6 +73150,7 @@ name,address,notes
 ?bfmeInitDGF@BfmeThingDGF@@QAEPAV1@PAX@Z,0x007F8730,pin
 ?bfmeInitDGG@BfmeThingDGG@@QAEPAV1@PAX@Z,0x007FA990,pin
 ?bfmeInitSubBWD@BfmeSubBWD@@QAEXXZ,0x0000F0A6,pin
+?bfmeInitSubEFA@@YAXPAX0@Z,0x0000129E,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
 ?bfmeInsertQI@BfmeThingQI@@QAEPADPADE@Z,0x0082FE50,pin
@@ -73157,6 +73161,7 @@ name,address,notes
 ?bfmeIsAlive@BfmeItemAK@@QAE_NXZ,0x00001C03,Open-BFME5 the ICF thunk (to 0x00401C03) the compaction at 0x0018BC70 asks each entry
 ?bfmeIsComputerControlled@Object@@QBE_NXZ,0x00010EA1,Open-BFME5 ILT thunk to body 0x001BE410; three Pathfinder callers use the controlling Player type check for computer pathfinding behavior; bfme prefix records unrecovered retail spelling
 ?bfmeIsGiantBird@Object@@QBEHXZ,0x0000E462,Open-BFME5 ILT thunk to body 0x001BE9D0; Object AI slot 76 is false in the base AIUpdateInterface and true in GiantBirdAIUpdate; AIAttackState uses the promoted result for BFME attack-mode selection
+?bfmeIsReady@BfmeSubEFB@@QAE_NXZ,0x0003D2F8,pin
 ?bfmeIsSet@BfmeGameOverGateA@@QAE_NXZ,0x000330DC,Open-BFME5 ILT the first early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012ED748 is unidentified
 ?bfmeIsSet@BfmeGameOverGateB@@QAE_NXZ,0x0000CFC7,Open-BFME5 ILT the second early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012F076C is unidentified
 ?bfmeIterate@BfmeIterableObject@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x0003DB68,Open-BFME5 ILT the per-object visit in Player::iterateObjects at 0x000CDCF0 calls; it jumps to 0x000EE770
@@ -73365,6 +73370,7 @@ name,address,notes
 ?bfmeReleaseOld@Gen_00359A80@@QAEXXZ,0x0002594B,Open-BFME5 the release of the old block the vector reserve at 0x00359A80 calls after moving
 ?bfmeReleaseOld@Gen_00359B50@@QAEXXZ,0x00015E56,Open-BFME5 the release of the old block the vector reserve at 0x00359B50 calls after moving
 ?bfmeReleaseRef@BfmeTextureS@@QAEXXZ,0x009EB7A0,Open-BFME5 the reference release the destructor at 0x00757830 runs over its elements
+?bfmeRemove@BfmeManagerEntryP@@QAEXPAVBfmeOwnedP@@@Z,0x001BE920,BfmeManagerP bfmeRemove at 0x003854C0 reaches this helper through ILT 0x0000B325; ECX is each +0xA8 list entry and the argument is the owned element
 ?bfmeRemove@BfmeManagerP@@QAEXPAVBfmeOwnedP@@@Z,0x000218B9,Open-BFME5 the ICF thunk (to 0x004218B9) the clear at 0x00371120 calls on its manager per element
 ?bfmeRemove@BfmeSingletonH@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the singleton clear at 0x003C0DB0 calls per element
 ?bfmeReserve@Gen_00095A50@@AAEXHPAX@Z,0x000472DA,Open-BFME5 ILT the vector assignment at 0x00095A50 reserves through
@@ -78517,6 +78523,7 @@ _bfmeFmtStrDZE,0x00C7C7B4,pin
 _bfmeFmtStrDZF,0x00C7C7B4,pin
 _bfmeFmtStrEAA,0x00C7C7B4,pin
 _bfmeFmtStrEAC,0x00C7C7B4,pin
+_bfmeGlobalTable12A6918,0x012A6918,pin
 _bfmeInfoDCE,0x00CEA6A8,pin
 _bfmeInfoDCF,0x00D14768,pin
 _bfmeInfoDCG,0x00D16D70,pin
@@ -79126,4 +79133,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeRemove@BfmeManagerEntryP@@QAEXPAVBfmeOwnedP@@@Z,0x001BE920,BfmeManagerP bfmeRemove at 0x003854C0 reaches this helper through ILT 0x0000B325; ECX is each +0xA8 list entry and the argument is the owned element
