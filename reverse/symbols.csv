@@ -73323,6 +73323,7 @@ name,address,notes
 ?bfmeThreeCED@BfmeThingCED@@QAE_NXZ,0x0004A9D0,pin
 ?bfmeThreeCGF@@YAXPAXPAUBfmeSubCGF@@@Z,0x0000C9B4,pin
 ?bfmeThreeCNG@BfmeBCNG@@QAEXXZ,0x00013A61,pin
+?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
 ?bfmeTryANA@BfmeThingANA@@QAEHPAX0@Z,0x0003381B,pin
 ?bfmeTwoAPA@@YGPAXPAXPAH@Z,0x009F6BEC,pin
 ?bfmeTwoBKE@@YAXPAX@Z,0x00038389,pin
@@ -77322,6 +77323,7 @@ name,address,notes
 ?setMouseText@Mouse@@QAEXVUnicodeString@@PBURGBAColorInt@@1@Z,0x0002FBD0,ILT thunk to body 0x005A5950
 ?setName@BFMETransitionGroup@@QAEXVBFMETransitionAsciiString@@@Z,0x00489B60,retail TransitionGroup::setName
 ?setName@Image@@QAEXVAsciiString@@@Z,0x0003EDBA,thunk to 0x000C2420; the body is byte-identical to three other setName instantiations so the call site is what pins it - the MappedImage parser at 0x000C2480 calls this one
+?setName@Object@@QAEXVAsciiString@@@Z,0x00027BBA,Open-BFME5 Object by-value name setter called by replacement-state transfer at 0x001C5620
 ?setNameAndType@DictPair@Dict@@QAEXW4NameKeyType@@W4DataType@2@@Z,0x00038D02,retail DictPair::setNameAndType body (unclaimed, called by setPrep/remove)
 ?setNewFrame@NetDisconnectScreenOffCommandMsg@@QAEXI@Z,0x0000930E,pinharvest x1 (thunk)
 ?setNewFrame@NetDisconnectScreenOffCommandMsg@@QAEXI@Z,0x00026C33,pinharvest x1 (thunk)
