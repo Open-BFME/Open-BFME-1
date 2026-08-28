@@ -2,6 +2,7 @@
 
 // Open-BFME5: HTreeClass default ctor + dtor
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/htree.h
 class HTreeClass
 {
 public:

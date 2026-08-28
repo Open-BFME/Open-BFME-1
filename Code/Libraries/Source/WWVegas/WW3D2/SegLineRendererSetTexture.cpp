@@ -1,11 +1,13 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureClass
 {
 public:
 	void Release_Ref();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/seglinerenderer.h
 class SegLineRendererClass
 {
 public:

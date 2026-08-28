@@ -28,6 +28,7 @@ typedef char Char;
 typedef int Int;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -92,6 +93,7 @@ protected:
 };
 
 // sizeof 0x2c -- retail's operator new argument on the streaming branch.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StreamingArchiveFile.h
 class StreamingArchiveFile : public RAMFile
 {
 public:
@@ -102,6 +104,7 @@ protected:
 };
 
 // Only slot 2 is proven here: retail's call is call dword ptr [edx+8].
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/LocalFileSystem.h
 class LocalFileSystem
 {
 public:
@@ -112,6 +115,7 @@ public:
 
 extern LocalFileSystem *TheLocalFileSystem;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ArchiveFileSystem.h
 struct ArchivedFileInfo
 {
 	AsciiString m_filename;			// +0x00
@@ -120,6 +124,7 @@ struct ArchivedFileInfo
 	unsigned int m_size;			// +0x0c
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ArchiveFile.h
 class ArchiveFile
 {
 public:
@@ -144,6 +149,7 @@ protected:
 	char m_opaque[0x1c];			// the archived-directory tree, +0x08 through +0x23
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFile.h
 class Win32BIGFile : public ArchiveFile
 {
 public:

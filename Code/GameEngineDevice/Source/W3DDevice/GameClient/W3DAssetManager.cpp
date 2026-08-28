@@ -285,6 +285,7 @@ TextureClass *W3DAssetManager::Get_Texture(
 #endif
 
 //---------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DAssetManager_Create_Render_Obj_scaled.cpp
 // ?Create_Render_Obj@W3DAssetManager@@ present-unmatched
 RenderObjClass * W3DAssetManager::Create_Render_Obj(const char* name)
 {
@@ -410,6 +411,7 @@ TextureClass * W3DAssetManager::Find_Texture(const char * name, const int color)
 }
 
 //---------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Recolor_Texture.cpp
 // ?Recolor_Texture@W3DAssetManager@@ present-unmatched
 TextureClass * W3DAssetManager::Recolor_Texture(TextureClass *texture, const int color)
 {
@@ -737,6 +739,7 @@ __int64 Total_Create_Render_Obj_Time=0;
 /** Generals specific code to generate customized render objects for each team color
 	Scale==1.0, color==0x00000000, and oldTexure==NULL are defaults that do nothing.
 */
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DAssetManager_Create_Render_Obj_scaled.cpp
 // ?Create_Render_Obj@W3DAssetManager@@ present-unmatched
 RenderObjClass * W3DAssetManager::Create_Render_Obj(
 	const char * name,
@@ -939,6 +942,7 @@ int W3DAssetManager::Recolor_Asset(RenderObjClass *robj, const int color)
 //---------------------------------------------------------------------
 /** Generals specific code to generate customized render objects for each team color
 */
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Recolor_Mesh.cpp
 // ?Recolor_Mesh@W3DAssetManager@@ present-unmatched
 int W3DAssetManager::Recolor_Mesh(RenderObjClass *robj, const int color)
 {
@@ -1482,6 +1486,7 @@ static inline void Munge_Texture_Name(char *newname, const char *oldname, const 
 	sprintf(newname,"#%s!H%gS%gV%g", lower_case_name, hsv_shift.X, hsv_shift.Y, hsv_shift.Z);
 }
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DAssetManager_Create_Render_Obj_scaled.cpp
 // ?Create_Render_Obj@W3DAssetManager@@ present-unmatched
 RenderObjClass * W3DAssetManager::Create_Render_Obj(const char * name,float scale, const Vector3 &hsv_shift)
 {
@@ -1672,6 +1677,7 @@ void W3DAssetManager::Recolor_Vertices(unsigned int *color, int count, const Vec
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Recolor_Texture.cpp
 // ?Recolor_Texture@W3DAssetManager@@ present-unmatched
 TextureClass * W3DAssetManager::Recolor_Texture(TextureClass *texture, const Vector3 &hsv_shift)
 {
@@ -1750,6 +1756,7 @@ TextureClass * W3DAssetManager::Find_Texture(const char * name, const Vector3 &h
 	return newtex;
 }
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Recolor_Mesh.cpp
 // ?Recolor_Mesh@W3DAssetManager@@ present-unmatched
 void W3DAssetManager::Recolor_Mesh(RenderObjClass *robj, const Vector3 &hsv_shift)
 {

@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
+// readable body of ?renderBibs@W3DBibBuffer@@QAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBibBuffer.cpp
 
 class IndexBufferClass;
 class ShaderClass;
 class TextureBaseClass;
 class VertexBufferClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:
@@ -17,6 +19,7 @@ public:
 void __cdecl BoxSetTexture(unsigned stage, TextureBaseClass *&texture);
 extern ShaderClass detailAlphaShader;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBibBuffer.h
 class W3DBibBuffer
 {
 public:

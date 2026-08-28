@@ -35,6 +35,7 @@
 class DisplayString;
 class GameFont;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayStringManager.h
 class DisplayStringManager
 {
 public:
@@ -54,12 +55,14 @@ public:
 
 extern DisplayStringManager *TheDisplayStringManager;				///< retail 0x012F12CC
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DebugDisplay.h
 class DebugDisplayInterface
 {
 public:
 	virtual ~DebugDisplayInterface() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DebugDisplay.h
 class DebugDisplay : public DebugDisplayInterface
 {
 public:
@@ -75,6 +78,7 @@ protected:
 	int m_leftMargin;					///< +0x1C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDebugDisplay.h
 class W3DDebugDisplay : public DebugDisplay
 {
 public:

@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ProductionPrerequisite.h
 class ProductionPrerequisite
 {
 private:

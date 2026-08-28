@@ -6,10 +6,12 @@
 // isolated translation unit (mirroring the other *_Thunk.cpp files in this directory) so
 // the extra member doesn't touch the shared aabtreecull.h used by already-matched rows.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/cullsys.h
 class CullSystemClass
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/cullsys.h
 class CullLinkClass
 {
 public:
@@ -20,6 +22,7 @@ protected:
 	CullSystemClass * System;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabtreecull.h
 class AABTreeCullSystemClass : public CullSystemClass
 {
 };
@@ -27,6 +30,7 @@ class AABTreeCullSystemClass : public CullSystemClass
 class AABTreeNodeClass;
 class CullableClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabtreecull.h
 class AABTreeLinkClass : public CullLinkClass
 {
 public:

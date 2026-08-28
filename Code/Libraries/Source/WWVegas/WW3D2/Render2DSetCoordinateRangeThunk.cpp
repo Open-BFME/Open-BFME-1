@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?Set_Coordinate_Range@Render2DClass@@QAEXABVRectClass@@@Z: Code/Libraries/Source/WWVegas/WW3D2/render2d.cpp
 // Open-BFME5: Render2DClass::Set_Coordinate_Range, retail 0x00933A50,
 // converted out of a machine byte dump.
 //
@@ -35,6 +36,7 @@ public:
 	Real Y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/rect.h
 class RectClass
 {
 public:
@@ -59,6 +61,7 @@ public:
 
 extern ScreenResolution TheScreenResolution;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
 public:
@@ -68,6 +71,7 @@ private:
 	static bool IsScreenUVBiased;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h
 class Render2DClass
 {
 public:

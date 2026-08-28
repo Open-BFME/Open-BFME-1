@@ -3,6 +3,7 @@
 // Win32Mouse::init, retail 0x006BC0A0. The base's init and then one flag at
 // +0x4DA0 - a long way into a class whose front this file says nothing about.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/GameClient/Win32Mouse.h
 class Win32Mouse
 {
 public:

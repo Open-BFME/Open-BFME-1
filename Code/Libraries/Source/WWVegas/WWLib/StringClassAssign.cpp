@@ -16,6 +16,7 @@ extern "C" void *__cdecl memcpy(void *dest, const void *src, unsigned int count)
 
 typedef char TCHAR;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
 class StringClass
 {
 public:

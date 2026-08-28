@@ -1,11 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?freeDisplayString@W3DDisplayStringManager@@UAEXPAVDisplayString@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringManager.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayString.h
 class DisplayString
 {
 public:
 	virtual ~DisplayString();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayStringManager.h
 class DisplayStringManager
 {
 public:
@@ -19,6 +22,7 @@ protected:
 	DisplayString *m_currentCheckpoint;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplayStringManager.h
 class W3DDisplayStringManager : public DisplayStringManager
 {
 public:

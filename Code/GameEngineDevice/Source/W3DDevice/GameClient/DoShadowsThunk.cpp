@@ -16,6 +16,7 @@ public:
 	Vector3 Get_Position() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/camera.h
 class CameraClass : public RenderObjClass
 {
 public:
@@ -30,12 +31,14 @@ protected:
 	void Update_Frustum() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/rinfo.h
 class RenderInfoClass
 {
 public:
 	CameraClass &Camera;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShadow.h
 class W3DShadowManager
 {
 public:
@@ -46,12 +49,14 @@ private:
 	bool m_isShadowScene;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DProjectedShadow.h
 class W3DProjectedShadowManager
 {
 public:
 	int renderShadows(RenderInfoClass &);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DVolumetricShadow.h
 class W3DVolumetricShadowManager
 {
 public:

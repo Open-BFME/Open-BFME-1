@@ -16,6 +16,7 @@ class ModuleData;
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DPropDraw.h
 class W3DPropDraw
 {
 public:

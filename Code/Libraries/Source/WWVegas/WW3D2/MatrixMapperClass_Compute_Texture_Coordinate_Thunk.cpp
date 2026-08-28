@@ -2,6 +2,7 @@
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Vector3;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/matrixmapper.h
 class MatrixMapperClass
 {
 public:

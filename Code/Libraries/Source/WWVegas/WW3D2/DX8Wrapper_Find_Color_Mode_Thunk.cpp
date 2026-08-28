@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Find_Color_Mode@DX8Wrapper@@: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 // Open-BFME5: lift the retail display-mode search to standalone C++.
 #include <string.h>
 
@@ -28,6 +29,7 @@ public:
 	IDirect3D8Vtbl *lpVtbl;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 protected:

@@ -34,6 +34,7 @@
 #pragma warning ( pop )
 
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/ThreadClassCtorThunk.cpp
 // ??0ThreadClass@@ present-unmatched
 ThreadClass::ThreadClass(const char *thread_name, ExceptionHandlerType exception_handler) : handle(0), running(false), thread_priority(0)
 {
@@ -96,6 +97,7 @@ void ThreadClass::Execute()
 	#endif
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/ThreadClassSetPriorityMethodThunk.cpp
 // ?Set_Priority@ThreadClass@@ present-unmatched
 void ThreadClass::Set_Priority(int priority)
 {
@@ -162,6 +164,7 @@ unsigned ThreadClass::_Get_Current_Thread_ID()
 	#endif
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/native_network.cpp
 // ?Is_Running@ThreadClass@@ present-unmatched
 bool ThreadClass::Is_Running()
 {

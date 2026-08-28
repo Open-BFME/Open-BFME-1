@@ -11,6 +11,7 @@
 // alike; the unwind slot is what separates them, standing at 0 while the member
 // is still alive and dropping to -1 for its destruction.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:

@@ -12,6 +12,7 @@
 // own code, and its deleting stub at 0x009581E0 is slot 0 of that. So the table
 // twelve bytes below belongs to the class it derives from, which static_sort_list.h
 // names StaticSortListClass.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/static_sort_list.h
 class StaticSortListClass
 {
 public:

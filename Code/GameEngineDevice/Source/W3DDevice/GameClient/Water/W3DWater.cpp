@@ -646,6 +646,7 @@ HRESULT WaterRenderObjClass::initBumpMap(LPDIRECT3DTEXTURE8 *pTex, TextureClass 
 //-------------------------------------------------------------------------------------------------
 /** Create and fill a D3D index buffer with water surface strip indices */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/WaterRenderObjClass_generateIndexBuffer_Thunk.cpp
 // ?generateIndexBuffer@WaterRenderObjClass@@IAEJHH@Z present-unmatched
 HRESULT WaterRenderObjClass::generateIndexBuffer(Int sizeX, Int sizeY)
 {
@@ -998,6 +999,7 @@ void WaterRenderObjClass::reset( void )
 		m_waterTrackSystem->reset();
 } 
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/UpdateInitializationThunks.cpp
 // ?enableWaterGrid@WaterRenderObjClass@@QAEX_N@Z present-unmatched
 void WaterRenderObjClass::enableWaterGrid(Bool state)
 {
@@ -1471,23 +1473,31 @@ void WaterRenderObjClass::Render(RenderInfoClass & rinfo)
 				DX8Wrapper::Set_DX8_Texture_Stage_State(1, D3DTSS_MAGFILTER, D3DTEXF_POINT);
 
 				// Pass stage 0 texture data untouched(by modulating with white)
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ExactStaticThunks.cpp
 // ?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z present-unmatched
 				DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_COLORARG1, D3DTA_TEXTURE );	//stage 1 texture
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ExactStaticThunks.cpp
 // ?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z present-unmatched
 				DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_COLORARG2, D3DTA_CURRENT );	//previous stage texture
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ExactStaticThunks.cpp
 // ?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z present-unmatched
 				DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_COLOROP,   D3DTOP_MODULATE );	//module with white => does nothing
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ExactStaticThunks.cpp
 // ?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z present-unmatched
 				DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_ALPHAARG1, D3DTA_TEXTURE );	//stage 1 texture
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ExactStaticThunks.cpp
 // ?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z present-unmatched
 				DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_ALPHAARG2, D3DTA_CURRENT );	//previous stage texture
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ExactStaticThunks.cpp
 // ?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z present-unmatched
 				DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_ALPHAOP,   D3DTOP_MODULATE );	//modulate with clipping texture
 
 				DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHAREF,0x00);
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 				DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHAFUNC,D3DCMP_NOTEQUAL);	//pass pixels who's alpha is not zero
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 				DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHATESTENABLE, true);	//test pixels if transparent(clipped) before rendering.
 
@@ -1542,10 +1552,12 @@ void WaterRenderObjClass::Render(RenderInfoClass & rinfo)
 
 				//disable texture coordinate generation
 				DX8Wrapper::Set_DX8_Texture_Stage_State(1, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 				DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHATESTENABLE, false);	//disable alpha testing
 			#endif
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/shader.cpp
 // ?Invert_Backface_Culling@ShaderClass@@ present-unmatched
 				ShaderClass::Invert_Backface_Culling(false);	//return culling back to normal
 
@@ -1642,6 +1654,7 @@ void WaterRenderObjClass::drawSea(RenderInfoClass & rinfo)
 
 	Matrix3D tm(Transform);
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
 // ?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix3D@@@Z present-unmatched
 	DX8Wrapper::Set_Transform(D3DTS_WORLD,tm);	//position the water surface
 // ?Set_Texture@DX8Wrapper@@SAXIPAVTextureBaseClass@@@Z present-unmatched
@@ -2223,6 +2236,7 @@ void WaterRenderObjClass::renderWaterMesh(void)
 
 	Matrix3D tm(Transform);
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
 // ?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix3D@@@Z present-unmatched
 	DX8Wrapper::Set_Transform(D3DTS_WORLD,tm);	//position the water surface
 	DX8Wrapper::Set_Material(m_meshVertexMaterialClass);
@@ -2247,6 +2261,7 @@ void WaterRenderObjClass::renderWaterMesh(void)
 	DX8Wrapper::Set_Light(2,NULL);
 	DX8Wrapper::Set_Light(3,NULL);
 /*
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_AMBIENT,0);	//turn off scene ambient
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_SPECULARENABLE,TRUE);
@@ -2272,8 +2287,10 @@ void WaterRenderObjClass::renderWaterMesh(void)
 		W3DShaderManager::setShader(W3DShaderManager::ST_SHROUD_TEXTURE, 1);
 
 		//modulate with shroud texture
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ExactStaticThunks.cpp
 // ?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z present-unmatched
 		DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_COLORARG1, D3DTA_TEXTURE );	//stage 1 texture
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ExactStaticThunks.cpp
 // ?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z present-unmatched
 		DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_COLORARG2, D3DTA_CURRENT );	//previous stage texture
 		DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_COLOROP,   D3DTOP_MODULATE );
@@ -2750,6 +2767,7 @@ void WaterRenderObjClass::drawRiverWater(PolygonTrigger *pTrig)
 
 	Matrix3D tm(1);
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
 // ?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix3D@@@Z present-unmatched
 	DX8Wrapper::Set_Transform(D3DTS_WORLD,tm);	//position the water surface
 	DX8Wrapper::Set_Index_Buffer(ib_access,0);
@@ -3132,6 +3150,7 @@ void WaterRenderObjClass::drawTrapezoidWater(Vector3 points[4])
 
 	Matrix3D tm(1);
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
 // ?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix3D@@@Z present-unmatched
 	DX8Wrapper::Set_Transform(D3DTS_WORLD,tm);	//position the water surface
 	DX8Wrapper::Set_Index_Buffer(ib_access,0);

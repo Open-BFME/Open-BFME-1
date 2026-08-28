@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?freeTerrainBuffers@W3DTerrainBackground@@IAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackground.cpp
 // Open-BFME: W3DTerrainBackground::freeTerrainBuffers, retail 0x007286F0,
 // 97 bytes.
 //
@@ -12,6 +13,7 @@
 // take the virtual slot 0 -- Delete_This, called with no argument, not a
 // deleting destructor.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -32,6 +34,7 @@ private:
 // too, which is what puts each store ahead of the next block's load.
 #define REF_PTR_RELEASE(x)	{ if (x) { x->Release_Ref(); x = 0; } }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainBackground.h
 class W3DTerrainBackground
 {
 protected:

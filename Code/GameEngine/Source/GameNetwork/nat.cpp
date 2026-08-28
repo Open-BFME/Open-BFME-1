@@ -191,6 +191,7 @@ NAT::~NAT() {
 // if we are negotiating still, call the connection update
 // check to see if this connection is done for us, or if it has failed.
 enum { MS_TO_WAIT_FOR_STATS = 5000 };
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NATUpdateThunk.cpp
 // ?update@NAT@@ present-unmatched
 NATStateType NAT::update() {
 	static UnsignedInt s_startStatWaitTime = 0;
@@ -303,6 +304,7 @@ NATStateType NAT::update() {
 // MANGLER:
 // if we are talking to the mangler, check to see if we got a response
 // if we didn't get a response, check to see if its time to send another packet to it
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NATConnectionUpdateThunk.cpp
 // ?connectionUpdate@NAT@@IAE?AW4NATConnectionState@@XZ present-unmatched
 NATConnectionState NAT::connectionUpdate() {
 
@@ -665,6 +667,7 @@ Transport * NAT::getTransport() {
 // figure out which port I'll be using.
 // send the port number to our target for this round.
 // init the m_connectionStates for all players.
+// byte-exact reconstruction: Code/GameEngine/Source/Common/NAT_doThisConnectionRoundMethodThunk.cpp
 // ?doThisConnectionRound@NAT@@IAEXXZ present-unmatched
 void NAT::doThisConnectionRound() {
 	DEBUG_LOG(("NAT::doThisConnectionRound - starting process for connection round %d\n", m_connectionRound));
@@ -1074,6 +1077,7 @@ void NAT::probed(Int nodeNumber) {
 // has: when m_connectionStates[m_localNodeNumber] is
 // NATCONNECTIONSTATE_WAITINGFORMANGLERRESPONSE it skips the whole probe section.
 // Landing it needs NAT+0xC4 named first.
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NAT_gotMangledPort_Thunk.cpp
 // ?gotMangledPort@NAT@@IAEXHG@Z present-unmatched
 void NAT::gotMangledPort(Int nodeNumber, UnsignedShort mangledPort) {
 
@@ -1190,6 +1194,7 @@ void NAT::notifyTargetOfProbe(GameSlot *targetSlot) {
 }
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/NAT_notifyUsersOfConnectionDoneMethodThunk.cpp
 // ?notifyUsersOfConnectionDone@NAT@@IAEXH@Z present-unmatched
 void NAT::notifyUsersOfConnectionDone(Int nodeIndex) {
 	GameSlot *localSlot = m_slotList[m_connectionNodes[m_localNodeNumber].m_slotIndex];
@@ -1293,6 +1298,7 @@ void NAT::notifyUsersOfConnectionFailed(Int nodeIndex) {
 	TheGameSpyPeerMessageQueue->addRequest(req);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NATSendMangledPortNumberToTargetThunk.cpp
 // ?sendMangledPortNumberToTarget@NAT@@IAEXGPAVGameSlot@@@Z present-unmatched
 void NAT::sendMangledPortNumberToTarget(UnsignedShort mangledPort, GameSlot *targetSlot) {
 	PeerRequest req;
@@ -1310,6 +1316,7 @@ void NAT::sendMangledPortNumberToTarget(UnsignedShort mangledPort, GameSlot *tar
 	TheGameSpyPeerMessageQueue->addRequest(req);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/NAT_processGlobalMessage_Thunk.cpp
 // ?processGlobalMessage@NAT@@QAEXHPBD@Z present-unmatched
 void NAT::processGlobalMessage(Int slotNum, const char *options) {
 	const char *ptr = options;

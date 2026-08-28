@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Invalidate@DX8MeshRendererClass@@QAEX_N@Z: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h
 class DX8MeshRendererClass
 {
 public:

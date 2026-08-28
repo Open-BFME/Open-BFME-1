@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
+// readable body of ??0TexBufferClass@@: Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp
 
 #include <string.h>
 
@@ -15,6 +16,7 @@ protected:
 	int Count;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.h
 class TexBufferClass : public ShareBufferClassBase
 {
 public:

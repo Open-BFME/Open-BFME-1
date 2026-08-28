@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 // Open-BFME5: no-SEH MapObject deque _M_create_nodes (0x78-byte nodes).
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MapObject.h
 class MapObject
 {
 };

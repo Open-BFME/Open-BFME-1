@@ -25,6 +25,7 @@
 // VectorClass's layout is ZH's: the retail bytes read Vector at +0x04,
 // VectorMax at +0x08 and IsAllocated at +0x0d.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
 class StringClass
 {
 public:
@@ -39,6 +40,7 @@ public:
 	float Row[3][4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/proxy.h
 class ProxyClass
 {
 public:

@@ -23,6 +23,7 @@ typedef int Int;
 class GameWindow;
 class WindowVideo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowVideoManager.h
 class WindowVideoManager
 {
 public:

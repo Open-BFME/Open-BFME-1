@@ -1,3 +1,4 @@
+// readable body of ?Build_Sentence_Not_Centered@Render2DSentenceClass@@AAE?AVVector2@@PBGPAH1_N@Z: Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.cpp
 // Exact retail bytes for Render2DSentenceClass::Build_Sentence_Not_Centered at 0x00942430.
 // Kept separate so render2dsentence.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_Render2DSentence_BuildNotCentered_942430()

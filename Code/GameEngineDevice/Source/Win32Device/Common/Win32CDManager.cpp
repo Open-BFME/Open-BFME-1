@@ -181,6 +181,7 @@ Win32CDManager::~Win32CDManager()
 // ?init@Win32CDManager@@UAEXXZ present-unmatched
 void Win32CDManager::init( void )
 {
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/CDManager.cpp
 // ?init@CDManager@@ present-unmatched
 	CDManager::init();	// init base classes
 

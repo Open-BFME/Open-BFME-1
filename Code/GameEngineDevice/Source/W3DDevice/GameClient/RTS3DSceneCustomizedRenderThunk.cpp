@@ -3,6 +3,7 @@
 
 class RenderInfoClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
 class RTS3DScene
 {
 public:

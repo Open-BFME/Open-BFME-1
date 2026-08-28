@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0W3DAnimationInfo@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp
 
 // W3DAnimationInfo's copy constructor, retail 0x00783D90.
 //
@@ -25,6 +26,7 @@ struct BfmeW3DAnimationInfoEntry
 	unsigned int m_04;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 class W3DAnimationInfo
 {
 public:

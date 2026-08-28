@@ -82,6 +82,7 @@ SimplePersistFactoryClass<TwiddlerClass, CHUNKID_TWIDDLER>						_TwiddlerPersist
 //	TwiddlerClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/TwiddlerClass_ctor.cpp
 // ??0TwiddlerClass@@ present-unmatched
 TwiddlerClass::TwiddlerClass (void)
 	:	m_IndirectClassID (0)

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?freeListOfMapObjects@WorldHeightMap@@SAXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp
 
 // Open-BFME5: WorldHeightMap::freeListOfMapObjects, retail 0x00746E90, 38
 // bytes. The body carried only a machine byte-dump row;
@@ -34,6 +35,7 @@ public:
 extern BfmeMapObjectListHolder *BfmeTheMapObjectListHolder;	// 0x012ED5DC
 extern BfmeMapObjectExtra BfmeTheMapObjectExtra;		// 0x012ED5E0
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/WorldHeightMap.h
 class WorldHeightMap
 {
 public:

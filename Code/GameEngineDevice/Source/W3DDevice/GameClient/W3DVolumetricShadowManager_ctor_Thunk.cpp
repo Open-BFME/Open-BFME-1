@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0W3DVolumetricShadowManager@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp
 
 class W3DShadowGeometryManager { char m_storage[8]; public: W3DShadowGeometryManager(); };
 class W3DBufferManager { char m_storage[0x4265c]; public: W3DBufferManager(); };
@@ -9,6 +10,7 @@ extern ShadowPool ShadowPoolB;
 extern int ShadowPoolALimit;
 extern int ShadowPoolBLimit;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DVolumetricShadow.h
 class W3DVolumetricShadowManager {
 	void *m_shadowList;
 	void *m_dynamicShadowVolumesToRender;

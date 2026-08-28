@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Make_Unique@VertexMaterialClass@@QAEXXZ: Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
 
 // VertexMaterialClass::Make_Unique (packet 00920ed0) is a two-field write
 // (UniqueID at real offset 0x60, CRCDirty at real offset 0x68) against a
@@ -12,6 +13,7 @@
 //
 // Real field offsets: UniqueID=0x60, CRC=0x64, CRCDirty=0x68, UseLighting=0x69.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.h
 class VertexMaterialClass
 {
 public:

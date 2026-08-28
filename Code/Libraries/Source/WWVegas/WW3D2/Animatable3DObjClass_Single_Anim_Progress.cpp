@@ -20,6 +20,7 @@ enum
 
 extern int WW3DSyncTime;					// 0x0133F420
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/animobj.h
 class Animatable3DObjClass
 {
 protected:

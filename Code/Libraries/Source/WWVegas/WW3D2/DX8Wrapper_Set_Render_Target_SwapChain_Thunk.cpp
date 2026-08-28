@@ -33,6 +33,7 @@ public:
 	IDirect3DSwapChain8Vtbl *lpVtbl;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:

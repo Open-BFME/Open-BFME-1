@@ -17,6 +17,7 @@ struct TriIndex
 	const uint16 &operator[](int position) const { return index[position]; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/tri.h
 class TriClass
 {
 public:
@@ -27,6 +28,7 @@ public:
 
 class AABoxCollisionTestData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/inttest.h
 class OBBoxIntersectionTestClass
 {
 public:
@@ -50,6 +52,7 @@ public:
 	T *data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshgeometry.h
 class MeshGeometryClass
 {
 private:
@@ -59,6 +62,7 @@ public:
 	VectorStorage<Vector3> *vertices;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/aabtree.h
 class AABTreeClass
 {
 private:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Set_Gamma@DX8Wrapper@@: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 // Open-BFME5: lift the retail DX8Wrapper::Set_Gamma MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_DX8WrapperSetGamma_905750()

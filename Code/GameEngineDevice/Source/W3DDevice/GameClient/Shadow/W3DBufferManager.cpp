@@ -85,6 +85,7 @@ W3DBufferManager::~W3DBufferManager(void)
 	freeAllBuffers();
 }
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager_Slots.cpp
 // ?freeAllSlots@W3DBufferManager@@ present-unmatched
 void W3DBufferManager::freeAllSlots(void)
 {
@@ -235,6 +236,7 @@ Bool W3DBufferManager::ReAcquireResources(void)
    creates a new slot and adds it to the pool.  Returns an integer slotId used to reference the VB.
    Returns -1 in case of failure.
 */
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager_Slots.cpp
 // ?getSlot@W3DBufferManager@@ present-unmatched
 W3DBufferManager::W3DVertexBufferSlot *W3DBufferManager::getSlot(VBM_FVF_TYPES fvfType, Int size)
 {
@@ -263,6 +265,7 @@ W3DBufferManager::W3DVertexBufferSlot *W3DBufferManager::getSlot(VBM_FVF_TYPES f
 }
 
 /**Returns vertex buffer space back to pool so it can be reused later*/
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager_Slots.cpp
 // ?releaseSlot@W3DBufferManager@@ present-unmatched
 void W3DBufferManager::releaseSlot(W3DVertexBufferSlot *vbSlot)
 {
@@ -277,6 +280,7 @@ void W3DBufferManager::releaseSlot(W3DVertexBufferSlot *vbSlot)
 
 /**Reserves space inside existing vertex buffer or allocates a new one to fit the required size.
 */
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager_Slots.cpp
 // ?allocateSlotStorage@W3DBufferManager@@ present-unmatched
 W3DBufferManager::W3DVertexBufferSlot * W3DBufferManager::allocateSlotStorage(VBM_FVF_TYPES fvfType, Int size)
 {
@@ -352,6 +356,7 @@ W3DBufferManager::W3DVertexBufferSlot * W3DBufferManager::allocateSlotStorage(VB
    creates a new slot and adds it to the pool.  Returns an integer slotId used to reference the VB.
    Returns -1 in case of failure.
 */
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager_Slots.cpp
 // ?getSlot@W3DBufferManager@@ present-unmatched
 W3DBufferManager::W3DIndexBufferSlot *W3DBufferManager::getSlot(Int size)
 {
@@ -380,6 +385,7 @@ W3DBufferManager::W3DIndexBufferSlot *W3DBufferManager::getSlot(Int size)
 }
 
 /**Returns index buffer space back to pool so it can be reused later*/
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager_Slots.cpp
 // ?releaseSlot@W3DBufferManager@@ present-unmatched
 void W3DBufferManager::releaseSlot(W3DIndexBufferSlot *ibSlot)
 {
@@ -394,6 +400,7 @@ void W3DBufferManager::releaseSlot(W3DIndexBufferSlot *ibSlot)
 
 /**Reserves space inside existing index buffer or allocates a new one to fit the required size.
 */
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager_Slots.cpp
 // ?allocateSlotStorage@W3DBufferManager@@ present-unmatched
 W3DBufferManager::W3DIndexBufferSlot * W3DBufferManager::allocateSlotStorage(Int size)
 {

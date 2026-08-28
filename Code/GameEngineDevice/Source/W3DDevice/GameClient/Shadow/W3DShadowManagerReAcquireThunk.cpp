@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?ReAcquireResources@W3DShadowManager@@QAE_NXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DShadow.cpp
 // Open-BFME5: W3DShadowManager::ReAcquireResources, retail 0x007B7620,
 // converted out of a machine byte dump.
 //
@@ -47,6 +48,7 @@ extern Gen_01306F18 *g_01306F18;
 extern Gen_01307178 *g_01307178;
 extern Gen_01306DF0 *g_01306DF0;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShadow.h
 class W3DShadowManager
 {
 public:

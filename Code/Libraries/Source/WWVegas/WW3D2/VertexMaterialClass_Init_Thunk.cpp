@@ -29,6 +29,7 @@
 // Init actually touches are named, everything else is opaque padding, and
 // the real (unmodified) constructor/Presets array are pulled in by mangled
 // name so this stays a single definition of each, not a duplicate.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.h
 class VertexMaterialClass
 {
 public:

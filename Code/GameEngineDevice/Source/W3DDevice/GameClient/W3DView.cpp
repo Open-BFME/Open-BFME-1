@@ -222,6 +222,7 @@ void W3DView::setHeight(Int height)
 //-------------------------------------------------------------------------------------------------
 /** Sets the width of the viewport, while maintaining original camera perspective. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewSetWidthBfmeLayout.cpp
 // ?setWidth@W3DView@@ present-unmatched
 void W3DView::setWidth(Int width)
 {
@@ -666,6 +667,7 @@ void W3DView::setCameraTransform( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DView_initMethodThunk.cpp
 // ?init@W3DView@@ present-unmatched
 void W3DView::init( void )
 {
@@ -3431,6 +3433,7 @@ void W3DView::cameraDisableRealZoomMode(void) //WST added 10/18/2002
 	updateView();
 }
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DView_AddCameraShakeThunk.cpp
 // ?Add_Camera_Shake@W3DView@@ present-unmatched
 void W3DView::Add_Camera_Shake (const Coord3D & position,float radius,float duration,float power) //WST added 11/13/02
 {

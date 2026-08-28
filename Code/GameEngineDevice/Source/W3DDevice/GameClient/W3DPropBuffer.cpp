@@ -124,6 +124,7 @@ W3DPropBuffer::~W3DPropBuffer(void)
 /** Constructor. Sets m_initialized to true if it finds the w3d models it needs
 for the props. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBuffer_ctor_Thunk.cpp
 // ??0W3DPropBuffer@@QAE@XZ present-unmatched
 W3DPropBuffer::W3DPropBuffer(void)
 {

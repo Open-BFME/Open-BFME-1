@@ -6,6 +6,7 @@ typedef void *HPROENUM;
 extern "C" __declspec(dllimport) S32 __stdcall AIL_enumerate_filters(
 	HPROENUM *next, HPROVIDER *provider, char **name);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/MilesAudioDevice/MilesAudioManager.h
 class MilesAudioManager
 {
 private:

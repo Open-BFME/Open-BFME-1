@@ -4,6 +4,7 @@
 // inc-word-at-+4; Release_Ref is TextureBaseClass::Release_Ref at 0x009EB7A0.
 // No self-assign guard.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:

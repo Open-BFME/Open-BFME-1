@@ -1,7 +1,9 @@
+// readable body of ?setOrientation@Thing@@QAEXM@Z: Code/GameEngine/Source/Common/Thing/Thing.cpp
 class Matrix3D
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:

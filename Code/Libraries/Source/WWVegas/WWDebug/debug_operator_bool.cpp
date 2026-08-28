@@ -2,6 +2,7 @@
 
 // Open-BFME5: Debug::operator<<(bool). const char* stream at vtable +0x38.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
 class Debug
 {
 public:

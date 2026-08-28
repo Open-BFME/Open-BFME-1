@@ -55,6 +55,7 @@ W3DPropDrawModuleData::W3DPropDrawModuleData()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DPropDrawModuleDataDestructorThunk.cpp
 // ??1W3DPropDrawModuleData@@ present-unmatched
 W3DPropDrawModuleData::~W3DPropDrawModuleData()
 {
@@ -80,6 +81,7 @@ void W3DPropDrawModuleData::buildFieldParse(MultiIniFieldParse& p)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DPropDrawConstructor.cpp
 // ??0W3DPropDraw@@ present-unmatched
 W3DPropDraw::W3DPropDraw( Thing *thing, const ModuleData* moduleData ) : DrawModule( thing, moduleData ),
 m_propAdded(false)

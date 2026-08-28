@@ -309,6 +309,7 @@ void LightEnvironmentClass::Add_Light(const LightClass & light)
 	}
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/LightEnvironmentClass_Pre_Render_Update_Thunk.cpp
 // ?Pre_Render_Update@LightEnvironmentClass@@QAEXABVMatrix3D@@@Z present-unmatched
 void LightEnvironmentClass::Pre_Render_Update(const Matrix3D & camera_tm)
 {

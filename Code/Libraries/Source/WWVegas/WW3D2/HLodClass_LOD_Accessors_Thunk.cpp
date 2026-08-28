@@ -13,6 +13,7 @@
 // declarations call for. These are distinct names rather than an overload group,
 // so the vtable keeps declaration order -- unlike the Collect_Objects and Scale
 // overload sets, which appear reversed.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hlod.h
 class HLodClass
 {
 public:

@@ -29,6 +29,7 @@ typedef int Int;
 // so the literal only has to be a float.
 #define MAP_XY_FACTOR 10.0f
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 class Coord3D
 {
 public:
@@ -38,6 +39,7 @@ public:
 };
 
 // A struct, not a class: the mangled name spells it PAURegion3D@@.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Region3D
 {
 	Coord3D lo;
@@ -64,6 +66,7 @@ private:
 
 extern BfmeTerrainRenderObject *TheTerrainRenderObject;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameLogic/W3DTerrainLogic.h
 class W3DTerrainLogic
 {
 public:

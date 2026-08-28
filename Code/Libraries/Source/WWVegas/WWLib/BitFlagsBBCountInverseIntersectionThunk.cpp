@@ -1,4 +1,7 @@
+// readable body of ?draw@Drawable@@QAEXPAVView@@@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
+// readable body of ?freeBlock@MemoryPool@@: Code/GameEngine/Source/Common/System/GameMemory.cpp
 template <int Bits>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getUVForNdx@WorldHeightMap@@IAEXHPAM000_N@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp
 // Open-BFME: WorldHeightMap::getUVForNdx, retail 0x00747490, 248 bytes.
 //
 // The reference's body unchanged, with EVAL_TILING_MODES off. What the bytes
@@ -28,12 +29,14 @@ enum { NUM_SOURCE_TILES = 1024 };
 #define TILE_PIXEL_EXTENT 64
 #define TEXTURE_WIDTH 2048
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
 	Int y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/TileData.h
 class TileData
 {
 public:
@@ -41,6 +44,7 @@ public:
 	ICoord2D m_tileLocationInTexture;			// +0x555C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/WorldHeightMap.h
 class WorldHeightMap
 {
 protected:

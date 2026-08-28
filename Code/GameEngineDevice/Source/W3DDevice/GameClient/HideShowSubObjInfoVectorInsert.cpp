@@ -10,9 +10,11 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 class ModelConditionInfo
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 	struct HideShowSubObjInfo
 	{
 		HideShowSubObjInfo(const HideShowSubObjInfo &other);

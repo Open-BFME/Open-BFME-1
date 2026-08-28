@@ -1,3 +1,4 @@
+// readable body of ?Init_Alternate@MeshMatDescClass@@QAEXAAV1@0@Z: Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp
 class MeshMatDescClass
 {
 public:

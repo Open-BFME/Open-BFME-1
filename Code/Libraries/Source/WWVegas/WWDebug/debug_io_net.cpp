@@ -37,6 +37,7 @@ DebugIONet::DebugIONet(void)
 {
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DebugIONetDestructorThunk.cpp
 // ??1DebugIONet@@UAE@XZ present-unmatched
 DebugIONet::~DebugIONet()
 {

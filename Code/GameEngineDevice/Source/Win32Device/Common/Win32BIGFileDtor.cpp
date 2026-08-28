@@ -27,6 +27,7 @@
 // Win32BIGFile's already-matched constructor at 0x009D14E0 allocates and zeroes.
 #include "string_base.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -41,6 +42,7 @@ private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ArchiveFile.h
 class ArchiveFile
 {
 public:
@@ -50,6 +52,7 @@ protected:
 	char m_opaque[0x20];	// vtable pointer is +0x00; ArchiveFile's own fields follow
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFile.h
 class Win32BIGFile : public ArchiveFile
 {
 public:

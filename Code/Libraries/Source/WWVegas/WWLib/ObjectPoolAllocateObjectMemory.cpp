@@ -19,19 +19,23 @@ typedef unsigned int uint32;
 // element -- GridLinkClass at 0x008DD970, MultiListNodeClass at 0x009DBDD0 and
 // HAnimComboDataClass at 0x00973DB0, all asking ::operator new for 0x1404 --
 // so those bodies are 210 bytes where this one is 212.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/gridcull.h
 class GridLinkClass
 {
 	char m_bfmeBody[20];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListNodeClass
 {
 	char m_bfmeBody[20];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/camerashakesystem.h
 class CameraShakeSystemClass
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/camerashakesystem.h
 	class CameraShakerClass
 	{
 		// Sixty bytes: what the pool's block allocation measures it as.
@@ -39,6 +43,7 @@ public:
 	};
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mutex.h
 class FastCriticalSectionClass
 {
 	unsigned Flag;
@@ -71,6 +76,7 @@ public:
 };
 
 template<class T,int BLOCK_SIZE = 64>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mempool.h
 class ObjectPoolClass
 {
 public:

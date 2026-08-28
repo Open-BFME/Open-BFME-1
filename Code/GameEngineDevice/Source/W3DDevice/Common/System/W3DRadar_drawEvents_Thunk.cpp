@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?drawEvents@W3DRadar@@: Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar.cpp
 // Open-BFME5: lift the exact retail W3DRadar::drawEvents body to C++.
 
 // ?drawEvents@W3DRadar@@IAEXHHHH@Z

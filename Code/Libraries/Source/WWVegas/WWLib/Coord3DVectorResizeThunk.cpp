@@ -20,6 +20,7 @@
 // already in the ledger as __copy<Coord3D*, Coord3D*, int>.  Any 12-byte POD
 // would mask to these same bytes otherwise.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;

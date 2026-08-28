@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?init@FlatTerrainShaderPixelShader@@UAEHXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp
 // Open-BFME5: lift the retail six-variant flat-terrain shader setup to C++.
 
 typedef unsigned long DWORD;
@@ -33,6 +34,7 @@ private:
 	DWORD m_dwTaint2PixelShader;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShaderManager.h
 class W3DShaderManager
 {
 public:

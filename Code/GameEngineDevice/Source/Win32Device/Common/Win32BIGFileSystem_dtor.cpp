@@ -31,6 +31,7 @@ class ArchiveFileMapStandIn
 	void *m_node[4];	// _Rb_tree is 0x10 bytes; only the size matters here
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ArchiveFileSystem.h
 class ArchiveFileSystem
 {
 public:
@@ -50,6 +51,7 @@ protected:
 	ArchiveFileMapStandIn m_archiveFileMap;	// +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFileSystem.h
 class Win32BIGFileSystem : public ArchiveFileSystem
 {
 public:

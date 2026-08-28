@@ -32,6 +32,7 @@ public:
 	Vector3 & operator = (const Vector3 & v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDynamicLight.h
 class W3DDynamicLight
 {
 public:
@@ -67,18 +68,21 @@ public:
 	unsigned int	m_increaseFrameCount;		// +0x158
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
 class RTS3DScene
 {
 public:
 	W3DDynamicLight *getADynamicLight(void);		// 0x00712420, already matched
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
 class W3DDisplay
 {
 public:
 	static RTS3DScene *m_3DScene;					// 0x012F8058
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DPoliceCarDraw.h
 class W3DPoliceCarDraw
 {
 protected:

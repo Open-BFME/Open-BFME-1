@@ -32,6 +32,7 @@
 
 enum { KEY_STATE_CAPSLOCK = 0x0200 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Keyboard.h
 class Keyboard
 {
 public:
@@ -48,6 +49,7 @@ protected:
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/GameClient/Win32DIKeyboard.h
 class DirectInputKeyboard : public Keyboard
 {
 public:

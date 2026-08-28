@@ -75,6 +75,7 @@ W3DDisplayStringManager::~W3DDisplayStringManager( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DDisplayStringManager_postProcessLoadMethodThunk.cpp
 // ?postProcessLoad@W3DDisplayStringManager@@UAEXXZ present-unmatched
 void W3DDisplayStringManager::postProcessLoad( void )
 {
@@ -113,6 +114,7 @@ void W3DDisplayStringManager::postProcessLoad( void )
 /** Allocate a new display string and tie it to the master list so we
 	* can keep track of it */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/W3DDisplayStringManagerNewDisplayStringThunk.cpp
 // ?newDisplayString@W3DDisplayStringManager@@UAEPAVDisplayString@@XZ present-unmatched
 DisplayString *W3DDisplayStringManager::newDisplayString( void )
 {
@@ -150,6 +152,7 @@ DisplayString *W3DDisplayStringManager::newDisplayString( void )
 //-------------------------------------------------------------------------------------------------
 /** Remove a display string from the master list and delete the data */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringManagerFree.cpp
 // ?freeDisplayString@W3DDisplayStringManager@@UAEXPAVDisplayString@@@Z present-unmatched
 void W3DDisplayStringManager::freeDisplayString( DisplayString *string )
 {

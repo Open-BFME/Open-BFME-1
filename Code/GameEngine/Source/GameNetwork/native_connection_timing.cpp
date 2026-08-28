@@ -4,6 +4,7 @@ typedef bool Bool;
 
 class NetCommandMsg;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/FrameDataManager.h
 class FrameDataManager
 {
 public:
@@ -20,6 +21,7 @@ struct BFMEConnectionState
 // Retail's real ConnectionManager, named so these two bodies carry their true
 // mangled names; the BFME-native helpers below keep the BFMEConnectionManager
 // name because theirs are unknown.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/ConnectionManager.h
 class ConnectionManager
 {
 public:
@@ -94,6 +96,7 @@ private:
 
 // Retail's real DisconnectManager, for the one body here whose true mangled name
 // is known. Protected, to match the IAE in the decorated name.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/DisconnectManager.h
 class DisconnectManager
 {
 public:

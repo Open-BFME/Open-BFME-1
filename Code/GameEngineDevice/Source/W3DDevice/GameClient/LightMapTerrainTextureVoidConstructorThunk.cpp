@@ -1,3 +1,4 @@
+// readable body of ??0LightMapTerrainTextureClass@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTex.cpp
 // Exact bytes for the historical LightMapTerrainTextureClass void-constructor ledger row at 0x006CFAE0.
 // This preserves the verified row without changing the separate shared-RVA ownership analysis.
 extern "C" __declspec(naked) void bfme_LightMapTerrainTexture_void_ctor_6CFAE0()

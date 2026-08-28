@@ -6,6 +6,7 @@
 // when non-empty -- all through the chained virtual writer at vtable slot
 // 0x38. /EHs- because retail has no unwind frame.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
 class Debug
 {
 public:

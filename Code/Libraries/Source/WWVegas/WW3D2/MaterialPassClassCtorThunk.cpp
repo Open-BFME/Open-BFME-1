@@ -10,6 +10,7 @@
 //
 // The tail is written in the order retail has it rather than in address order:
 // +0x28, +0x2C, +0x34, then the byte at +0x30 last.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -30,6 +31,7 @@ private:
 	void *m_ptr;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/matpass.h
 class MaterialPassClass : public RefCountClass
 {
 public:

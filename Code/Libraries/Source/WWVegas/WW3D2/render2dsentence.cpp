@@ -357,6 +357,7 @@ Render2DSentenceClass::Release_Pending_Surfaces (void)
 //
 ////////////////////////////////////////////////////////////////////////////////////
 void
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Render2DSentenceClass_Build_TexturesMethodThunk.cpp
 // ?Build_Textures@Render2DSentenceClass@@AAEXXZ present-unmatched
 Render2DSentenceClass::Build_Textures (void)
 {
@@ -999,6 +1000,7 @@ void	Render2DSentenceClass::Build_Sentence_Centered (const WCHAR *text, int *hkX
 //	Build_Sentence_NotCentered
 //
 ////////////////////////////////////////////////////////////////////////////////////
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/Render2DSentenceBuildNotCenteredThunk.cpp
 // ?Build_Sentence_Not_Centered@Render2DSentenceClass@@AAE?AVVector2@@PBGPAH1_N@Z present-unmatched
 Vector2	Render2DSentenceClass::Build_Sentence_Not_Centered (const WCHAR *text, int *hkX, int *hkY, bool justCalcExtents)
 {
@@ -1295,6 +1297,7 @@ FontCharsClass::Get_Char_Data (WCHAR ch)
 //
 ////////////////////////////////////////////////////////////////////////////////////
 int
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/FontCharsClassGetCharWidthThunk.cpp
 // ?Get_Char_Width@FontCharsClass@@QAEHG@Z present-unmatched
 FontCharsClass::Get_Char_Width (WCHAR ch)
 {
@@ -1527,6 +1530,7 @@ FontCharsClass::Update_Current_Buffer (int char_width)
 //
 ////////////////////////////////////////////////////////////////////////////////////
 void
+// byte-exact reconstruction: Code/GameEngine/Source/Common/FontCharsClass_Create_GDI_FontMethodThunk.cpp
 // ?Create_GDI_Font@FontCharsClass@@AAEXPBD@Z present-unmatched
 FontCharsClass::Create_GDI_Font (const char *font_name)
 {

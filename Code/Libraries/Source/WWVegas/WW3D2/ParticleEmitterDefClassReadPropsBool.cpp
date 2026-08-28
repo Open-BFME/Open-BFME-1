@@ -23,6 +23,7 @@ template <class T> struct ParticlePropertyStruct
 
 #define DECL_DUMMY(n) virtual void Dummy##n();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_ldr.h
 class ParticleEmitterDefClass
 {
 protected:

@@ -1,6 +1,8 @@
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventInfo.h
 struct AudioEventInfo
 {
 };
@@ -41,10 +43,12 @@ unsigned int hashtable<Value, Key, Hash, Select, Equal, Alloc>::_M_bkt_num_key(K
 namespace rts
 {
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/STLTypedefs.h
 struct hash
 {
 };
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/STLTypedefs.h
 struct equal_to
 {
 };

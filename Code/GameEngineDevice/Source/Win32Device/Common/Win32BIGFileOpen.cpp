@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep
+// readable body of ?openFile@Win32BIGFile@@UAEPAVFile@@PBDH@Z: Code/GameEngineDevice/Source/Win32Device/Common/Win32BIGFile.cpp
 //
 // Win32BIGFile::openFile(const Char *, Int) -- the two-argument form.
 //
@@ -21,6 +22,7 @@
 // its recorded offset, which is exactly what Zero Hour's single openFile does.
 class File;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFile.h
 class Win32BIGFile
 {
 public:

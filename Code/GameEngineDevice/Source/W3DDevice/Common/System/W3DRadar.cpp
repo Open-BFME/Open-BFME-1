@@ -546,6 +546,7 @@ void W3DRadar::drawSingleGenericEvent( Int pixelX, Int pixelY, Int width, Int he
 //-------------------------------------------------------------------------------------------------
 /** Draw all the radar events */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_drawEvents_Thunk.cpp
 // ?drawEvents@W3DRadar@@ present-unmatched
 void W3DRadar::drawEvents( Int pixelX, Int pixelY, Int width, Int height )
 {
@@ -598,6 +599,7 @@ void W3DRadar::drawIcons( Int pixelX, Int pixelY, Int width, Int height )
 //-------------------------------------------------------------------------------------------------
 /** Render an object list into the texture passed in */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_renderObjectList.asm
 // ?renderObjectList@W3DRadar@@IAEXPBVRadarObject@@PAVTextureClass@@_N@Z present-unmatched
 void W3DRadar::renderObjectList( const RadarObject *listHead, TextureClass *texture, Bool calcHero )
 {
@@ -1030,6 +1032,7 @@ void W3DRadar::newMap( TerrainLogic *terrain )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/W3DRadarBuildTerrainTextureThunk.cpp
 // ?buildTerrainTexture@W3DRadar@@IAEXPAVTerrainLogic@@@Z present-unmatched
 void W3DRadar::buildTerrainTexture( TerrainLogic *terrain )
 {
@@ -1274,6 +1277,7 @@ void W3DRadar::clearShroud()
 
 // ------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_setShroudLevel_Thunk.cpp
 // ?setShroudLevel@W3DRadar@@UAEXHHW4CellShroudStatus@@@Z present-unmatched
 void W3DRadar::setShroudLevel(Int shroudX, Int shroudY, CellShroudStatus setting)
 {
@@ -1466,6 +1470,7 @@ void W3DRadar::refreshTerrain( TerrainLogic *terrain )
 
 /*
  *
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_renderObjectList.asm
 // ?renderObjectList@W3DRadar@@IAEXPBVRadarObject@@PAVTextureClass@@_N@Z present-unmatched
 	void W3DRadar::renderObjectList( const RadarObject *listHead, TextureClass *texture, Bool calcHero )
 {

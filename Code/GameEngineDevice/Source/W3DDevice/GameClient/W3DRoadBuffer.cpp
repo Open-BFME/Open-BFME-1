@@ -349,6 +349,7 @@ Int RoadSegment::GetIndices(UnsignedShort *destination_ib, Int numToCopy, Int of
 //=============================================================================
 /** Updates the diffuse lighting in the vertex buffer. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RoadSegment_updateSegLightingMethodThunk.cpp
 // ?updateSegLighting@RoadSegment@@QAEXXZ present-unmatched
 void RoadSegment::updateSegLighting(void)
 {
@@ -573,6 +574,7 @@ terrain.  The road is loaded into the quadrilateral defined by the
 the road vector gives the direction of the road, and the road normal is perpendicular
 to the road normal.  */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBufferLoadFloat4PtSectionThunk.cpp
 // ?loadFloat4PtSection@W3DRoadBuffer@@ present-unmatched
 void W3DRoadBuffer::loadFloat4PtSection(RoadSegment *pRoad, Vector2 loc,
 														Vector2 roadNormal, Vector2 roadVector,
@@ -1808,6 +1810,7 @@ void W3DRoadBuffer::updateCountsAndFlags()
 //=============================================================================
 /** Inserts a Tee intersection. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/W3DRoadBufferInsertTeeThunk.cpp
 // ?insertTee@W3DRoadBuffer@@IAEXVVector2@@HM@Z present-unmatched
 void W3DRoadBuffer::insertTee(Vector2 loc, Int index1, Real scale)
 {
@@ -2011,6 +2014,7 @@ void W3DRoadBuffer::insertTee(Vector2 loc, Int index1, Real scale)
 //=============================================================================
 /** Inserts a Y intersection if the corner meets "Y" criteria. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBufferInsertYThunk.cpp
 // ?insertY@W3DRoadBuffer@@IAE_NVVector2@@HM@Z present-unmatched
 Bool W3DRoadBuffer::insertY(Vector2 loc, Int index1, Real scale)
 {
@@ -3169,6 +3173,7 @@ W3DRoadBuffer::W3DRoadBuffer(void)	:
 //=============================================================================
 /** Frees the index and vertex buffers. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DRoadBuffer_freeRoadBuffersMethodThunk.cpp
 // ?freeRoadBuffers@W3DRoadBuffer@@IAEXXZ present-unmatched
 void W3DRoadBuffer::freeRoadBuffers(void)
 {
@@ -3275,6 +3280,8 @@ void W3DRoadBuffer::setMap(WorldHeightMap *pMap)
 //=============================================================================
 /** Loads the roads from the map objects. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__loadRoads_W3DRoadBuffer_QAEXXZ_007105D0.cpp
+// ?loadRoads@W3DRoadBuffer@@QAEXXZ present-unmatched
 void W3DRoadBuffer::loadRoads()
 {
 	if (!m_initialized) {

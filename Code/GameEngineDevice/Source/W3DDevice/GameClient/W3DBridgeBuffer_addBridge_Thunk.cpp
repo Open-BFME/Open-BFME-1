@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?addBridge@W3DBridgeBuffer@@IAEXVVector3@@0VAsciiString@@PAVW3DTerrainLogic@@PAVDict@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeBuffer.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Vector3 {};
 class AsciiString {};
 class W3DTerrainLogic;
 class Dict;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBridgeBuffer.h
 class W3DBridgeBuffer {
 protected:
 	void addBridge(Vector3, Vector3, AsciiString, W3DTerrainLogic *, Dict *);

@@ -217,6 +217,7 @@ void DebugIOFlat::OutputStream::Flush(void)
 
 //////////////////////////////////////////////////////////////////////////////
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWDebug/DebugIOFlat_ExpandMagic_Thunk.cpp
 // ?ExpandMagic@DebugIOFlat@@CAXPBD0PAD@Z present-unmatched
 void DebugIOFlat::ExpandMagic(const char *src, const char *splitName, char *buf)
 {

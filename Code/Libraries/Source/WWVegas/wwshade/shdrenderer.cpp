@@ -185,6 +185,7 @@ void RendererListContainerClass::Flush()
 }
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdrenderer.h
 class ShdDX8RendererClass::MeshContainerClass : public RefCountClass
 {
 public:
@@ -606,6 +607,7 @@ void ShdDX8RendererNodeClass::Flush(int cur_pass)
 
 	// BEGIN OF SKIN CODE
 	if (SubMesh->Get_Flag(MeshGeometryClass::SKIN)) {
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 // ?Set_Vertex_Buffer@DX8Wrapper@@ present-unmatched
 		DX8Wrapper::Set_Vertex_Buffer(NULL);	// Free up the reference to the current vertex buffer
 															// (in case it is the dynamic, which may have to be resized)
@@ -655,6 +657,7 @@ void ShdDX8RendererNodeClass::Flush(int cur_pass)
 				SubMesh->Get_Vertex_Count()
 			);
 		}
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 // ?Set_Vertex_Buffer@DX8Wrapper@@ present-unmatched
 		DX8Wrapper::Set_Vertex_Buffer(vb);//stream 0
 

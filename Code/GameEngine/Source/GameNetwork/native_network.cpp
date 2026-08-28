@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /GX
+// readable body of ?Is_Running@ThreadClass@@: Code/Libraries/Source/WWVegas/WWLib/thread.cpp
 
 #include <new>
 

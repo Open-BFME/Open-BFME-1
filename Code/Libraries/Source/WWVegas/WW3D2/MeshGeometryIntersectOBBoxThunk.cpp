@@ -8,6 +8,7 @@
 
 class OBBoxIntersectionTestClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/aabtree.h
 class AABTreeClass
 {
 public:
@@ -25,6 +26,7 @@ private:
 	CullNodeStruct *RootNode;			// tree+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshgeometry.h
 class MeshGeometryClass
 {
 public:

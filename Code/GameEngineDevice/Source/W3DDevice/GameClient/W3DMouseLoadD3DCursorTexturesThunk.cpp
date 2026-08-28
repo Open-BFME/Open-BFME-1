@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?loadD3DCursorTextures@W3DMouse@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse.cpp
 // Open-BFME5: lift the retail W3DMouse::loadD3DCursorTextures MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_W3DMouseLoadD3DCursorTextures_701330()

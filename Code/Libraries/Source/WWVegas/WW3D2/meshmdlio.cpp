@@ -883,6 +883,7 @@ WW3DErrorType MeshModelClass::read_per_tri_materials(ChunkLoadClass & cload,Mesh
  *   10/28/1997 GH  : Created.                                                                 * 
  *   2/16/99    GTH : Moved into MeshModelClass                                                *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/MeshModelClass_read_vertex_colors_Thunk.cpp
 // ?read_vertex_colors@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z present-unmatched
 WW3DErrorType MeshModelClass::read_vertex_colors(ChunkLoadClass & cload,MeshLoadContextClass * context)
 {
@@ -2167,6 +2168,7 @@ WW3DErrorType MeshModelClass::read_texture_stage(ChunkLoadClass & cload,MeshLoad
  *   2/16/99    GTH : Created.                                                                 *
  *   9/1/2000   gth : Added alternate material desc support                                    *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/GameEngine/Source/Common/_read_texture_ids_MeshModelClass_IAE_AW4WW3DErrorType_AAVChuThunk.cpp
 // ?read_texture_ids@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z present-unmatched
 WW3DErrorType MeshModelClass::read_texture_ids(ChunkLoadClass & cload,MeshLoadContextClass * context)
 {
@@ -3392,6 +3394,7 @@ unsigned int MeshModelClass::get_sort_flags(void) const
 	return flags;
 }
 
+// byte-exact reconstruction: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmdlio.cpp
 // ?compute_static_sort_levels@MeshModelClass@@IAEXXZ present-unmatched
 void MeshModelClass::compute_static_sort_levels(void)
 {

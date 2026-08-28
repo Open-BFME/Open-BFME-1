@@ -66,6 +66,7 @@ private:
 	BfmeStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
 {
 public:
@@ -75,18 +76,21 @@ public:
 	StringBase<char> m_bfmeSlotNameKeyText;		// +0x2C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameInfo
 {
 public:
 	GameSlot *getSlot(Int slot);			// ILT thunk 0x0001EC18
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
 	NameKeyType nameToKey(const char *name);	// ILT thunk 0x0003ADD7
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -96,12 +100,14 @@ public:
 	Int m_playerIndex;				// +0x24
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
 	Player *findPlayerWithNameKey(NameKeyType key);	// ILT thunk 0x0002F586
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:
@@ -122,6 +128,7 @@ public:
 	UnsignedByte m_bfmeTail[0x24 - 0x18];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class CommandList
 {
 public:
@@ -137,6 +144,7 @@ public:
 	virtual void appendMessage(GameMessage *msg) = 0;	// slot 9, vtable+0x24
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDestroyPlayerCommandMsg
 {
 public:

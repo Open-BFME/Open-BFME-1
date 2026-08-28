@@ -1,3 +1,4 @@
+// readable body of ?getModelVertices@W3DBridge@@IAEHPAUVertexFormatXYZNDUV1@@HMAAVVector3@@111ABVMatrix3D@@PAVMeshClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeBuffer.cpp
 struct VertexFormatXYZNDUV1;
 class Vector3;
 class Matrix3D;
@@ -7,6 +8,7 @@ class RenderObjClass;
 template<class T>
 class RefMultiListIterator;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBridgeBuffer.h
 class W3DBridge
 {
 protected:

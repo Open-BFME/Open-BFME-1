@@ -104,6 +104,7 @@
 /** Constructor. Sets m_initialized to true if it finds the w3d models it needs
 for the bibs. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DWaypointBufferCtorThunk.cpp
 // ??0W3DWaypointBuffer@@ present-unmatched
 W3DWaypointBuffer::W3DWaypointBuffer(void)
 {
@@ -484,6 +485,7 @@ void W3DWaypointBuffer::drawWaypoints(RenderInfoClass &rinfo)
 									if (pNearElbow)//did we find a nearest corner?
 									{
 										m_waypointNodeRobj->Set_Position(Vector3(pNearElbow->x,pNearElbow->y,ctr->z));
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/WW3DRenderLayerThunk.cpp
 // ?Render@WW3D@@ present-unmatched
 										WW3D::Render(*m_waypointNodeRobj,localRinfo); //The little hockey puck
 										points[ numPoints ].Set( Vector3( pNearElbow->x, pNearElbow->y, ctr->z ) );
@@ -511,6 +513,7 @@ void W3DWaypointBuffer::drawWaypoints(RenderInfoClass &rinfo)
 											if (dot < 0)// we have a second elbow
 											{
 												m_waypointNodeRobj->Set_Position(Vector3(pFarElbow->x,pFarElbow->y,ctr->z));
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/WW3DRenderLayerThunk.cpp
 // ?Render@WW3D@@ present-unmatched
 												WW3D::Render(*m_waypointNodeRobj,localRinfo); //The little hockey puck
 												points[ numPoints ].Set( Vector3( pFarElbow->x, pFarElbow->y, ctr->z ) );
@@ -534,6 +537,7 @@ void W3DWaypointBuffer::drawWaypoints(RenderInfoClass &rinfo)
 						continue;
 
 					m_waypointNodeRobj->Set_Position(Vector3(naturalRallyPoint.x,naturalRallyPoint.y,naturalRallyPoint.z));
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/WW3DRenderLayerThunk.cpp
 // ?Render@WW3D@@ present-unmatched
 					WW3D::Render(*m_waypointNodeRobj,localRinfo); //The little hockey puck
 

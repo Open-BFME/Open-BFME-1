@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1W3DModelDrawModuleData@@UAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp
 // Open-BFME5: W3DModelDrawModuleData dtor. SEH W3DModelDrawModuleDataMember @+0x5c then base.
 
 class W3DModelDrawModuleDataMember

@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?addPublicBone@ModelConditionInfo@@QBEXABVAsciiString@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp
 // Open-BFME: ModelConditionInfo::addPublicBone, retail 0x00772BF0, 161 bytes.
 //
 // The reference's body unchanged: skip an empty or none name, lower-case a copy
@@ -16,6 +17,7 @@
 typedef int Int;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -39,6 +41,7 @@ private:
 	Header *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 class ModelConditionInfo
 {
 public:

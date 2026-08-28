@@ -72,6 +72,7 @@ extern "C" HRESULT WINAPI DirectInput8Create( HINSTANCE, DWORD, REFIID, void **,
 #undef DIDC_FORCEFEEDBACK
 #define DIDC_FORCEFEEDBACK           0x00000100
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/GameClient/Win32DIMouse.h
 class DirectInputMouse : public Mouse
 {
 

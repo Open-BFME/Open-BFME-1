@@ -5,6 +5,7 @@
 // in its parameter vector; the first member is an AsciiString and the five
 // following members are scalar values.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

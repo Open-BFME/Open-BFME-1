@@ -21,6 +21,7 @@
 #define BFME_MIN(a,b) (((a) < (b)) ? (a) : (b))
 #define BFME_MAX(a,b) (((a) > (b)) ? (a) : (b))
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -32,6 +33,7 @@ protected:
 };
 
 // Only slot 4 is proven here: retail's call is call dword ptr [eax+0x10].
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanim.h
 class HAnimClass : public RefCountClass
 {
 public:
@@ -41,6 +43,7 @@ public:
 	virtual int Get_Num_Frames( void );				// slot 4
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
 public:
@@ -50,6 +53,7 @@ private:
 	static unsigned int SyncTime;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/animobj.h
 class Animatable3DObjClass
 {
 public:

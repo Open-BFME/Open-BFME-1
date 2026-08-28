@@ -39,6 +39,7 @@ struct pair
 };
 
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/STLTypedefs.h
 struct hash
 {
 	unsigned int operator()(const T &x) const { return (unsigned int)x; }

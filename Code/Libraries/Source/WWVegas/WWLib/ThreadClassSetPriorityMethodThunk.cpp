@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?Set_Priority@ThreadClass@@: Code/Libraries/Source/WWVegas/WWLib/thread.cpp
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -29,6 +30,7 @@
 
 #include <windows.h>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/thread.h
 class ThreadClass
 {
 public:

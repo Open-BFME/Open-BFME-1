@@ -107,6 +107,7 @@ void W3DRopeDraw::buildSegments()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DRopeDrawDestructorThunk.cpp
 // ?tossSegments@W3DRopeDraw@@AAEXXZ present-unmatched
 void W3DRopeDraw::tossSegments()
 {
@@ -226,6 +227,7 @@ void W3DRopeDraw::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DRopeDrawDestructorThunk.cpp
 // ?xfer@W3DRopeDraw@@MAEXPAVXfer@@@Z present-unmatched
 void W3DRopeDraw::xfer( Xfer *xfer )
 {

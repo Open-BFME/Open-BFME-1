@@ -32,6 +32,7 @@
 // The retail WWLib StringBase header is four fields wide: its character data
 // starts eight bytes after the object-owned data header.  Keep this TU-local
 // ABI view so the conversion bodies inline the proven retail access.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	void *m_data;
@@ -52,6 +53,7 @@ public:
 // WWLib's retail string header stores the data header at +0x00 and its UTF-16
 // payload at +0x08.  This TU only needs that proven view for the encoder; the
 // destructor remains the existing WWLib ABI call emitted by the compiler.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 	void *m_data;

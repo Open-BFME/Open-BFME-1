@@ -33,6 +33,7 @@ class HAnimComboDataClass;
 class MultiListNodeClass;
 class AABTreeLinkClass;
 class AABTreeNodeClass;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/camerashakesystem.h
 class CameraShakeSystemClass
 {
 public:
@@ -43,6 +44,7 @@ class GridLinkClass;
 class PolyRenderTaskClass;
 class MatPassTaskClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mutex.h
 class FastCriticalSectionClass
 {
 	unsigned Flag;
@@ -75,6 +77,7 @@ public:
 };
 
 template<class T,int BLOCK_SIZE = 64>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mempool.h
 class ObjectPoolClass
 {
 public:

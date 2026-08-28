@@ -9,6 +9,7 @@
 // classes across its slots, ICF having folded the inherited methods. The enum
 // value does not depend on any of that, and it agrees with the HLodClass methods
 // that populate the rest of the table.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hlod.h
 class HLodClass
 {
 public:

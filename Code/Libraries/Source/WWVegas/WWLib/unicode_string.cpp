@@ -1,4 +1,6 @@
 // cl: /MD /EHsc
+// readable body of ??0UnicodeString@@: Code/GameEngine/Source/Common/System/UnicodeString.cpp
+// readable body of ?translate@UnicodeString@@: Code/GameEngine/Source/Common/System/UnicodeString.cpp
 #include "ascii_string.h"
 #include "unicode_string.h"
 #include "string_base.h"

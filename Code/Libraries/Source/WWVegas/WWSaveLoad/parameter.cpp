@@ -3,6 +3,9 @@
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
 // stlport
+// readable body of ?Class_ID@AABoxRenderObjClass@@UBEHXZ: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
+// readable body of ?Class_ID@OBBoxRenderObjClass@@UBEHXZ: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
+// readable body of ?Get_LOD_Count@RingRenderObjClass@@UBEHXZ: Code/Libraries/Source/WWVegas/WW3D2/ringobj.cpp
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setFullyObscuredByShroud@W3DModelDraw@@UAEX_N@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp
 
 // W3DModelDraw::setFullyObscuredByShroud, retail 0x007628C0.
 //
@@ -24,6 +25,7 @@ public:
 	Bool m_obscured;						// +0x05
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 class W3DModelDraw
 {
 public:

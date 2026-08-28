@@ -20,6 +20,7 @@
 // the compiler inserts, which is why it inlined into the deleting stub.
 class CullSystemClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/cullsys.h
 class CullLinkClass
 {
 public:

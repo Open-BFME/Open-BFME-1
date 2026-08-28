@@ -13,6 +13,7 @@
 // The buffer is freed with the scalar operator delete and no destructor call, so
 // whatever it points at has none -- it is written here as a byte pointer, which
 // is the weakest claim that produces those bytes.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanim.h
 class HAnimComboClass
 {
 public:

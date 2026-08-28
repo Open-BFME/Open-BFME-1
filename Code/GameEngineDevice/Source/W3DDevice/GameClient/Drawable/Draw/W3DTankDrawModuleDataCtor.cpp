@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0W3DTankDrawModuleData@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankDraw.cpp
 // Open-BFME5: W3DTankDrawModuleData::W3DTankDrawModuleData at retail 0x0077EA70.
 //
 // Identity is settled by the "TrackDebrisDirtLeft"/"TrackDebrisDirtRight"
@@ -25,6 +26,7 @@
 
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -47,6 +49,7 @@ struct W3DTankDrawTreadDebrisLeft
 	W3DTankDrawTreadDebrisLeft() : m_name( "TrackDebrisDirtLeft" ) {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DTankDraw.h
 class W3DTankDrawModuleData : public W3DTankDrawModuleDataBase
 {
 public:

@@ -16,6 +16,7 @@
 // inlined release since neither Release_Ref nor Delete_This is overridden
 // through this stand-in.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:

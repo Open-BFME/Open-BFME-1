@@ -36,6 +36,7 @@
 #include "W3DDevice/GameClient/Module/W3DSupplyDraw.h"
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DSupplyDrawModuleDataConstructor.cpp
 // ??0W3DSupplyDrawModuleData@@QAE@XZ present-unmatched
 W3DSupplyDrawModuleData::W3DSupplyDrawModuleData() 
 {
@@ -64,6 +65,7 @@ void W3DSupplyDrawModuleData::buildFieldParse(MultiIniFieldParse& p)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DSupplyDrawConstructor.cpp
 // ??0W3DSupplyDraw@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 W3DSupplyDraw::W3DSupplyDraw( Thing *thing, const ModuleData* moduleData ) : W3DModelDraw( thing, moduleData )
 {	 

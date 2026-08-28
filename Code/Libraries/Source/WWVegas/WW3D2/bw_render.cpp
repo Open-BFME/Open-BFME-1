@@ -46,6 +46,7 @@
 #include "vp.h"
 #include <string.h>
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/buff.cpp
 // ??0Buffer@@ present-unmatched
 BW_Render::Buffer::Buffer(unsigned char* buffer_, int scale_)
 	:
@@ -56,6 +57,7 @@ BW_Render::Buffer::Buffer(unsigned char* buffer_, int scale_)
 {
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/buff.cpp
 // ??1Buffer@@ present-unmatched
 BW_Render::Buffer::~Buffer()
 {
@@ -118,6 +120,7 @@ void BW_Render::Set_Vertex_Locations(Vector2* vertices_,int count)
 	vertices=vertices_;
 
 	float half_scale=pixel_buffer.Scale()*0.5f;
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/vp.cpp
 // ?MulAdd@VectorProcessorClass@@ present-unmatched
 	VectorProcessorClass::MulAdd(
 		reinterpret_cast<float*>(vertices),

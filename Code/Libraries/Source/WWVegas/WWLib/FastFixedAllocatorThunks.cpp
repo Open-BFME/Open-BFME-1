@@ -3,6 +3,7 @@
 // Standalone TU for exact retail FastFixedAllocator bodies (Open-BFME5).
 // Layout matches lotrbfme.exe: chunks@0, esize@4, stats@8/c/10, head@14.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/FastAllocator.h
 class FastFixedAllocator
 {
 public:
@@ -13,11 +14,13 @@ public:
 	void DefaultConstructorClosure();
 
 protected:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/FastAllocator.h
 	struct Link
 	{
 		Link *next;
 	};
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/FastAllocator.h
 	struct Chunk
 	{
 		enum { size = 8 * 1024 - 16 };

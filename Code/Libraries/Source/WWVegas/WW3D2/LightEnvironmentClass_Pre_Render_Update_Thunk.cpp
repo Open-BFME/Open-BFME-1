@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Pre_Render_Update@LightEnvironmentClass@@QAEXABVMatrix3D@@@Z: Code/Libraries/Source/WWVegas/WW3D2/lightenvironment.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Matrix3D;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/lightenvironment.h
 class LightEnvironmentClass
 {
 public:

@@ -3,6 +3,8 @@
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
 // stlport
+// readable body of ?Set_Index_Buffer@DX8Wrapper@@: Code/Libraries/Source/WWVegas/WW3D2/sortingrenderer.cpp
+// readable body of ?Set_Vertex_Buffer@DX8Wrapper@@: Code/Libraries/Source/WWVegas/wwshade/shdrenderer.cpp
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -348,6 +350,7 @@ bool DX8Wrapper::Init(void * hwnd, bool lite)
 	return(true);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DX8Wrapper_ShutdownMethodThunk.cpp
 // ?Shutdown@DX8Wrapper@@ present-unmatched
 void DX8Wrapper::Shutdown(void)
 {
@@ -652,6 +655,7 @@ bool DX8Wrapper::Create_Device(void)
 	return true;
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DX8WrapperResetDeviceThunk.cpp
 // ?Reset_Device@DX8Wrapper@@ present-unmatched
 bool DX8Wrapper::Reset_Device(bool reload_assets)
 {
@@ -1521,6 +1525,7 @@ bool DX8Wrapper::Find_Color_And_Z_Mode(int resx,int resy,int bitdepth,D3DFORMAT 
 
 // find the resolution mode with at least resx,resy with the highest supported
 // refresh rate
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DX8Wrapper_Find_Color_Mode_Thunk.cpp
 // ?Find_Color_Mode@DX8Wrapper@@ present-unmatched
 bool DX8Wrapper::Find_Color_Mode(D3DFORMAT colorbuffer, int resx, int resy, UINT *mode)
 {
@@ -2305,6 +2310,7 @@ void DX8Wrapper::Draw_Triangles(
 //
 // ----------------------------------------------------------------------------
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DX8Wrapper_DrawPrimitives.cpp
 // ?Draw_Strip@DX8Wrapper@@ present-unmatched
 void DX8Wrapper::Draw_Strip(
 	unsigned short start_index,
@@ -3771,6 +3777,7 @@ unsigned int DX8Wrapper::Get_Free_Texture_RAM()
 // Gamma - controls the curvature of the middle of the curve
 // Bright - controls the minimum value of the curve
 // Contrast - controls the difference between the maximum and the minimum of the curve
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DX8WrapperSetGammaThunk.cpp
 // ?Set_Gamma@DX8Wrapper@@ present-unmatched
 void DX8Wrapper::Set_Gamma(float gamma,float bright,float contrast,bool calibrate,bool uselimit)
 {
@@ -3973,6 +3980,7 @@ void DX8Wrapper::Apply_Default_State()
 	ShaderClass::Invalidate();
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DX8WrapperGetRenderStateNameThunk.cpp
 // ?Get_DX8_Render_State_Name@DX8Wrapper@@ present-unmatched
 const char* DX8Wrapper::Get_DX8_Render_State_Name(D3DRENDERSTATETYPE state)
 {
@@ -4241,6 +4249,7 @@ void DX8Wrapper::Get_DX8_Render_State_Value_Name(StringClass& name, D3DRENDERSTA
 	}
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DX8WrapperGetTextureStageStateValueNameThunk.cpp
 // ?Get_DX8_Texture_Stage_State_Value_Name@DX8Wrapper@@ present-unmatched
 void DX8Wrapper::Get_DX8_Texture_Stage_State_Value_Name(StringClass& name, D3DTEXTURESTAGESTATETYPE state, unsigned value)
 {

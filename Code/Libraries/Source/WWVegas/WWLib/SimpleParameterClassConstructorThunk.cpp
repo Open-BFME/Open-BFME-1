@@ -1,4 +1,5 @@
 template<class Type, int Flags>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/simpleparameter.h
 class SimpleParameterClass
 {
 public:

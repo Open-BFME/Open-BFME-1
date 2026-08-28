@@ -101,6 +101,7 @@ static inline Bool isValidTimeToCalcLogicStuff()
 
 #if defined(DEBUG_CRC) && (defined(_DEBUG) || defined(_INTERNAL))
 #include <cstdarg>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MiniLog.h
 class LogClass
 {
 public:
@@ -312,6 +313,7 @@ static char *TerrainDecalTextureName[TERRAIN_DECAL_MAX]=
 const UnsignedInt NO_NEXT_DURATION = 0xffffffff;
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DAnimationInfoCopyCtor.cpp
 // ??0W3DAnimationInfo@@ present-unmatched
 W3DAnimationInfo::W3DAnimationInfo(const AsciiString& name, Bool isIdle, Real distanceCovered) : 
 #ifdef RETAIN_ANIM_HANDLES
@@ -327,6 +329,7 @@ W3DAnimationInfo::W3DAnimationInfo(const AsciiString& name, Bool isIdle, Real di
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DAnimationInfoCopyCtor.cpp
 // ??0W3DAnimationInfo@@ present-unmatched
 __declspec(noinline) W3DAnimationInfo::W3DAnimationInfo( const W3DAnimationInfo &r ) :
 	m_name(r.m_name),
@@ -403,6 +406,7 @@ HAnimClass* W3DAnimationInfo::getAnimHandle() const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/W3DAnimationInfoDestructorThunk.cpp
 // ??1W3DAnimationInfo@@QAE@XZ present-unmatched
 W3DAnimationInfo::~W3DAnimationInfo() 
 { 
@@ -430,6 +434,7 @@ void ModelConditionInfo::preloadAssets( TimeOfDay timeOfDay, Real scale )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/ModelConditionInfo_addPublicBone.cpp
 // ?addPublicBone@ModelConditionInfo@@QBEXABVAsciiString@@@Z present-unmatched
 void ModelConditionInfo::addPublicBone(const AsciiString& boneName) const
 {
@@ -1057,6 +1062,7 @@ void ModelConditionInfo::clear()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ??0W3DModelDrawModuleData@@QAE@XZ present-unmatched
 W3DModelDrawModuleData::W3DModelDrawModuleData() : 
 	m_validated(0),
@@ -1156,6 +1162,7 @@ void W3DModelDrawModuleData::validateStuffForTimeAndWeather(const Drawable* draw
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawModuleDataDestructorThunk.cpp
 // ??1W3DModelDrawModuleData@@UAE@XZ present-unmatched
 W3DModelDrawModuleData::~W3DModelDrawModuleData()
 {
@@ -1461,6 +1468,7 @@ static Bool doesStateExist(const ModelConditionVector& v, const ModelConditionFl
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawModuleData_parseConditionState_Thunk.cpp
 // ?parseConditionState@W3DModelDrawModuleData@@ present-unmatched
 void W3DModelDrawModuleData::parseConditionState(INI* ini, void *instance, void * /*store*/, const void* userData)
 {
@@ -1840,6 +1848,7 @@ void W3DModelDraw::onDrawableBoundToObject(void)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DModelDrawDestructorThunk.cpp
 // ??1W3DModelDraw@@MAE@XZ present-unmatched
 W3DModelDraw::~W3DModelDraw(void)
 {
@@ -1996,6 +2005,7 @@ void W3DModelDraw::getRenderCostRecursive(RenderCost & rc,RenderObjClass * robj)
 #endif //_DEBUG || _INTERNAL
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw_setFullyObscuredByShroud.cpp
 // ?setFullyObscuredByShroud@W3DModelDraw@@UAEX_N@Z present-unmatched
 void W3DModelDraw::setFullyObscuredByShroud(Bool fullyObscured)
 {

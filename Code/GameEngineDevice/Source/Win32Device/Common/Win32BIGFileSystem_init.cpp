@@ -34,6 +34,7 @@ typedef int Bool;
 // The delegating shim, as in Win32BIGFileOpenArchived.cpp: the constructor is
 // defined here and forwards to StringBase<char>, rather than being left an
 // undefined extern. That file matched first try building two of these by value.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -54,6 +55,7 @@ private:
 class LocalFileSystem;
 extern LocalFileSystem *TheLocalFileSystem;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFileSystem.h
 class Win32BIGFileSystem
 {
 public:

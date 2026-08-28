@@ -250,6 +250,7 @@ void WW3D::Set_NPatches_Gap_Filling_Mode(NPatchesGapFillingModeEnum mode)
 	}
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/WW3D_SetNPatchesLevelThunk.cpp
 // ?Set_NPatches_Level@WW3D@@ present-unmatched
 void WW3D::Set_NPatches_Level(unsigned level)
 {
@@ -752,6 +753,7 @@ WW3DErrorType WW3D::Set_Device_Resolution(int width,int height,int bits,int wind
  *   3/24/98    GTH : Created.                                                                 *
  *   1/25/2001  gth : converted to dx8                                                         *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/Common/System/WW3D_Get_Render_Target_Resolution.cpp
 // ?Get_Render_Target_Resolution@WW3D@@ present-unmatched
 void WW3D::Get_Render_Target_Resolution(int & set_w,int & set_h,int & set_bits,bool & set_windowed)
 {
@@ -862,6 +864,7 @@ void WW3D::_Invalidate_Mesh_Cache()
 	TheDX8MeshRenderer.Invalidate();
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/WW3D__Invalidate_TexturesMethodThunk.cpp
 // ?_Invalidate_Textures@WW3D@@ present-unmatched
 void WW3D::_Invalidate_Textures()
 {
@@ -986,6 +989,7 @@ WW3DErrorType WW3D::Begin_Render(bool clear,bool clearz,const Vector3 & color, f
  * HISTORY:                                                                                    *
  *   4/2/98    EHC : Created.                                                                  *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/WW3DRenderLayerThunk.cpp
 // ?Render@WW3D@@ present-unmatched
 WW3DErrorType WW3D::Render(const LayerListClass &LayerList)
 {
@@ -1022,6 +1026,7 @@ WW3DErrorType WW3D::Render(const LayerListClass &LayerList)
  * HISTORY:                                                                                    *
  *   4/2/98    EHC : Created.                                                                  *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/WW3DRenderLayerThunk.cpp
 // ?Render@WW3D@@ present-unmatched
 WW3DErrorType WW3D::Render(const LayerClass &Layer)
 {
@@ -1047,6 +1052,7 @@ WW3DErrorType WW3D::Render(const LayerClass &Layer)
  * HISTORY:                                                                                    *
  *   3/24/98    GTH : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/WW3DRenderLayerThunk.cpp
 // ?Render@WW3D@@ present-unmatched
 WW3DErrorType WW3D::Render(SceneClass * scene,CameraClass * cam,bool clear,bool clearz,const Vector3 & color)
 {
@@ -1113,6 +1119,7 @@ WW3DErrorType WW3D::Render(SceneClass * scene,CameraClass * cam,bool clear,bool 
  * HISTORY:                                                                                    *
  *   4/4/2001   gth : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/WW3DRenderLayerThunk.cpp
 // ?Render@WW3D@@ present-unmatched
 WW3DErrorType WW3D::Render(
 	RenderObjClass & obj,
@@ -1624,6 +1631,7 @@ void WW3D::Make_Screen_Shot( const char * filename_base , const float gamma, con
  *   5/19/99    GTH : Created.                                                                 *
  *   2/26/2001  hy : updated to dx8                                                            *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/crc.cpp
 // ?Start_Movie_Capture@WW3D@@ present-unmatched
 void WW3D::Start_Movie_Capture( const char * filename_base, float frame_rate )
 {

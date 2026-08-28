@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setName@User@@: Code/GameEngine/Source/GameNetwork/User.cpp
 // Open-BFME5: User::setName, retail 0x00685420, zh_sweep packet 00685420.
 //
 // The Zero Hour body is one line -- m_name = name -- and everything retail
@@ -17,6 +18,7 @@
 // forwards to releaseBuffer (0x00887940, one of the many bodies folded onto
 // that address).
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:

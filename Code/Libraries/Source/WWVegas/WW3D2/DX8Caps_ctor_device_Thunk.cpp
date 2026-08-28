@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// readable body of ??0DX8Caps@@: Code/Libraries/Source/WWVegas/WW3D2/dx8caps.cpp
 // Open-BFME5: lift the device-backed DX8 capability constructor to clean C++.
 
 #include "wwstring.h"
@@ -8,6 +9,7 @@ struct IDirect3DDevice8;
 struct _D3DADAPTER_IDENTIFIER8;
 enum WW3DFormat { WW3DFormat_dummy = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8caps.h
 class DX8Caps
 {
 public:

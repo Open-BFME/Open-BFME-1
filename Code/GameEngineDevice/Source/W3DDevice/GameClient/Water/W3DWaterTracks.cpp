@@ -520,6 +520,7 @@ Int WaterTracksObj::render(DX8VertexBufferClass	*vertexBuffer, Int batchStart)
 	Int idxCount=(m_y-1)*(m_x*2+2) - 2;	//index count
 
 	DX8Wrapper::Set_Index_Buffer(TheWaterTracksRenderSystem->m_indexBuffer,batchStart);
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DX8Wrapper_DrawPrimitives.cpp
 // ?Draw_Strip@DX8Wrapper@@ present-unmatched
 	DX8Wrapper::Draw_Strip(0,idxCount-2,0,m_x*m_y);	//there are always n-2 primitives for n index strip.
 
@@ -928,6 +929,7 @@ void setFPMode( void );
 //=============================================================================
 /** Draw all active track marks for this frame */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/WaterTracksRenderSystem_flush_Thunk.cpp
 // ?flush@WaterTracksRenderSystem@@QAEXAAVRenderInfoClass@@@Z present-unmatched
 void WaterTracksRenderSystem::flush(RenderInfoClass & rinfo)
 {
@@ -969,6 +971,7 @@ Try improving the fit to vertical surfaces like cliffs.
 	diffuseLight=REAL_TO_INT(shadeB) | (REAL_TO_INT(shadeG) << 8) | (REAL_TO_INT(shadeR) << 16);
 
 	Matrix3D tm(1);	///set to identity
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
 // ?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix3D@@@Z present-unmatched
 	DX8Wrapper::Set_Transform(D3DTS_WORLD,tm);	//position the water surface
 
@@ -986,8 +989,10 @@ Try improving the fit to vertical surfaces like cliffs.
 		W3DShaderManager::setShader(W3DShaderManager::ST_SHROUD_TEXTURE, 1);
 
 		//modulate with shroud texture
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ExactStaticThunks.cpp
 // ?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z present-unmatched
 		DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_COLORARG1, D3DTA_TEXTURE );	//stage 1 texture
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ExactStaticThunks.cpp
 // ?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z present-unmatched
 		DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_COLORARG2, D3DTA_CURRENT );	//previous stage texture
 		DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_COLOROP,   D3DTOP_MODULATE );
@@ -1040,6 +1045,7 @@ WaterTracksObj *WaterTracksRenderSystem::findTrack(Vector2 &start, Vector2 &end,
 // ?saveTracks@WaterTracksRenderSystem@@QAEXXZ
 // Body in W3DWaterTracks_saveTracks.asm (exact 251B retail).
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/MiscThunkGroup.cpp
 // ?loadTracks@WaterTracksRenderSystem@@QAEXXZ present-unmatched
 void WaterTracksRenderSystem::loadTracks(void)
 {

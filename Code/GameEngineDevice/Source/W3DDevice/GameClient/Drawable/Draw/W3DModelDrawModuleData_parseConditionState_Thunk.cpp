@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?parseConditionState@W3DModelDrawModuleData@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp
 // Open-BFME5: lift the exact retail W3DModelDrawModuleData::parseConditionState body to C++.
 
 // ?parseConditionState@W3DModelDrawModuleData@@CAXPAVINI@@PAX1PBX@Z

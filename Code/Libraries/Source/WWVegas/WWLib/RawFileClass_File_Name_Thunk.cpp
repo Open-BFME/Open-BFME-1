@@ -5,6 +5,7 @@
 // File_Name. The body is a four-byte getter returning the member at +0x14, and
 // the reference implementation is `return(Filename);`. The same address also
 // fills slot 1 of BufferedFileClass's vtable, which inherits it.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WW3D/pluglib/rawfile.h
 class RawFileClass
 {
 public:

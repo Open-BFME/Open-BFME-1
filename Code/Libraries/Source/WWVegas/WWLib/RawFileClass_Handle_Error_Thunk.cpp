@@ -10,6 +10,7 @@
 // +0x10. Error takes three arguments and returns void, and slot 18 is a bare
 // ret 0xc -- twelve bytes of arguments popped, no body at all, the release build
 // having nothing to report.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WW3D/pluglib/rawfile.h
 class RawFileClass
 {
 public:

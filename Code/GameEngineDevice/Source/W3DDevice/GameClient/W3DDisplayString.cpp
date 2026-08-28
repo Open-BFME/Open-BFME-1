@@ -174,11 +174,13 @@ void W3DDisplayString::notifyTextChanged( void )
 	* position, or content.  If they have, we need to rebuild the sentence
 	* texture for rendering */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringDrawDefault.cpp
 // ?draw@W3DDisplayString@@ present-unmatched
 void W3DDisplayString::draw( Int x, Int y, Color color, Color dropColor )
 {
 	draw(x,y, color, dropColor, 1, 1);
 }
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringDrawDefault.cpp
 // ?draw@W3DDisplayString@@ present-unmatched
 void W3DDisplayString::draw( Int x, Int y, Color color, Color dropColor, Int xDrop, Int yDrop )
 {

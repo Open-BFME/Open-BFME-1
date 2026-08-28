@@ -12,9 +12,11 @@ public:
 
 extern int TheMixFileInfoPool;				// 0x012F1094
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mixfile.h
 class MixFileCreator
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mixfile.h
 	struct FileInfoStruct
 	{
 		~FileInfoStruct();

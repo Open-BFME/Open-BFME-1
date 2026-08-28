@@ -266,6 +266,7 @@ void BaseHeightMapRenderObjClass::drawScorches(void)
 //=============================================================================
 /** Destructor. Releases w3d assets. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BaseHeightMapRenderObjClassDestructorThunk.cpp
 // ??1BaseHeightMapRenderObjClass@@UAE@XZ present-unmatched
 BaseHeightMapRenderObjClass::~BaseHeightMapRenderObjClass(void)
 {
@@ -317,6 +318,7 @@ BaseHeightMapRenderObjClass::~BaseHeightMapRenderObjClass(void)
 //=============================================================================
 /** Constructor. Mostly nulls out the member variables. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructorThunk.cpp
 // ??0BaseHeightMapRenderObjClass@@QAE@XZ present-unmatched
 BaseHeightMapRenderObjClass::BaseHeightMapRenderObjClass(void)
 {
@@ -404,6 +406,7 @@ void BaseHeightMapRenderObjClass::setTextureLOD(Int lod)
 /** Adjust the terrain Level Of Detail.  If adj > 0 , increases LOD 1 step, if 
 adj < 0 decreases it one step, if adj==0, then just sets up for the current LOD */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapAdjustTerrainLOD.cpp
 // ?adjustTerrainLOD@BaseHeightMapRenderObjClass@@UAEXH@Z present-unmatched
 void BaseHeightMapRenderObjClass::adjustTerrainLOD(Int adj) 
 {
@@ -953,6 +956,7 @@ LineSegClass& (LineSegClass::*_BaseHeightMap_Force_LineSeg_eq)(const LineSegClas
 //=============================================================================
 /** return the height and normal of the triangle plane containing given location within heightmap. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_getHeightMapHeight.asm
 // ?getHeightMapHeight@BaseHeightMapRenderObjClass@@QBEMMMPAUCoord3D@@@Z present-unmatched
 Real BaseHeightMapRenderObjClass::getHeightMapHeight(Real x, Real y, Coord3D* normal) const
 {
@@ -1398,6 +1402,7 @@ Bool BaseHeightMapRenderObjClass::showAsVisibleCliff(Int xIndex, Int yIndex) con
 
 //=============================================================================
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapEvaluateVisibleCliff.cpp
 // ?evaluateAsVisibleCliff@BaseHeightMapRenderObjClass@@ present-unmatched
 Bool BaseHeightMapRenderObjClass::evaluateAsVisibleCliff(Int xIndex, Int yIndex, Real valuesGreaterThanRad)
 {
@@ -3072,6 +3077,7 @@ void BaseHeightMapRenderObjClass::initDestAlphaLUT(void)
 Also allocates all rendering resources such as vertex buffers, index buffers, 
 shaders, and materials.*/
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_initHeightData.asm
 // ?initHeightData@BaseHeightMapRenderObjClass@@UAEHHHPAVWorldHeightMap@@PAV?$RefMultiListIterator@VRenderObjClass@@@@_N@Z present-unmatched
 Int BaseHeightMapRenderObjClass::initHeightData(Int x, Int y, WorldHeightMap *pMap, RefRenderObjListIterator *pLightsIteratork, Bool updateExtraPassTiles)
 {	
@@ -3826,6 +3832,7 @@ void BaseHeightMapRenderObjClass::Render(RenderInfoClass & rinfo)
 /**Render parts of terrain that are along the coast line and have vertices directly under the
 water plane.  Applying a custom render to these polygons allows for a smoother land->water
 transition*/
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_renderShoreLines.asm
 // ?renderShoreLines@BaseHeightMapRenderObjClass@@IAEXPAVCameraClass@@@Z present-unmatched
 void BaseHeightMapRenderObjClass::renderShoreLines(CameraClass *pCamera)
 {
@@ -4348,6 +4355,7 @@ flushVertexBuffer1:
 /** Renders (draws) the trees. Since the trees are transparent, this has to be
 called after flush. */
 //=============================================================================
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/PhysicsRenderThunks.cpp
 // ?renderTrees@BaseHeightMapRenderObjClass@@QAEXPAVCameraClass@@@Z present-unmatched
 void BaseHeightMapRenderObjClass::renderTrees(CameraClass * camera)
 {

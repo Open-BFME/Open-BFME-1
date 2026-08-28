@@ -42,6 +42,7 @@ struct ImageSurfaceState
 	UnsignedLong status;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Image.h
 class Image
 {
 public:
@@ -70,6 +71,7 @@ W3DRadarResetSurface getBackBufferSurface006e(Int index);
 void copySurfaceRects006e(W3DRadarResetSurface source, const BfmeRect *sourceRect,
 	W3DRadarResetSurface destination, const BfmeRect *destinationRect, Int mode);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
 class W3DDisplay
 {
 public:

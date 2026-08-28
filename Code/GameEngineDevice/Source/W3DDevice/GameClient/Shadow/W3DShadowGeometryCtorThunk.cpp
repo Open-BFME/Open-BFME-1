@@ -5,6 +5,7 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -20,6 +21,7 @@ private:
 	int NumRefs;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/hash.h
 class HashableClass
 {
 public:
@@ -35,6 +37,7 @@ struct AsciiStringData;
 
 // BFME drift: the geometry name is a StringBase-derived string object at +0x10,
 // not Zero Hour's inline char[2*W3D_NAME_LEN].
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

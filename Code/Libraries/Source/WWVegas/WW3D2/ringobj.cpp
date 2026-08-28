@@ -992,6 +992,7 @@ void RingRenderObjClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) const
 }
 
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/RingRenderObjPrepareLOD.cpp
 // ?Prepare_LOD@RingRenderObjClass@@UAEXAAVCameraClass@@@Z present-unmatched
 void RingRenderObjClass::Prepare_LOD(CameraClass &camera)
 {
@@ -1021,12 +1022,14 @@ float RingRenderObjClass::Get_Cost(void) const
 	return Get_Num_Polys();	// Currently cost == polys
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/RingRenderObjPrepareLOD.cpp
 // ?Get_Value@RingRenderObjClass@@UBEMXZ present-unmatched
 float RingRenderObjClass::Get_Value(void) const
 {
 	return Value[CurrentLOD];
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/RingRenderObjPrepareLOD.cpp
 // ?Get_Post_Increment_Value@RingRenderObjClass@@UBEMXZ present-unmatched
 float RingRenderObjClass::Get_Post_Increment_Value(void) const
 {
@@ -1045,6 +1048,7 @@ int RingRenderObjClass::Get_LOD_Level(void) const
 	return CurrentLOD;
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.cpp
 // ?Get_LOD_Count@RingRenderObjClass@@UBEHXZ present-unmatched
 int RingRenderObjClass::Get_LOD_Count(void) const
 {

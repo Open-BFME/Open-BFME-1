@@ -3,6 +3,7 @@
 class StringClass;
 
 template <class KeyType, class ValueType>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/hashtemplate.h
 class HashTemplateClass
 {
 public:

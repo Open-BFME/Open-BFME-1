@@ -21,6 +21,7 @@ private:
 	T *Referent;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/linegrp.h
 class LineGroupClass
 {
 public:

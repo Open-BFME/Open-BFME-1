@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?init@TerrainShader2Stage@@UAEHXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp
 // Open-BFME5: retail two-stage terrain shader one-time initialisation in C++.
 
 typedef unsigned long DWORD;

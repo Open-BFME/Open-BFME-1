@@ -61,6 +61,7 @@
 class Matrix3D;
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankDrawModuleDataCtor.cpp
 // ??0W3DTankDrawModuleData@@ present-unmatched
 W3DTankDrawModuleData::W3DTankDrawModuleData() :
 	m_treadDebrisNameLeft("TrackDebrisDirtLeft"),

@@ -33,6 +33,7 @@
 class File;
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32LocalFileSystem.h
 class Win32LocalFileSystem
 {
 public:

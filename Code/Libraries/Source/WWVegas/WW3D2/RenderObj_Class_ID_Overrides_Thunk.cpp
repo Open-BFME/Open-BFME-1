@@ -18,6 +18,7 @@
 // so their agreement is what carries the claim.
 class RenderObjClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_emt.h
 class ParticleEmitterClass
 {
 public:
@@ -26,6 +27,7 @@ public:
 	virtual int Class_ID(void) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_buf.h
 class ParticleBufferClass
 {
 public:
@@ -34,6 +36,7 @@ public:
 	virtual int Class_ID(void) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/nullrobj.h
 class Null3DObjClass
 {
 public:

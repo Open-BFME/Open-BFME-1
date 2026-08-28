@@ -6,9 +6,11 @@
 #include "chunkio.h"
 #include "w3d_file.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hlod.h
 class HLodDefClass
 {
 private:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hlod.h
 	class SubObjectArrayClass
 	{
 	public:

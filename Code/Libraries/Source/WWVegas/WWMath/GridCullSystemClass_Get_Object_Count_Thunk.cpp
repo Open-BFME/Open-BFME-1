@@ -13,6 +13,7 @@ class FrustumClass;
 class ChunkLoadClass;
 class ChunkSaveClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/gridcull.h
 class GridCullSystemClass
 {
 public:

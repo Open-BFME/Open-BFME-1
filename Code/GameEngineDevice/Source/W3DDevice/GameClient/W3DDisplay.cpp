@@ -398,6 +398,7 @@ inline Int64 getPerformanceCounterFrequency()
 // W3DDisplay::W3DDisplay =====================================================
 /** */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayCtorThunk.cpp
 // ??0W3DDisplay@@QAE@XZ present-unmatched
 W3DDisplay::W3DDisplay()
 {
@@ -955,6 +956,7 @@ ICoord2D TheMousePos;
 // W3DDisplay::gatherDebugStats ===================================================
 /** Compute and display debug stats on screen */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayGatherDebugStatsThunk.cpp
 // ?gatherDebugStats@W3DDisplay@@ present-unmatched
 void W3DDisplay::gatherDebugStats( void )
 {
@@ -1799,6 +1801,7 @@ AGAIN:
 		return;
 	}
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/statistics.cpp
 // ?Begin_Statistics@Debug_Statistics@@ present-unmatched
 	Debug_Statistics::Begin_Statistics();	//reset all counters (polygons, vertices, etc) before drawing
 
@@ -1896,6 +1899,7 @@ AGAIN:
 				TheW3DProjectedShadowManager->updateRenderTargetTextures();
 		}
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/statistics.cpp
 // ?End_Statistics@Debug_Statistics@@ present-unmatched
 		Debug_Statistics::End_Statistics();	//record number of polygons rendered in RenderTargetTextures.
 
@@ -2935,6 +2939,7 @@ void W3DDisplay::clearShroud()
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplaySetBorderShroudLevel.cpp
 // ?setBorderShroudLevel@W3DDisplay@@UAEXE@Z present-unmatched
 void W3DDisplay::setBorderShroudLevel(UnsignedByte level)
 {
@@ -2945,6 +2950,7 @@ void W3DDisplay::setBorderShroudLevel(UnsignedByte level)
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplaySetBorderShroudLevel.cpp
 // ?setShroudLevel@W3DDisplay@@UAEXHHW4CellShroudStatus@@@Z present-unmatched
 void W3DDisplay::setShroudLevel( Int x, Int y, CellShroudStatus setting )
 {

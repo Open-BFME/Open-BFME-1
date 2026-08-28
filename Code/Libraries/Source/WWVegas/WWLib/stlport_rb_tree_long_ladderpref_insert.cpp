@@ -24,6 +24,7 @@ struct BfmeRbTreeInsertAnchorHelper;
 
 typedef long Long;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/LadderPreferences.h
 class LadderPref
 {
 	char m_bfmeBody[16];

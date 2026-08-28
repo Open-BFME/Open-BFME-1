@@ -597,6 +597,7 @@ void DynamicIBAccessClass::Allocate_DX8_Dynamic_Buffer()
 	IndexBufferOffset=_DynamicDX8IndexBufferOffset;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DynamicIBAccessClass_Allocate_Sorting_Dynamic_BufferMethodThunk.cpp
 // ?Allocate_Sorting_Dynamic_Buffer@DynamicIBAccessClass@@QAEXXZ present-unmatched
 void DynamicIBAccessClass::Allocate_Sorting_Dynamic_Buffer()
 {

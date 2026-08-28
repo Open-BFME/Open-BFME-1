@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?shutdown@TerrainTracksRenderObjClassSystem@@QAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainTracks.cpp
 // Open-BFME: TerrainTracksRenderObjClassSystem::shutdown, retail 0x0072EDF0,
 // 142 bytes.
 //
@@ -19,6 +20,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -35,6 +37,7 @@ public:
 
 #define REF_PTR_RELEASE(x) { if (x) { (x)->Release_Ref(); x = 0; } }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainTracks.h
 class TerrainTracksRenderObjClass : public RefCountClass
 {
 public:
@@ -44,6 +47,7 @@ public:
 	TerrainTracksRenderObjClass *m_nextSystem;		// this+0x12FC
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainTracks.h
 class TerrainTracksRenderObjClassSystem
 {
 public:

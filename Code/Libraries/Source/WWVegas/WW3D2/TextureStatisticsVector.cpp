@@ -10,6 +10,7 @@
 extern void *__cdecl operator new[](size_t size);
 extern void __cdecl operator delete[](void *pointer);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:
@@ -17,6 +18,7 @@ public:
 	void Release_Ref();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureClass : public TextureBaseClass
 {
 };
@@ -27,6 +29,7 @@ void TextureBaseClass::Add_Ref()
 }
 
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/ref_ptr.h
 class RefCountPtr
 {
 public:

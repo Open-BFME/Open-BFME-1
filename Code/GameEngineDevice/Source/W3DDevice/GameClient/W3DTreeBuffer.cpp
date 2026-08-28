@@ -1174,6 +1174,7 @@ void W3DTreeBuffer::freeTreeBuffers(void)
 //=============================================================================
 /** Check to see if a unit collided with a tree/grass/bush. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBuffer_unitMoved_Thunk.cpp
 // ?unitMoved@W3DTreeBuffer@@QAEXPAVObject@@@Z present-unmatched
 void W3DTreeBuffer::unitMoved(Object *unit)
 {

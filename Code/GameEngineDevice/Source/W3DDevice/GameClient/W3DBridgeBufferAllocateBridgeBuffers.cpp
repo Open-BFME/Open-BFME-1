@@ -8,6 +8,7 @@
 #include "W3DDevice/GameClient/W3DBridgeBuffer.h"
 #undef DX8VertexBufferClass
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
 class DX8VertexBufferClass : public ZH_DX8VertexBufferClass {
 public:
     enum UsageType { USAGE_DEFAULT=0, USAGE_DYNAMIC=1, USAGE_SOFTWAREPROCESSING=2, USAGE_NPATCHES=4 };

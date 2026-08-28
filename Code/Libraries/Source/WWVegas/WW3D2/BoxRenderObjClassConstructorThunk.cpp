@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0BoxRenderObjClass@@: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
 
 struct W3dBoxStruct;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/boxrobj.h
 class BoxRenderObjClass
 {
 public:

@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?Create_Render_Obj@W3DAssetManager@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DAssetManager.cpp
 // W3DAssetManager::Create_Render_Obj scaled/recolored path — retail 0x009004A0 size 1213
 // Exact body; clean C++ blocked on SEH + AsciiString vectors + munge cache.
 
 class RenderObjClass;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DAssetManager.h
 class W3DAssetManager {
 public:
 	RenderObjClass *Create_Render_Obj(void);

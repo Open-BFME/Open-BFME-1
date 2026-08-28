@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Add_Outline@Render2DClass@@: Code/Libraries/Source/WWVegas/WW3D2/render2d.cpp
 
 // BFME emits the three-argument outline overload directly instead of routing
 // it through the UV overload found in the Zero Hour source.  The four line
@@ -16,6 +17,7 @@ public:
 	float Y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/rect.h
 class RectClass
 {
 public:
@@ -25,6 +27,7 @@ public:
 	float Bottom;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h
 class Render2DClass
 {
 public:

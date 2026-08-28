@@ -399,6 +399,7 @@ int GameFileClass::Read(void *buffer, int len)
 //-------------------------------------------------------------------------------------------------
 /** Seek. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/GameFileClassSeek.cpp
 // ?Seek@GameFileClass@@UAEHHH@Z present-unmatched
 int GameFileClass::Seek(int pos, int dir) 
 {

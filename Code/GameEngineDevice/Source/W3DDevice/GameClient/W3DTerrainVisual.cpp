@@ -161,6 +161,7 @@ static TestSeismicFilter testSeismicFilter;
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisualCtor.cpp
 // ??0W3DTerrainVisual@@ present-unmatched
 W3DTerrainVisual::W3DTerrainVisual()
 {
@@ -928,6 +929,7 @@ void W3DTerrainVisual::addWaterVelocity( Real worldX, Real worldY,
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisualGetWaterGridHeight.cpp
 // ?getWaterGridHeight@W3DTerrainVisual@@ present-unmatched
 Bool W3DTerrainVisual::getWaterGridHeight( Real worldX, Real worldY, Real *height)
 {
@@ -944,6 +946,7 @@ Bool W3DTerrainVisual::getWaterGridHeight( Real worldX, Real worldY, Real *heigh
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisualSetRawMapHeight.cpp
 // ?setRawMapHeight@W3DTerrainVisual@@ present-unmatched
 void W3DTerrainVisual::setRawMapHeight(const ICoord2D *gridPos, Int height)
 {
@@ -1093,6 +1096,7 @@ void W3DTerrainVisual::removeFactionBibDrawable(Drawable *factionBuilding)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisualRemoveFactionBib.cpp
 // ?removeFactionBib@W3DTerrainVisual@@ present-unmatched
 void W3DTerrainVisual::removeFactionBib(Object *factionBuilding)
 {

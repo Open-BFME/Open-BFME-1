@@ -55,6 +55,7 @@
 
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ??0W3DOverlordAircraftDrawModuleData@@ present-unmatched
 W3DOverlordAircraftDrawModuleData::W3DOverlordAircraftDrawModuleData()
 {

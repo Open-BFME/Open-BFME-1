@@ -97,6 +97,7 @@ MatBufferClass::~MatBufferClass(void)
 	}
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/MeshMatDescSetMaterial.cpp
 // ?Set_Element@MatBufferClass@@QAEXHPAVVertexMaterialClass@@@Z present-unmatched
 void MatBufferClass::Set_Element(int index,VertexMaterialClass * mat)
 {
@@ -124,6 +125,7 @@ VertexMaterialClass * MatBufferClass::Peek_Element(int index)
 **
 **
 **************************************************************************************************/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/TexBufferClassCtorThunk.cpp
 // ??0TexBufferClass@@ present-unmatched
 TexBufferClass::TexBufferClass(const TexBufferClass & that) :
 	ShareBufferClass<TextureClass *>(that)
@@ -377,6 +379,7 @@ void MeshMatDescClass::Reset(int polycount,int vertcount,int passcount)
 	}
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/MeshMatDescInitAlternateThunk.cpp
 // ?Init_Alternate@MeshMatDescClass@@QAEXAAV1@0@Z present-unmatched
 void MeshMatDescClass::Init_Alternate(MeshMatDescClass & default_materials,MeshMatDescClass & alternate_materials)
 {
@@ -518,6 +521,8 @@ void MeshMatDescClass::Set_Single_Shader(ShaderClass shader,int pass)
 	Shader[pass] = shader;
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/MeshMatDescSetMaterial.cpp
+// ?Set_Material@MeshMatDescClass@@QAEXHPAVVertexMaterialClass@@H@Z present-unmatched
 void MeshMatDescClass::Set_Material(int vidx,VertexMaterialClass * vmat,int pass)
 {
 	MatBufferClass * mats = Get_Material_Array(pass,true);
@@ -991,6 +996,7 @@ void MeshMatDescClass::Post_Load_Process(bool lighting_enabled,MeshModelClass * 
 	}	
 }
 
+// byte-exact reconstruction: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp
 // ?Configure_Material@MeshMatDescClass@@IAEXPAVVertexMaterialClass@@H_N@Z present-unmatched
 void MeshMatDescClass::Configure_Material(VertexMaterialClass * mtl,int pass,bool lighting_enabled)
 {
@@ -1008,6 +1014,7 @@ void MeshMatDescClass::Configure_Material(VertexMaterialClass * mtl,int pass,boo
 	}
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/MeshMatDescClass_Do_Mappers_Need_Normals_Thunk.cpp
 // ?Do_Mappers_Need_Normals@MeshMatDescClass@@QAE_NXZ present-unmatched
 bool MeshMatDescClass::Do_Mappers_Need_Normals(void)
 {

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?update@W3DSnowManager@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DSnow.cpp
 
 // Retail 0x00725AC0. W3DSnowManager::update -- ZH's
 //   m_time += WW3D::Get_Frame_Time() / 1000.0f;
@@ -10,6 +11,7 @@
 
 extern "C" double __cdecl fmod(double, double);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
 public:
@@ -21,6 +23,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DSnow.h
 class W3DSnowManager
 {
 public:

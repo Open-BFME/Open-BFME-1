@@ -54,6 +54,7 @@
 
 //-----------------------------------------------------------------------------
 // srj sez: hack festival :-(
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameMemory.h
 class STLSpecialAlloc
 {
 public:

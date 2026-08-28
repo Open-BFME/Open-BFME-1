@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?setFullyObscuredByShroud@W3DTankTruckDraw@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankTruckDraw.cpp
 // Open-BFME5: W3DTankTruckDraw::setFullyObscuredByShroud, retail 0x007815E0,
 // zh_sweep packet 007815e0.
 //
@@ -15,6 +16,7 @@
 
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 class W3DModelDraw
 {
 public:
@@ -27,6 +29,7 @@ protected:
 	Bool m_fullyObscuredByShroud;									///< +0x2D
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DTankTruckDraw.h
 class W3DTankTruckDraw : public W3DModelDraw
 {
 public:

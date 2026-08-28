@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?AssertBegin@Debug@@SAAAV1@PBDH0@Z: Code/Libraries/Source/WWVegas/WWDebug/debug_debug.cpp
 // Open-BFME5: lift the exact retail Debug::AssertBegin MASM body.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
 class Debug
 {
 public:
