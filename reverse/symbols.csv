@@ -12404,6 +12404,7 @@ name,address,notes
 ?attach@Rva00061BB0Owner@@AAEXPAX@Z,0x00850670,one-argument __thiscall callee of the 0x00061BB0 constructor (U3_small_ctors.cpp); identity not recovered
 ?attach@Rva00065C50Owner@@AAEXPAX@Z,0x009D6290,one-argument __thiscall callee of the 0x00065C50 constructor (U3_small_ctors.cpp); identity not recovered
 ?attachFile@ArchiveFile@@QAEXPAVFile@@@Z,0x009CE560,closes any previous file then stores the new one
+?attachModel@Drawable@@QAEXVAsciiString@@_NH@Z,0x00042EDD,ILT thunk to BFME Drawable attachment body 0x00416A30; walks draw modules and passes model name, random-rotation flag, and expiration timer
 ?attachToObject@ParticleSystem@@QAEXPBVObject@@@Z,0x00013C82,ILT thunk to ParticleSystem::attachToObject body at 0x005BE170, resolved via decode_calls at the tossEmitters call site
 ?attack@AIGroupGroupAttackObjectPrivateShim@@QAEX_NPAVObject@@HW4CommandSourceType@@@Z,0x00155DA0,AIGroup groupAttackObjectPrivate incremental-link thunk target through a TU-local forwarding shim
 ?attackOptimizedTarget@AIStateTargetDispatch@@QAEXPAVThing@@@Z,0x0027E070,address-derived optimized target dispatch callee

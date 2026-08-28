@@ -8,6 +8,13 @@ struct Coord3D
 
 class Matrix3D;
 
+class Object
+{
+public:
+	unsigned char m_unmodelled[0x38];
+	Coord3D m_position;
+};
+
 class TacticalView
 {
 public:
@@ -32,6 +39,7 @@ class CameraShakerVolumeFXNugget
 public:
 	virtual void v00();
 	virtual void doFXPos(const Coord3D *, const Matrix3D *, float, const Coord3D *) const;
+	virtual void doFXObj(const Object *, const Object *) const;
 
 private:
 	unsigned char m_unmodelled[0xBC];
@@ -46,4 +54,12 @@ void CameraShakerVolumeFXNugget::doFXPos(const Coord3D *primary,
 {
 	if (primary)
 		TheTacticalView->addCameraShakerVolume(primary, m_fieldC0, m_fieldC4, m_fieldC8);
+}
+
+// ?doFXObj@CameraShakerVolumeFXNugget@@UBEXPBVObject@@0@Z
+void CameraShakerVolumeFXNugget::doFXObj(const Object *primary, const Object *) const
+{
+	if (primary)
+		TheTacticalView->addCameraShakerVolume(&primary->m_position,
+			m_fieldC0, m_fieldC4, m_fieldC8);
 }
