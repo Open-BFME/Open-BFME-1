@@ -72204,6 +72204,7 @@ name,address,notes
 ?bfmeAllocQG@@YAPAXHI@Z,0x00030940,pin
 ?bfmeAllocQL@@YAPAXHPAX@Z,0x00030940,pin
 ?bfmeAllocQT@@YAPAXHPAX@Z,0x00030940,pin
+?bfmeAllocRU@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocate@Gen_007b9e80@@AAE_NHH@Z,0x0003FC7E,Open-BFME5 the allocate the reserve at 0x007B9E80 calls
 ?bfmeAllocate@Gen_009073d0@@AAE_NHH@Z,0x00905DC0,Open-BFME5 the allocate the reserve at 0x009073D0 calls
 ?bfmeAllocate@Gen_00930d00@@AAE_NHH@Z,0x009304A0,Open-BFME5 the allocate the reserve at 0x00930D00 calls
@@ -72228,6 +72229,7 @@ name,address,notes
 ?bfmeApplyCircle@Gen_008812D0@@QAEXHHHH_N@Z,0x00881B90,Open-BFME5 semantic identity for the exact TaintManager grid circle-update wrapper already claimed under an address-derived class
 ?bfmeArenaReady@@YAXXZ,0x00897050,Open-BFME5 the routine the arena initialiser at 0x00897120 tail-calls
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
+?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
 ?bfmeAssign@BfmeCopyElementB@@QAEXPAU1@@Z,0x0000D4CC,Open-BFME5 the element assign the copy loops call
 ?bfmeAssign@BfmeCopyElementC@@QAEXPAU1@@Z,0x000470F0,Open-BFME5 the element assign the copy loops call
@@ -72238,6 +72240,7 @@ name,address,notes
 ?bfmeAssign@BfmeCopySubB@@QAEXPAU1@@Z,0x000FFA60,Open-BFME5 helper assignment body used by BfmeCopyElementA
 ?bfmeAssignOT@BfmeThingOT@@QAEXPAD0@Z,0x0002B297,pin
 ?bfmeAssignPL@BfmeThingPL@@QAEXPAD0@Z,0x0002B297,pin
+?bfmeAtRT@BfmeMapRT@@QAEPAVBfmeSlotRT@@PAX0@Z,0x0002D74A,pin
 ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z,0x0000C0A4,Open-BFME5 ILT thunk to body 0x00497CE0; ??0BfmeQuickMatchScreenBase@@QAE@PAX@Z at 0x00470620 calls it on this with its own argument as the last thing it does; address-derived name
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
 ?bfmeBaseUpdate@Gen009D6330@@QAEXPAXPBXI@Z,0x009D6E50,address-derived base update target from the direct REL32 call at retail 0x009D634E
@@ -72392,6 +72395,7 @@ name,address,notes
 ?bfmeFind@BfmeFinder@@QAEPAXXZ,0x000265A8,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 call
 ?bfmeFind@Gen_003C02B0@@AAEPAVBfmeItemAN@@H@Z,0x00032A56,Open-BFME5 the ICF thunk (to 0x00432A56) the remove at 0x003C02B0 looks its item up through
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
+?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
 ?bfmeFindRecord@FontLibraryBFMERetail@@AAEPAUBfmeFontRecord@@PAVAsciiString@@M@Z,0x000035A3,Open-BFME5 ILT thunk to body 0x00476E20; FontLibraryBFMERetail::getFont at 0x004772D0 calls it on this with the name and size and reads a byte at +8 of what it returns; address-derived name
 ?bfmeFinish@Gen_0015BCB0@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 tail-jump to
 ?bfmeFinish@Gen_00189D00@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finder at 0x00189D00 tail-jumps to
@@ -72878,6 +72882,7 @@ name,address,notes
 ?bfmeUnregister@@YAXPAVBfmeSecondZ@@@Z,0x00035328,Open-BFME5 the unregister the two-member vector destructor at 0x0035B8A0 calls on its second member
 ?bfmeUnregisterY@@YAXPAVBfmeSecondY@@@Z,0x0002F0EF,Open-BFME5 the unregister the two-member vector destructor at 0x0035B960 calls on its second member
 ?bfmeUpdate@BfmeCellFC@@QAEXH_N@Z,0x00881BE0,Open-BFME5 semantic identity for exact address-derived cell update body at 0x00881BE0
+?bfmeUseRT@BfmeSlotRT@@QAEXXZ,0x0003A427,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVisit@BfmeInnerIterable@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x000EDAB0,"address-derived inner-list visitor callee of BfmeIterableObject::bfmeIterate; retail reaches it through the low-RVA thunk at 0x0002DC1D"
 ?bfmeVisit@Gen_0038D000@@AAEXPAVBfmeNodeR@@@Z,0x0001D0DE,Open-BFME5 the ICF thunk (to 0x0038B0C0) the clear at 0x0038D000 calls on this per node
@@ -73912,6 +73917,7 @@ name,address,notes
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
 ?g_bfmeUnsignedShortFormat@@3QBDB,0x01144328,address-derived unsigned-short format string from retail 0x009D95BF
 ?g_bfmeWordFormat@@3QBDB,0x011442A8,address-derived word format string from the DIR32 operand at retail 0x009D93C0
+?g_bfmeWorldRV@@3PAUBfmeWorldRV@@A,0x00EF33F8,pin
 ?g_defaultRespawnPolicy@@3URespawnPolicy@@A,0x012ED8B8,RespawnBody default six-dword policy
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
