@@ -72395,6 +72395,7 @@ name,address,notes
 ?bfmeDispatchB@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x00028501,Open-BFME5 ILT the range dispatcher at 0x00437D30 calls
 ?bfmeDispatchC@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x00027138,Open-BFME5 ILT the range dispatcher at 0x00575A50 calls
 ?bfmeDoAXA@@YAXPAUBfmeBoxAXA@@PAX111@Z,0x0093B340,pin
+?bfmeDoBCC@@YAXPAX@Z,0x0004B2BD,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -72819,6 +72820,7 @@ name,address,notes
 ?bfmeLookup_001c63d0@@YAHPAX@Z,0x0004B218,Open-BFME5 ILT the bit setter at 0x001C63D0 calls
 ?bfmeMakeALA@@YAPAXPAX@Z,0x00024CA8,pin
 ?bfmeMakeASB@@YAPAXHH@Z,0x000283D5,pin
+?bfmeMakeBCE@@YAPAXXZ,0x007F4D50,pin
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
@@ -72865,6 +72867,7 @@ name,address,notes
 ?bfmeNext@Gen_000B56C0@@AAEXXZ,0x0001AD2A,Open-BFME5 the member the flag-then-forward wrapper at 0x000B56C0 tail-jumps to
 ?bfmeNext@Gen_000B56D0@@AAEXXZ,0x0003990A,Open-BFME5 the member the flag-then-forward wrapper at 0x000B56D0 tail-jumps to
 ?bfmeNextAQB@@YAPAUBfmeNodeAQB@@PAU1@@Z,0x0082B870,pin
+?bfmeNextBCA@@YAXPAD@Z,0x00049413,pin
 ?bfmeNodeAllocLarge@@YAPAXI@Z,0x00881F30,Open-BFME5 the STLport large-block allocator the 0x84-byte clone-node body calls
 ?bfmeNodeAllocSmall@@YAPAXI@Z,0x0082E540,Open-BFME5 the STLport node allocator the red-black clone-node bodies call
 ?bfmeNoteWD@BfmeThingWD@@QAEXXZ,0x0002191D,pin
@@ -72944,6 +72947,7 @@ name,address,notes
 ?bfmeSendATB@@YAXH@Z,0x000277E1,pin
 ?bfmeSendAXB@BfmeThingAXB@@QAEXPAVBfmeSrcAXB@@PAUBfmeFlagsAXB@@@Z,0x0001C030,pin
 ?bfmeSendAZB@@YAXHPAX0@Z,0x00018962,pin
+?bfmeSendBCF@BfmeSubBCF@@QAEXPAX@Z,0x009CBC90,pin
 ?bfmeSendRM@BfmeSinkRM@@QAEXPAXH@Z,0x00006613,pin
 ?bfmeSetAKA@BfmeInnerAKA@@QAEXH@Z,0x00024D70,pin
 ?bfmeSetANB@BfmeSlotANB@@QAEXPAXH@Z,0x00887D20,pin
@@ -72990,6 +72994,8 @@ name,address,notes
 ?bfmeStepAED@BfmeSubAED@@QAEXH@Z,0x00015546,pin
 ?bfmeStepARA@BfmeThingARA@@QAEXXZ,0x000312A0,pin
 ?bfmeStepAZA@BfmeThingAZA@@QAEXXZ,0x00048D6A,pin
+?bfmeStepBCB@BfmeThingBCB@@QAEXXZ,0x0003D0BE,pin
+?bfmeStepBCD@BfmeThingBCD@@QAEXXZ,0x009337E0,pin
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
@@ -73002,6 +73008,7 @@ name,address,notes
 ?bfmeStopMovie@Display@@QAEXXZ,0x0001992F,Open-BFME5 ILT thunk to body 0x0040EFF0; ?hide@Shell@@QAEX_N@Z at 0x0057F5B0 calls it on TheDisplay with no arguments; address-derived name
 ?bfmeStopTwoAQA@BfmeSubAQA@@QAEXXZ,0x000263EB,pin
 ?bfmeSwapEnds@@YAXPAPAPAVBfmeOwnedI@@0@Z,0x00032FE7,Open-BFME5 the ICF thunk (to 0x00432FE7) the swap in the clear at 0x003C1190 calls for the third pair
+?bfmeTailBCD@BfmeThingBCD@@QAEXXZ,0x0001CD8C,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
