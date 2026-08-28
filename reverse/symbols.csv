@@ -74241,6 +74241,7 @@ name,address,notes
 ?doFreezeTime@ScriptEngine@@QAEXXZ,0x00465B80,pin ScriptActions doFreezeTime wrapper
 ?doFxAtBones@FXListAtBonePosFXNugget@@IBEXPBVObject@@H@Z,0x00010CC6
 ?doGameStart@@YAXXZ,0x004D1B00,Open-BFME5 MapSelectMenu.cpp file-static; target of the rel32 at 0x004D1BE8 inside MapSelectMenuUpdate. Also referenced from 0x004D1B0C which reads the same startGame flag 0x012F3E6D. MainMenu.cpp declares a static of this name too - if that one ever needs pinning it is a second row here, not an edit to this one
+?doInit@BfmeThingDE0@@QAEXXZ,0x0003FA30,pin
 ?doNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@@Z,0x0001FC3F
 ?doNamedMapReveal@ScriptEnginedoNamedMapRevealShim@@QAEXABVAsciiString@@@Z,0x0034D200,ScriptEngine::doNamedMapReveal incremental-link thunk target through a TU-local forwarding shim
 ?doPhaseStuff@StructureCollapseUpdate@@IAEXW4StructureCollapsePhaseType@@PBUCoord3D@@@Z,0x00022872,StructureCollapse initial-phase ILT thunk
@@ -74490,6 +74491,7 @@ name,address,notes
 ?extraTail@W3DSnowManager@@QAEXXZ,0x000092AF,Open-BFME5 ILT 0x000092AF used by W3DSnowManager::update
 ?f_00881eb0@@YAXPAX@Z,0x00881EB0,gen-shim call target
 ?f_00881ef0@@YAXPAX@Z,0x00881EF0,gen-shim call target
+?fallback@BfmeSubD4C@@QAE_NXZ,0x0002FE05,pin
 ?fetch@GenKey@@QAEHPA_N@Z,0x00009304,S3 table-lookup-with-fallback family callee (address-derived name)
 ?fetchA@Rva00677280Msg@@QAEEXZ,0x00028A1F,S3 wire-record fill family fetch callee (address-derived name)
 ?fetchA@Rva006772F0Msg@@QAEEXZ,0x000058B7,S3 wire-record fill family fetch callee (address-derived name)
@@ -74725,6 +74727,7 @@ name,address,notes
 ?g_bfmeLookRP@@3PAVBfmeLookRP@@A,0x00EF076C,pin
 ?g_bfmeLookRQ@@3PAVBfmeLookRQ@@A,0x00EF076C,pin
 ?g_bfmeMakerAWB@@3PAVBfmeMakerAWB@@A,0x00EF12CC,pin
+?g_bfmeMgr12F0898@@3PAUBfmeGlobalMgr12F0898@@A,0x012F0898,pin
 ?g_bfmeMgr12F0898@@3PAVBfmeMgrEB2@@A,0x00EF0898,pin
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
@@ -77175,6 +77178,7 @@ name,address,notes
 ?primaryValueFor@Rva0036AF30Item@@QBEHPBVObject@@@Z,0x00025D92,retail jump thunk to the byte-verified primary state lookup at 0x003690A0
 ?privateDock@AIUpdateInterface@@MAEXPAVObject@@W4CommandSourceType@@@Z,0x0004872F,Open-BFME5 ILT from zh_sweep packet 002c5820
 ?probed@NAT@@IAEXH@Z,0x00671DE0,processGlobalMessage callee (ILT body)
+?process@BfmeSubED8@@QAEXPAX@Z,0x000283F8,pin
 ?processAck@Connection@@QAEPAVNetCommandRef@@GEI@Z,0x00661CC0,the three-argument form; BFME passes the ack's original execution frame as well as the command id and player id
 ?processChat@ConnectionManager@@QAEXPAVNetChatCommandMsg@@@Z,0x00667060,EXTRA - wrong ledger name resolvePlayerFromName: dispatcher case 14 (CHAT) arm 0x0066A5C4 -> ILT 0x00004A07 -> here; formats L'[%ls] %ls' (0x01117AEC) with getPlayerNameForSlot; resolves the slot name to a Player via nameToKey/findPlayerWithNameKey; tests the local bit of the player mask then plays 0x00662CE0 and posts the line; ZH processChat is public
 ?processContextSensitiveButtonClick@ControlBar@@QAE?AW4CBCommandStatus@@PAVGameWindow@@W4GadgetGameMessage@@@Z,0x00046F88
@@ -77217,6 +77221,7 @@ name,address,notes
 ?qr2_buffer_add@@YAXPAXPBD@Z,0x00855360,Open-BFME5 zh_sweep packet 0064e570 callee pin
 ?qr2_keybuffer_add@@YAXPAXH@Z,0x00855330,Open-BFME5 zh_sweep packet 00642cf0 callee pin
 ?query@BfmeHelperD77@@QAEDPAX@Z,0x0003E80B,pin
+?query@BfmeSub1CC_EC3@@QAEMPAX@Z,0x000230AB,pin
 ?query@Q2FlagOwner@@QAE_NH@Z,0x00416FC0,byte-returning __thiscall predicate taking one index; every row of the 34-byte queried-index assignment family (Q2QueriedIndexAssignments.cpp) calls this one body; address-derived name; identity not recovered
 ?queue@TransportQueueSendShim@@QAE_NIGPBEH@Z,0x00683830,Transport queueSend incremental-link thunk target through a TU-local forwarding shim
 ?queuePacket@LANAPI@@QAEXPAVLANAPIRequestPacket@@H@Z,0x0002B599,RequestLobbyLeave packet call; ILT thunk for LANAPI::sendMessage body 0x00684CF0
@@ -78513,6 +78518,7 @@ _audioManagerAddEventHelper@16,0x00020B08,AudioManager::addAudioEvent stdcall he
 _bfmeAppend,0x009D9180,address-derived varargs formatting helper target from the direct REL32 calls at retail 0x009D936D and 0x009D9386
 _bfmeArrayNew,0x00881F70,address-derived array allocator target from the direct REL32 call at retail 0x009D6259
 _bfmeCbAKC,0x00032155,pin
+_bfmeConst1075350,0x01075350,pin
 _bfmeDeleteBlock,0x00881EF0,address-derived release target from the direct REL32 call at retail 0x009D1A4C
 _bfmeDirectInput8Create@20,0x009F9AF0,undecorated alias for the DirectInput8Create import stub (see Win32DIKeyboardOpen.cpp)
 _bfmeDtorCbDLA,0x00002F5E,pin
