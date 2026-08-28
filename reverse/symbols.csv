@@ -72404,6 +72404,11 @@ name,address,notes
 ?bfmeDoBDB@BfmeSubBDB@@QAEXPAXH@Z,0x0001A4F6,pin
 ?bfmeDoBDF@@YAXPAX0@Z,0x00041164,pin
 ?bfmeDoBDG@BfmeThingBDG@@QAEXXZ,0x0003FE5E,pin
+?bfmeDoBGA@@YGXPAX0H@Z,0x0001366F,pin
+?bfmeDoBGB@BfmeSubBGB@@QAEXHH@Z,0x00014506,pin
+?bfmeDoBGC@BfmeSubBGC@@QAEXPAX@Z,0x000068B1,pin
+?bfmeDoBGD@BfmeSinkBGD@@QAEXPAUBfmePartBGD@@0@Z,0x0003C2E5,pin
+?bfmeDoBGE@BfmeSubBGE@@QAEXPAXH@Z,0x007E8900,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -73013,6 +73018,7 @@ name,address,notes
 ?bfmeStepBCD@BfmeThingBCD@@QAEXXZ,0x009337E0,pin
 ?bfmeStepBFF@BfmeSubBFF@@QAEXXZ,0x00888840,pin
 ?bfmeStepBFH@BfmeThingBFH@@QAEXXZ,0x00025EFF,pin
+?bfmeStepBGG@BfmeThingBGG@@QAEXXZ,0x00015E0B,pin
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
@@ -74117,6 +74123,7 @@ name,address,notes
 ?g_bfmeUnsignedByteFormat@@3QBDB,0x011442BC,address-derived unsigned-byte format string from the DIR32 operand at retail 0x009D943A
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
 ?g_bfmeUnsignedShortFormat@@3QBDB,0x01144328,address-derived unsigned-short format string from retail 0x009D95BF
+?g_bfmeWhatBGE@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWordFormat@@3QBDB,0x011442A8,address-derived word format string from the DIR32 operand at retail 0x009D93C0
 ?g_bfmeWorldRV@@3PAUBfmeWorldRV@@A,0x00EF33F8,pin
 ?g_defaultRespawnPolicy@@3URespawnPolicy@@A,0x012ED8B8,RespawnBody default six-dword policy
