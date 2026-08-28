@@ -72406,6 +72406,7 @@ name,address,notes
 ?bfmeDropVE@BfmeSubVE@@QAEXPAX@Z,0x0000871A,pin
 ?bfmeDropXA@BfmeListXA@@QAEXPAX@Z,0x0001FF82,pin
 ?bfmeDropZB@BfmeSubZB@@QAEXPAX@Z,0x000203D8,pin
+?bfmeDtorAEC@BfmeNodeAEC@@QAEXXZ,0x00030841,pin
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUF@BfmeThingUF@@QAEXXZ,0x00AB8350,pin
@@ -72606,6 +72607,7 @@ name,address,notes
 ?bfmeForward@Gen_00C71560Target@@QAEXXZ,0x009DB7A0,Open-BFME5 the member the singleton forwarder at 0x00C71560 tail-jumps to
 ?bfmeForward@Gen_00C71570Target@@QAEXXZ,0x009DB7A0,Open-BFME5 the member the singleton forwarder at 0x00C71570 tail-jumps to
 ?bfmeForward@Gen_00C71580Target@@QAEXXZ,0x009DB7A0,Open-BFME5 the member the singleton forwarder at 0x00C71580 tail-jumps to
+?bfmeFreeAEC@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeBlock@@YAXPAX@Z,0x00881EF0,Open-BFME5 the free the derived destructors at 0x00924090 and its siblings call
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
@@ -72922,6 +72924,7 @@ name,address,notes
 ?bfmeStep3@Gen_0077F000@@AAEXXZ,0x0001B32E,Open-BFME5 ILT the three-step runner at 0x0077F000 tail-jumps to
 ?bfmeStep3@Gen_007892D0@@AAEXXZ,0x0004264A,Open-BFME5 ILT the three-step runner at 0x007892D0 tail-jumps to
 ?bfmeStep@Glo012F1024Entry@@QAEXXZ,0x00015F50,Open-BFME5 ILT thunk to body 0x003A7320; ?step@Glo012F1024Type@@QAEXXZ at 0x003B3900 tail-jumps into it on the selected 32-byte entry; address-derived name
+?bfmeStepAED@BfmeSubAED@@QAEXH@Z,0x00015546,pin
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
