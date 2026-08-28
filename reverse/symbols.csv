@@ -72351,6 +72351,7 @@ name,address,notes
 ?bfmeBaseCLA@BfmeThingCLA@@QAEXPAX@Z,0x00029311,pin
 ?bfmeBaseCLB@BfmeThingCLB@@QAEXPAX@Z,0x00029311,pin
 ?bfmeBaseCVE@BfmeThingCVE@@QAEXXZ,0x00013E58,pin
+?bfmeBaseDYE@BfmeThingDYE@@QAEXPAU1@@Z,0x00887B60,pin
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
 ?bfmeBaseSJ@BfmeThingSJ@@QAEXH@Z,0x0090E3D0,pin
 ?bfmeBaseSK@BfmeThingSK@@QAEXH@Z,0x009DB4E0,pin
@@ -73375,6 +73376,7 @@ name,address,notes
 ?bfmeSetBTB@BfmeSubBTB@@QAEXPAX0@Z,0x00025306,pin
 ?bfmeSetBZC@BfmeSubBZC@@QAEXH@Z,0x00802C30,pin
 ?bfmeSetCBE@@YAXPAXH@Z,0x008FE0E0,pin
+?bfmeSetDYF@BfmeGlobDYF@@QAEX_N@Z,0x0003D578,pin
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
 ?bfmeSetOneCAC@BfmePairCAC@@QAEXHH@Z,0x0004A43A,pin
 ?bfmeSetQQ@BfmeThingQQ@@QAEXPBDI@Z,0x0088A8F0,pin
@@ -74641,6 +74643,7 @@ name,address,notes
 ?g_bfmeModeAZC@@3PAUBfmeModeAZC@@A,0x00EF0FE0,pin
 ?g_bfmeObjDXI@@3PAVBfmeGlobDXI@@A,0x00EF4B70,pin
 ?g_bfmeObjDXJ@@3PAUBfmeHeldDXJ@@A,0x00EF4B98,pin
+?g_bfmeObjDYF@@3PAVBfmeGlobDYF@@A,0x00EF4C5C,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
@@ -78345,6 +78348,7 @@ __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
 __imp__bfmeCloseDWE@4,0x00F590C8,pin
 __imp__bfmeCloseDXK@4,0x00F591A8,pin
 __imp__bfmeCmpDWK,0x00F5933C,pin
+__imp__bfmeCmpDYF,0x00F5933C,pin
 __imp__bfmeCpyDYC,0x00F593C8,pin
 __imp__bfmeCvtDXI,0x00F59384,pin
 __imp__bfmeDoDWH@0,0x00F596D8,pin
@@ -78353,6 +78357,7 @@ __imp__bfmeEnterDWA@4,0x00F58D18,pin
 __imp__bfmeEnterDWD@4,0x00F58D18,pin
 __imp__bfmeFreeDXC,0x00F593A0,pin
 __imp__bfmeFreeDYC,0x00F593A8,pin
+__imp__bfmeIncDYE@4,0x00F58E5C,pin
 __imp__bfmeInitDWA@4,0x00F58E5C,pin
 __imp__bfmeInitDXB@4,0x00F58D0C,pin
 __imp__bfmeLeaveDVC@4,0x00F58E74,pin
@@ -78360,6 +78365,7 @@ __imp__bfmeLeaveDWD@4,0x00F58E74,pin
 __imp__bfmeMaskDXF@4,0x00F58DAC,pin
 __imp__bfmeOnDWJ@4,0x00F59090,pin
 __imp__bfmeQueryDXE@4,0x00F591B4,pin
+__imp__bfmeScanDYG,0x00F59494,pin
 __imp__bfmeSetDWI@8,0x00F58F64,pin
 __imp__bfmeStartDWB@4,0x00F58D0C,pin
 __imp__bfmeStatusDXD@4,0x00F5958C,pin
@@ -78415,6 +78421,7 @@ _bfmeDtorDAC,0x00030652,pin
 _bfmeDtorDAD,0x00030652,pin
 _bfmeDtorDAE,0x00891B80,pin
 _bfmeEmptyANB,0x00C7301C,pin
+_bfmeFmtDYG,0x00CF71E0,pin
 _bfmeInfoDCE,0x00CEA6A8,pin
 _bfmeInfoDCF,0x00D14768,pin
 _bfmeInfoDCG,0x00D16D70,pin
@@ -78445,6 +78452,7 @@ _bfmeStrDULc,0x00D1D810,pin
 _bfmeStrDULd,0x00D1D820,pin
 _bfmeStrDULe,0x00D1D834,pin
 _bfmeStrDWK,0x00CBBAA8,pin
+_bfmeStrDYF,0x00C80FB4,pin
 _bfmeTagANB,0x00C9E038,pin
 _bfmeTagAPB,0x00DDFC30,pin
 _bfmeTagBNH,0x00D1DC1C,pin
