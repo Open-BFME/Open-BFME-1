@@ -72571,6 +72571,7 @@ name,address,notes
 ?bfmeDtorCUA@BfmeBaseCUA@@QAEXXZ,0x00013994,pin
 ?bfmeDtorCUB@BfmeBaseCUB@@QAEXXZ,0x00013994,pin
 ?bfmeDtorCUC@BfmeBaseCUC@@QAEXXZ,0x00013994,pin
+?bfmeDtorCUD@BfmeBaseCUD@@QAEXXZ,0x00013994,pin
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUF@BfmeThingUF@@QAEXXZ,0x00AB8350,pin
@@ -78162,6 +78163,8 @@ _bfmeVftCUBa,0x00D0F97C,pin
 _bfmeVftCUBb,0x00D1126C,pin
 _bfmeVftCUCa,0x00D0F9AC,pin
 _bfmeVftCUCb,0x00D1126C,pin
+_bfmeVftCUDa,0x00D0F9AC,pin
+_bfmeVftCUDb,0x00D1126C,pin
 _bfmeVftSA,0x00C8F4F0,pin
 _bfmeVftSE,0x00D0C64C,pin
 _bfmeVftSF,0x00D0C878,pin
