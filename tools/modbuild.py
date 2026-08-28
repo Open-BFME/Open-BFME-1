@@ -64,21 +64,15 @@ TARGET_HORPLUS_WIDTH_TAIL = 0x0073DDF8
 TARGET_HORPLUS_CAMERA_TAIL = 0x00742609
 TARGET_HORPLUS_DIRECT_TRANSFORM_TAIL = 0x00931304
 
-# 041-ultrawide-ui.  The parser entry is hooked before its retail width/height
-# scaling, and its internal tail is after retail has stored root x/y.  The
-# scheme entries are the three exact BFME ControlBarSchemeManager bodies; the
-# tails are their common exits after ControlBarScheme::init has consumed the
-# temporary logical Display width.  ControlBar::init's tail follows both
-# marker-position writes.
-TARGET_UI_PARSE_ENTRY = 0x004854F0
-TARGET_UI_PARSE_TAIL = 0x0048569B
-TARGET_UI_SCHEME_BY_NAME_ENTRY = 0x004AD880
-TARGET_UI_SCHEME_BY_NAME_TAIL = 0x004AD913
-TARGET_UI_SCHEME_BY_TEMPLATE_ENTRY = 0x004ADE40
-TARGET_UI_SCHEME_BY_TEMPLATE_TAIL = 0x004ADFF1
-TARGET_UI_SCHEME_BY_PLAYER_ENTRY = 0x004AE080
-TARGET_UI_SCHEME_BY_PLAYER_TAIL = 0x004AE2B9
-TARGET_UI_CONTROLBAR_INIT_TAIL = 0x004A1DA6
+# 042-ultrawide-render.  BFME has two Render2D bodies: the exact sentence
+# renderer writes a full-screen viewport at 0x00933FD0, while the incremental
+# link's W3DDisplay renderer writes one at 0x00934AD5.  Both hooks are placed
+# immediately after DX8Wrapper::Set_Viewport, and the surface-copy hook covers
+# ready Image objects which bypass either vertex renderer.
+TARGET_UI_COORDINATE_RANGE = 0x00933A50
+TARGET_UI_SENTENCE_VIEWPORT = 0x00933FD5
+TARGET_UI_RENDER_VIEWPORT = 0x00934ADA
+TARGET_UI_COPY_SURFACE = 0x00904D20
 
 # No CRT startup, no exceptions, no RTTI, no runtime library at all. /GS is off
 # by default in 7.1 and it rejects /GS-, so there is nothing to turn off there.
@@ -151,10 +145,11 @@ def undefined_externals(obj):
     return sorted(unresolved)
 
 
-def compile_payload(source, obj, probe=False):
+def compile_payload(source, obj, probe=False, defines=()):
     command = _msvc("cl.exe") + CL_FLAGS
     if probe:
         command.append("-DPROBE")
+    command += [f"-D{define}" for define in defines]
     command += [f"-Fo{toolchain.wine_path(obj)}", toolchain.wine_path(source)]
     _run(command, f"compiling {Path(source).name}")
 
@@ -248,13 +243,14 @@ def _rebase(image, delta):
         done += block
 
 
-def build_feature(pe, source, entry, hooks, probe=False):
+def build_feature(pe, source, entry, hooks, probe=False, defines=()):
     """Compile one feature's .cpp, lay it in the cave, and hook its entries.
 
     `hooks` is (target rva, exported name, shim arguments) per detour."""
     with tempfile.TemporaryDirectory() as tmp:
         stem = Path(source).stem
-        obj = compile_payload(source, Path(tmp) / f"{stem}.obj", probe=probe)
+        obj = compile_payload(source, Path(tmp) / f"{stem}.obj", probe=probe,
+                              defines=defines)
         image = link_payload(obj, entry, Path(tmp) / f"{stem}.exe")
         # The cave address is only knowable once every earlier blob is down, and
         # the blob has to be relocated to it before it is written.
@@ -308,18 +304,22 @@ def build_horplus(pe, feature_dir, probe=False):
     ), probe=probe)
 
 
-def build_ultrawide_ui(pe, feature_dir, probe=False):
-    return build_feature(pe, feature_dir / "src/ultrawide_ui.cpp", "ui_parse_begin", (
-        (TARGET_UI_PARSE_ENTRY, "ui_parse_begin", ("stack:0", "stack:1", "stack:2", "stack:3")),
-        (TARGET_UI_PARSE_TAIL, "ui_parse_end", ("ebp",)),
-        (TARGET_UI_SCHEME_BY_NAME_ENTRY, "ui_scheme_begin", ("ecx",)),
-        (TARGET_UI_SCHEME_BY_NAME_TAIL, "ui_scheme_end", ()),
-        (TARGET_UI_SCHEME_BY_TEMPLATE_ENTRY, "ui_scheme_begin", ("ecx",)),
-        (TARGET_UI_SCHEME_BY_TEMPLATE_TAIL, "ui_scheme_end", ()),
-        (TARGET_UI_SCHEME_BY_PLAYER_ENTRY, "ui_scheme_begin", ("ecx",)),
-        (TARGET_UI_SCHEME_BY_PLAYER_TAIL, "ui_scheme_end", ()),
-        (TARGET_UI_CONTROLBAR_INIT_TAIL, "ui_controlbar_markers", ("ebp",)),
-    ), probe=probe)
+def build_ultrawide_render(pe, feature_dir, probe=False, debug=False):
+    defines = ("ULTRAWIDE_UI_RENDER_DEBUG",) if debug else ()
+    return build_feature(pe, feature_dir / "src/ultrawide_render.cpp",
+                         "ui_render_viewport", (
+        # Set_Coordinate_Range is an entry hook: the payload changes only the
+        # full-screen range's right edge before retail computes scale/offset.
+        (TARGET_UI_COORDINATE_RANGE, "ui_coordinate_range", ("ecx", "stack:0")),
+        # At both renderer tails the preceding retail instruction has already
+        # submitted a full-screen viewport.  EBP/EDI are the two renderer this
+        # pointers at the respective post-call sites.
+        (TARGET_UI_SENTENCE_VIEWPORT, "ui_render_viewport", ("ebp",)),
+        (TARGET_UI_RENDER_VIEWPORT, "ui_render_viewport", ("edi",)),
+        # copySurfaceRects006e is cdecl with five dword arguments; the fourth
+        # is the destination BfmeRect pointer used by W3DDisplay::drawImage.
+        (TARGET_UI_COPY_SURFACE, "ui_copy_surface", ("stack:3",)),
+    ), probe=probe, defines=defines)
 
 
 FEATURES = {"020-gameresult": build_gameresult,
@@ -334,7 +334,7 @@ FEATURES = {"020-gameresult": build_gameresult,
 UNSHIPPED = {
     "030-netlatprobe": (build_netlatprobe, "an instrument: it writes tens of lines a second"),
     "040-horplus": (build_horplus, "a development camera modernization; build it to its own path"),
-    "041-ultrawide-ui": (build_ultrawide_ui, "a development centered UI modernization; build it to its own path"),
+    "042-ultrawide-render": (build_ultrawide_render, "a development renderer-level ultrawide UI modernization; build it to its own path"),
 }
 
 
@@ -347,6 +347,8 @@ def main():
                     help="also write mods/dist/ (the tracked, shippable build)")
     ap.add_argument("--probe", action="store_true",
                     help="drop end-of-game gates; diagnostic builds only")
+    ap.add_argument("--ui-render-debug", action="store_true",
+                    help="make 042-ultrawide-render use a diagnostic half-width viewport")
     ap.add_argument("--only", action="append", default=[],
                     help="build a subset — for bisection only, never for shipping")
     a = ap.parse_args()
@@ -368,7 +370,11 @@ def main():
         fn = FEATURES.get(name) or (UNSHIPPED[name][0] if name in UNSHIPPED else None)
         if fn is None:
             raise SystemExit(f"unknown feature: {name}")
-        info = fn(pe, ROOT / "mods/features" / name, probe=a.probe)
+        feature_dir = ROOT / "mods/features" / name
+        if name == "042-ultrawide-render":
+            info = fn(pe, feature_dir, probe=a.probe, debug=a.ui_render_debug)
+        else:
+            info = fn(pe, feature_dir, probe=a.probe)
         print(f"  {name}: {info['code_len']} B payload @ RVA 0x{info['code_rva']:08X}")
         for d in info["detours"]:
             t = d["target"]
