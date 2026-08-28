@@ -72513,6 +72513,8 @@ name,address,notes
 ?bfmeCall_0004a7a5@BfmeGlobal_012ed62c@@QAEXXZ,0x0004A7A5,Open-BFME5 the member the 11-byte forwarders on global 0x012ED62C tail-jump to
 ?bfmeCall_0004aa98@BfmeGlobal_012f076c@@QAEXXZ,0x0004AA98,Open-BFME5 the member the 11-byte forwarders on global 0x012F076C tail-jump to
 ?bfmeCall_008f73f0@BfmeGlobal_012ed5bc@@QAEXXZ,0x008F73F0,Open-BFME5 the member the 11-byte forwarders on global 0x012ED5BC tail-jump to
+?bfmeCast2EVB@@YAPAUBfmeObjEVB@@PAX@Z,0x00010424,pin
+?bfmeCastEVB@@YAPAUBfmeObjEVB@@PAX@Z,0x00042424,pin
 ?bfmeChanged@Gen_00411DD0@@AAEXXZ,0x000200D1,Open-BFME5 the member the change-setter at 0x00411DD0 calls
 ?bfmeChanged@Gen_0041B0D0@@AAEXXZ,0x0002E564,Open-BFME5 the member the change-setter at 0x0041B0D0 calls
 ?bfmeChanged@Gen_00505530@@AAEXXZ,0x00023A29,Open-BFME5 the member the change-setter at 0x00505530 calls
@@ -72776,6 +72778,7 @@ name,address,notes
 ?bfmeFindDGI@@YGPAVBfmeSubDGI@@PAX@Z,0x00032786,pin
 ?bfmeFindEGCa@BfmeSubEGCa@@QAEPAUBfmeResEGC@@PAX@Z,0x00038E4C,pin
 ?bfmeFindEGCb@BfmeSubEGCb@@QAEPAUBfmeResEGC@@PAX@Z,0x00014D49,pin
+?bfmeFindEVB@BfmeGlobEVB@@QAEPAUBfmeObjEVB@@PAX@Z,0x0001F253,pin
 ?bfmeFindItemE63@@YAPAUBfmeItemE63@@H@Z,0x0000E6E7,pin
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
 ?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
@@ -74831,6 +74834,7 @@ name,address,notes
 ?g_bfmeObjENG@@3PAVBfmeGlobENG@@A,0x00EF076C,pin
 ?g_bfmeObjESCa@@3PAVBfmeGlobESC@@A,0x00EED748,pin
 ?g_bfmeObjESCb@@3PAVBfmeGlobESC@@A,0x00EED748,pin
+?g_bfmeObjEVB@@3PAVBfmeGlobEVB@@A,0x00EF0898,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
