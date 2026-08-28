@@ -72201,6 +72201,7 @@ name,address,notes
 ?bfmeAddANB@BfmeSinkANB@@QAEXPAVBfmeThingANB@@PAX@Z,0x008520A0,pin
 ?bfmeAllocATA@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocATD@@YAPAXI@Z,0x0082E540,pin
+?bfmeAllocAVC@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocBlock@@YAPAXI@Z,0x009A5920,Open-BFME5 the allocator the calloc at 0x009A59D0 gets its block from
 ?bfmeAllocNode@@YAPAXI@Z,0x0082E540,Open-BFME5 the 16-byte allocator the node makers at 0x0046A070 0x0046B1C0 and 0x00927760 call
 ?bfmeAllocPV@@YAPAXHI@Z,0x00030940,pin
@@ -72262,6 +72263,7 @@ name,address,notes
 ?bfmeBaseASC@BfmeThingASC@@QAEXPAX@Z,0x00047B27,pin
 ?bfmeBaseAUA@BfmeThingAUA@@QAEXXZ,0x0001B522,pin
 ?bfmeBaseAUB@BfmeThingAUB@@QAEXXZ,0x0001B522,pin
+?bfmeBaseAVB@BfmeThingAVB@@QAEXXZ,0x009A1A30,pin
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
 ?bfmeBaseSJ@BfmeThingSJ@@QAEXH@Z,0x0090E3D0,pin
 ?bfmeBaseSK@BfmeThingSK@@QAEXH@Z,0x009DB4E0,pin
@@ -72417,6 +72419,7 @@ name,address,notes
 ?bfmeDropARB@BfmeGotARB@@QAEXH@Z,0x00043C8E,pin
 ?bfmeDropAUC@BfmeThingAUC@@QAEXPAX@Z,0x00015BE5,pin
 ?bfmeDropAUD@BfmeListAUD@@QAEXPAX@Z,0x00016ED2,pin
+?bfmeDropAVA@BfmeListAVA@@QAEXPAX@Z,0x0004A91C,pin
 ?bfmeDropB@@YAXPAX@Z,0x008961C0,Open-BFME5 the drop the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeDropRN@BfmeThingRN@@QAEXH@Z,0x00031F7A,pin
 ?bfmeDropRS@BfmeThingRS@@QAEXH@Z,0x00031F7A,pin
@@ -77756,6 +77759,9 @@ _bfmeVftASCb,0x00D1BD58,pin
 _bfmeVftASCc,0x00D1BD54,pin
 _bfmeVftAUA,0x00D0C920,pin
 _bfmeVftAUB,0x00D0CBEC,pin
+_bfmeVftAVBa,0x00C73744,pin
+_bfmeVftAVBb,0x00CECB78,pin
+_bfmeVftAVBc,0x00CECB64,pin
 _bfmeVftSA,0x00C8F4F0,pin
 _bfmeVftSE,0x00D0C64C,pin
 _bfmeVftSF,0x00D0C878,pin
