@@ -6596,17 +6596,28 @@ void ScriptActions::doMapSetRankLevelLimit(Int level)
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doPlayerGrantScience_Thunk.cpp
-// ?doPlayerGrantScience@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
+// The sibling of doPlayerPurchaseScience below, differing only in the Player call:
+// same mask walk, same science-before-mask lookup order.
+// ?doPlayerGrantScience@ScriptActions@@IAEXABVAsciiString@@0@Z
 void ScriptActions::doPlayerGrantScience(const AsciiString& playerName, const AsciiString& scienceName)
 {
-	Player* pPlayer = TheScriptEngine->getPlayerFromAsciiString(playerName);
-	if (!pPlayer)
-		return;
 	ScienceType science = TheScienceStore->getScienceFromInternalName(scienceName);
-	if (science == SCIENCE_INVALID)
+	if (science == SCIENCE_INVALID) {
 		return;
-	pPlayer->grantScience(science);
+	}
+
+	PlayerMaskType mask = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)
+		->getPlayerMaskFromAsciiString(playerName, NULL);
+	if (!mask) {
+		return;
+	}
+
+	do {
+		Player* player = ThePlayerList->getEachPlayerFromMask(mask);
+		if (player) {
+			player->grantScience(science);
+		}
+	} while (mask);
 }
 
 //-------------------------------------------------------------------------------------------------
