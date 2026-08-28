@@ -73323,6 +73323,7 @@ name,address,notes
 ?bfmeTailDDB@BfmeSubDDB@@QAEHXZ,0x0002E37A,pin
 ?bfmeTailDFA@BfmeThingDFA@@QAEPAV1@XZ,0x0083FB50,pin
 ?bfmeTailDFG@BfmeThingDFG@@QAEPAV1@XZ,0x0083FB50,pin
+?bfmeTailDFH@BfmeThingDFH@@QAEPAV1@XZ,0x0083FB50,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
@@ -78231,6 +78232,7 @@ _bfmeVftCUFb,0x00D1126C,pin
 _bfmeVftCVE,0x00D1B6A0,pin
 _bfmeVftDFA,0x00D2FBDC,pin
 _bfmeVftDFG,0x00D2FBDC,pin
+_bfmeVftDFH,0x00D2FBDC,pin
 _bfmeVftSA,0x00C8F4F0,pin
 _bfmeVftSE,0x00D0C64C,pin
 _bfmeVftSF,0x00D0C878,pin
