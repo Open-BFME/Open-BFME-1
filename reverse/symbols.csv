@@ -73127,6 +73127,9 @@ name,address,notes
 ?bfmeEmit1023@@YAXPAXPAD0H@Z,0x00049E86,pin
 ?bfmeEmit1231@BfmeA1231@@QAEXPAX0PAVBfmeE1231@@10H@Z,0x008CF5A0,pin
 ?bfmeEmit1236@BfmeB1236@@QAEXPAXH0@Z,0x008ADBD0,pin
+?bfmeElseBBC@@YAXXZ,0x0000F36C,pin
+?bfmeElseBBC@BfmeThingBBC@@QAEXXZ,0x0000F36C,pin
+?bfmeElseBBD@@YAXXZ,0x00842C00,pin
 ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z,0x0002CB79,Open-BFME5 ILT thunk to body 0x00417710; Gen_00417cb0::tail at 0x00417A70 calls it on this with the source result and its own argument; address-derived name in the same synthetic family as the class
 ?bfmeEnable@BfmeElemW@@QAEXHH@Z,0x000482AC,Open-BFME5 the ICF thunk (to 0x004482AC) the clear at 0x004B1720 calls on each element with a pair of ones
 ?bfmeEnd1100@BfmeZ1100@@QAEXH@Z,0x0003D578,pin
@@ -73239,6 +73242,7 @@ name,address,notes
 ?bfmeFindLC@BfmeKeyLC@@QAEPAUBfmeNodeLC@@XZ,0x00046538,pin
 ?bfmeFindNC@@YGHPAX@Z,0x0003954A,pin
 ?bfmeFindPE@BfmeSubPE@@QAEPAHH@Z,0x00025CCA,pin
+?bfmeFindBBA@BfmeSubBBA@@QAEPAUBfmeGotBBA@@XZ,0x00046538,pin
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
 ?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
 ?bfmeFindRecord@FontLibraryBFMERetail@@AAEPAUBfmeFontRecord@@PAVAsciiString@@M@Z,0x000035A3,Open-BFME5 ILT thunk to body 0x00476E20; FontLibraryBFMERetail::getFont at 0x004772D0 calls it on this with the name and size and reads a byte at +8 of what it returns; address-derived name
@@ -75923,6 +75927,7 @@ name,address,notes
 ?g_bfmeCountBBD@@3HA,0x00F0BD30,pin
 ?g_bfmeCountELH@@3HA,0x00F40594,pin
 ?g_bfmeCountQB@@3HA,0x00F04B60,pin
+?g_bfmeCountBBD@@3HA,0x00F0BD30,pin
 ?g_bfmeCountSI@@3HA,0x00EED240,pin
 ?g_bfmeCountTB@@3HA,0x00F0BCA8,pin
 ?g_bfmeCsDWC@@3UBfmeCsDWA@@A,0x00F36E60,pin
