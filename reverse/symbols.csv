@@ -72400,6 +72400,8 @@ name,address,notes
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
 ?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
 ?bfmeFindRecord@FontLibraryBFMERetail@@AAEPAUBfmeFontRecord@@PAVAsciiString@@M@Z,0x000035A3,Open-BFME5 ILT thunk to body 0x00476E20; FontLibraryBFMERetail::getFont at 0x004772D0 calls it on this with the name and size and reads a byte at +8 of what it returns; address-derived name
+?bfmeFindSC@BfmeMapSC@@QAEPAUBfmeSlotSC@@PAUBfmeKeySC@@@Z,0x00040430,pin
+?bfmeFindSD@BfmeMapSD@@QAEPAUBfmeSlotSD@@PAUBfmeKeySD@@@Z,0x00020E7D,pin
 ?bfmeFinish@Gen_0015BCB0@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 tail-jump to
 ?bfmeFinish@Gen_00189D00@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finder at 0x00189D00 tail-jumps to
 ?bfmeFinish@Gen_001BA9E0@@QAEXXZ,0x00023ECA,Open-BFME5 the body call the multi-member vector destructor at 0x001BA9E0 makes before its members go
@@ -72847,6 +72849,7 @@ name,address,notes
 ?bfmeStart@Gen_00654F20@@QAEXPAX0PAPAX@Z,0x0002648B,Open-BFME5 the starter the SEH constructor at 0x00654F20 calls
 ?bfmeStart@Gen_00844340@@QAEXPAX0PAPAX@Z,0x0002A531,Open-BFME5 the starter the SEH constructor at 0x00844340 calls
 ?bfmeStart@Gen_008443A0@@QAEXPAX0PAPAX@Z,0x00042BB8,Open-BFME5 the starter the SEH constructor at 0x008443A0 calls
+?bfmeStartSA@BfmeSubSA@@QAEXXZ,0x0000F0A6,pin
 ?bfmeStateFlags@BfmeObjectAI@@QAEIXZ,0x0001BB3F,Open-BFME5 ILT thunk to body 0x00279780; ?getAdjustedVisionRangeForObject@AI@@SAMPBVObject@@H@Z at 0x0014A620 reads the AI state word through it; address-derived name
 ?bfmeStateValue@BfmeObjectAI@@QAEHXZ,0x000187A0,Open-BFME5 helper state query body used by BfmeObjectAI::bfmeStateFlags
 ?bfmeStep1@Gen_004410A0@@AAEXXZ,0x000459CB,Open-BFME5 ILT the three-step runner at 0x004410A0 calls first
@@ -73916,6 +73919,7 @@ name,address,notes
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
+?g_bfmeSinkSB@@3PAVBfmeSinkSB@@A,0x00EED668,pin
 ?g_bfmeUnicodeStringFormat@@3QBDB,0x0114451C,address-derived UnicodeString format string from retail 0x009D9AAC
 ?g_bfmeUnsignedByteFormat@@3QBDB,0x011442BC,address-derived unsigned-byte format string from the DIR32 operand at retail 0x009D943A
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
@@ -77580,6 +77584,7 @@ _bfmeDeleteBlock,0x00881EF0,address-derived release target from the direct REL32
 _bfmeDirectInput8Create@20,0x009F9AF0,undecorated alias for the DirectInput8Create import stub (see Win32DIKeyboardOpen.cpp)
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
 _bfmeTryActivate@12,0x009D8460,address-derived stdcall helper target from the direct REL32 call at retail 0x009D6310
+_bfmeVftSA,0x00C8F4F0,pin
 _bfme_MallocAlloc0OomMalloc_82B820,0x0082B820,STLport __malloc_alloc<0>::_S_oom_malloc callee of allocate at 0x0082C580
 _bfme_acos,0x009F7256,internal acos helper called by ACos
 _bfme_asin,0x009F7D86,internal asin helper called by ASin
