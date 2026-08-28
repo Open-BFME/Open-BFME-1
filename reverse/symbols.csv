@@ -73338,6 +73338,7 @@ name,address,notes
 ?bfmeTheCBE@@3PAVBfmeGlobalCBE@@A,0x00EED5C8,pin
 ?bfmeTheCHE@@3PAUBfmeGlobalCHE@@A,0x00EF0898,pin
 ?bfmeTheCRA@@3PAVBfmeTableCRA@@A,0x00EF0898,pin
+?bfmeTheDEE@@3PAVBfmeGlobalDEE@@A,0x00EF076C,pin
 ?bfmeTheOneCHF@@3PAVBfmeOneCHF@@A,0x00EF1024,pin
 ?bfmeThePoolCJD@@3VBfmePoolCJD@@A,0x00F4FB38,pin
 ?bfmeTheTwoCHF@@3PAVBfmeTwoCHF@@A,0x00EF1028,pin
