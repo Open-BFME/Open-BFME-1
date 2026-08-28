@@ -1,4 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// Field names come from retail's INI field table joined to upstream's parse
+// table on the key; retail supplies every offset, upstream only the word. The
+// offsets were derived from the declaration sequence, not from the old m_xNN
+// names. StartsActive is the one bool, and the two weapon families -- reaction
+// and continuous -- each run pristine/damaged/reallyDamaged/rubble in that
+// order, which is what makes the eight of them unambiguous.
 // Open-BFME5: ModuleFactory's data-create proc 0x0012A170 allocates 0x9C and
 // runs this constructor through ILT 0x00012233, which identifies
 // FireWeaponWhenDamagedBehaviorModuleData. The name previously sat on the
@@ -27,31 +33,31 @@ public:
 private:
 	void *m_x04;
 	FWWD_BaseModuleData m_base;			// this+0x08
-	bool m_x70;							// this+0x70
-	int m_x74;
-	unsigned int m_x78;
-	unsigned int m_x7c;
-	unsigned int m_x80;
-	unsigned int m_x84;
-	unsigned int m_x88;
-	unsigned int m_x8c;
-	unsigned int m_x90;
-	unsigned int m_x94;
-	unsigned int m_x98;
+	bool m_initiallyActive;							// this+0x70
+	int m_damageTypes;
+	unsigned int m_damageAmount;
+	unsigned int m_reactionWeaponPristine;
+	unsigned int m_reactionWeaponDamaged;
+	unsigned int m_reactionWeaponReallyDamaged;
+	unsigned int m_reactionWeaponRubble;
+	unsigned int m_continuousWeaponPristine;
+	unsigned int m_continuousWeaponDamaged;
+	unsigned int m_continuousWeaponReallyDamaged;
+	unsigned int m_continuousWeaponRubble;
 };
 
 // ??0FireWeaponWhenDamagedBehaviorModuleData@@QAE@XZ
 FireWeaponWhenDamagedBehaviorModuleData::FireWeaponWhenDamagedBehaviorModuleData()
 {
-	m_x70 = false;
-	m_x7c = 0;
-	m_x80 = 0;
-	m_x84 = 0;
-	m_x88 = 0;
-	m_x8c = 0;
-	m_x90 = 0;
-	m_x94 = 0;
-	m_x98 = 0;
-	m_x78 = 0;
-	m_x74 = -1;
+	m_initiallyActive = false;
+	m_reactionWeaponPristine = 0;
+	m_reactionWeaponDamaged = 0;
+	m_reactionWeaponReallyDamaged = 0;
+	m_reactionWeaponRubble = 0;
+	m_continuousWeaponPristine = 0;
+	m_continuousWeaponDamaged = 0;
+	m_continuousWeaponReallyDamaged = 0;
+	m_continuousWeaponRubble = 0;
+	m_damageAmount = 0;
+	m_damageTypes = -1;
 }
