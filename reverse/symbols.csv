@@ -9273,8 +9273,8 @@ name,address,notes
 ??_7RetailCollideModuleData@@6B@,0x0108A350,CollideModule factory vtable target
 ??_7RetailDamageModuleData@@6B@,0x0108A350,DamageModule factory vtable target
 ??_7RetailUpdateModuleData@@6B@,0x0108A350,UpdateModule factory vtable target
-??_7Rva00885AF0Class@@6B@,0x01132ECC,pin
-??_7Rva00886F60Class@@6B@,0x01132FFC,pin
+??_7Rva00885AF0Class@@6B@,0x00D32ECC,pin
+??_7Rva00886F60Class@@6B@,0x00D32FFC,pin
 ??_7StatusBitsUpgradeModuleData@@6B@,0x00C8F4F0,vptr stored by the factory at 0x0012B650 whose field-parse pointer resolves to ?buildFieldParse@StatusBitsUpgradeModuleData
 ??_7VirtualMinusOneConstructorThunk@@6B@,0x010F6F58,Open-BFME5 virtual minus one constructor vftable
 ??_7VirtualZeroDerivedAlternateThunk@@6B@,0x010F6F68,Open-BFME5 alternate virtual zero derived vftable
@@ -10309,9 +10309,9 @@ name,address,notes
 ?Rva009F8878Notify@@YGXPAX0@Z,0x009F8878,address-derived stdcall notification target called by 0x0048CDD0
 ?Rva012ED238Global@@3PAXA,0x012ED238,address-derived global used by 0x0048CDD0 notification pair
 ?Rva01336E50Str@@3VRva0036CA00Str@@A,0x01336E50,Open-BFME5 global Rva0036CA00Str immediate used by 0x00385180/0x003855C0 reset
-?Rva01358E54@@YGXPAX@Z,0x01358E54,pin
-?Rva01358EA8@@YGXPAX@Z,0x01358EA8,pin
-?Rva01358ECC@@YGXPAX@Z,0x01358ECC,pin
+?Rva01358E54@@YGXPAX@Z,0x00F58E54,pin
+?Rva01358EA8@@YGXPAX@Z,0x00F58EA8,pin
+?Rva01358ECC@@YGXPAX@Z,0x00F58ECC,pin
 ?Scale@MeshGeometryClass@@QAEXABVVector3@@@Z,0x00925610
 ?Scale@SegLineRendererClass@@QAEXM@Z,0x0095FF30
 ?ScoreScreenInit@@YAXPAVWindowLayout@@PAX@Z,0x004E8DC0,FunctionLexicon triple at 0x00EA9AD8 {name 0x01086A20 ScoreScreenInit callback 0x004274F8 = ILT 0x000274F8 -> this body}; ZH ScoreScreenInit: g_playMusic(0x012F45D4)=1 buttonIsFinishCampaign(0x012F4183)=0 then nameToKey of ParentScoreScreen ButtonOk TextEntryChat ButtonEmote ListboxChatWindowScoreScreen ChatBoxBorder ButtonBuddy ButtonContinue ButtonSaveReplay into 0x012F4138..0x012F4158 and winGetWindowFromId into 0x012F415C..0x012F417C (listbox also stored to [0x012F7730]+0x5c) StaticTextGameSaveComplete -> 0x012F4178; LastReplayFileName = TheRecorder->getLastReplayFileName; TheShell->getPopupReplayLayout()->hide; canSaveReplay(0x012F4181) from getMode()==RECORD; then dispatch on TheGameLogic+0x10c: 3 REPLAY -> isMultiplayer ? initReplayMultiPlayer 0x004E929A : initReplaySinglePlayer 0x004E92C5 (overide=1); 5 INTERNET -> 0x004E92D1; 1 LAN -> 0x004E92DD; 2 SKIRMISH -> initSkirmish 0x004E92E9; else overide=1 initSinglePlayer 0x004E92F7 without the ScoreScreenShow transition; layout->hide(FALSE) winSetFocus(parent) ReplayWasPressed(0x012F4188)=0 s_blankLayout(0x012F4184) hide(FALSE)+bringForward
@@ -74836,7 +74836,7 @@ name,address,notes
 ?g_bfmeMakerAWB@@3PAVBfmeMakerAWB@@A,0x00EF12CC,pin
 ?g_bfmeMgr12F0898@@3PAUBfmeGlobalMgr12F0898@@A,0x00EF0898,pin
 ?g_bfmeMgr12F0898@@3PAVBfmeMgrEB2@@A,0x00EF0898,pin
-?g_bfmeMgr12F0898@@3PAVBfmeMgrF5F@@A,0x012F0898,pin
+?g_bfmeMgr12F0898@@3PAVBfmeMgrF5F@@A,0x00EF0898,pin
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
 ?g_bfmeModeAZC@@3PAUBfmeModeAZC@@A,0x00EF0FE0,pin
@@ -74921,7 +74921,7 @@ name,address,notes
 ?g_global12EF1D8@@3PAXA,0x00EEF1D8,pin
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
 ?g_lastPacketRouterStallFrame@@3IA,0x012F7704,last packet-router frame that triggered the native frame-stall gate
-?g_mgr12ED748@@3PAVBfmeMgrD74@@A,0x012ED748,pin
+?g_mgr12ED748@@3PAVBfmeMgrD74@@A,0x00EED748,pin
 ?g_mgr12EF1D8@@3PAUBfmeMgrContainerF1D@@A,0x00EEF1D8,pin
 ?g_mgr12F076C@@3PAVBfmeMgrF07@@A,0x00EF076C,pin
 ?g_mgr12F0898@@3PAVBfmeMgr089@@A,0x00EF0898,pin
@@ -74932,7 +74932,7 @@ name,address,notes
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
 ?g_obj12F060C@@3PAUBfmeObj2B1@@A,0x00EF060C,pin
 ?g_obj12F1024@@3PAUBfmeObj1024@@A,0x00EF1024,pin
-?g_processVal13596B8@@3P6GXH@ZA,0x013596B8,pin
+?g_processVal13596B8@@3P6GXH@ZA,0x00F596B8,pin
 ?g_quitMenuLayout@@3PAXA,0x012F4AD4,HideQuitMenu layout global
 ?g_rva0051B5F0Large@@3URva0051B5F0Large@@A,0x00D05FBC,Open-BFME5 packed thirteen-byte preset global
 ?g_rva0051B5F0Medium@@3URva0051B5F0Medium@@A,0x00D05FB0,Open-BFME5 packed ten-byte preset global
@@ -78619,7 +78619,7 @@ __ehhandler$?getClassMemoryPool@WeaponSetUpgrade@@CAPAVMemoryPool@@XZ,0x00C14DFE
 __ehhandler$?getClassMemoryPool@WorkerAIUpdate@@CAPAVMemoryPool@@XZ,0x00C140BE,pool-glue cascade static (back-solved)
 __ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00BFAB08,PlayerTemplate time-change retail exception handler
 __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
-__imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x013596D8,pin
+__imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
 __imp__bfmeCloseDWE@4,0x00F590C8,pin
@@ -78653,15 +78653,15 @@ __imp__bfmeStatusDXD@4,0x00F5958C,pin
 __imp__bfmeTickDYA@0,0x00F59544,pin
 __imp__bfmeTickDZC@0,0x00F59544,pin
 __imp__bfmeUseDWL@4,0x00F59210,pin
-__imp__fopen,0x013593BC,pin
-__imp__ftell,0x013593EC,pin
-__imp__itoa,0x0135935C,pin
-__imp__strchr,0x0135949C,pin
-__imp__strdup,0x01359308,pin
-__imp__strncpy,0x013594C0,pin
-__imp__strrchr,0x013594C8,pin
-__imp_free,0x013593D4,pin
-__imp_sprintf,0x0135948C,pin
+__imp__fopen,0x00F593BC,pin
+__imp__ftell,0x00F593EC,pin
+__imp__itoa,0x00F5935C,pin
+__imp__strchr,0x00F5949C,pin
+__imp__strdup,0x00F59308,pin
+__imp__strncpy,0x00F594C0,pin
+__imp__strrchr,0x00F594C8,pin
+__imp_free,0x00F593D4,pin
+__imp_sprintf,0x00F5948C,pin
 __real@40490fdb,0x00C87B14,Weapon constructor positive-pi comparison operand; retail data is IEEE-754 3.1415927410125732
 __real@c0490fdb,0x00C87B0C,Weapon constructor negative-pi comparison operand; retail data is IEEE-754 -3.1415927410125732
 __setjmp3,0x009F7E40,vendored=lua-4.0.1
@@ -79212,7 +79212,7 @@ _test_then_block,0x0099CEA0,vendored=lua-4.0.1
 _time,0x009F6F52,Y4 lane: time import thunk (gen-import ?ji_009f6f52@@YAXXZ names the same address)
 _var_or_func_tail,0x0099C4B0,vendored=lua-4.0.1
 _vsprintf,0x009F70AE
-_wcscpy,0x01359520,pin
+_wcscpy,0x00F59520,pin
 _whilestat,0x0099CC60,decode_calls pin for _stat callee
 g_NAMEKEY_empty_string,0x0107388B,NAMEKEY empty string literal
 g_bfmeArenaCursor,0x013378D4,Open-BFME5 the arena cursor the initialiser at 0x00897120 sets
