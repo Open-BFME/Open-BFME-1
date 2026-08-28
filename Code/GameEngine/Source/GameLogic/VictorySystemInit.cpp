@@ -4,6 +4,9 @@
 #include <vector>
 #include "string_base.h"
 
+extern "C" __declspec(dllimport) int __cdecl _memicmp( const void *left,
+	const void *right, unsigned int count );
+
 class AsciiString
 {
 public:
@@ -23,8 +26,35 @@ public:
 		((StringBase<char> *)this)->releaseBuffer();
 	}
 
+	int compareNoCase( const AsciiString &that ) const
+	{
+		const int length = that.m_data ? that.m_data->m_length : 0;
+		const char *data = that.m_data ? (const char *)(that.m_data + 1) : "";
+		return compareNoCase( data, length );
+	}
+
 private:
-	char *m_data;
+	struct Header
+	{
+		int m_refCount;
+		unsigned short m_length;
+		unsigned short m_capacity;
+	};
+
+	int compareNoCase( const char *text, int length ) const
+	{
+		const int thisLength = m_data ? m_data->m_length : 0;
+		const char *data = m_data ? (const char *)(m_data + 1) : "";
+		int difference = _memicmp( data, text,
+			thisLength < length ? thisLength : length );
+		if( difference != 0 )
+		{
+			return difference;
+		}
+		return thisLength - length;
+	}
+
+	Header *m_data;
 };
 
 struct FactionVictoryParameters
@@ -86,4 +116,22 @@ FactionVictoryParameters *VictorySystem::_bfme_findOrCreateFactionVictoryParamet
 		m_factionVictoryParameters.push_back( parameters );
 	}
 	return &m_factionVictoryParameters.back();
+}
+
+unsigned int VictorySystem::_bfme_findFactionVictoryParametersIndex(
+	const AsciiString &name )
+{
+	bool found = false;
+	unsigned int result = 0x7fffffff;
+	for( unsigned int index = 0;
+		index < m_factionVictoryParameters.size() && !found;
+		++index )
+	{
+		if( m_factionVictoryParameters[index].m_name.compareNoCase( name ) == 0 )
+		{
+			result = index;
+			found = true;
+		}
+	}
+	return result;
 }
