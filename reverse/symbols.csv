@@ -72208,6 +72208,7 @@ name,address,notes
 ?bfmeAddANB@BfmeSinkANB@@QAEXPAVBfmeThingANB@@PAX@Z,0x008520A0,pin
 ?bfmeAddBFC@BfmeSinkBFC@@QAEXPAUBfmeSubBFC@@@Z,0x0001D606,pin
 ?bfmeAddCFE@BfmeSubCFE@@QAEXPAXH@Z,0x0003D735,pin
+?bfmeAddCQE@BfmeSubCQE@@QAEXPAVBfmeArgCQE@@@Z,0x00005C22,pin
 ?bfmeAllocATA@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocATD@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocAVC@@YAPAXI@Z,0x0082E540,pin
@@ -72968,6 +72969,7 @@ name,address,notes
 ?bfmeJoinBSE@@YAPAXPAX0@Z,0x00042FA0,pin
 ?bfmeKindBVD@BfmeSubBVD@@QAEHXZ,0x0001E33A,pin
 ?bfmeKindCGG@BfmeOtherCGG@@QAEHPAX@Z,0x0004A719,pin
+?bfmeKindCQE@BfmeXCQE@@QAEDXZ,0x00012E3B,pin
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLogCNE@@YGXHH@Z,0x00032DEE,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
@@ -73152,6 +73154,7 @@ name,address,notes
 ?bfmeRunBEA@BfmeSubBEA@@QAEXXZ,0x0003DAA5,pin
 ?bfmeRunCLE@BfmeXCLE@@QAE_NPAVBfmeSubCLE@@PAXH@Z,0x0002E85C,pin
 ?bfmeRunCOF@BfmeThingCOF@@QAEXPAX000@Z,0x0001BB21,pin
+?bfmeRunCQE@BfmeXCQE@@QAEXH@Z,0x00008337,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
