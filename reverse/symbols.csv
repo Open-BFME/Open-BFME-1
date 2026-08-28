@@ -73554,6 +73554,7 @@ name,address,notes
 ?bfmeStopBEH@BfmeThingBEH@@QAEXXZ,0x000193CB,pin
 ?bfmeStopMovie@Display@@QAEXXZ,0x0001992F,Open-BFME5 ILT thunk to body 0x0040EFF0; ?hide@Shell@@QAEX_N@Z at 0x0057F5B0 calls it on TheDisplay with no arguments; address-derived name
 ?bfmeStopTwoAQA@BfmeSubAQA@@QAEXXZ,0x000263EB,pin
+?bfmeStrERA@BfmeOtherERA@@QAEXPBD@Z,0x00888BC0,pin
 ?bfmeSwapEnds@@YAXPAPAPAVBfmeOwnedI@@0@Z,0x00032FE7,Open-BFME5 the ICF thunk (to 0x00432FE7) the swap in the clear at 0x003C1190 calls for the third pair
 ?bfmeTailBCD@BfmeThingBCD@@QAEXXZ,0x0001CD8C,pin
 ?bfmeTailBED@BfmeThingBED@@QAEXXZ,0x00012C6F,pin
@@ -73690,6 +73691,7 @@ name,address,notes
 ?bfmeUseEFJ@BfmeResEFJ@@QAEXPAX0@Z,0x00017A12,pin
 ?bfmeUseEGE@BfmeResEGE@@QAEXH@Z,0x000032AB,pin
 ?bfmeUseRT@BfmeSlotRT@@QAEXXZ,0x0003A427,pin
+?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVecDtorDLA@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVecDtorDLB@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
@@ -78693,6 +78695,7 @@ _bfmeStrEECa,0x00CC47B8,pin
 _bfmeStrEECb,0x00CC4B60,pin
 _bfmeStrEECc,0x00D158A8,pin
 _bfmeStrENF,0x00C82C44,pin
+_bfmeStrERA,0x00C7301C,pin
 _bfmeString10CF498,0x00CCF498,pin
 _bfmeString10CF748,0x010CF748,pin
 _bfmeTabEAC,0x00D098B0,pin
@@ -78789,6 +78792,7 @@ _bfmeVftDUJb,0x00D1BD54,pin
 _bfmeVftDUJc,0x00C817AC,pin
 _bfmeVftDWL,0x00CE75B4,pin
 _bfmeVftEOA,0x00C75B08,pin
+_bfmeVftERA,0x00CEC77C,pin
 _bfmeVftSA,0x00C8F4F0,pin
 _bfmeVftSE,0x00D0C64C,pin
 _bfmeVftSF,0x00D0C878,pin
