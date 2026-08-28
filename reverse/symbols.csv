@@ -72221,6 +72221,7 @@ name,address,notes
 ?bfmeAllocDIE@@YGPAXI@Z,0x00019326,pin
 ?bfmeAllocDIF@@YGPAXI@Z,0x00019326,pin
 ?bfmeAllocDIG@@YGPAXI@Z,0x00019326,pin
+?bfmeAllocDIH@@YGPAXI@Z,0x00019326,pin
 ?bfmeAllocNode@@YAPAXI@Z,0x0082E540,Open-BFME5 the 16-byte allocator the node makers at 0x0046A070 0x0046B1C0 and 0x00927760 call
 ?bfmeAllocPV@@YAPAXHI@Z,0x00030940,pin
 ?bfmeAllocQA@@YAPAXHI@Z,0x00030940,pin
@@ -73171,6 +73172,7 @@ name,address,notes
 ?bfmeOneDIE@BfmeThingDIE@@QAEXPAX@Z,0x00850920,pin
 ?bfmeOneDIF@BfmeThingDIF@@QAEXPAX@Z,0x00850920,pin
 ?bfmeOneDIG@BfmeThingDIG@@QAEXPAX@Z,0x00850920,pin
+?bfmeOneDIH@BfmeThingDIH@@QAEXPAX@Z,0x00850920,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73421,6 +73423,7 @@ name,address,notes
 ?bfmeTwoDIE@BfmeThingDIE@@QAEXPAXH@Z,0x00850920,pin
 ?bfmeTwoDIF@BfmeThingDIF@@QAEXPAXH@Z,0x00850920,pin
 ?bfmeTwoDIG@BfmeThingDIG@@QAEXPAXH@Z,0x00850920,pin
+?bfmeTwoDIH@BfmeThingDIH@@QAEXPAXH@Z,0x00850920,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -78217,6 +78220,7 @@ _bfmeInfoDFJ,0x00D2B554,pin
 _bfmeInfoDIE,0x00C8B878,pin
 _bfmeInfoDIF,0x00C8B8B4,pin
 _bfmeInfoDIG,0x00CA4FB8,pin
+_bfmeInfoDIH,0x00CB2A24,pin
 _bfmeLitZD,0x00CC79BC,pin
 _bfmeObjDAA,0x00EEF430,pin
 _bfmeObjDAB,0x00EF1608,pin
