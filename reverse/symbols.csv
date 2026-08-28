@@ -74689,6 +74689,7 @@ name,address,notes
 ?g_bfmeObjECE@@3PAUBfmeObjECE@@A,0x00EF49F0,pin
 ?g_bfmeObjECF@@3PAUBfmeObjECF@@A,0x00F4B280,pin
 ?g_bfmeObjECI@@3PAVBfmeObjECI@@A,0x00EF7730,pin
+?g_bfmeObjEDC@@3PAVBfmeObjEDC@@A,0x00EF7FE0,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
