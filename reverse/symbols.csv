@@ -72196,6 +72196,7 @@ name,address,notes
 ?bfmeAccepts@Gen_00684b90Holder@@QAEHPAX@Z,0x00004F6B,Open-BFME5 ILT the guard at 0x00684B90 asks its holder through
 ?bfmeAllocBlock@@YAPAXI@Z,0x009A5920,Open-BFME5 the allocator the calloc at 0x009A59D0 gets its block from
 ?bfmeAllocNode@@YAPAXI@Z,0x0082E540,Open-BFME5 the 16-byte allocator the node makers at 0x0046A070 0x0046B1C0 and 0x00927760 call
+?bfmeAllocPV@@YAPAXHI@Z,0x00030940,pin
 ?bfmeAllocate@Gen_007b9e80@@AAE_NHH@Z,0x0003FC7E,Open-BFME5 the allocate the reserve at 0x007B9E80 calls
 ?bfmeAllocate@Gen_009073d0@@AAE_NHH@Z,0x00905DC0,Open-BFME5 the allocate the reserve at 0x009073D0 calls
 ?bfmeAllocate@Gen_00930d00@@AAE_NHH@Z,0x009304A0,Open-BFME5 the allocate the reserve at 0x00930D00 calls
@@ -72357,6 +72358,7 @@ name,address,notes
 ?bfmeDoPJ@BfmeThingPJ@@QAEXPADPAXH@Z,0x0003DA4B,pin
 ?bfmeDoPO@BfmeThingPO@@QAEXPAH@Z,0x0082F580,pin
 ?bfmeDoPQ@@YAXPAD000@Z,0x00005934,pin
+?bfmeDoPW@@YAXPAD000@Z,0x00005934,pin
 ?bfmeDrop@BfmeSinkAM@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the remove at 0x003BEBA0 tells about the entry
 ?bfmeDrop@Rva003D8530Owner@@QAEXPAX@Z,0x00016DB0,Open-BFME5 ILT thunk to body 0x003D8530; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it on the sub-object at +0x0C of _TheAIParseDefinitionAI for each live slot whose kind is one of four; address-derived name
 ?bfmeDropA@@YAXPAX@Z,0x00895320,Open-BFME5 the drop the cleanup at 0x00783A50 calls
