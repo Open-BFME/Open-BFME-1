@@ -72398,6 +72398,7 @@ name,address,notes
 ?bfmeDropRS@BfmeThingRS@@QAEXH@Z,0x00031F7A,pin
 ?bfmeDropUC@BfmeSubUC@@QAEXPAVBfmeThingUC@@@Z,0x0081C3D0,pin
 ?bfmeDropVE@BfmeSubVE@@QAEXPAX@Z,0x0000871A,pin
+?bfmeDropXA@BfmeListXA@@QAEXPAX@Z,0x0001FF82,pin
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUF@BfmeThingUF@@QAEXXZ,0x00AB8350,pin
@@ -72601,6 +72602,7 @@ name,address,notes
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
 ?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
+?bfmeFreeSizedXC@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeUB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeUD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
@@ -72875,6 +72877,7 @@ name,address,notes
 ?bfmeSetRQ@BfmeInnerRQ@@QAEXHH@Z,0x0000A5DD,pin
 ?bfmeSetSize@BfmeShadowPart@@QAEXMM@Z,0x00022D86,Open-BFME5 ILT thunk to body 0x00428250; ?setSize@Shadow@@QAEXMM@Z at 0x001E4250 calls it on every live entry of the two four-pointer arrays at +0x94 and +0xA4; address-derived name
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
+?bfmeSetupXB@BfmeThingXB@@QAEXPAX000@Z,0x00023F1F,pin
 ?bfmeSlot@BfmeDrawableLookupTable@@QAEPAPAVDrawable@@ABI@Z,0x00034A95,Open-BFME5 ILT addDrawableToLookupTable at 0x00431C20 asks for the slot through
 ?bfmeSmallAllocPR@@YAPAXI@Z,0x0082E450,pin
 ?bfmeSmallFreePM@@YAXPAXI@Z,0x0082E4F0,pin
@@ -77665,6 +77668,7 @@ _bfmeVftVE,0x00C7C7D0,pin
 _bfmeVftVF,0x00D2BC0C,pin
 _bfmeVftVG,0x00CC0D90,pin
 _bfmeVftVH,0x00CE1F3C,pin
+_bfmeVftXB,0x00C9BFC8,pin
 _bfme_MallocAlloc0OomMalloc_82B820,0x0082B820,STLport __malloc_alloc<0>::_S_oom_malloc callee of allocate at 0x0082C580
 _bfme_acos,0x009F7256,internal acos helper called by ACos
 _bfme_asin,0x009F7D86,internal asin helper called by ASin
