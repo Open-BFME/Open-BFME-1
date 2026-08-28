@@ -72224,6 +72224,7 @@ name,address,notes
 ?bfmeAssign@BfmeCopyElementF@@QAEXPAU1@@Z,0x0001B1D5,Open-BFME5 the element assign the copy loops call
 ?bfmeAssign@BfmeCopySubA@@QAEXPAU1@@Z,0x000FF8F0,Open-BFME5 helper assignment body used by BfmeCopyElementA
 ?bfmeAssign@BfmeCopySubB@@QAEXPAU1@@Z,0x000FFA60,Open-BFME5 helper assignment body used by BfmeCopyElementA
+?bfmeAssignOT@BfmeThingOT@@QAEXPAD0@Z,0x0002B297,pin
 ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z,0x0000C0A4,Open-BFME5 ILT thunk to body 0x00497CE0; ??0BfmeQuickMatchScreenBase@@QAE@PAX@Z at 0x00470620 calls it on this with its own argument as the last thing it does; address-derived name
 ?bfmeBaseUpdate@Gen009D6330@@QAEXPAXPBXI@Z,0x009D6E50,address-derived base update target from the direct REL32 call at retail 0x009D634E
 ?bfmeBegin@BfmeSetupRecord@@QAEXXZ,0x007E8AC0,Open-BFME5 the member the two-field setup stubs call first
@@ -72333,6 +72334,8 @@ name,address,notes
 ?bfmeDispatchB@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x00028501,Open-BFME5 ILT the range dispatcher at 0x00437D30 calls
 ?bfmeDispatchC@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x00027138,Open-BFME5 ILT the range dispatcher at 0x00575A50 calls
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
+?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
+?bfmeDoOU@BfmeThingOU@@QAEXE@Z,0x0003BC23,pin
 ?bfmeDrop@BfmeSinkAM@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the remove at 0x003BEBA0 tells about the entry
 ?bfmeDrop@Rva003D8530Owner@@QAEXPAX@Z,0x00016DB0,Open-BFME5 ILT thunk to body 0x003D8530; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it on the sub-object at +0x0C of _TheAIParseDefinitionAI for each live slot whose kind is one of four; address-derived name
 ?bfmeDropA@@YAXPAX@Z,0x00895320,Open-BFME5 the drop the cleanup at 0x00783A50 calls
