@@ -72599,6 +72599,7 @@ name,address,notes
 ?bfmeFreeBlock@@YAXPAX@Z,0x00881EF0,Open-BFME5 the free the derived destructors at 0x00924090 and its siblings call
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
+?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
 ?bfmeFreeUB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeUD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
@@ -72608,6 +72609,8 @@ name,address,notes
 ?bfmeFreeVC@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVE@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeVG@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeVH@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeGen00018C1E@Gen_005291F0@@QAEXH@Z,0x00018C1E,address-derived helper; target read from the guarded eight-index loop REL32 at 0x00529237
 ?bfmeGen00029C35@Gen_00529B10@@QAEXH@Z,0x00029C35,address-derived helper; target read from the first REL32 in the guarded eight-index loop at 0x00529B10
 ?bfmeGen0002D38A@Gen_00529B10@@QAEXH@Z,0x0002D38A,address-derived helper; target read from the third REL32 in the guarded eight-index loop at 0x00529B10
@@ -77650,6 +77653,9 @@ _bfmeVftVB,0x00C73728,pin
 _bfmeVftVC,0x00CE75B0,pin
 _bfmeVftVD,0x00CEE4EC,pin
 _bfmeVftVE,0x00C7C7D0,pin
+_bfmeVftVF,0x00D2BC0C,pin
+_bfmeVftVG,0x00CC0D90,pin
+_bfmeVftVH,0x00CE1F3C,pin
 _bfme_MallocAlloc0OomMalloc_82B820,0x0082B820,STLport __malloc_alloc<0>::_S_oom_malloc callee of allocate at 0x0082C580
 _bfme_acos,0x009F7256,internal acos helper called by ACos
 _bfme_asin,0x009F7D86,internal asin helper called by ASin
