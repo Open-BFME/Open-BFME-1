@@ -72260,6 +72260,8 @@ name,address,notes
 ?bfmeBaseARD@BfmeThingARD@@QAEXPAX0@Z,0x00021BE8,pin
 ?bfmeBaseASA@BfmeThingASA@@QAEXPAX@Z,0x000399F5,pin
 ?bfmeBaseASC@BfmeThingASC@@QAEXPAX@Z,0x00047B27,pin
+?bfmeBaseAUA@BfmeThingAUA@@QAEXXZ,0x0001B522,pin
+?bfmeBaseAUB@BfmeThingAUB@@QAEXXZ,0x0001B522,pin
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
 ?bfmeBaseSJ@BfmeThingSJ@@QAEXH@Z,0x0090E3D0,pin
 ?bfmeBaseSK@BfmeThingSK@@QAEXH@Z,0x009DB4E0,pin
@@ -72413,6 +72415,8 @@ name,address,notes
 ?bfmeDropA@@YAXPAX@Z,0x00895320,Open-BFME5 the drop the cleanup at 0x00783A50 calls
 ?bfmeDropAIB@BfmeListAIB@@QAEXPAX@Z,0x0000E363,pin
 ?bfmeDropARB@BfmeGotARB@@QAEXH@Z,0x00043C8E,pin
+?bfmeDropAUC@BfmeThingAUC@@QAEXPAX@Z,0x00015BE5,pin
+?bfmeDropAUD@BfmeListAUD@@QAEXPAX@Z,0x00016ED2,pin
 ?bfmeDropB@@YAXPAX@Z,0x008961C0,Open-BFME5 the drop the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeDropRN@BfmeThingRN@@QAEXH@Z,0x00031F7A,pin
 ?bfmeDropRS@BfmeThingRS@@QAEXH@Z,0x00031F7A,pin
@@ -77750,6 +77754,8 @@ _bfmeVftASAc,0x00CF3554,pin
 _bfmeVftASCa,0x00C817AC,pin
 _bfmeVftASCb,0x00D1BD58,pin
 _bfmeVftASCc,0x00D1BD54,pin
+_bfmeVftAUA,0x00D0C920,pin
+_bfmeVftAUB,0x00D0CBEC,pin
 _bfmeVftSA,0x00C8F4F0,pin
 _bfmeVftSE,0x00D0C64C,pin
 _bfmeVftSF,0x00D0C878,pin
