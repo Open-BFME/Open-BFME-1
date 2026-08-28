@@ -72636,6 +72636,7 @@ name,address,notes
 ?bfmeGetBonus@BfmeVisionBonusSource@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 ILT Object::getVisionRange at 0x001C17C0 queries bonus 14 through
 ?bfmeGetBonus@Object@@QBE_NHPAM@Z,0x0000BECE,Open-BFME5 ILT thunk to body 0x001BFDB0; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 queries bonus 6 on the source object through it with an out pointer; address-derived name
 ?bfmeGetBonusSource@Object@@ABEPAVBfmeVisionBonusSource@@XZ,0x000202ED,Open-BFME5 ILT Object::getVisionRange at 0x001C17C0 asks for the bonus source through
+?bfmeGetBoxAFB@BfmeThingAFB@@QAEPAUBfmeBoxAFB@@XZ,0x000202ED,pin
 ?bfmeGetID@BfmeDrawableWithID@@QAEIXZ,0x00009B01,Open-BFME5 ILT both drawable lookup-table wrappers at 0x00431C20 and 0x00430B50 read the id through
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
@@ -72884,6 +72885,7 @@ name,address,notes
 ?bfmeSendAAA@BfmeSinkAAA@@QAEXPAX_NH@Z,0x00044409,pin
 ?bfmeSendAAB@BfmeSinkAAB@@QAEXPAX_NH@Z,0x00044409,pin
 ?bfmeSendAC@BfmeNextAC@@QAEXPAUBfmeOutAC@@@Z,0x00043E91,pin
+?bfmeSendAFB@@YGXPAX0@Z,0x00007A45,pin
 ?bfmeSendRM@BfmeSinkRM@@QAEXPAXH@Z,0x00006613,pin
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
 ?bfmeSetQQ@BfmeThingQQ@@QAEXPBDI@Z,0x0088A8F0,pin
