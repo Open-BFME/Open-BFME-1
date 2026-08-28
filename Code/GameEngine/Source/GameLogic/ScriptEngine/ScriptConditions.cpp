@@ -146,9 +146,18 @@ public:
 	BFME_SCRIPT_CONDITION_SLOT(21); BFME_SCRIPT_CONDITION_SLOT(22); BFME_SCRIPT_CONDITION_SLOT(23);
 	BFME_SCRIPT_CONDITION_SLOT(24); BFME_SCRIPT_CONDITION_SLOT(25);
 	virtual Object *getUnitNamed(const AsciiString &name) = 0;
+	virtual void slot27() = 0;
+	virtual Bool didUnitExist(const AsciiString &name) = 0;
 };
 
 #undef BFME_SCRIPT_CONDITION_SLOT
+
+class BfmeScriptConditionParameter
+{
+public:
+	unsigned char m_beforeString[0x10];
+	AsciiString m_string;
+};
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -333,24 +342,6 @@ Bool ScriptConditions::evaluateBridgeRepaired(Parameter *pBridgeParm)
 //-------------------------------------------------------------------------------------------------
 /** evaluateNamedUnitDestroyed */
 //-------------------------------------------------------------------------------------------------
-// ?evaluateNamedUnitDestroyed@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
-Bool ScriptConditions::evaluateNamedUnitDestroyed(Parameter *pUnitParm)
-{
-	Object *theUnit = TheScriptEngine->getUnitNamed( pUnitParm->getString() );
-	if (theUnit) 
-	{
-		return theUnit->isEffectivelyDead();
-	}
-
-	if (TheScriptEngine->didUnitExist(pUnitParm->getString())) {
-		return true;
-	}
-	return false; // Non existent unit is not destroyed. 
-}
-
-//-------------------------------------------------------------------------------------------------
-/** evaluateNamedUnitExists */
-//-------------------------------------------------------------------------------------------------
 class BfmeNamedUnitObject
 {
 public:
@@ -360,6 +351,26 @@ public:
 	Bool isEffectivelyDead() const { return (m_privateStatus & 1) != 0; }
 };
 
+Bool ScriptConditions::evaluateNamedUnitDestroyed(Parameter *pUnitParm)
+{
+	BfmeScriptConditionEngine *engine = reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine);
+	BfmeNamedUnitObject *theUnit = reinterpret_cast<BfmeNamedUnitObject *>(
+		engine->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm)));
+	if (theUnit) 
+	{
+		return theUnit->isEffectivelyDead();
+	}
+
+	BfmeScriptConditionParameter *parameter = reinterpret_cast<BfmeScriptConditionParameter *>(pUnitParm);
+	if (reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine)->didUnitExist(parameter->m_string)) {
+		return true;
+	}
+	return false; // Non existent unit is not destroyed. 
+}
+
+//-------------------------------------------------------------------------------------------------
+/** evaluateNamedUnitExists */
+//-------------------------------------------------------------------------------------------------
 Bool ScriptConditions::evaluateNamedUnitExists(Parameter *pUnitParm)
 {
 	BfmeScriptConditionEngine *engine = reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine);
@@ -376,16 +387,18 @@ Bool ScriptConditions::evaluateNamedUnitExists(Parameter *pUnitParm)
 //-------------------------------------------------------------------------------------------------
 /** evaluateNamedUnitDying */
 //-------------------------------------------------------------------------------------------------
-// ?evaluateNamedUnitDying@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
 Bool ScriptConditions::evaluateNamedUnitDying(Parameter *pUnitParm)
 {
-	Object *theUnit = TheScriptEngine->getUnitNamed( pUnitParm->getString() );
+	BfmeScriptConditionEngine *engine = reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine);
+	BfmeNamedUnitObject *theUnit = reinterpret_cast<BfmeNamedUnitObject *>(
+		engine->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm)));
 	if (theUnit) 
 	{
 		return theUnit->isEffectivelyDead();
 	}
 
-	if (TheScriptEngine->didUnitExist(pUnitParm->getString())) 
+	BfmeScriptConditionParameter *parameter = reinterpret_cast<BfmeScriptConditionParameter *>(pUnitParm);
+	if (reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine)->didUnitExist(parameter->m_string))
 	{
 		return false; // already totally killed
 	}
@@ -395,15 +408,16 @@ Bool ScriptConditions::evaluateNamedUnitDying(Parameter *pUnitParm)
 //-------------------------------------------------------------------------------------------------
 /** evaluateNamedUnitTotallyDead */
 //-------------------------------------------------------------------------------------------------
-// ?evaluateNamedUnitTotallyDead@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
 Bool ScriptConditions::evaluateNamedUnitTotallyDead(Parameter *pUnitParm)
 {
-	Object *theUnit = TheScriptEngine->getUnitNamed( pUnitParm->getString() );
+	BfmeScriptConditionEngine *engine = reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine);
+	Object *theUnit = engine->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm));
 	if (theUnit) {
 		return false; // if the unit still exists, it isn't totally dead.
 	}
 
-	if (TheScriptEngine->didUnitExist(pUnitParm->getString())) {
+	BfmeScriptConditionParameter *parameter = reinterpret_cast<BfmeScriptConditionParameter *>(pUnitParm);
+	if (reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine)->didUnitExist(parameter->m_string)) {
 		// Did exist, now it doesnt.  So it is really, really dead.
 		return true; // totally killed
 	}
