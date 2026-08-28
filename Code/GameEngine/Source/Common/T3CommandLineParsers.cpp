@@ -21,8 +21,16 @@
 //
 // Identity is address-derived. Nothing in the image names these handlers, so the
 // ledger rows are Rva-prefixed and each carries the ZH handler it matches in
-// shape where there is one. The member names below are offsets, not guesses,
-// except where a comment says otherwise.
+// shape where there is one.
+//
+// Every offset below is one retail store; no name moves one. The named members
+// are the offsets retail's own INI field table at 0x00C77018 gives a key to,
+// joined to the upstream member that key writes -- so the offset is BFME's and
+// only the vocabulary is Zero Hour's. That table independently reproduces the
+// three offsets this file had already pinned by hand from the stores
+// (m_useFpsLimit +0x1E, m_framesPerSecondLimit +0x24, m_windowed +0x29), which
+// is what makes it safe to read the rest of it. A key BFME added and Zero Hour
+// has no member for stays an offset name, with the key in its comment.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -39,38 +47,38 @@ public:
 	Int m_framesPerSecondLimit;							///< retail this+0x24
 	unsigned char m_unreconstructed_28[1];
 	bool m_windowed;									///< retail this+0x29
-	bool m_flag2A;										///< retail this+0x2A
+	bool m_flag2A;										///< retail this+0x2A, INI key SkipMapUnroll
 	unsigned char m_unreconstructed_2B[0x30 - 0x2B];
-	Int m_value30;										///< retail this+0x30
+	Int m_yResolution;										///< retail this+0x30
 	unsigned char m_unreconstructed_34[0x64 - 0x34];
-	bool m_flag64;										///< retail this+0x64
-	bool m_flag65;										///< retail this+0x65
+	bool m_useShadowVolumes;										///< retail this+0x64
+	bool m_useShadowDecals;										///< retail this+0x65
 	unsigned char m_unreconstructed_66[0xA6C - 0x66];
-	bool m_flagA6C;										///< retail this+0xA6C
-	bool m_flagA6D;										///< retail this+0xA6D
-	bool m_flagA6E;										///< retail this+0xA6E
-	bool m_flagA6F;										///< retail this+0xA6F
-	bool m_flagA70;										///< retail this+0xA70
-	bool m_flagA71;										///< retail this+0xA71
+	bool m_audioOn;										///< retail this+0xA6C
+	bool m_musicOn;										///< retail this+0xA6D
+	bool m_soundsOn;										///< retail this+0xA6E
+	bool m_sounds3DOn;										///< retail this+0xA6F
+	bool m_speechOn;										///< retail this+0xA70
+	bool m_flagA71;										///< retail this+0xA71, INI key AmbientStreamsOn
 	unsigned char m_unreconstructed_A72[0xA84 - 0xA72];
 	Int m_valueA84;										///< retail this+0xA84
 	unsigned char m_unreconstructed_A88[0xA8F - 0xA88];
-	bool m_flagA8F;										///< retail this+0xA8F
+	bool m_flagA8F;										///< retail this+0xA8F, INI key ShowTooltips
 	bool m_flagA90;										///< retail this+0xA90
 	bool m_flagA91;										///< retail this+0xA91
 	unsigned char m_unreconstructed_A92[0xA95 - 0xA92];
 	bool m_flagA95;										///< retail this+0xA95
 	unsigned char m_unreconstructed_A96[0xAB0 - 0xA96];
-	Int m_valueAB0;										///< retail this+0xAB0
+	Int m_fixedSeed;										///< retail this+0xAB0
 	unsigned char m_unreconstructed_AB4[0xB0C - 0xAB4];
 	Int m_valueB0C;										///< retail this+0xB0C
 	unsigned char m_unreconstructed_B10[0xBB4 - 0xB10];
-	bool m_flagBB4;										///< retail this+0xBB4
-	bool m_flagBB5;										///< retail this+0xBB5
+	bool m_shellMapOn;										///< retail this+0xBB4
+	bool m_flagBB5;										///< retail this+0xBB5, INI key ShellMapOffByCommandArgument
 	unsigned char m_unreconstructed_BB6[0xBC4 - 0xBB6];
 	bool m_flagBC4;										///< retail this+0xBC4
 	unsigned char m_unreconstructed_BC5[0xCCC - 0xBC5];
-	Int m_valueCCC;										///< retail this+0xCCC
+	Int m_playStats;										///< retail this+0xCCC
 	unsigned char m_unreconstructed_CD0[0xDCD - 0xCD0];
 	bool m_flagDCD;										///< retail this+0xDCD
 	unsigned char m_unreconstructed_DCE[0x11FC - 0xDCE];
@@ -91,7 +99,7 @@ Int Rva00060910_parse(char *args[], int num)
 {
 	if (TheWritableGlobalData)
 	{
-		TheWritableGlobalData->m_flagBB4 = false;
+		TheWritableGlobalData->m_shellMapOn = false;
 		TheWritableGlobalData->m_flagBB5 = true;
 		TheWritableGlobalData->m_flagBC4 = false;
 		TheWritableGlobalData->m_flag11FC = true;
@@ -122,22 +130,22 @@ Int Rva00060A00_parse(char *args[], int num)
 	TheCommandLineFlags |= 4;
 	if (TheWritableGlobalData)
 	{
-		TheWritableGlobalData->m_flagA6D = false;
+		TheWritableGlobalData->m_musicOn = false;
 	}
 	return 1;
 }
 
-// ?Rva00060A60_parse@@YAHQAPADH@Z -- ZH parseNoCinematic in spirit
+// ?Rva00060A60_parse@@YAHQAPADH@Z -- ZH parseNoAudio, in ZH's store order
 Int Rva00060A60_parse(char *args[], int num)
 {
 	TheCommandLineFlags |= 2;
 	if (TheWritableGlobalData)
 	{
-		TheWritableGlobalData->m_flagA6C = false;
-		TheWritableGlobalData->m_flagA70 = false;
-		TheWritableGlobalData->m_flagA6E = false;
-		TheWritableGlobalData->m_flagA6F = false;
-		TheWritableGlobalData->m_flagA6D = false;
+		TheWritableGlobalData->m_audioOn = false;
+		TheWritableGlobalData->m_speechOn = false;
+		TheWritableGlobalData->m_soundsOn = false;
+		TheWritableGlobalData->m_sounds3DOn = false;
+		TheWritableGlobalData->m_musicOn = false;
 		TheWritableGlobalData->m_flagA71 = false;
 	}
 	return 1;
@@ -158,18 +166,19 @@ Int Rva00060B90_parse(char *args[], int num)
 {
 	if (TheWritableGlobalData)
 	{
-		TheWritableGlobalData->m_flag64 = false;
-		TheWritableGlobalData->m_flag65 = false;
+		TheWritableGlobalData->m_useShadowVolumes = false;
+		TheWritableGlobalData->m_useShadowDecals = false;
 	}
 	return 1;
 }
 
-// ?Rva00060C10_parse@@YAHQAPADH@Z -- ZH parseXRes shape
+// ?Rva00060C10_parse@@YAHQAPADH@Z -- ZH parseXRes shape, but +0x30 is
+// YResolution; XResolution is the +0x2C its table entry sits beside.
 Int Rva00060C10_parse(char *args[], int num)
 {
 	if (TheWritableGlobalData && num > 1)
 	{
-		TheWritableGlobalData->m_value30 = atoi(args[1]);
+		TheWritableGlobalData->m_yResolution = atoi(args[1]);
 		return 2;
 	}
 	return 1;
@@ -228,7 +237,7 @@ Int Rva00060EE0_parse(char *args[], int num)
 {
 	if (TheWritableGlobalData && num > 1)
 	{
-		TheWritableGlobalData->m_valueAB0 = atoi(args[1]);
+		TheWritableGlobalData->m_fixedSeed = atoi(args[1]);
 	}
 	return 2;
 }
@@ -248,7 +257,7 @@ Int Rva00060FA0_parse(char *args[], int num)
 {
 	if (TheWritableGlobalData && num > 1)
 	{
-		TheWritableGlobalData->m_valueCCC = atoi(args[1]);
+		TheWritableGlobalData->m_playStats = atoi(args[1]);
 	}
 	return 2;
 }
@@ -371,7 +380,7 @@ Int Rva00060880_parse(char *args[], int num)
 {
 	if (TheWritableGlobalData)
 	{
-		TheWritableGlobalData->m_flagBB4 = false;
+		TheWritableGlobalData->m_shellMapOn = false;
 		TheWritableGlobalData->m_flagBB5 = true;
 	}
 	return 1;
