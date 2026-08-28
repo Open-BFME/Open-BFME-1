@@ -10587,6 +10587,7 @@ name,address,notes
 ?WriteScriptDataChunk@@YAXAAVDataChunkOutput@@PAVScriptList@@PAVScript@@@Z,0x00002310,ScriptList script writer via ILT thunk
 ?ZeroStuff@Cftp@@AAEXXZ,0x008853C0,retail Cftp constructor helper
 ?_Bfme_classic_locale@_STL@@3PAV_Locale_impl@1@A,0x0130BCA0,Open-BFME5 classic-locale impl pointer that locale::locale() at 0x00832120 loads; DIR32 sites are masked by the byte gate so this records which global it is
+?_Create_DX8_Surface@DX8Wrapper@@SAPAVIDirect3DSurface9@@IIW4WW3DFormat@@W4_D3DPOOL@@@Z,0x00904CE0,SurfaceClass four-argument constructor call target
 ?_Init_Filters@TextureFilterClass@@SAXW4TextureFilterMode@1@@Z,0x00920D10,pinharvest x2 (body)
 ?_Invalidate_Textures@WW3D@@SAXXZ,0x008FD790,pinharvest x2 (body)
 ?_M_acquire_lock@NodeAllocMutex@_STL@@QAEXXZ,0x0082DA10,node_alloc deallocate lock acquire; thunk to real acquire 0x0082C760
@@ -79197,4 +79198,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?_Create_DX8_Surface@DX8Wrapper@@SAPAVIDirect3DSurface9@@IIW4WW3DFormat@@W4_D3DPOOL@@@Z,0x00904CE0,SurfaceClass four-argument constructor call target
