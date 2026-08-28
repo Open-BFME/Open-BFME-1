@@ -280,6 +280,75 @@ def test_a_donor_holding_a_second_destinations_body_is_never_deleted(tmp_path, c
     assert sources_of(ledger) == [MERGED, shared]
 
 
+# -------------------------------------------- a donor that is only partly ours ---
+
+# The real shape, from Code/GameEngine/Source/Common/SkirmishBattleHonorsLoyalGames.cpp:
+# two markers naming one destination, twenty rows owned. Selecting rows by donor
+# FILE moved all twenty and deleted the file, leaving eighteen bodies whose ledger
+# rows named a path that no longer existed. The build caught it
+# ("symbol not found in object: ?builtNuke@SkirmishBattleHonors@@QBE_NXZ"), but the
+# tool's docstring had promised row granularity all along.
+MARKED = ["?loyalGames@SkirmishBattleHonors@@QBE_NXZ",
+          "?loyalGamesCount@SkirmishBattleHonors@@QBE_NXZ"]
+UNMARKED = [f"?builtNuke{n:02d}@SkirmishBattleHonors@@QBE_NXZ" for n in range(18)]
+
+
+def partial_donor(tmp_path):
+    donor = "Code/GameEngine/Source/Common/SkirmishBattleHonorsLoyalGames.cpp"
+    ledger = repo(tmp_path, {
+        donor: sibling(MARKED[0], DEST, extra_marker=(MARKED[1], DEST)),
+        MERGED: "// merged\n",
+    }, [(name, donor, b"\r\n") for name in MARKED + UNMARKED])
+    return donor, ledger
+
+
+def test_only_the_rows_a_marker_names_move_and_the_donor_survives(tmp_path, capsys):
+    donor, ledger = partial_donor(tmp_path)
+
+    assert run("--apply", DEST, "--into", MERGED, "--only", donor,
+               "--root", str(tmp_path)) == 0
+
+    moved = sources_of(ledger)
+    assert moved[:2] == [MERGED, MERGED], "the two marked rows go to the merged TU"
+    assert moved[2:] == [donor] * len(UNMARKED), \
+        "the eighteen rows no marker names must keep their source"
+    assert (tmp_path / donor).exists(), \
+        "deleting a donor that still owns rows orphans every one of them"
+    out = capsys.readouterr().out
+    assert "kept 1 donor(s)" in out
+    assert f"18 row(s) no marker sends to {DEST}" in out
+    assert f": {DEST}" not in (tmp_path / donor).read_text(), \
+        "the drained markers must go, or the cluster still advertises them"
+
+
+def test_a_donor_whose_every_row_is_marked_is_still_deleted(tmp_path, capsys):
+    """The fix must not make every donor immortal: one with nothing left goes."""
+    donor = "Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
+    symbol = "?hasAnyUnits@TeamPrototype@@QBE_NXZ"
+    ledger = repo(tmp_path, {donor: sibling(symbol, DEST), MERGED: "// merged\n"},
+                  [(symbol, donor, b"\r\n")])
+
+    assert run("--apply", DEST, "--into", MERGED, "--only", donor,
+               "--root", str(tmp_path)) == 0
+
+    assert sources_of(ledger) == [MERGED]
+    assert not (tmp_path / donor).exists(), "a donor owning nothing must be deleted"
+    assert "deleted 1 donor(s)" in capsys.readouterr().out
+
+
+def test_plan_shows_the_marked_share_before_anyone_applies(tmp_path, capsys):
+    """The count that would have prevented the incident, visible without a
+    hand-run `grep -c ',<donor>,' reverse/functions.csv`."""
+    donor, _ledger = partial_donor(tmp_path)
+
+    assert run("--plan", DEST, "--only", donor, "--root", str(tmp_path)) == 0
+
+    out = capsys.readouterr().out
+    assert f"2 of 20 row(s) marked for {DEST}" in out
+    assert "1 PARTIAL donor(s)" in out
+    assert f"{donor} keeps {UNMARKED[0]}" in out
+
+
 # ------------------------------------------------------------------ green ---
 
 def test_only_moves_and_deletes_exactly_the_named_files(tmp_path, capsys):
