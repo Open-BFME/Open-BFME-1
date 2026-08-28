@@ -84,11 +84,13 @@ public:
 private:
 	bool _bfme_shouldSkipClientFrame(void);
 	bool _bfme_shouldSkipClientFrameCall(void);
+	void _bfme_updateClientFrameRatio(void);
 
 	char m_head[0x2c];
 	int m_clientFramePeriod;
 	int m_clientFrameCounter;
-	char m_gap38[8];
+	float m_clientFrameRatio;
+	char m_gap3C[4];
 	float m_clientFrameLimit;
 };
 
@@ -216,6 +218,18 @@ extern int BfmeSkippedClientFrames;
 #define SkippedClientFrames BfmeSkippedClientFrames
 extern int BfmeTimedOpInputLocked;
 #define TimedOpInputLocked BfmeTimedOpInputLocked
+
+void GameEngine::_bfme_updateClientFrameRatio(void)
+{
+	float ratio = (float)m_clientFramePeriod / (float)m_clientFrameCounter;
+	m_clientFrameRatio = ratio;
+	if (ratio < 0.0f)
+		m_clientFrameRatio = 0.0f;
+	else if (ratio > 1.0f)
+		m_clientFrameRatio = 1.0f;
+	else
+		m_clientFrameRatio = ratio;
+}
 
 bool GameEngine::_bfme_shouldSkipClientFrame(void)
 {
