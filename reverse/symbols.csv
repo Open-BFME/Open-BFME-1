@@ -74533,6 +74533,7 @@ name,address,notes
 ?getMap@GameInfo@@QBE?AVAsciiString@@XZ,0x00098E70,returns a copy of the AsciiString at this+0x3c = m_mapName (lower-cased and looked up in TheMapCache by 0x006233E0; formatted as map=%s by generateLadderGameResultsPacket at 0x006392DA via ILT 0x0002F28E; written as the Map key by SkirmishBattleHonors::write 0x0009EB2D); ICF-shared 32 B copy getter so the name follows the GameInfo callers; ledger row is the TerrainRoads dup placeholder
 ?getMaxDisconnectFrame@DisconnectManager@@IAEIXZ,0x0002CDCC,ILT thunk; real body 0xA6B620
 ?getMaxHeightAbovePosition@GeometryInfo@@QBEMXZ,0x0087E000,Open-BFME5 called by ?getFiringLineOfSightOrigin@Weapon@@IBEXPBVObject@@AAUCoord3D@@@Z at 0x001E1A30
+?getMaxHeightBelowPosition@GeometryInfo@@QBEMXZ,0x0087E070,Open-BFME5 GeometryInfo lower extent paired with the independently pinned upper-extent body and called by calcPitches
 ?getMode@RecorderClass@@QAE?AW4RecorderModeType@@XZ,0x00043EEB
 ?getModelIndices@W3DBridge@@IAEHPAGHHPAVMeshClass@@@Z,0x0003881B
 ?getModelVertices@W3DBridge@@IAEHPAUVertexFormatXYZNDUV1@@HMAAVVector3@@111ABVMatrix3D@@PAVMeshClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,0x0001B14E
