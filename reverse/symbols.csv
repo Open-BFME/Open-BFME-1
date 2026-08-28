@@ -926,7 +926,9 @@ name,address,notes
 ??$__introsort_loop@PAHHHUQ4Sort00755050@@@_STL@@YAXPAH00HUQ4Sort00755050@@@Z,0x00755050,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__introsort_loop@PAURva00364980HeapElement@@U1@HURva00364980HeapCompare@@@_STL@@YAXPAURva00364980HeapElement@@00HURva00364980HeapCompare@@@Z,0x0000AE61,REL32 self-call target from 0x00366B03
 ??$__linear_insert@PAUS4SortElem12@@U1@US4Cmp002E1690@@@_STL@@YAXPAUS4SortElem12@@0U1@US4Cmp002E1690@@@Z,0x000219F9,Open-BFME5 ILT the S4SortElem12 insertion sort at 0x002E1170 calls; it jumps to 0x002E0FE0
+??$__linear_insert@PAUS4SortElem12@@U1@US4Cmp00531FA0@@@_STL@@YAXPAUS4SortElem12@@0U1@US4Cmp00531FA0@@@Z,0x0002389E,Open-BFME5 ILT called by the S4SortElem12 insertion sort at 0x00531720
 ??$__linear_insert@PAUS4SortElem12@@U1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@0U1@US4Cmp00532740@@@Z,0x0002C3D1,Open-BFME5 ILT the second S4SortElem12 insertion sort at 0x00532080 calls
+??$__linear_insert@PAUS4SortElem12@@U1@US4Cmp00574DF0@@@_STL@@YAXPAUS4SortElem12@@0U1@US4Cmp00574DF0@@@Z,0x0002B8F5,Open-BFME5 ILT called by the S4SortElem12 insertion sort at 0x00574250
 ??$__linear_insert@PAUS4SortElem20@@U1@US4Cmp002EB8E0@@@_STL@@YAXPAUS4SortElem20@@0U1@US4Cmp002EB8E0@@@Z,0x0002D34E,Open-BFME5 ILT the S4SortElem20 insertion sort at 0x002EB270 calls
 ??$__linear_insert@PAVAsciiString@@V1@U?$less@VAsciiString@@@_STL@@@_STL@@YAXPAVAsciiString@@0V1@U?$less@VAsciiString@@@0@@Z,0x009CD0D0
 ??$__lower_bound@PBIIU?$less@I@_STL@@H@_STL@@YAPBIPBI0ABIU?$less@I@0@PAH@Z,0x00015659,ILT the same resize calls at 0x007868EE to pick the next prime
@@ -72793,6 +72795,7 @@ name,address,notes
 ?bfmeFinishAQA@BfmeTwoAQA@@QAEXXZ,0x00003300,pin
 ?bfmeFinishYC@BfmeThingYC@@QAEXPAX@Z,0x00019D17,pin
 ?bfmeFirstAKB@BfmeThingAKB@@QAE_NPAH@Z,0x00006EF1,pin
+?bfmeFirstEUA@BfmeGlobAEUA@@QAEHHH@Z,0x0004B290,pin
 ?bfmeFirstRK@BfmeThingRK@@QAEXXZ,0x00020B80,pin
 ?bfmeFlagCWB@@3IA,0x00EF1034,pin
 ?bfmeFlagCWC@@3IA,0x00EF14A4,pin
@@ -73225,6 +73228,7 @@ name,address,notes
 ?bfmeLookEBE@BfmeGlobEBE@@QAEPAXPAX@Z,0x0001F253,pin
 ?bfmeLookEFJ@BfmeGlobEFJ@@QAEPAVBfmeResEFJ@@PAVBfmeSubEFJ@@@Z,0x00028560,pin
 ?bfmeLookESC@BfmeGlobESC@@QAEGHHH@Z,0x00044C60,pin
+?bfmeLookEUA@BfmeGlobBEUA@@QAEPAUBfmeItemEUA@@PAH@Z,0x0002EE60,pin
 ?bfmeLookRH@@YGHPAX0@Z,0x007F76F0,pin
 ?bfmeLookupA@@YAHPAX@Z,0x0000B1AE,Open-BFME5 ILT the bit setter at 0x001C3FB0 looks up through
 ?bfmeLookupB@@YAHPAX@Z,0x000052CC,Open-BFME5 ILT the bit setter at 0x001C4020 looks up through
@@ -73453,6 +73457,11 @@ name,address,notes
 ?bfmeRunDGI@BfmeSubDGI@@QAEXPAX@Z,0x000223C2,pin
 ?bfmeRunEHDa@BfmeNodeEHD@@QAEXXZ,0x0000D8AA,pin
 ?bfmeRunEHDb@BfmeNodeEHD@@QAEXXZ,0x00008026,pin
+?bfmeRunEUAa@BfmeItemEUA@@QAEXPAX@Z,0x00025554,pin
+?bfmeRunEUAb@BfmeItemEUA@@QAEXPAX@Z,0x00039716,pin
+?bfmeRunEUAc@BfmeItemEUA@@QAEXPAX@Z,0x00043676,pin
+?bfmeRunEUAd@BfmeItemEUA@@QAEXPAX@Z,0x0000B66D,pin
+?bfmeRunEUAe@BfmeItemEUA@@QAEXPAX@Z,0x0004101A,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
@@ -74746,6 +74755,7 @@ name,address,notes
 ?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
 ?g_activeObj12F0610@@3PAXA,0x00EF0610,pin
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
+?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAccDYB@@3HA,0x00EED8A4,pin
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
 ?g_bfmeArgDZE@@3PAXA,0x00EB7D80,pin
@@ -74753,6 +74763,7 @@ name,address,notes
 ?g_bfmeArgEAA@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgEAC@@3PAXA,0x00EB7D80,pin
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
+?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
 ?g_bfmeBufDWG@@3PAXA,0x00F378D0,pin
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
 ?g_bfmeClockAHB@@3PAUBfmeClockAHB@@A,0x00EF0898,pin
@@ -79261,5 +79272,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??$__linear_insert@PAUS4SortElem12@@U1@US4Cmp00531FA0@@@_STL@@YAXPAUS4SortElem12@@0U1@US4Cmp00531FA0@@@Z,0x0002389E,Open-BFME5 ILT called by the S4SortElem12 insertion sort at 0x00531720
-??$__linear_insert@PAUS4SortElem12@@U1@US4Cmp00574DF0@@@_STL@@YAXPAUS4SortElem12@@0U1@US4Cmp00574DF0@@@Z,0x0002B8F5,Open-BFME5 ILT called by the S4SortElem12 insertion sort at 0x00574250
