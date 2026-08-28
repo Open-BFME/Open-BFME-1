@@ -308,7 +308,6 @@ void ScriptActions::reset( void )
 //-------------------------------------------------------------------------------------------------
 /** Update */
 //-------------------------------------------------------------------------------------------------
-// ?update@ScriptActions@@UAEXXZ present-unmatched
 void ScriptActions::update( void )
 {
 	// Empty for now.  jba.
