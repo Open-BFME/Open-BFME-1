@@ -72426,6 +72426,11 @@ name,address,notes
 ?bfmeDoBKC@BfmeSubBKC@@QAEXPAXH@Z,0x00033433,pin
 ?bfmeDoBKD@@YGXPAUBfmeThingBKD@@PAUBfmeSubBKD@@HPAX@Z,0x00023042,pin
 ?bfmeDoBKG@BfmeSubBKG@@QAEXPAX0@Z,0x007E88D0,pin
+?bfmeDoBLA@@YAXH@Z,0x00012878,pin
+?bfmeDoBLA@@YGXH@Z,0x00012878,pin
+?bfmeDoBLB@@YGXPAXPAD@Z,0x0003FAEE,pin
+?bfmeDoBLD@BfmeSinkBLD@@QAEXPAXH@Z,0x00043E4B,pin
+?bfmeDoBLF@@YAXPAUBfmeSubBLF@@PAXH@Z,0x009F70BA,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -72858,6 +72863,7 @@ name,address,notes
 ?bfmeMakeBFA@@YGPAXPAX@Z,0x00036CFA,pin
 ?bfmeMakeBIF@BfmeSubBIF@@QAEPAPAXPAX@Z,0x000100A0,pin
 ?bfmeMakeBIF@BfmeSubBIF@@QAEPAXPAX@Z,0x000100A0,pin
+?bfmeMakeBLC@BfmeSinkBLC@@QAEPAXPAX@Z,0x0003ADD7,pin
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
@@ -73042,6 +73048,7 @@ name,address,notes
 ?bfmeStepBFF@BfmeSubBFF@@QAEXXZ,0x00888840,pin
 ?bfmeStepBFH@BfmeThingBFH@@QAEXXZ,0x00025EFF,pin
 ?bfmeStepBGG@BfmeThingBGG@@QAEXXZ,0x00015E0B,pin
+?bfmeStepBLE@BfmeThingBLE@@QAEXXZ,0x000105F5,pin
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
@@ -73060,6 +73067,7 @@ name,address,notes
 ?bfmeTailBFG@BfmeThingBFG@@QAEXXZ,0x000286A0,pin
 ?bfmeTailBHG@@YAXXZ,0x00006D52,pin
 ?bfmeTailBHH@@YAXPAUBfmeThingBHH@@@Z,0x008646C0,pin
+?bfmeTailBLE@BfmeSubBLE@@QAEXXZ,0x0001D17E,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
@@ -74141,6 +74149,8 @@ name,address,notes
 ?g_bfmeSinkAAB@@3PAVBfmeSinkAAB@@A,0x00EF33F8,pin
 ?g_bfmeSinkBFC@@3PAVBfmeSinkBFC@@A,0x00EF6924,pin
 ?g_bfmeSinkBHD@@3PAVBfmeSinkBHD@@A,0x00EED668,pin
+?g_bfmeSinkBLC@@3PAVBfmeSinkBLC@@A,0x00EED600,pin
+?g_bfmeSinkBLD@@3PAVBfmeSinkBLD@@A,0x00EF4B98,pin
 ?g_bfmeSinkSB@@3PAVBfmeSinkSB@@A,0x00EED668,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
