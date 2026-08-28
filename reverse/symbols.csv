@@ -73267,6 +73267,7 @@ name,address,notes
 ?bfmeOneDRE@BfmeSubDRE@@QAEPAXPAX@Z,0x00014943,pin
 ?bfmeOneDSN@BfmeSubDSN@@QAEXPAX@Z,0x0002EB4F,pin
 ?bfmeOneDST@BfmeSubDST@@QAEPAPAXPAPAX@Z,0x00003931,pin
+?bfmeOneDSV@BfmeSubDSV@@QAEXXZ,0x000313A9,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -74579,6 +74580,7 @@ name,address,notes
 ?g_bfmeCoord3DFormat@@3QBDB,0x01144348,address-derived Coord3D format string from retail 0x009D9650
 ?g_bfmeCountBBD@@3HA,0x00F0BD30,pin
 ?g_bfmeCountSI@@3HA,0x00EED240,pin
+?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDisconnectPingResult@@3HA,0x012B9810,standalone disconnect ping-result state read and set by updateDisconnectStatus after the sub-ten-percent ratio check
 ?g_bfmeDoneAPB@@3_NA,0x00EED4E6,pin
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
