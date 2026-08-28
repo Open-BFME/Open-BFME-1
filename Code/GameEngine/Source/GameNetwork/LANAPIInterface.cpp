@@ -17,6 +17,7 @@
 // (0x006850F0), LookupGameByListOffset (0x00685150) -- are already ledgered as
 // LANAPI, which is what names the base.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class LANAPIInterface : public SubsystemInterface
 {
 public:

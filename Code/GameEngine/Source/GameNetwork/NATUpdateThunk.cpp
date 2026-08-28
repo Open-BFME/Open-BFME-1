@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?update@NAT@@: Code/GameEngine/Source/GameNetwork/nat.cpp
 // Open-BFME5: lift the retail NAT::update MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_NATUpdate_86C0C0()

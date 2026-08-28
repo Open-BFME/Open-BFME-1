@@ -59,6 +59,7 @@
 
 // GameSpyGameSlot -------------------------------------------
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGameSlotConstructorThunk.cpp
 // ??0GameSpyGameSlot@@ present-unmatched
 GameSpyGameSlot::GameSpyGameSlot()
 {
@@ -450,6 +451,7 @@ Bool GetLocalChatConnectionAddress(AsciiString serverName, UnsignedShort serverP
 
 // GameSpyGameSlot ----------------------------------------
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGameSlot_setPingString.cpp
 // ?setPingString@GameSpyGameSlot@@ present-unmatched
 void GameSpyGameSlot::setPingString( AsciiString pingStr )
 {
@@ -459,6 +461,7 @@ void GameSpyGameSlot::setPingString( AsciiString pingStr )
 
 // GameSpyStagingRoom ----------------------------------------
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyStagingRoom_ctor.cpp
 // ??0GameSpyStagingRoom@@ present-unmatched
 GameSpyStagingRoom::GameSpyStagingRoom()
 {
@@ -473,6 +476,7 @@ GameSpyStagingRoom::GameSpyStagingRoom()
 	m_ladderPort = 0;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyStagingRoom_cleanUpSlotPointers.cpp
 // ?cleanUpSlotPointers@GameSpyStagingRoom@@ present-unmatched
 void GameSpyStagingRoom::cleanUpSlotPointers( void )
 {
@@ -494,6 +498,7 @@ void GameSpyStagingRoom::init( void )
 	GameInfo::init();
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGameSlot_setPingString.cpp
 // ?setPingString@GameSpyStagingRoom@@ present-unmatched
 void GameSpyStagingRoom::setPingString( AsciiString pingStr )
 {
@@ -501,6 +506,7 @@ void GameSpyStagingRoom::setPingString( AsciiString pingStr )
 	m_pingInt = TheGameSpyInfo->getPingValue(pingStr);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__amIHost_GameSpyStagingRoom_UBE_NXZ_00638350.cpp
 // ?amIHost@GameSpyStagingRoom@@ present-unmatched
 Bool GameSpyStagingRoom::amIHost( void ) const
 {
@@ -511,6 +517,7 @@ Bool GameSpyStagingRoom::amIHost( void ) const
 	return getConstSlot(0)->isPlayer(m_localName);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGameSlot_setPingString.cpp
 // ?resetAccepted@GameSpyStagingRoom@@ present-unmatched
 void GameSpyStagingRoom::resetAccepted( void )
 {
@@ -526,6 +533,7 @@ void GameSpyStagingRoom::resetAccepted( void )
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGameSlot_setPingString.cpp
 // ?getLocalSlotNum@GameSpyStagingRoom@@ present-unmatched
 Int GameSpyStagingRoom::getLocalSlotNum( void ) const
 {
@@ -614,6 +622,7 @@ void GameSpyStagingRoom::startGame(Int gameID)
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameSpyStagingRoomGenerateGameResultsPacketThunk.cpp
 // ?generateGameSpyGameResultsPacket@GameSpyStagingRoom@@ present-unmatched
 AsciiString GameSpyStagingRoom::generateGameSpyGameResultsPacket( void )
 {
@@ -709,6 +718,7 @@ AsciiString GameSpyStagingRoom::generateGameSpyGameResultsPacket( void )
 	return results;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GenerateLadderGameResultsPacketThunk.cpp
 // ?generateLadderGameResultsPacket@GameSpyStagingRoom@@ present-unmatched
 AsciiString GameSpyStagingRoom::generateLadderGameResultsPacket( void )
 {
@@ -897,6 +907,7 @@ void GameSpyStagingRoom::launchGame( void )
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGameSlot_setPingString.cpp
 // ?reset@GameSpyStagingRoom@@ present-unmatched
 void GameSpyStagingRoom::reset(void)
 {

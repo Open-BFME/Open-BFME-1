@@ -168,6 +168,7 @@ void CrateSystem::parseCrateTemplateDefinition(INI* ini)
 	ini->initFromINI(crateTemplate, crateTemplate->getFieldParse());
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/CrateSystem_newCrateTemplate_Thunk.cpp
 // ?newCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z present-unmatched
 CrateTemplate *CrateSystem::newCrateTemplate( AsciiString name )
 {
@@ -191,6 +192,7 @@ CrateTemplate *CrateSystem::newCrateTemplate( AsciiString name )
 	return ct;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/System/CrateSystem_newCrateTemplateOverride.cpp
 // ?newCrateTemplateOverride@CrateSystem@@QAEPAVCrateTemplate@@PAV2@@Z present-unmatched
 CrateTemplate *CrateSystem::newCrateTemplateOverride( CrateTemplate *crateToOverride )
 {
@@ -221,6 +223,7 @@ const CrateTemplate *CrateSystem::findCrateTemplate(AsciiString name) const
 	return NULL;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/System/CrateSystem_friend_findCrateTemplate.cpp
 // ?friend_findCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z present-unmatched
 CrateTemplate *CrateSystem::friend_findCrateTemplate(AsciiString name)
 {
@@ -263,12 +266,14 @@ CrateTemplate::CrateTemplate()
 	m_isOwnedByMaker = FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/CrateTemplateDtor.cpp
 // ??1CrateTemplate@@MAE@XZ present-unmatched
 CrateTemplate::~CrateTemplate()
 {
 	m_possibleCrates.clear();
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/CrateTemplate_parseCrateCreationEntryMethodThunk.cpp
 // ?parseCrateCreationEntry@CrateTemplate@@SAXPAVINI@@PAX1PBX@Z present-unmatched
 void CrateTemplate::parseCrateCreationEntry( INI* ini, void *instance, void *, const void*  )
 {

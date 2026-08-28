@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?removeFromSavedIgnoreList@GameSpyInfo@@UAEXH@Z: Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp
 
 typedef int Int;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -37,6 +39,7 @@ typedef _STL::_Rb_tree<
 	_STL::less<int>,
 	_STL::allocator<SavedIgnorePair> > SavedIgnoreMap;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class UserPreferences
 {
 public:
@@ -47,6 +50,7 @@ private:
 	AsciiString m_filename;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/IgnorePreferences.h
 class IgnorePreferences : public UserPreferences
 {
 public:
@@ -55,6 +59,7 @@ public:
 	void setIgnore(const AsciiString &userName, Int profileID, Bool ignore);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefsImplementation.h
 class GameSpyInfo
 {
 public:

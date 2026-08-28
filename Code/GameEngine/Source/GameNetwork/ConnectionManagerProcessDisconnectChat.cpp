@@ -53,6 +53,7 @@ private:
 public:
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -79,6 +80,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectChatCommandMsg
 {
 public:
@@ -92,6 +94,7 @@ private:
 	Int m_playerID;									// this+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisconnectMenu.h
 class DisconnectMenu
 {
 public:
@@ -100,6 +103,7 @@ public:
 
 extern DisconnectMenu *TheDisconnectMenu;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/ConnectionManager.h
 class ConnectionManager
 {
 public:

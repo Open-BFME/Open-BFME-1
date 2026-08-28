@@ -87,6 +87,7 @@ enum
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate_ctor_Thunk.cpp
 // ??0WorkerAIUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 WorkerAIUpdate::WorkerAIUpdate( Thing *thing, const ModuleData* moduleData ) : 
 							 AIUpdateInterface( thing, moduleData )
@@ -148,6 +149,7 @@ WorkerAIUpdate::~WorkerAIUpdate( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate_isCurrentlyFerryingSupplies_Thunk.cpp
 // ?isCurrentlyFerryingSupplies@WorkerAIUpdate@@UBE_NXZ present-unmatched
 Bool WorkerAIUpdate::isCurrentlyFerryingSupplies() const
 {

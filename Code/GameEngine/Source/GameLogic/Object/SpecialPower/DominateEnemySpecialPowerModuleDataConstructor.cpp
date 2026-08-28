@@ -11,6 +11,7 @@
 // writes them before its own vftable pointer, which is the scheduler moving one
 // cleared register's three stores ahead of an independent immediate store.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
 class SpecialAbilityUpdateModuleData
 {
 public:

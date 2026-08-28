@@ -12,6 +12,7 @@
 // rather than a word because the compiler knows the three high bytes are
 // already clear.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

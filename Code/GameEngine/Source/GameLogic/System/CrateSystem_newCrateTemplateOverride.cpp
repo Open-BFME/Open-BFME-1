@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?newCrateTemplateOverride@CrateSystem@@QAEPAVCrateTemplate@@PAV2@@Z: Code/GameEngine/Source/GameLogic/System/CrateSystem.cpp
 // Open-BFME: CrateSystem::newCrateTemplateOverride, retail 0x0037A230, 143 bytes.
 //
 // The reference's body with one BFME addition: a global byte at 0x012ED611 is
@@ -20,6 +21,7 @@ typedef bool Bool;
 // Raised only while an override is being copied over its original.
 extern Bool TheBfmeOverrideCopyInProgress;			// 0x012ED611
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -33,6 +35,7 @@ protected:
 	Bool m_isOverride;					// this+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/CrateSystem.h
 class CrateTemplate : public Overridable
 {
 public:
@@ -43,6 +46,7 @@ private:
 	char m_bfme_body[0x3C - 0x0C];				// sizeof(CrateTemplate) is the pushed 0x3C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/CrateSystem.h
 class CrateSystem
 {
 public:

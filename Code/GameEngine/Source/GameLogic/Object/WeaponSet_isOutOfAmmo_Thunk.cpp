@@ -19,12 +19,14 @@ enum WeaponStatus
 	OUT_OF_AMMO										///< retail compares against 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:
 	WeaponStatus getStatus(void) const;				///< ILT 0x0000978C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/WeaponSet.h
 class WeaponSet
 {
 public:

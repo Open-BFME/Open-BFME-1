@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?update@VictoryConditions@@: Code/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp
 // Open-BFME5: lift the exact retail VictoryConditions::update MASM body.
 
 class VictoryConditions

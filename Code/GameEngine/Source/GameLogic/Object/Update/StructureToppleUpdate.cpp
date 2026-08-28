@@ -60,6 +60,7 @@ const Int MAX_IDX = 32;
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdateConstructor.cpp
 // ??0StructureToppleUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 StructureToppleUpdate::StructureToppleUpdate( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {
@@ -149,6 +150,7 @@ static void parseAngleFX(INI* ini, void *instance, void * /* store */, const voi
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/StructureToppleUpdate_onDie_Thunk.cpp
 // ?onDie@StructureToppleUpdate@@UAEXPBVDamageInfo@@@Z present-unmatched
 void StructureToppleUpdate::onDie( const DamageInfo *damageInfo )
 {

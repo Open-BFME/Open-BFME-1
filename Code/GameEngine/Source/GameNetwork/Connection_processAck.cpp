@@ -28,6 +28,7 @@ typedef float Real;
 // straight off the retail body at 0x00661CC0.
 class NetCommandMsg;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 public:
@@ -42,6 +43,7 @@ public:
 	UnsignedInt m_timeLastSent;						// this+0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandList.h
 class NetCommandList
 {
 public:
@@ -57,6 +59,7 @@ extern "C" __declspec(dllimport) UnsignedInt __stdcall timeGetTime(void);
 
 enum { CONNECTION_LATENCY_HISTORY_LENGTH = 200 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -71,6 +74,7 @@ public:
 	Int m_referenceCount;							// this+0x18
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetAckStage1CommandMsg : public NetCommandMsg
 {
 public:
@@ -82,6 +86,7 @@ public:
 	UnsignedInt m_originalExecutionFrame;			// this+0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetAckBothCommandMsg : public NetCommandMsg
 {
 public:
@@ -93,6 +98,7 @@ public:
 	UnsignedInt m_originalExecutionFrame;			// this+0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/Connection.h
 class Connection
 {
 public:

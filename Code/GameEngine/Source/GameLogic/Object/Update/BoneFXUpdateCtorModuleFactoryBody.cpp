@@ -27,6 +27,7 @@ protected:
 class BFU_Iface1 { public: virtual void slot(); };
 class BFU_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public BFU_DeepBase, public BFU_Iface1, public BFU_Iface2
 {
 public:
@@ -61,6 +62,7 @@ private:
     float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BoneFXUpdate.h
 class BoneFXUpdate : public UpdateModule
 {
 public:

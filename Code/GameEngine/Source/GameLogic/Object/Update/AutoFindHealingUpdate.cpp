@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AutoFindHealingUpdate.h
 class AutoFindHealingUpdateModuleData
 {
 	friend class AutoFindHealingUpdate;
@@ -32,6 +33,7 @@ AutoFindHealingUpdateModuleData::AutoFindHealingUpdateModuleData( void )
 
 class Player;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -48,6 +50,7 @@ enum CommandSourceType
 	CMD_FROM_DOZER	= 3
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
@@ -176,6 +179,7 @@ enum UpdateSleepTime
 	UPDATE_SLEEP_NONE = 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AutoFindHealingUpdate.h
 class AutoFindHealingUpdate
 {
 public:

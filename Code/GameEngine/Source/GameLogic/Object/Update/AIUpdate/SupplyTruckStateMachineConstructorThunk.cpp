@@ -1,6 +1,8 @@
+// readable body of ??0SupplyTruckStateMachine@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate.cpp
 class Object;
 class AsciiString {};
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyTruckAIUpdate.h
 class SupplyTruckStateMachine
 {
 public:

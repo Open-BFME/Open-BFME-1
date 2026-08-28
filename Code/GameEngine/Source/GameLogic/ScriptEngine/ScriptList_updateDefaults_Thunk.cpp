@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0ScriptList@@QAE@XZ: Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class ScriptList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/SidesList.h
 struct SidesInfo
 {
 	void *m_dict;
@@ -11,6 +13,7 @@ struct SidesInfo
 	void *m_rest[3];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/SidesList.h
 class SidesList
 {
 public:
@@ -30,6 +33,7 @@ extern SidesList *TheSidesList;
 // The two 0x20-byte blocks at +0x0C and +0x2C are byte-for-byte the same
 // initialiser, so they are one member type used twice rather than sixteen
 // separate fields.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 struct ScriptGroup
 {
 	void *m_a;
@@ -53,6 +57,7 @@ public:
 	ScriptListBase(void) : m_x(0), m_y(0) {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class ScriptList : public ScriptListBase
 {
 public:

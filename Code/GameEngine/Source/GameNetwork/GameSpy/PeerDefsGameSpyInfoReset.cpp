@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?reset@GameSpyInfo@@UAEXXZ: Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp
 
 // FILE: PeerDefsGameSpyInfoReset.cpp ////////////////////////////////////////
 //
@@ -154,6 +155,7 @@ private:
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PersistentStorageThread.h
 class PSPlayerStats
 {
 public:
@@ -162,6 +164,7 @@ private:
 	char m_bfmeBody[0x1c4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/StagingRoomGameInfo.h
 class GameSpyStagingRoom
 {
 public:
@@ -172,6 +175,7 @@ private:
 	char m_bfmeBody[0x468 - 4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefsImplementation.h
 class GameSpyInfo
 {
 public:

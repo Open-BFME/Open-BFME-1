@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?removeGame@LANAPI@@IAEXPAVLANGameInfo@@@Z: Code/GameEngine/Source/GameNetwork/lanapi.cpp
 
 // Retail 0x00685180 -- the LANGameInfo half of the pair whose LANPlayer half,
 // ?removePlayer@LANAPI@@IAEXPAVLANPlayer@@@Z at 0x00685290, is already ledgered
@@ -11,6 +12,7 @@
 // body compiled there misses by that displacement in six places. Modelling the
 // two offsets here keeps the correction out of a shared header.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameInfo
 {
 public:
@@ -18,6 +20,7 @@ public:
 	LANGameInfo *m_next;			// +0x398
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class LANAPI
 {
 protected:

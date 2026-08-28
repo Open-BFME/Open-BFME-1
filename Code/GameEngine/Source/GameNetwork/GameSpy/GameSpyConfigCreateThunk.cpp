@@ -1,3 +1,4 @@
+// readable body of ?create@GameSpyConfigInterface@@SAPAV1@VAsciiString@@@Z: Code/GameEngine/Source/GameNetwork/GameSpy/GSConfig.cpp
 // Exact retail bytes for GameSpyConfigInterface::create at 0x0062AD50.
 extern "C" __declspec(naked) void bfme_GameSpyConfigInterface_create_62AD50()
 {

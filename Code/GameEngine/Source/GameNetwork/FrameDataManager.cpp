@@ -50,6 +50,7 @@
 // clear loop to the vector-destructor iterator and operator delete[]. The field
 // offsets are unchanged (m_frameData at +4), which is why the accessors already
 // matched against the reference layout.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/FrameDataManager.h
 class FrameDataManager
 {
 public:

@@ -6,6 +6,7 @@
 // Retail layout from WWDownload/ftp.h (Cftp is a friend-only leaf class; no
 // other Cftp member has been reconstructed yet, so only the fields ZeroStuff
 // actually touches are given real names/offsets here).
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDownload/ftp.h
 class Cftp
 {
 public:

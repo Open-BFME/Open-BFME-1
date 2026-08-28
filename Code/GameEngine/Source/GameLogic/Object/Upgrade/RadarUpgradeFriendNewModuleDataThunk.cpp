@@ -17,6 +17,7 @@ private:
 	char opaque[0x68];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/RadarUpgrade.h
 class RadarUpgradeModuleData
 {
 public:
@@ -32,6 +33,7 @@ private:
 	unsigned char m_flag;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -40,6 +42,7 @@ public:
 
 extern "C" char RadarUpgradeFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/RadarUpgrade.h
 class RadarUpgrade
 {
 public:

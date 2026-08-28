@@ -8,6 +8,7 @@ typedef int (__stdcall *FARPROC)();
 extern "C" __declspec(dllimport) FARPROC __stdcall GetProcAddress(
 	HMODULE module, const char *procName);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 struct AsciiStringData
 {
 	unsigned char m_header[8];
@@ -25,6 +26,7 @@ private:
 	StringBase(const char *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -51,6 +53,7 @@ private:
 	AsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -65,6 +68,7 @@ extern Bool ScriptDebugMessagesDisabled;
 extern HMODULE TheScriptDebugWindowDLL;
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:

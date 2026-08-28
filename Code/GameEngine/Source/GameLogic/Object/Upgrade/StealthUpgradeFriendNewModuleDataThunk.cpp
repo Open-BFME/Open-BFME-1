@@ -27,6 +27,7 @@ private:
 	UpgradeModuleDataSub m_sub;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -35,6 +36,7 @@ public:
 
 extern "C" char StealthUpgradeFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StealthUpgrade.h
 class StealthUpgrade
 {
 public:

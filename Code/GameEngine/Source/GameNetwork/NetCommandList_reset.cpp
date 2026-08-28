@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?reset@NetCommandList@@QAEXXZ: Code/GameEngine/Source/GameNetwork/NetCommandList.cpp
 
 // NetCommandList::reset, 0x006731A0, 74 bytes.
 //
@@ -18,6 +19,7 @@ void __cdecl operator delete(void *block) throw();
 
 class NetCommandMsg;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 public:
@@ -28,6 +30,7 @@ public:
 	NetCommandRef *m_prev;							// this+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandList.h
 class NetCommandList
 {
 public:

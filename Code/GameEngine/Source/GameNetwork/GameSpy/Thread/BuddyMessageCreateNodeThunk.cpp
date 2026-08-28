@@ -3,6 +3,7 @@
 // Open-BFME5: list<BuddyMessage>::_M_create_node
 // Retail: operator new(0x20); construct value at +8; return node.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
 class BuddyMessage
 {
 };

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?processDisconnectVote@DisconnectManager@@IAEXPAVNetCommandMsg@@PAVConnectionManager@@@Z: Code/GameEngine/Source/GameNetwork/DisconnectManager.cpp
 // Lift the DisconnectManager::processDisconnectVote __emit thunk to clean C++.
 //
 // Verbatim Zero Hour DisconnectManager.cpp: translate the sender's slot, drop
@@ -16,12 +17,14 @@
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/ConnectionManager.h
 class ConnectionManager
 {
 public:
 	UnsignedInt getLocalPlayerID(void);						///< ILT thunk at 0x0004A291
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -35,6 +38,7 @@ private:
 	Int m_playerID;											///< retail this+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/DisconnectManager.h
 class DisconnectManager
 {
 protected:

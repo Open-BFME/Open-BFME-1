@@ -3,6 +3,7 @@
 
 #include <math.h>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -10,6 +11,7 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -20,6 +22,7 @@ private:
 	Coord3D m_cachedPos;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/RadiusDecal.h
 class RadiusDecal
 {
 public:
@@ -30,6 +33,7 @@ private:
 	unsigned char m_unreconstructed_00[0x10];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DynamicShroudClearingRangeUpdate.h
 class DynamicShroudClearingRangeUpdate
 {
 public:

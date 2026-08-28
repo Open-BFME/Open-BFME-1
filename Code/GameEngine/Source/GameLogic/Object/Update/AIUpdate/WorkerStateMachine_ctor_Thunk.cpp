@@ -2,6 +2,7 @@
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Object;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WorkerAIUpdate.h
 class WorkerStateMachine {
 public:
 	WorkerStateMachine(Object *);

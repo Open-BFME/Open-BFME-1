@@ -59,6 +59,7 @@ private:
 	NetCommandRef *m_first;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/Connection.h
 class Connection
 {
 public:

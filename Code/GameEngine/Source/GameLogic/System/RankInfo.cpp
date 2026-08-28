@@ -46,6 +46,7 @@ RankInfoStore* TheRankInfoStore = NULL;
 #endif
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RankInfoDestructorThunk.cpp
 // ??1RankInfo@@MAE@XZ present-unmatched
 RankInfo::~RankInfo()
 {
@@ -53,6 +54,7 @@ RankInfo::~RankInfo()
 
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RankInfoStoreDestructorThunk.cpp
 // ??1RankInfoStore@@UAE@XZ present-unmatched
 RankInfoStore::~RankInfoStore()
 {

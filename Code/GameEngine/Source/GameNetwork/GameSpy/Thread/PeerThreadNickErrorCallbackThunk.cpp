@@ -1,3 +1,4 @@
+// readable body of ?nickErrorCallback@PeerThreadClass@@: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread.cpp
 // Exact retail bytes for PeerThreadClass::nickErrorCallback at 0x0064A2E0.
 // Kept separate so PeerThread.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_PeerThread_nickErrorCallback_64A2E0()

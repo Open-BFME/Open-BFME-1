@@ -55,6 +55,7 @@ public:
 	virtual void slot();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
@@ -64,6 +65,7 @@ private:
 	unsigned char m_pad[0x94];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
 class SpecialAbilityUpdate : public SpecialAbilityUpdateUpdateModule,
 	public SpecialAbilityUpdateInterface
 {

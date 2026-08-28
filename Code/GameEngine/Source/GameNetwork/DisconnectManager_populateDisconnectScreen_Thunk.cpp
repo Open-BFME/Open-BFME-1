@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?populateDisconnectScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z: Code/GameEngine/Source/GameNetwork/DisconnectManager.cpp
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -17,6 +18,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>
 {
 public:
@@ -28,6 +30,7 @@ public:
 	~UnicodeString() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/ConnectionManager.h
 class ConnectionManager
 {
 public:
@@ -35,6 +38,7 @@ public:
 	UnsignedInt getLocalPlayerID();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisconnectMenu.h
 class DisconnectMenu
 {
 public:
@@ -44,6 +48,7 @@ public:
 
 extern DisconnectMenu *TheDisconnectMenu;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/DisconnectManager.h
 class DisconnectManager
 {
 protected:

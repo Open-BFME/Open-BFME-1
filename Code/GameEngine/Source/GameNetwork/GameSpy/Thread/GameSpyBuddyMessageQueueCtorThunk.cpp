@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0GameSpyBuddyMessageQueue@@QAE@XZ: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThread.cpp
 
 class GameSpyBuddyMessageQueue
 {

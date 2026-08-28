@@ -83,6 +83,7 @@ GameSpyInfo::~GameSpyInfo()
 	reset();
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefsGameSpyInfoReset.cpp
 // ?reset@GameSpyInfo@@UAEXXZ present-unmatched
 void GameSpyInfo::reset( void )
 {
@@ -204,6 +205,7 @@ BuddyInfoMap::iterator PeerDefs_force_BuddyInfoMapFind(BuddyInfoMap *map, Int id
 	return map->find(id);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfoAddGroupRoomThunk.cpp
 // ?addGroupRoom@GameSpyInfo@@UAEXVGameSpyGroupRoom@@@Z present-unmatched
 void GameSpyInfo::addGroupRoom( GameSpyGroupRoom room )
 {
@@ -289,6 +291,7 @@ void GameSpyInfo::joinGroupRoom( Int groupID )
 // Body in PeerDefs_leaveGroupRoom.asm (exact 188B retail @ 0x00634CE0).
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameSpyInfo_joinBestGroupRoomMethodThunk.cpp
 // ?joinBestGroupRoom@GameSpyInfo@@UAEXXZ present-unmatched
 void GameSpyInfo::joinBestGroupRoom( void )
 {
@@ -391,6 +394,7 @@ void GameSpyInfo::addStagingRoom( GameSpyStagingRoom room )
 	m_stagingRoomsDirty = m_sawFullGameList;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfo_updateStagingRoom.cpp
 // ?updateStagingRoom@GameSpyInfo@@UAEXVGameSpyStagingRoom@@@Z present-unmatched
 void GameSpyInfo::updateStagingRoom( GameSpyStagingRoom room )
 {
@@ -517,6 +521,8 @@ void GameSpyInfo::addToSavedIgnoreList( Int profileID, AsciiString nick)
 // ?removeFromSavedIgnoreList@GameSpyInfo@@UAEXH@Z
 // Retail body is claimed from PeerDefs_removeFromSavedIgnoreList.asm; retain this
 // definition so this translation unit emits its matched map template helpers.
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfoRemoveFromSavedIgnoreListThunk.cpp
+// ?removeFromSavedIgnoreList@GameSpyInfo@@UAEXH@Z present-unmatched
 void GameSpyInfo::removeFromSavedIgnoreList( Int profileID )
 {
 	m_savedIgnoreMap.erase(profileID);

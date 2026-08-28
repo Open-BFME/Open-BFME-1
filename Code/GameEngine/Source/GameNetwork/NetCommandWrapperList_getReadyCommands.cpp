@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?getReadyCommands@NetCommandWrapperList@@QAEPAVNetCommandList@@XZ: Code/GameEngine/Source/GameNetwork/NetCommandWrapperList.cpp
 
 // NetCommandWrapperList::getReadyCommands, 0x00676890, 256 bytes.
 //
@@ -23,6 +24,7 @@ void __cdecl operator delete(void *block) throw();
 
 class NetCommandMsg;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 public:
@@ -39,6 +41,7 @@ public:
 	UnsignedInt m_timeLastSent;						// this+0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandList.h
 class NetCommandList
 {
 public:
@@ -52,6 +55,7 @@ public:
 	NetCommandRef *m_lastMessageInserted;			// this+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 public:
@@ -60,6 +64,7 @@ public:
 
 class NetWrapperCommandMsg;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandWrapperList.h
 class NetCommandWrapperListNode
 {
 public:
@@ -79,6 +84,7 @@ public:
 	UnsignedInt m_numChunksPresent;					// this+0x1C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandWrapperList.h
 class NetCommandWrapperList
 {
 public:

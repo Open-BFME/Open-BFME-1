@@ -117,6 +117,7 @@ void DownloadManager::queueFileForDownload( AsciiString server, AsciiString user
 	m_queuedDownloads.push_back(q);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/DownloadManagerThunks.cpp
 // ?downloadNextQueuedFile@DownloadManager@@QAEJXZ present-unmatched
 HRESULT DownloadManager::downloadNextQueuedFile( void )
 {

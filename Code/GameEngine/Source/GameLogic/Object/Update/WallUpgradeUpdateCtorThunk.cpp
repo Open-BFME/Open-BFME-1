@@ -22,6 +22,7 @@ protected:
 class WUU_Iface1 { public: virtual void slot(); };
 class WUU_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public WUU_DeepBase, public WUU_Iface1, public WUU_Iface2
 {
 public:

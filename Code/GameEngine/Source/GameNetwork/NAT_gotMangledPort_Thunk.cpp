@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?gotMangledPort@NAT@@IAEXHG@Z: Code/GameEngine/Source/GameNetwork/nat.cpp
 // Open-BFME5: recovered BFME NAT mangled-port state machine.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
 {
 public:
@@ -22,6 +24,7 @@ struct NATConnectionNode
 	int m_unused;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NAT.h
 class NAT
 {
 protected:

@@ -128,6 +128,7 @@ void NetCommandList::init() {
 /**
  * Reset the contents of this list.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetCommandList_reset.cpp
 // ?reset@NetCommandList@@QAEXXZ present-unmatched
 void NetCommandList::reset() {
 	NetCommandRef *temp = m_first;
@@ -146,6 +147,7 @@ void NetCommandList::reset() {
  * Insert sorts msg.  Assumes that all the previous message inserts were done using this function.
  * The message is sorted in based first on command type, then player id, and then command id.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetCommandList_addMessage_Thunk.cpp
 // ?addMessage@NetCommandList@@QAEPAVNetCommandRef@@PAVNetCommandMsg@@@Z present-unmatched
 // Real body 0x00673200, 609 bytes, still claimed by NetCommandList_addMessage.asm.
 // The 84 accessor uses below were emitting the reference's +4/+8/+0xC offsets and

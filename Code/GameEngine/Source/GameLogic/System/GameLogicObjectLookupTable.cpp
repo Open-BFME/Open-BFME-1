@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?addObjectToLookupTable@GameLogic@@QAEXPAVObject@@@Z: Code/GameEngine/Source/GameLogic/System/GameLogic.cpp
+// readable body of ?removeObjectFromLookupTable@GameLogic@@QAEXPAVObject@@@Z: Code/GameEngine/Source/GameLogic/System/GameLogic.cpp
 // Open-BFME: the two halves of GameLogic's object lookup table,
 //
 //   0x0038E490  addObjectToLookupTable       38 bytes
@@ -25,6 +27,7 @@
 
 typedef int ObjectID;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -37,6 +40,7 @@ private:
 
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:

@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // stlport
+// readable body of ?addServerToMap@PeerThreadClass@@: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread.cpp
 
 // FILE: PeerThreadAddServerToMap.cpp //////////////////////////////////////
 //

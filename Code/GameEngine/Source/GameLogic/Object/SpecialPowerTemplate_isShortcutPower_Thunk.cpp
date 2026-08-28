@@ -35,6 +35,7 @@
 #pragma inline_recursion(on)
 #pragma inline_depth(2)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -51,11 +52,13 @@ protected:
 	Overridable *m_nextOverride;					///< retail this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 	char m_unreconstructed_00[0x94 - 0x24];			///< 0x70, the gap between the two sounds
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
 class SpecialPowerTemplate : public Overridable
 {
 public:

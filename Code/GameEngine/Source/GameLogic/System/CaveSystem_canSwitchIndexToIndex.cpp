@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?canSwitchIndexToIndex@CaveSystem@@QAE_NHH@Z: Code/GameEngine/Source/GameLogic/System/CaveSystem.cpp
 // Open-BFME: CaveSystem::canSwitchIndexToIndex, retail 0x003782D0, 89 bytes.
 //
 // The reference's body unchanged but for one BFME difference: getContainCount
@@ -16,12 +17,14 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/TunnelTracker.h
 class TunnelTracker
 {
 public:
 	UnsignedInt getContainCount(Int bfmeArg);		// ILT 0x00036165
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/CaveSystem.h
 class CaveSystem
 {
 public:

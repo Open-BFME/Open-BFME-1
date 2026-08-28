@@ -18,6 +18,7 @@ public:
 
 extern GameLogicFrameSlice *TheGameLogic;			// 0x012F0898
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/OCLUpdate.h
 class OCLUpdate
 {
 public:

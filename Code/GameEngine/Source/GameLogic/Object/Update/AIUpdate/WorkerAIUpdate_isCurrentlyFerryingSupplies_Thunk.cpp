@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?isCurrentlyFerryingSupplies@WorkerAIUpdate@@UBE_NXZ: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate.cpp
 // Open-BFME5: WorkerAIUpdate::isCurrentlyFerryingSupplies, retail 0x002C7E30,
 // zh_sweep packet 002c7e30. The Zero Hour body unchanged.
 //
@@ -31,6 +32,7 @@ enum SupplyTruckStateTypes
 	ST_DOCKING = 4
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
@@ -41,6 +43,7 @@ private:
 	unsigned int m_id;								///< retail this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -51,6 +54,7 @@ private:
 	State *m_currentState;							///< retail this+0x1C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WorkerAIUpdate.h
 class WorkerAIUpdate
 {
 public:

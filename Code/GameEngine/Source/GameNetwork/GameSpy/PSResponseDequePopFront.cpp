@@ -14,6 +14,7 @@
 
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PersistentStorageThread.h
 class PSPlayerStats
 {
 public:
@@ -23,6 +24,7 @@ private:
 	char m_bfmeBody[0x1E8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PersistentStorageThread.h
 class PSResponse
 {
 public:

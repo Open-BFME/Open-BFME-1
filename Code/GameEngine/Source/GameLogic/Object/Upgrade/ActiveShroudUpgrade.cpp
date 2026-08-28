@@ -70,6 +70,7 @@ ActiveShroudUpgradeModuleData::ActiveShroudUpgradeModuleData( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Upgrade/ActiveShroudUpgradeConstructor.cpp
 // ??0ActiveShroudUpgrade@@ present-unmatched
 ActiveShroudUpgrade::ActiveShroudUpgrade( Thing *thing, const ModuleData* moduleData ) : 
 							UpgradeModule( thing, moduleData )

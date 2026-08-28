@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?FillBufferWithFileMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
 // Retail 0x0067D740. Zero Hour's FillBufferWithFileMessage field for
 // field, and it pairs with GetFileCommandSize at 0x0067D410: the same
@@ -43,6 +44,7 @@ private:
 
 class NetCommandMsg;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileCommandMsg
 {
 public:
@@ -61,6 +63,7 @@ public:
 	Int m_commandType;				// +0x14
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 public:
@@ -72,6 +75,7 @@ public:
 	UnsignedByte m_relay;				// +0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 protected:

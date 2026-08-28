@@ -1,3 +1,4 @@
+// readable body of ??0GameSpyConfig@@QAE@VAsciiString@@@Z: Code/GameEngine/Source/GameNetwork/GameSpy/GSConfig.cpp
 // Exact retail bytes for GameSpyConfig::GameSpyConfig at 0x00628BA0.
 // Kept separate so GSConfig.cpp continues to provide its other symbols and constructor funclets.
 extern "C" __declspec(naked) void bfme_GameSpyConfig_ctor_628BA0()

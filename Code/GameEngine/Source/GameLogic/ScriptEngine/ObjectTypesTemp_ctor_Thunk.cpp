@@ -6,6 +6,7 @@
 // size (20 bytes, matching the retail `push 0x14` allocation size) and the
 // mangled default constructor matter here -- ObjectTypes itself is fully
 // defined and matched elsewhere.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectTypes.h
 class ObjectTypes
 {
 public:

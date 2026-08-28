@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?applyBattlePlanBonusesForObject@Player@@QBEXPAVObject@@@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
+// readable body of ?becomingTeamMember@Player@@QAEXPAVObject@@_N@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
 
 typedef bool Bool;
 typedef int Int;
@@ -11,6 +13,7 @@ enum NameKeyType
 class Object;
 class Player;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -20,6 +23,7 @@ public:
 	Overridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
 {
 public:
@@ -60,6 +64,7 @@ public:
 
 #undef BFME_VTABLE_SLOT
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public BfmeHighSlotVTable
 {
 public:
@@ -68,10 +73,12 @@ public:
 };
 
 class Module;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -119,12 +126,14 @@ private:
 	Bool m_modulesReady;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AutoDepositUpdate.h
 class AutoDepositUpdate : public UpdateModule
 {
 public:
 	void awardInitialCaptureBonus(Player *player);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
@@ -138,12 +147,14 @@ private:
 	Player *m_neutralPlayer;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
 	NameKeyType nameToKey(const char *name);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI : public BfmeHighSlotVTable
 {
 public:
@@ -153,6 +164,7 @@ public:
 
 void localApplyBattlePlanBonusesToObject(Object *object, void *bonuses);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

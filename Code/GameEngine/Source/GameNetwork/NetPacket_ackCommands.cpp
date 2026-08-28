@@ -10,6 +10,7 @@ typedef unsigned int UnsignedInt;
 
 class NetCommandMsg;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 public:
@@ -17,6 +18,7 @@ public:
 	NetCommandMsg *m_msg;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetAckBothCommandMsg
 {
 public:
@@ -30,6 +32,7 @@ public:
 	UnsignedInt m_playerID;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetAckStage1CommandMsg
 {
 public:
@@ -43,6 +46,7 @@ public:
 	UnsignedInt m_playerID;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetAckStage2CommandMsg
 {
 public:
@@ -56,6 +60,7 @@ public:
 	UnsignedInt m_playerID;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 protected:

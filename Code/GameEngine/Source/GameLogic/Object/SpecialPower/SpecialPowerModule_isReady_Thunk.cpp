@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?isReady@SpecialPowerModule@@UBE_NXZ: Code/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule.cpp
 
 // BFME SpecialPowerModule::isReady, 0x0026AA20.
 //
@@ -25,6 +26,7 @@ class Player;
 class Object;
 class SpecialPowerTemplate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -37,6 +39,7 @@ private:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -55,6 +58,7 @@ public:
 	Overridable *m_nextOverride;			// +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
 class SpecialPowerTemplate : public Overridable
 {
 public:
@@ -73,18 +77,21 @@ private:
 	bool m_sharedNSync;						// +0x115
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	Player *getControllingPlayer(void) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
 	UnsignedInt getOrStartSpecialPowerReadyFrame(const SpecialPowerTemplate *tmpl);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerModule.h
 class SpecialPowerModuleData
 {
 public:
@@ -92,6 +99,7 @@ public:
 	SpecialPowerTemplate *m_specialPowerTemplate;	// +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule
 {
 public:
@@ -115,12 +123,14 @@ protected:
 	char m_pad[0x24 - 0x0c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerModule.h
 class SpecialPowerModuleInterface
 {
 public:
 	virtual bool isReady(void) const = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerModule.h
 class SpecialPowerModule : public SpecialPowerPrimary, public SpecialPowerModuleInterface
 {
 public:

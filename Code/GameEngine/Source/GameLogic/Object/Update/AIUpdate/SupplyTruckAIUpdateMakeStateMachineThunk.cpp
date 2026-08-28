@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?makeStateMachine@SupplyTruckAIUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate.cpp
 
 // Retail's abbreviated MASM public name is preserved through the TU-local alias in functions.csv.
 extern "C" __declspec(naked) void bfme_SupplyTruckMakeStateMachine_2C5DB0()

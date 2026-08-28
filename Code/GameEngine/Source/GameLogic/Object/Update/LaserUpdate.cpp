@@ -78,6 +78,7 @@ LaserUpdateModuleData::LaserUpdateModuleData()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/LaserUpdateCtorThunk.cpp
 // ??0LaserUpdate@@ present-unmatched
 LaserUpdate::LaserUpdate( Thing *thing, const ModuleData* moduleData ) : ClientUpdateModule( thing, moduleData )
 {

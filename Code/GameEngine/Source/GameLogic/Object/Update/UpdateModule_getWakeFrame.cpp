@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getWakeFrame@UpdateModule@@IBE?AW4UpdateSleepTime@@XZ: Code/GameEngine/Source/GameLogic/Object/Update/UpdateModule.cpp
 
 // UpdateModule::getWakeFrame, retail 0x002B2020. No calls: the frame counter is
 // read straight out of TheGameLogic at +0x3C - the accessor is inlined - and
@@ -14,6 +15,7 @@ enum UpdateSleepTime
 	UPDATE_SLEEP_NONE = 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -23,6 +25,7 @@ public:
 
 extern GameLogic *TheGameLogic;				// 0x012F0898
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule
 {
 protected:

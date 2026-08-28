@@ -10,6 +10,7 @@ enum DozerTask
 	DOZER_TASK_DUMMY
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -31,6 +32,7 @@ private:
 	virtual StateReturnType initDefaultState();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:

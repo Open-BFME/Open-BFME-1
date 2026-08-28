@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0SpawnPointProductionExitUpdate@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/SpawnPointProductionExitUpdate.cpp
 // ModuleFactory reaches this constructor body through ILT 0x00023858. The
 // explicit retail layout keeps this per-TU copy independent of Zero Hour's
 // incompatible UpdateModule layout.
@@ -22,6 +23,7 @@ protected:
 class SPEU_Iface1 { public: virtual void slot(); };
 class SPEU_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public SPEU_DeepBase, public SPEU_Iface1, public SPEU_Iface2
 {
 public:
@@ -38,12 +40,14 @@ private:
     int m_f1c;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class ExitInterface
 {
 public:
     virtual void exitObject();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 class Coord3D
 {
 public:
@@ -63,6 +67,7 @@ private:
     float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpawnPointProductionExitUpdate.h
 class SpawnPointProductionExitUpdate : public UpdateModule, public ExitInterface
 {
 public:

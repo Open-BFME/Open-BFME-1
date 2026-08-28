@@ -26,6 +26,7 @@ public:
     virtual void slot();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public PB_DeepBase, public PB_Iface1, public PB_Iface2
 {
 public:
@@ -40,6 +41,7 @@ private:
     int m_wakeFrame;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class SlavedUpdateInterface
 {
 public:
@@ -55,6 +57,7 @@ struct SlavedGuardPointOffset
     unsigned int z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SlavedUpdate.h
 class SlavedUpdate : public UpdateModule, public SlavedUpdateInterface
 {
 public:

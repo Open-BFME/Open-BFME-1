@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
+// readable body of ??0HijackerUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/HijackerUpdate.cpp
 
 // Retail's incremental-link thunk at 0x0003A382 forwards to this 95-byte
 // constructor body at 0x00295B20.  The focused hierarchy follows the
@@ -11,6 +12,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 class Coord3D
 {
 public:
@@ -35,6 +37,7 @@ protected:
 class PB_Iface1 { public: virtual void slot(); };
 class PB_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public PB_DeepBase, public PB_Iface1, public PB_Iface2
 {
 public:
@@ -47,6 +50,7 @@ private:
 	int m_f1c;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/HijackerUpdate.h
 class HijackerUpdate : public UpdateModule
 {
 public:

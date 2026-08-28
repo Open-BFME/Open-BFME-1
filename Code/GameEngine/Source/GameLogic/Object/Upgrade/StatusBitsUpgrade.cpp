@@ -92,6 +92,7 @@ void StatusBitsUpgradeModuleData::buildFieldParse(MultiIniFieldParse& p)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Upgrade/StatusBitsUpgradeConstructor.cpp
 // ??0StatusBitsUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 StatusBitsUpgrade::StatusBitsUpgrade( Thing *thing, const ModuleData* moduleData ) : UpgradeModule( thing, moduleData )
 {

@@ -118,6 +118,7 @@ private:
 
 //-------------------------------------------------------------------------
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/Pinger_ctor_Thunk.cpp
 // ??0Pinger@@ present-unmatched
 Pinger::Pinger() : m_requestCount(0), m_responseCount(0)
 {

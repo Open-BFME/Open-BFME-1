@@ -378,6 +378,8 @@ LadderList::~LadderList()
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/LadderList_findLadder_Thunk.cpp
+// ?findLadder@LadderList@@QAEPBVLadderInfo@@ABVAsciiString@@G@Z present-unmatched
 const LadderInfo* LadderList::findLadder( const AsciiString& addr, UnsignedShort port )
 {
 	LadderInfoList::const_iterator cit;

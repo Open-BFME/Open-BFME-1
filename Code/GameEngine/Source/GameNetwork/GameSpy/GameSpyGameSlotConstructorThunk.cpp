@@ -1,3 +1,4 @@
+// readable body of ??0GameSpyGameSlot@@: Code/GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp
 class GameSpyGameSlot
 {
 public:

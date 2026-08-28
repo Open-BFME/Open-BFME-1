@@ -3,6 +3,7 @@
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
 // stlport
+// readable body of ?getShroudStatusForPlayer@PartitionManager@@: Code/GameEngine/Source/GameLogic/Object/PartitionManager.cpp
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -131,6 +132,7 @@ AIUpdateModuleData::AIUpdateModuleData()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/string_base.cpp
 // ??1AIUpdateModuleData@@ present-unmatched
 AIUpdateModuleData::~AIUpdateModuleData()
 {
@@ -146,6 +148,7 @@ AIUpdateModuleData::~AIUpdateModuleData()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateFindLocomotorTemplateVectorThunk.cpp
 // ?findLocomotorTemplateVector@AIUpdateModuleData@@ present-unmatched
 const LocomotorTemplateVector* AIUpdateModuleData::findLocomotorTemplateVector(LocomotorSetType t) const
 {
@@ -238,6 +241,7 @@ const LocomotorTemplateVector* AIUpdateModuleData::findLocomotorTemplateVector(L
 
 //-------------------------------------------------------------------------------------------------
 // subclasses may want to override this, to use a subclass of AIStateMachine.
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateMakeStateMachine.cpp
 // ?makeStateMachine@AIUpdateInterface@@ present-unmatched
 AIStateMachine* AIUpdateInterface::makeStateMachine()
 {
@@ -247,6 +251,7 @@ AIStateMachine* AIUpdateInterface::makeStateMachine()
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIUpdateInterfaceCtorThunk.cpp
 // ??0AIUpdateInterface@@ present-unmatched
 AIUpdateInterface::AIUpdateInterface( Thing *thing, const ModuleData* moduleData ) : 
 	UpdateModule( thing, moduleData )
@@ -694,6 +699,7 @@ void AIUpdateInterface::onObjectCreated()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AIUpdateInterfaceDestructorThunk.cpp
 // ??1AIUpdateInterface@@ present-unmatched
 AIUpdateInterface::~AIUpdateInterface( void )
 {
@@ -1414,6 +1420,7 @@ void AIUpdateInterface::clearWaypointQueue( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIUpdateInterface_markAsDead_Thunk.cpp
 // ?markAsDead@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::markAsDead()
 {
@@ -2302,6 +2309,7 @@ void AIUpdateInterface::friend_setPath(Path *path)
 /**
  * This is used by the guard tunnel network state to set a target object.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIUpdateInterface_friend_setGoalObject.cpp
 // ?friend_setGoalObject@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::friend_setGoalObject(Object *obj)
 {
@@ -4074,6 +4082,7 @@ void AIUpdateInterface::privateEnter( Object *obj, CommandSourceType cmdSource )
 /**
  * Dock with the given object
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateDock.cpp
 // ?privateDock@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateDock( Object *obj, CommandSourceType cmdSource )
 {
@@ -4234,6 +4243,7 @@ void AIUpdateInterface::privateExecuteRailedTransport( CommandSourceType cmdSour
 
 //----------------------------------------------------------------------------------------
 ///< life altering state change, if this AI can do it
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateGoProne_Thunk.cpp
 // ?privateGoProne@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateGoProne( const DamageInfo *damageInfo, CommandSourceType )
 {
@@ -4528,6 +4538,7 @@ void AIUpdateInterface::setCurrentVictim( const Object *victim )
 /**
  * Who is our current victim?
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_getCurrentVictim.cpp
 // ?getCurrentVictim@AIUpdateInterface@@ present-unmatched
 Object *AIUpdateInterface::getCurrentVictim( void ) const
 {
@@ -4538,6 +4549,7 @@ Object *AIUpdateInterface::getCurrentVictim( void ) const
 }
 
 // if we are attacking a position (and NOT an object), return it. otherwise return null.
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_getCurrentVictimPos.cpp
 // ?getCurrentVictimPos@AIUpdateInterface@@ present-unmatched
 const Coord3D *AIUpdateInterface::getCurrentVictimPos( void ) const
 {
@@ -4573,6 +4585,7 @@ AttitudeType AIUpdateInterface::getAttitude( void ) const
 /**
  * Return the current state the AI is in.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_getAIStateType.cpp
 // ?getAIStateType@AIUpdateInterface@@ present-unmatched
 AIStateType AIUpdateInterface::getAIStateType() const
 {
@@ -4779,6 +4792,7 @@ void AIUpdateInterface::wakeUpAndAttemptToTarget( void )
 /**
  * Reset when we should next look for a target. Usually called by *Idle::onEnter
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate_resetNextMoodCheckTime.cpp
 // ?resetNextMoodCheckTime@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::resetNextMoodCheckTime()
 {

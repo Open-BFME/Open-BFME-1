@@ -2,6 +2,7 @@
 
 // Open-BFME5: FireWeaponUpdateModuleData default ctor.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FireWeaponUpdate.h
 class FireWeaponUpdateModuleData
 {
 public:

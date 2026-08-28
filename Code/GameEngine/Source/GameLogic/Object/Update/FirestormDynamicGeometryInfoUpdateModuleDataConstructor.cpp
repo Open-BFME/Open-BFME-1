@@ -12,6 +12,7 @@ private:
 	unsigned char m_pad[0x60];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FirestormDynamicGeometryInfoUpdate.h
 class FirestormDynamicGeometryInfoUpdateModuleData : public FirestormDynamicGeometryInfoUpdateModuleDataBase
 {
 public:

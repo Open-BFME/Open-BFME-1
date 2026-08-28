@@ -21,6 +21,7 @@
 
 inline void *operator new(unsigned int, void *place) { return place; }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/BuddyThread.h
 class BuddyResponse
 {
 	char m_bfmeBody[0x864];

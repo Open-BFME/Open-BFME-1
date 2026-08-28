@@ -20,6 +20,7 @@
 
 inline void *operator new(unsigned int, void *place) { return place; }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/BuddyThread.h
 class BuddyRequest
 {
 	char m_bfmeBody[0x2B8];

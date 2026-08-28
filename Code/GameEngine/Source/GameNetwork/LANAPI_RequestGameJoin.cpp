@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib
+// readable body of ?RequestGameJoin@LANAPI@@UAEXPAVLANGameInfo@@I@Z: Code/GameEngine/Source/GameNetwork/lanapi.cpp
 
 // LANAPI::RequestGameJoin, 0x00688770, 387 bytes -- LANAPI vtable slot 11.
 //
@@ -65,6 +66,7 @@ enum PendingActionType
 // payload forces the union to 4-byte alignment and every field in it lands two
 // bytes high of where retail addresses it.
 #pragma pack(push, 1)
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 struct LANMessage
 {
 	Int LANMessageType;					// +0x00
@@ -81,6 +83,7 @@ struct LANMessage
 };
 #pragma pack(pop)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
 {
 public:
@@ -90,16 +93,19 @@ public:
 	UnsignedInt m_IP;					// this+0x30
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameInfo
 {
 public:
 	GameSlot *getSlot(Int slot);				// ILT thunk 0x0001EC18
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameInfo : public GameInfo
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -118,6 +124,7 @@ Int Rva0009B4B0(Int a, Int b);					// ILT thunk 0x000019F6
 
 Bool GetStringFromRegistry(AsciiString path, AsciiString key, AsciiString &val);	// ILT thunk 0x0000249B
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class LANAPI
 {
 public:

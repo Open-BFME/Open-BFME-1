@@ -2,6 +2,7 @@
 
 // Open-BFME5: FellBeastSwoopPowerModuleData ctor - base size 0x254, then two dwords.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerModule.h
 class SpecialPowerModuleData
 {
 public:

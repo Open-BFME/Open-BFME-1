@@ -8,6 +8,7 @@ extern "C" __declspec(dllimport) WideChar * __cdecl wcsncpy(WideChar *, const Wi
 
 enum { g_lanGameNameLength = 16, g_lanMaxOptionsLength = 406 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeStringData
 {
 public:
@@ -15,6 +16,7 @@ public:
 	WideChar m_stringdata[1];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -40,6 +42,7 @@ struct LANAddress
 };
 #pragma pack(pop)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameInfo
 {
 public:
@@ -53,6 +56,7 @@ public:
 	Bool m_isDirectConnect;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetworkInterface.h
 class NetworkInterface
 {
 public:
@@ -96,6 +100,7 @@ public:
 
 extern NetworkInterface *TheNetwork;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 struct LANMessage
 {
 	enum { MSG_GAME_ANNOUNCE = 1 };
@@ -113,6 +118,7 @@ struct LANMessage
 
 void __cdecl writeLANGameInfo(const LANGameInfo *, char *, unsigned int);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class LANAPI
 {
 public:

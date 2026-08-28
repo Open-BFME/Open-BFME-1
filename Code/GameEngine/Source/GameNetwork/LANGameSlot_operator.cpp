@@ -13,6 +13,7 @@ struct LANGameSlotConnectInfo
 	UnsignedShort m_port;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
 {
 public:
@@ -38,6 +39,7 @@ protected:
 	UnsignedInt m_bfmeLayoutPad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANPlayer.h
 class LANPlayer
 {
 protected:
@@ -50,6 +52,7 @@ protected:
 	UnsignedInt m_bfmeLayoutPad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameSlot : public GameSlot
 {
 public:

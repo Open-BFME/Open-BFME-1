@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0StructureCollapseUpdate@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngine/Source/GameLogic/Object/Update/StructureCollapseUpdate.cpp
 // ModuleFactory reaches this constructor through ILT 0x0004A345. Its
 // independently verified 0x44-byte allocation includes the BFME tail absent
 // from the Zero Hour header.
@@ -22,6 +23,7 @@ protected:
 class SCU_Iface1 { public: virtual void slot(); };
 class SCU_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public SCU_DeepBase, public SCU_Iface1, public SCU_Iface2
 {
 public:
@@ -38,12 +40,14 @@ private:
     int m_f1c;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModuleInterface
 {
 public:
     virtual void onDie();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StructureCollapseUpdate.h
 class StructureCollapseUpdate : public UpdateModule, public DieModuleInterface
 {
 public:

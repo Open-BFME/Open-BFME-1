@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?ParseScript@Script@@SAPAV1@AAVDataChunkInput@@G@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp
 // Open-BFME5: lift MASM dump Script::ParseScript to C++ thunk.
 
 class DataChunkInput;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Script
 {
 public:

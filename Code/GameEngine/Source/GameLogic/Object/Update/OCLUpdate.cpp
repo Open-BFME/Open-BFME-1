@@ -78,6 +78,7 @@ void parseFactionObjectCreationList( INI *ini, void *instance, void *store, cons
 }  // end parseFactionObjectCreationList
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/OCLUpdateModuleData.cpp
 // ??0OCLUpdateModuleData@@QAE@XZ present-unmatched
 OCLUpdateModuleData::OCLUpdateModuleData()
 {
@@ -109,6 +110,7 @@ OCLUpdateModuleData::OCLUpdateModuleData()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/OCLUpdateConstructor.cpp
 // ??0OCLUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 OCLUpdate::OCLUpdate( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {

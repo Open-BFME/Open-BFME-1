@@ -72,6 +72,7 @@ UpdateSleepTime UpdateModule::frameToSleepTime(
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/UpdateModule_getWakeFrame.cpp
 // ?getWakeFrame@UpdateModule@@IBE?AW4UpdateSleepTime@@XZ present-unmatched
 UpdateSleepTime UpdateModule::getWakeFrame() const
 {

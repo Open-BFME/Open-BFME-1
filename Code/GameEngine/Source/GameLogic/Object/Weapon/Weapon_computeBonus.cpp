@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?computeBonus@Weapon@@IBEXPBVObject@@IAAVWeaponBonus@@@Z: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
 
 // Open-BFME5: Weapon::computeBonus, retail 0x001E2840, 96 bytes. The body
 // carried only a machine byte-dump row; the symbols.csv pin names it, and
@@ -19,6 +20,7 @@
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponBonus
 {
 public:
@@ -35,12 +37,14 @@ public:
 	Real m_bfmeA, m_bfmeB, m_bfmeC, m_bfmeD, m_bfmeE, m_bfmeF;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponBonusSet
 {
 public:
 	void bfmeApplyBonuses(UnsignedInt mask, WeaponBonus &bonus) const; // ILT 0x0002272D
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -48,6 +52,7 @@ public:
 	UnsignedInt m_bfmeBonusMask;				// +0x2A0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -57,6 +62,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;			// 0x012ED5C8
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponTemplate
 {
 public:
@@ -64,6 +70,7 @@ public:
 	WeaponBonusSet *m_bfmeBonuses;				// +0x4A8
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 protected:

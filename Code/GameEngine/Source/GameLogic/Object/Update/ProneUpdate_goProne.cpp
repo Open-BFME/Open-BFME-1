@@ -15,6 +15,7 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfo
 {
 public:
@@ -23,12 +24,14 @@ public:
 	unsigned char m_unmodelled_54[ 0x5C - 0x54 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ProneUpdate.h
 struct ProneUpdateModuleData
 {
 	unsigned char m_unmodelled_00[ 8 ];
 	Real m_damageToFramesRatio;				// +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ProneUpdate.h
 class ProneUpdate
 {
 public:

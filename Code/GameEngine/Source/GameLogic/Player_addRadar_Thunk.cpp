@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?addRadar@Player@@QAEX_N@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
 // Open-BFME5: lift the retail addRadar body into a standalone C++ thunk.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

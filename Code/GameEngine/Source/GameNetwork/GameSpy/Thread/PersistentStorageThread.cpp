@@ -1222,6 +1222,7 @@ void PSPlayerStats::reset( void )
 //-------------------------------------------------------------------------
 #define CHECK(x) if (k == #x && generalMarker >= 0) { s.x[generalMarker] = atoi(v.c_str()); continue; }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameSpyParsePlayerKVPairsThunk.cpp
 // ?parsePlayerKVPairs@GameSpyPSMessageQueueInterface@@ present-unmatched
 PSPlayerStats GameSpyPSMessageQueueInterface::parsePlayerKVPairs( std::string kvPairs )
 {

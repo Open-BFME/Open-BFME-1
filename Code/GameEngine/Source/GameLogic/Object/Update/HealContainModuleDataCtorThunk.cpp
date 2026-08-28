@@ -3,6 +3,7 @@
 // Open-BFME5: HealContainModuleData default ctor.
 // Layout: vtable@0, gap@4 (uninit), then seven zeroed dwords @8..0x20.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/HealContain.h
 class HealContainModuleData
 {
 public:

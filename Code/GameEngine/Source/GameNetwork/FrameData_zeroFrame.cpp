@@ -36,6 +36,7 @@
 // Landing this resolves FrameDataManager::zeroFrames' one REL32 call, which
 // reaches the body through the ILT thunk at 0x00048748.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/FrameData.h
 class FrameData
 {
 public:

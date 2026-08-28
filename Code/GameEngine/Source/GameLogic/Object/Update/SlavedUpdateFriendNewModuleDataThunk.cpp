@@ -7,6 +7,7 @@ class ModuleData;
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SlavedUpdate.h
 class SlavedUpdateModuleData
 {
 public:
@@ -56,6 +57,7 @@ private:
 	unsigned char m_50;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -64,6 +66,7 @@ public:
 
 extern "C" char SlavedUpdateFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SlavedUpdate.h
 class SlavedUpdate
 {
 public:

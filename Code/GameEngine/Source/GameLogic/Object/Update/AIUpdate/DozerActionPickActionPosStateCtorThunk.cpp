@@ -14,6 +14,7 @@ enum DozerTask
 	DOZER_TASK_INVALID = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:

@@ -4,6 +4,7 @@
 // SubsystemInterface base, vtbl, zero three dwords at +8/+0xC/+0x10.
 // Volatile stores keep vtbl before field zeros.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:

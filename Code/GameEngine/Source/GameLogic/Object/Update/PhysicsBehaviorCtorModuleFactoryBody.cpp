@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ivendor/stlport
 // stlport
+// readable body of ??0PhysicsBehavior@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngine/Source/GameLogic/Object/Update/PhysicsUpdate.cpp
 // ModuleFactory reaches this constructor through ILT 0x0003C3BC. Its 0x60-byte
 // allocation proves the compact BFME layout, which predates Zero Hour fields.
 
@@ -9,6 +10,7 @@ class Thing;
 class Object;
 enum UpdateSleepTime { UPDATE_SLEEP_FOREVER = 0x3fffffff };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 public:
@@ -30,6 +32,7 @@ protected:
 class PB_Iface1 { public: virtual void slot(); };
 class PB_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public PB_DeepBase, public PB_Iface1, public PB_Iface2
 {
 public:
@@ -47,6 +50,7 @@ private:
     int m_f1c;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 class Coord3D
 {
 public:
@@ -63,6 +67,7 @@ private:
     float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/PhysicsUpdate.h
 class PhysicsBehavior : public UpdateModule
 {
 public:

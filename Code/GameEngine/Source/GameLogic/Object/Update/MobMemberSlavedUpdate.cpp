@@ -73,6 +73,7 @@ const Real CLOSE_ENOUGH = 15;				// Our moveTo commands and pathfinding can't ha
 const Real CLOSE_ENOUGH_SQR = (CLOSE_ENOUGH * CLOSE_ENOUGH);
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/MobMemberSlavedUpdateCtorThunk.cpp
 // ??0MobMemberSlavedUpdate@@ present-unmatched
 MobMemberSlavedUpdate::MobMemberSlavedUpdate( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {
@@ -101,6 +102,7 @@ MobMemberSlavedUpdate::MobMemberSlavedUpdate( Thing *thing, const ModuleData* mo
 } 
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/MobMemberSlavedUpdateDestructorThunk.cpp
 // ??1MobMemberSlavedUpdate@@ present-unmatched
 MobMemberSlavedUpdate::~MobMemberSlavedUpdate( void )
 {

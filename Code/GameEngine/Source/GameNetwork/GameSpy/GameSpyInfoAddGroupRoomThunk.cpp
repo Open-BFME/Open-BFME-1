@@ -1,3 +1,4 @@
+// readable body of ?addGroupRoom@GameSpyInfo@@UAEXVGameSpyGroupRoom@@@Z: Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp
 // Exact retail bytes for ?addGroupRoom@GameSpyInfo@@UAEXVGameSpyGroupRoom@@@Z at 0x00636650.
 extern "C" __declspec(naked) void bfme_GameSpyInfo_addGroupRoom_636650()
 {

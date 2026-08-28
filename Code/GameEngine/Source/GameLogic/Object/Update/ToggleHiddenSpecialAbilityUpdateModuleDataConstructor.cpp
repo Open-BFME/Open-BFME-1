@@ -8,6 +8,7 @@
 // module-data constructor at all. It was one of seven names aliased onto those
 // bytes; that claim is retracted here.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
 class SpecialAbilityUpdateModuleData
 {
 public:

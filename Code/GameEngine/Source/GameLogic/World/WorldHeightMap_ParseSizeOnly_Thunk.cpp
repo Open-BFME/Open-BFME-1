@@ -3,6 +3,7 @@
 
 class DataChunkInput;
 struct DataChunkInfo;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/WorldHeightMap.h
 class WorldHeightMap
 {
 protected:

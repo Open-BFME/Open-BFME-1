@@ -24,6 +24,7 @@ protected:
 class PB_Iface1 { public: virtual void slot(); };
 class PB_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public PB_DeepBase, public PB_Iface1, public PB_Iface2
 {
 public:
@@ -40,12 +41,14 @@ private:
     int m_f1c;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/HordeUpdate.h
 class HordeUpdateInterface
 {
 public:
     virtual void slot();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/HordeUpdate.h
 class HordeUpdate : public UpdateModule, public HordeUpdateInterface
 {
 public:

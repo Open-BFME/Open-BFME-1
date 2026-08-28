@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?initiateIntentToDoSpecialPower@SpecialPowerModule@@IAE_NPBVObject@@PBUCoord3D@@PBVWaypoint@@I@Z: Code/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule.cpp
 // Open-BFME5: lift the retail SpecialPowerModule::initiateIntentToDoSpecialPower MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_SpecialPowerModuleInitiateIntent_26A2E0()

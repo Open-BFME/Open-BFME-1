@@ -9,6 +9,7 @@ extern "C" __declspec(dllimport) FARPROC __stdcall GetProcAddress(
 
 extern HMODULE TheScriptDebugWindowDLL;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:

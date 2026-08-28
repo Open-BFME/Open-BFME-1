@@ -1,3 +1,4 @@
+// readable body of ?update@StealthDetectorUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdate.cpp
 // Exact retail bytes for the StealthDetectorUpdate::update row at 0x002AB690.
 extern "C" __declspec(naked) void bfme_StealthDetectorUpdate_update_2AB690()
 {

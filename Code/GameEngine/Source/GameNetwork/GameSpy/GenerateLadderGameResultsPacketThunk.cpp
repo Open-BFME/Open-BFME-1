@@ -1,3 +1,4 @@
+// readable body of ?generateLadderGameResultsPacket@GameSpyStagingRoom@@: Code/GameEngine/Source/GameNetwork/GameSpy/StagingRoomGameInfo.cpp
 // Exact retail bytes for the GameSpyStagingRoom ladder-results row at 0x00639190.
 extern "C" __declspec(naked) void bfme_generateLadderGameResultsPacket_639190()
 {

@@ -75,6 +75,7 @@ SupplyWarehouseDockUpdateModuleData::SupplyWarehouseDockUpdateModuleData( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyWarehouseDockUpdateConstructor.cpp
 // ??0SupplyWarehouseDockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 SupplyWarehouseDockUpdate::SupplyWarehouseDockUpdate( Thing *thing, const ModuleData* moduleData ) : DockUpdate( thing, moduleData )
 {
@@ -320,6 +321,7 @@ Bool SupplyWarehouseDockUpdate::action( Object* docker, Object *drone )
 	return FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SupplyWarehouseDockUpdate_setDockCrippledMethodThunk.cpp
 // ?setDockCrippled@SupplyWarehouseDockUpdate@@UAEX_N@Z present-unmatched
 void SupplyWarehouseDockUpdate::setDockCrippled( Bool setting )
 {
@@ -354,6 +356,7 @@ void SupplyWarehouseDockUpdate::setDockCrippled( Bool setting )
 	DockUpdate::setDockCrippled( setting );
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__setCashValue_SupplyWarehouseDockUpdate_QAEXH_Z_002CFA50.cpp
 // ?setCashValue@SupplyWarehouseDockUpdate@@QAEXH@Z present-unmatched
 void SupplyWarehouseDockUpdate::setCashValue( Int cashValue )
 {

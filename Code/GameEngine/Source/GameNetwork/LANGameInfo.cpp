@@ -74,6 +74,7 @@ LANPlayer * LANGameSlot::getUser( void )
 }
 
 // Various tests
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANGameSlot_isUser_Thunk.cpp
 // ?isUser@LANGameSlot@@ present-unmatched
 Bool LANGameSlot::isUser( LANPlayer *user )
 {
@@ -158,6 +159,8 @@ Int LANGameInfo::getLocalSlotNum( void ) const
 	return -1;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/LANGameInfo_getSlotNum_Thunk.cpp
+// ?getSlotNum@LANGameInfo@@QAEHVUnicodeString@@@Z present-unmatched
 Int LANGameInfo::getSlotNum( UnicodeString userName )
 {
 	DEBUG_ASSERTCRASH(m_inGame, ("Looking for game slot while not in game"));

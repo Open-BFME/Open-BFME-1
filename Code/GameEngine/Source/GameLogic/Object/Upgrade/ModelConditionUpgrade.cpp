@@ -38,6 +38,7 @@
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/ModelConditionUpgradeModuleDataCtorThunk.cpp
 // ??0ModelConditionUpgradeModuleData@@QAE@XZ present-unmatched
 ModelConditionUpgradeModuleData::ModelConditionUpgradeModuleData()
 {
@@ -46,6 +47,7 @@ ModelConditionUpgradeModuleData::ModelConditionUpgradeModuleData()
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgrade.cpp
 // ?buildFieldParse@ModelConditionUpgradeModuleData@@ present-unmatched
 void ModelConditionUpgradeModuleData::buildFieldParse(MultiIniFieldParse& p) 
 {
@@ -61,6 +63,7 @@ void ModelConditionUpgradeModuleData::buildFieldParse(MultiIniFieldParse& p)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Upgrade/ModelConditionUpgradeConstructor.cpp
 // ??0ModelConditionUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 ModelConditionUpgrade::ModelConditionUpgrade( Thing *thing, const ModuleData* moduleData ) : UpgradeModule( thing, moduleData )
 {

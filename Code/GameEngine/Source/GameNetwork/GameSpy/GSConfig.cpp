@@ -120,6 +120,7 @@ protected:
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyConfigCreateThunk.cpp
 // ?create@GameSpyConfigInterface@@SAPAV1@VAsciiString@@@Z present-unmatched
 GameSpyConfigInterface* GameSpyConfigInterface::create(AsciiString config)
 {
@@ -148,6 +149,7 @@ Bool SectionChecker::isInSection() {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyConfigConstructorThunk.cpp
 // ??0GameSpyConfig@@QAE@VAsciiString@@@Z present-unmatched
 GameSpyConfig::GameSpyConfig( AsciiString config ) :
 m_natRetryInterval(1000),

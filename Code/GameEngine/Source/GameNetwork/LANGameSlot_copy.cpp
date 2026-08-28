@@ -39,6 +39,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
 {
 public:
@@ -52,6 +53,7 @@ public:
 	UnsignedByte m_bfmeBody[0x40];			// after the vptr
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANPlayer.h
 class LANPlayer
 {
 public:
@@ -61,6 +63,7 @@ public:
 	UnsignedByte m_bfmeBody[0x1C];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameSlot : public GameSlot
 {
 public:

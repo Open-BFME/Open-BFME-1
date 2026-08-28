@@ -27,12 +27,14 @@ struct FieldParse;
 
 // Spelled under its own name so initFromINI resolves to the row the ledger
 // already carries at 0x008520A0 rather than needing a pin of its own.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
 	void initFromINI( void *what, const FieldParse *table );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Template
 {
 public:

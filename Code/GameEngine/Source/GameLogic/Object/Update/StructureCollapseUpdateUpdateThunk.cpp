@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?update@StructureCollapseUpdate@@UAE?AW4UpdateSleepTime@@XZ: Code/GameEngine/Source/GameLogic/Object/Update/StructureCollapseUpdate.cpp
 // Open-BFME5: lift the exact retail StructureCollapseUpdate::update MASM body.
 
 enum UpdateSleepTime {};
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StructureCollapseUpdate.h
 class StructureCollapseUpdate
 {
 public:

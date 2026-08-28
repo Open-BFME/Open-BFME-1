@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?parseWeaponTemplateDefinition@WeaponStore@@SAXPAVINI@@@Z: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class INI;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponStore {
 public:
 	static void parseWeaponTemplateDefinition(INI *);

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?addMessage@NetCommandList@@QAEPAVNetCommandRef@@PAVNetCommandMsg@@@Z: Code/GameEngine/Source/GameNetwork/NetCommandList.cpp
 // Open-BFME5: lift the exact retail NetCommandList::addMessage body to C++.
 
 // ?addMessage@NetCommandList@@QAEPAVNetCommandRef@@PAVNetCommandMsg@@@Z

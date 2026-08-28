@@ -6,6 +6,7 @@ public:
 	bool isLivingWorld(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/CampaignManager.h
 class CampaignManager
 {
 private:
@@ -15,6 +16,7 @@ public:
 	bool m_victorious;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class MessageStream
 {
 public:
@@ -26,6 +28,7 @@ public:
 	virtual void appendMessage(int type);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:

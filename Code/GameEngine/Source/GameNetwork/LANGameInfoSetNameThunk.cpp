@@ -2,6 +2,7 @@
 
 #include "Common/UnicodeString.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameInfo
 {
 public:

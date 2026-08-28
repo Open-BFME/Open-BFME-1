@@ -35,6 +35,7 @@ enum { SHELL_SCRIPT_HOOK_OPTIONS_CLOSED = 0x16 };
 
 void SignalUIInteraction(Int hook);				// ILT 0x000348DD
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
 class WindowLayout
 {
 public:

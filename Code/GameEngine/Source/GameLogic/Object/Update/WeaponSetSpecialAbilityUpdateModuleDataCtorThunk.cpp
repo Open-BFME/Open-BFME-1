@@ -2,6 +2,7 @@
 
 // Open-BFME5: WeaponSetSpecialAbilityUpdateModuleData ctor twin of FellBeastSwoop.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerModule.h
 class SpecialPowerModuleData
 {
 public:

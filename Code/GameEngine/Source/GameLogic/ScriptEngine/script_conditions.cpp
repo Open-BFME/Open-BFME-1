@@ -1,4 +1,5 @@
 // cl: /EHsc /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath /ICode/GameEngine/Include
+// readable body of ?evaluateCondition@ScriptConditions@@UAE_NPAVCondition@@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
 //
 // The script condition template table, retail 0x003307E0, 19131 bytes.
 //
@@ -52,6 +53,7 @@ inline AsciiString &AsciiString::operator=(const char *str)
 }
 
 // sizeof 0x7C, no vtable: `lea edi,[esi+0x10720]` points straight at m_uiName.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Template
 {
 public:
@@ -66,6 +68,7 @@ public:
 	int         m_pad;             // +0x78
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:

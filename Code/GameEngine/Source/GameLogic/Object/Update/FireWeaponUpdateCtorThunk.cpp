@@ -6,6 +6,7 @@ class Thing;
 class ModuleData;
 class WeaponTemplate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -39,6 +40,7 @@ protected:
 class FWU_Iface1 { public: virtual void slot(); };
 class FWU_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public FWU_DeepBase, public FWU_Iface1, public FWU_Iface2
 {
 public:
@@ -59,6 +61,7 @@ private:
     int m_updateState;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:
@@ -76,6 +79,7 @@ enum WeaponSlotType
     PRIMARY_WEAPON
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponStore
 {
 public:
@@ -85,6 +89,7 @@ public:
 
 extern WeaponStore *TheWeaponStore;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FireWeaponUpdate.h
 class FireWeaponUpdate : public UpdateModule
 {
 public:

@@ -11,6 +11,7 @@ extern "C" char SiegeDeploySpecialPower_vtbl10;
 extern "C" char SiegeDeploySpecialPower_vtbl20;
 extern "C" char SiegeDeploySpecialPower_vtbl24;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule
 {
 public:

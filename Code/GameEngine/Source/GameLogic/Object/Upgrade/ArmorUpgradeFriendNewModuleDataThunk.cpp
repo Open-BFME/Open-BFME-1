@@ -38,6 +38,7 @@ private:
 	unsigned int m_74;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -46,6 +47,7 @@ public:
 
 extern "C" char ArmorUpgradeFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ArmorUpgrade.h
 class ArmorUpgrade
 {
 public:

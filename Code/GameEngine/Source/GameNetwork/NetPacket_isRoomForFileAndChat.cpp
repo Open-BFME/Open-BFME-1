@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?isRoomForChatMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?isRoomForDisconnectChatMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?isRoomForFileAnnounceMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?isRoomForFileMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
 // Four more of NetPacket's isRoomFor family, retail 0x0067DBB0, 0x0067DC80,
 // 0x0067DD40 and 0x0067DDE0. Same shape as the four already in
@@ -22,6 +26,7 @@ enum { MAX_PACKET_SIZE = 0x1DC };
 // NetCommandMsg's field set is the one NetPacket_addCommand.cpp already pins
 // from a matched dispatcher: vptr, timestamp, frame, player, id, type, and the
 // reference count that closes it out at 0x1C.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -39,6 +44,7 @@ public:
 	Int m_referenceCount;							// this+0x18
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 public:
@@ -58,6 +64,7 @@ struct NetPacketAddress
 	UnsignedShort port;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 public:
@@ -108,6 +115,7 @@ private:
 
 typedef unsigned short WideChar;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileCommandMsg : public NetCommandMsg
 {
 public:
@@ -115,18 +123,21 @@ public:
 	UnsignedInt getFileLength(void);		// ILT thunk 0x0001E7BD
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileAnnounceCommandMsg : public NetCommandMsg
 {
 public:
 	StringBase<char> getPortableFilename(void);	// ILT thunk 0x0003D50F
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectChatCommandMsg : public NetCommandMsg
 {
 public:
 	StringBase<WideChar> getText(void);		// ILT thunk 0x00015901
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetChatCommandMsg : public NetCommandMsg
 {
 public:

@@ -72,6 +72,7 @@
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/BattlePlanUpdateModuleDataCtorThunk.cpp
 // ??0BattlePlanUpdateModuleData@@QAE@XZ present-unmatched
 BattlePlanUpdateModuleData::BattlePlanUpdateModuleData()
 {
@@ -138,6 +139,7 @@ BattlePlanUpdateModuleData::BattlePlanUpdateModuleData()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateCtorThunk.cpp
 // ??0BattlePlanUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 BattlePlanUpdate::BattlePlanUpdate( Thing *thing, const ModuleData* moduleData ) : 
 	SpecialPowerUpdateModule( thing, moduleData ),
@@ -1780,6 +1782,7 @@ void BattlePlanUpdate::enableTurret( Bool enable )
 }
 
 //------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdate_recenterTurret_Thunk.cpp
 // ?recenterTurret@BattlePlanUpdate@@IAEXXZ present-unmatched
 void BattlePlanUpdate::recenterTurret()
 {

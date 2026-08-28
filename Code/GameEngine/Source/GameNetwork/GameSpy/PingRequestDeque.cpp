@@ -16,6 +16,7 @@
 #include <deque>
 #include <string>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PingThread.h
 class PingRequest
 {
 	_STL::string m_bfmeText;
@@ -23,6 +24,7 @@ class PingRequest
 	int m_bfmeSecond;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PingThread.h
 class PingResponse
 {
 	_STL::string m_bfmeText;

@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?initFromSides@TeamFactory@@QAEXPAVSidesList@@@Z: Code/GameEngine/Source/Common/RTS/Team.cpp
 
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class StaticNameKey
 {
 public:
@@ -14,6 +16,7 @@ extern StaticNameKey TheKey_teamName;
 extern StaticNameKey TheKey_teamOwner;
 extern StaticNameKey TheKey_teamIsSingleton;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -25,6 +28,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
 class Dict
 {
 public:
@@ -45,6 +49,7 @@ struct TeamInfoSlot
 	Dict dict;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/SidesList.h
 class SidesList
 {
 private:
@@ -55,6 +60,7 @@ public:
 	TeamInfoSlot *m_teams;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamFactory
 {
 public:

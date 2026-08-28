@@ -345,6 +345,7 @@ Int GameSpyInfo::addText( UnicodeString message, Color c, GameWindow *win )
 	return index;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefsRegisterTextWindow.cpp
 // ?registerTextWindow@GameSpyInfo@@ present-unmatched
 void GameSpyInfo::registerTextWindow( GameWindow *win )
 {

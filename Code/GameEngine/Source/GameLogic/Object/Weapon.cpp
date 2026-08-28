@@ -1712,6 +1712,7 @@ void WeaponStore::setDelayedDamage(const WeaponTemplate *weapon, const Coord3D* 
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/WeaponStorePostProcessLoadThunk.cpp
 // ?postProcessLoad@WeaponStore@@UAEXXZ present-unmatched
 void WeaponStore::postProcessLoad()
 {
@@ -1731,6 +1732,7 @@ void WeaponStore::postProcessLoad()
 }  // end postProcessLoad
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/WeaponStore_parseWeaponTemplateDefinition_Thunk.cpp
 // ?parseWeaponTemplateDefinition@WeaponStore@@SAXPAVINI@@@Z present-unmatched
 // 176 of 223 bytes; the row still points at the MASM dump. Everything through
 // the findWeaponTemplatePrivate call matches, which took three fixes: the name
@@ -1870,6 +1872,7 @@ Weapon::~Weapon()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon/Weapon_computeBonus.cpp
 // ?computeBonus@Weapon@@IBEXPBVObject@@IAAVWeaponBonus@@@Z present-unmatched
 void Weapon::computeBonus(const Object *source, WeaponBonusConditionFlags extraBonusFlags, WeaponBonus& bonus) const
 {
@@ -1894,6 +1897,7 @@ void Weapon::computeBonus(const Object *source, WeaponBonusConditionFlags extraB
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon/Weapon_loadAmmoNow.cpp
 // ?loadAmmoNow@Weapon@@QAEXPBVObject@@@Z present-unmatched
 void Weapon::loadAmmoNow(const Object *sourceObj)
 {
@@ -1903,6 +1907,7 @@ void Weapon::loadAmmoNow(const Object *sourceObj)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_reloadAmmo.cpp
 // ?reloadAmmo@Weapon@@QAEXPBVObject@@@Z present-unmatched
 void Weapon::reloadAmmo(const Object *sourceObj)
 {
@@ -1956,6 +1961,7 @@ void Weapon::rebuildScatterTargets()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_reloadWithBonus_Thunk.cpp
 // ?reloadWithBonus@Weapon@@IAEXPBVObject@@ABVWeaponBonus@@_N@Z present-unmatched
 void Weapon::reloadWithBonus(const Object *sourceObj, const WeaponBonus& bonus, Bool loadInstantly)
 {
@@ -2058,6 +2064,7 @@ void Weapon::onWeaponBonusChange(const Object *source)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/WeaponComputeApproachTargetThunk.cpp
 // ?computeApproachTarget@Weapon@@QBE_NPBVObject@@0PBUCoord3D@@MAAU3@@Z present-unmatched
 Bool Weapon::computeApproachTarget(const Object *source, const Object *target, const Coord3D *pos, Real angleOffset, Coord3D& approachTargetPos) const
 {
@@ -2425,6 +2432,7 @@ Real Weapon::getPercentReadyToFire() const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_getAttackRange.cpp
 // ?getAttackRange@Weapon@@QBEMPBVObject@@@Z present-unmatched
 Real Weapon::getAttackRange(const Object *source) const
 { 
@@ -2462,6 +2470,7 @@ Real Weapon::getAttackDistance(const Object *source, const Object *victimObj, co
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/ObjectSetStatusThunk.cpp
 // ?estimateWeaponDamage@Weapon@@IAEMPBVObject@@0PBUCoord3D@@@Z present-unmatched
 Real Weapon::estimateWeaponDamage(const Object *sourceObj, const Object *victimObj, const Coord3D* victimPos)
 {
@@ -2837,6 +2846,7 @@ Object* Weapon::forceFireWeapon( const Object *source, const Coord3D *pos)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon/Weapon_getStatus.cpp
 // ?getStatus@Weapon@@QBE?AW4WeaponStatus@@XZ present-unmatched
 WeaponStatus Weapon::getStatus() const
 {

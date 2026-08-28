@@ -1,3 +1,4 @@
+// readable body of ?parsePlayerKVPairs@GameSpyPSMessageQueueInterface@@: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PersistentStorageThread.cpp
 // Exact retail bytes for GameSpyPSMessageQueueInterface::parsePlayerKVPairs at 0x00659670.
 // Kept separate so PersistentStorageThread.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_GameSpyPS_parsePlayerKVPairs_659670()

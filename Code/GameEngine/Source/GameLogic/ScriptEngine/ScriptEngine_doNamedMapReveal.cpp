@@ -46,6 +46,7 @@ private:
 	~StringBase();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -84,6 +85,7 @@ private:
 	BfmeAsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 struct NamedReveal
 {
 	AsciiString m_revealName;				// +0x00
@@ -95,6 +97,7 @@ struct NamedReveal
 typedef _STL::vector<NamedReveal> VecNamedReveal;
 typedef VecNamedReveal::iterator VecNamedRevealIt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Waypoint
 {
 public:
@@ -105,6 +108,7 @@ private:
 	Coord3D m_location;					// this+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -144,6 +148,7 @@ public:
 
 extern TerrainLogic *TheTerrainLogic;				// 0x012EF4CC
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionManager
 {
 public:
@@ -161,6 +166,7 @@ public:
 
 extern BfmeScriptEngine_getPlayerMaskFromAsciiString *TheScriptEngine;	// 0x012F076C
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:

@@ -24,6 +24,7 @@
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:
@@ -32,6 +33,7 @@ public:
 	void reloadAmmo(const Object *sourceObj);									///< ILT 0x00033C03
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/WeaponSet.h
 class WeaponSet
 {
 public:

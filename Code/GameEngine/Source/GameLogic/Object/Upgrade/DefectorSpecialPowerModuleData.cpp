@@ -11,6 +11,7 @@ private:
 	unsigned char m_base[524];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DefectorSpecialPower.h
 class DefectorSpecialPowerModuleData : public ModuleDataBase_DefectorSpecialPowerModuleData
 {
 public:

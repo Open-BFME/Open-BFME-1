@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?disconnectPlayer@DisconnectManager@@IAEXHPAVConnectionManager@@@Z: Code/GameEngine/Source/GameNetwork/DisconnectManager.cpp
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -17,6 +18,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>
 {
 public:
@@ -29,6 +31,7 @@ enum PlayerLeaveCode
 	PLAYERLEAVECODE_UNKNOWN
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
 {
 public:
@@ -42,12 +45,14 @@ private:
 	bool m_disconnected;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameInfo
 {
 public:
 	GameSlot *getSlot(Int slot);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/ConnectionManager.h
 class ConnectionManager
 {
 public:
@@ -56,12 +61,14 @@ public:
 	PlayerLeaveCode disconnectPlayer(Int slot);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass
 {
 public:
 	void logPlayerDisconnect(UnicodeString player, Int slot);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisconnectMenu.h
 class DisconnectMenu
 {
 public:
@@ -72,6 +79,7 @@ extern GameInfo *TheGameInfo;
 extern RecorderClass *TheRecorder;
 extern DisconnectMenu *TheDisconnectMenu;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/DisconnectManager.h
 class DisconnectManager
 {
 protected:

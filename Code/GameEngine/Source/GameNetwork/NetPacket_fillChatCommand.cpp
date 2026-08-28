@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?FillBufferWithChatCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
 // Retail 0x0067D620. Zero Hour's FillBufferWithChatCommand field for field, and
 // it pairs with GetChatCommandSize at 0x0067D3C0: 'T', 'F' with the execution
@@ -48,6 +49,7 @@ private:
 
 class NetCommandMsg;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetChatCommandMsg
 {
 public:
@@ -67,6 +69,7 @@ public:
 	Int m_commandType;				// +0x14
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 public:
@@ -78,6 +81,7 @@ public:
 	UnsignedByte m_relay;				// +0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 protected:

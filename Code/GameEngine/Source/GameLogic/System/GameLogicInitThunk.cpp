@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?init@GameLogic@@UAEXXZ: Code/GameEngine/Source/GameLogic/System/GameLogic.cpp
 // Open-BFME5: lift the exact retail GameLogic::init MASM body.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:

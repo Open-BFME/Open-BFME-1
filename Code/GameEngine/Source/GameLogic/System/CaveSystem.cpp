@@ -73,6 +73,7 @@ void CaveSystem::update()
 {
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/System/CaveSystem_canSwitchIndexToIndex.cpp
 // ?canSwitchIndexToIndex@CaveSystem@@QAE_NHH@Z present-unmatched
 Bool CaveSystem::canSwitchIndexToIndex( Int oldIndex, Int newIndex )
 {

@@ -11,6 +11,7 @@
 // the tree, and the only thing this body needs from it is where m_gridDecal
 // starts.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/RadiusDecal.h
 class RadiusDecal
 {
 public:
@@ -26,6 +27,7 @@ private:
 	char m_unreconstructed_08[0x10 - 8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DynamicShroudClearingRangeUpdate.h
 class DynamicShroudClearingRangeUpdate
 {
 public:

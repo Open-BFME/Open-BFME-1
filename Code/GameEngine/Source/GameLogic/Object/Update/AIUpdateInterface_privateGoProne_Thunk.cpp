@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?privateGoProne@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // Open-BFME5: AIUpdateInterface::privateGoProne, retail 0x0026F840,
 // zh_sweep packet 0026f840.
 //
@@ -23,6 +24,7 @@ enum NameKeyType { NAMEKEY_INVALID = 0 };
 
 enum CommandSourceType { CMD_FROM_PLAYER = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -31,6 +33,7 @@ public:
 
 extern NameKeyGenerator *TheNameKeyGenerator;				///< retail 0x012ED600
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ProneUpdate.h
 class ProneUpdate
 {
 public:
@@ -39,6 +42,7 @@ public:
 
 class Module;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -53,6 +57,7 @@ protected:
 	Module *findModule( NameKeyType key ) const;			///< ILT 0x0002AE23 -> 0x001BEE60
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 protected:

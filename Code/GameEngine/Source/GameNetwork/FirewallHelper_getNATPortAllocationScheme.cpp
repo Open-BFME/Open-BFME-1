@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getNATPortAllocationScheme@FirewallHelperClass@@AAEHHPAG0AA_N1@Z: Code/GameEngine/Source/GameNetwork/FirewallHelper.cpp
 // Open-BFME: FirewallHelperClass::getNATPortAllocationScheme, retail
 // 0x0066E870, 242 bytes. The body carried no ledger row; its name sat on a
 // 5-byte thunk.
@@ -14,6 +15,7 @@ typedef int Int;
 typedef unsigned short UnsignedShort;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/FirewallHelper.h
 class FirewallHelperClass
 {
 private:

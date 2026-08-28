@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?doLocalDefeat@ScriptActions@@IAEXXZ: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -10,6 +12,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 	unsigned char m_pad[0x118];
@@ -17,6 +20,7 @@ public:
 	Bool m_existingState;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -33,6 +37,7 @@ private:
 };
 extern ScriptEngine *TheScriptEngine;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -75,6 +80,7 @@ __declspec(noinline) void ScriptEngine::markMPLocalDefeatWindowShown()
 	m_mpLocalDefeatWindowShown = true;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/CampaignManager.h
 class CampaignManager
 {
 	unsigned char m_pad[0x1d];
@@ -83,6 +89,7 @@ public:
 };
 extern CampaignManager *TheCampaignManager;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

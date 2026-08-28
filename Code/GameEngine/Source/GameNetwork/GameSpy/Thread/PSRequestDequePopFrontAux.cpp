@@ -3,6 +3,7 @@
 
 void __cdecl operator delete( void *memory );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PersistentStorageThread.h
 class PSRequest
 {
 public:

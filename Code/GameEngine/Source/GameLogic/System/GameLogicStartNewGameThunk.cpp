@@ -1,3 +1,4 @@
+// readable body of ?startNewGame@GameLogic@@QAEX_N@Z: Code/GameEngine/Source/GameLogic/System/GameLogic.cpp
 // Exact retail bytes for GameLogic::startNewGame at 0x00394260.
 // Kept separate so GameLogic.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_GameLogic_startNewGame_394260()

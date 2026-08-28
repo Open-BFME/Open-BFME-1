@@ -1,3 +1,4 @@
+// readable body of ?getUiText@Parameter@@QBE?AVAsciiString@@XZ: Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp
 // Exact retail bytes for Parameter::getUiText at 0x00352E80.
 // Kept separate so Scripts.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_Parameter_getUiText_352E80()

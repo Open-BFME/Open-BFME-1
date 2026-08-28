@@ -405,6 +405,7 @@ int PeerThreadClass::lookupStatForPlayer(RoomType roomType, const char *nick, co
 	return 0;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadClearPlayerStats.cpp
 // ?clearPlayerStats@PeerThreadClass@@ present-unmatched
 void PeerThreadClass::clearPlayerStats(RoomType roomType)
 {
@@ -441,6 +442,7 @@ void PeerThreadClass::getStatsFromRoom(PEER peer, RoomType roomType)
 }
 #endif // USE_BROADCAST_KEYS
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadAddServerToMap.cpp
 // ?addServerToMap@PeerThreadClass@@ present-unmatched
 Int PeerThreadClass::addServerToMap( SBServer server )
 {
@@ -1050,6 +1052,7 @@ static int QRCountCallback
 	return 0;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread_stopHostingAlready.cpp
 // ?stopHostingAlready@PeerThreadClass@@ present-unmatched
 void PeerThreadClass::stopHostingAlready(PEER peer)
 {
@@ -1855,6 +1858,7 @@ void quickmatchEnumPlayersCallback( PEER peer, PEERBool success, RoomType roomTy
 	TheGameSpyPeerMessageQueue->addResponse(resp);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/PeerThreadClass_handleQMMatchMethodThunk.cpp
 // ?handleQMMatch@PeerThreadClass@@ present-unmatched
 void PeerThreadClass::handleQMMatch(PEER peer, Int mapIndex, Int seed,
 																		char *playerName[MAX_SLOTS],
@@ -2329,6 +2333,7 @@ void PeerThreadClass::connectCallback( PEER peer, PEERBool success )
 #endif // SERVER_DEBUGGING
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadNickErrorCallbackThunk.cpp
 // ?nickErrorCallback@PeerThreadClass@@ present-unmatched
 void PeerThreadClass::nickErrorCallback( PEER peer, Int type, const char *nick )
 {

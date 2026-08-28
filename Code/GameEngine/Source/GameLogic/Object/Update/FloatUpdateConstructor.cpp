@@ -12,6 +12,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule
 {
 public:
@@ -35,6 +36,7 @@ public:
 	virtual void updateAnchor() = 0;		///< vptr at 0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public ObjectModule,
 	public BehaviorInterface, public UpdateInterface
 {
@@ -58,6 +60,7 @@ public:
 // The trailing member is read from the module data at +8 rather than zeroed,
 // which is why the vtable stores land before it and no register residual
 // arises: only one zero is live, so 0x14 is written as an immediate.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FloatUpdate.h
 class FloatUpdateModuleData
 {
 public:
@@ -65,6 +68,7 @@ public:
 	bool m_enabled;							///< +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FloatUpdate.h
 class FloatUpdate : public UpdateModule
 {
 public:

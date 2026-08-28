@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WWLib
 
 // stlport
+// readable body of ?RequestGameOptions@LANAPI@@UAEXVAsciiString@@_NI@Z: Code/GameEngine/Source/GameNetwork/lanapi.cpp
 #define Matrix4x4 Matrix4  // BFME renamed it
 
 // Retail 0x00686850, LANAPI vtable slot 20 -- Zero Hour's RequestGameOptions,
@@ -22,6 +23,7 @@ extern "C" __declspec(dllimport) char *__cdecl strncpy(char *dest, const char *s
 enum { LANMSG_GAME_OPTIONS = 0xF };
 enum { LAN_MAX_OPTIONS_LENGTH = 0x196, LAN_MAX_SLOTS = 8 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 struct LANMessage
 {
 	Int LANMessageType;				// +0x00
@@ -45,6 +47,7 @@ struct BfmeLANSlot
 	unsigned char m_bfmeRest[0x68 - 8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameInfo
 {
 public:
@@ -52,6 +55,7 @@ public:
 	BfmeLANSlot m_slot[LAN_MAX_SLOTS];		// +0x88
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class LANAPI
 {
 public:

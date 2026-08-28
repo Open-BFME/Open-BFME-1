@@ -5,6 +5,7 @@ enum WeaponSlotType
 	WEAPON_SLOT_PLACEHOLDER
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponTemplate
 {
 public:
@@ -14,6 +15,7 @@ public:
 	unsigned int getSuspendFXDelay() const { return *reinterpret_cast<const unsigned int *>(reinterpret_cast<const char *>(this) + 0x518); }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -33,6 +35,7 @@ private:
 	int *m_capacity;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 protected:

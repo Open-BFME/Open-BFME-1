@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: retail OrCondition chunky parser in C++.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -31,6 +32,7 @@ struct DataChunkInfo { AsciiString label; };
 class DataChunkInput;
 typedef bool (__cdecl *ChunkParser)(DataChunkInput &, DataChunkInfo *, void *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkInput
 {
 public:
@@ -45,12 +47,14 @@ public:
 	OrConditionAllocation *m_or_condition;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Condition
 {
 public:
 	static bool __cdecl ParseConditionDataChunk(DataChunkInput &, DataChunkInfo *, void *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class OrCondition
 {
 public:

@@ -13,6 +13,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule
 {
 public:
@@ -36,6 +37,7 @@ public:
 	virtual void updateAnchor() = 0;		///< vptr at 0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public ObjectModule,
 	public BehaviorInterface, public UpdateInterface
 {
@@ -56,6 +58,7 @@ public:
 	int m_updateState;						///< 0x1c
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/RadarUpdate.h
 class RadarUpdate : public UpdateModule
 {
 public:

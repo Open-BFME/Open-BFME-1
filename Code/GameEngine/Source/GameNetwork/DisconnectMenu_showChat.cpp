@@ -26,6 +26,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>	// G is unsigned short: MSVC 7.1 without /Zc:wchar_t
 {
 };
@@ -36,6 +37,7 @@ Int GadgetListBoxAddEntryText(GameWindow *listbox, UnicodeString text, Int color
 
 extern Int chatNormalColor;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisconnectMenu.h
 class DisconnectMenu
 {
 public:

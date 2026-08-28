@@ -59,6 +59,7 @@
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AssaultTransportAIUpdateCtorThunk.cpp
 // ??0AssaultTransportAIUpdate@@ present-unmatched
 AssaultTransportAIUpdate::AssaultTransportAIUpdate( Thing *thing, const ModuleData* moduleData ) : AIUpdateInterface( thing, moduleData )
 {
@@ -87,6 +88,7 @@ void AssaultTransportAIUpdate::reset()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AssaultTransportAIUpdateDestructorThunk.cpp
 // ??1AssaultTransportAIUpdate@@ present-unmatched
 AssaultTransportAIUpdate::~AssaultTransportAIUpdate( void )
 {

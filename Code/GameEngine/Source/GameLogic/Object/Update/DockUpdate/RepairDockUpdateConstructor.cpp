@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0RepairDockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/RepairDockUpdate.cpp
 
 // RepairDockUpdate's constructor, retail 0x002CED20. The name used to sit on
 // its five-byte incremental-link thunk, lifted naked; a thunk is not the
@@ -15,6 +16,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule
 {
 public:
@@ -24,6 +26,7 @@ private:
 	unsigned char m_data[8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleInterface
 {
 public:
@@ -36,12 +39,14 @@ public:
 	virtual void moduleInterfaceAnchor();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class DockUpdateInterface
 {
 public:
 	virtual void dockUpdateInterfaceAnchor();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public BehaviorModule,
 	public UpdateModuleInterface,
 	public ModuleInterface
@@ -52,6 +57,7 @@ private:
 	unsigned char m_unmodelled_14[ 0x0C ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DockUpdate.h
 class DockUpdate : public UpdateModule, public DockUpdateInterface
 {
 public:
@@ -61,6 +67,7 @@ private:
 	unsigned char m_unmodelled_24[ 0x88 - 0x24 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/RepairDockUpdate.h
 class RepairDockUpdate : public DockUpdate
 {
 public:

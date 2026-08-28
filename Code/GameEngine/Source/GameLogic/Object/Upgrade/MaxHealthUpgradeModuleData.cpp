@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
+// readable body of ??0MaxHealthUpgradeModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgrade.cpp
 
 // Open-BFME5: MaxHealthUpgradeModuleData ctor
 // Retail: sub at +8, zero +0x70/+0x74, then outer vtbl.

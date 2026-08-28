@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?RequestAccept@LANAPI@@UAEXXZ: Code/GameEngine/Source/GameNetwork/lanapi.cpp
 // Open-BFME5: LANAPI::RequestAccept, retail 0x00686110, converted out of a
 // machine byte dump. The reference body ports unchanged.
 //
@@ -38,6 +39,7 @@ extern "C" __declspec(dllimport) WideChar * __cdecl wcsncpy( WideChar *, const W
 
 enum { g_lanGameNameLength = 16 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeStringData
 {
 public:
@@ -45,6 +47,7 @@ public:
 	WideChar m_stringdata[1];								///< +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -62,12 +65,14 @@ private:
 	UnicodeStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameInfo
 {
 public:
 	UnicodeString getName( void );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 struct LANMessage
 {
 	enum { MSG_SET_ACCEPT = 9 };
@@ -87,6 +92,7 @@ struct LANMessage
 	};
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class LANAPI
 {
 public:

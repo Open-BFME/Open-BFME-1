@@ -1,4 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?readAckBothMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?readAckStage1Message@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?readAckStage2Message@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?readFileAnnounceMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?readFileMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?readFrameMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
 // NetPacket's per-type message readers.
 //
@@ -97,6 +103,7 @@ private:
 typedef StringBase<char> AsciiString;
 typedef StringBase<unsigned short> UnicodeString;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -112,18 +119,21 @@ protected:
 	Int m_referenceCount;							// this+0x18
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetKeepAliveCommandMsg : public NetCommandMsg
 {
 public:
 	NetKeepAliveCommandMsg();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectKeepAliveCommandMsg : public NetCommandMsg
 {
 public:
 	NetDisconnectKeepAliveCommandMsg();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetAckBothCommandMsg : public NetCommandMsg
 {
 public:
@@ -136,6 +146,7 @@ public:
 	UnsignedInt m_originalExecutionFrame;			// this+0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetAckStage1CommandMsg : public NetCommandMsg
 {
 public:
@@ -148,6 +159,7 @@ public:
 	UnsignedInt m_originalExecutionFrame;			// this+0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetAckStage2CommandMsg : public NetCommandMsg
 {
 public:
@@ -160,6 +172,7 @@ public:
 	UnsignedInt m_originalExecutionFrame;			// this+0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetProgressCommandMsg : public NetCommandMsg
 {
 public:
@@ -169,6 +182,7 @@ public:
 	UnsignedByte m_percent;							// this+0x1C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectFrameCommandMsg : public NetCommandMsg
 {
 public:
@@ -178,6 +192,7 @@ public:
 	UnsignedInt m_disconnectFrame;					// this+0x1C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectScreenOffCommandMsg : public NetCommandMsg
 {
 public:
@@ -217,6 +232,7 @@ public:
 // ConnectionManager+0x120A0. Nothing names that third value, so it keeps its
 // offset. The count starting at -1 is the same "not yet known" sentinel the base
 // uses for m_executionFrame.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFrameCommandMsg : public NetCommandMsg
 {
 public:
@@ -258,6 +274,7 @@ public:
 	Int m_requestedPlayerID;						// this+0x1C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectChatCommandMsg : public NetCommandMsg
 {
 public:
@@ -267,6 +284,7 @@ public:
 	UnicodeString m_text;							// this+0x1C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetChatCommandMsg : public NetCommandMsg
 {
 public:
@@ -278,6 +296,7 @@ public:
 	Int m_playerMask;								// this+0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileCommandMsg : public NetCommandMsg
 {
 public:
@@ -292,6 +311,7 @@ public:
 	UnsignedInt m_dataLength;						// this+0x24
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileAnnounceCommandMsg : public NetCommandMsg
 {
 public:
@@ -326,6 +346,7 @@ public:
 	AsciiString m_text20;							// this+0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 protected:

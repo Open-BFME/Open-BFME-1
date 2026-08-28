@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?doDisplayCinematicText@ScriptActions@@IAEXABVAsciiString@@0H@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // Open-BFME5: lift MASM dump ScriptActions::doDisplayCinematicText to C++ thunk.
 
 class AsciiString;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

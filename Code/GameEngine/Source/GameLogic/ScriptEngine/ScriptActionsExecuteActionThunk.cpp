@@ -1,3 +1,4 @@
+// readable body of ?executeAction@ScriptActions@@UAEXPAVScriptAction@@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // Exact certified retail bytes for ScriptActions::executeAction at 0x00303BF0.
 // Kept separate so ScriptActions.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_ScriptActions_executeAction_303BF0()

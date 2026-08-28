@@ -13,6 +13,7 @@ enum ScienceAvailabilityType
 
 typedef std::vector<ScienceType> ScienceVec;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

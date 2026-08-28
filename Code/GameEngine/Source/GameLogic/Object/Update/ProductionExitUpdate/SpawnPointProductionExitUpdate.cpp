@@ -70,6 +70,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/SpawnPointProductionExitUpdateCtorModuleFactoryBody.cpp
 // ??0SpawnPointProductionExitUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 SpawnPointProductionExitUpdate::SpawnPointProductionExitUpdate( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {
@@ -172,6 +173,7 @@ void SpawnPointProductionExitUpdate::unreserveDoorForExit( ExitDoorType exitDoor
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/SpawnPointProductionExitUpdateInitializeBonePositionsThunk.cpp
 // ?initializeBonePositions@SpawnPointProductionExitUpdate@@AAEXXZ present-unmatched
 void SpawnPointProductionExitUpdate::initializeBonePositions()
 {

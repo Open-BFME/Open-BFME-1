@@ -33,6 +33,7 @@ public:
     virtual void slot();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public PB_DeepBase, public CP_Iface1, public CP_Iface2
 {
 public:
@@ -55,6 +56,7 @@ public:
     virtual void slot();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CheckpointUpdate.h
 class CheckpointUpdate : public UpdateModule, public CheckpointUpdateInterface
 {
 public:

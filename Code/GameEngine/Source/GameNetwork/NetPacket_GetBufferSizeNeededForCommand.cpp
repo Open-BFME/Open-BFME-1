@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?GetBufferSizeNeededForCommand@NetPacket@@KAIPAVNetCommandMsg@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?GetGameCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
 // NetPacket::GetBufferSizeNeededForCommand, 0x0067F2E0, 149 bytes -- the
 // per-command-type size dispatcher, and the counterpart of addCommand's own
@@ -102,6 +104,7 @@ enum GameMessageArgumentDataType
 	ARGUMENTDATATYPE_WIDECHAR
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:
@@ -109,6 +112,7 @@ public:
 	typedef Int Type;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -122,12 +126,14 @@ public:
 	NetCommandType m_commandType;					// this+0x14
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetGameCommandMsg : public NetCommandMsg
 {
 public:
 	GameMessage *constructGameMessage();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
 class GameMessageParserArgumentType
 {
 public:
@@ -141,6 +147,7 @@ public:
 	Int m_argCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
 class GameMessageParser
 {
 public:
@@ -153,6 +160,7 @@ public:
 	Int m_argTypeCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 protected:

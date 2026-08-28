@@ -22,6 +22,7 @@ enum SlotState
 // state. An undefined ~UnicodeString is already pinned to the same address as
 // releaseBuffer<G>. unsigned short not wchar_t because this TU compiles with
 // /Zc:wchar_t- and pulls no header declaring wchar_t; G is unsigned short.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -40,6 +41,7 @@ private:
 	unsigned short *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
 {
 public:

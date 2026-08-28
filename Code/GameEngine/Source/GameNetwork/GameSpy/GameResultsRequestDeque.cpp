@@ -14,6 +14,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <deque>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/GameResultsThread.h
 class GameResultsRequest
 {
 public:
