@@ -67,21 +67,12 @@ TARGET_HORPLUS_DIRECT_TRANSFORM_TAIL = 0x00931304
 # 042-ultrawide-render.  BFME has two Render2D bodies: the exact sentence
 # renderer writes a full-screen viewport at 0x00933FD0, while the incremental
 # link's W3DDisplay renderer writes one at 0x00934AD5.  Both hooks are placed
-# immediately after DX8Wrapper::Set_Viewport.  The layout hooks put roots and
-# control-bar scheme coordinates into the same centred physical coordinate
-# interval; surface-backed images are intentionally left untouched.
-TARGET_UI_PARSE_ENTRY = 0x004854F0
-TARGET_UI_PARSE_TAIL = 0x0048569B
-TARGET_UI_SCHEME_BY_NAME_ENTRY = 0x004AD880
-TARGET_UI_SCHEME_BY_NAME_TAIL = 0x004AD913
-TARGET_UI_SCHEME_BY_TEMPLATE_ENTRY = 0x004ADE40
-TARGET_UI_SCHEME_BY_TEMPLATE_TAIL = 0x004ADFF1
-TARGET_UI_SCHEME_BY_PLAYER_ENTRY = 0x004AE080
-TARGET_UI_SCHEME_BY_PLAYER_TAIL = 0x004AE2B9
-TARGET_UI_CONTROLBAR_INIT_TAIL = 0x004A1DA6
+# immediately after DX8Wrapper::Set_Viewport.  The separate ready-surface
+# image path is hooked at its copy entry so buttons receive the same mapping.
 TARGET_UI_COORDINATE_RANGE = 0x00933A50
 TARGET_UI_SENTENCE_VIEWPORT = 0x00933FD5
 TARGET_UI_RENDER_VIEWPORT = 0x00934ADA
+TARGET_UI_COPY_SURFACE = 0x00904D20
 
 # No CRT startup, no exceptions, no RTTI, no runtime library at all. /GS is off
 # by default in 7.1 and it rejects /GS-, so there is nothing to turn off there.
@@ -316,29 +307,18 @@ def build_horplus(pe, feature_dir, probe=False):
 def build_ultrawide_render(pe, feature_dir, probe=False, debug=False):
     defines = ("ULTRAWIDE_UI_RENDER_DEBUG",) if debug else ()
     return build_feature(pe, feature_dir / "src/ultrawide_render.cpp",
-                         "ui_parse_begin", (
-        # Layout roots are parsed against a temporary 4:3 Display width and
-        # translated back into the physical centred interval at the common
-        # parse tail.
-        (TARGET_UI_PARSE_ENTRY, "ui_parse_begin", ("stack:0", "stack:1", "stack:2", "stack:3")),
-        (TARGET_UI_PARSE_TAIL, "ui_parse_end", ("ebp",)),
-        # Control-bar scheme multipliers are likewise calculated in 4:3 space.
-        (TARGET_UI_SCHEME_BY_NAME_ENTRY, "ui_scheme_begin", ("ecx",)),
-        (TARGET_UI_SCHEME_BY_NAME_TAIL, "ui_scheme_end", ()),
-        (TARGET_UI_SCHEME_BY_TEMPLATE_ENTRY, "ui_scheme_begin", ("ecx",)),
-        (TARGET_UI_SCHEME_BY_TEMPLATE_TAIL, "ui_scheme_end", ()),
-        (TARGET_UI_SCHEME_BY_PLAYER_ENTRY, "ui_scheme_begin", ("ecx",)),
-        (TARGET_UI_SCHEME_BY_PLAYER_TAIL, "ui_scheme_end", ()),
-        (TARGET_UI_CONTROLBAR_INIT_TAIL, "ui_controlbar_markers", ("ebp",)),
-        # Set_Coordinate_Range is an entry hook: the payload changes only the
-        # full-screen range's physical left/right edges before retail computes
-        # scale/offset.
+                         "ui_coordinate_range", (
+        # Keep the logical range full-screen.  The hardware viewport applies
+        # the uniform scale and centring after vertices have been converted.
         (TARGET_UI_COORDINATE_RANGE, "ui_coordinate_range", ("ecx", "stack:0")),
         # At both renderer tails the preceding retail instruction has already
         # submitted a full-screen viewport.  EBP/EDI are the two renderer this
         # pointers at the respective post-call sites.
         (TARGET_UI_SENTENCE_VIEWPORT, "ui_render_viewport", ("ebp",)),
         (TARGET_UI_RENDER_VIEWPORT, "ui_render_viewport", ("edi",)),
+        # Ready surface images (notably command-bar buttons) bypass Render2D;
+        # the destination rectangle is the fourth explicit cdecl argument.
+        (TARGET_UI_COPY_SURFACE, "ui_copy_surface", ("stack:3",)),
     ), probe=probe, defines=defines)
 
 
