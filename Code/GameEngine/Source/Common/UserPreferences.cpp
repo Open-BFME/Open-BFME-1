@@ -125,6 +125,36 @@ struct BfmeAsciiStringView
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
 
+// BFME's preference getters read the mapped value's characters in place instead
+// of copying an AsciiString out, and they carry no unwind frame: the key is a
+// plain object driven by explicit init/destroy calls rather than one with a
+// destructor, and the map pointer is formed only after the key is built, which
+// is why retail keeps plain `this` in esi across the constructor and only then
+// does `add esi,4`. The map's header node doubles as its end sentinel.
+struct CustomAsciiStringShim
+{
+	void *m_data;
+	void init( const char *s );
+	void destroy( void );
+};
+
+struct CustomStringDataShim
+{
+	UnsignedByte m_header[8];					///< characters follow at +8
+};
+
+struct CustomMapNodeShim
+{
+	UnsignedByte m_unreconstructed_00[0x14];
+	CustomStringDataShim *m_value;				///< retail node+0x14
+};
+
+struct CustomPreferenceMapShim
+{
+	CustomMapNodeShim *m_header;
+	CustomMapNodeShim *find( CustomAsciiStringShim *key );
+};
+
 static AsciiString intAsStr(Int val)
 {
 	AsciiString ret;
@@ -309,16 +339,25 @@ AsciiString QuickMatchPreferences::getLastLadderAddr( void )
 	return it->second;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/QuickMatchPreferencesGetters.cpp
-// ?getLastLadderPort@QuickMatchPreferences@@QAEGXZ present-unmatched
+// ?getLastLadderPort@QuickMatchPreferences@@QAEGXZ
 UnsignedShort QuickMatchPreferences::getLastLadderPort( void )
 {
-	QuickMatchPreferences::const_iterator it = find("LastLadderPort");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("LastLadderPort");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 	{
 		return 0;
 	}
-	return atoi(it->second.str());
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	return atoi(text);
 }
 
 void QuickMatchPreferences::setMaxDisconnects(Int val)
@@ -327,36 +366,6 @@ void QuickMatchPreferences::setMaxDisconnects(Int val)
 	strVal.format("%d", val);
 	(*this)["MaxDisconnects"] = strVal;
 }
-
-// BFME's preference getters read the mapped value's characters in place instead
-// of copying an AsciiString out, and they carry no unwind frame: the key is a
-// plain object driven by explicit init/destroy calls rather than one with a
-// destructor, and the map pointer is formed only after the key is built, which
-// is why retail keeps plain `this` in esi across the constructor and only then
-// does `add esi,4`. The map's header node doubles as its end sentinel.
-struct CustomAsciiStringShim
-{
-	void *m_data;
-	void init( const char *s );
-	void destroy( void );
-};
-
-struct CustomStringDataShim
-{
-	UnsignedByte m_header[8];					///< characters follow at +8
-};
-
-struct CustomMapNodeShim
-{
-	UnsignedByte m_unreconstructed_00[0x14];
-	CustomStringDataShim *m_value;				///< retail node+0x14
-};
-
-struct CustomPreferenceMapShim
-{
-	CustomMapNodeShim *m_header;
-	CustomMapNodeShim *find( CustomAsciiStringShim *key );
-};
 
 // ?getMaxDisconnects@QuickMatchPreferences@@QAEHXZ
 Int QuickMatchPreferences::getMaxDisconnects( void )
@@ -600,28 +609,48 @@ void CustomMatchPreferences::setLastLadder(const AsciiString& addr, UnsignedShor
 	(*this)["LastLadderPort"] = strVal;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/CustomMatchPreferences_getLastLadderAddr_Thunk.cpp
-// ?getLastLadderAddr@CustomMatchPreferences@@QAE?AVAsciiString@@XZ present-unmatched
+// Returns by value, so it carries a hidden return pointer and both exits
+// copy-construct into that buffer. That shape is also what makes the compiler
+// null the key slot before building it, which the scalar-returning siblings
+// above do not do -- writing that null out by hand emits it twice.
+// ?getLastLadderAddr@CustomMatchPreferences@@QAE?AVAsciiString@@XZ
 AsciiString CustomMatchPreferences::getLastLadderAddr( void )
 {
-	QuickMatchPreferences::const_iterator it = find("LastLadderAddr");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("LastLadderAddr");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 	{
 		return AsciiString::TheEmptyString;
 	}
-	return it->second;
+
+	return *(const AsciiString *)&node->m_value;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/QuickMatchPreferencesGetters.cpp
-// ?getLastLadderPort@CustomMatchPreferences@@QAEGXZ present-unmatched
+// ?getLastLadderPort@CustomMatchPreferences@@QAEGXZ
 UnsignedShort CustomMatchPreferences::getLastLadderPort( void )
 {
-	QuickMatchPreferences::const_iterator it = find("LastLadderPort");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("LastLadderPort");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 	{
 		return 0;
 	}
-	return atoi(it->second.str());
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	return atoi(text);
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getPreferredColor_CustomMatchPreferences_QAEHXZ_000AC2A0.cpp
@@ -642,13 +671,14 @@ Int CustomMatchPreferences::getPreferredColor(void)
 	return ret;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/CustomMatchPreferences_setPreferredColor_Thunk.cpp
-// ?setPreferredColor@CustomMatchPreferences@@QAEXH@Z present-unmatched
+// Retail folds this onto setDisallowAsianText above -- same key, same body, the
+// value narrowed to a byte. The name survives as an ICF alias of that address.
+// ?setPreferredColor@CustomMatchPreferences@@QAEXH@Z
 void CustomMatchPreferences::setPreferredColor(Int val)
 {
 	AsciiString s;
-	s.format("%d", val);
-	(*this)["Color"] = s;
+	s.format("%d", (UnsignedByte)val);
+	(*this)["DisallowAsianText"] = s;
 }
 
 // ?getChatSizeSlider@CustomMatchPreferences@@QAEHXZ
@@ -828,8 +858,7 @@ Bool CustomMatchPreferences::getDisallowAsianText( void )
 	return FALSE;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/CustomMatchPreferences_setPreferredColor_Thunk.cpp
-// ?setDisallowAsianText@CustomMatchPreferences@@QAEX_N@Z present-unmatched
+// ?setDisallowAsianText@CustomMatchPreferences@@QAEX_N@Z
 void CustomMatchPreferences::setDisallowAsianText(Bool val)
 {
 	AsciiString s;
