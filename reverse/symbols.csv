@@ -72576,7 +72576,7 @@ name,address,notes
 ?bfmeDestroyRange12@@YAXPAUBfmeElem12@@0PAD@Z,0x00014AA1,Open-BFME5 the element destroy helper the vector destroy at 0x006FA4E0 hands its range to
 ?bfmeDestroyRange2@@YAXPAH0PAD@Z,0x000096FB,Open-BFME5 the element destroy helper the vector destroy at 0x006A76E0 hands its range to
 ?bfmeDestroyRange@@YAXPAH0PAD@Z,0x000247E9,Open-BFME5 the element destroy helper the vector destroy at 0x000BCBC0 hands its range to
-?bfmeDestroyRange@@YAXPAH0VBfmeAllocL@@@Z,0x0002376D,Open-BFME5 the ICF thunk (to 0x0042376D) the clear at 0x0048FA30 destroys its range with
+?bfmeDestroyRange@@YADPAH0VBfmeAllocL@@@Z,0x0002376D,Open-BFME5 the ICF thunk (to 0x0042376D) the clear at 0x0048FA30 destroys its range with
 ?bfmeDestroyRange@@YAXPAVBfmeVecAW@@@Z,0x00034DC9,Open-BFME5 the ICF thunk (to 0x00434DC9) the clear at 0x003D41D0 destroys its elements through
 ?bfmeDetachCFF@BfmeOwnerCFF@@QAEXPAVBfmeThingCFF@@@Z,0x0004B367,pin
 ?bfmeDispatchA@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x000075D6,Open-BFME5 ILT the range dispatcher at 0x002610F0 calls
