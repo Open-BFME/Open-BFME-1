@@ -72439,6 +72439,9 @@ name,address,notes
 ?bfmeDoBNE@BfmeOuterBNE@@QAEXXZ,0x0004908F,pin
 ?bfmeDoBNH@@YAXPAVBfmeThingBNH@@PAXHH@Z,0x0090E910,pin
 ?bfmeDoBOE@BfmeSinkBOE@@QAEXPAX0@Z,0x00020E3C,pin
+?bfmeDoBPB@BfmeSubBPB@@QAEXPAX00@Z,0x000160D1,pin
+?bfmeDoBPC@@YGXPAVBfmeThingBPC@@PAX@Z,0x000476F9,pin
+?bfmeDoBPF@@YAXPAXPAUBfmeSubBPF@@0@Z,0x00022AB6,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -72505,6 +72508,7 @@ name,address,notes
 ?bfmeFindBEC@BfmeSubBEC@@QAEPAVBfmeGotBEC@@XZ,0x0000F498,pin
 ?bfmeFindBHF@BfmeSubBHF@@QAEPAUBfmeGotBHF@@XZ,0x00046538,pin
 ?bfmeFindBOB@BfmeSubBOB@@QAEPAUBfmeGotBOB@@XZ,0x00048C61,pin
+?bfmeFindBPA@BfmeThingBPA@@QAEPAUBfmeGotBPA@@PAX@Z,0x0001DB92,pin
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
 ?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
 ?bfmeFindRecord@FontLibraryBFMERetail@@AAEPAUBfmeFontRecord@@PAVAsciiString@@M@Z,0x000035A3,Open-BFME5 ILT thunk to body 0x00476E20; FontLibraryBFMERetail::getFont at 0x004772D0 calls it on this with the name and size and reads a byte at +8 of what it returns; address-derived name
@@ -72948,6 +72952,7 @@ name,address,notes
 ?bfmeOneBKE@@YGXPAX@Z,0x0090C610,pin
 ?bfmeOneBKF@BfmePartBKF@@QAEXXZ,0x0090DF10,pin
 ?bfmeOneBOF@BfmeThingBOF@@QAEXXZ,0x00014182,pin
+?bfmeOneBPE@BfmeSubBPE@@QAEXXZ,0x000461CD,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73017,6 +73022,8 @@ name,address,notes
 ?bfmeSetANB@BfmeSlotANB@@QAEXPAXH@Z,0x00887D20,pin
 ?bfmeSetAZA@BfmeThingAZA@@QAEXH@Z,0x0002BECC,pin
 ?bfmeSetBME@BfmeSubBME@@QAEXPAX@Z,0x00888BC0,pin
+?bfmeSetBPC@BfmeThingBPC@@QAEXH@Z,0x0001E402,pin
+?bfmeSetBPD@BfmeSubBPD@@QAEXPAX@Z,0x00887B60,pin
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
 ?bfmeSetQQ@BfmeThingQQ@@QAEXPBDI@Z,0x0088A8F0,pin
 ?bfmeSetQR@BfmeThingQR@@QAEXPBDI@Z,0x0088A8F0,pin
