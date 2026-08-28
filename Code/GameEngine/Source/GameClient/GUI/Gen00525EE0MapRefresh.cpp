@@ -3,6 +3,7 @@
 class AsciiString
 {
 public:
+	AsciiString(const char *text);
 	AsciiString(const AsciiString &other);
 	~AsciiString();
 
@@ -15,6 +16,13 @@ class GameSlot;
 
 void GadgetComboBoxGetSelectedPos(GameWindow *window, int *selected);
 void *GadgetComboBoxGetItemData(GameWindow *window, int selected);
+void _bfme_closeAptScreen(const AsciiString &screenName);
+
+class Gen005207C0Member
+{
+public:
+	void bfmeReset(void);
+};
 
 class GameSlot
 {
@@ -87,6 +95,7 @@ class Gen_00525EE0
 {
 public:
 	void bfmeRefresh(void);
+	void bfmeShutdown(void);
 	void bfmeDispatchWindow(GameWindow *window);
 	int bfmeFindRepresentativeSlot(void);
 	int bfmeFindAvailableStartPosition(int firstIndex);
@@ -106,7 +115,9 @@ private:
 	unsigned char m_unmodelled15[2];
 	bool m_pending;
 	bool m_backgroundVisible;
-	unsigned char m_unmodelled19[0x8F];
+	unsigned char m_unmodelled19[0x0F];
+	Gen005207C0Member m_previewState;
+	unsigned char m_unmodelled29[0x7F];
 	GameWindow *m_colorCombos[8];
 	GameWindow *m_playerTemplateCombos[8];
 	unsigned char m_unmodelledE8[0x3C];
@@ -134,6 +145,23 @@ void Gen_00525EE0::bfmeRefresh(void)
 		if (map && map->m_isMultiplayer)
 			m_isMultiplayer = true;
 	}
+}
+
+// Tear down the preview state and close the setup APT screen.
+// ?bfmeShutdown@Gen_00525EE0@@QAEXXZ
+void Gen_00525EE0::bfmeShutdown(void)
+{
+	if (m_backgroundVisible)
+	{
+		m_backgroundVisible = false;
+		m_owner->bfmeSetBackgroundVisible(false);
+		if (m_owner->bfmeShouldRestoreBackground())
+			m_owner->bfmeRestoreBackground();
+	}
+
+	m_previewState.bfmeReset();
+	AsciiString screenName("MpGameSetup::GadgetInit");
+	_bfme_closeAptScreen(screenName);
 }
 
 // Restore the owner background state before dispatching the active window.

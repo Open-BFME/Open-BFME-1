@@ -72854,6 +72854,7 @@ name,address,notes
 ?bfmeReset@BfmeItemS@@QAEXXZ,0x00036A9D,Open-BFME5 the ICF thunk (to 0x00436A9D) the clear at 0x003CFBA0 calls per item
 ?bfmeReset@BfmeMapObjectExtra@@QAEXXZ,0x00033F46,Open-BFME5 the thiscall WorldHeightMap::freeListOfMapObjects at 0x00746E90 tail-jumps into on the global object at 0x012ED5E0
 ?bfmeReset@BfmeStopOther@@QAEXPAX@Z,0x0002A88D,Open-BFME5 the reset the stop-and-reset bodies at 0x0015BA80 and siblings tail-jump to
+?bfmeReset@Gen005207C0Member@@QAEXXZ,0x00018FB1,Open-BFME5 ILT to the preview-state reset body at 0x005207C0 called by multiplayer setup shutdown
 ?bfmeReset@Gen009D6E10@@QAEXPAVBfmePeer@@@Z,0x009D6410,address-derived reset target from the direct REL32 call at retail 0x009D6E33
 ?bfmeReset@Gen_008812D0@@QAEXXZ,0x008811A0,Open-BFME5 semantic no-op reset hook called immediately before the Taint grid region is cleared
 ?bfmeResolveZones@@YAXHHPAG00@Z,0x0002B648,Open-BFME5 ILT thunk to exact body 0x00403C90; BFME zone-equivalence list merger
