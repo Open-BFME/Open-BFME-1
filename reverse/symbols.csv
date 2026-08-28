@@ -10365,6 +10365,7 @@ name,address,notes
 ?Set_Texture@MeshMatDescClass@@QAEXHPAVTextureClass@@HH@Z,0x0092A4D0,pinharvest x1 (body)
 ?Set_Texture@MeshMatDescClass@@QAEXHPAVTextureClass@@HH@Z,0x0092C010,pinharvest x1 (body)
 ?Set_Texture@PointGroupClass@@QAEXPAVTextureClass@@@Z,0x009127F0
+?Set_Texture@Rva0095C7A0SegLineRendererClass@@QAEXPAVTextureClass@@@Z,0x0095C7A0,address-derived ICF twin of SegLineRendererClass::Set_Texture; target call in StreakLineClass::Set_Texture
 ?Set_Texture@SegLineRendererClass@@QAEXPAVTextureClass@@@Z,0x00960050
 ?Set_Transform@RenderObjClass@@UAEXABVMatrix3D@@@Z,0x009201A0
 ?Set_Transform@RenderObjClass@@UAEXABVMatrix3D@@@Z,0x00982110,pinharvest x1 (body)
