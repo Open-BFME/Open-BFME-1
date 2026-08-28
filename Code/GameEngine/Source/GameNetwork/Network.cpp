@@ -165,12 +165,43 @@ class BFMEConnectionManager
 {
 public:
 	void sendProgressCommand(Int percent);
+
+	// BFME grew the connection manager before its disconnect manager pointer;
+	// the published Zero Hour header does not describe this offset.
+	char m_bfmePad[0x120e0];
+	DisconnectManager *m_disconnectManager;
 };
 
 void Network::updateLoadProgress(Int percent)
 {
 	if (m_conMgr != NULL)
 		((BFMEConnectionManager *)m_conMgr)->sendProgressCommand(percent);
+}
+
+// BFME keeps DisconnectManager at +0x120e0 in ConnectionManager. The null
+// checks and tail calls match the retail vtable forwarders at 0x00681ac0 and
+// 0x00681af0; the getter bodies themselves are the matched implementations in
+// DisconnectManager.cpp.
+Int Network::getPingsSent()
+{
+	if (m_conMgr != NULL)
+	{
+		BFMEConnectionManager *conMgr = (BFMEConnectionManager *)m_conMgr;
+		if (conMgr->m_disconnectManager != NULL)
+			return conMgr->m_disconnectManager->getPingsSent();
+	}
+	return 0;
+}
+
+Int Network::getPingsRecieved()
+{
+	if (m_conMgr != NULL)
+	{
+		BFMEConnectionManager *conMgr = (BFMEConnectionManager *)m_conMgr;
+		if (conMgr->m_disconnectManager != NULL)
+			return conMgr->m_disconnectManager->getPingsRecieved();
+	}
+	return 0;
 }
 
 // BFME inlines ConnectionManager::getSlotAverageFPS into this forwarder. The
