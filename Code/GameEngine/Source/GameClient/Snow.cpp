@@ -99,7 +99,6 @@ void SnowManager::setVisible(Bool showWeather)
 	m_isVisible = showWeather;
 }
 
-// ?reset@SnowManager@@ present-unmatched
 void SnowManager::reset(void)
 {
 	m_isVisible = TRUE;	//default to showing if it's enabled via INI.
