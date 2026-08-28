@@ -2389,17 +2389,15 @@ void AIUpdateInterface::friend_setGoalObject(Object *obj)
 //-------------------------------------------------------------------------------------------------
 /** Is there a path at all that exists from us to the destination location */
 //-------------------------------------------------------------------------------------------------
-// ?isPathAvailable@AIUpdateInterface@@ present-unmatched
 Bool AIUpdateInterface::isPathAvailable( const Coord3D *destination ) const
 {
-	
-	// sanity
 	if( destination == NULL )
 		return FALSE;
 
-	const Coord3D *myPos = getObject()->getPosition();
-
-	return TheAI->pathfinder()->clientSafeQuickDoesPathExist( m_locomotorSet, myPos, destination );
+	const BFMEApproachPathFields *retail = reinterpret_cast<const BFMEApproachPathFields *>( this );
+	Object *obj = retail->m_object;
+	const Coord3D *myPos = reinterpret_cast<const Coord3D *>( reinterpret_cast<const char *>( obj ) + 0x38 );
+	return TheAI->pathfinder()->slowDoesPathExist( obj, myPos, destination, static_cast<ObjectID>( 0 ) );
 
 }  // end isPathAvailable
 
