@@ -72277,6 +72277,7 @@ name,address,notes
 ?bfmeBaseAUB@BfmeThingAUB@@QAEXXZ,0x0001B522,pin
 ?bfmeBaseAVB@BfmeThingAVB@@QAEXXZ,0x009A1A30,pin
 ?bfmeBaseAWA@BfmeThingAWA@@QAEXPAX0@Z,0x00912FE0,pin
+?bfmeBaseBMA@BfmeThingBMA@@QAEXPAX@Z,0x00887B60,pin
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
 ?bfmeBaseSJ@BfmeThingSJ@@QAEXH@Z,0x0090E3D0,pin
 ?bfmeBaseSK@BfmeThingSK@@QAEXH@Z,0x009DB4E0,pin
@@ -72431,6 +72432,8 @@ name,address,notes
 ?bfmeDoBLB@@YGXPAXPAD@Z,0x0003FAEE,pin
 ?bfmeDoBLD@BfmeSinkBLD@@QAEXPAXH@Z,0x00043E4B,pin
 ?bfmeDoBLF@@YAXPAUBfmeSubBLF@@PAXH@Z,0x009F70BA,pin
+?bfmeDoBMC@BfmeSubBMC@@QAEXPAUBfmePartBMC@@0@Z,0x00008E68,pin
+?bfmeDoBMF@BfmeSinkBMF@@QAEXHH@Z,0x0002054F,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -72864,6 +72867,7 @@ name,address,notes
 ?bfmeMakeBIF@BfmeSubBIF@@QAEPAPAXPAX@Z,0x000100A0,pin
 ?bfmeMakeBIF@BfmeSubBIF@@QAEPAXPAX@Z,0x000100A0,pin
 ?bfmeMakeBLC@BfmeSinkBLC@@QAEPAXPAX@Z,0x0003ADD7,pin
+?bfmeMakeBMD@BfmeSinkBMD@@QAEPAXPAX@Z,0x0002F95A,pin
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
@@ -73001,6 +73005,7 @@ name,address,notes
 ?bfmeSetAKA@BfmeInnerAKA@@QAEXH@Z,0x00024D70,pin
 ?bfmeSetANB@BfmeSlotANB@@QAEXPAXH@Z,0x00887D20,pin
 ?bfmeSetAZA@BfmeThingAZA@@QAEXH@Z,0x0002BECC,pin
+?bfmeSetBME@BfmeSubBME@@QAEXPAX@Z,0x00888BC0,pin
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
 ?bfmeSetQQ@BfmeThingQQ@@QAEXPBDI@Z,0x0088A8F0,pin
 ?bfmeSetQR@BfmeThingQR@@QAEXPBDI@Z,0x0088A8F0,pin
@@ -73049,6 +73054,7 @@ name,address,notes
 ?bfmeStepBFH@BfmeThingBFH@@QAEXXZ,0x00025EFF,pin
 ?bfmeStepBGG@BfmeThingBGG@@QAEXXZ,0x00015E0B,pin
 ?bfmeStepBLE@BfmeThingBLE@@QAEXXZ,0x000105F5,pin
+?bfmeStepBMB@BfmeThingBMB@@QAEXXZ,0x008FC4C0,pin
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
@@ -74151,6 +74157,8 @@ name,address,notes
 ?g_bfmeSinkBHD@@3PAVBfmeSinkBHD@@A,0x00EED668,pin
 ?g_bfmeSinkBLC@@3PAVBfmeSinkBLC@@A,0x00EED600,pin
 ?g_bfmeSinkBLD@@3PAVBfmeSinkBLD@@A,0x00EF4B98,pin
+?g_bfmeSinkBMD@@3PAVBfmeSinkBMD@@A,0x00EEF188,pin
+?g_bfmeSinkBMF@@3PAVBfmeSinkBMF@@A,0x00EF1028,pin
 ?g_bfmeSinkSB@@3PAVBfmeSinkSB@@A,0x00EED668,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
@@ -77836,6 +77844,7 @@ _bfmeTagAPB,0x00DDFC30,pin
 _bfmeTextAIB,0x00C94960,pin
 _bfmeTextAOA,0x00C88860,pin
 _bfmeTextAPB,0x00C75230,pin
+_bfmeTextBME,0x00C7301C,pin
 _bfmeTextOneAZB,0x00F36E54,pin
 _bfmeTextTwoAZB,0x00F36E50,pin
 _bfmeTryActivate@12,0x009D8460,address-derived stdcall helper target from the direct REL32 call at retail 0x009D6310
