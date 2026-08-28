@@ -3644,6 +3644,8 @@ name,address,notes
 ??0W3DQuadrupedDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000B339,link thunk to the W3DQuadrupedDraw constructor; named from the draw-module registration that pairs "W3DQuadrupedDraw" with factory 0x006BF260
 ??0W3DQuadrupedDrawModuleDataBase@@QAE@XZ,0x0000289C,Open-BFME5 W3DQuadruped module data base constructor pin
 ??0W3DQuadrupedElement@@QAE@XZ,0x00017BD9,Open-BFME5 W3DQuadruped array element constructor pin
+??0W3DRadarResetSurface@@QAE@IIII@Z,0x008FC560,W3D back-buffer fallback surface constructor
+??0W3DRadarResetSurface@@QAE@PAVSurfaceResource@@@Z,0x008FC590,W3D back-buffer surface adopting constructor
 ??0W3DRopeDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048167,retail W3D factory registration
 ??0W3DScienceModelDrawModuleData@@QAE@XZ,0x0001235A,pinharvest x1 (thunk)
 ??0W3DScriptedModelDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x000285EC,link thunk to the W3DScriptedModelDraw constructor; named from the draw-module registration that pairs "W3DScriptedModelDraw" with factory 0x006BF040
@@ -79255,7 +79257,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0?$pair@$$CBHVMultiplayerColorDefinition@@@_STL@@QAE@ABHABVMultiplayerColorDefinition@@@Z,0x00048FEA,MultiplayerColor map operator pair-constructor ILT
-?insert_unique@?$_Rb_tree@HU?$pair@$$CBHVMultiplayerColorDefinition@@@_STL@@U?$_Select1st@U?$pair@$$CBHVMultiplayerColorDefinition@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVMultiplayerColorDefinition@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHVMultiplayerColorDefinition@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVMultiplayerColorDefinition@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHVMultiplayerColorDefinition@@@2@@Z,0x00045A7F,MultiplayerColor map operator insert_unique ILT
-??0W3DRadarResetSurface@@QAE@PAVSurfaceResource@@@Z,0x008FC590,W3D back-buffer surface adopting constructor
-??0W3DRadarResetSurface@@QAE@IIII@Z,0x008FC560,W3D back-buffer fallback surface constructor
