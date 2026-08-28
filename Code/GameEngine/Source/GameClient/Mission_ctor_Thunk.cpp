@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0Mission@@QAE@XZ: Code/GameEngine/Source/GameClient/System/CampaignManager.cpp
 // Open-BFME5: clean C++ lift of the retail Mission constructor.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -15,6 +17,7 @@ private:
 
 enum ObjectID {};
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
@@ -25,12 +28,14 @@ private:
 	unsigned char m_data[112];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameMemory.h
 class MemoryPoolObject
 {
 public:
 	virtual void deleteInstance();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/CampaignManager.h
 class Mission : public MemoryPoolObject
 {
 public:

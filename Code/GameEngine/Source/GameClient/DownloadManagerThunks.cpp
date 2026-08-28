@@ -1,3 +1,4 @@
+// readable body of ?downloadNextQueuedFile@DownloadManager@@QAEJXZ: Code/GameEngine/Source/GameNetwork/DownloadManager.cpp
 // Two thunk rows were removed from this file. A 5-byte thunk row byte-verifies
 // against any incremental-link entry in the image, because every one of them is
 // E9 xx xx xx xx and the displacement is a REL32 the verifier fills in from the

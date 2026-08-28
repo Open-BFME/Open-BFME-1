@@ -2,6 +2,7 @@
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class ChunkInputStream;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/WorldHeightMap.h
 class WorldHeightMap {
 public:
 	WorldHeightMap(ChunkInputStream *, bool);

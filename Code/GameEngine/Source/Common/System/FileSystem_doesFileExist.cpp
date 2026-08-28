@@ -17,6 +17,7 @@ static inline int do_sprintf(char *b, const char *f, const char *a, const char *
 // The slot layouts stay attached to their call sites, because those are what the
 // emitted offsets come from; only the names move. Retail checks the archive
 // first and the local second, which is also now what the code reads like.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ArchiveFileSystem.h
 class ArchiveFileSystem {
 public:
 	virtual ~ArchiveFileSystem() {}
@@ -31,6 +32,7 @@ public:
 	virtual bool doesFileExist(const char *filename) const = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/LocalFileSystem.h
 class LocalFileSystem {
 public:
 	virtual ~LocalFileSystem() {}

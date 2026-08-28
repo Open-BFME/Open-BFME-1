@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/shims/campaignmanagerascii /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib
+// readable body of ?init@ControlBarResizer@@QAEXXZ: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarResizer.cpp
 
 // INI ini; ini.load(AsciiString("Data\\INI\\ControlBarResizer.ini"), INI_LOAD_OVERWRITE, NULL);
 //
@@ -27,6 +28,7 @@ enum INILoadType
 	INI_LOAD_CREATE_OVERRIDES = 2
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -39,6 +41,7 @@ private:
 	char m_storage[0x848];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBarResizer.h
 class ControlBarResizer
 {
 public:

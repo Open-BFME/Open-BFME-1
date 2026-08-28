@@ -1,8 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?muxDataProcessUpgradeRemoval@UpgradeMuxData@@: Code/GameEngine/Source/Common/Thing/Module.cpp
+// readable body of ?performUpgradeFX@UpgradeMuxData@@: Code/GameEngine/Source/Common/Thing/Module.cpp
 
 class UpgradeTemplate;
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXList
 {
 public:
@@ -10,6 +13,7 @@ public:
 	void doFXObj(const Object *primary, const Object *secondary) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -36,18 +40,21 @@ private:
 	Data *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeCenter
 {
 public:
 	const UpgradeTemplate *findUpgrade(const AsciiString &name) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	void removeUpgrade(const UpgradeTemplate *upgrade);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
 class INIException
 {
 public:

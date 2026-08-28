@@ -1,9 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
+// readable body of ?parseArmorTemplateSet@ArmorTemplateSet@@: Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp
+// readable body of ?parseArmorTemplateSet@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z: Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp
 
 #include <map>
 #include <vector>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -12,6 +15,7 @@ public:
 
 extern const unsigned char g_armorTemplateSetFieldParse[];
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ArmorSet.h
 class ArmorTemplateSet
 {
 public:
@@ -29,6 +33,7 @@ private:
 };
 
 template <int Count>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 private:
@@ -36,12 +41,14 @@ private:
 };
 
 template <class Value, class Key>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SparseMatchFinder.h
 class SparseMatchFinder
 {
 public:
 	void clear() { m_map.clear(); }
 
 private:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SparseMatchFinder.h
 	struct MapHelper
 	{
 		bool operator()(const Key &, const Key &) const;
@@ -50,6 +57,7 @@ private:
 	_STL::map<const Key, const Value *, MapHelper> m_map;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
 protected:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?update@PoisonedBehavior@@UAE?AW4UpdateSleepTime@@XZ: Code/GameEngine/Source/GameLogic/Object/Behavior/PoisonedBehavior.cpp
 // Grok promote from masm_dumps — retail 0x00202BD0 size 48
 // was: Code/masm_dumps/update_PoisonedBehavior_00202BD0_packet301.asm
 

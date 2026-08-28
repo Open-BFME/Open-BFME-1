@@ -7,6 +7,7 @@
 
 extern UnicodeString getUnicodeDateBuffer( SYSTEMTIME timeValue );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SkirmishBattleHonors.h
 class SkirmishBattleHonors
 {
 public:

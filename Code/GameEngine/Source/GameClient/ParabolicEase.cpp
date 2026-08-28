@@ -55,6 +55,7 @@ clamp(TYPE val, TYPE min = TYPE(0), TYPE max = TYPE(1))
 } // namespace
 // ============================================================================
 void
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/ParabolicEase_setEaseTimes_Thunk.cpp
 // ?setEaseTimes@ParabolicEase@@ present-unmatched
 ParabolicEase::setEaseTimes(Real easeInTime, Real easeOutTime)
 {

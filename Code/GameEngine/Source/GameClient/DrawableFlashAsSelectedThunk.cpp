@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?flashAsSelected@Drawable@@QAEXPBURGBColor@@@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 // Open-BFME5: lift the retail Drawable::flashAsSelected MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_DrawableFlashAsSelected_76E4F0()

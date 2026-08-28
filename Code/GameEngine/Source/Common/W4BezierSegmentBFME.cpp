@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/Precompiled /ICode/GameEngine/Source/Common/System /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib
+// readable body of ?getApproximateLength@BezierSegment@@: Code/GameEngine/Source/Common/Bezier/BezierSegment.cpp
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -35,6 +36,7 @@
 
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Coord3D();
@@ -45,6 +47,7 @@ struct Coord3D
 	void zero( void ) { x = 0.0f; y = 0.0f; z = 0.0f; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BezierSegment.h
 class BezierSegment
 {
 	protected:

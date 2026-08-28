@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?endMenu@EstablishConnectionsMenu@@: Code/GameEngine/Source/GameClient/GUI/EstablishConnectionsMenu/EstablishConnectionsMenu.cpp
 // Open-BFME5: lift the retail EstablishConnectionsMenu::endMenu MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_EstablishConnectionsMenuEndMenu_387A50()

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0SkirmishPreferences@@: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenu.cpp
 // Open-BFME5: lift the retail SkirmishPreferences constructor MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_SkirmishPreferencesCtor_09F850()

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?isKindOf@Thing@@QBE_NW4KindOfType@@@Z: Code/GameEngine/Source/Common/Thing/Thing.cpp
 // Thing::isKindOf, retail 0x000A2CF0.
 //
 // Zero Hour's one-liner `return getTemplate()->isKindOf(t);`, with BFME's
@@ -13,6 +14,7 @@ typedef bool Bool;
 
 enum KindOfType { KINDOF_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -23,6 +25,7 @@ public:
 	Overridable *m_nextOverride;						///< retail this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
 {
 public:
@@ -36,6 +39,7 @@ private:
 	UnsignedInt m_kindof[ 3 ];							///< retail this+0xC8
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
@@ -48,6 +52,7 @@ private:
 	const ThingTemplate *m_template;					///< retail this+0x04
 };
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Thing/Thing.cpp
 // ?getTemplate@Thing@@QBEPBVThingTemplate@@XZ present-unmatched
 inline const ThingTemplate *Thing::getTemplate( void ) const
 {

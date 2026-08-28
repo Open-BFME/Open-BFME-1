@@ -1,3 +1,4 @@
+// readable body of ?createMouseoverHint@InGameUI@@: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // Exact retail bytes for the InGameUI::createMouseoverHint row at 0x004445C0.
 extern "C" __declspec(naked) void bfme_InGameUI_createMouseoverHint_4445C0()
 {

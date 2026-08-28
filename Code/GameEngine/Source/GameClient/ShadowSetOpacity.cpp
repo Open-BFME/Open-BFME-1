@@ -4,6 +4,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shadow.h
 class Shadow
 {
 public:

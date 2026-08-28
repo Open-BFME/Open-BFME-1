@@ -125,6 +125,7 @@ protected:
 	void *m_mutex;			// +0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/LocalFile.h
 class LocalFile : public File
 {
 public:

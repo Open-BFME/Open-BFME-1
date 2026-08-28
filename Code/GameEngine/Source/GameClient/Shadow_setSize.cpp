@@ -77,6 +77,7 @@ __declspec(noinline) void BfmeShadowPart::bfmeSetSize(Real width, Real height)
 	}
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shadow.h
 class Shadow
 {
 public:

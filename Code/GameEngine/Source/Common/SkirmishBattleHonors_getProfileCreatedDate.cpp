@@ -4,6 +4,7 @@
 #include "PreRTS.h"
 #include "Common/AsciiString.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SkirmishBattleHonors.h
 class SkirmishBattleHonors
 {
 public:

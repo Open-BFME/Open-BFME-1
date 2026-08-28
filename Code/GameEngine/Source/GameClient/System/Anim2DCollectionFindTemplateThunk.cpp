@@ -23,6 +23,7 @@ typedef int Int;
 
 extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiStringData
 {
 public:
@@ -32,6 +33,7 @@ public:
 	char m_chars[1];									///< retail this+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -59,6 +61,7 @@ inline bool operator==(const AsciiString &a, const AsciiString &b)
 	return result == 0;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Anim2D.h
 class Anim2DTemplate
 {
 public:
@@ -71,6 +74,7 @@ private:
 	Anim2DTemplate *m_nextTemplate;						///< retail this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Anim2D.h
 class Anim2DCollection
 {
 public:

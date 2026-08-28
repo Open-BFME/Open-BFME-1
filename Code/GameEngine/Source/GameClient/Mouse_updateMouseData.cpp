@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?updateMouseData@Mouse@@: Code/GameEngine/Source/GameClient/Input/Mouse.cpp
 
 // Open-BFME5: Mouse::updateMouseData, retail 0x005A42E0, 114 bytes. The body
 // carried only a machine byte-dump row; the symbols.csv pin names it, and the

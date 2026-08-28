@@ -13,6 +13,7 @@
 // place rather than constructing it and copying it into a second slot.
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
 class INIException
 {
 public:
@@ -26,6 +27,7 @@ private:
 
 struct FieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:
@@ -38,6 +40,7 @@ public:
 class MetaMapRec;
 class INI;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MetaEvent.h
 class MetaMap
 {
 	friend class INI;
@@ -51,6 +54,7 @@ protected:
 extern MetaMap *TheMetaMap;
 extern const FieldParse TheMetaMapFieldParseTable[];
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

@@ -1,5 +1,7 @@
+// readable body of ?updateSlotExitImage@ControlBar@@QAEXPBVImage@@@Z: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 class Image;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:

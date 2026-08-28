@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?deleteListResources@Radar@@IAEXXZ: Code/GameEngine/Source/Common/System/Radar.cpp
 // Open-BFME: Radar::deleteListResources, retail 0x00106A90, 130 bytes.
 //
 // The reference's body unchanged, including the walk over every object at the
@@ -16,6 +17,7 @@ typedef bool Bool;
 
 class RadarObject;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -29,6 +31,7 @@ private:
 	RadarObject *m_radarData;				// this+0x20C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Radar.h
 class RadarObject
 {
 public:
@@ -42,6 +45,7 @@ private:
 	RadarObject *m_next;					// this+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -50,6 +54,7 @@ public:
 
 extern GameLogic *TheGameLogic;					// 0x012F0898
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Radar.h
 class Radar
 {
 protected:

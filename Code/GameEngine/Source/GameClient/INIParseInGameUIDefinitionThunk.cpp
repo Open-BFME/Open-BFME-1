@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
+// readable body of ?parseInGameUIDefinition@INI@@SAXPAV1@@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
 
 // Open-BFME5: INI::parseInGameUIDefinition
 // Null-check g_theInGameUI, virtual call slot 0x158, then thiscall on INI.
 
 class INI;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:
@@ -99,6 +101,7 @@ public:
 
 extern InGameUI *g_theInGameUI;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

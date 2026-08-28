@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?useCameraInReplays@OptionPreferences@@QAE_NXZ: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionsMenu.cpp
 // Grok promote from masm_dumps — retail 0x00090900 size 87
 // was: Code/masm_dumps/_sa14__useCameraInReplays_OptionPreferences__QAE_NXZ_90900.asm
 

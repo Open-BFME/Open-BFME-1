@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/campaignmanagerascii /ICode/Libraries/Source/WWVegas/WWLib
+// readable body of ?freeStaticStrings@GameWindowManager@@UAEXXZ: Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp
 
 // FILE: GameWindowManager_freeStaticStrings.cpp //////////////////////////////
 //
@@ -30,6 +31,7 @@
 
 extern AsciiString TheGameWindowManagerScratchStrings[ 4 ];		// 0x012F2570
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:

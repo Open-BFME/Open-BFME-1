@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?hide@Shell@@QAEX_N@Z: Code/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp
 
 // Open-BFME5: Shell::hide, retail 0x0057F5B0, 118 bytes. The body carried only
 // a machine byte-dump row; reverse/reloc_names.csv holds the name with
@@ -46,6 +47,7 @@ public:
 
 extern Glo012F3344Type *Glo012F3344;				// 0x012F3344
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 	protected:
@@ -53,6 +55,7 @@ class UnicodeString
 	void releaseBuffer();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display
 {
 public:
@@ -96,6 +99,7 @@ __declspec(noinline) void Display::bfmeStopMovie(void)
 
 extern Display *TheDisplay;					// 0x012F1270
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -105,6 +109,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;			// 0x012ED5C8
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
 public:
@@ -132,6 +137,7 @@ public:
 
 extern AudioManager *TheAudio;					///< retail [0x012ED668]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
 class Shell
 {
 public:

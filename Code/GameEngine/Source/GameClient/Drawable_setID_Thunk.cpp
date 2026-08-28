@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setID@Drawable@@QAEXW4DrawableID@@@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 
 typedef unsigned char UnsignedByte;
 enum DrawableID
@@ -8,6 +9,7 @@ enum DrawableID
 
 class Drawable;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameClient.h
 class GameClient
 {
 public:
@@ -17,6 +19,7 @@ public:
 
 extern GameClient *TheGameClient;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
@@ -32,6 +35,7 @@ struct DrawableAudioEvent
 // The field names and offsets below are limited to what the retail setID body
 // itself proves.  The three audio holders occupy consecutive pointer slots and
 // each embeds its AudioEventRTS at +4.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:

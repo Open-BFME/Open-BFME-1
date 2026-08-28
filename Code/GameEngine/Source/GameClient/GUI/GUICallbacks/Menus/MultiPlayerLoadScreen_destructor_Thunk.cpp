@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1MultiPlayerLoadScreen@@: Code/GameEngine/Source/GameClient/GUI/LoadScreen.cpp
 // Open-BFME5: lift the exact retail MultiPlayerLoadScreen destructor body to C++.
 
 // ??1MultiPlayerLoadScreen@@

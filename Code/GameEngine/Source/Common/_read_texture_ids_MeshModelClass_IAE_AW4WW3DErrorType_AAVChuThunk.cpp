@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?read_texture_ids@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z: Code/Libraries/Source/WWVegas/WW3D2/meshmdlio.cpp
 // Open-BFME5: lift MASM dump; object-symbol pin to this body.
 
 void __declspec(naked) open_bfme5_body__read_texture_ids_MeshModelClass_IAE_AW4WW3DErrorType_AAVChu()

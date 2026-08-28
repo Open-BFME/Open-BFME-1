@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?setCopiedFromDefault@ThingTemplate@@QAEXXZ: Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp
 // Grok promote from masm_dumps — retail 0x0013FDB0 size 71
 // was: Code/masm_dumps/ThingTemplate_setCopiedFromDefault.asm
 

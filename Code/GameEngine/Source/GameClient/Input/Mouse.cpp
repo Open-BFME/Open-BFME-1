@@ -125,6 +125,7 @@ static const FieldParse TheMouseFieldParseTable[] =
 //-------------------------------------------------------------------------------------------------
 /** Move the mouse in either relative or absolute coords */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Input/Mouse_moveMouse.cpp
 // ?moveMouse@Mouse@@ present-unmatched
 void Mouse::moveMouse( Int x, Int y, Int relOrAbs )
 {
@@ -155,6 +156,7 @@ void Mouse::moveMouse( Int x, Int y, Int relOrAbs )
 //-------------------------------------------------------------------------------------------------
 /** Get the current information for the mouse from the device */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Mouse_updateMouseData.cpp
 // ?updateMouseData@Mouse@@ present-unmatched
 void Mouse::updateMouseData( )
 {
@@ -665,6 +667,7 @@ void Mouse::reset( void )
 //-------------------------------------------------------------------------------------------------
 /** Update the states of the mouse position and buttons */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Input/Mouse_update.cpp
 // ?update@Mouse@@ present-unmatched
 void Mouse::update( void )
 {
@@ -955,6 +958,7 @@ void Mouse::setMouseText( UnicodeString text,
 //-------------------------------------------------------------------------------------------------
 /** Move the mouse to the position */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/Win32Device/GameClient/Mouse_setPosition.cpp
 // ?setPosition@Mouse@@ present-unmatched
 void Mouse::setPosition( Int x, Int y )
 {

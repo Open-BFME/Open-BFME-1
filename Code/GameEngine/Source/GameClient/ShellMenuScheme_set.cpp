@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?setShellMenuScheme@ShellMenuSchemeManager@@QAEXVAsciiString@@@Z: Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme.cpp
 // Open-BFME: ShellMenuSchemeManager::setShellMenuScheme, retail 0x00581140,
 // 262 bytes.
 //
@@ -34,6 +35,7 @@ struct BfmeAsciiStringData
 	UnsignedShort m_pad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -66,6 +68,7 @@ private:
 	BfmeAsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ShellMenuScheme.h
 class ShellMenuScheme
 {
 public:
@@ -75,6 +78,7 @@ public:
 typedef _STL::list<ShellMenuScheme *> ShellMenuSchemeList;
 typedef ShellMenuSchemeList::iterator ShellMenuSchemeListIt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ShellMenuScheme.h
 class ShellMenuSchemeManager
 {
 public:

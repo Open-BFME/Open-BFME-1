@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1W3DTreeDrawModuleData@@UAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp
 // Open-BFME5: W3DTreeDrawModuleData dtor.
 // Early derived vtbl; Buffers @+0x08/+0x0c/+0x28/+0x48; base vtbl.
 
@@ -18,6 +19,7 @@ private:
 	unsigned char m_pad[4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DTreeDraw.h
 class W3DTreeDrawModuleData : public W3DTreeDrawModuleDataBase
 {
 public:

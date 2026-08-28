@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1W3DLaserDrawModuleData@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDraw.cpp
 
 // Five members destroyed in reverse declaration order -- the strings at +0x18
 // and +0x14, then the three references at +0x10, +0x0C and +0x08 -- with the
@@ -57,12 +58,14 @@ private:
 	RefCountedThing *m_ptr;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
 	virtual ~Snapshot() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DLaserDraw.h
 class W3DLaserDrawModuleData : public Snapshot
 {
 public:

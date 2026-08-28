@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?findTerrain@TerrainTypeCollection@@: Code/GameEngine/Source/Common/TerrainTypes.cpp
 // Open-BFME: TerrainTypeCollection::findTerrain, retail 0x000A7AF0, 246 bytes.
 //
 // The reference's loop unchanged -- walk the list from m_terrainList at
@@ -34,6 +35,7 @@ struct BfmeAsciiStringData
 	UnsignedShort m_pad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -64,6 +66,7 @@ private:
 	BfmeAsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/TerrainTypes.h
 class TerrainType
 {
 public:
@@ -76,6 +79,7 @@ private:
 	TerrainType *m_next;					// this+0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/TerrainTypes.h
 class TerrainTypeCollection
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?saveGame@GameState@@QAE?AW4SaveCode@@VAsciiString@@VUnicodeString@@W4SaveFileType@@W4SnapshotType@@@Z: Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp
 // Open-BFME5: lift the retail GameState::saveGame MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_GameStateSaveGame_110170()

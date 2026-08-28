@@ -26,11 +26,13 @@ enum { FREE_TO_EXIT = 0 };
 class Object;
 class Locomotor;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x, y, z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -136,6 +138,7 @@ private:
 	Locomotor *m_curLocomotor;							///< retail this+0x1CC
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -152,12 +155,14 @@ private:
 	AIUpdateInterface *m_ai;							///< retail this+0x204
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:
 	Bool validMovementTerrain(Int layer, const Locomotor *loco, const Coord3D *pos);	///< ILT thunk at 0x0001B405
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -170,6 +175,7 @@ private:
 
 extern AI *TheAI;										///< retail [0x012EF214]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TransportContain.h
 class TransportContain
 {
 protected:

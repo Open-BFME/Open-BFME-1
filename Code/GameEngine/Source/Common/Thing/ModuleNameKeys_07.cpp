@@ -12,6 +12,7 @@
 
 enum NameKeyType { };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -228,6 +229,7 @@ NameKeyType W3DFloorDraw::getModuleNameKey() const
 	return nk;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DPoliceCarDraw.h
 class W3DPoliceCarDraw
 {
 public:

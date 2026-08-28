@@ -3969,6 +3969,7 @@ ControlBarSchemeManager::ControlBarSchemeManager( void )
 //
 // Destructor for the Manager
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBarSchemeManagerDestructorThunk.cpp
 // ??1ControlBarSchemeManager@@QAE@XZ present-unmatched
 ControlBarSchemeManager::~ControlBarSchemeManager( void )
 {
@@ -4026,6 +4027,7 @@ void ControlBarSchemeManager::parseAnimatingPartImage(INI *ini, void *instance, 
 //
 // Create a new control bar and return it.  Link it into our control bar list
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBarSchemeManager_newControlBarScheme_Thunk.cpp
 // ?newControlBarScheme@ControlBarSchemeManager@@QAEPAVControlBarScheme@@VAsciiString@@@Z present-unmatched
 ControlBarScheme *ControlBarSchemeManager::newControlBarScheme( AsciiString name )
 {
@@ -4058,6 +4060,7 @@ ControlBarScheme *ControlBarSchemeManager::newControlBarScheme( AsciiString name
 //
 // Find a scheme based on name
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/ControlBarScheme_find.cpp
 // ?findControlBarScheme@ControlBarSchemeManager@@QAEPAVControlBarScheme@@VAsciiString@@@Z present-unmatched
 ControlBarScheme *ControlBarSchemeManager::findControlBarScheme( AsciiString name )
 {
@@ -4127,6 +4130,7 @@ void ControlBarSchemeManager::preloadAssets( TimeOfDay timeOfDay )
 //
 // Find a scheme based on name
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBarSchemeManager_initMethodThunk.cpp
 // ?init@ControlBarSchemeManager@@QAEXXZ present-unmatched
 void ControlBarSchemeManager::init( void )
 {
@@ -4202,6 +4206,7 @@ void ControlBarSchemeManager::drawBackground( ICoord2D offset )
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarSchemeManagerSetControlBarSchemeByPlayerTemplateThunk.cpp
 // ?setControlBarSchemeByPlayerTemplate@ControlBarSchemeManager@@QAEXPBVPlayerTemplate@@_N@Z present-unmatched
 void ControlBarSchemeManager::setControlBarSchemeByPlayerTemplate( const PlayerTemplate *pt, Bool useSmall)
 {

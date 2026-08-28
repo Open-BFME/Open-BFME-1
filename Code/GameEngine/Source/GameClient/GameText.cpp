@@ -3785,6 +3785,8 @@ __declspec(naked) void GameTextManager::init( void )
 //============================================================================
 
 // ?deinit@GameTextManager@@UAEXXZ
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameTextManager_deinit_Thunk.cpp
+// ?deinit@GameTextManager@@UAEXXZ present-unmatched
 void GameTextManager::deinit( void )
 {
 
@@ -3823,6 +3825,8 @@ void GameTextManager::deinit( void )
 // GameTextManager::reset
 //============================================================================
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__reset_GameTextManager_UAEXXZ_00437500.cpp
+// ?reset@GameTextManager@@UAEXXZ present-unmatched
 void GameTextManager::reset( void )
 {
 	if( m_mapStringInfo != NULL )
@@ -4538,6 +4542,7 @@ quit:
 // GameTextManager::initMapStringFile
 //============================================================================
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameTextManager_initMapStringFile_Thunk.cpp
 // ?initMapStringFile@GameTextManager@@UAEXABVAsciiString@@@Z present-unmatched
 void GameTextManager::initMapStringFile( const AsciiString& filename )
 {

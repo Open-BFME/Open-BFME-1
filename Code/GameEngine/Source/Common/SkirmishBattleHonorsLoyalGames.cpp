@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setBool@UserPreferences@@QAEXVAsciiString@@_N@Z: Code/GameEngine/Source/Common/UserPreferences.cpp
+// readable body of ?setInt@UserPreferences@@QAEXVAsciiString@@H@Z: Code/GameEngine/Source/Common/UserPreferences.cpp
 
 // FILE: SkirmishBattleHonorsLoyalGames.cpp ///////////////////////////////////
 //
@@ -41,6 +43,7 @@ private:
 	friend class AsciiString;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -80,6 +83,7 @@ private:
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class UserPreferences
 {
 public:
@@ -103,6 +107,7 @@ public:
 	void setInt(AsciiString key, Int val);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SkirmishBattleHonors.h
 class SkirmishBattleHonors : public UserPreferences
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?prepareForMP_or_Skirmish@SidesList@@QAEXXZ: Code/GameEngine/Source/GameLogic/Map/SidesList.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) SidesList

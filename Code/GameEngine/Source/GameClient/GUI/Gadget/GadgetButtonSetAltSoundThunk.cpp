@@ -8,6 +8,7 @@
 // the accessor call stays inside the guard rather than being hoisted.
 #include "Common/AsciiString.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:

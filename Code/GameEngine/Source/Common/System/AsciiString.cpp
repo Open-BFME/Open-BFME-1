@@ -88,6 +88,7 @@ inline char* skipNonWhitespace(char* p)
 	return p;
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/string_base.cpp
 // ?freeBytes@AsciiString@@ present-unmatched
 void AsciiString::freeBytes(void)
 {
@@ -96,6 +97,7 @@ void AsciiString::freeBytes(void)
 
 // -----------------------------------------------------
 #ifdef _DEBUG
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp
 // ?validate@AsciiString@@ present-unmatched
 void AsciiString::validate() const
 {
@@ -185,6 +187,7 @@ char*  AsciiString::getBufferForRead(Int len)
 }
 
 // -----------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/ascii_string.cpp
 // ?translate@AsciiString@@ present-unmatched
 void AsciiString::translate(const UnicodeString& stringSrc)
 {
@@ -295,6 +298,7 @@ void AsciiString::format(const char* format, ...)
 }
 
 // -----------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/string_base.cpp
 // ?format_va@AsciiString@@ present-unmatched
 void AsciiString::format_va(const AsciiString& format, va_list args)
 {
@@ -307,6 +311,7 @@ void AsciiString::format_va(const AsciiString& format, va_list args)
 }
 
 // -----------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/string_base.cpp
 // ?format_va@AsciiString@@ present-unmatched
 void AsciiString::format_va(const char* format, va_list args)
 {

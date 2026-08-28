@@ -684,6 +684,7 @@ GameMessage::Type MetaMap::findGameMessageMetaType(const char* name)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/MessageStream/MetaMap_getMetaMapRecThunk.cpp
 // ?getMetaMapRec@MetaMap@@IAEPAVMetaMapRec@@W4Type@GameMessage@@@Z present-unmatched
 MetaMapRec *MetaMap::getMetaMapRec(GameMessage::Type t)
 {

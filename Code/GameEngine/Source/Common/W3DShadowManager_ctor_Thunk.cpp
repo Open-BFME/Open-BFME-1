@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0W3DShadowManager@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DShadow.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class W3DShadowManager { public: W3DShadowManager(); };

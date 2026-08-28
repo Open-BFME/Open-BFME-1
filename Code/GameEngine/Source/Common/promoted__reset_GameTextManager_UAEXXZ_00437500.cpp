@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?reset@GameTextManager@@UAEXXZ: Code/GameEngine/Source/GameClient/GameText.cpp
 // Grok promote from masm_dumps — retail 0x00437500 size 85
 // was: Code/masm_dumps/GameTextManager_reset.asm
 

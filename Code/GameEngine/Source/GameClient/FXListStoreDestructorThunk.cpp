@@ -3,6 +3,7 @@
 
 #include <map>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -12,6 +13,7 @@ private:
 	void *m_name;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -29,6 +31,7 @@ enum NameKeyType
 class TeamPrototype;
 typedef std::map<NameKeyType, TeamPrototype *, std::less<NameKeyType> > FXListMap;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXListStore : public SubsystemInterface, public Snapshot
 {
 public:

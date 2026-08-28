@@ -2,6 +2,7 @@
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 enum NameKeyType { };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WorkerAIUpdate.h
 class WorkerAIUpdate
 {
 public:

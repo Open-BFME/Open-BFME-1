@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source
+// readable body of ?winSetInstanceData@GameWindow@@QAEHPAVWinInstanceData@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // BFME's GameWindow instance-data member begins at +0x30; the vendored ZH
 // declaration places it at +0x2c.  Retail also uses the BFME DisplayString
 // vtable slot at +0x0c for getTextLength/getTooltipTextLength.  This narrow
@@ -8,6 +9,7 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayString.h
 class DisplayString
 {
 public:
@@ -19,6 +21,7 @@ public:
 
 class GameWindow;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 class WinInstanceData
 {
 public:
@@ -57,6 +60,7 @@ public:
 	void *m_videoBuffer;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:

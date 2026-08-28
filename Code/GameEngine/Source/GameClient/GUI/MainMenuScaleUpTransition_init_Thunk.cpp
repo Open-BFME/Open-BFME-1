@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?init@MainMenuScaleUpTransition@@UAEXPAVGameWindow@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp
 // Lift the MainMenuScaleUpTransition::init naked dump to clean C++.
 //
 // Zero Hour's GameWindowTransitionsStyles.cpp body. Same BFME parameterisation
@@ -21,12 +22,14 @@ typedef unsigned char Bool;
 
 class Image;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
 	Int y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -43,6 +46,7 @@ private:
 
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -52,6 +56,7 @@ public:
 extern NameKeyGenerator *TheNameKeyGenerator;			///< retail [0x012ED600]
 
 // Only the lookup is reconstructed; the slots ahead of it place it.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:
@@ -116,6 +121,7 @@ public:
 
 extern GameWindowManager *TheWindowManager;				///< retail [0x012F1B40]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class MainMenuScaleUpTransition
 {
 public:

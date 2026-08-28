@@ -21,6 +21,7 @@
 struct _ListboxData;
 typedef struct _ListboxData ListboxData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?releaseBuffer@UnicodeString@@: Code/GameEngine/Source/Common/System/UnicodeString.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) UnicodeString

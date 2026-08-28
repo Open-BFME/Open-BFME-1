@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?addScript@ScriptGroup@@QAEXPAVScript@@H@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Script;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class ScriptGroup
 {
 public:

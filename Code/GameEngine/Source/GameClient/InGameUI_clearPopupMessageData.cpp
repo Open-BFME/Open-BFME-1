@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?clearPopupMessageData@InGameUI@@QAEXXZ: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // Open-BFME: InGameUI::clearPopupMessageData, retail 0x0043B890, 125 bytes.
 //
 // The reference's body line for line, with the one BFME change the tree
@@ -18,6 +19,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
 class WindowLayout
 {
 public:
@@ -32,6 +34,7 @@ public:
 	virtual void destroyWindows(void) = 0;			// slot 8, vtable+0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class PopupMessageData
 {
 public:
@@ -52,6 +55,7 @@ public:
 
 extern BfmeGameLogicPause *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:

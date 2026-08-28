@@ -3,12 +3,14 @@
 
 #include <list>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
 	void initFromINI(void *, const void *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBarScheme.h
 class ControlBarSchemeImage
 {
 public:
@@ -24,6 +26,7 @@ private:
 	friend class ControlBarSchemeManager;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBarScheme.h
 class ControlBarScheme
 {
 private:
@@ -35,6 +38,7 @@ private:
 
 extern const unsigned char g_controlBarSchemeImageFieldParse[];
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBarScheme.h
 class ControlBarSchemeManager
 {
 public:

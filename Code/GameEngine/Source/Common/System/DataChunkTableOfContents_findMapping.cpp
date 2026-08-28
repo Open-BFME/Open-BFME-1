@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?findMapping@DataChunkTableOfContents@@AAEPAVMapping@@ABVAsciiString@@@Z: Code/GameEngine/Source/Common/System/DataChunk.cpp
 
 // DataChunkTableOfContents::findMapping, 0x00103CA0, 126 bytes.
 //
@@ -37,6 +38,7 @@ struct BfmeStringData
 	UnsignedShort m_pad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -58,6 +60,7 @@ public:
 
 inline bool operator==(const AsciiString &a, const AsciiString &b) { return a.compare(b) == 0; }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class Mapping
 {
 public:
@@ -67,6 +70,7 @@ public:
 	UnsignedInt id;						// this+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkTableOfContents
 {
 	Mapping *m_list;					// this+0x00

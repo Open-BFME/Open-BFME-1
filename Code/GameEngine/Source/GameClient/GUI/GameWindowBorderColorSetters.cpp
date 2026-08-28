@@ -25,6 +25,7 @@ enum { WIN_ERR_OK = 0, WIN_ERR_INVALID_PARAMETER = -3 };
 
 class Image;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 struct WinDrawData
 {
 	const Image *image;
@@ -32,6 +33,7 @@ struct WinDrawData
 	Color borderColor;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 class WinInstanceData
 {
 public:
@@ -40,6 +42,7 @@ public:
 	WinDrawData m_hiliteDrawData[ MAX_DRAW_DATA ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:

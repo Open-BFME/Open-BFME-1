@@ -59,6 +59,7 @@ Shell *TheShell = NULL;  ///< the shell singleton definition
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////////////////////////
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/Shell_ctor_Thunk.cpp
 // ??0Shell@@QAE@XZ present-unmatched
 Shell::Shell( void )
 {
@@ -225,6 +226,7 @@ void Shell::update( void )
 //-------------------------------------------------------------------------------------------------
 /** Find a screen via the .wnd script filename loaded */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/Shell/Shell_findScreenByFilename.cpp
 // ?findScreenByFilename@Shell@@QAEPAVWindowLayout@@VAsciiString@@@Z present-unmatched
 WindowLayout *Shell::findScreenByFilename( AsciiString filename )
 {
@@ -251,6 +253,7 @@ WindowLayout *Shell::findScreenByFilename( AsciiString filename )
 //-------------------------------------------------------------------------------------------------
 /** Hide or unhide all window layouts loaded */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Shell_hide.cpp
 // ?hide@Shell@@QAEX_N@Z present-unmatched
 void Shell::hide( Bool hide )
 {
@@ -268,6 +271,8 @@ void Shell::hide( Bool hide )
 //-------------------------------------------------------------------------------------------------
 /** Push layout onto shell */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Shell_push_Thunk.cpp
+// ?push@Shell@@QAEXVAsciiString@@_N@Z present-unmatched
 void Shell::push( AsciiString filename, Bool shutdownImmediate )
 {
 
@@ -463,6 +468,7 @@ void Shell::popImmediate( void )
 	* pushed on the stack, but it's already there (ie going from in game back to the
 	* pre-game shell menus */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/Shell_showShell_Thunk.cpp
 // ?showShell@Shell@@QAEX_N@Z present-unmatched
 void Shell::showShell( Bool runInit )
 {
@@ -527,6 +533,7 @@ void Shell::showShell( Bool runInit )
 	m_isShellActive = TRUE;
 }  // end showShell
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Shell_showShellMapMethodThunk.cpp
 // ?showShellMap@Shell@@QAEX_N@Z present-unmatched
 void Shell::showShellMap(Bool useShellMap )
 {

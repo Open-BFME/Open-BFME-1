@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/Precompiled /ICode/GameEngine/Source/Common/System /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
+// readable body of ?splitSegmentAtT@BezierSegment@@: Code/GameEngine/Source/Common/Bezier/BezierSegment.cpp
 #include <vector>
 /*
 **	Command & Conquer Generals Zero Hour(tm)

@@ -29,6 +29,7 @@ class GameWindow;
 // GWM_CHAR, and KEY_ESC as the vendored headers spell them.
 enum { GWM_CHAR = 0x15, KEY_ESC = 1 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:

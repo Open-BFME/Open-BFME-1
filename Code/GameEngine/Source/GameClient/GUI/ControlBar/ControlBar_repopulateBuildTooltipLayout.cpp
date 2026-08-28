@@ -4,6 +4,7 @@
 // +0x2F4 and +0x278 - both have to be there, and then the work is tail-jumped
 // to, so this function is only the guard.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:

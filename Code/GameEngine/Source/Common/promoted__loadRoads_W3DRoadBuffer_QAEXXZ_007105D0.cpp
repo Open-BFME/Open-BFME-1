@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?loadRoads@W3DRoadBuffer@@QAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp
 // Grok promote from masm_dumps — retail 0x007105D0 size 61
 // was: Code/masm_dumps/W3DRoadBuffer_loadRoads.asm
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DRoadBuffer.h
 class W3DRoadBuffer {
 public:
 	void loadRoadsHelper0(void);

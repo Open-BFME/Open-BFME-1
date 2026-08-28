@@ -23,6 +23,7 @@ struct ComboBoxData
 	GameWindow *m_listBox;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:

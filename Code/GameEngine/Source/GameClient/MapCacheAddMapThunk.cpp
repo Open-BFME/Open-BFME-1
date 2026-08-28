@@ -1,6 +1,8 @@
+// readable body of ?addMap@MapCache@@AAE_NVAsciiString@@0PAUFileInfo@@_N@Z: Code/GameEngine/Source/GameClient/MapUtil.cpp
 class AsciiString {};
 struct FileInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MapUtil.h
 class MapCache
 {
 private:

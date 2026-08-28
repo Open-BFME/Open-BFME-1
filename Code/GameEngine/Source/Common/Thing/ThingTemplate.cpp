@@ -559,6 +559,7 @@ static void parsePrerequisiteScience( INI* ini, void *instance, void * /*store*/
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ThingTemplate_parsePrerequisites_Thunk.cpp
 // ?parsePrerequisites@ThingTemplate@@ present-unmatched
 void ThingTemplate::parsePrerequisites( INI* ini, void *instance, void *store, const void* userData )
 {
@@ -640,6 +641,7 @@ void ThingTemplate::parsePerUnitSounds( INI* ini, void *instance, void *store, c
 //-------------------------------------------------------------------------------------------------
 /** Parse modules to add to the existing set of modules. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ThingTemplate_parseAddModule_Thunk.cpp
 // ?parseAddModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z present-unmatched
 void ThingTemplate::parseAddModule(INI *ini, void *instance, void *store, const void *userData)
 {
@@ -686,6 +688,7 @@ void ThingTemplate::parseRemoveModule(INI *ini, void *instance, void *store, con
 //-------------------------------------------------------------------------------------------------
 /** Replace the existing tagged modules with the new modules. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ThingTemplate_parseReplaceModule_Thunk.cpp
 // ?parseReplaceModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z present-unmatched
 void ThingTemplate::parseReplaceModule(INI *ini, void *instance, void *store, const void *userData)
 {
@@ -793,6 +796,7 @@ Bool ThingTemplate::removeModuleInfo(const AsciiString& moduleToRemove, AsciiStr
 
 //-------------------------------------------------------------------------------------------------
 /// @todo srj -- move this to another file
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ThingTemplate_parseArmorTemplateSet_Thunk.cpp
 // ?parseArmorTemplateSet@ArmorTemplateSet@@ present-unmatched
 void ArmorTemplateSet::parseArmorTemplateSet( INI* ini )
 {
@@ -808,6 +812,7 @@ void ArmorTemplateSet::parseArmorTemplateSet( INI* ini )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ThingTemplate_parseArmorTemplateSet_Thunk.cpp
 // ?parseArmorTemplateSet@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z present-unmatched
 void ThingTemplate::parseArmorTemplateSet( INI* ini, void *instance, void * /*store*/, const void* /*userData*/ )
 {
@@ -1050,6 +1055,7 @@ __declspec(naked) void ThingTemplate::validateAudio()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ThingTemplate_validateMethodThunk.cpp
 // ?validate@ThingTemplate@@QAEXXZ present-unmatched
 void ThingTemplate::validate()
 {
@@ -1146,6 +1152,8 @@ void ThingTemplate::copyFrom(const ThingTemplate* that)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__setCopiedFromDefault_ThingTemplate_QAEXXZ_0013FDB0.cpp
+// ?setCopiedFromDefault@ThingTemplate@@QAEXXZ present-unmatched
 void ThingTemplate::setCopiedFromDefault()
 {
 	m_armorCopiedFromDefault = true;
@@ -1231,6 +1239,7 @@ void ThingTemplate::resolveNames()
 
 //=============================================================================
 #ifdef LOAD_TEST_ASSETS
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Thing/ThingTemplateInitForLTAThunk.cpp
 // ?initForLTA@ThingTemplate@@QAEXABVAsciiString@@@Z present-unmatched
 void ThingTemplate::initForLTA(const AsciiString& name)
 {

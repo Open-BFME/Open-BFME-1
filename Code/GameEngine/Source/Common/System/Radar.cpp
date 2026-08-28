@@ -80,6 +80,7 @@ public:
 //-------------------------------------------------------------------------------------------------
 /** Delete list resources used by the radar and return them to the memory pools */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Radar_deleteListResources.cpp
 // ?deleteListResources@Radar@@IAEXXZ present-unmatched
 void Radar::deleteListResources( void )
 {
@@ -223,6 +224,7 @@ void RadarObject::loadPostProcess( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/RadarCtorThunk.cpp
 // ??0Radar@@QAE@XZ present-unmatched
 Radar::Radar( void )
 {
@@ -251,6 +253,7 @@ Radar::Radar( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RadarDestructorThunk.cpp
 // ??1Radar@@UAE@XZ present-unmatched
 Radar::~Radar( void )
 {
@@ -392,6 +395,7 @@ void Radar::update( void )
 //-------------------------------------------------------------------------------------------------
 /** Reset the radar for the new map data being given to it */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Radar_newMap_Thunk.cpp
 // ?newMap@Radar@@UAEXPAVTerrainLogic@@@Z present-unmatched
 void Radar::newMap( TerrainLogic *terrain )
 {
@@ -616,6 +620,7 @@ void Radar::addObject( Object *obj )
 //-------------------------------------------------------------------------------------------------
 /** Try to delete an object from a specific list */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Radar_deleteFromList.cpp
 // ?deleteFromList@Radar@@IAE_NPAVObject@@PAPAVRadarObject@@@Z present-unmatched
 Bool Radar::deleteFromList( Object *obj, RadarObject **list )
 {
@@ -1271,6 +1276,7 @@ Bool Radar::getLastEventLoc( Coord3D *eventPos )
 	* We don't want to create under attack events every time we are damaged and we also want
 	* to limit them based on time and local area of other recent attack events */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/RadarTryUnderAttackEventThunk.cpp
 // ?tryUnderAttackEvent@Radar@@ present-unmatched
 void Radar::tryUnderAttackEvent( const Object *obj )
 {
@@ -1358,6 +1364,7 @@ void Radar::tryUnderAttackEvent( const Object *obj )
 		This happens whenever a unit is hijacked, defected, converted to carbomb, hacked, or 
 		otherwise snuck into */ 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RadarTryInfiltrationEventThunk.cpp
 // ?tryInfiltrationEvent@Radar@@ present-unmatched
 void Radar::tryInfiltrationEvent( const Object *obj )
 {
@@ -1447,6 +1454,7 @@ Bool Radar::tryEvent( RadarEventType event, const Coord3D *pos )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/RadarRefreshTerrainThunk.cpp
 // ?refreshTerrain@Radar@@UAEXPAVTerrainLogic@@@Z present-unmatched
 void Radar::refreshTerrain( TerrainLogic *terrain )
 {

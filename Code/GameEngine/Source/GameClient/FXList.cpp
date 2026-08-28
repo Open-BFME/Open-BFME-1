@@ -811,6 +811,7 @@ void FXList::clear()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/FXListDoFXPosThunk.cpp
 // ?doFXPos@FXList@@IBEXPBUCoord3D@@PBVMatrix3D@@M0M@Z present-unmatched
 void FXList::doFXPos(const Coord3D *primary, const Matrix3D* primaryMtx, const Real primarySpeed, const Coord3D *secondary, const Real overrideRadius ) const
 {

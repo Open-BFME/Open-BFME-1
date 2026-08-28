@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1ShellMenuScheme@@QAE@XZ: Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) ShellMenuScheme

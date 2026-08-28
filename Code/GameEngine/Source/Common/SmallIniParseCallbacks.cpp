@@ -56,6 +56,7 @@ extern "C" __declspec(dllimport) int __cdecl atoi( const char * );
 extern const LookupListRec TheRva00427670TypeNames[];
 extern Real TheRva001D5F40Scale;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

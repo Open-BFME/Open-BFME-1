@@ -658,6 +658,7 @@ ModuleFactory::~ModuleFactory( void )
 	* to objects or drawables as modules needs to add a template
 	* for that class here */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/module_factory.cpp
 // ?init@ModuleFactory@@UAEXXZ present-unmatched
 void ModuleFactory::init( void )
 {
@@ -905,6 +906,7 @@ void ModuleFactory::init( void )
 }  // end init
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ModuleFactory_findModuleInterfaceMask_Thunk.cpp
 // ?findModuleInterfaceMask@ModuleFactory@@QAEHABVAsciiString@@W4ModuleType@@@Z present-unmatched
 Int ModuleFactory::findModuleInterfaceMask(const AsciiString& name, ModuleType type)
 {

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setText@WinInstanceData@@QAEXVUnicodeString@@@Z: Code/GameEngine/Source/GameClient/GUI/WinInstanceData.cpp
 // Open-BFME5: lift the WinInstanceData::setText MASM dump to clean C++.
 //
 // Same StringBase<unsigned short> friend shim as GameWindow::winSetText: private
@@ -24,6 +25,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>
 {
 public:
@@ -31,6 +33,7 @@ public:
 	~UnicodeString() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayString.h
 class DisplayString
 {
 public:
@@ -38,6 +41,7 @@ public:
 	virtual void setText(UnicodeString text);	///< vtable +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayStringManager.h
 class DisplayStringManager
 {
 public:
@@ -55,6 +59,7 @@ public:
 
 extern DisplayStringManager *TheDisplayStringManager;	///< retail [0x012F12CC]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 class WinInstanceData
 {
 public:

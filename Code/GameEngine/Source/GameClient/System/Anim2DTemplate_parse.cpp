@@ -12,6 +12,7 @@
 
 // The parser pair is kept in its own TU so the neighboring Anim2D.cpp compiler
 // labels stay stable. BFME retains the formatted INIException path in release.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
 class INIException
 {
 public:

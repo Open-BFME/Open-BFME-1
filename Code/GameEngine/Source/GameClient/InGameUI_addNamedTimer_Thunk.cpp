@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?addNamedTimer@InGameUI@@QAEXABVAsciiString@@ABVUnicodeString@@_N@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
 
 #include <map>
 
@@ -8,6 +9,7 @@ typedef float Real;
 typedef unsigned char Bool;
 typedef unsigned int Color;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -39,6 +41,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>
 {
 public:
@@ -52,6 +55,7 @@ public:
 
 class GameFont;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayString.h
 class DisplayString
 {
 public:
@@ -64,6 +68,7 @@ public:
 	virtual void setFont(GameFont *font);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayStringManager.h
 class DisplayStringManager
 {
 public:
@@ -79,6 +84,7 @@ public:
 	Int adjustFontSize(Int pointSize);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameFont.h
 class FontLibrary
 {
 public:
@@ -89,6 +95,7 @@ extern DisplayStringManager *TheDisplayStringManager;
 extern GlobalLanguageData *TheGlobalLanguageData;
 extern FontLibrary *TheFontLibrary;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class NamedTimerInfo
 {
 public:
@@ -116,6 +123,7 @@ struct BfmeInGameUINamedTimerLayout
 	Color m_namedTimerNormalColor;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:

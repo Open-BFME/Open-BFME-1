@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1TerrainLogic@@UAE@XZ: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) TerrainLogic

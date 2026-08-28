@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?translateGameMessage@HotKeyTranslator@@UAE?AW4GameMessageDisposition@@PBVGameMessage@@@Z: Code/GameEngine/Source/GameClient/MessageStream/HotKey.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class GameMessage;
 enum GameMessageDisposition {};
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/HotKey.h
 class HotKeyTranslator
 {
 public:

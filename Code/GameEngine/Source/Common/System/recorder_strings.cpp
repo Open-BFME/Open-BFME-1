@@ -10,6 +10,7 @@ extern "C" __declspec(dllimport) int __cdecl fgetc(FILE *stream);
 extern "C" __declspec(dllimport) unsigned int __cdecl fread(void *buffer, unsigned int size, unsigned int count, FILE *stream);
 extern "C" __declspec(dllimport) int __cdecl fclose(FILE *stream);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString {
 public:
     AsciiString() { base()->StringBase<char>::StringBase(); }
@@ -26,6 +27,7 @@ private:
     StringBase<char>::Header *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString {
 public:
     UnicodeString() { base()->StringBase<wchar_t>::StringBase(); }
@@ -43,6 +45,7 @@ private:
 
 UnicodeString readUnicodeString(FILE *file);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class MessageStream {
 public:
     virtual void v0();
@@ -63,17 +66,20 @@ public:
 
 extern MessageStream *TheMessageStream;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D {
     float x;
     float y;
     float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D {
     int x;
     int y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct IRegion2D {
     ICoord2D lo;
     ICoord2D hi;
@@ -95,6 +101,7 @@ enum GameMessageArgumentDataType {
     ARGUMENTDATATYPE_UNKNOWN
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage {
 public:
     enum Type {
@@ -134,6 +141,7 @@ private:
     void *m_argList;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class CommandList {
 public:
     virtual void v0();
@@ -157,6 +165,7 @@ private:
 
 extern CommandList *TheCommandList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic {
 public:
     unsigned int getFrame() { return m_frame; }
@@ -168,6 +177,7 @@ private:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
 class GameMessageParserArgumentType {
 public:
     virtual ~GameMessageParserArgumentType();
@@ -181,6 +191,7 @@ private:
     int m_argCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
 class GameMessageParser {
 public:
     GameMessageParser();
@@ -195,6 +206,7 @@ private:
     int m_argTypeCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass {
 public:
     void stopPlayback();

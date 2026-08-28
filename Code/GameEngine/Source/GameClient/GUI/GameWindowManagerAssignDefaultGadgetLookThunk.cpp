@@ -1,3 +1,4 @@
+// readable body of ?assignDefaultGadgetLook@GameWindowManager@@: Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp
 // Exact corrected retail bytes for GameWindowManager::assignDefaultGadgetLook at 0x004800FC.
 // Kept separate so GameWindowManager.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_GameWindowManager_assignDefaultGadgetLook_4800FC()

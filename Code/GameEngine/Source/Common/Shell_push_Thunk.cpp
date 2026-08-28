@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?push@Shell@@QAEXVAsciiString@@_N@Z: Code/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp
 // Open-BFME5: clean C++ reconstruction of the shell layout push path.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 struct AsciiStringData
 {
 	unsigned short m_refCount;
@@ -8,6 +10,7 @@ struct AsciiStringData
 	unsigned short m_length;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -18,6 +21,7 @@ private:
 	AsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
 class WindowLayout
 {
 public:
@@ -32,6 +36,7 @@ public:
 extern void *TheGameSpyInfo;
 void GameSpyCloseAllOverlays();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
 class Shell
 {
 public:

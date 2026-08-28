@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?showShellMap@Shell@@QAEX_N@Z: Code/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class __declspec(novtable) Shell

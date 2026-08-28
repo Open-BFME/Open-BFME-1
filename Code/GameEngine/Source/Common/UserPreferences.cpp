@@ -159,6 +159,7 @@ UserPreferences::UserPreferences( void )
 {
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/UserPreferencesDestructorThunk.cpp
 // ??1UserPreferences@@UAE@XZ present-unmatched
 UserPreferences::~UserPreferences( void )
 {
@@ -224,6 +225,7 @@ AsciiString UserPreferences::getAsciiString(AsciiString key, AsciiString default
 	return it->second;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SkirmishBattleHonorsLoyalGames.cpp
 // ?setBool@UserPreferences@@QAEXVAsciiString@@_N@Z present-unmatched
 void UserPreferences::setBool(AsciiString key, Bool val)
 {
@@ -235,6 +237,7 @@ void UserPreferences::setReal(AsciiString key, Real val)
 	reinterpret_cast<BfmeUserPreferencesVirtualView *>( this )->setAsciiString( key, realAsStr( val ) );
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SkirmishBattleHonorsLoyalGames.cpp
 // ?setInt@UserPreferences@@QAEXVAsciiString@@H@Z present-unmatched
 void UserPreferences::setInt(AsciiString key, Int val)
 {
@@ -306,6 +309,7 @@ AsciiString QuickMatchPreferences::getLastLadderAddr( void )
 	return it->second;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/QuickMatchPreferencesGetters.cpp
 // ?getLastLadderPort@QuickMatchPreferences@@QAEGXZ present-unmatched
 UnsignedShort QuickMatchPreferences::getLastLadderPort( void )
 {
@@ -324,6 +328,7 @@ void QuickMatchPreferences::setMaxDisconnects(Int val)
 	(*this)["MaxDisconnects"] = strVal;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/QuickMatchPreferences_getMaxDisconnects_Thunk.cpp
 // ?getMaxDisconnects@QuickMatchPreferences@@QAEHXZ present-unmatched
 Int QuickMatchPreferences::getMaxDisconnects( void )
 {
@@ -342,6 +347,7 @@ void QuickMatchPreferences::setMaxPoints(Int val)
 	(*this)["MaxPoints"] = strVal;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getMaxPoints_QuickMatchPreferences_QAEHXZ_000ABF80.cpp
 // ?getMaxPoints@QuickMatchPreferences@@QAEHXZ present-unmatched
 Int QuickMatchPreferences::getMaxPoints( void )
 {
@@ -360,6 +366,7 @@ void QuickMatchPreferences::setMinPoints(Int val)
 	(*this)["MinPoints"] = strVal;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getMinPoints_QuickMatchPreferences_QAEHXZ_000ABFF0.cpp
 // ?getMinPoints@QuickMatchPreferences@@QAEHXZ present-unmatched
 Int QuickMatchPreferences::getMinPoints( void )
 {
@@ -378,6 +385,7 @@ void QuickMatchPreferences::setWaitTime(Int val)
 	(*this)["WaitTime"] = strVal;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getWaitTime_QuickMatchPreferences_QAEHXZ_000AC060.cpp
 // ?getWaitTime@QuickMatchPreferences@@QAEHXZ present-unmatched
 Int QuickMatchPreferences::getWaitTime( void )
 {
@@ -396,6 +404,7 @@ void QuickMatchPreferences::setNumPlayers(Int val)
 	(*this)["NumPlayers"] = strVal;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getNumPlayers_QuickMatchPreferences_QAEHXZ_000AC0D0.cpp
 // ?getNumPlayers@QuickMatchPreferences@@QAEHXZ present-unmatched
 Int QuickMatchPreferences::getNumPlayers( void )
 {
@@ -414,6 +423,7 @@ void QuickMatchPreferences::setMaxPing(Int val)
 	(*this)["MaxPing"] = strVal;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getMaxPing_QuickMatchPreferences_QAEHXZ_000AC140.cpp
 // ?getMaxPing@QuickMatchPreferences@@QAEHXZ present-unmatched
 Int QuickMatchPreferences::getMaxPing( void )
 {
@@ -506,6 +516,7 @@ void CustomMatchPreferences::setLastLadder(const AsciiString& addr, UnsignedShor
 	(*this)["LastLadderPort"] = strVal;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/CustomMatchPreferences_getLastLadderAddr_Thunk.cpp
 // ?getLastLadderAddr@CustomMatchPreferences@@QAE?AVAsciiString@@XZ present-unmatched
 AsciiString CustomMatchPreferences::getLastLadderAddr( void )
 {
@@ -517,6 +528,7 @@ AsciiString CustomMatchPreferences::getLastLadderAddr( void )
 	return it->second;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/QuickMatchPreferencesGetters.cpp
 // ?getLastLadderPort@CustomMatchPreferences@@QAEGXZ present-unmatched
 UnsignedShort CustomMatchPreferences::getLastLadderPort( void )
 {
@@ -528,6 +540,8 @@ UnsignedShort CustomMatchPreferences::getLastLadderPort( void )
 	return atoi(it->second.str());
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getPreferredColor_CustomMatchPreferences_QAEHXZ_000AC2A0.cpp
+// ?getPreferredColor@CustomMatchPreferences@@QAEHXZ present-unmatched
 Int CustomMatchPreferences::getPreferredColor(void)
 {
 	Int ret;
@@ -544,6 +558,7 @@ Int CustomMatchPreferences::getPreferredColor(void)
 	return ret;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/CustomMatchPreferences_setPreferredColor_Thunk.cpp
 // ?setPreferredColor@CustomMatchPreferences@@QAEXH@Z present-unmatched
 void CustomMatchPreferences::setPreferredColor(Int val)
 {
@@ -552,6 +567,8 @@ void CustomMatchPreferences::setPreferredColor(Int val)
 	(*this)["Color"] = s;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getChatSizeSlider_CustomMatchPreferences_QAEHXZ_000AC330.cpp
+// ?getChatSizeSlider@CustomMatchPreferences@@QAEHXZ present-unmatched
 Int CustomMatchPreferences::getChatSizeSlider(void)
 {
 	Int ret;
@@ -575,6 +592,8 @@ void CustomMatchPreferences::setChatSizeSlider(Int val)
 	(*this)["ChatSlider"] = s;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/CustomMatchPreferences_getPreferredFaction_Thunk.cpp
+// ?getPreferredFaction@CustomMatchPreferences@@QAEHXZ present-unmatched
 Int CustomMatchPreferences::getPreferredFaction(void)
 {
 	Int ret;
@@ -619,6 +638,8 @@ void CustomMatchPreferences::setPreferredFaction(Int val)
 	(*this)["PlayerTemplate"] = s;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__usesSystemMapDir_CustomMatchPreferences_QAE_NXZ_000AC480.cpp
+// ?usesSystemMapDir@CustomMatchPreferences@@QAE_NXZ present-unmatched
 Bool CustomMatchPreferences::usesSystemMapDir(void)
 {
 	CustomMatchPreferences::const_iterator it = find("UseSystemMapDir");
@@ -658,6 +679,8 @@ void CustomMatchPreferences::setUsesLongGameList(Bool val)
 	(*this)["UseLongGameList"] = s;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__allowsObservers_CustomMatchPreferences_QAE_NXZ_000AC510.cpp
+// ?allowsObservers@CustomMatchPreferences@@QAE_NXZ present-unmatched
 Bool CustomMatchPreferences::allowsObservers(void)
 {
 	CustomMatchPreferences::const_iterator it = find("AllowObservers");
@@ -677,6 +700,8 @@ void CustomMatchPreferences::setAllowsObserver(Bool val)
 	(*this)["AllowObservers"] = s;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getDisallowAsianText_CustomMatchPreferences_QAE_NXZ_000AC590.cpp
+// ?getDisallowAsianText@CustomMatchPreferences@@QAE_NXZ present-unmatched
 Bool CustomMatchPreferences::getDisallowAsianText( void )
 {
 	CustomMatchPreferences::const_iterator it = find("DisallowAsianText");
@@ -696,6 +721,7 @@ Bool CustomMatchPreferences::getDisallowAsianText( void )
 	return FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/CustomMatchPreferences_setPreferredColor_Thunk.cpp
 // ?setDisallowAsianText@CustomMatchPreferences@@QAEX_N@Z present-unmatched
 void CustomMatchPreferences::setDisallowAsianText(Bool val)
 {
@@ -705,6 +731,8 @@ void CustomMatchPreferences::setDisallowAsianText(Bool val)
 
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getDisallowNonAsianText_CustomMatchPreferences_QAE_NXZ_000AC610.cpp
+// ?getDisallowNonAsianText@CustomMatchPreferences@@QAE_NXZ present-unmatched
 Bool CustomMatchPreferences::getDisallowNonAsianText( void )
 {
 	CustomMatchPreferences::const_iterator it = find("DisallowNonAsianText");
@@ -724,6 +752,7 @@ void CustomMatchPreferences::setDisallowNonAsianText( Bool val )
 	(*this)["DisallowNonAsianText"] = s;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/CustomMatchPreferences_getPreferredMap_Thunk.cpp
 // ?getPreferredMap@CustomMatchPreferences@@QAE?AVAsciiString@@XZ present-unmatched
 AsciiString CustomMatchPreferences::getPreferredMap(void)
 {
@@ -942,11 +971,15 @@ __declspec(naked) void GameSpyMiscPreferences::setLocale( Int )
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameSpyMiscPreferences_getCachedStats_Thunk.cpp
+// ?getCachedStats@GameSpyMiscPreferences@@QAE?AVAsciiString@@XZ present-unmatched
 AsciiString GameSpyMiscPreferences::getCachedStats( void )
 {
 	return getAsciiString("CachedStats", AsciiString::TheEmptyString);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameSpyMiscPreferences_setCachedStats_Thunk.cpp
+// ?setCachedStats@GameSpyMiscPreferences@@QAEXVAsciiString@@@Z present-unmatched
 void GameSpyMiscPreferences::setCachedStats( AsciiString val )
 {
 	setAsciiString("CachedStats", val);

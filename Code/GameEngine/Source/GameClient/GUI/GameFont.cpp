@@ -107,6 +107,7 @@ void FontLibrary::unlinkFont( GameFont *font )
 //-------------------------------------------------------------------------------------------------
 /** Delete all font data, DO NOT throw an exception ... the destructor uses this */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/FontLibrary_deleteAllFonts.cpp
 // ?deleteAllFonts@FontLibrary@@IAEXXZ present-unmatched
 void FontLibrary::deleteAllFonts( void )
 {

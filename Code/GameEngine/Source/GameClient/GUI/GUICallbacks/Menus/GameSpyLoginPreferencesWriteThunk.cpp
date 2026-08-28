@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?write@GameSpyLoginPreferences@@UAE_NXZ: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLoginMenu.cpp
 // Open-BFME5: lift the exact retail GameSpyLoginPreferences::write MASM body.
 
 class GameSpyLoginPreferences

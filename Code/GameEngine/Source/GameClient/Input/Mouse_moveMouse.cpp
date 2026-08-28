@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?moveMouse@Mouse@@: Code/GameEngine/Source/GameClient/Input/Mouse.cpp
 // Open-BFME: Mouse::moveMouse, retail 0x005A4230, 129 bytes.
 //
 // The reference's body unchanged, and it pins six offsets on the way past:
@@ -15,12 +16,14 @@ typedef bool Bool;
 
 enum { MOUSE_MOVE_RELATIVE = 0, MOUSE_MOVE_ABSOLUTE };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
 	Int y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Mouse.h
 struct MouseIO
 {
 	ICoord2D pos;

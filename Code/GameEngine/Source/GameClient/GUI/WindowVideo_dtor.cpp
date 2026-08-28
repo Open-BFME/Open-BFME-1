@@ -20,6 +20,7 @@ typedef bool Bool;
 
 class VideoBuffer;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -29,18 +30,21 @@ private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 class WinInstanceData
 {
 public:
 	void setVideoBuffer(VideoBuffer *videoBuffer);		// ILT 0x0002E073
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
 	WinInstanceData *winGetInstanceData(void);		// ILT 0x00034991
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/VideoPlayer.h
 class VideoBuffer
 {
 public:
@@ -54,6 +58,7 @@ public:
 	virtual void free(void) = 0;				// slot 7, vtable+0x1C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowVideoManager.h
 class WindowVideo
 {
 public:

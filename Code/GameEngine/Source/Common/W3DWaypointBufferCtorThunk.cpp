@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0W3DWaypointBuffer@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3dWaypointBuffer.cpp
 // Open-BFME5: lift the retail W3DWaypointBuffer constructor MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_W3DWaypointBufferCtor_7468B0()

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Unregister@SimpleSceneClass@@UAEXPAVRenderObjClass@@W4RegType@SceneClass@@@Z: Code/Libraries/Source/WWVegas/WW3D2/scene.cpp
 
 // Five-case switch on RegType, each arm removing the object from one scene list.
 // The lists are 24 bytes each and contiguous from +0x5C, which the Add and Remove
@@ -12,6 +13,7 @@
 // plain one whose Remove is.
 class RenderObjClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListObjectClass
 {
 public:
@@ -19,6 +21,7 @@ public:
 	void *m_next;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class GenericMultiListClass
 {
 protected:
@@ -29,6 +32,7 @@ private:
 };
 
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListClass : public GenericMultiListClass
 {
 public:
@@ -36,6 +40,7 @@ public:
 };
 
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class RefMultiListClass : public MultiListClass<T>
 {
 public:
@@ -53,12 +58,14 @@ class RenderObjClass : public RenderObjBase, public MultiListObjectClass
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SceneClass
 {
 public:
 	enum RegType { };
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SimpleSceneClass
 {
 public:

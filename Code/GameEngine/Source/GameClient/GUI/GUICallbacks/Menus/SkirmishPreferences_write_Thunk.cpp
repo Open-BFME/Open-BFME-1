@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?write@SkirmishPreferences@@: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenu.cpp
 // Open-BFME5: lift the exact retail SkirmishPreferences::write body to C++.
 
 // ?write@SkirmishPreferences@@

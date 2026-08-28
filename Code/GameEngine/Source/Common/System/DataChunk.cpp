@@ -87,6 +87,7 @@ CachedFileInputStream::~CachedFileInputStream(void)
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/CachedFileInputStream_open_Thunk.cpp
 // ?open@CachedFileInputStream@@QAE_NVAsciiString@@@Z present-unmatched
 Bool CachedFileInputStream::open(AsciiString path)
 {
@@ -265,6 +266,7 @@ Bool FileInputStream::eof(void)
 	return(true);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/FileInputStreamRewindThunk.cpp
 // ?rewind@FileInputStream@@ present-unmatched
 void FileInputStream::rewind()
 {
@@ -283,6 +285,7 @@ void FileInputStream::rewind()
 
 #define TEMP_FILENAME		"_tmpChunk.dat"
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/DataChunkOutputCtorThunk.cpp
 // ??0DataChunkOutput@@QAE@PAVOutputStream@@@Z present-unmatched
 DataChunkOutput::DataChunkOutput( OutputStream *pOut ) :  
 m_pOut(pOut)
@@ -325,6 +328,7 @@ DataChunkOutput::~DataChunkOutput()
 	::fclose(m_tmp_file);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/DataChunkOutputOpenDataChunkBody.cpp
 // ?openDataChunk@DataChunkOutput@@QAEXPADG@Z present-unmatched
 void DataChunkOutput::openDataChunk( char *name, DataChunkVersionType ver )
 {
@@ -376,6 +380,7 @@ void DataChunkOutput::writeArrayOfBytes(char *ptr, Int len)
 	::fwrite( (const char *)ptr, 1, len , m_tmp_file ); 
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/DataChunkOutput_writeAsciiString.cpp
 // ?writeAsciiString@DataChunkOutput@@QAEXABVAsciiString@@@Z present-unmatched
 void DataChunkOutput::writeAsciiString( const AsciiString& theString ) 
 { 
@@ -438,6 +443,7 @@ DataChunkTableOfContents::~DataChunkTableOfContents()
 }
 
 // return mapping data
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/DataChunkTableOfContents_findMapping.cpp
 // ?findMapping@DataChunkTableOfContents@@AAEPAVMapping@@ABVAsciiString@@@Z present-unmatched
 Mapping *DataChunkTableOfContents::findMapping( const AsciiString& name )
 {
@@ -477,6 +483,7 @@ AsciiString DataChunkTableOfContents::getName( UnsignedInt id )
 }
 
 // create new ID for given name or return existing mapping
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/DataChunkTableOfContents_allocateID.cpp
 // ?allocateID@DataChunkTableOfContents@@QAEIABVAsciiString@@@Z present-unmatched
 UnsignedInt DataChunkTableOfContents::allocateID(const AsciiString& name )
 {
@@ -582,6 +589,7 @@ void DataChunkTableOfContents::read( ChunkInputStream &s)
 //----------------------------------------------------------------------
 // DataChunkInput
 //----------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/DataChunkInputCtorThunk.cpp
 // ??0DataChunkInput@@QAE@PAVChunkInputStream@@@Z present-unmatched
 DataChunkInput::DataChunkInput( ChunkInputStream *pStream ) : m_file( pStream ), 
 																										m_userData(NULL), 
@@ -662,6 +670,7 @@ Bool DataChunkInput::isValidFileType(void)
 	return m_contents.isOpenedForRead();
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DataChunkInput_openDataChunk_Thunk.cpp
 // ?openDataChunk@DataChunkInput@@QAE?AVAsciiString@@PAG@Z present-unmatched
 AsciiString DataChunkInput::openDataChunk(DataChunkVersionType *ver )
 {
@@ -838,6 +847,7 @@ void DataChunkInput::readArrayOfBytes(char *ptr, Int len)
 	decrementDataLeft( len );
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/DataChunkInput_readNameKey_Thunk.cpp
 // ?readNameKey@DataChunkInput@@QAE?AW4NameKeyType@@XZ present-unmatched
 NameKeyType DataChunkInput::readNameKey(void)
 {

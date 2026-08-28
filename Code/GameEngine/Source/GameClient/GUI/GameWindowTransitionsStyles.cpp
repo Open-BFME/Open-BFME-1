@@ -857,6 +857,7 @@ void ScaleUpTransition::skip( void )
 
 //-----------------------------------------------------------------------------
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp
 // ??0ScoreScaleUpTransition@@QAE@XZ present-unmatched
 ScoreScaleUpTransition::ScoreScaleUpTransition ( void )
 {
@@ -1000,6 +1001,7 @@ MainMenuScaleUpTransition::~MainMenuScaleUpTransition( void )
 	m_win = NULL;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/MainMenuScaleUpTransition_init_Thunk.cpp
 // ?init@MainMenuScaleUpTransition@@UAEXPAVGameWindow@@@Z present-unmatched
 void MainMenuScaleUpTransition::init( GameWindow *win )
 {
@@ -1029,6 +1031,7 @@ void MainMenuScaleUpTransition::init( GameWindow *win )
 	
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/MainMenuScaleUpTransition_updateMethodThunk.cpp
 // ?update@MainMenuScaleUpTransition@@UAEXH@Z present-unmatched
 void MainMenuScaleUpTransition::update( Int frame )
 {
@@ -1124,6 +1127,7 @@ MainMenuMediumScaleUpTransition::~MainMenuMediumScaleUpTransition( void )
 	m_win = NULL;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/MainMenuMediumScaleUpTransition_init_Thunk.cpp
 // ?init@MainMenuMediumScaleUpTransition@@UAEXPAVGameWindow@@@Z present-unmatched
 void MainMenuMediumScaleUpTransition::init( GameWindow *win )
 {
@@ -1155,6 +1159,7 @@ void MainMenuMediumScaleUpTransition::init( GameWindow *win )
 	
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/MainMenuMediumScaleUpTransition_updateMethodThunk.cpp
 // ?update@MainMenuMediumScaleUpTransition@@UAEXH@Z present-unmatched
 void MainMenuMediumScaleUpTransition::update( Int frame )
 {
@@ -1249,6 +1254,7 @@ MainMenuSmallScaleDownTransition::~MainMenuSmallScaleDownTransition( void )
 	m_win = NULL;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransitionInit.cpp
 // ?init@MainMenuSmallScaleDownTransition@@UAEXPAVGameWindow@@@Z present-unmatched
 void MainMenuSmallScaleDownTransition::init( GameWindow *win )
 {
@@ -1362,6 +1368,7 @@ TextTypeTransition::TextTypeTransition ( void )
 	m_dStr = NULL;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TextTypeTransitionDestructorThunk.cpp
 // ??1TextTypeTransition@@UAE@XZ present-unmatched
 TextTypeTransition::~TextTypeTransition( void )
 {
@@ -1371,6 +1378,7 @@ TextTypeTransition::~TextTypeTransition( void )
 	m_dStr = NULL;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/TextTypeTransition_init_Thunk.cpp
 // ?init@TextTypeTransition@@UAEXPAVGameWindow@@@Z present-unmatched
 void TextTypeTransition::init( GameWindow *win )
 {
@@ -1480,6 +1488,7 @@ CountUpTransition::CountUpTransition ( void )
 
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/CountUpTransitionDestructorThunk.cpp
 // ??1CountUpTransition@@UAE@XZ present-unmatched
 CountUpTransition::~CountUpTransition( void )
 {
@@ -1784,6 +1793,7 @@ void ControlBarArrowTransition::reverse( void )
 	m_isForward = FALSE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp
 // ?draw@ControlBarArrowTransition@@UAEXXZ present-unmatched
 void ControlBarArrowTransition::draw( void )
 {

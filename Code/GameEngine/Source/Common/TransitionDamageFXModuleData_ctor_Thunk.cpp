@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0TransitionDamageFXModuleData@@: Code/GameEngine/Source/GameLogic/Object/Damage/TransitionDamageFX.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class TransitionDamageFXModuleData { public: TransitionDamageFXModuleData(); };

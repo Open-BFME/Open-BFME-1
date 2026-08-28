@@ -171,6 +171,7 @@ void XferSave::close( void )
 	* location of this beginBlock.  The current file position will then return to the location
 	* at which endBlock was called */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/XferSaveBeginBlockThunk.cpp
 // ?beginBlock@XferSave@@ present-unmatched
 Int XferSave::beginBlock( void )
 {

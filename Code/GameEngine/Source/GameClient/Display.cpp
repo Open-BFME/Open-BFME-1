@@ -105,6 +105,7 @@ Display::Display()
 /**
  * Destructor for the Display.  Destroy all views attached to it.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DisplayDestructorThunk.cpp
 // ??1Display@@UAE@XZ present-unmatched
 Display::~Display()
 {
@@ -178,6 +179,7 @@ void Display::draw( void )
 }
 
 /** Sets screen resolution/mode*/
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Display_setDisplayMode_Thunk.cpp
 // ?setDisplayMode@Display@@UAE_NIII_N@Z present-unmatched
 Bool Display::setDisplayMode( UnsignedInt xres, UnsignedInt yres, UnsignedInt bitdepth, Bool windowed )
 {

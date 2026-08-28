@@ -1,5 +1,36 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/gamewindow /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
+// readable body of ?winClearStatus@GameWindow@@QAEII@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetChild@GameWindow@@QAEPAV1@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetEnabledTextBorderColor@GameWindow@@QAEHXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetInstanceData@GameWindow@@QAEPAVWinInstanceData@@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetLayout@GameWindow@@QAEPAVWindowLayout@@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetNext@GameWindow@@QAEPAV1@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetNextInLayout@GameWindow@@QAEPAV1@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetOwner@GameWindow@@QAEPAV1@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetParent@GameWindow@@QAEPAV1@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetPrev@GameWindow@@QAEPAV1@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetPrevInLayout@GameWindow@@QAEPAV1@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetScreenPosition@GameWindow@@QAEHPAH0@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetSize@GameWindow@@QAEHPAH0@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetStatus@GameWindow@@QAEIXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetStyle@GameWindow@@QAEIXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetUserData@GameWindow@@QAEPAXXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winGetWindowId@GameWindow@@QAEHXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winIsHidden@GameWindow@@QAE_NXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winNextTab@GameWindow@@QAEHXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winPrevTab@GameWindow@@QAEHXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winSetDisabledImage@GameWindow@@QAEHHPBVImage@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winSetDisabledTextColors@GameWindow@@QAEXHH@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winSetEnabledImage@GameWindow@@QAEHHPBVImage@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winSetEnabledTextColors@GameWindow@@QAEXHH@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winSetHiliteImage@GameWindow@@QAEHHPBVImage@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winSetHiliteTextColors@GameWindow@@QAEXHH@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winSetIMECompositeTextColors@GameWindow@@QAEXHH@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winSetPrev@GameWindow@@QAEXPAV1@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winSetSize@GameWindow@@QAEHHH@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winSetTooltipFunc@GameWindow@@QAEHP6AXPAV1@PAVWinInstanceData@@I@Z@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
+// readable body of ?winSetUserData@GameWindow@@QAEXPAX@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 //
 // GameWindow field accessors, byte-matched against the reconstructed BFME
 // GameWindow layout (reference/shims/gamewindow/GameClient/GameWindow.h). These

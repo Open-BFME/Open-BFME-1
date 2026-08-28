@@ -1,3 +1,4 @@
+// readable body of ?initForLTA@ThingTemplate@@QAEXABVAsciiString@@@Z: Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp
 // Exact retail bytes for ?initForLTA@ThingTemplate@@QAEXABVAsciiString@@@Z at 0x00147F10.
 extern "C" __declspec(naked) void bfme_ThingTemplate_initForLTA_147F10()
 {

@@ -17,6 +17,7 @@ class WFS_Iface1 { public: virtual void slot(); };
 class WFS_Iface2 { public: virtual void slot(); private: unsigned char m_pad[0xC]; };
 class WFS_Iface3 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
 class SpecialAbilityUpdate : public WFS_RootBase, public WFS_Iface1, public WFS_Iface2, public WFS_Iface3
 {
 public:

@@ -107,6 +107,7 @@ void selectObjectOfType( Object* obj, void* selectObjectsInfo )
 /** Process a button transition message from the window system that should be for one of
 	* our GUI commands */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarProcessCommandTransitionUIThunk.cpp
 // ?processCommandTransitionUI@ControlBar@@ present-unmatched
 CBCommandStatus ControlBar::processCommandTransitionUI( GameWindow *control, GadgetGameMessage gadgetMessage )
 {

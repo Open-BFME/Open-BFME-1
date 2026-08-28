@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?calcPhysicsXform@Drawable@@IAE_NAAUPhysicsXformInfo@1@@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 // Lift the Drawable::calcPhysicsXform naked dump to clean C++.
 //
 // Zero Hour's Drawable.cpp body without the trailing denormal-clamping hotfix,
@@ -51,6 +52,7 @@ public:
 	LocomotorOverridable *m_nextOverride;						///< retail this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class Locomotor : public LocomotorOverridable
 {
 public:
@@ -69,6 +71,7 @@ private:
 	LocomotorAppearance m_appearance;					///< retail this+0x70
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -79,6 +82,7 @@ private:
 	Locomotor *m_curLocomotor;							///< retail this+0x1CC
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -89,9 +93,11 @@ private:
 	AIUpdateInterface *m_ai;							///< retail this+0x204
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 	struct PhysicsXformInfo
 	{
 		float m_totalPitch;

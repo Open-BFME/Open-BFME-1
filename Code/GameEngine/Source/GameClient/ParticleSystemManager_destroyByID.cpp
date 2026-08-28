@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z: Code/GameEngine/Source/GameClient/System/ParticleSys.cpp
 // Open-BFME: ParticleSystemManager::destroyParticleSystemByID, retail
 // 0x005C3C10, 84 bytes.
 //
@@ -14,6 +15,7 @@ typedef bool Bool;
 
 enum ParticleSystemID { INVALID_PARTICLE_SYSTEM_ID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 class ParticleSystem
 {
 public:
@@ -34,6 +36,7 @@ private:
 	char m_bfme_tail[8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 class ParticleSystemManager
 {
 public:

@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?killThemKillThemAll@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@@Z: Code/GameEngine/Source/GameClient/MessageStream/SelectionXlat.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Drawable;
 class GameMessage;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/SelectionXlat.h
 class SelectionTranslator {
 private:
 	bool killThemKillThemAll(Drawable *, GameMessage *);

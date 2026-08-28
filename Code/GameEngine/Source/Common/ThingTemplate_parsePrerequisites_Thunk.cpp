@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
+// readable body of ?parsePrerequisites@ThingTemplate@@: Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp
 // Open-BFME5: clean C++ for ThingTemplate::parsePrerequisites.
 // Retail keeps instance in esi and INI in edi; CREATE_OVERRIDES (load-type
 // at +8) erases m_prereqInfo [begin,end] at +0x2C4 via thiscall erase.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -23,6 +25,7 @@ public:
 	void *m_end;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
 protected:
@@ -31,6 +34,7 @@ protected:
 
 enum { INI_LOAD_CREATE_OVERRIDES = 2 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 struct FieldParse
 {
 	const char *name;

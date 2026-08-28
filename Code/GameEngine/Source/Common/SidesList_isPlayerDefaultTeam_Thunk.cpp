@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?isPlayerDefaultTeam@SidesList@@QAE_NPAVTeamsInfo@@@Z: Code/GameEngine/Source/GameLogic/Map/SidesList.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class TeamsInfo;

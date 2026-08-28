@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?allocateID@DataChunkTableOfContents@@QAEIABVAsciiString@@@Z: Code/GameEngine/Source/Common/System/DataChunk.cpp
 
 // DataChunkTableOfContents::allocateID, 0x00103D60, 100 bytes.
 //
@@ -29,6 +30,7 @@ struct BfmeStringData
 	UnsignedShort m_pad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -39,6 +41,7 @@ public:
 	BfmeStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class Mapping
 {
 public:
@@ -49,6 +52,7 @@ public:
 	UnsignedInt id;						// this+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkTableOfContents
 {
 public:

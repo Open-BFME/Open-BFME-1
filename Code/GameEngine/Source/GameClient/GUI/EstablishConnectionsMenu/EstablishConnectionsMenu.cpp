@@ -98,6 +98,7 @@ void EstablishConnectionsMenu::initMenu() {
 /**
  Close down the menu
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/EstablishConnectionsMenu/EstablishConnectionsMenuEndMenuThunk.cpp
 // ?endMenu@EstablishConnectionsMenu@@ present-unmatched
 void EstablishConnectionsMenu::endMenu() {
 	HideEstablishConnectionsWindow();

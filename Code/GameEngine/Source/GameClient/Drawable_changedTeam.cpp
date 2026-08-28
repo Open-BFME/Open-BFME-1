@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?changedTeam@Drawable@@QAEXXZ: Code/GameEngine/Source/GameClient/Drawable.cpp
 // Open-BFME: Drawable::changedTeam, retail 0x00418830, 57 bytes.
 //
 // The reference's first block, unchanged: pick the night or the day indicator
@@ -29,6 +30,7 @@ enum TimeOfDay
 	TIME_OF_DAY_COUNT
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -39,6 +41,7 @@ private:
 	unsigned char m_unmodelled_000[4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -48,6 +51,7 @@ public:
 
 extern GlobalData *TheGlobalData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:

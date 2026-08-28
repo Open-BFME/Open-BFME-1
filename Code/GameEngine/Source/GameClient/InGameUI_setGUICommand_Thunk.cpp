@@ -1,14 +1,17 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setGUICommand@InGameUI@@UAEXPBVCommandButton@@@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // Open-BFME5: recovered command-selection logic with the BFME retail ABI.
 
 enum RecorderModeType { RECORDER_MODE_PLAYBACK = 1 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass
 {
 public:
 	RecorderModeType getMode();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class CommandButton
 {
 public:
@@ -43,6 +46,7 @@ private:
 	int m_mouseCursor;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?canUseSpecialPower@SpecialPowerStore@@: Code/GameEngine/Source/Common/RTS/SpecialPower.cpp
 // Lift the SpecialPowerStore::canUseSpecialPower naked dump to clean C++.
 //
 // Zero Hour's SpecialPower.cpp body plus one BFME addition: where ZH ends with
@@ -30,6 +31,7 @@ class SpecialPowerModuleInterface;
 
 enum ScienceType { SCIENCE_INVALID = -1 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -41,6 +43,7 @@ public:
 	Overridable *m_nextOverride;						///< retail this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -52,6 +55,7 @@ public:
 	unsigned char _bfme_allowsSpecialPower(const SpecialPowerTemplate *tmpl);	///< ILT thunk at 0x0000226B
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
 class SpecialPowerTemplate : public Overridable
 {
 public:
@@ -75,6 +79,7 @@ private:
 	ScienceType m_requiredScience;						///< retail this+0x1C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -82,6 +87,7 @@ public:
 	Player *getControllingPlayer(void) const;			///< ILT thunk at 0x00020824
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
 class SpecialPowerStore
 {
 public:

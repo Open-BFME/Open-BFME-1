@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?doNamedUseCommandButtonAbility@ScriptActions@@IAEXABVAsciiString@@0@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // Open-BFME5: lift the ScriptActions::doNamedUseCommandButtonAbility MASM dump
 // to clean C++. Zero Hour's body is ScriptActions.cpp:4257 and BFME kept it,
 // except doCommandButton takes a third argument here, always zero.
@@ -14,6 +15,7 @@ class CommandButton;
 class CommandSet;
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 struct AsciiStringData
 {
 	unsigned short m_refCount;
@@ -27,6 +29,7 @@ public:
 	int compare(const AsciiString &other) const;	///< ILT 0x000220C5
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -40,6 +43,7 @@ public:
 	AsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class CommandButton
 {
 public:
@@ -55,6 +59,7 @@ public:
 	const CommandButton *getCommandButton(int index) const;	///< ILT 0x00003F80
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class CommandSet
 {
 public:
@@ -64,6 +69,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -71,12 +77,14 @@ public:
 	void doCommandButton(const CommandButton *button, int source, int extra);	///< ILT 0x000063CF
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:
 	const CommandSet *findCommandSet(const AsciiString &name);	///< ILT 0x00048CCA
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -112,6 +120,7 @@ public:
 extern ControlBar *TheControlBar;			///< retail [0x012F33F8]
 extern ScriptEngine *TheScriptEngine;		///< retail [0x012F076C]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

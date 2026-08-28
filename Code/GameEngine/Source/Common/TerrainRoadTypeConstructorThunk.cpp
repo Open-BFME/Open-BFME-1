@@ -16,6 +16,7 @@ typedef bool Bool;
 
 enum { BRIDGE_MAX_TOWERS = 4, MAX_BRIDGE_BODY_FX = 3, BODYDAMAGETYPE_COUNT = 4 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor
 {
 	Real red;
@@ -23,6 +24,7 @@ struct RGBColor
 	Real blue;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameMemory.h
 class MemoryPoolObject
 {
 public:
@@ -31,6 +33,7 @@ public:
 	virtual void anchor();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/TerrainRoads.h
 class TerrainRoadType : public MemoryPoolObject
 {
 public:

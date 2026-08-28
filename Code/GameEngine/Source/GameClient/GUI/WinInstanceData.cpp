@@ -102,6 +102,7 @@ WinInstanceData::~WinInstanceData( void )
 // WinInstanceData::init ======================================================
 /** Set initial values for instance data if desired */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/WinInstanceData_init.cpp
 // ?init@WinInstanceData@@QAEXXZ present-unmatched
 void WinInstanceData::init( void )
 {
@@ -170,6 +171,7 @@ void WinInstanceData::init( void )
 
 // WinInstanceData::setTooltipText ============================================
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/WinInstanceData_setTooltipText_Thunk.cpp
 // ?setTooltipText@WinInstanceData@@QAEXVUnicodeString@@@Z present-unmatched
 void WinInstanceData::setTooltipText( UnicodeString tip )
 {
@@ -187,6 +189,7 @@ void WinInstanceData::setTooltipText( UnicodeString tip )
 // WinInstanceData:setText ====================================================
 /** Set the text for this window instance data */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/WinInstanceData_setText_Thunk.cpp
 // ?setText@WinInstanceData@@QAEXVUnicodeString@@@Z present-unmatched
 void WinInstanceData::setText( UnicodeString text )
 {

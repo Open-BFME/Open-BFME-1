@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?friend_checkForSleepTransitions@State@@: Code/GameEngine/Source/Common/StateMachine.cpp
 // Open-BFME5: State::friend_checkForSleepTransitions, retail 0x000A05D0,
 // zh_sweep packet 000a05d0.
 //
@@ -60,6 +61,7 @@ struct TransitionVector
 	TransitionInfo *end( void ) { return _M_finish; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 struct TransitionInfo
 {
 	StateTransFuncPtr	test;								///< +0x00
@@ -67,6 +69,7 @@ struct TransitionInfo
 	void				*userData;							///< +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -89,6 +92,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:

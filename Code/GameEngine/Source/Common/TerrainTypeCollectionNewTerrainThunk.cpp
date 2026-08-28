@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?newTerrain@TerrainTypeCollection@@: Code/GameEngine/Source/Common/TerrainTypes.cpp
 
 extern "C" __declspec(naked) void bfme_TerrainTypeCollectionNewTerrain_A8680()
 {

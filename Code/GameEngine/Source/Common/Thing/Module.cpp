@@ -256,6 +256,7 @@ void DrawableModule::loadPostProcess( void )
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Thing/UpgradeMuxData.cpp
 // ?performUpgradeFX@UpgradeMuxData@@ present-unmatched
 void UpgradeMuxData::performUpgradeFX(Object* obj) const
 {
@@ -266,6 +267,7 @@ void UpgradeMuxData::performUpgradeFX(Object* obj) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Thing/UpgradeMuxData.cpp
 // ?muxDataProcessUpgradeRemoval@UpgradeMuxData@@ present-unmatched
 void UpgradeMuxData::muxDataProcessUpgradeRemoval(Object* obj) const
 {

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getUnicodeVersion@Version@@: Code/GameEngine/Source/Common/version.cpp
 // Open-BFME5: lift the retail Version::getUnicodeVersion MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_VersionGetUnicodeVersion_AEE00()

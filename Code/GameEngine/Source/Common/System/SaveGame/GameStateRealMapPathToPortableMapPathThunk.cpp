@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?realMapPathToPortableMapPath@GameState@@QBE?AVAsciiString@@ABV2@@Z: Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp
 // Open-BFME5: lift the retail GameState::realMapPathToPortableMapPath MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_GameStateRealMapPathToPortableMapPath_10F280()

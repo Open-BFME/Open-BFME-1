@@ -23,6 +23,7 @@ typedef unsigned short UnsignedShort;
 
 #define FALSE false
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -42,6 +43,7 @@ typedef void (*GameWinMsgBoxFunc)( void );
 
 class GameWindow;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:

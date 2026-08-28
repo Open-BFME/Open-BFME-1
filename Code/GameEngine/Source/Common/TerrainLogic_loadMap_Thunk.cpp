@@ -1,9 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?loadMap@TerrainLogic@@UAE_NVAsciiString@@_N@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:

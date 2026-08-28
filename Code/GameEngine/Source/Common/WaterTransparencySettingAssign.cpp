@@ -16,6 +16,7 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -39,6 +40,7 @@ struct BfmeWaterTriple
 	Int m_bfmeA, m_bfmeB, m_bfmeC;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Water.h
 class WaterTransparencySetting : public ScienceInfoBase
 {
 public:

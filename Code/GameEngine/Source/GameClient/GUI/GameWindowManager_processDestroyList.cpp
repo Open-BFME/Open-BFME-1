@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?processDestroyList@GameWindowManager@@IAEXXZ: Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp
 // Open-BFME: GameWindowManager::processDestroyList, retail 0x0047C0E0, 131 bytes.
 //
 // The reference's body unchanged, and the manager's own fields fall out of it
@@ -20,6 +21,7 @@ typedef bool Bool;
 
 enum { GWM_DESTROY = 2 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -29,12 +31,14 @@ public:
 	GameWindow *m_next;					// this+0x1F8
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 struct ModalWindow
 {
 	ModalWindow *next;
 	GameWindow *window;					// this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:

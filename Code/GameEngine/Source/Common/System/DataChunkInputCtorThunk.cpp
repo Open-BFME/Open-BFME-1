@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0DataChunkInput@@QAE@PAVChunkInputStream@@@Z: Code/GameEngine/Source/Common/System/DataChunk.cpp
 
 class ChunkInputStream;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkInput
 {
 public:

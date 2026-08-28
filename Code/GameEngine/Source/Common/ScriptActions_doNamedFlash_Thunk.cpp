@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?doNamedFlash@ScriptActions@@IAEXABVAsciiString@@HPBURGBColor@@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // Lift the ScriptActions::doNamedFlash naked dump to clean C++.
 //
 // Zero Hour's ScriptActions.cpp body. The two named constants are the only
@@ -31,11 +32,13 @@ enum
 	DRAWABLE_FRAMES_PER_FLASH = 15
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor
 {
 	Color getAsInt(void) const;							///< ILT thunk at 0x0002D989
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -55,6 +58,7 @@ public:
 	Color getIndicatorColor(void) const;				///< ILT thunk at 0x00009CA0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -90,6 +94,7 @@ public:
 
 extern ScriptEngine *TheScriptEngine;					///< retail [0x012F076C]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
@@ -102,6 +107,7 @@ private:
 	Color m_flashColor;									///< retail this+0x164
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

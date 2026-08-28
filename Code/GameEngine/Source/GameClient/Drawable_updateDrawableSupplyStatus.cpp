@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?updateDrawableSupplyStatus@Drawable@@QAEXHH@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 
 // Drawable::updateDrawableSupplyStatus, retail 0x00411E50. Zero Hour's loop
 // unchanged: walk the draw modules, ask each for its object draw interface and
@@ -13,6 +14,7 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class ObjectDrawInterface
 {
 public:
@@ -27,6 +29,7 @@ public:
 	virtual void updateDrawModuleSupplyStatus( Int maxSupply, Int currentSupply );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class DrawModule
 {
 public:
@@ -72,6 +75,7 @@ public:
 	virtual ObjectDrawInterface *getObjectDrawInterface();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:

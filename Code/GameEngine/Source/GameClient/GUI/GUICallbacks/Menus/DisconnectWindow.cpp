@@ -10,6 +10,7 @@ public:
 };
 
 #define BFME_INGAME_UI_SLOT(n) virtual void slot##n();
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:

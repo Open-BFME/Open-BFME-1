@@ -266,6 +266,7 @@ void toggleReplayControls( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SuperweaponInfoCtorThunk.cpp
 // ??0SuperweaponInfo@@QAE@W4ObjectID@@I_N111ABVAsciiString@@H1HPBVSpecialPowerTemplate@@@Z present-unmatched
 SuperweaponInfo::SuperweaponInfo(
 	ObjectID id,
@@ -571,6 +572,7 @@ void InGameUI::setMouseCursor(Mouse::MouseCursor c)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUIFindSWInfoThunk.cpp
 // ?findSWInfo@InGameUI@@IAEPAVSuperweaponInfo@@HABVAsciiString@@W4ObjectID@@PBVSpecialPowerTemplate@@@Z present-unmatched
 SuperweaponInfo* InGameUI::findSWInfo(Int playerIndex, const AsciiString& powerName, ObjectID id, const SpecialPowerTemplate *powerTemplate)
 {
@@ -590,6 +592,7 @@ SuperweaponInfo* InGameUI::findSWInfo(Int playerIndex, const AsciiString& powerN
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_addSuperweapon_Thunk.cpp
 // ?addSuperweapon@InGameUI@@UAEXHABVAsciiString@@W4ObjectID@@PBVSpecialPowerTemplate@@@Z present-unmatched
 void InGameUI::addSuperweapon(Int playerIndex, const AsciiString& powerName, ObjectID id, const SpecialPowerTemplate *powerTemplate)
 {
@@ -656,6 +659,7 @@ Bool InGameUI::removeSuperweapon(Int playerIndex, const AsciiString& powerName, 
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_objectChangedTeam_Thunk.cpp
 // ?objectChangedTeam@InGameUI@@UAEXPBVObject@@HH@Z present-unmatched
 void InGameUI::objectChangedTeam(const Object *obj, Int oldPlayerIndex, Int newPlayerIndex)
 {
@@ -757,6 +761,7 @@ Bool InGameUI::getSuperweaponDisplayEnabledByScript(void) const
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_addNamedTimer_Thunk.cpp
 // ?addNamedTimer@InGameUI@@QAEXABVAsciiString@@ABVUnicodeString@@_N@Z present-unmatched
 void InGameUI::addNamedTimer( const AsciiString& timerName, const UnicodeString& text, Bool isCountdown )
 {
@@ -780,6 +785,7 @@ void InGameUI::addNamedTimer( const AsciiString& timerName, const UnicodeString&
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_removeNamedTimer.cpp
 // ?removeNamedTimer@InGameUI@@QAEXABVAsciiString@@@Z present-unmatched
 void InGameUI::removeNamedTimer( const AsciiString& timerName )
 {
@@ -917,6 +923,8 @@ const FieldParse InGameUI::s_fieldParseTable[] =
 //-------------------------------------------------------------------------------------------------
 /** Parse MouseCursor entry */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/INIParseInGameUIDefinitionThunk.cpp
+// ?parseInGameUIDefinition@INI@@SAXPAV1@@Z present-unmatched
 void INI::parseInGameUIDefinition( INI* ini )
 {
 	if( TheInGameUI )
@@ -928,6 +936,7 @@ void INI::parseInGameUIDefinition( INI* ini )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUIConstructorThunk.cpp
 // ??0InGameUI@@QAE@XZ present-unmatched
 InGameUI::InGameUI()
 {
@@ -1100,6 +1109,7 @@ InGameUI::InGameUI()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUIDestructorThunk.cpp
 // ??1InGameUI@@UAE@XZ present-unmatched
 InGameUI::~InGameUI()
 {
@@ -1231,6 +1241,7 @@ void InGameUI::init( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_setRadiusCursor_Thunk.cpp
 // ?setRadiusCursor@InGameUI@@UAEXW4RadiusCursorType@@PBVSpecialPowerTemplate@@W4WeaponSlotType@@@Z present-unmatched
 void InGameUI::setRadiusCursor(RadiusCursorType cursorType, const SpecialPowerTemplate* specPowTempl, WeaponSlotType weaponSlot)
 {
@@ -1392,6 +1403,7 @@ void InGameUI::triggerDoubleClickAttackMoveGuardHint( void )
 //-------------------------------------------------------------------------------------------------
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_evaluateSoloNexus_Thunk.cpp
 // ?evaluateSoloNexus@InGameUI@@IAEXPAVDrawable@@@Z present-unmatched
 void InGameUI::evaluateSoloNexus( Drawable *newlyAddedDrawable )
 {
@@ -1657,6 +1669,7 @@ void InGameUI::preDraw( void )
 /** Update the in game user interface */
 //-------------------------------------------------------------------------------------------------
 //DECLARE_PERF_TIMER(InGameUI_update)
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUIUpdateThunk.cpp
 // ?update@InGameUI@@ present-unmatched
 void InGameUI::update( void )
 { 
@@ -2126,6 +2139,7 @@ void InGameUI::message( UnicodeString format, ... )
 /** Interface for display text messages to the user */
 //-------------------------------------------------------------------------------------------------
 // srj sez: passing as const-ref screws up varargs for some reason. dunno why. just pass by value.
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUIMessageColorThunk.cpp
 // ?messageColor@InGameUI@@UAAXPBURGBColor@@VUnicodeString@@ZZ present-unmatched
 void InGameUI::messageColor( const RGBColor *rgbColor, UnicodeString format, ... )
 {
@@ -2147,6 +2161,7 @@ void InGameUI::messageColor( const RGBColor *rgbColor, UnicodeString format, ...
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_addMessageText_Thunk.cpp
 // ?addMessageText@InGameUI@@IAEXABVUnicodeString@@PBURGBColor@@@Z present-unmatched
 void InGameUI::addMessageText( const UnicodeString& formattedMessage, const RGBColor *rgbColor )
 {
@@ -2284,6 +2299,7 @@ void InGameUI::createGarrisonHint( const GameMessage *msg )
 	* in just a tooltip.  An object might get a tooltip and show its hit points.
  */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUICreateMouseoverHintThunk.cpp
 // ?createMouseoverHint@InGameUI@@ present-unmatched
 void InGameUI::createMouseoverHint( const GameMessage *msg )
 {
@@ -2857,6 +2873,7 @@ DrawableID InGameUI::getMousedOverDrawableID( void ) const
 //-------------------------------------------------------------------------------------------------
 /// set right-click scroll mode
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUISetScrolling.cpp
 // ?setScrolling@InGameUI@@UAEX_N@Z present-unmatched
 void InGameUI::setScrolling( Bool isScrolling )
 {
@@ -2941,6 +2958,7 @@ Coord2D InGameUI::getScrollAmount( void )
 	* is where we enable that "mode" so that we can get the additional data needed for a
 	* command from the user */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_setGUICommand_Thunk.cpp
 // ?setGUICommand@InGameUI@@UAEXPBVCommandButton@@@Z present-unmatched
 void InGameUI::setGUICommand( const CommandButton *command )
 {
@@ -3036,6 +3054,7 @@ void InGameUI::destroyPlacementIcons( void )
 	* record what that thing is so that the we can catch the next click in the world
 	* and try to place the object there */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_placeBuildAvailable_Thunk.cpp
 // ?placeBuildAvailable@InGameUI@@UAEXPBVThingTemplate@@PAVDrawable@@@Z present-unmatched
 void InGameUI::placeBuildAvailable( const ThingTemplate *build, Drawable *buildDrawable )
 {
@@ -7291,6 +7310,7 @@ void InGameUI::createControlBar( void )
 //-------------------------------------------------------------------------------------------------
 /** Create the replay control GUI */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUICreateReplayControlThunk.cpp
 // ?createReplayControl@InGameUI@@IAEXXZ present-unmatched
 void InGameUI::createReplayControl( void )
 {
@@ -7367,6 +7387,7 @@ VideoBuffer* InGameUI::videoBuffer( void )
 // ------------------------------------------------------------------------------------------------
 // InGameUI::playMovie
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_playCameoMovie_Thunk.cpp
 // ?playCameoMovie@InGameUI@@UAEXABVAsciiString@@@Z present-unmatched
 void InGameUI::playCameoMovie( const AsciiString& movieName )
 {
@@ -7515,6 +7536,7 @@ void InGameUI::displayCantBuildMessage( LegalBuildCode lbc )
 // ------------------------------------------------------------------------------------------------
 // InGameUI::militarySubtitle
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUIMilitarySubtitleThunk.cpp
 // ?militarySubtitle@InGameUI@@UAEXABVAsciiString@@H@Z present-unmatched
 void InGameUI::militarySubtitle( const AsciiString& label, Int duration )
 {
@@ -7570,6 +7592,7 @@ void InGameUI::militarySubtitle( const AsciiString& label, Int duration )
 // ------------------------------------------------------------------------------------------------
 // InGameUI::removeMilitarySubtitle
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_removeMilitarySubtitleMethodThunk.cpp
 // ?removeMilitarySubtitle@InGameUI@@UAEXXZ present-unmatched
 void InGameUI::removeMilitarySubtitle( void )
 {
@@ -9243,6 +9266,7 @@ void InGameUI::clearFloatingText( void )
 //-------------------------------------------------------------------------------------------------
 /** If we want to use the default text color, then we call this function */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_popupMessage_Thunk.cpp
 // ?popupMessage@InGameUI@@ present-unmatched
 void InGameUI::popupMessage( const AsciiString& message, Int x, Int y, Int width, Bool pause, Bool pauseMusic)
 {
@@ -9252,6 +9276,7 @@ void InGameUI::popupMessage( const AsciiString& message, Int x, Int y, Int width
 //-------------------------------------------------------------------------------------------------
 /** initialize, and popup a message box to the user */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_popupMessage_Thunk.cpp
 // ?popupMessage@InGameUI@@ present-unmatched
 void InGameUI::popupMessage( const AsciiString& identifier, Int x, Int y, Int width, Color textColor, Bool pause, Bool pauseMusic)
 {
@@ -9295,6 +9320,7 @@ void InGameUI::popupMessage( const AsciiString& identifier, Int x, Int y, Int wi
 //-------------------------------------------------------------------------------------------------
 /** take care of the logic of clearing the popupMessageData */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_clearPopupMessageData.cpp
 // ?clearPopupMessageData@InGameUI@@QAEXXZ present-unmatched
 void InGameUI::clearPopupMessageData( void )
 {
@@ -9426,6 +9452,7 @@ static const UnsignedInt FRAMES_BEFORE_EXPIRE_TO_FADE = LOGICFRAMES_PER_SECOND *
 // ------------------------------------------------------------------------------------------------
 /** Update all world animations and draw the visible ones */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_updateAndDrawWorldAnimationsMethodThunk.cpp
 // ?updateAndDrawWorldAnimations@InGameUI@@IAEXXZ present-unmatched
 void InGameUI::updateAndDrawWorldAnimations( void )
 {
@@ -9904,6 +9931,8 @@ void InGameUI::updateIdleWorker( void )
 		hideIdleWorkerLayout();
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_resetIdleWorker_Thunk.cpp
+// ?resetIdleWorker@InGameUI@@EAEXXZ present-unmatched
 void InGameUI::resetIdleWorker( void )
 {
 	if(m_idleWorkerWin)
@@ -9918,6 +9947,7 @@ void InGameUI::resetIdleWorker( void )
 
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_recreateControlBarMethodThunk.cpp
 // ?recreateControlBar@InGameUI@@UAEXXZ present-unmatched
 void InGameUI::recreateControlBar( void )
 {

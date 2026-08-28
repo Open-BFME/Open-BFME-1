@@ -12,6 +12,7 @@
 
 // Only the SIZE matters for codegen here: retail allocates the whole record on
 // the stack and writes nothing but the type word.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/BuddyThread.h
 class BuddyRequest
 {
 public:
@@ -28,6 +29,7 @@ public:
 // method matters for codegen, not the real signatures. The class names are the
 // real ones so the globals below decorate to the symbols every other reference
 // uses, and the build cross-checks their addresses.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/BuddyThread.h
 class GameSpyBuddyMessageQueueInterface
 {
 public:
@@ -40,6 +42,7 @@ public:
 	virtual void addRequest( const BuddyRequest& req );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
 class GameSpyInfoInterface
 {
 public:

@@ -36,6 +36,7 @@ enum KindOfType
 	KINDOF_UNRECONSTRUCTED_108 = 108					///< the only value this function uses
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeTemplate
 {
 public:
@@ -46,6 +47,7 @@ private:
 	UnsignedInt m_upgradeMask;						///< retail this+0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeCenter
 {
 public:
@@ -54,6 +56,7 @@ public:
 
 // Reached only through the accessor at 0x001BFE20; nothing here is attested
 // beyond the two slots the call sites use.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -103,12 +106,14 @@ public:
 	virtual Upgrade *grantUpgrade(const UpgradeTemplate *upgrade);	///< vtable +0xAC
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
 	Bool isKindOf(KindOfType kind) const;			///< ILT thunk at 0x0003251F
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 public:
@@ -119,6 +124,7 @@ public:
 	Player *unidentified_001BFE20(void) const;		///< ILT thunk at 0x0000D3B9
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -154,6 +160,7 @@ public:
 extern ScriptEngine *TheScriptEngine;					///< retail [0x012F076C]
 extern UpgradeCenter *TheUpgradeCenter;					///< retail [0x012EF188]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

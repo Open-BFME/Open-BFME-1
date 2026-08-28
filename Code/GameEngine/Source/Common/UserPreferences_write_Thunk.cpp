@@ -16,6 +16,7 @@ struct AsciiStringDataShim
 	unsigned char m_unreconstructed_06[2];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -42,6 +43,7 @@ struct PrefMapShim
 
 PrefMapNodeShim *prefMapIncrement(PrefMapNodeShim *node);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class UserPreferences
 {
 public:

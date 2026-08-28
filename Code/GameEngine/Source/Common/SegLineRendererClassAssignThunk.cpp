@@ -3,6 +3,7 @@
 // Refcounted texture pointer at +0 (Add_Ref inline: inc word [p+4]; Release_Ref
 // out-of-line and matched), then the plain field copies.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:
@@ -10,6 +11,7 @@ public:
     void Release_Ref();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/seglinerenderer.h
 class SegLineRendererClass
 {
 public:

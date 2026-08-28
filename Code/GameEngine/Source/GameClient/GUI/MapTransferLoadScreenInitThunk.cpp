@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?init@MapTransferLoadScreen@@: Code/GameEngine/Source/GameClient/GUI/LoadScreen.cpp
 // Open-BFME5: lift the exact retail MapTransferLoadScreen::init MASM body.
 
 class GameInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/LoadScreen.h
 class MapTransferLoadScreen
 {
 public:

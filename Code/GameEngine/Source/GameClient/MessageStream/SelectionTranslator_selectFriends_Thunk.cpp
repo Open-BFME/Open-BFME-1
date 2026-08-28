@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?selectFriends@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@_N@Z: Code/GameEngine/Source/GameClient/MessageStream/SelectionXlat.cpp
 // Open-BFME5: lift the exact retail SelectionTranslator::selectFriends body to C++.
 
 // ?selectFriends@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@_N@Z

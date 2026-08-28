@@ -58,6 +58,7 @@ public:
 extern Glo012F4B98Type *Glo012F4B98;				// 0x012F4B98
 extern Glo012F368CType *Glo012F368C;				// 0x012F368C
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:

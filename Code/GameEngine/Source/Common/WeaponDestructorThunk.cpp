@@ -13,12 +13,14 @@
 // The mangling is MAE rather than UAE, which makes the destructor protected.
 #include <vector>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
 	virtual ~Snapshot() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon : public Snapshot
 {
 protected:

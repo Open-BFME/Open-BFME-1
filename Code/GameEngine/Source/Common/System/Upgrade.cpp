@@ -105,6 +105,7 @@ void Upgrade::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Upgrade_loadPostProcessMethodThunk.cpp
 // ?loadPostProcess@Upgrade@@MAEXXZ present-unmatched
 void Upgrade::loadPostProcess( void )
 {
@@ -153,6 +154,7 @@ UpgradeTemplate::UpgradeTemplate( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/UpgradeTemplateDestructorThunk.cpp
 // ??1UpgradeTemplate@@MAE@XZ present-unmatched
 UpgradeTemplate::~UpgradeTemplate( void )
 {
@@ -370,6 +372,7 @@ const UpgradeTemplate *UpgradeCenter::findUpgradeByKey( NameKeyType key ) const
 //-------------------------------------------------------------------------------------------------
 /** Find upgrade matching name */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/UpgradeCenter_findUpgrade.cpp
 // ?findUpgrade@UpgradeCenter@@QBEPBVUpgradeTemplate@@ABVAsciiString@@@Z present-unmatched
 const UpgradeTemplate *UpgradeCenter::findUpgrade( const AsciiString& name ) const
 {
@@ -381,6 +384,7 @@ const UpgradeTemplate *UpgradeCenter::findUpgrade( const AsciiString& name ) con
 //-------------------------------------------------------------------------------------------------
 /** Allocate a new upgrade template */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/UpgradeCenter_newUpgrade_Thunk.cpp
 // ?newUpgrade@UpgradeCenter@@QAEPAVUpgradeTemplate@@ABVAsciiString@@@Z present-unmatched
 UpgradeTemplate *UpgradeCenter::newUpgrade( const AsciiString& name )
 {
@@ -455,6 +459,7 @@ void UpgradeCenter::unlinkUpgrade( UpgradeTemplate *upgrade )
 //-------------------------------------------------------------------------------------------------
 /** does this player have all the necessary things to make this upgrade */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/UpgradeCenter_canAffordUpgrade_Thunk.cpp
 // ?canAffordUpgrade@UpgradeCenter@@QBE_NPAVPlayer@@PBVUpgradeTemplate@@_N@Z present-unmatched
 Bool UpgradeCenter::canAffordUpgrade( Player *player, const UpgradeTemplate *upgradeTemplate, Bool displayReason ) const
 {

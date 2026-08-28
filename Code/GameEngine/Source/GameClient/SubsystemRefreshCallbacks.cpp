@@ -24,6 +24,7 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display
 {
 public:
@@ -100,6 +101,7 @@ public:
 	virtual void slot118( Int a1, Int a2, Int a3 ) = 0;		///< +0x118
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Radar.h
 class Radar
 {
 public:

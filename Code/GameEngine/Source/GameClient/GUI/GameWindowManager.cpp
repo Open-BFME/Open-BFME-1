@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/gamewindowlist /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
+// readable body of ??0ScoreScaleUpTransition@@QAE@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -159,6 +160,7 @@ extern Transition *createSoundFadeTransition( void );
 extern Transition *createFreezePostLoadSoundsTransition( void );
 
 class TransitionGroup;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class GameWindowTransitionsHandler : public SubsystemInterface
 {
 public:
@@ -246,6 +248,7 @@ static Bool sendMousePosMessages = TRUE;
 //-------------------------------------------------------------------------------------------------
 /** Process windows waiting to be destroyed */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowManager_processDestroyList.cpp
 // ?processDestroyList@GameWindowManager@@IAEXXZ present-unmatched
 void GameWindowManager::processDestroyList( void )
 {
@@ -1489,6 +1492,7 @@ WinInputReturnCode GameWindowManager::winProcessMouseEvent( GameWindowMessage ms
 	* draw themselves, but will give their children an
 	* opportunity to draw */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowManager_drawWindow_Thunk.cpp
 // ?drawWindow@GameWindowManager@@IAEHPAVGameWindow@@@Z present-unmatched
 Int GameWindowManager::drawWindow( GameWindow *window )
 {
@@ -1597,6 +1601,7 @@ void GameWindowManager::dumpWindow( GameWindow *window )
 //-------------------------------------------------------------------------------------------------
 /** Create a new window by setting up its parameters and callbacks. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowManager_winCreate_Thunk.cpp
 // ?winCreate@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHP6A?AW4WindowMsgHandledType@@0III@ZPAVWinInstanceData@@@Z present-unmatched
 GameWindow *GameWindowManager::winCreate( GameWindow *parent, 
 																				  UnsignedInt status, 
@@ -2778,6 +2783,7 @@ GameWindow *GameWindowManager::gogoGadgetTextEntry( GameWindow *parent,
 /** Use this method to assign the default images/colors to gadgets as 
 	* they area created */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowManagerAssignDefaultGadgetLookThunk.cpp
 // ?assignDefaultGadgetLook@GameWindowManager@@ present-unmatched
 void GameWindowManager::assignDefaultGadgetLook( GameWindow *gadget,
 																								 GameFont *defaultFont,

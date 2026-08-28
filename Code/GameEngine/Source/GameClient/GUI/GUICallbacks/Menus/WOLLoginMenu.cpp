@@ -156,6 +156,7 @@ static AsciiString obfuscate( AsciiString in )
 	return out;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/GameSpyLoginPreferencesLoadThunk.cpp
 // ?load@GameSpyLoginPreferences@@UAE_NVAsciiString@@@Z present-unmatched
 Bool GameSpyLoginPreferences::load( AsciiString fname )
 {
@@ -203,6 +204,7 @@ Bool GameSpyLoginPreferences::load( AsciiString fname )
 	return true;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/GameSpyLoginPreferencesWriteThunk.cpp
 // ?write@GameSpyLoginPreferences@@UAE_NXZ present-unmatched
 Bool GameSpyLoginPreferences::write( void )
 {
@@ -254,6 +256,7 @@ Bool GameSpyLoginPreferences::write( void )
 	}
 	return false;
 }
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameSpyLoginPreferences_getDateForEmail_Thunk.cpp
 // ?getDateForEmail@GameSpyLoginPreferences@@QAE?AVAsciiString@@V2@AAV2@11@Z present-unmatched
 AsciiString GameSpyLoginPreferences::getDateForEmail( AsciiString email, AsciiString &month, AsciiString &date, AsciiString &year )
 {
@@ -268,6 +271,7 @@ AsciiString GameSpyLoginPreferences::getDateForEmail( AsciiString email, AsciiSt
 	return m_emailDateMap[email];
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameSpyLoginPreferences_getPasswordForEmail_Thunk.cpp
 // ?getPasswordForEmail@GameSpyLoginPreferences@@QAE?AVAsciiString@@V2@@Z present-unmatched
 AsciiString GameSpyLoginPreferences::getPasswordForEmail( AsciiString email )
 {
@@ -305,6 +309,7 @@ void GameSpyLoginPreferences::forgetLogin( AsciiString email )
 }
 #pragma inline_depth()
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/GameSpyLoginPreferencesGetEmailsThunk.cpp
 // ?getEmails@GameSpyLoginPreferences@@QAE?AV?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@XZ present-unmatched
 AsciiStringList GameSpyLoginPreferences::getEmails( void )
 {

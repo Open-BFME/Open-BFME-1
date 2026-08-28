@@ -10,6 +10,7 @@ public:
 	~SupplyCenterProductionExitEntry();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleData
 {
 public:
@@ -19,6 +20,7 @@ private:
 	unsigned int m_moduleTagNameKey;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyCenterProductionExitUpdate.h
 class SupplyCenterProductionExitUpdateModuleData : public UpdateModuleData
 {
 public:

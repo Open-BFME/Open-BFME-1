@@ -3,6 +3,7 @@
 
 class AsciiString {};
 class UnicodeString {};
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/HotKey.h
 class HotKeyManager {
 public:
 	AsciiString searchHotKey(const UnicodeString &);

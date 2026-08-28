@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setControlBarSchemeByPlayerTemplate@ControlBarSchemeManager@@QAEXPBVPlayerTemplate@@_N@Z: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme.cpp
 // Open-BFME5: lift the retail ControlBarSchemeManager::setControlBarSchemeByPlayerTemplate MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_ControlBarSchemeManagerSetControlBarSchemeByPlayerTemplate_3865B0()

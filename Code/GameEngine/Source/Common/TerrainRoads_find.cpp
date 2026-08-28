@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?findBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z: Code/GameEngine/Source/GameClient/Terrain/TerrainRoads.cpp
+// readable body of ?findRoad@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z: Code/GameEngine/Source/GameClient/Terrain/TerrainRoads.cpp
 // Open-BFME: TerrainRoadTypeCollection::findTerrain, retail 0x000A7AF0, 246 bytes.
 //
 // The reference's loop unchanged -- walk the list from m_terrainList at
@@ -34,6 +36,7 @@ struct BfmeAsciiStringData
 	UnsignedShort m_pad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -64,6 +67,7 @@ private:
 	BfmeAsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/TerrainRoads.h
 class TerrainRoadType
 {
 public:
@@ -76,6 +80,7 @@ private:
 	TerrainRoadType *m_next;				// this+0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/TerrainRoads.h
 class TerrainRoadCollection
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?parseFontDesc@GlobalLanguage@@: Code/GameEngine/Source/GameClient/GlobalLanguage.cpp
 // Open-BFME: GlobalLanguage::parseFontDesc, retail 0x00439150, 136 bytes. The
 // body carried no ledger row; its name sat on a 5-byte thunk.
 //
@@ -26,6 +27,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -36,6 +38,7 @@ public:
 	StringBase<char> m_string;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FontDesc.h
 struct FontDesc
 {
 	AsciiString name;					// +0x00
@@ -43,6 +46,7 @@ struct FontDesc
 	Bool bold;						// +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -53,6 +57,7 @@ public:
 	static Bool scanBool(const char *token);		// retail 0x00852550
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GlobalLanguage.h
 class GlobalLanguage
 {
 public:

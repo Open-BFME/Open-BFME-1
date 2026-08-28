@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0SuperweaponInfo@@QAE@W4ObjectID@@I_N111ABVAsciiString@@H1HPBVSpecialPowerTemplate@@@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // Open-BFME5: lift the retail SuperweaponInfo constructor MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_SuperweaponInfoCtor_43D8C0()

@@ -68,6 +68,7 @@ GameStateMap::GameStateMap( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameStateMapDtorThunk.cpp
 // ??1GameStateMap@@ present-unmatched
 GameStateMap::~GameStateMap( void )
 {

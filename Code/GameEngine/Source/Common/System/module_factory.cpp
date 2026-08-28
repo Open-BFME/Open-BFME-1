@@ -1,4 +1,5 @@
 // cl: /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// readable body of ?init@ModuleFactory@@UAEXXZ: Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp
 #include "module_factory.h"
 
 // Masked DIR32 targets: distinct symbols so each createProc/createDataProc/

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?populateGameFonts@HeaderTemplateManager@@AAEXXZ: Code/GameEngine/Source/GameClient/GUI/HeaderTemplate.cpp
 // Lift the HeaderTemplateManager::populateGameFonts __emit thunk to clean C++.
 //
 // Verbatim Zero Hour HeaderTemplate.cpp: walk the header-template list and give
@@ -19,12 +20,14 @@ class GameFont;
 
 // Embedded by value in HeaderTemplate: retail passes its address with
 // lea eax,[esi+8], not the stored word, so this cannot be a pointer field.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/HeaderTemplate.h
 class HeaderTemplate
 {
 public:
@@ -48,6 +51,7 @@ public:
 	Int adjustFontSize(Int point);							///< ILT thunk at 0x00004E67
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameFont.h
 class FontLibrary
 {
 public:
@@ -57,6 +61,7 @@ public:
 extern GlobalLanguageData *TheGlobalLanguageData;			///< retail [0x012F1484]
 extern FontLibrary *TheFontLibrary;							///< retail [0x012F1B38]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/HeaderTemplate.h
 class HeaderTemplateManager
 {
 	void populateGameFonts(void);

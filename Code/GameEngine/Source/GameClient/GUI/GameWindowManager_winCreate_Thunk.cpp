@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?winCreate@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHP6A?AW4WindowMsgHandledType@@0III@ZPAVWinInstanceData@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class GameWindow;

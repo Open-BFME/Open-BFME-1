@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?xfer@ScriptList@@MAEXPAVXfer@@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp
 // Open-BFME5: retail-layout C++ conversion of ScriptList snapshot transfer.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Xfer.h
 class Xfer
 {
 public:
@@ -21,6 +23,7 @@ public:
 
 extern void *RetailScriptVTable[];
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Script
 {
 public:
@@ -58,6 +61,7 @@ struct ScriptListNode
 	void *Value;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class ScriptList
 {
 protected:

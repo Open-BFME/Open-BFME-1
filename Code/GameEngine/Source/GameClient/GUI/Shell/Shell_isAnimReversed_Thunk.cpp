@@ -14,6 +14,7 @@
 // to renumber the compiland's $L labels, which remaps the EH funclet rows that
 // file already has matched (uw_00c367e8 and its siblings).
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/AnimateWindowManager.h
 class AnimateWindowManager
 {
 public:
@@ -27,6 +28,7 @@ private:
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
 class Shell
 {
 public:

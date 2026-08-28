@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onCollide@ToppleUpdate@@UAEXPAVObject@@PBUCoord3D@@1@Z: Code/GameEngine/Source/GameLogic/Object/Update/ToppleUpdate.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Object;
 struct Coord3D { };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ToppleUpdate.h
 class ToppleUpdate
 {
 public:

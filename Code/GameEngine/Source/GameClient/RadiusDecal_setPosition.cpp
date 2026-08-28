@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setPosition@RadiusDecal@@: Code/GameEngine/Source/GameClient/RadiusDecal.cpp
 
 // RadiusDecal::setPosition, retail 0x004583A0. The decal itself is behind the
 // pointer at +0x04 and does nothing when that is null; the position it carries
 // is three floats at +0x08 of whatever it points at.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -18,6 +20,7 @@ public:
 	Coord3D m_position;						// +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/RadiusDecal.h
 class RadiusDecal
 {
 public:

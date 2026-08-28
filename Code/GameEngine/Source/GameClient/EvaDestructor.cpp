@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ??1Eva@@: Code/GameEngine/Source/GameClient/Eva.cpp
 // Open-BFME5: Eva::~Eva, spelled against the retail BFME layout.
 //
 // Retail's Eva is a SubsystemInterface and a Snapshot: two vtable pointers, one
@@ -24,6 +25,7 @@
 
 // Retail per-message check record, 24 bytes of POD: two millisecond countdowns
 // and a played flag at +0x14.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 struct EvaCheck
 {
 	float m_timeUntilExpire;
@@ -75,6 +77,7 @@ private:
 // The +0x08 base.  Its destructor is inline and empty in retail -- the body
 // only restores the vtable pointer -- which is why no second base destructor
 // call appears.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -86,6 +89,7 @@ public:
 
 // The primary base: vtable pointer at +0x00 and the subsystem name at +0x04,
 // destroyed out of line at 0x009A1A40.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -96,6 +100,7 @@ private:
 	void *m_name;				// +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 class Eva : public SubsystemInterface, public Snapshot
 {
 public:

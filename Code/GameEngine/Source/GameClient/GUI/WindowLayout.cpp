@@ -48,6 +48,7 @@
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////////////////////////
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/window_layout.cpp
 // ??0WindowLayout@@ present-unmatched
 WindowLayout::WindowLayout( void )
 {
@@ -67,6 +68,7 @@ WindowLayout::WindowLayout( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/window_layout.cpp
 // ??1WindowLayout@@ present-unmatched
 WindowLayout::~WindowLayout( void )
 {
@@ -178,6 +180,7 @@ void WindowLayout::removeWindow( GameWindow *window )
 //-------------------------------------------------------------------------------------------------
 /** Destroy all the windows in a layout */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/window_layout.cpp
 // ?destroyWindows@WindowLayout@@ present-unmatched
 void WindowLayout::destroyWindows( void )
 {

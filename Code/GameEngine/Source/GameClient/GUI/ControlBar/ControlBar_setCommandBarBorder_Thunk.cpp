@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?setCommandBarBorder@ControlBar@@AAEXPAVGameWindow@@W4CommandButtonMappedBorderType@@@Z: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 // Lift the ControlBar::setCommandBarBorder naked dump to clean C++.
 //
 // Zero Hour's ControlBar.cpp body with one BFME addition: a fifth border type.
@@ -35,6 +36,7 @@ class GameWindow;
 
 void GadgetButtonSetBorder(GameWindow *button, Color color, Int enable);	///< ILT thunk at 0x00002982
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 private:

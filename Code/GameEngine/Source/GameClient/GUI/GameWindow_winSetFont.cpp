@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?winSetFont@GameWindow@@UAEXPAVGameFont@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // Open-BFME: GameWindow::winSetFont, retail 0x00478550, 131 bytes.
 //
 // The reference's body, plus one BFME line: after whichever branch ran, a hook
@@ -15,6 +16,7 @@
 
 class GameFont;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayString.h
 class DisplayString
 {
 public:
@@ -54,6 +56,7 @@ enum
 	GWS_COMBO_BOX		= 0x00008000
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:

@@ -384,6 +384,7 @@ FunctionLexicon *TheFunctionLexicon = NULL;  ///< the function dictionary
 	* components we might want to add to the table, such as generating
 	* a key based off the name supplied in the table for faster access */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/FunctionLexicon_loadTable_Thunk.cpp
 // ?loadTable@FunctionLexicon@@IAEXPAUTableEntry@1@W4TableIndex@1@@Z present-unmatched
 void FunctionLexicon::loadTable( TableEntry *table, 
 																 TableIndex tableIndex )
