@@ -1,24 +1,25 @@
 // 042-ultrawide-render — keep BFME's fixed-resolution UI in a centred 4:3
 // render band on displays wider than its reference aspect.
 //
-// 041-ultrawide-ui changed layout inputs, but the retail renderer still
-// converted those coordinates against the physical display and then submitted
-// a full-screen D3D viewport.  That made the experiment visually inert.  This
-// feature changes the renderer's two authoritative pieces instead:
+// 041-ultrawide-ui changed layout inputs, but it had no matching renderer
+// transform and was visually inert.  This feature keeps that layout correction
+// only where it is needed, then changes the renderer's authoritative pieces:
 //
-//   * Set_Coordinate_Range receives a height-led 4:3 screen range, so the
-//     Render2D vertex coordinates are generated in the same logical space as
-//     BFME's reference layouts.
+//   * screen-layout roots and control-bar scheme selection use a height-led
+//     4:3 logical width, then restore the physical Display width.  Root screen
+//     positions therefore already include the centred margin.
+//   * Set_Coordinate_Range receives the physical centred interval
+//     [left,left+band], so those already-centred coordinates are not shifted a
+//     second time.
 //   * both BFME Render2D bodies are hooked immediately after their retail
 //     DX8Wrapper::Set_Viewport call, so that logical range is presented in a
 //     centred 4:3 hardware viewport.
 //
 // Ready image surfaces take a third path through copySurfaceRects006e and do
-// not reach either vertex renderer.  Its destination rectangle is transformed
-// by the same integer mapping here.  This is deliberately renderer-level: it
-// covers the game-window UI, command bar, display strings, and the APT host
-// rendering without pretending that parser-time width substitutions are a
-// projection fix.
+// not reach either vertex renderer.  Their destination rectangles are already
+// physical screen coordinates after the layout correction, so this feature
+// deliberately leaves that copy routine alone.  This avoids applying a second
+// scale to buttons and other surface-backed UI.
 //
 // This is a naked MSVC 7.1 payload: /NODEFAULTLIB, no CRT, and no loader.  The
 // only floating point operations are the coordinate-range multiply and the
@@ -37,14 +38,6 @@ struct FloatRect
 	Real top;
 	Real right;
 	Real bottom;
-};
-
-struct BfmeRect
-{
-	Int left;
-	Int top;
-	Int right;
-	Int bottom;
 };
 
 struct Viewport
@@ -83,23 +76,138 @@ static Int centered_left(UnsignedInt width, UnsignedInt band)
 	return (Int)((width - band) / 2);
 }
 
-static Int map_surface_x(Int x, UnsignedInt width, UnsignedInt band, Int left)
+static Int field_int(void *base, Int offset)
 {
-	if (width == 0 || band == width)
-		return x;
+	return *(Int *)((unsigned char *)base + offset);
+}
 
-	// UI coordinates are display-sized (normally only a few thousand pixels),
-	// so this product remains in signed 32-bit range without a CRT 64-bit
-	// helper.  Keeping the division signed also preserves off-screen clipping
-	// rectangles instead of clamping them prematurely.
-	return left + (x * (Int)band) / (Int)width;
+static void set_field_int(void *base, Int offset, Int value)
+{
+	*(Int *)((unsigned char *)base + offset) = value;
+}
+
+// BFME Display::m_width/m_height are the first scalar fields after its
+// polymorphic prefix.  These are the same fields used by the old 041 layout
+// experiment and by the exact parseScreenRect body.
+#define TheDisplay (*(void **)0x012F1270)
+enum {
+	DISPLAY_WIDTH = 0x08,
+	DISPLAY_HEIGHT = 0x0C,
+	CONTROLBAR_FOREGROUND_MARKER_X = 0x2D0,
+	CONTROLBAR_BACKGROUND_MARKER_X = 0x2D8
+};
+
+static Int logical_width(Int width, Int height)
+{
+	if (width <= 0 || height <= 0)
+		return width;
+	Int reference_width = height * 4 / 3;
+	return width < reference_width ? width : reference_width;
+}
+
+static Int safe_left(void)
+{
+	if (TheDisplay == 0)
+		return 0;
+	Int width = field_int(TheDisplay, DISPLAY_WIDTH);
+	Int height = field_int(TheDisplay, DISPLAY_HEIGHT);
+	return (width - logical_width(width, height)) / 2;
+}
+
+static Int g_scheme_depth;
+static Int g_scheme_saved_width;
+static Int g_parse_active;
+static Int g_parse_saved_width;
+static Int g_parse_physical_width;
+static Int *g_parse_x;
+
+// parseScreenRect at RVA 0x004854F0 receives four stack arguments.  During a
+// root parse, make Display::getWidth report the 4:3 logical width, then add the
+// physical centring margin back to the stored root x before restoring width.
+// Child coordinates remain relative to their already-centred parent.
+extern "C" __declspec(dllexport) void __cdecl ui_parse_begin(
+	Int *x, Int *y, Int *width, Int *height)
+{
+	(void)y;
+	(void)width;
+	(void)height;
+	if (TheDisplay == 0 || x == 0 || g_parse_active)
+		return;
+
+	g_parse_active = 1;
+	g_parse_x = x;
+	g_parse_saved_width = field_int(TheDisplay, DISPLAY_WIDTH);
+	g_parse_physical_width = g_scheme_depth ? g_scheme_saved_width : g_parse_saved_width;
+	Int ui_width = logical_width(g_parse_physical_width,
+		field_int(TheDisplay, DISPLAY_HEIGHT));
+	if (ui_width < g_parse_physical_width)
+		set_field_int(TheDisplay, DISPLAY_WIDTH, ui_width);
+}
+
+extern "C" __declspec(dllexport) void __cdecl ui_parse_end(void *parent)
+{
+	if (!g_parse_active)
+		return;
+
+	if (parent == 0 && g_parse_x != 0) {
+		*g_parse_x += (g_parse_physical_width -
+			logical_width(g_parse_physical_width,
+				field_int(TheDisplay, DISPLAY_HEIGHT))) / 2;
+	}
+	set_field_int(TheDisplay, DISPLAY_WIDTH, g_parse_saved_width);
+	g_parse_x = 0;
+	g_parse_physical_width = 0;
+	g_parse_saved_width = 0;
+	g_parse_active = 0;
+}
+
+// The three ControlBarSchemeManager selection bodies calculate their scheme
+// multiplier from Display::getWidth.  Keep that calculation in 4:3 space,
+// while allowing the normal retail function to restore the physical width.
+extern "C" __declspec(dllexport) void __cdecl ui_scheme_begin(void *manager)
+{
+	(void)manager;
+	if (TheDisplay == 0)
+		return;
+	if (g_scheme_depth++ == 0) {
+		g_scheme_saved_width = field_int(TheDisplay, DISPLAY_WIDTH);
+		Int ui_width = logical_width(g_scheme_saved_width,
+			field_int(TheDisplay, DISPLAY_HEIGHT));
+		if (ui_width < g_scheme_saved_width)
+			set_field_int(TheDisplay, DISPLAY_WIDTH, ui_width);
+	}
+}
+
+extern "C" __declspec(dllexport) void __cdecl ui_scheme_end(void)
+{
+	if (g_scheme_depth <= 0)
+		return;
+	--g_scheme_depth;
+	if (g_scheme_depth == 0) {
+		if (TheDisplay != 0)
+			set_field_int(TheDisplay, DISPLAY_WIDTH, g_scheme_saved_width);
+		g_scheme_saved_width = 0;
+	}
+}
+
+// The command-bar draw callbacks subtract the stored marker from the current
+// marker window before drawing scheme images.  Store a zero-origin marker so
+// the callback's offset supplies the centred physical margin exactly once.
+extern "C" __declspec(dllexport) void __cdecl ui_controlbar_markers(void *bar)
+{
+	if (bar == 0)
+		return;
+	Int left = safe_left();
+	if (left == 0)
+		return;
+	*(Int *)((unsigned char *)bar + CONTROLBAR_FOREGROUND_MARKER_X) -= left;
+	*(Int *)((unsigned char *)bar + CONTROLBAR_BACKGROUND_MARKER_X) -= left;
 }
 
 // Set_Coordinate_Range at RVA 0x00933A50 is a thiscall entry.  The generated
 // cave shim passes ECX as renderer and stack:0 as the const RectClass pointer.
-// We alter only a screen-like range whose origin is (0,0) and whose width is
-// wider than its height-led 4:3 reference.  Custom local coordinate ranges
-// remain untouched.
+// We alter only the full-screen range.  Its physical bounds already include
+// the centred root margin, so custom local coordinate ranges remain untouched.
 extern "C" __declspec(dllexport) void __cdecl ui_coordinate_range(
 	void *renderer, FloatRect *range)
 {
@@ -108,9 +216,14 @@ extern "C" __declspec(dllexport) void __cdecl ui_coordinate_range(
 		range->bottom <= 0.0f)
 		return;
 
-	Real reference_width = range->bottom * 1.3333333333f;
-	if (range->right > reference_width)
-		range->right = reference_width;
+	UnsignedInt width = ScreenWidth;
+	UnsignedInt height = ScreenHeight;
+	UnsignedInt band = reference_band(width, height);
+	if (width == 0 || height == 0 || band == width)
+		return;
+	Int left = centered_left(width, band);
+	range->left = (Real)left;
+	range->right = (Real)(left + (Int)band);
 }
 
 // The exact Render2DClass::Render body at RVA 0x00933E50 writes its physical
@@ -150,28 +263,4 @@ extern "C" __declspec(dllexport) void __cdecl ui_render_viewport(void *renderer)
 	viewport.min_z = 0.0f;
 	viewport.max_z = 1.0f;
 	c_set_viewport(&viewport);
-}
-
-// copySurfaceRects006e at RVA 0x00904D20 is a cdecl function with five
-// dword arguments.  W3DDisplay::drawImage passes the destination BfmeRect as
-// its fourth argument (stack:3 at this entry), before the retail copy occurs.
-// This is the ready-surface branch that bypasses Render2D entirely.
-extern "C" __declspec(dllexport) void __cdecl ui_copy_surface(BfmeRect *destination)
-{
-	if (destination == 0)
-		return;
-
-	UnsignedInt width = ScreenWidth;
-	UnsignedInt height = ScreenHeight;
-	UnsignedInt band = reference_band(width, height);
-	if (width == 0 || height == 0 || band == width)
-		return;
-
-	Int left = centered_left(width, band);
-#ifdef ULTRAWIDE_UI_RENDER_DEBUG
-	band = width / 2;
-	left = (Int)(width / 4);
-#endif
-	destination->left = map_surface_x(destination->left, width, band, left);
-	destination->right = map_surface_x(destination->right, width, band, left);
 }
