@@ -12126,6 +12126,7 @@ name,address,notes
 ?_bfme_debugReportingEnabled@@YA_NXZ,0x008896D0,cdecl bool: reads TheGen001336E5C-shaped debug manager global 0x01336E5C+0x9F4B directly; guards whether the release crash-report chain runs, resolved via decode_calls at GameLODManager::getAudioLODIndex
 ?_bfme_detach@U1Sub@@QAEXXZ,0x0002129C,Open-BFME5 ILT thunk to body 0x001DA3F0; ?apply@U1Sub@@QAEAAV1@PAVU1CachedHolder@@@Z at 0x005C21D0 calls it on this before replacing the target - shape-only name in the same synthetic family as the class
 ?_bfme_doVictoryAndEndGame@ScriptActions@@IAEXXZ,0x002F7B60,executeAction jump table 0x0070D6A0[3] (ZH ScriptAction::VICTORY position) -> arm 0x0030522C -> ILT 0x000202C5; doVictory 0x002F1C10 then TheCampaignManager 0x012F1024 +0x1D = 1 (SetVictorious(TRUE)) then TheScriptEngine 0x012F076C vcall +0x30 startEndGameTimer = the tail of ZH doVictory that BFME split off the shared core; arm 0x0030524A (action 510) calls the core alone
+?_bfme_findFactionVictoryParametersIndex@VictorySystem@@AAEIABVAsciiString@@@Z,0x0002D2EA,ILT target 0x001DF350 scans VictorySystem +0xEC FactionVictoryParameters names and returns 0x7fffffff when absent
 ?_bfme_findOrCreateFactionVictoryParameters@VictorySystem@@QAEPAUFactionVictoryParameters@@ABVAsciiString@@@Z,0x001E04B0,only caller is the FactionVictoryData parser 0x000C327E; lookup 0x001DF350 (0x7fffffff = missing) into the +0xEC vector of 0x18-byte entries else push_back {name 0 0 0 0 0} and return the last; struct name from the assert string at 0x010839F8
 ?_bfme_getFrameHeadroom@Network@@UAEHXZ,0x006819E0,vtable 0x0111A968 slot 17 (+0x44) via ILT 0x000238BC; if (m_conMgr) tail-jumps getFrameHeadroom@BFMEConnectionManager 0x00664320 else 0; ZH getPacketArrivalCushion shape but the callee derives frames of headroom from conMgr+0x1205C/+0x12060 not an arrival cushion; consumer 0x0006BE07 clamps it to 10 for the logic time-scale 0x012A72A4
 ?_bfme_getFramesBehindPacketRouter@Network@@UAEHXZ,0x00681D30,vtable 0x0111A968 slot 51 (+0xCC) via ILT 0x00030E27; if (m_conMgr) return conMgr+0x1205C frame ceiling - TheGameLogic(0x012F0898)+0x3C frame + 1 else 0; the debug display formats it with the wide string Frames behind the packet router: %d (VA 0x0111E8E0) at 0x006EEDDB and 0x006E8991 tests it > 9
@@ -78324,8 +78325,10 @@ __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
 __imp__bfmeEnterDVC@4,0x00F58D18,pin
 __imp__bfmeEnterDWA@4,0x00F58D18,pin
+__imp__bfmeEnterDWD@4,0x00F58D18,pin
 __imp__bfmeInitDWA@4,0x00F58E5C,pin
 __imp__bfmeLeaveDVC@4,0x00F58E74,pin
+__imp__bfmeLeaveDWD@4,0x00F58E74,pin
 __imp__bfmeStartDWB@4,0x00F58D0C,pin
 __imp__fopen,0x013593BC,pin
 __imp__ftell,0x013593EC,pin
@@ -78959,6 +78962,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??$_Construct@UFactionVictoryParameters@@U1@@_STL@@YAXPAUFactionVictoryParameters@@ABU1@@Z,0x0000CED2,ILT target 0x001DE970 copies the AsciiString and five scalar fields of the 0x18-byte FactionVictoryParameters used by VictorySystem::init
-?_M_insert_overflow@?$vector@UFactionVictoryParameters@@V?$allocator@UFactionVictoryParameters@@@_STL@@@_STL@@IAEXPAUFactionVictoryParameters@@ABU3@ABU__false_type@2@I_N@Z,0x0000303A,ILT target 0x001DFFF0 is the 0x18-byte nontrivial STLport vector grow path called by VictorySystem::init
-?_bfme_findFactionVictoryParametersIndex@VictorySystem@@AAEIABVAsciiString@@@Z,0x0002D2EA,ILT target 0x001DF350 scans VictorySystem +0xEC FactionVictoryParameters names and returns 0x7fffffff when absent
