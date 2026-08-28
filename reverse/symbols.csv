@@ -74853,9 +74853,9 @@ name,address,notes
 ?g_global12EF1D8@@3PAXA,0x00EEF1D8,pin
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
 ?g_lastPacketRouterStallFrame@@3IA,0x012F7704,last packet-router frame that triggered the native frame-stall gate
-?g_mgr12F33F8@@3PAVBfmeMgr412@@A,0x012F33F8,pin
+?g_mgr12F33F8@@3PAVBfmeMgr412@@A,0x00EF33F8,pin
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
-?g_obj12F060C@@3PAUBfmeObj2B1@@A,0x012F060C,pin
+?g_obj12F060C@@3PAUBfmeObj2B1@@A,0x00EF060C,pin
 ?g_quitMenuLayout@@3PAXA,0x012F4AD4,HideQuitMenu layout global
 ?g_rva0051B5F0Large@@3URva0051B5F0Large@@A,0x00D05FBC,Open-BFME5 packed thirteen-byte preset global
 ?g_rva0051B5F0Medium@@3URva0051B5F0Medium@@A,0x00D05FB0,Open-BFME5 packed ten-byte preset global
@@ -78663,7 +78663,7 @@ _bfmeStrEECa,0x00CC47B8,pin
 _bfmeStrEECb,0x00CC4B60,pin
 _bfmeStrEECc,0x00D158A8,pin
 _bfmeStrENF,0x00C82C44,pin
-_bfmeString10CF498,0x010CF498,pin
+_bfmeString10CF498,0x00CCF498,pin
 _bfmeTabEAC,0x00D098B0,pin
 _bfmeTagANB,0x00C9E038,pin
 _bfmeTagAPB,0x00DDFC30,pin
