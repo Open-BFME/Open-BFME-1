@@ -73074,6 +73074,7 @@ name,address,notes
 ?bfmeGetEME@BfmeObjEME@@QAEPAXPAX@Z,0x009EED20,pin
 ?bfmeGetENK@BfmeObjENK@@QAEPAUBfmeSubENK@@XZ,0x00046538,pin
 ?bfmeGetESA@BfmeObjESA@@QAEPAUBfmeSubESA@@XZ,0x00020824,pin
+?bfmeGetFAD@BfmeSubFAD@@QAEPAUBfmeResFAD@@XZ,0x0002BE77,pin
 ?bfmeGetFinalOverride@BfmeSubInnerEFF@@QAEPAXXZ,0x000022BB,pin
 ?bfmeGetHordeMemberCount@Object@@QBEHXZ,0x00030715,Open-BFME5 ILT thunk to body 0x001BFDF0; Object m_contain at +0x1FC asks virtual slot +0x68 for a horde interface then calls its count slot +0x150 with false; bfme prefix records unrecovered retail spelling
 ?bfmeGetID@BfmeDrawableWithID@@QAEIXZ,0x00009B01,Open-BFME5 ILT both drawable lookup-table wrappers at 0x00431C20 and 0x00430B50 read the id through
@@ -73232,6 +73233,7 @@ name,address,notes
 ?bfmeKindBVD@BfmeSubBVD@@QAEHXZ,0x0001E33A,pin
 ?bfmeKindCGG@BfmeOtherCGG@@QAEHPAX@Z,0x0004A719,pin
 ?bfmeKindCQE@BfmeXCQE@@QAEDXZ,0x00012E3B,pin
+?bfmeKindFAH@BfmeObjFAH@@QAEHPAX@Z,0x0004A719,pin
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLogCNE@@YGXHH@Z,0x00032DEE,pin
@@ -73481,6 +73483,7 @@ name,address,notes
 ?bfmeRunEYE@BfmeNodeEYE@@QAEXXZ,0x00031FCF,pin
 ?bfmeRunEZA@BfmeItemEZA@@QAEXXZ,0x0001BF40,pin
 ?bfmeRunEZF@BfmeGlobEZF@@QAEXXZ,0x00009EC1,pin
+?bfmeRunFAA@BfmeSubFAA@@QAEXH@Z,0x00030887,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
@@ -74792,6 +74795,7 @@ name,address,notes
 ?g_activeObj12F0610@@3PAXA,0x00EF0610,pin
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
+?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAccDYB@@3HA,0x00EED8A4,pin
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
 ?g_bfmeArgDZE@@3PAXA,0x00EB7D80,pin
@@ -74800,8 +74804,10 @@ name,address,notes
 ?g_bfmeArgEAC@@3PAXA,0x00EB7D80,pin
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
+?g_bfmeBFAE@@3HA,0x00EACB4C,pin
 ?g_bfmeBufDWG@@3PAXA,0x00F378D0,pin
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
+?g_bfmeCFAE@@3HA,0x00EEF418,pin
 ?g_bfmeClockAHB@@3PAUBfmeClockAHB@@A,0x00EF0898,pin
 ?g_bfmeClockAZA@@3PAUBfmeClockAZA@@A,0x00EF0898,pin
 ?g_bfmeClockBSA@@3PAUBfmeClockBSA@@A,0x00EF0898,pin
@@ -74872,6 +74878,7 @@ name,address,notes
 ?g_bfmeObjEVB@@3PAVBfmeGlobEVB@@A,0x00EF0898,pin
 ?g_bfmeObjEYA@@3PAUBfmeGlobEYA@@A,0x00EED5C8,pin
 ?g_bfmeObjEZF@@3PAVBfmeGlobEZF@@A,0x00EF33F8,pin
+?g_bfmeObjFAF@@3PAUBfmeGlobFAF@@A,0x00EF7014,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
