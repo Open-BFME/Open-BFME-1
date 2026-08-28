@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?loadGarrisonPoints@GarrisonContain@@IAEXXZ: Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain.cpp
 // Open-BFME5: lift the exact retail GarrisonContain::loadGarrisonPoints MASM body.
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GarrisonContain.h
 class GarrisonContain
 {
 protected:

@@ -15,12 +15,14 @@ typedef unsigned int UnsignedInt;
 class SpecialPowerTemplate;
 class SpecialPowerModuleInterface;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	SpecialPowerModuleInterface *getSpecialPowerModule(const SpecialPowerTemplate *spTemplate) const;	// ILT 0x000401BF
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
 class SpecialPowerStore
 {
 public:
@@ -29,6 +31,7 @@ public:
 
 extern SpecialPowerStore *TheSpecialPowerStore;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:

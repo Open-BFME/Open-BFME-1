@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getPosition@ParticleSystem@@QAEXPAUCoord3D@@@Z: Code/GameEngine/Source/GameClient/System/ParticleSys.cpp
 // Open-BFME5: ParticleSystem::getPosition, retail 0x005BDDB0, 63 bytes.
 //
 // The three components are read out of three 0x10-strided members into a local
@@ -6,6 +7,7 @@
 // x87 stack across the null test, which is why the miss path has a bare
 // fstp st(0).
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -13,6 +15,7 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 class ParticleSystem
 {
 public:

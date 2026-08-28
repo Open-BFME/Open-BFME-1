@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0ModelConditionUpgradeModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Upgrade/ModelConditionUpgrade.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ModelConditionUpgrade.h
 class ModelConditionUpgradeModuleData
 {
 public:

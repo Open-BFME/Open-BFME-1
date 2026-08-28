@@ -49,6 +49,7 @@
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Die/FXListDieConstructor.cpp
 // ??0FXListDie@@ present-unmatched
 FXListDie::FXListDie( Thing *thing, const ModuleData* moduleData ) : DieModule( thing, moduleData )
 {

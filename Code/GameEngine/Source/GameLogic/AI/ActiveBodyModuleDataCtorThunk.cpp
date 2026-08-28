@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0ActiveBodyModuleData@@: Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ActiveBody.h
 class ActiveBodyModuleData
 {
 public:

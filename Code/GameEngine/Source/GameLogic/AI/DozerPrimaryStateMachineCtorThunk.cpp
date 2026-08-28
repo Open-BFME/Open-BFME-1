@@ -2,6 +2,7 @@
 // Open-BFME5: lift MASM dump DozerPrimaryStateMachine ctor to C++ thunk.
 
 class Object;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DozerAIUpdate.h
 class DozerPrimaryStateMachine
 {
 public:

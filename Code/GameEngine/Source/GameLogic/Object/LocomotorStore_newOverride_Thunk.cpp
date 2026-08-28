@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?newOverride@LocomotorStore@@QAEPAVLocomotorTemplate@@PAV2@@Z: Code/GameEngine/Source/GameLogic/Object/Locomotor.cpp
 // Open-BFME5: LocomotorStore::newOverride, retail 0x001B55D0,
 // zh_sweep packet 001b55d0.
 //
@@ -18,6 +19,7 @@
 // newInstance(LocomotorTemplate) is a plain ::new here -- allocate, null-check,
 // construct -- with no EH frame, so the pool glue is not in the path.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class LocomotorTemplate
 {
 public:
@@ -34,6 +36,7 @@ private:
 	unsigned char m_unreconstructed_09[0x140 - 9];					///< out to sizeof 0x140
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class LocomotorStore
 {
 public:

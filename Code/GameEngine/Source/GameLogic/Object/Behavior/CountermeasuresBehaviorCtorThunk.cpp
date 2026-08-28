@@ -7,6 +7,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule
 {
 public:
@@ -62,6 +63,7 @@ public:
 	CountermeasuresBehaviorBase(Thing *thing, const ModuleData *moduleData);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CountermeasuresBehavior.h
 class CountermeasuresBehavior : public CountermeasuresBehaviorBase,
 	public CountermeasuresBehaviorIface5
 {

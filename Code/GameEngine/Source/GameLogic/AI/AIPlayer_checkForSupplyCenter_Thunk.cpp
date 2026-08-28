@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?checkForSupplyCenter@AIPlayer@@IAEXPAVBuildListInfo@@PAVObject@@@Z: Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp
 
 typedef bool Bool;
 typedef int Int;
@@ -6,6 +7,7 @@ typedef int Int;
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 enum GameDifficulty { DIFFICULTY_EASY, DIFFICULTY_NORMAL, DIFFICULTY_HARD };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -15,6 +17,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -23,12 +26,14 @@ public:
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	class OCLUpdate *findUpdateModule(NameKeyType key);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/SidesList.h
 class BuildListInfo
 {
 public:
@@ -43,6 +48,7 @@ private:
 	Int m_currentGatherers;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -50,6 +56,7 @@ public:
 	AsciiString m_side;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AISideInfo
 {
 public:
@@ -62,6 +69,7 @@ public:
 	AISideInfo *m_next;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class TAiData
 {
 public:
@@ -69,6 +77,7 @@ public:
 	AISideInfo *m_sideInfo;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -80,6 +89,7 @@ private:
 
 extern AI *TheAI;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class AIPlayer
 {
 protected:

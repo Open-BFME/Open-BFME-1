@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onContaining@OpenContain@@: Code/GameEngine/Source/GameLogic/Object/Contain/OpenContain.cpp
 // Open-BFME: OpenContain::onContaining, retail 0x00221720, 154 bytes.
 //
 // The reference's body with one BFME change: the enter sound is fetched by
@@ -21,6 +22,7 @@ typedef unsigned int ObjectID;
 
 enum { BFME_SOUND_ENTER = 101 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
@@ -33,12 +35,14 @@ private:
 	unsigned char m_unmodelled_000[0x70];			// sizeof
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
 public:
 	const AudioEventRTS *getSound(Int index) const;		// ILT 0x0001BFD1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -61,6 +65,7 @@ private:
 	ObjectID m_id;						// Object+0x74
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
 public:
@@ -86,6 +91,7 @@ public:
 
 extern AudioManager *TheAudio;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class ContainModuleInterface
 {
 public:

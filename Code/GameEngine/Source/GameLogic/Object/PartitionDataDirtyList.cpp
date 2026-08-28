@@ -40,6 +40,7 @@
 //-------------------------------------------------------------------------------------------------
 /// PartitionData node stand-in local to this TU: only the two dirty-list link
 /// fields this function touches are modeled; other members are unrecovered.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionData
 {
 public:

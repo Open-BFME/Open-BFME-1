@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getAdjustedVisionRangeForObject@AI@@SAMPBVObject@@H@Z: Code/GameEngine/Source/GameLogic/AI/ai.cpp
 
 // Open-BFME5: AI::getAdjustedVisionRangeForObject, retail 0x0014A620, 125
 // bytes, from the thunk queue -- the name sat on a five-byte thunk and this is
@@ -21,6 +22,7 @@ extern const Real BfmeZeroRange;				// 0x01075350
 
 class BfmeObjectAI;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -28,6 +30,7 @@ public:
 	void *m_bfme2c;                                      // +0x2C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -128,6 +131,7 @@ UnsignedInt BfmeObjectAI::bfmeStateFlags(void)
 	return result | 0x10;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:

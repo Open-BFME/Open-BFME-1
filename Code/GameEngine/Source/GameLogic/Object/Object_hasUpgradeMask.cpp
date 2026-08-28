@@ -99,6 +99,7 @@ public:
 	virtual BfmeUpgradeSource *bfmeSource(void) = 0;	// slot 26, vtable+0x68
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

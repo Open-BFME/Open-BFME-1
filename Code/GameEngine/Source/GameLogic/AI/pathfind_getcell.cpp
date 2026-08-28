@@ -1,4 +1,6 @@
 // cl: /EHsc /Ireference/shims/pathfind
+// readable body of ?clip@Pathfinder@@QAEXPAUCoord3D@@0@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
+// readable body of ?getCell@PathfindLayer@@QAEPAVPathfindCell@@HH@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 #include "GameLogic/AIPathfind.h"
 
 // Retail rejects type==5 (CELL_BRIDGE_IMPASSABLE in this tree's ordinal - see

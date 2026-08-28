@@ -8,6 +8,7 @@
 // ModuleData needs a declared destructor: without one MSVC emits no EH frame,
 // because a throw out of the member's constructor would have nothing to unwind.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 public:
@@ -27,6 +28,7 @@ private:
 	unsigned char m_body[0x2c];				///< 0x08 .. 0x34
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModuleData : public ModuleData
 {
 public:
@@ -37,6 +39,7 @@ public:
 	InstantDeathDieMuxData m_mux;			///< 0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/PointDefenseLaserUpdate.h
 class PointDefenseLaserUpdateModuleData : public DieModuleData
 {
 public:

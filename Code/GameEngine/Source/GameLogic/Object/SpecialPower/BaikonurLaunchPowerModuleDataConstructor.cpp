@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0BaikonurLaunchPowerModuleData@@: Code/GameEngine/Source/GameLogic/Object/SpecialPower/BaikonurLaunchPower.cpp
 
 // BaikonurLaunchPowerModuleData's constructor, retail 0x00212C10.
 //
@@ -22,6 +23,7 @@ private:
 	unsigned char m_unmodelled_04[ 0x64 - 4 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BaikonurLaunchPower.h
 class BaikonurLaunchPowerModuleData : public BaikonurLaunchPowerModuleDataBase
 {
 public:

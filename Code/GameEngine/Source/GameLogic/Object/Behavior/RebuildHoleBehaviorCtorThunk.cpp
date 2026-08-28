@@ -13,6 +13,7 @@ public:
 	void construct(Thing *, const ModuleData *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/RebuildHoleBehavior.h
 class RebuildHoleBehavior
 {
 public:

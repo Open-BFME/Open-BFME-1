@@ -6,6 +6,7 @@
 // at +0x31/+0x32) and nulling the list head. Unlike ZH, BFME's TeamInQueue
 // has a single base (no Snapshot subobject) and uses plain delete.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class WorkOrder
 {
 public:
@@ -15,6 +16,7 @@ public:
 	WorkOrder *m_next;	// +0x0c
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 	unsigned char m_pad[0x31];
@@ -34,6 +36,7 @@ public:
 	void *m_dlink2b;	// +0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class TeamInQueue : public TeamInQueueBase
 {
 protected:

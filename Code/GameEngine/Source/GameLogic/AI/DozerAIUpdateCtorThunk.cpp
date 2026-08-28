@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0DozerAIUpdate@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate.cpp
 
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DozerAIUpdate.h
 class DozerAIUpdate
 {
 public:

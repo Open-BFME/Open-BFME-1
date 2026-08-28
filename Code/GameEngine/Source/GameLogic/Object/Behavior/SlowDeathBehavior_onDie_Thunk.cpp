@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onDie@SlowDeathBehavior@@UAEXPBVDamageInfo@@@Z: Code/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehavior.cpp
 // Open-BFME5: lift the exact retail SlowDeathBehavior::onDie body to C++.
 
 // ?onDie@SlowDeathBehavior@@UAEXPBVDamageInfo@@@Z

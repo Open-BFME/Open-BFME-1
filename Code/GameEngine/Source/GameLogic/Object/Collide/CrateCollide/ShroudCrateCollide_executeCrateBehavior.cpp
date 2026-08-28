@@ -11,6 +11,7 @@ enum ObjectID
 	INVALID_OBJECT_ID = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -21,6 +22,7 @@ private:
 	Int m_playerIndex;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -32,6 +34,7 @@ private:
 	ObjectID m_id;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionManager
 {
 public:
@@ -40,6 +43,7 @@ public:
 
 extern PartitionManager *ThePartitionManager;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
@@ -51,12 +55,14 @@ private:
 	char m_bfmeBody[0x70];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MiscAudio.h
 struct MiscAudio
 {
 	char m_bfmeHead[0x8c0];
 	AudioEventRTS m_crateShroud;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
 public:
@@ -138,6 +144,7 @@ public:
 
 extern AudioManager *TheAudio;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ShroudCrateCollide.h
 class ShroudCrateCollide
 {
 protected:

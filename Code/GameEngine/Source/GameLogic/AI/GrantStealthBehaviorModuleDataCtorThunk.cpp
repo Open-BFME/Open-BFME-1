@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GrantStealthBehavior.h
 class GrantStealthBehaviorModuleData
 {
 public:

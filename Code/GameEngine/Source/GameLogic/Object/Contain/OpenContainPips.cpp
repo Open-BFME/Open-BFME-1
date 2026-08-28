@@ -12,6 +12,7 @@ enum KindOfType
 	KINDOF_INFANTRY = 8
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -21,6 +22,7 @@ public:
 	Overridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
 {
 public:
@@ -35,6 +37,7 @@ private:
 };
 
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Override.h
 class OVERRIDE
 {
 public:
@@ -54,6 +57,7 @@ private:
 	const T *volatile m_overridable;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
@@ -64,10 +68,12 @@ private:
 	OVERRIDE<ThingTemplate> m_template;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/OpenContain.h
 class OpenContainModuleData
 {
 public:

@@ -139,6 +139,7 @@ Int Squad::getSizeOfGroup(void) const
 }
 
 // isOnSquad //////////////////////////////////////////////////////////////////////////////////////
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/Squad_isOnSquad.cpp
 // ?isOnSquad@Squad@@QBE_NPBVObject@@@Z present-unmatched
 Bool Squad::isOnSquad(const Object *objToTest) const
 {

@@ -1,3 +1,4 @@
+// readable body of ??0TAiData@@QAE@XZ: Code/GameEngine/Source/GameLogic/AI/ai.cpp
 // Open-BFME: TAiData::TAiData, retail 0x0014B150.
 //
 // BFME's TAiData predates the larger Zero Hour layout exposed by the reference
@@ -18,6 +19,7 @@ private:
 	StringBase( const T *text );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -31,6 +33,7 @@ private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -43,6 +46,7 @@ protected:
 	virtual void loadPostProcess() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class TAiData : public Snapshot
 {
 public:

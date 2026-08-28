@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?putObjectAtGarrisonPoint@GarrisonContain@@: Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain.cpp
 // Open-BFME: GarrisonContain::putObjectAtGarrisonPoint, retail 0x0021D750,
 // 161 bytes.
 //
@@ -17,6 +18,7 @@ typedef float Real;
 
 struct Coord3D { Real x, y, z; };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -28,6 +30,7 @@ private:
 	ObjectID m_id;						// Object+0x74
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -43,12 +46,14 @@ extern GameLogic *TheGameLogic;
 enum { MAX_GARRISON_POINTS = 40 };
 enum { MAX_GARRISON_POINT_CONDITIONS = 3 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GarrisonContain.h
 class GarrisonContain
 {
 protected:
 	void putObjectAtGarrisonPoint( Object *obj, ObjectID targetID, Int conditionIndex, Int pointIndex );
 
 private:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GarrisonContain.h
 	struct GarrisonPointData
 	{
 		ObjectID object;				// +0x00

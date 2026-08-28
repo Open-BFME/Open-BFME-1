@@ -52,6 +52,7 @@
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////////////////////////
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ??0HiveStructureBodyModuleData@@ present-unmatched
 HiveStructureBodyModuleData::HiveStructureBodyModuleData()
 {

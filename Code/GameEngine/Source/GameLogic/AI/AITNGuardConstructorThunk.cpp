@@ -1,3 +1,4 @@
+// readable body of ??0AITNGuardMachine@@: Code/GameEngine/Source/GameLogic/AI/AITNGuard.cpp
 // Exact retail bytes for AITNGuardMachine::AITNGuardMachine at 0x0018AFB0.
 // Kept separate so AITNGuard.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_AITNGuardMachine_ctor_18AFB0()

@@ -48,6 +48,7 @@
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageCommandCenterCrateCollide.cpp
 // ??0ConvertToCarBombCrateCollide@@ present-unmatched
 ConvertToCarBombCrateCollide::ConvertToCarBombCrateCollide( Thing *thing, const ModuleData* moduleData ) : CrateCollide( thing, moduleData )
 {

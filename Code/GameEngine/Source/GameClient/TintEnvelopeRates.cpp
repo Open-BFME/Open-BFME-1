@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setAttackFrames@TintEnvelope@@AAEXI@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
+// readable body of ?setDecayFrames@TintEnvelope@@AAEXI@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 
 // FILE: TintEnvelopeRates.cpp //////////////////////////////////////////////
 //
@@ -46,12 +48,14 @@ public:
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameMemory.h
 class MemoryPoolObject
 {
 protected:
 	virtual ~MemoryPoolObject() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class TintEnvelope : public MemoryPoolObject
 {
 private:

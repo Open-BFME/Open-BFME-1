@@ -7,6 +7,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule
 {
 public:
@@ -62,6 +63,7 @@ public:
 	NeutronMissileSlowDeathBehaviorBase(Thing *thing, const ModuleData *moduleData);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/NeutronMissileSlowDeathUpdate.h
 class NeutronMissileSlowDeathBehavior : public NeutronMissileSlowDeathBehaviorBase,
 	public NeutronMissileSlowDeathBehaviorIface5
 {

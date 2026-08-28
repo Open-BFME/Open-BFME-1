@@ -18,12 +18,14 @@ typedef int Int;
 
 class AsciiString;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
 	void setEmoticon(const AsciiString &name, Int duration);	// ILT 0x00001A3C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -40,6 +42,7 @@ public:
 	virtual Drawable *getDrawable(void) const;		// vtable +0x28
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:

@@ -10,6 +10,7 @@
 // The zero lives in edi across all of it, which is also why the unwind state is
 // stored as the four-byte register form rather than the eight-byte immediate --
 // a difference that shows up in the function's total size, not in its shape.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -24,6 +25,7 @@ private:
 namespace FXParticleSystem
 {
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 class ParticleSystemInfo
 {
 public:
@@ -35,6 +37,7 @@ private:
 	unsigned char m_pad[0x94];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 class ParticleSystemTemplate : public ParticleSystemInfo
 {
 public:

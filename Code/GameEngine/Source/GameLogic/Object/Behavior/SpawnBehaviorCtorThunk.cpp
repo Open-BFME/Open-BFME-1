@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ??0SpawnBehavior@@: Code/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehavior.cpp
 #include <list>
 
 typedef unsigned int UnsignedInt;
@@ -8,6 +9,7 @@ class ModuleData;
 class ThingTemplate;
 class AsciiString;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingFactory.h
 class ThingFactory
 {
 public:
@@ -15,6 +17,7 @@ public:
 };
 extern ThingFactory *TheThingFactory;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule
 {
 public:
@@ -25,18 +28,21 @@ protected:
 	Thing *m_object;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModuleInterface
 {
 public:
 	virtual void getBehaviorModuleInterface() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleInterface
 {
 public:
 	virtual void updateModuleInterface() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule : public ObjectModule, public BehaviorModuleInterface
 {
 public:
@@ -47,6 +53,7 @@ public:
 	virtual ~BehaviorModule() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public BehaviorModule, public UpdateModuleInterface
 {
 public:

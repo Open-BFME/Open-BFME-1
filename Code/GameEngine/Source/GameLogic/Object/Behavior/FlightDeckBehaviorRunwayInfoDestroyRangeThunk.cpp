@@ -9,6 +9,7 @@
 // The packet names the one-parameter _Destroy overload; the body takes two
 // iterators, so the decorated name carries a `0` backreference for the second.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FlightDeckBehavior.h
 class FlightDeckBehavior
 {
 public:

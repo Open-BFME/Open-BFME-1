@@ -3,6 +3,7 @@ typedef unsigned int UnsignedInt;
 typedef bool Bool;
 typedef unsigned short zoneStorageType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
@@ -20,6 +21,7 @@ struct PathfindMovementProfile
 	Int layer;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 struct PathfindCell
 {
 	unsigned char m_prefix[8];
@@ -27,6 +29,7 @@ struct PathfindCell
 	unsigned char m_tail[6];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 struct ZoneBlock
 {
 	zoneStorageType getEffectiveZone(
@@ -42,6 +45,7 @@ struct ZoneBlock
 	unsigned char m_tailPadding[3];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindZoneManager
 {
 public:

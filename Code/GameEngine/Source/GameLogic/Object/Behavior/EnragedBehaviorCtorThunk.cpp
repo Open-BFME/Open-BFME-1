@@ -20,6 +20,7 @@ protected:
 class EnragedBehaviorIface1 { public: virtual void slot(); };
 class EnragedBehaviorIface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public PB_DeepBase, public EnragedBehaviorIface1,
     public EnragedBehaviorIface2
 {

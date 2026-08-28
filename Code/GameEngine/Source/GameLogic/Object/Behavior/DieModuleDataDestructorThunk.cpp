@@ -5,6 +5,7 @@
 // order), then stores the base vftable. Member names are inferred from the
 // byte evidence (8 base bytes + four ints + two strings).
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	char *m_str;
@@ -12,6 +13,7 @@ public:
 	~AsciiString();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 public:
@@ -19,6 +21,7 @@ public:
 	unsigned int m_04;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModuleData : public ModuleData
 {
 public:

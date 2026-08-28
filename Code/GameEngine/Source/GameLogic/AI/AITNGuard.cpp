@@ -152,6 +152,7 @@ Bool TunnelNetworkExitConditions::shouldExit(const StateMachine* machine) const
 
 //-- AITNGuardMachine -------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AITNGuardConstructorThunk.cpp
 // ??0AITNGuardMachine@@ present-unmatched
 AITNGuardMachine::AITNGuardMachine( Object *owner ) : 
 	StateMachine(owner, "AITNGuardMachine"),

@@ -266,6 +266,7 @@ m_cpopValid(FALSE)
 	m_cpopOut.posOnPath.zero();
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathDestructor.cpp
 // ??1Path@@MAE@XZ present-unmatched
 Path::~Path( void )
 {
@@ -434,6 +435,7 @@ void Path::prependNode( const Coord3D *pos, PathfindLayerEnum layer )
 /**
  * Create a new node at the tail of the path
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/Path_appendNode.cpp
 // ?appendNode@Path@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z present-unmatched
 void Path::appendNode( const Coord3D *pos, PathfindLayerEnum layer )
 {
@@ -1927,6 +1929,7 @@ ZoneBlock::~ZoneBlock()
 	freeZones();
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp
 // ?freeZones@ZoneBlock@@IAEXXZ present-unmatched
 void ZoneBlock::freeZones(void) 
 {
@@ -2167,6 +2170,7 @@ void PathfindZoneManager::freeZones()
 	m_zonesAllocated = 0;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathfindZoneManager_freeBlocks.cpp
 // ?freeBlocks@PathfindZoneManager@@AAEXXZ present-unmatched
 void PathfindZoneManager::freeBlocks() 
 {
@@ -2209,6 +2213,7 @@ void PathfindZoneManager::allocateZones(void)
 }
 
 /* Allocate zone blocks for hierarchical pathfinding.   */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathfindZoneManager_allocateBlocks_Thunk.cpp
 // ?allocateBlocks@PathfindZoneManager@@QAEXABUIRegion2D@@@Z present-unmatched
 void PathfindZoneManager::allocateBlocks(const IRegion2D &globalBounds) 
 {
@@ -3341,6 +3346,7 @@ void PathfindLayer::doDebugIcons(void) {
 /**
  * Sets the bridge & layer number for a layer.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathfindLayer_initAndSetDestroyed.cpp
 // ?init@PathfindLayer@@QAE_NPAVBridge@@W4PathfindLayerEnum@@@Z present-unmatched
 Bool PathfindLayer::init(Bridge *theBridge, PathfindLayerEnum layer)  
 {
@@ -3453,6 +3459,7 @@ void PathfindLayer::allocateCellsForWallLayer(const IRegion2D *extent, ObjectID 
 /**
  * Checks to see if a broken bridge connects 2 zones.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathfindLayerConnectsZones.cpp
 // ?connectsZones@PathfindLayer@@QAE_NPAVPathfindZoneManager@@ABVLocomotorSet@@HH@Z present-unmatched
 Bool PathfindLayer::connectsZones(PathfindZoneManager *zm, const LocomotorSet& locoSet,
 																	Int zone1, Int zone2)
@@ -3556,6 +3563,7 @@ void PathfindLayer::classifyWallCells(ObjectID *wallPieces, Int numPieces)
 /**
  * Relassifies the pathfind cells for the destroyed bridge layer.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathfindLayer_initAndSetDestroyed.cpp
 // ?setDestroyed@PathfindLayer@@QAE_N_N@Z present-unmatched
 Bool PathfindLayer::setDestroyed(Bool destroyed)
 {
@@ -3595,6 +3603,7 @@ ObjectID PathfindLayer::getBridgeID(void)
 /**
  * Return the cell at the index location.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/pathfind_getcell.cpp
 // ?getCell@PathfindLayer@@QAEPAVPathfindCell@@HH@Z present-unmatched
 PathfindCell *PathfindLayer::getCell(Int x, Int y)
 {
@@ -3926,6 +3935,7 @@ Bool Pathfinder::isPointOnWall(const Coord3D *pos)
 /** 
  * Adds a bridge & returns the layer. 
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/Pathfinder_addBridge.cpp
 // ?addBridge@Pathfinder@@QAE?AW4PathfindLayerEnum@@PAVBridge@@@Z present-unmatched
 PathfindLayerEnum Pathfinder::addBridge(Bridge *theBridge)
 {
@@ -4075,6 +4085,7 @@ void Pathfinder::classifyFence( Object *obj, Bool insert )
  * If 'insert' is true, object is being added 
  * If 'insert' is false, object is being removed 
  */
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp
 // ?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z present-unmatched
 void Pathfinder::classifyObjectFootprint( Object *obj, Bool insert )
 {
@@ -4158,6 +4169,7 @@ void Pathfinder::classifyObjectFootprint( Object *obj, Bool insert )
 	internal_classifyObjectFootprint(obj, insert);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?internal_classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z present-unmatched
 void Pathfinder::internal_classifyObjectFootprint( Object *obj, Bool insert )
 {
@@ -5575,6 +5587,7 @@ Bool Pathfinder::adjustToPossibleDestination(Object *obj, const LocomotorSet& lo
  * Queues an object to do a pathfind.
  * It will call the object's ai update->doPathfind() during processPathfindQueue().
  */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Pathfinder_queueForPath_Thunk.cpp
 // ?queueForPath@Pathfinder@@QAE_NW4ObjectID@@@Z present-unmatched
 Bool Pathfinder::queueForPath(ObjectID id)
 {
@@ -6321,6 +6334,7 @@ Int Pathfinder::examineNeighboringCells(PathfindCell *parentCell, PathfindCell *
  * Find a short, valid path between given locations.
  * Uses A* algorithm.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathfinderFindPathThunk.cpp
 // ?findPath@Pathfinder@@EAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBUCoord3D@@2@Z present-unmatched
 Path *Pathfinder::findPath( Object *obj, const LocomotorSet& locomotorSet, const Coord3D *from, 
 													 const Coord3D *rawTo)
@@ -6396,6 +6410,7 @@ Path *Pathfinder::findPath( Object *obj, const LocomotorSet& locomotorSet, const
  * Find a short, valid path between given locations.
  * Uses A* algorithm.
  */
+// byte-exact reconstruction: Code/masm_dumps/internalFindPath_Pathfinder_3F0340.asm
 // ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBUCoord3D@@2@Z present-unmatched
 Path *Pathfinder::internalFindPath( Object *obj, const LocomotorSet& locomotorSet, const Coord3D *from, 
 													 const Coord3D *rawTo)
@@ -6873,6 +6888,7 @@ struct MADStruct
 	return 0;	// keep going
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Pathfinder_moveAlliesAwayFromDestination_Thunk.cpp
 // ?moveAlliesAwayFromDestination@Pathfinder@@QAEXPAVObject@@ABUCoord3D@@@Z present-unmatched
 void Pathfinder::moveAlliesAwayFromDestination(Object *obj,const Coord3D& destination)
 {
@@ -6943,6 +6959,7 @@ struct GroundCellsStruct
  * Find a short, valid path between given locations.
  * Uses A* algorithm.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIPathfind_findGroundPath.asm
 // ?findGroundPath@Pathfinder@@ present-unmatched
 Path *Pathfinder::findGroundPath( const Coord3D *from, 
 													 const Coord3D *rawTo, Int pathDiameter, Bool crusher)
@@ -8057,6 +8074,7 @@ Bool Pathfinder::slowDoesPathExist( Object *obj,
 	return found;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/pathfind_getcell.cpp
 // ?clip@Pathfinder@@QAEXPAUCoord3D@@0@Z present-unmatched
 void Pathfinder::clip( Coord3D *from, Coord3D *to )
 {
@@ -11705,6 +11723,7 @@ void Pathfinder::setDebugPath(Path *newDebugpath)
  * Given two world-space points, call callback for each cell.
  * Uses Bresenham line algorithm from www.gamedev.net.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/pathfind_iterateCellsAlongLine_world.cpp
 // ?iterateCellsAlongLine@Pathfinder@@ present-unmatched
 Int Pathfinder::iterateCellsAlongLine( const Coord3D& startWorld, const Coord3D& endWorld, 
 																			PathfindLayerEnum layer, CellAlongLineProc proc, void* userData )
@@ -11718,6 +11737,7 @@ Int Pathfinder::iterateCellsAlongLine( const Coord3D& startWorld, const Coord3D&
  * Given two world-space points, call callback for each cell.
  * Uses Bresenham line algorithm from www.gamedev.net.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/pathfind_iterateCellsAlongLine_world.cpp
 // ?iterateCellsAlongLine@Pathfinder@@ present-unmatched
 Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end, 
 																			PathfindLayerEnum layer, CellAlongLineProc proc, void* userData )
@@ -11983,6 +12003,7 @@ Bool Pathfinder::isViewBlockedByObstacle(const Object* obj, const Object* objOth
 
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Pathfinder_isAttackViewBlockedByObstacle_Thunk.cpp
 // ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@ABUCoord3D@@01@Z present-unmatched
 Bool Pathfinder::isAttackViewBlockedByObstacle(const Object* attacker, const Coord3D& attackerPos, const Object* victim, const Coord3D& victimPos)
 {
@@ -12290,6 +12311,7 @@ Bool Pathfinder::isGroundPathPassable( Bool isCrusher, const Coord3D& startWorld
  * If 'repaired' is true, bridge is repaired 
  * If 'repaired' is false, bridge has been damaged to be impassable 
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/Pathfinder_changeBridgeState.cpp
 // ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z present-unmatched
 void Pathfinder::changeBridgeState( PathfindLayerEnum layer, Bool repaired)
 {
@@ -12493,6 +12515,7 @@ void Pathfinder::updateAircraftGoal( Object *obj, const Coord3D *newGoalPos)
  * Used for a unit that is going to be moving several times, like following a waypoint path, 
  * or intentionally collides with other units (like a car bomb). jba
  */
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/W3DRadarBuildTerrainTextureThunk.cpp
 // ?removeGoal@Pathfinder@@QAEXPAVObject@@@Z present-unmatched
 void Pathfinder::removeGoal( Object *obj)
 {
@@ -12664,6 +12687,7 @@ void Pathfinder::updatePos( Object *obj, const Coord3D *newPos)
 /** 
  * Removes the position cell flags for an ai unit.
  */
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/RadarRefreshTerrainThunk.cpp
 // ?removePos@Pathfinder@@QAEXPAVObject@@@Z present-unmatched
 void Pathfinder::removePos( Object *obj)
 {

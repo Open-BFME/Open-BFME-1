@@ -27,10 +27,12 @@
 // ObjectTypes.cpp already carries the real ZH class body for this constructor
 // under a `present-unmatched` marker, but compiling it under this repo's own
 // stlport/AsciiString headers currently produces a wider vector<AsciiString> (one
+// readable body of ??0ObjectTypes@@: Code/GameEngine/Source/GameLogic/Object/ObjectTypes.cpp
 // extra data word) and an out-of-line AsciiString call retail does not have, so
 // it is not the byte-exact source yet. Four plain zero-initialized pointer-sized
 // members reproduce retail's exact "xor ecx,ecx; mov [x+N],ecx" sequence without
 // depending on that unresolved layout question.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectTypes.h
 class ObjectTypes
 {
 public:

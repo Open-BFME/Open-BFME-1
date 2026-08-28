@@ -52,6 +52,7 @@
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/CreateObjectDieModuleDataCtorThunk.cpp
 // ??0CreateObjectDieModuleData@@ present-unmatched
 CreateObjectDieModuleData::CreateObjectDieModuleData()
 {
@@ -83,6 +84,7 @@ CreateObjectDieModuleData::CreateObjectDieModuleData()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Die/CreateObjectDieConstructor.cpp
 // ??0CreateObjectDie@@ present-unmatched
 CreateObjectDie::CreateObjectDie( Thing *thing, const ModuleData* moduleData ) : DieModule( thing, moduleData )
 {

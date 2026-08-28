@@ -3,6 +3,7 @@
 // The declarations below retain the BFME object layout while keeping this
 // translation unit independent of the reference headers.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -22,6 +23,7 @@ private:
 	unsigned char m_data[0x2c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModuleData : public Snapshot
 {
 public:
@@ -46,6 +48,7 @@ private:
 	void *m_allocator;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/InstantDeathBehavior.h
 class InstantDeathBehaviorModuleData : public DieModuleData
 {
 public:

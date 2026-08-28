@@ -1,5 +1,6 @@
 // cl: /ICode/GameEngine/Include /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/GameEngine/Source/Common/System /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
+// readable body of ?ParseBlendTileData@WorldHeightMap@@IAE_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -131,6 +132,7 @@ BridgeInfo::BridgeInfo()
 // ------------------------------------------------------------------------------------------------
 /** Create a tower object for the bridge of the specified type (and therefore position) */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Bridge_createTower_Thunk.cpp
 // ?createTower@Bridge@@QAEPAVObject@@PAUCoord3D@@W4BridgeTowerType@@PBVThingTemplate@@PAV2@@Z present-unmatched
 Object *Bridge::createTower( Coord3D *worldPos,
 														 BridgeTowerType towerType, 
@@ -223,6 +225,7 @@ Object *Bridge::createTower( Coord3D *worldPos,
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Bridge_ctor_Thunk.cpp
 // ??0Bridge@@ present-unmatched
 Bridge::Bridge(BridgeInfo &theInfo, Dict *props, AsciiString bridgeTemplateName) :
 m_bridgeInfo(theInfo)
@@ -336,6 +339,7 @@ m_bridgeInfo(theInfo)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Bridge_ctor_Thunk.cpp
 // ??0Bridge@@ present-unmatched
 Bridge::Bridge(Object *bridgeObj) 
 {
@@ -461,6 +465,7 @@ Bridge::~Bridge()
 //-------------------------------------------------------------------------------------------------
 /** isPointOnBridge - see if point is on bridge. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/BridgeIsPointOnBridgeThunk.cpp
 // ?isPointOnBridge@Bridge@@QAE_NPBUCoord3D@@@Z present-unmatched
 Bool Bridge::isPointOnBridge(const Coord3D *pLoc)
 {
@@ -655,6 +660,7 @@ static Bool PointInRegion2D( const Coord3D *pt, const Region2D *clipRegion )
 //-------------------------------------------------------------------------------------------------
 /** isCellOnEnd - see if cell is on the end of the bridge. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/BridgeIsCellOnEndThunk.cpp
 // ?isCellOnEnd@Bridge@@QAE_NPBURegion2D@@@Z present-unmatched
 Bool Bridge::isCellOnEnd(const Region2D *cell)
 {
@@ -708,6 +714,7 @@ Bool Bridge::isCellOnEnd(const Region2D *cell)
 //-------------------------------------------------------------------------------------------------
 /** isCellOnSide - see if cell is on the end of the bridge. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Bridge_isCellOnSide_Thunk.cpp
 // ?isCellOnSide@Bridge@@QAE_NPBURegion2D@@@Z present-unmatched
 Bool Bridge::isCellOnSide(const Region2D *cell)
 {
@@ -884,6 +891,7 @@ Bool Bridge::pickBridge(const Vector3 &from, const Vector3 &to, Vector3 *pos)
 //-------------------------------------------------------------------------------------------------
 /** updateDamageState - Update the damage state. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/Bridge.cpp
 // ?updateDamageState@Bridge@@QAEXXZ present-unmatched
 void Bridge::updateDamageState( void )
 {
@@ -950,6 +958,7 @@ void Bridge::updateDamageState( void )
 //-------------------------------------------------------------------------------------------------
 /** getHeight - Get the height for an object on bridge.. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/BridgeGetBridgeHeightThunk.cpp
 // ?getBridgeHeight@Bridge@@QAEMPBUCoord3D@@PAU2@@Z present-unmatched
 Real Bridge::getBridgeHeight(const Coord3D *pLoc, Coord3D* normal)
 {
@@ -973,6 +982,7 @@ Real Bridge::getBridgeHeight(const Coord3D *pLoc, Coord3D* normal)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogicCtorThunk.cpp
 // ??0TerrainLogic@@QAE@XZ present-unmatched
 TerrainLogic::TerrainLogic()
 {
@@ -1007,6 +1017,7 @@ TerrainLogic::TerrainLogic()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainLogicDestructorThunk.cpp
 // ??1TerrainLogic@@UAE@XZ present-unmatched
 TerrainLogic::~TerrainLogic()
 {
@@ -1271,6 +1282,7 @@ void TerrainLogic::enableWaterGrid( Bool enable )
 /** device independent terrain logic load.  If query is true, we are just loading it to get
 look at some data rather than running a game, so don't pass this load to the client. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainLogic_loadMap_Thunk.cpp
 // ?loadMap@TerrainLogic@@UAE_NVAsciiString@@_N@Z present-unmatched
 Bool TerrainLogic::loadMap( AsciiString filename, Bool query )
 {
@@ -1646,6 +1658,7 @@ void TerrainLogic::addBridgeToLogic(BridgeInfo *pInfo, Dict *props, AsciiString 
 //-------------------------------------------------------------------------------------------------
 /** Adds a bridge's info get height function for logical terrain */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogic_addLandmarkBridgeToLogic_Thunk.cpp
 // ?addLandmarkBridgeToLogic@TerrainLogic@@UAEXPAVObject@@@Z present-unmatched
 void TerrainLogic::addLandmarkBridgeToLogic(Object *bridgeObj)
 {
@@ -2076,6 +2089,7 @@ void TerrainLogic::getBridgeAttackPoints(const Object *bridge, TBridgeAttackInfo
 //-------------------------------------------------------------------------------------------------
 /** Picks a bridge, and returns it's drawable. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/TerrainLogic_pickBridge_Thunk.cpp
 // ?pickBridge@TerrainLogic@@UAE_NABVVector3@@0PAV2@@Z present-unmatched
 Bool TerrainLogic::pickBridge(const Vector3 &from, const Vector3 &to, Vector3 *pos)
 {
@@ -2428,6 +2442,7 @@ Real TerrainLogic::getWaterHeight( const WaterHandle *water )
 /** Set the water height.  If the water rises, then any objects that now find themselves
 	* underwater will be damaged by the amount provided in the parameter 'damageAmount' */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogic_setWaterHeight_Thunk.cpp
 // ?setWaterHeight@TerrainLogic@@UAEXPBVWaterHandle@@MM_N@Z present-unmatched
 void TerrainLogic::setWaterHeight( const WaterHandle *water, Real height, Real damageAmount,
 																	 Bool forcePathfindUpdate )
@@ -2613,6 +2628,7 @@ void TerrainLogic::changeWaterHeightOverTime( const WaterHandle *water,
 // ------------------------------------------------------------------------------------------------
 /** Find the axis aligned bounding region around a water table */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogicFindAxisAlignedBoundingRectThunk.cpp
 // ?findAxisAlignedBoundingRect@TerrainLogic@@IAEXPBVWaterHandle@@PAURegion3D@@@Z present-unmatched
 void TerrainLogic::findAxisAlignedBoundingRect( const WaterHandle *water, Region3D *region )
 {
@@ -2704,6 +2720,7 @@ void TerrainLogic::findAxisAlignedBoundingRect( const WaterHandle *water, Region
 
 }  // end findAxisAlignedBoundingRect
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/TerrainLogic_setActiveBoundary_Thunk.cpp
 // ?setActiveBoundary@TerrainLogic@@QAEXH@Z present-unmatched
 void TerrainLogic::setActiveBoundary(Int newActiveBoundary)
 {
@@ -3068,6 +3085,7 @@ void TerrainLogic::crc( Xfer *xfer )
 	* 2: Added water updates over time (CBD)
 	*/
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogicXferThunk.cpp
 // ?xfer@TerrainLogic@@MAEXPAVXfer@@@Z present-unmatched
 void TerrainLogic::xfer( Xfer *xfer )
 {

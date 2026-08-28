@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onEnter@TurretAIIdleState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/TurretAI.cpp
 // Open-BFME5: retail-layout C++ conversion of TurretAIIdleState::onEnter.
 
 enum StateReturnType
@@ -6,6 +7,7 @@ enum StateReturnType
 	STATE_RETURN_ZERO = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 private:
@@ -19,6 +21,7 @@ public:
 	void resetNextMoodCheckTime();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 private:
@@ -38,6 +41,7 @@ public:
 	int MaxIdleScanInterval;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TurretAI.h
 class TurretAI
 {
 private:
@@ -52,6 +56,7 @@ public:
 	int getMaxIdleScanInterval() const { return ModuleData->MaxIdleScanInterval; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TurretAI.h
 class TurretStateMachine
 {
 private:
@@ -63,6 +68,7 @@ public:
 	TurretAI *Turret;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 private:
@@ -74,6 +80,7 @@ public:
 	unsigned int getFrame() const { return Frame; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TurretAI.h
 class TurretAIIdleState
 {
 public:

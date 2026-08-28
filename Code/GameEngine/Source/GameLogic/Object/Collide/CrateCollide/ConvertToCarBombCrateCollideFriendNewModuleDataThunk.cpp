@@ -43,6 +43,7 @@ ConvertToCarBombCrateCollideModuleData::ConvertToCarBombCrateCollideModuleData()
 	*(unsigned int *)((char *)this + 0x5C) = 10;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -51,6 +52,7 @@ public:
 
 extern "C" char ConvertToCarBombCrateCollideFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ConvertToCarBombCrateCollide.h
 class ConvertToCarBombCrateCollide
 {
 public:

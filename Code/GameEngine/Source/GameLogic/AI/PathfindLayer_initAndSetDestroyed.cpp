@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?init@PathfindLayer@@QAE_NPAVBridge@@W4PathfindLayerEnum@@@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
+// readable body of ?setDestroyed@PathfindLayer@@QAE_N_N@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 
 // Open-BFME5: PathfindLayer::init (42B at 0x003FB950) and
 // PathfindLayer::setDestroyed (44B at 0x003FCEC0). Both carried only machine
@@ -18,6 +20,7 @@ class Bridge;
 
 enum PathfindLayerEnum { BFME_LAYER_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindLayer
 {
 public:

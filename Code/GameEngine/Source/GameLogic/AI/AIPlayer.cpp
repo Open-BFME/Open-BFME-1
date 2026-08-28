@@ -111,6 +111,7 @@ m_curWarehouseID(INVALID_ID)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AIPlayerDestructorThunk.cpp
 // ??1AIPlayer@@MAE@XZ present-unmatched
 AIPlayer::~AIPlayer()
 {
@@ -120,6 +121,7 @@ AIPlayer::~AIPlayer()
 // ------------------------------------------------------------------------------------------------
 /** Invoked when a structure I am building is finished building. */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIPlayerOnStructureProducedThunk.cpp
 // ?onStructureProduced@AIPlayer@@UAEXPAVObject@@0@Z present-unmatched
 void AIPlayer::onStructureProduced( Object *factory, Object *bldg )
 {
@@ -193,6 +195,8 @@ void AIPlayer::onStructureProduced( Object *factory, Object *bldg )
 // ------------------------------------------------------------------------------------------------
 /** See if the building is a supply center, and see how many supply trucks we want. */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIPlayer_checkForSupplyCenter_Thunk.cpp
+// ?checkForSupplyCenter@AIPlayer@@IAEXPAVBuildListInfo@@PAVObject@@@Z present-unmatched
 void AIPlayer::checkForSupplyCenter( BuildListInfo *info, Object *bldg )
 {
 	class SupplyCenterDockUpdate;
@@ -899,6 +903,7 @@ void AIPlayer::aiPreTeamDestroy( const Team *deletedTeam )
 //-------------------------------------------------------------------------------------------------
 /** Guard supply center */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIPlayer_guardSupplyCenter_Thunk.cpp
 // ?guardSupplyCenter@AIPlayer@@QAEXPAVTeam@@H@Z present-unmatched
 void AIPlayer::guardSupplyCenter( Team *team, Int minSupplies )
 {
@@ -3295,6 +3300,8 @@ Bool TeamInQueue::areBuildsComplete()
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TeamInQueue_disbandMethodThunk.cpp
+// ?disband@TeamInQueue@@QAEXXZ present-unmatched
 void TeamInQueue::disband()
 {
 	Team *newTeam = m_team->getPrototype()->getControllingPlayer()->getDefaultTeam();

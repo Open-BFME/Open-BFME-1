@@ -64,6 +64,7 @@ static const Int K_SIDES_DATA_VERSION_3 = 3;	// includes Team list.
 /**
  SidesInfo - Constructor.
 */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/SidesInfoConstructorThunk.cpp
 // ??0SidesInfo@@ present-unmatched
 SidesInfo::SidesInfo(void) :
 	m_pBuildList(NULL),
@@ -71,6 +72,7 @@ SidesInfo::SidesInfo(void) :
 {
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/SidesInfoConstructorThunk.cpp
 // ??0SidesInfo@@ present-unmatched
 SidesInfo::SidesInfo(const SidesInfo& thatref) :
 	m_pBuildList(NULL),
@@ -82,6 +84,7 @@ SidesInfo::SidesInfo(const SidesInfo& thatref) :
 /**
  SidesInfo - Destructor - 
 */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SidesInfoDestructorThunk.cpp
 // ??1SidesInfo@@QAE@XZ present-unmatched
 SidesInfo::~SidesInfo(void)
 {
@@ -210,6 +213,7 @@ Int SidesInfo::removeFromBuildList(BuildListInfo *pBuildList)
 /**
  SidesList - Constructor.
 */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/SidesListCtorThunk.cpp
 // ??0SidesList@@QAE@XZ present-unmatched
 SidesList::SidesList(void) : m_numSides(0), m_numSkirmishSides(0)
 {
@@ -218,6 +222,7 @@ SidesList::SidesList(void) : m_numSides(0), m_numSkirmishSides(0)
 /**
  SidesList - Destructor - 
 */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SidesListDestructorThunk.cpp
 // ??1SidesList@@UAE@XZ present-unmatched
 SidesList::~SidesList(void)
 {
@@ -491,6 +496,7 @@ static Bool ParseTeamsDataChunk(DataChunkInput &file, DataChunkInfo *info, void 
 	return true;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SidesList_prepareForMP_or_SkirmishMethodThunk.cpp
 // ?prepareForMP_or_Skirmish@SidesList@@QAEXXZ present-unmatched
 void SidesList::prepareForMP_or_Skirmish(void)
 {
@@ -579,6 +585,7 @@ void SidesList::prepareForMP_or_Skirmish(void)
 }
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SidesList_isPlayerDefaultTeam_Thunk.cpp
 // ?isPlayerDefaultTeam@SidesList@@QAE_NPAVTeamsInfo@@@Z present-unmatched
 Bool SidesList::isPlayerDefaultTeam(TeamsInfo *t)
 {
@@ -633,6 +640,7 @@ void SidesList::addSkirmishTeam(const Dict* d)
 	m_skirmishTeamrec.addTeam(d);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SidesList_removeSideMethodThunk.cpp
 // ?removeSide@SidesList@@QAEXH@Z present-unmatched
 void SidesList::removeSide(Int i)
 {
@@ -2770,6 +2778,7 @@ __declspec(naked) Bool SidesList::validateAllyEnemyList(const AsciiString& tname
 #endif
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SidesList_addPlayerByTemplateMethodThunk.cpp
 // ?addPlayerByTemplate@SidesList@@QAEXVAsciiString@@@Z present-unmatched
 void SidesList::addPlayerByTemplate(AsciiString playerTemplateName)
 {
@@ -4755,6 +4764,7 @@ m_buildingName(AsciiString::TheEmptyString)
 /**
  BuildListInfo - Destructor - note - if linked, deletes linked items.
 */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BuildListInfoDestructorThunk.cpp
 // ??1BuildListInfo@@MAE@XZ present-unmatched
 BuildListInfo::~BuildListInfo(void)
 {
@@ -4770,6 +4780,7 @@ BuildListInfo::~BuildListInfo(void)
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BuildListInfo_parseStructureMethodThunk.cpp
 // ?parseStructure@BuildListInfo@@ present-unmatched
 void BuildListInfo::parseStructure(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
 {
@@ -4913,6 +4924,7 @@ TeamsInfoRec& TeamsInfoRec::operator=(const TeamsInfoRec& thatref)
 	return *this;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__clear_TeamsInfoRec_QAEXXZ_001991F0.cpp
 // ?clear@TeamsInfoRec@@QAEXXZ present-unmatched
 void TeamsInfoRec::clear() 
 { 
@@ -4942,6 +4954,7 @@ TeamsInfo *TeamsInfoRec::findTeamInfo(AsciiString name, Int* index /*= NULL*/)
 	return NULL;
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/TeamsInfoRecAddTeamThunk.cpp
 // ?addTeam@TeamsInfoRec@@QAEXPBVDict@@@Z present-unmatched
 void TeamsInfoRec::addTeam(const Dict* d)
 {
@@ -4973,6 +4986,7 @@ void TeamsInfoRec::addTeam(const Dict* d)
 	m_teams[m_numTeams++].init(d);
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/TeamsInfoRecAddTeamThunk.cpp
 // ?removeTeam@TeamsInfoRec@@QAEXH@Z present-unmatched
 void TeamsInfoRec::removeTeam(Int i)
 {

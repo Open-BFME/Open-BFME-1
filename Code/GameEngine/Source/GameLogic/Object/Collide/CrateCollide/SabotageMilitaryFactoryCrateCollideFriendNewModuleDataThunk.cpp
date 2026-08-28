@@ -9,6 +9,7 @@
 class INI;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SabotageMilitaryFactoryCrateCollide.h
 class SabotageMilitaryFactoryCrateCollide
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setTurretTargetObject@TurretAI@@QAEXPAVObject@@_N@Z: Code/GameEngine/Source/GameLogic/AI/TurretAI.cpp
 // Open-BFME5: retail-layout C++ conversion of TurretAI::setTurretTargetObject.
 
 typedef bool Bool;
@@ -18,6 +19,7 @@ class Weapon;
 	virtual void prefix##6(); virtual void prefix##7(); \
 	virtual void prefix##8(); virtual void prefix##9()
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -40,6 +42,7 @@ public:
 	virtual void removeTargeter(ObjectID, Bool);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 private:
@@ -76,18 +79,21 @@ public:
 	ObjectID getID() const { return ID; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TurretAI.h
 struct TurretAIData
 {
 	char Pad[0x3C];
 	unsigned int ControlledWeaponSlots;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 struct State
 {
 	void *VTable;
 	int ID;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -113,6 +119,7 @@ public:
 	Object *getGoalObject();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TurretAI.h
 class TurretAI
 {
 private:

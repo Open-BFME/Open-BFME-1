@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?update@AIHuntState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME5: lift the exact retail AIHuntState::update body to C++.
 
 // ?update@AIHuntState@@UAE?AW4StateReturnType@@XZ

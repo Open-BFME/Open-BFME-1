@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?resetIdleScan@TurretAIIdleState@@AAEXXZ: Code/GameEngine/Source/GameLogic/AI/TurretAI.cpp
 // Open-BFME5: TurretAIIdleState::resetIdleScan, retail 0x0018CAF0,
 // zh_sweep packet 0018caf0.
 //
@@ -24,6 +25,7 @@ typedef unsigned int UnsignedInt;
 Int GetGameLogicRandomValue( Int lo, Int hi, char *file, Int line );
 #define GameLogicRandomValue(lo, hi) GetGameLogicRandomValue((lo), (hi), (char *)__FILE__, __LINE__)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -38,6 +40,7 @@ extern GameLogic *TheGameLogic;
 
 // The two hops between the turret and its module data are unnamed: retail
 // proves the offsets, not what lives at them.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TurretAI.h
 class TurretAIData
 {
 public:
@@ -53,6 +56,7 @@ public:
 	const TurretAIData *m_data;								///< +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TurretAI.h
 class TurretAI
 {
 public:
@@ -64,6 +68,7 @@ private:
 	TurretAIModuleHolder *m_holder;							///< +0x44
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TurretAI.h
 class TurretAIIdleState
 {
 private:

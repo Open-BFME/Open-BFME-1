@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setGoalPosition@StateMachine@@: Code/GameEngine/Source/Common/StateMachine.cpp
 
 // StateMachine::setGoalPosition, retail 0x000A0880. No calls: a lock flag at
 // +0x40 and a null argument both fall straight to the return, and otherwise the
@@ -6,6 +7,7 @@
 // offset into the destination register once rather than into each store, which
 // is a struct assignment and not three field writes.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -13,6 +15,7 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:

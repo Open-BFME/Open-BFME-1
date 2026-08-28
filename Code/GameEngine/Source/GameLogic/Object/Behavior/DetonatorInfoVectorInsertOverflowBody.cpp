@@ -17,9 +17,11 @@
 // moves. Retail hands the helpers' empty dispatch tag the address of its own
 // trailing bool argument rather than spending a frame slot on it.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/MinefieldBehavior.h
 class MinefieldBehavior
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/MinefieldBehavior.h
 	struct DetonatorInfo
 	{
 		unsigned char m_data[16];

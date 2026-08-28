@@ -26,12 +26,14 @@ public:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXListStore
 {
 public:
 	const FXList *findFXList(const char *name) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -42,6 +44,7 @@ public:
 extern GlobalData *TheGlobalData;
 extern FXListStore *TheFXListStore;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ActiveBody.h
 class ActiveBodyModuleData
 {
 public:
@@ -53,6 +56,7 @@ private:
 	unsigned char m_head[0x44];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StructureBody.h
 class StructureBodyModuleData : public ActiveBodyModuleData
 {
 public:

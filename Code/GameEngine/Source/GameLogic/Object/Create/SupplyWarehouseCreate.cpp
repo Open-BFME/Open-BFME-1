@@ -40,6 +40,7 @@
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Create/SupplyWarehouseCreateConstructor.cpp
 // ??0SupplyWarehouseCreate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 SupplyWarehouseCreate::SupplyWarehouseCreate( Thing *thing, const ModuleData* moduleData ) : CreateModule( thing, moduleData )
 {

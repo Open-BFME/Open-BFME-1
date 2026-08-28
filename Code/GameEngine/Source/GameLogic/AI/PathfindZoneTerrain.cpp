@@ -33,6 +33,7 @@ struct ZoneEquivalencies
 	zoneStorageType *all;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindZoneManager
 {
 public:

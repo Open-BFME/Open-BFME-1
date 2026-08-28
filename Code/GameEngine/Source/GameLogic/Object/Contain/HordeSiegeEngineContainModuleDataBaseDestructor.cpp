@@ -51,6 +51,7 @@ struct Gen_t_0022b000_p8cd
 	char m_bfmeBody[8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0ProductionUpdateModuleData@@: Code/GameEngine/Source/GameLogic/Object/Update/ProductionUpdate.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ProductionUpdate.h
 class ProductionUpdateModuleData
 {
 public:

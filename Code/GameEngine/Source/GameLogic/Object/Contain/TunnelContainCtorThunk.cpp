@@ -45,6 +45,7 @@ private:
     unsigned char m_pad[0x9C];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TunnelContain.h
 class TunnelContain : public TC_Base
 {
 public:

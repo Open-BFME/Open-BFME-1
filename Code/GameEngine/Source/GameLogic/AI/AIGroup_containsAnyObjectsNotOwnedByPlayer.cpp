@@ -16,12 +16,14 @@ typedef bool Bool;
 
 class Player;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	Player *getControllingPlayer(void) const;		// ILT 0x00020824
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:

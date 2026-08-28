@@ -5,6 +5,7 @@
 
 class Thing;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 public:

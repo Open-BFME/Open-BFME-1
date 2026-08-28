@@ -10,6 +10,7 @@
 class ModuleData;
 class WeaponTemplate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 private:
@@ -19,6 +20,7 @@ public:
 	unsigned int m_weaponStatus;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class Module
 {
 public:
@@ -29,6 +31,7 @@ private:
 	const ModuleData *m_moduleData;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule : public Module
 {
 public:
@@ -41,12 +44,14 @@ private:
 	Thing *m_thing;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModuleInterface
 {
 public:
 	virtual void behaviorModuleInterfaceAnchor() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule : public ObjectModule, public BehaviorModuleInterface
 {
 public:
@@ -61,6 +66,7 @@ public:
 	virtual void collideModuleInterfaceAnchor() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CollideModule.h
 class CollideModule : public BehaviorModule, public FireWeaponCollideModuleInterface
 {
 public:
@@ -69,6 +75,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FireWeaponCollide.h
 class FireWeaponCollideModuleData
 {
 public:
@@ -86,6 +93,7 @@ enum WeaponSlotType
 	PRIMARY_WEAPON = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 private:
@@ -95,6 +103,7 @@ public:
 	unsigned int m_status;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponStore
 {
 public:
@@ -103,6 +112,7 @@ public:
 
 extern WeaponStore *TheWeaponStore;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FireWeaponCollide.h
 class FireWeaponCollide : public CollideModule
 {
 public:

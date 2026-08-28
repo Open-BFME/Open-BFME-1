@@ -18,12 +18,14 @@ typedef bool Bool;
 class CommandButton;
 enum CommandSourceType {};
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	void doCommandButtonAtObject(const CommandButton *commandButton, Object *obj, CommandSourceType cmdSource, Bool bfmeFlag);	// ILT 0x00033AA0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:

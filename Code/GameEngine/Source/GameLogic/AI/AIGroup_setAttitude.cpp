@@ -15,12 +15,14 @@
 
 enum AttitudeType {};
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
 	void setAttitude(AttitudeType tude);			// ILT 0x00030553
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -31,6 +33,7 @@ private:
 	AIUpdateInterface *m_ai;				// +0x204
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:

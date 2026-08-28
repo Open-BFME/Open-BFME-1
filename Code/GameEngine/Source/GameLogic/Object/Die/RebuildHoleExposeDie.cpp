@@ -59,6 +59,7 @@
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ??0RebuildHoleExposeDieModuleData@@ present-unmatched
 RebuildHoleExposeDieModuleData::RebuildHoleExposeDieModuleData()
 {
@@ -91,6 +92,7 @@ RebuildHoleExposeDieModuleData::RebuildHoleExposeDieModuleData()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageCommandCenterCrateCollide.cpp
 // ??0RebuildHoleExposeDie@@ present-unmatched
 RebuildHoleExposeDie::RebuildHoleExposeDie( Thing *thing, const ModuleData* moduleData )
 										: DieModule( thing, moduleData )

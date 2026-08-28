@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setWaterHeight@TerrainLogic@@UAEXPBVWaterHandle@@MM_N@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // Open-BFME5: lift the exact retail TerrainLogic::setWaterHeight body to C++.
 
 // ?setWaterHeight@TerrainLogic@@UAEXPBVWaterHandle@@MM_N@Z

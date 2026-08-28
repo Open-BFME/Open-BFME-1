@@ -28,6 +28,7 @@ protected:
 class LargeGroupBonusIface1 { public: virtual void slot(); };
 class LargeGroupBonusIface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public LargeGroupBonusDeepBase,
                      public LargeGroupBonusIface1,
                      public LargeGroupBonusIface2

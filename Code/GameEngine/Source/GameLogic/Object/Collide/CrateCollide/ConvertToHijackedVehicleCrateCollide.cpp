@@ -69,6 +69,7 @@
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageCommandCenterCrateCollide.cpp
 // ??0ConvertToHijackedVehicleCrateCollide@@ present-unmatched
 ConvertToHijackedVehicleCrateCollide::ConvertToHijackedVehicleCrateCollide( Thing *thing, const ModuleData* moduleData ) : CrateCollide( thing, moduleData )
 {

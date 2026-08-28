@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0AIAttackFollowWaypointPathState@@QAE@PAVStateMachine@@_N@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 
 class StateMachine;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIAttackFollowWaypointPathState
 {
 public:

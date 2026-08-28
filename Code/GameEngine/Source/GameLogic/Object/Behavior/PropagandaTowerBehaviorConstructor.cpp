@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0PropagandaTowerBehavior@@: Code/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehavior.cpp
 
 // The retail BFME UpdateModule prefix has three interface vptrs before the
 // PropagandaTowerBehavior interface.  Keep that verified view local to this
@@ -26,6 +27,7 @@ protected:
 class PB_Iface1 { public: virtual void slot(); };
 class PB_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public PB_DeepBase, public PB_Iface1, public PB_Iface2
 {
 public:
@@ -48,6 +50,7 @@ public:
     virtual void slot();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/PropagandaTowerBehavior.h
 class PropagandaTowerBehavior : public UpdateModule,
     public PropagandaTowerBehaviorIface
 {

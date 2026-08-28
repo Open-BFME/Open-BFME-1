@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0Bridge@@: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // Open-BFME5: lift the exact retail Bridge constructor body to C++.
 
 // ??0Bridge@@

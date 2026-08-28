@@ -28,12 +28,14 @@ typedef bool Bool;
 
 class AIGroup;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	void leaveGroup(void);					// ILT 0x0001F212
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -42,6 +44,7 @@ public:
 
 extern AI *TheAI;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:

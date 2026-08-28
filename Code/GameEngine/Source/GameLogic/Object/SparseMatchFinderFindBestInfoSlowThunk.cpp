@@ -1,8 +1,10 @@
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/WeaponSet.h
 class WeaponTemplateSet
 {
 };
 
 template <int Bits>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 };
@@ -21,6 +23,7 @@ class vector
 }
 
 template <class Set, class Flags>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SparseMatchFinder.h
 class SparseMatchFinder
 {
 	const Set *findBestInfoSlow(_STL::vector<Set, _STL::allocator<Set> > const &, Flags const &) const;

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onObjectCreated@BoneFXDamage@@: Code/GameEngine/Source/GameLogic/Object/Damage/BoneFXDamage.cpp
 // Open-BFME5: lift BoneFXDamage::onObjectCreated __emit thunk to clean C++.
 // Function-static MemoryPool from the factory (guard byte + static store),
 // a bind call on the member at +0x08, and a throw of a variadic exception
@@ -6,6 +7,7 @@
 
 class MemoryPool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameMemory.h
 class MemoryPoolFactory
 {
 public:
@@ -20,6 +22,7 @@ public:
     int bind(MemoryPool *pool);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
 class INIException
 {
 public:
@@ -40,6 +43,7 @@ private:
     unsigned int m_f4;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BoneFXDamage.h
 class BoneFXDamage : public BFX_RootBase
 {
 protected:

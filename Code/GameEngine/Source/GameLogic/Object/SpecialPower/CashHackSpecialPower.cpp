@@ -44,6 +44,7 @@
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/CashHackSpecialPowerModuleDataCtorThunk.cpp
 // ??0CashHackSpecialPowerModuleData@@QAE@XZ present-unmatched
 CashHackSpecialPowerModuleData::CashHackSpecialPowerModuleData( void )
 {
@@ -86,6 +87,7 @@ static void parseCashHackUpgradePair( INI* ini, void * /*instance*/, void *store
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/SpecialPower/CashHackSpecialPowerConstructor.cpp
 // ??0CashHackSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 CashHackSpecialPower::CashHackSpecialPower( Thing *thing, const ModuleData *moduleData )
 												: SpecialPowerModule( thing, moduleData )
@@ -125,6 +127,7 @@ static volatile CashHackConstBegin cashHackConstBeginAnchor = &CashHackUpgradesV
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/CashHackSpecialPower_doSpecialPowerAtObject_Thunk.cpp
 // ?doSpecialPowerAtObject@CashHackSpecialPower@@UAEXPAVObject@@I@Z present-unmatched
 void CashHackSpecialPower::doSpecialPowerAtObject( Object *victim, UnsignedInt commandOptions )
 {

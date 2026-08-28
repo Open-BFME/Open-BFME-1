@@ -45,6 +45,7 @@
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TransitionDamageFXModuleData_ctor_Thunk.cpp
 // ??0TransitionDamageFXModuleData@@ present-unmatched
 TransitionDamageFXModuleData::TransitionDamageFXModuleData( void )
 {
@@ -144,6 +145,7 @@ static void parseFXLocInfo( INI *ini, void *instance, FXLocInfo *locInfo )
 /** In the form of:
 	* FXListSlot = <<Bone:BoneName BoneRandom:<Yes|No>> | <Loc: X:x Y:y Z:z>> FXList:FXListName */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TransitionDamageFXModuleDataParseFXListThunk.cpp
 // ?parseFXList@TransitionDamageFXModuleData@@ present-unmatched
 void TransitionDamageFXModuleData::parseFXList( INI *ini, void *instance, 
 																								void *store, const void *userData )
@@ -173,6 +175,7 @@ void TransitionDamageFXModuleData::parseFXList( INI *ini, void *instance,
 /** In the form of:
 	* OCLSlot = <<Bone:BoneName BoneRandom:<Yes|No>> | <Loc: X:x Y:y Z:z>> OCL:OCLName */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TransitionDamageFXModuleDataParseObjectCreationListThunk.cpp
 // ?parseObjectCreationList@TransitionDamageFXModuleData@@ present-unmatched
 void TransitionDamageFXModuleData::parseObjectCreationList( INI *ini, void *instance, 
 																														void *store, const void *userData )
@@ -202,6 +205,7 @@ void TransitionDamageFXModuleData::parseObjectCreationList( INI *ini, void *inst
 /** In the form of:
 	* ParticleSlot = <<Bone:BoneName BoneRandom:<Yes|No>> | <Loc: X:x Y:y Z:z>> PSys:PSysName */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/FXModuleDataParseParticleSystemThunks.cpp
 // ?parseParticleSystem@TransitionDamageFXModuleData@@ present-unmatched
 void TransitionDamageFXModuleData::parseParticleSystem( INI *ini, void *instance, 
 																												void *store, const void *userData )

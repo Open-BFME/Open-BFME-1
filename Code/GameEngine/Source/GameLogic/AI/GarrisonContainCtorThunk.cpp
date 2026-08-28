@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0GarrisonContain@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain.cpp
 
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GarrisonContain.h
 class GarrisonContain
 {
 public:

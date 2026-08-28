@@ -6,6 +6,7 @@ class DamageInfo;
 // +0x18 of its DamageInfoInput argument.  DamageInfo below spells the same
 // two fields four bytes further out, so BFME's DamageInfo carries a four-byte
 // prefix ahead of the embedded input block; nothing here needs the rest.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfoInput
 {
 public:
@@ -15,12 +16,14 @@ public:
 	float m_amount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	void onDie(DamageInfo *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule
 {
 public:
@@ -32,6 +35,7 @@ protected:
 	unsigned int m_behaviorState;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 class BodyModuleInterface
 {
 public:
@@ -40,6 +44,7 @@ public:
 	virtual float estimateDamage(DamageInfoInput &) const = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfo
 {
 	public:
@@ -51,6 +56,7 @@ class DamageInfo
 	bool m_noEffect;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/InactiveBody.h
 class InactiveBody : public BehaviorModule, public BodyModuleInterface
 {
 public:

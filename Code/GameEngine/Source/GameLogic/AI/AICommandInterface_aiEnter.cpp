@@ -6,6 +6,7 @@
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -25,6 +26,7 @@ enum CommandSourceType
 	CMD_FROM_PLAYER = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandParms
 {
 public:
@@ -40,6 +42,7 @@ public:
 	char m_remaining[0x9c - 0x2c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:

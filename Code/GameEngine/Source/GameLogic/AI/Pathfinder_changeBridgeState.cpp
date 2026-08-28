@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 // Open-BFME: Pathfinder::changeBridgeState, retail 0x003D58C0, 70 bytes.
 //
 // The reference's body with two BFME differences. The layer test runs the
@@ -16,6 +17,7 @@ typedef bool Bool;
 
 enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindLayer
 {
 public:
@@ -26,12 +28,14 @@ private:
 	char m_bfme_body[0x44];					// the layer stride
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindZoneManager
 {
 public:
 	void markZonesDirty(Bool insert, Bool bfmeSecond);	// ILT 0x00015307
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:

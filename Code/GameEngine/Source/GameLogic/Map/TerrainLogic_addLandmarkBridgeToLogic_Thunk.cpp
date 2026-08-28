@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?addLandmarkBridgeToLogic@TerrainLogic@@UAEXPAVObject@@@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // Open-BFME5: TerrainLogic::addLandmarkBridgeToLogic, retail 0x001AA860,
 // zh_sweep packet 001aa860.
 //
@@ -23,6 +24,7 @@ class Object;
 
 enum PathfindLayerEnum { LAYER_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Bridge
 {
 public:
@@ -39,12 +41,14 @@ private:
 	unsigned char m_unreconstructed_8C[0x90 - 0x8C];		///< out to sizeof 0x90
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:
 	PathfindLayerEnum addBridge( Bridge *bridge );			///< ILT 0x0003C966 -> 0x003D5850
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -57,6 +61,7 @@ private:
 
 extern AI *TheAI;											///< retail 0x012EF214
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:

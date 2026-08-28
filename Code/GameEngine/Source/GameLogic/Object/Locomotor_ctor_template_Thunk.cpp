@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0Locomotor@@: Code/GameEngine/Source/GameLogic/Object/Locomotor.cpp
 // Open-BFME5: lift the exact retail Locomotor constructor body to C++.
 
 // ??0Locomotor@@IAE@PBVLocomotorTemplate@@@Z

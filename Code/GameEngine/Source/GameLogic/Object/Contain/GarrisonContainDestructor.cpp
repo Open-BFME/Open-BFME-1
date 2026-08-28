@@ -49,6 +49,7 @@ private:
 	unsigned char m_pad[0x3c4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 class Coord3D
 {
 public:
@@ -58,6 +59,7 @@ private:
 	float m_value[3];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GarrisonContain.h
 class GarrisonContain : public OpenContain
 {
 public:

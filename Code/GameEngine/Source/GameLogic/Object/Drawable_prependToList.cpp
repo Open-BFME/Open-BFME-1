@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?prependToList@Drawable@@QAEXPAPAV1@@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 
 // Drawable::prependToList, retail 0x00411C50. No calls, four stores: clear this
 // drawable's previous link at +0x108, point its next link at +0x104 at whatever
@@ -8,6 +9,7 @@
 // and once for the back-link test - which is what reading *pListHead twice does
 // through a pointer the compiler cannot prove is unaliased.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:

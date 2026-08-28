@@ -12,6 +12,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class Module
 {
 public:
@@ -26,6 +27,7 @@ private:
 // the same incremental-link thunk as seven other module constructors. Module
 // itself is what the factory returns, and it sits at offset zero, so the
 // returned pointer needs no adjustment.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ClientUpdateModule.h
 class ClientUpdateModule : public Module
 {
 public:

@@ -30,6 +30,7 @@ private:
     unsigned int m_field04;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FireWeaponWhenDeadBehavior.h
 class FireWeaponWhenDeadBehaviorModuleData : public FWWDead_ModuleDataBase
 {
 public:

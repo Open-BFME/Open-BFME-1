@@ -1,15 +1,18 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?guardSupplyCenter@AIPlayer@@QAEXPAVTeam@@H@Z: Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp
 
 typedef bool Bool;
 typedef int Int;
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord2D
 {
 	Real x;
 	Real y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
@@ -20,12 +23,14 @@ struct Coord3D
 	void normalize();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Region2D
 {
 	Coord2D lo;
 	Coord2D hi;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Geometry.h
 class GeometryInfo
 {
 public:
@@ -34,6 +39,7 @@ private:
 	Real m_boundingCircleRadius;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -46,6 +52,7 @@ private:
 	GeometryInfo m_geometryInfo;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -54,6 +61,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:
@@ -63,12 +71,14 @@ public:
 		CommandSourceType commandSource);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
 	void getTeamAsAIGroup(AIGroup *group);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -77,6 +87,7 @@ public:
 
 extern AI *TheAI;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -87,6 +98,7 @@ private:
 };
 
 #define BFME_VIRTUAL_SLOT(n) virtual void slot##n();
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -102,6 +114,7 @@ public:
 
 extern ScriptEngine *TheScriptEngine;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class AIPlayer
 {
 public:

@@ -5,6 +5,7 @@
 
 #include <list>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -14,6 +15,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -33,6 +35,7 @@ private:
 	unsigned char m_data[0x2c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModuleData : public Snapshot
 {
 public:
@@ -43,6 +46,7 @@ private:
 	InstantDeathDieMuxData m_dieMuxData;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CreateCrateDie.h
 class CreateCrateDieModuleData : public DieModuleData
 {
 public:

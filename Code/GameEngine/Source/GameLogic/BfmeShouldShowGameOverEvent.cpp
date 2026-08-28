@@ -38,6 +38,7 @@ public:
 	Bool bfmeIsSet(void);					// ILT 0x0000CFC7
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:

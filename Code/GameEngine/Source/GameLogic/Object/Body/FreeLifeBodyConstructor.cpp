@@ -16,6 +16,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule
 {
 public:
@@ -38,6 +39,7 @@ struct FreeLifeBodyModuleData
 	bool m_unmodelled_6C;				// +0x6C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 class BodyModuleInterface
 {
 public:

@@ -1,9 +1,12 @@
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowVideoManager.h
 class WindowVideo
 {
 };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowVideoManager.h
 class WindowVideoManager
 {
 public:
@@ -23,6 +26,7 @@ struct _Select1st
 {
 };
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/STLTypedefs.h
 struct equal_to
 {
 };

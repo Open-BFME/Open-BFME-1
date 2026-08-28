@@ -42,6 +42,7 @@
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Damage/BoneFXDamageConstructor.cpp
 // ??0BoneFXDamage@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 BoneFXDamage::BoneFXDamage( Thing *thing, const ModuleData* moduleData ) 
 																		  : DamageModule( thing, moduleData )
@@ -57,6 +58,7 @@ BoneFXDamage::~BoneFXDamage( void )
 }  // end ~BoneFXDamage
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Damage/BoneFXDamage_onObjectCreated_Thunk.cpp
 // ?onObjectCreated@BoneFXDamage@@ present-unmatched
 void BoneFXDamage::onObjectCreated()
 {

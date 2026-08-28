@@ -5,12 +5,14 @@ class ModuleData;
 
 enum ScienceType { SCIENCE_INVALID = -1 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
 	bool hasScience( ScienceType t ) const;			///< ILT 0x0000943F -> 0x000CE340
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -20,6 +22,7 @@ public:
 // Only the one field this function reads is reconstructed. m_killerScience is
 // at +0x30 because that is the offset the caller-side load uses -- the template
 // pointer arrives as the first argument and is dereferenced there directly.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/CrateSystem.h
 class CrateTemplate
 {
 public:
@@ -27,6 +30,7 @@ public:
 	ScienceType m_killerScience;					///< retail this+0x30
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule
 {
 public:
@@ -37,18 +41,21 @@ private:
 	unsigned char m_data[8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModuleInterface
 {
 public:
 	virtual void behaviorModuleInterfaceAnchor();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModuleInterface
 {
 public:
 	virtual void dieModuleInterfaceAnchor();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModule : public ObjectModule,
 	public BehaviorModuleInterface,
 	public DieModuleInterface
@@ -60,6 +67,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CreateCrateDie.h
 class CreateCrateDie : public DieModule
 {
 public:

@@ -179,6 +179,7 @@ Bool GuardRetaliateExitConditions::shouldExit(const StateMachine* machine) const
 
 //-- AIGuardRetaliateMachine -------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIGuardRetaliateMachineCtorThunk.cpp
 // ??0AIGuardRetaliateMachine@@ present-unmatched
 AIGuardRetaliateMachine::AIGuardRetaliateMachine( Object *owner ) : 
 	StateMachine(owner, "AIGuardRetaliateMachine"),

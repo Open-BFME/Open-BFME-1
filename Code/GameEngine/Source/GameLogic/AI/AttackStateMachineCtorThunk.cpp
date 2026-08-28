@@ -1,12 +1,15 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0AttackStateMachine@@QAE@PAVObject@@PAVAIAttackState@@VAsciiString@@_N33@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 
 class Object;
 class AIAttackState;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
     char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AttackStateMachine
 {
 public:

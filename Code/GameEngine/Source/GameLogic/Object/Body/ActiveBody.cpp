@@ -135,6 +135,7 @@ static BodyDamageType calcDamageState(Real health, Real maxHealth)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/ActiveBodyModuleDataCtorThunk.cpp
 // ??0ActiveBodyModuleData@@ present-unmatched
 ActiveBodyModuleData::ActiveBodyModuleData()
 {
@@ -147,6 +148,7 @@ ActiveBodyModuleData::ActiveBodyModuleData()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Body/ActiveBodyModuleDataBuildFieldParseThunk.cpp
 // ?buildFieldParse@ActiveBodyModuleData@@ present-unmatched
 void ActiveBodyModuleData::buildFieldParse(MultiIniFieldParse& p) 
 {
@@ -1133,6 +1135,7 @@ void ActiveBody::deleteAllParticleSystems( void )
 // ------------------------------------------------------------------------------------------------
 /* 	This function is called on state changes only.  Body Type or Aflameness. */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody_updateBodyParticleSystems_Thunk.cpp
 // ?updateBodyParticleSystems@ActiveBody@@ present-unmatched
 void ActiveBody::updateBodyParticleSystems( void )
 {

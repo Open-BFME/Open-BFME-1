@@ -22,6 +22,7 @@ private:
 class PB_Iface1 { public: virtual void slot(); };
 class EvacuateDamageInterface { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DamageModule.h
 class DamageModule : public PB_DeepBase,
                      public PB_Iface1,
                      public EvacuateDamageInterface

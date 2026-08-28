@@ -1,3 +1,4 @@
+// readable body of ??0AIStateMachine@@QAE@PAVObject@@VAsciiString@@@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Exact retail bytes for AIStateMachine::AIStateMachine at 0x00185A20.
 // Kept separate so AIStates.cpp continues to provide its other symbols and constructor funclets.
 extern "C" __declspec(naked) void bfme_AIStateMachine_ctor_185A20()

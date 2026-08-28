@@ -1,4 +1,7 @@
 // cl: /EHsc
+// readable body of ??0WindowLayout@@: Code/GameEngine/Source/GameClient/GUI/WindowLayout.cpp
+// readable body of ??1WindowLayout@@: Code/GameEngine/Source/GameClient/GUI/WindowLayout.cpp
+// readable body of ?destroyWindows@WindowLayout@@: Code/GameEngine/Source/GameClient/GUI/WindowLayout.cpp
 // WindowLayout (Generals GameClient/GUI/WindowLayout.cpp). The original was
 // compiled with exception handling; BFME's set(str) wrapper folds strlen of
 // the literal into the two-arg set call.

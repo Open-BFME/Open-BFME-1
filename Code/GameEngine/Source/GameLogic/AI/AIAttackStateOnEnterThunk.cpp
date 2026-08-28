@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onEnter@AIAttackState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME5: lift the exact retail AIAttackState::onEnter MASM body.
 
 enum StateReturnType {};
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIAttackState
 {
 public:

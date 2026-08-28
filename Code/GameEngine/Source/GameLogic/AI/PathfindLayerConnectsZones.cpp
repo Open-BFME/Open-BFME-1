@@ -1,3 +1,4 @@
+// readable body of ?connectsZones@PathfindLayer@@QAE_NPAVPathfindZoneManager@@ABVLocomotorSet@@HH@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 // BFME PathfindLayer::connectsZones. Unlike the later reference body, the
 // 16-byte BFME cell stores its connect layer in flag bits 12..17 and the
 // ground-cell zone must pass through both zone-manager equivalence maps.
@@ -30,6 +31,7 @@ struct PathfindMovementProfile
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/LocomotorSet.h
 class LocomotorSet
 {
 public:
@@ -40,6 +42,7 @@ private:
 	int m_validSurfaces;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCell
 {
 public:
@@ -56,6 +59,7 @@ private:
 	unsigned int m_flags;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct IRegion2D
 {
 	Int loX;
@@ -64,6 +68,7 @@ struct IRegion2D
 	Int hiY;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:
@@ -81,6 +86,7 @@ private:
 	IRegion2D m_mapBounds;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -93,6 +99,7 @@ private:
 
 extern "C" AI *TheAIParseDefinitionAI;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindZoneManager
 {
 public:
@@ -102,6 +109,7 @@ public:
 		const PathfindMovementProfile &profile, zoneStorageType zone) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindLayer
 {
 public:

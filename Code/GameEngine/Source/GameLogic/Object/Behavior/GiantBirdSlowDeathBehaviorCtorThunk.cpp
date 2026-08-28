@@ -3,6 +3,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -14,6 +15,7 @@ enum ObjectID
     INVALID_OBJECT_ID = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
@@ -54,6 +56,7 @@ public:
     virtual void slowDeathBehaviorDieAnchor();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SlowDeathBehavior.h
 class SlowDeathBehaviorInterface
 {
 public:

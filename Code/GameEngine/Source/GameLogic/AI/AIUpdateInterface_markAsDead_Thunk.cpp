@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?markAsDead@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // Open-BFME5: AIUpdateInterface::markAsDead, retail 0x0026EE80.
 //
 // Same reason this lives beside setQueueForPathTime's thunk rather than in
@@ -30,6 +31,7 @@
 // into friend_notifyStateMachineChanged; there is no separate call in the
 // retail bytes.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -43,12 +45,14 @@ enum UpdateSleepTime
 	UPDATE_SLEEP_FOREVER	= 0x3fffffff
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 private:
 	char m_unreconstructed_00[4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule
 {
 public:
@@ -66,6 +70,7 @@ protected:
 	char m_unreconstructed_0c[0x20 - 0x0c];		///< brings UpdateModule to 0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public UpdateModule, public AICommandInterface
 {
 public:

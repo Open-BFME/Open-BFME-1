@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
+// readable body of ?winGetDrawFunc@GameWindow@@QAEP6AXPAV1@PAVWinInstanceData@@@ZXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -335,6 +336,7 @@ static Bool inWeaponRangeObject(State *thisState, void* userData);
  * Create an AI state machine. Define all of the states the machine 
  * can possibly be in, and set the initial (default) state.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AttackStateMachineCtorThunk.cpp
 // ??0AttackStateMachine@@QAE@PAVObject@@PAVAIAttackState@@VAsciiString@@_N33@Z present-unmatched
 AttackStateMachine::AttackStateMachine( Object *obj, AIAttackState* att, AsciiString name, Bool follow, Bool attackingObject, Bool forceAttacking ) 
 	: StateMachine( obj, name )
@@ -751,6 +753,7 @@ void AIRappelState::onExit( StateExitType status )
 	NOTE NOTE NOTE NOTE NOTE
 
 */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIStateMachineConstructorThunk.cpp
 // ??0AIStateMachine@@QAE@PAVObject@@VAsciiString@@@Z present-unmatched
 AIStateMachine::AIStateMachine( Object *obj, AsciiString name ) : StateMachine( obj, name )
 {
@@ -1718,6 +1721,7 @@ Bool AIInternalMoveToState::computePath()
  * We are initiating a moveTo action.
  * Pathfind from m_goalPosition to goal.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateThunks.cpp
 // ?onEnter@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIInternalMoveToState::onEnter()
 {
@@ -1793,6 +1797,7 @@ StateReturnType AIInternalMoveToState::onEnter()
 /**
  * Start playing the object's move sound.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AIInternalMoveToState_startMoveSoundMethodThunk.cpp
 // ?startMoveSound@AIInternalMoveToState@@AAEXXZ present-unmatched
 void AIInternalMoveToState::startMoveSound(void)
 {
@@ -1872,6 +1877,7 @@ void AIInternalMoveToState::onExit( StateExitType status )
  * Execute the moveTo behavior towards GoalPosition.
  */
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateThunks.cpp
 // ?update@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIInternalMoveToState::update()
 {
@@ -2121,6 +2127,7 @@ AIAttackMoveStateMachine::~AIAttackMoveStateMachine()
 // note - has no crc/xfer as has no member vars. jba.
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIMoveToStateCtorThunk.cpp
 // ??0AIMoveToState@@QAE@PAVStateMachine@@@Z present-unmatched
 AIMoveToState::AIMoveToState(StateMachine *machine) : m_isMoveTo(true), AIInternalMoveToState( machine, "AIMoveToState" )
 {
@@ -2129,6 +2136,7 @@ AIMoveToState::AIMoveToState(StateMachine *machine) : m_isMoveTo(true), AIIntern
 }
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIMoveToState_onEnter_Thunk.cpp
 // ?onEnter@AIMoveToState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIMoveToState::onEnter()
 {
@@ -2184,6 +2192,7 @@ void AIMoveToState::onExit( StateExitType status )
 }
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AIMoveToState_updateMethodThunk.cpp
 // ?update@AIMoveToState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIMoveToState::update()
 {
@@ -2288,6 +2297,7 @@ Bool AIMoveOutOfTheWayState::computePath()
 }
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateThunks.cpp
 // ?update@AIMoveOutOfTheWayState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIMoveOutOfTheWayState::update()
 {
@@ -2351,6 +2361,7 @@ void AIMoveAndTightenState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AIMoveAndTightenState_onEnter_Thunk.cpp
 // ?onEnter@AIMoveAndTightenState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIMoveAndTightenState::onEnter()
 {
@@ -4233,6 +4244,7 @@ StateReturnType AIAttackApproachTargetState::update()
 }
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIAttackApproachTargetState_onExit_Thunk.cpp
 // ?onExit@AIAttackApproachTargetState@@UAEXW4StateExitType@@@Z present-unmatched
 void AIAttackApproachTargetState::onExit( StateExitType status )
 {
@@ -4792,6 +4804,7 @@ void AIFollowPathState::onExit( StateExitType status )
 }
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIFollowPathState_update_Thunk.cpp
 // ?update@AIFollowPathState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIFollowPathState::update()
 {
@@ -4981,6 +4994,7 @@ void AIMoveAndEvacuateState::onExit( StateExitType status )
 //----------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIAttackMoveToStateCtorThunk.cpp
 // ??0AIAttackMoveToState@@QAE@PAVStateMachine@@@Z present-unmatched
 AIAttackMoveToState::AIAttackMoveToState( StateMachine *machine ) : AIMoveToState(machine)
 {
@@ -5218,6 +5232,7 @@ void AIMoveAndDeleteState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AIMoveAndDeleteState_onEnter_Thunk.cpp
 // ?onEnter@AIMoveAndDeleteState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIMoveAndDeleteState::onEnter()
 {
@@ -5345,6 +5360,7 @@ Bool AIFollowWaypointPathState::hasNextWaypoint(void)
 }
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIFollowWaypointPathState_calcExtraPathDistance_Thunk.cpp
 // ?calcExtraPathDistance@AIFollowWaypointPathState@@IAEMXZ present-unmatched
 Real AIFollowWaypointPathState::calcExtraPathDistance(void)
 {
@@ -5519,6 +5535,7 @@ void AIFollowWaypointPathState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AIFollowWaypointPathState_onEnterMethodThunk.cpp
 // ?onEnter@AIFollowWaypointPathState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIFollowWaypointPathState::onEnter()
 {
@@ -5757,6 +5774,7 @@ StateReturnType AIFollowWaypointPathExactState::update()
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIAttackFollowWaypointPathStateCtorThunk.cpp
 // ??0AIAttackFollowWaypointPathState@@QAE@PAVStateMachine@@_N@Z present-unmatched
 AIAttackFollowWaypointPathState::AIAttackFollowWaypointPathState ( StateMachine *machine, Bool asGroup ) : 
 AIFollowWaypointPathState ( machine, asGroup, false ) 
@@ -6227,6 +6245,7 @@ StateReturnType AIPanicState::onEnter()
 }
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AIPanicState_update_Thunk.cpp
 // ?update@AIPanicState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIPanicState::update()
 {
@@ -6320,6 +6339,7 @@ void AIAttackAimAtTargetState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AIAttackAimAtTargetState_onEnterMethodThunk.cpp
 // ?onEnter@AIAttackAimAtTargetState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIAttackAimAtTargetState::onEnter()
 {
@@ -6779,6 +6799,7 @@ StateReturnType AIWaitState::update()
 //----------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIAttackStateCtorThunk.cpp
 // ??0AIAttackState@@QAE@PAVStateMachine@@_N11PAVAttackExitConditionsInterface@@@Z present-unmatched
 AIAttackState::AIAttackState( StateMachine *machine, Bool follow, Bool attackingObject, Bool forceAttacking, AttackExitConditionsInterface* attackParameters) : 
 	State( machine , "AIAttackState"), 
@@ -6826,6 +6847,7 @@ void AIAttackState::crc( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Xfer Method */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AIAttackState_xferMethodThunk.cpp
 // ?xfer@AIAttackState@@MAEXPAVXfer@@@Z present-unmatched
 void AIAttackState::xfer( Xfer *xfer )
 {
@@ -6923,6 +6945,7 @@ void AIAttackState::notifyNewVictimChosen(Object* victim)
  * the attack state.
  */
 DECLARE_PERF_TIMER(AIAttackState)
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIAttackStateOnEnterThunk.cpp
 // ?onEnter@AIAttackState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIAttackState::onEnter()
 {
@@ -7123,6 +7146,7 @@ StateReturnType AIAttackState::update()
 }
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AIAttackState_onExit_Thunk.cpp
 // ?onExit@AIAttackState@@UAEXW4StateExitType@@@Z present-unmatched
 void AIAttackState::onExit( StateExitType status )
 {
@@ -7244,6 +7268,7 @@ void AIAttackSquadState::crc( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Xfer Method */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AIAttackSquadState_xferMethodThunk.cpp
 // ?xfer@AIAttackSquadState@@MAEXPAVXfer@@@Z present-unmatched
 void AIAttackSquadState::xfer( Xfer *xfer )
 {
@@ -7292,6 +7317,7 @@ AsciiString AIAttackSquadState::getName(  ) const
  * Begin an attack on the machine's goal team.
  * To do this, we use a sub attack machine.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AIAttackSquadState_onEnter_Thunk.cpp
 // ?onEnter@AIAttackSquadState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIAttackSquadState::onEnter( void )
 {
@@ -7614,6 +7640,7 @@ StateReturnType AIEnterState::onEnter()
 }
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AIEnterState_onExit_Thunk.cpp
 // ?onExit@AIEnterState@@UAEXW4StateExitType@@@Z present-unmatched
 void AIEnterState::onExit( StateExitType status )
 {
@@ -8560,6 +8587,7 @@ AsciiString AIHuntState::getName(  ) const
 #endif
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIHuntState_update_Thunk.cpp
 // ?update@AIHuntState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIHuntState::update()
 {

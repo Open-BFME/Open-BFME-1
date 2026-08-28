@@ -50,6 +50,7 @@
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ??0DamDieModuleData@@ present-unmatched
 DamDieModuleData::DamDieModuleData( void )
 {
@@ -78,6 +79,7 @@ DamDieModuleData::DamDieModuleData( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageCommandCenterCrateCollide.cpp
 // ??0DamDie@@ present-unmatched
 DamDie::DamDie( Thing *thing, const ModuleData *moduleData )
 			 :DieModule( thing, moduleData )

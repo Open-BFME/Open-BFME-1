@@ -59,6 +59,7 @@
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorModuleDataCtorThunk.cpp
 // ??0BridgeBehaviorModuleData@@QAE@XZ present-unmatched
 BridgeBehaviorModuleData::BridgeBehaviorModuleData( void )
 {
@@ -70,6 +71,7 @@ BridgeBehaviorModuleData::BridgeBehaviorModuleData( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BridgeBehaviorModuleDataDestructorThunk.cpp
 // ??1BridgeBehaviorModuleData@@UAE@XZ present-unmatched
 BridgeBehaviorModuleData::~BridgeBehaviorModuleData( void )
 {
@@ -231,6 +233,7 @@ static void parseTimeAndLocationInfo( INI *ini, void *instance,
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/BridgeBehaviorCtorThunk.cpp
 // ??0BridgeBehavior@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 BridgeBehavior::BridgeBehavior( Thing *thing, const ModuleData *moduleData )
 							: UpdateModule( thing, moduleData )
@@ -729,6 +732,7 @@ void BridgeBehavior::onBodyDamageStateChange( const DamageInfo* damageInfo,
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BridgeBehavior_updateMethodThunk.cpp
 // ?update@BridgeBehavior@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
 UpdateSleepTime BridgeBehavior::update( void )
 {
@@ -895,6 +899,7 @@ void BridgeBehavior::onDie( const DamageInfo *damageInfo )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BridgeBehavior_handleObjectsOnBridgeOnDieMethodThunk.cpp
 // ?handleObjectsOnBridgeOnDie@BridgeBehavior@@IAEXXZ present-unmatched
 void BridgeBehavior::handleObjectsOnBridgeOnDie( void )
 {

@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?createGroup@AI@@QAEPAVAIGroup@@XZ: Code/GameEngine/Source/GameLogic/AI/ai.cpp
 // Open-BFME: AI::createGroup, retail 0x0014C630, 127 bytes.
 //
 // The reference's two lines. sizeof(AIGroup) is the 0x40 pushed to the global
@@ -15,6 +16,7 @@
 typedef int Int;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:
@@ -24,6 +26,7 @@ private:
 	char m_bfme_body[0x40];					// sizeof(AIGroup), the pushed size
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:

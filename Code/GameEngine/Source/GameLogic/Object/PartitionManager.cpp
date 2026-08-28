@@ -2628,6 +2628,7 @@ PartitionManager::PartitionManager()
 } 
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/PartitionManagerDestructorThunk.cpp
 // ??1PartitionManager@@UAE@XZ present-unmatched
 PartitionManager::~PartitionManager()
 {
@@ -3045,6 +3046,7 @@ void PartitionManager::unRegisterGhostObject( GhostObject* object )
 /** 
 	Reveals the map for the given player, but does not override Shroud generation.  (Script)
 */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/PartitionManagerRevealMapForPlayer.cpp
 // ?revealMapForPlayer@PartitionManager@@QAEXH@Z present-unmatched
 void PartitionManager::revealMapForPlayer( Int playerIndex )
 {
@@ -3127,6 +3129,7 @@ void PartitionManager::refreshShroudForLocalPlayer()
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // ?getShroudStatusForPlayer@PartitionManager@@ present-unmatched
 CellShroudStatus PartitionManager::getShroudStatusForPlayer(Int playerIndex, Int x, Int y) const
 {
@@ -3138,6 +3141,7 @@ CellShroudStatus PartitionManager::getShroudStatusForPlayer(Int playerIndex, Int
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // ?getShroudStatusForPlayer@PartitionManager@@ present-unmatched
 CellShroudStatus PartitionManager::getShroudStatusForPlayer(Int playerIndex, const Coord3D *loc ) const
 {
@@ -4859,6 +4863,7 @@ Real PartitionManager::getGroundOrStructureHeight(Real posx, Real posy)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpProcess.c
 // ?getMostValuableLocation@PartitionManager@@QAEXHIW4ValueOrThreat@@PAUCoord3D@@@Z present-unmatched
 void PartitionManager::getMostValuableLocation( Int playerIndex, UnsignedInt whichPlayerTypes, ValueOrThreat valType, Coord3D *outLocation )
 {
@@ -5147,6 +5152,7 @@ Bool PartitionFilterInsignificantBuildings::allow( Object *other )
 
 //-----------------------------------------------------------------------------
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/PartitionFilterRepulsor_allow_Thunk.cpp
 // ?allow@PartitionFilterRepulsor@@MAE_NPAVObject@@@Z present-unmatched
 Bool PartitionFilterRepulsor::allow( Object *other )
 {
@@ -5556,6 +5562,7 @@ Bool PartitionFilterLineOfSight::allow(Object *objOther)
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/PartitionFilters_allow_Thunk.cpp
 // ??0PartitionFilterPossibleToAttack@@QAE@W4AbleToAttackType@@PBVObject@@W4CommandSourceType@@@Z present-unmatched
 PartitionFilterPossibleToAttack::PartitionFilterPossibleToAttack(AbleToAttackType t, const Object *obj, CommandSourceType commandSource) :
 	m_attackType(t),

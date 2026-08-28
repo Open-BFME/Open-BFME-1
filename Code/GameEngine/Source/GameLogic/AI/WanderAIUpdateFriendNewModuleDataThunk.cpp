@@ -43,6 +43,7 @@ WanderAIUpdateModuleData::WanderAIUpdateModuleData()
 	*((unsigned char *)this + 0x6C) = 1;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -51,6 +52,7 @@ public:
 
 extern "C" char WanderAIUpdateFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WanderAIUpdate.h
 class WanderAIUpdate
 {
 public:

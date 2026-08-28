@@ -5,6 +5,7 @@
 class Thing;
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 public:
@@ -12,6 +13,7 @@ public:
     float m_initialDelay;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -38,6 +40,7 @@ protected:
 class ROFU_Iface1 { public: virtual void slot(); };
 class ROFU_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public ROFU_DeepBase, public ROFU_Iface1, public ROFU_Iface2
 {
 public:

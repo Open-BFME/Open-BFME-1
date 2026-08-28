@@ -47,6 +47,7 @@ AnimalAIUpdateModuleData::AnimalAIUpdateModuleData()
 	*((unsigned char *)this + 0x7c) = 1;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

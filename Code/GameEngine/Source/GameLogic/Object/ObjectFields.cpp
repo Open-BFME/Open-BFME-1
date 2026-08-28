@@ -1,4 +1,18 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /Ireference/shims/bfmeobject /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// readable body of ?didEnter@Object@@QBE_NPBVPolygonTrigger@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
+// readable body of ?didEnterOrExit@Object@@IBE_NXZ: Code/GameEngine/Source/GameLogic/Object/Object.cpp
+// readable body of ?didExit@Object@@QBE_NPBVPolygonTrigger@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
+// readable body of ?findSpecialPowerWithOverridableDestinationActive@Object@@QBEPAVSpecialPowerUpdateInterface@@W4SpecialPowerType@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
+// readable body of ?getCountermeasuresBehaviorInterface@Object@@: Code/GameEngine/Source/GameLogic/Object/Object.cpp
+// readable body of ?getDockUpdateInterface@Object@@QAEPAVDockUpdateInterface@@XZ: Code/GameEngine/Source/GameLogic/Object/Object.cpp
+// readable body of ?getProductionUpdateInterface@Object@@QAEPAVProductionUpdateInterface@@XZ: Code/GameEngine/Source/GameLogic/Object/Object.cpp
+// readable body of ?getProjectileUpdateInterface@Object@@QBEPAVProjectileUpdateInterface@@XZ: Code/GameEngine/Source/GameLogic/Object/Object.cpp
+// readable body of ?giveUpgrade@Object@@QAEXPBVUpgradeTemplate@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
+// readable body of ?hasSpecialPower@Object@@QBE_NW4SpecialPowerType@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
+// readable body of ?internal_classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
+// readable body of ?isUsingAirborneLocomotor@Object@@QBE_NXZ: Code/GameEngine/Source/GameLogic/Object/Object.cpp
+// readable body of ?removeUpgrade@Object@@QAEXPBVUpgradeTemplate@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
+// readable body of ?setScriptStatus@Object@@QAEXW4ObjectScriptStatusBit@@_N@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -33,6 +47,7 @@
 #include "GameLogic/Object.h"
 
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerUpdateModule.h
 class SpecialPowerUpdateInterface
 {
 public:
@@ -57,6 +72,7 @@ class ProductionUpdateInterface;
 class CountermeasuresBehaviorInterface;
 class ProjectileUpdateInterface;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModuleInterface
 {
 public:
@@ -114,6 +130,7 @@ private:
 };
 
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule : public _BFMEObjectModule, public BehaviorModuleInterface
 {
 };
@@ -134,6 +151,7 @@ public:
 
 //-------------------------------------------------------------------------------------------------
 /// PartitionData stand-in: BFME makeDirty() takes no argument (ZH: makeDirty(Bool)).
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionData
 {
 public:
@@ -215,6 +233,7 @@ void Object::setScriptStatus( ObjectScriptStatusBit bit, Bool set )
 
 //-------------------------------------------------------------------------------------------------
 /// Overridable stand-in: MemoryPoolObject vtable pointer, then m_nextOverride@+0x04.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -241,6 +260,7 @@ const ThingTemplate* Thing::getTemplate( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class LocomotorTemplate : public Overridable
 {
 public:
@@ -249,6 +269,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class Locomotor
 {
 public:
@@ -273,6 +294,7 @@ enum KindOfType
 
 //-------------------------------------------------------------------------------------------------
 /// ThingTemplate stand-in: an Overridable with KindOfMaskType at +0xd0.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
 {
 public:
@@ -314,6 +336,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class ContainModuleInterface
 {
 public:
@@ -334,6 +357,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeTemplate
 {
 public:
@@ -436,6 +460,7 @@ ProjectileUpdateInterface* Object::getProjectileUpdateInterface( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpgradeModule.h
 class UpgradeModuleInterface
 {
 public:
@@ -463,6 +488,7 @@ void Object::removeUpgrade( const UpgradeTemplate *upgradeT )
 }
 
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -493,6 +519,7 @@ SpecialPowerUpdateInterface* Object::findSpecialPowerWithOverridableDestinationA
 }
 
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:

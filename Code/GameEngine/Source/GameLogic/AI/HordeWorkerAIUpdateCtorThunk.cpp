@@ -16,6 +16,7 @@ enum UpdateSleepTime
 	UPDATE_SLEEP_FIVE = 5
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule
 {
 public:

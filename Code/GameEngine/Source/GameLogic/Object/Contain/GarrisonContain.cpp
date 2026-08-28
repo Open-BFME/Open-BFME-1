@@ -83,6 +83,7 @@ enum { MUZZLE_FLASH_LIFETIME = LOGICFRAMES_PER_SECOND / 7 };
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/GarrisonContainModuleDataCtorThunk.cpp
 // ??0GarrisonContainModuleData@@QAE@XZ present-unmatched
 GarrisonContainModuleData::GarrisonContainModuleData( void )
 {
@@ -172,6 +173,7 @@ Int GarrisonContain::getObjectGarrisonPointIndex( Object *obj )
 // ------------------------------------------------------------------------------------------------
 /** Put the object at the specified garrison point by index */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain_putObjectAtGarrisonPoint.cpp
 // ?putObjectAtGarrisonPoint@GarrisonContain@@ present-unmatched
 void GarrisonContain::putObjectAtGarrisonPoint( Object *obj, 
 																								ObjectID targetID,
@@ -458,6 +460,7 @@ void GarrisonContain::putObjectAtBestGarrisonPoint( Object *obj, Object *target,
 // ------------------------------------------------------------------------------------------------
 /** Remove the object from the garrison point position and replace at the center of the building */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainTrackTargets.cpp
 // ?removeObjectFromGarrisonPoint@GarrisonContain@@IAEXPAVObject@@H@Z present-unmatched
 void GarrisonContain::removeObjectFromGarrisonPoint( Object *obj, Int index )
 {
@@ -534,6 +537,7 @@ TheInGameUI->message( msg );
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/GarrisonContainCtorThunk.cpp
 // ??0GarrisonContain@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 GarrisonContain::GarrisonContain( Thing *thing, const ModuleData *moduleData ) : 
 								 OpenContain( thing, moduleData )
@@ -716,6 +720,7 @@ void GarrisonContain::addValidObjectsToGarrisonPoints( void )
 	* points that are available if they are closer.  We will also track our targets position
 	* and orient any effect stuff we need to (gun barrel / muzzle flash) */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainTrackTargets.cpp
 // ?trackTargets@GarrisonContain@@IAEXXZ present-unmatched
 void GarrisonContain::trackTargets( void )
 {
@@ -1236,6 +1241,7 @@ void GarrisonContain::healSingleObject( Object *obj, Real framesForFullHeal)
 /** return the player that *appears* to control this unit. if null, 
 		use getObject()->getControllingPlayer() instead. */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GarrisonContain_getApparentControllingPlayer_Thunk.cpp
 // ?getApparentControllingPlayer@GarrisonContain@@UBEPBVPlayer@@PBV2@@Z present-unmatched
 const Player* GarrisonContain::getApparentControllingPlayer( const Player* observingPlayer ) const
 {
@@ -1353,6 +1359,7 @@ void GarrisonContain::recalcApparentControllingPlayer( void )
 // ------------------------------------------------------------------------------------------------
 /** Load the garrison point position data and save for use later */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainLoadGarrisonPointsThunk.cpp
 // ?loadGarrisonPoints@GarrisonContain@@IAEXXZ present-unmatched
 void GarrisonContain::loadGarrisonPoints( void )
 {
@@ -2443,6 +2450,7 @@ void GarrisonContain::onBodyDamageStateChange( const DamageInfo* , BodyDamageTyp
 
 //-------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GarrisonContain_onObjectCreated_Thunk.cpp
 // ?onObjectCreated@GarrisonContain@@MAEXXZ present-unmatched
 void GarrisonContain::onObjectCreated()
 {
@@ -2485,6 +2493,7 @@ void GarrisonContain::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GarrisonContain_xfer_Thunk.cpp
 // ?xfer@GarrisonContain@@MAEXPAVXfer@@@Z present-unmatched
 void GarrisonContain::xfer( Xfer *xfer )
 {

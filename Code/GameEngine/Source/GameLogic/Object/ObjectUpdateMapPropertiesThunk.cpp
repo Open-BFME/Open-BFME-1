@@ -1,3 +1,4 @@
+// readable body of ?updateObjValuesFromMapProperties@Object@@QAEXPAVDict@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 // Exact certified retail bytes for Object::updateObjValuesFromMapProperties at 0x001D0610.
 // Kept separate so Object.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_Object_updateValuesFromMapProperties_1D0610()

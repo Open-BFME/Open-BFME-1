@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 
 // Object::hasUpgrade, retail 0x001C9F50. A null template is false without
 // asking anything; otherwise the template's mask at +0x20 replaces the argument
@@ -7,6 +8,7 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeTemplate
 {
 public:
@@ -14,6 +16,7 @@ public:
 	UnsignedInt m_mask;						// +0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

@@ -36,11 +36,13 @@ class Path;
 enum AICommandType { AICMD_GET_HEALED = 0x15 };
 enum CommandSourceType { CMD_FROM_PLAYER = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfo
 {
 	char m_bfme_body[0x5C];					// sizeof(DamageInfo)
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 struct AICommandParms
 {
 	AICommandType						m_cmd;			// +0x00
@@ -60,6 +62,7 @@ struct AICommandParms
 	AICommandParms(AICommandType cmd, CommandSourceType cmdSource);	// ILT 0x00030EA4
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:

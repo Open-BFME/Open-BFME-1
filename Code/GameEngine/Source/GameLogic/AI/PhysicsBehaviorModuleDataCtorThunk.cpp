@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0PhysicsBehaviorModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Update/PhysicsUpdate.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/PhysicsUpdate.h
 class PhysicsBehaviorModuleData
 {
 public:

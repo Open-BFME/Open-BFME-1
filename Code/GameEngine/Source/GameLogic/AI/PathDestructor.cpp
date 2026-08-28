@@ -1,7 +1,9 @@
+// readable body of ??1Path@@MAE@XZ: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 // BFME Path::~Path releases its singly linked node chain. novtable preserves
 // the protected virtual destructor ABI without emitting a vftable restore in
 // this focused translation unit.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathNode
 {
 public:

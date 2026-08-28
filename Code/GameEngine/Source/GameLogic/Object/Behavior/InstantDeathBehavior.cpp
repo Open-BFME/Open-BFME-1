@@ -109,6 +109,7 @@ static void parseWeapon( INI* ini, void *instance, void * /*store*/, const void*
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/InstantDeathBehaviorCtorThunk.cpp
 // ??0InstantDeathBehavior@@ present-unmatched
 InstantDeathBehavior::InstantDeathBehavior( Thing *thing, const ModuleData* moduleData ) : DieModule( thing, moduleData )
 {

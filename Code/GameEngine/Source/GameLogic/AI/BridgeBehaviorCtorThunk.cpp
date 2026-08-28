@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0BridgeBehavior@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp
 
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BridgeBehavior.h
 class BridgeBehavior
 {
 public:

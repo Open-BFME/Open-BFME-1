@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/VideoPlayer.h
 struct Video
 {
 	_STL::string m_bfmeName;

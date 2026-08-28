@@ -63,6 +63,7 @@ const Real BEGIN_MIDPOINT_RATIO = 0.35f;
 const Real END_MIDPOINT_RATIO = 0.65f;
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SlowDeathBehaviorModuleData_ctor_Thunk.cpp
 // ??0SlowDeathBehaviorModuleData@@QAE@XZ present-unmatched
 SlowDeathBehaviorModuleData::SlowDeathBehaviorModuleData()
 {
@@ -166,6 +167,7 @@ static void parseWeapon( INI* ini, void *instance, void * /*store*/, const void*
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehavior_ctor_Thunk.cpp
 // ??0SlowDeathBehavior@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 SlowDeathBehavior::SlowDeathBehavior( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {
@@ -602,6 +604,7 @@ UpdateSleepTime SlowDeathBehavior::update()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehavior_onDie_Thunk.cpp
 // ?onDie@SlowDeathBehavior@@UAEXPBVDamageInfo@@@Z present-unmatched
 void SlowDeathBehavior::onDie( const DamageInfo *damageInfo )
 {

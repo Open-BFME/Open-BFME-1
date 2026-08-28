@@ -18,6 +18,7 @@ private:
 	unsigned char m_pad[0x90]; // vptr+0x90=0x94
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

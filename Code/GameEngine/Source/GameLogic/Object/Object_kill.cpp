@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?kill@Object@@QAEXW4DamageType@@W4DeathType@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 
 // Object::kill, retail 0x001C30F0. Zero Hour's body unchanged: build a
 // DamageInfo, fill it with unmodifiable damage equal to the object's maximum
@@ -20,6 +21,7 @@ enum DamageType {};
 enum DeathType {};
 enum ObjectID { INVALID_ID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfoInput
 {
 	unsigned char m_unmodelled_00[ 8 ];
@@ -32,6 +34,7 @@ struct DamageInfoInput
 	Bool m_kill;							// +0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfo
 {
 	DamageInfo();							// ILT thunk at 0x0002C9D5
@@ -40,6 +43,7 @@ struct DamageInfo
 	unsigned char m_unmodelled_24[ 0x5C - 0x24 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 class BodyModuleInterface
 {
 public:
@@ -52,6 +56,7 @@ public:
 	virtual Real getMaxHealth() const;		// +0x18
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

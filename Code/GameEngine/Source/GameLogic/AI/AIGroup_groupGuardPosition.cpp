@@ -20,6 +20,7 @@ struct Coord3D;
 enum GuardMode { BFME_GUARD_MODE_NORMAL };
 enum CommandSourceType { BFME_COMMAND_SOURCE_PLAYER };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
@@ -52,6 +53,7 @@ struct BfmeMemberNode : public BfmeListNodeBase
 	BfmeGroupMember *m_bfmeValue;				// +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:

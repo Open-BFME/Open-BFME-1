@@ -9,10 +9,12 @@
 // at this family declared its own AsciiString and stalled on that pair alone.
 #include "Common/AsciiString.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
@@ -24,6 +26,7 @@ private:
 	unsigned char m_head[0x20];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class ContinueState : public State
 {
 public:

@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
 public:
@@ -36,6 +37,7 @@ private:
 	unsigned char m_data[ 8 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleInterface
 {
 public:
@@ -47,6 +49,7 @@ struct ModuleInterfaceDispatch { };
 extern const ModuleInterfaceDispatch
 	g_castleMemberBehaviorModuleInterfaceDispatch;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public Rva0036BBA0BehaviorModule,
 	public UpdateModuleInterface
 {

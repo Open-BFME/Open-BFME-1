@@ -39,6 +39,7 @@
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeScaffoldBehaviorCtorThunk.cpp
 // ??0BridgeScaffoldBehavior@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 BridgeScaffoldBehavior::BridgeScaffoldBehavior( Thing *thing, const ModuleData *moduleData )
 											: UpdateModule( thing, moduleData )

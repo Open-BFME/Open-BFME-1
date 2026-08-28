@@ -4,6 +4,7 @@
 // Retail: copy DISABLEDMASK_ALL into hidden return slot (ret 4).
 
 template <int Bits>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -16,6 +17,7 @@ public:
 // ?DISABLEDMASK_ALL@@3V?$BitFlags@$0N@@@A
 extern BitFlags<13> DISABLEDMASK_ALL;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/PoisonedBehavior.h
 class PoisonedBehavior
 {
 public:

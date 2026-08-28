@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0FireWeaponWhenDeadBehavior@@: Code/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehavior.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Thing;
 class ModuleData;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FireWeaponWhenDeadBehavior.h
 class FireWeaponWhenDeadBehavior {
 public:
 	FireWeaponWhenDeadBehavior(Thing *, const ModuleData *);

@@ -107,6 +107,7 @@ struct BfmeAutoHealDamageData
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehaviorCtorThunk.cpp
 // ??0AutoHealBehavior@@ present-unmatched
 AutoHealBehavior::AutoHealBehavior( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {

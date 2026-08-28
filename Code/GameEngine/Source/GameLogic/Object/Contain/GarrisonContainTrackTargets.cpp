@@ -1,5 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?removeObjectFromGarrisonPoint@GarrisonContain@@IAEXPAVObject@@H@Z: Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain.cpp
+// readable body of ?trackTargets@GarrisonContain@@IAEXXZ: Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
     float x;
@@ -14,6 +17,7 @@ enum ObjectID
     INVALID_OBJECT_ID = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -35,6 +39,7 @@ public:
     virtual int getDamageState() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
@@ -46,6 +51,7 @@ private:
     Coord3D m_position;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 public:
@@ -68,6 +74,7 @@ struct ContainedNode
     Object *object;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GarrisonContain.h
 struct GarrisonPointData
 {
     ObjectID objectID;
@@ -85,6 +92,7 @@ static float calcDistanceSquared(const Coord3D &first, const Coord3D &second)
     return dx * dx + dy * dy + dz * dz;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GarrisonContain.h
 class GarrisonContain
 {
 public:

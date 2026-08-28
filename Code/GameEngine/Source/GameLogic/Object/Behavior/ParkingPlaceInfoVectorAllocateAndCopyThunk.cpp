@@ -2,9 +2,11 @@
 
 // Open-BFME5: STLport ParkingPlaceInfo vector allocation and copy helper.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ParkingPlaceBehavior.h
 class ParkingPlaceBehavior
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ParkingPlaceBehavior.h
 	struct ParkingPlaceInfo
 	{
 	private:

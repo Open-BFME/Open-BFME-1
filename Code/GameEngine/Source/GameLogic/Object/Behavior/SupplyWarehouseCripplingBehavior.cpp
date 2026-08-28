@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyWarehouseCripplingBehavior.h
 class SupplyWarehouseCripplingBehaviorModuleData
 {
 	virtual void virtualAnchor( void ) = 0;

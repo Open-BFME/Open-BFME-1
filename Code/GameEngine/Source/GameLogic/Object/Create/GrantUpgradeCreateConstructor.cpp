@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0GrantUpgradeCreate@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngine/Source/GameLogic/Object/Create/GrantUpgradeCreate.cpp
 
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule
 {
 public:
@@ -12,6 +14,7 @@ private:
 	unsigned char m_data[8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CreateModule.h
 class CreateModuleInterface
 {
 public:
@@ -24,6 +27,7 @@ public:
 	virtual void moduleInterfaceAnchor();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CreateModule.h
 class CreateModule : public BehaviorModule,
 	public CreateModuleInterface,
 	public ModuleInterface
@@ -32,6 +36,7 @@ public:
 	CreateModule( Thing *thing, const ModuleData *moduleData );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GrantUpgradeCreate.h
 class GrantUpgradeCreate : public CreateModule
 {
 public:

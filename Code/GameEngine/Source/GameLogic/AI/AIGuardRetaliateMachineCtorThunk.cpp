@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0AIGuardRetaliateMachine@@: Code/GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIGuardRetaliate.h
 class AIGuardRetaliateMachine
 {
 public:

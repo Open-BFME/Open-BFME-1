@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: lift the exact retail AIPlayer::selectTeamToBuild MASM body.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class AIPlayer
 {
 protected:

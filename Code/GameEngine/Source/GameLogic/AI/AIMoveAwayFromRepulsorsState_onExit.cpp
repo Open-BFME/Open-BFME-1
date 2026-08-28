@@ -29,6 +29,7 @@ enum StateExitType
 
 // BFME Object leaf used only for the model-condition word at +0x118 and the
 // post-clear notify thunk (retail ILT 0x2191d -> body 0x1be1c0).
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -55,6 +56,7 @@ private:
 
 // BFME StateMachine: single vptr (Snapshot base dropped, same lesson as
 // Locomotor) + 12-byte map storage => m_owner @+0x10.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -67,6 +69,7 @@ private:
 };
 
 // BFME State: single vptr + 3x StateID + 12B vector => m_machine @+0x1c.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
@@ -82,12 +85,14 @@ private:
 };
 
 // Base whose onExit is a matched external (REL32 -> 0x00029311).
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState : public State
 {
 public:
 	virtual void onExit(StateExitType status);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIMoveAwayFromRepulsorsState : public AIInternalMoveToState
 {
 public:

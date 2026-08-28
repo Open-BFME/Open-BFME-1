@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0TerrainLogic@@QAE@XZ: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // Open-BFME5: TerrainLogic::TerrainLogic, retail 0x006BE070 (46 bytes).
 //
 // Local ABI-slice replica.  sizeof(TerrainLogic) is 0x1904 and the class has
@@ -26,6 +27,7 @@ protected:
 	int	m_slot18fc;				// this+0x18fc
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic : public TerrainLogicBase
 {
 public:

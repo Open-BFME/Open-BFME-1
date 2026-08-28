@@ -3,6 +3,7 @@
 // vptr, then five init-list members, then the RS_Member at 0x1c built out of
 // line. ModuleData carries a declared destructor so the EH frame appears.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 public:
@@ -22,6 +23,7 @@ private:
 	void *m_p;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AutoDepositUpdate.h
 class AutoDepositUpdateModuleData : public ModuleData
 {
 public:

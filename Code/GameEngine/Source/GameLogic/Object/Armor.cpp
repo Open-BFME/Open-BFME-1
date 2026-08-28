@@ -50,12 +50,14 @@ enum DamageType
 
 extern const char *TheDamageNames[];		// 0x012ACC70
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfoInput
 {
 	char pad[12];
 	DamageType m_damageType;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Armor.h
 class ArmorTemplate
 {
 public:
@@ -129,6 +131,7 @@ void ArmorTemplate::clear()
 class ArmorStore;
 extern ArmorStore *TheArmorStore;		// 0x012EF4E8
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Armor.h
 class ArmorStore : public SubsystemInterface
 {
 public:

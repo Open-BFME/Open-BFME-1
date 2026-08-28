@@ -21,6 +21,7 @@ protected:
 class DWB_Iface1 { public: virtual void slot(); };
 class DWB_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public DWB_DeepBase, public DWB_Iface1, public DWB_Iface2
 {
 public:

@@ -13,6 +13,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule
 {
 public:
@@ -36,6 +37,7 @@ public:
 	virtual void moduleInterfaceAnchor();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CollideModule.h
 class CollideModule : public BehaviorModule,
 	public InlineCollideModuleInterface,
 	public ModuleInterface
@@ -47,6 +49,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CrateCollide.h
 class CrateCollide : public CollideModule
 {
 public:

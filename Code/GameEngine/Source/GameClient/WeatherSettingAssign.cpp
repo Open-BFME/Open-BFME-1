@@ -9,6 +9,7 @@ typedef int Int;
 typedef float Real;
 typedef unsigned char Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -34,6 +35,7 @@ struct BFMELightningRandomVariable
 	Int m_distribution;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Snow.h
 class WeatherSetting : public ScienceInfoBase
 {
 public:

@@ -32,6 +32,7 @@ public:
     virtual void slot();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public PB_DeepBase, public PB_Iface1, public PB_Iface2
 {
 public:
@@ -54,6 +55,7 @@ public:
     virtual void slot();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BunkerBusterBehavior.h
 class BunkerBusterBehavior : public UpdateModule,
     public BunkerBusterBehaviorIface
 {

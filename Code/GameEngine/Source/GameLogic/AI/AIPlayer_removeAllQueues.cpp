@@ -16,6 +16,7 @@
 // Retail asks nothing - the node it is unlinking is the head, so the question
 // has one answer - and the DLINK node keeps its links at +0x04 and +0x08.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class TeamInQueue
 {
 public:
@@ -55,6 +56,7 @@ private:
 	TeamInQueue *m_dlink_next_ready;			// +0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class AIPlayer
 {
 protected:

@@ -42,6 +42,7 @@ public:
     virtual ~HealContainBase();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/HealContain.h
 class HealContain : public HealContainBase
 {
 public:
