@@ -95,6 +95,16 @@ static void checkForAutoHeal( Object *testObj, void *userData )
 	listToAddTo->push_back(testObj);
 }
 
+// BFME's module-data layout places the onDamage fields at different offsets
+// from the vendored Zero Hour declaration, and stores the radius gate as a
+// word tested for zero by the retail body.
+struct BfmeAutoHealDamageData
+{
+	UnsignedByte m_padding[0x7c];
+	UnsignedInt m_startHealingDelay;
+	UnsignedInt m_radius;
+};
+
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ??0AutoHealBehavior@@ present-unmatched
@@ -166,26 +176,29 @@ void AutoHealBehavior::undoUpgrade()
 //-------------------------------------------------------------------------------------------------
 /** Damage has been dealt, this is an opportunity to reach to that damage */
 //-------------------------------------------------------------------------------------------------
-// ?onDamage@AutoHealBehavior@@ present-unmatched
 void AutoHealBehavior::onDamage( DamageInfo *damageInfo )
 {
-	if (m_stopped)
+	// BFME's AutoHealBehavior base layout differs from the vendored Zero Hour
+	// declaration in this interface-adjusted method.  Use the retail offsets
+	// explicitly so the generated body keeps the original field accesses.
+	if (*(const Bool *)((const char *)this + 0x30))
 		return;
 
-	const AutoHealBehaviorModuleData *d = getAutoHealBehaviorModuleData();
-	if (isUpgradeActive() && d->m_radius == 0.0f)
+	const BfmeAutoHealDamageData *d =
+		*(const BfmeAutoHealDamageData *const *)((const char *)this + 0x04);
+	if (isUpgradeActive() && d->m_radius == 0)
 	{
 		// if this is nonzero, getting damaged resets our healing process. so go to
 		// sleep for this long.
 		if (d->m_startHealingDelay > 0)
 		{
-			setWakeFrame(getObject(), UPDATE_SLEEP(d->m_startHealingDelay));
+			setWakeFrame(*(Object *const *)((const char *)this + 0x08), UPDATE_SLEEP(d->m_startHealingDelay));
 		}
-		else if( TheGameLogic->getFrame() > m_soonestHealFrame )
+		else if( TheGameLogic->getFrame() > *(const Int *)((const char *)this + 0x2c) )
 		{
 			// We can only force an immediate wake if we are ready to heal.  Otherwise we will
 			// heal on a timer AND at every damage input.
-			setWakeFrame(getObject(), UPDATE_SLEEP_NONE);
+			setWakeFrame(*(Object *const *)((const char *)this + 0x08), UPDATE_SLEEP_NONE);
 		}
 	}
 }
