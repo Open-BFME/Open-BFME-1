@@ -2,6 +2,18 @@
 
 // Base, a string, four floats and a run of flags.
 //
+// Names come from retail's INI field table joined to upstream's parse table on
+// the key; retail gives every offset, upstream only the word, and the offsets
+// here were derived from the declaration sequence rather than the old m_NN
+// names. The three Percent keys are the three floats and the five toppling
+// flags are the five bytes at +0x24..+0x28, which is what pins the run.
+//
+// +0x010 previously read m_toppleFX. Retail's table puts StumpName there and
+// ToppleFX at +0x008, upstream declares m_stumpName in that position, and the
+// type here was already a string -- so the slot was right and only the name was
+// wrong. ToppleFX and BounceFX are the two pointer-width slots ahead of it that
+// had no name at all. +0x020 has no key in the table and keeps its offset name.
+//
 // The string at +0x10 is constructed inline -- one zeroed word through the lea
 // that stays live -- and then cleared, which is the call to the private
 // releaseBuffer. Clearing a string that was just zeroed looks redundant and is
@@ -49,33 +61,33 @@ public:
 	ToppleUpdateModuleData();
 
 private:
-	int m_08;
-	int m_0c;
-	BFMERetailAsciiString m_toppleFX;
-	float m_14;
-	float m_18;
-	float m_1c;
+	int m_toppleFX;
+	int m_bounceFX;
+	BFMERetailAsciiString m_stumpName;
+	float m_initialVelocityPercent;
+	float m_initialAccelPercent;
+	float m_bounceVelocityPercent;
 	float m_20;
-	bool m_24;
-	bool m_25;
-	bool m_26;
-	bool m_27;
-	bool m_28;
+	bool m_killWhenToppled;
+	bool m_killWhenStartToppled;
+	bool m_killStumpWhenToppled;
+	bool m_toppleLeftOrRightOnly;
+	bool m_reorientToppledRubble;
 };
 
 // ??0ToppleUpdateModuleData@@QAE@XZ
 ToppleUpdateModuleData::ToppleUpdateModuleData()
 {
-	m_08 = 0;
-	m_0c = 0;
-	m_toppleFX.clear();
-	m_14 = 0.2f;
-	m_1c = 0.2f;
-	m_25 = false;
-	m_26 = false;
-	m_27 = false;
-	m_28 = false;
-	m_24 = true;
-	m_18 = 0.01f;
+	m_toppleFX = 0;
+	m_bounceFX = 0;
+	m_stumpName.clear();
+	m_initialVelocityPercent = 0.2f;
+	m_bounceVelocityPercent = 0.2f;
+	m_killWhenStartToppled = false;
+	m_killStumpWhenToppled = false;
+	m_toppleLeftOrRightOnly = false;
+	m_reorientToppledRubble = false;
+	m_killWhenToppled = true;
+	m_initialAccelPercent = 0.01f;
 	m_20 = 0.5f;
 }
