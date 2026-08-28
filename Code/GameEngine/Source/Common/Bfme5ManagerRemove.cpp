@@ -1,11 +1,47 @@
-// Remove an owned entry from every manager bucket that currently contains
-// it, then notify the global sink through its virtual removal slot.
+class BfmeOwnedP;
 
-class BfmeOwnedP
+class BfmeManagerEntryP
 {
 public:
-	virtual ~BfmeOwnedP(void);				// slot +0x00
+	void bfmeRemove(BfmeOwnedP *element);
+
+private:
+	char m_bfmeHead[0x88];
+
+public:
+	BfmeManagerEntryP *m_bfmeNext;
 };
+
+class AudioEventRTS;
+
+class AudioManager
+{
+public:
+	// Only the recovered release slot is named; anchors preserve its retail +0x168 position.
+#define BFME_AUDIO_ANCHOR(n) virtual void bfmeAudioAnchor##n();
+	BFME_AUDIO_ANCHOR(00) BFME_AUDIO_ANCHOR(01) BFME_AUDIO_ANCHOR(02) BFME_AUDIO_ANCHOR(03) BFME_AUDIO_ANCHOR(04)
+	BFME_AUDIO_ANCHOR(05) BFME_AUDIO_ANCHOR(06) BFME_AUDIO_ANCHOR(07) BFME_AUDIO_ANCHOR(08) BFME_AUDIO_ANCHOR(09)
+	BFME_AUDIO_ANCHOR(10) BFME_AUDIO_ANCHOR(11) BFME_AUDIO_ANCHOR(12) BFME_AUDIO_ANCHOR(13) BFME_AUDIO_ANCHOR(14)
+	BFME_AUDIO_ANCHOR(15) BFME_AUDIO_ANCHOR(16) BFME_AUDIO_ANCHOR(17) BFME_AUDIO_ANCHOR(18) BFME_AUDIO_ANCHOR(19)
+	BFME_AUDIO_ANCHOR(20) BFME_AUDIO_ANCHOR(21) BFME_AUDIO_ANCHOR(22) BFME_AUDIO_ANCHOR(23) BFME_AUDIO_ANCHOR(24)
+	BFME_AUDIO_ANCHOR(25) BFME_AUDIO_ANCHOR(26) BFME_AUDIO_ANCHOR(27) BFME_AUDIO_ANCHOR(28) BFME_AUDIO_ANCHOR(29)
+	BFME_AUDIO_ANCHOR(30) BFME_AUDIO_ANCHOR(31) BFME_AUDIO_ANCHOR(32) BFME_AUDIO_ANCHOR(33) BFME_AUDIO_ANCHOR(34)
+	BFME_AUDIO_ANCHOR(35) BFME_AUDIO_ANCHOR(36) BFME_AUDIO_ANCHOR(37) BFME_AUDIO_ANCHOR(38) BFME_AUDIO_ANCHOR(39)
+	BFME_AUDIO_ANCHOR(40) BFME_AUDIO_ANCHOR(41) BFME_AUDIO_ANCHOR(42) BFME_AUDIO_ANCHOR(43) BFME_AUDIO_ANCHOR(44)
+	BFME_AUDIO_ANCHOR(45) BFME_AUDIO_ANCHOR(46) BFME_AUDIO_ANCHOR(47) BFME_AUDIO_ANCHOR(48) BFME_AUDIO_ANCHOR(49)
+	BFME_AUDIO_ANCHOR(50) BFME_AUDIO_ANCHOR(51) BFME_AUDIO_ANCHOR(52) BFME_AUDIO_ANCHOR(53) BFME_AUDIO_ANCHOR(54)
+	BFME_AUDIO_ANCHOR(55) BFME_AUDIO_ANCHOR(56) BFME_AUDIO_ANCHOR(57) BFME_AUDIO_ANCHOR(58) BFME_AUDIO_ANCHOR(59)
+	BFME_AUDIO_ANCHOR(60) BFME_AUDIO_ANCHOR(61) BFME_AUDIO_ANCHOR(62) BFME_AUDIO_ANCHOR(63) BFME_AUDIO_ANCHOR(64)
+	BFME_AUDIO_ANCHOR(65) BFME_AUDIO_ANCHOR(66) BFME_AUDIO_ANCHOR(67) BFME_AUDIO_ANCHOR(68) BFME_AUDIO_ANCHOR(69)
+	BFME_AUDIO_ANCHOR(70) BFME_AUDIO_ANCHOR(71) BFME_AUDIO_ANCHOR(72) BFME_AUDIO_ANCHOR(73) BFME_AUDIO_ANCHOR(74)
+	BFME_AUDIO_ANCHOR(75) BFME_AUDIO_ANCHOR(76) BFME_AUDIO_ANCHOR(77) BFME_AUDIO_ANCHOR(78) BFME_AUDIO_ANCHOR(79)
+	BFME_AUDIO_ANCHOR(80) BFME_AUDIO_ANCHOR(81) BFME_AUDIO_ANCHOR(82) BFME_AUDIO_ANCHOR(83) BFME_AUDIO_ANCHOR(84)
+	BFME_AUDIO_ANCHOR(85) BFME_AUDIO_ANCHOR(86) BFME_AUDIO_ANCHOR(87) BFME_AUDIO_ANCHOR(88) BFME_AUDIO_ANCHOR(89)
+#undef BFME_AUDIO_ANCHOR
+	virtual void releaseAudioEventRTS(AudioEventRTS *event);
+};
+
+extern AudioManager *TheAudio;
 
 class BfmeManagerP
 {
@@ -14,71 +50,19 @@ public:
 
 private:
 	char m_bfmeHead[0xA8];
-	void *m_bfmeFirst;					// +0xA8
+	BfmeManagerEntryP *m_bfmeFirst;
 };
 
-// The retail global at 0x012ED668 is dispatched through slot +0x168.
-// Its concrete type is shared by unrelated subsystem views in the recovered
-// sources, so the byte-stable body emits the global load directly.
-
 // ?bfmeRemove@BfmeManagerP@@QAEXPAVBfmeOwnedP@@@Z
-__declspec(naked) void BfmeManagerP::bfmeRemove(BfmeOwnedP *element)
-	// retail body 0x003854C0
+void BfmeManagerP::bfmeRemove(BfmeOwnedP *element)
 {
-	__asm {
-		__emit 0x56                 // push esi
-		__emit 0x8b                 // mov esi,[ecx+0a8]
-		__emit 0xb1
-		__emit 0xa8
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x85                 // test esi,esi
-		__emit 0xf6
-		__emit 0x57                 // push edi
-		__emit 0x8b                 // mov edi,[esp+0c]
-		__emit 0x7c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0x74                 // je notify
-		__emit 0x12
-		__emit 0x57                 // push edi
-		__emit 0x8b                 // mov ecx,esi
-		__emit 0xce
-		__emit 0xe8                 // call the per-entry removal thunk
-		__emit 0x4d
-		__emit 0x5e
-		__emit 0xc8
-		__emit 0xff
-		__emit 0x8b                 // mov esi,[esi+088]
-		__emit 0xb6
-		__emit 0x88
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x85                 // test esi,esi
-		__emit 0xf6
-		__emit 0x75                 // jne loop
-		__emit 0xee
-		__emit 0x8b                 // mov ecx,[0x012ed668]
-		__emit 0x0d
-		__emit 0x68
-		__emit 0xd6
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x8b                 // mov eax,[ecx]
-		__emit 0x01
-		__emit 0x57                 // push edi
-		__emit 0xff                 // call [eax+168]
-		__emit 0x90
-		__emit 0x68
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5f                 // pop edi
-		__emit 0x5e                 // pop esi
-		__emit 0xc2                 // ret 4
-		__emit 0x04
-		__emit 0x00
+	BfmeManagerEntryP *entry = m_bfmeFirst;
+
+	while (entry)
+	{
+		entry->bfmeRemove(element);
+		entry = entry->m_bfmeNext;
 	}
+
+	TheAudio->releaseAudioEventRTS((AudioEventRTS *)element);
 }
