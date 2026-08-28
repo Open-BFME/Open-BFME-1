@@ -78903,3 +78903,7 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??1ShroudManagerImpl008FBA40Node@@QAE@XZ,0x008F8340,RVA 0x008FBA40 node-chain destructor call target
+??1ShroudManagerImpl008FBA40Element@@QAE@XZ,0x008F9330,RVA 0x008FBA40 element-array destructor callback
+?configure@ShroudManagerImpl008FBA40@@QAEXURegion3D@@M@Z,0x008FB5F0,RVA 0x008FBAD0 validated Region3D configure call target
+??0ShroudManagerImpl008FBA40Element@@QAE@XZ,0x008F92F0,RVA 0x008FBB50 single-element array constructor callback
