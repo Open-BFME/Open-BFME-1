@@ -72450,6 +72450,7 @@ name,address,notes
 ?bfmeCallEBD@BfmeSubEBD@@QAEXXZ,0x000349C8,pin
 ?bfmeCallEBJ@BfmeObjEBJ@@QAEXPAXPBD@Z,0x008520A0,pin
 ?bfmeCallEBL@BfmeObjEBL@@QAEXPAX0@Z,0x0000A803,pin
+?bfmeCallECE@BfmeSubECE@@QAEXPBD@Z,0x000244B5,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -72960,6 +72961,7 @@ name,address,notes
 ?bfmeFreeDMD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeDME@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeDXK@@YAXPAX@Z,0x00881EF0,pin
+?bfmeFreeECH@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
 ?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
@@ -73301,6 +73303,8 @@ name,address,notes
 ?bfmeOneEBF@BfmeThingEBF@@QAEXXZ,0x000286A0,pin
 ?bfmeOneEBG@BfmeThingEBG@@QAEXXZ,0x00026684,pin
 ?bfmeOneEBK@BfmeObjEBK@@QAEXPAXH@Z,0x007E8900,pin
+?bfmeOneECGa@BfmeSubECG@@QAEXXZ,0x0003418F,pin
+?bfmeOneECGb@BfmeSubECG@@QAEXXZ,0x0002987A,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73571,6 +73575,7 @@ name,address,notes
 ?bfmeTwoEBF@@YAXXZ,0x00012D9B,pin
 ?bfmeTwoEBG@@YAXXZ,0x0000FB9B,pin
 ?bfmeTwoEBK@BfmeObjEBK@@QAEXPAX0@Z,0x007E88D0,pin
+?bfmeTwoECG@BfmeSubECG@@QAEXXZ,0x000414BB,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -74674,6 +74679,10 @@ name,address,notes
 ?g_bfmeObjDYF@@3PAVBfmeGlobDYF@@A,0x00EF4C5C,pin
 ?g_bfmeObjEBE@@3PAVBfmeGlobEBE@@A,0x00EF0898,pin
 ?g_bfmeObjEBL@@3VBfmeObjEBL@@A,0x00EF1000,pin
+?g_bfmeObjECD@@3PAVBfmeObjECC@@A,0x00EF7094,pin
+?g_bfmeObjECE@@3PAUBfmeObjECE@@A,0x00EF49F0,pin
+?g_bfmeObjECF@@3PAUBfmeObjECF@@A,0x00F4B280,pin
+?g_bfmeObjECI@@3PAVBfmeObjECI@@A,0x00EF7730,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
@@ -78517,6 +78526,7 @@ _bfmeStrDULe,0x00D1D834,pin
 _bfmeStrDWK,0x00CBBAA8,pin
 _bfmeStrDYF,0x00C80FB4,pin
 _bfmeStrEBJ,0x00CF1B68,pin
+_bfmeStrECE,0x00D06F24,pin
 _bfmeTabEAC,0x00D098B0,pin
 _bfmeTagANB,0x00C9E038,pin
 _bfmeTagAPB,0x00DDFC30,pin
