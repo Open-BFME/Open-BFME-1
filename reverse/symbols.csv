@@ -72940,6 +72940,7 @@ name,address,notes
 ?bfmeJoinAKD@BfmeInnerAKD@@QAEXPAXHH@Z,0x00014FDD,pin
 ?bfmeJoinBSE@@YAPAXPAX0@Z,0x00042FA0,pin
 ?bfmeKindBVD@BfmeSubBVD@@QAEHXZ,0x0001E33A,pin
+?bfmeKindCGG@BfmeOtherCGG@@QAEHPAX@Z,0x0004A719,pin
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
 ?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
