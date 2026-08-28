@@ -12041,6 +12041,7 @@ name,address,notes
 ?_M_reallocate_map@?$deque@UGen_t_0065fd10_p12cd@@V?$allocator@UGen_t_0065fd10_p12cd@@@_STL@@@_STL@@IAEXI_N@Z,0x0065F910,gen-tgrid payload member
 ?_M_reallocate_map@?$deque@UGen_t_0065fd40_p12cd@@V?$allocator@UGen_t_0065fd40_p12cd@@@_STL@@@_STL@@IAEXI_N@Z,0x0065FAE0,gen-tgrid payload member
 ?_M_reallocate_map@?$deque@UGen_t_006a4e20_p12cd@@V?$allocator@UGen_t_006a4e20_p12cd@@@_STL@@@_STL@@IAEXI_N@Z,0x006A10E0,gen-tgrid payload member
+?_M_reallocate_map@?$deque@UGen_t_008fb4d0_p20pod@@V?$allocator@UGen_t_008fb4d0_p20pod@@@_STL@@@_STL@@IAEXI_N@Z,0x008FAA40,RVA 0x008FB4D0 exact auxiliary call target
 ?_M_reallocate_map@?$deque@UGen_t_008fb570_p8pod@@V?$allocator@UGen_t_008fb570_p8pod@@@_STL@@@_STL@@IAEXI_N@Z,0x008FABB0,RVA 0x008FB570 exact auxiliary call target
 ?_M_reallocate_map@?$deque@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@IAEXI_N@Z,0x0000C450,Open-BFME5 ILT the BuddyRequest deque _M_push_back_aux_v at 0x0063CD80 reserves the map through
 ?_M_reallocate_map@?$deque@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@IAEXI_N@Z,0x00001523,Open-BFME5 ILT the BuddyResponse deque _M_push_back_aux_v at 0x0063CE30 reserves the map through
@@ -72398,6 +72399,7 @@ name,address,notes
 ?bfmeCallDNE@BfmeOtherDNE@@QAEXPAX@Z,0x00888BC0,pin
 ?bfmeCallDNF@BfmeOtherDNF@@QAEXPAX@Z,0x00888BC0,pin
 ?bfmeCallDNG@BfmeOtherDNG@@QAEXPAX@Z,0x00888BC0,pin
+?bfmeCallDOA@BfmeOtherDOA@@QAEXPAVBfmeItemDOA@@@Z,0x00887B60,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -78871,4 +78873,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?_M_reallocate_map@?$deque@UGen_t_008fb4d0_p20pod@@V?$allocator@UGen_t_008fb4d0_p20pod@@@_STL@@@_STL@@IAEXI_N@Z,0x008FAA40,RVA 0x008FB4D0 exact auxiliary call target
