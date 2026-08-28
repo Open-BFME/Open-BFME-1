@@ -5869,7 +5869,6 @@ void Drawable::clearAndSetModelConditionState( ModelConditionFlagType clr, Model
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getDrawModulesNonDirty@Drawable@@QAEPAPAVDrawModule@@XZ present-unmatched
 DrawModule** Drawable::getDrawModulesNonDirty() 
 { 
 	DrawModule** dm = (DrawModule**)getModuleList(MODULETYPE_DRAW); 
