@@ -72349,6 +72349,7 @@ name,address,notes
 ?bfmeDispatchA@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x000075D6,Open-BFME5 ILT the range dispatcher at 0x002610F0 calls
 ?bfmeDispatchB@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x00028501,Open-BFME5 ILT the range dispatcher at 0x00437D30 calls
 ?bfmeDispatchC@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x00027138,Open-BFME5 ILT the range dispatcher at 0x00575A50 calls
+?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
 ?bfmeDoOU@BfmeThingOU@@QAEXE@Z,0x0003BC23,pin
@@ -72698,6 +72699,7 @@ name,address,notes
 ?bfmeIsSet@BfmeGameOverGateA@@QAE_NXZ,0x000330DC,Open-BFME5 ILT the first early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012ED748 is unidentified
 ?bfmeIsSet@BfmeGameOverGateB@@QAE_NXZ,0x0000CFC7,Open-BFME5 ILT the second early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012F076C is unidentified
 ?bfmeIterate@BfmeIterableObject@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x0003DB68,Open-BFME5 ILT the per-object visit in Player::iterateObjects at 0x000CDCF0 calls; it jumps to 0x000EE770
+?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLookupA@@YAHPAX@Z,0x0000B1AE,Open-BFME5 ILT the bit setter at 0x001C3FB0 looks up through
 ?bfmeLookupB@@YAHPAX@Z,0x000052CC,Open-BFME5 ILT the bit setter at 0x001C4020 looks up through
 ?bfmeLookupC@@YAHPAX@Z,0x00031246,Open-BFME5 ILT the bit setter at 0x0020EC60 looks up through
@@ -72783,6 +72785,7 @@ name,address,notes
 ?bfmeQuery@BfmeFilterObject@@QAE_NPAVPlayer@@@Z,0x00020824,Open-BFME5 ILT the object query in Rva2225E0Filter::accepts at 0x003A04A0 goes through
 ?bfmeQuery@Pathfinder@@QAEXPAVObject@@PAH1@Z,0x000461FF,Open-BFME5 ILT the TightenPathStruct constructor at 0x003E1720 queries the pathfinder through; the two pointer arguments are the outputs at +0x0C and +0x10
 ?bfmeRangeBase@WeaponTemplate@@ABEMPBVObject@@ABVWeaponBonus@@M@Z,0x00009598,Open-BFME5 ILT thunk to body 0x001E2670; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 gets its unbonused range from it with the negated z of the position; address-derived name
+?bfmeRangeErrorQX@BfmeThingQX@@QAEXXZ,0x000132CD,pin
 ?bfmeRebuild@BFMERopeDrawableGetPositionShim@@AAEXH@Z,0x00034C3E,Open-BFME5 ILT the rope getPosition at 0x0041D090 rebuilds through
 ?bfmeRegisterHouseColor@@YAXPBD0@Z,0x00900D70,the two-argument __cdecl function the HouseColor parser hands its two strings to; unnamed in the image
 ?bfmeRelease@BfmeRefAB@@QAEPAV1@XZ,0x00032D1C,Open-BFME5 the ICF thunk (to 0x00432D1C) the drop helper at 0x003CFC90 gives a borrowed reference back through
