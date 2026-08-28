@@ -2352,11 +2352,22 @@ void AIUpdateInterface::friend_endingMove()
 /**
  * This is used by the jetai to set a specific path.
  */
-// ?friend_setPath@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::friend_setPath(Path *path)
 {
-	destroyPath();
-	m_path = path;
+	BFMEApproachPathFields *retail = reinterpret_cast<BFMEApproachPathFields *>(this);
+
+	if (retail->m_path) {
+		Path *oldPath = retail->m_path;
+		reinterpret_cast<BFMEDeletablePath *>(oldPath)->destroy();
+		::operator delete(oldPath);
+	}
+
+	retail->m_path = NULL;
+	retail->m_waitingForPath = FALSE;
+	retail->m_isBlockedAndStuck = FALSE;
+	retail->m_isAttackPath = FALSE;
+	reinterpret_cast<BFMEDestroyPathAIUpdate *>(this)->setLocomotorGoalNone();
+	retail->m_path = path;
 }
 
 //-------------------------------------------------------------------------------------------------
