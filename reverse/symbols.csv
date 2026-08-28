@@ -73340,6 +73340,7 @@ name,address,notes
 ?bfmeTheCRA@@3PAVBfmeTableCRA@@A,0x00EF0898,pin
 ?bfmeTheDEE@@3PAVBfmeGlobalDEE@@A,0x00EF076C,pin
 ?bfmeTheDEF@@3PAVBfmeGlobalDEF@@A,0x00EF076C,pin
+?bfmeTheDEG@@3PAVBfmeGlobalDEG@@A,0x00EF076C,pin
 ?bfmeTheOneCHF@@3PAVBfmeOneCHF@@A,0x00EF1024,pin
 ?bfmeThePoolCJD@@3VBfmePoolCJD@@A,0x00F4FB38,pin
 ?bfmeTheTwoCHF@@3PAVBfmeTwoCHF@@A,0x00EF1028,pin
