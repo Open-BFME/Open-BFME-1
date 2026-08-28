@@ -1300,10 +1300,16 @@ const ArmorTemplateSet* ThingTemplate::findArmorTemplateSet(const ArmorSetFlags&
 }
 
 //=============================================================================
-// ?findWeaponTemplateSet@ThingTemplate@@QBEPBVWeaponTemplateSet@@ABV?$BitFlags@$0BB@@@@Z present-unmatched
 const WeaponTemplateSet* ThingTemplate::findWeaponTemplateSet(const WeaponSetFlags& t) const
 {
-  return m_weaponTemplateSetFinder.findBestInfo(m_weaponTemplateSets, t);
+  struct BFMEThingTemplateWeaponView
+  {
+    char m_padding[0x2F8];
+    WeaponTemplateSetVector m_sets;
+    WeaponTemplateSetFinder m_finder;
+  };
+  const BFMEThingTemplateWeaponView *bfme = reinterpret_cast<const BFMEThingTemplateWeaponView *>(this);
+  return bfme->m_finder.findBestInfo(bfme->m_sets, t);
 }
 
 //-----------------------------------------------------------------------------
