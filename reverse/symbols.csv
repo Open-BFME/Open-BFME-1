@@ -73111,6 +73111,7 @@ name,address,notes
 ?bfmeHashCombineC@@YAIII@Z,0x0003F7CE,Open-BFME5 ILT the combiner at 0x0056E1E0 calls
 ?bfmeHashCompareA@@YAIII@Z,0x00027BFB,Open-BFME5 ILT the hash comparisons at 0x0054ECB0 and 0x0054F200 call
 ?bfmeHashCompareB@@YAIII@Z,0x00020AA4,Open-BFME5 ILT the hash comparisons at 0x0054ECE0 and 0x0054F230 call
+?bfmeHelper990410@@YAXPAXN@Z,0x00990410,pin
 ?bfmeHitAEA@BfmeEntryAEA@@QAE_NPAUBfmeKeyAEA@@PAX@Z,0x008017E0,pin
 ?bfmeIdAIA@BfmeThingAIA@@QAEPAXXZ,0x00020824,pin
 ?bfmeIdALA@BfmeKeyALA@@QAEPAUBfmeIdALA@@XZ,0x00020824,pin
@@ -73377,6 +73378,7 @@ name,address,notes
 ?bfmePushQI@BfmeThingQI@@QAEXE@Z,0x0003BC23,pin
 ?bfmeQuery@BfmeFilterObject@@QAE_NPAVPlayer@@@Z,0x00020824,Open-BFME5 ILT the object query in Rva2225E0Filter::accepts at 0x003A04A0 goes through
 ?bfmeQuery@Pathfinder@@QAEXPAVObject@@PAH1@Z,0x000461FF,Open-BFME5 ILT the TightenPathStruct constructor at 0x003E1720 queries the pathfinder through; the two pointer arguments are the outputs at +0x0C and +0x10
+?bfmeRandom2B7@@YANHMPBDH@Z,0x0002CCA5,pin
 ?bfmeRangeBase@WeaponTemplate@@ABEMPBVObject@@ABVWeaponBonus@@M@Z,0x00009598,Open-BFME5 ILT thunk to body 0x001E2670; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 gets its unbonused range from it with the negated z of the position; address-derived name
 ?bfmeRangeErrorQX@BfmeThingQX@@QAEXXZ,0x000132CD,pin
 ?bfmeRebuild@BFMERopeDrawableGetPositionShim@@AAEXH@Z,0x00034C3E,Open-BFME5 ILT the rope getPosition at 0x0041D090 rebuilds through
@@ -73752,8 +73754,10 @@ name,address,notes
 ?calcPhysicsXformTreads@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z,0x00034ABD,ILT thunk to the treads physics transform helper
 ?calcPitches@GeometryInfo@@QBEXABUCoord3D@@ABV1@0AAM2@Z,0x0087EC20,GeometryInfo pitch calculation body decoded from Weapon::isWithinTargetPitch retail callsite
 ?calculateScore@ScoreKeeper@@QAEHXZ,0x000E8D90,ZH ScoreKeeper::calculateScore: TheGlobalData (0x012ED5C8) value multipliers at +0x1224..+0x1250 times moneyEarned +4 unitsBuilt +0x8c buildingsBuilt +0x114 and the per-player kill arrays at +0xc/+0x94 skipping m_myPlayerIdx +0x140; stores m_currentScore at +0x138; ILT 0x0000D67A; callers 0x000E8F70 0x000E92B0 and the score screen 0x004E81A0
+?call2@BfmeTargetF63@@QAEXPAX@Z,0x00002A59,pin
 ?call@ArmorMapHelperShim@@QBE_NABV?$BitFlags@$0L@@@0@Z,0x00140740,incremental-link thunk target through a TU-local forwarding shim
 ?call@BfmeObj412@@QAEXPAX0@Z,0x00049A80,pin
+?call@BfmeTargetF5F@@QAEXPAX@Z,0x000160D1,pin
 ?call@Gen0000C4F0@@QAEXPAVY1ForEachArg@@@Z,0x0000C4F0,element callee of the 0x003D0FE0 for-each loop reached via incremental-link thunk; address-derived name
 ?call@Gen0000D84B@@QAEXXZ,0x0000D84B,element callee of the 0x003CFC60 for-each loop reached via incremental-link thunk; address-derived name
 ?call@Gen000135B1@@QAEXPAVY1ForEachArg@@0@Z,0x000135B1,element callee of the 0x003CD260 for-each loop reached via incremental-link thunk; address-derived name
@@ -74535,6 +74539,7 @@ name,address,notes
 ?filter@BfmeFilterC9E@@QAE_NPAX@Z,0x000250F4,pin
 ?filterSetup@W3DShaderManager@@SA_NW4FilterModes@@W4FilterTypes@@@Z,0x00716AA0,address-derived callee of 0x0073B650
 ?filterSetup@W3DShaderManager@@SA_NW4FilterTypes@@W4FilterModes@@@Z,0x00716AA0,address-derived callee of 0x0073B650
+?find2@BfmeMgrF5F@@QAEPAXHPAX0H@Z,0x0001F253,pin
 ?find@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QBEIPBDII@Z,0x00654BE0,STLport basic_string<char>::find(const char* s; size_type pos; size_type n): -1 on empty; clamps pos; std::search via ILT 0x0000F574 over [begin+pos; end) for [s; s+n); returns index or npos; callers parsePlayerKVPairs@GameSpyPSMessageQueueInterface 0x006597BE; ILT 0x0003DA4B
 ?find@?$hash_map@HW4Relationship@@U?$hash@H@_STL@@U?$equal_to@H@3@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@3@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBHW4Relationship@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHW4Relationship@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHW4Relationship@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@2@@2@ABH@Z,0x0001D8CC,ILT; PlayerRelationMap find in Player::getRelationship 0x000D19C0
 ?find@?$hash_map@IW4Relationship@@U?$hash@I@_STL@@U?$equal_to@I@3@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@3@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBIW4Relationship@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBIW4Relationship@@@_STL@@@2@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIW4Relationship@@@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@2@@2@ABI@Z,0x0002D0B0,ILT; TeamRelationMap find in Player::getRelationship 0x000D19C0
@@ -74542,6 +74547,7 @@ name,address,notes
 ?find@BFMELANPreferenceMap@@QAEPAXABVBFMELANPreferenceKey@@@Z,0x0000AEAC,LANPreferences retail map lookup ILT reaches the matched STL tree find at 0x00080600
 ?find@BfmeFinderD02@@QAEHH@Z,0x0002B81E,pin
 ?find@BfmeMgrEB2@@QAEPAVBfmeObjEB2@@H@Z,0x0001F253,pin
+?find@BfmeMgrF5F@@QAEPAXHPAXH@Z,0x0001F253,pin
 ?find@BfmeMgrF62@@QAEPAVBfmeObjF62@@H@Z,0x0001F253,pin
 ?find@CostMapShim@@QAE?AUCostMapIteratorShim@@ABH@Z,0x0001D980,ILT thunk to the name-keyed map find behind Player+0x1CC; returns its iterator by value
 ?find@CustomPreferenceMapShim@@QAEPAUCustomMapNodeShim@@ABVAsciiString@@@Z,0x0000AEAC
@@ -74757,6 +74763,7 @@ name,address,notes
 ?g_bfmeMakerAWB@@3PAVBfmeMakerAWB@@A,0x00EF12CC,pin
 ?g_bfmeMgr12F0898@@3PAUBfmeGlobalMgr12F0898@@A,0x00EF0898,pin
 ?g_bfmeMgr12F0898@@3PAVBfmeMgrEB2@@A,0x00EF0898,pin
+?g_bfmeMgr12F0898@@3PAVBfmeMgrF5F@@A,0x012F0898,pin
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
 ?g_bfmeModeAZC@@3PAUBfmeModeAZC@@A,0x00EF0FE0,pin
@@ -74837,6 +74844,7 @@ name,address,notes
 ?g_lastPacketRouterStallFrame@@3IA,0x012F7704,last packet-router frame that triggered the native frame-stall gate
 ?g_mgr12F33F8@@3PAVBfmeMgr412@@A,0x012F33F8,pin
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
+?g_obj12F060C@@3PAUBfmeObj2B1@@A,0x012F060C,pin
 ?g_quitMenuLayout@@3PAXA,0x012F4AD4,HideQuitMenu layout global
 ?g_rva0051B5F0Large@@3URva0051B5F0Large@@A,0x00D05FBC,Open-BFME5 packed thirteen-byte preset global
 ?g_rva0051B5F0Medium@@3URva0051B5F0Medium@@A,0x00D05FB0,Open-BFME5 packed ten-byte preset global
@@ -78643,6 +78651,7 @@ _bfmeStrECE,0x00D06F24,pin
 _bfmeStrEECa,0x00CC47B8,pin
 _bfmeStrEECb,0x00CC4B60,pin
 _bfmeStrEECc,0x00D158A8,pin
+_bfmeString10CF498,0x010CF498,pin
 _bfmeTabEAC,0x00D098B0,pin
 _bfmeTagANB,0x00C9E038,pin
 _bfmeTagAPB,0x00DDFC30,pin
