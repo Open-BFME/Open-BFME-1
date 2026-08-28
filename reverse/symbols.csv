@@ -74588,6 +74588,7 @@ name,address,notes
 ?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
+?g_bfmeBufDWG@@3PAXA,0x00F378D0,pin
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
 ?g_bfmeClockAHB@@3PAUBfmeClockAHB@@A,0x00EF0898,pin
 ?g_bfmeClockAZA@@3PAUBfmeClockAZA@@A,0x00EF0898,pin
@@ -74607,6 +74608,7 @@ name,address,notes
 ?g_bfmeFindAMB@@3PAVBfmeFindAMB@@A,0x00EF0898,pin
 ?g_bfmeFlagBRA@@3HA,0x00EF7094,pin
 ?g_bfmeFlagsAPB@@3IA,0x00EA6FA0,pin
+?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeICoord2DFormat@@3QBDB,0x01144414,address-derived ICoord2D format string from retail 0x009D97C5
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
 ?g_bfmeIRegion2DFormat@@3QBDB,0x0114445C,address-derived IRegion2D format string from retail 0x009D985E
@@ -78323,6 +78325,7 @@ __ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00
 __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
+__imp__bfmeCloseDWE@4,0x00F590C8,pin
 __imp__bfmeEnterDVC@4,0x00F58D18,pin
 __imp__bfmeEnterDWA@4,0x00F58D18,pin
 __imp__bfmeEnterDWD@4,0x00F58D18,pin
