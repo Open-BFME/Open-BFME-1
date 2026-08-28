@@ -50,10 +50,25 @@ struct Gen_t_008fb350_p12pod
 	int value[3];
 };
 
+class ShroudManagerImpl008FBA40Element;
+
+struct ShroudManagerImpl008FBA40CellObject
+{
+	char padding00[0x24];
+	int playerState[16];
+};
+
 class ShroudManagerImpl008FBA40Node
 {
 public:
 	~ShroudManagerImpl008FBA40Node();
+
+private:
+	int unknown00;
+	ShroudManagerImpl008FBA40CellObject *object;
+	int unknown08;
+	ShroudManagerImpl008FBA40Node *next;
+	friend class ShroudManagerImpl008FBA40Element;
 };
 
 class ShroudManagerImpl008FBA40;
@@ -73,6 +88,9 @@ struct ShroudManagerImpl008FBA40PlayerState
 	unsigned short status;
 	unsigned short counters[2];
 };
+
+typedef void (__cdecl *ShroudManagerImpl008FBA40RefreshCallback)(
+	int x, int y, int status);
 
 class ShroudManagerImpl008FBA40Element
 {
@@ -109,8 +127,8 @@ private:
 	Region3D region;
 	Real defaultCellSize;
 	Real inverseCellSize;
-	int width;
-	int height;
+	unsigned int width;
+	unsigned int height;
 	ShroudManagerImpl008FBA40Element *elements;
 	ShroudManagerImpl008FBA40Node *nodes;
 	PartitionData *pendingPartitionData;
@@ -119,9 +137,10 @@ private:
 	int unknown64;
 	bool enabled;
 	char padding69[3];
-	void *refreshCallback;
+	ShroudManagerImpl008FBA40RefreshCallback refreshCallback;
 
 	void processPending(bool drainAll);
+	friend class ShroudManagerImpl008FBA40Element;
 };
 
 ShroudManagerImpl008FBA40::ShroudManagerImpl008FBA40()
@@ -230,4 +249,27 @@ void ShroudManagerImpl008FBA40Element::adjustPlayerCounter008FC1F0(
 	else if (amount > 0xffff)
 		amount = 0xffff;
 	*counter = (unsigned short)amount;
+}
+
+void ShroudManagerImpl008FBA40Element::updatePlayerCells008FC450(
+	ShroudManagerImpl008FBA40 *manager, int playerIndex)
+{
+	ShroudManagerImpl008FBA40PlayerState &playerState =
+		playerStates[playerIndex];
+	if (playerState.status == 0)
+	{
+		playerState.status = 0xffff;
+		for (ShroudManagerImpl008FBA40Node *node = cellNodes;
+			node; node = node->next)
+		{
+			node->object->playerState[playerIndex] = 0;
+		}
+
+		if (playerIndex == manager->unknown64)
+		{
+			int index = this - manager->elements;
+			manager->refreshCallback(index % manager->width,
+				index / manager->width, 2);
+		}
+	}
 }
