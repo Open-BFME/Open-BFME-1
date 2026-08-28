@@ -72506,6 +72506,7 @@ name,address,notes
 ?bfmeCallFCD@BfmeObjFCD@@QAEDPAX0@Z,0x0003EEBE,pin
 ?bfmeCallFEA@BfmeGlobFEA@@QAEXPAXH@Z,0x0003A279,pin
 ?bfmeCallFED@BfmeBaseFED@@QAEXPAXH@Z,0x000157DA,pin
+?bfmeCallFHA@@YAHPAX0@Z,0x00041164,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -73261,6 +73262,7 @@ name,address,notes
 ?bfmeLookEUA@BfmeGlobBEUA@@QAEPAUBfmeItemEUA@@PAH@Z,0x0002EE60,pin
 ?bfmeLookFDA@BfmeGlobFDA@@QAEPAUBfmeResFDA@@PAUBfmeSubFDA@@@Z,0x00028560,pin
 ?bfmeLookFEG@BfmeGlobFEG@@QAEPAVBfmeResFEG@@H@Z,0x0001F253,pin
+?bfmeLookFHH@BfmeGlobFHH@@QAEPAVBfmeResFHH@@PAUBfmeSubFHH@@@Z,0x00028560,pin
 ?bfmeLookRH@@YGHPAX0@Z,0x007F76F0,pin
 ?bfmeLookupA@@YAHPAX@Z,0x0000B1AE,Open-BFME5 ILT the bit setter at 0x001C3FB0 looks up through
 ?bfmeLookupB@@YAHPAX@Z,0x000052CC,Open-BFME5 ILT the bit setter at 0x001C4020 looks up through
@@ -73648,6 +73650,7 @@ name,address,notes
 ?bfmeTailELGa@BfmeSubELGa@@QAEXPAX@Z,0x000468D0,pin
 ?bfmeTailELGb@BfmeSubELGb@@QAEXPAX@Z,0x00032975,pin
 ?bfmeTailFFC@BfmeSubFFC@@QAEXH@Z,0x0001C882,pin
+?bfmeTailFHG@@YGXPAX0HH@Z,0x0000F105,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
@@ -73758,6 +73761,7 @@ name,address,notes
 ?bfmeUseFDE@BfmeThingFDE@@QAEXPAX@Z,0x0000A254,pin
 ?bfmeUseFEG@BfmeResFEG@@QAEXPAX@Z,0x00028641,pin
 ?bfmeUseFGE@BfmeResFGE@@QAEXPAX0@Z,0x0002E834,pin
+?bfmeUseFHH@BfmeResFHH@@QAEXPAX0@Z,0x00017A12,pin
 ?bfmeUseRT@BfmeSlotRT@@QAEXXZ,0x0003A427,pin
 ?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
@@ -74920,6 +74924,7 @@ name,address,notes
 ?g_bfmeObjFGA@@3PAUBfmeGlobFGA@@A,0x00EF1270,pin
 ?g_bfmeObjFGC@@3PAUBfmeGlobFGC@@A,0x00EF0898,pin
 ?g_bfmeObjFGE@@3PAVBfmeGlobFGE@@A,0x00EF0898,pin
+?g_bfmeObjFHH@@3PAVBfmeGlobFHH@@A,0x00EEF1D8,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
