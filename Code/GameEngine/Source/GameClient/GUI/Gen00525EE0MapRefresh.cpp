@@ -67,7 +67,7 @@ class Gen00525EE0Owner
 public:
 	virtual void bfmeSlot0(void) = 0;
 	virtual void bfmeSlot1(void) = 0;
-	virtual void bfmeSlot2(void) = 0;
+	virtual void bfmeDispatchWindow(GameWindow *window, bool active) = 0;
 	virtual void bfmeSlot3(void) = 0;
 	virtual unsigned char bfmeSetPlayerTemplate(GameSlot *slot, int playerTemplate) = 0;
 	virtual bool bfmeSetColor(GameSlot *slot, int color) = 0;
@@ -75,12 +75,19 @@ public:
 	virtual bool bfmeSetStartPosition(GameSlot *slot, int startPosition) = 0;
 	virtual void bfmeSlot8(void) = 0;
 	virtual bool bfmeContains(GameInfo *game) = 0;
+	virtual void bfmeSlot10(void) = 0;
+	virtual void bfmeSlot11(void) = 0;
+	virtual bool bfmeShouldRestoreBackground(void) = 0;
+	virtual void bfmeSlot13(void) = 0;
+	virtual void bfmeSetBackgroundVisible(bool visible) = 0;
+	virtual void bfmeRestoreBackground(void) = 0;
 };
 
 class Gen_00525EE0
 {
 public:
 	void bfmeRefresh(void);
+	void bfmeDispatchWindow(GameWindow *window);
 	int bfmeFindRepresentativeSlot(void);
 	int bfmeFindAvailableStartPosition(int firstIndex);
 	bool bfmeApplyStartPosition(int index, int startPosition);
@@ -98,7 +105,8 @@ private:
 	bool m_multiplayerStartPositionChanged;
 	unsigned char m_unmodelled15[2];
 	bool m_pending;
-	unsigned char m_unmodelled18[0x90];
+	bool m_backgroundVisible;
+	unsigned char m_unmodelled19[0x8F];
 	GameWindow *m_colorCombos[8];
 	GameWindow *m_playerTemplateCombos[8];
 	unsigned char m_unmodelledE8[0x3C];
@@ -126,6 +134,20 @@ void Gen_00525EE0::bfmeRefresh(void)
 		if (map && map->m_isMultiplayer)
 			m_isMultiplayer = true;
 	}
+}
+
+// Restore the owner background state before dispatching the active window.
+// ?bfmeDispatchWindow@Gen_00525EE0@@QAEXPAVGameWindow@@@Z
+void Gen_00525EE0::bfmeDispatchWindow(GameWindow *window)
+{
+	if (m_backgroundVisible)
+	{
+		m_backgroundVisible = false;
+		m_owner->bfmeSetBackgroundVisible(false);
+		if (m_owner->bfmeShouldRestoreBackground())
+			m_owner->bfmeRestoreBackground();
+	}
+	m_owner->bfmeDispatchWindow(window, true);
 }
 
 // Prefer the local slot, except that a hosting observer is represented by the
