@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
+// Field names come from retail's own INI field table joined to upstream's
+// parse table on the key: retail supplies every offset, upstream only the
+// word. The offsets were derived from this class's declaration sequence and
+// type sizes, never read out of the old placeholder names.
 
 // Open-BFME5: QueueProductionExitUpdate::friend_newModuleData
 // Inline ModuleData ctor so the TU only exports the factory symbol.
@@ -14,10 +18,10 @@ class QueueProductionExitUpdateModuleData
 public:
 	QueueProductionExitUpdateModuleData()
 	{
-		m_a = 0;
+		m_unitCreatePoint = 0;
 		m_b = 0;
 		m_c = 0;
-		m_d = 0;
+		m_naturalRallyPoint = 0;
 		m_e = 0;
 		m_f = 0;
 		m_g = 0;
@@ -30,10 +34,10 @@ public:
 	virtual ~QueueProductionExitUpdateModuleData();
 private:
 	unsigned int m_pad;
-	unsigned int m_a;
+	unsigned int m_unitCreatePoint;
 	unsigned int m_b;
 	unsigned int m_c;
-	unsigned int m_d;
+	unsigned int m_naturalRallyPoint;
 	unsigned int m_e;
 	unsigned int m_f;
 	unsigned int m_g;
