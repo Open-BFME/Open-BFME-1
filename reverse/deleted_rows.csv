@@ -23925,3 +23925,11 @@ dup_59eb90,0x0059EB90,"not AttackNugget: its constructor target is 0x0059EB00 no
 ?d_007f6ab0@@YAXXZ,0x007F6AB0,"gen-dump placeholder superseded by the real identity of these bytes: ??_I@YGXPAXIHP6EX0@Z@Z, byte-verified from Code/GameEngine/Source/Common/Q3FpsPreferenceGetters.cpp over the same 49-byte range. The Code/gen_asm/d_007f2a50.asm dump reproduces those bytes but carries no identity."
 ?d_0084b020@@YAXXZ,0x0084B020,"gen-dump placeholder superseded by the real identity of these bytes: ?_M_switch_to_input_mode@?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@AAE_NXZ, byte-verified from Code/gen_small/X4Filebuf.cpp over the same 81-byte range. The Code/gen_asm/d_00849530.asm dump reproduces those bytes but carries no identity."
 ?d_0085aa50@@YAXXZ,0x0085AA50,"gen-dump placeholder superseded by the real identity of these bytes: _ciSocketSelect, byte-verified from Code/GameEngine/Source/GameNetwork/GameSpy/chat/ChatSocketCore.cpp over the same 96-byte range. The Code/gen_asm/d_00858250.asm dump reproduces those bytes but carries no identity."
+?dup_000c8b40@@YAXXZ,0x000C8B40,gen-alias placeholder superseded by the real C++ identity ?getDrawModulesNonDirty@Drawable@@QAEPAPAVDrawModule@@XZ
+?dup_0048c580@@YAXXZ,0x0048C580,gen-alias placeholder superseded by the real C++ identity ??0ControlBarResizer@@QAE@XZ
+?dup_00537540@@YAXXZ,0x00537540,gen-alias placeholder superseded by the real C++ identity ?getNumCommands@NetPacket@@QAEHXZ
+?dup_0061e640@@YAXXZ,0x0061E640,gen-alias placeholder superseded by the real C++ identity ?leaveGame@GameInfo@@QAEXXZ
+?dup_00676bf0@@YAXXZ,0x00676BF0,gen-alias placeholder superseded by the real C++ identity ?GetRunAheadCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z
+?dup_00676c10@@YAXXZ,0x00676C10,gen-alias placeholder superseded by the real C++ identity ?GetDestroyPlayerCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z
+?dup_00676c40@@YAXXZ,0x00676C40,gen-alias placeholder superseded by the real C++ identity ?GetDisconnectPlayerCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z
+?dup_00676cc0@@YAXXZ,0x00676CC0,gen-alias placeholder superseded by the real C++ identity ?GetDisconnectFrameCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z

@@ -404,7 +404,6 @@ void GameInfo::enterGame( void )
 	m_inProgress = false;
 }
 
-// ?leaveGame@GameInfo@@QAEXXZ present-unmatched
 void GameInfo::leaveGame( void )
 {
 	DEBUG_ASSERTCRASH(m_inGame && !m_inProgress, ("Leaving game at a bad time!"));

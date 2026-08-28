@@ -82,7 +82,6 @@ ResizerWindow::ResizerWindow(void)
 	m_altPos.x = m_altPos.y = 0;
 }
 
-// ??0ControlBarResizer@@QAE@XZ present-unmatched
 ControlBarResizer::ControlBarResizer( void )
 {
 

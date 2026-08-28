@@ -434,7 +434,6 @@ UnsignedInt NetPacket::GetRunAheadMetricsCommandSize(NetCommandMsg *msg) {
 	return msglen;
 }
 
-// ?GetRunAheadCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
 UnsignedInt NetPacket::GetRunAheadCommandSize(NetCommandMsg *msg) {
 	Int msglen = 0;
 
@@ -453,7 +452,6 @@ UnsignedInt NetPacket::GetRunAheadCommandSize(NetCommandMsg *msg) {
 	return msglen;
 }
 
-// ?GetDestroyPlayerCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
 UnsignedInt NetPacket::GetDestroyPlayerCommandSize(NetCommandMsg *msg) {
 	Int msglen = 0;
 
@@ -501,7 +499,6 @@ UnsignedInt NetPacket::GetDisconnectKeepAliveCommandSize(NetCommandMsg *msg) {
 	return msglen;
 }
 
-// ?GetDisconnectPlayerCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
 UnsignedInt NetPacket::GetDisconnectPlayerCommandSize(NetCommandMsg *msg) {
 	Int msglen = 0;
 
@@ -732,7 +729,6 @@ UnsignedInt NetPacket::GetFileProgressCommandSize(NetCommandMsg *msg) {
 	return msglen;
 }
 
-// ?GetDisconnectFrameCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z present-unmatched
 UnsignedInt NetPacket::GetDisconnectFrameCommandSize(NetCommandMsg *msg) {
 	UnsignedInt msglen = 0;
 	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte);	// 'T' and command type
@@ -5950,7 +5946,6 @@ NetCommandMsg * NetPacket::readFrameResendRequestMessage(UnsignedByte *data, Int
 /**
  * Returns the number of commands in this packet.  Only valid if the packet is locally constructed.
  */
-// ?getNumCommands@NetPacket@@QAEHXZ present-unmatched
 Int NetPacket::getNumCommands() {
 	return m_numCommands;
 }
