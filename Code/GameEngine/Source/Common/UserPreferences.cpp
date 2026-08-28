@@ -651,22 +651,27 @@ void CustomMatchPreferences::setPreferredColor(Int val)
 	(*this)["Color"] = s;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getChatSizeSlider_CustomMatchPreferences_QAEHXZ_000AC330.cpp
-// ?getChatSizeSlider@CustomMatchPreferences@@QAEHXZ present-unmatched
-Int CustomMatchPreferences::getChatSizeSlider(void)
+// ?getChatSizeSlider@CustomMatchPreferences@@QAEHXZ
+Int CustomMatchPreferences::getChatSizeSlider( void )
 {
-	Int ret;
-	CustomMatchPreferences::const_iterator it = find("ChatSlider");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("ChatSlider");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node != map->m_header)
 	{
-		return 45;
+		CustomStringDataShim *data = node->m_value;
+		const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+		Int value = atoi(text);
+		if (value >= 0 && value <= 100)
+			return value;
 	}
 
-	ret = atoi(it->second.str());
-	if (ret < 0 || ret > 100)
-		ret = 45;
-
-	return ret;
+	return 45;
 }
 
 void CustomMatchPreferences::setChatSizeSlider(Int val)
@@ -722,15 +727,23 @@ void CustomMatchPreferences::setPreferredFaction(Int val)
 	(*this)["PlayerTemplate"] = s;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__usesSystemMapDir_CustomMatchPreferences_QAE_NXZ_000AC480.cpp
-// ?usesSystemMapDir@CustomMatchPreferences@@QAE_NXZ present-unmatched
-Bool CustomMatchPreferences::usesSystemMapDir(void)
+// ?usesSystemMapDir@CustomMatchPreferences@@QAE_NXZ
+Bool CustomMatchPreferences::usesSystemMapDir( void )
 {
-	CustomMatchPreferences::const_iterator it = find("UseSystemMapDir");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("UseSystemMapDir");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 		return TRUE;
 
-	if (stricmp(it->second.str(), "1") == 0) {
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	if (stricmp(text, "1") == 0) {
 		return TRUE;
 	}
 	return FALSE;
@@ -763,15 +776,23 @@ void CustomMatchPreferences::setUsesLongGameList(Bool val)
 	(*this)["UseLongGameList"] = s;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__allowsObservers_CustomMatchPreferences_QAE_NXZ_000AC510.cpp
-// ?allowsObservers@CustomMatchPreferences@@QAE_NXZ present-unmatched
-Bool CustomMatchPreferences::allowsObservers(void)
+// ?allowsObservers@CustomMatchPreferences@@QAE_NXZ
+Bool CustomMatchPreferences::allowsObservers( void )
 {
-	CustomMatchPreferences::const_iterator it = find("AllowObservers");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("AllowObservers");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 		return TRUE;
 
-	if (stricmp(it->second.str(), "1") == 0) {
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	if (stricmp(text, "1") == 0) {
 		return TRUE;
 	}
 	return FALSE;
@@ -784,22 +805,24 @@ void CustomMatchPreferences::setAllowsObserver(Bool val)
 	(*this)["AllowObservers"] = s;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getDisallowAsianText_CustomMatchPreferences_QAE_NXZ_000AC590.cpp
-// ?getDisallowAsianText@CustomMatchPreferences@@QAE_NXZ present-unmatched
+// BFME drops the reference's registry-language fallback: a miss is just FALSE.
+// ?getDisallowAsianText@CustomMatchPreferences@@QAE_NXZ
 Bool CustomMatchPreferences::getDisallowAsianText( void )
 {
-	CustomMatchPreferences::const_iterator it = find("DisallowAsianText");
-	if (it == end())
-	{
-		// since English Win98 machines don't have a Unicode font installed by default,
-		// we're forced to disable asian chat by default for English builds.
-		if (GetRegistryLanguage().compareNoCase("chinese") == 0 || GetRegistryLanguage().compareNoCase("korean") == 0 )
-			return FALSE;
-		else
-			return TRUE;
-	}
+	CustomAsciiStringShim key;
+	key.init("DisallowAsianText");
 
-	if (stricmp(it->second.str(), "1") == 0) {
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
+		return FALSE;
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	if (stricmp(text, "1") == 0) {
 		return TRUE;
 	}
 	return FALSE;
@@ -815,15 +838,23 @@ void CustomMatchPreferences::setDisallowAsianText(Bool val)
 
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__getDisallowNonAsianText_CustomMatchPreferences_QAE_NXZ_000AC610.cpp
-// ?getDisallowNonAsianText@CustomMatchPreferences@@QAE_NXZ present-unmatched
+// ?getDisallowNonAsianText@CustomMatchPreferences@@QAE_NXZ
 Bool CustomMatchPreferences::getDisallowNonAsianText( void )
 {
-	CustomMatchPreferences::const_iterator it = find("DisallowNonAsianText");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("DisallowNonAsianText");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 		return FALSE;
 
-	if (stricmp(it->second.str(), "1") == 0) {
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	if (stricmp(text, "1") == 0) {
 		return TRUE;
 	}
 	return FALSE;
