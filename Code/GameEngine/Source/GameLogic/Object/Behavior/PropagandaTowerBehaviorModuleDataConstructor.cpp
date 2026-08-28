@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// Field names come from retail's own INI field table joined to upstream's
+// parse table on the key: retail supplies every offset, upstream only the
+// word. The offsets were derived from this class's declaration sequence and
+// type sizes, never read out of the old placeholder names.
 // readable body of ??0PropagandaTowerBehaviorModuleData@@: Code/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehavior.cpp
 
 // PropagandaTowerBehaviorModuleData's constructor, retail 0x0028DC60. The name
@@ -28,10 +32,10 @@ public:
 private:
 	int m_unmodelled_08;
 	int m_unmodelled_0C;
-	int m_unmodelled_10;
-	int m_unmodelled_14;
-	int m_unmodelled_18;
-	int m_unmodelled_1C;
+	int m_autoHealPercentPerSecond;
+	int m_pulseFX;
+	int m_upgradeRequired;
+	int m_upgradedAutoHealPercentPerSecond;
 	int m_unmodelled_20;
 	bool m_unmodelled_24;
 	bool m_unmodelled_25;
@@ -40,10 +44,10 @@ private:
 PropagandaTowerBehaviorModuleData::PropagandaTowerBehaviorModuleData()
 	: m_unmodelled_08( 0 ),
 	  m_unmodelled_0C( 0 ),
-	  m_unmodelled_10( 0 ),
-	  m_unmodelled_14( 0 ),
-	  m_unmodelled_18( 0 ),
-	  m_unmodelled_1C( 0 ),
+	  m_autoHealPercentPerSecond( 0 ),
+	  m_pulseFX( 0 ),
+	  m_upgradeRequired( 0 ),
+	  m_upgradedAutoHealPercentPerSecond( 0 ),
 	  m_unmodelled_20( 0 ),
 	  m_unmodelled_24( false ),
 	  m_unmodelled_25( false )
