@@ -72806,6 +72806,7 @@ name,address,notes
 ?bfmeNext@Gen_000B56D0@@AAEXXZ,0x0003990A,Open-BFME5 the member the flag-then-forward wrapper at 0x000B56D0 tail-jumps to
 ?bfmeNodeAllocLarge@@YAPAXI@Z,0x00881F30,Open-BFME5 the STLport large-block allocator the 0x84-byte clone-node body calls
 ?bfmeNodeAllocSmall@@YAPAXI@Z,0x0082E540,Open-BFME5 the STLport node allocator the red-black clone-node bodies call
+?bfmeNoteWD@BfmeThingWD@@QAEXXZ,0x0002191D,pin
 ?bfmeNotify@BfmeOwnedE@@QAEXXZ,0x000263EB,Open-BFME5 the ICF thunk (to 0x003C9320) the clear at 0x003C0EF0 tail-calls
 ?bfmeNotify@Gen_000946D0Manager@@QAEXPAX@Z,0x0001A7DF,Open-BFME5 the manager member the notify-setter at 0x000946D0 tail-jumps to
 ?bfmeNotify@Gen_00094700Manager@@QAEXPAX@Z,0x0001A7DF,Open-BFME5 the manager member the notify-setter at 0x00094700 tail-jumps to
@@ -72820,6 +72821,7 @@ name,address,notes
 ?bfmeNotify@Glo012F1028Sub@@QAEXXZ,0x0002DE89,Open-BFME5 ILT thunk to body 0x003CAD20; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 tail-jumps into it from both arms on the sub-object at +0x28 of the global at 0x012F1028; address-derived name
 ?bfmeNotifyBridge@PathfindLayer@@AAEXXZ,0x0003B250,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is set
 ?bfmeNotifyPlain@PathfindLayer@@AAEXXZ,0x0003A03F,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is null
+?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmePushBack@BFMEAnimateWindowListPush@@QAEXABQAVAnimateWindow@@@Z,0x00022D36,BFME out-of-line list<AnimateWindow*>::push_back body 0x45DAE0 via ILT thunk
 ?bfmePushBackAux@Gen_00089d90@@IAEXABQAX@Z,0x0002FF1D,Open-BFME5 ILT the deque push_back at 0x00089D90 tail-jumps through
 ?bfmePushBackAux@Gen_0035b840@@IAEXABQAX@Z,0x00025284,Open-BFME5 ILT the deque push_back at 0x0035B840 tail-jumps through
@@ -72919,6 +72921,7 @@ name,address,notes
 ?bfmeTellRB@BfmeNodeRB@@QAEXPAX@Z,0x000021CB,pin
 ?bfmeTellRP@BfmeFoundRP@@QAEXPAX@Z,0x00030553,pin
 ?bfmeTest@Rva2225E0Filter@@AAE_NPAVBfmeOverridable@@_N@Z,0x0001B437,Open-BFME5 ILT the filter test whose result Rva2225E0Filter::accepts at 0x003A04A0 returns
+?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
 ?bfmeUnguardedInsertAQ@@YAXPAHHVBfmeCompAQ@@@Z,0x000018C0,Open-BFME5 the ICF thunk (to 0x004018C0) the linear insert at 0x00342C70 hands its unguarded arm to
