@@ -72280,6 +72280,7 @@ name,address,notes
 ?bfmeAssignPL@BfmeThingPL@@QAEXPAD0@Z,0x0002B297,pin
 ?bfmeAtRT@BfmeMapRT@@QAEPAVBfmeSlotRT@@PAX0@Z,0x0002D74A,pin
 ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z,0x0000C0A4,Open-BFME5 ILT thunk to body 0x00497CE0; ??0BfmeQuickMatchScreenBase@@QAE@PAX@Z at 0x00470620 calls it on this with its own argument as the last thing it does; address-derived name
+?bfmeAttachCEF@BfmeSubCEF@@QAEXPAUBfmeListCEF@@@Z,0x00887C90,pin
 ?bfmeBaseAB@BfmeThingAB@@QAEXPAX@Z,0x0001AD0C,pin
 ?bfmeBaseAGB@BfmeThingAGB@@QAEXPAX0@Z,0x000170E4,pin
 ?bfmeBaseARC@BfmeThingARC@@QAEXXZ,0x009A1A30,pin
@@ -73043,6 +73044,7 @@ name,address,notes
 ?bfmeOneCDD@BfmeThingCDD@@QAEXPAX0@Z,0x00005501,pin
 ?bfmeOneCDE@BfmeOwnerCDE@@QAEXPAX@Z,0x008F8D00,pin
 ?bfmeOneCED@BfmeThingCED@@QAE_NXZ,0x00046E3E,pin
+?bfmeOneCEF@BfmeThingCEF@@QAEXXZ,0x00004075,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73238,6 +73240,7 @@ name,address,notes
 ?bfmeTwoCBB@BfmeThingCBB@@QAEXPAXH@Z,0x0002EA91,pin
 ?bfmeTwoCDD@BfmeThingCDD@@QAEXPAX@Z,0x0004A1EC,pin
 ?bfmeTwoCED@BfmeThingCED@@QAE_NXZ,0x0001B31A,pin
+?bfmeTwoCEF@BfmeThingCEF@@QAEXXZ,0x00031FCF,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
