@@ -5,6 +5,7 @@ typedef unsigned short UnsignedShort;
 
 enum NetCommandType
 {
+	NETCOMMANDTYPE_PLAYERLEAVE = 10,
 	NETCOMMANDTYPE_LOADCOMPLETE = 16
 };
 
@@ -13,12 +14,17 @@ class NetCommandMsg
 public:
 	NetCommandMsg();
 	virtual ~NetCommandMsg();
+	virtual int getSortNumber();
+	virtual void prepareForRelay();
 	void detach();
 
+	void setExecutionFrame(unsigned int frame) { m_executionFrame = frame; }
+	unsigned int getExecutionFrame() { return m_executionFrame; }
 	void setPlayerID(unsigned int playerID) { m_playerID = playerID; }
 	unsigned int getPlayerID() { return m_playerID; }
 	void setID(UnsignedShort id) { m_id = id; }
 	void setNetCommandType(NetCommandType type) { m_commandType = type; }
+	NetCommandType getNetCommandType() { return m_commandType; }
 
 private:
 	unsigned int m_timestamp;
@@ -30,7 +36,17 @@ private:
 };
 
 Bool DoesCommandRequireACommandID(NetCommandType type);
+Bool IsCommandSynchronized(NetCommandType type);
 UnsignedShort GenerateNextCommandID();
+
+class NetCommandRef
+{
+	public:
+	NetCommandMsg *msg;
+	NetCommandRef *next;
+	NetCommandRef *prev;
+	unsigned char relay;
+};
 
 class BFMENetRequestPlayerLeaveCommandMsg
 {
@@ -65,14 +81,15 @@ public:
 	Bool getIsQuitting();
 	unsigned int getCommandCount(unsigned int frame);
 	unsigned int getFrameCommandCount(unsigned int frame);
+	NetCommandRef *addNetCommandMsg(NetCommandMsg *msg);
 };
 
-struct BFMEConnectionState
+class Connection
 {
+	public:
+	void sendNetCommandMsg(NetCommandMsg *msg, unsigned char relay);
 	int m_openState;
 };
-
-struct BFMEConnectionState;
 
 // Retail's real ConnectionManager, named so these two bodies carry their true
 // mangled names; the BFME-native helpers below keep the BFMEConnectionManager
@@ -88,7 +105,7 @@ public:
 
 private:
 	char m_unknown00[4];
-	BFMEConnectionState *m_connections[8];
+	Connection *m_connections[8];
 	char m_unknown24[0x12004];
 	unsigned int m_localSlot;
 	unsigned int m_packetRouterSlot;
@@ -145,7 +162,7 @@ public:
 
 private:
 	char m_unknown00[4];
-	BFMEConnectionState *m_connections[8];
+	Connection *m_connections[8];
 	char m_unknown24[0x12004];
 	int m_localSlot;
 	int m_packetRouterSlot;
@@ -344,9 +361,9 @@ Bool BFMEConnectionManager::hasPacketRouterFrameStall()
 	unsigned int frame = TheGameLogic->frame;
 	unsigned int slack = frame > 5 ? TheWritableGlobalData->networkRunAheadSlack : 3;
 	int slot = 0;
-	BFMEConnectionState **connectionSlot = m_connections;
+	Connection **connectionSlot = m_connections;
 	for (; slot < 8; ++slot, ++connectionSlot) {
-		BFMEConnectionState *connection = *connectionSlot;
+		Connection *connection = *connectionSlot;
 		if (connection != 0 && connection->m_openState == -1 &&
 			!((unsigned int)slot < 8 &&
 				*(int *)((char *)connectionSlot + 0x1207C) >= 1 &&
@@ -2212,7 +2229,7 @@ int BFMEConnectionManager::isPlayerInGame(int slot)
 		goto notInGame;
 	if (slot == m_localSlot)
 		goto inGame;
-	BFMEConnectionState *connection = m_connections[slot];
+	Connection *connection = m_connections[slot];
 	if (connection == 0 || connection->m_openState != -1)
 		goto notInGame;
 inGame:
@@ -2231,7 +2248,7 @@ int BFMEConnectionManager::isPlayerSlotActive(int slot)
 		goto inactive;
 	if (slot == m_localSlot)
 		goto active;
-	BFMEConnectionState *connection = m_connections[slot];
+	Connection *connection = m_connections[slot];
 	if (connection == 0 || connection->m_openState != -1)
 		goto inactive;
 active:
@@ -2252,132 +2269,37 @@ void BFMEConnectionManager::processRequestPlayerLeaveCommand(void *msg)
 		m_playerState[command->getRequestedPlayerID()] = 1;
 }
 
-// Relays one queued command. Reads the message straight off the reference's
-// first dword -- BFME de-pooled NetCommandRef, so m_msg is at +0 where ZH has a
-// vptr -- stamps TheGameLogic's frame into the message when its execution frame
-// is still -1, drops it when that frame plus NetworkKeepAliveDelay has already
-// passed, and then tests the reference's relay byte at +0x0C against our own
-// slot bit. Together with NetCommandList::reset this pins the 20-byte
-// NetCommandRef: m_msg +0, m_next +4, m_prev +8, m_relay +0x0C.
-__declspec(naked) void BFMEConnectionManager::relayCommand(void *ref)
+void BFMEConnectionManager::relayCommand(void *ref)
 {
-	__asm {
-		mov eax, dword ptr [esp+4h]
-		push ebx
-		push edi
-		mov edi, dword ptr [eax]
-		test edi, edi
-		mov ebx, ecx
-		je L00_6631E8
-		cmp dword ptr [edi+8h], 0FFFFFFFFh
-		jne L01_663124
-		__emit 08Bh
-		__emit 00Dh
-		__emit 098h
-		__emit 008h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f0898]
-		mov edx, dword ptr [ecx+3Ch]
-		mov dword ptr [edi+8h], edx
-L01_663124:
-		__emit 08Bh
-		__emit 00Dh
-		__emit 0C8h
-		__emit 0D5h
-		__emit 02Eh
-		__emit 001h   // mov ecx, dword ptr [0x12ed5c8]
-		mov edx, dword ptr [ecx+0CB4h]
-		__emit 08Bh
-		__emit 00Dh
-		__emit 098h
-		__emit 008h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f0898]
-		push ebp
-		mov ebp, dword ptr [edi+8h]
-		push esi
-		mov esi, dword ptr [ecx+3Ch]
-		add edx, ebp
-		cmp edx, esi
-		jb L02_6631E6
-		mov ecx, dword ptr [ebx+12028h]
-		movzx eax, byte ptr [eax+0Ch]
-		mov edx, 1h
-		shl edx, cl
-		mov dword ptr [esp+14h], eax
-		__emit 085h
-		__emit 0D0h   // test eax, edx
-		je L02_6631E6
-		mov eax, dword ptr [edi+0Ch]
-		mov ecx, dword ptr [ebx+eax*4+120E4h]
-		test ecx, ecx
-		je L02_6631E6
-		mov eax, dword ptr [edi+14h]
-		push eax
-		__emit 0E8h
-		__emit 03Dh
-		__emit 0EEh
-		__emit 099h
-		__emit 0FFh   // call 0x1FB9
-		add esp, 4h
-		test al, al
-		je L02_6631E6
-		mov ecx, dword ptr [edi+0Ch]
-		cmp ecx, dword ptr [ebx+12028h]
-		jne L03_66319B
-		cmp dword ptr [edi+14h], 0Ah
-		je L03_66319B
-		mov edx, dword ptr [edi]
-		mov ecx, edi
-		call dword ptr [edx+8h]
-L03_66319B:
-		mov eax, dword ptr [edi+0Ch]
-		mov ecx, dword ptr [ebx+eax*4+120E4h]
-		push edi
-		__emit 0E8h
-		__emit 0B2h
-		__emit 0C9h
-		__emit 09Ch
-		__emit 0FFh   // call 0x2FB5D
-		test eax, eax
-		je L02_6631E6
-		xor esi, esi
-		lea ebp,  [ebx+4h]
-L05_6631B4:
-		mov ecx, esi
-		mov eax, 1h
-		shl eax, cl
-		mov ecx, dword ptr [esp+14h]
-		__emit 085h
-		__emit 0C1h   // test ecx, eax
-		je L04_6631DD
-		mov eax, dword ptr [ebp]
-		test eax, eax
-		je L04_6631DD
-		xor edx, edx
-		mov dl, 1h
-		mov ecx, esi
-		shl dl, cl
-		mov ecx, eax
-		push edx
-		push edi
-		__emit 0E8h
-		__emit 05Fh
-		__emit 03Bh
-		__emit 09Ch
-		__emit 0FFh   // call 0x26D3C
-L04_6631DD:
-		inc esi
-		add ebp, 4h
-		cmp esi, 8h
-		jl L05_6631B4
-L02_6631E6:
-		pop esi
-		pop ebp
-L00_6631E8:
-		pop edi
-		pop ebx
-		ret 4h
+	NetCommandRef *commandRef = (NetCommandRef *)ref;
+	NetCommandMsg *msg = commandRef->msg;
+	if (msg == 0)
+		return;
+
+	if (msg->getExecutionFrame() == (unsigned int)-1)
+		msg->setExecutionFrame(TheGameLogic->frame);
+	if (msg->getExecutionFrame() + TheWritableGlobalData->networkRunAheadSlack < TheGameLogic->frame)
+		return;
+
+	unsigned int relay = commandRef->relay;
+	if ((relay & (1 << m_localSlot)) == 0)
+		return;
+
+	if (m_frameData[msg->getPlayerID()] == 0 ||
+		!IsCommandSynchronized(msg->getNetCommandType()))
+		return;
+
+	if (msg->getPlayerID() == (unsigned int)m_localSlot &&
+		msg->getNetCommandType() != NETCOMMANDTYPE_PLAYERLEAVE)
+		msg->prepareForRelay();
+
+	if (m_frameData[msg->getPlayerID()]->addNetCommandMsg(msg) == 0)
+		return;
+
+	for (int i = 0; i < 8; ++i)
+	{
+		if ((relay & (1 << i)) != 0 && m_connections[i] != 0)
+			m_connections[i]->sendNetCommandMsg(msg, (unsigned char)(1 << i));
 	}
 }
 
