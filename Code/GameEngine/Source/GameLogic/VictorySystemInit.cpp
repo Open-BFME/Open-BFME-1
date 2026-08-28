@@ -51,8 +51,12 @@ class VictorySystem
 {
 public:
 	virtual void init( void );
+	FactionVictoryParameters *_bfme_findOrCreateFactionVictoryParameters(
+		const AsciiString &name );
 
 private:
+	unsigned int _bfme_findFactionVictoryParametersIndex( const AsciiString &name );
+
 	char m_opaque[0xe8];
 	_STL::vector<FactionVictoryParameters> m_factionVictoryParameters;
 };
@@ -66,4 +70,20 @@ void VictorySystem::init( void )
 	parameters.m_victoryThreshold = 500.0f;
 	parameters.m_mapToCellVictoryRatio = 1.0f;
 	m_factionVictoryParameters.push_back( parameters );
+}
+
+FactionVictoryParameters *VictorySystem::_bfme_findOrCreateFactionVictoryParameters(
+	const AsciiString &name )
+{
+	unsigned int index = _bfme_findFactionVictoryParametersIndex( name );
+	if( index != 0x7fffffff )
+	{
+		return &m_factionVictoryParameters[index];
+	}
+
+	{
+		FactionVictoryParameters parameters( name );
+		m_factionVictoryParameters.push_back( parameters );
+	}
+	return &m_factionVictoryParameters.back();
 }
