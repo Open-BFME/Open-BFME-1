@@ -1,6 +1,14 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
 // Open-BFME5: SlavedUpdate::friend_newModuleData
+//
+// The members are named from retail's own INI field table, which gives each
+// SlavedUpdate key a binary-proven offset; upstream's parse table says which
+// member that key writes. Every offset here is derived from the declaration
+// sequence, not from the old m_NN names, and the two agree across all nineteen.
+// Upstream declares the same nineteen in the same order and the widths match --
+// four bytes each except StayOnSameLayerAsMaster, which is the one byte at the
+// end. Only identifiers changed; no field moved.
 
 class ModuleData;
 
@@ -14,47 +22,47 @@ public:
 	SlavedUpdateModuleData()
 	{
 		// Store order mirrors retail factory body.
-		m_48 = 0;
-		m_4c = 0;
-		m_08 = 0;
-		m_0c = 0;
-		m_10 = 0;
-		m_14 = 0;
-		m_18 = 0;
-		m_1c = 0;
-		m_20 = 0;
-		m_30 = 0;
-		m_34 = 0;
-		m_28 = 0;
-		m_2c = 0;
-		m_40 = 0;
-		m_44 = 0;
-		m_38 = 0;
-		m_3c = 0;
-		m_50 = 0;
+		m_weldingSysName = 0;
+		m_weldingFXBone = 0;
+		m_guardMaxRange = 0;
+		m_guardWanderRange = 0;
+		m_attackRange = 0;
+		m_attackWanderRange = 0;
+		m_scoutRange = 0;
+		m_scoutWanderRange = 0;
+		m_distToTargetToGrantRangeBonus = 0;
+		m_repairRatePerSecond = 0;
+		m_repairWhenHealthBelowPercentage = 0;
+		m_repairMinAltitude = 0;
+		m_repairMaxAltitude = 0;
+		m_minWeldFrames = 0;
+		m_maxWeldFrames = 0;
+		m_minReadyFrames = 0;
+		m_maxReadyFrames = 0;
+		m_stayOnSameLayerAsMaster = 0;
 	}
 	virtual ~SlavedUpdateModuleData();
 private:
 	unsigned int m_04;
-	unsigned int m_08;
-	unsigned int m_0c;
-	unsigned int m_10;
-	unsigned int m_14;
-	unsigned int m_18;
-	unsigned int m_1c;
-	unsigned int m_20;
-	unsigned int m_24;
-	unsigned int m_28;
-	unsigned int m_2c;
-	unsigned int m_30;
-	unsigned int m_34;
-	unsigned int m_38;
-	unsigned int m_3c;
-	unsigned int m_40;
-	unsigned int m_44;
-	unsigned int m_48;
-	unsigned int m_4c;
-	unsigned char m_50;
+	unsigned int m_guardMaxRange;
+	unsigned int m_guardWanderRange;
+	unsigned int m_attackRange;
+	unsigned int m_attackWanderRange;
+	unsigned int m_scoutRange;
+	unsigned int m_scoutWanderRange;
+	unsigned int m_distToTargetToGrantRangeBonus;
+	unsigned int m_repairRange;
+	unsigned int m_repairMinAltitude;
+	unsigned int m_repairMaxAltitude;
+	unsigned int m_repairRatePerSecond;
+	unsigned int m_repairWhenHealthBelowPercentage;
+	unsigned int m_minReadyFrames;
+	unsigned int m_maxReadyFrames;
+	unsigned int m_minWeldFrames;
+	unsigned int m_maxWeldFrames;
+	unsigned int m_weldingSysName;
+	unsigned int m_weldingFXBone;
+	unsigned char m_stayOnSameLayerAsMaster;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
