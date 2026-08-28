@@ -23936,3 +23936,5 @@ dup_59eb90,0x0059EB90,"not AttackNugget: its constructor target is 0x0059EB00 no
 ?dup_0059b840@@YAXXZ,0x0059B840,gen-alias placeholder superseded by the real C++ identity ?reverse@ButtonFlashTransition@@UAEXXZ
 ?dup_008f7350@@YAXXZ,0x008F7350,gen-alias placeholder superseded by the real C++ identity ?reset@FunctionLexicon@@UAEXXZ
 ?dup_00956ac0@@YAXXZ,0x00956AC0,gen-alias placeholder superseded by the real C++ identity ?Set_Position@OBBoxRenderObjClass@@UAEXABVVector3@@@Z
+?dup_007d0b70@@YAXXZ,0x007D0B70,gen-alias placeholder superseded by the real C++ identity ?preRender@ScreenBWFilter@@UAE_NAA_NAAW4CustomScenePassModes@@@Z
+?dup_007d0c50@@YAXXZ,0x007D0C50,gen-alias placeholder superseded by the real C++ identity ?preRender@ScreenBWFilterDOT3@@UAE_NAA_NAAW4CustomScenePassModes@@@Z

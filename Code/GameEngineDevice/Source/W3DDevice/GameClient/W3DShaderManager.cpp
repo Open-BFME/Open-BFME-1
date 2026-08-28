@@ -454,7 +454,6 @@ Int ScreenBWFilter::init(void)
 	return FALSE;
 }
 
-// ?preRender@ScreenBWFilter@@UAE_NAA_NAAW4CustomScenePassModes@@@Z present-unmatched
 Bool ScreenBWFilter::preRender(Bool &skipRender, CustomScenePassModes &scenePassMode)
 {
 	skipRender = false;
@@ -654,7 +653,6 @@ Int ScreenBWFilterDOT3::init(void)
 	return FALSE;
 }
 
-// ?preRender@ScreenBWFilterDOT3@@UAE_NAA_NAAW4CustomScenePassModes@@@Z present-unmatched
 Bool ScreenBWFilterDOT3::preRender(Bool &skipRender, CustomScenePassModes &scenePassMode)
 {
 	skipRender = false;
