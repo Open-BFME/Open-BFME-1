@@ -251,15 +251,46 @@ class WindowManager
 {
 public:
 	void bfme_hideBackground( bool hide );
-	void bfme_showBackground( int kind );
+	__declspec( noinline ) void bfme_showBackground( int kind );
 	void bfme_setAptText( const AsciiString &name, const UnicodeString &text );
 	void unidentified_00015235( int movie, const char *function, int argumentCount,
 		const void *argument, int unused1, int unused2, int unused3, int unused4 );
+
+private:
+	char m_bfmePrefix[ 0x1B8 ];
+	int m_bfmePendingBackgroundKind;
+	int m_bfmeRememberedBackgroundKind;
+	int m_bfmeBackgroundMovie;
 };
 
 extern WindowManager *g_theWindowManager;
 extern DisconnectMenu *TheDisconnectMenu;
 void _bfme_closeAptScreen( const AsciiString &name );
+
+void WindowManager::bfme_showBackground( int kind )
+{
+	int zero = 0;
+	m_bfmePendingBackgroundKind = kind;
+
+	switch( kind )
+	{
+	case 0:
+		m_bfmePendingBackgroundKind = zero;
+		break;
+	case 2:
+		m_bfmeRememberedBackgroundKind = zero;
+		unidentified_00015235(
+			m_bfmeBackgroundMovie, "ShowInGameBackground", zero,
+			reinterpret_cast< const void * >( zero ), zero, zero, zero, zero );
+		break;
+	case 1:
+		m_bfmeRememberedBackgroundKind = zero;
+		unidentified_00015235(
+			m_bfmeBackgroundMovie, "ShowFrontEndBackground", zero,
+			reinterpret_cast< const void * >( zero ), zero, zero, zero, zero );
+		break;
+	}
+}
 
 class __multiple_inheritance FunctorTarget;
 typedef void (FunctorTarget::*FunctorMethod)( void );
