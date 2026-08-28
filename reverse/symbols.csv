@@ -78954,3 +78954,4 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??$_Construct@UFactionVictoryParameters@@U1@@_STL@@YAXPAUFactionVictoryParameters@@ABU1@@Z,0x0000CED2,ILT target 0x001DE970 copies the AsciiString and five scalar fields of the 0x18-byte FactionVictoryParameters used by VictorySystem::init
 ?_M_insert_overflow@?$vector@UFactionVictoryParameters@@V?$allocator@UFactionVictoryParameters@@@_STL@@@_STL@@IAEXPAUFactionVictoryParameters@@ABU3@ABU__false_type@2@I_N@Z,0x0000303A,ILT target 0x001DFFF0 is the 0x18-byte nontrivial STLport vector grow path called by VictorySystem::init
+?_bfme_findFactionVictoryParametersIndex@VictorySystem@@AAEIABVAsciiString@@@Z,0x0002D2EA,ILT target 0x001DF350 scans VictorySystem +0xEC FactionVictoryParameters names and returns 0x7fffffff when absent
