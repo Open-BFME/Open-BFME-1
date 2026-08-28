@@ -74893,6 +74893,7 @@ name,address,notes
 ?g_global12EF1D8@@3PAXA,0x00EEF1D8,pin
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
 ?g_lastPacketRouterStallFrame@@3IA,0x012F7704,last packet-router frame that triggered the native frame-stall gate
+?g_mgr12EF1D8@@3PAUBfmeMgrContainerF1D@@A,0x012EF1D8,pin
 ?g_mgr12F33F8@@3PAVBfmeMgr412@@A,0x00EF33F8,pin
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
 ?g_obj12F060C@@3PAUBfmeObj2B1@@A,0x00EF060C,pin
@@ -76594,6 +76595,8 @@ name,address,notes
 ?insert@?$vector@UGen_t_001b6e60_p40pod@@V?$allocator@UGen_t_001b6e60_p40pod@@@_STL@@@_STL@@QAEPAUGen_t_001b6e60_p40pod@@PAU3@ABU3@@Z,0x001C7720,gen-tgrid payload member
 ?insert@RelationshipHashtableInsertShim@_STL@@QAEAAU?$pair@$$CBHW4Relationship@@@2@ABU32@@Z,0x00787140,incremental-link thunk target through a TU-local forwarding shim
 ?insert@W3DRoadBufferInsertTeeShim@@QAEXVVector2@@HM@Z,0x0070BC00,W3DRoadBuffer insertTee incremental-link thunk target through a TU-local forwarding shim
+?insertHelper@BfmeVector28@@QAEXPAXABUBfmeItem28@@0HH@Z,0x00032272,pin
+?insertHelper@BfmeVector28@@QAEXPAXPBUBfmeItem28@@0HH@Z,0x00032272,pin
 ?insertTee@W3DRoadBuffer@@IAEXVVector2@@HM@Z,0x00007522,ILT thunk to 0x70BC00
 ?insertY@W3DRoadBuffer@@IAE_NVVector2@@HM@Z,0x00017977,ILT thunk -> body 0x7073D0; called by insertTee (decode_calls.py)
 ?insertY@W3DRoadBufferInsertYShim@@QAE_NVVector2@@HM@Z,0x007073D0,W3DRoadBuffer incremental-link thunk target through a TU-local forwarding shim
@@ -77113,6 +77116,7 @@ name,address,notes
 ?noteAssign@U4Notify@@QAEXPAVU4Assign006057C0@@@Z,0x00409040,U4 lane: notify entry called by the assignment operator at 0x006057C0; address-derived name
 ?noteOwner@U4Notify@@QAEXPAVU4Owner00604C00@@@Z,0x004090C0,U4 lane: notify entry called by the detach at 0x00604C00; address-derived name
 ?notify@BfmeSub30_7F0@@QAEXHH@Z,0x00044319,pin
+?notify@BfmeSub30_FCD@@QAEXPAXH@Z,0x00044319,pin
 ?notify@BfmeSubVfn1A6@@QAEXHPAX@Z,0x00044319,pin
 ?notify@Q4Base00D35D68@@QAEXHH@Z,0x008975D0,two-argument __thiscall member called at the top of the 94-byte polymorphic destructor family (Q4VptrPairDtors.cpp); address-derived name; identity not recovered
 ?notify@Rva00589690@@AAEXXZ,0x0003643A,Open-BFME5 fresh thiscall at ILT of set-byte+notify 0x00589690
@@ -77368,6 +77372,7 @@ name,address,notes
 ?refreshTerrain@Radar@@UAEXPAVTerrainLogic@@@Z,0x0089F420,pinharvest x1 (body)
 ?registerBannerAptCallbacks@@YAXXZ,0x0003DE6F,BannerUI init ILT to the helper that registers AptBannerUI OnBttnBanner and OnInitialized callbacks
 ?registerGameWindow@AnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z,0x00045322,ILT thunk to the window animation registration
+?registerObj@BfmeMgrF1D@@QAEPAXPAX@Z,0x00028560,pin
 ?registerObject@PartitionManager@@QAEXPAVObject@@@Z,0x001086C0,Open-BFME5 callee of ?friend_notifyOfNewMapBoundary@Object@@QAEXXZ at 0x001BED80 via ILT 0x00001F5A
 ?registerParser@DataChunkInput@@QAEXABVAsciiString@@0P6A_NAAV1@PAUDataChunkInfo@@PAX@Z3@Z,0x00015BD1,Open-BFME5 DataChunkInput parser registration ILT
 ?registerParser@DataChunkInput@@QAEXABVAsciiString@@PAUDataChunkInfo@@P6A_NAAV1@1PAX@ZH@Z,0x00015BD1,DataChunkInput::registerParser via ILT thunk
