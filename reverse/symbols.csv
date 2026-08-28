@@ -72898,6 +72898,7 @@ name,address,notes
 ?bfmeInvoke@Gen_006CDF70Target@@QAEXPAX0@Z,0x0000560A,Open-BFME5 the member the guarded dispatcher at 0x006CDF70 calls
 ?bfmeInvoke@Gen_009EBA60Target@@QAEXPAX0@Z,0x009EEAC0,Open-BFME5 the member the guarded dispatcher at 0x009EBA60 calls
 ?bfmeIsAlive@BfmeItemAK@@QAE_NXZ,0x00001C03,Open-BFME5 the ICF thunk (to 0x00401C03) the compaction at 0x0018BC70 asks each entry
+?bfmeIsComputerControlled@Object@@QBE_NXZ,0x00010EA1,Open-BFME5 ILT thunk to body 0x001BE410; three Pathfinder callers use the controlling Player type check for computer pathfinding behavior; bfme prefix records unrecovered retail spelling
 ?bfmeIsSet@BfmeGameOverGateA@@QAE_NXZ,0x000330DC,Open-BFME5 ILT the first early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012ED748 is unidentified
 ?bfmeIsSet@BfmeGameOverGateB@@QAE_NXZ,0x0000CFC7,Open-BFME5 ILT the second early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012F076C is unidentified
 ?bfmeIterate@BfmeIterableObject@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x0003DB68,Open-BFME5 ILT the per-object visit in Player::iterateObjects at 0x000CDCF0 calls; it jumps to 0x000EE770
