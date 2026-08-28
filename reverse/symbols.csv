@@ -72417,6 +72417,7 @@ name,address,notes
 ?bfmeCallDPH@BfmeSubDPH@@QAEXPAVBfmeOtherDPH@@@Z,0x00031507,pin
 ?bfmeCallDQA@BfmeSubDQA@@QAEXPAX@Z,0x0003DA3C,pin
 ?bfmeCallDQB@BfmeSubDQB@@QAEXPAX@Z,0x00887B60,pin
+?bfmeCallDQC@BfmeOtherDQC@@QAEXPAX@Z,0x00887B60,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
