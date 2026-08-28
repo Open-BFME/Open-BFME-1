@@ -18,7 +18,7 @@ public:
 	char m_bfmeTag;
 };
 
-void __cdecl bfmeDestroyRange(int *first, int *last, BfmeAllocL allocator);	// retail thunk 0x0002376D -> 0x0042376D
+char __cdecl bfmeDestroyRange(int *first, int *last, BfmeAllocL allocator);	// retail thunk 0x0002376D -> 0x0042376D
 
 inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
 {
