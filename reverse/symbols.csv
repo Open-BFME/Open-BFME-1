@@ -72279,6 +72279,7 @@ name,address,notes
 ?bfmeAskCSA@BfmeSubCSA@@QAE_NXZ,0x00017607,pin
 ?bfmeAskCSD@BfmeSubCSD@@QAE_NXZ,0x00017607,pin
 ?bfmeAskCSE@BfmeSubCSE@@QAE_NXZ,0x00017607,pin
+?bfmeAskCSF@BfmeSubCSF@@QAE_NXZ,0x00017607,pin
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
 ?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
