@@ -63,6 +63,12 @@ private:
 	Real m_amplitude;
 };
 
+// ?doFXPos@TintDrawableFXNugget@@UBEXPBUCoord3D@@PBVMatrix3D@@M0@Z
+void TintDrawableFXNugget::doFXPos(const Coord3D *, const Matrix3D *, Real,
+	const Coord3D *) const
+{
+}
+
 // ?doFXObj@TintDrawableFXNugget@@UBEXPBVObject@@0@Z
 void TintDrawableFXNugget::doFXObj(const Object *primary,
 	const Object *) const
