@@ -78318,6 +78318,8 @@ __ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00
 __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
+__imp__bfmeEnterDVC@4,0x00F58D18,pin
+__imp__bfmeLeaveDVC@4,0x00F58E74,pin
 __imp__fopen,0x013593BC,pin
 __imp__ftell,0x013593EC,pin
 __imp__itoa,0x0135935C,pin
