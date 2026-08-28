@@ -3,6 +3,8 @@
 typedef int Int;
 typedef unsigned long UnsignedLong;
 
+struct BfmeRect;
+
 class SurfaceResource
 {
 public:
@@ -34,6 +36,23 @@ public:
 	virtual void unused17();
 	virtual UnsignedLong __stdcall getBackBuffer(
 		unsigned swapChain, unsigned backBuffer, unsigned type, SurfaceResource **surface);
+	virtual void unused19();
+	virtual void unused20();
+	virtual void unused21();
+	virtual void unused22();
+	virtual void unused23();
+	virtual void unused24();
+	virtual void unused25();
+	virtual void unused26();
+	virtual void unused27();
+	virtual void unused28();
+	virtual void unused29();
+	virtual void unused30();
+	virtual void unused31();
+	virtual void unused32();
+	virtual void unused33();
+	virtual void __stdcall copySurfaceRects(SurfaceResource *source, const BfmeRect *sourceRect,
+		SurfaceResource *destination, const BfmeRect *destinationRect, Int mode);
 };
 
 extern BfmeD3DDevice *g_bfmeD3DDevice;
@@ -52,6 +71,11 @@ public:
 	}
 
 	~W3DRadarResetSurface();
+
+	__forceinline SurfaceResource *getSurface() const
+	{
+		return m_surface;
+	}
 
 private:
 	SurfaceResource *m_surface;
@@ -72,4 +96,12 @@ W3DRadarResetSurface getBackBufferSurface006e(Int index)
 	}
 
 	return W3DRadarResetSurface(0x40, 0x40, 0x16, 2);
+}
+
+void copySurfaceRects006e(W3DRadarResetSurface source, const BfmeRect *sourceRect,
+	W3DRadarResetSurface destination, const BfmeRect *destinationRect, Int mode)
+{
+	g_bfmeD3DDevice->copySurfaceRects(
+		source.getSurface(), sourceRect, destination.getSurface(), destinationRect, mode);
+	++g_bfmeD3DCallCount;
 }
