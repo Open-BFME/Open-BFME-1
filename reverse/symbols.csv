@@ -73391,6 +73391,7 @@ name,address,notes
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
 ?bfmeSetupXB@BfmeThingXB@@QAEXPAX000@Z,0x00023F1F,pin
 ?bfmeShowDZE@BfmeUiDZE@@QAEXPAXPBDH0HHHH@Z,0x00015235,pin
+?bfmeShowDZF@BfmeUiDZF@@QAEXPAXPBDH0HHHH@Z,0x00015235,pin
 ?bfmeSlot@BfmeDrawableLookupTable@@QAEPAPAVDrawable@@ABI@Z,0x00034A95,Open-BFME5 ILT addDrawableToLookupTable at 0x00431C20 asks for the slot through
 ?bfmeSmallAllocPR@@YAPAXI@Z,0x0082E450,pin
 ?bfmeSmallFreePM@@YAXPAXI@Z,0x0082E4F0,pin
@@ -74604,6 +74605,7 @@ name,address,notes
 ?g_bfmeAccDYB@@3HA,0x00EED8A4,pin
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
 ?g_bfmeArgDZE@@3PAXA,0x00EB7D80,pin
+?g_bfmeArgDZF@@3PAXA,0x00EB7D80,pin
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
 ?g_bfmeBufDWG@@3PAXA,0x00F378D0,pin
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
@@ -74685,6 +74687,7 @@ name,address,notes
 ?g_bfmeTwoATC@@3PAUBfmeTwoATC@@A,0x00EF4B58,pin
 ?g_bfmeUiDZD@@3PAVBfmeUiDZD@@A,0x00EF7194,pin
 ?g_bfmeUiDZE@@3PAVBfmeUiDZE@@A,0x00EF19E8,pin
+?g_bfmeUiDZF@@3PAVBfmeUiDZF@@A,0x00EF19E8,pin
 ?g_bfmeUnicodeStringFormat@@3QBDB,0x0114451C,address-derived UnicodeString format string from retail 0x009D9AAC
 ?g_bfmeUnsignedByteFormat@@3QBDB,0x011442BC,address-derived unsigned-byte format string from the DIR32 operand at retail 0x009D943A
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
@@ -78375,6 +78378,7 @@ __imp__bfmeOnDWJ@4,0x00F59090,pin
 __imp__bfmeQueryDXE@4,0x00F591B4,pin
 __imp__bfmeScanDYG,0x00F59494,pin
 __imp__bfmeSetDWI@8,0x00F58F64,pin
+__imp__bfmeSnpDZF,0x00F5932C,pin
 __imp__bfmeStartDWB@4,0x00F58D0C,pin
 __imp__bfmeStatusDXD@4,0x00F5958C,pin
 __imp__bfmeTickDYA@0,0x00F59544,pin
@@ -78432,6 +78436,7 @@ _bfmeDtorDAE,0x00891B80,pin
 _bfmeEmptyANB,0x00C7301C,pin
 _bfmeFmtDYG,0x00CF71E0,pin
 _bfmeFmtStrDZE,0x00C7C7B4,pin
+_bfmeFmtStrDZF,0x00C7C7B4,pin
 _bfmeInfoDCE,0x00CEA6A8,pin
 _bfmeInfoDCF,0x00D14768,pin
 _bfmeInfoDCG,0x00D16D70,pin
@@ -78453,6 +78458,10 @@ _bfmeMsgDZEa,0x00D09990,pin
 _bfmeMsgDZEb,0x00D09AAC,pin
 _bfmeMsgDZEc,0x00D09AD8,pin
 _bfmeMsgDZEd,0x00D09B00,pin
+_bfmeMsgDZFa,0x00D09D0C,pin
+_bfmeMsgDZFb,0x00D09D4C,pin
+_bfmeMsgDZFc,0x00D09D68,pin
+_bfmeMsgDZFd,0x00D09D84,pin
 _bfmeObjDAA,0x00EEF430,pin
 _bfmeObjDAB,0x00EF1608,pin
 _bfmeObjDAC,0x00F41148,pin
