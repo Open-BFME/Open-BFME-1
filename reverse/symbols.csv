@@ -73795,6 +73795,7 @@ name,address,notes
 ?first@Rva0051DB00@@QAEXXZ,0x00005F88,Open-BFME5 thiscall at ILT of two-call wrap 0x0051DB00
 ?first@Rva0051DCE0@@QAEXXZ,0x00005F88,ILT to 0x0051D590 for 13B two-call wrap at 0x0051DCE0
 ?firstNamed@U4Scan@@QBE_NPAXPBVU4Filter@@@Z,0x00606D60,U4 lane: third scan entry forwarded to by the proxy at 0x00606E20; address-derived name
+?flattenZones@@YAXPAG0H@Z,0x004027B0,Open-BFME5 static zone-table flatten helper used by PathfindZoneManager at 0x00402E90
 ?flushConnections@ConnectionManager@@QAEXXZ,0x006636F0,ZH twin exact: doSend(FALSE) on the eight m_connections then tail-jmp Transport::doSend 0x006834B0 on +0x12024; sole caller sendRequestPlayerLeaveCommand 0x00664939 where ZH quitGame calls flushConnections; ILT 0x0004230C
 ?flushQueue@LANAPIMemberObject@@QAEXXZ,0x00001EC4,RequestLobbyLeave flag call; ILT thunk for Transport::update body 0x00684420
 ?format@BFMERetailAsciiString@@QAAXV1@ZZ,0x00888FF0,BannerUI one-dword retail AsciiString format alias
