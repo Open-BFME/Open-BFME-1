@@ -55,6 +55,16 @@
 
 static SegLineRendererClass _LineRenderer;
 
+// BFME's second renderer setter is the ICF twin at 0x0095C7A0, not the
+// canonical SegLineRendererClass body at 0x00960050.  Keep that call target
+// explicit while retaining a typed __thiscall so the emitted ABI stays the
+// same as the retail member call.
+class Rva0095C7A0SegLineRendererClass
+{
+public:
+	void Set_Texture(TextureClass *texture);
+};
+
 
 /*
 ** StreakLineClass implementation:
@@ -361,11 +371,10 @@ int StreakLineClass::Are_End_Caps_Enabled(void)
 	return LineRenderer.Are_End_Caps_Enabled();
 }
 
-// ?Set_Texture@StreakLineClass@@ present-unmatched
 void StreakLineClass::Set_Texture(TextureClass *texture)
 {
-	LineRenderer.Set_Texture(texture);
-	StreakRenderer.Set_Texture(texture);
+	reinterpret_cast<SegLineRendererClass *>(reinterpret_cast<char *>(this) + 0x104)->Set_Texture(texture);
+	reinterpret_cast<Rva0095C7A0SegLineRendererClass *>(reinterpret_cast<char *>(this) + 0x154)->Set_Texture(texture);
 }
 
 // ?Set_Shader@StreakLineClass@@ present-unmatched
