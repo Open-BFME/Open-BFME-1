@@ -73124,7 +73124,9 @@ name,address,notes
 ?bfmeHashCombineC@@YAIII@Z,0x0003F7CE,Open-BFME5 ILT the combiner at 0x0056E1E0 calls
 ?bfmeHashCompareA@@YAIII@Z,0x00027BFB,Open-BFME5 ILT the hash comparisons at 0x0054ECB0 and 0x0054F200 call
 ?bfmeHashCompareB@@YAIII@Z,0x00020AA4,Open-BFME5 ILT the hash comparisons at 0x0054ECE0 and 0x0054F230 call
+?bfmeHelper98FDE0@@YAXPAXH@Z,0x0098FDE0,pin
 ?bfmeHelper990410@@YAXPAXN@Z,0x00990410,pin
+?bfmeHelper996070@@YAXPAX00PBD@Z,0x00996070,pin
 ?bfmeHitAEA@BfmeEntryAEA@@QAE_NPAUBfmeKeyAEA@@PAX@Z,0x008017E0,pin
 ?bfmeIdAIA@BfmeThingAIA@@QAEPAXXZ,0x00020824,pin
 ?bfmeIdALA@BfmeKeyALA@@QAEPAUBfmeIdALA@@XZ,0x00020824,pin
@@ -73213,6 +73215,7 @@ name,address,notes
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLogCNE@@YGXHH@Z,0x00032DEE,pin
+?bfmeLogMsg574@@YAXPBD@Z,0x0003EBAD,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
 ?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
 ?bfmeLookBBB@@YAPAXPAX@Z,0x0082B8E0,pin
@@ -73303,6 +73306,8 @@ name,address,notes
 ?bfmeNodeAllocLarge@@YAPAXI@Z,0x00881F30,Open-BFME5 the STLport large-block allocator the 0x84-byte clone-node body calls
 ?bfmeNodeAllocSmall@@YAPAXI@Z,0x0082E540,Open-BFME5 the STLport node allocator the red-black clone-node bodies call
 ?bfmeNoteWD@BfmeThingWD@@QAEXXZ,0x0002191D,pin
+?bfmeNotify1_574@@YAXPAX0@Z,0x00034B67,pin
+?bfmeNotify2_574@@YAXPAX0@Z,0x0000630C,pin
 ?bfmeNotify@BfmeOwnedE@@QAEXXZ,0x000263EB,Open-BFME5 the ICF thunk (to 0x003C9320) the clear at 0x003C0EF0 tail-calls
 ?bfmeNotify@Gen_000946D0Manager@@QAEXPAX@Z,0x0001A7DF,Open-BFME5 the manager member the notify-setter at 0x000946D0 tail-jumps to
 ?bfmeNotify@Gen_00094700Manager@@QAEXPAX@Z,0x0001A7DF,Open-BFME5 the manager member the notify-setter at 0x00094700 tail-jumps to
@@ -74733,6 +74738,7 @@ name,address,notes
 ?g_01075954@@3MC,0x01075954,accessor-batch external float
 ?g_BFMEIndexBufferDebug@@3PAVBFMEIndexBufferDebugClass@@A,0x01336E5C,retail DX8 error path dispatches through the shared game debug manager global
 ?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
+?g_activeObj12F0610@@3PAXA,0x012F0610,pin
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
 ?g_bfmeAccDYB@@3HA,0x00EED8A4,pin
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
@@ -76471,6 +76477,7 @@ name,address,notes
 ?handle@Rva00984B50@@UAEXXZ,0x00989A00,address-derived override reached by the adjustor thunk at the same address-derived name; target read from the REL32 in the thunk
 ?handle@Rva009A2650@@UAEXXZ,0x009A2730,address-derived override reached by the adjustor thunk at the same address-derived name; target read from the REL32 in the thunk
 ?handle@Rva009F27D0@@UAEXXZ,0x009F2900,address-derived override reached by the adjustor thunk at the same address-derived name; target read from the REL32 in the thunk
+?handleMatch@BfmeBaseA97@@QAEXPAX0@Z,0x0000E719,pin
 ?hasAchievedVictory@VictoryConditions@@UAE_NPAVPlayer@@@Z,0x0035F270,vtable 0x010E8D90 slot 9 (+0x24) via ILT 0x00035661 = ZH VictoryConditionsInterface slot order; ZH body plus BFME gates isPlayerObserver 0x000C9CF0 -> false and the defeat counter +0xC0 > 0; loops m_players +0x14 calling slot +0x2C and areAllies 0x0035F150; on success TheGameLogic->bfme_setPlayerVictoryFrame(i) 0x00383C30
 ?hasAnyBuildFacility@Team@@QBE_NXZ,0x0003F594,Open-BFME5 ILT thunk; ?hasAnyBuildFacility@TeamPrototype@@QBE_NXZ at 0x000F0DA0 asks it of every team on the instance list
 ?hasAnyBuildFacility@TeamPrototype@@QBE_NXZ,0x00032C81,Open-BFME5 ILT thunk to body 0x000F0DA0; ?hasAnyBuildFacility@Player@@QBE_NXZ at 0x000CE100 asks it of every prototype
@@ -78618,6 +78625,7 @@ _bfmeDtorDAC,0x00030652,pin
 _bfmeDtorDAD,0x00030652,pin
 _bfmeDtorDAE,0x00891B80,pin
 _bfmeEmptyANB,0x00C7301C,pin
+_bfmeEmptyStr107388B,0x0107388B,pin
 _bfmeFmtDYG,0x00CF71E0,pin
 _bfmeFmtStrDZE,0x00C7C7B4,pin
 _bfmeFmtStrDZF,0x00C7C7B4,pin
@@ -78680,6 +78688,7 @@ _bfmeStrEECb,0x00CC4B60,pin
 _bfmeStrEECc,0x00D158A8,pin
 _bfmeStrENF,0x00C82C44,pin
 _bfmeString10CF498,0x00CCF498,pin
+_bfmeString10CF748,0x010CF748,pin
 _bfmeTabEAC,0x00D098B0,pin
 _bfmeTagANB,0x00C9E038,pin
 _bfmeTagAPB,0x00DDFC30,pin
