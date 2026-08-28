@@ -9131,6 +9131,7 @@ name,address,notes
 ??8@YA_NABVAsciiString@@0@Z,0x00046803,pinharvest x1 (thunk)
 ??8@YA_NABVAsciiString@@0@Z,0x008574E0,pinharvest x1 (body)
 ??8@YA_NABVAsciiString@@0@Z,0x008B0EE0,pinharvest x1 (body)
+??9?$BitFlags@$0FG@@@QBE_NABV0@@Z,0x00022C5A,Object::setStatus BitFlags<86> inequality ILT
 ??A?$hash_map@HHU?$hash@H@_STL@@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHH@_STL@@@2@@_STL@@QAEAAHABH@Z,0x000D6280,int/int hash_map operator[] matched as Gen_hashraw_000d6280; called through its ILT by Player::setTeamRelationship
 ??A?$hash_map@HPAVObject@@U?$hash@H@_STL@@U?$equal_to@H@3@V?$allocator@U?$pair@$$CBHPAVObject@@@_STL@@@3@@_STL@@QAEAAPAVObject@@ABH@Z,0x00005E11,Open-BFME5 ILT for the ObjectID/Object* hash_map operator[]; called by GameLogic::addObjectToLookupTable at 0x0038E490 and jumps to the body at 0x0038B980 matched as Gen_hashraw_0038b980
 ??A?$hash_map@HW4Relationship@@U?$hash@H@_STL@@U?$equal_to@H@3@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@3@@_STL@@QAEAAW4Relationship@@ABH@Z,0x0001219D,Open-BFME5 ILT; called by ?setPlayerRelationship@Player@@QAEXPBV1@W4Relationship@@@Z at 0x000D7600
@@ -77215,6 +77216,7 @@ name,address,notes
 ?shutdownComplete@Shell@@QAEXPAVWindowLayout@@_N@Z,0x00002F1D,link thunk; reached from SinglePlayerMenuShutdown 0x004E94F0
 ?shutdownCompleteLanGameOptionsMenu@@YAXPAVWindowLayout@@@Z,0x004CBA70,LanGameOptionsMenu.cpp file-static shutdownComplete; spelled per-TU because ~30 menu files each define one
 ?shutdownCompleteWOLLoginMenu@@YAXPAVWindowLayout@@@Z,0x004FFA40,per-TU static; retail ?shutdownComplete@@YAXPAVWindowLayout@@@Z in WOLLoginMenu.cpp renamed in source so one key means one body
+?sleepUntil@ObjectHelper@@QAEXI@Z,0x000159AB,Object::setStatus helper ILT
 ?slowDoesPathExist@Pathfinder@@QAE_NPAVObject@@PBUCoord3D@@1W4ObjectID@@@Z,0x0004A327,Pathfinder::slowDoesPathExist resolves to the retail ILT at 0x0004A327 and its body at 0x003EDF90; target evaluateTeamCanPathToWaypoint calls this exact four-argument path check
 ?someInsideSomeOutside@Team@@QBE_NPAVPolygonTrigger@@I@Z,0x000F5CE0,the first of the two calls ScriptConditions::evaluateTeamInsideAreaPartially (0x00324670) makes on the team it looked up before falling back on allInside; the reference declares exactly that const member beside allInside with the same pair
 ?spin@LockClass@FastCriticalSectionClass@@CIXPAI@Z,0x00026FA8,FastCriticalSectionClass::LockClass spin-acquire (shared out-of-line body reached via ILT thunk); StringClass locks resolve here
