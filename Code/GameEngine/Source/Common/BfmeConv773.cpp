@@ -1,3 +1,5 @@
+extern "C" const float bfmeKDSM;
+
 class BfmeSubDSK
 {
 public:
@@ -12,6 +14,8 @@ public:
 	virtual void bfmeV8();
 	virtual void bfmeV9();
 	virtual bool bfmeRunDSL();
+	virtual float bfmeRunDSM();
+	virtual float bfmeRunDSN();
 };
 
 class BfmeThingDSK
@@ -19,6 +23,8 @@ class BfmeThingDSK
 public:
 	bool bfmeGoDSK();
 	bool bfmeGoDSL();
+	float bfmeGoDSM();
+	float bfmeGoDSN();
 	bool bfmeAskDSK();
 	char m_bfmeHead[0x4c];
 	BfmeSubDSK *m_bfmeSub;
@@ -36,4 +42,18 @@ bool BfmeThingDSK::bfmeGoDSL()
 	if (bfmeAskDSK())
 		return m_bfmeSub->bfmeRunDSL();
 	return false;
+}
+
+float BfmeThingDSK::bfmeGoDSM()
+{
+	if (bfmeAskDSK())
+		return m_bfmeSub->bfmeRunDSM();
+	return bfmeKDSM;
+}
+
+float BfmeThingDSK::bfmeGoDSN()
+{
+	if (bfmeAskDSK())
+		return m_bfmeSub->bfmeRunDSN();
+	return bfmeKDSM;
 }

@@ -78362,6 +78362,7 @@ _bfmeInfoDND,0x00C7301C,pin
 _bfmeInfoDNE,0x00CF5E6C,pin
 _bfmeInfoDNF,0x00CF5E74,pin
 _bfmeInfoDNG,0x00C7301C,pin
+_bfmeKDSM,0x00C75350,pin
 _bfmeLitZD,0x00CC79BC,pin
 _bfmeObjDAA,0x00EEF430,pin
 _bfmeObjDAB,0x00EF1608,pin
