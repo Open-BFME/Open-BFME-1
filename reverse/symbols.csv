@@ -72229,6 +72229,7 @@ name,address,notes
 ?bfmeAddBFC@BfmeSinkBFC@@QAEXPAUBfmeSubBFC@@@Z,0x0001D606,pin
 ?bfmeAddCFE@BfmeSubCFE@@QAEXPAXH@Z,0x0003D735,pin
 ?bfmeAddCQE@BfmeSubCQE@@QAEXPAVBfmeArgCQE@@@Z,0x00005C22,pin
+?bfmeAfterEOC@BfmeThingEOC@@QAEXXZ,0x000106AE,pin
 ?bfmeAllocATA@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocATD@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocAVC@@YAPAXI@Z,0x0082E540,pin
@@ -72370,6 +72371,7 @@ name,address,notes
 ?bfmeBaseCVE@BfmeThingCVE@@QAEXXZ,0x00013E58,pin
 ?bfmeBaseDYE@BfmeThingDYE@@QAEXPAU1@@Z,0x00887B60,pin
 ?bfmeBaseENE@BfmeThingENE@@QAEPAUBfmeSubENE@@XZ,0x0002CC8C,pin
+?bfmeBaseEOA@BfmeThingEOA@@QAEXXZ,0x009D8630,pin
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
 ?bfmeBaseSJ@BfmeThingSJ@@QAEXH@Z,0x0090E3D0,pin
 ?bfmeBaseSK@BfmeThingSK@@QAEXH@Z,0x009DB4E0,pin
@@ -72406,6 +72408,7 @@ name,address,notes
 ?bfmeCalcBXH@@YAHHI@Z,0x000222AF,pin
 ?bfmeCalcEBH@BfmeThingEBH@@QAEMM@Z,0x0001FEEC,pin
 ?bfmeCalcEFC@@YGMH@Z,0x0001FEEC,pin
+?bfmeCalcEOC@@YAMPAX@Z,0x0000991C,pin
 ?bfmeCallCCH@@YAHPAX0H@Z,0x00009084,pin
 ?bfmeCallCIB@@YAHPAX000@Z,0x007EC5C0,pin
 ?bfmeCallCIC@@YAHPAX000@Z,0x007ECE60,pin
@@ -72482,6 +72485,7 @@ name,address,notes
 ?bfmeCallENG@BfmeGlobENG@@QAEXXZ,0x0000E0B6,pin
 ?bfmeCallENI@BfmeHolderENI@@QAEXPAX@Z,0x0002DC86,pin
 ?bfmeCallENJ@@YAXPAX0@Z,0x00004C37,pin
+?bfmeCallEOD@BfmeThingEOD@@QAEXPAX@Z,0x00887B60,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -73181,6 +73185,7 @@ name,address,notes
 ?bfmeInitDGD@BfmeThingDGD@@QAEPAV1@PAX@Z,0x007F7FA0,pin
 ?bfmeInitDGF@BfmeThingDGF@@QAEPAV1@PAX@Z,0x007F8730,pin
 ?bfmeInitDGG@BfmeThingDGG@@QAEPAV1@PAX@Z,0x007FA990,pin
+?bfmeInitEOE@@YGXPAUBfmeThingEOE@@HHP6AXXZ1@Z,0x009F6EE4,pin
 ?bfmeInitSubBWD@BfmeSubBWD@@QAEXXZ,0x0000F0A6,pin
 ?bfmeInitSubEFA@@YAXPAX0@Z,0x0000129E,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
@@ -73670,6 +73675,7 @@ name,address,notes
 ?bfmeUpdEFH@BfmeNodeEFH@@QAEPAU1@XZ,0x00048C61,pin
 ?bfmeUpdEGA@BfmeSubEGA@@QAEPAUBfmeThingEGA@@XZ,0x00048C61,pin
 ?bfmeUpdEGB@BfmeSubEGB@@QAEPAUBfmeThingEGB@@XZ,0x00048C61,pin
+?bfmeUpdEOG@BfmeNodeEOG@@QAEPAU1@XZ,0x00048C61,pin
 ?bfmeUpdate@BfmeCellFC@@QAEXH_N@Z,0x00881BE0,Open-BFME5 semantic identity for exact address-derived cell update body at 0x00881BE0
 ?bfmeUpdateCHE@BfmeThingCHE@@QAEXXZ,0x00004A70,pin
 ?bfmeUpdateCMB@BfmeThingCMB@@QAEXXZ,0x00032231,pin
@@ -78583,6 +78589,8 @@ _bfmeAppend,0x009D9180,address-derived varargs formatting helper target from the
 _bfmeArrayNew,0x00881F70,address-derived array allocator target from the direct REL32 call at retail 0x009D6259
 _bfmeCbAKC,0x00032155,pin
 _bfmeCbEMB,0x00863440,pin
+_bfmeCbEOEa,0x0003A760,pin
+_bfmeCbEOEb,0x0001F951,pin
 _bfmeConst1075350,0x00C75350,pin
 _bfmeDeleteBlock,0x00881EF0,address-derived release target from the direct REL32 call at retail 0x009D1A4C
 _bfmeDirectInput8Create@20,0x009F9AF0,undecorated alias for the DirectInput8Create import stub (see Win32DIKeyboardOpen.cpp)
@@ -78763,6 +78771,7 @@ _bfmeVftDUJa,0x00D1BD58,pin
 _bfmeVftDUJb,0x00D1BD54,pin
 _bfmeVftDUJc,0x00C817AC,pin
 _bfmeVftDWL,0x00CE75B4,pin
+_bfmeVftEOA,0x00C75B08,pin
 _bfmeVftSA,0x00C8F4F0,pin
 _bfmeVftSE,0x00D0C64C,pin
 _bfmeVftSF,0x00D0C878,pin
