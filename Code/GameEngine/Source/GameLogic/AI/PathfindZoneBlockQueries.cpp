@@ -37,7 +37,9 @@ struct ZoneBlock
 	Waypoint *m_waypoints[12];                // 0x008
 	unsigned char m_zoneState[0x12c - 0x38];
 	Bool m_interactsWithBridge;               // 0x12c
-	unsigned char m_tail[0x228 - 0x12d];
+	unsigned char m_tail[0x224 - 0x12d];
+	Bool m_tailFlag;                          // 0x224
+	unsigned char m_tailPadding[3];
 };
 
 class PathfindZoneManager
@@ -48,6 +50,7 @@ public:
 	Waypoint *bfmeGetWaypoint(Int cellX, Int cellY, UnsignedInt index) const;
 	zoneStorageType bfmeGetBlockZone(const PathfindMovementProfile &profile,
 		Int cellX, Int cellY, PathfindCell **map) const;
+	void bfmeSetTailFlag(Int cellX, Int cellY, Bool flag);
 
 private:
 	unsigned char m_prefix[0x23628];
@@ -112,4 +115,15 @@ zoneStorageType PathfindZoneManager::bfmeGetBlockZone(
 
 	return m_zoneBlocks[blockX][blockY].getEffectiveZone(
 		profile, map[cellX][cellY].m_zone);
+}
+
+void PathfindZoneManager::bfmeSetTailFlag(Int cellX, Int cellY, Bool flag)
+{
+	if (cellX < 0 || cellY < 0)
+		return;
+
+	Int blockX = cellX / 16;
+	Int blockY = cellY / 16;
+	if (blockX < m_zoneBlockExtent.x && blockY < m_zoneBlockExtent.y)
+		m_zoneBlocks[blockX][blockY].m_tailFlag = flag;
 }
