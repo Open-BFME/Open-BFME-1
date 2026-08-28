@@ -711,43 +711,46 @@ void CustomMatchPreferences::setChatSizeSlider(Int val)
 	(*this)["ChatSlider"] = s;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/CustomMatchPreferences_getPreferredFaction_Thunk.cpp
-// ?getPreferredFaction@CustomMatchPreferences@@QAEHXZ present-unmatched
-Int CustomMatchPreferences::getPreferredFaction(void)
+// BFME bounds the answer with the playable-side flag at PlayerTemplate+0xBD and
+// nothing else -- none of the reference's starting-building, old-faction or
+// disabled-general checks are in retail's body.
+struct BfmePlayerTemplatePlayable
 {
-	Int ret;
-	CustomMatchPreferences::const_iterator it = find("PlayerTemplate");
-	if (it == end())
-	{
+	UnsignedByte m_unreconstructed_00[0xBD];
+	Bool m_isPlayableSide;
+};
+
+// ?getPreferredFaction@CustomMatchPreferences@@QAEHXZ
+Int CustomMatchPreferences::getPreferredFaction( void )
+{
+	CustomAsciiStringShim key;
+	key.init("PlayerTemplate");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 		return PLAYERTEMPLATE_RANDOM;
-	}
 
-	ret = atoi(it->second.str());
-	if (ret == PLAYERTEMPLATE_OBSERVER || ret < PLAYERTEMPLATE_MIN || ret >= ThePlayerTemplateStore->getPlayerTemplateCount())
-		ret = PLAYERTEMPLATE_RANDOM;
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	Int index = atoi(text);
 
-	if (ret >= 0)
+	if (index == PLAYERTEMPLATE_OBSERVER || index < PLAYERTEMPLATE_MIN ||
+			index >= ThePlayerTemplateStore->getPlayerTemplateCount())
 	{
-		const PlayerTemplate *fac = ThePlayerTemplateStore->getNthPlayerTemplate(ret);
-		if (!fac)
-			ret = PLAYERTEMPLATE_RANDOM;
-		else if (fac->getStartingBuilding().isEmpty())
-			ret = PLAYERTEMPLATE_RANDOM;
-		else if (TheGameInfo && TheGameInfo->oldFactionsOnly() && !fac->isOldFaction())
-			ret = PLAYERTEMPLATE_RANDOM;
-		else {
-			// Prevent from loading the disabled Generals, in case you had previously selected one as your preferred faction.
-			// This is also enforced at GUI setup (GUIUtil.cpp and GameLogic.cpp).
-			// @todo: unlock these when something rad happens
-			Bool disallowLockedGenerals = TRUE;
-			const GeneralPersona *general = TheChallengeGenerals->getGeneralByTemplateName(fac->getName());
-			Bool startsLocked = general ? !general->isStartingEnabled() : FALSE;
-			if (disallowLockedGenerals && startsLocked)
-				ret = PLAYERTEMPLATE_RANDOM;
-		}
+		index = PLAYERTEMPLATE_RANDOM;
+	}
+	else if (index >= 0)
+	{
+		const PlayerTemplate *tmpl = ThePlayerTemplateStore->getNthPlayerTemplate(index);
+		if (tmpl == 0 || !((const BfmePlayerTemplatePlayable *)tmpl)->m_isPlayableSide)
+			index = PLAYERTEMPLATE_RANDOM;
 	}
 
-	return ret;
+	return index;
 }
 
 void CustomMatchPreferences::setPreferredFaction(Int val)
