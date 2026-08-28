@@ -73317,6 +73317,7 @@ name,address,notes
 ?bfmeUnregisterY@@YAXPAVBfmeSecondY@@@Z,0x0002F0EF,Open-BFME5 the unregister the two-member vector destructor at 0x0035B960 calls on its second member
 ?bfmeUpdate@BfmeCellFC@@QAEXH_N@Z,0x00881BE0,Open-BFME5 semantic identity for exact address-derived cell update body at 0x00881BE0
 ?bfmeUpdateCHE@BfmeThingCHE@@QAEXXZ,0x00004A70,pin
+?bfmeUpdateCMB@BfmeThingCMB@@QAEXXZ,0x00032231,pin
 ?bfmeUseRT@BfmeSlotRT@@QAEXXZ,0x0003A427,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVisit@BfmeInnerIterable@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x000EDAB0,"address-derived inner-list visitor callee of BfmeIterableObject::bfmeIterate; retail reaches it through the low-RVA thunk at 0x0002DC1D"
