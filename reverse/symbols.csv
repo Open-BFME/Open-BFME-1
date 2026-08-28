@@ -72393,6 +72393,7 @@ name,address,notes
 ?bfmeCallDID@@YAXPAPAXPAX1@Z,0x000044EE,pin
 ?bfmeCallDNA@BfmeOtherDNA@@QAEXPAVBfmeSubDNA@@@Z,0x00887B60,pin
 ?bfmeCallDNB@BfmeOtherDNB@@QAEXPAVBfmeSubDNB@@@Z,0x00887B60,pin
+?bfmeCallDNC@BfmeOtherDNC@@QAEXPAX@Z,0x00887B60,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -78301,6 +78302,7 @@ _bfmeInfoDIE,0x00C8B878,pin
 _bfmeInfoDIF,0x00C8B8B4,pin
 _bfmeInfoDIG,0x00CA4FB8,pin
 _bfmeInfoDIH,0x00CB2A24,pin
+_bfmeInfoDNC,0x00F36E50,pin
 _bfmeLitZD,0x00CC79BC,pin
 _bfmeObjDAA,0x00EEF430,pin
 _bfmeObjDAB,0x00EF1608,pin
