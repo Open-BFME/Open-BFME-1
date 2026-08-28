@@ -159,6 +159,13 @@ public:
 	AsciiString m_string;
 };
 
+class BfmeScriptConditionTerrainLogic
+{
+public:
+	unsigned char m_unreconstructed[0x38];
+	unsigned char m_bridgesChanged;
+};
+
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ??0ScriptConditions@@QAE@XZ present-unmatched
@@ -308,14 +315,14 @@ Bool ScriptConditions::evaluateIsDestroyed(Parameter *pTeamParm)
 //-------------------------------------------------------------------------------------------------
 /** evaluateBridgeBroken */
 //-------------------------------------------------------------------------------------------------
-// ?evaluateBridgeBroken@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
 Bool ScriptConditions::evaluateBridgeBroken(Parameter *pBridgeParm)
 {
-	if (!TheTerrainLogic->anyBridgesDamageStatesChanged()) {
+	if (!reinterpret_cast<BfmeScriptConditionTerrainLogic *>(TheTerrainLogic)->m_bridgesChanged) {
 		// Don't bother checking if no bridges changed damage states.
 		return false;
 	}
-	Object *theBridge = TheScriptEngine->getUnitNamed( pBridgeParm->getString() );
+	BfmeScriptConditionEngine *engine = reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine);
+	Object *theBridge = engine->getUnitNamed(*reinterpret_cast<const AsciiString *>(pBridgeParm));
 	if (theBridge) {
 		return (TheTerrainLogic->isBridgeBroken(theBridge));
 	}
@@ -325,14 +332,14 @@ Bool ScriptConditions::evaluateBridgeBroken(Parameter *pBridgeParm)
 //-------------------------------------------------------------------------------------------------
 /** evaluateBridgeRepaired */
 //-------------------------------------------------------------------------------------------------
-// ?evaluateBridgeRepaired@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
 Bool ScriptConditions::evaluateBridgeRepaired(Parameter *pBridgeParm)
 {
-	if (!TheTerrainLogic->anyBridgesDamageStatesChanged()) {
+	if (!reinterpret_cast<BfmeScriptConditionTerrainLogic *>(TheTerrainLogic)->m_bridgesChanged) {
 		// Don't bother checking if no bridges changed damage states.
 		return false;
 	}
-	Object *theBridge = TheScriptEngine->getUnitNamed( pBridgeParm->getString() );
+	BfmeScriptConditionEngine *engine = reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine);
+	Object *theBridge = engine->getUnitNamed(*reinterpret_cast<const AsciiString *>(pBridgeParm));
 	if (theBridge) {
 		return (TheTerrainLogic->isBridgeRepaired(theBridge));
 	}
