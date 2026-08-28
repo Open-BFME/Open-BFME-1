@@ -72456,6 +72456,7 @@ name,address,notes
 ?bfmeCallEBL@BfmeObjEBL@@QAEXPAX0@Z,0x0000A803,pin
 ?bfmeCallECE@BfmeSubECE@@QAEXPBD@Z,0x000244B5,pin
 ?bfmeCallEEA@BfmeSubEEA@@QAEXXZ,0x0002DF65,pin
+?bfmeCallEFC@@YGXPAUBfmeAEFC@@M@Z,0x0001536B,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -72490,6 +72491,7 @@ name,address,notes
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
 ?bfmeClear@BfmeListA@@QAEXXZ,0x00021CD3,Open-BFME5 the out-of-line list clear the destructor at 0x0009F7A0 calls
 ?bfmeClear@BfmeListB@@QAEXXZ,0x0001900B,Open-BFME5 the out-of-line list clear the destructor at 0x00080950 calls
+?bfmeClearEFG@BfmeThingEFG@@QAEXXZ,0x0001D4B7,pin
 ?bfmeClearMembers@@YAXPAVLGA_MemberObj@@@Z,0x00034DC9,Open-BFME5 ILT thunk to body 0x003D4080; ??1LGA_MemberObj@@QAE@XZ at 0x003D4490 calls it on this as a cdecl of one pointer before its member vector is released; address-derived name
 ?bfmeClearPP@BfmeThingPP@@QAEXXZ,0x0082AE40,pin
 ?bfmeClose@Gen009D1A40@@QAEXXZ,0x009CB880,address-derived close target from the tail REL32 jump at retail 0x009D1A5D
@@ -72538,6 +72540,7 @@ name,address,notes
 ?bfmeCopyBaseCND@BfmeBaseCND@@QAEXPAU1@@Z,0x000171CA,pin
 ?bfmeCopyBaseCNI@BfmeBaseCNI@@QAEXPAU1@@Z,0x000171CA,pin
 ?bfmeCopyCEB@@YAXPADPBDI@Z,0x009F70BA,pin
+?bfmeCopyEFG@BfmeThingEFG@@QAEXPAV1@@Z,0x000201A3,pin
 ?bfmeCopyInto_00134BB0@@YAXPBUBfmeCopyElem_00134BB0@@0PAU1@PAI@Z,0x0002C14C,Open-BFME5 the copier the allocate-and-delegate body at 0x00134BB0 hands its range and block to
 ?bfmeCopyInto_00134C20@@YAXPBUBfmeCopyElem_00134C20@@0PAU1@PAI@Z,0x00031E4E,Open-BFME5 the copier the allocate-and-delegate body at 0x00134C20 hands its range and block to
 ?bfmeCopyInto_0020E8D0@@YAXPBUBfmeCopyElem_0020E8D0@@0PAU1@PAI@Z,0x00024528,Open-BFME5 the copier the allocate-and-delegate body at 0x0020E8D0 hands its range and block to
@@ -73316,6 +73319,7 @@ name,address,notes
 ?bfmeOneECGb@BfmeSubECG@@QAEXXZ,0x0002987A,pin
 ?bfmeOneEEA@BfmeThingEEA@@QAEXXZ,0x00017BAC,pin
 ?bfmeOneEEC@BfmeThingEEC@@QAEXPBDH@Z,0x00850920,pin
+?bfmeOneEFF@@YAPAXPAXH@Z,0x00990250,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73588,6 +73592,8 @@ name,address,notes
 ?bfmeTwoEBK@BfmeObjEBK@@QAEXPAX0@Z,0x007E88D0,pin
 ?bfmeTwoECG@BfmeSubECG@@QAEXXZ,0x000414BB,pin
 ?bfmeTwoEEC@BfmeThingEEC@@QAEXPAX@Z,0x00850920,pin
+?bfmeTwoEFF@@YAXHPAX@Z,0x0001327D,pin
+?bfmeTwoEFFb@@YAXHPAX@Z,0x0001327D,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -73603,6 +73609,8 @@ name,address,notes
 ?bfmeUnregisterY@@YAXPAVBfmeSecondY@@@Z,0x0002F0EF,Open-BFME5 the unregister the two-member vector destructor at 0x0035B960 calls on its second member
 ?bfmeUpdDTI@BfmeThingDTI@@QAEXXZ,0x0001FDC5,pin
 ?bfmeUpdDTJ@BfmeThingDTJ@@QAEXXZ,0x00032231,pin
+?bfmeUpdEFE@BfmeNodeEFE@@QAEPAU1@XZ,0x00048C61,pin
+?bfmeUpdEFH@BfmeNodeEFH@@QAEPAU1@XZ,0x00048C61,pin
 ?bfmeUpdate@BfmeCellFC@@QAEXH_N@Z,0x00881BE0,Open-BFME5 semantic identity for exact address-derived cell update body at 0x00881BE0
 ?bfmeUpdateCHE@BfmeThingCHE@@QAEXXZ,0x00004A70,pin
 ?bfmeUpdateCMB@BfmeThingCMB@@QAEXXZ,0x00032231,pin
