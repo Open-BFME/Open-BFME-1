@@ -77339,6 +77339,7 @@ _EntEnragedInitialValueData,0x00CBE788,Open-BFME5 EntEnragedUpdate initializatio
 _FreeGame,0x009D2B70,Official gstats.c FreeGame identity; GameSpyStagingRoom reset releases its statsgame pointer at +0x464
 _FreeKeyList,0x00867A60,vendored=gamespy-2004
 _FreePopularValues,0x008679D0,vendored=gamespy-2004
+_GSISocketSelect,0x00854530,Open-BFME5 shared GameSpy socket-select target called by ciSocketThinkRecv
 _GdipAlloc@4,0x009F6C28,gdiplus.dll import stub (direct REL32 call site; see U3GdiplusGraphicsMembers.cpp)
 _GdipBitmapLockBits@20,0x009F6BFE,gdiplus.dll import stub (direct REL32 call site; see T3GdiplusImageMembers.cpp)
 _GdipBitmapUnlockBits@8,0x009F6C04,gdiplus.dll import stub (direct REL32 call site; see T3GdiplusImageMembers.cpp)
