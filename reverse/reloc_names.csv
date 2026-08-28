@@ -975,9 +975,6 @@ _Rva0051D1E0Forward,0x0051D1E0,149,Code/GameEngine/Source/Common/Rva0051D2A0Forw
 ??1Gen_dtor_005996c0@@UAE@XZ,0x00599330,264,Code/gen_small/dtors_006.cpp,reloc-derived;call-sites=1;identity=generated
 ??0BfmeAptScreenSpellStore@@QAE@PAX@Z,0x00599FE0,783,Code/GameEngine/Source/GameClient/AptScreenFactories.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_0059aad0@@UAE@XZ,0x0059A690,18,Code/gen_small/dtors_006.cpp,reloc-derived;call-sites=1;identity=generated
-??1Gen_dtor_0059b8c0@@UAE@XZ,0x0059B7F0,19,Code/gen_small/dtors_006.cpp,reloc-derived;call-sites=1;identity=generated
-??1Gen_dtor_0059d9b0@@UAE@XZ,0x0059D850,22,Code/gen_small/dtors_006.cpp,reloc-derived;call-sites=1;identity=generated
-??1Gen_dtor_0059dde0@@UAE@XZ,0x0059DC80,19,Code/gen_small/dtors_006.cpp,reloc-derived;call-sites=1;identity=generated
 ??0S4Parsed0059F980@@QAE@XZ,0x0059F8F0,69,Code/GameEngine/Source/Common/S4ParseThenRegister.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_005a3d80@@UAE@XZ,0x005A3B20,120,Code/gen_small/dtors_006.cpp,reloc-derived;call-sites=1;identity=generated
 ?_M_insert_overflow@?$vector@UGen_t_005a3db0_p8pod@@V?$allocator@UGen_t_005a3db0_p8pod@@@_STL@@@_STL@@IAEXPAUGen_t_005a3db0_p8pod@@ABU3@ABU__false_type@2@I_N@Z,0x005A3C00,302,Code/gen_small/tgrid_134.cpp,reloc-derived;call-sites=1;identity=generated
@@ -1166,7 +1163,6 @@ _Rva0051D1E0Forward,0x0051D1E0,149,Code/GameEngine/Source/Common/Rva0051D2A0Forw
 ??1Gen_dtor_00691670@@UAE@XZ,0x006BA340,202,Code/gen_small/dtors_008.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_006bafa0@@UAE@XZ,0x006BAB00,27,Code/gen_small/dtors_008.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_006bb650@@UAE@XZ,0x006BB460,138,Code/gen_small/dtors_008.cpp,reloc-derived;call-sites=1;identity=generated
-??1Gen_dtor_006bc300@@UAE@XZ,0x006BC080,21,Code/gen_small/dtors_008.cpp,reloc-derived;call-sites=1;identity=generated
 ?setCursor@Win32Mouse@@UAEXW4MouseCursor@Mouse@@@Z,0x006BC190,83,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouse.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_006bd070@@UAE@XZ,0x006BC6E0,48,Code/gen_small/dtors_008.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_006bce10@@UAE@XZ,0x006BCE40,100,Code/gen_small/dtors_008.cpp,reloc-derived;call-sites=1;identity=generated
@@ -1335,7 +1331,6 @@ _Rva0051D1E0Forward,0x0051D1E0,149,Code/GameEngine/Source/Common/Rva0051D2A0Forw
 ?renderMirror@WaterRenderObjClass@@IAEXPAVCameraClass@@@Z,0x007A2B00,1073,Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_007a60f0@@UAE@XZ,0x007A5D10,784,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ??0W3DBufferManager@@QAE@XZ,0x007AD830,326,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DVolumetricShadowManager_ctor_Thunk.cpp,reloc-derived;call-sites=1;identity=real
-??0Rva007B12F0Base@@QAE@XZ,0x007AF200,100,Code/GameEngine/Source/Common/Rva007B12F0Ctor.cpp,reloc-derived;call-sites=3;identity=real
 ??1Gen_dtor_007af4b0@@UAE@XZ,0x007AF4E0,93,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ?getTexture@BFMEShadowManagerLayout@@QAEPAVW3DShadowTexture@@PBD@Z,0x007AFD10,396,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_007b3cb0@@UAE@XZ,0x007AFF00,111,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
@@ -1473,7 +1468,6 @@ _d_0088d240,0x0088D240,437,Code/GameEngine/Source/Common/Bfme/Rva00889760.cpp,re
 ??1Rva00891D40SizedDeleting@@UAE@XZ,0x00896060,95,Code/GameEngine/Source/Common/SizedDeleteDestructors.cpp,reloc-derived;call-sites=1;identity=generated
 ?notify@Q4Base00D35D68@@QAEXHH@Z,0x008975D0,108,Code/GameEngine/Source/Common/Q4VptrPairDtors.cpp,reloc-derived;call-sites=7;identity=real
 ??1Rva00899500HeaderedDeleting@@UAE@XZ,0x00899380,94,Code/GameEngine/Source/Common/HeaderedDeleteDestructors.cpp,reloc-derived;call-sites=1;identity=generated
-??0Rva899F00Base@@QAE@PBDH@Z,0x00899F00,183,Code/Libraries/Source/WWVegas/WWLib/ThreadClassCtorThunk.cpp,reloc-derived;call-sites=1;identity=generated
 ?handle@Gen0089C880@@QAEXXZ,0x0089C880,124,Code/GameEngine/Source/Common/R1GuardedReleaseHelpers.cpp,reloc-derived;call-sites=1;identity=generated
 ?ChangeBuffer@EAStringC@@AAEXIIIW4CBPushZero@1@I@Z,0x0089E570,260,Code/Libraries/Source/EA/Apt/AptString/EAStringCase.cpp,reloc-derived;call-sites=2;identity=real
 ??1Rva008A3030SizedDeleting@@UAE@XZ,0x008A2C80,106,Code/GameEngine/Source/Common/SizedDeleteDestructors.cpp,reloc-derived;call-sites=1;identity=generated
@@ -1524,6 +1518,7 @@ _gpiCheckSocketConnect,0x008ECB40,181,Code/GameEngine/Source/GameNetwork/GameSpy
 ??1Gen_dtor_0090bb40@@UAE@XZ,0x0090B5F0,70,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_0090be00@@UAE@XZ,0x0090BC40,103,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ?getSurfaceLevel@W3DRadarResetTexture@@QAE?AVW3DRadarResetSurface@@I@Z,0x0090DDC0,323,Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar.cpp,reloc-derived;call-sites=1;identity=real
+?bfmeBaseSJ@BfmeThingSJ@@QAEXH@Z,0x0090E3D0,154,Code/GameEngine/Source/Common/BfmeThreeHundredThirtyEight.cpp,reloc-derived;call-sites=1;identity=real
 ?BFMEGetWaterTrackTexture@@YA?AVBFMEWaterTrackTextureHandle@@PADHH@Z,0x0090E910,309,Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp,reloc-derived;call-sites=2;identity=real
 ??1Gen_dtor_005f0920@@UAE@XZ,0x0090F680,215,Code/gen_small/dtors_007.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_00913ad0@@UAE@XZ,0x009125E0,193,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
