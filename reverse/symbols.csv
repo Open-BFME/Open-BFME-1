@@ -1,5 +1,4 @@
 name,address,notes
-?step@BfmeFinishDispatcherAGA@@QAEXPAX0@Z,0x00014F51,BFME finish-list dispatch layout alias; retail call uses this at object offset -0x20
 ?$S103@?1??getClassMemoryPool@AIUpdateInterface@@CAPAVMemoryPool@@XZ@4IA,0x00EEFE34,pool-glue cascade static (back-solved)
 ?$S105@?1??getClassMemoryPool@PoisonedBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF830,pool-glue cascade static (back-solved)
 ?$S107@?1??getClassMemoryPool@SupplyWarehouseCripplingBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF91C,pool-glue cascade static (back-solved)
@@ -72969,6 +72968,7 @@ name,address,notes
 ?bfmeMakeBTE@BfmeSlotBTE@@QAEPAPAXPAX@Z,0x00045EB7,pin
 ?bfmeMakeBTE@BfmeSlotBTE@@QAEPAXPAX@Z,0x00045EB7,pin
 ?bfmeMakeBZA@@YAPAVBfmeCacheBZA@@PAVBfmeThingBZA@@@Z,0x007F4810,pin
+?bfmeMakeCGE@@YAHPAVBfmeSubCGE@@@Z,0x0097F5D0,pin
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
@@ -77371,6 +77371,7 @@ name,address,notes
 ?startRenderToTexture@W3DShaderManager@@SAXXZ,0x000154E7
 ?startThreads@GameResultsQueue@@UAEXXZ,0x006406D0,GameResultsQueue vtable 0x01119380 slot +0x24 in the ZH interface order; endThreads vslot +0x28 first then new(0x54) GameResultsThreadClass + Execute; ZH GameResultsThread.cpp:128; present-unmatched row
 ?statusCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyStatusArg@@@Z,0x0003BD8B
+?step@BfmeFinishDispatcherAGA@@QAEXPAX0@Z,0x00014F51,BFME finish-list dispatch layout alias; retail call uses this at object offset -0x20
 ?step@Gen003BBA40Member@@QAEXPAVGenXferInterface@@@Z,0x000650C0,member at +0xC handed the interface by the transfer sequence at 0x003BBA40; address-derived name
 ?step@Gen003C75A0Owner@@QAEXXZ,0x003C75A0,niladic member called on the pointer at +0x28 by 0x003BCA30; address-derived name
 ?step@Glo012F1024Type@@QAEXXZ,0x003B3900,niladic member called on the global at 0x012F1024; address-derived name
