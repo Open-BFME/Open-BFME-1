@@ -19,6 +19,7 @@ void *GadgetComboBoxGetItemData(GameWindow *window, int selected);
 class GameSlot
 {
 public:
+	bool isAI(void) const;
 	bool isHuman(void) const;
 	int getStartPosition(void) const { return m_startPosition; }
 	int getPlayerTemplate(void) const { return m_playerTemplate; }
@@ -34,8 +35,16 @@ private:
 class GameInfo
 {
 public:
+	virtual void bfmeSlot0(void) = 0;
+	virtual void bfmeSlot1(void) = 0;
+	virtual void bfmeSlot2(void) = 0;
+	virtual void bfmeSlot3(void) = 0;
+	virtual bool amIHost(void) const = 0;
+	virtual int getLocalSlotNum(void) const = 0;
+
 	AsciiString getMap(void) const;
 	GameSlot *getSlot(int index);
+	const GameSlot *getConstSlot(int index) const;
 };
 
 class MapMetaData
@@ -72,6 +81,7 @@ class Gen_00525EE0
 {
 public:
 	void bfmeRefresh(void);
+	int bfmeFindAvailableStartPosition(int firstIndex);
 	bool bfmeApplyStartPosition(int index, int startPosition);
 	bool bfmeApplyPlayerTemplate(int index);
 	bool bfmeApplyColor(int index);
@@ -115,6 +125,36 @@ void Gen_00525EE0::bfmeRefresh(void)
 		if (map && map->m_isMultiplayer)
 			m_isMultiplayer = true;
 	}
+}
+
+// Find the next unassigned local/AI slot whose start position can be changed.
+// ?bfmeFindAvailableStartPosition@Gen_00525EE0@@QAEHH@Z
+int Gen_00525EE0::bfmeFindAvailableStartPosition(int firstIndex)
+{
+	if (m_first && !m_owner->bfmeContains(m_first))
+		m_first = 0;
+
+	if (m_second && !m_owner->bfmeContains(m_second))
+		m_second = 0;
+
+	if (!m_first)
+		return -1;
+	if (!m_first->amIHost())
+		return -1;
+
+	for (int index = firstIndex; index < 8; ++index)
+	{
+		GameSlot *slot = m_first->getSlot(index);
+		if (slot && slot->getStartPosition() == -1)
+		{
+			if (index == m_first->getLocalSlotNum() &&
+				m_first->getConstSlot(index)->getPlayerTemplate() != -2)
+				return index;
+			if (slot->isAI())
+				return index;
+		}
+	}
+	return -1;
 }
 
 // Apply a unique start position and remember changes that need propagation.
