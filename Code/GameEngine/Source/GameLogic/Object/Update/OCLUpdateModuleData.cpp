@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// Field names come from retail's own INI field table joined to upstream's
+// parse table on the key: retail supplies every offset, upstream only the
+// word. The offsets were derived from this class's declaration sequence and
+// type sizes, never read out of the old placeholder names.
 // readable body of ??0OCLUpdateModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Update/OCLUpdate.cpp
 
 // Open-BFME5: OCLUpdateModuleData default ctor.
@@ -13,17 +17,17 @@ public:
 
 private:
 	unsigned int m_gap4;
-	unsigned int m_08;
-	unsigned int m_0c;
-	unsigned int m_10;
-	unsigned char m_14;
+	unsigned int m_ocl;
+	unsigned int m_minDelay;
+	unsigned int m_maxDelay;
+	unsigned char m_isCreateAtEdge;
 };
 
 // ??0OCLUpdateModuleData@@QAE@XZ
 OCLUpdateModuleData::OCLUpdateModuleData()
 {
-	m_0c = 0;
-	m_10 = 0;
-	m_08 = 0;
-	m_14 = 0;
+	m_minDelay = 0;
+	m_maxDelay = 0;
+	m_ocl = 0;
+	m_isCreateAtEdge = 0;
 }
