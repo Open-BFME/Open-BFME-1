@@ -2813,6 +2813,7 @@ name,address,notes
 ??0LaserUpdateModuleData@@QAE@XZ,0x0003E4A5,pinharvest x1 (thunk)
 ??0LeafletDropBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
 ??0LevelGrantSpecialPowerBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME5 LevelGrantSpecialPower base pin
+??0LU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,LifetimeUpdate constructor calls the shared ObjectModule constructor ILT
 ??0LifetimeUpdateModuleData@@QAE@XZ,0x0002E6D1,LifetimeUpdate ModuleData ctor
 ??0LightPulseFXNugget@@QAE@XZ,0x00021175,LightPulse parser calls this constructor ILT; target resolves to the 0x00828E10 body
 ??0LightningDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x19614,LightningDrawModuleTemplate clone copy-ctor pin
@@ -73793,6 +73794,7 @@ name,address,notes
 ?calcPhysicsXformThrust@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z,0x00027651,ILT thunk to the thrust physics transform helper
 ?calcPhysicsXformTreads@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z,0x00034ABD,ILT thunk to the treads physics transform helper
 ?calcPitches@GeometryInfo@@QBEXABUCoord3D@@ABV1@0AAM2@Z,0x0087EC20,GeometryInfo pitch calculation body decoded from Weapon::isWithinTargetPitch retail callsite
+?calcSleepDelay@LifetimeUpdate@@AAEIII@Z,0x0003596D,LifetimeUpdate constructor calls its out-of-line helper through this ILT
 ?calculateScore@ScoreKeeper@@QAEHXZ,0x000E8D90,ZH ScoreKeeper::calculateScore: TheGlobalData (0x012ED5C8) value multipliers at +0x1224..+0x1250 times moneyEarned +4 unitsBuilt +0x8c buildingsBuilt +0x114 and the per-player kill arrays at +0xc/+0x94 skipping m_myPlayerIdx +0x140; stores m_currentScore at +0x138; ILT 0x0000D67A; callers 0x000E8F70 0x000E92B0 and the score screen 0x004E81A0
 ?call2@BfmeTargetF63@@QAEXPAX@Z,0x00002A59,pin
 ?call@ArmorMapHelperShim@@QBE_NABV?$BitFlags@$0L@@@0@Z,0x00140740,incremental-link thunk target through a TU-local forwarding shim
