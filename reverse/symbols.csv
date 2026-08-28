@@ -11326,6 +11326,7 @@ name,address,notes
 ?_M_initialize_map@?$_Deque_base@UGen_t_0065f750_p12cd@@V?$allocator@UGen_t_0065f750_p12cd@@@_STL@@@_STL@@IAEXI@Z,0x0065F3A0,gen-tgrid payload member
 ?_M_initialize_map@?$_Deque_base@UGen_t_0069e6a0_p12cd@@V?$allocator@UGen_t_0069e6a0_p12cd@@@_STL@@@_STL@@IAEXI@Z,0x0069C140,gen-tgrid payload member
 ?_M_initialize_map@?$_Deque_base@UGen_t_006a04a0_p12cd@@V?$allocator@UGen_t_006a04a0_p12cd@@@_STL@@@_STL@@IAEXI@Z,0x0069C140,gen-tgrid payload member
+?_M_initialize_map@?$_Deque_base@UGen_t_008fb350_p12pod@@V?$allocator@UGen_t_008fb350_p12pod@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,RVA 0x008FB960 p12-POD deque initialization call target
 ?_M_initialize_map@?$_Deque_base@URva00089CA0Element@@V?$allocator@URva00089CA0Element@@@_STL@@@_STL@@IAEXI@Z,0x00037C90,Open-BFME5 the deque _M_initialize_map the queue constructor at 0x00089CA0 calls
 ?_M_initialize_map@?$_Deque_base@URva0035A900Element@@V?$allocator@URva0035A900Element@@@_STL@@@_STL@@IAEXI@Z,0x00048838,Open-BFME5 the deque _M_initialize_map the queue constructor at 0x0035A900 calls
 ?_M_initialize_map@?$_Deque_base@URva0035A940Element@@V?$allocator@URva0035A940Element@@@_STL@@@_STL@@IAEXI@Z,0x000115C7,Open-BFME5 the deque _M_initialize_map the queue constructor at 0x0035A940 calls

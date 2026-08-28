@@ -1,4 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// stlport
+
+#include <deque>
 
 typedef float Real;
 
@@ -63,44 +66,51 @@ private:
 	char state[0x68];
 };
 
-namespace _STL
-{
-template <class Type>
-class allocator
-{
-};
-
-template <class Type, class Allocator>
-class deque
-{
-public:
-	~deque();
-
-private:
-	char state[0x28];
-};
-}
-
 class ShroudManagerImpl008FBA40
 {
 public:
+	ShroudManagerImpl008FBA40();
 	~ShroudManagerImpl008FBA40();
 	void reset();
 	void setRegion(const Region3D *region, Real cellSize);
 	void configure(Region3D region, Real cellSize);
 
 private:
+	int mode;
 	Region3D region;
-	Real unknown18;
 	Real defaultCellSize;
+	Real inverseCellSize;
 	int width;
 	int height;
-	void *unknown28;
 	ShroudManagerImpl008FBA40Element *elements;
 	ShroudManagerImpl008FBA40Node *nodes;
-	char unknown34[8];
+	void *unknown34;
+	int unknown38;
 	_STL::deque<Gen_t_008fb350_p12pod, _STL::allocator<Gen_t_008fb350_p12pod> > records;
+	int unknown64;
+	bool enabled;
+	char padding69[3];
+	void *refreshCallback;
 };
+
+ShroudManagerImpl008FBA40::ShroudManagerImpl008FBA40()
+	: mode(2),
+	  defaultCellSize(1.0f),
+	  width(0),
+	  height(0),
+	  elements(0),
+	  nodes(0),
+	  unknown34(0),
+	  unknown38(0),
+	  records(),
+	  unknown64(-1),
+	  enabled(true),
+	  refreshCallback(0)
+{
+	region.lo.zero();
+	region.hi.zero();
+	configure(region, 1.0f);
+}
 
 ShroudManagerImpl008FBA40::~ShroudManagerImpl008FBA40()
 {
