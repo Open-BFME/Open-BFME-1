@@ -72617,6 +72617,7 @@ name,address,notes
 ?bfmeFindBPA@BfmeThingBPA@@QAEPAUBfmeGotBPA@@PAX@Z,0x0001DB92,pin
 ?bfmeFindCRA@BfmeTableCRA@@QAEPAUBfmeMidCRA@@PAX@Z,0x0001F253,pin
 ?bfmeFindDEA@BfmeThingDEA@@QAEPAUBfmeSubDEA@@XZ,0x00017DF5,pin
+?bfmeFindDEB@BfmeThingDEB@@QAEPAUBfmeSubDEB@@XZ,0x00017DF5,pin
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
 ?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
 ?bfmeFindRecord@FontLibraryBFMERetail@@AAEPAUBfmeFontRecord@@PAVAsciiString@@M@Z,0x000035A3,Open-BFME5 ILT thunk to body 0x00476E20; FontLibraryBFMERetail::getFont at 0x004772D0 calls it on this with the name and size and reads a byte at +8 of what it returns; address-derived name
