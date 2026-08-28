@@ -73164,6 +73164,7 @@ name,address,notes
 ?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
 ?bfmeLookBBB@@YAPAXPAX@Z,0x0082B8E0,pin
 ?bfmeLookEBE@BfmeGlobEBE@@QAEPAXPAX@Z,0x0001F253,pin
+?bfmeLookEFJ@BfmeGlobEFJ@@QAEPAVBfmeResEFJ@@PAVBfmeSubEFJ@@@Z,0x00028560,pin
 ?bfmeLookRH@@YGHPAX0@Z,0x007F76F0,pin
 ?bfmeLookupA@@YAHPAX@Z,0x0000B1AE,Open-BFME5 ILT the bit setter at 0x001C3FB0 looks up through
 ?bfmeLookupB@@YAHPAX@Z,0x000052CC,Open-BFME5 ILT the bit setter at 0x001C4020 looks up through
@@ -73616,6 +73617,7 @@ name,address,notes
 ?bfmeUpdateCMB@BfmeThingCMB@@QAEXXZ,0x00032231,pin
 ?bfmeUseDXI@BfmeGlobDXI@@QAEXH@Z,0x0004159C,pin
 ?bfmeUseDXJ@BfmeSubDXJ@@QAEXH@Z,0x00021468,pin
+?bfmeUseEFJ@BfmeResEFJ@@QAEXPAX0@Z,0x00017A12,pin
 ?bfmeUseRT@BfmeSlotRT@@QAEXXZ,0x0003A427,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVecDtorDLA@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
@@ -74544,6 +74546,7 @@ name,address,notes
 ?findObjectByID@GameLogic@@QAEPAVObject@@H@Z,0x0009A510,Open-BFME5 the lookup StateMachine::getGoalObject forwards to; reloc_names carries the same address
 ?findObjectByID@GameLogic@@QAEPAVObject@@W4ObjectID@@@Z,0x0001F253,enum ABI spelling used by AIDockProcessDockState::findMyDrone; same matched ILT as the int-decorated overload
 ?findObjectCreationList@ObjectCreationListStore@@QBEPBVObjectCreationList@@VAsciiString@@@Z,0x0000D3FA,call displacement in InstantDeathBehavior parseOCL @0x00201770 (incremental-link thunk); BFME takes the name by value
+?findOrInsert@AptTextRecordMap@@QAEPAUAptTextRecord@@ABVAsciiString@@@Z,0x0046B490,WindowManager bfme_setAptText at 0x0046CBF0 passes this+0x44 and the AsciiString key; helper returns the listener plus UnicodeString record
 ?findOrInsert@ControlBarOverrideMapABI@@QAEAAPBVCommandButton@@ABVAsciiString@@@Z,0x00008170,Open-BFME5 control-bar override hash-map subscript ILT
 ?findParticleSystemByID@ParticleSystemManager@@AAE?AVBfmeParticleSystemHandle@@W4ParticleSystemID@@@Z,0x0002A216,Open-BFME5 ILT; returns the particle system by value into a hidden slot for ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z at 0x005C3C10
 ?findRoad@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z,0x00019DC6,walks the list at collection+0x08; identical 246-byte body to findBridge which walks +0x0c. Called by the Road block whose create branch is the already-matched newRoad
@@ -74704,6 +74707,7 @@ name,address,notes
 ?g_bfmeObjECF@@3PAUBfmeObjECF@@A,0x00F4B280,pin
 ?g_bfmeObjECI@@3PAVBfmeObjECI@@A,0x00EF7730,pin
 ?g_bfmeObjEDC@@3PAVBfmeObjEDC@@A,0x00EF7FE0,pin
+?g_bfmeObjEFJ@@3PAVBfmeGlobEFJ@@A,0x00EEF1D8,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
@@ -79106,4 +79110,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?findOrInsert@AptTextRecordMap@@QAEPAUAptTextRecord@@ABVAsciiString@@@Z,0x0046B490,WindowManager bfme_setAptText at 0x0046CBF0 passes this+0x44 and the AsciiString key; helper returns the listener plus UnicodeString record
