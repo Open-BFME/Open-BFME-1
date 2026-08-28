@@ -131,6 +131,26 @@ TransportStatus::~TransportStatus()
 static TransportStatus *s_transportStatuses;
 
 //-------------------------------------------------------------------------------------------------
+#define BFME_SCRIPT_CONDITION_SLOT(N) virtual void slot##N() = 0
+
+class BfmeScriptConditionEngine
+{
+public:
+	BFME_SCRIPT_CONDITION_SLOT(00); BFME_SCRIPT_CONDITION_SLOT(01); BFME_SCRIPT_CONDITION_SLOT(02);
+	BFME_SCRIPT_CONDITION_SLOT(03); BFME_SCRIPT_CONDITION_SLOT(04); BFME_SCRIPT_CONDITION_SLOT(05);
+	BFME_SCRIPT_CONDITION_SLOT(06); BFME_SCRIPT_CONDITION_SLOT(07); BFME_SCRIPT_CONDITION_SLOT(08);
+	BFME_SCRIPT_CONDITION_SLOT(09); BFME_SCRIPT_CONDITION_SLOT(10); BFME_SCRIPT_CONDITION_SLOT(11);
+	BFME_SCRIPT_CONDITION_SLOT(12); BFME_SCRIPT_CONDITION_SLOT(13); BFME_SCRIPT_CONDITION_SLOT(14);
+	BFME_SCRIPT_CONDITION_SLOT(15); BFME_SCRIPT_CONDITION_SLOT(16); BFME_SCRIPT_CONDITION_SLOT(17);
+	BFME_SCRIPT_CONDITION_SLOT(18); BFME_SCRIPT_CONDITION_SLOT(19); BFME_SCRIPT_CONDITION_SLOT(20);
+	BFME_SCRIPT_CONDITION_SLOT(21); BFME_SCRIPT_CONDITION_SLOT(22); BFME_SCRIPT_CONDITION_SLOT(23);
+	BFME_SCRIPT_CONDITION_SLOT(24); BFME_SCRIPT_CONDITION_SLOT(25);
+	virtual Object *getUnitNamed(const AsciiString &name) = 0;
+};
+
+#undef BFME_SCRIPT_CONDITION_SLOT
+
+//-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ??0ScriptConditions@@QAE@XZ present-unmatched
 ScriptConditions::ScriptConditions()
@@ -331,10 +351,20 @@ Bool ScriptConditions::evaluateNamedUnitDestroyed(Parameter *pUnitParm)
 //-------------------------------------------------------------------------------------------------
 /** evaluateNamedUnitExists */
 //-------------------------------------------------------------------------------------------------
-// ?evaluateNamedUnitExists@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
+class BfmeNamedUnitObject
+{
+public:
+	unsigned char m_unreconstructed[0x344];
+	unsigned char m_privateStatus;
+
+	Bool isEffectivelyDead() const { return (m_privateStatus & 1) != 0; }
+};
+
 Bool ScriptConditions::evaluateNamedUnitExists(Parameter *pUnitParm)
 {
-	Object *theUnit = TheScriptEngine->getUnitNamed( pUnitParm->getString() );
+	BfmeScriptConditionEngine *engine = reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine);
+	BfmeNamedUnitObject *theUnit = reinterpret_cast<BfmeNamedUnitObject *>(
+		engine->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm)));
 	if (theUnit) 
 	{
 		return !theUnit->isEffectivelyDead();
@@ -962,12 +992,12 @@ Bool ScriptConditions::evaluateBuiltByPlayer(Condition *pCondition, Parameter* p
 //-------------------------------------------------------------------------------------------------
 /** evaluateNamedCreated */
 //-------------------------------------------------------------------------------------------------
-// ?evaluateNamedCreated@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
 Bool ScriptConditions::evaluateNamedCreated(Parameter* pUnitParm)
 {
 	// This is actually evaluateNamedExists(...)
 	///@todo - evaluate created, not exists...
-	return (TheScriptEngine->getUnitNamed(pUnitParm->getString()) != NULL);
+	BfmeScriptConditionEngine *engine = reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine);
+	return engine->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm)) != NULL;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -1076,21 +1106,6 @@ Bool ScriptConditions::evaluateBuildingEntered( Parameter *pPlayerParm, Paramete
 
 #define BFME_SCRIPT_CONDITION_SLOT(N) virtual void slot##N() = 0
 
-class BfmeScriptConditionEngine
-{
-public:
-	BFME_SCRIPT_CONDITION_SLOT(00); BFME_SCRIPT_CONDITION_SLOT(01); BFME_SCRIPT_CONDITION_SLOT(02);
-	BFME_SCRIPT_CONDITION_SLOT(03); BFME_SCRIPT_CONDITION_SLOT(04); BFME_SCRIPT_CONDITION_SLOT(05);
-	BFME_SCRIPT_CONDITION_SLOT(06); BFME_SCRIPT_CONDITION_SLOT(07); BFME_SCRIPT_CONDITION_SLOT(08);
-	BFME_SCRIPT_CONDITION_SLOT(09); BFME_SCRIPT_CONDITION_SLOT(10); BFME_SCRIPT_CONDITION_SLOT(11);
-	BFME_SCRIPT_CONDITION_SLOT(12); BFME_SCRIPT_CONDITION_SLOT(13); BFME_SCRIPT_CONDITION_SLOT(14);
-	BFME_SCRIPT_CONDITION_SLOT(15); BFME_SCRIPT_CONDITION_SLOT(16); BFME_SCRIPT_CONDITION_SLOT(17);
-	BFME_SCRIPT_CONDITION_SLOT(18); BFME_SCRIPT_CONDITION_SLOT(19); BFME_SCRIPT_CONDITION_SLOT(20);
-	BFME_SCRIPT_CONDITION_SLOT(21); BFME_SCRIPT_CONDITION_SLOT(22); BFME_SCRIPT_CONDITION_SLOT(23);
-	BFME_SCRIPT_CONDITION_SLOT(24); BFME_SCRIPT_CONDITION_SLOT(25);
-	virtual Object *getUnitNamed(const AsciiString &name) = 0;	// vtable +0x68
-};
-
 class BfmeScriptConditionContain
 {
 public:
@@ -1124,7 +1139,7 @@ public:
 
 Bool ScriptConditions::evaluateIsBuildingEmpty( Parameter *pItemParm )
 {
-	// BFME's Parameter begins with the AsciiString used here, unlike the ZH layout in the shared header.
+	// BFME's getUnitNamed path consumes this Parameter address directly, unlike the ZH accessor path.
 	BfmeScriptConditionEngine *engine = reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine);
 	BfmeScriptConditionObject *theBuilding = reinterpret_cast<BfmeScriptConditionObject *>(
 		engine->getUnitNamed(*reinterpret_cast<const AsciiString *>(pItemParm)));
