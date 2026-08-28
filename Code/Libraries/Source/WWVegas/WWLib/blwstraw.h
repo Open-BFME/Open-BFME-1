@@ -47,6 +47,7 @@
 **	manipulation will occur. The Blowfish algorithm is symmetric, thus the same key is used
 **	for encryption as is for decryption.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blwstraw.h
 class BlowStraw : public Straw
 {
 	public:

@@ -53,6 +53,7 @@
 //	Class defining the 'listeners' 3D position/velocity in the world.  This should
 // only be used by the SoundSceneClass.
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/Listener.h
 class Listener3DClass : public Sound3DClass
 {
 	public:

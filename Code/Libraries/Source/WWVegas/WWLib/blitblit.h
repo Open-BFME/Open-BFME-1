@@ -74,6 +74,7 @@
 **	this blitter process is not often required by the game.
 */
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blitblit.h
 class BlitPlain : public Blitter {
 	public:
 		virtual void BlitForward(void * dest, void const * source, int length) const {memcpy(dest, source, length*sizeof(T));}
@@ -86,6 +87,7 @@ class BlitPlain : public Blitter {
 **	This process is not often used.
 */
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blitblit.h
 class BlitTrans : public Blitter {
 	public:
 		virtual void BlitForward(void * dest, void const * source, int len) const
@@ -113,6 +115,7 @@ class BlitTrans : public Blitter {
 **	It is used fairly frequently and is a good candidate for optimization.
 */
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blitblit.h
 class BlitPlainXlat : public Blitter {
 	public:
 		BlitPlainXlat(T const * translator) : TranslateTable(translator) {assert(TranslateTable != NULL);}
@@ -144,6 +147,7 @@ class BlitPlainXlat : public Blitter {
 **	optimization.
 */
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blitblit.h
 class BlitTransXlat : public Blitter {
 	public:
 		BlitTransXlat(T const * translator) : TranslateTable(translator) {assert(TranslateTable != NULL);}
@@ -178,6 +182,7 @@ class BlitTransXlat : public Blitter {
 **	constructor. As such, it has limited value.
 */
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blitblit.h
 class BlitTransRemapXlat : public Blitter {
 	public:
 		BlitTransRemapXlat(unsigned char const * remapper, T const * translator) : RemapTable(remapper), TranslateTable(translator) {assert(RemapTable != NULL);assert(TranslateTable != NULL);}
@@ -214,6 +219,7 @@ class BlitTransRemapXlat : public Blitter {
 **	blitter object to dynamically use alternate remap tables.
 */
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blitblit.h
 class BlitTransZRemapXlat : public Blitter {
 	public:
 		BlitTransZRemapXlat(unsigned char const * const * remapper, T const * translator) : RemapTable(remapper), TranslateTable(translator) {assert(RemapTable != NULL);assert(TranslateTable != NULL);}
@@ -250,6 +256,7 @@ class BlitTransZRemapXlat : public Blitter {
 **	algorithm works only for hicolor pixels.
 */
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blitblit.h
 class BlitTransDarken : public Blitter {
 	public:
 		BlitTransDarken(T mask) : Mask(mask) {}
@@ -283,6 +290,7 @@ class BlitTransDarken : public Blitter {
 **	really only applies to lowcolor display.
 */
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blitblit.h
 class BlitTransRemapDest : public Blitter {
 	public:
 		BlitTransRemapDest(T const * remap) : RemapTable(remap) {}
@@ -316,6 +324,7 @@ class BlitTransRemapDest : public Blitter {
 **	pointer is unused.
 */
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blitblit.h
 class BlitDarken : public Blitter {
 	public:
 		BlitDarken(T mask) : Mask(mask) {}
@@ -345,6 +354,7 @@ class BlitDarken : public Blitter {
 **	candidate for optimization.
 */
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blitblit.h
 class BlitTransLucent50 : public Blitter {
 	public:
 		BlitTransLucent50(T const * translator, T mask) : TranslateTable(translator), Mask(mask) {assert(TranslateTable != NULL);}
@@ -378,6 +388,7 @@ class BlitTransLucent50 : public Blitter {
 **	but there are some uses for it. It only works with hicolor pixels.
 */
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blitblit.h
 class BlitTransLucent25 : public Blitter {
 	public:
 		BlitTransLucent25(T const * translator, T mask) : TranslateTable(translator), Mask(mask) {assert(TranslateTable != NULL);}
@@ -414,6 +425,7 @@ class BlitTransLucent25 : public Blitter {
 **	for optimization.
 */
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blitblit.h
 class BlitTransLucent75 : public Blitter {
 	public:
 		BlitTransLucent75(T const * translator, T mask) : TranslateTable(translator), Mask(mask) {assert(TranslateTable != NULL);}

@@ -50,6 +50,7 @@
 //	SoundStreamHandleClass
 //
 //////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/soundstreamhandle.h
 class SoundStreamHandleClass	: public SoundHandleClass
 {
 public:

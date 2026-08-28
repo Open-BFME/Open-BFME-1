@@ -45,6 +45,7 @@
 #include "shdhwshader.h"
 #endif
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shd8bumpdiff.h
 class Shd8BumpDiffClass : public ShdInterfaceClass
 {
 public:

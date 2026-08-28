@@ -46,6 +46,7 @@
 **	blitter object created that supports this interface. The blit blitting routines will
 **	call the appropriate method as the pixel are being processed.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blitter.h
 class Blitter {
 	public:
 
@@ -77,6 +78,7 @@ class Blitter {
 **	every type of RLE compressed blitter operation desired, there would be an object created
 **	that supports this interface.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blitter.h
 class RLEBlitter {
 	public:
 

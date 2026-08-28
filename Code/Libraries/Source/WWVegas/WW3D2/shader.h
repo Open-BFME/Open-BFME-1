@@ -89,6 +89,7 @@ enum ShaderShiftConstants
 
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/shader.h
 class ShaderClass
 {
 	friend DX8Wrapper;

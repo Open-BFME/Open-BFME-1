@@ -53,6 +53,7 @@ class ShdRendererNodeClass;
 class MeshClass;
 class TexProjectClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdmesh.h
 struct ShdSubMeshStruct
 {
 	ShdSubMeshClass* Mesh;
@@ -65,6 +66,7 @@ struct ShdSubMeshStruct
 ** - It uses the new shader system
 ** - It contains one or more sub-meshes which each use only a single shader (unlike the old mesh system)
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdmesh.h
 class ShdMeshClass : public RenderObjClass
 {
 public:

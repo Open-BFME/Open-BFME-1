@@ -11,6 +11,7 @@ class WindowLayout;
 
 // GameWindow layout-chain accessors (Generals GameWindow.h). Addresses come
 // from reverse/symbols.csv, derived from the binary's call sites.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow {
 public:
     GameWindow *winGetNextInLayout(void);
@@ -23,6 +24,7 @@ public:
 };
 
 // Partial GameWindowManager: only the slot used here is meaningful.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager {
 public:
     virtual void wmSlot0();
@@ -75,6 +77,7 @@ private:
 
 typedef void (*WindowLayoutFunc)(void *layout, void *userData);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
 class WindowLayout {
 public:
     WindowLayout(void);

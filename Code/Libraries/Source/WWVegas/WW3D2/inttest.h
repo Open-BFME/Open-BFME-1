@@ -69,6 +69,7 @@
 // collision test classes though.
 //  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/inttest.h
 class IntersectionTestClass
 {
 public:
@@ -86,6 +87,7 @@ public:
 // This is an intersection test which uses an Axis-Aligned Box
 //  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/inttest.h
 class AABoxIntersectionTestClass : public IntersectionTestClass
 {
 public:
@@ -151,6 +153,7 @@ inline bool AABoxIntersectionTestClass::Intersect_Triangle(const TriClass & tri)
 // This is an intersection test which uses an Axis-Aligned Box
 //  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/inttest.h
 class OBBoxIntersectionTestClass : public IntersectionTestClass
 {
 public:

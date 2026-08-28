@@ -54,6 +54,7 @@ enum SHDVER
 	SHDVER_8
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shddef.h
 class ShdVersion
 {
 public:
@@ -81,6 +82,7 @@ private:
 ** abstract factory which creates a shader implementation compatible with the current hardware the application
 ** is running on.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shddef.h
 class ShdDefClass : public EditableClass, public RefCountClass
 {
 public:

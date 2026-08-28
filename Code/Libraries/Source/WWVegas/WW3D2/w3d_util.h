@@ -54,6 +54,7 @@ class ShaderClass;
 ** These functions are just simple helpers which convert to and from the W3D file-format
 ** structures and the equivalent runtime classes.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/w3d_util.h
 class W3dUtilityClass
 {
 public:

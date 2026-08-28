@@ -46,6 +46,7 @@
 **	The palette class is used to manipulate a palette as a whole. All 256 colors are
 **	represented by the palette class object.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WW3D/pluglib/palette.h
 class PaletteClass
 {
 	public:

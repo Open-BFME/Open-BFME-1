@@ -57,6 +57,7 @@ extern class DynamicAudioSaveLoadClass _DynamicAudioSaveLoadSubsystem;
 //	StaticAudioSaveLoadClass
 //
 //////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/AudioSaveLoad.h
 class StaticAudioSaveLoadClass : public SaveLoadSubSystemClass
 {
 public:
@@ -91,6 +92,7 @@ protected:
 //	DynamicAudioSaveLoadClass
 //
 //////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/AudioSaveLoad.h
 class DynamicAudioSaveLoadClass : public SaveLoadSubSystemClass
 {
 public:

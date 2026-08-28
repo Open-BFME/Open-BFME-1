@@ -86,6 +86,7 @@ typedef void (_stdcall  *LPFNTEXTCALLBACK)	(AudibleSoundClass *sound_obj, const 
 // the event occurs.
 //
 /////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/AudioEvents.h
 class AudioCallbackClass
 {
 
@@ -128,6 +129,7 @@ public:
 //	Protected structures
 /////////////////////////////////////////////////////////////////////////////////
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/AudioEvents.h
 struct AUDIO_CALLBACK_STRUCT
 {
 	T					callback_ptr;
@@ -146,6 +148,7 @@ struct AUDIO_CALLBACK_STRUCT
 //	Protected structures
 /////////////////////////////////////////////////////////////////////////////////
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/AudioEvents.h
 class AudioCallbackListClass : public SimpleDynVecClass< AUDIO_CALLBACK_STRUCT<T> >
 {
 public:

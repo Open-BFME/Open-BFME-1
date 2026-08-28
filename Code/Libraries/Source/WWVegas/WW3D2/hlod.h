@@ -82,6 +82,7 @@ class ProxyArrayClass;
 	This is an hierarchical, animatable level-of-detail model.
 
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hlod.h
 class HLodClass : public W3DMPO, public Animatable3DObjClass
 {
 	W3DMPO_GLUE(HLodClass)
@@ -239,6 +240,7 @@ protected:
 protected:
 	
 	
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hlod.h
 	class ModelNodeClass 
 	{
 	public:
@@ -252,6 +254,7 @@ protected:
 		bool operator != (const ModelNodeClass & that) { return !operator == (that); }
 	};
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hlod.h
 	class ModelArrayClass : public DynamicVectorClass<ModelNodeClass> 
 	{
 	public:
@@ -299,6 +302,7 @@ protected:
 /*
 ** Loaders for HLodClass
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hlod.h
 class HLodLoaderClass : public PrototypeLoaderClass
 {
 public:
@@ -312,6 +316,7 @@ public:
 ** This description object is generated when reading a W3D_CHUNK_HLOD.  It 
 ** directly describes the contents of an HLod model.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hlod.h
 class HLodDefClass : public W3DMPO
 {
 	W3DMPO_GLUE(HLodDefClass)
@@ -343,6 +348,7 @@ private:
 	** a render object which will be exploded when the HLod is constructed (its
 	** sub-objects, if any, will be placed into the HLod).
 	*/
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hlod.h
 	class SubObjectArrayClass
 	{
 	public:
@@ -378,6 +384,7 @@ private:
 /*
 ** Prototype for HLod objects
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hlod.h
 class HLodPrototypeClass : public W3DMPO, public PrototypeClass
 {
 	W3DMPO_GLUE(HLodPrototypeClass)

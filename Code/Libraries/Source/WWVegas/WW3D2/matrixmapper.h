@@ -60,6 +60,7 @@
 **                                                        -1
 ** ViewToTexture = Projection * Mwrld-shadow * Mwrld-camera 
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/matrixmapper.h
 class MatrixMapperClass : public TextureMapperClass
 {
 	W3DMPO_GLUE(MatrixMapperClass)
@@ -122,6 +123,7 @@ protected:
 ** which usually uses actual texture coordinates as input. If the internal mapper is NULL, it
 ** simply applies it's own matrix.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/matrixmapper.h
 class CompositeMatrixMapperClass : public MatrixMapperClass
 {
 public:

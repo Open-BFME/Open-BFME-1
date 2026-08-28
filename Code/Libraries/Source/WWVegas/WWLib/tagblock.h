@@ -65,6 +65,7 @@ class TagBlockIndex;
 //	
 //	
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/TagBlock.h
 class TagBlockFile : protected RawFileClass
 {
 	public:
@@ -133,6 +134,7 @@ class TagBlockFile : protected RawFileClass
 		};
 
 		// Each block in the file has a header before it.
+		// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/TagBlock.h
 		struct BlockHeader
 		{
 			BlockHeader()  {memset(this, 0, sizeof(*this));}
@@ -213,6 +215,7 @@ class TagBlockFile : protected RawFileClass
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// Start of TagBlockHandle/////////////////////////////////////
 // All external access to the TagBlockFile is done through handles.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/TagBlock.h
 class TagBlockHandle
 {
 	public:

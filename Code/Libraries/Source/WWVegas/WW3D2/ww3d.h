@@ -74,6 +74,7 @@ class 	StaticSortListClass;
 ** This is the collection of static functions and data which initialize and
 ** control the behavior of the WW3D library.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
 public:
@@ -403,6 +404,7 @@ private:
 ** This struct holds the results of a performance sampling.  The WW3D object returns
 ** its statistics packaged up in one of these structures.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 struct RenderStatistics
 {
 		// General statistics

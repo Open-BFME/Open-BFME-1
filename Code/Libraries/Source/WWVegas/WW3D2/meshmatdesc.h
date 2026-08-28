@@ -229,6 +229,7 @@ protected:
 ** Get and Peek work like normal, and all non-NULL pointers will be released when the buffer 
 ** is destroyed.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.h
 class MatBufferClass : public ShareBufferClass < VertexMaterialClass * >
 {
 	// BFME: Get_Material_Array allocates via global operator new (0x881F30), not W3DMPO pool.
@@ -252,6 +253,7 @@ private:
 ** This is a ShareBufferClass of pointers to textures.  Works just like MatBufferClass but with 
 ** TextureClass's...
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.h
 class TexBufferClass : public ShareBufferClass < TextureClass * >
 {
 	// BFME: same as MatBufferClass — allocate via global operator new, not W3DMPO pool.
@@ -275,6 +277,7 @@ private:
 ** This is a ShareBufferClass of uv coordinates.  At load time, we are detecting redundant UV arrays
 ** so this class stores a CRC for quick checking.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.h
 class UVBufferClass : public ShareBufferClass < Vector2 >
 {
 	// BFME: same as Mat/TexBuffer — no W3DMPO pool glue.

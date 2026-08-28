@@ -56,6 +56,7 @@ class StringClass;
 // It is used for reading/writing lines of text (looking for CR/LF or LF's).
 //
 ///////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/textfile.h
 class TextFileClass : public RawFileClass
 {
 public:

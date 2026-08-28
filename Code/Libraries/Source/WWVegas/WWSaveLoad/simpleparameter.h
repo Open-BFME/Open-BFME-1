@@ -60,6 +60,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 template <class T, ParameterClass::Type type>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/simpleparameter.h
 class SimpleParameterClass : public ParameterClass
 {
 public:
@@ -184,6 +185,7 @@ typedef SimpleParameterClass<int,		ParameterClass::TYPE_STRINGSDB_ID>	StringsDBE
 //
 //////////////////////////////////////////////////////////////////////////////////
 template <class T, ParameterClass::Type type>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/simpleparameter.h
 class RangedParameterClass : public SimpleParameterClass<T, type>
 {
 public:
@@ -213,6 +215,7 @@ private:
 //////////////////////////////////////////////////////////////////////////////////
 //	IntParameterClass 
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/simpleparameter.h
 class IntParameterClass : public RangedParameterClass<int, ParameterClass::TYPE_INT>
 {
 public:
@@ -224,6 +227,7 @@ public:
 //////////////////////////////////////////////////////////////////////////////////
 //	FloatParameterClass 
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/simpleparameter.h
 class FloatParameterClass  : public RangedParameterClass<float, ParameterClass::TYPE_FLOAT>
 {
 public:
@@ -235,6 +239,7 @@ public:
 //////////////////////////////////////////////////////////////////////////////////
 //	AngleParameterClass 
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/simpleparameter.h
 class AngleParameterClass   : public RangedParameterClass<float, ParameterClass::TYPE_ANGLE>
 {
 public:

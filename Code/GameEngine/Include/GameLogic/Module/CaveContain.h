@@ -9,6 +9,7 @@
 struct Sound;
 class Team;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CaveContain.h
 class CaveContainModuleData : public OpenContainModuleData
 {
 public:
@@ -33,6 +34,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CaveContain.h
 class CaveContain : public OpenContain, public CreateModuleInterface, public CaveInterface
 {
 	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE( CaveContain, "CaveContain" )

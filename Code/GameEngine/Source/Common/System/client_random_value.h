@@ -50,6 +50,7 @@ class DebugWindowDialog;
  * A GameClientRandomVariable represents a distribution of random values
  * from which discrete values can be retrieved.
  */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ClientRandomValue.h
 class GameClientRandomVariable
 {
 public:

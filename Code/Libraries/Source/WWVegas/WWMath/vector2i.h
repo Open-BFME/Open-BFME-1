@@ -44,6 +44,7 @@
 
 #include "always.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/vector2i.h
 class Vector2i
 {
 public:

@@ -38,6 +38,7 @@ typedef unsigned short WCHAR;   // see win.h; needed for Copy_Wide's signature
 // codegen; a verbatim asm ctor instead materialises the object and does not match.
 #ifndef BFME_FASTCRITICALSECTION_DEFINED
 #define BFME_FASTCRITICALSECTION_DEFINED
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mutex.h
 class FastCriticalSectionClass
 {
 	unsigned Flag;
@@ -69,6 +70,7 @@ public:
 };
 #endif // BFME_FASTCRITICALSECTION_DEFINED
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
 class StringClass
 {
 public:

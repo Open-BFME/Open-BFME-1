@@ -57,6 +57,7 @@
 class RenderInfoClass;
 class Vector4;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdhwshader.h
 class ShdHWShader
 {
 public:
@@ -79,6 +80,7 @@ protected:
 	DWORD Shader;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdhwshader.h
 class ShdHWVertexShader : public ShdHWShader
 {
 public:
@@ -119,6 +121,7 @@ private:
 	static bool Using_Hardware;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdhwshader.h
 class ShdHWPixelShader : public ShdHWShader
 {
 public:

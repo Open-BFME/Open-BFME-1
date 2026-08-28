@@ -68,6 +68,7 @@
 // Radius - radius of the sphere
 //
 /////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/sphere.h
 class SphereClass
 {
 public:

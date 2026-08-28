@@ -93,6 +93,7 @@ WWINLINE int& Vector3i::operator[] (int n)
 
 // ----------------------------------------------------------------------------
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/Vector3i.h
 class Vector3i16
 {
 public:

@@ -71,6 +71,7 @@ template <> inline unsigned int HashTemplateKeyClass<float>::Get_Hash_Value (con
 
 // Hash class
 template <class KeyType, class ValueType> 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/hashtemplate.h
 class HashTemplateClass
 {
 	struct Entry;
@@ -120,6 +121,7 @@ private:
 };
 
 template <class KeyType, class ValueType>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/hashtemplate.h
 class HashTemplateIterator
 {
 	int HashIndex;					// index to hash pointer table

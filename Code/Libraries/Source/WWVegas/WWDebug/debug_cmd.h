@@ -48,6 +48,7 @@
   For convenience the macro \ref DEBUG_CREATE_COMMAND_GROUP
   can be used as well.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_cmd.h
 class DebugCmdInterface
 {
   // no copy/assign op

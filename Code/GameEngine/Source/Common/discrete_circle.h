@@ -38,6 +38,7 @@
 	One horizontal line of the circle we are going to generate, the points drawn should be from 
 	(xStart, yPos)-(xEnd, yPos), inclusive.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DiscreteCircle.h
 struct HorzLine
 {
 	Int yPos;
@@ -59,6 +60,7 @@ typedef void (*ScanlineDrawFunc)(Int xStart, Int xEnd, Int yPos, void *otherParm
 	horizontal segments for the top half of the circle only, so they need to be duplicated for the 
 	bottom half.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DiscreteCircle.h
 class DiscreteCircle
 {
 	VecHorzLine m_edges;	// Should be HorzLines

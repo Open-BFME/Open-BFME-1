@@ -31,6 +31,7 @@
 ** material system completely.  The plan is to eventually have a full set of "real" shaders and
 ** not need to use this at all.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdlegacyw3d.h
 class ShdLegacyW3DDefClass : public ShdDefClass
 {
 public:
@@ -105,6 +106,7 @@ private:
 
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdlegacyw3d.h
 class Shd6LegacyW3DClass : public ShdInterfaceClass
 {
 public:

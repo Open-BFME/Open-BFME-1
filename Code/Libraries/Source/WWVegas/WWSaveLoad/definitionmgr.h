@@ -66,6 +66,7 @@ extern class DefinitionMgrClass	_TheDefinitionMgr;
 //	DefinitionMgrClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/definitionmgr.h
 class DefinitionMgrClass : public SaveLoadSubSystemClass
 {
 public:

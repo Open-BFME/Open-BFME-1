@@ -58,6 +58,7 @@ class ChunkLoadClass;
 //	DefinitionClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/definition.h
 class DefinitionClass : public PersistClass, public EditableClass
 {
 public:

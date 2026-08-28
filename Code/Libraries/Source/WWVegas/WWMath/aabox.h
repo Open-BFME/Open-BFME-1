@@ -79,6 +79,7 @@ struct CastResultStruct;
 ** without a rotation matrix.  A similar algorithm is used to test the box
 ** for intersection.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabox.h
 class AABoxClass
 {
 
@@ -131,6 +132,7 @@ public:
 ** and then convert it into a center-extent AABox in some cases.  Its purpose
 ** is basically that.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabox.h
 class MinMaxAABoxClass
 {
 public:

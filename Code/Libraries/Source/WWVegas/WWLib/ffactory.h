@@ -12,6 +12,7 @@
 
 class FileClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/ffactory.h
 class FileFactoryClass {
 public:
 	virtual ~FileFactoryClass(void){};
@@ -22,6 +23,7 @@ public:
 //
 // Handy auto pointer class.  Prevents you from having to call Return_File manually
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/ffactory.h
 class file_auto_ptr
 {
 public:
@@ -54,6 +56,7 @@ private:
 ** RawFileFactoryClass is a derived FileFactoryClass which
 ** gives RawFileClass objects
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/ffactory.h
 class	RawFileFactoryClass {
 public:
 	RawFileClass * Get_File( char const *filename );
@@ -64,6 +67,7 @@ public:
 ** SimpleFileFactoryClass is the default read factory: it hands out BufferedFileClass
 ** objects, honouring an optional (semicolon separated) search path and path stripping.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/ffactory.h
 class	SimpleFileFactoryClass : public FileFactoryClass {
 
 public:

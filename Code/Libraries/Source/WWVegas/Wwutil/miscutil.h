@@ -40,6 +40,7 @@
 
 const float MISCUTIL_EPSILON = 0.0001f;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/Wwutil/miscutil.h
 class cMiscUtil
 {
 	public:

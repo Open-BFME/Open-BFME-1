@@ -55,6 +55,7 @@ class HTreeClass;
 ** ShdSubMeshClass - A single ShdMeshClass instance will contain one or more ShdSubMeshClass.  
 ** The "sub-mesh" is a collection of polygons who all use the same shader.  
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdsubmesh.h
 class ShdSubMeshClass : public MeshGeometryClass
 {
 public:	

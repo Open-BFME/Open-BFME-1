@@ -54,6 +54,7 @@ typedef signed long long sint64;
 
 class CPUDetectInitClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/cpudetect.h
 class CPUDetectClass
 {
 public:
@@ -305,6 +306,7 @@ private:
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/cpudetect.h
 struct CPUIDStruct
 {
 	unsigned Eax;

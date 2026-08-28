@@ -60,6 +60,7 @@ const int SHD_MAX_PASSES = 4;
 ** The caller of the Copy_Vertex_Stream() should use query functions (such as Requires_Normals()) in the definition
 ** to determine which streams the shader needs.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdinterface.h
 struct VertexStreamStruct
 {
 	VertexStreamStruct()
@@ -90,6 +91,7 @@ struct VertexStreamStruct
 ** set up the D3D render states for a particular rendering operation.  Instances of shaders are 
 ** are created by an associated ShdDefClass.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdinterface.h
 class ShdInterfaceClass : public RefCountClass
 {
 public:

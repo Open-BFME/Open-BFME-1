@@ -39,6 +39,7 @@
 
 class View;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 struct ShroudLevel
 {
 	Short m_currentShroud;		///< A Value of 1 means shrouded.  0 is not.  Negative is the count of people looking.
@@ -55,6 +56,7 @@ enum StaticGameLODLevel;
 /**
  * The Display class implements the Display interface
  */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display : public SubsystemInterface
 {
 

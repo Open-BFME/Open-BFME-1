@@ -9,6 +9,7 @@
 
 enum BodyDamageType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DamageModule.h
 class DamageModuleInterface
 {
 public:
@@ -18,6 +19,7 @@ public:
 		BodyDamageType oldState, BodyDamageType newState ) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DamageModule.h
 class DamageModuleData : public BehaviorModuleData
 {
 public:
@@ -58,6 +60,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DamageModule.h
 class DamageModule : public BehaviorModule, public DamageModuleInterface
 {
 	MEMORY_POOL_GLUE_ABC( DamageModule )

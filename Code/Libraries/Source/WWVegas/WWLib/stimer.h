@@ -55,6 +55,7 @@
 #define	GRAYFADETIME			(1 * TICKS_PER_SECOND)
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/stimer.h
 class SystemTimerClass
 {
 	public:

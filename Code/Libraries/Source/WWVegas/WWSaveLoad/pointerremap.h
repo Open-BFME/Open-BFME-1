@@ -53,6 +53,7 @@
 class RefCountClass;
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/pointerremap.h
 class PointerRemapClass 
 {
 	public:
@@ -75,6 +76,7 @@ class PointerRemapClass
 
 	private:
 
+		// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/pointerremap.h
 		struct PtrPairStruct
 		{
 			PtrPairStruct(void) {}
@@ -86,6 +88,7 @@ class PointerRemapClass
 			void *		NewPointer;
 		};
 		
+		// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/pointerremap.h
 		struct PtrRemapStruct
 		{
 			PtrRemapStruct(void) {}

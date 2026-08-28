@@ -57,6 +57,7 @@ class SnapPointsClass;
 ** CollectionClass
 ** This is a render object which contains a collection of render objects.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/collect.h
 class CollectionClass : public CompositeRenderObjClass
 {
 public:
@@ -139,6 +140,7 @@ protected:
 ** CollectionLoaderClass
 ** Loader for collection objects
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/collect.h
 class CollectionLoaderClass : public PrototypeLoaderClass
 {
 public:

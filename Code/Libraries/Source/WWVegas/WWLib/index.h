@@ -81,6 +81,7 @@
 */
 
 template<class INDEX, class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/search.h
 class IndexClass
 {
 	public:
@@ -128,6 +129,7 @@ class IndexClass
 		**	This node object is used to keep track of the connection between the data
 		**	object and the index identifier number.
 		*/
+		// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/search.h
 		struct NodeElement {
 			NodeElement(void) {}		// Default constructor does nothing (by design).
 			NodeElement(INDEX const & id, T & data) : ID(id), Data(data) {}

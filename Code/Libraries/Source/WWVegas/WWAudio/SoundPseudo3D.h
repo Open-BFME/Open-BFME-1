@@ -54,6 +54,7 @@
 // hardware, are not restricted to mono, uncompressed, WAV data,
 // and do not calculate doppler and reverb effects.
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/SoundPseudo3D.h
 class SoundPseudo3DClass : public Sound3DClass
 {
 	public:

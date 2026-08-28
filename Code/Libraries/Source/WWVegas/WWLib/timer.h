@@ -68,6 +68,7 @@
 // Let lint know that non-virtual destructor is OK for this class.
 //lint -esym(1509,BasicTimerClass)
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/timer.h
 class BasicTimerClass {
  	public:
 		// Constructor allows assignment as if class was integral 'long' type.
@@ -202,6 +203,7 @@ inline int BasicTimerClass<T>::operator () (void) const
 **	class instead.
 */
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/timer.h
 class TTimerClass : public BasicTimerClass<T> {
  	public:
 		// Constructor allows assignment as if class was integral 'long' type.
@@ -427,6 +429,7 @@ inline bool TTimerClass<T>::Is_Active(void) const
 **	were an integral "magic" long that automatically counts down toward zero.
 */
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/timer.h
 class CDTimerClass : public BasicTimerClass<T> {
 	public:
 		// Constructor allows assignment as if class was integral 'long' type.

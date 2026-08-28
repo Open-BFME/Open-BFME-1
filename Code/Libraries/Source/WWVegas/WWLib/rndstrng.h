@@ -48,6 +48,7 @@ class	StringClass;
 /*
 **
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/rndstrng.h
 class	RandomStringClass {
 
 public:

@@ -53,6 +53,7 @@
 class FileClass;
 //class srColorSurfaceIFace;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texfcach.h
 class TextureFileCache  
 {
 	public:
@@ -104,6 +105,7 @@ class TextureFileCache
 		//		rawdata MipMap[_TextureBlockHeader.NumMipMaps - 1]
 		//		End of BLock
 
+		// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texfcach.h
 		struct TextureBlockHeader 
 		{
 			// Time data stamp of file.
@@ -131,6 +133,7 @@ class TextureFileCache
 		};
 
 		// Each texture has an offset into the file and it's size when uncompressed.
+		// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texfcach.h
 		struct OffsetTableType
 		{
 			OffsetTableType() : Offset(0), Size (0) {}

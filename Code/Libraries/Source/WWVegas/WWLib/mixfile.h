@@ -56,6 +56,7 @@ class FileClass;
 /*
 **
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mixfile.h
 class	MixFileFactoryClass : public FileFactoryClass {
 
 public:
@@ -97,6 +98,7 @@ private:
 	bool			Get_Temp_Filename (const char *path, StringClass &full_path);
 	static int	File_Offset_Compare(const void * a, const void * b);
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mixfile.h
 	struct FileInfoStruct {
 		bool operator== (const FileInfoStruct &src)	{ return false; }
 		bool operator!= (const FileInfoStruct &src)	{ return true; }
@@ -106,6 +108,7 @@ private:
 		unsigned long Size;				// Size of data subfile.
 	};
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mixfile.h
 	struct AddInfoStruct {
 		bool operator== (const AddInfoStruct &src)	{ return false; }
 		bool operator!= (const AddInfoStruct &src)	{ return true; }
@@ -131,6 +134,7 @@ private:
 /*
 **
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mixfile.h
 class	MixFileCreator {
 
 public:
@@ -144,6 +148,7 @@ private:
 
 	static int File_Info_Compare(const void * a, const void * b);
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mixfile.h
 	struct FileInfoStruct {
 		bool operator== (const FileInfoStruct &src)	{ return false; }
 		bool operator!= (const FileInfoStruct &src)	{ return true; }

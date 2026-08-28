@@ -61,11 +61,13 @@ class INIClass;
 #define METALMAP_SIZE 16
 #define METALMAP_SIZE_2 (METALMAP_SIZE * METALMAP_SIZE)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/metalmap.h
 class MetalMapManagerClass {
 
 public:
 
 	// These parameters are for a simple Phong reflectance model
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/metalmap.h
 	struct MetalParams {
 		Vector3	AmbientColor;
 		Vector3	DiffuseColor;

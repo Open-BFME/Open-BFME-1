@@ -60,6 +60,7 @@ class HAnimClass;
 ** asset name is in the list or is a child of something in the list.
 */
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/w3dexclusionlist.h
 class W3DExclusionListClass
 {
 public:

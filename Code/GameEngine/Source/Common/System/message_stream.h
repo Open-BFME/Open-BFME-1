@@ -11,6 +11,7 @@ struct Coord3D;
 struct ICoord2D;
 struct IRegion2D;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage {
 public:
 	enum Type { MSG_INVALID = 0 };

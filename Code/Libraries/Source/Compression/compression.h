@@ -47,6 +47,7 @@ enum CompressionType
 	COMPRESSION_HUFF,
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression/Compression.h
 class CompressionManager
 {
 public:

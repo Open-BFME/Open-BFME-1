@@ -95,6 +95,7 @@ enum
 ** 	WWMemoryLogClass::Release_Memory(ptr);
 ** }
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug/wwmemlog.h
 class WWMemoryLogClass
 {
 public:
@@ -152,6 +153,7 @@ protected:
 ** and pop the desired memory category.  NOTE: this class should not be used directly,
 ** instead, use the WWMEMLOG macros!
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug/wwmemlog.h
 class WWMemorySampleClass
 {
 	bool category_push;

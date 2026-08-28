@@ -48,6 +48,7 @@
 ** CardinalSpline3DClass
 ** 3-Dimensional cardinal splines
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/cardinalspline.h
 class CardinalSpline3DClass : public HermiteSpline3DClass
 {
 public:
@@ -76,6 +77,7 @@ protected:
 ** CardinalSpline1DClass
 ** 1-Dimensional cardinal splines
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/cardinalspline.h
 class CardinalSpline1DClass : public HermiteSpline1DClass
 {
 public:

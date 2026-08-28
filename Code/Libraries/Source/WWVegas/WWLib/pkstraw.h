@@ -42,6 +42,7 @@
 #include	"pkstraw.h"
 #include	"rndstraw.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/pkstraw.h
 class PKStraw : public Straw
 {
 	public:

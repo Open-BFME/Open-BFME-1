@@ -52,6 +52,7 @@
 //	Sound object that applies the specified 'reverb' filter so as to sound 'tinny'.
 //
 /////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/FilteredSound.h
 class FilteredSoundClass : public SoundPseudo3DClass
 {
 	public:

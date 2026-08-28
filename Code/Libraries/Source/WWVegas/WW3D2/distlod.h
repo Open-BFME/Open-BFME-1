@@ -64,6 +64,7 @@ class		DistLODDefClass;
 ** notified that it is being added.  This allows us to correctly handle lights
 ** and particle emitters in LODs...
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/distlod.h
 class DistLODClass : public CompositeRenderObjClass
 {
 public:
@@ -150,6 +151,7 @@ private:
 	void								Increment_Lod(void);
 	void								Decrement_Lod(void);
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/distlod.h
 	struct LODNodeClass
 	{
 		RenderObjClass *			Model;
@@ -167,6 +169,7 @@ private:
 /*
 ** Loaders for DistLODClass
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/distlod.h
 class DistLODLoaderClass : public PrototypeLoaderClass
 {
 public:
@@ -179,6 +182,7 @@ public:
 ** DistLODModelDefStruct
 ** Describes a single model in a Distance-Based LOD Object
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/distlod.h
 struct DistLODNodeDefStruct
 {
 	DistLODNodeDefStruct(void) : Name(NULL),ResDownDist(0.0f),ResUpDist(0.0f) {}
@@ -194,6 +198,7 @@ struct DistLODNodeDefStruct
 ** to the HModelDef's that are used by the asset manager to construct
 ** HModels.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/distlod.h
 class DistLODDefClass
 {
 public:
@@ -222,6 +227,7 @@ private:
 /*
 ** Prototype for Dist-LOD objects
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/distlod.h
 class DistLODPrototypeClass : public W3DMPO, public PrototypeClass 
 {
 	W3DMPO_GLUE(DistLODPrototypeClass)

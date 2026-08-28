@@ -58,10 +58,12 @@ class Vector3;
 ** Hector Yee 2/12/01 - added in fills, blits etc for font3d class
 **
 *************************************************************************/
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/surfaceclass.h
 class SurfaceClass : public RefCountClass
 {
 	public:
 
+		// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/surfaceclass.h
 		struct SurfaceDescription {
 			WW3DFormat		Format;	// Surface format
 			unsigned int	Width;	// Surface width in pixels

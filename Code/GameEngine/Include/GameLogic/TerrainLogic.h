@@ -61,6 +61,7 @@ enum WaypointID
 // Waypoint
 /** Helper class for waypoint info in terrain logic.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Waypoint : public MemoryPoolObject
 {
 	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(Waypoint, "Waypoint")		
@@ -130,6 +131,7 @@ public:
 // Bridge
 /** Helper class for bridge info in terrain logic.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class BridgeInfo 
 {
 public:
@@ -151,6 +153,7 @@ public:
 // Bridge
 /** Helper class for bridge info in terrain logic.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 struct TBridgeAttackInfo 
 {
 public:
@@ -159,6 +162,7 @@ public:
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Bridge : public MemoryPoolObject
 {
 	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(Bridge, "Bridge")		
@@ -214,6 +218,7 @@ public:
 /** Device independent implementation for some functionality of the
   * logical terrain singleton */
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic : public Snapshot,
 										 public SubsystemInterface
 {
@@ -386,6 +391,7 @@ protected:
 	// tables for a map.  We could use a list, but eh, this is fine and small anyway
 	//
 	enum { MAX_DYNAMIC_WATER = 64 };
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 	struct DynamicWaterEntry
 	{
 		const WaterHandle *waterTable;	///< handle to water table to edit

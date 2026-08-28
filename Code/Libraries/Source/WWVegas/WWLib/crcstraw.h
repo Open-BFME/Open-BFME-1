@@ -44,6 +44,7 @@
 **	This class will build a CRC value from the data stream that is drawn through this class.
 **	The data is not modified, but it is examined as it passes through.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/crcstraw.h
 class CRCStraw : public Straw
 {
 	public:

@@ -36,6 +36,7 @@ class ThumbnailManagerClass;
 
 // ----------------------------------------------------------------------------
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texturethumbnail.h
 class ThumbnailClass
 {
 	friend ThumbnailManagerClass;
@@ -85,6 +86,7 @@ public:
 
 // ----------------------------------------------------------------------------
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texturethumbnail.h
 class ThumbnailManagerClass : public DLNodeClass<ThumbnailManagerClass>
 {
 	W3DMPO_GLUE(ThumbnailManagerClass);

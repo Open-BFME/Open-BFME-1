@@ -146,6 +146,7 @@ WWINLINE void DX8_ErrorCode(unsigned res)
 // EXTENDED_STATS collects additional timing statistics by turning off parts
 // of the 3D drawing system (terrain, objects, etc.)
 #ifdef EXTENDED_STATS
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8_Stats
 {
 public:
@@ -170,6 +171,7 @@ public:
 // This virtual interface was added for the Generals RTS.
 // It is called before resetting the dx8 device to ensure
 // that all dx8 resources are released.  Otherwise reset fails. jba.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8_CleanupHook
 {
 public:
@@ -178,6 +180,7 @@ public:
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 struct RenderStateStruct
 {
 	ShaderClass shader;
@@ -211,6 +214,7 @@ struct RenderStateStruct
 ** an WWINLINE function so that we can add stat tracking, etc if needed.  Direct access to the
 ** D3D device will require "friend" status and should be granted only in extreme circumstances :-)
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 	enum ChangedStates {

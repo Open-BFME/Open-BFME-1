@@ -54,6 +54,7 @@ class ChunkSaveClass;
 ** LightClass 
 ** This "render object" is a light source.  
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/light.h
 class LightClass : public RenderObjClass
 {
 public:

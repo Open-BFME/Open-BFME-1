@@ -39,6 +39,7 @@
 ** "Regular Expression Tutorial.html". This file comes from the web at
 ** http://www.living-source.com/user/matte/regexp/regexp_tutorial.html
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/regexpr.h
 class RegularExpressionClass
 {
 public:

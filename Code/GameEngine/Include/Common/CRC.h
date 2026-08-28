@@ -36,6 +36,7 @@
 
 #ifdef _DEBUG
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/crc.h
 class CRC
 {
 public:
@@ -55,6 +56,7 @@ private:
 #else
 
 // optimized inline only version
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/crc.h
 class CRC
 {
 public:

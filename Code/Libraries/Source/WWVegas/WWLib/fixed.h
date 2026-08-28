@@ -69,6 +69,7 @@
 **	Note that when integer values are returns from the arithmetic operators, the value is rounded
 **	to the nearest whole integer value. This differs from normal integer math that always rounds down.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/fixed.h
 class fixed
 {
 	public:

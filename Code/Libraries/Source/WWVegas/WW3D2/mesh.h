@@ -71,6 +71,7 @@ struct VertexFormatXYZNDUV2;
 /**
 ** MeshClass -- Render3DObject for rendering meshes.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mesh.h
 class MeshClass : public W3DMPO, public RenderObjClass
 {
 	W3DMPO_GLUE(MeshClass)

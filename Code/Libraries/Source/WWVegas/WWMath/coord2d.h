@@ -9,6 +9,7 @@ struct Coord2DBase {
     float y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 class Coord2D : public Coord2DBase {
 public:
     Coord2D();

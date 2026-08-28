@@ -57,6 +57,7 @@ template<class T> struct ParticlePropertyStruct;
 ** ParticleBufferClass contains a circular buffer of NewParticleStructs, and
 ** new ones overwrite the oldest in the case of overflows.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_buf.h
 struct NewParticleStruct
 {
 	Vector3			Position;	// Particle position in worldspace.
@@ -84,6 +85,7 @@ struct NewParticleStruct
 ** typically be inserted into a hierarchy object or some such) will remain
 ** separate.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_buf.h
 class ParticleBufferClass : public RenderObjClass
 {
 	public:

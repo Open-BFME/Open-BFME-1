@@ -45,6 +45,7 @@
 //
 ////////////////////////////////////////////////////////////////////
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/PriorityVector.h
 class PriorityVectorClass : public DynamicVectorClass<T>
 {
 	public:

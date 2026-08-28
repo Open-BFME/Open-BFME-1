@@ -85,6 +85,7 @@ struct BoxRayAPTContextStruct;
 ** is in MeshGeometryClass.  I moved these out into a separate file just to reduce the
 ** size of meshmdl.cpp.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/aabtree.h
 class AABTreeClass : public W3DMPO, public RefCountClass
 {
 	W3DMPO_GLUE(AABTreeClass)
@@ -162,6 +163,7 @@ private:
 	** OBBoxAPTContextStruct - this is a temporary datastructure used in building
 	** an APT by culling the mesh to an oriented bounding box.
 	*/
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/aabtree.h
 	struct OBBoxAPTContextStruct
 	{
 		OBBoxAPTContextStruct(const OBBoxClass & box,SimpleDynVecClass<uint32> & apt) : 
@@ -176,6 +178,7 @@ private:
 	** OBBoxRayAPTContextStruct - temporary datastructure used in building an APT
 	** by culling the mesh to a oriented box and eliminating backfaces to a ray.
 	*/
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/aabtree.h
 	struct OBBoxRayAPTContextStruct
 	{
 		OBBoxRayAPTContextStruct(const OBBoxClass & box,const Vector3 & viewdir,SimpleDynVecClass<uint32> & apt) :

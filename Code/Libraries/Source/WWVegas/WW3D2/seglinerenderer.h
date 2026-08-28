@@ -62,6 +62,7 @@ struct VertexFormatXYZDUV1;
 ** This class implements the low-level line rendering functionality used by both SegmentedLineClass
 ** and ParticleBufferClass
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/seglinerenderer.h
 class SegLineRendererClass
 {
 public:

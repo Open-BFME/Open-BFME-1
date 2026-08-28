@@ -37,6 +37,7 @@ class HashTableIteratorClass;
 /*
 ** HashableClass
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/hash.h
 class	HashableClass {
 
 public:
@@ -55,6 +56,7 @@ private:
 /*
 ** HashTableClass
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/hash.h
 class HashTableClass {
 
 public:
@@ -82,6 +84,7 @@ private:
 /*
 **
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/hash.h
 class HashTableIteratorClass
 {
 public:

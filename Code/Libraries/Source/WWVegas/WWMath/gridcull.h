@@ -82,6 +82,7 @@ class ChunkSaveClass;
 ** allowed but they are simply put into a linked list which is iterated with each call to
 ** the culling system (linearly culled rather than logarithmic...)
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/gridcull.h
 class GridCullSystemClass : public CullSystemClass
 {
 
@@ -160,6 +161,7 @@ protected:
 
 	// Structure used to define a volume in the grid.  The volume spans from the cell indexed
 	// by Min[0],Min[1],Min[2] to the cell indexed by Max[0]-1,Max[1]-1,Max[2]-1.
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/gridcull.h
 	struct VolumeStruct
 	{
 		VolumeStruct(void);
@@ -244,6 +246,7 @@ public:
 ** This class is should only be used by classes which derive from GridCullSystemClass
 ** not normal users.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/gridcull.h
 class GridLinkClass : public CullLinkClass, public AutoPoolClass<GridLinkClass,256>
 {
 public:
@@ -263,6 +266,7 @@ public:
 ** This class should only be used by classes which derive from GridCullSystemClass
 ** not normal users.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/gridcull.h
 class GridListIterator
 {
 public:

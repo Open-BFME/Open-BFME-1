@@ -50,6 +50,7 @@
 //	TwiddlerClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/twiddler.h
 class TwiddlerClass : public DefinitionClass
 {
 public:

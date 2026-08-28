@@ -56,6 +56,7 @@
 **
 ** The default state of ComputeContactPoint is *false*
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/castres.h
 struct CastResultStruct
 {
 	CastResultStruct(void)	{ Reset(); }

@@ -60,6 +60,7 @@ class FileClass;
 //	A sound buffer manages the raw sound data for any of the SoundObj types
 // except for the StreamSoundClass object.
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/SoundBuffer.h
 class SoundBufferClass : public RefCountClass
 {
 	public:
@@ -137,6 +138,7 @@ class SoundBufferClass : public RefCountClass
 //	A sound buffer manages the raw sound data for any of the SoundObj types
 // except for the StreamSoundClass object.
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/SoundBuffer.h
 class StreamSoundBufferClass : public SoundBufferClass
 {
 	public:

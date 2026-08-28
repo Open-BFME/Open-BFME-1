@@ -37,6 +37,7 @@ class CameraClass;
 class DazzleVisibilityClass;
 struct VertexFormatXYZNDUV2;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dazzle.h
 class DazzleInitClass
 {
 public:
@@ -69,6 +70,7 @@ public:
 	float blink_on_time;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dazzle.h
 class LensflareInitClass
 {
 public:
@@ -123,6 +125,7 @@ public:
 
 class DazzleRenderObjClass;
 class DazzleLayerClass;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dazzle.h
 class DazzleTypeClass
 {
 	friend DazzleRenderObjClass;
@@ -177,6 +180,7 @@ public:
 // NOTE: dazzle layers must be constructed AFTER all the dazzle types have
 // been initialized, since the constructor needs to know how many dazzle types
 // there are.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dazzle.h
 class DazzleLayerClass {
 
 	friend DazzleRenderObjClass;
@@ -200,6 +204,7 @@ class DazzleLayerClass {
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dazzle.h
 class LensflareTypeClass
 {
 	friend DazzleLayerClass;
@@ -234,6 +239,7 @@ public:
 
 class INIClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dazzle.h
 class DazzleRenderObjClass : public RenderObjClass
 {	
 	friend DazzleLayerClass;
@@ -345,6 +351,7 @@ public:
 ** dazzle visibility test.  Renegade will use ray-casting to determine visibility.  The
 ** default visibility handler will query the scene which the dazzle is contained in.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dazzle.h
 class DazzleVisibilityClass
 {
 public:
@@ -360,6 +367,7 @@ public:
 ** information needed to construct a particular instance of a dazzle.  Prototypes are
 ** stored in the asset manager and used to construct render objects when needed.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dazzle.h
 class DazzlePrototypeClass : public W3DMPO, public PrototypeClass
 {
 	W3DMPO_GLUE(DazzlePrototypeClass)
@@ -385,6 +393,7 @@ private:
 ** An instance of this class is registered with the asset manager and handles loading W3D_CHUNK_DAZZLE.  
 ** It creates DazzlePrototypes from the data in the chunk.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dazzle.h
 class DazzleLoaderClass : public PrototypeLoaderClass
 {
 public:

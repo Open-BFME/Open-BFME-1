@@ -49,6 +49,7 @@
 **	a small but useful set of functions. Emphasis is placed on supporting those functions which are
 **	likely to have hardware assist.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/Surface.h
 class Surface
 {
 	public:

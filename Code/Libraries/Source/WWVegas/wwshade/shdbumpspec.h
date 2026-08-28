@@ -40,6 +40,7 @@
 #include "shddef.h"
 #include "saveload.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdbumpspec.h
 class ShdBumpSpecDefClass : public ShdDefClass
 {
 public:

@@ -48,6 +48,7 @@
 **	symetric key that is then encrypted using the public key system. This symetric key is then
 **	used to encrypt the remaining data.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/pkpipe.h
 class PKPipe : public Pipe
 {
 	public:

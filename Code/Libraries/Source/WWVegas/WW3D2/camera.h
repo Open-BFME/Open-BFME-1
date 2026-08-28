@@ -67,6 +67,7 @@ class RenderInfoClass;
 ** camera to render into.  A viewport which filled the entire screen would be
 ** (0,0) - (1,1) with 0,0 being the upper left and 1,1 being the lower right.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/camera.h
 class ViewportClass
 {
 public:	
@@ -108,6 +109,7 @@ public:
 #include "matrix4.h"
 typedef Matrix4 Matrix4x4;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/camera.h
 class CameraClass : public RenderObjClass
 {
 public:

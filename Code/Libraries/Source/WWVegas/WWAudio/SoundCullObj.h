@@ -56,6 +56,7 @@
 //	Simple 'sound physics' object that wraps a SoundClass object and is derived
 // from PhysClass so it can be used with the different culling systems.
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/SoundCullObj.h
 class SoundCullObjClass : public MultiListObjectClass, public CullableClass
 {
 	public:

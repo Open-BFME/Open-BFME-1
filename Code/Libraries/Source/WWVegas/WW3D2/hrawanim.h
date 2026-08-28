@@ -49,6 +49,7 @@
 class MotionChannelClass;
 class BitChannelClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hrawanim.h
 struct NodeMotionStruct
 {
 	NodeMotionStruct();
@@ -81,6 +82,7 @@ struct NodeMotionStruct
 
 **********************************************************************************/
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hrawanim.h
 class HRawAnimClass : public HAnimClass
 {
 

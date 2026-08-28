@@ -58,6 +58,7 @@ class FrustumClass;
 ** a class derived from CullLinkClass where the different culling systems can store
 ** things.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/cullsys.h
 class CullLinkClass
 {
 public:
@@ -78,6 +79,7 @@ protected:
 ** This class provides an axis aligned bounding box and some linkage variables which
 ** allow it to be processed by any culling system.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/cullsys.h
 class CullableClass : public RefCountClass
 {
 public:
@@ -148,6 +150,7 @@ private:
 ** Base class of any culling system.  This interface exists so that things can
 ** be shuffled around without having explicit knowledge of what system they are in.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/cullsys.h
 class CullSystemClass
 {
 public:

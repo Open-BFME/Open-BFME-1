@@ -57,6 +57,7 @@
 ** detection. Moving the low-level geometrical collision code into the math library makes it 
 ** more re-useable and independent from changes in the rendering code.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/tri.h
 class TriClass
 {
 public:

@@ -72,6 +72,7 @@ class HRawAnimClass;
 
 */
 // BFME drift: W3DMPO absent (would add a phantom vtable ptr; HTreeClass is 0x1c not 0x20).
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/htree.h
 class HTreeClass
 {
 public:

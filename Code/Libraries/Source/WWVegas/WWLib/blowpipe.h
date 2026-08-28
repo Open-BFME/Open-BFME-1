@@ -44,6 +44,7 @@
 **	Performs Blowfish encryption/decryption on the data stream that is piped
 **	through this class.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blowpipe.h
 class BlowPipe : public Pipe
 {
 	public:

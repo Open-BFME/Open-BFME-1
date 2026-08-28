@@ -134,6 +134,7 @@ class FastAllocatorGeneral;  //Allocates and deletes items of any size. Can use 
 //    }
 //
 template<class T, int nStackCount, int bConstruct=1>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/FastAllocator.h
 class StackAllocator{
 public:
    StackAllocator() : mnAllocCount(-1), mpTHeap(NULL){}
@@ -208,6 +209,7 @@ protected:
 ///////////////////////////////////////////////////////////////////////////////
 // class FastFixedAllocator
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/FastAllocator.h
 class FastFixedAllocator
 {
 public:
@@ -223,11 +225,13 @@ public:
 	unsigned Get_Allocation_Count() const { return TotalAllocationCount; }
 
 protected:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/FastAllocator.h
 	struct Link
 	{
 		Link* next;
 	};
 
+   // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/FastAllocator.h
    struct Chunk
 	{
 		enum {
@@ -355,6 +359,7 @@ WWINLINE void FastFixedAllocator::grow()
 // This class works by putting sizes into fixed size buckets. Each fixed size
 // bucket is a FastFixedAllocator.
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/FastAllocator.h
 class FastAllocatorGeneral
 {
 	enum {
@@ -534,6 +539,7 @@ WWINLINE void* FastAllocatorGeneral::Realloc(void* pAlloc, unsigned int n){
    //standard C++. So we define a version of the STL allocator specifically
    //for VC++, and let other compilers use a standard allocator template.
    template <class T>
+   // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/FastAllocator.h
    struct FastSTLAllocator{
       typedef size_t    size_type;        //basically, "unsigned int"
       typedef ptrdiff_t difference_type;  //basically, "int"
@@ -565,6 +571,7 @@ WWINLINE void* FastAllocatorGeneral::Realloc(void* pAlloc, unsigned int n){
    //other than Microsoft C++ compile this fine. Otherwise. you might be able
    //to use the same allocator as VC++ uses above.
    template <class T>
+   // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/FastAllocator.h
    class FastSTLAllocator{
    public:
      typedef size_t     size_type;

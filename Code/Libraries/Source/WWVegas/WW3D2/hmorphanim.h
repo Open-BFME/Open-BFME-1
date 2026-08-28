@@ -68,6 +68,7 @@ class TextFileClass;
 
 **********************************************************************************/
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hmorphanim.h
 class HMorphAnimClass : public HAnimClass
 {
 
@@ -145,6 +146,7 @@ protected:
 **
 *********************************************************************************************/
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hmorphanim.h
 class TimeCodedMorphKeysClass
 {
 public:
@@ -160,6 +162,7 @@ public:
 
 private:
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hmorphanim.h
 	struct MorphKeyStruct
 	{
 		MorphKeyStruct (void)

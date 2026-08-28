@@ -58,6 +58,7 @@ class ChunkLoadClass;
 ** LookupTableClass
 ** This class contains the tabulated values for a function. 
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/lookuptable.h
 class LookupTableClass : public RefCountClass, public MultiListObjectClass
 {
 public:
@@ -125,6 +126,7 @@ inline float LookupTableClass::Get_Value_Quick(float input)
 ** NOTE: I add a table called "DefaultTable" so that you can revert to that if
 ** your table isn't found.  
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/lookuptable.h
 class LookupTableMgrClass
 {
 public:

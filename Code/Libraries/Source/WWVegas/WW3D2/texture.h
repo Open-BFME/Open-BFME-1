@@ -68,6 +68,7 @@ class TextureLoadTaskClass;
 class CubeTextureClass;
 class VolumeTextureClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass : public RefCountClass
 {
 public:
@@ -280,6 +281,7 @@ private:
 ** modes.
 **
 *************************************************************************/
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureClass : public TextureBaseClass
 {
 //	friend DX8Wrapper;
@@ -363,6 +365,7 @@ protected:
 	TextureFilterClass	Filter;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class ZTextureClass : public TextureBaseClass
 {
 public:
@@ -395,6 +398,7 @@ private:
 	WW3DZFormat DepthStencilTextureFormat;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class CubeTextureClass : public TextureClass
 {
 public:
@@ -440,6 +444,7 @@ public:
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class VolumeTextureClass : public TextureClass
 {
 public:

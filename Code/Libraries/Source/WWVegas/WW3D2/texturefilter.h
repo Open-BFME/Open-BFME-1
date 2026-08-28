@@ -70,6 +70,7 @@ enum MipCountType
 
 // This is legacy and should be phased out into wwshade shader states
 // keeping as an abstracted class for now to support this transition later
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texturefilter.h
 class TextureFilterClass
 {
 public:

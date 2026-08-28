@@ -70,6 +70,7 @@
 //	MMSLockClass
 //
 /////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/Utils.h
 class MMSLockClass
 {
 	public:

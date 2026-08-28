@@ -61,6 +61,7 @@
 //	operations are performed on wide character strings.
 //
 //////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/widestring.h
 class WideStringClass
 {
 public:

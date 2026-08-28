@@ -46,6 +46,7 @@
 #include "plane.h"
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/frustum.h
 class FrustumClass
 {
 public:

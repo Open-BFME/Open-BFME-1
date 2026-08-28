@@ -76,6 +76,7 @@ const float COLLISION_EPSILON = 0.001f;
 ** CollisionMath
 ** This is a collection of the low-level math functions for collision detection.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/colmath.h
 class CollisionMath
 {
 public:
@@ -204,6 +205,7 @@ public:
 	// Stats 
 	// Note that these functions will only work if you have stat tracking enabled
 	////////////////////////////////////////////////////////////////////////////////////////
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/colmath.h
 	struct ColmathStatsStruct
 	{	
 		ColmathStatsStruct(void);

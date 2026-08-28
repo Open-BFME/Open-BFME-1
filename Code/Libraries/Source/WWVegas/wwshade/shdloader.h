@@ -42,6 +42,7 @@
 #include "proto.h"
 #endif
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdloader.h
 class ShdMeshLoaderClass : public PrototypeLoaderClass
 {
 public:
@@ -53,6 +54,7 @@ public:
 /*
 ** Prototype loader that converts legacy meshes into Shader meshes
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdloader.h
 class ShdMeshLegacyLoaderClass : public PrototypeLoaderClass
 {
 public:

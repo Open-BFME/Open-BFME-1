@@ -61,6 +61,7 @@ class DX8TextureCategoryClass;
 ** This is a record of a batch/range of polygons to be rendered.  These hang off of the DX8TextureCategoryClass's
 ** and are rendered after the system installs a vertex buffer and textures in the DX8 wrapper.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8polygonrenderer.h
 class DX8PolygonRendererClass : public MultiListObjectClass 
 {
 	MeshModelClass *				mmc;

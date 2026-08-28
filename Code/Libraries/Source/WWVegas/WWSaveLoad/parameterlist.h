@@ -55,6 +55,7 @@
 //	ParameterListClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameterlist.h
 class ParameterListClass : public DynamicVectorClass<ParameterClass *>
 {
 public:

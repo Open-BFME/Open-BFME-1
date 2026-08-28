@@ -41,6 +41,7 @@
   
   \brief Debug module main class (singleton).
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
 class Debug
 {
   // necessary because all debug commands operate directly on this class
@@ -79,6 +80,7 @@ public:
 DLOG( "This is 16 bytes of memory:\n" << Debug::MemDump::Raw(&somePointer,16) );
     \endcode
   */
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
   class MemDump
   {
     // necessary because Debug needs access to the following private members
@@ -161,6 +163,7 @@ DLOG( "My HResult is: " << Debug::HResult(SomeHRESULTValue) << "\n" );
     can be added or removed during runtime, see \ref Debug::AddHResultTranslator for more
     information.
   */
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
   class HResult
   {
     // necessary because Debug needs access to the following private members
@@ -183,6 +186,7 @@ DLOG( "My HResult is: " << Debug::HResult(SomeHRESULTValue) << "\n" );
     \brief Helper class for adding log group descriptions.
 
   */
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
   class LogDescription
   {
     // sorry, no copies or assignments
@@ -240,6 +244,7 @@ DLOG( "My HResult is: " << Debug::HResult(SomeHRESULTValue) << "\n" );
   /**
     \brief Sets output width for the next insertion.
   */
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
   class Width
   {
     // necessary because Debug needs access to the following private members
@@ -262,6 +267,7 @@ DLOG( "My HResult is: " << Debug::HResult(SomeHRESULTValue) << "\n" );
   /**
     \brief Sets new fill character.
   */
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
   class FillChar
   {
     // necessary because Debug needs access to the following private members
@@ -284,6 +290,7 @@ DLOG( "My HResult is: " << Debug::HResult(SomeHRESULTValue) << "\n" );
   /**
     \brief Repeats a given character N times.
   */
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
   class RepeatChar
   {
     // necessary because Debug needs access to the following private members
@@ -306,6 +313,7 @@ DLOG( "My HResult is: " << Debug::HResult(SomeHRESULTValue) << "\n" );
     \note Do not use this helper class for new code. It is mainly here
     to get the old code base adapted to the new debug module more quickly.
   */
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
   class Format
   {
     // necessary because Debug needs access to the following private members
@@ -797,6 +805,7 @@ private:
   static void *PostStatic;    
 
   /// \internal HResult translator vector entry
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
   struct HResultTranslatorEntry
   {
     /// priority
@@ -816,6 +825,7 @@ private:
   unsigned numHrTranslators;
 
   /// \internal I/O class/factory list entry
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
   struct IOFactoryListEntry
   {
     /// pointer to next entry in list
@@ -852,6 +862,7 @@ private:
   IOFactoryListEntry *firstIOFactory;
 
   /// \internal command interface list entry
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
   struct CmdInterfaceListEntry
   {
     /// pointer to next entry in list
@@ -915,6 +926,7 @@ private:
     \brief Hash table entry for mapping stack frame addresses to
     asserts/checks/logs.
   */
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
   struct FrameHashEntry
   {
     /// pointer to next entry with same hash
@@ -1023,6 +1035,7 @@ private:
     if a new stack frame entry is added (which happens only
     once for each log command).
   */
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
   struct KnownLogGroupList
   {
     /// next entry

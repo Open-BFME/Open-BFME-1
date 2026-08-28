@@ -69,6 +69,7 @@ struct _D3DMATERIAL8;
 ** This is simply the typical W3D thin-wrapper around the surrender vertex material.
 ** The vertex material defines things like the lighting properties of a vertex.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.h
 class VertexMaterialClass : public W3DMPO, public RefCountClass
 {
 	W3DMPO_GLUE(VertexMaterialClass)

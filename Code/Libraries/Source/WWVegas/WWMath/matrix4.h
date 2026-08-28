@@ -67,6 +67,7 @@
 #include "matrix3.h"
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WW3D/pluglib/matrix4.h
 class Matrix4
 {
 public:

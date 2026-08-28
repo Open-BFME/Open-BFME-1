@@ -72,6 +72,7 @@ class HTreeClass;
 	contains the virtual interface that all animations must support.
 	
 **********************************************************************************/
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanim.h
 class HAnimClass : public RefCountClass, public	HashableClass
 {
 public:
@@ -150,6 +151,7 @@ public:
 */
 class NamedPivotMapClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanim.h
 class PivotMapClass : public DynamicVectorClass<float>, public RefCountClass
 {
 public:
@@ -162,6 +164,7 @@ public:
 **	having to have the HAnim available. Later, when an HAnim is retrieved from the asset manager,
 ** the pivot map can be updated to produce the correct map.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanim.h
 class NamedPivotMapClass : public PivotMapClass
 {
 public:
@@ -178,6 +181,7 @@ public:
 private:
 
 	// This info is packaged into a struct to minimize DynamicVectorClass overhead
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanim.h
 	struct WeightInfoStruct {
 		WeightInfoStruct() : Name(0) {}
 		~WeightInfoStruct() { if(Name) delete [] Name; } 
@@ -199,6 +203,7 @@ private:
 **	The HAnimComboDataClass is used by the new HAnimComboClass to allow for a mix of shared/unshared data
 **	which will allow us to have the anim combo refer to data whereever we wish to put it.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanim.h
 class HAnimComboDataClass : public AutoPoolClass<HAnimComboDataClass,256> {
 	public:
 		HAnimComboDataClass(bool shared = false);
@@ -241,6 +246,7 @@ class HAnimComboDataClass : public AutoPoolClass<HAnimComboDataClass,256> {
 /*
 ** defines a combination of animations for blending/mixing
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanim.h
 class HAnimComboClass {
 
 public:

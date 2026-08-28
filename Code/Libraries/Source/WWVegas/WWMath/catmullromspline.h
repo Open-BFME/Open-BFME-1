@@ -48,6 +48,7 @@
 ** CatmullRomSpline3DClass
 ** This is is an implementation of 3D catmull-rom splines
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/catmullromspline.h
 class CatmullRomSpline3DClass : public HermiteSpline3DClass
 {
 public:
@@ -64,6 +65,7 @@ public:
 ** CatmullRomSpline1DClass
 ** This is is an implementation of 1D catmull-rom splines
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/catmullromspline.h
 class CatmullRomSpline1DClass : public HermiteSpline1DClass
 {
 public:

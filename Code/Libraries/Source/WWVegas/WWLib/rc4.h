@@ -33,6 +33,7 @@
 //		The key would be the concatenation of the two parts of the key.	
 //
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/rc4.h
 class RC4Class
 {
 public:
@@ -65,6 +66,7 @@ private:
 	void Prepare_Key_16bytes(const unsigned char *key_data_ptr);
 	void Prepare_Key_8bytes(const unsigned char *key_data_ptr);
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/rc4.h
 	struct RC4Key
 	{      
 		unsigned char State[256];       

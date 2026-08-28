@@ -82,6 +82,7 @@ class DecalMeshClass;
 ** DecalSystem->Unlock_Decal_Generator(gen);
 **
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/decalsys.h
 class DecalSystemClass
 {
 public:
@@ -128,6 +129,7 @@ protected:
 ** This class encapsulates the information needed to generate a decal.   It also tracks
 ** what meshes actually used it to generate new decal polygons.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/decalsys.h
 class DecalGeneratorClass : public ProjectorClass
 {
 public:
@@ -213,6 +215,7 @@ protected:
 ** slot ids. (decal ids only have to be unique within a given decal system)
 */
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/decalsys.h
 class MultiFixedPoolDecalSystemClass : public DecalSystemClass
 {
 
@@ -270,6 +273,7 @@ protected:
 	static void decode_decal_id(uint32 decal_id, uint32 & pool_id, uint32 & slot_id) { slot_id = decal_id & 0xFFFF; pool_id = decal_id >> 16; }
 
 	// A class to store the meshes to which the decal has been applied (so that they can be removed when needed)
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/decalsys.h
 	class LogicalDecalClass
 	{
 	public:
@@ -284,6 +288,7 @@ protected:
 		NonRefRenderObjListClass	MeshList;		
 	};
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/decalsys.h
 	class LogicalDecalPoolClass
 	{
 	public:

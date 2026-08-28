@@ -62,6 +62,7 @@ class INIClass;
 ** TextureMapperClass
 ** Base class for all texture mappers.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class TextureMapperClass : public RefCountClass
 {
 	public:
@@ -120,6 +121,7 @@ class TextureMapperClass : public RefCountClass
 ** ScaleTextureMapperClass
 ** Scales UV coordinates
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class ScaleTextureMapperClass : public TextureMapperClass
 {
 public:	
@@ -142,6 +144,7 @@ protected:
 ** LinearOffsetTextureMapperClass
 ** Modifies the UV coordinates by a linear offset
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class LinearOffsetTextureMapperClass : public ScaleTextureMapperClass
 {
 public:
@@ -184,6 +187,7 @@ protected:
 ** GridTextureMapperClass
 ** Animates a texture by divving it up into a grid and using those offsets
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class GridTextureMapperClass : public TextureMapperClass
 {
 public:
@@ -227,6 +231,7 @@ protected:
 ** RotateTextureMapperClass
 ** Modifies the textures over time
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class RotateTextureMapperClass : public ScaleTextureMapperClass
 {
 public:
@@ -253,6 +258,7 @@ private:
 ** SineLinearOffsetTextureMapperClass
 ** Modifies the UV coodinates by a sine linear offset
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class SineLinearOffsetTextureMapperClass : public ScaleTextureMapperClass
 {
 public:
@@ -279,6 +285,7 @@ private:
 ** StepLinearOffsetTextureMapperClass
 ** Modifies the UV coodinates by a Step linear offset
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class StepLinearOffsetTextureMapperClass : public ScaleTextureMapperClass
 {
 public:
@@ -308,6 +315,7 @@ private:
 ** ZigZagLinearOffsetTextureMapperClass
 ** Modifies the UV coodinates by a ZigZag linear offset
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class ZigZagLinearOffsetTextureMapperClass : public ScaleTextureMapperClass
 {
 public:
@@ -338,6 +346,7 @@ private:
 //
 // ----------------------------------------------------------------------------
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class ClassicEnvironmentMapperClass : public TextureMapperClass
 {
 public:
@@ -350,6 +359,7 @@ public:
 	virtual void Calculate_Texture_Matrix(Matrix4x4 &tex_matrix);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class EnvironmentMapperClass : public TextureMapperClass
 {
 public:
@@ -362,6 +372,7 @@ public:
 	virtual void Calculate_Texture_Matrix(Matrix4x4 &tex_matrix);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class EdgeMapperClass : public TextureMapperClass
 {
 public:
@@ -382,6 +393,7 @@ protected:
 	bool UseReflect;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class WSEnvMapperClass : public TextureMapperClass
 {
 public:
@@ -395,6 +407,7 @@ protected:
 	AxisType		Axis;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class WSClassicEnvironmentMapperClass : public WSEnvMapperClass
 {
 public:
@@ -406,6 +419,7 @@ public:
 	virtual void Apply(int uv_array_index);		
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class WSEnvironmentMapperClass : public WSEnvMapperClass
 {
 public:
@@ -417,6 +431,7 @@ public:
 	virtual void Apply(int uv_array_index);	
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class GridClassicEnvironmentMapperClass : public GridTextureMapperClass
 {
 public:
@@ -430,6 +445,7 @@ public:
 	virtual void Calculate_Texture_Matrix(Matrix4x4 &tex_matrix);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class GridEnvironmentMapperClass : public GridTextureMapperClass
 {
 public:	
@@ -449,6 +465,7 @@ public:
 // coordinates of vertices
 //
 // ----------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class ScreenMapperClass : public LinearOffsetTextureMapperClass
 {
 public:
@@ -466,6 +483,7 @@ public:
 ** RandomTextureMapperClass
 ** Modifies the textures over time
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class RandomTextureMapperClass : public ScaleTextureMapperClass
 {
 public:
@@ -496,6 +514,7 @@ protected:
 ** Modifies the bump transform as a function of time.  This mapper is derived
 ** from the LinearOffset mapper so that you can scroll and scale the bump map.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class BumpEnvTextureMapperClass : public LinearOffsetTextureMapperClass
 {
 public:
@@ -518,6 +537,7 @@ protected:
 	float				ScaleFactor;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class GridWSEnvMapperClass : public GridTextureMapperClass
 {
 public:
@@ -531,6 +551,7 @@ protected:
 	AxisType		Axis;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class GridWSClassicEnvironmentMapperClass : public GridWSEnvMapperClass
 {
 public:
@@ -542,6 +563,7 @@ public:
 	virtual void Apply(int uv_array_index);	
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mapper.h
 class GridWSEnvironmentMapperClass : public GridWSEnvMapperClass
 {
 public:	

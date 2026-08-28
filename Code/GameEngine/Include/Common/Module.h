@@ -100,6 +100,7 @@ enum ModuleInterfaceType
 /** Base class for data-read-from-INI for modules. */
 //-------------------------------------------------------------------------------------------------
 /// @todo srj -- make ModuleData be MemoryPool based
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData : public Snapshot
 {
 public:
@@ -178,6 +179,7 @@ public: \
 	* a single module factory to handle instancing them ... it's just
 	* convenient this way */
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class Module : public MemoryPoolObject
 {
 
@@ -239,6 +241,7 @@ private:
 	* between modules intended for use in objects and modules intended for use
 	* in drawables */
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule : public Module
 {
 
@@ -285,6 +288,7 @@ private:
 	* between modules intended for use in objects and modules intended for use
 	* in drawables */
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class DrawableModule : public Module
 {
 

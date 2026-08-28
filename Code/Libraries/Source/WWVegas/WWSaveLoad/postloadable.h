@@ -49,6 +49,7 @@
 // derived from this class can be added to the post-load list in the SaveLoadSystem
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/postloadable.h
 class PostLoadableClass
 {
 public:

@@ -72,6 +72,7 @@
 */
 //================================
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/List.h
 class	LListNode
 {
 	friend class LList;
@@ -113,6 +114,7 @@ class	LListNode
 //================================
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/List.h
 class	LList
 {
 	public:

@@ -53,6 +53,7 @@ class RefCountClass;
 
 #ifndef NDEBUG
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 struct ActiveRefStruct
 {
 	char *					File;
@@ -103,6 +104,7 @@ struct ActiveRefStruct
 typedef DataNode<RefCountClass *>	RefCountNodeClass;
 typedef List<RefCountNodeClass *>	RefCountListClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:

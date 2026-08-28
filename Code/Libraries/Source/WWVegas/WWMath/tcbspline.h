@@ -48,6 +48,7 @@
 ** TCBSpline3DClass
 ** Tension-Continuity-Bias splines.  Otherwise known as Kochanek-Bartels cubic splines
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/tcbspline.h
 class TCBSpline3DClass : public HermiteSpline3DClass
 {
 public:
@@ -68,6 +69,7 @@ public:
 
 protected:	
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/tcbspline.h
 	class TCBClass
 	{
 	public:

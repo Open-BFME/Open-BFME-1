@@ -46,6 +46,7 @@
 **	only one buffer is required. This changes the memory footprint of this class depending on
 **	the process desired.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/lzostraw.h
 class LZOStraw : public Straw
 {
 	public:

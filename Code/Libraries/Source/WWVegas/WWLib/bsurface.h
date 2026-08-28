@@ -46,6 +46,7 @@
 /*
 **	This class handles a simple surface that exists in system RAM.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/bsurface.h
 class BSurface : public XSurface
 {
 	public:

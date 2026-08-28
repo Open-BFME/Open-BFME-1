@@ -31,6 +31,7 @@
 #ifndef MATHUTIL_H
 #define MATHUTIL_H
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/Wwutil/mathutil.h
 class cMathUtil
 {
 	public:

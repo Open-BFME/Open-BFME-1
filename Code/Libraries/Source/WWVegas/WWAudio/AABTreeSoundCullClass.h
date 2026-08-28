@@ -51,6 +51,7 @@
 //
 //	Simple derived class that implements 2 required methods from AABTreeCullClass.
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/AABTreeSoundCullClass.h
 class AABTreeSoundCullClass : public AABTreeCullClass
 {
 	public:

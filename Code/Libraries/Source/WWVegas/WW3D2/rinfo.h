@@ -73,6 +73,7 @@ const unsigned MAX_OVERRIDE_FLAG_LEVEL=32;
 **
 ** Camera - The camera being used to render the scene, contains culling code, etc
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/rinfo.h
 class RenderInfoClass
 {
 public:
@@ -133,6 +134,7 @@ protected:
 ** The reason for a Special_Render function is that I didn't want to pollute
 ** the main rendering pipeline with checks for these alternate rendering operations.
 */	
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/rinfo.h
 class SpecialRenderInfoClass : public RenderInfoClass
 {	
 

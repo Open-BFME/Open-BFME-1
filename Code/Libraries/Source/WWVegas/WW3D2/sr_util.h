@@ -183,6 +183,7 @@ bool Get_ZClamped_Camera_Frustum_Corners(const CameraClass * camera,
 class RenderObjClass;
 typedef unsigned short POLYGONINDEX;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/sr_util.h
 class SRMeshClass {
 public:
 	RenderObjClass *RenderObject; // what initialized this structure

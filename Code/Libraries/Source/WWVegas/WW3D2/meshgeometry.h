@@ -87,6 +87,7 @@ typedef Vector3i16 TriIndex;
 ** This class encapsulates the geometry data for a triangle mesh. 
 */ 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshgeometry.h
 class MeshGeometryClass : public W3DMPO, public RefCountClass, public MultiListObjectClass
 {
 	//W3DMPO_GLUE(MeshGeometryClass)

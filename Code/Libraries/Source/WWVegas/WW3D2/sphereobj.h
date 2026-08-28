@@ -54,6 +54,7 @@
 
 class TextureClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/sphereobj.h
 struct AlphaVectorStruct
 {
 	AlphaVectorStruct (void)
@@ -70,6 +71,7 @@ struct AlphaVectorStruct
 	float			intensity;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/sphereobj.h
 class AlphaVectorChannel : public PrimitiveAnimationChannelClass<AlphaVectorStruct>
 {
 public:
@@ -116,6 +118,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/sphereobj.h
 struct W3dSphereStruct
 {
 	uint32				Version;							// file format version
@@ -151,6 +154,7 @@ typedef AlphaVectorChannel							SphereVectorChannelClass;
 class VertexMaterialClass;
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/sphereobj.h
 class SphereMeshClass
 {
 friend class SphereRenderObjClass;
@@ -226,6 +230,7 @@ SphereMeshClass::Set_DCG (bool is_additive, int index, float value)
 ** SphereRenderObjClass: Procedurally generated render spheres
 **
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/sphereobj.h
 class SphereRenderObjClass : public RenderObjClass
 {	
 
@@ -432,6 +437,7 @@ inline const AABoxClass & SphereRenderObjClass::Get_Box(void)
 /*
 ** Loader for spheres
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/sphereobj.h
 class SphereLoaderClass : public PrototypeLoaderClass
 {
 public:
@@ -442,6 +448,7 @@ public:
 /*
 ** Prototype for Sphere objects
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/sphereobj.h
 class SpherePrototypeClass : public W3DMPO, public PrototypeClass
 {
 	W3DMPO_GLUE(SpherePrototypeClass)

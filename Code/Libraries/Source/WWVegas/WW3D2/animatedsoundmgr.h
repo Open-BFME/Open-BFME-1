@@ -62,6 +62,7 @@ class SoundLibraryBridgeClass;
 //	AnimatedSoundMgrClass
 //
 //////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/animatedsoundmgr.h
 class AnimatedSoundMgrClass
 {
 public:
@@ -90,6 +91,7 @@ private:
 	///////////////////////////////////////////////////////////////////
 	//	Private data types
 	///////////////////////////////////////////////////////////////////
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/animatedsoundmgr.h
 	struct AnimSoundInfo
 	{
 		AnimSoundInfo() : Frame(0), SoundName(), Is2D(false), IsStop(false) {}
@@ -101,6 +103,7 @@ private:
 
 	typedef AnimSoundInfo								ANIM_SOUND_INFO;
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/animatedsoundmgr.h
 	struct AnimSoundList
 	{
 		AnimSoundList() : List(), BoneName("root") {}

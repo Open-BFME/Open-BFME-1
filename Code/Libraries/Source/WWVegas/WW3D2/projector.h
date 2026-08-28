@@ -55,6 +55,7 @@ class MatrixMapperClass;
 ** This is a class which encapsulates the data needed to describe a projection.  It isn't
 ** really useful by itself but it is a common base class between TexProjectClass and DecalGeneratorClass.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/projector.h
 class ProjectorClass
 {
 public:

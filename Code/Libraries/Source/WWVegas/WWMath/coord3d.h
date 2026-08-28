@@ -10,6 +10,7 @@ struct Coord3DBase {
     float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 class Coord3D : public Coord3DBase {
 public:
     Coord3D();

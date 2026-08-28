@@ -73,6 +73,7 @@
 **
 **********************************************************************************************/
 template<class T,int BLOCK_SIZE = 64> 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mempool.h
 class ObjectPoolClass
 {
 public:
@@ -131,6 +132,7 @@ protected:
 **
 **********************************************************************************************/
 template<class T, int BLOCK_SIZE = 64> 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mempool.h
 class AutoPoolClass 
 {
 public:

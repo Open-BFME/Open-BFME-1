@@ -28,6 +28,7 @@
 struct IDirect3DTexture8;
 struct IDirect3DSurface8;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/missingtexture.h
 class MissingTexture
 {
 public:

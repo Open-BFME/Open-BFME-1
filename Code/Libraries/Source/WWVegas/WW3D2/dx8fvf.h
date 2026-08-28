@@ -78,6 +78,7 @@ enum {
 //
 // ----------------------------------------------------------------------------
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 struct VertexFormatXYZ
 {
 	float x;
@@ -85,6 +86,7 @@ struct VertexFormatXYZ
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 struct VertexFormatXYZNUV1
 {
 	float x;
@@ -97,6 +99,7 @@ struct VertexFormatXYZNUV1
 	float v1;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 struct VertexFormatXYZNUV2
 {
 	float x;
@@ -111,6 +114,7 @@ struct VertexFormatXYZNUV2
 	float v2;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 struct VertexFormatXYZN
 {
 	float x;
@@ -121,6 +125,7 @@ struct VertexFormatXYZN
 	float nz;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 struct VertexFormatXYZNDUV1
 {
 	float x;
@@ -134,6 +139,7 @@ struct VertexFormatXYZNDUV1
 	float v1;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 struct VertexFormatXYZNDUV2
 {
 	float x;
@@ -149,6 +155,7 @@ struct VertexFormatXYZNDUV2
 	float v2;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 struct VertexFormatXYZDUV1
 {
 	float x;
@@ -159,6 +166,7 @@ struct VertexFormatXYZDUV1
 	float v1;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 struct VertexFormatXYZDUV2
 {
 	float x;
@@ -171,6 +179,7 @@ struct VertexFormatXYZDUV2
 	float v2;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 struct VertexFormatXYZUV1
 {
 	float x;
@@ -180,6 +189,7 @@ struct VertexFormatXYZUV1
 	float v1;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 struct VertexFormatXYZUV2
 {
 	float x;
@@ -192,6 +202,7 @@ struct VertexFormatXYZUV2
 };
 
 // todo KJM compress
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 struct VertexFormatXYZNDUV1TG3
 {
 	float x;
@@ -216,6 +227,7 @@ struct VertexFormatXYZNDUV1TG3
 
 
 // displacement mapping format
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 struct VertexFormatXYZNUV2DMAP
 {
 	float x;
@@ -233,6 +245,7 @@ struct VertexFormatXYZNUV2DMAP
 };
 
 // cube map format (texcoords are normally generated)
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 struct VertexFormatXYZNDCUBEMAP
 {
 	float x;
@@ -250,6 +263,7 @@ struct VertexFormatXYZNDCUBEMAP
 // FVF info class can be created for any legal FVF. It constructs information
 // of offsets to various elements in the vertex buffer.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 class FVFInfoClass : public W3DMPO
 {
 	W3DMPO_GLUE(FVFInfoClass)

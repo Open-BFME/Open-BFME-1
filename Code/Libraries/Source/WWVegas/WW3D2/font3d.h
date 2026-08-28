@@ -71,6 +71,7 @@ class SurfaceClass;
 ** settable width, and skip the drawing.
 **
 *******************************************************************/
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/font3d.h
 class Font3DDataClass : public RefCountClass {
 
 public:
@@ -148,6 +149,7 @@ private:
 ** Font3DInstanceClass
 **
 *******************************************************************/
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/font3d.h
 class Font3DInstanceClass : public RefCountClass {
 
 public:
