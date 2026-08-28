@@ -72434,6 +72434,7 @@ name,address,notes
 ?bfmeCallDSD@@YGDPAX@Z,0x008365B0,pin
 ?bfmeCallDSI@BfmeSubDSI@@QAEXPAPAX@Z,0x000013ED,pin
 ?bfmeCallDSP@BfmeOwnerDSP@@QAEXPAX@Z,0x0003DB77,pin
+?bfmeCallDUB@BfmeSubDUB@@QAEXXZ,0x0002DF65,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -73268,6 +73269,7 @@ name,address,notes
 ?bfmeOneDSN@BfmeSubDSN@@QAEXPAX@Z,0x0002EB4F,pin
 ?bfmeOneDST@BfmeSubDST@@QAEPAPAXPAPAX@Z,0x00003931,pin
 ?bfmeOneDSV@BfmeSubDSV@@QAEXXZ,0x000313A9,pin
+?bfmeOneDUC@BfmeSubDUC@@QAEXXZ,0x009600A0,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73526,6 +73528,7 @@ name,address,notes
 ?bfmeTwoDRE@BfmeOtherDRE@@QAEXPAX@Z,0x00887B60,pin
 ?bfmeTwoDSN@BfmeSubDSN@@QAEXPAX@Z,0x0002E320,pin
 ?bfmeTwoDSU@BfmeSubDSU@@QAEPAPAXPAPAX@Z,0x0001F91F,pin
+?bfmeTwoDUD@BfmeSubDUD@@QAEXXZ,0x0095C7F0,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
