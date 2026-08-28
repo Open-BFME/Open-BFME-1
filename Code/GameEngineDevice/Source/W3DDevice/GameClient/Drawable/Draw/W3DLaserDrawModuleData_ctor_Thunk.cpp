@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// Field names come from retail's own INI field table joined to upstream's
+// parse table on the key: retail supplies every offset, upstream only the
+// word. The offsets were derived from this class's declaration sequence and
+// type sizes, never read out of the old placeholder names.
 // readable body of ??0W3DLaserDrawModuleData@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDraw.cpp
 
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
@@ -84,15 +88,15 @@ private:
 	ThingRef m_ref2;
 	AsciiString m_name0;
 	AsciiString m_name1;
-	bool m_flag0;
+	bool m_tile;
 	float m_width0;
 	float m_width1;
 	unsigned int m_count0;
-	bool m_flag1;
+	bool m_textureName;
 	float m_f0;
 	float m_f1;
-	float m_f2;
-	float m_f3;
+	float m_segments;
+	float m_arcHeight;
 };
 
 // ??0W3DLaserDrawModuleData@@QAE@XZ
@@ -102,11 +106,11 @@ W3DLaserDrawModuleData::W3DLaserDrawModuleData()
 	m_count0 = 0;
 	m_name0.set("", 0);
 	m_name1.set("", 0);
-	m_flag1 = false;
-	m_flag0 = false;
+	m_textureName = false;
+	m_tile = false;
 	m_width0 = 30.0f;
 	m_f0 = 0.25f;
 	m_f1 = 0.5f;
-	m_f2 = 0.75f;
-	m_f3 = 1.0f;
+	m_segments = 0.75f;
+	m_arcHeight = 1.0f;
 }
