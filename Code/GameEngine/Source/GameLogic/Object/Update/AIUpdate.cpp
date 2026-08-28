@@ -98,7 +98,10 @@ struct BFMEApproachPathFields
 	UnsignedInt m_pathTimestamp;
 	char m_unreconstructed_164[0x17C - 0x164];
 	UnsignedInt m_queueForPathFrame;
-	char m_unreconstructed_180[0x31E - 0x180];
+	char m_unreconstructed_180[0x1D8 - 0x180];
+	Int m_locomotorGoalType;
+	Coord3D m_locomotorGoalData;
+	char m_unreconstructed_1E8[0x31E - 0x1E8];
 	Bool m_waitingForPath;
 	Bool m_isAttackPath;
 	Bool m_isFinalGoal;
@@ -2634,11 +2637,21 @@ void AIUpdateInterface::setLocomotorGoalPositionOnPath()
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setLocomotorGoalPositionExplicit@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::setLocomotorGoalPositionExplicit(const Coord3D& newPos)
 {
-	m_locomotorGoalType = POSITION_EXPLICIT;
-	m_locomotorGoalData = newPos;
+	BFMEApproachPathFields *retail = reinterpret_cast<BFMEApproachPathFields *>( this );
+	if (retail->m_locomotorGoalType != 4)
+	{
+		Path *path = retail->m_path;
+		if (path)
+		{
+			reinterpret_cast<BFMEDeletablePath *>( path )->destroy();
+			::operator delete( path );
+		}
+		retail->m_path = NULL;
+	}
+	retail->m_locomotorGoalType = 4;
+	retail->m_locomotorGoalData = newPos;
 #ifdef _DEBUG
 if (_isnan(m_locomotorGoalData.x) || _isnan(m_locomotorGoalData.y) || _isnan(m_locomotorGoalData.z))
 {
