@@ -72396,6 +72396,10 @@ name,address,notes
 ?bfmeDispatchC@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x00027138,Open-BFME5 ILT the range dispatcher at 0x00575A50 calls
 ?bfmeDoAXA@@YAXPAUBfmeBoxAXA@@PAX111@Z,0x0093B340,pin
 ?bfmeDoBCC@@YAXPAX@Z,0x0004B2BD,pin
+?bfmeDoBDA@@YGXPAUBfmeSubBDA@@PAX@Z,0x0002CEEE,pin
+?bfmeDoBDB@BfmeSubBDB@@QAEXPAXH@Z,0x0001A4F6,pin
+?bfmeDoBDF@@YAXPAX0@Z,0x00041164,pin
+?bfmeDoBDG@BfmeThingBDG@@QAEXXZ,0x0003FE5E,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -72868,6 +72872,8 @@ name,address,notes
 ?bfmeNext@Gen_000B56D0@@AAEXXZ,0x0003990A,Open-BFME5 the member the flag-then-forward wrapper at 0x000B56D0 tail-jumps to
 ?bfmeNextAQB@@YAPAUBfmeNodeAQB@@PAU1@@Z,0x0082B870,pin
 ?bfmeNextBCA@@YAXPAD@Z,0x00049413,pin
+?bfmeNextBDD@@YAXPAUBfmeSlotBDD@@@Z,0x0003D4E7,pin
+?bfmeNextBDD@@YGXPAUBfmeSlotBDD@@@Z,0x0003D4E7,pin
 ?bfmeNodeAllocLarge@@YAPAXI@Z,0x00881F30,Open-BFME5 the STLport large-block allocator the 0x84-byte clone-node body calls
 ?bfmeNodeAllocSmall@@YAPAXI@Z,0x0082E540,Open-BFME5 the STLport node allocator the red-black clone-node bodies call
 ?bfmeNoteWD@BfmeThingWD@@QAEXXZ,0x0002191D,pin
@@ -72933,6 +72939,7 @@ name,address,notes
 ?bfmeResume@Gen_0018BC70@@AAEXXZ,0x0000764E,Open-BFME5 the ICF thunk (to 0x0040764E) the compaction at 0x0018BC70 calls when its flag is clear
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
 ?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
+?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
