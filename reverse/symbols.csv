@@ -72397,6 +72397,9 @@ name,address,notes
 ?bfmeDropRN@BfmeThingRN@@QAEXH@Z,0x00031F7A,pin
 ?bfmeDropRS@BfmeThingRS@@QAEXH@Z,0x00031F7A,pin
 ?bfmeDropUC@BfmeSubUC@@QAEXPAVBfmeThingUC@@@Z,0x0081C3D0,pin
+?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
+?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
+?bfmeDtorUF@BfmeThingUF@@QAEXXZ,0x00AB8350,pin
 ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z,0x0002CB79,Open-BFME5 ILT thunk to body 0x00417710; Gen_00417cb0::tail at 0x00417A70 calls it on this with the source result and its own argument; address-derived name in the same synthetic family as the class
 ?bfmeEnable@BfmeElemW@@QAEXHH@Z,0x000482AC,Open-BFME5 the ICF thunk (to 0x004482AC) the clear at 0x004B1720 calls on each element with a pair of ones
 ?bfmeEnter@Glo012F1024Item@@QAEXXZ,0x0000BC5D,Open-BFME5 ILT thunk to body 0x003AEE70; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 calls it on the 0xDC-byte item the advanced index selects; address-derived name
@@ -72594,6 +72597,9 @@ name,address,notes
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
 ?bfmeFreeUB@@YAXPAX@Z,0x00881EF0,pin
+?bfmeFreeUD@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeUF@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeGen00018C1E@Gen_005291F0@@QAEXH@Z,0x00018C1E,address-derived helper; target read from the guarded eight-index loop REL32 at 0x00529237
 ?bfmeGen00029C35@Gen_00529B10@@QAEXH@Z,0x00029C35,address-derived helper; target read from the first REL32 in the guarded eight-index loop at 0x00529B10
 ?bfmeGen0002D38A@Gen_00529B10@@QAEXH@Z,0x0002D38A,address-derived helper; target read from the third REL32 in the guarded eight-index loop at 0x00529B10
@@ -77629,6 +77635,9 @@ _bfmeVftTL,0x00D2FBDC,pin
 _bfmeVftUA,0x00CE7524,pin
 _bfmeVftUB,0x00D45744,pin
 _bfmeVftUC,0x00D2D210,pin
+_bfmeVftUD,0x00D58598,pin
+_bfmeVftUE,0x00D58808,pin
+_bfmeVftUF,0x00D58A78,pin
 _bfme_MallocAlloc0OomMalloc_82B820,0x0082B820,STLport __malloc_alloc<0>::_S_oom_malloc callee of allocate at 0x0082C580
 _bfme_acos,0x009F7256,internal acos helper called by ACos
 _bfme_asin,0x009F7D86,internal asin helper called by ASin
