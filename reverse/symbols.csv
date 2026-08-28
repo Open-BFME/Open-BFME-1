@@ -72206,6 +72206,7 @@ name,address,notes
 ?bfmeAllocQT@@YAPAXHPAX@Z,0x00030940,pin
 ?bfmeAllocRU@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocRW@@YAPAXI@Z,0x0082E540,pin
+?bfmeAllocRX@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocate@Gen_007b9e80@@AAE_NHH@Z,0x0003FC7E,Open-BFME5 the allocate the reserve at 0x007B9E80 calls
 ?bfmeAllocate@Gen_009073d0@@AAE_NHH@Z,0x00905DC0,Open-BFME5 the allocate the reserve at 0x009073D0 calls
 ?bfmeAllocate@Gen_00930d00@@AAE_NHH@Z,0x009304A0,Open-BFME5 the allocate the reserve at 0x00930D00 calls
@@ -72375,6 +72376,7 @@ name,address,notes
 ?bfmeDoPO@BfmeThingPO@@QAEXPAH@Z,0x0082F580,pin
 ?bfmeDoPQ@@YAXPAD000@Z,0x00005934,pin
 ?bfmeDoPW@@YAXPAD000@Z,0x00005934,pin
+?bfmeDoRY@BfmeItemRY@@QAEXPAX0@Z,0x0002852E,pin
 ?bfmeDoSevenRL@@YAXPAX0000PAPAXH@Z,0x00019C45,pin
 ?bfmeDoSixRC@@YAXPAX0000H@Z,0x00028358,pin
 ?bfmeDrop@BfmeSinkAM@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the remove at 0x003BEBA0 tells about the entry
@@ -72863,6 +72865,7 @@ name,address,notes
 ?bfmeStep3@Gen_0077F000@@AAEXXZ,0x0001B32E,Open-BFME5 ILT the three-step runner at 0x0077F000 tail-jumps to
 ?bfmeStep3@Gen_007892D0@@AAEXXZ,0x0004264A,Open-BFME5 ILT the three-step runner at 0x007892D0 tail-jumps to
 ?bfmeStep@Glo012F1024Entry@@QAEXXZ,0x00015F50,Open-BFME5 ILT thunk to body 0x003A7320; ?step@Glo012F1024Type@@QAEXXZ at 0x003B3900 tail-jumps into it on the selected 32-byte entry; address-derived name
+?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStop@BfmeStopF@@QAEXXZ,0x00015E2E,Open-BFME5 the ICF thunk (to 0x0037C600) the clear at 0x002901C0 calls before emptying its vector
 ?bfmeStopMovie@Display@@QAEXXZ,0x0001992F,Open-BFME5 ILT thunk to body 0x0040EFF0; ?hide@Shell@@QAEX_N@Z at 0x0057F5B0 calls it on TheDisplay with no arguments; address-derived name
 ?bfmeSwapEnds@@YAXPAPAPAVBfmeOwnedI@@0@Z,0x00032FE7,Open-BFME5 the ICF thunk (to 0x00432FE7) the swap in the clear at 0x003C1190 calls for the third pair
