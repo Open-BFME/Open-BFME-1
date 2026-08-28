@@ -73899,6 +73899,7 @@ name,address,notes
 ?clear30B4@BaseHeightMapResetBuffer@@QAEXXZ,0x0003697B,BaseHeightMap reset call for BFME buffer at this+0x30B4
 ?clear@?$StringBase@D@@QAEXXZ,0x00887940,retail StringBase<char>::clear body (folds with releaseBuffer); SubsystemLegendEntry ctor calls it directly not via the 0x000680C0 thunk
 ?clear@?$_List_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAEXXZ,0x0002FB8A,ILT thunk to already-matched body 0x000CD120; TunnelTracker::onTunnelDestroyed m_containList.clear() call
+?clear@?$_List_base@UBfmeFontEntry@@V?$allocator@UBfmeFontEntry@@@_STL@@@_STL@@QAEXXZ,0x0001A8AC,GlobalLanguage local-font list clear through retail incremental-link thunk
 ?clear@?$_List_base@UBridgeFXInfo@@V?$allocator@UBridgeFXInfo@@@_STL@@@_STL@@QAEXXZ,0x0001E9ED,Open-BFME5 BridgeFXInfo STLPort list clear body
 ?clear@?$_List_base@UBridgeOCLInfo@@V?$allocator@UBridgeOCLInfo@@@_STL@@@_STL@@QAEXXZ,0x000034F9,Open-BFME5 BridgeOCLInfo STLPort list clear body
 ?clear@?$_List_base@UGen_t_000803e0_p4cd@@V?$allocator@UGen_t_000803e0_p4cd@@@_STL@@@_STL@@QAEXXZ,0x000800C0,gen-tgrid payload member
@@ -74061,6 +74062,7 @@ name,address,notes
 ?collect@U1Rest_005CE640@@QAEXPAXPAVU1Supplier_005CE640@@@Z,0x005CDD80,member collect tail of 0x005CE640; address-derived name
 ?collect@U1Rest_005CF1F0@@QAEXPAXPAVU1Supplier_005CF1F0@@@Z,0x005CEE90,member collect tail of 0x005CF1F0; address-derived name
 ?collect@Y3AdjTail_005C98E0@@QAEXPAVY3AdjOut@@@Z,0x005C98E0,Y4 lane: restored pin the Y3 lane needs; a concurrent whole-file rewrite of symbols.csv dropped it. Address is the one its own address-derived name states and the one its five callers REL32 to.
+?collectScoreKeeperStats@StatsCollector@@AAEXXZ,0x00026765,StatsCollector update call through retail incremental-link thunk
 ?compare@AsciiString@@QBEHABV1@@Z,0x000220C5,HotKey retail StringBase compare thunk
 ?compare@AsciiStringCompareShim@@QBEHABVAsciiString@@@Z,0x000220C5,AsciiString::compare via ILT thunk
 ?compare@GameSortStructCallOperatorShim@@QAE_NPAVGameSpyStagingRoom@@0@Z,0x0053EDD0,GameSortStruct operator() incremental-link thunk target through a TU-local forwarding shim
@@ -79381,5 +79383,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?collectScoreKeeperStats@StatsCollector@@AAEXXZ,0x00026765,StatsCollector update call through retail incremental-link thunk
-?clear@?$_List_base@UBfmeFontEntry@@V?$allocator@UBfmeFontEntry@@@_STL@@@_STL@@QAEXXZ,0x0001A8AC,GlobalLanguage local-font list clear through retail incremental-link thunk
