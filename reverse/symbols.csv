@@ -74353,6 +74353,7 @@ name,address,notes
 ?getDynamicGameLODIndex@GameLODManager@@QAEHVAsciiString@@@Z,0x0001703F,harvested from parseDynamicGameLODDefinition (thunk)
 ?getEachPlayerFromMask@PlayerList@@QAEPAVPlayer@@AAG@Z,0x0002EE60,ILT getEachPlayerFromMask (body 0xDF4A0)
 ?getEachPlayerFromMask@PlayerList@@QAEPAVPlayer@@AAG@Z,0x000DF4A0,body PlayerList::getEachPlayerFromMask
+?getEffectiveZone@ZoneBlock@@QBEGABUPathfindMovementProfile@@G@Z,0x0002732C,Open-BFME5 ILT thunk to body 0x00402AF0; BFME zone-block effective-zone helper
 ?getEndFrame@VictoryConditions@@UAEIXZ,0x0035F4B0,vtable 0x010E8D90 slot 17 (+0x44) via ILT 0x0001BC3E; returns m_endFrame +0x98 (written by update at 0x0035FA07 from TheGameLogic frame); ledger ?m@Gen_0035f4b0 is a generic getter shape
 ?getError@Rva007E8810Message@@QAEHXZ,0x007E88B0,V2 lane: FESL message error-code getter; same body as ?m@Gen_007e88b0@@QAEHXZ
 ?getErrorString@DownloadManager@@QAE?AVUnicodeString@@XZ,0x0000ECCD,ILT thunk used by call site

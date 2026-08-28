@@ -1,6 +1,7 @@
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
+typedef unsigned short zoneStorageType;
 
 struct ICoord2D
 {
@@ -10,8 +11,27 @@ struct ICoord2D
 
 class Waypoint;
 
+struct PathfindMovementProfile
+{
+	Int acceptableSurfaces;
+	Bool crusher;
+	Bool terrainOnly;
+	unsigned char padding[2];
+	Int layer;
+};
+
+struct PathfindCell
+{
+	unsigned char m_prefix[8];
+	zoneStorageType m_zone;
+	unsigned char m_tail[6];
+};
+
 struct ZoneBlock
 {
+	zoneStorageType getEffectiveZone(
+		const PathfindMovementProfile &profile, zoneStorageType zone) const;
+
 	Int m_numWaypoints;                       // 0x000
 	Int m_unknown04;                          // 0x004
 	Waypoint *m_waypoints[12];                // 0x008
@@ -26,6 +46,8 @@ public:
 	Bool bfmeInteractsWithBridge(Int cellX, Int cellY) const;
 	Bool bfmeHasWaypoints(Int cellX, Int cellY) const;
 	Waypoint *bfmeGetWaypoint(Int cellX, Int cellY, UnsignedInt index) const;
+	zoneStorageType bfmeGetBlockZone(const PathfindMovementProfile &profile,
+		Int cellX, Int cellY, PathfindCell **map) const;
 
 private:
 	unsigned char m_prefix[0x23628];
@@ -74,4 +96,20 @@ Waypoint *PathfindZoneManager::bfmeGetWaypoint(
 	}
 
 	return 0;
+}
+
+zoneStorageType PathfindZoneManager::bfmeGetBlockZone(
+	const PathfindMovementProfile &profile,
+	Int cellX, Int cellY, PathfindCell **map) const
+{
+	if (cellX < 0 || cellY < 0)
+		return 0;
+
+	Int blockX = cellX / 16;
+	Int blockY = cellY / 16;
+	if (blockX >= m_zoneBlockExtent.x || blockY >= m_zoneBlockExtent.y)
+		return 0;
+
+	return m_zoneBlocks[blockX][blockY].getEffectiveZone(
+		profile, map[cellX][cellY].m_zone);
 }
