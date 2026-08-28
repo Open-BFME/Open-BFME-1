@@ -73205,6 +73205,7 @@ name,address,notes
 ?bfmeRunCLE@BfmeXCLE@@QAE_NPAVBfmeSubCLE@@PAXH@Z,0x0002E85C,pin
 ?bfmeRunCOF@BfmeThingCOF@@QAEXPAX000@Z,0x0001BB21,pin
 ?bfmeRunCQE@BfmeXCQE@@QAEXH@Z,0x00008337,pin
+?bfmeRunDFD@BfmeGlobalDFD@@QAEXHH@Z,0x0003921B,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
@@ -73347,6 +73348,7 @@ name,address,notes
 ?bfmeTheDEE@@3PAVBfmeGlobalDEE@@A,0x00EF076C,pin
 ?bfmeTheDEF@@3PAVBfmeGlobalDEF@@A,0x00EF076C,pin
 ?bfmeTheDEG@@3PAVBfmeGlobalDEG@@A,0x00EF076C,pin
+?bfmeTheDFD@@3PAVBfmeGlobalDFD@@A,0x00EF1028,pin
 ?bfmeTheOneCHF@@3PAVBfmeOneCHF@@A,0x00EF1024,pin
 ?bfmeThePoolCJD@@3VBfmePoolCJD@@A,0x00F4FB38,pin
 ?bfmeTheTwoCHF@@3PAVBfmeTwoCHF@@A,0x00EF1028,pin
