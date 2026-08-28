@@ -72448,6 +72448,7 @@ name,address,notes
 ?bfmeFinish@Glo012F1028Sub@@AAEXPAVGlo012F1028Item@@H@Z,0x00038910,Open-BFME5 ILT thunk to body 0x003CA7C0; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on this with the item and a zero; address-derived name
 ?bfmeFinishAGA@BfmeThingAGA@@QAEXPAX@Z,0x00028493,pin
 ?bfmeFinishANB@BfmeThingANB@@QAEXPAVBfmeSinkANB@@PAX@Z,0x00014439,pin
+?bfmeFinishAQA@BfmeTwoAQA@@QAEXXZ,0x00003300,pin
 ?bfmeFinishYC@BfmeThingYC@@QAEXPAX@Z,0x00019D17,pin
 ?bfmeFirstAKB@BfmeThingAKB@@QAE_NPAH@Z,0x00006EF1,pin
 ?bfmeFirstRK@BfmeThingRK@@QAEXXZ,0x00020B80,pin
@@ -72836,6 +72837,7 @@ name,address,notes
 ?bfmeNext@Gen_000B56B0@@AAEXXZ,0x00016455,Open-BFME5 the member the flag-then-forward wrapper at 0x000B56B0 tail-jumps to
 ?bfmeNext@Gen_000B56C0@@AAEXXZ,0x0001AD2A,Open-BFME5 the member the flag-then-forward wrapper at 0x000B56C0 tail-jumps to
 ?bfmeNext@Gen_000B56D0@@AAEXXZ,0x0003990A,Open-BFME5 the member the flag-then-forward wrapper at 0x000B56D0 tail-jumps to
+?bfmeNextAQB@@YAPAUBfmeNodeAQB@@PAU1@@Z,0x0082B870,pin
 ?bfmeNodeAllocLarge@@YAPAXI@Z,0x00881F30,Open-BFME5 the STLport large-block allocator the 0x84-byte clone-node body calls
 ?bfmeNodeAllocSmall@@YAPAXI@Z,0x0082E540,Open-BFME5 the STLport node allocator the red-black clone-node bodies call
 ?bfmeNoteWD@BfmeThingWD@@QAEXXZ,0x0002191D,pin
@@ -72910,6 +72912,7 @@ name,address,notes
 ?bfmeSendAIB@BfmeSinkAIB@@QAEXPAVBfmeListAIB@@PAX@Z,0x008520A0,pin
 ?bfmeSendAMB@BfmeSinkAMB@@QAEXPAX0@Z,0x000160D1,pin
 ?bfmeSendAPB@@YGXPADPAX@Z,0x009F6D00,pin
+?bfmeSendAQA@BfmeTwoAQA@@QAEXPAX@Z,0x0002FAC2,pin
 ?bfmeSendRM@BfmeSinkRM@@QAEXPAXH@Z,0x00006613,pin
 ?bfmeSetAKA@BfmeInnerAKA@@QAEXH@Z,0x00024D70,pin
 ?bfmeSetANB@BfmeSlotANB@@QAEXPAXH@Z,0x00887D20,pin
@@ -72958,7 +72961,9 @@ name,address,notes
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
 ?bfmeStop@BfmeStopF@@QAEXXZ,0x00015E2E,Open-BFME5 the ICF thunk (to 0x0037C600) the clear at 0x002901C0 calls before emptying its vector
 ?bfmeStopAHA@BfmeSubAHA@@QAEXH@Z,0x0004AB4C,pin
+?bfmeStopAQA@BfmeOneAQA@@QAEXXZ,0x0001F316,pin
 ?bfmeStopMovie@Display@@QAEXXZ,0x0001992F,Open-BFME5 ILT thunk to body 0x0040EFF0; ?hide@Shell@@QAEX_N@Z at 0x0057F5B0 calls it on TheDisplay with no arguments; address-derived name
+?bfmeStopTwoAQA@BfmeSubAQA@@QAEXXZ,0x000263EB,pin
 ?bfmeSwapEnds@@YAXPAPAPAVBfmeOwnedI@@0@Z,0x00032FE7,Open-BFME5 the ICF thunk (to 0x00432FE7) the swap in the clear at 0x003C1190 calls for the third pair
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
@@ -74019,6 +74024,7 @@ name,address,notes
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
+?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
@@ -74034,6 +74040,7 @@ name,address,notes
 ?g_bfmeSinkSB@@3PAVBfmeSinkSB@@A,0x00EED668,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
 ?g_bfmeTwoAOA@@3PAVBfmeTwoAOA@@A,0x00EED600,pin
+?g_bfmeTwoAQA@@3PAVBfmeTwoAQA@@A,0x00EF1028,pin
 ?g_bfmeUnicodeStringFormat@@3QBDB,0x0114451C,address-derived UnicodeString format string from retail 0x009D9AAC
 ?g_bfmeUnsignedByteFormat@@3QBDB,0x011442BC,address-derived unsigned-byte format string from the DIR32 operand at retail 0x009D943A
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
