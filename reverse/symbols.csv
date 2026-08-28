@@ -72237,6 +72237,8 @@ name,address,notes
 ?bfmeAllocDIH@@YGPAXI@Z,0x00019326,pin
 ?bfmeAllocECMa@@YAPAXI@Z,0x007F0130,pin
 ?bfmeAllocECMb@@YAPAXI@Z,0x00881F30,pin
+?bfmeAllocEECa@@YGPAXI@Z,0x00019326,pin
+?bfmeAllocEECb@@YGPAXI@Z,0x0002698B,pin
 ?bfmeAllocNode@@YAPAXI@Z,0x0082E540,Open-BFME5 the 16-byte allocator the node makers at 0x0046A070 0x0046B1C0 and 0x00927760 call
 ?bfmeAllocPV@@YAPAXHI@Z,0x00030940,pin
 ?bfmeAllocQA@@YAPAXHI@Z,0x00030940,pin
@@ -72453,6 +72455,7 @@ name,address,notes
 ?bfmeCallEBJ@BfmeObjEBJ@@QAEXPAXPBD@Z,0x008520A0,pin
 ?bfmeCallEBL@BfmeObjEBL@@QAEXPAX0@Z,0x0000A803,pin
 ?bfmeCallECE@BfmeSubECE@@QAEXPBD@Z,0x000244B5,pin
+?bfmeCallEEA@BfmeSubEEA@@QAEXXZ,0x0002DF65,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -73311,6 +73314,8 @@ name,address,notes
 ?bfmeOneEBK@BfmeObjEBK@@QAEXPAXH@Z,0x007E8900,pin
 ?bfmeOneECGa@BfmeSubECG@@QAEXXZ,0x0003418F,pin
 ?bfmeOneECGb@BfmeSubECG@@QAEXXZ,0x0002987A,pin
+?bfmeOneEEA@BfmeThingEEA@@QAEXXZ,0x00017BAC,pin
+?bfmeOneEEC@BfmeThingEEC@@QAEXPBDH@Z,0x00850920,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73582,6 +73587,7 @@ name,address,notes
 ?bfmeTwoEBG@@YAXXZ,0x0000FB9B,pin
 ?bfmeTwoEBK@BfmeObjEBK@@QAEXPAX0@Z,0x007E88D0,pin
 ?bfmeTwoECG@BfmeSubECG@@QAEXXZ,0x000414BB,pin
+?bfmeTwoEEC@BfmeThingEEC@@QAEXPAX@Z,0x00850920,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -78534,6 +78540,9 @@ _bfmeStrDWK,0x00CBBAA8,pin
 _bfmeStrDYF,0x00C80FB4,pin
 _bfmeStrEBJ,0x00CF1B68,pin
 _bfmeStrECE,0x00D06F24,pin
+_bfmeStrEECa,0x00CC47B8,pin
+_bfmeStrEECb,0x00CC4B60,pin
+_bfmeStrEECc,0x00D158A8,pin
 _bfmeTabEAC,0x00D098B0,pin
 _bfmeTagANB,0x00C9E038,pin
 _bfmeTagAPB,0x00DDFC30,pin
