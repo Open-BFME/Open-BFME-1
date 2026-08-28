@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// Field names come from retail's own INI field table joined to upstream's
+// parse table on the key: retail supplies every offset, upstream only the
+// word. The offsets were derived from this class's declaration sequence and
+// type sizes, never read out of the old placeholder names.
 // readable body of ??0BattlePlanUpdateModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdate.cpp
 // Open-BFME5: the named ILT 0x0003025B reaches this body, and ModuleFactory's
 // data-create proc 0x00117420 allocates 0x90 for it, so this is
@@ -32,8 +36,8 @@ private:
 	unsigned int m_x74;
 	unsigned int m_x78;
 	unsigned int m_x7c[3];				// this+0x7C .. 0x84
-	int m_x88;
-	bool m_x8c;
+	int m_searchAndDestroySightRangeScalar;
+	bool m_strategyCenterSearchAndDestroySightRangeScalar;
 	bool m_x8d;
 };
 
@@ -41,10 +45,10 @@ private:
 BattlePlanUpdateModuleData::BattlePlanUpdateModuleData()
 {
 	memset(m_x7c, 0, sizeof(m_x7c));
-	m_x8c = false;
+	m_strategyCenterSearchAndDestroySightRangeScalar = false;
 	m_x74 = 0;
 	m_x78 = 0;
 	m_x8d = false;
-	m_x88 = 5;
+	m_searchAndDestroySightRangeScalar = 5;
 	m_x70 = 100.0f;
 }
