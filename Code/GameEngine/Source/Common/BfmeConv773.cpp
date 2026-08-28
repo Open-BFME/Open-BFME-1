@@ -12,7 +12,7 @@ public:
 	virtual bool bfmeRunDSK();
 	virtual void bfmeV7();
 	virtual void bfmeV8();
-	virtual void bfmeV9();
+	virtual bool bfmeRun9DSK();
 	virtual bool bfmeRunDSL();
 	virtual float bfmeRunDSM();
 	virtual float bfmeRunDSN();
@@ -22,6 +22,7 @@ class BfmeThingDSK
 {
 public:
 	bool bfmeGoDSK();
+	void bfmeGoDSP();
 	bool bfmeGoDSL();
 	float bfmeGoDSM();
 	float bfmeGoDSN();
@@ -56,4 +57,10 @@ float BfmeThingDSK::bfmeGoDSN()
 	if (bfmeAskDSK())
 		return m_bfmeSub->bfmeRunDSN();
 	return bfmeKDSM;
+}
+
+void BfmeThingDSK::bfmeGoDSP()
+{
+	if (bfmeAskDSK())
+		m_bfmeSub->bfmeRun9DSK();
 }
