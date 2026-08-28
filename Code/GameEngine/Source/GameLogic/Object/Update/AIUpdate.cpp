@@ -113,6 +113,12 @@ struct BFMEApproachPathFields
 	Bool m_isInUpdate;
 };
 
+struct BFMEQuickPathFields
+{
+	char m_unreconstructed_000[0x1B8];
+	Int m_validLocomotorSurfaces;
+};
+
 class BFMEDeletablePath : public Path
 {
 public:
@@ -156,6 +162,7 @@ public:
 	BFME_AIUPDATE_SLOT(116); BFME_AIUPDATE_SLOT(117); BFME_AIUPDATE_SLOT(118); BFME_AIUPDATE_SLOT(119);
 	BFME_AIUPDATE_SLOT(120); BFME_AIUPDATE_SLOT(121);
 	virtual void setLocomotorGoalNone(void) = 0;
+	virtual Bool isDoingGroundMovement(void) const = 0;
 };
 
 #undef BFME_AIUPDATE_SLOT
@@ -1874,14 +1881,14 @@ Bool AIUpdateInterface::processCollision(PhysicsBehavior *physics, Object *other
 /**
  * See if we can do a quick path without pathfinding.
  */
-// ?canComputeQuickPath@AIUpdateInterface@@ present-unmatched
 Bool AIUpdateInterface::canComputeQuickPath( void )
 {
+	const BFMEQuickPathFields *retail = reinterpret_cast<const BFMEQuickPathFields *>( this );
 	/* Basically, if a unit is moving through the air, we can quick path.  jba. */
 	Bool landBound = FALSE;
 	// Note - if a truck happens to pop into the air and gets a move to command, it still
 	// needs to pathfind.  So only skip pathfinding for airborne things that can fly... jba.
-	if (!(m_locomotorSet.getValidSurfaces() & LOCOMOTORSURFACE_AIR))
+	if (!(retail->m_validLocomotorSurfaces & LOCOMOTORSURFACE_AIR))
   {
 		landBound = TRUE;
 	}
@@ -1890,7 +1897,7 @@ Bool AIUpdateInterface::canComputeQuickPath( void )
 	if (landBound) {
 		unitIsFlyingThroughTheAir = FALSE; // Land bound units never fly.
 	}	else {
-		if (!isDoingGroundMovement()) {
+		if (!reinterpret_cast<const BFMEDestroyPathAIUpdate *>( this )->isDoingGroundMovement()) {
 			// If it can fly, and it isn't moving on the ground, we're flying.
 			unitIsFlyingThroughTheAir = TRUE;
 		}
