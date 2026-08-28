@@ -97,6 +97,7 @@ class	Vector4;
 /*
 ** Render2DClass
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h
 class Render2DClass : public W3DMPO
 {
 	W3DMPO_GLUE(Render2DClass)
@@ -202,6 +203,7 @@ protected:
 /*
 ** Render2DTextClass
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h
 class Render2DTextClass : public Render2DClass {
 public:
 	Render2DTextClass(Font3DInstanceClass *font=NULL);

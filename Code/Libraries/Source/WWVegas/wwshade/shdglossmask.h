@@ -47,6 +47,7 @@
 #include "saveload.h"
 #include "shader.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdglossmask.h
 class ShdGlossMaskDefClass : public ShdDefClass
 {
 public:
@@ -106,6 +107,7 @@ private:
 
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdglossmask.h
 class Shd6GlossMaskClass : public ShdInterfaceClass
 {
 public:

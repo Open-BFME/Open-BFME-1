@@ -44,6 +44,7 @@
 **	This is an abstract interface class for a random number generator. It serves only to
 **	provide random numbers.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/rng.h
 class RandomNumberGenerator {
 	public:
 		virtual ~RandomNumberGenerator() {}

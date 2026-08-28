@@ -44,6 +44,7 @@
 **	This class doesn't modify the data being piped through, but it does examine it and build
 **	a CRC value from the data.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/crcpipe.h
 class CRCPipe : public Pipe
 {
 	public:

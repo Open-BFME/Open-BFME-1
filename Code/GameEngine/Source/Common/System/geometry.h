@@ -82,6 +82,7 @@ static const Real EXTENT_BIG_CHANGE = 10.0f;
 //-------------------------------------------------------------------------------------------------
 /** Geometry information */
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Geometry.h
 class GeometryInfo : public Snapshot
 {
 private:

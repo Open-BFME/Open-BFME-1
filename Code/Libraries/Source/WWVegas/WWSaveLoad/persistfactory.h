@@ -61,6 +61,7 @@ class PersistClass;
 ** derived PersistClass.
 */
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/persistfactory.h
 class PersistFactoryClass
 {
 public:

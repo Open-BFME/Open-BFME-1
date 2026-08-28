@@ -54,6 +54,7 @@ class ChunkLoadClass;
 ** This class is used to iterate through the shader definition factories in the material
 ** editor for example.  
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shddefmanager.h
 class ShdDefManagerClass
 {
 public:

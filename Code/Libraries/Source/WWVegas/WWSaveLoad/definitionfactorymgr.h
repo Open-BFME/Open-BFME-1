@@ -52,6 +52,7 @@ class DefinitionFactoryClass;
 //	DefinitionFactoryMgrClass 
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/definitionfactorymgr.h
 class DefinitionFactoryMgrClass
 {
 public:

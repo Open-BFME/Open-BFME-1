@@ -48,6 +48,7 @@
 ** refcounted wrapper (also a count).
 */
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/sharebuf.h
 class ShareBufferClass : public RefCountClass
 {
 	public:

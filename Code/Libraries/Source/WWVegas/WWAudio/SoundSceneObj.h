@@ -78,6 +78,7 @@ const uint32	SOUND_OBJ_START_ID	= 1000000000;
 // object that will be inserted in the culling system.
 //
 /////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/SoundSceneObj.h
 class SoundSceneObjClass : public MultiListObjectClass, public PersistClass, public RefCountClass
 {
 	public:

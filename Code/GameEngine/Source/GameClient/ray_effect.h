@@ -42,6 +42,7 @@ class Drawable;
 //-------------------------------------------------------------------------------------------------
 /** Data the ray effect system keeps for an entry */
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/RayEffect.h
 struct RayEffectData
 {
 
@@ -54,6 +55,7 @@ struct RayEffectData
 //-------------------------------------------------------------------------------------------------
 /** This class maintains all the ray effects visible in the world */
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/RayEffect.h
 class RayEffectSystem : public SubsystemInterface
 {
 

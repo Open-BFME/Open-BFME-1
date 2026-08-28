@@ -60,6 +60,7 @@
 **	a second on a P6-200). The time to set up a key is equivalent to 
 **	encrypting 4240 bytes.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/blowfish.h
 class BlowfishEngine {
 	public:
 		BlowfishEngine(void) : IsKeyed(false) {}

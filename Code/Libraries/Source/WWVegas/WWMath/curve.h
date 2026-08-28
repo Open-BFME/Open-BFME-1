@@ -62,6 +62,7 @@ class ChunkLoadClass;
 class ChunkSaveClass;
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/curve.h
 class Curve3DClass : public PersistClass
 {
 public:
@@ -105,6 +106,7 @@ protected:
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/curve.h
 class LinearCurve3DClass : public Curve3DClass
 {
 public:
@@ -120,6 +122,7 @@ public:
 /*
 ** 1-Dimensional curve classes.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/curve.h
 class Curve1DClass : public PersistClass
 {
 public:
@@ -164,6 +167,7 @@ protected:
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/curve.h
 class LinearCurve1DClass : public Curve1DClass
 {
 public:

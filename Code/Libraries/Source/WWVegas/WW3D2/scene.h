@@ -59,6 +59,7 @@ class ChunkSaveClass;
 ** This object is used to iterate through the render objects
 ** in a scene.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SceneIterator
 {
 public:
@@ -91,6 +92,7 @@ protected:
 ** each frame regardless of whether they are visible so they are registered
 ** for "ON_FRAME_UPDATE" processing.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SceneClass : public RefCountClass
 {
 public:
@@ -221,6 +223,7 @@ private:
 ** render object add its internal (surrender) representation to the
 ** internal (surrender) representation of the scene.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SimpleSceneClass : public SceneClass
 {
 public:

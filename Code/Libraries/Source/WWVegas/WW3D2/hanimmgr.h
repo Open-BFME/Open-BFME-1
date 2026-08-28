@@ -55,6 +55,7 @@ class W3DExclusionListClass;
 /*
 ** An entry for a table of anims not found, so we can quickly determine their loss
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanimmgr.h
 class MissingAnimClass : public HashableClass {
 
 public:
@@ -74,6 +75,7 @@ private:
 	This class is used to keep track of all of the motion data.
 */
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanimmgr.h
 class HAnimManagerClass
 {
 
@@ -108,6 +110,7 @@ private:
 /*
 ** An Iterator to get to all loaded HAnims in a HAnimManager
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanimmgr.h
 class HAnimManagerIterator : public HashTableIteratorClass {
 public:
 	HAnimManagerIterator( HAnimManagerClass & manager ) : HashTableIteratorClass( *manager.AnimPtrTable ) {}

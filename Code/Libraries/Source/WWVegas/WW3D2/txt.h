@@ -22,6 +22,7 @@
 class FontClass;
 class ConvertClass;
 class TextureClass;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/txt.h
 class TextTextureClass {
 	public:
 		TextTextureClass(void);

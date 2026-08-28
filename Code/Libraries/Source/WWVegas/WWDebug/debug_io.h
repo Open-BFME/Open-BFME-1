@@ -43,6 +43,7 @@
   \ref DEBUG_IMPLEMENT_IO_INTERFACE macros (recommended, but
   not mandatory.)
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_io.h
 class DebugIOInterface
 {
   // no copy/assign op

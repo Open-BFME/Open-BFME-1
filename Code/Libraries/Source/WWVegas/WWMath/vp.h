@@ -55,6 +55,7 @@ class Vector4;
 class Matrix3D;
 class Matrix4;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/vp.h
 class VectorProcessorClass
 {
 public:

@@ -47,6 +47,7 @@
 #include "saveload.h"
 #include "shader.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdcubemap.h
 class ShdCubeMapDefClass : public ShdDefClass
 {
 public:
@@ -106,6 +107,7 @@ private:
 
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdcubemap.h
 class Shd6CubeMapClass : public ShdInterfaceClass
 {
 public:

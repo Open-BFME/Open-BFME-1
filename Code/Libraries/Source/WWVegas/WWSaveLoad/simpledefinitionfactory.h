@@ -31,6 +31,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 template<class T, int class_id, char *name>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/simpledefinitionfactory.h
 class SimpleDefinitionFactoryClass : public DefinitionFactoryClass
 {
 public:

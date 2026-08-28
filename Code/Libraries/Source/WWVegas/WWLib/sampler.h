@@ -63,6 +63,7 @@ class Random4Class;
 // all these sampling algoriths modify a vector of length Dimensions
 // they all return a value between 0..1
 // Hector Yee 6/11/01
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/sampler.h
 class SamplingClass
 {
 public:
@@ -81,6 +82,7 @@ protected:
 // Samples randomly in the dimensions using Mesenne Twister
 // divisions ignored
 // Hector Yee 6/11/01
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/sampler.h
 class RandomSamplingClass : public SamplingClass
 {
 public:
@@ -91,6 +93,7 @@ public:
 
 // samples over a regular hypergrid
 // Hector Yee 6/11/01
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/sampler.h
 class RegularSamplingClass : public SamplingClass
 {
 public:
@@ -104,6 +107,7 @@ protected:
 
 // samples over a regular hypergrid with random perturbations
 // Hector Yee 6/11/01
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/sampler.h
 class StratifiedSamplingClass : public SamplingClass
 {
 public:
@@ -119,6 +123,7 @@ protected:
 // divisions ignored
 // based on the Halton-Hammersly sequence which is in turn based on the inverse radical function
 // Hector Yee 6/11/01
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/sampler.h
 class QMCSamplingClass : public SamplingClass
 {
 public:

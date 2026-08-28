@@ -40,6 +40,7 @@ struct IDirect3DVolume8;
 //
 // ----------------------------------------------------------------------------
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ddsfile.h
 struct LegacyDDCOLORKEY
 { 
 	unsigned ColorSpaceLowValue; 
@@ -53,6 +54,7 @@ struct LegacyDDCOLORKEY
 //
 // ----------------------------------------------------------------------------
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ddsfile.h
 struct LegacyDDSCAPS2
 {
 	unsigned Caps;
@@ -68,6 +70,7 @@ struct LegacyDDSCAPS2
 //
 // ----------------------------------------------------------------------------
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ddsfile.h
 struct LegacyDDPIXELFORMAT
 {
 	unsigned Size; 
@@ -121,6 +124,7 @@ struct LegacyDDPIXELFORMAT
 //
 // ----------------------------------------------------------------------------
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ddsfile.h
 struct LegacyDDSURFACEDESC2 {
 	unsigned Size;
 	unsigned Flags;
@@ -176,6 +180,7 @@ enum DDSType
 //
 // ----------------------------------------------------------------------------
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ddsfile.h
 class DDSFileClass
 {
 	unsigned Width;

@@ -82,6 +82,7 @@ class ChunkLoadClass;
 ** Basically this class simply associates a name with a render object 
 ** creation function.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/proto.h
 class PrototypeClass 
 {
 
@@ -108,6 +109,7 @@ private:
 	PrototypeClass & operator = (const PrototypeClass & that);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/proto.h
 class PrimitivePrototypeClass : public W3DMPO, public PrototypeClass
 {
 	W3DMPO_GLUE(PrimitivePrototypeClass)
@@ -131,6 +133,7 @@ protected:
 ** chunk type in a W3D file and can load it and create a PrototypeClass
 ** for it.  
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/proto.h
 class PrototypeLoaderClass 
 {
 
@@ -154,6 +157,7 @@ private:
 /*
 ** Default Prototype Loaders for Meshes and HModels
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/proto.h
 class MeshLoaderClass : public PrototypeLoaderClass
 {
 public:
@@ -162,6 +166,7 @@ public:
 	virtual PrototypeClass *	Load_W3D(ChunkLoadClass & cload);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/proto.h
 class HModelLoaderClass : public PrototypeLoaderClass
 {
 public:

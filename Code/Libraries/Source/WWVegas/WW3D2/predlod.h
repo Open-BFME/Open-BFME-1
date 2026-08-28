@@ -58,6 +58,7 @@ class LODHeapNode;
 ** PredictiveLODOptimizerClass: Class which performs the predictive LOD
 ** optimization. All the members of this class are static.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/predlod.h
 class PredictiveLODOptimizerClass {
 
 	public:

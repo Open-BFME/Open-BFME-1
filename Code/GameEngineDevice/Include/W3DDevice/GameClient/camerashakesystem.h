@@ -52,6 +52,7 @@ class CameraClass;
 ** This class encapsulates all of the logic and data needed to implement camera "shakes"
 ** These are used to simulate explosions, earthquakes, etc.  
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/camerashakesystem.h
 class CameraShakeSystemClass
 {
 public:
@@ -80,6 +81,7 @@ public:
 	** This class encapsulates the current state of a camera shaker.  It is a multi-list object
 	** and is allocated in pools.
 	*/
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/camerashakesystem.h
 	class CameraShakerClass : public MultiListObjectClass, public AutoPoolClass<CameraShakerClass,256>
 	{	
 	public:

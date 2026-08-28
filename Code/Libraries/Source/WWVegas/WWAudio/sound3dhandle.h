@@ -49,6 +49,7 @@
 //	Sound3DHandleClass
 //
 //////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/sound3dhandle.h
 class Sound3DHandleClass : public SoundHandleClass
 {
 public:

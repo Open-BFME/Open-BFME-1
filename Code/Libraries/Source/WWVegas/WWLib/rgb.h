@@ -49,6 +49,7 @@ class HSVClass;
 **	guns. The gun values are recorded in device dependant format, but the interface
 **	uses gun values from 0 to 255.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WW3D/pluglib/rgb.h
 class RGBClass
 {
 	public:

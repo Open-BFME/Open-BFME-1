@@ -33,6 +33,7 @@
 #define DEBUG_STACK_H
 
 /// \brief stack walker class (singleton)
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_stack.h
 class DebugStackwalk
 {
   friend class Debug;
@@ -47,6 +48,7 @@ class DebugStackwalk
 public:
 
   /// \brief a stack trace signature
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_stack.h
   class Signature
   {
     // makes life easier :)

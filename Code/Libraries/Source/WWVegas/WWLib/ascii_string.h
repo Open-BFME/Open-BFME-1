@@ -7,6 +7,7 @@ extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int c
 
 class UnicodeString;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString {
 public:
     // Retail inlines the default ctor (the entry ctor at 0x009A1390 zeroes

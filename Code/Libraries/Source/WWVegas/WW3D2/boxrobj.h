@@ -72,6 +72,7 @@ class VertexMaterialClass;
 ** but can have a center point that is offest from the transform's origin.
 ** 
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/boxrobj.h
 class BoxRenderObjClass : public RenderObjClass
 {	
 
@@ -142,6 +143,7 @@ inline void BoxRenderObjClass::Set_Local_Min_Max(const Vector3 & min,const Vecto
 /*
 ** AABoxRenderObjClass -- RenderObject for axis-aligned collision boxes.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/boxrobj.h
 class AABoxRenderObjClass : public W3DMPO, public BoxRenderObjClass
 {
 	W3DMPO_GLUE(AABoxRenderObjClass)
@@ -195,6 +197,7 @@ inline const AABoxClass & AABoxRenderObjClass::Get_Box(void)
 /*
 ** OBBoxRenderObjClass - render object for oriented collision boxes
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/boxrobj.h
 class OBBoxRenderObjClass : public W3DMPO, public BoxRenderObjClass
 {
 	W3DMPO_GLUE(OBBoxRenderObjClass)
@@ -240,6 +243,7 @@ protected:
 /*
 ** Loader for boxes
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/boxrobj.h
 class BoxLoaderClass : public PrototypeLoaderClass
 {
 public:
@@ -252,6 +256,7 @@ public:
 /*
 ** Prototype for Box objects
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/boxrobj.h
 class BoxPrototypeClass : public W3DMPO, public PrototypeClass
 {
 	W3DMPO_GLUE(BoxPrototypeClass)

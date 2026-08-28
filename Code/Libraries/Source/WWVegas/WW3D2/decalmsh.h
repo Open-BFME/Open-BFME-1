@@ -76,6 +76,7 @@ class TextureClass;
 ** DecalMeshClass is an abstract base class from which we derive concrete classes.
 */
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/decalmsh.h
 class DecalMeshClass : public RefCountClass
 {
 public:
@@ -121,6 +122,7 @@ protected:
 ** used for decals on rigid (non-skin) meshes.
 */
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/decalmsh.h
 class RigidDecalMeshClass : public DecalMeshClass
 {
 public:
@@ -168,6 +170,7 @@ protected:
 	/*
 	** Decal Organization
 	*/
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/decalmsh.h
 	struct DecalStruct
 	{	
 		uint32	DecalID;
@@ -186,6 +189,7 @@ protected:
 ** used for decals on skin meshes.
 */
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/decalmsh.h
 class SkinDecalMeshClass : public DecalMeshClass
 {
 public:
@@ -232,6 +236,7 @@ protected:
 	/*
 	** Decal Organization
 	*/
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/decalmsh.h
 	struct DecalStruct
 	{	
 		uint32	DecalID;

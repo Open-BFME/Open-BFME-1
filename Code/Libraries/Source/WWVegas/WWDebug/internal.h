@@ -85,6 +85,7 @@ void *DebugReAllocMemory(void *oldPtr, unsigned newSize);
 void DebugFreeMemory(void *ptr);
 
 /// \internal Command group: 'debug'
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/internal.h
 class DebugCmdInterfaceDebug: public DebugCmdInterface
 {
 public:

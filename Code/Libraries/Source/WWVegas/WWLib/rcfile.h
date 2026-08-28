@@ -53,6 +53,7 @@
 ** IDR_FILE1 to "MyFile.w3d") and then you will be able to access it by using this
 ** class.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/rcfile.h
 class ResourceFileClass : public FileClass
 {
 	public:

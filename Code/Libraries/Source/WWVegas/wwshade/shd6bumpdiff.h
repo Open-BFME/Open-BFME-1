@@ -48,6 +48,7 @@
 #endif
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shd6bumpdiff.h
 class Shd6BumpDiffClass : public ShdInterfaceClass
 {
 public:

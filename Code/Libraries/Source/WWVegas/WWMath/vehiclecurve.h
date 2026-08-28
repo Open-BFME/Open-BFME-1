@@ -55,6 +55,7 @@
 // arc is determined by the turn radius which is used to initialize the curve.
 //
 ////////////////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/vehiclecurve.h
 class VehicleCurveClass : public Curve3DClass
 {
 public:

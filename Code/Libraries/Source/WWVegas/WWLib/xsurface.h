@@ -48,6 +48,7 @@
 **	implemented routines do not use hardware assist. They are prime candidates to be converted
 **	to assembly language.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/xsurface.h
 class XSurface : public Surface
 {
 	public:

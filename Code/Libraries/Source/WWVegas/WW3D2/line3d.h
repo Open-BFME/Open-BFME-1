@@ -57,6 +57,7 @@ class RenderInfoClass;
 ** Line3DCLass objects are unlit, therefore only the sihouette needs to be
 ** approximated).
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/line3d.h
 class Line3DClass : public W3DMPO, public RenderObjClass
 {
 	W3DMPO_GLUE(Line3DClass)

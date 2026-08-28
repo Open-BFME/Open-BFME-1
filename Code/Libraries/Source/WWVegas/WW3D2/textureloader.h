@@ -52,6 +52,7 @@ class StringClass;
 struct IDirect3DTexture8;
 class TextureLoadTaskClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/textureloader.h
 class TextureLoader
 {
 public:
@@ -108,6 +109,7 @@ private:
 	static int	TextureInactiveOverrideTime;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/textureloader.h
 class TextureLoadTaskListNodeClass
 {
 	friend class TextureLoadTaskListClass;
@@ -123,6 +125,7 @@ class TextureLoadTaskListNodeClass
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/textureloader.h
 class TextureLoadTaskListClass
 {
 	// This class implements an unsynchronized, double-linked list of TextureLoadTaskClass 
@@ -155,6 +158,7 @@ class TextureLoadTaskListClass
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/textureloader.h
 class SynchronizedTextureLoadTaskListClass : public TextureLoadTaskListClass
 {
 	// This class added thread-safety to the basic TextureLoadTaskListClass.
@@ -181,6 +185,7 @@ class SynchronizedTextureLoadTaskListClass : public TextureLoadTaskListClass
 */
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/textureloader.h
 class TextureLoadTaskClass : public TextureLoadTaskListNodeClass
 {
 	public:
@@ -272,6 +277,7 @@ class TextureLoadTaskClass : public TextureLoadTaskListNodeClass
 		StateType				State;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/textureloader.h
 class CubeTextureLoadTaskClass : public TextureLoadTaskClass
 {
 public:
@@ -301,6 +307,7 @@ private:
 	unsigned int			LockedCubeSurfacePitch[6][MIP_LEVELS_MAX];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/textureloader.h
 class VolumeTextureLoadTaskClass : public TextureLoadTaskClass
 {
 public:

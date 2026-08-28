@@ -35,6 +35,7 @@
 //	The seed values should be unguessable by an outside viewer and the random values have
 //		good distribution properties.
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/srandom.h
 class SecureRandomClass
 {
 public:

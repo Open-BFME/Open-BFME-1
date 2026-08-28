@@ -48,6 +48,7 @@
 
 #include "proto.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/nullrobj.h
 class Null3DObjClass : public RenderObjClass
 {
 public:
@@ -69,6 +70,7 @@ protected:
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/nullrobj.h
 class NullPrototypeClass : public W3DMPO, public PrototypeClass
 {
 	W3DMPO_GLUE(NullPrototypeClass)
@@ -86,6 +88,7 @@ protected:
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/nullrobj.h
 class NullLoaderClass : public PrototypeLoaderClass
 {
 public:

@@ -54,6 +54,7 @@
 ** efficiently get an array of random points.
 */
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/v3_rnd.h
 class Vector3Randomizer {
 
 	public:
@@ -108,6 +109,7 @@ class Vector3Randomizer {
 ** Vector3SolidBoxRandomizer is a randomizer for generating points uniformly distributed inside a
 ** box which is centered on the origin.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/v3_rnd.h
 class Vector3SolidBoxRandomizer : public Vector3Randomizer {
 
 	public:
@@ -139,6 +141,7 @@ class Vector3SolidBoxRandomizer : public Vector3Randomizer {
 ** Vector3SolidSphereRandomizer is a randomizer for generating points uniformly distributed inside
 ** a sphere which is centered on the origin.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/v3_rnd.h
 class Vector3SolidSphereRandomizer : public Vector3Randomizer {
 
 	public:
@@ -170,6 +173,7 @@ class Vector3SolidSphereRandomizer : public Vector3Randomizer {
 ** Vector3HollowSphereRandomizer is a randomizer for generating points uniformly distributed on the
 ** surface of a sphere which is centered on the origin.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/v3_rnd.h
 class Vector3HollowSphereRandomizer : public Vector3Randomizer {
 
 	public:
@@ -201,6 +205,7 @@ class Vector3HollowSphereRandomizer : public Vector3Randomizer {
 ** Vector3SolidCylinderRandomizer is a randomizer for generating points uniformly distributed
 ** inside a cylinder which is centered on the origin (set extent to 0 for a disk).
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/v3_rnd.h
 class Vector3SolidCylinderRandomizer : public Vector3Randomizer {
 
 	public:

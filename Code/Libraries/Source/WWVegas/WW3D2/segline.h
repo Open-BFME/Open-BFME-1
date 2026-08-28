@@ -52,6 +52,7 @@ class TextureClass;
 /*
 ** SegmentedLineClass -- a render object for rendering thick segmented lines.
 */ 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/segline.h
 class SegmentedLineClass : public RenderObjClass
 {
 	public:

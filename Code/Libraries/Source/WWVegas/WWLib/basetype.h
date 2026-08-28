@@ -255,6 +255,7 @@ __forceinline float fast_float_ceil(float f)
 // so they can be used within unions.
 
 // real-valued range defined by low and high values
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RealRange 
 {
 	Real lo, hi;							// low and high values of the range
@@ -268,6 +269,7 @@ struct RealRange
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord2D 
 {
 	Real x, y;
@@ -304,6 +306,7 @@ inline Real Coord2D::toAngle( void ) const
 	return y < 0.0f ? -ACos(c) : ACos(c);
 }  // end toAngle
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D 
 {
 	Int x, y;
@@ -311,6 +314,7 @@ struct ICoord2D
 	Int length( void ) const { return (Int)sqrt( (double)(x*x + y*y) ); }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Region2D
 {
 	Coord2D lo, hi;						// bounds of 2D rectangular region
@@ -319,6 +323,7 @@ struct Region2D
 	Real height( void ) const { return hi.y - lo.y; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct IRegion2D
 {
 	ICoord2D lo, hi;					// bounds of 2D rectangular region
@@ -328,6 +333,7 @@ struct IRegion2D
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D 
 {
 	Real x, y, z;
@@ -411,6 +417,7 @@ struct Coord3D
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord3D 
 {
 	Int x, y, z;
@@ -425,6 +432,7 @@ struct ICoord3D
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Region3D
 {
 	Coord3D lo, hi;						// axis-aligned bounding box
@@ -447,6 +455,7 @@ struct Region3D
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct IRegion3D
 {
 	ICoord3D lo, hi;					// axis-aligned bounding box
@@ -457,6 +466,7 @@ struct IRegion3D
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor
 {
 	Real red, green, blue;		// range between 0 and 1
@@ -478,6 +488,7 @@ struct RGBColor
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBAColorReal
 {
 
@@ -485,6 +496,7 @@ struct RGBAColorReal
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBAColorInt
 {
 

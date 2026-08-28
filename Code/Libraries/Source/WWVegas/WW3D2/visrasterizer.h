@@ -64,6 +64,7 @@ struct EdgeStruct;
 ** This class manages the ID buffer and the Z buffer.  It provides the low level
 ** rasterization code and stats about how many pixels and triangles are drawn.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/visrasterizer.h
 class IDBufferClass
 {
 public:
@@ -151,6 +152,7 @@ inline bool IDBufferClass::Is_Backfacing(const Vector3 & p0,const Vector3 & p1,c
 ** The VisRasterizer will transform and clip triangles into homogeneous view space; then the clipped
 ** triangles will be passed on to the IDBufferClass which will scan convert them.
 */ 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/visrasterizer.h
 class VisRasterizerClass
 {
 public:

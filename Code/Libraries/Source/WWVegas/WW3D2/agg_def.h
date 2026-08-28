@@ -83,6 +83,7 @@ class IndirectTextureClass;
 // to construct aggregates.  An  'aggregate' is simply a 'shell' that
 //	contains references to a hierarchy model and subobjects to attach to its bones.
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/agg_def.h
 class AggregateDefClass
 {
 	public:
@@ -206,6 +207,7 @@ class AggregateDefClass
 //
 //	AggregatePrototypeClass
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/agg_def.h
 class AggregatePrototypeClass : public W3DMPO, public PrototypeClass 
 {
 	W3DMPO_GLUE(AggregatePrototypeClass)
@@ -245,6 +247,7 @@ class AggregatePrototypeClass : public W3DMPO, public PrototypeClass
 //
 //	AggregateLoaderClass
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/agg_def.h
 class AggregateLoaderClass : public PrototypeLoaderClass
 {
 	public:

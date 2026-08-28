@@ -7,6 +7,7 @@ struct ICoord2DBase {
     int y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D : public ICoord2DBase {
     ICoord2D();
     ICoord2D(const ICoord2DBase &that);
@@ -18,6 +19,7 @@ struct ICoord2D : public ICoord2DBase {
     bool operator!=(const ICoord2DBase &that) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord3D {
     ICoord3D();
     ICoord3D(int x, int y, int z);

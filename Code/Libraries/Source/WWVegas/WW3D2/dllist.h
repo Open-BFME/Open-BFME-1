@@ -47,6 +47,7 @@
 template <class T> class DLNodeClass;
 
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dllist.h
 class DLListClass
 {
 	friend DLNodeClass<T>;
@@ -71,6 +72,7 @@ public:
 // Destroy-list will call delete for all nodes when the list is destructed. Note that the class doesn't work
 // with undeclared pointer types (destructor has to be known).
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dllist.h
 class DLDestroyListClass : public DLListClass<T>
 {
 public:
@@ -83,6 +85,7 @@ public:
 };
 
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dllist.h
 class DLNodeClass : public W3DMPO
 {
 	// nope, this is an ABC

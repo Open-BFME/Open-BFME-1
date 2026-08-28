@@ -50,6 +50,7 @@ class DebugWindowDialog;
  * A GameLogicRandomVariable represents a distribution of random values
  * from which discrete values can be retrieved.
  */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/LogicRandomValue.h
 class GameLogicRandomVariable
 {
 public:

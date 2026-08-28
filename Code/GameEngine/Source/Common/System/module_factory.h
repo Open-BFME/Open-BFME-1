@@ -14,6 +14,7 @@ typedef int ModuleType;
 // A temporary AsciiString whose ctor/dtor inline to the (already matched)
 // StringBase<char> machinery, so each `AsciiString("Name")` compiles to the
 // target's StringBase ctor (0x888bc0) + releaseBuffer (0x887940) pair.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString {
 public:
     AsciiString(const char *str) { ((StringBase<char> *)this)->StringBase<char>::StringBase(str); }
@@ -23,11 +24,13 @@ private:
     char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ModuleFactory.h
 class ModuleFactory {
 public:
     virtual void init(void);
 
 protected:
+    // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ModuleFactory.h
     class ModuleTemplate {
     public:
         const void *m_createProc;      // +0x0

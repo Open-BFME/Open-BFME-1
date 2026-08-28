@@ -1,5 +1,6 @@
 #pragma once
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor {
     float red;
     float green;
@@ -13,6 +14,7 @@ struct RGBColor {
 bool operator==(const RGBColor &left, const RGBColor &right);
 bool operator!=(const RGBColor &left, const RGBColor &right);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBAColorInt {
     unsigned int red;
     unsigned int green;
@@ -22,6 +24,7 @@ struct RGBAColorInt {
     RGBAColorInt &operator=(const RGBAColorInt &that);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBAColorReal {
     float red;
     float green;
@@ -33,6 +36,7 @@ struct RGBAColorReal {
 
 namespace FXParticleSystem {
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 struct RGBColorKeyframe {
     RGBColorKeyframe()
     {

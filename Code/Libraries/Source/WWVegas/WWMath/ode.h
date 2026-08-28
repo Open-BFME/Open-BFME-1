@@ -56,6 +56,7 @@
 ** do a slight optimization which makes this a normal fixed size array that
 ** we've determined is "big enough".
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/ode.h
 class StateVectorClass : public DynamicVectorClass<float> 
 {
 public:
@@ -69,6 +70,7 @@ public:
 ** If a system of Ordinary Differential Equations (ODE's) are put behind an interface
 ** of this type, they can be integrated using the Integrators defined in this module.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/ode.h
 class ODESystemClass
 {
 
@@ -119,6 +121,7 @@ public:
 ** Kutta.  It requires six evaluations of the derivatives.  
 */
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/ode.h
 class IntegrationSystem
 {
 public:

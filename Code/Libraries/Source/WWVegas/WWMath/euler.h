@@ -96,6 +96,7 @@ extern int	EulerOrderZYZr;
 	by Ken Shoemake.  The original article is on page 222.
 	
 *********************************************************************/
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/euler.h
 class EulerAnglesClass
 {
 

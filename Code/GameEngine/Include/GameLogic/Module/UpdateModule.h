@@ -93,6 +93,7 @@ enum SleepyUpdatePhase
 };
 	
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleInterface
 {
 public:
@@ -119,6 +120,7 @@ public:
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleData : public BehaviorModuleData
 {
 public:
@@ -130,6 +132,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public BehaviorModule, public UpdateModuleInterface
 {
 
@@ -248,6 +251,7 @@ typedef UpdateModuleInterface* UpdateModulePtr;
 #endif
 
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class SlavedUpdateInterface
 {
 public:
@@ -260,6 +264,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class ProjectileUpdateInterface
 {
 public:
@@ -273,6 +278,7 @@ public:
 };
 
 //-------------------------------------------------------------------------------------------------
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class DockUpdateInterface
 {
 public:
@@ -349,6 +355,7 @@ enum ExitDoorType
 
 //-------------------------------------------------------------------------------------------------
 ///< Different types of modules have an interest in exiting units out of themselves for whatever reason.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class ExitInterface
 { 
 public:

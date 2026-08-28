@@ -49,6 +49,7 @@
 ** 3-Dimensional hermite spline interpolation
 ** Hermite splines require you to input all of the tangents...
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/hermitespline.h
 class HermiteSpline3DClass : public Curve3DClass
 {
 public:
@@ -81,6 +82,7 @@ public:
 
 protected:
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/hermitespline.h
 	class TangentsClass
 	{
 	public:
@@ -100,6 +102,7 @@ protected:
 ** 1-Dimensional hermite spline interpolation
 ** Hermite splines require you to input all of the tangents...
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/hermitespline.h
 class HermiteSpline1DClass : public Curve1DClass
 {
 public:
@@ -124,6 +127,7 @@ public:
 	
 protected:
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/hermitespline.h
 	class TangentsClass
 	{
 	public:

@@ -17,8 +17,10 @@ struct RGBAColorReal;
 struct RGBAColorInt;
 struct XferReservedTag;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Xfer.h
 class Xfer {
 public:
+    // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/version.h
     class Version {
     public:
         unsigned char data[2];

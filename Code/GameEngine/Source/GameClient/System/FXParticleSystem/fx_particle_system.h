@@ -8,6 +8,7 @@
 
 struct Region2D;
 class AssetList;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI {
 public:
     void initFromINI(void *data, const void *parseTable);
@@ -462,6 +463,7 @@ public:
     bool m_flag;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 class ParticleSystemInfo {
 public:
     ParticleSystemInfo();
@@ -553,6 +555,7 @@ public:
     int m_i0, m_i1;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ModuleFactory.h
 class ModuleTemplate {
 public:
     ModuleTemplate() {}
@@ -766,6 +769,7 @@ public:
     static void parseEventFXListName(INI *ini, void *data, void *store, const void *userData);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 struct Keyframe {
     Keyframe();
 
@@ -775,6 +779,7 @@ struct Keyframe {
     Keyframe &operator=(const Keyframe &that);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 class ParticleSystemTemplate {
 public:
     ParticleSystemTemplate();

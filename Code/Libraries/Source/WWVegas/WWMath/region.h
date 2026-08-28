@@ -6,6 +6,7 @@
 struct ICoord2D;
 struct ICoord3D;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RealRange {
     RealRange &operator=(const RealRange &that);
     void combine(RealRange &that);
@@ -14,6 +15,7 @@ struct RealRange {
     float max;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct IRegion2D {
     bool operator==(const IRegion2D &that) const;
     bool operator!=(const IRegion2D &that) const;
@@ -29,6 +31,7 @@ struct IRegion2D {
     int y_max;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct IRegion3D {
     IRegion3D();
     IRegion3D &operator=(const IRegion3D &that);
@@ -46,6 +49,7 @@ struct IRegion3D {
     int z_max;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Region2D {
     Region2D();
     Region2D(const Region2D &that);
@@ -65,6 +69,7 @@ struct Region2D {
     float y_max;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Region3D {
     Region3D();
     Region3D(const Region3D &that);

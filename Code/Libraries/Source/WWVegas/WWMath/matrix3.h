@@ -73,6 +73,7 @@ class Matrix3D;
 class Matrix4;
 class Quaternion;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WW3D/pluglib/WWmatrix3.h
 class Matrix3
 {
 public:

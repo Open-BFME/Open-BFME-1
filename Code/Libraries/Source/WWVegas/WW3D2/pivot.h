@@ -60,6 +60,7 @@
 
 //#define LAZY_CAP_MTX_ALLOC
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/pivot.h
 struct PivotClass
 {
 public:

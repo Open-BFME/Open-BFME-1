@@ -50,6 +50,7 @@
 // logical sounds.
 //
 /////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/LogicalListener.h
 class LogicalListenerClass : public SoundSceneObjClass
 {
 	public:

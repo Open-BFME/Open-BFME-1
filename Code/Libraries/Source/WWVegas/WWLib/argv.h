@@ -61,6 +61,7 @@
 //		2. Each line is a seperate parameter.  This enables white space to be embeded.
 //	In typical Argv implementation, the first argument is the name of the application.  This
 // is not the case with this.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/argv.h
 class ArgvClass
 {				 
 	public:			 

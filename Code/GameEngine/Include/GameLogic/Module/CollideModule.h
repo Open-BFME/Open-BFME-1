@@ -6,6 +6,7 @@
 #include "Common/Module.h"
 #include "GameLogic/Module/BehaviorModule.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CollideModule.h
 class CollideModuleInterface
 {
 public:
@@ -18,6 +19,7 @@ public:
 	virtual Bool isSalvageCrateCollide() const = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CollideModule.h
 class CollideModuleData : public BehaviorModuleData
 {
 public:
@@ -48,6 +50,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CollideModule.h
 class CollideModule : public BehaviorModule, public CollideModuleInterface
 {
 	MEMORY_POOL_GLUE_ABC( CollideModule )

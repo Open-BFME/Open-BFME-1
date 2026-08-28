@@ -103,6 +103,7 @@ void Copy_Emitter_Property_Struct
 ** the object containing the emitter (emitters will typically be inserted
 ** into a hierarchy object or some such) will remain separate.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_emt.h
 class ParticleEmitterClass : public RenderObjClass
 {
 	public:

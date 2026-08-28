@@ -1,5 +1,6 @@
 #pragma once
 #include "ascii_string.h"
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/VideoPlayer.h
 class VideoBuffer {
 public:
 	int allocate(unsigned int w, unsigned int h);
@@ -7,6 +8,7 @@ public:
 	unsigned int width(void);
 	unsigned int height(void);
 };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/VideoPlayer.h
 class VideoStreamInterface {
 public:
 	void close(void);

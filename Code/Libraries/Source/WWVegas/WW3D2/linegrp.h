@@ -57,6 +57,7 @@ template <class T> class ShareBufferClass;
 ** LineGroupClass -- a custom object for rendering 
 ** groups of lines (such as motion blurred particle systems).
 */ 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/linegrp.h
 class LineGroupClass
 {
 public:

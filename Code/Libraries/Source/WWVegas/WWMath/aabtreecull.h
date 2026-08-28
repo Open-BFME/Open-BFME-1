@@ -59,6 +59,7 @@ class SphereClass;
 ** AABTreeCullSystemClass
 ** Derived culling system that uses an Axis-Aligned Bounding Box Tree
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabtreecull.h
 class AABTreeCullSystemClass : public CullSystemClass
 {
 public:
@@ -200,6 +201,7 @@ protected:
 ** This iterator allows the user to walk a tree.  It can return the index of the current
 ** node and the bounds of the current node.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabtreecull.h
 class AABTreeIterator
 {
 public:
@@ -254,6 +256,7 @@ public:
 ** re-builds, as objects are added, they will be placed as deep into the
 ** tree as possible.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabtreecull.h
 class AABTreeNodeClass : public AutoPoolClass<AABTreeNodeClass,256>
 {
 
@@ -329,6 +332,7 @@ public:
 ** AABTreeLinkClass
 ** This structure is used to link objects into an AAB-Tree culling system. 
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabtreecull.h
 class AABTreeLinkClass : public CullLinkClass, public AutoPoolClass<AABTreeLinkClass,256>
 {
 public:

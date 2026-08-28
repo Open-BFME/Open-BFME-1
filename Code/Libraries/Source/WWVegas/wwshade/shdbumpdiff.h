@@ -41,6 +41,7 @@
 #include "saveload.h"
 #include "shader.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdbumpdiff.h
 class ShdBumpDiffDefClass : public ShdDefClass
 {
 public:

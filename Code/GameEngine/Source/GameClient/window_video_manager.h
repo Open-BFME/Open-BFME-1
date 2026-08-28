@@ -89,6 +89,7 @@ enum WindowVideoStates
 	WINDOW_VIDEO_STATE_COUNT	
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowVideoManager.h
 class WindowVideo
 {
 public:
@@ -119,6 +120,7 @@ private:
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowVideoManager.h
 class WindowVideoManager : public SubsystemInterface
 {
 public:

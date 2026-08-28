@@ -56,6 +56,7 @@ typedef MultiListIterator<ShdRendererNodeClass> ShdRendererNodeListIterator;
 typedef MultiListClass<RendererListContainerClass> RendererListContainerList;
 typedef MultiListIterator<RendererListContainerClass> RendererListContainerIterator;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdrenderer.h
 class RendererListContainerClass : public MultiListObjectClass, public RefCountClass
 {
 	int Pass;
@@ -83,6 +84,7 @@ public:
 ** RendererNodeClass acts as a link between ShdMeshClass, ShdSubMeshClass and the
 ** rendering system. Rendering API specific implementations are expected.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdrenderer.h
 class ShdRendererNodeClass : public MultiListObjectClass, public RefCountClass
 {
 	RendererListContainerClass* RendererListContainer[SHD_MAX_PASSES];
@@ -127,6 +129,7 @@ public:
 /**
 ** ShdRenderer
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdrenderer.h
 class ShdRendererClass
 {
 	static ShdRendererClass* ShdRenderer;
@@ -165,6 +168,7 @@ public:
 /**
 ** ShdDX8Renderer
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdrenderer.h
 class ShdDX8RendererClass : public ShdRendererClass
 {
 public:

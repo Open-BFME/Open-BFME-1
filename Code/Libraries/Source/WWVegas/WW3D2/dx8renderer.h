@@ -80,6 +80,7 @@ class CameraClass;
 ** Then, all polygons will be rendered in 'TextureCategory' batches to reduce the number of stage changes
 ** (and most importantly, texture changes) that we cause in DX8.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h
 class DX8TextureCategoryClass : public MultiListObjectClass
 {
 	int												pass;
@@ -134,6 +135,7 @@ public:
 ** DX8FVFCategoryContainer
 */
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h
 class DX8FVFCategoryContainer : public MultiListObjectClass
 {
 public:
@@ -264,6 +266,7 @@ public:
 ** DX8RigidFVFCategoryContainer
 ** This is an FVFCategoryContainer for rigid (non-skin) meshes
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h
 class DX8RigidFVFCategoryContainer : public DX8FVFCategoryContainer
 {
 public:
@@ -299,6 +302,7 @@ protected:
 ** DX8SkinFVFCategoryContainer
 ** This is an FVFCategoryContainer for skin meshes
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h
 class DX8SkinFVFCategoryContainer: public DX8FVFCategoryContainer
 {
 public:
@@ -339,6 +343,7 @@ private:
 ** the visible mesh fragments is composed and rendered.  There is a global instance of this
 ** class called TheDX8MeshRenderer that should be used for all mesh rendering.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h
 class DX8MeshRendererClass
 {
 public:

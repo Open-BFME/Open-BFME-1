@@ -78,6 +78,7 @@ typedef MultiListClass<LogicalListenerClass>					LOGICAL_LISTENER_LIST;
 // a virtual world.  Used to efficiently cull sounds that are too far away
 // from the listner to be heard.
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/SoundScene.h
 class SoundSceneClass
 {
 	public:
@@ -178,6 +179,7 @@ class SoundSceneClass
 		//////////////////////////////////////////////////////////////////////
 		//	Collection methods
 		//////////////////////////////////////////////////////////////////////		
+		// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/SoundScene.h
 		class AudibleInfoClass : public MultiListObjectClass, public AutoPoolClass<AudibleInfoClass, 64>
 		{
 		public:

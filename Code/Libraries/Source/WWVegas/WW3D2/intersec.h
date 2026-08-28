@@ -68,6 +68,7 @@ typedef unsigned short POLYGONINDEX;
 /*
 **
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/intersec.h
 class IntersectionResultClass 
 {
 public:
@@ -91,6 +92,7 @@ public:
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/intersec.h
 class IntersectionClass
 {
 	// member data

@@ -82,6 +82,7 @@ typedef enum {
 **	required for every additional palette set to the video DAC registers. It is 
 **	presumed that one general best-case palette will be used.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/Convert.h
 class ConvertClass
 {
 	public:

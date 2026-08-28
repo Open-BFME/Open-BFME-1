@@ -99,6 +99,7 @@ const int INFINITE_LOOPS								= 0;
 //	Base class defining a common interface to all sound object types.
 //
 /////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/AudibleSound.h
 class AudibleSoundClass : public SoundSceneObjClass
 {
 	public:
@@ -379,6 +380,7 @@ class AudibleSoundClass : public SoundSceneObjClass
 //	AudibleSoundDefinitionClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/AudibleSound.h
 class AudibleSoundDefinitionClass : public DefinitionClass
 {
 

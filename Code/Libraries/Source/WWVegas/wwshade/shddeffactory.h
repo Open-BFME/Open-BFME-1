@@ -55,6 +55,7 @@ class ShdDefClass;
 ** creating shader definitions.  All existing 'DefFactories' can be iterated over 
 ** and presented to the user in a menu.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shddeffactory.h
 class ShdDefFactoryClass 
 {
 public:

@@ -52,6 +52,7 @@ class MeshClass;
 // Note! For the debugger to be usable, the application must call DX8RendererDebugger::Update() once
 // each frame.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8rendererdebugger.h
 class DX8RendererDebugger
 {
 	static bool Enabled;

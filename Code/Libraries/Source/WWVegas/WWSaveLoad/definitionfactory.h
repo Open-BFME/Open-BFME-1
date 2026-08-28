@@ -56,6 +56,7 @@ class DefinitionClass;
 //	are responsible for creating new definitions for a particular class of objects.
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/definitionfactory.h
 class DefinitionFactoryClass
 {
 public:

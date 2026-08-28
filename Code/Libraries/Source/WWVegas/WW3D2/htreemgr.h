@@ -61,6 +61,7 @@ class StringClass;
 	A hierarchy tree is the base pose for a hierarchy model.
 
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/htreemgr.h
 class HTreeManagerClass
 {
 

@@ -56,6 +56,7 @@
 **	secure hash with no known weaknesses. It generates a 160 bit hash
 **	result given an arbitrary length data source.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/sha.h
 class SHAEngine
 {
 	public:

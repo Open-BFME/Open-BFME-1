@@ -54,6 +54,7 @@ const char* Shader_ClassIDs[SHDDEF_CLASSID_LAST]=
 	"SHDDEF_CLASSID_CUBEMAP"
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shddump.h
 struct ShdDef_ChunkStruct
 {
 	DWORD DefChunkId;

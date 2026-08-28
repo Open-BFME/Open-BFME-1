@@ -82,6 +82,7 @@ class MetalMapManagerClass;
 ** currently exist in the Asset Manager.  It tells you the names
 ** of the assets which the manager can create for you.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/assetmgr.h
 class AssetIterator
 {
 
@@ -104,6 +105,7 @@ protected:
 ** The render obj iterator simply adds a method for determining
 ** the class id of a render object prototype in the system.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/assetmgr.h
 class RenderObjIterator : public AssetIterator
 {
 public:
@@ -181,6 +183,7 @@ public:
 */
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/assetmgr.h
 class WW3DAssetManager
 {
 

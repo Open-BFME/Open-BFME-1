@@ -88,6 +88,7 @@ class RenderObjClass;
 //
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/coltest.h
 class CollisionTestClass
 {
 public:
@@ -123,6 +124,7 @@ inline CollisionTestClass::CollisionTestClass(const CollisionTestClass & that) :
 // pointer to a CollisionStruct for the result
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/coltest.h
 class RayCollisionTestClass : public CollisionTestClass
 {
 public:
@@ -189,6 +191,7 @@ inline bool RayCollisionTestClass::Cast_To_Triangle(const TriClass & tri)
 // box and for the volume swept out by the box.
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/coltest.h
 class AABoxCollisionTestClass : public CollisionTestClass
 {
 public:
@@ -266,6 +269,7 @@ inline bool AABoxCollisionTestClass::Cast_To_Triangle(const TriClass & tri)
 // both for the initial box and for the volume swept out by the box.
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/coltest.h
 class OBBoxCollisionTestClass : public CollisionTestClass
 {
 public:

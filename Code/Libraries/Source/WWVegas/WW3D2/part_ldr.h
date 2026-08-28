@@ -93,6 +93,7 @@ class Vector3Randomizer;
 //	Description of a general particle emitter object.  Used by the asset manager
 // to construct particle emitters.
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_ldr.h
 class ParticleEmitterDefClass
 {
 	public:
@@ -324,6 +325,7 @@ inline void ParticleEmitterDefClass::Set_Line_Texture_Mapping_Mode(int mode)
 //
 //	ParticleEmitterPrototypeClass
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_ldr.h
 class ParticleEmitterPrototypeClass : public W3DMPO, public PrototypeClass 
 {
 	W3DMPO_GLUE(ParticleEmitterPrototypeClass)
@@ -361,6 +363,7 @@ class ParticleEmitterPrototypeClass : public W3DMPO, public PrototypeClass
 //
 //	ParticleEmitterLoaderClass
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_ldr.h
 class ParticleEmitterLoaderClass : public PrototypeLoaderClass
 {
 	public:

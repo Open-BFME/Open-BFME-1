@@ -75,6 +75,7 @@ int lzo1x_decompress	(  const lzo_byte *in,
 // you do have to manage the compression buffer being large enough to hold the
 // worst case compression: LZO_BUFFER_SIZE(uncompressed_size).
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/lzo.h
 class LZOCompressor
 {
 public:

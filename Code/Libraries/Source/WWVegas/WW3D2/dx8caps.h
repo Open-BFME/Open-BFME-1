@@ -48,6 +48,7 @@
 #include "ww3dformat.h"
 #include <d3d8.h>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8caps.h
 class DX8Caps
 {
 public:

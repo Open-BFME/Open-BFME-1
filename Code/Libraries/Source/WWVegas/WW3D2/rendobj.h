@@ -154,6 +154,7 @@ static const char* TheAnimModeNames[] =
 // render object. Applications using WW3D may create concrete classes deriving from this for
 // application-specific pre- and post- render processing. (the return value from Pre_Render
 // determines whether to perform the Render() call - if false, Render() will not be called).
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/rendobj.h
 class RenderHookClass
 {
 public:
@@ -199,6 +200,7 @@ public:
  	//mesh renderer so it can override settings which are usually shared across
  	//all instances of a model - typically material settings like alpha, texture
  	//animation, texture uv scrolling, etc.  Added for 'Generals' -MW
+ 	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/rendobj.h
  	struct Material_Override
  	{	Material_Override(void)	: Struct_ID(USER_DATA_MATERIAL_OVERRIDE),customUVOffset(0,0) {}
 

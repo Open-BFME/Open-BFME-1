@@ -56,6 +56,7 @@ class	SurfaceClass;
 //
 //	Private data structures
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 class FontCharsClassCharDataStruct : public W3DMPO
 {
 	W3DMPO_GLUE(FontCharsClassCharDataStruct)
@@ -67,6 +68,7 @@ public:
 
 enum { CHAR_BUFFER_LEN		= 32768 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 class FontCharsBuffer : public W3DMPO
 {
 	W3DMPO_GLUE(FontCharsBuffer)
@@ -75,6 +77,7 @@ public:
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 class FontCharsClass : public W3DMPO, public RefCountClass 
 {
 	W3DMPO_GLUE(FontCharsClass)
@@ -149,6 +152,7 @@ private:
 /*
 ** Render2DSentenceClass
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 class Render2DSentenceClass {
 public:
 	//Render2DSentenceClass( FontCharsClass * font );
@@ -216,6 +220,7 @@ private:
 	//
 	//	Private structures
 	//
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 	struct SentenceDataStruct {
 		SurfaceClass *		Surface;
 		RectClass			ScreenRect;
@@ -225,6 +230,7 @@ private:
 		bool operator!= (const SentenceDataStruct &src)	{ return true; }
 	};
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 	struct PendingSurfaceStruct {
 		SurfaceClass *								Surface;
 		DynamicVectorClass<Render2DClass *>	Renderers;
@@ -233,6 +239,7 @@ private:
 		bool operator!= (const PendingSurfaceStruct &src)	{ return true; }
 	};
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 	struct RendererDataStruct {
 		Render2DClass *	Renderer;
 		SurfaceClass *		Surface;

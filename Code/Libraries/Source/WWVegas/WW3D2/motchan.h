@@ -61,6 +61,7 @@ class Quaternion;
 
 ******************************************************************************/
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/motchan.h
 class MotionChannelClass : public W3DMPO
 {
 	// BFME does not pool these two: ~NodeMotionStruct deletes every channel
@@ -222,6 +223,7 @@ WWINLINE int BitChannelClass::Get_Bit(int frame) const
 
 ******************************************************************************/
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/motchan.h
 class TimeCodedMotionChannelClass : public W3DMPO
 {
 	// Not pooled, on the same evidence as MotionChannelClass above: the unpooled
@@ -351,6 +353,7 @@ WWINLINE uint32 TimeCodedMotionChannelClass::get_index(uint32 timecode)
 
 }	// get_index
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/motchan.h
 class AdaptiveDeltaMotionChannelClass : public W3DMPO
 {
 	// Not pooled, on the same evidence as MotionChannelClass above: the unpooled
@@ -410,6 +413,7 @@ private:
 
 ******************************************************************************/
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/motchan.h
 class TimeCodedBitChannelClass : public W3DMPO
 {
 	// Not pooled, on the same evidence as MotionChannelClass above: the unpooled

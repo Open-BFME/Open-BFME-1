@@ -43,6 +43,7 @@ public:
 // Verbatim reference MutexClass (incl. LockClass sentry): the stand-in above
 // covers CriticalSectionClass only; zh TUs like mutex.cpp need the full class.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mutex.h
 class MutexClass
 {
 	void* handle;
@@ -86,6 +87,7 @@ public:
 // class (its call sites byte-match retail only with that model); first include wins.
 #ifndef BFME_FASTCRITICALSECTION_DEFINED
 #define BFME_FASTCRITICALSECTION_DEFINED
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mutex.h
 class FastCriticalSectionClass
 {
 	unsigned Flag;

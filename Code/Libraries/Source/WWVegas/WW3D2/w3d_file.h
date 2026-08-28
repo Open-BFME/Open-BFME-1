@@ -1802,6 +1802,7 @@ struct W3dEmitterInfoStruct
 	W3dRGBAStruct		EndColor;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/w3d_file.h
 struct W3dEmitterExtraInfoStruct
 {
 	float32				FutureStartTime; // Whether to start a particle in the future or not
@@ -1912,6 +1913,7 @@ struct W3dEmitterFrameKeyframeStruct
 // W3D_CHUNK_EMITTER_BLUR_TIME_KEYFRAMES
 // Contains a W3dEmitterFrameHeaderStruct followed by a number of
 // frame keyframes (sub-texture indexing)
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/w3d_file.h
 struct W3dEmitterBlurTimeHeaderStruct
 {
 	uint32				KeyframeCount;
@@ -1919,6 +1921,7 @@ struct W3dEmitterBlurTimeHeaderStruct
 	uint32				Reserved[1];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/w3d_file.h
 struct W3dEmitterBlurTimeKeyframeStruct
 {
 	float32				Time;
@@ -2200,6 +2203,7 @@ struct W3dSoundRObjHeaderStruct
 /**
 ** Header for a ShdMesh
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/w3d_file.h
 struct W3dShdMeshHeaderStruct
 {
 	uint32					Version;							
@@ -2225,6 +2229,7 @@ struct W3dShdMeshHeaderStruct
 /**
 ** Header for a sub-mesh inside an ShdMesh
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/w3d_file.h
 struct W3dShdSubMeshHeaderStruct
 {
 	//

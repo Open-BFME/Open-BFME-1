@@ -44,6 +44,7 @@
 **	achieve greater speed. The buffering is not active by default. It must be activated
 **	by setting the appropriate buffer through the Cache() function.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/bfiofile.h
 class BufferIOFileClass : public RawFileClass
 {
 		typedef RawFileClass BASECLASS;

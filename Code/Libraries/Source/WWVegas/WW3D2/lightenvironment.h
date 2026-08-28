@@ -70,6 +70,7 @@ class LightClass;
 ** - we need the direction of the lights in eye-space
 ** - the ambient light from all lights should be added into the ambient light (not just scene)
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/lightenvironment.h
 class LightEnvironmentClass 
 {
 public:
@@ -136,6 +137,7 @@ public:
 
 protected:
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/lightenvironment.h
 	struct InputLightStruct
 	{
 		void				Init(const LightClass & light,const Vector3 & object_center);
@@ -157,6 +159,7 @@ protected:
 
 	};
 	
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/lightenvironment.h
 	struct OutputLightStruct
 	{
 		void				Init(const InputLightStruct & input,const Matrix3D & camera_tm);

@@ -70,6 +70,7 @@ class PlaneClass;
 ** the bounding box you could use this equation:
 ** Vector3 corner = Center + Basis * Extent;
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/obbox.h
 class OBBoxClass
 {
 public:

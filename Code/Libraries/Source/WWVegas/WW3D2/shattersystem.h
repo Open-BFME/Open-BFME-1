@@ -59,6 +59,7 @@ class MeshMtlParamsClass;
 ** This collection of static functions is used to "shatter" a mesh into fragments and
 ** create projectile objects which use the generated fragments as their render object.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/shattersystem.h
 class ShatterSystem
 {
 public:

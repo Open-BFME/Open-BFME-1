@@ -12,6 +12,7 @@ enum GadgetGameMessage { GBM_SELECTED = 0x4008 };
 
 class GameWindow;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
 class WindowLayout {
 public:
     virtual void winSlot0();
@@ -25,6 +26,7 @@ public:
     virtual void destroyWindows();  // slot 8 (+0x20)
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager {
 public:
     virtual void wmSlot0();
@@ -97,17 +99,20 @@ public:
     virtual void reset();  // slot 5 (+0x14)
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar {
 public:
     void hidePurchaseScience();
     void hideSpecialPowerShortcut();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator {
 public:
     NameKeyType nameToKey(const char *name);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic {
 public:
     void closeWindows(void);

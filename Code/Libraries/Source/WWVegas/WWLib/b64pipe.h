@@ -46,6 +46,7 @@
 **	This class performs Base64 encoding/decoding to the data that is piped through. Note that
 **	encoded data will grow in size by about 30%. The reverse occurs when decoding.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/b64pipe.h
 class Base64Pipe : public Pipe
 {
 	public:

@@ -45,6 +45,7 @@
 **	class. The data is compressed in blocks so of small enough size to be compressed
 **	quickly and large enough size to get decent compression rates.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/lcwpipe.h
 class LCWPipe : public Pipe
 {
 	public:

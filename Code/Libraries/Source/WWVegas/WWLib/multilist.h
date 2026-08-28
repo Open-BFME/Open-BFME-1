@@ -74,6 +74,7 @@ class GenericMultiListClass;
 ** If you delete an instance of one of these objects while it is in one or more
 ** Multi-Lists, it will automatically remove itself from the lists.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListObjectClass 
 {
 public:
@@ -96,6 +97,7 @@ private:
 ** given list and the other dimension is the list of lists that a given object
 ** is in.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListNodeClass : public AutoPoolClass<MultiListNodeClass, 256>
 {
 public:
@@ -117,6 +119,7 @@ public:
 ** This simply contains the head node for a list.  This is a doubly circularly linked list where
 ** our head node is a sentry.  To easily iterate the list use the iterator defined below.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class GenericMultiListClass 
 {
 public:
@@ -174,6 +177,7 @@ inline MultiListObjectClass * GenericMultiListClass::Internal_Get_List_Head(void
 ** use the templated MultiListIterator which will do typecasting and proper reference 
 ** counting rather than this class.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class GenericMultiListIterator
 {
 public:
@@ -218,6 +222,7 @@ protected:
 ** with this template.
 */
 template <class ObjectType>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListClass : public GenericMultiListClass
 {
 public:
@@ -292,6 +297,7 @@ private:
 ** Remove_Current_Object function (don't modify the list directly while iterating it).
 */
 template <class ObjectType>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListIterator : public GenericMultiListIterator
 {
 public:
@@ -339,6 +345,7 @@ public:
 ** GenericMultiListClass.
 */
 template <class ObjectType>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class RefMultiListClass : public GenericMultiListClass
 {
 public:
@@ -443,6 +450,7 @@ public:
 ** note that this function will cause the list to release its reference to the object.
 */
 template <class ObjectType>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class RefMultiListIterator : public GenericMultiListIterator
 {
 public:
@@ -485,6 +493,7 @@ public:
 **************************************************************************************/
 
 template <class ObjectType>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class PriorityMultiListIterator : public MultiListIterator<ObjectType>
 {
 public:

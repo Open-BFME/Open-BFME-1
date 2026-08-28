@@ -69,6 +69,7 @@ class MeshMatDescClass;
 ** that the mesh is using.
 **
 ***********************************************************************************************/
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/matinfo.h
 class MaterialInfoClass : public W3DMPO, public RefCountClass
 {
 	W3DMPO_GLUE(MaterialInfoClass)
@@ -133,6 +134,7 @@ private:
 ** Please Note: this class does not hold references to the materials and is meant only to
 ** be used in a temporary fashion.  Create it, do your conversion, then delete it :-)
 ***********************************************************************************************/
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/matinfo.h
 class MaterialRemapperClass
 {
 public:
@@ -145,12 +147,14 @@ public:
 
 private:
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/matinfo.h
 	struct VmatRemapStruct
 	{
 		VertexMaterialClass *	Src;
 		VertexMaterialClass *	Dest;
 	};
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/matinfo.h
 	struct TextureRemapStruct
 	{
 		TextureClass *				Src;
@@ -185,6 +189,7 @@ private:
 ** check whether the contents of the objects are identical.  (Exporter does this, I assume
 ** that if there are two separate objects, they are that way for a reason here.)
 ***********************************************************************************************/
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/matinfo.h
 class MaterialCollectorClass 
 {
 public:

@@ -49,6 +49,7 @@
 **	straw chain, data throughput can be regulated. This can yield great performance increases
 **	when dealing with a file source.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/cstraw.h
 class CacheStraw : public Straw
 {
 	public:

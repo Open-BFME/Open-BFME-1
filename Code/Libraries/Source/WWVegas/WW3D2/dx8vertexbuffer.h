@@ -63,6 +63,7 @@ struct IDirect3DVertexBuffer8;
 class VertexBufferClass;
 struct VertexFormatXYZNDUV2;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
 class VertexBufferLockClass
 {
 protected:
@@ -79,6 +80,7 @@ public:
 ** DX8VertexBufferClass
 ** This class wraps a DX8 vertex buffer.  Use the lock objects to modify or append to the vertex buffer.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
 class VertexBufferClass : public W3DMPO, public RefCountClass
 {
 	// nope, an ABC
@@ -136,6 +138,7 @@ protected:
 **
 */
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
 class DynamicVBAccessClass
 {
 	friend DX8Wrapper;
@@ -204,6 +207,7 @@ inline VertexFormatXYZNDUV2 * DynamicVBAccessClass::WriteLockClass::Get_Formatte
 ** DX8VertexBufferClass
 ** This class wraps a DX8 vertex buffer.  Use the lock objects to modify or append to the vertex buffer.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
 class DX8VertexBufferClass : public VertexBufferClass
 {
 	W3DMPO_GLUE(DX8VertexBufferClass)
@@ -243,6 +247,7 @@ protected:
 ** SortingVertexBufferClass
 ** This class acts as a vertex buffer for the vertices that need to be passed to alpha renderer.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
 class SortingVertexBufferClass : public VertexBufferClass
 {
 	W3DMPO_GLUE(SortingVertexBufferClass)

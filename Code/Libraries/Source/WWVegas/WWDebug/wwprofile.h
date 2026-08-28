@@ -50,6 +50,7 @@ typedef signed long long _int64;
 /*
 ** A node in the WWProfile Hierarchy Tree
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug/wwprofile.h
 class	WWProfileHierachyNodeClass {
 
 public:
@@ -86,6 +87,7 @@ protected:
 /*
 ** An iterator to navigate through the tree
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug/wwprofile.h
 class WWProfileIterator
 {
 public:
@@ -120,6 +122,7 @@ protected:
 /*
 ** An iterator to walk through the tree in depth first order
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug/wwprofile.h
 class WWProfileInOrderIterator
 {
 public:
@@ -143,6 +146,7 @@ protected:
 /*
 ** The Manager for the WWProfile system
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug/wwprofile.h
 class	WWProfileManager {
 public:
 	static	void								Start_Profile( const char * name );
@@ -172,6 +176,7 @@ private:
 ** WWProfileSampleClass is a simple way to profile a function's scope
 ** Use the WWPROFILE macro at the start of scope to time
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug/wwprofile.h
 class	WWProfileSampleClass {
 public:
 	WWProfileSampleClass( const char * name )		
@@ -195,6 +200,7 @@ public:
 /*
 ** WWTimeIt is like WWProfile, but it doesn't save anything, it just times one routine, regardless of thread
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug/wwprofile.h
 class	WWTimeItClass {
 public:
 	WWTimeItClass( const char * name );
@@ -217,6 +223,7 @@ private:
 ** WWMeasureItClass is like WWTimeItClass, but it pokes the result into the given float, 
 ** and can be used in the release build.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug/wwprofile.h
 class	WWMeasureItClass {
 public:
 	WWMeasureItClass( float * p_result );

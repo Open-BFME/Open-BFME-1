@@ -49,6 +49,7 @@
 //	This class represents 'logical' sounds that affect gameplay but do not
 // actually make an audible sound
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/LogicalSound.h
 class LogicalSoundClass : public SoundSceneObjClass
 {
 	public:

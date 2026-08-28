@@ -46,6 +46,7 @@
 #include "shddef.h"
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdsimple.h
 class ShdSimpleDefClass : public ShdDefClass
 {
 public:
@@ -101,6 +102,7 @@ private:
 
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shdsimple.h
 class Shd6SimpleClass : public ShdInterfaceClass
 {
 public:

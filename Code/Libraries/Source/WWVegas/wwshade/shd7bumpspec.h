@@ -46,6 +46,7 @@
 #endif
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/wwshade/shd7bumpspec.h
 class Shd7BumpSpecClass : public ShdInterfaceClass
 {
 public:

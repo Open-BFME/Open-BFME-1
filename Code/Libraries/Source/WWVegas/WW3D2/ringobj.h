@@ -63,6 +63,7 @@ typedef LERPAnimationChannelClass<Vector2>	RingScaleChannelClass;
 ** W3dRingStruct
 ** This structure is used to define a ring object in the W3D file format.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ringobj.h
 struct W3dRingStruct
 {
 	uint32				Version;						// file format version
@@ -101,6 +102,7 @@ struct W3dRingStruct
 ** RingRenderObjClass: Procedurally generated render rings
 **
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ringobj.h
 class RingRenderObjClass : public RenderObjClass
 {	
 
@@ -321,6 +323,7 @@ inline const AABoxClass & RingRenderObjClass::Get_Box(void)
 /*
 ** Loader for rings
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ringobj.h
 class RingLoaderClass : public PrototypeLoaderClass
 {
 public:
@@ -331,6 +334,7 @@ public:
 /*
 ** Prototype for Ring objects
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ringobj.h
 class RingPrototypeClass : public W3DMPO, public PrototypeClass
 {
 	W3DMPO_GLUE(RingPrototypeClass)

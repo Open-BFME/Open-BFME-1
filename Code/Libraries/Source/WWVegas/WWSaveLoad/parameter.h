@@ -65,6 +65,7 @@ class DefParameterClass;
 //	ParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class ParameterClass
 {
 public:
@@ -257,6 +258,7 @@ ParameterClass::Set_Units_Name (const char *new_name)
 //	StringParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class StringParameterClass : public ParameterClass
 {
 public:	
@@ -304,6 +306,7 @@ protected:
 //	FilenameParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class FilenameParameterClass : public StringParameterClass
 {
 public:	
@@ -353,6 +356,7 @@ protected:
 //	TextureFilenameParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class TextureFilenameParameterClass : public FilenameParameterClass
 {
 public:	
@@ -395,6 +399,7 @@ protected:
 //	SoundFilenameParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class SoundFilenameParameterClass : public FilenameParameterClass
 {
 public:	
@@ -426,6 +431,7 @@ public:
 //	EnumParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class EnumParameterClass : public ParameterClass
 {
 public:	
@@ -493,6 +499,7 @@ protected:
 //	PhysDefParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class PhysDefParameterClass : public ParameterClass
 {
 public:	
@@ -543,6 +550,7 @@ protected:
 //	ModelDefParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class ModelDefParameterClass : public ParameterClass
 {
 public:	
@@ -593,6 +601,7 @@ protected:
 //	DefParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class DefParameterClass : public ParameterClass
 {
 public:	
@@ -639,6 +648,7 @@ protected:
 //	GenericDefParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class GenericDefParameterClass : public DefParameterClass
 {
 public:	
@@ -686,6 +696,7 @@ protected:
 //	GameObjDefParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class GameObjDefParameterClass : public DefParameterClass
 {
 public:	
@@ -733,6 +744,7 @@ protected:
 //	AmmoObjDefParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class AmmoObjDefParameterClass : public GameObjDefParameterClass
 {
 public:	
@@ -769,6 +781,7 @@ public:
 //	WeaponObjDefParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class WeaponObjDefParameterClass : public GameObjDefParameterClass
 {
 public:	
@@ -805,6 +818,7 @@ public:
 //	ExplosionObjDefParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class ExplosionObjDefParameterClass : public GameObjDefParameterClass
 {
 public:	
@@ -842,6 +856,7 @@ public:
 //	SoundDefParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class SoundDefParameterClass : public DefParameterClass
 {
 public:	
@@ -875,6 +890,7 @@ public:
 //	ScriptParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class ScriptParameterClass : public ParameterClass
 {
 public:	
@@ -925,6 +941,7 @@ protected:
 //	DefIDListParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class DefIDListParameterClass : public ParameterClass
 {
 public:	
@@ -978,6 +995,7 @@ protected:
 //	ZoneParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class ZoneParameterClass : public ParameterClass
 {
 public:	
@@ -1026,6 +1044,7 @@ protected:
 //	FilenameListParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class FilenameListParameterClass : public ParameterClass
 {
 public:	
@@ -1073,6 +1092,7 @@ protected:
 //	ScriptListParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class ScriptListParameterClass : public ParameterClass
 {
 public:	
@@ -1126,6 +1146,7 @@ protected:
 //	SeparatorParameterClass
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h
 class SeparatorParameterClass : public ParameterClass
 {
 public:	

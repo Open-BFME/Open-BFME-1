@@ -33,6 +33,7 @@
 #define INTERNAL_IO_H
 
 /// \internal \brief con debug I/O class
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/internal_io.h
 class DebugIOCon: public DebugIOInterface
 {
   /**
@@ -71,6 +72,7 @@ public:
 };
 
 /// \internal \brief con flat I/O class
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/internal_io.h
 class DebugIOFlat: public DebugIOInterface
 {
   /// \brief single output stream
@@ -154,6 +156,7 @@ class DebugIOFlat: public DebugIOInterface
   };
 
   /// \brief a single split structure
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/internal_io.h
   struct SplitListEntry
   {
     /// next split
@@ -173,6 +176,7 @@ class DebugIOFlat: public DebugIOInterface
   };
 
   /// \brief List of output streams
+  // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/internal_io.h
   struct StreamListEntry
   {
     /// next entry
@@ -222,6 +226,7 @@ public:
 };
 
 /// \internal \brief net debug I/O class
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/internal_io.h
 class DebugIONet: public DebugIOInterface
 {
   /// our pipe handle
@@ -240,6 +245,7 @@ public:
 };
 
 /// \internal \brief ods debug I/O class
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/internal_io.h
 class DebugIOOds: public DebugIOInterface
 {
 public:

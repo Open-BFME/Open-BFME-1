@@ -48,6 +48,7 @@
 class RenderInfoClass;
 
 // Just defines the interface for the class as used by WW3D..
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/static_sort_list.h
 class StaticSortListClass
 {
 	public:
@@ -62,6 +63,7 @@ class StaticSortListClass
 }; // end StaticSortListClass
 
 // The actual implementation for the standard ww3d StaticSortList.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/static_sort_list.h
 class DefaultStaticSortListClass : public StaticSortListClass
 {
 	public:

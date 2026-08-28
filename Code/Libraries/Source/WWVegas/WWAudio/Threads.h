@@ -53,6 +53,7 @@ class RefCountClass;
 // information together.
 //
 //////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/Threads.h
 class WWAudioThreadsClass
 {
 	public:

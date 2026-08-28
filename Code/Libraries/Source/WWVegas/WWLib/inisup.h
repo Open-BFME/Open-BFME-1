@@ -53,6 +53,7 @@
 **	The value entries for the INI file are stored as objects of this type.
 **	The entry identifier and value string are combined into this object.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/inisup.h
 struct INIEntry : public Node<INIEntry *> {
 	INIEntry(char * entry = NULL, char * value = NULL) : Entry(entry), Value(value) {}
 	~INIEntry(void);
@@ -68,6 +69,7 @@ struct INIEntry : public Node<INIEntry *> {
 **	Each section (bracketed) is represented by an object of this type. All entries
 **	subordinate to this section are attached.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/inisup.h
 struct INISection : public Node<INISection *> {
 		INISection(char * section) : Section(section) {}
 		~INISection(void);

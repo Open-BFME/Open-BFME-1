@@ -56,6 +56,7 @@ class SortingIndexBufferClass;
 
 // ----------------------------------------------------------------------------
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class IndexBufferClass : public W3DMPO, public RefCountClass
 {
 	// nope, it's an ABC
@@ -111,6 +112,7 @@ protected:
 
 // HY 2/14/01
 // Created
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class DynamicIBAccessClass : public W3DMPO
 {
 	W3DMPO_GLUE(DynamicIBAccessClass)
@@ -159,6 +161,7 @@ public:
 ** DX8IndexBufferClass
 ** This class wraps a DX8 index buffer.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class DX8IndexBufferClass : public IndexBufferClass
 {
 	W3DMPO_GLUE(DX8IndexBufferClass)
@@ -191,6 +194,7 @@ private:
 
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class SortingIndexBufferClass : public IndexBufferClass
 {
 	W3DMPO_GLUE(SortingIndexBufferClass)

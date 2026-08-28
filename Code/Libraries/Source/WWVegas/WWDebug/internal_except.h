@@ -33,6 +33,7 @@
 #define INTERNAL_EXCEPT_H
 
 /// \internal exception handler
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/internal_except.h
 class DebugExceptionhandler
 {
   DebugExceptionhandler(const DebugExceptionhandler&);

@@ -47,6 +47,7 @@
 /*
 **	This is the definition of a buffered read raw file class.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/bufffile.h
 class BufferedFileClass : public RawFileClass
 {
 	typedef RawFileClass BASECLASS;

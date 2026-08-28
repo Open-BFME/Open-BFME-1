@@ -44,6 +44,7 @@
 **	This class serves as a pipe that generates a Secure Hash from the data stream that flows
 **	through it. It doesn't modify the data stream in any fashion.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/shapipe.h
 class SHAPipe : public Pipe
 {
 	public:

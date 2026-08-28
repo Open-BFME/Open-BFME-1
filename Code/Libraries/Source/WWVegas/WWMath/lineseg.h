@@ -54,6 +54,7 @@ class SphereClass;
 class Matrix3D;
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/lineseg.h
 class LineSegClass
 {
 

@@ -101,6 +101,7 @@ class ZTextureClass;
 **   or generated off-line.
 **
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texproject.h
 class TexProjectClass : public ProjectorClass, public CullableClass, public MultiListObjectClass
 {
 public:

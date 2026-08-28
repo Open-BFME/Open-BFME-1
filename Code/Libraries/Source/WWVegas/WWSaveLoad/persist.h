@@ -62,6 +62,7 @@ class ChunkLoadClass;
 // PostLoadableClass )
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/persist.h
 class PersistClass : public PostLoadableClass
 {
 public:

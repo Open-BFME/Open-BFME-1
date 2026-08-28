@@ -66,6 +66,7 @@ class ChunkSaveClass;
 // that data.
 //
 //////////////////////////////////////////////////////////////////////////////////
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/saveloadsubsystem.h
 class SaveLoadSubSystemClass : public PostLoadableClass
 {
 public:

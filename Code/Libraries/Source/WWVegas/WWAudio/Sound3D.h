@@ -57,6 +57,7 @@
 //	A 3D sound should be added to the SoundScene rather than explicitly played.  The
 // SoundScene will determine when a 3D sound is 'in range' and play it...
 //
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio/Sound3D.h
 class Sound3DClass : public AudibleSoundClass
 {
 	public:

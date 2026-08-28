@@ -52,6 +52,7 @@
 ** of the functions are implemented through the existing sub-object interface
 ** so there is still no assumption on how you store/organize your sub-objects.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/composite.h
 class CompositeRenderObjClass : public RenderObjClass
 {
 public:

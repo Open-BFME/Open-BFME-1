@@ -63,6 +63,7 @@ class TextureClass;
 ** point), so it is probably suboptimal for software rasterization devices
 ** (which would probably perform better with some kind of blit/sprite code).
 */ 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/pointgr.h
 class PointGroupClass
 {
 public:
@@ -234,6 +235,7 @@ private:
 };
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/pointgr.h
 class SegmentGroupClass : public PointGroupClass
 {
 public:

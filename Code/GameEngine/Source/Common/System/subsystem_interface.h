@@ -12,6 +12,7 @@ class Xfer;
 // bodies shared by ~130 classes), so the vtable we emit is shorter than retail's.
 // Slots 1 and 2 are the load-bearing ones: SubsystemInterfaceList::initSubsystem
 // dispatches through [vptr+4] and [vptr+8].
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface {
 public:
 	SubsystemInterface();
@@ -34,6 +35,7 @@ protected:
 };
 
 // The registry GameEngine::init drives; retail keeps it at 0x0134C6C8.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterfaceList
 {
 public:

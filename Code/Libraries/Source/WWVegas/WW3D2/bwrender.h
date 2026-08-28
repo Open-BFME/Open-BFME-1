@@ -58,6 +58,7 @@
 ** (gth) 04/02/2001 - I'm going to add render-to-texture code to Renegade so this
 ** class may be obsolete.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/bwrender.h
 class BWRenderClass
 {
 	// Internal pixel buffer used by the triangle renderer

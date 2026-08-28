@@ -60,6 +60,7 @@ class RenderInfoClass;
 ** This class performs some of the work necessary to implement hierarchical animation.
 ** It implements much of the bone and animation interface of RenderObjClass.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/animobj.h
 class Animatable3DObjClass : public CompositeRenderObjClass
 {
 public:

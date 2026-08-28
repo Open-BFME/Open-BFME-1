@@ -46,6 +46,7 @@
 **	This is a concrete surface class that is based on the DirectDraw
 **	API.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/dsurface.h
 class DSurface : public XSurface
 {
 		typedef XSurface BASECLASS;

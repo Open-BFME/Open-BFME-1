@@ -46,6 +46,7 @@
 **	Performs Base 64 encoding/decoding on the data that is drawn through the straw. Note that
 **	encoding increases the data size by about 30%. The reverse occurs when decoding.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/b64straw.h
 class Base64Straw : public Straw
 {
 	public:
