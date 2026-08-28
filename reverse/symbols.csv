@@ -73392,6 +73392,7 @@ name,address,notes
 ?bfmeSetupXB@BfmeThingXB@@QAEXPAX000@Z,0x00023F1F,pin
 ?bfmeShowDZE@BfmeUiDZE@@QAEXPAXPBDH0HHHH@Z,0x00015235,pin
 ?bfmeShowDZF@BfmeUiDZF@@QAEXPAXPBDH0HHHH@Z,0x00015235,pin
+?bfmeShowEAA@BfmeUiEAA@@QAEXPAXPBDH01HHH@Z,0x00015235,pin
 ?bfmeSlot@BfmeDrawableLookupTable@@QAEPAPAVDrawable@@ABI@Z,0x00034A95,Open-BFME5 ILT addDrawableToLookupTable at 0x00431C20 asks for the slot through
 ?bfmeSmallAllocPR@@YAPAXI@Z,0x0082E450,pin
 ?bfmeSmallFreePM@@YAXPAXI@Z,0x0082E4F0,pin
@@ -74606,6 +74607,7 @@ name,address,notes
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
 ?g_bfmeArgDZE@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgDZF@@3PAXA,0x00EB7D80,pin
+?g_bfmeArgEAA@@3PAXA,0x00EB7D80,pin
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
 ?g_bfmeBufDWG@@3PAXA,0x00F378D0,pin
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
@@ -74688,6 +74690,7 @@ name,address,notes
 ?g_bfmeUiDZD@@3PAVBfmeUiDZD@@A,0x00EF7194,pin
 ?g_bfmeUiDZE@@3PAVBfmeUiDZE@@A,0x00EF19E8,pin
 ?g_bfmeUiDZF@@3PAVBfmeUiDZF@@A,0x00EF19E8,pin
+?g_bfmeUiEAA@@3PAVBfmeUiEAA@@A,0x00EF19E8,pin
 ?g_bfmeUnicodeStringFormat@@3QBDB,0x0114451C,address-derived UnicodeString format string from retail 0x009D9AAC
 ?g_bfmeUnsignedByteFormat@@3QBDB,0x011442BC,address-derived unsigned-byte format string from the DIR32 operand at retail 0x009D943A
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
@@ -78366,6 +78369,7 @@ __imp__bfmeEnterDVC@4,0x00F58D18,pin
 __imp__bfmeEnterDWA@4,0x00F58D18,pin
 __imp__bfmeEnterDWD@4,0x00F58D18,pin
 __imp__bfmeFmtDZE,0x00F5948C,pin
+__imp__bfmeFmtEAA,0x00F5948C,pin
 __imp__bfmeFreeDXC,0x00F593A0,pin
 __imp__bfmeFreeDYC,0x00F593A8,pin
 __imp__bfmeIncDYE@4,0x00F58E5C,pin
@@ -78437,6 +78441,7 @@ _bfmeEmptyANB,0x00C7301C,pin
 _bfmeFmtDYG,0x00CF71E0,pin
 _bfmeFmtStrDZE,0x00C7C7B4,pin
 _bfmeFmtStrDZF,0x00C7C7B4,pin
+_bfmeFmtStrEAA,0x00C7C7B4,pin
 _bfmeInfoDCE,0x00CEA6A8,pin
 _bfmeInfoDCF,0x00D14768,pin
 _bfmeInfoDCG,0x00D16D70,pin
@@ -78462,11 +78467,19 @@ _bfmeMsgDZFa,0x00D09D0C,pin
 _bfmeMsgDZFb,0x00D09D4C,pin
 _bfmeMsgDZFc,0x00D09D68,pin
 _bfmeMsgDZFd,0x00D09D84,pin
+_bfmeMsgEAAa,0x00D09968,pin
+_bfmeMsgEAAb,0x00D099E0,pin
+_bfmeMsgEAAc,0x00D09A00,pin
+_bfmeMsgEAAd,0x00D09A34,pin
 _bfmeObjDAA,0x00EEF430,pin
 _bfmeObjDAB,0x00EF1608,pin
 _bfmeObjDAC,0x00F41148,pin
 _bfmeObjDAD,0x00EF8798,pin
 _bfmeObjDAE,0x00F38480,pin
+_bfmeOffEAA,0x00D09918,pin
+_bfmeOffEAB,0x00D05E70,pin
+_bfmeOnEAA,0x00D09920,pin
+_bfmeOnEAB,0x00D05E6C,pin
 _bfmeRegZB,0x00EF1094,pin
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
 _bfmeStrDULa,0x00D1D7F0,pin
