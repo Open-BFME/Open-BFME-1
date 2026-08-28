@@ -12,6 +12,7 @@ name,target_rva,reason
 #
 # If you later PROVE one of these is real, delete its line here in the same
 # commit that re-adds the row, and say what the proof was.
+?d_00681930@@YAXXZ,0x00681930,gen-dump placeholder superseded by the recovered Network::liteupdate identity and exact C++ body
 ?d_005a4b50@@YAXXZ,0x005A4B50,gen-dump placeholder superseded by the recovered Mouse engine-visibility setter identity and exact C++ body
 ?d_003cc570@@YAXXZ,0x003CC570,gen-dump placeholder superseded by the recovered bfmeUnguardedInsertAT identity and exact C++ body
 ?d_0047d9c0@@YAXXZ,0x0047D9C0,gen-dump placeholder superseded by the recovered bfmeUnguardedInsertAS identity and exact C++ body

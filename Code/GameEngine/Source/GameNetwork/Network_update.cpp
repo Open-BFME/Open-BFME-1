@@ -6,6 +6,14 @@ public:
 	void disconnectLocalPlayer(void);
 };
 
+class BFMEConnectionManager
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot01(void) = 0;
+	virtual void update(bool isInGame, bool phase) = 0;
+};
+
 class GameMessage;
 
 class MessageStream
@@ -55,6 +63,15 @@ private:
 	unsigned char m_gap10[0x24];
 	bool m_frameDataReady;
 };
+
+void Network::liteupdate(bool phase)
+{
+	if (m_conMgr != 0)
+	{
+		BFMEConnectionManager *conMgr = (BFMEConnectionManager *)m_conMgr;
+		conMgr->update(m_localStatus == 1, phase);
+	}
+}
 
 void Network::update(bool phase)
 {
