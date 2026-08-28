@@ -978,12 +978,21 @@ void NetPacket::FillBufferWithGameCommand(UnsignedByte *buffer, NetCommandRef *m
 	gmsg = NULL;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillAck.cpp
-// ?FillBufferWithAckCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
-void NetPacket::FillBufferWithAckCommand(UnsignedByte *buffer, NetCommandRef *msg) {
-//		DEBUG_LOG(("NetPacket::FillBufferWithAckCommand - adding ack for command %d for player %d\n", cmdMsg->getCommandID(), msg->getCommand()->getPlayerID()));
+// BFME's NetCommandRef holds the command pointer at +0x00 and the relay at
+// +0x0c; the reference header puts them at +0x04 and +0x10. Every buffer-fill
+// body below reaches both through this view rather than the accessors.
+struct BfmeNetCommandRef
+{
+	NetCommandMsg *m_command;
+	UnsignedByte m_unreconstructed_04[0x0c - 4];
+	UnsignedByte m_relay;
+};
 
-	NetCommandMsg *cmdMsg = msg->getCommand();
+// ?FillBufferWithAckCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
+void NetPacket::FillBufferWithAckCommand(UnsignedByte *buffer, NetCommandRef *msg) {
+//		DEBUG_LOG(("NetPacket::FillBufferWithAckCommand - adding ack for command %d for player %d\n", cmdMsg->getCommandID(), ((BfmeNetCommandRef *)msg)->m_command->getPlayerID()));
+
+	NetCommandMsg *cmdMsg = ((BfmeNetCommandRef *)msg)->m_command;
 	UnsignedShort offset = 0;
 
 	UnsignedShort commandID = 0;
@@ -1079,10 +1088,9 @@ void NetPacket::FillBufferWithFrameCommand(UnsignedByte *buffer, NetCommandRef *
 //		DEBUG_LOG(("outgoing - added frame %d, player %d, command count = %d, command id = %d\n", cmdMsg->getExecutionFrame(), cmdMsg->getPlayerID(), cmdMsg->getCommandCount(), cmdMsg->getID()));
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillPlayerLeaveDestroy.cpp
-// ?FillBufferWithPlayerLeaveCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
+// ?FillBufferWithPlayerLeaveCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
 void NetPacket::FillBufferWithPlayerLeaveCommand(UnsignedByte *buffer, NetCommandRef *msg) {
-	NetPlayerLeaveCommandMsg *cmdMsg = (NetPlayerLeaveCommandMsg *)(msg->getCommand());
+	NetPlayerLeaveCommandMsg *cmdMsg = (NetPlayerLeaveCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
 	UnsignedShort offset = 0;
 //		DEBUG_LOG(("NetPacket::addPlayerLeaveCommand - adding player leave command for player %d\n", cmdMsg->getLeavingPlayerID()));
 
@@ -1095,7 +1103,7 @@ void NetPacket::FillBufferWithPlayerLeaveCommand(UnsignedByte *buffer, NetComman
 // If necessary, put the relay into the packet.
 	buffer[offset] = 'R';
 	++offset;
-	UnsignedByte newRelay = msg->getRelay();
+	UnsignedByte newRelay = ((BfmeNetCommandRef *)msg)->m_relay;
 	memcpy(buffer+offset, &newRelay, sizeof(UnsignedByte));
 	offset += sizeof(UnsignedByte);
 
@@ -1237,10 +1245,9 @@ void NetPacket::FillBufferWithRunAheadCommand(UnsignedByte *buffer, NetCommandRe
 //		DEBUG_LOG(("NetPacket - added run ahead command, frame %d, player id %d command id %d\n", m_lastFrame, m_lastPlayerID, m_lastCommandID));
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillPlayerLeaveDestroy.cpp
-// ?FillBufferWithDestroyPlayerCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
+// ?FillBufferWithDestroyPlayerCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
 void NetPacket::FillBufferWithDestroyPlayerCommand(UnsignedByte *buffer, NetCommandRef *msg) {
-	NetDestroyPlayerCommandMsg *cmdMsg = (NetDestroyPlayerCommandMsg *)(msg->getCommand());
+	NetDestroyPlayerCommandMsg *cmdMsg = (NetDestroyPlayerCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
 	UnsignedShort offset = 0;
 //		DEBUG_LOG(("NetPacket::addRunAheadCommand - adding run ahead command\n"));
 
@@ -1253,7 +1260,7 @@ void NetPacket::FillBufferWithDestroyPlayerCommand(UnsignedByte *buffer, NetComm
 // If necessary, put the relay into the packet.
 	buffer[offset] = 'R';
 	++offset;
-	UnsignedByte newRelay = msg->getRelay();
+	UnsignedByte newRelay = ((BfmeNetCommandRef *)msg)->m_relay;
 	memcpy(buffer+offset, &newRelay, sizeof(UnsignedByte));
 	offset += sizeof(UnsignedByte);
 
@@ -1604,10 +1611,9 @@ void NetPacket::FillBufferWithChatCommand(UnsignedByte *buffer, NetCommandRef *m
 	offset += sizeof(Int);
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillProgress.cpp
-// ?FillBufferWithProgressMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
+// ?FillBufferWithProgressMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
 void NetPacket::FillBufferWithProgressMessage(UnsignedByte *buffer, NetCommandRef *msg) {
-	NetProgressCommandMsg *cmdMsg = (NetProgressCommandMsg *)(msg->getCommand());
+	NetProgressCommandMsg *cmdMsg = (NetProgressCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
 	UnsignedShort offset = 0;
 
 // If necessary, put the NetCommandType into the packet.
@@ -1619,7 +1625,7 @@ void NetPacket::FillBufferWithProgressMessage(UnsignedByte *buffer, NetCommandRe
 // If necessary, put the relay into the packet.
 	buffer[offset] = 'R';
 	++offset;
-	UnsignedByte newRelay = msg->getRelay();
+	UnsignedByte newRelay = ((BfmeNetCommandRef *)msg)->m_relay;
 	memcpy(buffer+offset, &newRelay, sizeof(UnsignedByte));
 	offset += sizeof(UnsignedByte);
 
@@ -1636,10 +1642,9 @@ void NetPacket::FillBufferWithProgressMessage(UnsignedByte *buffer, NetCommandRe
 	++offset;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillCompletion.cpp
-// ?FillBufferWithLoadCompleteMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
+// ?FillBufferWithLoadCompleteMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
 void NetPacket::FillBufferWithLoadCompleteMessage(UnsignedByte *buffer, NetCommandRef *msg) {
-	NetCommandMsg *cmdMsg = (NetCommandMsg *)(msg->getCommand());
+	NetCommandMsg *cmdMsg = (NetCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
 	UnsignedShort offset = 0;
 
 // If necessary, put the NetCommandType into the packet.
@@ -1651,7 +1656,7 @@ void NetPacket::FillBufferWithLoadCompleteMessage(UnsignedByte *buffer, NetComma
 // If necessary, put the relay into the packet.
 	buffer[offset] = 'R';
 	++offset;
-	UnsignedByte newRelay = msg->getRelay();
+	UnsignedByte newRelay = ((BfmeNetCommandRef *)msg)->m_relay;
 	memcpy(buffer+offset, &newRelay, sizeof(UnsignedByte));
 	offset += sizeof(UnsignedByte);
 
@@ -1671,10 +1676,9 @@ void NetPacket::FillBufferWithLoadCompleteMessage(UnsignedByte *buffer, NetComma
 	++offset;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillCompletion.cpp
-// ?FillBufferWithTimeOutGameStartMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
+// ?FillBufferWithTimeOutGameStartMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
 void NetPacket::FillBufferWithTimeOutGameStartMessage(UnsignedByte *buffer, NetCommandRef *msg) {
-	NetCommandMsg *cmdMsg = (NetCommandMsg *)(msg->getCommand());
+	NetCommandMsg *cmdMsg = (NetCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
 	UnsignedShort offset = 0;
 
 // If necessary, put the NetCommandType into the packet.
@@ -1686,7 +1690,7 @@ void NetPacket::FillBufferWithTimeOutGameStartMessage(UnsignedByte *buffer, NetC
 // If necessary, put the relay into the packet.
 	buffer[offset] = 'R';
 	++offset;
-	UnsignedByte newRelay = msg->getRelay();
+	UnsignedByte newRelay = ((BfmeNetCommandRef *)msg)->m_relay;
 	memcpy(buffer+offset, &newRelay, sizeof(UnsignedByte));
 	offset += sizeof(UnsignedByte);
 	buffer[offset] = 'P';
@@ -1851,10 +1855,9 @@ void NetPacket::FillBufferWithFileProgressMessage(UnsignedByte *buffer, NetComma
 	offset += sizeof(progress);
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillDisconnectFrames.cpp
-// ?FillBufferWithDisconnectFrameMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
+// ?FillBufferWithDisconnectFrameMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
 void NetPacket::FillBufferWithDisconnectFrameMessage(UnsignedByte *buffer, NetCommandRef *msg) {
-	NetDisconnectFrameCommandMsg *cmdMsg = (NetDisconnectFrameCommandMsg *)(msg->getCommand());
+	NetDisconnectFrameCommandMsg *cmdMsg = (NetDisconnectFrameCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
 	UnsignedInt offset = 0;
 
 	// command type
@@ -1866,7 +1869,7 @@ void NetPacket::FillBufferWithDisconnectFrameMessage(UnsignedByte *buffer, NetCo
 	// relay
 	buffer[offset] = 'R';
 	++offset;
-	buffer[offset] = msg->getRelay();
+	buffer[offset] = ((BfmeNetCommandRef *)msg)->m_relay;
 	offset += sizeof(UnsignedByte);
 
 	// player ID
@@ -1891,10 +1894,9 @@ void NetPacket::FillBufferWithDisconnectFrameMessage(UnsignedByte *buffer, NetCo
 	offset += sizeof(disconnectFrame);
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillDisconnectFrames.cpp
-// ?FillBufferWithDisconnectScreenOffMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
+// ?FillBufferWithDisconnectScreenOffMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
 void NetPacket::FillBufferWithDisconnectScreenOffMessage(UnsignedByte *buffer, NetCommandRef *msg) {
-	NetDisconnectScreenOffCommandMsg *cmdMsg = (NetDisconnectScreenOffCommandMsg *)(msg->getCommand());
+	NetDisconnectScreenOffCommandMsg *cmdMsg = (NetDisconnectScreenOffCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
 	UnsignedInt offset = 0;
 
 	// command type
@@ -1906,7 +1908,7 @@ void NetPacket::FillBufferWithDisconnectScreenOffMessage(UnsignedByte *buffer, N
 	// relay
 	buffer[offset] = 'R';
 	++offset;
-	buffer[offset] = msg->getRelay();
+	buffer[offset] = ((BfmeNetCommandRef *)msg)->m_relay;
 	offset += sizeof(UnsignedByte);
 
 	// player ID
