@@ -73496,6 +73496,8 @@ name,address,notes
 ?bfmeSendAXB@BfmeThingAXB@@QAEXPAVBfmeSrcAXB@@PAUBfmeFlagsAXB@@@Z,0x0001C030,pin
 ?bfmeSendAZB@@YAXHPAX0@Z,0x00018962,pin
 ?bfmeSendBCF@BfmeSubBCF@@QAEXPAX@Z,0x009CBC90,pin
+?bfmeSendEventA11@@YAXPAX00IH@Z,0x000023E2,pin
+?bfmeSendEventA19@@YAXPAX00IH@Z,0x00049896,pin
 ?bfmeSendRM@BfmeSinkRM@@QAEXPAXH@Z,0x00006613,pin
 ?bfmeSetAKA@BfmeInnerAKA@@QAEXH@Z,0x00024D70,pin
 ?bfmeSetANB@BfmeSlotANB@@QAEXPAXH@Z,0x00887D20,pin
@@ -74255,6 +74257,7 @@ name,address,notes
 ?decompress@AdaptiveDeltaMotionChannelClass@@AAEXKPAM@Z,0x00977DB0,AdaptiveDeltaMotionChannelClass getframe retail two-argument decompress
 ?decompress@LZHLDecompressor@@QAEHPAEPAIPBE1@Z,0x00826920,LZH-Light decompressor member body entry; retail body begins after the 12-byte alignment pad before 0x00826920
 ?decompressData@CompressionManager@@SAHPBXHPAXH@Z,0x0081E890,CachedFileInputStream open retail decompression call
+?defaultHandler@BfmeMsgHandler@@QAEHHPAX0@Z,0x00010AF0,pin
 ?defineState@StateMachine@@IAEXIPAVState@@IIPBUStateConditionInfo@@@Z,0x000A2030,hand-decoded from DozerPrimaryStateMachine ctor @0x2B7870 (5 call sites, one per defineState() in the reference source, args match: stateID/state-ptr/successID/failureID/conditions-ptr); call site encodes thunk 0x3D1B3 (thunk_FUN_004a2030) -- pinned to the real body
 ?deleteAllFonts@FontLibrary@@IAEXXZ,0x000309CC,pinharvest x1 (thunk)
 ?deleteAllFonts@FontLibrary@@IAEXXZ,0x00033D9D,pinharvest x1 (thunk)
@@ -74925,18 +74928,27 @@ name,address,notes
 ?g_global12EF1D8@@3PAXA,0x00EEF1D8,pin
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
 ?g_lastPacketRouterStallFrame@@3IA,0x012F7704,last packet-router frame that triggered the native frame-stall gate
+?g_mgr12ED5EC@@3PAVBfmeMgrD5E@@A,0x012ED5EC,pin
 ?g_mgr12ED748@@3PAVBfmeMgrD74@@A,0x00EED748,pin
 ?g_mgr12EF1D8@@3PAUBfmeMgrContainerF1D@@A,0x00EEF1D8,pin
 ?g_mgr12F076C@@3PAVBfmeMgrF07@@A,0x00EF076C,pin
 ?g_mgr12F0898@@3PAVBfmeMgr089@@A,0x00EF0898,pin
 ?g_mgr12F148C@@3PAVBfmeMgrF14@@A,0x00EF148C,pin
+?g_mgr12F148C@@3PAVBfmeMgrF14_010@@A,0x012F148C,pin
 ?g_mgr12F1600@@3PAVBfmeMgr160@@A,0x00EF1600,pin
+?g_mgr12F19E8@@3PAVBfmeMgr19E@@A,0x012F19E8,pin
 ?g_mgr12F33F8@@3PAVBfmeMgr33F@@A,0x012F33F8,pin
+?g_mgr12F33F8@@3PAVBfmeMgr33F_010@@A,0x012F33F8,pin
 ?g_mgr12F33F8@@3PAVBfmeMgr412@@A,0x00EF33F8,pin
+?g_mgr12F4184@@3PAVBfmeMgr418@@A,0x012F4184,pin
 ?g_mgr12F4B98@@3PAUBfmeMgr112@@A,0x00EF4B98,pin
+?g_mgr12F4C5C@@3PAVBfmeMgr4C5@@A,0x012F4C5C,pin
+?g_mgr12F4C84@@3PAVBfmeMgr4C8@@A,0x012F4C84,pin
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
 ?g_obj12F060C@@3PAUBfmeObj2B1@@A,0x00EF060C,pin
 ?g_obj12F1024@@3PAUBfmeObj1024@@A,0x00EF1024,pin
+?g_obj12F495C@@3PAXA,0x012F495C,pin
+?g_obj12F4B58@@3PAUBfmeObj4B5@@A,0x012F4B58,pin
 ?g_processVal13596B8@@3P6GXH@ZA,0x00F596B8,pin
 ?g_quitMenuLayout@@3PAXA,0x012F4AD4,HideQuitMenu layout global
 ?g_rva0051B5F0Large@@3URva0051B5F0Large@@A,0x00D05FBC,Open-BFME5 packed thirteen-byte preset global
@@ -76637,6 +76649,7 @@ name,address,notes
 ?initializeBuckets@TeamRelationHashTable@@AAEXI@Z,0x00016A59,retail REL32 at 0x000F7726 targets the ILT for STLport hashtable _M_initialize_buckets
 ?insert4Way@W3DRoadBuffer@@IAEXVVector2@@HM@Z,0x00032B96,ILT thunk to 0x706310
 ?insert@?$vector@UGen_t_001b6e60_p40pod@@V?$allocator@UGen_t_001b6e60_p40pod@@@_STL@@@_STL@@QAEPAUGen_t_001b6e60_p40pod@@PAU3@ABU3@@Z,0x001C7720,gen-tgrid payload member
+?insert@BfmeSubMap3B3@@QAEPAPAXPAX@Z,0x00038B22,pin
 ?insert@RelationshipHashtableInsertShim@_STL@@QAEAAU?$pair@$$CBHW4Relationship@@@2@ABU32@@Z,0x00787140,incremental-link thunk target through a TU-local forwarding shim
 ?insert@W3DRoadBufferInsertTeeShim@@QAEXVVector2@@HM@Z,0x0070BC00,W3DRoadBuffer insertTee incremental-link thunk target through a TU-local forwarding shim
 ?insertHelper@BfmeVector28@@QAEXPAXABUBfmeItem28@@0HH@Z,0x00032272,pin
@@ -77161,6 +77174,7 @@ name,address,notes
 ?normalizeAngle@@YAMM@Z,0x0000991C
 ?noteAssign@U4Notify@@QAEXPAVU4Assign006057C0@@@Z,0x00409040,U4 lane: notify entry called by the assignment operator at 0x006057C0; address-derived name
 ?noteOwner@U4Notify@@QAEXPAVU4Owner00604C00@@@Z,0x004090C0,U4 lane: notify entry called by the detach at 0x00604C00; address-derived name
+?notify@BfmeMgr19E@@QAEHXZ,0x000290D2,pin
 ?notify@BfmeObjNotify3F0@@QAEXPAXH@Z,0x000259FA,pin
 ?notify@BfmeSub30_7F0@@QAEXHH@Z,0x00044319,pin
 ?notify@BfmeSub30_FCD@@QAEXPAXH@Z,0x00044319,pin
@@ -77991,9 +78005,14 @@ name,address,notes
 ?startRenderToTexture@W3DShaderManager@@SAXXZ,0x000154E7
 ?startThreads@GameResultsQueue@@UAEXXZ,0x006406D0,GameResultsQueue vtable 0x01119380 slot +0x24 in the ZH interface order; endThreads vslot +0x28 first then new(0x54) GameResultsThreadClass + Execute; ZH GameResultsThread.cpp:128; present-unmatched row
 ?statusCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyStatusArg@@@Z,0x0003BD8B
+?step1@BfmeMgrF14_010@@QAEXH@Z,0x0003EBDF,pin
 ?step1@BfmeSub30_7F0@@QAEXXZ,0x0002D308,pin
 ?step1@BfmeSubVfn1A6@@QAEXXZ,0x0002D308,pin
+?step2@BfmeMgr4C5@@QAEXH@Z,0x00016A68,pin
 ?step2@BfmeSub30_7F0@@QAEXPAX@Z,0x00016E55,pin
+?step3@BfmeSub32A@@QAEXH@Z,0x000032AB,pin
+?step4@BfmeMgr33F_010@@QAEXXZ,0x00027336,pin
+?step5@BfmeMgr4C8@@QAEXXZ,0x00048626,pin
 ?step@BfmeFinishDispatcherAGA@@QAEXPAX0@Z,0x00014F51,BFME finish-list dispatch layout alias; retail call uses this at object offset -0x20
 ?step@Gen003BBA40Member@@QAEXPAVGenXferInterface@@@Z,0x000650C0,member at +0xC handed the interface by the transfer sequence at 0x003BBA40; address-derived name
 ?step@Gen003C75A0Owner@@QAEXXZ,0x003C75A0,niladic member called on the pointer at +0x28 by 0x003BCA30; address-derived name
