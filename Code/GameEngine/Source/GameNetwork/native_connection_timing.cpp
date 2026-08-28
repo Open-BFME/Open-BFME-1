@@ -4,6 +4,15 @@ typedef bool Bool;
 
 class NetCommandMsg;
 
+class GameLogic
+{
+	public:
+	char unknown[0x3C];
+	unsigned int frame;
+};
+
+extern GameLogic *TheGameLogic;
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/FrameDataManager.h
 class FrameDataManager
 {
@@ -86,7 +95,8 @@ private:
 	char m_unknown24[0x12004];
 	int m_localSlot;
 	int m_packetRouterSlot;
-	char m_unknown12030[0x30];
+	char m_unknown12030[0x2C];
+	unsigned int m_frameCeiling;
 	unsigned int m_playerLatestFrame[8];
 	int m_playerState[8];
 	char m_unknown120A0[0x44];
@@ -481,76 +491,28 @@ Bool BFMEConnectionManager::areFrameCommandsComplete(unsigned int frame, Bool de
 // connected player's frame plus one, so the router cannot outrun its clients.
 // The player scan is unrolled four slots at a time, reading m_connections
 // (this+0x04) as this+0x12060-0x1205C.
-__declspec(naked) int BFMEConnectionManager::getFrameHeadroom()
+int BFMEConnectionManager::getFrameHeadroom()
 {
-	__asm {
-		mov eax, dword ptr [ecx+12028h]
-		cmp eax, dword ptr [ecx+1202Ch]
-		je routerPath
-		mov eax, dword ptr [ecx+1205Ch]
-		__emit 08Bh
-		__emit 00Dh
-		__emit 098h
-		__emit 008h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f0898]
-		mov edx, dword ptr [ecx+3Ch]
-		sub eax, edx
-		inc eax
-		ret
-routerPath:
-		push esi
-		xor edx, edx
-		lea eax,  [ecx+12060h]
-		mov esi, 2h
-		nop
-nextGroup:
-		mov ecx, dword ptr [eax-1205Ch]
-		test ecx, ecx
-		je slot1
-		mov ecx, dword ptr [eax]
-		cmp edx, ecx
-		ja slot1
-		mov edx, ecx
-slot1:
-		mov ecx, dword ptr [eax-12058h]
-		test ecx, ecx
-		je slot2
-		mov ecx, dword ptr [eax+4h]
-		cmp edx, ecx
-		ja slot2
-		mov edx, ecx
-slot2:
-		mov ecx, dword ptr [eax-12054h]
-		test ecx, ecx
-		je slot3
-		mov ecx, dword ptr [eax+8h]
-		cmp edx, ecx
-		ja slot3
-		mov edx, ecx
-slot3:
-		mov ecx, dword ptr [eax-12050h]
-		test ecx, ecx
-		je groupDone
-		mov ecx, dword ptr [eax+0Ch]
-		cmp edx, ecx
-		ja groupDone
-		mov edx, ecx
-groupDone:
-		add eax, 10h
-		dec esi
-		jne nextGroup
-		__emit 0A1h
-		__emit 098h
-		__emit 008h
-		__emit 02Fh
-		__emit 001h   // mov eax, dword ptr [0x12f0898]
-		mov eax, dword ptr [eax+3Ch]
-		sub eax, edx
-		pop esi
-		inc eax
-		ret
+	if (m_localSlot != m_packetRouterSlot)
+		return m_frameCeiling - TheGameLogic->frame + 1;
+
+	unsigned int furthestPlayerFrame = 0;
+	for (int slot = 0; slot < 8; slot += 4) {
+		if (m_connections[slot] != 0 &&
+			furthestPlayerFrame <= m_playerLatestFrame[slot])
+			furthestPlayerFrame = m_playerLatestFrame[slot];
+		if (m_connections[slot + 1] != 0 &&
+			furthestPlayerFrame <= m_playerLatestFrame[slot + 1])
+			furthestPlayerFrame = m_playerLatestFrame[slot + 1];
+		if (m_connections[slot + 2] != 0 &&
+			furthestPlayerFrame <= m_playerLatestFrame[slot + 2])
+			furthestPlayerFrame = m_playerLatestFrame[slot + 2];
+		if (m_connections[slot + 3] != 0 &&
+			furthestPlayerFrame <= m_playerLatestFrame[slot + 3])
+			furthestPlayerFrame = m_playerLatestFrame[slot + 3];
 	}
+
+	return TheGameLogic->frame - furthestPlayerFrame + 1;
 }
 
 // Command type 8 handler. Records the sender's announced frame in the
