@@ -73103,6 +73103,7 @@ name,address,notes
 ?bfmeOneCKF@BfmeSubCKF@@QAEPAVBfmeOneCKF@@XZ,0x0000E570,pin
 ?bfmeOneCNG@BfmeSubCNG@@QAEXPAX@Z,0x0087F270,pin
 ?bfmeOneCPB@BfmeInnerCPB@@QAEXHH@Z,0x0001336D,pin
+?bfmeOneCRB@BfmeThingCRB@@QAEXPAX0@Z,0x0000F975,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
