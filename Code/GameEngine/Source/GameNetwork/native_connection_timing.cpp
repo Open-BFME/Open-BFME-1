@@ -45,7 +45,7 @@ public:
 	void init();
 	void computePlayerFrameRatios();
 	int isPlayerInGame(int slot);
-	Bool isPlayerSlotActive(int slot);
+	int isPlayerSlotActive(int slot);
 	void markPlayerInGame(void *msg);
 	void relayCommand(void *ref);
 	void update();
@@ -2270,31 +2270,20 @@ notInGame:
 // Same test as isPlayerInGame but accepting states 1 through 3, so a player who
 // is on the way out still counts. Together the two bound the state values:
 // 0 is an empty slot, 1 is in the game, 2 and 3 are leaving.
-__declspec(naked) Bool BFMEConnectionManager::isPlayerSlotActive(int slot)
+int BFMEConnectionManager::isPlayerSlotActive(int slot)
 {
-	__asm {
-		mov eax, dword ptr [esp+4h]
-		cmp eax, 8h
-		jae L00_662C67
-		mov edx, dword ptr [ecx+eax*4+12080h]
-		cmp edx, 1h
-		jl L00_662C67
-		cmp edx, 3h
-		jg L00_662C67
-		cmp eax, dword ptr [ecx+12028h]
-		je L01_662C5F
-		mov eax, dword ptr [ecx+eax*4+4h]
-		test eax, eax
-		je L00_662C67
-		cmp dword ptr [eax], 0FFFFFFFFh
-		jne L00_662C67
-L01_662C5F:
-		mov eax, 1h
-		ret 4h
-L00_662C67:
-		xor eax, eax
-		ret 4h
-	}
+	if ((unsigned int)slot >= 8 ||
+		m_playerState[slot] < 1 || m_playerState[slot] > 3)
+		goto inactive;
+	if (slot == m_localSlot)
+		goto active;
+	BFMEConnectionState *connection = m_connections[slot];
+	if (connection == 0 || connection->m_openState != -1)
+		goto inactive;
+active:
+	return 1;
+inactive:
+	return 0;
 }
 
 // Moves a slot from empty to in-game: reads the message's player id (retail
