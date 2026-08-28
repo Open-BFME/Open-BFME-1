@@ -1,8 +1,36 @@
 // cl: /DNDEBUG /MD /GX
 
 typedef bool Bool;
+typedef unsigned short UnsignedShort;
 
-class NetCommandMsg;
+enum NetCommandType
+{
+	NETCOMMANDTYPE_LOADCOMPLETE = 16
+};
+
+class NetCommandMsg
+{
+public:
+	NetCommandMsg();
+	virtual ~NetCommandMsg();
+	void detach();
+
+	void setPlayerID(unsigned int playerID) { m_playerID = playerID; }
+	unsigned int getPlayerID() { return m_playerID; }
+	void setID(UnsignedShort id) { m_id = id; }
+	void setNetCommandType(NetCommandType type) { m_commandType = type; }
+
+private:
+	unsigned int m_timestamp;
+	unsigned int m_executionFrame;
+	unsigned int m_playerID;
+	UnsignedShort m_id;
+	NetCommandType m_commandType;
+	int m_referenceCount;
+};
+
+Bool DoesCommandRequireACommandID(NetCommandType type);
+UnsignedShort GenerateNextCommandID();
 
 class BFMENetRequestPlayerLeaveCommandMsg
 {
@@ -13,6 +41,7 @@ public:
 class GameLogic
 {
 	public:
+	void processProgressComplete(int playerID);
 	char unknown[0x3C];
 	unsigned int frame;
 };
@@ -7573,99 +7602,19 @@ L03_66495B:
 	}
 }
 
-// Sends command type 16 (LOADCOMPLETE). Named from the type its message carries, which is
-// evidence rather than inference now that the enum at 0x00683020 is recovered.
-__declspec(naked) void BFMEConnectionManager::sendLoadCompleteCommand()
+void BFMEConnectionManager::sendLoadCompleteCommand()
 {
-	__asm {
-		push 0FFFFFFFFh
-		push 104412Bh
-		mov eax, dword ptr fs:[0h]
-		push eax
-		mov dword ptr fs:[0h], esp
-		push ecx
-		push esi
-		push edi
-		push 1Ch
-		mov edi, ecx
-		__emit 0E8h
-		__emit 0AFh
-		__emit 0D4h
-		__emit 021h
-		__emit 000h   // call 0x881F30
-		add esp, 4h
-		mov dword ptr [esp+8h], eax
-		xor esi, esi
-		cmp eax, esi
-		mov dword ptr [esp+14h], esi
-		je L00_664A9B
-		mov ecx, eax
-		__emit 0E8h
-		__emit 01Bh
-		__emit 0E8h
-		__emit 09Ah
-		__emit 0FFh   // call 0x132B4
-		mov esi, eax
-L00_664A9B:
-		mov dword ptr [esi+14h], 10h
-		mov eax, dword ptr [edi+12028h]
-		push 10h
-		mov dword ptr [esp+18h], 0FFFFFFFFh
-		mov dword ptr [esi+0Ch], eax
-		__emit 0E8h
-		__emit 0B8h
-		__emit 010h
-		__emit 09Bh
-		__emit 0FFh   // call 0x15B72
-		add esp, 4h
-		test al, al
-		je L01_664ACA
-		__emit 0E8h
-		__emit 092h
-		__emit 0BAh
-		__emit 09Ch
-		__emit 0FFh   // call 0x30558
-		mov word ptr [esi+10h], ax
-L01_664ACA:
-		mov ecx, dword ptr [esi+0Ch]
-		push ecx
-		__emit 08Bh
-		__emit 00Dh
-		__emit 098h
-		__emit 008h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f0898]
-		__emit 0E8h
-		__emit 02Ch
-		__emit 0B9h
-		__emit 09Bh
-		__emit 0FFh   // call 0x20405
-		mov ecx, dword ptr [edi+12028h]
-		xor edx, edx
-		mov dl, 1h
-		shl dl, cl
-		mov ecx, edi
-		not dl
-		push edx
-		push esi
-		__emit 0E8h
-		__emit 08Ah
-		__emit 0A6h
-		__emit 09Dh
-		__emit 0FFh   // call 0x3F17A
-		mov ecx, esi
-		__emit 0E8h
-		__emit 0ADh
-		__emit 0B5h
-		__emit 09Bh
-		__emit 0FFh   // call 0x200A4
-		mov ecx, dword ptr [esp+0Ch]
-		pop edi
-		pop esi
-		mov dword ptr fs:[0h], ecx
-		add esp, 10h
-		ret
+	NetCommandMsg *msg = new NetCommandMsg;
+	msg->setNetCommandType(NETCOMMANDTYPE_LOADCOMPLETE);
+	msg->setPlayerID(m_localSlot);
+	if (DoesCommandRequireACommandID(NETCOMMANDTYPE_LOADCOMPLETE))
+	{
+		msg->setID(GenerateNextCommandID());
 	}
+
+	TheGameLogic->processProgressComplete(msg->getPlayerID());
+	reinterpret_cast<ConnectionManager *>(this)->sendLocalCommand(msg, 0xff ^ (1 << m_localSlot));
+	msg->detach();
 }
 
 // Sends command type 10 (PLAYERLEAVE) and 11 (DESTROYPLAYER) -- it builds both. Named from the type its message carries.
