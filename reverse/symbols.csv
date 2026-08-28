@@ -72796,6 +72796,7 @@ name,address,notes
 ?bfmeFindEVB@BfmeGlobEVB@@QAEPAUBfmeObjEVB@@PAX@Z,0x0001F253,pin
 ?bfmeFindEZC@BfmeSubEZC@@QAEPAUBfmeResEZC@@PAX@Z,0x00037D6C,pin
 ?bfmeFindFBD@BfmeGlobFBD@@QAEPAUBfmeObjFBD@@PAX@Z,0x0001F253,pin
+?bfmeFindFFG@BfmeMidFFG@@QAEPAUBfmeResFFG@@PAUBfmeSubFFG@@@Z,0x0003B890,pin
 ?bfmeFindItemE63@@YAPAUBfmeItemE63@@H@Z,0x0000E6E7,pin
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
 ?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
@@ -73085,6 +73086,7 @@ name,address,notes
 ?bfmeGetENK@BfmeObjENK@@QAEPAUBfmeSubENK@@XZ,0x00046538,pin
 ?bfmeGetESA@BfmeObjESA@@QAEPAUBfmeSubESA@@XZ,0x00020824,pin
 ?bfmeGetFAD@BfmeSubFAD@@QAEPAUBfmeResFAD@@XZ,0x0002BE77,pin
+?bfmeGetFFG@BfmeHeldFFG@@QAEPAVBfmeMidFFG@@XZ,0x00020824,pin
 ?bfmeGetFinalOverride@BfmeSubInnerEFF@@QAEPAXXZ,0x000022BB,pin
 ?bfmeGetHordeMemberCount@Object@@QBEHXZ,0x00030715,Open-BFME5 ILT thunk to body 0x001BFDF0; Object m_contain at +0x1FC asks virtual slot +0x68 for a horde interface then calls its count slot +0x150 with false; bfme prefix records unrecovered retail spelling
 ?bfmeGetID@BfmeDrawableWithID@@QAEIXZ,0x00009B01,Open-BFME5 ILT both drawable lookup-table wrappers at 0x00431C20 and 0x00430B50 read the id through
@@ -73598,6 +73600,7 @@ name,address,notes
 ?bfmeStepCBC@BfmeThingCBC@@QAEXH@Z,0x008D2130,pin
 ?bfmeStepCBD@BfmeThingCBD@@QAEXH@Z,0x008D2130,pin
 ?bfmeStepCDA@BfmeThingCDA@@QAEXXZ,0x00047B6D,pin
+?bfmeStepFFF@BfmeThingFFF@@QAEXPAUBfmeSubFFF@@PAX@Z,0x00016C3E,pin
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
@@ -73642,6 +73645,7 @@ name,address,notes
 ?bfmeTailELC@BfmeSubELC@@QAEXH@Z,0x00020B5D,pin
 ?bfmeTailELGa@BfmeSubELGa@@QAEXPAX@Z,0x000468D0,pin
 ?bfmeTailELGb@BfmeSubELGb@@QAEXPAX@Z,0x00032975,pin
+?bfmeTailFFC@BfmeSubFFC@@QAEXH@Z,0x0001C882,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
@@ -74907,6 +74911,9 @@ name,address,notes
 ?g_bfmeObjFDA@@3PAVBfmeGlobFDA@@A,0x00EEF1D8,pin
 ?g_bfmeObjFEA@@3PAVBfmeGlobFEA@@A,0x00EF0898,pin
 ?g_bfmeObjFEG@@3PAVBfmeGlobFEG@@A,0x00EF0898,pin
+?g_bfmeObjFFA@@3PAUBfmeGlobFFA@@A,0x00EED668,pin
+?g_bfmeObjFFC@@3PAUBfmeGlobFFC@@A,0x00EF076C,pin
+?g_bfmeObjFFD@@3PAUBfmeGlobFFD@@A,0x00EF079C,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
