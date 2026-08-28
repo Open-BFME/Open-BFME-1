@@ -73807,6 +73807,7 @@ name,address,notes
 ?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
+?g_bfmeCoord2DFormat@@3QBDB,0x011443F8,address-derived Coord2D format string from retail 0x009D9789
 ?g_bfmeCoord3DFormat@@3QBDB,0x01144348,address-derived Coord3D format string from retail 0x009D9650
 ?g_bfmeDisconnectPingResult@@3HA,0x012B9810,standalone disconnect ping-result state read and set by updateDisconnectStatus after the sub-ten-percent ratio check
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
