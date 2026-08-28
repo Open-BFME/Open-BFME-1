@@ -72973,6 +72973,7 @@ name,address,notes
 ?bfmeMake_0054ee00@@YAPAXHH@Z,0x00029771,Open-BFME5 ILT the pair at 0x0054EE00 and 0x0054F390 calls
 ?bfmeMake_0056E900@@YAHHH@Z,0x0003C65A,Open-BFME5 ILT the short-widening ctor at 0x0056E900 calls
 ?bfmeMake_0056e1c0@@YAPAXHH@Z,0x0003C65A,Open-BFME5 ILT the pair at 0x0056E1C0 and 0x0056E7C0 calls
+?bfmeMarkUpgradeCompleted@Object@@QAEXPBVUpgradeTemplate@@@Z,0x00007086,Open-BFME5 ILT thunk to body 0x001C5B90; marks the indexed Object upgrade-completed bit then refreshes upgrade modules; descriptive spelling
 ?bfmeMatchRaw@Gen_002da6b0@@AAEEPAX0@Z,0x0001D813,Open-BFME5 ILT the byte-returning match the wrapper at 0x002DA6B0 calls
 ?bfmeMatchRaw@Gen_002da6d0@@AAEEPAX0@Z,0x0002DB69,Open-BFME5 ILT the byte-returning match the wrapper at 0x002DA6D0 calls
 ?bfmeMatchRaw@Gen_002dad40@@AAEEPAX0@Z,0x0002DB69,Open-BFME5 ILT the byte-returning match the wrapper at 0x002DAD40 calls
