@@ -72709,6 +72709,7 @@ name,address,notes
 ?bfmeHashCompareB@@YAIII@Z,0x00020AA4,Open-BFME5 ILT the hash comparisons at 0x0054ECE0 and 0x0054F230 call
 ?bfmeHitAEA@BfmeEntryAEA@@QAE_NPAUBfmeKeyAEA@@PAX@Z,0x008017E0,pin
 ?bfmeIdAIA@BfmeThingAIA@@QAEPAXXZ,0x00020824,pin
+?bfmeIdALA@BfmeKeyALA@@QAEPAUBfmeIdALA@@XZ,0x00020824,pin
 ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z,0x0003E0B3,Open-BFME5 ILT thunk to body 0x0039BBD0; ?_bfme_allows@BfmeSpecialPowerAllowanceStore@@QAEE... at 0x0039BE50 asks it about the template first and allows everything when it answers negative; address-derived name
 ?bfmeInit000078A1@@YAXXZ,0x000078A1,Open-BFME5 ILT the initialiser the run-once latch at 0x005E85A0 calls
 ?bfmeInit0000B686@@YAXXZ,0x0000B686,Open-BFME5 ILT the initialiser the run-once latch at 0x005E8570 calls
@@ -72782,6 +72783,7 @@ name,address,notes
 ?bfmeLookup_001c62b0@@YAHPAX@Z,0x000190F1,Open-BFME5 ILT the bit setter at 0x001C62B0 calls
 ?bfmeLookup_001c6340@@YAHPAX@Z,0x00026A3F,Open-BFME5 ILT the bit setter at 0x001C6340 calls
 ?bfmeLookup_001c63d0@@YAHPAX@Z,0x0004B218,Open-BFME5 ILT the bit setter at 0x001C63D0 calls
+?bfmeMakeALA@@YAPAXPAX@Z,0x00024CA8,pin
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
