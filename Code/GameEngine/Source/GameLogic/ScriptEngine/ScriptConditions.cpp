@@ -1073,23 +1073,70 @@ Bool ScriptConditions::evaluateBuildingEntered( Parameter *pPlayerParm, Paramete
 //-------------------------------------------------------------------------------------------------
 /** evaluateIsBuildingEmpty */
 //-------------------------------------------------------------------------------------------------
-// ?evaluateIsBuildingEmpty@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
+
+#define BFME_SCRIPT_CONDITION_SLOT(N) virtual void slot##N() = 0
+
+class BfmeScriptConditionEngine
+{
+public:
+	BFME_SCRIPT_CONDITION_SLOT(00); BFME_SCRIPT_CONDITION_SLOT(01); BFME_SCRIPT_CONDITION_SLOT(02);
+	BFME_SCRIPT_CONDITION_SLOT(03); BFME_SCRIPT_CONDITION_SLOT(04); BFME_SCRIPT_CONDITION_SLOT(05);
+	BFME_SCRIPT_CONDITION_SLOT(06); BFME_SCRIPT_CONDITION_SLOT(07); BFME_SCRIPT_CONDITION_SLOT(08);
+	BFME_SCRIPT_CONDITION_SLOT(09); BFME_SCRIPT_CONDITION_SLOT(10); BFME_SCRIPT_CONDITION_SLOT(11);
+	BFME_SCRIPT_CONDITION_SLOT(12); BFME_SCRIPT_CONDITION_SLOT(13); BFME_SCRIPT_CONDITION_SLOT(14);
+	BFME_SCRIPT_CONDITION_SLOT(15); BFME_SCRIPT_CONDITION_SLOT(16); BFME_SCRIPT_CONDITION_SLOT(17);
+	BFME_SCRIPT_CONDITION_SLOT(18); BFME_SCRIPT_CONDITION_SLOT(19); BFME_SCRIPT_CONDITION_SLOT(20);
+	BFME_SCRIPT_CONDITION_SLOT(21); BFME_SCRIPT_CONDITION_SLOT(22); BFME_SCRIPT_CONDITION_SLOT(23);
+	BFME_SCRIPT_CONDITION_SLOT(24); BFME_SCRIPT_CONDITION_SLOT(25);
+	virtual Object *getUnitNamed(const AsciiString &name) = 0;	// vtable +0x68
+};
+
+class BfmeScriptConditionContain
+{
+public:
+	BFME_SCRIPT_CONDITION_SLOT(00); BFME_SCRIPT_CONDITION_SLOT(01); BFME_SCRIPT_CONDITION_SLOT(02); BFME_SCRIPT_CONDITION_SLOT(03);
+	BFME_SCRIPT_CONDITION_SLOT(04); BFME_SCRIPT_CONDITION_SLOT(05); BFME_SCRIPT_CONDITION_SLOT(06); BFME_SCRIPT_CONDITION_SLOT(07);
+	BFME_SCRIPT_CONDITION_SLOT(08); BFME_SCRIPT_CONDITION_SLOT(09); BFME_SCRIPT_CONDITION_SLOT(10); BFME_SCRIPT_CONDITION_SLOT(11);
+	BFME_SCRIPT_CONDITION_SLOT(12); BFME_SCRIPT_CONDITION_SLOT(13); BFME_SCRIPT_CONDITION_SLOT(14); BFME_SCRIPT_CONDITION_SLOT(15);
+	BFME_SCRIPT_CONDITION_SLOT(16); BFME_SCRIPT_CONDITION_SLOT(17); BFME_SCRIPT_CONDITION_SLOT(18); BFME_SCRIPT_CONDITION_SLOT(19);
+	BFME_SCRIPT_CONDITION_SLOT(20); BFME_SCRIPT_CONDITION_SLOT(21); BFME_SCRIPT_CONDITION_SLOT(22); BFME_SCRIPT_CONDITION_SLOT(23);
+	BFME_SCRIPT_CONDITION_SLOT(24); BFME_SCRIPT_CONDITION_SLOT(25); BFME_SCRIPT_CONDITION_SLOT(26); BFME_SCRIPT_CONDITION_SLOT(27);
+	BFME_SCRIPT_CONDITION_SLOT(28); BFME_SCRIPT_CONDITION_SLOT(29); BFME_SCRIPT_CONDITION_SLOT(30); BFME_SCRIPT_CONDITION_SLOT(31);
+	BFME_SCRIPT_CONDITION_SLOT(32); BFME_SCRIPT_CONDITION_SLOT(33); BFME_SCRIPT_CONDITION_SLOT(34); BFME_SCRIPT_CONDITION_SLOT(35);
+	BFME_SCRIPT_CONDITION_SLOT(36); BFME_SCRIPT_CONDITION_SLOT(37); BFME_SCRIPT_CONDITION_SLOT(38); BFME_SCRIPT_CONDITION_SLOT(39);
+	BFME_SCRIPT_CONDITION_SLOT(40); BFME_SCRIPT_CONDITION_SLOT(41); BFME_SCRIPT_CONDITION_SLOT(42); BFME_SCRIPT_CONDITION_SLOT(43);
+	BFME_SCRIPT_CONDITION_SLOT(44); BFME_SCRIPT_CONDITION_SLOT(45); BFME_SCRIPT_CONDITION_SLOT(46); BFME_SCRIPT_CONDITION_SLOT(47);
+	BFME_SCRIPT_CONDITION_SLOT(48); BFME_SCRIPT_CONDITION_SLOT(49); BFME_SCRIPT_CONDITION_SLOT(50); BFME_SCRIPT_CONDITION_SLOT(51);
+	BFME_SCRIPT_CONDITION_SLOT(52); BFME_SCRIPT_CONDITION_SLOT(53); BFME_SCRIPT_CONDITION_SLOT(54); BFME_SCRIPT_CONDITION_SLOT(55);
+	BFME_SCRIPT_CONDITION_SLOT(56); BFME_SCRIPT_CONDITION_SLOT(57); BFME_SCRIPT_CONDITION_SLOT(58); BFME_SCRIPT_CONDITION_SLOT(59);
+	BFME_SCRIPT_CONDITION_SLOT(60); BFME_SCRIPT_CONDITION_SLOT(61); BFME_SCRIPT_CONDITION_SLOT(62); BFME_SCRIPT_CONDITION_SLOT(63);
+	virtual UnsignedInt getContainCount(Bool countRiders) const = 0;	// vtable +0x100
+};
+
+#undef BFME_SCRIPT_CONDITION_SLOT
+
+class BfmeScriptConditionObject
+{
+public:
+	unsigned char m_unreconstructed[0x1FC];
+	BfmeScriptConditionContain *m_contain;
+};
+
 Bool ScriptConditions::evaluateIsBuildingEmpty( Parameter *pItemParm )
 {
-
-	Object *theBuilding = TheScriptEngine->getUnitNamed(pItemParm->getString());
-	if (!theBuilding) {
-		return false;
+	// BFME's Parameter begins with the AsciiString used here, unlike the ZH layout in the shared header.
+	BfmeScriptConditionEngine *engine = reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine);
+	BfmeScriptConditionObject *theBuilding = reinterpret_cast<BfmeScriptConditionObject *>(
+		engine->getUnitNamed(*reinterpret_cast<const AsciiString *>(pItemParm)));
+	if (theBuilding) {
+		BfmeScriptConditionContain *contain = theBuilding->m_contain;
+		if (contain) {
+			if (contain->getContainCount(false) > 0) {
+				return true;
+			}
+		}
 	}
-	
-	ContainModuleInterface* contain = theBuilding->getContain();
-	if (!contain) {
-		return false;
-	}
-	if (contain->getContainCount() > 0) {
-		return false;
-	}
-	return true;
+	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -3103,5 +3150,3 @@ Bool ScriptConditions::evaluateCondition( Condition *pCondition )
 		
 	}
 }
-
-
