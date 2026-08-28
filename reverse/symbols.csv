@@ -75844,6 +75844,7 @@ name,address,notes
 ?isFinished@GameWindowTransitionsHandler@@QAE_NXZ,0x00042E6F,Shell retail transition handler
 ?isFinished@TransitionGroup@@QAE_NXZ,0x0003B584,GameWindowTransitionsHandler retail call ILT reaches TransitionGroup::isFinished at 0x0048A0F0
 ?isGamePaused@BfmeGameLogicPause@@QAE_NXZ,0x00022C96,derived from the REL32 displacement at 0x004DF520
+?isGroundPathPassable@Pathfinder@@QAE_NABUCoord3D@@W4PathfindLayerEnum@@0H@Z,0x00025090,Open-BFME5 ILT thunk to the four-argument BFME ground-path passability body at 0x003EAC00
 ?isInMultiplayerGame@GameLogic@@QAE_NXZ,0x0005C5E0,returns m_gameMode (+0x10c) == 1 GAME_LAN or == 5 GAME_INTERNET which is the ZH inline isInMultiplayerGame; called by the MSG_CLEAR_GAME_DATA arm at 0x003977A4 via ILT 0x000062D5; the converted GameLogic::testTimeOut uses it
 ?isInMultiplayerOrSkirmishGame@GameLogicPortraitShim@@QAE_NXZ,0x0001E0AB,BFME portrait selector ILT to GameLogic mode predicate
 ?isKindOf@BFMEActionThing@@QBE_NH@Z,0x0003251F,BFME Thing kind helper ILT decoded from ActionManager::canGetHealedAt
