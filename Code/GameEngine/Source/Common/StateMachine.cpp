@@ -840,14 +840,26 @@ const Object *StateMachine::getGoalObject() const
 }
 
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/StateMachine_setGoalPosition.cpp
-// ?setGoalPosition@StateMachine@@ present-unmatched
+// Retail has no call here: the lock flag at +0x40 and a null argument both fall
+// straight to the return, and the member at +0x24 is copied as a struct rather
+// than three field writes. The header lands the two at +0x34 and +0x28.
+struct BfmeStateMachineGoal
+{
+	UnsignedByte m_unreconstructed_00[0x24];
+	Coord3D m_goalPosition;					///< retail this+0x24
+	UnsignedByte m_unreconstructed_30[0x40 - 0x30];
+	Bool m_locked;						///< retail this+0x40
+};
+
+// ?setGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z
 void StateMachine::setGoalPosition( const Coord3D *pos ) 
 { 
-	if (m_locked)
+	BfmeStateMachineGoal *self = (BfmeStateMachineGoal *)this;
+	if (self->m_locked)
 		return;
-
-	internalSetGoalPosition( pos );
+	if (pos == 0)
+		return;
+	self->m_goalPosition = *pos;
 }
 
 //-----------------------------------------------------------------------------
