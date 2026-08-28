@@ -73816,6 +73816,7 @@ name,address,notes
 ?g_bfmeIRegion3DFormat@@3QBDB,0x011443C8,address-derived IRegion3D format string from retail 0x009D9745
 ?g_bfmeInt64Format@@3QBDB,0x011442EC,address-derived int64 format string from retail 0x009D9503
 ?g_bfmeIntegerFormat@@3QBDB,0x011442DC,address-derived integer format string from the DIR32 operand at retail 0x009D94B8
+?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
 ?g_bfmeRealFormat@@3QBDB,0x0114433C,address-derived real format string from retail 0x009D9608
 ?g_bfmeRealRangeFormat@@3QBDB,0x01144480,address-derived RealRange format string from retail 0x009D9899
 ?g_bfmeRegion2DFormat@@3QBDB,0x0114442C,address-derived Region2D format string from retail 0x009D9814
