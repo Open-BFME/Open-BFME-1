@@ -72609,6 +72609,7 @@ name,address,notes
 ?bfmeDtorDJF@BfmeBaseDJF@@QAEXXZ,0x00013994,pin
 ?bfmeDtorDLA@BfmeThingDLA@@QAEXXZ,0x00002F5E,pin
 ?bfmeDtorDLB@BfmeThingDLB@@QAEXXZ,0x0002083D,pin
+?bfmeDtorDLC@BfmeThingDLC@@QAEXXZ,0x0003F783,pin
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUF@BfmeThingUF@@QAEXXZ,0x00AB8350,pin
@@ -72838,6 +72839,7 @@ name,address,notes
 ?bfmeFreeAEC@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeArrDLA@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrDLB@@YAXPAX@Z,0x00881EF0,pin
+?bfmeFreeArrDLC@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeBIB@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeBOF@@YAXPAX@Z,0x00012E90,pin
 ?bfmeFreeBOG@@YAXPAX@Z,0x000126FC,pin
@@ -72858,6 +72860,7 @@ name,address,notes
 ?bfmeFreeCJH@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeDLA@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeDLB@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeDLC@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
 ?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
@@ -73456,6 +73459,7 @@ name,address,notes
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVecDtorDLA@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVecDtorDLB@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
+?bfmeVecDtorDLC@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVisit@BfmeInnerIterable@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x000EDAB0,"address-derived inner-list visitor callee of BfmeIterableObject::bfmeIterate; retail reaches it through the low-RVA thunk at 0x0002DC1D"
 ?bfmeVisit@Gen_0038D000@@AAEXPAVBfmeNodeR@@@Z,0x0001D0DE,Open-BFME5 the ICF thunk (to 0x0038B0C0) the clear at 0x0038D000 calls on this per node
 ?bfmeWakeAutoPickup@Object@@QAEXH@Z,0x00004930,Open-BFME5 Object helper ILT thunk to body 0x001BFEF0; MSG_WAKE_AUTO_PICKUP dispatch and AutoPickUpUpdate vtables prove button-number selection and wake semantics
@@ -78221,6 +78225,7 @@ _bfmeDeleteBlock,0x00881EF0,address-derived release target from the direct REL32
 _bfmeDirectInput8Create@20,0x009F9AF0,undecorated alias for the DirectInput8Create import stub (see Win32DIKeyboardOpen.cpp)
 _bfmeDtorCbDLA,0x00002F5E,pin
 _bfmeDtorCbDLB,0x0002083D,pin
+_bfmeDtorCbDLC,0x0003F783,pin
 _bfmeDtorDAA,0x0000D828,pin
 _bfmeDtorDAB,0x0003D4B0,pin
 _bfmeDtorDAC,0x00030652,pin
