@@ -72878,6 +72878,7 @@ name,address,notes
 ?bfmeIterate@BfmeIterableObject@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x0003DB68,Open-BFME5 ILT the per-object visit in Player::iterateObjects at 0x000CDCF0 calls; it jumps to 0x000EE770
 ?bfmeJoinAKD@BfmeInnerAKD@@QAEXPAXHH@Z,0x00014FDD,pin
 ?bfmeJoinBSE@@YAPAXPAX0@Z,0x00042FA0,pin
+?bfmeKindBVD@BfmeSubBVD@@QAEHXZ,0x0001E33A,pin
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
 ?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
