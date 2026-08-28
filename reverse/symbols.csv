@@ -72398,6 +72398,7 @@ name,address,notes
 ?bfmeConstruct_0069F080@@YAXPAUBfmeCopy_0069F080@@PBU1@@Z,0x00026503,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x0069F080 calls per pass
 ?bfmeConstruct_007653C0@@YAXPAUBfmeCopy_007653C0@@PBU1@@Z,0x0003B7E6,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x007653C0 calls per pass
 ?bfmeConstruct_007690F0@@YAXPAUBfmeCopy_007690F0@@PBU1@@Z,0x0002B7AB,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x007690F0 calls per pass
+?bfmeCopyBZD@@YAXPADPBDI@Z,0x009F70BA,pin
 ?bfmeCopyInto_00134BB0@@YAXPBUBfmeCopyElem_00134BB0@@0PAU1@PAI@Z,0x0002C14C,Open-BFME5 the copier the allocate-and-delegate body at 0x00134BB0 hands its range and block to
 ?bfmeCopyInto_00134C20@@YAXPBUBfmeCopyElem_00134C20@@0PAU1@PAI@Z,0x00031E4E,Open-BFME5 the copier the allocate-and-delegate body at 0x00134C20 hands its range and block to
 ?bfmeCopyInto_0020E8D0@@YAXPBUBfmeCopyElem_0020E8D0@@0PAU1@PAI@Z,0x00024528,Open-BFME5 the copier the allocate-and-delegate body at 0x0020E8D0 hands its range and block to
