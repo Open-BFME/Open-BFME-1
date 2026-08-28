@@ -2808,8 +2808,32 @@ Bool Player::grantScience(ScienceType science)
 }
 
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerFields.cpp
-// ?isCapableOfPurchasingScience@Player@@QBE_NW4ScienceType@@@Z present-unmatched
+// BFME inserts 0x14 bytes ahead of the radar counters and 0xd0 ahead of the
+// science vectors, so both families are read through a view rather than through
+// the members the vendored header declares. The three ScienceVecs land at
+// +0x234, +0x240 and +0x24c, twelve bytes apart, which corroborates the first
+// offset against the other two.
+struct BfmePlayerRadarFields
+{
+	UnsignedByte m_unreconstructed_00[0x58];
+	Int m_radarCount;					///< retail this+0x58
+	Int m_disableProofRadarCount;				///< retail this+0x5c
+	Bool m_radarDisabled;					///< retail this+0x60
+};
+
+struct BfmePlayerScienceFields
+{
+	UnsignedByte m_unreconstructed_00[0x234];
+	ScienceVec m_sciences;					///< retail this+0x234
+	ScienceVec m_sciencesDisabled;				///< retail this+0x240
+	ScienceVec m_sciencesHidden;				///< retail this+0x24c
+	UnsignedByte m_unreconstructed_258[0x264 - 0x258];
+	Int m_sciencePurchasePoints;				///< retail this+0x264
+};
+
+// BFME does not consult the disabled or hidden lists here; retail goes straight
+// from the inlined hasScience find to the prereq call.
+// ?isCapableOfPurchasingScience@Player@@QBE_NW4ScienceType@@@Z
 Bool Player::isCapableOfPurchasingScience(ScienceType science) const
 {
 	if (science == SCIENCE_INVALID)
@@ -2822,11 +2846,6 @@ Bool Player::isCapableOfPurchasingScience(ScienceType science) const
 		return false;
 	}
 
-	if( isScienceDisabled( science ) || isScienceHidden( science ) )
-	{
-		return false;
-	}
-
 	if (!hasPrereqsForScience(science))
 	{
 		return false;
@@ -2834,7 +2853,7 @@ Bool Player::isCapableOfPurchasingScience(ScienceType science) const
 
 	Int cost = TheScienceStore->getSciencePurchaseCost(science);
 	// purchase cost of zero means "not purchasable!"
-	if (cost == 0 || cost > getSciencePurchasePoints())
+	if (cost == 0 || cost > ((const BfmePlayerScienceFields *)this)->m_sciencePurchasePoints)
 	{
 		return false;
 	}
@@ -2852,11 +2871,11 @@ Bool Player::isCapableOfPurchasingScience(ScienceType science) const
 // Body in Player_setRankLevel.asm (exact 395B retail).
 
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerFields.cpp
-// ?hasScience@Player@@QBE_NW4ScienceType@@@Z present-unmatched
+// ?hasScience@Player@@QBE_NW4ScienceType@@@Z
 Bool Player::hasScience(ScienceType t) const
 {
-	return std::find(m_sciences.begin(), m_sciences.end(), t) != m_sciences.end();
+	const BfmePlayerScienceFields *self = (const BfmePlayerScienceFields *)this;
+	return std::find(self->m_sciences.begin(), self->m_sciences.end(), t) != self->m_sciences.end();
 }
 
 //=============================================================================
@@ -3321,15 +3340,15 @@ void Player::enableRadar()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerFields.cpp
-// ?hasRadar@Player@@QBE_NXZ present-unmatched
+// ?hasRadar@Player@@QBE_NXZ
 Bool Player::hasRadar() const
 {
-	if( m_radarDisabled  && (m_disableProofRadarCount == 0) )
+	const BfmePlayerRadarFields *self = (const BfmePlayerRadarFields *)this;
+	if( self->m_radarDisabled  && (self->m_disableProofRadarCount == 0) )
 		return FALSE;// Nope, no matter how many you have, if I say no, you don't have it
 
 	// Otherwise, check if I actually do have it.
-	return m_radarCount > 0;
+	return self->m_radarCount > 0;
 }
 
 //-------------------------------------------------------------------------------------------------
