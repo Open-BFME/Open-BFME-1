@@ -72453,6 +72453,7 @@ name,address,notes
 ?bfmeFirstRK@BfmeThingRK@@QAEXXZ,0x00020B80,pin
 ?bfmeFlush@Rva003D8530Owner@@QAEXXZ,0x00009787,Open-BFME5 ILT thunk to body 0x003D55C0; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it once on the same sub-object after the slot loop; address-derived name
 ?bfmeFlushQO@BfmeThingQO@@QAEXH@Z,0x0088A230,pin
+?bfmeFormatAPB@@YAXPADHPAX@Z,0x00850600,pin
 ?bfmeForward@Gen_0002644FTarget@@QAEXXZ,0x0002644F,Open-BFME5 ILT the three negative-displacement forwarders at 0x001FB570 0x001FBF60 and 0x00204450 all jump to
 ?bfmeForward@Gen_0005C450Target@@QAEXXZ,0x00018205,Open-BFME5 the member the singleton forwarder at 0x0005C450 tail-jumps to
 ?bfmeForward@Gen_000C9770Target@@QAEXPAX@Z,0x000107D5,Open-BFME5 the callee the guarded delegate at 0x000C9770 tail-jumps to
@@ -72852,6 +72853,7 @@ name,address,notes
 ?bfmeNotify@Glo012F1028Sub@@QAEXXZ,0x0002DE89,Open-BFME5 ILT thunk to body 0x003CAD20; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 tail-jumps into it from both arms on the sub-object at +0x28 of the global at 0x012F1028; address-derived name
 ?bfmeNotifyBridge@PathfindLayer@@AAEXXZ,0x0003B250,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is set
 ?bfmeNotifyPlain@PathfindLayer@@AAEXXZ,0x0003A03F,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is null
+?bfmeOneAPA@@YGPAXPAXPAH@Z,0x009F6BF2,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -72907,6 +72909,7 @@ name,address,notes
 ?bfmeSendAFB@@YGXPAX0@Z,0x00007A45,pin
 ?bfmeSendAIB@BfmeSinkAIB@@QAEXPAVBfmeListAIB@@PAX@Z,0x008520A0,pin
 ?bfmeSendAMB@BfmeSinkAMB@@QAEXPAX0@Z,0x000160D1,pin
+?bfmeSendAPB@@YGXPADPAX@Z,0x009F6D00,pin
 ?bfmeSendRM@BfmeSinkRM@@QAEXPAXH@Z,0x00006613,pin
 ?bfmeSetAKA@BfmeInnerAKA@@QAEXH@Z,0x00024D70,pin
 ?bfmeSetANB@BfmeSlotANB@@QAEXPAXH@Z,0x00887D20,pin
@@ -72969,6 +72972,7 @@ name,address,notes
 ?bfmeTellRP@BfmeFoundRP@@QAEXPAX@Z,0x00030553,pin
 ?bfmeTest@Rva2225E0Filter@@AAE_NPAVBfmeOverridable@@_N@Z,0x0001B437,Open-BFME5 ILT the filter test whose result Rva2225E0Filter::accepts at 0x003A04A0 returns
 ?bfmeTryANA@BfmeThingANA@@QAEHPAX0@Z,0x0003381B,pin
+?bfmeTwoAPA@@YGPAXPAXPAH@Z,0x009F6BEC,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -73994,9 +73998,11 @@ name,address,notes
 ?g_bfmeCoord3DFormat@@3QBDB,0x01144348,address-derived Coord3D format string from retail 0x009D9650
 ?g_bfmeCountSI@@3HA,0x00EED240,pin
 ?g_bfmeDisconnectPingResult@@3HA,0x012B9810,standalone disconnect ping-result state read and set by updateDisconnectStatus after the sub-ten-percent ratio check
+?g_bfmeDoneAPB@@3_NA,0x00EED4E6,pin
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
 ?g_bfmeFindAMB@@3PAVBfmeFindAMB@@A,0x00EF0898,pin
+?g_bfmeFlagsAPB@@3IA,0x00EA6FA0,pin
 ?g_bfmeICoord2DFormat@@3QBDB,0x01144414,address-derived ICoord2D format string from retail 0x009D97C5
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
 ?g_bfmeIRegion2DFormat@@3QBDB,0x0114445C,address-derived IRegion2D format string from retail 0x009D985E
@@ -74011,6 +74017,7 @@ name,address,notes
 ?g_bfmeLookRQ@@3PAVBfmeLookRQ@@A,0x00EF076C,pin
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
+?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
@@ -77700,14 +77707,17 @@ _bfmeLitZD,0x00CC79BC,pin
 _bfmeRegZB,0x00EF1094,pin
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
 _bfmeTagANB,0x00C9E038,pin
+_bfmeTagAPB,0x00DDFC30,pin
 _bfmeTextAIB,0x00C94960,pin
 _bfmeTextAOA,0x00C88860,pin
+_bfmeTextAPB,0x00C75230,pin
 _bfmeTryActivate@12,0x009D8460,address-derived stdcall helper target from the direct REL32 call at retail 0x009D6310
 _bfmeVftAGBa,0x00C9C9D0,pin
 _bfmeVftAGBb,0x00CA372C,pin
 _bfmeVftAGBc,0x00CB1404,pin
 _bfmeVftAGBd,0x00CB1340,pin
 _bfmeVftAGBe,0x00CB132C,pin
+_bfmeVftAPA,0x00C73734,pin
 _bfmeVftSA,0x00C8F4F0,pin
 _bfmeVftSE,0x00D0C64C,pin
 _bfmeVftSF,0x00D0C878,pin
