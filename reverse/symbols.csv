@@ -12218,6 +12218,7 @@ name,address,notes
 ?accepts@Rva001DB720Predicate@@QAE_NPAVThingTemplate@@@Z,0x00007B4E,incremental-link thunk called by the 0x001DB720 template-name scan
 ?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z,0x0001DA34,Open-BFME5 filter predicate call pin
 ?accepts@U4Filter@@QBE_NPBUU4Elem@@@Z,0x00606BF0,U4 lane: element predicate called by both scan loops at 0x00606DC0 and 0x00607000; address-derived name
+?action4@BfmeObjE61@@QAEXPAX000@Z,0x000287AE,pin
 ?actionA@BfmeObjE10@@QAEXH@Z,0x000348EC,pin
 ?actionB@BfmeObjE10@@QAEXH@Z,0x000122AB,pin
 ?active@Rva000DF7F0Player@@QBE_NXZ,0x000179BD,Open-BFME5 fresh thiscall bool at ILT of !query 0x000DF7F0
@@ -74674,6 +74675,7 @@ name,address,notes
 ?findOrInsert@ControlBarOverrideMapABI@@QAEAAPBVCommandButton@@ABVAsciiString@@@Z,0x00008170,Open-BFME5 control-bar override hash-map subscript ILT
 ?findParticleSystemByID@ParticleSystemManager@@AAE?AVBfmeParticleSystemHandle@@W4ParticleSystemID@@@Z,0x0002A216,Open-BFME5 ILT; returns the particle system by value into a hidden slot for ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z at 0x005C3C10
 ?findRoad@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z,0x00019DC6,walks the list at collection+0x08; identical 246-byte body to findBridge which walks +0x0c. Called by the Road block whose create branch is the already-matched newRoad
+?findSomething@BfmeMgrF07@@QAEHPAXH@Z,0x0004B290,pin
 ?findSpecialPowerTemplate@SpecialPowerStore@@QAEPBVSpecialPowerTemplate@@VAsciiString@@@Z,0x00020F04,harvested from parseSpecialPowerTemplate (thunk)
 ?findSpecialPowerTemplateByID@SpecialPowerStore@@QAEPBVSpecialPowerTemplate@@I@Z,0x000034B8,Open-BFME5 ILT thunk to the body already matched at 0x000EB690; ?getSpecialPowerSourceObject@AIGroup@@QAEPAVObject@@I@Z at 0x001513D0 reaches it through this thunk
 ?findSpecialPowerTemplatePrivate@SpecialPowerStore@@IAEPAVSpecialPowerTemplate@@VAsciiString@@@Z,0x00004822,link thunk; the address findSpecialPowerTemplate at 0x000BA930 encodes
@@ -74721,6 +74723,7 @@ name,address,notes
 ?format_va@AsciiString@@QAEXPBDPAD@Z,0x00888930,pinharvest x1 (body)
 ?format_va@UnicodeString@@QAEXPBGPAD@Z,0x00888060,pinharvest x1 (body)
 ?format_va@UnicodeString@@QAEXPBGPAD@Z,0x00888930,pinharvest x1 (body)
+?forwardObj@BfmeMgr089_E5E@@QAEXPAX@Z,0x0001D0DE,pin
 ?forwardVal@BfmeMgr2B0@@QAEXPAX@Z,0x000201DA,pin
 ?freeAllBuffers@W3DBufferManager@@QAEXXZ,0x00023349,Open-BFME5 ILT the GenAlpha shadow-resource release tail-jumps through
 ?freeAllSlots@W3DBufferManager@@QAEXXZ,0x00018188,link thunk; the address freeAllBuffers at 0x007ADAD0 encodes
@@ -74913,6 +74916,7 @@ name,address,notes
 ?g_global12EF1D8@@3PAXA,0x00EEF1D8,pin
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
 ?g_lastPacketRouterStallFrame@@3IA,0x012F7704,last packet-router frame that triggered the native frame-stall gate
+?g_mgr12ED748@@3PAVBfmeMgrD74@@A,0x012ED748,pin
 ?g_mgr12EF1D8@@3PAUBfmeMgrContainerF1D@@A,0x00EEF1D8,pin
 ?g_mgr12F076C@@3PAVBfmeMgrF07@@A,0x00EF076C,pin
 ?g_mgr12F0898@@3PAVBfmeMgr089@@A,0x00EF0898,pin
@@ -75502,6 +75506,7 @@ name,address,notes
 ?getNewFrame@NetDisconnectScreenOffCommandMsg@@QAEIXZ,0x0003A1F2,ILT thunk; real body 0x674360
 ?getNewGroup@GameWindowTransitionsHandler@@QAEPAVTransitionGroup@@VAsciiString@@@Z,0x000480C7,called on TheTransitionHandler (0x012F3330 - the same singleton the matched GameWindowManager reset and update use) by the WindowTransition block parser; signature is ZH declared
 ?getNewPushButtonData@@YAPAU_PushButtonData@@XZ,0x00012765
+?getNext@BfmeMgrD74@@QAEPAVBfmeObjNotify3F0@@PAF@Z,0x0002EE60,pin
 ?getNextMission@Campaign@@QAEPAVMission@@PAV2@@Z,0x0003236C
 ?getNextPacketRouterSlot@ConnectionManager@@QAEII@Z,0x00033190,DisconnectManager::isLocalPlayerNextPacketRouter loop advances through the router order; ILT target 0x00663BC0
 ?getNextSubToken@INI@@QAEPBDPBD@Z,0x00850B00,INI parser
@@ -77144,6 +77149,7 @@ name,address,notes
 ?normalizeAngle@@YAMM@Z,0x0000991C
 ?noteAssign@U4Notify@@QAEXPAVU4Assign006057C0@@@Z,0x00409040,U4 lane: notify entry called by the assignment operator at 0x006057C0; address-derived name
 ?noteOwner@U4Notify@@QAEXPAVU4Owner00604C00@@@Z,0x004090C0,U4 lane: notify entry called by the detach at 0x00604C00; address-derived name
+?notify@BfmeObjNotify3F0@@QAEXPAXH@Z,0x000259FA,pin
 ?notify@BfmeSub30_7F0@@QAEXHH@Z,0x00044319,pin
 ?notify@BfmeSub30_FCD@@QAEXPAXH@Z,0x00044319,pin
 ?notify@BfmeSubVfn1A6@@QAEXHPAX@Z,0x00044319,pin
@@ -77696,6 +77702,7 @@ name,address,notes
 ?sendNetCommandMsg@Connection@@QAEXPAVNetCommandMsg@@E@Z,0x00026D3C,ILT thunk for body 0x006624A0
 ?sendNetCommandMsg@Connection@@QAEXPAVNetCommandMsg@@E@Z,0x006624A0,ZH twin exact: function-static NetPacket at 0x012F76FC; NEW_NETCOMMANDREF 0x00676240; NetPacket::addCommand 0x006811B0; ConstructBigCommandPacketList 0x006814B0 split path; addMessage 0x00673200 + setRelay at ref+0xC; callers queueLocalCommand relayCommand sendLocalCommandDirect sendLocalCommand via ILT 0x00026D3C
 ?sendPlayerDestruct@DisconnectManager@@IAEXHPAVConnectionManager@@@Z,0x0004B0B0,DisconnectManager status update destruction dispatch through ILT to the existing 0x0066B550 body
+?sendSignal@BfmeObjE65@@QAEXHH@Z,0x00014506,pin
 ?sendToManglerFromPort@FirewallHelperClass@@QAE_NIGG_N@Z,0x00022C00
 ?sendToManglerFromPort@FirewallHelperClassSendToManglerFromPortShim@@QAE_NIGG_N@Z,0x0066EC50,FirewallHelperClass incremental-link thunk target through a TU-local forwarding shim
 ?sendVoteCommand@DisconnectManager@@IAEXHPAVConnectionManager@@@Z,0x0002EE79,ILT thunk to DisconnectManager::sendVoteCommand
