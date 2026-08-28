@@ -1,4 +1,14 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
+//
+// +0x08 is named from retail's own INI field table at 0x00C8D4B0: it holds one
+// key, SpawnPointBoneName, at that offset, and upstream's parse table for this
+// class writes that key to m_spawnPointBoneNameData. One key, one member, so
+// there is nothing to disambiguate.
+//
+// It stays an int. Upstream's member is an AsciiString, which is one pointer
+// word here, and the constructor stores the null that AsciiString's own
+// constructor would -- declaring the real type would add a constructor and a
+// destructor call this body does not make.
 
 class ModuleData;
 
@@ -14,7 +24,7 @@ public:
 
 private:
 	int m_tag;
-	int m_field8;
+	int m_spawnPointBoneNameData;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
@@ -36,7 +46,7 @@ public:
 // ??0SpawnPointProductionExitUpdateModuleData@@QAE@XZ
 SpawnPointProductionExitUpdateModuleData::SpawnPointProductionExitUpdateModuleData()
 {
-	m_field8 = 0;
+	m_spawnPointBoneNameData = 0;
 }
 
 // ?friend_newModuleData@SpawnPointProductionExitUpdate@@SAPAVModuleData@@PAVINI@@@Z
