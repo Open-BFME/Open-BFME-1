@@ -72756,6 +72756,7 @@ name,address,notes
 ?bfmeFreeBQD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeBXD@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeBXE@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeFreeBigCFA@@YAXPAD@Z,0x00881EB0,pin
 ?bfmeFreeBlock@@YAXPAX@Z,0x00881EF0,Open-BFME5 the free the derived destructors at 0x00924090 and its siblings call
 ?bfmeFreeCAD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeCBF@@YAXPAX@Z,0x00881EB0,pin
@@ -72764,6 +72765,7 @@ name,address,notes
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
 ?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
 ?bfmeFreeSizedXC@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeFreeSmallCFA@@YAXPADI@Z,0x0082E5F0,pin
 ?bfmeFreeUB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeUD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
