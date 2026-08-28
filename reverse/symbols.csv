@@ -77788,6 +77788,7 @@ name,address,notes
 ?updateOCLTimerTextDisplay@ControlBar@@AAEXIM@Z,0x00029839,Open-BFME5 ILT; ?updateContextOCLTimer@ControlBar@@AAEXXZ at 0x004AA980 calls it only when the second count changed
 ?updatePlayback@RecorderClass@@QAEXXZ,0x00099110,zh-sweep callee pin derived from retail REL32 displacement
 ?updatePlayerCells008FC3B0@ShroudManagerImpl008FBA40Element@@QAEXPAVShroudManagerImpl008FBA40@@H@Z,0x008FC3B0,RVA 0x008FB010 per-element player update call target
+?updatePlayerCells008FC450@ShroudManagerImpl008FBA40Element@@QAEXPAVShroudManagerImpl008FBA40@@H@Z,0x008FC450,RVA 0x008FB060 per-element alternate player update call target
 ?updatePos@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@@Z,0x00013647,Open-BFME5 ILT; called by ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z at 0x001BEBB0 on TheAI+0x0C with the object position after the layer store
 ?updatePos@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@@Z,0x003E9D80,Open-BFME5 callee of ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z at 0x001BEBB0 via ILT 0x00013647
 ?updateRecord@RecorderClass@@QAEXXZ,0x0009BFE0,zh-sweep callee pin derived from retail REL32 displacement
