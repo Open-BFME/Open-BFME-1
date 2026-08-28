@@ -77731,6 +77731,7 @@ name,address,notes
 ?writeINI_part1@FXParticleSystem@@YAXPBXPAVFile@@PAI@Z,0x000460C9,DefaultModuleTemplate writeINI helper 1
 ?writeINI_part2@FXParticleSystem@@YAXPAVFile@@PAI@Z,0x0004618C,DefaultModuleTemplate writeINI helper 2
 ?writeLANGameInfo@@YAXPBVLANGameInfo@@PADI@Z,0x00041579,LAN request game-info serializer thunk
+?xfer@?$BitFlags@$0MA@@@QAEXPAVXfer@@@Z,0x0000335F,Open-BFME5 BitFlags<192>::xfer ILT thunk to body 0x001C4F00; Object::xfer passes its proven six-dword upgrade-completion mask at Object+0x224
 ?xfer@W3DRopeDrawDrawModule@@MAEXPAVXfer@@@Z,0x0002FD88,
 ?xferInteger@@YAXAAVXfer@@AAH@Z,0x0002153A,ParticleSystemInfo::DoXfer raw ParticleType enum helper call target
 ?xferInteger@@YAXAAVXfer@@AAH@Z,0x000272CD,ParticleSystemInfo::DoXfer raw ParticlePriorityType enum helper call target
