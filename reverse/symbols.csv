@@ -72508,6 +72508,7 @@ name,address,notes
 ?bfmeDropXA@BfmeListXA@@QAEXPAX@Z,0x0001FF82,pin
 ?bfmeDropZB@BfmeSubZB@@QAEXPAX@Z,0x000203D8,pin
 ?bfmeDtorAEC@BfmeNodeAEC@@QAEXXZ,0x00030841,pin
+?bfmeDtorBXD@BfmePayloadBXD@@QAEXXZ,0x00021445,pin
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUF@BfmeThingUF@@QAEXXZ,0x00AB8350,pin
@@ -72730,6 +72731,7 @@ name,address,notes
 ?bfmeFreeBOG@@YAXPAX@Z,0x000126FC,pin
 ?bfmeFreeBQC@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeBQD@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeBXD@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeBlock@@YAXPAX@Z,0x00881EF0,Open-BFME5 the free the derived destructors at 0x00924090 and its siblings call
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
