@@ -9201,6 +9201,7 @@ name,address,notes
 ??RS4Range007537C0@@QBE_NHH@Z,0x00752B80,S4 unguarded-insertion predicate (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??RUnicodeStringLessThan@@QBE_NVUnicodeString@@0@Z,0x000482B1,LanguageFilter map operator[] callee (ILT thunk -> body 0x0044D2A0)
 ??RWOLLoginAsciiStringLess@@QBE_NABVAsciiString@@0@Z,0x00043D42,WOLLogin retail AsciiString comparator thunk
+??S?$bitset@$0BDA@@_STL@@QBE?AV01@XZ,0x00030B07,Open-BFME5 BitFlags<304> complement operator ILT thunk to body 0x001C4B30; ModelConditionFlags::clearAndSet calls it
 ??_7?$DynamicVectorClass@UResolutionDescClass@@@@6B@,0x00D3A0E4,RenderDeviceDescClass::ResArray destructor direct vtable DIR32
 ??_7?$ShareBufferClass@VVector3@@@@6B@,0x011135D0,Open-BFME5 ShareBuffer Vector3 retail vtable
 ??_7AITunnelNetworkGuardState@@6B@,0x00C982B8,vptr stored by ??0AITunnelNetworkGuardState 0x001717B0 right after the State base ctor
