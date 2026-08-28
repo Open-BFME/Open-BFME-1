@@ -73142,6 +73142,7 @@ name,address,notes
 ?bfmeHashCombineC@@YAIII@Z,0x0003F7CE,Open-BFME5 ILT the combiner at 0x0056E1E0 calls
 ?bfmeHashCompareA@@YAIII@Z,0x00027BFB,Open-BFME5 ILT the hash comparisons at 0x0054ECB0 and 0x0054F200 call
 ?bfmeHashCompareB@@YAIII@Z,0x00020AA4,Open-BFME5 ILT the hash comparisons at 0x0054ECE0 and 0x0054F230 call
+?bfmeHelper760@@YAXPAXH@Z,0x002ED760,pin
 ?bfmeHelper98FDE0@@YAXPAXH@Z,0x0098FDE0,pin
 ?bfmeHelper990410@@YAXPAXN@Z,0x00990410,pin
 ?bfmeHelper996070@@YAXPAX00PBD@Z,0x00996070,pin
@@ -74671,6 +74672,8 @@ name,address,notes
 ?findNameIndex@Rva00359530StringRecordTable@@AAEHPAVAsciiString@@@Z,0x000072F7,retail call target from the 0x00359530 string-record release body
 ?findNonConstCommandButton@ControlBar@@IAEPAVCommandButton@@ABVAsciiString@@@Z,0x00044EEF,pinharvest x1 (thunk)
 ?findNonConstCommandSet@ControlBar@@AAEPAVCommandSet@@ABVAsciiString@@@Z,0x00036D27,pinharvest x1 (thunk)
+?findObj@BfmeMgr33F@@QAEPAVBfmeObj720@@PAX@Z,0x0003B59D,pin
+?findObj@BfmeMgrD74_Linked@@QAEPAVBfmeLinkedObj@@H@Z,0x0001DDE5,pin
 ?findObjectByID@GameLogic@@QAEPAVObject@@H@Z,0x0001F253,ILT thunk to GameLogic::findObjectByID
 ?findObjectByID@GameLogic@@QAEPAVObject@@H@Z,0x0009A510,Open-BFME5 the lookup StateMachine::getGoalObject forwards to; reloc_names carries the same address
 ?findObjectByID@GameLogic@@QAEPAVObject@@W4ObjectID@@@Z,0x0001F253,enum ABI spelling used by AIDockProcessDockState::findMyDrone; same matched ILT as the int-decorated overload
@@ -74927,6 +74930,7 @@ name,address,notes
 ?g_mgr12F0898@@3PAVBfmeMgr089@@A,0x00EF0898,pin
 ?g_mgr12F148C@@3PAVBfmeMgrF14@@A,0x00EF148C,pin
 ?g_mgr12F1600@@3PAVBfmeMgr160@@A,0x00EF1600,pin
+?g_mgr12F33F8@@3PAVBfmeMgr33F@@A,0x012F33F8,pin
 ?g_mgr12F33F8@@3PAVBfmeMgr412@@A,0x00EF33F8,pin
 ?g_mgr12F4B98@@3PAUBfmeMgr112@@A,0x00EF4B98,pin
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
@@ -77007,6 +77011,7 @@ name,address,notes
 ?launchGame@GameSpyStagingRoom@@QAEXXZ,0x00639950,E tier 1 via the corrected TheNetwork vcall seed: ZH StagingRoomGameInfo.cpp:794 line for line - getSlot/isHuman loop with markPlayerAsPreorder 0x0061E680 (0x006399A5) gated on TheGameSpyInfo 0x012F7194 vslot +0x160 didPlayerPreorder; TheNetwork factory 0x00682320 at 0x006399B0 (createNetwork+init); setLocalAddress vslot +0x30 at 0x006399F1 with TheNAT(0x012F770C)->getSlotPort 0x00670C60 or 8888; TheNAT ? attachTransport +0x34 at 0x00639A12 : initTransport +0x38 at 0x00639A1F; parseUserList(this) +0x2C at 0x00639A2B; clearGameData 0x00396B00; DoAnyMapTransfers 0x0066E070; MapCache::updateCache 0x00457E70; GUI:Error / GUI:CouldNotTransferMap with TheNetwork deleted and nulled at 0x00639C90; MSG_NEW_GAME + InitGameLogicRandom 0x00096C90; PSRequest to [0x012F76F0] slot +0x10 then delete TheNAT; callers WOLQuickMatchMenuUpdate 0x00506985 (ZH WOLQuickMatchMenu.cpp:1082) 0x0063A5BC 0x0055A3F6 0x00545097 0x004F6E90 via ILT 0x00006CE4
 ?leave@Gen003BD7D0Node@@QAEXXZ,0x003A4AD0,called on the outgoing lookup result by 0x003BD880; address-derived name
 ?less@AsciiStringLessShim@@SA_NABVAsciiString@@0@Z,0x006451D0,AsciiString less-than incremental-link thunk target through a TU-local forwarding shim
+?link@BfmeLinkedObj@@QAEXPAV1@H@Z,0x0000CBB7,pin
 ?linkWindow@GameWindowManager@@QAEXPAVGameWindow@@@Z,0x0002B87D,winSetParent depth Open-BFME4+Grok
 ?liteupdate@Network@@UAEX_N@Z,0x00681930,vtable 0x0111A968 slot 9 (+0x24) via ILT 0x00009D0E; ZH liteupdate: if (m_conMgr) m_conMgr->update(m_localStatus==INGAME) through ConnectionManager vtable 0x0111A2B0 slot +0x08 (update@BFMEConnectionManager 0x0066AB30) with the caller's Bool forwarded as 2nd arg; called by update 0x00682C95 and after updateLoadProgress by load screens 0x00491ED7 0x0051BC32 and startNewGame 0x003958D8 (ZH LoadScreen.cpp:1513-1514 GameLogic.cpp:2169-2170)
 ?load@GameWindowTransitionsHandler@@QAEXXZ,0x00027921,ILT thunk -> body 0x48B8D0; called by GameWindowManager::init on TheTransitionHandler (0x012F3330)
@@ -77163,6 +77168,7 @@ name,address,notes
 ?notifyAll@Y3NotifyTail_005C5A50@@QAEXPAX@Z,0x005C5A50,Y4 lane: restored pin a concurrent whole-file rewrite of reverse/symbols.csv dropped; address is the one the Y3 lane encodes in its own address-derived name and the byte gate confirms it
 ?notifyModelConditionChanged@Object@@QAEXXZ,0x0002191D,Object model-condition notify ILT (body 0x1BE1C0); inlined clearModelConditionState(PANICKING) sites
 ?notifyOfObjectCreationOrDestruction@ScriptEngine@@QAEXXZ,0x0003B15B,Open-BFME5 retail script notification thunk
+?notifyOther@BfmeLinkedObjBE@@QAEXPAV1@PAX@Z,0x000389D3,pin
 ?notifyScriptEngine@SpecialPowerCompletionDie@@QAEXXZ,0x00017981,Open-BFME5 ILT from zh_sweep packet 00256070
 ?notifyShroudChanged006e@BaseHeightMapRenderObjClass@@QAEXXZ,0x00036F43,W3DDisplay terrain shroud-notification target read from retail REL32
 ?notifyShroudChanged30B8@BaseHeightMapResetShroud@@QAEXXZ,0x00005371,retail thunk called for the +0x3098 shroud child by notifyShroudChanged006e
