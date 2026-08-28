@@ -484,7 +484,6 @@ DynamicIBAccessClass::~DynamicIBAccessClass()
 	}
 }
 
-// ?_Deinit@DynamicIBAccessClass@@SAXXZ present-unmatched
 void DynamicIBAccessClass::_Deinit()
 {
 	WWASSERT ((_DynamicDX8IndexBuffer == NULL) || (_DynamicDX8IndexBuffer->Num_Refs() == 1));
