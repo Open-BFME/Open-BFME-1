@@ -15,11 +15,11 @@ public:
 	virtual void update(void);
 };
 
-class PreClientUpdate
+class ScriptEngine
 {
 public:
-	void beginUpdate(void);
-	bool finishUpdate(void);
+	void _bfme_updateClientDebugFrame(void);
+	bool _bfme_isClientFrameFrozen(void);
 };
 
 class DebugManager
@@ -72,7 +72,7 @@ struct ClientFrameState
 
 #define FirstUpdateSubsystem (*(UpdateSubsystem **)0x0134FAA0)
 #define SecondUpdateSubsystem (*(UpdateSubsystem **)0x012F1028)
-#define ClientUpdateState (*(PreClientUpdate **)0x012F076C)
+#define TheScriptEngine (*(ScriptEngine **)0x012F076C)
 #define TheGameClient (*(ClientFrameState **)0x012F1464)
 #define TheDebugManager (*(DebugManager **)0x01336E5C)
 #define Zero (*(const float *)0x01075350)
@@ -151,8 +151,8 @@ void GameEngine::update(void)
 {
 	FirstUpdateSubsystem->update();
 	SecondUpdateSubsystem->update();
-	ClientUpdateState->beginUpdate();
-	bool skipClientFrame = ClientUpdateState->finishUpdate();
+	TheScriptEngine->_bfme_updateClientDebugFrame();
+	bool skipClientFrame = TheScriptEngine->_bfme_isClientFrameFrozen();
 	_bfme_updateClientSubsystems();
 	if (skipClientFrame)
 	{
