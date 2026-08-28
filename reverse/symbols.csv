@@ -74744,7 +74744,7 @@ name,address,notes
 ?g_01075954@@3MC,0x01075954,accessor-batch external float
 ?g_BFMEIndexBufferDebug@@3PAVBFMEIndexBufferDebugClass@@A,0x01336E5C,retail DX8 error path dispatches through the shared game debug manager global
 ?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
-?g_activeObj12F0610@@3PAXA,0x012F0610,pin
+?g_activeObj12F0610@@3PAXA,0x00EF0610,pin
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
 ?g_bfmeAccDYB@@3HA,0x00EED8A4,pin
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
@@ -78639,7 +78639,7 @@ _bfmeDtorDAC,0x00030652,pin
 _bfmeDtorDAD,0x00030652,pin
 _bfmeDtorDAE,0x00891B80,pin
 _bfmeEmptyANB,0x00C7301C,pin
-_bfmeEmptyStr107388B,0x0107388B,pin
+_bfmeEmptyStr107388B,0x00C7388B,pin
 _bfmeFmtDYG,0x00CF71E0,pin
 _bfmeFmtStrDZE,0x00C7C7B4,pin
 _bfmeFmtStrDZF,0x00C7C7B4,pin
@@ -78703,7 +78703,7 @@ _bfmeStrEECc,0x00D158A8,pin
 _bfmeStrENF,0x00C82C44,pin
 _bfmeStrERA,0x00C7301C,pin
 _bfmeString10CF498,0x00CCF498,pin
-_bfmeString10CF748,0x010CF748,pin
+_bfmeString10CF748,0x00CCF748,pin
 _bfmeTabEAC,0x00D098B0,pin
 _bfmeTagANB,0x00C9E038,pin
 _bfmeTagAPB,0x00DDFC30,pin
