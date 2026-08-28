@@ -37,6 +37,8 @@ struct BFMEConnectionState
 	int m_openState;
 };
 
+struct BFMEConnectionState;
+
 // Retail's real ConnectionManager, named so these two bodies carry their true
 // mangled names; the BFME-native helpers below keep the BFMEConnectionManager
 // name because theirs are unknown.
@@ -48,6 +50,13 @@ public:
 	void sendLocalCommandDirect(NetCommandMsg *msg, unsigned char relay);
 	int getNumPlayers();
 	unsigned int getPacketRouterSlot();
+
+private:
+	char m_unknown00[4];
+	BFMEConnectionState *m_connections[8];
+	char m_unknown24[0x12004];
+	unsigned int m_localSlot;
+	unsigned int m_packetRouterSlot;
 };
 
 class BFMEConnectionManager
@@ -6936,70 +6945,15 @@ unsigned int ConnectionManager::getPacketRouterSlot()
 // Counts the connected slots exactly as the reference does, except that BFME
 // inlines isPlayerConnected: a slot counts when it is our own or its Connection
 // pointer at this+0x04 is set.
-__declspec(naked) int ConnectionManager::getNumPlayers()
+int ConnectionManager::getNumPlayers()
 {
-	__asm {
-		push ebx
-		push esi
-		push edi
-		mov edi, dword ptr [ecx+12028h]
-		mov esi, 2h
-		xor eax, eax
-		add ecx, 8h
-		mov ebx, esi
-L08_663785:
-		lea edx,  [esi-2h]
-		cmp edx, edi
-		je L00_663798
-		mov edx, dword ptr [ecx-4h]
-		test edx, edx
-		je L01_663799
-		cmp dword ptr [edx], 0FFFFFFFFh
-		jne L01_663799
-L00_663798:
-		inc eax
-L01_663799:
-		lea edx,  [esi-1h]
-		cmp edx, edi
-		je L02_6637AB
-		mov edx, dword ptr [ecx]
-		test edx, edx
-		je L03_6637AC
-		cmp dword ptr [edx], 0FFFFFFFFh
-		jne L03_6637AC
-L02_6637AB:
-		inc eax
-L03_6637AC:
-		cmp esi, edi
-		je L04_6637BC
-		mov edx, dword ptr [ecx+4h]
-		test edx, edx
-		je L05_6637BD
-		cmp dword ptr [edx], 0FFFFFFFFh
-		jne L05_6637BD
-L04_6637BC:
-		inc eax
-L05_6637BD:
-		lea edx,  [esi+1h]
-		cmp edx, edi
-		je L06_6637D0
-		mov edx, dword ptr [ecx+8h]
-		test edx, edx
-		je L07_6637D1
-		cmp dword ptr [edx], 0FFFFFFFFh
-		jne L07_6637D1
-L06_6637D0:
-		inc eax
-L07_6637D1:
-		add ecx, 10h
-		add esi, 4h
-		dec ebx
-		jne L08_663785
-		pop edi
-		pop esi
-		pop ebx
-		ret
+	int playerCount = 0;
+	for (int slot = 0; slot < 8; ++slot) {
+		if (slot == m_localSlot ||
+			(m_connections[slot] != 0 && m_connections[slot]->m_openState == -1))
+			++playerCount;
 	}
+	return playerCount;
 }
 
 // Sends command type 12 (KEEPALIVE), built by the constructor at 0x00673B80. Named from the type its message carries, which is
