@@ -72274,6 +72274,7 @@ name,address,notes
 ?bfmeAskCFC@BfmeOuterCFC@@QAE_NXZ,0x0004425B,pin
 ?bfmeAskCLE@BfmeSubCLE@@QAEPAVBfmeXCLE@@H@Z,0x00009C41,pin
 ?bfmeAskCOF@BfmeThingCOF@@QAE_NXZ,0x00011F77,pin
+?bfmeAskCPC@@YG_NPAUBfmeThingCPC@@@Z,0x00025EF5,pin
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
 ?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
@@ -72382,6 +72383,7 @@ name,address,notes
 ?bfmeChanged@Gen_005899D0@@AAEXXZ,0x0000271B,Open-BFME5 the member the change-setter at 0x005899D0 calls
 ?bfmeCheckA@@YAHPAX@Z,0x00894D90,Open-BFME5 the guard the cleanup at 0x00783A50 calls
 ?bfmeCheckB@@YAHPAX@Z,0x00894DB0,Open-BFME5 the guard the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
+?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
 ?bfmeClear@BfmeListA@@QAEXXZ,0x00021CD3,Open-BFME5 the out-of-line list clear the destructor at 0x0009F7A0 calls
 ?bfmeClear@BfmeListB@@QAEXXZ,0x0001900B,Open-BFME5 the out-of-line list clear the destructor at 0x00080950 calls
