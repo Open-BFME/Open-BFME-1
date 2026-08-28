@@ -1,7 +1,7 @@
-// Three short errands with nothing but their own memory to work on: a setting
+// Four short errands with nothing but their own memory to work on: a setting
 // written down and passed on when it actually changes, the row that follows a
 // named one, and the value a key names, reached by counting back along its
-// chain.
+// chain, once over each of the two row tables the record keeps.
 
 class BfmeSubMB
 {
@@ -127,6 +127,40 @@ private:
 };
 
 int *BfmeThingMD::bfmeAtMD(const BfmeKeyMD *key)
+{
+	int back = key->m_bfmeBack;
+
+	BfmeRowMD *row = &m_bfmeRows[key->m_bfmeIndex];
+
+	int have = row->m_bfmeHave;
+
+	BfmeLinkMD *link = row->m_bfmeHead2;
+
+	if (have > back)
+	{
+		int steps = have - back;
+
+		do
+		{
+			--steps;
+
+			link = link->m_bfmeNext;
+		}
+		while (steps != 0);
+	}
+
+	return &link->m_bfmeValue;
+}
+
+struct BfmeThingME
+{
+	int *bfmeAtME(const BfmeKeyMD *key);
+
+	unsigned char m_bfmeHead[0x38];		// 0x00
+	BfmeRowMD *m_bfmeRows;			// 0x38
+};
+
+int *BfmeThingME::bfmeAtME(const BfmeKeyMD *key)
 {
 	int back = key->m_bfmeBack;
 
