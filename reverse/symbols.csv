@@ -73752,6 +73752,7 @@ name,address,notes
 ?calcPitches@GeometryInfo@@QBEXABUCoord3D@@ABV1@0AAM2@Z,0x0087EC20,GeometryInfo pitch calculation body decoded from Weapon::isWithinTargetPitch retail callsite
 ?calculateScore@ScoreKeeper@@QAEHXZ,0x000E8D90,ZH ScoreKeeper::calculateScore: TheGlobalData (0x012ED5C8) value multipliers at +0x1224..+0x1250 times moneyEarned +4 unitsBuilt +0x8c buildingsBuilt +0x114 and the per-player kill arrays at +0xc/+0x94 skipping m_myPlayerIdx +0x140; stores m_currentScore at +0x138; ILT 0x0000D67A; callers 0x000E8F70 0x000E92B0 and the score screen 0x004E81A0
 ?call@ArmorMapHelperShim@@QBE_NABV?$BitFlags@$0L@@@0@Z,0x00140740,incremental-link thunk target through a TU-local forwarding shim
+?call@BfmeObj412@@QAEXPAX0@Z,0x00049A80,pin
 ?call@Gen0000C4F0@@QAEXPAVY1ForEachArg@@@Z,0x0000C4F0,element callee of the 0x003D0FE0 for-each loop reached via incremental-link thunk; address-derived name
 ?call@Gen0000D84B@@QAEXXZ,0x0000D84B,element callee of the 0x003CFC60 for-each loop reached via incremental-link thunk; address-derived name
 ?call@Gen000135B1@@QAEXPAVY1ForEachArg@@0@Z,0x000135B1,element callee of the 0x003CD260 for-each loop reached via incremental-link thunk; address-derived name
@@ -74248,6 +74249,7 @@ name,address,notes
 ?dispatchIndexedValue@@YAXPAXH0HPAH1@Z,0x00858070,Open-BFME5 dual indexed dispatch implementation target
 ?dlink_removeFrom_TeamMemberList@Object@@QAEXPAPAV1@@Z,0x001BD490,MAKE_DLINK unlink body; unlinks Object +0x25C/+0x260 and writes *pListHead
 ?doAction@BfmeSub9BB@@QAEXXZ,0x00026044,pin
+?doCall@BfmeSub204_2C0@@QAEXH@Z,0x00016DF1,pin
 ?doCommandButton@Object@@QAEXPBVCommandButton@@HH@Z,0x000063CF,Object::doCommandButton via ILT thunk
 ?doCommandButtonAtObject@Object@@QAEXPBVCommandButton@@PAV1@W4CommandSourceType@@_N@Z,0x00033AA0,Open-BFME5 ILT thunk to body 0x001D1D10; the four-argument BFME form ?groupDoCommandButtonAtObject@AIGroup@@QAEXPBVCommandButton@@PAVObject@@W4CommandSourceType@@@Z at 0x00150F90 calls with a false fourth
 ?doCommandButtonAtPosition@Object@@QAEXPBVCommandButton@@PBUCoord3D@@W4CommandSourceType@@_N@Z,0x00026EF4,Open-BFME5 ILT thunk to body 0x001D1FA0; the four-argument BFME form ?groupDoCommandButtonAtPosition@AIGroup@@QAEXPBVCommandButton@@PBUCoord3D@@W4CommandSourceType@@@Z at 0x00150F40 calls with a false fourth - the body pops 0x10
@@ -74275,6 +74277,7 @@ name,address,notes
 ?doSkyBoxSet@@YAX_N@Z,0x00029AC8
 ?doUnfreezeTime@ScriptEngine@@QAEXXZ,0x00037524,ILT thunk for doUnfreezeTime body 0x336F10
 ?doUnfreezeTime@ScriptEngine@@QAEXXZ,0x00336F10,pin ScriptActions doUnfreezeTime wrapper (ScriptEngine+0x17624=0)
+?doUpdate@BfmeTarget78E@@QAEXPAX@Z,0x00038F8C,pin
 ?downloadNextQueuedFile@DownloadManager@@QAEJXZ,0x00038F00,ILT thunk used by call site
 ?downloadNextQueuedFile@DownloadManagerDownloadNextQueuedFileShim@@QAEJXZ,0x00627370,DownloadManager::downloadNextQueuedFile incremental-link thunk target through a TU-local forwarding shim
 ?draw@Drawable@@QAEXPAVView@@@Z,0x00003873,pinharvest x1 (thunk)
@@ -74610,6 +74613,7 @@ name,address,notes
 ?findSpecialPowerTemplatePrivate@SpecialPowerStore@@IAEPAVSpecialPowerTemplate@@VAsciiString@@@Z,0x00004822,link thunk; the address findSpecialPowerTemplate at 0x000BA930 encodes
 ?findSpecialPowerWithOverridableDestinationActive@Object@@QBEPAVSpecialPowerUpdateInterface@@W4SpecialPowerType@@@Z,0x00039766
 ?findSupplyCenter@AIPlayer@@IAEPAVObject@@H@Z,0x0001E0FB,Open-BFME5 ILT; called by ?isSupplySourceSafe@AIPlayer@@QAE_NH@Z at 0x00166A10
+?findTarget@BfmeFinder78E@@QAEPAVBfmeTarget78E@@XZ,0x00020824,pin
 ?findTeamPrototype@TeamFactory@@QAEPAVTeamPrototype@@ABVAsciiString@@0@Z,0x000EFE10,call displacement in initTeam @0x000F8195
 ?findTemplate@BFMEThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z,0x00028560,INI retail ThingFactory facade
 ?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z,0x00028560,BFME one-arg ThingFactory findTemplate; ScriptActions doAddCommandBarButton facade
@@ -74830,6 +74834,7 @@ name,address,notes
 ?g_global12EF1D8@@3PAXA,0x00EEF1D8,pin
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
 ?g_lastPacketRouterStallFrame@@3IA,0x012F7704,last packet-router frame that triggered the native frame-stall gate
+?g_mgr12F33F8@@3PAVBfmeMgr412@@A,0x012F33F8,pin
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
 ?g_quitMenuLayout@@3PAXA,0x012F4AD4,HideQuitMenu layout global
 ?g_rva0051B5F0Large@@3URva0051B5F0Large@@A,0x00D05FBC,Open-BFME5 packed thirteen-byte preset global
@@ -76939,6 +76944,7 @@ name,address,notes
 ?localPixelToRadar@Radar@@QAE_NPBUICoord2D@@PAU2@@Z,0x00004D59
 ?localPixelToRadar@RadarLocalPixelToRadarShim@@QAE_NPBUICoord2D@@PAU2@@Z,0x00107AB0,Radar incremental-link thunk target through a TU-local forwarding shim
 ?lookForInnerTarget@AIGuardMachine@@QAE_NXZ,0x000317A5,Open-BFME5 retail guard inner-target scan
+?lookup@BfmeMgr412@@QAEPAVBfmeObj412@@PAX@Z,0x00048CCA,pin
 ?lookup@GenTable@@QAEMH@Z,0x000184B2,S3 table-lookup-with-fallback family callee (address-derived name)
 ?lookup@Rva00368B80Registry@@QAEPAURva00368B80LookupResult@@I@Z,0x0001DBBA,REL32 bounds-checked pointer lookup target from 0x00368B91
 ?lookup@TerrainCollisionEventFXLookupShim@FXParticleSystem@@QBEPBVFXList@@PBD@Z,0x0001669E,TerrainCollisionModuleInfo event FX lookup thunk used through a TU-local layout shim
