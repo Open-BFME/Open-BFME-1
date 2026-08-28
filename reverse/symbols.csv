@@ -76275,6 +76275,7 @@ name,address,notes
 ?parseDurationUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z,0x000324DE
 ?parseFXList@INI@@SAXPAV1@PAX1PBX@Z,0x00004B47,INI::parseFXList thunk
 ?parseFXList@INI@@SAXPAV1@PAX1PBX@Z,0x00851EE0,INI::parseFXList body
+?parseFXLocInfo@@YAXPAVINI@@PAXPAUBoneLocInfo@@@Z,0x00287B10,BoneFX TU-local location parser confirmed by its caller and bone token/error paths
 ?parseFontDesc@GlobalLanguageParseFontDescShim@@SAXPAVINI@@PAX1PBX@Z,0x00439150,GlobalLanguage incremental-link static thunk target through a TU-local forwarding shim
 ?parseFromINI@BitFlags116ParseFromINIShim@@SAXPAVINI@@PAX1PBX@Z,0x00129810,BitFlags<116>::parseFromINI incremental-link thunk target through a TU-local forwarding shim
 ?parseFromINI@BitFlags45ParseFromINIShim@@SAXPAVINI@@PAX1PBX@Z,0x00204E70,BitFlags<45>::parseFromINI incremental-link thunk target through a TU-local forwarding shim
