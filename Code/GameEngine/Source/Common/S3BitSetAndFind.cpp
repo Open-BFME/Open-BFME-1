@@ -206,3 +206,86 @@ int Gen_002BC050::bfmeRun(void)
 
 	return -1;
 }
+
+class Object;
+
+class GameLogic
+{
+public:
+	Object *findObjectByID(int id);
+};
+
+extern GameLogic *TheGameLogic;
+
+class CollideModuleInterface
+{
+public:
+	virtual void bfmeOnCollide(void);
+	virtual bool wouldLikeToCollideWith(const Object *other) const;
+};
+
+class BehaviorModuleInterface
+{
+public:
+	virtual void *bfmeGetBody(void);
+	virtual CollideModuleInterface *getCollide(void);
+};
+
+class ObjectModuleSlice
+{
+public:
+	virtual void bfmeModuleSlot(void);
+
+private:
+	void *m_bfmeData;
+	Object *m_bfmeObject;
+};
+
+class BehaviorModule : public ObjectModuleSlice, public BehaviorModuleInterface
+{
+};
+
+class Object
+{
+public:
+	BehaviorModule **getBehaviorModules(void) const { return m_bfmeBehaviors; }
+
+private:
+	char m_bfmeHead[0x1F0];
+	BehaviorModule **m_bfmeBehaviors;
+};
+
+class AIUpdateInterface
+{
+public:
+	Object *checkForCrateToPickup(void);
+
+private:
+	Object *getObject(void) const { return m_bfmeObject; }
+
+	char m_bfmeHead[8];
+	Object *m_bfmeObject;
+	char m_bfmeBody[0x218 - 0x0C];
+	int m_crateCreated;
+};
+
+// Keeping findObjectByID out of line preserves retail's scan after the ID is cleared.
+Object *AIUpdateInterface::checkForCrateToPickup(void)
+{
+	if (m_crateCreated != 0)
+	{
+		m_crateCreated = 0;
+		Object *crate = TheGameLogic->findObjectByID(m_crateCreated);
+		if (crate)
+		{
+			for (BehaviorModule **module = crate->getBehaviorModules(); *module; ++module)
+			{
+				CollideModuleInterface *collide = (*module)->getCollide();
+				if (collide && collide->wouldLikeToCollideWith(getObject()))
+					return crate;
+			}
+		}
+	}
+
+	return 0;
+}
