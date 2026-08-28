@@ -74504,6 +74504,7 @@ name,address,notes
 ?fill@U1SupplierHigh@@QAEXPAVU1FillTargetHigh@@PAX@Z,0x005C8E90,tail of the slot-2 field collectors reading the 0xB8-0xBC run; address-derived name
 ?fill@U1SupplierLow@@QAEXPAVU1FillTargetLow@@PAX@Z,0x005C8D40,tail of the slot-2 field collectors reading the 0x3C-0x54 run; address-derived name
 ?fill_insert@BitVectorFillInsertShim@_STL@@QAEXU?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@2@I_N@Z,0x002CC290,_STL bit vector _M_fill_insert incremental-link thunk target through a TU-local forwarding shim
+?filter@BfmeFilterC9E@@QAE_NPAX@Z,0x000250F4,pin
 ?filterSetup@W3DShaderManager@@SA_NW4FilterModes@@W4FilterTypes@@@Z,0x00716AA0,address-derived callee of 0x0073B650
 ?filterSetup@W3DShaderManager@@SA_NW4FilterTypes@@W4FilterModes@@@Z,0x00716AA0,address-derived callee of 0x0073B650
 ?find@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QBEIPBDII@Z,0x00654BE0,STLport basic_string<char>::find(const char* s; size_type pos; size_type n): -1 on empty; clamps pos; std::search via ILT 0x0000F574 over [begin+pos; end) for [s; s+n); returns index or npos; callers parsePlayerKVPairs@GameSpyPSMessageQueueInterface 0x006597BE; ILT 0x0003DA4B
@@ -74513,6 +74514,7 @@ name,address,notes
 ?find@BFMELANPreferenceMap@@QAEPAXABVBFMELANPreferenceKey@@@Z,0x0000AEAC,LANPreferences retail map lookup ILT reaches the matched STL tree find at 0x00080600
 ?find@BfmeFinderD02@@QAEHH@Z,0x0002B81E,pin
 ?find@BfmeMgrEB2@@QAEPAVBfmeObjEB2@@H@Z,0x0001F253,pin
+?find@BfmeMgrF62@@QAEPAVBfmeObjF62@@H@Z,0x0001F253,pin
 ?find@CostMapShim@@QAE?AUCostMapIteratorShim@@ABH@Z,0x0001D980,ILT thunk to the name-keyed map find behind Player+0x1CC; returns its iterator by value
 ?find@CustomPreferenceMapShim@@QAEPAUCustomMapNodeShim@@ABVAsciiString@@@Z,0x0000AEAC
 ?find@CustomPreferenceMapShim@@QAEPAUCustomMapNodeShim@@PAUCustomAsciiStringShim@@@Z,0x0000AEAC,CustomMatchPreferences getter map lookup shim
@@ -74790,6 +74792,7 @@ name,address,notes
 ?g_bfmeWorldRV@@3PAUBfmeWorldRV@@A,0x00EF33F8,pin
 ?g_bfmeXEBK@@3PAXA,0x00EC3C58,pin
 ?g_defaultRespawnPolicy@@3URespawnPolicy@@A,0x012ED8B8,RespawnBody default six-dword policy
+?g_global12EF1D8@@3PAXA,0x012EF1D8,pin
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
 ?g_lastPacketRouterStallFrame@@3IA,0x012F7704,last packet-router frame that triggered the native frame-stall gate
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
@@ -75296,6 +75299,7 @@ name,address,notes
 ?getFilePathInSaveDirectory@GameState@@QBE?AVAsciiString@@ABV2@@Z,0x0001D8C2,incremental-link thunk called by doesSaveGameExist
 ?getFileTransferProgress@ConnectionManager@@QAEHHVAsciiString@@@Z,0x00038113,ILT thunk to 0x00669A00; the address Network::getFileTransferProgress at 0x00682640 encodes
 ?getFilename@WindowLayout@@QAE?AVAsciiString@@XZ,0x00019D53,BFME WindowLayout +0x04 accessor: Shell::findScreenByFilename retail callsite passes WindowLayout receiver and hidden AsciiString return; ILT 0x00019D53 targets exact 32B StringBase<char> copy-accessor body at 0x004EA450
+?getFinal@BfmeSubInnerD77@@QAEPAXXZ,0x000022BB,pin
 ?getFinalOverride@Overridable@@QBEPBV1@XZ,0x000022BB
 ?getFirstItemIn_TeamMemberList@Team@@QBEPAVObject@@XZ,0x0003FD41,Team::getFirstItemIn_TeamMemberList resolves to the retail 5-byte ILT at 0x0003FD41, whose body is the proven +0x0C team-member-head getter used by evaluateTeamCanPathToWaypoint
 ?getFirstObject@GameLogic@@QAEPAVObject@@XZ,0x000358BE,doEnableOrDisableObjectDifficultyBonuses call target (incremental-link thunk)
@@ -77212,6 +77216,7 @@ name,address,notes
 ?q4Notify001E6240@@YAXPAXPAVMade001E6240@@HH@Z,0x002DCF10,four-argument __cdecl callee of the 157-byte make-notify-and-link family (Q4MakeNotifyLink.cpp); address-derived name; identity not recovered
 ?qr2_buffer_add@@YAXPAXPBD@Z,0x00855360,Open-BFME5 zh_sweep packet 0064e570 callee pin
 ?qr2_keybuffer_add@@YAXPAXH@Z,0x00855330,Open-BFME5 zh_sweep packet 00642cf0 callee pin
+?query@BfmeHelperD77@@QAEDPAX@Z,0x0003E80B,pin
 ?query@Q2FlagOwner@@QAE_NH@Z,0x00416FC0,byte-returning __thiscall predicate taking one index; every row of the 34-byte queried-index assignment family (Q2QueriedIndexAssignments.cpp) calls this one body; address-derived name; identity not recovered
 ?queue@TransportQueueSendShim@@QAE_NIGPBEH@Z,0x00683830,Transport queueSend incremental-link thunk target through a TU-local forwarding shim
 ?queuePacket@LANAPI@@QAEXPAVLANAPIRequestPacket@@H@Z,0x0002B599,RequestLobbyLeave packet call; ILT thunk for LANAPI::sendMessage body 0x00684CF0
@@ -77862,6 +77867,7 @@ name,address,notes
 ?tossSegments@W3DRopeDraw@@AAEXXZ,0x0002C020,W3DRopeDraw destructor member call through retail ILT
 ?transferUnitsTo@Team@@QAEXPAV1@@Z,0x00020E55,TeamInQueue disband call pin
 ?trigger@BfmeObjEB2@@QAEXHH@Z,0x00014506,pin
+?trigger@BfmeObjF62@@QAEXHH@Z,0x00014506,pin
 ?trim@UnicodeString@@QAEXXZ,0x00888ED0,alias of matched StringBase<unsigned short>::trim (PopupJoinGameSystem callee)
 ?turnOffScreen@DisconnectManager@@IAEXH@Z,0x00044AD0,ILT thunk; real body 0x66B270
 ?turnOnScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z,0x0066BFE0,ZH twin minus hidePacketRouterTimeout: showScreen via 0x0050E9A0; m_disconnectState+0xC=SCREENON(0); m_lastKeepAliveSendTime+0x10=-1; populateDisconnectScreen 0x0066BEF0; resetPlayerTimeouts 0x0066B980; +0x258=0; m_timeOfDisconnectScreenOn+0x25C=timeGetTime; sole caller BFMEDisconnectManager::update 0x0066CAEF; ILT 0x00034900
