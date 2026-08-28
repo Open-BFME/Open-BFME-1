@@ -74278,6 +74278,7 @@ name,address,notes
 ?find@TeamPrototypeMap@@QBEPAUTeamPrototypeNode@@ABUTeamPrototypeKey@@@Z,0x00011CB6,ILT thunk to the team prototype map lookup
 ?find@UpgradeCenterFindUpgradeShim@@QBEPBVUpgradeTemplate@@ABVAsciiString@@@Z,0x0010B0E0,UpgradeCenter findUpgrade incremental-link thunk target through a TU-local forwarding shim
 ?find@WeaponTemplateBitFlagsFindShim@_STL@@QBEPAU?$_Rb_tree_node@U?$pair@$$CBV?$BitFlags@$0BB@@@PBVWeaponTemplateSet@@@_STL@@@2@ABV?$BitFlags@$0BB@@@@Z,0x00141220,incremental-link thunk target through a TU-local forwarding shim
+?findAmmoPipShowingWeapon@WeaponSet@@QBEPBVWeapon@@XZ,0x00031BA1,Open-BFME5 canonical WeaponSet ammo-pip weapon query ILT thunk to body 0x001EAEB0; callee of Object::getAmmoPipShowingInfo
 ?findAnimObject@BfmeLivingWorldManagerIcons@@QAEPAVBfmeLivingWorldAnimObject@@ABVAsciiString@@@Z,0x00614620,Open-BFME5 REL32 target of parseLivingWorldAnimObject; the LivingWorldAnimObject lookup on TheLivingWorldManager
 ?findAnimObject@BfmeLivingWorldManagerIcons@@QAEPAVLivingWorldAnimObject@@ABVAsciiString@@@Z,0x00614620,Snapshot-name literal corrects the returned animation-object identity
 ?findArmorTemplate@ArmorStore@@QBEPBVArmorTemplate@@VAsciiString@@@Z,0x00022FC5,parseArmorTemplate call target (incremental-link thunk); resolves repointed INI parser thunk-dump
@@ -74922,6 +74923,7 @@ name,address,notes
 ?getAbleToAttackSpecificObject@WeaponSet@@QBE?AW4CanAttackResult@@W4AbleToAttackType@@PBVObject@@1W4CommandSourceType@@W4WeaponSlotType@@@Z,0x001EBEB0,callee pin from Object.cpp REL32 site
 ?getAdjustedVisionRangeForObject@AI@@SAMPBVObject@@H@Z,0x0002481B,pinharvest x6 (thunk)
 ?getAdjustedVisionRangeForObject@AIAdjustedVisionRangeForObjectShim@@SAMPBVObject@@H@Z,0x0014A620,AI incremental-link static thunk target through a TU-local forwarding shim
+?getAmmoPipShowingInfo@Object@@QBE_NAAH0@Z,0x0001858E,Open-BFME5 canonical Object ammo-pip query ILT thunk to body 0x001BE2C0; surviving Object.cpp implementation and retail Object WeaponSet offset 0x264
 ?getArchiveFilenameForFile@ArchiveFileSystem@@QBE?AVAsciiString@@ABV2@@Z,0x009CA2A0,called by ArchiveFileSystem::openFile at 0x009CA62B; ZH openFile calls exactly this before assigning and length-checking the result
 ?getArchivedFileInfo@ArchiveFile@@IBEPBUArchivedFileInfo@@ABVAsciiString@@@Z,0x009D0900,archive entry lookup used by getFileInfo and openFile
 ?getArgumentDataType@GameMessage@@QAEHH@Z,0x0001A3D4,GameMessage::getArgumentDataType via ILT thunk
@@ -75121,6 +75123,7 @@ name,address,notes
 ?getReal@UserPreferences@@QBEMVAsciiString@@M@Z,0x000A93B0,find virtual +0x18 then atof through the CRT import at 0x01359380 and fstp/fld of the Real default; ILT 0x0000B320 used by getTimePlayed 0x0009C2C0; ret 8
 ?getRelationship@Object@@QBE?AW4Relationship@@PBV1@@Z,0x0004A719,ILT thunk to Object::getRelationship; identity from Zero Hour ActionManager.cpp where the result is compared against ALLIES
 ?getRelationship@Player@@QBE?AW4Relationship@@PBVTeam@@@Z,0x0003E77A
+?getRemainingAmmo@Weapon@@QBEI_N@Z,0x00046F10,Open-BFME5 canonical Weapon remaining-ammo query ILT thunk to body 0x001E5660; callee of Object::getAmmoPipShowingInfo
 ?getRemainingFrames@OCLUpdate@@QAEIXZ,0x00032AA6,Open-BFME5 ILT; ?updateContextOCLTimer@ControlBar@@AAEXXZ at 0x004AA980 divides its result by ten for the second count
 ?getRemoteIPEntry@LANPreferences@@QAE?AVUnicodeString@@H@Z,0x0002B62A,PopulateRemoteIPComboBox direct-call ILT thunk to getRemoteIPEntry
 ?getRoomKeysCallback@@YAXPAXHW4RoomType@@PBDHPAPAD30@Z,0x0064EA90,ZH PeerThread.cpp:2611 line for line: 8-arg peerGetRoomKeys callback (peer success roomType nick num keys values param); bails on null param/roomType/nick/success/keys/values; for i<num t->trackStatsForPlayer(nick roomType keys[i] values[i]) via ILT 0x00043568 -> 0x0064E7B0; then PeerResponse type 0xd (PLAYERINFO) with nick and getPlayerInfo 0x0064AA70 and addResponse +0x20 on 0x012F71C8; ILT 0x000066EA; Ghidra has no function here
