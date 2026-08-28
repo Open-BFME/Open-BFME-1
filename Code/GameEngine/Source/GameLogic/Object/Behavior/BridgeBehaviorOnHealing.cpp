@@ -13,6 +13,8 @@ enum ObjectID { INVALID_ID = 0 };
 enum KindOfType { KINDOF_BRIDGE_TOWER = 24 };
 enum BodyDamageType { BODY_RUBBLE = 3 };
 enum PathfindLayerEnum {};
+enum DamageType { DAMAGE_UNRESISTABLE = 8 };
+enum DeathType { DEATH_NORMAL = 0 };
 
 struct Coord3D
 {
@@ -86,6 +88,7 @@ public:
 	virtual void unused14();
 	virtual void unused15();
 	virtual void attemptHealing(Real amount, Object *source);
+	void kill(DamageType damageType, DeathType deathType);
 
 	bool isBridgeTower() const
 	{
@@ -115,6 +118,10 @@ class GameLogic
 {
 public:
 	Object *findObjectByID(ObjectID id);
+	UnsignedInt getFrame() const
+	{
+		return *(const UnsignedInt *)((const unsigned char *)this + 0x3C);
+	}
 
 	__forceinline Object *findObjectByIDInline(ObjectID id)
 	{
@@ -298,9 +305,11 @@ public:
 	virtual void onDamage(DamageInfo *damageInfo);
 	virtual bool isScaffoldInMotion();
 	virtual void removeScaffolding();
+	virtual void onDie(const DamageInfo *damageInfo);
 
 protected:
 	virtual void xfer(Xfer *xfer);
+	void handleObjectsOnBridgeOnDie();
 
 public:
 	Object *getObject() const
@@ -444,6 +453,24 @@ void BridgeBehavior::xfer(Xfer *xfer)
 
 	xfer->xferUnsignedInt((UnsignedInt *)(behavior + 0x484));
 	xfer->xferBool((bool *)(behavior + 0x47C));
+}
+
+// ?onDie@BridgeBehavior@@UAEXPBVDamageInfo@@@Z
+void BridgeBehavior::onDie(const DamageInfo *)
+{
+	int i = 0;
+	BridgeBehaviorInterface *bridge =
+		(BridgeBehaviorInterface *)((unsigned char *)this - 0x08);
+	for (; i < 4; ++i)
+	{
+		Object *tower = TheGameLogic->findObjectByIDInline(bridge->getTowerID(i));
+		if (tower)
+			tower->kill(DAMAGE_UNRESISTABLE, DEATH_NORMAL);
+	}
+
+	BridgeBehavior *primary = (BridgeBehavior *)((unsigned char *)this - 0x28);
+	primary->handleObjectsOnBridgeOnDie();
+	*(UnsignedInt *)((unsigned char *)this + 0x45C) = TheGameLogic->getFrame();
 }
 
 // ?onDamage@BridgeBehavior@@UAEXPAVDamageInfo@@@Z
