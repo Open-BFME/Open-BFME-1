@@ -75,6 +75,8 @@ public:
 	~ShroudManagerImpl008FBA40Element();
 	void updatePlayerCells008FC3B0(ShroudManagerImpl008FBA40 *manager,
 		int playerIndex);
+	void updatePlayerCells008FC450(ShroudManagerImpl008FBA40 *manager,
+		int playerIndex);
 
 private:
 	char state[0x68];
@@ -87,6 +89,7 @@ public:
 	~ShroudManagerImpl008FBA40();
 	void drainPending();
 	void updatePlayerCells008FB010(int playerIndex);
+	void updatePlayerCells008FB060(int playerIndex);
 	void reset();
 	void setRegion(const Region3D *region, Real cellSize);
 	void configure(Region3D region, Real cellSize);
@@ -163,6 +166,22 @@ void ShroudManagerImpl008FBA40::updatePlayerCells008FB010(int playerIndex)
 			element != end; ++element)
 		{
 			element->updatePlayerCells008FC3B0(this, playerIndex);
+		}
+	}
+}
+
+void ShroudManagerImpl008FBA40::updatePlayerCells008FB060(int playerIndex)
+{
+	if (playerIndex >= 0 && playerIndex < 16)
+	{
+		processPending(false);
+
+		ShroudManagerImpl008FBA40Element *end =
+			elements + width * height;
+		for (ShroudManagerImpl008FBA40Element *element = elements;
+			element != end; ++element)
+		{
+			element->updatePlayerCells008FC450(this, playerIndex);
 		}
 	}
 }
