@@ -22,6 +22,13 @@ struct Coord3D
 };
 
 class DamageInfo;
+class Xfer;
+
+class UpdateModule
+{
+protected:
+	virtual void xfer(Xfer *xfer);
+};
 
 class BodyModuleInterface
 {
@@ -151,6 +158,7 @@ public:
 };
 
 void __stlp_deallocate_small(void *node, UnsignedInt bytes);
+namespace _STL { void *nodeAllocate(UnsignedInt bytes); }
 
 template <class T>
 class BridgeScaffoldAllocator : public _STL::allocator<T>
@@ -160,6 +168,11 @@ public:
 
 	BridgeScaffoldAllocator() {}
 	template <class U> BridgeScaffoldAllocator(const BridgeScaffoldAllocator<U> &) {}
+
+	T *allocate(UnsignedInt count, const void * = 0) const
+	{
+		return (T *)_STL::nodeAllocate(count * sizeof(T));
+	}
 
 	void deallocate(T *node, UnsignedInt count) const
 	{
@@ -180,6 +193,14 @@ class Bridge
 {
 public:
 	PathfindLayerEnum getLayer() const { return m_layer; }
+	void setBridgeObjectID(ObjectID id)
+	{
+		*(ObjectID *)((unsigned char *)this + 0x60) = id;
+	}
+	void setTowerObjectID(ObjectID id, UnsignedInt tower)
+	{
+		((ObjectID *)((unsigned char *)this + 0x64))[tower] = id;
+	}
 
 private:
 	unsigned char m_unreconstructed00[0x88];
@@ -221,6 +242,40 @@ private:
 extern TerrainLogic *TheTerrainLogic;
 extern AI *TheAI;
 
+struct XferVersion
+{
+	XferVersion(unsigned char value) : current(value), minimum(value) {}
+
+	unsigned char current;
+	unsigned char minimum;
+};
+
+class Xfer
+{
+public:
+	virtual void unused00();
+	virtual bool isLoading() const;
+	virtual bool isStoring() const;
+	virtual void unused03();
+	virtual bool isLightCRC() const;
+	virtual void unused05(); virtual void unused06(); virtual void unused07();
+	virtual void unused08(); virtual void unused09();
+	virtual void xferVersion(XferVersion *version);
+	virtual void unused11(); virtual void unused12(); virtual void unused13();
+	virtual void unused14(); virtual void unused15(); virtual void unused16();
+	virtual void unused17(); virtual void unused18(); virtual void unused19();
+	virtual void unused20(); virtual void unused21(); virtual void unused22();
+	virtual void unused23(); virtual void unused24(); virtual void unused25();
+	virtual void unused26(); virtual void unused27(); virtual void unused28();
+	virtual void xferUnsignedInt(UnsignedInt *value);
+	virtual void unused30();
+	virtual void xferUnsignedShort(unsigned short *value);
+	virtual void unused32(); virtual void unused33(); virtual void unused34();
+	virtual void xferBool(bool *value);
+};
+
+void friend_xferObjectID(Xfer *xfer, ObjectID *id);
+
 class DamageInfo
 {
 public:
@@ -236,13 +291,18 @@ public:
 	unsigned char m_unreconstructed20[0x5C - 0x20];
 };
 
-class BridgeBehavior
+class BridgeBehavior : public UpdateModule
 {
 public:
 	virtual void onHealing(DamageInfo *damageInfo);
 	virtual void onDamage(DamageInfo *damageInfo);
 	virtual bool isScaffoldInMotion();
 	virtual void removeScaffolding();
+
+protected:
+	virtual void xfer(Xfer *xfer);
+
+public:
 	Object *getObject() const
 	{
 		return *(Object **)((unsigned char *)this - 0x1C);
@@ -324,6 +384,66 @@ void BridgeBehavior::removeScaffolding()
 		if (bridge)
 			TheAI->pathfinder()->friend_changeBridgeState(bridge->getLayer(), true);
 	}
+}
+
+// ?xfer@BridgeBehavior@@MAEXPAVXfer@@@Z
+void BridgeBehavior::xfer(Xfer *xfer)
+{
+	UpdateModule::xfer(xfer);
+	if (xfer->isLightCRC())
+		return;
+
+	unsigned char *behavior = (unsigned char *)this;
+	Object *object = *(Object **)(behavior + 0x08);
+	XferVersion version(1);
+	xfer->xferVersion(&version);
+
+	if (xfer->isLoading())
+	{
+		Bridge *bridge = TheTerrainLogic->findBridgeAt(object->getPosition());
+		bridge->setBridgeObjectID(object->getID());
+	}
+
+	ObjectID *towerID = (ObjectID *)(behavior + 0x2C);
+	for (int i = 0; i < 4; ++i, ++towerID)
+		friend_xferObjectID(xfer, towerID);
+
+	if (xfer->isLoading())
+	{
+		Bridge *bridge = TheTerrainLogic->findBridgeAt(object->getPosition());
+		bridge->setTowerObjectID(*(ObjectID *)(behavior + 0x2C), 0);
+		bridge->setTowerObjectID(*(ObjectID *)(behavior + 0x30), 1);
+		bridge->setTowerObjectID(*(ObjectID *)(behavior + 0x34), 2);
+		bridge->setTowerObjectID(*(ObjectID *)(behavior + 0x38), 3);
+	}
+
+	xfer->xferBool((bool *)(behavior + 0x47D));
+	BridgeScaffoldList *scaffoldIDs = (BridgeScaffoldList *)(behavior + 0x480);
+	unsigned short scaffoldCount = 0;
+	scaffoldCount = (unsigned short)scaffoldIDs->size();
+	xfer->xferUnsignedShort(&scaffoldCount);
+
+	ObjectID scaffoldID;
+	if (xfer->isStoring())
+	{
+		for (BridgeScaffoldList::iterator it = scaffoldIDs->begin();
+			it != scaffoldIDs->end(); ++it)
+		{
+			scaffoldID = *it;
+			friend_xferObjectID(xfer, &scaffoldID);
+		}
+	}
+	else
+	{
+		for (UnsignedInt i = 0; i < scaffoldCount; ++i)
+		{
+			friend_xferObjectID(xfer, &scaffoldID);
+			scaffoldIDs->push_back(scaffoldID);
+		}
+	}
+
+	xfer->xferUnsignedInt((UnsignedInt *)(behavior + 0x484));
+	xfer->xferBool((bool *)(behavior + 0x47C));
 }
 
 // ?onDamage@BridgeBehavior@@UAEXPAVDamageInfo@@@Z
