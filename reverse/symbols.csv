@@ -73109,6 +73109,7 @@ name,address,notes
 ?bfmeNotifyCJF@BfmeThingCJF@@QAEXXZ,0x0087EE60,pin
 ?bfmeNotifyCJG@BfmeThingCJG@@QAEXXZ,0x0087EE60,pin
 ?bfmeNotifyCLC@BfmeMidCLC@@QAEXXZ,0x0002191D,pin
+?bfmeNotifyDDE@@YAXXZ,0x0000ADFD,pin
 ?bfmeNotifyPlain@PathfindLayer@@AAEXXZ,0x0003A03F,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is null
 ?bfmeNowCBE@@YAPAXXZ,0x008FD440,pin
 ?bfmeOnceBXF@BfmeThingBXF@@QAEXXZ,0x0000E3AE,pin
