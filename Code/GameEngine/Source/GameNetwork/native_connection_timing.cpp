@@ -5,6 +5,7 @@ typedef unsigned short UnsignedShort;
 
 enum NetCommandType
 {
+	NETCOMMANDTYPE_FRAMEINFO = 3,
 	NETCOMMANDTYPE_PLAYERLEAVE = 10,
 	NETCOMMANDTYPE_LOADCOMPLETE = 16
 };
@@ -26,13 +27,35 @@ public:
 	void setNetCommandType(NetCommandType type) { m_commandType = type; }
 	NetCommandType getNetCommandType() { return m_commandType; }
 
-private:
+protected:
 	unsigned int m_timestamp;
 	unsigned int m_executionFrame;
 	unsigned int m_playerID;
 	UnsignedShort m_id;
 	NetCommandType m_commandType;
 	int m_referenceCount;
+};
+
+class NetFrameCommandMsg : public NetCommandMsg
+{
+public:
+	NetFrameCommandMsg() : NetCommandMsg()
+	{
+		m_frame = 0;
+		m_playerFrame = 0;
+		m_commandCount = -1;
+		m_commandType = NETCOMMANDTYPE_FRAMEINFO;
+	}
+
+	void setFrame(unsigned int frame) { m_frame = frame; }
+	unsigned int getFrame() { return m_frame; }
+	void setPlayerFrame(unsigned int frame) { m_playerFrame = frame; }
+	void setCommandCount(int count) { m_commandCount = count; }
+
+private:
+	unsigned int m_frame;
+	unsigned int m_playerFrame;
+	int m_commandCount;
 };
 
 Bool DoesCommandRequireACommandID(NetCommandType type);
@@ -58,11 +81,31 @@ class GameLogic
 {
 	public:
 	void processProgressComplete(int playerID);
+	unsigned int getFrame() { return frame; }
 	char unknown[0x3C];
 	unsigned int frame;
 };
 
 extern GameLogic *TheGameLogic;
+
+class GameClient;
+
+struct GameClientVTable
+{
+	void *unknown[26];
+	unsigned int (__fastcall *getFrame)(GameClient *gameClient);
+};
+
+class GameClient
+{
+public:
+	unsigned int getFrame() { return vtable->getFrame(this); }
+
+private:
+	GameClientVTable *vtable;
+};
+
+extern GameClient *TheGameClient;
 
 class GlobalData
 {
@@ -82,6 +125,7 @@ public:
 	unsigned int getCommandCount(unsigned int frame);
 	unsigned int getFrameCommandCount(unsigned int frame);
 	NetCommandRef *addNetCommandMsg(NetCommandMsg *msg);
+	void setFrameCommandCount(unsigned int frame, unsigned int count);
 };
 
 class Connection
@@ -693,198 +737,40 @@ done:
 	}
 }
 
-// The FRAMEINFO (command type 3) sender, and the function that publishes the
-// frame ceiling. Builds a 0x28-byte type-3 message stamped with TheGameLogic's
-// current frame, sums getCommandCount(frame) across the eight FrameDataManagers,
-// records that total on the local manager via setFrameCommandCount and copies it
-// into the message at +0x24. As packet router it broadcasts to every other slot
-// and then sets the shared ceiling at this+0x1205C to its OWN current frame;
-// otherwise it sends only to the router. This is BFME's off-host delay: a client
-// may advance only up to the last frame the router announced, and the router
-// announces on the fixed QueryPerformanceFrequency/5 (200ms) quantum that
-// BFMENativeNetwork::getFrameAdvanceCount enforces.
-__declspec(naked) void BFMEConnectionManager::sendFrameInfo()
+void BFMEConnectionManager::sendFrameInfo()
 {
-	__asm {
-		push 0FFFFFFFFh
-		push 104426Bh
-		mov eax, dword ptr fs:[0h]
-		push eax
-		mov dword ptr fs:[0h], esp
-		push ecx
-		push ebx
-		push ebp
-		push esi
-		push edi
-		push 28h
-		mov edi, ecx
-		or ebp, 0FFFFFFFFh
-		__emit 0E8h
-		__emit 0FAh
-		__emit 0C1h
-		__emit 021h
-		__emit 000h   // call 0x881F30
-		mov esi, eax
-		add esp, 4h
-		mov dword ptr [esp+10h], esi
-		xor ebx, ebx
-		cmp esi, ebx
-		mov dword ptr [esp+1Ch], ebx
-		je allocFailed
-		mov ecx, esi
-		__emit 0E8h
-		__emit 064h
-		__emit 0D5h
-		__emit 09Ah
-		__emit 0FFh   // call 0x132B4
-		mov dword ptr [esi], 111A220h
-		mov dword ptr [esi+1Ch], ebx
-		mov dword ptr [esi+20h], ebx
-		mov dword ptr [esi+24h], ebp
-		mov dword ptr [esi+14h], 3h
-		jmp stampFrame
-allocFailed:
-		xor esi, esi
-stampFrame:
-		__emit 0A1h
-		__emit 098h
-		__emit 008h
-		__emit 02Fh
-		__emit 001h   // mov eax, dword ptr [0x12f0898]
-		mov ecx, dword ptr [eax+3Ch]
-		mov dword ptr [esi+1Ch], ecx
-		__emit 08Bh
-		__emit 00Dh
-		__emit 064h
-		__emit 014h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f1464]
-		mov edx, dword ptr [ecx]
-		mov dword ptr [esp+1Ch], ebp
-		call dword ptr [edx+68h]
-		mov dword ptr [esi+20h], eax
-		mov eax, dword ptr [edi+12028h]
-		mov dword ptr [esi+0Ch], eax
-		mov eax, dword ptr [esi+14h]
-		push eax
-		__emit 0E8h
-		__emit 0D9h
-		__emit 0FDh
-		__emit 09Ah
-		__emit 0FFh   // call 0x15B72
-		add esp, 4h
-		test al, al
-		je countCommands
-		__emit 0E8h
-		__emit 0B3h
-		__emit 0A7h
-		__emit 09Ch
-		__emit 0FFh   // call 0x30558
-		mov word ptr [esi+10h], ax
-countCommands:
-		mov eax, dword ptr [edi+12028h]
-		cmp dword ptr [edi+eax*4+120E4h], ebx
-		je recordTotal
-		cmp eax, dword ptr [edi+1202Ch]
-		jne recordTotal
-		xor ebp, ebp
-		lea ebx,  [edi+120E4h]
-		mov dword ptr [esp+10h], 8h
-nextSlot:
-		mov ecx, dword ptr [ebx]
-		test ecx, ecx
-		je advanceSlot
-		__emit 0E8h
-		__emit 001h
-		__emit 0D9h
-		__emit 09Bh
-		__emit 0FFh   // call 0x236DC
-		test al, al
-		jne advanceSlot
-		__emit 08Bh
-		__emit 00Dh
-		__emit 098h
-		__emit 008h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f0898]
-		mov eax, dword ptr [ecx+3Ch]
-		mov ecx, dword ptr [ebx]
-		push eax
-		__emit 0E8h
-		__emit 0A2h
-		__emit 019h
-		__emit 09Bh
-		__emit 0FFh   // call 0x17792
-		add ebp, eax
-advanceSlot:
-		mov eax, dword ptr [esp+10h]
-		add ebx, 4h
-		dec eax
-		mov dword ptr [esp+10h], eax
-		jne nextSlot
-		mov edx, dword ptr [esi+1Ch]
-		mov eax, dword ptr [edi+12028h]
-		mov ecx, dword ptr [edi+eax*4+120E4h]
-		push ebp
-		push edx
-		__emit 0E8h
-		__emit 04Bh
-		__emit 060h
-		__emit 09Dh
-		__emit 0FFh   // call 0x3BE62
-recordTotal:
-		mov dword ptr [esi+24h], ebp
-		mov eax, dword ptr [edi+12028h]
-		mov ecx, dword ptr [edi+1202Ch]
-		xor edx, edx
-		cmp eax, ecx
-		mov dl, 1h
-		jne sendToRouter
-		mov ecx, eax
-		shl dl, cl
-		mov ecx, edi
-		not dl
-		push edx
-		push esi
-		__emit 0E8h
-		__emit 03Dh
-		__emit 093h
-		__emit 09Dh
-		__emit 0FFh   // call 0x3F17A
-		__emit 0A1h
-		__emit 098h
-		__emit 008h
-		__emit 02Fh
-		__emit 001h   // mov eax, dword ptr [0x12f0898]
-		mov ecx, dword ptr [eax+3Ch]
-		mov dword ptr [edi+1205Ch], ecx
-		jmp release
-sendToRouter:
-		shl dl, cl
-		mov ecx, edi
-		push edx
-		push esi
-		__emit 0E8h
-		__emit 022h
-		__emit 093h
-		__emit 09Dh
-		__emit 0FFh   // call 0x3F17A
-release:
-		mov ecx, esi
-		__emit 0E8h
-		__emit 045h
-		__emit 0A2h
-		__emit 09Bh
-		__emit 0FFh   // call 0x200A4
-		mov ecx, dword ptr [esp+14h]
-		pop edi
-		pop esi
-		pop ebp
-		pop ebx
-		mov dword ptr fs:[0h], ecx
-		add esp, 10h
-		ret
+	int commandCount = -1;
+	NetFrameCommandMsg *msg = new NetFrameCommandMsg;
+	msg->setFrame(TheGameLogic->getFrame());
+	msg->setPlayerFrame(TheGameClient->getFrame());
+	msg->setPlayerID(m_localSlot);
+	if (DoesCommandRequireACommandID(msg->getNetCommandType()))
+		msg->setID(GenerateNextCommandID());
+
+	if (m_frameData[m_localSlot] != 0 && m_localSlot == m_packetRouterSlot)
+	{
+		commandCount = 0;
+		for (int i = 0; i < 8; ++i)
+		{
+			if (m_frameData[i] != 0 && !m_frameData[i]->getIsQuitting())
+				commandCount += m_frameData[i]->getCommandCount(TheGameLogic->getFrame());
+		}
+		m_frameData[m_localSlot]->setFrameCommandCount(msg->getFrame(), commandCount);
 	}
+	msg->setCommandCount(commandCount);
+
+	if (m_localSlot == m_packetRouterSlot)
+	{
+		reinterpret_cast<ConnectionManager *>(this)->sendLocalCommand(
+			msg, (unsigned char)~(1 << m_localSlot));
+		m_frameCeiling = TheGameLogic->frame;
+	}
+	else
+	{
+		reinterpret_cast<ConnectionManager *>(this)->sendLocalCommand(
+			msg, (unsigned char)(1 << m_packetRouterSlot));
+	}
+	msg->detach();
 }
 
 // The incoming-command dispatcher: switch on the command type at message
