@@ -72601,6 +72601,7 @@ name,address,notes
 ?bfmeDtorCUD@BfmeBaseCUD@@QAEXXZ,0x00013994,pin
 ?bfmeDtorCUE@BfmeBaseCUE@@QAEXXZ,0x00013994,pin
 ?bfmeDtorCUF@BfmeBaseCUF@@QAEXXZ,0x00013994,pin
+?bfmeDtorDJA@BfmeBaseDJA@@QAEXXZ,0x00013994,pin
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUF@BfmeThingUF@@QAEXXZ,0x00AB8350,pin
@@ -78290,6 +78291,10 @@ _bfmeVftCVE,0x00D1B6A0,pin
 _bfmeVftDFA,0x00D2FBDC,pin
 _bfmeVftDFG,0x00D2FBDC,pin
 _bfmeVftDFH,0x00D2FBDC,pin
+_bfmeVftDJA1,0x00C73744,pin
+_bfmeVftDJA2,0x00D0FA14,pin
+_bfmeVftDJA3,0x00D10834,pin
+_bfmeVftDJA4,0x00D1126C,pin
 _bfmeVftSA,0x00C8F4F0,pin
 _bfmeVftSE,0x00D0C64C,pin
 _bfmeVftSF,0x00D0C878,pin
