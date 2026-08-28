@@ -72405,6 +72405,7 @@ name,address,notes
 ?bfmeDtorVB@BfmeThingVB@@QAEXPAX@Z,0x009F6BC8,pin
 ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z,0x0002CB79,Open-BFME5 ILT thunk to body 0x00417710; Gen_00417cb0::tail at 0x00417A70 calls it on this with the source result and its own argument; address-derived name in the same synthetic family as the class
 ?bfmeEnable@BfmeElemW@@QAEXHH@Z,0x000482AC,Open-BFME5 the ICF thunk (to 0x004482AC) the clear at 0x004B1720 calls on each element with a pair of ones
+?bfmeEnsureWA@BfmeThingWA@@QAEXXZ,0x0002DE02,pin
 ?bfmeEnter@Glo012F1024Item@@QAEXXZ,0x0000BC5D,Open-BFME5 ILT thunk to body 0x003AEE70; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 calls it on the 0xDC-byte item the advanced index selects; address-derived name
 ?bfmeEquivalencyIndex@PathfindMovementProfile@@QBEHXZ,0x00046B55,Open-BFME5 ILT thunk to the exact movement-profile equivalency index at 0x00402120
 ?bfmeErase@AnimationSoundClientBehaviorModuleDataMember@@AAEXPAX@Z,0x000082D3,Open-BFME5 ILT thunk; ??1AnimationSoundClientBehaviorModuleDataMember@@QAE@XZ at 0x00605E60 hands it the field at +4 of its header before putting the header back to itself; address-derived name
@@ -72737,6 +72738,7 @@ name,address,notes
 ?bfmeInitBodyA@@YAXPAUBfmeNodeBody@@PAX@Z,0x000012D5,Open-BFME5 ILT the node maker at 0x0046A070 initialises through
 ?bfmeInitBodyB@@YAXPAUBfmeNodeBody@@PAX@Z,0x0000C568,Open-BFME5 ILT the node maker at 0x0046B1C0 initialises through
 ?bfmeInitBodyC@@YAXPAUBfmeNodeBody@@PAX@Z,0x00926750,Open-BFME5 the routine the node maker at 0x00927760 initialises through
+?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
 ?bfmeInsertQI@BfmeThingQI@@QAEPADPADE@Z,0x0082FE50,pin
 ?bfmeInvoke@Gen_0064C6A0Target@@QAEXPAX0@Z,0x0001F785,Open-BFME5 the member the guarded dispatcher at 0x0064C6A0 calls
@@ -72903,6 +72905,7 @@ name,address,notes
 ?bfmeStep3@Gen_007892D0@@AAEXXZ,0x0004264A,Open-BFME5 ILT the three-step runner at 0x007892D0 tail-jumps to
 ?bfmeStep@Glo012F1024Entry@@QAEXXZ,0x00015F50,Open-BFME5 ILT thunk to body 0x003A7320; ?step@Glo012F1024Type@@QAEXXZ at 0x003B3900 tail-jumps into it on the selected 32-byte entry; address-derived name
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
+?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStop@BfmeStopF@@QAEXXZ,0x00015E2E,Open-BFME5 the ICF thunk (to 0x0037C600) the clear at 0x002901C0 calls before emptying its vector
 ?bfmeStopMovie@Display@@QAEXXZ,0x0001992F,Open-BFME5 ILT thunk to body 0x0040EFF0; ?hide@Shell@@QAEX_N@Z at 0x0057F5B0 calls it on TheDisplay with no arguments; address-derived name
 ?bfmeSwapEnds@@YAXPAPAPAVBfmeOwnedI@@0@Z,0x00032FE7,Open-BFME5 the ICF thunk (to 0x00432FE7) the swap in the clear at 0x003C1190 calls for the third pair
@@ -72911,6 +72914,7 @@ name,address,notes
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSH@BfmeSubSH@@QAEXXZ,0x009EB7A0,pin
 ?bfmeTailSI@BfmeThingSI@@QAEXXZ,0x000437F2,pin
+?bfmeTailWC@BfmeInnerWC@@QAEXH@Z,0x00007513,pin
 ?bfmeTake@BfmeSinkAB@@QAEXPAVBfmeVecAB@@@Z,0x00014E1B,Open-BFME5 the ICF thunk (to 0x00414E1B) the body at 0x003CFC90 hands its first vector to
 ?bfmeTellRB@BfmeNodeRB@@QAEXPAX@Z,0x000021CB,pin
 ?bfmeTellRP@BfmeFoundRP@@QAEXPAX@Z,0x00030553,pin
