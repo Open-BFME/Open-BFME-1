@@ -4714,24 +4714,32 @@ void ScriptActions::doSetMoney(const AsciiString& playerName, Int money)
 //-------------------------------------------------------------------------------------------------
 /** doGiveMoney */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doGiveMoney_Thunk.cpp
-// ?doGiveMoney@ScriptActions@@IAEXABVAsciiString@@H@Z present-unmatched
+// BFME generalised the player half the same way doSetMoney above was: the name
+// resolves to a mask and the body walks it, getEachPlayerFromMask consuming the
+// mask by reference, so the trailing test of the mask is the loop condition.
+// Money is inline at Player+0x48, so getMoney() is a lea and the null test after
+// it is dead -- retail still emits it, so it stays.
+// ?doGiveMoney@ScriptActions@@IAEXABVAsciiString@@H@Z
 void ScriptActions::doGiveMoney(const AsciiString& playerName, Int money)
 {
-	Player* player = TheScriptEngine->getPlayerFromAsciiString(playerName);
-
-	if (!player) {
+	PlayerMaskType mask = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)
+		->getPlayerMaskFromAsciiString(playerName, NULL);
+	if (!mask) {
 		return;
 	}
 
-	Money *m = player->getMoney();
-	if (!m)
-		return;
-
-	if (money < 0)
-		m->withdraw(-money);
-	else
-		m->deposit(money);
+	do {
+		Player* player = ThePlayerList->getEachPlayerFromMask(mask);
+		if (player) {
+			Money *m = &((BfmePlayerMoney *)player)->m_money;
+			if (m) {
+				if (money < 0)
+					m->withdraw(-money);
+				else
+					m->deposit(money);
+			}
+		}
+	} while (mask);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -6602,17 +6610,30 @@ void ScriptActions::doPlayerGrantScience(const AsciiString& playerName, const As
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doPlayerPurchaseScience_Thunk.cpp
-// ?doPlayerPurchaseScience@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
+// Same mask generalisation as doGiveMoney, but the science resolves first: retail
+// reads the second parameter before it has pushed anything, so the two lookups are
+// swapped relative to Zero Hour. SCIENCE_INVALID is -1, hence a cmp rather than the
+// plain test the mask guard below it gets.
+// ?doPlayerPurchaseScience@ScriptActions@@IAEXABVAsciiString@@0@Z
 void ScriptActions::doPlayerPurchaseScience(const AsciiString& playerName, const AsciiString& scienceName)
 {
-	Player* pPlayer = TheScriptEngine->getPlayerFromAsciiString(playerName);
-	if (!pPlayer)
-		return;
 	ScienceType science = TheScienceStore->getScienceFromInternalName(scienceName);
-	if (science == SCIENCE_INVALID)
+	if (science == SCIENCE_INVALID) {
 		return;
-	pPlayer->attemptToPurchaseScience(science);
+	}
+
+	PlayerMaskType mask = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)
+		->getPlayerMaskFromAsciiString(playerName, NULL);
+	if (!mask) {
+		return;
+	}
+
+	do {
+		Player* player = ThePlayerList->getEachPlayerFromMask(mask);
+		if (player) {
+			player->attemptToPurchaseScience(science);
+		}
+	} while (mask);
 }
 
 //-------------------------------------------------------------------------------------------------
