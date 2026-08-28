@@ -64,6 +64,7 @@ class Connection
 public:
 	Connection();
 	Bool isQueueEmpty();
+	void setQuitting( UnsignedInt quitFrame );
 
 protected:
 	void doRetryMetrics();
@@ -82,6 +83,11 @@ Bool Connection::isQueueEmpty() {
 		return TRUE;
 	}
 	return FALSE;
+}
+
+void Connection::setQuitting( UnsignedInt quitFrame ) {
+	m_id = quitFrame;
+	m_openedTime = timeGetTime();
 }
 
 void Connection::doRetryMetrics() {
