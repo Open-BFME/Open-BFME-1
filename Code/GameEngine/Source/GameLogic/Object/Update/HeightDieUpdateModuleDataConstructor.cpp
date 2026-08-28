@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// Field names come from retail's own INI field table joined to upstream's
+// parse table on the key: retail supplies every offset, upstream only the
+// word. The offsets were derived from this class's declaration sequence and
+// type sizes, never read out of the old placeholder names.
 
 // Open-BFME5: HeightDieUpdateModuleData default ctor.
 
@@ -11,26 +15,26 @@ public:
 
 private:
 	unsigned int m_gap4;
-	unsigned int m_08;
-	unsigned char m_0c;
-	unsigned char m_0d;
+	unsigned int m_targetHeightAboveTerrain;
+	unsigned char m_targetHeightIncludesStructures;
+	unsigned char m_onlyWhenMovingDown;
 	unsigned char m_pad0e;
 	unsigned char m_pad0f;
-	float m_10;
-	unsigned char m_14;
+	float m_destroyAttachedParticlesAtHeight;
+	unsigned char m_snapToGroundOnDeath;
 	unsigned char m_pad15;
 	unsigned char m_pad16;
 	unsigned char m_pad17;
-	unsigned int m_18;
+	unsigned int m_initialDelay;
 };
 
 // ??0HeightDieUpdateModuleData@@QAE@XZ
 HeightDieUpdateModuleData::HeightDieUpdateModuleData()
 {
-	m_08 = 0;
-	m_0c = 0;
-	m_0d = 0;
-	m_10 = -1.0f;
-	m_14 = 0;
-	m_18 = 0;
+	m_targetHeightAboveTerrain = 0;
+	m_targetHeightIncludesStructures = 0;
+	m_onlyWhenMovingDown = 0;
+	m_destroyAttachedParticlesAtHeight = -1.0f;
+	m_snapToGroundOnDeath = 0;
+	m_initialDelay = 0;
 }
