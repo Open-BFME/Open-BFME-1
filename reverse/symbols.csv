@@ -73084,6 +73084,7 @@ name,address,notes
 ?bfmeOneCGF@BfmeOwnerCGF@@QAEXPAX@Z,0x0001D4B2,pin
 ?bfmeOneCHF@BfmeOneCHF@@QAEXXZ,0x00020C84,pin
 ?bfmeOneCKE@BfmeSubCKE@@QAEPAVBfmeOneCKE@@XZ,0x0000E570,pin
+?bfmeOneCKF@BfmeSubCKF@@QAEPAVBfmeOneCKF@@XZ,0x0000E570,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73247,6 +73248,7 @@ name,address,notes
 ?bfmeTailCHG@@YAXPAX000@Z,0x0001F596,pin
 ?bfmeTailCJH@BfmeThingCJH@@QAEXXZ,0x009DB5A0,pin
 ?bfmeTailCKE@BfmeThingCKE@@QAEHXZ,0x000488F6,pin
+?bfmeTailCKF@BfmeThingCKF@@QAEHXZ,0x000488F6,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
@@ -73293,6 +73295,7 @@ name,address,notes
 ?bfmeTwoCGF@BfmeThingCGF@@QAEXPAX@Z,0x00039B1C,pin
 ?bfmeTwoCHF@BfmeTwoCHF@@QAEXXZ,0x0000A754,pin
 ?bfmeTwoCKE@BfmeOneCKE@@QAEPAVBfmeTwoCKE@@XZ,0x0000F498,pin
+?bfmeTwoCKF@BfmeOneCKF@@QAEPAVBfmeTwoCKF@@XZ,0x0000F498,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
