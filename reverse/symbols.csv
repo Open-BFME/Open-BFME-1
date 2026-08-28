@@ -72254,6 +72254,8 @@ name,address,notes
 ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z,0x0000C0A4,Open-BFME5 ILT thunk to body 0x00497CE0; ??0BfmeQuickMatchScreenBase@@QAE@PAX@Z at 0x00470620 calls it on this with its own argument as the last thing it does; address-derived name
 ?bfmeBaseAB@BfmeThingAB@@QAEXPAX@Z,0x0001AD0C,pin
 ?bfmeBaseAGB@BfmeThingAGB@@QAEXPAX0@Z,0x000170E4,pin
+?bfmeBaseARC@BfmeThingARC@@QAEXXZ,0x009A1A30,pin
+?bfmeBaseARD@BfmeThingARD@@QAEXPAX0@Z,0x00021BE8,pin
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
 ?bfmeBaseSJ@BfmeThingSJ@@QAEXH@Z,0x0090E3D0,pin
 ?bfmeBaseSK@BfmeThingSK@@QAEXH@Z,0x009DB4E0,pin
@@ -72406,6 +72408,7 @@ name,address,notes
 ?bfmeDrop@Rva003D8530Owner@@QAEXPAX@Z,0x00016DB0,Open-BFME5 ILT thunk to body 0x003D8530; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it on the sub-object at +0x0C of _TheAIParseDefinitionAI for each live slot whose kind is one of four; address-derived name
 ?bfmeDropA@@YAXPAX@Z,0x00895320,Open-BFME5 the drop the cleanup at 0x00783A50 calls
 ?bfmeDropAIB@BfmeListAIB@@QAEXPAX@Z,0x0000E363,pin
+?bfmeDropARB@BfmeGotARB@@QAEXH@Z,0x00043C8E,pin
 ?bfmeDropB@@YAXPAX@Z,0x008961C0,Open-BFME5 the drop the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeDropRN@BfmeThingRN@@QAEXH@Z,0x00031F7A,pin
 ?bfmeDropRS@BfmeThingRS@@QAEXH@Z,0x00031F7A,pin
@@ -72956,6 +72959,7 @@ name,address,notes
 ?bfmeStep3@Gen_007892D0@@AAEXXZ,0x0004264A,Open-BFME5 ILT the three-step runner at 0x007892D0 tail-jumps to
 ?bfmeStep@Glo012F1024Entry@@QAEXXZ,0x00015F50,Open-BFME5 ILT thunk to body 0x003A7320; ?step@Glo012F1024Type@@QAEXXZ at 0x003B3900 tail-jumps into it on the selected 32-byte entry; address-derived name
 ?bfmeStepAED@BfmeSubAED@@QAEXH@Z,0x00015546,pin
+?bfmeStepARA@BfmeThingARA@@QAEXXZ,0x000312A0,pin
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
@@ -77725,6 +77729,12 @@ _bfmeVftAGBc,0x00CB1404,pin
 _bfmeVftAGBd,0x00CB1340,pin
 _bfmeVftAGBe,0x00CB132C,pin
 _bfmeVftAPA,0x00C73734,pin
+_bfmeVftARCa,0x00C73744,pin
+_bfmeVftARCb,0x00CEA230,pin
+_bfmeVftARCc,0x00CEA21C,pin
+_bfmeVftARDa,0x00C9E7B4,pin
+_bfmeVftARDb,0x00C9E6F0,pin
+_bfmeVftARDc,0x00C9E6E4,pin
 _bfmeVftSA,0x00C8F4F0,pin
 _bfmeVftSE,0x00D0C64C,pin
 _bfmeVftSF,0x00D0C878,pin
