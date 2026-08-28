@@ -2113,6 +2113,7 @@ name,address,notes
 ??0BfmeStaticThingD@@QAE@XZ,0x0003DB0E,Open-BFME5 the constructor the function-local static at 0x005D9C30 runs
 ??0BfmeStaticThingE@@QAE@XZ,0x000022D9,Open-BFME5 the constructor the function-local static at 0x005D9CA0 runs
 ??0BfmeStaticThingF@@QAE@XZ,0x0000A533,Open-BFME5 the constructor the function-local static at 0x005D9D10 runs
+??0BfmeStrZD@@QAE@PBX@Z,0x00888BC0,pin
 ??0BfmeSubA@@QAE@ABV0@@Z,0x00887C90,Open-BFME5 the sub-object copy ctor the copies at 0x003505E0 and 0x00350630 call
 ??0BfmeSubB@@QAE@ABV0@@Z,0x00887B60,Open-BFME5 the sub-object copy ctor the copies at 0x00351F30 and 0x00351FB0 call
 ??0BfmeThingBE@@QAE@XZ,0x008BE3B0,Open-BFME5 the constructor the new expression at 0x008BE660 runs on its block
@@ -72259,6 +72260,7 @@ name,address,notes
 ?bfmeBaseTL@BfmeThingTL@@QAEXPAXH@Z,0x0083FB60,pin
 ?bfmeBaseUpdate@Gen009D6330@@QAEXPAXPBXI@Z,0x009D6E50,address-derived base update target from the direct REL32 call at retail 0x009D634E
 ?bfmeBaseZA@BfmeThingZA@@QAEXXZ,0x00025E1E,pin
+?bfmeBaseZD@BfmeThingZD@@QAEXPAXVBfmeStrZD@@@Z,0x000035B2,pin
 ?bfmeBegin@BfmeSetupRecord@@QAEXXZ,0x007E8AC0,Open-BFME5 the member the two-field setup stubs call first
 ?bfmeBegin@BfmeSetupTarget@@QAEXXZ,0x007E8AC0,Open-BFME5 the member the setup stubs at 0x007E95A0 and siblings call first
 ?bfmeBegin@Glo012F1028Sub@@AAEXPAVGlo012F1028Item@@@Z,0x0003BF2F,Open-BFME5 ILT thunk to body 0x003C7010; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on this with each item of the vector at +0x30 of its holder; address-derived name
@@ -72874,6 +72876,8 @@ name,address,notes
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
+?bfmeSendAAA@BfmeSinkAAA@@QAEXPAX_NH@Z,0x00044409,pin
+?bfmeSendAAB@BfmeSinkAAB@@QAEXPAX_NH@Z,0x00044409,pin
 ?bfmeSendRM@BfmeSinkRM@@QAEXPAXH@Z,0x00006613,pin
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
 ?bfmeSetQQ@BfmeThingQQ@@QAEXPBDI@Z,0x0088A8F0,pin
@@ -73967,6 +73971,8 @@ name,address,notes
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
 ?g_bfmeLookRP@@3PAVBfmeLookRP@@A,0x00EF076C,pin
 ?g_bfmeLookRQ@@3PAVBfmeLookRQ@@A,0x00EF076C,pin
+?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
+?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
@@ -73977,6 +73983,8 @@ name,address,notes
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
+?g_bfmeSinkAAA@@3PAVBfmeSinkAAA@@A,0x00EF33F8,pin
+?g_bfmeSinkAAB@@3PAVBfmeSinkAAB@@A,0x00EF33F8,pin
 ?g_bfmeSinkSB@@3PAVBfmeSinkSB@@A,0x00EED668,pin
 ?g_bfmeUnicodeStringFormat@@3QBDB,0x0114451C,address-derived UnicodeString format string from retail 0x009D9AAC
 ?g_bfmeUnsignedByteFormat@@3QBDB,0x011442BC,address-derived unsigned-byte format string from the DIR32 operand at retail 0x009D943A
@@ -77642,6 +77650,7 @@ _bfmeAppend,0x009D9180,address-derived varargs formatting helper target from the
 _bfmeArrayNew,0x00881F70,address-derived array allocator target from the direct REL32 call at retail 0x009D6259
 _bfmeDeleteBlock,0x00881EF0,address-derived release target from the direct REL32 call at retail 0x009D1A4C
 _bfmeDirectInput8Create@20,0x009F9AF0,undecorated alias for the DirectInput8Create import stub (see Win32DIKeyboardOpen.cpp)
+_bfmeLitZD,0x00CC79BC,pin
 _bfmeRegZB,0x00EF1094,pin
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
 _bfmeTryActivate@12,0x009D8460,address-derived stdcall helper target from the direct REL32 call at retail 0x009D6310
@@ -77679,6 +77688,7 @@ _bfmeVftVF,0x00D2BC0C,pin
 _bfmeVftVG,0x00CC0D90,pin
 _bfmeVftVH,0x00CE1F3C,pin
 _bfmeVftXB,0x00C9BFC8,pin
+_bfmeVftZD,0x00CC7968,pin
 _bfme_MallocAlloc0OomMalloc_82B820,0x0082B820,STLport __malloc_alloc<0>::_S_oom_malloc callee of allocate at 0x0082C580
 _bfme_acos,0x009F7256,internal acos helper called by ACos
 _bfme_asin,0x009F7D86,internal asin helper called by ASin
