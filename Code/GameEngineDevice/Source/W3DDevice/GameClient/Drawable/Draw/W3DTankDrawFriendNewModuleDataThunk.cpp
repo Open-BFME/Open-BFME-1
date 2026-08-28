@@ -16,6 +16,7 @@ class ModuleData;
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DTankDraw.h
 class W3DTankDrawModuleData
 {
 public:
@@ -26,6 +27,7 @@ private:
 	unsigned char m_pad[0x16C];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -34,6 +36,7 @@ public:
 
 extern "C" char W3DTankDrawFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DTankDraw.h
 class W3DTankDraw
 {
 public:

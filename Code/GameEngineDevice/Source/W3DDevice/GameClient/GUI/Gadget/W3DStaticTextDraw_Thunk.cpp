@@ -47,18 +47,21 @@ enum { WIN_STATUS_WRAP_CENTERED = 0x00040000 };
 enum { WIN_STATUS_HOTKEY_TEXT = 0x00100000 };
 enum { WIN_COLOR_UNDEFINED = 0x00FFFFFF };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
 	Int y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct IRegion2D
 {
 	ICoord2D lo;
 	ICoord2D hi;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 struct WinDrawData
 {
 	const Image *image;
@@ -70,6 +73,7 @@ struct WinDrawData
 // ones used place them.  Witnessed: getTextLength +0x0C, setWordWrap +0x20,
 // setWordWrapCentered +0x24, the two-colour setter +0x28, the four-argument
 // draw +0x38, getSize +0x3C, setUseHotkey +0x4C, setClipRegion +0x50.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayString.h
 class DisplayString
 {
 public:
@@ -102,6 +106,7 @@ struct TextData
 	Bool centered;											///< +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 class WinInstanceData
 {
 public:
@@ -109,6 +114,7 @@ public:
 	ICoord2D m_imageOffset;									///< retail this+0x17C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -132,6 +138,7 @@ private:
 };
 
 // Only winDrawImage is reconstructed; the slots ahead of it place it.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:
@@ -209,6 +216,7 @@ public:
 													 Int endX, Int endY);				///< vtable +0xFC
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:

@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setEaseTimes@ParabolicEase@@: Code/GameEngine/Source/GameClient/ParabolicEase.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParabolicEase.h
 class ParabolicEase
 {
 public:

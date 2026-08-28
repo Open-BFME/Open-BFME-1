@@ -31,6 +31,7 @@ typedef bool Bool;
 extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);
 #pragma intrinsic(memcmp)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -60,6 +61,7 @@ inline bool operator==(const AsciiString &left, const AsciiString &right)
 namespace rts
 {
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/STLTypedefs.h
 struct hash
 {
 	unsigned int operator()(T value) const;			// ILT 0x0000EC91

@@ -14,6 +14,7 @@ struct MeshGeomInner
 	const char *text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshgeometry.h
 class MeshGeometryClass
 {
 protected:
@@ -27,6 +28,7 @@ private:
 	MeshGeomInner *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmdl.h
 class MeshModelClass
 {
 public:

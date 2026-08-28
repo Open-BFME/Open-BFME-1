@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Set_UV_Source@VertexMaterialClass@@QAEXHH@Z: Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
 
 // VertexMaterialClass::Set_UV_Source (packet 00921250) writes UVSource[stage]
 // (real offset 0x40, 8-element array) and sets CRCDirty (real offset 0x68).
@@ -12,6 +13,7 @@
 //
 // Real field offsets: UVSource[8]=0x40, UniqueID=0x60, CRCDirty=0x68.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.h
 class VertexMaterialClass
 {
 public:

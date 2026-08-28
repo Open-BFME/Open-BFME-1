@@ -29,6 +29,7 @@ typedef int Int;
 typedef int Bool;
 typedef char Char;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFileSystem.h
 class Win32BIGFileSystem
 {
 public:

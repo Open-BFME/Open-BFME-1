@@ -19,6 +19,7 @@ public:
 	W3DOverlordTruckModuleDataBase();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DOverlordTruckDraw.h
 class W3DOverlordTruckDrawModuleData : public W3DOverlordTruckModuleDataBase
 {
 public:

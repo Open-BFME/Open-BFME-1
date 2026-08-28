@@ -229,6 +229,7 @@ W3DBibBuffer::~W3DBibBuffer(void)
 /** Constructor. Sets m_initialized to true if it finds the w3d models it needs
 for the bibs. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBibBuffer_ctor_Thunk.cpp
 // ??0W3DBibBuffer@@QAE@XZ present-unmatched
 W3DBibBuffer::W3DBibBuffer(void)
 {
@@ -429,6 +430,7 @@ void W3DBibBuffer::removeBibDrawable(DrawableID id)
 //=============================================================================
 /** Draws the bibs.  Uses camera to cull. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBibBuffer_renderBibs_Thunk.cpp
 // ?renderBibs@W3DBibBuffer@@QAEXXZ present-unmatched
 void W3DBibBuffer::renderBibs()
 {

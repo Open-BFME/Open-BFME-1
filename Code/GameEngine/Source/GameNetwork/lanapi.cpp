@@ -99,6 +99,7 @@ LANAPI::LANAPI( void ) : m_transport(NULL)
 	m_isActive = TRUE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_dtor.cpp
 // ??1LANAPI@@UAE@XZ present-unmatched
 LANAPI::~LANAPI( void )
 {
@@ -325,6 +326,7 @@ void LANAPI::checkMOTD( void )
 
 extern Bool LANbuttonPushed;
 extern Bool LANSocketErrorDetected;
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPIUpdateThunk.cpp
 // ?update@LANAPI@@ present-unmatched
 void LANAPI::update( void )
 {
@@ -626,6 +628,7 @@ void LANAPI::RequestLocations( void )
 	sendMessage(&msg);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_RequestGameJoin.cpp
 // ?RequestGameJoin@LANAPI@@UAEXPAVLANGameInfo@@I@Z present-unmatched
 void LANAPI::RequestGameJoin( LANGameInfo *game, UnsignedInt ip /* = 0 */ )
 {
@@ -715,6 +718,7 @@ void LANAPI::RequestGameLeave( void )
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_RequestGameAnnounce.cpp
 // ?RequestGameAnnounce@LANAPI@@UAEXXZ present-unmatched
 void LANAPI::RequestGameAnnounce( void )
 {
@@ -739,6 +743,7 @@ void LANAPI::RequestGameAnnounce( void )
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_RequestAccept_Thunk.cpp
 // ?RequestAccept@LANAPI@@UAEXXZ present-unmatched
 void LANAPI::RequestAccept( void )
 {
@@ -798,6 +803,7 @@ void LANAPI::RequestHasMap( void )
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/LANAPI_RequestChat_Thunk.cpp
 // ?RequestChat@LANAPI@@UAEXVUnicodeString@@W4ChatType@LANAPIInterface@@@Z present-unmatched
 void LANAPI::RequestChat( UnicodeString message, ChatType format )
 {
@@ -855,6 +861,7 @@ void LANAPI::RequestGameStartTimer( Int seconds )
 	OnGameStartTimer(seconds);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_RequestGameOptions.cpp
 // ?RequestGameOptions@LANAPI@@UAEXVAsciiString@@_NI@Z present-unmatched
 void LANAPI::RequestGameOptions( AsciiString gameOptions, Bool isPublic, UnsignedInt ip /* = 0 */ )
 {
@@ -967,6 +974,7 @@ void LANAPI::RequestSlotList( void )
 	OnSlotList(LANAPIInterface::RET_OK, m_currentGame);
 } // void LANAPI::RequestSlotList( void )
 */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_RequestSetName.cpp
 // ?RequestSetName@LANAPI@@UAEXVUnicodeString@@@Z present-unmatched
 void LANAPI::RequestSetName( UnicodeString newName )
 {
@@ -1037,6 +1045,7 @@ void LANAPI::RequestLobbyLeave( Bool forced )
 }
 
 // Misc utility functions
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_LookupGame.cpp
 // ?LookupGame@LANAPI@@UAEPAVLANGameInfo@@VUnicodeString@@@Z present-unmatched
 LANGameInfo * LANAPI::LookupGame( UnicodeString gameName )
 {
@@ -1071,6 +1080,7 @@ LANGameInfo * LANAPI::LookupGameByListOffset( Int offset )
 	return theGame; // NULL means we didn't find anything.
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_removeGame.cpp
 // ?removeGame@LANAPI@@IAEXPAVLANGameInfo@@@Z present-unmatched
 void LANAPI::removeGame( LANGameInfo *game )
 {
@@ -1143,6 +1153,7 @@ void LANAPI::removePlayer( LANPlayer *player )
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_addGame.cpp
 // ?addGame@LANAPI@@IAEXPAVLANGameInfo@@@Z present-unmatched
 void LANAPI::addGame( LANGameInfo *game )
 {
@@ -1205,6 +1216,7 @@ void LANAPI::addPlayer( LANPlayer *player )
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_SetLocalIP.cpp
 // ?SetLocalIP@LANAPI@@ present-unmatched
 Bool LANAPI::SetLocalIP( UnsignedInt localIP )
 {
@@ -1218,6 +1230,7 @@ Bool LANAPI::SetLocalIP( UnsignedInt localIP )
 	return retval;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_SetLocalIP.cpp
 // ?SetLocalIP@LANAPI@@ present-unmatched
 void LANAPI::SetLocalIP( AsciiString localIP )
 {

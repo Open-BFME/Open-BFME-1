@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Draw_Strip@DX8Wrapper@@: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 
 // DX8Wrapper::Draw_Triangles (0x00906DF0) and DX8Wrapper::Draw_Strip
 // (0x00906E40). Thirty-three bytes each and the same body but for one
@@ -8,6 +9,7 @@
 
 typedef unsigned short UnsignedShort;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:

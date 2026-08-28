@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setBorderShroudLevel@W3DDisplay@@UAEXE@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
+// readable body of ?setShroudLevel@W3DDisplay@@UAEXHHW4CellShroudStatus@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
 
 class BaseHeightMapResetShroud
 {
@@ -11,6 +13,7 @@ public:
 	void setShroudLevel30BC(int x, int y, unsigned char level, bool immediate);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/BaseHeightMap.h
 class BaseHeightMapRenderObjClass
 {
 private:
@@ -34,6 +37,7 @@ public:
 
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 private:
@@ -62,6 +66,7 @@ enum CellShroudStatus
 	CELLSHROUD_SHROUDED
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
 class W3DDisplay
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?draw@RTS2DScene@@UAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp
 // Open-BFME5: RTS2DScene::draw, retail 0x00711AB0, converted out of a machine
 // byte dump. The reference body is two lines and ports unchanged.
 //
@@ -27,6 +28,7 @@ public:
 	Real X, Y, Z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
 public:
@@ -34,6 +36,7 @@ public:
 						bool clearz = false, const Vector3 &color = Vector3(0, 0, 0) );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
 class RTS2DScene
 {
 public:

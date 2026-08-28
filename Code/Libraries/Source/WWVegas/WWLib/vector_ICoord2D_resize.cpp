@@ -20,6 +20,7 @@
 // straight to _M_fill_insert: the ILT at 0x000160C2 lands on 0x00452450, which
 // the ledger already names that.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	int x;

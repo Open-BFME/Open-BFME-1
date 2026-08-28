@@ -1,4 +1,5 @@
 // cl: /EHsc
+// readable body of ?translate@AsciiString@@: Code/GameEngine/Source/Common/System/AsciiString.cpp
 #include "unicode_string.h"
 #include "ascii_string.h"
 #include "string_base.h"

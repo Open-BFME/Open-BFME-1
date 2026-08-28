@@ -1,3 +1,4 @@
+// readable body of ?Insert_Triangles@SortingRendererClass@@: Code/Libraries/Source/WWVegas/WW3D2/sortingrenderer.cpp
 // Exact retail bytes for SortingRendererClass::Insert_Triangles at 0x0093B340.
 // Kept separate so sortingrenderer.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_SortingRenderer_InsertTriangles_93B340()

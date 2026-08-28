@@ -102,6 +102,7 @@ bool W3DStatusCircle::Cast_Ray(RayCollisionTestClass & raytest)
 
 
 //@todo: MW Handle both of these properly!!
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DStatusCircleCtorThunk.cpp
 // ??0W3DStatusCircle@@ present-unmatched
 W3DStatusCircle::W3DStatusCircle(const W3DStatusCircle & src)
 {

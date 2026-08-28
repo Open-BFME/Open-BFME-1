@@ -13,6 +13,7 @@
 // The class below is a layout skeleton -- it only has to place the fields and
 // give HAnimClass a reference count at +0x04, which is where retail's inlined
 // Add_Ref increments.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -23,10 +24,12 @@ protected:
 	int NumRefs;				// +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanim.h
 class HAnimClass : public RefCountClass
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/animobj.h
 class Animatable3DObjClass
 {
 public:

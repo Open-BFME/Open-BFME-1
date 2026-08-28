@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
+// readable body of ?Set_Shader@DX8Wrapper@@SAXABVShaderClass@@@Z: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// readable body of ?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix3D@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -332,6 +334,7 @@ public:
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/BoxRenderObjClassConstructorThunk.cpp
 // ??0BoxRenderObjClass@@ present-unmatched
 BoxRenderObjClass::BoxRenderObjClass(void)
 {
@@ -355,6 +358,7 @@ BoxRenderObjClass::BoxRenderObjClass(void)
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/BoxRenderObjClassConstructorThunk.cpp
 // ??0BoxRenderObjClass@@ present-unmatched
 BoxRenderObjClass::BoxRenderObjClass(const W3dBoxStruct & def)
 {
@@ -380,6 +384,7 @@ BoxRenderObjClass::BoxRenderObjClass(const W3dBoxStruct & def)
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/BoxRenderObjClassConstructorThunk.cpp
 // ??0BoxRenderObjClass@@ present-unmatched
 BoxRenderObjClass::BoxRenderObjClass(const BoxRenderObjClass & src)
 {
@@ -717,6 +722,7 @@ void BoxRenderObjClass::render_box(RenderInfoClass & rinfo,const Vector3 & cente
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/AABoxRenderObjClassCtorThunk.cpp
 // ??0AABoxRenderObjClass@@ present-unmatched
 AABoxRenderObjClass::AABoxRenderObjClass(void)
 {
@@ -736,6 +742,7 @@ AABoxRenderObjClass::AABoxRenderObjClass(void)
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/AABoxRenderObjClassCtorThunk.cpp
 // ??0AABoxRenderObjClass@@ present-unmatched
 AABoxRenderObjClass::AABoxRenderObjClass(const W3dBoxStruct & def) :
 	BoxRenderObjClass(def)
@@ -756,6 +763,7 @@ AABoxRenderObjClass::AABoxRenderObjClass(const W3dBoxStruct & def) :
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/AABoxRenderObjClassCtorThunk.cpp
 // ??0AABoxRenderObjClass@@ present-unmatched
 AABoxRenderObjClass::AABoxRenderObjClass(const AABoxRenderObjClass & src)
 {
@@ -775,6 +783,7 @@ AABoxRenderObjClass::AABoxRenderObjClass(const AABoxRenderObjClass & src)
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/AABoxRenderObjClassCtorThunk.cpp
 // ??0AABoxRenderObjClass@@ present-unmatched
 // Implemented in AABoxRenderObjClassCtorThunk.cpp because the real class's
 // base subobjects make MSVC prepend constructor initialization to a naked body.
@@ -832,6 +841,7 @@ RenderObjClass * AABoxRenderObjClass::Clone(void) const
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.cpp
 // ?Class_ID@AABoxRenderObjClass@@UBEHXZ present-unmatched
 int AABoxRenderObjClass::Class_ID(void) const
 {
@@ -1236,6 +1246,7 @@ RenderObjClass * OBBoxRenderObjClass::Clone(void) const
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.cpp
 // ?Class_ID@OBBoxRenderObjClass@@UBEHXZ present-unmatched
 int OBBoxRenderObjClass::Class_ID(void) const
 {

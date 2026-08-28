@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0W3DTerrainVisual@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp
 // Open-BFME5: W3DTerrainVisual::W3DTerrainVisual at retail 0x007304E0.
 //
 // Identity is settled by the base call through the incremental-link thunk to
@@ -42,6 +43,7 @@ private:
 	char m_baseFields[8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainVisual.h
 class W3DTerrainVisual : public W3DTerrainVisualBase
 {
 public:

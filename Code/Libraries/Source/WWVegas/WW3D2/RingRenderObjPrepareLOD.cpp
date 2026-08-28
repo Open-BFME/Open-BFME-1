@@ -1,4 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Get_Post_Increment_Value@RingRenderObjClass@@UBEMXZ: Code/Libraries/Source/WWVegas/WW3D2/ringobj.cpp
+// readable body of ?Get_Value@RingRenderObjClass@@UBEMXZ: Code/Libraries/Source/WWVegas/WW3D2/ringobj.cpp
+// readable body of ?Prepare_LOD@RingRenderObjClass@@UAEXAAVCameraClass@@@Z: Code/Libraries/Source/WWVegas/WW3D2/ringobj.cpp
 
 // BFME RingRenderObjClass::Prepare_LOD, retail 0x00919900. The focused ABI
 // slice is anchored by the real Ring vftable at 0x00D3AD28 and the unique
@@ -15,6 +18,7 @@ extern float g_Va0113BD80;
 	virtual void Dummy##e(); virtual void Dummy##f(); \
 	virtual void Dummy##g(); virtual void Dummy##h();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ringobj.h
 class RingRenderObjClass
 {
 public:

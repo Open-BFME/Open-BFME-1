@@ -171,6 +171,7 @@ void W3DSnowManager::reset( void )
 	SnowManager::reset();
 }
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DSnowManagerUpdate.cpp
 // ?update@W3DSnowManager@@ present-unmatched
 void W3DSnowManager::update(void)
 {

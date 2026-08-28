@@ -13,6 +13,7 @@
 class Vector3;
 class Vector3Randomizer;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/v3_rnd.h
 class Vector3SolidSphereRandomizer
 {
 public:

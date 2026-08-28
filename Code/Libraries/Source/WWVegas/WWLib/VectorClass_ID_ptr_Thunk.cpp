@@ -9,6 +9,7 @@
 // multiply -- magic 0xB30F6353, take the high dword, shift right by 10 -- and
 // 1464 is the only divisor for which that sequence reproduces integer division
 // exactly, so sizeof(RenderDeviceDescClass) is 1464.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/rddesc.h
 class RenderDeviceDescClass
 {
 	unsigned char m_body[1464];

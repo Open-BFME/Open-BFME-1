@@ -6,6 +6,7 @@ public:
 	virtual ~RenderObjClass();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/bmp2d.h
 class Bitmap2DObjClass : public RenderObjClass
 {
 public:

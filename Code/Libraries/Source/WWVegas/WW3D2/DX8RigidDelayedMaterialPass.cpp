@@ -2,6 +2,7 @@
 
 #include <stddef.h>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/matpass.h
 class MaterialPassClass
 {
 public:
@@ -9,6 +10,7 @@ public:
     int references;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mesh.h
 class MeshClass
 {
 public:
@@ -45,6 +47,7 @@ struct MatPassTaskClass
     }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h
 class DX8RigidFVFCategoryContainer
 {
     unsigned char prefix[0xcc];

@@ -282,6 +282,7 @@ void MaterialRemapperClass::Remap_Mesh(const MeshMatDescClass * srcmeshmatdesc, 
 	}
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/MaterialCollectorClass_ctor_Thunk.cpp
 // ??0MaterialCollectorClass@@QAE@XZ present-unmatched
 MaterialCollectorClass::MaterialCollectorClass(void)
 {
@@ -290,6 +291,7 @@ MaterialCollectorClass::MaterialCollectorClass(void)
 	LastTexture = NULL;
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/MaterialCollectorClassDestructorThunk.cpp
 // ??1MaterialCollectorClass@@QAE@XZ present-unmatched
 MaterialCollectorClass::~MaterialCollectorClass(void)
 {

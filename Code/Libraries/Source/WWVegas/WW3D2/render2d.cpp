@@ -216,6 +216,7 @@ void Render2DClass::Enable_Texturing(bool b)
 	}
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/Render2DSetCoordinateRangeThunk.cpp
 // ?Set_Coordinate_Range@Render2DClass@@QAEXABVRectClass@@@Z present-unmatched
 void	Render2DClass::Set_Coordinate_Range( const RectClass & range )
 {
@@ -640,12 +641,14 @@ void	Render2DClass::Add_Rect( const RectClass & rect, float border_width, uint32
 	return ;
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/Render2DClassAddOutline.cpp
 // ?Add_Outline@Render2DClass@@ present-unmatched
 void	Render2DClass::Add_Outline( const RectClass & rect, float width, unsigned long color )
 {
 	Add_Outline( rect, width, RectClass( 0,0,1,1 ), color );
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/Render2DClassAddOutline.cpp
 // ?Add_Outline@Render2DClass@@ present-unmatched
 void	Render2DClass::Add_Outline( const RectClass & rect, float width, const RectClass & uv, unsigned long color )
 {
@@ -660,6 +663,7 @@ void	Render2DClass::Add_Outline( const RectClass & rect, float width, const Rect
 	Add_Line (Vector2 (rect.Right, rect.Bottom),	Vector2 (rect.Left + 1, rect.Bottom),	width, color);	
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/Render2DRenderThunk.cpp
 // ?Render@Render2DClass@@QAEXXZ present-unmatched
 void Render2DClass::Render(void)
 {

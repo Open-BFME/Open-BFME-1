@@ -10,6 +10,7 @@
 // which is the offset Set_Name writes. Neighbours: slots 29 and 30 are
 // Get_Base_Model_Name and Set_Base_Model_Name of CompositeRenderObjClass, so the
 // inherited implementations in this region are that class's.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/composite.h
 class CompositeRenderObjClass
 {
 public:

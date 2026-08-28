@@ -54,6 +54,7 @@
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageCommandCenterCrateCollide.cpp
 // ??0W3DDefaultDraw@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 W3DDefaultDraw::W3DDefaultDraw(Thing *thing, const ModuleData* moduleData) : DrawModule(thing, moduleData)
 {

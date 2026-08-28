@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Get_DX8_Texture_Stage_State_Value_Name@DX8Wrapper@@: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 // Open-BFME5: lift the retail DX8Wrapper texture-stage-state name MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_DX8WrapperGetTextureStageStateValueName_906FE0()

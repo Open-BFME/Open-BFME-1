@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?flush@WaterTracksRenderSystem@@QAEXAAVRenderInfoClass@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class RenderInfoClass;

@@ -11,6 +11,7 @@
 
 #include "string_base.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -27,6 +28,7 @@ public:
 namespace rts
 {
 template <class T>
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/STLTypedefs.h
 	struct hash
 	{
 	unsigned int operator()(T value) const
@@ -42,6 +44,7 @@ template <class T>
 };
 
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/STLTypedefs.h
 struct equal_to
 {
 };

@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
+// readable body of ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -1341,6 +1342,7 @@ void DX8SkinFVFCategoryContainer::Render(void)
 	}
 	AnythingToRender=false;
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 // ?Set_Vertex_Buffer@DX8Wrapper@@ present-unmatched
 	DX8Wrapper::Set_Vertex_Buffer(NULL);	// Free up the reference to the current vertex buffer
 														// (in case it is the dynamic, which may have to be resized)
@@ -1975,6 +1977,7 @@ void DX8TextureCategoryClass::Render(void)
 					DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHAREF,0x60);
 					vmaterial->Set_Opacity(oldOpacity);	//restore previous value
 					vmaterial->Set_Diffuse(oldDiffuse.X,oldDiffuse.Y,oldDiffuse.Z);
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
 // ?Set_Shader@DX8Wrapper@@SAXABVShaderClass@@@Z present-unmatched
 					DX8Wrapper::Set_Shader(theShader);	//restore previous value
 				}
@@ -1985,8 +1988,10 @@ void DX8TextureCategoryClass::Render(void)
 				{	oldMapper->Set_LastUsedSyncTime(oldUVOffsetSyncTime);
 					oldMapper->Set_Current_UV_Offset(oldUVOffset);
 				}
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dynamesh.cpp
 // ?Set_Material@DX8Wrapper@@SAXPBVVertexMaterialClass@@@Z present-unmatched
 				DX8Wrapper::Set_Material(NULL);	//force a reset of vertex material since we secretly changed opacity
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dynamesh.cpp
 // ?Set_Material@DX8Wrapper@@SAXPBVVertexMaterialClass@@@Z present-unmatched
 				DX8Wrapper::Set_Material(vmaterial);	//restore previous material.
 			} 
@@ -2225,6 +2230,7 @@ static void Invalidate_FVF_Category_Container_List(FVFCategoryList& list)
 	}
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DX8MeshRendererClass_Invalidate_Thunk.cpp
 // ?Invalidate@DX8MeshRendererClass@@QAEX_N@Z present-unmatched
 void DX8MeshRendererClass::Invalidate( bool shutdown)
 {

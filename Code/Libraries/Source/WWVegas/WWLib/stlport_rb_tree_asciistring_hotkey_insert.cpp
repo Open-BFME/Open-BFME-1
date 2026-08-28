@@ -28,6 +28,7 @@ typedef int Int;
 
 struct BfmeRbTreeInsertAnchorHelper;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -37,6 +38,7 @@ private:
 	char *m_bfmeData;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/HotKey.h
 class HotKey
 {
 	char m_bfmeBody[8];

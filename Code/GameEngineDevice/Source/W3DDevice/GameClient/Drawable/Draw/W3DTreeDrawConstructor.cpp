@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0W3DTreeDraw@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp
 
 // W3DTreeDraw's constructor, retail 0x0077F1C0.
 //
@@ -10,6 +11,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class DrawModule
 {
 public:
@@ -21,6 +23,7 @@ private:
 	unsigned char m_data[8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DTreeDraw.h
 class W3DTreeDraw : public DrawModule
 {
 public:

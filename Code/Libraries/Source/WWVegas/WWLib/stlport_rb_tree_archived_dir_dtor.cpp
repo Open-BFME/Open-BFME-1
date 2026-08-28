@@ -15,11 +15,13 @@
 // node base, leaves 0x20 for pair<const AsciiString, ArchivedDirectoryInfo>.
 // AsciiString is one pointer, so ArchivedDirectoryInfo is the remaining 28.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	char *m_bfmeData;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ArchiveFileSystem.h
 class ArchivedDirectoryInfo
 {
 	char m_bfmeBody[28];

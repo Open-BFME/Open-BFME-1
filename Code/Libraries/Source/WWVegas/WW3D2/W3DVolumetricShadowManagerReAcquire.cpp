@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?ReAcquireResources@W3DVolumetricShadowManager@@QAE_NXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp
 
 // Retail 0x007C1180, 179 bytes. Two allocations, each the standard MSVC
 // expansion of new with a constructor: push the size, call operator new, park
@@ -17,6 +18,7 @@ typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
 class DX8VertexBufferClass
 {
 public:
@@ -32,6 +34,7 @@ private:
 	char m_bfmeBody[0x20];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class DX8IndexBufferClass
 {
 public:
@@ -47,6 +50,7 @@ private:
 	char m_bfmeBody[0x18];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DVolumetricShadow.h
 class W3DVolumetricShadowManager
 {
 public:

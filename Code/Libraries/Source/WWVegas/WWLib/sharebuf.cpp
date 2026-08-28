@@ -7,6 +7,7 @@ void *operator new[](unsigned int size);
 // + NumRefs), then RawBuffer, Array, Count, and Alignment.  The copy
 // constructor allocates a fresh buffer and preserves the aligned view used by
 // the retail UInt and VertexMaterial pointer instantiations.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -27,6 +28,7 @@ private:
 class VertexMaterialClass;
 
 template <class Type>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/sharebuf.h
 class ShareBufferClass : public RefCountClass
 {
 public:

@@ -1,5 +1,8 @@
+// readable body of ?addTeam@TeamsInfoRec@@QAEXPBVDict@@@Z: Code/GameEngine/Source/GameLogic/Map/SidesList.cpp
+// readable body of ?removeTeam@TeamsInfoRec@@QAEXH@Z: Code/GameEngine/Source/GameLogic/Map/SidesList.cpp
 class Dict;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/SidesList.h
 class TeamsInfoRec
 {
 public:

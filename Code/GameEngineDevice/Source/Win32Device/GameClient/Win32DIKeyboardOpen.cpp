@@ -41,6 +41,7 @@ extern "C" HRESULT WINAPI bfmeDirectInput8Create( HINSTANCE, DWORD, REFIID, void
 
 enum { KEYBOARD_BUFFER_SIZE = 256 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/GameClient/Win32DIKeyboard.h
 class DirectInputKeyboard
 {
 protected:

@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep
+// readable body of ?Cull@AABoxCollisionTestClass@@: Code/Libraries/Source/WWVegas/WW3D2/coltest.cpp
+// readable body of ?Cull@OBBoxCollisionTestClass@@: Code/Libraries/Source/WWVegas/WW3D2/coltest.cpp
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.

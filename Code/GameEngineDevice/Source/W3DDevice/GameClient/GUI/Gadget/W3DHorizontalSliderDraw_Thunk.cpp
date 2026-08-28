@@ -34,12 +34,14 @@ enum { WIN_STATUS_ENABLED = 0x00000008 };
 enum { WIN_STATE_HILITED = 0x00000002 };
 enum { WIN_COLOR_UNDEFINED = 0x00FFFFFF };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
 	Int y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 struct WinDrawData
 {
 	const Image *image;
@@ -47,6 +49,7 @@ struct WinDrawData
 	Color borderColor;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 class WinInstanceData
 {
 public:
@@ -57,6 +60,7 @@ private:
 	UnsignedInt m_state;								///< retail this+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -79,6 +83,7 @@ private:
 };
 
 // Only the two rect calls are reconstructed; the slots ahead of them place them.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:

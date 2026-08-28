@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?ExpandMagic@DebugIOFlat@@CAXPBD0PAD@Z: Code/Libraries/Source/WWVegas/WWDebug/debug_io_flat.cpp
 // Open-BFME5: lift the exact retail DebugIOFlat::ExpandMagic body to C++.
 
 // ?ExpandMagic@DebugIOFlat@@CAXPBD0PAD@Z

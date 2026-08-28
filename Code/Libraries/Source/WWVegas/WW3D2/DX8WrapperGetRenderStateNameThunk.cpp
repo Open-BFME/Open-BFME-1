@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Get_DX8_Render_State_Name@DX8Wrapper@@: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 // Open-BFME5: lift the retail DX8Wrapper::Get_DX8_Render_State_Name MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_DX8WrapperGetRenderStateName_873DA0()

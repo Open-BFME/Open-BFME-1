@@ -111,6 +111,7 @@ void DoShadows(RenderInfoClass & rinfo, Bool stencilPass)
 
 }
 	
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DShadowManager_ctor_Thunk.cpp
 // ??0W3DShadowManager@@QAE@XZ present-unmatched
 W3DShadowManager::W3DShadowManager( void )
 {
@@ -173,6 +174,7 @@ void W3DShadowManager::Reset( void )
 		TheW3DProjectedShadowManager->reset();
 }
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DShadowManagerReAcquireThunk.cpp
 // ?ReAcquireResources@W3DShadowManager@@QAE_NXZ present-unmatched
 Bool W3DShadowManager::ReAcquireResources()
 {

@@ -1,5 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Set_Element@MatBufferClass@@QAEXHPAVVertexMaterialClass@@@Z: Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp
+// readable body of ?Set_Material@MeshMatDescClass@@QAEXHPAVVertexMaterialClass@@H@Z: Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.h
 class VertexMaterialClass
 {
 public:
@@ -7,6 +10,7 @@ public:
     int references;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.h
 class MatBufferClass
 {
     unsigned char prefix[8];

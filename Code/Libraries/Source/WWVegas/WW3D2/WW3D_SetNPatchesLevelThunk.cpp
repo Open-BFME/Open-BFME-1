@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Set_NPatches_Level@WW3D@@: Code/Libraries/Source/WWVegas/WW3D2/ww3d.cpp
 // Open-BFME5: WW3D::Set_NPatches_Level, spelled against the retail BFME shape.
 //
 // The clamp and the two invalidation tests are the reference body unchanged.
@@ -12,6 +13,7 @@
 // DX8MeshRendererClass::Invalidate at 0x00947BD0, and the clamped value lands
 // in the same 0x012D6D8C global both invalidation tests read.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h
 class DX8MeshRendererClass
 {
 public:
@@ -26,6 +28,7 @@ extern DX8MeshRendererClass *TheDX8MeshRenderer;
 // retail performs around the first Invalidate call.
 extern unsigned NPatchesLevel;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
 public:

@@ -490,6 +490,7 @@ void W3DTerrainBackground::setFlipRecursive(Int xOffset, Int yOffset, Int width)
 The coordinates in partialRange are map cell coordinates, relative to the entire map.
 The vertex coordinates and texture coordinates, as well as static lighting are updated.
 */
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackgroundTesselatedUpdateThunk.cpp
 // ?doTesselatedUpdate@W3DTerrainBackground@@QAEXABUIRegion2D@@PAVWorldHeightMap@@_N@Z present-unmatched
 void W3DTerrainBackground::doTesselatedUpdate(const IRegion2D &partialRange, WorldHeightMap *htMap, Bool doTextures )
 {	
@@ -659,6 +660,7 @@ m_texMultiplier(TEX1X)
 //=============================================================================
 /** Frees the index and vertex buffers. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackground_freeTerrainBuffers.cpp
 // ?freeTerrainBuffers@W3DTerrainBackground@@IAEXXZ present-unmatched
 void W3DTerrainBackground::freeTerrainBuffers(void)
 {
@@ -676,6 +678,7 @@ void W3DTerrainBackground::freeTerrainBuffers(void)
 //=============================================================================
 /** Allocates the index and vertex buffers. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackgroundAllocateThunk.cpp
 // ?allocateTerrainBuffers@W3DTerrainBackground@@QAEXPAVWorldHeightMap@@HHH@Z present-unmatched
 void W3DTerrainBackground::allocateTerrainBuffers(WorldHeightMap *htMap, Int xOrigin, Int yOrigin, Int width)
 {

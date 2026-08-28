@@ -20,6 +20,7 @@
 #include <map>
 #include <vector>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ArchiveFile.h
 class ArchiveFile
 {
 public:
@@ -40,6 +41,7 @@ typedef std::map<AsciiString, ArchiveFile *> ArchiveFileMap;
 
 class File;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFileSystem.h
 class Win32BIGFileSystem
 {
 public:

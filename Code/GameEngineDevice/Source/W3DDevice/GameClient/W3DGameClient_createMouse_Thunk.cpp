@@ -21,10 +21,12 @@ class Mouse
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/GameClient/Win32Mouse.h
 class Win32Mouse : public Mouse
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DMouse.h
 class W3DMouse : public Win32Mouse
 {
 public:
@@ -36,6 +38,7 @@ private:
 
 extern Win32Mouse *TheWin32Mouse;							///< retail 0x012ED240
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DGameClient.h
 class W3DGameClient
 {
 protected:

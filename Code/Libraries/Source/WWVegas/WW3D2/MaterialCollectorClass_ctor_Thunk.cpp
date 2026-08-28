@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0MaterialCollectorClass@@QAE@XZ: Code/Libraries/Source/WWVegas/WW3D2/matinfo.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class ShaderVectorBaseCtorShim
@@ -83,6 +84,7 @@ private:
 	unsigned int m_value;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/matinfo.h
 class MaterialCollectorClass
 {
 public:

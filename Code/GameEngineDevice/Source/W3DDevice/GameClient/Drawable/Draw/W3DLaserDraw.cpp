@@ -67,6 +67,7 @@
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDrawModuleData_ctor_Thunk.cpp
 // ??0W3DLaserDrawModuleData@@ present-unmatched
 W3DLaserDrawModuleData::W3DLaserDrawModuleData()
 {
@@ -85,6 +86,7 @@ W3DLaserDrawModuleData::W3DLaserDrawModuleData()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DLaserDrawModuleDataDestructorThunk.cpp
 // ??1W3DLaserDrawModuleData@@ present-unmatched
 W3DLaserDrawModuleData::~W3DLaserDrawModuleData()
 {

@@ -1,3 +1,9 @@
+// readable body of ??1AIUpdateModuleData@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
+// readable body of ??4AudioEventRTS@@: Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp
+// readable body of ?format_va@AsciiString@@: Code/GameEngine/Source/Common/System/AsciiString.cpp
+// readable body of ?format_va@UnicodeString@@: Code/GameEngine/Source/Common/System/UnicodeString.cpp
+// readable body of ?freeBytes@AsciiString@@: Code/GameEngine/Source/Common/System/AsciiString.cpp
+// readable body of ?set@UnicodeString@@: Code/GameEngine/Source/Common/System/UnicodeString.cpp
 #include "string_base.h"
 
 // The original translation unit linked the dynamic CRT, so CRT calls that are

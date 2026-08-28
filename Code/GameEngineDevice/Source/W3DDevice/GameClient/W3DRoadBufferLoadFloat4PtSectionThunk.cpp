@@ -1,8 +1,10 @@
+// readable body of ?loadFloat4PtSection@W3DRoadBuffer@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp
 class RoadSegment;
 class Vector2
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DRoadBuffer.h
 class W3DRoadBuffer
 {
 protected:

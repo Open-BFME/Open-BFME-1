@@ -2,6 +2,7 @@
 
 #include "vector3.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/light.h
 class LightClass
 {
 public:
@@ -22,6 +23,7 @@ protected:
 	Vector3 SpotDirection;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDynamicLight.h
 class W3DDynamicLight : public LightClass
 {
 public:

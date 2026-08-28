@@ -1,3 +1,4 @@
+// readable body of ?doTesselatedUpdate@W3DTerrainBackground@@QAEXABUIRegion2D@@PAVWorldHeightMap@@_N@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackground.cpp
 // Exact retail bytes for W3DTerrainBackground::doTesselatedUpdate at 0x0072C7F0.
 extern "C" __declspec(naked) void bfme_W3DTerrainBackground_doTesselatedUpdate_72C7F0()
 {

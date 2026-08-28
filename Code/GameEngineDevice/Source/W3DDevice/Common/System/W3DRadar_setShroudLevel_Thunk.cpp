@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setShroudLevel@W3DRadar@@UAEXHHW4CellShroudStatus@@@Z: Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar.cpp
 // Open-BFME5: lift the exact retail W3DRadar::setShroudLevel body to C++.
 
 // ?setShroudLevel@W3DRadar@@UAEXHHW4CellShroudStatus@@@Z

@@ -62,6 +62,7 @@ public:
 	Vector4 Row[3];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/sphere.h
 class SphereClass
 {
 public:
@@ -74,6 +75,7 @@ public:
 	float	Radius;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabox.h
 class AABoxClass
 {
 public:
@@ -84,6 +86,7 @@ public:
 	Vector3 Extent;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -93,6 +96,7 @@ public:
 	int NumRefs;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListObjectClass
 {
 public:
@@ -107,6 +111,7 @@ class RenderHookClass;
 
 // Get_Default_Native_Screen_Size is inlined to a straight load of the static at
 // 0x12D6D7C -- retail reads it with an integer mov, never the x87 stack.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
 public:

@@ -13,6 +13,7 @@
 
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:

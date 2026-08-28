@@ -30,6 +30,7 @@
 // null-check plus virtual dispatch (mov ecx,[esi+0x14]; test; mov edx,[ecx];
 // push 1; call [edx]). On a forward-declared type delete emits a plain
 // operator delete instead, which is four bytes shorter and the wrong shape.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ArchiveFile.h
 class ArchiveFile
 {
 public:
@@ -45,6 +46,7 @@ class File;
 typedef int Int;
 typedef int Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFileSystem.h
 class Win32BIGFileSystem
 {
 public:

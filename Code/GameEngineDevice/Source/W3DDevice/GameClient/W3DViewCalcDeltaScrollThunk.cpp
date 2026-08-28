@@ -8,6 +8,7 @@
 // four offsets matter and the real W3DView drags in most of the device layer.
 // m_pos at 0xC, the camera at 0x104, the previous look-at at 0x23E4 and the
 // ground level at 0x23F8.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord2D
 {
 	float x;
@@ -26,6 +27,7 @@ public:
 	float Z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/camera.h
 class CameraClass
 {
 public:
@@ -37,6 +39,7 @@ public:
 	ProjectionResType Project(Vector3 &dest, const Vector3 &src) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DView.h
 class W3DView
 {
 private:

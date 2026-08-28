@@ -13,6 +13,7 @@
 // immediate 0x3f800000, so it is a Real holding 1.0f, and m_mapMinZ shares the
 // zeroed register with the two Ints above it.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -23,12 +24,14 @@ protected:
 	char m_unreconstructed_04[0x0c - 4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/WorldHeightMap.h
 class WorldHeightMap
 {
 public:
 	static void freeListOfMapObjects(void);			///< ILT 0x00047127
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameLogic/W3DTerrainLogic.h
 class W3DTerrainLogic : public TerrainLogic
 {
 public:

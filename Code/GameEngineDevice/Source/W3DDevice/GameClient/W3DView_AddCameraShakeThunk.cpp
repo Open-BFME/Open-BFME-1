@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Add_Camera_Shake@W3DView@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp
 // Open-BFME5: W3DView::Add_Camera_Shake, spelled against the retail BFME shape.
 //
 // Zero Hour reaches the shaker through a global CameraShakeSystemClass object
@@ -18,6 +19,7 @@
 
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
@@ -35,6 +37,7 @@ public:
 	float Z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/camerashakesystem.h
 class CameraShakeSystemClass
 {
 public:
@@ -44,6 +47,7 @@ public:
 // BFME's is a pointer where Zero Hour's is an object; 0x012F7FEC.
 extern CameraShakeSystemClass *CameraShakerSystem;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DView.h
 class W3DView
 {
 public:

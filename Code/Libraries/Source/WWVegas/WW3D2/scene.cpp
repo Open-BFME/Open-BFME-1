@@ -388,6 +388,7 @@ void SimpleSceneClass::Remove_All_Render_Objects(void)
  * HISTORY:                                                                                    *
  *   3/24/98    GTH : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SimpleSceneClass_Add_Render_Object_Thunk.cpp
 // ?Add_Render_Object@SimpleSceneClass@@UAEXPAVRenderObjClass@@@Z present-unmatched
 void SimpleSceneClass::Add_Render_Object(RenderObjClass * obj)
 {
@@ -408,6 +409,7 @@ void SimpleSceneClass::Add_Render_Object(RenderObjClass * obj)
  * HISTORY:                                                                                    *
  *   3/24/98    GTH : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SimpleSceneClass_Remove_Render_Object_Thunk.cpp
 // ?Remove_Render_Object@SimpleSceneClass@@UAEXPAVRenderObjClass@@@Z present-unmatched
 void SimpleSceneClass::Remove_Render_Object(RenderObjClass * obj)
 {
@@ -418,6 +420,7 @@ void SimpleSceneClass::Remove_Render_Object(RenderObjClass * obj)
 	RenderList.Remove(obj);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SimpleSceneClass_Register_Thunk.cpp
 // ?Register@SimpleSceneClass@@UAEXPAVRenderObjClass@@W4RegType@SceneClass@@@Z present-unmatched
 void SimpleSceneClass::Register(RenderObjClass * obj,RegType for_what)
 {
@@ -434,6 +437,7 @@ void SimpleSceneClass::Register(RenderObjClass * obj,RegType for_what)
 	};
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/SimpleSceneClass_Unregister_Thunk.cpp
 // ?Unregister@SimpleSceneClass@@UAEXPAVRenderObjClass@@W4RegType@SceneClass@@@Z present-unmatched
 void SimpleSceneClass::Unregister(RenderObjClass * obj,RegType for_what)
 {

@@ -3,6 +3,7 @@
 // Retail 0x007239A0. Out-of-line WW3D::Get_Frame_Time -- the header inline
 // `return SyncTime - PreviousSyncTime` compiled as its own body.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
 public:

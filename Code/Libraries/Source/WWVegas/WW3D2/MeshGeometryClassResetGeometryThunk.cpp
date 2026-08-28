@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: lift the exact retail MeshGeometryClass::Reset_Geometry MASM body.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshgeometry.h
 class MeshGeometryClass
 {
 public:

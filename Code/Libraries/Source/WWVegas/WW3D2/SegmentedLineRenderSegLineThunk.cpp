@@ -1,7 +1,9 @@
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/rinfo.h
 class RenderInfoClass
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/segline.h
 class SegmentedLineClass
 {
 protected:

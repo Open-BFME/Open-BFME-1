@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?Render@WW3D@@: Code/Libraries/Source/WWVegas/WW3D2/ww3d.cpp
 // Open-BFME5: WW3D::Render(const LayerClass &), retail 0x008FE7D0,
 // zh_sweep packet 008fe7d0.
 //
@@ -80,6 +81,7 @@ public:
 
 // Only the five fields these bodies forward are reconstructed; the spacing
 // between them and the node base is retail's.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/layer.h
 class LayerClass : public Node<LayerClass *>
 {
 public:
@@ -93,6 +95,7 @@ public:
 
 typedef List<LayerClass *> LayerListClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
 public:

@@ -12,6 +12,7 @@
 
 typedef unsigned long uint32;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/obbox.h
 class OBBoxClass
 {
 public:
@@ -26,9 +27,11 @@ public:
 	T &operator[](int index);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/aabtree.h
 class AABTreeClass
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/aabtree.h
 	struct OBBoxAPTContextStruct
 	{
 		OBBoxAPTContextStruct(const OBBoxClass &box, SimpleDynVecClass<uint32> &apt);

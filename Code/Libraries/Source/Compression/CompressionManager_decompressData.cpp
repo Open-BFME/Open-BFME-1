@@ -58,6 +58,7 @@ extern "C" {
 
 Bool DecompressMemory(void *inBufferVoid, Int inSize, void *outBufferVoid, Int &outSize);	// retail 0x0081EB80
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression/Compression.h
 class CompressionManager
 {
 public:

@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ??0AABoxRenderObjClass@@: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
 
 class AABoxClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/boxrobj.h
 class AABoxRenderObjClass
 {
 public:

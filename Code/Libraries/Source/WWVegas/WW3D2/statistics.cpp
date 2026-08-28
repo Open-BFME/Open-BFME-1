@@ -1,4 +1,6 @@
 // cl: /DNDEBUG
+// readable body of ?Begin_Statistics@Debug_Statistics@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
+// readable body of ?End_Statistics@Debug_Statistics@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
 /*
 **	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -50,6 +52,7 @@ namespace Debug_Statistics
 void Record_Texture_Begin();
 void Record_Texture_End();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 	public:

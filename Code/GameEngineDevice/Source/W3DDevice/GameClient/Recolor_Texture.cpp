@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?Recolor_Texture@W3DAssetManager@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DAssetManager.cpp
 // W3DAssetManager::Recolor_Texture — retail 0x00A5828A size 644
 // Naked exact body; promoted from .asm to 1:1 C++. thiscall 9 stack args (ret 0x24).
 

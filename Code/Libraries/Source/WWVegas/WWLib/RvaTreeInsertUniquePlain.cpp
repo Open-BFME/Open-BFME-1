@@ -320,6 +320,7 @@ template _STL::pair<Rva000817C0Tree::iterator, bool>
 Rva000817C0Tree::insert_unique( const Rva000817C0Pair & );
 
 // Eight bytes, the width the _M_insert at 0x005B2EF0 allocates for it.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/HotKey.h
 class HotKey
 {
 	char m_body[ 8 ];

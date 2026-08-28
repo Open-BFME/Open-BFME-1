@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?isCliffMappedTexture@WorldHeightMap@@QAE_NHH@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp
 
 // WorldHeightMap::isCliffMappedTexture, retail 0x00728250. No calls: the cell
 // index is built from the map origin at +0x120E0/+0x120E4 and the row stride at
@@ -9,6 +10,7 @@
 typedef int Int;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/WorldHeightMap.h
 class WorldHeightMap
 {
 public:

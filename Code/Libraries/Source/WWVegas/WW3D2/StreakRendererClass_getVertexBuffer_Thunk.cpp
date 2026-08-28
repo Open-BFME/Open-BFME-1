@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?getVertexBuffer@StreakRendererClass@@AAEPAUVertexFormatXYZUV1@@I@Z: Code/Libraries/Source/WWVegas/WW3D2/streakRender.cpp
 //
 // StreakRendererClass::getVertexBuffer, isolated from the shared streakrender.h
 // (that header is included by streakRender.cpp for other already-matched rows;
@@ -29,6 +30,7 @@
 void *operator new[](unsigned int);
 void operator delete[](void *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8fvf.h
 struct VertexFormatXYZUV1
 {
 	float x;
@@ -38,6 +40,7 @@ struct VertexFormatXYZUV1
 	float v1;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/streakRender.h
 class StreakRendererClass
 {
 private:

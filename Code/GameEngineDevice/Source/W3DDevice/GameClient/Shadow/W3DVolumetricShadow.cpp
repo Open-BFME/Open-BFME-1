@@ -1144,6 +1144,7 @@ void W3DShadowGeometryMesh::buildPolygonNeighbors( void )
 // allocateNeighbors ==========================================================
 // Allocate storage for the polygon neighbors and record its size
 // ============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DShadowGeometryMesh_allocateNeighbors_Thunk.cpp
 // ?allocateNeighbors@W3DShadowGeometryMesh@@IAE_NH@Z present-unmatched
 Bool W3DShadowGeometryMesh::allocateNeighbors( Int numPolys )
 {
@@ -3016,6 +3017,7 @@ void W3DVolumetricShadow::SetGeometry( W3DShadowGeometry *geometry )
  the shadow volume for this shadow from the silhouette of the geometry
  and any light sources
 */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DVolumetricShadow_UpdateMethodThunk.cpp
 // ?Update@W3DVolumetricShadow@@ present-unmatched
 void W3DVolumetricShadow::Update()
 {
@@ -3058,8 +3060,10 @@ void W3DVolumetricShadow::Update()
    		{	
  			Real extent = MAX_SHADOW_LENGTH_EXTRA_AIRBORNE_SCALE_FACTOR * m_robjExtent;
  			if (WWMath::Fabs(pos.X - bcX) > (beX + extent) ||
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
 // ?Fabs@WWMath@@SAMM@Z present-unmatched
  				WWMath::Fabs(pos.Y - bcY) > (beY + extent) ||
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
 // ?Fabs@WWMath@@SAMM@Z present-unmatched
  				WWMath::Fabs(pos.Z - bcZ) > (beZ + extent))
  				return;	//shadow can't be visible so no point in updating.
@@ -3073,8 +3077,10 @@ void W3DVolumetricShadow::Update()
 			//base since it should be sitting directly at ground level.
 
  			if (WWMath::Fabs(pos.X - bcX) > (beX + m_robjExtent) ||
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
 // ?Fabs@WWMath@@SAMM@Z present-unmatched
  				WWMath::Fabs(pos.Y - bcY) > (beY + m_robjExtent) ||
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
 // ?Fabs@WWMath@@SAMM@Z present-unmatched
  				WWMath::Fabs(pos.Z - bcZ) > (beZ + m_robjExtent))
  				return;	//shadow can't be visible so no point in updating.
@@ -5003,6 +5009,7 @@ void W3DVolumetricShadowManager::invalidateCachedLightPositions(void)
 
 // W3DVolumetricShadowManager =============================================================
 // ============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DVolumetricShadowManager_ctor_Thunk.cpp
 // ??0W3DVolumetricShadowManager@@QAE@XZ present-unmatched
 W3DVolumetricShadowManager::W3DVolumetricShadowManager( void )
 {
@@ -5047,6 +5054,7 @@ void W3DVolumetricShadowManager::ReleaseResources(void)
 }
 
 /** (Re)allocates all W3D/D3D assets after a reset.. */
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/W3DVolumetricShadowManagerReAcquire.cpp
 // ?ReAcquireResources@W3DVolumetricShadowManager@@QAE_NXZ present-unmatched
 Bool W3DVolumetricShadowManager::ReAcquireResources(void)
 {
@@ -5309,6 +5317,7 @@ Bool	W3DShadowGeometryManager::Is_Missing( const char * name )
 }
 
 /** Create shadow geometry from a reference W3D RenderObject*/
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DShadowGeometryManager_Load_Geom_Thunk.cpp
 // ?Load_Geom@W3DShadowGeometryManager@@QAEHPAVRenderObjClass@@PBD@Z present-unmatched
 int W3DShadowGeometryManager::Load_Geom(RenderObjClass *robj, const char *name)
 {

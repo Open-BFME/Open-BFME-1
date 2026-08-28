@@ -1,3 +1,4 @@
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
 class Debug
 {
     bool IsWindowed(void);

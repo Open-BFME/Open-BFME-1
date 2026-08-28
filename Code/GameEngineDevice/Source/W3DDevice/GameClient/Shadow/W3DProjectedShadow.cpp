@@ -321,6 +321,7 @@ Bool W3DProjectedShadowManager::ReAcquireResources(void)
 	return TRUE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted_ReleaseResources_W3DProjectedShadowManager_QAEXXZ_007B1450.cpp
 // ?ReleaseResources@W3DProjectedShadowManager@@QAEXXZ present-unmatched
 void W3DProjectedShadowManager::ReleaseResources(void)
 {
@@ -3151,6 +3152,7 @@ void W3DProjectedShadowManager::removeShadow (W3DProjectedShadow *shadow)
 	}  // end for
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__removeAllShadows_W3DProjectedShadowManager_QAEXXZ_007AEA90.cpp
 // ?removeAllShadows@W3DProjectedShadowManager@@QAEXXZ present-unmatched
 void W3DProjectedShadowManager::removeAllShadows(void)
 {
@@ -3227,6 +3229,7 @@ void W3DProjectedShadow::init(void)
 
 #define DECAL_TEXELS_PER_WORLD_UNIT	(64.0f/20.0f)	//64 texels per 2 terrain cells (20 units)
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowUpdateTextureThunk.cpp
 // ?updateTexture@W3DProjectedShadow@@ present-unmatched
 void W3DProjectedShadow::updateTexture(Vector3 &lightPos)
 {

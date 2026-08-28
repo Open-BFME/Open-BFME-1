@@ -22,6 +22,7 @@ private:
 	float Z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -37,6 +38,7 @@ private:
 };
 
 template <class Type>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/sharebuf.h
 class ShareBufferClass : public RefCountClass
 {
 public:

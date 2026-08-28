@@ -7,6 +7,7 @@
 // +0xD7B8, so the two scalars behind it close the object.
 //
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class BridgeInfo
 {
 public:
@@ -35,6 +36,7 @@ public:
 	unsigned int m_14;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBridgeBuffer.h
 class W3DBridgeBuffer : public BridgeBufferBase
 {
 public:

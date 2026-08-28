@@ -92,6 +92,7 @@ public:
 /*static*/ MapObject *MapObject::TheMapObjectListPtr = NULL;
 /*static*/ Dict MapObject::TheWorldDict;
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/MapObjectCtorThunk.cpp
 // ??0MapObject@@QAE@UCoord3D@@VAsciiString@@MHPBVDict@@PBVThingTemplate@@@Z present-unmatched
 MapObject::MapObject(Coord3D loc, AsciiString name, Real angle, Int flags, const Dict* props,
 										 const ThingTemplate *thingTemplate )
@@ -128,6 +129,7 @@ MapObject::MapObject(Coord3D loc, AsciiString name, Real angle, Int flags, const
 }	
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/MapObjectDestructorThunk.cpp
 // ??1MapObject@@MAE@XZ present-unmatched
 MapObject::~MapObject(void)
 {
@@ -220,6 +222,7 @@ void MapObject::verifyValidTeam(void)
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/MapObject_verifyValidUniqueIDMethodThunk.cpp
 // ?verifyValidUniqueID@MapObject@@QAEXXZ present-unmatched
 void MapObject::verifyValidUniqueID(void)
 {
@@ -359,6 +362,7 @@ void MapObject::setName(AsciiString name)
 WaypointID MapObject::getWaypointID() { return (WaypointID)getProperties()->getInt(TheKey_waypointID); }
 AsciiString MapObject::getWaypointName() { return getProperties()->getAsciiString(TheKey_waypointName); }
 void MapObject::setWaypointID(Int i) { getProperties()->setInt(TheKey_waypointID, i); }
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/MapObjectSetWaypointNameThunk.cpp
 // ?setWaypointName@MapObject@@QAEXVAsciiString@@@Z present-unmatched
 void MapObject::setWaypointName(AsciiString n) { getProperties()->setAsciiString(TheKey_waypointName, n); }
 
@@ -443,6 +447,7 @@ WorldHeightMap::~WorldHeightMap(void)
 	REF_PTR_RELEASE(m_alphaEdgeTex);
 }
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap_freeListOfMapObjects.cpp
 // ?freeListOfMapObjects@WorldHeightMap@@SAXXZ present-unmatched
 void WorldHeightMap::freeListOfMapObjects(void)
 {
@@ -2760,6 +2765,7 @@ void WorldHeightMap::readTexClass(TXTextureClass *texClass, TileData **tileData)
 *	Input: DataChunkInput 
 *		
 */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // ?ParseBlendTileData@WorldHeightMap@@IAE_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z present-unmatched
 Bool WorldHeightMap::ParseBlendTileData(DataChunkInput &file, DataChunkInfo *info, void *userData)
 {
@@ -3307,6 +3313,7 @@ Int WorldHeightMap::updateTileTexturePositions(Int *edgeHeight)
 
 /** getUVData - Gets the texture coordinates to use.  See getTerrainTexture.
 */
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap_getUVForNdx.cpp
 // ?getUVForNdx@WorldHeightMap@@IAEXHPAM000_N@Z present-unmatched
 void WorldHeightMap::getUVForNdx(Int tileNdx, float *minU, float *minV, float *maxU, float*maxV, Bool fullTile)
 {
@@ -3369,6 +3376,7 @@ void WorldHeightMap::getUVForBlend(Int edgeClass, Region2D *range)
 }
 
 /// Get whether something is cliff indexed with the offset that HeightMapRenderObjClass uses built in.
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap_isCliffMappedTexture.cpp
 // ?isCliffMappedTexture@WorldHeightMap@@QAE_NHH@Z present-unmatched
 Bool WorldHeightMap::isCliffMappedTexture(Int x, Int y) { 
 	Int ndx = x+m_drawOriginX+m_width*(y+m_drawOriginY);

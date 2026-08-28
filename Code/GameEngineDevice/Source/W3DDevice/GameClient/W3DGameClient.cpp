@@ -46,6 +46,7 @@
 #include "Common/SubsystemInterface.h"
 
 #define _SNOW_H_
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Snow.h
 class SnowManager : public SubsystemInterface
 {
 public:
@@ -60,6 +61,7 @@ private:
 };
 
 #define _W3DSNOW_H_
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DSnow.h
 class W3DSnowManager : public SnowManager
 {
 public:
@@ -78,6 +80,7 @@ typedef char BFMERetailSnowManagerSizeCheck[ sizeof( SnowManager ) == 0x68 ? 1 :
 typedef char BFMERetailW3DSnowManagerSizeCheck[ sizeof( W3DSnowManager ) == 0x9c ? 1 : -1 ];
 
 #define __TERRAINVISUAL_H_
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/TerrainVisual.h
 class TerrainVisual
 {
 public:
@@ -88,6 +91,7 @@ private:
 };
 
 #define __W3DTERRAINVISUAL_H_
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainVisual.h
 class W3DTerrainVisual : public TerrainVisual
 {
 public:
@@ -105,6 +109,7 @@ typedef char BFMERetailW3DTerrainVisualSizeCheck[ sizeof( W3DTerrainVisual ) == 
 class Drawable;
 typedef std::list< Drawable * > DrawableList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:
@@ -134,6 +139,7 @@ class View;
 class RenderObjClass;
 class HAnimClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DInGameUI.h
 class W3DInGameUI : public InGameUI
 {
 public:
@@ -170,6 +176,7 @@ private:
 	char m_data[ 24 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DGameFont.h
 class W3DFontLibrary : public BFMERetailFontLibrary
 {
 protected:
@@ -177,6 +184,7 @@ protected:
 };
 
 #define __KEYBOARD_H_
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Keyboard.h
 class Keyboard : public SubsystemInterface
 {
 public:
@@ -192,6 +200,7 @@ private:
 };
 
 #define __WIN32DIKEYBOARD_H_
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/GameClient/Win32DIKeyboard.h
 class DirectInputKeyboard : public Keyboard
 {
 public:

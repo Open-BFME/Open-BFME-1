@@ -75,6 +75,7 @@ AABoxCollisionTestClass::AABoxCollisionTestClass(const AABoxClass & aabox,const 
 }
 
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/aabtree.cpp
 // ?Cull@AABoxCollisionTestClass@@ present-unmatched
 bool AABoxCollisionTestClass::Cull(const AABoxClass & box)
 {
@@ -300,16 +301,19 @@ OBBoxCollisionTestClass::OBBoxCollisionTestClass
 {
 	Vector3 max_extent;
 	max_extent.X =	WWMath::Fabs(Box.Basis[0][0] * Box.Extent.X) +
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
 // ?Fabs@WWMath@@ present-unmatched
 						WWMath::Fabs(Box.Basis[0][1] * Box.Extent.Y) +
 						WWMath::Fabs(Box.Basis[0][2] * Box.Extent.Z) + 0.01f;
 
 	max_extent.Y =	WWMath::Fabs(Box.Basis[1][0] * Box.Extent.X) +
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
 // ?Fabs@WWMath@@ present-unmatched
 						WWMath::Fabs(Box.Basis[1][1] * Box.Extent.Y) +
 						WWMath::Fabs(Box.Basis[1][2] * Box.Extent.Z) + 0.01f;
 
 	max_extent.Z =	WWMath::Fabs(Box.Basis[2][0] * Box.Extent.X) +
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
 // ?Fabs@WWMath@@ present-unmatched
 						WWMath::Fabs(Box.Basis[2][1] * Box.Extent.Y) +
 						WWMath::Fabs(Box.Basis[2][2] * Box.Extent.Z) + 0.01f;
@@ -366,6 +370,7 @@ OBBoxCollisionTestClass::OBBoxCollisionTestClass
 }
 
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/aabtree.cpp
 // ?Cull@OBBoxCollisionTestClass@@ present-unmatched
 bool OBBoxCollisionTestClass::Cull(const AABoxClass & box)
 {

@@ -51,10 +51,12 @@ private:
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 class Render2DSentenceClass
 {
 public:
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 	struct PendingSurfaceStruct
 	{
 		SurfaceClass *Surface;										// @0x0

@@ -1,3 +1,4 @@
+// readable body of ?Render@Render2DClass@@QAEXXZ: Code/Libraries/Source/WWVegas/WW3D2/render2d.cpp
 // Exact retail bytes for Render2DClass::Render at 0x00933E50.
 // Kept separate so render2d.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_Render2D_Render_933E50()

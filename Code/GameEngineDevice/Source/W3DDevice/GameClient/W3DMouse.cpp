@@ -184,6 +184,7 @@ Bool W3DMouse::releaseD3DCursorTextures(MouseCursor cursor)
 }
 
 /**Load the textures required to display the selected cursor*/
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouseLoadD3DCursorTexturesThunk.cpp
 // ?loadD3DCursorTextures@W3DMouse@@ present-unmatched
 Bool W3DMouse::loadD3DCursorTextures(MouseCursor cursor)
 {

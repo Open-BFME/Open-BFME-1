@@ -14,6 +14,7 @@ public:
     unsigned int m_reserved[4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/FastAllocator.h
 class FastAllocatorGeneral
 {
 public:

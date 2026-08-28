@@ -16,6 +16,7 @@
 
 typedef char TCHAR;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
 class StringClass
 {
 public:
@@ -39,6 +40,7 @@ struct D3DADAPTER_IDENTIFIER8
 	unsigned char m_unreconstructed_00[0x44C];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/rddesc.h
 class ResolutionDescClass
 {
 public:
@@ -79,6 +81,7 @@ protected:
 	int GrowthStep;										///< retail this+0x14
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/rddesc.h
 class RenderDeviceDescClass
 {
 public:

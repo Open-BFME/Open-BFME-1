@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
 class StringClass
 {
 public:
@@ -9,6 +10,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/rddesc.h
 struct ResolutionDescClass
 {
 	int width;
@@ -48,6 +50,7 @@ private:
 	int m_growthStep;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/rddesc.h
 class RenderDeviceDescClass
 {
 public:

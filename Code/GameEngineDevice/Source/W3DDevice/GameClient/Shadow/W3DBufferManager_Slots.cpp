@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?allocateSlotStorage@W3DBufferManager@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager.cpp
+// readable body of ?freeAllSlots@W3DBufferManager@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager.cpp
+// readable body of ?getSlot@W3DBufferManager@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager.cpp
+// readable body of ?releaseSlot@W3DBufferManager@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DBufferManager.cpp
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -61,6 +65,7 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
 class DX8VertexBufferClass
 {
 public:
@@ -71,6 +76,7 @@ private:
 	char m_storage[ 32 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class DX8IndexBufferClass
 {
 public:
@@ -80,6 +86,7 @@ private:
 	char m_storage[ 24 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBufferManager.h
 class W3DBufferManager
 {
 public:
@@ -107,6 +114,7 @@ public:
 		MAX_FVF
 	};
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBufferManager.h
 	struct W3DRenderTask
 	{
 		W3DRenderTask	*m_nextTask;
@@ -115,6 +123,7 @@ public:
 	struct W3DVertexBuffer;
 	struct W3DIndexBuffer;
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBufferManager.h
 	struct W3DVertexBufferSlot
 	{
 		Int m_size;
@@ -126,6 +135,7 @@ public:
 		W3DVertexBufferSlot *m_nextSameVB;
 	};
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBufferManager.h
 	struct W3DVertexBuffer
 	{
 		VBM_FVF_TYPES	m_format;
@@ -137,6 +147,7 @@ public:
 		W3DRenderTask	*m_renderTaskList;
 	};
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBufferManager.h
 	struct W3DIndexBufferSlot
 	{
 		Int m_size;
@@ -148,6 +159,7 @@ public:
 		W3DIndexBufferSlot *m_nextSameIB;
 	};
 
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBufferManager.h
 	struct W3DIndexBuffer
 	{
 		W3DIndexBufferSlot *m_usedSlots;

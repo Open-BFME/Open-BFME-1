@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?newDisplayString@W3DDisplayStringManager@@UAEPAVDisplayString@@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringManager.cpp
 // Open-BFME5: lift the exact retail W3DDisplayStringManager::newDisplayString MASM body.
 
 class DisplayString;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplayStringManager.h
 class W3DDisplayStringManager
 {
 public:

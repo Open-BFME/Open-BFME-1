@@ -544,6 +544,7 @@ void StreakLineClass::Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) const
 	sphere.Radius = box.Extent.Length();
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/StreakLineClass_Get_Obj_Space_Bounding_Box.cpp
 // ?Get_Obj_Space_Bounding_Box@StreakLineClass@@ present-unmatched
 void StreakLineClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) const
 {

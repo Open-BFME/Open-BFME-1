@@ -411,6 +411,7 @@ W3DFilterInterface *ScreenBWFilterList[]=
 	NULL
 };
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__init_ScreenBWFilter_UAEHXZ_007D0AF0.cpp
 // ?init@ScreenBWFilter@@UAEHXZ present-unmatched
 Int ScreenBWFilter::init(void)
 {
@@ -842,6 +843,7 @@ W3DFilterInterface *ScreenCrossFadeFilterList[]=
 	NULL
 };
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ScreenCrossFadeFilter_initMethodThunk.cpp
 // ?init@ScreenCrossFadeFilter@@UAEHXZ present-unmatched
 Int ScreenCrossFadeFilter::init(void)
 {
@@ -867,6 +869,7 @@ Int ScreenCrossFadeFilter::init(void)
 	return TRUE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/ScreenCrossFadeFilterUpdateFadeLevelThunk.cpp
 // ?updateFadeLevel@ScreenCrossFadeFilter@@IAE_NXZ present-unmatched
 Bool ScreenCrossFadeFilter::updateFadeLevel(void)
 {
@@ -1754,6 +1757,7 @@ W3DShaderInterface *FlatTerrainShaderList[]=
 	NULL
 };
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainShader2Stage_init_Thunk.cpp
 // ?init@TerrainShader2Stage@@UAEHXZ present-unmatched
 Int TerrainShader2Stage::init( void )
 {
@@ -2161,6 +2165,7 @@ Int TerrainShaderPixelShader::shutdown(void)
 	return TRUE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainShaderPixelShader_init_Thunk.cpp
 // ?init@TerrainShaderPixelShader@@EAEHXZ present-unmatched
 Int TerrainShaderPixelShader::init( void )
 {	
@@ -2510,6 +2515,7 @@ Int RoadShaderPixelShader::set(Int pass)
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_ZWRITEENABLE,FALSE);
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_LIGHTING, FALSE);
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHABLENDENABLE,true);	//blend roads into terrain
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
@@ -2629,6 +2635,7 @@ Int RoadShader2Stage::set(Int pass)
 	DX8Wrapper::Set_DX8_Texture_Stage_State( 0, D3DTSS_ALPHAOP,   D3DTOP_MODULATE );
 
 	DX8Wrapper::Set_DX8_Texture_Stage_State( 0, D3DTSS_TEXCOORDINDEX, 0 );
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHABLENDENABLE,true);	//blend roads into terrain
 
@@ -3061,6 +3068,7 @@ void W3DShaderManager::drawViewport(Int color)
 /** Starts rendering to a texture.
  */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ExactStaticThunks.cpp
 // ?startRenderToTexture@W3DShaderManager@@SAXXZ present-unmatched
 void W3DShaderManager::startRenderToTexture(void)
 {	
@@ -3077,6 +3085,7 @@ void W3DShaderManager::startRenderToTexture(void)
 		if (m_currentFilter == FT_VIEW_MOTION_BLUR_FILTER || m_currentFilter == FT_VIEW_CROSSFADE)
 		{	//these filters rely on the previous frame being visible so we must be careful about clearing
 			//frame buffer.  Only clear the alpha channel
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 			DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_ALPHA);	//only clear alpha
 			ShaderClass shader=ShaderClass::_PresetOpaqueSolidShader;
@@ -3089,6 +3098,7 @@ void W3DShaderManager::startRenderToTexture(void)
 			REF_PTR_RELEASE(vmat);	//no need to keep a reference since it's a preset.
 		
 			drawViewport(0x00ffffff | (((Int)(TheWaterTransparency->m_minWaterOpacity*255.0f)) <<24));
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 			DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_RED|D3DCOLORWRITEENABLE_GREEN|D3DCOLORWRITEENABLE_BLUE);	//disable writes to alpha
 		}
@@ -3768,6 +3778,7 @@ Int FlatTerrainShaderPixelShader::shutdown(void)
 	return TRUE;
 }
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/FlatTerrainShaderPixelShader_init_Thunk.cpp
 // ?init@FlatTerrainShaderPixelShader@@UAEHXZ present-unmatched
 Int FlatTerrainShaderPixelShader::init( void )
 {	

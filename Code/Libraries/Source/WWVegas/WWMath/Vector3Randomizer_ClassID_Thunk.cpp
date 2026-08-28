@@ -8,6 +8,7 @@
 class Vector3;
 class Vector3Randomizer;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/v3_rnd.h
 class Vector3HollowSphereRandomizer
 {
 public:
@@ -21,6 +22,7 @@ public:
 	float m_Radius;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/v3_rnd.h
 class Vector3SolidCylinderRandomizer
 {
 public:

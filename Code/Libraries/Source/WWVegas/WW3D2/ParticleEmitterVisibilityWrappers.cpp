@@ -62,6 +62,7 @@ protected:
 	unsigned long Bits;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/part_emt.h
 class ParticleEmitterClass : public RenderObjClass
 {
 public:

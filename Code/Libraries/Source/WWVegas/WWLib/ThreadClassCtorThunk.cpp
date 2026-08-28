@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ??0ThreadClass@@: Code/Libraries/Source/WWVegas/WWLib/thread.cpp
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -60,6 +61,7 @@ private:
 	char	_bfme_base_slice[0x1c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/thread.h
 class ThreadClass : public Rva899F00Base
 {
 public:

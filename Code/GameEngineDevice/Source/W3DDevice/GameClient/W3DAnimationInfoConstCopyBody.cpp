@@ -35,6 +35,7 @@ struct BfmeW3DAnimationInfoTail
 	int m_bfmeC;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 class W3DAnimationInfo
 {
 public:

@@ -67,6 +67,7 @@ DebugIOCon::DebugIOCon(void):
   }
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DebugIOConDestructorThunk.cpp
 // ??1DebugIOCon@@UAE@XZ present-unmatched
 DebugIOCon::~DebugIOCon()
 {

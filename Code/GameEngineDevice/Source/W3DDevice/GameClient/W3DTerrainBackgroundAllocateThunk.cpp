@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?allocateTerrainBuffers@W3DTerrainBackground@@QAEXPAVWorldHeightMap@@HHH@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackground.cpp
 // Open-BFME5: W3DTerrainBackground::allocateTerrainBuffers, retail 0x00728770,
 // converted out of Code/gen_asm/d_0071bb90.asm. The reference body ports
 // unchanged.
@@ -17,6 +18,7 @@ typedef int Int;
 
 #define NULL 0
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -29,6 +31,7 @@ protected:
 	Int NumRefs;											///< +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/WorldHeightMap.h
 class WorldHeightMap : public RefCountClass
 {
 };
@@ -40,6 +43,7 @@ class WorldHeightMap : public RefCountClass
 		(dst) = (src);										\
 	}
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainBackground.h
 class W3DTerrainBackground
 {
 public:

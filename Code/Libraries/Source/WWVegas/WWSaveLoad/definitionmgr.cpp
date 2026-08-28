@@ -477,6 +477,7 @@ DefinitionMgrClass::Get_Next (DefinitionClass *curr_def)
 //
 ////////////////////////////////////////////////////////////////////////////
 void
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/File.cpp
 // ?Free_Definitions@DefinitionMgrClass@@ present-unmatched
 DefinitionMgrClass::Free_Definitions (void)
 {

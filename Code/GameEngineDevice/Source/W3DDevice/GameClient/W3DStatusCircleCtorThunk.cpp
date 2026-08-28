@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ??0W3DStatusCircle@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DStatusCircle.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DStatusCircle.h
 class W3DStatusCircle
 {
 public:

@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Reset_Device@DX8Wrapper@@: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 // Open-BFME5: lift the exact retail DX8Wrapper::Reset_Device MASM body.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:

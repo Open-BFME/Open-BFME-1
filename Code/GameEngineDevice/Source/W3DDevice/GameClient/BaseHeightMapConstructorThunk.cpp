@@ -1,3 +1,4 @@
+// readable body of ??0BaseHeightMapRenderObjClass@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp
 // Exact retail bytes for BaseHeightMapRenderObjClass::BaseHeightMapRenderObjClass at 0x006CFAE0.
 // This is the evidenced true owner; the conflicting LightMap ledger alias remains separate.
 extern "C" __declspec(naked) void bfme_BaseHeightMapRenderObj_ctor_6CFAE0()

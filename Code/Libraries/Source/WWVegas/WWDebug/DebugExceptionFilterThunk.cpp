@@ -3,6 +3,7 @@
 
 struct _EXCEPTION_POINTERS;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/internal_except.h
 class DebugExceptionhandler
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /Ireference/shims/sweep
+// readable body of ?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 #define Matrix4x4 Matrix4
 /*
 **	Command & Conquer Generals Zero Hour(tm)

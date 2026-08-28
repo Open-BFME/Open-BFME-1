@@ -9,6 +9,7 @@
 // shift-by-three, so the empty range returns the result argument straight from
 // the stack rather than falling through the loop.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -18,9 +19,11 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 class ModelConditionInfo
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 	struct HideShowSubObjInfo
 	{
 		// Retail's per-element assignment touches only the name: the leading

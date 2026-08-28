@@ -7,12 +7,14 @@ extern void *__cdecl operator new[](size_t size);
 extern void __cdecl operator delete[](void *pointer);
 extern "C" __declspec(dllimport) void __cdecl free(void *pointer) throw();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:
 	void Release_Ref();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/proxy.h
 class ProxyClass
 {
 public:
@@ -80,6 +82,7 @@ protected:
 	int GrowthStep;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h
 class Render2DClass
 {
 public:

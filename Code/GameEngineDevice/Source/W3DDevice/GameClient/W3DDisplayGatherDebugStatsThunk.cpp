@@ -1,3 +1,4 @@
+// readable body of ?gatherDebugStats@W3DDisplay@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
 // Exact retail bytes for W3DDisplay::gatherDebugStats at 0x006F0300.
 // Kept separate so W3DDisplay.cpp continues to provide its other symbols and funclets.
 extern "C" __declspec(naked) void bfme_W3DDisplay_gatherDebugStats_6F0300()

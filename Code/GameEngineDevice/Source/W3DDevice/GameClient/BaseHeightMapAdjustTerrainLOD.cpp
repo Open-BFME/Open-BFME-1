@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?adjustTerrainLOD@BaseHeightMapRenderObjClass@@UAEXH@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp
 
 class BaseHeightMapRenderObjClass;
 class HeightMapRenderObjClass;
@@ -11,12 +12,14 @@ class View;
 	virtual void prefix##8(); virtual void prefix##9(); virtual void prefix##a(); virtual void prefix##b(); \
 	virtual void prefix##c(); virtual void prefix##d(); virtual void prefix##e(); virtual void prefix##f()
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 struct GlobalData
 {
 	char m_unknown[0x54];
 	int m_terrainLOD;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/WorldHeightMap.h
 struct WorldHeightMap
 {
 	char m_unknown[0x120e8];
@@ -24,18 +27,21 @@ struct WorldHeightMap
 	int m_drawHeight;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShroud.h
 class W3DShroud
 {
 public:
 	void reset();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DRoadBuffer.h
 class W3DRoadBuffer
 {
 public:
 	void loadRoads();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
 class RTS3DScene
 {
 public:
@@ -50,6 +56,7 @@ public:
 	virtual void unregisterObject(void *object, int event);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/HeightMap.h
 class HeightMapRenderObjClass
 {
 public:
@@ -74,6 +81,7 @@ private:
 	char m_data[0x3178];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/View.h
 class View
 {
 public:

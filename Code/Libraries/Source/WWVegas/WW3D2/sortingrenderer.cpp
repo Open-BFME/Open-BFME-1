@@ -221,6 +221,7 @@ static TempIndexStruct* Get_Temp_Index_Array(unsigned count)
 //
 // ----------------------------------------------------------------------------
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/SortingRendererInsertTrianglesThunk.cpp
 // ?Insert_Triangles@SortingRendererClass@@ present-unmatched
 void SortingRendererClass::Insert_Triangles(
 	const SphereClass& bounding_sphere,
@@ -310,6 +311,7 @@ void SortingRendererClass::Insert_Triangles(
 //
 // ----------------------------------------------------------------------------
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/SortingRendererInsertTrianglesThunk.cpp
 // ?Insert_Triangles@SortingRendererClass@@ present-unmatched
 void SortingRendererClass::Insert_Triangles(
 	unsigned short start_index, 
@@ -566,8 +568,10 @@ void SortingRendererClass::Flush_Sorting_Pool()
 
 	// Set index buffer and render!
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 // ?Set_Index_Buffer@DX8Wrapper@@ present-unmatched
 	DX8Wrapper::Set_Index_Buffer(dyn_ib_access,0); // Override with this buffer (do something to prevent need for this!)
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 // ?Set_Vertex_Buffer@DX8Wrapper@@ present-unmatched
 	DX8Wrapper::Set_Vertex_Buffer(dyn_vb_access); // Override with this buffer (do something to prevent need for this!)
 

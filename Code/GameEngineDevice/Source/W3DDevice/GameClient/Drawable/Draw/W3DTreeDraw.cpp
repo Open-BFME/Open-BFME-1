@@ -49,6 +49,7 @@
 #endif
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeDrawModuleDataConstructorThunk.cpp
 // ??0W3DTreeDrawModuleData@@QAE@XZ present-unmatched
 W3DTreeDrawModuleData::W3DTreeDrawModuleData() :
 m_framesToMoveInward(1),
@@ -78,6 +79,7 @@ m_maxOutwardMovement(1.0f)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DTreeDrawModuleDataDestructorThunk.cpp
 // ??1W3DTreeDrawModuleData@@UAE@XZ present-unmatched
 W3DTreeDrawModuleData::~W3DTreeDrawModuleData()
 {
@@ -121,6 +123,7 @@ void W3DTreeDrawModuleData::buildFieldParse(MultiIniFieldParse& p)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDrawConstructor.cpp
 // ??0W3DTreeDraw@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 W3DTreeDraw::W3DTreeDraw( Thing *thing, const ModuleData* moduleData ) : DrawModule( thing, moduleData ),
 m_treeAdded(false)

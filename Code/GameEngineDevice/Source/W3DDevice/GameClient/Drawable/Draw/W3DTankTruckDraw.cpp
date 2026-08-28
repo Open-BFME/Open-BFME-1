@@ -220,6 +220,7 @@ void W3DTankTruckDraw::tossEmitters()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankTruckDraw_setFullyObscuredByShroud_Thunk.cpp
 // ?setFullyObscuredByShroud@W3DTankTruckDraw@@ present-unmatched
 void W3DTankTruckDraw::setFullyObscuredByShroud(Bool fullyObscured)
 {

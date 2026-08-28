@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep
+// readable body of ??0Buffer@@: Code/Libraries/Source/WWVegas/WW3D2/bw_render.cpp
+// readable body of ??1Buffer@@: Code/Libraries/Source/WWVegas/WW3D2/bw_render.cpp
 
 
 #include	"always.h"

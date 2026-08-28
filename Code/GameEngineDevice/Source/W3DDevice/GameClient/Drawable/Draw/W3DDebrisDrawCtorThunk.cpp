@@ -32,6 +32,7 @@ class Drawable;
 extern int W3DDebrisDraw_vftable;
 extern int W3DDebrisDraw_DebrisDrawInterface_vftable;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class DrawModule
 {
 public:
@@ -45,6 +46,7 @@ protected:
 
 // Polymorphic and not novtable: retail stores this base's own vftable at +0x0C
 // before the derived pair of vptr writes.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class DebrisDrawInterface
 {
 public:

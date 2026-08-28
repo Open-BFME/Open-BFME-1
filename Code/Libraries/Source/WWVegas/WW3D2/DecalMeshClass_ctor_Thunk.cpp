@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ??0DecalMeshClass@@QAE@PAVMeshClass@@PAVDecalSystemClass@@@Z: Code/Libraries/Source/WWVegas/WW3D2/decalmsh.cpp
 // Open-BFME5: DecalMeshClass::DecalMeshClass, retail 0x000FC2E0,
 // zh_sweep packet 000fc2e0.
 //
@@ -33,6 +34,7 @@ protected:
 	int m_word_04;											///< +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/decalmsh.h
 class DecalMeshClass : public DecalMeshBase
 {
 public:

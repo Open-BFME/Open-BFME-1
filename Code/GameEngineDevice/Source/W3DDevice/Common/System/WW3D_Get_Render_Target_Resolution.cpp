@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Get_Render_Target_Resolution@WW3D@@: Code/Libraries/Source/WWVegas/WW3D2/ww3d.cpp
 
 // Retail 0x00906990, 195 bytes. An SEH frame with the 0/-1 unwind pair around
 // the device branch, which is a guard object: the same lock and unlock pair
@@ -65,6 +66,7 @@ extern Int BfmeRenderHeight;						// 0x012D6DB8
 extern Int BfmeRenderBitDepth;						// 0x012D6DBC
 extern Bool BfmeRenderWindowed;						// 0x0134050D
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setPosition@Mouse@@: Code/GameEngine/Source/GameClient/Input/Mouse.cpp
 
 // Mouse::setPosition, retail 0x005A4500. Two stores and nothing else: the
 // current mouse position is the pair of dwords at +0x4D10 and +0x4D14, a long

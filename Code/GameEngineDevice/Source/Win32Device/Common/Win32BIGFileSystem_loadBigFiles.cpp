@@ -47,6 +47,7 @@
 #include <vector>
 #include <algorithm>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ArchiveFile.h
 class ArchiveFile
 {
 public:
@@ -72,6 +73,7 @@ typedef std::set<AsciiString, rts::less_than_nocase<AsciiString> > FilenameList;
 
 class File;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFileSystem.h
 class Win32BIGFileSystem
 {
 public:
@@ -94,6 +96,7 @@ protected:
 	ArchiveFileMap m_archiveFileMap;	// +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/LocalFileSystem.h
 class LocalFileSystem
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?draw@RTS3DScene@@UAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp
 
 // FILE: RTS3DSceneDraw.cpp ///////////////////////////////////////////////////
 //
@@ -46,6 +47,7 @@ class CameraClass;
 // decorated as ?Render@WW3D@@SA?AW4WW3DErrorType@@PAVSceneClass@@PAVCameraClass@@_N2ABVVector3@@@Z
 enum WW3DErrorType { WW3D_ERROR_OK };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SceneClass
 {
 public:
@@ -54,18 +56,21 @@ public:
 
 // 0x108 bytes: the vtable pointer SceneClass contributes plus 0x104 of members
 // this body does not see.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SimpleSceneClass : public SceneClass
 {
 protected:
 	char m_bfmeSceneBody[0x108 - 4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
 	virtual void draw() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
 public:
@@ -76,6 +81,7 @@ public:
 										 const Vector3 &color = Vector3(0,0,0) );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
 class RTS3DScene : public SimpleSceneClass, public SubsystemInterface
 {
 public:

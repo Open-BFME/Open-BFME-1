@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?freeMapResources@HeightMapRenderObjClass@@UAEHXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/HeightMap.cpp
 
 // Open-BFME5: HeightMapRenderObjClass::freeMapResources, retail 0x006D2690, 122
 // bytes. The body carried only a machine byte-dump row; reverse/reloc_names.csv
@@ -36,6 +37,7 @@ private:
 	char m_bfmeBody[0xC4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/HeightMap.h
 class HeightMapRenderObjClass
 {
 public:

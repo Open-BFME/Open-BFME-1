@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?allocateNeighbors@W3DShadowGeometryMesh@@IAE_NH@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp
 // Open-BFME5: W3DShadowGeometryMesh::allocateNeighbors, retail 0x007B81D0,
 // zh_sweep packet 007b81d0.
 //

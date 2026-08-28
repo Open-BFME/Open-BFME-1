@@ -22,6 +22,7 @@ typedef int Int;
 
 struct BfmeRbTreeInsertAnchorHelper;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	char *m_bfmeData;

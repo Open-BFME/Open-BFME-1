@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?unitMoved@W3DTreeBuffer@@QAEXPAVObject@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBuffer.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class Object;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTreeBuffer.h
 class W3DTreeBuffer
 {
 public:

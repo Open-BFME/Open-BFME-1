@@ -37,6 +37,7 @@ extern "C" __declspec(dllimport) unsigned long __stdcall htonl(unsigned long net
 UnsignedInt BFMEComputeCRC(const UnsignedByte *data, UnsignedInt length, UnsignedInt crc);
 
 #pragma pack(push, 1)
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetworkDefs.h
 struct TransportMessage
 {
 	UnsignedInt crc;								// +0x000

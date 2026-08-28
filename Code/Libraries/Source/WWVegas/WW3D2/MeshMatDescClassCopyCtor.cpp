@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:
@@ -9,6 +10,7 @@ public:
 class TextureClass : public TextureBaseClass {};
 
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/ref_ptr.h
 class RefCountPtr
 {
 public:
@@ -33,6 +35,7 @@ private:
 	T * Referent;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/shader.h
 class ShaderClass
 {
 public:

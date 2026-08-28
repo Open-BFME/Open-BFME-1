@@ -21,6 +21,7 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -45,6 +46,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFile.h
 class Win32BIGFile
 {
 public:

@@ -9,6 +9,7 @@
 
 class RenderObjClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hlod.h
 class HLodClass
 {
 public:

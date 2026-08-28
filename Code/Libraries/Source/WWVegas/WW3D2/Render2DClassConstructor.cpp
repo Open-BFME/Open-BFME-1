@@ -95,6 +95,7 @@ extern int g_bfmeThirdEB;
 extern int g_bfmeFourthEB;
 extern int g_bfmeFifthEB;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h
 class Render2DClass
 {
 public:

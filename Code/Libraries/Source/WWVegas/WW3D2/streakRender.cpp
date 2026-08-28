@@ -413,6 +413,7 @@ void StreakRendererClass::RenderStreak
 		modelview.mul(view2, transform);
 #endif
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/vp.cpp
 // ?Transform@VectorProcessorClass@@ present-unmatched
 		VectorProcessorClass::Transform(&xformed_pts[0],
 			&points[chunkIndex], modelview, point_cnt);
@@ -807,6 +808,7 @@ void StreakRendererClass::RenderStreak
 
 				// Not parallel - intersect planes to get line (get vector, normalize it, ensure it is
 				// pointing towards the midpoint)
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
 // ?Cross_Product@Vector3@@SAXABV1@0PAV1@@Z present-unmatched
 				Vector3::Cross_Product(segment[intersectionIndex - 1].EdgePlane[TOP_EDGE], segment[intersectionIndex].EdgePlane[TOP_EDGE],
 					&(intersection[intersectionIndex][TOP_EDGE].Direction));
@@ -849,6 +851,7 @@ void StreakRendererClass::RenderStreak
 
 				// Not parallel - intersect planes to get line (get vector, normalize it, ensure it is
 				// pointing towards the midpoint)
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
 // ?Cross_Product@Vector3@@SAXABV1@0PAV1@@Z present-unmatched
 				Vector3::Cross_Product(segment[intersectionIndex - 1].EdgePlane[BOTTOM_EDGE], segment[intersectionIndex].EdgePlane[BOTTOM_EDGE],
 					&(intersection[intersectionIndex][BOTTOM_EDGE].Direction));
@@ -1437,6 +1440,7 @@ void StreakRendererClass::RenderStreak
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/StreakRendererClass_getVertexBuffer_Thunk.cpp
 // ?getVertexBuffer@StreakRendererClass@@AAEPAUVertexFormatXYZUV1@@I@Z present-unmatched
 VertexFormatXYZUV1 *StreakRendererClass::getVertexBuffer(unsigned int number)
 {

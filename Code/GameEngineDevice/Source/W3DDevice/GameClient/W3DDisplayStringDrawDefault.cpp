@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
+// readable body of ?draw@W3DDisplayString@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayString.cpp
 
 typedef int Int;
 typedef int Color;
 
 // BFME added the two-argument convenience overload at vtable slot +0x34;
 // the four-argument draw it delegates to is the next slot at +0x38.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplayString.h
 class W3DDisplayString
 {
 public:

@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?read_vertex_colors@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z: Code/Libraries/Source/WWVegas/WW3D2/meshmdlio.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 enum WW3DErrorType {};
 class ChunkLoadClass;
 class MeshLoadContextClass;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmdl.h
 class MeshModelClass
 {
 protected:

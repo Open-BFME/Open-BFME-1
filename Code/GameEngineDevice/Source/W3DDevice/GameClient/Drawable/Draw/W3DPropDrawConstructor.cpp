@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0W3DPropDraw@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DPropDraw.cpp
 
 // W3DPropDraw's constructor, retail 0x007592C0.
 //
@@ -10,6 +11,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class DrawModule
 {
 public:
@@ -21,6 +23,7 @@ private:
 	unsigned char m_data[8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DPropDraw.h
 class W3DPropDraw : public DrawModule
 {
 public:

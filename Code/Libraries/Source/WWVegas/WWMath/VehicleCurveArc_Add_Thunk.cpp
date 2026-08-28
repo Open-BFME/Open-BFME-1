@@ -35,6 +35,7 @@ public:
 	Vector3 &operator=(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/vehiclecurve.h
 class VehicleCurveClass
 {
 public:

@@ -20,12 +20,14 @@
 // distance to m_textRenderer is proven -- so it is carried as one opaque run
 // rather than invented member names.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 class Render2DSentenceClass
 {
 public:
 	~Render2DSentenceClass();								///< retail 0x00887940
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 protected:
@@ -35,6 +37,7 @@ protected:
 	friend class W3DGameWindow;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DGameWindow.h
 class W3DGameWindow : public GameWindow
 {
 protected:

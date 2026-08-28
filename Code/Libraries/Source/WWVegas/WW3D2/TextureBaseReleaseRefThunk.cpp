@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:
@@ -32,6 +33,7 @@ void TextureBaseClass::Release_Ref()
 	Delete_This();
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureClass
 {
 public:

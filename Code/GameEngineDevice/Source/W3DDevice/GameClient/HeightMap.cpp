@@ -162,6 +162,7 @@ void HeightMapRenderObjClass::freeIndexVertexBuffers(void)
 //=============================================================================
 /** Frees the w3d resources used to draw the terrain. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/HeightMapRenderObjClass_freeMapResources.cpp
 // ?freeMapResources@HeightMapRenderObjClass@@UAEHXZ present-unmatched
 Int HeightMapRenderObjClass::freeMapResources(void)
 {
@@ -1089,6 +1090,7 @@ Int HeightMapRenderObjClass::updateBlock(Int x0, Int y0, Int x1, Int y1,  WorldH
 //=============================================================================
 /** Destructor. Releases w3d assets. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/HeightMapRenderObjClassDestructorThunk.cpp
 // ??1HeightMapRenderObjClass@@UAE@XZ present-unmatched
 HeightMapRenderObjClass::~HeightMapRenderObjClass(void)
 {

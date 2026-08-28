@@ -2,6 +2,7 @@
 // layout local avoids changing the later vendored MaterialPassClass header,
 // while allowing MSVC to emit the retail array-destructor cleanup sequence.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -32,6 +33,7 @@ private:
 	void *Pointer;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/matpass.h
 class MaterialPassClass : public RefCountClass
 {
 public:

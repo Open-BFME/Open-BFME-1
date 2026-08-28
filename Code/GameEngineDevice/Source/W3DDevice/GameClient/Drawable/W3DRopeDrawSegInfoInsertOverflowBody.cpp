@@ -19,9 +19,11 @@
 // on it, which is the only way the function comes out with one local dword
 // instead of two.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DRopeDraw.h
 class W3DRopeDraw
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DRopeDraw.h
 	struct SegInfo
 	{
 		unsigned char m_data[16];

@@ -201,6 +201,7 @@ static DecalPolyClass _DecalPoly1;
  * HISTORY:                                                                                    *
  *   1/26/00    gth : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DecalMeshClass_ctor_Thunk.cpp
 // ??0DecalMeshClass@@QAE@PAVMeshClass@@PAVDecalSystemClass@@@Z present-unmatched
 DecalMeshClass::DecalMeshClass(MeshClass * parent,DecalSystemClass * system) :
 	Parent(parent),

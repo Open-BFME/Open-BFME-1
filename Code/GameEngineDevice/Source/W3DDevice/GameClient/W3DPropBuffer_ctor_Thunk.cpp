@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0W3DPropBuffer@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBuffer.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DPropBuffer.h
 class W3DPropBuffer {
 public:
 	W3DPropBuffer();

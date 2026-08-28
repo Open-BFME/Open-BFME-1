@@ -78,6 +78,7 @@ Bool User::operator!= (const User *other)
 /**
  * Set the name of this user.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/User_setName_Thunk.cpp
 // ?setName@User@@ present-unmatched
 void User::setName(UnicodeString name) {
 	m_name.set(name);

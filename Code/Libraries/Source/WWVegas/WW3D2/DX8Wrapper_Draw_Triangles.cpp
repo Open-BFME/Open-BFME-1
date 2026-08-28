@@ -1,9 +1,11 @@
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/sphere.h
 class SphereClass
 {
 public:
 	float Center[3];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/sortingrenderer.h
 class SortingRendererClass
 {
 public:
@@ -15,6 +17,7 @@ public:
 		unsigned short vertex_count);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 	static void Draw(

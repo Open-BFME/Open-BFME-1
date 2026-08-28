@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?Recolor_Mesh@W3DAssetManager@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DAssetManager.cpp
 // W3DAssetManager::Recolor_Mesh — retail 0x0092DF50 size 1218
 // Naked exact body; promoted from .asm to 1:1 C++. thiscall 1 stack arg.
 

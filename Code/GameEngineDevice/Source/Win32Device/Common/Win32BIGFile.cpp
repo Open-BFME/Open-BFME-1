@@ -62,6 +62,8 @@ Win32BIGFile::Win32BIGFile()
 // compiles the way its eight matched rows were proven under. BFME's real body
 // moved into the four-argument overload and is matched from
 // Win32BIGFileOpenArchived.cpp; read that one, not this.
+// byte-exact reconstruction: Code/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileOpen.cpp
+// ?openFile@Win32BIGFile@@UAEPAVFile@@PBDH@Z present-unmatched
 File* Win32BIGFile::openFile( const Char *filename, Int access )
 {
 	const ArchivedFileInfo *fileInfo = getArchivedFileInfo(AsciiString(filename));

@@ -44,6 +44,7 @@ public:
 	int m_bfmeRefCount;						// +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/distlod.h
 class DistLODClass
 {
 private:

@@ -25,6 +25,7 @@ struct BfmeRbTreeInsertAnchorHelper;
 // GameSpyGroupRoom is 32 bytes, which is what the pair destructor at
 // 0x00631920 already models: a narrow string, a wide string, and 24 bytes
 // behind them.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
 class GameSpyGroupRoom
 {
 	char m_bfmeBody[32];
