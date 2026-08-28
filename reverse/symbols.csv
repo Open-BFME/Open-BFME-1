@@ -72855,6 +72855,7 @@ name,address,notes
 ?bfmeFreeArrDLI@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrDLJ@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrDMA@@YAXPAX@Z,0x00881EF0,pin
+?bfmeFreeArrDMB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrDMC@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeBIB@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeBOF@@YAXPAX@Z,0x00012E90,pin
@@ -72885,6 +72886,7 @@ name,address,notes
 ?bfmeFreeDLI@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeDLJ@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeDMA@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeDMB@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeDMC@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
@@ -73493,6 +73495,7 @@ name,address,notes
 ?bfmeVecDtorDLI@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVecDtorDLJ@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVecDtorDMA@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
+?bfmeVecDtorDMB@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVecDtorDMC@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVisit@BfmeInnerIterable@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x000EDAB0,"address-derived inner-list visitor callee of BfmeIterableObject::bfmeIterate; retail reaches it through the low-RVA thunk at 0x0002DC1D"
 ?bfmeVisit@Gen_0038D000@@AAEXPAVBfmeNodeR@@@Z,0x0001D0DE,Open-BFME5 the ICF thunk (to 0x0038B0C0) the clear at 0x0038D000 calls on this per node
@@ -78268,6 +78271,7 @@ _bfmeDtorCbDLH,0x0002F2A2,pin
 _bfmeDtorCbDLI,0x0000D59E,pin
 _bfmeDtorCbDLJ,0x0001D9EE,pin
 _bfmeDtorCbDMA,0x0001364C,pin
+_bfmeDtorCbDMB,0x00001C80,pin
 _bfmeDtorCbDMC,0x008F9330,pin
 _bfmeDtorDAA,0x0000D828,pin
 _bfmeDtorDAB,0x0003D4B0,pin
@@ -78378,6 +78382,7 @@ _bfmeVftDJF1,0x00C73744,pin
 _bfmeVftDJF2,0x00D0F9E8,pin
 _bfmeVftDJF3,0x00D1089C,pin
 _bfmeVftDJF4,0x00D1126C,pin
+_bfmeVftDMB,0x00C73744,pin
 _bfmeVftSA,0x00C8F4F0,pin
 _bfmeVftSE,0x00D0C64C,pin
 _bfmeVftSF,0x00D0C878,pin
