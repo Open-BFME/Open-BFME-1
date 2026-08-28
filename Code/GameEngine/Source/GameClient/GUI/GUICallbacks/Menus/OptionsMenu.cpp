@@ -596,23 +596,153 @@ AsciiString OptionPreferences::getSpeakerType(void)
 	return it->second;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getSoundVolume_Thunk.cpp
-// ?getSoundVolume@OptionPreferences@@QAEMXZ present-unmatched
+// The preference getters below read the mapped value's characters in place and
+// drive the lookup key with explicit init/destroy calls rather than an object
+// with a destructor: retail has no unwind frame here, and a destructor would
+// demand one. The map's header node doubles as its end sentinel.
+struct CustomAsciiStringShim
+{
+	void *m_data;
+	void init( const char *s );
+	void destroy( void );
+};
+
+struct CustomStringDataShim
+{
+	UnsignedByte m_header[8];				///< characters follow at +8
+};
+
+struct CustomMapNodeShim
+{
+	UnsignedByte m_unreconstructed_00[0x14];
+	CustomStringDataShim *m_value;				///< retail node+0x14
+};
+
+struct CustomPreferenceMapShim
+{
+	CustomMapNodeShim *m_header;
+	CustomMapNodeShim *find( CustomAsciiStringShim *key );
+};
+
+// The defaults come from TheWritableGlobalData, whose flags BFME keeps at these
+// three offsets.
+struct BfmeGlobalDataFlags
+{
+	UnsignedByte m_unreconstructed_00[0x1c];
+	Bool m_extraAnimationsDisabled;				///< retail this+0x1c
+	Bool m_useHeatEffects;					///< retail this+0x1d
+	UnsignedByte m_unreconstructed_1e[0x58 - 0x1e];
+	Bool m_dynamicLODEnabled;				///< retail this+0x58
+};
+
+// TheAudio reaches its settings through vtable slot 72; the three default volumes
+// sit at +0x80, +0x84 and +0x88.
+struct BfmeAudioSettings
+{
+	UnsignedByte m_unreconstructed_00[0x80];
+	Real m_defaultSoundVolume;				///< retail settings+0x80
+	Real m_defaultVoiceVolume;				///< retail settings+0x84
+	Real m_musicVolume;					///< retail settings+0x88
+};
+
+class BfmeAudioVtbl_120
+{
+public:
+	virtual void _a120_0() = 0;
+	virtual void _a120_1() = 0;
+	virtual void _a120_2() = 0;
+	virtual void _a120_3() = 0;
+	virtual void _a120_4() = 0;
+	virtual void _a120_5() = 0;
+	virtual void _a120_6() = 0;
+	virtual void _a120_7() = 0;
+	virtual void _a120_8() = 0;
+	virtual void _a120_9() = 0;
+	virtual void _a120_10() = 0;
+	virtual void _a120_11() = 0;
+	virtual void _a120_12() = 0;
+	virtual void _a120_13() = 0;
+	virtual void _a120_14() = 0;
+	virtual void _a120_15() = 0;
+	virtual void _a120_16() = 0;
+	virtual void _a120_17() = 0;
+	virtual void _a120_18() = 0;
+	virtual void _a120_19() = 0;
+	virtual void _a120_20() = 0;
+	virtual void _a120_21() = 0;
+	virtual void _a120_22() = 0;
+	virtual void _a120_23() = 0;
+	virtual void _a120_24() = 0;
+	virtual void _a120_25() = 0;
+	virtual void _a120_26() = 0;
+	virtual void _a120_27() = 0;
+	virtual void _a120_28() = 0;
+	virtual void _a120_29() = 0;
+	virtual void _a120_30() = 0;
+	virtual void _a120_31() = 0;
+	virtual void _a120_32() = 0;
+	virtual void _a120_33() = 0;
+	virtual void _a120_34() = 0;
+	virtual void _a120_35() = 0;
+	virtual void _a120_36() = 0;
+	virtual void _a120_37() = 0;
+	virtual void _a120_38() = 0;
+	virtual void _a120_39() = 0;
+	virtual void _a120_40() = 0;
+	virtual void _a120_41() = 0;
+	virtual void _a120_42() = 0;
+	virtual void _a120_43() = 0;
+	virtual void _a120_44() = 0;
+	virtual void _a120_45() = 0;
+	virtual void _a120_46() = 0;
+	virtual void _a120_47() = 0;
+	virtual void _a120_48() = 0;
+	virtual void _a120_49() = 0;
+	virtual void _a120_50() = 0;
+	virtual void _a120_51() = 0;
+	virtual void _a120_52() = 0;
+	virtual void _a120_53() = 0;
+	virtual void _a120_54() = 0;
+	virtual void _a120_55() = 0;
+	virtual void _a120_56() = 0;
+	virtual void _a120_57() = 0;
+	virtual void _a120_58() = 0;
+	virtual void _a120_59() = 0;
+	virtual void _a120_60() = 0;
+	virtual void _a120_61() = 0;
+	virtual void _a120_62() = 0;
+	virtual void _a120_63() = 0;
+	virtual void _a120_64() = 0;
+	virtual void _a120_65() = 0;
+	virtual void _a120_66() = 0;
+	virtual void _a120_67() = 0;
+	virtual void _a120_68() = 0;
+	virtual void _a120_69() = 0;
+	virtual void _a120_70() = 0;
+	virtual void _a120_71() = 0;
+	virtual const BfmeAudioSettings *getAudioSettings( void ) = 0;
+};
+
+// BFME has no relative-2D-volume scaling on the missing-key path.
+// ?getSoundVolume@OptionPreferences@@QAEMXZ
 Real OptionPreferences::getSoundVolume(void)
 {
-	OptionPreferences::const_iterator it = find("SFXVolume");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("SFXVolume");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 	{
-		Real relative = TheAudio->getAudioSettings()->m_relative2DVolume;
-		if( relative < 0 )
-		{
-			Real scale = 1.0f + relative;
-			return TheAudio->getAudioSettings()->m_defaultSoundVolume * 100.0f * scale;
-		}
-		return TheAudio->getAudioSettings()->m_defaultSoundVolume * 100.0f;
+		return ((BfmeAudioVtbl_120 *)TheAudio)->getAudioSettings()->m_defaultSoundVolume * 100.0f;
 	}
 
-	Real volume = (Real) atof(it->second.str());
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	Real volume = (Real) atof(text);
 	if (volume < 0.0f)
 	{
 		volume = 0.0f;
@@ -643,15 +773,25 @@ Real OptionPreferences::get3DSoundVolume(void)
 	return volume;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getSpeechVolume_Thunk.cpp
-// ?getSpeechVolume@OptionPreferences@@QAEMXZ present-unmatched
+// ?getSpeechVolume@OptionPreferences@@QAEMXZ
 Real OptionPreferences::getSpeechVolume(void)
 {
-	OptionPreferences::const_iterator it = find("VoiceVolume");
-	if (it == end())
-		return TheAudio->getAudioSettings()->m_defaultSpeechVolume * 100.0f;
+	CustomAsciiStringShim key;
+	key.init("VoiceVolume");
 
-	Real volume = (Real) atof(it->second.str());
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
+	{
+		return ((BfmeAudioVtbl_120 *)TheAudio)->getAudioSettings()->m_defaultVoiceVolume * 100.0f;
+	}
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	Real volume = (Real) atof(text);
 	if (volume < 0.0f)
 	{
 		volume = 0.0f;
@@ -710,45 +850,6 @@ Bool OptionPreferences::getTreesEnabled(void)
 	}
 	return FALSE;
 }
-
-// The preference getters below read the mapped value's characters in place and
-// drive the lookup key with explicit init/destroy calls rather than an object
-// with a destructor: retail has no unwind frame here, and a destructor would
-// demand one. The map's header node doubles as its end sentinel.
-struct CustomAsciiStringShim
-{
-	void *m_data;
-	void init( const char *s );
-	void destroy( void );
-};
-
-struct CustomStringDataShim
-{
-	UnsignedByte m_header[8];				///< characters follow at +8
-};
-
-struct CustomMapNodeShim
-{
-	UnsignedByte m_unreconstructed_00[0x14];
-	CustomStringDataShim *m_value;				///< retail node+0x14
-};
-
-struct CustomPreferenceMapShim
-{
-	CustomMapNodeShim *m_header;
-	CustomMapNodeShim *find( CustomAsciiStringShim *key );
-};
-
-// The defaults come from TheWritableGlobalData, whose flags BFME keeps at these
-// three offsets.
-struct BfmeGlobalDataFlags
-{
-	UnsignedByte m_unreconstructed_00[0x1c];
-	Bool m_extraAnimationsDisabled;				///< retail this+0x1c
-	Bool m_useHeatEffects;					///< retail this+0x1d
-	UnsignedByte m_unreconstructed_1e[0x58 - 0x1e];
-	Bool m_dynamicLODEnabled;				///< retail this+0x58
-};
 
 // ?getExtraAnimationsDisabled@OptionPreferences@@QAE_NXZ
 Bool OptionPreferences::getExtraAnimationsDisabled(void)
@@ -900,15 +1001,25 @@ void OptionPreferences::getResolution(Int *xres, Int *yres)
 	*yres=selectedYRes;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_getMusicVolume_Thunk.cpp
-// ?getMusicVolume@OptionPreferences@@QAEMXZ present-unmatched
+// ?getMusicVolume@OptionPreferences@@QAEMXZ
 Real OptionPreferences::getMusicVolume(void)
 {
-	OptionPreferences::const_iterator it = find("MusicVolume");
-	if (it == end())
-		return TheAudio->getAudioSettings()->m_defaultMusicVolume * 100.0f;
+	CustomAsciiStringShim key;
+	key.init("MusicVolume");
 
-	Real volume = (Real) atof(it->second.str());
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
+	{
+		return ((BfmeAudioVtbl_120 *)TheAudio)->getAudioSettings()->m_musicVolume * 100.0f;
+	}
+
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	Real volume = (Real) atof(text);
 	if (volume < 0.0f)
 	{
 		volume = 0.0f;
