@@ -1328,7 +1328,6 @@ void OBBoxRenderObjClass::Set_Transform(const Matrix3D &m)
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?Set_Position@OBBoxRenderObjClass@@UAEXABVVector3@@@Z present-unmatched
 void OBBoxRenderObjClass::Set_Position(const Vector3 &v)
 {
 	RenderObjClass::Set_Position(v);

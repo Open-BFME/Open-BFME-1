@@ -23933,3 +23933,6 @@ dup_59eb90,0x0059EB90,"not AttackNugget: its constructor target is 0x0059EB00 no
 ?dup_00676c10@@YAXXZ,0x00676C10,gen-alias placeholder superseded by the real C++ identity ?GetDestroyPlayerCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z
 ?dup_00676c40@@YAXXZ,0x00676C40,gen-alias placeholder superseded by the real C++ identity ?GetDisconnectPlayerCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z
 ?dup_00676cc0@@YAXXZ,0x00676CC0,gen-alias placeholder superseded by the real C++ identity ?GetDisconnectFrameCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z
+?dup_0059b840@@YAXXZ,0x0059B840,gen-alias placeholder superseded by the real C++ identity ?reverse@ButtonFlashTransition@@UAEXXZ
+?dup_008f7350@@YAXXZ,0x008F7350,gen-alias placeholder superseded by the real C++ identity ?reset@FunctionLexicon@@UAEXXZ
+?dup_00956ac0@@YAXXZ,0x00956AC0,gen-alias placeholder superseded by the real C++ identity ?Set_Position@OBBoxRenderObjClass@@UAEXABVVector3@@@Z

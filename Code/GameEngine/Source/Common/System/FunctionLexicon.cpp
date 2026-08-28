@@ -564,7 +564,6 @@ void FunctionLexicon::init( void )
 //-------------------------------------------------------------------------------------------------
 /** reset */
 //-------------------------------------------------------------------------------------------------
-// ?reset@FunctionLexicon@@UAEXXZ present-unmatched
 void FunctionLexicon::reset( void )
 {
 
