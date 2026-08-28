@@ -72447,6 +72447,8 @@ name,address,notes
 ?bfmeCallDXH@@YAXPAVBfmeSubDXH@@PAX0@Z,0x008D2D10,pin
 ?bfmeCallEBC@BfmeOwnerEBC@@QAEXXZ,0x0003C740,pin
 ?bfmeCallEBD@BfmeSubEBD@@QAEXXZ,0x000349C8,pin
+?bfmeCallEBJ@BfmeObjEBJ@@QAEXPAXPBD@Z,0x008520A0,pin
+?bfmeCallEBL@BfmeObjEBL@@QAEXPAX0@Z,0x0000A803,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -72484,6 +72486,8 @@ name,address,notes
 ?bfmeClearMembers@@YAXPAVLGA_MemberObj@@@Z,0x00034DC9,Open-BFME5 ILT thunk to body 0x003D4080; ??1LGA_MemberObj@@QAE@XZ at 0x003D4490 calls it on this as a cdecl of one pointer before its member vector is released; address-derived name
 ?bfmeClearPP@BfmeThingPP@@QAEXXZ,0x0082AE40,pin
 ?bfmeClose@Gen009D1A40@@QAEXXZ,0x009CB880,address-derived close target from the tail REL32 jump at retail 0x009D1A5D
+?bfmeCmpEBMa@@YADPAX0@Z,0x00013C78,pin
+?bfmeCmpEBMb@@YADPAX0@Z,0x000397AC,pin
 ?bfmeCompare@AsciiString@@QBEHABV1@@Z,0x000220C5,Open-BFME5 ILT less<AsciiString> calls in the AsciiString-keyed _Rb_tree _M_insert at 0x005B2EF0; it jumps to 0x0005FEB0 and its result is tested against zero
 ?bfmeCompare@BfmeNameAU@@QBEHPBV1@@Z,0x00027471,Open-BFME5 the ICF thunk (to 0x00427471) the comparator inlined at 0x005134A0 and 0x0052FF70 compares names through
 ?bfmeComputeStatus@Weapon@@ABE?AW4WeaponStatus@@PA_N@Z,0x0001E6A0,Open-BFME5 ILT Weapon::getStatus at 0x001E6EE0 computes the status through; the bool by pointer arrives pre-set to true and gates the cache write
@@ -72990,6 +72994,7 @@ name,address,notes
 ?bfmeGetCCH@BfmeSubCCH@@QAEPAUBfmeResultCCH@@XZ,0x00046538,pin
 ?bfmeGetCrewSpeedMultiplier@Object@@QBEMXZ,0x000277AA,Open-BFME5 ILT thunk to body 0x001BF020; null m_contain at +0x1FC returns 1.0 otherwise tail-forwards to ContainModuleInterface slot 48 (+0xC0); bfme prefix records unrecovered retail spelling
 ?bfmeGetCurrentVictimIfAttacking@Object@@QBEPAV1@XZ,0x0000B366,Open-BFME5 ILT thunk to body 0x001BE070; Object m_ai at +0x204; AIUpdateInterface isAttacking slot 97 (+0x184) gates the pinned getCurrentVictim call; bfme prefix records unrecovered retail spelling
+?bfmeGetEBN@BfmeObjEBN@@QAEPAUBfmeSubEBN@@XZ,0x00046538,pin
 ?bfmeGetHordeMemberCount@Object@@QBEHXZ,0x00030715,Open-BFME5 ILT thunk to body 0x001BFDF0; Object m_contain at +0x1FC asks virtual slot +0x68 for a horde interface then calls its count slot +0x150 with false; bfme prefix records unrecovered retail spelling
 ?bfmeGetID@BfmeDrawableWithID@@QAEIXZ,0x00009B01,Open-BFME5 ILT both drawable lookup-table wrappers at 0x00431C20 and 0x00430B50 read the id through
 ?bfmeGetLastDamagePlayerIndex@Object@@QBEHXZ,0x0000515A,Open-BFME5 ILT thunk to body 0x001BF060; BodyModuleInterface last-damage slot 15 supplies sourcePlayerMask resolved through PlayerList and returned as Player index; bfme prefix records unrecovered retail spelling
@@ -73294,6 +73299,7 @@ name,address,notes
 ?bfmeOneDWB@BfmeThingDWB@@QAEXXZ,0x00017EEF,pin
 ?bfmeOneEBF@BfmeThingEBF@@QAEXXZ,0x000286A0,pin
 ?bfmeOneEBG@BfmeThingEBG@@QAEXXZ,0x00026684,pin
+?bfmeOneEBK@BfmeObjEBK@@QAEXPAXH@Z,0x007E8900,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73563,6 +73569,7 @@ name,address,notes
 ?bfmeTwoDVB@BfmeSubDVB@@QAEXPAX0@Z,0x0002AB0D,pin
 ?bfmeTwoEBF@@YAXXZ,0x00012D9B,pin
 ?bfmeTwoEBG@@YAXXZ,0x0000FB9B,pin
+?bfmeTwoEBK@BfmeObjEBK@@QAEXPAX0@Z,0x007E88D0,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -74665,6 +74672,7 @@ name,address,notes
 ?g_bfmeObjDXJ@@3PAUBfmeHeldDXJ@@A,0x00EF4B98,pin
 ?g_bfmeObjDYF@@3PAVBfmeGlobDYF@@A,0x00EF4C5C,pin
 ?g_bfmeObjEBE@@3PAVBfmeGlobEBE@@A,0x00EF0898,pin
+?g_bfmeObjEBL@@3VBfmeObjEBL@@A,0x00EF1000,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
@@ -74712,6 +74720,7 @@ name,address,notes
 ?g_bfmeWhatBKG@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWordFormat@@3QBDB,0x011442A8,address-derived word format string from the DIR32 operand at retail 0x009D93C0
 ?g_bfmeWorldRV@@3PAUBfmeWorldRV@@A,0x00EF33F8,pin
+?g_bfmeXEBK@@3PAXA,0x00EC3C58,pin
 ?g_defaultRespawnPolicy@@3URespawnPolicy@@A,0x012ED8B8,RespawnBody default six-dword policy
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
 ?g_lastPacketRouterStallFrame@@3IA,0x012F7704,last packet-router frame that triggered the native frame-stall gate
@@ -78506,6 +78515,7 @@ _bfmeStrDULd,0x00D1D820,pin
 _bfmeStrDULe,0x00D1D834,pin
 _bfmeStrDWK,0x00CBBAA8,pin
 _bfmeStrDYF,0x00C80FB4,pin
+_bfmeStrEBJ,0x00CF1B68,pin
 _bfmeTabEAC,0x00D098B0,pin
 _bfmeTagANB,0x00C9E038,pin
 _bfmeTagAPB,0x00DDFC30,pin
