@@ -6927,12 +6927,9 @@ L08_66A337:
 
 // Retail's name -- the ZH reference declares it with this signature. Returns
 // m_packetRouterSlot at this+0x1202C.
-__declspec(naked) unsigned int ConnectionManager::getPacketRouterSlot()
+unsigned int ConnectionManager::getPacketRouterSlot()
 {
-	__asm {
-		mov eax, dword ptr [ecx+1202Ch]
-		ret
-	}
+	return *(unsigned int *)((char *)this + 0x1202C);
 }
 
 // Retail's name, and the callee DisconnectManager::isPlayerVotedOut wants.
