@@ -6628,16 +6628,14 @@ void Object::defect( Team* newTeam, UnsignedInt detectionTime )
 //=============================================================================
 // Object::goInvulnerable
 //=============================================================================
-// ?goInvulnerable@Object@@QAEXI@Z present-unmatched
 // BFME: m_defectionHelper lives at +0x1e4.
 void Object::goInvulnerable( UnsignedInt time )
 {
 	const Bool WITHOUT_DEFECTOR_FX = FALSE;
+	friend_setUndetectedDefector( time > 0 );
 
 	ObjectDefectionHelper *defectionHelper =
 		*reinterpret_cast<ObjectDefectionHelper *const *>( reinterpret_cast<char *>(this) + 0x1e4 );
-
-	friend_setUndetectedDefector( time > 0 );
 
 	if (defectionHelper)
 		defectionHelper->startDefectionTimer(time, WITHOUT_DEFECTOR_FX);
