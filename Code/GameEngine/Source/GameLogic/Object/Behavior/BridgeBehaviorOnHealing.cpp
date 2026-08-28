@@ -11,6 +11,8 @@ typedef unsigned int UnsignedInt;
 enum ObjectID { INVALID_ID = 0 };
 enum KindOfType { KINDOF_BRIDGE_TOWER = 24 };
 
+class DamageInfo;
+
 class BodyModuleInterface
 {
 public:
@@ -61,7 +63,7 @@ public:
 	virtual void unused10();
 	virtual void unused11();
 	virtual void unused12();
-	virtual void unused13();
+	virtual void attemptDamage(DamageInfo *damageInfo);
 	virtual void unused14();
 	virtual void unused15();
 	virtual void attemptHealing(Real amount, Object *source);
@@ -75,10 +77,13 @@ public:
 	}
 
 	BodyModuleInterface *getBodyModule() const { return m_body; }
+	ObjectID getID() const { return m_id; }
 
 private:
 	ThingTemplate *m_template;
-	unsigned char m_unreconstructed08[0x200 - 0x08];
+	unsigned char m_unreconstructed08[0x74 - 0x08];
+	ObjectID m_id;
+	unsigned char m_unreconstructed78[0x200 - 0x78];
 	BodyModuleInterface *m_body;
 };
 
@@ -118,16 +123,23 @@ public:
 class DamageInfo
 {
 public:
+	DamageInfo();
+
 	unsigned char m_unreconstructed00[0x08];
 	ObjectID m_sourceID;
-	unsigned char m_unreconstructed0C[0x1C - 0x0C];
+	void *m_sourceTemplate;
+	int m_damageType;
+	int m_damageFXOverride;
+	int m_deathType;
 	Real m_amount;
+	unsigned char m_unreconstructed20[0x5C - 0x20];
 };
 
 class BridgeBehavior
 {
 public:
 	virtual void onHealing(DamageInfo *damageInfo);
+	virtual void onDamage(DamageInfo *damageInfo);
 	Object *getObject() const
 	{
 		return *(Object **)((unsigned char *)this - 0x1C);
@@ -151,6 +163,33 @@ void BridgeBehavior::onHealing(DamageInfo *damageInfo)
 			{
 				BodyModuleInterface *towerBody = tower->getBodyModule();
 				tower->attemptHealing(healingPercentage * towerBody->getMaxHealth(), getObject());
+			}
+		}
+	}
+}
+
+// ?onDamage@BridgeBehavior@@UAEXPAVDamageInfo@@@Z
+void BridgeBehavior::onDamage(DamageInfo *damageInfo)
+{
+	Real damagePercentage = damageInfo->m_amount / getObject()->getBodyModule()->getMaxHealth();
+	Object *source = TheGameLogic->findObjectByID(damageInfo->m_sourceID);
+
+	if (source == 0 || !source->isBridgeTower())
+	{
+		for (int i = 0; i < 4; ++i)
+		{
+			BridgeBehaviorInterface *bridge =
+				(BridgeBehaviorInterface *)((unsigned char *)this - 4);
+			Object *tower = TheGameLogic->findObjectByIDInline(bridge->getTowerID(i));
+			if (tower)
+			{
+				BodyModuleInterface *towerBody = tower->getBodyModule();
+				DamageInfo towerDamage;
+				towerDamage.m_amount = damagePercentage * towerBody->getMaxHealth();
+				towerDamage.m_sourceID = getObject()->getID();
+				towerDamage.m_damageType = damageInfo->m_damageType;
+				towerDamage.m_deathType = damageInfo->m_deathType;
+				tower->attemptDamage(&towerDamage);
 			}
 		}
 	}
