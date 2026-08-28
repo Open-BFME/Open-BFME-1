@@ -4,6 +4,12 @@ typedef bool Bool;
 
 class NetCommandMsg;
 
+class BFMENetRequestPlayerLeaveCommandMsg
+{
+public:
+	int getRequestedPlayerID();
+};
+
 class GameLogic
 {
 	public:
@@ -76,7 +82,7 @@ public:
 	void computePlayerFrameRatios();
 	int isPlayerInGame(int slot);
 	int isPlayerSlotActive(int slot);
-	void markPlayerInGame(void *msg);
+	void processRequestPlayerLeaveCommand(void *msg);
 	void relayCommand(void *ref);
 	void update();
 	void runRelayPass();
@@ -2208,42 +2214,13 @@ inactive:
 // Moves a slot from empty to in-game: reads the message's player id (retail
 // re-reads it through the accessor all three times rather than keeping it in a
 // register) and, if the state at this+0x12080 is still 0, sets it to 1.
-__declspec(naked) void BFMEConnectionManager::markPlayerInGame(void *msg)
+void BFMEConnectionManager::processRequestPlayerLeaveCommand(void *msg)
 {
-	__asm {
-		push esi
-		push edi
-		mov edi, dword ptr [esp+0Ch]
-		mov esi, ecx
-		mov ecx, edi
-		__emit 0E8h
-		__emit 08Fh
-		__emit 016h
-		__emit 09Ch
-		__emit 0FFh   // call 0x2442E
-		cmp eax, 8h
-		jae L00_662DC8
-		mov ecx, edi
-		__emit 0E8h
-		__emit 083h
-		__emit 016h
-		__emit 09Ch
-		__emit 0FFh   // call 0x2442E
-		mov ecx, dword ptr [esi+eax*4+12080h]
-		test ecx, ecx
-		jne L00_662DC8
-		mov ecx, edi
-		__emit 0E8h
-		__emit 071h
-		__emit 016h
-		__emit 09Ch
-		__emit 0FFh   // call 0x2442E
-		mov dword ptr [esi+eax*4+12080h], 1h
-L00_662DC8:
-		pop edi
-		pop esi
-		ret 4h
-	}
+	BFMENetRequestPlayerLeaveCommandMsg *command =
+		(BFMENetRequestPlayerLeaveCommandMsg *)msg;
+	if ((unsigned int)command->getRequestedPlayerID() < 8 &&
+		m_playerState[command->getRequestedPlayerID()] == 0)
+		m_playerState[command->getRequestedPlayerID()] = 1;
 }
 
 // Relays one queued command. Reads the message straight off the reference's
