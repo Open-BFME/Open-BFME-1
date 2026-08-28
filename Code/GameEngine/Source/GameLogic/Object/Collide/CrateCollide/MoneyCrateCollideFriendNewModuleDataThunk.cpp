@@ -40,6 +40,7 @@ MoneyCrateCollideModuleData::MoneyCrateCollideModuleData()
 	*(unsigned int *)((char *)this + 0x54) = 0x0;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -48,6 +49,7 @@ public:
 
 extern "C" char MoneyCrateCollideFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/MoneyCrateCollide.h
 class MoneyCrateCollide
 {
 public:

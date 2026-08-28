@@ -1,5 +1,6 @@
 typedef unsigned short zoneStorageType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 struct PathfindCell
 {
 	unsigned char opaque[10];

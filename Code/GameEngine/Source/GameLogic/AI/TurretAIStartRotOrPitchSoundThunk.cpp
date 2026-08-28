@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?startRotOrPitchSound@TurretAI@@AAEXXZ: Code/GameEngine/Source/GameLogic/AI/TurretAI.cpp
 
 typedef unsigned int AudioHandle;
 typedef bool Bool;
@@ -7,6 +8,7 @@ enum ObjectID {
 	INVALID_OBJECT_ID = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString {
 public:
 	AsciiString(const char *text);
@@ -16,6 +18,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS {
 public:
 	AudioEventRTS &operator=(const AudioEventRTS &that);
@@ -24,11 +27,13 @@ public:
 	Bool isCurrentlyPlaying() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate {
 public:
 	const AudioEventRTS *getPerUnitSound(const AsciiString &name) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object {
 public:
 	virtual void slot00() = 0;
@@ -49,6 +54,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager {
 public:
 	virtual void slot00() = 0;
@@ -73,6 +79,7 @@ public:
 
 extern AudioManager *TheAudio;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TurretAI.h
 class TurretAI {
 private:
 	void startRotOrPitchSound();

@@ -6,6 +6,7 @@ class Thing;
 class ModuleData;
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -38,6 +39,7 @@ public:
 	virtual void slot();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public PB_DeepBase,
 	public PartTheHeavensUpdateIface1,
 	public PartTheHeavensUpdateIface2

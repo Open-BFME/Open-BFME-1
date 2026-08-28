@@ -3,6 +3,7 @@
 // vptr, then the RS_Member at 0x08 built out of line, then two plain members.
 // ModuleData carries a declared destructor so the EH frame appears.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 public:

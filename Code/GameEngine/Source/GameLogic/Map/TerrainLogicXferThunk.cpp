@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?xfer@TerrainLogic@@MAEXPAVXfer@@@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // Open-BFME5: TerrainLogic::xfer, retail 0x006BE430, 45 bytes.
 //
 // The Zero Hour prologue: a version pair is built on the stack -- both bytes
@@ -15,6 +16,7 @@ struct TerrainLogicXferVersion
 	unsigned char m_currentVersion;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Xfer.h
 class Xfer
 {
 public:
@@ -31,6 +33,7 @@ public:
 	virtual void xferVersion(TerrainLogicXferVersion *versionData);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 protected:

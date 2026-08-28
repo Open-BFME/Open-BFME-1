@@ -23,6 +23,7 @@ typedef int Int;
 
 enum WeaponSlotType { PRIMARY_WEAPON = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/RadiusDecal.h
 class RadiusDecalTemplate
 {
 public:
@@ -35,6 +36,7 @@ private:
 	unsigned char m_unreconstructed_00[0x30];				///< sizeof 0x30
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectCreationList.h
 class ObjectCreationNugget
 {
 public:

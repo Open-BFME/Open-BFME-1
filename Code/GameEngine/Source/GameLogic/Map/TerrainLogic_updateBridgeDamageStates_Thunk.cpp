@@ -11,6 +11,7 @@
 // same thing that moved Shell::isAnimReversed and
 // BattlePlanUpdate::recenterTurret into their own TUs.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Bridge
 {
 public:
@@ -22,6 +23,7 @@ private:
 	Bridge *m_next;									///< retail this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:

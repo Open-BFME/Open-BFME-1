@@ -184,6 +184,7 @@ AsciiString DescribeObject(const Object *obj)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectConstructorThunk.cpp
 // ??0Object@@QAE@PBVThingTemplate@@ABV?$BitFlags@$0CN@@@PAVTeam@@@Z present-unmatched
 Object::Object( const ThingTemplate *tt, const ObjectStatusMaskType &objectStatusMask, Team *team ) : 
 	Thing(tt),
@@ -1024,6 +1025,7 @@ Bool Object::checkAndDetonateBoobyTrap(const Object *victim)
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/ObjectSetStatusThunk.cpp
 // ?setStatus@Object@@QAEXV?$BitFlags@$0CN@@@_N@Z present-unmatched
 void Object::setStatus( ObjectStatusMaskType objectStatus, Bool set )
 {
@@ -1090,6 +1092,7 @@ void Object::setStatus( ObjectStatusMaskType objectStatus, Bool set )
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?setScriptStatus@Object@@QAEXW4ObjectScriptStatusBit@@_N@Z present-unmatched
 void Object::setScriptStatus( ObjectScriptStatusBit bit, Bool set )
 {
@@ -1148,6 +1151,7 @@ void Object::setScriptStatus( ObjectScriptStatusBit bit, Bool set )
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_canCrushOrSquish_Thunk.cpp
 // ?canCrushOrSquish@Object@@ present-unmatched
 Bool Object::canCrushOrSquish(Object *otherObj, CrushSquishTestType testType ) const
 {
@@ -1374,6 +1378,7 @@ void Object::setModelConditionState( ModelConditionFlagType a )
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_clearModelConditionState.cpp
 // ?clearModelConditionState@Object@@QAEXW4ModelConditionFlagType@@@Z present-unmatched
 void Object::clearModelConditionState( ModelConditionFlagType a )
 {
@@ -1470,6 +1475,7 @@ void Object::clearSpecialModelConditionStates()
 //}
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_getCurrentWeapon.cpp
 // ?getCurrentWeapon@Object@@ present-unmatched
 Weapon* Object::getCurrentWeapon(WeaponSlotType* wslot)
 {
@@ -1482,6 +1488,7 @@ Weapon* Object::getCurrentWeapon(WeaponSlotType* wslot)
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_getCurrentWeapon.cpp
 // ?getCurrentWeapon@Object@@ present-unmatched
 const Weapon* Object::getCurrentWeapon(WeaponSlotType* wslot) const
 {
@@ -1661,6 +1668,7 @@ ObjectID Object::getLastVictimID() const
 //=============================================================================
 // Object::getRelationship
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/ObjectGetRelationshipThunk.cpp
 // ?getRelationship@Object@@QBE?AW4Relationship@@PBV1@@Z present-unmatched
 Relationship Object::getRelationship(const Object *that) const
 { 
@@ -1952,6 +1960,7 @@ ObjectShroudStatus Object::getShroudedStatus(Int playerIndex) const
 //-------------------------------------------------------------------------------------------------
 /** Something is attempting to damage this object */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Object_attemptDamage_Thunk.cpp
 // ?attemptDamage@Object@@QAEXPAVDamageInfo@@@Z present-unmatched
 void Object::attemptDamage( DamageInfo *damageInfo )
 {
@@ -2093,6 +2102,7 @@ Real Object::estimateDamage( DamageInfoInput& damageInfo ) const
 //-------------------------------------------------------------------------------------------------
 /** Do so much damage to an object that it will certainly die */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_kill.cpp
 // ?kill@Object@@QAEXW4DamageType@@W4DeathType@@@Z present-unmatched
 void Object::kill( DamageType damageType, DeathType deathType )
 {
@@ -2202,6 +2212,7 @@ Bool Object::isHero(void) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_setReceivingDifficultyBonus.cpp
 // ?setReceivingDifficultyBonus@Object@@QAEX_N@Z present-unmatched
 void Object::setReceivingDifficultyBonus(Bool receive)
 {
@@ -2222,6 +2233,7 @@ void Object::setDisabled( DisabledType type )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/MoneyObjectThunks.cpp
 // ?setDisabledUntil@Object@@ present-unmatched
 void Object::setDisabledUntil( DisabledType type, UnsignedInt frame )
 {
@@ -2390,6 +2402,7 @@ UnsignedInt Object::getDisabledUntil( DisabledType type ) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Object_clearDisabled_Thunk.cpp
 // ?clearDisabled@Object@@QAE_NW4DisabledType@@@Z present-unmatched
 Bool Object::clearDisabled( DisabledType type )
 {
@@ -2655,6 +2668,7 @@ Bool Object::isSalvageCrate() const
 /** 
 	Our owning player is telling us to recheck our UpgradeModules, as an upgrade has completed
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectUpdateUpgradeModulesThunk.cpp
 // ?updateUpgradeModules@Object@@QAEXXZ present-unmatched
 void Object::updateUpgradeModules()
 {
@@ -2749,6 +2763,7 @@ void Object::forceRefreshSubObjectUpgradeStatus()
 //-------------------------------------------------------------------------------------------------
 /** Returns whether an object entered or exited an area. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?didEnterOrExit@Object@@IBE_NXZ present-unmatched
 Bool Object::didEnterOrExit() const
 {
@@ -2768,6 +2783,7 @@ Bool Object::didEnterOrExit() const
 //-------------------------------------------------------------------------------------------------
 /** Returns whether an object entered an area. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?didEnter@Object@@QBE_NPBVPolygonTrigger@@@Z present-unmatched
 Bool Object::didEnter(const PolygonTrigger *pTrigger) const
 {
@@ -2787,6 +2803,7 @@ Bool Object::didEnter(const PolygonTrigger *pTrigger) const
 //-------------------------------------------------------------------------------------------------
 /** Returns whether an object entered an area. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?didExit@Object@@QBE_NPBVPolygonTrigger@@@Z present-unmatched
 Bool Object::didExit(const PolygonTrigger *pTrigger) const
 {
@@ -2820,6 +2837,7 @@ Bool Object::isInside(const PolygonTrigger *pTrigger) const
 // ------------------------------------------------------------------------------------------------
 /** Get production exit interface in object is present */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_getObjectExitInterface.cpp
 // ?getObjectExitInterface@Object@@QBEPAVExitInterface@@XZ present-unmatched
 ExitInterface *Object::getObjectExitInterface() const
 {
@@ -2892,6 +2910,7 @@ void Object::prependToList(Object **pListHead)
 //-------------------------------------------------------------------------------------------------
 // BFME: m_layer lives at +0x314, and BFME compiles the bridge-layer
 // interaction check unconditionally (ZH keeps it behind SET_LAYER_INTENSE_DEBUG).
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_setLayer.cpp
 // ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z present-unmatched
 void Object::setLayer(PathfindLayerEnum layer)
 {
@@ -3302,6 +3321,7 @@ void Object::clearWeaponSetFlag(WeaponSetType wst)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?hasSpecialPower@Object@@QBE_NW4SpecialPowerType@@@Z present-unmatched
 Bool Object::hasSpecialPower( SpecialPowerType type ) const
 {
@@ -3508,6 +3528,7 @@ void Object::maskObject( Bool mask )
 /*
  * returns true if the current locomotor is an airborne one
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?isUsingAirborneLocomotor@Object@@QBE_NXZ present-unmatched
 Bool Object::isUsingAirborneLocomotor( void ) const
 {
@@ -3547,6 +3568,7 @@ void Object::getHealthBoxPosition(Coord3D& pos) const
  * Update this object instance with properties from the map object
  * 
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectUpdateMapPropertiesThunk.cpp
 // ?updateObjValuesFromMapProperties@Object@@QAEXPAVDict@@@Z present-unmatched
 void Object::updateObjValuesFromMapProperties(Dict* properties)
 {
@@ -3893,6 +3915,7 @@ void Object::updateObjValuesFromMapProperties(Dict* properties)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ObjectFriendAdjustPower.cpp
 // ?friend_adjustPowerForPlayer@Object@@QAEX_N@Z present-unmatched
 void Object::friend_adjustPowerForPlayer( Bool incoming )
 {
@@ -4559,6 +4582,7 @@ void Object::loadPostProcess()
 //-------------------------------------------------------------------------------------------------
 /** Does this object have this upgrade */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_hasUpgrade.cpp
 // ?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z present-unmatched
 Bool Object::hasUpgrade( const UpgradeTemplate *upgradeT ) const 
 {
@@ -4603,6 +4627,7 @@ Bool Object::affectedByUpgrade( const UpgradeTemplate *upgradeT ) const
 //-------------------------------------------------------------------------------------------------
 /** Give this upgrade to this object */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?giveUpgrade@Object@@QAEXPBVUpgradeTemplate@@@Z present-unmatched
 // (the matched BFME body lives in ObjectFields.cpp at 0x001C9F70)
 void Object::giveUpgrade( const UpgradeTemplate *upgradeT )
@@ -4622,6 +4647,7 @@ void Object::giveUpgrade( const UpgradeTemplate *upgradeT )
 //-------------------------------------------------------------------------------------------------
 /** Remove this upgrade from this object */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?removeUpgrade@Object@@QAEXPBVUpgradeTemplate@@@Z present-unmatched
 void Object::removeUpgrade( const UpgradeTemplate *upgradeT )
 {
@@ -4819,6 +4845,7 @@ void Object::clearWeaponBonusCondition(WeaponBonusConditionType wst)
 	that I am concerned with.
 */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/ObjectAdjustModelConditionThunk.cpp
 // ?adjustModelConditionForWeaponStatus@Object@@ present-unmatched
 void Object::adjustModelConditionForWeaponStatus()
 {
@@ -5251,6 +5278,7 @@ void Object::unshroud()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_getVisionRange.cpp
 // ?getVisionRange@Object@@QBEMXZ present-unmatched
 Real Object::getVisionRange() const
 {
@@ -5279,6 +5307,7 @@ void Object::setVisionRange( Real newVisionRange )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_getShroudClearingRange.cpp
 // ?getShroudClearingRange@Object@@QBEMXZ present-unmatched
 Real Object::getShroudClearingRange() const
 {
@@ -6054,6 +6083,7 @@ void Object::clearLeechRangeModeForAllWeapons()
 // ------------------------------------------------------------------------------------------------
 /** Search our update modules for a production update interface and return it if one is found */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?getProductionUpdateInterface@Object@@QAEPAVProductionUpdateInterface@@XZ present-unmatched
 ProductionUpdateInterface* Object::getProductionUpdateInterface( void )
 {
@@ -6075,6 +6105,7 @@ ProductionUpdateInterface* Object::getProductionUpdateInterface( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?getDockUpdateInterface@Object@@QAEPAVDockUpdateInterface@@XZ present-unmatched
 DockUpdateInterface *Object::getDockUpdateInterface( void )
 {
@@ -6229,6 +6260,7 @@ SpawnBehaviorInterface* Object::getSpawnBehaviorInterface() const
 }  // end getSpawnBehaviorInterfaceFromObject
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?getProjectileUpdateInterface@Object@@QBEPAVProjectileUpdateInterface@@XZ present-unmatched
 ProjectileUpdateInterface* Object::getProjectileUpdateInterface() const
 {
@@ -6246,6 +6278,7 @@ ProjectileUpdateInterface* Object::getProjectileUpdateInterface() const
 // ------------------------------------------------------------------------------------------------
 // Simply find the special power module that is currently allowing plotting of positions to target.
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?findSpecialPowerWithOverridableDestinationActive@Object@@QBEPAVSpecialPowerUpdateInterface@@W4SpecialPowerType@@@Z present-unmatched
 SpecialPowerUpdateInterface* Object::findSpecialPowerWithOverridableDestinationActive( SpecialPowerType type ) const
 {
@@ -6372,6 +6405,7 @@ Bool Object::getSingleLogicalBonePosition(const char* boneName, Coord3D* positio
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectGetSingleLogicalBonePositionOnTurretThunk.cpp
 // ?getSingleLogicalBonePositionOnTurret@Object@@QBE_NW4WhichTurretType@@PBDPAUCoord3D@@PAVMatrix3D@@@Z present-unmatched
 Bool Object::getSingleLogicalBonePositionOnTurret( WhichTurretType whichTurret, const char* boneName, Coord3D* position, Matrix3D* transform ) const
 {
@@ -6449,6 +6483,7 @@ Int Object::getMultiLogicalBonePosition(const char* boneNamePrefix, Int maxBones
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_getCommandSetString.cpp
 // ?getCommandSetString@Object@@QBEABVAsciiString@@XZ present-unmatched
 const AsciiString& Object::getCommandSetString() const 
 { 
@@ -6478,6 +6513,7 @@ Bool Object::canProduceUpgrade( const UpgradeTemplate *upgrade )
 //=============================================================================
 // Object::defect, and related methods                                        =
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_defect_Thunk.cpp
 // ?defect@Object@@QAEXPAVTeam@@I@Z present-unmatched
 void Object::defect( Team* newTeam, UnsignedInt detectionTime )
 {
@@ -6703,6 +6739,7 @@ Real Object::getCarrierDeckHeight() const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?getCountermeasuresBehaviorInterface@Object@@ present-unmatched
 CountermeasuresBehaviorInterface* Object::getCountermeasuresBehaviorInterface()
 {
@@ -6718,6 +6755,7 @@ CountermeasuresBehaviorInterface* Object::getCountermeasuresBehaviorInterface()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?getCountermeasuresBehaviorInterface@Object@@ present-unmatched
 const CountermeasuresBehaviorInterface* Object::getCountermeasuresBehaviorInterface() const
 {

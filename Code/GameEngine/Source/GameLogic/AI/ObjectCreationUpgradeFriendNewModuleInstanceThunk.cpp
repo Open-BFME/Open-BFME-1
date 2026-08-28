@@ -8,6 +8,7 @@ class ModuleData;
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class Module
 {
 public:
@@ -22,6 +23,7 @@ private:
 	unsigned char m_pad[0x4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ObjectCreationUpgrade.h
 class ObjectCreationUpgrade : public ObjectCreationUpgradeBase, public Module
 {
 public:

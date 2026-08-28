@@ -17,6 +17,7 @@ private:
 	unsigned char m_raw[0x68];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FireWeaponWhenDamagedBehavior.h
 class FireWeaponWhenDamagedBehaviorModuleData
 {
 public:

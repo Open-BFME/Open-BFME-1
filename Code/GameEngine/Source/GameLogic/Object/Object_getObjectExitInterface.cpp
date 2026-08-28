@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?getObjectExitInterface@Object@@QBEPAVExitInterface@@XZ: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 // Object::getObjectExitInterface, retail 0x001BEAF0.
 //
 // Zero Hour's body verbatim. The behavior-module array is at this+0x1F0 and is
@@ -42,10 +43,12 @@ public:
 	virtual ExitInterface *getUpdateExitInterface( void ) = 0;	///< vtable slot +0x4C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule : public ModuleBase, public UpdateExitProvider
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class ContainModuleInterface
 {
 public:
@@ -76,6 +79,7 @@ public:
 	virtual ExitInterface *getContainExitInterface( void ) = 0;	///< vtable slot +0x60
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

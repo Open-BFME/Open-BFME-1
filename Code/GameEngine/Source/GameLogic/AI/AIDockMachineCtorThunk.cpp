@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0AIDockMachine@@: Code/GameEngine/Source/GameLogic/AI/AIDock.cpp
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIDock.h
 class AIDockMachine
 {
 public:

@@ -1,11 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?allocateBlocks@PathfindZoneManager@@QAEXABUIRegion2D@@@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	int x;
 	int y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct IRegion2D
 {
 	ICoord2D lo;
@@ -26,6 +29,7 @@ private:
 	char m_retailLayout[0x228];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindZoneManager
 {
 public:

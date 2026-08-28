@@ -43,6 +43,7 @@ DeployStyleAIUpdateModuleData::DeployStyleAIUpdateModuleData()
 	*((unsigned char *)this + 0x6e) = 0x0;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -51,6 +52,7 @@ public:
 
 extern "C" char DeployStyleAIUpdateFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DeployStyleAIUpdate.h
 class DeployStyleAIUpdate
 {
 public:

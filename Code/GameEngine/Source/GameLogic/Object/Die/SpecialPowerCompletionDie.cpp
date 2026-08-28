@@ -5,6 +5,7 @@ class ModuleData;
 class Object;
 class DamageInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule
 {
 public:
@@ -23,12 +24,14 @@ private:
 	Object *m_obj;							///< retail this+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModuleInterface
 {
 public:
 	virtual void behaviorModuleInterfaceAnchor();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModuleInterface
 {
 public:
@@ -47,6 +50,7 @@ public:
 	bool isDieApplicable( const Object *obj, const DamageInfo *damageInfo ) const;	///< ILT 0x000357D8
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModuleData
 {
 public:
@@ -54,6 +58,7 @@ public:
 	DieMuxData m_dieMuxData;				///< retail moduleData+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModule : public ObjectModule,
 	public BehaviorModuleInterface,
 	public DieModuleInterface
@@ -84,6 +89,7 @@ private:
 	bool m_isActive;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerCompletionDie.h
 class SpecialPowerCompletionDie : public DieModule
 {
 public:

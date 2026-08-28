@@ -2,6 +2,7 @@
 
 // Open-BFME5: CrushDieModuleData constructor lifted from retail.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -21,6 +22,7 @@ private:
 	unsigned char m_data[0x2c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModuleData : public Snapshot
 {
 public:
@@ -31,6 +33,7 @@ private:
 	InstantDeathDieMuxData m_dieMuxData;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
@@ -50,6 +53,7 @@ enum CrushType
 	CRUSH_COUNT
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CrushDie.h
 class CrushDieModuleData : public DieModuleData
 {
 public:

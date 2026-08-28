@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0PropagandaTowerBehaviorModuleData@@: Code/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehavior.cpp
 
 // PropagandaTowerBehaviorModuleData's constructor, retail 0x0028DC60. The name
 // used to sit on its five-byte incremental-link thunk, lifted naked; a thunk is
@@ -18,6 +19,7 @@ private:
 	unsigned char m_unmodelled_04[4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/PropagandaTowerBehavior.h
 class PropagandaTowerBehaviorModuleData : public PropagandaTowerBehaviorModuleDataBase
 {
 public:

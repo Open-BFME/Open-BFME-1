@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0FlightDeckBehaviorModuleData@@: Code/GameEngine/Source/GameLogic/Object/Behavior/FlightDeckBehavior.cpp
 
 // Open-BFME5: FlightDeckBehaviorModuleData's constructor, retail 0x002131B0, 50
 // bytes. The body carried only a machine byte-dump row; reverse/reloc_names.csv
@@ -34,6 +35,7 @@ public:
 	char m_bfmeBody[0xC4 - 0x5C];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FlightDeckBehavior.h
 class FlightDeckBehaviorModuleData : public ModuleDataBase
 {
 public:

@@ -4,6 +4,7 @@
 // of line -- the call resolves to the existing pin for ??0RS_Member@@QAE@XZ at
 // 0x0003747A. That member is what gives this constructor its EH frame.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 public:

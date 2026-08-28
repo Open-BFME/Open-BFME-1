@@ -33,12 +33,14 @@ enum { NO_FORMATION_ID = 0 };
 
 enum { DISABLED_HELD = 0x00000008 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord2D
 {
 	Real x;														///< +0x00
 	Real y;														///< +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;														///< +0x00
@@ -48,6 +50,7 @@ struct Coord3D
 
 class AIUpdateInterface;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -70,6 +73,7 @@ private:
 	FormationID m_formationID;									///< +0x031C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:

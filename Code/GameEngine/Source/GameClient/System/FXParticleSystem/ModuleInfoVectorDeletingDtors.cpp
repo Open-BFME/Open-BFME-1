@@ -50,6 +50,7 @@
 // instead: whichever member ParticleSystemTemplate has after `m_a0` is missing
 // from the sibling thunk, and 0x005CE780 is free the moment it is found.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ClientRandomValue.h
 class GameClientRandomVariable
 {
 public:
@@ -64,6 +65,7 @@ private:
 	float m_high;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 class RGBColor
 {
 public:
@@ -86,6 +88,7 @@ struct RandomAlphaKeyframe
 	float frame;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 struct RGBColorKeyframe
 {
 	RGBColor color;
@@ -94,6 +97,7 @@ struct RGBColorKeyframe
 
 class Xfer;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 protected:

@@ -18,6 +18,7 @@ enum CommandSourceType { CMD_FROM_PLAYER = 0 };
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BuildAssistant.h
 class BuildAssistant
 {
 public:
@@ -44,6 +45,7 @@ public:
 
 extern BuildAssistant *TheBuildAssistant;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:

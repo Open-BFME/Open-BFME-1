@@ -1,3 +1,6 @@
+// readable body of ?onEnter@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
+// readable body of ?update@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
+// readable body of ?update@AIMoveOutOfTheWayState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 enum StateReturnType
 {
 };
@@ -6,6 +9,7 @@ enum StateExitType
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
 {
 public:
@@ -14,6 +18,7 @@ public:
 	virtual StateReturnType update();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIMoveOutOfTheWayState
 {
 public:

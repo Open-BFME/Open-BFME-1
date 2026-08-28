@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0OpenContainModuleData@@: Code/GameEngine/Source/GameLogic/Object/Contain/OpenContain.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/OpenContain.h
 class OpenContainModuleData
 {
 public:

@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?canCrushOrSquish@Object@@: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 enum CrushSquishTestType {};
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

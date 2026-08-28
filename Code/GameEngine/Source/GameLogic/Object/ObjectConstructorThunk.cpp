@@ -1,3 +1,4 @@
+// readable body of ??0Object@@QAE@PBVThingTemplate@@ABV?$BitFlags@$0CN@@@PAVTeam@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 // Exact retail bytes for ??0Object@@QAE@PBVThingTemplate@@ABV?$BitFlags@$0CN@@@PAVTeam@@@Z at 0x001D29A0.
 extern "C" __declspec(naked) void bfme_Object_ctor_1D29A0()
 {

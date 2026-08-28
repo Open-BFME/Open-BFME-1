@@ -21,12 +21,14 @@ typedef int Int;
 class CommandButton;
 enum CommandSourceType {};
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	void doCommandButton(const CommandButton *commandButton, Int cmdSource, Int bfmeArg);	// ILT 0x000063CF
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:

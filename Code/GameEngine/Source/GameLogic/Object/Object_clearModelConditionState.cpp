@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?clearModelConditionState@Object@@QAEXW4ModelConditionFlagType@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 
 // Object::clearModelConditionState, retail 0x00162CD0. Builds a single-bit
 // flag mask on the stack and hands it to the shared apply helper at
@@ -31,6 +32,7 @@ inline void ModelConditionFlags::set( ModelConditionFlagType bit )
 	m_bits[ (UnsignedInt)bit >> 5 ] |= 1 << ( (UnsignedInt)bit & 31 );
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

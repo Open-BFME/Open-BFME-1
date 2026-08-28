@@ -74,6 +74,7 @@
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/OpenContainModuleDataCtorThunk.cpp
 // ??0OpenContainModuleData@@ present-unmatched
 OpenContainModuleData::OpenContainModuleData( void )
 {
@@ -129,6 +130,7 @@ OpenContainModuleData::OpenContainModuleData( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Contain/OpenContainConstructorThunk.cpp
 // ??0OpenContain@@ present-unmatched
 OpenContain::OpenContain( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {
@@ -179,6 +181,7 @@ Int OpenContain::getContainMax( void ) const
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/OpenContainDestructorThunk.cpp
 // ??1OpenContain@@ present-unmatched
 OpenContain::~OpenContain()
 {
@@ -760,6 +763,7 @@ void OpenContain::scatterToNearbyPosition(Object* rider)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Contain/OpenContain_onContaining.cpp
 // ?onContaining@OpenContain@@ present-unmatched
 void OpenContain::onContaining( Object *rider, Bool wasSelected )
 {

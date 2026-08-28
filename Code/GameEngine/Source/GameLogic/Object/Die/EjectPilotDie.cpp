@@ -47,6 +47,7 @@
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
 // ??0EjectPilotDieModuleData@@ present-unmatched
 EjectPilotDieModuleData::EjectPilotDieModuleData() :
 	m_oclInAir(NULL),
@@ -74,6 +75,7 @@ void EjectPilotDieModuleData::buildFieldParse(MultiIniFieldParse& p)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SabotageCommandCenterCrateCollide.cpp
 // ??0EjectPilotDie@@ present-unmatched
 EjectPilotDie::EjectPilotDie( Thing *thing, const ModuleData* moduleData ) : DieModule( thing, moduleData )
 {

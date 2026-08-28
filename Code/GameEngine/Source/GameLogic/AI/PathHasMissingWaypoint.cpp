@@ -9,6 +9,7 @@ static const WaypointID INVALID_WAYPOINT_ID = 0x7fffffff;
 
 class Waypoint;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -49,6 +50,7 @@ public:
 
 extern TerrainLogic *TheTerrainLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 struct PathNode
 {
 	PathNode *m_next;
@@ -56,6 +58,7 @@ struct PathNode
 	WaypointID m_waypointID;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Path
 {
 public:

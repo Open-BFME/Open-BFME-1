@@ -141,6 +141,7 @@ ImageCollection *TheMappedImageCollection = NULL;  ///< mapped images
 // PUBLIC FUNCTIONS////////////////////////////////////////////////////////////////////////////////
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ImageCtorThunk.cpp
 // ??0Image@@QAE@XZ present-unmatched
 Image::Image( void )
 {
@@ -237,6 +238,7 @@ const Image *ImageCollection::findImageByName( const AsciiString& name )
 /** Load this image collection with all the images specified in the INI files
 	* for the proper texture size directory */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ImageCollection_loadMethodThunk.cpp
 // ?load@ImageCollection@@QAEXH@Z present-unmatched
 void ImageCollection::load( Int textureSize )
 {

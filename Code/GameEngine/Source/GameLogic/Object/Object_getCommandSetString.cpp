@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getCommandSetString@Object@@QBEABVAsciiString@@XZ: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 
 // Object::getCommandSetString, retail 0x001C39A0. Three sources tried in order,
 // each returned by reference.
@@ -21,12 +22,14 @@ public:
 	unsigned short m_capacity;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
 	AsciiStringHeader *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -36,6 +39,7 @@ public:
 	Overridable *m_nextOverride;			// +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

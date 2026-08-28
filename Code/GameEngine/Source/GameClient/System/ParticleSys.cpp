@@ -1160,6 +1160,7 @@ void ParticleSystem::stop( void )
 // ------------------------------------------------------------------------------------------------
 /** Stop emitting, wait for all of our particles to die, then destroy self. */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/ParticleSystem_destroy.cpp
 // ?destroy@ParticleSystem@@QAEXXZ present-unmatched
 void ParticleSystem::destroy( void )
 {
@@ -1173,6 +1174,7 @@ void ParticleSystem::destroy( void )
 // ------------------------------------------------------------------------------------------------
 /** Get the position of the particle system */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/System/ParticleSystemGetPositionThunk.cpp
 // ?getPosition@ParticleSystem@@QAEXPAUCoord3D@@@Z present-unmatched
 void ParticleSystem::getPosition( Coord3D *pos )
 {
@@ -2856,6 +2858,7 @@ void ParticleSystem::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ParticleSystem_loadPostProcessMethodThunk.cpp
 // ?loadPostProcess@ParticleSystem@@MAEXXZ present-unmatched
 void ParticleSystem::loadPostProcess( void )
 {
@@ -3353,6 +3356,7 @@ ParticleSystem *ParticleSystemManager::findParticleSystem( ParticleSystemID id )
 // ------------------------------------------------------------------------------------------------
 /** destroy the particle system with the given id (if it still exists) */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/ParticleSystemManager_destroyByID.cpp
 // ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z present-unmatched
 void ParticleSystemManager::destroyParticleSystemByID(ParticleSystemID id)
 {

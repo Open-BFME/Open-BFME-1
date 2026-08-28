@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?addBridge@Pathfinder@@QAE?AW4PathfindLayerEnum@@PAVBridge@@@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 // Open-BFME: Pathfinder::addBridge, retail 0x003D5850, 87 bytes.
 //
 // The reference's body once its two debug lines are gone: scan the bridge
@@ -21,6 +22,7 @@ enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_WALL = 15, L
 
 class Bridge;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindLayer
 {
 public:
@@ -31,6 +33,7 @@ private:
 	char m_bfme_body[0x44];					// the layer stride
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:

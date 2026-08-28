@@ -1,8 +1,10 @@
+// readable body of ?findPath@Pathfinder@@EAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBUCoord3D@@2@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 class Path;
 class Object;
 class LocomotorSet;
 struct Coord3D;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 private:

@@ -32,6 +32,7 @@ public:
     virtual void slot();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public PB_DeepBase,
     public ShareExperienceBehaviorIface1,
     public ShareExperienceBehaviorIface2

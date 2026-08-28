@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getVisionRange@Object@@QBEMXZ: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 
 // Open-BFME5: Object::getVisionRange, retail 0x001C17C0, 71 bytes. The body
 // carried only a machine byte-dump row; reverse/reloc_names.csv holds the name
@@ -25,6 +26,7 @@ public:
 	Bool bfmeGetBonus(Int which, Real *out);		// ILT 0x000282D6
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

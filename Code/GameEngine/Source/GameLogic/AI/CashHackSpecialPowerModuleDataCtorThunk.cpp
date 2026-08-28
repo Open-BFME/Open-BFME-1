@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0CashHackSpecialPowerModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/SpecialPower/CashHackSpecialPower.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CashHackSpecialPower.h
 class CashHackSpecialPowerModuleData
 {
 public:

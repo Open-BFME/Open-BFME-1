@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?findAxisAlignedBoundingRect@TerrainLogic@@IAEXPBVWaterHandle@@PAURegion3D@@@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // Open-BFME5: lift the retail TerrainLogic::findAxisAlignedBoundingRect MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_TerrainLogicFindAxisAlignedBoundingRect_1A66C0()

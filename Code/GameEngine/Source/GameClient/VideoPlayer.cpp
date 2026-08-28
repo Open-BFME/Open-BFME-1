@@ -169,6 +169,7 @@ VideoPlayer::VideoPlayer()
 // VideoPlayer::~VideoPlayer
 //============================================================================
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/VideoPlayerDestructorThunk.cpp
 // ??1VideoPlayer@@UAE@XZ present-unmatched
 VideoPlayer::~VideoPlayer()
 {
@@ -183,6 +184,7 @@ VideoPlayer::~VideoPlayer()
 // VideoPlayer::init
 //============================================================================
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/VideoPlayer_initMethodThunk.cpp
 // ?init@VideoPlayer@@UAEXXZ present-unmatched
 void	VideoPlayer::init( void )
 {

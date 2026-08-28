@@ -42,6 +42,7 @@ AssaultTransportAIUpdateModuleData::AssaultTransportAIUpdateModuleData()
 	*(unsigned int *)((char *)this + 0x68) = 0x42480000;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -50,6 +51,7 @@ public:
 
 extern "C" char AssaultTransportAIUpdateFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AssaultTransportAIUpdate.h
 class AssaultTransportAIUpdate
 {
 public:

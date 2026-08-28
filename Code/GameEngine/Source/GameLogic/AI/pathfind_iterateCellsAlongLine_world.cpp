@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?iterateCellsAlongLine@Pathfinder@@: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 // The world-space half of Pathfinder::iterateCellsAlongLine, thirteen times.
 //
 // Zero Hour declares one pair of overloads: a world-space one that converts
@@ -29,11 +30,13 @@
 typedef int Int;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x, y, z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x, y;
@@ -54,6 +57,7 @@ struct Rva003E8440Struct;
 struct MADStruct;
 struct Rva003F1CA0Struct;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:

@@ -11,6 +11,7 @@ struct SixDwords
     unsigned int v[6];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StatusBitsUpgrade.h
 class StatusBitsUpgradeModuleData
 {
 public:

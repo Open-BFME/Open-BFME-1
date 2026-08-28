@@ -102,6 +102,7 @@ void PoisonedBehavior::onHealing( DamageInfo *damageInfo )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted_update_PoisonedBehavior_UAE_AW4UpdateSleepTime_XZ_00202BD0.cpp
 // ?update@PoisonedBehavior@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
 UpdateSleepTime PoisonedBehavior::update()
 {

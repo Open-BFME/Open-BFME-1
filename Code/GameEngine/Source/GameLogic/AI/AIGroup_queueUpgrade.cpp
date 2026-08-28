@@ -26,6 +26,7 @@ enum UpgradeType { UPGRADE_TYPE_PLAYER = 0, UPGRADE_TYPE_OBJECT = 1 };
 
 enum CanMakeType { CANMAKE_QUEUE_FULL = 4 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeTemplate
 {
 public:
@@ -36,6 +37,7 @@ private:
 	UpgradeType m_type;					// +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ProductionUpdate.h
 class ProductionUpdateInterface
 {
 public:
@@ -45,6 +47,7 @@ public:
 	virtual void queueUpgrade(const UpgradeTemplate *upgrade, Bool bfmeFlag);	// vtable +0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -54,6 +57,7 @@ public:
 	ProductionUpdateInterface *getProductionUpdateInterface(void);			// ILT 0x00003B52
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeCenter
 {
 public:
@@ -62,6 +66,7 @@ public:
 
 extern UpgradeCenter *TheUpgradeCenter;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:

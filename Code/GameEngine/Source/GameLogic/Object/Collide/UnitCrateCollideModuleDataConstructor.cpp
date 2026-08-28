@@ -11,6 +11,7 @@
 // The unwind slot is written twice, 0 for the base and 1 once the string is
 // standing, because the assignment is a call that can throw.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -25,6 +26,7 @@ private:
 
 extern AsciiString TheBfmeCrateNameDefault;			// 0x01336E50
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:

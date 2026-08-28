@@ -20,6 +20,7 @@ struct Coord3D;
 enum SpecialPowerType { SPECIAL_INVALID = 0 };
 enum CommandSourceType { CMD_FROM_PLAYER = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerUpdateModule.h
 class SpecialPowerUpdateInterface
 {
 public:
@@ -31,12 +32,14 @@ public:
 	virtual void setSpecialPowerOverridableDestination(const Coord3D *loc);	// vtable +0x14
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	SpecialPowerUpdateInterface *findSpecialPowerWithOverridableDestinationActive(SpecialPowerType spType) const;	// ILT 0x00039766
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:

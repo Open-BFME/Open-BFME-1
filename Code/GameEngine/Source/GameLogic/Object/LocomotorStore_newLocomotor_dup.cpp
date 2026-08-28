@@ -21,6 +21,7 @@
 class LocomotorTemplate;
 class LocomotorStore;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class Locomotor
 {
 protected:
@@ -32,6 +33,7 @@ private:
 	char m_bfmeBody[0x2C];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class LocomotorStore
 {
 public:

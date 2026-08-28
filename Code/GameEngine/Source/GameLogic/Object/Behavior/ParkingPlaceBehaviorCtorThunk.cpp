@@ -22,6 +22,7 @@ protected:
 class PPB_Iface1 { public: virtual void slot(); };
 class PPB_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public PPB_DeepBase, public PPB_Iface1, public PPB_Iface2
 {
 public:
@@ -68,6 +69,7 @@ private:
     float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ParkingPlaceBehavior.h
 class ParkingPlaceBehavior : public UpdateModule,
                              public PPB_DieInterface,
                              public PPB_InterfaceState

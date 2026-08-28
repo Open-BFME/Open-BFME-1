@@ -4,6 +4,7 @@
 namespace FXParticleSystem
 {
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ModuleFactory.h
 class ModuleTemplate
 {
 public:

@@ -66,6 +66,7 @@
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RiderChangeContainModuleData_ctor_Thunk.cpp
 // ??0RiderChangeContainModuleData@@QAE@XZ present-unmatched
 RiderChangeContainModuleData::RiderChangeContainModuleData()
 {

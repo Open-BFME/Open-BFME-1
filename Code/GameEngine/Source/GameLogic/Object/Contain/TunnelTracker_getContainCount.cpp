@@ -40,6 +40,7 @@ struct BfmeObjectNode : public BfmeListNodeBase
 	Object *m_bfmeValue;				// +0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/TunnelTracker.h
 class TunnelTracker
 {
 public:

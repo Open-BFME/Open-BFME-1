@@ -245,6 +245,7 @@ static void bfmeRetailSetAdjustsDestinationFalse( State *state )
  * Create an AI state machine. Define all of the states the machine 
  * can possibly be in, and set the initial (default) state.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIDockMachineCtorThunk.cpp
 // ??0AIDockMachine@@ present-unmatched
 AIDockMachine::AIDockMachine( Object *obj ) : StateMachine( obj, "AIDockMachine" )
 {

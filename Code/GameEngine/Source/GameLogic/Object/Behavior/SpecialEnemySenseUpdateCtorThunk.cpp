@@ -21,6 +21,7 @@ protected:
 class SESU_Iface1 { public: virtual void slot(); };
 class SESU_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public SESU_DeepBase, public SESU_Iface1, public SESU_Iface2
 {
 public:

@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
+// readable body of ??0GrantUpgradeCreateModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Create/GrantUpgradeCreate.cpp
 
 // GrantUpgradeCreateModuleData::GrantUpgradeCreateModuleData, 0x0024FA80, 99 bytes.
 //
@@ -34,6 +35,7 @@
 
 #include <bitset>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -46,6 +48,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CreateModule.h
 class CreateModuleData
 {
 public:
@@ -56,6 +59,7 @@ private:
 	int m_moduleDataBase_04;							// +0x04, untouched by this constructor
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GrantUpgradeCreate.h
 class GrantUpgradeCreateModuleData : public CreateModuleData
 {
 public:

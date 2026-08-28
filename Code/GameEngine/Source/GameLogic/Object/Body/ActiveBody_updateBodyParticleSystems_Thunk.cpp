@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?updateBodyParticleSystems@ActiveBody@@: Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp
 // Open-BFME5: lift the exact retail ActiveBody::updateBodyParticleSystems body to C++.
 
 // ?updateBodyParticleSystems@ActiveBody@@UAEXXZ

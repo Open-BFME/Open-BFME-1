@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0InstantDeathBehavior@@: Code/GameEngine/Source/GameLogic/Object/Behavior/InstantDeathBehavior.cpp
 
 // Open-BFME5: InstantDeathBehavior module ctor.
 // Base call then interim dual iface vtbls at +0xC/+0x10, then three
@@ -7,6 +8,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule
 {
 public:
@@ -34,6 +36,7 @@ public:
 	InstantDeathBehaviorBase(Thing *thing, const ModuleData *moduleData);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/InstantDeathBehavior.h
 class InstantDeathBehavior : public InstantDeathBehaviorBase,
 	public InstantDeathBehaviorIface1,
 	public InstantDeathBehaviorIface2

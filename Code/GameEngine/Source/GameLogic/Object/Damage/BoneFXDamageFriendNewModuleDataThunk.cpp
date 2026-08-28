@@ -16,6 +16,7 @@ private:
 	int m_pad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -24,6 +25,7 @@ public:
 
 extern "C" char BoneFXDamageFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BoneFXDamage.h
 class BoneFXDamage
 {
 public:

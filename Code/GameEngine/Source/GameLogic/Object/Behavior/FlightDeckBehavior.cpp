@@ -68,6 +68,7 @@
 //#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
 #endif
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/FlightDeckBehaviorModuleDataConstructor.cpp
 // ??0FlightDeckBehaviorModuleData@@ present-unmatched
 FlightDeckBehaviorModuleData::FlightDeckBehaviorModuleData()
 {

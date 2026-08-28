@@ -1,3 +1,4 @@
+// readable body of ??0OpenContain@@: Code/GameEngine/Source/GameLogic/Object/Contain/OpenContain.cpp
 class Thing;
 class ModuleData;
 

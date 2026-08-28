@@ -9,6 +9,7 @@ enum KindOfType
 	KINDOF_BFME_6C = 0x6c
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:

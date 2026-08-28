@@ -12,6 +12,7 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/OCLSpecialPower.h
 class OCLSpecialPowerModuleData
 {
 public:

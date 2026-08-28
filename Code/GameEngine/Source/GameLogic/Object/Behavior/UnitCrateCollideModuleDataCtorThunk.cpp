@@ -2,6 +2,7 @@
 
 // Open-BFME5: UnitCrateCollideModuleData constructor lifted from retail.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CrateCollide.h
 class CrateCollideModuleData
 {
 public:
@@ -12,6 +13,7 @@ private:
 	unsigned char m_data[0x50];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -27,6 +29,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UnitCrateCollide.h
 class UnitCrateCollideModuleData : public CrateCollideModuleData
 {
 public:

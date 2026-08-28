@@ -13,6 +13,7 @@ inline void __cdecl operator delete(void *, void *)
 {
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -35,6 +36,7 @@ public:
     void set(const T *text, int length);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
     char *m_text;

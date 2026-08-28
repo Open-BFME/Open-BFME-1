@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 // Open-BFME: Object::setLayer, retail 0x001BEBB0, 85 bytes.
 //
 // The reference's body plus the block it keeps under an #ifdef. Retail runs
@@ -27,6 +28,7 @@ struct Coord3D { Real x, y, z; };
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:
@@ -34,6 +36,7 @@ public:
 	void updatePos(Object *obj, const Coord3D *pos);			// ILT 0x00013647
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -46,6 +49,7 @@ private:
 
 extern AI *TheAI;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -69,6 +73,7 @@ public:
 
 extern TerrainLogic *TheTerrainLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

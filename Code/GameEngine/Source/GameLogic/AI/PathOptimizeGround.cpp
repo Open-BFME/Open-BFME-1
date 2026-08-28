@@ -13,6 +13,7 @@ enum PathfindLayerEnum
 	LAYER_FIRST_BRIDGE = 16
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
@@ -20,6 +21,7 @@ struct Coord3D
 	Real z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathNode
 {
 public:
@@ -38,6 +40,7 @@ private:
 	PathfindLayerEnum m_layer;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:
@@ -45,6 +48,7 @@ public:
 		PathfindLayerEnum startLayer, const Coord3D &endWorld, Int pathDiameter);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -57,6 +61,7 @@ private:
 
 extern "C" AI *TheAIParseDefinitionAI;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Path
 {
 public:

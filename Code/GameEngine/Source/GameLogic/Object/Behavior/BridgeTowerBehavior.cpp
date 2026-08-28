@@ -47,6 +47,7 @@
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeTowerBehaviorCtorThunk.cpp
 // ??0BridgeTowerBehavior@@ present-unmatched
 BridgeTowerBehavior::BridgeTowerBehavior( Thing *thing, const ModuleData *moduleData )
 									 : BehaviorModule( thing, moduleData )

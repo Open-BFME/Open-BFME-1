@@ -596,6 +596,7 @@ void LocomotorStore::reset()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/LocomotorStore_newOverride_Thunk.cpp
 // ?newOverride@LocomotorStore@@QAEPAVLocomotorTemplate@@PAV2@@Z present-unmatched
 LocomotorTemplate *LocomotorStore::newOverride( LocomotorTemplate *locoTemplate )
 {
@@ -667,6 +668,7 @@ LocomotorTemplate *LocomotorStore::newOverride( LocomotorTemplate *locoTemplate 
 // Body in Locomotor_ctor_template.asm (exact 539B retail @ 0x001B60E0).
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Locomotor_ctor_template_Thunk.cpp
 // ??0Locomotor@@ present-unmatched
 Locomotor::Locomotor(const Locomotor& that)
 {

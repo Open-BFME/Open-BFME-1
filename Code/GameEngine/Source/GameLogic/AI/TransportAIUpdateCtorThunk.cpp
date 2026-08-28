@@ -7,6 +7,7 @@
 class Thing;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule
 {
 public:
@@ -53,6 +54,7 @@ public:
 	TransportAIUpdateBase(Thing *thing, const ModuleData *moduleData);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TransportAIUpdate.h
 class TransportAIUpdate : public TransportAIUpdateBase
 {
 public:

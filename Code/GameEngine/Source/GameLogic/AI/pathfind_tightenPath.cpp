@@ -14,11 +14,13 @@ enum PathfindLayerEnum
 	LAYER_INVALID = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x, y, z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x, y;
@@ -30,6 +32,7 @@ class Pathfinder;
 
 // Retail TerrainLogic::getLayerForDestination takes a nullable first arg
 // (often 0/NULL, or an Object*) plus the destination Coord3D*. ret 0x8.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -61,6 +64,7 @@ struct TightenPathStruct
 		PathfindLayerEnum lay, const Coord3D *to);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:

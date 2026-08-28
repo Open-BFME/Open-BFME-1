@@ -9,6 +9,7 @@ extern "C" unsigned int __cdecl strlen(const char *str);
 
 // Inline AsciiString: ctor/concat inline to the matched StringBase<char> machinery
 // (ctor 0x888bc0, concat 0x887d60), str() folds to the m_data+8 / "" the target uses.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString {
 public:
     AsciiString(const char *s) { ((StringBase<char> *)this)->StringBase<char>::StringBase(s); }

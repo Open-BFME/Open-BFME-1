@@ -37,6 +37,7 @@
 #include "Common/INI.h"
 #include "GameClient/TerrainRoads.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
 class INIException
 {
 public:
@@ -217,6 +218,7 @@ const FieldParse TerrainRoadType::m_terrainBridgeFieldParseTable[] =
 // ??0TerrainRoadType@@QAE@XZ matched from Common/TerrainRoadTypeConstructorThunk.cpp
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainRoadTypeDestructorThunk.cpp
 // ??1TerrainRoadType@@MAE@XZ present-unmatched
 TerrainRoadType::~TerrainRoadType( void )
 {
@@ -281,6 +283,7 @@ TerrainRoadCollection::~TerrainRoadCollection( void )
 //-------------------------------------------------------------------------------------------------
 /** Find road with matching name */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainRoads_find.cpp
 // ?findRoad@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z present-unmatched
 TerrainRoadType *TerrainRoadCollection::findRoad( AsciiString name )
 {
@@ -302,6 +305,7 @@ TerrainRoadType *TerrainRoadCollection::findRoad( AsciiString name )
 //-------------------------------------------------------------------------------------------------
 /** Find bridge with matching name */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainRoads_find.cpp
 // ?findBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z present-unmatched
 TerrainRoadType *TerrainRoadCollection::findBridge( AsciiString name )
 {
@@ -338,6 +342,7 @@ TerrainRoadType *TerrainRoadCollection::findRoadOrBridge( AsciiString name )
 //-------------------------------------------------------------------------------------------------
 /** Allocate a new road, set the name, and link to the road list */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainRoadCollection_newRoad_Thunk.cpp
 // ?newRoad@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z present-unmatched
 TerrainRoadType *TerrainRoadCollection::newRoad( AsciiString name )
 {

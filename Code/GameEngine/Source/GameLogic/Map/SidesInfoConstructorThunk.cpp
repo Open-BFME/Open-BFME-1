@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
+// readable body of ??0SidesInfo@@: Code/GameEngine/Source/GameLogic/Map/SidesList.cpp
 
 // Open-BFME5: SidesInfo ctor
 // Retail: zero +0, construct sub at +4 with arg 0, zero +8..+14.
@@ -12,6 +13,7 @@ private:
 	char opaque[4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/SidesList.h
 class SidesInfo
 {
 public:

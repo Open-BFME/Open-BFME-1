@@ -28,6 +28,7 @@ public:
     float m_z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TunnelContain.h
 class TunnelContainModuleData : public HordeGarrisonContainModuleData
 {
 public:

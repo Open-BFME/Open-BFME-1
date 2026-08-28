@@ -11,6 +11,7 @@ public:
 	virtual BridgeBehaviorInterface *getBridgeBehaviorInterface();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule
 {
 private:
@@ -20,6 +21,7 @@ public:
 	BehaviorModuleInterfaceSlice m_interface;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -30,6 +32,7 @@ private:
 	BehaviorModule **m_behaviors;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BridgeBehavior.h
 class BridgeBehavior
 {
 public:

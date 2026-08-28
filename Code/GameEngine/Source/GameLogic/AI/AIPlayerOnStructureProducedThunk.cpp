@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onStructureProduced@AIPlayer@@UAEXPAVObject@@0@Z: Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp
 // Open-BFME5: lift the retail AIPlayer::onStructureProduced MASM body into a C++ thunk.
 
 extern "C" __declspec(naked) void bfme_AIPlayerOnStructureProduced_162D30()

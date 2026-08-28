@@ -84,6 +84,7 @@ ObjectTracker::~ObjectTracker( void ) { }
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorModuleDataConstructor.cpp
 // ??0PropagandaTowerBehaviorModuleData@@ present-unmatched
 PropagandaTowerBehaviorModuleData::PropagandaTowerBehaviorModuleData( void )
 {
@@ -128,6 +129,7 @@ PropagandaTowerBehaviorModuleData::PropagandaTowerBehaviorModuleData( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorConstructor.cpp
 // ??0PropagandaTowerBehavior@@ present-unmatched
 PropagandaTowerBehavior::PropagandaTowerBehavior( Thing *thing, const ModuleData *modData )
 											 : UpdateModule( thing, modData )

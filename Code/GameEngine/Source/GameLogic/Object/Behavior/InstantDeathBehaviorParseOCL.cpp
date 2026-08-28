@@ -66,6 +66,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -73,6 +74,7 @@ public:
 	const char *getNextTokenOrNull( const char *seps = 0 );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponStore
 {
 public:
@@ -81,6 +83,7 @@ public:
 
 extern WeaponStore *TheWeaponStore;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/InstantDeathBehavior.h
 class InstantDeathBehaviorModuleData
 {
 public:

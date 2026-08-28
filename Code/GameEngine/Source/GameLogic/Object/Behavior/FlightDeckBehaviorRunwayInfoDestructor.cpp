@@ -15,6 +15,7 @@
 // The frame stores this before the first destruction because the iterator call
 // needs an unwind record, and the unwind slot goes 0 then -1 across the two.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -24,6 +25,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 class Coord3D
 {
 public:
@@ -33,6 +35,7 @@ private:
 	float m_bfmeX, m_bfmeY, m_bfmeZ;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FlightDeckBehavior.h
 class FlightDeckBehavior
 {
 public:

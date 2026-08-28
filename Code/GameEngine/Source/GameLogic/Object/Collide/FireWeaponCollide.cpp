@@ -65,6 +65,7 @@ void FireWeaponCollideModuleData::buildFieldParse(MultiIniFieldParse& p)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/FireWeaponCollideDestructorThunk.cpp
 // ??1FireWeaponCollide@@ present-unmatched
 FireWeaponCollide::~FireWeaponCollide( void )
 {

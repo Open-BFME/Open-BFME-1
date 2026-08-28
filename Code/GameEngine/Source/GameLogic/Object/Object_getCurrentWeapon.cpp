@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getCurrentWeapon@Object@@: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 
 // FILE: Object_getCurrentWeapon.cpp //////////////////////////////////////////
 //
@@ -21,6 +22,7 @@ enum WeaponSlotType
 	WEAPONSLOT_COUNT
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

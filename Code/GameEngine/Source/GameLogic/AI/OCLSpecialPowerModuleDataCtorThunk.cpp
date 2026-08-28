@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0OCLSpecialPowerModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/SpecialPower/OCLSpecialPower.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/OCLSpecialPower.h
 class OCLSpecialPowerModuleData
 {
 public:

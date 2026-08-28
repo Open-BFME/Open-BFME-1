@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?defect@Object@@QAEXPAVTeam@@I@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 // Open-BFME5: lift certified retail packet 281 for Object::defect to C++.
 
 // ?defect@Object@@QAEXPAVTeam@@I@Z

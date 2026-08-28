@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?isOnSquad@Squad@@QBE_NPBVObject@@@Z: Code/GameEngine/Source/GameLogic/AI/Squad.cpp
 
 // Squad::isOnSquad, retail 0x0018B520. No calls: the object's id is read inline
 // from +0x74, and the squad's membership is a plain pointer pair at +0x04 and
@@ -14,6 +15,7 @@
 typedef int ObjectID;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

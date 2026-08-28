@@ -3,6 +3,7 @@ enum CommandSourceType
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
     void groupAttackObjectPrivate(bool, Object *, int, CommandSourceType);

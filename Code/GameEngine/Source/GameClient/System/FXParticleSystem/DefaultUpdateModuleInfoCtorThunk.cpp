@@ -2,6 +2,7 @@
 
 namespace FXParticleSystem {
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ClientRandomValue.h
 class GameClientRandomVariable
 {
 public:

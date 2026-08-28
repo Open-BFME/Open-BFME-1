@@ -5,6 +5,7 @@
 class Thing;
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 private:
@@ -30,6 +31,7 @@ protected:
 class BehaviorModuleInterface { public: virtual void slot(); };
 class UpdateModuleInterface { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public PB_DeepBase, public BehaviorModuleInterface,
 	public UpdateModuleInterface
 {

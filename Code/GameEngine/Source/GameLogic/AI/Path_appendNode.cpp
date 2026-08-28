@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?appendNode@Path@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 // Open-BFME: Path::appendNode, retail 0x0016A4B0, 180 bytes.
 //
 // The reference's body with its list append rewritten. Everything before that
@@ -32,6 +33,7 @@ typedef bool Bool;
 
 enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	// Member-wise: retail stores the three fields straight into the node at
@@ -42,6 +44,7 @@ struct Coord3D
 	Real x, y, z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathNode
 {
 public:
@@ -69,6 +72,7 @@ public:
 	Int m_costSoFar;					// this+0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Path
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0HordeUpdateModuleData@@: Code/GameEngine/Source/GameLogic/Object/Update/HordeUpdate.cpp
 
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 //
@@ -49,6 +50,7 @@ private:
 	RefCountedThing *m_ptr;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -61,12 +63,14 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
 	virtual ~Snapshot() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/HordeUpdate.h
 class HordeUpdateModuleData : public Snapshot
 {
 public:

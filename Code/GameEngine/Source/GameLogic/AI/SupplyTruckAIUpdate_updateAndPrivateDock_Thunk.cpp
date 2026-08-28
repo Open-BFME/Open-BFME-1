@@ -1,4 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?isCurrentlyFerryingSupplies@SupplyTruckAIUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate.cpp
+// readable body of ?privateDock@SupplyTruckAIUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate.cpp
+// readable body of ?update@SupplyTruckAIUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate.cpp
 // Open-BFME5: SupplyTruckAIUpdate::update and ::privateDock, retail 0x002C5740
 // and 0x002C5820. Both Zero Hour bodies unchanged.
 //
@@ -66,6 +69,7 @@ enum SupplyTruckStateTypes
 	ST_BFME_SIXTH = 5			///< BFME-only; unnamed, and on the ferrying side
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
@@ -76,6 +80,7 @@ private:
 	unsigned int m_id;							///< retail this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -96,6 +101,7 @@ private:
 	State *m_currentState;						///< retail this+0x1c
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -119,6 +125,7 @@ protected:
 // byte-verified and they cannot both describe AIUpdateInterface, so which class
 // owns 0x330 is open. Nothing in these three bodies settles it, and neither
 // reading changes any offset any of them uses.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyTruckAIUpdate.h
 class SupplyTruckAIInterface
 {
 public:
@@ -126,6 +133,7 @@ public:
 	virtual bool isCurrentlyFerryingSupplies( void ) const = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyTruckAIUpdate.h
 class SupplyTruckAIUpdate : public AIUpdateInterface, public SupplyTruckAIInterface
 {
 public:

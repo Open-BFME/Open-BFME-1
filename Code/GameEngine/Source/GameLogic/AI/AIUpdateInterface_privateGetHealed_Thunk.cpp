@@ -31,6 +31,7 @@ enum CommandSourceType
 	CMD_FROM_PLAYER = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ActionManager.h
 class ActionManager
 {
 public:
@@ -39,6 +40,7 @@ public:
 
 extern ActionManager *TheActionManager;			///< retail 0x012ED700
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
@@ -48,6 +50,7 @@ private:
 	char m_unreconstructed_00[4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule
 {
 public:
@@ -63,6 +66,7 @@ protected:
 	char m_unreconstructed_0c[0x20 - 0x0c];		///< brings UpdateModule to 0x20
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public UpdateModule, public AICommandInterface
 {
 protected:

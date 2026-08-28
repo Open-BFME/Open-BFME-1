@@ -16,6 +16,7 @@ private:
 	int m_pad; // force 8-byte allocation like retail
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -25,6 +26,7 @@ public:
 // Retail field-parse table address
 extern "C" char BridgeTowerBehaviorFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BridgeTowerBehavior.h
 class BridgeTowerBehavior
 {
 public:

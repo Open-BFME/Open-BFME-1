@@ -64,6 +64,7 @@
 
 #define SPAWN_DELAY_MIN_FRAMES (16) // about as rapidly as you'd expect people to successively exit through the same door
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorCtorThunk.cpp
 // ??0SpawnBehavior@@ present-unmatched
 SpawnBehavior::SpawnBehavior( Thing *thing, const ModuleData* moduleData ) 
 						 : UpdateModule( thing, moduleData )

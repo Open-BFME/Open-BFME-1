@@ -2,6 +2,7 @@ class ArmorTemplateSet;
 class WeaponTemplateSet;
 
 template <int Bits>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -10,9 +11,11 @@ public:
 };
 
 template <class Set, class Flags>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SparseMatchFinder.h
 class SparseMatchFinder
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SparseMatchFinder.h
 	class MapHelper
 	{
 	public:
@@ -84,9 +87,11 @@ bool SparseMatchFinder<Set, Flags>::MapHelper::operator()(const Flags &a, const 
 template class SparseMatchFinder<ArmorTemplateSet, BitFlags<11> >;
 
 template <>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SparseMatchFinder.h
 class SparseMatchFinder<WeaponTemplateSet, BitFlags<17> >
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SparseMatchFinder.h
 	class MapHelper
 	{
 	public:

@@ -58,6 +58,7 @@ struct GrantUpgradeStatusBits12
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Create/GrantUpgradeCreateModuleDataCtor.cpp
 // ??0GrantUpgradeCreateModuleData@@QAE@XZ present-unmatched
 GrantUpgradeCreateModuleData::GrantUpgradeCreateModuleData()
 {
@@ -87,6 +88,7 @@ void GrantUpgradeCreateModuleData::buildFieldParse(MultiIniFieldParse& p)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Create/GrantUpgradeCreateConstructor.cpp
 // ??0GrantUpgradeCreate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 GrantUpgradeCreate::GrantUpgradeCreate( Thing *thing, const ModuleData* moduleData ) : CreateModule( thing, moduleData )
 {
@@ -149,6 +151,7 @@ void GrantUpgradeCreate::onBuildComplete( void )
 	if( ! shouldDoOnBuildComplete() )
 		return;
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Create/CreateModule.cpp
 // ?onBuildComplete@CreateModule@@UAEXXZ present-unmatched
 	CreateModule::onBuildComplete(); // extend
 

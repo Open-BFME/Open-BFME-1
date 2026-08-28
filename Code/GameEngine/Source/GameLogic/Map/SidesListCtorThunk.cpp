@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0SidesList@@QAE@XZ: Code/GameEngine/Source/GameLogic/Map/SidesList.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/SidesList.h
 class SidesList
 {
 public:

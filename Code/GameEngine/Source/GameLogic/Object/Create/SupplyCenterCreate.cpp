@@ -24,12 +24,14 @@ class Thing;
 class ModuleData;
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ResourceGatheringManager.h
 class ResourceGatheringManager
 {
 public:
 	void addSupplyCenter( Object *obj );		///< ILT 0x0001E23B
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -40,6 +42,7 @@ private:
 	ResourceGatheringManager *m_resourceGatheringManager;	///< retail this+0x228
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
@@ -53,6 +56,7 @@ private:
 
 extern PlayerList *ThePlayerList;				///< retail 0x012ED748
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule
 {
 public:
@@ -67,12 +71,14 @@ private:
 	Object *m_obj;								///< retail this+0x08
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModuleInterface
 {
 public:
 	virtual void behaviorModuleInterfaceAnchor();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CreateModule.h
 class CreateModuleInterface
 {
 public:
@@ -81,6 +87,7 @@ public:
 	virtual bool shouldDoOnBuildComplete() const = 0;	///< slot 2, retail call [eax+0x8]
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CreateModule.h
 class CreateModule : public ObjectModule,
 	public BehaviorModuleInterface,
 	public CreateModuleInterface
@@ -104,6 +111,7 @@ protected:
 	bool m_needToRunOnBuildComplete;			///< retail object+0x14
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyCenterCreate.h
 class SupplyCenterCreate : public CreateModule
 {
 public:

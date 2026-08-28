@@ -54,6 +54,7 @@ private:
     int m_24;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ObjectCreationUpgrade.h
 class ObjectCreationUpgrade : public OCU_GrandBase, public OCU_MiddleBase
 {
 public:

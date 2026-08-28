@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0BridgeTowerBehavior@@: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeTowerBehavior.cpp
 
 // Open-BFME5: BridgeTowerBehavior module ctor.
 //
@@ -14,6 +15,7 @@ class Thing;
 class ModuleData;
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule
 {
 public:

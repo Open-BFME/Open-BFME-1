@@ -31,6 +31,7 @@ typedef float Real;
 
 class PolygonTrigger;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -41,6 +42,7 @@ public:
 
 // Only the one slot this block reaches is spelled out. The padding is what
 // puts it at vtable +0x90; nothing here claims to know the other 36.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:

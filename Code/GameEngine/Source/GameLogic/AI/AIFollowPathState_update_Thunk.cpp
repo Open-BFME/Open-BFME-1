@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?update@AIFollowPathState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME5: lift the exact retail AIFollowPathState::update body to C++.
 
 // ?update@AIFollowPathState@@UAE?AW4StateReturnType@@XZ

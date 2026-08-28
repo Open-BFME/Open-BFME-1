@@ -57,6 +57,7 @@
 #include "GameLogic/Object.h"
 #include "GameLogic/Module/BaikonurLaunchPower.h"
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/SpecialPower/BaikonurLaunchPowerModuleDataConstructor.cpp
 // ??0BaikonurLaunchPowerModuleData@@ present-unmatched
 BaikonurLaunchPowerModuleData::BaikonurLaunchPowerModuleData( void )
 {

@@ -17,6 +17,7 @@
 // Kept out of AIPlayer.cpp because correcting the classes there would move all
 // 32 of its matched rows for one 38-byte body.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamTemplateInfo
 {
 public:
@@ -24,6 +25,7 @@ public:
 	int m_initialIdleFrames;					///< retail reads it at prototype+0x1a4
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:
@@ -37,6 +39,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
@@ -47,6 +50,7 @@ private:
 	TeamPrototype *m_proto;						///< retail this+0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -59,6 +63,7 @@ private:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class TeamInQueue
 {
 public:

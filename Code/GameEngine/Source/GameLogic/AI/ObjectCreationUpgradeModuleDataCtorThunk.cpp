@@ -6,6 +6,7 @@
 // Trailing members are written in retail's store order, which is not offset
 // order: 0xa0 lands before 0x98 and 0x9c, and the -1 at 0x94 comes last.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 public:
@@ -23,6 +24,7 @@ private:
 	unsigned char m_body[0x78 - 0x10];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ObjectCreationUpgrade.h
 class ObjectCreationUpgradeModuleData : public ModuleData
 {
 public:

@@ -3,6 +3,7 @@
 class INI;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FireWeaponCollide.h
 class FireWeaponCollide
 {
 public:

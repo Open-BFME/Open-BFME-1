@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getSingleLogicalBonePositionOnTurret@Object@@QBE_NW4WhichTurretType@@PBDPAUCoord3D@@PAVMatrix3D@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 // Open-BFME5: lift the exact retail Object turret bone-position MASM body.
 
 enum WhichTurretType {};
 struct Coord3D;
 class Matrix3D;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onTunnelCreated@TunnelTracker@@: Code/GameEngine/Source/Common/RTS/TunnelTracker.cpp
 
 // Open-BFME5: TunnelTracker::onTunnelCreated, retail 0x000F8DD0, 56 bytes. The
 // body carried only a machine byte-dump row; reverse/reloc_names.csv holds the
@@ -17,6 +18,7 @@ inline void *operator new(unsigned int, void *place) { return place; }
 
 typedef unsigned int ObjectID;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -67,6 +69,7 @@ public:
 	BfmeListNodeBase *m_bfmeNode;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/TunnelTracker.h
 class TunnelTracker
 {
 public:

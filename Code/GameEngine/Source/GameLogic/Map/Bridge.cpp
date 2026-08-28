@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
+// readable body of ?updateDamageState@Bridge@@QAEXXZ: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 
 typedef bool Bool;
 typedef float Real;
@@ -9,6 +10,7 @@ enum DamageType { DAMAGE_FALLING = 11 };
 enum DeathType { DEATH_SPLATTED = 11 };
 enum PathfindLayerEnum {};
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfoInput
 {
 	unsigned char m_unmodelled_00[8];
@@ -20,6 +22,7 @@ struct DamageInfoInput
 	Real m_amount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfo
 {
 	DamageInfo();
@@ -27,6 +30,7 @@ struct DamageInfo
 	unsigned char m_unmodelled_20[0x5C - 0x20];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 class BodyModuleInterface
 {
 public:
@@ -41,6 +45,7 @@ public:
 	virtual BodyDamageType getDamageState();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -73,6 +78,7 @@ private:
 	BodyModuleInterface *m_body;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -80,12 +86,14 @@ public:
 	Object *getFirstObject();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:
 	void changeBridgeState(PathfindLayerEnum layer, Bool open);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -96,6 +104,7 @@ private:
 	Pathfinder *m_pathfinder;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -112,6 +121,7 @@ public:
 	virtual Bool objectInteractsWithBridgeLayer(Object *object, int layer, Bool considerBridgeHealth);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BridgeBehavior.h
 class BridgeBehaviorInterface
 {
 public:
@@ -123,12 +133,14 @@ public:
 	virtual Bool isScaffoldPresent() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BridgeBehavior.h
 class BridgeBehavior
 {
 public:
 	static BridgeBehaviorInterface *getBridgeBehaviorInterfaceFromObject(Object *object);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Bridge
 {
 public:

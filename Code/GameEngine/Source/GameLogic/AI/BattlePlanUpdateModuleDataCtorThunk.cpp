@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0BattlePlanUpdateModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdate.cpp
 // Open-BFME5: the named ILT 0x0003025B reaches this body, and ModuleFactory's
 // data-create proc 0x00117420 allocates 0x90 for it, so this is
 // BattlePlanUpdateModuleData's constructor.
@@ -17,6 +18,7 @@ private:
 	unsigned char m_raw[0x68];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BattlePlanUpdate.h
 class BattlePlanUpdateModuleData
 {
 public:

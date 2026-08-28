@@ -17,6 +17,7 @@ typedef bool Bool;
 
 class LocomotorTemplate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class Locomotor
 {
 public:
@@ -26,6 +27,7 @@ private:
 	char m_bfme_body[0xA8];				// sizeof(Locomotor), the pushed size
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class LocomotorStore
 {
 public:

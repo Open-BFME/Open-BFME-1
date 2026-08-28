@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0ParticleUplinkCannonUpdateModuleData@@: Code/GameEngine/Source/GameLogic/Object/Update/ParticleUplinkCannonUpdate.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ParticleUplinkCannonUpdate.h
 class ParticleUplinkCannonUpdateModuleData
 {
 public:
