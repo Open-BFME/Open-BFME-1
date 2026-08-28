@@ -74634,6 +74634,7 @@ name,address,notes
 ?getTooltipName@MultiplayerColorDefinition@@QBE?AVAsciiString@@XZ,0x0002D830,Open-BFME5 ILT thunk to body 0x0008E280; ?findMultiplayerColorDefinitionByName@MultiplayerSettings@@QAEPAVMultiplayerColorDefinition@@VAsciiString@@@Z at 0x0008E760 calls it on each colour in the list and compares the string it returns by value
 ?getTotalBuildingsDestroyed@ScoreKeeper@@QAEHXZ,0x000E8A70,sums the 32 ints at ScoreKeeper+0x94 (m_totalBuildingsDestroyed[MAX_PLAYER_COUNT]); used for buildingsKilled%d by generateLadderGameResultsPacket at 0x006394BA via ILT 0x0001033E; ZH ScoreKeeper.h:92
 ?getTotalDataLength@NetWrapperCommandMsg@@QAEIXZ,0x0000F70E,ILT thunk; real body 0xA73F40 (mov eax,[ecx+0x28];ret)
+?getTotalFrames@TransitionGroup@@QAEHXZ,0x00032470,Open-BFME5 ILT to the 0x0048A130 group window-duration maximum used by TransitionGroup::init
 ?getTotalUnitsDestroyed@ScoreKeeper@@QAEHXZ,0x000E8AB0,sums the 32 ints at ScoreKeeper+0xc (m_totalUnitsDestroyed[MAX_PLAYER_COUNT]); used for unitsKilled%d by generateLadderGameResultsPacket at 0x0063949D via ILT 0x000403F9; ZH ScoreKeeper.h:89
 ?getUiStrings@Template@@QBEHQAVAsciiString@@@Z,0x0002BAE9
 ?getUncompressedSize@CompressionManager@@SAHPBXH@Z,0x0081E6D0,CachedFileInputStream open retail uncompressed-size query
