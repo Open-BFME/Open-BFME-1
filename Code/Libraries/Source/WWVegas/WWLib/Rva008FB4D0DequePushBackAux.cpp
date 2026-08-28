@@ -88,7 +88,6 @@ template void deque<Gen_t_008fb4d0_p20pod, allocator<Gen_t_008fb4d0_p20pod> >::_
 template void deque<Gen_t_008fb4d0_p20pod, allocator<Gen_t_008fb4d0_p20pod> >::push_back(
 	const Gen_t_008fb4d0_p20pod &);
 }
-
 class Rva008FBCB0P20Queue
 {
 public:
