@@ -4,6 +4,14 @@ typedef bool Bool;
 
 class NetCommandMsg;
 
+class FrameDataManager
+{
+public:
+	Bool getIsQuitting();
+	unsigned int getCommandCount(unsigned int frame);
+	unsigned int getFrameCommandCount(unsigned int frame);
+};
+
 // Retail's real ConnectionManager, named so these two bodies carry their true
 // mangled names; the BFME-native helpers below keep the BFMEConnectionManager
 // name because theirs are unknown.
@@ -64,6 +72,12 @@ public:
 	void processAckCommand(void *msg);
 	void beginPlayerLeave(void *msg);
 	void resendFrameRangeToPlayer(int playerID, unsigned int startFrame, unsigned int endFrame);
+
+private:
+	char m_unknown00[0x12028];
+	int m_localSlot;
+	char m_unknown1202C[0xB8];
+	FrameDataManager *m_frameData[8];
 };
 
 
@@ -431,59 +445,21 @@ clampLowToZero:
 // skipping null and quitting ones, and compares the total against the LOCAL
 // manager's getFrameCommandCount(frame), which the FRAMEINFO path stores as the
 // announced expected total. Zero Hour instead matches counts per player.
-__declspec(naked) Bool BFMEConnectionManager::areFrameCommandsComplete(unsigned int frame, Bool debugSpewage)
+Bool BFMEConnectionManager::areFrameCommandsComplete(unsigned int frame, Bool debugSpewage)
 {
-	__asm {
-		push ebx
-		push ebp
-		push esi
-		mov ebx, ecx
-		push edi
-		xor edi, edi
-		lea esi,  [ebx+120E4h]
-		mov ebp, 8h
-nextSlot:
-		mov ecx, dword ptr [esi]
-		test ecx, ecx
-		je skipSlot
-		__emit 0E8h
-		__emit 0DEh
-		__emit 002h
-		__emit 09Ch
-		__emit 0FFh   // call 0x236DC
-		test al, al
-		jne skipSlot
-		mov eax, dword ptr [esp+14h]
-		mov ecx, dword ptr [esi]
-		push eax
-		__emit 0E8h
-		__emit 084h
-		__emit 043h
-		__emit 09Bh
-		__emit 0FFh   // call 0x17792
-		add edi, eax
-skipSlot:
-		add esi, 4h
-		dec ebp
-		jne nextSlot
-		mov ecx, dword ptr [esp+14h]
-		mov edx, dword ptr [ebx+12028h]
-		push ecx
-		mov ecx, dword ptr [ebx+edx*4+120E4h]
-		__emit 0E8h
-		__emit 076h
-		__emit 0A3h
-		__emit 09Dh
-		__emit 0FFh   // call 0x3D7A3
-		cmp eax, edi
-		pop edi
-		pop esi
-		pop ebp
-		sete al
-		pop ebx
-		ret 8h
+	unsigned int commandCount = 0;
+	FrameDataManager **manager = m_frameData;
+	int slotsRemaining = 8;
+	do {
+		if (*manager != 0 && !(*manager)->getIsQuitting())
+			commandCount += (*manager)->getCommandCount(frame);
+		++manager;
+	} while (--slotsRemaining != 0);
+
+	Bool commandsComplete =
+		m_frameData[m_localSlot]->getFrameCommandCount(frame) == commandCount;
+	return commandsComplete;
 	}
-}
 
 // Frames of headroom. Off the packet router that is the shared ceiling at
 // this+0x1205C minus the current frame plus one -- the same expression the
