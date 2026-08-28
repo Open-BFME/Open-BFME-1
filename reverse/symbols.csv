@@ -72733,6 +72733,8 @@ name,address,notes
 ?bfmeFindDGE@@YGPAVBfmeSubDGE@@PAX@Z,0x0004446D,pin
 ?bfmeFindDGH@@YGPAVBfmeSubDGH@@PAX@Z,0x00032786,pin
 ?bfmeFindDGI@@YGPAVBfmeSubDGI@@PAX@Z,0x00032786,pin
+?bfmeFindEGCa@BfmeSubEGCa@@QAEPAUBfmeResEGC@@PAX@Z,0x00038E4C,pin
+?bfmeFindEGCb@BfmeSubEGCb@@QAEPAUBfmeResEGC@@PAX@Z,0x00014D49,pin
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
 ?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
 ?bfmeFindRecord@FontLibraryBFMERetail@@AAEPAUBfmeFontRecord@@PAVAsciiString@@M@Z,0x000035A3,Open-BFME5 ILT thunk to body 0x00476E20; FontLibraryBFMERetail::getFont at 0x004772D0 calls it on this with the name and size and reads a byte at +8 of what it returns; address-derived name
@@ -73612,6 +73614,8 @@ name,address,notes
 ?bfmeUpdDTJ@BfmeThingDTJ@@QAEXXZ,0x00032231,pin
 ?bfmeUpdEFE@BfmeNodeEFE@@QAEPAU1@XZ,0x00048C61,pin
 ?bfmeUpdEFH@BfmeNodeEFH@@QAEPAU1@XZ,0x00048C61,pin
+?bfmeUpdEGA@BfmeSubEGA@@QAEPAUBfmeThingEGA@@XZ,0x00048C61,pin
+?bfmeUpdEGB@BfmeSubEGB@@QAEPAUBfmeThingEGB@@XZ,0x00048C61,pin
 ?bfmeUpdate@BfmeCellFC@@QAEXH_N@Z,0x00881BE0,Open-BFME5 semantic identity for exact address-derived cell update body at 0x00881BE0
 ?bfmeUpdateCHE@BfmeThingCHE@@QAEXXZ,0x00004A70,pin
 ?bfmeUpdateCMB@BfmeThingCMB@@QAEXXZ,0x00032231,pin
@@ -74708,6 +74712,7 @@ name,address,notes
 ?g_bfmeObjECI@@3PAVBfmeObjECI@@A,0x00EF7730,pin
 ?g_bfmeObjEDC@@3PAVBfmeObjEDC@@A,0x00EF7FE0,pin
 ?g_bfmeObjEFJ@@3PAVBfmeGlobEFJ@@A,0x00EEF1D8,pin
+?g_bfmeObjEGD@@3PAVBfmeObjEGD@@A,0x00EF1B40,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
