@@ -73006,6 +73006,7 @@ name,address,notes
 ?bfmeNotifyBridge@PathfindLayer@@AAEXXZ,0x0003B250,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is set
 ?bfmeNotifyCCA@BfmeSubCCA@@QAEXXZ,0x0002191D,pin
 ?bfmeNotifyCCB@BfmeSubCCB@@QAEXXZ,0x0002191D,pin
+?bfmeNotifyCCC@BfmeSubCCC@@QAEXXZ,0x0002191D,pin
 ?bfmeNotifyPlain@PathfindLayer@@AAEXXZ,0x0003A03F,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is null
 ?bfmeNowCBE@@YAPAXXZ,0x008FD440,pin
 ?bfmeOnceBXF@BfmeThingBXF@@QAEXXZ,0x0000E3AE,pin
