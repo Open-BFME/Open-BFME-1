@@ -2184,3 +2184,31 @@ MSVC's register allocation more than the corrected offset was worth. In the same
 file addMessageText landed first try, because its views already existed as proven
 spellings. Correct facts applied together can still go backwards; add one view,
 measure, keep or revert.
+## The second thunk test: is this stub the body's ONLY thunk?
+
+Caller counts settle a jmp stub's identity only when the two candidates have
+wildly different call profiles. They are useless when both are called once, and
+plenty of constructors are. The test that works there is topological: build the
+map of every 5-byte `E9` in `.text` to its target, and ask how many stubs reach
+the body in question. Incremental linking emits ONE thunk per function, so if a
+body already has a matched claim under name B and exactly one stub jumps to it,
+that stub is B's thunk -- whatever name a row has parked on it.
+
+`??0AutoHealBehavior@@` claimed a stub whose only target is a 276-byte matched
+`??0SpyVisionUpdate@@`. Both are called once. ICF is not the alternative
+explanation: folding needs identical bodies WITH identical relocations, and two
+module constructors store different vftables.
+
+Sweeping for it: 5-byte rows whose jump target is claimed by a differently-named
+symbol give 272 hits, and most are the project's own conventions -- a real name
+thunking to a `?d_`/`?j_`/`tg_`/`Gen_` placeholder body, or to a deliberate
+`..._Body`/`...Shim` split, or the same template function under two manglings.
+Excluding those leaves 81; requiring the stub to be the body's unique thunk and
+the body to be a matched claim of 32 bytes or more leaves 67. Confidence is not
+uniform inside that 67: a 276- or 652-byte body cannot be an ICF twin of another
+class's constructor, but a 69-byte trivial ModuleData constructor plausibly can,
+and for those the ledger may be modelling a genuine fold. Sort by body size and
+believe the large ones.
+
+Eleven of the 67 are donors in the marker queue, so screening them returns a
+small `miss(N)` that means nothing at all.

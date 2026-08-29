@@ -107,8 +107,21 @@ struct BfmeAutoHealDamageData
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehaviorCtorThunk.cpp
 // ??0AutoHealBehavior@@ present-unmatched
+// The pointer to AutoHealBehaviorCtorThunk.cpp is removed: that donor does not
+// hold this body. It owns one 5-byte row at RVA 0x00048B9E, and 0x00048B9E is a
+// jmp to 0x001EE950 -- a 276-byte body this ledger already has matched as
+// ??0SpyVisionUpdate@@QAE@PAVThing@@PBVModuleData@@@Z. That stub is the ONLY one
+// in .text jumping there, so it is SpyVisionUpdate's import thunk, and one
+// class's constructor does not tail-call another's. ICF cannot explain it either:
+// folding needs identical bodies WITH identical relocations, and two module
+// constructors store different vftables.
+//
+// The row passes because a jmp's rel32 is masked, leaving one compared byte, so
+// any 5-byte tail-call thunk matches any other. Screening this body against that
+// donor reports miss(3) -- the first five bytes of the real constructor below
+// against a jump -- which is noise, not three instructions of work. Logged
+// mis-anchored? in re_attempts.log; retail's AutoHealBehavior ctor is unlocated.
 AutoHealBehavior::AutoHealBehavior( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {
 	const AutoHealBehaviorModuleData *d = getAutoHealBehaviorModuleData();
