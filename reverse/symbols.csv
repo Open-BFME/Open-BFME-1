@@ -80821,3 +80821,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??A?$hash_map@IW4Relationship@@U?$hash@I@_STL@@U?$equal_to@I@3@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@3@@_STL@@QAEAAW4Relationship@@ABI@Z,0x000D6280,TeamRelationMapType operator[] ICF-folded onto the int/int spelling already recorded at this address; setTeamRelationship calls it and the enum instantiation was otherwise unpinned
