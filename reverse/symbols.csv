@@ -576,6 +576,7 @@ name,address,notes
 ??$_M_find@V?$BitFlags@$0L@@@@?$_Rb_tree@$$CBV?$BitFlags@$0L@@@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@U?$_Select1st@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@3@UMapHelper@?$SparseMatchFinder@VArmorTemplateSet@@V?$BitFlags@$0L@@@@@V?$allocator@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@1@ABV?$BitFlags@$0L@@@@Z,0x00042D1B,pinharvest x1 (thunk)
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@PAUNamedTimerInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUNamedTimerInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@PAUNamedTimerInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@PAUNamedTimerInfo@@@_STL@@@1@ABVAsciiString@@@Z,0x00013ED5,Open-BFME5 ILT to the named-timer map lookup ?removeNamedTimer@InGameUI@@QAEXABVAsciiString@@@Z at 0x0044A1B0 makes
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@@1@ABVAsciiString@@@Z,0x009C9B70,the m_archiveFileMap.find in ArchiveFileSystem::getFileInfo at 0x009CA831; REL32 so a wrong address fails rather than masks
+??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@@1@ABVAsciiString@@@Z,0x00013ED5,Open-BFME5 same ILT as the PAU spelling above; InGameUI.cpp declares NamedTimerInfo a class so the map instantiates with V. ILT jumps to 0x00448EE0 the ledger's STLport _M_find over an AsciiString key
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@1@ABVAsciiString@@@Z,0x00010AAF
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V1@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@V1@@_STL@@@1@ABVAsciiString@@@Z,0x0000AEAC,getDateForEmail map find thunk (ILT->0x80600)
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@1@ABVAsciiString@@@Z,0x009C9AA0,directory-tree lookup ArchiveFileSystem::doesFileExist calls at 0x009CA1D8
@@ -2163,6 +2164,7 @@ name,address,notes
 ??0BfmeSubB@@QAE@ABV0@@Z,0x00887B60,Open-BFME5 the sub-object copy ctor the copies at 0x00351F30 and 0x00351FB0 call
 ??0BfmeTempCME@@QAE@XZ,0x00037EC5,pin
 ??0BfmeThingBE@@QAE@XZ,0x008BE3B0,Open-BFME5 the constructor the new expression at 0x008BE660 runs on its block
+??0BfmeUnicodeArgBase@@AAE@ABV0@@Z,0x00888400,alias of the wide string copy constructor pinned at the same address; InGameUI.cpp builds the by-value GadgetRadioSetText argument through a view because the reference header keeps the copy out of line
 ??0BinkVideoPlayer@@QAE@XZ,0x0000B0A5,pinharvest x1 (thunk)
 ??0BinkVideoPlayer@@QAE@XZ,0x00045AF7,pinharvest x1 (thunk)
 ??0Bitmap2DObjClass@@QAE@ABV0@@Z,0x00956140,Open-BFME5 retail bitmap copy constructor pin
@@ -3930,6 +3932,7 @@ name,address,notes
 ??1?$pair@$$CBUGen_t_009cca50_k4@@UGen_t_009cca50_p4pod@@@_STL@@QAE@XZ,0x0002C2A0,gen-tgrid payload member
 ??1?$pair@$$CBUGen_t_009ccb10_k4@@UGen_t_009ccb10_p4pod@@@_STL@@QAE@XZ,0x0002C2A0,gen-tgrid payload member
 ??1?$pair@$$CBVAsciiString@@PAUNamedTimerInfo@@@_STL@@QAE@XZ,0x000011E5,Open-BFME5 ILT; the named-timer node value destructor ?removeNamedTimer@InGameUI@@QAEXABVAsciiString@@@Z at 0x0044A1B0 runs after the rebalance
+??1?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@QAE@XZ,0x000011E5,Open-BFME5 same ILT as the PAU spelling above; the V spelling is what InGameUI.cpp emits. ILT jumps to 0x00440030 which tail-jumps to AsciiString releaseBuffer - the pair's only destructible member
 ??1?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@QAE@XZ,0x000200FE
 ??1?$pair@$$CBVAsciiString@@V1@@_STL@@QAE@XZ,0x0002517B
 ??1?$pair@$$CBVAsciiString@@VAsciiString@@@_STL@@QAE@XZ,0x0007CB30,releases the AsciiString at +4 then at +0; the per-node dtor of the PreferenceMap _M_erase 0x0007D250 (ILT 0x00031EF3); ledger row is a Gen_t placeholder
@@ -9784,6 +9787,7 @@ name,address,notes
 ?GadgetListBoxSetColors@@YAXPAVGameWindow@@HHHHHHHHHHHH@Z,0x000410AB,ILT thunk used by GadgetComboBoxSetColors
 ?GadgetListBoxSetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z,0x000013CF,Open-BFME5 ILT thunk to the body already matched at 0x004B7260; ?winSetFont@GameWindow@@UAEXPAVGameFont@@@Z at 0x00478550 dispatches to it on the matching style bit
 ?GadgetRadioSetSelection@@YAXPAVGameWindow@@_N@Z,0x00034536
+?GadgetRadioSetText@@YAXPAVGameWindow@@VBfmeUnicodeStringArg@@@Z,0x000424F1,ILT for ?GadgetRadioSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z (jumps to 0x004BC6E0); the view type only changes the by-value argument's spelling
 ?GadgetStaticTextSetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z,0x00044904,Open-BFME5 ILT thunk to the body already matched at 0x004BD5F0; ?winSetFont@GameWindow@@UAEXPAVGameFont@@@Z at 0x00478550 dispatches to it on the matching style bit
 ?GadgetStaticTextSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z,0x0002C16F
 ?GadgetTabControlShowSubPane@@YAXPAVGameWindow@@H@Z,0x00008936
@@ -72478,6 +72482,7 @@ name,address,notes
 ?bfmeBase1030@BfmeA1030@@QAEXXZ,0x007F02F0,pin
 ?bfmeBase1030C@BfmeC1030@@QAEXHH@Z,0x00899F00,pin
 ?bfmeBase1050@BfmeB1050@@QAEXXZ,0x0000AF38,pin
+?bfmeBase1055@BfmeB1055@@QAEXHHH@Z,0x008D60C0,pin
 ?bfmeBase963@BfmeReg963@@QAEXXZ,0x009A1A30,pin
 ?bfmeBase966A@BfmeVft966A@@QAEXXZ,0x00039D6A,pin
 ?bfmeBase966B@BfmeVft966B@@QAEXXZ,0x00039D6A,pin
@@ -72559,6 +72564,7 @@ name,address,notes
 ?bfmeCalcEBH@BfmeThingEBH@@QAEMM@Z,0x0001FEEC,pin
 ?bfmeCalcEFC@@YGMH@Z,0x0001FEEC,pin
 ?bfmeCalcEOC@@YAMPAX@Z,0x0000991C,pin
+?bfmeCall1055@@YAXHP6AXXZPAUBfmeT1055@@@Z,0x00866FD0,pin
 ?bfmeCall916D@BfmeTail916D@@QAEXPAX@Z,0x0001192D,pin
 ?bfmeCall922F@BfmeTail922F@@QAEXPAXH@Z,0x0002B4F9,pin
 ?bfmeCall922G@BfmeSub922G@@QAEXPAPAX@Z,0x0003B5AC,pin
@@ -79766,6 +79772,7 @@ _bfmeFnB1033,0x0001E0B0,pin
 _bfmeGlobalTable12A6918,0x00EA6918,pin
 _bfmeHook1052,0x0003695D,pin
 _bfmeHook1053,0x000066EA,pin
+_bfmeHook1055,0x00863A70,pin
 _bfmeHookA1054,0x00008B39,pin
 _bfmeHookB1054,0x00011897,pin
 _bfmeInfoDCE,0x00CEA6A8,pin
@@ -79857,6 +79864,8 @@ _bfmeVft1045B,0x00D2C304,pin
 _bfmeVft1050B,0x00D28450,pin
 _bfmeVft1050F,0x00D28D30,pin
 _bfmeVft1053A,0x00D2BBE8,pin
+_bfmeVft1055B,0x00D376D0,pin
+_bfmeVft1055C,0x00D37720,pin
 _bfmeVftAGBa,0x00C9C9D0,pin
 _bfmeVftAGBb,0x00CA372C,pin
 _bfmeVftAGBc,0x00CB1404,pin
@@ -80402,7 +80411,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@@1@ABVAsciiString@@@Z,0x00013ED5,Open-BFME5 same ILT as the PAU spelling above; InGameUI.cpp declares NamedTimerInfo a class so the map instantiates with V. ILT jumps to 0x00448EE0 the ledger's STLport _M_find over an AsciiString key
-??1?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@QAE@XZ,0x000011E5,Open-BFME5 same ILT as the PAU spelling above; the V spelling is what InGameUI.cpp emits. ILT jumps to 0x00440030 which tail-jumps to AsciiString releaseBuffer - the pair's only destructible member
-??0BfmeUnicodeArgBase@@AAE@ABV0@@Z,0x00888400,alias of the wide string copy constructor pinned at the same address; InGameUI.cpp builds the by-value GadgetRadioSetText argument through a view because the reference header keeps the copy out of line
-?GadgetRadioSetText@@YAXPAVGameWindow@@VBfmeUnicodeStringArg@@@Z,0x000424F1,ILT for ?GadgetRadioSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z (jumps to 0x004BC6E0); the view type only changes the by-value argument's spelling
