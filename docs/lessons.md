@@ -1437,6 +1437,9 @@ none costs a full-tree gate:
                          the right header size and a strcmp-based compare where
                          retail does a length-bounded memcmp
   inlined CONSTRUCTOR -> /Ireference/shims/campaignmanagerascii      (71 TUs use it)
+  inlined str() AT +4     -> /Ireference/shims/asciistring8                (5 TUs use it)
+                             when the single wrong instruction is `add eax,4`
+                             where retail has `add eax,8`
                          plus /ICode/Libraries/Source/WWVegas/WWLib for string_base.h
   inlined str() at +4 -> /Ireference/shims/asciistring8              (6 TUs use it)
 
@@ -1687,3 +1690,38 @@ the success string.
 
 This screen found the module-constructor 6/10/6/3 split, two bodies sitting one
 instruction from home, and a marker asking for authoring rather than a fold.
+
+## The m_data+8 header is cheap PER FILE, even though the tree-wide change is not
+
+The tree-wide correction really does cost a full gate plus a 403-row funclet
+re-anchoring, and this file parks it on that basis. But that is the TREE-WIDE
+question. A single body stuck on one instruction -- `add eax,4` where retail
+inlines str() as `add eax,8` -- can be unstuck today: put
+/Ireference/shims/asciistring8 on THAT FILE's own cl line. Five files already
+carry it. UpgradeCenter::findUpgrade landed that way with no full gate, no
+re-anchoring, and all 16 pre-existing rows in the destination re-verified.
+
+So: park the tree-wide change, but do not read that as parking the bodies. Check
+whether your residue is exactly the +4/+8 difference before deferring one.
+
+## A view's constructor may need throw()
+
+Without it MSVC wraps the allocation in an SEH prologue purely to free the block
+if the constructor throws, and retail -- which has no unwind funclet there --
+does not. Usually this is a couple of bytes. On LocomotorStore::newOverride it
+was the difference between an entire prologue and none. Add `throw()` to a view
+constructor whose retail caller has no unwind state.
+
+## A vtable slot read off ONE call site is a guess
+
+Three AIUpdateInterface/DozerAIInterface slots move together: getDozerAIInterface
++0x13C against the vendored +0xFC, isIdle +0x180 against +0x13C -- isIdle landing
+exactly where the header put getDozerAIInterface, which is what an interface that
+GAINED sixteen entries ahead of them looks like, not one that was reordered.
+getMostRecentCommand goes the other way, +0x14 against +0x180, and is a different
+interface saying the same thing about DozerAIInterface.
+
+Two of the three were assigned backwards on the first attempt and the gate caught
+it. The rule is the same one that names members from an ordered call sequence:
+one agreement is a guess, and the whole sequence has to line up before you can
+claim any of it.
