@@ -3151,19 +3151,56 @@ void ScriptActions::doMoviePlayRadar(const AsciiString& movieName)
 //-------------------------------------------------------------------------------------------------
 /** doSoundPlayFromNamed */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doSoundPlayFromNamed_Thunk.cpp
-// ?doSoundPlayFromNamed@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
+// BFME's audio event is 0x70 bytes where the reference's is 0x64, so a local one
+// reserves twelve more bytes of frame. Deriving from AudioEventRTS would size it
+// correctly but adds a vptr store the retail body does not make, so this is a
+// standalone view and each member is aliased onto the thunk retail calls.
+class BfmeAudioEventRTS
+{
+public:
+	BfmeAudioEventRTS( const AsciiString &name, ObjectID owner );	///< retail ILT 0x0003961C
+	~BfmeAudioEventRTS();											///< retail ILT 0x00026F35
+	void setIsLogicalAudio( Bool logical );							///< retail ILT 0x00008206
+	void setPlayerIndex( Int index );								///< retail ILT 0x0003AC88
+
+	unsigned char m_unreconstructed_00[0x70];
+};
+
+// BFME's Audio vtable puts addAudioEvent at slot 17; the ZH header lands it at
+// 12, so the call comes out [edx+0x30] instead of [edx+0x44].
+class BfmeAudioVtbl_44
+{
+public:
+	virtual void _a44_0() = 0;	virtual void _a44_1() = 0;
+	virtual void _a44_2() = 0;	virtual void _a44_3() = 0;
+	virtual void _a44_4() = 0;	virtual void _a44_5() = 0;
+	virtual void _a44_6() = 0;	virtual void _a44_7() = 0;
+	virtual void _a44_8() = 0;	virtual void _a44_9() = 0;
+	virtual void _a44_10() = 0;	virtual void _a44_11() = 0;
+	virtual void _a44_12() = 0;	virtual void _a44_13() = 0;
+	virtual void _a44_14() = 0;	virtual void _a44_15() = 0;
+	virtual void _a44_16() = 0;
+	virtual void addAudioEvent( BfmeAudioEventRTS *event ) = 0;
+};
+
+// BFME stamps the owning player on the event so the mixer can bias it; the
+// reference copy leaves the index unset.
+// ?doSoundPlayFromNamed@ScriptActions@@IAEXABVAsciiString@@0@Z
 void ScriptActions::doSoundPlayFromNamed(const AsciiString& soundName, const AsciiString& unitName)
 {
-	Object *pUnit = TheScriptEngine->getUnitNamed(unitName);
+	Object *pUnit = ((BFMERetailScriptEngineVTable *)TheScriptEngine)->getUnitNamed(unitName);
 
 	if (!pUnit) {
 		return;
 	}
 	
-	AudioEventRTS sfx(soundName, pUnit->getID());
+	BfmeAudioEventRTS sfx(soundName, pUnit->getID());
 	sfx.setIsLogicalAudio(true);
-	TheAudio->addAudioEvent(&sfx);
+	Player *player = pUnit->getControllingPlayer();
+	if (player) {
+		sfx.setPlayerIndex(player->getPlayerIndex());
+	}
+	((BfmeAudioVtbl_44 *)TheAudio)->addAudioEvent(&sfx);
 }
 
 //-------------------------------------------------------------------------------------------------

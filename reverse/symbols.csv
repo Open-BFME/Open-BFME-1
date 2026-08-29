@@ -2099,6 +2099,7 @@ name,address,notes
 ??0BfmeArmyIcon@@QAE@ABVAsciiString@@@Z,0x00023ED9,retail findArmyIcon body directly encodes the BfmeArmyIcon constructor thunk
 ??0BfmeArmyIconBase@@QAE@VAsciiString@@@Z,0x000125F3,base constructor thunk called by BfmeArmyIcon
 ??0BfmeAttackNuggetBase@@QAE@XZ,0x0001B522,Open-BFME5 ILT the AttackNugget constructor at 0x0059EB00 calls its base through; it jumps to 0x00489210
+??0BfmeAudioEventRTS@@QAE@ABVAsciiString@@W4ObjectID@@@Z,0x0003961C,alias of the AudioEventRTS spelling pinned at the same ILT; ScriptActions.cpp sizes the local through a view because BFME's event is 0x70 bytes
 ??0BfmeBaseJC@@QAE@PAX@Z,0x0090E3D0,pin
 ??0BfmeBaseP0@@QAE@PAX0@Z,0x000170E4,Open-BFME5 the two-argument first base the triple-base constructors at 0x00200AE0 and siblings forward to
 ??0BfmeBinkPlayerMember@@QAE@XZ,0x0002833F,Open-BFME5 ILT the member constructor BinkVideoPlayer at 0x00691230 calls for its member at +0x0C
@@ -3992,6 +3993,7 @@ name,address,notes
 ??1BfmeAptScreenDisconnectScreen@@UAE@XZ,0x0050EA10,virtual dtor of the class whose ctor is pinned ??0BfmeAptScreenDisconnectScreen@@QAE@PAX@Z: resets vtables 0x01104DE8 and 0x01104DE4(+0x218) clears TheDisconnectMenu 0x012F4964 when it is this calls g_theWindowManager 0x00468090(0) unless the Quit flag this+0x261 is set unregisters DisconnectScreen::InitGadgets via 0x004629A0 then base dtor 0x00465430; called by the deleting dtor at 0x0050F633; ILT 0x00011C84
 ??1BfmeAptScreenQuitMenu@@UAE@XZ,0x00569720,E tier 1 via the corrected TheNetwork vcall seed: virtual dtor of the QuitMenu APT screen whose ctor is pinned ??0BfmeAptScreenQuitMenu@@QAE@PAX@Z (ILT 0x00025153 -> 0x0056A2F0 installs vtable 0x0110A388 at 0x0056A324 and publishes this to 0x012F4B40 at 0x0056A361): resets vtables 0x0110A388 / 0x0110A384 (+0x218) compares this with 0x012F4B40 (0x0056974F) and clears it then UI singleton 0x012F148C slot +0x150(0); carries the ZH QuitMenu.cpp:151 exit: if TheNetwork (0x012F7714 at 0x0056981F) TheNetwork->quitGame vslot +0x78 at 0x0056982C else 0x003839E0 (posts MSG_CLEAR_GAME_DATA at 0x00383A2C) via ILT 0x000238A3; then Shell::showShell 0x00580150 bfme_hideBackground 0x00468090 APT:Pause text via 0x0046CBF0 and the APT screen base dtor 0x00465430 (the base ??1BfmeAptScreenDisconnectScreen also calls); called by the deleting dtor ??_GGen_dtor_00569de0 at 0x00569DE3 via ILT 0x000271F6 = vtable 0x0110A388 slot 0
 ??1BfmeAptScreenScoreScreen@@UAE@XZ,0x00575050,virtual dtor: resets vtables 0x0110AAB8/0x0110AAB4 unregisters AptScoreScreen::InitGadgets via 0x004629A0; if +0x25c==0 (single-player screen) && TheShell 0x012F4B58 -> TheShell->0x0057F5B0(FALSE) (ILT 0x000428ED); clears TheScoreScreen 0x012F4B50; AsciiString dtors at +0x330 +0x320 +0x300; frees the bit-vector buffer +0x2e8; vector<pair<Int AsciiString>> dtor 0x00574BC0 on +0x264; base dtor 0x00465430; ILT 0x00006F28; sole caller the deleting dtor 0x00575883
+??1BfmeAudioEventRTS@@QAE@XZ,0x00026F35,alias of the AudioEventRTS destructor spelling pinned at the same ILT; reached from the ScriptActions view local
 ??1BfmeBaseAA@@UAE@XZ,0x009A1A40,Open-BFME5 the base destructor the unwound clear destructor at 0x0039C6D0 chains to
 ??1BfmeBaseF@@QAE@XZ,0x00029537,Open-BFME5 the base destructor the deleting list destructor at 0x0048C5B0 chains to
 ??1BfmeBaseP@@UAE@XZ,0x009A1A40,Open-BFME5 the primary base destructor the vector-member destructor at 0x00378650 calls
@@ -78531,6 +78533,7 @@ name,address,notes
 ?setInt@UserPreferences@@QAEXVAsciiString@@H@Z,0x00009B3D,incremental-link thunk fronting the unclaimed body 0x000A96F0
 ?setInt@UserPreferences@@QAEXVAsciiString@@H@Z,0x000A96F0,body behind the pinned ILT 0x00009B3D: "%d" (VA 0x0107C7B4) format through 0x000A9010 then the setAsciiString virtual +0x1c
 ?setIsLogicalAudio@AudioEventRTS@@QAEX_N@Z,0x00008206,doSoundPlayFromNamed logical-audio ILT thunk
+?setIsLogicalAudio@BfmeAudioEventRTS@@QAEX_N@Z,0x00008206,alias of the AudioEventRTS spelling pinned at the same ILT; reached from the ScriptActions view local
 ?setLadderIP@GameSpyStagingRoom@@QAEXVAsciiString@@@Z,0x004D4810,add ecx 0x444 then AsciiString assign 0x00887C90 from the by-value argument (released at exit); ILT 0x0003FB2F called with ecx = TheGameSpyGame 0x012F7198 at 0x004FCB97 0x0053E1A8 0x00507335 0x00507357 (ZH StagingRoomGameInfo.h:129 inline)
 ?setLadderPort@GameSpyStagingRoom@@QAEXG@Z,0x004D3E40,mov word [this+0x450] = arg; ret 4 (ZH StagingRoomGameInfo.h:131 inline); out-of-line copy with no callers (every live write is inlined: 0x0053E655 host 0x004FCBA9/0x0053EB3D/0x0053E1BA joiners 0x0050733F/0x00507365 quickmatch); ILT 0x0001F807
 ?setLastLadder@CustomMatchPreferences@@QAEXABVAsciiString@@G@Z,0x00046E43
@@ -78579,6 +78582,7 @@ name,address,notes
 ?setPercentage@NetProgressCommandMsg@@QAEXE@Z,0x00030C56,pinharvest x1 (thunk)
 ?setPercentage@NetProgressCommandMsg@@QAEXE@Z,0x0003C44D,pinharvest x1 (thunk)
 ?setPlayerIndex@AudioEventRTS@@QAEXH@Z,0x0003AC88,doSoundPlayFromNamed player-index ILT thunk
+?setPlayerIndex@BfmeAudioEventRTS@@QAEXH@Z,0x0003AC88,alias of the AudioEventRTS spelling pinned at the same ILT; reached from the ScriptActions view local
 ?setPlayerIndex@NetDestroyPlayerCommandMsg@@QAEXI@Z,0x0000930E,pinharvest x1 (thunk)
 ?setPlayerIndex@NetDestroyPlayerCommandMsg@@QAEXI@Z,0x00026C33,pinharvest x1 (thunk)
 ?setPlayerIndex@NetDestroyPlayerCommandMsg@@QAEXI@Z,0x00029505,pinharvest x1 (thunk)
