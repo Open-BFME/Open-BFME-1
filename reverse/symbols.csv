@@ -73785,6 +73785,8 @@ name,address,notes
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
 ?bfmeSend1002@BfmeB1002@@QAEDPAUBfmeHold1002@@H@Z,0x0000583A,pin
 ?bfmeSend1007@BfmeB1007@@QAEDHPAX@Z,0x000420A5,pin
+?bfmeSend1009@BfmeSink1009@@QAEXH@Z,0x000122AB,pin
+?bfmeSend1009C@BfmeSinkC1009@@QAEDPAX0@Z,0x00004633,pin
 ?bfmeSend975B@BfmeB975@@QAEXHH@Z,0x0002D6F5,pin
 ?bfmeSend979B@BfmeSink979@@QAEXPAVBfmeKey979@@@Z,0x00038938,pin
 ?bfmeSend986C@BfmeC986@@QAEXHHHHH@Z,0x0001A6B3,pin
@@ -74019,6 +74021,7 @@ name,address,notes
 ?bfmeTouch982C@BfmeT982@@QAEXXZ,0x0002D2C7,pin
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
 ?bfmeTransferPowerInfluence@Object@@QAEXPAVPlayer@@0@Z,0x00014B91,Open-BFME5 recursive Object power-influence transfer ILT to body 0x001C3710
+?bfmeTry1009@BfmeC1009@@QAEDPAX0@Z,0x0001D813,pin
 ?bfmeTry996@BfmeB996@@QAEDHHPAD@Z,0x00038163,pin
 ?bfmeTryANA@BfmeThingANA@@QAEHPAX0@Z,0x0003381B,pin
 ?bfmeTwo920F@BfmeThing920F@@QAEXP6AXPAVLocomotorTemplate@@@Z@Z,0x00012B20,pin
