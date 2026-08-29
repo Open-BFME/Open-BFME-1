@@ -4755,52 +4755,78 @@ Bool NetPacket::isAckRepeat(NetCommandRef *msg) {
 	return FALSE;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_ackRepeats.cpp
-// ?isAckBothRepeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
+// BFME's ACK messages carry the acking player's ID at +0x20, a field the
+// reference class does not have, and every repeat test compares it.
+struct BfmeNetAckCommandMsg
+{
+	UnsignedByte m_unreconstructed_00[0x20];
+	UnsignedInt m_ackPlayerID;
+};
+
+// BFME packs the destination port next to the address instead of leaving it
+// after m_lastFrame, so every member from m_numCommands on sits four bytes
+// later than the reference class puts it: m_lastCommand is at +0x1f0.
+struct BfmeNetPacketFields
+{
+	UnsignedByte m_unreconstructed_00[0x1f0];
+	NetCommandRef *m_lastCommand;
+};
+
+// ?isAckBothRepeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z
 Bool NetPacket::isAckBothRepeat(NetCommandRef *msg) {
-	NetAckBothCommandMsg *ack = (NetAckBothCommandMsg *)(msg->getCommand());
-	NetAckBothCommandMsg *lastAck = (NetAckBothCommandMsg *)(m_lastCommand->getCommand());
+	BfmeNetPacketFields *self = (BfmeNetPacketFields *)this;
+	NetAckBothCommandMsg *ack = (NetAckBothCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
+	NetAckBothCommandMsg *lastAck = (NetAckBothCommandMsg *)(((BfmeNetCommandRef *)self->m_lastCommand)->m_command);
 	if (lastAck->getCommandID() != (ack->getCommandID() - 1)) {
 		return FALSE;
 	}
 	if (lastAck->getOriginalPlayerID() != ack->getOriginalPlayerID()) {
 		return FALSE;
 	}
-	if (msg->getRelay() != m_lastCommand->getRelay()) {
+	if (((BfmeNetAckCommandMsg *)lastAck)->m_ackPlayerID != ((BfmeNetAckCommandMsg *)ack)->m_ackPlayerID) {
+		return FALSE;
+	}
+	if (((BfmeNetCommandRef *)msg)->m_relay != ((BfmeNetCommandRef *)self->m_lastCommand)->m_relay) {
 		return FALSE;
 	}
 	return TRUE;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_ackRepeats.cpp
-// ?isAckStage1Repeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
+// ?isAckStage1Repeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z
 Bool NetPacket::isAckStage1Repeat(NetCommandRef *msg) {
-	NetAckStage2CommandMsg *ack = (NetAckStage2CommandMsg *)(msg->getCommand());
-	NetAckStage2CommandMsg *lastAck = (NetAckStage2CommandMsg *)(m_lastCommand->getCommand());
+	BfmeNetPacketFields *self = (BfmeNetPacketFields *)this;
+	NetAckStage2CommandMsg *ack = (NetAckStage2CommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
+	NetAckStage2CommandMsg *lastAck = (NetAckStage2CommandMsg *)(((BfmeNetCommandRef *)self->m_lastCommand)->m_command);
 	if (lastAck->getCommandID() != (ack->getCommandID() - 1)) {
 		return FALSE;
 	}
 	if (lastAck->getOriginalPlayerID() != ack->getOriginalPlayerID()) {
 		return FALSE;
 	}
-	if (msg->getRelay() != m_lastCommand->getRelay()) {
+	if (((BfmeNetAckCommandMsg *)lastAck)->m_ackPlayerID != ((BfmeNetAckCommandMsg *)ack)->m_ackPlayerID) {
+		return FALSE;
+	}
+	if (((BfmeNetCommandRef *)msg)->m_relay != ((BfmeNetCommandRef *)self->m_lastCommand)->m_relay) {
 		return FALSE;
 	}
 	return TRUE;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_ackRepeats.cpp
-// ?isAckStage2Repeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
+// ?isAckStage2Repeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z
 Bool NetPacket::isAckStage2Repeat(NetCommandRef *msg) {
-	NetAckStage2CommandMsg *ack = (NetAckStage2CommandMsg *)(msg->getCommand());
-	NetAckStage2CommandMsg *lastAck = (NetAckStage2CommandMsg *)(m_lastCommand->getCommand());
+	BfmeNetPacketFields *self = (BfmeNetPacketFields *)this;
+	NetAckStage2CommandMsg *ack = (NetAckStage2CommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
+	NetAckStage2CommandMsg *lastAck = (NetAckStage2CommandMsg *)(((BfmeNetCommandRef *)self->m_lastCommand)->m_command);
 	if (lastAck->getCommandID() != (ack->getCommandID() - 1)) {
 		return FALSE;
 	}
 	if (lastAck->getOriginalPlayerID() != ack->getOriginalPlayerID()) {
 		return FALSE;
 	}
-	if (msg->getRelay() != m_lastCommand->getRelay()) {
+	if (((BfmeNetAckCommandMsg *)lastAck)->m_ackPlayerID != ((BfmeNetAckCommandMsg *)ack)->m_ackPlayerID) {
+		return FALSE;
+	}
+	if (((BfmeNetCommandRef *)msg)->m_relay != ((BfmeNetCommandRef *)self->m_lastCommand)->m_relay) {
 		return FALSE;
 	}
 	return TRUE;
