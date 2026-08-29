@@ -72440,6 +72440,8 @@ name,address,notes
 ?bfmeCall924G@BfmeOne924G@@QAEXXZ,0x0000DDDC,pin
 ?bfmeCall925C@@YAXPAX@Z,0x0000A3DF,pin
 ?bfmeCall925E@@YAHPAX@Z,0x00010857,pin
+?bfmeCall926A@@YAXPAX00H@Z,0x00049F30,pin
+?bfmeCall926E@BfmeTail926C@@QAEXPAX0@Z,0x0002F1CB,pin
 ?bfmeCallCCH@@YAHPAX0H@Z,0x00009084,pin
 ?bfmeCallCIB@@YAHPAX000@Z,0x007EC5C0,pin
 ?bfmeCallCIC@@YAHPAX000@Z,0x007ECE60,pin
@@ -72811,6 +72813,7 @@ name,address,notes
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
+?bfmeFind926C@BfmeKey926C@@QAEPAUBfmeObj926C@@XZ,0x00020824,pin
 ?bfmeFind@BfmeChainOwner@@QAEPAVBfmeChainResult@@H@Z,0x0002F52C,Open-BFME5 ILT the four lookups around 0x002197E0 call
 ?bfmeFind@BfmeFinder@@QAEPAXXZ,0x000265A8,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 call
 ?bfmeFind@Gen_003C02B0@@AAEPAVBfmeItemAN@@H@Z,0x00032A56,Open-BFME5 the ICF thunk (to 0x00432A56) the remove at 0x003C02B0 looks its item up through
@@ -73319,6 +73322,7 @@ name,address,notes
 ?bfmeLookup_001c62b0@@YAHPAX@Z,0x000190F1,Open-BFME5 ILT the bit setter at 0x001C62B0 calls
 ?bfmeLookup_001c6340@@YAHPAX@Z,0x00026A3F,Open-BFME5 ILT the bit setter at 0x001C6340 calls
 ?bfmeLookup_001c63d0@@YAHPAX@Z,0x0004B218,Open-BFME5 ILT the bit setter at 0x001C63D0 calls
+?bfmeMake926B@@YAPAUBfmeNodeLC@@XZ,0x00012765,pin
 ?bfmeMakeALA@@YAPAXPAX@Z,0x00024CA8,pin
 ?bfmeMakeASB@@YAPAXHH@Z,0x000283D5,pin
 ?bfmeMakeBCE@@YAPAXXZ,0x007F4D50,pin
@@ -73691,6 +73695,7 @@ name,address,notes
 ?bfmeTail923A@BfmeGlob923A@@QAEXPAUBfmeSub923A@@PAX@Z,0x0000EAB6,pin
 ?bfmeTail923B@BfmeSub923B@@QAEXD@Z,0x000182F0,pin
 ?bfmeTail923E@BfmeElem923E@@QAEXPAX0@Z,0x0001F7BC,pin
+?bfmeTail926D@BfmeTail926C@@QAEHH@Z,0x00036165,pin
 ?bfmeTailBCD@BfmeThingBCD@@QAEXXZ,0x0001CD8C,pin
 ?bfmeTailBED@BfmeThingBED@@QAEXXZ,0x00012C6F,pin
 ?bfmeTailBFG@BfmeThingBFG@@QAEXXZ,0x000286A0,pin
@@ -73849,6 +73854,7 @@ name,address,notes
 ?bfmeUpdate@BfmeCellFC@@QAEXH_N@Z,0x00881BE0,Open-BFME5 semantic identity for exact address-derived cell update body at 0x00881BE0
 ?bfmeUpdateCHE@BfmeThingCHE@@QAEXXZ,0x00004A70,pin
 ?bfmeUpdateCMB@BfmeThingCMB@@QAEXXZ,0x00032231,pin
+?bfmeUse926B@BfmeKeyLC@@QAEXPAUBfmeNodeLC@@@Z,0x00002E69,pin
 ?bfmeUseDXI@BfmeGlobDXI@@QAEXH@Z,0x0004159C,pin
 ?bfmeUseDXJ@BfmeSubDXJ@@QAEXH@Z,0x00021468,pin
 ?bfmeUseEFJ@BfmeResEFJ@@QAEXPAX0@Z,0x00017A12,pin
@@ -74956,6 +74962,7 @@ name,address,notes
 ?g_bfme923GlobA@@3PAVBfmeGlob923A@@A,0x00EF64BC,pin
 ?g_bfme924OneG@@3PAVBfmeOne924G@@A,0x00EF49D0,pin
 ?g_bfme924TwoG@@3PAVBfmeTwo924G@@A,0x00EF4988,pin
+?g_bfme926Obj@@3PADA,0x002555A0,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
