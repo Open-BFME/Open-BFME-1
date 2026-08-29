@@ -79963,3 +79963,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVOpen2Held9A2680@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVOpen2Held9A2680@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVOpen2Held9A2680@@@_STL@@@3@@_STL@@QAE@XZ,0x009A4620,Open2 0x009A2680 map tree destructor
 ?registerGameWindow@BfmeAnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z,0x00045322,Open-BFME5 view-class spelling of the ILT already pinned as ?registerGameWindow@AnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z; ControlBar::animateSpecialPowerShortcut reaches it through the view that carries the retail field offsets
 ?reverseAnimateWindow@BfmeAnimateWindowManager@@QAEXXZ,0x00027B65,Open-BFME5 ILT reached by ControlBar::animateSpecialPowerShortcut; NOT an alias of an existing pin -- this address was previously unpinned, taken from the donor and byte-proved by the rel32 in that call
+??$_Construct@VOpen2Elem063700@@V1@@_STL@@YAXPAVOpen2Elem063700@@ABV1@@Z,0x00007554,Open2 0x00063700 vector element construct (ILT)
+?_M_clear@?$vector@VOpen2Elem063700@@V?$allocator@VOpen2Elem063700@@@_STL@@@_STL@@IAEXXZ,0x0003588C,Open2 0x00063700 vector clear (ILT)
+??$_Construct@VOpen2Elem247180@@V1@@_STL@@YAXPAVOpen2Elem247180@@ABV1@@Z,0x00028308,Open2 0x00247180 vector element construct (ILT)
+?_M_clear@?$vector@VOpen2Elem247180@@V?$allocator@VOpen2Elem247180@@@_STL@@@_STL@@IAEXXZ,0x00022534,Open2 0x00247180 vector clear (ILT)
