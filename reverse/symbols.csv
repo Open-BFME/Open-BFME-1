@@ -72430,6 +72430,7 @@ name,address,notes
 ?bfmeCalcEBH@BfmeThingEBH@@QAEMM@Z,0x0001FEEC,pin
 ?bfmeCalcEFC@@YGMH@Z,0x0001FEEC,pin
 ?bfmeCalcEOC@@YAMPAX@Z,0x0000991C,pin
+?bfmeCall916D@BfmeTail916D@@QAEXPAX@Z,0x0001192D,pin
 ?bfmeCallCCH@@YAHPAX0H@Z,0x00009084,pin
 ?bfmeCallCIB@@YAHPAX000@Z,0x007EC5C0,pin
 ?bfmeCallCIC@@YAHPAX000@Z,0x007ECE60,pin
@@ -72637,6 +72638,7 @@ name,address,notes
 ?bfmeDispatchB@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x00028501,Open-BFME5 ILT the range dispatcher at 0x00437D30 calls
 ?bfmeDispatchC@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x00027138,Open-BFME5 ILT the range dispatcher at 0x00575A50 calls
 ?bfmeDo912C@BfmeThing912C@@QAEXPAUBfmeNode912C@@@Z,0x009F4D80,pin
+?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
 ?bfmeDoAXA@@YAXPAUBfmeBoxAXA@@PAX111@Z,0x0093B340,pin
 ?bfmeDoBCC@@YAXPAX@Z,0x0004B2BD,pin
 ?bfmeDoBDA@@YGXPAUBfmeSubBDA@@PAX@Z,0x0002CEEE,pin
