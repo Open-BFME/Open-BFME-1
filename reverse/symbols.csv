@@ -81332,3 +81332,5 @@ g_bfmeGridWaterHandle,0x012EF4D4,TerrainLogic getWaterHandle retail grid-water s
 ?_M_reallocate_map@?$deque@UGen_t_008fb570_p8pod@@V?$allocator@UGen_t_008fb570_p8pod@@@_STL@@@_STL@@IAEXI_N@Z,0x008FABB0,RVA 0x008FB570 exact auxiliary call target
 ??$_Construct@UGen_t_008fb570_p8pod@@U1@@_STL@@YAXPAUGen_t_008fb570_p8pod@@ABU1@@Z,0x008F9C70,RVA 0x008FB570 exact auxiliary call target
 ?_M_reallocate_map@?$deque@UGen_t_008fb4d0_p20pod@@V?$allocator@UGen_t_008fb4d0_p20pod@@@_STL@@@_STL@@IAEXI_N@Z,0x008FAA40,RVA 0x008FB4D0 exact auxiliary call target
+??0?$vector@UGeometryShape@@V?$allocator@UGeometryShape@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00027570,GeometryInfo copy constructor vector<GeometryShape> member at retail 0x000FFD10
+??0?$vector@UGeometryRecord@@V?$allocator@UGeometryRecord@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000149DE,GeometryInfo copy constructor vector<GeometryRecord> member at retail 0x000FFD10
