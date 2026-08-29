@@ -72331,6 +72331,7 @@ name,address,notes
 ?bfmeAfterEOC@BfmeThingEOC@@QAEXXZ,0x000106AE,pin
 ?bfmeAfterFCB@BfmeOwnFCB@@QAEXXZ,0x000098B8,pin
 ?bfmeAlloc1036@@YAPAXH@Z,0x00881F30,pin
+?bfmeAlloc1037@@YAPAXH@Z,0x00881F30,pin
 ?bfmeAlloc946@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAlloc950B@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocATA@@YAPAXI@Z,0x0082E540,pin
@@ -72809,6 +72810,7 @@ name,address,notes
 ?bfmeDo1015B@BfmeI1015B@@QAEXHH@Z,0x000020CC,pin
 ?bfmeDo1025@BfmeStore1025@@QAEXPAX@Z,0x0001D0DE,pin
 ?bfmeDo1026@BfmeStore1026@@QAEXH@Z,0x0001D0DE,pin
+?bfmeDo1037@BfmeG1037@@QAEXHH@Z,0x00013CCD,pin
 ?bfmeDo912C@BfmeThing912C@@QAEXPAUBfmeNode912C@@@Z,0x009F4D80,pin
 ?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
 ?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
@@ -73002,6 +73004,7 @@ name,address,notes
 ?bfmeFind1032@@YGPADH@Z,0x000181FB,pin
 ?bfmeFind1034@@YGPAUBfmeX1034@@HH@Z,0x0003B061,pin
 ?bfmeFind1034F@BfmeTab1034@@QAEPAVBfmeN1034@@H@Z,0x0089CEF0,pin
+?bfmeFind1037F@@YGPAVBfmeG1037@@H@Z,0x0003F5DA,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
@@ -73366,6 +73369,7 @@ name,address,notes
 ?bfmeGetID@BfmeDrawableWithID@@QAEIXZ,0x00009B01,Open-BFME5 ILT both drawable lookup-table wrappers at 0x00431C20 and 0x00430B50 read the id through
 ?bfmeGetLastDamagePlayerIndex@Object@@QBEHXZ,0x0000515A,Open-BFME5 ILT thunk to body 0x001BF060; BodyModuleInterface last-damage slot 15 supplies sourcePlayerMask resolved through PlayerList and returned as Player index; bfme prefix records unrecovered retail spelling
 ?bfmeGetLastShotPosition@BfmeFiringTracker@@QBE?AUBfmeFiringPosition@@XZ,0x000228BD,Open-BFME5 ILT to body 0x001BD7D0; FiringTracker+0x48 last-shot position getter used by Object wrapper 0x001BF970
+?bfmeGetLog1037@@YAPAVBfmeLog1037@@XZ,0x007EB810,pin
 ?bfmeGetMgr1015@@YAPAVBfmeMgr1015@@XZ,0x007EFFC0,pin
 ?bfmeGetNonnegativePreferredLocomotorHeight@Object@@QBEMXZ,0x000047C8,Open-BFME5 ILT thunk to body 0x001BE030; Object m_ai at +0x204 and AIUpdateInterface m_curLocomotor at +0x1CC; returns canonical getPreferredHeight clamped to shared 0.0f; bfme prefix records unrecovered retail spelling
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
@@ -73475,6 +73479,7 @@ name,address,notes
 ?bfmeInit1019@@YAXPAD@Z,0x009F7244,pin
 ?bfmeInit1029@BfmeSub1029@@QAEXXZ,0x007F01B0,pin
 ?bfmeInit1030@BfmeSub1030@@QAEXHPAH@Z,0x0003B318,pin
+?bfmeInit1037@BfmeD1037@@QAEPAV1@PAVBfmeE1037@@@Z,0x0002D231,pin
 ?bfmeInit929C@@YAXPAD@Z,0x009F7244,pin
 ?bfmeInit929G@BfmeThing929G@@QAEXXZ,0x0089E700,pin
 ?bfmeInit936G@BfmeThing936G@@QAEXXZ,0x00843990,pin
@@ -74036,7 +74041,9 @@ name,address,notes
 ?bfmeTail938A@BfmeGlob938A@@QAEXH@Z,0x0000C9CD,pin
 ?bfmeTail939B@BfmeThing939B@@QAEXPAUBfmeElem939B@@@Z,0x0003D4E7,pin
 ?bfmeTail974D@BfmeD974@@QAEXXZ,0x0001B8C4,pin
+?bfmeTailA1037@BfmeI1037@@QAEXH@Z,0x000302E7,pin
 ?bfmeTailA947C@@YAXXZ,0x000241E0,pin
+?bfmeTailB1037@BfmeI1037@@QAEXH@Z,0x00045179,pin
 ?bfmeTailB947C@BfmeGlob947C@@QAEXXZ,0x000290D2,pin
 ?bfmeTailBCD@BfmeThingBCD@@QAEXXZ,0x0001CD8C,pin
 ?bfmeTailBED@BfmeThingBED@@QAEXXZ,0x00012C6F,pin
@@ -75591,6 +75598,7 @@ name,address,notes
 ?g_bfmeModeAZC@@3PAUBfmeModeAZC@@A,0x00EF0FE0,pin
 ?g_bfmeMsg1020@@3HA,0x00EB7D80,pin
 ?g_bfmeMsg1021@@3HA,0x00EB7D80,pin
+?g_bfmeMsg1037@@3PADA,0x00D29AB0,pin
 ?g_bfmeN1020@@3PAVBfmeN1020@@A,0x00EF1B40,pin
 ?g_bfmeN1021@@3PAVBfmeN1021@@A,0x00EF1B40,pin
 ?g_bfmeN1022@@3PAVBfmeN1022@@A,0x00EF1B40,pin
@@ -79556,6 +79564,7 @@ __imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
 __imp_?bfmeWait1012@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?bfmeWait1036@@YGHPAXH@Z,0x00F58F64,pin
+__imp_?bfmeWait1037@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
