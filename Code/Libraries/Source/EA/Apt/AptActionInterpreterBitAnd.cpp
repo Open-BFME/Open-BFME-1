@@ -41,6 +41,8 @@ public:
 		AptActionInterpreter *interpreter, LocalContextT *context);
 	static void _FunctionAptActionBitLShift(
 		AptActionInterpreter *interpreter, LocalContextT *context);
+	static void _FunctionAptActionBitRShift(
+		AptActionInterpreter *interpreter, LocalContextT *context);
 
 	int m_stackTop;
 	int m_stackCapacity;
@@ -177,6 +179,42 @@ void AptActionInterpreter::_FunctionAptActionBitLShift(
 		int underValue = under->toInteger();
 
 		result = AptInteger::Create(underValue << shift);
+	}
+
+	for (int index = 1; index <= 2; ++index)
+	{
+		AptValue *value = interpreter->m_stack[interpreter->m_stackTop - index];
+
+		if (!value->GetMaxRefCountHit())
+			value->Release();
+	}
+
+	interpreter->m_stackTop -= 2;
+	interpreter->m_stack[interpreter->m_stackTop++] = result;
+
+	if (!result->GetMaxRefCountHit())
+		result->AddRef();
+}
+
+void AptActionInterpreter::_FunctionAptActionBitRShift(
+	AptActionInterpreter *interpreter, LocalContextT *)
+{
+	AptValue *top = interpreter->m_stack[interpreter->m_stackTop - 1];
+	AptValue *under = interpreter->m_stack[interpreter->m_stackTop - 2];
+	AptValue *result;
+
+	if (AptGetSwfVersion() == 7
+		&& (under->isUndefined() || top->isUndefined())
+		&& (result = gpUndefinedValue) != 0)
+	{
+		// SWF 7 preserves undefined instead of coercing it through integer arithmetic.
+	}
+	else
+	{
+		int shift = top->toInteger();
+		int underValue = under->toInteger();
+
+		result = AptInteger::Create(underValue >> shift);
 	}
 
 	for (int index = 1; index <= 2; ++index)
