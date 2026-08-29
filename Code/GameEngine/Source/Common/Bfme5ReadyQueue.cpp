@@ -119,7 +119,7 @@ public:
 	CellShroudStatus getShroudStatusForPlayer(int player, const Coord3D *pos) const;
 };
 
-extern PartitionManager *ThePartitionManager;
+extern PartitionManager *TheShroudManager;
 
 class Bfme5ShroudedThing
 {
@@ -132,8 +132,8 @@ public:
 
 char Bfme5ShroudedThing::bfmeIsShrouded(int player)
 {
-	if (ThePartitionManager &&
-	    ThePartitionManager->getShroudStatusForPlayer(player, (const Coord3D *)&m_bfmePos) >= 1)
+	if (TheShroudManager &&
+	    TheShroudManager->getShroudStatusForPlayer(player, (const Coord3D *)&m_bfmePos) >= 1)
 		return 1;
 
 	return 0;
