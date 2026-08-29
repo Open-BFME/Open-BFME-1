@@ -84,7 +84,8 @@ def repo(tmp_path, sources, rows):
     """A tree merge_cluster can operate on: sources, a ledger, and a git index.
 
     `rows` are (name, source, terminator) so a test can choose the mix of line
-    endings the real ledger carries."""
+    endings the real ledger carries; an optional 4th element sets target_size,
+    which is what distinguishes a 5-byte ILT thunk from a real body."""
     for rel, text in sources.items():
         path = tmp_path / rel
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -92,8 +93,10 @@ def repo(tmp_path, sources, rows):
     ledger = tmp_path / "reverse" / "functions.csv"
     ledger.parent.mkdir(parents=True, exist_ok=True)
     payload = (HEADER + "\r\n").encode()
-    for name, source, term in rows:
-        payload += f"{name},,0x000F0000,52,{source},matched,".encode() + term
+    for row in rows:
+        name, source, term = row[0], row[1], row[2]
+        size = row[3] if len(row) > 3 else 52
+        payload += f"{name},,0x000F0000,{size},{source},matched,".encode() + term
     ledger.write_bytes(payload)
     subprocess.run(["git", "init", "-q", str(tmp_path)], check=True,
                    capture_output=True)
@@ -396,3 +399,26 @@ def test_the_merged_file_may_not_be_its_own_donor(tmp_path, capsys):
     assert exc.value.code == 1
     assert "its own donor" in capsys.readouterr().err
     assert ledger.read_bytes() == before
+
+
+def test_plan_flags_a_thunk_only_donor_whose_fold_would_delete_the_real_body(
+        tmp_path, capsys):
+    """A donor whose every row is ILT-sized holds no body. Folding it deletes the
+    destination's readable body and leaves a stub -- a net loss the file count
+    reports as progress, so --plan has to say so before anyone applies."""
+    thunk = "Code/GameEngine/Source/Common/RTS/BridgeIsPointOnBridgeThunk.cpp"
+    real = "Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
+    repo(tmp_path, {
+        thunk: sibling("?isPointOnBridge@Bridge@@QBE_NPBUCoord3D@@@Z", DEST),
+        real: sibling("?hasAnyUnits@TeamPrototype@@QBE_NXZ", DEST),
+        MERGED: "// merged\n",
+    }, [("?isPointOnBridge@Bridge@@QBE_NPBUCoord3D@@@Z", thunk, b"\r\n", 5),
+        ("?hasAnyUnits@TeamPrototype@@QBE_NXZ", real, b"\r\n", 52)])
+
+    run("--plan", DEST, "--root", str(tmp_path))
+    plan = capsys.readouterr().out
+
+    assert "THUNK-ONLY donor(s)" in plan
+    assert thunk in plan.split("THUNK-ONLY")[1]
+    # the real body must NOT be flagged, or the warning is noise
+    assert real not in plan.split("THUNK-ONLY")[1].split("declarations common")[0]
