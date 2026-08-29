@@ -596,15 +596,31 @@ void LocomotorStore::reset()
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/LocomotorStore_newOverride_Thunk.cpp
-// ?newOverride@LocomotorStore@@QAEPAVLocomotorTemplate@@PAV2@@Z present-unmatched
+// BFME's LocomotorTemplate is 0x140 bytes where the vendored class is 0xEC, and
+// an allocation size comes from the class rather than from anything this .cpp can
+// cast -- retail pushes 0x140 straight into operator new. A standalone view at
+// the retail size, constructor declared and never defined, gets the size right
+// and still runs the real constructor at the address it is pinned to. Everything
+// after it -- the copy assignment, the next-override store at locoTemplate+0x04
+// and the override flag at newTemplate+0x08 -- already matched.
+class BfmeLocomotorTemplateStorage
+{
+public:
+	// throw() so `new` does not carry an EH frame just to free the block if the
+	// constructor throws; retail has no unwind funclet here.
+	BfmeLocomotorTemplateStorage() throw();
+
+private:
+	unsigned char m_bfmeBody[ 0x140 ];
+};
+
 LocomotorTemplate *LocomotorStore::newOverride( LocomotorTemplate *locoTemplate )
 {
 	if (locoTemplate == NULL)
 		return NULL;
 
 	// allocate new template
-	LocomotorTemplate *newTemplate = newInstance(LocomotorTemplate);
+	LocomotorTemplate *newTemplate = (LocomotorTemplate *)::new BfmeLocomotorTemplateStorage;
 
 	// copy data from final override to 'newTemplate' as a set of initial default values
 	*newTemplate = *locoTemplate;
