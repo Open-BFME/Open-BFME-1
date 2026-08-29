@@ -79317,6 +79317,7 @@ _luaV_tostring,0x00997200,vendored=lua-4.0.1
 _luaX_lex,0x009A0B60,Open-BFME5 BFME Lua lexer body
 _luaX_setinput,0x0099FEF0,additive pin for _luaY_parser call resolution
 _luaY_parser,0x0099D380,vendored=lua-4.0.1
+_lua_pushboolean,0x009903E0,BFME Lua boolean extension; API shape and tag-6 body proven by LuaScriptEngine callbacks
 _lua_pushcclosure,0x009904E0,vendored=lua-4.0.1
 _markall,0x0099A170,vendored=lua-4.0.1
 _markobject,0x00999B30,vendored=lua-4.0.1
@@ -79526,10 +79527,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-_lua_pushboolean,0x009903E0,BFME Lua boolean extension; API shape and tag-6 body proven by LuaScriptEngine callbacks
-?bfmeDtorUEW@BfmeThingUEW@@QAEXXZ,0x008A2F30,pin
-__imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
-?bfmeDtorVBW@BfmeSubVBW@@QAEXXZ,0x00895260,pin
-__imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
-?bfmeBaseVDW@BfmeThingVDW@@QAEXHH@Z,0x00899F00,pin
-?g_bfmeVftVDW@@3PADA,0x00D36238,pin
