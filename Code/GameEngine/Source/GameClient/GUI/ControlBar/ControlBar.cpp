@@ -1831,15 +1831,35 @@ CommandButton *ControlBar::newCommandButtonOverride( CommandButton *buttonToOver
 //-------------------------------------------------------------------------------------------------
 /** Find existing command set by name */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarFields.cpp
-// ?findNonConstCommandSet@ControlBar@@AAEPAVCommandSet@@ABVAsciiString@@@Z present-unmatched
+// A BFME command set holds twenty command slots where Zero Hour's holds
+// eighteen, so its next pointer lands at +0x60 rather than +0x58 -- and the name
+// is compared the same inlined way findNonConstCommandButton above needs.
+struct BfmeCommandSetNode
+{
+	unsigned char m_unmodelled_000[ 0x0c ];
+	BfmeControlBarStringView m_name;			///< retail this+0x0c
+	unsigned char m_unmodelled_010[ 0x60 - 0x10 ];		///< twenty command slots at +0x10
+	BfmeCommandSetNode *m_next;				///< retail this+0x60
+
+	const BfmeControlBarStringView &getName() const { return m_name; }
+	BfmeCommandSetNode *friend_getNext() { return m_next; }
+};
+
+struct BfmeControlBarSetList
+{
+	unsigned char m_unmodelled_000[ 0x2c ];
+	BfmeCommandSetNode *m_commandSets;			///< retail this+0x2c
+};
+
+// ?findNonConstCommandSet@ControlBar@@AAEPAVCommandSet@@ABVAsciiString@@@Z
 CommandSet* ControlBar::findNonConstCommandSet( const AsciiString& name )
 {
-	CommandSet* set;
+	const BfmeControlBarStringView &searchName = reinterpret_cast<const BfmeControlBarStringView &>( name );
+	BfmeCommandSetNode *set;
 
-	for( set = m_commandSets; set != NULL; set = set->friend_getNext() )
-		if( set->getName() == name )
-			return const_cast<CommandSet*>((const CommandSet *) set);
+	for( set = ((BfmeControlBarSetList *)this)->m_commandSets; set != NULL; set = set->friend_getNext() )
+		if( set->getName().compare( searchName ) == 0 )
+			return (CommandSet *)set;
 
 	return NULL;  // set not found
 
