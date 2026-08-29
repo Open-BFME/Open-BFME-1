@@ -3207,6 +3207,24 @@ Bool Player::hasUpgradeInProduction( const UpgradeTemplate *upgradeTemplate )
 //=================================================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_addUpgrade.cpp
 // ?addUpgrade@Player@@QAEPAVUpgrade@@PBVUpgradeTemplate@@W4UpgradeStatusType@@@Z present-unmatched
+//
+// Cannot come home, and NOT for anything inside the body. The merged form is
+// settled: m_upgradeList at Player+0x54, the two six-dword masks at +0x74 and
+// +0x8c, Upgrade's fields at +0x04/+0x08/+0x0c/+0x10, and the template's single
+// word at +0x20 passed as a BIT INDEX -- the same field Object::hasUpgrade
+// reads, at the same 192-bit width the kind-of masks carry. BFME builds the
+// Upgrade with the class's own operator new (0x00881f30) and constructor (ILT
+// 0x00005bb4), and has no markUIDirty tail.
+//
+// What blocks it is a SECOND row. The newInstance(Upgrade) below is the only
+// memory-pool new for Upgrade in this TU, and it is what makes MSVC emit the
+// matching placement delete, Upgrade::operator delete(void*, UpgradeMagicEnum).
+// That compiler-generated symbol is itself a matched row: 0x007efff0, 12 bytes,
+// claimed from this file. Replacing this body deletes the expression, the symbol
+// stops being emitted, and that row fails "symbol not found in object" -- which
+// is how this was found. Trading a 238-byte row for a 12-byte one is still C++
+// exact going backward. Moving it needs whatever other newInstance(Upgrade)
+// retail's own Player.cpp holds, which nothing in this tree has recovered yet.
 Upgrade *Player::addUpgrade( const UpgradeTemplate *upgradeTemplate, UpgradeStatusType status )
 {
 	Upgrade *u = findUpgrade( upgradeTemplate );
