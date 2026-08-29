@@ -73167,6 +73167,7 @@ name,address,notes
 ?bfmeGetAttributeModifierMultiplier@AttributeModifierPoolUpdate@@QAE_NHPAM@Z,0x000247D5,Open-BFME5 ILT thunk to body 0x00368C50; body initializes the output to 1.0 and multiplies matching attribute entries while bfme names record unresolved retail API spelling
 ?bfmeGetBonus@BfmeVisionBonusSource@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 ILT Object::getVisionRange at 0x001C17C0 queries bonus 14 through
 ?bfmeGetBonus@Object@@QBE_NHPAM@Z,0x0000BECE,Open-BFME5 ILT thunk to body 0x001BFDB0; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 queries bonus 6 on the source object through it with an out pointer; address-derived name
+?bfmeGetBonusSource@BfmeVisionBonusHolder@@QBEPAVBfmeVisionBonusSource@@XZ,0x000202ED,alias of the Object spelling pinned below; Object.cpp reaches the getter through a view class because the reference Object.h does not declare it
 ?bfmeGetBonusSource@Object@@ABEPAVBfmeVisionBonusSource@@XZ,0x000202ED,Open-BFME5 ILT Object::getVisionRange at 0x001C17C0 asks for the bonus source through
 ?bfmeGetBoxAFB@BfmeThingAFB@@QAEPAUBfmeBoxAFB@@XZ,0x000202ED,pin
 ?bfmeGetCCH@BfmeSubCCH@@QAEPAUBfmeResultCCH@@XZ,0x00046538,pin
@@ -76932,6 +76933,7 @@ name,address,notes
 ?hasScience@Player@@QBE_NW4ScienceType@@@Z,0x0000943F,retail target of playerHasPrereqsForScience inner-loop call; thunk-table entry; real body unresolved
 ?hasSinglePlayerBeenDefeated@VictoryConditions@@UAE_NPAVPlayer@@@Z,0x0035FDF0,vtable 0x010E8D90 slot 11 (+0x2C) via ILT 0x000151CC; ZH body: m_victoryConditions bits select hasAnyObjects 0x000CE0B0 / hasAnyUnits 0x000CE070 / hasAnyBuildings(mask 0x8000) 0x000CDF70; BFME adds isPlayerObserver -> false and isPlayerDead 0x000C9D00 -> true and increments the +0xC0 counter at 0x0035FEB9 on every true
 ?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37,Open-BFME5 ILT thunk from CommandButton::isReady call sites (body 0x001C9F50)
+?hasUpgradeMask@BfmeUpgradeMaskTester@@QBE_NI@Z,0x001C59C0,alias of the Object spelling; Object.cpp reaches the mask test through a view class because the reference Object.h does not declare it
 ?hasUpgradeMask@Object@@QBE_NI@Z,0x001C59C0,Open-BFME5 the mask test Object::hasUpgrade tail-jumps to; unnamed in the image
 ?haveAllConnectedPlayersReachedFrame@BFMEConnectionManager@@QAE_NI@Z,0x00662D50,walks +0x12060 latest-frame[8] with m_connections read as [eax-0x1205c]; FALSE if any connected slot's latest frame < arg; sole caller 0x00682BD7 in Network frame-tick body 0x00682A90 gating the router's own beginPlayerLeave on Network+0x38; ILT 0x0004A895
 ?healObject@TunnelTracker@@SAXPAVObject@@PAX@Z,0x000387B2,ILT thunk to 0xF8640; pinned from TunnelTracker::healObjects @0xF8D10
@@ -77477,6 +77479,7 @@ name,address,notes
 ?makeDecoratedNameKey@ModuleFactory@@KA?AW4NameKeyType@@ABVAsciiString@@W4ModuleType@@@Z,0x0004B439
 ?makeDecoratedNameKey@ModuleFactory@@KAHABVAsciiString@@H@Z,0x0004B439,ModuleFactory::makeDecoratedNameKey thunk (body 0x00126260)
 ?makeDecoratedNameKey@ModuleFactory@@SAHABVAsciiString@@W4ModuleType@@@Z,0x0004B439,ILT thunk to the module name decorator at 0x00126260
+?makeDirty@BfmeDirtyablePartitionData@@QAEXXZ,0x008F7B30,alias of the no-argument PartitionData::makeDirty; Object.cpp reaches it through a view class because the reference PartitionManager.h declares Zero Hour's makeDirty(Bool)
 ?makeDirty@PartitionData@@QAEXXZ,0x008F7B30,BFME PartitionData::makeDirty() takes no argument; pinned from setScriptStatus 0x1D01D0
 ?makeEmpty@SimpleObjectIterator@@QAEXXZ,0x00015479,pinharvest x1 (thunk)
 ?makeEmpty@SimpleObjectIterator@@QAEXXZ,0x00037565,pinharvest x1 (thunk)

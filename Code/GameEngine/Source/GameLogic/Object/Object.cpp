@@ -4579,16 +4579,32 @@ void Object::loadPostProcess()
 
 //-------------------------------------------------------------------------------------------------
 /** Does this object have this upgrade */
+// BFME's upgrade mask is a single word at UpgradeTemplate+0x20, not the
+// reference class's BitFlags, and the test against it lives in a member the
+// reference Object.h does not declare. Both are spelled here as views.
+struct BfmeUpgradeTemplateMask
+{
+	UnsignedByte m_unreconstructed_00[0x20];
+	UnsignedInt m_upgradeMask;			///< retail this+0x20
+};
+
+class BfmeUpgradeMaskTester
+{
+public:
+	Bool hasUpgradeMask( UnsignedInt mask ) const;	///< retail 0x001c59c0
+};
+
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_hasUpgrade.cpp
-// ?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z present-unmatched
+// ?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z
 Bool Object::hasUpgrade( const UpgradeTemplate *upgradeT ) const 
 {
-	if( m_objectUpgradesCompleted.testForAll( upgradeT->getUpgradeMask() ) )
-	{
-		return TRUE;
-	}
-	return FALSE;
+	if( upgradeT == NULL )
+		return FALSE;
+
+	// A tail jump: the mask replaces the argument in place and nothing here
+	// survives the call.
+	return reinterpret_cast<const BfmeUpgradeMaskTester *>(this)->hasUpgradeMask(
+		reinterpret_cast<const BfmeUpgradeTemplateMask *>(upgradeT)->m_upgradeMask );
 }  // end hasUpgrade
 
 //-------------------------------------------------------------------------------------------------
@@ -5275,27 +5291,65 @@ void Object::unshroud()
 	m_partitionLastShroud->reset();
 }
 
+// BFME's PartitionData::makeDirty takes no argument; the reference class
+// declares Zero Hour's makeDirty(Bool), so the no-argument entry needs its own
+// spelling.
+class BfmeDirtyablePartitionData
+{
+public:
+	void makeDirty();				///< retail 0x008f7b30
+};
+
+// BFME keeps the looking ranges past where the reference class puts them: the
+// vision range at +0x194, the shroud-clearing range at +0x198, and a second
+// shroud range at +0xbc that bit 2 of the status byte at +0x90 selects instead.
+struct BfmeObjectVisionFields
+{
+	UnsignedByte m_unreconstructed_000[0x90];
+	UnsignedByte m_statusFlags;			///< retail this+0x90
+	UnsignedByte m_unreconstructed_091[0xbc - 0x91];
+	Real m_altShroudClearingRange;			///< retail this+0xbc
+	UnsignedByte m_unreconstructed_0c0[0x194 - 0xc0];
+	Real m_visionRange;				///< retail this+0x194
+	Real m_shroudClearingRange;			///< retail this+0x198
+	UnsignedByte m_unreconstructed_19c[0x3b0 - 0x19c];
+	BfmeDirtyablePartitionData *m_partitionData;	///< retail this+0x3b0
+};
+
+// BFME scales the stored vision range by a bonus it queries from a per-object
+// source. Neither the source getter nor the query is declared by the reference
+// Object.h, so both are spelled as views onto the retail entry points.
+class BfmeVisionBonusSource
+{
+public:
+	Bool bfmeGetBonus( Int which, Real *out );	///< retail ILT 0x000282d6
+};
+
+class BfmeVisionBonusHolder
+{
+public:
+	BfmeVisionBonusSource *bfmeGetBonusSource() const;	///< retail ILT 0x000202ed
+};
+
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_getVisionRange.cpp
-// ?getVisionRange@Object@@QBEMXZ present-unmatched
+// ?getVisionRange@Object@@QBEMXZ
 Real Object::getVisionRange() const
 {
-#if defined(_DEBUG) || defined(_INTERNAL)
-	if (TheGlobalData->m_debugVisibility) 
-	{
-		Vector3 pos(m_visionRange, 0, 0);
-		for (int i = 0; i < TheGlobalData->m_debugVisibilityTileCount; ++i) 
-		{
-			pos.Rotate_Z(1.0f * i / TheGlobalData->m_debugVisibilityTileCount * 2 * PI);
-			Coord3D coord = { pos.X + getPosition()->x, pos.Y + getPosition()->y, pos.Z + getPosition()->z };
+	// One array rather than two locals: MSVC always places an address-taken
+	// local below a plain one, and retail keeps the range in the lower slot
+	// with the address-taken bonus above it.
+	Real slot[2];
 
-			addIcon(&coord, TheGlobalData->m_debugVisibilityTileWidth, 
-											TheGlobalData->m_debugVisibilityTileDuration, 
-											TheGlobalData->m_debugVisibilityTargettableColor);
-		}
-	}
-#endif
-	return m_visionRange;
+	slot[0] = reinterpret_cast<const BfmeObjectVisionFields *>(this)->m_visionRange;
+	slot[1] = 0.0f;
+
+	BfmeVisionBonusSource *source =
+		reinterpret_cast<const BfmeVisionBonusHolder *>(this)->bfmeGetBonusSource();
+
+	if (source && source->bfmeGetBonus(14, &slot[1]))
+		return (slot[1] + 1.0f) * slot[0];
+
+	return slot[0];
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -5305,72 +5359,38 @@ void Object::setVisionRange( Real newVisionRange )
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_getShroudClearingRange.cpp
-// ?getShroudClearingRange@Object@@QBEMXZ present-unmatched
+// ?getShroudClearingRange@Object@@QBEMXZ
 Real Object::getShroudClearingRange() const
 {
-	Real shroudClearingRange=m_shroudClearingRange;
+	const BfmeObjectVisionFields *self =
+		reinterpret_cast<const BfmeObjectVisionFields *>(this);
 
-	if( getStatusBits().test( OBJECT_STATUS_UNDER_CONSTRUCTION ) )
-	{	
-		//structures under construction have limited vision range.  For now, base it
-		//on the geometry extents so the structure can only see itself.
-		shroudClearingRange = getGeometryInfo().getBoundingCircleRadius();
-	}
+	// Both loads happen before the test: retail pushes the +0x198 float and
+	// pops it again in the taken branch, which is what reading each into its
+	// own local ahead of the `if' compiles to.
+	UnsignedByte flags = self->m_statusFlags;
+	Real shroudClearingRange = self->m_shroudClearingRange;
 
-#if defined(_DEBUG) || defined(_INTERNAL)
-	if (TheGlobalData->m_debugVisibility) 
-	{
-		Vector3 pos(shroudClearingRange, 0, 0);
-		for (int i = 0; i < TheGlobalData->m_debugVisibilityTileCount; ++i) 
-		{
-			pos.Rotate_Z(1.0f * i / TheGlobalData->m_debugVisibilityTileCount * 2 * PI);
-			Coord3D coord = { pos.X + getPosition()->x, pos.Y + getPosition()->y, pos.Z + getPosition()->z };
-
-			addIcon(&coord, TheGlobalData->m_debugVisibilityTileWidth, 
-											TheGlobalData->m_debugVisibilityTileDuration, 
-											TheGlobalData->m_debugVisibilityDeshroudColor);
-		}
-	}
-#endif
+	if( flags & 4 )
+		shroudClearingRange = self->m_altShroudClearingRange;
 
 	return shroudClearingRange;
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setShroudClearingRange@Object@@QAEXM@Z present-unmatched
+// ?setShroudClearingRange@Object@@QAEXM@Z
 void Object::setShroudClearingRange( Real newShroudClearingRange )
 {
- 	if( newShroudClearingRange != m_shroudClearingRange )
- 	{
- 		// The partition cell refresh is a slow operation, so only do it if you really have to.
- 		// Range change is a valid reason to relook.
- 		m_shroudClearingRange = newShroudClearingRange;
+	BfmeObjectVisionFields *self = reinterpret_cast<BfmeObjectVisionFields *>(this);
 
-		/*
-			Complete and total monkey hack fix. 
-
-			The problem: newObject doesn't get an initial pos, so all objects start at 0,0,0.
-			Most code paths instantly move 'em to a good pos, but in some cases, that is too late:
-			If we have search-and-destroy battle plan, we will apply it at that point, and clear out
-			a vision range based on our current (wrong) location. Doh!
-
-			So, this just sez: if you are at 0,0,0, don't call handlePartitionCellMaintenance()... since
-			you will either (1) be moved elsewhere immediately, thus forcing it to be called via
-			another route anyway, or (2) not be moved, which means you are a very naughty and worthless
-			object anyway and we should just ignore you.
-
-			Proper fix for next version is to require initial pos to be passed in to newObject so that
-			all objects can start at their proper initial position from the start of the ctor. 
-
-			(srj)
-		*/
-		const Coord3D* pos = getPosition();
-		if (pos->x || pos->y || pos->z)
-		{
-	 		handlePartitionCellMaintenance();
-		}
- 	}
+	// The partition cell refresh is a slow operation, so only do it if you really have to.
+	// Range change is a valid reason to relook.
+	if( newShroudClearingRange != self->m_shroudClearingRange )
+	{
+		self->m_shroudClearingRange = newShroudClearingRange;
+		if( self->m_partitionData )
+			self->m_partitionData->makeDirty();
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
