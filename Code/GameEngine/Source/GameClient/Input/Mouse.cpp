@@ -126,30 +126,45 @@ static const FieldParse TheMouseFieldParseTable[] =
 /** Move the mouse in either relative or absolute coords */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/Input/Mouse_moveMouse.cpp
-// ?moveMouse@Mouse@@ present-unmatched
+// BFME's Mouse puts the current position at this+0x4D10, the four clamp bounds
+// from +0x4D88 in min-then-max order per axis, and the input frame counter at
+// +0x4D98. The reference class lands all of them 0x354 earlier.
+struct BfmeMouseLayout
+{
+	UnsignedByte pad0[0x4d10];
+	ICoord2D currPos;									///< retail this+0x4D10
+	UnsignedByte pad1[0x4d88 - 0x4d18];
+	Int minX;											///< retail this+0x4D88
+	Int maxX;											///< retail this+0x4D8C
+	Int minY;											///< retail this+0x4D90
+	Int maxY;											///< retail this+0x4D94
+	UnsignedInt inputFrame;								///< retail this+0x4D98
+};
+
 void Mouse::moveMouse( Int x, Int y, Int relOrAbs )
 {
+	BfmeMouseLayout *self = (BfmeMouseLayout *)this;
 
 	if( relOrAbs == MOUSE_MOVE_RELATIVE )
 	{
-		m_currMouse.pos.x += x;
-		m_currMouse.pos.y += y;
+		self->currPos.x += x;
+		self->currPos.y += y;
 	}
 	else
 	{
-		m_currMouse.pos.x = x;
-		m_currMouse.pos.y = y;
+		self->currPos.x = x;
+		self->currPos.y = y;
 	}
 
-	if( m_currMouse.pos.x > m_maxX )
-		m_currMouse.pos.x = m_maxX;
-	else if( m_currMouse.pos.x < m_minX )
-		m_currMouse.pos.x = m_minX;
+	if( self->currPos.x > self->maxX )
+		self->currPos.x = self->maxX;
+	else if( self->currPos.x < self->minX )
+		self->currPos.x = self->minX;
 
-	if( m_currMouse.pos.y > m_maxY )
-		m_currMouse.pos.y = m_maxY;
-	else if( m_currMouse.pos.y < m_minY )
-		m_currMouse.pos.y = m_minY;
+	if( self->currPos.y > self->maxY )
+		self->currPos.y = self->maxY;
+	else if( self->currPos.y < self->minY )
+		self->currPos.y = self->minY;
 
 }  // end moveMouse
 
@@ -157,43 +172,81 @@ void Mouse::moveMouse( Int x, Int y, Int relOrAbs )
 /** Get the current information for the mouse from the device */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/Mouse_updateMouseData.cpp
-// ?updateMouseData@Mouse@@ present-unmatched
+// The event array is at this+0x1110 -- 256 records of 0x3C -- and the drain
+// asks the device through vtable +0x60. The reentry flag is the global at
+// 0x012F4C62 where the reference keeps a function-local static. The ceiling
+// test is unsigned and the count test below it is not, so the cast belongs on
+// the loop bound alone.
+struct BfmeMouseEventRecord
+{
+	UnsignedByte body[0x3c];
+};
+
+#define BFME_MOUSE_SLOT(n) virtual void _bfme_slot##n( void ) = 0;
+
+class BfmeMouseEventSource
+{
+public:
+	BFME_MOUSE_SLOT(0)  BFME_MOUSE_SLOT(1)  BFME_MOUSE_SLOT(2)  BFME_MOUSE_SLOT(3)
+	BFME_MOUSE_SLOT(4)  BFME_MOUSE_SLOT(5)  BFME_MOUSE_SLOT(6)  BFME_MOUSE_SLOT(7)
+	BFME_MOUSE_SLOT(8)  BFME_MOUSE_SLOT(9)  BFME_MOUSE_SLOT(10) BFME_MOUSE_SLOT(11)
+	BFME_MOUSE_SLOT(12) BFME_MOUSE_SLOT(13) BFME_MOUSE_SLOT(14) BFME_MOUSE_SLOT(15)
+	BFME_MOUSE_SLOT(16) BFME_MOUSE_SLOT(17) BFME_MOUSE_SLOT(18) BFME_MOUSE_SLOT(19)
+	BFME_MOUSE_SLOT(20) BFME_MOUSE_SLOT(21) BFME_MOUSE_SLOT(22) BFME_MOUSE_SLOT(23)
+	virtual UnsignedByte bfmeGetEvent( BfmeMouseEventRecord *event, Int wait ) = 0;
+};
+
+#undef BFME_MOUSE_SLOT
+
+struct BfmeMouseEventLayout
+{
+	UnsignedByte pad0[0x1110];
+	BfmeMouseEventRecord events[256];					///< retail this+0x1110
+	UnsignedByte pad1[0x4d98 - 0x4d10];
+	Int inputFrame;										///< retail this+0x4D98
+	Int deadInputFrame;									///< retail this+0x4D9C
+	UnsignedByte pad2[0x4e00 - 0x4da0];
+	Int eventsThisFrame;								///< retail this+0x4E00
+};
+
+extern bool Glo012F4C62;								///< retail [0x012F4C62]
+
 void Mouse::updateMouseData( )
 {
-	static Bool busy = FALSE;
-	Int index = 0;
-	UnsignedByte result;
+	BfmeMouseEventLayout *self = (BfmeMouseEventLayout *)this;
+	Int count = 0;
 
 	// prevent reentrancy in the event we make this mouse multi-threaded
-	if( busy == FALSE )
+	if( !Glo012F4C62 )
 	{
+		Glo012F4C62 = true;
 
-		busy = TRUE;
-
-		// Get latest mouse events from DirectX
-		do
+		BfmeMouseEventRecord *event = self->events;
+		for( ;; )
 		{
+			UnsignedByte answer;
 			do
-			{
-				result = getMouseEvent( &m_mouseEvents[ index ], TRUE );
-			}
-			while( result == MOUSE_LOST );
-			index++;
+				answer = ((BfmeMouseEventSource *)this)->bfmeGetEvent( event, 1 );
+			while( answer == 0xFF );
+			++count;
+			++event;
+			if( answer == 0 )
+				break;
+			if( (UnsignedInt)count >= 0x100 )
+				break;
 		}
-		while( (result != MOUSE_NONE) &&
-					 (index < sizeof( m_mouseEvents ) / sizeof( MouseIO )) );
 
-		busy = FALSE;
+		Glo012F4C62 = false;
 
 	}  // end if
 
-	if( index > 0 )
-		m_eventsThisFrame = index - 1;
+	if( count > 0 )
+		self->eventsThisFrame = count - 1;
 	else
-		m_eventsThisFrame = 0;
+		self->eventsThisFrame = 0;
 
-	if( index != 0 )
-		m_deadInputFrame = m_inputFrame;
+	if( count != 0 )
+		self->deadInputFrame = self->inputFrame;
 
 }  // end updateMouseData
 
@@ -668,12 +721,11 @@ void Mouse::reset( void )
 /** Update the states of the mouse position and buttons */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/Input/Mouse_update.cpp
-// ?update@Mouse@@ present-unmatched
 void Mouse::update( void )
 {
 
 	// increment input frame
-	m_inputFrame++;
+	((BfmeMouseLayout *)this)->inputFrame++;
 
 	// update the mouse data
 	updateMouseData( );
@@ -959,12 +1011,12 @@ void Mouse::setMouseText( UnicodeString text,
 /** Move the mouse to the position */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngineDevice/Source/Win32Device/GameClient/Mouse_setPosition.cpp
-// ?setPosition@Mouse@@ present-unmatched
 void Mouse::setPosition( Int x, Int y )
 {
+	BfmeMouseLayout *self = (BfmeMouseLayout *)this;
 
-	m_currMouse.pos.x = x;
-	m_currMouse.pos.y = y;
+	self->currPos.x = x;
+	self->currPos.y = y;
 
 }  // end setPosition
 
