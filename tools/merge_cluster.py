@@ -63,6 +63,16 @@ SIZE_AT = LEDGER_COLUMNS.index("target_size")
 SRC_EXT = (".cpp", ".c", ".h", ".inl")
 
 MARKER = re.compile(r"^\s*//\s*readable body of\s+(\S.*?)\s*:\s*(\S+)\s*$")
+# A line is a MARKER CANDIDATE only when a comment opener is immediately
+# followed by the phrase. Prose that merely mentions `readable body of` mid
+# sentence is not a candidate -- a note explaining the marker convention once
+# hard-failed --list, --plan and --apply tree-wide, blocking every lane, because
+# any line holding the phrase had to parse as a marker. Malformed markers must
+# still fail loudly (a dropped marker silently loses a body from its cluster),
+# so this narrows WHAT COUNTS as an attempted marker rather than softening the
+# failure: a trailing `code; // readable body of X: Y` is still a candidate and
+# still fails, because MARKER requires the comment to start the line.
+CANDIDATE = re.compile(r"//\s*readable body of\b")
 CLASS_OPEN = re.compile(r"^(?:class|struct)\s+(\w+)\b")
 # A data member: no call parens, no initialiser, ends at the semicolon. Function
 # declarations are excluded on purpose -- siblings differing there are overloads
@@ -88,7 +98,7 @@ def markers(path):
     typo'd marker silently drops a body out of its cluster -- so say so."""
     out = []
     for number, line in enumerate(read_text(path).split("\n"), 1):
-        if "readable body of" not in line:
+        if not CANDIDATE.search(line):
             continue
         match = MARKER.match(line)
         if match is None:
