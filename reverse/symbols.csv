@@ -4239,6 +4239,7 @@ name,address,notes
 ??1Gen00842970@@QAE@XZ,0x00842970,member destroyed by the virtual-base destructor family (R4VirtualBaseDestructors.cpp); address-derived name; identity not recovered
 ??1Gen00887940@@QAE@XZ,0x00887940,destructible member destroyed by the two-member destructor families (R4TwoMemberDestructors.cpp / R4VptrTailDestructors.cpp); address-derived name; identity not recovered
 ??1Gen008881D0@@QAE@XZ,0x008881D0,destructible member destroyed by the two-member destructor families (R4TwoMemberDestructors.cpp / R4VptrTailDestructors.cpp); address-derived name; identity not recovered
+??1Gen0090F680@@QAE@XZ,0x0090F680,Open2 0x005F0D10 and 0x005F5500 shared destructor
 ??1Gen0097D800@@QAE@XZ,0x0097D800,S3 delete-and-clear family callee destructor (address-derived name)
 ??1Gen009DB400@@QAE@XZ,0x009DB400,S3 delete-and-clear family callee destructor (address-derived name)
 ??1Gen009DB4D0@@QAE@XZ,0x009DB4D0,S3 delete-and-clear family callee destructor (address-derived name)
@@ -72373,6 +72374,7 @@ name,address,notes
 ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z,0x0000C0A4,Open-BFME5 ILT thunk to body 0x00497CE0; ??0BfmeQuickMatchScreenBase@@QAE@PAX@Z at 0x00470620 calls it on this with its own argument as the last thing it does; address-derived name
 ?bfmeAttachCEF@BfmeSubCEF@@QAEXPAUBfmeListCEF@@@Z,0x00887C90,pin
 ?bfmeAttachCFF@BfmeOwnerCFF@@QAEXPAVBfmeThingCFF@@@Z,0x0002C1CE,pin
+?bfmeBase963@BfmeReg963@@QAEXXZ,0x009A1A30,pin
 ?bfmeBaseAB@BfmeThingAB@@QAEXPAX@Z,0x0001AD0C,pin
 ?bfmeBaseAGB@BfmeThingAGB@@QAEXPAX0@Z,0x000170E4,pin
 ?bfmeBaseARC@BfmeThingARC@@QAEXXZ,0x009A1A30,pin
@@ -74455,6 +74457,7 @@ name,address,notes
 ?create@BridgeAreaEffectsOCLShim@@QBEPAVObject@@PBV2@PBUCoord3D@@1_N@Z,0x00002A59,BridgeBehavior doAreaEffects retail call at 0x001F24E6 uses the Bool ObjectCreationList overload
 ?create@LocomotorStoreNewLocomotorShim@@QBEPAVLocomotor@@PBVLocomotorTemplate@@@Z,0x001B6920,LocomotorStore newLocomotor incremental-link thunk target through a TU-local forwarding shim
 ?create@RadarCreateEventShim@@QAEXPBUCoord3D@@W4RadarEventType@@M@Z,0x00108140,Radar createEvent incremental-link thunk target through a TU-local forwarding shim
+?create@Rva005D0490@@QAEPAXXZ,0x00001B18,Open2 0x005D0490 tail callee (ILT -> 0x005CFF50)
 ?create@ScriptEngineCreateNamedMapRevealShim@@QAEXABVAsciiString@@0M0@Z,0x0034EF80,ScriptEngine createNamedMapReveal incremental-link thunk target through a TU-local forwarding shim
 ?create@StructureCollapseOCLShim@@QBEPAVObject@@PBV2@PBUCoord3D@@1I@Z,0x00002A59,StructureCollapse doPhaseStuff BFME OCL creation call thunk
 ?createDirectory@FileSystem@@QAE_NVAsciiString@@@Z,0x009C8DC0
@@ -75231,6 +75234,7 @@ name,address,notes
 ?g_bfmeRealRangeFormat@@3QBDB,0x01144480,address-derived RealRange format string from retail 0x009D9899
 ?g_bfmeRefEMIa@@3PAUBfmeRefEMI@@A,0x00ED5140,pin
 ?g_bfmeRefEMIb@@3PAUBfmeRefEMI@@A,0x00ED5978,pin
+?g_bfmeReg963@@3PAVBfmeReg963@@A,0x00EF10D0,pin
 ?g_bfmeRegion2DFormat@@3QBDB,0x0114442C,address-derived Region2D format string from retail 0x009D9814
 ?g_bfmeRegion3DFormat@@3QBDB,0x01144388,address-derived Region3D format string from retail 0x009D96EE
 ?g_bfmeResetA961@@3PAVBfmeResetA961@@A,0x00EF1028,pin
@@ -75268,6 +75272,7 @@ name,address,notes
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
 ?g_bfmeUnsignedShortFormat@@3QBDB,0x01144328,address-derived unsigned-short format string from retail 0x009D95BF
 ?g_bfmeValMD@@3HA,0x00EB7D80,pin
+?g_bfmeVft963@@3PADA,0x00CF0398,pin
 ?g_bfmeVftAQB@@3PADA,0x00D22470,pin
 ?g_bfmeVftBQB@@3PADA,0x00D223A0,pin
 ?g_bfmeVftTA@@3PADA,0x00D2F254,pin
@@ -77576,6 +77581,7 @@ name,address,notes
 ?openMouse@DirectInputMouse@@AAEXXZ,0x00042A7D,ILT thunk to DirectInputMouse::openMouse
 ?operator_delete_sized@@YAXPAX@Z,0x00881EF0,ShareBuffer dtor free/delete helper
 ?outOfWeaponRangeObject@@YA_NPAVState@@PAX@Z,0x0001745E,pinharvest x1 (thunk)
+?overflow@Rva0060C120@@QAEXXZ,0x000377E0,Open2 0x0060C120 tail callee (ILT -> 0x0060C030)
 ?parse@BoneFXUpdateModuleDataParseFXListShim@@SAXPAVINI@@PAX1PBX@Z,0x00287BC0,BoneFXUpdateModuleData parseFXList incremental-link thunk target through a TU-local forwarding shim
 ?parse@BoneFXUpdateModuleDataParseObjectCreationListShim@@SAXPAVINI@@PAX1PBX@Z,0x00287D00,BoneFXUpdateModuleData parseObjectCreationList incremental-link thunk target through a TU-local forwarding shim
 ?parse@BoxEmissionVolumeTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00027999,Open-BFME5 pin
@@ -77731,6 +77737,7 @@ name,address,notes
 ?processRequestPlayerLeaveCommand@BFMEConnectionManager@@QAEXPAX@Z,0x00662D90,CORRECT NAME for the body the ledger calls markPlayerInGame: dispatcher 0x0066A3F0 jump table 0x0066A634 case 7 (NETCOMMANDTYPE_REQUESTPLAYERLEAVE per mapper 0x00683020) -> arm 0x0066A53B -> ILT 0x00038627 -> here; reads the leaving slot through 0x00674250 (the type-7 payload getter at +0x1C) and sets state +0x12080[slot]=1 when 0; the only writer of 1
 ?produceStoredValue@@YGHH@Z,0x0000C7FC,Open-BFME5 produced value implementation thunk
 ?propagateMessages@MessageStream@@QAEXXZ,0x0008ADF0,ZH MessageStream::propagateMessages line for line: for each translator (+0x10 list) for each message (+0x08 list) call translator->translateGameMessage (vslot 0) and deleteInstance on DESTROY_MESSAGE(1); then TheCommandList 0x012ED5F0 ->appendMessage (vcall +0x24) for every remaining message and clear +0x08/+0x0C; ecx=TheMessageStream 0x012ED5EC at 0x0006B9CE
+?publish@Rva005A41F0@@QAEXXZ,0x00039671,Open2 0x005A41F0 tail callee (ILT -> 0x005A3EF0)
 ?push@?$queue@VPeerResponse@@V?$deque@VPeerResponse@@V?$allocator@VPeerResponse@@@_STL@@@_STL@@@_STL@@QAEXABVPeerResponse@@@Z,0x0003CE07
 ?push@PeerResponseQueuePushShim@_STL@@QAEXPBX@Z,0x0064CB30,_STL queue PeerResponse push incremental-link thunk target through a TU-local forwarding shim
 ?push@U4Sink0060D3B0@@QAEXHH@Z,0x00396B00,U4 lane: two-literal callee of the emitter at 0x0060D3B0; address-derived name
@@ -77792,6 +77799,7 @@ name,address,notes
 ?reallyDoFX@ParticleSystemFXNugget@@IBEXPBUCoord3D@@PBVMatrix3D@@PBVObject@@2@Z,0x0000F105,zh-landmulti per-site callee copy (body proven byte-equal)
 ?recenterTurret@TurretAI@@QAEXXZ,0x0003B679,ILT thunk to 0x18C8D0; pinned from AIUpdateInterface::recenterTurret @0x26EA10
 ?refresh@Rva000F72D0FrameCachedValue@@AAEXPAX@Z,0x0004154C,retail REL32 at 0x000F72EC targets the frame-cache refresh ILT at 0x0004154C
+?refresh@Rva0060C120@@QAEXXZ,0x00025CED,Open2 0x0060C120 callee (ILT -> 0x0061CE00)
 ?refresh@Rva00845250Node@@QAEXXZ,0x00833D90,U2 lane: member called on both arguments of the comparison at 0x00845250; unnamed dump elsewhere
 ?refreshAmbientSound@Drawable@@AAEXXZ,0x0002E564,Drawable::replaceModelConditionState reaches the no-argument ambient-state callee through its retail ILT
 ?refreshTerrain@Radar@@UAEXPAVTerrainLogic@@@Z,0x0002F8DD,pinharvest x1 (thunk)
@@ -78417,6 +78425,7 @@ name,address,notes
 ?testSetAndClear@?$BitFlags@$0HE@@@QBE_NABV1@0@Z,0x007EA320,pinharvest x1 (body)
 ?testSetAndClear@?$BitFlags@$0HE@@@QBE_NABV1@0@Z,0x007EA380,pinharvest x1 (body)
 ?testStatus@BFMEActionObject@@QBE_NH@Z,0x000016A4,BFME Object status helper ILT decoded from ActionManager::canGetHealedAt
+?tick@Rva005A41F0@@QAEXXZ,0x0001CD82,Open2 0x005A41F0 callee (ILT -> 0x005A40E0)
 ?timeOutGameStart@GameLogic@@QAEXXZ,0x00383730,mov byte [ecx+0x148] = 1 is m_forceGameStartByTimeOut (follows m_progressComplete[8] at +0x120 and m_progressCompleteTimeout[8] at +0x128); ZH GameLogic::timeOutGameStart; called with ecx = TheGameLogic from BFMEConnectionManager::processIncomingCommand case 17 (NETCOMMANDTYPE_TIMEOUTSTART) at 0x0066A590 via ILT 0x00012AA8
 ?toInteger@AptValue@@QBEHXZ,0x00898300,EA Apt 2.00.00 integer coercion called by the ActionScript BitAnd handler
 ?toLower@AsciiString@@QAEXXZ,0x00887DA0,same body the ledger claims as ?toLower@?$StringBase@D@@QAEXXZ
@@ -79738,9 +79747,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?tick@Rva005A41F0@@QAEXXZ,0x0001CD82,Open2 0x005A41F0 callee (ILT -> 0x005A40E0)
-?publish@Rva005A41F0@@QAEXXZ,0x00039671,Open2 0x005A41F0 tail callee (ILT -> 0x005A3EF0)
-?create@Rva005D0490@@QAEPAXXZ,0x00001B18,Open2 0x005D0490 tail callee (ILT -> 0x005CFF50)
-??1Gen0090F680@@QAE@XZ,0x0090F680,Open2 0x005F0D10 and 0x005F5500 shared destructor
-?refresh@Rva0060C120@@QAEXXZ,0x00025CED,Open2 0x0060C120 callee (ILT -> 0x0061CE00)
-?overflow@Rva0060C120@@QAEXXZ,0x000377E0,Open2 0x0060C120 tail callee (ILT -> 0x0060C030)
