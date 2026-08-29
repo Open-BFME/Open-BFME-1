@@ -2623,3 +2623,50 @@ numbers is at risk -- but any shortlist built with it is inflated wherever a
 donor owns more rows than it has markers for. That shape is common:
 lanapi, InGameUI, Player and DataChunk were unaffected precisely because each
 donor there owned only the rows it had markers for.
+
+## HYPOTHESIS: BFME classes carry TWO links where the reference carries one
+
+Two independent classes now show the same shape, and it is worth testing on a
+third before treating it as a fact.
+
+**Script** carries two action pointers. `ParseActionDataChunk` reads and writes
+`Script+0x20`, while `getAction` and `setAction` both work on `+0x28` -- and
+retail's own accessors settle it: `mov eax,[ecx+0x28]; ret` at 0x00112980 and
+`mov [ecx+0x28],eax` at 0x00112970. So the accessor pair maintains one action
+list and the parser appends to a different one.
+
+**LANGameInfo** is the same: +0x360 maintained by the accessors, +0x398 walked
+by the bodies.
+
+If this is a habit rather than a coincidence, it predicts a family of blockers
+that read as "the accessor and the body disagree about an offset" and are
+actually two real members. The diagnostic that distinguishes them: a matched
+ACCESSOR is authoritative about its own offset, so when a body disagrees with a
+matched accessor, suspect a second member before suspecting a layout error --
+and check whether both offsets are live rather than assuming one is wrong.
+
+Do not fold this into a layout correction. Adding a view that moves the parser
+onto the accessor's offset would make one row match and silently merge two
+distinct members.
+
+## find_emitter: which TU could an orphaned row live in, without a build
+
+Seventh instance of the orphan-accessor pattern, so `tools/find_emitter.py`
+answers it directly:
+
+    python3 tools/find_emitter.py '?getAction@Script@@QBEPAVScriptAction@@XZ'
+
+Every object under `build/match` is already compiled, so the answer is in the
+symbol tables. It reads them, names the sources, compiles nothing, writes
+nothing.
+
+**The distinction it enforces is the one grep cannot make: EMITTING is what the
+ledger needs, and calling is not enough.** `Script::setAction` is called in
+GameLogic.cpp and not emitted there -- a guess that looked right and cost a full
+TU build to disprove. It agrees with all four cases previously resolved by hand,
+including the two with no home at all, which is why addGame and
+ParseActionDataChunk are declined rather than pending.
+
+Build the object map forward from the tree, never by decoding object names:
+`obj_path()` joins path parts with `_` and filenames contain underscores too, so
+decoding produced a path to "scripts.cpp" that was nothing of the sort.
