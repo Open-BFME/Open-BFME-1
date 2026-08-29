@@ -72322,6 +72322,7 @@ name,address,notes
 ?bfmeAdd1026@BfmeLst1026@@QAEXHH@Z,0x0002221E,pin
 ?bfmeAdd1034@BfmeSubA1034@@QAEXH@Z,0x00887C90,pin
 ?bfmeAdd1038@BfmeSubF1038@@QAEXHH@Z,0x008BDBB0,pin
+?bfmeAdd1040@BfmeH1040@@QAEXPAX@Z,0x0001EF9C,pin
 ?bfmeAdd913D@BfmeThing913D@@QAEDPAX@Z,0x000110E0,pin
 ?bfmeAdd955@BfmeSink955@@QAEXPAHH@Z,0x00037A56,pin
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
@@ -72381,6 +72382,7 @@ name,address,notes
 ?bfmeAllowsBase@Gen_0026c5d0@@AAE_NXZ,0x0002FE05,Open-BFME5 ILT the predicate at 0x0026C5D0 defers through
 ?bfmeAllowsBase@Gen_002983b0@@AAE_NXZ,0x0002FE05,Open-BFME5 ILT the predicate at 0x002983B0 defers through
 ?bfmeApply1023@BfmeB1023@@QAEXH@Z,0x00003FE4,pin
+?bfmeApply1040@@YAXPAUBfmeS1040@@H@Z,0x009A6630,pin
 ?bfmeApply980A@BfmeUseA980@@QAEPAXHH@Z,0x0000DA8A,pin
 ?bfmeApply980B@BfmeUseB980@@QAEPAXHH@Z,0x0004B01F,pin
 ?bfmeApply@BfmeSMCTarget@@QAEXHPBXH@Z,0x0002AD88,Open-BFME5 ILT thunk to body 0x0028EEB0; Object chain-tail forwarder at 0x001C1FB0 supplies the condition index optional opaque descriptor and frame count; bfme name records unrecovered retail types and spelling
@@ -73259,6 +73261,7 @@ name,address,notes
 ?bfmeForward@Gen_00C71580Target@@QAEXXZ,0x009DB7A0,Open-BFME5 the member the singleton forwarder at 0x00C71580 tail-jumps to
 ?bfmeFourLF@@YAXXZ,0x00039900,pin
 ?bfmeFree1026@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFree1040E@@YGXPAX@Z,0x009F6C10,pin
 ?bfmeFree915A@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFree923F@@YGXPAXH@Z,0x0003F413,pin
 ?bfmeFreeAEC@@YAXPAX@Z,0x00881EB0,pin
@@ -73343,6 +73346,7 @@ name,address,notes
 ?bfmeGeometryIntersects@Object@@QBE_NPBV1@@Z,0x0001E20E,Open-BFME5 ILT thunk to body 0x001BE980; compares two Object GeometryInfo footprints using each position and orientation; descriptive spelling
 ?bfmeGet1002@BfmeMid1002@@QAEPAXXZ,0x000022BB,pin
 ?bfmeGet1026@BfmeSrc1026@@QAEHXZ,0x00020824,pin
+?bfmeGet1040@BfmeD1040@@QAEPAUBfmeE1040@@XZ,0x00046538,pin
 ?bfmeGet920D@BfmeX920D@@QAEPAVBfmeRes920D@@XZ,0x0002BE77,pin
 ?bfmeGet948C@BfmeGrid948C@@QAE_NH@Z,0x00017049,pin
 ?bfmeGet948D@BfmeGrid948D@@QAE_NH@Z,0x00017049,pin
@@ -73793,6 +73797,7 @@ name,address,notes
 ?bfmePushBackAux@Gen_00369e30@@IAEXABQAX@Z,0x00036C82,Open-BFME5 ILT the deque push_back at 0x00369E30 tail-jumps through
 ?bfmePushBackAux@Gen_00647430@@IAEXABQAX@Z,0x000399D7,Open-BFME5 ILT the deque push_back at 0x00647430 tail-jumps through
 ?bfmePushQI@BfmeThingQI@@QAEXE@Z,0x0003BC23,pin
+?bfmeQuery1040@@YAXHPAH@Z,0x00008945,pin
 ?bfmeQuery932C@BfmeSub932C@@QAEEXZ,0x00048928,pin
 ?bfmeQuery@BfmeFilterObject@@QAE_NPAVPlayer@@@Z,0x00020824,Open-BFME5 ILT the object query in Rva2225E0Filter::accepts at 0x003A04A0 goes through
 ?bfmeQuery@Pathfinder@@QAEXPAVObject@@PAH1@Z,0x000461FF,Open-BFME5 ILT the TightenPathStruct constructor at 0x003E1720 queries the pathfinder through; the two pointer arguments are the outputs at +0x0C and +0x10
@@ -73968,6 +73973,7 @@ name,address,notes
 ?bfmeStep1034@BfmeH1034@@QAEXXZ,0x00006906,pin
 ?bfmeStep1035@BfmeA1035@@QAEXD@Z,0x00016608,pin
 ?bfmeStep1038@BfmeA1038@@QAEXXZ,0x000168C4,pin
+?bfmeStep1040@BfmeG1040@@QAEXXZ,0x00041970,pin
 ?bfmeStep1@Gen_004410A0@@AAEXXZ,0x000459CB,Open-BFME5 ILT the three-step runner at 0x004410A0 calls first
 ?bfmeStep1@Gen_0077F000@@AAEXXZ,0x00039428,Open-BFME5 ILT the three-step runner at 0x0077F000 calls first
 ?bfmeStep1@Gen_007892D0@@AAEXXZ,0x000270FC,Open-BFME5 ILT the three-step runner at 0x007892D0 calls first
@@ -75532,6 +75538,7 @@ name,address,notes
 ?g_bfmeFmt995B@@3PADA,0x00D05184,pin
 ?g_bfmeFmtA995C@@3PADA,0x00D07374,pin
 ?g_bfmeFmtB995C@@3PADA,0x00D053D4,pin
+?g_bfmeFree1040@@3P6AXPAXH@ZA,0x00F37830,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeFreeDXG@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeG1022@@3PAVBfmeG1022@@A,0x00EED668,pin
@@ -75557,6 +75564,7 @@ name,address,notes
 ?g_bfmeH1025@@3PAVBfmeH1025@@A,0x00EF1028,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeHeld995B@@3PAXA,0x00EF4974,pin
+?g_bfmeHook1040@@3P6AXPAUBfmeS1040@@@ZA,0x00F56DA0,pin
 ?g_bfmeHub1006@@3PAVBfmeHub1006@@A,0x00EF19E8,pin
 ?g_bfmeHub1013@@3PAVBfmeHub1013@@A,0x00EF3330,pin
 ?g_bfmeHub982@@3PAVBfmeHub982@@A,0x00F06954,pin
@@ -79574,10 +79582,12 @@ __imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
 __imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
 __imp_?bfmeImport928G@@YGXPAX@Z,0x00F58F08,pin
 __imp_?bfmeImport930C@@YAXPAX@Z,0x00F593D4,pin
+__imp_?bfmeLock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58D18,pin
 __imp_?bfmeMake1030@@YGHHHH@Z,0x00F58CF4,pin
 __imp_?bfmePrint1025@@YAXHPADH@Z,0x00F5948C,pin
 __imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
+__imp_?bfmeUnlock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58E74,pin
 __imp_?bfmeWait1012@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?bfmeWait1036@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?bfmeWait1037@@YGHPAXH@Z,0x00F58F64,pin
