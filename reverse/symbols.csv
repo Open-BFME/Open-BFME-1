@@ -9291,6 +9291,8 @@ name,address,notes
 ??_7AssaultTransportAIUpdateModuleDataVtbl@@6B@,0x01089CC0,AssaultTransportAIUpdate vtbl
 ??_7BannerUI@@6B@,0x00D0B828,BannerUI vtable independently identified by SubsystemInterface slots and adjacent BannerUI strings
 ??_7BehaviorModuleInterface@@6B@,0x0109C9D0,Open-BFME5 vtable address emitted by ObjectHelper constructor 0x001C0DB0
+??_7BfmeE1124@@6B@,0x00D2FB8C,pin
+??_7BfmeF1124@@6B@,0x00D2FBB8,pin
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
@@ -10599,6 +10601,7 @@ name,address,notes
 ?TheScriptEngine@@3PAVScriptEngine@@A,0x00EF076C,ScriptEngine global proven by SignalUIInteraction retail DIR32 and independently referenced by script action vcall sites
 ?TheShellHookNames@@3PAPBDA,0x00EB3DC0,Shell hook name table proven by SignalUIInteraction indexed retail DIR32 and canonical EA Scripts.cpp data
 ?TheShroudCrateCollidePool@?1??getClassMemoryPool@ShroudCrateCollide@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFA20,pool-glue cascade static (back-solved)
+?TheShroudManager@@3PAVPartitionManager@@A,0x012ED5BC,the engine-init tag block at 0x0038A1F0 stores this pointer and then pushes the tag "TheShroudManager"; the shroud entry points reach it while ThePartitionManager is a separate subsystem at 0x012ED5B8. Typed PartitionManager because that is the class whose matched methods are called on it
 ?TheShroudManager@@3PAVShroudManager@@A,0x012ED5BC,ShroudManager* global; named by the engine-init constructor tag "TheShroudManager" set at RVA 0x0038A2BB immediately after the store at 0x0038A2AC
 ?TheSlavedUpdatePool@?1??getClassMemoryPool@SlavedUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0048,pool-glue cascade static (back-solved)
 ?TheSpawnBehaviorPool@?1??getClassMemoryPool@SpawnBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF900,pool-glue cascade static (back-solved)
@@ -80822,4 +80825,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?TheShroudManager@@3PAVPartitionManager@@A,0x012ED5BC,the engine-init tag block at 0x0038A1F0 stores this pointer and then pushes the tag "TheShroudManager"; the shroud entry points reach it while ThePartitionManager is a separate subsystem at 0x012ED5B8. Typed PartitionManager because that is the class whose matched methods are called on it
