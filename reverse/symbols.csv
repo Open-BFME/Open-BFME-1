@@ -75184,6 +75184,7 @@ name,address,notes
 ?g_bfmeDropDXH@@3P6AXPAVBfmeSubDXH@@@ZA,0x00F378A0,pin
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
+?g_bfmeEndC976@@3PAVBfmeEndC976@@A,0x00EF64BC,pin
 ?g_bfmeEndKA@@3PAPAVBfmeItemKA@@A,0x00EF1470,pin
 ?g_bfmeFind975D@@3PAVBfmeFind975D@@A,0x00EEF1D8,pin
 ?g_bfmeFindAMB@@3PAVBfmeFindAMB@@A,0x00EF0898,pin
@@ -75278,6 +75279,7 @@ name,address,notes
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
 ?g_bfmeOneATC@@3PAVBfmeOneATC@@A,0x00EF19E8,pin
+?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
@@ -75311,6 +75313,7 @@ name,address,notes
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
+?g_bfmeTickC976@@3PAVBfmeTickC976@@A,0x00EF706C,pin
 ?g_bfmeTwoAOA@@3PAVBfmeTwoAOA@@A,0x00EED600,pin
 ?g_bfmeTwoAQA@@3PAVBfmeTwoAQA@@A,0x00EF1028,pin
 ?g_bfmeTwoATC@@3PAUBfmeTwoATC@@A,0x00EF4B58,pin
