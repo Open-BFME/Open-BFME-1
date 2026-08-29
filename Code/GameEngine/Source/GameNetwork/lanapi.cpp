@@ -919,29 +919,140 @@ void LANAPI::RequestGameStartTimer( Int seconds )
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_RequestGameOptions.cpp
-// ?RequestGameOptions@LANAPI@@UAEXVAsciiString@@_NI@Z present-unmatched
+
+// BFME identifies a LAN participant by an ADDRESS PAIR -- the ip and port that
+// vtable slot 55 hands back -- where the reference compares a bare m_localIP.
+struct BfmeNetAddress
+{
+	UnsignedInt m_ip;
+	UnsignedShort m_port;
+};
+
+// One per-slot record, 0x68 apart: the loop steps by 0x68 and stops at 0x340,
+// which is eight of them, and the address pair opens each one.
+struct BfmeLANSlot
+{
+	BfmeNetAddress m_address;							///< +0x00 of the slot
+	UnsignedByte m_bfmeRest[0x68 - 8];
+};
+
+struct BfmeLANGameSlots
+{
+	UnsignedByte pad[0x88];
+	BfmeLANSlot m_slot[8];								///< retail LANGameInfo+0x88
+};
+
+// m_currentGame is at this+0x40, four bytes past where this tree's header lands
+// it; retail's m_lastResendTime at +0x38 and m_isInLANMenu at +0x3C say the same
+// four bytes are missing ahead of the whole block.
+struct BfmeLANAPICurrentGame
+{
+	UnsignedByte pad[0x40];
+	LANGameInfo *currentGame;							///< retail +0x40
+};
+
+#define BFME_CURGAME(p) (((BfmeLANAPICurrentGame *)(p))->currentGame)
+#define BFME_SLOTS(g) (((BfmeLANGameSlots *)(g))->m_slot)
+
+// The options string starts at msg+0x22 for this message type, with its
+// terminator at +0x1B8, and retail inlines str() over the eight-byte header.
+struct BfmeLANOptionsMessage
+{
+	Int LANMessageType;									///< +0x00
+	UnsignedByte m_bfmeGap[0x22 - 4];
+	char options[0x196 + 1];							///< +0x22, terminator at +0x1B8
+};
+
+#define BFME_OPTMSG(m) ((BfmeLANOptionsMessage *)(m))
+#define BFME_OPTSTR(s) (*(char **)&(s) ? *(char **)&(s) + 8 : (char *)"")
+
+class BfmeLANOptionsCallbacks
+{
+public:
+	virtual void _bfme_opt_v0( void ) = 0;
+	virtual void _bfme_opt_v1( void ) = 0;
+	virtual void _bfme_opt_v2( void ) = 0;
+	virtual void _bfme_opt_v3( void ) = 0;
+	virtual void _bfme_opt_v4( void ) = 0;
+	virtual void _bfme_opt_v5( void ) = 0;
+	virtual void _bfme_opt_v6( void ) = 0;
+	virtual void _bfme_opt_v7( void ) = 0;
+	virtual void _bfme_opt_v8( void ) = 0;
+	virtual void _bfme_opt_v9( void ) = 0;
+	virtual void _bfme_opt_v10( void ) = 0;
+	virtual void _bfme_opt_v11( void ) = 0;
+	virtual void _bfme_opt_v12( void ) = 0;
+	virtual void _bfme_opt_v13( void ) = 0;
+	virtual void _bfme_opt_v14( void ) = 0;
+	virtual void _bfme_opt_v15( void ) = 0;
+	virtual void _bfme_opt_v16( void ) = 0;
+	virtual void _bfme_opt_v17( void ) = 0;
+	virtual void _bfme_opt_v18( void ) = 0;
+	virtual void _bfme_opt_v19( void ) = 0;
+	virtual void _bfme_opt_v20( void ) = 0;
+	virtual void _bfme_opt_v21( void ) = 0;
+	virtual void _bfme_opt_v22( void ) = 0;
+	virtual void _bfme_opt_v23( void ) = 0;
+	virtual void _bfme_opt_v24( void ) = 0;
+	virtual void _bfme_opt_v25( void ) = 0;
+	virtual void _bfme_opt_v26( void ) = 0;
+	virtual void _bfme_opt_v27( void ) = 0;
+	virtual void _bfme_opt_v28( void ) = 0;
+	virtual void _bfme_opt_v29( void ) = 0;
+	virtual void _bfme_opt_v30( void ) = 0;
+	virtual void _bfme_opt_v31( void ) = 0;
+	virtual void _bfme_opt_v32( void ) = 0;
+	virtual void _bfme_opt_v33( void ) = 0;
+	virtual void _bfme_opt_v34( void ) = 0;
+	virtual void _bfme_opt_v35( void ) = 0;
+	virtual void _bfme_opt_v36( void ) = 0;
+	virtual void _bfme_opt_v37( void ) = 0;
+	virtual void OnGameOptions( BfmeNetAddress *from, Int playerSlot, AsciiString options ) = 0;	///< +0x98
+	virtual void _bfme_opt_v39( void ) = 0;
+	virtual void _bfme_opt_v40( void ) = 0;
+	virtual void _bfme_opt_v41( void ) = 0;
+	virtual void _bfme_opt_v42( void ) = 0;
+	virtual void _bfme_opt_v43( void ) = 0;
+	virtual void _bfme_opt_v44( void ) = 0;
+	virtual void _bfme_opt_v45( void ) = 0;
+	virtual void _bfme_opt_v46( void ) = 0;
+	virtual void _bfme_opt_v47( void ) = 0;
+	virtual void _bfme_opt_v48( void ) = 0;
+	virtual void _bfme_opt_v49( void ) = 0;
+	virtual void _bfme_opt_v50( void ) = 0;
+	virtual void _bfme_opt_v51( void ) = 0;
+	virtual void _bfme_opt_v52( void ) = 0;
+	virtual void _bfme_opt_v53( void ) = 0;
+	virtual void _bfme_opt_v54( void ) = 0;
+	virtual BfmeNetAddress *_bfme_localAddress( void ) = 0;								///< +0xDC
+};
+
 void LANAPI::RequestGameOptions( AsciiString gameOptions, Bool isPublic, UnsignedInt ip /* = 0 */ )
 {
-	DEBUG_ASSERTCRASH(gameOptions.getLength() < m_lanMaxOptionsLength, ("Game options string is too long!"));
-
-	if (!m_currentGame)
+	if (!BFME_CURGAME(this))
 		return;
 
 	LANMessage msg;
 	fillInLANMessage( &msg );
-	msg.LANMessageType = LANMessage::MSG_GAME_OPTIONS;
-	strncpy(msg.GameOptions.options, gameOptions.str(), m_lanMaxOptionsLength);
-	msg.GameOptions.options[m_lanMaxOptionsLength] = 0;
+	BFME_OPTMSG(&msg)->LANMessageType = 0xF;
+	strncpy(BFME_OPTMSG(&msg)->options, BFME_OPTSTR(gameOptions), 0x196);
+	BFME_OPTMSG(&msg)->options[0x196] = 0;
 	sendMessage(&msg, ip);
 
-	m_lastGameopt = gameOptions;
+	// no m_lastGameopt here: BFME dropped Zero Hour's demo hack, which is why
+	// its destructor has one fewer string to destroy.
 
-	int player;
-	for (player = 0; player<MAX_SLOTS; ++player)
+	Int player;
+	for (player = 0; player < 8; ++player)
 	{
-		if (m_currentGame->getIP(player) == m_localIP)
+		BfmeNetAddress *slot = &BFME_SLOTS(BFME_CURGAME(this))[player].m_address;
+		BfmeNetAddress *me = ((BfmeLANOptionsCallbacks *)this)->_bfme_localAddress();
+
+		if (slot->m_ip == me->m_ip && slot->m_port == me->m_port)
 		{
-			OnGameOptions(m_localIP, player, AsciiString(msg.GameOptions.options));
+			((BfmeLANOptionsCallbacks *)this)->OnGameOptions(
+				((BfmeLANOptionsCallbacks *)this)->_bfme_localAddress(), player,
+				AsciiString(BFME_OPTMSG(&msg)->options) );
 			break;
 		}
 	}
