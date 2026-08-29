@@ -72842,6 +72842,7 @@ name,address,notes
 ?bfmeCreateInactiveTeam@TeamFactory@@AAEPAVTeam@@ABVAsciiString@@0@Z,0x0000D15C,retail REL32 at 0x000F7CAB targets the two-name createInactiveTeam ILT at 0x0000D15C
 ?bfmeCtorECMa@BfmeThingECMa@@QAEPAV1@XZ,0x00806300,pin
 ?bfmeCtorECMb@BfmeThingECMb@@QAEPAV1@XZ,0x008254C0,pin
+?bfmeCur1094@BfmeK1094@@QAEPAVBfmeR1094@@XZ,0x00020824,pin
 ?bfmeDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 the sentinel deallocator the list-member destructors at 0x0009F7A0 and 0x00080950 call
 ?bfmeDefer@Gen_002d60a0@@AAE_NPAVObject@@@Z,0x0000204F,Open-BFME5 ILT the guard at 0x002D60A0 tail-jumps through; it jumps to 0x002D9D00
 ?bfmeDel1086@BfmeC1086@@QAEXPAVBfmeQ1086@@@Z,0x0000358A,pin
@@ -73075,6 +73076,7 @@ name,address,notes
 ?bfmeFind1081@BfmeJ1081@@QAEPAVBfmeF1081@@H@Z,0x000335D2,pin
 ?bfmeFind1087@BfmeC1087@@QAEHH@Z,0x0004B36C,pin
 ?bfmeFind1091@BfmeC1091@@QAEHH@Z,0x0004B36C,pin
+?bfmeFind1094@BfmeB1094@@QAEPAVBfmeK1094@@H@Z,0x0001F253,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
@@ -73658,6 +73660,7 @@ name,address,notes
 ?bfmeLook1091@BfmeD1091@@QAEPAVBfmeR1091@@PAF@Z,0x0002EE60,pin
 ?bfmeLook1092@BfmeD1092@@QAEPAVBfmeR1092@@PAF@Z,0x0002EE60,pin
 ?bfmeLook1093@BfmeD1093@@QAEPAVBfmeR1093@@PAF@Z,0x0002EE60,pin
+?bfmeLook1094@BfmeD1094@@QAEPAVBfmeR1094@@PAF@Z,0x0002EE60,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
 ?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
 ?bfmeLookBBB@@YAPAXPAX@Z,0x0082B8E0,pin
@@ -73760,6 +73763,7 @@ name,address,notes
 ?bfmeNext1091@BfmeP1091@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1092@BfmeP1092@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1093@BfmeP1093@@QAEHH@Z,0x000230B5,pin
+?bfmeNext1094@BfmeP1094@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext929D@BfmeNext929D@@QAEHH@Z,0x0089CC30,pin
 ?bfmeNext@Gen_00088B60@@AAEXXZ,0x00031FCF,Open-BFME5 the member the flag-then-forward wrapper at 0x00088B60 tail-jumps to
 ?bfmeNext@Gen_000B5690@@AAEXXZ,0x000242A3,Open-BFME5 the member the flag-then-forward wrapper at 0x000B5690 tail-jumps to
@@ -75651,6 +75655,7 @@ name,address,notes
 ?g_bfmeB1086@@3PAVBfmeB1086@@A,0x00EED5C4,pin
 ?g_bfmeB1087@@3PAUBfmeB1087@@A,0x00EF0898,pin
 ?g_bfmeB1091@@3PAUBfmeB1091@@A,0x00EF0898,pin
+?g_bfmeB1094@@3PAVBfmeB1094@@A,0x00EF0898,pin
 ?g_bfmeB986B@@3PAHA,0x00EF9D0C,pin
 ?g_bfmeB991@@3PAVBfmeB991@@A,0x00EF9D88,pin
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
@@ -75700,6 +75705,7 @@ name,address,notes
 ?g_bfmeD1091@@3PAVBfmeD1091@@A,0x00EED748,pin
 ?g_bfmeD1092@@3PAVBfmeD1092@@A,0x00EED748,pin
 ?g_bfmeD1093@@3PAVBfmeD1093@@A,0x00EED748,pin
+?g_bfmeD1094@@3PAVBfmeD1094@@A,0x00EED748,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
@@ -75992,6 +75998,7 @@ name,address,notes
 ?g_bfmeP1091@@3PAVBfmeP1091@@A,0x00EF076C,pin
 ?g_bfmeP1092@@3PAVBfmeP1092@@A,0x00EF076C,pin
 ?g_bfmeP1093@@3PAVBfmeP1093@@A,0x00EF076C,pin
+?g_bfmeP1094@@3PAVBfmeP1094@@A,0x00EF076C,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
