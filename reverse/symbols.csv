@@ -73517,6 +73517,7 @@ name,address,notes
 ?bfmeHas1026@BfmeTab1026@@QAEDHH@Z,0x0001DA34,pin
 ?bfmeHas1052@BfmeTab1052@@QAEDHH@Z,0x0001DA34,pin
 ?bfmeHas1091@BfmeR1091@@QAEDH@Z,0x00049E45,pin
+?bfmeHas1093@BfmeR1093@@QAEDH@Z,0x00025E46,pin
 ?bfmeHas985C@BfmeArg985@@QAEDH@Z,0x000077B6,pin
 ?bfmeHas992C@BfmeAsk992@@QAEDXZ,0x007E88A0,pin
 ?bfmeHash00007518@@YAIII@Z,0x00007518,Open-BFME5 ILT the per-type hash helper the bfmeDiffers pair at that sentinel calls
@@ -73656,6 +73657,7 @@ name,address,notes
 ?bfmeLook1090@BfmeD1090@@QAEPAVBfmeR1090@@PAF@Z,0x0002EE60,pin
 ?bfmeLook1091@BfmeD1091@@QAEPAVBfmeR1091@@PAF@Z,0x0002EE60,pin
 ?bfmeLook1092@BfmeD1092@@QAEPAVBfmeR1092@@PAF@Z,0x0002EE60,pin
+?bfmeLook1093@BfmeD1093@@QAEPAVBfmeR1093@@PAF@Z,0x0002EE60,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
 ?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
 ?bfmeLookBBB@@YAPAXPAX@Z,0x0082B8E0,pin
@@ -73757,6 +73759,7 @@ name,address,notes
 ?bfmeNext1090@BfmeP1090@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1091@BfmeP1091@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1092@BfmeP1092@@QAEHH@Z,0x000230B5,pin
+?bfmeNext1093@BfmeP1093@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext929D@BfmeNext929D@@QAEHH@Z,0x0089CC30,pin
 ?bfmeNext@Gen_00088B60@@AAEXXZ,0x00031FCF,Open-BFME5 the member the flag-then-forward wrapper at 0x00088B60 tail-jumps to
 ?bfmeNext@Gen_000B5690@@AAEXXZ,0x000242A3,Open-BFME5 the member the flag-then-forward wrapper at 0x000B5690 tail-jumps to
@@ -75696,6 +75699,7 @@ name,address,notes
 ?g_bfmeD1090@@3PAVBfmeD1090@@A,0x00EED748,pin
 ?g_bfmeD1091@@3PAVBfmeD1091@@A,0x00EED748,pin
 ?g_bfmeD1092@@3PAVBfmeD1092@@A,0x00EED748,pin
+?g_bfmeD1093@@3PAVBfmeD1093@@A,0x00EED748,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
@@ -75987,6 +75991,7 @@ name,address,notes
 ?g_bfmeP1090@@3PAVBfmeP1090@@A,0x00EF076C,pin
 ?g_bfmeP1091@@3PAVBfmeP1091@@A,0x00EF076C,pin
 ?g_bfmeP1092@@3PAVBfmeP1092@@A,0x00EF076C,pin
+?g_bfmeP1093@@3PAVBfmeP1093@@A,0x00EF076C,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
