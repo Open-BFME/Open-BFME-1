@@ -3179,3 +3179,42 @@ DIR32 check exists to catch, and it fails the gate for the whole tree: a header
 or shim change makes the pre-commit hook run the FULL gate, so this blocks every
 lane, not only the one that introduced it. Three distinct globals need three
 distinct names; a shared placeholder asserts they are one object.
+
+## The DIR32 check only fires once a SECOND base exists
+
+`Bfme5ReadyQueue.cpp` declared `extern PartitionManager *ThePartitionManager;`
+locally in the TU and used it twice in `bfmeIsShrouded` -- a shroud predicate
+reaching the shroud manager through the wrong name. The check caught it within
+hours, which is the argument against ever whitelisting it.
+
+But note the limit honestly: **it catches a misnamed global only once a second
+base exists.** A new file that declares the extern itself and is the ONLY
+reference to that name passes silently while being just as wrong. The
+declaration being TU-local is what makes this recurrable -- nothing in the tree
+prevents the next new file from doing the same, and the ledger's own pin for the
+correct name does not help, because the wrong name never has to resolve against
+it.
+
+If this recurs a third time, the fix is a positive check -- every global a TU
+declares `extern` must have a symbols.csv pin agreeing with the address its
+references resolve to -- not another rename.
+
+## `this` is not always the entry pointer: measure the base, and use a control
+
+`GarrisonContain::getApparentControllingPlayer` is 88B/88B with nine differing
+bytes, all member offsets. The first views moved every offset by a constant
+-0x20 rather than fixing anything, which is what proved the mechanism: MSVC
+treats `this` in that method as **the entry pointer minus 0x20**, so a
+`this`-relative view needs +0x20 on the number you want to see in the
+instruction.
+
+Two things made that a measurement rather than a guess. The file's own
+`findConditionIndex` already documented the same base ("m_object at module+0x08")
+-- independent corroboration already sitting in the file. And the fourth view,
+on the `observingPlayer` PARAMETER, needed no adjustment and landed first time,
+which isolates the effect to `this` specifically. **Keep a view that should not
+need the correction as a control**; without it, a uniform shift looks like a bad
+view rather than a different base.
+
+Corrected targets: m_object at this+0x08, hide flag at this+0x9b5, m_originalTeam
+at this+0xd4, Player's default team at observingPlayer+0x230.
