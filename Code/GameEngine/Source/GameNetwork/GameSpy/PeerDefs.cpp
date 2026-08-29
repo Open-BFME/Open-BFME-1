@@ -405,6 +405,13 @@ void GameSpyInfo::addStagingRoom( GameSpyStagingRoom room )
 // that adds a declaration here pays that, so this body needs the funclet rows
 // re-anchored first, or a change that adds no declarations at all. Comments are
 // free; code is not.
+//
+// removeFromSavedIgnoreList below is the second body in this file in the same
+// position, and it wants MORE code than this one: retail's m_savedIgnoreMap has a
+// TWELVE-byte value type, not AsciiString, so its _Rb_tree::erase is the generic
+// 12-byte instantiation at 0x006342A0 rather than the AsciiString one at
+// 0x00224870. Reaching that needs a second map instantiation in this TU, which is
+// a great deal more renumbering than one view class. Two bodies, one blocker.
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfo_updateStagingRoom.cpp
 // ?updateStagingRoom@GameSpyInfo@@UAEXVGameSpyStagingRoom@@@Z present-unmatched
 void GameSpyInfo::updateStagingRoom( GameSpyStagingRoom room )
