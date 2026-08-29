@@ -23,6 +23,7 @@ UnsignedInt LifetimeUpdate::calcSleepDelay( UnsignedInt minFrames, UnsignedInt m
 	m_dieFrame = frame + delay;
 	return delay;
 }
+#line 27
 
 void LifetimeUpdate::setLifetimeRange( UnsignedInt minFrames, UnsignedInt maxFrames )
 {
