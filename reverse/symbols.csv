@@ -73796,6 +73796,7 @@ name,address,notes
 ?bfmeNext1107@@YAPAUBfmeNode1107@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext1108@@YAPAUBfmeNode1108@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext1109@@YAPAUBfmeNode1109@@PAU1@@Z,0x0082B870,pin
+?bfmeNext1110@@YAPAUBfmeNode1110@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext929D@BfmeNext929D@@QAEHH@Z,0x0089CC30,pin
 ?bfmeNext@Gen_00088B60@@AAEXXZ,0x00031FCF,Open-BFME5 the member the flag-then-forward wrapper at 0x00088B60 tail-jumps to
 ?bfmeNext@Gen_000B5690@@AAEXXZ,0x000242A3,Open-BFME5 the member the flag-then-forward wrapper at 0x000B5690 tail-jumps to
@@ -73810,6 +73811,8 @@ name,address,notes
 ?bfmeNextCWB@@3HA,0x00EF1030,pin
 ?bfmeNextCWC@@3HA,0x00EF1030,pin
 ?bfmeNextCWD@@3HA,0x00EF1030,pin
+?bfmeNextM1110@@YAPAUBfmeM1110@@PAU1@@Z,0x0082B870,pin
+?bfmeNextR1110@BfmeR1110@@QAEPAV1@XZ,0x00022A70,pin
 ?bfmeNodeAllocLarge@@YAPAXI@Z,0x00881F30,Open-BFME5 the STLport large-block allocator the 0x84-byte clone-node body calls
 ?bfmeNodeAllocSmall@@YAPAXI@Z,0x0082E540,Open-BFME5 the STLport node allocator the red-black clone-node bodies call
 ?bfmeNote1023@BfmeJ1023@@QAEXPAVBfmeH1023@@@Z,0x00010F46,pin
