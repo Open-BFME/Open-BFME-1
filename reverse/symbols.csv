@@ -73050,6 +73050,7 @@ name,address,notes
 ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z,0x0002CB79,Open-BFME5 ILT thunk to body 0x00417710; Gen_00417cb0::tail at 0x00417A70 calls it on this with the source result and its own argument; address-derived name in the same synthetic family as the class
 ?bfmeEnable@BfmeElemW@@QAEXHH@Z,0x000482AC,Open-BFME5 the ICF thunk (to 0x004482AC) the clear at 0x004B1720 calls on each element with a pair of ones
 ?bfmeEnd1100@BfmeZ1100@@QAEXH@Z,0x0003D578,pin
+?bfmeEnd1111@BfmeK1111@@QAEXXZ,0x000097BE,pin
 ?bfmeEnd982C@BfmeHub982@@QAEXXZ,0x00008D4B,pin
 ?bfmeEnsureWA@BfmeThingWA@@QAEXXZ,0x0002DE02,pin
 ?bfmeEnter@Glo012F1024Item@@QAEXXZ,0x0000BC5D,Open-BFME5 ILT thunk to body 0x003AEE70; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 calls it on the 0xDC-byte item the advanced index selects; address-derived name
@@ -73350,6 +73351,7 @@ name,address,notes
 ?bfmeFree1040E@@YGXPAX@Z,0x009F6C10,pin
 ?bfmeFree1041@@YAXPAD@Z,0x00881EB0,pin
 ?bfmeFree1049@@YAXPAX@Z,0x00012E90,pin
+?bfmeFree1111@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFree915A@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFree923F@@YGXPAXH@Z,0x0003F413,pin
 ?bfmeFreeAEC@@YAXPAX@Z,0x00881EB0,pin
@@ -73797,6 +73799,7 @@ name,address,notes
 ?bfmeNext1108@@YAPAUBfmeNode1108@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext1109@@YAPAUBfmeNode1109@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext1110@@YAPAUBfmeNode1110@@PAU1@@Z,0x0082B870,pin
+?bfmeNext1111@@YAPAUBfmeNode1111@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext929D@BfmeNext929D@@QAEHH@Z,0x0089CC30,pin
 ?bfmeNext@Gen_00088B60@@AAEXXZ,0x00031FCF,Open-BFME5 the member the flag-then-forward wrapper at 0x00088B60 tail-jumps to
 ?bfmeNext@Gen_000B5690@@AAEXXZ,0x000242A3,Open-BFME5 the member the flag-then-forward wrapper at 0x000B5690 tail-jumps to
@@ -74419,6 +74422,7 @@ name,address,notes
 ?bfmeUnguardedInsertAT@@YAXPAPAVBfmeRecAT@@PAV1@VBfmeCompAT@@@Z,0x0001F1FE,Open-BFME5 the ICF thunk (to 0x0041F1FE) the ranked linear insert at 0x003CE420 hands its unguarded arm to
 ?bfmeUnguardedInsertAU@@YAXPAPAVBfmeRecAU@@PAV1@VBfmeCompAU@@@Z,0x00016275,Open-BFME5 the ICF thunk (to 0x00416275) the linear insert at 0x005134A0 hands its unguarded arm to
 ?bfmeUnguardedInsertAV@@YAXPAPAVBfmeRecAU@@PAV1@VBfmeCompAU@@@Z,0x000044EE,Open-BFME5 the ICF thunk (to 0x004044EE) the linear insert at 0x0052FF70 hands its unguarded arm to
+?bfmeUnlink1111@BfmeW1111@@QAEXPAVBfmeE1111@@@Z,0x00014FE7,pin
 ?bfmeUnlink@@YAPAUBfmeSplitNode@@PAU1@PAPAU1@11@Z,0x0082CB60,Open-BFME5 the unlinker the tree removes at 0x00587670 and 0x00587750 hand their node to
 ?bfmeUnregister@@YAXPAVBfmeOwnedP@@@Z,0x00006500,Open-BFME5 the ICF thunk (to 0x00406500) the clear at 0x00371120 calls per element
 ?bfmeUnregister@@YAXPAVBfmeSecondZ@@@Z,0x00035328,Open-BFME5 the unregister the two-member vector destructor at 0x0035B8A0 calls on its second member
