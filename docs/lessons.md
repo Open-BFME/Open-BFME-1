@@ -1538,3 +1538,33 @@ Related, when a batch refuses: merge_cluster compares declarations only across
 the `--only` set, so two donors that declare one member differently will block
 an --apply that names both and go through cleanly in two batches -- provided the
 destination has already reconciled them.
+
+## The gate is blind to NAMES and authoritative about IMMEDIATES
+
+These are opposite properties of the same check and this lane has confused them
+three times, in both directions. Get it right before you size an alarm:
+
+  A NAME is unvalidated. A row's symbol, a member name, an enum spelling, a
+  function identity -- all compile to the same instruction whether right or
+  wrong. `identity-suspect` findings, mis-anchored rows and reversed enum names
+  all live here, and only a second body disagreeing exposes them.
+
+  AN IMMEDIATE IS PROVEN. `isKindOf(KINDOF_INERT)` compiles to `push 0x54`. If
+  retail pushes 0x58, the bytes differ and the row does not match. The same goes
+  for a vtable slot (`ff 50 20` against `ff 50 2c`), a chipset tier compare, a
+  structure offset, a frame size.
+
+So when you find a renumbered enum, a shifted vtable or a changed constant, the
+exposure is NEVER the matched bodies -- those are self-proving. It is
+    - bodies not yet converted, which will fail as a byte mismatch when someone
+      attempts them, exactly as intended, and
+    - new code written against the vendored header.
+That is a header correction to schedule, not a fire to fight. Say which of the
+two you mean when you report one, because "N call sites are testing the wrong
+bit" reads as the first and is usually the second.
+
+Worked examples on this lane: BFME's KindOfType has four entries the reference
+lacks (MOB_NEXUS 46 against 42, IGNORED_IN_GUI 47 against 43, INERT 0x58 against
+0x54, PROJECTILE bit 25 against 22), GameClient's vtable is off by three and five
+slots, and DC_GENERIC_PIXEL_SHADER_1_1 is 3 where the header numbers it 9. All
+three were reported as tree-wide hazards; all three are bounded the same way.
