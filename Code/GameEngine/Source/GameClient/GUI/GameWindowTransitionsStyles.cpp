@@ -1416,24 +1416,75 @@ TextTypeTransition::~TextTypeTransition( void )
 	m_dStr = NULL;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/TextTypeTransition_init_Thunk.cpp
-// ?init@TextTypeTransition@@UAEXPAVGameWindow@@@Z present-unmatched
+// Same parameterisation as the scale-up transitions: the frame handed to update
+// and the clamp on the text length come from members at this+0x10 and this+0x14,
+// not from the TEXTTYPETRANSITION_START/_END constants. The clamp is written as
+// the ternary retail emits rather than through MIN.
+struct BfmeTextTypeTransitionFields
+{
+	unsigned char m_unreconstructed_00[ 0x04 ];		///< vtable pointer at +0x00
+	Int m_frameLength;					///< retail this+0x04
+	Bool m_isFinished;					///< retail this+0x08
+	Bool m_isForward;					///< retail this+0x09
+	unsigned char m_pad0a[ 2 ];
+	GameWindow *m_win;					///< retail this+0x0c
+	Int m_startFrame;					///< retail this+0x10
+	Int m_endFrame;						///< retail this+0x14
+	ICoord2D m_pos;						///< retail this+0x18
+	ICoord2D m_size;					///< retail this+0x20
+	Int m_drawState;					///< retail this+0x28
+	UnicodeString m_fullText;				///< retail this+0x2c
+	UnicodeString m_partialText;				///< retail this+0x30
+	DisplayString *m_dStr;					///< retail this+0x34
+};
+
+// The two strings are one pointer each; if that ever stops being true the
+// offsets above silently shift, so say it out loud.
+typedef char BfmeTextTypeTransitionStringWidth[
+		(sizeof(UnicodeString) == 4) ? 1 : -1];
+
+// newDisplayString is vtable slot 9 (+0x24) in BFME, not the slot 6 (+0x18) the
+// vendored manager puts it at.
+class BfmeTransitionDisplayStringManager
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02();
+	virtual void slot03(); virtual void slot04(); virtual void slot05();
+	virtual void slot06(); virtual void slot07(); virtual void slot08();
+	virtual DisplayString *newDisplayString();		///< vtable +0x24
+};
+
+// getLength inlines to a 16-bit read of the length in the string header at
+// m_data+4; this tree's UnicodeString calls out of line for it instead.
+struct BfmeTransitionUnicodeString
+{
+	const unsigned char *m_data;
+
+	Int getLength() const
+	{
+		return m_data ? *(const unsigned short *)(m_data + 4) : 0;
+	}
+};
+
+// ?init@TextTypeTransition@@UAEXPAVGameWindow@@@Z
 void TextTypeTransition::init( GameWindow *win )
 {
+	BfmeTextTypeTransitionFields *self = (BfmeTextTypeTransitionFields *)this;
+
 	if(win)
 	{
-		m_win = win;
-		m_win->winGetSize(&m_size.x, &m_size.y);
-		m_win->winGetScreenPosition(&m_pos.x, &m_pos.y );
+		self->m_win = win;
+		self->m_win->winGetSize(&self->m_size.x, &self->m_size.y);
+		self->m_win->winGetScreenPosition(&self->m_pos.x, &self->m_pos.y );
 	}
-	m_isForward = FALSE;
-	update(TEXTTYPETRANSITION_START);
-	m_isFinished = FALSE;
-	m_isForward = TRUE;
-	m_dStr = TheDisplayStringManager->newDisplayString();
-	m_fullText = GadgetStaticTextGetText(m_win);		
-	Int length = m_fullText.getLength();
-	m_frameLength = MIN(length, TEXTTYPETRANSITION_END);
+	self->m_isForward = FALSE;
+	update(self->m_startFrame);
+	self->m_isFinished = FALSE;
+	self->m_isForward = TRUE;
+	self->m_dStr = ((BfmeTransitionDisplayStringManager *)TheDisplayStringManager)->newDisplayString();
+	self->m_fullText = GadgetStaticTextGetText(self->m_win);		
+	Int length = ((const BfmeTransitionUnicodeString *)&self->m_fullText)->getLength();
+	self->m_frameLength = length < self->m_endFrame ? length : self->m_endFrame;
 }
 
 void TextTypeTransition::update( Int frame )
