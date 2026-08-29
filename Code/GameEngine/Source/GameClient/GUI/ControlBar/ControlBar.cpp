@@ -2003,39 +2003,69 @@ CBCommandStatus ControlBar::processContextSensitiveButtonTransition( GameWindow 
 // ?switchToContext@ControlBar@@IAEXW4ControlBarContext@@PAVDrawable@@@Z
 // Body in ControlBar_switchToContext.asm (exact 869B retail).
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_setCommandBarBorder_Thunk.cpp
-// ?setCommandBarBorder@ControlBar@@AAEXPAVGameWindow@@W4CommandButtonMappedBorderType@@@Z present-unmatched
+// BFME adds a FIFTH border type Zero Hour does not have. Retail's jump table
+// covers switch values 1 through 5 as an identity map, so the arms are in source
+// order and the new one follows the reference's four.
+//
+// The colour members are NOT declared in the enum's order -- the arms read
+// this+0x280, +0x288, +0x284, +0x28c and +0x290 in case order -- so the offsets
+// are proven while the pairing of the reference's names to them rests on BFME
+// having kept the enum order and appended to it. The fifth has no reference name
+// at all, hence the _bfme_ one.
+struct BfmeControlBarBorderColors
+{
+	unsigned char m_unreconstructed_00[ 0x280 ];
+	Color m_commandButtonBorderBuildColor;			///< retail this+0x280
+	Color m_commandButtonBorderActionColor;			///< retail this+0x284
+	Color m_commandButtonBorderUpgradeColor;		///< retail this+0x288
+	Color m_commandButtonBorderSystemColor;			///< retail this+0x28c
+	Color m_bfmeCommandButtonBorderFifthColor;		///< retail this+0x290
+};
+
+enum { COMMAND_BUTTON_BORDER_BFME_FIFTH = 5 };
+
+// ?setCommandBarBorder@ControlBar@@AAEXPAVGameWindow@@W4CommandButtonMappedBorderType@@@Z
 void ControlBar::setCommandBarBorder( GameWindow *button, CommandButtonMappedBorderType type)
 {
+	BfmeControlBarBorderColors *self = (BfmeControlBarBorderColors *)this;
+
 	if(!button)
 		return;
 
+	// GadgetButtonSetBorder's third argument is defaulted in the reference's four
+	// arms; retail pushes it every time, which is what a defaulted argument looks
+	// like from the outside.
 	switch( type )
 	{
 		case COMMAND_BUTTON_BORDER_BUILD:
 		{
-			GadgetButtonSetBorder(button, m_commandButtonBorderBuildColor);
+			GadgetButtonSetBorder(button, self->m_commandButtonBorderBuildColor, TRUE);
 			break;
 		}
 		//-------------------------------------------------------------------------------------------------
 		case COMMAND_BUTTON_BORDER_UPGRADE:
 		{
-			GadgetButtonSetBorder(button, m_commandButtonBorderUpgradeColor );
+			GadgetButtonSetBorder(button, self->m_commandButtonBorderUpgradeColor, TRUE );
 			break;
 		}
 		//-------------------------------------------------------------------------------------------------
 		case COMMAND_BUTTON_BORDER_ACTION:
 		{
-			GadgetButtonSetBorder(button, m_commandButtonBorderActionColor);
+			GadgetButtonSetBorder(button, self->m_commandButtonBorderActionColor, TRUE);
 			break;
 		}
 		//-------------------------------------------------------------------------------------------------
 		case COMMAND_BUTTON_BORDER_SYSTEM:
 		{
-			GadgetButtonSetBorder(button, m_commandButtonBorderSystemColor);
+			GadgetButtonSetBorder(button, self->m_commandButtonBorderSystemColor, TRUE);
 			break;
 		}
-
+		//-------------------------------------------------------------------------------------------------
+		case COMMAND_BUTTON_BORDER_BFME_FIFTH:
+		{
+			GadgetButtonSetBorder(button, self->m_bfmeCommandButtonBorderFifthColor, TRUE);
+			break;
+		}
 		//-------------------------------------------------------------------------------------------------
 		case COMMAND_BUTTON_BORDER_NONE:
 		default:
