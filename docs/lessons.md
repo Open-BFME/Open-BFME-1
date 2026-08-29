@@ -1424,6 +1424,36 @@ them on three separate folds before spotting it, and one body (Object::setLayer)
 did turn out to match once the marker was dropped -- which is the trap: the
 message is sometimes right by accident.
 
+## Read the whole shims directory before asking for a new one
+
+They are named for the TU that motivated them, not for what they do, so the
+general one does not look general. I surveyed five AsciiString shims, concluded
+none had both the 8-byte header and an out-of-line copy constructor, and asked
+for a sixth. `campaignmanagerascii` has both and was already on 71 TUs: it is
+StringBase-based, so its 8-byte `Header` comes from `string_base.h` rather than
+from a field of its own -- which is why grepping the shims for the ZH
+`m_debugptr` marker misses it -- and its copy constructor delegates to
+`StringBase<char>::StringBase(const StringBase<char> &)`, declared private in
+string_base.h and never defined, so the delegation compiles to a CALL. Same
+declared-never-defined mechanism as the by-value view.
+
+Two mechanics when you reach for it:
+
+  `/ICode/Libraries/Source/WWVegas/WWLib` goes LAST on the cl line.
+  string_base.h resolves from anywhere on the path, but WWLib ahead of the
+  sweep shim shadows headers sweep needs and snmp.h stops compiling.
+
+  Its `compare(const AsciiString &)` is the INLINE length-bounded memcmp retail
+  spells; its `operator==` forwards to a StringBase one that is declared and
+  never defined, so `a == b` compiles to a call retail does not make. Write
+  `a.compare(b) == 0`.
+
+And know the price before taking it: it makes AsciiString's copy constructor
+THROWING (an undefined declaration is assumed so), which can put an EH frame on
+anything that copy-constructs a class holding one. `SpecialPower.cpp` absorbed
+that with all 13 rows intact; `W3DModelDraw.cpp` did not -- see the
+`_Construct` / `push_back` pair in re_attempts.log for the two-sided wall.
+
 ## Four string levers, four symptoms: pick by which operation retail calls
 
 "Retail calls it, we inline it" has four different string shapes and four
