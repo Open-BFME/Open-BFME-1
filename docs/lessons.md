@@ -2908,9 +2908,20 @@ sizeof(VertexMaterialClass)=112 against retail's 108.
 to prove the file actually recompiles. Only then does a conditional probe that
 does NOT fire mean anything -- a probe silently reusing a cached object reads as
 a clean negative result, which is the same swallowed-failure shape as a sweep
-reporting "0 refs" for 314 objects that failed to load. Here the validated
-negative was informative: a probe inside `#ifndef NDEBUG` did not fire, so
-NDEBUG is defined and the debug members are out.
+reporting "0 refs" for 314 objects that failed to load.
+
+**RETRACTED, and the retraction is the more important lesson.** The sizeof
+figures above and a companion result -- that dropping the empty W3DMPO base did
+not move the offsets, so W3DMPO was "ruled out" -- were all measured against
+`reference/CnC_Generals_Zero_Hour/.../vertmaterial.h`, which this build does not
+use. WW3D2 has its own copy and a relative include finds it first. Every one of
+those experiments was a no-op, and two of them were reported as findings.
+
+So `#error` proves the file RECOMPILES. It does not prove you are editing the
+file the build READS. Those are different questions and only the second one
+matters. **Check the deps sidecar for the header the compile actually opened
+before editing any header**, especially where a vendored copy and a local copy
+share a name.
 
 ## Three screen MATCHes that are not folds
 
@@ -3133,3 +3144,38 @@ The same defect nearly produced a second false green deliberately:
 0x1EC, retail's m_tooltip is at 0x1EC and m_prev at 0x1FC, and our class is 16
 short there. winSetTooltipFunc is the true owner. Landing winSetPrev would have
 authored a false green on purpose.
+
+## A pad that must be UNDONE at every call site is a wrong layout
+
+`vertmaterial.h` carried a deliberate `unsigned int _bfme_vmat_v0` pad ahead of
+MaterialOld. `MeshMatDescClass_Do_Mappers_Need_Normals_Thunk.cpp` then carried
+two `reinterpret_cast<unsigned char *>(mtl) - 4` adjustments, subtracting that
+pad back off every VertexMaterialClass pointer before calling through it.
+Deleting the pad makes those casts unnecessary and the body matches.
+
+Treat a correction that has to be reversed at each use as evidence against
+itself. It is the same tell as a matched TU declaring a local class to work
+around a shared header: the workaround marks where the shared artefact is wrong.
+`meshmatdesc.cpp` had independently reached the same conclusion from different
+evidence and worked around it by including the reference header through angle
+brackets -- two separate per-file workarounds for one wrong dword.
+
+## Enumerate a header's includers with a SOURCE GREP, not the deps sidecars
+
+The sidecars record what THIS worktree has compiled, not what includes what. A
+per-file enumeration built from them missed
+`MeshMatDescClass_Do_Mappers_Need_Normals_Thunk.cpp` entirely, and only the full
+gate caught it. Use the sidecars to learn which header a TU actually opened;
+use a grep over sources to learn who includes a header at all.
+
+## `g_bfme5ParseVtable` names three different globals
+
+`?g_bfme5ParseVtable@@3PAXA` resolves to three addresses -- 0x0108B1B8,
+0x0108D638 and 0x0108D748 -- one for each of `bfme5MakeParseNodeA`, `B` and `C`
+in `Code/GameEngine/Source/Common/Bfme5NodeMakers.cpp`, each at +0x11.
+
+One placeholder name standing for three distinct vtables is exactly what the
+DIR32 check exists to catch, and it fails the gate for the whole tree: a header
+or shim change makes the pre-commit hook run the FULL gate, so this blocks every
+lane, not only the one that introduced it. Three distinct globals need three
+distinct names; a shared placeholder asserts they are one object.
