@@ -72730,6 +72730,7 @@ name,address,notes
 ?bfmeCall_008f73f0@BfmeGlobal_012ed5bc@@QAEXXZ,0x008F73F0,Open-BFME5 the member the 11-byte forwarders on global 0x012ED5BC tail-jump to
 ?bfmeCast2EVB@@YAPAUBfmeObjEVB@@PAX@Z,0x00010424,pin
 ?bfmeCastEVB@@YAPAUBfmeObjEVB@@PAX@Z,0x00042424,pin
+?bfmeCb1098@@YAXXZ,0x00012D69,pin
 ?bfmeCb974D@@YGXXZ,0x0024F2D0,pin
 ?bfmeChanged@Gen_00411DD0@@AAEXXZ,0x000200D1,Open-BFME5 the member the change-setter at 0x00411DD0 calls
 ?bfmeChanged@Gen_0041B0D0@@AAEXXZ,0x0002E564,Open-BFME5 the member the change-setter at 0x0041B0D0 calls
@@ -73031,6 +73032,7 @@ name,address,notes
 ?bfmeDtorVA@BfmeThingVA@@QAEXXZ,0x00034833,pin
 ?bfmeDtorVB@BfmeThingVB@@QAEXPAX@Z,0x009F6BC8,pin
 ?bfmeDtorVBW@BfmeSubVBW@@QAEXXZ,0x00895260,pin
+?bfmeEach1098@BfmeR1098@@QAEHPAX0@Z,0x0002F1CB,pin
 ?bfmeElem936B@@YGXPAX@Z,0x00030652,pin
 ?bfmeElse911B@BfmeThing911B@@QAEXPAX@Z,0x00926CB0,pin
 ?bfmeElseBBC@@YAXXZ,0x0000F36C,pin
@@ -73583,6 +73585,7 @@ name,address,notes
 ?bfmeInit1051@@YAXPAUBfmeSubN1051@@H@Z,0x0000317F,pin
 ?bfmeInit1061@BfmeB1061@@QAEXXZ,0x000165B8,pin
 ?bfmeInit1078@BfmeQ1078@@QAEXXZ,0x0001D9CB,pin
+?bfmeInit1098@BfmeCtx1098@@QAEXHH@Z,0x00021F21,pin
 ?bfmeInit929C@@YAXPAD@Z,0x009F7244,pin
 ?bfmeInit929G@BfmeThing929G@@QAEXXZ,0x0089E700,pin
 ?bfmeInit936G@BfmeThing936G@@QAEXXZ,0x00843990,pin
@@ -73673,6 +73676,7 @@ name,address,notes
 ?bfmeLook1094@BfmeD1094@@QAEPAVBfmeR1094@@PAF@Z,0x0002EE60,pin
 ?bfmeLook1095@BfmeD1095A@@QAEPAVBfmeR1095@@PAF@Z,0x0002EE60,pin
 ?bfmeLook1096@BfmeD1096@@QAEPAVBfmeR1096@@PAF@Z,0x0002EE60,pin
+?bfmeLook1098@BfmeD1098@@QAEPAVBfmeR1098@@PAF@Z,0x0002EE60,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
 ?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
 ?bfmeLookBBB@@YAPAXPAX@Z,0x0082B8E0,pin
@@ -73828,6 +73832,7 @@ name,address,notes
 ?bfmeObjectLeavingInfluence@Player@@QAEXPAVObject@@@Z,0x0000EACA,Open-BFME5 Player ILT that removes an Object's power influence; called by recursive transfer wrapper 0x001C3710
 ?bfmeOff1096@BfmeR1096@@QAEXPAVBfmeS1096@@@Z,0x0003D90B,pin
 ?bfmeOff1097@BfmeR1097@@QAEXPAVBfmeU1097@@@Z,0x0003D90B,pin
+?bfmeOk1098@BfmeR1098@@QAEDXZ,0x000179BD,pin
 ?bfmeOn1096@BfmeR1096@@QAEXPAVBfmeS1096@@@Z,0x0003529C,pin
 ?bfmeOnceBXF@BfmeThingBXF@@QAEXXZ,0x0000E3AE,pin
 ?bfmeOne920F@BfmeThing920F@@QAEXP6AXPAVLocomotorTemplate@@@Z@Z,0x000497DD,pin
@@ -74116,6 +74121,7 @@ name,address,notes
 ?bfmeSmallFreePZ@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeSmallFreeQJ@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeStart1021@BfmeF1021@@QAEXH@Z,0x0000EEA8,pin
+?bfmeStart1098@BfmeD1098@@QAEHHHH@Z,0x00044C60,pin
 ?bfmeStart@Gen_0049A330@@QAEXPAX0PAPAX@Z,0x00014100,Open-BFME5 the starter the SEH constructor at 0x0049A330 calls
 ?bfmeStart@Gen_00654F20@@QAEXPAX0PAPAX@Z,0x0002648B,Open-BFME5 the starter the SEH constructor at 0x00654F20 calls
 ?bfmeStart@Gen_00844340@@QAEXPAX0PAPAX@Z,0x0002A531,Open-BFME5 the starter the SEH constructor at 0x00844340 calls
@@ -75729,6 +75735,7 @@ name,address,notes
 ?g_bfmeD1095@@3PAVBfmeD1095A@@A,0x00EED748,pin
 ?g_bfmeD1096@@3PAVBfmeD1096@@A,0x00EED748,pin
 ?g_bfmeD1097@@3PAVBfmeD1097@@A,0x00EED748,pin
+?g_bfmeD1098@@3PAVBfmeD1098@@A,0x00EED748,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
