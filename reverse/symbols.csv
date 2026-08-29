@@ -72384,6 +72384,7 @@ name,address,notes
 ?bfmeBase967A@BfmeVft967A@@QAEXXZ,0x0001AB90,pin
 ?bfmeBase969D@BfmeD969@@QAEXXZ,0x007FA650,pin
 ?bfmeBase974E@BfmeE974@@QAEXPAUBfmeArg974@@H@Z,0x0004872F,pin
+?bfmeBase983@BfmeG983@@QAEXHPAXH@Z,0x00016C2A,pin
 ?bfmeBaseAB@BfmeThingAB@@QAEXPAX@Z,0x0001AD0C,pin
 ?bfmeBaseAGB@BfmeThingAGB@@QAEXPAX0@Z,0x000170E4,pin
 ?bfmeBaseARC@BfmeThingARC@@QAEXXZ,0x009A1A30,pin
@@ -75188,6 +75189,7 @@ name,address,notes
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
 ?g_bfmeCFAE@@3HA,0x00EEF418,pin
 ?g_bfmeClock977@@3PAVBfmeClock977@@A,0x00EF1B40,pin
+?g_bfmeClock983@@3PAVBfmeClock983@@A,0x00EF1B40,pin
 ?g_bfmeClockAHB@@3PAUBfmeClockAHB@@A,0x00EF0898,pin
 ?g_bfmeClockAZA@@3PAUBfmeClockAZA@@A,0x00EF0898,pin
 ?g_bfmeClockBSA@@3PAUBfmeClockBSA@@A,0x00EF0898,pin
