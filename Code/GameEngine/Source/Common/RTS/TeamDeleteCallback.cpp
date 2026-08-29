@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// readable body of ?teamAboutToBeDeleted@TeamFactory@@QAEXPAVTeam@@@Z: Code/GameEngine/Source/Common/RTS/Team.cpp
 
 #define __PLACEMENT_VEC_NEW_INLINE
 #include <map>

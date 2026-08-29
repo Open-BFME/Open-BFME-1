@@ -79892,3 +79892,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?removeOverrideTeamRelationship@BfmeTeamInstanceLink@@QAEXI@Z,0x0001A48D,Open-BFME5 view-class spelling of the ILT already pinned as ?removeOverrideTeamRelationship@Team@@QAEXI@Z; called through the view so the in-TU definition cannot inline when retail inlines the TeamPrototype walk into TeamFactory::teamAboutToBeDeleted
