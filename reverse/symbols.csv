@@ -72447,6 +72447,7 @@ name,address,notes
 ?bfmeCall929E@@YAXPAXPAPAX@Z,0x00892230,pin
 ?bfmeCall929F@@YAXPAXPADPAUBfmeArg929F@@@Z,0x00866F90,pin
 ?bfmeCall930G@@YAXHHHPAXHH@Z,0x00906B40,pin
+?bfmeCall933D@BfmeSub933D@@QAEXXZ,0x0000A862,pin
 ?bfmeCallCCH@@YAHPAX0H@Z,0x00009084,pin
 ?bfmeCallCIB@@YAHPAX000@Z,0x007EC5C0,pin
 ?bfmeCallCIC@@YAHPAX000@Z,0x007ECE60,pin
@@ -73717,6 +73718,7 @@ name,address,notes
 ?bfmeTail928G@BfmeThing928G@@QAEXXZ,0x000495F8,pin
 ?bfmeTail930F@BfmeThing930F@@QAEXXZ,0x0091DD20,pin
 ?bfmeTail932E@BfmeThing932E@@QAEXXZ,0x000488F6,pin
+?bfmeTail933B@BfmeTail933B@@QAEXXZ,0x0003436A,pin
 ?bfmeTailBCD@BfmeThingBCD@@QAEXXZ,0x0001CD8C,pin
 ?bfmeTailBED@BfmeThingBED@@QAEXXZ,0x00012C6F,pin
 ?bfmeTailBFG@BfmeThingBFG@@QAEXXZ,0x000286A0,pin
@@ -74996,6 +74998,7 @@ name,address,notes
 ?g_bfme930Glob@@3PAVBfmeGlob930C@@A,0x00F4C7DC,pin
 ?g_bfme930Vft@@3PADA,0x00D3BD6C,pin
 ?g_bfme932GlobD@@3PAVBfmeGlob932D@@A,0x00EF0888,pin
+?g_bfme933GlobC@@3PAUBfmeGlob933C@@A,0x00EF0898,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
