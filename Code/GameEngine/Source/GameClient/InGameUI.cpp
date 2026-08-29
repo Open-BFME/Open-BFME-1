@@ -2449,12 +2449,30 @@ void InGameUI::messageColor( const RGBColor *rgbColor, UnicodeString format, ...
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_addMessageText_Thunk.cpp
-// ?addMessageText@InGameUI@@IAEXABVUnicodeString@@PBURGBColor@@@Z present-unmatched
+// The message font triple sits with the other per-message state BFME left low
+// in the class, the same way the named-timer block above does.
+struct BfmeMessageFontLayout
+{
+	UnsignedByte pad[0x84c];
+	AsciiString messageFont;						///< retail this+0x84C
+	Int messagePointSize;							///< retail this+0x850
+	Bool messageBold;								///< retail this+0x854
+};
+
+#define BFME_UIMSG(n) (((UIMessage *)((UnsignedByte *)this + 0x56c))[n])
+
 void InGameUI::addMessageText( const UnicodeString& formattedMessage, const RGBColor *rgbColor )
 {
+	// BFME lands the message ring at InGameUI+0x56C and the two default colours
+	// at +0x83C and +0x840; the vendored class is much larger and puts all three
+	// far higher.  Six entries of 0x10, the same ring removeMessageAtIndex below
+	// reaches.  Spelled off `this` at each use rather than through a hoisted
+	// pointer, which would take a register retail spends on the second colour,
+	// and kept as UIMessage so the shift still goes through
+	// UIMessage::operator=, which retail emits.
 	Int i;
-	Color color1 = m_messageColor1;
-	Color color2 = m_messageColor2;
+	Color color1 = *(Color *)((UnsignedByte *)this + 0x83c);
+	Color color2 = *(Color *)((UnsignedByte *)this + 0x840);
 
 	if (rgbColor)
 	{
@@ -2463,36 +2481,40 @@ void InGameUI::addMessageText( const UnicodeString& formattedMessage, const RGBC
 	}
 
 	// delete the message stuff at the last index
-	m_uiMessages[ MAX_UI_MESSAGES - 1 ].fullText.clear();
-	if( m_uiMessages[ MAX_UI_MESSAGES - 1 ].displayString )
-		TheDisplayStringManager->freeDisplayString( m_uiMessages[ MAX_UI_MESSAGES - 1 ].displayString );
-	m_uiMessages[ MAX_UI_MESSAGES - 1 ].displayString = NULL;
-	m_uiMessages[ MAX_UI_MESSAGES - 1 ].timestamp = 0;
+	BFME_UIMSG(5).fullText.clear();
+	if( BFME_UIMSG(5).displayString )
+		reinterpret_cast<BfmeDisplayStringManagerView *>(TheDisplayStringManager)
+			->freeDisplayString( BFME_UIMSG(5).displayString );
+	BFME_UIMSG(5).displayString = NULL;
+	BFME_UIMSG(5).timestamp = 0;
 
 	// shift all the messages down one index and remove the last one
-	for( i = MAX_UI_MESSAGES - 1; i >= 1; i-- )
-		m_uiMessages[ i ] = m_uiMessages[ i - 1 ];
+	for( i = 5; i >= 1; i-- )
+		BFME_UIMSG(i) = BFME_UIMSG(i - 1);
 
 	//
 	// set the new message in index 0, note that we need to allocate a display string, but
 	// we do not need to free the one that is already there because it has been moved
 	// "up" an index
 	//
-	m_uiMessages[ 0 ].fullText = formattedMessage;
-	m_uiMessages[ 0 ].timestamp = TheGameLogic->getFrame();
-	m_uiMessages[ 0 ].displayString = TheDisplayStringManager->newDisplayString();
-	m_uiMessages[ 0 ].displayString->setFont( TheFontLibrary->getFont( m_messageFont, 
-																						TheGlobalLanguageData->adjustFontSize(m_messagePointSize), m_messageBold ) );
-	m_uiMessages[ 0 ].displayString->setText( m_uiMessages[ 0 ].fullText );
+	BFME_UIMSG(0).fullText = formattedMessage;
+	BFME_UIMSG(0).timestamp = TheGameLogic->getFrame();
+	BFME_UIMSG(0).displayString = reinterpret_cast<BfmeDisplayStringManagerView *>(TheDisplayStringManager)->newDisplayString();
+	reinterpret_cast<BfmeDisplayStringView *>(BFME_UIMSG(0).displayString)->setFont(
+		reinterpret_cast<FontLibraryBFMERetail *>(TheFontLibrary)->getFont(
+			&((BfmeMessageFontLayout *)this)->messageFont,
+			(Real)TheGlobalLanguageData->adjustFontSize(((BfmeMessageFontLayout *)this)->messagePointSize),
+			((BfmeMessageFontLayout *)this)->messageBold ) );
+	reinterpret_cast<BfmeDisplayStringView *>(BFME_UIMSG(0).displayString)->setText( BFME_UIMSG(0).fullText );
 	
 	//
 	// assign a color for this string instance that will stay with it no matter what
 	// line it is rendered on
 	//
-	if( m_uiMessages[ 1 ].displayString == NULL || m_uiMessages[ 1 ].color == color2 )
-		m_uiMessages[ 0 ].color = color1;
+	if( BFME_UIMSG(1).displayString == NULL || BFME_UIMSG(1).color == color2 )
+		BFME_UIMSG(0).color = color1;
 	else
-		m_uiMessages[ 0 ].color = color2;
+		BFME_UIMSG(0).color = color2;
 
 }  // end addFormattedMessage
 
