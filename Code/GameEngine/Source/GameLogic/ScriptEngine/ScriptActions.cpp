@@ -571,7 +571,6 @@ void ScriptActions::doPlaySoundEffect(const AsciiString& sound)
 //-------------------------------------------------------------------------------------------------
 /** doPlaySoundEffectAt */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doPlaySoundEffectAt_Thunk.cpp
 // Attempted and reverted. Three of the four differences are settled and cost
 // nothing to redo: the event is a BfmeAudioEventRTS (0x70 bytes, positional
 // constructor at ILT 0x0004941D), addAudioEvent is Audio vtable slot 17, and
@@ -583,6 +582,7 @@ void ScriptActions::doPlaySoundEffect(const AsciiString& sound)
 // constructor where retail loads both after it. Reaching the slot through a
 // typed global alias rather than a cast at the call site produces byte-identical
 // output, so the cast is not the cause.
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doPlaySoundEffectAt_Thunk.cpp
 // ?doPlaySoundEffectAt@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doPlaySoundEffectAt(const AsciiString& sound, const AsciiString& waypoint)
 {	
