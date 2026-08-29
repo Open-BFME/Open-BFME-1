@@ -63,8 +63,8 @@
 
 // -----------------------------------------------------
 #ifdef _DEBUG
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarObserver.cpp
-// ?validate@UnicodeString@@ present-unmatched
+// (folded home from ControlBarObserver.cpp, which no longer points here)
+// stale marker removed: ?validate@UnicodeString@@ABEXXZ is matched from here
 void UnicodeString::validate() const
 {
 	if (!m_data) return;
