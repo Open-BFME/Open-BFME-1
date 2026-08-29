@@ -2075,6 +2075,7 @@ name,address,notes
 ??0BfmeBaseJC@@QAE@PAX@Z,0x0090E3D0,pin
 ??0BfmeBaseP0@@QAE@PAX0@Z,0x000170E4,Open-BFME5 the two-argument first base the triple-base constructors at 0x00200AE0 and siblings forward to
 ??0BfmeBinkPlayerMember@@QAE@XZ,0x0002833F,Open-BFME5 ILT the member constructor BinkVideoPlayer at 0x00691230 calls for its member at +0x0C
+??0BfmeBridgeNode@@QAE@PAVObject@@@Z,0x00047C0D,alias of the Bridge constructor pinned below; TerrainLogic.cpp builds the landmark bridge through a view struct because BFME's Bridge is 0x90 bytes and uses the global operator new
 ??0BfmeCellGrid@@QAE@HHMM@Z,0x001B1830,thiscall ret 0x10 (width height cellSize offset) into a 0x1C-byte object: +0 w +4 h +8 w*h +0xC cellSize +0x10 offset +0x14 vector-new of w*h 0x88-byte cells +0x18 w*h dwords; assert text Could not create Cell Grid for VictorySystem! 0x0109C958; both callers are VictorySystem::newMap 0x001DF5DF/0x001DF628
 ??0BfmeCopyPart_000C08E0@@QAE@ABV0@@Z,0x0001D10B,Open-BFME5 the trailing member copy constructor the memberwise copy at 0x000C08E0 calls
 ??0BfmeCopyPart_000C0DF0@@QAE@ABV0@@Z,0x0000EAF2,Open-BFME5 the trailing member copy constructor the memberwise copy at 0x000C0DF0 calls
@@ -78828,6 +78829,7 @@ name,address,notes
 ?xferRandomVariable@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0003EE32,H1 GameClientRandomVariable xfer helper (thunk; body 0x0010C4D0) ??? pinned, ideally matched in game_client_random_variable.cpp
 ?xferRandomVariable@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0004570F,RenderObjectDrawModuleInfo::DoXfer raw helper call target
 ?xferSaveData@GameState@@AAEXPAVXfer@@W4SnapshotType@@@Z,0x0010FBD0,GameState save-data walker (CHUNK_GameState/Campaign/LivingWorldLogic/Palantir/Audio); thunk 0x36674
+?xferTerrainState@BfmeTerrainStateXfer@@QAEXPAVXfer@@@Z,0x00043ED7,alias of the protected TerrainLogic spelling pinned below; TerrainLogic.cpp reaches the tail call through a view class because the reference TerrainLogic.h does not declare it
 ?xferTerrainState@TerrainLogic@@IAEXPAVXfer@@@Z,0x00043ED7,TerrainLogic::xfer tail call ILT reaching the body at 0x001AD370
 @__security_check_cookie@4,0x009F74F4,V2 lane: MSVC 7.1 /GS cookie check helper called in ecx by every /GS epilogue
 AODHordeContainFieldParse,0x004334F6,AODHordeContain FieldParse

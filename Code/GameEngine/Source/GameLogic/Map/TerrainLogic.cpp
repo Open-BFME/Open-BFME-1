@@ -1658,15 +1658,43 @@ void TerrainLogic::addBridgeToLogic(BridgeInfo *pInfo, Dict *props, AsciiString 
 //-------------------------------------------------------------------------------------------------
 /** Adds a bridge's info get height function for logical terrain */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogic_addLandmarkBridgeToLogic_Thunk.cpp
-// ?addLandmarkBridgeToLogic@TerrainLogic@@UAEXPAVObject@@@Z present-unmatched
+// BFME's Bridge is 0x90 bytes where the vendored class is 0x8c, and this one is
+// built with the GLOBAL operator new rather than the memory pool -- which is
+// what makes the allocation 0x90 exactly, with no pool cookie. The list head is
+// at TerrainLogic+0x34, not the vendored +0x2c. Bridge's own offsets are already
+// right: setNext writes +0x04 and setLayer writes +0x88, both inlined.
+//
+// addBridgeToLogic above keeps its newInstance(Bridge), so the pool allocator
+// and deallocator rows this file claims stay emitted.
+struct BfmeBridgeNode
+{
+	BfmeBridgeNode( Object *bridgeObj );				///< retail ILT 0x00047c0d
+
+	void setNext( BfmeBridgeNode *next ) { m_next = next; }
+	void setLayer( PathfindLayerEnum layer ) { m_layer = layer; }
+
+	void *m_unreconstructed_00;
+	BfmeBridgeNode *m_next;						///< retail this+0x04
+	UnsignedByte m_unreconstructed_08[0x88 - 8];
+	PathfindLayerEnum m_layer;					///< retail this+0x88
+	UnsignedByte m_unreconstructed_8C[0x90 - 0x8C];			///< out to sizeof 0x90
+};
+
+struct BfmeTerrainBridgeList
+{
+	UnsignedByte m_unreconstructed_00[0x34];
+	BfmeBridgeNode *m_bridgeListHead;				///< retail this+0x34
+};
+
+// ?addLandmarkBridgeToLogic@TerrainLogic@@UAEXPAVObject@@@Z
 void TerrainLogic::addLandmarkBridgeToLogic(Object *bridgeObj)
 {
+	BfmeTerrainBridgeList *self = (BfmeTerrainBridgeList *)this;
 
-	Bridge *pBridge = newInstance(Bridge)(bridgeObj);
-	pBridge->setNext(m_bridgeListHead);
-	m_bridgeListHead = pBridge;
-	PathfindLayerEnum layer = TheAI->pathfinder()->addBridge(pBridge);
+	BfmeBridgeNode *pBridge = ::new BfmeBridgeNode(bridgeObj);
+	pBridge->setNext(self->m_bridgeListHead);
+	self->m_bridgeListHead = pBridge;
+	PathfindLayerEnum layer = TheAI->pathfinder()->addBridge((Bridge *)pBridge);
 	pBridge->setLayer(layer);
 
 }
@@ -3085,93 +3113,50 @@ void TerrainLogic::crc( Xfer *xfer )
 	* 2: Added water updates over time (CBD)
 	*/
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogicXferThunk.cpp
-// ?xfer@TerrainLogic@@MAEXPAVXfer@@@Z present-unmatched
+// BFME's TerrainLogic::xfer is 45 bytes: it writes a two-byte version pair on
+// the stack -- both bytes from one materialised 1, which is what
+// `const XferVersion currentVersion = 1; XferVersion version = currentVersion;'
+// compiles to -- hands that ONE pointer to Xfer's vtable slot 10 (+0x28), and
+// then makes a single call to xferTerrainState. The reference copy passes a
+// second argument to xferVersion, starts at version 2, and inlines the whole
+// transfer that BFME keeps in a separate body.
+struct BfmeXferVersionPair
+{
+	UnsignedByte m_version;
+	UnsignedByte m_currentVersion;
+};
+
+class BfmeVersionXfer
+{
+public:
+	virtual void bfmeSlot00() = 0;	virtual void bfmeSlot04() = 0;
+	virtual void bfmeSlot08() = 0;	virtual void bfmeSlot0C() = 0;
+	virtual void bfmeSlot10() = 0;	virtual void bfmeSlot14() = 0;
+	virtual void bfmeSlot18() = 0;	virtual void bfmeSlot1C() = 0;
+	virtual void bfmeSlot20() = 0;	virtual void bfmeSlot24() = 0;
+	virtual void xferVersion( BfmeXferVersionPair *versionData ) = 0;	///< vtable +0x28
+};
+
+class BfmeTerrainStateXfer
+{
+public:
+	void xferTerrainState( Xfer *xfer );				///< retail ILT 0x00043ed7
+};
+
+// ?xfer@TerrainLogic@@MAEXPAVXfer@@@Z
 void TerrainLogic::xfer( Xfer *xfer )
 {
-
 	// version
-	const XferVersion currentVersion = 2;	
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
+	const UnsignedByte currentVersion = 1;
+	BfmeXferVersionPair version;
 
-	// active boundrary
-	Int activeBoundary = m_activeBoundary;
-	xfer->xferInt( &activeBoundary );
-	if( xfer->getXferMode() == XFER_LOAD )
-		setActiveBoundary( activeBoundary );
+	version.m_version = currentVersion;
+	version.m_currentVersion = currentVersion;
+	((BfmeVersionXfer *)xfer)->xferVersion( &version );
 
-	// updatable water tables
-	if( version >= 2 )
-	{
-
-		// number of water entries in our update array
-		xfer->xferInt( &m_numWaterToUpdate );
-
-		// water update entry data
-		for( UnsignedInt i = 0; i < m_numWaterToUpdate; ++i )
-		{
-
-			// water handle
-			if( xfer->getXferMode() == XFER_SAVE )
-			{
-
-				// write ID of polygon trigger that this water handle is representing
-				Int triggerID = m_waterToUpdate[ i ].waterTable->m_polygon->getID();
-				xfer->xferInt( &triggerID );
-
-			}  // end if, save
-			else if (xfer->getXferMode() == XFER_LOAD)
-			{
-				
-				// read trigger id
-				Int triggerID;
-				xfer->xferInt( &triggerID );
-
-				// find polygon trigger
-				PolygonTrigger *poly = PolygonTrigger::getPolygonTriggerByID( triggerID );
-
-				// sanity
-				if( poly == NULL )
-				{
-				
-					DEBUG_CRASH(( "TerrainLogic::xfer - Unable to find polygon trigger for water table with trigger ID '%d'\n",
-												triggerID ));
-					throw SC_INVALID_DATA;
-
-				}  // end if
-
-				// set water handle
-				m_waterToUpdate[ i ].waterTable = poly->getWaterHandle();
-
-				// sanity
-				if( m_waterToUpdate[ i ].waterTable == NULL )
-				{
-
-					DEBUG_CRASH(( "TerrainLogic::xfer - Polygon trigger to use for water handle has no water handle!\n" ));
-					throw SC_INVALID_DATA;
-
-				}  // end if
-
-			}  // end else, load
-
-			// change per frame
-			xfer->xferReal( &m_waterToUpdate[ i ].changePerFrame );
-
-			// target height
-			xfer->xferReal( &m_waterToUpdate[ i ].targetHeight );
-
-			// damage amount
-			xfer->xferReal( &m_waterToUpdate[ i ].damageAmount );
-
-			// current height
-			xfer->xferReal( &m_waterToUpdate[ i ].currentHeight );
-
-		}  // end for, i
-
-	}  // end if
-
-}  // end xfer
+	((BfmeTerrainStateXfer *)this)->xferTerrainState( xfer );
+}
+ // end xfer
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
