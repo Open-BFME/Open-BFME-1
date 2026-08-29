@@ -71,6 +71,13 @@ void Squad::addObjectID(ObjectID objectID) {
 }
 
 // removeObject ///////////////////////////////////////////////////////////////////////////////////
+// ?removeObject@Squad@@QAEXPAVObject@@@Z present-unmatched
+// RE-HOMED. The row for 0x0018B620 is now ?dup_0018b620@@YAXXZ -- the existing
+// convention for a real body whose identity is unknown -- because that body
+// reads a container at this+0x04 and the two symbolic rows above prove retail's
+// Squad keeps m_objectIDs at +0x08. The BFMESquad view below is what made it
+// byte-verify under the wrong name; it is kept because those bytes are real and
+// this file is where they are emitted, not because the name was right.
 void Squad::removeObject(Object *objectToRemove)
 {
 	if (objectToRemove) {
@@ -139,8 +146,6 @@ Int Squad::getSizeOfGroup(void) const
 }
 
 // isOnSquad //////////////////////////////////////////////////////////////////////////////////////
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/Squad_isOnSquad.cpp
-// ?isOnSquad@Squad@@QBE_NPBVObject@@@Z present-unmatched
 // RESOLVED, and not in this body's favour. Retail's 0x0018B520 reads the
 // membership pair from this+0x04 and this+0x08; compiled here it reads +0x08 and
 // +0x0C, because Squad derives from both MemoryPoolObject and Snapshot.
@@ -161,6 +166,8 @@ Int Squad::getSizeOfGroup(void) const
 // siblings of each other, not of Squad. Both logged mis-anchored?; neither is
 // re-homed, because a 38- and a 62-byte body are not ILT thunks and the
 // ?j_XXXXXXXX convention does not fit them.
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/Squad_isOnSquad.cpp
+// ?isOnSquad@Squad@@QBE_NPBVObject@@@Z present-unmatched
 Bool Squad::isOnSquad(const Object *objToTest) const
 {
 	// @todo need a faster way to do this. Perhaps a more efficient data structure?

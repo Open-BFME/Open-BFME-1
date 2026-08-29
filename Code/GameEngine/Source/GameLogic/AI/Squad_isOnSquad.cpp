@@ -34,7 +34,12 @@ private:
 	ObjectID *m_end;						// +0x08
 };
 
-// ?isOnSquad@Squad@@QBE_NPBVObject@@@Z
+// ?isOnSquad@Squad@@QBE_NPBVObject@@@Z present-unmatched
+// RE-HOMED. The row for 0x0018B520 is now ?dup_0018b520@@YAXXZ. The replica
+// below places the membership pair at +0x04, and that is an assertion rather
+// than evidence -- two SYMBOLIC matched rows in Squad.cpp put retail's
+// m_objectIDs at +0x08. 0x0018B520 sits one body before 0x0018B620, which makes
+// the same +0x04 claim, so the two are siblings of each other and not of Squad.
 Bool Squad::isOnSquad( const Object *obj ) const
 {
 	ObjectID id = obj->m_id;
