@@ -2670,3 +2670,47 @@ ParseActionDataChunk are declined rather than pending.
 Build the object map forward from the tree, never by decoding object names:
 `obj_path()` joins path parts with `_` and filenames contain underscores too, so
 decoding produced a path to "scripts.cpp" that was nothing of the sort.
+
+## The rows ALREADY matched tell you which regions are safe to change
+
+Correcting a shared class reads as dangerous because N rows depend on it. It is
+the opposite: those rows are the constraint that makes it safe, and they can be
+read before touching anything.
+
+GameWindow.cpp had 30 matched rows when a four-byte insertion at +0x04 was
+proposed -- everything from m_status onward moving to +0x08, +0x0C, +0x2C,
++0x30. A body reading m_instData at +0x38 could not have matched retail's +0x3C,
+so no matched row touches the shifted region, and the nine that were failing all
+did. The 30 rows were positive evidence the class was wrong AND that fixing it
+broke nothing.
+
+So the question is never "how many rows depend on this class". It is "which of
+them read the region I am moving" -- and a matched row that reads it is a
+falsification, not an obstacle.
+
+## Check a candidate shim against the BODIES, not against the destination
+
+`reference/shims/gamewindow/GameClient/GameWindow.h` already carried the exact
+layout that nine GameWindow rows needed, four-byte anchor included. It had been
+opened, read as disagreeing, and dismissed -- because it was compared against
+the DESTINATION's current class rather than against the retail bodies. It was
+agreeing with the bodies and disagreeing with the destination, which is precisely
+what a correct shim for a wrong destination looks like.
+
+Fifth new-shim need to dissolve on an artefact the repo already owned, and the
+first where the artefact had been looked at and rejected. When a shim seems
+wrong, check which side it disagrees with before discarding it.
+
+## One source name, two real functions, two addresses
+
+That shim still could not be used, for a reason worth knowing: it declares
+`winSetLayout`, `winSetNextInLayout` and `winSetPrevInLayout` returning `Int`
+where GameWindow.cpp defines them returning `void` -- and BOTH ARE REAL.
+`?winSetLayout@GameWindow@@QAEHPAVWindowLayout@@@Z` is at 0x00478E10 and
+`?winSetLayout@GameWindow@@QAEXPAVWindowLayout@@@Z` is at 0x0026ED70. MSVC
+encodes the return type, so they are distinct symbols that share a source name.
+
+A shim can therefore carry a correct layout AND a set of signatures that belong
+to one TU only, and a destination gets one or the other. A TU-local view takes
+the layout without the signatures, which is why views keep working where the
+shim cannot be adopted.
