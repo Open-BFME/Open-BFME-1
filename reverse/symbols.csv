@@ -40,6 +40,7 @@ name,address,notes
 ?$S192@?1??getClassMemoryPool@RepairDockUpdate@@CAPAVMemoryPool@@XZ@4IA,0x00EF04E0,pool-glue cascade static (back-solved)
 ?$S193@?1??getClassMemoryPool@RailedTransportDockUpdate@@CAPAVMemoryPool@@XZ@4IA,0x00EF04D8,pool-glue cascade static (back-solved)
 ?$S196@?1??getClassMemoryPool@SlavedUpdate@@CAPAVMemoryPool@@XZ@4IA,0x00EF004C,pool-glue cascade static (back-solved)
+?$S1@?1??bfmeGo1133@BfmeObj1133@@QBEHXZ@4IA,0x00EF0734,pin
 ?$S1@?6??_bfme_getSelectedPortraitImage@@YAPBVImage@@PBVThingTemplatePortraitShim@@0@Z@4IA,0x012EF1F4,GondorGandalf static AsciiString guard
 ?$S200@?1??getClassMemoryPool@StealthDetectorUpdate@@CAPAVMemoryPool@@XZ@4IA,0x00EF00A0,pool-glue cascade static (back-solved)
 ?$S201@?1??getClassMemoryPool@StealthUpdate@@CAPAVMemoryPool@@XZ@4IA,0x00EF01CC,pool-glue cascade static (back-solved)
@@ -2106,6 +2107,8 @@ name,address,notes
 ??0BfmeBaseJC@@QAE@PAX@Z,0x0090E3D0,pin
 ??0BfmeBaseP0@@QAE@PAX0@Z,0x000170E4,Open-BFME5 the two-argument first base the triple-base constructors at 0x00200AE0 and siblings forward to
 ??0BfmeBinkPlayerMember@@QAE@XZ,0x0002833F,Open-BFME5 ILT the member constructor BinkVideoPlayer at 0x00691230 calls for its member at +0x0C
+??0BfmeBits1133@@QAE@HHHH@Z,0x0003284E,pin
+??0BfmeBits1133@@QAE@HHHHHH@Z,0x00031133,pin
 ??0BfmeBridgeNode@@QAE@PAVObject@@@Z,0x00047C0D,alias of the Bridge constructor pinned below; TerrainLogic.cpp builds the landmark bridge through a view struct because BFME's Bridge is 0x90 bytes and uses the global operator new
 ??0BfmeCellGrid@@QAE@HHMM@Z,0x001B1830,thiscall ret 0x10 (width height cellSize offset) into a 0x1C-byte object: +0 w +4 h +8 w*h +0xC cellSize +0x10 offset +0x14 vector-new of w*h 0x88-byte cells +0x18 w*h dwords; assert text Could not create Cell Grid for VictorySystem! 0x0109C958; both callers are VictorySystem::newMap 0x001DF5DF/0x001DF628
 ??0BfmeCopyPart_000C08E0@@QAE@ABV0@@Z,0x0001D10B,Open-BFME5 the trailing member copy constructor the memberwise copy at 0x000C08E0 calls
@@ -72416,6 +72419,7 @@ name,address,notes
 ?bfmeAllowsBase@Gen_0026c0d0@@AAE_NXZ,0x0002FE05,Open-BFME5 ILT the predicate at 0x0026C0D0 defers through
 ?bfmeAllowsBase@Gen_0026c5d0@@AAE_NXZ,0x0002FE05,Open-BFME5 ILT the predicate at 0x0026C5D0 defers through
 ?bfmeAllowsBase@Gen_002983b0@@AAE_NXZ,0x0002FE05,Open-BFME5 ILT the predicate at 0x002983B0 defers through
+?bfmeAny1133@BfmeThing1133@@QBEDABVBfmeBits1133@@@Z,0x000497D3,pin
 ?bfmeApply1023@BfmeB1023@@QAEXH@Z,0x00003FE4,pin
 ?bfmeApply1040@@YAXPAUBfmeS1040@@H@Z,0x009A6630,pin
 ?bfmeApply980A@BfmeUseA980@@QAEPAXHH@Z,0x0000DA8A,pin
@@ -79078,6 +79082,8 @@ name,address,notes
 ?s4First005F6590@@YAXXZ,0x005DF120,S4 callee of the ctor-then-publish-new family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ?s4First005F8540@@YAXXZ,0x005DEF70,S4 callee of the ctor-then-publish-new family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ?s4Second@@YAXXZ,0x005F40C0,S4 callee of the ctor-then-publish-new family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
+?s_bfmeA@?1??bfmeGo1133@BfmeObj1133@@QBEHXZ@4VBfmeBits1133@@A,0x00EF0718,pin
+?s_bfmeB@?1??bfmeGo1133@BfmeObj1133@@QBEHXZ@4VBfmeBits1133@@A,0x00EF06FC,pin
 ?saveReplay@@YAXVUnicodeString@@@Z,0x004DE8E0,PopupReplaySystem callee from decode_calls
 ?scanClosestTarget@AutoFindHealingUpdate@@QAEPAVObject@@XZ,0x00036787,packet 002817b0 pin
 ?scanIndexList@INI@@SAHPBDPBQBD@Z,0x008509E0
