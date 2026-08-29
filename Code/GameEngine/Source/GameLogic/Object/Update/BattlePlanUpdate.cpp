@@ -1782,11 +1782,27 @@ void BattlePlanUpdate::enableTurret( Bool enable )
 }
 
 //------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdate_recenterTurret_Thunk.cpp
-// ?recenterTurret@BattlePlanUpdate@@IAEXXZ present-unmatched
+// The Zero Hour body unchanged; two offsets are BFME's. The module's owning
+// object is at module+0x08 -- the BFME_MODULE_NO_MPO layout, Module without its
+// MemoryPoolObject base -- where this file's getObject() reads +0x0C, and the
+// AI is at Object+0x204 where getAI() reads +0x19C. Switching the define on for
+// this TU is not available: the members getActiveBattlePlan reads are pinned to
+// the wider layout and stop matching, so both offsets are views.
+struct BfmeRecenterTurretObject
+{
+	unsigned char m_unreconstructed_000[ 0x204 ];
+	AIUpdateInterface *m_ai;				///< retail this+0x204
+};
+
+struct BfmeRecenterTurretModule
+{
+	unsigned char m_unreconstructed_000[ 8 ];
+	BfmeRecenterTurretObject *m_object;			///< retail this+0x08
+};
+
 void BattlePlanUpdate::recenterTurret()
 {
-	AIUpdateInterface *ai = getObject()->getAI();
+	AIUpdateInterface *ai = ((BfmeRecenterTurretModule *)this)->m_object->m_ai;
 	if( ai )
 	{
 		WhichTurretType tur = ai->getWhichTurretForCurWeapon();
