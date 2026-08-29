@@ -48,6 +48,12 @@
 // style word at this+0x3C and writes the enabled-text colours at +0x18C and
 // +0x190, where this tree lands them at +0x38, +0x188 and +0x18C.
 #define BFME_WIN_STYLE(w)          (*(UnsignedInt *)((UnsignedByte *)(w) + 0x3c))
+// The rest of the class BFME moves.  Four BFME-only members are inserted --
+// reference/shims/gamewindow names them at +0x04, +0x1DC, +0x1F0 and +0x1F4 --
+// so the displacement is CUMULATIVE: +4 at the front, +8 through the callback
+// block, +16 from the sibling pointers on.  Every offset below is retail's,
+// read from the accessor body that proves it.
+#define BFME_WIN_AT(w, off, type) (*(type *)((UnsignedByte *)(w) + (off)))
 #define BFME_WIN_STATUS(w)         (*(Int *)((UnsignedByte *)(w) + 0x08))
 #define BFME_WIN_SIZE_X(w)         (*(Int *)((UnsignedByte *)(w) + 0x0c))
 #define BFME_WIN_SIZE_Y(w)         (*(Int *)((UnsignedByte *)(w) + 0x10))
@@ -696,11 +702,10 @@ UnsignedInt GameWindow::winGetStatus( void )
 /** Returns a window's style flags. */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetStyle@GameWindow@@QAEIXZ present-unmatched
 UnsignedInt GameWindow::winGetStyle( void )
 {
 
-	return m_instData.m_style;
+	return BFME_WIN_AT(this, 0x3c, UnsignedInt);
 
 }  // end WinGetStyle
 
@@ -949,11 +954,10 @@ Color GameWindow::winGetEnabledTextColor( void )
 /** Get the enabled text color */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetEnabledTextBorderColor@GameWindow@@QAEHXZ present-unmatched
 Color GameWindow::winGetEnabledTextBorderColor( void )
 {
 
-	return m_instData.m_enabledText.borderColor;
+	return BFME_WIN_AT(this, 0x190, Color);
 
 }  // end winGetEnabledTextBorderColor
 
@@ -1065,11 +1069,10 @@ Int GameWindow::winSetInstanceData_ZHReference( WinInstanceData *data )
 /** Return pointer to the instance data for this window */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetInstanceData@GameWindow@@QAEPAVWinInstanceData@@XZ present-unmatched
 WinInstanceData *GameWindow::winGetInstanceData( void )
 {
 
-	return &m_instData;
+	return (WinInstanceData *)((UnsignedByte *)this + 0x30);
 
 }  // end WinGetInstanceData
 
@@ -1077,11 +1080,10 @@ WinInstanceData *GameWindow::winGetInstanceData( void )
 /** Return the user data stored */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetUserData@GameWindow@@QAEPAXXZ present-unmatched
 void *GameWindow::winGetUserData( void )
 {
 
-	return m_userData;
+	return BFME_WIN_AT(this, 0x2c, void *);
 
 }  // end WinGetUserData
 
@@ -1123,11 +1125,10 @@ Int GameWindow::winSetWindowId( Int id )
 /** Gets the window's id */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetWindowId@GameWindow@@QAEHXZ present-unmatched
 Int GameWindow::winGetWindowId( void )
 {
 
-	return m_instData.m_id;
+	return BFME_WIN_AT(this, 0x34, Int);
 
 }  // end WinGetWindowId
 
@@ -1238,11 +1239,10 @@ Int GameWindow::winSetParent( GameWindow *parent )
 /** Gets the window's parent */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetParent@GameWindow@@QAEPAV1@XZ present-unmatched
 GameWindow *GameWindow::winGetParent( void )
 {
 
-	return m_parent;
+	return BFME_WIN_AT(this, 0x200, GameWindow *);
 
 }  // end WinGetParent
 
@@ -1273,11 +1273,10 @@ Bool GameWindow::winIsChild( GameWindow *child )
 /** Get the child window of this window */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetChild@GameWindow@@QAEPAV1@XZ present-unmatched
 GameWindow *GameWindow::winGetChild( void )
 {
 
-	return m_child;
+	return BFME_WIN_AT(this, 0x204, GameWindow *);
 
 }  // end WinGetChild
 
@@ -1324,11 +1323,10 @@ void GameWindow::winSetNext( GameWindow *next )
 /** Gets the next window */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetNext@GameWindow@@QAEPAV1@XZ present-unmatched
 GameWindow *GameWindow::winGetNext( void )
 {
 
-	return m_next;
+	return BFME_WIN_AT(this, 0x1f8, GameWindow *);
 
 }  // end winGetNext
 
@@ -1348,11 +1346,10 @@ void GameWindow::winSetPrev( GameWindow *prev )
 /** Get the previous window */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetPrev@GameWindow@@QAEPAV1@XZ present-unmatched
 GameWindow *GameWindow::winGetPrev( void )
 {
 
-	return m_prev;
+	return BFME_WIN_AT(this, 0x1fc, GameWindow *);
 
 }  // end winGetPrev
 
@@ -1384,30 +1381,27 @@ void GameWindow::winSetLayout( WindowLayout *layout )
 /** Get layout this window is a part of, if any */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetLayout@GameWindow@@QAEPAVWindowLayout@@XZ present-unmatched
 WindowLayout *GameWindow::winGetLayout( void )
 {
-	return m_layout;
+	return BFME_WIN_AT(this, 0x210, WindowLayout *);
 }
 
 // GameWindow::winGetNextInLayout =============================================
 /** Get next window in layout list if any */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetNextInLayout@GameWindow@@QAEPAV1@XZ present-unmatched
 GameWindow *GameWindow::winGetNextInLayout( void )
 {
-	return m_nextLayout;
+	return BFME_WIN_AT(this, 0x208, GameWindow *);
 }
 
 // GameWindow::winGetPrevInLayout =============================================
 /** Get prev window in layout list if any */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetPrevInLayout@GameWindow@@QAEPAV1@XZ present-unmatched
 GameWindow *GameWindow::winGetPrevInLayout( void )
 {
-	return m_prevLayout;
+	return BFME_WIN_AT(this, 0x20c, GameWindow *);
 }
 
 // GameWindow::winSetSystemFunc ===============================================
