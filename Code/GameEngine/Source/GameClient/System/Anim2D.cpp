@@ -269,6 +269,7 @@ void Anim2D::randomizeCurrentFrame( void )
 	setCurrentFrame( GameClientRandomValue( 0, m_template->getNumFrames() - 1 ) );
 
 }  // end randomizeCurrentFrame
+#line 273
 
 // ------------------------------------------------------------------------------------------------
 /** Reset this animation instance to the "start" of the animation */

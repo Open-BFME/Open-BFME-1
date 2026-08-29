@@ -26,6 +26,7 @@ int GetClientRandomNumberReal(lua_State *state)
 	}
 	return 1;
 }
+#line 30
 
 enum KindOfType { KINDOF_INVALID = -1 };
 

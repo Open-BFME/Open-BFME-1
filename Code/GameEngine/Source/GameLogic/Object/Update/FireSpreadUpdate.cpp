@@ -200,6 +200,7 @@ UnsignedInt FireSpreadUpdate::calcNextSpreadDelay()
 		delay = 1;
 	return delay;
 }
+#line 204
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */
