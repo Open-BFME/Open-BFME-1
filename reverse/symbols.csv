@@ -73108,6 +73108,7 @@ name,address,notes
 ?bfmeFd1148@BfmeS1148@@QAEDXZ,0x00001BE5,pin
 ?bfmeFill1028@BfmeSub1028@@QAEXPAH0@Z,0x00021562,pin
 ?bfmeFill1031@@YAXPAVBfmeG1031@@PAH@Z,0x000139BC,pin
+?bfmeFill1172@BfmeF1172@@QAEXPAH@Z,0x009EE0F0,pin
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
 ?bfmeFind1002@BfmeA1002@@QAEPAUBfmeX1002@@PAUBfmeArg1002@@@Z,0x0003F5DA,pin
 ?bfmeFind1004@BfmeHold1004@@QAEPAVBfmeX1004@@XZ,0x0000D3B9,pin
@@ -80127,6 +80128,7 @@ __imp__bfmeCmpDYF,0x00F5933C,pin
 __imp__bfmeCpyDYC,0x00F593C8,pin
 __imp__bfmeCvtDXI,0x00F59384,pin
 __imp__bfmeDoDWH@0,0x00F596D8,pin
+__imp__bfmeEnter1172@4,0x00F58D18,pin
 __imp__bfmeEnterDVC@4,0x00F58D18,pin
 __imp__bfmeEnterDWA@4,0x00F58D18,pin
 __imp__bfmeEnterDWD@4,0x00F58D18,pin
@@ -80138,6 +80140,7 @@ __imp__bfmeFreeDYC,0x00F593A8,pin
 __imp__bfmeIncDYE@4,0x00F58E5C,pin
 __imp__bfmeInitDWA@4,0x00F58E5C,pin
 __imp__bfmeInitDXB@4,0x00F58D0C,pin
+__imp__bfmeLeave1172@4,0x00F58E74,pin
 __imp__bfmeLeaveDVC@4,0x00F58E74,pin
 __imp__bfmeLeaveDWD@4,0x00F58E74,pin
 __imp__bfmeMaskDXF@4,0x00F58DAC,pin
