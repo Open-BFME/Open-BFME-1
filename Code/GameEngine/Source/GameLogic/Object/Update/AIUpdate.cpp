@@ -304,8 +304,14 @@ public:
 	Int m_appearance;					///< retail this+0x70
 };
 
-// BFME numbers LOCO_HOVER 2 and LOCO_WINGS 3; the reference enum has 3 and 5.
-enum { BFME_LOCO_HOVER = 2, BFME_LOCO_WINGS = 3 };
+// The two locomotor appearance values these bodies test. Only the VALUES are
+// proven; the names are not. This file's donors called them LOCO_HOVER and
+// LOCO_WINGS against the reference enum's 3 and 5, but Drawable.cpp's
+// calcPhysicsXform jump table -- which is the only place the whole enum is
+// visible at once -- numbers them with the reference's own ordering, where 2 and
+// 3 are TREADS and HOVER. The two readings cannot both be right and neither
+// body's bytes decide it, so the values are named for what they are.
+enum { BFME_LOCO_APPEARANCE_2 = 2, BFME_LOCO_APPEARANCE_3 = 3 };
 
 // BFME's AI state ids are not the reference enum's: it has no ENTER_HORDE,
 // ENTER_GARRISON or ENTER_TRANSPORT and numbers the rest differently.
@@ -3110,11 +3116,11 @@ Bool AIUpdateInterface::isAircraftThatAdjustsDestination(void) const
 		return FALSE;	// No loco, so we aren't moving.
 	}
 
-	if (curLocomotor->getAppearance() == BFME_LOCO_HOVER) 
+	if (curLocomotor->getAppearance() == BFME_LOCO_APPEARANCE_2) 
 	{
 		return TRUE;	// Hover adjusts.
 	}
-	if (curLocomotor->getAppearance() == BFME_LOCO_WINGS)
+	if (curLocomotor->getAppearance() == BFME_LOCO_APPEARANCE_3)
 	{
 		return TRUE; // wings adjusts.
 	}
@@ -3139,7 +3145,7 @@ Bool AIUpdateInterface::getTreatAsAircraftForLocoDistToGoal() const
 		treatAsAircraft = TRUE;
 	}
 	if (fields->m_curLocomotor &&
-			reinterpret_cast<BFMELocomotorOverride *>( fields->m_curLocomotor )->getAppearance() == BFME_LOCO_HOVER) 
+			reinterpret_cast<BFMELocomotorOverride *>( fields->m_curLocomotor )->getAppearance() == BFME_LOCO_APPEARANCE_2) 
 	{
 		// Hovercrafts are very sloppy.  So use aircraft tests for distance to goal.  jba.
 		treatAsAircraft = TRUE;
