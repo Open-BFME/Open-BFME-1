@@ -8,6 +8,10 @@ public:
 	{
 		m_bfmeTag = 0;
 	}
+	BfmeAllocL(const BfmeAllocL &that)
+	{
+		m_bfmeTag = that.m_bfmeTag;
+	}
 
 	char m_bfmeTag;
 };
@@ -19,6 +23,12 @@ public:
 };
 
 void __cdecl bfmeFreeScalar(void *block);				// retail 0x00881EB0
+void j_00036e9e(void);
+
+struct BfmeDtorThunk
+{
+	void destroy(void);
+};
 
 // The return byte keeps the by-value allocator live through the shared retail
 // epilogue; its only known caller intentionally ignores the value.
