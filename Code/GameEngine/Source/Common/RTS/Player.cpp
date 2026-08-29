@@ -3907,10 +3907,13 @@ static void localApplyBattlePlanBonusesToObject( Object *obj, void *userData )
 //New object or converted object gaining our current battle plan bonuses.
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Player_becomingTeamMember_Thunk.cpp
-// ?applyBattlePlanBonusesForObject@Player@@QBEXPAVObject@@@Z present-unmatched
+// BFME keeps m_battlePlanBonuses at Player+0x70; the vendored class lands it
+// elsewhere.
+#define BFME_BATTLE_PLAN_BONUSES(p) (*(BattlePlanBonuses *const *)((const UnsignedByte *)(p) + 0x70))
+
 void Player::applyBattlePlanBonusesForObject( Object *obj ) const
 {
-	localApplyBattlePlanBonusesToObject( obj, m_battlePlanBonuses );
+	localApplyBattlePlanBonusesToObject( obj, BFME_BATTLE_PLAN_BONUSES(this) );
 }
 
 //-------------------------------------------------------------------------------------------------
