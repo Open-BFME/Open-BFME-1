@@ -79969,3 +79969,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??$_Construct@VOpen2Elem247180@@V1@@_STL@@YAXPAVOpen2Elem247180@@ABV1@@Z,0x00028308,Open2 0x00247180 vector element construct (ILT)
 ?_M_clear@?$vector@VOpen2Elem247180@@V?$allocator@VOpen2Elem247180@@@_STL@@@_STL@@IAEXXZ,0x00022534,Open2 0x00247180 vector clear (ILT)
 ??4Open2Stats6589E0@@QAEAAV0@ABV0@@Z,0x0001C783,Open2 0x006589E0 stats assignment (ILT)
+?setGroup@BfmeRankTransitionHandler@@QAEXVAsciiString@@H@Z,0x00045C28,Open-BFME5 ILT reached by ControlBar::onPlayerRankChanged; BFME setGroup takes a second always-zero argument the vendored one-argument declaration cannot spell, so it is called through a view; address from the donor and byte-proved by the rel32
