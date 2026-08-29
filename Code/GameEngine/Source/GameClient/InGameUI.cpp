@@ -1107,7 +1107,6 @@ static BfmeInGameUIIdleWorkerView *bfmeIdleWorkerView(InGameUI *ui)
 //-------------------------------------------------------------------------------------------------
 /** Parse MouseCursor entry */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/INIParseInGameUIDefinitionThunk.cpp
 void INI::parseInGameUIDefinition( INI* ini )
 {
 	if( TheInGameUI )
@@ -7824,7 +7823,6 @@ void InGameUI::militarySubtitle( const AsciiString& label, Int duration )
 // ------------------------------------------------------------------------------------------------
 // InGameUI::removeMilitarySubtitle
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_removeMilitarySubtitleMethodThunk.cpp
 // BFME's record drops the ICoord2D position the ZH struct keeps between the
 // index and the array, so displayStrings starts at +0x08 rather than +0x10,
 // and it carries one more display string at +0x28 that the reference body
