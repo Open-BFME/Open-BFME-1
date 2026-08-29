@@ -97,8 +97,8 @@ void AsciiString::freeBytes(void)
 
 // -----------------------------------------------------
 #ifdef _DEBUG
-// byte-exact reconstruction: Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp
-// ?validate@AsciiString@@ present-unmatched
+// (folded home from AudioEventRTS.cpp, which no longer points here)
+// stale marker removed: ?validate@AsciiString@@ABEXXZ is matched from here
 void AsciiString::validate() const
 {
 	if (!m_data) return;
