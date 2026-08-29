@@ -988,6 +988,38 @@ struct BfmeNetCommandRef
 	UnsignedByte m_relay;
 };
 
+// BFME packs the destination port next to the address instead of leaving it
+// after m_lastFrame, so every member from m_numCommands on sits later than the
+// reference class puts it: four bytes for the two words, two for the trailing
+// bytes.
+struct BfmeNetPacketFields
+{
+	UnsignedByte m_unreconstructed_00[0x1f0];
+	NetCommandRef *m_lastCommand;			///< retail this+0x1f0
+	UnsignedInt m_lastFrame;			///< retail this+0x1f4
+	UnsignedShort m_lastCommandID;			///< retail this+0x1f8
+	UnsignedByte m_lastPlayerID;			///< retail this+0x1fa
+	UnsignedByte m_lastCommandType;			///< retail this+0x1fb
+	UnsignedByte m_lastRelay;			///< retail this+0x1fc
+};
+
+// BFME's string buffers cache the character count in the block header, so its
+// getLength() is a two-byte load; the reference header has no such field and
+// its getLength() calls strlen. Every body below that measures a string a
+// message returns reads the cached count instead.
+struct BfmeStringData
+{
+	UnsignedShort m_refCount;
+	UnsignedShort m_numCharsAllocated;
+	UnsignedShort m_len;				///< retail m_data+0x04
+};
+
+static Int bfmeStringLength(const UnicodeString &str)
+{
+	BfmeStringData *data = *(BfmeStringData * const *)&str;
+	return data ? data->m_len : 0;
+}
+
 // ?FillBufferWithAckCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
 void NetPacket::FillBufferWithAckCommand(UnsignedByte *buffer, NetCommandRef *msg) {
 //		DEBUG_LOG(("NetPacket::FillBufferWithAckCommand - adding ack for command %d for player %d\n", cmdMsg->getCommandID(), ((BfmeNetCommandRef *)msg)->m_command->getPlayerID()));
@@ -3187,19 +3219,19 @@ Bool NetPacket::addProgressMessage(NetCommandRef *msg) {
 /**
  * Returns true if there is room in the packet for this command.
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_isRoomForProgressFamily.cpp
-// ?isRoomForProgressMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
+// ?isRoomForProgressMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z
 Bool NetPacket::isRoomForProgressMessage(NetCommandRef *msg) {
+	BfmeNetPacketFields *self = (BfmeNetPacketFields *)this;
 	Int len = 0;
-	NetProgressCommandMsg *cmdMsg = (NetProgressCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
+	NetProgressCommandMsg *cmdMsg = (NetProgressCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
+	if (self->m_lastCommandType != cmdMsg->getNetCommandType()) {
 		++len;
 		len += sizeof(UnsignedByte);
 	}
-	if (m_lastRelay != msg->getRelay()) {
+	if (self->m_lastRelay != ((BfmeNetCommandRef *)msg)->m_relay) {
 		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
 	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
+	if (self->m_lastPlayerID != cmdMsg->getPlayerID()) {
 		++len;
 		len += sizeof(UnsignedByte);
 	}
@@ -3395,26 +3427,26 @@ Bool NetPacket::addDisconnectChatCommand(NetCommandRef *msg) {
 	return FALSE;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_isRoomForFileAndChat.cpp
-// ?isRoomForDisconnectChatMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
+// ?isRoomForDisconnectChatMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z
 Bool NetPacket::isRoomForDisconnectChatMessage(NetCommandRef *msg) {
+	BfmeNetPacketFields *self = (BfmeNetPacketFields *)this;
 	Int len = 0;
-	NetDisconnectChatCommandMsg *cmdMsg = (NetDisconnectChatCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
+	NetDisconnectChatCommandMsg *cmdMsg = (NetDisconnectChatCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
+	if (self->m_lastCommandType != cmdMsg->getNetCommandType()) {
 		++len;
 		len += sizeof(UnsignedByte);
 	}
-	if (m_lastRelay != msg->getRelay()) {
+	if (self->m_lastRelay != ((BfmeNetCommandRef *)msg)->m_relay) {
 		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
 	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
+	if (self->m_lastPlayerID != cmdMsg->getPlayerID()) {
 		++len;
 		len += sizeof(UnsignedByte);
 	}
 
 	++len; // the 'D'
 	len += sizeof(UnsignedByte); // string length
-	UnsignedByte textLen = cmdMsg->getText().getLength();
+	UnsignedByte textLen = bfmeStringLength(cmdMsg->getText());
 	len += textLen * sizeof(UnsignedShort);
 	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
 		return FALSE;
@@ -3515,34 +3547,34 @@ Bool NetPacket::addChatCommand(NetCommandRef *msg) {
 	return FALSE;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_isRoomForFileAndChat.cpp
-// ?isRoomForChatMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
+// ?isRoomForChatMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z
 Bool NetPacket::isRoomForChatMessage(NetCommandRef *msg) {
+	BfmeNetPacketFields *self = (BfmeNetPacketFields *)this;
 	Bool needNewCommandID = FALSE;
 	Int len = 0;
-	NetChatCommandMsg *cmdMsg = (NetChatCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
+	NetChatCommandMsg *cmdMsg = (NetChatCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
+	if (self->m_lastCommandType != cmdMsg->getNetCommandType()) {
 		++len;
 		len += sizeof(UnsignedByte);
 	}
-	if (m_lastFrame != cmdMsg->getExecutionFrame()) {
+	if (self->m_lastFrame != cmdMsg->getExecutionFrame()) {
 		len += sizeof(UnsignedInt) + sizeof(UnsignedByte);
 	}
-	if (m_lastRelay != msg->getRelay()) {
+	if (self->m_lastRelay != ((BfmeNetCommandRef *)msg)->m_relay) {
 		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
 	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
+	if (self->m_lastPlayerID != cmdMsg->getPlayerID()) {
 		++len;
 		len += sizeof(UnsignedByte);
 		needNewCommandID = TRUE;
 	}
-	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
+	if (((self->m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
 		len += sizeof(UnsignedShort) + sizeof(UnsignedByte);
 	}
 
 	++len; // the 'D'
 	len += sizeof(UnsignedByte); // string length
-	UnsignedByte textLen = cmdMsg->getText().getLength();
+	UnsignedByte textLen = bfmeStringLength(cmdMsg->getText());
 	len += textLen * sizeof(UnsignedShort);
 	len += sizeof(Int); // playerMask
 	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
@@ -4449,28 +4481,28 @@ Bool NetPacket::addPlayerLeaveCommand(NetCommandRef *msg) {
 /**
  * Returns true if there is enough room in the packet to fit this message.
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_isRoomForProgressFamily.cpp
-// ?isRoomForPlayerLeaveMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
+// ?isRoomForPlayerLeaveMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z
 Bool NetPacket::isRoomForPlayerLeaveMessage(NetCommandRef *msg) {
+	BfmeNetPacketFields *self = (BfmeNetPacketFields *)this;
 	Int len = 0;
 	Bool needNewCommandID = FALSE;
-	NetPlayerLeaveCommandMsg *cmdMsg = (NetPlayerLeaveCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
+	NetPlayerLeaveCommandMsg *cmdMsg = (NetPlayerLeaveCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
+	if (self->m_lastCommandType != cmdMsg->getNetCommandType()) {
 		++len;
 		len += sizeof(UnsignedByte);
 	}
-	if (m_lastRelay != msg->getRelay()) {
+	if (self->m_lastRelay != ((BfmeNetCommandRef *)msg)->m_relay) {
 		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
 	}
-	if (m_lastFrame != cmdMsg->getExecutionFrame()) {
+	if (self->m_lastFrame != cmdMsg->getExecutionFrame()) {
 		len += sizeof(UnsignedInt) + sizeof(UnsignedByte);
 	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
+	if (self->m_lastPlayerID != cmdMsg->getPlayerID()) {
 		++len;
 		len += sizeof(UnsignedByte);
 		needNewCommandID = TRUE;
 	}
-	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
+	if (((self->m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
 		len += sizeof(UnsignedShort) + sizeof(UnsignedByte);
 	}
 
@@ -4761,15 +4793,6 @@ struct BfmeNetAckCommandMsg
 {
 	UnsignedByte m_unreconstructed_00[0x20];
 	UnsignedInt m_ackPlayerID;
-};
-
-// BFME packs the destination port next to the address instead of leaving it
-// after m_lastFrame, so every member from m_numCommands on sits four bytes
-// later than the reference class puts it: m_lastCommand is at +0x1f0.
-struct BfmeNetPacketFields
-{
-	UnsignedByte m_unreconstructed_00[0x1f0];
-	NetCommandRef *m_lastCommand;
 };
 
 // ?isAckBothRepeat@NetPacket@@IAE_NPAVNetCommandRef@@@Z

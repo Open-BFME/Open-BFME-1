@@ -75913,7 +75913,9 @@ name,address,notes
 ?getPlayerStructureBounds@AIPlayer@@SAXPAURegion2D@@H@Z,0x000362AA,Open-BFME5 ILT at guardSupplyCenter 0x0016694A; static helper receives the local bounds and enemy player index
 ?getPoints@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,0x0009C410,by-value side prefix + "Points" at VA 0x01080498 then getInt ILT 0x000443B9 (pinned) -> 0x000A9490 with default 0; ret 4; ZH SkirmishBattleHonors::getPoints
 ?getPortableFilename@NetFileAnnounceCommandMsg@@QAE?AV?$StringBase@D@@XZ,0x0003D50F,ILT thunk to 0x0067D2E0; NetPacket::GetFileAnnounceCommandSize at 0x0067D460 calls it where Zero Hour calls getPortableFilename
+?getPortableFilename@NetFileAnnounceCommandMsg@@QAE?AVAsciiString@@XZ,0x0003D50F,ILT thunk to 0x0067D2E0; same entry as the StringBase<char> spelling, which is how BFME returns AsciiString
 ?getPortableFilename@NetFileCommandMsg@@QAE?AV?$StringBase@D@@XZ,0x00044323,ILT thunk to 0x0067D250; NetPacket::GetFileCommandSize at 0x0067D410 calls it beside the ledgered getFileLength on the same class
+?getPortableFilename@NetFileCommandMsg@@QAE?AVAsciiString@@XZ,0x00044323,ILT thunk to 0x0067D250; same entry as the StringBase<char> spelling, which is how BFME returns AsciiString
 ?getPosition@BFMERopeDrawable@@QBEPBUCoord3D@@XZ,0x0004B12D,retail Drawable::getPosition ILT thunk
 ?getPreferredHeight@Locomotor@@QBEMXZ,0x0002ECAD,Open-BFME5 ILT thunk to four-byte body 0x001B46A0; reads Locomotor m_preferredHeight at +0x3C as established by the BFME locomotor layout shim
 ?getPristineBonePositions@BFMEDrawableBoneQuery@@QBEHPBDHPAUCoord3D@@PAVMatrix3D@@HH@Z,0x0002319B,BFME Drawable::getPristineBonePositions 6-arg (ret 0x18); thunk to 0x413850
@@ -75956,6 +75958,7 @@ name,address,notes
 ?getTeamAsAIGroup@Team@@QAEXPAVAIGroup@@@Z,0x00022EC1,doTeamAttackNamed BFME Team::getTeamAsAIGroup thunk
 ?getTerrainColorAt@WorldHeightMap@@QAEXMMPAURGBColor@@@Z,0x007477E0,thunk-resolved body (via 0x197ae)
 ?getText@INILineBuffer@@QBEPBDH@Z,0x009CBC60,the INI line array accessor readLine copies from
+?getText@NetChatCommandMsg@@QAE?AVUnicodeString@@XZ,0x00025338,ILT thunk; the by-value UnicodeString getter NetPacket::isRoomForChatMessage calls, beside the ledgered NetDisconnectChatCommandMsg twin
 ?getText@NetDisconnectChatCommandMsg@@QAE?AVUnicodeString@@XZ,0x00015901,ILT thunk; the by-value UnicodeString getter ConnectionManager::processDisconnectChat calls on its message
 ?getText@WinInstanceData@@QAE?AVUnicodeString@@XZ,0x0003E112,Open-BFME5 ILT; called by ?winGetText@GameWindow@@QAE?AVUnicodeString@@XZ at 0x005CB9F0
 ?getTexture@BFMEShadowManagerLayout@@QAEPAVW3DShadowTexture@@PBD@Z,0x0004088B,retail projected-shadow texture lookup ILT thunk
