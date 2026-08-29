@@ -80261,3 +80261,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?release@DcPool@@QAEXPAX@Z,0x0005C0C0,HDC pool release; body at 0x0005C0C0 is 52/53 bytes exact (retail CALLs DeleteDC where MSVC tail-jumps)
