@@ -6684,13 +6684,66 @@ void Drawable::updateDrawableClipStatus( UnsignedInt shotsRemaining, UnsignedInt
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Drawable_updateDrawableSupplyStatus.cpp
-// ?updateDrawableSupplyStatus@Drawable@@QAEXHH@Z present-unmatched
+// BFME reads the draw-module list straight off Drawable+0x150 rather than
+// calling getDrawModules, and getObjectDrawInterface is vtable slot 39 (+0x9c)
+// of the draw module where the reference class puts it at +0x50.
+struct BfmeDrawableDrawModules
+{
+	UnsignedByte m_unreconstructed_000[0x150];
+	DrawModule **m_drawModules;					///< retail this+0x150
+};
+
+class BfmeObjectDrawModule
+{
+public:
+	virtual void bfmeSlot00() = 0;
+	virtual void bfmeSlot04() = 0;
+	virtual void bfmeSlot08() = 0;
+	virtual void bfmeSlot0C() = 0;
+	virtual void bfmeSlot10() = 0;
+	virtual void bfmeSlot14() = 0;
+	virtual void bfmeSlot18() = 0;
+	virtual void bfmeSlot1C() = 0;
+	virtual void bfmeSlot20() = 0;
+	virtual void bfmeSlot24() = 0;
+	virtual void bfmeSlot28() = 0;
+	virtual void bfmeSlot2C() = 0;
+	virtual void bfmeSlot30() = 0;
+	virtual void bfmeSlot34() = 0;
+	virtual void bfmeSlot38() = 0;
+	virtual void bfmeSlot3C() = 0;
+	virtual void bfmeSlot40() = 0;
+	virtual void bfmeSlot44() = 0;
+	virtual void bfmeSlot48() = 0;
+	virtual void bfmeSlot4C() = 0;
+	virtual void bfmeSlot50() = 0;
+	virtual void bfmeSlot54() = 0;
+	virtual void bfmeSlot58() = 0;
+	virtual void bfmeSlot5C() = 0;
+	virtual void bfmeSlot60() = 0;
+	virtual void bfmeSlot64() = 0;
+	virtual void bfmeSlot68() = 0;
+	virtual void bfmeSlot6C() = 0;
+	virtual void bfmeSlot70() = 0;
+	virtual void bfmeSlot74() = 0;
+	virtual void bfmeSlot78() = 0;
+	virtual void bfmeSlot7C() = 0;
+	virtual void bfmeSlot80() = 0;
+	virtual void bfmeSlot84() = 0;
+	virtual void bfmeSlot88() = 0;
+	virtual void bfmeSlot8C() = 0;
+	virtual void bfmeSlot90() = 0;
+	virtual void bfmeSlot94() = 0;
+	virtual void bfmeSlot98() = 0;
+virtual ObjectDrawInterface *getObjectDrawInterface() = 0;	///< vtable +0x9c
+};
+
+// ?updateDrawableSupplyStatus@Drawable@@QAEXHH@Z
 void Drawable::updateDrawableSupplyStatus( Int maxSupply, Int currentSupply )
 {
-	for (DrawModule** dm = getDrawModules(); *dm; ++dm)
+	for (DrawModule** dm = ((BfmeDrawableDrawModules *)this)->m_drawModules; *dm; ++dm)
 	{
-		ObjectDrawInterface* di = (*dm)->getObjectDrawInterface();
+		ObjectDrawInterface* di = ((BfmeObjectDrawModule *)(*dm))->getObjectDrawInterface();
 		if (di)
 			di->updateDrawModuleSupplyStatus( maxSupply, currentSupply );
 	}
