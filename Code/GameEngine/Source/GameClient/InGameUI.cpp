@@ -845,7 +845,6 @@ struct BfmeNamedTimerLayout
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_addNamedTimer_Thunk.cpp
 void InGameUI::addNamedTimer( const AsciiString& timerName, const UnicodeString& text, Bool isCountdown )
 {
 	BfmeNamedTimerLayout *ui = (BfmeNamedTimerLayout *)this;
@@ -3256,7 +3255,6 @@ Coord2D InGameUI::getScrollAmount( void )
 	* is where we enable that "mode" so that we can get the additional data needed for a
 	* command from the user */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_setGUICommand_Thunk.cpp
 // The pending command is at this+0x230 and the two mouse-mode words at +0x824
 // and +0x828, which is where BFME left them; a CommandButton keeps its options
 // at +0x18, the special-power template at +0x34, the radius-cursor type at
