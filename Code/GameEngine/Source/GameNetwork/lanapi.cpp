@@ -1112,16 +1112,62 @@ struct BfmeLANGameLink
 
 #define BFME_LAN_NEXT(g) (((BfmeLANGameLink *)(g))->next)
 
+// Retail inlines the whole name comparison in LookupGame -- both
+// UnicodeString's internals (length word at +4, text at +8, L"" when the handle
+// is null) and the compare loop itself.  The mismatch branch computes the
+// difference and returns it only when non-zero, falling through to the length
+// difference otherwise: that is what puts retail's `jne` over the length
+// subtraction, where an early `return *a - *b` lays the block out after the
+// length path and jumps back to it.
+struct BfmeUnicodeStringData
+{
+	UnsignedShort m_refCount;
+	UnsignedShort m_numCharsAllocated;
+	UnsignedShort m_len;								///< retail +4
+	UnsignedShort m_pad;
+	// WideChar text[] at +8
+};
+
+#define BFME_USTR(s) (*(BfmeUnicodeStringData *const *)&(s))
+
+// __forceinline is required: MSVC will not inline a function containing a loop.
+__forceinline Int bfmeUnicodeCompare( const UnicodeString &self, const UnicodeString &that )
+{
+	Int thatLen = BFME_USTR(that) ? BFME_USTR(that)->m_len : 0;
+	const UnsignedShort *thatText = BFME_USTR(that) ? (const UnsignedShort *)(BFME_USTR(that) + 1) : (const UnsignedShort *)L"";
+	Int thisLen = BFME_USTR(self) ? BFME_USTR(self)->m_len : 0;
+	const UnsignedShort *thisText = BFME_USTR(self) ? (const UnsignedShort *)(BFME_USTR(self) + 1) : (const UnsignedShort *)L"";
+
+	Int n = thisLen < thatLen ? thisLen : thatLen;
+
+	while (n > 0)
+	{
+		if (*thisText != *thatText)
+		{
+			Int diff = *thisText - *thatText;
+			if (diff != 0)
+				return diff;
+
+			break;
+		}
+
+		++thisText;
+		++thatText;
+		--n;
+	}
+
+	return thisLen - thatLen;
+}
+
 // Misc utility functions
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_LookupGame.cpp
-// ?LookupGame@LANAPI@@UAEPAVLANGameInfo@@VUnicodeString@@@Z present-unmatched
 LANGameInfo * LANAPI::LookupGame( UnicodeString gameName )
 {
 	LANGameInfo *theGame = m_games;
 
-	while (theGame && theGame->getName() != gameName)
+	while (theGame && bfmeUnicodeCompare(theGame->getName(), gameName) != 0)
 	{
-		theGame = theGame->getNext();
+		theGame = BFME_LAN_NEXT(theGame);
 	}
 
 	return theGame; // NULL means we didn't find anything.
