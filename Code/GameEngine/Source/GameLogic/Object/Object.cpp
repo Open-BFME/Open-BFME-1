@@ -1232,18 +1232,58 @@ Bool Object::canCrushOrSquish(Object *otherObj, CrushSquishTestType testType ) c
 	return false;
 }
 
-//-------------------------------------------------------------------------------------------------
-// ?getCrusherLevel@Object@@QBEEXZ present-unmatched
-UnsignedByte Object::getCrusherLevel() const
+// BFME's ThingTemplate carries FOUR crush levels at +0x499..+0x49c, not two:
+// a mounted pair that is used when the object's mounted-condition word at
+// +0x128 has bit 11 set and the mounted level is not 0xff.
+struct BfmeCrushLevels
 {
-	return getTemplate()->getCrusherLevel();
+	unsigned char m_unreconstructed_000[0x499];
+	UnsignedByte m_crusherLevel;			///< retail this+0x499
+	UnsignedByte m_crushableLevel;			///< retail this+0x49a
+	UnsignedByte m_mountedCrusherLevel;		///< retail this+0x49b
+	UnsignedByte m_mountedCrushableLevel;		///< retail this+0x49c
+};
+
+struct BfmeObjectCrushFields
+{
+	unsigned char m_unreconstructed_000[4];
+	const Overridable *m_template;			///< retail this+0x04
+	unsigned char m_unreconstructed_008[0x128 - 8];
+	UnsignedInt m_mountedCondition;			///< retail this+0x128
+};
+
+static const BfmeCrushLevels *bfmeFinalCrushTemplate( const Object *obj )
+{
+	const Overridable *base =
+		reinterpret_cast<const BfmeObjectCrushFields *>(obj)->m_template;
+	if (base == NULL)
+		return NULL;
+
+	return reinterpret_cast<const BfmeCrushLevels *>( base->getFinalOverride() );
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getCrushableLevel@Object@@QBEEXZ present-unmatched
+// ?getCrusherLevel@Object@@QBEEXZ
+UnsignedByte Object::getCrusherLevel() const
+{
+	const BfmeCrushLevels *thingTemplate = bfmeFinalCrushTemplate( this );
+	UnsignedByte level = thingTemplate->m_mountedCrusherLevel;
+	if (level == 0xff ||
+			(reinterpret_cast<const BfmeObjectCrushFields *>(this)->m_mountedCondition & 0x800) == 0)
+		level = thingTemplate->m_crusherLevel;
+	return level;
+}
+
+//-------------------------------------------------------------------------------------------------
+// ?getCrushableLevel@Object@@QBEEXZ
 UnsignedByte Object::getCrushableLevel() const
 {
-	return getTemplate()->getCrushableLevel();
+	const BfmeCrushLevels *thingTemplate = bfmeFinalCrushTemplate( this );
+	UnsignedByte level = thingTemplate->m_mountedCrushableLevel;
+	if (level == 0xff ||
+			(reinterpret_cast<const BfmeObjectCrushFields *>(this)->m_mountedCondition & 0x800) == 0)
+		level = thingTemplate->m_crushableLevel;
+	return level;
 }
 
 
@@ -1520,22 +1560,40 @@ Weapon* Object::findWaypointFollowingCapableWeapon()
 	return m_weaponSet.findWaypointFollowingCapableWeapon();
 }
 
+// BFME reads the clip size from the weapon template at +0x4ac and asks for the
+// remaining ammo out of line, with an argument the reference class does not
+// have: whether a reloading clip counts as empty.
+struct BfmeWeaponTemplateClip
+{
+	unsigned char m_unreconstructed_000[0x4ac];
+	Int m_clipSize;					///< retail this+0x4ac
+};
+
+class BfmeAmmoPipWeapon
+{
+public:
+	UnsignedInt getRemainingAmmo( Bool countReloadingAsEmpty ) const;	///< retail ILT 0x00046f10
+
+	unsigned char m_unreconstructed_00[4];		///< the vtable pointer
+	const BfmeWeaponTemplateClip *m_template;	///< retail this+0x04
+};
+
 //=============================================================================
-// ?getAmmoPipShowingInfo@Object@@QBE_NAAH0@Z present-unmatched
+// ?getAmmoPipShowingInfo@Object@@QBE_NAAH0@Z
 Bool Object::getAmmoPipShowingInfo(Int& numTotal, Int& numFull) const
 {
 /// @todo srj -- may need to cache this inside weaponset.
-	const Weapon* w = m_weaponSet.findAmmoPipShowingWeapon();
+	const WeaponSet *weaponSet = reinterpret_cast<const WeaponSet *>(
+		reinterpret_cast<const char *>(this) + 0x264 );
+	const Weapon* w = weaponSet->findAmmoPipShowingWeapon();
 	if (w)
 	{
-		numTotal = w->getClipSize();
-		numFull = w->getRemainingAmmo();
+		const BfmeAmmoPipWeapon *weapon = reinterpret_cast<const BfmeAmmoPipWeapon *>(w);
+		numTotal = weapon->m_template->m_clipSize;
+		numFull = weapon->getRemainingAmmo(TRUE);
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
 //=============================================================================
@@ -2039,15 +2097,75 @@ void Object::attemptDamage( DamageInfo *damageInfo )
 
 }
 
+// BFME's DamageInfo is 0x5c bytes with its input half at the front -- source id
+// at +0x08, damage type at +0x10, death type at +0x18, amount at +0x1c and the
+// kill flag at +0x20 -- and its constructor is out of line, so the local needs
+// no unwind funclet. The body module is at object+0x200 with getMaxHealth at
+// vtable +0x18, and attemptDamage is the object's own virtual at vtable +0x34.
+struct BFMEDamageInfoInput
+{
+	unsigned char m_unreconstructed_00[8];
+	ObjectID m_sourceID;				///< +0x08
+	unsigned char m_unreconstructed_0c[4];
+	DamageType m_damageType;			///< +0x10
+	unsigned char m_unreconstructed_14[4];
+	DeathType m_deathType;				///< +0x18
+	Real m_amount;					///< +0x1c
+	Bool m_kill;					///< +0x20
+};
+
+struct BFMEDamageInfo
+{
+	BFMEDamageInfo();				///< retail ILT 0x0002c9d5
+
+	BFMEDamageInfoInput in;
+	unsigned char m_unreconstructed_24[0x5c - 0x24];
+};
+
+struct BFMEBodyMaxHealthShim
+{
+	virtual void bfmeSlot00() = 0;	virtual void bfmeSlot04() = 0;
+	virtual void bfmeSlot08() = 0;	virtual void bfmeSlot0C() = 0;
+	virtual void bfmeSlot10() = 0;	virtual void bfmeSlot14() = 0;
+	virtual Real getMaxHealth() const = 0;		///< vtable +0x18
+};
+
+struct BFMEObjectAttemptDamageShim
+{
+	virtual void bfmeSlot00() = 0;	virtual void bfmeSlot04() = 0;
+	virtual void bfmeSlot08() = 0;	virtual void bfmeSlot0C() = 0;
+	virtual void bfmeSlot10() = 0;	virtual void bfmeSlot14() = 0;
+	virtual void bfmeSlot18() = 0;	virtual void bfmeSlot1C() = 0;
+	virtual void bfmeSlot20() = 0;	virtual void bfmeSlot24() = 0;
+	virtual void bfmeSlot28() = 0;	virtual void bfmeSlot2C() = 0;
+	virtual void bfmeSlot30() = 0;
+	virtual void attemptDamage( BFMEDamageInfo *damageInfo ) = 0;	///< vtable +0x34
+};
+
+struct BFMEObjectBodyField
+{
+	unsigned char m_unreconstructed_000[0x200];
+	BFMEBodyMaxHealthShim *m_body;			///< retail this+0x200
+};
+
+// attemptHealing is slot 1 (+0x04) of the body module's vtable, and BFME's
+// healing damage type is 7 -- the reference enum's DAMAGE_HEALING is 10.
+struct BFMEBodyAttemptHealingShim
+{
+	virtual void bfmeSlot00() = 0;
+	virtual void attemptHealing( BFMEDamageInfo *damageInfo ) = 0;	///< vtable +0x04
+};
+
 //-------------------------------------------------------------------------------------------------
-// ?attemptHealing@Object@@QAEXMPBV1@@Z present-unmatched
+// ?attemptHealing@Object@@QAEXMPBV1@@Z
 void Object::attemptHealing(Real amount, const Object* source)
 {
-	BodyModuleInterface* body = getBodyModule();
+	BFMEBodyAttemptHealingShim *body = reinterpret_cast<BFMEBodyAttemptHealingShim *>(
+		reinterpret_cast<BFMEObjectBodyField *>(this)->m_body );
 	if (body)
 	{
-		DamageInfo damageInfo;
-		damageInfo.in.m_damageType = DAMAGE_HEALING;
+		BFMEDamageInfo damageInfo;
+		damageInfo.in.m_damageType = (DamageType)7;		// BFME's DAMAGE_HEALING
 		damageInfo.in.m_deathType = DEATH_NONE;
 		damageInfo.in.m_sourceID = source ? source->getID() : INVALID_ID;
 		damageInfo.in.m_amount = amount;
@@ -2116,57 +2234,6 @@ Real Object::estimateDamage( DamageInfoInput& damageInfo ) const
 /** Do so much damage to an object that it will certainly die */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_kill.cpp
-// BFME's DamageInfo is 0x5c bytes with its input half at the front -- source id
-// at +0x08, damage type at +0x10, death type at +0x18, amount at +0x1c and the
-// kill flag at +0x20 -- and its constructor is out of line, so the local needs
-// no unwind funclet. The body module is at object+0x200 with getMaxHealth at
-// vtable +0x18, and attemptDamage is the object's own virtual at vtable +0x34.
-struct BFMEDamageInfoInput
-{
-	unsigned char m_unreconstructed_00[8];
-	ObjectID m_sourceID;				///< +0x08
-	unsigned char m_unreconstructed_0c[4];
-	DamageType m_damageType;			///< +0x10
-	unsigned char m_unreconstructed_14[4];
-	DeathType m_deathType;				///< +0x18
-	Real m_amount;					///< +0x1c
-	Bool m_kill;					///< +0x20
-};
-
-struct BFMEDamageInfo
-{
-	BFMEDamageInfo();				///< retail ILT 0x0002c9d5
-
-	BFMEDamageInfoInput in;
-	unsigned char m_unreconstructed_24[0x5c - 0x24];
-};
-
-struct BFMEBodyMaxHealthShim
-{
-	virtual void bfmeSlot00() = 0;	virtual void bfmeSlot04() = 0;
-	virtual void bfmeSlot08() = 0;	virtual void bfmeSlot0C() = 0;
-	virtual void bfmeSlot10() = 0;	virtual void bfmeSlot14() = 0;
-	virtual Real getMaxHealth() const = 0;		///< vtable +0x18
-};
-
-struct BFMEObjectAttemptDamageShim
-{
-	virtual void bfmeSlot00() = 0;	virtual void bfmeSlot04() = 0;
-	virtual void bfmeSlot08() = 0;	virtual void bfmeSlot0C() = 0;
-	virtual void bfmeSlot10() = 0;	virtual void bfmeSlot14() = 0;
-	virtual void bfmeSlot18() = 0;	virtual void bfmeSlot1C() = 0;
-	virtual void bfmeSlot20() = 0;	virtual void bfmeSlot24() = 0;
-	virtual void bfmeSlot28() = 0;	virtual void bfmeSlot2C() = 0;
-	virtual void bfmeSlot30() = 0;
-	virtual void attemptDamage( BFMEDamageInfo *damageInfo ) = 0;	///< vtable +0x34
-};
-
-struct BFMEObjectBodyField
-{
-	unsigned char m_unreconstructed_000[0x200];
-	BFMEBodyMaxHealthShim *m_body;			///< retail this+0x200
-};
-
 // ?kill@Object@@QAEXW4DamageType@@W4DeathType@@@Z
 void Object::kill( DamageType damageType, DeathType deathType )
 {
