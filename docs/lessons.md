@@ -2135,3 +2135,52 @@ as loose objects until gc, and `find .git/objects -type f -printf '%T@ %p\n'`
 sorted by time finds them far faster than `git fsck`, which times out on this
 repo. Note `find -newermt` silently returned nothing here; compare the numeric
 `%T@` against a cutoff instead.
+
+## A GREEN build under a layout define is not evidence the define is right
+
+`/DBFME_MODULE_NO_MPO` drops MemoryPoolObject from Module's base list, removing a
+vptr and shifting every member below by four. Three destinations, same family,
+three different answers:
+
+  W3DPropDraw and CreateObjectDie: the define IS the whole fix, no view, no shim.
+  InstantDeathBehavior and BridgeTowerBehavior: RED under it. Each has an
+    already-matched this-adjusting interface getter in the same TU, and a
+    this-adjustment encodes base offsets directly -- so those matched rows are
+    positive proof these objects DO carry the vptr the define removes.
+  AssaultTransportAIUpdate: stays GREEN under the define and gets WORSE --
+    ctor miss(7) without it, miss(11) with it.
+
+That last one is the trap. Nothing in that TU contradicted the define, so the
+build had nothing to say; only the screen did. Take the miss count, not the exit
+code, as the evidence that a layout define belongs. And note the shape of the
+proof in the RED pair: a matched this-adjusting thunk in the same TU is a
+layout witness you already own.
+
+## When a diff lands on a masked DIR32, read the relocations, not the disassembly
+
+explain_mismatch rendered two vptr stores as `mov DWORD PTR [esi+0x4],0x5ec68b00`
+followed by stray `.byte`s, because relocation targets are zero-filled in the
+object and the disassembler ran off the end of the immediate. Read as a mystery
+member, it sent an agent looking for a field that does not exist.
+`build.read_object_symbol_bytes` returns `(body, relocs)`; the relocation list
+named `??_7W3DPropDraw@@6BMemoryPoolObject@@@` and `??_7W3DPropDraw@@6BSnapshot@@@`
+outright and the diagnosis was immediate.
+
+## Rank a cluster with ONE compile before applying anything
+
+Build the destination once, then for each donor read its symbol out of the
+already-built .obj, mask relocations, and compare against retail. Twenty
+candidates ranked in a single build with no applies and no ledger churn. It put
+addMessageText at 64.9% agreement (landed 388/388 first try) and correctly warned
+that `update` at 19.3%, failing at offset 0 on an `and esp,-8` aligned frame, was
+a research task rather than a fold.
+
+## Fresh views need tuning ONE AT A TIME against the residue
+
+objectChangedTeam: repointing its row onto the existing body agreed on 62.4% of
+masked bytes; correcting all six known offset facts at once dropped it to 29.7%.
+The offsets were right and the spellings were wrong -- each fresh view moved
+MSVC's register allocation more than the corrected offset was worth. In the same
+file addMessageText landed first try, because its views already existed as proven
+spellings. Correct facts applied together can still go backwards; add one view,
+measure, keep or revert.
