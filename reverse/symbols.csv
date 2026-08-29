@@ -73919,6 +73919,7 @@ name,address,notes
 ?bfmeThreeLF@@YAXXZ,0x0002795D,pin
 ?bfmeThreeQE@BfmeGlobQE@@QAEXXZ,0x00003A80,pin
 ?bfmeThrow937C@@YGXI@Z,0x00AFD540,pin
+?bfmeToggle997@BfmeA997@@QAEXXZ,0x000200D1,pin
 ?bfmeTouch982C@BfmeT982@@QAEXXZ,0x0002D2C7,pin
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
 ?bfmeTry996@BfmeB996@@QAEDHHPAD@Z,0x00038163,pin
@@ -75228,6 +75229,7 @@ name,address,notes
 ?g_bfmeCFAE@@3HA,0x00EEF418,pin
 ?g_bfmeClock977@@3PAVBfmeClock977@@A,0x00EF1B40,pin
 ?g_bfmeClock983@@3PAVBfmeClock983@@A,0x00EF1B40,pin
+?g_bfmeClock997@@3PAVBfmeClock997@@A,0x00EF1464,pin
 ?g_bfmeClockAHB@@3PAUBfmeClockAHB@@A,0x00EF0898,pin
 ?g_bfmeClockAZA@@3PAUBfmeClockAZA@@A,0x00EF0898,pin
 ?g_bfmeClockBSA@@3PAUBfmeClockBSA@@A,0x00EF0898,pin
@@ -76778,6 +76780,12 @@ name,address,notes
 ?handle@Gen009EB810@@QAEXXZ,0x009EB810,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
 ?handle@Gen009F1510@@QAEXXZ,0x009F1510,address-derived callee of the load-ecx pointer tail-jump family; target read from the REL32 at its call sites
 ?handle@Gen009F5040@@QAEXXZ,0x009F5040,address-derived callee of the load-ecx pointer tail-jump family; target read from the REL32 at its call sites
+?handle@Open2Handler1292C0@@QAE_NPAVGenItem@@PA_N1@Z,0x0003D3B1,Open2 0x001292C0 BitFlags token handler (ILT)
+?handle@Open2Handler142D20@@QAE_NPAVGenItem@@PA_N1@Z,0x0004A7AF,Open2 0x00142D20 BitFlags token handler (ILT)
+?handle@Open2Handler204A80@@QAE_NPAVGenItem@@PA_N1@Z,0x0003D68B,Open2 0x00204A80 BitFlags token handler (ILT)
+?handle@Open2Handler29CE10@@QAE_NPAVGenItem@@PA_N1@Z,0x00006F78,Open2 0x0029CE10 BitFlags token handler (ILT)
+?handle@Open2Handler369790@@QAE_NPAVGenItem@@PA_N1@Z,0x0002E893,Open2 0x00369790 BitFlags token handler (ILT)
+?handle@Open2Handler61CC40@@QAE_NPAVGenItem@@PA_N1@Z,0x000341FD,Open2 0x0061CC40 BitFlags token handler (ILT)
 ?handle@Q1Callee0002E320@@QAEXH@Z,0x0002E320,address-derived callee of the sub-object forward family; target read from the REL32 at sites 0x0020A9E0 0x00280020 0x00289AE0 0x002D3530 0x002D6D40
 ?handle@Q1Callee0002EB4F@@QAEXH@Z,0x0002EB4F,address-derived callee of the sub-object forward family; target read from the REL32 at sites 0x0027FFF0 0x0020A9B0 0x00289AB0 0x002D3500 0x002D6D10
 ?handle@Q1Forwardee0000871A@@QAEXH@Z,0x0000871A,address-derived callee of the shared-store forward family; target read from the REL32 at all sixteen of its call sites
@@ -79930,9 +79938,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?handle@Open2Handler1292C0@@QAE_NPAVGenItem@@PA_N1@Z,0x0003D3B1,Open2 0x001292C0 BitFlags token handler (ILT)
-?handle@Open2Handler142D20@@QAE_NPAVGenItem@@PA_N1@Z,0x0004A7AF,Open2 0x00142D20 BitFlags token handler (ILT)
-?handle@Open2Handler204A80@@QAE_NPAVGenItem@@PA_N1@Z,0x0003D68B,Open2 0x00204A80 BitFlags token handler (ILT)
-?handle@Open2Handler29CE10@@QAE_NPAVGenItem@@PA_N1@Z,0x00006F78,Open2 0x0029CE10 BitFlags token handler (ILT)
-?handle@Open2Handler369790@@QAE_NPAVGenItem@@PA_N1@Z,0x0002E893,Open2 0x00369790 BitFlags token handler (ILT)
-?handle@Open2Handler61CC40@@QAE_NPAVGenItem@@PA_N1@Z,0x000341FD,Open2 0x0061CC40 BitFlags token handler (ILT)
