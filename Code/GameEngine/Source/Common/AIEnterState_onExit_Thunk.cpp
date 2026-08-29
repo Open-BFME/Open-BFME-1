@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD /EHs-c-
-// readable body of ?onExit@AIEnterState@@UAEXW4StateExitType@@@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Lift the AIEnterState::onExit __emit thunk to clean C++.
 //
 // Verbatim Zero Hour AIStates.cpp: chain to the base onExit, stop the pathfinder
