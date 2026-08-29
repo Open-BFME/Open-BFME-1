@@ -10,6 +10,7 @@ extern "C" void lua_pushnumber(lua_State *state, double value);
 extern "C" const char *lua_tostring(lua_State *state, int index);
 extern "C" void lua_pushnil(lua_State *state);
 extern "C" void lua_pushboolean(lua_State *state, int value);
+extern "C" void lua_pushstring(lua_State *state, const char *value);
 
 extern Real GetGameClientRandomValueReal(Real low, Real high, char *file, int line);
 
@@ -62,9 +63,33 @@ struct LuaTargetOwner
 	LuaTargetRecord *m_target;
 };
 
+class AsciiString
+{
+private:
+	struct Data
+	{
+		int m_references;
+		unsigned short m_length;
+		unsigned short m_capacity;
+		char m_text[1];
+	};
+
+public:
+	AsciiString() : m_data(0) {}
+	~AsciiString();
+	AsciiString &operator=(const AsciiString &other);
+	bool isEmpty() const { return m_data == 0 || m_data->m_length == 0; }
+	const char *str() const { return m_data->m_text; }
+
+private:
+	Data *m_data;
+};
+
 struct LuaDrawableLink
 {
-	char m_ownerPad[0x0C];
+	AsciiString m_previousAnimationState;
+	AsciiString m_transitionAnimationState;
+	AsciiString m_previousAnimation;
 	LuaTargetOwner *m_owner;
 };
 
@@ -93,5 +118,37 @@ int CurDrawableIsCurrentTargetKindof(lua_State *state)
 	}
 
 	lua_pushboolean(state, 0);
+	return 1;
+}
+
+int CurDrawablePrevAnimationState(lua_State *state)
+{
+	AsciiString previousState;
+	LuaDrawableLink *drawable = g_obj12F060C->m_drawable;
+	if (drawable != 0) {
+		previousState = drawable->m_previousAnimationState;
+	}
+
+	if (!previousState.isEmpty()) {
+		lua_pushstring(state, previousState.str());
+	} else {
+		lua_pushnil(state);
+	}
+	return 1;
+}
+
+int CurDrawablePrevAnimation(lua_State *state)
+{
+	AsciiString previousAnimation;
+	LuaDrawableLink *drawable = g_obj12F060C->m_drawable;
+	if (drawable != 0) {
+		previousAnimation = drawable->m_previousAnimation;
+	}
+
+	if (!previousAnimation.isEmpty()) {
+		lua_pushstring(state, previousAnimation.str());
+	} else {
+		lua_pushnil(state);
+	}
 	return 1;
 }
