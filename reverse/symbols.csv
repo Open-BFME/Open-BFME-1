@@ -72826,6 +72826,7 @@ name,address,notes
 ?bfmeDo1025@BfmeStore1025@@QAEXPAX@Z,0x0001D0DE,pin
 ?bfmeDo1026@BfmeStore1026@@QAEXH@Z,0x0001D0DE,pin
 ?bfmeDo1037@BfmeG1037@@QAEXHH@Z,0x00013CCD,pin
+?bfmeDo1052@BfmeH1052@@QAEXHPAVBfmeI1052@@H@Z,0x00800BD0,pin
 ?bfmeDo912C@BfmeThing912C@@QAEXPAUBfmeNode912C@@@Z,0x009F4D80,pin
 ?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
 ?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
@@ -73026,6 +73027,7 @@ name,address,notes
 ?bfmeFind1034F@BfmeTab1034@@QAEPAVBfmeN1034@@H@Z,0x0089CEF0,pin
 ?bfmeFind1037F@@YGPAVBfmeG1037@@H@Z,0x0003F5DA,pin
 ?bfmeFind1038@@YGPAVBfmeY1038@@H@Z,0x000181FB,pin
+?bfmeFind1052@BfmeI1052@@QAEHPADH@Z,0x007E8900,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
@@ -73366,6 +73368,7 @@ name,address,notes
 ?bfmeGet1026@BfmeSrc1026@@QAEHXZ,0x00020824,pin
 ?bfmeGet1040@BfmeD1040@@QAEPAUBfmeE1040@@XZ,0x00046538,pin
 ?bfmeGet1044@BfmeSrc1044@@QAEPAXXZ,0x00020D1A,pin
+?bfmeGet1052@BfmeE1052@@QAEHXZ,0x00020824,pin
 ?bfmeGet920D@BfmeX920D@@QAEPAVBfmeRes920D@@XZ,0x0002BE77,pin
 ?bfmeGet948C@BfmeGrid948C@@QAE_NH@Z,0x00017049,pin
 ?bfmeGet948D@BfmeGrid948D@@QAE_NH@Z,0x00017049,pin
@@ -73461,6 +73464,7 @@ name,address,notes
 ?bfmeHandle_00799cb0@@YAXPAVGen_00799cb0@@PAX@Z,0x0003DC7B,Open-BFME5 ILT the 22-byte submit at 0x00799CB0 calls
 ?bfmeHas1000@BfmeArg1000@@QAEDH@Z,0x00003B1B,pin
 ?bfmeHas1026@BfmeTab1026@@QAEDHH@Z,0x0001DA34,pin
+?bfmeHas1052@BfmeTab1052@@QAEDHH@Z,0x0001DA34,pin
 ?bfmeHas985C@BfmeArg985@@QAEDH@Z,0x000077B6,pin
 ?bfmeHas992C@BfmeAsk992@@QAEDXZ,0x007E88A0,pin
 ?bfmeHash00007518@@YAIII@Z,0x00007518,Open-BFME5 ILT the per-type hash helper the bfmeDiffers pair at that sentinel calls
@@ -73835,6 +73839,7 @@ name,address,notes
 ?bfmeRefreshPartitionCells@Object@@QAEXXZ,0x000292DF,Open-BFME5 ILT thunk to body 0x001BFD70; Object virtual-base lookup at +0x68 reaches friend_getPartitionData slot 4 twice then calls the combined dirty-list unlink and cell update; bfme prefix records unrecovered retail spelling
 ?bfmeReg1024@BfmeP1024@@QAEXPAVBfmeE1024@@@Z,0x009EF280,pin
 ?bfmeReg1033@@YAXP6AXXZ0@Z,0x0002FCB1,pin
+?bfmeReg1052@BfmeN1052@@QAEXPAHP6AXXZ@Z,0x00043E4B,pin
 ?bfmeRegisterDAA@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterDAB@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterDAC@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
@@ -74002,6 +74007,7 @@ name,address,notes
 ?bfmeStep1038@BfmeA1038@@QAEXXZ,0x000168C4,pin
 ?bfmeStep1040@BfmeG1040@@QAEXXZ,0x00041970,pin
 ?bfmeStep1044@BfmeD1044@@QAEXH@Z,0x000399A5,pin
+?bfmeStep1052@BfmeSubF1052@@QAEXXZ,0x000107C6,pin
 ?bfmeStep1@Gen_004410A0@@AAEXXZ,0x000459CB,Open-BFME5 ILT the three-step runner at 0x004410A0 calls first
 ?bfmeStep1@Gen_0077F000@@AAEXXZ,0x00039428,Open-BFME5 ILT the three-step runner at 0x0077F000 calls first
 ?bfmeStep1@Gen_007892D0@@AAEXXZ,0x000270FC,Open-BFME5 ILT the three-step runner at 0x007892D0 calls first
@@ -74069,6 +74075,7 @@ name,address,notes
 ?bfmeStopTwoAQA@BfmeSubAQA@@QAEXXZ,0x000263EB,pin
 ?bfmeStrERA@BfmeOtherERA@@QAEXPBD@Z,0x00888BC0,pin
 ?bfmeSwapEnds@@YAXPAPAPAVBfmeOwnedI@@0@Z,0x00032FE7,Open-BFME5 the ICF thunk (to 0x00432FE7) the swap in the clear at 0x003C1190 calls for the third pair
+?bfmeTail1052@BfmeL1052@@QAEXPAUBfmeM1052@@@Z,0x0004115A,pin
 ?bfmeTail915C@BfmeElem915C@@QAEHPAX@Z,0x00049EA4,pin
 ?bfmeTail921A@BfmeTail921A@@QAEXPAX0@Z,0x00007BCB,pin
 ?bfmeTail922A@BfmeTail922A@@QAEDXZ,0x0001773D,pin
@@ -74269,6 +74276,7 @@ name,address,notes
 ?bfmeUpdateCMB@BfmeThingCMB@@QAEXXZ,0x00032231,pin
 ?bfmeUse1026@BfmeW1026@@QAEXH@Z,0x0002B706,pin
 ?bfmeUse1035@BfmeT1035@@QAEXPAVBfmeX1035@@H@Z,0x00022372,pin
+?bfmeUse1052@BfmeJ1052@@QAEXPAH@Z,0x00046150,pin
 ?bfmeUse926B@BfmeKeyLC@@QAEXPAUBfmeNodeLC@@@Z,0x00002E69,pin
 ?bfmeUse975D@BfmeD975@@QAEDPAX@Z,0x0003E80B,pin
 ?bfmeUseDXI@BfmeGlobDXI@@QAEXH@Z,0x0004159C,pin
@@ -75623,6 +75631,7 @@ name,address,notes
 ?g_bfmeJ1023@@3PAVBfmeJ1023@@A,0x00EF1044,pin
 ?g_bfmeK1022@@3PAVBfmeK1022@@A,0x00EF7198,pin
 ?g_bfmeK1023@@3PAVBfmeK1023@@A,0x00EF7730,pin
+?g_bfmeK1052@@3PAVBfmeK1052@@A,0x00EF7048,pin
 ?g_bfmeKey1026@@3PADA,0x00D096E8,pin
 ?g_bfmeKey1027@@3PADA,0x00D096F4,pin
 ?g_bfmeLimit952@@3MA,0x00C977E8,pin
@@ -75672,7 +75681,9 @@ name,address,notes
 ?g_bfmeN1021@@3PAVBfmeN1021@@A,0x00EF1B40,pin
 ?g_bfmeN1022@@3PAVBfmeN1022@@A,0x00EF1B40,pin
 ?g_bfmeN1024@@3PAVBfmeN1024@@A,0x00EF64BC,pin
+?g_bfmeN1052@@3PAVBfmeN1052@@A,0x00EF4B98,pin
 ?g_bfmeName1019@@3PADA,0x00D2A5A8,pin
+?g_bfmeName1052@@3PADA,0x00D2C144,pin
 ?g_bfmeObj1006@@3PAUBfmeObj1006@@A,0x00EF4C38,pin
 ?g_bfmeObj2EGE@@3PAVBfmeObj2EGE@@A,0x00EF148C,pin
 ?g_bfmeObj985@@3PAUBfmeObj985@@A,0x00EF4B40,pin
@@ -79741,6 +79752,7 @@ _bfmeFmtStrEAC,0x00C7C7B4,pin
 _bfmeFnA1033,0x000487C0,pin
 _bfmeFnB1033,0x0001E0B0,pin
 _bfmeGlobalTable12A6918,0x00EA6918,pin
+_bfmeHook1052,0x0003695D,pin
 _bfmeInfoDCE,0x00CEA6A8,pin
 _bfmeInfoDCF,0x00D14768,pin
 _bfmeInfoDCG,0x00D16D70,pin
