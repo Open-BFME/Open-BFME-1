@@ -703,8 +703,9 @@ void BoxRenderObjClass::render_box(RenderInfoClass & rinfo,const Vector3 & cente
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?vis_render_box@BoxRenderObjClass@@IAEXAAVSpecialRenderInfoClass@@ABVVector3@@1@Z
-// Body in boxrobj_vis_render_box.asm (exact 590B retail).
+// Body in boxrobj_vis_render_box.asm (exact 590B retail): ?vis_render_box@BoxRenderObjClass@@IAEXAAVSpecialRenderInfoClass@@ABVVector3@@1@Z
+// (one line, and prose-first: a `// ?` line binds to the NEXT definition, and
+// this one documents a body in another file, not the ctor below.)
 
 /*
 ** AABoxRenderObjClass Implementation
@@ -722,7 +723,6 @@ void BoxRenderObjClass::render_box(RenderInfoClass & rinfo,const Vector3 & cente
  * HISTORY:                                                                                    *
  *   1/19/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/AABoxRenderObjClassCtorThunk.cpp
 AABoxRenderObjClass::AABoxRenderObjClass(void)
 {
 	update_cached_box();
