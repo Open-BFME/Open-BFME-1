@@ -712,6 +712,15 @@ Bool Player::removePlayerRelationship(const Player *that)
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_setTeamRelationship.cpp
 // ?setTeamRelationship@Player@@QAEXPBVTeam@@W4Relationship@@@Z present-unmatched
+// Cannot come home yet, and not for a layout reason: with teamRelationsOf and
+// getRetailTeamID (the same two offsets removeTeamRelationship reads) and the
+// map bound to a reference so it is loaded before the key, the body reaches
+// retail's exact call and differs only in register assignment -- retail keeps
+// `that' in eax and drops m_teamRelations into ecx, this TU uses edx and eax.
+// The callee needs ??A?$hash_map@IW4Relationship@@... (the TeamID-keyed
+// spelling this tree compiles) pinned at 0x000d6280, which retail reaches via
+// ILT 0x0002a1da; that half is proven, the register half is not steerable from
+// the source shapes tried.
 void Player::setTeamRelationship(const Team *that, Relationship r)
 {
 	if (that != NULL)
@@ -837,13 +846,43 @@ void Player::update()
 	}
 }
 
+// BFME's newMap is not the reference one-liner through the AI player's virtual.
+// It reads a flag at +0x118 of the pointer at Player+0x04 and hands it, with the
+// field at Player+0x24, to a non-virtual call on the subobject at Player+0x30 --
+// as two separate call sites, which is what an if/else with a statement in each
+// arm compiles to rather than one call with a conditional argument.
+struct BfmePlayerMapFlagSource
+{
+	UnsignedByte m_unreconstructed_000[0x118];
+	Bool m_bfmeFlag;					///< retail this+0x118
+};
+
+class BfmePlayerMapState
+{
+public:
+	void bfmeNewMap( Int field, Bool flag );		///< retail ILT 0x00018679
+};
+
+struct BfmePlayerMapFields
+{
+	UnsignedByte m_unreconstructed_00[4];
+	BfmePlayerMapFlagSource *m_bfmeFlagSource;		///< retail this+0x04
+	UnsignedByte m_unreconstructed_08[0x24 - 8];
+	Int m_bfmeField24;					///< retail this+0x24
+	UnsignedByte m_unreconstructed_28[0x30 - 0x28];
+	BfmePlayerMapState m_bfmeMapState;			///< retail this+0x30
+};
+
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_newMap.cpp
-// ?newMap@Player@@QAEXXZ present-unmatched
+// ?newMap@Player@@QAEXXZ
 void Player::newMap()
 {
-	if (m_ai)
-		m_ai->newMap();
+	BfmePlayerMapFields *self = (BfmePlayerMapFields *)this;
+
+	if (self->m_bfmeFlagSource)
+		self->m_bfmeMapState.bfmeNewMap(self->m_bfmeField24, self->m_bfmeFlagSource->m_bfmeFlag);
+	else
+		self->m_bfmeMapState.bfmeNewMap(self->m_bfmeField24, false);
 }
 
 //=============================================================================
@@ -3255,16 +3294,51 @@ void Player::removeUpgrade( const UpgradeTemplate *upgradeTemplate )
 
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_okToPlayRadarEdgeSound.cpp
-// ?okToPlayRadarEdgeSound@Player@@QAE_NXZ present-unmatched
+// BFME reads all four flags in place rather than through accessors. The
+// victory-conditions test is slot 11 (+0x2c) of its table and ONLY that slot is
+// named here; the frame test is unsigned, which is what makes it a jbe.
+class BfmeVictoryConditionsSlots
+{
+public:
+	virtual void _bfme_slot0() = 0;		virtual void _bfme_slot1() = 0;
+	virtual void _bfme_slot2() = 0;		virtual void _bfme_slot3() = 0;
+	virtual void _bfme_slot4() = 0;		virtual void _bfme_slot5() = 0;
+	virtual void _bfme_slot6() = 0;		virtual void _bfme_slot7() = 0;
+	virtual void _bfme_slot8() = 0;		virtual void _bfme_slot9() = 0;
+	virtual void _bfme_slot10() = 0;
+	virtual Bool bfmeIsPlayerOut( Player *player ) = 0;	///< vtable +0x2c
+};
+
+struct BfmeInGameUIQuietFlag
+{
+	UnsignedByte m_unreconstructed_00000[0x12BE];
+	Bool m_bfmeSuppressed;					///< retail this+0x12be
+};
+
+struct BfmeGameLogicFrameSlice
+{
+	UnsignedByte m_unreconstructed_00[0x3C];
+	UnsignedInt m_bfmeFrame;				///< retail this+0x3c
+	UnsignedByte m_unreconstructed_40[0x6B - 0x40];
+	Bool m_bfmeStarted;					///< retail this+0x6b
+};
+
+struct BfmePlayerRadarEdgeFlag
+{
+	UnsignedByte m_unreconstructed_000[0x680];
+	Bool m_bfmeRadarEdgeSoundOff;				///< retail this+0x680
+};
+
+//-------------------------------------------------------------------------------------------------
+// ?okToPlayRadarEdgeSound@Player@@QAE_NXZ
 Bool Player::okToPlayRadarEdgeSound( void )
 {
 	return (
-		! TheVictoryConditions->hasSinglePlayerBeenDefeated( this ) 
-		&& ! m_isPlayerDead 
-		&& ! TheInGameUI->isClientQuiet()
-		&& TheGameLogic->isInGameLogicUpdate() 
-		&& TheGameLogic->getFrame() > 0 );
+		! ((BfmeVictoryConditionsSlots *)TheVictoryConditions)->bfmeIsPlayerOut( this )
+		&& ! ((BfmePlayerRadarEdgeFlag *)this)->m_bfmeRadarEdgeSoundOff
+		&& ! ((BfmeInGameUIQuietFlag *)TheInGameUI)->m_bfmeSuppressed
+		&& ((BfmeGameLogicFrameSlice *)TheGameLogic)->m_bfmeStarted
+		&& ((BfmeGameLogicFrameSlice *)TheGameLogic)->m_bfmeFrame > 0 );
 
 }
 
