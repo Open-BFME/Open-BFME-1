@@ -60,3 +60,16 @@ void *__stdcall Rva00417260( int selector )
 	}
 	return selected ? selected : (void *)&g_q1Fallback012F1318;
 }
+
+void *__stdcall Rva004172A0( int selector )
+{
+	void *selected;
+	switch ( selector )
+	{
+		case 1: selected = Q1Selector0000286A( 0x5C ); break;
+		case 2: selected = Q1Selector0000286A( 0x5D ); break;
+		case 3: selected = Q1Selector0000286A( 0x5E ); break;
+		default: selected = Q1Selector0000286A( 0x5B ); break;
+	}
+	return selected ? selected : (void *)&g_q1Fallback012F1318;
+}
