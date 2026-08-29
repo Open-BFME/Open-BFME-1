@@ -1037,6 +1037,14 @@ parameter in esi and `this` in edi while the merged TU does the reverse, and the
 swap also flips two adjacent stores. Three source shapes (a local view pointer, a
 re-evaluated static helper, an inline setter) all produced byte-identical output.
 
+FIRST, RULE OUT THE OTHER CAUSE -- an inlined same-TU callee and a register
+tie-break look IDENTICAL in a byte diff: extra register traffic clustered around
+a missing call. The tell is a call whose target is not one the body should make.
+Screen it before reaching for the accessor: compare the definition line of every
+named callee against your body's own line number, and treat anything defined
+EARLIER in the TU as an inlining candidate. Getting this backwards costs a cycle
+in each direction.
+
 So: try the accessor ONCE. If the diff is a whole-body register swap rather than
 a chain diverging at one load, park it. And a body already parked as
 "register-allocation class" with an eax/ecx chain signature is worth one more
