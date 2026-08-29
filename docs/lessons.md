@@ -918,6 +918,18 @@ callee-saved registers, this toolchain holds the address instead. Logged
 
 ## A $L funclet row self-heals ONLY if it carries `parent=`
 
+### And a funclet with NO candidate is a diagnostic, not a pin problem
+
+`funclet_candidates` returning nothing for a row that HAS a `parent=` does not
+mean the pin is stale -- it means no `$L` body in the parent's COMDAT matches
+retail's bytes, so the merged body lays its TEMPORARIES out differently. That
+fires before a single byte of the parent is compared, which makes it the
+cheapest signal this lane has that a body carrying unwind states is wrong.
+`LANAPI::addGame` is the worked case: every pin and offset was right and the
+funclet row still refused, because the two `getName()` temporaries were not
+being built the way retail builds them. Read it as evidence about the
+temporaries and go back to the body.
+
 A row whose `object-symbol=` names a compiler-local label (`$L51425`, `$T294`,
 `$SG…`) is pinned to a per-compilation ordinal, and ANY edit to its TU can
 renumber it. build.py already handles that -- `funclet_candidates` finds the
