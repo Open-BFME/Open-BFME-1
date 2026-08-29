@@ -497,6 +497,10 @@ name,address,notes
 ??$_Destroy@PAUParticleSysBoneInfo@@@_STL@@YAXPAUParticleSysBoneInfo@@0@Z,0x0003C38A,pinharvest x1 (thunk)
 ??$_Destroy@PAUParticleSysBoneInfo@@@_STL@@YAXPAUParticleSysBoneInfo@@0@Z,0x000413AD,pinharvest x1 (thunk)
 ??$_Destroy@PAUPrereqUnitRec@ProductionPrerequisite@@@_STL@@YAXPAUPrereqUnitRec@ProductionPrerequisite@@0@Z,0x0000CBE4,resweep callee back-solved
+??$_Destroy@PAVOpen2Elem138090@@@_STL@@YAXPAVOpen2Elem138090@@0@Z,0x00026F71,Open2 0x138090 vector twin callee
+??$_Destroy@PAVOpen2Elem3B5860@@@_STL@@YAXPAVOpen2Elem3B5860@@0@Z,0x0001AC62,Open2 0x3b5860 vector twin callee
+??$_Destroy@PAVOpen2Elem3B59D0@@@_STL@@YAXPAVOpen2Elem3B59D0@@0@Z,0x0002227D,Open2 0x3b59d0 vector twin callee
+??$_Destroy@PAVOpen2Elem771DF0@@@_STL@@YAXPAVOpen2Elem771DF0@@0@Z,0x00028D76,Open2 0x771df0 vector twin callee
 ??$_Destroy@PAVProductionPrerequisite@@@_STL@@YAXPAVProductionPrerequisite@@0@Z,0x00011D47
 ??$_Destroy@PAVW3DAnimationInfo@@@_STL@@YAXPAVW3DAnimationInfo@@0@Z,0x00001663,ILT thunk used by call site
 ??$_M_allocate_and_copy@PAH@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEPAHIPAH0@Z,0x000673D0,gen-tgrid shared callee
@@ -556,6 +560,10 @@ name,address,notes
 ??$_M_allocate_and_copy@PBUParticleSysBoneInfo@@@?$vector@UParticleSysBoneInfo@@V?$allocator@UParticleSysBoneInfo@@@_STL@@@_STL@@IAEPAUParticleSysBoneInfo@@IPBU2@0@Z,0x00030D69,pinharvest x1 (thunk)
 ??$_M_allocate_and_copy@PBUParticleSysBoneInfo@@@?$vector@UParticleSysBoneInfo@@V?$allocator@UParticleSysBoneInfo@@@_STL@@@_STL@@IAEPAUParticleSysBoneInfo@@IPBU2@0@Z,0x00033FB9,pinharvest x1 (thunk)
 ??$_M_allocate_and_copy@PBUPrereqUnitRec@ProductionPrerequisite@@@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@IAEPAUPrereqUnitRec@ProductionPrerequisite@@IPBU23@0@Z,0x00014470,resweep callee back-solved
+??$_M_allocate_and_copy@PBVOpen2Elem138090@@@?$vector@VOpen2Elem138090@@V?$allocator@VOpen2Elem138090@@@_STL@@@_STL@@IAEPAVOpen2Elem138090@@IPBV2@0@Z,0x00045174,Open2 0x138090 vector twin callee
+??$_M_allocate_and_copy@PBVOpen2Elem3B5860@@@?$vector@VOpen2Elem3B5860@@V?$allocator@VOpen2Elem3B5860@@@_STL@@@_STL@@IAEPAVOpen2Elem3B5860@@IPBV2@0@Z,0x0002E221,Open2 0x3b5860 vector twin callee
+??$_M_allocate_and_copy@PBVOpen2Elem3B59D0@@@?$vector@VOpen2Elem3B59D0@@V?$allocator@VOpen2Elem3B59D0@@@_STL@@@_STL@@IAEPAVOpen2Elem3B59D0@@IPBV2@0@Z,0x0000A78B,Open2 0x3b59d0 vector twin callee
+??$_M_allocate_and_copy@PBVOpen2Elem771DF0@@@?$vector@VOpen2Elem771DF0@@V?$allocator@VOpen2Elem771DF0@@@_STL@@@_STL@@IAEPAVOpen2Elem771DF0@@IPBV2@0@Z,0x00005745,Open2 0x771df0 vector twin callee
 ??$_M_allocate_and_copy@PBVProductionPrerequisite@@@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@IAEPAVProductionPrerequisite@@IPBV2@0@Z,0x00014961
 ??$_M_allocate_and_copy@PBVW3DAnimationInfo@@@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEPAVW3DAnimationInfo@@IPBV2@0@Z,0x0003D3C5,ILT thunk used by call site
 ??$_M_assign_dispatch@PAG@?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@AAEAAV01@PAG0ABU__false_type@1@@Z,0x004F3A20,gen-tgrid shared callee
@@ -709,6 +717,8 @@ name,address,notes
 ??$__copy@PAVArmorTemplateSet@@PAV1@H@_STL@@YAPAVArmorTemplateSet@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00007A04,ThingTemplate armor vector clear via ILT thunk
 ??$__copy@PAVAsciiString@@PAV1@H@_STL@@YAPAVAsciiString@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00042EA6
 ??$__copy@PAVLivingWorldPlayerArmy@@PAV1@H@_STL@@YAPAVLivingWorldPlayerArmy@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00002DD3,REL32 vector range-copy target from 0x003668FB
+??$__copy@PAVOpen2Elem2EB190@@PAV1@H@_STL@@YAPAVOpen2Elem2EB190@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000AA92,Open2 0x2eb190 vector twin callee
+??$__copy@PAVOpen2Elem7716A0@@PAV1@H@_STL@@YAPAVOpen2Elem7716A0@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00038CD5,Open2 0x7716a0 vector twin callee
 ??$__copy@PAVProductionPrerequisite@@PAV1@H@_STL@@YAPAVProductionPrerequisite@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000181A1,resweep callee back-solved
 ??$__copy@PAVW3DAnimationInfo@@PAV1@H@_STL@@YAPAVW3DAnimationInfo@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00024023,ILT thunk used by call site
 ??$__copy@PBUGen_t_000b0c00_p8cd@@PAU1@H@_STL@@YAPAUGen_t_000b0c00_p8cd@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x000B0290,gen-tgrid payload member
@@ -733,6 +743,10 @@ name,address,notes
 ??$__copy@PBUParticleSysBoneInfo@@PAU1@H@_STL@@YAPAUParticleSysBoneInfo@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00039577,hit-decoded x2 (thunk)
 ??$__copy@PBUParticleSysBoneInfo@@PAU1@H@_STL@@YAPAUParticleSysBoneInfo@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0003DB1D,hit-decoded x2 (thunk)
 ??$__copy@PBUPrereqUnitRec@ProductionPrerequisite@@PAU12@H@_STL@@YAPAUPrereqUnitRec@ProductionPrerequisite@@PBU12@0PAU12@ABUrandom_access_iterator_tag@0@PAH@Z,0x00008391,resweep callee back-solved
+??$__copy@PBVOpen2Elem138090@@PAV1@H@_STL@@YAPAVOpen2Elem138090@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00016F5E,Open2 0x138090 vector twin callee
+??$__copy@PBVOpen2Elem3B5860@@PAV1@H@_STL@@YAPAVOpen2Elem3B5860@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0001C4B3,Open2 0x3b5860 vector twin callee
+??$__copy@PBVOpen2Elem3B59D0@@PAV1@H@_STL@@YAPAVOpen2Elem3B59D0@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00039EE1,Open2 0x3b59d0 vector twin callee
+??$__copy@PBVOpen2Elem771DF0@@PAV1@H@_STL@@YAPAVOpen2Elem771DF0@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000EE3F,Open2 0x771df0 vector twin callee
 ??$__copy@PBVProductionPrerequisite@@PAV1@H@_STL@@YAPAVProductionPrerequisite@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x000078E7
 ??$__copy@PBVW3DAnimationInfo@@PAV1@H@_STL@@YAPAVW3DAnimationInfo@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x000417EF,ILT thunk used by call site
 ??$__copy@U?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@U12@H@_STL@@YA?AU?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@0@U10@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000F682
@@ -1020,6 +1034,10 @@ name,address,notes
 ??$__uninitialized_copy@PBUParticleSysBoneInfo@@PAU1@@_STL@@YAPAUParticleSysBoneInfo@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0002AF86,pinharvest x1 (thunk)
 ??$__uninitialized_copy@PBUParticleSysBoneInfo@@PAU1@@_STL@@YAPAUParticleSysBoneInfo@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0002F0E5,pinharvest x1 (thunk)
 ??$__uninitialized_copy@PBUPrereqUnitRec@ProductionPrerequisite@@PAU12@@_STL@@YAPAUPrereqUnitRec@ProductionPrerequisite@@PBU12@0PAU12@ABU__false_type@0@@Z,0x000178B4,resweep callee back-solved
+??$__uninitialized_copy@PBVOpen2Elem138090@@PAV1@@_STL@@YAPAVOpen2Elem138090@@PBV1@0PAV1@ABU__false_type@0@@Z,0x000370AB,Open2 0x138090 vector twin callee
+??$__uninitialized_copy@PBVOpen2Elem3B5860@@PAV1@@_STL@@YAPAVOpen2Elem3B5860@@PBV1@0PAV1@ABU__false_type@0@@Z,0x0002ECCB,Open2 0x3b5860 vector twin callee
+??$__uninitialized_copy@PBVOpen2Elem3B59D0@@PAV1@@_STL@@YAPAVOpen2Elem3B59D0@@PBV1@0PAV1@ABU__false_type@0@@Z,0x00031F34,Open2 0x3b59d0 vector twin callee
+??$__uninitialized_copy@PBVOpen2Elem771DF0@@PAV1@@_STL@@YAPAVOpen2Elem771DF0@@PBV1@0PAV1@ABU__false_type@0@@Z,0x000262D8,Open2 0x771df0 vector twin callee
 ??$__uninitialized_copy@PBVProductionPrerequisite@@PAV1@@_STL@@YAPAVProductionPrerequisite@@PBV1@0PAV1@ABU__false_type@0@@Z,0x0001FFEB
 ??$__uninitialized_copy@PBVW3DAnimationInfo@@PAV1@@_STL@@YAPAVW3DAnimationInfo@@PBV1@0PAV1@ABU__false_type@0@@Z,0x0001D5F7,ILT thunk used by call site
 ??$__uninitialized_fill_n@PAUGen_t_0074e320_p16pod@@IU1@@_STL@@YAPAUGen_t_0074e320_p16pod@@PAU1@IABU1@ABU__false_type@0@@Z,0x00749450,gen-tgrid payload member
@@ -8550,6 +8568,8 @@ name,address,notes
 ??1ObjectCreationListMap@@QAE@XZ,0x0001D110,Open-BFME5 retail ObjectCreationList map destructor body
 ??1ObjectCreationUpgradeModuleDataMemberA@@QAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1ObjectModule@@UAE@XZ,0x00047C53,Open-BFME5 FireWeaponCollide base destructor ILT pin
+??1Open2Elem2EB190@@QAE@XZ,0x0002AB2B,Open2 0x2eb190 vector twin callee
+??1Open2Elem7716A0@@QAE@XZ,0x0003F4FE,Open2 0x7716a0 vector twin callee
 ??1OptionPreferences@@UAE@XZ,0x00001307
 ??1PB_DeepBase@@UAE@XZ,0x00047C53,Open-BFME5 SlaveWatcherBehavior base destructor ILT pin
 ??1PSPlayerStats@@QAE@XZ,0x00025C1B,PSRequest retail member destructor
@@ -10764,7 +10784,11 @@ name,address,notes
 ?_M_clear@?$vector@UVideo@@V?$allocator@UVideo@@@_STL@@@_STL@@IAEXXZ,0x0001E420,ILT the Video vector overflow calls at 0x006FA8B6 to clear the old buffer
 ?_M_clear@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@IAEXXZ,0x0001C9B8,Open-BFME5 ILT thunk to the retail AsciiString vector clear body at 0x007578F0
 ?_M_clear@?$vector@VOpen2Elem063700@@V?$allocator@VOpen2Elem063700@@@_STL@@@_STL@@IAEXXZ,0x0003588C,Open2 0x00063700 vector clear (ILT)
+?_M_clear@?$vector@VOpen2Elem138090@@V?$allocator@VOpen2Elem138090@@@_STL@@@_STL@@IAEXXZ,0x00039707,Open2 0x138090 vector twin callee
 ?_M_clear@?$vector@VOpen2Elem247180@@V?$allocator@VOpen2Elem247180@@@_STL@@@_STL@@IAEXXZ,0x00022534,Open2 0x00247180 vector clear (ILT)
+?_M_clear@?$vector@VOpen2Elem3B5860@@V?$allocator@VOpen2Elem3B5860@@@_STL@@@_STL@@IAEXXZ,0x00020C34,Open2 0x3b5860 vector twin callee
+?_M_clear@?$vector@VOpen2Elem3B59D0@@V?$allocator@VOpen2Elem3B59D0@@@_STL@@@_STL@@IAEXXZ,0x000153C0,Open2 0x3b59d0 vector twin callee
+?_M_clear@?$vector@VOpen2Elem771DF0@@V?$allocator@VOpen2Elem771DF0@@@_STL@@@_STL@@IAEXXZ,0x0002BD46,Open2 0x771df0 vector twin callee
 ?_M_clear@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@IAEXXZ,0x0001FE92
 ?_M_clear@?$vector@VUnicodeString@@V?$allocator@VUnicodeString@@@_STL@@@_STL@@IAEXXZ,0x00026D41,tail call of vector<UnicodeString>::_M_insert_overflow at 0x00532AEA
 ?_M_clear@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEXXZ,0x00008837,ILT thunk used by call site
@@ -72905,6 +72929,7 @@ name,address,notes
 ?bfmeFallback961@BfmeHost961@@QAEXHH@Z,0x0001C46D,pin
 ?bfmeFallback977C@@YADXZ,0x00892210,pin
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
+?bfmeFind1002@BfmeA1002@@QAEPAUBfmeX1002@@PAUBfmeArg1002@@@Z,0x0003F5DA,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
@@ -73225,6 +73250,7 @@ name,address,notes
 ?bfmeGen0002D38A@Gen_00529B10@@QAEXH@Z,0x0002D38A,address-derived helper; target read from the third REL32 in the guarded eight-index loop at 0x00529B10
 ?bfmeGen0002EA91@Gen_00529B10@@QAEXH_N@Z,0x0002EA91,address-derived helper; target read from the second REL32 in the guarded eight-index loop at 0x00529B10
 ?bfmeGeometryIntersects@Object@@QBE_NPBV1@@Z,0x0001E20E,Open-BFME5 ILT thunk to body 0x001BE980; compares two Object GeometryInfo footprints using each position and orientation; descriptive spelling
+?bfmeGet1002@BfmeMid1002@@QAEPAXXZ,0x000022BB,pin
 ?bfmeGet920D@BfmeX920D@@QAEPAVBfmeRes920D@@XZ,0x0002BE77,pin
 ?bfmeGet948C@BfmeGrid948C@@QAE_NH@Z,0x00017049,pin
 ?bfmeGet948D@BfmeGrid948D@@QAE_NH@Z,0x00017049,pin
@@ -73255,6 +73281,7 @@ name,address,notes
 ?bfmeGetHordeMemberCount@Object@@QBEHXZ,0x00030715,Open-BFME5 ILT thunk to body 0x001BFDF0; Object m_contain at +0x1FC asks virtual slot +0x68 for a horde interface then calls its count slot +0x150 with false; bfme prefix records unrecovered retail spelling
 ?bfmeGetID@BfmeDrawableWithID@@QAEIXZ,0x00009B01,Open-BFME5 ILT both drawable lookup-table wrappers at 0x00431C20 and 0x00430B50 read the id through
 ?bfmeGetLastDamagePlayerIndex@Object@@QBEHXZ,0x0000515A,Open-BFME5 ILT thunk to body 0x001BF060; BodyModuleInterface last-damage slot 15 supplies sourcePlayerMask resolved through PlayerList and returned as Player index; bfme prefix records unrecovered retail spelling
+?bfmeGetLastShotPosition@BfmeFiringTracker@@QBE?AUBfmeFiringPosition@@XZ,0x000228BD,Open-BFME5 ILT to body 0x001BD7D0; FiringTracker+0x48 last-shot position getter used by Object wrapper 0x001BF970
 ?bfmeGetNonnegativePreferredLocomotorHeight@Object@@QBEMXZ,0x000047C8,Open-BFME5 ILT thunk to body 0x001BE030; Object m_ai at +0x204 and AIUpdateInterface m_curLocomotor at +0x1CC; returns canonical getPreferredHeight clamped to shared 0.0f; bfme prefix records unrecovered retail spelling
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
@@ -73722,6 +73749,7 @@ name,address,notes
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
+?bfmeSend1002@BfmeB1002@@QAEDPAUBfmeHold1002@@H@Z,0x0000583A,pin
 ?bfmeSend975B@BfmeB975@@QAEXHH@Z,0x0002D6F5,pin
 ?bfmeSend979B@BfmeSink979@@QAEXPAVBfmeKey979@@@Z,0x00038938,pin
 ?bfmeSend986C@BfmeC986@@QAEXHHHHH@Z,0x0001A6B3,pin
@@ -77141,6 +77169,7 @@ name,address,notes
 ?hasAnyObjects@Player@@QBE_N_N@Z,0x0002BB8E,ILT thunk -> body 0x000CE0B0; ZH hasAnyObjects grew one arg in BFME (call site pushes 0); arg type unproven
 ?hasAnyObjects@Team@@QBE_N_N@Z,0x0001478B,Open-BFME5 ILT thunk to body 0x000F4CF0; ?hasAnyObjects@TeamPrototype@@QAE_N_N@Z at 0x000F7170 passes its flag through to each team on the instance list
 ?hasAnyObjects@TeamPrototype@@QAE_N_N@Z,0x00021D96,Open-BFME5 ILT; ?hasAnyObjects@Player@@QBE_N_N@Z at 0x000CE0B0 forwards its flag to each prototype through it
+?hasAnyShortcutSpecialPower@BfmeShortcutPlayer@@QAEHXZ,0x0002331C,Open-BFME5 ILT reached by ControlBar::showSpecialPowerShortcut; returns a 32-bit value (retail tests eax not al) so it is spelled on a view; address from the donor and byte-proved by the rel32 in that call
 ?hasAnyShortcutSpecialPower@Player@@QAEHXZ,0x0002331C,ILT thunk to the local player shortcut special power check
 ?hasAnyUnits@Player@@QBE_NXZ,0x000146FF,ILT thunk -> body 0x000CE070; sits at ZH's hasAnyUnits site in hasSinglePlayerBeenDefeated
 ?hasAnyUnits@Team@@QBE_NXZ,0x000064F6,Open-BFME5 ILT thunk to body 0x000F4C10; the per-team question ?hasAnyUnits@TeamPrototype@@QBE_NXZ at 0x000F7120 asks of every team on its instance list
@@ -79980,29 +80009,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?hasAnyShortcutSpecialPower@BfmeShortcutPlayer@@QAEHXZ,0x0002331C,Open-BFME5 ILT reached by ControlBar::showSpecialPowerShortcut; returns a 32-bit value (retail tests eax not al) so it is spelled on a view; address from the donor and byte-proved by the rel32 in that call
-??$_M_allocate_and_copy@PBVOpen2Elem138090@@@?$vector@VOpen2Elem138090@@V?$allocator@VOpen2Elem138090@@@_STL@@@_STL@@IAEPAVOpen2Elem138090@@IPBV2@0@Z,0x00045174,Open2 0x138090 vector twin callee
-?_M_clear@?$vector@VOpen2Elem138090@@V?$allocator@VOpen2Elem138090@@@_STL@@@_STL@@IAEXXZ,0x00039707,Open2 0x138090 vector twin callee
-??$__copy@PBVOpen2Elem138090@@PAV1@H@_STL@@YAPAVOpen2Elem138090@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00016F5E,Open2 0x138090 vector twin callee
-??$_Destroy@PAVOpen2Elem138090@@@_STL@@YAXPAVOpen2Elem138090@@0@Z,0x00026F71,Open2 0x138090 vector twin callee
-??$__uninitialized_copy@PBVOpen2Elem138090@@PAV1@@_STL@@YAPAVOpen2Elem138090@@PBV1@0PAV1@ABU__false_type@0@@Z,0x000370AB,Open2 0x138090 vector twin callee
-??$_M_allocate_and_copy@PBVOpen2Elem3B5860@@@?$vector@VOpen2Elem3B5860@@V?$allocator@VOpen2Elem3B5860@@@_STL@@@_STL@@IAEPAVOpen2Elem3B5860@@IPBV2@0@Z,0x0002E221,Open2 0x3b5860 vector twin callee
-?_M_clear@?$vector@VOpen2Elem3B5860@@V?$allocator@VOpen2Elem3B5860@@@_STL@@@_STL@@IAEXXZ,0x00020C34,Open2 0x3b5860 vector twin callee
-??$__copy@PBVOpen2Elem3B5860@@PAV1@H@_STL@@YAPAVOpen2Elem3B5860@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0001C4B3,Open2 0x3b5860 vector twin callee
-??$_Destroy@PAVOpen2Elem3B5860@@@_STL@@YAXPAVOpen2Elem3B5860@@0@Z,0x0001AC62,Open2 0x3b5860 vector twin callee
-??$__uninitialized_copy@PBVOpen2Elem3B5860@@PAV1@@_STL@@YAPAVOpen2Elem3B5860@@PBV1@0PAV1@ABU__false_type@0@@Z,0x0002ECCB,Open2 0x3b5860 vector twin callee
-??$_M_allocate_and_copy@PBVOpen2Elem3B59D0@@@?$vector@VOpen2Elem3B59D0@@V?$allocator@VOpen2Elem3B59D0@@@_STL@@@_STL@@IAEPAVOpen2Elem3B59D0@@IPBV2@0@Z,0x0000A78B,Open2 0x3b59d0 vector twin callee
-?_M_clear@?$vector@VOpen2Elem3B59D0@@V?$allocator@VOpen2Elem3B59D0@@@_STL@@@_STL@@IAEXXZ,0x000153C0,Open2 0x3b59d0 vector twin callee
-??$__copy@PBVOpen2Elem3B59D0@@PAV1@H@_STL@@YAPAVOpen2Elem3B59D0@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00039EE1,Open2 0x3b59d0 vector twin callee
-??$_Destroy@PAVOpen2Elem3B59D0@@@_STL@@YAXPAVOpen2Elem3B59D0@@0@Z,0x0002227D,Open2 0x3b59d0 vector twin callee
-??$__uninitialized_copy@PBVOpen2Elem3B59D0@@PAV1@@_STL@@YAPAVOpen2Elem3B59D0@@PBV1@0PAV1@ABU__false_type@0@@Z,0x00031F34,Open2 0x3b59d0 vector twin callee
-??$_M_allocate_and_copy@PBVOpen2Elem771DF0@@@?$vector@VOpen2Elem771DF0@@V?$allocator@VOpen2Elem771DF0@@@_STL@@@_STL@@IAEPAVOpen2Elem771DF0@@IPBV2@0@Z,0x00005745,Open2 0x771df0 vector twin callee
-?_M_clear@?$vector@VOpen2Elem771DF0@@V?$allocator@VOpen2Elem771DF0@@@_STL@@@_STL@@IAEXXZ,0x0002BD46,Open2 0x771df0 vector twin callee
-??$__copy@PBVOpen2Elem771DF0@@PAV1@H@_STL@@YAPAVOpen2Elem771DF0@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000EE3F,Open2 0x771df0 vector twin callee
-??$_Destroy@PAVOpen2Elem771DF0@@@_STL@@YAXPAVOpen2Elem771DF0@@0@Z,0x00028D76,Open2 0x771df0 vector twin callee
-??$__uninitialized_copy@PBVOpen2Elem771DF0@@PAV1@@_STL@@YAPAVOpen2Elem771DF0@@PBV1@0PAV1@ABU__false_type@0@@Z,0x000262D8,Open2 0x771df0 vector twin callee
-??$__copy@PAVOpen2Elem2EB190@@PAV1@H@_STL@@YAPAVOpen2Elem2EB190@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000AA92,Open2 0x2eb190 vector twin callee
-??1Open2Elem2EB190@@QAE@XZ,0x0002AB2B,Open2 0x2eb190 vector twin callee
-??$__copy@PAVOpen2Elem7716A0@@PAV1@H@_STL@@YAPAVOpen2Elem7716A0@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00038CD5,Open2 0x7716a0 vector twin callee
-??1Open2Elem7716A0@@QAE@XZ,0x0003F4FE,Open2 0x7716a0 vector twin callee
-?bfmeGetLastShotPosition@BfmeFiringTracker@@QBE?AUBfmeFiringPosition@@XZ,0x000228BD,Open-BFME5 ILT to body 0x001BD7D0; FiringTracker+0x48 last-shot position getter used by Object wrapper 0x001BF970
