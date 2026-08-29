@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// readable body of ?applyBattlePlanBonusesForObject@Player@@QBEXPAVObject@@@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
 // readable body of ?becomingTeamMember@Player@@QAEXPAVObject@@_N@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
 
 typedef bool Bool;
