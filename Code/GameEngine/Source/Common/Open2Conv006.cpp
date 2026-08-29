@@ -19,6 +19,7 @@ class StringBase
 public:
 	void set( const T *text, int length );		// retail 0x00887D20
 	void set( const StringBase<T> &src );		// retail 0x00887C90
+	void toLower();					// retail 0x00887DA0
 
 	bool isEmpty() const { return m_data == 0 || m_data->m_length == 0; }
 	bool isNotEmpty() const { return !isEmpty(); }
@@ -55,6 +56,7 @@ public:
 	}
 
 	void set( const AsciiString &other ) { m_string.set( other.m_string ); }
+	void toLower() { m_string.toLower(); }
 	bool isNotEmpty() const { return m_string.isNotEmpty(); }
 
 	StringBase<char> m_string;
@@ -231,4 +233,76 @@ void Rva00764220::setup( int value, AsciiString text )
 	m_armed = false;
 	m_value = value;
 	m_text = text;
+}
+
+// ---------------------------------------------------------------------------
+// 0x00762460 -- an INI field parser: read the next token, store it, fold case.
+//
+// The parser signature is fixed by the offsets it reads: the INI is argument
+// one and the destination is argument THREE, with a bare `ret`, which is the
+// __cdecl (INI *, void *instance, void *store, const void *userData) shape.
+// The token arrives by value -- retail hands `getNextAsciiString` an sret slot
+// on its own frame and destroys it afterwards -- and the store is `set`, not
+// assignment: the argument is pushed BEFORE the receiver is materialised.
+
+class INI
+{
+public:
+	AsciiString getNextAsciiString( void );		// retail 0x008516E0
+};
+
+// @?Open2ParseLowerAsciiString@@YAXPAVINI@@PAX1PBX@Z 0x00762460
+void Open2ParseLowerAsciiString( INI *ini, void *instance, void *store, const void *userData )
+{
+	AsciiString *destination = (AsciiString *)store;
+	destination->set( ini->getNextAsciiString() );
+	destination->toLower();
+}
+
+// ---------------------------------------------------------------------------
+// 0x00765040 and 0x00768AE0 -- STLport's `_Construct` over two records that
+// differ only in where the string sits.
+//
+//     mov esi,[esp+0x18] / mov [esp+4],esi / test esi,esi / je done
+//     <copy the fields, calling the string copy constructor for one of them>
+//
+// The null test on the destination is what placement new leaves behind: the
+// allocation function is inline and returns its argument, so the compiler
+// still guards the construction it cannot prove non-null.  Both bodies are
+// __cdecl over two arguments and copy their records MEMBERWISE rather than
+// calling a copy constructor, so each record uses the implicit one.
+
+inline void *operator new( unsigned int, void *place ) { return place; }
+inline void operator delete( void *, void * ) {}
+
+class Open265040Record
+{
+public:
+	int m_a;
+	int m_b;
+	AsciiString m_text;
+	int m_c;
+	unsigned char m_d;
+};
+
+// @?Open2Construct65040@@YAXPAVOpen265040Record@@ABV1@@Z 0x00765040
+void Open2Construct65040( Open265040Record *place, const Open265040Record &value )
+{
+	new ( place ) Open265040Record( value );
+}
+
+class Open268AE0Record
+{
+public:
+	int m_a;
+	int m_b;
+	int m_c;
+	AsciiString m_text;
+	int m_e;
+};
+
+// @?Open2Construct68AE0@@YAXPAVOpen268AE0Record@@ABV1@@Z 0x00768AE0
+void Open2Construct68AE0( Open268AE0Record *place, const Open268AE0Record &value )
+{
+	new ( place ) Open268AE0Record( value );
 }
