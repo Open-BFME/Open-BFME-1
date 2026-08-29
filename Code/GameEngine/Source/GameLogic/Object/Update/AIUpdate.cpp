@@ -428,6 +428,33 @@ public:
 	virtual void removeAllContained( Bool exposeStealthUnits ) = 0;	///< vtable +0x94
 };
 
+// BFME numbers the four waypoint-following states 2..5, and clears the
+// object's formation id -- at object+0x31c -- when a unit follows a path on
+// its own rather than as part of a team.
+enum
+{
+	BFME_AI_FOLLOW_WAYPOINT_PATH_AS_TEAM			= 2,
+	BFME_AI_FOLLOW_WAYPOINT_PATH_AS_INDIVIDUALS		= 3,
+	BFME_AI_FOLLOW_WAYPOINT_PATH_AS_TEAM_EXACT		= 4,
+	BFME_AI_FOLLOW_WAYPOINT_PATH_AS_INDIVIDUALS_EXACT	= 5
+};
+
+struct BFMEObjectFormationField
+{
+	void setFormationID( FormationID id ) { m_formationID = id; }
+
+	char m_unreconstructed_000[0x31C];
+	FormationID m_formationID;				///< retail this+0x31c
+};
+
+// The movement voice line the four waypoint commands answer with. The vendored
+// AIUpdate.h does not declare it at all.
+class BFMEMoveVoiceAI
+{
+public:
+	void playMoveVoiceResponse( const Coord3D *position );	///< retail ILT 0x000462ea
+};
+
 // BFME keeps the object's contain module at +0x1fc and its AI module at +0x204.
 struct BFMEObjectContainField
 {
@@ -3925,92 +3952,98 @@ void AIUpdateInterface::privateMoveAwayFromUnit( Object *unit, CommandSourceType
 /**
  * Start following the path from the given point
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateFollowWaypointPath.cpp
-// ?privateFollowWaypointPath@AIUpdateInterface@@ present-unmatched
+// ?privateFollowWaypointPath@AIUpdateInterface@@MAEXPBVWaypoint@@W4CommandSourceType@@@Z
 void AIUpdateInterface::privateFollowWaypointPath( const Waypoint *way, CommandSourceType cmdSource )
 {
-	if (getObject()->isMobile() == FALSE)
+	BFMEAIUpdateFields *fields = reinterpret_cast<BFMEAIUpdateFields *>(this);
+
+	if (!fields->getObject()->isMobile())
 		return;
 
-	//Resetting the locomotor here was initially added for scripting purposes. It has been moved
-	//to the responsibility of the script to reset the locomotor before moving. This is needed because
-	//other systems (like the battle drone) change the locomotor based on what it's trying to do, and
-	//doesn't want to get reset when ordered to move.
-	//chooseLocomotorSet(LOCOMOTORSET_NORMAL);
+	reinterpret_cast<BFMEObjectFormationField *>( fields->getObject() )->setFormationID( NO_FORMATION_ID );
 
-	getStateMachine()->clear();
-	getStateMachine()->setGoalWaypoint( way );
-	setLastCommandSource( cmdSource );
-	getStateMachine()->setState( AI_FOLLOW_WAYPOINT_PATH_AS_INDIVIDUALS );
+	fields->getGoalObjectMachine()->clear();
+	reinterpret_cast<AIStateMachine *>( fields->m_stateMachine )->setGoalWaypoint( way );
+	fields->m_lastCommandSource = cmdSource;
+	fields->getGoalObjectMachine()->setState( (StateID)BFME_AI_FOLLOW_WAYPOINT_PATH_AS_INDIVIDUALS );
+
+	// Retail answers with a movement voice line for the two command sources it
+	// numbers 0 and 1; the reference copies have no voice response at all.
+	if (cmdSource == (CommandSourceType)0 || cmdSource == (CommandSourceType)1)
+		reinterpret_cast<BFMEMoveVoiceAI *>(this)->playMoveVoiceResponse( way->getLocation() );
 }
 
 //----------------------------------------------------------------------------------------
 /**
  * Start following the path from the given point
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateFollowWaypointPath.cpp
-// ?privateFollowWaypointPathExact@AIUpdateInterface@@ present-unmatched
+// ?privateFollowWaypointPathExact@AIUpdateInterface@@MAEXPBVWaypoint@@W4CommandSourceType@@@Z
 void AIUpdateInterface::privateFollowWaypointPathExact( const Waypoint *way, CommandSourceType cmdSource )
 {
-	if (getObject()->isMobile() == FALSE)
+	BFMEAIUpdateFields *fields = reinterpret_cast<BFMEAIUpdateFields *>(this);
+
+	if (!fields->getObject()->isMobile())
 		return;
 
-	//Resetting the locomotor here was initially added for scripting purposes. It has been moved
-	//to the responsibility of the script to reset the locomotor before moving. This is needed because
-	//other systems (like the battle drone) change the locomotor based on what it's trying to do, and
-	//doesn't want to get reset when ordered to move.
-	//chooseLocomotorSet(LOCOMOTORSET_NORMAL);
+	reinterpret_cast<BFMEObjectFormationField *>( fields->getObject() )->setFormationID( NO_FORMATION_ID );
 
-	getStateMachine()->clear();
-	getStateMachine()->setGoalWaypoint( way );
-	setLastCommandSource( cmdSource );
-	getStateMachine()->setState( AI_FOLLOW_WAYPOINT_PATH_AS_INDIVIDUALS_EXACT );
+	fields->getGoalObjectMachine()->clear();
+	reinterpret_cast<AIStateMachine *>( fields->m_stateMachine )->setGoalWaypoint( way );
+	fields->m_lastCommandSource = cmdSource;
+	fields->getGoalObjectMachine()->setState( (StateID)BFME_AI_FOLLOW_WAYPOINT_PATH_AS_INDIVIDUALS_EXACT );
+
+	// Retail answers with a movement voice line for the two command sources it
+	// numbers 0 and 1; the reference copies have no voice response at all.
+	if (cmdSource == (CommandSourceType)0 || cmdSource == (CommandSourceType)1)
+		reinterpret_cast<BFMEMoveVoiceAI *>(this)->playMoveVoiceResponse( way->getLocation() );
 }
 
 //----------------------------------------------------------------------------------------
 /**
  * Start following the path from the given point
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateFollowWaypointPath.cpp
-// ?privateFollowWaypointPathAsTeam@AIUpdateInterface@@ present-unmatched
+// ?privateFollowWaypointPathAsTeam@AIUpdateInterface@@MAEXPBVWaypoint@@W4CommandSourceType@@@Z
 void AIUpdateInterface::privateFollowWaypointPathAsTeam( const Waypoint *way, CommandSourceType cmdSource )
 {
-	if (getObject()->isMobile() == FALSE)
+	BFMEAIUpdateFields *fields = reinterpret_cast<BFMEAIUpdateFields *>(this);
+
+	if (!fields->getObject()->isMobile())
 		return;
 
-	//Resetting the locomotor here was initially added for scripting purposes. It has been moved
-	//to the responsibility of the script to reset the locomotor before moving. This is needed because
-	//other systems (like the battle drone) change the locomotor based on what it's trying to do, and
-	//doesn't want to get reset when ordered to move.
-	//chooseLocomotorSet(LOCOMOTORSET_NORMAL);
 
-	getStateMachine()->clear();
-	getStateMachine()->setGoalWaypoint( way );
-	setLastCommandSource( cmdSource );
-	getStateMachine()->setState( AI_FOLLOW_WAYPOINT_PATH_AS_TEAM );
+	fields->getGoalObjectMachine()->clear();
+	reinterpret_cast<AIStateMachine *>( fields->m_stateMachine )->setGoalWaypoint( way );
+	fields->m_lastCommandSource = cmdSource;
+	fields->getGoalObjectMachine()->setState( (StateID)BFME_AI_FOLLOW_WAYPOINT_PATH_AS_TEAM );
+
+	// Retail answers with a movement voice line for the two command sources it
+	// numbers 0 and 1; the reference copies have no voice response at all.
+	if (cmdSource == (CommandSourceType)0 || cmdSource == (CommandSourceType)1)
+		reinterpret_cast<BFMEMoveVoiceAI *>(this)->playMoveVoiceResponse( way->getLocation() );
 }
 
 //----------------------------------------------------------------------------------------
 /**
  * Start following the path from the given point
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateFollowWaypointPath.cpp
-// ?privateFollowWaypointPathAsTeamExact@AIUpdateInterface@@ present-unmatched
+// ?privateFollowWaypointPathAsTeamExact@AIUpdateInterface@@MAEXPBVWaypoint@@W4CommandSourceType@@@Z
 void AIUpdateInterface::privateFollowWaypointPathAsTeamExact( const Waypoint *way, CommandSourceType cmdSource )
 {
-	if (getObject()->isMobile() == FALSE)
+	BFMEAIUpdateFields *fields = reinterpret_cast<BFMEAIUpdateFields *>(this);
+
+	if (!fields->getObject()->isMobile())
 		return;
 
-	//Resetting the locomotor here was initially added for scripting purposes. It has been moved
-	//to the responsibility of the script to reset the locomotor before moving. This is needed because
-	//other systems (like the battle drone) change the locomotor based on what it's trying to do, and
-	//doesn't want to get reset when ordered to move.
-	//chooseLocomotorSet(LOCOMOTORSET_NORMAL);
 
-	getStateMachine()->clear();
-	getStateMachine()->setGoalWaypoint( way );
-	setLastCommandSource( cmdSource );
-	getStateMachine()->setState( AI_FOLLOW_WAYPOINT_PATH_AS_TEAM_EXACT );
+	fields->getGoalObjectMachine()->clear();
+	reinterpret_cast<AIStateMachine *>( fields->m_stateMachine )->setGoalWaypoint( way );
+	fields->m_lastCommandSource = cmdSource;
+	fields->getGoalObjectMachine()->setState( (StateID)BFME_AI_FOLLOW_WAYPOINT_PATH_AS_TEAM_EXACT );
+
+	// Retail answers with a movement voice line for the two command sources it
+	// numbers 0 and 1; the reference copies have no voice response at all.
+	if (cmdSource == (CommandSourceType)0 || cmdSource == (CommandSourceType)1)
+		reinterpret_cast<BFMEMoveVoiceAI *>(this)->playMoveVoiceResponse( way->getLocation() );
 }
 
 //----------------------------------------------------------------------------------------
