@@ -80236,6 +80236,7 @@ _bfmeInfoDNG,0x00C7301C,pin
 _bfmeKDSM,0x00C75350,pin
 _bfmeKEZC,0x00C75350,pin
 _bfmeLitZD,0x00CC79BC,pin
+_bfmeMalloc1149,0x0082ADA0,pin
 _bfmeMsgDZEa,0x00D09990,pin
 _bfmeMsgDZEb,0x00D09AAC,pin
 _bfmeMsgDZEc,0x00D09AD8,pin
@@ -80505,9 +80506,13 @@ _funcargs,0x0099C410,decode_calls pin for _var_or_func_tail callee
 _funcstat,0x0099C390,decode_calls pin for _stat callee
 _g_Rva0112C8D0,0x0112C8D0,address-derived terminated lookup table read by 0x0080D890
 _g_Rva012C47A4,0x012C47A4,DirtySock default alias-list pointer used by 0x0080EF50
+_g_bfmeFreeList1149,0x00F0B210,pin
 _g_bfmeG1144,0x00EED5C8,pin
 _g_bfmeG1148,0x00EED5C8,pin
 _g_bfmeH1144,0x00EED5AC,pin
+_g_bfmeHeapCur1149,0x00F0B208,pin
+_g_bfmeHeapEnd1149,0x00F0B204,pin
+_g_bfmeHeapSize1149,0x00F0B200,pin
 _g_bfmeK1127,0x00C75350,pin
 _g_bfmeO1145,0x00F40534,pin
 _g_bfmeO1146,0x00EF1600,pin
