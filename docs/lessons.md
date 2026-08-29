@@ -808,3 +808,32 @@ both are worth as much as the landing would have been.
   address and reads `+field`, while still folding the first read back onto ecx.
   It also orders `add ecx,K` before the argument push instead of after. Two
   unrelated families needed exactly this on the same day.
+
+## A mixed-ending file turns a one-line edit into a lift accusation
+
+Symptom: you change a comment and `conversion_gate.py` rejects the commit with
+"adds a naked/__emit body outside Code/gen_small/: __emit 0x81; (3967 such
+lines)". Cause: 13 cluster destinations hold a CRLF `__emit` block inside an
+otherwise-LF file — AIPathfind.cpp is 3967 CRLF against 11131 LF, and
+OptionsMenu.cpp, GameText.cpp, InGameUI.cpp, ControlBarScheme.cpp,
+ActionManager.cpp, Drawable.cpp and GameWindowManagerScript.cpp are the same
+shape. Python's `read_text()`/`write_text()` translates on read and writes LF,
+so a scripted edit silently rewrites every CRLF line and the diff really does
+re-add them. The gate is right; the accusation is not. Rule: script every edit
+with `read_bytes().decode("utf-8")` and `write_bytes(s.encode("utf-8"))`, and
+check `git diff --stat` after — a whole-file rewrite means line endings, not a
+bad edit. Same root cause as the ledger terminator hazard in tools/ledger_io.py.
+
+## An access specifier can make a body unmergeable, and it fails like a compile error
+
+Symptom: the gate says "symbol not found in object" rather than showing a byte
+mismatch, so it reads like the callee is missing. Cause: MSVC encodes access in
+the mangled name — Q public, I protected, A private — so a member the shim
+declares `protected` emits `?name@Class@@IAE...` while the ledger row carries
+the public `QAE` spelling. `AIUpdateInterface::setGoalPositionClipped` is
+protected in reference/shims/aiupdatelayout/GameLogic/Module/AIUpdate.h and
+public in the ledger. No view struct and no alias pin reaches an access
+specifier; only a shim-header edit does, which is a wide change and a full-tree
+build for one body. Rule: before starting a body, compare the row's access
+letter against the shim's declaration. If they disagree, leave the donor and
+annotate its marker.
