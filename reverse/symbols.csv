@@ -12204,6 +12204,7 @@ name,address,notes
 ?_Transfer@?$_List_global@_N@_STL@@SAXPAU_List_node_base@2@00@Z,0x0082BA90,family-emit shared callee
 ?__stlp_deallocate_small@@YAXPAXI@Z,0x0082E5F0,alias for the already-pinned STLport __node_alloc<0,0>::_M_deallocate small-block pool deallocator, used directly (not through the template) by TensileFormationUpdateMember::~TensileFormationUpdateMember
 ?_bfme_allows@BfmeSpecialPowerAllowanceStore@@QAEEPAVBfmePlayerSpecialPowerState@@PBVSpecialPowerTemplate@@@Z,0x00024E33,Open-BFME5 shape-only pin: the thunk Player _bfme_allowsSpecialPower calls; thiscall on the global at 0x012F0FF8 with the player subobject and the template
+?_bfme_allowsSpecialPower@BfmeSpecialPowerPlayer@@QAEEPBVSpecialPowerTemplate@@@Z,0x0000226B,alias of ?_bfme_allowsSpecialPower@Player@@QAEEPBVSpecialPowerTemplate@@@Z pinned at the same ILT; SpecialPower.cpp compiles the real Player which does not declare it
 ?_bfme_allowsSpecialPower@Player@@QAEEPBVSpecialPowerTemplate@@@Z,0x0000226B,ILT thunk to an unidentified Player check at 0x000C9890 that forwards the template to the global at 0x012F0FF8
 ?_bfme_arePlayerControlsShown@DisconnectMenu@@QAE_NH@Z,0x0001AF28,DisconnectManager status update visibility query through ILT to the existing 0x0050E6D0 body
 ?_bfme_arePlayerControlsShown@DisconnectMenu@@QAE_NH@Z,0x0050E6D0,returns this+0x262[slot] written by 0x0050E650; callers DisconnectManager::updateDisconnectStatus 0x0066C61D and 0x0066C63F guarding the show/hide calls; ILT 0x0001AF28
@@ -74133,6 +74134,7 @@ name,address,notes
 ?bfmeStop1027@BfmeX1027@@QAEXXZ,0x0001F212,pin
 ?bfmeStop1038F@BfmeAObj1038@@QAEXXZ,0x008A0B00,pin
 ?bfmeStop1066@BfmeR1066@@QAEXH@Z,0x0000BD7F,pin
+?bfmeStop1082@BfmeC1082@@QAEXXZ,0x0001992F,pin
 ?bfmeStop@BfmeStopF@@QAEXXZ,0x00015E2E,Open-BFME5 the ICF thunk (to 0x0037C600) the clear at 0x002901C0 calls before emptying its vector
 ?bfmeStopAHA@BfmeSubAHA@@QAEXH@Z,0x0004AB4C,pin
 ?bfmeStopAQA@BfmeOneAQA@@QAEXXZ,0x0001F316,pin
@@ -75435,6 +75437,7 @@ name,address,notes
 ?friend_findCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z,0x0000D8BE,first of the find-then-create pair in the CrateData block; the second call on the same receiver is the already-matched newCrateTemplate and ZH declares this one beside it
 ?friend_getFinalOverride@BFMELocomotorOverride@@QAEPAV1@XZ,0x000022BB,alias of the LocomotorOverridable spelling pinned below; AIUpdate.cpp reaches the chain walker through a view class because the reference Locomotor reads its template instead
 ?friend_getFinalOverride@BfmeOverridable@@QAEPAV1@XZ,0x000022BB,Open-BFME5 ILT the override walk in Rva2225E0Filter::accepts at 0x003A04A0 recurses through
+?friend_getFinalOverride@BfmeOverridableChain@@QBEPBV1@XZ,0x00048C61,alias of ?friend_getFinalOverride@Overridable@@QBEPBV1@XZ pinned at the same ILT; declared-only view so the call survives where the vendored header's inline would unroll another link
 ?friend_getFinalOverride@LocomotorOverridable@@QAEPAV1@XZ,0x000022BB,ILT thunk to the locomotor override-chain walker at 0x00087A80; a distinct body from the SpecialPowerTemplate walker at 0x00097880
 ?friend_getFinalOverride@Overridable@@QAEPAV1@XZ,0x00048C61
 ?friend_getFinalOverride@Overridable@@QBEPBV1@XZ,0x00048C61,doTeamUseCommandButtonOnNamed BFME override-chain ILT
@@ -75571,6 +75574,7 @@ name,address,notes
 ?g_bfmeA1038@@3PAVBfmeAObj1038@@A,0x00F377D8,pin
 ?g_bfmeA1057@@3HA,0x00F40594,pin
 ?g_bfmeA1062@@3PAVBfmeA1062@@A,0x00F06F18,pin
+?g_bfmeA1082@@3PAVBfmeA1082@@A,0x00EED668,pin
 ?g_bfmeA986B@@3PAHA,0x00EF9D04,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
@@ -75597,6 +75601,7 @@ name,address,notes
 ?g_bfmeB1057@@3HA,0x00F40568,pin
 ?g_bfmeB1058@@3PAVBfmeB1058@@A,0x00EED668,pin
 ?g_bfmeB1062@@3PAVBfmeB1062@@A,0x00F06DF0,pin
+?g_bfmeB1082@@3PAUBfmeB1082@@A,0x00EF0898,pin
 ?g_bfmeB986B@@3PAHA,0x00EF9D0C,pin
 ?g_bfmeB991@@3PAVBfmeB991@@A,0x00EF9D88,pin
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
@@ -75611,6 +75616,7 @@ name,address,notes
 ?g_bfmeC1038@@3HA,0x00F378D4,pin
 ?g_bfmeC1059@@3PAVBfmeC1059@@A,0x00EF1600,pin
 ?g_bfmeC1062@@3PAVBfmeC1062@@A,0x00F37A9C,pin
+?g_bfmeC1082@@3PAVBfmeC1082@@A,0x00EF1270,pin
 ?g_bfmeCFAE@@3HA,0x00EEF418,pin
 ?g_bfmeCh1035@@3DA,0x00F4ECC8,pin
 ?g_bfmeClock977@@3PAVBfmeClock977@@A,0x00EF1B40,pin
@@ -75955,6 +75961,14 @@ name,address,notes
 ?g_bfmeS1027@@3PAUBfmeS1027@@A,0x00EF0898,pin
 ?g_bfmeS1051@@3PAUBfmeS1051@@A,0x00EF0898,pin
 ?g_bfmeS1061@@3PAVBfmeS1061@@A,0x00EEF70C,pin
+?g_bfmeS1082_0@@3PAVBfmeS1082@@A,0x00F38378,pin
+?g_bfmeS1082_1@@3PAVBfmeS1082@@A,0x00F3837C,pin
+?g_bfmeS1082_2@@3PAVBfmeS1082@@A,0x00F38380,pin
+?g_bfmeS1082_3@@3PAVBfmeS1082@@A,0x00F38384,pin
+?g_bfmeS1082_4@@3PAVBfmeS1082@@A,0x00F38388,pin
+?g_bfmeS1082_5@@3PAVBfmeS1082@@A,0x00F3838C,pin
+?g_bfmeS1082_6@@3PAVBfmeS1082@@A,0x00F38390,pin
+?g_bfmeS1082_7@@3PAVBfmeS1082@@A,0x00F38394,pin
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
@@ -80630,5 +80644,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?_bfme_allowsSpecialPower@BfmeSpecialPowerPlayer@@QAEEPBVSpecialPowerTemplate@@@Z,0x0000226B,alias of ?_bfme_allowsSpecialPower@Player@@QAEEPBVSpecialPowerTemplate@@@Z pinned at the same ILT; SpecialPower.cpp compiles the real Player which does not declare it
-?friend_getFinalOverride@BfmeOverridableChain@@QBEPBV1@XZ,0x00048C61,alias of ?friend_getFinalOverride@Overridable@@QBEPBV1@XZ pinned at the same ILT; declared-only view so the call survives where the vendored header's inline would unroll another link
