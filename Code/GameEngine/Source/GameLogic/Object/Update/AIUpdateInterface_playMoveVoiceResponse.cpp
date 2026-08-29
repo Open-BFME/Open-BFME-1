@@ -51,6 +51,7 @@ class GameMessage
 public:
 	enum Type
 	{
+		MSG_DO_ATTACK_OBJECT = 0x7E7,
 		MSG_DO_MOVETO = 0x7E8
 	};
 };
@@ -62,12 +63,26 @@ class AIUpdateInterface
 {
 protected:
 	virtual void slot00();
+	void playAttackVoiceResponse( const Coord3D *position );
 	void playMoveVoiceResponse( const Coord3D *position );
 
 private:
 	unsigned char m_unmodelled_04[ 4 ];
 	Object *m_object;
 };
+
+void AIUpdateInterface::playAttackVoiceResponse( const Coord3D *position )
+{
+	Drawable *drawable = m_object->getDrawable();
+	if( drawable )
+	{
+		DrawableList list;
+		list.push_back( drawable );
+		PickAndPlayInfo info;
+		info.m_position = *position;
+		pickAndPlayUnitVoiceResponse( &list, GameMessage::MSG_DO_ATTACK_OBJECT, &info );
+	}
+}
 
 void AIUpdateInterface::playMoveVoiceResponse( const Coord3D *position )
 {
