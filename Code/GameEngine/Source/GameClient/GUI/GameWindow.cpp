@@ -792,7 +792,6 @@ GameFont *GameWindow::winGetFont( void )
 // GameWindow::winSetFont =====================================================
 /** Set font for text in this window */
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindow_winSetFont.cpp
 // BFME's instance data starts four bytes later than the reference class puts
 // it, so the style is at this+0x3C, the font at +0x1B4 and the two display
 // strings at +0x1CC and +0x1D0. A DisplayString takes its font at vtable +0x18.
@@ -1427,7 +1426,6 @@ Int GameWindow::winSetSystemFunc( GameWinSystemFunc system )
 // GameWindow::winSetInputFunc ================================================
 /** Sets the window's input callback functions. */
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GameWindow_winSetInputFunc.cpp
 Int GameWindow::winSetInputFunc( GameWinInputFunc input )
 {
 
@@ -1563,7 +1561,6 @@ GameWindow *GameWindow::winPointInChild( Int x, Int y, Bool ignoreEnableCheck, B
 /** Find the child in which the cursor resides; regardless of
 	* whether or not the window is actually enabled */
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/Common/GameWindow_winPointInAnyChild_Thunk.cpp
 // The window's pick fields all sit later than the reference class puts them --
 // the status word and the geometry by four bytes, the three list pointers by
 // sixteen. Same body otherwise, and the four arguments retail pushes to
