@@ -4,6 +4,7 @@ typedef bool Bool;
 typedef unsigned int UnsignedInt;
 typedef unsigned int ObjectID;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfo
 {
 	unsigned char m_prefix[8];
@@ -28,6 +29,7 @@ public:
 	virtual Bool getRecentDamageSource(ObjectID *sourceID, UnsignedInt frames) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class ContainModuleInterface
 {
 public:
@@ -43,6 +45,7 @@ public:
 	virtual BfmeDamageRedirect *getDamageRedirect() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 class BodyModuleInterface
 {
 public:
@@ -55,6 +58,7 @@ public:
 	virtual UnsignedInt getLastDamageTimestamp() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -64,6 +68,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

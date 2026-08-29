@@ -10,6 +10,7 @@ enum UpdateSleepTime
 };
 
 // Upstream layout: GameLogic/Module/ObjectModule.h.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule
 {
 public:
@@ -21,12 +22,14 @@ protected:
 	Object *m_object;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleInterface
 {
 public:
 	virtual void updateInterfaceAnchor();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModuleInterface
 {
 public:
@@ -34,6 +37,7 @@ public:
 };
 
 // Upstream layout: GameLogic/Module/UpdateModule.h.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public ObjectModule,
 	public BehaviorModuleInterface,
 	public UpdateModuleInterface
@@ -56,6 +60,7 @@ private:
 };
 
 // Upstream layout: GameLogic/Module/ObjectHelper.h.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ObjectHelper.h
 class ObjectHelper : public UpdateModule
 {
 public:

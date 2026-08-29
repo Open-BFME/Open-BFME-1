@@ -675,7 +675,6 @@ void DisconnectManager::sendKeepAlive(ConnectionManager *conMgr) {
 	}
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManager_populateDisconnectScreen_Thunk.cpp
 // Attempted and reverted. The BFME body differs from the one below in three
 // ways, all readable in the retail bytes: it returns early when there is no
 // disconnect menu, it inlines the slot translation as a three-way branch and
@@ -684,6 +683,7 @@ void DisconnectManager::sendKeepAlive(ConnectionManager *conMgr) {
 // except for one transposition -- retail stores the unwind slot before loading
 // the copy-constructor receiver, MSVC schedules the two the other way round --
 // which is the same not-source-controllable class as register allocation.
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManager_populateDisconnectScreen_Thunk.cpp
 // ?populateDisconnectScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::populateDisconnectScreen(ConnectionManager *conMgr) {
 	for (Int i = 0; i < MAX_SLOTS; ++i) {
@@ -799,7 +799,6 @@ void DisconnectManager::turnOnScreen(ConnectionManager *conMgr) {
 	self->m_timeOfDisconnectScreenOn = timeGetTime();
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManager_disconnectPlayer_Thunk.cpp
 // Attempted and reverted, three bytes short. The BFME body ignores the leave
 // code the connection manager returns -- there is no packet-router resend --
 // inlines the slot translation, and skips the disconnect window when it is
@@ -812,6 +811,7 @@ void DisconnectManager::turnOnScreen(ConnectionManager *conMgr) {
 // line, which makes the temporary opaque, and retail's compiler saw an inline
 // copy delegating to an undefined base. Same block as populateDisconnectScreen
 // below; both need the string shim, not a view.
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManager_disconnectPlayer_Thunk.cpp
 // ?disconnectPlayer@DisconnectManager@@IAEXHPAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::disconnectPlayer(Int slot, ConnectionManager *conMgr) {
 	DEBUG_LOG(("DisconnectManager::disconnectPlayer - Disconnecting slot number %d on frame %d\n", slot, TheGameLogic->getFrame()));
