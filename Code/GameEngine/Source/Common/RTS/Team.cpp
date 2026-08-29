@@ -65,6 +65,89 @@
 // GLOBALS ////////////////////////////////////////////////////////////////////
 TeamFactory *TheTeamFactory = NULL;
 
+// ------------------------------------------------------------------------
+// BFME reaches the next team in the instance list through a call rather than
+// through the DLINK member Zero Hour's macros expand to, and puts the list head
+// at TeamPrototype+0x274, so the five walks below iterate it by hand.
+//
+// advance() carries its own null check.  That is what the second test on the
+// same register is: the loop body cannot have changed it, and the branch it
+// feeds goes straight to the exit because an iterator that is done stays done.
+class BfmeTeamInstanceLink
+{
+public:
+	BfmeTeamInstanceLink *_bfme_nextInInstanceList();	///< ILT 0x00022A70
+
+	// Team::hasAnyBuildFacility is defined further down this same TU and is small
+	// enough that MSVC inlines it into the walk below, where retail emits a call
+	// through ILT 0x0003F594.  Declared-not-defined here, the call survives.
+	// The three sibling walks need no such help: their callees are in this TU too
+	// but the inliner declines them.
+	Bool hasAnyBuildFacility() const;			///< ILT 0x0003F594
+
+	// Same trap, one level deeper: Team::removeOverrideTeamRelationship is defined
+	// in this TU too, and retail inlines the whole TeamPrototype walk below into
+	// TeamFactory::teamAboutToBeDeleted -- at which depth MSVC inlines this callee
+	// as well, where retail still calls it through ILT 0x0001A48D.  Retail's is
+	// void-returning; the vendored header's Bool return is discarded either way.
+	void removeOverrideTeamRelationship( TeamID teamID );	///< ILT 0x0001A48D
+};
+
+// Team loses the second base's vtable pointer BFME does not have, so the id
+// sits at Team+0x08 where the vendored header lands it at +0x0c.  A function so
+// the key stays an rvalue, the way the retail load feeds the push directly.
+static TeamID bfmeTeamID( const Team *that )
+{
+	return *(const TeamID *)((const char *)that + 0x08);
+}
+
+class BfmeTeamInstanceIterator
+{
+public:
+	BfmeTeamInstanceIterator( Team *head ) : m_cur( head ) { }
+
+	Bool done() const { return m_cur == NULL; }
+	Team *cur() const { return m_cur; }
+
+	void advance()
+	{
+		if( m_cur )
+			m_cur = (Team *)((BfmeTeamInstanceLink *)m_cur)->_bfme_nextInInstanceList();
+	}
+
+private:
+	Team *m_cur;
+};
+
+// The accessor is in-class on the view rather than a free function: that extra
+// inline-call layer is what schedules the load of the head the way retail does.
+struct BfmeTeamPrototypeInstances
+{
+	unsigned char m_unmodelled_000[ 0x274 ];
+	Team *m_teamInstanceList;				///< retail this+0x274
+
+	BfmeTeamInstanceIterator iterate() const
+	{
+		return BfmeTeamInstanceIterator( m_teamInstanceList );
+	}
+};
+
+// ------------------------------------------------------------------------
+// BFME keys the prototype map on a pair of ints, not on a NameKeyType, so the
+// value_type is four bytes wider than the vendored TeamPrototypeMap's and the
+// prototype pointer sits at a different offset inside each node.  TeamFactory
+// derives from SubsystemInterface and Snapshot -- two vptrs plus the subsystem
+// name -- which puts the tree itself at TeamFactory+0x0c.
+typedef std::pair< Int, Int > BfmeTeamPrototypeKey;
+typedef std::map< BfmeTeamPrototypeKey, TeamPrototype *,
+		std::less< BfmeTeamPrototypeKey > > BfmeTeamPrototypeMap;
+
+struct BfmeTeamFactoryMap
+{
+	unsigned char m_unmodelled_000[ 0x0c ];
+	BfmeTeamPrototypeMap m_prototypes;			///< retail this+0x0c
+};
+
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamRelationMapConstructor.cpp
@@ -328,8 +411,7 @@ TeamPrototype *TeamFactory::findTeamPrototypeByID( TeamPrototypeID id )
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamFactory_findTeamByID.cpp
-// ?findTeamByID@TeamFactory@@QAEPAVTeam@@I@Z present-unmatched
+// ?findTeamByID@TeamFactory@@QAEPAVTeam@@I@Z
 Team *TeamFactory::findTeamByID( TeamID teamID )
 {
 
@@ -337,16 +419,19 @@ Team *TeamFactory::findTeamByID( TeamID teamID )
 	if( teamID == TEAM_ID_INVALID )
 		return NULL;
 
-	// search all prototypes for the matching team ID
-	TeamPrototype *tp;
-	TeamPrototypeMap::iterator it;
-	Team *team;
-	for( it = m_prototypes.begin(); it != m_prototypes.end(); ++it )
+	// Retail does not ask each prototype in turn -- it walks the prototype's own
+	// instance list here, so TeamPrototype::findTeamByID is inlined away and the
+	// id test is against Team+0x08 directly.
+	BfmeTeamPrototypeMap &prototypes = ((BfmeTeamFactoryMap *)this)->m_prototypes;
+	for( BfmeTeamPrototypeMap::iterator it = prototypes.begin(); it != prototypes.end(); ++it )
 	{
-		tp = (*it).second;
-		team = tp->findTeamByID( teamID );
-		if( team )
-			return team;
+		TeamPrototype *tp = (*it).second;
+		for( BfmeTeamInstanceIterator iter = ((const BfmeTeamPrototypeInstances *)tp)->iterate(); !iter.done(); iter.advance() )
+		{
+			Team *team = iter.cur();
+			if( bfmeTeamID( team ) == teamID )
+				return team;
+		}
 	}
 
 	return NULL;
@@ -435,22 +520,6 @@ Team* TeamFactory::findTeam(const AsciiString& name)
 
 // ------------------------------------------------------------------------
 // ?teamAboutToBeDeleted@TeamFactory@@QAEXPAVTeam@@@Z
-// ------------------------------------------------------------------------
-// BFME keys the prototype map on a pair of ints, not on a NameKeyType, so the
-// value_type is four bytes wider than the vendored TeamPrototypeMap's and the
-// prototype pointer sits at a different offset inside each node.  TeamFactory
-// derives from SubsystemInterface and Snapshot -- two vptrs plus the subsystem
-// name -- which puts the tree itself at TeamFactory+0x0c.
-typedef std::pair< Int, Int > BfmeTeamPrototypeKey;
-typedef std::map< BfmeTeamPrototypeKey, TeamPrototype *,
-		std::less< BfmeTeamPrototypeKey > > BfmeTeamPrototypeMap;
-
-struct BfmeTeamFactoryMap
-{
-	unsigned char m_unmodelled_000[ 0x0c ];
-	BfmeTeamPrototypeMap m_prototypes;			///< retail this+0x0c
-};
-
 void TeamFactory::teamAboutToBeDeleted(Team* team)
 {
 	BfmeTeamPrototypeMap &prototypes = ((BfmeTeamFactoryMap *)this)->m_prototypes;
@@ -959,73 +1028,6 @@ void TeamPrototype::setControllingPlayer(Player *newController)
 }
 
 // ------------------------------------------------------------------------
-// ------------------------------------------------------------------------
-// BFME reaches the next team in the instance list through a call rather than
-// through the DLINK member Zero Hour's macros expand to, and puts the list head
-// at TeamPrototype+0x274, so the five walks below iterate it by hand.
-//
-// advance() carries its own null check.  That is what the second test on the
-// same register is: the loop body cannot have changed it, and the branch it
-// feeds goes straight to the exit because an iterator that is done stays done.
-class BfmeTeamInstanceLink
-{
-public:
-	BfmeTeamInstanceLink *_bfme_nextInInstanceList();	///< ILT 0x00022A70
-
-	// Team::hasAnyBuildFacility is defined further down this same TU and is small
-	// enough that MSVC inlines it into the walk below, where retail emits a call
-	// through ILT 0x0003F594.  Declared-not-defined here, the call survives.
-	// The three sibling walks need no such help: their callees are in this TU too
-	// but the inliner declines them.
-	Bool hasAnyBuildFacility() const;			///< ILT 0x0003F594
-
-	// Same trap, one level deeper: Team::removeOverrideTeamRelationship is defined
-	// in this TU too, and retail inlines the whole TeamPrototype walk below into
-	// TeamFactory::teamAboutToBeDeleted -- at which depth MSVC inlines this callee
-	// as well, where retail still calls it through ILT 0x0001A48D.  Retail's is
-	// void-returning; the vendored header's Bool return is discarded either way.
-	void removeOverrideTeamRelationship( TeamID teamID );	///< ILT 0x0001A48D
-};
-
-// Team loses the second base's vtable pointer BFME does not have, so the id
-// sits at Team+0x08 where the vendored header lands it at +0x0c.  A function so
-// the key stays an rvalue, the way the retail load feeds the push directly.
-static TeamID bfmeTeamID( const Team *that )
-{
-	return *(const TeamID *)((const char *)that + 0x08);
-}
-
-class BfmeTeamInstanceIterator
-{
-public:
-	BfmeTeamInstanceIterator( Team *head ) : m_cur( head ) { }
-
-	Bool done() const { return m_cur == NULL; }
-	Team *cur() const { return m_cur; }
-
-	void advance()
-	{
-		if( m_cur )
-			m_cur = (Team *)((BfmeTeamInstanceLink *)m_cur)->_bfme_nextInInstanceList();
-	}
-
-private:
-	Team *m_cur;
-};
-
-// The accessor is in-class on the view rather than a free function: that extra
-// inline-call layer is what schedules the load of the head the way retail does.
-struct BfmeTeamPrototypeInstances
-{
-	unsigned char m_unmodelled_000[ 0x274 ];
-	Team *m_teamInstanceList;				///< retail this+0x274
-
-	BfmeTeamInstanceIterator iterate() const
-	{
-		return BfmeTeamInstanceIterator( m_teamInstanceList );
-	}
-};
-
 // ?countObjectsByThingTemplate@TeamPrototype@@QBEXHPBQBVThingTemplate@@_NPAH1@Z
 void TeamPrototype::countObjectsByThingTemplate(Int numTmplates, const ThingTemplate* const* things, Bool ignoreDead, Int *counts, Bool ignoreUnderConstruction) const
 {
