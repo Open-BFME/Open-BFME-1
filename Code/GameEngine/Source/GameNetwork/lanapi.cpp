@@ -1091,7 +1091,6 @@ LANGameInfo * LANAPI::LookupGameByListOffset( Int offset )
 	return theGame; // NULL means we didn't find anything.
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_removeGame.cpp
 void LANAPI::removeGame( LANGameInfo *game )
 {
 	LANGameInfo *g = m_games;
