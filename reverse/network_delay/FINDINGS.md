@@ -196,10 +196,10 @@ The first native timing slice is now byte-matched:
 
 | Function | RVA | Timing evidence |
 | --- | --- | --- |
-| `BFMEConnectionManager::isPlayerConnected` | `0x00662A50` | uses `timeGetTime`; compares elapsed time against `TheGlobalData + 0xCBC` (`NetworkPlayerTimeoutTime`); before frame threshold `0x010EAD50`, uses `NetworkPlayerTimeoutTime * 4` |
+| `BFMEConnectionManager::isPlayerConnected` | `0x00662A50` | uses `timeGetTime`; compares elapsed time against `TheGlobalData + 0xCC0` (`NetworkPlayerTimeoutTime`); before frame threshold `0x010EAD50`, uses `NetworkPlayerTimeoutTime * 4` |
 | `BFMEConnectionManager::isPlayerConnectedForTimeout` | `0x00662B00` | same connection timestamp at peer object `+0x34C`; normally uses caller timeout, but startup path still falls back to `NetworkPlayerTimeoutTime * 4` |
-| `BFMEConnectionManager::hasPacketRouterFrameStall` | `0x00664260` | only runs when local player is packet router; after frame `5`, uses `TheGlobalData + 0xCB4` (`NetworkKeepAliveDelay`) to detect stale per-player frame data |
-| `BFMEDisconnectManager::hasDisconnectScreenNotifyTimedOut` | `0x0066B510` | compares elapsed time against `TheGlobalData + 0xCC0` (`NetworkDisconnectScreenNotifyTime`) |
+| `BFMEConnectionManager::hasPacketRouterFrameStall` | `0x00664260` | only runs when local player is packet router; after frame `5`, uses `TheGlobalData + 0xCB4` (**`NetworkRunAheadSlack`**) to detect stale per-player frame data |
+| `BFMEDisconnectManager::hasDisconnectScreenNotifyTimedOut` | `0x0066B510` | compares elapsed time against `TheGlobalData + 0xCC4` (`NetworkDisconnectScreenNotifyTime`) |
 | `BFMEConnectionManager::processRequestFrameDataCommand` | `0x006659B0` | command type `9` handler; rejects/clamps requested resend windows using `NetworkRunAheadSlack` (`+0xCB4`), then calls `0x0040D8CD` with player id and frame range |
 
 These are timeout/readiness gates, not the delay patch itself, but they expose the
@@ -356,6 +356,69 @@ De-pooled and 20 bytes: `m_msg` `+0x00` (where ZH has a vptr), `m_next` `+0x04`,
 `m_prev` `+0x08`, `m_relay` `+0x0C`. Proven by `relayCommand` (`0x00663100`) and
 `NetCommandList::reset` (`0x006731A0`), which plain-deletes its nodes rather than
 returning them to a pool.
+
+## The GlobalData network block, corrected 2026-08-29
+
+Every offset this file gave for the network timing block was one slot low. The
+INI parse table settles it: each row is 16 bytes and the field offset is the
+FOURTH dword, not the third.
+
+Confirmed three independent ways, after a challenge that the block was shifted
+one slot: (1) the INI parse table's fourth dword maps seven names to seven
+consecutive offsets in order; (2) the retail imm32 initialisers match Zero Hour's
+documented defaults exactly and in order -- 500 / 20 / 5000 / 60000 / 15000 at
+`+0xCAC` / `+0xCB8` / `+0xCBC` / `+0xCC0` / `+0xCC4`; (3) the semantics fit
+(a 60-second compiled player timeout, a 15-second disconnect-screen notice); and (4) the
+def-use scan later in this file, which counts TEN reads of `+0xCB4` and ZERO of
+`+0xCB8` -- a field named KeepAliveDelay that is never read is exactly what
+"parsed, never read" means, and a live stall tolerance is not. BFME
+preserves Zero Hour's field ORDER and spacing here and drops nothing, so any
+derivation that assumes a dropped member is working from pins one slot low.
+
+| Offset | Field | Compiled `imm32` | **Runtime (live read)** | ZH default |
+| --- | --- | --- | --- | --- |
+| `+0xCAC` | `NetworkRunAheadMetricsTime` | 500 | — | 500 |
+| `+0xCB0` | `NetworkCushionHistoryLength` | 10 | — | 10 |
+| `+0xCB4` | **`NetworkRunAheadSlack`** | 10 | **10** (9,984 reads) | 10 |
+| `+0xCB8` | `NetworkKeepAliveDelay` | 20 | **360** | 20 |
+| `+0xCBC` | `NetworkDisconnectTime` | 5000 | **15000** | 5000 |
+| `+0xCC0` | `NetworkPlayerTimeoutTime` | 60000 | **100000** | 60000 |
+| `+0xCC4` | `NetworkDisconnectScreenNotifyTime` | 15000 | — | 15000 |
+
+**The compiled column is what identifies the fields; the runtime column is what
+the game actually uses, and they are not the same.** `_patch222.big` overrides
+`ini.big` per field, which is observed rather than assumed — `KeepAliveDelay`
+reads 360 at runtime against 20 in the base archive. Three of these differ from
+the binary by 3–18×.
+
+Two consequences. First, **quote the runtime value for any behavioural claim**: a
+"voted out after 60 seconds" statement is wrong by 40 seconds, and dividing a
+stall by the compiled 5000 ms disconnect time overstates the risk 3×. Both errors
+were made in this project and corrected. Second, the identification argument is
+*unaffected* — it rests on the compiled initialisers matching Zero Hour's
+declaration order, which they do, and an INI override does not move a field.
+
+`NetworkRunAheadSlack` is written at `0x00795F79` (value 2) or `0x00795F94`
+(value 5) -- but **neither write executes in a normal match**. Both are gated on
+the flags at `0x012ED4E5`/`0x012ED4E6`, and those are DEBUG CRC MODES: the
+function that sets `0x012ED4E5` at `0x00461313` also ORs `0x10000` into the
+flags word at `0x012A6FA0` and handles the strings `"debug.add l + NETWORK_CRC"`
+and `"Do not specify both -deepCRC and -liteCRC in your commandline arguments."`
+So those two values apply only under `-deepCRC`/`-liteCRC`.
+
+The runtime value comes from the INI row (parse table at `0x01078668`, field
+offset `+0xCB4`) and is **10** — `NetworkRunAheadSlack = 10` in `GameData.ini`
+inside `ini.big`. At 5 Hz that is exactly 2000 ms, the same as retail's
+`m_retryTime`, so the staleness cutoff, the router stall threshold and the
+send-queue retention horizon all coincide with the retry interval. Any argument that depends on slack being 2 or 5 specifically
+is unsupported.
+
+It is a FRAME count, not milliseconds, and it is the router's stall tolerance:
+`hasPacketRouterFrameStall` returns true -- freezing every seat -- as soon as any
+active player satisfies `m_playerLatestFrame[i] + slack < currentFrame`. So a
+guest frozen for longer than `slack * 200 ms` drags the router down with it,
+which is why router freezes appear at all in the loss captures and why they
+nearly vanish when the guest's freezes are shortened.
 
 ## Corrections to earlier notes in this file
 
@@ -825,6 +888,13 @@ exhaustive scan of every section for a call or jump reaching either that body or
 its thunk at 0x00049DB4 finds exactly one reference: the thunk's own jump into
 the body. **Nothing calls the thunk.**
 
+Reachability VERIFIED 2026-08-29, not inferred: `0x00A63530` has no direct
+callers, its single jmp thunk at `0x00449DB4` has no callers, and its address is
+never stored as a dword anywhere in the image, so it is not reached through a
+vtable either. It is unreachable code. That is what makes RotWK's delay fix
+non-portable in a stronger sense than "the field is initialised low" -- the
+throttle RotWK removes cannot be set in BFME 1 at all.
+
 So m_frameGrouping stays at 1ms and that gate never fires. There is no second
 delay source to remove. The function also halves the interval when the machine
 is the packet router -- BFME-only, and dead along with the rest of it.
@@ -962,3 +1032,202 @@ m_?(+0x20)  = -1
 Writing these needs the de-pooled NetCommandMsg base -- BFME de-pooled this graph
 like the rest -- and the usual care over member declaration order, since the
 compiler emits the stores in declaration order rather than the order above.
+
+## BFME has no run-ahead, and the router relays late in its own frame period
+
+Two structural facts read out of the retail exe on 2026-08-29, both of which
+change what "the delay" is made of. Neither matches the Zero Hour reference.
+
+**There is no run-ahead.** Zero Hour schedules a command `m_runAhead` frames into
+the future (`getFrame() + m_runAhead`, initialised to 30). BFME does not:
+
+* `sendLocalCommand` (`0x00A6478D`), router path: `executionFrame = max(currentFrame, 2)`
+* `relayCommand` (`0x00A63121`), for an unbound guest command: `executionFrame = router's current frame`
+
+So a command executes on the frame the **router** is on when it sees it. The
+host's own input has essentially no scheduled delay, which is why the router seat
+measures ~0.2 ms while a guest measures hundreds. A guest's delay is therefore
+transit plus frame quantum, not a schedulable offset — there is no run-ahead
+constant to lower, and looking for one is wasted effort.
+
+It also explains why `034-framedrain` desynced. The router keeps binding arriving
+commands to its current frame right up until it runs that frame, so the guest's
+one-quantum lag is the entire ordering margin. Removing the lag removes the
+margin.
+
+**The router relays late in its frame period.** Measured across three captures
+(150-300 ms round trip, ~2,300 relays each), as a phase within the router's own
+200 ms logic-frame period:
+
+| arm | p10 | p50 | p90 | share in the first 10% |
+|---|---|---|---|---|
+| s9-retail-1 | 0.17 | 0.75 | 1.00 | **0.0%** |
+| s9-both-1 | 0.15 | 0.75 | 1.00 | **0.0%** |
+| s9x-both400-1 | 0.26 | 0.62 | 1.00 | **0.0%** |
+
+Not batching — a relay batched to the frame tick would pile up at phase 0, and
+none do. The opposite: the router never relays in the first tenth of its period
+and typically relays around three-quarters through, so a command arriving just
+after a frame boundary waits most of a quantum before being passed on. The
+binding frame is unaffected (it is bound to the frame the router is on either
+way), so this does not change *which* frame a command lands on — it changes how
+much of that frame remains for the guest to receive it and run.
+
+**Candidate, not a finding — and now sized, which kills it.** The blackout is
+real and independently reproduced (0.0% of 1623 router relays in the first tenth
+of the period), but the mean phase is **0.590 against 0.500 for uniform**, so only
+about **20 ms** is recoverable on a 225 ms quantum — not the ~100 ms first
+estimated. That does not justify a detour in the router's hot loop. Recorded with
+the number attached so nobody revives it believing it is bigger.
+
+The original, over-large estimate: polling the network earlier in the router's
+loop would relay commands up to ~100 ms sooner on average and would *increase* the
+guest's ordering margin rather than reduce it, which is the safe direction.
+Unquantified and unbuilt. Note the caution — this is a cadence change on the
+relay side, and the send-side cadence change (`031-earlysend`) has a benefit that
+replication has so far failed to distinguish from retail's own spread at
+150 ms/3%. Do not assume a cadence fix is worth what it looks like on paper.
+
+## Where a guest's remaining delay actually sits
+
+Measured on the guest's own clock, so no cross-seat alignment is involved — the
+error that produced the send-anchored-clock artifact earlier in this work.
+
+| leg | retail | both400 |
+|---|---|---|
+| input → send (local) | p50 **173.4** p90 495.1 | p50 **191.7** p90 517.3 |
+| send → next frame run | p50 0.1 p90 0.2 | p50 0.1 p90 95.8 |
+
+Nearly all of the guest's controllable delay is **before the packet leaves the
+machine**, and the send→run leg is ~0. Phases within the guest's own 200 ms frame
+period say why:
+
+| | input phase | send phase | gap between sends |
+|---|---|---|---|
+| retail | p50 **0.00** | p50 **1.00** | p50 173.2 |
+| both400 | p50 0.00 | p50 1.00, **p10 0.50** | p50 191.3, **p10 34.8** |
+
+Inputs are appended at the top of a frame period; the resulting network command
+is sent at the end of it. That is the engine's message pipeline — a `GameMessage`
+appended during one client update is translated to a network command by the
+logic update that follows — and it costs most of a quantum.
+
+**This bounds what any future latency work can win.** The transit and frame-wait
+legs are structural (there is no run-ahead to shorten — see above), so the only
+compressible leg is this local ~190 ms.
+
+**An earlier revision of this paragraph said compressing it "reorders simulation
+input". That is too strong and is corrected here.** A guest does not execute its
+own command locally: it sends to the router, the router assigns an execution
+frame and relays, and the guest executes only when the command comes back. That
+is visible in the measurements — a guest's creation-to-run is 545-843 ms where
+purely local execution would be ~200 ms. So sending a guest's command earlier is
+a **transport-side** change. It does not reorder anything locally, because local
+order is decided by the router's frame assignment, and that assignment is
+authoritative and broadcast to every seat identically.
+
+What it does change is *which* frame the command binds to — an earlier one. That
+is the entire benefit, and it lands on all seats alike rather than on one.
+
+So this is a real candidate rather than a dead end, with three caveats that have
+to be discharged before anyone builds it:
+
+* `031-earlysend` already flushes the connection earlier and moves only ~9% of
+  sends, because it cannot send a command that has not been created yet. The
+  lever is whatever creates the network command, not the flush.
+* All ~16 callers of `sendLocalCommand` (`0x00A64740`, via thunk `0x0043F17A`)
+  are internal protocol sends inside `ConnectionManager`. The game-command path
+  has not been isolated, so the thing to hook is not yet identified.
+* Every "obviously safe" change on this track has so far been wrong three times.
+  The argument above is structural and untested, and `034-framedrain` had a
+  structural argument too.
+
+### A metric that measured the boundary instead of the effect
+
+Recorded because it produced a confident, wrong, load-bearing number, and the
+failure mode is easy to repeat.
+
+To evaluate `031-earlysend` mechanically, a *phase* statistic was used: where a
+send falls within the guest's own 200 ms frame period, and specifically the share
+landing in the first half. It reported that retail put 0.0% of sends in the first
+half and earlysend 8.3–9.5% — perfect separation across nine matches, which
+looked like decisive evidence and was adopted by both sessions.
+
+**It is degenerate at exactly the point that matters.** A send 0.2 ms *before* a
+frame event has phase ~1.00; one 0.2 ms *after* has phase ~0.00. Same instant,
+opposite ends of the bucket. Distance to the nearest frame event instead:
+
+| arm | p10 | p50 | p90 | within 5 ms of a boundary |
+|---|---|---|---|---|
+| retail | −0.2 ms | −0.2 ms | −0.1 ms | **99.7%** |
+| + earlysend | −65.8 ms | −0.2 ms | +87.8 ms | **15.8%** |
+
+Retail pins 99.7% of sends to the frame tick and earlysend releases 84% of them.
+The phase statistic reported that as "9% move" because it was measuring which
+side of a tick the boundary noise fell on.
+
+**What it cost.** From "9% of sends move by at most half a quantum" came a mean
+saving of ~9 ms, and from that the conclusion that earlysend's effect was two
+orders of magnitude below the noise floor and could never be resolved — an
+argument for *stopping* measurement. The true effect is ~100 ms p50 and ~170 ms
+p95, and it is disjoint at n=2 once measured against a baseline whose own spread
+is not 700 ms.
+
+**The metric that was right the whole time** was `held` — send minus command
+creation, from `netlat.creation_to_run` — which read 86.9–96.1 ms in every retail
+arm and 0.1 ms in every earlysend arm, in every capture, from the beginning. It
+was looked past by both sessions because it was labelled a validity check rather
+than a result.
+
+The distinction that separates them: `held` is anchored to the **command's own
+creation**, while phase is anchored to a **frame boundary the effect is defined
+relative to**. Anchoring a measurement to the thing an intervention moves is how
+this class of error is avoided.
+
+### Two ways this measurement goes wrong, both hit in practice
+
+* **Bucketing by phase instead of by distance.** See above — degenerate at the
+  frame boundary, understates an 84% effect as 9%.
+* **Not filtering to game commands.** A guest emits ~1326 per-tick frame-info
+  sends (type 3) against ~336 game commands (type 4). Frame info is pinned to the
+  tick by construction and cannot move, so an unfiltered measurement dilutes the
+  effect 4:1 and reports ~82% pinned for an arm that is 84% *released*.
+
+**And the reason the first error survived a review.** A second session checked
+the ~9 ms figure for arithmetic consistency against the phase statistic and it
+passed — 9% of sends times half a quantum genuinely is about 9 ms. What went
+unchecked was whether the phase statistic measured what it claimed. *A
+consistency check against a broken input reproduces the break*, and both parties
+then hold the same wrong number with increased confidence.
+
+## The "6x more polling" finding was the instrument, measured
+
+Pre-registered before the data existed, in the batch script that collected it:
+*"counters ~6x -> the effect is real and the hook merely observed it; counters
+~1x -> THE 6x WAS THE INSTRUMENT, not 'the effect disappeared'; in between ->
+real but amplified."* Recorded in advance precisely because the ~1x case is the
+one most easily mis-told.
+
+**It is ~1x.** Clean counters that only increment an integer and write nothing,
+reported on a line already being emitted per logic frame:
+
+| arm | seat | loops / frame | driver entries / frame |
+|---|---|---|---|
+| retail | router | 6.00 | 6.00 |
+| retail | guest | 6.00 | 6.00 |
+| + earlysend | router | 6.00 | 6.00 |
+| + earlysend | guest | 6.00 | 6.00 |
+
+Identical across arms and seats, p50 and p90. 6.00 is simply the ~30 Hz client
+loop divided by the 5 Hz logic rate.
+
+The earlier measurement — a guest reaching the frame driver 6x more often under
+`031-earlysend` — came from `netlat_admit`, which wrote a **flushed line per
+poll**. A seat that polls more pays more to be watched polling, and the cost
+scales with the very ratio being measured. That arm wrote 19,349 lines against
+its control's 3,239, and removing the hook moved the same retail arm from 8.5% to
+3.2% net game time lost.
+
+**So the guest's main loop is not slow, and never was.** Both seats iterate six
+times per logic frame and enter the frame driver on every iteration. Any account
+of guest lag that rests on the guest polling less often is describing the probe.

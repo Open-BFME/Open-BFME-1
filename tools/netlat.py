@@ -257,8 +257,77 @@ def to_execution(seat, router):
     return out, unbound
 
 
+def creation_to_run(seat, router):
+    """From the input that produced a command to the frame it runs on.
+
+    THE metric for judging a send-side fix, and the reason is not subtlety: a
+    send-anchored clock starts when the command LEAVES the machine, and retail
+    holds a command in its local list for most of a 200 ms quantum first. That
+    hold is invisible to `to_execution`, and removing it is exactly what
+    031-earlysend does -- so measuring that feature with `to_execution`
+    subtracts its own benefit, and under packet loss it charges the fixed build
+    for a freeze that retail's later timestamp lands inside. Doing so produced a
+    phantom "p95 regression" that two parties independently reproduced, because
+    they shared the instrument rather than the finding.
+
+    The join is nearest-preceding-input rather than the FIFO pairing in
+    `wrap_delays`. FIFO is invalid here: roughly three input messages reach the
+    list per command, so popping one per send drifts by the difference and ends
+    a match tens of seconds out of step. Nearest-preceding is approximate -- it
+    can pick a sibling message of the same click -- but it cannot drift.
+
+    Returns (values, held), where `held` is send minus creation. `held` is the
+    check, not decoration: it must come out near zero for a build that sends
+    immediately and near half a quantum for one that does not. If it does not,
+    the join is wrong and the values are meaningless.
+
+    Measured behaviour of that check, so a reader knows how far to trust it:
+
+      clean LAN, retail      held p50 96.1  max 183.9   0/628 over a quantum
+      clean LAN, earlysend   held p50  0.1  max   8.3   0/629 over a quantum
+      80ms/1%, retail        held p50 86.9  max 750.3  47/629 over a quantum
+
+    On a clean link the join is exact -- no send is held longer than the one
+    quantum the mechanism allows, so no pairing can have crossed a click. Under
+    loss 7.5% exceed a quantum, and this data cannot separate "the logic tick
+    that would have sent it was itself delayed by a freeze" from "the pairing
+    crossed into a neighbouring click". Both are plausible at 750 ms. Treat
+    loss-condition medians as sound and individual loss-condition outliers as
+    unattributed."""
+    bind = {}
+    for e in router["events"]:
+        if e["ev"] == "relay" and e["type"] == GAME_COMMAND and e["player"] == seat["slot"]:
+            bind.setdefault(e["cmd"], e["f"])
+    when = {}
+    for e in seat["events"]:
+        if e["ev"] == "frame":
+            when.setdefault(e["f"], e["t"])
+    inputs = [e["t"] for e in seat["events"] if e["ev"] == "input"]
+    if not inputs:
+        raise SystemExit(f"{seat['path']}: no input events, so no command has a "
+                         f"creation time. This capture cannot answer the question.")
+    out, held = [], []
+    for e in seat["events"]:
+        if e["ev"] != "send" or e["type"] != GAME_COMMAND:
+            continue
+        frame = bind.get(e["cmd"])
+        ran = when.get(frame) if frame is not None else None
+        if ran is None or ran < e["t"]:
+            continue
+        i = bisect.bisect_left(inputs, e["t"]) - 1
+        if i < 0:
+            continue
+        out.append(ran - inputs[i])
+        held.append(e["t"] - inputs[i])
+    return out, held
+
+
 def end_to_end(seat, router, paired):
-    """input -> the frame the router bound the command to.
+    """SUPERSEDED by creation_to_run -- kept only for callers that still pass a
+    `paired` list. Its FIFO join drifts (see creation_to_run) and its results
+    should not be quoted.
+
+    input -> the frame the router bound the command to.
 
     The guest never learns its own execution frame: it sends unstamped and the
     router pins the command to whatever frame it is on. So the binding is read
@@ -268,10 +337,16 @@ def end_to_end(seat, router, paired):
     binds = deque(e for e in router["events"]
                   if e["ev"] == "relay" and e["type"] == GAME_COMMAND
                   and e["player"] == slot)
+    # Keyed on the frame FIELD, not on the hook's argument. The frame event's
+    # `exec` is relayCommandsToCommandList's arg0, which reads 1 rather than a
+    # frame number -- to_execution was corrected for this and this function was
+    # not, so every lookup missed and every command was discarded as unbound.
+    # The failure was silent in the worst way: the guards reported "dropped",
+    # which reads as bad data rather than as a broken join.
     when = {}
     for e in seat["events"]:
         if e["ev"] == "frame":
-            when.setdefault(e["exec"], e["t"])
+            when.setdefault(e["f"], e["t"])
     out, unbound, impossible = [], 0, 0
     for c, _ in paired:
         if not binds:

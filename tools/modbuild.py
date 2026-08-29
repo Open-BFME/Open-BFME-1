@@ -373,6 +373,18 @@ def main():
 
     claimed = {}
     names = a.only or list(FEATURES)
+    if a.dist and a.only:
+        # --only is for bisection, and its own help says never for shipping --
+        # but nothing enforced that, so `--only X --dist` quietly rewrote the
+        # shipped artifact with a build carrying ONLY X. It happened: dist went
+        # to a one-feature build with gameresult and earlysend absent, and was
+        # only caught because someone checked the hash. mods/dist is always the
+        # whole of FEATURES or it is not mods/dist.
+        raise SystemExit(
+            "refusing --dist with --only: mods/dist is the artifact every ladder "
+            "player runs and must carry all of FEATURES "
+            f"({', '.join(sorted(FEATURES))}). --only builds a subset for "
+            "bisection; give it its own path with -o.")
     if a.dist:
         for name in names:
             if name in UNSHIPPED:

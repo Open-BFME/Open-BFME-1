@@ -18,8 +18,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from netlat import (GAME_COMMAND, frame_skew, load, logic_rate,  # noqa: E402
-                    pct, send_cadence, to_execution)
+from netlat import (GAME_COMMAND, creation_to_run, frame_skew, load,  # noqa: E402
+                    logic_rate, pct, send_cadence, to_execution)
 
 
 def summarise(run):
@@ -38,10 +38,34 @@ def summarise(run):
     for name, seat in (("host", router), ("guest", guest)):
         cad = send_cadence(seat)
         e2e, _ = to_execution(seat, router)
+        # The creation-anchored metric, and the one to read. `to_execution`
+        # starts its clock when a command LEAVES the machine, which subtracts a
+        # send-side fix's own benefit -- it is what produced a phantom p95
+        # regression that two sessions reproduced because they shared it.
+        # `held` is not a diagnostic: it is send minus creation, i.e. exactly the
+        # local delay a send-side fix removes, and it read 86.9-96.1 ms in every
+        # retail arm against 0.1 ms in every 031-earlysend arm from the first
+        # capture onward. It was labelled a validity check and went unread as a
+        # result for four hours.
+        # The ROUTER has no creation-anchored figure and this is structural, not
+        # a failure: creation_to_run binds a command to its frame using the
+        # router's relay events, and the router binds its OWN commands inside
+        # sendLocalCommand (0x00A6478D) without ever relaying them to itself. So
+        # no relay event carries the router's own player id and the join is
+        # empty. Reported as "n/a (structural)" rather than nan, because a bare
+        # nan reads as a broken measurement.
+        try:
+            e2r, held = creation_to_run(seat, router)
+        except SystemExit as why:
+            print(f"  {run}: {name} has no creation-anchored figure -- {why}",
+                  file=sys.stderr)
+            e2r, held = [], []
         rate, stalls, frames = logic_rate(seat)
         out[f"{name}_cadence"] = pct(cad, 50) if cad else float("nan")
         out[f"{name}_earliest"] = min(cad) if cad else float("nan")
         out[f"{name}_run"] = pct(e2e, 50) if e2e else float("nan")
+        out[f"{name}_created"] = pct(e2r, 50) if e2r else float("nan")
+        out[f"{name}_held"] = pct(held, 50) if held else float("nan")
         out[f"{name}_rate"] = rate
         out[f"{name}_frames"] = max(e["f"] for e in seat["events"] if e["ev"] == "frame")
         out[f"{name}_desync"] = max((e.get("desync", 0) for e in seat["events"]
@@ -61,9 +85,14 @@ def pool(runs, key):
     return (pct(values, 50), min(values), max(values)) if values else (float("nan"),) * 3
 
 
+# The host's creation-anchored rows are omitted deliberately -- see summarise().
+# The router never relays its own commands, so the join has nothing to bind to,
+# and printing nan there invites a reader to think something broke.
 ROWS = [
-    ("guest: send -> it runs", "guest_run", "ms"),
-    ("host: send -> it runs", "host_run", "ms"),
+    ("guest: CREATED -> it runs", "guest_created", "ms"),
+    ("guest: held locally before send", "guest_held", "ms"),
+    ("guest: send -> it runs (SUPERSEDED)", "guest_run", "ms"),
+    ("host: send -> it runs (SUPERSEDED)", "host_run", "ms"),
     ("host vs guest gap", "gap", "ms"),
     ("guest send cadence", "guest_cadence", "ms"),
     ("guest earliest send", "guest_earliest", "ms"),

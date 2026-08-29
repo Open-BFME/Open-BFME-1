@@ -55,6 +55,17 @@ HOOKS = {
     0x00663100: ("netlat_relay", True),     # ConnectionManager::relayCommand(ref)
     0x00682A90: ("netlat_frame", True),     # Network::relayCommandsToCommandList(frame)
     0x00665D10: ("netlat_ceiling", False),  # ConnectionManager::sendFrameInfo()
+    0x0006BC2B: ("netlat_loop", False),     # GameEngine::execute loop body
+    0x0006BAE0: ("netlat_driver", False),   # the frame driver entry
+}
+
+# The engine functions this payload CALLS. A mistyped one does not read a wrong
+# number, it transfers control into the middle of an unrelated body -- and it is
+# invisible in the source, because each is a cast integer literal.
+CALLS = {
+    0x00A633E0: "ConnectionManager::areFrameCommandsComplete",
+    0x00A70780: "FrameDataManager::getFrameCommandCount",
+    0x00A70720: "FrameDataManager::getCommandCount",
 }
 
 # The engine this payload reads, by absolute address. These are the values a
@@ -72,7 +83,7 @@ SCHEMA = [
     ',"type":%u,"msg":%u,"list":%u,"owner":%u',
     ',"type":%u,"cmd":%u,"player":%u,"exec":%d',
     ',"type":%u,"cmd":%u,"player":%u,"exec":%d,"mask":%u',
-    ',"exec":%d,"desync":%u,"stalls":%u',
+    ',"exec":%d,"desync":%u,"stalls":%u,"loops":%u,"drivers":%u',
     '{"ev":"open","qfreqlo":%u,"qfreqhi":%u}\n',
     "BFME_LAT_PATH",
     "%s\\My Battle for Middle-earth Files\\NetLat.jsonl",
@@ -179,6 +190,13 @@ def test_the_payload_reads_the_engine_it_claims_to(cave_bytes):
     """A mistyped global compiles, links, runs, and logs the wrong dword."""
     for address, what in GLOBALS.items():
         assert struct.pack("<I", address) in cave_bytes, f"the payload never reads {what}"
+
+
+def test_the_payload_calls_the_engine_bodies_not_their_thunks(cave_bytes):
+    """Each is a cast literal, so a wrong digit compiles and links and then
+    jumps into the middle of some other function at match time."""
+    for address, what in CALLS.items():
+        assert struct.pack("<I", address) in cave_bytes, f"the payload never calls {what}"
 
 
 def test_the_record_schema_is_what_the_analysis_parses(cave_bytes):
