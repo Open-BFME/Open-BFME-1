@@ -97,11 +97,20 @@ MatBufferClass::~MatBufferClass(void)
 	}
 }
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/MeshMatDescSetMaterial.cpp
-// ?Set_Element@MatBufferClass@@QAEXHPAVVertexMaterialClass@@@Z present-unmatched
+// ShareBufferClass keeps its Array at +0x08 in BFME and at +0x0C here -- the same
+// four bytes the MeshMatDescClass comment above records as an empty W3DMPO base
+// this hierarchy does not have. The body is otherwise the REF_PTR_SET expansion
+// unchanged: add-ref the incoming material, release the outgoing one through
+// vtable slot 0 when its count reaches zero, then store.
+struct BfmeMatBufferArray
+{
+	unsigned char m_unreconstructed_000[ 8 ];
+	VertexMaterialClass **m_array;				///< retail this+0x08
+};
+
 void MatBufferClass::Set_Element(int index,VertexMaterialClass * mat)
 {
-	REF_PTR_SET(Array[index],mat);
+	REF_PTR_SET(((BfmeMatBufferArray *)this)->m_array[index],mat);
 }
 
 VertexMaterialClass * MatBufferClass::Get_Element(int index)
@@ -521,8 +530,6 @@ void MeshMatDescClass::Set_Single_Shader(ShaderClass shader,int pass)
 	Shader[pass] = shader;
 }
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/MeshMatDescSetMaterial.cpp
-// ?Set_Material@MeshMatDescClass@@QAEXHPAVVertexMaterialClass@@H@Z present-unmatched
 void MeshMatDescClass::Set_Material(int vidx,VertexMaterialClass * vmat,int pass)
 {
 	MatBufferClass * mats = Get_Material_Array(pass,true);
