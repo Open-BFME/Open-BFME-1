@@ -1241,17 +1241,28 @@ void GarrisonContain::healSingleObject( Object *obj, Real framesForFullHeal)
 /** return the player that *appears* to control this unit. if null, 
 		use getObject()->getControllingPlayer() instead. */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/GarrisonContain_getApparentControllingPlayer_Thunk.cpp
-// ?getApparentControllingPlayer@GarrisonContain@@UBEPBVPlayer@@PBV2@@Z present-unmatched
+// Four BFME offsets. The three taken from this are written against the
+// GarrisonContain base -- the same base findConditionIndex above uses when it
+// reads m_object at module+0x08 -- but the compiler enters this method with
+// ecx already 0x20 past that base, so each lands 0x20 lower in the encoded
+// instruction than the number written here. Player's default team is the odd
+// one out: it comes off a plain parameter with no adjustment, so +0x230 is
+// literally what retail encodes, against this tree's +0x160.
+#define BFME_GARRISON_OBJECT(p)    (*(Object *const *)((const char *)(p) + 0x08))
+#define BFME_GARRISON_HIDESTATE(p) (*(const Bool *)((const char *)(p) + 0x9b5))
+#define BFME_GARRISON_ORIGTEAM(p)  (*(Team *const *)((const char *)(p) + 0xd4))
+#define BFME_PLAYER_DEFAULTTEAM(p) (*(Team *const *)((const char *)(p) + 0x230))
 const Player* GarrisonContain::getApparentControllingPlayer( const Player* observingPlayer ) const
 {
-	const Player* myPlayer = getObject()->getControllingPlayer();
+	const Player* myPlayer = BFME_GARRISON_OBJECT(this)->getControllingPlayer();
 
-	if ( m_hideGarrisonedStateFromNonallies && m_originalTeam && myPlayer && observingPlayer )
+	// m_originalTeam stays spelled out at both sites: retail loads +0xb4 twice
+	// and hoisting it into a local collapses that to one read.
+	if ( BFME_GARRISON_HIDESTATE(this) && BFME_GARRISON_ORIGTEAM(this) && myPlayer && observingPlayer )
 	{
-		Relationship r = myPlayer->getRelationship(observingPlayer->getDefaultTeam());
+		Relationship r = myPlayer->getRelationship(BFME_PLAYER_DEFAULTTEAM(observingPlayer));
 		if (r != ALLIES)
-			return m_originalTeam->getControllingPlayer();
+			return BFME_GARRISON_ORIGTEAM(this)->getControllingPlayer();
 	}
 	return myPlayer;
 }
