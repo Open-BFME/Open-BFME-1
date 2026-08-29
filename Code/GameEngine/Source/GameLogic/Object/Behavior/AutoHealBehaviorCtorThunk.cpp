@@ -5,7 +5,16 @@
 // this is the only stub in .text jumping there. So this is SpyVisionUpdate's
 // import thunk under the wrong name; the row survives only because a jmp's rel32
 // is masked and every 5-byte tail-call thunk matches every other. Retiring it
-// means deleting this file, which is a ledger decision. Logged mis-anchored?.
+// RE-HOMED. The row is now ?j_00048b9e@@YAXXZ -- the address-derived ILT
+// convention gen_small already uses for 1,048 slots -- with an object-symbol
+// note pointing at the ctor symbol this file emits. The five bytes keep their
+// coverage, because they are real, and the row no longer asserts an identity
+// the binary contradicts. The old name is tombstoned in deleted_rows.csv so a
+// union merge cannot bring it back.
+//
+// This file survives only to emit those five bytes. Its C++ still spells
+// AutoHealBehavior's constructor because that is what makes the compiler emit a
+// tail-call thunk of the right shape; do not read the name as a claim.
 // (Do not write the cluster marker's phrase in prose here -- merge_cluster scans
 // every line for it and hard-fails tree-wide on one that does not parse.)
 
