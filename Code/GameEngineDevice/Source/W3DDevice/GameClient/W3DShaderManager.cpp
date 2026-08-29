@@ -1756,11 +1756,11 @@ W3DShaderInterface *FlatTerrainShaderList[]=
 };
 
 // byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainShader2Stage_init_Thunk.cpp
-// ?init@TerrainShader2Stage@@UAEHXZ present-unmatched
 Int TerrainShader2Stage::init( void )
 {
 	//initialize settings for uv animated clouds
-	m_xSlidePerSecond = -0.02f;	 
+	// BFME drifts the cloud shadows at -0.012 per second, not the reference's -0.02
+	m_xSlidePerSecond = -0.012f;	 
 	m_ySlidePerSecond =  1.50f * m_xSlidePerSecond;
 	m_curTick = 0;
 	m_curTick = WW3D::Get_Sync_Time();//::GetTickCount();
