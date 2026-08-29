@@ -10,18 +10,25 @@ _d, _s, symbols = build._object_layout(str(obj), stat.st_mtime_ns, stat.st_size)
 objnames = set(s["name"] for s in symbols)
 
 # every donor file carrying a marker for this destination
+# A donor may own far more rows than it has markers for, and only the MARKERED
+# ones are cluster members that `merge_cluster --apply` can move. Screening
+# every row the donor owns over-reports: ini.cpp owns 256 rows and carries 32
+# markers for INI_stl.cpp, and an earlier version of this script reported
+# eleven "ready" rows of which only two were actually movable.
 donors = {}
 for p in Path("Code").rglob("*.cpp"):
     try: t = p.read_text(errors="ignore")
     except Exception: continue
-    m = re.search(r"// readable body of ([^:]+): (\S+)", t)
-    if m and m.group(2) == dest:
-        donors[str(p)] = m.group(1).strip()
+    marks = [m.group(1).strip() for m in re.finditer(r"// readable body of ([^:]+): (\S+)", t)
+             if m.group(2) == dest]
+    if marks:
+        donors[str(p)] = marks
 
 rows = {}
 for line in Path("reverse/functions.csv").read_bytes().decode("utf-8", "replace").splitlines():
     f = next(csv.reader([line]), [])
-    if len(f) >= 5 and f[4] in donors:
+    # a marker may name a TRUNCATED symbol, so match by prefix as merge_cluster does
+    if len(f) >= 5 and f[4] in donors and any(f[0].startswith(m) for m in donors[f[4]]):
         rows.setdefault(f[4], []).append((f[0], int(f[2], 16), int(f[3])))
 
 out = []
