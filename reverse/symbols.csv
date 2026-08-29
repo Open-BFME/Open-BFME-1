@@ -80027,3 +80027,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeObjectLeavingInfluence@Player@@QAEXPAVObject@@@Z,0x0000EACA,Open-BFME5 Player ILT that removes an Object's power influence; called by recursive transfer wrapper 0x001C3710
 ?bfmeObjectEnteringInfluence@Player@@QAEXPAVObject@@@Z,0x00029875,Open-BFME5 Player ILT that adds an Object's power influence; called by recursive transfer wrapper 0x001C3710
 ?bfmeTransferPowerInfluence@Object@@QAEXPAVPlayer@@0@Z,0x00014B91,Open-BFME5 recursive Object power-influence transfer ILT to body 0x001C3710
+?bfmeLayerForPosition@Pathfinder@@QAEHPAVObject@@UCoord3D@@@Z,0x00040F52,Open-BFME5 Pathfinder ILT to body 0x003E5CA0; returns ground layer 1 or bridge layer 2..15 for an Object position
