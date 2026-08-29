@@ -1,62 +1,46 @@
-// ?bfmeFind@BfmeHashBucketTable@@QBEPAXI@Z
-// partial score=0.6 date=2026-08-24
-// cl: /DNDEBUG /MD /EHs-c-
-
-// Retail 0x00786BD0, 70 bytes, carried only a machine byte-dump row. Five
-// names are pinned at the address -- anyIntersectionWith and countIntersection
-// on BitFlags, Drawable::draw, MemoryPool::freeBlock -- and none of them can be
-// this body, which divides, indexes a bucket array and walks a chain. They are
-// identical-code-folding aliases on the ILT.
+// ?d_00786bd0@@YAXXZ
+// partial score=0.77 date=2026-08-29
+// ---------------------------------------------------------------------------
+// 0x00786BD0 -- hash lookup over a bucket vector.
 //
-// What it is: a hash lookup. The bucket array is a pointer pair at +0x0C and
-// +0x10, its length comes from the difference shifted right by two, and the
-// division is unsigned (xor edx,edx ahead of div) so the index is key modulo
-// bucket count. Chain nodes are next at +0x00, key at +0x04, value at +0x08.
+//     mov esi,[ecx+0xc] / mov edi,[ecx+0x10] / sub edi,esi / sar edi,2
+//     div edi / mov eax,[ecx+0xc] / mov edx,[eax+edx*4]
+//     <walk the chain> ... mov eax,[edx+8]
 //
-// The doubled exit is the shape of a find whose result is then tested: the
-// walk falls out with a null node down one path and the match down the other,
-// and the caller's own null check is the redundant test on the matched node.
+// `div` is unsigned and the bucket count is a pointer difference over four, so
+// the buckets are a dword vector.  The chain walk exits through TWO tests of
+// the same register -- one leaving the loop, one guarding the read -- which is
+// a `while` followed by an `if`, not a single test.
 
-typedef unsigned int UnsignedInt;
-
-class BfmeHashNode
+class Open2HashNode
 {
 public:
-	BfmeHashNode *m_bfmeNext;					// +0x00
-	UnsignedInt m_bfmeKey;						// +0x04
-	void *m_bfmeValue;						// +0x08
+	Open2HashNode *m_next;
+	unsigned int m_key;
+	void *m_value;
 };
 
-class BfmeHashBucketTable
+class Rva00786BD0
 {
 public:
-	void *bfmeFind(UnsignedInt key) const;
+	void *find( unsigned int key ) const;
 
-private:
-	BfmeHashNode *bfmeFindNode(UnsignedInt key) const
-	{
-		BfmeHashNode *node = m_bfmeBucketsStart[key % (UnsignedInt)(m_bfmeBucketsFinish - m_bfmeBucketsStart)];
-
-		while (node)
-		{
-			if (node->m_bfmeKey == key)
-				return node;
-
-			node = node->m_bfmeNext;
-		}
-
-		return 0;
-	}
-
-	char m_bfmeHead[0x0C];
-	BfmeHashNode **m_bfmeBucketsStart;				// +0x0C
-	BfmeHashNode **m_bfmeBucketsFinish;				// +0x10
+	char m_pad[ 0xc ];
+	Open2HashNode **m_bucketBegin;
+	Open2HashNode **m_bucketEnd;
 };
 
-// ?bfmeFind@BfmeHashBucketTable@@QBEPAXI@Z
-void *BfmeHashBucketTable::bfmeFind(UnsignedInt key) const
+// @?find@Rva00786BD0@@QBEPAXI@Z 0x00786BD0
+void *Rva00786BD0::find( unsigned int key ) const
 {
-	BfmeHashNode *node = bfmeFindNode(key);
+	unsigned int buckets = (unsigned int)( m_bucketEnd - m_bucketBegin );
+	Open2HashNode *node = m_bucketBegin[ key % buckets ];
 
-	return node ? node->m_bfmeValue : 0;
+	while( node != 0 && node->m_key != key )
+		node = node->m_next;
+
+	if( node != 0 )
+		return node->m_value;
+	return 0;
 }
+
