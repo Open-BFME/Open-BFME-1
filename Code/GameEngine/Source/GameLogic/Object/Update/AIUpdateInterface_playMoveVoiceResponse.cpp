@@ -29,6 +29,13 @@ public:
 	virtual void slot20();
 	virtual void slot24();
 	virtual Drawable *getDrawable();
+
+	const Coord3D *getPosition() const { return &m_position; }
+	Bool isUsingAirborneLocomotor() const;
+
+private:
+	unsigned char m_unmodelled_04[ 0x34 ];
+	Coord3D m_position;
 };
 
 typedef _STL::list<Drawable *> DrawableList;
@@ -63,6 +70,7 @@ class AIUpdateInterface
 {
 protected:
 	virtual void slot00();
+	void playAttackVoiceResponse( Object *victim );
 	void playAttackVoiceResponse( const Coord3D *position );
 	void playMoveVoiceResponse( const Coord3D *position );
 
@@ -70,6 +78,24 @@ private:
 	unsigned char m_unmodelled_04[ 4 ];
 	Object *m_object;
 };
+
+void AIUpdateInterface::playAttackVoiceResponse( Object *victim )
+{
+	Drawable *drawable = m_object->getDrawable();
+	if( drawable )
+	{
+		DrawableList list;
+		list.push_back( drawable );
+		PickAndPlayInfo info;
+		if( victim )
+		{
+			info.m_drawTarget = victim->getDrawable();
+			info.m_position = *victim->getPosition();
+			info.m_air = victim->isUsingAirborneLocomotor();
+		}
+		pickAndPlayUnitVoiceResponse( &list, GameMessage::MSG_DO_ATTACK_OBJECT, &info );
+	}
+}
 
 void AIUpdateInterface::playAttackVoiceResponse( const Coord3D *position )
 {
