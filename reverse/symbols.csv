@@ -12357,6 +12357,10 @@ name,address,notes
 ?aiAttackObject@AICommandInterface@@QAEXPAVObject@@HW4CommandSourceType@@@Z,0x0002EDCF,retail AIEnterState::update call target
 ?aiEnter@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x000442A1,Open-BFME5 ILT thunk fronting body 0x000D89C0
 ?aiGetHealed@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0003CF10,packet 002817b0 pin
+?aiGuardPosition@Open2Commands156070@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x00013D68,Open2 0x00156070 guard command (ILT)
+?aiGuardPosition@Open2Commands1568A0@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x00014FDD,Open2 0x001568A0 guard command (ILT)
+?aiGuardPosition@Open2Commands156900@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x0000F47F,Open2 0x00156900 guard command (ILT)
+?aiGuardPosition@Open2Commands156960@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x000171C0,Open2 0x00156960 guard command (ILT)
 ?aiIdle@AICommandInterface@@QAEXW4CommandSourceType@@@Z,0x00024D70,ILT thunk to the AI idle command reached through the base at ai+0x20
 ?aiMoveToPosition@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x0003436A,Open-BFME5 AI movement thunk alias
 ?aiPreTeamDestroy@AIPlayer@@QAEXPBVTeam@@@Z,0x00161430,Player preTeamDestroy tail target; canonical AIPlayer queue-removal body matches retail structure
@@ -72676,6 +72680,7 @@ name,address,notes
 ?bfmeConstruct_007653C0@@YAXPAUBfmeCopy_007653C0@@PBU1@@Z,0x0003B7E6,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x007653C0 calls per pass
 ?bfmeConstruct_007690F0@@YAXPAUBfmeCopy_007690F0@@PBU1@@Z,0x0002B7AB,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x007690F0 calls per pass
 ?bfmeConv982B@BfmeY982@@QAEPAV1@XZ,0x0000DE9F,pin
+?bfmeConv998@BfmeC998@@QAEHH@Z,0x00927230,pin
 ?bfmeCopyBZD@@YAXPADPBDI@Z,0x009F70BA,pin
 ?bfmeCopyBaseCND@BfmeBaseCND@@QAEXPAU1@@Z,0x000171CA,pin
 ?bfmeCopyBaseCNI@BfmeBaseCNI@@QAEXPAU1@@Z,0x000171CA,pin
@@ -78647,6 +78652,7 @@ name,address,notes
 ?unidentified_000029D7@Object@@QBEHXZ,0x000029D7,UNIDENTIFIED no-argument Object accessor whose result canResumeConstructionOf compares against the actor's field at +0x74; address-derived name; do not treat as an identity
 ?unidentified_0000f5fb@GameLogicShim@@QAEXH@Z,0x0000F5FB,ILT thunk -> body 0x00383C30: bounds index to [0-8) and stamps TheGameLogic frame (+0x3C) into the 0x1C-byte slot records at +0x1BC; called by hasAchievedVictory with the winning player index; address-derived shim name
 ?unidentified_00012eea@PlayerShim@@QBE_NXZ,0x00012EEA,ILT thunk -> body 0x000C9D00 (byte getter +0x680); BFME-only pre-check seeding hasSinglePlayerBeenDefeated; address-derived shim name
+?unidentified_00015235@Open2WindowManager@@QAEXHPBDHPBXHHHH@Z,0x00015235,Open2 0x0051B050 family window-manager forwarder (ILT)
 ?unidentified_00015235@WindowManager@@QAEXHPBDHPBX1111@Z,0x00015235,ILT thunk -> body 0x004675F0; eight-dword __thiscall scripted-UI event dispatcher on g_theWindowManager: (0xB; event name; arg count; up to five args); pushes ShowEndGame/HideEndGame from the VictoryConditions banner bodies; address-derived name
 ?unidentified_00015235@WindowManager@@QAEXHPBDHPBXHHHH@Z,0x00015235,DisconnectMenu setPlayerName invokes HideKickButton through the established scripted-UI dispatcher ILT
 ?unidentified_0001FC99@@YAHPBDPAI@Z,0x0001FC99,UNIDENTIFIED cdecl shader loader; address-derived name; loads shaders\monochrome.pso for ScreenBWFilter::init
@@ -79938,8 +79944,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?aiGuardPosition@Open2Commands156070@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x00013D68,Open2 0x00156070 guard command (ILT)
-?aiGuardPosition@Open2Commands1568A0@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x00014FDD,Open2 0x001568A0 guard command (ILT)
-?aiGuardPosition@Open2Commands156900@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x0000F47F,Open2 0x00156900 guard command (ILT)
-?aiGuardPosition@Open2Commands156960@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x000171C0,Open2 0x00156960 guard command (ILT)
-?unidentified_00015235@Open2WindowManager@@QAEXHPBDHPBXHHHH@Z,0x00015235,Open2 0x0051B050 family window-manager forwarder (ILT)
