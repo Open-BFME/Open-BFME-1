@@ -9156,6 +9156,7 @@ name,address,notes
 ??8@YA_NABVAsciiString@@0@Z,0x008574E0,pinharvest x1 (body)
 ??8@YA_NABVAsciiString@@0@Z,0x008B0EE0,pinharvest x1 (body)
 ??9?$BitFlags@$0FG@@@QBE_NABV0@@Z,0x00022C5A,Object::setStatus BitFlags<86> inequality ILT
+??9ModelConditionFlags@@QBE_NABV0@@Z,0x00035CA1,Open-BFME5 ILT thunk to the ten-dword ModelConditionFlags comparison body at 0x001C2870
 ??A?$hash_map@HHU?$hash@H@_STL@@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHH@_STL@@@2@@_STL@@QAEAAHABH@Z,0x000D6280,int/int hash_map operator[] matched as Gen_hashraw_000d6280; called through its ILT by Player::setTeamRelationship
 ??A?$hash_map@HPAVObject@@U?$hash@H@_STL@@U?$equal_to@H@3@V?$allocator@U?$pair@$$CBHPAVObject@@@_STL@@@3@@_STL@@QAEAAPAVObject@@ABH@Z,0x00005E11,Open-BFME5 ILT for the ObjectID/Object* hash_map operator[]; called by GameLogic::addObjectToLookupTable at 0x0038E490 and jumps to the body at 0x0038B980 matched as Gen_hashraw_0038b980
 ??A?$hash_map@HW4Relationship@@U?$hash@H@_STL@@U?$equal_to@H@3@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@3@@_STL@@QAEAAW4Relationship@@ABH@Z,0x0001219D,Open-BFME5 ILT; called by ?setPlayerRelationship@Player@@QAEXPBV1@W4Relationship@@@Z at 0x000D7600
@@ -78052,7 +78053,9 @@ name,address,notes
 ?renderShadows@W3DVolumetricShadowManager@@QAEX_N@Z,0x00046A51,DoShadows REL32 call via ILT thunk
 ?renderTrees@BaseHeightMapRenderObjClass@@QAEXPAVCameraClass@@@Z,0x0003FE36
 ?render_box@BoxRenderObjClass@@IAEXAAVRenderInfoClass@@ABVVector3@@1@Z,0x00956F40,rel32 pin for exact-ambiguous landing
+?replaceModelConditionFlags@Object@@QAEXABVModelConditionFlags@@_N@Z,0x00023277,Open-BFME5 ILT thunk to Object model-condition replacement body 0x001C4830 proven by the GarrisonContain caller
 ?replaceModelConditionState@Drawable@@QAEXABVModelConditionFlags@@II@Z,0x0041CCD0,Open-BFME5 the Drawable member Object::notifyModelConditionChanged pushes its condition flags at +0x110 into; unnamed in the image
+?replaceModelConditionState@Drawable@@QAEXABVModelConditionFlags@@_NI@Z,0x0001343F,Open-BFME5 ILT thunk to matched Drawable replacement body 0x0041CCD0 with BFME Bool parameter spelling
 ?replenish@LivingWorldArmy@@QAEXPAVLivingWorldPlayerArmy@@@Z,0x0002C66A,LivingWorldPlayerArmy loadPostProcess retail call at 0x00365861 uses the ILT thunk to the 0x00365570 replenishment body
 ?repopulateBuildTooltipLayout@ControlBar@@QAEXXZ,0x00038F4B,REL32 pin from ControlBar::setSquishedControlBarConfig @0x49D0B0
 ?report@Glo012F4B98Type@@QAEXHM@Z,0x0058C240,called on the global at 0x012F4B98 with a count and 7.0f by 0x003BCA90; address-derived name
