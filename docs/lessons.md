@@ -2803,3 +2803,63 @@ destroys it again, and never writes through the instance pointer. Same shape as
 the three InGameUI varargs message stubs -- a name that survives a layer BFME
 removed. Not chased; flagged because anyone treating that symbol as an accessor
 is reading a name rather than a body.
+
+## A row can be GREEN because a layout error cancels a naming error
+
+The worst case yet, because nothing complains. In VertexMaterialClass three
+bodies -- Get_Ambient, Get_Specular, Get_Emissive -- each stop on ONE byte and
+all on the same one: retail loads the material pointer with `mov eax,[ecx+0x08]`
+where this tree emits `[ecx+0x0C]`. So MaterialDyn is at +0x08 in retail and
++0x0C here, and the class measures 112 against retail's 108.
+
+Given that shift, two MATCHED rows in the same file read one field past their
+names. `?Get_Ambient_Color_Source@` at 0x00921210 is `mov eax,[ecx+0x14]` and
+`?Get_Emissive_Color_Source@` at 0x00921230 is `mov eax,[ecx+0x18]` -- our
+offsets for those fields, while in retail's layout +0x14 is EmissiveColorSource
+and +0x18 is DiffuseColorSource. They match ONLY because the +4 shift slides our
+field under retail's load. The trio and the pair imply mutually exclusive
+layouts for one class, so both cannot be right.
+
+Two consequences worth internalising:
+
+A matched row is evidence about BYTES, never about NAMES -- same conclusion the
+5-byte jmp thunks, the 100%-masked screen and the local replicas all reached,
+arriving here from a fourth direction. Compounding errors that cancel is the
+only one of the four that a correct fix will appear to BREAK.
+
+So expect it: fixing the layout will turn those two red, and that is the fix
+working. Before a class correction, identify which matched rows are green by
+cancellation, and predict them as expected casualties in the commit message --
+otherwise the next agent reverts a correct change to get the count back.
+
+## Ask the compiler for a sizeof, and validate the instrument before believing it
+
+MSVC will state a size in a diagnostic if you make it print a type:
+
+    static char (*p)[sizeof(X)] = 1;   // cannot convert from 'int' to 'char (*)[112]'
+
+That gave sizeof(RefCountClass)=8, sizeof(W3DMPO)=1 (empty-base optimised), and
+sizeof(VertexMaterialClass)=112 against retail's 108.
+
+**Validate the probe first with an unconditional `#error` in the same header**,
+to prove the file actually recompiles. Only then does a conditional probe that
+does NOT fire mean anything -- a probe silently reusing a cached object reads as
+a clean negative result, which is the same swallowed-failure shape as a sweep
+reporting "0 refs" for 314 objects that failed to load. Here the validated
+negative was informative: a probe inside `#ifndef NDEBUG` did not fire, so
+NDEBUG is defined and the debug members are out.
+
+## Three screen MATCHes that are not folds
+
+They look identical in a report and each needs a different answer:
+
+  * **A symbol matching from a SECOND destination.** `?Fabs@WWMath@@SAMM@Z`
+    matched from coltest.cpp after its row had already moved into
+    W3DVolumetricShadow.cpp. That is not a second fold -- it means the body
+    compiles identically in several TUs, and chasing it is ping-pong.
+  * **Donor equals destination.** `?Add_Quad@Render2DClass@@QAEXABVRectClass@@0K@Z`
+    "matches" from render2d.cpp, which is already its own source. A no-op.
+  * **Donor under `reference/`, not `Code/`.** `?Configure_Material@MeshMatDescClass@@`
+    matches with its donor in the vendored tree. Repointing a row onto a
+    reference-tree source is a different decision from folding two of our own
+    files, and should not be taken as ordinary cluster work.
