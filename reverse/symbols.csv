@@ -82227,3 +82227,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeImplVMR@BfmeStrVMR@@QAEXHHH@Z,0x00830410,Open-BFME5 /Od 3-arg view of callee at 0x00830410
 ?bfmeImplVMS@BfmeStrVMS@@QAEXHHH@Z,0x008300B0,Open-BFME5 /Od 3-arg view of callee at 0x008300B0
 ?bfmeImplVMT@BfmeStrVMT@@QAEXHH@Z,0x00036DE0,Open-BFME5 /Od 2-arg view of callee at 0x00036DE0
+?_bfme_initialize_007E35E0@Rva007E3930StringState@@AAEXPBDHH@Z,0x00005C0E,address-derived three-argument initializer ILT to body 0x007E35E0
+?_bfme_fillCurrentLANGameInfo_0068E630@@YAXPADI@Z,0x0002A6D5,BFME-only current-game serializer helper ILT proven from body 0x0068E630
