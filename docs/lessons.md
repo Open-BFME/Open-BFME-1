@@ -3344,6 +3344,8 @@ so it reintroduces exactly this race. Use
 read the stash list, or better, wait for the tree to be yours.
 
 ## ICF needs identical RELOCATIONS, so relocations decide it -- not size
+**(The naive form of this test is WRONG. Read the correction below before using
+it: compare relocation STRUCTURE, never target names.)**
 
 The ambiguous middle of the mis-anchored list was framed as a size question:
 bodies between 32 and 130 bytes where an ICF fold is a live alternative to a
@@ -3485,3 +3487,47 @@ resolves only when unambiguous (two overloads sharing a prefix return
 ~2,000 of ~3,000 markers name no row and that is the largest bucket; a miss
 reports its byte count; and `moves` counts only rows a marker HERE names -- the
 miscount that turned one lane's eleven ready rows into two.
+
+## CORRECTION: compare relocation STRUCTURE, not relocation NAMES
+
+"Compare the claimants' relocation targets" was the instruction given, and the
+obvious reading of it is actively misleading. Measured against 1,041 multi-name
+addresses:
+
+  * **Target NAMES flags 367 and is useless.** Two classes' constructors name
+    different vftables -- but that is a masked DIR32 the byte comparison never
+    sees, so this flags every template and module family in the tree.
+  * **REL32 call targets only gives 225 and still over-flags.** One function
+    under a C and a C++ decoration (`?png_handle_IHDR@D3DX@@` against
+    `_png_handle_IHDR@12`) and per-instantiation template symbols resolve to
+    different names for the same call.
+  * **Structure is decisive: 11.** Mask every relocation site to zero in BOTH
+    bodies, then compare the remaining bytes AND the `(offset, type)` list.
+
+The reasoning is the important part: two ICF-folded bodies **are the same
+bytes**, so their relocation SITES must coincide however differently our objects
+happen to name the targets. Names are a property of our compile; sites are a
+property of the code.
+
+Final classification of 1,041 multi-name addresses: **965 real folds, 65
+all-placeholder, 11 that cannot be one body.** 976 of 1,041 need nobody.
+
+## Five of the eleven are GameWindow, and four were new
+
+    0x00478EB0  winSetPrev           | winSetTooltipFunc
+    0x00478E40  getEnergyBonus       | winGetPrevInLayout
+    0x00478E30  getEnergyProduction  | winGetNextInLayout
+    0x00478710  getContain           | winGetEnabledTextBorderColor
+    0x00478490  getFrame@GameLogic   | winGetStyle
+
+Each pairs a GameWindow accessor with an unrelated accessor of a DIFFERENT
+CLASS at one address, matched claimants on both sides. The detector was told
+nothing about GameWindow and rediscovered 0x00478EB0 unaided, which is the
+reason to trust the other four.
+
+**The six of the eleven deliberately NOT called** are large trivial-constructor
+groups -- 24 names at 18 bytes, 40 at 9, 17 at 16 -- where at least one member
+compiles differently here. The likelier fault is our compile of one member than
+a 40-name group being wrong. A detector saying "these cannot be one body" is
+evidence about the group, and when the group is that large the evidence points
+at the odd member first.
