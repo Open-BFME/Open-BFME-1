@@ -4,11 +4,274 @@
 #
 # Regenerate (deterministic, from the retail image): python3 tools/gen_small.py classify
 # Format: 0x<rva> <reason>
+0x0000113B mid-instruction-target: jmp rel32 to 0x007849C0, which is inside a known function and is not one's start
+0x00001145 mid-instruction-target: jmp rel32 to 0x005819D0, which is inside a known function and is not one's start
+0x000015E6 mid-instruction-target: jmp rel32 to 0x000A3260, which is inside a known function and is not one's start
+0x00001A9B mid-instruction-target: jmp rel32 to 0x00337390, which is inside a known function and is not one's start
+0x00001BA9 mid-instruction-target: jmp rel32 to 0x00169F80, which is inside a known function and is not one's start
+0x000027E3 mid-instruction-target: jmp rel32 to 0x000A0120, which is inside a known function and is not one's start
+0x0000346D mid-instruction-target: jmp rel32 to 0x0045BEB0, which is inside a known function and is not one's start
+0x0000352B mid-instruction-target: jmp rel32 to 0x0029C100, which is inside a known function and is not one's start
+0x000035BC mid-instruction-target: jmp rel32 to 0x00470940, which is inside a known function and is not one's start
+0x000038D2 mid-instruction-target: jmp rel32 to 0x00191BB0, which is inside a known function and is not one's start
+0x00004304 mid-instruction-target: jmp rel32 to 0x0060D980, which is inside a known function and is not one's start
+0x00005493 mid-instruction-target: jmp rel32 to 0x0075D040, which is inside a known function and is not one's start
+0x0000579F mid-instruction-target: jmp rel32 to 0x0016A020, which is inside a known function and is not one's start
+0x00005CD1 mid-instruction-target: jmp rel32 to 0x000C9DF0, which is inside a known function and is not one's start
+0x000060EB mid-instruction-target: jmp rel32 to 0x001F8690, which is inside a known function and is not one's start
+0x00006555 mid-instruction-target: jmp rel32 to 0x00784A60, which is inside a known function and is not one's start
+0x000068ED mid-instruction-target: jmp rel32 to 0x0075CF70, which is inside a known function and is not one's start
+0x00006D6B mid-instruction-target: jmp rel32 to 0x0029C140, which is inside a known function and is not one's start
+0x00007009 mid-instruction-target: jmp rel32 to 0x001C01B0, which is inside a known function and is not one's start
+0x00007298 mid-instruction-target: jmp rel32 to 0x002E2D80, which is inside a known function and is not one's start
+0x0000804E mid-instruction-target: jmp rel32 to 0x002AF0E0, which is inside a known function and is not one's start
+0x0000831E mid-instruction-target: jmp rel32 to 0x00752070, which is inside a known function and is not one's start
+0x000084E5 mid-instruction-target: jmp rel32 to 0x001C02E0, which is inside a known function and is not one's start
+0x00008BCA mid-instruction-target: jmp rel32 to 0x0075D610, which is inside a known function and is not one's start
+0x00008DD7 mid-instruction-target: jmp rel32 to 0x0075D0F0, which is inside a known function and is not one's start
+0x000091F1 mid-instruction-target: jmp rel32 to 0x001F86F0, which is inside a known function and is not one's start
+0x0000A05B mid-instruction-target: jmp rel32 to 0x00412650, which is inside a known function and is not one's start
+0x0000A097 mid-instruction-target: jmp rel32 to 0x0016A030, which is inside a known function and is not one's start
+0x0000A245 mid-instruction-target: jmp rel32 to 0x002D8290, which is inside a known function and is not one's start
+0x0000A3E9 mid-instruction-target: jmp rel32 to 0x007838D0, which is inside a known function and is not one's start
+0x0000A5BF mid-instruction-target: jmp rel32 to 0x00511540, which is inside a known function and is not one's start
+0x0000A97F mid-instruction-target: jmp rel32 to 0x003CBC90, which is inside a known function and is not one's start
+0x0000A9DE mid-instruction-target: jmp rel32 to 0x0013A2F0, which is inside a known function and is not one's start
+0x0000BAA0 mid-instruction-target: jmp rel32 to 0x00232B40, which is inside a known function and is not one's start
+0x0000C0F9 mid-instruction-target: jmp rel32 to 0x001223E0, which is inside a known function and is not one's start
+0x0000C239 mid-instruction-target: jmp rel32 to 0x00367A20, which is inside a known function and is not one's start
+0x0000C482 mid-instruction-target: jmp rel32 to 0x00711BC0, which is inside a known function and is not one's start
+0x0000C7D4 mid-instruction-target: jmp rel32 to 0x005705A0, which is inside a known function and is not one's start
+0x0000C8E7 mid-instruction-target: jmp rel32 to 0x000B9270, which is inside a known function and is not one's start
+0x0000CAF9 mid-instruction-target: jmp rel32 to 0x002E2D30, which is inside a known function and is not one's start
+0x0000CD33 mid-instruction-target: jmp rel32 to 0x002329C0, which is inside a known function and is not one's start
+0x0000D6B6 mid-instruction-target: jmp rel32 to 0x00696940, which is inside a known function and is not one's start
+0x0000DDA0 mid-instruction-target: jmp rel32 to 0x0013A2D0, which is inside a known function and is not one's start
+0x0000DE90 mid-instruction-target: jmp rel32 to 0x000EB130, which is inside a known function and is not one's start
+0x0000E14C mid-instruction-target: jmp rel32 to 0x00232A60, which is inside a known function and is not one's start
+0x0000E214 mid-instruction-target: jmp rel32 to 0x00759EF0, which is inside a known function and is not one's start
+0x0000EA93 mid-instruction-target: jmp rel32 to 0x0040E250, which is inside a known function and is not one's start
+0x0000EAC0 mid-instruction-target: jmp rel32 to 0x00232A10, which is inside a known function and is not one's start
+0x0000ECD2 mid-instruction-target: jmp rel32 to 0x003AC650, which is inside a known function and is not one's start
+0x0000F99D mid-instruction-target: jmp rel32 to 0x0018B3D0, which is inside a known function and is not one's start
+0x0000FB23 gap-target-padding: jmp rel32 to 0x0005D550, which is int3/nop fill, not a function start
+0x000101CC mid-instruction-target: jmp rel32 to 0x00169F90, which is inside a known function and is not one's start
+0x000104E2 mid-instruction-target: jmp rel32 to 0x00367A60, which is inside a known function and is not one's start
+0x00010956 mid-instruction-target: jmp rel32 to 0x0075D260, which is inside a known function and is not one's start
+0x000109DD mid-instruction-target: jmp rel32 to 0x004726A0, which is inside a known function and is not one's start
+0x00010CC1 mid-instruction-target: jmp rel32 to 0x000DDE40, which is inside a known function and is not one's start
+0x000111DF mid-instruction-target: jmp rel32 to 0x00122260, which is inside a known function and is not one's start
+0x00011E91 mid-instruction-target: jmp rel32 to 0x003CBD90, which is inside a known function and is not one's start
+0x000121F2 mid-instruction-target: jmp rel32 to 0x003B2E00, which is inside a known function and is not one's start
+0x00012549 mid-instruction-target: jmp rel32 to 0x0048E650, which is inside a known function and is not one's start
+0x0001346C mid-instruction-target: jmp rel32 to 0x006C1B20, which is inside a known function and is not one's start
+0x0001418C mid-instruction-target: jmp rel32 to 0x00784AD0, which is inside a known function and is not one's start
+0x0001456A mid-instruction-target: jmp rel32 to 0x00661B40, which is inside a known function and is not one's start
+0x00014583 mid-instruction-target: jmp rel32 to 0x003AC6D0, which is inside a known function and is not one's start
 0x0001466E mid-instruction-target: jmp rel32 to 0x002A5A30, which is not a function start (FUN_0041466e)
+0x0001490C mid-instruction-target: jmp rel32 to 0x00258380, which is inside a known function and is not one's start
 0x00014C45 truncated-jmp: 1-byte body cannot hold a jmp rel32 (FUN_00414c45)
+0x00014D12 mid-instruction-target: jmp rel32 to 0x003AC670, which is inside a known function and is not one's start
+0x000150A5 mid-instruction-target: jmp rel32 to 0x00232AC0, which is inside a known function and is not one's start
+0x000152B7 mid-instruction-target: jmp rel32 to 0x002E2C40, which is inside a known function and is not one's start
+0x000153CA mid-instruction-target: jmp rel32 to 0x00784AC0, which is inside a known function and is not one's start
+0x00015816 mid-instruction-target: jmp rel32 to 0x000E69A0, which is inside a known function and is not one's start
+0x00015E83 mid-instruction-target: jmp rel32 to 0x00283010, which is inside a known function and is not one's start
+0x00015E8D mid-instruction-target: jmp rel32 to 0x006969B0, which is inside a known function and is not one's start
+0x00016293 mid-instruction-target: jmp rel32 to 0x007520F0, which is inside a known function and is not one's start
+0x00017EAE mid-instruction-target: jmp rel32 to 0x0018B3B0, which is inside a known function and is not one's start
+0x00017FDF mid-instruction-target: jmp rel32 to 0x00205E20, which is inside a known function and is not one's start
+0x0001856B mid-instruction-target: jmp rel32 to 0x003FCF10, which is inside a known function and is not one's start
+0x00018E58 mid-instruction-target: jmp rel32 to 0x001E1E00, which is inside a known function and is not one's start
+0x00018E94 mid-instruction-target: jmp rel32 to 0x00232A30, which is inside a known function and is not one's start
+0x000192B8 mid-instruction-target: jmp rel32 to 0x003CBE10, which is inside a known function and is not one's start
+0x000194BB mid-instruction-target: jmp rel32 to 0x002AF0C0, which is inside a known function and is not one's start
+0x00019F9C mid-instruction-target: jmp rel32 to 0x0013D0B0, which is inside a known function and is not one's start
+0x0001A83E mid-instruction-target: jmp rel32 to 0x0013CFC0, which is inside a known function and is not one's start
+0x0001AAAF mid-instruction-target: jmp rel32 to 0x004D4080, which is inside a known function and is not one's start
+0x0001B3C4 mid-instruction-target: jmp rel32 to 0x00784AB0, which is inside a known function and is not one's start
+0x0001B482 mid-instruction-target: jmp rel32 to 0x00783870, which is inside a known function and is not one's start
+0x0001B4AA mid-instruction-target: jmp rel32 to 0x006BE480, which is inside a known function and is not one's start
+0x0001B5BD mid-instruction-target: jmp rel32 to 0x0020E1C0, which is inside a known function and is not one's start
+0x0001B83D mid-instruction-target: jmp rel32 to 0x00350740, which is inside a known function and is not one's start
+0x0001B900 mid-instruction-target: jmp rel32 to 0x000689C0, which is inside a known function and is not one's start
+0x0001C41D mid-instruction-target: jmp rel32 to 0x00169FA0, which is inside a known function and is not one's start
+0x0001CC47 mid-instruction-target: jmp rel32 to 0x0075D3A0, which is inside a known function and is not one's start
+0x0001CE5E mid-instruction-target: jmp rel32 to 0x0055BE80, which is inside a known function and is not one's start
+0x0001D313 mid-instruction-target: jmp rel32 to 0x0036AE00, which is inside a known function and is not one's start
+0x0001D82C mid-instruction-target: jmp rel32 to 0x003C63F0, which is inside a known function and is not one's start
+0x0001D985 mid-instruction-target: jmp rel32 to 0x00169FC0, which is inside a known function and is not one's start
+0x0001DEA8 mid-instruction-target: jmp rel32 to 0x000B9220, which is inside a known function and is not one's start
+0x0001DF93 mid-instruction-target: jmp rel32 to 0x00094C10, which is inside a known function and is not one's start
+0x0001E024 mid-instruction-target: jmp rel32 to 0x003BCEA0, which is inside a known function and is not one's start
+0x0001E461 mid-instruction-target: jmp rel32 to 0x002329F0, which is inside a known function and is not one's start
+0x0001E916 mid-instruction-target: jmp rel32 to 0x000C9F50, which is inside a known function and is not one's start
+0x0001EF60 mid-instruction-target: jmp rel32 to 0x00337470, which is inside a known function and is not one's start
+0x0001F68B mid-instruction-target: jmp rel32 to 0x003AC790, which is inside a known function and is not one's start
+0x0001F717 mid-instruction-target: jmp rel32 to 0x00784A50, which is inside a known function and is not one's start
+0x0001FC49 mid-instruction-target: jmp rel32 to 0x0075D1A0, which is inside a known function and is not one's start
+0x0002036A mid-instruction-target: jmp rel32 to 0x00752150, which is inside a known function and is not one's start
+0x00020374 mid-instruction-target: jmp rel32 to 0x002E2C80, which is inside a known function and is not one's start
+0x00020BBC mid-instruction-target: jmp rel32 to 0x005BFF30, which is inside a known function and is not one's start
+0x00021332 mid-instruction-target: jmp rel32 to 0x0060D9C0, which is inside a known function and is not one's start
+0x00021459 mid-instruction-target: jmp rel32 to 0x003AC690, which is inside a known function and is not one's start
+0x0002156C mid-instruction-target: jmp rel32 to 0x0048E610, which is inside a known function and is not one's start
+0x000219D6 mid-instruction-target: jmp rel32 to 0x00169FE0, which is inside a known function and is not one's start
+0x00021C33 mid-instruction-target: jmp rel32 to 0x003AC630, which is inside a known function and is not one's start
+0x00021FC6 mid-instruction-target: jmp rel32 to 0x003AC710, which is inside a known function and is not one's start
+0x00022502 mid-instruction-target: jmp rel32 to 0x006FA0F0, which is inside a known function and is not one's start
+0x0002357E mid-instruction-target: jmp rel32 to 0x005A32F0, which is inside a known function and is not one's start
+0x0002364B mid-instruction-target: jmp rel32 to 0x0075D660, which is inside a known function and is not one's start
+0x00023BAA mid-instruction-target: jmp rel32 to 0x002606A0, which is inside a known function and is not one's start
+0x00023C59 mid-instruction-target: jmp rel32 to 0x00069870, which is inside a known function and is not one's start
+0x00023DD5 mid-instruction-target: jmp rel32 to 0x006BE470, which is inside a known function and is not one's start
+0x000240DC mid-instruction-target: jmp rel32 to 0x0060A710, which is inside a known function and is not one's start
+0x000240E1 mid-instruction-target: jmp rel32 to 0x0013D450, which is inside a known function and is not one's start
+0x00024FC8 mid-instruction-target: jmp rel32 to 0x0036BF10, which is inside a known function and is not one's start
+0x00025392 mid-instruction-target: jmp rel32 to 0x000E0BF0, which is inside a known function and is not one's start
+0x00025A4A mid-instruction-target: jmp rel32 to 0x0047D790, which is inside a known function and is not one's start
+0x00026B57 mid-instruction-target: jmp rel32 to 0x00232770, which is inside a known function and is not one's start
+0x00026F53 mid-instruction-target: jmp rel32 to 0x001F8730, which is inside a known function and is not one's start
+0x000275CA mid-instruction-target: jmp rel32 to 0x00403940, which is inside a known function and is not one's start
+0x00027629 mid-instruction-target: jmp rel32 to 0x00232710, which is inside a known function and is not one's start
+0x000276E7 mid-instruction-target: jmp rel32 to 0x001223C0, which is inside a known function and is not one's start
+0x0002779B mid-instruction-target: jmp rel32 to 0x0075D420, which is inside a known function and is not one's start
+0x00028042 gap-target-padding: jmp rel32 to 0x0005D580, which is int3/nop fill, not a function start
 0x000282D6 mid-instruction-target: jmp rel32 to 0x00369460, which is not a function start (FUN_004282d6)
+0x00028547 mid-instruction-target: jmp rel32 to 0x000FC430, which is inside a known function and is not one's start
+0x000287C2 mid-instruction-target: jmp rel32 to 0x0060DA00, which is inside a known function and is not one's start
+0x00028B46 mid-instruction-target: jmp rel32 to 0x006EACC0, which is inside a known function and is not one's start
+0x0002909B mid-instruction-target: jmp rel32 to 0x00262970, which is inside a known function and is not one's start
+0x00029316 mid-instruction-target: jmp rel32 to 0x003A0510, which is inside a known function and is not one's start
+0x00029726 mid-instruction-target: jmp rel32 to 0x001A4210, which is inside a known function and is not one's start
+0x000297FD mid-instruction-target: jmp rel32 to 0x003B7260, which is inside a known function and is not one's start
+0x00029D70 mid-instruction-target: jmp rel32 to 0x002E2CD0, which is inside a known function and is not one's start
+0x00029E83 mid-instruction-target: jmp rel32 to 0x006435D0, which is inside a known function and is not one's start
+0x0002A18F mid-instruction-target: jmp rel32 to 0x00337410, which is inside a known function and is not one's start
+0x0002A22F mid-instruction-target: jmp rel32 to 0x006003D0, which is inside a known function and is not one's start
+0x0002A3AB mid-instruction-target: jmp rel32 to 0x00169F50, which is inside a known function and is not one's start
+0x0002A9AF mid-instruction-target: jmp rel32 to 0x0075D640, which is inside a known function and is not one's start
+0x0002AA54 mid-instruction-target: jmp rel32 to 0x003AC600, which is inside a known function and is not one's start
+0x0002B29C mid-instruction-target: jmp rel32 to 0x0016A000, which is inside a known function and is not one's start
+0x0002B2E7 mid-instruction-target: jmp rel32 to 0x00169FF0, which is inside a known function and is not one's start
+0x0002B7D8 mid-instruction-target: jmp rel32 to 0x0037D350, which is inside a known function and is not one's start
+0x0002BA17 mid-instruction-target: jmp rel32 to 0x0060D9A0, which is inside a known function and is not one's start
+0x0002C27D mid-instruction-target: jmp rel32 to 0x000F9310, which is inside a known function and is not one's start
+0x0002C3D6 mid-instruction-target: jmp rel32 to 0x00784A40, which is inside a known function and is not one's start
+0x0002D3C1 mid-instruction-target: jmp rel32 to 0x00251A10, which is inside a known function and is not one's start
+0x0002D691 mid-instruction-target: jmp rel32 to 0x0013D2E0, which is inside a known function and is not one's start
+0x0002DC2C mid-instruction-target: jmp rel32 to 0x00570660, which is inside a known function and is not one's start
+0x0002E5DC mid-instruction-target: jmp rel32 to 0x000E44A0, which is inside a known function and is not one's start
+0x0002E906 mid-instruction-target: jmp rel32 to 0x0075CF30, which is inside a known function and is not one's start
+0x0002F117 mid-instruction-target: jmp rel32 to 0x0013D160, which is inside a known function and is not one's start
+0x0002F239 mid-instruction-target: jmp rel32 to 0x0036C030, which is inside a known function and is not one's start
+0x0002F5B3 mid-instruction-target: jmp rel32 to 0x00784AA0, which is inside a known function and is not one's start
 0x0002F6FD mid-instruction-target: jmp rel32 to 0x006C6EC0, which is not a function start (FUN_0042f6fd)
+0x0002F9A0 mid-instruction-target: jmp rel32 to 0x0028F010, which is inside a known function and is not one's start
+0x0002FD1A mid-instruction-target: jmp rel32 to 0x00584E60, which is inside a known function and is not one's start
+0x0002FD56 mid-instruction-target: jmp rel32 to 0x000CA380, which is inside a known function and is not one's start
+0x0002FFD6 mid-instruction-target: jmp rel32 to 0x002629B0, which is inside a known function and is not one's start
+0x000303B9 mid-instruction-target: jmp rel32 to 0x006068E0, which is inside a known function and is not one's start
+0x0003049A mid-instruction-target: jmp rel32 to 0x00258340, which is inside a known function and is not one's start
+0x000309E5 mid-instruction-target: jmp rel32 to 0x00433B90, which is inside a known function and is not one's start
+0x00030C3D mid-instruction-target: jmp rel32 to 0x003CBD00, which is inside a known function and is not one's start
+0x00030CA1 mid-instruction-target: jmp rel32 to 0x00287860, which is inside a known function and is not one's start
+0x00031755 mid-instruction-target: jmp rel32 to 0x00360B10, which is inside a known function and is not one's start
+0x0003194E mid-instruction-target: jmp rel32 to 0x00696680, which is inside a known function and is not one's start
+0x00032344 mid-instruction-target: jmp rel32 to 0x0036BEB0, which is inside a known function and is not one's start
+0x00032628 mid-instruction-target: jmp rel32 to 0x00069460, which is inside a known function and is not one's start
+0x0003293E mid-instruction-target: jmp rel32 to 0x0036C000, which is inside a known function and is not one's start
+0x00032D8A mid-instruction-target: jmp rel32 to 0x00191A80, which is inside a known function and is not one's start
+0x00033145 mid-instruction-target: jmp rel32 to 0x00336590, which is inside a known function and is not one's start
+0x000331D6 mid-instruction-target: jmp rel32 to 0x0016A010, which is inside a known function and is not one's start
+0x000331F9 mid-instruction-target: jmp rel32 to 0x00570620, which is inside a known function and is not one's start
+0x000332DF mid-instruction-target: jmp rel32 to 0x00282FB0, which is inside a known function and is not one's start
+0x0003350F mid-instruction-target: jmp rel32 to 0x005BFF50, which is inside a known function and is not one's start
+0x00033654 mid-instruction-target: jmp rel32 to 0x003BCE40, which is inside a known function and is not one's start
+0x000337F3 mid-instruction-target: jmp rel32 to 0x00748FB0, which is inside a known function and is not one's start
+0x00033B2C mid-instruction-target: jmp rel32 to 0x00752030, which is inside a known function and is not one's start
+0x00033FDC mid-instruction-target: jmp rel32 to 0x004AFDE0, which is inside a known function and is not one's start
+0x00034392 mid-instruction-target: jmp rel32 to 0x0052CF40, which is inside a known function and is not one's start
+0x00034658 mid-instruction-target: jmp rel32 to 0x006BE420, which is inside a known function and is not one's start
+0x00034A27 mid-instruction-target: jmp rel32 to 0x002DF7C0, which is inside a known function and is not one's start
+0x00034A72 mid-instruction-target: jmp rel32 to 0x001DE480, which is inside a known function and is not one's start
+0x00035B6B mid-instruction-target: jmp rel32 to 0x0079A2C0, which is inside a known function and is not one's start
 0x00035C42 mid-instruction-target: jmp rel32 to 0x0060D5D0, which is not a function start (FUN_00435c42)
+0x00035D64 mid-instruction-target: jmp rel32 to 0x0039CF50, which is inside a known function and is not one's start
+0x00035FF8 mid-instruction-target: jmp rel32 to 0x00784B10, which is inside a known function and is not one's start
+0x0003636D mid-instruction-target: jmp rel32 to 0x000B6B20, which is inside a known function and is not one's start
+0x00036377 mid-instruction-target: jmp rel32 to 0x0039B870, which is inside a known function and is not one's start
+0x000363F4 mid-instruction-target: jmp rel32 to 0x000B9290, which is inside a known function and is not one's start
+0x0003648F mid-instruction-target: jmp rel32 to 0x001B4CA0, which is inside a known function and is not one's start
+0x00036494 mid-instruction-target: jmp rel32 to 0x0059A670, which is inside a known function and is not one's start
+0x000368A9 mid-instruction-target: jmp rel32 to 0x002931C0, which is inside a known function and is not one's start
+0x00036F11 mid-instruction-target: jmp rel32 to 0x0076EB10, which is inside a known function and is not one's start
+0x00037614 mid-instruction-target: jmp rel32 to 0x0028F070, which is inside a known function and is not one's start
+0x000378C1 mid-instruction-target: jmp rel32 to 0x0052CF60, which is inside a known function and is not one's start
+0x000379E3 mid-instruction-target: jmp rel32 to 0x00282FE0, which is inside a known function and is not one's start
+0x00037DC1 mid-instruction-target: jmp rel32 to 0x00337320, which is inside a known function and is not one's start
+0x000392DE mid-instruction-target: jmp rel32 to 0x003D6870, which is inside a known function and is not one's start
+0x00039630 mid-instruction-target: jmp rel32 to 0x003374E0, which is inside a known function and is not one's start
+0x0003A66B mid-instruction-target: jmp rel32 to 0x001B4B90, which is inside a known function and is not one's start
+0x0003AE8B mid-instruction-target: jmp rel32 to 0x000B92B0, which is inside a known function and is not one's start
+0x0003B2C8 mid-instruction-target: jmp rel32 to 0x00169FD0, which is inside a known function and is not one's start
+0x0003B3C2 mid-instruction-target: jmp rel32 to 0x00783830, which is inside a known function and is not one's start
+0x0003BA25 mid-instruction-target: jmp rel32 to 0x006EABE0, which is inside a known function and is not one's start
+0x0003BAD4 mid-instruction-target: jmp rel32 to 0x00169FB0, which is inside a known function and is not one's start
+0x0003C178 mid-instruction-target: jmp rel32 to 0x00169F70, which is inside a known function and is not one's start
+0x0003C1FA mid-instruction-target: jmp rel32 to 0x003C6490, which is inside a known function and is not one's start
+0x0003CE66 mid-instruction-target: jmp rel32 to 0x0042E870, which is inside a known function and is not one's start
+0x0003CED4 mid-instruction-target: jmp rel32 to 0x0075D150, which is inside a known function and is not one's start
+0x0003D5EB mid-instruction-target: jmp rel32 to 0x000B92D0, which is inside a known function and is not one's start
+0x0003D6E5 mid-instruction-target: jmp rel32 to 0x001D5FA0, which is inside a known function and is not one's start
+0x0003DBBD mid-instruction-target: jmp rel32 to 0x00784B50, which is inside a known function and is not one's start
+0x0003E1B7 mid-instruction-target: jmp rel32 to 0x00607E70, which is inside a known function and is not one's start
+0x0003E572 mid-instruction-target: jmp rel32 to 0x003AC740, which is inside a known function and is not one's start
+0x0003E92D mid-instruction-target: jmp rel32 to 0x0052CF00, which is inside a known function and is not one's start
+0x0003EEF0 mid-instruction-target: jmp rel32 to 0x003B7330, which is inside a known function and is not one's start
+0x0003EEF5 mid-instruction-target: jmp rel32 to 0x00360A50, which is inside a known function and is not one's start
+0x0003F210 mid-instruction-target: jmp rel32 to 0x002606F0, which is inside a known function and is not one's start
+0x0003F8DC mid-instruction-target: jmp rel32 to 0x005BFFB0, which is inside a known function and is not one's start
+0x0003F931 mid-instruction-target: jmp rel32 to 0x005C0030, which is inside a known function and is not one's start
+0x0003F9F9 mid-instruction-target: jmp rel32 to 0x0013D8F0, which is inside a known function and is not one's start
+0x000406BA mid-instruction-target: jmp rel32 to 0x00748EF0, which is inside a known function and is not one's start
+0x00040ACA mid-instruction-target: jmp rel32 to 0x00383D70, which is inside a known function and is not one's start
+0x00040B56 mid-instruction-target: jmp rel32 to 0x00752130, which is inside a known function and is not one's start
+0x00040E35 mid-instruction-target: jmp rel32 to 0x005C0BE0, which is inside a known function and is not one's start
+0x00041010 mid-instruction-target: jmp rel32 to 0x0059A680, which is inside a known function and is not one's start
+0x00041335 mid-instruction-target: jmp rel32 to 0x0037D2F0, which is inside a known function and is not one's start
+0x000417B3 mid-instruction-target: jmp rel32 to 0x00094C90, which is inside a known function and is not one's start
+0x000420F5 mid-instruction-target: jmp rel32 to 0x0060D9E0, which is inside a known function and is not one's start
+0x00042C8A mid-instruction-target: jmp rel32 to 0x000E0C70, which is inside a known function and is not one's start
+0x00042DF2 mid-instruction-target: jmp rel32 to 0x0039CFB0, which is inside a known function and is not one's start
+0x00043EAF mid-instruction-target: jmp rel32 to 0x00337550, which is inside a known function and is not one's start
+0x0004405D mid-instruction-target: jmp rel32 to 0x003A1310, which is inside a known function and is not one's start
+0x00044B02 mid-instruction-target: jmp rel32 to 0x00696600, which is inside a known function and is not one's start
+0x00044BED mid-instruction-target: jmp rel32 to 0x0013D0F0, which is inside a known function and is not one's start
+0x000450DE mid-instruction-target: jmp rel32 to 0x00378C70, which is inside a known function and is not one's start
+0x00045831 mid-instruction-target: jmp rel32 to 0x00717B00, which is inside a known function and is not one's start
+0x00045872 mid-instruction-target: jmp rel32 to 0x000E69D0, which is inside a known function and is not one's start
+0x00045A8E mid-instruction-target: jmp rel32 to 0x003CBE70, which is inside a known function and is not one's start
+0x00045D77 mid-instruction-target: jmp rel32 to 0x0059A6B0, which is inside a known function and is not one's start
+0x00045DE5 mid-instruction-target: jmp rel32 to 0x005D39D0, which is inside a known function and is not one's start
+0x00045E3F mid-instruction-target: jmp rel32 to 0x003781F0, which is inside a known function and is not one's start
+0x00046740 mid-instruction-target: jmp rel32 to 0x00422580, which is inside a known function and is not one's start
+0x000467AE mid-instruction-target: jmp rel32 to 0x00293180, which is inside a known function and is not one's start
+0x00046AE2 mid-instruction-target: jmp rel32 to 0x002DF850, which is inside a known function and is not one's start
+0x00047262 mid-instruction-target: jmp rel32 to 0x001919D0, which is inside a known function and is not one's start
+0x00047749 mid-instruction-target: jmp rel32 to 0x0013D0D0, which is inside a known function and is not one's start
+0x00047B63 mid-instruction-target: jmp rel32 to 0x00383CE0, which is inside a known function and is not one's start
+0x00047E74 mid-instruction-target: jmp rel32 to 0x0075D590, which is inside a known function and is not one's start
+0x00048801 mid-instruction-target: jmp rel32 to 0x0044FBF0, which is inside a known function and is not one's start
+0x00049431 mid-instruction-target: jmp rel32 to 0x000928E0, which is inside a known function and is not one's start
+0x00049A3A mid-instruction-target: jmp rel32 to 0x002DF760, which is inside a known function and is not one's start
+0x0004A2E6 mid-instruction-target: jmp rel32 to 0x0013A2B0, which is inside a known function and is not one's start
+0x0004A3A9 mid-instruction-target: jmp rel32 to 0x000663F0, which is inside a known function and is not one's start
+0x0004A64C mid-instruction-target: jmp rel32 to 0x00696400, which is inside a known function and is not one's start
+0x0004AAAC mid-instruction-target: jmp rel32 to 0x00207A70, which is inside a known function and is not one's start
+0x0004AEDF mid-instruction-target: jmp rel32 to 0x00065390, which is inside a known function and is not one's start
+0x0004B0C4 mid-instruction-target: jmp rel32 to 0x003AC570, which is inside a known function and is not one's start
+0x00060637 mid-instruction-target: jmp rel32 to 0x000604D3, which is inside a known function and is not one's start
 0x0006CDF0 int3-truncated: body ends in padding, not an instruction (FUN_0046cdf0)
 0x0006CFD0 int3-truncated: body ends in padding, not an instruction (FUN_0046cfd0)
 0x0006D1D0 int3-truncated: body ends in padding, not an instruction (FUN_0046d1d0)
@@ -17,17 +280,94 @@
 0x0006D7A0 int3-truncated: body ends in padding, not an instruction (FUN_0046d7a0)
 0x0006D990 int3-truncated: body ends in padding, not an instruction (FUN_0046d990)
 0x0006DB70 int3-truncated: body ends in padding, not an instruction (FUN_0046db70)
+0x0008B017 gap-undelimited-run: the thunk run at 0x0008B017 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B03F gap-undelimited-run: the thunk run at 0x0008B03F runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B05F gap-undelimited-run: the thunk run at 0x0008B05F runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B07F gap-undelimited-run: the thunk run at 0x0008B07F runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B09F gap-undelimited-run: the thunk run at 0x0008B09F runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B0BF gap-undelimited-run: the thunk run at 0x0008B0BF runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B0DF gap-undelimited-run: the thunk run at 0x0008B0DF runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B125 gap-undelimited-run: the thunk run at 0x0008B125 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B35C gap-undelimited-run: the thunk run at 0x0008B35C runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B384 gap-undelimited-run: the thunk run at 0x0008B384 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B3A4 gap-undelimited-run: the thunk run at 0x0008B3A4 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B3C4 gap-undelimited-run: the thunk run at 0x0008B3C4 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B3E4 gap-undelimited-run: the thunk run at 0x0008B3E4 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B404 gap-undelimited-run: the thunk run at 0x0008B404 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B424 gap-undelimited-run: the thunk run at 0x0008B424 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B46A gap-undelimited-run: the thunk run at 0x0008B46A runs straight into other code, so it is a function tail, not a standalone thunk
+0x0008B534 gap-undelimited-run: the thunk run at 0x0008B534 runs straight into other code, so it is a function tail, not a standalone thunk
 0x00097970 int3-truncated: body ends in padding, not an instruction (FUN_00497970)
 0x00097B50 int3-truncated: body ends in padding, not an instruction (FUN_00497b50)
+0x000FFEA1 gap-undelimited-run: the thunk run at 0x000FFEA1 runs straight into other code, so it is a function tail, not a standalone thunk
+0x000FFF05 gap-undelimited-run: the thunk run at 0x000FFF05 runs straight into other code, so it is a function tail, not a standalone thunk
+0x000FFF62 gap-undelimited-run: the thunk run at 0x000FFF62 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00100096 gap-undelimited-run: the thunk run at 0x00100096 runs straight into other code, so it is a function tail, not a standalone thunk
+0x001000E2 gap-undelimited-run: the thunk run at 0x001000E2 runs straight into other code, so it is a function tail, not a standalone thunk
+0x001000F5 gap-undelimited-run: the thunk run at 0x001000F5 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00100130 gap-undelimited-run: the thunk run at 0x00100130 runs straight into other code, so it is a function tail, not a standalone thunk
 0x00102240 no-terminator: body ends mid-instruction (568b3550d82e0185f6eb155733c0bf) (FUN_00502240)
+0x00162834 mid-instruction-target: jmp rel32 to 0x00162757, which is inside a known function and is not one's start
+0x001BA814 gap-undelimited-run: the thunk run at 0x001BA814 runs straight into other code, so it is a function tail, not a standalone thunk
+0x001EB65E gap-undelimited-run: the thunk run at 0x001EB65E runs straight into other code, so it is a function tail, not a standalone thunk
+0x00263468 gap-undelimited-run: the thunk run at 0x00263468 runs straight into other code, so it is a function tail, not a standalone thunk
+0x002634B1 gap-undelimited-run: the thunk run at 0x002634B1 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00276AE4 gap-undelimited-run: the thunk run at 0x00276AE4 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00276FCD gap-undelimited-run: the thunk run at 0x00276FCD runs straight into other code, so it is a function tail, not a standalone thunk
+0x00277021 gap-undelimited-run: the thunk run at 0x00277021 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0027703C gap-undelimited-run: the thunk run at 0x0027703C runs straight into other code, so it is a function tail, not a standalone thunk
+0x00277228 gap-undelimited-run: the thunk run at 0x00277228 runs straight into other code, so it is a function tail, not a standalone thunk
+0x002C2032 gap-undelimited-run: the thunk run at 0x002C2032 runs straight into other code, so it is a function tail, not a standalone thunk
+0x002DFE34 gap-undelimited-run: the thunk run at 0x002DFE34 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0032FE0C gap-undelimited-run: the thunk run at 0x0032FE0C runs straight into other code, so it is a function tail, not a standalone thunk
+0x0035896B gap-undelimited-run: the thunk run at 0x0035896B runs straight into other code, so it is a function tail, not a standalone thunk
 0x00384340 int3-truncated: body ends in padding, not an instruction (FUN_00784340)
 0x00384520 int3-truncated: body ends in padding, not an instruction (FUN_00784520)
 0x00384720 int3-truncated: body ends in padding, not an instruction (FUN_00784720)
 0x00384900 int3-truncated: body ends in padding, not an instruction (FUN_00784900)
+0x0039A31C gap-undelimited-run: the thunk run at 0x0039A31C runs straight into other code, so it is a function tail, not a standalone thunk
 0x003C6580 int3-truncated: body ends in padding, not an instruction (FUN_007c6580)
 0x003C6760 int3-truncated: body ends in padding, not an instruction (FUN_007c6760)
 0x003C6950 int3-truncated: body ends in padding, not an instruction (FUN_007c6950)
 0x003C6B30 int3-truncated: body ends in padding, not an instruction (FUN_007c6b30)
+0x003F445F gap-undelimited-run: the thunk run at 0x003F445F runs straight into other code, so it is a function tail, not a standalone thunk
+0x0048DF5C gap-undelimited-run: the thunk run at 0x0048DF5C runs straight into other code, so it is a function tail, not a standalone thunk
+0x004A5478 gap-undelimited-run: the thunk run at 0x004A5478 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004A73C4 gap-undelimited-run: the thunk run at 0x004A73C4 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004A73F8 gap-undelimited-run: the thunk run at 0x004A73F8 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004A744C gap-undelimited-run: the thunk run at 0x004A744C runs straight into other code, so it is a function tail, not a standalone thunk
+0x004A7B04 gap-undelimited-run: the thunk run at 0x004A7B04 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004A7BD9 gap-undelimited-run: the thunk run at 0x004A7BD9 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004A7E74 gap-undelimited-run: the thunk run at 0x004A7E74 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004B64FD gap-undelimited-run: the thunk run at 0x004B64FD runs straight into other code, so it is a function tail, not a standalone thunk
+0x004B654F gap-undelimited-run: the thunk run at 0x004B654F runs straight into other code, so it is a function tail, not a standalone thunk
+0x004B6562 gap-undelimited-run: the thunk run at 0x004B6562 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004BD152 gap-undelimited-run: the thunk run at 0x004BD152 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004BEFB0 gap-undelimited-run: the thunk run at 0x004BEFB0 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004BF03F gap-undelimited-run: the thunk run at 0x004BF03F runs straight into other code, so it is a function tail, not a standalone thunk
+0x004BF081 gap-undelimited-run: the thunk run at 0x004BF081 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004CA1C9 gap-undelimited-run: the thunk run at 0x004CA1C9 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004CA232 gap-undelimited-run: the thunk run at 0x004CA232 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004CA289 gap-undelimited-run: the thunk run at 0x004CA289 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004CA315 gap-undelimited-run: the thunk run at 0x004CA315 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004CA350 gap-undelimited-run: the thunk run at 0x004CA350 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004CA674 gap-undelimited-run: the thunk run at 0x004CA674 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004F26DE gap-undelimited-run: the thunk run at 0x004F26DE runs straight into other code, so it is a function tail, not a standalone thunk
+0x004F2A36 gap-undelimited-run: the thunk run at 0x004F2A36 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004F6D9A gap-undelimited-run: the thunk run at 0x004F6D9A runs straight into other code, so it is a function tail, not a standalone thunk
+0x004F6EAB gap-undelimited-run: the thunk run at 0x004F6EAB runs straight into other code, so it is a function tail, not a standalone thunk
+0x004F7046 gap-undelimited-run: the thunk run at 0x004F7046 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004F786A gap-undelimited-run: the thunk run at 0x004F786A runs straight into other code, so it is a function tail, not a standalone thunk
+0x004F79C4 gap-undelimited-run: the thunk run at 0x004F79C4 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004F7AFF gap-undelimited-run: the thunk run at 0x004F7AFF runs straight into other code, so it is a function tail, not a standalone thunk
+0x004F80DE gap-undelimited-run: the thunk run at 0x004F80DE runs straight into other code, so it is a function tail, not a standalone thunk
+0x004F81B6 gap-undelimited-run: the thunk run at 0x004F81B6 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004F82CC gap-undelimited-run: the thunk run at 0x004F82CC runs straight into other code, so it is a function tail, not a standalone thunk
+0x004F8662 gap-undelimited-run: the thunk run at 0x004F8662 runs straight into other code, so it is a function tail, not a standalone thunk
+0x004F8C5F gap-undelimited-run: the thunk run at 0x004F8C5F runs straight into other code, so it is a function tail, not a standalone thunk
+0x0051921D gap-undelimited-run: the thunk run at 0x0051921D runs straight into other code, so it is a function tail, not a standalone thunk
+0x00519271 gap-undelimited-run: the thunk run at 0x00519271 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0051D7C5 gap-undelimited-run: the thunk run at 0x0051D7C5 runs straight into other code, so it is a function tail, not a standalone thunk
 0x00523650 int3-truncated: body ends in padding, not an instruction (FUN_00923650)
 0x00523830 int3-truncated: body ends in padding, not an instruction (FUN_00923830)
 0x00523A30 int3-truncated: body ends in padding, not an instruction (FUN_00923a30)
@@ -36,6 +376,39 @@
 0x00524000 int3-truncated: body ends in padding, not an instruction (FUN_00924000)
 0x005241F0 int3-truncated: body ends in padding, not an instruction (FUN_009241f0)
 0x005243D0 int3-truncated: body ends in padding, not an instruction (FUN_009243d0)
+0x00535698 gap-undelimited-run: the thunk run at 0x00535698 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005357E7 gap-undelimited-run: the thunk run at 0x005357E7 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00535AF1 gap-undelimited-run: the thunk run at 0x00535AF1 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00535B0D gap-undelimited-run: the thunk run at 0x00535B0D runs straight into other code, so it is a function tail, not a standalone thunk
+0x00535B20 gap-undelimited-run: the thunk run at 0x00535B20 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00535B5E gap-undelimited-run: the thunk run at 0x00535B5E runs straight into other code, so it is a function tail, not a standalone thunk
+0x00539E08 gap-undelimited-run: the thunk run at 0x00539E08 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0053B1BD gap-undelimited-run: the thunk run at 0x0053B1BD runs straight into other code, so it is a function tail, not a standalone thunk
+0x0053D1EE gap-undelimited-run: the thunk run at 0x0053D1EE runs straight into other code, so it is a function tail, not a standalone thunk
+0x0053D840 gap-undelimited-run: the thunk run at 0x0053D840 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00541D96 gap-undelimited-run: the thunk run at 0x00541D96 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00541DCE gap-undelimited-run: the thunk run at 0x00541DCE runs straight into other code, so it is a function tail, not a standalone thunk
+0x00541E06 gap-undelimited-run: the thunk run at 0x00541E06 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00541E3E gap-undelimited-run: the thunk run at 0x00541E3E runs straight into other code, so it is a function tail, not a standalone thunk
+0x00541E76 gap-undelimited-run: the thunk run at 0x00541E76 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00541F84 gap-undelimited-run: the thunk run at 0x00541F84 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00542022 gap-undelimited-run: the thunk run at 0x00542022 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005428E2 gap-undelimited-run: the thunk run at 0x005428E2 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00542923 gap-undelimited-run: the thunk run at 0x00542923 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00542A7F gap-undelimited-run: the thunk run at 0x00542A7F runs straight into other code, so it is a function tail, not a standalone thunk
+0x00542BCB gap-undelimited-run: the thunk run at 0x00542BCB runs straight into other code, so it is a function tail, not a standalone thunk
+0x00542CEC gap-undelimited-run: the thunk run at 0x00542CEC runs straight into other code, so it is a function tail, not a standalone thunk
+0x005431B3 gap-undelimited-run: the thunk run at 0x005431B3 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005432C0 gap-undelimited-run: the thunk run at 0x005432C0 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0054342F gap-undelimited-run: the thunk run at 0x0054342F runs straight into other code, so it is a function tail, not a standalone thunk
+0x0054350A gap-undelimited-run: the thunk run at 0x0054350A runs straight into other code, so it is a function tail, not a standalone thunk
+0x0054376B gap-undelimited-run: the thunk run at 0x0054376B runs straight into other code, so it is a function tail, not a standalone thunk
+0x00543B02 gap-undelimited-run: the thunk run at 0x00543B02 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00544140 gap-undelimited-run: the thunk run at 0x00544140 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00544180 gap-undelimited-run: the thunk run at 0x00544180 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005441C4 gap-undelimited-run: the thunk run at 0x005441C4 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00544EE8 gap-undelimited-run: the thunk run at 0x00544EE8 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005450D6 gap-undelimited-run: the thunk run at 0x005450D6 runs straight into other code, so it is a function tail, not a standalone thunk
 0x00549020 int3-truncated: body ends in padding, not an instruction (FUN_00949020)
 0x00549200 int3-truncated: body ends in padding, not an instruction (FUN_00949200)
 0x00549400 int3-truncated: body ends in padding, not an instruction (FUN_00949400)
@@ -56,6 +429,11 @@
 0x0054B110 int3-truncated: body ends in padding, not an instruction (FUN_0094b110)
 0x0054B320 int3-truncated: body ends in padding, not an instruction (FUN_0094b320)
 0x0054B500 int3-truncated: body ends in padding, not an instruction (FUN_0094b500)
+0x0055A804 gap-undelimited-run: the thunk run at 0x0055A804 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0055A943 gap-undelimited-run: the thunk run at 0x0055A943 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0055AA23 gap-undelimited-run: the thunk run at 0x0055AA23 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00562A3D gap-undelimited-run: the thunk run at 0x00562A3D runs straight into other code, so it is a function tail, not a standalone thunk
+0x00562F4F gap-undelimited-run: the thunk run at 0x00562F4F runs straight into other code, so it is a function tail, not a standalone thunk
 0x0056AE50 int3-truncated: body ends in padding, not an instruction (FUN_0096ae50)
 0x0056B030 int3-truncated: body ends in padding, not an instruction (FUN_0096b030)
 0x0056B230 int3-truncated: body ends in padding, not an instruction (FUN_0096b230)
@@ -64,13 +442,116 @@
 0x0056B800 int3-truncated: body ends in padding, not an instruction (FUN_0096b800)
 0x0056B9F0 int3-truncated: body ends in padding, not an instruction (FUN_0096b9f0)
 0x0056BBD0 int3-truncated: body ends in padding, not an instruction (FUN_0096bbd0)
+0x00579B8C gap-undelimited-run: the thunk run at 0x00579B8C runs straight into other code, so it is a function tail, not a standalone thunk
 0x0058A080 int3-truncated: body ends in padding, not an instruction (FUN_0098a080)
 0x0058A260 int3-truncated: body ends in padding, not an instruction (FUN_0098a260)
 0x0058A450 int3-truncated: body ends in padding, not an instruction (FUN_0098a450)
 0x0058A630 int3-truncated: body ends in padding, not an instruction (FUN_0098a630)
 0x0058A840 int3-truncated: body ends in padding, not an instruction (FUN_0098a840)
 0x0058AA20 int3-truncated: body ends in padding, not an instruction (FUN_0098aa20)
+0x005A4ED1 gap-undelimited-run: the thunk run at 0x005A4ED1 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B018A gap-undelimited-run: the thunk run at 0x005B018A runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B01BB gap-undelimited-run: the thunk run at 0x005B01BB runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B01DD gap-undelimited-run: the thunk run at 0x005B01DD runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B01FA gap-undelimited-run: the thunk run at 0x005B01FA runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0217 gap-undelimited-run: the thunk run at 0x005B0217 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0234 gap-undelimited-run: the thunk run at 0x005B0234 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0296 gap-undelimited-run: the thunk run at 0x005B0296 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B02F8 gap-undelimited-run: the thunk run at 0x005B02F8 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0321 gap-undelimited-run: the thunk run at 0x005B0321 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0333 gap-undelimited-run: the thunk run at 0x005B0333 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0363 gap-undelimited-run: the thunk run at 0x005B0363 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0389 gap-undelimited-run: the thunk run at 0x005B0389 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B039B gap-undelimited-run: the thunk run at 0x005B039B runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B04AE gap-undelimited-run: the thunk run at 0x005B04AE runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B04E5 gap-undelimited-run: the thunk run at 0x005B04E5 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0574 gap-undelimited-run: the thunk run at 0x005B0574 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B058C gap-undelimited-run: the thunk run at 0x005B058C runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B05B0 gap-undelimited-run: the thunk run at 0x005B05B0 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B05DB gap-undelimited-run: the thunk run at 0x005B05DB runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0788 gap-undelimited-run: the thunk run at 0x005B0788 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0913 gap-undelimited-run: the thunk run at 0x005B0913 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B092C gap-undelimited-run: the thunk run at 0x005B092C runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0A53 gap-undelimited-run: the thunk run at 0x005B0A53 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0A8A gap-undelimited-run: the thunk run at 0x005B0A8A runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0AA2 gap-undelimited-run: the thunk run at 0x005B0AA2 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0ABA gap-undelimited-run: the thunk run at 0x005B0ABA runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0AD2 gap-undelimited-run: the thunk run at 0x005B0AD2 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0AEA gap-undelimited-run: the thunk run at 0x005B0AEA runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0B0E gap-undelimited-run: the thunk run at 0x005B0B0E runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0B26 gap-undelimited-run: the thunk run at 0x005B0B26 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0B3E gap-undelimited-run: the thunk run at 0x005B0B3E runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0B56 gap-undelimited-run: the thunk run at 0x005B0B56 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0BC2 gap-undelimited-run: the thunk run at 0x005B0BC2 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0E32 gap-undelimited-run: the thunk run at 0x005B0E32 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B0E61 gap-undelimited-run: the thunk run at 0x005B0E61 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B1F56 gap-undelimited-run: the thunk run at 0x005B1F56 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B1FE2 gap-undelimited-run: the thunk run at 0x005B1FE2 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B4848 gap-undelimited-run: the thunk run at 0x005B4848 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B6014 gap-undelimited-run: the thunk run at 0x005B6014 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B6685 gap-undelimited-run: the thunk run at 0x005B6685 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B66D0 gap-undelimited-run: the thunk run at 0x005B66D0 runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B9DFC gap-undelimited-run: the thunk run at 0x005B9DFC runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B9E7C gap-undelimited-run: the thunk run at 0x005B9E7C runs straight into other code, so it is a function tail, not a standalone thunk
+0x005B9EF5 gap-undelimited-run: the thunk run at 0x005B9EF5 runs straight into other code, so it is a function tail, not a standalone thunk
 0x00618F90 int3-truncated: body ends in padding, not an instruction (FUN_00a18f90)
 0x00619170 int3-truncated: body ends in padding, not an instruction (FUN_00a19170)
+0x0062F568 gap-undelimited-run: the thunk run at 0x0062F568 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0063A28C gap-undelimited-run: the thunk run at 0x0063A28C runs straight into other code, so it is a function tail, not a standalone thunk
+0x0063E90E mid-instruction-target: jmp rel32 to 0x0063E5EF, which is inside a known function and is not one's start
+0x0063F275 gap-undelimited-run: the thunk run at 0x0063F275 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0063F2ED gap-undelimited-run: the thunk run at 0x0063F2ED runs straight into other code, so it is a function tail, not a standalone thunk
+0x0063F3C3 gap-undelimited-run: the thunk run at 0x0063F3C3 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0063F49D gap-undelimited-run: the thunk run at 0x0063F49D runs straight into other code, so it is a function tail, not a standalone thunk
+0x0063F5FC gap-undelimited-run: the thunk run at 0x0063F5FC runs straight into other code, so it is a function tail, not a standalone thunk
+0x0063F632 gap-undelimited-run: the thunk run at 0x0063F632 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0063F785 gap-undelimited-run: the thunk run at 0x0063F785 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0063F8C8 mid-instruction-target: jmp rel32 to 0x0063EC90, which is inside a known function and is not one's start
+0x0064B750 gap-undelimited-run: the thunk run at 0x0064B750 runs straight into other code, so it is a function tail, not a standalone thunk
+0x006501A0 gap-undelimited-run: the thunk run at 0x006501A0 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00650260 gap-undelimited-run: the thunk run at 0x00650260 runs straight into other code, so it is a function tail, not a standalone thunk
+0x006502C1 gap-undelimited-run: the thunk run at 0x006502C1 runs straight into other code, so it is a function tail, not a standalone thunk
+0x006504CB gap-undelimited-run: the thunk run at 0x006504CB runs straight into other code, so it is a function tail, not a standalone thunk
+0x00650776 gap-undelimited-run: the thunk run at 0x00650776 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00650791 gap-undelimited-run: the thunk run at 0x00650791 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00650F34 gap-undelimited-run: the thunk run at 0x00650F34 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0065104F mid-instruction-target: jmp rel32 to 0x00650000, which is inside a known function and is not one's start
+0x006510E0 gap-undelimited-run: the thunk run at 0x006510E0 runs straight into other code, so it is a function tail, not a standalone thunk
 0x006BBA90 int3-truncated: body ends in padding, not an instruction (FUN_00abba90)
+0x006D2D70 gap-undelimited-run: the thunk run at 0x006D2D70 runs straight into other code, so it is a function tail, not a standalone thunk
+0x006D2DD4 gap-undelimited-run: the thunk run at 0x006D2DD4 runs straight into other code, so it is a function tail, not a standalone thunk
+0x006E8B44 gap-target-outside-text: jmp rel32 to 0x-3390C62E
+0x006E9098 gap-undelimited-run: the thunk run at 0x006E9098 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0080E2D1 gap-undelimited-run: the thunk run at 0x0080E2D1 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0083BE7D gap-undelimited-run: the thunk run at 0x0083BE7D runs straight into other code, so it is a function tail, not a standalone thunk
+0x0083C8ED gap-undelimited-run: the thunk run at 0x0083C8ED runs straight into other code, so it is a function tail, not a standalone thunk
+0x0083D094 gap-undelimited-run: the thunk run at 0x0083D094 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0083D0EB gap-undelimited-run: the thunk run at 0x0083D0EB runs straight into other code, so it is a function tail, not a standalone thunk
+0x0083D11F gap-undelimited-run: the thunk run at 0x0083D11F runs straight into other code, so it is a function tail, not a standalone thunk
+0x0083D16A gap-undelimited-run: the thunk run at 0x0083D16A runs straight into other code, so it is a function tail, not a standalone thunk
+0x0083D3CA gap-undelimited-run: the thunk run at 0x0083D3CA runs straight into other code, so it is a function tail, not a standalone thunk
+0x0083D411 gap-undelimited-run: the thunk run at 0x0083D411 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0083DF9C gap-undelimited-run: the thunk run at 0x0083DF9C runs straight into other code, so it is a function tail, not a standalone thunk
+0x0083DFEE gap-undelimited-run: the thunk run at 0x0083DFEE runs straight into other code, so it is a function tail, not a standalone thunk
+0x0083E203 gap-undelimited-run: the thunk run at 0x0083E203 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00858A36 gap-undelimited-run: the thunk run at 0x00858A36 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00858A57 gap-undelimited-run: the thunk run at 0x00858A57 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00858A73 gap-undelimited-run: the thunk run at 0x00858A73 runs straight into other code, so it is a function tail, not a standalone thunk
+0x008921CF gap-undelimited-run: the thunk run at 0x008921CF runs straight into other code, so it is a function tail, not a standalone thunk
+0x008A5601 gap-undelimited-run: the thunk run at 0x008A5601 runs straight into other code, so it is a function tail, not a standalone thunk
+0x008A5612 gap-undelimited-run: the thunk run at 0x008A5612 runs straight into other code, so it is a function tail, not a standalone thunk
+0x008A5665 gap-undelimited-run: the thunk run at 0x008A5665 runs straight into other code, so it is a function tail, not a standalone thunk
+0x008A567C gap-undelimited-run: the thunk run at 0x008A567C runs straight into other code, so it is a function tail, not a standalone thunk
+0x008CA53D gap-undelimited-run: the thunk run at 0x008CA53D runs straight into other code, so it is a function tail, not a standalone thunk
+0x008D50D7 gap-undelimited-run: the thunk run at 0x008D50D7 runs straight into other code, so it is a function tail, not a standalone thunk
+0x008D50F5 gap-undelimited-run: the thunk run at 0x008D50F5 runs straight into other code, so it is a function tail, not a standalone thunk
+0x008D5129 gap-undelimited-run: the thunk run at 0x008D5129 runs straight into other code, so it is a function tail, not a standalone thunk
+0x008D5135 gap-undelimited-run: the thunk run at 0x008D5135 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00911B98 gap-undelimited-run: the thunk run at 0x00911B98 runs straight into other code, so it is a function tail, not a standalone thunk
+0x00911BC4 gap-undelimited-run: the thunk run at 0x00911BC4 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0091CAF8 gap-target-outside-text: jmp rel32 to 0x-336D633E
+0x009470C8 gap-undelimited-run: the thunk run at 0x009470C8 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0094E0A7 gap-undelimited-run: the thunk run at 0x0094E0A7 runs straight into other code, so it is a function tail, not a standalone thunk
+0x0097DBCC gap-undelimited-run: the thunk run at 0x0097DBCC runs straight into other code, so it is a function tail, not a standalone thunk
+0x009AEAD3 gap-undelimited-run: the thunk run at 0x009AEAD3 runs straight into other code, so it is a function tail, not a standalone thunk
 0x00C70EB0 int3-truncated: body ends in padding, not an instruction (FUN_01070eb0)

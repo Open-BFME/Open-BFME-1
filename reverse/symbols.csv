@@ -81087,3 +81087,9 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?b_00439150@@YAXXZ,0x00439150,gen-thunk body
+?b_002c11e0@@YAXXZ,0x002C11E0,gen-thunk body
+?b_002c1250@@YAXXZ,0x002C1250,gen-thunk body
+?b_000bcd80@@YAXXZ,0x000BCD80,gen-thunk body
+?b_002c1150@@YAXXZ,0x002C1150,gen-thunk body
+?b_000bab30@@YAXXZ,0x000BAB30,gen-thunk body
