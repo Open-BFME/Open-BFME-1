@@ -1988,3 +1988,29 @@ unsigned short share a mangled type (G) under MSVC 7.1, so one specialisation
 covers both. On one body this was worth 71 of 77 diverging instructions --
 compareNoCase sat between a temporary's construction and its destruction, and
 nothrow let MSVC drop the unwind-state bumps either side.
+
+## "Same body, different template instantiation" is only cheap if something else keeps the old one alive
+
+A call site resolving to the wrong template instantiation looks like a free fix:
+point it at the right one and the bytes match. But the OLD instantiation's
+COMDATs are matched rows too, and if your call site was their only emitter in
+that TU, the fix trades one matched row for another.
+
+GameSpyInfo::removeFromSavedIgnoreList is the worked example. Retail's
+m_savedIgnoreMap has a twelve-byte value type where the vendored header says
+AsciiString, so its erase belongs to the generic 12-byte _Rb_tree instantiation
+that gen_small/tgrid_119.cpp already owns rather than the AsciiString one -- the
+same 91-byte body under a different template, and a local map view compiles the
+call correctly. But that erase is the ONLY expression in the TU instantiating
+the AsciiString tree's `_M_upper_bound`, a MATCHED 38-byte row claimed from that
+same file. operator[] and find() elsewhere in the file do not instantiate it;
+only erase does. So the body cannot land until that row is retired or rehomed --
+a ledger decision, not a fold.
+
+Check before costing one of these: does any OTHER expression in the TU keep the
+old instantiation's COMDATs alive? Same screen as the pool-glue and inline-COMDAT
+cases, pointed at templates.
+
+And when you find the real reason, REPLACE the note that named the wrong one. A
+note naming the wrong blocker is worse than no note: it bills the next agent for
+the wrong fix.
