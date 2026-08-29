@@ -5640,27 +5640,28 @@ Bool Pathfinder::adjustToPossibleDestination(Object *obj, const LocomotorSet& lo
  * Queues an object to do a pathfind.
  * It will call the object's ai update->doPathfind() during processPathfindQueue().
  */
-// byte-exact reconstruction: Code/GameEngine/Source/Common/Pathfinder_queueForPath_Thunk.cpp
-// ?queueForPath@Pathfinder@@QAE_NW4ObjectID@@@Z present-unmatched
+// BFME's pathfind request ring sits past the pathfinder's own storage at
+// +0x24718, with the head and tail right after it, and the insert uses the tail
+// value loaded at entry rather than re-reading it.
+struct BFMEPathfindQueue
+{
+	char m_unreconstructed_00000[0x24718];
+	UnsignedInt m_queuedPathfindRequests[PATHFIND_QUEUE_LEN];	///< retail this+0x24718
+	Int m_queuePRHead;						///< retail this+0x25718
+	Int m_queuePRTail;						///< retail this+0x2571c
+};
+
+// ?queueForPath@Pathfinder@@QAE_NW4ObjectID@@@Z
 Bool Pathfinder::queueForPath(ObjectID id)
 {
-#if defined(_DEBUG) || defined(_INTERNAL)
-	{
-		Object *tmpObj = TheGameLogic->findObjectByID(id);
-		if (tmpObj) {
-			AIUpdateInterface *tmpAI = tmpObj->getAIUpdateInterface();
-			if (tmpAI) {
-				const Coord3D* pos = tmpAI->friend_getRequestedDestination();
-				DEBUG_ASSERTLOG(pos->x != 0.0 && pos->y != 0.0, ("Queueing pathfind to (0, 0), usually a bug. (Unit Name: '%s', Type: '%s' \n", tmpObj->getName().str(), tmpObj->getTemplate()->getName().str()));
-			}
-		}
-	}
-#endif
-	
+	BFMEPathfindQueue *self = reinterpret_cast<BFMEPathfindQueue *>(this);
+
+	Int tail = self->m_queuePRTail;
+
 	/* Check & see if we are already queued. */
-	Int slot = m_queuePRHead;
-	while (slot != m_queuePRTail) {
-		if (m_queuedPathfindRequests[slot] == id) {
+	Int slot = self->m_queuePRHead;
+	while (slot != self->m_queuePRTail) {
+		if (self->m_queuedPathfindRequests[slot] == (UnsignedInt)id) {
 			return true;
 		}
 		slot++;
@@ -5670,16 +5671,16 @@ Bool Pathfinder::queueForPath(ObjectID id)
 	}
 
 	// Tail is the first available slot.
-	Int nextSlot = m_queuePRTail+1;
+	Int nextSlot = tail+1;
 	if (nextSlot >= PATHFIND_QUEUE_LEN) {
 		nextSlot = 0;
 	}
-	if (nextSlot==m_queuePRHead) {
+	if (nextSlot==self->m_queuePRHead) {
 		DEBUG_CRASH(("Ran out of pathfind queue slots."));
 		return false;
 	}
-	m_queuedPathfindRequests[m_queuePRTail] = id;
-	m_queuePRTail = nextSlot;
+	self->m_queuedPathfindRequests[tail] = id;
+	self->m_queuePRTail = nextSlot;
 	return true;
 }
 
