@@ -8574,6 +8574,7 @@ name,address,notes
 ??1Open2Elem39EB70@@QAE@XZ,0x00043699,Open2 0x39eb70 vector erase twin callee
 ??1Open2Elem3A3280@@QAE@XZ,0x00036241,Open2 0x3a3280 vector erase twin callee
 ??1Open2Elem7716A0@@QAE@XZ,0x0003F4FE,Open2 0x7716a0 vector twin callee
+??1Open2FlagName344B20@@QAE@XZ,0x000444EA,Open2 0x00344B20 flag lookup callee
 ??1OptionPreferences@@UAE@XZ,0x00001307
 ??1PB_DeepBase@@UAE@XZ,0x00047C53,Open-BFME5 SlaveWatcherBehavior base destructor ILT pin
 ??1PSPlayerStats@@QAE@XZ,0x00025C1B,PSRequest retail member destructor
@@ -73010,7 +73011,11 @@ name,address,notes
 ?bfmeFinish@Glo012F1028Sub@@AAEXPAVGlo012F1028Item@@H@Z,0x00038910,Open-BFME5 ILT thunk to body 0x003CA7C0; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on this with the item and a zero; address-derived name
 ?bfmeFinishAGA@BfmeThingAGA@@QAEXPAX@Z,0x00028493,pin
 ?bfmeFinishANB@BfmeThingANB@@QAEXPAVBfmeSinkANB@@PAX@Z,0x00014439,pin
+?bfmeFinishAP1008@BfmeP1008@@QAEXXZ,0x000488AB,pin
+?bfmeFinishAQ1008@BfmeQ1008@@QAEXXZ,0x000488AB,pin
 ?bfmeFinishAQA@BfmeTwoAQA@@QAEXXZ,0x00003300,pin
+?bfmeFinishBP1008@BfmeP1008@@QAEXPAX@Z,0x00002EAA,pin
+?bfmeFinishBQ1008@BfmeQ1008@@QAEXPAX@Z,0x00002EAA,pin
 ?bfmeFinishYC@BfmeThingYC@@QAEXPAX@Z,0x00019D17,pin
 ?bfmeFirstAKB@BfmeThingAKB@@QAE_NPAH@Z,0x00006EF1,pin
 ?bfmeFirstEUA@BfmeGlobAEUA@@QAEHHH@Z,0x0004B290,pin
@@ -74220,6 +74225,7 @@ name,address,notes
 ?canGetHealedAt@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@@Z,0x0001B090,Open-BFME5 ILT thunk fronting body 0x000C5140
 ?canSwitchIndexToIndex@CaveSystem@@QAE_NHH@Z,0x00003E7C,Open-BFME5 retail cave index switch pin
 ?canonicalFlagName@BFMEScriptEngineFlagLookup@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,TU-scoped ABI; sole findFlag caller proves AsciiString hidden return and this plus 0x17088 canonical-name lookup
+?canonicalFlagName@Open2Lookup344B20@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,Open2 0x00344B20 flag lookup callee
 ?changeBattlePlan@Player@@QAEXW4BattlePlanStatus@@HPAVBattlePlanBonuses@@@Z,0x000D8080,Open-BFME5 retail identity; exact clean C++ body
 ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z,0x0002847F,Bridge::updateDamageState calls the existing ILT thunk for both closed and open transitions
 ?changeGridHeight@WaterRenderObjClass@@QAEXMMM@Z,0x0079F850,thunk-resolved body (via 0x2b256)
@@ -75015,6 +75021,7 @@ name,address,notes
 ?find@MapCache@@QAEPAUMapCacheNode@@ABVAsciiString@@@Z,0x000263D7,isValidMap lookup thunk
 ?find@ModuleTemplateMap@@QBE?AUModuleTemplateMapIterator@@ABH@Z,0x0000C054,ILT thunk to the NameKey-keyed module template map find at 0x001265D0
 ?find@Open26A2FD0Logic@@QAEPAVOpen26A2FD0Object@@PAX@Z,0x0001F253,Open2 0x006A2FD0 lookup (ILT)
+?find@Open2FlagMap344B20@@QAEPAUOpen2FlagNode344B20@@ABVOpen2FlagName344B20@@@Z,0x0003B32C,Open2 0x00344B20 flag lookup callee
 ?find@ParticleSystemHashtableFindShim@_STL@@QBEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@ABVAsciiString@@@Z,0x005C76A0,incremental-link thunk target through a TU-local forwarding shim
 ?find@PassMap@@QAEPAUPassMapNode@@ABVAsciiString@@@Z,0x0000AEAC,GameSpyLoginPreferences password map find ILT
 ?find@PreferenceMap@@QBEPAUPreferenceNode@@ABVAsciiString@@@Z,0x0000AEAC,ILT thunk to the AsciiString-keyed preferences map find at 0x00080600
@@ -80060,6 +80067,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?canonicalFlagName@Open2Lookup344B20@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,Open2 0x00344B20 flag lookup callee
-?find@Open2FlagMap344B20@@QAEPAUOpen2FlagNode344B20@@ABVOpen2FlagName344B20@@@Z,0x0003B32C,Open2 0x00344B20 flag lookup callee
-??1Open2FlagName344B20@@QAE@XZ,0x000444EA,Open2 0x00344B20 flag lookup callee
