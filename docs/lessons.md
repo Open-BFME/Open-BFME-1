@@ -2092,3 +2092,23 @@ destination holds a real body and the donor row owns a jmp stub -- it is
 comparing the body's first five bytes against a jump. A low miss(N) is only
 meaningful when donor and destination model the same SHAPE of function. Check
 the donor row's size before believing one.
+
+## A push loop that trusts an empty commit range cannot see its own failure
+
+`git log origin/master..HEAD` is empty when you are pushed AND when a conflicted
+rebase has left HEAD detached on origin's tip with your commit only in the
+reflog. Checking HEAD's POSITION instead does not help -- in that failure HEAD
+really is an ancestor of origin/master, so the position check passes too. And a
+push guard grepping for "rejected" misses the actual error text, which can be
+"a pushed branch tip is behind its remote counterpart" or, mid-rebase, "fatal:
+Exiting because of an unresolved conflict."
+
+Both failures start with a silenced `git pull --rebase` swallowing the conflict.
+Observed twice in one day: once reporting a false PUSHED, once exhausting its
+retries in total silence while the commit was lost.
+
+Use `tools/push_retry.sh`, which never silences the pull, refuses to start
+mid-rebase, exits non-zero with the conflicted paths when the rebase needs
+hands, and confirms the commit SUBJECT is in origin/master before printing OK.
+Verify a push by what reached the remote, never by a range that is empty in the
+failure case as well.
