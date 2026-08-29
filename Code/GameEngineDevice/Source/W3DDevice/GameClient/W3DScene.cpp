@@ -1261,6 +1261,14 @@ void RTS2DScene::doRender( CameraClass * cam )
 //=============================================================================
 /** Customized render for the 2d scene management */
 //=============================================================================
+// One instruction away, and the instruction is the class. Retail converts `this`
+// to the scene base with `add ecx,-0x108` where this tree emits `add ecx,-0x98`:
+// the RTS2DScene sub-object sits 0x108 into the complete object in BFME and 0x98
+// here, so the bases above it are 0x70 bytes bigger than the vendored ones.
+// Everything else in the body -- the null guard, the five pushed arguments, the
+// three zeroed stack slots -- is already identical. Writing the -0x108 by hand
+// would byte-match while asserting a layout the type system does not have; this
+// wants the header.
 // byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/RTS2DSceneDrawThunk.cpp
 // ?draw@RTS2DScene@@UAEXXZ present-unmatched
 void RTS2DScene::draw( )
