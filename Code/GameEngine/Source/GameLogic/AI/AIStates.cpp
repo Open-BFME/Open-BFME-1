@@ -5402,8 +5402,6 @@ Bool AIFollowWaypointPathState::hasNextWaypoint(void)
 }
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIFollowWaypointPathState_calcExtraPathDistance_Thunk.cpp
-// ?calcExtraPathDistance@AIFollowWaypointPathState@@IAEMXZ present-unmatched
 Real AIFollowWaypointPathState::calcExtraPathDistance(void)
 {
 	Real extra = PATHFIND_CELL_SIZE_F/10.0f;
@@ -5411,10 +5409,17 @@ Real AIFollowWaypointPathState::calcExtraPathDistance(void)
 	Int limit = 5; // just look ahead 5, in case of circular paths.  jba
 	while (curWay && limit>0) {
 		limit--;
-		Int linkCount = curWay->getNumLinks();
+		// BFME's Waypoint carries a larger link table than the vendored one, so
+		// the link count is at +0x4c and the first link at +0x20 where the
+		// reference header puts them at +0x3c and +0x1c. Read at the two
+		// disassembly-confirmed offsets rather than through a replacement view:
+		// every other byte of this body already matches the reference verbatim,
+		// so the two loads are all that is proven, and naming a whole Waypoint
+		// layout here would assert a shape nothing in this file measured.
+		const unsigned char *curWayRaw = (const unsigned char *)curWay;
+		Int linkCount = *(const Int *)(curWayRaw + 0x4c);
 		if (linkCount == 0) return extra;
-		Int which = 0;
-		const Waypoint *nextWay = curWay->getLink( which );
+		const Waypoint *nextWay = *(const Waypoint * const *)(curWayRaw + 0x20);
 		Coord2D delta;
 		delta.x = nextWay->getLocation()->x - curWay->getLocation()->x;
 		delta.y = nextWay->getLocation()->y - curWay->getLocation()->y;
