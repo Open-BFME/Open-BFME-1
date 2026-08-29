@@ -80490,6 +80490,8 @@ _funcargs,0x0099C410,decode_calls pin for _var_or_func_tail callee
 _funcstat,0x0099C390,decode_calls pin for _stat callee
 _g_Rva0112C8D0,0x0112C8D0,address-derived terminated lookup table read by 0x0080D890
 _g_Rva012C47A4,0x012C47A4,DirtySock default alias-list pointer used by 0x0080EF50
+_g_bfmeG1144,0x00EED5C8,pin
+_g_bfmeH1144,0x00EED5AC,pin
 _g_bfmeK1127,0x00C75350,pin
 _g_bfmeS1142,0x00EF8008,pin
 _g_bfmeV1134,0x00CF0AE0,pin
