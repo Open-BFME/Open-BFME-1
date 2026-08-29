@@ -931,7 +931,7 @@ void ScriptActions::doDefeat( void )
 	if (!m_suppressNewWindows)
 	{
 		BfmeDefeatScreenHolder *holder =
-			((BfmeGameClientDefeatScreen *)TheGameClient)->m_defeatScreenHolder;
+			((BfmeGameClientDefeatScreen *)ThePlayerList)->m_defeatScreenHolder;
 		if (TheVictoryConditions && holder)
 		{
 			BFMERetailAsciiString screen( "Gui_DefeatScreen" );
@@ -961,7 +961,7 @@ void ScriptActions::doLocalDefeat( void )
 		!((BfmeVictoryConditionsVtbl *)TheVictoryConditions)->amIObserver())
 	{
 		BfmeDefeatScreenHolder *holder =
-			((BfmeGameClientDefeatScreen *)TheGameClient)->m_defeatScreenHolder;
+			((BfmeGameClientDefeatScreen *)ThePlayerList)->m_defeatScreenHolder;
 		if (holder)
 		{
 			BFMERetailAsciiString screen( "Gui_DefeatScreen" );
