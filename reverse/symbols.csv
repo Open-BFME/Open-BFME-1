@@ -72927,6 +72927,7 @@ name,address,notes
 ?bfmeFindSC@BfmeMapSC@@QAEPAUBfmeSlotSC@@PAUBfmeKeySC@@@Z,0x00040430,pin
 ?bfmeFindSD@BfmeMapSD@@QAEPAUBfmeSlotSD@@PAUBfmeKeySD@@@Z,0x00020E7D,pin
 ?bfmeFinish961@BfmeGate961@@QAEXXZ,0x0002D169,pin
+?bfmeFinish991@@YAXXZ,0x000114DC,pin
 ?bfmeFinish@Gen_0015BCB0@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 tail-jump to
 ?bfmeFinish@Gen_00189D00@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finder at 0x00189D00 tail-jumps to
 ?bfmeFinish@Gen_001BA9E0@@QAEXXZ,0x00023ECA,Open-BFME5 the body call the multi-member vector destructor at 0x001BA9E0 makes before its members go
@@ -73686,6 +73687,7 @@ name,address,notes
 ?bfmeSend975B@BfmeB975@@QAEXHH@Z,0x0002D6F5,pin
 ?bfmeSend979B@BfmeSink979@@QAEXPAVBfmeKey979@@@Z,0x00038938,pin
 ?bfmeSend986C@BfmeC986@@QAEXHHHHH@Z,0x0001A6B3,pin
+?bfmeSend991@BfmeC991@@QAEDHH@Z,0x0000BD11,pin
 ?bfmeSendAAA@BfmeSinkAAA@@QAEXPAX_NH@Z,0x00044409,pin
 ?bfmeSendAAB@BfmeSinkAAB@@QAEXPAX_NH@Z,0x00044409,pin
 ?bfmeSendAC@BfmeNextAC@@QAEXPAUBfmeOutAC@@@Z,0x00043E91,pin
@@ -73702,6 +73704,7 @@ name,address,notes
 ?bfmeSendEventA19@@YAXPAX00IH@Z,0x00049896,pin
 ?bfmeSendRM@BfmeSinkRM@@QAEXPAXH@Z,0x00006613,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
+?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
 ?bfmeSetAKA@BfmeInnerAKA@@QAEXH@Z,0x00024D70,pin
 ?bfmeSetANB@BfmeSlotANB@@QAEXPAXH@Z,0x00887D20,pin
 ?bfmeSetAZA@BfmeThingAZA@@QAEXH@Z,0x0002BECC,pin
@@ -73767,9 +73770,11 @@ name,address,notes
 ?bfmeStep4_250@@YAXPAX@Z,0x00864280,pin
 ?bfmeStep982C@@YAXXZ,0x00785FD0,pin
 ?bfmeStep@Glo012F1024Entry@@QAEXXZ,0x00015F50,Open-BFME5 ILT thunk to body 0x003A7320; ?step@Glo012F1024Type@@QAEXXZ at 0x003B3900 tail-jumps into it on the selected 32-byte entry; address-derived name
+?bfmeStepA991@@YAXXZ,0x0001A857,pin
 ?bfmeStepAED@BfmeSubAED@@QAEXH@Z,0x00015546,pin
 ?bfmeStepARA@BfmeThingARA@@QAEXXZ,0x000312A0,pin
 ?bfmeStepAZA@BfmeThingAZA@@QAEXXZ,0x00048D6A,pin
+?bfmeStepB991@@YAXXZ,0x00892040,pin
 ?bfmeStepBCB@BfmeThingBCB@@QAEXXZ,0x0003D0BE,pin
 ?bfmeStepBCD@BfmeThingBCD@@QAEXXZ,0x009337E0,pin
 ?bfmeStepBFF@BfmeSubBFF@@QAEXXZ,0x00888840,pin
@@ -74983,6 +74988,7 @@ name,address,notes
 ?findUpdateModule@Object@@QAEPAVOCLUpdate@@W4NameKeyType@@@Z,0x0002AE23,Open-BFME5 ILT; ?updateContextOCLTimer@ControlBar@@AAEXXZ at 0x004AA980 looks the OCLUpdate module up through it
 ?findUpgrade@UpgradeCenter@@QBEPBVUpgradeTemplate@@ABVAsciiString@@@Z,0x0002F95A
 ?findWeaponTemplate@WeaponStore@@QBEPBVWeaponTemplate@@VBFMERetailAsciiString@@@Z,0x0000D3FA,WeaponFireSpecialAbilityUpdate WeaponStore lookup ILT thunk
+?finish@Open2Hub@@QAEXXZ,0x000465A1,Open2 0x00783010 hub teardown (ILT)
 ?finish@Rva0022BDE0Obj@@QAEXPAVObject@@@Z,0x00041E34,Open-BFME5 pin for 0x0022BDE0 finish call through ILT to 0x0022E340
 ?finish@Rva003677B0Entry@@QAEXPAX_N@Z,0x0003FE09,REL32 target read from the retail call at RVA 0x003677E3; ILT thunk to RVA 0x00367010
 ?finish@Rva003BEED0@@QAEXXZ,0x003BEC30,niladic member tail-jumped by the two-call forwarder at 0x003BEED0; address-derived name
@@ -75199,6 +75205,7 @@ name,address,notes
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
 ?g_bfmeAux985@@3PAUBfmeAux985@@A,0x00EF4B58,pin
 ?g_bfmeB986B@@3PAHA,0x00EF9D0C,pin
+?g_bfmeB991@@3PAVBfmeB991@@A,0x00EF9D88,pin
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
 ?g_bfmeBFAE@@3HA,0x00EACB4C,pin
 ?g_bfmeBMG@@3HA,0x00EB9660,pin
@@ -75388,6 +75395,7 @@ name,address,notes
 ?g_bfmeUnsignedByteFormat@@3QBDB,0x011442BC,address-derived unsigned-byte format string from the DIR32 operand at retail 0x009D943A
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
 ?g_bfmeUnsignedShortFormat@@3QBDB,0x01144328,address-derived unsigned-short format string from retail 0x009D95BF
+?g_bfmeVal991@@3HA,0x00EF822C,pin
 ?g_bfmeValMD@@3HA,0x00EB7D80,pin
 ?g_bfmeVft963@@3PADA,0x00CF0398,pin
 ?g_bfmeVft969D1@@3PADA,0x00D2B3F0,pin
@@ -79884,4 +79892,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?finish@Open2Hub@@QAEXXZ,0x000465A1,Open2 0x00783010 hub teardown (ILT)
