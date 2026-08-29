@@ -214,6 +214,15 @@ independent naming problems). Read the disassembly before building — a bare
 candidate in one read. When a body stalls within single digits of exact with
 every instruction present, the residue is retail's TU structure (what the
 inliner saw), not a spelling — record it and move on.
+One exception, and screen for it before you give up: a callee DEFINED later in
+the same TU can inline into an earlier caller where retail emits a call.
+TeamPrototype::hasAnyBuildFacility failed while three structurally identical
+sibling walks passed, because the inliner declined their callees and took that
+one. Declare the callee on a view class -- declared, never defined -- so the
+call survives, then alias that spelling at the ILT address. The screen costs one
+build: list the callees defined in the same TU and rebuild. In
+TeamPrototype::updateState both candidates were declined and the existing pins
+resolved unchanged, so the screen is cheap even when it finds nothing.
 
 ## Layout facts you can read straight off the bytes
 
