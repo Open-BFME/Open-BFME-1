@@ -412,11 +412,32 @@ void GameSpyInfo::addStagingRoom( GameSpyStagingRoom room )
 // 12-byte instantiation at 0x006342A0 rather than the AsciiString one at
 // 0x00224870. Reaching that needs a second map instantiation in this TU, which is
 // a great deal more renumbering than one view class. Two bodies, one blocker.
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfo_updateStagingRoom.cpp
-// ?updateStagingRoom@GameSpyInfo@@UAEXVGameSpyStagingRoom@@@Z present-unmatched
+// addStagingRoom is vtable +0xA0 in BFME and +0x84 in the vendored interface --
+// twenty-eight bytes of extra virtuals ahead of it. The argument handling,
+// including the by-value copy and its unwind slot, already matched; only the slot
+// moved. Declaring this view renumbers the compiler-local $L labels in this TU,
+// which is why uw_00c40e10 and uw_00c40e8a are re-anchored in the same commit.
+template <Int N>
+class BfmeStagingRoomSlots : public BfmeStagingRoomSlots<N - 1>
+{
+public:
+	virtual void unused(char (*)[N]) = 0;
+};
+
+template <>
+class BfmeStagingRoomSlots<0>
+{
+};
+
+class BfmeStagingRoomVTable : public BfmeStagingRoomSlots<40>
+{
+public:
+	virtual void addStagingRoom( GameSpyStagingRoom room ) = 0;	///< vtable +0xA0
+};
+
 void GameSpyInfo::updateStagingRoom( GameSpyStagingRoom room )
 {
-	addStagingRoom(room);
+	((BfmeStagingRoomVTable *)this)->addStagingRoom(room);
 }
 
 void GameSpyInfo::removeStagingRoom( GameSpyStagingRoom room )
