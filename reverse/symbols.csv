@@ -73508,6 +73508,7 @@ name,address,notes
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLog1013@BfmeLog1013@@QAEXHPADHHHHHH@Z,0x00015235,pin
+?bfmeLog1021@BfmeLog1021@@QAEXHPADHHHHHH@Z,0x00015235,pin
 ?bfmeLog993B@BfmeLog993@@QAEXHPADH0HHHH@Z,0x00015235,pin
 ?bfmeLog995@BfmeLog995@@QAEXHPADH0HHHH@Z,0x00015235,pin
 ?bfmeLogCNE@@YGXHH@Z,0x00032DEE,pin
@@ -73881,6 +73882,7 @@ name,address,notes
 ?bfmeSmallFreePM@@YAXPAXI@Z,0x0082E4F0,pin
 ?bfmeSmallFreePZ@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeSmallFreeQJ@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeStart1021@BfmeF1021@@QAEXH@Z,0x0000EEA8,pin
 ?bfmeStart@Gen_0049A330@@QAEXPAX0PAPAX@Z,0x00014100,Open-BFME5 the starter the SEH constructor at 0x0049A330 calls
 ?bfmeStart@Gen_00654F20@@QAEXPAX0PAPAX@Z,0x0002648B,Open-BFME5 the starter the SEH constructor at 0x00654F20 calls
 ?bfmeStart@Gen_00844340@@QAEXPAX0PAPAX@Z,0x0002A531,Open-BFME5 the starter the SEH constructor at 0x00844340 calls
@@ -75406,6 +75408,7 @@ name,address,notes
 ?g_bfmeDrop995@@3PAVBfmeDrop995@@A,0x00EF12CC,pin
 ?g_bfmeDropDXH@@3P6AXPAVBfmeSubDXH@@@ZA,0x00F378A0,pin
 ?g_bfmeE1014@@3PAVBfmeE1014@@A,0x00EF3A90,pin
+?g_bfmeE1021@@3PAVBfmeE1021@@A,0x00EF1464,pin
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
 ?g_bfmeEndC976@@3PAVBfmeEndC976@@A,0x00EF64BC,pin
@@ -75421,6 +75424,8 @@ name,address,notes
 ?g_bfmeFlagMG@@3HA,0x00EF4ACC,pin
 ?g_bfmeFlagsAPB@@3IA,0x00EA6FA0,pin
 ?g_bfmeFmt1013@@3PADA,0x00D05BEC,pin
+?g_bfmeFmt1021B@@3PADA,0x00D08ED8,pin
+?g_bfmeFmt1021G@@3PADA,0x00D09CD4,pin
 ?g_bfmeFmt993B@@3PADA,0x00D09B3C,pin
 ?g_bfmeFmt995B@@3PADA,0x00D05184,pin
 ?g_bfmeFmtA995C@@3PADA,0x00D07374,pin
@@ -75467,6 +75472,7 @@ name,address,notes
 ?g_bfmeListEYE@@3PAUBfmeListEYE@@A,0x00EED5DC,pin
 ?g_bfmeLog1013@@3PAVBfmeLog1013@@A,0x00EF19E8,pin
 ?g_bfmeLog1020@@3PAVBfmeLog1020@@A,0x00EF19E8,pin
+?g_bfmeLog1021@@3PAVBfmeLog1021@@A,0x00EF19E8,pin
 ?g_bfmeLog993@@3PAVBfmeLog993@@A,0x00EF19E8,pin
 ?g_bfmeLog995@@3PAVBfmeLog995@@A,0x00EF19E8,pin
 ?g_bfmeLook1001@@3PAVBfmeLook1001@@A,0x00EF0898,pin
@@ -75490,7 +75496,9 @@ name,address,notes
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
 ?g_bfmeModeAZC@@3PAUBfmeModeAZC@@A,0x00EF0FE0,pin
 ?g_bfmeMsg1020@@3HA,0x00EB7D80,pin
+?g_bfmeMsg1021@@3HA,0x00EB7D80,pin
 ?g_bfmeN1020@@3PAVBfmeN1020@@A,0x00EF1B40,pin
+?g_bfmeN1021@@3PAVBfmeN1021@@A,0x00EF1B40,pin
 ?g_bfmeName1019@@3PADA,0x00D2A5A8,pin
 ?g_bfmeObj1006@@3PAUBfmeObj1006@@A,0x00EF4C38,pin
 ?g_bfmeObj2EGE@@3PAVBfmeObj2EGE@@A,0x00EF148C,pin
@@ -75590,6 +75598,7 @@ name,address,notes
 ?g_bfmeStrB993B@@3PADA,0x00C80FC0,pin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
 ?g_bfmeT1019@@3PAUBfmeT1019@@A,0x00EF1024,pin
+?g_bfmeTab1021@@3PAHA,0x00EB7D94,pin
 ?g_bfmeTarget986B@@3PADA,0x00F071E4,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
