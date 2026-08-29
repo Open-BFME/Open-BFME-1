@@ -23938,3 +23938,4 @@ dup_59eb90,0x0059EB90,"not AttackNugget: its constructor target is 0x0059EB00 no
 ?dup_00956ac0@@YAXXZ,0x00956AC0,gen-alias placeholder superseded by the real C++ identity ?Set_Position@OBBoxRenderObjClass@@UAEXABVVector3@@@Z
 ?dup_007d0b70@@YAXXZ,0x007D0B70,gen-alias placeholder superseded by the real C++ identity ?preRender@ScreenBWFilter@@UAE_NAA_NAAW4CustomScenePassModes@@@Z
 ?dup_007d0c50@@YAXXZ,0x007D0C50,gen-alias placeholder superseded by the real C++ identity ?preRender@ScreenBWFilterDOT3@@UAE_NAA_NAAW4CustomScenePassModes@@@Z
+?d_00273300@@YAXXZ,0x00273300,"gen-dump placeholder superseded by the real identity of these bytes: ?playMoveVoiceResponse@AIUpdateInterface@@IAEXPBUCoord3D@@@Z, byte-verified from Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_playMoveVoiceResponse.cpp over the same 202-byte range. The Code/gen_asm/d_00272800.asm dump reproduces those bytes but carries no identity."
