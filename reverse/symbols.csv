@@ -79510,3 +79510,9 @@ __imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
 __imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
 ?bfmeBaseVDW@BfmeThingVDW@@QAEXHH@Z,0x00899F00,pin
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
+??0PickAndPlayInfo@@QAE@XZ,0x0000F164,BFME PickAndPlayInfo constructor; target call follows local DrawableList construction and precedes field population in three adjacent voice response helpers
+??1?$_List_base@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE@XZ,0x00040863,STLport Drawable pointer list base destructor; cleanup call for the local one-Drawable list in three adjacent voice response helpers
+?pickAndPlayUnitVoiceResponse@@YAXPBV?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@W4Type@GameMessage@@PAVPickAndPlayInfo@@@Z,0x000196C8,BFME voice dispatcher; adjacent helpers pass the local DrawableList message IDs 0x7E7 or 0x7E8 and PickAndPlayInfo
+?canonicalFlagName@BFMEScriptEngineFlagLookup@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,TU-scoped ABI; sole findFlag caller proves AsciiString hidden return and this plus 0x17088 canonical-name lookup
+?find@BFMEFlagMap@@QAEPAUBFMEFlagMapNode@@ABVBFMEFlagName@@@Z,0x000243CF,TU-scoped map facade; retail call reaches proven pair-of-AsciiString tree find body 0x0033FE60
+??1BFMEFlagName@@QAE@XZ,0x000444EA,TU-scoped two-AsciiString key destructor; retail target 0x000DFB20 destroys offsets 4 then 0
