@@ -72791,6 +72791,7 @@ name,address,notes
 ?bfmeCopyTwoCDF@BfmePartCDF@@QAEXPAU1@@Z,0x0003B5C5,pin
 ?bfmeCopyTwoCKA@BfmePartCKA@@QAEXPAU1@@Z,0x000434DC,pin
 ?bfmeCount1029@@YAHHHPADH@Z,0x00001BAE,pin
+?bfmeCount1041@@YAHHPAXPADH@Z,0x00001BAE,pin
 ?bfmeCount932D@BfmeGlob932D@@QAEHPAXH@Z,0x0000C284,pin
 ?bfmeCreateInactiveTeam@TeamFactory@@AAEPAVTeam@@ABVAsciiString@@0@Z,0x0000D15C,retail REL32 at 0x000F7CAB targets the two-name createInactiveTeam ILT at 0x0000D15C
 ?bfmeCtorECMa@BfmeThingECMa@@QAEPAV1@XZ,0x00806300,pin
@@ -73262,6 +73263,7 @@ name,address,notes
 ?bfmeFourLF@@YAXXZ,0x00039900,pin
 ?bfmeFree1026@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFree1040E@@YGXPAX@Z,0x009F6C10,pin
+?bfmeFree1041@@YAXPAD@Z,0x00881EB0,pin
 ?bfmeFree915A@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFree923F@@YGXPAXH@Z,0x0003F413,pin
 ?bfmeFreeAEC@@YAXPAX@Z,0x00881EB0,pin
@@ -75459,6 +75461,7 @@ name,address,notes
 ?g_bfmeAccDYB@@3HA,0x00EED8A4,pin
 ?g_bfmeActA979@@3PAVBfmeActA979@@A,0x00EF19E8,pin
 ?g_bfmeAlloc1034@@3PAUBfmeAlloc1034@@A,0x00F37A30,pin
+?g_bfmeAlloc1041@@3PAUBfmeAlloc1041@@A,0x00F37A30,pin
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
 ?g_bfmeArgDZE@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgDZF@@3PAXA,0x00EB7D80,pin
@@ -75534,6 +75537,7 @@ name,address,notes
 ?g_bfmeFmt1021G@@3PADA,0x00D09CD4,pin
 ?g_bfmeFmt1025@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmt1029@@3PADA,0x00CBF820,pin
+?g_bfmeFmt1041@@3PADA,0x00CA1378,pin
 ?g_bfmeFmt993B@@3PADA,0x00D09B3C,pin
 ?g_bfmeFmt995B@@3PADA,0x00D05184,pin
 ?g_bfmeFmtA995C@@3PADA,0x00D07374,pin
