@@ -2105,6 +2105,9 @@ name,address,notes
 ??0BfmeAudioEventRTS@@QAE@ABVAsciiString@@PBUCoord3D@@H@Z,0x0004941D,alias of the positional AudioEventRTS spelling pinned at the same ILT; reached from the ScriptActions view local
 ??0BfmeAudioEventRTS@@QAE@ABVAsciiString@@W4ObjectID@@@Z,0x0003961C,alias of the AudioEventRTS spelling pinned at the same ILT; ScriptActions.cpp sizes the local through a view because BFME's event is 0x70 bytes
 ??0BfmeBase1134@@QAE@XZ,0x009A1A30,pin
+??0BfmeBase1137A@@QAE@XZ,0x0001594C,pin
+??0BfmeBase1137B@@QAE@XZ,0x009333A0,pin
+??0BfmeBase1137C@@QAE@XZ,0x0001B522,pin
 ??0BfmeBaseJC@@QAE@PAX@Z,0x0090E3D0,pin
 ??0BfmeBaseP0@@QAE@PAX0@Z,0x000170E4,Open-BFME5 the two-argument first base the triple-base constructors at 0x00200AE0 and siblings forward to
 ??0BfmeBinkPlayerMember@@QAE@XZ,0x0002833F,Open-BFME5 ILT the member constructor BinkVideoPlayer at 0x00691230 calls for its member at +0x0C
@@ -80486,6 +80489,9 @@ _g_Rva0112C8D0,0x0112C8D0,address-derived terminated lookup table read by 0x0080
 _g_Rva012C47A4,0x012C47A4,DirtySock default alias-list pointer used by 0x0080EF50
 _g_bfmeK1127,0x00C75350,pin
 _g_bfmeV1134,0x00CF0AE0,pin
+_g_bfmeV1137A,0x00D20FD4,pin
+_g_bfmeV1137B,0x00D1E23C,pin
+_g_bfmeV1137C,0x00D0CA7C,pin
 _gameTextPrepare@16,0x009F6D76,GameTextManager reset prepare helper shim
 _gameTextRelease,0x00881EF0,GameTextManager reset release helper shim
 _getbinopr,0x0099B480,decode_calls pin for _subexpr callee
