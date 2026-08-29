@@ -77034,6 +77034,7 @@ name,address,notes
 ?iniParseFactionVictoryDefinition@@YAXPAVINI@@@Z,0x000C31B0,INI block table 0x012A88AC binds FactionVictoryData to its ILT 0x00411FAE; cdecl INI* from [esp+0x21c] and plain ret at 0x000C331A; token compareNoCase neutral; TheVictorySystem 0x012EF734 -> findOrCreateFactionVictoryParameters 0x001E04B0 -> initFromINI with table 0x0109FBC8; the assert at 0x000C32CB names iniParseFactionVictoryDefinition; ledger ?removeSide@SidesList@@QAEXH@Z is wrong
 ?init@?$basic_ios@GV?$char_traits@G@_STL@@@_STL@@IAEXPAV?$basic_streambuf@GV?$char_traits@G@_STL@@@2@@Z,0x0083F9B0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Streams.cpp
 ?init@AudioEventRTS@@QAEXABVAsciiString@@W4ObjectID@@@Z,0x000B2CC0,GiantBirdSlowDeathBehavior audio member initializer
+?init@BFMEPathfindLayer@@QAE_NPAVBridge@@W4PathfindLayerEnum@@@Z,0x003FB950,alias of the ledgered spelling at the same body; AIPathfind.cpp reaches it through a view class because the reference AIPathfind.h inlines it
 ?init@CustomAsciiStringShim@@QAEXPBD@Z,0x00888BC0,CustomMatchPreferences getter key constructor shim
 ?init@FrameData@@QAEXXZ,0x0003BB6F,ILT thunk retail's call sites encode; double hop via 0x00670220 to the body at 0x00670170, which build_call_thunks only follows one level of
 ?init@Mouse@@UAEXXZ,0x0000245A,ILT thunk to Mouse::init; base call from DirectInputMouse::init
@@ -77405,6 +77406,7 @@ name,address,notes
 ?isTryingToAimAtTarget@TurretAI@@QBE_NPBVObject@@@Z,0x000079D7,ILT thunk to TurretAI::isTryingToAimAtTarget at 0x0018D080
 ?isTurretInNaturalPosition@AIUpdateInterface@@QBE_NW4WhichTurretType@@@Z,0x00043F45,REL32 pin from BattlePlanUpdate::isTurretInNaturalPosition body
 ?isTurretInNaturalPosition@TurretAI@@QBE_NXZ,0x0003E469,ILT thunk to 0x18C8E0; pinned from AIUpdateInterface::isTurretInNaturalPosition @0x26EA60
+?isUsed@BFMEPathfindLayer@@QAE_NXZ,0x003FBB90,alias of the ledgered spelling at the same body; AIPathfind.cpp reaches it through a view class because the reference AIPathfind.h declares the opposite sense, isUnused
 ?isUsed@PathfindLayer@@QAE_NXZ,0x0003D4E2,Open-BFME5 ILT; ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z at 0x003D58C0 goes on when it returns true - the opposite sense to the reference isUnused so the name is behaviour-derived
 ?isUser@LANGameSlot@@QAE_NVUnicodeString@@@Z,0x0068E8D0,byte-scan placement of the LANGameSlot user compare
 ?isUsingAirborneLocomotor@Object@@QBE_NXZ,0x0000A001,ILT thunk to 0x001C1770
@@ -77564,6 +77566,7 @@ name,address,notes
 ?makeSortedTmp@HuffStat@@IAEHPAUHuffStatTmpStruct@@@Z,0x00825E80
 ?markAsDead@AIUpdateInterface@@QAEXXZ,0x00025BFD,ILT thunk read out of StructureCollapseUpdate::onDie call displacement; real body 0x0026EE80 (d_0026ee80, gen-dump)
 ?markMPLocalDefeatWindowShown@ScriptEngine@@QAEXXZ,0x00002ACC,local defeat retail ILT
+?markZonesDirty@BFMEZoneDirtyManager@@QAEX_N0@Z,0x004030D0,alias of the ledgered spelling at the same body; AIPathfind.cpp reaches it through a view class because the reference AIPathfind.h declares one argument, not two
 ?markZonesDirty@PathfindZoneManager@@QAEX_N0@Z,0x00015307,Open-BFME5 ILT; two arguments in BFME where the reference takes one; ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z at 0x003D58C0 passes false and true
 ?messageCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyMessageArg@@@Z,0x0000E43A
 ?method@Rva00409850SubObject@@QAEXE@Z,0x0003207E,incremental link thunk
@@ -78227,6 +78230,7 @@ name,address,notes
 ?setData@NetWrapperCommandMsg@@QAEXPAEI@Z,0x00049ECC,ILT thunk; real body 0xA73E70
 ?setDataOffset@NetWrapperCommandMsg@@QAEXI@Z,0x00023709,ILT thunk; real body 0xA73EF0
 ?setDefaultControlBarConfig@ControlBar@@IAEXXZ,0x00043E73
+?setDestroyed@BFMEPathfindLayer@@QAE_N_N@Z,0x003FCEC0,alias of the ledgered spelling at the same body; AIPathfind.cpp reaches it through a view class because the reference AIPathfind.h inlines it
 ?setDestroyed@PathfindLayer@@QAE_N_N@Z,0x00005510,Open-BFME5 ILT; ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z at 0x003D58C0 hands it the inverted repaired flag
 ?setDisabledUntil@Object@@QAEXW4DisabledType@@I@Z,0x0003364A
 ?setDisabledUntil@ObjectSetDisabledUntilShim@@QAEXW4DisabledType@@I@Z,0x001C81C0,Object::setDisabledUntil incremental-link thunk target through a TU-local forwarding shim
