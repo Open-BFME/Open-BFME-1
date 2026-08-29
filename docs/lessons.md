@@ -2494,3 +2494,40 @@ being replaced.
 
 Also: replace such a line in place rather than deleting it. Files that compile
 macros expanding `__LINE__` change bytes below any removed line.
+
+## When a matched TU works around the shared header, the HEADER is what is wrong
+
+Four separate requests for a new `reference/shims/` directory have now dissolved
+on an artefact the tree already owned. The clearest:
+`CachedFileInputStream::open` appeared to need a Compression.h shim because
+BFME's `decompressData` takes a `const void *src`. But
+`Code/Libraries/Source/Compression/compression.h` is OUR copy, byte-identical to
+the reference bar a provenance comment, and DataChunk.cpp was the ONLY file
+including it -- reaching the reference copy merely because our directory was not
+on its include path. Correcting the header we own was narrower than duplicating
+it into a shim.
+
+The tell was in the tree the whole time: `CompressionManager_decompressData.cpp`
+reproduces that body byte for byte and has to declare its own local class to say
+`const`. A matched TU carrying a local workaround for a shared declaration is
+evidence about the DECLARATION, not a trick to copy.
+
+Before adding a shim, check whether the repo already owns the header, whether
+the destination is even reaching our copy, and which matched TUs already work
+around it.
+
+## `and esp,-8` with no floating point anywhere: rule it out before theorising
+
+`LANAPI::update` opens `push ebp / mov ebp,esp / and esp,0xfffffff8`. MSVC 7.1
+emits that for a local needing eight-byte alignment, which normally means a
+double or an `__int64` -- so that is the first thing to test, and it is FALSE
+here. Scanning all 2030 retail bytes for `fld`, `fstp`, `fild`, `fadd`, `fmul`,
+`fdiv`, `movq` and any qword operand returns nothing at all.
+
+That leaves `__declspec(align)`, `_alloca`, or inline asm, and the question has
+to be settled before anything downstream in the body can be judged -- it fails
+at offset zero, so every later measurement is against a shifted frame.
+
+The wider point: re-measuring after the LANAPI layout correction landed produced
+NO movement at all (393/2030 before and after). A body that does not move when
+you fix a real thing is telling you the real thing was not what held it.
