@@ -127,6 +127,7 @@ struct BFMEQuickPathFields
 struct BFMEAIUpdateFields
 {
 	Object *getObject() const { return m_object; }
+	Real getPathExtraDistance() const { return m_pathExtraDistance; }
 
 	char m_unreconstructed_000[0x08];
 	Object *m_object;					///< retail this+0x08
@@ -134,7 +135,9 @@ struct BFMEAIUpdateFields
 	StateMachine *m_stateMachine;				///< retail this+0x30
 	char m_unreconstructed_034[0x40 - 0x34];
 	ObjectID m_currentVictimID;				///< retail this+0x40
-	char m_unreconstructed_044[0x1CC - 0x44];
+	char m_unreconstructed_044[0x168 - 0x44];
+	Real m_pathExtraDistance;				///< retail this+0x168
+	char m_unreconstructed_16C[0x1CC - 0x16C];
 	Locomotor *m_curLocomotor;				///< retail this+0x1CC
 	char m_unreconstructed_1D0[0x1FC - 0x1D0];
 	UnsignedInt m_nextMoodCheckTime;			///< retail this+0x1FC
@@ -246,11 +249,26 @@ public:
 		return finalOverride->m_legalSurfaces;
 	}
 
+	// Retail deliberately reads through the override pointer, so a missing
+	// override stays an invalid locomotor rather than silently meaning this one.
+	Int getAppearance() const
+	{
+		BFMELocomotorOverride *finalOverride = m_nextOverride;
+		if (finalOverride && finalOverride->m_nextOverride)
+			finalOverride = finalOverride->m_nextOverride->friend_getFinalOverride();
+		return finalOverride->m_appearance;
+	}
+
 	char m_unreconstructed_000[4];				///< the vtable pointer
 	BFMELocomotorOverride *m_nextOverride;			///< retail this+0x04
 	char m_unreconstructed_008[0x10 - 8];
 	UnsignedInt m_legalSurfaces;				///< retail this+0x10
+	char m_unreconstructed_014[0x70 - 0x14];
+	Int m_appearance;					///< retail this+0x70
 };
+
+// BFME numbers LOCO_HOVER 2; the reference enum has it at 3.
+enum { BFME_LOCO_HOVER = 2 };
 
 // BFME's AI state ids are not the reference enum's: it has no ENTER_HORDE,
 // ENTER_GARRISON or ENTER_TRANSPORT and numbers the rest differently.
@@ -330,6 +348,51 @@ public:
 	BFME_AIUPDATE_SLOT(120); BFME_AIUPDATE_SLOT(121);
 	virtual void setLocomotorGoalNone(void) = 0;
 	virtual Bool isDoingGroundMovement(void) const = 0;
+};
+
+// addTargeter is vtable slot 115 (+0x1cc) of the AIUpdateInterface.
+class BFMEAddTargeterAI
+{
+public:
+	BFME_AIUPDATE_SLOT(000); BFME_AIUPDATE_SLOT(001); BFME_AIUPDATE_SLOT(002); BFME_AIUPDATE_SLOT(003);
+	BFME_AIUPDATE_SLOT(004); BFME_AIUPDATE_SLOT(005); BFME_AIUPDATE_SLOT(006); BFME_AIUPDATE_SLOT(007);
+	BFME_AIUPDATE_SLOT(008); BFME_AIUPDATE_SLOT(009); BFME_AIUPDATE_SLOT(010); BFME_AIUPDATE_SLOT(011);
+	BFME_AIUPDATE_SLOT(012); BFME_AIUPDATE_SLOT(013); BFME_AIUPDATE_SLOT(014); BFME_AIUPDATE_SLOT(015);
+	BFME_AIUPDATE_SLOT(016); BFME_AIUPDATE_SLOT(017); BFME_AIUPDATE_SLOT(018); BFME_AIUPDATE_SLOT(019);
+	BFME_AIUPDATE_SLOT(020); BFME_AIUPDATE_SLOT(021); BFME_AIUPDATE_SLOT(022); BFME_AIUPDATE_SLOT(023);
+	BFME_AIUPDATE_SLOT(024); BFME_AIUPDATE_SLOT(025); BFME_AIUPDATE_SLOT(026); BFME_AIUPDATE_SLOT(027);
+	BFME_AIUPDATE_SLOT(028); BFME_AIUPDATE_SLOT(029); BFME_AIUPDATE_SLOT(030); BFME_AIUPDATE_SLOT(031);
+	BFME_AIUPDATE_SLOT(032); BFME_AIUPDATE_SLOT(033); BFME_AIUPDATE_SLOT(034); BFME_AIUPDATE_SLOT(035);
+	BFME_AIUPDATE_SLOT(036); BFME_AIUPDATE_SLOT(037); BFME_AIUPDATE_SLOT(038); BFME_AIUPDATE_SLOT(039);
+	BFME_AIUPDATE_SLOT(040); BFME_AIUPDATE_SLOT(041); BFME_AIUPDATE_SLOT(042); BFME_AIUPDATE_SLOT(043);
+	BFME_AIUPDATE_SLOT(044); BFME_AIUPDATE_SLOT(045); BFME_AIUPDATE_SLOT(046); BFME_AIUPDATE_SLOT(047);
+	BFME_AIUPDATE_SLOT(048); BFME_AIUPDATE_SLOT(049); BFME_AIUPDATE_SLOT(050); BFME_AIUPDATE_SLOT(051);
+	BFME_AIUPDATE_SLOT(052); BFME_AIUPDATE_SLOT(053); BFME_AIUPDATE_SLOT(054); BFME_AIUPDATE_SLOT(055);
+	BFME_AIUPDATE_SLOT(056); BFME_AIUPDATE_SLOT(057); BFME_AIUPDATE_SLOT(058); BFME_AIUPDATE_SLOT(059);
+	BFME_AIUPDATE_SLOT(060); BFME_AIUPDATE_SLOT(061); BFME_AIUPDATE_SLOT(062); BFME_AIUPDATE_SLOT(063);
+	BFME_AIUPDATE_SLOT(064); BFME_AIUPDATE_SLOT(065); BFME_AIUPDATE_SLOT(066); BFME_AIUPDATE_SLOT(067);
+	BFME_AIUPDATE_SLOT(068); BFME_AIUPDATE_SLOT(069); BFME_AIUPDATE_SLOT(070); BFME_AIUPDATE_SLOT(071);
+	BFME_AIUPDATE_SLOT(072); BFME_AIUPDATE_SLOT(073); BFME_AIUPDATE_SLOT(074); BFME_AIUPDATE_SLOT(075);
+	BFME_AIUPDATE_SLOT(076); BFME_AIUPDATE_SLOT(077); BFME_AIUPDATE_SLOT(078); BFME_AIUPDATE_SLOT(079);
+	BFME_AIUPDATE_SLOT(080); BFME_AIUPDATE_SLOT(081); BFME_AIUPDATE_SLOT(082); BFME_AIUPDATE_SLOT(083);
+	BFME_AIUPDATE_SLOT(084); BFME_AIUPDATE_SLOT(085); BFME_AIUPDATE_SLOT(086); BFME_AIUPDATE_SLOT(087);
+	BFME_AIUPDATE_SLOT(088); BFME_AIUPDATE_SLOT(089); BFME_AIUPDATE_SLOT(090); BFME_AIUPDATE_SLOT(091);
+	BFME_AIUPDATE_SLOT(092); BFME_AIUPDATE_SLOT(093); BFME_AIUPDATE_SLOT(094); BFME_AIUPDATE_SLOT(095);
+	BFME_AIUPDATE_SLOT(096); BFME_AIUPDATE_SLOT(097); BFME_AIUPDATE_SLOT(098); BFME_AIUPDATE_SLOT(099);
+	BFME_AIUPDATE_SLOT(100); BFME_AIUPDATE_SLOT(101); BFME_AIUPDATE_SLOT(102); BFME_AIUPDATE_SLOT(103);
+	BFME_AIUPDATE_SLOT(104); BFME_AIUPDATE_SLOT(105); BFME_AIUPDATE_SLOT(106); BFME_AIUPDATE_SLOT(107);
+	BFME_AIUPDATE_SLOT(108); BFME_AIUPDATE_SLOT(109); BFME_AIUPDATE_SLOT(110); BFME_AIUPDATE_SLOT(111);
+	BFME_AIUPDATE_SLOT(112); BFME_AIUPDATE_SLOT(113); BFME_AIUPDATE_SLOT(114);
+	virtual void addTargeter( ObjectID id, Bool add ) = 0;	///< vtable +0x1cc
+};
+
+// BFME keeps the object's AI module at +0x204.
+struct BFMEObjectAIField
+{
+	BFMEAddTargeterAI *getAI() const { return m_ai; }
+
+	char m_unreconstructed_000[0x204];
+	BFMEAddTargeterAI *m_ai;				///< retail this+0x204
 };
 
 #undef BFME_AIUPDATE_SLOT
@@ -2922,17 +2985,23 @@ Bool AIUpdateInterface::isAircraftThatAdjustsDestination(void) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_getTreatAsAircraftForLocoDistToGoal.cpp
-// ?getTreatAsAircraftForLocoDistToGoal@AIUpdateInterface@@ present-unmatched
+// ?getTreatAsAircraftForLocoDistToGoal@AIUpdateInterface@@MBE_NXZ
 Bool AIUpdateInterface::getTreatAsAircraftForLocoDistToGoal() const
 {
-	Bool treatAsAircraft = !isDoingGroundMovement();
-	if (getPathExtraDistance() > PATHFIND_CLOSE_ENOUGH) 
+	const BFMEAIUpdateFields *fields = reinterpret_cast<const BFMEAIUpdateFields *>(this);
+
+	// isDoingGroundMovement is vtable slot 123 (+0x1ec) in BFME; the reference
+	// class puts it at slot 100. BFMEDestroyPathAIUpdate above already models
+	// that vtable, so the call goes through it.
+	Bool treatAsAircraft =
+		!reinterpret_cast<const BFMEDestroyPathAIUpdate *>(this)->isDoingGroundMovement();
+	if (fields->getPathExtraDistance() > PATHFIND_CLOSE_ENOUGH) 
 	{
 		// We are following a waypoint or other multiple point path, so use the "easy" success criteria.
 		treatAsAircraft = TRUE;
 	}
-	if (m_curLocomotor && m_curLocomotor->getAppearance() == LOCO_HOVER) 
+	if (fields->m_curLocomotor &&
+			reinterpret_cast<BFMELocomotorOverride *>( fields->m_curLocomotor )->getAppearance() == BFME_LOCO_HOVER) 
 	{
 		// Hovercrafts are very sloppy.  So use aircraft tests for distance to goal.  jba.
 		treatAsAircraft = TRUE;
@@ -4752,20 +4821,23 @@ void AIUpdateInterface::transferAttack(ObjectID fromID, ObjectID toID)
 /**
  * Indicate who we are attacking.
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_setCurrentVictim.cpp
-// ?setCurrentVictim@AIUpdateInterface@@ present-unmatched
+// ?setCurrentVictim@AIUpdateInterface@@QAEXPBVObject@@@Z
 void AIUpdateInterface::setCurrentVictim( const Object *victim )
 {
+	BFMEAIUpdateFields *fields = reinterpret_cast<BFMEAIUpdateFields *>(this);
+
 	if (victim == NULL)
 	{
 		// be paranoid, in case we are called from dtors, etc.
-		if (m_currentVictimID != INVALID_ID)
+		if (fields->m_currentVictimID != INVALID_ID)
 		{
-			Object* self = getObject();
-			Object* target = TheGameLogic->findObjectByID(m_currentVictimID);
+			Object* self = fields->getObject();
+			Object* target = reinterpret_cast<BFMEObjectLookup *>(TheGameLogic)->findObjectByID(
+				fields->m_currentVictimID );
 			if (self != NULL && target != NULL)
 			{
-				AIUpdateInterface* targetAI = target->getAI();
+				BFMEAddTargeterAI* targetAI =
+					reinterpret_cast<const BFMEObjectAIField *>(target)->getAI();
 				if (targetAI)
 				{
 					targetAI->addTargeter(self->getID(), FALSE);
@@ -4773,14 +4845,14 @@ void AIUpdateInterface::setCurrentVictim( const Object *victim )
 			}
 		}
 
-		m_currentVictimID = INVALID_ID;
+		fields->m_currentVictimID = INVALID_ID;
 	}
 	else
 	{
 		// we don't add a targeter here, since we usually want to defer
 		// that until we are actually aiming (as opposed to, say, approaching)
 		// the victim.
-		m_currentVictimID = victim->getID();
+		fields->m_currentVictimID = victim->getID();
 	}
 }
 
