@@ -1,5 +1,3 @@
-// ?isAircraftThatAdjustsDestination@AIUpdateInterface@@QBE_NXZ
-// partial score=0.9 date=2026-08-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 // readable body: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
@@ -16,26 +14,50 @@ class LocomotorOverridable
 public:
 	virtual ~LocomotorOverridable();
 	LocomotorOverridable *friend_getFinalOverride();
+	const LocomotorOverridable *getFinalOverride() const
+	{
+		if( m_nextOverride )
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
+	}
 
 	LocomotorOverridable *m_nextOverride;
 };
 
-class Locomotor : public LocomotorOverridable
+class LocomotorTemplate : public LocomotorOverridable
 {
 public:
-	LocomotorAppearance getAppearance() const
+	unsigned char m_unmodelled_008[ 0x70 - 8 ];
+	LocomotorAppearance m_appearance;
+};
+
+class LocomotorTemplateOverride
+{
+public:
+	const LocomotorTemplate *operator->() const
 	{
-		// Retail deliberately reads through the override pointer, so a missing
-		// override remains an invalid Locomotor rather than silently using this.
-		LocomotorOverridable *o = m_nextOverride;
-		if( o && o->m_nextOverride )
-			o = o->m_nextOverride->friend_getFinalOverride();
-		return static_cast<const Locomotor *>(o)->m_appearance;
+		if( m_overridable == 0 )
+			return 0;
+		return static_cast<const LocomotorTemplate *>(
+			m_overridable->getFinalOverride());
 	}
 
 private:
-	unsigned char m_unmodelled_008[ 0x70 - 8 ];
-	LocomotorAppearance m_appearance;
+	const LocomotorTemplate *m_overridable;
+};
+
+class Locomotor
+{
+public:
+	virtual ~Locomotor();
+
+	LocomotorAppearance getAppearance() const
+	{
+		return m_template->m_appearance;
+	}
+
+private:
+	LocomotorTemplateOverride m_template;
 };
 
 #define AI_SLOT(N) virtual void slot##N()
@@ -77,7 +99,6 @@ private:
 
 #undef AI_SLOT
 
-// ?isAircraftThatAdjustsDestination@AIUpdateInterface@@QBE_NXZ
 Bool AIUpdateInterface::isAircraftThatAdjustsDestination() const
 {
 	if( isGiantBird() )
