@@ -973,8 +973,6 @@ void INI::parseDamageFX( INI* ini, void * /*instance*/, void *store, const void*
 //-------------------------------------------------------------------------------------------------
 /** Parse an ObjectCreationList and assign to the 'ObjectCreationList *' at store */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/INI_parseObjectCreationList.cpp
-// ?parseObjectCreationList@INI@@SAXPAV1@PAX1PBX@Z present-unmatched
 void INI::parseObjectCreationList( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
 	const char *token = ini->getNextToken();
