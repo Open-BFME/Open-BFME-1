@@ -1474,30 +1474,43 @@ void Object::clearSpecialModelConditionStates()
 //	}
 //}
 
+// BFME asks the weapon set nothing: the four weapon pointers, the slot in hand
+// and the word that says whether there is a weapon at all are all read in
+// place, at +0x08, +0x18 and +0x20 of the weapon set that starts at +0x264.
+struct BfmeObjectWeaponFields
+{
+	UnsignedByte m_unreconstructed_000[0x26c];
+	Weapon *m_weapons[4];				///< retail this+0x26c
+	WeaponSlotType m_curWeapon;			///< retail this+0x27c
+	UnsignedByte m_unreconstructed_280[4];
+	void *m_hasWeapon;				///< retail this+0x284
+};
+
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_getCurrentWeapon.cpp
-// ?getCurrentWeapon@Object@@ present-unmatched
+// ?getCurrentWeapon@Object@@QAEPAVWeapon@@PAW4WeaponSlotType@@@Z
 Weapon* Object::getCurrentWeapon(WeaponSlotType* wslot)
 {
-	if (!m_weaponSet.hasAnyWeapon())
+	BfmeObjectWeaponFields *self = reinterpret_cast<BfmeObjectWeaponFields *>(this);
+
+	if (self->m_hasWeapon == NULL)
 		return NULL;
 
 	if (wslot)
-		*wslot = m_weaponSet.getCurWeaponSlot();
-	return m_weaponSet.getCurWeapon();
+		*wslot = self->m_curWeapon;
+	return self->m_weapons[self->m_curWeapon];
 }
 
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_getCurrentWeapon.cpp
-// ?getCurrentWeapon@Object@@ present-unmatched
 const Weapon* Object::getCurrentWeapon(WeaponSlotType* wslot) const
 {
-	if (!m_weaponSet.hasAnyWeapon())
+	const BfmeObjectWeaponFields *self = reinterpret_cast<const BfmeObjectWeaponFields *>(this);
+
+	if (self->m_hasWeapon == NULL)
 		return NULL;
 
 	if (wslot)
-		*wslot = m_weaponSet.getCurWeaponSlot();
-	return m_weaponSet.getCurWeapon();
+		*wslot = self->m_curWeapon;
+	return self->m_weapons[self->m_curWeapon];
 }
 
 //=============================================================================
@@ -2211,17 +2224,43 @@ Bool Object::isHero(void) const
 	return isKindOf( KINDOF_HERO );
 }
 
+// BFME: m_team at +0x23c (see isLocallyControlled) and the difficulty-bonus
+// flag at +0x348. The applier is non-const in BFME where the reference Player.h
+// declares it const, so it needs its own spelling.
+struct BfmeObjectDifficultyFields
+{
+	UnsignedByte m_unreconstructed_000[0x23c];
+	Team *m_team;					///< retail this+0x23c
+	UnsignedByte m_unreconstructed_240[0x348 - 0x240];
+	Bool m_isReceivingDifficultyBonus;		///< retail this+0x348
+};
+
+class BfmeDifficultyBonusPlayer
+{
+public:
+	void friend_applyDifficultyBonusesForObject( Object *object, Bool receive );	///< retail ILT 0x0002278c
+};
+
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_setReceivingDifficultyBonus.cpp
-// ?setReceivingDifficultyBonus@Object@@QAEX_N@Z present-unmatched
+// ?setReceivingDifficultyBonus@Object@@QAEX_N@Z
 void Object::setReceivingDifficultyBonus(Bool receive)
 {
-	if (receive == m_isReceivingDifficultyBonus) {
-		return;
-	}
+	BfmeObjectDifficultyFields *self = reinterpret_cast<BfmeObjectDifficultyFields *>(this);
 
-	m_isReceivingDifficultyBonus = receive;
-	getControllingPlayer()->friend_applyDifficultyBonusesForObject(this, m_isReceivingDifficultyBonus);
+	if (receive == self->m_isReceivingDifficultyBonus)
+		return;
+
+	self->m_isReceivingDifficultyBonus = receive;
+
+	// getControllingPlayer is inlined to its team read, and the player is
+	// checked for null before the applier runs.
+	Player *player = self->m_team ? self->m_team->getControllingPlayer() : NULL;
+	if (!player)
+		return;
+
+	// The argument is re-read from +0x348 rather than reusing the parameter.
+	reinterpret_cast<BfmeDifficultyBonusPlayer *>(player)->friend_applyDifficultyBonusesForObject(
+		this, self->m_isReceivingDifficultyBonus );
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -6500,15 +6539,48 @@ Int Object::getMultiLogicalBonePosition(const char* boneNamePrefix, Int maxBones
 	}
 }
 
+// BFME tries three sources in order and returns each by reference. The two
+// object-side overrides are AsciiStrings at +0x328 and +0x32c, and "set" means
+// a non-zero character count in the block header, not merely a non-null buffer.
+struct BfmeAsciiStringHeader
+{
+	Int m_refCount;
+	UnsignedShort m_length;				///< retail m_data+0x04
+	UnsignedShort m_capacity;
+};
+
+struct BfmeObjectCommandSetFields
+{
+	UnsignedByte m_unreconstructed_000[4];
+	const Overridable *m_template;			///< retail this+0x04
+	UnsignedByte m_unreconstructed_008[0x328 - 8];
+	BfmeAsciiStringHeader *m_commandSetFallback;	///< retail this+0x328
+	BfmeAsciiStringHeader *m_commandSetOverride;	///< retail this+0x32c
+};
+
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_getCommandSetString.cpp
-// ?getCommandSetString@Object@@QBEABVAsciiString@@XZ present-unmatched
+// ?getCommandSetString@Object@@QBEABVAsciiString@@XZ
 const AsciiString& Object::getCommandSetString() const 
 { 
-	if (m_commandSetStringOverride.isNotEmpty())
-		return m_commandSetStringOverride; 
+	const BfmeObjectCommandSetFields *self =
+		reinterpret_cast<const BfmeObjectCommandSetFields *>(this);
 
-	return getTemplate()->friend_getCommandSetString();
+	if (self->m_commandSetOverride && self->m_commandSetOverride->m_length != 0)
+		return *reinterpret_cast<const AsciiString *>(&self->m_commandSetOverride);
+
+	if (self->m_commandSetFallback && self->m_commandSetFallback->m_length != 0)
+		return *reinterpret_cast<const AsciiString *>(&self->m_commandSetFallback);
+
+	// A null template is answered with the constant 0x2c -- that member's
+	// address off a null base -- rather than by sharing the walk's `add'.
+	const Overridable *tmpl = self->m_template;
+
+	if (tmpl == NULL)
+		return *reinterpret_cast<const AsciiString *>( static_cast<const char *>(0) + 0x2c );
+
+	tmpl = tmpl->getFinalOverride();
+
+	return *reinterpret_cast<const AsciiString *>( reinterpret_cast<const char *>(tmpl) + 0x2c );
 }
 
 //=============================================================================
