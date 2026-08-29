@@ -2358,6 +2358,25 @@ void InGameUI::freeMessageResources( void )
 //-------------------------------------------------------------------------------------------------
 // srj sez: passing as const-ref screws up varargs for some reason. dunno why. just pass by value.
 // ?message@InGameUI@@ present-unmatched
+// BFME REMOVED THE VARARGS MESSAGE LAYER.  All three entry points below are
+// nine-byte stubs in retail, laid out consecutively, that destroy their
+// by-value string argument and return:
+//
+//   message(AsciiString, ...)              0x0043DED0  lea ecx,[esp+8]  jmp 0x00887940
+//   message(UnicodeString, ...)            0x0043DEE0  lea ecx,[esp+8]  jmp 0x008881D0
+//   messageColor(RGBColor*, UnicodeString) 0x0043DEF0  lea ecx,[esp+0xC] jmp 0x008881D0
+//
+// The jump targets are the AsciiString and UnicodeString releaseBuffer bodies,
+// and the argument offsets differ exactly as each signature dictates -- +8 for
+// the one-argument forms, +0xC where the RGBColor* comes first -- so this is
+// not a mis-anchoring.  addMessageText right after them at 0x0043DF00 is a real
+// 388-byte body, so the message SYSTEM survives; only the printf-style
+// formatting front end is gone.
+//
+// The Zero Hour bodies are kept below for reference and CANNOT be matched.  Two
+// of the three rows already live in their own files as naked stubs
+// (InGameUI_message_AsciiString.cpp, InGameUI_message_UnicodeString.cpp); the
+// third belongs with them rather than here.
 void InGameUI::message( AsciiString stringManagerLabel, ... )
 {
 	UnicodeString stringManagerString;
