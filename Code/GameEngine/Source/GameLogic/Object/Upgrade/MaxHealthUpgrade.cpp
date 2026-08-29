@@ -72,6 +72,14 @@ void MaxHealthUpgradeModuleData::buildFieldParse(MultiIniFieldParse& p)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// Screened against BFME_MODULE_NO_MPO and it is NOT the blocker: with the define
+// on, this file's own rows stay green and the constructor comes down to one
+// instruction -- retail stores a FOURTH vtable at this+0x18 that the vendored
+// UpgradeModule hierarchy has nowhere to put. BehaviorModule at +0x00, UpgradeMux
+// at +0x0C and UpgradeModuleInterface at +0x10 are all present and all correct;
+// BFME has one more interface base after them. The same one instruction is
+// missing on MaxHealthUpgrade, StatusBitsUpgrade and ModelConditionUpgrade, so it
+// is the class and not the three bodies. Unblocking it is a header change.
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeModule.cpp
 // ??0MaxHealthUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 MaxHealthUpgrade::MaxHealthUpgrade( Thing *thing, const ModuleData* moduleData ) : UpgradeModule( thing, moduleData )
