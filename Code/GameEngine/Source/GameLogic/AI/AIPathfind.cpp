@@ -3935,14 +3935,42 @@ Bool Pathfinder::isPointOnWall(const Coord3D *pos)
 /** 
  * Adds a bridge & returns the layer. 
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/Pathfinder_addBridge.cpp
-// ?addBridge@Pathfinder@@QAE?AW4PathfindLayerEnum@@PAVBridge@@@Z present-unmatched
+// BFME's PathfindLayer is 0x44 bytes and its array starts at Pathfinder+0x85c,
+// with the zone manager right after it at +0xc9c; the reference class is 0x38
+// and its array +0xf8. The layer's use test runs the other way round from the
+// reference isUnused -- the call answers true when the layer IS used -- and
+// init, setDestroyed and markZonesDirty are all out-of-line calls where the
+// reference header inlines them. markZonesDirty also takes two arguments here.
+struct BFMEPathfindLayer
+{
+	Bool isUsed();							///< retail 0x003fbb90
+	Bool init( Bridge *theBridge, PathfindLayerEnum layer );	///< retail 0x003fb950
+	Bool setDestroyed( Bool destroyed );				///< retail 0x003fcec0
+
+	char m_unreconstructed_00[0x44];
+};
+
+struct BFMEZoneDirtyManager
+{
+	void markZonesDirty( Bool insert, Bool bfmeSecond );		///< retail 0x004030d0
+};
+
+struct BFMEPathfinderLayers
+{
+	char m_unreconstructed_000[0x85C];
+	BFMEPathfindLayer m_layers[LAYER_LAST + 1];			///< retail this+0x85c
+	BFMEZoneDirtyManager m_zoneManager;				///< retail this+0xc9c
+};
+
+// ?addBridge@Pathfinder@@QAE?AW4PathfindLayerEnum@@PAVBridge@@@Z
 PathfindLayerEnum Pathfinder::addBridge(Bridge *theBridge)
 {
+	BFMEPathfinderLayers *self = reinterpret_cast<BFMEPathfinderLayers *>(this);
+
 	Int layer = LAYER_GROUND+1;
 	while (layer<=LAYER_WALL) {
-		if (m_layers[layer].isUnused()) {
-			if (m_layers[layer].init(theBridge, (PathfindLayerEnum)layer) ) {
+		if (!self->m_layers[layer].isUsed()) {
+			if (self->m_layers[layer].init(theBridge, (PathfindLayerEnum)layer) ) {
 				return (PathfindLayerEnum)layer;
 			}
 			DEBUG_LOG(("WARNING: Bridge failed to init in pathfinder\n"));
@@ -12311,13 +12339,17 @@ Bool Pathfinder::isGroundPathPassable( Bool isCrusher, const Coord3D& startWorld
  * If 'repaired' is true, bridge is repaired 
  * If 'repaired' is false, bridge has been damaged to be impassable 
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/Pathfinder_changeBridgeState.cpp
-// ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z present-unmatched
+// ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z
 void Pathfinder::changeBridgeState( PathfindLayerEnum layer, Bool repaired)
 {
-	if (m_layers[layer].isUnused()) return;	
-	if (m_layers[layer].setDestroyed(!repaired)) {
-		m_zoneManager.markZonesDirty( repaired );
+	BFMEPathfinderLayers *self = reinterpret_cast<BFMEPathfinderLayers *>(this);
+
+	// Both dirty-mark arguments are constants: the repaired flag reaches only
+	// setDestroyed.
+	if (self->m_layers[layer].isUsed()) {
+		if (self->m_layers[layer].setDestroyed(!repaired)) {
+			self->m_zoneManager.markZonesDirty( FALSE, TRUE );
+		}
 	}
 }
 
