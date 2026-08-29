@@ -73274,6 +73274,7 @@ name,address,notes
 ?bfmeFree1026@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFree1040E@@YGXPAX@Z,0x009F6C10,pin
 ?bfmeFree1041@@YAXPAD@Z,0x00881EB0,pin
+?bfmeFree1049@@YAXPAX@Z,0x00012E90,pin
 ?bfmeFree915A@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFree923F@@YGXPAXH@Z,0x0003F413,pin
 ?bfmeFreeAEC@@YAXPAX@Z,0x00881EB0,pin
@@ -73690,6 +73691,7 @@ name,address,notes
 ?bfmeNodeAllocSmall@@YAPAXI@Z,0x0082E540,Open-BFME5 the STLport node allocator the red-black clone-node bodies call
 ?bfmeNote1023@BfmeJ1023@@QAEXPAVBfmeH1023@@@Z,0x00010F46,pin
 ?bfmeNote1029@@YAXHD@Z,0x0001136A,pin
+?bfmeNote1049@@YGXHH@Z,0x00047807,pin
 ?bfmeNoteWD@BfmeThingWD@@QAEXXZ,0x0002191D,pin
 ?bfmeNotify1_574@@YAXPAX0@Z,0x00034B67,pin
 ?bfmeNotify2_574@@YAXPAX0@Z,0x0000630C,pin
@@ -74013,11 +74015,13 @@ name,address,notes
 ?bfmeStep982C@@YAXXZ,0x00785FD0,pin
 ?bfmeStep@Glo012F1024Entry@@QAEXXZ,0x00015F50,Open-BFME5 ILT thunk to body 0x003A7320; ?step@Glo012F1024Type@@QAEXXZ at 0x003B3900 tail-jumps into it on the selected 32-byte entry; address-derived name
 ?bfmeStepA1046@@YAXPAUBfmeSubA1046@@@Z,0x00867B00,pin
+?bfmeStepA1049@BfmeA1049@@QAEXXZ,0x00014182,pin
 ?bfmeStepA991@@YAXXZ,0x0001A857,pin
 ?bfmeStepAED@BfmeSubAED@@QAEXH@Z,0x00015546,pin
 ?bfmeStepARA@BfmeThingARA@@QAEXXZ,0x000312A0,pin
 ?bfmeStepAZA@BfmeThingAZA@@QAEXXZ,0x00048D6A,pin
 ?bfmeStepB1046@@YAXPAUBfmeSubB1046@@@Z,0x008698E0,pin
+?bfmeStepB1049@BfmeA1049@@QAEXXZ,0x00004156,pin
 ?bfmeStepB991@@YAXXZ,0x00892040,pin
 ?bfmeStepBCB@BfmeThingBCB@@QAEXXZ,0x0003D0BE,pin
 ?bfmeStepBCD@BfmeThingBCD@@QAEXXZ,0x009337E0,pin
