@@ -303,12 +303,19 @@ def main():
                 continue
 
             needle = mangle_method(class_name, method_name)
+            # The namespace tracker below loses its stack in very large files, so
+            # class_name can arrive unqualified for a symbol whose real decorated
+            # name carries a namespace: ??4EmissionVolumeInfo@FXParticleSystem@@
+            # against a needle of ??4EmissionVolumeInfo@@. Trimming one '@' off
+            # the terminator lets the qualified form match, and cannot widen the
+            # class itself -- the trailing '@' still has to follow it exactly.
+            open_needle = needle[:-1]
             # Constructors/destructors match a prefix; ordinary methods match a substring.
             if needle.startswith("??0") or needle.startswith("??1"):
-                if any(name.startswith(needle) for name in matched):
+                if any(name.startswith(open_needle) for name in matched):
                     continue
             else:
-                if any(needle in name for name in matched):
+                if any(open_needle in name for name in matched):
                     continue
             unmatched.append((rel_path, class_name, method_name))
 
