@@ -2598,3 +2598,28 @@ selection cannot reach it.
 Log these and leave them. Do not add a marker to create the cluster: the marker
 is the evidence the tool reads, and writing one to make an apply possible is
 manufacturing the input rather than recording a finding.
+
+## A cluster member is a MARKERED ROW, not every row its donor owns
+
+screen_cluster.py collected donor FILES by marker and then screened every row
+those files own. ini.cpp owns 256 rows and carries 32 markers for INI_stl.cpp,
+so 224 non-members were measured and reported as candidates -- an "eleven ready
+rows" verdict that was really two.
+
+The invariant: only a markered row is a cluster member, and only a markered row
+is something merge_cluster can move. Filter a donor's rows against its own
+marker list, matching by prefix since a marker may name a truncated symbol.
+
+The instructive part is WHERE the bug was. merge_cluster -- the tool that ACTS
+-- had it right all along, intersecting owned rows against `claims(...)`.
+screen_cluster -- the tool that MEASURES -- did not. So the measurement was
+promising folds the apply step would have refused, and the two disagreed
+silently until --symbols made the apply reject nine names at once. When a
+measuring tool and an acting tool encode the same rule separately, the measuring
+one is where the drift hides, because nothing fails when it is wrong.
+
+Corrected counts come in LOWER, never higher, so nothing landed on the old
+numbers is at risk -- but any shortlist built with it is inflated wherever a
+donor owns more rows than it has markers for. That shape is common:
+lanapi, InGameUI, Player and DataChunk were unaffected precisely because each
+donor there owned only the rows it had markers for.
