@@ -72785,6 +72785,8 @@ name,address,notes
 ?bfmeDispatchB@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x00028501,Open-BFME5 ILT the range dispatcher at 0x00437D30 calls
 ?bfmeDispatchC@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x00027138,Open-BFME5 ILT the range dispatcher at 0x00575A50 calls
 ?bfmeDo1006@BfmeHub1006@@QAEXXZ,0x000290D2,pin
+?bfmeDo1014F@BfmeF1014A@@QAEXH@Z,0x0001C927,pin
+?bfmeDo1014G@BfmeF1014B@@QAEXH@Z,0x0001E9F2,pin
 ?bfmeDo912C@BfmeThing912C@@QAEXPAUBfmeNode912C@@@Z,0x009F4D80,pin
 ?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
 ?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
@@ -72963,6 +72965,7 @@ name,address,notes
 ?bfmeFind1004@BfmeHold1004@@QAEPAVBfmeX1004@@XZ,0x0000D3B9,pin
 ?bfmeFind1011@BfmeLook1011@@QAEPAVBfmeX1011@@H@Z,0x0001F253,pin
 ?bfmeFind1011B@BfmeB1011@@QAEPAUBfmeSlot1011@@PAX@Z,0x000288B7,pin
+?bfmeFind1014@BfmeStore1014@@QAEPAUBfmeRec1014@@H@Z,0x0001F253,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
@@ -75377,6 +75380,7 @@ name,address,notes
 ?g_bfmeDoneAPB@@3_NA,0x00EED4E6,pin
 ?g_bfmeDrop995@@3PAVBfmeDrop995@@A,0x00EF12CC,pin
 ?g_bfmeDropDXH@@3P6AXPAVBfmeSubDXH@@@ZA,0x00F378A0,pin
+?g_bfmeE1014@@3PAVBfmeE1014@@A,0x00EF3A90,pin
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
 ?g_bfmeEndC976@@3PAVBfmeEndC976@@A,0x00EF64BC,pin
@@ -75547,6 +75551,7 @@ name,address,notes
 ?g_bfmeStateA979@@3PAUBfmeStateA979@@A,0x00EF0898,pin
 ?g_bfmeStop1003@@3PAVBfmeStop1003@@A,0x00EF1024,pin
 ?g_bfmeStop1006@@3PAVBfmeStop1006@@A,0x00EF4B58,pin
+?g_bfmeStore1014@@3PAVBfmeStore1014@@A,0x00EF0898,pin
 ?g_bfmeStrA993B@@3PADA,0x00C81238,pin
 ?g_bfmeStrB993B@@3PADA,0x00C80FC0,pin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
