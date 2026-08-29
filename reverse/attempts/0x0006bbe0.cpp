@@ -1,12 +1,9 @@
 // ?execute@GameEngine@@UAEXXZ
-// partial score=0.89 date=2026-08-28
+// partial score=0.995 date=2026-08-28
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
 
 #include <string.h>
 #include "Common/INIException.h"
-
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
 
 typedef unsigned char Bool;
 typedef unsigned int UnsignedInt;
@@ -28,15 +25,15 @@ public:
 	void cleanUpReplayFile(void);
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StatsCollector.h
-class StatsCollector
+// Retail watchdog at 0x012EF18C; method identities remain address-derived.
+class Watchdog
 {
 public:
-	void update(void);
-	void writeFileEnd(void);
+	void rva0010B6F0(void);
+	void rva0010BBB0(void);
 };
 
-extern StatsCollector *RetailStatsCollector;
+extern Watchdog *TheWatchdog;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
@@ -175,7 +172,6 @@ struct GlobalDataLayout
 };
 
 #define TheRecorder (*(RecorderClass **)0x012ED62C)
-#define TheStatsCollector (*(StatsCollector **)0x012EF18C)
 #define TheScriptEngine (*(ScriptEngine **)0x012F076C)
 #define TheTacticalView (*(TacticalView **)0x012F1600)
 #define TheGameClient (*(GameClient **)0x012F1464)
@@ -184,6 +180,7 @@ struct GlobalDataLayout
 #define TheDebugManager (*(DebugManager **)0x01336E5C)
 
 #define LogicTimeScale (*(float *)0x012A72A4)
+#define One (*(const float *)0x01075334)
 #define LogicFrameAdjustment (**(int **)0x012A7244)
 #define SavedClientFrame (*(int *)0x012ED508)
 #define SleepTimeTotal (*(UnsignedInt *)0x012ED50C)
@@ -207,21 +204,14 @@ struct GlobalDataLayout
 // ?execute@GameEngine@@UAEXXZ present-unmatched
 void GameEngine::execute(void)
 {
+	GameEngine *self = this;
 	if (InitialFrameTime == 0)
 		InitialFrameTime = bfme_timeGetTime();
-	// Retail retains this otherwise-unused profiler singleton load before the loop.
-	__asm
+	while (!self->m_quitting)
 	{
-		mov ecx, RetailStatsCollector
-		nop
-	}
-
-	while (!m_quitting)
-	{
-		float oldScale;
 		try
 		{
-			update();
+			self->update();
 		}
 		catch (INIException *e)
 		{
@@ -259,7 +249,7 @@ void GameEngine::execute(void)
 		if (TheGlobalData->fastMode)
 			LimitFrameRate = false;
 
-		oldScale = LogicTimeScale;
+		const float oldScale = LogicTimeScale;
 		NetworkInterface *network = TheNetwork;
 		if (!network)
 			goto force_normal_speed;
@@ -267,7 +257,7 @@ void GameEngine::execute(void)
 			goto force_normal_speed;
 		if (DisablePacingB)
 			goto force_normal_speed;
-		if (m_clientFramePeriod != 1)
+		if (self->m_clientFramePeriod != 1)
 			goto pacing_done;
 
 		LogicTimeScale = 1.0f;
@@ -275,7 +265,7 @@ void GameEngine::execute(void)
 		{
 	force_normal_speed:
 			LogicTimeScale = 1.0f;
-			goto pacing_done;
+			goto frame_pacing_ready;
 		}
 
 	multiplayer_pacing:
@@ -299,45 +289,29 @@ void GameEngine::execute(void)
 				desired = 1.0f;
 		}
 
-		_ReadWriteBarrier();
 		LogicTimeScale = (desired + oldScale) * 0.5f;
 
 	pacing_done:
-		if (1.0f != *(volatile float *)0x012A72A4)
+		if (LogicTimeScale != One)
 			LimitFrameRate = true;
 
+	frame_pacing_ready:
 		if ((UnsignedInt)SavedClientFrame + 6 > TheGameClient->getFrame())
-		{
 			LimitFrameRate = false;
-
-	unlimited_frame:
-			{
-				UnsignedInt now = bfme_timeGetTime();
-				FrameElapsedTime = now - PreviousFrameTime;
-				SleepTimeRemaining = 0;
-				PreviousFrameTime = now;
-			}
-
-	frame_complete:
-			StatsCollector *stats = TheStatsCollector;
-			if (stats)
-				stats->update();
-			continue;
-		}
-
-		if (!LimitFrameRate)
-			goto unlimited_frame;
-
+		else if (LimitFrameRate)
 		{
 			UnsignedInt now = bfme_timeGetTime();
-			int limit = (int)(1000.0f / ((float)m_maxFPS * LogicTimeScale) + (float)LogicFrameAdjustment);
+			int limit = (int)(1000.0f / ((float)self->m_maxFPS * LogicTimeScale) + (float)LogicFrameAdjustment);
 			UnsignedInt elapsed = now - PreviousFrameTime;
 			FrameElapsedTime = elapsed;
-			UnsignedInt remaining = 0;
-			if (elapsed < (UnsignedInt)limit)
+			UnsignedInt remaining;
+			if (elapsed >= (UnsignedInt)limit)
+				remaining = 0;
+			else
 				remaining = (UnsignedInt)limit - elapsed;
-			SleepTimeTotal += remaining;
+			UnsignedInt total = SleepTimeTotal + remaining;
 			SleepTimeRemaining = remaining;
+			SleepTimeTotal = total;
 			while (elapsed < (UnsignedInt)limit)
 			{
 				Sleep(0);
@@ -345,13 +319,23 @@ void GameEngine::execute(void)
 				elapsed = now - PreviousFrameTime;
 			}
 			PreviousFrameTime = now;
+			goto frame_complete;
 		}
-		goto frame_complete;
+
+		{
+			UnsignedInt now = bfme_timeGetTime();
+			FrameElapsedTime = now - PreviousFrameTime;
+			SleepTimeRemaining = 0;
+			PreviousFrameTime = now;
+		}
+
+	frame_complete:
+		if (TheWatchdog)
+			TheWatchdog->rva0010B6F0();
 	}
 
-	StatsCollector *stats = TheStatsCollector;
-	if (stats)
-		stats->writeFileEnd();
+	if (TheWatchdog)
+		TheWatchdog->rva0010BBB0();
 	GlobalLanguage *language = TheGlobalLanguageData;
 	if (language)
 		language->onGameEngineExit();
