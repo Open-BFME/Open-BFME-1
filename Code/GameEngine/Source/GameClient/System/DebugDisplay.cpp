@@ -105,8 +105,8 @@
 // DebugDisplay::DebugDisplay
 //============================================================================
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/System/DebugDisplayCtorThunk.cpp
-// ??0DebugDisplay@@ present-unmatched
+// (folded home; DebugDisplayCtorThunk.cpp is deleted)
+// (claimed from this file now; the marker here was stale)
 DebugDisplay::DebugDisplay()
 : m_width(0),
 	m_height(0)
@@ -118,14 +118,37 @@ DebugDisplay::DebugDisplay()
 // DebugDisplay::reset
 //============================================================================
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/System/DebugDisplayCtorThunk.cpp
-// ?reset@DebugDisplay@@ present-unmatched
+// (folded home; DebugDisplayCtorThunk.cpp is deleted)
+// (claimed from this file now; the marker here was stale)
+// BFME's DebugDisplayInterface carries ONE more virtual ahead of the list this
+// header declares, so every slot below sits four bytes further along than the
+// shared header computes -- retail calls setTextColor at +0x20 where we emit
+// +0x1C, and so on for setRightMargin, getWidth and setLeftMargin. Reached with
+// a TU-local view rather than by renumbering a header the whole tree includes.
+// The constructor inlines reset(), so fixing the slots here fixes both bodies.
+class BfmeDebugDisplayVTable
+{
+public:
+	virtual void bfme_extra_slot_00( void ) = 0;		///< vtable +0x00, absent from ZH
+	virtual void bfme_destructor( void ) = 0;		///< +0x04
+	virtual void bfme_printf( void ) = 0;			///< +0x08
+	virtual void setCursorPos( Int x, Int y ) = 0;	///< +0x0C
+	virtual Int  getCursorXPos( void ) = 0;			///< +0x10
+	virtual Int  getCursorYPos( void ) = 0;			///< +0x14
+	virtual Int  getWidth( void ) = 0;				///< +0x18
+	virtual Int  getHeight( void ) = 0;				///< +0x1C
+	virtual void setTextColor( Color color ) = 0;	///< +0x20
+	virtual void setRightMargin( Int rightPos ) = 0;	///< +0x24
+	virtual void setLeftMargin( Int leftPos ) = 0;	///< +0x28
+};
+
 void DebugDisplay::reset( void )
 {
-	setCursorPos( 0, 0 );
-	setTextColor( WHITE );
-	setRightMargin( 0 );
-	setLeftMargin( getWidth() );
+	BfmeDebugDisplayVTable *v = (BfmeDebugDisplayVTable *)this;
+	v->setCursorPos( 0, 0 );
+	v->setTextColor( WHITE );
+	v->setRightMargin( 0 );
+	v->setLeftMargin( v->getWidth() );
 }
 //============================================================================
 // DebugDisplay::setCursorPos
