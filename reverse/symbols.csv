@@ -80270,6 +80270,7 @@ _bfmeOnEAA,0x00D09920,pin
 _bfmeOnEAB,0x00D05E6C,pin
 _bfmeRegZB,0x00EF1094,pin
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
+_bfmeSearch1155,0x0082F1A0,pin
 _bfmeStrAEYC,0x00C76C18,pin
 _bfmeStrBEYC,0x00C76C14,pin
 _bfmeStrDULa,0x00D1D7F0,pin
