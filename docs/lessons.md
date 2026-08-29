@@ -934,3 +934,33 @@ releaseBuffer inline, so an AsciiString local's destruction compiles to a null
 test, a refcount compare and an indirect dllimport free where retail emits a
 plain out-of-line call. Three TUs already use this shim. Unrelated to the
 m_data+4/+8 payload question, which stays parked.
+
+## The bytes prove values and offsets, never names
+
+A donor's local enum, its member names and its comments are the ORIGINAL
+author's reading. The byte gate validates none of them: a wrong name compiles to
+the same instruction as a right one, so a body can be byte-exact and its
+vocabulary still be invented. Three instances on one lane, each caught only when
+a second body disagreed:
+
+  a donor named the values it tests CMD_FROM_AI; a sibling donor in the same
+  cluster named the same value CMD_FROM_SCRIPT, and the reference enum orders
+  them PLAYER 0, SCRIPT 1, AI 2. Nothing settles it, so the merged code compares
+  against the numbers and asserts no name.
+
+  a donor called the pointer at Player+0x04 "the AI player". That file's own
+  matched bodies already place the AI player at Player+0x220. Two fields cannot
+  be one field, so the identification is unproven and was not propagated.
+
+  a donor's enum gave LOCO_HOVER 2 and LOCO_WINGS 3. Drawable.cpp's
+  calcPhysicsXform is a jump table over the whole range -- the only place the
+  enum is visible at once -- and numbers them with the reference's own ordering,
+  where 2 and 3 are TREADS and HOVER. Both donors byte-match; only the naming
+  disagrees. The constants were renamed BFME_LOCO_APPEARANCE_2/_3 with the
+  conflict written out, and the compiled bytes did not move.
+
+Detection is cheap: when two clusters test the same numeric constant on the same
+field, check whether their donors agree on the name BEFORE propagating either.
+When they disagree, name the thing for what is proven -- the value -- and record
+both readings. Renaming to an honest placeholder costs nothing at the gate,
+which is the point: if it were expensive, guessing would be tempting.
