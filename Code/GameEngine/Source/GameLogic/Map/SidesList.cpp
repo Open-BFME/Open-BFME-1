@@ -4889,13 +4889,13 @@ void BuildListInfo::loadPostProcess( void )
 }  // end loadPostProcess
 
 /* ********* TeamsInfoRec class ****************************/
-// ??0TeamsInfoRec@@ present-unmatched
+// stale marker removed: ??0TeamsInfoRec@@QAE@XZ is matched from this file
 TeamsInfoRec::TeamsInfoRec() : 
 	m_numTeams(0), m_numTeamsAllocated(0), m_teams(NULL)
 {
 }
 
-// ??0TeamsInfoRec@@ present-unmatched
+// ??0TeamsInfoRec@@QAE@ABV0@@Z present-unmatched
 TeamsInfoRec::TeamsInfoRec(const TeamsInfoRec& thatref) : 
 	m_numTeams(0), m_numTeamsAllocated(0), m_teams(NULL)
 {

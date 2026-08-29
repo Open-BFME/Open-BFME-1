@@ -405,7 +405,7 @@ WW3DErrorType WW3D::Shutdown(void)
  * HISTORY:                                                                                    *
  *   3/24/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Set_Render_Device@WW3D@@ present-unmatched
+// ?Set_Render_Device@WW3D@@SA?AW4WW3DErrorType@@PBDHHHH_N@Z present-unmatched
 WW3DErrorType WW3D::Set_Render_Device( const char * dev_name, int width, int height, int bits, int windowed, bool resize_window )
 {
 	bool success = DX8Wrapper::Set_Render_Device(dev_name,width,height,bits,windowed,resize_window);
@@ -453,7 +453,7 @@ WW3DErrorType WW3D::Set_Any_Render_Device( void )
  * HISTORY:                                                                                    *
  *   3/24/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Set_Render_Device@WW3D@@ present-unmatched
+// stale marker removed: the int-device overload is matched from this file
 __declspec(naked) WW3DErrorType WW3D::Set_Render_Device(int dev, int width, int height, int bits, int windowed, bool resize_window, bool reset_device, bool restore_assets )
 {
 	__asm {
