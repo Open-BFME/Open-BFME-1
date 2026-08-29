@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?onEnter@AIMoveAndDeleteState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME1: lift the retail AIMoveAndDeleteState::onEnter body to C++.
 //
 // The vendored ZH StateMachine.h disagrees with this build's real layout:
