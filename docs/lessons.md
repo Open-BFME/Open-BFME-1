@@ -1755,3 +1755,43 @@ Two of the three were assigned backwards on the first attempt and the gate caugh
 it. The rule is the same one that names members from an ordered call sequence:
 one agreement is a guess, and the whole sequence has to line up before you can
 claim any of it.
+
+## $L-anchored rows are broken by ANY added declaration, not just a header change
+
+The 403-row re-anchoring cost is usually quoted against the tree-wide string
+header, which makes it read as a cost of BIG changes. It is not. The labels are
+assigned across the whole TU during codegen, so ANY edit that adds a
+DECLARATION renumbers them -- a forty-slot view class is enough.
+
+GameSpyInfo::updateStagingRoom is one instruction from home (addStagingRoom is
+vtable +0xA0 in BFME against the vendored +0x84, and the by-value copy and its
+unwind slot already match). The view that reaches +0xA0 renumbers PeerDefs.cpp's
+labels, and uw_00c40e10 / uw_00c40e8a are anchored on them: one fails its byte
+compare and the other can no longer be told from two siblings, so the gate
+refuses to guess.
+
+COMMENTS ARE FREE; CODE IS NOT. Before adding a view to a TU, check:
+    grep -F ",<destination>," reverse/functions.csv | grep -c 'object-symbol=[$]'
+and if it is non-zero, re-anchor those rows (give them a parent=) FIRST.
+
+## Run the object-symbol check BEFORE authoring, not after
+
+A row can carry an object-symbol naming a spelling the destination will NEVER
+define, and no amount of correct bytes fixes it.
+GameSpyBuddyMessageQueueInterface::createNewMessageQueue looked like a one-diff
+allocation-size fix -- 0x74 against the vendored 0x68, which is real -- but its
+row carries
+object-symbol=?createNewGameResultsInterface@GameResultsInterface@@SAPAV1@XZ.
+The two are ICF-folded onto one body at 0x0063E240, build.py reads THAT spelling
+out of the object, and the destination does not define it and never will. The
+repoint fails "symbol not found in object" the moment it lands.
+
+It is free and it is one grep. Put it first in your screen, ahead of any compile.
+
+## Some rows only need repointing: the destination already compiles them
+
+DX8Wrapper::Set_Shader needed no source change at all -- dx8renderer.cpp already
+produced it byte for byte, and the row pointed at boxrobj.cpp only because that
+is where it was originally lifted from. INI::parseObjectCreationList was the
+same. The marker-clear screen finds these for free: clear the marker, build the
+destination, and if it is already green the work is a repoint, not a fold.
