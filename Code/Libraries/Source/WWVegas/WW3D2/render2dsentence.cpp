@@ -1296,14 +1296,23 @@ FontCharsClass::Get_Char_Data (WCHAR ch)
 //	Get_Char_Width
 //
 ////////////////////////////////////////////////////////////////////////////////////
+// Retail reads the width at +4 of the char record. The vendored class derives
+// from W3DMPO, which puts Value at +4 and Width at +6; BFME's record has no such
+// base and carries two bytes between Value and Width that nothing here names.
+// Only Width is ever touched in this body, so a local replica is enough.
+struct BfmeFontCharRecord
+{
+	unsigned short m_value;					///< retail this+0x00
+	unsigned short m_unreconstructed_002;			///< retail this+0x02
+	short m_width;						///< retail this+0x04
+};
+
 int
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/FontCharsClassGetCharWidthThunk.cpp
-// ?Get_Char_Width@FontCharsClass@@QAEHG@Z present-unmatched
 FontCharsClass::Get_Char_Width (WCHAR ch)
 {
 	const FontCharsClassCharDataStruct	* data = Get_Char_Data( ch );
 	if ( data != NULL ) {
-		return data->Width;
+		return ((const BfmeFontCharRecord *)data)->m_width;
 	}
 
 	return 0;
