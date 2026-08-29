@@ -149,6 +149,17 @@ WorkerAIUpdate::~WorkerAIUpdate( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// One instruction away, and the instruction is the class. With the three offsets
+// below corrected by views -- the supply machine at WorkerAIUpdate+0xE0 against
+// the vendored +0xCC, its current state at StateMachine+0x1C against +0x20, and
+// the state's id at State+0x04 against +0x08 -- the whole body matches except the
+// very first read: retail is `mov eax,[ecx+0xe0]` and this tree emits
+// `mov eax,[ecx-0x124]`. That is -0x204 + 0xE0: MSVC enters this override with
+// the SupplyTruckAIInterface sub-object, which the vendored
+// `WorkerAIUpdate : AIUpdateInterface, DozerAIInterface, SupplyTruckAIInterface,
+// WorkerAIInterface` puts at +0x204, and folds the adjustment into the
+// displacement. Retail enters it with the object itself, so BFME declares that
+// interface first. No cast reaches a this-adjustment; this is a header change.
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate_isCurrentlyFerryingSupplies_Thunk.cpp
 // ?isCurrentlyFerryingSupplies@WorkerAIUpdate@@UBE_NXZ present-unmatched
 Bool WorkerAIUpdate::isCurrentlyFerryingSupplies() const
