@@ -72339,6 +72339,7 @@ name,address,notes
 ?bfmeAlloc1036@@YAPAXH@Z,0x00881F30,pin
 ?bfmeAlloc1037@@YAPAXH@Z,0x00881F30,pin
 ?bfmeAlloc1039@@YAPAXH@Z,0x00881F30,pin
+?bfmeAlloc1046@@YAPAXH@Z,0x0082E540,pin
 ?bfmeAlloc946@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAlloc950B@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocATA@@YAPAXI@Z,0x0082E540,pin
@@ -73849,6 +73850,7 @@ name,address,notes
 ?bfmeReserve@Gen_003A9560@@AAEXHPAX@Z,0x00027098,Open-BFME5 ILT the vector assignment at 0x003A9560 reserves through
 ?bfmeReset1015@BfmeL1015@@QAEXXZ,0x007E86C0,pin
 ?bfmeReset1018@BfmeSink1018@@QAEXH@Z,0x000348EC,pin
+?bfmeReset1046@BfmeD1046@@QAEXH@Z,0x008BDD70,pin
 ?bfmeReset961@BfmeResetA961@@QAEXXZ,0x0001BC75,pin
 ?bfmeReset988D@BfmeUnit988@@QAEXXZ,0x000065E1,pin
 ?bfmeReset@BfmeItemS@@QAEXXZ,0x00036A9D,Open-BFME5 the ICF thunk (to 0x00436A9D) the clear at 0x003CFBA0 calls per item
@@ -74008,10 +74010,12 @@ name,address,notes
 ?bfmeStep4_250@@YAXPAX@Z,0x00864280,pin
 ?bfmeStep982C@@YAXXZ,0x00785FD0,pin
 ?bfmeStep@Glo012F1024Entry@@QAEXXZ,0x00015F50,Open-BFME5 ILT thunk to body 0x003A7320; ?step@Glo012F1024Type@@QAEXXZ at 0x003B3900 tail-jumps into it on the selected 32-byte entry; address-derived name
+?bfmeStepA1046@@YAXPAUBfmeSubA1046@@@Z,0x00867B00,pin
 ?bfmeStepA991@@YAXXZ,0x0001A857,pin
 ?bfmeStepAED@BfmeSubAED@@QAEXH@Z,0x00015546,pin
 ?bfmeStepARA@BfmeThingARA@@QAEXXZ,0x000312A0,pin
 ?bfmeStepAZA@BfmeThingAZA@@QAEXXZ,0x00048D6A,pin
+?bfmeStepB1046@@YAXPAUBfmeSubB1046@@@Z,0x008698E0,pin
 ?bfmeStepB991@@YAXXZ,0x00892040,pin
 ?bfmeStepBCB@BfmeThingBCB@@QAEXXZ,0x0003D0BE,pin
 ?bfmeStepBCD@BfmeThingBCD@@QAEXXZ,0x009337E0,pin
@@ -75557,6 +75561,7 @@ name,address,notes
 ?g_bfmeFmtA995C@@3PADA,0x00D07374,pin
 ?g_bfmeFmtB995C@@3PADA,0x00D053D4,pin
 ?g_bfmeFree1040@@3P6AXPAXH@ZA,0x00F37830,pin
+?g_bfmeFree1046@@3P6AXPAXH@ZA,0x00F37830,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeFreeDXG@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeG1022@@3PAVBfmeG1022@@A,0x00EED668,pin
