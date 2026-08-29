@@ -469,19 +469,86 @@ void DisconnectManager::processPacketRouterAck(NetCommandMsg *msg, ConnectionMan
 	}
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManagerProcessDisconnectVoteThunk.cpp
-// ?processDisconnectVote@DisconnectManager@@IAEXPAVNetCommandMsg@@PAVConnectionManager@@@Z present-unmatched
-void DisconnectManager::processDisconnectVote(NetCommandMsg *msg, ConnectionManager *conMgr) {
-	NetDisconnectVoteCommandMsg *cmdMsg = (NetDisconnectVoteCommandMsg *)msg;
-	DEBUG_LOG(("DisconnectManager::processDisconnectVote - Got a disconnect vote for player %d command from player %d\n", cmdMsg->getSlot(), cmdMsg->getPlayerID()));
-	Int transSlot = translatedSlotPosition(msg->getPlayerID(), conMgr->getLocalPlayerID());
+// BFME does NOT translate the slot here: it votes, sends and applies against the
+// slot it was handed, where the reference copy first maps it through
+// untranslatedSlotPosition and uses that everywhere. The vote table itself is at
+// DisconnectManager+0x30, eight bytes per entry -- the flag at +0x00 and the
+// frame at +0x04.
+struct BfmePlayerVote
+{
+	Bool vote;							///< retail this+0x00
+	UnsignedInt frame;						///< retail this+0x04
+};
 
-	if (isPlayerInGame(transSlot, conMgr) == FALSE) {
+struct BfmeDisconnectVoteTable
+{
+	char m_unreconstructed_00[0x30];
+	BfmePlayerVote m_playerVotes[MAX_SLOTS][MAX_SLOTS];		///< retail this+0x30
+};
+
+// Both callees are DEFINED earlier in this TU, so MSVC inlines them here where
+// retail emits calls. Declaring them on a view -- declared, never defined --
+// keeps the calls, and the aliases name the same ILTs the real spellings carry.
+class BfmeDisconnectVoteSender
+{
+public:
+	void sendVoteCommand( Int slot, ConnectionManager *conMgr );	///< retail ILT 0x0002ee79
+	void applyDisconnectVote( Int slot, UnsignedInt frame, Int fromSlot,
+			ConnectionManager *conMgr );				///< retail ILT 0x000215ad
+};
+
+// BFME's vote count takes the connection manager as a second argument where the
+// reference declares a one-argument form, and BFME null-checks TheDisconnectMenu
+// before touching it -- the reference copy dereferences it unconditionally.
+class BfmeVoteCounter
+{
+public:
+	Int countVotesForPlayer( Int slot, ConnectionManager *conMgr );	///< retail ILT 0x00003751
+};
+
+// The slot and vote-frame accessors are reached through a view: retail calls
+// them out of line off the NetCommandMsg spelling, and getSlot returns a byte.
+class BfmeDisconnectVoteMsg
+{
+public:
+	UnsignedInt getVoteFrame( void );					///< retail ILT 0x00013F20
+	unsigned char getSlot( void );						///< retail ILT 0x000058B7
+	Int getPlayerID( void ) const { return m_playerID; }
+
+	unsigned char m_unreconstructed_00[0x0c];
+	Int m_playerID;										///< retail this+0x0C
+};
+
+// isPlayerInGame is defined further down this same file, so a direct call would
+// bind to that definition; retail goes through the thunk, hence the view.
+class BfmeDisconnectRoster
+{
+public:
+	Bool isPlayerInGame( Int slot, ConnectionManager *conMgr );	///< retail ILT 0x0003A648
+};
+
+// Retail inlines the slot translation here where it calls it in the bodies
+// below; the result is passed on rather than tested for an early return.
+// ?processDisconnectVote@DisconnectManager@@IAEXPAVNetCommandMsg@@PAVConnectionManager@@@Z
+void DisconnectManager::processDisconnectVote(NetCommandMsg *msg, ConnectionManager *conMgr) {
+	BfmeDisconnectVoteMsg *cmdMsg = (BfmeDisconnectVoteMsg *)msg;
+	Int senderSlot = cmdMsg->getPlayerID();
+	Int localSlot = conMgr->getLocalPlayerID();
+	Int transSlot;
+	if (senderSlot < localSlot) {
+		transSlot = senderSlot;
+	} else if (senderSlot == localSlot) {
+		transSlot = -1;
+	} else {
+		transSlot = senderSlot - 1;
+	}
+
+	if (((BfmeDisconnectRoster *)this)->isPlayerInGame(transSlot, conMgr) == FALSE) {
 		// if they've been timed out, voted out, disconnected, don't count their vote.
 		return;
 	}
 
-	applyDisconnectVote(cmdMsg->getSlot(), cmdMsg->getVoteFrame(), cmdMsg->getPlayerID(), conMgr);
+	((BfmeDisconnectVoteSender *)this)->applyDisconnectVote(cmdMsg->getSlot(), cmdMsg->getVoteFrame(), cmdMsg->getPlayerID(), conMgr);
 }
 
 void DisconnectManager::processDisconnectFrame(NetCommandMsg *msg, ConnectionManager *conMgr) {
@@ -541,42 +608,6 @@ __declspec(noinline) void DisconnectManager::processDisconnectScreenOff(NetComma
 	turnOffScreen(conMgr->getLocalPlayerID());
 }
 
-// BFME does NOT translate the slot here: it votes, sends and applies against the
-// slot it was handed, where the reference copy first maps it through
-// untranslatedSlotPosition and uses that everywhere. The vote table itself is at
-// DisconnectManager+0x30, eight bytes per entry -- the flag at +0x00 and the
-// frame at +0x04.
-struct BfmePlayerVote
-{
-	Bool vote;							///< retail this+0x00
-	UnsignedInt frame;						///< retail this+0x04
-};
-
-struct BfmeDisconnectVoteTable
-{
-	char m_unreconstructed_00[0x30];
-	BfmePlayerVote m_playerVotes[MAX_SLOTS][MAX_SLOTS];		///< retail this+0x30
-};
-
-// Both callees are DEFINED earlier in this TU, so MSVC inlines them here where
-// retail emits calls. Declaring them on a view -- declared, never defined --
-// keeps the calls, and the aliases name the same ILTs the real spellings carry.
-class BfmeDisconnectVoteSender
-{
-public:
-	void sendVoteCommand( Int slot, ConnectionManager *conMgr );	///< retail ILT 0x0002ee79
-	void applyDisconnectVote( Int slot, UnsignedInt frame, Int fromSlot,
-			ConnectionManager *conMgr );				///< retail ILT 0x000215ad
-};
-
-// BFME's vote count takes the connection manager as a second argument where the
-// reference declares a one-argument form, and BFME null-checks TheDisconnectMenu
-// before touching it -- the reference copy dereferences it unconditionally.
-class BfmeVoteCounter
-{
-public:
-	Int countVotesForPlayer( Int slot, ConnectionManager *conMgr );	///< retail ILT 0x00003751
-};
 
 // ?applyDisconnectVote@DisconnectManager@@IAEXHIHPAVConnectionManager@@@Z
 void DisconnectManager::applyDisconnectVote(Int slot, UnsignedInt frame, Int fromSlot, ConnectionManager *conMgr) {
@@ -645,6 +676,14 @@ void DisconnectManager::sendKeepAlive(ConnectionManager *conMgr) {
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManager_populateDisconnectScreen_Thunk.cpp
+// Attempted and reverted. The BFME body differs from the one below in three
+// ways, all readable in the retail bytes: it returns early when there is no
+// disconnect menu, it inlines the slot translation as a three-way branch and
+// still runs the caller's now-dead "slot != -1" test, and its vote count takes
+// the connection manager. Written that way the body is byte-identical to retail
+// except for one transposition -- retail stores the unwind slot before loading
+// the copy-constructor receiver, MSVC schedules the two the other way round --
+// which is the same not-source-controllable class as register allocation.
 // ?populateDisconnectScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::populateDisconnectScreen(ConnectionManager *conMgr) {
 	for (Int i = 0; i < MAX_SLOTS; ++i) {
