@@ -295,7 +295,10 @@ public:
 // NetPacket.cpp carries.
 struct BfmeAsciiStringData
 {
-	unsigned char m_unreconstructed_00[8];
+	unsigned short m_refCount;
+	unsigned short m_numCharsAllocated;
+	unsigned short m_numChars;								///< retail data+0x04
+	unsigned short m_unreconstructed_06;
 };
 
 static const char *bfmeStringChars( const AsciiString &str )
@@ -303,6 +306,49 @@ static const char *bfmeStringChars( const AsciiString &str )
 	const BfmeAsciiStringData *data = *(const BfmeAsciiStringData * const *)&str;
 	return data ? (const char *)(data + 1) : "";
 }
+
+// BFME asks the length word at data+4; the reference header tests the first
+// character instead.
+static Bool bfmeStringIsEmpty( const AsciiString &str )
+{
+	const BfmeAsciiStringData *data = *(const BfmeAsciiStringData * const *)&str;
+	return data == NULL || data->m_numChars == 0;
+}
+
+// Both of these already carry the shim spelling in the ledger: their real names
+// are matched at the body address, and naming them directly would emit a rel32
+// to the body where retail jumps through the thunk.
+class AsciiStringCompareShim
+{
+public:
+	Int compare( const AsciiString &other ) const;			///< retail ILT 0x000220C5
+};
+
+class CommandSetShim
+{
+public:
+	const CommandButton *getCommandButton( Int index ) const;	///< retail ILT 0x00003F80
+};
+
+// BFME's command button keeps its name at +0x0C, and doCommandButton takes a
+// third argument the reference header does not declare, always zero here.
+class BfmeCommandButtonName
+{
+public:
+	const AsciiString &getName( void ) const { return m_name; }
+
+	unsigned char m_unreconstructed_00[0xc];
+	AsciiString m_name;										///< retail button+0x0C
+};
+
+class BfmeObjectDoCommandButton
+{
+public:
+	void doCommandButton( const CommandButton *button, Int source, Int extra );	///< retail ILT 0x000063CF
+};
+
+// BFME walks twenty command slots; the reference header caps the set at 18.
+enum { BFME_MAX_COMMANDS_PER_SET = 20 };
 
 // BFME's Object keeps its contain module at +0x1FC and its AI update interface
 // at +0x204; the reference header puts them at +0x190 and +0x19C.
@@ -5327,10 +5373,10 @@ void ScriptActions::doNamedFireSpecialPowerAtNamed( const AsciiString& unit, con
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doNamedUseCommandButtonAbility_Thunk.cpp
-// ?doNamedUseCommandButtonAbility@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
+// ?doNamedUseCommandButtonAbility@ScriptActions@@IAEXABVAsciiString@@0@Z
 void ScriptActions::doNamedUseCommandButtonAbility( const AsciiString& unit, const AsciiString& ability )
 {
-	Object *theObj = TheScriptEngine->getUnitNamed( unit );
+	Object *theObj = ((BFMERetailScriptEngineVTable *)TheScriptEngine)->getUnitNamed( unit );
 	
 	//Sanity check
 	if( !theObj )
@@ -5341,18 +5387,18 @@ void ScriptActions::doNamedUseCommandButtonAbility( const AsciiString& unit, con
 	const CommandSet *commandSet = TheControlBar->findCommandSet( theObj->getCommandSetString() );
 	if( commandSet )
 	{
-		for( Int i = 0; i < MAX_COMMANDS_PER_SET; i++ )
+		for( Int i = 0; i < BFME_MAX_COMMANDS_PER_SET; i++ )
 		{
 			//Get the command button.
-			const CommandButton *commandButton = commandSet->getCommandButton(i);
+			const CommandButton *commandButton = ((const CommandSetShim *)commandSet)->getCommandButton(i);
 
 			if( commandButton )
 			{
-				if( !commandButton->getName().isEmpty() )
+				if( !bfmeStringIsEmpty(((const BfmeCommandButtonName *)commandButton)->getName()) )
 				{
-					if( commandButton->getName() == ability )
+					if( ((const AsciiStringCompareShim *)&((const BfmeCommandButtonName *)commandButton)->getName())->compare(ability) == 0 )
 					{
-						theObj->doCommandButton( commandButton, CMD_FROM_SCRIPT );
+						((BfmeObjectDoCommandButton *)theObj)->doCommandButton( commandButton, CMD_FROM_SCRIPT, 0 );
 					}
 				}
 			}
