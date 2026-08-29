@@ -1071,3 +1071,25 @@ Diagnostic, not a fix: raise the extent LOCALLY to see what the extra bytes are,
 read them, then REVERT the extent before fixing the body. The bytes tell you
 which construct over-ran -- usually an inlined tail retail calls out of line, or
 a destructor the merged shape emits and retail does not.
+
+## Sizing work off re_attempts.log overstates it, in three separate ways
+
+The log is append-only and nobody prunes it, so a body that later lands leaves
+its old "abandoned" note behind forever. A grep over it is not a work queue.
+Measured on one slice -- entries citing register allocation with an eax/ecx
+signature -- the count collapsed at every step:
+
+    61  matching log LINES
+    58  distinct symbols        (a symbol can be logged more than once)
+    30  that are ledger rows    (the rest are narrative/capstone entries such as
+                                 "pool-figures-and-two-more-refuted-pins", or
+                                 symbols since renamed or retired)
+    18  whose row is still on a dump -- the actionable pool
+
+The other 12 had been converted since their note was written: a 21% false-parked
+rate in one slice. Cross-reference before quoting a number off this file or it
+overstates by about a fifth.
+
+And do NOT filter on status=matched to find the unconverted ones. All 18 are
+matched -- from Code/gen_asm/*.asm, because a dump matches by construction. The
+discriminator is the SOURCE PATH, not the status column.
