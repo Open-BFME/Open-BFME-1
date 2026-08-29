@@ -72608,6 +72608,7 @@ name,address,notes
 ?bfmeChanged@Gen_005899B0@@AAEXXZ,0x0001D354,Open-BFME5 the member the change-setter at 0x005899B0 calls
 ?bfmeChanged@Gen_005899D0@@AAEXXZ,0x0000271B,Open-BFME5 the member the change-setter at 0x005899D0 calls
 ?bfmeCheck961@BfmeGate961@@QAEDXZ,0x00041FF1,pin
+?bfmeCheck986B@@YAHXZ,0x000162A7,pin
 ?bfmeCheckA@@YAHPAX@Z,0x00894D90,Open-BFME5 the guard the cleanup at 0x00783A50 calls
 ?bfmeCheckB@@YAHPAX@Z,0x00894DB0,Open-BFME5 the guard the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
@@ -73587,6 +73588,7 @@ name,address,notes
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
 ?bfmePrep911E@BfmeSub911E@@QAEXXZ,0x0090F140,pin
+?bfmePrep986C@BfmeC986@@QAEXXZ,0x00006258,pin
 ?bfmePushBack@BFMEAnimateWindowListPush@@QAEXABQAVAnimateWindow@@@Z,0x00022D36,BFME out-of-line list<AnimateWindow*>::push_back body 0x45DAE0 via ILT thunk
 ?bfmePushBackAux@Gen_00089d90@@IAEXABQAX@Z,0x0002FF1D,Open-BFME5 ILT the deque push_back at 0x00089D90 tail-jumps through
 ?bfmePushBackAux@Gen_0035b840@@IAEXABQAX@Z,0x00025284,Open-BFME5 ILT the deque push_back at 0x0035B840 tail-jumps through
@@ -73609,6 +73611,7 @@ name,address,notes
 ?bfmeRandom2B7@@YANHMPBDH@Z,0x0002CCA5,pin
 ?bfmeRangeBase@WeaponTemplate@@ABEMPBVObject@@ABVWeaponBonus@@M@Z,0x00009598,Open-BFME5 ILT thunk to body 0x001E2670; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 gets its unbonused range from it with the negated z of the position; address-derived name
 ?bfmeRangeErrorQX@BfmeThingQX@@QAEXXZ,0x000132CD,pin
+?bfmeReady986C@BfmeC986@@QAEDXZ,0x000104B0,pin
 ?bfmeRebuild@BFMERopeDrawableGetPositionShim@@AAEXH@Z,0x00034C3E,Open-BFME5 ILT the rope getPosition at 0x0041D090 rebuilds through
 ?bfmeRefreshPartitionCells@Object@@QAEXXZ,0x000292DF,Open-BFME5 ILT thunk to body 0x001BFD70; Object virtual-base lookup at +0x68 reaches friend_getPartitionData slot 4 twice then calls the combined dirty-list unlink and cell update; bfme prefix records unrecovered retail spelling
 ?bfmeRegisterDAA@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
@@ -73675,6 +73678,7 @@ name,address,notes
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
 ?bfmeSend975B@BfmeB975@@QAEXHH@Z,0x0002D6F5,pin
 ?bfmeSend979B@BfmeSink979@@QAEXPAVBfmeKey979@@@Z,0x00038938,pin
+?bfmeSend986C@BfmeC986@@QAEXHHHHH@Z,0x0001A6B3,pin
 ?bfmeSendAAA@BfmeSinkAAA@@QAEXPAX_NH@Z,0x00044409,pin
 ?bfmeSendAAB@BfmeSinkAAB@@QAEXPAX_NH@Z,0x00044409,pin
 ?bfmeSendAC@BfmeNextAC@@QAEXPAUBfmeOutAC@@@Z,0x00043E91,pin
@@ -75173,6 +75177,7 @@ name,address,notes
 ?g_bfme967A7@@3PADA,0x00CB0A60,pin
 ?g_bfme967A8@@3PADA,0x00CB0A50,pin
 ?g_bfme967A9@@3PADA,0x00CB0A4C,pin
+?g_bfmeA986B@@3PAHA,0x00EF9D04,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
@@ -75185,6 +75190,7 @@ name,address,notes
 ?g_bfmeArgEAC@@3PAXA,0x00EB7D80,pin
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
 ?g_bfmeAux985@@3PAUBfmeAux985@@A,0x00EF4B58,pin
+?g_bfmeB986B@@3PAHA,0x00EF9D0C,pin
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
 ?g_bfmeBFAE@@3HA,0x00EACB4C,pin
 ?g_bfmeBMG@@3HA,0x00EB9660,pin
@@ -75322,6 +75328,7 @@ name,address,notes
 ?g_bfmeOneATC@@3PAVBfmeOneATC@@A,0x00EF19E8,pin
 ?g_bfmeOut982@@3PAVBfmeOut982@@A,0x00EED83C,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
+?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
@@ -75355,6 +75362,7 @@ name,address,notes
 ?g_bfmeSrc982@@3PAVBfmeSrc982@@A,0x00EF076C,pin
 ?g_bfmeStateA979@@3PAUBfmeStateA979@@A,0x00EF0898,pin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
+?g_bfmeTarget986B@@3PADA,0x00F071E4,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
 ?g_bfmeTickC976@@3PAVBfmeTickC976@@A,0x00EF706C,pin
@@ -75386,6 +75394,7 @@ name,address,notes
 ?g_bfmeWorldRV@@3PAUBfmeWorldRV@@A,0x00EF33F8,pin
 ?g_bfmeXEBK@@3PAXA,0x00EC3C58,pin
 ?g_bfmeXEMC@@3PAXA,0x00EC3B2C,pin
+?g_bfmeZero986B@@3HA,0x00F071C8,pin
 ?g_defaultRespawnPolicy@@3URespawnPolicy@@A,0x012ED8B8,RespawnBody default six-dword policy
 ?g_global12EF1D8@@3PAXA,0x00EEF1D8,pin
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
