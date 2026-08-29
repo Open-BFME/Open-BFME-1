@@ -672,13 +672,12 @@ UnsignedInt GameWindow::winSetStatus( UnsignedInt status )
 /** Allows the user to directly clear a window's status flags. */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winClearStatus@GameWindow@@QAEII@Z present-unmatched
 UnsignedInt GameWindow::winClearStatus( UnsignedInt status )
 {
 	UnsignedInt oldStatus;
 
-	oldStatus = m_status;
-	BitClear( m_status, status );
+	oldStatus = BFME_WIN_AT(this, 0x08, UnsignedInt);
+	BitClear( BFME_WIN_AT(this, 0x08, UnsignedInt), status );
 
 	return oldStatus;
 
@@ -688,11 +687,10 @@ UnsignedInt GameWindow::winClearStatus( UnsignedInt status )
 /** Returns a window's status flags. */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetStatus@GameWindow@@QAEIXZ present-unmatched
 UnsignedInt GameWindow::winGetStatus( void )
 {
 
-	return m_status;
+	return BFME_WIN_AT(this, 0x08, UnsignedInt);
 
 }  // end WinGetStatus
 
@@ -1298,11 +1296,10 @@ Int GameWindow::winSetOwner( GameWindow *owner )
 /** Gets the window's owner */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetOwner@GameWindow@@QAEPAV1@XZ present-unmatched
 GameWindow *GameWindow::winGetOwner( void )
 {
 
-	return m_instData.getOwner();
+	return BFME_WIN_AT(this, 0x44, GameWindow *);
 
 }  // end winGetOwner
 
