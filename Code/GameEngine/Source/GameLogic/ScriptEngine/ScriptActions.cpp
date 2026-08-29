@@ -350,6 +350,52 @@ public:
 // BFME walks twenty command slots; the reference header caps the set at 18.
 enum { BFME_MAX_COMMANDS_PER_SET = 20 };
 
+// The retail one-dword AsciiString, already spelled this way in ControlBar.cpp
+// and elsewhere: BFME releases out of line where the reference header inlines the
+// refcount drop, and its format takes the format string by value as __cdecl.
+class BfmeStringLiteralBase
+{
+	friend class BFMERetailAsciiString;
+
+private:
+	BfmeStringLiteralBase( const char *string );			///< retail 0x00888BC0
+	~BfmeStringLiteralBase();
+};
+
+class BFMERetailAsciiString
+{
+public:
+	BFMERetailAsciiString() : m_data(0) {}
+	BFMERetailAsciiString( const char *string )
+	{
+		((BfmeStringLiteralBase *)this)->BfmeStringLiteralBase::BfmeStringLiteralBase(string);
+	}
+	~BFMERetailAsciiString() { releaseBuffer(); }
+
+	void __cdecl format( BFMERetailAsciiString fmt, ... );
+
+private:
+	void releaseBuffer();
+	char *m_data;
+};
+
+// BFME hangs the prototype off Team+0x04 where the reference puts it at +0x08,
+// and the prototype's production priority is at +0x1C8 against +0x100.
+class BfmeTeamProtoField
+{
+public:
+	const TeamPrototype *getPrototype( void ) const { return m_proto; }
+
+	unsigned char m_unreconstructed_00[4];
+	const TeamPrototype *m_proto;							///< retail team+0x04
+};
+
+struct BfmeTeamPrototypeFields
+{
+	unsigned char m_unreconstructed_00[0x1c8];
+	Int m_productionPriority;								///< retail prototype+0x1C8
+};
+
 // BFME's Object keeps its contain module at +0x1FC and its AI update interface
 // at +0x204; the reference header puts them at +0x190 and +0x19C.
 class BfmeObjectModules
@@ -3184,7 +3230,7 @@ void ScriptActions::doTeamWander(const AsciiString& teamName, const AsciiString&
 /** doTeamIncreasePriority */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doTeamIncreasePriorityThunk.cpp
-// ?doTeamIncreasePriority@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
+// ?doTeamIncreasePriority@ScriptActions@@IAEXABVAsciiString@@@Z
 //
 // Blocked by the AsciiString local, and that blocker rules out most of this
 // cluster rather than just this body. Retail releases the message string with an
@@ -3201,20 +3247,20 @@ void ScriptActions::doTeamWander(const AsciiString& teamName, const AsciiString&
 // +0x100).
 void ScriptActions::doTeamIncreasePriority(const AsciiString& teamName)
 {
-	Team *team = TheScriptEngine->getTeamNamed(teamName);
+	Team *team = ((BfmeScriptEngineVtbl_44 *)TheScriptEngine)->getTeamNamed(teamName);
 
 	if (!team) {
 		return;
 	}
-	const TeamPrototype *theTeamProto = team->getPrototype();
+	const TeamPrototype *theTeamProto = ((const BfmeTeamProtoField *)team)->getPrototype();
 
 	if (!theTeamProto) {
 		return;
 	}
 	theTeamProto->increaseAIPriorityForSuccess();
-	AsciiString msg;
-	msg.format("Team '%s' priority increased to %d for success.", teamName.str(), theTeamProto->getTemplateInfo()->m_productionPriority);
-	TheScriptEngine->AppendDebugMessage(msg, false);
+	BFMERetailAsciiString msg;
+	msg.format("Team '%s' priority increased to %d for success.", bfmeStringChars(teamName), ((const BfmeTeamPrototypeFields *)theTeamProto)->m_productionPriority);
+	TheScriptEngine->AppendDebugMessage(*(const AsciiString *)&msg, false);
 
 }
 

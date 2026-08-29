@@ -2155,6 +2155,7 @@ name,address,notes
 ??0BfmeStaticThingF@@QAE@XZ,0x0000A533,Open-BFME5 the constructor the function-local static at 0x005D9D10 runs
 ??0BfmeStrZD@@QAE@PBX@Z,0x00888BC0,pin
 ??0BfmeStringArgBase@@AAE@ABV0@@Z,0x00887B60,alias of the AsciiString copy constructor pinned at the same address; ScriptActions.cpp builds by-value string arguments through a view because the reference header inlines the addref
+??0BfmeStringLiteralBase@@AAE@PBD@Z,0x00888BC0,alias of the retail one-dword AsciiString literal constructor pinned at the same address; the by-value format argument delegates to it so the copy stays visible
 ??0BfmeSubA@@QAE@ABV0@@Z,0x00887C90,Open-BFME5 the sub-object copy ctor the copies at 0x003505E0 and 0x00350630 call
 ??0BfmeSubB@@QAE@ABV0@@Z,0x00887B60,Open-BFME5 the sub-object copy ctor the copies at 0x00351F30 and 0x00351FB0 call
 ??0BfmeTempCME@@QAE@XZ,0x00037EC5,pin
@@ -3978,6 +3979,7 @@ name,address,notes
 ??1BFMEFlagName@@QAE@XZ,0x000444EA,TU-scoped two-AsciiString key destructor; retail target 0x000DFB20 destroys offsets 4 then 0
 ??1BFMELANPreferenceKey@@QAE@XZ,0x00887940,LANPreferences retail key destruction call reaches the established AsciiString release body
 ??1BFMEPlayerTemplateAsciiString@@QAE@XZ,0x00887940,PlayerTemplate time-change retail AsciiString release owner
+??1BFMERetailAsciiString@@QAE@XZ,0x0000D828,alias of the string destructor ILT the ScriptActions unwind funclet jumps to; the destructor body itself is already pinned at 0x00887940 under ??1AsciiString and ?releaseBuffer
 ??1BannerCarrierString@@QAE@XZ,0x00887940,BannerCarrier object-name string destructor
 ??1BannerCarrierUpgrade@@QAE@XZ,0x000438AB,BannerCarrier upgrade destructor thunk
 ??1BannerStringMember@@QAE@XZ,0x0001A401,BannerUI +0x1C member destructor ILT proven by the virtual destructor call site
