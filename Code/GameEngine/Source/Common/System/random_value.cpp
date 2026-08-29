@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/Precompiled /ICode/GameEngine/Source/Common /ICode/GameEngine/Include/Common /ICode/GameEngine/Source/GameLogic /ICode/Libraries/Source/WWVegas/WWLib
-// readable body of ?setRange@GameLogicRandomVariable@@: Code/GameEngine/Source/Common/RandomValue.cpp
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
