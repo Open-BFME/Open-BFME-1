@@ -72639,6 +72639,7 @@ name,address,notes
 ?bfmeCopySlotE@@YAXPAUBfmeSlotE@@PAX@Z,0x0001870F,Open-BFME5 the copy the bounded appends call
 ?bfmeCopyTwoCDF@BfmePartCDF@@QAEXPAU1@@Z,0x0003B5C5,pin
 ?bfmeCopyTwoCKA@BfmePartCKA@@QAEXPAU1@@Z,0x000434DC,pin
+?bfmeCount932D@BfmeGlob932D@@QAEHPAXH@Z,0x0000C284,pin
 ?bfmeCreateInactiveTeam@TeamFactory@@AAEPAVTeam@@ABVAsciiString@@0@Z,0x0000D15C,retail REL32 at 0x000F7CAB targets the two-name createInactiveTeam ILT at 0x0000D15C
 ?bfmeCtorECMa@BfmeThingECMa@@QAEPAV1@XZ,0x00806300,pin
 ?bfmeCtorECMb@BfmeThingECMb@@QAEPAV1@XZ,0x008254C0,pin
@@ -73520,6 +73521,7 @@ name,address,notes
 ?bfmePushBackAux@Gen_00369e30@@IAEXABQAX@Z,0x00036C82,Open-BFME5 ILT the deque push_back at 0x00369E30 tail-jumps through
 ?bfmePushBackAux@Gen_00647430@@IAEXABQAX@Z,0x000399D7,Open-BFME5 ILT the deque push_back at 0x00647430 tail-jumps through
 ?bfmePushQI@BfmeThingQI@@QAEXE@Z,0x0003BC23,pin
+?bfmeQuery932C@BfmeSub932C@@QAEEXZ,0x00048928,pin
 ?bfmeQuery@BfmeFilterObject@@QAE_NPAVPlayer@@@Z,0x00020824,Open-BFME5 ILT the object query in Rva2225E0Filter::accepts at 0x003A04A0 goes through
 ?bfmeQuery@Pathfinder@@QAEXPAVObject@@PAH1@Z,0x000461FF,Open-BFME5 ILT the TightenPathStruct constructor at 0x003E1720 queries the pathfinder through; the two pointer arguments are the outputs at +0x0C and +0x10
 ?bfmeQueryKE@@YGIPAXH@Z,0x009F8890,pin
@@ -73714,6 +73716,7 @@ name,address,notes
 ?bfmeTail928F@BfmeSub928F@@QAEXXZ,0x00007EA5,pin
 ?bfmeTail928G@BfmeThing928G@@QAEXXZ,0x000495F8,pin
 ?bfmeTail930F@BfmeThing930F@@QAEXXZ,0x0091DD20,pin
+?bfmeTail932E@BfmeThing932E@@QAEXXZ,0x000488F6,pin
 ?bfmeTailBCD@BfmeThingBCD@@QAEXXZ,0x0001CD8C,pin
 ?bfmeTailBED@BfmeThingBED@@QAEXXZ,0x00012C6F,pin
 ?bfmeTailBFG@BfmeThingBFG@@QAEXXZ,0x000286A0,pin
@@ -73763,6 +73766,7 @@ name,address,notes
 ?bfmeTellRB@BfmeNodeRB@@QAEXPAX@Z,0x000021CB,pin
 ?bfmeTellRP@BfmeFoundRP@@QAEXPAX@Z,0x00030553,pin
 ?bfmeTest914A@@YAHXZ,0x000162A7,pin
+?bfmeTest932E@BfmeThing932E@@QAEHXZ,0x00037E34,pin
 ?bfmeTest@Rva2225E0Filter@@AAE_NPAVBfmeOverridable@@_N@Z,0x0001B437,Open-BFME5 ILT the filter test whose result Rva2225E0Filter::accepts at 0x003A04A0 returns
 ?bfmeTestLB@BfmeOwnerLB@@QAE_NPAUBfmeThingLB@@@Z,0x0004250A,pin
 ?bfmeTestME@BfmeThingME@@QAEHXZ,0x00003EA4,pin
@@ -74991,6 +74995,7 @@ name,address,notes
 ?g_bfme929Tab@@3PADA,0x008728D0,pin
 ?g_bfme930Glob@@3PAVBfmeGlob930C@@A,0x00F4C7DC,pin
 ?g_bfme930Vft@@3PADA,0x00D3BD6C,pin
+?g_bfme932GlobD@@3PAVBfmeGlob932D@@A,0x00EF0888,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
