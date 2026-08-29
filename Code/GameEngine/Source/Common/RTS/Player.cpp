@@ -3462,15 +3462,105 @@ void Player::removeRadar( Bool disableProof )
 	}
 }  // end removeRadar
 
+// BFME's AudioEventRTS is twelve bytes larger than the vendored class, which is
+// the entire frame difference these two bodies showed (sub esp,0x70 against
+// 0x64).  A padded wrapper buys retail's frame without touching the class: the
+// event sits at offset 0, so its address, constructor and destructor are
+// unchanged.
+struct BfmeAudioEventStorage
+{
+	BfmeAudioEventStorage( const AudioEventRTS &src ) : e(src) { }
+	AudioEventRTS e;
+	UnsignedByte _bfme_tail[12];
+};
+
+// getMiscAudio is a VIRTUAL at vtable +0x124 where the vendored header makes it
+// a direct call, and addAudioEvent is +0x44 rather than +0x30.
+class BfmeAudioManagerView
+{
+public:
+	virtual void _bfme_audio_v0( void ) = 0;
+	virtual void _bfme_audio_v1( void ) = 0;
+	virtual void _bfme_audio_v2( void ) = 0;
+	virtual void _bfme_audio_v3( void ) = 0;
+	virtual void _bfme_audio_v4( void ) = 0;
+	virtual void _bfme_audio_v5( void ) = 0;
+	virtual void _bfme_audio_v6( void ) = 0;
+	virtual void _bfme_audio_v7( void ) = 0;
+	virtual void _bfme_audio_v8( void ) = 0;
+	virtual void _bfme_audio_v9( void ) = 0;
+	virtual void _bfme_audio_v10( void ) = 0;
+	virtual void _bfme_audio_v11( void ) = 0;
+	virtual void _bfme_audio_v12( void ) = 0;
+	virtual void _bfme_audio_v13( void ) = 0;
+	virtual void _bfme_audio_v14( void ) = 0;
+	virtual void _bfme_audio_v15( void ) = 0;
+	virtual void _bfme_audio_v16( void ) = 0;
+	virtual void addAudioEvent( const AudioEventRTS *e ) = 0;		///< vtable +0x44
+	virtual void _bfme_audio_v18( void ) = 0;
+	virtual void _bfme_audio_v19( void ) = 0;
+	virtual void _bfme_audio_v20( void ) = 0;
+	virtual void _bfme_audio_v21( void ) = 0;
+	virtual void _bfme_audio_v22( void ) = 0;
+	virtual void _bfme_audio_v23( void ) = 0;
+	virtual void _bfme_audio_v24( void ) = 0;
+	virtual void _bfme_audio_v25( void ) = 0;
+	virtual void _bfme_audio_v26( void ) = 0;
+	virtual void _bfme_audio_v27( void ) = 0;
+	virtual void _bfme_audio_v28( void ) = 0;
+	virtual void _bfme_audio_v29( void ) = 0;
+	virtual void _bfme_audio_v30( void ) = 0;
+	virtual void _bfme_audio_v31( void ) = 0;
+	virtual void _bfme_audio_v32( void ) = 0;
+	virtual void _bfme_audio_v33( void ) = 0;
+	virtual void _bfme_audio_v34( void ) = 0;
+	virtual void _bfme_audio_v35( void ) = 0;
+	virtual void _bfme_audio_v36( void ) = 0;
+	virtual void _bfme_audio_v37( void ) = 0;
+	virtual void _bfme_audio_v38( void ) = 0;
+	virtual void _bfme_audio_v39( void ) = 0;
+	virtual void _bfme_audio_v40( void ) = 0;
+	virtual void _bfme_audio_v41( void ) = 0;
+	virtual void _bfme_audio_v42( void ) = 0;
+	virtual void _bfme_audio_v43( void ) = 0;
+	virtual void _bfme_audio_v44( void ) = 0;
+	virtual void _bfme_audio_v45( void ) = 0;
+	virtual void _bfme_audio_v46( void ) = 0;
+	virtual void _bfme_audio_v47( void ) = 0;
+	virtual void _bfme_audio_v48( void ) = 0;
+	virtual void _bfme_audio_v49( void ) = 0;
+	virtual void _bfme_audio_v50( void ) = 0;
+	virtual void _bfme_audio_v51( void ) = 0;
+	virtual void _bfme_audio_v52( void ) = 0;
+	virtual void _bfme_audio_v53( void ) = 0;
+	virtual void _bfme_audio_v54( void ) = 0;
+	virtual void _bfme_audio_v55( void ) = 0;
+	virtual void _bfme_audio_v56( void ) = 0;
+	virtual void _bfme_audio_v57( void ) = 0;
+	virtual void _bfme_audio_v58( void ) = 0;
+	virtual void _bfme_audio_v59( void ) = 0;
+	virtual void _bfme_audio_v60( void ) = 0;
+	virtual void _bfme_audio_v61( void ) = 0;
+	virtual void _bfme_audio_v62( void ) = 0;
+	virtual void _bfme_audio_v63( void ) = 0;
+	virtual void _bfme_audio_v64( void ) = 0;
+	virtual void _bfme_audio_v65( void ) = 0;
+	virtual void _bfme_audio_v66( void ) = 0;
+	virtual void _bfme_audio_v67( void ) = 0;
+	virtual void _bfme_audio_v68( void ) = 0;
+	virtual void _bfme_audio_v69( void ) = 0;
+	virtual void _bfme_audio_v70( void ) = 0;
+	virtual void _bfme_audio_v71( void ) = 0;
+	virtual void _bfme_audio_v72( void ) = 0;
+	virtual const MiscAudio *getMiscAudio( void ) = 0;				///< vtable +0x124
+};
+
+// The radar sounds sit at MiscAudio+0x1C0 and +0x150, against the vendored
+// +0x258.
+#define BFME_MISC_SOUND(m, off) (*(const AudioEventRTS *)((const UnsignedByte *)(m) + (off)))
+
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_radar.cpp
-// ?disableRadar@Player@@QAEXXZ present-unmatched
-// Cannot come home: retail's AudioEventRTS is 0x70 bytes where this tree's is
-// 0x64 (sub esp,0x70 against 0x64), TheAudio->getMiscAudio() is a virtual at
-// vtable +0x124 rather than a direct call, addAudioEvent is vtable +0x44 not
-// +0x30, and the misc-audio sound sits at +0x1c0/+0x150 rather than +0x258.
-// That is a class-shape difference, not a field view. The m_radarDisabled read
-// below is still corrected to BFME's +0x60 through the view hasRadar proves.
 void Player::disableRadar()
 {
 	Bool hadRadar = hasRadar();
@@ -3480,21 +3570,15 @@ void Player::disableRadar()
 		&& !hasRadar() && okToPlayRadarEdgeSound() ) 
 	{
 		// This player just lost radar, so play the "You lost Radar!" sound
-		AudioEventRTS soundToPlay = TheAudio->getMiscAudio()->m_radarOfflineSound;
-		soundToPlay.setPlayerIndex(getPlayerIndex());
-		TheAudio->addAudioEvent(&soundToPlay);
+		BfmeAudioEventStorage soundToPlay( BFME_MISC_SOUND(
+			((BfmeAudioManagerView *)TheAudio)->getMiscAudio(), 0x1c0) );
+		soundToPlay.e.setPlayerIndex(getPlayerIndex());
+		((BfmeAudioManagerView *)TheAudio)->addAudioEvent(&soundToPlay.e);
 	}
 }
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_radar.cpp
-// ?enableRadar@Player@@QAEXXZ present-unmatched
-// Cannot come home: retail's AudioEventRTS is 0x70 bytes where this tree's is
-// 0x64 (sub esp,0x70 against 0x64), TheAudio->getMiscAudio() is a virtual at
-// vtable +0x124 rather than a direct call, addAudioEvent is vtable +0x44 not
-// +0x30, and the misc-audio sound sits at +0x1c0/+0x150 rather than +0x258.
-// That is a class-shape difference, not a field view. The m_radarDisabled read
-// below is still corrected to BFME's +0x60 through the view hasRadar proves.
 void Player::enableRadar()
 {
 	Bool hadRadar = hasRadar();
@@ -3503,9 +3587,10 @@ void Player::enableRadar()
 	if( !hadRadar && hasRadar() && okToPlayRadarEdgeSound() )  
 	{
 		// This player just got radar, so play the "You have Radar!" sound
-		AudioEventRTS soundToPlay = TheAudio->getMiscAudio()->m_radarOnlineSound;
-		soundToPlay.setPlayerIndex(getPlayerIndex());
-		TheAudio->addAudioEvent(&soundToPlay);
+		BfmeAudioEventStorage soundToPlay( BFME_MISC_SOUND(
+			((BfmeAudioManagerView *)TheAudio)->getMiscAudio(), 0x150) );
+		soundToPlay.e.setPlayerIndex(getPlayerIndex());
+		((BfmeAudioManagerView *)TheAudio)->addAudioEvent(&soundToPlay.e);
 	}
 }
 
