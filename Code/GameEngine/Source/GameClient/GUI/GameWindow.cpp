@@ -793,35 +793,79 @@ GameFont *GameWindow::winGetFont( void )
 /** Set font for text in this window */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindow_winSetFont.cpp
-// ?winSetFont@GameWindow@@UAEXPAVGameFont@@@Z present-unmatched
+// BFME's instance data starts four bytes later than the reference class puts
+// it, so the style is at this+0x3C, the font at +0x1B4 and the two display
+// strings at +0x1CC and +0x1D0. A DisplayString takes its font at vtable +0x18.
+class BfmeWindowDisplayString
+{
+public:
+	virtual void _pad0( void ) = 0;
+	virtual void _pad1( void ) = 0;
+	virtual void _pad2( void ) = 0;
+	virtual void _pad3( void ) = 0;
+	virtual void _pad4( void ) = 0;
+	virtual void _pad5( void ) = 0;
+	virtual void setFont( GameFont *font ) = 0;			///< vtable +0x18
+};
+
+// Shape only: whatever sits at GameWindow+0x04, BFME hands it the font through
+// its own vtable slot +0x10 every time the font changes, after whichever branch
+// ran. The reference makes no such call.
+class BfmeWindowFontSink
+{
+public:
+	virtual void _pad0( void ) = 0;
+	virtual void _pad1( void ) = 0;
+	virtual void _pad2( void ) = 0;
+	virtual void _pad3( void ) = 0;
+	virtual void setFont( GameFont *font ) = 0;			///< vtable +0x10
+};
+
+struct BfmeWindowFontLayout
+{
+	void *vtable;
+	BfmeWindowFontSink *fontSink;						///< this+0x04
+	UnsignedByte pad0[0x3c - 0x08];
+	UnsignedInt style;									///< this+0x3C
+	UnsignedByte pad1[0x1b4 - 0x40];
+	GameFont *font;										///< this+0x1B4
+	UnsignedByte pad2[0x1cc - 0x1b8];
+	DisplayString *text;								///< this+0x1CC
+	DisplayString *tooltip;								///< this+0x1D0
+};
+
 void GameWindow::winSetFont( GameFont *font )
 {
+	BfmeWindowFontLayout *self = (BfmeWindowFontLayout *)this;
 
 	// set font in window member
-	m_instData.m_font = font;
+	self->font = font;
 
 	// set font for other display strings in special gadget window controls
-	if( BitTest( m_instData.getStyle(), GWS_SCROLL_LISTBOX ) )
+	if( self->style & GWS_SCROLL_LISTBOX )
 		GadgetListBoxSetFont( this, font );
-	else if( BitTest( m_instData.getStyle(), GWS_COMBO_BOX ) )
+	else if( self->style & GWS_COMBO_BOX )
 		GadgetComboBoxSetFont( this, font );
-	else if( BitTest( m_instData.getStyle(), GWS_ENTRY_FIELD ) )
+	else if( self->style & GWS_ENTRY_FIELD )
 		GadgetTextEntrySetFont( this, font );
-	else if( BitTest( m_instData.getStyle(), GWS_STATIC_TEXT ) )
+	else if( self->style & GWS_STATIC_TEXT )
 		GadgetStaticTextSetFont( this, font );
 	else
 	{
-		DisplayString *dString;
+		BfmeWindowDisplayString *dString;
 
 		// set the font for the display strings all windows have
-		dString = m_instData.getTextDisplayString();
+		dString = (BfmeWindowDisplayString *)self->text;
 		if( dString )
 			dString->setFont( font );
-		dString = m_instData.getTooltipDisplayString();
+		dString = (BfmeWindowDisplayString *)self->tooltip;
 		if( dString )
 			dString->setFont( font );
 
 	}  // end else
+
+	if( self->fontSink )
+		self->fontSink->setFont( font );
 
 }  // end WinSetFont
 
@@ -1384,14 +1428,14 @@ Int GameWindow::winSetSystemFunc( GameWinSystemFunc system )
 /** Sets the window's input callback functions. */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GameWindow_winSetInputFunc.cpp
-// ?winSetInputFunc@GameWindow@@QAEHP6A?AW4WindowMsgHandledType@@PAV1@III@Z@Z present-unmatched
 Int GameWindow::winSetInputFunc( GameWinInputFunc input )
 {
 
+	// BFME ignores a null handler and leaves whatever was there; the reference
+	// replaces it with the window manager's default. The callback lives at
+	// this+0x1E0, which the reference class does not reach.
 	if( input )
-		m_input = input;
-	else
-		m_input = TheWindowManager->getDefaultInput();
+		*(GameWinInputFunc *)((char *)this + 0x1e0) = input;
 
 	return WIN_ERR_OK;
 
@@ -1520,34 +1564,51 @@ GameWindow *GameWindow::winPointInChild( Int x, Int y, Bool ignoreEnableCheck, B
 	* whether or not the window is actually enabled */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/Common/GameWindow_winPointInAnyChild_Thunk.cpp
-// ?winPointInAnyChild@GameWindow@@QAEPAV1@HH_N0@Z present-unmatched
+// The window's pick fields all sit later than the reference class puts them --
+// the status word and the geometry by four bytes, the three list pointers by
+// sixteen. Same body otherwise, and the four arguments retail pushes to
+// winPointInChild are three written plus the defaulted playDisabledSound,
+// materialised at the call site.
+struct BfmeWindowPickLayout
+{
+	UnsignedByte pad0[0x08];
+	UnsignedInt status;									///< this+0x08
+	ICoord2D size;										///< this+0x0C
+	IRegion2D region;									///< this+0x14
+	UnsignedByte pad1[0x1f8 - 0x24];
+	BfmeWindowPickLayout *next;							///< this+0x1F8
+	UnsignedByte pad2[0x200 - 0x1fc];
+	BfmeWindowPickLayout *parent;						///< this+0x200
+	BfmeWindowPickLayout *child;						///< this+0x204
+};
+
 GameWindow *GameWindow::winPointInAnyChild( Int x, Int y, Bool ignoreHidden, Bool ignoreEnableCheck )
 {
-	GameWindow *parent;
-	GameWindow *child;
+	BfmeWindowPickLayout *parent;
+	BfmeWindowPickLayout *child;
 	ICoord2D origin;
 
-	for( child = m_child; child; child = child->m_next ) 
+	for( child = ((BfmeWindowPickLayout *)this)->child; child; child = child->next ) 
 	{
 
-		origin = child->m_region.lo;
-		parent = child->m_parent;
+		origin = child->region.lo;
+		parent = child->parent;
 
 		while( parent ) 
 		{
 
-			origin.x += parent->m_region.lo.x;
-			origin.y += parent->m_region.lo.y;
-			parent = parent->m_parent;
+			origin.x += parent->region.lo.x;
+			origin.y += parent->region.lo.y;
+			parent = parent->parent;
 
 		}  // end while
 
-		if( x >= origin.x && x <= origin.x + child->m_size.x &&
-				y >= origin.y && y <= origin.y + child->m_size.y )
+		if( x >= origin.x && x <= origin.x + child->size.x &&
+				y >= origin.y && y <= origin.y + child->size.y )
 		{
 
-			if( !(ignoreHidden == TRUE &&	BitTest( child->m_status, WIN_STATUS_HIDDEN )) )
-				return child->winPointInChild( x, y, ignoreEnableCheck );
+			if( !(ignoreHidden == TRUE &&	BitTest( child->status, WIN_STATUS_HIDDEN )) )
+				return ((GameWindow *)child)->winPointInChild( x, y, ignoreEnableCheck );
 
 		}  // end if
 
