@@ -72518,6 +72518,7 @@ name,address,notes
 ?bfmeBase1050@BfmeB1050@@QAEXXZ,0x0000AF38,pin
 ?bfmeBase1055@BfmeB1055@@QAEXHHH@Z,0x008D60C0,pin
 ?bfmeBase1058@BfmeE1058@@QAEXXZ,0x00004381,pin
+?bfmeBase1170@BfmeM1170@@QAEXH@Z,0x0000E520,pin
 ?bfmeBase963@BfmeReg963@@QAEXXZ,0x009A1A30,pin
 ?bfmeBase966A@BfmeVft966A@@QAEXXZ,0x00039D6A,pin
 ?bfmeBase966B@BfmeVft966B@@QAEXXZ,0x00039D6A,pin
@@ -72757,6 +72758,7 @@ name,address,notes
 ?bfmeChanged@Gen_005899D0@@AAEXXZ,0x0000271B,Open-BFME5 the member the change-setter at 0x005899D0 calls
 ?bfmeCheck1003@BfmeA1003@@QAEDPAX@Z,0x000422E9,pin
 ?bfmeCheck1026@BfmeQ1026@@QAEDHHH@Z,0x0002BC92,pin
+?bfmeCheck1170@BfmeM1170@@QAEDXZ,0x00023FA6,pin
 ?bfmeCheck961@BfmeGate961@@QAEDXZ,0x00041FF1,pin
 ?bfmeCheck986B@@YAHXZ,0x000162A7,pin
 ?bfmeCheckA@@YAHPAX@Z,0x00894D90,Open-BFME5 the guard the cleanup at 0x00783A50 calls
@@ -80117,6 +80119,7 @@ __imp_?bfmeWait1037@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
+__imp__bfmeApply1170@4,0x00F5906C,pin
 __imp__bfmeCloseDWE@4,0x00F590C8,pin
 __imp__bfmeCloseDXK@4,0x00F591A8,pin
 __imp__bfmeCmpDWK,0x00F5933C,pin
@@ -80516,6 +80519,7 @@ _funcargs,0x0099C410,decode_calls pin for _var_or_func_tail callee
 _funcstat,0x0099C390,decode_calls pin for _stat callee
 _g_Rva0112C8D0,0x0112C8D0,address-derived terminated lookup table read by 0x0080D890
 _g_Rva012C47A4,0x012C47A4,DirtySock default alias-list pointer used by 0x0080EF50
+_g_bfmeCursors1170,0x00EF77A8,pin
 _g_bfmeFreeList1149,0x00F0B210,pin
 _g_bfmeFreeList1150,0x00F0B1C0,pin
 _g_bfmeG1144,0x00EED5C8,pin
