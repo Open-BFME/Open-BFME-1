@@ -2523,25 +2523,34 @@ void ControlBar::setSquishedControlBarConfig( void )
 	m_controlBarSchemeManager->setControlBarSchemeByPlayerTemplate(ThePlayerList->getLocalPlayer()->getPlayerTemplate(), TRUE);
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/ControlBar_setLowControlBarConfig.cpp
-// ?setLowControlBarConfig@ControlBar@@IAEXXZ present-unmatched
+// The default bar position is at ControlBar+0x18, the stage at +0x20 and the
+// context parents from +0x34 with the master first.
+struct BfmeControlBarLowConfig
+{
+	char m_slice_pad[ 0x18 ];				///< retail this+0x00..+0x17, untouched
+	ICoord2D m_defaultControlBarPosition;			///< retail this+0x18
+	Int m_currentControlBarStage;				///< retail this+0x20
+	char m_slice_padB[ 0x34 - 0x24 ];
+	GameWindow *m_contextParent[ NUM_CONTEXT_PARENTS ];	///< retail this+0x34
+};
+
+// ?setLowControlBarConfig@ControlBar@@IAEXXZ
 void ControlBar::setLowControlBarConfig( void )
 {
-//	if(m_currentControlBarStage == CONTROL_BAR_STAGE_SQUISHED)
-//	{
-//		m_controlBarResizer->sizeWindowsDefault();
-//		m_controlBarSchemeManager->setControlBarSchemeByPlayerTemplate(ThePlayerList->getLocalPlayer()->getPlayerTemplate(), FALSE);
-//	}
-	
-	m_currentControlBarStage = CONTROL_BAR_STAGE_LOW;
-	ICoord2D pos;
-	pos.x = m_defaultControlBarPosition.x;
-	pos.y = TheDisplay->getHeight() - .1 * TheDisplay->getHeight();
-	TheTacticalView->setHeight((Int)(TheDisplay->getHeight())); 
-	m_contextParent[ CP_MASTER ]->winSetPosition(pos.x, pos.y);
-	m_contextParent[ CP_MASTER ]->winHide(FALSE);
-	setUpDownImages();
+	BfmeControlBarLowConfig *self = (BfmeControlBarLowConfig *)this;
 
+	self->m_currentControlBarStage = CONTROL_BAR_STAGE_LOW;
+	ICoord2D pos;
+	pos.x = self->m_defaultControlBarPosition.x;
+	// Retail truncates only the tenth -- fild, multiply by 0.1, ftol -- and
+	// subtracts that integer from a freshly fetched height, so the cast sits on
+	// the second term rather than around the whole expression.  getHeight is
+	// fetched three times and is unsigned, the fild carrying the 2^32 fixup.
+	pos.y = TheDisplay->getHeight() - (Int)(.1 * TheDisplay->getHeight());
+	TheTacticalView->setHeight((Int)(TheDisplay->getHeight())); 
+	self->m_contextParent[ CP_MASTER ]->winSetPosition(pos.x, pos.y);
+	self->m_contextParent[ CP_MASTER ]->winHide(FALSE);
+	setUpDownImages();
 }
 
 void ControlBar::setHiddenControlBar( void )
