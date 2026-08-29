@@ -165,3 +165,86 @@ Bfme5TreeIterB __cdecl bfme5SeekKeyB(Bfme5TreeIterB cur, Bfme5TreeIterB end, con
 
 	return cur;
 }
+
+class MultiIniFieldParse;
+
+class INI
+{
+public:
+	void initFromINIMultiProc(void *p, void (__cdecl *proc)(MultiIniFieldParse &));
+};
+
+extern void *g_bfme5ParseVtable;
+void __cdecl bfme5ParseProcA(MultiIniFieldParse &m);
+void __cdecl bfme5ParseProcB(MultiIniFieldParse &m);
+
+struct Bfme5ParseNode
+{
+	void *m_bfmeVptr;
+	int m_bfme04;
+};
+
+void * __cdecl bfme5MakeParseNodeA(INI *ini)
+{
+	Bfme5ParseNode *q = (Bfme5ParseNode *)operator new(8);
+	Bfme5ParseNode *p;
+
+	if (q) {
+		q->m_bfmeVptr = &g_bfme5ParseVtable;
+		p = q;
+	} else {
+		p = 0;
+	}
+
+	if (ini)
+		ini->initFromINIMultiProc(p, bfme5ParseProcA);
+
+	return p;
+}
+
+void * __cdecl bfme5MakeParseNodeB(INI *ini)
+{
+	Bfme5ParseNode *q = (Bfme5ParseNode *)operator new(8);
+	Bfme5ParseNode *p;
+
+	if (q) {
+		q->m_bfmeVptr = &g_bfme5ParseVtable;
+		p = q;
+	} else {
+		p = 0;
+	}
+
+	if (ini)
+		ini->initFromINIMultiProc(p, bfme5ParseProcB);
+
+	return p;
+}
+
+struct Coord3D;
+
+class Bridge
+{
+public:
+	bool isPointOnBridge(const Coord3D *p);
+
+	char m_bfmePad[4];
+	Bridge *m_bfmeNext;
+};
+
+class Bfme5BridgeList
+{
+public:
+	char bfmeAnyBridgeAt(const Coord3D *p);
+
+	char m_bfmePad[0x858];
+	Bridge *m_bfmeBridges;
+};
+
+char Bfme5BridgeList::bfmeAnyBridgeAt(const Coord3D *p)
+{
+	for (Bridge *b = m_bfmeBridges; b != 0; b = b->m_bfmeNext)
+		if (b->isPointOnBridge(p))
+			return 1;
+
+	return 0;
+}
