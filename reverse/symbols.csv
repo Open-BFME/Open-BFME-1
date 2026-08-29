@@ -79526,3 +79526,10 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+_lua_pushboolean,0x009903E0,BFME Lua boolean extension; API shape and tag-6 body proven by LuaScriptEngine callbacks
+?bfmeDtorUEW@BfmeThingUEW@@QAEXXZ,0x008A2F30,pin
+__imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
+?bfmeDtorVBW@BfmeSubVBW@@QAEXXZ,0x00895260,pin
+__imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
+?bfmeBaseVDW@BfmeThingVDW@@QAEXHH@Z,0x00899F00,pin
+?g_bfmeVftVDW@@3PADA,0x00D36238,pin
