@@ -1,9 +1,12 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
+// readable body of ?getCrushableLevel@Object@@QBEEXZ: Code/GameEngine/Source/GameLogic/Object/Object.cpp
+// readable body of ?getCrusherLevel@Object@@QBEEXZ: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 // Open-BFME5: focused reconstruction of BFME's mounted-aware crush levels.
 
 typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -13,6 +16,7 @@ public:
 	const Overridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
 {
 public:
@@ -23,6 +27,7 @@ public:
 	UnsignedByte m_mountedCrushableLevel;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

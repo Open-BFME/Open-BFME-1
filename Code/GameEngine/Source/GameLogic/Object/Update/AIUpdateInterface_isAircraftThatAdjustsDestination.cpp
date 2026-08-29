@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?isAircraftThatAdjustsDestination@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // readable body: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
 typedef bool Bool;
@@ -24,6 +25,7 @@ public:
 	LocomotorOverridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class LocomotorTemplate : public LocomotorOverridable
 {
 public:
@@ -46,6 +48,7 @@ private:
 	const LocomotorTemplate *m_overridable;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class Locomotor
 {
 public:
@@ -86,6 +89,7 @@ public:
 	AI_SLOT(072); AI_SLOT(073); AI_SLOT(074); AI_SLOT(075);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public AIUpdateVirtualPrefix
 {
 public:

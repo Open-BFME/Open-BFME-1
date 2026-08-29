@@ -7,6 +7,7 @@
 extern "C" __declspec(dllimport) int __cdecl _memicmp( const void *left,
 	const void *right, unsigned int count );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

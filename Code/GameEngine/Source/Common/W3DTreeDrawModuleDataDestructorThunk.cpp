@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1W3DTreeDrawModuleData@@UAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp
 // Field names come from retail's own INI field table joined to upstream's
 // parse table on the key: retail supplies every offset, upstream only the
 // word. The offsets were derived from this class's declaration sequence and
 // type sizes, never read out of the old placeholder names.
-// readable body of ??1W3DTreeDrawModuleData@@UAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp
 // Open-BFME5: W3DTreeDrawModuleData dtor.
 // Early derived vtbl; Buffers @+0x08/+0x0c/+0x28/+0x48; base vtbl.
 

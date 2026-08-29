@@ -2,6 +2,7 @@
 
 // This legacy class spelling is retained because it names the existing exact
 // resolver row at 0x008F7B20; the Object field itself is BFME shroud state.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionData
 {
 public:
@@ -20,6 +21,7 @@ public:
 	void init();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class ContainModuleInterface
 {
 public:
@@ -27,6 +29,7 @@ public:
 	virtual void containReactToTransformChange() = 0; // +0x04
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 protected:

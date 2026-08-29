@@ -8,6 +8,7 @@ typedef float Real;
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *, const char *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -23,6 +24,7 @@ private:
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
 class INIException
 {
 public:
@@ -34,6 +36,7 @@ private:
 	int m_argCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -51,6 +54,7 @@ private:
 	const char *m_sepsColon;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ClientRandomValue.h
 class GameClientRandomVariable
 {
 public:
@@ -68,6 +72,7 @@ private:
 	Real m_high;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/LogicRandomValue.h
 class GameLogicRandomVariable
 {
 public:
@@ -89,11 +94,13 @@ class FXList;
 class ObjectCreationList;
 class ParticleSystemTemplate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BoneFXUpdate.h
 struct BoneLocInfo
 {
 	AsciiString boneName;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BoneFXUpdate.h
 struct BaseBoneListInfo
 {
 	BoneLocInfo locInfo;
@@ -102,16 +109,19 @@ struct BaseBoneListInfo
 	Bool onlyOnce;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BoneFXUpdate.h
 struct BoneFXListInfo : public BaseBoneListInfo
 {
 	const FXList *fx;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BoneFXUpdate.h
 struct BoneOCLInfo : public BaseBoneListInfo
 {
 	const ObjectCreationList *ocl;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BoneFXUpdate.h
 struct BoneParticleSystemInfo : public BaseBoneListInfo
 {
 	const ParticleSystemTemplate *particleSystemTemplate;

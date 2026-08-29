@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHs-c- /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?isFactionStructure@Object@@QBE_NXZ: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 
 // Open-BFME: Object::isFactionStructure, retail 0x001C5730. The surviving
 // Object.cpp source spells this as isAnyKindOf(KINDOFMASK_FS). Retail builds
@@ -11,6 +12,7 @@ typedef int Int;
 typedef bool Bool;
 
 template <size_t NUMBITS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -42,12 +44,14 @@ private:
 
 typedef BitFlags<116> KindOfMaskType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
 	Bool isAnyKindOf( const KindOfMaskType &mask ) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 public:

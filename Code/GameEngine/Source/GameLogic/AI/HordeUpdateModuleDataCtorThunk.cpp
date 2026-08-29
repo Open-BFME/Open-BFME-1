@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0HordeUpdateModuleData@@: Code/GameEngine/Source/GameLogic/Object/Update/HordeUpdate.cpp
 // Field names come from retail's own INI field table joined to upstream's
 // parse table on the key: retail supplies every offset, upstream only the
 // word. The offsets were derived from this class's declaration sequence and
 // type sizes, never read out of the old placeholder names.
-// readable body of ??0HordeUpdateModuleData@@: Code/GameEngine/Source/GameLogic/Object/Update/HordeUpdate.cpp
 
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 //

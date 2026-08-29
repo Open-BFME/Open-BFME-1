@@ -5,6 +5,7 @@ enum PlayerLeaveCode
 	PLAYER_LEAVE_CODE_CLIENT
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/ConnectionManager.h
 class ConnectionManager
 {
 public:
@@ -26,6 +27,7 @@ public:
 
 class GameMessage;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class MessageStream
 {
 public:

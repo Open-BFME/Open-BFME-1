@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?attemptHealing@Object@@QAEXMPBV1@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 
 typedef unsigned int ObjectID;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfo
 {
 public:
@@ -17,6 +19,7 @@ public:
 	unsigned char m_20[0x3C];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 class BodyModuleInterface
 {
 public:
@@ -24,6 +27,7 @@ public:
 	virtual void attemptHealing(DamageInfo *damageInfo);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

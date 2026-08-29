@@ -6,6 +6,7 @@ public:
 	void bfmeApply(int condition, const void *animation, int frames);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

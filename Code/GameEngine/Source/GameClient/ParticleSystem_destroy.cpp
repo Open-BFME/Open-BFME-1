@@ -2,7 +2,6 @@
 // Tear down the particle-system chain rooted at +0x160.  BFME's pointer
 // wrapper supplies the shared lazy-pointer fallback used by the retail body.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 class ParticleSystem;
 
 ParticleSystem *Make00001B18(void);
@@ -27,6 +26,7 @@ private:
 	ParticleSystem *m_target;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 class ParticleSystem
 {
 public:

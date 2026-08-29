@@ -22,6 +22,7 @@ public:
 	virtual Int getHordeMemberCount(Bool countRiders) const = 0; // +0x150
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class ContainModuleInterface
 {
 public:
@@ -34,6 +35,7 @@ public:
 
 #undef SLOT
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

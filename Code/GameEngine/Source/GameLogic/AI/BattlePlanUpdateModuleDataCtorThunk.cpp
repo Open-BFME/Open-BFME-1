@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0BattlePlanUpdateModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdate.cpp
 // Field names come from retail's own INI field table joined to upstream's
 // parse table on the key: retail supplies every offset, upstream only the
 // word. The offsets were derived from this class's declaration sequence and
 // type sizes, never read out of the old placeholder names.
-// readable body of ??0BattlePlanUpdateModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdate.cpp
 // Open-BFME5: the named ILT 0x0003025B reaches this body, and ModuleFactory's
 // data-create proc 0x00117420 allocates 0x90 for it, so this is
 // BattlePlanUpdateModuleData's constructor.

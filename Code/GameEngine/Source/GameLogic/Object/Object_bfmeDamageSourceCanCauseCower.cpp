@@ -8,6 +8,7 @@ typedef int Int;
 typedef bool Bool;
 typedef Int ObjectID;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -49,6 +50,7 @@ public:
 	virtual Bool bfmeCanCauseCower() const = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 private:
@@ -60,6 +62,7 @@ public:
 	Bool bfmeDamageSourceCanCauseCower(ObjectID sourceID) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:

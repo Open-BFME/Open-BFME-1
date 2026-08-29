@@ -434,6 +434,7 @@ Team* TeamFactory::findTeam(const AsciiString& name)
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamDeleteCallback.cpp
 // ?teamAboutToBeDeleted@TeamFactory@@QAEXPAVTeam@@@Z present-unmatched
 void TeamFactory::teamAboutToBeDeleted(Team* team)
 {
@@ -1018,7 +1019,7 @@ void TeamPrototype::decreaseAIPriorityForFailure(void) const
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototype_countBuildings.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototypeInstanceWalks.cpp
 // ?countBuildings@TeamPrototype@@QAEHXZ present-unmatched
 Int TeamPrototype::countBuildings(void)
 {
@@ -1098,7 +1099,7 @@ Bool TeamPrototype::hasAnyBuildings(KindOfMaskType kindOf) const
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototypeInstanceWalks.cpp
 // ?hasAnyUnits@TeamPrototype@@QBE_NXZ present-unmatched
 Bool TeamPrototype::hasAnyUnits() const
 {
@@ -1167,7 +1168,7 @@ void TeamPrototype::updateState(void)
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyBuildFacility.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototypeInstanceWalks.cpp
 // ?hasAnyBuildFacility@TeamPrototype@@QBE_NXZ present-unmatched
 Bool TeamPrototype::hasAnyBuildFacility() const
 {

@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?isRoomForFileAnnounceMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?isRoomForFileMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
 // Two of NetPacket's isRoomFor family, retail 0x0067DBB0 and 0x0067DC80. Same
 // shape as the four already in NetPacket_isRoomForFrameFamily.cpp -- count only

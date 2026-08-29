@@ -13,6 +13,7 @@
 // wrapper has no surviving source spelling, so its bfme-prefixed name remains
 // descriptive.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionData
 {
 public:
@@ -37,6 +38,7 @@ public:
 	virtual PartitionData *friend_getPartitionData() const = 0; // +0x10
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public BfmeObjectPrefix, virtual public BfmePartitionDataOwner
 {
 public:

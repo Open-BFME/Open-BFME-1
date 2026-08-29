@@ -40,6 +40,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ClientRandomValue.h
 struct GameClientRandomVariable
 {
 	unsigned int m_storage[ 3 ];
