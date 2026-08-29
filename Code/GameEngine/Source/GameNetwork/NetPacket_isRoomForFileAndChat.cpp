@@ -1,19 +1,20 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// readable body of ?isRoomForChatMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
-// readable body of ?isRoomForDisconnectChatMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
-// readable body of ?isRoomForFileAnnounceMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
-// readable body of ?isRoomForFileMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
-// Four more of NetPacket's isRoomFor family, retail 0x0067DBB0, 0x0067DC80,
-// 0x0067DD40 and 0x0067DDE0. Same shape as the four already in
-// NetPacket_isRoomForFrameFamily.cpp -- count only the headers that would have
-// to be written, add the payload, compare against MAX_PACKET_SIZE -- and the
-// payload arithmetic is the same each FillBufferWith body writes and each
-// GetXxxCommandSize helper counts.
+// Two of NetPacket's isRoomFor family, retail 0x0067DBB0 and 0x0067DC80. Same
+// shape as the four already in NetPacket_isRoomForFrameFamily.cpp -- count only
+// the headers that would have to be written, add the payload, compare against
+// MAX_PACKET_SIZE -- and the payload arithmetic is the same each
+// FillBufferWith body writes and each GetXxxCommandSize helper counts.
 //
-// Named by their getters, all four already ledgered:
-// getPortableFilename@NetFileCommandMsg, getPortableFilename@NetFileAnnounceCommandMsg,
-// getText@NetDisconnectChatCommandMsg and getText@NetChatCommandMsg.
+// Named by their getters, both already ledgered:
+// getPortableFilename@NetFileCommandMsg and getPortableFilename@NetFileAnnounceCommandMsg.
+//
+// The two chat twins that used to sit here now live in NetPacket.cpp. These two
+// cannot follow: the string they measure is an AsciiString, and the reference
+// AsciiString inlines its release as an InterlockedDecrement where retail calls
+// one out of line. UnicodeString's release is already out of line in that
+// header, which is the whole reason the chat pair compiles to retail's bytes
+// inside NetPacket.cpp and this pair does not.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -73,8 +74,6 @@ public:
 protected:
 	Bool isRoomForFileMessage(NetCommandRef *msg);
 	Bool isRoomForFileAnnounceMessage(NetCommandRef *msg);
-	Bool isRoomForDisconnectChatMessage(NetCommandRef *msg);
-	Bool isRoomForChatMessage(NetCommandRef *msg);
 
 public:
 
@@ -113,8 +112,6 @@ private:
 	BfmeStringData *m_data;
 };
 
-typedef unsigned short WideChar;
-
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileCommandMsg : public NetCommandMsg
 {
@@ -128,20 +125,6 @@ class NetFileAnnounceCommandMsg : public NetCommandMsg
 {
 public:
 	StringBase<char> getPortableFilename(void);	// ILT thunk 0x0003D50F
-};
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
-class NetDisconnectChatCommandMsg : public NetCommandMsg
-{
-public:
-	StringBase<WideChar> getText(void);		// ILT thunk 0x00015901
-};
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
-class NetChatCommandMsg : public NetCommandMsg
-{
-public:
-	StringBase<WideChar> getText(void);		// ILT thunk 0x00025338
 };
 
 Bool NetPacket::isRoomForFileMessage(NetCommandRef *msg) {
@@ -204,61 +187,3 @@ Bool NetPacket::isRoomForFileAnnounceMessage(NetCommandRef *msg) {
 	return true;
 }
 
-Bool NetPacket::isRoomForDisconnectChatMessage(NetCommandRef *msg) {
-	Int len = 0;
-	NetDisconnectChatCommandMsg *cmdMsg = (NetDisconnectChatCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-		++len;
-		len += sizeof(UnsignedByte);
-	}
-	if (m_lastRelay != msg->getRelay()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-		++len;
-		len += sizeof(UnsignedByte);
-	}
-
-	++len; // the 'D'
-	len += sizeof(UnsignedByte); // string length
-	UnsignedByte textLen = cmdMsg->getText().getLength();
-	len += textLen * sizeof(UnsignedShort);
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return false;
-	}
-	return true;
-}
-
-Bool NetPacket::isRoomForChatMessage(NetCommandRef *msg) {
-	Bool needNewCommandID = false;
-	Int len = 0;
-	NetChatCommandMsg *cmdMsg = (NetChatCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
-		++len;
-		len += sizeof(UnsignedByte);
-	}
-	if (m_lastFrame != cmdMsg->getExecutionFrame()) {
-		len += sizeof(UnsignedInt) + sizeof(UnsignedByte);
-	}
-	if (m_lastRelay != msg->getRelay()) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
-		++len;
-		len += sizeof(UnsignedByte);
-		needNewCommandID = true;
-	}
-	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == true)) {
-		len += sizeof(UnsignedShort) + sizeof(UnsignedByte);
-	}
-
-	++len; // the 'D'
-	len += sizeof(UnsignedByte); // string length
-	UnsignedByte textLen = cmdMsg->getText().getLength();
-	len += textLen * sizeof(UnsignedShort);
-	len += sizeof(Int); // playerMask
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return false;
-	}
-	return true;
-}
