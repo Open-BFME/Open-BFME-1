@@ -1194,3 +1194,32 @@ Clear the marker first, then build. Two agents hit this independently, one of
 them on three separate folds before spotting it, and one body (Object::setLayer)
 did turn out to match once the marker was dropped -- which is the trap: the
 message is sometimes right by accident.
+
+## Three string levers, three symptoms: pick by which operation retail calls
+
+"Retail calls it, we inline it" has three different string shapes and three
+different fixes. They are not interchangeable and reaching for the wrong one
+costs a build each time. All three are per-file cl-line or TU-local changes, so
+none costs a full-tree gate:
+
+  inlined DESTRUCTOR  -> /Ireference/shims/asciistringsetoutofline   (5 TUs use it)
+  inlined COMPARE     -> a TU-local view of retail's eight-byte header; the
+                         include-path shims do NOT substitute, because they give
+                         the right header size and a strcmp-based compare where
+                         retail does a length-bounded memcmp
+  inlined CONSTRUCTOR -> /Ireference/shims/campaignmanagerascii      (71 TUs use it)
+                         plus /ICode/Libraries/Source/WWVegas/WWLib for string_base.h
+
+Note asciistringsetoutofline does NOT fix an inlined constructor -- it leaves
+that one inline. And campaignmanagerascii works for the same reason the by-value
+view does: its constructor is a VISIBLE inline delegating to a StringBase
+constructor declared and never defined. Two agents reached that shape from
+opposite directions, which is the strongest evidence the tree offers about it.
+
+A fourth symptom is NOT a string problem at all: if the residue after the string
+construction matches is an extra vptr store (mov dword ptr [esi+4] right after
+the vtable store), that is a second vptr the vendored hierarchy carries and BFME
+does not. Base and vptr stores come from the CLASS, so no .cpp reaches them, and
+initializer order is not the cause -- base-first and member-first are
+byte-identical. Revert the shim with the body; a TU-wide compile change that
+buys nothing is worse than no change.
