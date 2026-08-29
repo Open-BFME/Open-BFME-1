@@ -2750,18 +2750,46 @@ first pass here grepped for one macro name (`BFME_WIN`) and so counted five
 view-based rows as symbolic because their views were spelled differently. One
 naming convention is not a census.
 
-## A class can be short at the FRONT and correct at the TAIL
+## Displacement is CUMULATIVE: map the whole class with its getters
 
-GameWindow needs +4 at the front (m_status 0x08, m_size 0x0C, m_userData 0x2C)
-while its tail already lands on retail's offsets. Both can only be true if
-compensating bytes sit between them -- and the shim names FOUR BFME-only
-insertions, not one: m_bfmeAnchor +0x04, m_bfmeInputExtra +0x1DC,
-m_bfmeCallbackExtra +0x1F0, m_bfmeCallbackExtra2 +0x1F4.
+GameWindow was read twice and reported wrongly both times -- first as uniformly
++4, then as "short at the front, already correct at the tail". Both were
+artefacts of measuring one end. The truth is a staircase, one step per
+insertion:
 
-A single measured delta at the front is therefore not evidence that the whole
-class is uniformly shifted, and "one insertion lands a dozen near-misses" is the
-kind of framing that survives only until someone enumerates the tail. Check both
-ends before sizing a header pass.
+    +0x2C m_userData  +4     +0x34 m_id      +4     +0x3C m_style    +4
+    +0x1EC m_tooltip  +8
+    +0x1F8 m_next    +16     +0x200 m_parent +16    +0x210 m_layout +16
+
+which is exactly the four BFME-only insertions in `reference/shims/gamewindow`
+(+0x04, +0x1DC, +0x1F0, +0x1F4) accumulating.
+
+**A sizeof tells you the TOTAL, never the distribution.** 112 against 108 is
+consistent with one insertion anywhere, or four. Do not size a header pass from
+one measured delta or from a sizeof.
+
+**The cheap instrument is the getters.** Each getter is a single load, so each
+PROVES one retail offset outright -- no build, no view, no inference. Read a
+class's getters together and the whole displacement falls out in one pass.
+Thirteen of them mapped GameWindow after two wrong readings from partial data.
+
+## A getter and a setter for one member cannot disagree about its offset
+
+The cheapest identity evidence in the tree, and it settled a question that had
+already been escalated as unanswerable.
+
+Three matched GameWindow setters write `this+0x1F8`, `+0x1FC` and `+0x200` as
+plain `m_nextLayout = next;` bodies. The getters prove those offsets are
+**m_next, m_prev and m_parent** -- m_nextLayout sits at +0x208. So
+`?winSetNextInLayout@…@Z` at 0x001BD6A0, `?winSetPrevInLayout@…@Z` at
+0x00478DD0 and `?winSetLayout@…QAEX…@Z` at 0x0026ED70 are misnamed: they are
+winSetNext, winSetPrev and winSetParent, matching only because our header puts
+m_nextLayout exactly where retail puts m_next.
+
+Third instance of a row green because a layout error cancels a naming error,
+after the VertexMaterialClass colour-source pair. Reach for the getter/setter
+pair BEFORE escalating an identity question -- it is one disassembly per member
+and it answers outright.
 
 ## Check a candidate shim against the BODIES, not against the destination
 
