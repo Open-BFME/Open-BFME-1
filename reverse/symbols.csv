@@ -80003,3 +80003,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1Open2Elem2EB190@@QAE@XZ,0x0002AB2B,Open2 0x2eb190 vector twin callee
 ??$__copy@PAVOpen2Elem7716A0@@PAV1@H@_STL@@YAPAVOpen2Elem7716A0@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00038CD5,Open2 0x7716a0 vector twin callee
 ??1Open2Elem7716A0@@QAE@XZ,0x0003F4FE,Open2 0x7716a0 vector twin callee
+?bfmeGetLastShotPosition@BfmeFiringTracker@@QBE?AUBfmeFiringPosition@@XZ,0x000228BD,Open-BFME5 ILT to body 0x001BD7D0; FiringTracker+0x48 last-shot position getter used by Object wrapper 0x001BF970
