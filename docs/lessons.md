@@ -1568,3 +1568,39 @@ lacks (MOB_NEXUS 46 against 42, IGNORED_IN_GUI 47 against 43, INERT 0x58 against
 0x54, PROJECTILE bit 25 against 22), GameClient's vtable is off by three and five
 slots, and DC_GENERIC_PIXEL_SHADER_1_1 is 3 where the header numbers it 9. All
 three were reported as tree-wide hazards; all three are bounded the same way.
+
+## BFME ships BOTH module layouts -- a family lever is not a family fact
+
+23 donors carry a marker for a ??0X@@QAE@PAVThing@@PBVModuleData@@@Z, every one
+holding a constructor byte-identical to what its destination already spells.
+What keeps them apart is the module hierarchy: retail's Module has no
+MemoryPoolObject base, so BehaviorModule spans 0x0C and the second vtable store
+lands there, while the wide layout puts a fourth vptr at +0x04 and shifts
+everything. reference/shims/sweep/Common/Module.h carries the switch as
+BFME_MODULE_NO_MPO and thirty-odd files already set it.
+
+Screened one file at a time -- add the define, require the destination's OWN
+rows to stay green, then diff with explain_mismatch:
+    6 land    (CashHackSpecialPower, GrantUpgradeCreate, OCLSpecialPower,
+               BoneFXDamage, SupplyWarehouseCreate, W3DTreeDraw)
+   10 turn their destination RED, so their module layout genuinely is the wide
+      one (SlowDeathBehavior, WorkerAIUpdate, BoneFXUpdate, BattlePlanUpdate,
+      StructureCollapseUpdate, ToppleUpdate, SupplyWarehouseDockUpdate,
+      OCLUpdate, GarrisonContain, BridgeBehavior)
+    6 miss for unrelated reasons, 3 are genuinely different bodies, 1 has no
+      marker pair to consume.
+
+SETTING THIS DEFINE TREE-WIDE WOULD BREAK TEN FILES. The screen is per-file and
+cheap; the generalisation is false. Apply the same caution to any switch that
+looks like it characterises a family.
+
+Three of the misses are one finding: retail stores a FOURTH vtable at this+0x18
+that the vendored UpgradeModule hierarchy has nowhere to put -- BehaviorModule
++0x00, UpgradeMux +0x0C and UpgradeModuleInterface +0x10 are all correct, BFME
+simply has one more interface base after them. Header change, not a fold.
+
+## The `// cl:` line must be the FIRST line of the file
+
+Put an explanatory comment above it and every flag on it is silently dropped --
+no error, no warning, and the body then fails for reasons that have nothing to
+do with the edit you made. Explanations go BELOW.
