@@ -1096,7 +1096,6 @@ void W3DTerrainVisual::removeFactionBibDrawable(Drawable *factionBuilding)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisualRemoveFactionBib.cpp
 void W3DTerrainVisual::removeFactionBib(Object *factionBuilding)
 {
 	// Same guard as removeFactionBibDrawable above and as the adder: BFME tests
