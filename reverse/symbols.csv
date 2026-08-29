@@ -73446,6 +73446,7 @@ name,address,notes
 ?bfmeOneNA@BfmeThingNA@@QAEXXZ,0x00002C2A,pin
 ?bfmeOneNF@BfmeSubNF@@QAEXPAX@Z,0x0003AB3E,pin
 ?bfmeOnePC@BfmeSubPC@@QAEXXZ,0x0000DDD7,pin
+?bfmeOneQE@BfmeThingQE@@QAEXXZ,0x000172D8,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73679,6 +73680,7 @@ name,address,notes
 ?bfmeTailMF@BfmeSubMF@@QAEXH@Z,0x0004A1FB,pin
 ?bfmeTailNC@BfmeGlobNC@@QAEXH@Z,0x000206A8,pin
 ?bfmeTailPD@BfmeSubPD@@QAEDHPAUBfmeVecPD@@HH@Z,0x0002ADDD,pin
+?bfmeTailQB@BfmeThingQB@@QAEXXZ,0x0002FF31,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
@@ -73718,6 +73720,7 @@ name,address,notes
 ?bfmeThreeCNG@BfmeBCNG@@QAEXXZ,0x00013A61,pin
 ?bfmeThreeDVB@BfmeSubDVB@@QAEXPAX0@Z,0x00025BBC,pin
 ?bfmeThreeLF@@YAXXZ,0x0002795D,pin
+?bfmeThreeQE@BfmeGlobQE@@QAEXXZ,0x00003A80,pin
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
 ?bfmeTryANA@BfmeThingANA@@QAEHPAX0@Z,0x0003381B,pin
 ?bfmeTwoAPA@@YGPAXPAXPAH@Z,0x009F6BEC,pin
@@ -73768,6 +73771,7 @@ name,address,notes
 ?bfmeTwoNA@BfmeThingNA@@QAEXXZ,0x0003AFE4,pin
 ?bfmeTwoNF@BfmeGlobNF@@QAEXPAXH@Z,0x00006442,pin
 ?bfmeTwoPC@BfmeSubPC@@QAEXXZ,0x00045D72,pin
+?bfmeTwoQE@BfmeSubQE@@QAEXXZ,0x0001117B,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -74891,6 +74895,7 @@ name,address,notes
 ?g_bfmeCoord3DFormat@@3QBDB,0x01144348,address-derived Coord3D format string from retail 0x009D9650
 ?g_bfmeCountBBD@@3HA,0x00F0BD30,pin
 ?g_bfmeCountELH@@3HA,0x00F40594,pin
+?g_bfmeCountQB@@3HA,0x00F04B60,pin
 ?g_bfmeCountSI@@3HA,0x00EED240,pin
 ?g_bfmeCsDWC@@3UBfmeCsDWA@@A,0x00F36E60,pin
 ?g_bfmeCurEYE@@3PAXA,0x00EED5D8,pin
@@ -74921,6 +74926,8 @@ name,address,notes
 ?g_bfmeGlobNF@@3PAVBfmeGlobNF@@A,0x00EF0898,pin
 ?g_bfmeGlobNG@@3PAVBfmeGlobNG@@A,0x00EED668,pin
 ?g_bfmeGlobPB@@3PAVBfmeGlobPB@@A,0x00EF8058,pin
+?g_bfmeGlobQC@@3PAVBfmeGlobQC@@A,0x00EF8058,pin
+?g_bfmeGlobQE@@3PAVBfmeGlobQE@@A,0x00F06EEC,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeICoord2DFormat@@3QBDB,0x01144414,address-derived ICoord2D format string from retail 0x009D97C5
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
@@ -75030,6 +75037,8 @@ name,address,notes
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
 ?g_bfmeUnsignedShortFormat@@3QBDB,0x01144328,address-derived unsigned-short format string from retail 0x009D95BF
 ?g_bfmeValMD@@3HA,0x00EB7D80,pin
+?g_bfmeVftAQB@@3PADA,0x00D22470,pin
+?g_bfmeVftBQB@@3PADA,0x00D223A0,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeWhatBGE@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWhatBKG@@3PAXA,0x00EC3BB8,pin
