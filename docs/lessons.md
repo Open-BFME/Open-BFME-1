@@ -3002,3 +3002,22 @@ does not tell you which:
 Three checks before costing a miss: is the row a 5-byte jmp stub (its miss count
 is meaningless); do the diffs sit at the END of the row (truncation, not drift);
 do the deltas agree (one lever, or several).
+
+## A register-allocation wall moves on a TU FLAG, never on a source rewrite
+
+The zero-register hoist is a class now, not a one-off -- it has blocked three
+bodies. The instructive part is what beat it the one time it was beaten: a TU
+FLAG (a string shim on the cl line), not a source shape. Seven separate source
+rewrites of `RequestSetName` produced nothing at all.
+
+That is the cost rule. When a body is exact in size and structure and differs
+only in which registers hold which values, rewriting the source is close to
+free of information: MSVC's allocator is responding to what the TU declares and
+includes, not to how you spell the statement. Reach for the cl line -- a shim,
+an inliner flag, an STLport knob -- or record the wall and move on.
+
+Two corollaries already in this file, now with a shared cause: a fresh view can
+make a body WORSE by moving allocation more than the corrected offset was worth
+(objectChangedTeam, 62.4% to 29.7%), and six correct offsets applied at once did
+exactly that. Same mechanism, opposite direction -- allocation is a TU-level
+response, so TU-level inputs are the only reliable lever on it.
