@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/asciistring8 /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -355,13 +355,22 @@ UpgradeTemplate *UpgradeCenter::firstUpgradeTemplate( void )
 //-------------------------------------------------------------------------------------------------
 /** Find upgrade matching name key */
 //-------------------------------------------------------------------------------------------------
+// The link to the next template is at UpgradeTemplate+0x108, not the vendored
+// +0xF8. The name key at +0x0C and the list head at UpgradeCenter+0x08 are both
+// already right, and this walk is what retail inlines into findUpgrade below.
+struct BfmeUpgradeTemplateLink
+{
+	unsigned char m_unreconstructed_000[ 0x108 ];
+	const UpgradeTemplate *m_next;				///< retail this+0x108
+};
+
 // ?findUpgradeByKey@UpgradeCenter@@QBEPBVUpgradeTemplate@@W4NameKeyType@@@Z present-unmatched
 const UpgradeTemplate *UpgradeCenter::findUpgradeByKey( NameKeyType key ) const
 {
 	const UpgradeTemplate *upgrade;
 
 	// search list
-	for( upgrade = m_upgradeList; upgrade; upgrade = upgrade->friend_getNext() )
+	for( upgrade = m_upgradeList; upgrade; upgrade = ((const BfmeUpgradeTemplateLink *)upgrade)->m_next )
 		if( upgrade->getUpgradeNameKey() == key )
 			return upgrade;
 
@@ -372,8 +381,6 @@ const UpgradeTemplate *UpgradeCenter::findUpgradeByKey( NameKeyType key ) const
 //-------------------------------------------------------------------------------------------------
 /** Find upgrade matching name */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/UpgradeCenter_findUpgrade.cpp
-// ?findUpgrade@UpgradeCenter@@QBEPBVUpgradeTemplate@@ABVAsciiString@@@Z present-unmatched
 const UpgradeTemplate *UpgradeCenter::findUpgrade( const AsciiString& name ) const
 {
 
