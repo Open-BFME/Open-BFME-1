@@ -72760,6 +72760,7 @@ name,address,notes
 ?bfmeCheck1003@BfmeA1003@@QAEDPAX@Z,0x000422E9,pin
 ?bfmeCheck1026@BfmeQ1026@@QAEDHHH@Z,0x0002BC92,pin
 ?bfmeCheck1170@BfmeM1170@@QAEDXZ,0x00023FA6,pin
+?bfmeCheck1181@BfmeP1181@@QAEHPAUBfmePair1181@@0PAX0@Z,0x00013DC2,pin
 ?bfmeCheck961@BfmeGate961@@QAEDXZ,0x00041FF1,pin
 ?bfmeCheck986B@@YAHXZ,0x000162A7,pin
 ?bfmeCheckA@@YAHPAX@Z,0x00894D90,Open-BFME5 the guard the cleanup at 0x00783A50 calls
@@ -72843,6 +72844,7 @@ name,address,notes
 ?bfmeConv1066@@YAPAVBfmeX1066@@PAVBfmeH1066@@@Z,0x00010901,pin
 ?bfmeConv1087@BfmeN1087@@QAEHH@Z,0x000483B5,pin
 ?bfmeConv1101@BfmeC1101@@QAEHPAD@Z,0x0003ADD7,pin
+?bfmeConv1181@BfmeP1181@@QAEXPAXPAUBfmePair1181@@@Z,0x000171E8,pin
 ?bfmeConv982B@BfmeY982@@QAEPAV1@XZ,0x0000DE9F,pin
 ?bfmeConv998@BfmeC998@@QAEHH@Z,0x00927230,pin
 ?bfmeCopy1029@@YAXPADH0@Z,0x007E8640,pin
