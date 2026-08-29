@@ -470,6 +470,8 @@ name,address,notes
 ??$_Construct@VAsciiString@@V1@@_STL@@YAXPAVAsciiString@@ABV1@@Z,0x0004725D,resweep callee back-solved
 ??$_Construct@VGameResultsResponse@@V1@@_STL@@YAXPAVGameResultsResponse@@ABV1@@Z,0x0000DCE7
 ??$_Construct@VLivingWorldPlayerArmy@@V1@@_STL@@YAXPAVLivingWorldPlayerArmy@@ABV1@@Z,0x000344A0,Open-BFME5 REL32 pin from addPlayerArmy; ILT thunk to 0x003661E0
+??$_Construct@VOpen2Elem063700@@V1@@_STL@@YAXPAVOpen2Elem063700@@ABV1@@Z,0x00007554,Open2 0x00063700 vector element construct (ILT)
+??$_Construct@VOpen2Elem247180@@V1@@_STL@@YAXPAVOpen2Elem247180@@ABV1@@Z,0x00028308,Open2 0x00247180 vector element construct (ILT)
 ??$_Construct@VPeerResponse@@V1@@_STL@@YAXPAVPeerResponse@@ABV1@@Z,0x0003BB51,ILT the queue push calls at 0x0064CB49 to build the element in place
 ??$_Construct@VPingRequest@@V1@@_STL@@YAXPAVPingRequest@@ABV1@@Z,0x00049828
 ??$_Construct@VPingResponse@@V1@@_STL@@YAXPAVPingResponse@@ABV1@@Z,0x0003C9E8
@@ -9113,6 +9115,7 @@ name,address,notes
 ??4MeshMatDescClass@@QAEAAV0@ABV0@@Z,0x0092BB00,MeshMatDesc copy constructor direct same-TU call target
 ??4MultiplayerColorDefinition@@QAEAAV0@ABV0@@Z,0x00027B56,ILT thunk for MultiplayerColorDefinition::operator= found via decode_calls at newMultiplayerColorDefinition call site
 ??4OBBoxClass@@QAEAAV0@ABV0@@Z,0x009316A0
+??4Open2Stats6589E0@@QAEAAV0@ABV0@@Z,0x0001C783,Open2 0x006589E0 stats assignment (ILT)
 ??4PSPlayerStats@@QAEAAV0@ABV0@@Z,0x000A5950,Open-BFME5 ILT the BFMENetworkQueueItem1 assignment at 0x00658340 copies its stats through
 ??4PSRequest@@QAEAAV0@ABV0@@Z,0x000336A4,derived-ICF
 ??4Parameter@@QAEAAV0@ABV0@@Z,0x00887C90,ICF-folded with the shared AsciiString::set body; Parameter copy in Condition::duplicate
@@ -10760,6 +10763,8 @@ name,address,notes
 ?_M_clear@?$vector@URva0077AEA0Element@_STL@@V?$allocator@URva0077AEA0Element@_STL@@@2@@_STL@@IAEXXZ,0x00004B74,Open-BFME5 the vector _M_clear the insert at 0x0077AEA0 calls
 ?_M_clear@?$vector@UVideo@@V?$allocator@UVideo@@@_STL@@@_STL@@IAEXXZ,0x0001E420,ILT the Video vector overflow calls at 0x006FA8B6 to clear the old buffer
 ?_M_clear@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@IAEXXZ,0x0001C9B8,Open-BFME5 ILT thunk to the retail AsciiString vector clear body at 0x007578F0
+?_M_clear@?$vector@VOpen2Elem063700@@V?$allocator@VOpen2Elem063700@@@_STL@@@_STL@@IAEXXZ,0x0003588C,Open2 0x00063700 vector clear (ILT)
+?_M_clear@?$vector@VOpen2Elem247180@@V?$allocator@VOpen2Elem247180@@@_STL@@@_STL@@IAEXXZ,0x00022534,Open2 0x00247180 vector clear (ILT)
 ?_M_clear@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@IAEXXZ,0x0001FE92
 ?_M_clear@?$vector@VUnicodeString@@V?$allocator@VUnicodeString@@@_STL@@@_STL@@IAEXXZ,0x00026D41,tail call of vector<UnicodeString>::_M_insert_overflow at 0x00532AEA
 ?_M_clear@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEXXZ,0x00008837,ILT thunk used by call site
@@ -72914,6 +72919,7 @@ name,address,notes
 ?bfmeFind@BfmeChainOwner@@QAEPAVBfmeChainResult@@H@Z,0x0002F52C,Open-BFME5 ILT the four lookups around 0x002197E0 call
 ?bfmeFind@BfmeFinder@@QAEPAXXZ,0x000265A8,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 call
 ?bfmeFind@Gen_003C02B0@@AAEPAVBfmeItemAN@@H@Z,0x00032A56,Open-BFME5 the ICF thunk (to 0x00432A56) the remove at 0x003C02B0 looks its item up through
+?bfmeFindA1001@BfmeLook1001@@QAEPAVBfmeX1001@@H@Z,0x0001F253,pin
 ?bfmeFindAKB@BfmeSubAKB@@QAEPAVBfmeFoundAKB@@H@Z,0x0001B185,pin
 ?bfmeFindAWB@BfmeKeyAWB@@QAEPAUBfmeNodeAWB@@XZ,0x00046538,pin
 ?bfmeFindAttributeModifierPoolUpdate@Object@@ABEPAVAttributeModifierPoolUpdate@@XZ,0x000202ED,Open-BFME5 ILT thunk to finder body 0x001BF830; body proves AttributeModifierPoolUpdate from its module-name key literal while bfmeFind records that the original verb is unresolved
@@ -73407,6 +73413,7 @@ name,address,notes
 ?bfmeJoinBSE@@YAPAXPAX0@Z,0x00042FA0,pin
 ?bfmeJoinENLa@@YAPAXPAX0@Z,0x00023254,pin
 ?bfmeJoinENLb@@YAPAXPAX0@Z,0x0003F7CE,pin
+?bfmeKind1001@BfmeUnit1001@@QAEDH@Z,0x0003251F,pin
 ?bfmeKind956@BfmeAI956@@QAEHXZ,0x0001E33A,pin
 ?bfmeKindBVD@BfmeSubBVD@@QAEHXZ,0x0001E33A,pin
 ?bfmeKindCGG@BfmeOtherCGG@@QAEHPAX@Z,0x0004A719,pin
@@ -73620,6 +73627,7 @@ name,address,notes
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
+?bfmeOwner1001@BfmeX1001@@QAEPAXXZ,0x00020824,pin
 ?bfmePrep911E@BfmeSub911E@@QAEXXZ,0x0090F140,pin
 ?bfmePrep986C@BfmeC986@@QAEXXZ,0x00006258,pin
 ?bfmePushBack@BFMEAnimateWindowListPush@@QAEXABQAVAnimateWindow@@@Z,0x00022D36,BFME out-of-line list<AnimateWindow*>::push_back body 0x45DAE0 via ILT thunk
@@ -73644,6 +73652,7 @@ name,address,notes
 ?bfmeRandom2B7@@YANHMPBDH@Z,0x0002CCA5,pin
 ?bfmeRangeBase@WeaponTemplate@@ABEMPBVObject@@ABVWeaponBonus@@M@Z,0x00009598,Open-BFME5 ILT thunk to body 0x001E2670; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 gets its unbonused range from it with the negated z of the position; address-derived name
 ?bfmeRangeErrorQX@BfmeThingQX@@QAEXXZ,0x000132CD,pin
+?bfmeReady1001@BfmeUnit1001@@QAEDXZ,0x000331C7,pin
 ?bfmeReady986C@BfmeC986@@QAEDXZ,0x000104B0,pin
 ?bfmeRebuild@BFMERopeDrawableGetPositionShim@@AAEXH@Z,0x00034C3E,Open-BFME5 ILT the rope getPosition at 0x0041D090 rebuilds through
 ?bfmeRefreshPartitionCells@Object@@QAEXXZ,0x000292DF,Open-BFME5 ILT thunk to body 0x001BFD70; Object virtual-base lookup at +0x68 reaches friend_getPartitionData slot 4 twice then calls the combined dirty-list unlink and cell update; bfme prefix records unrecovered retail spelling
@@ -75321,6 +75330,7 @@ name,address,notes
 ?g_bfmeListEYE@@3PAUBfmeListEYE@@A,0x00EED5DC,pin
 ?g_bfmeLog993@@3PAVBfmeLog993@@A,0x00EF19E8,pin
 ?g_bfmeLog995@@3PAVBfmeLog995@@A,0x00EF19E8,pin
+?g_bfmeLook1001@@3PAVBfmeLook1001@@A,0x00EF0898,pin
 ?g_bfmeLook978@@3PAVBfmeLook978@@A,0x00EF0898,pin
 ?g_bfmeLook979@@3PAVBfmeLook979@@A,0x00EF0898,pin
 ?g_bfmeLook987@@3PAVBfmeLook987@@A,0x00EF0898,pin
@@ -78006,6 +78016,7 @@ name,address,notes
 ?refreshTerrain@Radar@@UAEXPAVTerrainLogic@@@Z,0x0089F420,pinharvest x1 (body)
 ?registerBannerAptCallbacks@@YAXXZ,0x0003DE6F,BannerUI init ILT to the helper that registers AptBannerUI OnBttnBanner and OnInitialized callbacks
 ?registerGameWindow@AnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z,0x00045322,ILT thunk to the window animation registration
+?registerGameWindow@BfmeAnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z,0x00045322,Open-BFME5 view-class spelling of the ILT already pinned as ?registerGameWindow@AnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z; ControlBar::animateSpecialPowerShortcut reaches it through the view that carries the retail field offsets
 ?registerObj@BfmeMgrF1D@@QAEPAXPAX@Z,0x00028560,pin
 ?registerObject@PartitionManager@@QAEXPAVObject@@@Z,0x001086C0,Open-BFME5 callee of ?friend_notifyOfNewMapBoundary@Object@@QAEXXZ at 0x001BED80 via ILT 0x00001F5A
 ?registerParser@DataChunkInput@@QAEXABVAsciiString@@0P6A_NAAV1@PAUDataChunkInfo@@PAX@Z3@Z,0x00015BD1,Open-BFME5 DataChunkInput parser registration ILT
@@ -78200,6 +78211,7 @@ name,address,notes
 ?revealMapForPlayer@PartitionManagerImpl008F8D60@@QAEXH@Z,0x008F8D60,BFME PartitionManager implementation delegate target from the public wrapper at 0x008F73D0
 ?revealMapForPlayerPermanently@PartitionManager@@QAEXH@Z,0x008F73E0,REL32 pin from ScriptActions::doBorderSwitch @0x2EFC50
 ?reverse@GameWindowTransitionsHandler@@QAEXVAsciiString@@@Z,0x0048AEC0,WOLLoginMenuShutdown transition helper
+?reverseAnimateWindow@BfmeAnimateWindowManager@@QAEXXZ,0x00027B65,Open-BFME5 ILT reached by ControlBar::animateSpecialPowerShortcut; NOT an alias of an existing pin -- this address was previously unpinned, taken from the donor and byte-proved by the rel32 in that call
 ?run@BfmeSub58_ACF@@QAE_NPAX0@Z,0x00004633,pin
 ?run@BitFlagsCountInverseIntersectionShim@@QBEHABV1@@Z,0x00786BD0,BitFlags countInverseIntersection incremental-link thunk target through a TU-local forwarding shim
 ?run@BitFlagsHFCountInverseIntersectionShim@@QBEHABV1@@Z,0x00421830,BitFlags@117 countInverseIntersection incremental-link thunk target through a TU-local forwarding shim
@@ -78415,6 +78427,7 @@ name,address,notes
 ?setGridTransform@WaterRenderObjClass@@QAEXMMMM@Z,0x00023628,pinharvest x1 (thunk)
 ?setGridTransform@WaterRenderObjClass@@QAEXPBVMatrix3D@@@Z,0x000151D6,pinharvest x1 (thunk)
 ?setGridTransform@WaterRenderObjClass@@QAEXPBVMatrix3D@@@Z,0x00017120,pinharvest x1 (thunk)
+?setGroup@BfmeRankTransitionHandler@@QAEXVAsciiString@@H@Z,0x00045C28,Open-BFME5 ILT reached by ControlBar::onPlayerRankChanged; BFME setGroup takes a second always-zero argument the vendored one-argument declaration cannot spell, so it is called through a view; address from the donor and byte-proved by the rel32
 ?setGroup@GameWindowTransitionsHandler@@QAEXVAsciiString@@_N@Z,0x0048AD80,this=TheTransitionHandler 0x012F3330; ZH GameWindowTransitionsHandler::setGroup line for line under a BFME critical section (+0x34): empty name and immediate -> m_currentGroup(+0x20)=NULL; immediate -> skip 0x0048A240 and findGroup 0x0048A520 into +0x20 then init 0x0048AC10; else reverse 0x0048A180 when not fireOnce/reversed and findGroup into m_pendingGroup +0x24; same TU as ??0ScoreScaleUpTransition 0x0048B8D0 and parseWindowTransitions 0x0048B7C0; hideEndGameScreen passes MPorSkirmishFadeToScoreScreen
 ?setGroup@TransitionHandler@@QAEXVAsciiString@@H@Z,0x00045C28,TransitionHandler::setGroup via ILT thunk
 ?setID@Drawable@@QAEXW4DrawableID@@@Z,0x00005A7E,Open-BFME5 ILT; called by ?registerDrawable@GameClient@@UAEXPAVDrawable@@@Z at 0x0042E530
@@ -79962,11 +79975,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?registerGameWindow@BfmeAnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z,0x00045322,Open-BFME5 view-class spelling of the ILT already pinned as ?registerGameWindow@AnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z; ControlBar::animateSpecialPowerShortcut reaches it through the view that carries the retail field offsets
-?reverseAnimateWindow@BfmeAnimateWindowManager@@QAEXXZ,0x00027B65,Open-BFME5 ILT reached by ControlBar::animateSpecialPowerShortcut; NOT an alias of an existing pin -- this address was previously unpinned, taken from the donor and byte-proved by the rel32 in that call
-??$_Construct@VOpen2Elem063700@@V1@@_STL@@YAXPAVOpen2Elem063700@@ABV1@@Z,0x00007554,Open2 0x00063700 vector element construct (ILT)
-?_M_clear@?$vector@VOpen2Elem063700@@V?$allocator@VOpen2Elem063700@@@_STL@@@_STL@@IAEXXZ,0x0003588C,Open2 0x00063700 vector clear (ILT)
-??$_Construct@VOpen2Elem247180@@V1@@_STL@@YAXPAVOpen2Elem247180@@ABV1@@Z,0x00028308,Open2 0x00247180 vector element construct (ILT)
-?_M_clear@?$vector@VOpen2Elem247180@@V?$allocator@VOpen2Elem247180@@@_STL@@@_STL@@IAEXXZ,0x00022534,Open2 0x00247180 vector clear (ILT)
-??4Open2Stats6589E0@@QAEAAV0@ABV0@@Z,0x0001C783,Open2 0x006589E0 stats assignment (ILT)
-?setGroup@BfmeRankTransitionHandler@@QAEXVAsciiString@@H@Z,0x00045C28,Open-BFME5 ILT reached by ControlBar::onPlayerRankChanged; BFME setGroup takes a second always-zero argument the vendored one-argument declaration cannot spell, so it is called through a view; address from the donor and byte-proved by the rel32
