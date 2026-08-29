@@ -2071,6 +2071,7 @@ name,address,notes
 ??0BfmeArmyIcon@@QAE@ABVAsciiString@@@Z,0x00023ED9,retail findArmyIcon body directly encodes the BfmeArmyIcon constructor thunk
 ??0BfmeArmyIconBase@@QAE@VAsciiString@@@Z,0x000125F3,base constructor thunk called by BfmeArmyIcon
 ??0BfmeAttackNuggetBase@@QAE@XZ,0x0001B522,Open-BFME5 ILT the AttackNugget constructor at 0x0059EB00 calls its base through; it jumps to 0x00489210
+??0BfmeBaseJC@@QAE@PAX@Z,0x0090E3D0,pin
 ??0BfmeBaseP0@@QAE@PAX0@Z,0x000170E4,Open-BFME5 the two-argument first base the triple-base constructors at 0x00200AE0 and siblings forward to
 ??0BfmeBinkPlayerMember@@QAE@XZ,0x0002833F,Open-BFME5 ILT the member constructor BinkVideoPlayer at 0x00691230 calls for its member at +0x0C
 ??0BfmeCellGrid@@QAE@HHMM@Z,0x001B1830,thiscall ret 0x10 (width height cellSize offset) into a 0x1C-byte object: +0 w +4 h +8 w*h +0xC cellSize +0x10 offset +0x14 vector-new of w*h 0x88-byte cells +0x18 w*h dwords; assert text Could not create Cell Grid for VictorySystem! 0x0109C958; both callers are VictorySystem::newMap 0x001DF5DF/0x001DF628
@@ -72507,6 +72508,7 @@ name,address,notes
 ?bfmeCallFEA@BfmeGlobFEA@@QAEXPAXH@Z,0x0003A279,pin
 ?bfmeCallFED@BfmeBaseFED@@QAEXPAXH@Z,0x000157DA,pin
 ?bfmeCallFHA@@YAHPAX0@Z,0x00041164,pin
+?bfmeCallJA@BfmeHookJA@@QAEPAUBfmeSlotJA@@XZ,0x000022BB,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -73657,6 +73659,7 @@ name,address,notes
 ?bfmeTailELGb@BfmeSubELGb@@QAEXPAX@Z,0x00032975,pin
 ?bfmeTailFFC@BfmeSubFFC@@QAEXH@Z,0x0001C882,pin
 ?bfmeTailFHG@@YGXPAX0HH@Z,0x0000F105,pin
+?bfmeTailJB@BfmeTargetJB@@QAE_NXZ,0x0001FF91,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
@@ -74876,6 +74879,7 @@ name,address,notes
 ?g_bfmeFreeDXG@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeGlobGI@@3PAVBfmeGlobGI@@A,0x00EF076C,pin
 ?g_bfmeGlobID@@3PAVBfmeGlobID@@A,0x00EED5F0,pin
+?g_bfmeGlobJB@@3PAVBfmeGlobJB@@A,0x00EF148C,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeICoord2DFormat@@3QBDB,0x01144414,address-derived ICoord2D format string from retail 0x009D97C5
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
