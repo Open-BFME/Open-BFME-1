@@ -72469,6 +72469,7 @@ name,address,notes
 ?bfmeCall940A@@YGHPAX@Z,0x00012224,pin
 ?bfmeCall940E@BfmeGlob940E@@QAEXPAX@Z,0x0001D0DE,pin
 ?bfmeCall940G@BfmeB940G@@QAEXPAXH@Z,0x0003EEBE,pin
+?bfmeCall941G@@YGXPAXPAD@Z,0x0000B00F,pin
 ?bfmeCallCCH@@YAHPAX0H@Z,0x00009084,pin
 ?bfmeCallCIB@@YAHPAX000@Z,0x007EC5C0,pin
 ?bfmeCallCIC@@YAHPAX000@Z,0x007ECE60,pin
@@ -73471,6 +73472,7 @@ name,address,notes
 ?bfmeOne934G@BfmeThing934G@@QAEHXZ,0x00048761,pin
 ?bfmeOne940B@BfmeThing940B@@QAEXXZ,0x0003D0EB,pin
 ?bfmeOne940C@BfmeThing940C@@QAEXXZ,0x00015E0B,pin
+?bfmeOne941F@BfmeThing941F@@QAEXXZ,0x0002037E,pin
 ?bfmeOneAPA@@YGPAXPAXPAH@Z,0x009F6BF2,pin
 ?bfmeOneBKE@@YGXPAX@Z,0x0090C610,pin
 ?bfmeOneBKF@BfmePartBKF@@QAEXXZ,0x0090DF10,pin
@@ -73838,6 +73840,7 @@ name,address,notes
 ?bfmeTwo928F@BfmeThing928F@@QAEXXZ,0x0001C9A9,pin
 ?bfmeTwo934G@BfmeThing934G@@QAEHXZ,0x00031AFC,pin
 ?bfmeTwo940B@BfmeThing940B@@QAEXXZ,0x00001AFA,pin
+?bfmeTwo941F@BfmeThing941F@@QAEXPAX@Z,0x00023D49,pin
 ?bfmeTwoAPA@@YGPAXPAXPAH@Z,0x009F6BEC,pin
 ?bfmeTwoBKE@@YAXPAX@Z,0x00038389,pin
 ?bfmeTwoBOF@BfmeThingBOF@@QAEXXZ,0x00004156,pin
