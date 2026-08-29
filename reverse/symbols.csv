@@ -74991,6 +74991,7 @@ name,address,notes
 ?findSub@BfmeObj9E0@@QAEPAVBfmeSubVfn9E0@@H@Z,0x0001B185,pin
 ?findSupplyCenter@AIPlayer@@IAEPAVObject@@H@Z,0x0001E0FB,Open-BFME5 ILT; called by ?isSupplySourceSafe@AIPlayer@@QAE_NH@Z at 0x00166A10
 ?findTarget@BfmeFinder78E@@QAEPAVBfmeTarget78E@@XZ,0x00020824,pin
+?findTeam@TeamFactory@@QAEPAVTeam@@ABVAsciiString@@@Z,0x000273EF,Open-BFME5 ILT thunk to TeamFactory::findTeam used by Object::restoreOriginalTeam
 ?findTeamPrototype@TeamFactory@@QAEPAVTeamPrototype@@ABVAsciiString@@0@Z,0x000EFE10,call displacement in initTeam @0x000F8195
 ?findTemplate@BFMEThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z,0x00028560,INI retail ThingFactory facade
 ?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z,0x00028560,BFME one-arg ThingFactory findTemplate; ScriptActions doAddCommandBarButton facade
