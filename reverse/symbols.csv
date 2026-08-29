@@ -72590,6 +72590,7 @@ name,address,notes
 ?bfmeChanged@Gen_00505550@@AAEXXZ,0x00023A29,Open-BFME5 the member the change-setter at 0x00505550 calls
 ?bfmeChanged@Gen_005899B0@@AAEXXZ,0x0001D354,Open-BFME5 the member the change-setter at 0x005899B0 calls
 ?bfmeChanged@Gen_005899D0@@AAEXXZ,0x0000271B,Open-BFME5 the member the change-setter at 0x005899D0 calls
+?bfmeCheck961@BfmeGate961@@QAEDXZ,0x00041FF1,pin
 ?bfmeCheckA@@YAHPAX@Z,0x00894D90,Open-BFME5 the guard the cleanup at 0x00783A50 calls
 ?bfmeCheckB@@YAHPAX@Z,0x00894DB0,Open-BFME5 the guard the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
@@ -72846,6 +72847,7 @@ name,address,notes
 ?bfmeErase@S4Mem005879C0@@AAEXPAX@Z,0x00037353,Open-BFME5 ILT thunk; ??1S4Mem005879C0@@QAE@XZ at 0x005879C0 hands it the field at +4 of its header before putting the header back to itself; address-derived name
 ?bfmeEraseFrom@BfmeListW@@QAEXPAVBfmeNodeW@@@Z,0x00037AB5,Open-BFME5 the ICF thunk (to 0x00437AB5) the list clear at 0x004B1720 erases through
 ?bfmeFailDXE@@YGXH@Z,0x00AFD540,pin
+?bfmeFallback961@BfmeHost961@@QAEXHH@Z,0x0001C46D,pin
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
@@ -72887,6 +72889,7 @@ name,address,notes
 ?bfmeFindRecord@FontLibraryBFMERetail@@AAEPAUBfmeFontRecord@@PAVAsciiString@@M@Z,0x000035A3,Open-BFME5 ILT thunk to body 0x00476E20; FontLibraryBFMERetail::getFont at 0x004772D0 calls it on this with the name and size and reads a byte at +8 of what it returns; address-derived name
 ?bfmeFindSC@BfmeMapSC@@QAEPAUBfmeSlotSC@@PAUBfmeKeySC@@@Z,0x00040430,pin
 ?bfmeFindSD@BfmeMapSD@@QAEPAUBfmeSlotSD@@PAUBfmeKeySD@@@Z,0x00020E7D,pin
+?bfmeFinish961@BfmeGate961@@QAEXXZ,0x0002D169,pin
 ?bfmeFinish@Gen_0015BCB0@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 tail-jump to
 ?bfmeFinish@Gen_00189D00@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finder at 0x00189D00 tail-jumps to
 ?bfmeFinish@Gen_001BA9E0@@QAEXXZ,0x00023ECA,Open-BFME5 the body call the multi-member vector destructor at 0x001BA9E0 makes before its members go
@@ -73593,6 +73596,7 @@ name,address,notes
 ?bfmeReserve@Gen_000B54C0@@AAEXHPAX@Z,0x00043E37,Open-BFME5 ILT the vector assignment at 0x000B54C0 reserves through
 ?bfmeReserve@Gen_002F8980@@AAEXHPAX@Z,0x00015ABE,Open-BFME5 ILT the vector assignment at 0x002F8980 reserves through
 ?bfmeReserve@Gen_003A9560@@AAEXHPAX@Z,0x00027098,Open-BFME5 ILT the vector assignment at 0x003A9560 reserves through
+?bfmeReset961@BfmeResetA961@@QAEXXZ,0x0001BC75,pin
 ?bfmeReset@BfmeItemS@@QAEXXZ,0x00036A9D,Open-BFME5 the ICF thunk (to 0x00436A9D) the clear at 0x003CFBA0 calls per item
 ?bfmeReset@BfmeMapObjectExtra@@QAEXXZ,0x00033F46,Open-BFME5 the thiscall WorldHeightMap::freeListOfMapObjects at 0x00746E90 tail-jumps into on the global object at 0x012ED5E0
 ?bfmeReset@BfmeStopOther@@QAEXPAX@Z,0x0002A88D,Open-BFME5 the reset the stop-and-reset bodies at 0x0015BA80 and siblings tail-jump to
@@ -75126,12 +75130,14 @@ name,address,notes
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
 ?g_bfmeEndKA@@3PAPAVBfmeItemKA@@A,0x00EF1470,pin
 ?g_bfmeFindAMB@@3PAVBfmeFindAMB@@A,0x00EF0898,pin
+?g_bfmeFlag961@@3PAUBfmeFlag961@@A,0x00EF7048,pin
 ?g_bfmeFlagBRA@@3HA,0x00EF7094,pin
 ?g_bfmeFlagMD@@3DA,0x00EF4AFC,pin
 ?g_bfmeFlagMG@@3HA,0x00EF4ACC,pin
 ?g_bfmeFlagsAPB@@3IA,0x00EA6FA0,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeFreeDXG@@3P6AXPAX@ZA,0x00F3782C,pin
+?g_bfmeGate961@@3PAVBfmeGate961@@A,0x00EF706C,pin
 ?g_bfmeGlob956@@3PAUBfmeGlob956@@A,0x00EEF214,pin
 ?g_bfmeGlobGI@@3PAVBfmeGlobGI@@A,0x00EF076C,pin
 ?g_bfmeGlobID@@3PAVBfmeGlobID@@A,0x00EED5F0,pin
@@ -75225,6 +75231,7 @@ name,address,notes
 ?g_bfmeRefEMIb@@3PAUBfmeRefEMI@@A,0x00ED5978,pin
 ?g_bfmeRegion2DFormat@@3QBDB,0x0114442C,address-derived Region2D format string from retail 0x009D9814
 ?g_bfmeRegion3DFormat@@3QBDB,0x01144388,address-derived Region3D format string from retail 0x009D96EE
+?g_bfmeResetA961@@3PAVBfmeResetA961@@A,0x00EF1028,pin
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
