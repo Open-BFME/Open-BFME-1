@@ -4061,6 +4061,7 @@ name,address,notes
 ??1BfmeMidA@@QAE@XZ,0x00035D8C,Open-BFME5 the middle member destructor the vector-member destructor at 0x003643C0 runs
 ??1BfmeMidB@@QAE@XZ,0x009D82D0,Open-BFME5 the middle member destructor the vector-member destructor at 0x009D83D0 runs second
 ??1BfmeMidC@@QAE@XZ,0x009D7A70,Open-BFME5 the last member destructor the vector-member destructor at 0x009D83D0 runs first
+??1BfmeMilitarySubtitleRecord@@QAE@XZ,0x00018CE1,ILT for the military-subtitle record destructor InGameUI::removeMilitarySubtitle calls at 0x004431B0; jumps to 0x0043EBF0 which the ledger already holds as a thunk onto releaseBuffer - the record's only destructible member is the UnicodeString at +0x00
 ??1BfmeOtherX@@QAE@XZ,0x00024D8E,Open-BFME5 the last member destructor the multi-member vector destructor at 0x000A83D0 runs first
 ??1BfmeOwnedMember@@QAE@XZ,0x00887940,Open-BFME5 provisional destructor for the owned member the zeroing constructors unwind
 ??1BfmeParticleSystemHandle@@QAE@XZ,0x00013994,Open-BFME5 ILT; the value ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z at 0x005C3C10 gets back from its lookup is released through it
@@ -72484,6 +72485,7 @@ name,address,notes
 ?bfmeBase1030C@BfmeC1030@@QAEXHH@Z,0x00899F00,pin
 ?bfmeBase1050@BfmeB1050@@QAEXXZ,0x0000AF38,pin
 ?bfmeBase1055@BfmeB1055@@QAEXHHH@Z,0x008D60C0,pin
+?bfmeBase1058@BfmeE1058@@QAEXXZ,0x00004381,pin
 ?bfmeBase963@BfmeReg963@@QAEXXZ,0x009A1A30,pin
 ?bfmeBase966A@BfmeVft966A@@QAEXXZ,0x00039D6A,pin
 ?bfmeBase966B@BfmeVft966B@@QAEXXZ,0x00039D6A,pin
@@ -72785,6 +72787,7 @@ name,address,notes
 ?bfmeConstruct_0069F080@@YAXPAUBfmeCopy_0069F080@@PBU1@@Z,0x00026503,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x0069F080 calls per pass
 ?bfmeConstruct_007653C0@@YAXPAUBfmeCopy_007653C0@@PBU1@@Z,0x0003B7E6,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x007653C0 calls per pass
 ?bfmeConstruct_007690F0@@YAXPAUBfmeCopy_007690F0@@PBU1@@Z,0x0002B7AB,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x007690F0 calls per pass
+?bfmeConv1058@@YAHHH@Z,0x0003B971,pin
 ?bfmeConv982B@BfmeY982@@QAEPAV1@XZ,0x0000DE9F,pin
 ?bfmeConv998@BfmeC998@@QAEHH@Z,0x00927230,pin
 ?bfmeCopy1029@@YAXPADH0@Z,0x007E8640,pin
@@ -73378,6 +73381,7 @@ name,address,notes
 ?bfmeGet1040@BfmeD1040@@QAEPAUBfmeE1040@@XZ,0x00046538,pin
 ?bfmeGet1044@BfmeSrc1044@@QAEPAXXZ,0x00020D1A,pin
 ?bfmeGet1052@BfmeE1052@@QAEHXZ,0x00020824,pin
+?bfmeGet1058@@YAXHPAH@Z,0x0003B75A,pin
 ?bfmeGet920D@BfmeX920D@@QAEPAVBfmeRes920D@@XZ,0x0002BE77,pin
 ?bfmeGet948C@BfmeGrid948C@@QAE_NH@Z,0x00017049,pin
 ?bfmeGet948D@BfmeGrid948D@@QAE_NH@Z,0x00017049,pin
@@ -73962,6 +73966,8 @@ name,address,notes
 ?bfmeSet1028@BfmeSet1028@@QAEXH@Z,0x0093D0C0,pin
 ?bfmeSet1034@BfmeZ1034@@QAEXD@Z,0x00016DF1,pin
 ?bfmeSet1042@BfmeSub1042@@QAEXPADHH@Z,0x00942BC0,pin
+?bfmeSet1058@BfmeStr1058@@QAEXPADH@Z,0x00887D20,pin
+?bfmeSet1058J@BfmeJ1058@@QAEXH_N@Z,0x00027237,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
 ?bfmeSetA1004@BfmeObj1004@@QAEXHH@Z,0x00032DEE,pin
@@ -74292,6 +74298,7 @@ name,address,notes
 ?bfmeUse1026@BfmeW1026@@QAEXH@Z,0x0002B706,pin
 ?bfmeUse1035@BfmeT1035@@QAEXPAVBfmeX1035@@H@Z,0x00022372,pin
 ?bfmeUse1052@BfmeJ1052@@QAEXPAH@Z,0x00046150,pin
+?bfmeUse1058@BfmeK1058@@QAEXH@Z,0x00028E93,pin
 ?bfmeUse926B@BfmeKeyLC@@QAEXPAUBfmeNodeLC@@@Z,0x00002E69,pin
 ?bfmeUse975D@BfmeD975@@QAEDPAX@Z,0x0003E80B,pin
 ?bfmeUseDXI@BfmeGlobDXI@@QAEXH@Z,0x0004159C,pin
@@ -75534,6 +75541,7 @@ name,address,notes
 ?g_bfmeB1025@@3PAVBfmeB1025@@A,0x00EF7194,pin
 ?g_bfmeB1038@@3HA,0x00F37A04,pin
 ?g_bfmeB1057@@3HA,0x00F40568,pin
+?g_bfmeB1058@@3PAVBfmeB1058@@A,0x00EED668,pin
 ?g_bfmeB986B@@3PAHA,0x00EF9D0C,pin
 ?g_bfmeB991@@3PAVBfmeB991@@A,0x00EF9D88,pin
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
@@ -75654,9 +75662,11 @@ name,address,notes
 ?g_bfmeJ1017@@3PAVBfmeJ1017@@A,0x00F377D8,pin
 ?g_bfmeJ1020@@3PAVBfmeJ1020@@A,0x00EF0888,pin
 ?g_bfmeJ1023@@3PAVBfmeJ1023@@A,0x00EF1044,pin
+?g_bfmeJ1058@@3PAVBfmeJ1058@@A,0x00EF0888,pin
 ?g_bfmeK1022@@3PAVBfmeK1022@@A,0x00EF7198,pin
 ?g_bfmeK1023@@3PAVBfmeK1023@@A,0x00EF7730,pin
 ?g_bfmeK1052@@3PAVBfmeK1052@@A,0x00EF7048,pin
+?g_bfmeK1058@@3PAVBfmeK1058@@A,0x00EF70E8,pin
 ?g_bfmeKey1026@@3PADA,0x00D096E8,pin
 ?g_bfmeKey1027@@3PADA,0x00D096F4,pin
 ?g_bfmeLimit952@@3MA,0x00C977E8,pin
@@ -75667,6 +75677,7 @@ name,address,notes
 ?g_bfmeLit1025@@3PADA,0x00C7388B,pin
 ?g_bfmeLit1035@@3PADA,0x00D3A5CC,pin
 ?g_bfmeLit1042@@3PADA,0x00C7388C,pin
+?g_bfmeLit1058@@3PADA,0x00C7301C,pin
 ?g_bfmeLog1013@@3PAVBfmeLog1013@@A,0x00EF19E8,pin
 ?g_bfmeLog1020@@3PAVBfmeLog1020@@A,0x00EF19E8,pin
 ?g_bfmeLog1021@@3PAVBfmeLog1021@@A,0x00EF19E8,pin
@@ -75820,6 +75831,7 @@ name,address,notes
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
 ?g_bfmeT1019@@3PAUBfmeT1019@@A,0x00EF1024,pin
 ?g_bfmeT1057@@3PAVBfmeT1057@@A,0x00EF1464,pin
+?g_bfmeT1058@@3PAVBfmeT1058@@A,0x00EF1464,pin
 ?g_bfmeTab1021@@3PAHA,0x00EB7D94,pin
 ?g_bfmeTab1053@@3HA,0x00EB9670,pin
 ?g_bfmeTag1028@@3PADA,0x00D23918,pin
@@ -75862,8 +75874,10 @@ name,address,notes
 ?g_bfmeWhatBKG@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWordFormat@@3QBDB,0x011442A8,address-derived word format string from the DIR32 operand at retail 0x009D93C0
 ?g_bfmeWorldRV@@3PAUBfmeWorldRV@@A,0x00EF33F8,pin
+?g_bfmeX1058@@3HA,0x00EF8064,pin
 ?g_bfmeXEBK@@3PAXA,0x00EC3C58,pin
 ?g_bfmeXEMC@@3PAXA,0x00EC3B2C,pin
+?g_bfmeY1058@@3HA,0x00EBAA2C,pin
 ?g_bfmeZero986B@@3HA,0x00F071C8,pin
 ?g_defaultRespawnPolicy@@3URespawnPolicy@@A,0x012ED8B8,RespawnBody default six-dword policy
 ?g_global12EF1D8@@3PAXA,0x00EEF1D8,pin
@@ -80422,4 +80436,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??1BfmeMilitarySubtitleRecord@@QAE@XZ,0x00018CE1,ILT for the military-subtitle record destructor InGameUI::removeMilitarySubtitle calls at 0x004431B0; jumps to 0x0043EBF0 which the ledger already holds as a thunk onto releaseBuffer - the record's only destructible member is the UnicodeString at +0x00
