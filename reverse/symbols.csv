@@ -73417,6 +73417,7 @@ name,address,notes
 ?bfmeNowCBE@@YAPAXXZ,0x008FD440,pin
 ?bfmeOnceBXF@BfmeThingBXF@@QAEXXZ,0x0000E3AE,pin
 ?bfmeOne920F@BfmeThing920F@@QAEXP6AXPAVLocomotorTemplate@@@Z@Z,0x000497DD,pin
+?bfmeOne921G@BfmeThing921G@@QAEXXZ,0x0004287A,pin
 ?bfmeOneAPA@@YGPAXPAXPAH@Z,0x009F6BF2,pin
 ?bfmeOneBKE@@YGXPAX@Z,0x0090C610,pin
 ?bfmeOneBKF@BfmePartBKF@@QAEXXZ,0x0090DF10,pin
@@ -73678,6 +73679,7 @@ name,address,notes
 ?bfmeStrERA@BfmeOtherERA@@QAEXPBD@Z,0x00888BC0,pin
 ?bfmeSwapEnds@@YAXPAPAPAVBfmeOwnedI@@0@Z,0x00032FE7,Open-BFME5 the ICF thunk (to 0x00432FE7) the swap in the clear at 0x003C1190 calls for the third pair
 ?bfmeTail915C@BfmeElem915C@@QAEHPAX@Z,0x00049EA4,pin
+?bfmeTail921A@BfmeTail921A@@QAEXPAX0@Z,0x00007BCB,pin
 ?bfmeTailBCD@BfmeThingBCD@@QAEXXZ,0x0001CD8C,pin
 ?bfmeTailBED@BfmeThingBED@@QAEXXZ,0x00012C6F,pin
 ?bfmeTailBFG@BfmeThingBFG@@QAEXXZ,0x000286A0,pin
@@ -74936,6 +74938,7 @@ name,address,notes
 ?g_bfme918VftA@@3PADA,0x00D2F304,pin
 ?g_bfme918VftB@@3PADA,0x00D2F30C,pin
 ?g_bfme918VftC@@3PADA,0x00D2F2FC,pin
+?g_bfme921GlobE@@3PAVBfmeGlob921E@@A,0x00EF7014,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
@@ -78348,6 +78351,7 @@ name,address,notes
 ?upper_bound@AsciiStringTreeUpperBoundShim@_STL@@QBEPAU?$_Rb_tree_node@VAsciiString@@@2@ABVAsciiString@@@Z,0x000804D0,incremental-link thunk target through a TU-local forwarding shim
 ?use_facet@Rva005380A0@@QAEPAXPBX@Z,0x008321D0,Open-BFME5 thiscall of cdecl locale wrapper
 ?use_facet@Rva005C0FD0@@QAEPAXPBX@Z,0x008321D0,Open-BFME5 thiscall of cdecl locale wrapper
+?validMovementPosition@Pathfinder@@QAE_NPBUCoord3D@@W4PathfindLayerEnum@@IPAVObject@@@Z,0x0003B359,Open-BFME5 isValidLocomotorPosition exact four-argument call setup reaches ILT thunk to body 0x003DB520
 ?validMovementTerrain@Pathfinder@@QAE_NHPBVLocomotor@@PBUCoord3D@@@Z,0x0001B405,ILT thunk to the pathfinder terrain check at 0x003D85C0
 ?validate@BfmeThingACF@@QAE_NPAX0@Z,0x0001D813,pin
 ?validate@BfmeThingE80@@QAE_NPAX0@Z,0x0001D813,pin
@@ -79564,4 +79568,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?validMovementPosition@Pathfinder@@QAE_NPBUCoord3D@@W4PathfindLayerEnum@@IPAVObject@@@Z,0x0003B359,Open-BFME5 isValidLocomotorPosition exact four-argument call setup reaches ILT thunk to body 0x003DB520
