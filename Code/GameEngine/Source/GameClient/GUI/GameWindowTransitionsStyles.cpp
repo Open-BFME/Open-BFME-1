@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/fullfade /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/asciistringsetoutofline /Ireference/shims/fullfade /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -1292,36 +1292,150 @@ MainMenuSmallScaleDownTransition::~MainMenuSmallScaleDownTransition( void )
 	m_win = NULL;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransitionInit.cpp
-// ?init@MainMenuSmallScaleDownTransition@@UAEXPAVGameWindow@@@Z present-unmatched
+// This transition's own layout: the base ends at +0x10, so position lands at
+// +0x10, size at +0x18, draw state at +0x20, the grow window's position and size
+// at +0x24 and +0x2c, the single increment at +0x34 and the grow window at +0x3c.
+// Unlike the scale-up pair, its bounds really are constants here.
+struct BfmeSmallScaleDownFields
+{
+	unsigned char m_unreconstructed_00[ 0x08 ];		///< vtable pointer and frame length
+	Bool m_isFinished;					///< retail this+0x08
+	Bool m_isForward;					///< retail this+0x09
+	unsigned char m_pad0a[ 2 ];
+	GameWindow *m_win;					///< retail this+0x0c
+	ICoord2D m_pos;						///< retail this+0x10
+	ICoord2D m_size;					///< retail this+0x18
+	Int m_drawState;					///< retail this+0x20
+	ICoord2D m_growPos;					///< retail this+0x24
+	ICoord2D m_growSize;					///< retail this+0x2c
+	ICoord2D m_incrementSize;				///< retail this+0x34
+	GameWindow *m_growWin;					///< retail this+0x3c
+};
+
+// concat takes an explicit LENGTH in BFME, and str() reads the payload at
+// m_data+8 -- the eight-byte string header again.
+struct BfmeSmallScaleDownString
+{
+	void *m_data;
+
+	// Declared, never defined: retail CALLS the copy-assignment where this tree's
+	// AsciiString expands it inline with its null and refcount tests.
+	BfmeSmallScaleDownString &operator=( const BfmeSmallScaleDownString &other );
+	void concat( const char *text, Int length );
+	const char *str() const
+	{
+		return m_data ? (const char *)m_data + 8 : "";
+	}
+};
+
+struct BfmeSmallScaleDownInstanceData
+{
+	unsigned char m_pad00[ 0x18c ];
+	BfmeSmallScaleDownString m_decoratedNameString;		///< retail this+0x18c
+};
+
+// winGetEnabledImage takes NO index in BFME: retail reads the image straight out
+// of the window at +0x48.
+struct BfmeSmallScaleDownWindow
+{
+	unsigned char m_pad00[ 0x48 ];
+	const Image *m_enabledImage;				///< retail this+0x48
+};
+
+// winGetWindowFromId is vtable slot 55 (+0xdc) on the window manager.
+class BfmeSmallScaleDownWindowManager
+{
+public:
+	virtual void slot000();
+	virtual void slot004();
+	virtual void slot008();
+	virtual void slot00c();
+	virtual void slot010();
+	virtual void slot014();
+	virtual void slot018();
+	virtual void slot01c();
+	virtual void slot020();
+	virtual void slot024();
+	virtual void slot028();
+	virtual void slot02c();
+	virtual void slot030();
+	virtual void slot034();
+	virtual void slot038();
+	virtual void slot03c();
+	virtual void slot040();
+	virtual void slot044();
+	virtual void slot048();
+	virtual void slot04c();
+	virtual void slot050();
+	virtual void slot054();
+	virtual void slot058();
+	virtual void slot05c();
+	virtual void slot060();
+	virtual void slot064();
+	virtual void slot068();
+	virtual void slot06c();
+	virtual void slot070();
+	virtual void slot074();
+	virtual void slot078();
+	virtual void slot07c();
+	virtual void slot080();
+	virtual void slot084();
+	virtual void slot088();
+	virtual void slot08c();
+	virtual void slot090();
+	virtual void slot094();
+	virtual void slot098();
+	virtual void slot09c();
+	virtual void slot0a0();
+	virtual void slot0a4();
+	virtual void slot0a8();
+	virtual void slot0ac();
+	virtual void slot0b0();
+	virtual void slot0b4();
+	virtual void slot0b8();
+	virtual void slot0bc();
+	virtual void slot0c0();
+	virtual void slot0c4();
+	virtual void slot0c8();
+	virtual void slot0cc();
+	virtual void slot0d0();
+	virtual void slot0d4();
+	virtual void slot0d8();
+	virtual GameWindow *winGetWindowFromId(GameWindow *parent, Int id);	///< vtable +0xdc
+};
+
+// ?init@MainMenuSmallScaleDownTransition@@UAEXPAVGameWindow@@@Z
 void MainMenuSmallScaleDownTransition::init( GameWindow *win )
 {
+	BfmeSmallScaleDownFields *self = (BfmeSmallScaleDownFields *)this;
+
 	if(win)
 	{
-		m_win = win;
-		m_win->winGetSize(&m_size.x, &m_size.y);
-		m_win->winGetScreenPosition(&m_pos.x, &m_pos.y );
+		self->m_win = win;
+		self->m_win->winGetSize(&self->m_size.x, &self->m_size.y);
+		self->m_win->winGetScreenPosition(&self->m_pos.x, &self->m_pos.y );
 	}
 	AsciiString growWinName;
-	growWinName = m_win->winGetInstanceData()->m_decoratedNameString;
-	growWinName.concat("Small");
-	m_growWin = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey(growWinName));
-	if(!m_growWin)
+	*(BfmeSmallScaleDownString *)&growWinName =
+			((BfmeSmallScaleDownInstanceData *)self->m_win->winGetInstanceData())->m_decoratedNameString;
+	((BfmeSmallScaleDownString *)&growWinName)->concat("Small", 5);
+	self->m_growWin = ((BfmeSmallScaleDownWindowManager *)TheWindowManager)->winGetWindowFromId(NULL,
+			TheNameKeyGenerator->nameToKey(((BfmeSmallScaleDownString *)&growWinName)->str()));
+	if(!self->m_growWin)
 		return;
 
-	m_growWin->winGetSize(&m_growSize.x, &m_growSize.y);
-	m_growWin->winGetScreenPosition(&m_growPos.x, &m_growPos.y );
+	self->m_growWin->winGetSize(&self->m_growSize.x, &self->m_growSize.y);
+	self->m_growWin->winGetScreenPosition(&self->m_growPos.x, &self->m_growPos.y );
 
-	m_isForward = FALSE;
+	self->m_isForward = FALSE;
 	update(MAINMENUSMALLSCALEDOWNTRANSITION_START);
-	m_isFinished = FALSE;
-	m_isForward = TRUE;
+	self->m_isFinished = FALSE;
+	self->m_isForward = TRUE;
 	
-	m_incrementSize.x = (m_growSize.x - m_size.x) / MAINMENUSMALLSCALEDOWNTRANSITION_END;
-	m_incrementSize.y = (m_growSize.y - m_size.y) / MAINMENUSMALLSCALEDOWNTRANSITION_END;
-	const Image *image = m_win->winGetEnabledImage(0);
-	m_growWin->winSetEnabledImage(0, image);
-	
+	self->m_incrementSize.x = (self->m_growSize.x - self->m_size.x) / MAINMENUSMALLSCALEDOWNTRANSITION_END;
+	self->m_incrementSize.y = (self->m_growSize.y - self->m_size.y) / MAINMENUSMALLSCALEDOWNTRANSITION_END;
+	const Image *image = ((const BfmeSmallScaleDownWindow *)self->m_win)->m_enabledImage;
+	self->m_growWin->winSetEnabledImage(0, image);
 }
 
 void MainMenuSmallScaleDownTransition::update( Int frame )

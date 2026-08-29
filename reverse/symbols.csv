@@ -80036,3 +80036,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?concat@BfmeSmallScaleDownString@@QAEXPBDH@Z,0x00887D60,Open-BFME5 view-class spelling of the two-argument concat already pinned as ?concat@AsciiString@@QAEXPBDH@Z; BFME passes an explicit length where the vendored declaration takes only the pointer
+??4BfmeSmallScaleDownString@@QAEAAU0@ABU0@@Z,0x00887C90,Open-BFME5 view-class spelling of the AsciiString copy-assignment already pinned as ??4AsciiString@@QAEAAV0@ABV0@@Z; declared-not-defined on the view so retail out-of-line call survives instead of the vendored inline expansion
