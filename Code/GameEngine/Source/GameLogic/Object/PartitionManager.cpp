@@ -5152,7 +5152,6 @@ Bool PartitionFilterInsignificantBuildings::allow( Object *other )
 
 //-----------------------------------------------------------------------------
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/PartitionFilterRepulsor_allow_Thunk.cpp
 // Three pieces of BFME drift, all read off this body's own bytes:
 //   - a PartitionFilter's first data member is at this+0x08, not the
 //     reference's +0x04: the base is one word wider.
@@ -5589,7 +5588,6 @@ Bool PartitionFilterLineOfSight::allow(Object *objOther)
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/PartitionFilters_allow_Thunk.cpp
 // BFME declares these three the other way round -- the attack type at +0x04,
 // the source at +0x08 and the command source at +0x0C, where the reference
 // class declares obj, commandSource, attackType. An initialiser list emits in
