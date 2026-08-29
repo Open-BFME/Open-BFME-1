@@ -74984,6 +74984,7 @@ name,address,notes
 ?freeZones@ZoneBlock@@IAEXXZ,0x000482ED,pinharvest x1 (thunk)
 ?friend_addToList@CommandSet@@QAEXPAPAV1@@Z,0x00037DDA,ControlBar newCommandSet retail list-link call ILT
 ?friend_adjustPowerForPlayer@Object@@QAEX_N@Z,0x00021297,Open-BFME5 retail object power adjustment thunk
+?friend_applyDifficultyBonusesForObject@BfmeDifficultyBonusPlayer@@QAEXPAVObject@@_N@Z,0x0002278C,alias of the Player spelling pinned below; Object.cpp reaches the applier through a view class because the reference Player.h declares it const
 ?friend_applyDifficultyBonusesForObject@Player@@QAEXPAVObject@@_N@Z,0x0002278C,Open-BFME5 the incremental-link thunk Object setReceivingDifficultyBonus calls; Zero Hour names the same call
 ?friend_awakenUpdateModule@GameLogic@@QAEXPAVObject@@PAVUpdateModule@@I@Z,0x00009944
 ?friend_changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z,0x0002847F,ILT spelling used by BridgeBehavior::removeScaffolding to preserve the retail indirection
