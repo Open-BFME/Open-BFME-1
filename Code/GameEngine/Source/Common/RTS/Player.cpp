@@ -2815,20 +2815,70 @@ Bool Player::addScience(ScienceType science)
 	return true;
 }
 
+// BFME inserts 0x14 bytes ahead of the radar counters and 0xd0 ahead of the
+// science vectors, so both families are read through a view rather than through
+// the members the vendored header declares. The three ScienceVecs land at
+// +0x234, +0x240 and +0x24c, twelve bytes apart, which corroborates the first
+// offset against the other two.
+struct BfmePlayerRadarFields
+{
+	UnsignedByte m_unreconstructed_00[0x58];
+	Int m_radarCount;					///< retail this+0x58
+	Int m_disableProofRadarCount;				///< retail this+0x5c
+	Bool m_radarDisabled;					///< retail this+0x60
+};
+
+struct BfmePlayerScienceFields
+{
+	UnsignedByte m_unreconstructed_00[0x234];
+	ScienceVec m_sciences;					///< retail this+0x234
+	ScienceVec m_sciencesDisabled;				///< retail this+0x240
+	ScienceVec m_sciencesHidden;				///< retail this+0x24c
+	UnsignedByte m_unreconstructed_258[0x264 - 0x258];
+	Int m_sciencePurchasePoints;				///< retail this+0x264
+};
+
+// BFME records points EARNED, as opposed to spent, on the subobject at
+// Player+0x348 before the running total moves; the reference body has no such
+// statement.
+class BfmeAcademyPointRecorder
+{
+public:
+	void _bfme_recordPointsEarned( Int points );		///< retail ILT 0x0001b969
+};
+
+struct BfmePlayerPointRecorderField
+{
+	UnsignedByte m_unreconstructed_000[0x348];
+	BfmeAcademyPointRecorder m_pointRecorder;		///< retail this+0x348
+};
+
+// BFME hands the control bar a non-const Player; the reference ControlBar.h
+// declares the same notification taking a const one.
+class BfmeSciencePointsControlBar
+{
+public:
+	void onPlayerSciencePurchasePointsChanged( Player *player );	///< retail ILT 0x000439d7
+};
+
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_addSciencePurchasePoints.cpp
-// ?addSciencePurchasePoints@Player@@QAEXH@Z present-unmatched
+// ?addSciencePurchasePoints@Player@@QAEXH@Z
 // noinline: retail attemptToPurchaseScience calls this out-of-line (ILT 0xF0F1)
 __declspec(noinline) void Player::addSciencePurchasePoints(Int delta)
 {
 	//DEBUG_LOG(("Adding SciencePurchasePoints %d -> %d\n",m_sciencePurchasePoints,m_sciencePurchasePoints+delta));
-	Int oldSPP = m_sciencePurchasePoints;
-	m_sciencePurchasePoints += delta;
-	if (m_sciencePurchasePoints < 0)
-		m_sciencePurchasePoints = 0;
+	if (delta > 0)
+		((BfmePlayerPointRecorderField *)this)->m_pointRecorder._bfme_recordPointsEarned(delta);
 
-	if (oldSPP != m_sciencePurchasePoints && TheControlBar != NULL)
-		TheControlBar->onPlayerSciencePurchasePointsChanged(this);
+	BfmePlayerScienceFields *points = (BfmePlayerScienceFields *)this;
+
+	Int oldSPP = points->m_sciencePurchasePoints;
+	points->m_sciencePurchasePoints += delta;
+	if (points->m_sciencePurchasePoints < 0)
+		points->m_sciencePurchasePoints = 0;
+
+	if (oldSPP != points->m_sciencePurchasePoints && TheControlBar != NULL)
+		((BfmeSciencePointsControlBar *)TheControlBar)->onPlayerSciencePurchasePointsChanged(this);
 
 }
 
@@ -2861,28 +2911,6 @@ Bool Player::grantScience(ScienceType science)
 }
 
 //=============================================================================
-// BFME inserts 0x14 bytes ahead of the radar counters and 0xd0 ahead of the
-// science vectors, so both families are read through a view rather than through
-// the members the vendored header declares. The three ScienceVecs land at
-// +0x234, +0x240 and +0x24c, twelve bytes apart, which corroborates the first
-// offset against the other two.
-struct BfmePlayerRadarFields
-{
-	UnsignedByte m_unreconstructed_00[0x58];
-	Int m_radarCount;					///< retail this+0x58
-	Int m_disableProofRadarCount;				///< retail this+0x5c
-	Bool m_radarDisabled;					///< retail this+0x60
-};
-
-struct BfmePlayerScienceFields
-{
-	UnsignedByte m_unreconstructed_00[0x234];
-	ScienceVec m_sciences;					///< retail this+0x234
-	ScienceVec m_sciencesDisabled;				///< retail this+0x240
-	ScienceVec m_sciencesHidden;				///< retail this+0x24c
-	UnsignedByte m_unreconstructed_258[0x264 - 0x258];
-	Int m_sciencePurchasePoints;				///< retail this+0x264
-};
 
 // BFME does not consult the disabled or hidden lists here; retail goes straight
 // from the inlined hasScience find to the prereq call.
@@ -3392,12 +3420,11 @@ void Player::removeRadar( Bool disableProof )
 }  // end removeRadar
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_radar.cpp
-// ?disableRadar@Player@@QAEXXZ present-unmatched
+// ?disableRadar@Player@@QAEXXZ
 void Player::disableRadar()
 {
 	Bool hadRadar = hasRadar();
-	m_radarDisabled = TRUE;
+	((BfmePlayerRadarFields *)this)->m_radarDisabled = TRUE;
 
 	if( hadRadar  
 		&& !hasRadar() && okToPlayRadarEdgeSound() ) 
@@ -3410,12 +3437,11 @@ void Player::disableRadar()
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_radar.cpp
-// ?enableRadar@Player@@QAEXXZ present-unmatched
+// ?enableRadar@Player@@QAEXXZ
 void Player::enableRadar()
 {
 	Bool hadRadar = hasRadar();
-	m_radarDisabled = FALSE;
+	((BfmePlayerRadarFields *)this)->m_radarDisabled = FALSE;
 
 	if( !hadRadar && hasRadar() && okToPlayRadarEdgeSound() )  
 	{
@@ -3602,15 +3628,37 @@ void Player::friend_applyDifficultyBonusesForObject(Object* obj, Bool apply) con
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_doesObjectQualifyForBattlePlan_Thunk.cpp
-// ?doesObjectQualifyForBattlePlan@Player@@QBE_NPAVObject@@@Z present-unmatched
+// BFME keeps m_battlePlanBonuses at Player+0x70 where the vendored header
+// computes +0x5c, and inside it the valid kind-of mask at +0x14 and the invalid
+// one at +0x2c. Those two are 0x18 apart, not 0x10: a BFME kind-of mask is 24
+// bytes, as the six-dword mask isFactionStructure's merged body builds already
+// shows, so the eight bytes the reference type does not cover are the rest of
+// the first mask rather than a gap between two fields. Only the offsets are
+// proven, so the run ahead of the first mask stays unnamed.
+struct BfmeBattlePlanBonuses
+{
+	UnsignedByte m_unreconstructed_00[0x14];
+	KindOfMaskType m_validKindOf;				///< retail this+0x14
+	UnsignedByte m_unreconstructed_24[0x2C - 0x24];
+	KindOfMaskType m_invalidKindOf;				///< retail this+0x2c
+};
+
+struct BfmePlayerBattlePlanField
+{
+	UnsignedByte m_unreconstructed_00[0x70];
+	BfmeBattlePlanBonuses *m_battlePlanBonuses;		///< retail this+0x70
+};
+
+// ?doesObjectQualifyForBattlePlan@Player@@QBE_NPAVObject@@@Z
 Bool Player::doesObjectQualifyForBattlePlan( Object *obj ) const
 {
-	if( m_battlePlanBonuses && obj )
+	const BfmePlayerBattlePlanField *self = (const BfmePlayerBattlePlanField *)this;
+
+	if( self->m_battlePlanBonuses && obj )
 	{
-		if( obj->isAnyKindOf( m_battlePlanBonuses->m_validKindOf ) )
+		if( obj->isAnyKindOf( self->m_battlePlanBonuses->m_validKindOf ) )
 		{
-			if( !obj->isAnyKindOf( m_battlePlanBonuses->m_invalidKindOf ) )
+			if( !obj->isAnyKindOf( self->m_battlePlanBonuses->m_invalidKindOf ) )
 			{
 				return true;
 			}
