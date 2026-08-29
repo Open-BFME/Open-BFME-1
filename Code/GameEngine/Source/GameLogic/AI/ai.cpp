@@ -218,8 +218,9 @@ static const FieldParse TheAIFieldParseTable[] =
 
 };
 
-// ?parseSideInfo@AI@@SAXPAVINI@@PAX1PBX@Z
-// Body in ai_parseSideInfo.asm (exact 516B retail).
+// Body in ai_parseSideInfo.asm (exact 516B retail): ?parseSideInfo@AI@@SAXPAVINI@@PAX1PBX@Z
+// (one line, and prose-first: a `// ?` line binds to the NEXT definition, and
+// this one documents a body in another file, not parseSkillSet below.)
 
 void AI::parseSkillSet(INI *ini, void *instance, void* store, const void* /*userData*/)
 {
@@ -431,6 +432,7 @@ void AI::parseAiDataDefinition(INI *ini)
 /**
  * Create a new AI Group
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AI_createGroup.cpp
 // ?createGroup@AI@@QAEPAVAIGroup@@XZ present-unmatched
 AIGroup *AI::createGroup( void )
 {
@@ -793,6 +795,7 @@ Object *AI::findClosestRepulsor( const Object *me, Real range)
 }
 /////////////////////////////
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AI_getAdjustedVisionRangeForObject.cpp
 // ?getAdjustedVisionRangeForObject@AI@@SAMPBVObject@@H@Z present-unmatched
 Real AI::getAdjustedVisionRangeForObject(const Object *object, Int factorsToConsider)
 {
@@ -889,6 +892,7 @@ Real AI::getAdjustedVisionRangeForObject(const Object *object, Int factorsToCons
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/TAiDataCtor.cpp
 // ??0TAiData@@QAE@XZ present-unmatched
 TAiData::TAiData() : 
 m_next(NULL), 
@@ -995,6 +999,7 @@ void TAiData::loadPostProcess( void )
 }  // end loadPostProcess
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/AI_crc_Thunk.cpp
 // ?crc@AI@@UAEXPAVXfer@@@Z present-unmatched
 void AI::crc( Xfer *xfer )
 {
