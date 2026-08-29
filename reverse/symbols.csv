@@ -73396,6 +73396,7 @@ name,address,notes
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLog993B@BfmeLog993@@QAEXHPADH0HHHH@Z,0x00015235,pin
+?bfmeLog995@BfmeLog995@@QAEXHPADH0HHHH@Z,0x00015235,pin
 ?bfmeLogCNE@@YGXHH@Z,0x00032DEE,pin
 ?bfmeLogMsg574@@YAXPBD@Z,0x0003EBAD,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
@@ -75240,6 +75241,7 @@ name,address,notes
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
 ?g_bfmeDisconnectPingResult@@3HA,0x012B9810,standalone disconnect ping-result state read and set by updateDisconnectStatus after the sub-ten-percent ratio check
 ?g_bfmeDoneAPB@@3_NA,0x00EED4E6,pin
+?g_bfmeDrop995@@3PAVBfmeDrop995@@A,0x00EF12CC,pin
 ?g_bfmeDropDXH@@3P6AXPAVBfmeSubDXH@@@ZA,0x00F378A0,pin
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
@@ -75255,6 +75257,9 @@ name,address,notes
 ?g_bfmeFlagMG@@3HA,0x00EF4ACC,pin
 ?g_bfmeFlagsAPB@@3IA,0x00EA6FA0,pin
 ?g_bfmeFmt993B@@3PADA,0x00D09B3C,pin
+?g_bfmeFmt995B@@3PADA,0x00D05184,pin
+?g_bfmeFmtA995C@@3PADA,0x00D07374,pin
+?g_bfmeFmtB995C@@3PADA,0x00D053D4,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeFreeDXG@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeGate961@@3PAVBfmeGate961@@A,0x00EF706C,pin
@@ -75275,6 +75280,7 @@ name,address,notes
 ?g_bfmeGlobQE@@3PAVBfmeGlobQE@@A,0x00F06EEC,pin
 ?g_bfmeGlobRB@@3PAUBfmeObjRB@@A,0x00EF7FDC,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
+?g_bfmeHeld995B@@3PAXA,0x00EF4974,pin
 ?g_bfmeHub982@@3PAVBfmeHub982@@A,0x00F06954,pin
 ?g_bfmeHub985@@3PAVBfmeHub985@@A,0x00EF19E8,pin
 ?g_bfmeHub993@@3PAVBfmeHub993@@A,0x00EF148C,pin
@@ -75290,6 +75296,7 @@ name,address,notes
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
 ?g_bfmeListEYE@@3PAUBfmeListEYE@@A,0x00EED5DC,pin
 ?g_bfmeLog993@@3PAVBfmeLog993@@A,0x00EF19E8,pin
+?g_bfmeLog995@@3PAVBfmeLog995@@A,0x00EF19E8,pin
 ?g_bfmeLook978@@3PAVBfmeLook978@@A,0x00EF0898,pin
 ?g_bfmeLook979@@3PAVBfmeLook979@@A,0x00EF0898,pin
 ?g_bfmeLook987@@3PAVBfmeLook987@@A,0x00EF0898,pin
@@ -75411,6 +75418,7 @@ name,address,notes
 ?g_bfmeUnsignedShortFormat@@3QBDB,0x01144328,address-derived unsigned-short format string from retail 0x009D95BF
 ?g_bfmeVal991@@3HA,0x00EF822C,pin
 ?g_bfmeVal993B@@3HA,0x00EB7D80,pin
+?g_bfmeVal995B@@3HA,0x00EB7430,pin
 ?g_bfmeValMD@@3HA,0x00EB7D80,pin
 ?g_bfmeVft963@@3PADA,0x00CF0398,pin
 ?g_bfmeVft969D1@@3PADA,0x00D2B3F0,pin
@@ -79194,6 +79202,7 @@ __imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
 __imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
 __imp_?bfmeImport928G@@YGXPAX@Z,0x00F58F08,pin
 __imp_?bfmeImport930C@@YAXPAX@Z,0x00F593D4,pin
+__imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
 __imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
