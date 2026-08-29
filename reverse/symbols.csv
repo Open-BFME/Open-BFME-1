@@ -12431,6 +12431,7 @@ name,address,notes
 ?assign@LifeEventAsciiStringAssignShim@FXParticleSystem@@QAEXPBX@Z,0x00887C90,LifeEventModuleInfo AsciiString assignment thunk used through a TU-local layout shim
 ?assign@LightningDrawTemplateAssignShim@FXParticleSystem@@QAEXPBX@Z,0x0003E108,LightningDrawModuleTemplate assignment thunk used through a TU-local layout shim
 ?assign@ObjectIDPairVectorAssignShim@_STL@@QAEAAV?$vector@U?$pair@W4ObjectID@@I@_STL@@V?$allocator@U?$pair@W4ObjectID@@I@_STL@@@2@@2@ABV32@@Z,0x00095D30,ObjectID vector incremental-link thunk target through a TU-local forwarding shim
+?assign@Open2C800Target@@QAEXPAX@Z,0x0001BA31,Open2 0x0053C800 callee (ILT -> 0x0053C710)
 ?assign@ParticleSystemTemplateInfoAssignShim@FXParticleSystem@@QAEXPBX@Z,0x000387C6,ParticleSystemTemplate base-info assignment thunk used through a TU-local layout shim
 ?assign@ParticleSystemTemplateTailAssignShim@FXParticleSystem@@QAEXPBX@Z,0x0004A232,ParticleSystemTemplate tail assignment thunk used through a TU-local layout shim
 ?assign@PlayerTemplateAssignShim@@QAEAAVPlayerTemplate@@ABV2@@Z,0x000E32D0,PlayerTemplate assignment incremental-link thunk target through a TU-local forwarding shim
@@ -75250,6 +75251,7 @@ name,address,notes
 ?g_bfmeSinkBTC@@3PAVBfmeSinkBTC@@A,0x00EF0898,pin
 ?g_bfmeSinkBUB@@3PAVBfmeSinkBUB@@A,0x00EF0888,pin
 ?g_bfmeSinkSB@@3PAVBfmeSinkSB@@A,0x00EED668,pin
+?g_bfmeSrc962@@3PAVBfmeSrc962@@A,0x00EF1464,pin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
@@ -77259,6 +77261,7 @@ name,address,notes
 ?internal_classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0004AEFD,pinharvest x1 (thunk)
 ?intersect_obbox_brute_force@MeshGeometryClass@@AAE_NAAVOBBoxIntersectionTestClass@@@Z,0x00926BE0,MeshGeometryClass brute-force OBBox arm reached by the tail jump at 0x0092793D
 ?invoke@Gen004675F0@@QAEXPAXPBDH10000@Z,0x004675F0,eight-argument __thiscall callee of the 38-byte named script-callback family (Q2NamedScriptCallbacks.cpp); target read from the call site REL32 through its incremental-link thunk; address-derived name; identity not recovered
+?invoke@Open2381C0Impl@@QAEXHPAX0@Z,0x00840F00,Open2 0x005381C0 callee
 ?invoke@Q3ScriptDispatcher@@QAEXPAUQ3ScriptMovie@@PBDH1PAX222@Z,0x004675F0,address-derived script-dispatch entry shared by the seven bool toggle wrappers; read from the REL32 at their call sites and followed through its ILT thunk
 ?invoke@S4Sink004135C0@@QAEXABVAsciiString@@HHHH@Z,0x004135C0,S4 sink method of the Lua string-command family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ?isAbleToAttack@Object@@QBE_NXZ,0x00001FD7,ILT thunk pin from PartitionFilterRepulsor::allow packet 001ddb10 (target body 0x001C9C10)
@@ -79734,5 +79737,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?assign@Open2C800Target@@QAEXPAX@Z,0x0001BA31,Open2 0x0053C800 callee (ILT -> 0x0053C710)
-?invoke@Open2381C0Impl@@QAEXHPAX0@Z,0x00840F00,Open2 0x005381C0 callee
