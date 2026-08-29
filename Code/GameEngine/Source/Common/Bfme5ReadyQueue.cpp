@@ -135,3 +135,66 @@ char Bfme5ShroudedThing::bfmeIsShrouded(int player)
 
 	return 0;
 }
+
+struct Bfme5Link
+{
+	Bfme5Link *m_bfmeNext;
+	Bfme5Link *m_bfmePrev;
+	void *m_bfmeValue;
+};
+
+struct Bfme5LinkHead
+{
+	Bfme5Link *m_bfmeNode;
+};
+
+class Bfme5LinkPusher
+{
+public:
+	void bfmePushBack(void *x);
+
+	char m_bfmePad[0x10];
+	Bfme5LinkHead *m_bfmeList;
+};
+
+void Bfme5LinkPusher::bfmePushBack(void *x)
+{
+	Bfme5Link *pos = m_bfmeList->m_bfmeNode;
+	Bfme5Link *n = (Bfme5Link *)_STL::__new_alloc::allocate(0x0c);
+	void **p = &n->m_bfmeValue;
+
+	if (p)
+		*p = x;
+
+	Bfme5Link *prev = pos->m_bfmePrev;
+
+	n->m_bfmeNext = pos;
+	n->m_bfmePrev = prev;
+	prev->m_bfmeNext = n;
+	pos->m_bfmePrev = n;
+}
+
+struct Bfme5Pair8
+{
+	Bfme5Pair8(void);
+	~Bfme5Pair8();
+
+	int m_bfme00;
+	int m_bfme04;
+};
+
+class Bfme5PairArray
+{
+public:
+	Bfme5PairArray(void);
+
+	int m_bfme00;
+	int m_bfme04;
+	Bfme5Pair8 *m_bfme08;
+	Bfme5Pair8 m_bfmeArray[2];
+};
+
+Bfme5PairArray::Bfme5PairArray(void)
+	: m_bfme00(0), m_bfme04(0), m_bfme08(m_bfmeArray)
+{
+}
