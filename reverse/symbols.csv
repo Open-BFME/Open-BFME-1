@@ -72318,6 +72318,7 @@ name,address,notes
 ?bfmeApplySpecialModelCondition@Object@@QAEXHPBXH@Z,0x0001191E,Open-BFME5 ILT thunk to body 0x001C1FB0; follows Object m_next at +0x214 to the chain tail and forwards three arguments through the SMC helper at +0x1F8; bfme prefix records unrecovered retail spelling
 ?bfmeApplyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,Open-BFME5 TintDrawableFXNugget retail tint helper ILT; body 0x00412040
 ?bfmeArenaReady@@YAXXZ,0x00897050,Open-BFME5 the routine the arena initialiser at 0x00897120 tail-calls
+?bfmeAsk979A@@YGDH@Z,0x000063F2,pin
 ?bfmeAskAIA@BfmeThingAIA@@QAE_NH@Z,0x0003251F,pin
 ?bfmeAskAMB@BfmeGateAMB@@QAE_NPAXPAUBfmeKeyAMB@@@Z,0x000357D8,pin
 ?bfmeAskAOA@BfmeThingAOA@@QAE_NXZ,0x0002C714,pin
@@ -72698,6 +72699,7 @@ name,address,notes
 ?bfmeDo912C@BfmeThing912C@@QAEXPAUBfmeNode912C@@@Z,0x009F4D80,pin
 ?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
 ?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
+?bfmeDo979A@BfmeActA979@@QAEXH@Z,0x00009494,pin
 ?bfmeDoAXA@@YAXPAUBfmeBoxAXA@@PAX111@Z,0x0093B340,pin
 ?bfmeDoBCC@@YAXPAX@Z,0x0004B2BD,pin
 ?bfmeDoBDA@@YGXPAUBfmeSubBDA@@PAX@Z,0x0002CEEE,pin
@@ -72871,6 +72873,7 @@ name,address,notes
 ?bfmeFind975D@BfmeFind975D@@QAEPAXH@Z,0x00028560,pin
 ?bfmeFind977B@BfmeMgr977@@QAEPAXPAVBfmeB977@@@Z,0x0003B59D,pin
 ?bfmeFind978D@BfmeLook978@@QAEPAUBfmeX978@@PAVBfmeThing978@@@Z,0x0001F253,pin
+?bfmeFind979C@BfmeLook979@@QAEPAXPAVBfmeThing979@@@Z,0x0001F253,pin
 ?bfmeFind@BfmeChainOwner@@QAEPAVBfmeChainResult@@H@Z,0x0002F52C,Open-BFME5 ILT the four lookups around 0x002197E0 call
 ?bfmeFind@BfmeFinder@@QAEPAXXZ,0x000265A8,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 call
 ?bfmeFind@Gen_003C02B0@@AAEPAVBfmeItemAN@@H@Z,0x00032A56,Open-BFME5 the ICF thunk (to 0x00432A56) the remove at 0x003C02B0 looks its item up through
@@ -73178,6 +73181,7 @@ name,address,notes
 ?bfmeGet920D@BfmeX920D@@QAEPAVBfmeRes920D@@XZ,0x0002BE77,pin
 ?bfmeGet948C@BfmeGrid948C@@QAE_NH@Z,0x00017049,pin
 ?bfmeGet948D@BfmeGrid948D@@QAE_NH@Z,0x00017049,pin
+?bfmeGet979B@BfmeKey979@@QAEPAUBfmeX979@@XZ,0x00020824,pin
 ?bfmeGetAllocator003D32D0@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QBE?AV?$allocator@PAX@2@XZ,0x0002CE4E,Open-BFME5 address-scoped STLport get_allocator ILT to body 0x003D32D0 used by the key-map copy constructor
 ?bfmeGetAllocator@Gen_000bb890@@ABE?AVBfmeAllocator@@XZ,0x0001E2A4,Open-BFME5 ILT the copy constructor at 0x000BB890 gets its allocator through
 ?bfmeGetAllocator@Gen_000ce890@@ABE?AVBfmeAllocator@@XZ,0x00008BED,Open-BFME5 ILT the copy constructor at 0x000CE890 gets its allocator through
@@ -73656,6 +73660,7 @@ name,address,notes
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
 ?bfmeSend975B@BfmeB975@@QAEXHH@Z,0x0002D6F5,pin
+?bfmeSend979B@BfmeSink979@@QAEXPAVBfmeKey979@@@Z,0x00038938,pin
 ?bfmeSendAAA@BfmeSinkAAA@@QAEXPAX_NH@Z,0x00044409,pin
 ?bfmeSendAAB@BfmeSinkAAB@@QAEXPAX_NH@Z,0x00044409,pin
 ?bfmeSendAC@BfmeNextAC@@QAEXPAUBfmeOutAC@@@Z,0x00043E91,pin
@@ -75156,6 +75161,7 @@ name,address,notes
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
 ?g_bfmeAccDYB@@3HA,0x00EED8A4,pin
+?g_bfmeActA979@@3PAVBfmeActA979@@A,0x00EF19E8,pin
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
 ?g_bfmeArgDZE@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgDZF@@3PAXA,0x00EB7D80,pin
@@ -75203,6 +75209,7 @@ name,address,notes
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeFreeDXG@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeGate961@@3PAVBfmeGate961@@A,0x00EF706C,pin
+?g_bfmeGateA979@@3PAHA,0x00EF4B58,pin
 ?g_bfmeGlob956@@3PAUBfmeGlob956@@A,0x00EEF214,pin
 ?g_bfmeGlobGI@@3PAVBfmeGlobGI@@A,0x00EF076C,pin
 ?g_bfmeGlobID@@3PAVBfmeGlobID@@A,0x00EED5F0,pin
@@ -75231,6 +75238,7 @@ name,address,notes
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
 ?g_bfmeListEYE@@3PAUBfmeListEYE@@A,0x00EED5DC,pin
 ?g_bfmeLook978@@3PAVBfmeLook978@@A,0x00EF0898,pin
+?g_bfmeLook979@@3PAVBfmeLook979@@A,0x00EF0898,pin
 ?g_bfmeLookAKC@@3PAVBfmeLookAKC@@A,0x00EF076C,pin
 ?g_bfmeLookAKD@@3PAVBfmeLookAKD@@A,0x00EF076C,pin
 ?g_bfmeLookRP@@3PAVBfmeLookRP@@A,0x00EF076C,pin
@@ -75319,6 +75327,7 @@ name,address,notes
 ?g_bfmeSinkBUB@@3PAVBfmeSinkBUB@@A,0x00EF0888,pin
 ?g_bfmeSinkSB@@3PAVBfmeSinkSB@@A,0x00EED668,pin
 ?g_bfmeSrc962@@3PAVBfmeSrc962@@A,0x00EF1464,pin
+?g_bfmeStateA979@@3PAUBfmeStateA979@@A,0x00EF0898,pin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
