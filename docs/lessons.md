@@ -2556,3 +2556,45 @@ at offset zero, so every later measurement is against a shifted frame.
 The wider point: re-measuring after the LANAPI layout correction landed produced
 NO movement at all (393/2030 before and after). A body that does not move when
 you fix a real thing is telling you the real thing was not what held it.
+
+## The marker queue is NOT a fold backlog: two thirds of it has no ledger row
+
+158 destinations screened in one pass, roughly 3,000 markers:
+
+    ~2,000  no ledger row AT ALL -- a body present in the tree with no matched
+            retail address behind it. Screening can never turn these into folds;
+            they are AUTHORING work, not repointing work.
+      ~300  measured misses, nearly all layout facts
+       ~30  MATCH, collapsing to 9 distinct symbols, of which 6 landed
+
+That is roughly one fold per 26 destinations screened. Anyone budgeting a lane
+against the marker count is budgeting against a number that is two-thirds
+something else. Measure the composition of a queue before planning against its
+size -- this cost one pass and should have been done first.
+
+## A marker can sit above a CALL, not a definition, and folding invalidates the rest
+
+Markers are not always above the body they name. W3DVolumetricShadow.cpp carries
+four `// ?Fabs@WWMath@@SAMM@Z present-unmatched` lines INSIDE a function body,
+one above each CALL of it; W3DWater.cpp has four the same way for
+Set_DX8_Render_State. `--apply` consumes the pair it matched and leaves the
+others, so landing one inline-emitted COMDAT turns every remaining annotation of
+that symbol in that file into a stale marker. The gate catches it, but the
+cleanup belongs in the same commit.
+
+Two consequences. Folding an inline-emitted symbol always means sweeping its
+other annotations in the destination. And in-place replacement stops being a
+preference and becomes mandatory: these lines sit inside function bodies, so
+deleting one moves every line below it and changes any `__LINE__` the TU expands.
+
+## Some MATCHes are not expressible as a merge, and --symbols does not help
+
+`?Set_Transform@DX8Wrapper@@` matches from BOTH W3DWater.cpp and
+W3DWaterTracks.cpp. One row cannot land in two files. Worse, boxrobj.cpp -- which
+owns it -- carries no readable-body marker naming either, so there is no cluster
+to select within at all. The constraint is UPSTREAM of selection, so per-symbol
+selection cannot reach it.
+
+Log these and leave them. Do not add a marker to create the cluster: the marker
+is the evidence the tool reads, and writing one to make an apply possible is
+manufacturing the input rather than recording a finding.
