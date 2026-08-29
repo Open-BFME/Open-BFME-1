@@ -73296,6 +73296,7 @@ name,address,notes
 ?bfmeHandle_00799600@@YAXPAVGen_00799600@@PAX@Z,0x00023056,Open-BFME5 ILT the 22-byte submit at 0x00799600 calls
 ?bfmeHandle_00799c90@@YAXPAVGen_00799c90@@PAX@Z,0x0002C7AA,Open-BFME5 ILT the 22-byte submit at 0x00799C90 calls
 ?bfmeHandle_00799cb0@@YAXPAVGen_00799cb0@@PAX@Z,0x0003DC7B,Open-BFME5 ILT the 22-byte submit at 0x00799CB0 calls
+?bfmeHas1000@BfmeArg1000@@QAEDH@Z,0x00003B1B,pin
 ?bfmeHas985C@BfmeArg985@@QAEDH@Z,0x000077B6,pin
 ?bfmeHas992C@BfmeAsk992@@QAEDXZ,0x007E88A0,pin
 ?bfmeHash00007518@@YAIII@Z,0x00007518,Open-BFME5 ILT the per-type hash helper the bfmeDiffers pair at that sentinel calls
@@ -73389,6 +73390,7 @@ name,address,notes
 ?bfmeInvoke@Gen_0064C6A0Target@@QAEXPAX0@Z,0x0001F785,Open-BFME5 the member the guarded dispatcher at 0x0064C6A0 calls
 ?bfmeInvoke@Gen_006CDF70Target@@QAEXPAX0@Z,0x0000560A,Open-BFME5 the member the guarded dispatcher at 0x006CDF70 calls
 ?bfmeInvoke@Gen_009EBA60Target@@QAEXPAX0@Z,0x009EEAC0,Open-BFME5 the member the guarded dispatcher at 0x009EBA60 calls
+?bfmeIs1000@BfmeThing1000@@QAEDH@Z,0x0003251F,pin
 ?bfmeIsAlive@BfmeItemAK@@QAE_NXZ,0x00001C03,Open-BFME5 the ICF thunk (to 0x00401C03) the compaction at 0x0018BC70 asks each entry
 ?bfmeIsComputerControlled@Object@@QBE_NXZ,0x00010EA1,Open-BFME5 ILT thunk to body 0x001BE410; three Pathfinder callers use the controlling Player type check for computer pathfinding behavior; bfme prefix records unrecovered retail spelling
 ?bfmeIsGiantBird@Object@@QBEHXZ,0x0000E462,Open-BFME5 ILT thunk to body 0x001BE9D0; Object AI slot 76 is false in the base AIUpdateInterface and true in GiantBirdAIUpdate; AIAttackState uses the promoted result for BFME attack-mode selection
