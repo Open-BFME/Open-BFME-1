@@ -1898,3 +1898,35 @@ and check what markers the commit removed:
 
 After ANY mid-cycle recovery, count the markers the commit deleted against the
 rows it repointed. They must match.
+
+## Half the markers are truncated, so a name-shaped grep undercounts by half
+
+Measured: 4,545 `present-unmatched` markers carry a TRUNCATED mangled name
+(`??0AudioEventRTS@@`, no parameter encoding) against 4,640 carrying a full one.
+Any screen that greps a complete signature therefore misses about half its
+population. A family screen on `PAVThing@@PBVModuleData` returned 23 module
+constructors; at least one more (StealthDetectorUpdate) was missed purely
+because its marker is the truncated `??0StealthDetectorUpdate@@`. Treat any such
+count as a LOWER BOUND and say so when you quote it.
+
+The same truncation causes two other failures already recorded here -- a bare
+`??0Class@@` binds by PREFIX so landing one constructor staleens the other, and
+a donor carrying a full spelling for one destination and a truncated one for
+another LOOKS multi-destination and is not. One cause, three symptoms.
+
+When you need a real count, match on the class-and-name prefix rather than the
+signature, and expect to disambiguate by hand.
+
+## A destination can be uncommittable at HEAD, and you find out by touching it
+
+DeletionUpdate.cpp defines setLifetimeRange and calcSleepDelay; the ledger names
+only calcSleepDelay and a d_ row. Staging the file fails the claims gate with
+"staged sources define functions the ledger does not declare:
+DeletionUpdate::setLifetimeRange". That condition sits at HEAD and is invisible
+until somebody edits the file for an unrelated reason -- then the gate names a
+function they never went near.
+
+It is not something to work around: the file wants a declaration or a marker,
+and that is a ledger decision. Revert your edit, record the file, and pick
+another. Worth screening a destination for it before authoring if the fold is
+large.
