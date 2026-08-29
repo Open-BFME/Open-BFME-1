@@ -394,6 +394,17 @@ void GameSpyInfo::addStagingRoom( GameSpyStagingRoom room )
 	m_stagingRoomsDirty = m_sawFullGameList;
 }
 
+// One vtable slot from home, and the slot is reachable -- but the fix is not,
+// for a reason that has nothing to do with this body. addStagingRoom is vtable
+// +0xA0 in BFME and +0x84 in the vendored interface, twenty-eight bytes of extra
+// virtuals ahead of it, and the argument handling including the by-value copy and
+// its unwind slot already matches. A forty-slot view class reaches +0xA0 and the
+// body then matches -- but DECLARING it renumbers the compiler-local $L labels in
+// this TU, and uw_00c40e10 and uw_00c40e8a are anchored on them: one fails the
+// byte compare and the other can no longer be told from two siblings. Any edit
+// that adds a declaration here pays that, so this body needs the funclet rows
+// re-anchored first, or a change that adds no declarations at all. Comments are
+// free; code is not.
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfo_updateStagingRoom.cpp
 // ?updateStagingRoom@GameSpyInfo@@UAEXVGameSpyStagingRoom@@@Z present-unmatched
 void GameSpyInfo::updateStagingRoom( GameSpyStagingRoom room )
