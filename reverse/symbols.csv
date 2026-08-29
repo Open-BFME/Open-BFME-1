@@ -72456,6 +72456,7 @@ name,address,notes
 ?bfmeCall935E@BfmeSub935E@@QAEXPAX@Z,0x0000F727,pin
 ?bfmeCall935F@BfmeSub935F@@QAEXPAPAX@Z,0x0001ACB2,pin
 ?bfmeCall935G@@YGXPAXHHH@Z,0x00020B08,pin
+?bfmeCall936F@@YAXH@Z,0x00893820,pin
 ?bfmeCallCCH@@YAHPAX0H@Z,0x00009084,pin
 ?bfmeCallCIB@@YAHPAX000@Z,0x007EC5C0,pin
 ?bfmeCallCIC@@YAHPAX000@Z,0x007ECE60,pin
@@ -72811,6 +72812,7 @@ name,address,notes
 ?bfmeDtorVA@BfmeThingVA@@QAEXXZ,0x00034833,pin
 ?bfmeDtorVB@BfmeThingVB@@QAEXPAX@Z,0x009F6BC8,pin
 ?bfmeDtorVBW@BfmeSubVBW@@QAEXXZ,0x00895260,pin
+?bfmeElem936B@@YGXPAX@Z,0x00030652,pin
 ?bfmeElse911B@BfmeThing911B@@QAEXPAX@Z,0x00926CB0,pin
 ?bfmeElseBBC@@YAXXZ,0x0000F36C,pin
 ?bfmeElseBBC@BfmeThingBBC@@QAEXXZ,0x0000F36C,pin
@@ -73257,6 +73259,7 @@ name,address,notes
 ?bfmeInit005DFD50@@YAXXZ,0x00015FB9,Open-BFME5 ILT the initialiser a latched-once body calls
 ?bfmeInit929C@@YAXPAD@Z,0x009F7244,pin
 ?bfmeInit929G@BfmeThing929G@@QAEXXZ,0x0089E700,pin
+?bfmeInit936G@BfmeThing936G@@QAEXXZ,0x00843990,pin
 ?bfmeInit@BfmeSub@@QAEXPAX@Z,0x0000DF49,Open-BFME5 the sub-object initialiser the entry append at 0x000D5E90 calls
 ?bfmeInit@Gen008FF1B0@@AAEXPAX@Z,0x008FEC90,Open-BFME5 the initialiser the zeroing constructor at 0x008FF1B0 calls
 ?bfmeInit@Gen0090BE20@@AAEXPAX@Z,0x0090BCF0,Open-BFME5 the initialiser the zeroing constructor at 0x0090BE20 calls
@@ -73905,6 +73908,7 @@ name,address,notes
 ?bfmeUseRT@BfmeSlotRT@@QAEXXZ,0x0003A427,pin
 ?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
+?bfmeVecDtor936B@@YGXPAXIHP6GX0@Z@Z,0x009F6D76,pin
 ?bfmeVecDtorDLA@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVecDtorDLB@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeVecDtorDLC@@YGXPAXIHP6AX0@Z@Z,0x009F6D76,pin
@@ -75014,6 +75018,9 @@ name,address,notes
 ?g_bfme933GlobC@@3PAUBfmeGlob933C@@A,0x00EF0898,pin
 ?g_bfme935GlobA@@3PAVBfmeGlob935A@@A,0x00EED668,pin
 ?g_bfme935GlobC@@3PAUBfmeObj935C@@A,0x00EF4998,pin
+?g_bfme936Count@@3HA,0x00F40594,pin
+?g_bfme936GlobG@@3PAXA,0x00F0BD30,pin
+?g_bfme936Ptr@@3PAUBfmeObj936C@@A,0x00F40534,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
