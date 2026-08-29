@@ -72320,6 +72320,7 @@ name,address,notes
 ?bfmeAdd1024@BfmeH1024@@QAEXHH@Z,0x000157DA,pin
 ?bfmeAdd1024@BfmeTab1024@@QAEXHH@Z,0x0089D890,pin
 ?bfmeAdd1026@BfmeLst1026@@QAEXHH@Z,0x0002221E,pin
+?bfmeAdd1034@BfmeSubA1034@@QAEXH@Z,0x00887C90,pin
 ?bfmeAdd913D@BfmeThing913D@@QAEDPAX@Z,0x000110E0,pin
 ?bfmeAdd955@BfmeSink955@@QAEXPAHH@Z,0x00037A56,pin
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
@@ -72997,6 +72998,8 @@ name,address,notes
 ?bfmeFind1024@BfmeTab1024@@QAEHH@Z,0x0089CEF0,pin
 ?bfmeFind1024S@BfmeStore1024@@QAEPAUBfmeRec1024@@H@Z,0x0001F253,pin
 ?bfmeFind1032@@YGPADH@Z,0x000181FB,pin
+?bfmeFind1034@@YGPAUBfmeX1034@@HH@Z,0x0003B061,pin
+?bfmeFind1034F@BfmeTab1034@@QAEPAVBfmeN1034@@H@Z,0x0089CEF0,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
@@ -73891,6 +73894,7 @@ name,address,notes
 ?bfmeSet1026@BfmeX1026@@QAEXHD@Z,0x0002BF2B,pin
 ?bfmeSet1027@BfmeQ1027@@QAEXHH@Z,0x000344C3,pin
 ?bfmeSet1028@BfmeSet1028@@QAEXH@Z,0x0093D0C0,pin
+?bfmeSet1034@BfmeZ1034@@QAEXD@Z,0x00016DF1,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
 ?bfmeSetA1004@BfmeObj1004@@QAEXHH@Z,0x00032DEE,pin
@@ -73942,6 +73946,7 @@ name,address,notes
 ?bfmeStartTI@BfmeSubTI@@QAEXXZ,0x0000F0A6,pin
 ?bfmeStateFlags@BfmeObjectAI@@QAEIXZ,0x0001BB3F,Open-BFME5 ILT thunk to body 0x00279780; ?getAdjustedVisionRangeForObject@AI@@SAMPBVObject@@H@Z at 0x0014A620 reads the AI state word through it; address-derived name
 ?bfmeStateValue@BfmeObjectAI@@QAEHXZ,0x000187A0,Open-BFME5 helper state query body used by BfmeObjectAI::bfmeStateFlags
+?bfmeStep1034@BfmeH1034@@QAEXXZ,0x00006906,pin
 ?bfmeStep1@Gen_004410A0@@AAEXXZ,0x000459CB,Open-BFME5 ILT the three-step runner at 0x004410A0 calls first
 ?bfmeStep1@Gen_0077F000@@AAEXXZ,0x00039428,Open-BFME5 ILT the three-step runner at 0x0077F000 calls first
 ?bfmeStep1@Gen_007892D0@@AAEXXZ,0x000270FC,Open-BFME5 ILT the three-step runner at 0x007892D0 calls first
@@ -74075,6 +74080,7 @@ name,address,notes
 ?bfmeTellRB@BfmeNodeRB@@QAEXPAX@Z,0x000021CB,pin
 ?bfmeTellRP@BfmeFoundRP@@QAEXPAX@Z,0x00030553,pin
 ?bfmeTest1025@BfmeT1025@@QAEDPAXH@Z,0x000357D8,pin
+?bfmeTest1034@@YADH@Z,0x0002789A,pin
 ?bfmeTest914A@@YAHXZ,0x000162A7,pin
 ?bfmeTest932E@BfmeThing932E@@QAEHXZ,0x00037E34,pin
 ?bfmeTest@Rva2225E0Filter@@AAE_NPAVBfmeOverridable@@_N@Z,0x0001B437,Open-BFME5 ILT the filter test whose result Rva2225E0Filter::accepts at 0x003A04A0 returns
@@ -74212,6 +74218,7 @@ name,address,notes
 ?bfmeUseRT@BfmeSlotRT@@QAEXXZ,0x0003A427,pin
 ?bfmeVal1025@BfmeH1025@@QAEHXZ,0x0001F668,pin
 ?bfmeVal1027@BfmeVal1027@@QAEMXZ,0x0000D7B5,pin
+?bfmeVal1034@BfmeN1034@@QAEHXZ,0x00898300,pin
 ?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVecCtor1030@@YGXPAX0HHP6AXXZ1@Z,0x009F7036,pin
@@ -75418,6 +75425,7 @@ name,address,notes
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
 ?g_bfmeAccDYB@@3HA,0x00EED8A4,pin
 ?g_bfmeActA979@@3PAVBfmeActA979@@A,0x00EF19E8,pin
+?g_bfmeAlloc1034@@3PAUBfmeAlloc1034@@A,0x00F37A30,pin
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
 ?g_bfmeArgDZE@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgDZF@@3PAXA,0x00EB7D80,pin
@@ -78285,6 +78293,7 @@ name,address,notes
 ?registerObject@PartitionManager@@QAEXPAVObject@@@Z,0x001086C0,Open-BFME5 callee of ?friend_notifyOfNewMapBoundary@Object@@QAEXXZ at 0x001BED80 via ILT 0x00001F5A
 ?registerParser@DataChunkInput@@QAEXABVAsciiString@@0P6A_NAAV1@PAUDataChunkInfo@@PAX@Z3@Z,0x00015BD1,Open-BFME5 DataChunkInput parser registration ILT
 ?registerParser@DataChunkInput@@QAEXABVAsciiString@@PAUDataChunkInfo@@P6A_NAAV1@1PAX@ZH@Z,0x00015BD1,DataChunkInput::registerParser via ILT thunk
+?release@DcPool@@QAEXPAX@Z,0x0005C0C0,HDC pool release; body at 0x0005C0C0 is 52/53 bytes exact (retail CALLs DeleteDC where MSVC tail-jumps)
 ?release@DictReleaseDataShim@@QAEXXZ,0x000681C0,Dict releaseData incremental-link thunk target through a TU-local forwarding shim
 ?release@DistLODClassFreeShim@@QAEXXZ,0x00725B70,DistLODClass incremental-link Free target through a TU-local layout shim
 ?release@Gen0002857E@@QAEXXZ,0x000442B0,address-derived Release-style callee of Rva00691040Handle; ILT to 0x006BA220
@@ -80261,4 +80270,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?release@DcPool@@QAEXPAX@Z,0x0005C0C0,HDC pool release; body at 0x0005C0C0 is 52/53 bytes exact (retail CALLs DeleteDC where MSVC tail-jumps)
