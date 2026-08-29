@@ -81337,3 +81337,4 @@ g_bfmeGridWaterHandle,0x012EF4D4,TerrainLogic getWaterHandle retail grid-water s
 ?_M_reallocate_map@?$deque@UGen_t_008fb4d0_p20pod@@V?$allocator@UGen_t_008fb4d0_p20pod@@@_STL@@@_STL@@IAEXI_N@Z,0x008FAA40,RVA 0x008FB4D0 exact auxiliary call target
 ??0?$vector@UGeometryShape@@V?$allocator@UGeometryShape@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00027570,GeometryInfo copy constructor vector<GeometryShape> member at retail 0x000FFD10
 ??0?$vector@UGeometryRecord@@V?$allocator@UGeometryRecord@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000149DE,GeometryInfo copy constructor vector<GeometryRecord> member at retail 0x000FFD10
+?write@DataChunkTableOfContents@@QAEXAAVOutputStream@@@Z,0x00102E60,DataChunkOutput::~DataChunkOutput callsite at retail 0x001036C0 writes the CkMp table through m_contents
