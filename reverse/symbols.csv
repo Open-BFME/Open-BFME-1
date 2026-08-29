@@ -73041,6 +73041,7 @@ name,address,notes
 ?bfmeFinishBP1008@BfmeP1008@@QAEXPAX@Z,0x00002EAA,pin
 ?bfmeFinishBQ1008@BfmeQ1008@@QAEXPAX@Z,0x00002EAA,pin
 ?bfmeFinishYC@BfmeThingYC@@QAEXPAX@Z,0x00019D17,pin
+?bfmeFirst1019@@YAXXZ,0x00005D9E,pin
 ?bfmeFirstAKB@BfmeThingAKB@@QAE_NPAH@Z,0x00006EF1,pin
 ?bfmeFirstEUA@BfmeGlobAEUA@@QAEHHH@Z,0x0004B290,pin
 ?bfmeFirstRK@BfmeThingRK@@QAEXXZ,0x00020B80,pin
@@ -73435,6 +73436,7 @@ name,address,notes
 ?bfmeInit00044BFC@@YAXXZ,0x00044BFC,Open-BFME5 ILT the initialiser the run-once latch at 0x005E84E0 calls
 ?bfmeInit0004B0F1@@YAXXZ,0x0004B0F1,Open-BFME5 ILT the initialiser the run-once latch at 0x005E85D0 calls
 ?bfmeInit005DFD50@@YAXXZ,0x00015FB9,Open-BFME5 ILT the initialiser a latched-once body calls
+?bfmeInit1019@@YAXPAD@Z,0x009F7244,pin
 ?bfmeInit929C@@YAXPAD@Z,0x009F7244,pin
 ?bfmeInit929G@BfmeThing929G@@QAEXXZ,0x0089E700,pin
 ?bfmeInit936G@BfmeThing936G@@QAEXXZ,0x00843990,pin
@@ -73937,6 +73939,7 @@ name,address,notes
 ?bfmeStop1003@BfmeStop1003@@QAEXXZ,0x00020C84,pin
 ?bfmeStop1006@BfmeStop1006@@QAEXXZ,0x00006AAA,pin
 ?bfmeStop1013@BfmeUnit1013@@QAEXH@Z,0x0004A1FB,pin
+?bfmeStop1019@BfmeA1019@@QAEXH@Z,0x00044A53,pin
 ?bfmeStop@BfmeStopF@@QAEXXZ,0x00015E2E,Open-BFME5 the ICF thunk (to 0x0037C600) the clear at 0x002901C0 calls before emptying its vector
 ?bfmeStopAHA@BfmeSubAHA@@QAEXH@Z,0x0004AB4C,pin
 ?bfmeStopAQA@BfmeOneAQA@@QAEXXZ,0x0001F316,pin
@@ -75347,6 +75350,7 @@ name,address,notes
 ?g_bfme967A7@@3PADA,0x00CB0A60,pin
 ?g_bfme967A8@@3PADA,0x00CB0A50,pin
 ?g_bfme967A9@@3PADA,0x00CB0A4C,pin
+?g_bfmeA1019@@3PAVBfmeA1019@@A,0x00EF1270,pin
 ?g_bfmeA986B@@3PAHA,0x00EF9D04,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
@@ -75362,6 +75366,7 @@ name,address,notes
 ?g_bfmeAskB993@@3PAVBfmeAskB993@@A,0x00EF4B98,pin
 ?g_bfmeAux1006@@3PAUBfmeAux1006@@A,0x00EF4B58,pin
 ?g_bfmeAux985@@3PAUBfmeAux985@@A,0x00EF4B58,pin
+?g_bfmeB1019@@3PAVBfmeB1019@@A,0x00EED668,pin
 ?g_bfmeB986B@@3PAHA,0x00EF9D0C,pin
 ?g_bfmeB991@@3PAVBfmeB991@@A,0x00EF9D88,pin
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
@@ -75477,6 +75482,7 @@ name,address,notes
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
 ?g_bfmeModeAZC@@3PAUBfmeModeAZC@@A,0x00EF0FE0,pin
+?g_bfmeName1019@@3PADA,0x00D2A5A8,pin
 ?g_bfmeObj1006@@3PAUBfmeObj1006@@A,0x00EF4C38,pin
 ?g_bfmeObj2EGE@@3PAVBfmeObj2EGE@@A,0x00EF148C,pin
 ?g_bfmeObj985@@3PAUBfmeObj985@@A,0x00EF4B40,pin
@@ -75542,6 +75548,7 @@ name,address,notes
 ?g_bfmeRegion3DFormat@@3QBDB,0x01144388,address-derived Region3D format string from retail 0x009D96EE
 ?g_bfmeResetA961@@3PAVBfmeResetA961@@A,0x00EF1028,pin
 ?g_bfmeRun1006@@3PAVBfmeRun1006@@A,0x00EF4998,pin
+?g_bfmeS1019@@3PAVBfmeS1019@@A,0x00F0A5B0,pin
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
@@ -75573,6 +75580,7 @@ name,address,notes
 ?g_bfmeStrA993B@@3PADA,0x00C81238,pin
 ?g_bfmeStrB993B@@3PADA,0x00C80FC0,pin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
+?g_bfmeT1019@@3PAUBfmeT1019@@A,0x00EF1024,pin
 ?g_bfmeTarget986B@@3PADA,0x00F071E4,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
@@ -75580,6 +75588,7 @@ name,address,notes
 ?g_bfmeTwoAOA@@3PAVBfmeTwoAOA@@A,0x00EED600,pin
 ?g_bfmeTwoAQA@@3PAVBfmeTwoAQA@@A,0x00EF1028,pin
 ?g_bfmeTwoATC@@3PAUBfmeTwoATC@@A,0x00EF4B58,pin
+?g_bfmeU1019@@3PAVBfmeU1019@@A,0x00EF076C,pin
 ?g_bfmeUiDZD@@3PAVBfmeUiDZD@@A,0x00EF7194,pin
 ?g_bfmeUiDZE@@3PAVBfmeUiDZE@@A,0x00EF19E8,pin
 ?g_bfmeUiDZF@@3PAVBfmeUiDZF@@A,0x00EF19E8,pin
