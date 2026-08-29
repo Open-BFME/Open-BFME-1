@@ -9983,6 +9983,7 @@ name,address,notes
 ?Get_Bone_Name@HTreeClass@@QBEPBDH@Z,0x009522B0
 ?Get_Bounding_Box@MeshGeometryClass@@QAEXPAVAABoxClass@@@Z,0x00924DD0
 ?Get_Bounding_Sphere@MeshGeometryClass@@QAEXPAVSphereClass@@@Z,0x00924E70
+?Get_Char_Data@FontCharsClass@@AAEPBVFontCharsClassCharDataStruct@@G@Z,0x00941290,the private class-declared spelling render2dsentence.h emits for the body already pinned as ?Get_Char_Data@FontCharsClass@@QAEPBUFontCharsClassCharDataStruct@@G@Z; same function, the donor declared it public and struct
 ?Get_Char_Data@FontCharsClass@@QAEPBUFontCharsClassCharDataStruct@@G@Z,0x00941290,body
 ?Get_Char_Spacing@FontCharsClass@@QAEHG@Z,0x009414D0,body
 ?Get_Color_Array@MeshMatDescClass@@QAEPAIH_N@Z,0x0002F8E2,
