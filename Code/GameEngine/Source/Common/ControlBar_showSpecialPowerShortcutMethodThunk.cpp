@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
-// readable body of ?showSpecialPowerShortcut@ControlBar@@QAEXXZ: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 // Lift the ControlBar::showSpecialPowerShortcut naked dump to clean C++.
 //
 // Zero Hour's ControlBar.cpp body with one BFME simplification: ZH's final

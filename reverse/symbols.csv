@@ -79978,3 +79978,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?hasAnyShortcutSpecialPower@BfmeShortcutPlayer@@QAEHXZ,0x0002331C,Open-BFME5 ILT reached by ControlBar::showSpecialPowerShortcut; returns a 32-bit value (retail tests eax not al) so it is spelled on a view; address from the donor and byte-proved by the rel32 in that call
