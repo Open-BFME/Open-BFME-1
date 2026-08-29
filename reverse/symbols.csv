@@ -72457,6 +72457,7 @@ name,address,notes
 ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z,0x0000C0A4,Open-BFME5 ILT thunk to body 0x00497CE0; ??0BfmeQuickMatchScreenBase@@QAE@PAX@Z at 0x00470620 calls it on this with its own argument as the last thing it does; address-derived name
 ?bfmeAttachCEF@BfmeSubCEF@@QAEXPAUBfmeListCEF@@@Z,0x00887C90,pin
 ?bfmeAttachCFF@BfmeOwnerCFF@@QAEXPAVBfmeThingCFF@@@Z,0x0002C1CE,pin
+?bfmeBase1028@BfmeA1028@@QAEXH@Z,0x009DB4E0,pin
 ?bfmeBase963@BfmeReg963@@QAEXXZ,0x009A1A30,pin
 ?bfmeBase966A@BfmeVft966A@@QAEXXZ,0x00039D6A,pin
 ?bfmeBase966B@BfmeVft966B@@QAEXXZ,0x00039D6A,pin
@@ -72977,6 +72978,7 @@ name,address,notes
 ?bfmeFallback1015@BfmeM1015@@QAEXHH@Z,0x008A48A0,pin
 ?bfmeFallback961@BfmeHost961@@QAEXHH@Z,0x0001C46D,pin
 ?bfmeFallback977C@@YADXZ,0x00892210,pin
+?bfmeFill1028@BfmeSub1028@@QAEXPAH0@Z,0x00021562,pin
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
 ?bfmeFind1002@BfmeA1002@@QAEPAUBfmeX1002@@PAUBfmeArg1002@@@Z,0x0003F5DA,pin
 ?bfmeFind1004@BfmeHold1004@@QAEPAVBfmeX1004@@XZ,0x0000D3B9,pin
@@ -73790,6 +73792,7 @@ name,address,notes
 ?bfmeRemove@BfmeManagerEntryP@@QAEXPAVBfmeOwnedP@@@Z,0x001BE920,BfmeManagerP bfmeRemove at 0x003854C0 reaches this helper through ILT 0x0000B325; ECX is each +0xA8 list entry and the argument is the owned element
 ?bfmeRemove@BfmeManagerP@@QAEXPAVBfmeOwnedP@@@Z,0x000218B9,Open-BFME5 the ICF thunk (to 0x004218B9) the clear at 0x00371120 calls on its manager per element
 ?bfmeRemove@BfmeSingletonH@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the singleton clear at 0x003C0DB0 calls per element
+?bfmeReport1028@@YAXHHPADH@Z,0x00027AAC,pin
 ?bfmeReserve@Gen_00095A50@@AAEXHPAX@Z,0x000472DA,Open-BFME5 ILT the vector assignment at 0x00095A50 reserves through
 ?bfmeReserve@Gen_000B54C0@@AAEXHPAX@Z,0x00043E37,Open-BFME5 ILT the vector assignment at 0x000B54C0 reserves through
 ?bfmeReserve@Gen_002F8980@@AAEXHPAX@Z,0x00015ABE,Open-BFME5 ILT the vector assignment at 0x002F8980 reserves through
@@ -73846,6 +73849,7 @@ name,address,notes
 ?bfmeSend1009C@BfmeSinkC1009@@QAEDPAX0@Z,0x00004633,pin
 ?bfmeSend1011@BfmeA1011@@QAEXHHHHH@Z,0x000061E5,pin
 ?bfmeSend1020@BfmeLog1020@@QAEXH@Z,0x0002144A,pin
+?bfmeSend1028@BfmeSink1028@@QAEXHPAH0@Z,0x00803110,pin
 ?bfmeSend975B@BfmeB975@@QAEXHH@Z,0x0002D6F5,pin
 ?bfmeSend979B@BfmeSink979@@QAEXPAVBfmeKey979@@@Z,0x00038938,pin
 ?bfmeSend986C@BfmeC986@@QAEXHHHHH@Z,0x0001A6B3,pin
@@ -73872,6 +73876,7 @@ name,address,notes
 ?bfmeSet1020@BfmeJ1020@@QAEXH_N@Z,0x00027237,pin
 ?bfmeSet1026@BfmeX1026@@QAEXHD@Z,0x0002BF2B,pin
 ?bfmeSet1027@BfmeQ1027@@QAEXHH@Z,0x000344C3,pin
+?bfmeSet1028@BfmeSet1028@@QAEXH@Z,0x0093D0C0,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
 ?bfmeSetA1004@BfmeObj1004@@QAEXHH@Z,0x00032DEE,pin
@@ -75662,6 +75667,7 @@ name,address,notes
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
 ?g_bfmeT1019@@3PAUBfmeT1019@@A,0x00EF1024,pin
 ?g_bfmeTab1021@@3PAHA,0x00EB7D94,pin
+?g_bfmeTag1028@@3PADA,0x00D23918,pin
 ?g_bfmeTarget986B@@3PADA,0x00F071E4,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
@@ -79680,6 +79686,7 @@ _bfmeTextBTF,0x00CBF820,pin
 _bfmeTextOneAZB,0x00F36E54,pin
 _bfmeTextTwoAZB,0x00F36E50,pin
 _bfmeTryActivate@12,0x009D8460,address-derived stdcall helper target from the direct REL32 call at retail 0x009D6310
+_bfmeVft1028A,0x00D1A174,pin
 _bfmeVftAGBa,0x00C9C9D0,pin
 _bfmeVftAGBb,0x00CA372C,pin
 _bfmeVftAGBc,0x00CB1404,pin
