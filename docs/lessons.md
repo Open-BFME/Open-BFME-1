@@ -2768,7 +2768,9 @@ to one TU only, and a destination gets one or the other. A TU-local view takes
 the layout without the signatures, which is why views keep working where the
 shim cannot be adopted.
 
-## THE DISCRIMINATOR: second member, or short class? Read the SHAPE of the disagreement
+## THE DISCRIMINATOR: second member, or short class? -- HALF OF THIS WAS WRONG
+**The GAP RULE below is FALSIFIED. Read the correction that follows it before
+using anything in this entry.**
 
 A matched tiny accessor is authoritative about its own offset -- it is
 byte-verified and does nothing else. So collect a class's accessor-proven
@@ -2905,3 +2907,52 @@ order: is the row a 5-byte jmp stub (then the number is noise), do the diffs sit
 at the end (then it is a length difference), do the deltas agree (then one lever
 might close it). A miss(1) is not nearer to landing than a miss(9); it is just
 smaller evidence of whatever it is.
+
+## CORRECTION: the gap rule is dead; use the LIVENESS test
+
+`Drawable::getID` falsified it within the hour. Retail reads +0x100, this tree
+reads +0x8C, the accessors either side both AGREE at retail's offsets
+(getInstanceMatrix +0xD4, getFullyObscuredByShroud +0x148), and +0x100 sits in
+the gap between them. The gap rule calls that a second member. It is not -- it
+is ONE member declared in the wrong position, and the row lands 7/7 by pointing
+at +0x100.
+
+**What survives:**
+
+  * A RUN of consecutive members at a CONSTANT delta is still a reliable
+    shifted-class positive. GameWindow's four members, all exactly +4.
+  * **The liveness test, which replaces the gap rule entirely: does retail use
+    OUR offset anywhere -- an accessor, or a matched body? If nothing does, our
+    offset is the error and there is one member.** A question about evidence,
+    not about shape.
+
+**Reclassified:** LANGameInfo PASSES -- +0x360 by get/setNext, +0x398 by three
+matched bodies. Drawable FAILS -- one misplaced member. Script is UNRESOLVED:
+its +0x20 has no accessor and no matched body, only retail's bytes in the one
+function that cannot land, which is good evidence the OFFSET is real and no
+evidence that +0x20 and +0x28 are two members rather than one relocated one.
+
+**So "BFME classes carry two links" rests on ONE solid case, not two.** Treat it
+as a single-witness observation and do not let it steer a diagnosis.
+
+The mechanism of the error is the part to keep: two positives, a rule built to
+explain both, shipped without a case that could have falsified it. The liveness
+test was the falsifiable version and something cheaper was substituted for it.
+A rule that explains every case you have is not evidence -- it is a description
+of the cases you have. Find the case that would break it BEFORE writing it down,
+and if you cannot construct one, say the rule is untested.
+
+## BFME overloads on integer signedness where the reference has one function
+
+Two sightings, and -- given the entry immediately above -- recorded as an
+observation rather than a rule, with no case yet sought that would break it.
+
+    ?setFlashColor@Drawable@@QAEXH@Z   at 0xD0    Int
+    ?setFlashColor@Drawable@@QAEXI@Z   at 0x164   UnsignedInt
+    ?winSetLayout@GameWindow@@QAEH...  at 0x00478E10
+    ?winSetLayout@GameWindow@@QAEX...  at 0x0026ED70   (return type, not a parameter)
+
+MSVC encodes both the parameter types and the return type, so these are distinct
+symbols sharing a source name. The practical consequence is the one already
+recorded for winSetLayout: a header declaring one spelling cannot serve the TU
+that defines the other, and a matched row for one says nothing about the other.
