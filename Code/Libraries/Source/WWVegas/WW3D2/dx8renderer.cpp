@@ -1985,11 +1985,11 @@ void DX8TextureCategoryClass::Render(void)
 				{	oldMapper->Set_LastUsedSyncTime(oldUVOffsetSyncTime);
 					oldMapper->Set_Current_UV_Offset(oldUVOffset);
 				}
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dynamesh.cpp
-// ?Set_Material@DX8Wrapper@@SAXPBVVertexMaterialClass@@@Z present-unmatched
+// (folded home from dynamesh.cpp, which no longer points here)
+// (?Set_Material@DX8Wrapper is claimed from this file now)
 				DX8Wrapper::Set_Material(NULL);	//force a reset of vertex material since we secretly changed opacity
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dynamesh.cpp
-// ?Set_Material@DX8Wrapper@@SAXPBVVertexMaterialClass@@@Z present-unmatched
+// (folded home from dynamesh.cpp, which no longer points here)
+// (?Set_Material@DX8Wrapper is claimed from this file now)
 				DX8Wrapper::Set_Material(vmaterial);	//restore previous material.
 			} 
 			else

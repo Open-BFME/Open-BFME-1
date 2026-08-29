@@ -808,8 +808,8 @@ void StreakRendererClass::RenderStreak
 
 				// Not parallel - intersect planes to get line (get vector, normalize it, ensure it is
 				// pointing towards the midpoint)
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
-// ?Cross_Product@Vector3@@SAXABV1@0PAV1@@Z present-unmatched
+// (folded home from colmathobbobb.cpp, which no longer points here)
+// (?Cross_Product@Vector3 is claimed from this file now)
 				Vector3::Cross_Product(segment[intersectionIndex - 1].EdgePlane[TOP_EDGE], segment[intersectionIndex].EdgePlane[TOP_EDGE],
 					&(intersection[intersectionIndex][TOP_EDGE].Direction));
 				intersection[intersectionIndex][TOP_EDGE].Direction.Normalize();
@@ -851,8 +851,8 @@ void StreakRendererClass::RenderStreak
 
 				// Not parallel - intersect planes to get line (get vector, normalize it, ensure it is
 				// pointing towards the midpoint)
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
-// ?Cross_Product@Vector3@@SAXABV1@0PAV1@@Z present-unmatched
+// (folded home from colmathobbobb.cpp, which no longer points here)
+// (?Cross_Product@Vector3 is claimed from this file now)
 				Vector3::Cross_Product(segment[intersectionIndex - 1].EdgePlane[BOTTOM_EDGE], segment[intersectionIndex].EdgePlane[BOTTOM_EDGE],
 					&(intersection[intersectionIndex][BOTTOM_EDGE].Direction));
 				intersection[intersectionIndex][BOTTOM_EDGE].Direction.Normalize();

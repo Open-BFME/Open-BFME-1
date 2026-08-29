@@ -153,8 +153,8 @@ void GrantUpgradeCreate::onBuildComplete( void )
 	if( ! shouldDoOnBuildComplete() )
 		return;
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Create/CreateModule.cpp
-// ?onBuildComplete@CreateModule@@UAEXXZ present-unmatched
+// (folded home from CreateModule.cpp, which no longer points here)
+// (?onBuildComplete@CreateModule@@UAEXXZ is claimed from this file now)
 	CreateModule::onBuildComplete(); // extend
 
 	const UpgradeTemplate *upgradeTemplate = TheUpgradeCenter->findUpgrade( getGrantUpgradeCreateModuleData()->m_upgradeName );
