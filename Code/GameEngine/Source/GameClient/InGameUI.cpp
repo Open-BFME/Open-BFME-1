@@ -809,7 +809,6 @@ struct BfmeNamedTimerObject
 };
 
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_removeNamedTimer.cpp
 void InGameUI::removeNamedTimer( const AsciiString& timerName )
 {
 	// BFME's map sits at this+0x77C; the ZH class reaches it 0xC0 bytes early
@@ -10038,7 +10037,6 @@ void InGameUI::updateIdleWorker( void )
 		hideIdleWorkerLayout();
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_resetIdleWorker_Thunk.cpp
 // Retail hands GadgetRadioSetText the empty string by value. The vendored
 // UnicodeString keeps its copy constructor out of line, so the temporary is
 // opaque and MSVC records its unwind slot AFTER loading the constructor's
