@@ -80538,3 +80538,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?LoadAndCreateD3DShader@BfmeShaderLoader@@SAJPBDPAK@Z,0x0001FC99,alias of ?LoadAndCreateD3DShader@W3DShaderManager@@SAJPBDPAK@Z pinned at the same ILT; W3DShaderManager.cpp compiles the reference five-argument declaration so the BFME two-argument spelling needs a name of its own
