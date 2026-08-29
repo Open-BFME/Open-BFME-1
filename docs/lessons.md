@@ -1110,6 +1110,33 @@ test, a refcount compare and an indirect dllimport free where retail emits a
 plain out-of-line call. Three TUs already use this shim. Unrelated to the
 m_data+4/+8 payload question, which stays parked.
 
+## BFME's KindOfType is four entries longer than the reference's, past index 41
+
+Two unrelated files agree, which is why this is worth propagating where the
+individual readings were not:
+
+    InGameUI::evaluateSoloNexus   MOB_NEXUS 46, IGNORED_IN_GUI 47   (ref 42, 43)
+    PartitionFilterRepulsor::allow            INERT 0x58            (ref 0x54)
+
+KINDOF_STRUCTURE is 7 in both, so the four extra entries are not at the front.
+Anything passing a reference KIND_OF constant to a BFME body above index 41 is
+testing the wrong bit -- and a body that does so still byte-matches, because the
+number is an immediate. Only the VALUE is proven; what BFME calls the four extra
+entries is not, so write the number and say where it came from rather than
+inventing a name.
+
+## A member-order difference does not need the header changed
+
+An initialiser list emits in the CLASS's declaration order, whatever order it is
+written in -- so when BFME declares a class's members in a different order than
+the reference, the reference constructor stores each argument into the wrong
+slot and no list can fix it. Body assignments emit AS WRITTEN, and that is
+enough: `PartitionFilterPossibleToAttack`'s constructor lands all 32 bytes from
+the body form, vptr store included -- MSVC still sinks the vptr to the position
+retail puts it, between the first and second member store. Works for POD
+members; a member needing construction still wants the list, and then the order
+really is the class's.
+
 ## The bytes prove values and offsets, never names
 
 A donor's local enum, its member names and its comments are the ORIGINAL
