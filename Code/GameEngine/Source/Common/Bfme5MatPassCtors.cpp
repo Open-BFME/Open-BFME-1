@@ -56,3 +56,24 @@ Bfme5ColorRecord::Bfme5ColorRecord(const Bfme5ColorRecord &o)
 	: m_bfme04(o.m_bfme04), m_bfme08(o.m_bfme08), m_bfme0c(o.m_bfme0c), m_bfme10(o.m_bfme10)
 {
 }
+
+struct Bfme5ColorTriple
+{
+	MultiplayerColorDefinition m_bfmeColour;
+	int m_bfme04;
+	int m_bfme08;
+};
+
+class Bfme5TripleRecord
+{
+public:
+	Bfme5TripleRecord(const int *p, const Bfme5ColorTriple &t);
+
+	int m_bfme00;
+	Bfme5ColorTriple m_bfme04;
+};
+
+Bfme5TripleRecord::Bfme5TripleRecord(const int *p, const Bfme5ColorTriple &t)
+	: m_bfme00(*p), m_bfme04(t)
+{
+}
