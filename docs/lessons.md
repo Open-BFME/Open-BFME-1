@@ -3342,3 +3342,54 @@ add `rebase.autoStash`; autostash pushes and pops through the same shared stack,
 so it reintroduces exactly this race. Use
 `git -c rebase.autoStash=true pull --rebase` deliberately and only when you have
 read the stash list, or better, wait for the tree to be yours.
+
+## ICF needs identical RELOCATIONS, so relocations decide it -- not size
+
+The ambiguous middle of the mis-anchored list was framed as a size question:
+bodies between 32 and 130 bytes where an ICF fold is a live alternative to a
+mis-anchoring. Size is the wrong axis. **ICF folds bodies that are identical
+INCLUDING their relocations**, so two constructors that store different vftables
+cannot fold however small and however similar their code.
+
+That makes it decidable rather than a judgement call:
+
+  * read both candidate bodies' relocation lists (`read_object_symbol_bytes`
+    returns `(body, relocs)`);
+  * if the targets differ -- different vftables, different string literals,
+    different callees -- ICF is IMPOSSIBLE and a shared address is a
+    mis-anchoring, whatever the size;
+  * if the targets are identical, an ICF fold is genuinely possible and the row
+    may be correct bookkeeping that merely looks odd. Log it, do not convert it.
+
+This is the same instrument that named the two vftables behind the
+`/DBFME_MODULE_NO_MPO` diagnosis. When a diff or an identity question lands on a
+masked DIR32, read the relocations rather than the disassembly.
+
+## Caller counts go silent exactly where the topology test earns its keep
+
+All four constructor thunks re-homed in one pass had caller counts of **1
+against 1**. The histogram that cracked the AsciiString case -- 6,947 sites
+against one -- says nothing at all here.
+
+That is the argument for keeping both discriminators rather than the one that
+fired first. Caller counts settle a case where an import thunk serves the whole
+binary; the topology test (incremental linking emits ONE thunk per function, so
+a body already matched under name B with exactly one stub reaching it owns that
+stub) settles the case where both counts are one, which is most of them.
+
+## Re-homing is duplicate-prone in a way ordinary folds are not
+
+A retire-plus-add-match writes the SAME ADDRESS twice in one commit, so any
+concurrent rebase has two rows to union. A duplicate `?j_00048b9e@@YAXXZ`
+appeared exactly this way and pre-push caught it -- the documented case, fixed
+with ledger_io keeping the first, never dedup_csv.
+
+Expect it on every re-homing commit and check `check_csv` before pushing rather
+than after the rebase surprises you.
+
+## Quote the heredoc when a commit message contains backticks
+
+`git commit -F -` with an unquoted `<<EOF` lets the shell execute backticks and
+`$` inside the message; two phrases vanished from one message this way and a
+word from another. Use `<<'EOF'`. Amend before pushing if you catch it; do not
+force-push over shared history to fix prose if you do not.
