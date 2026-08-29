@@ -73070,6 +73070,7 @@ name,address,notes
 ?bfmeFreeSizedXC@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeSmallCFA@@YAXPADI@Z,0x0082E5F0,pin
 ?bfmeFreeSmallCFB@@YAXPADI@Z,0x0082E5F0,pin
+?bfmeFreeTA@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeUB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeUD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
@@ -73452,6 +73453,7 @@ name,address,notes
 ?bfmeOneQE@BfmeThingQE@@QAEXXZ,0x000172D8,pin
 ?bfmeOneRB@@YAXHPAUBfmeObjRB@@@Z,0x0003F427,pin
 ?bfmeOneRF@@YAPAXPAX0@Z,0x007EBCA0,pin
+?bfmeOneTB@@YAXXZ,0x00831F90,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73472,6 +73474,7 @@ name,address,notes
 ?bfmeQuery@BfmeFilterObject@@QAE_NPAVPlayer@@@Z,0x00020824,Open-BFME5 ILT the object query in Rva2225E0Filter::accepts at 0x003A04A0 goes through
 ?bfmeQuery@Pathfinder@@QAEXPAVObject@@PAH1@Z,0x000461FF,Open-BFME5 ILT the TightenPathStruct constructor at 0x003E1720 queries the pathfinder through; the two pointer arguments are the outputs at +0x0C and +0x10
 ?bfmeQueryKE@@YGIPAXH@Z,0x009F8890,pin
+?bfmeQuerySG@BfmeSrcSG@@QAEHXZ,0x00039324,pin
 ?bfmeRandom2B7@@YANHMPBDH@Z,0x0002CCA5,pin
 ?bfmeRangeBase@WeaponTemplate@@ABEMPBVObject@@ABVWeaponBonus@@M@Z,0x00009598,Open-BFME5 ILT thunk to body 0x001E2670; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 gets its unbonused range from it with the negated z of the position; address-derived name
 ?bfmeRangeErrorQX@BfmeThingQX@@QAEXXZ,0x000132CD,pin
@@ -73700,6 +73703,7 @@ name,address,notes
 ?bfmeTest@Rva2225E0Filter@@AAE_NPAVBfmeOverridable@@_N@Z,0x0001B437,Open-BFME5 ILT the filter test whose result Rva2225E0Filter::accepts at 0x003A04A0 returns
 ?bfmeTestLB@BfmeOwnerLB@@QAE_NPAUBfmeThingLB@@@Z,0x0004250A,pin
 ?bfmeTestME@BfmeThingME@@QAEHXZ,0x00003EA4,pin
+?bfmeTestSB@@YAHXZ,0x0085B420,pin
 ?bfmeTheBZF@@3PAVBfmeGlobalBZF@@A,0x00EF1028,pin
 ?bfmeTheCBC@@3HA,0x00F379BC,pin
 ?bfmeTheCBD@@3HA,0x00F379BC,pin
@@ -73779,6 +73783,7 @@ name,address,notes
 ?bfmeTwoQE@BfmeSubQE@@QAEXXZ,0x0001117B,pin
 ?bfmeTwoRB@@YAXHH@Z,0x0003FD82,pin
 ?bfmeTwoRF@@YAPAXPAX0@Z,0x007EE720,pin
+?bfmeTwoTB@@YAPAXXZ,0x0083B330,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -74904,6 +74909,7 @@ name,address,notes
 ?g_bfmeCountELH@@3HA,0x00F40594,pin
 ?g_bfmeCountQB@@3HA,0x00F04B60,pin
 ?g_bfmeCountSI@@3HA,0x00EED240,pin
+?g_bfmeCountTB@@3HA,0x00F0BCA8,pin
 ?g_bfmeCsDWC@@3UBfmeCsDWA@@A,0x00F36E60,pin
 ?g_bfmeCurEYE@@3PAXA,0x00EED5D8,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
@@ -75003,6 +75009,7 @@ name,address,notes
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
 ?g_bfmeOneATC@@3PAVBfmeOneATC@@A,0x00EF19E8,pin
+?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
@@ -75047,6 +75054,7 @@ name,address,notes
 ?g_bfmeValMD@@3HA,0x00EB7D80,pin
 ?g_bfmeVftAQB@@3PADA,0x00D22470,pin
 ?g_bfmeVftBQB@@3PADA,0x00D223A0,pin
+?g_bfmeVftTA@@3PADA,0x00D2F254,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeWhatBGE@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWhatBKG@@3PAXA,0x00EC3BB8,pin
