@@ -74747,6 +74747,7 @@ name,address,notes
 ?compare@Gen_t_003d3b80_mc4@@QBEHABU1@@Z,0x00090570,family-emit payload member
 ?compare@Gen_t_00423f10_mc4@@QBEHABU1@@Z,0x0005FEB0,family-emit payload member
 ?compare@Gen_t_0054ed50_mc4@@QBEHABU1@@Z,0x0005FFA0,family-emit payload member
+?compare@Rva0039C7D0Owner@@ABE_NPBURva0039C7D0Payload@@0@Z,0x00028AF6,Open-BFME5 ILT to the two-argument member worker called by 0x0039C7D0
 ?compareNoCase@AsciiString@@QBEHPBD@Z,0x000405E8,ILT thunk to the case-insensitive AsciiString compare at 0x00075E00
 ?compute@BridgeGetBridgeHeightShim@@QAEMPBUCoord3D@@PAU2@@Z,0x001A7520,Bridge getBridgeHeight incremental-link thunk target through a TU-local forwarding shim
 ?computeApproachPosition@DockUpdate@@IAE?AUCoord3D@@HPAVObject@@@Z,0x0001D7C8
