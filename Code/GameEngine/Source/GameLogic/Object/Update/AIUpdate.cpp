@@ -115,8 +115,10 @@ struct BFMEApproachPathFields
 
 struct BFMEQuickPathFields
 {
+	UnsignedInt getValidLocomotorSurfaces() const { return m_validLocomotorSurfaces; }
+
 	char m_unreconstructed_000[0x1B8];
-	Int m_validLocomotorSurfaces;
+	UnsignedInt m_validLocomotorSurfaces;
 };
 
 // The rest of the AIUpdateInterface tail the Zero Hour shim cannot place: the
@@ -124,6 +126,8 @@ struct BFMEQuickPathFields
 // randomise flag.
 struct BFMEAIUpdateFields
 {
+	Object *getObject() const { return m_object; }
+
 	char m_unreconstructed_000[0x08];
 	Object *m_object;					///< retail this+0x08
 	char m_unreconstructed_00C[0x30 - 0x0C];
@@ -180,6 +184,38 @@ class BFMEObjectLookup
 {
 public:
 	Object *findObjectByID( ObjectID id );			///< retail ILT 0x0001f253
+};
+
+// BFME's pathfinder position test takes the position first and the object
+// last, and asks nothing about crush level; the reference Pathfinder declares
+// Zero Hour's argument list. The layer accessor is a call here, not the
+// reference class's inline member read.
+class BFMEPathfinderMove
+{
+public:
+	Bool validMovementPosition( const Coord3D *pos, PathfindLayerEnum layer,
+			UnsignedInt validSurfaces, Object *obj );	///< retail ILT 0x0003b359
+};
+
+class BFMEObjectLayerQuery
+{
+public:
+	Int getLayer() const;					///< retail ILT 0x0003a391
+};
+
+// BFME reaches setGoalObject through the state machine's vtable at +0x38; the
+// reference StateMachine declares it as an ordinary member.
+class BFMEGoalObjectMachine
+{
+public:
+	virtual void slot00() = 0;	virtual void slot04() = 0;
+	virtual void slot08() = 0;	virtual void slot0C() = 0;
+	virtual void slot10() = 0;	virtual void slot14() = 0;
+	virtual void slot18() = 0;	virtual void slot1C() = 0;
+	virtual void slot20() = 0;	virtual void slot24() = 0;
+	virtual void slot28() = 0;	virtual void slot2C() = 0;
+	virtual void slot30() = 0;	virtual void slot34() = 0;
+	virtual void setGoalObject( const Object *object ) = 0;	///< vtable +0x38
 };
 
 // The object status word, whose IS_ATTACKING bit is 22.
@@ -2503,11 +2539,16 @@ Bool AIUpdateInterface::isQuickPathAvailable( const Coord3D *destination ) const
 
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_isValidLocomotorPosition.cpp
-// ?isValidLocomotorPosition@AIUpdateInterface@@ present-unmatched
+// ?isValidLocomotorPosition@AIUpdateInterface@@QBE_NPBUCoord3D@@@Z
 Bool AIUpdateInterface::isValidLocomotorPosition(const Coord3D* pos) const
 {
-	return TheAI->pathfinder()->validMovementPosition( getObject()->getCrusherLevel()>0, getObject()->getLayer(), m_locomotorSet, pos );
+	const BFMEAIUpdateFields *self = reinterpret_cast<const BFMEAIUpdateFields *>(this);
+
+	return reinterpret_cast<BFMEPathfinderMove *>( TheAI->pathfinder() )->validMovementPosition(
+		pos,
+		(PathfindLayerEnum)reinterpret_cast<const BFMEObjectLayerQuery *>( self->getObject() )->getLayer(),
+		reinterpret_cast<const BFMEQuickPathFields *>(this)->getValidLocomotorSurfaces(),
+		self->getObject() );
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -4641,29 +4682,24 @@ void AIUpdateInterface::privateHackInternet( CommandSourceType cmdSource )
 }
 
 /// if we are attacking "fromID", stop that and attack "toID" instead
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_transferAttack.cpp
-// ?transferAttack@AIUpdateInterface@@ present-unmatched
+// ?transferAttack@AIUpdateInterface@@QAEXW4ObjectID@@0@Z
 void AIUpdateInterface::transferAttack(ObjectID fromID, ObjectID toID)
 {
-	Object *newTarget = TheGameLogic->findObjectByID( toID );
+	BFMEAIUpdateFields *self = reinterpret_cast<BFMEAIUpdateFields *>(this);
 
-	if (m_currentVictimID == fromID)
-		m_currentVictimID = toID;
+	if (self->m_currentVictimID == fromID)
+		self->m_currentVictimID = toID;
 
-	Object* goalObj = getStateMachine()->getGoalObject();
+	// The replacement is looked up only when it is needed, and BFME transfers
+	// no turret targets here.
+	Object *goalObj = self->m_stateMachine->getGoalObject();
 	if (goalObj && goalObj->getID() == fromID)
-		getStateMachine()->setGoalObject( newTarget );
-
-	//Transfer the turrets too this frame.
-	for( Int i = 0; i < MAX_TURRETS; i++ )
 	{
-		goalObj = getTurretTargetObject( (WhichTurretType)i, FALSE );
-		if( goalObj && goalObj->getID() == fromID )
-		{
-			setTurretTargetObject( (WhichTurretType)i, newTarget, TRUE );
-		}
+		BFMEGoalObjectMachine *stateMachine =
+			reinterpret_cast<BFMEGoalObjectMachine *>( self->m_stateMachine );
+		stateMachine->setGoalObject(
+			reinterpret_cast<BFMEObjectLookup *>(TheGameLogic)->findObjectByID( toID ) );
 	}
-
 }
 
 //----------------------------------------------------------------------------------------------------------
