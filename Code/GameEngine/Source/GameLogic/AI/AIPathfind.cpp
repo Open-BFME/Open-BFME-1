@@ -3346,14 +3346,34 @@ void PathfindLayer::doDebugIcons(void) {
 /**
  * Sets the bridge & layer number for a layer.
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathfindLayer_initAndSetDestroyed.cpp
-// ?init@PathfindLayer@@QAE_NPAVBridge@@W4PathfindLayerEnum@@@Z present-unmatched
+// The two pointers at +0x38 and +0x3c are what the layer's use test reads, and
+// both of them refuse an init. The layer enum sits at +0x28 and the destroyed
+// flag at +0x34. setDestroyed picks its notification by whether the bridge at
+// +0x38 is set, where the reference copy classifies cells unconditionally;
+// neither notification is declared by the reference header.
+struct BFMEPathfindLayerFields
+{
+	void bfmeNotifyBridge();				///< retail 0x0003b250
+	void bfmeNotifyPlain();					///< retail 0x0003a03f
+
+	char m_unreconstructed_00[0x28];
+	PathfindLayerEnum m_layer;				///< retail this+0x28
+	char m_unreconstructed_2C[0x34 - 0x2C];
+	Bool m_destroyed;					///< retail this+0x34
+	char m_unreconstructed_35[0x38 - 0x35];
+	Bridge *m_bridge;					///< retail this+0x38
+	Bridge *m_bfmeOther;					///< retail this+0x3c
+};
+
+// ?init@PathfindLayer@@QAE_NPAVBridge@@W4PathfindLayerEnum@@@Z
 Bool PathfindLayer::init(Bridge *theBridge, PathfindLayerEnum layer)  
 {
-	if (m_bridge!=NULL) return false;
-	m_bridge = theBridge;
-	m_layer = layer;
-	m_destroyed = false;
+	BFMEPathfindLayerFields *self = reinterpret_cast<BFMEPathfindLayerFields *>(this);
+
+	if (self->m_bridge != NULL || self->m_bfmeOther != NULL) return false;
+	self->m_bridge = theBridge;
+	self->m_layer = layer;
+	self->m_destroyed = false;
 	return true;
 }
 
@@ -3563,14 +3583,19 @@ void PathfindLayer::classifyWallCells(ObjectID *wallPieces, Int numPieces)
 /**
  * Relassifies the pathfind cells for the destroyed bridge layer.
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathfindLayer_initAndSetDestroyed.cpp
-// ?setDestroyed@PathfindLayer@@QAE_N_N@Z present-unmatched
+// ?setDestroyed@PathfindLayer@@QAE_N_N@Z
 Bool PathfindLayer::setDestroyed(Bool destroyed)
 {
-	if (destroyed == m_destroyed) return false;
-	
-	m_destroyed = destroyed;
-	classifyCells();
+	BFMEPathfindLayerFields *self = reinterpret_cast<BFMEPathfindLayerFields *>(this);
+
+	if (destroyed == self->m_destroyed) return false;
+
+	self->m_destroyed = destroyed;
+
+	if (self->m_bridge != NULL)
+		self->bfmeNotifyBridge();
+	else
+		self->bfmeNotifyPlain();
 
 	return true;
 }
