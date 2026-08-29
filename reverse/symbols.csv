@@ -79501,3 +79501,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??0PickAndPlayInfo@@QAE@XZ,0x0000F164,BFME PickAndPlayInfo constructor; target call follows local DrawableList construction and precedes field population in three adjacent voice response helpers
+??1?$_List_base@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE@XZ,0x00040863,STLport Drawable pointer list base destructor; cleanup call for the local one-Drawable list in three adjacent voice response helpers
+?pickAndPlayUnitVoiceResponse@@YAXPBV?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@W4Type@GameMessage@@PAVPickAndPlayInfo@@@Z,0x000196C8,BFME voice dispatcher; adjacent helpers pass the local DrawableList message IDs 0x7E7 or 0x7E8 and PickAndPlayInfo
