@@ -2005,20 +2005,48 @@ void W3DModelDraw::getRenderCostRecursive(RenderCost & rc,RenderObjClass * robj)
 #endif //_DEBUG || _INTERNAL
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw_setFullyObscuredByShroud.cpp
-// ?setFullyObscuredByShroud@W3DModelDraw@@UAEX_N@Z present-unmatched
+// Retail does not go through enableShadowInvisible: it writes the flag straight
+// into each sub-object's own byte at +0x05, and the two writes are NOT the same
+// expression -- the first takes the argument and the second re-reads the member
+// it just stored. That is one character in the source and three bytes in the
+// object, so it is written as retail has it rather than tidied into one variable.
+//
+// The trailing call is also not doStartOrStopParticleSys: it is a plain call with
+// `this' unchanged and nothing pushed, to a zero-argument member that is unnamed
+// in the image. It is reached here through the same view spelling the donor
+// pinned it under, which says what the call site does with it and asserts no more.
+struct BfmeShroudSubObject
+{
+	unsigned char m_unreconstructed_000[ 5 ];
+	Bool m_obscured;					///< retail this+0x05
+};
+
+class BfmeW3DModelDrawShroud
+{
+public:
+	void updateSubObjectsFromShroud( void );		///< retail 0x00762500
+
+	unsigned char m_unreconstructed_000[ 0x2d ];
+	Bool m_fullyObscuredByShroud;				///< retail this+0x2D
+	unsigned char m_unreconstructed_02e[ 0x3c - 0x2e ];
+	BfmeShroudSubObject *m_shadow;				///< retail this+0x3C
+	BfmeShroudSubObject *m_terrainDecal;			///< retail this+0x40
+};
+
 void W3DModelDraw::setFullyObscuredByShroud(Bool fullyObscured)
 {
-	if (m_fullyObscuredByShroud != fullyObscured)
+	BfmeW3DModelDrawShroud *self = (BfmeW3DModelDrawShroud *)this;
+
+	if (self->m_fullyObscuredByShroud != fullyObscured)
 	{
-		m_fullyObscuredByShroud = fullyObscured;
+		self->m_fullyObscuredByShroud = fullyObscured;
 
-		if (m_shadow)
-			m_shadow->enableShadowInvisible(m_fullyObscuredByShroud);
-		if (m_terrainDecal)
-			m_terrainDecal->enableShadowInvisible(m_fullyObscuredByShroud);
+		if (self->m_shadow)
+			self->m_shadow->m_obscured = fullyObscured;
+		if (self->m_terrainDecal)
+			self->m_terrainDecal->m_obscured = self->m_fullyObscuredByShroud;
 
-		doStartOrStopParticleSys();
+		self->updateSubObjectsFromShroud();
 	}
 }
 
