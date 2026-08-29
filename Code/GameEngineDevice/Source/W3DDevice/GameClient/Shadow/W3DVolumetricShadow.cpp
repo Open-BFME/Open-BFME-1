@@ -3077,11 +3077,11 @@ void W3DVolumetricShadow::Update()
    		{	
  			Real extent = MAX_SHADOW_LENGTH_EXTRA_AIRBORNE_SCALE_FACTOR * m_robjExtent;
  			if (WWMath::Fabs(pos.X - bcX) > (beX + extent) ||
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
-// ?Fabs@WWMath@@SAMM@Z present-unmatched
+// (folded home; the donor no longer holds this body)
+// (WWMath::Fabs is claimed from this file now; the marker here was stale)
  				WWMath::Fabs(pos.Y - bcY) > (beY + extent) ||
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
-// ?Fabs@WWMath@@SAMM@Z present-unmatched
+// (folded home; the donor no longer holds this body)
+// (WWMath::Fabs is claimed from this file now; the marker here was stale)
  				WWMath::Fabs(pos.Z - bcZ) > (beZ + extent))
  				return;	//shadow can't be visible so no point in updating.
  
@@ -3094,11 +3094,11 @@ void W3DVolumetricShadow::Update()
 			//base since it should be sitting directly at ground level.
 
  			if (WWMath::Fabs(pos.X - bcX) > (beX + m_robjExtent) ||
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
-// ?Fabs@WWMath@@SAMM@Z present-unmatched
+// (folded home; the donor no longer holds this body)
+// (WWMath::Fabs is claimed from this file now; the marker here was stale)
  				WWMath::Fabs(pos.Y - bcY) > (beY + m_robjExtent) ||
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWMath/colmathobbobb.cpp
-// ?Fabs@WWMath@@SAMM@Z present-unmatched
+// (folded home; the donor no longer holds this body)
+// (WWMath::Fabs is claimed from this file now; the marker here was stale)
  				WWMath::Fabs(pos.Z - bcZ) > (beZ + m_robjExtent))
  				return;	//shadow can't be visible so no point in updating.
  
