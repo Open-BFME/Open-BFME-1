@@ -72812,6 +72812,7 @@ name,address,notes
 ?bfmeFindItemE63@@YAPAUBfmeItemE63@@H@Z,0x0000E6E7,pin
 ?bfmeFindLC@BfmeKeyLC@@QAEPAUBfmeNodeLC@@XZ,0x00046538,pin
 ?bfmeFindNC@@YGHPAX@Z,0x0003954A,pin
+?bfmeFindPE@BfmeSubPE@@QAEPAHH@Z,0x00025CCA,pin
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
 ?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
 ?bfmeFindRecord@FontLibraryBFMERetail@@AAEPAUBfmeFontRecord@@PAVAsciiString@@M@Z,0x000035A3,Open-BFME5 ILT thunk to body 0x00476E20; FontLibraryBFMERetail::getFont at 0x004772D0 calls it on this with the name and size and reads a byte at +8 of what it returns; address-derived name
@@ -73444,6 +73445,7 @@ name,address,notes
 ?bfmeOneMD@BfmeObjMD@@QAEXH@Z,0x00033857,pin
 ?bfmeOneNA@BfmeThingNA@@QAEXXZ,0x00002C2A,pin
 ?bfmeOneNF@BfmeSubNF@@QAEXPAX@Z,0x0003AB3E,pin
+?bfmeOnePC@BfmeSubPC@@QAEXXZ,0x0000DDD7,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73558,6 +73560,7 @@ name,address,notes
 ?bfmeSetDYF@BfmeGlobDYF@@QAEX_N@Z,0x0003D578,pin
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
 ?bfmeSetOneCAC@BfmePairCAC@@QAEXHH@Z,0x0004A43A,pin
+?bfmeSetPG@BfmeThingPG@@QAEXHPAX@Z,0x00021C1F,pin
 ?bfmeSetQQ@BfmeThingQQ@@QAEXPBDI@Z,0x0088A8F0,pin
 ?bfmeSetQR@BfmeThingQR@@QAEXPBDI@Z,0x0088A8F0,pin
 ?bfmeSetRQ@BfmeInnerRQ@@QAEXHH@Z,0x0000A5DD,pin
@@ -73675,6 +73678,7 @@ name,address,notes
 ?bfmeTailJB@BfmeTargetJB@@QAE_NXZ,0x0001FF91,pin
 ?bfmeTailMF@BfmeSubMF@@QAEXH@Z,0x0004A1FB,pin
 ?bfmeTailNC@BfmeGlobNC@@QAEXH@Z,0x000206A8,pin
+?bfmeTailPD@BfmeSubPD@@QAEDHPAUBfmeVecPD@@HH@Z,0x0002ADDD,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
@@ -73763,6 +73767,7 @@ name,address,notes
 ?bfmeTwoMD@BfmeObjMD@@QAEXXZ,0x0001A483,pin
 ?bfmeTwoNA@BfmeThingNA@@QAEXXZ,0x0003AFE4,pin
 ?bfmeTwoNF@BfmeGlobNF@@QAEXPAXH@Z,0x00006442,pin
+?bfmeTwoPC@BfmeSubPC@@QAEXXZ,0x00045D72,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -74915,6 +74920,7 @@ name,address,notes
 ?g_bfmeGlobNC@@3PAVBfmeGlobNC@@A,0x00EF1028,pin
 ?g_bfmeGlobNF@@3PAVBfmeGlobNF@@A,0x00EF0898,pin
 ?g_bfmeGlobNG@@3PAVBfmeGlobNG@@A,0x00EED668,pin
+?g_bfmeGlobPB@@3PAVBfmeGlobPB@@A,0x00EF8058,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeICoord2DFormat@@3QBDB,0x01144414,address-derived ICoord2D format string from retail 0x009D97C5
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
