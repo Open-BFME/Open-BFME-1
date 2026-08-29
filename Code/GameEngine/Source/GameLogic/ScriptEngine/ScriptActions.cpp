@@ -922,7 +922,6 @@ void ScriptActions::doVictory( void )
 //-------------------------------------------------------------------------------------------------
 /** doDefeat */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doDefeat_Thunk.cpp
 // ?doDefeat@ScriptActions@@IAEXXZ
 void ScriptActions::doDefeat( void )
 {
@@ -952,7 +951,6 @@ void ScriptActions::doDefeat( void )
 //-------------------------------------------------------------------------------------------------
 /** doLocalDefeat */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doLocalDefeat_Thunk.cpp
 // ?doLocalDefeat@ScriptActions@@IAEXXZ
 void ScriptActions::doLocalDefeat( void )
 {
@@ -3354,7 +3352,6 @@ void ScriptActions::doTeamWander(const AsciiString& teamName, const AsciiString&
 //-------------------------------------------------------------------------------------------------
 /** doTeamIncreasePriority */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doTeamIncreasePriorityThunk.cpp
 // ?doTeamIncreasePriority@ScriptActions@@IAEXABVAsciiString@@@Z
 //
 // Blocked by the AsciiString local, and that blocker rules out most of this
@@ -3633,7 +3630,6 @@ void ScriptActions::doNamedCustomColor(const AsciiString& unitName, Color c)
 //-------------------------------------------------------------------------------------------------
 /** doNamedFlash */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doNamedFlash_Thunk.cpp
 // Attempted and reverted, and the reason is structural rather than codegen.
 // BFME multiplies the designer's seconds by 5, not by the reference header's
 // LOGICFRAMES_PER_SECOND of 30, and still divides by 15 -- a ten-second flash is
@@ -3645,6 +3641,7 @@ void ScriptActions::doNamedCustomColor(const AsciiString& unitName, Color c)
 // rows claiming THIS file, and doNamedFlash is their only caller: moving the
 // body off them orphans both. The donor carries BFME's own pair, which is why
 // it can hold the body and this file cannot.
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doNamedFlash_Thunk.cpp
 // ?doNamedFlash@ScriptActions@@IAEXABVAsciiString@@HPBURGBColor@@@Z present-unmatched
 void ScriptActions::doNamedFlash(const AsciiString& unitName, Int timeInSeconds, const RGBColor *color)
 {
@@ -4358,7 +4355,6 @@ void ScriptActions::doMusicTrackChange(const AsciiString& newTrackName, Bool fad
 //-------------------------------------------------------------------------------------------------
 /** doTeamGarrisonSpecificBuilding */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamGarrisonSpecificBuilding.cpp
 // ?doTeamGarrisonSpecificBuilding@ScriptActions@@IAEXABVAsciiString@@0@Z
 void ScriptActions::doTeamGarrisonSpecificBuilding(const AsciiString& teamName, const AsciiString& buildingName)
 {
@@ -4525,7 +4521,6 @@ void ScriptActions::doTeamExitAllBuildings(const AsciiString& teamName)
 //-------------------------------------------------------------------------------------------------
 /** doUnitGarrisonSpecificBuilding */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamGarrisonSpecificBuilding.cpp
 // ?doUnitGarrisonSpecificBuilding@ScriptActions@@IAEXABVAsciiString@@0@Z
 void ScriptActions::doUnitGarrisonSpecificBuilding(const AsciiString& unitName, const AsciiString& buildingName)
 {
@@ -5543,7 +5538,6 @@ void ScriptActions::doNamedFireSpecialPowerAtNamed( const AsciiString& unit, con
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doNamedUseCommandButtonAbility_Thunk.cpp
 // ?doNamedUseCommandButtonAbility@ScriptActions@@IAEXABVAsciiString@@0@Z
 void ScriptActions::doNamedUseCommandButtonAbility( const AsciiString& unit, const AsciiString& ability )
 {
@@ -7257,7 +7251,6 @@ void ScriptActions::doPlayerPurchaseScience(const AsciiString& playerName, const
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doPlayerSetScienceAvailability_Thunk.cpp
 // ?doPlayerSetScienceAvailability@ScriptActions@@IAEXABVAsciiString@@00@Z
 void ScriptActions::doPlayerSetScienceAvailability( const AsciiString& playerName, const AsciiString& scienceName, const AsciiString& scienceAvailability )
 {
