@@ -447,12 +447,50 @@ struct BFMEObjectFormationField
 	FormationID m_formationID;				///< retail this+0x31c
 };
 
-// The movement voice line the four waypoint commands answer with. The vendored
-// AIUpdate.h does not declare it at all.
+// The voice lines the movement and attack commands answer with. The vendored
+// AIUpdate.h declares neither.
 class BFMEMoveVoiceAI
 {
 public:
 	void playMoveVoiceResponse( const Coord3D *position );	///< retail ILT 0x000462ea
+};
+
+class BFMEAttackVoiceAI
+{
+public:
+	void playAttackVoiceResponse( Object *victim );		///< retail ILT 0x00002ef0
+};
+
+// BFME refuses an attack order from a mine-clearing detail: bit 8 of the
+// object's weapon-set flags, whose accessor the vendored Object.h lacks.
+class BFMEWeaponSetFlags
+{
+public:
+	Bool test( Int type ) const { return (m_words[0] & (1U << type)) != 0; }
+
+	UnsignedInt m_words[1];
+};
+
+class BFMEWeaponSetOwner
+{
+public:
+	const BFMEWeaponSetFlags &getWeaponSetFlags() const;	///< retail ILT 0x000209fa
+};
+
+// BFME writes the max-shot count in place: the count at weapon+0x34 and the
+// shots-fired counter at +0x20 reset together, with no call.
+struct BFMEWeaponShotCount
+{
+	void setMaxShotCount( Int maxShots )
+	{
+		m_maxShotCount = maxShots;
+		m_shotsFired = 0;
+	}
+
+	char m_unreconstructed_000[0x20];
+	Int m_shotsFired;					///< retail this+0x20
+	char m_unreconstructed_024[0x34 - 0x24];
+	Int m_maxShotCount;					///< retail this+0x34
 };
 
 // BFME keeps the object's contain module at +0x1fc and its AI module at +0x204.
@@ -4117,31 +4155,32 @@ void AIUpdateInterface::privateFollowPath( const std::vector<Coord3D>* path, Obj
 /**
  * Attack given object
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateAttackCommands.cpp
-// ?privateAttackObject@AIUpdateInterface@@ present-unmatched
+// ?privateAttackObject@AIUpdateInterface@@MAEXPAVObject@@HW4CommandSourceType@@@Z
 void AIUpdateInterface::privateAttackObject( Object *victim, Int maxShotsToFire, CommandSourceType cmdSource )
 {
-	//Resetting the locomotor here was initially added for scripting purposes. It has been moved
-	//to the responsibility of the script to reset the locomotor before moving. This is needed because
-	//other systems (like the battle drone) change the locomotor based on what it's trying to do, and
-	//doesn't want to get reset when ordered to move.
-	//chooseLocomotorSet(LOCOMOTORSET_NORMAL);
+	BFMEAIUpdateFields *fields = reinterpret_cast<BFMEAIUpdateFields *>(this);
 
-	if (!victim) 
-	{
-		// Hard to kill em if they're already dead.  jba
+	// BFME refuses the order outright for a mine-clearing detail. There is no
+	// null-victim guard.
+	if (reinterpret_cast<const BFMEWeaponSetOwner *>( fields->getObject() )
+			->getWeaponSetFlags().test( 8 ))
 		return;
-	}
 
-	getStateMachine()->clear();
-	getStateMachine()->setGoalObject( victim );
-	setLastCommandSource( cmdSource );
-	getStateMachine()->setState( AI_ATTACK_OBJECT );
+	fields->getGoalObjectMachine()->clear();
+	// Here the goal object goes through the ordinary member, not the vtable slot
+	// the other commands in this file use.
+	fields->m_stateMachine->setGoalObject( victim );
+	fields->m_lastCommandSource = cmdSource;
+	fields->getGoalObjectMachine()->setState( (StateID)0x17 );	// BFME's AI_ATTACK_OBJECT
 
 	// do this after setting it as the current state, as the max-shots-to-fire is reset in AttackState::onEnter()
-	Weapon* weapon = getObject()->getCurrentWeapon();
+	Weapon* weapon = fields->getObject()->getCurrentWeapon();
 	if (weapon)
-		weapon->setMaxShotCount(maxShotsToFire);
+		reinterpret_cast<BFMEWeaponShotCount *>(weapon)->setMaxShotCount(maxShotsToFire);
+
+	Object *goal = fields->m_stateMachine->getGoalObject();
+	if (goal && (cmdSource == (CommandSourceType)0 || cmdSource == (CommandSourceType)1))
+		reinterpret_cast<BFMEAttackVoiceAI *>(this)->playAttackVoiceResponse( goal );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4313,28 +4352,26 @@ void AIUpdateInterface::privateAttackMoveToPosition( const Coord3D *pos, Int max
 /**
  * Attack move down a given waypoint path. If asTeam is TRUE, do so as a team.
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateAttackCommands.cpp
-// ?privateAttackFollowWaypointPath@AIUpdateInterface@@ present-unmatched
+// ?privateAttackFollowWaypointPath@AIUpdateInterface@@MAEXPBVWaypoint@@H_NW4CommandSourceType@@@Z
 void AIUpdateInterface::privateAttackFollowWaypointPath( const Waypoint *way, Int maxShotsToFire, Bool asTeam, CommandSourceType cmdSource )
 {
-	if (m_isAiDead || getObject()->isMobile() == FALSE)
+	BFMEAIUpdateFields *fields = reinterpret_cast<BFMEAIUpdateFields *>(this);
+
+	if (fields->m_isAiDead || !fields->getObject()->isMobile())
 		return;
 
-	//Resetting the locomotor here was initially added for scripting purposes. It has been moved
-	//to the responsibility of the script to reset the locomotor before moving. This is needed because
-	//other systems (like the battle drone) change the locomotor based on what it's trying to do, and
-	//doesn't want to get reset when ordered to move.
-	//chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-
-	getStateMachine()->clear();
-	getStateMachine()->setGoalWaypoint( way );
-	setLastCommandSource( cmdSource );
-	getStateMachine()->setState( (asTeam ? AI_ATTACKFOLLOW_WAYPOINT_PATH_AS_TEAM : AI_ATTACKFOLLOW_WAYPOINT_PATH_AS_INDIVIDUALS) );
+	fields->getGoalObjectMachine()->clear();
+	reinterpret_cast<AIStateMachine *>( fields->m_stateMachine )->setGoalWaypoint( way );
+	fields->m_lastCommandSource = cmdSource;
+	fields->getGoalObjectMachine()->setState( (StateID)(asTeam ? 0x23 : 0x22) );
 
 	// do this after setting it as the current state, as the max-shots-to-fire is reset in AttackState::onEnter()
-	Weapon* weapon = getObject()->getCurrentWeapon();
+	Weapon* weapon = fields->getObject()->getCurrentWeapon();
 	if (weapon)
-		weapon->setMaxShotCount(maxShotsToFire);
+		reinterpret_cast<BFMEWeaponShotCount *>(weapon)->setMaxShotCount(maxShotsToFire);
+
+	if (cmdSource == (CommandSourceType)0 || cmdSource == (CommandSourceType)1)
+		reinterpret_cast<BFMEMoveVoiceAI *>(this)->playMoveVoiceResponse( way->getLocation() );
 }
 
 
