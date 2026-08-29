@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?doLocalDefeat@ScriptActions@@IAEXXZ: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 typedef bool Bool;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
