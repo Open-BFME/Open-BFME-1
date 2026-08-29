@@ -6220,6 +6220,13 @@ void ScriptActions::doWaterChangeHeightOverTime( const AsciiString& waterName, R
 	}
 }
 
+// The shroud subsystem is a SEPARATE global from the partition manager in BFME:
+// the engine-init tag block at 0x0038A1F0 stores 0x012ED5BC and then pushes the
+// tag "TheShroudManager", while ThePartitionManager is constructed just before
+// it at 0x012ED5B8.  The shroud read below reaches the former; every other
+// ThePartitionManager use in this file is a real partition call and is correct.
+extern PartitionManager *TheShroudManager;				///< retail 0x012ED5BC
+
 //-------------------------------------------------------------------------------------------------
 /** doBorderSwitch */
 //-------------------------------------------------------------------------------------------------
@@ -6243,14 +6250,14 @@ void ScriptActions::doBorderSwitch(Int borderToUse)
 
 	if (observerPlayerIndex != -1)
 	{
-		ThePartitionManager->undoRevealMapForPlayerPermanently( observerPlayerIndex );
+		TheShroudManager->undoRevealMapForPlayerPermanently( observerPlayerIndex );
 	}
 
 	TheTerrainLogic->setActiveBoundary(borderToUse);
 
 	if (observerPlayerIndex != -1)
 	{
-		ThePartitionManager->revealMapForPlayerPermanently( observerPlayerIndex );
+		TheShroudManager->revealMapForPlayerPermanently( observerPlayerIndex );
 	}
 	// BFME stops here: the retail body @0x2EFC50 returns straight after the
 	// reveal call, with no refreshShroudForLocalPlayer().
