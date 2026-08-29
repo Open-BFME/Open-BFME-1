@@ -2112,3 +2112,26 @@ mid-rebase, exits non-zero with the conflicted paths when the rebase needs
 hands, and confirms the commit SUBJECT is in origin/master before printing OK.
 Verify a push by what reached the remote, never by a range that is empty in the
 failure case as well.
+
+## An investigation command can be destructive: never reset a checkout you share
+
+Chasing whether some orphaned reflog commits had really landed, I ran
+`git reset --hard origin/master` in the shared Open-BFME1 checkout to get a
+clean base to grep. Another lane was mid-fold in that tree, and the reset threw
+away its index and working copy without a prompt.
+
+Nothing was actually lost -- every InGameUI.cpp and functions.csv blob from that
+window turned out to be BEHIND master, a superseded mid-rebase snapshot -- but
+that was luck, not care. The reason to write it down is that `reset --hard` did
+not feel like a mutation at the time; it felt like setup for a read-only
+investigation, which is exactly how the dangerous ones look.
+
+Two rules. Investigate from a worktree you own, or from `git cat-file`/`git show`
+against a ref, which touch nothing. And if you must know what a shared tree
+holds, `git status --porcelain` first and stop if it is non-empty.
+
+Recovering a clobbered index is possible but only briefly: staged blobs survive
+as loose objects until gc, and `find .git/objects -type f -printf '%T@ %p\n'`
+sorted by time finds them far faster than `git fsck`, which times out on this
+repo. Note `find -newermt` silently returned nothing here; compare the numeric
+`%T@` against a cutoff instead.
