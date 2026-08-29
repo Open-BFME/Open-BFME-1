@@ -73921,6 +73921,7 @@ name,address,notes
 ?bfmeRun1065@BfmeR1065@@QAEXPAVBfmeX1065@@PADH11111@Z,0x00015235,pin
 ?bfmeRun1066@BfmeR1066@@QAEXPAVBfmeX1066@@PADH11111@Z,0x00015235,pin
 ?bfmeRun1067@BfmeR1067@@QAEXPAVBfmeX1067@@PADH11111@Z,0x00015235,pin
+?bfmeRun1068@BfmeR1068@@QAEXPAVBfmeX1068@@PADH11111@Z,0x00015235,pin
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
 ?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
 ?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
@@ -75651,16 +75652,19 @@ name,address,notes
 ?g_bfmeFmtA1064@@3PADA,0x00D05BE0,pin
 ?g_bfmeFmtA1066@@3PADA,0x00D09E28,pin
 ?g_bfmeFmtA1067@@3PADA,0x00D09F64,pin
+?g_bfmeFmtA1068@@3PADA,0x00D09A60,pin
 ?g_bfmeFmtA995C@@3PADA,0x00D07374,pin
 ?g_bfmeFmtB1064@@3PADA,0x00D0523C,pin
 ?g_bfmeFmtB1066@@3PADA,0x00D061A0,pin
 ?g_bfmeFmtB1067@@3PADA,0x00D05EC8,pin
+?g_bfmeFmtB1068@@3PADA,0x00D09A84,pin
 ?g_bfmeFmtB995C@@3PADA,0x00D053D4,pin
 ?g_bfmeFmtC1063@@3PADA,0x00D056EC,pin
 ?g_bfmeFmtC1064@@3PADA,0x00D05224,pin
 ?g_bfmeFmtD1064@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtD1065@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtD1067@@3PADA,0x00C7C7B4,pin
+?g_bfmeFmtD1068@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtE1064@@3PADA,0x00D05E7C,pin
 ?g_bfmeFmtF1065@@3PADA,0x00D09950,pin
 ?g_bfmeFmtG1065@@3PADA,0x00C80F24,pin
@@ -75850,6 +75854,7 @@ name,address,notes
 ?g_bfmeR1065@@3PAVBfmeR1065@@A,0x00EF19E8,pin
 ?g_bfmeR1066@@3PAVBfmeR1066@@A,0x00EF19E8,pin
 ?g_bfmeR1067@@3PAVBfmeR1067@@A,0x00EF19E8,pin
+?g_bfmeR1068@@3PAVBfmeR1068@@A,0x00EF19E8,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
@@ -75960,6 +75965,7 @@ name,address,notes
 ?g_bfmeX1062@@3PAVBfmeX1062@@A,0x00EB7D80,pin
 ?g_bfmeX1065@@3PAVBfmeX1065@@A,0x00EB7D80,pin
 ?g_bfmeX1067@@3PAVBfmeX1067@@A,0x00EB7D80,pin
+?g_bfmeX1068@@3PAVBfmeX1068@@A,0x00EB7D80,pin
 ?g_bfmeXEBK@@3PAXA,0x00EC3C58,pin
 ?g_bfmeXEMC@@3PAXA,0x00EC3B2C,pin
 ?g_bfmeY1058@@3HA,0x00EBAA2C,pin
@@ -79780,6 +79786,7 @@ __imp_?bfmeOpen1043@@YGPAXPAD@Z,0x00F58E78,pin
 __imp_?bfmePrint1025@@YAXHPADH@Z,0x00F5948C,pin
 __imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
 __imp_?bfmeSpf1065@@YAHPAD0H@Z,0x00F5948C,pin
+__imp_?bfmeSpf1068@@YAHPAD0H@Z,0x00F5948C,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
 __imp_?bfmeUnlock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58E74,pin
 __imp_?bfmeWait1012@@YGHPAXH@Z,0x00F58F64,pin
