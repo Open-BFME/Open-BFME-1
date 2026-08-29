@@ -837,3 +837,26 @@ specifier; only a shim-header edit does, which is a wide change and a full-tree
 build for one body. Rule: before starting a body, compare the row's access
 letter against the shim's declaration. If they disagree, leave the donor and
 annotate its marker.
+
+## One agent per checkout, not one agent per cluster
+
+Symptom: two agents merging disjoint clusters in the same working tree, and
+whichever commits first silently takes the other's work. Not a conflict -- a
+partial commit. Cause: there is one index and one reverse/functions.csv, and
+`merge_cluster.py --apply` git-adds both the sources and the ledger. So the
+committer's staged set contains the other agent's row repoints without their
+sources, and the pre-commit gate only byte-verifies the sources THAT agent
+staged, so it passes and leaves the ledger naming a file that does not hold
+those bodies. Neither split is available either: commit your paths with the
+shared ledger and you land their rows without their source; commit without it
+and check_csv fails "source not in git" on your own donor deletions.
+Partitioning by cluster is sound ACROSS clones or git worktrees, where each has
+its own index and its own ledger; it buys nothing inside one checkout. Rule: one
+agent per checkout. Give a second agent `git worktree add` (seed build/ by
+hardlink and build/readability/counts.json by COPY -- two trees writing one
+cache file is the hazard), or a different clone.
+Corollary: authoring-without-applying is a safe way to keep working while
+blocked on git ONLY if nobody else can commit your tree. `git commit` takes the
+working tree for tracked files, so another agent's commit will sweep in edits
+you deliberately left unstaged -- including markers removed in anticipation of
+an apply, which leaves bodies that look claimed and are not.
