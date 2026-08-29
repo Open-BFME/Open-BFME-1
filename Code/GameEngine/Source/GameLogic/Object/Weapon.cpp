@@ -1897,24 +1897,37 @@ void Weapon::computeBonus(const Object *source, WeaponBonusConditionFlags extraB
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon/Weapon_loadAmmoNow.cpp
-// ?loadAmmoNow@Weapon@@QAEXPBVObject@@@Z present-unmatched
+// BFME's WeaponBonus carries SIX fields where the reference enum stops at five
+// (DAMAGE, RADIUS, RANGE, RATE_OF_FIRE, PRE_ATTACK), so the local is 0x18 bytes
+// rather than 0x14 and its constructor writes six 1.0f stores. Both reload
+// entry points below are otherwise the reference bodies unchanged.
+struct BfmeWeaponBonus
+{
+	BfmeWeaponBonus()
+	{
+		for (int i = 0; i < 6; ++i)
+			m_field[i] = 1.0f;
+	}
+
+	Real m_field[6];
+};
+
+// ?loadAmmoNow@Weapon@@QAEXPBVObject@@@Z
 void Weapon::loadAmmoNow(const Object *sourceObj)
 {
-	WeaponBonus bonus;
-	computeBonus(sourceObj, 0, bonus);
-	reloadWithBonus(sourceObj, bonus, true);
+	BfmeWeaponBonus bonus;
+	computeBonus(sourceObj, 0, (WeaponBonus &)bonus);
+	reloadWithBonus(sourceObj, (const WeaponBonus &)bonus, true);
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_reloadAmmo.cpp
-// ?reloadAmmo@Weapon@@QAEXPBVObject@@@Z present-unmatched
+// ?reloadAmmo@Weapon@@QAEXPBVObject@@@Z
 void Weapon::reloadAmmo(const Object *sourceObj)
 {
 
-	WeaponBonus bonus;
-	computeBonus(sourceObj, 0, bonus);
-	reloadWithBonus(sourceObj, bonus, false);
+	BfmeWeaponBonus bonus;
+	computeBonus(sourceObj, 0, (WeaponBonus &)bonus);
+	reloadWithBonus(sourceObj, (const WeaponBonus &)bonus, false);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -2846,24 +2859,33 @@ Object* Weapon::forceFireWeapon( const Object *source, const Coord3D *pos)
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon/Weapon_getStatus.cpp
-// ?getStatus@Weapon@@QBE?AW4WeaponStatus@@XZ present-unmatched
+// BFME's getStatus is a CACHED query, not a recomputation. A helper works the
+// status out and reports through a bool-by-pointer -- pre-set to true -- whether
+// the answer may be cached; the cache at Weapon+0x10 is rewritten only when the
+// helper leaves that flag set AND the value actually changed, and the value
+// RETURNED is the helper's, not the cache. The method is const in the mangled
+// name and still writes +0x10, so retail writes through the const too.
+class BfmeWeaponStatusCache
+{
+public:
+	WeaponStatus bfmeComputeStatus( Bool *valid ) const;		///< retail ILT 0x0001e6a0
+
+	char m_unreconstructed_00[0x10];
+	WeaponStatus m_bfmeCached;					///< retail this+0x10
+};
+
+// ?getStatus@Weapon@@QBE?AW4WeaponStatus@@XZ
 WeaponStatus Weapon::getStatus() const
 {
-	UnsignedInt now = TheGameLogic->getFrame();
-	if( now < m_whenPreAttackFinished )
-	{
-		return PRE_ATTACK;
-	}
-	if( now >= m_whenWeCanFireAgain )
-	{
-		if (m_ammoInClip > 0)
-			m_status = READY_TO_FIRE;
-		else
-			m_status = OUT_OF_AMMO;
-		//CRCDEBUG_LOG(("Weapon::getStatus() just set m_status to %d (ammo in clip is %d)\n", m_status, m_ammoInClip));
-	}
-	return m_status;
+	const BfmeWeaponStatusCache *self = (const BfmeWeaponStatusCache *)this;
+
+	Bool valid = true;
+	WeaponStatus status = self->bfmeComputeStatus(&valid);
+
+	if (valid && self->m_bfmeCached != status)
+		((BfmeWeaponStatusCache *)self)->m_bfmeCached = status;
+
+	return status;
 }
 
 //-------------------------------------------------------------------------------------------------

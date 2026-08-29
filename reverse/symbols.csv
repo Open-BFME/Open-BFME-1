@@ -72647,6 +72647,7 @@ name,address,notes
 ?bfmeCmpRE@BfmeOtherRE@@QAEDHH@Z,0x007E8F20,pin
 ?bfmeCompare@AsciiString@@QBEHABV1@@Z,0x000220C5,Open-BFME5 ILT less<AsciiString> calls in the AsciiString-keyed _Rb_tree _M_insert at 0x005B2EF0; it jumps to 0x0005FEB0 and its result is tested against zero
 ?bfmeCompare@BfmeNameAU@@QBEHPBV1@@Z,0x00027471,Open-BFME5 the ICF thunk (to 0x00427471) the comparator inlined at 0x005134A0 and 0x0052FF70 compares names through
+?bfmeComputeStatus@BfmeWeaponStatusCache@@QBE?AW4WeaponStatus@@PA_N@Z,0x0001E6A0,alias of the private Weapon spelling pinned below; Weapon.cpp reaches the status helper through a view class because the reference Weapon.h does not declare it
 ?bfmeComputeStatus@Weapon@@ABE?AW4WeaponStatus@@PA_N@Z,0x0001E6A0,Open-BFME5 ILT Weapon::getStatus at 0x001E6EE0 computes the status through; the bool by pointer arrives pre-set to true and gates the cache write
 ?bfmeConfigure@Gen_008812D0@@QAEXURegion3D@@M@Z,0x00881800,Open-BFME5 semantic identity for the exact TaintManager grid configuration body
 ?bfmeConstructA@@YAXPAUBfmeAppendValue@@PAX@Z,0x0004031D,Open-BFME5 ILT the list append at 0x0014C700 constructs through
