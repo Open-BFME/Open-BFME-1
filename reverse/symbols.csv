@@ -72791,6 +72791,7 @@ name,address,notes
 ?bfmeConstruct_007653C0@@YAXPAUBfmeCopy_007653C0@@PBU1@@Z,0x0003B7E6,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x007653C0 calls per pass
 ?bfmeConstruct_007690F0@@YAXPAUBfmeCopy_007690F0@@PBU1@@Z,0x0002B7AB,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x007690F0 calls per pass
 ?bfmeConv1058@@YAHHH@Z,0x0003B971,pin
+?bfmeConv1060@BfmeQ1060@@QAEHH@Z,0x0003ADD7,pin
 ?bfmeConv982B@BfmeY982@@QAEPAV1@XZ,0x0000DE9F,pin
 ?bfmeConv998@BfmeC998@@QAEHH@Z,0x00927230,pin
 ?bfmeCopy1029@@YAXPADH0@Z,0x007E8640,pin
@@ -73043,6 +73044,7 @@ name,address,notes
 ?bfmeFind1037F@@YGPAVBfmeG1037@@H@Z,0x0003F5DA,pin
 ?bfmeFind1038@@YGPAVBfmeY1038@@H@Z,0x000181FB,pin
 ?bfmeFind1052@BfmeI1052@@QAEHPADH@Z,0x007E8900,pin
+?bfmeFind1060@BfmeSub1060@@QAEPAUBfmeFn1060@@PAH@Z,0x0000F2FE,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
@@ -73385,6 +73387,7 @@ name,address,notes
 ?bfmeGet1044@BfmeSrc1044@@QAEPAXXZ,0x00020D1A,pin
 ?bfmeGet1052@BfmeE1052@@QAEHXZ,0x00020824,pin
 ?bfmeGet1058@@YAXHPAH@Z,0x0003B75A,pin
+?bfmeGet1060@BfmeO1060@@QAEHH@Z,0x00850970,pin
 ?bfmeGet920D@BfmeX920D@@QAEPAVBfmeRes920D@@XZ,0x0002BE77,pin
 ?bfmeGet948C@BfmeGrid948C@@QAE_NH@Z,0x00017049,pin
 ?bfmeGet948D@BfmeGrid948D@@QAE_NH@Z,0x00017049,pin
@@ -73900,6 +73903,7 @@ name,address,notes
 ?bfmeRestart@Gen_0018BC70@@AAEXXZ,0x0003F1FC,Open-BFME5 the ICF thunk (to 0x0043F1FC) the compaction at 0x0018BC70 calls when its flag is set
 ?bfmeResume@Gen_0018BC70@@AAEXXZ,0x0000764E,Open-BFME5 the ICF thunk (to 0x0040764E) the compaction at 0x0018BC70 calls when its flag is clear
 ?bfmeRun1006@BfmeRun1006@@QAEXXZ,0x0003B773,pin
+?bfmeRun1060@BfmeR1060@@QAEXPAVBfmeX1060@@PADH1HHHH@Z,0x00015235,pin
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
 ?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
 ?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
@@ -75685,6 +75689,9 @@ name,address,notes
 ?g_bfmeLit1035@@3PADA,0x00D3A5CC,pin
 ?g_bfmeLit1042@@3PADA,0x00C7388C,pin
 ?g_bfmeLit1058@@3PADA,0x00C7301C,pin
+?g_bfmeLitA1060@@3PADA,0x00C81238,pin
+?g_bfmeLitB1060@@3PADA,0x00C80FC0,pin
+?g_bfmeLitC1060@@3PADA,0x00D09BC4,pin
 ?g_bfmeLog1013@@3PAVBfmeLog1013@@A,0x00EF19E8,pin
 ?g_bfmeLog1020@@3PAVBfmeLog1020@@A,0x00EF19E8,pin
 ?g_bfmeLog1021@@3PAVBfmeLog1021@@A,0x00EF19E8,pin
@@ -75779,10 +75786,13 @@ name,address,notes
 ?g_bfmeOut982@@3PAVBfmeOut982@@A,0x00EED83C,pin
 ?g_bfmeP1024@@3PAVBfmeP1024@@A,0x00F4FAAC,pin
 ?g_bfmeP1025@@3PAVBfmeP1025@@A,0x00F4FAAC,pin
+?g_bfmeP1060@@3PAUBfmeP1060@@A,0x00EF4B98,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
 ?g_bfmeQ1026@@3PAVBfmeQ1026@@A,0x00EED700,pin
+?g_bfmeQ1060@@3PAVBfmeQ1060@@A,0x00EED600,pin
+?g_bfmeR1060@@3PAVBfmeR1060@@A,0x00EF19E8,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
@@ -75877,11 +75887,13 @@ name,address,notes
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
 ?g_bfmeW1027@@3PAVBfmeW1027@@A,0x00EF4B98,pin
+?g_bfmeW1060@@3PAVBfmeW1060@@A,0x00EF3330,pin
 ?g_bfmeWhatBGE@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWhatBKG@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWordFormat@@3QBDB,0x011442A8,address-derived word format string from the DIR32 operand at retail 0x009D93C0
 ?g_bfmeWorldRV@@3PAUBfmeWorldRV@@A,0x00EF33F8,pin
 ?g_bfmeX1058@@3HA,0x00EF8064,pin
+?g_bfmeX1060@@3PAVBfmeX1060@@A,0x00EB7D80,pin
 ?g_bfmeXEBK@@3PAXA,0x00EC3C58,pin
 ?g_bfmeXEMC@@3PAXA,0x00EC3B2C,pin
 ?g_bfmeY1058@@3HA,0x00EBAA2C,pin
