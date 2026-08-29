@@ -1301,3 +1301,41 @@ does not. Base and vptr stores come from the CLASS, so no .cpp reaches them, and
 initializer order is not the cause -- base-first and member-first are
 byte-identical. Revert the shim with the body; a TU-wide compile change that
 buys nothing is worse than no change.
+
+## A shared header's vtable can be wrong, but a matched row proves its own slot
+
+BFME's GameClient vtable is not the vendored one: findDrawableByID is slot 11
+(+0x2C) where GameClient.h puts it at slot 8 (+0x20), and destroyDrawable is
+slot 24 (+0x60) against slot 19 (+0x4C) -- three BFME virtuals ahead of the
+first and two more between them. The header already carries three
+bfmeVirtualStub slots for a different part of the same table, so the divergence
+is known and this part is simply not covered.
+
+Bound the alarm before acting on it. A body that BYTE-MATCHED cannot be
+dispatching through the wrong slot: the call encodes the offset, so `ff 50 20`
+against retail's `ff 50 2c` is a mismatch and the gate would have refused it.
+Every matched row is therefore proof about its own dispatch. The exposure is
+UNCONVERTED bodies -- which will hit it as a byte mismatch when someone attempts
+them, exactly as intended -- and any new code written against the header.
+
+So this is not a fire to put out; it is a header correction worth doing
+deliberately, and a per-file view reaches it meanwhile.
+
+## When a merged body's diff starts at a container teardown, try the node allocator
+
+PreRTS.h and STLTypedefs.h force _STLP_USE_NEWALLOC, which flattens a node
+deallocation to a bare `operator delete` where retail pushes the node size and
+calls __node_alloc::_M_deallocate. The sanctioned opt-out is per-file and costs
+nothing:
+
+    /DBFME_STLP_NODE_ALLOC /Ireference/shims/stlp_nodealloc
+
+on the file's own cl line. It recompiles the TU, so every matched row in it
+re-verifies -- 65 of them on the first file to use it. Try this before anything
+else when a diff opens at a container teardown.
+
+Related trap in the same area: BFME_PARTICLE_LIST_NODE_TAIL pads EVERY
+_List_node in a TU by 0x20. If one row in the file needs that padding and
+another needs plain 12-byte nodes, they cannot share list<>::clear() -- give the
+12-byte one a local node type and a local clear() spelled the way STLport spells
+it.
