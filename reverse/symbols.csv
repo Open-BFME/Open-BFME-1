@@ -79249,6 +79249,7 @@ name,address,notes
 ?updateRecord@RecorderClass@@QAEXXZ,0x0009BFE0,zh-sweep callee pin derived from retail REL32 displacement
 ?updateScorches@BaseHeightMapScorchUpdater@@QAEXXZ,0x00032966,BaseHeightMap scorch update ILT thunk
 ?updateState@Team@@QAEXXZ,0x0004383D,Open-BFME5 ILT thunk to body 0x000F4F30; ?updateState@TeamPrototype@@QAEXXZ at 0x000F71C0 calls it once per team on the instance list - reloc_names puts this name on the prototype body which is the caller not the callee
+?updateSubObjectsFromShroud@BfmeW3DModelDrawShroud@@QAEXXZ,0x00762500,view-class alias of ?updateSubObjectsFromShroud@W3DModelDraw@@AAEXXZ; W3DModelDraw.cpp reaches the zero-argument member setFullyObscuredByShroud ends with through a view because the vendored class does not declare it
 ?updateSubObjectsFromShroud@W3DModelDraw@@AAEXXZ,0x00762500,Open-BFME5 the zero-argument member setFullyObscuredByShroud ends with; unnamed in the image and named here for what the call site does with it
 ?updateTeamStates@Player@@QAEXXZ,0x000CE140,body Player::updateTeamStates; iterates std::list at Player+0x288 (m_playerTeamPrototypes) calling one method per node; pinned by ?updateTeamStates@PlayerList@@QAEXXZ at 0x000DF390 via ILT 0x00022548
 ?updateUpgradeModules@Object@@QAEXXZ,0x00027FCF,ILT thunk used by giveUpgrade call site
