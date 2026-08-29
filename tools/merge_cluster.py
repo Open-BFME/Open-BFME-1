@@ -412,7 +412,7 @@ def unclustered(root, files, declared, dest):
     return sorted(rel for rel in candidates if owned[rel])
 
 
-def do_apply(root, dest, into, only):
+def do_apply(root, dest, into, only, symbols=()):
     clusters, declared = scan(root)
     files = clusters.get(dest)
     if not files:
@@ -439,7 +439,7 @@ def do_apply(root, dest, into, only):
              f"--plan {dest} --only ...)")
 
     owned = ledger_index(root, set(chosen))
-    moving, keep_donor = {}, {}
+    moving, keep_donor, deferred = {}, {}, {}
     for rel in chosen:
         elsewhere = sorted({d for _s, d in declared[rel] if d != dest})
         # A marker names a SYMBOL, so the rows bound for `dest` are the rows this
@@ -453,7 +453,20 @@ def do_apply(root, dest, into, only):
         if not names:
             fail(f"--only names {rel}, which owns no ledger row bound for {dest}",
                  "its marker and the ledger disagree; fix one before merging")
-        moving[rel] = set(names)
+        # --symbols narrows the move to individual ROWS. A donor whose rows are
+        # not all ready is otherwise unmergeable: INI_stl.cpp has eleven rows
+        # that verify byte-exact and cannot be taken, because repointing the
+        # donor's markered rows wholesale drags in twenty-one that fail.
+        if symbols:
+            picked = {n for n in names if names_symbol_any(symbols, n)}
+            if not picked:
+                fail(f"--only names {rel}, but --symbols selects none of the "
+                     f"{len(names)} row(s) it has bound for {dest}",
+                     "drop the file from --only or widen --symbols")
+            moving[rel] = picked
+        else:
+            moving[rel] = set(names)
+        deferred[rel] = set(names) - moving[rel]
         # Rows no marker assigns here stay, and a donor still owning one keeps its
         # file -- the same protection a donor bound for a second destination
         # already had, at row granularity rather than file granularity. Deleting
@@ -464,6 +477,13 @@ def do_apply(root, dest, into, only):
     for rel in moving:
         if rel not in files:
             fail(f"row owner {rel} is not in the cluster for {dest}")
+    picked_all = {n for names in moving.values() for n in names}
+    unused = [s for s in symbols if not names_symbol(s, picked_all)]
+    if unused:
+        fail(f"--symbols names {len(unused)} symbol(s) that no selected row matches:",
+             *(f"  {s}" for s in unused),
+             "a typo here would silently move nothing; check against "
+             f"--plan {dest} --only ...")
 
     written = rewrite_ledger(root, moving, into_rel)
     expected = sum(len(names) for names in moving.values())
@@ -471,7 +491,8 @@ def do_apply(root, dest, into, only):
         fail(f"repointed {written} row(s) but {expected} were selected — the ledger "
              "changed under the lock; re-run after python3 tools/check_csv.py")
 
-    stripped = {rel: strip_markers(root / rel, dest) for rel in sorted(keep_donor)}
+    stripped = {rel: strip_markers(root / rel, dest, deferred.get(rel, ()))
+                for rel in sorted(keep_donor)}
     removed = sorted(rel for rel in chosen if rel not in keep_donor)
     for rel in removed:
         (root / rel).unlink()
@@ -487,8 +508,12 @@ def do_apply(root, dest, into, only):
     print(f"  kept {len(keep_donor)} donor(s) that still own rows:")
     for rel, (elsewhere, left) in sorted(keep_donor.items()):
         why = []
-        if left:
-            why.append(f"{len(left)} row(s) no marker sends to {dest}")
+        held = deferred.get(rel, set())
+        if held:
+            why.append(f"{len(held)} row(s) DEFERRED by --symbols (markers kept)")
+        unsent = [n for n in left if n not in held]
+        if unsent:
+            why.append(f"{len(unsent)} row(s) no marker sends to {dest}")
         if elsewhere:
             why.append(f"still bound for {', '.join(elsewhere)}")
         print(f"      {rel} ({stripped[rel]} marker line(s) dropped, {'; '.join(why)})")
@@ -563,15 +588,34 @@ def rewrite_ledger(root, moving, into_rel):
     return written
 
 
-def strip_markers(path, dest):
-    """Drop only this destination's marker lines from a donor that stays.
+def names_symbol_any(symbols, name):
+    """Does any requested `symbols` entry name the ledger row `name`?"""
+    return any(s == name or name.startswith(s) for s in symbols)
+
+
+def names_symbol(symbol, names):
+    """Does a marker's (possibly truncated) `symbol` name any of `names`?
+
+    Same prefix rule as claims(): markers are often written truncated at an
+    `@@`, so `?parseSoundsList@INI@@` names the full mangled row."""
+    return any(symbol == name or name.startswith(symbol) for name in names)
+
+
+def strip_markers(path, dest, deferred=()):
+    """Drop this destination's marker lines, KEEPING any that name a deferred row.
+
+    With --symbols a donor can be drained one row at a time, so it keeps rows
+    still bound for `dest`. Their markers have to survive or the next --apply
+    cannot find them -- membership of a cluster is defined by the marker and
+    nothing else. With no --symbols nothing is deferred and every marker for
+    this destination goes, which is what draining a donor whole has always done.
 
     Byte-level line surgery so the file's own line endings survive untouched."""
     lines = path.read_bytes().splitlines(keepends=True)
     kept = []
     for line in lines:
         match = MARKER.match(line.decode("utf-8", "replace").rstrip("\r\n"))
-        if match and match.group(2) == dest:
+        if match and match.group(2) == dest and not names_symbol(match.group(1), deferred):
             continue
         kept.append(line)
     path.write_bytes(b"".join(kept))
@@ -602,18 +646,24 @@ def main(argv=None):
     parser.add_argument("--only", nargs="+", default=[], metavar="FILE",
                         help="the cluster members this merge consumes (required "
                              "with --apply; narrows the report with --plan)")
+    parser.add_argument("--symbols", nargs="+", default=[], metavar="NAME",
+                        help="with --apply, move only these ledger symbols and "
+                             "leave the donor's other rows (and their markers) "
+                             "in place; accepts a truncated marker symbol")
     parser.add_argument("--root", type=Path, default=DEFAULT_ROOT,
                         help="repository to operate on (default: this repo)")
     args = parser.parse_args(argv)
     root = args.root.resolve()
 
     if args.list:
-        if args.only or args.into:
-            fail("--list takes neither --only nor --into")
+        if args.only or args.into or args.symbols:
+            fail("--list takes neither --only nor --into nor --symbols")
         return do_list(root)
     if args.plan is not None:
         if args.into:
             fail("--into belongs to --apply, not --plan")
+        if args.symbols:
+            fail("--symbols belongs to --apply, not --plan")
         return do_plan(root, args.plan, args.only)
     if not args.into:
         fail("--apply needs --into PATH naming the merged translation unit")
@@ -622,7 +672,7 @@ def main(argv=None):
              "clusters run to 62 files; merging one whole in a single commit is "
              "unreviewable and would repoint rows for bodies the merged TU does "
              "not contain")
-    return do_apply(root, args.apply, args.into, args.only)
+    return do_apply(root, args.apply, args.into, args.only, args.symbols)
 
 
 if __name__ == "__main__":
