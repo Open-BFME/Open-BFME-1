@@ -72741,6 +72741,7 @@ name,address,notes
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
 ?bfmeChk1064@BfmeQ1064@@QAEDXZ,0x0001E533,pin
 ?bfmeChk1079@BfmeM1079@@QAEDXZ,0x000279CB,pin
+?bfmeChk1083@BfmeB1083@@QAEDXZ,0x00022C96,pin
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
 ?bfmeClear1003@BfmeB1003@@QAEXXZ,0x0000A754,pin
 ?bfmeClear1024@BfmeList1024@@QAEXXZ,0x00015640,pin
@@ -75602,6 +75603,7 @@ name,address,notes
 ?g_bfmeB1058@@3PAVBfmeB1058@@A,0x00EED668,pin
 ?g_bfmeB1062@@3PAVBfmeB1062@@A,0x00F06DF0,pin
 ?g_bfmeB1082@@3PAUBfmeB1082@@A,0x00EF0898,pin
+?g_bfmeB1083@@3PAVBfmeB1083@@A,0x00EF0898,pin
 ?g_bfmeB986B@@3PAHA,0x00EF9D0C,pin
 ?g_bfmeB991@@3PAVBfmeB991@@A,0x00EF9D88,pin
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
@@ -75640,6 +75642,7 @@ name,address,notes
 ?g_bfmeD1025@@3PAVBfmeD1025@@A,0x00EED748,pin
 ?g_bfmeD1062@@3PAVBfmeC1062@@A,0x00F37AA0,pin
 ?g_bfmeD1072@@3DA,0x00EF4AD1,pin
+?g_bfmeD1083@@3PAVBfmeD1083@@A,0x00EF1600,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
@@ -75969,6 +75972,9 @@ name,address,notes
 ?g_bfmeS1082_5@@3PAVBfmeS1082@@A,0x00F3838C,pin
 ?g_bfmeS1082_6@@3PAVBfmeS1082@@A,0x00F38390,pin
 ?g_bfmeS1082_7@@3PAVBfmeS1082@@A,0x00F38394,pin
+?g_bfmeS1083_0@@3PAVBfmeS1083@@A,0x00F38398,pin
+?g_bfmeS1083_1@@3PAVBfmeS1083@@A,0x00F383A0,pin
+?g_bfmeS1083_2@@3PAVBfmeS1083@@A,0x00F3839C,pin
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
@@ -76072,6 +76078,7 @@ name,address,notes
 ?g_bfmeXEMC@@3PAXA,0x00EC3B2C,pin
 ?g_bfmeY1058@@3HA,0x00EBAA2C,pin
 ?g_bfmeY1074@@3PAVBfmeX1074@@A,0x00EB7430,pin
+?g_bfmeZ1083@@3PAVBfmeZ1083@@A,0x00EF4C5C,pin
 ?g_bfmeZero986B@@3HA,0x00F071C8,pin
 ?g_defaultRespawnPolicy@@3URespawnPolicy@@A,0x012ED8B8,RespawnBody default six-dword policy
 ?g_global12EF1D8@@3PAXA,0x00EEF1D8,pin
