@@ -1044,6 +1044,17 @@ void LANAPI::RequestLobbyLeave( Bool forced )
 		m_transport->update();
 }
 
+// BFME keeps LANGameInfo's list pointer at +0x398 where the vendored header
+// puts it at +0x360, so every walk of m_games goes through this view rather
+// than getNext()/setNext().
+struct BfmeLANGameLink
+{
+	UnsignedByte pad[0x398];
+	LANGameInfo *next;								///< retail LANGameInfo+0x398
+};
+
+#define BFME_LAN_NEXT(g) (((BfmeLANGameLink *)(g))->next)
+
 // Misc utility functions
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_LookupGame.cpp
 // ?LookupGame@LANAPI@@UAEPAVLANGameInfo@@VUnicodeString@@@Z present-unmatched
@@ -1081,32 +1092,28 @@ LANGameInfo * LANAPI::LookupGameByListOffset( Int offset )
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_removeGame.cpp
-// ?removeGame@LANAPI@@IAEXPAVLANGameInfo@@@Z present-unmatched
 void LANAPI::removeGame( LANGameInfo *game )
 {
 	LANGameInfo *g = m_games;
-	if (!game)
+	// BFME returns on an empty list too; the reference tests only `game` and
+	// then walks into the else branch with a null g.
+	if (!game || !g)
 	{
 		return;
 	}
 	else if (m_games == game)
 	{
-		m_games = m_games->getNext();
+		m_games = BFME_LAN_NEXT(m_games);
 	}
 	else
 	{
-		while (g->getNext() && g->getNext() != game)
+		while (BFME_LAN_NEXT(g) && BFME_LAN_NEXT(g) != game)
 		{
-			g = g->getNext();
+			g = BFME_LAN_NEXT(g);
 		}
-		if (g->getNext() == game)
+		if (BFME_LAN_NEXT(g) == game)
 		{
-			g->setNext(game->getNext());
-		}
-		else
-		{
-			// Odd.  We went the whole way without finding it in the list.
-			DEBUG_ASSERTCRASH(false, ("LANGameInfo wasn't in the list"));
+			BFME_LAN_NEXT(g) = BFME_LAN_NEXT(game);
 		}
 	}
 }
