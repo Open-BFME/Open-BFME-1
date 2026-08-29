@@ -8938,6 +8938,7 @@ name,address,notes
 ??1W3DRadarResetSurface@@QAE@XZ,0x008FC5B0,W3DRadar reset BFME value-surface destructor
 ??1W3DRopeDrawRootBase@@UAE@XZ,0x0002B8C8,W3DRopeDraw destructor drawable-root-base call through retail ILT
 ??1W3DShadowHelperManager@@QAE@XZ,0x007C19A0,Open-BFME5 shadow helper manager dtor (two refcounted members) from retail ~W3DShadowManager call site
+??1WatchdogOwnedState@@QAE@XZ,0x009DB400,Watchdog owned-state destructor from retail stop body
 ??1WaterTracksObj@@QAE@XZ,0x0003DD2F,WaterTracksRenderSystem::shutdown deletes WaterTracksObj through this exact retail ILT; target 0x003DD2F forwards to the proven 0x007AB150 WaterTracksObj destructor body
 ??1WeaponChangeSpecialPowerModuleModuleDataBase@@UAE@XZ,0x0001D7B4,Open-BFME5 base pin
 ??1WeaponFireSpecialAbilityUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base dtor pin
@@ -75053,6 +75054,12 @@ name,address,notes
 ?g_bfme939GlobD@@3PAVBfmeGlob939D@@A,0x00EF0898,pin
 ?g_bfme939Str@@3PADA,0x00EB49B4,pin
 ?g_bfme940GlobE@@3PAVBfmeGlob940E@@A,0x00EF0898,pin
+?g_bfme943VftE1@@3PADA,0x00D3C5A4,pin
+?g_bfme943VftE2@@3PADA,0x00D3C598,pin
+?g_bfme943VftF1@@3PADA,0x00D3D010,pin
+?g_bfme943VftF2@@3PADA,0x00D3D004,pin
+?g_bfme943VftG1@@3PADA,0x00D3F604,pin
+?g_bfme943VftG2@@3PADA,0x00D3F5F8,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
@@ -78330,6 +78337,7 @@ name,address,notes
 ?step@Gen003BBA40Member@@QAEXPAVGenXferInterface@@@Z,0x000650C0,member at +0xC handed the interface by the transfer sequence at 0x003BBA40; address-derived name
 ?step@Gen003C75A0Owner@@QAEXXZ,0x003C75A0,niladic member called on the pointer at +0x28 by 0x003BCA30; address-derived name
 ?step@Glo012F1024Type@@QAEXXZ,0x003B3900,niladic member called on the global at 0x012F1024; address-derived name
+?stop@BFMENetworkThreadBase@@QAEXXZ,0x009DB5A0,Watchdog stop tail target from retail body
 ?stopAllBoneFX@BoneFXUpdate@@QAEXXZ,0x0002728C
 ?stopDocking@SiegeDockingBehavior@@AAEXXZ,0x00018F89,SiegeDockingBehavior destructor body call target
 ?stopHostingAlready@PeerThreadClass@@QAEXPAX@Z,0x00029FBE,Open-BFME5 zh_sweep packet 0064e570 callee pin
@@ -78695,6 +78703,7 @@ _GdiplusShutdown@4,0x009F6C10,gdiplus.dll import stub (direct REL32 call site; s
 _Gen00881EF0,0x00881EF0,address-derived callee of a guarded cdecl release-and-clear; one pointer argument popped by the caller; the ledger also names this address operator delete[] but the call site does not prove which
 _GenBase009EB7D0_vtbl,0x01145744,GenBase009EB7D0 base vftable used by its retail constructor
 _GetChallenge,0x009D39A0,gstats.c GetChallenge(statsgame_t): NULL game -> g_statsgame 0x0134D478; still NULL -> create_challenge(connid 0x0134D47C ^ 0x38F371E6 into static challenge[9] 0x0134D06C) and return it; else game->challenge = game+0x10; callers _BFMENetworkBackendEventCallback@40 0x00654A21 and BFMEConnectionManager::update 0x0066AC0B/0x0066AC31 which compares the result with NULLGAME
+_GetCurrentThreadId@0,0x009DB580,Watchdog update call target from retail REL32
 _HideControlBar,0x00002847,HideControlBar letterbox
 _InitStatsConnection,0x009D58C0
 _IsStatsConnected,0x009D2B60
@@ -79684,6 +79693,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-_GetCurrentThreadId@0,0x009DB580,Watchdog update call target from retail REL32
-??1WatchdogOwnedState@@QAE@XZ,0x009DB400,Watchdog owned-state destructor from retail stop body
-?stop@BFMENetworkThreadBase@@QAEXXZ,0x009DB5A0,Watchdog stop tail target from retail body
