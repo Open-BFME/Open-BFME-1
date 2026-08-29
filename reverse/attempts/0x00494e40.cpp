@@ -1,0 +1,206 @@
+// ?d_00494e40@@YAXXZ
+// partial score=0.94 date=2026-08-29
+// cl: /DNDEBUG /MD /EHsc
+//
+// Three instantiations of STLport's hash_map::operator[], landed as
+// relocation-blind twins of the body in
+// Code/GameEngine/Source/Common/RTS/Player.cpp (0x00787D80).  Each differs
+// from the model in exactly one slot: the `_M_insert` it calls -- and those
+// three are the ones landed in Open2Twins004.cpp, so the call resolves by
+// name with no pin.
+//
+// The declarations are that file's, with two additions the operator needs: a
+// one-argument `pair` constructor (retail writes the key and a zero into the
+// temporary and passes its address) and the lookup itself.  `_M_insert` is
+// declared and NOT defined here, so it stays an external call.
+
+// cl: /DNDEBUG /MD /EHsc
+
+// Open-BFME5: _STL::hashtable<pair<const Int, Int> >::_M_insert, retail
+// 0x000D3430, 111 bytes. The body carried only a machine byte-dump row;
+// reverse/reloc_names.csv holds the name with identity=real.
+//
+// The layout falls out of the offsets. Three empty functors sit at +0 and pad
+// to four, then the bucket vector's three pointers at +4, +8 and +0x0C, and
+// the element count at +0x10.
+//
+// The bucket index is computed inline as a plain divide: hash<Int> is the
+// identity, so the key is read straight out of the pair and taken modulo the
+// bucket count. The node is 12 bytes -- one next pointer and the eight-byte
+// pair -- and the value is copy-constructed through an out-of-line _Construct,
+// which is why the next pointer is cleared before the call and only linked to
+// the old bucket head afterwards.
+//
+// There is no unwind frame, so this translation unit is built without
+// exceptions and STLport's try around the construct is gone.
+
+typedef int Int;
+
+namespace _STL
+{
+
+// The node allocator's own _M_allocate is private in STLport, so the call is
+// spelled through the free-function name the ledger already pins on the same
+// body at 0x0082E540.
+void *__cdecl vectorSmallAllocate(unsigned int bytes);
+
+template <class T1, class T2>
+struct pair
+{
+	typedef T1 first_type;
+	typedef T2 second_type;
+
+	// The inserted value is built from the key alone with the mapped half
+	// value-initialised: retail writes the key and a zero into the temporary
+	// and passes its address.
+	pair(const T1 &key) : first(key), second() {}
+
+	T1 first;
+	T2 second;
+};
+
+template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/STLTypedefs.h
+struct hash
+{
+	unsigned int operator()(const T &x) const { return (unsigned int)x; }
+};
+
+template <class T>
+struct equal_to {};
+
+template <class T>
+struct _Select1st
+{
+	const typename T::first_type &operator()(const T &x) const { return x.first; }
+};
+
+template <class T>
+class allocator {};
+
+// _M_buckets is a vector of void*, not of node pointers, and its size and its
+// indexing go through separate inline accessors -- which is why retail reloads
+// the start pointer after the divide instead of keeping it live.
+class _BucketVector
+{
+public:
+	unsigned int size(void) const { return (unsigned int)(_M_finish - _M_start); }
+
+	void *&operator[](unsigned int n) { return *(_M_start + n); }
+	void *const &operator[](unsigned int n) const { return *(_M_start + n); }
+
+	void **_M_start;					// +0x00
+	void **_M_finish;					// +0x04
+	void **_M_end_of_storage;				// +0x08
+};
+
+template <class V>
+struct _Hashtable_node
+{
+	_Hashtable_node<V> *_M_next;
+	V _M_val;
+};
+
+template <class T1, class T2>
+void _Construct(T1 *p, const T2 &value);
+
+template <class Value, class Key, class HashFcn, class ExtractKey, class EqualKey, class Alloc>
+class hashtable
+{
+public:
+	typedef unsigned int size_type;
+	typedef _Hashtable_node<Value> _Node;
+
+	Value &_M_insert(const Value &obj);			// landed at its own address
+
+	// The lookup is its own inline function, which is what makes the caller
+	// re-test the node it was handed: retail runs the walk, falls out of it,
+	// and tests again before dereferencing.  Folded into operator[] the
+	// compiler knows the break leaves it non-null and drops both the test and
+	// the jump that reaches the insert path.
+	struct iterator
+	{
+		_Node *_M_cur;
+	};
+
+	iterator find(const Key &key)
+	{
+		iterator it;
+		it._M_cur = (_Node *)_M_buckets[_M_bkt_num_key(key)];
+
+		while (it._M_cur != 0)
+		{
+			if (it._M_cur->_M_val.first == key)
+				break;
+			it._M_cur = it._M_cur->_M_next;
+		}
+		return it;
+	}
+
+	typename Value::second_type &operator[](const Key &key)
+	{
+		_Node *cur = find(key)._M_cur;
+
+		if (cur != 0)
+			return cur->_M_val.second;
+
+		Value tmp(key);
+		return _M_insert(tmp).second;
+	}
+
+private:
+	void resize(size_type numElementsHint);			// retail 0x000D10F0
+
+	size_type _M_bkt_num_key(const Key &key) const
+	{
+		return _M_hash(key) % _M_buckets.size();
+	}
+
+	size_type _M_bkt_num(const Value &obj) const
+	{
+		return _M_bkt_num_key(_M_get_key(obj));
+	}
+
+	_Node *_M_new_node(const Value &obj)
+	{
+		_Node *n = (_Node *)vectorSmallAllocate(sizeof(_Node));
+		n->_M_next = 0;
+		_Construct(&n->_M_val, obj);
+		return n;
+	}
+
+	HashFcn _M_hash;					// +0x00
+	EqualKey _M_equals;
+	ExtractKey _M_get_key;
+	_BucketVector _M_buckets;				// +0x04
+	size_type _M_num_elements;				// +0x10
+};
+
+
+struct Open2Mapped494DA0 { Int m_value; };
+
+typedef pair<const Int, Open2Mapped494DA0> Open2Pair494DA0;
+
+template Open2Mapped494DA0 &hashtable<Open2Pair494DA0, Int, hash<Int>,
+	_Select1st<Open2Pair494DA0>, equal_to<Int>,
+	allocator<Open2Pair494DA0> >::operator[](const Int &);
+
+
+struct Open2Mapped498B30 { Int m_value; };
+
+typedef pair<const Int, Open2Mapped498B30> Open2Pair498B30;
+
+template Open2Mapped498B30 &hashtable<Open2Pair498B30, Int, hash<Int>,
+	_Select1st<Open2Pair498B30>, equal_to<Int>,
+	allocator<Open2Pair498B30> >::operator[](const Int &);
+
+
+struct Open2Mapped613250 { Int m_value; };
+
+typedef pair<const Int, Open2Mapped613250> Open2Pair613250;
+
+template Open2Mapped613250 &hashtable<Open2Pair613250, Int, hash<Int>,
+	_Select1st<Open2Pair613250>, equal_to<Int>,
+	allocator<Open2Pair613250> >::operator[](const Int &);
+
+}
