@@ -73838,6 +73838,7 @@ name,address,notes
 ?bfmeOneRF@@YAPAXPAX0@Z,0x007EBCA0,pin
 ?bfmeOneTB@@YAXXZ,0x00831F90,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
+?bfmeOpen1071@BfmeR1071@@QAEXPAVBfmeX1071@@@Z,0x0002144A,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
 ?bfmeOwner1001@BfmeX1001@@QAEPAXXZ,0x00020824,pin
@@ -73926,6 +73927,7 @@ name,address,notes
 ?bfmeRun1068@BfmeR1068@@QAEXPAVBfmeX1068@@PADH11111@Z,0x00015235,pin
 ?bfmeRun1069@BfmeR1069@@QAEXPAVBfmeX1069@@PADH11111@Z,0x00015235,pin
 ?bfmeRun1070@BfmeR1070@@QAEXPAVBfmeX1070@@PADH11111@Z,0x00015235,pin
+?bfmeRun1071@BfmeR1071@@QAEXPAVBfmeX1071@@PADH11111@Z,0x00015235,pin
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
 ?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
 ?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
@@ -75632,6 +75634,7 @@ name,address,notes
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
 ?g_bfmeEndC976@@3PAVBfmeEndC976@@A,0x00EF64BC,pin
 ?g_bfmeEndKA@@3PAPAVBfmeItemKA@@A,0x00EF1470,pin
+?g_bfmeF1071@@3DA,0x00EB7D84,pin
 ?g_bfmeFind975D@@3PAVBfmeFind975D@@A,0x00EEF1D8,pin
 ?g_bfmeFindA980@@3PAVBfmeFindA980@@A,0x00EEF1D8,pin
 ?g_bfmeFindAMB@@3PAVBfmeFindAMB@@A,0x00EF0898,pin
@@ -75674,10 +75677,14 @@ name,address,notes
 ?g_bfmeFmtD1067@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtD1068@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtD1070@@3PADA,0x00C7C7B4,pin
+?g_bfmeFmtD1071@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtE1064@@3PADA,0x00D05E7C,pin
 ?g_bfmeFmtF1065@@3PADA,0x00D09950,pin
 ?g_bfmeFmtG1065@@3PADA,0x00C80F24,pin
 ?g_bfmeFmtH1065@@3PADA,0x00D09C58,pin
+?g_bfmeFmtP1071@@3PADA,0x00D09708,pin
+?g_bfmeFmtQ1071@@3PADA,0x00D096FC,pin
+?g_bfmeFmtR1071@@3PADA,0x00D09E28,pin
 ?g_bfmeFree1040@@3P6AXPAXH@ZA,0x00F37830,pin
 ?g_bfmeFree1046@@3P6AXPAXH@ZA,0x00F37830,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
@@ -75707,6 +75714,7 @@ name,address,notes
 ?g_bfmeGlobRB@@3PAUBfmeObjRB@@A,0x00EF7FDC,pin
 ?g_bfmeH1025@@3PAVBfmeH1025@@A,0x00EF1028,pin
 ?g_bfmeH1059@@3PAVBfmeH1059@@A,0x00EF7014,pin
+?g_bfmeH1071@@3DA,0x00EF4AFE,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeHeld995B@@3PAXA,0x00EF4974,pin
 ?g_bfmeHits1054@@3HA,0x00F40594,pin
@@ -75869,6 +75877,7 @@ name,address,notes
 ?g_bfmeR1068@@3PAVBfmeR1068@@A,0x00EF19E8,pin
 ?g_bfmeR1069@@3PAVBfmeR1069@@A,0x00EF19E8,pin
 ?g_bfmeR1070@@3PAVBfmeR1070@@A,0x00EF19E8,pin
+?g_bfmeR1071@@3PAVBfmeR1071@@A,0x00EF19E8,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
@@ -75982,6 +75991,7 @@ name,address,notes
 ?g_bfmeX1067@@3PAVBfmeX1067@@A,0x00EB7D80,pin
 ?g_bfmeX1068@@3PAVBfmeX1068@@A,0x00EB7D80,pin
 ?g_bfmeX1070@@3PAVBfmeX1070@@A,0x00EB7D80,pin
+?g_bfmeX1071@@3PAVBfmeX1071@@A,0x00EB7D80,pin
 ?g_bfmeXEBK@@3PAXA,0x00EC3C58,pin
 ?g_bfmeXEMC@@3PAXA,0x00EC3B2C,pin
 ?g_bfmeY1058@@3HA,0x00EBAA2C,pin
@@ -79804,6 +79814,7 @@ __imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
 __imp_?bfmeSpf1065@@YAHPAD0H@Z,0x00F5948C,pin
 __imp_?bfmeSpf1068@@YAHPAD0H@Z,0x00F5948C,pin
 __imp_?bfmeSpf1070@@YAHPAD0H@Z,0x00F5948C,pin
+__imp_?bfmeSpf1071@@YAHPAD0H@Z,0x00F5948C,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
 __imp_?bfmeUnlock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58E74,pin
 __imp_?bfmeWait1012@@YGHPAXH@Z,0x00F58F64,pin
