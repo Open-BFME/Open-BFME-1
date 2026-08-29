@@ -3452,3 +3452,36 @@ an idea is total.
 
 Ephemeral scratch is correct for a one-off probe answering a question you will
 never ask again. It is wrong for anything that produced a number you reported.
+
+## A marker must be ADJACENT to its definition: explanation goes ABOVE it
+
+`find_declared_unmatched` reads a marker as declaring the body that FOLLOWS it.
+Twenty lines of explanation inserted between the marker and the code made the
+hook read the body as undeclared, and the pre-commit failed.
+
+    // why this row is re-homed, at whatever length              <- explanation
+    // ?dup_0018b520@@YAXXZ present-unmatched                    <- marker
+    void Squad::isOnSquad(...) { ... }                           <- the body
+
+Never between the marker and the code. This bites precisely when documenting a
+re-homing in place, which is exactly when the explanation is longest.
+
+## batch_screen's safety contract is the INVERSE of marker_screen's
+
+marker_screen clears a marker to ask its question, so it MUST restore it, even
+on BaseException. batch_screen must never have cleared one, because a marker is
+a comment and cannot change what the compiler emits -- which is the whole reason
+one compile answers a destination's entire marker list.
+
+So its first test is that contract: **it never writes** -- not the source, not
+the ledger. If it ever starts editing to get a better answer, it needs the
+restore machinery, and that test should fail loudly rather than be relaxed. Two
+tools, opposite invariants, each pinned by the test that would catch the other's
+bug.
+
+Its other tests encode things this effort learned expensively: a truncated label
+resolves only when unambiguous (two overloads sharing a prefix return
+`ambiguous`, never a guess); an unknown label is REPORTED, not skipped, since
+~2,000 of ~3,000 markers name no row and that is the largest bucket; a miss
+reports its byte count; and `moves` counts only rows a marker HERE names -- the
+miscount that turned one lane's eleven ready rows into two.
