@@ -72321,6 +72321,7 @@ name,address,notes
 ?bfmeAdd1024@BfmeTab1024@@QAEXHH@Z,0x0089D890,pin
 ?bfmeAdd1026@BfmeLst1026@@QAEXHH@Z,0x0002221E,pin
 ?bfmeAdd1034@BfmeSubA1034@@QAEXH@Z,0x00887C90,pin
+?bfmeAdd1038@BfmeSubF1038@@QAEXHH@Z,0x008BDBB0,pin
 ?bfmeAdd913D@BfmeThing913D@@QAEDPAX@Z,0x000110E0,pin
 ?bfmeAdd955@BfmeSink955@@QAEXPAHH@Z,0x00037A56,pin
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
@@ -72901,6 +72902,7 @@ name,address,notes
 ?bfmeDoRY@BfmeItemRY@@QAEXPAX0@Z,0x0002852E,pin
 ?bfmeDoSevenRL@@YAXPAX0000PAPAXH@Z,0x00019C45,pin
 ?bfmeDoSixRC@@YAXPAX0000H@Z,0x00028358,pin
+?bfmeDone1038@BfmeB1038@@QAEXXZ,0x000142A9,pin
 ?bfmeDrop1010@BfmeSink1010@@QAEXPAVBfmeItem1010@@@Z,0x0001D0DE,pin
 ?bfmeDrop1022@BfmeE1022@@QAEXHPAX@Z,0x0003BCCD,pin
 ?bfmeDrop1024@BfmeN1024@@QAEXH@Z,0x00005696,pin
@@ -73005,6 +73007,7 @@ name,address,notes
 ?bfmeFind1034@@YGPAUBfmeX1034@@HH@Z,0x0003B061,pin
 ?bfmeFind1034F@BfmeTab1034@@QAEPAVBfmeN1034@@H@Z,0x0089CEF0,pin
 ?bfmeFind1037F@@YGPAVBfmeG1037@@H@Z,0x0003F5DA,pin
+?bfmeFind1038@@YGPAVBfmeY1038@@H@Z,0x000181FB,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
@@ -73084,6 +73087,7 @@ name,address,notes
 ?bfmeFlagCWB@@3IA,0x00EF1034,pin
 ?bfmeFlagCWC@@3IA,0x00EF14A4,pin
 ?bfmeFlagCWD@@3IA,0x00EF3698,pin
+?bfmeFlush1038@@YAXXZ,0x00897110,pin
 ?bfmeFlush@Rva003D8530Owner@@QAEXXZ,0x00009787,Open-BFME5 ILT thunk to body 0x003D55C0; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it once on the same sub-object after the slot loop; address-derived name
 ?bfmeFlushQO@BfmeThingQO@@QAEXH@Z,0x0088A230,pin
 ?bfmeFormatAPB@@YAXPADHPAX@Z,0x00850600,pin
@@ -73370,6 +73374,7 @@ name,address,notes
 ?bfmeGetLastDamagePlayerIndex@Object@@QBEHXZ,0x0000515A,Open-BFME5 ILT thunk to body 0x001BF060; BodyModuleInterface last-damage slot 15 supplies sourcePlayerMask resolved through PlayerList and returned as Player index; bfme prefix records unrecovered retail spelling
 ?bfmeGetLastShotPosition@BfmeFiringTracker@@QBE?AUBfmeFiringPosition@@XZ,0x000228BD,Open-BFME5 ILT to body 0x001BD7D0; FiringTracker+0x48 last-shot position getter used by Object wrapper 0x001BF970
 ?bfmeGetLog1037@@YAPAVBfmeLog1037@@XZ,0x007EB810,pin
+?bfmeGetLog1038@@YAPAVBfmeLog1038@@XZ,0x007EB810,pin
 ?bfmeGetMgr1015@@YAPAVBfmeMgr1015@@XZ,0x007EFFC0,pin
 ?bfmeGetNonnegativePreferredLocomotorHeight@Object@@QBEMXZ,0x000047C8,Open-BFME5 ILT thunk to body 0x001BE030; Object m_ai at +0x204 and AIUpdateInterface m_curLocomotor at +0x1CC; returns canonical getPreferredHeight clamped to shared 0.0f; bfme prefix records unrecovered retail spelling
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
@@ -73959,6 +73964,7 @@ name,address,notes
 ?bfmeStateValue@BfmeObjectAI@@QAEHXZ,0x000187A0,Open-BFME5 helper state query body used by BfmeObjectAI::bfmeStateFlags
 ?bfmeStep1034@BfmeH1034@@QAEXXZ,0x00006906,pin
 ?bfmeStep1035@BfmeA1035@@QAEXD@Z,0x00016608,pin
+?bfmeStep1038@BfmeA1038@@QAEXXZ,0x000168C4,pin
 ?bfmeStep1@Gen_004410A0@@AAEXXZ,0x000459CB,Open-BFME5 ILT the three-step runner at 0x004410A0 calls first
 ?bfmeStep1@Gen_0077F000@@AAEXXZ,0x00039428,Open-BFME5 ILT the three-step runner at 0x0077F000 calls first
 ?bfmeStep1@Gen_007892D0@@AAEXXZ,0x000270FC,Open-BFME5 ILT the three-step runner at 0x007892D0 calls first
@@ -74010,6 +74016,7 @@ name,address,notes
 ?bfmeStop1013@BfmeUnit1013@@QAEXH@Z,0x0004A1FB,pin
 ?bfmeStop1019@BfmeA1019@@QAEXH@Z,0x00044A53,pin
 ?bfmeStop1027@BfmeX1027@@QAEXXZ,0x0001F212,pin
+?bfmeStop1038F@BfmeAObj1038@@QAEXXZ,0x008A0B00,pin
 ?bfmeStop@BfmeStopF@@QAEXXZ,0x00015E2E,Open-BFME5 the ICF thunk (to 0x0037C600) the clear at 0x002901C0 calls before emptying its vector
 ?bfmeStopAHA@BfmeSubAHA@@QAEXH@Z,0x0004AB4C,pin
 ?bfmeStopAQA@BfmeOneAQA@@QAEXXZ,0x0001F316,pin
@@ -74234,6 +74241,7 @@ name,address,notes
 ?bfmeVal1025@BfmeH1025@@QAEHXZ,0x0001F668,pin
 ?bfmeVal1027@BfmeVal1027@@QAEMXZ,0x0000D7B5,pin
 ?bfmeVal1034@BfmeN1034@@QAEHXZ,0x00898300,pin
+?bfmeVal1038@BfmeY1038@@QAEHXZ,0x00033AC8,pin
 ?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVecCtor1030@@YGXPAX0HHP6AXXZ1@Z,0x009F7036,pin
@@ -75434,6 +75442,7 @@ name,address,notes
 ?g_bfmeA1019@@3PAVBfmeA1019@@A,0x00EF1270,pin
 ?g_bfmeA1020@@3PAVBfmeA1020@@A,0x00EF1270,pin
 ?g_bfmeA1023@@3PAXA,0x00EF3C1C,pin
+?g_bfmeA1038@@3PAVBfmeAObj1038@@A,0x00F377D8,pin
 ?g_bfmeA986B@@3PAHA,0x00EF9D04,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
@@ -75452,6 +75461,7 @@ name,address,notes
 ?g_bfmeAux985@@3PAUBfmeAux985@@A,0x00EF4B58,pin
 ?g_bfmeB1019@@3PAVBfmeB1019@@A,0x00EED668,pin
 ?g_bfmeB1025@@3PAVBfmeB1025@@A,0x00EF7194,pin
+?g_bfmeB1038@@3HA,0x00F37A04,pin
 ?g_bfmeB986B@@3PAHA,0x00EF9D0C,pin
 ?g_bfmeB991@@3PAVBfmeB991@@A,0x00EF9D88,pin
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
@@ -75463,6 +75473,7 @@ name,address,notes
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
 ?g_bfmeC1020@@3DA,0x00EB7D84,pin
 ?g_bfmeC1023@@3PAVBfmeC1023@@A,0x00EF7714,pin
+?g_bfmeC1038@@3HA,0x00F378D4,pin
 ?g_bfmeCFAE@@3HA,0x00EEF418,pin
 ?g_bfmeCh1035@@3DA,0x00F4ECC8,pin
 ?g_bfmeClock977@@3PAVBfmeClock977@@A,0x00EF1B40,pin
@@ -75599,6 +75610,7 @@ name,address,notes
 ?g_bfmeMsg1020@@3HA,0x00EB7D80,pin
 ?g_bfmeMsg1021@@3HA,0x00EB7D80,pin
 ?g_bfmeMsg1037@@3PADA,0x00D29AB0,pin
+?g_bfmeMsg1038@@3PADA,0x00D29AD4,pin
 ?g_bfmeN1020@@3PAVBfmeN1020@@A,0x00EF1B40,pin
 ?g_bfmeN1021@@3PAVBfmeN1021@@A,0x00EF1B40,pin
 ?g_bfmeN1022@@3PAVBfmeN1022@@A,0x00EF1B40,pin
@@ -79550,6 +79562,7 @@ __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
 __imp_?bfmeAtoi1027@@YAHPAD@Z,0x00F59384,pin
 __imp_?bfmeClose1012@@YGXPAX@Z,0x00F58ECC,pin
 __imp_?bfmeClose1033@@YGXH@Z,0x00F58CCC,pin
+__imp_?bfmeClose1038@@YGHPAX@Z,0x00F58ECC,pin
 __imp_?bfmeCmp1026@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeCmp1027@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeFree1035@@YAXPAX@Z,0x00F593D4,pin
