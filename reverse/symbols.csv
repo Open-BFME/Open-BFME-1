@@ -2119,6 +2119,8 @@ name,address,notes
 ??0BfmeCtorBaseD@@QAE@XZ,0x009A1A30,Open-BFME5 the base constructor the based list constructor at 0x000FDA80 runs first
 ??0BfmeDelayedLuaEvent@@QAE@XZ,0x0003A1C5,Open-BFME5 ILT the DelayedLuaEventList constructor at 0x000EDBB0 hands to the EH vector constructor iterator as the element constructor; DIR32 sites are masked by the byte gate so this records the address
 ??0BfmeErr1042@@QAE@XZ,0x00013A8E,pin
+??0BfmeErr1043@@QAE@XZ,0x00013A8E,pin
+??0BfmeErr2_1043@@QAE@XZ,0x000180D9,pin
 ??0BfmeLegendString@@QAE@ABU0@@Z,0x00887B60,SubsystemLegend.cpp AsciiString stand-in copy ctor (StringBase<char> copy ctor body)
 ??0BfmeLegendString@@QAE@PBD@Z,0x00888BC0,SubsystemLegend.cpp AsciiString stand-in ctor from const char*
 ??0BfmeLegendStringVec@@QAE@ABU0@@Z,0x000D2E70,SubsystemLegend.cpp vector<AsciiString> stand-in copy ctor
@@ -72998,6 +73000,8 @@ name,address,notes
 ?bfmeFallback961@BfmeHost961@@QAEXHH@Z,0x0001C46D,pin
 ?bfmeFallback977C@@YADXZ,0x00892210,pin
 ?bfmeFatal1042@@YGXPAVBfmeErr1042@@PAD@Z,0x009F6D00,pin
+?bfmeFatal1043@@YGXPAVBfmeErr1043@@PAD@Z,0x009F6D00,pin
+?bfmeFatal2_1043@@YGXPAVBfmeErr2_1043@@PAD@Z,0x009F6D00,pin
 ?bfmeFill1028@BfmeSub1028@@QAEXPAH0@Z,0x00021562,pin
 ?bfmeFill1031@@YAXPAVBfmeG1031@@PAH@Z,0x000139BC,pin
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
@@ -75631,6 +75635,8 @@ name,address,notes
 ?g_bfmeMsg1037@@3PADA,0x00D29AB0,pin
 ?g_bfmeMsg1038@@3PADA,0x00D29AD4,pin
 ?g_bfmeMsg1042@@3PADA,0x00DE1CE4,pin
+?g_bfmeMsg1043@@3PADA,0x00DE1CE4,pin
+?g_bfmeMsg2_1043@@3PADA,0x00E07858,pin
 ?g_bfmeN1020@@3PAVBfmeN1020@@A,0x00EF1B40,pin
 ?g_bfmeN1021@@3PAVBfmeN1021@@A,0x00EF1B40,pin
 ?g_bfmeN1022@@3PAVBfmeN1022@@A,0x00EF1B40,pin
@@ -79593,6 +79599,7 @@ __imp_?bfmeImport928G@@YGXPAX@Z,0x00F58F08,pin
 __imp_?bfmeImport930C@@YAXPAX@Z,0x00F593D4,pin
 __imp_?bfmeLock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58D18,pin
 __imp_?bfmeMake1030@@YGHHHH@Z,0x00F58CF4,pin
+__imp_?bfmeOpen1043@@YGPAXPAD@Z,0x00F58E78,pin
 __imp_?bfmePrint1025@@YAXHPADH@Z,0x00F5948C,pin
 __imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
@@ -79783,6 +79790,7 @@ _bfmeVft1030C,0x00D36D58,pin
 _bfmeVft1033D,0x00D29A9C,pin
 _bfmeVft1039C,0x00D3E630,pin
 _bfmeVft1039D,0x00D3E654,pin
+_bfmeVft1043P,0x00CE7520,pin
 _bfmeVftAGBa,0x00C9C9D0,pin
 _bfmeVftAGBb,0x00CA372C,pin
 _bfmeVftAGBc,0x00CB1404,pin
