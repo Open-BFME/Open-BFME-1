@@ -72327,6 +72327,7 @@ name,address,notes
 ?bfmeAdd1038@BfmeSubF1038@@QAEXHH@Z,0x008BDBB0,pin
 ?bfmeAdd1040@BfmeH1040@@QAEXPAX@Z,0x0001EF9C,pin
 ?bfmeAdd1044@BfmeE1044@@QAEXPAVBfmeD1044@@H@Z,0x000157DA,pin
+?bfmeAdd1054@BfmeD1054@@QAEXPAVBfmeSubC1054@@@Z,0x000361CE,pin
 ?bfmeAdd913D@BfmeThing913D@@QAEDPAX@Z,0x000110E0,pin
 ?bfmeAdd955@BfmeSink955@@QAEXPAHH@Z,0x00037A56,pin
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
@@ -73617,6 +73618,7 @@ name,address,notes
 ?bfmeLookup_001c6340@@YAHPAX@Z,0x00026A3F,Open-BFME5 ILT the bit setter at 0x001C6340 calls
 ?bfmeLookup_001c63d0@@YAHPAX@Z,0x0004B218,Open-BFME5 ILT the bit setter at 0x001C63D0 calls
 ?bfmeMake1010@BfmeMake1010@@QAEPAVBfmeHeld1010@@PAXH@Z,0x000122BF,pin
+?bfmeMake1054@@YAHH@Z,0x0000971E,pin
 ?bfmeMake926B@@YAPAUBfmeNodeLC@@XZ,0x00012765,pin
 ?bfmeMake980A@BfmeA980@@QAEPAUBfmeRecA980@@H@Z,0x00025347,pin
 ?bfmeMake980B@BfmeB980@@QAEPAUBfmeRecB980@@H@Z,0x00025347,pin
@@ -74010,6 +74012,7 @@ name,address,notes
 ?bfmeStep1040@BfmeG1040@@QAEXXZ,0x00041970,pin
 ?bfmeStep1044@BfmeD1044@@QAEXH@Z,0x000399A5,pin
 ?bfmeStep1052@BfmeSubF1052@@QAEXXZ,0x000107C6,pin
+?bfmeStep1054@BfmeC1054@@QAEXPAVBfmeD1054@@HH@Z,0x00012F5D,pin
 ?bfmeStep1@Gen_004410A0@@AAEXXZ,0x000459CB,Open-BFME5 ILT the three-step runner at 0x004410A0 calls first
 ?bfmeStep1@Gen_0077F000@@AAEXXZ,0x00039428,Open-BFME5 ILT the three-step runner at 0x0077F000 calls first
 ?bfmeStep1@Gen_007892D0@@AAEXXZ,0x000270FC,Open-BFME5 ILT the three-step runner at 0x007892D0 calls first
@@ -74100,9 +74103,11 @@ name,address,notes
 ?bfmeTail974D@BfmeD974@@QAEXXZ,0x0001B8C4,pin
 ?bfmeTailA1037@BfmeI1037@@QAEXH@Z,0x000302E7,pin
 ?bfmeTailA1044@BfmeB1044@@QAEXXZ,0x00006E83,pin
+?bfmeTailA1054@@YGXPAUBfmeA1054@@@Z,0x000207B6,pin
 ?bfmeTailA947C@@YAXXZ,0x000241E0,pin
 ?bfmeTailB1037@BfmeI1037@@QAEXH@Z,0x00045179,pin
 ?bfmeTailB1044@BfmeB1044@@QAEXXZ,0x00033F19,pin
+?bfmeTailB1054@@YGXPAUBfmeB1054@@@Z,0x000481D0,pin
 ?bfmeTailB947C@BfmeGlob947C@@QAEXXZ,0x000290D2,pin
 ?bfmeTailBCD@BfmeThingBCD@@QAEXXZ,0x0001CD8C,pin
 ?bfmeTailBED@BfmeThingBED@@QAEXXZ,0x00012C6F,pin
@@ -75541,6 +75546,7 @@ name,address,notes
 ?g_bfmeClockYD@@3PAUBfmeClockYD@@A,0x00EF0898,pin
 ?g_bfmeCoord2DFormat@@3QBDB,0x011443F8,address-derived Coord2D format string from retail 0x009D9789
 ?g_bfmeCoord3DFormat@@3QBDB,0x01144348,address-derived Coord3D format string from retail 0x009D9650
+?g_bfmeCount1054@@3HA,0x00F4054C,pin
 ?g_bfmeCountBBD@@3HA,0x00F0BD30,pin
 ?g_bfmeCountELH@@3HA,0x00F40594,pin
 ?g_bfmeCountQB@@3HA,0x00F04B60,pin
@@ -75562,6 +75568,7 @@ name,address,notes
 ?g_bfmeE1014@@3PAVBfmeE1014@@A,0x00EF3A90,pin
 ?g_bfmeE1021@@3PAVBfmeE1021@@A,0x00EF1464,pin
 ?g_bfmeE1022@@3PAVBfmeE1022@@A,0x00EF33F8,pin
+?g_bfmeE1054@@3PAUBfmeE1054@@A,0x00F40534,pin
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
 ?g_bfmeEndC976@@3PAVBfmeEndC976@@A,0x00EF64BC,pin
@@ -75615,6 +75622,7 @@ name,address,notes
 ?g_bfmeH1025@@3PAVBfmeH1025@@A,0x00EF1028,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeHeld995B@@3PAXA,0x00EF4974,pin
+?g_bfmeHits1054@@3HA,0x00F40594,pin
 ?g_bfmeHook1040@@3P6AXPAUBfmeS1040@@@ZA,0x00F56DA0,pin
 ?g_bfmeHub1006@@3PAVBfmeHub1006@@A,0x00EF19E8,pin
 ?g_bfmeHub1013@@3PAVBfmeHub1013@@A,0x00EF3330,pin
@@ -79758,6 +79766,8 @@ _bfmeFnB1033,0x0001E0B0,pin
 _bfmeGlobalTable12A6918,0x00EA6918,pin
 _bfmeHook1052,0x0003695D,pin
 _bfmeHook1053,0x000066EA,pin
+_bfmeHookA1054,0x00008B39,pin
+_bfmeHookB1054,0x00011897,pin
 _bfmeInfoDCE,0x00CEA6A8,pin
 _bfmeInfoDCF,0x00D14768,pin
 _bfmeInfoDCG,0x00D16D70,pin
