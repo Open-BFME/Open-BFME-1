@@ -72379,6 +72379,7 @@ name,address,notes
 ?bfmeBase966A@BfmeVft966A@@QAEXXZ,0x00039D6A,pin
 ?bfmeBase966B@BfmeVft966B@@QAEXXZ,0x00039D6A,pin
 ?bfmeBase967A@BfmeVft967A@@QAEXXZ,0x0001AB90,pin
+?bfmeBase969D@BfmeD969@@QAEXXZ,0x007FA650,pin
 ?bfmeBaseAB@BfmeThingAB@@QAEXPAX@Z,0x0001AD0C,pin
 ?bfmeBaseAGB@BfmeThingAGB@@QAEXPAX0@Z,0x000170E4,pin
 ?bfmeBaseARC@BfmeThingARC@@QAEXXZ,0x009A1A30,pin
@@ -74593,6 +74594,7 @@ name,address,notes
 ?drawStaticTextText@@YAXPAVGameWindow@@HH@Z,0x00796BA0,file-static reached by the byte-proven call at 0x00796FAF
 ?drawStaticTextText@@YAXPAVGameWindow@@PAVWinInstanceData@@HH@Z,0x00796BA0,the 346-byte body immediately ahead of W3DGadgetStaticTextDraw in the same compiland
 ?drop@Gen003C8A50@@QAEXPAVGen003C8A50Result@@@Z,0x003CA9D0,called on the owner with the lookup result by 0x003BCA90; address-derived name
+?drop@Open2List@@QAEXPAVOpen2Node@@@Z,0x00016ED2,Open2 0x0071B4B0 list drop (ILT)
 ?duplicate@Condition@@QBEPAV1@XZ,0x0001C189,pinharvest x2 (thunk)
 ?dx8_polygons@Debug_Statistics@@3HA,0x01346E64,Open-BFME5 retail DX8 polygon counter
 ?dx8_renders@Debug_Statistics@@3HA,0x01346E68,Open-BFME5 retail DX8 render counter
@@ -74956,6 +74958,7 @@ name,address,notes
 ?first@Rva0051DCE0@@QAEXXZ,0x00005F88,ILT to 0x0051D590 for 13B two-call wrap at 0x0051DCE0
 ?firstNamed@U4Scan@@QBE_NPAXPBVU4Filter@@@Z,0x00606D60,U4 lane: third scan entry forwarded to by the proxy at 0x00606E20; address-derived name
 ?flattenZones@@YAXPAG0H@Z,0x004027B0,Open-BFME5 static zone-table flatten helper used by PathfindZoneManager at 0x00402E90
+?flush@Open27110F0Flusher@@QAEXXZ,0x0003139A,Open2 0x007110F0 flush (ILT)
 ?flushConnections@ConnectionManager@@QAEXXZ,0x006636F0,ZH twin exact: doSend(FALSE) on the eight m_connections then tail-jmp Transport::doSend 0x006834B0 on +0x12024; sole caller sendRequestPlayerLeaveCommand 0x00664939 where ZH quitGame calls flushConnections; ILT 0x0004230C
 ?flushQueue@LANAPIMemberObject@@QAEXXZ,0x00001EC4,RequestLobbyLeave flag call; ILT thunk for Transport::update body 0x00684420
 ?forceEmotion@EmotionTrackerUpdate@@QAEXW4EmotionType@@MPBVObject@@@Z,0x0003F4EF,Open-BFME5 EmotionTrackerUpdate force-emotion ILT thunk to body 0x0028F3E0; writes forced type duration frames and source Object ID in the recovered tracker layout
@@ -75315,6 +75318,9 @@ name,address,notes
 ?g_bfmeUnsignedShortFormat@@3QBDB,0x01144328,address-derived unsigned-short format string from retail 0x009D95BF
 ?g_bfmeValMD@@3HA,0x00EB7D80,pin
 ?g_bfmeVft963@@3PADA,0x00CF0398,pin
+?g_bfmeVft969D1@@3PADA,0x00D2B3F0,pin
+?g_bfmeVft969D2@@3PADA,0x00D2B3AC,pin
+?g_bfmeVft969D3@@3PADA,0x00D2B3C8,pin
 ?g_bfmeVftAQB@@3PADA,0x00D22470,pin
 ?g_bfmeVftBQB@@3PADA,0x00D223A0,pin
 ?g_bfmeVftTA@@3PADA,0x00D2F254,pin
@@ -77730,6 +77736,7 @@ name,address,notes
 ?playerHasPrereqsForScience@ScienceStore@@QBE_NPBVPlayer@@W4ScienceType@@@Z,0x0000DCDD
 ?playerLeftCallback@@YAXPAXW4RoomType@@PBD20@Z,0x0064AF80,PeerCallbacks struct slot +0x28 (playerLeft) filled at 0x0064FC70 in the PeerThreadClass thread body 0x0064FB90 (the table order matches peer.h and the ledger-named QRKeyListCallback at +0x5c / QRTeamKeyCallback at +0x58); builds PeerResponse type 0xb with nick=arg3 roomType=arg2 and getPlayerInfo 0x0064AA70 then TheGameSpyPeerMessageQueue 0x012F71C8 addResponse +0x20; BFME extra: when the nick is the local name (0x00647920) and t+0x228 is neither 0 nor 0xe it also posts response 0x11 and request 0x12; ZH PeerThread.cpp playerLeftCallback
 ?pointInTrigger@PolygonTrigger@@QBE_NAAUICoord3D@@@Z,0x0004AB6F,decoded target call from PartitionFilterPolygonTrigger::allow
+?poke@Open2715D80Inner@@QAEPAVOpen2715D80Owner@@XZ,0x000022BB,Open2 0x00715D80 guarded poke (ILT)
 ?poke@U4Global006094C0@@QAEXXZ,0x006159C0,U4 lane: no-argument tail callee of the guarded jump at 0x006094C0; address-derived name
 ?pop@?$queue@VPingRequest@@V?$deque@VPingRequest@@V?$allocator@VPingRequest@@@_STL@@@_STL@@@_STL@@QAEXXZ,0x0003BFED
 ?pop@?$queue@VPingResponse@@V?$deque@VPingResponse@@V?$allocator@VPingResponse@@@_STL@@@_STL@@@_STL@@QAEXXZ,0x000412A4
@@ -78443,6 +78450,7 @@ name,address,notes
 ?storeImage@Anim2DTemplate@@QAEXPBVImage@@@Z,0x0001CF0D
 ?strtrim@@YAPADPAD@Z,0x009E7EB0
 ?structureCollapseBuildNonDupRandomIndexList@@YAXHHQAH@Z,0x002AE160,StructureCollapse doPhaseStuff retail file-local index builder
+?submit@Open27110F0Sink@@QAEXHHHH@Z,0x00031840,Open2 0x007110F0 sink submit (ILT)
 ?substr@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QBE?AV12@II@Z,0x006550F0,STLport basic_string<char>::substr(pos; n): constructs the hidden return string from [begin+pos; begin+pos+min(n; size-pos)) through the range ctor ILT 0x0002648B; four callers in parsePlayerKVPairs@GameSpyPSMessageQueueInterface 0x00659888..0x00659A25; ILT 0x0003D60E
 ?supportTextureFormat@W3DRadarFormatCaps@@QAE_NW4WW3DFormat@@@Z,0x0091B4F0,W3DRadar BFME caps query ABI shim
 ?swap@Rva00356830Blk@@QAEXAAV1@@Z,0x00040372
@@ -79793,7 +79801,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?poke@Open2715D80Inner@@QAEPAVOpen2715D80Owner@@XZ,0x000022BB,Open2 0x00715D80 guarded poke (ILT)
-?submit@Open27110F0Sink@@QAEXHHHH@Z,0x00031840,Open2 0x007110F0 sink submit (ILT)
-?flush@Open27110F0Flusher@@QAEXXZ,0x0003139A,Open2 0x007110F0 flush (ILT)
-?drop@Open2List@@QAEXPAVOpen2Node@@@Z,0x00016ED2,Open2 0x0071B4B0 list drop (ILT)
