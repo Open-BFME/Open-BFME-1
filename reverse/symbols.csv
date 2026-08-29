@@ -72744,6 +72744,7 @@ name,address,notes
 ?bfmeChk1064@BfmeQ1064@@QAEDXZ,0x0001E533,pin
 ?bfmeChk1079@BfmeM1079@@QAEDXZ,0x000279CB,pin
 ?bfmeChk1083@BfmeB1083@@QAEDXZ,0x00022C96,pin
+?bfmeChk1089@BfmeR1089@@QAEDXZ,0x000262B5,pin
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
 ?bfmeClear1003@BfmeB1003@@QAEXXZ,0x0000A754,pin
 ?bfmeClear1024@BfmeList1024@@QAEXXZ,0x00015640,pin
@@ -73645,6 +73646,7 @@ name,address,notes
 ?bfmeLogMsg574@@YAXPBD@Z,0x0003EBAD,pin
 ?bfmeLook1087@BfmeD1087@@QAEPAUBfmeR1087@@PAF@Z,0x0002EE60,pin
 ?bfmeLook1088@BfmeD1088@@QAEPAUBfmeR1088@@PAF@Z,0x0002EE60,pin
+?bfmeLook1089@BfmeD1089@@QAEPAVBfmeR1089@@PAF@Z,0x0002EE60,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
 ?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
 ?bfmeLookBBB@@YAPAXPAX@Z,0x0082B8E0,pin
@@ -73742,6 +73744,7 @@ name,address,notes
 ?bfmeNext1016@BfmeIter1016@@QAEGH@Z,0x00835ED0,pin
 ?bfmeNext1087@BfmeP1087@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1088@BfmeP1088@@QAEHH@Z,0x000230B5,pin
+?bfmeNext1089@BfmeP1089@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext929D@BfmeNext929D@@QAEHH@Z,0x0089CC30,pin
 ?bfmeNext@Gen_00088B60@@AAEXXZ,0x00031FCF,Open-BFME5 the member the flag-then-forward wrapper at 0x00088B60 tail-jumps to
 ?bfmeNext@Gen_000B5690@@AAEXXZ,0x000242A3,Open-BFME5 the member the flag-then-forward wrapper at 0x000B5690 tail-jumps to
@@ -74389,6 +74392,7 @@ name,address,notes
 ?bfmeVal1027@BfmeVal1027@@QAEMXZ,0x0000D7B5,pin
 ?bfmeVal1034@BfmeN1034@@QAEHXZ,0x00898300,pin
 ?bfmeVal1038@BfmeY1038@@QAEHXZ,0x00033AC8,pin
+?bfmeVal1089@BfmeR1089@@QAEHXZ,0x000271B5,pin
 ?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVecCtor1030@@YGXPAX0HHP6AXXZ1@Z,0x009F7036,pin
@@ -75670,6 +75674,7 @@ name,address,notes
 ?g_bfmeD1083@@3PAVBfmeD1083@@A,0x00EF1600,pin
 ?g_bfmeD1087@@3PAVBfmeD1087@@A,0x00EED748,pin
 ?g_bfmeD1088@@3PAVBfmeD1088@@A,0x00EED748,pin
+?g_bfmeD1089@@3PAVBfmeD1089@@A,0x00EED748,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
@@ -75956,6 +75961,7 @@ name,address,notes
 ?g_bfmeP1085@@3PAVBfmeP1085@@A,0x00EF076C,pin
 ?g_bfmeP1087@@3PAVBfmeP1087@@A,0x00EF076C,pin
 ?g_bfmeP1088@@3PAVBfmeP1088@@A,0x00EF076C,pin
+?g_bfmeP1089@@3PAVBfmeP1089@@A,0x00EF076C,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
