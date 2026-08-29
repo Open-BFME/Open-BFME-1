@@ -951,17 +951,169 @@ const FieldParse InGameUI::s_fieldParseTable[] =
 	{ NULL,													NULL,										NULL,		0 }  // keep this last
 };
 
+namespace {
+
+struct BfmeInGameUIIdleWorkerView {
+	unsigned char padding[0x139c];
+	GameWindow *idleWorkerWin;
+	Int currentIdleWorkerDisplay;
+};
+
+// _List_node carries BFME's 32-byte tail in this TU -- the SuperweaponInfo
+// list's head node really is 0x2C bytes -- while an idle-worker list is a
+// plain 12-byte node, so its teardown gets its own spelling of clear().
+struct BfmeIdleWorkerNode {
+	BfmeIdleWorkerNode *next;
+	BfmeIdleWorkerNode *prev;
+	Object *object;
+};
+
+struct BfmeIdleWorkerList {
+	BfmeIdleWorkerNode *head;
+
+	void clear()
+	{
+		BfmeIdleWorkerNode *cur = head->next;
+		while (cur != head)
+		{
+			BfmeIdleWorkerNode *dead = cur;
+			cur = cur->next;
+			_STL::allocator<BfmeIdleWorkerNode>().deallocate(dead, 1);
+		}
+		head->next = head;
+		head->prev = head;
+	}
+};
+
+#define BFME_IN_GAME_UI_SLOT(n) virtual void bfmeSlot##n() = 0;
+
+// One local view of the BFME vtable for the whole file: getFieldParse at
+// +0x158, clearTooltipsDisabled at +0x190 and getIdleWorkerCount at +0x198,
+// none of which the ZH class lands in the same slot.
+struct BfmeInGameUIVirtualView {
+	BFME_IN_GAME_UI_SLOT(0)
+	BFME_IN_GAME_UI_SLOT(1)
+	BFME_IN_GAME_UI_SLOT(2)
+	BFME_IN_GAME_UI_SLOT(3)
+	BFME_IN_GAME_UI_SLOT(4)
+	BFME_IN_GAME_UI_SLOT(5)
+	BFME_IN_GAME_UI_SLOT(6)
+	BFME_IN_GAME_UI_SLOT(7)
+	BFME_IN_GAME_UI_SLOT(8)
+	BFME_IN_GAME_UI_SLOT(9)
+	BFME_IN_GAME_UI_SLOT(10)
+	BFME_IN_GAME_UI_SLOT(11)
+	BFME_IN_GAME_UI_SLOT(12)
+	BFME_IN_GAME_UI_SLOT(13)
+	BFME_IN_GAME_UI_SLOT(14)
+	BFME_IN_GAME_UI_SLOT(15)
+	BFME_IN_GAME_UI_SLOT(16)
+	BFME_IN_GAME_UI_SLOT(17)
+	BFME_IN_GAME_UI_SLOT(18)
+	BFME_IN_GAME_UI_SLOT(19)
+	BFME_IN_GAME_UI_SLOT(20)
+	BFME_IN_GAME_UI_SLOT(21)
+	BFME_IN_GAME_UI_SLOT(22)
+	BFME_IN_GAME_UI_SLOT(23)
+	BFME_IN_GAME_UI_SLOT(24)
+	BFME_IN_GAME_UI_SLOT(25)
+	BFME_IN_GAME_UI_SLOT(26)
+	BFME_IN_GAME_UI_SLOT(27)
+	BFME_IN_GAME_UI_SLOT(28)
+	BFME_IN_GAME_UI_SLOT(29)
+	BFME_IN_GAME_UI_SLOT(30)
+	BFME_IN_GAME_UI_SLOT(31)
+	BFME_IN_GAME_UI_SLOT(32)
+	BFME_IN_GAME_UI_SLOT(33)
+	BFME_IN_GAME_UI_SLOT(34)
+	BFME_IN_GAME_UI_SLOT(35)
+	BFME_IN_GAME_UI_SLOT(36)
+	BFME_IN_GAME_UI_SLOT(37)
+	BFME_IN_GAME_UI_SLOT(38)
+	BFME_IN_GAME_UI_SLOT(39)
+	BFME_IN_GAME_UI_SLOT(40)
+	BFME_IN_GAME_UI_SLOT(41)
+	BFME_IN_GAME_UI_SLOT(42)
+	BFME_IN_GAME_UI_SLOT(43)
+	BFME_IN_GAME_UI_SLOT(44)
+	BFME_IN_GAME_UI_SLOT(45)
+	BFME_IN_GAME_UI_SLOT(46)
+	BFME_IN_GAME_UI_SLOT(47)
+	BFME_IN_GAME_UI_SLOT(48)
+	BFME_IN_GAME_UI_SLOT(49)
+	BFME_IN_GAME_UI_SLOT(50)
+	BFME_IN_GAME_UI_SLOT(51)
+	BFME_IN_GAME_UI_SLOT(52)
+	BFME_IN_GAME_UI_SLOT(53)
+	BFME_IN_GAME_UI_SLOT(54)
+	BFME_IN_GAME_UI_SLOT(55)
+	BFME_IN_GAME_UI_SLOT(56)
+	BFME_IN_GAME_UI_SLOT(57)
+	BFME_IN_GAME_UI_SLOT(58)
+	BFME_IN_GAME_UI_SLOT(59)
+	BFME_IN_GAME_UI_SLOT(60)
+	BFME_IN_GAME_UI_SLOT(61)
+	BFME_IN_GAME_UI_SLOT(62)
+	BFME_IN_GAME_UI_SLOT(63)
+	BFME_IN_GAME_UI_SLOT(64)
+	BFME_IN_GAME_UI_SLOT(65)
+	BFME_IN_GAME_UI_SLOT(66)
+	BFME_IN_GAME_UI_SLOT(67)
+	BFME_IN_GAME_UI_SLOT(68)
+	BFME_IN_GAME_UI_SLOT(69)
+	BFME_IN_GAME_UI_SLOT(70)
+	BFME_IN_GAME_UI_SLOT(71)
+	BFME_IN_GAME_UI_SLOT(72)
+	BFME_IN_GAME_UI_SLOT(73)
+	BFME_IN_GAME_UI_SLOT(74)
+	BFME_IN_GAME_UI_SLOT(75)
+	BFME_IN_GAME_UI_SLOT(76)
+	BFME_IN_GAME_UI_SLOT(77)
+	BFME_IN_GAME_UI_SLOT(78)
+	BFME_IN_GAME_UI_SLOT(79)
+	BFME_IN_GAME_UI_SLOT(80)
+	BFME_IN_GAME_UI_SLOT(81)
+	BFME_IN_GAME_UI_SLOT(82)
+	BFME_IN_GAME_UI_SLOT(83)
+	BFME_IN_GAME_UI_SLOT(84)
+	BFME_IN_GAME_UI_SLOT(85)
+	virtual const FieldParse *getFieldParse( void ) const = 0;	///< vtable +0x158
+	BFME_IN_GAME_UI_SLOT(87)
+	BFME_IN_GAME_UI_SLOT(88)
+	BFME_IN_GAME_UI_SLOT(89)
+	BFME_IN_GAME_UI_SLOT(90)
+	BFME_IN_GAME_UI_SLOT(91)
+	BFME_IN_GAME_UI_SLOT(92)
+	BFME_IN_GAME_UI_SLOT(93)
+	BFME_IN_GAME_UI_SLOT(94)
+	BFME_IN_GAME_UI_SLOT(95)
+	BFME_IN_GAME_UI_SLOT(96)
+	BFME_IN_GAME_UI_SLOT(97)
+	BFME_IN_GAME_UI_SLOT(98)
+	BFME_IN_GAME_UI_SLOT(99)
+	virtual void clearTooltipsDisabled( void ) = 0;			///< vtable +0x190
+	BFME_IN_GAME_UI_SLOT(101)
+	virtual Int getIdleWorkerCount() = 0;
+};
+
+#undef BFME_IN_GAME_UI_SLOT
+
+static BfmeInGameUIIdleWorkerView *bfmeIdleWorkerView(InGameUI *ui)
+{
+	return reinterpret_cast<BfmeInGameUIIdleWorkerView *>(ui);
+}
+
+}
 //-------------------------------------------------------------------------------------------------
 /** Parse MouseCursor entry */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/INIParseInGameUIDefinitionThunk.cpp
-// ?parseInGameUIDefinition@INI@@SAXPAV1@@Z present-unmatched
 void INI::parseInGameUIDefinition( INI* ini )
 {
 	if( TheInGameUI )
 	{
 		// parse the ini weapon definition
-		ini->initFromINI( TheInGameUI, TheInGameUI->getFieldParse() );
+		ini->initFromINI( TheInGameUI, ((const BfmeInGameUIVirtualView *)TheInGameUI)->getFieldParse() );
 	}
 }
 
@@ -7673,27 +7825,61 @@ void InGameUI::militarySubtitle( const AsciiString& label, Int duration )
 // InGameUI::removeMilitarySubtitle
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_removeMilitarySubtitleMethodThunk.cpp
-// ?removeMilitarySubtitle@InGameUI@@UAEXXZ present-unmatched
+// BFME's record drops the ICoord2D position the ZH struct keeps between the
+// index and the array, so displayStrings starts at +0x08 rather than +0x10,
+// and it carries one more display string at +0x28 that the reference body
+// never frees. The array width is a layout inference -- it is what puts +0x28
+// where retail reads it -- since the loop is bounded by currentDisplayString
+// and never by the width.
+struct BfmeMilitarySubtitleRecord
+{
+	// declared out of line on purpose: with the implicit destructor MSVC
+	// inlines UnicodeString's, where retail calls the record's own through a
+	// thunk that ICF has folded onto releaseBuffer
+	~BfmeMilitarySubtitleRecord();
+
+	UnicodeString subtitle;					///< retail this+0x00
+	UnsignedInt index;						///< retail this+0x04
+	DisplayString *displayStrings[8];		///< retail this+0x08
+	DisplayString *blockString;				///< retail this+0x28
+	UnsignedInt currentDisplayString;		///< retail this+0x2C
+};
+
+// The record pointer at this+0x818 is spelled as a direct dereference rather
+// than a member of a padded view struct, and that is load-bearing: reached
+// through a view, the array load below encodes as `mov eax,[eax+edi]` where
+// retail has `mov eax,[edi+eax]` -- the same operation with base and index
+// swapped, and the only byte in the body that differed. Reached this way it
+// encodes retail's way.
+#define BFME_SUBTITLE(ui) (*(BfmeMilitarySubtitleRecord **)((UnsignedByte *)(ui) + 0x818))
+
 void InGameUI::removeMilitarySubtitle( void )
 {
 	// sanity (is there really such a thing in this world?)
-	if(!m_militarySubtitle)
+	if(!BFME_SUBTITLE(this))
 		return;
 
-	TheInGameUI->clearTooltipsDisabled();
+	((BfmeInGameUIVirtualView *)TheInGameUI)->clearTooltipsDisabled();
 
 	// loop through and free up the display strings
-	for(Int i = 0; i <= m_militarySubtitle->currentDisplayString; i ++)
+	for(Int i = 0; i <= BFME_SUBTITLE(this)->currentDisplayString; i ++)
 	{
-		TheDisplayStringManager->freeDisplayString(m_militarySubtitle->displayStrings[i]);
-		m_militarySubtitle->displayStrings[i] = NULL;
+		reinterpret_cast<DisplayStringManager_FreeSlot *>(TheDisplayStringManager)
+			->freeDisplayString(BFME_SUBTITLE(this)->displayStrings[i]);
+		BFME_SUBTITLE(this)->displayStrings[i] = NULL;
 	}
 
+	// the reference body stops above; retail frees this one too
+	reinterpret_cast<DisplayStringManager_FreeSlot *>(TheDisplayStringManager)
+		->freeDisplayString(BFME_SUBTITLE(this)->blockString);
+
 	//delete it man!
-	delete m_militarySubtitle;
-	m_militarySubtitle= NULL;
+	delete BFME_SUBTITLE(this);
+	BFME_SUBTITLE(this) = NULL;
 
 }
+
+#undef BFME_SUBTITLE
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
@@ -9821,157 +10007,6 @@ Int InGameUI::getIdleWorkerCount( void )
 	return m_idleWorkers[index].size();
 }
 
-namespace {
-
-struct BfmeInGameUIIdleWorkerView {
-	unsigned char padding[0x139c];
-	GameWindow *idleWorkerWin;
-	Int currentIdleWorkerDisplay;
-};
-
-// _List_node carries BFME's 32-byte tail in this TU -- the SuperweaponInfo
-// list's head node really is 0x2C bytes -- while an idle-worker list is a
-// plain 12-byte node, so its teardown gets its own spelling of clear().
-struct BfmeIdleWorkerNode {
-	BfmeIdleWorkerNode *next;
-	BfmeIdleWorkerNode *prev;
-	Object *object;
-};
-
-struct BfmeIdleWorkerList {
-	BfmeIdleWorkerNode *head;
-
-	void clear()
-	{
-		BfmeIdleWorkerNode *cur = head->next;
-		while (cur != head)
-		{
-			BfmeIdleWorkerNode *dead = cur;
-			cur = cur->next;
-			_STL::allocator<BfmeIdleWorkerNode>().deallocate(dead, 1);
-		}
-		head->next = head;
-		head->prev = head;
-	}
-};
-
-#define BFME_IN_GAME_UI_SLOT(n) virtual void bfmeSlot##n() = 0;
-
-// The BFME vtable puts getIdleWorkerCount at +0x198; keep that source-era ABI local.
-struct BfmeInGameUIVirtualView {
-	BFME_IN_GAME_UI_SLOT(0)
-	BFME_IN_GAME_UI_SLOT(1)
-	BFME_IN_GAME_UI_SLOT(2)
-	BFME_IN_GAME_UI_SLOT(3)
-	BFME_IN_GAME_UI_SLOT(4)
-	BFME_IN_GAME_UI_SLOT(5)
-	BFME_IN_GAME_UI_SLOT(6)
-	BFME_IN_GAME_UI_SLOT(7)
-	BFME_IN_GAME_UI_SLOT(8)
-	BFME_IN_GAME_UI_SLOT(9)
-	BFME_IN_GAME_UI_SLOT(10)
-	BFME_IN_GAME_UI_SLOT(11)
-	BFME_IN_GAME_UI_SLOT(12)
-	BFME_IN_GAME_UI_SLOT(13)
-	BFME_IN_GAME_UI_SLOT(14)
-	BFME_IN_GAME_UI_SLOT(15)
-	BFME_IN_GAME_UI_SLOT(16)
-	BFME_IN_GAME_UI_SLOT(17)
-	BFME_IN_GAME_UI_SLOT(18)
-	BFME_IN_GAME_UI_SLOT(19)
-	BFME_IN_GAME_UI_SLOT(20)
-	BFME_IN_GAME_UI_SLOT(21)
-	BFME_IN_GAME_UI_SLOT(22)
-	BFME_IN_GAME_UI_SLOT(23)
-	BFME_IN_GAME_UI_SLOT(24)
-	BFME_IN_GAME_UI_SLOT(25)
-	BFME_IN_GAME_UI_SLOT(26)
-	BFME_IN_GAME_UI_SLOT(27)
-	BFME_IN_GAME_UI_SLOT(28)
-	BFME_IN_GAME_UI_SLOT(29)
-	BFME_IN_GAME_UI_SLOT(30)
-	BFME_IN_GAME_UI_SLOT(31)
-	BFME_IN_GAME_UI_SLOT(32)
-	BFME_IN_GAME_UI_SLOT(33)
-	BFME_IN_GAME_UI_SLOT(34)
-	BFME_IN_GAME_UI_SLOT(35)
-	BFME_IN_GAME_UI_SLOT(36)
-	BFME_IN_GAME_UI_SLOT(37)
-	BFME_IN_GAME_UI_SLOT(38)
-	BFME_IN_GAME_UI_SLOT(39)
-	BFME_IN_GAME_UI_SLOT(40)
-	BFME_IN_GAME_UI_SLOT(41)
-	BFME_IN_GAME_UI_SLOT(42)
-	BFME_IN_GAME_UI_SLOT(43)
-	BFME_IN_GAME_UI_SLOT(44)
-	BFME_IN_GAME_UI_SLOT(45)
-	BFME_IN_GAME_UI_SLOT(46)
-	BFME_IN_GAME_UI_SLOT(47)
-	BFME_IN_GAME_UI_SLOT(48)
-	BFME_IN_GAME_UI_SLOT(49)
-	BFME_IN_GAME_UI_SLOT(50)
-	BFME_IN_GAME_UI_SLOT(51)
-	BFME_IN_GAME_UI_SLOT(52)
-	BFME_IN_GAME_UI_SLOT(53)
-	BFME_IN_GAME_UI_SLOT(54)
-	BFME_IN_GAME_UI_SLOT(55)
-	BFME_IN_GAME_UI_SLOT(56)
-	BFME_IN_GAME_UI_SLOT(57)
-	BFME_IN_GAME_UI_SLOT(58)
-	BFME_IN_GAME_UI_SLOT(59)
-	BFME_IN_GAME_UI_SLOT(60)
-	BFME_IN_GAME_UI_SLOT(61)
-	BFME_IN_GAME_UI_SLOT(62)
-	BFME_IN_GAME_UI_SLOT(63)
-	BFME_IN_GAME_UI_SLOT(64)
-	BFME_IN_GAME_UI_SLOT(65)
-	BFME_IN_GAME_UI_SLOT(66)
-	BFME_IN_GAME_UI_SLOT(67)
-	BFME_IN_GAME_UI_SLOT(68)
-	BFME_IN_GAME_UI_SLOT(69)
-	BFME_IN_GAME_UI_SLOT(70)
-	BFME_IN_GAME_UI_SLOT(71)
-	BFME_IN_GAME_UI_SLOT(72)
-	BFME_IN_GAME_UI_SLOT(73)
-	BFME_IN_GAME_UI_SLOT(74)
-	BFME_IN_GAME_UI_SLOT(75)
-	BFME_IN_GAME_UI_SLOT(76)
-	BFME_IN_GAME_UI_SLOT(77)
-	BFME_IN_GAME_UI_SLOT(78)
-	BFME_IN_GAME_UI_SLOT(79)
-	BFME_IN_GAME_UI_SLOT(80)
-	BFME_IN_GAME_UI_SLOT(81)
-	BFME_IN_GAME_UI_SLOT(82)
-	BFME_IN_GAME_UI_SLOT(83)
-	BFME_IN_GAME_UI_SLOT(84)
-	BFME_IN_GAME_UI_SLOT(85)
-	BFME_IN_GAME_UI_SLOT(86)
-	BFME_IN_GAME_UI_SLOT(87)
-	BFME_IN_GAME_UI_SLOT(88)
-	BFME_IN_GAME_UI_SLOT(89)
-	BFME_IN_GAME_UI_SLOT(90)
-	BFME_IN_GAME_UI_SLOT(91)
-	BFME_IN_GAME_UI_SLOT(92)
-	BFME_IN_GAME_UI_SLOT(93)
-	BFME_IN_GAME_UI_SLOT(94)
-	BFME_IN_GAME_UI_SLOT(95)
-	BFME_IN_GAME_UI_SLOT(96)
-	BFME_IN_GAME_UI_SLOT(97)
-	BFME_IN_GAME_UI_SLOT(98)
-	BFME_IN_GAME_UI_SLOT(99)
-	BFME_IN_GAME_UI_SLOT(100)
-	BFME_IN_GAME_UI_SLOT(101)
-	virtual Int getIdleWorkerCount() = 0;
-};
-
-#undef BFME_IN_GAME_UI_SLOT
-
-static BfmeInGameUIIdleWorkerView *bfmeIdleWorkerView(InGameUI *ui)
-{
-	return reinterpret_cast<BfmeInGameUIIdleWorkerView *>(ui);
-}
-
-}
 
 void InGameUI::showIdleWorkerLayout( void )
 {
