@@ -72244,6 +72244,7 @@ name,address,notes
 ?bfmeAccepts@Gen_00684b90Holder@@QAEHPAX@Z,0x00004F6B,Open-BFME5 ILT the guard at 0x00684B90 asks its holder through
 ?bfmeActME@BfmeThingME@@QAEXXZ,0x0000C4EB,pin
 ?bfmeAdd913D@BfmeThing913D@@QAEDPAX@Z,0x000110E0,pin
+?bfmeAdd955@BfmeSink955@@QAEXPAHH@Z,0x00037A56,pin
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
 ?bfmeAddANB@BfmeSinkANB@@QAEXPAVBfmeThingANB@@PAX@Z,0x008520A0,pin
 ?bfmeAddBFC@BfmeSinkBFC@@QAEXPAUBfmeSubBFC@@@Z,0x0001D606,pin
