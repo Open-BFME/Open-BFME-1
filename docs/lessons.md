@@ -1216,6 +1216,21 @@ view does: its constructor is a VISIBLE inline delegating to a StringBase
 constructor declared and never defined. Two agents reached that shape from
 opposite directions, which is the strongest evidence the tree offers about it.
 
+The same shape rule governs a LOCAL string, not just a by-value argument. This
+tree already spells retail's one-dword string as BFMERetailAsciiString in
+ControlBar.cpp and elsewhere with a DECLARED-ONLY literal constructor, and that
+schedules the unwind-slot store after the receiver load. Make it delegate
+visibly to an undefined base and it matches. Those existing call sites are not
+scheduling-sensitive, so nothing there is wrong today -- but copy the shape, not
+the spelling.
+
+And know this failure signature before it costs you a build: a body with a local
+string has an unwind funclet of its own, and changing the local's type makes the
+funclet reference the inline destructor MSVC emits. That fails as an UNRESOLVED
+RELOCATION -- `e9 00 00 00 00` -- which reads like a broken build and is really a
+missing alias for the destructor ILT the funclet jumps to. One additive pin fixes
+it. It is not a byte mismatch and there is nothing wrong with the body.
+
 A fourth symptom is NOT a string problem at all: if the residue after the string
 construction matches is an extra vptr store (mov dword ptr [esi+4] right after
 the vtable store), that is a second vptr the vendored hierarchy carries and BFME
