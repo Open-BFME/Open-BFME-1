@@ -1,6 +1,7 @@
 // Open-BFME5 conversions.
 
 class BfmeArg1158;
+class BfmeSub1158;
 
 class BfmeSub1158
 {
@@ -10,9 +11,9 @@ public:
 	virtual void bfmeSubVM21158();
 	virtual void bfmeSubVM31158();
 	virtual void bfmeSubVM41158();
-	virtual void bfmeSubVM51158();
+	virtual char bfmeSubL1158(int a, int b);
 	virtual void bfmeSubVM61158();
-	virtual void bfmeSubVM71158();
+	virtual void bfmeSubK1158(int a, int b, int c);
 	virtual void bfmeSubVM81158();
 	virtual void bfmeSubVM91158();
 	virtual void bfmeSubVM101158();
@@ -35,7 +36,7 @@ public:
 	virtual void bfmeSubVM271158();
 	virtual void bfmeSubF1158();
 	virtual void bfmeSubVM291158();
-	virtual void bfmeSubVM301158();
+	virtual void bfmeSubM1158(int a, int b, int c, int d, int e);
 	virtual void bfmeSubVM311158();
 	virtual int bfmeSubG1158(BfmeArg1158 *a);
 	virtual int bfmeSubH1158(BfmeArg1158 *a);
@@ -84,7 +85,7 @@ public:
 	virtual void bfmeVM351158();
 	virtual void bfmeVM361158();
 	virtual void bfmeVM371158();
-	virtual void bfmeVM381158();
+	virtual BfmeSub1158 *bfmeGetSub2_1158();
 	virtual BfmeSub1158 *bfmeGetSub1158();
 	virtual void bfmeVM401158();
 	virtual void bfmeVM411158();
@@ -96,7 +97,7 @@ public:
 	virtual void bfmeVM471158();
 	virtual void bfmeVM481158();
 	virtual void bfmeVM491158();
-	virtual void bfmeVM501158();
+	virtual char bfmeItemAsk1158();
 	virtual void bfmeItemStop1158(BfmeArg1158 *a);
 	virtual void bfmeItemStopNow1158();
 	virtual void bfmeVM531158();
@@ -121,6 +122,9 @@ public:
 	int bfmeSubGAny1158(BfmeArg1158 *a);
 	int bfmeSubHAny1158(BfmeArg1158 *a);
 	void bfmeItemStopAll1158(BfmeArg1158 *a, char now);
+	char bfmeItemAskAll1158(void);
+	void bfmeSubKAll1158(int a, int b, int c);
+	char bfmeSubLAny1158(int a, int b);
 
 	char m_bfmePad[0x150];
 	BfmeItem1158 **m_bfmeItems;
@@ -270,4 +274,37 @@ void BfmeOwner1158::bfmeItemStopAll1158(BfmeArg1158 *a, char now)
 		else
 			(*p)->bfmeItemStop1158(a);
 	}
+}
+
+char BfmeOwner1158::bfmeItemAskAll1158(void)
+{
+	char r = 0;
+
+	for (BfmeItem1158 **p = m_bfmeItems; *p; ++p)
+		r |= (*p)->bfmeItemAsk1158();
+
+	return r;
+}
+
+void BfmeOwner1158::bfmeSubKAll1158(int a, int b, int c)
+{
+	for (BfmeItem1158 **p = m_bfmeItems; *p; ++p) {
+		BfmeSub1158 *s = (*p)->bfmeGetSub1158();
+
+		if (s)
+			s->bfmeSubK1158(a, b, c);
+	}
+}
+
+
+char BfmeOwner1158::bfmeSubLAny1158(int a, int b)
+{
+	for (BfmeItem1158 **p = m_bfmeItems; *p; ++p) {
+		BfmeSub1158 *s = (*p)->bfmeGetSub2_1158();
+
+		if (s && s->bfmeSubL1158(a, b))
+			return 1;
+	}
+
+	return 0;
 }
