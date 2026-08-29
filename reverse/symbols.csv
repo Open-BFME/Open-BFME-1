@@ -73928,6 +73928,7 @@ name,address,notes
 ?bfmeRun1069@BfmeR1069@@QAEXPAVBfmeX1069@@PADH11111@Z,0x00015235,pin
 ?bfmeRun1070@BfmeR1070@@QAEXPAVBfmeX1070@@PADH11111@Z,0x00015235,pin
 ?bfmeRun1071@BfmeR1071@@QAEXPAVBfmeX1071@@PADH11111@Z,0x00015235,pin
+?bfmeRun1072@BfmeR1072@@QAEXPAVBfmeX1072@@PADH11111@Z,0x00015235,pin
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
 ?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
 ?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
@@ -75615,6 +75616,7 @@ name,address,notes
 ?g_bfmeD1020@@3DA,0x00EF4AFE,pin
 ?g_bfmeD1025@@3PAVBfmeD1025@@A,0x00EED748,pin
 ?g_bfmeD1062@@3PAVBfmeC1062@@A,0x00F37AA0,pin
+?g_bfmeD1072@@3DA,0x00EF4AD1,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
@@ -75663,22 +75665,27 @@ name,address,notes
 ?g_bfmeFmtA1067@@3PADA,0x00D09F64,pin
 ?g_bfmeFmtA1068@@3PADA,0x00D09A60,pin
 ?g_bfmeFmtA1070@@3PADA,0x00D05740,pin
+?g_bfmeFmtA1072@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtA995C@@3PADA,0x00D07374,pin
 ?g_bfmeFmtB1064@@3PADA,0x00D0523C,pin
 ?g_bfmeFmtB1066@@3PADA,0x00D061A0,pin
 ?g_bfmeFmtB1067@@3PADA,0x00D05EC8,pin
 ?g_bfmeFmtB1068@@3PADA,0x00D09A84,pin
 ?g_bfmeFmtB1070@@3PADA,0x00D097A4,pin
+?g_bfmeFmtB1072@@3PADA,0x00D04FFC,pin
 ?g_bfmeFmtB995C@@3PADA,0x00D053D4,pin
 ?g_bfmeFmtC1063@@3PADA,0x00D056EC,pin
 ?g_bfmeFmtC1064@@3PADA,0x00D05224,pin
+?g_bfmeFmtC1072@@3PADA,0x00D090D8,pin
 ?g_bfmeFmtD1064@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtD1065@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtD1067@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtD1068@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtD1070@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtD1071@@3PADA,0x00C7C7B4,pin
+?g_bfmeFmtD1072@@3PADA,0x00D05700,pin
 ?g_bfmeFmtE1064@@3PADA,0x00D05E7C,pin
+?g_bfmeFmtE1072@@3PADA,0x00D056EC,pin
 ?g_bfmeFmtF1065@@3PADA,0x00D09950,pin
 ?g_bfmeFmtG1065@@3PADA,0x00C80F24,pin
 ?g_bfmeFmtH1065@@3PADA,0x00D09C58,pin
@@ -75759,10 +75766,12 @@ name,address,notes
 ?g_bfmeLitA1066@@3PADA,0x00C80FC0,pin
 ?g_bfmeLitA1067@@3PADA,0x00D05F0C,pin
 ?g_bfmeLitA1069@@3PADA,0x00D073A0,pin
+?g_bfmeLitA1072@@3PADA,0x00D090F4,pin
 ?g_bfmeLitB1060@@3PADA,0x00C80FC0,pin
 ?g_bfmeLitB1066@@3PADA,0x00C81238,pin
 ?g_bfmeLitB1067@@3PADA,0x00D05EEC,pin
 ?g_bfmeLitB1069@@3PADA,0x00D07384,pin
+?g_bfmeLitB1072@@3PADA,0x00CF7734,pin
 ?g_bfmeLitC1060@@3PADA,0x00D09BC4,pin
 ?g_bfmeLitC1062@@3PADA,0x00D09B98,pin
 ?g_bfmeLog1013@@3PAVBfmeLog1013@@A,0x00EF19E8,pin
@@ -75878,6 +75887,7 @@ name,address,notes
 ?g_bfmeR1069@@3PAVBfmeR1069@@A,0x00EF19E8,pin
 ?g_bfmeR1070@@3PAVBfmeR1070@@A,0x00EF19E8,pin
 ?g_bfmeR1071@@3PAVBfmeR1071@@A,0x00EF19E8,pin
+?g_bfmeR1072@@3PAVBfmeR1072@@A,0x00EF19E8,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
@@ -76473,6 +76483,7 @@ name,address,notes
 ?getCampaignDifficulty@OptionPreferences@@QAEHXZ,0x00032B5A
 ?getCanAttackObject@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z,0x00045D90,retail AIEnterState::update call target
 ?getCell@Pathfinder@@QAEPAVPathfindCell@@W4PathfindLayerEnum@@HH@Z,0x00020671
+?getChipset@BfmeChipsetQuery@@SA?AW4ChipsetType@@XZ,0x000162A7,alias of ?getChipset@W3DShaderManager@@SA?AW4ChipsetType@@XZ pinned at the same ILT; declared-only view so the call keeps the ordinary convention where the same-TU definition would use MSVC's private one
 ?getChipset@W3DShaderManager@@SA?AW4ChipsetType@@XZ,0x000162A7
 ?getChunkNumber@NetWrapperCommandMsg@@QAEIXZ,0x0003F814
 ?getClassMemoryPool@Anim2D@@CAPAVMemoryPool@@XZ,0x00AFF960,pinharvest x3 (body)
@@ -79815,6 +79826,7 @@ __imp_?bfmeSpf1065@@YAHPAD0H@Z,0x00F5948C,pin
 __imp_?bfmeSpf1068@@YAHPAD0H@Z,0x00F5948C,pin
 __imp_?bfmeSpf1070@@YAHPAD0H@Z,0x00F5948C,pin
 __imp_?bfmeSpf1071@@YAHPAD0H@Z,0x00F5948C,pin
+__imp_?bfmeSpf1072@@YAHPAD0H@Z,0x00F5948C,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
 __imp_?bfmeUnlock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58E74,pin
 __imp_?bfmeWait1012@@YGHPAXH@Z,0x00F58F64,pin
@@ -80561,4 +80573,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?getChipset@BfmeChipsetQuery@@SA?AW4ChipsetType@@XZ,0x000162A7,alias of ?getChipset@W3DShaderManager@@SA?AW4ChipsetType@@XZ pinned at the same ILT; declared-only view so the call keeps the ordinary convention where the same-TU definition would use MSVC's private one
