@@ -12223,6 +12223,7 @@ name,address,notes
 ?_bfme_debugReportingEnabled@@YA_NXZ,0x008896D0,cdecl bool: reads TheGen001336E5C-shaped debug manager global 0x01336E5C+0x9F4B directly; guards whether the release crash-report chain runs, resolved via decode_calls at GameLODManager::getAudioLODIndex
 ?_bfme_detach@U1Sub@@QAEXXZ,0x0002129C,Open-BFME5 ILT thunk to body 0x001DA3F0; ?apply@U1Sub@@QAEAAV1@PAVU1CachedHolder@@@Z at 0x005C21D0 calls it on this before replacing the target - shape-only name in the same synthetic family as the class
 ?_bfme_doVictoryAndEndGame@ScriptActions@@IAEXXZ,0x002F7B60,executeAction jump table 0x0070D6A0[3] (ZH ScriptAction::VICTORY position) -> arm 0x0030522C -> ILT 0x000202C5; doVictory 0x002F1C10 then TheCampaignManager 0x012F1024 +0x1D = 1 (SetVictorious(TRUE)) then TheScriptEngine 0x012F076C vcall +0x30 startEndGameTimer = the tail of ZH doVictory that BFME split off the shared core; arm 0x0030524A (action 510) calls the core alone
+?_bfme_fillCurrentLANGameInfo_0068E630@@YAXPADI@Z,0x0002A6D5,BFME-only current-game serializer helper ILT proven from body 0x0068E630
 ?_bfme_findFactionVictoryParametersIndex@VictorySystem@@AAEIABVAsciiString@@@Z,0x0002D2EA,ILT target 0x001DF350 scans VictorySystem +0xEC FactionVictoryParameters names and returns 0x7fffffff when absent
 ?_bfme_findOrCreateFactionVictoryParameters@VictorySystem@@QAEPAUFactionVictoryParameters@@ABVAsciiString@@@Z,0x001E04B0,only caller is the FactionVictoryData parser 0x000C327E; lookup 0x001DF350 (0x7fffffff = missing) into the +0xEC vector of 0x18-byte entries else push_back {name 0 0 0 0 0} and return the last; struct name from the assert string at 0x010839F8
 ?_bfme_getFrameHeadroom@Network@@UAEHXZ,0x006819E0,vtable 0x0111A968 slot 17 (+0x44) via ILT 0x000238BC; if (m_conMgr) tail-jumps getFrameHeadroom@BFMEConnectionManager 0x00664320 else 0; ZH getPacketArrivalCushion shape but the callee derives frames of headroom from conMgr+0x1205C/+0x12060 not an arrival cushion; consumer 0x0006BE07 clamps it to 10 for the logic time-scale 0x012A72A4
@@ -72974,6 +72975,7 @@ name,address,notes
 ?bfmeDrop1086A@BfmeA1086@@QAEXPAH@Z,0x009F2670,pin
 ?bfmeDrop1086B@BfmeB1086@@QAEXPAH@Z,0x009A25A0,pin
 ?bfmeDrop1101@BfmeJ1101@@QAEXH@Z,0x0003D2A3,pin
+?bfmeDrop1105@BfmeK1105@@QAEXXZ,0x0000CEA5,pin
 ?bfmeDrop988@BfmeReg988@@QAEXPAVBfmeE988@@@Z,0x00010F46,pin
 ?bfmeDrop@BfmeSinkAM@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the remove at 0x003BEBA0 tells about the entry
 ?bfmeDrop@Rva003D8530Owner@@QAEXPAX@Z,0x00016DB0,Open-BFME5 ILT thunk to body 0x003D8530; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it on the sub-object at +0x0C of _TheAIParseDefinitionAI for each live slot whose kind is one of four; address-derived name
@@ -73788,6 +73790,7 @@ name,address,notes
 ?bfmeNext1092@BfmeP1092@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1093@BfmeP1093@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1094@BfmeP1094@@QAEHH@Z,0x000230B5,pin
+?bfmeNext1105@@YAPAUBfmeNode1105@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext929D@BfmeNext929D@@QAEHH@Z,0x0089CC30,pin
 ?bfmeNext@Gen_00088B60@@AAEXXZ,0x00031FCF,Open-BFME5 the member the flag-then-forward wrapper at 0x00088B60 tail-jumps to
 ?bfmeNext@Gen_000B5690@@AAEXXZ,0x000242A3,Open-BFME5 the member the flag-then-forward wrapper at 0x000B5690 tail-jumps to
@@ -80795,4 +80798,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?_bfme_fillCurrentLANGameInfo_0068E630@@YAXPADI@Z,0x0002A6D5,BFME-only current-game serializer helper ILT proven from body 0x0068E630
