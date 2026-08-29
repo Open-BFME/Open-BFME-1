@@ -18,15 +18,9 @@
 // readable body of ?winGetUserData@GameWindow@@QAEPAXXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winGetWindowId@GameWindow@@QAEHXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winIsHidden@GameWindow@@QAE_NXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
-// readable body of ?winNextTab@GameWindow@@QAEHXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
-// readable body of ?winPrevTab@GameWindow@@QAEHXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winSetDisabledImage@GameWindow@@QAEHHPBVImage@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
-// readable body of ?winSetDisabledTextColors@GameWindow@@QAEXHH@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winSetEnabledImage@GameWindow@@QAEHHPBVImage@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
-// readable body of ?winSetEnabledTextColors@GameWindow@@QAEXHH@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winSetHiliteImage@GameWindow@@QAEHHPBVImage@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
-// readable body of ?winSetHiliteTextColors@GameWindow@@QAEXHH@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
-// readable body of ?winSetIMECompositeTextColors@GameWindow@@QAEXHH@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winSetPrev@GameWindow@@QAEXPAV1@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winSetSize@GameWindow@@QAEHHH@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winSetTooltipFunc@GameWindow@@QAEHP6AXPAV1@PAVWinInstanceData@@I@Z@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp

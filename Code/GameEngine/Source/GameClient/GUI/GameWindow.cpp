@@ -345,7 +345,6 @@ GameWindow *GameWindow::findNextLeaf( void )
 /** Go to next window in tab chain */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winNextTab@GameWindow@@QAEHXZ present-unmatched
 Int GameWindow::winNextTab( void )
 {
 /*
@@ -382,7 +381,6 @@ Int GameWindow::winNextTab( void )
 /** Go to previous window in tab chain */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winPrevTab@GameWindow@@QAEHXZ present-unmatched
 Int GameWindow::winPrevTab( void )
 {
 /*
@@ -872,13 +870,19 @@ void GameWindow::winSetFont( GameFont *font )
 /** Set the text colors for the enabled state */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winSetEnabledTextColors@GameWindow@@QAEXHH@Z present-unmatched
+// BFME's GameWindow starts m_instData four bytes further in: retail tests the
+// style word at this+0x3C and writes the enabled-text colours at +0x18C and
+// +0x190, where this tree lands them at +0x38, +0x188 and +0x18C.
+#define BFME_WIN_STYLE(w)          (*(UnsignedInt *)((UnsignedByte *)(w) + 0x3c))
+// The four text-colour pairs run consecutively from +0x18C, eight bytes apart.
+#define BFME_WIN_TEXT_COLOR(w, off)  (*(Color *)((UnsignedByte *)(w) + (off)))
+
 void GameWindow::winSetEnabledTextColors( Color color, Color borderColor )
 {
-	m_instData.m_enabledText.color = color;
-	m_instData.m_enabledText.borderColor = borderColor;
+	BFME_WIN_TEXT_COLOR(this, 0x18c) = color;
+	BFME_WIN_TEXT_COLOR(this, 0x190) = borderColor;
 	
-	if( BitTest( m_instData.getStyle(), GWS_COMBO_BOX ) )
+	if( BitTest( BFME_WIN_STYLE(this), GWS_COMBO_BOX ) )
 		GadgetComboBoxSetEnabledTextColors(this,  color, borderColor );
 	
 
@@ -888,14 +892,13 @@ void GameWindow::winSetEnabledTextColors( Color color, Color borderColor )
 /** Set the text colors for the disabled state */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winSetDisabledTextColors@GameWindow@@QAEXHH@Z present-unmatched
 void GameWindow::winSetDisabledTextColors( Color color, Color borderColor )
 {
 
-	m_instData.m_disabledText.color = color;
-	m_instData.m_disabledText.borderColor = borderColor;
+	BFME_WIN_TEXT_COLOR(this, 0x194) = color;
+	BFME_WIN_TEXT_COLOR(this, 0x198) = borderColor;
 
-	if( BitTest( m_instData.getStyle(), GWS_COMBO_BOX ) )
+	if( BitTest( BFME_WIN_STYLE(this), GWS_COMBO_BOX ) )
 		GadgetComboBoxSetDisabledTextColors( this, color, borderColor );
 
 }  // end winSetDisabledTextColors
@@ -904,14 +907,13 @@ void GameWindow::winSetDisabledTextColors( Color color, Color borderColor )
 /** Set the text colors for the Hilite state */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winSetHiliteTextColors@GameWindow@@QAEXHH@Z present-unmatched
 void GameWindow::winSetHiliteTextColors( Color color, Color borderColor )
 {
 
-	m_instData.m_hiliteText.color = color;
-	m_instData.m_hiliteText.borderColor = borderColor;
+	BFME_WIN_TEXT_COLOR(this, 0x19c) = color;
+	BFME_WIN_TEXT_COLOR(this, 0x1a0) = borderColor;
 
-	if( BitTest( m_instData.getStyle(), GWS_COMBO_BOX ) )
+	if( BitTest( BFME_WIN_STYLE(this), GWS_COMBO_BOX ) )
 		GadgetComboBoxSetHiliteTextColors( this, color, borderColor );
 
 }  // end winSetHiliteTextColors
@@ -920,14 +922,13 @@ void GameWindow::winSetHiliteTextColors( Color color, Color borderColor )
 /** Set the text colors for the IME Composite state */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winSetIMECompositeTextColors@GameWindow@@QAEXHH@Z present-unmatched
 void GameWindow::winSetIMECompositeTextColors( Color color, Color borderColor )
 {
 
-	m_instData.m_imeCompositeText.color = color;
-	m_instData.m_imeCompositeText.borderColor = borderColor;
+	BFME_WIN_TEXT_COLOR(this, 0x1a4) = color;
+	BFME_WIN_TEXT_COLOR(this, 0x1a8) = borderColor;
 
-	if( BitTest( m_instData.getStyle(), GWS_COMBO_BOX ) )
+	if( BitTest( BFME_WIN_STYLE(this), GWS_COMBO_BOX ) )
 		GadgetComboBoxSetIMECompositeTextColors( this, color, borderColor );
 }  // end winSetIMECompositeTextColors
 
