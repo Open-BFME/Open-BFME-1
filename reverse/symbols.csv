@@ -2110,6 +2110,7 @@ name,address,notes
 ??0BfmeBase1137C@@QAE@XZ,0x0001B522,pin
 ??0BfmeBase1140A@@QAE@XZ,0x0001B522,pin
 ??0BfmeBase1140B@@QAE@XZ,0x0001B522,pin
+??0BfmeBase1142@@QAE@XZ,0x00048BE4,pin
 ??0BfmeBaseJC@@QAE@PAX@Z,0x0090E3D0,pin
 ??0BfmeBaseP0@@QAE@PAX0@Z,0x000170E4,Open-BFME5 the two-argument first base the triple-base constructors at 0x00200AE0 and siblings forward to
 ??0BfmeBinkPlayerMember@@QAE@XZ,0x0002833F,Open-BFME5 ILT the member constructor BinkVideoPlayer at 0x00691230 calls for its member at +0x0C
@@ -80490,12 +80491,17 @@ _funcstat,0x0099C390,decode_calls pin for _stat callee
 _g_Rva0112C8D0,0x0112C8D0,address-derived terminated lookup table read by 0x0080D890
 _g_Rva012C47A4,0x012C47A4,DirtySock default alias-list pointer used by 0x0080EF50
 _g_bfmeK1127,0x00C75350,pin
+_g_bfmeS1142,0x00EF8008,pin
 _g_bfmeV1134,0x00CF0AE0,pin
 _g_bfmeV1137A,0x00D20FD4,pin
 _g_bfmeV1137B,0x00D1E23C,pin
 _g_bfmeV1137C,0x00D0CA7C,pin
 _g_bfmeV1140A,0x00D0C64C,pin
 _g_bfmeV1140B,0x00D0C814,pin
+_g_bfmeV1142A,0x00D1DC88,pin
+_g_bfmeV1142B,0x00D1DC80,pin
+_g_bfmeV1142C,0x00D1DC74,pin
+_g_bfmeV1142D,0x00D1DC60,pin
 _gameTextPrepare@16,0x009F6D76,GameTextManager reset prepare helper shim
 _gameTextRelease,0x00881EF0,GameTextManager reset release helper shim
 _getbinopr,0x0099B480,decode_calls pin for _subexpr callee
