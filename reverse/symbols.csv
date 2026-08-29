@@ -73909,6 +73909,7 @@ name,address,notes
 ?bfmeRun1006@BfmeRun1006@@QAEXXZ,0x0003B773,pin
 ?bfmeRun1060@BfmeR1060@@QAEXPAVBfmeX1060@@PADH1HHHH@Z,0x00015235,pin
 ?bfmeRun1062@BfmeR1062@@QAEXPAVBfmeX1062@@PADH1HHHH@Z,0x00015235,pin
+?bfmeRun1063@BfmeR1063@@QAEXPAVBfmeX1063@@PADH11111@Z,0x00015235,pin
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
 ?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
 ?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
@@ -75637,6 +75638,7 @@ name,address,notes
 ?g_bfmeFmt995B@@3PADA,0x00D05184,pin
 ?g_bfmeFmtA995C@@3PADA,0x00D07374,pin
 ?g_bfmeFmtB995C@@3PADA,0x00D053D4,pin
+?g_bfmeFmtC1063@@3PADA,0x00D056EC,pin
 ?g_bfmeFree1040@@3P6AXPAXH@ZA,0x00F37830,pin
 ?g_bfmeFree1046@@3P6AXPAXH@ZA,0x00F37830,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
@@ -75811,6 +75813,7 @@ name,address,notes
 ?g_bfmeQ1060@@3PAVBfmeQ1060@@A,0x00EED600,pin
 ?g_bfmeR1060@@3PAVBfmeR1060@@A,0x00EF19E8,pin
 ?g_bfmeR1062@@3PAVBfmeR1062@@A,0x00EF19E8,pin
+?g_bfmeR1063@@3PAVBfmeR1063@@A,0x00EF19E8,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
