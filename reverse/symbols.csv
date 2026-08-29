@@ -72976,6 +72976,7 @@ name,address,notes
 ?bfmeDrop1086B@BfmeB1086@@QAEXPAH@Z,0x009A25A0,pin
 ?bfmeDrop1101@BfmeJ1101@@QAEXH@Z,0x0003D2A3,pin
 ?bfmeDrop1105@BfmeK1105@@QAEXXZ,0x0000CEA5,pin
+?bfmeDrop1106@BfmeK1106@@QAEXXZ,0x00006D61,pin
 ?bfmeDrop988@BfmeReg988@@QAEXPAVBfmeE988@@@Z,0x00010F46,pin
 ?bfmeDrop@BfmeSinkAM@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the remove at 0x003BEBA0 tells about the entry
 ?bfmeDrop@Rva003D8530Owner@@QAEXPAX@Z,0x00016DB0,Open-BFME5 ILT thunk to body 0x003D8530; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it on the sub-object at +0x0C of _TheAIParseDefinitionAI for each live slot whose kind is one of four; address-derived name
@@ -73791,6 +73792,7 @@ name,address,notes
 ?bfmeNext1093@BfmeP1093@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1094@BfmeP1094@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1105@@YAPAUBfmeNode1105@@PAU1@@Z,0x0082B870,pin
+?bfmeNext1106@@YAPAUBfmeNode1106@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext929D@BfmeNext929D@@QAEHH@Z,0x0089CC30,pin
 ?bfmeNext@Gen_00088B60@@AAEXXZ,0x00031FCF,Open-BFME5 the member the flag-then-forward wrapper at 0x00088B60 tail-jumps to
 ?bfmeNext@Gen_000B5690@@AAEXXZ,0x000242A3,Open-BFME5 the member the flag-then-forward wrapper at 0x000B5690 tail-jumps to
