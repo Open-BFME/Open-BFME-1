@@ -3214,16 +3214,45 @@ void ControlBar::drawSpecialPowerShortcutMultiplierText()
 	}
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBar_animateSpecialPowerShortcutMethodThunk.cpp
-// ?animateSpecialPowerShortcut@ControlBar@@QAEX_N@Z present-unmatched
+// The animation manager is at ControlBar+0x10, the shortcut button array at
+// +0xcc, the used-button count at +0xf4 and the shortcut parent at +0xfc.  reset
+// is the virtual at vtable+0x10 while the other two are direct calls.
+class BfmeAnimateWindowManager
+{
+public:
+	virtual void unused00();
+	virtual void unused01();
+	virtual void unused02();
+	virtual void unused03();
+	virtual void reset(void);				///< vtable +0x10
+
+	void registerGameWindow(GameWindow *win, Int animType, Bool needsToFinish,
+			Int ms, Int delayMs);				///< ILT 0x00045322
+	void reverseAnimateWindow(void);			///< ILT 0x00027B65
+};
+
+struct BfmeControlBarShortcutFields
+{
+	unsigned char m_unreconstructed_00[ 0x10 ];
+	BfmeAnimateWindowManager *m_animateWindowManagerForGenShortcuts;	///< retail this+0x10
+	unsigned char m_unreconstructed_14[ 0xcc - 0x14 ];
+	GameWindow *m_specialPowerShortcutButtons[ 10 ];	///< retail this+0xcc
+	Int m_currentlyUsedSpecialPowersButtons;		///< retail this+0xf4
+	unsigned char m_unreconstructed_f8[ 4 ];
+	GameWindow *m_specialPowerShortcutParent;		///< retail this+0xfc
+};
+
+// ?animateSpecialPowerShortcut@ControlBar@@QAEX_N@Z
 void ControlBar::animateSpecialPowerShortcut( Bool isOn )
 {
-	if(!m_specialPowerShortcutParent || !m_animateWindowManagerForGenShortcuts || !m_currentlyUsedSpecialPowersButtons)
+	BfmeControlBarShortcutFields *self = (BfmeControlBarShortcutFields *)this;
+
+	if(!self->m_specialPowerShortcutParent || !self->m_animateWindowManagerForGenShortcuts || !self->m_currentlyUsedSpecialPowersButtons)
 		return;
 	Bool dontAnimate = TRUE;
-	for( Int i = 0; i < m_currentlyUsedSpecialPowersButtons; ++i )
+	for( Int i = 0; i < self->m_currentlyUsedSpecialPowersButtons; ++i )
 	{
-		if (m_specialPowerShortcutButtons[i]->winGetUserData())
+		if (self->m_specialPowerShortcutButtons[i]->winGetUserData())
 		{
 			dontAnimate = FALSE;
 			break;
@@ -3234,12 +3263,12 @@ void ControlBar::animateSpecialPowerShortcut( Bool isOn )
 
 	if(isOn)
 	{	
-		m_animateWindowManagerForGenShortcuts->reset();
-		m_animateWindowManagerForGenShortcuts->registerGameWindow(m_specialPowerShortcutParent,WIN_ANIMATION_SLIDE_RIGHT,TRUE,500,0);
+		self->m_animateWindowManagerForGenShortcuts->reset();
+		self->m_animateWindowManagerForGenShortcuts->registerGameWindow(self->m_specialPowerShortcutParent,WIN_ANIMATION_SLIDE_RIGHT,TRUE,500,0);
 	}
 	else
 	{
-		m_animateWindowManagerForGenShortcuts->reverseAnimateWindow();
+		self->m_animateWindowManagerForGenShortcuts->reverseAnimateWindow();
 	}
 }
 
