@@ -447,16 +447,42 @@ WorldHeightMap::~WorldHeightMap(void)
 	REF_PTR_RELEASE(m_alphaEdgeTex);
 }
 
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap_freeListOfMapObjects.cpp
-// ?freeListOfMapObjects@WorldHeightMap@@SAXXZ present-unmatched
+// The list head is one indirection further out than the reference's static
+// member: retail reads the pointer at 0x012ED5DC and takes the head from its
+// first word, and it RE-READS that pointer to clear the head rather than keeping
+// it, so the source touches the global twice. The tail is a thiscall on the
+// object AT 0x012ED5E0 -- loaded as an immediate address, so that one is an
+// object and not a pointer to one. All three spellings are already pinned.
+class BfmeMapObjectListEntry
+{
+public:
+	virtual void bfmeDeleteThis(int freeIt) = 0;		///< vtable slot 0
+};
+
+class BfmeMapObjectListHolder
+{
+public:
+	BfmeMapObjectListEntry *m_bfmeHead;			///< retail this+0x00
+};
+
+class BfmeMapObjectExtra
+{
+public:
+	void bfmeReset(void);					///< retail 0x00033F46
+};
+
+extern BfmeMapObjectListHolder *BfmeTheMapObjectListHolder;	///< retail [0x012ED5DC]
+extern BfmeMapObjectExtra BfmeTheMapObjectExtra;		///< retail 0x012ED5E0
+
 void WorldHeightMap::freeListOfMapObjects(void)
 {
-	if (MapObject::TheMapObjectListPtr) 
+	if (BfmeTheMapObjectListHolder->m_bfmeHead != 0)
 	{
-		MapObject::TheMapObjectListPtr->deleteInstance();
-		MapObject::TheMapObjectListPtr = NULL;
+		BfmeTheMapObjectListHolder->m_bfmeHead->bfmeDeleteThis(1);
+		BfmeTheMapObjectListHolder->m_bfmeHead = 0;
 	}
-	MapObject::getWorldDict()->clear();
+
+	BfmeTheMapObjectExtra.bfmeReset();
 }
 
 
