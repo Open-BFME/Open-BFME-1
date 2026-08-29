@@ -72682,6 +72682,7 @@ name,address,notes
 ?bfmeDoECKb@BfmeHeldECKb@@QAEXXZ,0x007EAB40,pin
 ?bfmeDoEMHa@BfmeGlobEMHa@@QAEXXZ,0x0002BCCE,pin
 ?bfmeDoEMHb@BfmeGlobEMHb@@QAEXXZ,0x00033FC3,pin
+?bfmeDoHC@BfmeObjHC@@QAE_NPAX00H@Z,0x00045D9A,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -73294,6 +73295,7 @@ name,address,notes
 ?bfmeMakeEIB@BfmeThingEIB@@QAEPAUBfmeSubEIB@@XZ,0x00001B18,pin
 ?bfmeMakeEYA@@YAPAXII@Z,0x0000FC4A,pin
 ?bfmeMakeEYF@@YAPAUBfmeNodeEYF@@PAX0@Z,0x00026823,pin
+?bfmeMakeHE@@YAPAXXZ,0x000481E4,pin
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
@@ -74859,6 +74861,7 @@ name,address,notes
 ?g_bfmeCurEYE@@3PAXA,0x00EED5D8,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
+?g_bfmeDefHD@@3PADA,0x00F36E50,pin
 ?g_bfmeDisconnectPingResult@@3HA,0x012B9810,standalone disconnect ping-result state read and set by updateDisconnectStatus after the sub-ten-percent ratio check
 ?g_bfmeDoneAPB@@3_NA,0x00EED4E6,pin
 ?g_bfmeDropDXH@@3P6AXPAVBfmeSubDXH@@@ZA,0x00F378A0,pin
