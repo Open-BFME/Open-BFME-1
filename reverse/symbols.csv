@@ -80143,6 +80143,8 @@ _atoi,0x009F6DEE,Y2 lane: atoi import thunk (gen-import ?ji_009f6dee@@YAXXZ name
 _audioManagerAddEventHelper@16,0x00020B08,AudioManager::addAudioEvent stdcall helper pin
 _bfmeAppend,0x009D9180,address-derived varargs formatting helper target from the direct REL32 calls at retail 0x009D936D and 0x009D9386
 _bfmeArrayNew,0x00881F70,address-derived array allocator target from the direct REL32 call at retail 0x009D6259
+_bfmeCall1128A,0x008479C0,pin
+_bfmeCall1128B,0x00847B20,pin
 _bfmeCbAKC,0x00032155,pin
 _bfmeCbEMB,0x00863440,pin
 _bfmeCbEOEa,0x0003A760,pin
