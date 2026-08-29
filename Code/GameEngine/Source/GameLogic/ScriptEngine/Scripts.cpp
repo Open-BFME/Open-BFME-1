@@ -257,6 +257,15 @@ void ScriptList::crc( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptList_xferMethodThunk.cpp
 // ?xfer@ScriptList@@MAEXPAVXfer@@@Z present-unmatched
+// Counted and not started: about thirteen independent callees and offsets --
+// three Xfer vtable slots (xferVersion, xferUnsignedShort, xferSnapshot), the
+// eight intrusive-list fields BFME keeps for scripts and groups (head, begin,
+// end and node array for each), the EmptyScript global, and a plain `new
+// Script'. That is well past the point where a body is worth starting cold.
+// What the donor already establishes, for whoever does take it: BFME transfers
+// the script list as an intrusive node walk with a count check rather than the
+// reference's straight list walk, pads the count out with a shared empty Script
+// when the walk runs short, and guards the group half behind version >= 2.
 void ScriptList::xfer( Xfer *xfer )
 {
 	UnsignedShort countVerify;
@@ -1632,6 +1641,10 @@ void Condition::setConditionType(enum ConditionType type)
 
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/ConditionDuplicateThunk.cpp
 // ?duplicate@Condition@@QBEPAV1@XZ present-unmatched
+// DECLINED under the anti-lift rule. The donor is a 5-byte ILT whose whole
+// content is a cast-and-call into an unnamed shim, and its jump lands at
+// 0x00357d30 -- still an unconverted dump (Code/gen_asm/d_003492a0.asm). This
+// body is the only readable statement of what the function does.
 Condition *Condition::duplicate(void) const 
 {
 	Condition *pNew = newInstance(Condition)(m_conditionType);	
