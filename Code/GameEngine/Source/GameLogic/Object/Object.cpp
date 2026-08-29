@@ -850,6 +850,7 @@ void Object::friend_setUndetectedDefector( Bool status )
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_restoreOriginalTeam.cpp
 // ?restoreOriginalTeam@Object@@QAEXXZ present-unmatched
 void Object::restoreOriginalTeam()
 {
@@ -3748,6 +3749,7 @@ Bool Object::isAbleToAttack() const
 /**
 	* Mask/Un-Mask an object
 	*/
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_maskObject.cpp
 // ?maskObject@Object@@QAEX_N@Z present-unmatched
 void Object::maskObject( Bool mask )
 {
