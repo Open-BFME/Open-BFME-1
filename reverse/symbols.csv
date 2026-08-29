@@ -72795,6 +72795,7 @@ name,address,notes
 ?bfmeDo1014G@BfmeF1014B@@QAEXH@Z,0x0001E9F2,pin
 ?bfmeDo1015A@BfmeI1015A@@QAEXHHH@Z,0x000449F4,pin
 ?bfmeDo1015B@BfmeI1015B@@QAEXHH@Z,0x000020CC,pin
+?bfmeDo1025@BfmeStore1025@@QAEXPAX@Z,0x0001D0DE,pin
 ?bfmeDo912C@BfmeThing912C@@QAEXPAUBfmeNode912C@@@Z,0x009F4D80,pin
 ?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
 ?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
@@ -73536,6 +73537,7 @@ name,address,notes
 ?bfmeLookFEG@BfmeGlobFEG@@QAEPAVBfmeResFEG@@H@Z,0x0001F253,pin
 ?bfmeLookFHH@BfmeGlobFHH@@QAEPAVBfmeResFHH@@PAUBfmeSubFHH@@@Z,0x00028560,pin
 ?bfmeLookRH@@YGHPAX0@Z,0x007F76F0,pin
+?bfmeLookup1025@BfmeD1025@@QAEGHHH@Z,0x00044C60,pin
 ?bfmeLookupA@@YAHPAX@Z,0x0000B1AE,Open-BFME5 ILT the bit setter at 0x001C3FB0 looks up through
 ?bfmeLookupB@@YAHPAX@Z,0x000052CC,Open-BFME5 ILT the bit setter at 0x001C4020 looks up through
 ?bfmeLookupC@@YAHPAX@Z,0x00031246,Open-BFME5 ILT the bit setter at 0x0020EC60 looks up through
@@ -73825,6 +73827,7 @@ name,address,notes
 ?bfmeRunFAA@BfmeSubFAA@@QAEXH@Z,0x00030887,pin
 ?bfmeRunFBG@BfmeItemFBG@@QAEXH@Z,0x00031228,pin
 ?bfmeRunFDB@BfmeThingFDB@@QAEXPAX@Z,0x00048F36,pin
+?bfmeSay1025@BfmeP1025@@QAEDPAD@Z,0x009EEBB0,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
@@ -74040,6 +74043,7 @@ name,address,notes
 ?bfmeTarget861210@@YAXPAX0PBD@Z,0x00861210,pin
 ?bfmeTellRB@BfmeNodeRB@@QAEXPAX@Z,0x000021CB,pin
 ?bfmeTellRP@BfmeFoundRP@@QAEXPAX@Z,0x00030553,pin
+?bfmeTest1025@BfmeT1025@@QAEDPAXH@Z,0x000357D8,pin
 ?bfmeTest914A@@YAHXZ,0x000162A7,pin
 ?bfmeTest932E@BfmeThing932E@@QAEHXZ,0x00037E34,pin
 ?bfmeTest@Rva2225E0Filter@@AAE_NPAVBfmeOverridable@@_N@Z,0x0001B437,Open-BFME5 ILT the filter test whose result Rva2225E0Filter::accepts at 0x003A04A0 returns
@@ -74173,6 +74177,7 @@ name,address,notes
 ?bfmeUseFHH@BfmeResFHH@@QAEXPAX0@Z,0x00017A12,pin
 ?bfmeUseGI@BfmeSubGI@@QAEXPAX@Z,0x0002D2EF,pin
 ?bfmeUseRT@BfmeSlotRT@@QAEXXZ,0x0003A427,pin
+?bfmeVal1025@BfmeH1025@@QAEHXZ,0x0001F668,pin
 ?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVecDtor936B@@YGXPAXIHP6GX0@Z@Z,0x009F6D76,pin
@@ -75388,6 +75393,7 @@ name,address,notes
 ?g_bfmeAux1006@@3PAUBfmeAux1006@@A,0x00EF4B58,pin
 ?g_bfmeAux985@@3PAUBfmeAux985@@A,0x00EF4B58,pin
 ?g_bfmeB1019@@3PAVBfmeB1019@@A,0x00EED668,pin
+?g_bfmeB1025@@3PAVBfmeB1025@@A,0x00EF7194,pin
 ?g_bfmeB986B@@3PAHA,0x00EF9D0C,pin
 ?g_bfmeB991@@3PAVBfmeB991@@A,0x00EF9D88,pin
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
@@ -75417,6 +75423,7 @@ name,address,notes
 ?g_bfmeCsDWC@@3UBfmeCsDWA@@A,0x00F36E60,pin
 ?g_bfmeCurEYE@@3PAXA,0x00EED5D8,pin
 ?g_bfmeD1020@@3DA,0x00EF4AFE,pin
+?g_bfmeD1025@@3PAVBfmeD1025@@A,0x00EED748,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
@@ -75445,6 +75452,7 @@ name,address,notes
 ?g_bfmeFmt1013@@3PADA,0x00D05BEC,pin
 ?g_bfmeFmt1021B@@3PADA,0x00D08ED8,pin
 ?g_bfmeFmt1021G@@3PADA,0x00D09CD4,pin
+?g_bfmeFmt1025@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmt993B@@3PADA,0x00D09B3C,pin
 ?g_bfmeFmt995B@@3PADA,0x00D05184,pin
 ?g_bfmeFmtA995C@@3PADA,0x00D07374,pin
@@ -75471,6 +75479,7 @@ name,address,notes
 ?g_bfmeGlobQC@@3PAVBfmeGlobQC@@A,0x00EF8058,pin
 ?g_bfmeGlobQE@@3PAVBfmeGlobQE@@A,0x00F06EEC,pin
 ?g_bfmeGlobRB@@3PAUBfmeObjRB@@A,0x00EF7FDC,pin
+?g_bfmeH1025@@3PAVBfmeH1025@@A,0x00EF1028,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeHeld995B@@3PAXA,0x00EF4974,pin
 ?g_bfmeHub1006@@3PAVBfmeHub1006@@A,0x00EF19E8,pin
@@ -75495,6 +75504,7 @@ name,address,notes
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
 ?g_bfmeList1016@@3VBfmeList1016@@A,0x00F3F468,pin
 ?g_bfmeListEYE@@3PAUBfmeListEYE@@A,0x00EED5DC,pin
+?g_bfmeLit1025@@3PADA,0x00C7388B,pin
 ?g_bfmeLog1013@@3PAVBfmeLog1013@@A,0x00EF19E8,pin
 ?g_bfmeLog1020@@3PAVBfmeLog1020@@A,0x00EF19E8,pin
 ?g_bfmeLog1021@@3PAVBfmeLog1021@@A,0x00EF19E8,pin
@@ -75578,6 +75588,7 @@ name,address,notes
 ?g_bfmeOneATC@@3PAVBfmeOneATC@@A,0x00EF19E8,pin
 ?g_bfmeOut982@@3PAVBfmeOut982@@A,0x00EED83C,pin
 ?g_bfmeP1024@@3PAVBfmeP1024@@A,0x00F4FAAC,pin
+?g_bfmeP1025@@3PAVBfmeP1025@@A,0x00F4FAAC,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
@@ -75625,6 +75636,7 @@ name,address,notes
 ?g_bfmeStop1006@@3PAVBfmeStop1006@@A,0x00EF4B58,pin
 ?g_bfmeStore1014@@3PAVBfmeStore1014@@A,0x00EF0898,pin
 ?g_bfmeStore1024@@3PAVBfmeStore1024@@A,0x00EF0898,pin
+?g_bfmeStore1025@@3PAVBfmeStore1025@@A,0x00EF0898,pin
 ?g_bfmeStrA993B@@3PADA,0x00C81238,pin
 ?g_bfmeStrB993B@@3PADA,0x00C80FC0,pin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
@@ -79466,6 +79478,7 @@ __imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
 __imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
 __imp_?bfmeImport928G@@YGXPAX@Z,0x00F58F08,pin
 __imp_?bfmeImport930C@@YAXPAX@Z,0x00F593D4,pin
+__imp_?bfmePrint1025@@YAXHPADH@Z,0x00F5948C,pin
 __imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
 __imp_?bfmeWait1012@@YGHPAXH@Z,0x00F58F64,pin
