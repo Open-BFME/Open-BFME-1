@@ -79738,3 +79738,9 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?tick@Rva005A41F0@@QAEXXZ,0x0001CD82,Open2 0x005A41F0 callee (ILT -> 0x005A40E0)
+?publish@Rva005A41F0@@QAEXXZ,0x00039671,Open2 0x005A41F0 tail callee (ILT -> 0x005A3EF0)
+?create@Rva005D0490@@QAEPAXXZ,0x00001B18,Open2 0x005D0490 tail callee (ILT -> 0x005CFF50)
+??1Gen0090F680@@QAE@XZ,0x0090F680,Open2 0x005F0D10 and 0x005F5500 shared destructor
+?refresh@Rva0060C120@@QAEXXZ,0x00025CED,Open2 0x0060C120 callee (ILT -> 0x0061CE00)
+?overflow@Rva0060C120@@QAEXXZ,0x000377E0,Open2 0x0060C120 tail callee (ILT -> 0x0060C030)
