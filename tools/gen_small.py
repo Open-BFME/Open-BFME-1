@@ -732,7 +732,22 @@ def gap_paths(batch):
     return (GEN_DIR / f"gthunks_{batch:03d}.cpp", PENDING_DIR / f"gthunks_{batch:03d}.json")
 
 
-def select_gap_thunks(candidates, claimed, batch_source, limit, index):
+def deleted_rows():
+    """The exact (name, RVA) claims retired by the append-only tombstone log."""
+    if not DELETED.exists():
+        return set()
+    rows = set()
+    with DELETED.open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            try:
+                rows.add((row["name"], int(row["target_rva"], 16)))
+            except (KeyError, TypeError, ValueError):
+                continue
+    return rows
+
+
+def select_gap_thunks(candidates, claimed, batch_source, limit, index,
+                      tombstones=frozenset()):
     """(picked, subsumed) — the next `limit` claimable gap thunks.
 
     Same contract as select_thunks: an RVA already claimed by THIS batch's
@@ -741,6 +756,8 @@ def select_gap_thunks(candidates, claimed, batch_source, limit, index):
     """
     picked, subsumed = [], []
     for rva, target in candidates:
+        if (thunk_symbol("j", rva), rva) in tombstones:
+            continue
         owner = claimed.get(rva)
         if owner is not None and owner != batch_source:
             continue
@@ -765,7 +782,8 @@ def cmd_gen_gap_thunks(args):
 
     source_path, pending_path = gap_paths(args.batch)
     source_rel = source_path.relative_to(ROOT).as_posix()
-    picked, subsumed = select_gap_thunks(candidates, claimed, source_rel, args.limit, index)
+    picked, subsumed = select_gap_thunks(
+        candidates, claimed, source_rel, args.limit, index, deleted_rows())
     for rva, (owner, start, end) in subsumed:
         print(f"gen-gap-thunks: SKIP 0x{rva:08X}: those bytes are inside matched row "
               f"{owner} [0x{start:08X}, 0x{end:08X})", file=sys.stderr)
