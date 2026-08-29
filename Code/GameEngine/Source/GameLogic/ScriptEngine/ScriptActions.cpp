@@ -350,6 +350,15 @@ public:
 // BFME walks twenty command slots; the reference header caps the set at 18.
 enum { BFME_MAX_COMMANDS_PER_SET = 20 };
 
+// The availability-name lookup is a Player member in BFME rather than the
+// ScienceStore member Zero Hour uses. The name is address-derived and is NOT an
+// identity claim.
+class BfmePlayerScienceAvailability
+{
+public:
+	ScienceAvailabilityType unidentified_000CFE80( const AsciiString &name );	///< retail ILT 0x00030260, body 0x000CFE80
+};
+
 // BFME's ScriptEngine puts startEndGameTimer at vtable slot 12, and the defeat
 // screen picks its event name from this selector.
 class BfmeScriptEngineVtbl_30
@@ -7249,19 +7258,26 @@ void ScriptActions::doPlayerPurchaseScience(const AsciiString& playerName, const
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doPlayerSetScienceAvailability_Thunk.cpp
-// ?doPlayerSetScienceAvailability@ScriptActions@@IAEXABVAsciiString@@00@Z present-unmatched
+// ?doPlayerSetScienceAvailability@ScriptActions@@IAEXABVAsciiString@@00@Z
 void ScriptActions::doPlayerSetScienceAvailability( const AsciiString& playerName, const AsciiString& scienceName, const AsciiString& scienceAvailability )
 {
-	Player* player = TheScriptEngine->getPlayerFromAsciiString(playerName);
-	if( player )
+	PlayerMaskType mask = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)
+		->getPlayerMaskFromAsciiString( playerName, NULL );
+
+	while( mask != 0 )
 	{
-		ScienceAvailabilityType saType = player->getScienceAvailabilityTypeFromString( scienceAvailability );
-		if( saType != SCIENCE_AVAILABILITY_INVALID )
+		Player *player = ThePlayerList->getEachPlayerFromMask( mask );
+		if( player )
 		{
-			ScienceType science = TheScienceStore->getScienceFromInternalName( scienceName );
-			if( science != SCIENCE_INVALID )
+			ScienceAvailabilityType saType =
+				((BfmePlayerScienceAvailability *)player)->unidentified_000CFE80( scienceAvailability );
+			if( saType != SCIENCE_AVAILABILITY_INVALID )
 			{
-				player->setScienceAvailability( science, saType );
+				ScienceType science = TheScienceStore->getScienceFromInternalName( scienceName );
+				if( science != SCIENCE_INVALID )
+				{
+					player->setScienceAvailability( science, saType );
+				}
 			}
 		}
 	}
