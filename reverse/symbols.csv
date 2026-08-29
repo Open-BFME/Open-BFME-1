@@ -72342,6 +72342,7 @@ name,address,notes
 ?bfmeAlloc1046@@YAPAXH@Z,0x0082E540,pin
 ?bfmeAlloc1047@@YAPAXH@Z,0x0082E540,pin
 ?bfmeAlloc1051@@YAPAXH@Z,0x0082E540,pin
+?bfmeAlloc1053@@YAPAXH@Z,0x008064A0,pin
 ?bfmeAlloc946@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAlloc950B@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocATA@@YAPAXI@Z,0x0082E540,pin
@@ -73840,6 +73841,7 @@ name,address,notes
 ?bfmeReg1024@BfmeP1024@@QAEXPAVBfmeE1024@@@Z,0x009EF280,pin
 ?bfmeReg1033@@YAXP6AXXZ0@Z,0x0002FCB1,pin
 ?bfmeReg1052@BfmeN1052@@QAEXPAHP6AXXZ@Z,0x00043E4B,pin
+?bfmeReg1053@@YAXHHPADHPAHP6AXXZPAVBfmeE1053@@H@Z,0x00859480,pin
 ?bfmeRegisterDAA@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterDAB@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterDAC@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
@@ -75684,6 +75686,7 @@ name,address,notes
 ?g_bfmeN1052@@3PAVBfmeN1052@@A,0x00EF4B98,pin
 ?g_bfmeName1019@@3PADA,0x00D2A5A8,pin
 ?g_bfmeName1052@@3PADA,0x00D2C144,pin
+?g_bfmeName1053@@3PADA,0x00C892DC,pin
 ?g_bfmeObj1006@@3PAUBfmeObj1006@@A,0x00EF4C38,pin
 ?g_bfmeObj2EGE@@3PAVBfmeObj2EGE@@A,0x00EF148C,pin
 ?g_bfmeObj985@@3PAUBfmeObj985@@A,0x00EF4B40,pin
@@ -75793,6 +75796,7 @@ name,address,notes
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
 ?g_bfmeT1019@@3PAUBfmeT1019@@A,0x00EF1024,pin
 ?g_bfmeTab1021@@3PAHA,0x00EB7D94,pin
+?g_bfmeTab1053@@3HA,0x00EB9670,pin
 ?g_bfmeTag1028@@3PADA,0x00D23918,pin
 ?g_bfmeTarget986B@@3PADA,0x00F071E4,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
@@ -79753,6 +79757,7 @@ _bfmeFnA1033,0x000487C0,pin
 _bfmeFnB1033,0x0001E0B0,pin
 _bfmeGlobalTable12A6918,0x00EA6918,pin
 _bfmeHook1052,0x0003695D,pin
+_bfmeHook1053,0x000066EA,pin
 _bfmeInfoDCE,0x00CEA6A8,pin
 _bfmeInfoDCF,0x00D14768,pin
 _bfmeInfoDCG,0x00D16D70,pin
@@ -79841,6 +79846,7 @@ _bfmeVft1045A,0x00D2C308,pin
 _bfmeVft1045B,0x00D2C304,pin
 _bfmeVft1050B,0x00D28450,pin
 _bfmeVft1050F,0x00D28D30,pin
+_bfmeVft1053A,0x00D2BBE8,pin
 _bfmeVftAGBa,0x00C9C9D0,pin
 _bfmeVftAGBb,0x00CA372C,pin
 _bfmeVftAGBc,0x00CB1404,pin
