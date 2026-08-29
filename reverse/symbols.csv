@@ -79944,3 +79944,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?getFinalOverride@BfmeControlBarOverridable@@QBEPBV1@XZ,0x000022BB,Open-BFME5 view-class spelling of the ILT already pinned as ?getFinalOverride@Overridable@@QBEPBV1@XZ; ControlBar::findNonConstCommandButton calls it through the view so the vendored inline recursive walk cannot unroll
