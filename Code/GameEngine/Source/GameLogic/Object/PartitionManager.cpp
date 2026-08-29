@@ -5153,25 +5153,52 @@ Bool PartitionFilterInsignificantBuildings::allow( Object *other )
 //-----------------------------------------------------------------------------
 
 // byte-exact reconstruction: Code/GameEngine/Source/Common/PartitionFilterRepulsor_allow_Thunk.cpp
-// ?allow@PartitionFilterRepulsor@@MAE_NPAVObject@@@Z present-unmatched
+// Three pieces of BFME drift, all read off this body's own bytes:
+//   - a PartitionFilter's first data member is at this+0x08, not the
+//     reference's +0x04: the base is one word wider.
+//   - an Object's status word is at +0x90 and the private-status byte whose
+//     bit 0 is EFFECTIVELY_DEAD at +0x344. The reference reads them through
+//     testStatus/isEffectivelyDead, which land elsewhere entirely.
+//   - the second isKindOf takes 0x58, where the reference enum numbers
+//     KINDOF_INERT 0x54. Four entries earlier, exactly the shift
+//     KINDOF_MOB_NEXUS and KINDOF_IGNORED_IN_GUI show in InGameUI.cpp
+//     (46/47 against the reference's 42/43). KINDOF_STRUCTURE is 7 in both.
+struct BfmeRepulsorFilterSelf
+{
+	UnsignedByte pad[0x08];
+	const Object *self;									///< retail this+0x08
+};
+
+struct BfmeRepulsorObject
+{
+	UnsignedByte pad0[0x90];
+	UnsignedInt status;									///< retail this+0x90; bit 0x100 is REPULSOR
+	UnsignedByte pad1[0x344 - 0x94];
+	UnsignedByte privateStatus;							///< retail this+0x344; bit 0 is EFFECTIVELY_DEAD
+};
+
+enum { BFME_KINDOF_INERT = 0x58 };
+
 Bool PartitionFilterRepulsor::allow( Object *other )
 {
-	if (other == m_self) 
+	const Object *self = ((BfmeRepulsorFilterSelf *)this)->self;
+
+	if (other == self) 
 	{
 		// don't repulse yourself. :)
 		return false;
 	}
 
 	// If it's flagged, it's a repulsor.
-	if (other->testStatus(OBJECT_STATUS_REPULSOR)) 
+	if (((BfmeRepulsorObject *)other)->status & 0x100u) 
 	{
 		return	true;
 	}
 
-	if (other->isEffectivelyDead()) 
+	if (((BfmeRepulsorObject *)other)->privateStatus & 0x1u) 
 		return false; // no dead enemies.
 
-	Relationship r = m_self->getRelationship(other);
+	Relationship r = self->getRelationship(other);
 	if (r != ENEMIES) 
 	{
 		return false; // only enemies auto repulse.
@@ -5185,7 +5212,7 @@ Bool PartitionFilterRepulsor::allow( Object *other )
 		return false;
 	}
 	
-	if ( other->isKindOf( KINDOF_INERT ))
+	if ( other->isKindOf( (KindOfType)BFME_KINDOF_INERT ))
 		return false;
 
 
