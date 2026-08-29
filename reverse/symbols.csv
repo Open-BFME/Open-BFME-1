@@ -79539,3 +79539,7 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?isSignificantlyAboveTerrain@Thing@@QBE_NXZ,0x00019FF1,pristine EA setGoalPositionClipped call and retail AI/Drawable callers identify Thing terrain-height helper ILT
+?bfmeIsKindOf@Thing@@QBE_NW4KindOfType@@@Z,0x0003251F,TU ABI alias for authentic Thing::isKindOf ILT used by retail setGoalPositionClipped
+?bfmeSetGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z,0x0000314D,TU ABI alias for authentic StateMachine::setGoalPosition ILT used by retail setGoalPositionClipped
+?TheTerrainLogic@@3PAVTerrainLogic@@A,0x012EF4CC,typed ABI spelling for the proven terrain singleton used by retail setGoalPositionClipped
