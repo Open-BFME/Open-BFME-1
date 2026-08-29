@@ -1000,36 +1000,6 @@ MainMenuScaleUpTransition::~MainMenuScaleUpTransition( void )
 	m_win = NULL;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/MainMenuScaleUpTransition_init_Thunk.cpp
-// ?init@MainMenuScaleUpTransition@@UAEXPAVGameWindow@@@Z present-unmatched
-void MainMenuScaleUpTransition::init( GameWindow *win )
-{
-	if(win)
-	{
-		m_win = win;
-		m_win->winGetSize(&m_size.x, &m_size.y);
-		m_win->winGetScreenPosition(&m_pos.x, &m_pos.y );
-	}
-	m_growWin = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("MainMenu.wnd:WinGrowMarker"));
-	if(!m_growWin)
-		return;
-
-	m_growWin->winGetSize(&m_growSize.x, &m_growSize.y);
-	m_growWin->winGetScreenPosition(&m_growPos.x, &m_growPos.y );
-
-	m_isForward = FALSE;
-	update(MAINMENUSCALEUPTRANSITION_START);
-	m_isFinished = FALSE;
-	m_isForward = TRUE;
-	m_incrementPos.x = (m_growPos.x - m_pos.x)  / MAINMENUSCALEUPTRANSITION_END;
-	m_incrementPos.y = (m_growPos.y - m_pos.y)  / MAINMENUSCALEUPTRANSITION_END;
-	m_incrementSize.x = (m_growSize.x - m_size.x) / MAINMENUSCALEUPTRANSITION_END;
-	m_incrementSize.y = (m_growSize.y - m_size.y) / MAINMENUSCALEUPTRANSITION_END;
-	const Image *image = m_win->winGetDisabledImage(0);
-	m_growWin->winSetEnabledImage(0, image);
-	
-}
-
 // BFME parameterises the frame bounds: retail compares against this+0x10 and
 // this+0x14 where the reference uses the MAINMENUSCALEUPTRANSITION_START/_END
 // constants. That has a knock-on effect -- a switch needs constant cases, so the
@@ -1048,11 +1018,59 @@ struct BfmeScaleUpTransitionFields
 	GameWindow *m_win;					///< retail this+0x0c
 	Int m_startFrame;					///< retail this+0x10
 	Int m_endFrame;						///< retail this+0x14
-	unsigned char m_unreconstructed_18[ 0x28 - 0x18 ];
+	ICoord2D m_pos;						///< retail this+0x18
+	ICoord2D m_size;					///< retail this+0x20
 	Int m_drawState;					///< retail this+0x28
-	unsigned char m_unreconstructed_2c[ 0x4c - 0x2c ];
+	ICoord2D m_growPos;					///< retail this+0x2c
+	ICoord2D m_growSize;					///< retail this+0x34
+	ICoord2D m_incrementPos;				///< retail this+0x3c
+	ICoord2D m_incrementSize;				///< retail this+0x44
 	GameWindow *m_growWin;					///< retail this+0x4c
 };
+
+// winGetDisabledImage does NOT survive as a call: retail reads the image straight
+// out of the window at win+0xb4, so it is an inline read over an array rather
+// than the out-of-line accessor the other two window calls use.
+struct BfmeTransitionWindowImages
+{
+	unsigned char m_unreconstructed_00[ 0xb4 ];
+	const Image *m_disabledImage[ 1 ];			///< retail this+0xb4
+};
+
+// Same parameterisation as the matching update: the frame handed to update and
+// the divisor of the four increments both come from members at this+0x10 and
+// this+0x14 where the reference uses the START/END constants.
+// ?init@MainMenuScaleUpTransition@@UAEXPAVGameWindow@@@Z
+void MainMenuScaleUpTransition::init( GameWindow *win )
+{
+	BfmeScaleUpTransitionFields *self = (BfmeScaleUpTransitionFields *)this;
+
+	if(win)
+	{
+		self->m_win = win;
+		self->m_win->winGetSize(&self->m_size.x, &self->m_size.y);
+		self->m_win->winGetScreenPosition(&self->m_pos.x, &self->m_pos.y );
+	}
+	self->m_growWin = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("MainMenu.wnd:WinGrowMarker"));
+	if(!self->m_growWin)
+		return;
+
+	self->m_growWin->winGetSize(&self->m_growSize.x, &self->m_growSize.y);
+	self->m_growWin->winGetScreenPosition(&self->m_growPos.x, &self->m_growPos.y );
+
+	self->m_isForward = FALSE;
+	update(self->m_startFrame);
+	self->m_isFinished = FALSE;
+	self->m_isForward = TRUE;
+	self->m_incrementPos.x = (self->m_growPos.x - self->m_pos.x)  / self->m_endFrame;
+	self->m_incrementPos.y = (self->m_growPos.y - self->m_pos.y)  / self->m_endFrame;
+	self->m_incrementSize.x = (self->m_growSize.x - self->m_size.x) / self->m_endFrame;
+	self->m_incrementSize.y = (self->m_growSize.y - self->m_size.y) / self->m_endFrame;
+	const Image *image = ((const BfmeTransitionWindowImages *)self->m_win)->m_disabledImage[0];
+	self->m_growWin->winSetEnabledImage(0, image);
+	
+}
+
 
 // ?update@MainMenuScaleUpTransition@@UAEXH@Z
 void MainMenuScaleUpTransition::update( Int frame )
