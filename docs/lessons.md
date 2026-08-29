@@ -1148,3 +1148,30 @@ spellings, each reached through a call so the rel32 proves it. And the cost is
 ZERO for any further call site whose callee is virtual, because a view's virtual
 signature can change types freely -- one body matched first try with no new pins
 at all.
+
+## "It did not match" is a deferral, not a dead end
+
+Read tools/re_log.py's status doctrine (lines ~40-70) BEFORE recording a
+verdict. The distinction it draws is not bookkeeping:
+
+  DEAD_END_STATUSES -- no-match, refuted, identity-suspect, mis-anchored -- are
+  findings about the BOUNDARY. Re-serving cannot fix them.
+  DEFERRED_STATUSES -- blocked, attempted, abandoned, partial -- are properties
+  of the ATTEMPT. Every retail byte needs a C++ equivalent, so "I could not
+  match it" can only ever mean "not this session".
+
+Conflating them retired 535 symbols the project cannot finish without. An
+SEH-frame, register-allocation, CSE or inlining-depth wall is a deferral: it was
+usually measured by an agent working the body SOLO, and the land rate is 19.5%
+solo against 46.5% with ten or more siblings landed, so the finding is stale by
+construction the moment its file drains.
+
+`partial` is the one to reach for when the attempt produced something -- it banks
+the body under reverse/attempts/<rva>.cpp and serves it beside the candidate. The
+tool REFUSES partial without --stash and --score, because a row describing a near
+miss with no body measures worse than recording nothing.
+
+Corollary for anyone sizing work off the log: `note`, `evidence`, `lever`,
+`correction` and unrecognised words are ANNOTATIONS, not verdicts, and an
+unrecognised status leaks a candidate rather than burying one. So a grep counts
+things the tool does not. Use re_log.is_dead_end(), not text.
