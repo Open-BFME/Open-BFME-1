@@ -157,7 +157,6 @@ Object* ObjectCreationNugget::create( const Object* primary, const Object* secon
 
 //-------------------------------------------------------------------------------------------------
 //This one is called only when we have a nugget that doesn't care about createOwner.
-// ?create@ObjectCreationNugget@@ present-unmatched
 Object* ObjectCreationNugget::create( const Object *primaryObj, const Coord3D *primary, const Coord3D *secondary, Bool createOwner, UnsignedInt lifetimeFrames ) const
 {
 	return create( primaryObj, primary, secondary, INVALID_ANGLE, lifetimeFrames );
@@ -766,6 +765,7 @@ __declspec(naked) void ApplyRandomForceNugget::parse(INI *, void *, void *, cons
 	}
 }
 
+// ?bfmeForcePoolComdats@ApplyRandomForceNugget@@ absent-from-retail
 void ApplyRandomForceNugget::bfmeForcePoolComdats()
 {
 	ApplyRandomForceNugget* n = newInstance(ApplyRandomForceNugget);
@@ -1669,6 +1669,7 @@ ObjectCreationListStore::ObjectCreationListStore()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ObjectCreationListStoreDestructorThunk.cpp
 // ??1ObjectCreationListStore@@UAE@XZ present-unmatched
 ObjectCreationListStore::~ObjectCreationListStore()
 {

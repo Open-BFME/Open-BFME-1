@@ -1,5 +1,6 @@
 class Player;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -27,6 +28,7 @@ struct Rva2225E0FilteredCountThunk
 	int cachedCount;
 };
 
+// ?count@Rva2225E0FilteredCountThunk@@ absent-from-retail
 int Rva2225E0FilteredCountThunk::count(Rva2225E0Filter *filter)
 {
 	if (filter == 0) {

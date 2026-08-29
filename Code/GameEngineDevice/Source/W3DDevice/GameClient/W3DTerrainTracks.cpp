@@ -714,6 +714,7 @@ void TerrainTracksRenderObjClassSystem::init( SceneClass *TerrainTracksScene )
 //=============================================================================
 /** Shutdown and free all memory for this system */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainTracks_shutdown.cpp
 // ?shutdown@TerrainTracksRenderObjClassSystem@@QAEXXZ present-unmatched
 void TerrainTracksRenderObjClassSystem::shutdown( void )
 {
@@ -815,6 +816,7 @@ void TerrainTracksRenderObjClassSystem::update()
 //=============================================================================
 // ?flush@TerrainTracksRenderObjClassSystem@@QAEXXZ exact retail body is emitted by
 // W3DTerrainTracksFlushThunk.cpp.
+// ?Reset@TerrainTracksRenderObjClassSystem@@ present-unmatched
 void TerrainTracksRenderObjClassSystem::Reset(void)
 {
 	TerrainTracksRenderObjClass *nextMod,*mod=m_usedModules;

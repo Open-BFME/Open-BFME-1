@@ -2253,7 +2253,6 @@ Real Object::estimateDamage( DamageInfoInput& damageInfo ) const
 //-------------------------------------------------------------------------------------------------
 /** Do so much damage to an object that it will certainly die */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_kill.cpp
 // ?kill@Object@@QAEXW4DamageType@@W4DeathType@@@Z
 void Object::kill( DamageType damageType, DeathType deathType )
 {
@@ -3157,7 +3156,6 @@ void Object::prependToList(Object **pListHead)
 //-------------------------------------------------------------------------------------------------
 // BFME: m_layer lives at +0x314, and BFME compiles the bridge-layer
 // interaction check unconditionally (ZH keeps it behind SET_LAYER_INTENSE_DEBUG).
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_setLayer.cpp
 // ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z
 void Object::setLayer(PathfindLayerEnum layer)
 {

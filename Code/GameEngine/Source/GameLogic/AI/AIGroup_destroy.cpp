@@ -10,12 +10,14 @@
 #include <list>
 #include <algorithm>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:
 	virtual ~AIGroup(void) { }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -27,6 +29,7 @@ private:
 };
 
 // ?destroyGroup@AI@@QAEXPAVAIGroup@@@Z
+// ?destroyGroup@AI@@ present-unmatched
 void AI::destroyGroup(AIGroup *group)
 {
 	_STL::list<AIGroup *>::iterator i = _STL::find(m_groupList.begin(), m_groupList.end(), group);

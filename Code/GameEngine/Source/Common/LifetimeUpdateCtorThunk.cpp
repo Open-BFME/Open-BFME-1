@@ -9,6 +9,7 @@ enum KindOfType { KINDOF_HULK = 81 };
 
 int GetGameLogicRandomValue(int, int, char *, int);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -24,6 +25,7 @@ private:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -39,6 +41,7 @@ private:
     Overridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
 {
 public:
@@ -69,6 +72,7 @@ private:
     const T *m_overridable;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
@@ -104,6 +108,7 @@ protected:
 class LU_Iface1 { public: virtual void slot(); };
 class LU_Iface2 { public: virtual void slot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public LU_DeepBase, public LU_Iface1, public LU_Iface2
 {
 public:
@@ -124,6 +129,7 @@ private:
     int m_updateState;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/LifetimeUpdate.h
 class LifetimeUpdateModuleData
 {
 private:
@@ -135,6 +141,7 @@ public:
     bool m_startDisabled;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/LifetimeUpdate.h
 class LifetimeUpdate : public UpdateModule
 {
 public:
@@ -147,6 +154,7 @@ private:
     UnsignedInt m_birthFrame;
 };
 
+// ?calcSleepDelayInline@LifetimeUpdate@@ absent-from-retail
 __forceinline UnsignedInt LifetimeUpdate::calcSleepDelayInline(
     UnsignedInt minFrames, UnsignedInt maxFrames)
 {

@@ -702,6 +702,7 @@ void Keyboard::initKeyNames( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/KeyboardCtor.cpp
 // ??0Keyboard@@ present-unmatched
 Keyboard::Keyboard( void )
 {
@@ -1004,7 +1005,6 @@ Bool Keyboard::isAlt()
 }  // end isAlt()
 
 
-// ?getPrintableKey@Keyboard@@ present-unmatched
 WideChar Keyboard::getPrintableKey( UnsignedByte key,  Int state )
 {
 	if((key < 0 || key >=KEY_NAMES_COUNT) || ( state < 0 || state >= MAX_KEY_STATES))

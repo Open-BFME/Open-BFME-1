@@ -64,11 +64,13 @@ public:
 	int m_bfmeValue;					// +0x04
 };
 
+// ??0BfmeCellFC@@ absent-from-retail
 BfmeCellFC::BfmeCellFC()
 	: m_bfmeKind(0x80), m_bfmeValue(0)
 {
 }
 
+// ??1BfmeCellFC@@ absent-from-retail
 BfmeCellFC::~BfmeCellFC()
 {
 }
@@ -82,6 +84,7 @@ struct BfmePointFC
 	Real y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
@@ -96,6 +99,7 @@ struct Coord3D
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Region3D
 {
 	__forceinline Region3D() {}

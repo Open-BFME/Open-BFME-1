@@ -2,6 +2,7 @@
 // BFME's Render2D layout predates the later vendored class. Keep the retail
 // layout and nonvirtual Reset ABI local to this translation unit.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:
@@ -24,6 +25,7 @@ public:
 	int GrowthStep;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/proxy.h
 class ProxyClass
 {
 public:
@@ -67,11 +69,13 @@ public:
 	int Field70;
 };
 
+// ??0ProxyClass@@ present-unmatched
 __forceinline ProxyClass::ProxyClass()
 {
 	Texture = 0;
 }
 
+// ?Initialize@ProxyClass@@ present-unmatched
 __forceinline void ProxyClass::Initialize()
 {
 	Field20 = -1;
@@ -104,6 +108,7 @@ __forceinline void ProxyClass::Initialize()
 	Field70 = 0;
 }
 
+// ??4ProxyClass@@ present-unmatched
 ProxyClass &ProxyClass::operator=(ProxyClass const &other)
 {
 	if (other.Texture)
@@ -203,6 +208,7 @@ protected:
 	int GrowthStep;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h
 class Render2DClass
 {
 public:

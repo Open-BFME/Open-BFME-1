@@ -18,6 +18,7 @@ enum ObjectStatusTypes
 };
 
 template <int BitCount>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -46,6 +47,7 @@ enum ModelConditionFlagType
 
 typedef BitFlags<288> ModelConditionFlags;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -59,6 +61,7 @@ public:
 	ModelConditionFlags m_modelConditionFlags;
 };
 
+// ?setModelConditionState@Object@@ present-unmatched
 inline void Object::setModelConditionState(ModelConditionFlagType state)
 {
 	if (!m_modelConditionFlags.test(state))

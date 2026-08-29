@@ -1,3 +1,4 @@
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -21,6 +22,7 @@ struct Rva505C80WindowVisibilityThunk
 	GameWindow *thirdWindow;
 };
 
+// ?updateVisibility@Rva505C80WindowVisibilityThunk@@ absent-from-retail
 void Rva505C80WindowVisibilityThunk::updateVisibility()
 {
 	firstWindow->winHide(true);
