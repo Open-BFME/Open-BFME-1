@@ -342,8 +342,8 @@ TerrainRoadType *TerrainRoadCollection::findRoadOrBridge( AsciiString name )
 //-------------------------------------------------------------------------------------------------
 /** Allocate a new road, set the name, and link to the road list */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainRoadCollection_newRoad_Thunk.cpp
-// ?newRoad@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z present-unmatched
+// Folded home: the donor TerrainRoadCollection_newRoad_Thunk.cpp is deleted and
+// this file owns the row, so the present-unmatched marker here was stale.
 TerrainRoadType *TerrainRoadCollection::newRoad( AsciiString name )
 {
 	TerrainRoadType *road = newInstance(TerrainRoadType);
