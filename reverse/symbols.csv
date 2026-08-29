@@ -74212,6 +74212,7 @@ name,address,notes
 ?bfmeStep1052@BfmeSubF1052@@QAEXXZ,0x000107C6,pin
 ?bfmeStep1054@BfmeC1054@@QAEXPAVBfmeD1054@@HH@Z,0x00012F5D,pin
 ?bfmeStep1211C@BfmeG1211@@QAEXXZ,0x008A30C0,pin
+?bfmeStep1212C@BfmeG1212@@QAEXXZ,0x008A30C0,pin
 ?bfmeStep1@Gen_004410A0@@AAEXXZ,0x000459CB,Open-BFME5 ILT the three-step runner at 0x004410A0 calls first
 ?bfmeStep1@Gen_0077F000@@AAEXXZ,0x00039428,Open-BFME5 ILT the three-step runner at 0x0077F000 calls first
 ?bfmeStep1@Gen_007892D0@@AAEXXZ,0x000270FC,Open-BFME5 ILT the three-step runner at 0x007892D0 calls first
@@ -75613,6 +75614,7 @@ name,address,notes
 ?g_bfme1017H@@3HA,0x00F37800,pin
 ?g_bfme1017I@@3HA,0x00F377DC,pin
 ?g_bfme1211@@3PAVBfmeG1211@@A,0x00F37810,pin
+?g_bfme1212@@3PAVBfmeG1212@@A,0x00F37810,pin
 ?g_bfme911Busy@@3DA,0x0094B208,pin
 ?g_bfme911Flag@@3DA,0x008D7188,pin
 ?g_bfme911Ptr@@3PAVBfmeObj911C@@A,0x0094B210,pin
@@ -80297,6 +80299,8 @@ _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdec
 _bfmeSearch1155,0x0082F1A0,pin
 _bfmeStep1211A,0x008D0B00,pin
 _bfmeStep1211B,0x008CD130,pin
+_bfmeStep1212A,0x008D0F10,pin
+_bfmeStep1212B,0x008CD130,pin
 _bfmeStrAEYC,0x00C76C18,pin
 _bfmeStrBEYC,0x00C76C14,pin
 _bfmeStrDULa,0x00D1D7F0,pin
