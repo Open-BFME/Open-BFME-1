@@ -1806,6 +1806,61 @@ Exactly three rows tree-wide are gen-alias + $L + parent=. lanapi's is fixed;
 ?a_00c52ae0@@YAXXZ (VectorClassArrayPlacementCleanup_00C52AE0.cpp) are latent
 the same way. If either destination looks frozen, this is why.
 
+## A vendored class that is too SMALL needs bytes, not a new class
+
+"Retail's frame is 0x70 where this tree's is 0x64, and that is a
+class-shape difference, not a field view" is a verdict Player.cpp carried
+against disableRadar and enableRadar. The diagnosis was right and the
+conclusion was wrong: both land byte-exact, and so does removeRadar.
+
+A local whose class is twelve bytes too small does not need the class
+changed. It needs twelve bytes:
+
+    struct BfmeAudioEventStorage
+    {
+        BfmeAudioEventStorage( const AudioEventRTS &src ) : e(src) { }
+        AudioEventRTS e;
+        UnsignedByte _bfme_tail[12];
+    };
+
+The member sits at offset 0, so its address, constructor and destructor are
+unchanged and every call in the body stays what it was; only the frame
+grows. THE CONSTRUCTOR IS LOAD-BEARING. Declaring the storage and then
+assigning (`BfmeAudioEventStorage x; x.e = src;`) default-constructs and
+then assigns, where retail COPY-CONSTRUCTS in one call. Taking the source
+by const reference and initialising the member in the initialiser list is
+what reproduces retail's single call.
+
+This reaches any body blocked only by a vendored class smaller than BFME's.
+It does NOT generalise to the class: retail's addRadar reserves 0x60 where
+the other three reserve 0x70, sets its EH frame up in the other order, and
+sits at 0x000FB3F0 well away from them at 0x000CC0B0-0x000CC2C0. The twelve
+bytes belong to the frame those three share, not to AudioEventRTS
+everywhere -- so measure the frame per body rather than padding on faith.
+
+## Screen a whole cluster with ONE build, before applying anything
+
+Repointing a row to find out how close it is costs an apply, a build and a
+revert, and leaves the ledger dirty if you die between them. It is
+unnecessary. After ONE build of the destination, read each candidate's
+symbol straight out of the .obj, mask the relocation sites, and compare
+against retail:
+
+    build.read_object_symbol_bytes(obj, symbol, size)  vs
+    build.read_target_bytes(rva, size)
+
+Twenty InGameUI candidates ranked in a single build, no applies. It put
+addMessageText (64.9%) at the top -- it landed 388/388 -- and correctly
+warned off update, which agrees on 19.3% and fails at offset ZERO on an
+`and esp,-8` aligned frame nothing in the body explains.
+
+Read the COMPILED SIZE beside the percentage. Once the two sizes differ the
+percentage stops moving even as you fix real things, because every byte
+after the first divergence is compared against the wrong position. On
+addSuperweapon three separate offset fixes each left it at exactly 60.4%
+while the loads visibly stopped diverging. Size converging on retail's is
+the signal; the percentage is only useful while the sizes match.
+
 ## throw() can be made TU-local with an explicit specialisation
 
 A nothrow declaration is often the whole difference between a merged body and
