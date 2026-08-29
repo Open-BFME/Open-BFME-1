@@ -1604,3 +1604,40 @@ simply has one more interface base after them. Header change, not a fold.
 Put an explanatory comment above it and every flag on it is silently dropped --
 no error, no warning, and the body then fails for reasons that have nothing to
 do with the edit you made. Explanations go BELOW.
+
+## An ordered call sequence names its unnamed members, like a vtable does
+
+W3DRoadBuffer::loadRoads's donor called its seven callees loadRoadsHelper0
+through loadRoadsHelper6 -- honest and worth nothing. The DESTINATION's source
+calls seven named methods in a fixed order, and four of the seven already
+resolved to ledger-named W3DRoadBuffer members at exactly the positions the
+source puts them (insertTeeIntersections fourth, insertCurveSegments fifth,
+insertCrossTypeJoins sixth, preloadRoadsInVertexAndIndexBuffers seventh). Four
+independent agreements in a row fix the other three BY POSITION, and all three
+bodies sit inside the class's own address span:
+
+    ?clearAllRoads@W3DRoadBuffer@@QAEXXZ        ILT 0x000336F9 -> 0x00706E60
+    ?addMapObjects@W3DRoadBuffer@@IAEXXZ        ILT 0x0002001D -> 0x007100C0
+    ?updateCountsAndFlags@W3DRoadBuffer@@IAEXXZ ILT 0x00010B5E -> 0x00705260
+
+Two of the three had been carrying nothing but a d_00xxxxxx dump name. This is
+the "ask the vtable" argument pointed at a CALL SEQUENCE: when a body's callee
+list is ordered and most of it is already named, the remainder falls out. The
+agreements have to be independent and in order to count -- one or two matches
+is coincidence.
+
+## Triage a donor WITHOUT applying it
+
+Cheapest screen there is, two compiles: clear the marker in the destination,
+require the destination's own rows to stay green, then run
+`explain_mismatch --rva/--size/--source`. You get the exact distance without
+touching the ledger, so near-misses sort themselves and a body that needs
+AUTHORING rather than repointing (its destination has no definition at all)
+shows up before you spend anything.
+
+CAUTION: a match prints "OK: bytes match" and NO Disassembly section. Do not
+detect a match by counting diff lines -- an ERRORED run also has zero. Match on
+the success string.
+
+This screen found the module-constructor 6/10/6/3 split, two bodies sitting one
+instruction from home, and a marker asking for authoring rather than a fold.
