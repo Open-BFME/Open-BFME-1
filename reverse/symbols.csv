@@ -72683,6 +72683,8 @@ name,address,notes
 ?bfmeDoEMHa@BfmeGlobEMHa@@QAEXXZ,0x0002BCCE,pin
 ?bfmeDoEMHb@BfmeGlobEMHb@@QAEXXZ,0x00033FC3,pin
 ?bfmeDoHC@BfmeObjHC@@QAE_NPAX00H@Z,0x00045D9A,pin
+?bfmeDoIC@BfmeThingIC@@QAEXPAXPAUBfmeNodeIC@@@Z,0x0000AD85,pin
+?bfmeDoID@BfmeThingID@@QAEXPAUBfmeNodeID@@H@Z,0x0003FF67,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
@@ -74873,6 +74875,7 @@ name,address,notes
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeFreeDXG@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeGlobGI@@3PAVBfmeGlobGI@@A,0x00EF076C,pin
+?g_bfmeGlobID@@3PAVBfmeGlobID@@A,0x00EED5F0,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeICoord2DFormat@@3QBDB,0x01144414,address-derived ICoord2D format string from retail 0x009D97C5
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
