@@ -3940,6 +3940,7 @@ name,address,notes
 ??1AudioEventRTS@@UAE@XZ,0x009409F0,pinharvest x1 (body)
 ??1AutoPickUpUpdateModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1AutoPickUpUpdateModuleDataMemberB@@QAE@XZ,0x00045016,Open-BFME5 pin
+??1BFMEFlagName@@QAE@XZ,0x000444EA,TU-scoped two-AsciiString key destructor; retail target 0x000DFB20 destroys offsets 4 then 0
 ??1BFMELANPreferenceKey@@QAE@XZ,0x00887940,LANPreferences retail key destruction call reaches the established AsciiString release body
 ??1BFMEPlayerTemplateAsciiString@@QAE@XZ,0x00887940,PlayerTemplate time-change retail AsciiString release owner
 ??1BannerCarrierString@@QAE@XZ,0x00887940,BannerCarrier object-name string destructor
@@ -72403,6 +72404,7 @@ name,address,notes
 ?bfmeBaseTK@BfmeThingTK@@QAEXXZ,0x009CB970,pin
 ?bfmeBaseTL@BfmeThingTL@@QAEXPAXH@Z,0x0083FB60,pin
 ?bfmeBaseUpdate@Gen009D6330@@QAEXPAXPBXI@Z,0x009D6E50,address-derived base update target from the direct REL32 call at retail 0x009D634E
+?bfmeBaseVDW@BfmeThingVDW@@QAEXHH@Z,0x00899F00,pin
 ?bfmeBaseZA@BfmeThingZA@@QAEXXZ,0x00025E1E,pin
 ?bfmeBaseZD@BfmeThingZD@@QAEXPAXVBfmeStrZD@@@Z,0x000035B2,pin
 ?bfmeBegin@BfmeSetupRecord@@QAEXXZ,0x007E8AC0,Open-BFME5 the member the two-field setup stubs call first
@@ -72770,9 +72772,11 @@ name,address,notes
 ?bfmeDtorEHBb@BfmeSubEHBb@@QAEXXZ,0x0003D2B7,pin
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
+?bfmeDtorUEW@BfmeThingUEW@@QAEXXZ,0x008A2F30,pin
 ?bfmeDtorUF@BfmeThingUF@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorVA@BfmeThingVA@@QAEXXZ,0x00034833,pin
 ?bfmeDtorVB@BfmeThingVB@@QAEXPAX@Z,0x009F6BC8,pin
+?bfmeDtorVBW@BfmeSubVBW@@QAEXXZ,0x00895260,pin
 ?bfmeElseBBC@@YAXXZ,0x0000F36C,pin
 ?bfmeElseBBC@BfmeThingBBC@@QAEXXZ,0x0000F36C,pin
 ?bfmeElseBBD@@YAXXZ,0x00842C00,pin
@@ -73931,6 +73935,7 @@ name,address,notes
 ?canEnterObject@BFMEActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@W4CanEnterType@@PA_N@Z,0x0002D588,retail five-argument ActionManager ABI thunk (body 0x000C5440)
 ?canGetHealedAt@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@@Z,0x0001B090,Open-BFME5 ILT thunk fronting body 0x000C5140
 ?canSwitchIndexToIndex@CaveSystem@@QAE_NHH@Z,0x00003E7C,Open-BFME5 retail cave index switch pin
+?canonicalFlagName@BFMEScriptEngineFlagLookup@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,TU-scoped ABI; sole findFlag caller proves AsciiString hidden return and this plus 0x17088 canonical-name lookup
 ?changeBattlePlan@Player@@QAEXW4BattlePlanStatus@@HPAVBattlePlanBonuses@@@Z,0x000D8080,Open-BFME5 retail identity; exact clean C++ body
 ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z,0x0002847F,Bridge::updateDamageState calls the existing ILT thunk for both closed and open transitions
 ?changeGridHeight@WaterRenderObjClass@@QAEXMMM@Z,0x0079F850,thunk-resolved body (via 0x2b256)
@@ -74704,6 +74709,7 @@ name,address,notes
 ?find@?$hash_map@HW4Relationship@@U?$hash@H@_STL@@U?$equal_to@H@3@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@3@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBHW4Relationship@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHW4Relationship@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHW4Relationship@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@2@@2@ABH@Z,0x0001D8CC,ILT; PlayerRelationMap find in Player::getRelationship 0x000D19C0
 ?find@?$hash_map@IW4Relationship@@U?$hash@I@_STL@@U?$equal_to@I@3@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@3@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBIW4Relationship@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBIW4Relationship@@@_STL@@@2@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIW4Relationship@@@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@2@@2@ABI@Z,0x0002D0B0,ILT; TeamRelationMap find in Player::getRelationship 0x000D19C0
 ?find@AssistedTargetingObjectShim@@QAEPAXH@Z,0x00009C41,AssistedTargetingUpdate isFreeToAssist object query shim
+?find@BFMEFlagMap@@QAEPAUBFMEFlagMapNode@@ABVBFMEFlagName@@@Z,0x000243CF,TU-scoped map facade; retail call reaches proven pair-of-AsciiString tree find body 0x0033FE60
 ?find@BFMELANPreferenceMap@@QAEPAXABVBFMELANPreferenceKey@@@Z,0x0000AEAC,LANPreferences retail map lookup ILT reaches the matched STL tree find at 0x00080600
 ?find@BfmeFinderD02@@QAEHH@Z,0x0002B81E,pin
 ?find@BfmeMgrEB2@@QAEPAVBfmeObjEB2@@H@Z,0x0001F253,pin
@@ -75057,6 +75063,7 @@ name,address,notes
 ?g_bfmeVftAQB@@3PADA,0x00D22470,pin
 ?g_bfmeVftBQB@@3PADA,0x00D223A0,pin
 ?g_bfmeVftTA@@3PADA,0x00D2F254,pin
+?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeWhatBGE@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWhatBKG@@3PAXA,0x00EC3BB8,pin
@@ -78788,6 +78795,8 @@ __ehhandler$?getClassMemoryPool@WeaponSetUpgrade@@CAPAVMemoryPool@@XZ,0x00C14DFE
 __ehhandler$?getClassMemoryPool@WorkerAIUpdate@@CAPAVMemoryPool@@XZ,0x00C140BE,pool-glue cascade static (back-solved)
 __ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00BFAB08,PlayerTemplate time-change retail exception handler
 __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
+__imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
+__imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
 __imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
@@ -79504,15 +79513,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeDtorUEW@BfmeThingUEW@@QAEXXZ,0x008A2F30,pin
-__imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
-?bfmeDtorVBW@BfmeSubVBW@@QAEXXZ,0x00895260,pin
-__imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
-?bfmeBaseVDW@BfmeThingVDW@@QAEXHH@Z,0x00899F00,pin
-?g_bfmeVftVDW@@3PADA,0x00D36238,pin
-??0PickAndPlayInfo@@QAE@XZ,0x0000F164,BFME PickAndPlayInfo constructor; target call follows local DrawableList construction and precedes field population in three adjacent voice response helpers
-??1?$_List_base@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE@XZ,0x00040863,STLport Drawable pointer list base destructor; cleanup call for the local one-Drawable list in three adjacent voice response helpers
-?pickAndPlayUnitVoiceResponse@@YAXPBV?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@W4Type@GameMessage@@PAVPickAndPlayInfo@@@Z,0x000196C8,BFME voice dispatcher; adjacent helpers pass the local DrawableList message IDs 0x7E7 or 0x7E8 and PickAndPlayInfo
-?canonicalFlagName@BFMEScriptEngineFlagLookup@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,TU-scoped ABI; sole findFlag caller proves AsciiString hidden return and this plus 0x17088 canonical-name lookup
-?find@BFMEFlagMap@@QAEPAUBFMEFlagMapNode@@ABVBFMEFlagName@@@Z,0x000243CF,TU-scoped map facade; retail call reaches proven pair-of-AsciiString tree find body 0x0033FE60
-??1BFMEFlagName@@QAE@XZ,0x000444EA,TU-scoped two-AsciiString key destructor; retail target 0x000DFB20 destroys offsets 4 then 0
