@@ -72754,6 +72754,7 @@ name,address,notes
 ?bfmeChk1090@BfmeS1090@@QAEDXZ,0x00024500,pin
 ?bfmeChk1091@BfmeR1091@@QAEDXZ,0x0003E5A9,pin
 ?bfmeChk1100@BfmeB1100@@QAEDH@Z,0x0000B63B,pin
+?bfmeChk1112@BfmeSub1112@@QAEDPAUBfmeA1112@@PAUBfmeB1112@@@Z,0x00019BCD,pin
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
 ?bfmeClear1003@BfmeB1003@@QAEXXZ,0x0000A754,pin
 ?bfmeClear1024@BfmeList1024@@QAEXXZ,0x00015640,pin
@@ -73800,6 +73801,7 @@ name,address,notes
 ?bfmeNext1109@@YAPAUBfmeNode1109@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext1110@@YAPAUBfmeNode1110@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext1111@@YAPAUBfmeNode1111@@PAU1@@Z,0x0082B870,pin
+?bfmeNext1112@@YAPAUBfmeNode1112@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext929D@BfmeNext929D@@QAEHH@Z,0x0089CC30,pin
 ?bfmeNext@Gen_00088B60@@AAEXXZ,0x00031FCF,Open-BFME5 the member the flag-then-forward wrapper at 0x00088B60 tail-jumps to
 ?bfmeNext@Gen_000B5690@@AAEXXZ,0x000242A3,Open-BFME5 the member the flag-then-forward wrapper at 0x000B5690 tail-jumps to
