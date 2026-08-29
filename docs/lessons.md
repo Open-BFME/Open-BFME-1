@@ -3585,3 +3585,46 @@ The rule kept is the defensive one -- apply the view after the merge and grep
 that it is still there. Worth the retraction: a wrong rule about a SHARED tool
 has every other lane working around behaviour the tool does not have, which is
 more expensive than the original confusion.
+
+## The two identity detectors are COMPLEMENTARY: neither subsumes the other
+
+The natural assumption is that the newer structural detector replaces the older
+thunk-topology one. It does not, and `0x0000B9CE` is the proof.
+
+That address carries four names -- three `?Clear@VectorClass<...>` instantiations
+and `?getClassMemoryPool@ObjectDefectionHelper@@` -- and `multi_name` classifies
+it as a genuine FOLD. Correctly: all four are 5-byte jmp thunks whose only
+differing content is the masked rel32, so **structurally they really are
+identical bytes**. It was predicted to be the detector's first confirmed hit, by
+two people, and it was not.
+
+    a STRUCTURAL comparison cannot separate thunks
+        -- every 5-byte jmp is structurally identical to every other
+    a THUNK-TOPOLOGY test cannot see a wrong field offset
+        -- it only asks which stub reaches which body
+
+So run both. `multi_name.py` finds defects where the offsets agree;
+the unique-stub topology test finds mis-anchored ILT stubs. Each is blind
+exactly where the other sees.
+
+## A detector that CLOSES a question is worth as much as one that opens one
+
+The 69-byte body shared by `??0DestroyDieModuleData@@` and
+`??0KeepObjectDieModuleData@@` -- the ambiguous middle that was deliberately left
+alone for hours because ICF was a live alternative -- classifies as a **real
+fold**: identical masked bytes, identical relocation sites. Logged `refuted`.
+
+That pile is correct bookkeeping rather than odd-looking bookkeeping, and it
+comes OFF the suspect list instead of staying uncertain forever. "Twelve rows we
+chose not to touch" was the right call at the time and is now a closed question
+rather than a standing doubt. Prefer the instrument that can return a negative.
+
+## Byte-verification is evidence about bytes, in both directions
+
+Address 0x0018B520 was UPGRADED from the placeholder `?d_0018b520@@YAXXZ` to
+`?isOnSquad@Squad@@…` as a "byte-verified" identity, and has now been DOWNGRADED
+to `?dup_0018b520@@YAXXZ` on the evidence of two symbolic siblings. **The same 38
+bytes verified both times.**
+
+The tombstone chain records the mistake being made and unmade, which is what that
+file is for. A byte-verified upgrade is not proof of identity either.
