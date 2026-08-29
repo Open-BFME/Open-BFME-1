@@ -38,11 +38,52 @@ public:
 
 // Retail's helper name is unknown, so keep the proven this/by-value ABI local
 // instead of assigning an unsupported canonical identity to its 0x00344E10 body.
+class BFMEFlagName
+{
+public:
+	BFMEFlagName(const AsciiString &canonical, const AsciiString &name) :
+		m_canonical(canonical), m_name(name) {}
+	~BFMEFlagName();
+
+private:
+	AsciiString m_canonical;
+	AsciiString m_name;
+};
+
+struct BFMEFlagMapNode
+{
+	void *m_treeLinks[4];
+	BFMEFlagName m_key;
+	bool m_value;
+};
+
+struct BFMEFlagMap
+{
+	BFMEFlagMapNode *m_header;
+	__declspec(nothrow) BFMEFlagMapNode *find(const BFMEFlagName &name);
+};
+
 class BFMEScriptEngineFlagLookup
 {
 public:
 	bool *findFlag(AsciiString name);
+
+private:
+	AsciiString canonicalFlagName(const AsciiString &name);
+	char m_flagMapPad[0x1604C];
+	BFMEFlagMap m_flags;
 };
+
+bool *BFMEScriptEngineFlagLookup::findFlag(AsciiString name)
+{
+	AsciiString canonical = canonicalFlagName(name);
+	// Extending this temporary through both returns preserves retail's one composite cleanup.
+	const BFMEFlagName &key = BFMEFlagName(canonical, name);
+	BFMEFlagMapNode *found = m_flags.find(key);
+	if (found != m_flags.m_header)
+		return &found->m_value;
+	return 0;
+}
 
 void ScriptEngine::clearFlag(const AsciiString &name)
 {
