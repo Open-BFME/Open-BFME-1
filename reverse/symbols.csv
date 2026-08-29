@@ -12375,6 +12375,7 @@ name,address,notes
 ?addKeepAliveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0067BC40,addCommand's jump-table arm for command type 12
 ?addLoadCompleteMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0002ED4D,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addLoadCompleteMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0067AFD0,addCommand's jump-table arm for command type 16
+?addMapObjects@W3DRoadBuffer@@IAEXXZ,0x0002001D,second of the seven calls W3DRoadBuffer::loadRoads makes at 0x007105D0; the last four of the seven already resolve to insertTeeIntersections, insertCurveSegments, insertCrossTypeJoins and preloadRoadsInVertexAndIndexBuffers in exactly the order the source calls them, which fixes the first three by position. Body 0x007100C0
 ?addNetCommandMsg@FrameDataManager@@QAEPAVNetCommandRef@@PAVNetCommandMsg@@@Z,0x0002FB5D,ILT thunk for body 0x00670640
 ?addNoFlyZone@AerialPathfinder@@QAEXPAVPolygonTrigger@@M@Z,0x00148C10,Open-BFME5 callee of parseAerialPathfindNoFlyZone; appends {area,height} to the list at TheAerialPathfinder+0xC
 ?addNugget@EmotionSystem@@QAEXPAVEmotionNugget@@@Z,0x000170D0,derived from the REL32 displacement at 0x0037B8A0
@@ -74676,6 +74677,7 @@ name,address,notes
 ?clear@WindowVideoHashtableClearShim@_STL@@QAEXXZ,0x004984F0,_STL hashtable clear GameWindow/WindowVideo incremental-link thunk target through a TU-local forwarding shim
 ?clearAllEvents@Radar@@IAEXXZ,0x00028C27
 ?clearAllProps@W3DPropBuffer@@QAEXXZ,0x000298BB
+?clearAllRoads@W3DRoadBuffer@@QAEXXZ,0x000336F9,first of the seven calls W3DRoadBuffer::loadRoads makes at 0x007105D0, entered with this unchanged; named by position against the four already-named calls that follow it. Body 0x00706E60
 ?clearAndSet@ModelConditionFlags@@QAEXABV1@0@Z,0x0000AF06,Drawable::replaceModelConditionState calls the retail ModelConditionFlags clear-and-set ILT
 ?clearAndSetModelConditionFlags@Object@@QAEXABVModelConditionFlags@@PBV2@@Z,0x001C7370,Open-BFME5 the member clearModelConditionState forwards its one-bit mask to with a null set-mask; unnamed in the image
 ?clearAndSetModelConditionState@Drawable@@QAEXW4ModelConditionFlagType@@0@Z,0x0001C8D2
@@ -79359,6 +79361,7 @@ name,address,notes
 ?updateCenter@BaseHeightMapUpdateNoArgs@@QAEXXZ,0x0003BECB,BaseHeightMap retail road update thunk
 ?updateContextOCLTimer@ControlBar@@AAEXXZ,0x000331C2,incremental-link thunk read out of the call displacement in populateOCLTimer
 ?updateCounts@W3DRoadBuffer@@IAEXPAVRoadSegment@@@Z,0x00010BC7,Open-BFME-DS05 addMapObject callee pin (ILT thunk to 0x00705000)
+?updateCountsAndFlags@W3DRoadBuffer@@IAEXXZ,0x00010B5E,third of the seven calls W3DRoadBuffer::loadRoads makes at 0x007105D0; named by position against the four already-named calls that follow it. Body 0x00705260
 ?updateDamageState@Bridge@@QAEXXZ,0x000232D6,Open-BFME5 ILT; called by ?updateBridgeDamageStates@TerrainLogic@@UAEXXZ at 0x001AAD70
 ?updateDrawableSupplyStatus@Drawable@@QAEXHH@Z,0x00031615,ILT thunk to Drawable::updateDrawableSupplyStatus at 0x00411E50
 ?updateFadeLevel@ScreenCrossFadeFilter@@IAE_NXZ,0x00006D0C

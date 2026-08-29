@@ -3280,8 +3280,6 @@ void W3DRoadBuffer::setMap(WorldHeightMap *pMap)
 //=============================================================================
 /** Loads the roads from the map objects. */
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__loadRoads_W3DRoadBuffer_QAEXXZ_007105D0.cpp
-// ?loadRoads@W3DRoadBuffer@@QAEXXZ present-unmatched
 void W3DRoadBuffer::loadRoads()
 {
 	if (!m_initialized) {
