@@ -1,5 +1,3 @@
-// ?isDoingGroundMovement@AIUpdateInterface@@UBE_NXZ
-// partial score=0.96 date=2026-08-28
 // cl: /DNDEBUG /MD /EHsc
 // readable body: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
@@ -25,10 +23,10 @@ class Locomotor : public LocomotorOverridable
 public:
 	UnsignedInt getLegalSurfaces() const
 	{
-		LocomotorOverridable *o = m_nextOverride;
-		if( o && o->m_nextOverride )
-			o = o->m_nextOverride->friend_getFinalOverride();
-		return static_cast<const Locomotor *>(o)->m_legalSurfaces;
+		LocomotorOverridable *override = m_nextOverride;
+		if( override && override->m_nextOverride )
+			override = override->m_nextOverride->friend_getFinalOverride();
+		return static_cast<const Locomotor *>(override)->m_legalSurfaces;
 	}
 
 private:
@@ -66,18 +64,21 @@ private:
 	Locomotor *m_curLocomotor;
 };
 
-// ?isDoingGroundMovement@AIUpdateInterface@@UBE_NXZ
 Bool AIUpdateInterface::isDoingGroundMovement() const
 {
 	if( m_validLocomotorSurfaces == LOCOMOTORSURFACE_AIR )
+	{
 		return false;
+	}
+	else
+	{
+		Locomotor *curLocomotor = m_curLocomotor;
+		if( curLocomotor == 0 )
+			return false;
 
-	Locomotor *curLocomotor = m_curLocomotor;
-	if( curLocomotor == 0 )
-		return false;
+		if( curLocomotor->getLegalSurfaces() & LOCOMOTORSURFACE_AIR )
+			return false;
 
-	if( curLocomotor->getLegalSurfaces() & LOCOMOTORSURFACE_AIR )
-		return false;
-
-	return m_object->isNotHeldDisabled();
+		return m_object->isNotHeldDisabled();
+	}
 }
