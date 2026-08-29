@@ -433,7 +433,22 @@ public:
 enum { BFME_DC_GENERIC_PIXEL_SHADER_1_1 = 3 };
 
 // byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__init_ScreenBWFilter_UAEHXZ_007D0AF0.cpp
-// ?init@ScreenBWFilter@@UAEHXZ present-unmatched
+// BFME tests the two device globals directly where the reference calls
+// W3DShaderManager::canRenderToTexture().
+extern void *g_deviceGlobal;								///< retail [0x012F9D04]
+extern void *g_pixelShaderGlobal;							///< retail [0x012F9D0C]
+
+// getChipset is DEFINED in this TU, and MSVC then reaches it with its private
+// convention for a static whose call sites it can all see -- which lets the
+// shader-handle address stay in ECX across the call, where retail has to park
+// it in ESI. A declared-only view restores the ordinary call and with it
+// retail's register choice. Same function, same ILT.
+class BfmeChipsetQuery
+{
+public:
+	static ChipsetType getChipset( void );
+};
+
 Int ScreenBWFilter::init(void)
 {
 	Int res;
@@ -442,34 +457,21 @@ Int ScreenBWFilter::init(void)
 	m_dwBWPixelShader = NULL;
 	m_curFadeFrame = 0;
 
-	if (!W3DShaderManager::canRenderToTexture()) {
-		// Have to be able to render to texture.
-		return false;
-	}
-
-	if ((res=W3DShaderManager::getChipset()) != 0)
+	if (g_deviceGlobal != 0 && g_pixelShaderGlobal != 0)
 	{
-		if (res >= DC_GENERIC_PIXEL_SHADER_1_1)
+		if ((res=BfmeChipsetQuery::getChipset()) != 0)
 		{
-			//this shader needs some assets that need to be loaded
-			//shader decleration
-			DWORD Declaration[]=
+			if (res >= BFME_DC_GENERIC_PIXEL_SHADER_1_1)
 			{
-				(D3DVSD_STREAM(0)),
-				(D3DVSD_REG(0, D3DVSDT_FLOAT3)), // Position
-				(D3DVSD_REG(1, D3DVSDT_D3DCOLOR)), // Diffuse
-				(D3DVSD_REG(2, D3DVSDT_FLOAT2)), //  Texture Coordinates
-				(D3DVSD_END())
-			};
+				//Monochrome pixel shader.
+				hr = BfmeShaderLoader::LoadAndCreateD3DShader("shaders\\monochrome.pso", &m_dwBWPixelShader);
+				if (FAILED(hr))
+					return FALSE;
 
-			//Monochrome pixel shader.
-			hr = W3DShaderManager::LoadAndCreateD3DShader("shaders\\monochrome.pso", &Declaration[0], 0, false, &m_dwBWPixelShader);
-			if (FAILED(hr))
-				return FALSE;
+				W3DFilters[FT_VIEW_BW_FILTER]=&screenBWFilter;
 
-			W3DFilters[FT_VIEW_BW_FILTER]=&screenBWFilter;
-
-			return TRUE;
+				return TRUE;
+			}
 		}
 	}
 	return FALSE;
