@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?restoreOriginalTeam@Object@@QAEXXZ: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 
 // Open-BFME5: Object::restoreOriginalTeam, retail 0x001C4670, 118 bytes.
 // The first half is the surviving Zero Hour routine.  BFME adds a safeguard
@@ -17,6 +18,7 @@ enum DeathType
 	DEATH_NORMAL = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
@@ -35,18 +37,21 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
 	Bool isPlayerDead() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
 	Player *getControllingPlayer() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamFactory
 {
 public:
@@ -55,6 +60,7 @@ public:
 
 extern TeamFactory *TheTeamFactory;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
