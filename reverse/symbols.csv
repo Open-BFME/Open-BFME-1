@@ -2118,6 +2118,7 @@ name,address,notes
 ??0BfmeCreated_0097D920@@QAE@PAVGen_0097D920@@@Z,0x0097D850,Open-BFME5 the constructor the make-and-return body at 0x0097D920 runs on its fresh block
 ??0BfmeCtorBaseD@@QAE@XZ,0x009A1A30,Open-BFME5 the base constructor the based list constructor at 0x000FDA80 runs first
 ??0BfmeDelayedLuaEvent@@QAE@XZ,0x0003A1C5,Open-BFME5 ILT the DelayedLuaEventList constructor at 0x000EDBB0 hands to the EH vector constructor iterator as the element constructor; DIR32 sites are masked by the byte gate so this records the address
+??0BfmeErr1042@@QAE@XZ,0x00013A8E,pin
 ??0BfmeLegendString@@QAE@ABU0@@Z,0x00887B60,SubsystemLegend.cpp AsciiString stand-in copy ctor (StringBase<char> copy ctor body)
 ??0BfmeLegendString@@QAE@PBD@Z,0x00888BC0,SubsystemLegend.cpp AsciiString stand-in ctor from const char*
 ??0BfmeLegendStringVec@@QAE@ABU0@@Z,0x000D2E70,SubsystemLegend.cpp vector<AsciiString> stand-in copy ctor
@@ -72996,6 +72997,7 @@ name,address,notes
 ?bfmeFallback1015@BfmeM1015@@QAEXHH@Z,0x008A48A0,pin
 ?bfmeFallback961@BfmeHost961@@QAEXHH@Z,0x0001C46D,pin
 ?bfmeFallback977C@@YADXZ,0x00892210,pin
+?bfmeFatal1042@@YGXPAVBfmeErr1042@@PAD@Z,0x009F6D00,pin
 ?bfmeFill1028@BfmeSub1028@@QAEXPAH0@Z,0x00021562,pin
 ?bfmeFill1031@@YAXPAVBfmeG1031@@PAH@Z,0x000139BC,pin
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
@@ -73920,6 +73922,7 @@ name,address,notes
 ?bfmeSet1027@BfmeQ1027@@QAEXHH@Z,0x000344C3,pin
 ?bfmeSet1028@BfmeSet1028@@QAEXH@Z,0x0093D0C0,pin
 ?bfmeSet1034@BfmeZ1034@@QAEXD@Z,0x00016DF1,pin
+?bfmeSet1042@BfmeSub1042@@QAEXPADHH@Z,0x00942BC0,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
 ?bfmeSetA1004@BfmeObj1004@@QAEXHH@Z,0x00032DEE,pin
@@ -75595,6 +75598,7 @@ name,address,notes
 ?g_bfmeListEYE@@3PAUBfmeListEYE@@A,0x00EED5DC,pin
 ?g_bfmeLit1025@@3PADA,0x00C7388B,pin
 ?g_bfmeLit1035@@3PADA,0x00D3A5CC,pin
+?g_bfmeLit1042@@3PADA,0x00C7388C,pin
 ?g_bfmeLog1013@@3PAVBfmeLog1013@@A,0x00EF19E8,pin
 ?g_bfmeLog1020@@3PAVBfmeLog1020@@A,0x00EF19E8,pin
 ?g_bfmeLog1021@@3PAVBfmeLog1021@@A,0x00EF19E8,pin
@@ -75626,6 +75630,7 @@ name,address,notes
 ?g_bfmeMsg1021@@3HA,0x00EB7D80,pin
 ?g_bfmeMsg1037@@3PADA,0x00D29AB0,pin
 ?g_bfmeMsg1038@@3PADA,0x00D29AD4,pin
+?g_bfmeMsg1042@@3PADA,0x00DE1CE4,pin
 ?g_bfmeN1020@@3PAVBfmeN1020@@A,0x00EF1B40,pin
 ?g_bfmeN1021@@3PAVBfmeN1021@@A,0x00EF1B40,pin
 ?g_bfmeN1022@@3PAVBfmeN1022@@A,0x00EF1B40,pin
