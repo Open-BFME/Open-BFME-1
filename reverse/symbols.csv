@@ -72787,6 +72787,8 @@ name,address,notes
 ?bfmeDo1006@BfmeHub1006@@QAEXXZ,0x000290D2,pin
 ?bfmeDo1014F@BfmeF1014A@@QAEXH@Z,0x0001C927,pin
 ?bfmeDo1014G@BfmeF1014B@@QAEXH@Z,0x0001E9F2,pin
+?bfmeDo1015A@BfmeI1015A@@QAEXHHH@Z,0x000449F4,pin
+?bfmeDo1015B@BfmeI1015B@@QAEXHH@Z,0x000020CC,pin
 ?bfmeDo912C@BfmeThing912C@@QAEXPAUBfmeNode912C@@@Z,0x009F4D80,pin
 ?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
 ?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
@@ -72958,6 +72960,7 @@ name,address,notes
 ?bfmeErase@S4Mem005879C0@@AAEXPAX@Z,0x00037353,Open-BFME5 ILT thunk; ??1S4Mem005879C0@@QAE@XZ at 0x005879C0 hands it the field at +4 of its header before putting the header back to itself; address-derived name
 ?bfmeEraseFrom@BfmeListW@@QAEXPAVBfmeNodeW@@@Z,0x00037AB5,Open-BFME5 the ICF thunk (to 0x00437AB5) the list clear at 0x004B1720 erases through
 ?bfmeFailDXE@@YGXH@Z,0x00AFD540,pin
+?bfmeFallback1015@BfmeM1015@@QAEXHH@Z,0x008A48A0,pin
 ?bfmeFallback961@BfmeHost961@@QAEXHH@Z,0x0001C46D,pin
 ?bfmeFallback977C@@YADXZ,0x00892210,pin
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
@@ -73326,6 +73329,7 @@ name,address,notes
 ?bfmeGetID@BfmeDrawableWithID@@QAEIXZ,0x00009B01,Open-BFME5 ILT both drawable lookup-table wrappers at 0x00431C20 and 0x00430B50 read the id through
 ?bfmeGetLastDamagePlayerIndex@Object@@QBEHXZ,0x0000515A,Open-BFME5 ILT thunk to body 0x001BF060; BodyModuleInterface last-damage slot 15 supplies sourcePlayerMask resolved through PlayerList and returned as Player index; bfme prefix records unrecovered retail spelling
 ?bfmeGetLastShotPosition@BfmeFiringTracker@@QBE?AUBfmeFiringPosition@@XZ,0x000228BD,Open-BFME5 ILT to body 0x001BD7D0; FiringTracker+0x48 last-shot position getter used by Object wrapper 0x001BF970
+?bfmeGetMgr1015@@YAPAVBfmeMgr1015@@XZ,0x007EFFC0,pin
 ?bfmeGetNonnegativePreferredLocomotorHeight@Object@@QBEMXZ,0x000047C8,Open-BFME5 ILT thunk to body 0x001BE030; Object m_ai at +0x204 and AIUpdateInterface m_curLocomotor at +0x1CC; returns canonical getPreferredHeight clamped to shared 0.0f; bfme prefix records unrecovered retail spelling
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
@@ -73761,6 +73765,7 @@ name,address,notes
 ?bfmeReserve@Gen_000B54C0@@AAEXHPAX@Z,0x00043E37,Open-BFME5 ILT the vector assignment at 0x000B54C0 reserves through
 ?bfmeReserve@Gen_002F8980@@AAEXHPAX@Z,0x00015ABE,Open-BFME5 ILT the vector assignment at 0x002F8980 reserves through
 ?bfmeReserve@Gen_003A9560@@AAEXHPAX@Z,0x00027098,Open-BFME5 ILT the vector assignment at 0x003A9560 reserves through
+?bfmeReset1015@BfmeL1015@@QAEXXZ,0x007E86C0,pin
 ?bfmeReset961@BfmeResetA961@@QAEXXZ,0x0001BC75,pin
 ?bfmeReset988D@BfmeUnit988@@QAEXXZ,0x000065E1,pin
 ?bfmeReset@BfmeItemS@@QAEXXZ,0x00036A9D,Open-BFME5 the ICF thunk (to 0x00436A9D) the clear at 0x003CFBA0 calls per item
@@ -75518,6 +75523,7 @@ name,address,notes
 ?g_bfmeRealRangeFormat@@3QBDB,0x01144480,address-derived RealRange format string from retail 0x009D9899
 ?g_bfmeRefEMIa@@3PAUBfmeRefEMI@@A,0x00ED5140,pin
 ?g_bfmeRefEMIb@@3PAUBfmeRefEMI@@A,0x00ED5978,pin
+?g_bfmeReg1015@@3PAVBfmeReg1015@@A,0x00EF12CC,pin
 ?g_bfmeReg963@@3PAVBfmeReg963@@A,0x00EF10D0,pin
 ?g_bfmeReg988@@3PAVBfmeReg988@@A,0x00EF1044,pin
 ?g_bfmeRegion2DFormat@@3QBDB,0x0114442C,address-derived Region2D format string from retail 0x009D9814
