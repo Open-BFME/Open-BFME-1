@@ -2268,19 +2268,116 @@ void ControlBar::setPortraitByImage( const Image *image )
 /** Show a rally point marker at the world location specified.  If no location is specified
 	* any marker that we might have visible is hidden */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_showRallyPoint_Thunk.cpp
-// ?showRallyPoint@ControlBar@@IAEXPBUCoord3D@@@Z present-unmatched
+// BFME's rally-point marker differs from the reference in three ways that are
+// all visible in the call sequence: newDrawable takes a third argument (retail
+// pushes -1 after the status bits), setDrawableStatus is inlined to an OR into
+// the dword at Drawable+0x110, and the whole position/orientation/colour block
+// is guarded by `if (marker)`.  The reference guards only the creation arm and
+// then dereferences the marker unconditionally -- under NDEBUG its
+// DEBUG_ASSERTCRASH compiles away and nothing is left to stop a null.
+class BFMERetailAsciiString
+{
+public:
+	BFMERetailAsciiString( const char *string );
+	~BFMERetailAsciiString() { releaseBuffer(); }
+private:
+	void releaseBuffer();
+	char *m_data;
+};
+
+// BFME's GameClient vtable is not the vendored one: findDrawableByID is slot 11
+// (+0x2C) against slot 8 (+0x20) here, and destroyDrawable slot 24 (+0x60)
+// against slot 19 (+0x4C).  Three virtuals ahead of findDrawableByID and two more
+// between it and destroyDrawable that the reference header does not declare.
+class BFMEGameClientDrawables
+{
+public:
+	virtual void unused00() = 0;
+	virtual void unused01() = 0;
+	virtual void unused02() = 0;
+	virtual void unused03() = 0;
+	virtual void unused04() = 0;
+	virtual void unused05() = 0;
+	virtual void unused06() = 0;
+	virtual void unused07() = 0;
+	virtual void unused08() = 0;
+	virtual void unused09() = 0;
+	virtual void unused10() = 0;
+	virtual Drawable *findDrawableByID( const DrawableID id ) = 0;	///< vtable +0x2C
+	virtual void unused12() = 0;
+	virtual void unused13() = 0;
+	virtual void unused14() = 0;
+	virtual void unused15() = 0;
+	virtual void unused16() = 0;
+	virtual void unused17() = 0;
+	virtual void unused18() = 0;
+	virtual void unused19() = 0;
+	virtual void unused20() = 0;
+	virtual void unused21() = 0;
+	virtual void unused22() = 0;
+	virtual void unused23() = 0;
+	virtual void destroyDrawable( Drawable *draw ) = 0;		///< vtable +0x60
+};
+
+// Four fields the vendored headers place earlier than BFME does: the downwind
+// angle at GlobalData+0x17C against +0x15C, the time of day at +0x218 against
+// +0x204, and the player's day/night indicator colours at Player+0x1C4/+0x1C8
+// against +0x124/+0x128.
+struct BfmeRallyPointGlobalData
+{
+	unsigned char m_unreconstructed_000[ 0x17c ];
+	Real m_downwindAngle;					///< retail this+0x17C
+	unsigned char m_unreconstructed_180[ 0x218 - 0x180 ];
+	TimeOfDay m_timeOfDay;					///< retail this+0x218
+};
+
+struct BfmeRallyPointPlayer
+{
+	unsigned char m_unreconstructed_000[ 0x1c4 ];
+	Color m_playerColor;					///< retail this+0x1C4
+	Color m_playerNightColor;				///< retail this+0x1C8
+};
+
+struct BfmeRallyPointControlBar
+{
+	unsigned char m_unreconstructed_000[ 0x64 ];
+	DrawableID m_rallyPointDrawableID;			///< retail this+0x64
+};
+
+struct BfmeRallyPointDrawable
+{
+	unsigned char m_unreconstructed_000[ 0x110 ];
+	UnsignedInt m_status;					///< retail this+0x110
+};
+
+// findTemplate is an inline forwarding to findTemplateInternal(name, check) in
+// the vendored header, so the shared spelling pushes the default TRUE as well;
+// retail calls a one-argument lookup.  newDrawable takes a third argument retail
+// passes -1 for, which is the spelling BFMEThingFactory_newDrawable.cpp already
+// carries.
+class BFMEThingFactory
+{
+public:
+	const ThingTemplate *findTemplate( const AsciiString &name );
+	Drawable *newDrawable( const ThingTemplate *tmplate, DrawableStatus statusBits, Int unknown );
+};
+
 void ControlBar::showRallyPoint( const Coord3D *loc )
 {
+	BfmeRallyPointControlBar *self = (BfmeRallyPointControlBar *)this;
 
 	// if loc is NULL, destroy any rally point drawble we have shown
 	if( loc == NULL )
 	{
 
 		// destroy rally point drawable if present
-		if( m_rallyPointDrawableID != INVALID_DRAWABLE_ID )
-			TheGameClient->destroyDrawable( TheGameClient->findDrawableByID( m_rallyPointDrawableID ) );
-		m_rallyPointDrawableID = INVALID_DRAWABLE_ID;
+		// BFME clears the id only when it actually destroyed something; the
+		// reference clears it unconditionally, one line further out.
+		if( self->m_rallyPointDrawableID != INVALID_DRAWABLE_ID )
+		{
+			((BFMEGameClientDrawables *)TheGameClient)->destroyDrawable( ((BFMEGameClientDrawables *)TheGameClient)->findDrawableByID( self->m_rallyPointDrawableID ) );
+			self->m_rallyPointDrawableID = INVALID_DRAWABLE_ID;
+		}
 
 	}  // end if
 	else
@@ -2288,36 +2385,41 @@ void ControlBar::showRallyPoint( const Coord3D *loc )
 		Drawable *marker = NULL;
 
 		// create a rally point drawble if necessary
-		if( m_rallyPointDrawableID == INVALID_DRAWABLE_ID )
+		if( self->m_rallyPointDrawableID == INVALID_DRAWABLE_ID )
 		{
 
-			const ThingTemplate* ttn = TheThingFactory->findTemplate("RallyPointMarker");
-			marker = TheThingFactory->newDrawable( ttn );
-			DEBUG_ASSERTCRASH( marker, ("showRallyPoint: Unable to create rally point drawable\n") );
+			const ThingTemplate* ttn;
+			{
+				BFMERetailAsciiString markerName( "RallyPointMarker" );
+				ttn = ((BFMEThingFactory *)TheThingFactory)->findTemplate( *(const AsciiString *)&markerName );
+			}
+			marker = ((BFMEThingFactory *)TheThingFactory)->newDrawable( ttn, DRAWABLE_STATUS_NONE, -1 );
 			if (marker)
 			{
-				marker->setDrawableStatus(DRAWABLE_STATUS_NO_SAVE);
-				m_rallyPointDrawableID = marker->getID();
+				((BfmeRallyPointDrawable *)marker)->m_status |= DRAWABLE_STATUS_NO_SAVE;
+				self->m_rallyPointDrawableID = marker->getID();
 			}
 
 		}  // end if
 		else
-			marker = TheGameClient->findDrawableByID( m_rallyPointDrawableID );
+			marker = ((BFMEGameClientDrawables *)TheGameClient)->findDrawableByID( self->m_rallyPointDrawableID );
 
-		// sanity
-		DEBUG_ASSERTCRASH( marker, ("showRallyPoint: No rally point marker found\n" ) );
+		if (marker)
+		{
 
-		// set the position of the rally point drawble to the position passed in
-		marker->setPosition( loc );
-		marker->setOrientation( TheGlobalData->m_downwindAngle );//To blow down wind -- ML
+			// set the position of the rally point drawble to the position passed in
+			marker->setPosition( loc );
+			marker->setOrientation( ((const BfmeRallyPointGlobalData *)TheGlobalData)->m_downwindAngle );//To blow down wind -- ML
 
-		// set the marker colors to that of the local player
-		Player *player = ThePlayerList->getLocalPlayer();
+			// set the marker colors to that of the local player
+			Player *player = ThePlayerList->getLocalPlayer();
 
-		if (TheGlobalData->m_timeOfDay == TIME_OF_DAY_NIGHT)
-			marker->setIndicatorColor( player->getPlayerNightColor() );
-		else
-			marker->setIndicatorColor( player->getPlayerColor() );
+			if (((const BfmeRallyPointGlobalData *)TheGlobalData)->m_timeOfDay == TIME_OF_DAY_NIGHT)
+				marker->setIndicatorColor( ((const BfmeRallyPointPlayer *)player)->m_playerNightColor );
+			else
+				marker->setIndicatorColor( ((const BfmeRallyPointPlayer *)player)->m_playerColor );
+
+		}
 
 	}  // end else
 
@@ -2663,16 +2765,6 @@ void ControlBar::setHiddenControlBar( void )
 //	}
 //}
 //
-class BFMERetailAsciiString
-{
-public:
-	BFMERetailAsciiString( const char *string );
-	~BFMERetailAsciiString() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-	char *m_data;
-};
-
 class BFMERetailCommandButton
 {
 public:
