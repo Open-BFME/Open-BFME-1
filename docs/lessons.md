@@ -1111,3 +1111,40 @@ overstates by about a fifth.
 And do NOT filter on status=matched to find the unconverted ones. All 18 are
 matched -- from Code/gen_asm/*.asm, because a dump matches by construction. The
 discriminator is the SOURCE PATH, not the status column.
+
+## A by-value string argument needs a VISIBLE copy, not an opaque one
+
+The wall: retail passes AsciiString/UnicodeString by value, and the vendored
+header's copy constructor is out of line, so the temporary is opaque and MSVC
+schedules the unwind-slot store after the copy-constructor receiver load where
+retail stores first. It gates roughly 114 of 511 clean cluster donors, so it is
+worth getting right.
+
+The fix is a per-file view, NOT a shim header and NOT a full-tree gate. But the
+SHAPE decides it, and the obvious shape is the wrong one. A view with an opaque
+copy -- declared, never defined -- removes the inlining and still leaves MSVC
+hoisting the receiver's global and vtable across the call. Retail's compiler saw
+a VISIBLE copy that delegates to a base constructor which is itself declared and
+never defined:
+
+    class BfmeStringArgBase { friend class BfmeAsciiStringArg;
+    private: BfmeStringArgBase( const BfmeStringArgBase & ); ~BfmeStringArgBase(); };
+
+    class BfmeAsciiStringArg { public:
+        BfmeAsciiStringArg( const AsciiString &that )
+        { ((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
+              *(const BfmeStringArgBase *)&that); }
+        ~BfmeAsciiStringArg();
+    private: char *m_text; };
+
+Opaque and visible-delegating are both different from the reference header and
+only the second matches. This is "temporaries schedule by how visible their type
+is" applied in the right direction -- and the shape is not invented, it is what
+the sibling donors' own shims already spell, which is why they match and a
+merged body does not.
+
+Cost: a few additive aliases at addresses already pinned under the real string
+spellings, each reached through a call so the rel32 proves it. And the cost is
+ZERO for any further call site whose callee is virtual, because a view's virtual
+signature can change types freely -- one body matched first try with no new pins
+at all.
