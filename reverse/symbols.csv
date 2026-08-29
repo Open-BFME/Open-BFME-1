@@ -79733,3 +79733,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?assign@Open2C800Target@@QAEXPAX@Z,0x0001BA31,Open2 0x0053C800 callee (ILT -> 0x0053C710)
+?invoke@Open2381C0Impl@@QAEXHPAX0@Z,0x00840F00,Open2 0x005381C0 callee
