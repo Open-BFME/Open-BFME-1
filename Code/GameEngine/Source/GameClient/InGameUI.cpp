@@ -573,11 +573,16 @@ void InGameUI::setMouseCursor(Mouse::MouseCursor c)
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUIFindSWInfoThunk.cpp
-// ?findSWInfo@InGameUI@@IAEPAVSuperweaponInfo@@HABVAsciiString@@W4ObjectID@@PBVSpecialPowerTemplate@@@Z present-unmatched
 SuperweaponInfo* InGameUI::findSWInfo(Int playerIndex, const AsciiString& powerName, ObjectID id, const SpecialPowerTemplate *powerTemplate)
 {
-	SuperweaponMap::iterator mapIt = m_superweapons[playerIndex].find(powerName);
-	if (mapIt != m_superweapons[playerIndex].end())
+	// BFME's per-player map array is at this+0x5CC; the ZH class puts it at
+	// +0x17F0 because MAX_PLAYER_COUNT is 16 where retail sizes it 32. Same
+	// 12-byte stride either way. The SpecialPowerTemplate argument is never
+	// read -- retail matches on the ObjectID alone.
+	SuperweaponMap *superweapons = (SuperweaponMap *)((char *)this + 0x5cc);
+
+	SuperweaponMap::iterator mapIt = superweapons[playerIndex].find(powerName);
+	if (mapIt != superweapons[playerIndex].end())
 	{
 		for (SuperweaponList::iterator listIt = mapIt->second.begin(); listIt != mapIt->second.end(); ++listIt)
 		{
@@ -1431,17 +1436,54 @@ void InGameUI::triggerDoubleClickAttackMoveGuardHint( void )
 
 
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_evaluateSoloNexus_Thunk.cpp
-// ?evaluateSoloNexus@InGameUI@@IAEXPAVDrawable@@@Z present-unmatched
+// BFME numbers KINDOF_MOB_NEXUS 46 and KINDOF_IGNORED_IN_GUI 47 where the
+// reference enum numbers them 42 and 43 -- four entries earlier in the same
+// list -- so the two are bit 14 and bit 15 of the template's second mask word
+// either way. The loop below reads that word directly at template+0xCC where
+// the early-out still calls isKindOf; retail draws the same distinction.
+enum { BFME_KINDOF_MOB_NEXUS = 46, BFME_KINDOF_IGNORED_IN_GUI = 47 };
+
+struct BfmeKindOfMaskTemplate
+{
+	UnsignedByte pad[0xcc];
+	UnsignedInt highMask;				///< retail template+0xCC; bit 0x4000 / 0x8000
+};
+
+// retail Thing+0x04, ahead of everything the ZH class packs before m_template
+struct BfmeSoloNexusThing
+{
+	void *vtable;
+	OVERRIDE<ThingTemplate> templateOverride;
+
+	const BfmeKindOfMaskTemplate *kindOfTemplate() const
+	{
+		return (const BfmeKindOfMaskTemplate *)templateOverride.operator->();
+	}
+};
+
+struct BfmeSoloNexusDrawable
+{
+	UnsignedByte pad[0xfc];
+	Object *object;						///< retail Drawable+0xFC
+};
+
+struct BfmeSoloNexusUI
+{
+	UnsignedByte pad[0x13a4];
+	DrawableID soloNexusSelectedDrawableID;			///< retail this+0x13A4
+};
+
 void InGameUI::evaluateSoloNexus( Drawable *newlyAddedDrawable )
 {
+	BfmeSoloNexusUI *self = (BfmeSoloNexusUI *)this;
 
-	m_soloNexusSelectedDrawableID = INVALID_DRAWABLE_ID;//failsafe...
+	self->soloNexusSelectedDrawableID = INVALID_DRAWABLE_ID;//failsafe...
 
 	// short test: If the thing just added is a nonmobster, bail with NULL
 	if ( newlyAddedDrawable )
 	{
-		const Object *newObj = newlyAddedDrawable->getObject();
-		if ( newObj && ! ( newObj->isKindOf(KINDOF_MOB_NEXUS) || newObj->isKindOf(KINDOF_IGNORED_IN_GUI) ) )
+		const Object *newObj = ((BfmeSoloNexusDrawable *)newlyAddedDrawable)->object;
+		if ( newObj && ! ( newObj->isKindOf((KindOfType)BFME_KINDOF_MOB_NEXUS) || newObj->isKindOf((KindOfType)BFME_KINDOF_IGNORED_IN_GUI) ) )
 			return;
 	}
 
@@ -1451,28 +1493,28 @@ void InGameUI::evaluateSoloNexus( Drawable *newlyAddedDrawable )
 	{
 
 		Drawable *draw = (*it);
-		const Object *obj = draw->getObject();
+		const Object *obj = ((BfmeSoloNexusDrawable *)draw)->object;
 
 
 		if ( ! obj )
 			continue;
 			
-		if ( obj->isKindOf( KINDOF_MOB_NEXUS ) )
+		if ( ((const BfmeSoloNexusThing *)obj)->kindOfTemplate()->highMask & 0x4000 )
 		{
 			++nexaeFound;
 			if ( nexaeFound == 1 )
 			{
-				m_soloNexusSelectedDrawableID = draw->getID();
+				self->soloNexusSelectedDrawableID = draw->getID();
 			}
 			else // darn! more than one!
 			{
-				m_soloNexusSelectedDrawableID = INVALID_DRAWABLE_ID;
+				self->soloNexusSelectedDrawableID = INVALID_DRAWABLE_ID;
 				return;
 			}
 		}
-		else if ( ! obj->isKindOf( KINDOF_IGNORED_IN_GUI ) )// darn! a non-angrymobster!
+		else if ( ! (((const BfmeSoloNexusThing *)obj)->kindOfTemplate()->highMask & 0x8000) )// darn! a non-angrymobster!
 		{
-			m_soloNexusSelectedDrawableID = INVALID_DRAWABLE_ID;
+			self->soloNexusSelectedDrawableID = INVALID_DRAWABLE_ID;
 			return;
 		}
 
