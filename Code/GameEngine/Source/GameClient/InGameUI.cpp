@@ -572,7 +572,6 @@ void InGameUI::setMouseCursor(Mouse::MouseCursor c)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUIFindSWInfoThunk.cpp
 SuperweaponInfo* InGameUI::findSWInfo(Int playerIndex, const AsciiString& powerName, ObjectID id, const SpecialPowerTemplate *powerTemplate)
 {
 	// BFME's per-player map array is at this+0x5CC; the ZH class puts it at
@@ -1435,7 +1434,6 @@ void InGameUI::triggerDoubleClickAttackMoveGuardHint( void )
 //-------------------------------------------------------------------------------------------------
 
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_evaluateSoloNexus_Thunk.cpp
 // BFME numbers KINDOF_MOB_NEXUS 46 and KINDOF_IGNORED_IN_GUI 47 where the
 // reference enum numbers them 42 and 43 -- four entries earlier in the same
 // list -- so the two are bit 14 and bit 15 of the template's second mask word
