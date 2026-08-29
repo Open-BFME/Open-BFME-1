@@ -290,6 +290,105 @@ public:
 	virtual Waypoint *getWaypointByName( BfmeAsciiStringArg name ) = 0;
 };
 
+// BFME's string data header is eight bytes where the reference's is four, so the
+// characters begin at m_data+8 rather than m_data+4 -- the same two-word header
+// NetPacket.cpp carries.
+struct BfmeAsciiStringData
+{
+	unsigned char m_unreconstructed_00[8];
+};
+
+static const char *bfmeStringChars( const AsciiString &str )
+{
+	const BfmeAsciiStringData *data = *(const BfmeAsciiStringData * const *)&str;
+	return data ? (const char *)(data + 1) : "";
+}
+
+// BFME's ScriptEngine vtable puts getTeamNamed at slot 17, it takes the team
+// name by value, and it carries a second Bool the reference header does not
+// declare -- the `push 0` ahead of the string temporary is that argument.
+class BfmeScriptEngineVtbl_44
+{
+public:
+	virtual void _se44_0() = 0;
+	virtual void _se44_1() = 0;
+	virtual void _se44_2() = 0;
+	virtual void _se44_3() = 0;
+	virtual void _se44_4() = 0;
+	virtual void _se44_5() = 0;
+	virtual void _se44_6() = 0;
+	virtual void _se44_7() = 0;
+	virtual void _se44_8() = 0;
+	virtual void _se44_9() = 0;
+	virtual void _se44_10() = 0;
+	virtual void _se44_11() = 0;
+	virtual void _se44_12() = 0;
+	virtual void _se44_13() = 0;
+	virtual void _se44_14() = 0;
+	virtual void _se44_15() = 0;
+	virtual void _se44_16() = 0;
+	virtual Team *getTeamNamed( BfmeAsciiStringArg name, Bool exact = FALSE ) = 0;
+};
+
+// BFME's View vtable puts rotateCameraTowardPosition at slot 52.
+class BfmeViewVtbl_d0
+{
+public:
+	virtual void _vd0_0() = 0;
+	virtual void _vd0_1() = 0;
+	virtual void _vd0_2() = 0;
+	virtual void _vd0_3() = 0;
+	virtual void _vd0_4() = 0;
+	virtual void _vd0_5() = 0;
+	virtual void _vd0_6() = 0;
+	virtual void _vd0_7() = 0;
+	virtual void _vd0_8() = 0;
+	virtual void _vd0_9() = 0;
+	virtual void _vd0_10() = 0;
+	virtual void _vd0_11() = 0;
+	virtual void _vd0_12() = 0;
+	virtual void _vd0_13() = 0;
+	virtual void _vd0_14() = 0;
+	virtual void _vd0_15() = 0;
+	virtual void _vd0_16() = 0;
+	virtual void _vd0_17() = 0;
+	virtual void _vd0_18() = 0;
+	virtual void _vd0_19() = 0;
+	virtual void _vd0_20() = 0;
+	virtual void _vd0_21() = 0;
+	virtual void _vd0_22() = 0;
+	virtual void _vd0_23() = 0;
+	virtual void _vd0_24() = 0;
+	virtual void _vd0_25() = 0;
+	virtual void _vd0_26() = 0;
+	virtual void _vd0_27() = 0;
+	virtual void _vd0_28() = 0;
+	virtual void _vd0_29() = 0;
+	virtual void _vd0_30() = 0;
+	virtual void _vd0_31() = 0;
+	virtual void _vd0_32() = 0;
+	virtual void _vd0_33() = 0;
+	virtual void _vd0_34() = 0;
+	virtual void _vd0_35() = 0;
+	virtual void _vd0_36() = 0;
+	virtual void _vd0_37() = 0;
+	virtual void _vd0_38() = 0;
+	virtual void _vd0_39() = 0;
+	virtual void _vd0_40() = 0;
+	virtual void _vd0_41() = 0;
+	virtual void _vd0_42() = 0;
+	virtual void _vd0_43() = 0;
+	virtual void _vd0_44() = 0;
+	virtual void _vd0_45() = 0;
+	virtual void _vd0_46() = 0;
+	virtual void _vd0_47() = 0;
+	virtual void _vd0_48() = 0;
+	virtual void _vd0_49() = 0;
+	virtual void _vd0_50() = 0;
+	virtual void _vd0_51() = 0;
+	virtual void rotateCameraTowardPosition( const Coord3D *pos, Int msec, Real easeIn, Real easeOut, Bool reverse ) = 0;
+};
+
 // BFME's audio event is 0x70 bytes where the reference's is 0x64, so a local one
 // reserves twelve more bytes of frame. Deriving from AudioEventRTS would size it
 // correctly but adds a vptr store the retail body does not make, so this is a
@@ -1454,13 +1553,12 @@ void ScriptActions::doRotateCameraTowardObject(const AsciiString& unitName, Real
 //-------------------------------------------------------------------------------------------------
 /** doRotateCameraTowardWaypoint */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doRotateCameraTowardWaypoint_Thunk.cpp
-// ?doRotateCameraTowardWaypoint@ScriptActions@@IAEXABVAsciiString@@MMM_N@Z present-unmatched
+// ?doRotateCameraTowardWaypoint@ScriptActions@@IAEXABVAsciiString@@MMM_N@Z
 void ScriptActions::doRotateCameraTowardWaypoint(const AsciiString& waypointName, Real sec, Real easeIn, Real easeOut, Bool reverseRotation)
 {
-	Waypoint *way = TheTerrainLogic->getWaypointByName(waypointName);
+	Waypoint *way = ((BfmeTerrainLogicVtbl_7c *)TheTerrainLogic)->getWaypointByName(waypointName);
 	if (way==NULL) return;
-	TheTacticalView->rotateCameraTowardPosition(way->getLocation(), sec*1000.0f, easeIn*1000.0f, easeOut*1000.0f, reverseRotation);			
+	((BfmeViewVtbl_d0 *)TheTacticalView)->rotateCameraTowardPosition(way->getLocation(), sec*1000.0f, easeIn*1000.0f, easeOut*1000.0f, reverseRotation);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -5458,12 +5556,11 @@ void ScriptActions::doTeamRemoveOverrideRelationToTeam(const AsciiString& teamNa
 //-------------------------------------------------------------------------------------------------
 /** doPlayerSetOverrideRelationToTeam */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doPlayerSetOverrideRelationToTeam_Thunk.cpp
-// ?doPlayerSetOverrideRelationToTeam@ScriptActions@@IAEXABVAsciiString@@0H@Z present-unmatched
+// ?doPlayerSetOverrideRelationToTeam@ScriptActions@@IAEXABVAsciiString@@0H@Z
 void ScriptActions::doPlayerSetOverrideRelationToTeam(const AsciiString& playerName, const AsciiString& otherTeam, Int relation)
 {
-	Player *thePlayer = ThePlayerList->findPlayerWithNameKey(NAMEKEY(playerName));
-	Team *theOtherTeam = TheScriptEngine->getTeamNamed( otherTeam );
+	Player *thePlayer = ThePlayerList->findPlayerWithNameKey(NAMEKEY(bfmeStringChars(playerName)));
+	Team *theOtherTeam = ((BfmeScriptEngineVtbl_44 *)TheScriptEngine)->getTeamNamed( otherTeam );
 	if (thePlayer && theOtherTeam) {
 		thePlayer->setTeamRelationship(theOtherTeam, (Relationship)relation);
 	}
