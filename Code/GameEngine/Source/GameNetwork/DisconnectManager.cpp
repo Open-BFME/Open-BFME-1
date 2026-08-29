@@ -692,21 +692,35 @@ void DisconnectManager::turnOffScreen(Int localSlot) {
 	m_timeOfDisconnectScreenOn = 0;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManagerTurnOnScreenBfme.cpp
-// ?turnOnScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z present-unmatched
+// BFME's show-screen helper is called with NO receiver: it loads
+// TheDisconnectMenu itself and creates the DisconnectScreen.apt layout
+// internally, so the reference's TheDisconnectMenu->showScreen() passes a `this'
+// retail does not. BFME also makes no hidePacketRouterTimeout call here at all.
+extern void bfmeShowDisconnectScreen(void);				///< retail 0x0050e9a0
+
+struct BfmeDisconnectScreenFields
+{
+	char m_unreconstructed_00[0x0C];
+	Int m_disconnectState;						///< retail this+0x0c
+	Int m_lastKeepAliveSendTime;					///< retail this+0x10
+	char m_unreconstructed_14[0x258 - 0x14];
+	Int m_haveNotifiedOtherPlayersOfCurrentFrame;			///< retail this+0x258
+	Int m_timeOfDisconnectScreenOn;					///< retail this+0x25c
+};
+
+// ?turnOnScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z
 void DisconnectManager::turnOnScreen(ConnectionManager *conMgr) {
-	TheDisconnectMenu->showScreen();
-	DEBUG_LOG(("DisconnectManager::turnOnScreen - turning on screen on frame %d\n", TheGameLogic->getFrame()));
-	m_disconnectState = DISCONNECTSTATETYPE_SCREENON;
-	m_lastKeepAliveSendTime = -1;
+	BfmeDisconnectScreenFields *self = (BfmeDisconnectScreenFields *)this;
+
+	bfmeShowDisconnectScreen();
+	self->m_disconnectState = DISCONNECTSTATETYPE_SCREENON;
+	self->m_lastKeepAliveSendTime = -1;
 	populateDisconnectScreen(conMgr);
 	resetPlayerTimeouts(conMgr);
-	TheDisconnectMenu->hidePacketRouterTimeout();
 
-	m_haveNotifiedOtherPlayersOfCurrentFrame = FALSE;
+	self->m_haveNotifiedOtherPlayersOfCurrentFrame = FALSE;
 
-	m_timeOfDisconnectScreenOn = timeGetTime();
-	DEBUG_LOG(("DisconnectManager::turnOnScreen - turned on screen at time %d\n", m_timeOfDisconnectScreenOn));
+	self->m_timeOfDisconnectScreenOn = timeGetTime();
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManager_disconnectPlayer_Thunk.cpp
@@ -813,22 +827,46 @@ void DisconnectManager::recalculatePacketRouterIndex(ConnectionManager *conMgr) 
 	DEBUG_ASSERTCRASH((m_currentPacketRouterIndex < MAX_SLOTS), ("Invalid packet router index"));
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManager_allOnSameFrame_Thunk.cpp
-// ?allOnSameFrame@DisconnectManager@@IAE_NPAVConnectionManager@@@Z present-unmatched
+// BFME asks TWO more questions per slot before it will hold that slot to the
+// frame check. Both are per-slot predicates on the connection manager that the
+// reference class does not declare, and both are shape-only names: one reads the
+// state word at conMgr+0x12080 and answers whether it is in range, the other
+// answers true immediately for the local slot at conMgr+0x12028. The reference
+// copy checks only connected-and-in-game, so it holds slots to the frame check
+// that retail excludes.
+class BfmeSlotStateConnectionManager
+{
+public:
+	Bool _bfme_slotStateInRange( Int slot );			///< retail ILT 0x000486b2
+	Bool _bfme_slotIsLocalOrLive( Int slot );			///< retail ILT 0x0001f136
+};
+
+struct BfmeDisconnectFrameFields
+{
+	char m_unreconstructed_000[0x230];
+	Int m_disconnectFrames[MAX_SLOTS];				///< retail this+0x230
+	Bool m_disconnectFramesReceived[MAX_SLOTS];			///< retail this+0x250
+};
+
+// ?allOnSameFrame@DisconnectManager@@IAE_NPAVConnectionManager@@@Z
 Bool DisconnectManager::allOnSameFrame(ConnectionManager *conMgr) {
+	BfmeDisconnectFrameFields *self = (BfmeDisconnectFrameFields *)this;
+	BfmeSlotStateConnectionManager *slots = (BfmeSlotStateConnectionManager *)conMgr;
+
 	Bool retval = TRUE;
 	for (Int i = 0; (i < MAX_SLOTS) && (retval == TRUE); ++i) {
 		Int transSlot = translatedSlotPosition(i, conMgr->getLocalPlayerID());
 		if (transSlot == -1) {
 			continue;
 		}
-		if ((conMgr->isPlayerConnected(i) == TRUE) && (isPlayerInGame(transSlot, conMgr) == TRUE)) {
+		if ((conMgr->isPlayerConnected(i) == TRUE) && (isPlayerInGame(transSlot, conMgr) == TRUE)
+				&& (slots->_bfme_slotStateInRange(i) == FALSE) && slots->_bfme_slotIsLocalOrLive(i)) {
 			// ok, i is someone who is in the game and hasn't timed out yet or been voted out.
-			if (m_disconnectFramesReceived[i] == FALSE) {
+			if (self->m_disconnectFramesReceived[i] == FALSE) {
 				// we don't know what frame they are on yet.
 				retval = FALSE;
 			}
-			if ((m_disconnectFramesReceived[i] == TRUE) && (m_disconnectFrames[conMgr->getLocalPlayerID()] != m_disconnectFrames[i])) {
+			if ((self->m_disconnectFramesReceived[i] == TRUE) && (self->m_disconnectFrames[conMgr->getLocalPlayerID()] != self->m_disconnectFrames[i])) {
 				// We know their frame, but they aren't on the same frame as us.
 				retval = FALSE;
 			}
