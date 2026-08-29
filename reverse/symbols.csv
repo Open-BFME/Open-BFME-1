@@ -80402,3 +80402,7 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@@1@ABVAsciiString@@@Z,0x00013ED5,Open-BFME5 same ILT as the PAU spelling above; InGameUI.cpp declares NamedTimerInfo a class so the map instantiates with V. ILT jumps to 0x00448EE0 the ledger's STLport _M_find over an AsciiString key
+??1?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@QAE@XZ,0x000011E5,Open-BFME5 same ILT as the PAU spelling above; the V spelling is what InGameUI.cpp emits. ILT jumps to 0x00440030 which tail-jumps to AsciiString releaseBuffer - the pair's only destructible member
+??0BfmeUnicodeArgBase@@AAE@ABV0@@Z,0x00888400,alias of the wide string copy constructor pinned at the same address; InGameUI.cpp builds the by-value GadgetRadioSetText argument through a view because the reference header keeps the copy out of line
+?GadgetRadioSetText@@YAXPAVGameWindow@@VBfmeUnicodeStringArg@@@Z,0x000424F1,ILT for ?GadgetRadioSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z (jumps to 0x004BC6E0); the view type only changes the by-value argument's spelling
