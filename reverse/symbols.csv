@@ -73374,6 +73374,7 @@ name,address,notes
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
 ?bfmeInsertQI@BfmeThingQI@@QAEPADPADE@Z,0x0082FE50,pin
+?bfmeIntern996@BfmeMap996@@QAEHPAD@Z,0x0003ADD7,pin
 ?bfmeIntersects@GeometryInfo@@QBE_NABUCoord3D@@MABV1@0M@Z,0x0087F2F0,Open-BFME5 oriented GeometryInfo intersection predicate called by Object wrapper 0x001BE980; direct body pin; descriptive spelling
 ?bfmeInvoke@Gen_0064C6A0Target@@QAEXPAX0@Z,0x0001F785,Open-BFME5 the member the guarded dispatcher at 0x0064C6A0 calls
 ?bfmeInvoke@Gen_006CDF70Target@@QAEXPAX0@Z,0x0000560A,Open-BFME5 the member the guarded dispatcher at 0x006CDF70 calls
@@ -73920,6 +73921,7 @@ name,address,notes
 ?bfmeThrow937C@@YGXI@Z,0x00AFD540,pin
 ?bfmeTouch982C@BfmeT982@@QAEXXZ,0x0002D2C7,pin
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
+?bfmeTry996@BfmeB996@@QAEDHHPAD@Z,0x00038163,pin
 ?bfmeTryANA@BfmeThingANA@@QAEHPAX0@Z,0x0003381B,pin
 ?bfmeTwo920F@BfmeThing920F@@QAEXP6AXPAVLocomotorTemplate@@@Z@Z,0x00012B20,pin
 ?bfmeTwo928F@BfmeThing928F@@QAEXXZ,0x0001C9A9,pin
@@ -75241,6 +75243,7 @@ name,address,notes
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
+?g_bfmeDefault996@@3PADA,0x00D2233C,pin
 ?g_bfmeDisconnectPingResult@@3HA,0x012B9810,standalone disconnect ping-result state read and set by updateDisconnectStatus after the sub-ten-percent ratio check
 ?g_bfmeDoneAPB@@3_NA,0x00EED4E6,pin
 ?g_bfmeDrop995@@3PAVBfmeDrop995@@A,0x00EF12CC,pin
@@ -75308,6 +75311,7 @@ name,address,notes
 ?g_bfmeLookRP@@3PAVBfmeLookRP@@A,0x00EF076C,pin
 ?g_bfmeLookRQ@@3PAVBfmeLookRQ@@A,0x00EF076C,pin
 ?g_bfmeMakerAWB@@3PAVBfmeMakerAWB@@A,0x00EF12CC,pin
+?g_bfmeMap996@@3PAVBfmeMap996@@A,0x00EED600,pin
 ?g_bfmeMgr12F0898@@3PAUBfmeGlobalMgr12F0898@@A,0x00EF0898,pin
 ?g_bfmeMgr12F0898@@3PAVBfmeMgrEB2@@A,0x00EF0898,pin
 ?g_bfmeMgr12F0898@@3PAVBfmeMgrF5F@@A,0x00EF0898,pin
