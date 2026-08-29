@@ -10,11 +10,13 @@ class Matrix3D
 class Vector3 {};
 class Vector4 {};
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/sphere.h
 class SphereClass
 {
     float values[4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/streakRender.h
 class StreakRendererClass
 {
 public:
@@ -31,6 +33,7 @@ struct RetailPointContainer
     int growth;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/streak.h
 class StreakLineClass
 {
     virtual void reserved_0();
@@ -116,6 +119,7 @@ protected:
     void Render_Streak_Line(RenderInfoClass &);
 };
 
+// ?Render_Streak_Line@StreakLineClass@@ present-unmatched
 void StreakLineClass::Render_Streak_Line(RenderInfoClass &renderInfo)
 {
     if (PointLocations.count < 2) return;

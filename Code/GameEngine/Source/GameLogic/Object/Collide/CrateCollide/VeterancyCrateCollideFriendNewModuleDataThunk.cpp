@@ -32,6 +32,7 @@ private:
 	unsigned char m_pad[0x5c];
 };
 
+// ??0VeterancyCrateCollideModuleData@@ present-unmatched
 VeterancyCrateCollideModuleData::VeterancyCrateCollideModuleData()
 {
 	((VeterancyCrateCollideModuleDataBaseShim *)this)->construct();
@@ -44,6 +45,7 @@ VeterancyCrateCollideModuleData::VeterancyCrateCollideModuleData()
 	*(unsigned int *)((char *)this + 0x5c) = 0xa;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -52,6 +54,7 @@ public:
 
 extern "C" char VeterancyCrateCollideFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/VeterancyCrateCollide.h
 class VeterancyCrateCollide
 {
 public:

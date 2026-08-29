@@ -66,6 +66,7 @@ Open2ComHandle &Open2ComHandle::operator=( const Open2ComHandle &other )
 class IndexBufferClass;
 class VertexBufferClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:
@@ -73,6 +74,7 @@ public:
 	static void Set_Vertex_Buffer( const VertexBufferClass *buffer, unsigned int offset );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:

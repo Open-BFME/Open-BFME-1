@@ -126,6 +126,7 @@ FileSystem	*TheFileSystem = NULL;
 // FileSystem::FileSystem
 //============================================================================
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/FileSystemCtor.cpp
 // ??0FileSystem@@ present-unmatched
 FileSystem::FileSystem()
 {
@@ -136,6 +137,7 @@ FileSystem::FileSystem()
 // FileSystem::~FileSystem
 //============================================================================
 
+// ??1FileSystem@@ present-unmatched
 FileSystem::~FileSystem()
 {
 
@@ -180,6 +182,7 @@ void		FileSystem::reset( void )
 // FileSystem::open
 //============================================================================
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/FileSystem_openFile.cpp
 // ?openFile@FileSystem@@ present-unmatched
 File*		FileSystem::openFile( const Char *filename, Int access ) 
 {
@@ -247,6 +250,7 @@ Bool FileSystem::getFileInfo(const AsciiString& filename, FileInfo *fileInfo) co
 //============================================================================
 // FileSystem::createDirectory
 //============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/FileSystem_createDirectory.cpp
 // ?createDirectory@FileSystem@@ present-unmatched
 Bool FileSystem::createDirectory(AsciiString directory) 
 {

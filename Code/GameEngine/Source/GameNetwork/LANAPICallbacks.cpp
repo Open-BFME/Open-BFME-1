@@ -103,6 +103,7 @@ UnicodeString LANAPIInterface::getErrorStringFromReturnType( ReturnType ret )
 
 // On functions are (generally) the result of network traffic
 
+// ?OnAccept@LANAPI@@ present-unmatched
 void LANAPI::OnAccept( UnsignedInt playerIP, Bool status ) 
 { 
 	if( AmIHost() )
@@ -137,6 +138,7 @@ void LANAPI::OnAccept( UnsignedInt playerIP, Bool status )
 	}
 }// void LANAPI::OnAccept( UnicodeString player, Bool status ) 
 
+// ?OnHasMap@LANAPI@@ present-unmatched
 void LANAPI::OnHasMap( UnsignedInt playerIP, Bool status ) 
 { 
 	if( AmIHost() )
@@ -190,6 +192,7 @@ void LANAPI::OnGameStartTimer( Int seconds )
 	OnChat(UnicodeString(L"SYSTEM"), m_localIP, text, LANCHAT_SYSTEM);
 }
 
+// ?OnGameStart@LANAPI@@ present-unmatched
 void LANAPI::OnGameStart( void )
 {
 	//DEBUG_LOG(("Map is '%s', preview is '%s'\n", m_currentGame->getMap().str(), GetPreviewFromMap(m_currentGame->getMap()).str()));
@@ -272,6 +275,7 @@ void LANAPI::OnGameStart( void )
 	}
 }
 
+// ?OnGameOptions@LANAPI@@ present-unmatched
 void LANAPI::OnGameOptions( UnsignedInt playerIP, Int playerSlot, AsciiString options )
 {
 	if (!m_currentGame)
@@ -472,6 +476,7 @@ void LANAPI::OnGameOptions( UnsignedInt playerIP, Int playerSlot, AsciiString op
 
 
 /*
+// ?OnSlotList@LANAPI@@ present-unmatched
 void LANAPI::OnSlotList( ReturnType ret, LANGameInfo *theGame )
 {
 	if (!theGame || theGame != m_currentGame)
@@ -497,6 +502,7 @@ void LANAPI::OnSlotList( ReturnType ret, LANGameInfo *theGame )
 	lanUpdateSlotList();
 }
 */
+// ?OnPlayerJoin@LANAPI@@ present-unmatched
 void LANAPI::OnPlayerJoin( Int slot, UnicodeString playerName )
 {
 	if (m_currentGame && m_currentGame->getIP(0) == m_localIP)
@@ -511,6 +517,7 @@ void LANAPI::OnPlayerJoin( Int slot, UnicodeString playerName )
 	lanUpdateSlotList();
 }
 
+// ?OnGameJoin@LANAPI@@ present-unmatched
 void LANAPI::OnGameJoin( ReturnType ret, LANGameInfo *theGame )
 {
 	if (ret == RET_OK)
@@ -542,6 +549,7 @@ void LANAPI::OnGameJoin( ReturnType ret, LANGameInfo *theGame )
 	}
 }
 
+// ?OnHostLeave@LANAPI@@ present-unmatched
 void LANAPI::OnHostLeave( void )
 {
 	DEBUG_ASSERTCRASH(!m_inLobby && m_currentGame, ("Game info is gone!"));
@@ -552,6 +560,7 @@ void LANAPI::OnHostLeave( void )
 	TheShell->pop();
 }
 
+// ?OnPlayerLeave@LANAPI@@ present-unmatched
 void LANAPI::OnPlayerLeave( UnicodeString player )
 {
 	DEBUG_ASSERTCRASH(!m_inLobby && m_currentGame, ("Game info is gone!"));
@@ -592,6 +601,7 @@ void LANAPI::OnPlayerLeave( UnicodeString player )
 	}
 }
 
+// ?OnGameList@LANAPI@@ present-unmatched
 void LANAPI::OnGameList( LANGameInfo *gameList )
 {
 		
@@ -601,6 +611,7 @@ void LANAPI::OnGameList( LANGameInfo *gameList )
 	}
 }//void LANAPI::OnGameList( LANGameInfo *gameList ) 
 
+// ?OnGameCreate@LANAPI@@ present-unmatched
 void LANAPI::OnGameCreate( ReturnType ret )
 {
 	if (ret == RET_OK)
@@ -632,6 +643,7 @@ void LANAPI::OnGameCreate( ReturnType ret )
 
 }//void OnGameCreate( ReturnType ret )
 
+// ?OnPlayerList@LANAPI@@ present-unmatched
 void LANAPI::OnPlayerList( LANPlayer *playerList )
 {
 	if (m_inLobby)
@@ -673,6 +685,7 @@ void LANAPI::OnInActive(UnsignedInt IP) {
 	
 }
 
+// ?OnChat@LANAPI@@ present-unmatched
 void LANAPI::OnChat( UnicodeString player, UnsignedInt ip, UnicodeString message, ChatType format )
 {
 	GameWindow *chatWindow = NULL;

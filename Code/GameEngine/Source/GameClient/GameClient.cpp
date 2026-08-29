@@ -492,7 +492,6 @@ void GameClient::reset( void )
 /** -----------------------------------------------------------------------------------------------
  * Return a new unique object id.
  */
-// ?allocDrawableID@GameClient@@ present-unmatched
 DrawableID GameClient::allocDrawableID( void )
 {
 	/// @todo Find unused value in current set
@@ -872,6 +871,7 @@ void GameClient::destroyDrawable( Drawable *draw )
 // ------------------------------------------------------------------------------------------------
 /** Add drawable to lookup table for fast id searching */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GameClientDrawableLookupTable.cpp
 // ?addDrawableToLookupTable@GameClient@@ present-unmatched
 void GameClient::addDrawableToLookupTable(Drawable *draw )
 {
@@ -893,6 +893,7 @@ void GameClient::addDrawableToLookupTable(Drawable *draw )
 // ------------------------------------------------------------------------------------------------
 /** Remove drawable from lookup table of fast id searching */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GameClientDrawableLookupTable.cpp
 // ?removeDrawableFromLookupTable@GameClient@@ present-unmatched
 void GameClient::removeDrawableFromLookupTable( Drawable *draw )
 {

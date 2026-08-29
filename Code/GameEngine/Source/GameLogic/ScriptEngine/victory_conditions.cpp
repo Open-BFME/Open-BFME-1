@@ -1,5 +1,13 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
+// readable body of ?cachePlayerPtrs@VictoryConditions@@: Code/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp
+// readable body of ?hasAchievedVictory@VictoryConditions@@: Code/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp
+// readable body of ?hasBeenDefeated@VictoryConditions@@: Code/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp
+// readable body of ?hasSinglePlayerBeenDefeated@VictoryConditions@@: Code/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp
+// readable body of ?isLocalAlliedDefeat@VictoryConditions@@: Code/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp
+// readable body of ?isLocalAlliedVictory@VictoryConditions@@: Code/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp
+// readable body of ?isLocalDefeat@VictoryConditions@@: Code/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp
+// readable body of ?reset@VictoryConditions@@: Code/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp
 // victory_conditions.cpp -- BFME's VictoryConditions subsystem as clean C++.
 //
 // Retail keeps the whole family in one TU around 0x0035F150-0x0035FED0 with the
@@ -48,6 +56,7 @@ typedef BitFlags<KINDOF_COUNT> KindOfMaskType;
 class Team;
 class PlayerTemplate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -76,6 +85,7 @@ private:
 //   4 reset                                   5 update
 //   6 unidentified Bool(arg){false} (0x00067940)
 //   7 unidentified, empty (0x009A16C0)        8 unidentified, empty-with-arg (0x009A16D0)
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -99,6 +109,7 @@ enum VictoryType
 	VICTORY_NOUNITS = 2,
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/VictoryConditions.h
 class VictoryConditionsInterface : public SubsystemInterface
 {
 public:
@@ -127,6 +138,7 @@ protected:
 
 // TheGameLogic as far as reset() needs it: the game-mode word retail keeps at
 // +0x10C (the same field the matched update body compares against 1/2/5/6).
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -140,6 +152,7 @@ extern GameLogic *TheGameLogic;			///< retail [0x012F0898]
 
 // TheGameInfo as far as isLocalAlliedVictory needs it: retail queries virtual
 // slot 12 ([vptr+0x30]) as a Bool predicate before trusting the local slot.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameInfo
 {
 public:
@@ -165,6 +178,7 @@ enum NameKeyType
 	NAMEKEY_INVALID = 0,
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -175,6 +189,7 @@ extern NameKeyGenerator *TheNameKeyGenerator;	///< retail [0x012ED600]
 
 #define NAMEKEY(x) TheNameKeyGenerator->nameToKey(x)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerTemplate.h
 class PlayerTemplateStore
 {
 public:
@@ -185,6 +200,7 @@ extern PlayerTemplateStore *ThePlayerTemplateStore;	///< retail [0x012ED750]
 
 // PlayerList as far as cachePlayerPtrs needs it: getNthPlayer resolves
 // out-of-line, getNeutralPlayer inlines to the +0x14 member read retail shows.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
@@ -199,6 +215,7 @@ private:
 
 extern PlayerList *ThePlayerList;			///< retail [0x012ED748]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass
 {
 public:
@@ -209,6 +226,7 @@ extern RecorderClass *TheRecorder;		///< retail [0x012ED62C]
 
 // Radar as far as cachePlayerPtrs needs it: forceOn inlines to the +0x0D byte
 // store retail shows.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Radar.h
 class Radar
 {
 public:
@@ -247,6 +265,7 @@ extern WindowManager *g_theWindowManager;	///< retail [0x012F19E8]
 
 // Display as far as the banner methods need it: they flip a byte at +0x13C
 // (1 on hide, 0 on show). Member identity open.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display
 {
 public:
@@ -533,6 +552,7 @@ Bool VictoryConditions::amIObserver( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// ?getEndFrame@VictoryConditions@@ present-unmatched
 UnsignedInt VictoryConditions::getEndFrame( void )
 {
 	return m_endFrame;
@@ -545,6 +565,7 @@ Bool VictoryConditions::isPlayerDefeated(Int index)
 }
 
 //-------------------------------------------------------------------------------------------------
+// ?init@VictoryConditions@@ present-unmatched
 void VictoryConditions::init( void )
 {
 	reset();

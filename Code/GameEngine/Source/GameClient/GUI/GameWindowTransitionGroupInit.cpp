@@ -5,6 +5,7 @@
 
 typedef int NameKeyType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 struct AsciiStringData
 {
 	int m_refCount;
@@ -12,6 +13,7 @@ struct AsciiStringData
 	char m_text[1];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -24,6 +26,7 @@ private:
 	AsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -34,6 +37,7 @@ extern NameKeyGenerator *TheNameKeyGenerator;
 
 class GameWindow;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:
@@ -97,6 +101,7 @@ public:
 
 extern GameWindowManager *TheWindowManager;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class Transition
 {
 public:
@@ -104,6 +109,7 @@ public:
 	virtual void init(GameWindow *window) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class TransitionWindow
 {
 public:
@@ -118,6 +124,7 @@ private:
 	int m_currentFrameDelay;
 };
 
+// ?init@TransitionWindow@@ present-unmatched
 inline void TransitionWindow::init(void)
 {
 	m_winID = TheNameKeyGenerator->nameToKey(m_winName.str());
@@ -126,6 +133,7 @@ inline void TransitionWindow::init(void)
 	m_transition->init(m_win);
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class GameWindowTransitionsHandler
 {
 public:
@@ -135,6 +143,7 @@ public:
 
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class TransitionGroup
 {
 public:

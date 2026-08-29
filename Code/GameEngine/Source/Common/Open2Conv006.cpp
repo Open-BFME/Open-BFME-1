@@ -245,6 +245,7 @@ void Rva00764220::setup( int value, AsciiString text )
 // on its own frame and destroys it afterwards -- and the store is `set`, not
 // assignment: the argument is pushed BEFORE the receiver is materialised.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

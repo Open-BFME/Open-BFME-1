@@ -658,6 +658,7 @@ void AlphaTerrainTextureClass::Apply(unsigned int stage)
 //=============================================================================
 /** Constructor. Calls parent constructor to load the .tga texture. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/LightMapTerrainTextureVoidConstructorThunk.cpp
 // ??0LightMapTerrainTextureClass@@ present-unmatched
 LightMapTerrainTextureClass::LightMapTerrainTextureClass(AsciiString name, MipCountType mipLevelCount) :
 TextureClass(name.isEmpty()?"TSNoiseUrb.tga":name.str(),name.isEmpty()?"TSNoiseUrb.tga":name.str(), mipLevelCount )
@@ -776,7 +777,6 @@ AlphaEdgeTextureClass::AlphaEdgeTextureClass( int height, MipCountType mipLevelC
 
 }
 
-// ?update256@AlphaEdgeTextureClass@@ present-unmatched
 int AlphaEdgeTextureClass::update256(WorldHeightMap *htMap)
 {
 	return 1;

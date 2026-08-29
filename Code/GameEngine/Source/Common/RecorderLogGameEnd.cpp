@@ -8,6 +8,7 @@ extern "C" __declspec(dllimport) int __cdecl fseek(void *stream, long offset, in
 extern "C" __declspec(dllimport) unsigned int __cdecl fwrite(const void *buffer, unsigned int size,
 	unsigned int count, void *stream);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -17,6 +18,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass
 {
 	unsigned char prefix[0x0c];
@@ -26,6 +28,7 @@ protected:
 	void logGameEnd(void);
 };
 
+// ?logGameEnd@RecorderClass@@ present-unmatched
 void RecorderClass::logGameEnd(void)
 {
 	if (!m_file)

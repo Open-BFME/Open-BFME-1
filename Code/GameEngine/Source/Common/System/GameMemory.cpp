@@ -582,7 +582,6 @@ inline /*static*/ Int MemoryPoolSingleBlock::calcRawBlockSize(Int logicalSize)
 /**
 	accessor
 */
-// ?getOwningBlob@MemoryPoolSingleBlock@@ present-unmatched
 inline MemoryPoolBlob *MemoryPoolSingleBlock::getOwningBlob() 
 { 
 	return m_owningBlob; 
@@ -737,7 +736,6 @@ inline MemoryPoolBlob *MemoryPoolBlob::getNextInList() { return m_nextBlob; }
 /// accessor
 inline Bool MemoryPoolBlob::hasAnyFreeBlocks() { return m_firstFreeBlock != NULL; }
 /// accessor
-// ?getOwningPool@MemoryPoolBlob@@ present-unmatched
 inline MemoryPool *MemoryPoolBlob::getOwningPool() { return m_owningPool; }
 /// accessor
 // ?getFreeBlockCount@MemoryPoolBlob@@ present-unmatched
@@ -1593,6 +1591,7 @@ void MemoryPool::init(MemoryPoolFactory *factory, const char *poolName, Int allo
 /**
 	throw away the pool, and all blocks/blobs associated with it.
 */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/MemoryPoolDestructor.cpp
 // ??1MemoryPool@@ present-unmatched
 MemoryPool::~MemoryPool()
 {   
@@ -1767,6 +1766,7 @@ void* MemoryPool::allocateBlockImplementation(DECLARE_LITERALSTRING_ARG1)
 /**
 	free a block allocated by this pool. it's ok to pass null.
 */
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/BitFlagsBBCountInverseIntersectionThunk.cpp
 // ?freeBlock@MemoryPool@@ present-unmatched
 void MemoryPool::freeBlock(void* pBlockPtr)
 {
@@ -2668,7 +2668,6 @@ void DynamicMemoryAllocator::debugDmaInfoReport( FILE *fp )
 /**
 	init the factory to safe values.
 */
-// ??0MemoryPoolFactory@@ present-unmatched
 MemoryPoolFactory::MemoryPoolFactory() :
 	m_firstPoolInFactory(NULL),
 	m_firstDmaInFactory(NULL)
@@ -2727,6 +2726,7 @@ MemoryPoolFactory::~MemoryPoolFactory()
 /**
 	create a new memory pool.
 */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/NameKeyGenerator.cpp
 // ?createMemoryPool@MemoryPoolFactory@@ present-unmatched
 MemoryPool *MemoryPoolFactory::createMemoryPool(const PoolInitRec *parms)
 {
@@ -2737,6 +2737,7 @@ MemoryPool *MemoryPoolFactory::createMemoryPool(const PoolInitRec *parms)
 /**
 	create a new memory pool. (alternate argument list)
 */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/NameKeyGenerator.cpp
 // ?createMemoryPool@MemoryPoolFactory@@ present-unmatched
 MemoryPool *MemoryPoolFactory::createMemoryPool(const char *poolName, Int allocationSize, Int initialAllocationCount, Int overflowAllocationCount)
 {

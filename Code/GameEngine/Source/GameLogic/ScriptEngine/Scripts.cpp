@@ -216,6 +216,7 @@ void ScriptList::reset(void)
 /**
   Ctor.
 */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptList_updateDefaults_Thunk.cpp
 // ??0ScriptList@@QAE@XZ present-unmatched
 ScriptList::ScriptList(void) :
 m_firstGroup(NULL),
@@ -254,6 +255,7 @@ void ScriptList::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptList_xferMethodThunk.cpp
 // ?xfer@ScriptList@@MAEXPAVXfer@@@Z present-unmatched
 void ScriptList::xfer( Xfer *xfer )
 {
@@ -545,6 +547,7 @@ void ScriptList::deleteGroup(ScriptGroup *pGrp)
 *	Input: DataChunkInput 
 *		
 */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptList_ParseScriptsDataChunk_Thunk.cpp
 // ?ParseScriptsDataChunk@ScriptList@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z present-unmatched
 Bool ScriptList::ParseScriptsDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData)
 {
@@ -598,6 +601,7 @@ Int ScriptList::getReadScripts(ScriptList *scriptLists[MAX_PLAYER_COUNT])
 *	Input: DataChunkInput 
 *		
 */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptList_WriteScriptsDataChunk_Thunk.cpp
 // ?WriteScriptsDataChunk@ScriptList@@SAXAAVDataChunkOutput@@QAPAV1@H@Z present-unmatched
 void ScriptList::WriteScriptsDataChunk(DataChunkOutput &chunkWriter, ScriptList *scriptLists[], Int numLists )
 {
@@ -621,6 +625,7 @@ void ScriptList::WriteScriptsDataChunk(DataChunkOutput &chunkWriter, ScriptList 
 *	Input: DataChunkInput 
 *		
 */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptList_WriteScriptListDataChunkBfmeLayout.cpp
 // ?WriteScriptListDataChunk@ScriptList@@QAEXAAVDataChunkOutput@@@Z present-unmatched
 void ScriptList::WriteScriptListDataChunk(DataChunkOutput &chunkWriter)
 {
@@ -637,6 +642,7 @@ void ScriptList::WriteScriptListDataChunk(DataChunkOutput &chunkWriter)
 *	Input: DataChunkInput 
 *		
 */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptList_ParseScriptListDataChunkThunk.cpp
 // ?ParseScriptListDataChunk@ScriptList@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z present-unmatched
 Bool ScriptList::ParseScriptListDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData)
 {
@@ -841,6 +847,7 @@ void ScriptGroup::deleteScript(Script *pScr)
 /**
   Add a script to the current list of scripts.  Offset to position ndx.
 */
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptGroup_addScript_Thunk.cpp
 // ?addScript@ScriptGroup@@QAEXPAVScript@@H@Z present-unmatched
 void ScriptGroup::addScript(Script *pScr, Int ndx)
 {
@@ -869,6 +876,7 @@ void ScriptGroup::addScript(Script *pScr, Int ndx)
 *	Input: DataChunkInput 
 *		
 */
+// ?WriteGroupDataChunk@ScriptGroup@@ present-unmatched
 void ScriptGroup::WriteGroupDataChunk(DataChunkOutput &chunkWriter, ScriptGroup *pGroup)
 {
 
@@ -915,6 +923,7 @@ Bool ScriptGroup::ParseGroupDataChunk(DataChunkInput &file, DataChunkInfo *info,
 /**
   Ctor - initializes members.
 */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptCtor.cpp
 // ??0Script@@QAE@XZ present-unmatched
 Script::Script(void) :
 m_isActive(true),
@@ -1198,6 +1207,7 @@ void Script::deleteFalseAction(ScriptAction *pAct)
 /**
   Script::getUiText - Creates the string to display in the scripts dialog box.
 */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/Script_getUiText_Thunk.cpp
 // ?getUiText@Script@@QAE?AVAsciiString@@XZ present-unmatched
 AsciiString Script::getUiText(void) 
 {
@@ -1280,6 +1290,7 @@ void Script::WriteScriptDataChunk(DataChunkOutput &chunkWriter, Script *pScript)
 *	Input: DataChunkInput 
 *		
 */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/Script_ParseScript_Thunk.cpp
 // ?ParseScript@Script@@SAPAV1@AAVDataChunkInput@@G@Z present-unmatched
 Script *Script::ParseScript(DataChunkInput &file, unsigned short version)
 {
@@ -1568,6 +1579,7 @@ m_nextAndCondition(NULL)
 	setConditionType(type);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/Condition_setConditionType_Thunk.cpp
 // ?setConditionType@Condition@@QAEXW4ConditionType@1@@Z present-unmatched
 void Condition::setConditionType(enum ConditionType type)
 {
@@ -1585,6 +1597,7 @@ void Condition::setConditionType(enum ConditionType type)
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/ConditionDuplicateThunk.cpp
 // ?duplicate@Condition@@QBEPAV1@XZ present-unmatched
 Condition *Condition::duplicate(void) const 
 {
@@ -1658,6 +1671,7 @@ Int Condition::getUiStrings(AsciiString strings[MAX_PARMS])
 	return pTemplate->getUiStrings(strings);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/Condition_getUiText_Thunk.cpp
 // ?getUiText@Condition@@QAE?AVAsciiString@@XZ present-unmatched
 AsciiString Condition::getUiText(void)
 {
@@ -1873,6 +1887,7 @@ void Parameter::qualify(const AsciiString& qualifier,
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ParameterGetUiTextThunk.cpp
 // ?getUiText@Parameter@@QBE?AVAsciiString@@XZ present-unmatched
 AsciiString Parameter::getUiText(void) const
 {
@@ -2213,6 +2228,7 @@ void ScriptAction::setActionType(enum ScriptActionType type)
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptAction_duplicate_Thunk.cpp
 // ?duplicate@ScriptAction@@QBEPAV1@XZ present-unmatched
 ScriptAction *ScriptAction::duplicate(void) const 
 {
@@ -2294,6 +2310,7 @@ Int ScriptAction::getUiStrings(AsciiString strings[MAX_PARMS])
 	return pTemplate->getUiStrings(strings);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptAction_getUiText_Thunk.cpp
 // ?getUiText@ScriptAction@@QAE?AVAsciiString@@XZ present-unmatched
 AsciiString ScriptAction::getUiText(void)
 {
@@ -2531,6 +2548,7 @@ ScriptAction *ScriptAction::ParseAction(DataChunkInput &file, DataChunkInfo *inf
 *	Input: DataChunkInput 
 *		
 */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptsParseActionDataChunkThunk.cpp
 // ?ParseActionDataChunk@ScriptAction@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z present-unmatched
 Bool ScriptAction::ParseActionDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData)
 {
@@ -2593,6 +2611,7 @@ void ScriptAction::WriteActionFalseDataChunk(DataChunkOutput &chunkWriter, Scrip
 *	Input: DataChunkInput 
 *		
 */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptAction_ParseActionFalseDataChunk_Thunk.cpp
 // ?ParseActionFalseDataChunk@ScriptAction@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z present-unmatched
 Bool ScriptAction::ParseActionFalseDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData)
 {
