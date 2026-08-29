@@ -79545,3 +79545,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeIsKindOf@Thing@@QBE_NW4KindOfType@@@Z,0x0003251F,TU ABI alias for authentic Thing::isKindOf ILT used by retail setGoalPositionClipped
 ?bfmeSetGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z,0x0000314D,TU ABI alias for authentic StateMachine::setGoalPosition ILT used by retail setGoalPositionClipped
 ?TheTerrainLogic@@3PAVTerrainLogic@@A,0x012EF4CC,typed ABI spelling for the proven terrain singleton used by retail setGoalPositionClipped
+?AptGetSwfVersion@@YAIXZ,0x00892370,EA Apt 2.00.00 SWF version getter called by the ActionScript BitAnd handler
+?toInteger@AptValue@@QBEHXZ,0x00898300,EA Apt 2.00.00 integer coercion called by the ActionScript BitAnd handler
+?Create@AptInteger@@SAPAV1@H@Z,0x008A11E0,EA Apt 2.00.00 integer factory called by the ActionScript BitAnd handler
