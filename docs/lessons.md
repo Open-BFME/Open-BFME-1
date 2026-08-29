@@ -3531,3 +3531,57 @@ compiles differently here. The likelier fault is our compile of one member than
 a 40-name group being wrong. A detector saying "these cannot be one body" is
 evidence about the group, and when the group is that large the evidence points
 at the odd member first.
+
+## The funclet self-heal searched the wrong section, and 18,690 rows cannot heal at all
+
+`funclet_candidates` re-identified a renumbered `$L` pin by searching the section
+holding `__ehhandler$<parent>`. But MSVC 7.1 gives that handler a COMDAT OF ITS
+OWN, while the `$L` funclet bodies stay in the PARENT function's section. In
+StagingRoomGameInfo.obj the parent is section 342 and its handler 343, and all
+eighteen ehhandlers in that object split the same way -- so the search returned
+no candidate and the row died on its stale pin.
+
+The symptom is opaque: a one-line view shifts two pins by two and the build stops
+on `ValueError: symbol not found in object: $L70459`, naming a compiler-local
+label and nothing else, while the body sits in the object as `$L70461`. Fixed by
+searching the parent's own section as well as the handler's; both paths still go
+through `holds_funclet` and a group of look-alikes still fails loudly, so this
+widens where evidence is sought without picking anything on faith.
+
+**The unfixed half is a tripwire under all header work: 18,690 `gen-funclet`
+rows carry no `parent=` at all, against 1,362 that do.** Without it
+`funclet_candidates` returns immediately and cannot heal anything, so ANY edit to
+a TU holding one of those rows freezes the build on that same unreadable symbol
+error -- and it fires on TUs nobody edited deliberately.
+
+The back-fill is mechanical and evidence-based: build the TU, find the `$L`
+symbol the pin names, record the non-`$L` symbol sharing its section. **Do it per
+TU, on demand, not as a tree-wide sweep** -- 18,690 annotated rows is a diff on
+the scale that conflicts with every branch in flight, and the tripwire only fires
+on a TU you actually edit. Back-fill the file you are about to touch.
+
+## Two cheap screens that save a build
+
+**A donor declaring a class with a method it never defines: the mangled name IS
+the pin.** `ThingTemplate::parsePrerequisites` reaches retail only because its
+donor declares a fake `PrereqVector` with an `erase` it never defines -- retail's
+`clear()` calls a range-destroy helper where our readable `m_prereqInfo.clear()`
+calls STLport's `vector::erase`, a different function. Folding it would mean
+importing that fiction into a readable TU to gain one file. Grep the donor for a
+declared-never-defined method before spending a build.
+
+**A masked compare can say MATCH while build.sh says FAIL**, because masking
+hides relocation TARGETS as well as addresses. A screen is a filter; a fold is
+only verified by build.sh.
+
+## Withdrawing a wrong rule about a shared tool
+
+A lesson was logged saying `merge_cluster --apply` discards uncommitted edits to
+the destination. It is wrong and was withdrawn: a later `--apply` ran over an
+unstaged view in StagingRoomGameInfo.cpp and the view survived. Something else
+reverted the earlier edit and the cause was never established.
+
+The rule kept is the defensive one -- apply the view after the merge and grep
+that it is still there. Worth the retraction: a wrong rule about a SHARED tool
+has every other lane working around behaviour the tool does not have, which is
+more expensive than the original confusion.
