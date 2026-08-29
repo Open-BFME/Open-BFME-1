@@ -72341,6 +72341,7 @@ name,address,notes
 ?bfmeAlloc1039@@YAPAXH@Z,0x00881F30,pin
 ?bfmeAlloc1046@@YAPAXH@Z,0x0082E540,pin
 ?bfmeAlloc1047@@YAPAXH@Z,0x0082E540,pin
+?bfmeAlloc1051@@YAPAXH@Z,0x0082E540,pin
 ?bfmeAlloc946@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAlloc950B@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocATA@@YAPAXI@Z,0x0082E540,pin
@@ -72800,6 +72801,7 @@ name,address,notes
 ?bfmeCopyTwoCKA@BfmePartCKA@@QAEXPAU1@@Z,0x000434DC,pin
 ?bfmeCount1029@@YAHHHPADH@Z,0x00001BAE,pin
 ?bfmeCount1041@@YAHHPAXPADH@Z,0x00001BAE,pin
+?bfmeCount1051@@YAHHHPADH@Z,0x00001BAE,pin
 ?bfmeCount932D@BfmeGlob932D@@QAEHPAXH@Z,0x0000C284,pin
 ?bfmeCreateInactiveTeam@TeamFactory@@AAEPAVTeam@@ABVAsciiString@@0@Z,0x0000D15C,retail REL32 at 0x000F7CAB targets the two-name createInactiveTeam ILT at 0x0000D15C
 ?bfmeCtorECMa@BfmeThingECMa@@QAEPAV1@XZ,0x00806300,pin
@@ -73509,6 +73511,7 @@ name,address,notes
 ?bfmeInit1030@BfmeSub1030@@QAEXHPAH@Z,0x0003B318,pin
 ?bfmeInit1037@BfmeD1037@@QAEPAV1@PAVBfmeE1037@@@Z,0x0002D231,pin
 ?bfmeInit1039@BfmeC1039@@QAEXPAVBfmeD1039@@@Z,0x00969710,pin
+?bfmeInit1051@@YAXPAUBfmeSubN1051@@H@Z,0x0000317F,pin
 ?bfmeInit929C@@YAXPAD@Z,0x009F7244,pin
 ?bfmeInit929G@BfmeThing929G@@QAEXXZ,0x0089E700,pin
 ?bfmeInit936G@BfmeThing936G@@QAEXXZ,0x00843990,pin
@@ -73582,6 +73585,7 @@ name,address,notes
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLog1013@BfmeLog1013@@QAEXHPADHHHHHH@Z,0x00015235,pin
 ?bfmeLog1021@BfmeLog1021@@QAEXHPADHHHHHH@Z,0x00015235,pin
+?bfmeLog1051@BfmeLog1051@@QAEXHPADH0HHHH@Z,0x00015235,pin
 ?bfmeLog993B@BfmeLog993@@QAEXHPADH0HHHH@Z,0x00015235,pin
 ?bfmeLog995@BfmeLog995@@QAEXHPADH0HHHH@Z,0x00015235,pin
 ?bfmeLogCNE@@YGXHH@Z,0x00032DEE,pin
@@ -73911,6 +73915,7 @@ name,address,notes
 ?bfmeSend1020@BfmeLog1020@@QAEXH@Z,0x0002144A,pin
 ?bfmeSend1028@BfmeSink1028@@QAEXHPAH0@Z,0x00803110,pin
 ?bfmeSend1032@BfmeSink1032@@QAEXHPAVBfmeD1032@@@Z,0x000147D1,pin
+?bfmeSend1051@BfmeSub1051@@QAEXHHHHHH@Z,0x0087F590,pin
 ?bfmeSend975B@BfmeB975@@QAEXHH@Z,0x0002D6F5,pin
 ?bfmeSend979B@BfmeSink979@@QAEXPAVBfmeKey979@@@Z,0x00038938,pin
 ?bfmeSend986C@BfmeC986@@QAEXHHHHH@Z,0x0001A6B3,pin
@@ -75490,6 +75495,7 @@ name,address,notes
 ?g_bfmeAlloc1034@@3PAUBfmeAlloc1034@@A,0x00F37A30,pin
 ?g_bfmeAlloc1041@@3PAUBfmeAlloc1041@@A,0x00F37A30,pin
 ?g_bfmeAlloc1045@@3PAUBfmeAlloc1045@@A,0x00F37A30,pin
+?g_bfmeArg1051@@3PADA,0x00D090E8,pin
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
 ?g_bfmeArgDZE@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgDZF@@3PAXA,0x00EB7D80,pin
@@ -75566,6 +75572,8 @@ name,address,notes
 ?g_bfmeFmt1025@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmt1029@@3PADA,0x00CBF820,pin
 ?g_bfmeFmt1041@@3PADA,0x00CA1378,pin
+?g_bfmeFmt1051@@3PADA,0x00D090D8,pin
+?g_bfmeFmt1051B@@3PADA,0x00CC03A8,pin
 ?g_bfmeFmt993B@@3PADA,0x00D09B3C,pin
 ?g_bfmeFmt995B@@3PADA,0x00D05184,pin
 ?g_bfmeFmtA995C@@3PADA,0x00D07374,pin
@@ -75628,6 +75636,7 @@ name,address,notes
 ?g_bfmeLog1013@@3PAVBfmeLog1013@@A,0x00EF19E8,pin
 ?g_bfmeLog1020@@3PAVBfmeLog1020@@A,0x00EF19E8,pin
 ?g_bfmeLog1021@@3PAVBfmeLog1021@@A,0x00EF19E8,pin
+?g_bfmeLog1051@@3PAVBfmeLog1051@@A,0x00EF19E8,pin
 ?g_bfmeLog993@@3PAVBfmeLog993@@A,0x00EF19E8,pin
 ?g_bfmeLog995@@3PAVBfmeLog995@@A,0x00EF19E8,pin
 ?g_bfmeLook1001@@3PAVBfmeLook1001@@A,0x00EF0898,pin
@@ -75735,6 +75744,7 @@ name,address,notes
 ?g_bfmeRun1006@@3PAVBfmeRun1006@@A,0x00EF4998,pin
 ?g_bfmeS1019@@3PAVBfmeS1019@@A,0x00F0A5B0,pin
 ?g_bfmeS1027@@3PAUBfmeS1027@@A,0x00EF0898,pin
+?g_bfmeS1051@@3PAUBfmeS1051@@A,0x00EF0898,pin
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
