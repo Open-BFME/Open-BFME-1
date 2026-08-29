@@ -3339,7 +3339,6 @@ Int WorldHeightMap::updateTileTexturePositions(Int *edgeHeight)
 
 /** getUVData - Gets the texture coordinates to use.  See getTerrainTexture.
 */
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap_getUVForNdx.cpp
 // The tile table is at this+0xA4 and the terrain texture height at +0x120C8;
 // a TileData carries its location in the texture at +0x555C, past the mip
 // chain. The reference class lands the table at +0x60.
@@ -3408,7 +3407,6 @@ void WorldHeightMap::getUVForBlend(Int edgeClass, Region2D *range)
 }
 
 /// Get whether something is cliff indexed with the offset that HeightMapRenderObjClass uses built in.
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap_isCliffMappedTexture.cpp
 // The five fields this body touches are at retail's offsets, not the reference
 // class's: the row stride at +0x08, the cell count at +0x20, the cliff-info
 // table at +0x94 and the draw origin at +0x120E0/+0x120E4. The index is bounds
