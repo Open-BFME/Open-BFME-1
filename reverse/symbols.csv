@@ -72937,6 +72937,7 @@ name,address,notes
 ?bfmeFallback977C@@YADXZ,0x00892210,pin
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
 ?bfmeFind1002@BfmeA1002@@QAEPAUBfmeX1002@@PAUBfmeArg1002@@@Z,0x0003F5DA,pin
+?bfmeFind1004@BfmeHold1004@@QAEPAVBfmeX1004@@XZ,0x0000D3B9,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
@@ -73781,9 +73782,11 @@ name,address,notes
 ?bfmeSendRM@BfmeSinkRM@@QAEXPAXH@Z,0x00006613,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
+?bfmeSetA1004@BfmeObj1004@@QAEXHH@Z,0x00032DEE,pin
 ?bfmeSetAKA@BfmeInnerAKA@@QAEXH@Z,0x00024D70,pin
 ?bfmeSetANB@BfmeSlotANB@@QAEXPAXH@Z,0x00887D20,pin
 ?bfmeSetAZA@BfmeThingAZA@@QAEXH@Z,0x0002BECC,pin
+?bfmeSetB1004@BfmeObj1004@@QAEXH@Z,0x00030887,pin
 ?bfmeSetBME@BfmeSubBME@@QAEXPAX@Z,0x00888BC0,pin
 ?bfmeSetBPC@BfmeThingBPC@@QAEXH@Z,0x0001E402,pin
 ?bfmeSetBPD@BfmeSubBPD@@QAEXPAX@Z,0x00887B60,pin
