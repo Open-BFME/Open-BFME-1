@@ -72697,6 +72697,7 @@ name,address,notes
 ?bfmeDispatchC@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x00027138,Open-BFME5 ILT the range dispatcher at 0x00575A50 calls
 ?bfmeDo912C@BfmeThing912C@@QAEXPAUBfmeNode912C@@@Z,0x009F4D80,pin
 ?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
+?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
 ?bfmeDoAXA@@YAXPAUBfmeBoxAXA@@PAX111@Z,0x0093B340,pin
 ?bfmeDoBCC@@YAXPAX@Z,0x0004B2BD,pin
 ?bfmeDoBDA@@YGXPAUBfmeSubBDA@@PAX@Z,0x0002CEEE,pin
@@ -72859,6 +72860,7 @@ name,address,notes
 ?bfmeEraseFrom@BfmeListW@@QAEXPAVBfmeNodeW@@@Z,0x00037AB5,Open-BFME5 the ICF thunk (to 0x00437AB5) the list clear at 0x004B1720 erases through
 ?bfmeFailDXE@@YGXH@Z,0x00AFD540,pin
 ?bfmeFallback961@BfmeHost961@@QAEXHH@Z,0x0001C46D,pin
+?bfmeFallback977C@@YADXZ,0x00892210,pin
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
@@ -72867,6 +72869,7 @@ name,address,notes
 ?bfmeFind940D@BfmeSrc940D@@QAEPAVBfmeRes940D@@XZ,0x0000F498,pin
 ?bfmeFind956@BfmeKey956@@QAEPAUBfmeInfo956@@XZ,0x00020824,pin
 ?bfmeFind975D@BfmeFind975D@@QAEPAXH@Z,0x00028560,pin
+?bfmeFind977B@BfmeMgr977@@QAEPAXPAVBfmeB977@@@Z,0x0003B59D,pin
 ?bfmeFind@BfmeChainOwner@@QAEPAVBfmeChainResult@@H@Z,0x0002F52C,Open-BFME5 ILT the four lookups around 0x002197E0 call
 ?bfmeFind@BfmeFinder@@QAEPAXXZ,0x000265A8,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 call
 ?bfmeFind@Gen_003C02B0@@AAEPAVBfmeItemAN@@H@Z,0x00032A56,Open-BFME5 the ICF thunk (to 0x00432A56) the remove at 0x003C02B0 looks its item up through
@@ -75165,6 +75168,7 @@ name,address,notes
 ?g_bfmeBufDWG@@3PAXA,0x00F378D0,pin
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
 ?g_bfmeCFAE@@3HA,0x00EEF418,pin
+?g_bfmeClock977@@3PAVBfmeClock977@@A,0x00EF1B40,pin
 ?g_bfmeClockAHB@@3PAUBfmeClockAHB@@A,0x00EF0898,pin
 ?g_bfmeClockAZA@@3PAUBfmeClockAZA@@A,0x00EF0898,pin
 ?g_bfmeClockBSA@@3PAUBfmeClockBSA@@A,0x00EF0898,pin
@@ -75233,6 +75237,7 @@ name,address,notes
 ?g_bfmeMgr12F0898@@3PAUBfmeGlobalMgr12F0898@@A,0x00EF0898,pin
 ?g_bfmeMgr12F0898@@3PAVBfmeMgrEB2@@A,0x00EF0898,pin
 ?g_bfmeMgr12F0898@@3PAVBfmeMgrF5F@@A,0x00EF0898,pin
+?g_bfmeMgr977@@3PAVBfmeMgr977@@A,0x00EF33F8,pin
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
 ?g_bfmeModeAZC@@3PAUBfmeModeAZC@@A,0x00EF0FE0,pin
