@@ -1378,3 +1378,28 @@ _List_node in a TU by 0x20. If one row in the file needs that padding and
 another needs plain 12-byte nodes, they cannot share list<>::clear() -- give the
 12-byte one a local node type and a local clear() spelled the way STLport spells
 it.
+
+## To correct an allocation size, use a standalone view -- not derive-and-pad
+
+Deriving from the vendored class and padding it to retail's size gets
+`push <size>` right and still does not reproduce `new T(...)`. The derived
+constructor is inlined, so only the BASE constructor is called, and MSVC will
+not reuse that return value as the derived pointer -- it parks the block in an
+extra callee-saved register retail does not need.
+
+A STANDALONE view at retail's size, with its constructor DECLARED AND NEVER
+DEFINED, has a constructor of its own and matches exactly. Cost is one additive
+alias per constructor, at the address already pinned under the real spelling and
+reached through a direct call, so the rel32 proves it.
+
+Note this is the same shape as the by-value string argument view and the
+campaignmanagerascii constructor: declared-never-defined is what makes MSVC
+emit the call retail emits instead of expanding something in its place. Three
+different problems, one mechanism.
+
+## symbols.csv is sorted, and its header sorts AFTER a mangled name
+
+Inserting programmatically into reverse/symbols.csv: the header line
+`name,address,notes` sorts after any `??0...` symbol, so a naive sorted insert
+places the new row ABOVE the header and check_csv rejects the file with "bad
+header". Start the scan at index 1 and keep the header pinned at the top.
