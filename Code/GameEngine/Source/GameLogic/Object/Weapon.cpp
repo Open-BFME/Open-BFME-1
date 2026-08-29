@@ -2445,13 +2445,31 @@ Real Weapon::getPercentReadyToFire() const
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_getAttackRange.cpp
-// ?getAttackRange@Weapon@@QBEMPBVObject@@@Z present-unmatched
+// BFME widened the reference's bonus-only signature: its getAttackRange takes
+// the source object and the source's position as well as the bonus, so the
+// range can depend on where the shooter is.
+class BfmeRangedWeaponTemplate
+{
+public:
+	Real getAttackRange( const Object *source, const WeaponBonus &bonus,
+			const Coord3D *sourcePos ) const;			///< retail ILT 0x0002ffb3
+};
+
+// BFME's weapon keeps its template at +0x04, where the reference class puts it
+// at +0x08 -- the same offset Object::getAmmoPipShowingInfo reads.
+struct BfmeWeaponTemplateField
+{
+	char m_unreconstructed_00[4];					///< the vtable pointer
+	const BfmeRangedWeaponTemplate *m_template;			///< retail this+0x04
+};
+
+// ?getAttackRange@Weapon@@QBEMPBVObject@@@Z
 Real Weapon::getAttackRange(const Object *source) const
 { 
-	WeaponBonus bonus;
-	computeBonus(source, 0, bonus);
-	return m_template->getAttackRange(bonus); 
+	BfmeWeaponBonus bonus;
+	computeBonus(source, 0, (WeaponBonus &)bonus);
+	return ((const BfmeWeaponTemplateField *)this)->m_template->getAttackRange(
+		source, (const WeaponBonus &)bonus, source->getPosition()); 
 
 	//Contained objects have longer ranges.
 	//const Object *container = source->getContainedBy();
