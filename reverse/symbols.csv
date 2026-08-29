@@ -72322,6 +72322,7 @@ name,address,notes
 ?bfmeApplyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,Open-BFME5 TintDrawableFXNugget retail tint helper ILT; body 0x00412040
 ?bfmeArenaReady@@YAXXZ,0x00897050,Open-BFME5 the routine the arena initialiser at 0x00897120 tail-calls
 ?bfmeAsk979A@@YGDH@Z,0x000063F2,pin
+?bfmeAsk993B@BfmeAskB993@@QAEDXZ,0x00008ED1,pin
 ?bfmeAskAIA@BfmeThingAIA@@QAE_NH@Z,0x0003251F,pin
 ?bfmeAskAMB@BfmeGateAMB@@QAE_NPAXPAUBfmeKeyAMB@@@Z,0x000357D8,pin
 ?bfmeAskAOA@BfmeThingAOA@@QAE_NXZ,0x0002C714,pin
@@ -73392,6 +73393,7 @@ name,address,notes
 ?bfmeKindFAH@BfmeObjFAH@@QAEHPAX@Z,0x0004A719,pin
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
+?bfmeLog993B@BfmeLog993@@QAEXHPADH0HHHH@Z,0x00015235,pin
 ?bfmeLogCNE@@YGXHH@Z,0x00032DEE,pin
 ?bfmeLogMsg574@@YAXPBD@Z,0x0003EBAD,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
@@ -75205,6 +75207,7 @@ name,address,notes
 ?g_bfmeArgEAA@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgEAC@@3PAXA,0x00EB7D80,pin
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
+?g_bfmeAskB993@@3PAVBfmeAskB993@@A,0x00EF4B98,pin
 ?g_bfmeAux985@@3PAUBfmeAux985@@A,0x00EF4B58,pin
 ?g_bfmeB986B@@3PAHA,0x00EF9D0C,pin
 ?g_bfmeB991@@3PAVBfmeB991@@A,0x00EF9D88,pin
@@ -75249,6 +75252,7 @@ name,address,notes
 ?g_bfmeFlagMD@@3DA,0x00EF4AFC,pin
 ?g_bfmeFlagMG@@3HA,0x00EF4ACC,pin
 ?g_bfmeFlagsAPB@@3IA,0x00EA6FA0,pin
+?g_bfmeFmt993B@@3PADA,0x00D09B3C,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeFreeDXG@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeGate961@@3PAVBfmeGate961@@A,0x00EF706C,pin
@@ -75271,6 +75275,7 @@ name,address,notes
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeHub982@@3PAVBfmeHub982@@A,0x00F06954,pin
 ?g_bfmeHub985@@3PAVBfmeHub985@@A,0x00EF19E8,pin
+?g_bfmeHub993@@3PAVBfmeHub993@@A,0x00EF148C,pin
 ?g_bfmeICoord2DFormat@@3QBDB,0x01144414,address-derived ICoord2D format string from retail 0x009D97C5
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
 ?g_bfmeIRegion2DFormat@@3QBDB,0x0114445C,address-derived IRegion2D format string from retail 0x009D985E
@@ -75282,6 +75287,7 @@ name,address,notes
 ?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
 ?g_bfmeListEYE@@3PAUBfmeListEYE@@A,0x00EED5DC,pin
+?g_bfmeLog993@@3PAVBfmeLog993@@A,0x00EF19E8,pin
 ?g_bfmeLook978@@3PAVBfmeLook978@@A,0x00EF0898,pin
 ?g_bfmeLook979@@3PAVBfmeLook979@@A,0x00EF0898,pin
 ?g_bfmeLook987@@3PAVBfmeLook987@@A,0x00EF0898,pin
@@ -75380,6 +75386,8 @@ name,address,notes
 ?g_bfmeSrc962@@3PAVBfmeSrc962@@A,0x00EF1464,pin
 ?g_bfmeSrc982@@3PAVBfmeSrc982@@A,0x00EF076C,pin
 ?g_bfmeStateA979@@3PAUBfmeStateA979@@A,0x00EF0898,pin
+?g_bfmeStrA993B@@3PADA,0x00C81238,pin
+?g_bfmeStrB993B@@3PADA,0x00C80FC0,pin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
 ?g_bfmeTarget986B@@3PADA,0x00F071E4,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
@@ -75398,6 +75406,7 @@ name,address,notes
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
 ?g_bfmeUnsignedShortFormat@@3QBDB,0x01144328,address-derived unsigned-short format string from retail 0x009D95BF
 ?g_bfmeVal991@@3HA,0x00EF822C,pin
+?g_bfmeVal993B@@3HA,0x00EB7D80,pin
 ?g_bfmeValMD@@3HA,0x00EB7D80,pin
 ?g_bfmeVft963@@3PADA,0x00CF0398,pin
 ?g_bfmeVft969D1@@3PADA,0x00D2B3F0,pin
