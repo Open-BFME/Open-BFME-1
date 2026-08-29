@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/lanapi /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/lanapi /Ireference/shims/campaignmanagerascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -629,32 +629,89 @@ void LANAPI::RequestLocations( void )
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_RequestGameJoin.cpp
-// ?RequestGameJoin@LANAPI@@UAEXPAVLANGameInfo@@I@Z present-unmatched
+// BFME's OnGameJoin takes a THIRD argument and sits at vtable +0x74; the
+// reference declares two and lands it at +0x60.
+#define BFME_LANAPI_V(n) virtual void _bfme_join_v##n( void ) = 0;
+
+class BfmeLANJoinCallbacks
+{
+public:
+	BFME_LANAPI_V(0)   BFME_LANAPI_V(1)   BFME_LANAPI_V(2)   BFME_LANAPI_V(3)   BFME_LANAPI_V(4)
+	BFME_LANAPI_V(5)   BFME_LANAPI_V(6)   BFME_LANAPI_V(7)   BFME_LANAPI_V(8)   BFME_LANAPI_V(9)
+	BFME_LANAPI_V(10)  BFME_LANAPI_V(11)  BFME_LANAPI_V(12)  BFME_LANAPI_V(13)  BFME_LANAPI_V(14)
+	BFME_LANAPI_V(15)  BFME_LANAPI_V(16)  BFME_LANAPI_V(17)  BFME_LANAPI_V(18)  BFME_LANAPI_V(19)
+	BFME_LANAPI_V(20)  BFME_LANAPI_V(21)  BFME_LANAPI_V(22)  BFME_LANAPI_V(23)  BFME_LANAPI_V(24)
+	BFME_LANAPI_V(25)  BFME_LANAPI_V(26)  BFME_LANAPI_V(27)  BFME_LANAPI_V(28)
+	virtual void OnGameJoin( Int ret, LANGameInfo *theGame, void *bfmeExtra = NULL ) = 0;
+};
+
+#undef BFME_LANAPI_V
+
+// The join payload is PACKED -- unpacked, the four-dword block forces the union
+// to four-byte alignment and every field lands two bytes high of where retail
+// addresses it. BFME sends a fourth CRC at msg+0x2E that the reference never
+// fills, and its serial field is 0x17 bytes.
+#pragma pack(push, 1)
+struct BfmeLANJoinPayload
+{
+	UnsignedByte head[0x22];
+	UnsignedInt gameIP;									///< retail msg+0x22
+	UnsignedInt exeCRC;									///< retail msg+0x26
+	UnsignedInt iniCRC;									///< retail msg+0x2A
+	UnsignedInt bfmeExtraCRC;							///< retail msg+0x2E
+	char serial[0x17];									///< retail msg+0x32
+};
+#pragma pack(pop)
+
+struct BfmeGlobalDataCRC
+{
+	UnsignedByte pad[0xbc8];
+	UnsignedInt iniCRC;									///< retail this+0xBC8
+	UnsignedByte gap[4];
+	UnsignedInt exeCRC;									///< retail this+0xBD0
+	UnsignedInt bfmeExtraCRC;							///< retail this+0xBD4
+};
+
+// the obfuscation-hook wrapper an obfuscated GlobalData member is read through
+Int Rva0009B4B0( Int a, Int b );						///< ILT thunk 0x000019F6
+
+#define BFME_JOIN(m) ((BfmeLANJoinPayload *)(m))
+#define BFME_GDCRC   ((BfmeGlobalDataCRC *)TheWritableGlobalData)
+
+// BFME's GameSlot carries one more dword ahead of the IP than the reference's.
+#define BFME_SLOT_IP(s) (*(UnsignedInt *)((UnsignedByte *)(s) + 0x30))
+
+// retail inlines str() over the eight-byte header; the shim's is out of line.
+#define BFME_STR(s) (*(char **)&(s) ? *(char **)&(s) + 8 : (char *)"")
+
 void LANAPI::RequestGameJoin( LANGameInfo *game, UnsignedInt ip /* = 0 */ )
 {
 	if ((m_pendingAction != ACT_NONE) && (m_pendingAction != ACT_JOINDIRECTCONNECT))
 	{
-		OnGameJoin( RET_BUSY, NULL );
+		((BfmeLANJoinCallbacks *)this)->OnGameJoin( RET_BUSY, NULL );
 		return;
 	}
 
 	if (!game)
 	{
-		OnGameJoin( RET_GAME_GONE, NULL );
+		((BfmeLANJoinCallbacks *)this)->OnGameJoin( RET_GAME_GONE, NULL );
 		return;
 	}
 
 	LANMessage msg;
+
 	msg.LANMessageType = LANMessage::MSG_REQUEST_JOIN;
 	fillInLANMessage( &msg );
-	msg.GameToJoin.gameIP = game->getSlot(0)->getIP();
-	msg.GameToJoin.exeCRC = TheGlobalData->m_exeCRC;
-	msg.GameToJoin.iniCRC = TheGlobalData->m_iniCRC;
+	BFME_JOIN(&msg)->gameIP = BFME_SLOT_IP( game->getSlot(0) );
+	// retail reads the exe CRC through the obfuscation hook, twice
+	BFME_JOIN(&msg)->exeCRC = Rva0009B4B0( BFME_GDCRC->exeCRC, BFME_GDCRC->exeCRC );
+	BFME_JOIN(&msg)->iniCRC = BFME_GDCRC->iniCRC;
+	BFME_JOIN(&msg)->bfmeExtraCRC = BFME_GDCRC->bfmeExtraCRC;
 
 	AsciiString s = "";
 	GetStringFromRegistry("\\ergc", "", s);
-	strncpy(msg.GameToJoin.serial, s.str(), g_maxSerialLength);
-	msg.GameToJoin.serial[g_maxSerialLength-1] = '\0';
+	strncpy(BFME_JOIN(&msg)->serial, BFME_STR(s), 0x17);
+	BFME_JOIN(&msg)->serial[0x17-1] = '\0';
 
 	sendMessage(&msg, ip);
 
