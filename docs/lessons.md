@@ -1795,3 +1795,32 @@ produced it byte for byte, and the row pointed at boxrobj.cpp only because that
 is where it was originally lifted from. INI::parseObjectCreationList was the
 same. The marker-clear screen finds these for free: clear the marker, build the
 destination, and if it is already green the work is a repoint, not a fold.
+
+## The "$L freeze" was a notes misclassification, not a constraint
+
+build.py has always re-found renumbered funclets from the parent's
+`__ehhandler$` group -- that is the "Funclet pins: N row(s) verified past a
+renumbered $L label" line, 339 rows on a full gate. It never fired for
+lanapi.cpp because is_funclet_row() (tools/build.py:920) gates on the notes
+containing **gen-funclet**, and `?a_00c464f8@@YAXXZ`'s notes said **gen-alias**.
+Both are true of that row: it is an ICF-twin alias claim AND a $L-pinned funclet
+with a parent=. Saying both in the notes lets the pin self-heal like the 20,051
+others, and lanapi stopped being frozen.
+
+So a TU is only "frozen" if its $L-pinned row cannot be classified as a funclet.
+EXACTLY THREE ROWS TREE-WIDE are gen-alias + $L + parent=:
+
+    ?a_00c464f8@@YAXXZ   lanapi.cpp                                (fixed)
+    ?a_00bfd4b8@@YAXXZ   Common/System/UpgradeNamesPlacementCleanup_00BFD4B8.cpp
+    ?a_00c52ae0@@YAXXZ   WWVegas/WW3D2/VectorClassArrayPlacementCleanup_00C52AE0.cpp
+
+The other two are latent the same way. If either file is a destination someone
+is holding off, that is why -- and the fix is one add_match.py
+--replace-existing on the notes, not a re-anchor.
+
+What it bought immediately: lanapi.cpp had no AsciiString shim at all, adding
+campaignmanagerascii (with /ICode/Libraries/Source/WWVegas/WWLib LAST for
+string_base.h) left all 18 pre-existing rows green and collapsed one body's
+residue from ~55 diverging instructions to 2. A re_attempts.log entry recording
+"the shim is not free in this TU" had been measuring the misclassification, not
+the shim.
