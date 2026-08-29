@@ -72424,6 +72424,7 @@ name,address,notes
 ?bfmeBlendTileTouch@@YAXXZ,0x0000A88F,Open-BFME5 ILT the blendTileData at 0x0074A240 calls with no arguments
 ?bfmeBucketNumForKey@@YAIPBXI@Z,0x00012909,Open-BFME5 ILT the hashtable iterator skips at 0x00460DA0 and 0x00461480 ask for the bucket through
 ?bfmeBuildFont@FontLibraryBFMERetail@@AAEPAVGameFont@@PAVAsciiString@@MEH@Z,0x0000EBA6,Open-BFME5 ILT thunk to body 0x00476C50; FontLibraryBFMERetail::getFont at 0x004772D0 tail-returns its result; address-derived name
+?bfmeCalc919G@BfmeCalc919G@@QAEHXZ,0x00017512,pin
 ?bfmeCalcBWF@BfmeCalcBWF@@QAEXPAVBfmeRetBWF@@H0@Z,0x0087E0D0,pin
 ?bfmeCalcBXA@@YAHHI@Z,0x00023254,pin
 ?bfmeCalcBXB@@YAHHI@Z,0x0003F7CE,pin
