@@ -1049,3 +1049,17 @@ parked the local in ebp where retail loads the global three separate times.
 Writing the global out at each use restored the match. The instinct to hoist a
 repeated expression into a local is the wrong one here -- spell it out as often
 as retail does, and let the compiler decide.
+
+## An extent complaint on an already-matched row is about the body, not the row
+
+Symptom: the build asks you to raise a row's target_size, and the row already
+matched from its donor. Do not raise it. The row's extent was proven when the
+donor landed; if the merged body now needs more bytes, the merged body is wrong
+-- it is reaching past the function retail actually ends. Raising the extent
+makes the complaint go away and buries the real cause under a row that now
+claims bytes belonging to the next function.
+
+Diagnostic, not a fix: raise the extent LOCALLY to see what the extra bytes are,
+read them, then REVERT the extent before fixing the body. The bytes tell you
+which construct over-ran -- usually an inlined tail retail calls out of line, or
+a destructor the merged shape emits and retail does not.
