@@ -439,7 +439,6 @@ void Eva::setShouldPlay(EvaMessage messageToPlay)
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/EvaSetEvaEnabled.cpp
 // BFME's Eva is not the reference's here. Retail keeps one 24-byte per-message
 // check record in a vector at this+0x4C/+0x50 and the enable flag at +0x5C, and
 // the setter is a no-op when the flag would not change. It never touches
