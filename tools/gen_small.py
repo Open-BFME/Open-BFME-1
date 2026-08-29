@@ -4075,10 +4075,14 @@ def tinst_resolve(read, rva):
 
     The linker gives every STL member an ILT entry and it is the ILT address the
     name tables record, so a name looked up raw lands on five bytes rather than
-    on the function.
+    on the function.  Return None when a name-table address is not mapped in
+    the retail image; reloc-derived names also include data symbols.
     """
     for _ in range(3):
-        head = read(rva, 5)
+        try:
+            head = read(rva, 5)
+        except ValueError:
+            return None
         if len(head) != 5 or head[0] != 0xE9:
             return rva
         rva = (rva + 5 + int.from_bytes(head[1:5], "little", signed=True)) & 0xFFFFFFFF
@@ -4165,6 +4169,8 @@ def tinst_cells(read, named):
     stake = collections.Counter()
     for name, (rva, size) in named.items():
         body = tinst_resolve(read, rva)
+        if body is None:
+            continue
         if body in claimed:
             continue
         container, element = tinst_element(name)
@@ -4209,6 +4215,8 @@ def tinst_probe(read, named, cell, headers, claimed, taken):
                 if symbol not in named or symbol in claimed:
                     continue
                 rva = tinst_resolve(read, named[symbol][0])
+                if rva is None:
+                    continue
                 if rva in taken:
                     continue
                 retail = read(rva, len(body))

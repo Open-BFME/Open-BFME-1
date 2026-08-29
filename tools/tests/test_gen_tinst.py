@@ -131,6 +131,13 @@ def test_a_truncated_read_is_not_mistaken_for_a_stub():
     assert gen_small.tinst_resolve(read, 0x00FFFFFC) == 0x00FFFFFC
 
 
+def test_a_name_table_data_address_is_not_treated_as_code():
+    def read(rva, _size):
+        raise ValueError(f"RVA 0x{rva:08X} is outside all PE sections")
+
+    assert gen_small.tinst_resolve(read, 0x0130BCA0) is None
+
+
 # The call slots are the half a masked comparison cannot see, and they are where
 # two instantiations that compile to identical code differ: deque<int>'s
 # _M_push_back_aux_v is its neighbours' code reaching a different
