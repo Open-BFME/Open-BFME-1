@@ -80060,3 +80060,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?canonicalFlagName@Open2Lookup344B20@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,Open2 0x00344B20 flag lookup callee
+?find@Open2FlagMap344B20@@QAEPAUOpen2FlagNode344B20@@ABVOpen2FlagName344B20@@@Z,0x0003B32C,Open2 0x00344B20 flag lookup callee
+??1Open2FlagName344B20@@QAE@XZ,0x000444EA,Open2 0x00344B20 flag lookup callee
