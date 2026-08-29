@@ -1485,3 +1485,15 @@ After --apply, count the donor's rows:
     grep -c ",<donor>," reverse/functions.csv
 
 Zero means delete the donor rather than leave it.
+
+## A bare `// ??0Class@@` marker binds by PREFIX, so landing one ctor staleens the other
+
+The claims hook matches a marker comment by prefix. Write both a default and a
+copy constructor as the bare `// ??0Class@@` and they are the same marker to it,
+so landing one leaves the other's marker pointing at a body that is no longer
+there. Give the survivor its FULL mangled name.
+
+Related, when a batch refuses: merge_cluster compares declarations only across
+the `--only` set, so two donors that declare one member differently will block
+an --apply that names both and go through cleanly in two batches -- provided the
+destination has already reconciled them.
