@@ -1522,6 +1522,25 @@ TextTypeTransition::TextTypeTransition ( void )
 
 // byte-exact reconstruction: Code/GameEngine/Source/Common/TextTypeTransitionDestructorThunk.cpp
 // ??1TextTypeTransition@@UAE@XZ present-unmatched
+// Neither this destructor nor CountUpTransition's can come home: class shape,
+// and the evidence is worth keeping because both get very close.
+//
+// Everything a body controls already matches -- the vtable store, the zeroing,
+// the guard, the two member destructor calls in the right order and the EH
+// state transitions. What does not is generated from the CLASS rather than from
+// the body, and no cast in a .cpp reaches it:
+//   - every member sits EIGHT bytes later in retail than the vendored Transition
+//     base puts it. m_dStr is at +0x34 against +0x2c here, and the two strings at
+//     +0x30 and +0x2c against +0x28 and +0x24, so the compiler-generated member
+//     destructor calls all take the wrong address.
+//   - the BASE destructor call is missing entirely from what this tree emits,
+//     because the reference hierarchy does not have the base retail destroys.
+//   - freeDisplayString is vtable slot 10 (+0x28) in BFME against slot 7 (+0x1c)
+//     here. That one alone a view WOULD reach, the same way the newDisplayString
+//     slot was corrected in init above -- but it is not the blocker.
+//
+// Unblocking these means correcting the Transition base layout in a header, which
+// re-verifies every one of this file's matched rows and is not a Tier 1 job.
 TextTypeTransition::~TextTypeTransition( void )
 {
 	m_win = NULL;
