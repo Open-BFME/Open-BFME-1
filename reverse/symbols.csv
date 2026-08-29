@@ -72326,6 +72326,7 @@ name,address,notes
 ?bfmeAdd1034@BfmeSubA1034@@QAEXH@Z,0x00887C90,pin
 ?bfmeAdd1038@BfmeSubF1038@@QAEXHH@Z,0x008BDBB0,pin
 ?bfmeAdd1040@BfmeH1040@@QAEXPAX@Z,0x0001EF9C,pin
+?bfmeAdd1044@BfmeE1044@@QAEXPAVBfmeD1044@@H@Z,0x000157DA,pin
 ?bfmeAdd913D@BfmeThing913D@@QAEDPAX@Z,0x000110E0,pin
 ?bfmeAdd955@BfmeSink955@@QAEXPAHH@Z,0x00037A56,pin
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
@@ -73355,6 +73356,7 @@ name,address,notes
 ?bfmeGet1002@BfmeMid1002@@QAEPAXXZ,0x000022BB,pin
 ?bfmeGet1026@BfmeSrc1026@@QAEHXZ,0x00020824,pin
 ?bfmeGet1040@BfmeD1040@@QAEPAUBfmeE1040@@XZ,0x00046538,pin
+?bfmeGet1044@BfmeSrc1044@@QAEPAXXZ,0x00020D1A,pin
 ?bfmeGet920D@BfmeX920D@@QAEPAVBfmeRes920D@@XZ,0x0002BE77,pin
 ?bfmeGet948C@BfmeGrid948C@@QAE_NH@Z,0x00017049,pin
 ?bfmeGet948D@BfmeGrid948D@@QAE_NH@Z,0x00017049,pin
@@ -73983,6 +73985,7 @@ name,address,notes
 ?bfmeStep1035@BfmeA1035@@QAEXD@Z,0x00016608,pin
 ?bfmeStep1038@BfmeA1038@@QAEXXZ,0x000168C4,pin
 ?bfmeStep1040@BfmeG1040@@QAEXXZ,0x00041970,pin
+?bfmeStep1044@BfmeD1044@@QAEXH@Z,0x000399A5,pin
 ?bfmeStep1@Gen_004410A0@@AAEXXZ,0x000459CB,Open-BFME5 ILT the three-step runner at 0x004410A0 calls first
 ?bfmeStep1@Gen_0077F000@@AAEXXZ,0x00039428,Open-BFME5 ILT the three-step runner at 0x0077F000 calls first
 ?bfmeStep1@Gen_007892D0@@AAEXXZ,0x000270FC,Open-BFME5 ILT the three-step runner at 0x007892D0 calls first
@@ -74067,8 +74070,10 @@ name,address,notes
 ?bfmeTail939B@BfmeThing939B@@QAEXPAUBfmeElem939B@@@Z,0x0003D4E7,pin
 ?bfmeTail974D@BfmeD974@@QAEXXZ,0x0001B8C4,pin
 ?bfmeTailA1037@BfmeI1037@@QAEXH@Z,0x000302E7,pin
+?bfmeTailA1044@BfmeB1044@@QAEXXZ,0x00006E83,pin
 ?bfmeTailA947C@@YAXXZ,0x000241E0,pin
 ?bfmeTailB1037@BfmeI1037@@QAEXH@Z,0x00045179,pin
+?bfmeTailB1044@BfmeB1044@@QAEXXZ,0x00033F19,pin
 ?bfmeTailB947C@BfmeGlob947C@@QAEXXZ,0x000290D2,pin
 ?bfmeTailBCD@BfmeThingBCD@@QAEXXZ,0x0001CD8C,pin
 ?bfmeTailBED@BfmeThingBED@@QAEXXZ,0x00012C6F,pin
@@ -75735,6 +75740,7 @@ name,address,notes
 ?g_bfmeSinkBUB@@3PAVBfmeSinkBUB@@A,0x00EF0888,pin
 ?g_bfmeSinkSB@@3PAVBfmeSinkSB@@A,0x00EED668,pin
 ?g_bfmeSrc1007@@3PAVBfmeSrc1007@@A,0x00EF1464,pin
+?g_bfmeSrc1044@@3VBfmeSrc1044@@A,0x00F4FB38,pin
 ?g_bfmeSrc962@@3PAVBfmeSrc962@@A,0x00EF1464,pin
 ?g_bfmeSrc982@@3PAVBfmeSrc982@@A,0x00EF076C,pin
 ?g_bfmeStateA979@@3PAUBfmeStateA979@@A,0x00EF0898,pin
@@ -79599,6 +79605,7 @@ __imp_?bfmeImport928G@@YGXPAX@Z,0x00F58F08,pin
 __imp_?bfmeImport930C@@YAXPAX@Z,0x00F593D4,pin
 __imp_?bfmeLock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58D18,pin
 __imp_?bfmeMake1030@@YGHHHH@Z,0x00F58CF4,pin
+__imp_?bfmeMap1044@@YGPAXPAXH@Z,0x00F590FC,pin
 __imp_?bfmeOpen1043@@YGPAXPAD@Z,0x00F58E78,pin
 __imp_?bfmePrint1025@@YAXHPADH@Z,0x00F5948C,pin
 __imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
