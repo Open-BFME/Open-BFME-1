@@ -440,14 +440,49 @@ void Eva::setShouldPlay(EvaMessage messageToPlay)
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/EvaSetEvaEnabled.cpp
-// ?setEvaEnabled@Eva@@ present-unmatched
+// BFME's Eva is not the reference's here. Retail keeps one 24-byte per-message
+// check record in a vector at this+0x4C/+0x50 and the enable flag at +0x5C, and
+// the setter is a no-op when the flag would not change. It never touches
+// m_shouldPlay -- going dark invalidates the pending CHECK TIMERS instead, so
+// nothing fires the moment Eva comes back on, and enabling clears nothing at
+// all. The reference body wipes m_shouldPlay on every call including enable.
+struct BfmeEvaCheck
+{
+	Real m_triggeredOnFrame;
+	Real m_timeForNextCheck;					///< retail record+0x04
+	char m_rest[0x10];
+};
+
+struct BfmeEvaEnableLayout
+{
+	char head[0x4c];
+	BfmeEvaCheck *checksBegin;					///< retail this+0x4C
+	BfmeEvaCheck *checksEnd;					///< retail this+0x50
+	char tail[0x08];
+	Bool enabled;								///< retail this+0x5C
+};
+
 void Eva::setEvaEnabled(Bool enabled)
 {
-	// clear out any waiting messages.
-	for (Int i = EVA_FIRST; i < EVA_COUNT; ++i) {
-		m_shouldPlay[i] = FALSE;
+	BfmeEvaEnableLayout *self = (BfmeEvaEnableLayout *)this;
+
+	// Retail bails before the store when nothing changes.
+	if (enabled == self->enabled)
+		return;
+
+	// Going dark invalidates every pending check so nothing fires on re-enable.
+	if (!enabled)
+	{
+		BfmeEvaCheck *check = self->checksBegin;
+		BfmeEvaCheck *last = self->checksEnd;
+		while (check != last)
+		{
+			check->m_timeForNextCheck = -1.0f;
+			++check;
+		}
 	}
-	m_enabled = enabled; 
+
+	self->enabled = enabled;
 }
 
 //-------------------------------------------------------------------------------------------------
