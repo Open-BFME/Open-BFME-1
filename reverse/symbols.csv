@@ -74386,6 +74386,7 @@ name,address,notes
 ?bfmeThreeLF@@YAXXZ,0x0002795D,pin
 ?bfmeThreeQE@BfmeGlobQE@@QAEXXZ,0x00003A80,pin
 ?bfmeThrow1152@BfmeS1152@@QAEXXZ,0x000132CD,pin
+?bfmeThrow1153@BfmeS1153@@QAEXXZ,0x000132CD,pin
 ?bfmeThrow937C@@YGXI@Z,0x00AFD540,pin
 ?bfmeToggle997@BfmeA997@@QAEXXZ,0x000200D1,pin
 ?bfmeTouch982C@BfmeT982@@QAEXXZ,0x0002D2C7,pin
@@ -80179,6 +80180,7 @@ _bfmeCbEOEa,0x0003A760,pin
 _bfmeCbEOEb,0x0001F951,pin
 _bfmeConst1075350,0x00C75350,pin
 _bfmeCopy1152,0x00005934,pin
+_bfmeCopy1153,0x00005934,pin
 _bfmeCtor1030,0x0000E534,pin
 _bfmeDeleteBlock,0x00881EF0,address-derived release target from the direct REL32 call at retail 0x009D1A4C
 _bfmeDirectInput8Create@20,0x009F9AF0,undecorated alias for the DirectInput8Create import stub (see Win32DIKeyboardOpen.cpp)
@@ -80237,6 +80239,7 @@ _bfmeInfoDNF,0x00CF5E74,pin
 _bfmeInfoDNG,0x00C7301C,pin
 _bfmeKDSM,0x00C75350,pin
 _bfmeKEZC,0x00C75350,pin
+_bfmeLen1153,0x00006B9A,pin
 _bfmeLitZD,0x00CC79BC,pin
 _bfmeMalloc1149,0x0082ADA0,pin
 _bfmeMalloc1150,0x0082ADA0,pin
