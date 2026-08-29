@@ -637,6 +637,23 @@ nothing inside the caller's own file can fix. Before drawing a work packet for
 a body whose calls do not account for all their arguments, find the callee and
 check whether it takes one in a register.
 
+### And the inverse, which is this lane's hazard
+
+Merging a body INTO the TU that defines its callee turns the same mechanism
+against you. `ScreenBWFilter::init` came out three bytes short of 91 with every
+offset, constant and call already right: `getChipset` is defined in
+W3DShaderManager.cpp, MSVC reached it with the private convention, concluded
+ECX survives the call, and kept the shader-handle address there -- where retail
+has to park it in ESI and pay the push/pop. Nothing in the body's own text says
+so; the tell is a caller that is SHORTER than retail by exactly a
+callee-saved-register save/restore, with a value live across a call to a static
+defined in the same file.
+
+Fix: declare the callee on a view class -- declared, never defined -- so the
+call takes the ordinary convention, and pin that spelling at the ILT the real
+name already uses. Same one-line screen either way: before merging, list the
+callees your body makes that this destination also DEFINES.
+
 ### What that does not buy you
 
 Both of these bodies then stalled on differences below the source level, and
