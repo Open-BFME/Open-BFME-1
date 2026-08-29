@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/asciistringsetoutofline /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -320,21 +320,52 @@ void TeamFactory::clear()
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/TeamFactory_initFromSides_Thunk.cpp
-// ?initFromSides@TeamFactory@@QAEXPAVSidesList@@@Z present-unmatched
+// BFME does not keep the teams in a counted array, so there is no getNumTeams()
+// loop here.  The pool is an intrusive linked list of 16-byte slots reached
+// through the pointer at SidesList+0x63c: slot 0 is the head, each slot's `next`
+// chains to the next one and terminates on zero, and a slot whose `free` field
+// is set is skipped rather than counted.  The list is re-read through `sides`
+// every iteration rather than hoisted into a local, which is what retail does.
+struct BfmeTeamInfoSlot
+{
+	short next;
+	short previous;
+	short reserved;
+	short free;
+	Int generation;
+	Dict dict;
+};
+
+struct BfmeSidesListTeams
+{
+	char m_retailPrefix[ 0x63c ];
+	BfmeTeamInfoSlot *m_teams;				///< retail this+0x63c
+};
+
+// The slot stride is what indexes the walk; if Dict ever stops being one pointer
+// wide this must fail loudly rather than silently walk the wrong stride.
+typedef char BfmeTeamInfoSlotSizeMustMatchRetail[
+		(sizeof(BfmeTeamInfoSlot) == 16) ? 1 : -1];
+
+// ?initFromSides@TeamFactory@@QAEXPAVSidesList@@@Z
 void TeamFactory::initFromSides(SidesList *sides)
 {
 	clear();
 
 	// create the teams we need.
-	for(Int i = 0; i < sides->getNumTeams(); i++)
+	for(Int index = ((BfmeSidesListTeams *)sides)->m_teams[0].next; index != 0;
+		index = ((BfmeSidesListTeams *)sides)->m_teams[index].next)
 	{
-		Dict *d = sides->getTeamInfo(i)->getDict();
+		BfmeTeamInfoSlot &team = ((BfmeSidesListTeams *)sides)->m_teams[index];
+		if (team.free == 0)
+		{
+			Dict *d = &team.dict;
 
-		AsciiString tname = d->getAsciiString(TheKey_teamName);
-		AsciiString oname = d->getAsciiString(TheKey_teamOwner);
-		Bool singleton = d->getBool(TheKey_teamIsSingleton);
-		initTeam(tname, oname, singleton, d);
+			AsciiString tname = d->getAsciiString(TheKey_teamName);
+			AsciiString oname = d->getAsciiString(TheKey_teamOwner);
+			Bool singleton = d->getBool(TheKey_teamIsSingleton);
+			initTeam(tname, oname, singleton, d);
+		}
 	}
 
 }
