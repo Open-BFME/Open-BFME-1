@@ -72457,6 +72457,8 @@ name,address,notes
 ?bfmeCall935F@BfmeSub935F@@QAEXPAPAX@Z,0x0001ACB2,pin
 ?bfmeCall935G@@YGXPAXHHH@Z,0x00020B08,pin
 ?bfmeCall936F@@YAXH@Z,0x00893820,pin
+?bfmeCall937A@@YAXPAD@Z,0x009F6E26,pin
+?bfmeCall937B@BfmeSub937B@@QAEXPAX@Z,0x0090CD00,pin
 ?bfmeCallCCH@@YAHPAX0H@Z,0x00009084,pin
 ?bfmeCallCIB@@YAHPAX000@Z,0x007EC5C0,pin
 ?bfmeCallCIC@@YAHPAX000@Z,0x007ECE60,pin
@@ -73814,6 +73816,7 @@ name,address,notes
 ?bfmeThreeDVB@BfmeSubDVB@@QAEXPAX0@Z,0x00025BBC,pin
 ?bfmeThreeLF@@YAXXZ,0x0002795D,pin
 ?bfmeThreeQE@BfmeGlobQE@@QAEXXZ,0x00003A80,pin
+?bfmeThrow937C@@YGXI@Z,0x00AFD540,pin
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
 ?bfmeTryANA@BfmeThingANA@@QAEHPAX0@Z,0x0003381B,pin
 ?bfmeTwo920F@BfmeThing920F@@QAEXP6AXPAVLocomotorTemplate@@@Z@Z,0x00012B20,pin
@@ -75021,6 +75024,7 @@ name,address,notes
 ?g_bfme936Count@@3HA,0x00F40594,pin
 ?g_bfme936GlobG@@3PAXA,0x00F0BD30,pin
 ?g_bfme936Ptr@@3PAUBfmeObj936C@@A,0x00F40534,pin
+?g_bfme937Obj@@3PADA,0x009F8AA0,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
