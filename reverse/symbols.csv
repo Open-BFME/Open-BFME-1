@@ -72330,6 +72330,7 @@ name,address,notes
 ?bfmeAddCQE@BfmeSubCQE@@QAEXPAVBfmeArgCQE@@@Z,0x00005C22,pin
 ?bfmeAfterEOC@BfmeThingEOC@@QAEXXZ,0x000106AE,pin
 ?bfmeAfterFCB@BfmeOwnFCB@@QAEXXZ,0x000098B8,pin
+?bfmeAlloc1036@@YAPAXH@Z,0x00881F30,pin
 ?bfmeAlloc946@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAlloc950B@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocATA@@YAPAXI@Z,0x0082E540,pin
@@ -73800,6 +73801,7 @@ name,address,notes
 ?bfmeRegisterDAE@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterHouseColor@@YAXPBD0@Z,0x00900D70,the two-argument __cdecl function the HouseColor parser hands its two strings to; unnamed in the image
 ?bfmeRelKB@BfmeOldKB@@QAEXXZ,0x009EB7A0,pin
+?bfmeRelease1036@@YAXPAX@Z,0x00804330,pin
 ?bfmeRelease964@BfmeItem964@@QAEXXZ,0x000024A5,pin
 ?bfmeRelease@BfmeRefAB@@QAEPAV1@XZ,0x00032D1C,Open-BFME5 the ICF thunk (to 0x00432D1C) the drop helper at 0x003CFC90 gives a borrowed reference back through
 ?bfmeRelease@BfmeSharedBlock@@QAEXXZ,0x009EB7A0,Open-BFME5 the shared-block release the refcounted assignments at 0x005D1E50 and its siblings call
@@ -79553,6 +79555,7 @@ __imp_?bfmePrint1025@@YAXHPADH@Z,0x00F5948C,pin
 __imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
 __imp_?bfmeWait1012@@YGHPAXH@Z,0x00F58F64,pin
+__imp_?bfmeWait1036@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
