@@ -1144,18 +1144,35 @@ void W3DShadowGeometryMesh::buildPolygonNeighbors( void )
 // allocateNeighbors ==========================================================
 // Allocate storage for the polygon neighbors and record its size
 // ============================================================================
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DShadowGeometryMesh_allocateNeighbors_Thunk.cpp
-// ?allocateNeighbors@W3DShadowGeometryMesh@@IAE_NH@Z present-unmatched
+// BFME's W3DShadowGeometryMesh is polymorphic: retail writes m_polyNeighbors at
+// this+0x24 and m_numPolyNeighbors at this+0x28 where the flat vendored layout
+// puts them at +0x20 and +0x24. A uniform four-byte shift of every trailing
+// member is what a vptr at +0x00 looks like, and the reference has the switch for
+// exactly that -- it declares GetPolygonIndex and its neighbours virtual under
+// DO_TERRAIN_SHADOW_VOLUMES. A view rather than the macro, because the macro
+// would move all 89 rows in this file at once.
+//
+// The allocation is a plain global operator new[]: sizeof(PolyNeighbor) is 22 and
+// retail confirms it with `imul eax,eax,0x16`, a POD array with no cookie. NEW
+// would route it through the memory pool instead.
+struct BfmeShadowGeometryMeshNeighbors
+{
+	unsigned char m_unreconstructed_000[ 0x24 ];
+	PolyNeighbor *m_polyNeighbors;				///< retail this+0x24
+	Int m_numPolyNeighbors;					///< retail this+0x28
+};
+
 Bool W3DShadowGeometryMesh::allocateNeighbors( Int numPolys )
 {
+	BfmeShadowGeometryMeshNeighbors *self = (BfmeShadowGeometryMeshNeighbors *)this;
 
 	// assure we're not re-allocating without deleting
-	assert( m_numPolyNeighbors == 0 );
-	assert( m_polyNeighbors == NULL );
+	assert( self->m_numPolyNeighbors == 0 );
+	assert( self->m_polyNeighbors == NULL );
 
 	// allocate the list
-	m_polyNeighbors = NEW PolyNeighbor[ numPolys ];
-	if( m_polyNeighbors == NULL )
+	self->m_polyNeighbors = ::new PolyNeighbor[ numPolys ];
+	if( self->m_polyNeighbors == NULL )
 	{
 
 //		DBGPRINTF(( "Unable to allocate polygon neighbors\n" ));
@@ -1165,7 +1182,7 @@ Bool W3DShadowGeometryMesh::allocateNeighbors( Int numPolys )
 	}  // end if
 
 	// list is now acutally allocated
-	m_numPolyNeighbors = numPolys;
+	self->m_numPolyNeighbors = numPolys;
 
 	return TRUE;  // success!
 
