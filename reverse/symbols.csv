@@ -72561,6 +72561,7 @@ name,address,notes
 ?bfmeCheckB@@YAHPAX@Z,0x00894DB0,Open-BFME5 the guard the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
+?bfmeClear927A@BfmeSub927A@@QAEXXZ,0x0004278A,pin
 ?bfmeClear@BfmeListA@@QAEXXZ,0x00021CD3,Open-BFME5 the out-of-line list clear the destructor at 0x0009F7A0 calls
 ?bfmeClear@BfmeListB@@QAEXXZ,0x0001900B,Open-BFME5 the out-of-line list clear the destructor at 0x00080950 calls
 ?bfmeClearEFG@BfmeThingEFG@@QAEXXZ,0x0001D4B7,pin
@@ -72751,6 +72752,7 @@ name,address,notes
 ?bfmeDropZB@BfmeSubZB@@QAEXPAX@Z,0x000203D8,pin
 ?bfmeDtor918P@BfmeSub918P@@QAEXXZ,0x000414BB,pin
 ?bfmeDtor918Q@BfmeSub918Q@@QAEXXZ,0x0083F810,pin
+?bfmeDtor927B@BfmeObj927B@@QAEXXZ,0x00036E9E,pin
 ?bfmeDtorAEC@BfmeNodeAEC@@QAEXXZ,0x00030841,pin
 ?bfmeDtorBXD@BfmePayloadBXD@@QAEXXZ,0x00021445,pin
 ?bfmeDtorBXE@BfmePayloadBXE@@QAEXXZ,0x0003F95E,pin
@@ -73429,6 +73431,8 @@ name,address,notes
 ?bfmeOnceBXF@BfmeThingBXF@@QAEXXZ,0x0000E3AE,pin
 ?bfmeOne920F@BfmeThing920F@@QAEXP6AXPAVLocomotorTemplate@@@Z@Z,0x000497DD,pin
 ?bfmeOne921G@BfmeThing921G@@QAEXXZ,0x0004287A,pin
+?bfmeOne927C@BfmeThing927C@@QAEXXZ,0x0003418F,pin
+?bfmeOne927D@BfmeThing927D@@QAEXXZ,0x0002987A,pin
 ?bfmeOneAPA@@YGPAXPAXPAH@Z,0x009F6BF2,pin
 ?bfmeOneBKE@@YGXPAX@Z,0x0090C610,pin
 ?bfmeOneBKF@BfmePartBKF@@QAEXXZ,0x0090DF10,pin
@@ -74963,6 +74967,7 @@ name,address,notes
 ?g_bfme924OneG@@3PAVBfmeOne924G@@A,0x00EF49D0,pin
 ?g_bfme924TwoG@@3PAVBfmeTwo924G@@A,0x00EF4988,pin
 ?g_bfme926Obj@@3PADA,0x002555A0,pin
+?g_bfme927Vft@@3PADA,0x00D3A56C,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
