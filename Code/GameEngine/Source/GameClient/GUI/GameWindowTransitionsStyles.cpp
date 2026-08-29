@@ -1030,54 +1030,66 @@ void MainMenuScaleUpTransition::init( GameWindow *win )
 	
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/MainMenuScaleUpTransition_updateMethodThunk.cpp
-// ?update@MainMenuScaleUpTransition@@UAEXH@Z present-unmatched
+// BFME parameterises the frame bounds: retail compares against this+0x10 and
+// this+0x14 where the reference uses the MAINMENUSCALEUPTRANSITION_START/_END
+// constants. That has a knock-on effect -- a switch needs constant cases, so the
+// two frame tests become an if/else-if chain rather than a switch.
+//
+// The reference's `frame == 1' block builds an AudioEventRTS and plays
+// GUILogoSelect. Retail has no trace of it and could not have: that temporary
+// has a destructor and would have forced an SEH frame onto a function that has
+// none. So BFME does not play that click here at all.
+struct BfmeScaleUpTransitionFields
+{
+	unsigned char m_unreconstructed_00[ 0x08 ];		///< vtable pointer at +0x00
+	Bool m_isFinished;					///< retail this+0x08
+	Bool m_isForward;					///< retail this+0x09
+	unsigned char m_unreconstructed_0a[ 2 ];
+	GameWindow *m_win;					///< retail this+0x0c
+	Int m_startFrame;					///< retail this+0x10
+	Int m_endFrame;						///< retail this+0x14
+	unsigned char m_unreconstructed_18[ 0x28 - 0x18 ];
+	Int m_drawState;					///< retail this+0x28
+	unsigned char m_unreconstructed_2c[ 0x4c - 0x2c ];
+	GameWindow *m_growWin;					///< retail this+0x4c
+};
+
+// ?update@MainMenuScaleUpTransition@@UAEXH@Z
 void MainMenuScaleUpTransition::update( Int frame )
 {
-	m_drawState = -1;
-	if(frame < MAINMENUSCALEUPTRANSITION_START || frame > MAINMENUSCALEUPTRANSITION_END)
+	BfmeScaleUpTransitionFields *self = (BfmeScaleUpTransitionFields *)this;
+
+	self->m_drawState = -1;
+	if(frame < self->m_startFrame || frame > self->m_endFrame)
 	{
-		DEBUG_ASSERTCRASH(FALSE, ("MainMenuScaleUpTransition::update - Frame is out of the range the this update can handle %d", frame));
 		return;
 	}
-	switch (frame) {
-	case MAINMENUSCALEUPTRANSITION_START:
+	if (frame == self->m_startFrame)
+	{
+		if(!self->m_isForward && self->m_win && self->m_growWin)
 		{
-			
-			if(m_isForward || !m_win || !m_growWin)
-				break;
 //			m_win->winHide(TRUE);
-			m_growWin->winHide(TRUE);
-			m_isFinished = TRUE;
+			self->m_growWin->winHide(TRUE);
+			self->m_isFinished = TRUE;
 		}
-		break;
-	case MAINMENUSCALEUPTRANSITION_END:
+	}
+	else if (frame == self->m_endFrame)
+	{
+		if(self->m_isForward && self->m_win && self->m_growWin)
 		{
-			if(!m_isForward || !m_win || !m_growWin)
-				break;
-			m_win->winHide(TRUE);
-			m_growWin->winHide(FALSE);
-			m_isFinished = TRUE;
+			self->m_win->winHide(TRUE);
+			self->m_growWin->winHide(FALSE);
+			self->m_isFinished = TRUE;
 		}
-	}	
-	if(frame == 1)
-	{
-		AudioEventRTS buttonClick("GUILogoSelect");
-
-		if( TheAudio )
-		{
-			TheAudio->addAudioEvent( &buttonClick );
-		}  // end if			
 	}
-	if(frame > MAINMENUSCALEUPTRANSITION_START && frame < MAINMENUSCALEUPTRANSITION_END)
+	if(frame > self->m_startFrame && frame < self->m_endFrame)
 	{
-		if(m_win)
-			m_win->winHide(TRUE);
-		if(m_growWin)
-			m_growWin->winHide(TRUE);
-		m_drawState = frame;
+		if(self->m_win)
+			self->m_win->winHide(TRUE);
+		if(self->m_growWin)
+			self->m_growWin->winHide(TRUE);
+		self->m_drawState = frame;
 	}
-
 }
 
 // ?reverse@MainMenuScaleUpTransition@@UAEXXZ present-unmatched
@@ -1158,52 +1170,61 @@ void MainMenuMediumScaleUpTransition::init( GameWindow *win )
 	
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/MainMenuMediumScaleUpTransition_updateMethodThunk.cpp
-// ?update@MainMenuMediumScaleUpTransition@@UAEXH@Z present-unmatched
+// The medium variant is the same shape as MainMenuScaleUpTransition::update
+// above, with two differences of its own: its grow window is at +0x44 rather than
+// +0x4c, and it opens the start case by SHOWING m_win where the plain variant has
+// that call commented out. It drops an audio block too -- the reference plays
+// GUILogoMouseOver on the first forward frame and retail has no trace of it.
+struct BfmeMediumScaleUpTransitionFields
+{
+	unsigned char m_unreconstructed_00[ 0x08 ];		///< vtable pointer at +0x00
+	Bool m_isFinished;					///< retail this+0x08
+	Bool m_isForward;					///< retail this+0x09
+	unsigned char m_unreconstructed_0a[ 2 ];
+	GameWindow *m_win;					///< retail this+0x0c
+	Int m_startFrame;					///< retail this+0x10
+	Int m_endFrame;						///< retail this+0x14
+	unsigned char m_unreconstructed_18[ 0x28 - 0x18 ];
+	Int m_drawState;					///< retail this+0x28
+	unsigned char m_unreconstructed_2c[ 0x44 - 0x2c ];
+	GameWindow *m_growWin;					///< retail this+0x44
+};
+
+// ?update@MainMenuMediumScaleUpTransition@@UAEXH@Z
 void MainMenuMediumScaleUpTransition::update( Int frame )
 {
-	m_drawState = -1;
-	if(frame < MAINMENUMEDIUMSCALEUPTRANSITION_START || frame > MAINMENUMEDIUMSCALEUPTRANSITION_END)
+	BfmeMediumScaleUpTransitionFields *self = (BfmeMediumScaleUpTransitionFields *)this;
+
+	self->m_drawState = -1;
+	if(frame < self->m_startFrame || frame > self->m_endFrame)
 	{
-		DEBUG_ASSERTCRASH(FALSE, ("MainMenuMediumScaleUpTransition::update - Frame is out of the range the this update can handle %d", frame));
 		return;
 	}
-	switch (frame) {
-	case MAINMENUMEDIUMSCALEUPTRANSITION_START:
-		{
-			
-			if(m_isForward || !m_win || !m_growWin)
-				break;
-			m_win->winHide(FALSE);
-			m_growWin->winHide(TRUE);
-			m_isFinished = TRUE;
-		}
-		break;
-	case MAINMENUMEDIUMSCALEUPTRANSITION_END:
-		{
-			if(!m_isForward || !m_win || !m_growWin)
-				break;
-			m_win->winHide(TRUE);
-			m_growWin->winHide(FALSE);
-			m_isFinished = TRUE;
-		}
-	}	
-	if(frame > MAINMENUMEDIUMSCALEUPTRANSITION_START && frame < MAINMENUMEDIUMSCALEUPTRANSITION_END)
+	if (frame == self->m_startFrame)
 	{
-		if(frame == 1 && m_isForward)
+		if(!self->m_isForward && self->m_win && self->m_growWin)
 		{
-			AudioEventRTS buttonClick("GUILogoMouseOver");
-
-			if( TheAudio )
-			{
-				TheAudio->addAudioEvent( &buttonClick );
-			}  // end if			
+			self->m_win->winHide(FALSE);
+			self->m_growWin->winHide(TRUE);
+			self->m_isFinished = TRUE;
 		}
-		if(m_win)
-			m_win->winHide(TRUE);
-		if(m_growWin)
-			m_growWin->winHide(TRUE);
-		m_drawState = frame;
+	}
+	else if (frame == self->m_endFrame)
+	{
+		if(self->m_isForward && self->m_win && self->m_growWin)
+		{
+			self->m_win->winHide(TRUE);
+			self->m_growWin->winHide(FALSE);
+			self->m_isFinished = TRUE;
+		}
+	}
+	if(frame > self->m_startFrame && frame < self->m_endFrame)
+	{
+		if(self->m_win)
+			self->m_win->winHide(TRUE);
+		if(self->m_growWin)
+			self->m_growWin->winHide(TRUE);
+		self->m_drawState = frame;
 	}
 }
 
