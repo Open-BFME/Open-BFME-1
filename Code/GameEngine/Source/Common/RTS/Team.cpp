@@ -373,6 +373,44 @@ void TeamFactory::initFromSides(SidesList *sides)
 // ------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamFactoryCtorThunk.cpp
 // ?initTeam@TeamFactory@@QAEXABVAsciiString@@0_NPAVDict@@@Z present-unmatched
+// TeamFactoryCtorThunk.cpp cannot come home, and the blocker is initTeam's
+// allocator rather than any of the four bodies. Recording it so the next agent
+// does not re-derive the layout.
+//
+// That donor owns four rows marked for this file -- the TeamFactory destructor,
+// clear, addTeamPrototypeToList and initTeam -- and merge_cluster moves a
+// donor's marked rows together, so all four are gated on the worst of them.
+//
+// initTeam is the one that blocks. Retail builds the prototype through
+// TeamPrototype's POOL operator new, and this file owns the ledger row for that
+// allocator (the static operator new taking the TeamPrototypeMagicEnum). It is
+// emitted here only because initTeam spells newInstance(TeamPrototype). BFME's
+// constructor takes SEVEN parameters with owner before name, where the vendored
+// one takes six and omits the owner string, so the merged call cannot go
+// through newInstance -- and the moment it does not, the allocator row loses
+// its only definition and the build fails with "symbol not found in object"
+// on an unrelated row. Same shape as the addUpgrade blocker: a second row
+// depending on the allocator of the body being merged.
+//
+// Everything else about the merge is settled and proved, so it is only the
+// allocator that is missing:
+//   - m_prototypes is keyed by a PAIR of name keys, one per prototype string,
+//     not the single NAMEKEY the reference builds from getName(); the tree is
+//     at TeamFactory+0x0c and the two Ints follow at +0x18 and +0x1c.
+//   - the prototype's two AsciiStrings are at +0x10 and +0x14, and retail
+//     re-reads them off the prototype it just built rather than reusing the
+//     parameters.
+//   - findTeamPrototype and createInactiveTeam both take TWO strings in BFME
+//     (pinned at 0x000EFE10 and 0x000F7AB0); the vendored header declares one.
+//   - the seven-argument prototype constructor is pinned at 0x000F3E40.
+//   - the destructor nulls TheTeamFactory after clear().
+//   - clear deletes each prototype through its own vtable slot 0 rather than
+//     calling deleteInstance.
+//   - PlayerList keeps the neutral player as a member at +0x14, not behind
+//     getNeutralPlayer().
+//
+// Unblocking it means emitting the pool allocation with the seven-argument
+// constructor, which needs the magic-enum spelling rather than the macro.
 void TeamFactory::initTeam(const AsciiString& name, const AsciiString& owner, Bool isSingleton, Dict *d)
 {
 	DEBUG_ASSERTCRASH(findTeamPrototype(name)==NULL,("team already exists"));
