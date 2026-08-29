@@ -34,10 +34,15 @@
 #include "_pch.h"
 #include <new>      // needed for placement new prototype
 
-// ?Write@DebugIOOds@@UAEXW4StringType@DebugIOInterface@@PBD1@Z present-unmatched
+// BFME numbers StructuredCmdReply one lower than Zero Hour does: retail
+// compares against 5 here, and the vendored enum yields 6. Restated for this
+// translation unit only -- reference/ stays pristine, and a shim edit would
+// need the full gate.
+static const int BfmeStructuredCmdReply = 5;
+
 void DebugIOOds::Write(StringType type, const char *src, const char *str)
 {
-  if (type!=StringType::StructuredCmdReply&&str)
+  if (type!=BfmeStructuredCmdReply&&str)
     OutputDebugString(str);
 }
 
