@@ -1,0 +1,60 @@
+"""marker_screen clears a destination's marker to measure a donor, so the one
+thing it must never do is leave that marker cleared. A destination missing its
+marker makes the NEXT build report a stale-annotation pass that never compared
+a byte -- the trap docs/lessons.md records -- so an interrupted screen is worse
+than a failed one."""
+import sys
+from pathlib import Path
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import marker_screen  # noqa: E402
+
+
+def _dest(tmp_path, donor, symbol):
+    """screen() resolves its destination as ROOT / dest, and pathlib lets an
+    ABSOLUTE dest win, which is how these tests point it at tmp_path without
+    patching anything."""
+    path = tmp_path / "Dest.cpp"
+    marker = "// byte-exact reconstruction: %s\n// %s present-unmatched\n" % (donor, symbol)
+    path.write_bytes(("above\n" + marker + "below\n").encode("utf-8"))
+    return path, marker
+
+
+def test_an_exception_mid_screen_restores_the_marker(tmp_path, monkeypatch):
+    donor, symbol = "d.cpp", "?f@C@@QAEXXZ"
+    path, marker = _dest(tmp_path, donor, symbol)
+    before = path.read_bytes()
+
+    def boom(*a, **k):
+        raise RuntimeError("build died")
+    monkeypatch.setattr(marker_screen, "_screen_cleared", boom)
+    with pytest.raises(RuntimeError):
+        marker_screen.screen(donor, str(path), symbol)
+
+    assert path.read_bytes() == before, "marker not restored after an exception"
+    assert marker in path.read_bytes().decode("utf-8")
+
+
+def test_a_keyboardinterrupt_also_restores(tmp_path, monkeypatch):
+    """BaseException, not Exception -- a Ctrl-C mid-build must restore too."""
+    donor, symbol = "d.cpp", "?f@C@@QAEXXZ"
+    path, marker = _dest(tmp_path, donor, symbol)
+    before = path.read_bytes()
+
+    def interrupted(*a, **k):
+        raise KeyboardInterrupt
+    monkeypatch.setattr(marker_screen, "_screen_cleared", interrupted)
+    with pytest.raises(KeyboardInterrupt):
+        marker_screen.screen(donor, str(path), symbol)
+
+    assert path.read_bytes() == before, "marker not restored after Ctrl-C"
+
+
+def test_a_missing_marker_pair_is_reported_and_nothing_is_written(tmp_path, monkeypatch):
+    path = tmp_path / "Dest.cpp"
+    path.write_bytes(b"no marker here\n")
+    before = path.read_bytes()
+    assert marker_screen.screen("d.cpp", str(path), "?f@C@@QAEXXZ") == "no-marker-pair"
+    assert path.read_bytes() == before

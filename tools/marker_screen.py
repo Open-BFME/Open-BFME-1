@@ -100,7 +100,20 @@ def screen(donor, dest, symbol):
     # read_bytes/write_bytes throughout: thirteen destinations hold CRLF blocks
     # inside otherwise-LF files and read_text would rewrite every one of them.
     path.write_bytes(text.replace(marker, "", 1).encode("utf-8"))
+    # Every exit below either restores `original` or returns MATCH, which leaves
+    # the clear in place on purpose. But a build timeout or a Ctrl-C between here
+    # and those exits would strand the destination WITHOUT its marker, and a
+    # missing marker is the state that makes the next build report a
+    # stale-annotation pass that never compared a byte. So restore on any
+    # unwind and re-raise.
+    try:
+        return _screen_cleared(path, original, dest, symbol)
+    except BaseException:
+        path.write_bytes(original)
+        raise
 
+
+def _screen_cleared(path, original, dest, symbol):
     built = subprocess.run(["./build.sh", dest], cwd=ROOT,
                            capture_output=True, text=True, timeout=1800)
     if "Functions: OK" not in built.stdout:
