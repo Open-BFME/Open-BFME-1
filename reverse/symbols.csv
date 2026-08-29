@@ -72746,6 +72746,7 @@ name,address,notes
 ?bfmeChk1083@BfmeB1083@@QAEDXZ,0x00022C96,pin
 ?bfmeChk1089@BfmeR1089@@QAEDXZ,0x000262B5,pin
 ?bfmeChk1090@BfmeS1090@@QAEDXZ,0x00024500,pin
+?bfmeChk1091@BfmeR1091@@QAEDXZ,0x0003E5A9,pin
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
 ?bfmeClear1003@BfmeB1003@@QAEXXZ,0x0000A754,pin
 ?bfmeClear1024@BfmeList1024@@QAEXXZ,0x00015640,pin
@@ -73073,6 +73074,7 @@ name,address,notes
 ?bfmeFind1060@BfmeSub1060@@QAEPAUBfmeFn1060@@PAH@Z,0x0000F2FE,pin
 ?bfmeFind1081@BfmeJ1081@@QAEPAVBfmeF1081@@H@Z,0x000335D2,pin
 ?bfmeFind1087@BfmeC1087@@QAEHH@Z,0x0004B36C,pin
+?bfmeFind1091@BfmeC1091@@QAEHH@Z,0x0004B36C,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
@@ -73513,6 +73515,7 @@ name,address,notes
 ?bfmeHas1000@BfmeArg1000@@QAEDH@Z,0x00003B1B,pin
 ?bfmeHas1026@BfmeTab1026@@QAEDHH@Z,0x0001DA34,pin
 ?bfmeHas1052@BfmeTab1052@@QAEDHH@Z,0x0001DA34,pin
+?bfmeHas1091@BfmeR1091@@QAEDH@Z,0x00049E45,pin
 ?bfmeHas985C@BfmeArg985@@QAEDH@Z,0x000077B6,pin
 ?bfmeHas992C@BfmeAsk992@@QAEDXZ,0x007E88A0,pin
 ?bfmeHash00007518@@YAIII@Z,0x00007518,Open-BFME5 ILT the per-type hash helper the bfmeDiffers pair at that sentinel calls
@@ -73649,6 +73652,7 @@ name,address,notes
 ?bfmeLook1088@BfmeD1088@@QAEPAUBfmeR1088@@PAF@Z,0x0002EE60,pin
 ?bfmeLook1089@BfmeD1089@@QAEPAVBfmeR1089@@PAF@Z,0x0002EE60,pin
 ?bfmeLook1090@BfmeD1090@@QAEPAVBfmeR1090@@PAF@Z,0x0002EE60,pin
+?bfmeLook1091@BfmeD1091@@QAEPAVBfmeR1091@@PAF@Z,0x0002EE60,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
 ?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
 ?bfmeLookBBB@@YAPAXPAX@Z,0x0082B8E0,pin
@@ -73748,6 +73752,7 @@ name,address,notes
 ?bfmeNext1088@BfmeP1088@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1089@BfmeP1089@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1090@BfmeP1090@@QAEHH@Z,0x000230B5,pin
+?bfmeNext1091@BfmeP1091@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext929D@BfmeNext929D@@QAEHH@Z,0x0089CC30,pin
 ?bfmeNext@Gen_00088B60@@AAEXXZ,0x00031FCF,Open-BFME5 the member the flag-then-forward wrapper at 0x00088B60 tail-jumps to
 ?bfmeNext@Gen_000B5690@@AAEXXZ,0x000242A3,Open-BFME5 the member the flag-then-forward wrapper at 0x000B5690 tail-jumps to
@@ -74251,6 +74256,7 @@ name,address,notes
 ?bfmeTellRP@BfmeFoundRP@@QAEXPAX@Z,0x00030553,pin
 ?bfmeTest1025@BfmeT1025@@QAEDPAXH@Z,0x000357D8,pin
 ?bfmeTest1034@@YADH@Z,0x0002789A,pin
+?bfmeTest1091@BfmeR1091@@QAEDH@Z,0x0002BB8E,pin
 ?bfmeTest914A@@YAHXZ,0x000162A7,pin
 ?bfmeTest932E@BfmeThing932E@@QAEHXZ,0x00037E34,pin
 ?bfmeTest@Rva2225E0Filter@@AAE_NPAVBfmeOverridable@@_N@Z,0x0001B437,Open-BFME5 ILT the filter test whose result Rva2225E0Filter::accepts at 0x003A04A0 returns
@@ -75635,6 +75641,7 @@ name,address,notes
 ?g_bfmeB1083@@3PAVBfmeB1083@@A,0x00EF0898,pin
 ?g_bfmeB1086@@3PAVBfmeB1086@@A,0x00EED5C4,pin
 ?g_bfmeB1087@@3PAUBfmeB1087@@A,0x00EF0898,pin
+?g_bfmeB1091@@3PAUBfmeB1091@@A,0x00EF0898,pin
 ?g_bfmeB986B@@3PAHA,0x00EF9D0C,pin
 ?g_bfmeB991@@3PAVBfmeB991@@A,0x00EF9D88,pin
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
@@ -75652,6 +75659,7 @@ name,address,notes
 ?g_bfmeC1082@@3PAVBfmeC1082@@A,0x00EF1270,pin
 ?g_bfmeC1086@@3PAVBfmeC1086@@A,0x00EF060C,pin
 ?g_bfmeC1087@@3PAVBfmeC1087@@A,0x00EED7AC,pin
+?g_bfmeC1091@@3PAVBfmeC1091@@A,0x00EED7AC,pin
 ?g_bfmeCFAE@@3HA,0x00EEF418,pin
 ?g_bfmeCh1035@@3DA,0x00F4ECC8,pin
 ?g_bfmeClock977@@3PAVBfmeClock977@@A,0x00EF1B40,pin
@@ -75680,6 +75688,7 @@ name,address,notes
 ?g_bfmeD1088@@3PAVBfmeD1088@@A,0x00EED748,pin
 ?g_bfmeD1089@@3PAVBfmeD1089@@A,0x00EED748,pin
 ?g_bfmeD1090@@3PAVBfmeD1090@@A,0x00EED748,pin
+?g_bfmeD1091@@3PAVBfmeD1091@@A,0x00EED748,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
@@ -75882,6 +75891,7 @@ name,address,notes
 ?g_bfmeM1024@@3PAVBfmeM1024@@A,0x00EF6924,pin
 ?g_bfmeM1066@@3PAUBfmeM1066@@A,0x00EED5C8,pin
 ?g_bfmeM1087@@3PAUBfmeM1087@@A,0x00EED5C8,pin
+?g_bfmeM1091@@3PAUBfmeM1091@@A,0x00EED5C8,pin
 ?g_bfmeMake1010@@3PAVBfmeMake1010@@A,0x00EEF738,pin
 ?g_bfmeMakerAWB@@3PAVBfmeMakerAWB@@A,0x00EF12CC,pin
 ?g_bfmeMap1024@@3PAUBfmeMap1024@@A,0x00F3846C,pin
@@ -75968,6 +75978,7 @@ name,address,notes
 ?g_bfmeP1088@@3PAVBfmeP1088@@A,0x00EF076C,pin
 ?g_bfmeP1089@@3PAVBfmeP1089@@A,0x00EF076C,pin
 ?g_bfmeP1090@@3PAVBfmeP1090@@A,0x00EF076C,pin
+?g_bfmeP1091@@3PAVBfmeP1091@@A,0x00EF076C,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
