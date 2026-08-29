@@ -1,10 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0W3DSupplyDraw@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DSupplyDraw.cpp
+// readable body of ??0W3DSupplyDrawModuleData@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DSupplyDraw.cpp
 // Field names come from retail's own INI field table joined to upstream's
 // parse table on the key: retail supplies every offset, upstream only the
 // word. The offsets were derived from this class's declaration sequence and
 // type sizes, never read out of the old placeholder names.
-// readable body of ??0W3DSupplyDraw@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DSupplyDraw.cpp
-// readable body of ??0W3DSupplyDrawModuleData@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DSupplyDraw.cpp
 
 // The two constructors W3DSupplyDraw.cpp defines: the draw module itself
 // (retail 0x0077DB70) and its module data (0x0077DD50). Both are pure layout

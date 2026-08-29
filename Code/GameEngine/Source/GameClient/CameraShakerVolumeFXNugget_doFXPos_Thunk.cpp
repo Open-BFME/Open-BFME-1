@@ -1,6 +1,7 @@
 // cl: /O2 /Ob0 /DNDEBUG /MD /EHsc
 // Open-BFME5: clean C++ conversion of CameraShakerVolume's positional dispatch.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x, y, z;
@@ -8,6 +9,7 @@ struct Coord3D
 
 class Matrix3D;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

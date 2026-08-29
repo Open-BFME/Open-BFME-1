@@ -2,6 +2,7 @@
 
 extern char g_bfme911Flag;
 extern int g_bfme911Val;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:
@@ -19,6 +20,7 @@ void bfmeGo911A(void)
 
 class RayCollisionTestClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/aabtree.h
 class AABTreeClass
 {
 public:

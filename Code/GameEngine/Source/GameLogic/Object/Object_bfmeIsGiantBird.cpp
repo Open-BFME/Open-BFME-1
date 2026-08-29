@@ -4,6 +4,7 @@ typedef bool Bool;
 
 #define BFME_AI_SLOT(n) virtual void bfmeAiSlot##n();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -88,6 +89,7 @@ public:
 
 #undef BFME_AI_SLOT
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

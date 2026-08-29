@@ -5,6 +5,7 @@ typedef float Real;
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -15,6 +16,7 @@ private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor
 {
 	volatile Real red;
@@ -22,12 +24,14 @@ struct RGBColor
 	volatile Real blue;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord2D
 {
 	volatile Real x;
 	volatile Real y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXNugget
 {
 public:

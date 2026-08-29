@@ -8,6 +8,7 @@ typedef float Real;
 void *operator new[](unsigned int bytes);
 void operator delete[](void *pointer);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
@@ -22,6 +23,7 @@ struct Coord3D
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Region3D
 {
 	__forceinline Region3D() {}
@@ -73,6 +75,7 @@ private:
 
 class ShroudManagerImpl008FBA40;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionData
 {
 public:

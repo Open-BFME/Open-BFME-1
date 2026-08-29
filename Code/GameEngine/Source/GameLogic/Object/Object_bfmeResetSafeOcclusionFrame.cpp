@@ -2,6 +2,7 @@
 
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -11,6 +12,7 @@ public:
 	Overridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
 {
 public:
@@ -21,6 +23,7 @@ private:
 	UnsignedInt m_occlusionDelay;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
@@ -42,6 +45,7 @@ inline const ThingTemplate *Thing::getTemplate() const
 	return thingTemplate;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -51,6 +55,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 public:

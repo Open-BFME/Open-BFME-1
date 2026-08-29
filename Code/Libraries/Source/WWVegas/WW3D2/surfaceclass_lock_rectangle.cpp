@@ -68,6 +68,7 @@ static __forceinline void BFME_Surface_ErrorCode008FC710(unsigned result)
 	}
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/surfaceclass.h
 class SurfaceClass
 {
 public:

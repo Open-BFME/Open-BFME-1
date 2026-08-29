@@ -193,6 +193,7 @@ void SubsystemInterfaceList::postProcessLoadAll()
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/SubsystemInterfaceListResetAllBfmeLayout.cpp
 // ?resetAll@SubsystemInterfaceList@@QAEXXZ present-unmatched
 void SubsystemInterfaceList::resetAll()
 {

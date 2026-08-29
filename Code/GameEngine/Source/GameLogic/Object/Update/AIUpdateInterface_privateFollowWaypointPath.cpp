@@ -1,10 +1,15 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?privateFollowWaypointPath@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
+// readable body of ?privateFollowWaypointPathAsTeam@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
+// readable body of ?privateFollowWaypointPathAsTeamExact@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
+// readable body of ?privateFollowWaypointPathExact@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // readable bodies: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
 typedef bool Bool;
 typedef unsigned int ObjectID;
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
@@ -31,6 +36,7 @@ enum
 	NO_FORMATION_ID = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Waypoint
 {
 public:
@@ -44,6 +50,7 @@ private:
 	Coord3D m_location;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -59,6 +66,7 @@ private:
 	ObjectID m_formationID;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIStateMachine
 {
 public:
@@ -75,6 +83,7 @@ public:
 	void setGoalWaypoint( const Waypoint *way );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 protected:

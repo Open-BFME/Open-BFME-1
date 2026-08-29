@@ -6905,6 +6905,7 @@ AsciiString AIAttackState::getName(  ) const
 #endif
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIAttackStateChooseWeaponBfmeLayout.cpp
 // ?chooseWeapon@AIAttackState@@AAE_NXZ present-unmatched
 Bool AIAttackState::chooseWeapon()
 {

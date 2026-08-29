@@ -10,6 +10,7 @@ typedef bool Bool;
 typedef int Int;
 
 template <int Bits>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -36,18 +37,21 @@ private:
 
 typedef BitFlags<86> ObjectStatusMaskType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ObjectHelper.h
 class ObjectHelper
 {
 public:
 	void sleepUntil(UnsignedInt frame);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionData
 {
 public:
 	void makeDirty();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -57,6 +61,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

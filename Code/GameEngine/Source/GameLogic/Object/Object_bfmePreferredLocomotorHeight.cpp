@@ -17,12 +17,14 @@ typedef float Real;
 
 extern Real g_bfmeZeroCY; // retail 0x01075350
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class Locomotor
 {
 public:
 	Real getPreferredHeight() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -30,6 +32,7 @@ public:
 	Locomotor *m_curLocomotor; // +0x1CC
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

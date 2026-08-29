@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getTreatAsAircraftForLocoDistToGoal@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // readable body: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
 typedef bool Bool;
@@ -18,6 +19,7 @@ public:
 	LocomotorOverridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class Locomotor : public LocomotorOverridable
 {
 public:
@@ -74,6 +76,7 @@ public:
 	AI_SLOT(120); AI_SLOT(121); AI_SLOT(122);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public AIUpdateVirtualPrefix
 {
 public:

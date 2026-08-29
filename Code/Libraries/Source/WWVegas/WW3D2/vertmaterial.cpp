@@ -158,7 +158,7 @@ VertexMaterialClass::VertexMaterialClass(const VertexMaterialClass & src) :
 	memcpy(Material, SRCMATPTR(&src), sizeof(D3DMATERIAL8));
 }
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/VertexMaterialClass_Make_Unique_Thunk.cpp
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/VertexMaterialClassFieldWrites.cpp
 // ?Make_Unique@VertexMaterialClass@@QAEXXZ present-unmatched
 void VertexMaterialClass::Make_Unique()
 {
@@ -482,7 +482,7 @@ VertexMaterialClass::Get_Diffuse_Color_Source(void)
 	}
 }
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/VertexMaterialClass_Set_UV_Source_Thunk.cpp
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/VertexMaterialClassFieldWrites.cpp
 // ?Set_UV_Source@VertexMaterialClass@@QAEXHH@Z present-unmatched
 void VertexMaterialClass::Set_UV_Source(int stage,int array_index)
 {

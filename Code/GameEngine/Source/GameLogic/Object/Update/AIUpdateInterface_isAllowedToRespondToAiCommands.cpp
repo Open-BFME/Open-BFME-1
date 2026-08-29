@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?isAllowedToRespondToAiCommands@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // readable body: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
 typedef bool Bool;
@@ -15,12 +16,14 @@ enum CommandSourceType
 	CMD_FROM_AI = 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 struct AICommandParms
 {
 	AICommandType m_cmd;
 	CommandSourceType m_cmdSource;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -34,6 +37,7 @@ private:
 	unsigned char m_deadFlags;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIStateMachine
 {
 public:
@@ -46,6 +50,7 @@ private:
 	int m_goalObjectID;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:

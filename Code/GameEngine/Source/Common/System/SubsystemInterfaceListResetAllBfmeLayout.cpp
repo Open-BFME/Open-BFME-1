@@ -1,3 +1,4 @@
+// readable body of ?resetAll@SubsystemInterfaceList@@QAEXXZ: Code/GameEngine/Source/Common/System/SubsystemInterface.cpp
 // BFME layout reconstruction of SubsystemInterface.cpp's resetAll body.
 // The BFME list stores eight-byte subsystem/slot pairs, and its reset virtual
 // is at vtable offset 0x10 rather than the shared ZH offset 0x0c.
@@ -18,6 +19,7 @@ struct BfmeSubsystemEntry
 	void *m_slot;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterfaceList
 {
 public:

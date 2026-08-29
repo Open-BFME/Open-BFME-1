@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?getEnterTarget@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // readable body: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
 class Object;
@@ -18,6 +19,7 @@ enum AIStateType
 	AI_ENTER_TRANSPORT = 0x34
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
@@ -30,6 +32,7 @@ public:
 	StateID m_stateID;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -50,6 +53,7 @@ public:
 	State *m_currentState;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:

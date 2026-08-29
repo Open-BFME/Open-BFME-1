@@ -1,3 +1,4 @@
+// readable body of ?checkForCrateToPickup@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // Six more bodies in two shapes.
 //
 // 0x001C3FB0, 0x001C4020 and 0x0020EC60 look a key up, refuse a negative
@@ -209,6 +210,7 @@ int Gen_002BC050::bfmeRun(void)
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -217,6 +219,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CollideModule.h
 class CollideModuleInterface
 {
 public:
@@ -224,6 +227,7 @@ public:
 	virtual bool wouldLikeToCollideWith(const Object *other) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModuleInterface
 {
 public:
@@ -241,10 +245,12 @@ private:
 	Object *m_bfmeObject;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule : public ObjectModuleSlice, public BehaviorModuleInterface
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -255,6 +261,7 @@ private:
 	BehaviorModule **m_bfmeBehaviors;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:

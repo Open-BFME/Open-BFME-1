@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setGoalPositionClipped@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // readable body: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
 typedef bool Bool;
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
@@ -11,6 +13,7 @@ struct Coord3D
 	Real z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Region3D
 {
 	Coord3D lo;
@@ -33,6 +36,7 @@ enum KindOfType
 	KINDOF_AIRCRAFT = 0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
@@ -40,10 +44,12 @@ public:
 	Bool isSignificantlyAboveTerrain() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class Locomotor
 {
 public:
@@ -54,12 +60,14 @@ private:
 	Real m_preferredHeight;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
 	void bfmeSetGoalPosition( const Coord3D *position );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -74,6 +82,7 @@ public:
 	virtual void getExtent( Region3D *extent );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -84,6 +93,7 @@ public:
 extern GlobalData *TheWritableGlobalData;
 extern TerrainLogic *TheTerrainLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:

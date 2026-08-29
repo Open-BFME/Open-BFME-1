@@ -284,6 +284,7 @@ void Convert_Pixel(unsigned char * pixel,const SurfaceClass::SurfaceDescription 
 /*************************************************************************
 **                             SurfaceClass
 *************************************************************************/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/surfaceclass_constructor.cpp
 // ??0SurfaceClass@@ present-unmatched
 SurfaceClass::SurfaceClass(unsigned width, unsigned height, WW3DFormat format):
 	D3DSurface(NULL),
@@ -294,6 +295,7 @@ SurfaceClass::SurfaceClass(unsigned width, unsigned height, WW3DFormat format):
 	D3DSurface = DX8Wrapper::_Create_DX8_Surface(width, height, format);
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/surfaceclass_constructor.cpp
 // ??0SurfaceClass@@ present-unmatched
 SurfaceClass::SurfaceClass(const char *filename):
 	D3DSurface(NULL)
@@ -304,6 +306,7 @@ SurfaceClass::SurfaceClass(const char *filename):
 	SurfaceFormat=desc.Format;
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/surfaceclass_constructor.cpp
 // ??0SurfaceClass@@ present-unmatched
 SurfaceClass::SurfaceClass(IDirect3DSurface8 *d3d_surface)	:
 	D3DSurface (NULL)

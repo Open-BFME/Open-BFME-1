@@ -16,6 +16,7 @@
 typedef int Int;
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class ContainModuleInterface
 {
 public:
@@ -48,6 +49,7 @@ public:
 	virtual Real bfmeGetCrewSpeedMultiplier() const = 0; // slot 48, +0xC0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

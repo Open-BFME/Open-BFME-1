@@ -17,6 +17,7 @@ typedef int (__stdcall *FarProc)(void);
 extern "C" __declspec(dllimport) FarProc __stdcall GetProcAddress(
 	void *module, const char *name);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameClient.h
 class GameClient
 {
 public:

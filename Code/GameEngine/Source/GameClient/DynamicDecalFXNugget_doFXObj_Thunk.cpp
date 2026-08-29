@@ -1,6 +1,7 @@
 // cl: /O2 /Ob0 /DNDEBUG /MD /EHsc
 // Open-BFME5: clean C++ conversion of DynamicDecal's object dispatch.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x, y, z;
@@ -12,6 +13,7 @@ private:
 	float m_values[12];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

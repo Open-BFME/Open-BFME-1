@@ -10,6 +10,7 @@ enum NetCommandType
 	NETCOMMANDTYPE_LOADCOMPLETE = 16
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -37,6 +38,7 @@ protected:
 	int m_referenceCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFrameCommandMsg : public NetCommandMsg
 {
 public:
@@ -64,6 +66,7 @@ Bool CommandRequiresDirectSend(NetCommandMsg *msg);
 Bool IsCommandSynchronized(NetCommandType type);
 UnsignedShort GenerateNextCommandID();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 	public:
@@ -79,6 +82,7 @@ public:
 	int getRequestedPlayerID();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 	public:
@@ -98,6 +102,7 @@ struct GameClientVTable
 	unsigned int (__fastcall *getFrame)(GameClient *gameClient);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameClient.h
 class GameClient
 {
 public:
@@ -109,6 +114,7 @@ private:
 
 extern GameClient *TheGameClient;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -130,6 +136,7 @@ public:
 	void setFrameCommandCount(unsigned int frame, unsigned int count);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/Connection.h
 class Connection
 {
 	public:

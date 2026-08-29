@@ -4,6 +4,7 @@
 typedef float Real;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
@@ -11,6 +12,7 @@ struct Coord3D
 	Real z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor
 {
 	Real red;
@@ -18,6 +20,7 @@ struct RGBColor
 	Real blue;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Geometry.h
 class GeometryInfo
 {
 public:
@@ -30,6 +33,7 @@ private:
 	Real m_boundingCircleRadius;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -50,6 +54,7 @@ private:
 	GeometryInfo m_geometryInfo;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display
 {
 public:

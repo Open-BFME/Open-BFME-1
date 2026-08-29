@@ -6,6 +6,7 @@
 typedef bool Bool;
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
@@ -15,6 +16,7 @@ struct Coord3D
 
 class Drawable;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -40,6 +42,7 @@ private:
 
 typedef _STL::list<Drawable *> DrawableList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/CommandXlat.h
 class PickAndPlayInfo
 {
 public:
@@ -53,6 +56,7 @@ public:
 	unsigned int m_unmodelled_1C;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:
@@ -66,6 +70,7 @@ public:
 void pickAndPlayUnitVoiceResponse( const DrawableList *list, GameMessage::Type messageType,
 	PickAndPlayInfo *info );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 protected:

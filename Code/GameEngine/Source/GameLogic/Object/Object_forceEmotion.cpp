@@ -13,6 +13,7 @@ public:
 	void forceEmotion(EmotionType emotion, float duration, const Object *source);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

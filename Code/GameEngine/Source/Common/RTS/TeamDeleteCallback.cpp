@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?teamAboutToBeDeleted@TeamFactory@@QAEXPAVTeam@@@Z: Code/GameEngine/Source/Common/RTS/Team.cpp
 
 #define __PLACEMENT_VEC_NEW_INLINE
 #include <map>
@@ -51,6 +52,7 @@ private:
 	TeamID m_id;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:
@@ -82,6 +84,7 @@ public:
 
 typedef std::pair<Int, Int> BfmeTeamPrototypeKey;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
@@ -91,6 +94,7 @@ public:
 extern PlayerList *ThePlayerList;
 
 // The BFME TeamFactory map is the pair-keyed STLport tree at +0x0c.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamFactory : public SubsystemInterface, public Snapshot
 {
 public:

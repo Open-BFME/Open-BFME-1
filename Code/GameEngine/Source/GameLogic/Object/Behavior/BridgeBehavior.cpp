@@ -441,6 +441,7 @@ ObjectID BridgeBehavior::getTowerID( BridgeTowerType towerType )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorOnHealing.cpp
 // ?onDamage@BridgeBehavior@@UAEXPAVDamageInfo@@@Z present-unmatched
 void BridgeBehavior::onDamage( DamageInfo *damageInfo )
 {
@@ -486,6 +487,7 @@ void BridgeBehavior::onDamage( DamageInfo *damageInfo )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorOnHealing.cpp
 // ?onHealing@BridgeBehavior@@UAEXPAVDamageInfo@@@Z present-unmatched
 void BridgeBehavior::onHealing( DamageInfo *damageInfo )
 {
@@ -874,6 +876,7 @@ UpdateSleepTime BridgeBehavior::update( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorOnHealing.cpp
 // ?onDie@BridgeBehavior@@UAEXPBVDamageInfo@@@Z present-unmatched
 void BridgeBehavior::onDie( const DamageInfo *damageInfo )
 {
@@ -990,6 +993,7 @@ void BridgeBehavior::handleObjectsOnBridgeOnDie( void )
 // ------------------------------------------------------------------------------------------------
 /** Set all the position, angle, and speed data we need to for a single scaffold object */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorOnHealing.cpp
 // ?setScaffoldData@BridgeBehavior@@IAEXPAVObject@@PAM1PBUCoord3D@@22@Z present-unmatched
 void BridgeBehavior::setScaffoldData( Object *obj, 
 																			Real *angle, 
@@ -1318,6 +1322,7 @@ void BridgeBehavior::createScaffolding( void )
 // ------------------------------------------------------------------------------------------------
 /** Remove the bridge scaffolding.  If we don't have any then this call is ignored */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorOnHealing.cpp
 // ?removeScaffolding@BridgeBehavior@@UAEXXZ present-unmatched
 void BridgeBehavior::removeScaffolding( void )
 {
@@ -1371,6 +1376,7 @@ void BridgeBehavior::removeScaffolding( void )
 // ------------------------------------------------------------------------------------------------
 /** Is any of the scaffolding in motion */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorOnHealing.cpp
 // ?isScaffoldInMotion@BridgeBehavior@@UAE_NXZ present-unmatched
 Bool BridgeBehavior::isScaffoldInMotion( void )
 {
@@ -1419,6 +1425,7 @@ void BridgeBehavior::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorOnHealing.cpp
 // ?xfer@BridgeBehavior@@MAEXPAVXfer@@@Z present-unmatched
 void BridgeBehavior::xfer( Xfer *xfer )
 {

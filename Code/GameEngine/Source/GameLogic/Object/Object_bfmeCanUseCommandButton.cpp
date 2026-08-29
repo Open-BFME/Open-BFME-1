@@ -11,6 +11,7 @@ class AsciiString {};
 class SpecialPowerTemplate;
 class SpecialPowerModuleInterface;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class CommandButton
 {
 private:
@@ -24,12 +25,14 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class CommandSet
 {
 public:
 	const CommandButton *getCommandButton(Int index) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:
@@ -38,6 +41,7 @@ public:
 
 extern ControlBar *TheControlBar;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

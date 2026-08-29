@@ -396,7 +396,6 @@ __declspec(naked) Int OptionPreferences::getCampaignDifficulty(void)
 // ?getLANIPAddress@OptionPreferences@@QAEIXZ
 // Body in OptionsMenu_getLANIPAddress.asm (exact 403B retail).
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_setLANIPAddress_Thunk.cpp
 // ?setLANIPAddress@OptionPreferences@@ present-unmatched
 void OptionPreferences::setLANIPAddress( AsciiString IP )
 {
@@ -405,7 +404,6 @@ void OptionPreferences::setLANIPAddress( AsciiString IP )
 	slot = IP;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_setLANIPAddress_Thunk.cpp
 // ?setLANIPAddress@OptionPreferences@@ present-unmatched
 void OptionPreferences::setLANIPAddress( UnsignedInt IP )
 {
@@ -417,7 +415,6 @@ void OptionPreferences::setLANIPAddress( UnsignedInt IP )
 // ?getOnlineIPAddress@OptionPreferences@@QAEIXZ
 // Body in OptionsMenu_getOnlineIPAddress.asm (exact 397B retail).
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_setOnlineIPAddress_Thunk.cpp
 // ?setOnlineIPAddress@OptionPreferences@@ present-unmatched
 void OptionPreferences::setOnlineIPAddress( AsciiString IP )
 {
@@ -426,7 +423,6 @@ void OptionPreferences::setOnlineIPAddress( AsciiString IP )
 	slot = IP;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/OptionPreferences_setOnlineIPAddress_Thunk.cpp
 // ?setOnlineIPAddress@OptionPreferences@@ present-unmatched
 void OptionPreferences::setOnlineIPAddress( UnsignedInt IP )
 {

@@ -4,6 +4,7 @@
 typedef float Real;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor
 {
 	RGBColor(Real r, Real g, Real b) : red(r), green(g), blue(b) {}
@@ -13,6 +14,7 @@ struct RGBColor
 	Real blue;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXNugget
 {
 public:

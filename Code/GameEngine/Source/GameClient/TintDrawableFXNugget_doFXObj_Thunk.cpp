@@ -4,6 +4,7 @@
 typedef float Real;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor
 {
 	Real red;
@@ -11,6 +12,7 @@ struct RGBColor
 	Real blue;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
@@ -24,6 +26,7 @@ public:
 
 #define BFME_OBJECT_SLOT(name) virtual void name();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

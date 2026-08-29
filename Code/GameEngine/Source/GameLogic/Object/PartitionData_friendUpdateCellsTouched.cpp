@@ -11,6 +11,7 @@
 // inherits that backlink. The cleared backlink records that this node is no
 // longer linked.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionData
 {
 public:

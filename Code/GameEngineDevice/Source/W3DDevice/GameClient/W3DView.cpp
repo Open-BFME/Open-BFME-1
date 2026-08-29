@@ -1920,6 +1920,7 @@ void W3DView::setAngle( Real angle )
 //-------------------------------------------------------------------------------------------------
 /** Rotate the view around the horizontal (X) axis to the given angle. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewSetPitchBfmeLayout.cpp
 // ?setPitch@W3DView@@ present-unmatched
 void W3DView::setPitch( Real angle )
 {

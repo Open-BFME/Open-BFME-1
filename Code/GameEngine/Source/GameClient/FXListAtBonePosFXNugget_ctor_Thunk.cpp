@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Clean C++ reconstruction of the BFME FX-at-bone-position nugget constructor.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -14,6 +15,7 @@ private:
 
 class FXList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXNugget
 {
 public:

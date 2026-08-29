@@ -458,6 +458,7 @@ void AIUpdateInterface::setSurrendered( const Object *objWeSurrenderedTo, Bool s
 #endif
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_setGoalPositionClipped.cpp
 // ?setGoalPositionClipped@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::setGoalPositionClipped(const Coord3D* in, CommandSourceType cmdSource)
 {
@@ -1167,6 +1168,7 @@ void AIUpdateInterface::chooseGoodLocomotorFromCurrentSet( void )
 }
 
 //----------------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/S3BitSetAndFind.cpp
 // ?checkForCrateToPickup@AIUpdateInterface@@ present-unmatched
 Object* AIUpdateInterface::checkForCrateToPickup()
 {
@@ -2431,6 +2433,7 @@ Bool AIUpdateInterface::isQuickPathAvailable( const Coord3D *destination ) const
 
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_isValidLocomotorPosition.cpp
 // ?isValidLocomotorPosition@AIUpdateInterface@@ present-unmatched
 Bool AIUpdateInterface::isValidLocomotorPosition(const Coord3D* pos) const
 {
@@ -2689,6 +2692,7 @@ void AIUpdateInterface::setLocomotorGoalNone()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_isDoingGroundMovement.cpp
 // ?isDoingGroundMovement@AIUpdateInterface@@ present-unmatched
 Bool AIUpdateInterface::isDoingGroundMovement(void) const
 {
@@ -2739,6 +2743,7 @@ Bool AIUpdateInterface::isDoingGroundMovement(void) const
 Others, like missles, should stack destinations.  AdjustDestination in pathfinder unstacks
 destinations, and this routine identifies non-ground units that should unstack. */
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_isAircraftThatAdjustsDestination.cpp
 // ?isAircraftThatAdjustsDestination@AIUpdateInterface@@ present-unmatched
 Bool AIUpdateInterface::isAircraftThatAdjustsDestination(void) const
 {
@@ -2764,6 +2769,7 @@ Bool AIUpdateInterface::isAircraftThatAdjustsDestination(void) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_getTreatAsAircraftForLocoDistToGoal.cpp
 // ?getTreatAsAircraftForLocoDistToGoal@AIUpdateInterface@@ present-unmatched
 Bool AIUpdateInterface::getTreatAsAircraftForLocoDistToGoal() const
 {
@@ -2927,6 +2933,7 @@ void AIUpdateInterface::joinTeam( void )
 }  // end joinTeam
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_isAllowedToRespondToAiCommands.cpp
 // ?isAllowedToRespondToAiCommands@AIUpdateInterface@@ present-unmatched
 Bool AIUpdateInterface::isAllowedToRespondToAiCommands(const AICommandParms* parms) const
 {
@@ -3619,6 +3626,7 @@ void AIUpdateInterface::privateMoveAwayFromUnit( Object *unit, CommandSourceType
 /**
  * Start following the path from the given point
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateFollowWaypointPath.cpp
 // ?privateFollowWaypointPath@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateFollowWaypointPath( const Waypoint *way, CommandSourceType cmdSource )
 {
@@ -3641,6 +3649,7 @@ void AIUpdateInterface::privateFollowWaypointPath( const Waypoint *way, CommandS
 /**
  * Start following the path from the given point
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateFollowWaypointPath.cpp
 // ?privateFollowWaypointPathExact@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateFollowWaypointPathExact( const Waypoint *way, CommandSourceType cmdSource )
 {
@@ -3663,6 +3672,7 @@ void AIUpdateInterface::privateFollowWaypointPathExact( const Waypoint *way, Com
 /**
  * Start following the path from the given point
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateFollowWaypointPath.cpp
 // ?privateFollowWaypointPathAsTeam@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateFollowWaypointPathAsTeam( const Waypoint *way, CommandSourceType cmdSource )
 {
@@ -3685,6 +3695,7 @@ void AIUpdateInterface::privateFollowWaypointPathAsTeam( const Waypoint *way, Co
 /**
  * Start following the path from the given point
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateFollowWaypointPath.cpp
 // ?privateFollowWaypointPathAsTeamExact@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateFollowWaypointPathAsTeamExact( const Waypoint *way, CommandSourceType cmdSource )
 {
@@ -3774,6 +3785,7 @@ void AIUpdateInterface::privateFollowPath( const std::vector<Coord3D>* path, Obj
 /**
  * Attack given object
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateAttackCommands.cpp
 // ?privateAttackObject@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateAttackObject( Object *victim, Int maxShotsToFire, CommandSourceType cmdSource )
 {
@@ -3969,6 +3981,7 @@ void AIUpdateInterface::privateAttackMoveToPosition( const Coord3D *pos, Int max
 /**
  * Attack move down a given waypoint path. If asTeam is TRUE, do so as a team.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateAttackCommands.cpp
 // ?privateAttackFollowWaypointPath@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateAttackFollowWaypointPath( const Waypoint *way, Int maxShotsToFire, Bool asTeam, CommandSourceType cmdSource )
 {
@@ -4177,6 +4190,7 @@ void AIUpdateInterface::privateDock( Object *obj, CommandSourceType cmdSource )
 }
 
 //----------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateCombatDrop.cpp
 // ?privateCombatDrop@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateCombatDrop( Object *target, const Coord3D& pos, CommandSourceType cmdSource )
 {
@@ -4557,6 +4571,7 @@ void AIUpdateInterface::privateHackInternet( CommandSourceType cmdSource )
 }
 
 /// if we are attacking "fromID", stop that and attack "toID" instead
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_transferAttack.cpp
 // ?transferAttack@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::transferAttack(ObjectID fromID, ObjectID toID)
 {
@@ -4585,6 +4600,7 @@ void AIUpdateInterface::transferAttack(ObjectID fromID, ObjectID toID)
 /**
  * Indicate who we are attacking.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_setCurrentVictim.cpp
 // ?setCurrentVictim@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::setCurrentVictim( const Object *victim )
 {
@@ -4694,6 +4710,7 @@ ObjectID AIUpdateInterface::getIgnoredObstacleID( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_getEnterTarget.cpp
 // ?getEnterTarget@AIUpdateInterface@@ present-unmatched
 Object* AIUpdateInterface::getEnterTarget()
 {

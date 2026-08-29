@@ -1,5 +1,12 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 // stlport
+// readable body of ?isScaffoldInMotion@BridgeBehavior@@UAE_NXZ: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp
+// readable body of ?onDamage@BridgeBehavior@@UAEXPAVDamageInfo@@@Z: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp
+// readable body of ?onDie@BridgeBehavior@@UAEXPBVDamageInfo@@@Z: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp
+// readable body of ?onHealing@BridgeBehavior@@UAEXPAVDamageInfo@@@Z: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp
+// readable body of ?removeScaffolding@BridgeBehavior@@UAEXXZ: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp
+// readable body of ?setScaffoldData@BridgeBehavior@@IAEXPAVObject@@PAM1PBUCoord3D@@22@Z: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp
+// readable body of ?xfer@BridgeBehavior@@MAEXPAVXfer@@@Z: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehavior.cpp
 // BFME's BridgeBehavior healing propagation uses the old GameLogic object hash.
 
 #define _STLP_USE_NEWALLOC 1
@@ -17,6 +24,7 @@ enum PathfindLayerEnum {};
 enum DamageType { DAMAGE_UNRESISTABLE = 8 };
 enum DeathType { DEATH_NORMAL = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real length() const { return (Real)sqrt(x * x + y * y + z * z); }
@@ -29,18 +37,21 @@ struct Coord3D
 class DamageInfo;
 class Xfer;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
 	void setOrientation(Real angle);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule
 {
 protected:
 	virtual void xfer(Xfer *xfer);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 class BodyModuleInterface
 {
 public:
@@ -55,6 +66,7 @@ public:
 	virtual BodyDamageType getDamageState() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -64,6 +76,7 @@ public:
 	Overridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
 {
 public:
@@ -77,6 +90,7 @@ public:
 	UnsignedInt m_kindOf[3];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -124,6 +138,7 @@ private:
 
 typedef _STL::hash_map<int, Object *, _STL::hash<int>, _STL::equal_to<int> > ObjectPtrHash;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -152,6 +167,7 @@ private:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BridgeBehavior.h
 class BridgeBehaviorInterface
 {
 public:
@@ -159,6 +175,7 @@ public:
 	virtual ObjectID getTowerID(int towerType);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BridgeScaffoldBehavior.h
 class BridgeScaffoldBehaviorInterface
 {
 public:
@@ -171,6 +188,7 @@ public:
 	virtual void setVerticalSpeed(Real speed);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BridgeScaffoldBehavior.h
 class BridgeScaffoldBehavior
 {
 public:
@@ -209,6 +227,7 @@ BridgeScaffoldAllocator<U> &__stl_alloc_rebind(
 
 typedef _STL::list<ObjectID, BridgeScaffoldAllocator<ObjectID> > BridgeScaffoldList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Bridge
 {
 public:
@@ -227,6 +246,7 @@ private:
 	PathfindLayerEnum m_layer;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -243,12 +263,14 @@ public:
 	virtual Bridge *findBridgeAt(const Coord3D *position);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:
 	void friend_changeBridgeState(PathfindLayerEnum layer, bool open);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -270,6 +292,7 @@ struct XferVersion
 	unsigned char minimum;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Xfer.h
 class Xfer
 {
 public:
@@ -296,6 +319,7 @@ public:
 
 void friend_xferObjectID(Xfer *xfer, ObjectID *id);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfo
 {
 public:
@@ -311,6 +335,7 @@ public:
 	unsigned char m_unreconstructed20[0x5C - 0x20];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BridgeBehavior.h
 class BridgeBehavior : public UpdateModule
 {
 public:

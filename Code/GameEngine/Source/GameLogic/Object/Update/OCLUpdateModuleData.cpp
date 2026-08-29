@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0OCLUpdateModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Update/OCLUpdate.cpp
 // Field names come from retail's own INI field table joined to upstream's
 // parse table on the key: retail supplies every offset, upstream only the
 // word. The offsets were derived from this class's declaration sequence and
 // type sizes, never read out of the old placeholder names.
-// readable body of ??0OCLUpdateModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Update/OCLUpdate.cpp
 
 // Open-BFME5: OCLUpdateModuleData default ctor.
 // Zero order: +0xc, +0x10, +0x8, byte +0x14.

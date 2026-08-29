@@ -12,6 +12,7 @@ class Rva002D9A70Object
 void Rva002D9A70Invoke(Rva002D9A70Object *upgrade);
 
 template <unsigned int NUMBITS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -41,6 +42,7 @@ public:
 	virtual Rva002D9A70Object *getUpgrade() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

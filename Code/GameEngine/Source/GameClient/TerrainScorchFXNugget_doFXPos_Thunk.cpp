@@ -1,6 +1,7 @@
 // cl: /O2 /Ob0 /DNDEBUG /MD /EHsc
 // Open-BFME5: clean C++ conversion of the positional TerrainScorch dispatch.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x, y, z;
@@ -11,6 +12,7 @@ class Matrix3D;
 int GetGameClientRandomValue(int, int, char *, int);
 
 #define BFME_GAMECLIENT_SLOT( name ) virtual void name();
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameClient.h
 class GameClient
 {
 public:
