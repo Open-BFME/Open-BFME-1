@@ -223,6 +223,106 @@ public:
 	virtual Object *getUnitNamed(const AsciiString &name) = 0;
 };
 
+// Retail calls the AsciiString copy constructor out of line where the reference
+// header inlines the addref, so a by-value string argument is built through this
+// pair: the copy is visible and delegates to a base constructor that is declared
+// and never defined, which is the shape retail's compiler saw.
+class BfmeStringArgBase
+{
+	friend class BfmeAsciiStringArg;
+
+private:
+	BfmeStringArgBase( const BfmeStringArgBase &other );	///< retail AsciiString copy ctor 0x00887B60
+	~BfmeStringArgBase();									///< retail AsciiString destructor 0x00887940
+};
+
+class BfmeAsciiStringArg
+{
+public:
+	BfmeAsciiStringArg( const AsciiString &that )
+	{
+		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
+			*(const BfmeStringArgBase *)&that);
+	}
+	~BfmeAsciiStringArg();									///< retail AsciiString destructor 0x00887940
+
+private:
+	char *m_text;
+};
+
+// BFME's TerrainLogic vtable puts getWaypointByName at slot 31 where the ZH
+// header lands it at 24, and BFME takes the name by value rather than by const
+// reference -- the AsciiString copy before the call is the proof.
+class BfmeTerrainLogicVtbl_7c
+{
+public:
+	virtual void _t7c_0() = 0;
+	virtual void _t7c_1() = 0;
+	virtual void _t7c_2() = 0;
+	virtual void _t7c_3() = 0;
+	virtual void _t7c_4() = 0;
+	virtual void _t7c_5() = 0;
+	virtual void _t7c_6() = 0;
+	virtual void _t7c_7() = 0;
+	virtual void _t7c_8() = 0;
+	virtual void _t7c_9() = 0;
+	virtual void _t7c_10() = 0;
+	virtual void _t7c_11() = 0;
+	virtual void _t7c_12() = 0;
+	virtual void _t7c_13() = 0;
+	virtual void _t7c_14() = 0;
+	virtual void _t7c_15() = 0;
+	virtual void _t7c_16() = 0;
+	virtual void _t7c_17() = 0;
+	virtual void _t7c_18() = 0;
+	virtual void _t7c_19() = 0;
+	virtual void _t7c_20() = 0;
+	virtual void _t7c_21() = 0;
+	virtual void _t7c_22() = 0;
+	virtual void _t7c_23() = 0;
+	virtual void _t7c_24() = 0;
+	virtual void _t7c_25() = 0;
+	virtual void _t7c_26() = 0;
+	virtual void _t7c_27() = 0;
+	virtual void _t7c_28() = 0;
+	virtual void _t7c_29() = 0;
+	virtual void _t7c_30() = 0;
+	virtual Waypoint *getWaypointByName( BfmeAsciiStringArg name ) = 0;
+};
+
+// BFME's audio event is 0x70 bytes where the reference's is 0x64, so a local one
+// reserves twelve more bytes of frame. Deriving from AudioEventRTS would size it
+// correctly but adds a vptr store the retail body does not make, so this is a
+// standalone view and each member is aliased onto the thunk retail calls.
+class BfmeAudioEventRTS
+{
+public:
+	BfmeAudioEventRTS( const AsciiString &name, ObjectID owner );	///< retail ILT 0x0003961C
+	BfmeAudioEventRTS( const AsciiString &name, const Coord3D *at, Int positional = 0 );	///< retail ILT 0x0004941D
+	~BfmeAudioEventRTS();											///< retail ILT 0x00026F35
+	void setIsLogicalAudio( Bool logical );							///< retail ILT 0x00008206
+	void setPlayerIndex( Int index );								///< retail ILT 0x0003AC88
+
+	unsigned char m_unreconstructed_00[0x70];
+};
+
+// BFME's Audio vtable puts addAudioEvent at slot 17; the ZH header lands it at
+// 12, so the call comes out [edx+0x30] instead of [edx+0x44].
+class BfmeAudioVtbl_44
+{
+public:
+	virtual void _a44_0() = 0;	virtual void _a44_1() = 0;
+	virtual void _a44_2() = 0;	virtual void _a44_3() = 0;
+	virtual void _a44_4() = 0;	virtual void _a44_5() = 0;
+	virtual void _a44_6() = 0;	virtual void _a44_7() = 0;
+	virtual void _a44_8() = 0;	virtual void _a44_9() = 0;
+	virtual void _a44_10() = 0;	virtual void _a44_11() = 0;
+	virtual void _a44_12() = 0;	virtual void _a44_13() = 0;
+	virtual void _a44_14() = 0;	virtual void _a44_15() = 0;
+	virtual void _a44_16() = 0;
+	virtual void addAudioEvent( BfmeAudioEventRTS *event ) = 0;
+};
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)
@@ -571,30 +671,18 @@ void ScriptActions::doPlaySoundEffect(const AsciiString& sound)
 //-------------------------------------------------------------------------------------------------
 /** doPlaySoundEffectAt */
 //-------------------------------------------------------------------------------------------------
-// Attempted and reverted. Three of the four differences are settled and cost
-// nothing to redo: the event is a BfmeAudioEventRTS (0x70 bytes, positional
-// constructor at ILT 0x0004941D), addAudioEvent is Audio vtable slot 17, and
-// getWaypointByName is TerrainLogic vtable slot 31 taking the name BY VALUE
-// rather than by const reference -- the AsciiString copy before the call, out
-// of line to 0x00887B60, is the proof, and the reference header inlines that
-// addref instead. What blocks it is what the by-value copy does to scheduling:
-// MSVC hoists TheTerrainLogic and its vtable into esi across the copy
-// constructor where retail loads both after it. Reaching the slot through a
-// typed global alias rather than a cast at the call site produces byte-identical
-// output, so the cast is not the cause.
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doPlaySoundEffectAt_Thunk.cpp
-// ?doPlaySoundEffectAt@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
+// ?doPlaySoundEffectAt@ScriptActions@@IAEXABVAsciiString@@0@Z
 void ScriptActions::doPlaySoundEffectAt(const AsciiString& sound, const AsciiString& waypoint)
 {	
-	Waypoint *way = TheTerrainLogic->getWaypointByName(waypoint);
+	Waypoint *way = ((BfmeTerrainLogicVtbl_7c *)TheTerrainLogic)->getWaypointByName(waypoint);
 	if (!way) {
 		return;
 	}
 
-	AudioEventRTS audioEvent(sound, way->getLocation());
+	BfmeAudioEventRTS audioEvent(sound, way->getLocation());
 	audioEvent.setIsLogicalAudio(true);
 	audioEvent.setPlayerIndex(ThePlayerList->getLocalPlayer()->getPlayerIndex());
-	TheAudio->addAudioEvent( &audioEvent );
+	((BfmeAudioVtbl_44 *)TheAudio)->addAudioEvent( &audioEvent );
 }  
 
 //-------------------------------------------------------------------------------------------------
@@ -3097,6 +3185,17 @@ void ScriptActions::doNamedCustomColor(const AsciiString& unitName, Color c)
 /** doNamedFlash */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doNamedFlash_Thunk.cpp
+// Attempted and reverted, and the reason is structural rather than codegen.
+// BFME multiplies the designer's seconds by 5, not by the reference header's
+// LOGICFRAMES_PER_SECOND of 30, and still divides by 15 -- a ten-second flash is
+// three flashes here where the reference gives twenty. It reaches the drawable
+// through Object vtable slot 10 where the reference inlines a field read at
+// +0x80, and its flash count and colour are at drawable+0x160 and +0x164 where
+// the reference puts them at +0xCC and +0xD0. Writing all of that lands the
+// body, but the two reference-shaped setters at +0xCC are themselves matched
+// rows claiming THIS file, and doNamedFlash is their only caller: moving the
+// body off them orphans both. The donor carries BFME's own pair, which is why
+// it can hold the body and this file cannot.
 // ?doNamedFlash@ScriptActions@@IAEXABVAsciiString@@HPBURGBColor@@@Z present-unmatched
 void ScriptActions::doNamedFlash(const AsciiString& unitName, Int timeInSeconds, const RGBColor *color)
 {
@@ -3162,37 +3261,6 @@ void ScriptActions::doMoviePlayRadar(const AsciiString& movieName)
 //-------------------------------------------------------------------------------------------------
 /** doSoundPlayFromNamed */
 //-------------------------------------------------------------------------------------------------
-// BFME's audio event is 0x70 bytes where the reference's is 0x64, so a local one
-// reserves twelve more bytes of frame. Deriving from AudioEventRTS would size it
-// correctly but adds a vptr store the retail body does not make, so this is a
-// standalone view and each member is aliased onto the thunk retail calls.
-class BfmeAudioEventRTS
-{
-public:
-	BfmeAudioEventRTS( const AsciiString &name, ObjectID owner );	///< retail ILT 0x0003961C
-	~BfmeAudioEventRTS();											///< retail ILT 0x00026F35
-	void setIsLogicalAudio( Bool logical );							///< retail ILT 0x00008206
-	void setPlayerIndex( Int index );								///< retail ILT 0x0003AC88
-
-	unsigned char m_unreconstructed_00[0x70];
-};
-
-// BFME's Audio vtable puts addAudioEvent at slot 17; the ZH header lands it at
-// 12, so the call comes out [edx+0x30] instead of [edx+0x44].
-class BfmeAudioVtbl_44
-{
-public:
-	virtual void _a44_0() = 0;	virtual void _a44_1() = 0;
-	virtual void _a44_2() = 0;	virtual void _a44_3() = 0;
-	virtual void _a44_4() = 0;	virtual void _a44_5() = 0;
-	virtual void _a44_6() = 0;	virtual void _a44_7() = 0;
-	virtual void _a44_8() = 0;	virtual void _a44_9() = 0;
-	virtual void _a44_10() = 0;	virtual void _a44_11() = 0;
-	virtual void _a44_12() = 0;	virtual void _a44_13() = 0;
-	virtual void _a44_14() = 0;	virtual void _a44_15() = 0;
-	virtual void _a44_16() = 0;
-	virtual void addAudioEvent( BfmeAudioEventRTS *event ) = 0;
-};
 
 // BFME stamps the owning player on the event so the mixer can bias it; the
 // reference copy leaves the index unset.
