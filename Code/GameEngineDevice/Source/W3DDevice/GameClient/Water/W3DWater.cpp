@@ -1480,11 +1480,11 @@ void WaterRenderObjClass::Render(RenderInfoClass & rinfo)
 				DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_ALPHAOP,   D3DTOP_MODULATE );	//modulate with clipping texture
 
 				DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHAREF,0x00);
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
-// ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
+// (folded home; the donor no longer holds this body)
+// (Set_DX8_Render_State is claimed from this file now; the marker was stale)
 				DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHAFUNC,D3DCMP_NOTEQUAL);	//pass pixels who's alpha is not zero
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
-// ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
+// (folded home; the donor no longer holds this body)
+// (Set_DX8_Render_State is claimed from this file now; the marker was stale)
 				DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHATESTENABLE, true);	//test pixels if transparent(clipped) before rendering.
 
 				// Set clipping texture
@@ -1538,8 +1538,8 @@ void WaterRenderObjClass::Render(RenderInfoClass & rinfo)
 
 				//disable texture coordinate generation
 				DX8Wrapper::Set_DX8_Texture_Stage_State(1, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
-// ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
+// (folded home; the donor no longer holds this body)
+// (Set_DX8_Render_State is claimed from this file now; the marker was stale)
 				DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHATESTENABLE, false);	//disable alpha testing
 			#endif
 
@@ -2247,8 +2247,8 @@ void WaterRenderObjClass::renderWaterMesh(void)
 	DX8Wrapper::Set_Light(2,NULL);
 	DX8Wrapper::Set_Light(3,NULL);
 /*
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
-// ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
+// (folded home; the donor no longer holds this body)
+// (Set_DX8_Render_State is claimed from this file now; the marker was stale)
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_AMBIENT,0);	//turn off scene ambient
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_SPECULARENABLE,TRUE);
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_LOCALVIEWER,TRUE); 
