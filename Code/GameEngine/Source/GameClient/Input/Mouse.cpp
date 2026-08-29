@@ -125,7 +125,6 @@ static const FieldParse TheMouseFieldParseTable[] =
 //-------------------------------------------------------------------------------------------------
 /** Move the mouse in either relative or absolute coords */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Input/Mouse_moveMouse.cpp
 // BFME's Mouse puts the current position at this+0x4D10, the four clamp bounds
 // from +0x4D88 in min-then-max order per axis, and the input frame counter at
 // +0x4D98. The reference class lands all of them 0x354 earlier.
@@ -171,7 +170,6 @@ void Mouse::moveMouse( Int x, Int y, Int relOrAbs )
 //-------------------------------------------------------------------------------------------------
 /** Get the current information for the mouse from the device */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Mouse_updateMouseData.cpp
 // The event array is at this+0x1110 -- 256 records of 0x3C -- and the drain
 // asks the device through vtable +0x60. The reentry flag is the global at
 // 0x012F4C62 where the reference keeps a function-local static. The ceiling
@@ -720,7 +718,6 @@ void Mouse::reset( void )
 //-------------------------------------------------------------------------------------------------
 /** Update the states of the mouse position and buttons */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Input/Mouse_update.cpp
 void Mouse::update( void )
 {
 
@@ -1010,7 +1007,6 @@ void Mouse::setMouseText( UnicodeString text,
 //-------------------------------------------------------------------------------------------------
 /** Move the mouse to the position */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngineDevice/Source/Win32Device/GameClient/Mouse_setPosition.cpp
 void Mouse::setPosition( Int x, Int y )
 {
 	BfmeMouseLayout *self = (BfmeMouseLayout *)this;
