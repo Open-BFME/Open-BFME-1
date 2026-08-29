@@ -72,7 +72,6 @@ public:
 };
 
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class Open2Option086F30 : public UserPreferences
 {
 public:
@@ -88,7 +87,6 @@ void Open2Option086F30::store(int value)
     (*this)["Color"] = text;
 }
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class Open2Option087010 : public UserPreferences
 {
 public:
@@ -104,7 +102,6 @@ void Open2Option087010::store(int value)
     (*this)["PlayerTemplate"] = text;
 }
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class Open2Option0AD8C0 : public UserPreferences
 {
 public:
