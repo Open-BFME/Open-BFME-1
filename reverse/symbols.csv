@@ -72734,6 +72734,7 @@ name,address,notes
 ?bfmeCheckA@@YAHPAX@Z,0x00894D90,Open-BFME5 the guard the cleanup at 0x00783A50 calls
 ?bfmeCheckB@@YAHPAX@Z,0x00894DB0,Open-BFME5 the guard the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
+?bfmeChk1064@BfmeQ1064@@QAEDXZ,0x0001E533,pin
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
 ?bfmeClear1003@BfmeB1003@@QAEXXZ,0x0000A754,pin
 ?bfmeClear1024@BfmeList1024@@QAEXXZ,0x00015640,pin
@@ -73704,6 +73705,7 @@ name,address,notes
 ?bfmeMatchRaw@Gen_002dec00@@AAEEPAX0@Z,0x0001D813,Open-BFME5 ILT the byte-returning match the wrapper at 0x002DEC00 calls
 ?bfmeMatchRaw@Gen_002df4c0@@AAEEPAX0@Z,0x0001D813,Open-BFME5 ILT the byte-returning match the wrapper at 0x002DF4C0 calls
 ?bfmeMatchRaw@Gen_002df4e0@@AAEEPAX0@Z,0x0002DB69,Open-BFME5 ILT the byte-returning match the wrapper at 0x002DF4E0 calls
+?bfmeMk1064@@YAPAVBfmeX1064@@PAV1@0@Z,0x000019F6,pin
 ?bfmeMore1035@BfmeA1035@@QAEXXZ,0x00042D52,pin
 ?bfmeMoveTo@Gen_0023E120@@QAEPAUBfmeElem_0023E120@@IPAU2@0@Z,0x00041D85,Open-BFME5 the element move the vector reserve at 0x0023E120 calls when it already holds storage
 ?bfmeMoveTo@Gen_00359A80@@QAEPAUBfmeElem_00359A80@@IPAU2@0@Z,0x00014687,Open-BFME5 the element move the vector reserve at 0x00359A80 calls when it already holds storage
@@ -73912,6 +73914,7 @@ name,address,notes
 ?bfmeRun1060@BfmeR1060@@QAEXPAVBfmeX1060@@PADH1HHHH@Z,0x00015235,pin
 ?bfmeRun1062@BfmeR1062@@QAEXPAVBfmeX1062@@PADH1HHHH@Z,0x00015235,pin
 ?bfmeRun1063@BfmeR1063@@QAEXPAVBfmeX1063@@PADH11111@Z,0x00015235,pin
+?bfmeRun1064@BfmeR1064@@QAEXPAVBfmeX1064@@PADH11111@Z,0x00015235,pin
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
 ?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
 ?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
@@ -75638,9 +75641,14 @@ name,address,notes
 ?g_bfmeFmt1057@@3PADA,0x00D053D4,pin
 ?g_bfmeFmt993B@@3PADA,0x00D09B3C,pin
 ?g_bfmeFmt995B@@3PADA,0x00D05184,pin
+?g_bfmeFmtA1064@@3PADA,0x00D05BE0,pin
 ?g_bfmeFmtA995C@@3PADA,0x00D07374,pin
+?g_bfmeFmtB1064@@3PADA,0x00D0523C,pin
 ?g_bfmeFmtB995C@@3PADA,0x00D053D4,pin
 ?g_bfmeFmtC1063@@3PADA,0x00D056EC,pin
+?g_bfmeFmtC1064@@3PADA,0x00D05224,pin
+?g_bfmeFmtD1064@@3PADA,0x00C7C7B4,pin
+?g_bfmeFmtE1064@@3PADA,0x00D05E7C,pin
 ?g_bfmeFree1040@@3P6AXPAXH@ZA,0x00F37830,pin
 ?g_bfmeFree1046@@3P6AXPAXH@ZA,0x00F37830,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
@@ -75816,6 +75824,7 @@ name,address,notes
 ?g_bfmeR1060@@3PAVBfmeR1060@@A,0x00EF19E8,pin
 ?g_bfmeR1062@@3PAVBfmeR1062@@A,0x00EF19E8,pin
 ?g_bfmeR1063@@3PAVBfmeR1063@@A,0x00EF19E8,pin
+?g_bfmeR1064@@3PAVBfmeR1064@@A,0x00EF19E8,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
@@ -75878,6 +75887,7 @@ name,address,notes
 ?g_bfmeTab1053@@3HA,0x00EB9670,pin
 ?g_bfmeTag1028@@3PADA,0x00D23918,pin
 ?g_bfmeTarget986B@@3PADA,0x00F071E4,pin
+?g_bfmeTbl1064@@3PAPADA,0x00D05E9C,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
 ?g_bfmeTickC976@@3PAVBfmeTickC976@@A,0x00EF706C,pin
@@ -75896,6 +75906,7 @@ name,address,notes
 ?g_bfmeUnsignedByteFormat@@3QBDB,0x011442BC,address-derived unsigned-byte format string from the DIR32 operand at retail 0x009D943A
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
 ?g_bfmeUnsignedShortFormat@@3QBDB,0x01144328,address-derived unsigned-short format string from retail 0x009D95BF
+?g_bfmeV1064@@3PAVBfmeX1064@@A,0x00EF49A8,pin
 ?g_bfmeVal991@@3HA,0x00EF822C,pin
 ?g_bfmeVal993B@@3HA,0x00EB7D80,pin
 ?g_bfmeVal995B@@3HA,0x00EB7430,pin
@@ -79723,6 +79734,7 @@ __imp_?bfmeClose1033@@YGXH@Z,0x00F58CCC,pin
 __imp_?bfmeClose1038@@YGHPAX@Z,0x00F58ECC,pin
 __imp_?bfmeCmp1026@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeCmp1027@@YAHPAD0H@Z,0x00F594BC,pin
+__imp_?bfmeFmt1064@@YAHPADI0H@Z,0x00F5932C,pin
 __imp_?bfmeFree1035@@YAXPAX@Z,0x00F593D4,pin
 __imp_?bfmeFree912B@@YGXPAX@Z,0x00F58CCC,pin
 __imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
