@@ -4806,12 +4806,22 @@ Bool	GameTextManager::readLine( char *buffer, Int max, File *file )
 // GameTextManager::readChar
 //============================================================================
 
-// ?readChar@GameTextManager@@IAEDPAVFile@@@Z present-unmatched
+// BFME's File vtable places read at +0x0C.  The shared header models a later
+// layout, so keep the retail slot correction local to this translation unit.
+class BFMEGameTextFileReadLayout
+{
+public:
+	virtual void slot0( void ) = 0;
+	virtual void slot1( void ) = 0;
+	virtual void slot2( void ) = 0;
+	virtual Int read( void *buffer, Int bytes ) = 0;
+};
+
 Char	GameTextManager::readChar( File *file )
 {
 	Char ch;
 
-	if ( file->read( &ch, 1 ) == 1 )
+	if ( ((BFMEGameTextFileReadLayout *)file)->read( &ch, 1 ) == 1 )
 	{
 		return ch;
 	}
