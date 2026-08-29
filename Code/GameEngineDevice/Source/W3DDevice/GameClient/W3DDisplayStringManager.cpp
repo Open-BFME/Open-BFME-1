@@ -152,8 +152,12 @@ DisplayString *W3DDisplayStringManager::newDisplayString( void )
 //-------------------------------------------------------------------------------------------------
 /** Remove a display string from the master list and delete the data */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringManagerFree.cpp
-// ?freeDisplayString@W3DDisplayStringManager@@UAEXPAVDisplayString@@@Z present-unmatched
+class BfmeDeletableDisplayString
+{
+public:
+	virtual ~BfmeDeletableDisplayString();
+};
+
 void W3DDisplayStringManager::freeDisplayString( DisplayString *string )
 {
 
@@ -169,8 +173,12 @@ void W3DDisplayStringManager::freeDisplayString( DisplayString *string )
 		m_currentCheckpoint = NULL;
 	}
 
-	// free data
-	string->deleteInstance();
+	// BFME deletes it rather than returning it to the pool: retail is the scalar
+	// deleting destructor, vtable slot 0 with the flag pushed as 1, where
+	// deleteInstance() compiles to the two-call memory-pool teardown. The cast is
+	// only there because the real DisplayString keeps its destructor protected, as
+	// every memory-pool class does; the dispatch is through slot 0 either way.
+	delete (BfmeDeletableDisplayString *)string;
 
 }  // end freeDisplayString
 
