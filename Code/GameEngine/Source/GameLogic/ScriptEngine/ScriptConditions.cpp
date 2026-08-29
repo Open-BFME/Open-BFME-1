@@ -148,6 +148,16 @@ public:
 	virtual Object *getUnitNamed(const AsciiString &name) = 0;
 	virtual void slot27() = 0;
 	virtual Bool didUnitExist(const AsciiString &name) = 0;
+	BFME_SCRIPT_CONDITION_SLOT(29); BFME_SCRIPT_CONDITION_SLOT(30); BFME_SCRIPT_CONDITION_SLOT(31);
+	BFME_SCRIPT_CONDITION_SLOT(32); BFME_SCRIPT_CONDITION_SLOT(33); BFME_SCRIPT_CONDITION_SLOT(34);
+	BFME_SCRIPT_CONDITION_SLOT(35); BFME_SCRIPT_CONDITION_SLOT(36); BFME_SCRIPT_CONDITION_SLOT(37);
+	BFME_SCRIPT_CONDITION_SLOT(38); BFME_SCRIPT_CONDITION_SLOT(39); BFME_SCRIPT_CONDITION_SLOT(40);
+	BFME_SCRIPT_CONDITION_SLOT(41);
+	// Retail folded evaluateVideoHasCompleted, evaluateSpeechHasCompleted and
+	// evaluateAudioHasCompleted onto one body, so which of isVideoComplete,
+	// isSpeechComplete and isAudioComplete sits here cannot be told apart from
+	// the call site. The slot is what the bytes prove; the name is not.
+	virtual Bool unidentifiedIsComplete(const AsciiString &name, Bool value) = 0;	///< vtable +0xA8
 };
 
 #undef BFME_SCRIPT_CONDITION_SLOT
@@ -1599,11 +1609,16 @@ Bool ScriptConditions::evaluateSpeechHasCompleted(Parameter *pSpeechParm)
 //-------------------------------------------------------------------------------------------------
 /** evaluateAudioHasCompleted */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptConditions_evaluateAudioHasCompleted_Thunk.cpp
-// ?evaluateAudioHasCompleted@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
+// The parameter's string is at Parameter+0x10 -- retail's `add edx,0x10` and a
+// raw field read, no getString() call -- where the vendored layout puts it at
+// +0x14, and the ScriptEngine virtual is vtable +0xA8. Retail folded this body
+// with evaluateVideoHasCompleted and evaluateSpeechHasCompleted, which is why
+// the slot is spelled by its offset: all three forward one Parameter to a
+// (const AsciiString &, Bool) virtual, so nothing here distinguishes them.
 Bool ScriptConditions::evaluateAudioHasCompleted(Parameter *pAudioParm)
 {
-	return TheScriptEngine->isAudioComplete(pAudioParm->getString(), true);
+	return ((BfmeScriptConditionEngine *)TheScriptEngine)->unidentifiedIsComplete(
+		((BfmeScriptConditionParameter *)pAudioParm)->m_string, true);
 }
 
 //-------------------------------------------------------------------------------------------------
