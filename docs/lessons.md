@@ -1437,25 +1437,36 @@ Collect the offsets the class's MATCHED TINY ACCESSORS prove -- they are
 authoritative about their own offset, being byte-verified -- and look at the
 shape of the disagreement:
 
-  * A SECOND MEMBER shows one offset in a GAP the accessors do not cover,
-    while the accessors themselves are internally consistent.
-    LANGameInfo: getNext/setNext prove +0x360 and getLastHeard/setLastHeard
-    prove +0x364, adjacent and consistent; +0x398 is 0x38 further on, covered
-    by no accessor. Script: setActive +0x1C, get/setAction +0x28,
-    setFalseAction +0x2C, setNextScript +0x30, setFrameToEvaluate +0x34 -- a
-    dense consistent run -- and the parser's +0x20 sits in the gap between
-    +0x1C and +0x28 with no accessor over it.
+  * A SHIFTED CLASS shows a RUN of consecutive members displaced by the SAME
+    delta. That is a reliable positive. GameWindow: m_status, m_size,
+    m_userData and m_instData are every one of them exactly +4 from where the
+    vendored class puts them, because BFME has a member at +0x04 the reference
+    does not. Four coincidental second members all exactly four bytes apart is
+    not credible; one inserted member is.
 
-  * A SHIFTED CLASS shows a RUN of consecutive members all displaced by the
-    SAME delta. GameWindow: m_status, m_size, m_userData and m_instData are
-    every one of them exactly +4 from where the vendored class puts them,
-    because BFME has a member at +0x04 that the reference does not. Four
-    coincidental second members all exactly four bytes apart is not credible;
-    one inserted member is.
+  * ANYTHING ELSE NEEDS THE LIVENESS TEST, and a gap in the accessor set is
+    NOT enough on its own. The question is whether BOTH offsets are live IN
+    RETAIL. Two members means retail uses both; one misplaced member means
+    retail uses only its own and ours is simply wrong.
+    LANGameInfo passes: +0x360 is proven by get/setNext and +0x398 by three
+    matched bodies -- removeGame, LookupGameByListOffset and addGame.
+    Drawable::getID FAILS it and is the counter-example that matters: retail
+    reads +0x100, this tree reads +0x8C, the accessors either side agree
+    (getInstanceMatrix +0xD4 and getFullyObscuredByShroud +0x148 are both
+    matched from Drawable.cpp at retail's offsets), and +0x100 sits in a gap
+    -- so the gap heuristic alone would have called it a second member. It is
+    not: NO retail accessor reads +0x8C and nothing else claims it. One member
+    declared in the wrong POSITION.
 
-So: ONE offset in a gap means a second member and the body is right; a RUN at a
-constant delta means the class is short and the header is wrong. Both readings
-are structural claims, and this tells them apart before you write any code.
+So: a RUN at a constant delta means the class is short and the header is wrong.
+Everything else means go and check whether retail uses OUR offset anywhere --
+an accessor reading it, or a matched body. If nothing does, our offset is the
+error and there is only one member.
+
+Script sits in the middle and should be treated as unresolved: its +0x20 has no
+accessor and no matched body, only retail's own bytes in the one function that
+cannot land. That is good evidence the offset is real and NOT evidence that
++0x28 and +0x20 are two members rather than one relocated one.
 
 The remaining doubt on the second-member reading is worth stating: an offset is
 strongest when a MATCHED row proves it. +0x398 has three (addGame's siblings

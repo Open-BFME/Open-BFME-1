@@ -6108,14 +6108,21 @@ void Drawable::setID( DrawableID id )
 /** Return drawable ID, this ID is only good on the client */
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/DrawableFields.cpp
-// ?getID@Drawable@@QBE?AW4DrawableID@@XZ present-unmatched
+// BFME declares m_id LATER in Drawable than this tree does: retail's getID is
+// `mov eax,[ecx+0x100]; ret` while the vendored class lands it at +0x8C.  The
+// members either side agree -- getInstanceMatrix at +0xD4 and
+// getFullyObscuredByShroud at +0x148 are both matched from this file at
+// retail's offsets -- so this is one member in the wrong POSITION, not a
+// shifted class and not a second member: no accessor in retail reads +0x8C.
+#define BFME_DRAWABLE_ID(d) (*(const DrawableID *)((const UnsignedByte *)(d) + 0x100))
+
 DrawableID Drawable::getID( void ) const
 {
 
 	// we should never be getting the ID of a drawable who doesn't yet have and ID assigned to it
 	DEBUG_ASSERTCRASH( m_id != 0, ("Drawable::getID - Using ID before it was assigned!!!!\n") );
 
-	return m_id;
+	return BFME_DRAWABLE_ID(this);
 
 }  // end get ID
 
