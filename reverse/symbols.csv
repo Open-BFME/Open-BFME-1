@@ -73154,6 +73154,8 @@ name,address,notes
 ?bfmeGen0002EA91@Gen_00529B10@@QAEXH_N@Z,0x0002EA91,address-derived helper; target read from the second REL32 in the guarded eight-index loop at 0x00529B10
 ?bfmeGeometryIntersects@Object@@QBE_NPBV1@@Z,0x0001E20E,Open-BFME5 ILT thunk to body 0x001BE980; compares two Object GeometryInfo footprints using each position and orientation; descriptive spelling
 ?bfmeGet920D@BfmeX920D@@QAEPAVBfmeRes920D@@XZ,0x0002BE77,pin
+?bfmeGet948C@BfmeGrid948C@@QAE_NH@Z,0x00017049,pin
+?bfmeGet948D@BfmeGrid948D@@QAE_NH@Z,0x00017049,pin
 ?bfmeGetAllocator003D32D0@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QBE?AV?$allocator@PAX@2@XZ,0x0002CE4E,Open-BFME5 address-scoped STLport get_allocator ILT to body 0x003D32D0 used by the key-map copy constructor
 ?bfmeGetAllocator@Gen_000bb890@@ABE?AVBfmeAllocator@@XZ,0x0001E2A4,Open-BFME5 ILT the copy constructor at 0x000BB890 gets its allocator through
 ?bfmeGetAllocator@Gen_000ce890@@ABE?AVBfmeAllocator@@XZ,0x00008BED,Open-BFME5 ILT the copy constructor at 0x000CE890 gets its allocator through
