@@ -72441,6 +72441,7 @@ name,address,notes
 ?bfmeBlendTileFits@@YG_NGHPADH@Z,0x000274A8,Open-BFME5 ILT the blendTileData at 0x0074A240 tests through
 ?bfmeBlendTileOffset@BFMERetailWorldHeightMapBlendTileDataShim@@AAEHHPAUTBlendTileInfo@@@Z,0x0003D965,Open-BFME5 ILT the blendTileData at 0x0074A240 asks for its offset through
 ?bfmeBlendTileTouch@@YAXXZ,0x0000A88F,Open-BFME5 ILT the blendTileData at 0x0074A240 calls with no arguments
+?bfmeBlocked985C@BfmeArg985@@QAEDH@Z,0x0000BA37,pin
 ?bfmeBucketNumForKey@@YAIPBXI@Z,0x00012909,Open-BFME5 ILT the hashtable iterator skips at 0x00460DA0 and 0x00461480 ask for the bucket through
 ?bfmeBuildFont@FontLibraryBFMERetail@@AAEPAVGameFont@@PAVAsciiString@@MEH@Z,0x0000EBA6,Open-BFME5 ILT thunk to body 0x00476C50; FontLibraryBFMERetail::getFont at 0x004772D0 tail-returns its result; address-derived name
 ?bfmeCalc919G@BfmeCalc919G@@QAEHXZ,0x00017512,pin
@@ -72705,6 +72706,7 @@ name,address,notes
 ?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
 ?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
 ?bfmeDo979A@BfmeActA979@@QAEXH@Z,0x00009494,pin
+?bfmeDo985@BfmeHub985@@QAEXXZ,0x000290D2,pin
 ?bfmeDoAXA@@YAXPAUBfmeBoxAXA@@PAX111@Z,0x0093B340,pin
 ?bfmeDoBCC@@YAXPAX@Z,0x0004B2BD,pin
 ?bfmeDoBDA@@YGXPAUBfmeSubBDA@@PAX@Z,0x0002CEEE,pin
@@ -73270,6 +73272,7 @@ name,address,notes
 ?bfmeHandle_00799600@@YAXPAVGen_00799600@@PAX@Z,0x00023056,Open-BFME5 ILT the 22-byte submit at 0x00799600 calls
 ?bfmeHandle_00799c90@@YAXPAVGen_00799c90@@PAX@Z,0x0002C7AA,Open-BFME5 ILT the 22-byte submit at 0x00799C90 calls
 ?bfmeHandle_00799cb0@@YAXPAVGen_00799cb0@@PAX@Z,0x0003DC7B,Open-BFME5 ILT the 22-byte submit at 0x00799CB0 calls
+?bfmeHas985C@BfmeArg985@@QAEDH@Z,0x000077B6,pin
 ?bfmeHash00007518@@YAIII@Z,0x00007518,Open-BFME5 ILT the per-type hash helper the bfmeDiffers pair at that sentinel calls
 ?bfmeHash0000DD28@@YAIII@Z,0x0000DD28,Open-BFME5 ILT the per-type hash helper the bfmeDiffers pair at that sentinel calls
 ?bfmeHash00010AFA@@YAIII@Z,0x00010AFA,Open-BFME5 ILT the per-type hash helper the bfmeDiffers pair at that sentinel calls
@@ -75181,6 +75184,7 @@ name,address,notes
 ?g_bfmeArgEAA@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgEAC@@3PAXA,0x00EB7D80,pin
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
+?g_bfmeAux985@@3PAUBfmeAux985@@A,0x00EF4B58,pin
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
 ?g_bfmeBFAE@@3HA,0x00EACB4C,pin
 ?g_bfmeBMG@@3HA,0x00EB9660,pin
@@ -75243,6 +75247,7 @@ name,address,notes
 ?g_bfmeGlobRB@@3PAUBfmeObjRB@@A,0x00EF7FDC,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeHub982@@3PAVBfmeHub982@@A,0x00F06954,pin
+?g_bfmeHub985@@3PAVBfmeHub985@@A,0x00EF19E8,pin
 ?g_bfmeICoord2DFormat@@3QBDB,0x01144414,address-derived ICoord2D format string from retail 0x009D97C5
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
 ?g_bfmeIRegion2DFormat@@3QBDB,0x0114445C,address-derived IRegion2D format string from retail 0x009D985E
@@ -75270,6 +75275,7 @@ name,address,notes
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
 ?g_bfmeModeAZC@@3PAUBfmeModeAZC@@A,0x00EF0FE0,pin
 ?g_bfmeObj2EGE@@3PAVBfmeObj2EGE@@A,0x00EF148C,pin
+?g_bfmeObj985@@3PAUBfmeObj985@@A,0x00EF4B40,pin
 ?g_bfmeObjDXI@@3PAVBfmeGlobDXI@@A,0x00EF4B70,pin
 ?g_bfmeObjDXJ@@3PAUBfmeHeldDXJ@@A,0x00EF4B98,pin
 ?g_bfmeObjDYF@@3PAVBfmeGlobDYF@@A,0x00EF4C5C,pin
