@@ -59,6 +59,7 @@ LEDGER_COLUMNS = ["name", "export_rva", "target_rva", "target_size", "source",
                   "status", "notes"]
 SOURCE_AT = LEDGER_COLUMNS.index("source")
 NAME_AT = LEDGER_COLUMNS.index("name")
+SIZE_AT = LEDGER_COLUMNS.index("target_size")
 SRC_EXT = (".cpp", ".c", ".h", ".inl")
 
 MARKER = re.compile(r"^\s*//\s*readable body of\s+(\S.*?)\s*:\s*(\S+)\s*$")
@@ -164,6 +165,31 @@ def ledger_index(root, wanted):
         if row[SOURCE_AT] in owned:
             owned[row[SOURCE_AT]].append(row[NAME_AT])
     return owned
+
+
+# An ILT thunk is 5 bytes of jmp. A donor whose every row is thunk-sized holds no
+# body at all -- folding it DELETES the destination's readable body and leaves a
+# forwarding stub. That is a net loss whenever the jump target is still an
+# unconverted dump, and the file count says the opposite, so say it here rather
+# than let --plan present it like an ordinary merge.
+THUNK_BYTES = 8
+
+
+def thunk_donors(root, wanted):
+    """Sources in `wanted` whose every ledger row is thunk-sized."""
+    sizes = {source: [] for source in wanted}
+    for number, payload, _term in records(ledger_path(root)):
+        if number == 1:
+            continue
+        row = ledger_io.fields(payload)
+        if not row or len(row) != len(LEDGER_COLUMNS):
+            continue
+        if row[SOURCE_AT] in sizes:
+            try:
+                sizes[row[SOURCE_AT]].append(int(row[SIZE_AT]))
+            except ValueError:
+                sizes[row[SOURCE_AT]].append(THUNK_BYTES + 1)
+    return {s for s, got in sizes.items() if got and max(got) <= THUNK_BYTES}
 
 
 def ledger_path(root):
@@ -324,6 +350,15 @@ def do_plan(root, dest, only):
         for rel, marked in partial:
             for name in sorted(set(owned[rel]) - set(marked)):
                 print(f"      {rel} keeps {name}")
+    thunks = thunk_donors(root, set(chosen))
+    if thunks:
+        print(f"  {len(thunks)} THUNK-ONLY donor(s) — every row is <= {THUNK_BYTES} bytes, so the")
+        print(f"      donor holds no body. Folding one DELETES {dest}'s readable body and")
+        print(f"      leaves a forwarding stub. Decode the jump target first: if it is still")
+        print(f"      an unconverted dump, the destination is the only readable statement of")
+        print(f"      that function and the merge is a net loss the file count will not show.")
+        for rel in sorted(thunks):
+            print(f"      {rel}")
     print(f"  declarations common to ALL {len(chosen)} (free to hoist): {len(common)}")
     differing = sorted(set.union(*sets) - common)
     print(f"  declarations needing reconciliation: {len(differing)}")
