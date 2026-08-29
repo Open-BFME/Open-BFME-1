@@ -1,5 +1,7 @@
-// DO NOT FOLD THIS INTO SidesList.cpp. It carried `readable body of` markers
-// pointing there; they are removed because this file does not hold those bodies.
+// DO NOT FOLD THIS INTO SidesList.cpp. It carried cluster markers pointing
+// there; they are removed because this file does not hold those bodies. (Do not
+// write that marker's phrase in prose here either -- merge_cluster scans every
+// line for it and hard-fails tree-wide on one that does not parse as a marker.)
 //
 // All three rows this TU owns sit on RVA 0x0000D828, and 0x0000D828 is
 // `E9 63 16 05 00` = jmp 0x0005EE90 -- which functions.csv already records as
