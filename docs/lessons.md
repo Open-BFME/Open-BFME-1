@@ -1424,11 +1424,11 @@ them on three separate folds before spotting it, and one body (Object::setLayer)
 did turn out to match once the marker was dropped -- which is the trap: the
 message is sometimes right by accident.
 
-## Three string levers, three symptoms: pick by which operation retail calls
+## Four string levers, four symptoms: pick by which operation retail calls
 
-"Retail calls it, we inline it" has three different string shapes and three
+"Retail calls it, we inline it" has four different string shapes and four
 different fixes. They are not interchangeable and reaching for the wrong one
-costs a build each time. All three are per-file cl-line or TU-local changes, so
+costs a build each time. All four are per-file cl-line or TU-local changes, so
 none costs a full-tree gate:
 
   inlined DESTRUCTOR  -> /Ireference/shims/asciistringsetoutofline   (5 TUs use it)
@@ -1438,6 +1438,18 @@ none costs a full-tree gate:
                          retail does a length-bounded memcmp
   inlined CONSTRUCTOR -> /Ireference/shims/campaignmanagerascii      (71 TUs use it)
                          plus /ICode/Libraries/Source/WWVegas/WWLib for string_base.h
+  inlined str() at +4 -> /Ireference/shims/asciistring8              (6 TUs use it)
+
+The fourth is the `add eax,4` against retail's `add eax,8` that the m_data+8
+section below parks as a tree-wide change. It IS a tree-wide change if you want
+all 87 sites at once -- full gate, and 403 funclet rows to re-anchor. But a
+SINGLE body stuck on that one instruction does not need any of that: putting
+/Ireference/shims/asciistring8 on that file's own cl line gives the eight-byte
+header for that TU only, and the file's existing rows re-verify in the same
+build. UpgradeCenter::findUpgrade came home that way with sixteen prior rows
+unchanged. Reach for it whenever a diff is `83 c0 04` against `83 c0 08` with the
+empty-string fallback at 0x0107388B beside it; the parked section is about the
+tree, not about your body.
 
 Note asciistringsetoutofline does NOT fix an inlined constructor -- it leaves
 that one inline. And campaignmanagerascii works for the same reason the by-value
