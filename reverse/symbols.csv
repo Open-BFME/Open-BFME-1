@@ -72387,6 +72387,7 @@ name,address,notes
 ?bfmeBase974E@BfmeE974@@QAEXPAUBfmeArg974@@H@Z,0x0004872F,pin
 ?bfmeBase983@BfmeG983@@QAEXHPAXH@Z,0x00016C2A,pin
 ?bfmeBase987@BfmeA987@@QAEXXZ,0x00015E0B,pin
+?bfmeBase988D@BfmeD988@@QAEXH@Z,0x00029311,pin
 ?bfmeBaseAB@BfmeThingAB@@QAEXPAX@Z,0x0001AD0C,pin
 ?bfmeBaseAGB@BfmeThingAGB@@QAEXPAX0@Z,0x000170E4,pin
 ?bfmeBaseARC@BfmeThingARC@@QAEXXZ,0x009A1A30,pin
@@ -72794,6 +72795,7 @@ name,address,notes
 ?bfmeDoRY@BfmeItemRY@@QAEXPAX0@Z,0x0002852E,pin
 ?bfmeDoSevenRL@@YAXPAX0000PAPAXH@Z,0x00019C45,pin
 ?bfmeDoSixRC@@YAXPAX0000H@Z,0x00028358,pin
+?bfmeDrop988@BfmeReg988@@QAEXPAVBfmeE988@@@Z,0x00010F46,pin
 ?bfmeDrop@BfmeSinkAM@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the remove at 0x003BEBA0 tells about the entry
 ?bfmeDrop@Rva003D8530Owner@@QAEXPAX@Z,0x00016DB0,Open-BFME5 ILT thunk to body 0x003D8530; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it on the sub-object at +0x0C of _TheAIParseDefinitionAI for each live slot whose kind is one of four; address-derived name
 ?bfmeDropA@@YAXPAX@Z,0x00895320,Open-BFME5 the drop the cleanup at 0x00783A50 calls
@@ -73641,6 +73643,7 @@ name,address,notes
 ?bfmeReserve@Gen_002F8980@@AAEXHPAX@Z,0x00015ABE,Open-BFME5 ILT the vector assignment at 0x002F8980 reserves through
 ?bfmeReserve@Gen_003A9560@@AAEXHPAX@Z,0x00027098,Open-BFME5 ILT the vector assignment at 0x003A9560 reserves through
 ?bfmeReset961@BfmeResetA961@@QAEXXZ,0x0001BC75,pin
+?bfmeReset988D@BfmeUnit988@@QAEXXZ,0x000065E1,pin
 ?bfmeReset@BfmeItemS@@QAEXXZ,0x00036A9D,Open-BFME5 the ICF thunk (to 0x00436A9D) the clear at 0x003CFBA0 calls per item
 ?bfmeReset@BfmeMapObjectExtra@@QAEXXZ,0x00033F46,Open-BFME5 the thiscall WorldHeightMap::freeListOfMapObjects at 0x00746E90 tail-jumps into on the global object at 0x012ED5E0
 ?bfmeReset@BfmeStopOther@@QAEXPAX@Z,0x0002A88D,Open-BFME5 the reset the stop-and-reset bodies at 0x0015BA80 and siblings tail-jump to
@@ -73698,6 +73701,7 @@ name,address,notes
 ?bfmeSendEventA11@@YAXPAX00IH@Z,0x000023E2,pin
 ?bfmeSendEventA19@@YAXPAX00IH@Z,0x00049896,pin
 ?bfmeSendRM@BfmeSinkRM@@QAEXPAXH@Z,0x00006613,pin
+?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSetAKA@BfmeInnerAKA@@QAEXH@Z,0x00024D70,pin
 ?bfmeSetANB@BfmeSlotANB@@QAEXPAXH@Z,0x00887D20,pin
 ?bfmeSetAZA@BfmeThingAZA@@QAEXH@Z,0x0002BECC,pin
@@ -75343,6 +75347,7 @@ name,address,notes
 ?g_bfmeRefEMIa@@3PAUBfmeRefEMI@@A,0x00ED5140,pin
 ?g_bfmeRefEMIb@@3PAUBfmeRefEMI@@A,0x00ED5978,pin
 ?g_bfmeReg963@@3PAVBfmeReg963@@A,0x00EF10D0,pin
+?g_bfmeReg988@@3PAVBfmeReg988@@A,0x00EF1044,pin
 ?g_bfmeRegion2DFormat@@3QBDB,0x0114442C,address-derived Region2D format string from retail 0x009D9814
 ?g_bfmeRegion3DFormat@@3QBDB,0x01144388,address-derived Region3D format string from retail 0x009D96EE
 ?g_bfmeResetA961@@3PAVBfmeResetA961@@A,0x00EF1028,pin
