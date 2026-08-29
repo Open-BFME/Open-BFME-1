@@ -79979,3 +79979,27 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?hasAnyShortcutSpecialPower@BfmeShortcutPlayer@@QAEHXZ,0x0002331C,Open-BFME5 ILT reached by ControlBar::showSpecialPowerShortcut; returns a 32-bit value (retail tests eax not al) so it is spelled on a view; address from the donor and byte-proved by the rel32 in that call
+??$_M_allocate_and_copy@PBVOpen2Elem138090@@@?$vector@VOpen2Elem138090@@V?$allocator@VOpen2Elem138090@@@_STL@@@_STL@@IAEPAVOpen2Elem138090@@IPBV2@0@Z,0x00045174,Open2 0x138090 vector twin callee
+?_M_clear@?$vector@VOpen2Elem138090@@V?$allocator@VOpen2Elem138090@@@_STL@@@_STL@@IAEXXZ,0x00039707,Open2 0x138090 vector twin callee
+??$__copy@PBVOpen2Elem138090@@PAV1@H@_STL@@YAPAVOpen2Elem138090@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00016F5E,Open2 0x138090 vector twin callee
+??$_Destroy@PAVOpen2Elem138090@@@_STL@@YAXPAVOpen2Elem138090@@0@Z,0x00026F71,Open2 0x138090 vector twin callee
+??$__uninitialized_copy@PBVOpen2Elem138090@@PAV1@@_STL@@YAPAVOpen2Elem138090@@PBV1@0PAV1@ABU__false_type@0@@Z,0x000370AB,Open2 0x138090 vector twin callee
+??$_M_allocate_and_copy@PBVOpen2Elem3B5860@@@?$vector@VOpen2Elem3B5860@@V?$allocator@VOpen2Elem3B5860@@@_STL@@@_STL@@IAEPAVOpen2Elem3B5860@@IPBV2@0@Z,0x0002E221,Open2 0x3b5860 vector twin callee
+?_M_clear@?$vector@VOpen2Elem3B5860@@V?$allocator@VOpen2Elem3B5860@@@_STL@@@_STL@@IAEXXZ,0x00020C34,Open2 0x3b5860 vector twin callee
+??$__copy@PBVOpen2Elem3B5860@@PAV1@H@_STL@@YAPAVOpen2Elem3B5860@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0001C4B3,Open2 0x3b5860 vector twin callee
+??$_Destroy@PAVOpen2Elem3B5860@@@_STL@@YAXPAVOpen2Elem3B5860@@0@Z,0x0001AC62,Open2 0x3b5860 vector twin callee
+??$__uninitialized_copy@PBVOpen2Elem3B5860@@PAV1@@_STL@@YAPAVOpen2Elem3B5860@@PBV1@0PAV1@ABU__false_type@0@@Z,0x0002ECCB,Open2 0x3b5860 vector twin callee
+??$_M_allocate_and_copy@PBVOpen2Elem3B59D0@@@?$vector@VOpen2Elem3B59D0@@V?$allocator@VOpen2Elem3B59D0@@@_STL@@@_STL@@IAEPAVOpen2Elem3B59D0@@IPBV2@0@Z,0x0000A78B,Open2 0x3b59d0 vector twin callee
+?_M_clear@?$vector@VOpen2Elem3B59D0@@V?$allocator@VOpen2Elem3B59D0@@@_STL@@@_STL@@IAEXXZ,0x000153C0,Open2 0x3b59d0 vector twin callee
+??$__copy@PBVOpen2Elem3B59D0@@PAV1@H@_STL@@YAPAVOpen2Elem3B59D0@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00039EE1,Open2 0x3b59d0 vector twin callee
+??$_Destroy@PAVOpen2Elem3B59D0@@@_STL@@YAXPAVOpen2Elem3B59D0@@0@Z,0x0002227D,Open2 0x3b59d0 vector twin callee
+??$__uninitialized_copy@PBVOpen2Elem3B59D0@@PAV1@@_STL@@YAPAVOpen2Elem3B59D0@@PBV1@0PAV1@ABU__false_type@0@@Z,0x00031F34,Open2 0x3b59d0 vector twin callee
+??$_M_allocate_and_copy@PBVOpen2Elem771DF0@@@?$vector@VOpen2Elem771DF0@@V?$allocator@VOpen2Elem771DF0@@@_STL@@@_STL@@IAEPAVOpen2Elem771DF0@@IPBV2@0@Z,0x00005745,Open2 0x771df0 vector twin callee
+?_M_clear@?$vector@VOpen2Elem771DF0@@V?$allocator@VOpen2Elem771DF0@@@_STL@@@_STL@@IAEXXZ,0x0002BD46,Open2 0x771df0 vector twin callee
+??$__copy@PBVOpen2Elem771DF0@@PAV1@H@_STL@@YAPAVOpen2Elem771DF0@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000EE3F,Open2 0x771df0 vector twin callee
+??$_Destroy@PAVOpen2Elem771DF0@@@_STL@@YAXPAVOpen2Elem771DF0@@0@Z,0x00028D76,Open2 0x771df0 vector twin callee
+??$__uninitialized_copy@PBVOpen2Elem771DF0@@PAV1@@_STL@@YAPAVOpen2Elem771DF0@@PBV1@0PAV1@ABU__false_type@0@@Z,0x000262D8,Open2 0x771df0 vector twin callee
+??$__copy@PAVOpen2Elem2EB190@@PAV1@H@_STL@@YAPAVOpen2Elem2EB190@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000AA92,Open2 0x2eb190 vector twin callee
+??1Open2Elem2EB190@@QAE@XZ,0x0002AB2B,Open2 0x2eb190 vector twin callee
+??$__copy@PAVOpen2Elem7716A0@@PAV1@H@_STL@@YAPAVOpen2Elem7716A0@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00038CD5,Open2 0x7716a0 vector twin callee
+??1Open2Elem7716A0@@QAE@XZ,0x0003F4FE,Open2 0x7716a0 vector twin callee
