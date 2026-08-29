@@ -1755,7 +1755,6 @@ W3DShaderInterface *FlatTerrainShaderList[]=
 	NULL
 };
 
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainShader2Stage_init_Thunk.cpp
 Int TerrainShader2Stage::init( void )
 {
 	//initialize settings for uv animated clouds
