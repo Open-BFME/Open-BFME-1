@@ -73419,6 +73419,7 @@ name,address,notes
 ?bfmeGet1052@BfmeE1052@@QAEHXZ,0x00020824,pin
 ?bfmeGet1058@@YAXHPAH@Z,0x0003B75A,pin
 ?bfmeGet1060@BfmeO1060@@QAEHH@Z,0x00850970,pin
+?bfmeGet1092@BfmeD1092@@QAEPAVBfmeR1092@@H@Z,0x0001DDE5,pin
 ?bfmeGet920D@BfmeX920D@@QAEPAVBfmeRes920D@@XZ,0x0002BE77,pin
 ?bfmeGet948C@BfmeGrid948C@@QAE_NH@Z,0x00017049,pin
 ?bfmeGet948D@BfmeGrid948D@@QAE_NH@Z,0x00017049,pin
@@ -73632,6 +73633,7 @@ name,address,notes
 ?bfmeJoinENLa@@YAPAXPAX0@Z,0x00023254,pin
 ?bfmeJoinENLb@@YAPAXPAX0@Z,0x0003F7CE,pin
 ?bfmeKind1001@BfmeUnit1001@@QAEDH@Z,0x0003251F,pin
+?bfmeKind1092@BfmeE1092@@QAEHH@Z,0x0002B81E,pin
 ?bfmeKind956@BfmeAI956@@QAEHXZ,0x0001E33A,pin
 ?bfmeKindBVD@BfmeSubBVD@@QAEHXZ,0x0001E33A,pin
 ?bfmeKindCGG@BfmeOtherCGG@@QAEHPAX@Z,0x0004A719,pin
@@ -73653,6 +73655,7 @@ name,address,notes
 ?bfmeLook1089@BfmeD1089@@QAEPAVBfmeR1089@@PAF@Z,0x0002EE60,pin
 ?bfmeLook1090@BfmeD1090@@QAEPAVBfmeR1090@@PAF@Z,0x0002EE60,pin
 ?bfmeLook1091@BfmeD1091@@QAEPAVBfmeR1091@@PAF@Z,0x0002EE60,pin
+?bfmeLook1092@BfmeD1092@@QAEPAVBfmeR1092@@PAF@Z,0x0002EE60,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
 ?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
 ?bfmeLookBBB@@YAPAXPAX@Z,0x0082B8E0,pin
@@ -73753,6 +73756,7 @@ name,address,notes
 ?bfmeNext1089@BfmeP1089@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1090@BfmeP1090@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1091@BfmeP1091@@QAEHH@Z,0x000230B5,pin
+?bfmeNext1092@BfmeP1092@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext929D@BfmeNext929D@@QAEHH@Z,0x0089CC30,pin
 ?bfmeNext@Gen_00088B60@@AAEXXZ,0x00031FCF,Open-BFME5 the member the flag-then-forward wrapper at 0x00088B60 tail-jumps to
 ?bfmeNext@Gen_000B5690@@AAEXXZ,0x000242A3,Open-BFME5 the member the flag-then-forward wrapper at 0x000B5690 tail-jumps to
@@ -74080,6 +74084,7 @@ name,address,notes
 ?bfmeShowEAC@BfmeUiEAC@@QAEXPAXPBDH0HHHH@Z,0x00015235,pin
 ?bfmeShut1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x00012733,pin
 ?bfmeSize1035@BfmeSubE1035@@QAEHXZ,0x0089CC10,pin
+?bfmeSkip1092@BfmeE1092@@QAEDPAVBfmeR1092@@@Z,0x00003B1B,pin
 ?bfmeSlot1024@BfmeSlots1024@@QAEPAPAVBfmeV1024@@H@Z,0x000100A0,pin
 ?bfmeSlot@BfmeDrawableLookupTable@@QAEPAPAVDrawable@@ABI@Z,0x00034A95,Open-BFME5 ILT addDrawableToLookupTable at 0x00431C20 asks for the slot through
 ?bfmeSmallAllocPR@@YAPAXI@Z,0x0082E450,pin
@@ -75689,6 +75694,7 @@ name,address,notes
 ?g_bfmeD1089@@3PAVBfmeD1089@@A,0x00EED748,pin
 ?g_bfmeD1090@@3PAVBfmeD1090@@A,0x00EED748,pin
 ?g_bfmeD1091@@3PAVBfmeD1091@@A,0x00EED748,pin
+?g_bfmeD1092@@3PAVBfmeD1092@@A,0x00EED748,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
@@ -75979,6 +75985,7 @@ name,address,notes
 ?g_bfmeP1089@@3PAVBfmeP1089@@A,0x00EF076C,pin
 ?g_bfmeP1090@@3PAVBfmeP1090@@A,0x00EF076C,pin
 ?g_bfmeP1091@@3PAVBfmeP1091@@A,0x00EF076C,pin
+?g_bfmeP1092@@3PAVBfmeP1092@@A,0x00EF076C,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
