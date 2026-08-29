@@ -72439,6 +72439,7 @@ name,address,notes
 ?bfmeAssignOT@BfmeThingOT@@QAEXPAD0@Z,0x0002B297,pin
 ?bfmeAssignPL@BfmeThingPL@@QAEXPAD0@Z,0x0002B297,pin
 ?bfmeAtRT@BfmeMapRT@@QAEPAVBfmeSlotRT@@PAX0@Z,0x0002D74A,pin
+?bfmeAttach1010@BfmeHeld1010@@QAEXPAUBfmeOwner1010@@@Z,0x0000FED4,pin
 ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z,0x0000C0A4,Open-BFME5 ILT thunk to body 0x00497CE0; ??0BfmeQuickMatchScreenBase@@QAE@PAX@Z at 0x00470620 calls it on this with its own argument as the last thing it does; address-derived name
 ?bfmeAttachCEF@BfmeSubCEF@@QAEXPAUBfmeListCEF@@@Z,0x00887C90,pin
 ?bfmeAttachCFF@BfmeOwnerCFF@@QAEXPAVBfmeThingCFF@@@Z,0x0002C1CE,pin
@@ -72866,6 +72867,7 @@ name,address,notes
 ?bfmeDoRY@BfmeItemRY@@QAEXPAX0@Z,0x0002852E,pin
 ?bfmeDoSevenRL@@YAXPAX0000PAPAXH@Z,0x00019C45,pin
 ?bfmeDoSixRC@@YAXPAX0000H@Z,0x00028358,pin
+?bfmeDrop1010@BfmeSink1010@@QAEXPAVBfmeItem1010@@@Z,0x0001D0DE,pin
 ?bfmeDrop988@BfmeReg988@@QAEXPAVBfmeE988@@@Z,0x00010F46,pin
 ?bfmeDrop@BfmeSinkAM@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the remove at 0x003BEBA0 tells about the entry
 ?bfmeDrop@Rva003D8530Owner@@QAEXPAX@Z,0x00016DB0,Open-BFME5 ILT thunk to body 0x003D8530; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it on the sub-object at +0x0C of _TheAIParseDefinitionAI for each live slot whose kind is one of four; address-derived name
@@ -73001,6 +73003,8 @@ name,address,notes
 ?bfmeFindSC@BfmeMapSC@@QAEPAUBfmeSlotSC@@PAUBfmeKeySC@@@Z,0x00040430,pin
 ?bfmeFindSD@BfmeMapSD@@QAEPAUBfmeSlotSD@@PAUBfmeKeySD@@@Z,0x00020E7D,pin
 ?bfmeFinish1003@BfmeB1003@@QAEXXZ,0x0003FBF7,pin
+?bfmeFinish1010A@BfmeA1010@@QAEXXZ,0x0002A05E,pin
+?bfmeFinish1010B@BfmeThing1010@@QAEXH@Z,0x0001AA0A,pin
 ?bfmeFinish961@BfmeGate961@@QAEXXZ,0x0002D169,pin
 ?bfmeFinish991@@YAXXZ,0x000114DC,pin
 ?bfmeFinish@Gen_0015BCB0@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 tail-jump to
@@ -73506,6 +73510,7 @@ name,address,notes
 ?bfmeLookup_001c62b0@@YAHPAX@Z,0x000190F1,Open-BFME5 ILT the bit setter at 0x001C62B0 calls
 ?bfmeLookup_001c6340@@YAHPAX@Z,0x00026A3F,Open-BFME5 ILT the bit setter at 0x001C6340 calls
 ?bfmeLookup_001c63d0@@YAHPAX@Z,0x0004B218,Open-BFME5 ILT the bit setter at 0x001C63D0 calls
+?bfmeMake1010@BfmeMake1010@@QAEPAVBfmeHeld1010@@PAXH@Z,0x000122BF,pin
 ?bfmeMake926B@@YAPAUBfmeNodeLC@@XZ,0x00012765,pin
 ?bfmeMake980A@BfmeA980@@QAEPAUBfmeRecA980@@H@Z,0x00025347,pin
 ?bfmeMake980B@BfmeB980@@QAEPAUBfmeRecB980@@H@Z,0x00025347,pin
@@ -75422,6 +75427,7 @@ name,address,notes
 ?g_bfmeLookC980@@3PAVBfmeLookC980@@A,0x00EF0898,pin
 ?g_bfmeLookRP@@3PAVBfmeLookRP@@A,0x00EF076C,pin
 ?g_bfmeLookRQ@@3PAVBfmeLookRQ@@A,0x00EF076C,pin
+?g_bfmeMake1010@@3PAVBfmeMake1010@@A,0x00EEF738,pin
 ?g_bfmeMakerAWB@@3PAVBfmeMakerAWB@@A,0x00EF12CC,pin
 ?g_bfmeMap996@@3PAVBfmeMap996@@A,0x00EED600,pin
 ?g_bfmeMgr12F0898@@3PAUBfmeGlobalMgr12F0898@@A,0x00EF0898,pin
@@ -75498,9 +75504,11 @@ name,address,notes
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
+?g_bfmeSink1010@@3PAVBfmeSink1010@@A,0x00EF0898,pin
 ?g_bfmeSinkA994@@3PAVBfmeSinkA994@@A,0x00EF7014,pin
 ?g_bfmeSinkAAA@@3PAVBfmeSinkAAA@@A,0x00EF33F8,pin
 ?g_bfmeSinkAAB@@3PAVBfmeSinkAAB@@A,0x00EF33F8,pin
+?g_bfmeSinkB1010@@3PAVBfmeSinkB1010@@A,0x00EF1464,pin
 ?g_bfmeSinkB994@@3PAVBfmeSinkB994@@A,0x00EF1464,pin
 ?g_bfmeSinkBFC@@3PAVBfmeSinkBFC@@A,0x00EF6924,pin
 ?g_bfmeSinkBHD@@3PAVBfmeSinkBHD@@A,0x00EED668,pin
