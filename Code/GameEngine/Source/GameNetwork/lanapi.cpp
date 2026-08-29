@@ -100,7 +100,6 @@ LANAPI::LANAPI( void ) : m_transport(NULL)
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_dtor.cpp
-// ??1LANAPI@@UAE@XZ present-unmatched
 LANAPI::~LANAPI( void )
 {
 	reset();
@@ -124,7 +123,6 @@ void LANAPI::init( void )
 	m_currentGame = NULL;
 	m_directConnectRemoteIP = 0;
 	
-	m_lastGameopt = "";
 
 	unsigned long bufSize = UNLEN + 1;
 	char userName[UNLEN + 1];

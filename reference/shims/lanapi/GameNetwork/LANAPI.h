@@ -249,24 +249,38 @@ protected:
 	UnsignedInt					m_actionTimeout;
 	UnsignedInt					m_directConnectRemoteIP;///< The IP address of the game we are direct connecting to.
 
-	// Resend timer ---------------------------------------------------------------------------
-	UnsignedInt					m_lastResendTime; // in ms
+	// Four bytes BFME added sit here, and FOUR independent retail bodies agree on
+	// what follows them: LANAPI::update tests m_isInLANMenu as a byte at this+0x3C
+	// (`cmp byte ptr [esi+0x3c],1`), RequestSetName reaches m_lastResendTime at
+	// +0x38 and m_inLobby at +0x3D, RequestAccept reads m_inLobby at +0x3D and
+	// m_currentGame at +0x40, and RequestGameOptions reads m_currentGame at +0x40.
+	// Zero Hour's order lands the four at +0x34, +0x38, +0x39 and +0x3C.
+	// What occupies the four bytes is unknown.
+	char								_bfme_hole_beforeResendTimer[4];
 
-	Bool								m_isInLANMenu;		///< true while we are in a LAN menu (lobby, game options, direct connect)
-	Bool								m_inLobby;											///< Are we in the lobby (not in a game)?
-	LANGameInfo *				m_currentGame;							///< Pointer to game (setup screen) we are currently in (NULL for lobby)
+	// Resend timer ---------------------------------------------------------------------------
+	UnsignedInt					m_lastResendTime;						///< +0x38, in ms
+
+	Bool								m_isInLANMenu;					///< +0x3C, true while we are in a LAN menu
+	Bool								m_inLobby;											///< +0x3D, are we in the lobby (not in a game)?
+	LANGameInfo *				m_currentGame;							///< +0x40, game (setup screen) we are in (NULL for lobby)
 	//LANGameInfo *m_currentGameInfo;			///< Pointer to game setup info we are currently in.
 
-	UnsignedInt					m_localIP;
-	// RequestLobbyLeave reaches m_transport at this+0x4C, eight bytes past where
-	// this header lands it. What occupies them is unknown.
-	char								_bfme_hole_beforeTransport[8];
-	Transport*					m_transport;
+	UnsignedInt					m_localIP;									///< +0x44
+	// RequestLobbyLeave and update both reach m_transport at this+0x4C; these are
+	// what is left of the eight bytes this header used to need before the block
+	// above was corrected.
+	char								_bfme_hole_beforeTransport[4];
+	Transport*					m_transport;								///< +0x4C
 
 	UnsignedInt					m_broadcastAddr;
 
 	UnsignedInt					m_lastUpdate;
-	AsciiString					m_lastGameopt; /// @todo: hack for demo - remove this
+	// Zero Hour's demo hack, and BFME took its own advice and removed it: retail's
+	// ~LANAPI destroys exactly three strings (+0x10, +0x14, +0x18) and nothing at
+	// +0x58, and retail's RequestGameOptions never writes it.  The slot is still
+	// four bytes of something, so it stays as storage rather than disappearing.
+	UnsignedInt					_bfme_unused_0x58;					///< was AsciiString m_lastGameopt
 
 	Bool								m_isActive;			///< is the game currently active?
 
