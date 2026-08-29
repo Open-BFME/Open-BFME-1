@@ -869,3 +869,41 @@ blocked on git ONLY if nobody else can commit your tree. `git commit` takes the
 working tree for tracked files, so another agent's commit will sweep in edits
 you deliberately left unstaged -- including markers removed in anticipation of
 an apply, which leaves bodies that look claimed and are not.
+
+## A fold can delete a compiler-generated symbol another matched row needs
+
+Symptom: the merged body compiles clean and a DIFFERENT function, one you never
+touched, fails the gate with "symbol not found in object". Cause: some matched
+rows are not hand-written bodies at all -- they are symbols MSVC emits as a side
+effect of an expression in the TU. Remove the last such expression and the
+symbol stops being emitted and its row dies. Two proven shapes:
+
+  memory-pool placement delete. `newInstance(Upgrade)` is the only pool-new for
+  Upgrade in Player.cpp, and it is what makes MSVC emit
+  ??3Upgrade@@SAXPAXW4UpgradeMagicEnum@0@@Z -- a matched 12-byte row at
+  0x007EFFF0 claimed from Player.cpp. BFME allocates through the class's own
+  operator new instead, so a faithful merge emits no newInstance and kills the
+  row. Trading a 238-byte row for a 12-byte one is still going backwards.
+
+  inline COMDAT. becomingTeamMember's call to areModulesReady is the only one in
+  the TU, and the COMDAT copy MSVC emits for that inline is the matched 7-byte
+  row ?areModulesReady@Object@@QBE_NXZ at 0x002ED260, also claimed from
+  Player.cpp.
+
+Recoverable only if the reference expression can be kept beside the merged body.
+It could not be here: the reference inline reads Object+0x295 and byte-matches
+retail's standalone body at that address, while retail inlines a read of +0x341
+in becomingTeamMember. Both are right -- they are different members, and the
+donor's one name for both is doing double duty.
+
+Pre-check before authoring a line, one command -- list the rows claimed from the
+destination whose owning class is NOT the destination's, dropping STL noise:
+
+    cls=Player   # destination basename
+    grep -F ",Code/.../$cls.cpp," reverse/functions.csv | cut -d, -f1 \
+      | grep -v "@${cls}@@" | grep -v "_STL@@" | grep -v '?\$'
+
+The `??2X@@SAPAXI...MagicEnum` and `??3X@@SAXPAX...MagicEnum` hits are pool
+new/delete pairs and are the ones that bite: Player.cpp carries five, Team.cpp
+eight. Any body whose merge would stop emitting one of them is blocked before
+you write anything.
