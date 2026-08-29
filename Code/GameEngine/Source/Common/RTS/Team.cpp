@@ -1182,11 +1182,62 @@ Bool TeamPrototype::hasAnyObjects() const
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototype_updateState.cpp
-// ?updateState@TeamPrototype@@QAEXXZ present-unmatched
+// ------------------------------------------------------------------------
+// updateState's own layout facts.  BFME's Team and TeamPrototype are missing a
+// base the vendored headers give them, so the fields below all sit earlier than
+// the headers put them, and the singleton flag is a bit in a byte rather than a
+// Bool member of its own.
+struct BfmeUpdateStatePrototype
+{
+	unsigned char m_unmodelled_000[ 0x08 ];
+	Player *m_owningPlayer;					///< retail this+0x08
+	unsigned char m_unmodelled_00c[ 0x18 - 0x0c ];
+	unsigned char m_flags;					///< retail this+0x18, bit 0 is the singleton flag
+
+	Bool getIsSingleton() const { return (m_flags & 1) != 0; }
+};
+
+struct BfmeUpdateStatePlayer
+{
+	unsigned char m_unmodelled_000[ 0x230 ];
+	Team *m_defaultTeam;					///< retail this+0x230
+};
+
+// The virtual destructor is what puts the vptr at +0x00 and every field after
+// it at its retail offset, and it is also how retail removes the team: the
+// delete goes through vtable slot 0.
+class BfmeUpdateStateTeam
+{
+public:
+	virtual ~BfmeUpdateStateTeam();				///< vtable slot 0
+
+	void deleteInstance() { delete this; }
+
+	// Retail inlines getControllingPlayer rather than calling it, so both hops
+	// are written out here; each is null-guarded.
+	Player *getControllingPlayer() const
+	{
+		if( m_proto )
+			return m_proto->m_owningPlayer;
+		return NULL;
+	}
+
+	Bool isActive() const { return m_active; }
+	void *getFirstItemIn_TeamMemberList() const { return m_memberListHead; }
+
+	BfmeUpdateStatePrototype *m_proto;			///< retail this+0x04
+	unsigned char m_unmodelled_008[ 0x0c - 0x08 ];
+	void *m_memberListHead;					///< retail this+0x0c
+	unsigned char m_unmodelled_010[ 0x31 - 0x10 ];
+	Bool m_active;						///< retail this+0x31
+};
+
+static BfmeUpdateStateTeam *bfmeTeamFields( Team *t ) { return (BfmeUpdateStateTeam *)t; }
+
+// ?updateState@TeamPrototype@@QAEXXZ
 void TeamPrototype::updateState(void) 
 {
-	for (DLINK_ITERATOR<Team> iter = iterate_TeamInstanceList(); !iter.done(); iter.advance())
+	for( BfmeTeamInstanceIterator iter = ((const BfmeTeamPrototypeInstances *)this)->iterate(); !iter.done(); iter.advance() )
 	{
 		iter.cur()->updateState();
 	}
@@ -1194,31 +1245,31 @@ void TeamPrototype::updateState(void)
 	Bool done = false;
 	while (!done) {
 		done = true;
-		for (DLINK_ITERATOR<Team> iter = iterate_TeamInstanceList(); !iter.done(); iter.advance())
+		for( BfmeTeamInstanceIterator iter = ((const BfmeTeamPrototypeInstances *)this)->iterate(); !iter.done(); iter.advance() )
 		{	
-			if (iter.cur()->getFirstItemIn_TeamMemberList() == NULL) 
+			if (bfmeTeamFields(iter.cur())->getFirstItemIn_TeamMemberList() == NULL) 
 			{ 
 				// Team has no members.
-				if (this->getIsSingleton())	
+				if (((const BfmeUpdateStatePrototype *)this)->getIsSingleton())	
 				{
 					continue; // Don't delete singleton teams, even if they are empty.
 				}
 
-				if (iter.cur()->getControllingPlayer() && iter.cur()->getControllingPlayer()->getDefaultTeam() == iter.cur()) 
+				if (bfmeTeamFields(iter.cur())->getControllingPlayer() && ((BfmeUpdateStatePlayer *)bfmeTeamFields(iter.cur())->getControllingPlayer())->m_defaultTeam == iter.cur()) 
 				{
 					// This is the player's default team, so don't remove it.
 					continue;
 				}
 
 				// don't delete inactive teams - they are under construction
-				if (iter.cur()->isActive() == false)
+				if (bfmeTeamFields(iter.cur())->isActive() == false)
 				{
 					continue;
 				}
 
 				// So remove it
 				TheTeamFactory->teamAboutToBeDeleted(iter.cur());
-				iter.cur()->deleteInstance();
+				bfmeTeamFields(iter.cur())->deleteInstance();
 
 				done = false;
 				break; // Not sure what state the iterator is in after deleting a member of the list. jba
