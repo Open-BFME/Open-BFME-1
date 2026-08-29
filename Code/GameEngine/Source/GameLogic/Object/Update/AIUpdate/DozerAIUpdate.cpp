@@ -3400,56 +3400,117 @@ Bool DozerPrimaryStateMachine::isBuildMostImportant( State *thisState, void* use
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/DozerPrimaryStateMachine_isRepairMostImportant_Thunk.cpp
-// ?isRepairMostImportant@DozerPrimaryStateMachine@@SA_NPAVState@@PAX@Z present-unmatched
+// Both of these two statics differ from retail in the same five places, and all
+// five are layout: the state's machine is at State+0x1C against the vendored
+// +0x20, its owner at StateMachine+0x10 against +0x14, the AI at Object+0x204
+// against +0x19C, getDozerAIInterface at AIUpdateInterface vtable +0x13C against
+// +0xFC, isIdle at AIUpdateInterface vtable +0x180 against +0x13C, and
+// getMostRecentCommand at DozerAIInterface vtable +0x14 against +0x180. Two of
+// the three slots move by exactly the amount the one before it moved, so the
+// interface gained entries rather than being reordered.
+template <Int N>
+class BfmeDozerSlots : public BfmeDozerSlots<N - 1>
+{
+public:
+	virtual void unused(char (*)[N]) = 0;
+};
+
+template <>
+class BfmeDozerSlots<0>
+{
+};
+
+class BfmeDozerAiVTable : public BfmeDozerSlots<79>
+{
+public:
+	virtual void *getDozerAIInterface() = 0;		///< vtable +0x13C
+	virtual void unusedSlot80() = 0;
+	virtual void unusedSlot81() = 0;
+	virtual void unusedSlot82() = 0;
+	virtual void unusedSlot83() = 0;
+	virtual void unusedSlot84() = 0;
+	virtual void unusedSlot85() = 0;
+	virtual void unusedSlot86() = 0;
+	virtual void unusedSlot87() = 0;
+	virtual void unusedSlot88() = 0;
+	virtual void unusedSlot89() = 0;
+	virtual void unusedSlot90() = 0;
+	virtual void unusedSlot91() = 0;
+	virtual void unusedSlot92() = 0;
+	virtual void unusedSlot93() = 0;
+	virtual void unusedSlot94() = 0;
+	virtual void unusedSlot95() = 0;
+	virtual Bool isIdle() = 0;				///< vtable +0x180
+};
+
+class BfmeDozerTaskVTable : public BfmeDozerSlots<5>
+{
+public:
+	virtual Int getMostRecentCommand() = 0;			///< vtable +0x14
+};
+
+struct BfmeDozerMachineFields
+{
+	unsigned char m_unreconstructed_000[ 0x10 ];
+	Object *m_owner;					///< retail this+0x10
+};
+
+struct BfmeDozerStateFields
+{
+	unsigned char m_unreconstructed_000[ 0x1c ];
+	BfmeDozerMachineFields *m_machine;			///< retail this+0x1C
+};
+
+struct BfmeDozerObjectFields
+{
+	unsigned char m_unreconstructed_000[ 0x204 ];
+	AIUpdateInterface *m_ai;				///< retail this+0x204
+};
+
 Bool DozerPrimaryStateMachine::isRepairMostImportant( State *thisState, void* userData )
 {
-	Object *dozer = thisState->getMachineOwner();
-	AIUpdateInterface *ai = dozer->getAIUpdateInterface();
+	Object *dozer = ((BfmeDozerStateFields *)thisState)->m_machine->m_owner;
+	AIUpdateInterface *ai = ((BfmeDozerObjectFields *)dozer)->m_ai;
 	if( !ai )
 	{
 		return false;
 	}
-	DozerAIInterface *dozerAI = ai->getDozerAIInterface();
+	DozerAIInterface *dozerAI = (DozerAIInterface *)((BfmeDozerAiVTable *)ai)->getDozerAIInterface();
 	if( !dozerAI )
 	{
 		return false;
 	}
 
-	if( !ai->isIdle() )
+	if( !((BfmeDozerAiVTable *)ai)->isIdle() )
 		return FALSE;  // busy doing something else
 
 	// if the most important task is us then return true
-	DozerTask task = dozerAI->getMostRecentCommand();
+	DozerTask task = (DozerTask)((BfmeDozerTaskVTable *)dozerAI)->getMostRecentCommand();
 	return task == DOZER_TASK_REPAIR;
-
 }  // end isRepairMostImportant
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/DozerPrimaryStateMachine_isFortifyMostImportant_Thunk.cpp
-// ?isFortifyMostImportant@DozerPrimaryStateMachine@@SA_NPAVState@@PAX@Z present-unmatched
 Bool DozerPrimaryStateMachine::isFortifyMostImportant( State *thisState, void* userData )
 {
-	Object *dozer = thisState->getMachineOwner();
-	AIUpdateInterface *ai = dozer->getAIUpdateInterface();
+	Object *dozer = ((BfmeDozerStateFields *)thisState)->m_machine->m_owner;
+	AIUpdateInterface *ai = ((BfmeDozerObjectFields *)dozer)->m_ai;
 	if( !ai )
 	{
 		return false;
 	}
-	DozerAIInterface *dozerAI = ai->getDozerAIInterface();
+	DozerAIInterface *dozerAI = (DozerAIInterface *)((BfmeDozerAiVTable *)ai)->getDozerAIInterface();
 	if( !dozerAI )
 	{
 		return false;
 	}
 
-	if( !ai->isIdle() )
+	if( !((BfmeDozerAiVTable *)ai)->isIdle() )
 		return FALSE;  // busy doing something else
 
 	// if the most important task is us then return true
-	DozerTask task = dozerAI->getMostRecentCommand();
+	DozerTask task = (DozerTask)((BfmeDozerTaskVTable *)dozerAI)->getMostRecentCommand();
 	return task == DOZER_TASK_FORTIFY;
-
 }  // end isFortifyMostImportat
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
