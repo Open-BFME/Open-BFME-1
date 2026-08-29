@@ -5590,12 +5590,26 @@ Bool PartitionFilterLineOfSight::allow(Object *objOther)
 
 //-----------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/PartitionFilters_allow_Thunk.cpp
-// ??0PartitionFilterPossibleToAttack@@QAE@W4AbleToAttackType@@PBVObject@@W4CommandSourceType@@@Z present-unmatched
-PartitionFilterPossibleToAttack::PartitionFilterPossibleToAttack(AbleToAttackType t, const Object *obj, CommandSourceType commandSource) :
-	m_attackType(t),
-	m_obj(obj),
-	m_commandSource(commandSource)
+// BFME declares these three the other way round -- the attack type at +0x04,
+// the source at +0x08 and the command source at +0x0C, where the reference
+// class declares obj, commandSource, attackType. An initialiser list emits in
+// the CLASS's declaration order, so it cannot reach retail's; the stores go in
+// the body, which emits as written.
+struct BfmePossibleToAttackFilter
 {
+	void *vtable;
+	AbleToAttackType attackType;						///< retail this+0x04
+	const Object *source;								///< retail this+0x08
+	CommandSourceType commandSource;					///< retail this+0x0C
+};
+
+PartitionFilterPossibleToAttack::PartitionFilterPossibleToAttack(AbleToAttackType t, const Object *obj, CommandSourceType commandSource)
+{
+	BfmePossibleToAttackFilter *self = (BfmePossibleToAttackFilter *)this;
+
+	self->attackType = t;
+	self->source = obj;
+	self->commandSource = commandSource;
 }
 
 //-----------------------------------------------------------------------------
