@@ -255,6 +255,26 @@ unsigned long VertexMaterialClass::Compute_CRC(void) const
 // Ambient Get and Sets
 
 // byte-exact reconstruction: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
+// This getter, ?Get_Specular@ and ?Get_Emissive@ all stop on ONE byte and all
+// three stop on the same one: retail loads the material pointer with
+// `mov eax,[ecx+0x08]`, this tree emits `[ecx+0x0C]`. That pins MaterialDyn at
+// +0x08 in retail against +0x0C here -- the spurious dword ?Init@ already
+// recorded, now measured from three independent bodies rather than inferred.
+//
+// Measured, so nobody repeats it: sizeof(RefCountClass) is 8 and sizeof(W3DMPO)
+// is 1 (read out of the compiler with `char (*p)[sizeof(X)] = 1`), and dropping
+// W3DMPO from the base list moves nothing, so neither base is the extra dword.
+// sizeof(VertexMaterialClass) is 112 here where retail needs 108.
+//
+// AND THAT MAKES TWO MATCHED ROWS IN THIS FILE SUSPECT, which is the part worth
+// acting on. ?Get_Ambient_Color_Source@ at 0x00921210 is `mov eax,[ecx+0x14]`
+// and ?Get_Emissive_Color_Source@ at 0x00921230 is `mov eax,[ecx+0x18]`. Those
+// are this tree's offsets for those two fields. In RETAIL's layout, with
+// MaterialDyn at +0x08, +0x14 is EmissiveColorSource and +0x18 is
+// DiffuseColorSource -- so each of those rows reads one field PAST its name.
+// They match only because the +4 shift moves our field under retail's load.
+// The two readings cannot both be right. re_attempts.log recorded this as an
+// unverified suspicion; these three bodies are the corroboration.
 // ?Get_Ambient@VertexMaterialClass@@QBEXPAVVector3@@@Z present-unmatched
 void VertexMaterialClass::Get_Ambient(Vector3 * set) const
 {
