@@ -916,17 +916,30 @@ honest end of it: retail spills `&m_instData` and holds both saved pointers in
 callee-saved registers, this toolchain holds the address instead. Logged
 `attempted`, not a dead end.
 
-## Re-anchoring a $L funclet row: bytes narrow it, the COMDAT record settles it
+## A $L funclet row self-heals ONLY if it carries `parent=`
 
 A row whose `object-symbol=` names a compiler-local label (`$L51425`, `$T294`,
-`$SG…`) breaks on ANY edit to its TU -- those numbers are assigned during
-codegen across the whole file, so the gate stops at `symbol not found in
-object: $L51425` before it compares a byte. That makes such a destination
-expensive but not untouchable. Screen for it before choosing a cluster:
+`$SG…`) is pinned to a per-compilation ordinal, and ANY edit to its TU can
+renumber it. build.py already handles that -- `funclet_candidates` finds the
+body again inside the parent's own COMDAT group (the section that also holds
+`__ehhandler$<parent>`) and prints
 
-    grep -F ",<destination>," reverse/functions.csv | grep -c 'object-symbol=[$]'
+    $L96540 was renumbered by an edit to this TU; the body is $L96533 in the
+    object built now (stale ledger pin, not a byte mismatch)
 
-Recovering the new label takes TWO filters and neither is enough alone.
+-- but ONLY when the row's notes carry `parent=<mangled>`. Without it the
+lookup returns nothing and the gate stops hard at `symbol not found in object`,
+which is what makes such a destination look untouchable. THE FIX IS THE NOTE,
+not a new pin: give the row a `parent=` and it never needs re-anchoring again.
+`gen-alias` funclet rows are the ones that lack it; `gen-funclet` rows carry it
+by construction. Screen a destination before choosing it:
+
+    grep -F ",<destination>," reverse/functions.csv | grep 'object-symbol=[$]' \
+      | grep -v 'parent='
+
+Those are the only rows that will stop you. To work out the right `parent=`
+(or when the parent's group holds look-alikes and the gate refuses to choose),
+two filters, and neither is enough alone.
 
   BYTES NARROW IT. Compile, then for every `$…` label in the object compare its
   bytes against retail at the row's RVA with relocation sites masked on both
@@ -951,7 +964,8 @@ Recovering the new label takes TWO filters and neither is enough alone.
   invented claim and no gate can see it.
 
 Apply with `add_match.py --replace-existing --notes` (the sanctioned path for
-rewriting a row). Where a TU has several such rows the gate cannot pass until
+rewriting a row), and write the `parent=` in while you are there so the next
+edit heals itself. Where a TU has several such rows the gate cannot pass until
 all of them are right, so the first N need `--no-verify` and one `./build.sh`
 verifies the set.
 
