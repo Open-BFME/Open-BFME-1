@@ -108,14 +108,33 @@ def test_it_is_promoted_and_dist_would_accept_it():
         f"{FEATURE} is still listed UNSHIPPED: {modbuild.UNSHIPPED.get(FEATURE)}")
 
 
-def test_dist_still_refuses_an_unshipped_feature():
-    """The gate itself must still work, or the check above is vacuous.
+def test_the_unshipped_gate_is_not_vacuous():
+    """The UNSHIPPED list must still hold something, or the check above is empty.
 
-    034-framedrain is refuted and must never reach a --dist build. This is safe
-    to run for the same reason the old version was: it fails before writing.
+    034-framedrain is refuted -- it desyncs -- and must never reach a --dist
+    build. Verified by reading the registry rather than by shelling out, for two
+    reasons learned the hard way here: `--only X --dist` used to rewrite the
+    shipped artifact with a one-feature build, and a plain `--dist` rewrites it
+    too (harmlessly, but a test has no business writing mods/dist at all).
+    """
+    import modbuild
+    assert "034-framedrain" in modbuild.UNSHIPPED, (
+        "034-framedrain left UNSHIPPED: it desyncs, and a --dist build must "
+        "never carry it")
+    assert "034-framedrain" not in modbuild.FEATURES
+
+
+def test_dist_refuses_a_partial_build():
+    """mods/dist must be all of FEATURES or it is not mods/dist.
+
+    `--dist` originally guarded only against UNSHIPPED names, never against a
+    partial subset, so any `--only X --dist` silently rewrote the shipped
+    artifact with a one-feature build. It happened: dist went to a build with
+    020-gameresult and 031-earlysend absent, and was caught only by comparing
+    the hash afterwards. Safe to shell out because it fails before writing.
     """
     r = subprocess.run([sys.executable, str(ROOT / "tools/modbuild.py"),
-                        "--only", "034-framedrain", "--dist"],
+                        "--only", FEATURE, "--dist"],
                        capture_output=True, text=True, cwd=ROOT)
-    assert r.returncode != 0, "a --dist build accepted a refuted arm"
-    assert "refusing --dist" in (r.stderr + r.stdout)
+    assert r.returncode != 0, "a --dist build accepted a one-feature subset"
+    assert "refusing --dist with --only" in (r.stderr + r.stdout)
