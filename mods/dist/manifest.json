@@ -10,7 +10,7 @@
   },
   "output": {
     "path": "mods/dist/lotrbfme.exe",
-    "sha256": "fd2683385f029dd0d2e44d1d1f33ab84e9b7c6e6effba890d748af297325c53d",
+    "sha256": "2cfc51e2466af38b3b023318b1f96451e223e592b0caf27eabcaf03a36cb7e10",
     "size": 16498688
   },
   "cave": {
@@ -27,6 +27,10 @@
     {
       "name": "020-gameresult",
       "target_rva": "0x0035F920"
+    },
+    {
+      "name": "033-retrytime",
+      "target_rva": "0x006623DE"
     },
     {
       "name": "020-gameresult",

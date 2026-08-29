@@ -1,70 +1,63 @@
 # Fixing BFME 1's off-host input delay
 
+`031-earlysend`. ~106 bytes in a code cave. Ships **with** `033-retrytime`.
+
 ## The problem
 
-On the host, units respond almost immediately. On a guest, they don't. Players
-have described this for twenty years; nobody has fixed it in BFME 1.
-
-## What causes it
-
-The engine, not your connection.
-
-BFME 1 runs all game logic at 5 frames per second — one frame every 200 ms. A
-guest's input queue is drained only inside that tick, so a command waits for the
-next one *merely to leave the machine*. The host doesn't wait: it stamps and
-executes its own commands inside the same tick.
-
-Two delays then stack: the host binds an arriving command to *its* current
-frame, and a guest already trails by a full quantum — so the guest waits roughly
-two ticks, not one.
+All game logic runs at a compiled-in 5 Hz. Retail drains the outbound command
+list only from `Network::update`, on a logic tick — so a guest's command waits up
+to a 200 ms quantum before it even leaves the machine. The host pays nothing: it
+stamps and executes inside the same tick that wrapped the command.
 
 ## The fix
 
-One 5-byte detour (`031-earlysend`, 106 bytes of payload). It drains the command
-queue every engine tick (~33 ms) rather than only on the 5 Hz logic tick, sited
-immediately before the engine's own network flush — so a command queued there
-reaches the wire on the next instruction.
+A detour at RVA `0x0006BA44`, immediately before the engine's own
+`liteupdate(FALSE)`, calling `Network::getCommandsFromCommandList`. Purely
+additive — the retail flush still runs and finds the list empty. It does not
+touch the 5 Hz quantum, the frame ceiling, or GameLogic's cadence.
 
-It deliberately does **not** touch the 5 Hz quantum, the frame ceiling, or the
-logic cadence. Raising the tick rate would multiply the game's speed — the trap,
-not the fix. Commands only leave *earlier*.
+## What it does, measured
 
-## How we tested it
+Two mechanical results, both deterministic and present in every capture:
 
-Two real clients (host and guest) play a LAN match on separate network stacks,
-each issuing ~200 scripted commands at random intervals. A second mod logs
-every command's journey on a clock shared by both machines. Retail is measured
-**first**: the defect must reproduce before anything is credited with removing
-it. Twelve matches; ranges are best-to-worst of three per build.
+* **Hold removed.** Time from a command being created to leaving the machine:
+  retail 68–160 ms (median ~95, bounded by one quantum); earlysend **0.1 ms**.
+  Zero overlap, on selections and on real build orders alike.
+* **Sends released from the tick.** 84–88% of game commands leave mid-period with
+  the hook; **0.0–0.9%** without it.
 
-## Results — clean LAN (milliseconds)
+## What it is worth
 
-| | Retail | Fixed |
+| condition | commands | effect |
 |---|---|---|
-| Command sent → it runs (guest) | 395.7 `[395.1–396.1]` | **309.1** `[303.4–320.9]` |
-| Host vs guest gap | 395.5 | **224.7** |
-| Command leaves after its tick | 198.0 `[198.0–198.5]` | **105.2** `[102.3–105.3]` |
-| Logic rate (frames/sec) | 5.000 | 5.000 |
+| clean LAN | selections | **−152 ms** (n=3, tight) |
+| clean LAN | build orders | **−80 ms**, p = 0.060 (n=5) |
+| 150 ms/3% | selections | −69 ms at p90, disjoint at n=3 |
+| 150 ms/3% | build orders | **indistinguishable** — floor is ~2000 ms |
+| 150 ms/3% | on top of 033 | **+95 ms p50, +69 p90, +88 p95**, disjoint n=3 |
 
-No retail match overlaps any fixed match — the gain is ~90x the run-to-run
-spread. The unchanged logic rate means game speed, resource rates and animation
-timing are untouched: the fix moves *when a command is sent*, nothing else.
+The benefit is a *translation* — a constant ~90 ms off every command — so it is
+visible where the baseline is quiet and invisible where it is not. Under loss the
+floor is freezes. **Its effect is only measurable once `033` removes them**,
+which is why the pair is the shipping unit.
 
-## Results — 40 ms ping, 1% loss (milliseconds)
+## Cost
 
-| | Retail | Fixed |
-|---|---|---|
-| Command sent → it runs (guest) | 576 `[409–696]` | 609 `[449–658]` |
-| Command leaves after its tick | 191.8 | **103.8** |
++21% datagrams (9.90–10.70 → 12.96–13.02 /s). Each extra datagram costs one
+retry interval if lost — expensive at 2000 ms, negligible at 400. That is the
+whole reason it must not ship alone.
 
-Here the builds are **indistinguishable**: each spreads ~±150 ms, more than the
-gap between them. The fix still halves the send cadence, but under loss the delay
-is dominated by the guest falling behind and catching up, which it cannot
-address. Expect a large gain on good connections, little on poor ones.
+## Two corrections worth keeping
 
-No desync occurred in any of the twelve matches.
+**The original metric was wrong.** `send→run` starts its clock at the moment this
+fix moves, crediting retail with a free ~90 ms. It made earlysend look 514 ms
+*worse* at p95. Anchor to command creation, and validate with the held column:
+an arm that sends immediately must read ~0, one that waits must read half a
+quantum. Both reproduce in every capture.
 
-## Shipping
-
-It compiles into the same single `lotrbfme.exe` as the win-detection feature —
-one file, identical for every player.
+**A user-reported +90 ms did not reproduce.** On the same action (placing a farm
+as a guest), on a controlled link, the fix is ~80 ms *faster*. Every mechanism
+for the opposite sign was eliminated: no command splitting (0% of 22 builds; the
+pair is [build, deselect]), hold fully removed, render rate untouched (the loop
+spin-waits to a fixed period). Likely cross-session variance — retail's own
+click-to-build varies 449→561 ms within one match.

@@ -47,6 +47,25 @@ TARGET_SENDLOCAL = 0x00664740       # ConnectionManager::sendLocalCommand(msg)
 TARGET_RELAYCOMMAND = 0x00663100    # ConnectionManager::relayCommand(ref)
 TARGET_FRAMERELAY = 0x00682A90      # Network::relayCommandsToCommandList(frame)
 TARGET_SENDFRAMEINFO = 0x00665D10   # ConnectionManager::sendFrameInfo()
+TARGET_ADVANCECOUNT = 0x00681F70   # BFMENativeNetwork::getFrameAdvanceCount()
+# Connection::update, immediately before the engine decides whether to discard a
+# just-resent command for good. eax = execution frame, esi = NetCommandRef,
+# edi = Connection. Displaces `mov ecx,ds:0x12ED5C8` (6 bytes).
+TARGET_DISCARD = 0x006620A4
+TARGET_FRAMEDRIVER = 0x0006BAE0   # the per-iteration frame driver, vtable slot +0x7C
+TARGET_LOOPBODY    = 0x0006BC2B   # GameEngine::execute's once-per-iteration call
+
+# Connection::init's `mov dword ptr [edx+0x1C], 2000` -- m_retryTime, the wall
+# time an unacked command waits before it is put in a packet again. The imm32
+# starts three bytes into the instruction at RVA 0x006623DB.
+TARGET_RETRYTIME = 0x006623DE
+RETRY_WAS = 2000
+# Pre-registered for the spike. Under 40 ms/1% loss the guest's stall histogram
+# piles up at exactly 2.0 s -- this timer, once per lost packet -- and loses
+# 10-17% of a match to it. 400 ms is ~2x a realistic ladder round trip, so an
+# acked command still never resends; the 250 ms arm is this constant, changed,
+# rebuilt to its own -o path.
+RETRY_MS = 400
 
 # 031-earlysend. The client half's tail, immediately before the engine's own
 # liteupdate(FALSE) at 0x0006BA53 -- so a command queued by the payload is
@@ -250,13 +269,54 @@ def build_gameresult(pe, feature_dir, probe=False):
 
 
 def build_netlatprobe(pe, feature_dir, probe=False):
+    # netlat_admit is NOT in this list, and its absence is the point.
+    #
+    # It answered the admission question -- the guest polls the frame driver once
+    # per logic frame, consumes permission in 0.2 ms, and its one-frame lag is
+    # the protocol's correctness margin -- and that question is closed. What it
+    # still does is write a flushed line per driver call, and a guest polls the
+    # driver MORE when it is frozen. So its cost scales with how much an arm
+    # freezes: the arm that freezes more pays more to be watched freezing. That
+    # is a feedback loop, not an offset, and it silently flatters any fix that
+    # reduces freezing.
+    #
+    # The entry point is kept in the payload. Re-add this line to ask an
+    # admission question again, and do not have it installed while measuring
+    # freezes.
     return build_feature(pe, feature_dir / "src/netlatprobe.cpp", "netlat_frame", (
         (TARGET_APPENDMESSAGE, "netlat_input", ("ecx", "stack:0")),
         (TARGET_SENDLOCAL, "netlat_send", ("ecx", "stack:0")),
         (TARGET_RELAYCOMMAND, "netlat_relay", ("ecx", "stack:0")),
         (TARGET_FRAMERELAY, "netlat_frame", ("ecx", "stack:0")),
         (TARGET_SENDFRAMEINFO, "netlat_ceiling", ("ecx",)),
+        (TARGET_LOOPBODY, "netlat_loop", ("ecx",)),
+        (TARGET_FRAMEDRIVER, "netlat_driver", ("ecx",)),
+        (TARGET_DISCARD, "netlat_discard", ("eax", "esi", "edi")),
     ), probe=probe)
+
+
+def build_framedrain(pe, feature_dir, probe=False):
+    return build_feature(pe, feature_dir / "src/framedrain.cpp", "framedrain", (
+        (TARGET_FRAMEDRIVER, "framedrain", ("ecx",)),
+    ), probe=probe)
+
+
+def build_retrytime(pe, feature_dir, probe=False):
+    """No payload and no detour: one imm32, rewritten in place.
+
+    A code cave would be the wrong shape here. The value is written once, by a
+    constructor, into each Connection -- there is no behaviour to add, only a
+    constant to change, and a detour would be five bytes of trampoline standing
+    in for four bytes of data."""
+    (feature_dir / "src").mkdir(parents=True, exist_ok=True)
+    before = struct.unpack("<I", pe.read(TARGET_RETRYTIME, 4))[0]
+    if before != RETRY_WAS:
+        raise SystemExit(
+            f"0x{TARGET_RETRYTIME:08X} holds {before}, not {RETRY_WAS}. This is not "
+            f"the retail Connection::init, so the poke would land somewhere unknown.")
+    pe.write(TARGET_RETRYTIME, struct.pack("<I", RETRY_MS))
+    return dict(code_rva=0, code_len=0, detours=[],
+                pokes=[dict(rva=TARGET_RETRYTIME, was=before, now=RETRY_MS)])
 
 
 def build_earlysend(pe, feature_dir, probe=False):
@@ -269,13 +329,28 @@ FEATURES = {"020-gameresult": build_gameresult,
             # Promoted once its spike came back green: twelve rig matches, no
             # retail match overlapping any fixed one, and the logic rate
             # unchanged at 5.000/s. docs/net-latency-fix.md has the numbers.
-            "031-earlysend": build_earlysend}
+            "031-earlysend": build_earlysend,
+            # Promoted 2026-08-29 on the condition its UNSHIPPED note set --
+            # "green at 150ms+ round trip". Four stress matches at 300ms RTT,
+            # both timer values, zero desync and no stuck seat on either seat;
+            # duplicate delivery measured at 1.0-2.5% in EVERY arm including
+            # retail, and provably absorbed (a tolerated duplicate would wedge a
+            # seat forever, and no match wedged). At 150ms/3% it clears retail's
+            # whole range: gap p99 420/419/420 vs 1740/1769/1800, worst stall
+            # 805/806/800 vs 2031/3724/3719, game time lost ~0% vs 3-11%. On
+            # real build orders, placement goes 0.7-2.6s unpredictable to
+            # 0.43-0.65s. docs/net-freeze-fix.md has the numbers.
+            "033-retrytime": build_retrytime}
 # Selected only by name, and refused by --dist. mods/dist is the artifact
 # every ladder player runs: an instrument writes tens of lines a second, and a
 # candidate has not earned a place in it until the spike measuring it is green.
 # Promote one into FEATURES when it has.
 UNSHIPPED = {
     "030-netlatprobe": (build_netlatprobe, "an instrument: it writes tens of lines a second"),
+    "034-framedrain": (build_framedrain,
+                       "REFUTED: it desyncs. the desync flag raised from logic frame 102 on "
+                       "both seats, match dead at 127, against zero in every other arm. "
+                       "See the header of its source before reviving it"),
 }
 
 
@@ -310,7 +385,14 @@ def main():
         if fn is None:
             raise SystemExit(f"unknown feature: {name}")
         info = fn(pe, ROOT / "mods/features" / name, probe=a.probe)
-        print(f"  {name}: {info['code_len']} B payload @ RVA 0x{info['code_rva']:08X}")
+        if info["code_len"]:
+            print(f"  {name}: {info['code_len']} B payload @ RVA 0x{info['code_rva']:08X}")
+        for poke in info.get("pokes", ()):
+            if poke["rva"] in claimed:
+                raise SystemExit(f"address conflict: {name} and {claimed[poke['rva']]} "
+                                 f"both claim 0x{poke['rva']:08X}")
+            claimed[poke["rva"]] = name
+            print(f"  {name}: poke 0x{poke['rva']:08X} {poke['was']} -> {poke['now']}")
         for d in info["detours"]:
             t = d["target"]
             if t in claimed:
