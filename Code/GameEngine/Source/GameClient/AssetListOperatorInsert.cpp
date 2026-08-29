@@ -27,9 +27,10 @@ typedef Rva001408C0Target *Rva001408C0Key;
 typedef _STL::set<Rva001408C0Key, _STL::less<Rva001408C0Key>,
 	_STL::allocator<Rva001408C0Key> > Rva001408C0Set;
 
-// The cast supplies the recovered ABI for the prototype lookup body whose
-// byte-true placeholder already lives at 0x009EC0B0.
-void d_009ec0b0();
+// The cast supplies the recovered ABI for the prototype lookup body at
+// 0x009EC0B0. Its byte-true placeholder has since been converted, so name the
+// identity that now holds the address rather than the retired dump symbol.
+void *bfmeGoEMEb(void *);
 typedef Rva001408C0Target *(__cdecl *FindPrototypeFn)(const char *name);
 
 class AssetList
@@ -48,7 +49,7 @@ private:
 AssetList &AssetList::operator <<(const AsciiString &name)
 {
 	if (m_prototypes.insert(
-		((FindPrototypeFn)d_009ec0b0)(name.str())).second)
+		((FindPrototypeFn)bfmeGoEMEb)(name.str())).second)
 	{
 		m_changed = true;
 	}
