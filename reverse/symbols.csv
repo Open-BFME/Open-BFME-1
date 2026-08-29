@@ -75007,6 +75007,7 @@ name,address,notes
 ?friend_awakenUpdateModule@GameLogic@@QAEXPAVObject@@PAVUpdateModule@@I@Z,0x00009944
 ?friend_changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z,0x0002847F,ILT spelling used by BridgeBehavior::removeScaffolding to preserve the retail indirection
 ?friend_findCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z,0x0000D8BE,first of the find-then-create pair in the CrateData block; the second call on the same receiver is the already-matched newCrateTemplate and ZH declares this one beside it
+?friend_getFinalOverride@BFMELocomotorOverride@@QAEPAV1@XZ,0x000022BB,alias of the LocomotorOverridable spelling pinned below; AIUpdate.cpp reaches the chain walker through a view class because the reference Locomotor reads its template instead
 ?friend_getFinalOverride@BfmeOverridable@@QAEPAV1@XZ,0x000022BB,Open-BFME5 ILT the override walk in Rva2225E0Filter::accepts at 0x003A04A0 recurses through
 ?friend_getFinalOverride@LocomotorOverridable@@QAEPAV1@XZ,0x000022BB,ILT thunk to the locomotor override-chain walker at 0x00087A80; a distinct body from the SpecialPowerTemplate walker at 0x00097880
 ?friend_getFinalOverride@Overridable@@QAEPAV1@XZ,0x00048C61

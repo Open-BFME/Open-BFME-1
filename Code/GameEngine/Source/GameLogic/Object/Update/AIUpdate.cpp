@@ -134,10 +134,15 @@ struct BFMEAIUpdateFields
 	StateMachine *m_stateMachine;				///< retail this+0x30
 	char m_unreconstructed_034[0x40 - 0x34];
 	ObjectID m_currentVictimID;				///< retail this+0x40
-	char m_unreconstructed_044[0x1FC - 0x44];
+	char m_unreconstructed_044[0x1CC - 0x44];
+	Locomotor *m_curLocomotor;				///< retail this+0x1CC
+	char m_unreconstructed_1D0[0x1FC - 0x1D0];
 	UnsignedInt m_nextMoodCheckTime;			///< retail this+0x1FC
 	char m_unreconstructed_200[0x32A - 0x200];
 	Bool m_randomlyOffsetMoodCheck;				///< retail this+0x32A
+	char m_unreconstructed_32B[0x333 - 0x32B];
+	Bool m_forbidPlayerCommands;				///< retail this+0x333
+	Bool m_forbidAICommands;				///< retail this+0x334
 };
 
 struct BFMEStateIDField
@@ -161,12 +166,9 @@ struct BFMEStateMachineFields
 				: (StateID)INVALID_STATE_ID;
 
 		if (id == INVALID_STATE_ID)
-		{
-			if (m_fallbackState)
-				return reinterpret_cast<const BFMEStateIDField *>(m_fallbackState)->getID();
-
-			return (StateID)INVALID_STATE_ID;
-		}
+			id = m_fallbackState
+					? reinterpret_cast<const BFMEStateIDField *>(m_fallbackState)->getID()
+					: (StateID)INVALID_STATE_ID;
 
 		return id;
 	}
@@ -177,6 +179,7 @@ struct BFMEStateMachineFields
 	Coord3D m_goalPosition;					///< retail this+0x24
 	char m_unreconstructed_030[0x58 - 0x30];
 	State *m_currentState;					///< retail this+0x58
+	Int m_goalObjectID;					///< retail this+0x5C
 };
 
 // The reference GameLogic inlines its object lookup; BFME calls it.
@@ -201,6 +204,64 @@ class BFMEObjectLayerQuery
 {
 public:
 	Int getLayer() const;					///< retail ILT 0x0003a391
+};
+
+// BFME reads the held-disabled and dead flags out of the object's own bytes
+// rather than through isDisabledByType and isEffectivelyDead.
+struct BFMEObjectDisabledMask
+{
+	__forceinline Bool isNotHeldDisabled() const
+	{
+		UnsignedByte disabled = m_disabledMask;
+		disabled >>= 3;
+		disabled = ~disabled;
+		disabled &= 1;
+		return disabled;
+	}
+
+	char m_unreconstructed_000[0x1A4];
+	UnsignedByte m_disabledMask;				///< retail this+0x1A4
+};
+
+struct BFMEObjectDeadFlags
+{
+	Bool isEffectivelyDead() const { return (m_deadFlags & 1) != 0; }
+
+	char m_unreconstructed_000[0x344];
+	UnsignedByte m_deadFlags;				///< retail this+0x344
+};
+
+// BFME's legal-surface read walks the locomotor's override chain; the
+// reference Locomotor reads its template's surface mask instead.
+class BFMELocomotorOverride
+{
+public:
+	BFMELocomotorOverride *friend_getFinalOverride();	///< retail ILT 0x000022bb
+
+	UnsignedInt getLegalSurfaces() const
+	{
+		BFMELocomotorOverride *finalOverride = m_nextOverride;
+		if (finalOverride && finalOverride->m_nextOverride)
+			finalOverride = finalOverride->m_nextOverride->friend_getFinalOverride();
+		return finalOverride->m_legalSurfaces;
+	}
+
+	char m_unreconstructed_000[4];				///< the vtable pointer
+	BFMELocomotorOverride *m_nextOverride;			///< retail this+0x04
+	char m_unreconstructed_008[0x10 - 8];
+	UnsignedInt m_legalSurfaces;				///< retail this+0x10
+};
+
+// BFME's AI state ids are not the reference enum's: it has no ENTER_HORDE,
+// ENTER_GARRISON or ENTER_TRANSPORT and numbers the rest differently.
+enum BFMEAIStateType
+{
+	BFME_AI_ENTER				= 0x0F,
+	BFME_AI_GET_REPAIRED			= 0x18,
+	BFME_AI_ENTER_GARRISON			= 0x19,
+	BFME_AI_ENTER_HORDE			= 0x2B,
+	BFME_AI_ENTER_TUNNEL			= 0x31,
+	BFME_AI_ENTER_TRANSPORT			= 0x34
 };
 
 // BFME reaches setGoalObject through the state machine's vtable at +0x38; the
@@ -2803,50 +2864,31 @@ void AIUpdateInterface::setLocomotorGoalNone()
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_isDoingGroundMovement.cpp
-// ?isDoingGroundMovement@AIUpdateInterface@@ present-unmatched
+// ?isDoingGroundMovement@AIUpdateInterface@@UBE_NXZ
 Bool AIUpdateInterface::isDoingGroundMovement(void) const
 {
-  
-  if (getObject()->isDisabledByType( DISABLED_UNMANNED ) 
-   && getObject()->isKindOf( KINDOF_PRODUCED_AT_HELIPAD ) )
-  {
-    return TRUE; // an unmanned helicopter gets grounded, eventually.
-  }
+	const BFMEAIUpdateFields *self = reinterpret_cast<const BFMEAIUpdateFields *>(this);
 
-	if (m_locomotorSet.getValidSurfaces() == LOCOMOTORSURFACE_AIR) 
+	if (reinterpret_cast<const BFMEQuickPathFields *>(this)->getValidLocomotorSurfaces()
+			== LOCOMOTORSURFACE_AIR)
 	{
 		return FALSE;  // air only loco.
 	}
-
-	if (m_curLocomotor == NULL) 
+	else
 	{
-		return FALSE;	// No loco, so we aren't moving.
-	}
+		BFMELocomotorOverride *curLocomotor =
+			reinterpret_cast<BFMELocomotorOverride *>( self->m_curLocomotor );
+		if (curLocomotor == NULL)
+			return FALSE;	// No loco, so we aren't moving.
 
-	// Cur loco is air, so not ground.
-	if (m_curLocomotor->getLegalSurfaces() & LOCOMOTORSURFACE_AIR) 
-	{
-		return FALSE; 
-	}
+		// Cur loco is air, so not ground.
+		if (curLocomotor->getLegalSurfaces() & LOCOMOTORSURFACE_AIR)
+			return FALSE;
 
-	// We are held, so not moving on ground.
-	if( getObject()->isDisabledByType( DISABLED_HELD ) ) 
-	{
-		return FALSE;
+		// We are held, so not moving on ground.
+		return reinterpret_cast<const BFMEObjectDisabledMask *>(
+			self->getObject() )->isNotHeldDisabled();
 	}
-
-	// if we're airborne and "allowed to fall", we are probably deliberately in midair
-	// due to rappel or accident...
-	const PhysicsBehavior* physics = getObject()->getPhysics();
-	if (getObject()->isAboveTerrain() && physics != NULL && physics->getAllowToFall())
-	{
-		return FALSE;
-	}
-
-	// After all exceptions, we must be doing ground movement.
-	//DEBUG_ASSERTLOG(getObject()->isSignificantlyAboveTerrain(), ("Object %s is significantly airborne but also doing ground movement. What?\n",getObject()->getTemplate()->getName().str()));
-	return TRUE;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -3044,33 +3086,37 @@ void AIUpdateInterface::joinTeam( void )
 }  // end joinTeam
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_isAllowedToRespondToAiCommands.cpp
-// ?isAllowedToRespondToAiCommands@AIUpdateInterface@@ present-unmatched
+// ?isAllowedToRespondToAiCommands@AIUpdateInterface@@MBE_NPBUAICommandParms@@@Z
 Bool AIUpdateInterface::isAllowedToRespondToAiCommands(const AICommandParms* parms) const
 {
+	const BFMEAIUpdateFields *self = reinterpret_cast<const BFMEAIUpdateFields *>(this);
+
 	// the dead don't listen very well
 	// (unless they are seeking to feed on the brains of the living)
 	// [urrr, need brains]
-	if (getObject()->isEffectivelyDead())
+	if (reinterpret_cast<const BFMEObjectDeadFlags *>( self->getObject() )->isEffectivelyDead())
 		return FALSE;
 
 	// We're catching the sleep mood here. AI Units that are asleep actually ignore all commands.
 	// (See the AI Mood matrix for more info)
 	UnsignedInt moodParms = getMoodMatrixValue();
-	if ((moodParms & MM_Controller_AI) && (moodParms & MM_Mood_Sleep) && (parms->m_cmd != AICMD_MOVE_TO_POSITION_EVEN_IF_SLEEPING))
+	// BFME numbers this command 0x36 where the reference enum has 0x32.
+	if ((moodParms & MM_Controller_AI) && (moodParms & MM_Mood_Sleep) && (parms->m_cmd != (AICommandType)0x36))
 		return FALSE;
 
-  const AIUpdateModuleData *data = getAIUpdateModuleData();
+	// Both forbid flags are instance state in BFME, not module data, and the AI
+	// side is checked too.
+	if (self->m_forbidPlayerCommands && parms->m_cmdSource == CMD_FROM_PLAYER)
+		return FALSE;
 
-  Bool forbidden = data->m_forbidPlayerCommands;
+	// BFME's CMD_FROM_AI is 1; the reference enum puts a source in between.
+	if (self->m_forbidAICommands && parms->m_cmdSource == (CommandSourceType)1)
+		return FALSE;
 
-  if ( parms->m_cmdSource == CMD_FROM_PLAYER && forbidden )
-    return FALSE; 
-  // THIS IS JUST FOR THE SPECTREGUNSHIP FOR NOW... 
-  // IT LOCKS OUT USER INPUT, 
-  // ALLOWING ONLY THE SPECTREUPDATE TO COMMAND IT VIA CMD_FROM_AI
-  // AUTHOR, LORENZEN... 5/15/03
-
+	const BFMEStateMachineFields *machine =
+		reinterpret_cast<const BFMEStateMachineFields *>( self->m_stateMachine );
+	if (machine->m_currentState && machine->m_goalObjectID == -1)
+		return FALSE;
 
 	return TRUE;
 }
@@ -4822,18 +4868,25 @@ ObjectID AIUpdateInterface::getIgnoredObstacleID( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_getEnterTarget.cpp
-// ?getEnterTarget@AIUpdateInterface@@ present-unmatched
+// ?getEnterTarget@AIUpdateInterface@@UAEPAVObject@@XZ
 Object* AIUpdateInterface::getEnterTarget()
 {
-	AIStateType stateType = getAIStateType();
+	BFMEAIUpdateFields *self = reinterpret_cast<BFMEAIUpdateFields *>(this);
+	BFMEStateMachineFields *machine =
+		reinterpret_cast<BFMEStateMachineFields *>( self->m_stateMachine );
 
-	if( stateType != AI_ENTER && 
-			stateType != AI_GUARD_TUNNEL_NETWORK &&
-			stateType != AI_GET_REPAIRED )
+	// Six entering states, not the reference copy's three.
+	Int stateType = machine->getCurrentStateID();
+
+	if( stateType != BFME_AI_ENTER &&
+			stateType != BFME_AI_ENTER_TUNNEL &&
+			stateType != BFME_AI_GET_REPAIRED &&
+			stateType != BFME_AI_ENTER_HORDE &&
+			stateType != BFME_AI_ENTER_GARRISON &&
+			stateType != BFME_AI_ENTER_TRANSPORT )
 		return NULL;
 
-	return getStateMachine()->getGoalObject();
+	return self->m_stateMachine->getGoalObject();
 }
 
 //-------------------------------------------------------------------------------------------------
