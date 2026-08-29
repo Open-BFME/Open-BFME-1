@@ -943,25 +943,82 @@ void TeamPrototype::setControllingPlayer(Player *newController)
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototype_countObjectsByThingTemplate.cpp
-// ?countObjectsByThingTemplate@TeamPrototype@@QBEXHPBQBVThingTemplate@@_NPAH1@Z present-unmatched
+// ------------------------------------------------------------------------
+// BFME reaches the next team in the instance list through a call rather than
+// through the DLINK member Zero Hour's macros expand to, and puts the list head
+// at TeamPrototype+0x274, so the five walks below iterate it by hand.
+//
+// advance() carries its own null check.  That is what the second test on the
+// same register is: the loop body cannot have changed it, and the branch it
+// feeds goes straight to the exit because an iterator that is done stays done.
+class BfmeTeamInstanceLink
+{
+public:
+	BfmeTeamInstanceLink *_bfme_nextInInstanceList();	///< ILT 0x00022A70
+
+	// Team::hasAnyBuildFacility is defined further down this same TU and is small
+	// enough that MSVC inlines it into the walk below, where retail emits a call
+	// through ILT 0x0003F594.  Declared-not-defined here, the call survives.
+	// The three sibling walks need no such help: their callees are in this TU too
+	// but the inliner declines them.
+	Bool hasAnyBuildFacility() const;			///< ILT 0x0003F594
+};
+
+// Team loses the second base's vtable pointer BFME does not have, so the id
+// sits at Team+0x08 where the vendored header lands it at +0x0c.  A function so
+// the key stays an rvalue, the way the retail load feeds the push directly.
+static TeamID bfmeTeamID( const Team *that )
+{
+	return *(const TeamID *)((const char *)that + 0x08);
+}
+
+class BfmeTeamInstanceIterator
+{
+public:
+	BfmeTeamInstanceIterator( Team *head ) : m_cur( head ) { }
+
+	Bool done() const { return m_cur == NULL; }
+	Team *cur() const { return m_cur; }
+
+	void advance()
+	{
+		if( m_cur )
+			m_cur = (Team *)((BfmeTeamInstanceLink *)m_cur)->_bfme_nextInInstanceList();
+	}
+
+private:
+	Team *m_cur;
+};
+
+// The accessor is in-class on the view rather than a free function: that extra
+// inline-call layer is what schedules the load of the head the way retail does.
+struct BfmeTeamPrototypeInstances
+{
+	unsigned char m_unmodelled_000[ 0x274 ];
+	Team *m_teamInstanceList;				///< retail this+0x274
+
+	BfmeTeamInstanceIterator iterate() const
+	{
+		return BfmeTeamInstanceIterator( m_teamInstanceList );
+	}
+};
+
+// ?countObjectsByThingTemplate@TeamPrototype@@QBEXHPBQBVThingTemplate@@_NPAH1@Z
 void TeamPrototype::countObjectsByThingTemplate(Int numTmplates, const ThingTemplate* const* things, Bool ignoreDead, Int *counts, Bool ignoreUnderConstruction) const
 {
-	for (DLINK_ITERATOR<Team> iter = iterate_TeamInstanceList(); !iter.done(); iter.advance())
+	for( BfmeTeamInstanceIterator iter = ((const BfmeTeamPrototypeInstances *)this)->iterate(); !iter.done(); iter.advance() )
 	{
 		iter.cur()->countObjectsByThingTemplate(numTmplates, things, ignoreDead, counts, ignoreUnderConstruction);
 	}
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototype_teamAboutToBeDeleted.cpp
-// ?teamAboutToBeDeleted@TeamPrototype@@QAEXPAVTeam@@@Z present-unmatched
+// ?teamAboutToBeDeleted@TeamPrototype@@QAEXPAVTeam@@@Z
 void TeamPrototype::teamAboutToBeDeleted(Team* team)
 {
-	for (DLINK_ITERATOR<Team> iter = iterate_TeamInstanceList(); !iter.done(); iter.advance())
+	for( BfmeTeamInstanceIterator iter = ((const BfmeTeamPrototypeInstances *)this)->iterate(); !iter.done(); iter.advance() )
 	{
-//		iter.cur()->removeOverrideTeamRelationship(team);
-		iter.cur()->removeOverrideTeamRelationship(team ? team->getID() : TEAM_ID_INVALID );
+		iter.cur()->removeOverrideTeamRelationship( team ? bfmeTeamID( team ) : TEAM_ID_INVALID );
 	}
 }
 
@@ -1019,14 +1076,16 @@ void TeamPrototype::decreaseAIPriorityForFailure(void) const
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototypeInstanceWalks.cpp
-// ?countBuildings@TeamPrototype@@QAEHXZ present-unmatched
+// ?countBuildings@TeamPrototype@@QAEHXZ
 Int TeamPrototype::countBuildings(void)
 {
-	int retVal = 0;
-	for (DLINK_ITERATOR<Team> iter = iterate_TeamInstanceList(); !iter.done(); iter.advance()) {
+	Int retVal = 0;
+
+	for( BfmeTeamInstanceIterator iter = ((const BfmeTeamPrototypeInstances *)this)->iterate(); !iter.done(); iter.advance() )
+	{
 		retVal += iter.cur()->countBuildings();
 	}
+
 	return retVal;
 }
 
@@ -1099,14 +1158,15 @@ Bool TeamPrototype::hasAnyBuildings(KindOfMaskType kindOf) const
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototypeInstanceWalks.cpp
-// ?hasAnyUnits@TeamPrototype@@QBE_NXZ present-unmatched
+// ?hasAnyUnits@TeamPrototype@@QBE_NXZ
 Bool TeamPrototype::hasAnyUnits() const
 {
-	for (DLINK_ITERATOR<Team> iter = iterate_TeamInstanceList(); !iter.done(); iter.advance())
+	for( BfmeTeamInstanceIterator iter = ((const BfmeTeamPrototypeInstances *)this)->iterate(); !iter.done(); iter.advance() )
 	{
-		if (iter.cur()->hasAnyUnits()) return true;
+		if( iter.cur()->hasAnyUnits() )
+			return true;
 	}
+
 	return false;
 }
 
@@ -1168,14 +1228,15 @@ void TeamPrototype::updateState(void)
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamPrototypeInstanceWalks.cpp
-// ?hasAnyBuildFacility@TeamPrototype@@QBE_NXZ present-unmatched
+// ?hasAnyBuildFacility@TeamPrototype@@QBE_NXZ
 Bool TeamPrototype::hasAnyBuildFacility() const
 {
-	for (DLINK_ITERATOR<Team> iter = iterate_TeamInstanceList(); !iter.done(); iter.advance())
+	for( BfmeTeamInstanceIterator iter = ((const BfmeTeamPrototypeInstances *)this)->iterate(); !iter.done(); iter.advance() )
 	{
-		if (iter.cur()->hasAnyBuildFacility()) return true;
+		if( ((const BfmeTeamInstanceLink *)iter.cur())->hasAnyBuildFacility() )
+			return true;
 	}
+
 	return false;
 }
 
