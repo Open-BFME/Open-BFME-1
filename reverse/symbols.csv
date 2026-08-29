@@ -73794,6 +73794,7 @@ name,address,notes
 ?bfmeNext1105@@YAPAUBfmeNode1105@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext1106@@YAPAUBfmeNode1106@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext1107@@YAPAUBfmeNode1107@@PAU1@@Z,0x0082B870,pin
+?bfmeNext1108@@YAPAUBfmeNode1108@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext929D@BfmeNext929D@@QAEHH@Z,0x0089CC30,pin
 ?bfmeNext@Gen_00088B60@@AAEXXZ,0x00031FCF,Open-BFME5 the member the flag-then-forward wrapper at 0x00088B60 tail-jumps to
 ?bfmeNext@Gen_000B5690@@AAEXXZ,0x000242A3,Open-BFME5 the member the flag-then-forward wrapper at 0x000B5690 tail-jumps to
