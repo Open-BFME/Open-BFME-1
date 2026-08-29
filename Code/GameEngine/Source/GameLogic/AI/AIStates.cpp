@@ -7908,33 +7908,86 @@ StateReturnType AIEnterState::onEnter()
 }
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/AIEnterState_onExit_Thunk.cpp
-// ?onExit@AIEnterState@@UAEXW4StateExitType@@@Z present-unmatched
+// Retail reads four fields the vendored headers place elsewhere: the state's
+// machine at this+0x1C, its owner at machine+0x10, the pending entry id at
+// this+0x50, and the contain module at Object+0x1FC.  setAllowInvalidPosition
+// is inlined to a single `and [Locomotor+0x40], ~2`, so the flag is bit 1 of the
+// word at Locomotor+0x40 rather than a call.
+class BFMEEnterStateLocomotor
+{
+public:
+	void setAllowInvalidPosition(Bool allow)
+	{
+		if (!allow)
+			m_flags &= ~ALLOW_INVALID_POSITION;
+	}
+
+private:
+	enum { ALLOW_INVALID_POSITION = 0x00000002 };
+
+	unsigned char m_unreconstructed_000[ 0x40 ];
+	UnsignedInt m_flags;					///< retail this+0x40
+};
+
+class BFMEEnterStateAI
+{
+public:
+	BFMEEnterStateLocomotor *getCurLocomotor() const
+	{
+		return *(BFMEEnterStateLocomotor **)((char *)this + 0x1cc);
+	}
+};
+
+class BFMEEnterExitContain : public BFMEVirtualSlots<13>
+{
+public:
+	virtual void onObjectWantsToEnterOrExit(Object *obj, ObjectEnterExitType wants) = 0;
+};
+
+// Retail CALLS the lookup; reference/.../GameLogic.h defines it inline, so the
+// shared spelling compiles the vector index in place.  Same view AIUpdate.cpp
+// uses, already pinned at the ILT thunk 0x0001F253.
+class BFMEObjectLookup
+{
+public:
+	Object *findObjectByID( ObjectID id );
+};
+
+struct BFMEEnterStateFields
+{
+	unsigned char m_unreconstructed_000[ 0x1c ];
+	BfmeMoveStateMachineFields *m_machine;			///< retail this+0x1c
+	unsigned char m_unreconstructed_020[ 0x50 - 0x20 ];
+	ObjectID m_entryToClear;				///< retail this+0x50
+};
+
 void AIEnterState::onExit( StateExitType status )
 {
-	Object* obj = getMachineOwner();
+	BFMEEnterStateFields *self = (BFMEEnterStateFields *)this;
+
+	Object* obj = self->m_machine->m_owner;
 	AIInternalMoveToState::onExit( status );
 
 	// tell the pathfinder to stop ignoring the object
-	AIUpdateInterface *ai = obj->getAI();
+	AIUpdateInterface *ai = ((BFMEObjectAI *)obj)->getAI();
 	if (ai) 
 	{
 
 		ai->ignoreObstacle( NULL );
-		if (ai->getCurLocomotor()) 
+		if (((BFMEEnterStateAI *)ai)->getCurLocomotor()) 
 		{
-			ai->getCurLocomotor()->setAllowInvalidPosition(false);
+			((BFMEEnterStateAI *)ai)->getCurLocomotor()->setAllowInvalidPosition(false);
 		}
 	}
 
 	// use this, rather than getMachineGoalObject, in case the goal
 	// is killed while we were waiting...
-	if (m_entryToClear != INVALID_ID)
+	if (self->m_entryToClear != INVALID_ID)
 	{
-		Object* goal = TheGameLogic->findObjectByID(m_entryToClear);
+		Object* goal = ((BFMEObjectLookup *)TheGameLogic)->findObjectByID(self->m_entryToClear);
 		if (goal)
 		{
-			ContainModuleInterface* contain = goal->getContain();
+			BFMEEnterExitContain* contain = *(BFMEEnterExitContain **)((char *)goal + 0x1fc);
 			if (contain)
 			{
 				contain->onObjectWantsToEnterOrExit(obj, WANTS_NEITHER);
