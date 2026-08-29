@@ -9605,6 +9605,13 @@ void InGameUI::updateFloatingText( void )
 
 }
 
+// The shroud subsystem is a SEPARATE global from the partition manager in BFME:
+// the engine-init tag block at 0x0038A1F0 stores 0x012ED5BC and then pushes the
+// tag "TheShroudManager", while ThePartitionManager is constructed just before
+// it at 0x012ED5B8.  The shroud read below reaches the former; every other
+// ThePartitionManager use in this file is a real partition call and is correct.
+extern PartitionManager *TheShroudManager;				///< retail 0x012ED5BC
+
 //-------------------------------------------------------------------------------------------------
 /** Itterates through and draws each floating text */
 //-------------------------------------------------------------------------------------------------
@@ -9631,7 +9638,7 @@ void InGameUI::drawFloatingText( void )
 		// translate it's 3d pos into a 2d screen pos
 		if( !( TheTacticalView->*(*(RetailWorldToScreen *)&(*(void ***)TheTacticalView)[0x15C / sizeof( void *)]) )( &ftd->m_pos3D, &pos )
 			&& ftd->m_dString 
-			&& ThePartitionManager->getShroudStatusForPlayer(playerNdx, &ftd->m_pos3D) == CELLSHROUD_CLEAR )
+			&& TheShroudManager->getShroudStatusForPlayer(playerNdx, &ftd->m_pos3D) == CELLSHROUD_CLEAR )
 		{
 			pos.y -= ftd->m_frameCount * floatingTextMoveUpSpeed / *reinterpret_cast<const Int *>( reinterpret_cast<const char *>( TheGameEngine ) + 0x34 );
 			Color dropColor;

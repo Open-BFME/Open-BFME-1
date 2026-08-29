@@ -80822,3 +80822,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?TheShroudManager@@3PAVPartitionManager@@A,0x012ED5BC,the engine-init tag block at 0x0038A1F0 stores this pointer and then pushes the tag "TheShroudManager"; the shroud entry points reach it while ThePartitionManager is a separate subsystem at 0x012ED5B8. Typed PartitionManager because that is the class whose matched methods are called on it

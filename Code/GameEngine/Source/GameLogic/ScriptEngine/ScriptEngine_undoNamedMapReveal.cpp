@@ -155,7 +155,11 @@ public:
 	void undoShroudReveal(const Coord3D *pos, Real radius, UnsignedInt playerMask);	// retail 0x008F7730
 };
 
-extern PartitionManager *ThePartitionManager;			// 0x012ED5BC
+// The shroud subsystem is a SEPARATE global from the partition manager in BFME:
+// the engine-init tag block at 0x0038A1F0 stores 0x012ED5BC and then pushes the
+// tag "TheShroudManager", while ThePartitionManager is constructed just before it
+// at 0x012ED5B8.  This entry point reaches the former.
+extern PartitionManager *TheShroudManager;				///< retail 0x012ED5BC
 
 // The mask resolver the ledger already pins on its ILT.
 class BfmeScriptEngine_getPlayerMaskFromAsciiString
@@ -200,5 +204,5 @@ void ScriptEngine::undoNamedMapReveal(const AsciiString& revealName)
 
 	UnsignedShort playerMask = TheScriptEngine->getPlayerMaskFromAsciiString(reveal->m_playerName, 0);
 
-	ThePartitionManager->undoShroudReveal(way->getLocation(), reveal->m_radiusToReveal, playerMask);
+	TheShroudManager->undoShroudReveal(way->getLocation(), reveal->m_radiusToReveal, playerMask);
 }
