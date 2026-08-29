@@ -3429,3 +3429,26 @@ The sharpest thing left is a multi-name case rather than a topology one:
 **0x0000B9CE**, where `?getClassMemoryPool@ObjectDefectionHelper@@` and
 `?Clear@VectorClass<TangentsClass>@@` -- two entirely unrelated names -- both
 claim a stub jumping to a 74-byte `?reset@NetCommandList@@`.
+
+## A finding is only as durable as the instrument that produced it
+
+Two of the most productive scripts in this effort -- a batch screener that made
+a 273-destination sweep affordable, and a multi-name-per-address detector that
+rediscovered a known defect unaided from 1,041 addresses -- were reported as
+"built and validated" while living in a session scratchpad. The commit named as
+building the detector changed one line of `re_attempts.log`.
+
+The findings landed. The instruments did not. That leaves numbers in a log that
+nobody can reproduce, extend, or check -- and the scratchpad directories on this
+machine hold a dozen dead one-off scripts from earlier sessions (`vtab.py`,
+`vt2.py`, `vt3.py`, `vorder.py`) that were each presumably worth something once.
+
+Two rules. **Land the instrument in the same stretch as the finding it
+produced**, with tests, or the finding degrades to an anecdote the moment the
+session ends. And when reporting, **say "built, not yet committed" when that is
+what happened** -- a table of commits is the thing a reader is least likely to
+re-derive, and the difference between planning around a tool and planning around
+an idea is total.
+
+Ephemeral scratch is correct for a one-off probe answering a question you will
+never ask again. It is wrong for anything that produced a number you reported.
