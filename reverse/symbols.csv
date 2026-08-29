@@ -9263,6 +9263,7 @@ name,address,notes
 ??_7AnimalAIUpdateModuleDataVtbl@@6B@,0x010899F0,AnimalAIUpdate vtbl
 ??_7AssaultTransportAIUpdateModuleDataVtbl@@6B@,0x01089CC0,AssaultTransportAIUpdate vtbl
 ??_7BannerUI@@6B@,0x00D0B828,BannerUI vtable independently identified by SubsystemInterface slots and adjacent BannerUI strings
+??_7BehaviorModuleInterface@@6B@,0x0109C9D0,Open-BFME5 vtable address emitted by ObjectHelper constructor 0x001C0DB0
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
@@ -9307,6 +9308,9 @@ name,address,notes
 ??_7Made001E5BC0@@6B@,0x010CF058,Open-BFME5 vftable the constructor at 0x002DE130 installs over the base one
 ??_7Made001E6170@@6B@,0x010CF1C4,Open-BFME5 vftable the constructor at 0x002DE930 installs over the base one
 ??_7MoneyCrateCollideModuleDataVtbl@@6B@,0x0108EAA0,MoneyCrateCollide vtbl
+??_7ObjectHelper@@6BBehaviorModuleInterface@@@,0x0109E398,Open-BFME5 ObjectHelper BehaviorModuleInterface vtable address emitted by constructor 0x001C0DB0
+??_7ObjectHelper@@6BObjectModule@@@,0x0109E45C,Open-BFME5 primary ObjectHelper vtable address emitted by constructor 0x001C0DB0
+??_7ObjectHelper@@6BUpdateModuleInterface@@@,0x0109E38C,Open-BFME5 ObjectHelper UpdateModuleInterface vtable address emitted by constructor 0x001C0DB0
 ??_7RAMFile@@6B@,0x01143C58,installed by RAMFile ctor at 0x009D1980 and by the matched ??1RAMFile@@MAE@XZ
 ??_7RawFileClass@@6B@,0x01145548,14 of 17 slots are matched @RawFileClass@@ methods
 ??_7RespawnBodyModuleData@@6B@,0x010A92C8,RespawnBodyModuleData retail vtable
@@ -9316,6 +9320,7 @@ name,address,notes
 ??_7Rva00885AF0Class@@6B@,0x00D32ECC,pin
 ??_7Rva00886F60Class@@6B@,0x00D32FFC,pin
 ??_7StatusBitsUpgradeModuleData@@6B@,0x00C8F4F0,vptr stored by the factory at 0x0012B650 whose field-parse pointer resolves to ?buildFieldParse@StatusBitsUpgradeModuleData
+??_7UpdateModuleInterface@@6B@,0x0109CBA0,Open-BFME5 vtable address emitted by ObjectHelper constructor 0x001C0DB0
 ??_7VirtualMinusOneConstructorThunk@@6B@,0x010F6F58,Open-BFME5 virtual minus one constructor vftable
 ??_7VirtualZeroDerivedAlternateThunk@@6B@,0x010F6F68,Open-BFME5 alternate virtual zero derived vftable
 ??_7VirtualZeroDerivedThirdThunk@@6B@,0x010F6F74,Open-BFME5 third virtual zero derived vftable
@@ -72659,12 +72664,14 @@ name,address,notes
 ?bfmeChanged@Gen_00505550@@AAEXXZ,0x00023A29,Open-BFME5 the member the change-setter at 0x00505550 calls
 ?bfmeChanged@Gen_005899B0@@AAEXXZ,0x0001D354,Open-BFME5 the member the change-setter at 0x005899B0 calls
 ?bfmeChanged@Gen_005899D0@@AAEXXZ,0x0000271B,Open-BFME5 the member the change-setter at 0x005899D0 calls
+?bfmeCheck1003@BfmeA1003@@QAEDPAX@Z,0x000422E9,pin
 ?bfmeCheck961@BfmeGate961@@QAEDXZ,0x00041FF1,pin
 ?bfmeCheck986B@@YAHXZ,0x000162A7,pin
 ?bfmeCheckA@@YAHPAX@Z,0x00894D90,Open-BFME5 the guard the cleanup at 0x00783A50 calls
 ?bfmeCheckB@@YAHPAX@Z,0x00894DB0,Open-BFME5 the guard the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
+?bfmeClear1003@BfmeB1003@@QAEXXZ,0x0000A754,pin
 ?bfmeClear927A@BfmeSub927A@@QAEXXZ,0x0004278A,pin
 ?bfmeClear987@BfmeDrop987@@QAEXHH@Z,0x00014506,pin
 ?bfmeClear@BfmeListA@@QAEXXZ,0x00021CD3,Open-BFME5 the out-of-line list clear the destructor at 0x0009F7A0 calls
@@ -72979,6 +72986,7 @@ name,address,notes
 ?bfmeFindRecord@FontLibraryBFMERetail@@AAEPAUBfmeFontRecord@@PAVAsciiString@@M@Z,0x000035A3,Open-BFME5 ILT thunk to body 0x00476E20; FontLibraryBFMERetail::getFont at 0x004772D0 calls it on this with the name and size and reads a byte at +8 of what it returns; address-derived name
 ?bfmeFindSC@BfmeMapSC@@QAEPAUBfmeSlotSC@@PAUBfmeKeySC@@@Z,0x00040430,pin
 ?bfmeFindSD@BfmeMapSD@@QAEPAUBfmeSlotSD@@PAUBfmeKeySD@@@Z,0x00020E7D,pin
+?bfmeFinish1003@BfmeB1003@@QAEXXZ,0x0003FBF7,pin
 ?bfmeFinish961@BfmeGate961@@QAEXXZ,0x0002D169,pin
 ?bfmeFinish991@@YAXXZ,0x000114DC,pin
 ?bfmeFinish@Gen_0015BCB0@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 tail-jump to
@@ -73289,6 +73297,8 @@ name,address,notes
 ?bfmeGet_002198d0@BfmeChainResult@@QAEPAXXZ,0x000456E2,Open-BFME5 ILT the lookup at 0x002198D0 tail-jumps through
 ?bfmeGlobalCGD@@YAXXZ,0x009A3AD0,pin
 ?bfmeGoal952@BfmeHolder952@@QAEPAVBfmeTarget952@@XZ,0x0000E570,pin
+?bfmeGoalA1003@BfmeHold1003@@QAEPAXXZ,0x0000E570,pin
+?bfmeGoalB1003@BfmeSink1003@@QAEPAXXZ,0x0000E570,pin
 ?bfmeGrab@BfmeSourceA@@QAEPAXPAPAX@Z,0x00019876,Open-BFME5 ILT the vector assignment at 0x00095A50 grabs through
 ?bfmeGrab@BfmeSourceB@@QAEPAXPAPAX@Z,0x000314E9,Open-BFME5 ILT the vector assignment at 0x000B54C0 grabs through
 ?bfmeGrab@BfmeSourceC@@QAEPAXPAPAX@Z,0x0002EBC2,Open-BFME5 ILT the vector assignment at 0x002F8980 grabs through
@@ -73862,6 +73872,7 @@ name,address,notes
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
+?bfmeStop1003@BfmeStop1003@@QAEXXZ,0x00020C84,pin
 ?bfmeStop@BfmeStopF@@QAEXXZ,0x00015E2E,Open-BFME5 the ICF thunk (to 0x0037C600) the clear at 0x002901C0 calls before emptying its vector
 ?bfmeStopAHA@BfmeSubAHA@@QAEXH@Z,0x0004AB4C,pin
 ?bfmeStopAQA@BfmeOneAQA@@QAEXXZ,0x0001F316,pin
@@ -75464,6 +75475,7 @@ name,address,notes
 ?g_bfmeSrc962@@3PAVBfmeSrc962@@A,0x00EF1464,pin
 ?g_bfmeSrc982@@3PAVBfmeSrc982@@A,0x00EF076C,pin
 ?g_bfmeStateA979@@3PAUBfmeStateA979@@A,0x00EF0898,pin
+?g_bfmeStop1003@@3PAVBfmeStop1003@@A,0x00EF1024,pin
 ?g_bfmeStrA993B@@3PADA,0x00C81238,pin
 ?g_bfmeStrB993B@@3PADA,0x00C80FC0,pin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
@@ -80009,8 +80021,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??_7BehaviorModuleInterface@@6B@,0x0109C9D0,Open-BFME5 vtable address emitted by ObjectHelper constructor 0x001C0DB0
-??_7UpdateModuleInterface@@6B@,0x0109CBA0,Open-BFME5 vtable address emitted by ObjectHelper constructor 0x001C0DB0
-??_7ObjectHelper@@6BObjectModule@@@,0x0109E45C,Open-BFME5 primary ObjectHelper vtable address emitted by constructor 0x001C0DB0
-??_7ObjectHelper@@6BBehaviorModuleInterface@@@,0x0109E398,Open-BFME5 ObjectHelper BehaviorModuleInterface vtable address emitted by constructor 0x001C0DB0
-??_7ObjectHelper@@6BUpdateModuleInterface@@@,0x0109E38C,Open-BFME5 ObjectHelper UpdateModuleInterface vtable address emitted by constructor 0x001C0DB0
