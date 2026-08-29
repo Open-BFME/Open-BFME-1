@@ -1356,6 +1356,21 @@ ZERO for any further call site whose callee is virtual, because a view's virtual
 signature can change types freely -- one body matched first try with no new pins
 at all.
 
+AND THE CONVERSION AT THE CALL SITE MUST BE IMPLICIT. `f(Arg(x))` makes MSVC
+materialise the temporary in a NAMED LOCAL and pass its address; `f(x)` builds
+it directly in the argument slot, which is what retail does. So the callee has
+to be declared under a name of its own rather than as an overload of the real
+one -- an overload taking the real string type is an exact match and wins,
+leaving the view unused. `LANAPI::SetLocalIP` is the worked case: same bytes
+either way up to that point, and the whole prologue and temporary land once the
+call reads `bfmeResolveIP(localIP)`.
+
+A WARNING ABOUT THE TU-WIDE STRING SHIMS in a file that carries funclet rows.
+`/Ireference/shims/asciistringsetoutofline` fixes an inlined destructor, and in
+lanapi.cpp it changes codegen enough that a funclet row on a body you are NOT
+editing stops finding a byte-equal candidate in its parent's COMDAT. Check for
+`object-symbol=$` rows in the destination before reaching for one.
+
 ## "It did not match" is a deferral, not a dead end
 
 Read tools/re_log.py's status doctrine (lines ~40-70) BEFORE recording a
