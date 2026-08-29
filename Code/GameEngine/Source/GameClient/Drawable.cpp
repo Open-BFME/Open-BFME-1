@@ -1456,58 +1456,92 @@ void Drawable::applyPhysicsXform(Matrix3D* mtx)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Drawable_calcPhysicsXform_Thunk.cpp
-// ?calcPhysicsXform@Drawable@@IAE_NAAUPhysicsXformInfo@1@@Z present-unmatched
+// BFME reads the whole chain in place: the object at Drawable+0xfc, its AI at
+// Object+0x204, the current locomotor at AI+0x1cc, and the appearance at
+// locomotor+0x70 through the override pointer -- with no fallback to `this', so
+// a locomotor with no override dereferences null exactly as retail does.
+//
+// The case VALUES below are what the jump table proves; the NAMES are the
+// reference enum's and are not proven to denote the same appearances. Values 2
+// and 3 share one body here, and a sibling body in AIUpdate.cpp tests those same
+// two values for "adjusts destination" -- which reads naturally as hover and
+// wings but is spelled treads and hover by this enum. Nothing in either body's
+// bytes settles it, so the grouping is reproduced and the naming is not relied on.
+class BFMELocomotorOverride
+{
+public:
+	BFMELocomotorOverride *friend_getFinalOverride();		///< retail ILT 0x000022bb
+
+	Int getAppearance() const
+	{
+		BFMELocomotorOverride *o = m_nextOverride;
+		if (o && o->m_nextOverride)
+			o = o->m_nextOverride->friend_getFinalOverride();
+		return o->m_appearance;
+	}
+
+	void *m_vtable;
+	BFMELocomotorOverride *m_nextOverride;				///< retail this+0x04
+	UnsignedByte m_unreconstructed_008[0x70 - 8];
+	Int m_appearance;						///< retail this+0x70
+};
+
+struct BFMEDrawableAIChain
+{
+	UnsignedByte m_unreconstructed_000[0xFC];
+	const Object *m_object;						///< retail Drawable+0xfc
+};
+
+struct BFMEObjectAIField
+{
+	UnsignedByte m_unreconstructed_000[0x204];
+	const void *m_ai;						///< retail Object+0x204
+};
+
+struct BFMEAICurLocomotor
+{
+	UnsignedByte m_unreconstructed_000[0x1CC];
+	BFMELocomotorOverride *m_curLocomotor;				///< retail AIUpdate+0x1cc
+};
+
+// ?calcPhysicsXform@Drawable@@IAE_NAAUPhysicsXformInfo@1@@Z
 Bool Drawable::calcPhysicsXform(PhysicsXformInfo& info)
 {
-	const Object* obj = getObject();
-	const AIUpdateInterface *ai = obj ? obj->getAIUpdateInterface() : NULL;
+	const Object* obj = ((const BFMEDrawableAIChain *)this)->m_object;
+	const void *ai = obj ? ((const BFMEObjectAIField *)obj)->m_ai : NULL;
 	Bool hasPhysicsXform = false;
 	if (ai) 
 	{
-		const Locomotor *locomotor = ai->getCurLocomotor(); 
+		const BFMELocomotorOverride *locomotor =
+			((const BFMEAICurLocomotor *)ai)->m_curLocomotor; 
 		if (locomotor) 
 		{
 			switch (locomotor->getAppearance())
 			{
 				case LOCO_WHEELS_FOUR:
-					calcPhysicsXformWheels(locomotor, info);
+					calcPhysicsXformWheels((const Locomotor *)locomotor, info);
 					hasPhysicsXform = true;
-					break;
-				case LOCO_MOTORCYCLE:
-					calcPhysicsXformMotorcycle( locomotor, info );
-					hasPhysicsXform = TRUE;
 					break;
 				case LOCO_TREADS:
-					calcPhysicsXformTreads(locomotor, info);
+				case LOCO_HOVER:
+					calcPhysicsXformTreads((const Locomotor *)locomotor, info);
 					hasPhysicsXform = true;
 					break;
-				case LOCO_HOVER:
 				case LOCO_WINGS:
-					calcPhysicsXformHoverOrWings(locomotor, info);
+					calcPhysicsXformHoverOrWings((const Locomotor *)locomotor, info);
 					hasPhysicsXform = true;
 					break;
 				case LOCO_THRUST:	
-					calcPhysicsXformThrust(locomotor, info);
+					calcPhysicsXformThrust((const Locomotor *)locomotor, info);
+					hasPhysicsXform = true;
+					break;
+				case LOCO_MOTORCYCLE:
+					calcPhysicsXformWheels((const Locomotor *)locomotor, info);
 					hasPhysicsXform = true;
 					break;
 			}
 		}
 	}
-
-  if (hasPhysicsXform)
-  {
-    // HOTFIX: Ensure that we are not passing denormalized values back to caller
-    // @todo remove hotfix
-    if (info.m_totalPitch>-1e-20f&&info.m_totalPitch<1e-20f)
-      info.m_totalPitch=0.f;
-    if (info.m_totalRoll>-1e-20f&&info.m_totalRoll<1e-20f)
-      info.m_totalRoll=0.f;
-    if (info.m_totalYaw>-1e-20f&&info.m_totalYaw<1e-20f)
-      info.m_totalYaw=0.f;
-    if (info.m_totalZ>-1e-20f&&info.m_totalZ<1e-20f)
-      info.m_totalZ=0.f;
-  }
 
 	return hasPhysicsXform;
 }
