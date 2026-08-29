@@ -72442,6 +72442,8 @@ name,address,notes
 ?bfmeCall925E@@YAHPAX@Z,0x00010857,pin
 ?bfmeCall926A@@YAXPAX00H@Z,0x00049F30,pin
 ?bfmeCall926E@BfmeTail926C@@QAEXPAX0@Z,0x0002F1CB,pin
+?bfmeCall928D@@YAXPAX@Z,0x00894D80,pin
+?bfmeCall928E@@YAXPAVBfmeThing928E@@PAX11@Z,0x00028033,pin
 ?bfmeCallCCH@@YAHPAX0H@Z,0x00009084,pin
 ?bfmeCallCIB@@YAHPAX000@Z,0x007EC5C0,pin
 ?bfmeCallCIC@@YAHPAX000@Z,0x007ECE60,pin
@@ -73433,6 +73435,7 @@ name,address,notes
 ?bfmeOne921G@BfmeThing921G@@QAEXXZ,0x0004287A,pin
 ?bfmeOne927C@BfmeThing927C@@QAEXXZ,0x0003418F,pin
 ?bfmeOne927D@BfmeThing927D@@QAEXXZ,0x0002987A,pin
+?bfmeOne928F@BfmeThing928F@@QAEXXZ,0x00033D70,pin
 ?bfmeOneAPA@@YGPAXPAXPAH@Z,0x009F6BF2,pin
 ?bfmeOneBKE@@YGXPAX@Z,0x0090C610,pin
 ?bfmeOneBKF@BfmePartBKF@@QAEXXZ,0x0090DF10,pin
@@ -73700,6 +73703,10 @@ name,address,notes
 ?bfmeTail923B@BfmeSub923B@@QAEXD@Z,0x000182F0,pin
 ?bfmeTail923E@BfmeElem923E@@QAEXPAX0@Z,0x0001F7BC,pin
 ?bfmeTail926D@BfmeTail926C@@QAEHH@Z,0x00036165,pin
+?bfmeTail928A@@YGXPAUBfmeObj928A@@@Z,0x00016AA4,pin
+?bfmeTail928C@BfmeSub928C@@QAEXPAX@Z,0x0002B526,pin
+?bfmeTail928F@BfmeSub928F@@QAEXXZ,0x00007EA5,pin
+?bfmeTail928G@BfmeThing928G@@QAEXXZ,0x000495F8,pin
 ?bfmeTailBCD@BfmeThingBCD@@QAEXXZ,0x0001CD8C,pin
 ?bfmeTailBED@BfmeThingBED@@QAEXXZ,0x00012C6F,pin
 ?bfmeTailBFG@BfmeThingBFG@@QAEXXZ,0x000286A0,pin
@@ -73782,6 +73789,7 @@ name,address,notes
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
 ?bfmeTryANA@BfmeThingANA@@QAEHPAX0@Z,0x0003381B,pin
 ?bfmeTwo920F@BfmeThing920F@@QAEXP6AXPAVLocomotorTemplate@@@Z@Z,0x00012B20,pin
+?bfmeTwo928F@BfmeThing928F@@QAEXXZ,0x0001C9A9,pin
 ?bfmeTwoAPA@@YGPAXPAXPAH@Z,0x009F6BEC,pin
 ?bfmeTwoBKE@@YAXPAX@Z,0x00038389,pin
 ?bfmeTwoBOF@BfmeThingBOF@@QAEXXZ,0x00004156,pin
@@ -74968,6 +74976,8 @@ name,address,notes
 ?g_bfme924TwoG@@3PAVBfmeTwo924G@@A,0x00EF4988,pin
 ?g_bfme926Obj@@3PADA,0x002555A0,pin
 ?g_bfme927Vft@@3PADA,0x00D3A56C,pin
+?g_bfme928Handler@@3PADA,0x0004975B,pin
+?g_bfme928Vft@@3PADA,0x00D1C9A8,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
@@ -78880,6 +78890,7 @@ __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
 __imp_?bfmeFree912B@@YGXPAX@Z,0x00F58CCC,pin
 __imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
 __imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
+__imp_?bfmeImport928G@@YGXPAX@Z,0x00F58F08,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
 __imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
