@@ -248,3 +248,31 @@ char Bfme5BridgeList::bfmeAnyBridgeAt(const Coord3D *p)
 
 	return 0;
 }
+
+struct Bfme5ParseNode12
+{
+	void *m_bfmeVptr;
+	int m_bfme04;
+	int m_bfme08;
+};
+
+void __cdecl bfme5ParseProcC(MultiIniFieldParse &m);
+
+void * __cdecl bfme5MakeParseNodeC(INI *ini)
+{
+	Bfme5ParseNode12 *q = (Bfme5ParseNode12 *)operator new(12);
+	Bfme5ParseNode12 *p;
+
+	if (q) {
+		q->m_bfmeVptr = &g_bfme5ParseVtable;
+		q->m_bfme08 = 1;
+		p = q;
+	} else {
+		p = 0;
+	}
+
+	if (ini)
+		ini->initFromINIMultiProc(p, bfme5ParseProcC);
+
+	return p;
+}
