@@ -3415,53 +3415,6 @@ Bool Player::okToPlayRadarEdgeSound( void )
 
 //-------------------------------------------------------------------------------------------------
 /** The parameter object has just aquired a radar */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Player_addRadar_Thunk.cpp
-// ?addRadar@Player@@QAEX_N@Z present-unmatched
-void Player::addRadar( Bool disableProof )
-{
-	Bool hadRadar = hasRadar();
-
-	// increment count
-	++m_radarCount;
-
-	if( disableProof )
-		++m_disableProofRadarCount;// Disable proof is also in the normal refcount
-
-	if( !hadRadar && hasRadar()	&& okToPlayRadarEdgeSound() )
-	{
-		// This player just got radar, so play the "You have Radar!" sound
-		AudioEventRTS soundToPlay = TheAudio->getMiscAudio()->m_radarOnlineSound;
-		soundToPlay.setPlayerIndex(getPlayerIndex());
-		TheAudio->addAudioEvent(&soundToPlay);
-	}
-}  // end addRadar
-
-//-------------------------------------------------------------------------------------------------
-/** The parameter object has is taking its radar away from the player */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Player_removeRadar_Thunk.cpp
-// ?removeRadar@Player@@QAEX_N@Z present-unmatched
-void Player::removeRadar( Bool disableProof )
-{
-	Bool hadRadar = hasRadar();
-
-	// decrement count
-	DEBUG_ASSERTCRASH( m_radarCount > 0, ("removeRadar: An Object is taking its radar away, but the player radar count says they don't have radar!\n") );
-	--m_radarCount;
-
-	if( disableProof )
-		--m_disableProofRadarCount;// Disable proof is also in the normal refcount
-
-	if( hadRadar && !hasRadar()	&& okToPlayRadarEdgeSound() ) 
-	{
-		// This player just lost radar, so play the "You lost Radar!" sound
-		AudioEventRTS soundToPlay = TheAudio->getMiscAudio()->m_radarOfflineSound;
-		soundToPlay.setPlayerIndex(getPlayerIndex());
-		TheAudio->addAudioEvent(&soundToPlay);
-	}
-}  // end removeRadar
-
 // BFME's AudioEventRTS is twelve bytes larger than the vendored class, which is
 // the entire frame difference these two bodies showed (sub esp,0x70 against
 // 0x64).  A padded wrapper buys retail's frame without touching the class: the
@@ -3558,6 +3511,54 @@ public:
 // The radar sounds sit at MiscAudio+0x1C0 and +0x150, against the vendored
 // +0x258.
 #define BFME_MISC_SOUND(m, off) (*(const AudioEventRTS *)((const UnsignedByte *)(m) + (off)))
+
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Player_addRadar_Thunk.cpp
+// ?addRadar@Player@@QAEX_N@Z present-unmatched
+void Player::addRadar( Bool disableProof )
+{
+	Bool hadRadar = hasRadar();
+
+	// increment count
+	++((BfmePlayerRadarFields *)this)->m_radarCount;
+
+	if( disableProof )
+		++((BfmePlayerRadarFields *)this)->m_disableProofRadarCount;// Disable proof is also in the normal refcount
+
+	if( !hadRadar && hasRadar()	&& okToPlayRadarEdgeSound() )
+	{
+		// This player just got radar, so play the "You have Radar!" sound
+		AudioEventRTS soundToPlay( BFME_MISC_SOUND(
+			((BfmeAudioManagerView *)TheAudio)->getMiscAudio(), 0x150) );
+		soundToPlay.setPlayerIndex(getPlayerIndex());
+		((BfmeAudioManagerView *)TheAudio)->addAudioEvent(&soundToPlay);
+	}
+}  // end addRadar
+
+//-------------------------------------------------------------------------------------------------
+/** The parameter object has is taking its radar away from the player */
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Player_removeRadar_Thunk.cpp
+void Player::removeRadar( Bool disableProof )
+{
+	Bool hadRadar = hasRadar();
+
+	// decrement count
+	DEBUG_ASSERTCRASH( m_radarCount > 0, ("removeRadar: An Object is taking its radar away, but the player radar count says they don't have radar!\n") );
+	--((BfmePlayerRadarFields *)this)->m_radarCount;
+
+	if( disableProof )
+		--((BfmePlayerRadarFields *)this)->m_disableProofRadarCount;// Disable proof is also in the normal refcount
+
+	if( hadRadar && !hasRadar()	&& okToPlayRadarEdgeSound() ) 
+	{
+		// This player just lost radar, so play the "You lost Radar!" sound
+		BfmeAudioEventStorage soundToPlay( BFME_MISC_SOUND(
+			((BfmeAudioManagerView *)TheAudio)->getMiscAudio(), 0x1c0) );
+		soundToPlay.e.setPlayerIndex(getPlayerIndex());
+		((BfmeAudioManagerView *)TheAudio)->addAudioEvent(&soundToPlay.e);
+	}
+}  // end removeRadar
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_radar.cpp
