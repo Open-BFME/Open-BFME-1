@@ -12396,6 +12396,7 @@ name,address,notes
 ?appendTeamIDArgument@GameMessage@@QAEXI@Z,0x0000C522,GameMessage::appendTeamIDArgument thunk
 ?appendTimestampArgument@GameMessage@@QAEXI@Z,0x0000D558,GameMessage::appendTimestampArgument thunk
 ?appendWideCharArgument@GameMessage@@QAEXABG@Z,0x000028C9,GameMessage::appendWideCharArgument thunk
+?apply@BfmeObjectFlagApply@@QAEXABUBfmeModelConditionFlags@@_N@Z,0x001C7370,alias of the applyRva1C7370 spelling pinned below; Object.cpp reaches the helper through a view class because ModelConditionFlags is a BitFlags typedef there
 ?apply@BfmeSub210_4B0@@QAEXMH@Z,0x000326F5,pin
 ?apply@ControlBarSetDefaultConfigShim@@QAEXXZ,0x0049E090,ControlBar setDefaultControlBarConfig incremental-link thunk target through a TU-local forwarding shim
 ?apply@ControlBarSetLowConfigShim@@QAEXXZ,0x0049E120,ControlBar setLowControlBarConfig incremental-link thunk target through a TU-local forwarding shim
@@ -77272,6 +77273,7 @@ name,address,notes
 ?invoke@S4Sink004135C0@@QAEXABVAsciiString@@HHHH@Z,0x004135C0,S4 sink method of the Lua string-command family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ?isAbleToAttack@Object@@QBE_NXZ,0x00001FD7,ILT thunk pin from PartitionFilterRepulsor::allow packet 001ddb10 (target body 0x001C9C10)
 ?isAbleToBeToppled@ToppleUpdate@@QBE_NXZ,0x0000678A
+?isAnyKindOf@BfmeKindOfTester@@QBE_NABVBfmeKindOfMask@@@Z,0x00132AE0,alias of the Thing BitFlags<116> spelling ledgered at the same body; Object.cpp reaches it through a view class because the reference KindOfMaskType is four dwords, not six
 ?isAnyKindOf@Thing@@QBE_NABV?$BitFlags@$0EF@@@@Z,0x0004250A,Open-BFME5 MSVC71 BitFlags<69> ILT
 ?isAnyKindOf@Thing@@QBE_NABV?$BitFlags@$0HE@@@@Z,0x0004250A,ILT thunk
 ?isCapableOfPurchasingScience@Player@@QBE_NW4ScienceType@@@Z,0x00049E45
