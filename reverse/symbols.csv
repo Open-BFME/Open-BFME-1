@@ -75968,6 +75968,7 @@ name,address,notes
 ?getIgnoredObstacleID@AIUpdateInterface@@QAEHXZ,0x0001A36B,ILT thunk to a plain read of ai+0x164
 ?getIgnores@IgnorePreferences@@QAE?AV?$map@HVAsciiString@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHVAsciiString@@@_STL@@@3@@_STL@@XZ,0x00011257,Saved ignore preferences getter pin
 ?getIncomingBytesPerSecond@Network@@UAEMXZ,0x00681C10,vtable 0x0111A968 slot 45 (+0xB4) via ILT 0x00028C9F; if (m_conMgr && conMgr+0x12024 transport) tail-jumps ?getIncomingBytesPerSecond@Transport 0x00683900 else 0.0f (ZH Network->ConnectionManager->Transport hop inlined); caller debug display 0x006EEB91 (ZH W3DDisplay.cpp:1364)
+?getIndicatorColor@Object@@QBEHXZ,0x00009CA0,the Int-returning spelling this tree compiles for the same ILT already pinned as QBEIXZ; the sibling getNightIndicatorColor is ledgered under the same Int spelling
 ?getIndicatorColor@Object@@QBEIXZ,0x00009CA0,ILT thunk to the object indicator colour used as the default flash colour
 ?getInfoResponseForRequest@@YAXPAVGPConnection@@PAUGPGetInfoResponseArg@@PAX@Z,0x0063A910,Buddy request callback helper identified by its GP callback registration and identity copies into the request response
 ?getInfoResponseForStatus@@YAXPAVGPConnection@@PAUGPGetInfoResponseArg@@PAX@Z,0x0063A980,Buddy status callback helper identified by its GP callback registration and writes into the status response
@@ -78356,6 +78357,7 @@ name,address,notes
 ?setGroup@TransitionHandler@@QAEXVAsciiString@@H@Z,0x00045C28,TransitionHandler::setGroup via ILT thunk
 ?setID@Drawable@@QAEXW4DrawableID@@@Z,0x00005A7E,Open-BFME5 ILT; called by ?registerDrawable@GameClient@@UAEXPAVDrawable@@@Z at 0x0042E530
 ?setIgnore@IgnorePreferences@@QAEXABVAsciiString@@H_N@Z,0x00016789,REL32 pin from GameSpyInfo::addToSavedIgnoreList @0x635670
+?setIndicatorColor@Drawable@@QAEXH@Z,0x00028C09,the Int-taking spelling this tree compiles for the same ILT already pinned as QAEXI@Z; changedTeam feeds it whichever indicator colour the time of day selects
 ?setIndicatorColor@Drawable@@QAEXI@Z,0x00028C09,Open-BFME5 ILT thunk to body 0x004186E0; ?changedTeam@Drawable@@QAEXXZ at 0x00418830 feeds it whichever indicator colour the time of day selects
 ?setInputEnabled@BfmeInGameUI_setInputEnabled@@QAEX_N@Z,0x0003EBDF,ILT thunk ScriptActions doEnableInput
 ?setInputEnabled@BfmeInGameUI_setInputEnabled@@QAEX_N@Z,0x0043B280,body setInputEnabled

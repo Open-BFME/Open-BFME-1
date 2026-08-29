@@ -6021,28 +6021,51 @@ const GeometryInfo& Drawable::getDrawableGeometryInfo() const
 // ------------------------------------------------------------------------------------------------
 /** Set the id for this drawable */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Drawable_setID_Thunk.cpp
-// ?setID@Drawable@@QAEXW4DrawableID@@@Z present-unmatched
+// BFME keeps THREE audio-event holders in consecutive pointer slots from +0x144,
+// each embedding its AudioEventRTS at +0x04, and re-stamps every one of them.
+// Only what this body proves is named.
+struct BfmeDrawableAudioEvent
+{
+	void *m_vtable;
+	AudioEventRTS m_event;						///< retail this+0x04
+};
+
+struct BfmeDrawableIdFields
+{
+	UnsignedByte m_unreconstructed_000[0x100];
+	DrawableID m_id;						///< retail this+0x100
+	UnsignedByte m_unreconstructed_104[0x40];
+	BfmeDrawableAudioEvent *m_audioEvents[3];			///< retail this+0x144
+};
+
+// ?setID@Drawable@@QAEXW4DrawableID@@@Z
 void Drawable::setID( DrawableID id )
 {
+	BfmeDrawableIdFields *self = (BfmeDrawableIdFields *)this;
+
 
 	// if id hasn't changed do nothing
-	if( m_id == id )
+	if( self->m_id == id )
 		return;
 
 	// remove this objects previous id from the lookup table
-	if( m_id != INVALID_DRAWABLE_ID )
+	if( self->m_id != INVALID_DRAWABLE_ID )
 		TheGameClient->removeDrawableFromLookupTable( this );
 
 	// assign new id
-	m_id = id;
+	self->m_id = id;
 
 	// add new id to lookup table
-	if( m_id != INVALID_DRAWABLE_ID )
+	if( self->m_id != INVALID_DRAWABLE_ID )
 	{
 		TheGameClient->addDrawableToLookupTable( this );
-		if (m_ambientSound)
-			m_ambientSound->m_event.setDrawableID(m_id);
+
+		if (self->m_audioEvents[0])
+			self->m_audioEvents[0]->m_event.setDrawableID(self->m_id);
+		if (self->m_audioEvents[1])
+			self->m_audioEvents[1]->m_event.setDrawableID(self->m_id);
+		if (self->m_audioEvents[2])
+			self->m_audioEvents[2]->m_event.setDrawableID(self->m_id);
 	}
 
 }  // end setID
@@ -6094,26 +6117,48 @@ void Drawable::friend_bindToObject( Object *obj ) ///< bind this drawable to an 
 	// we can update our model, etc., if necessary. NOTE, we don't guarantee
 	// that the new team is different from the old team, nor do we guarantee
 	// that the team is nonnull.
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Drawable_changedTeam.cpp
-// ?changedTeam@Drawable@@QAEXXZ present-unmatched
+// BFME has no FS_FAKE terrain-decal block here at all. In its place the body
+// tail-jumps a slot of the drawable's own vtable at +0x34 with no arguments; the
+// name is shape only. getObject is a member read of this+0xfc, not a call.
+struct BfmeDrawableTeamFields
+{
+	UnsignedByte m_unreconstructed_000[0xFC];
+	Object *m_object;						///< retail this+0xfc
+};
+
+// BFME's time-of-day sits at TheGlobalData+0x218; the reference header computes
+// +0x204. The value tested is 4, which is TIME_OF_DAY_NIGHT in both.
+struct BfmeGlobalTimeOfDay
+{
+	UnsignedByte m_unreconstructed_000[0x218];
+	Int m_timeOfDay;						///< retail this+0x218
+};
+
+class BfmeTeamIndicatorDrawable
+{
+public:
+	virtual void bfmeSlot00() = 0;	virtual void bfmeSlot04() = 0;
+	virtual void bfmeSlot08() = 0;	virtual void bfmeSlot0C() = 0;
+	virtual void bfmeSlot10() = 0;	virtual void bfmeSlot14() = 0;
+	virtual void bfmeSlot18() = 0;	virtual void bfmeSlot1C() = 0;
+	virtual void bfmeSlot20() = 0;	virtual void bfmeSlot24() = 0;
+	virtual void bfmeSlot28() = 0;	virtual void bfmeSlot2C() = 0;
+	virtual void bfmeSlot30() = 0;
+	virtual void bfmeTeamIndicatorChanged() = 0;			///< vtable +0x34
+};
+
+// ?changedTeam@Drawable@@QAEXXZ
 void Drawable::changedTeam()
 {
-	Object *object = getObject();
+	Object *object = ((BfmeDrawableTeamFields *)this)->m_object;
 	if( object )
 	{
-		if (TheGlobalData->m_timeOfDay == TIME_OF_DAY_NIGHT)
+		if (((const BfmeGlobalTimeOfDay *)TheGlobalData)->m_timeOfDay == TIME_OF_DAY_NIGHT)
 			setIndicatorColor( object->getNightIndicatorColor() );
 		else
 			setIndicatorColor( object->getIndicatorColor() );
 
-		if (object->isKindOf(KINDOF_FS_FAKE))
-		{
-			Relationship rel=ThePlayerList->getLocalPlayer()->getRelationship(object->getTeam());
-			if (rel == ALLIES || rel == NEUTRAL)
-				setTerrainDecal(TERRAIN_DECAL_SHADOW_TEXTURE);
-			else
-				setTerrainDecal(TERRAIN_DECAL_NONE);
-		}
+		((BfmeTeamIndicatorDrawable *)this)->bfmeTeamIndicatorChanged();
 	}
 }
 
