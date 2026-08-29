@@ -1404,13 +1404,66 @@ void TurretAIIdleState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/TurretAIIdleState_resetIdleScan_Thunk.cpp
-// ?resetIdleScan@TurretAIIdleState@@AAEXXZ present-unmatched
+// The reference body unchanged; three things separated it from retail. The state
+// reaches its turret at this+0x1C where the vendored layout says +0x20, the
+// turret's module holder is at turret+0x44 rather than +0x38 (from there the
+// chain is unchanged: +0x08 to the module data, +0x48 and +0x4C for the interval
+// bounds), and the frame counter is at GameLogic+0x3C.
+//
+// The third is not a BFME difference at all. Retail pushes 1278 as the __LINE__
+// argument of the random-value call; this file's own line numbering supplies a
+// different one, because the reference file and the port have drifted apart
+// above this function. The #line pair below restores retail's number for the one
+// statement that needs it and puts the physical numbering back immediately
+// after, so nothing below this function moves. The presumed FILE stays retail's
+// -- that is what every __FILE__ immediate in this TU should be.
+struct BfmeIdleScanGameLogic
+{
+	unsigned char m_unreconstructed_000[ 0x3c ];
+	UnsignedInt m_frame;					///< retail this+0x3C
+};
+
+struct BfmeIdleScanModuleData
+{
+	unsigned char m_unreconstructed_000[ 0x48 ];
+	Int m_minIdleScanInterval;				///< retail this+0x48
+	Int m_maxIdleScanInterval;				///< retail this+0x4C
+};
+
+struct BfmeIdleScanHolder
+{
+	unsigned char m_unreconstructed_000[ 8 ];
+	BfmeIdleScanModuleData *m_data;				///< retail this+0x08
+};
+
+struct BfmeIdleScanTurretAI
+{
+	Int getMinIdleScanInterval( void ) const { return m_holder->m_data->m_minIdleScanInterval; }
+	Int getMaxIdleScanInterval( void ) const { return m_holder->m_data->m_maxIdleScanInterval; }
+
+	unsigned char m_unreconstructed_000[ 0x44 ];
+	BfmeIdleScanHolder *m_holder;				///< retail this+0x44
+};
+
+struct BfmeIdleScanState
+{
+	BfmeIdleScanTurretAI *getTurretAI( void ) const { return m_turretAI; }
+
+	unsigned char m_unreconstructed_000[ 0x1c ];
+	BfmeIdleScanTurretAI *m_turretAI;			///< retail this+0x1C
+	unsigned char m_unreconstructed_020[ 4 ];
+	UnsignedInt m_nextIdleScan;				///< retail this+0x24
+};
+
 void TurretAIIdleState::resetIdleScan()
 {
-	UnsignedInt now = TheGameLogic->getFrame();
-	UnsignedInt delay = GameLogicRandomValue(getTurretAI()->getMinIdleScanInterval(), getTurretAI()->getMaxIdleScanInterval());
-	m_nextIdleScan = now + delay;
+	BfmeIdleScanState *self = (BfmeIdleScanState *)this;
+
+	UnsignedInt now = ((const BfmeIdleScanGameLogic *)TheGameLogic)->m_frame;
+#line 1278 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\TurretAI.cpp"
+	UnsignedInt delay = GameLogicRandomValue(self->getTurretAI()->getMinIdleScanInterval(), self->getTurretAI()->getMaxIdleScanInterval());
+#line 1466
+	self->m_nextIdleScan = now + delay;
 }
 
 //----------------------------------------------------------------------------------------------------------
