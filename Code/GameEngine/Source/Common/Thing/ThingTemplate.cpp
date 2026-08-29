@@ -796,8 +796,6 @@ Bool ThingTemplate::removeModuleInfo(const AsciiString& moduleToRemove, AsciiStr
 
 //-------------------------------------------------------------------------------------------------
 /// @todo srj -- move this to another file
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ThingTemplate_parseArmorTemplateSet_Thunk.cpp
-// ?parseArmorTemplateSet@ArmorTemplateSet@@ present-unmatched
 void ArmorTemplateSet::parseArmorTemplateSet( INI* ini )
 {
 	static const FieldParse myFieldParse[] = 

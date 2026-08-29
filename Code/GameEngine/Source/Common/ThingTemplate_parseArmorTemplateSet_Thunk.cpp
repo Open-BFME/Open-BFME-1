@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
-// readable body of ?parseArmorTemplateSet@ArmorTemplateSet@@: Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp
 // readable body of ?parseArmorTemplateSet@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z: Code/GameEngine/Source/Common/Thing/ThingTemplate.cpp
 
 #include <map>
