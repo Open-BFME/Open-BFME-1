@@ -79938,3 +79938,8 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?aiGuardPosition@Open2Commands156070@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x00013D68,Open2 0x00156070 guard command (ILT)
+?aiGuardPosition@Open2Commands1568A0@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x00014FDD,Open2 0x001568A0 guard command (ILT)
+?aiGuardPosition@Open2Commands156900@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x0000F47F,Open2 0x00156900 guard command (ILT)
+?aiGuardPosition@Open2Commands156960@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x000171C0,Open2 0x00156960 guard command (ILT)
+?unidentified_00015235@Open2WindowManager@@QAEXHPBDHPBXHHHH@Z,0x00015235,Open2 0x0051B050 family window-manager forwarder (ILT)
