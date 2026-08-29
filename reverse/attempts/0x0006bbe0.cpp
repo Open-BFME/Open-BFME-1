@@ -1,5 +1,5 @@
 // ?execute@GameEngine@@UAEXXZ
-// partial score=0.995 date=2026-08-28
+// partial score=0.995 date=2026-08-29
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
 
 #include <string.h>
