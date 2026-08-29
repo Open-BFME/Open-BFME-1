@@ -12498,6 +12498,7 @@ name,address,notes
 ?apply@ToppleUpdateApplyTopplingForceShim@@QAEXPBUCoord3D@@MI@Z,0x002B1BC0,ToppleUpdate applyTopplingForce incremental-link thunk target through a TU-local forwarding shim
 ?apply@U1Sub@@QAEXPAVU1CachedHolder@@@Z,0x005C21D0,member subobject method called by 0x005C3590 and 0x005C35E0; address-derived name
 ?applyAlternate@Rva001705A0Inner@@QAEXH_N@Z,0x000195B0,address-derived call target from the twin lazy-owner body at 0x00170610; ILT fronts the shared body at 0x0018B8B0
+?applyAreaState@Rva002F73B0Owner@@QAEXABVAsciiString@@_N1@Z,0x002F7340,address-derived same-object callee of 0x002F73B0; target ret 0x0C and saves incoming ecx
 ?applyDefectionFrame@ObjectDefectionHelper@@QAEXPAVObject@@H@Z,0x000157DA,ILT thunk to the two-arg defection-frame setter at 0x002B2040
 ?applyDefinition@INI@@QAEXPAVInGameUI@@PAX@Z,0x008520A0,INI parseInGameUIDefinition callee thiscall apply
 ?applyDifficultyBonuses@ScriptActionsDifficultyListNode@@QAEX_N@Z,0x00016F2C,doEnableOrDisableObjectDifficultyBonuses per-node call; ILT thunk for body 0x001BE7D0
