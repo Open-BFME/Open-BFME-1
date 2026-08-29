@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -434,11 +434,27 @@ Team* TeamFactory::findTeam(const AsciiString& name)
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TeamDeleteCallback.cpp
-// ?teamAboutToBeDeleted@TeamFactory@@QAEXPAVTeam@@@Z present-unmatched
+// ?teamAboutToBeDeleted@TeamFactory@@QAEXPAVTeam@@@Z
+// ------------------------------------------------------------------------
+// BFME keys the prototype map on a pair of ints, not on a NameKeyType, so the
+// value_type is four bytes wider than the vendored TeamPrototypeMap's and the
+// prototype pointer sits at a different offset inside each node.  TeamFactory
+// derives from SubsystemInterface and Snapshot -- two vptrs plus the subsystem
+// name -- which puts the tree itself at TeamFactory+0x0c.
+typedef std::pair< Int, Int > BfmeTeamPrototypeKey;
+typedef std::map< BfmeTeamPrototypeKey, TeamPrototype *,
+		std::less< BfmeTeamPrototypeKey > > BfmeTeamPrototypeMap;
+
+struct BfmeTeamFactoryMap
+{
+	unsigned char m_unmodelled_000[ 0x0c ];
+	BfmeTeamPrototypeMap m_prototypes;			///< retail this+0x0c
+};
+
 void TeamFactory::teamAboutToBeDeleted(Team* team)
 {
-	for (TeamPrototypeMap::iterator it = m_prototypes.begin(); it != m_prototypes.end(); ++it)
+	BfmeTeamPrototypeMap &prototypes = ((BfmeTeamFactoryMap *)this)->m_prototypes;
+	for (BfmeTeamPrototypeMap::iterator it = prototypes.begin(); it != prototypes.end(); ++it)
 	{
 		it->second->teamAboutToBeDeleted(team);
 	}
@@ -962,6 +978,13 @@ public:
 	// The three sibling walks need no such help: their callees are in this TU too
 	// but the inliner declines them.
 	Bool hasAnyBuildFacility() const;			///< ILT 0x0003F594
+
+	// Same trap, one level deeper: Team::removeOverrideTeamRelationship is defined
+	// in this TU too, and retail inlines the whole TeamPrototype walk below into
+	// TeamFactory::teamAboutToBeDeleted -- at which depth MSVC inlines this callee
+	// as well, where retail still calls it through ILT 0x0001A48D.  Retail's is
+	// void-returning; the vendored header's Bool return is discarded either way.
+	void removeOverrideTeamRelationship( TeamID teamID );	///< ILT 0x0001A48D
 };
 
 // Team loses the second base's vtable pointer BFME does not have, so the id
@@ -1018,7 +1041,7 @@ void TeamPrototype::teamAboutToBeDeleted(Team* team)
 {
 	for( BfmeTeamInstanceIterator iter = ((const BfmeTeamPrototypeInstances *)this)->iterate(); !iter.done(); iter.advance() )
 	{
-		iter.cur()->removeOverrideTeamRelationship( team ? bfmeTeamID( team ) : TEAM_ID_INVALID );
+		((BfmeTeamInstanceLink *)iter.cur())->removeOverrideTeamRelationship( team ? bfmeTeamID( team ) : TEAM_ID_INVALID );
 	}
 }
 
