@@ -72316,6 +72316,7 @@ name,address,notes
 ?bfmeAccepts@Gen_00684b90Holder@@QAEHPAX@Z,0x00004F6B,Open-BFME5 ILT the guard at 0x00684B90 asks its holder through
 ?bfmeActME@BfmeThingME@@QAEXXZ,0x0000C4EB,pin
 ?bfmeAdd1011@BfmeB1011@@QAEPAPAXPAX@Z,0x0002AF13,pin
+?bfmeAdd1023@BfmeH1023@@QAEXHH@Z,0x000157DA,pin
 ?bfmeAdd913D@BfmeThing913D@@QAEDPAX@Z,0x000110E0,pin
 ?bfmeAdd955@BfmeSink955@@QAEXPAHH@Z,0x00037A56,pin
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
@@ -72371,6 +72372,7 @@ name,address,notes
 ?bfmeAllowsBase@Gen_0026c0d0@@AAE_NXZ,0x0002FE05,Open-BFME5 ILT the predicate at 0x0026C0D0 defers through
 ?bfmeAllowsBase@Gen_0026c5d0@@AAE_NXZ,0x0002FE05,Open-BFME5 ILT the predicate at 0x0026C5D0 defers through
 ?bfmeAllowsBase@Gen_002983b0@@AAE_NXZ,0x0002FE05,Open-BFME5 ILT the predicate at 0x002983B0 defers through
+?bfmeApply1023@BfmeB1023@@QAEXH@Z,0x00003FE4,pin
 ?bfmeApply980A@BfmeUseA980@@QAEPAXHH@Z,0x0000DA8A,pin
 ?bfmeApply980B@BfmeUseB980@@QAEPAXHH@Z,0x0004B01F,pin
 ?bfmeApply@BfmeSMCTarget@@QAEXHPBXH@Z,0x0002AD88,Open-BFME5 ILT thunk to body 0x0028EEB0; Object chain-tail forwarder at 0x001C1FB0 supplies the condition index optional opaque descriptor and frame count; bfme name records unrecovered retail types and spelling
@@ -72391,6 +72393,7 @@ name,address,notes
 ?bfmeApplyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,Open-BFME5 TintDrawableFXNugget retail tint helper ILT; body 0x00412040
 ?bfmeArenaReady@@YAXXZ,0x00897050,Open-BFME5 the routine the arena initialiser at 0x00897120 tail-calls
 ?bfmeAsk1013@@YADXZ,0x0001E533,pin
+?bfmeAsk1023@BfmeSub1023@@QAEDXZ,0x00035A5D,pin
 ?bfmeAsk979A@@YGDH@Z,0x000063F2,pin
 ?bfmeAsk993B@BfmeAskB993@@QAEDXZ,0x00008ED1,pin
 ?bfmeAskAIA@BfmeThingAIA@@QAE_NH@Z,0x0003251F,pin
@@ -72949,6 +72952,7 @@ name,address,notes
 ?bfmeElseBBC@@YAXXZ,0x0000F36C,pin
 ?bfmeElseBBC@BfmeThingBBC@@QAEXXZ,0x0000F36C,pin
 ?bfmeElseBBD@@YAXXZ,0x00842C00,pin
+?bfmeEmit1023@@YAXPAXPAD0H@Z,0x00049E86,pin
 ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z,0x0002CB79,Open-BFME5 ILT thunk to body 0x00417710; Gen_00417cb0::tail at 0x00417A70 calls it on this with the source result and its own argument; address-derived name in the same synthetic family as the class
 ?bfmeEnable@BfmeElemW@@QAEXHH@Z,0x000482AC,Open-BFME5 the ICF thunk (to 0x004482AC) the clear at 0x004B1720 calls on each element with a pair of ones
 ?bfmeEnd982C@BfmeHub982@@QAEXXZ,0x00008D4B,pin
@@ -73617,6 +73621,7 @@ name,address,notes
 ?bfmeNextCWD@@3HA,0x00EF1030,pin
 ?bfmeNodeAllocLarge@@YAPAXI@Z,0x00881F30,Open-BFME5 the STLport large-block allocator the 0x84-byte clone-node body calls
 ?bfmeNodeAllocSmall@@YAPAXI@Z,0x0082E540,Open-BFME5 the STLport node allocator the red-black clone-node bodies call
+?bfmeNote1023@BfmeJ1023@@QAEXPAVBfmeH1023@@@Z,0x00010F46,pin
 ?bfmeNoteWD@BfmeThingWD@@QAEXXZ,0x0002191D,pin
 ?bfmeNotify1_574@@YAXPAX0@Z,0x00034B67,pin
 ?bfmeNotify2_574@@YAXPAX0@Z,0x0000630C,pin
@@ -75357,6 +75362,7 @@ name,address,notes
 ?g_bfme967A9@@3PADA,0x00CB0A4C,pin
 ?g_bfmeA1019@@3PAVBfmeA1019@@A,0x00EF1270,pin
 ?g_bfmeA1020@@3PAVBfmeA1020@@A,0x00EF1270,pin
+?g_bfmeA1023@@3PAXA,0x00EF3C1C,pin
 ?g_bfmeA986B@@3PAHA,0x00EF9D04,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
@@ -75379,9 +75385,11 @@ name,address,notes
 ?g_bfmeBFAE@@3HA,0x00EACB4C,pin
 ?g_bfmeBMG@@3HA,0x00EB9660,pin
 ?g_bfmeBegKA@@3PAPAVBfmeItemKA@@A,0x00EF146C,pin
+?g_bfmeBuf1023@@3PADA,0x00EF3CC4,pin
 ?g_bfmeBufDWG@@3PAXA,0x00F378D0,pin
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
 ?g_bfmeC1020@@3DA,0x00EB7D84,pin
+?g_bfmeC1023@@3PAVBfmeC1023@@A,0x00EF7714,pin
 ?g_bfmeCFAE@@3HA,0x00EEF418,pin
 ?g_bfmeClock977@@3PAVBfmeClock977@@A,0x00EF1B40,pin
 ?g_bfmeClock983@@3PAVBfmeClock983@@A,0x00EF1B40,pin
@@ -75435,6 +75443,7 @@ name,address,notes
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeFreeDXG@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeG1022@@3PAVBfmeG1022@@A,0x00EED668,pin
+?g_bfmeG1023@@3PAVBfmeG1023@@A,0x00EED668,pin
 ?g_bfmeGate961@@3PAVBfmeGate961@@A,0x00EF706C,pin
 ?g_bfmeGateA979@@3PAHA,0x00EF4B58,pin
 ?g_bfmeGlob956@@3PAUBfmeGlob956@@A,0x00EEF214,pin
@@ -75468,7 +75477,9 @@ name,address,notes
 ?g_bfmeIntegerFormat@@3QBDB,0x011442DC,address-derived integer format string from the DIR32 operand at retail 0x009D94B8
 ?g_bfmeJ1017@@3PAVBfmeJ1017@@A,0x00F377D8,pin
 ?g_bfmeJ1020@@3PAVBfmeJ1020@@A,0x00EF0888,pin
+?g_bfmeJ1023@@3PAVBfmeJ1023@@A,0x00EF1044,pin
 ?g_bfmeK1022@@3PAVBfmeK1022@@A,0x00EF7198,pin
+?g_bfmeK1023@@3PAVBfmeK1023@@A,0x00EF7730,pin
 ?g_bfmeLimit952@@3MA,0x00C977E8,pin
 ?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
