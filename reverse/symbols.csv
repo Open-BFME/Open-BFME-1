@@ -72474,6 +72474,7 @@ name,address,notes
 ?bfmeBase1029@BfmeA1029@@QAEXHH@Z,0x00899F00,pin
 ?bfmeBase1030@BfmeA1030@@QAEXXZ,0x007F02F0,pin
 ?bfmeBase1030C@BfmeC1030@@QAEXHH@Z,0x00899F00,pin
+?bfmeBase1050@BfmeB1050@@QAEXXZ,0x0000AF38,pin
 ?bfmeBase963@BfmeReg963@@QAEXXZ,0x009A1A30,pin
 ?bfmeBase966A@BfmeVft966A@@QAEXXZ,0x00039D6A,pin
 ?bfmeBase966B@BfmeVft966B@@QAEXXZ,0x00039D6A,pin
@@ -72513,6 +72514,7 @@ name,address,notes
 ?bfmeBaseDtor1033@BfmeD1033@@QAEXXZ,0x007F0300,pin
 ?bfmeBaseENE@BfmeThingENE@@QAEPAUBfmeSubENE@@XZ,0x0002CC8C,pin
 ?bfmeBaseEOA@BfmeThingEOA@@QAEXXZ,0x009D8630,pin
+?bfmeBaseF1050@BfmeF1050@@QAEXHHH@Z,0x0081C550,pin
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
 ?bfmeBaseSJ@BfmeThingSJ@@QAEXH@Z,0x0090E3D0,pin
 ?bfmeBaseSK@BfmeThingSK@@QAEXH@Z,0x009DB4E0,pin
@@ -73352,6 +73354,7 @@ name,address,notes
 ?bfmeFreeVE@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVG@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVH@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFwd1050@BfmeP1050@@QAEXHHHHH@Z,0x009F5C00,pin
 ?bfmeGen00018C1E@Gen_005291F0@@QAEXH@Z,0x00018C1E,address-derived helper; target read from the guarded eight-index loop REL32 at 0x00529237
 ?bfmeGen00029C35@Gen_00529B10@@QAEXH@Z,0x00029C35,address-derived helper; target read from the first REL32 in the guarded eight-index loop at 0x00529B10
 ?bfmeGen0002D38A@Gen_00529B10@@QAEXH@Z,0x0002D38A,address-derived helper; target read from the third REL32 in the guarded eight-index loop at 0x00529B10
@@ -73855,6 +73858,7 @@ name,address,notes
 ?bfmeReset1015@BfmeL1015@@QAEXXZ,0x007E86C0,pin
 ?bfmeReset1018@BfmeSink1018@@QAEXH@Z,0x000348EC,pin
 ?bfmeReset1046@BfmeD1046@@QAEXH@Z,0x008BDD70,pin
+?bfmeReset1050@@YAXH@Z,0x000345EF,pin
 ?bfmeReset961@BfmeResetA961@@QAEXXZ,0x0001BC75,pin
 ?bfmeReset988D@BfmeUnit988@@QAEXXZ,0x000065E1,pin
 ?bfmeReset@BfmeItemS@@QAEXXZ,0x00036A9D,Open-BFME5 the ICF thunk (to 0x00436A9D) the clear at 0x003CFBA0 calls per item
@@ -79813,6 +79817,8 @@ _bfmeVft1039D,0x00D3E654,pin
 _bfmeVft1043P,0x00CE7520,pin
 _bfmeVft1045A,0x00D2C308,pin
 _bfmeVft1045B,0x00D2C304,pin
+_bfmeVft1050B,0x00D28450,pin
+_bfmeVft1050F,0x00D28D30,pin
 _bfmeVftAGBa,0x00C9C9D0,pin
 _bfmeVftAGBb,0x00CA372C,pin
 _bfmeVftAGBc,0x00CB1404,pin
