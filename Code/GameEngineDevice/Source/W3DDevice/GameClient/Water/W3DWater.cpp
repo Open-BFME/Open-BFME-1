@@ -647,104 +647,90 @@ HRESULT WaterRenderObjClass::initBumpMap(LPDIRECT3DTEXTURE8 *pTex, TextureClass 
 /** Create and fill a D3D index buffer with water surface strip indices */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/WaterRenderObjClass_generateIndexBuffer_Thunk.cpp
-// ?generateIndexBuffer@WaterRenderObjClass@@IAEJHH@Z present-unmatched
+// BFME creates the index buffer through a GLOBAL device at 0x01340534, not the
+// m_pDev member the reference uses, and its CreateIndexBuffer takes SIX
+// arguments -- the five the reference passes plus a trailing null. The buffer
+// pointer is at this+0x128 and the index count at this+0x140.
+class BfmeRetailIndexBuffer
+{
+public:
+	virtual void slot00() = 0; virtual void slot01() = 0; virtual void slot02() = 0;
+	virtual void slot03() = 0; virtual void slot04() = 0; virtual void slot05() = 0;
+	virtual void slot06() = 0; virtual void slot07() = 0; virtual void slot08() = 0;
+	virtual void slot09() = 0; virtual void slot10() = 0;
+	virtual HRESULT __stdcall Lock(unsigned int, unsigned int, BYTE **, unsigned int) = 0;
+	virtual HRESULT __stdcall Unlock() = 0;
+};
+
+class BfmeRetailDevice
+{
+public:
+	virtual void slot00() = 0; virtual void slot01() = 0; virtual void slot02() = 0;
+	virtual void slot03() = 0; virtual void slot04() = 0; virtual void slot05() = 0;
+	virtual void slot06() = 0; virtual void slot07() = 0; virtual void slot08() = 0;
+	virtual void slot09() = 0; virtual void slot10() = 0; virtual void slot11() = 0;
+	virtual void slot12() = 0; virtual void slot13() = 0; virtual void slot14() = 0;
+	virtual void slot15() = 0; virtual void slot16() = 0; virtual void slot17() = 0;
+	virtual void slot18() = 0; virtual void slot19() = 0; virtual void slot20() = 0;
+	virtual void slot21() = 0; virtual void slot22() = 0; virtual void slot23() = 0;
+	virtual void slot24() = 0; virtual void slot25() = 0; virtual void slot26() = 0;
+	virtual HRESULT __stdcall CreateIndexBuffer(unsigned int, unsigned int, unsigned int,
+		unsigned int, BfmeRetailIndexBuffer **, void *) = 0;
+};
+
+extern BfmeRetailDevice *g_retailWaterDevice;			///< retail [0x01340534]
+
+struct BfmeWaterIndexLayout
+{
+	unsigned char gap0[0x128];
+	BfmeRetailIndexBuffer *indexBufferD3D;				///< retail this+0x128
+	unsigned char gap1[0x14];
+	Int numIndices;										///< retail this+0x140
+};
+
 HRESULT WaterRenderObjClass::generateIndexBuffer(Int sizeX, Int sizeY)
 {
+	BfmeWaterIndexLayout *self = (BfmeWaterIndexLayout *)this;
 	HRESULT hr;
 
 	//Will need SizeY-1 strips, each of length SizeX*2 (2 indices per strip segment).
 	//Will also need 2 extra indices to connect each strip to next one (except last strip)
 	//Total index buffer size = (SizeY-1)*(SizeX*2+2) - 2 (drop the extra 2 indices from last strip)
 
-	m_numIndices=(sizeY-1)*(sizeX*2+2) - 2;
-
-	//old way
+	self->numIndices = (sizeY - 1) * (sizeX * 2 + 2) - 2;
 
 	// Create index buffer
-	WORD* pIndices;
+	WORD *pIndices;
 
-	if (FAILED(hr=m_pDev->CreateIndexBuffer
-	(
-		(m_numIndices+2)*sizeof(WORD), 
-		D3DUSAGE_WRITEONLY, 
-		D3DFMT_INDEX16, 
-		D3DPOOL_MANAGED, 
-		&m_indexBufferD3D
-	)))
+	if ((hr = g_retailWaterDevice->CreateIndexBuffer((self->numIndices + 2) * sizeof(WORD),
+		8, 101, 1, &self->indexBufferD3D, 0)) < 0)
 		return hr;
 
-	if (FAILED(hr=m_indexBufferD3D->Lock
-	(
-		0, 
-		m_numIndices*sizeof(WORD), 
-		(BYTE**)&pIndices, 
-		0
-	)))
+	if ((hr = self->indexBufferD3D->Lock(0, self->numIndices * sizeof(WORD),
+		(BYTE **)&pIndices, 0)) < 0)
 		return hr;
 
-	Int i,j,k;
+	Int i, j, k;
 
-	for (i=0,j=0,k=0; i<m_numIndices; j++)
+	for (i = 0, j = 0, k = 0; i < self->numIndices; j++)
 	{
-		for (;k<(sizeX*(j+1)); k++,i+=2)
+		for (; k < sizeX * (j + 1); k++, i += 2)
 		{
-			pIndices[i]=(UnsignedShort) k+sizeX;
-			pIndices[i+1]=(UnsignedShort) k;
+			pIndices[i] = (UnsignedShort)k + sizeX;
+			pIndices[i + 1] = (UnsignedShort)k;
 		}
-		//Generate 4 degenerate triangle to connect current strip to next strip/row of map
-		//To do this, we just repeat the last index of first strip and first index of new strip.
-		//Any triangles with repeated vertices will be skipped during rendering.
-		if (i<m_numIndices) //check if there is at least 1 more strip to go
+		if (i < self->numIndices)
 		{
-			pIndices[i]=k-1;
-			pIndices[i+1]=k+sizeX;
-			i+=2;
+			pIndices[i] = k - 1;
+			pIndices[i + 1] = k + sizeX;
+			i += 2;
 		}
 	}
 
-	/*Old way
-	Int step=1;
-	Int psize=(size-1)/step;
+	if ((hr = self->indexBufferD3D->Unlock()) < 0)
+		return hr;
 
-	m_numIndices=psize*((psize+1)*2)+(psize*2)-2;
-
-
-	Int x,z,s_toggle=1;
-	for (z=step; z<size; z+=step)
-	{
-		if (s_toggle)
-		{
-			for (x=0; x<(size-step); x+=step)
-			{
-				*pIndices++=(WORD)((z-0)*size+(x));
-				*pIndices++=(WORD)((z-step)*size+(x));
-			}
-				*pIndices++=(WORD)((z-0)*size+(size-1));
-			*pIndices++=(WORD)((z-step)*size+(size-1));
-			// insert additional degenerate to start next row
-			*pIndices++=pIndices[-2];
-			*pIndices++=pIndices[-1];
-		}
-		else
-		{
-			*pIndices++=(WORD)((z-step)*size+(size-1));
-			*pIndices++=(WORD)((z-0)*size+(size-1));
-			for (x=size-1; x>0; x-=step)
-			{
-				*pIndices++=(WORD)((z-step)*size+(x-step));
-				*pIndices++=(WORD)((z-0)*size+(x-step));
-			}
-			// insert additional degenerate to start next row
-			*pIndices++=pIndices[-1];
-			*pIndices++=pIndices[-1];
-		}
-
-		s_toggle=!s_toggle;
-	}
-*/
-	if (FAILED(hr=m_indexBufferD3D->Unlock())) return hr;
-
-	return S_OK;
+	return 0;
 }
 
 //-------------------------------------------------------------------------------------------------
