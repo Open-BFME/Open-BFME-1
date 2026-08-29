@@ -1455,3 +1455,33 @@ Inserting programmatically into reverse/symbols.csv: the header line
 `name,address,notes` sorts after any `??0...` symbol, so a naive sorted insert
 places the new row ABOVE the header and check_csv rejects the file with "bad
 header". Start the scan at index 1 and keep the header pinned at the top.
+
+## A paired #line lets a __LINE__ body move into a shared destination
+
+Retail pushes its own __LINE__ into GameLogicRandomValue and friends, and the
+reference file and this port have drifted apart, so a body carrying one appears
+unmergeable: a `#line N` to satisfy it would renumber everything BELOW it in a
+shared destination. That reasoning is why several donors kept their own TU.
+
+It is wrong. Emit the `#line` for the statement, then a bare `#line N` AFTER it
+restoring the physical numbering, and nothing below moves. The presumed FILE
+stays as retail has it. TurretAIIdleState::resetIdleScan landed this way;
+LifetimeUpdate.cpp and SlowDeathBehavior.cpp each still have one open, and
+anything else parked on "a #line would renumber the file" is now foldable.
+
+## Check a donor's remaining ROW COUNT after --apply, not the "kept" line
+
+`--plan` reports a donor with a second destination as kept, which is right when
+it has rows left over. It is misleading when the donor's ONLY row is the one you
+just moved: the file survives owning ZERO rows and the gate refuses that
+outright -- "source presence is not progress".
+
+INI_parseObjectCreationList.cpp is the shape to recognise: it carried TWO
+markers for ONE body -- the full mangled spelling naming ini.cpp and a truncated
+`?parseObjectCreationList@INI@@` naming INI_stl.cpp -- and both destinations
+hold a copy of the function. So the donor looked multi-destination and was not.
+After --apply, count the donor's rows:
+
+    grep -c ",<donor>," reverse/functions.csv
+
+Zero means delete the donor rather than leave it.
