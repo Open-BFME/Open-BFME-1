@@ -2108,6 +2108,8 @@ name,address,notes
 ??0BfmeBase1137A@@QAE@XZ,0x0001594C,pin
 ??0BfmeBase1137B@@QAE@XZ,0x009333A0,pin
 ??0BfmeBase1137C@@QAE@XZ,0x0001B522,pin
+??0BfmeBase1140A@@QAE@XZ,0x0001B522,pin
+??0BfmeBase1140B@@QAE@XZ,0x0001B522,pin
 ??0BfmeBaseJC@@QAE@PAX@Z,0x0090E3D0,pin
 ??0BfmeBaseP0@@QAE@PAX0@Z,0x000170E4,Open-BFME5 the two-argument first base the triple-base constructors at 0x00200AE0 and siblings forward to
 ??0BfmeBinkPlayerMember@@QAE@XZ,0x0002833F,Open-BFME5 ILT the member constructor BinkVideoPlayer at 0x00691230 calls for its member at +0x0C
@@ -80492,6 +80494,8 @@ _g_bfmeV1134,0x00CF0AE0,pin
 _g_bfmeV1137A,0x00D20FD4,pin
 _g_bfmeV1137B,0x00D1E23C,pin
 _g_bfmeV1137C,0x00D0CA7C,pin
+_g_bfmeV1140A,0x00D0C64C,pin
+_g_bfmeV1140B,0x00D0C814,pin
 _gameTextPrepare@16,0x009F6D76,GameTextManager reset prepare helper shim
 _gameTextRelease,0x00881EF0,GameTextManager reset release helper shim
 _getbinopr,0x0099B480,decode_calls pin for _subexpr callee
