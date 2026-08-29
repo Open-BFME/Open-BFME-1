@@ -75849,6 +75849,7 @@ name,address,notes
 ?getInterface@RvaC4390First@@QAEPAURvaC4390Interface@@XZ,0x0000B3E3,Open-BFME5 relation interface call pin
 ?getLANSlot@LANGameInfo@@QAEPAVLANGameSlot@@H@Z,0x000061D6,ICF alias: this thunk chains to the GameInfo::getSlot body at 0x0061E8B0; the two accessors compile to the same bytes
 ?getLadderIP@GameSpyStagingRoom@@QBE?AVAsciiString@@XZ,0x004D7AC0,returns a copy of the AsciiString at this+0x444 = m_ladderIP (cleared by reset 0x006385A0 at 0x006385F4; set by the setLadderIP body 0x004D4810 add ecx 0x444; released by ??1GameSpyStagingRoom at 0x004FA400); ILT 0x00024D43 called by generateLadderGameResultsPacket 0x006393AC WOLLobbyMenuSystem 0x004FCAA7/0x004FCB8C insertGame 0x0062DE57 and the score screen 0x004E6DCB/0x004E6E21
+?getLayer@BFMEObjectLayerQuery@@QBEHXZ,0x0003A391,alias of the Object spelling pinned below; AIUpdate.cpp reaches the accessor through a view class because the reference Object.h inlines it
 ?getLayer@BfmeSpawnPointCreationObject@@QBE?AW4PathfindLayerEnum@@XZ,0x0003A391,SpawnPoint exit BFME object layer accessor
 ?getLayer@Object@@QBEHXZ,0x0003A391,ILT thunk to the object layer accessor at 0x001BEC20
 ?getLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PAVObject@@PBUCoord3D@@@Z,0x0001C675,tightenPath 2-arg BFME getLayer (thunk->0x001A7C20)
@@ -78531,6 +78532,7 @@ name,address,notes
 ?upper_bound@AsciiStringTreeUpperBoundShim@_STL@@QBEPAU?$_Rb_tree_node@VAsciiString@@@2@ABVAsciiString@@@Z,0x000804D0,incremental-link thunk target through a TU-local forwarding shim
 ?use_facet@Rva005380A0@@QAEPAXPBX@Z,0x008321D0,Open-BFME5 thiscall of cdecl locale wrapper
 ?use_facet@Rva005C0FD0@@QAEPAXPBX@Z,0x008321D0,Open-BFME5 thiscall of cdecl locale wrapper
+?validMovementPosition@BFMEPathfinderMove@@QAE_NPBUCoord3D@@W4PathfindLayerEnum@@IPAVObject@@@Z,0x0003B359,alias of the Pathfinder spelling pinned below; AIUpdate.cpp reaches it through a view class because the reference Pathfinder declares Zero Hour argument order
 ?validMovementPosition@Pathfinder@@QAE_NPBUCoord3D@@W4PathfindLayerEnum@@IPAVObject@@@Z,0x0003B359,Open-BFME5 isValidLocomotorPosition exact four-argument call setup reaches ILT thunk to body 0x003DB520
 ?validMovementTerrain@Pathfinder@@QAE_NHPBVLocomotor@@PBUCoord3D@@@Z,0x0001B405,ILT thunk to the pathfinder terrain check at 0x003D85C0
 ?validate@BfmeThingACF@@QAE_NPAX0@Z,0x0001D813,pin
