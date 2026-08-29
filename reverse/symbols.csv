@@ -75938,6 +75938,7 @@ name,address,notes
 ?getReal@UserPreferences@@QBEMVAsciiString@@M@Z,0x000A93B0,find virtual +0x18 then atof through the CRT import at 0x01359380 and fstp/fld of the Real default; ILT 0x0000B320 used by getTimePlayed 0x0009C2C0; ret 8
 ?getRelationship@Object@@QBE?AW4Relationship@@PBV1@@Z,0x0004A719,ILT thunk to Object::getRelationship; identity from Zero Hour ActionManager.cpp where the result is compared against ALLIES
 ?getRelationship@Player@@QBE?AW4Relationship@@PBVTeam@@@Z,0x0003E77A
+?getRemainingAmmo@BfmeAmmoPipWeapon@@QBEI_N@Z,0x00046F10,alias of the Weapon spelling pinned below; Object.cpp reaches the query through a view class because the reference Weapon.h declares an inline no-argument getRemainingAmmo
 ?getRemainingAmmo@Weapon@@QBEI_N@Z,0x00046F10,Open-BFME5 canonical Weapon remaining-ammo query ILT thunk to body 0x001E5660; callee of Object::getAmmoPipShowingInfo
 ?getRemainingFrames@OCLUpdate@@QAEIXZ,0x00032AA6,Open-BFME5 ILT; ?updateContextOCLTimer@ControlBar@@AAEXXZ at 0x004AA980 divides its result by ten for the second count
 ?getRemoteIPEntry@LANPreferences@@QAE?AVUnicodeString@@H@Z,0x0002B62A,PopulateRemoteIPComboBox direct-call ILT thunk to getRemoteIPEntry
