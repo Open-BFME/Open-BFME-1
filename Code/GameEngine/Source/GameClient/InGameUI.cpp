@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -784,17 +784,45 @@ void InGameUI::addNamedTimer( const AsciiString& timerName, const UnicodeString&
 }
 
 // ------------------------------------------------------------------------------------------------
+// BFME freeDisplayString is DisplayStringManager vtable +0x28 (slot 10).
+class DisplayStringManager_FreeSlot {
+public:
+	virtual void _pad0(void) = 0;
+	virtual void _pad1(void) = 0;
+	virtual void _pad2(void) = 0;
+	virtual void _pad3(void) = 0;
+	virtual void _pad4(void) = 0;
+	virtual void _pad5(void) = 0;
+	virtual void _pad6(void) = 0;
+	virtual void _pad7(void) = 0;
+	virtual void _pad8(void) = 0;
+	virtual void _pad9(void) = 0;
+	virtual void freeDisplayString( DisplayString *string ) = 0;
+};
+
+// A NamedTimerInfo's destructor is protected, so `delete` only reaches it
+// through a view; retail frees the timer that way -- vtable slot 0 with the
+// deleting flag -- where the ZH source calls deleteInstance().
+struct BfmeNamedTimerObject
+{
+	virtual ~BfmeNamedTimerObject();
+};
+
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_removeNamedTimer.cpp
-// ?removeNamedTimer@InGameUI@@QAEXABVAsciiString@@@Z present-unmatched
 void InGameUI::removeNamedTimer( const AsciiString& timerName )
 {
-	NamedTimerMapIt mapIt = m_namedTimers.find(timerName);
-	if (mapIt != m_namedTimers.end())
+	// BFME's map sits at this+0x77C; the ZH class reaches it 0xC0 bytes early
+	// because m_superweapons above it is MAX_PLAYER_COUNT long, not 32.
+	NamedTimerMap *namedTimers = (NamedTimerMap *)((char *)this + 0x77c);
+
+	NamedTimerMapIt mapIt = namedTimers->find(timerName);
+	if (mapIt != namedTimers->end())
 	{
-		TheDisplayStringManager->freeDisplayString( mapIt->second->displayString );
-		mapIt->second->deleteInstance();
-		m_namedTimers.erase(mapIt);
+		reinterpret_cast<DisplayStringManager_FreeSlot *>(TheDisplayStringManager)
+			->freeDisplayString( mapIt->second->displayString );
+		delete reinterpret_cast<BfmeNamedTimerObject *>(mapIt->second);
+		namedTimers->erase(mapIt);
 		return;
 	}
 }
@@ -2047,22 +2075,6 @@ void InGameUI::reset( void )
 //-------------------------------------------------------------------------------------------------
 /** Free any resources we used for our messages */
 //-------------------------------------------------------------------------------------------------
-
-// BFME freeDisplayString is DisplayStringManager vtable +0x28 (slot 10).
-class DisplayStringManager_FreeSlot {
-public:
-	virtual void _pad0(void) = 0;
-	virtual void _pad1(void) = 0;
-	virtual void _pad2(void) = 0;
-	virtual void _pad3(void) = 0;
-	virtual void _pad4(void) = 0;
-	virtual void _pad5(void) = 0;
-	virtual void _pad6(void) = 0;
-	virtual void _pad7(void) = 0;
-	virtual void _pad8(void) = 0;
-	virtual void _pad9(void) = 0;
-	virtual void freeDisplayString( DisplayString *string ) = 0;
-};
 
 void InGameUI::freeMessageResources( void )
 {
@@ -9778,6 +9790,32 @@ struct BfmeInGameUIIdleWorkerView {
 	Int currentIdleWorkerDisplay;
 };
 
+// _List_node carries BFME's 32-byte tail in this TU -- the SuperweaponInfo
+// list's head node really is 0x2C bytes -- while an idle-worker list is a
+// plain 12-byte node, so its teardown gets its own spelling of clear().
+struct BfmeIdleWorkerNode {
+	BfmeIdleWorkerNode *next;
+	BfmeIdleWorkerNode *prev;
+	Object *object;
+};
+
+struct BfmeIdleWorkerList {
+	BfmeIdleWorkerNode *head;
+
+	void clear()
+	{
+		BfmeIdleWorkerNode *cur = head->next;
+		while (cur != head)
+		{
+			BfmeIdleWorkerNode *dead = cur;
+			cur = cur->next;
+			_STL::allocator<BfmeIdleWorkerNode>().deallocate(dead, 1);
+		}
+		head->next = head;
+		head->prev = head;
+	}
+};
+
 #define BFME_IN_GAME_UI_SLOT(n) virtual void bfmeSlot##n() = 0;
 
 // The BFME vtable puts getIdleWorkerCount at +0x198; keep that source-era ABI local.
@@ -10001,19 +10039,50 @@ void InGameUI::updateIdleWorker( void )
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_resetIdleWorker_Thunk.cpp
-// ?resetIdleWorker@InGameUI@@EAEXXZ present-unmatched
+// Retail hands GadgetRadioSetText the empty string by value. The vendored
+// UnicodeString keeps its copy constructor out of line, so the temporary is
+// opaque and MSVC records its unwind slot AFTER loading the constructor's
+// `this`; retail records it first. A visible copy delegating to a
+// declared-only base restores that order -- the shape ScriptActions.cpp
+// already uses for AsciiString.
+class BfmeUnicodeArgBase
+{
+	friend class BfmeUnicodeStringArg;
+private:
+	BfmeUnicodeArgBase( const BfmeUnicodeArgBase &other );	///< retail StringBase<G> copy ctor 0x00888400
+	~BfmeUnicodeArgBase();
+};
+
+class BfmeUnicodeStringArg
+{
+public:
+	BfmeUnicodeStringArg( const UnicodeString &that )
+	{
+		((BfmeUnicodeArgBase *)this)->BfmeUnicodeArgBase::BfmeUnicodeArgBase(
+			*(const BfmeUnicodeArgBase *)&that);
+	}
+	~BfmeUnicodeStringArg();
+private:
+	WideChar *m_text;
+};
+
+extern void GadgetRadioSetText( GameWindow *g, BfmeUnicodeStringArg text );
+
 void InGameUI::resetIdleWorker( void )
 {
-	if(m_idleWorkerWin)
-	{
-		GadgetButtonSetText(m_idleWorkerWin, UnicodeString::TheEmptyString);
-	}
-	m_currentIdleWorkerDisplay = -1;
-	for(Int i = 0; i < MAX_PLAYER_COUNT; ++i)
-	{
-		m_idleWorkers[i].clear();
-	}
+	// Retail clears all 32 lists, not the 16 MAX_PLAYER_COUNT this tree carries,
+	// and reaches the window and the display index past them -- the same array
+	// at this+0x131C that removeIdleWorker indexes.
+	BfmeInGameUIIdleWorkerView *view = bfmeIdleWorkerView(this);
 
+	if (view->idleWorkerWin)
+		GadgetRadioSetText(view->idleWorkerWin, UnicodeString::TheEmptyString);
+
+	view->currentIdleWorkerDisplay = -1;
+
+	BfmeIdleWorkerList *idleWorkers = (BfmeIdleWorkerList *)((char *)this + 0x131c);
+	for (Int i = 0; i < 32; ++i)
+		idleWorkers[i].clear();
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_recreateControlBarMethodThunk.cpp
