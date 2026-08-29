@@ -1824,3 +1824,33 @@ string_base.h) left all 18 pre-existing rows green and collapsed one body's
 residue from ~55 diverging instructions to 2. A re_attempts.log entry recording
 "the shim is not free in this TU" had been measuring the misclassification, not
 the shim.
+
+## A stripped marker over an unmoved row hides a non-matching body
+
+The worst state a half-finished fold can leave, because the gate reports success
+BECAUSE of it. Recovering an agent that died mid-cycle, e92e20fdf carried a
+rewritten BFME body into AIStates.cpp, deleted its `present-unmatched` marker,
+and repointed only ONE of the two rows. The other body was then: rewritten, no
+marker, row still naming the donor. verify_source_claims has nothing to
+complain about -- the marker is gone -- and the byte comparison never looks at
+it, because the row points elsewhere. `Functions: OK 158/158` and `PRE-COMMIT
+OK` both passed, and neither was evidence about that body.
+
+An unclaimed REFERENCE body in a destination is the baseline: 254 of them in
+that one file. An unclaimed REWRITTEN body with its marker removed is not, and
+the two are indistinguishable from the row side.
+
+DIAGNOSING IT: `git show <sha> -- <dest> | grep "^+.*ClassName"` does NOT work.
+A function's class name appears only in its signature, which stays as unchanged
+context, so the grep returns 0 whether or not the body was replaced. Compare the
+bodies directly:
+
+    git show <sha>^:<dest> | awk '/^Ret Class::method/,/^}/'
+    git show <sha>:<dest>  | awk '/^Ret Class::method/,/^}/'
+
+and check what markers the commit removed:
+
+    git show <sha> -- <dest> | grep -E "^-.*present-unmatched"
+
+After ANY mid-cycle recovery, count the markers the commit deleted against the
+rows it repointed. They must match.
