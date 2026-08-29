@@ -74221,6 +74221,7 @@ name,address,notes
 ?bfmeTail1070@BfmeT1070@@QAEXXZ,0x00010F8C,pin
 ?bfmeTail1087@BfmeQ1087@@QAEXXZ,0x00031F4D,pin
 ?bfmeTail1095@BfmeT1095@@QAEXXZ,0x00010FB4,pin
+?bfmeTail1102@BfmeTl1102@@QAEXXZ,0x00010F8C,pin
 ?bfmeTail915C@BfmeElem915C@@QAEHPAX@Z,0x00049EA4,pin
 ?bfmeTail921A@BfmeTail921A@@QAEXPAX0@Z,0x00007BCB,pin
 ?bfmeTail922A@BfmeTail922A@@QAEDXZ,0x0001773D,pin
@@ -75854,6 +75855,7 @@ name,address,notes
 ?g_bfmeG1070@@3PAVBfmeG1070@@A,0x00EF7730,pin
 ?g_bfmeG1078@@3PAUBfmeG1078@@A,0x00EF7730,pin
 ?g_bfmeG1085@@3DA,0x00EF4AFD,pin
+?g_bfmeG1102@@3PAVBfmeG1102@@A,0x00EF7730,pin
 ?g_bfmeGate961@@3PAVBfmeGate961@@A,0x00EF706C,pin
 ?g_bfmeGateA979@@3PAHA,0x00EF4B58,pin
 ?g_bfmeGlob956@@3PAUBfmeGlob956@@A,0x00EEF214,pin
@@ -76147,6 +76149,7 @@ name,address,notes
 ?g_bfmeT1061@@3PAVBfmeT1061@@A,0x00EED524,pin
 ?g_bfmeT1070@@3PAVBfmeT1070@@A,0x00EED524,pin
 ?g_bfmeT1095@@3PAVBfmeT1095@@A,0x00EED63C,pin
+?g_bfmeT1102@@3PAVBfmeTl1102@@A,0x00EED524,pin
 ?g_bfmeTab1021@@3PAHA,0x00EB7D94,pin
 ?g_bfmeTab1053@@3HA,0x00EB9670,pin
 ?g_bfmeTag1028@@3PADA,0x00D23918,pin
