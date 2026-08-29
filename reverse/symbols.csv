@@ -2119,6 +2119,8 @@ name,address,notes
 ??0BfmeCreated_00957FB0@@QAE@PAVGen_00957FB0@@@Z,0x00957F40,Open-BFME5 the constructor the make-and-return body at 0x00957FB0 runs on its fresh block
 ??0BfmeCreated_0097D920@@QAE@PAVGen_0097D920@@@Z,0x0097D850,Open-BFME5 the constructor the make-and-return body at 0x0097D920 runs on its fresh block
 ??0BfmeCtorBaseD@@QAE@XZ,0x009A1A30,Open-BFME5 the base constructor the based list constructor at 0x000FDA80 runs first
+??0BfmeDX8IndexBuffer@@QAE@GW4UsageType@0@@Z,0x0091D0A0,view-class alias of ??0DX8IndexBufferClass@@QAE@GW4UsageType@0@@Z; W3DVolumetricShadow.cpp allocates the retail 0x18-byte size through a standalone view because the vendored class is four bytes shorter
+??0BfmeDX8VertexBuffer@@QAE@IGW4UsageType@0@I@Z,0x0091F2F0,view-class alias of ??0DX8VertexBufferClass@@QAE@IGW4UsageType@0@I@Z; W3DVolumetricShadow.cpp allocates the retail 0x20-byte size through a standalone view because the vendored class is four bytes shorter
 ??0BfmeDelayedLuaEvent@@QAE@XZ,0x0003A1C5,Open-BFME5 ILT the DelayedLuaEventList constructor at 0x000EDBB0 hands to the EH vector constructor iterator as the element constructor; DIR32 sites are masked by the byte gate so this records the address
 ??0BfmeErr1042@@QAE@XZ,0x00013A8E,pin
 ??0BfmeErr1043@@QAE@XZ,0x00013A8E,pin

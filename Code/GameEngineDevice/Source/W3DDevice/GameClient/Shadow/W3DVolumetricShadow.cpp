@@ -5071,43 +5071,57 @@ void W3DVolumetricShadowManager::ReleaseResources(void)
 }
 
 /** (Re)allocates all W3D/D3D assets after a reset.. */
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/W3DVolumetricShadowManagerReAcquire.cpp
-// ?ReAcquireResources@W3DVolumetricShadowManager@@QAE_NXZ present-unmatched
+// BFME does not talk to D3D here at all. Where Zero Hour releases everything and
+// then creates a raw index buffer and vertex buffer through the device, retail
+// keeps two WW3D wrapper objects on the manager itself, at +0x00 and +0x04, and
+// creates each one only if it is still null -- so this is idempotent where the
+// reference is destructive, and it never calls ReleaseResources.
+//
+// The sizes and arguments name the classes exactly: 0x20 bytes taking
+// (2, 30000, USAGE_DYNAMIC, 0) is DX8VertexBufferClass, 0x18 bytes taking
+// (30000, USAGE_DYNAMIC) is DX8IndexBufferClass.
+// Retail allocates 0x20 bytes for the vertex buffer and 0x18 for the index
+// buffer; the vendored classes are four bytes shorter in each case, and the
+// allocation size comes from the class rather than from anything this .cpp can
+// cast. These are standalone views at the retail sizes, with the constructors
+// declared and never defined so the calls land on the real bodies.
+class BfmeDX8VertexBuffer
+{
+public:
+	enum UsageType { USAGE_DEFAULT = 0, USAGE_DYNAMIC = 1 };
+
+	BfmeDX8VertexBuffer(unsigned fvf, unsigned short count, UsageType usage, unsigned size);
+
+private:
+	unsigned char m_bfmeBody[ 0x20 ];
+};
+
+class BfmeDX8IndexBuffer
+{
+public:
+	enum UsageType { USAGE_DEFAULT = 0, USAGE_DYNAMIC = 1 };
+
+	BfmeDX8IndexBuffer(unsigned short count, UsageType usage);
+
+private:
+	unsigned char m_bfmeBody[ 0x18 ];
+};
+
+struct BfmeVolumetricShadowManagerBuffers
+{
+	BfmeDX8VertexBuffer *m_vertexBuffer;			///< retail this+0x00
+	BfmeDX8IndexBuffer *m_indexBuffer;			///< retail this+0x04
+};
+
 Bool W3DVolumetricShadowManager::ReAcquireResources(void)
 {
-	ReleaseResources();
+	BfmeVolumetricShadowManagerBuffers *self = (BfmeVolumetricShadowManagerBuffers *)this;
 
-	LPDIRECT3DDEVICE8 m_pDev=DX8Wrapper::_Get_D3D_Device8();
+	if (self->m_vertexBuffer == NULL)
+		self->m_vertexBuffer = ::new BfmeDX8VertexBuffer(2, 30000, BfmeDX8VertexBuffer::USAGE_DYNAMIC, 0);
 
-	DEBUG_ASSERTCRASH(m_pDev, ("Trying to ReAquireResources on W3DVolumetricShadowManager without device"));
-
-	if (FAILED(m_pDev->CreateIndexBuffer
-	(
-		SHADOW_INDEX_SIZE*sizeof(WORD), 
-		D3DUSAGE_WRITEONLY|D3DUSAGE_DYNAMIC, 
-		D3DFMT_INDEX16, 
-		D3DPOOL_DEFAULT, 
-		&shadowIndexBufferD3D
-	)))
-		return FALSE;
-
-	if (shadowVertexBufferD3D == NULL)
-	{	// Create vertex buffer
-
-		if (FAILED(m_pDev->CreateVertexBuffer
-		(
-			SHADOW_VERTEX_SIZE*sizeof(SHADOW_DYNAMIC_VOLUME_VERTEX),
-			D3DUSAGE_WRITEONLY|D3DUSAGE_DYNAMIC, 
-			0,
-			D3DPOOL_DEFAULT, 
-			&shadowVertexBufferD3D
-		)))
-			return FALSE;
-	}
-
-	if (TheW3DBufferManager)
-		if (!TheW3DBufferManager->ReAcquireResources())
-			return FALSE;
+	if (self->m_indexBuffer == NULL)
+		self->m_indexBuffer = ::new BfmeDX8IndexBuffer(30000, BfmeDX8IndexBuffer::USAGE_DYNAMIC);
 
 	return TRUE;
 }
