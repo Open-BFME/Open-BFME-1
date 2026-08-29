@@ -3279,3 +3279,41 @@ So a mis-anchored row is re-homed to whichever fits its SIZE: a 5-byte jmp stub
 becomes `?j_`, and a 38- or 62-byte real body becomes `?dup_`. Neither throws
 away the byte coverage, and neither asserts an identity the evidence does not
 support.
+
+## Re-homing a mis-anchored row: the recipe, and why `object-symbol=` is the trick
+
+Retiring a false row throws away real byte coverage. Re-homing keeps it:
+
+  1. retire the false-named row and tombstone it in `reverse/deleted_rows.csv`
+     with the evidence, so a union merge from an older branch cannot restore it;
+  2. `add_match '?j_00048b9e@@YAXXZ' 0x00048B9E 5 <donor> \
+         --notes 'object-symbol=<the symbol the donor actually emits>;...'`
+
+**`object-symbol=` is what makes it work.** The row's NAME becomes
+address-derived and claims nothing, while the byte comparison still knows which
+emitted symbol supplies the bytes. Coverage unchanged, identity claim gone, no
+file deleted. AutoHealBehavior verified as it stood: `Functions: OK 1/1 matched`.
+
+Deletion is the fallback for the case re-homing cannot reach -- the three
+AsciiString rows went that way because their donor held nothing else, and
+`verify_source_claims` forbids a row-less .cpp. That took the matched total
+161787 -> 161784, stated in the commit message. **An honest decrease beats a
+total you cannot trust**, and the tombstone reason carries what the false rows
+were hiding: retail's TeamsInfoRec::addTeam and ::removeTeam are UNLOCATED.
+
+## The FILE name describes the C++; the ROW name describes the bytes
+
+They are allowed to differ, and after a re-homing they must.
+
+`AutoHealBehaviorCtorThunk.cpp` keeps its name even though its row is now
+`?j_00048b9e@@YAXXZ`, because the file genuinely does declare AutoHealBehavior's
+constructor -- that declaration is precisely what makes the compiler emit a
+tail-call thunk of the right shape. The name is accurate about the SOURCE. What
+was false was the ROW's claim that those five bytes ARE that constructor, and
+that claim is what got removed.
+
+So do not rename these donors. Renaming rewrites every row's `source` in a
+union-merged ledger for a benefit one comment already delivers -- and the
+comment is mandatory: without a line saying the class name is there to shape the
+emitted thunk and is not an identity claim, the file is a trap for the next
+reader.
