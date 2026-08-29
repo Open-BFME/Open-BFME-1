@@ -72376,6 +72376,8 @@ name,address,notes
 ?bfmeAttachCEF@BfmeSubCEF@@QAEXPAUBfmeListCEF@@@Z,0x00887C90,pin
 ?bfmeAttachCFF@BfmeOwnerCFF@@QAEXPAVBfmeThingCFF@@@Z,0x0002C1CE,pin
 ?bfmeBase963@BfmeReg963@@QAEXXZ,0x009A1A30,pin
+?bfmeBase966A@BfmeVft966A@@QAEXXZ,0x00039D6A,pin
+?bfmeBase966B@BfmeVft966B@@QAEXXZ,0x00039D6A,pin
 ?bfmeBaseAB@BfmeThingAB@@QAEXPAX@Z,0x0001AD0C,pin
 ?bfmeBaseAGB@BfmeThingAGB@@QAEXPAX0@Z,0x000170E4,pin
 ?bfmeBaseARC@BfmeThingARC@@QAEXXZ,0x009A1A30,pin
@@ -74267,6 +74269,7 @@ name,address,notes
 ?close@File@@UAEXXZ,0x00033D9D,pinharvest x1 (thunk)
 ?close@File@@UAEXXZ,0x009CB880,pinharvest x1 (body)
 ?close@File@@UAEXXZ,0x009DB5A0,pinharvest x1 (body)
+?close@Open2LiveHandle@@QAEXXZ,0x009DB5A0,Open2 0x006407D0 and 0x00644950 handle close
 ?closeDataChunk@DataChunkOutput@@QAEXXZ,0x00004B42
 ?closeKeyboard@DirectInputKeyboard@@IAEXXZ,0x0004A13D,zh_sweep packet 006bb53f callee pin
 ?collect@U1Rest_005CD8E0@@QAEXPAXPAVU1Supplier_005CD8E0@@@Z,0x005CD410,member collect tail of 0x005CD8E0; address-derived name
@@ -74497,6 +74500,7 @@ name,address,notes
 ?deleteListResources@Radar@@IAEXXZ,0x0002C976
 ?deleteLoadScreen@GameLogicClientUpdate@@QAEXXZ,0x00040791,ILT used by GameEngine::_bfme_updateClientSubsystems for GameLogic::deleteLoadScreen body 0x0038D100
 ?deleteNotificationBox@@YAXXZ,0x000271DD
+?deliver@Rva006A2FD0@@QAEDPAXI@Z,0x000420A5,Open2 0x006A2FD0 tail consumer (ILT)
 ?deposit@Money@@QAEXI_N@Z,0x00027D6D
 ?deposit@MoneyDepositShim@@QAEXI_N@Z,0x000C8730,Money::deposit incremental-link thunk target through a TU-local forwarding shim
 ?deselectObject@GameLogic@@QAEXPAVObject@@G_N@Z,0x0001EC2C,ILT thunk read out of StructureCollapseUpdate::onDie call displacement; real body 0x00382F50 (d_00382f50, gen-dump)
@@ -74817,6 +74821,7 @@ name,address,notes
 ?f_00881ef0@@YAXPAX@Z,0x00881EF0,gen-shim call target
 ?fallback@BfmeSubD4C@@QAE_NXZ,0x0002FE05,pin
 ?fetch@GenKey@@QAEHPA_N@Z,0x00009304,S3 table-lookup-with-fallback family callee (address-derived name)
+?fetch@Open27110B0Source@@QAEPBVOpen2Triple@@H@Z,0x0000BEB0,Open2 0x007110B0 source lookup (ILT)
 ?fetchA@Rva00677280Msg@@QAEEXZ,0x00028A1F,S3 wire-record fill family fetch callee (address-derived name)
 ?fetchA@Rva006772F0Msg@@QAEEXZ,0x000058B7,S3 wire-record fill family fetch callee (address-derived name)
 ?fetchA@Rva00677450Msg@@QAEGXZ,0x00012C15,S3 wire-record fill family fetch callee (address-derived name)
@@ -74852,6 +74857,7 @@ name,address,notes
 ?find@Gen003C8A50@@QAEPAVGen003C8A50Result@@PBD@Z,0x003C8A50,owner lookup called by the guarded-lookup flag readers in V4GuardedLookupFieldReads.cpp; address-derived name
 ?find@MapCache@@QAEPAUMapCacheNode@@ABVAsciiString@@@Z,0x000263D7,isValidMap lookup thunk
 ?find@ModuleTemplateMap@@QBE?AUModuleTemplateMapIterator@@ABH@Z,0x0000C054,ILT thunk to the NameKey-keyed module template map find at 0x001265D0
+?find@Open26A2FD0Logic@@QAEPAVOpen26A2FD0Object@@PAX@Z,0x0001F253,Open2 0x006A2FD0 lookup (ILT)
 ?find@ParticleSystemHashtableFindShim@_STL@@QBEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@ABVAsciiString@@@Z,0x005C76A0,incremental-link thunk target through a TU-local forwarding shim
 ?find@PassMap@@QAEPAUPassMapNode@@ABVAsciiString@@@Z,0x0000AEAC,GameSpyLoginPreferences password map find ILT
 ?find@PreferenceMap@@QBEPAUPreferenceNode@@ABVAsciiString@@@Z,0x0000AEAC,ILT thunk to the AsciiString-keyed preferences map find at 0x00080600
@@ -75098,6 +75104,26 @@ name,address,notes
 ?g_bfme947B5@@3PADA,0x00D12CB8,pin
 ?g_bfme947GlobC@@3PAVBfmeGlob947C@@A,0x00EF19E8,pin
 ?g_bfme947ObjC@@3PAUBfmeObj947C@@A,0x00EF4B40,pin
+?g_bfme966A0@@3PADA,0x00CAB000,pin
+?g_bfme966A1@@3PADA,0x00CAAF38,pin
+?g_bfme966A2@@3PADA,0x00CAAF28,pin
+?g_bfme966A3@@3PADA,0x00CAAD80,pin
+?g_bfme966A4@@3PADA,0x00CAAD64,pin
+?g_bfme966A5@@3PADA,0x00CAAD60,pin
+?g_bfme966A6@@3PADA,0x00CAAD50,pin
+?g_bfme966A7@@3PADA,0x00CAAD14,pin
+?g_bfme966A8@@3PADA,0x00CAAD04,pin
+?g_bfme966A9@@3PADA,0x00CAACF8,pin
+?g_bfme966B0@@3PADA,0x00CAD4E8,pin
+?g_bfme966B1@@3PADA,0x00CAD420,pin
+?g_bfme966B2@@3PADA,0x00CAD410,pin
+?g_bfme966B3@@3PADA,0x00CAD268,pin
+?g_bfme966B4@@3PADA,0x00CAD24C,pin
+?g_bfme966B5@@3PADA,0x00CAD248,pin
+?g_bfme966B6@@3PADA,0x00CAD238,pin
+?g_bfme966B7@@3PADA,0x00CAD1FC,pin
+?g_bfme966B8@@3PADA,0x00CAD1EC,pin
+?g_bfme966B9@@3PADA,0x00CAD1E8,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
@@ -75836,6 +75862,7 @@ name,address,notes
 ?getHeightAboveTerrainOrWater@Thing@@QBEMXZ,0x00005948,pinharvest x1 (thunk)
 ?getID@AIGroup@@QAEIXZ,0x000131DD
 ?getID@Drawable@@QBE?AW4DrawableID@@XZ,0x00009B01
+?getID@Open26A2FD0Drawable@@QAEIXZ,0x00009B01,Open2 0x006A2FD0 id read (ILT)
 ?getIgnoredObstacleID@AIUpdateInterface@@QAEHXZ,0x0001A36B,ILT thunk to a plain read of ai+0x164
 ?getIgnores@IgnorePreferences@@QAE?AV?$map@HVAsciiString@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHVAsciiString@@@_STL@@@3@@_STL@@XZ,0x00011257,Saved ignore preferences getter pin
 ?getIncomingBytesPerSecond@Network@@UAEMXZ,0x00681C10,vtable 0x0111A968 slot 45 (+0xB4) via ILT 0x00028C9F; if (m_conMgr && conMgr+0x12024 transport) tail-jumps ?getIncomingBytesPerSecond@Transport 0x00683900 else 0.0f (ZH Network->ConnectionManager->Transport hop inlined); caller debug display 0x006EEB91 (ZH W3DDisplay.cpp:1364)
@@ -79753,8 +79780,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?close@Open2LiveHandle@@QAEXXZ,0x009DB5A0,Open2 0x006407D0 and 0x00644950 handle close
-?find@Open26A2FD0Logic@@QAEPAVOpen26A2FD0Object@@PAX@Z,0x0001F253,Open2 0x006A2FD0 lookup (ILT)
-?getID@Open26A2FD0Drawable@@QAEIXZ,0x00009B01,Open2 0x006A2FD0 id read (ILT)
-?deliver@Rva006A2FD0@@QAEDPAXI@Z,0x000420A5,Open2 0x006A2FD0 tail consumer (ILT)
-?fetch@Open27110B0Source@@QAEPBVOpen2Triple@@H@Z,0x0000BEB0,Open2 0x007110B0 source lookup (ILT)
