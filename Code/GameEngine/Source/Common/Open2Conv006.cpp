@@ -20,12 +20,22 @@ public:
 	void set( const T *text, int length );		// retail 0x00887D20
 	void set( const StringBase<T> &src );		// retail 0x00887C90
 
+	bool isEmpty() const { return m_data == 0 || m_data->m_length == 0; }
+	bool isNotEmpty() const { return !isEmpty(); }
+
 private:
 	StringBase() { m_data = 0; }
 	StringBase( const StringBase<T> &src );		// retail 0x00887B60
 	~StringBase();					// retail 0x00887940
 
-	void *m_data;
+	struct Header
+	{
+		int m_refCount;
+		unsigned short m_length;
+		unsigned short m_capacity;
+	};
+
+	Header *m_data;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
@@ -43,6 +53,9 @@ public:
 		m_string.set( other.m_string );
 		return *this;
 	}
+
+	void set( const AsciiString &other ) { m_string.set( other.m_string ); }
+	bool isNotEmpty() const { return m_string.isNotEmpty(); }
 
 	StringBase<char> m_string;
 };
@@ -162,4 +175,60 @@ Open2761AF0Record *Open2CopyRecords( Open2761AF0Record *first,
 		++result;
 	}
 	return result;
+}
+
+// ---------------------------------------------------------------------------
+// 0x007609B0 -- `return m_text.isNotEmpty()` with both halves inlined.
+//
+//     mov eax,[ecx+0x200] / test eax,eax / je one / cmp word [eax+4],0 / je one
+//     xor eax,eax / <tail> ... one: mov eax,1 / <tail>
+//     tail: xor ecx,ecx / test al,al / sete cl / mov al,cl / ret
+//
+// The tail is DUPLICATED rather than shared, and it negates a value the
+// compiler already knows: that is `!isEmpty()` where isEmpty is itself inline
+// and short-circuits.  `cmp word ptr [eax+4],0` pins the length field to a
+// 16-bit member at +4 of the header, right after the reference count.
+
+class Rva007609B0
+{
+public:
+	bool hasText( void ) const;
+	char m_pad[0x200];
+	AsciiString m_text;
+};
+
+// @?hasText@Rva007609B0@@QBE_NXZ 0x007609B0
+bool Rva007609B0::hasText( void ) const
+{
+	return m_text.isNotEmpty();
+}
+
+// ---------------------------------------------------------------------------
+// 0x00764220 -- take a string BY VALUE and copy it into a member.
+//
+// `ret 8` covers an int and one pointer, and the body destroys the second
+// argument in place (`lea ecx,[esp+0x14] / call ~StringBase`) after copying it
+// out -- that is a by-value class parameter the callee owns, which is also
+// where the unwind state and the SEH frame come from.  The member's address is
+// computed BEFORE the argument is pushed, which is assignment
+// (`m_text = text`), not `m_text.set(text)`: set pushes the argument first.
+
+class Rva00764220
+{
+public:
+	void setup( int value, AsciiString text );
+	char m_pad[0x78];
+	bool m_armed;
+	char m_pad2[3];
+	int m_value;
+	char m_pad3[0xc];
+	AsciiString m_text;
+};
+
+// @?setup@Rva00764220@@QAEXHVAsciiString@@@Z 0x00764220
+void Rva00764220::setup( int value, AsciiString text )
+{
+	m_armed = false;
+	m_value = value;
+	m_text = text;
 }
