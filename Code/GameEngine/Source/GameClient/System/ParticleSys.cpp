@@ -1160,14 +1160,54 @@ void ParticleSystem::stop( void )
 // ------------------------------------------------------------------------------------------------
 /** Stop emitting, wait for all of our particles to die, then destroy self. */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/ParticleSystem_destroy.cpp
-// ?destroy@ParticleSystem@@QAEXXZ present-unmatched
+// BFME holds the slave system in a lazy-pointer wrapper, not a bare pointer:
+// dereferencing it substitutes a shared fallback object when the pointer is null,
+// while testing it does not. That is the `test eax,eax / jne +5 / call 0x00001B18`
+// pair retail has inside the walk and nothing outside it. The flag is at +0x1A8
+// and the wrapper at +0x160.
+//
+// Retail's body is a LOOP, not a call: `m_slaveSystem->destroy()` is a tail call
+// to this same function, and the compiler turns that into a walk down the slave
+// chain. The source below is the reference's recursion unchanged; the loop is the
+// compiler's doing, which is why nothing here spells one.
+ParticleSystem *Make00001B18( void );
+
+class BfmeParticleSystemPtr
+{
+public:
+	operator ParticleSystem *( void ) const
+	{
+		return m_target;
+	}
+
+	ParticleSystem *operator->( void ) const
+	{
+		ParticleSystem *target = m_target;
+		if( !target )
+			target = Make00001B18();
+		return target;
+	}
+
+private:
+	ParticleSystem *m_target;
+};
+
+struct BfmeParticleDestroyView
+{
+	unsigned char m_unreconstructed_000[ 0x160 ];
+	BfmeParticleSystemPtr m_slaveSystem;			///< retail this+0x160
+	unsigned char m_unreconstructed_164[ 0x1a8 - 0x164 ];
+	unsigned char m_isDestroyed;				///< retail this+0x1A8
+};
+
 void ParticleSystem::destroy( void )
 {
-	m_isDestroyed = true;
-	if( m_slaveSystem )
+	BfmeParticleDestroyView *self = (BfmeParticleDestroyView *)this;
+
+	self->m_isDestroyed = true;
+	if( self->m_slaveSystem )
 	{
-		m_slaveSystem->destroy();  // If we don't it will leak forever.  We are solely responsible for it.
+		self->m_slaveSystem->destroy();  // If we don't it will leak forever.  We are solely responsible for it.
 	}
 }
 
