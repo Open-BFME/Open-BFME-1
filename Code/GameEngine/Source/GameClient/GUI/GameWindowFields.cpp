@@ -2,14 +2,11 @@
 // stlport
 // readable body of ?winClearStatus@GameWindow@@QAEII@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winGetOwner@GameWindow@@QAEPAV1@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
-// readable body of ?winGetScreenPosition@GameWindow@@QAEHPAH0@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winGetStatus@GameWindow@@QAEIXZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winSetDisabledImage@GameWindow@@QAEHHPBVImage@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winSetEnabledImage@GameWindow@@QAEHHPBVImage@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winSetHiliteImage@GameWindow@@QAEHHPBVImage@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winSetPrev@GameWindow@@QAEXPAV1@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
-// readable body of ?winSetSize@GameWindow@@QAEHHH@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
-// readable body of ?winSetTooltipFunc@GameWindow@@QAEHP6AXPAV1@PAVWinInstanceData@@I@Z@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 //
 // GameWindow field accessors, byte-matched against the reconstructed BFME
 // GameWindow layout (reference/shims/gamewindow/GameClient/GameWindow.h). These

@@ -523,20 +523,19 @@ Int GameWindow::winGetCursorPosition( Int *x, Int *y )
 /** Get the window's postion in screen coordinates */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetScreenPosition@GameWindow@@QAEHPAH0@Z present-unmatched
 Int GameWindow::winGetScreenPosition( Int *x, Int *y )
 {
-	GameWindow *parent = m_parent;
+	GameWindow *parent = BFME_WIN_AT(this, 0x200, GameWindow *);
 
-	*x = m_region.lo.x;
-	*y = m_region.lo.y;
+	*x = BFME_WIN_AT(this, 0x14, Int);
+	*y = BFME_WIN_AT(this, 0x18, Int);
 
 	while( parent ) 
 	{
 
-		*x += parent->m_region.lo.x;
-		*y += parent->m_region.lo.y;
-		parent = parent->m_parent;
+		*x += BFME_WIN_AT(parent, 0x14, Int);
+		*y += BFME_WIN_AT(parent, 0x18, Int);
+		parent = BFME_WIN_AT(parent, 0x200, GameWindow *);
 
 	}  // end while
 
@@ -582,14 +581,13 @@ Bool GameWindow::winPointInWindow( Int x, Int y )
 /** Set the window's size */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winSetSize@GameWindow@@QAEHHH@Z present-unmatched
 Int GameWindow::winSetSize( Int width, Int height )
 {
 
-	m_size.x = width;
-	m_size.y = height;
-	m_region.hi.x = m_region.lo.x + width;
-	m_region.hi.y = m_region.lo.y + height;
+	BFME_WIN_AT(this, 0x0c, Int) = width;
+	BFME_WIN_AT(this, 0x10, Int) = height;
+	BFME_WIN_AT(this, 0x1c, Int) = BFME_WIN_AT(this, 0x14, Int) + width;
+	BFME_WIN_AT(this, 0x20, Int) = BFME_WIN_AT(this, 0x18, Int) + height;
 
 	TheWindowManager->winSendSystemMsg( this, 
 																			GGM_RESIZED,
@@ -1455,11 +1453,10 @@ Int GameWindow::winSetDrawFunc( GameWinDrawFunc draw )
 /** Sets a window's tooltip callback */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winSetTooltipFunc@GameWindow@@QAEHP6AXPAV1@PAVWinInstanceData@@I@Z@Z present-unmatched
 Int GameWindow::winSetTooltipFunc( GameWinTooltipFunc tooltip )
 {
 
-	m_tooltip = tooltip;
+	BFME_WIN_AT(this, 0x1ec, GameWinTooltipFunc) = tooltip;
 	
 	return WIN_ERR_OK;
 
