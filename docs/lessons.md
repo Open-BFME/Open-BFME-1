@@ -864,6 +864,41 @@ and a local `clear()` spelled the way STLport spells it -- head re-read on every
 iteration, `_STL::allocator<Node>().deallocate(p, 1)` for the free -- and it
 reproduces retail's reload pattern exactly.
 
+## A donor is unmergeable when its TU compiles the class under a different header
+
+Two TUs can hold bodies for the same class under DIFFERENT layouts on purpose,
+and the ledger can have both spellings matched at different addresses. When that
+happens the donor cannot be folded, because one TU cannot emit both.
+
+GameWindowFields.cpp is the worked case: 31 of its rows are marked for
+GameWindow.cpp, but it compiles against `/Ireference/shims/gamewindow` (the true
+BFME layout, m_instData@0x30) while GameWindow.cpp compiles the vendored header
+(m_instData@0x2C). Putting the shim on the destination costs three compile
+errors and, behind them, four matched rows: BFME changed `winSetNextInLayout`,
+`winSetPrevInLayout` and `winSetLayout` from void to Int, and the ledger holds
+BOTH `?…@GameWindow@@QAEXPAV1@@Z` (from GameWindow.cpp) and `…QAEHPAV1@@Z` (from
+GameWindowFields.cpp) at different addresses. C++ cannot declare two members
+differing only in return type, so adopting the shim deletes the void rows. The
+merge also gains no file, since the donor keeps 14 rows either way.
+
+Screen for it: compare the two files' `// cl:` include paths before planning a
+partial donor, and grep the ledger for the donor's symbols under a second
+spelling.
+
+## Reaching a member as a MEMBER or through a local pointer picks the registers
+
+Not a style choice. `view->field` off a hoisted local makes MSVC keep the
+MEMBER's address in a register and read small offsets from it; `self->sub.field`
+off a padded view struct makes it keep `this` and read `this+K+field`. Retail
+picks one, and getting it wrong moves every offset in the body. The lesson
+already recorded the receiver-of-a-call direction; this is the same lever for
+plain reads, and it is worth one build before concluding anything about a body.
+`GameWindow::winSetInstanceData` went from "every offset wrong" to "register
+allocation only" on that change alone -- and then stopped there, which is the
+honest end of it: retail spills `&m_instData` and holds both saved pointers in
+callee-saved registers, this toolchain holds the address instead. Logged
+`attempted`, not a dead end.
+
 ## Re-anchoring a $L funclet row: bytes narrow it, the COMDAT record settles it
 
 A row whose `object-symbol=` names a compiler-local label (`$L51425`, `$T294`,
