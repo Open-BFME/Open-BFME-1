@@ -72388,6 +72388,7 @@ name,address,notes
 ?bfmeApplySpecialModelCondition@Object@@QAEXHPBXH@Z,0x0001191E,Open-BFME5 ILT thunk to body 0x001C1FB0; follows Object m_next at +0x214 to the chain tail and forwards three arguments through the SMC helper at +0x1F8; bfme prefix records unrecovered retail spelling
 ?bfmeApplyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,Open-BFME5 TintDrawableFXNugget retail tint helper ILT; body 0x00412040
 ?bfmeArenaReady@@YAXXZ,0x00897050,Open-BFME5 the routine the arena initialiser at 0x00897120 tail-calls
+?bfmeAsk1013@@YADXZ,0x0001E533,pin
 ?bfmeAsk979A@@YGDH@Z,0x000063F2,pin
 ?bfmeAsk993B@BfmeAskB993@@QAEDXZ,0x00008ED1,pin
 ?bfmeAskAIA@BfmeThingAIA@@QAE_NH@Z,0x0003251F,pin
@@ -73012,6 +73013,7 @@ name,address,notes
 ?bfmeFinish1003@BfmeB1003@@QAEXXZ,0x0003FBF7,pin
 ?bfmeFinish1010A@BfmeA1010@@QAEXXZ,0x0002A05E,pin
 ?bfmeFinish1010B@BfmeThing1010@@QAEXH@Z,0x0001AA0A,pin
+?bfmeFinish1013@BfmeB1013@@QAEXXZ,0x00011464,pin
 ?bfmeFinish961@BfmeGate961@@QAEXXZ,0x0002D169,pin
 ?bfmeFinish991@@YAXXZ,0x000114DC,pin
 ?bfmeFinish@Gen_0015BCB0@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 tail-jump to
@@ -73493,6 +73495,7 @@ name,address,notes
 ?bfmeLayerForPosition@Pathfinder@@QAEHPAVObject@@UCoord3D@@@Z,0x00040F52,Open-BFME5 Pathfinder ILT to body 0x003E5CA0; returns ground layer 1 or bridge layer 2..15 for an Object position
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
+?bfmeLog1013@BfmeLog1013@@QAEXHPADHHHHHH@Z,0x00015235,pin
 ?bfmeLog993B@BfmeLog993@@QAEXHPADH0HHHH@Z,0x00015235,pin
 ?bfmeLog995@BfmeLog995@@QAEXHPADH0HHHH@Z,0x00015235,pin
 ?bfmeLogCNE@@YGXHH@Z,0x00032DEE,pin
@@ -73916,6 +73919,7 @@ name,address,notes
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
 ?bfmeStop1003@BfmeStop1003@@QAEXXZ,0x00020C84,pin
 ?bfmeStop1006@BfmeStop1006@@QAEXXZ,0x00006AAA,pin
+?bfmeStop1013@BfmeUnit1013@@QAEXH@Z,0x0004A1FB,pin
 ?bfmeStop@BfmeStopF@@QAEXXZ,0x00015E2E,Open-BFME5 the ICF thunk (to 0x0037C600) the clear at 0x002901C0 calls before emptying its vector
 ?bfmeStopAHA@BfmeSubAHA@@QAEXH@Z,0x0004AB4C,pin
 ?bfmeStopAQA@BfmeOneAQA@@QAEXXZ,0x0001F316,pin
@@ -75385,6 +75389,7 @@ name,address,notes
 ?g_bfmeFlagMD@@3DA,0x00EF4AFC,pin
 ?g_bfmeFlagMG@@3HA,0x00EF4ACC,pin
 ?g_bfmeFlagsAPB@@3IA,0x00EA6FA0,pin
+?g_bfmeFmt1013@@3PADA,0x00D05BEC,pin
 ?g_bfmeFmt993B@@3PADA,0x00D09B3C,pin
 ?g_bfmeFmt995B@@3PADA,0x00D05184,pin
 ?g_bfmeFmtA995C@@3PADA,0x00D07374,pin
@@ -75411,6 +75416,7 @@ name,address,notes
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeHeld995B@@3PAXA,0x00EF4974,pin
 ?g_bfmeHub1006@@3PAVBfmeHub1006@@A,0x00EF19E8,pin
+?g_bfmeHub1013@@3PAVBfmeHub1013@@A,0x00EF3330,pin
 ?g_bfmeHub982@@3PAVBfmeHub982@@A,0x00F06954,pin
 ?g_bfmeHub985@@3PAVBfmeHub985@@A,0x00EF19E8,pin
 ?g_bfmeHub993@@3PAVBfmeHub993@@A,0x00EF148C,pin
@@ -75425,6 +75431,7 @@ name,address,notes
 ?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
 ?g_bfmeListEYE@@3PAUBfmeListEYE@@A,0x00EED5DC,pin
+?g_bfmeLog1013@@3PAVBfmeLog1013@@A,0x00EF19E8,pin
 ?g_bfmeLog993@@3PAVBfmeLog993@@A,0x00EF19E8,pin
 ?g_bfmeLog995@@3PAVBfmeLog995@@A,0x00EF19E8,pin
 ?g_bfmeLook1001@@3PAVBfmeLook1001@@A,0x00EF0898,pin
