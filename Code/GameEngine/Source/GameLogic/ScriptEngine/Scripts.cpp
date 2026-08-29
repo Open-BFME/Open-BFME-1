@@ -625,7 +625,6 @@ struct BfmeScriptListHeads
 };
 
 // byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptList_WriteScriptsDataChunk_Thunk.cpp
-// ?WriteScriptsDataChunk@ScriptList@@SAXAAVDataChunkOutput@@QAPAV1@H@Z present-unmatched
 //
 // Blocked on the row's own object-symbol note, which is a variant worth knowing.
 // The row is NAMED ...QAPAV1@H@Z but carries
