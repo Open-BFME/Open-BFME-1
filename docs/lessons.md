@@ -1424,6 +1424,31 @@ them on three separate folds before spotting it, and one body (Object::setLayer)
 did turn out to match once the marker was dropped -- which is the trap: the
 message is sometimes right by accident.
 
+## Before adding a shim for a header, check whether the tree OWNS that header
+
+Four separate requests for a new shim in this lane dissolved on an artefact
+the repo already had. The last one is the cleanest example, and it
+generalises past strings.
+
+CachedFileInputStream::open would not land because BFME's
+CompressionManager::decompressData takes a `const void *` source and the
+call site emitted the non-const mangling. The apparent fix was a shim
+carrying a corrected Compression.h. But
+Code/Libraries/Source/Compression/compression.h is OUR copy, byte-identical
+to the reference bar one provenance comment, and DataChunk.cpp is the ONLY
+file in the tree that includes "Compression.h" -- it was reaching the
+reference copy because our directory was not on its include path. Correct
+the header we own, put our directory first, done. A shim would have
+duplicated a header already in the repo to fix a one-word error in it.
+
+THE TELL, and it is the reusable part: a MATCHED TU carrying a local
+workaround for a shared declaration is evidence about the declaration, not
+a trick to copy. CompressionManager_decompressData.cpp reproduces retail
+byte for byte and has to declare its own `class CompressionManager` with
+the const signature to do it. That is retail telling you the shared header
+is wrong. Before writing a shim, grep for who else includes the header --
+if it is one file, or none, fix the header.
+
 ## Read the whole shims directory before asking for a new one
 
 They are named for the TU that motivated them, not for what they do, so the
