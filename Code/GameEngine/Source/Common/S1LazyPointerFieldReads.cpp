@@ -56,3 +56,23 @@ BFME_LAZY_FIELD_READ( Rva005F30D0 )
 BFME_LAZY_FIELD_READ( Rva005F42E0 )
 BFME_LAZY_FIELD_READ( Rva005F5490 )
 BFME_LAZY_FIELD_READ( Rva005F7F30 )
+
+// The 0x0020E1F0 body is the direct-return form of the same lazy-pointer
+// pattern above: return the stored pointer when present, otherwise tail-call
+// the shared fallback at 0x00001B18.  Identity remains address-derived.
+class Rva0020E1F0
+{
+public:
+	Gen00001B18 *get();
+	Gen00001B18 *m_target;
+};
+
+Gen00001B18 *Rva0020E1F0::get()
+{
+	Gen00001B18 *target = m_target;
+	if ( !target )
+	{
+		return Make00001B18();
+	}
+	return target;
+}
