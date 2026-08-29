@@ -80158,6 +80158,7 @@ __imp__bfmeLeaveDVC@4,0x00F58E74,pin
 __imp__bfmeLeaveDWD@4,0x00F58E74,pin
 __imp__bfmeMaskDXF@4,0x00F58DAC,pin
 __imp__bfmeNotify1209,0x00F378A4,pin
+__imp__bfmeNotify1210,0x00F378A0,pin
 __imp__bfmeOnDWJ@4,0x00F59090,pin
 __imp__bfmeQueryDXE@4,0x00F591B4,pin
 __imp__bfmeScanDYG,0x00F59494,pin
