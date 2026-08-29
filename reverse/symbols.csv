@@ -72313,6 +72313,7 @@ name,address,notes
 ?bfmeAccept@Gen_0077F790@@AAEXPAVBfmeSeedTarget@@@Z,0x00011CBB,Open-BFME5 ILT the seeder at 0x0077F790 accepts through
 ?bfmeAccepts@Gen_00684b90Holder@@QAEHPAX@Z,0x00004F6B,Open-BFME5 ILT the guard at 0x00684B90 asks its holder through
 ?bfmeActME@BfmeThingME@@QAEXXZ,0x0000C4EB,pin
+?bfmeAdd1011@BfmeB1011@@QAEPAPAXPAX@Z,0x0002AF13,pin
 ?bfmeAdd913D@BfmeThing913D@@QAEDPAX@Z,0x000110E0,pin
 ?bfmeAdd955@BfmeSink955@@QAEXPAHH@Z,0x00037A56,pin
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
@@ -72957,6 +72958,8 @@ name,address,notes
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
 ?bfmeFind1002@BfmeA1002@@QAEPAUBfmeX1002@@PAUBfmeArg1002@@@Z,0x0003F5DA,pin
 ?bfmeFind1004@BfmeHold1004@@QAEPAVBfmeX1004@@XZ,0x0000D3B9,pin
+?bfmeFind1011@BfmeLook1011@@QAEPAVBfmeX1011@@H@Z,0x0001F253,pin
+?bfmeFind1011B@BfmeB1011@@QAEPAUBfmeSlot1011@@PAX@Z,0x000288B7,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
@@ -73796,6 +73799,7 @@ name,address,notes
 ?bfmeSend1007@BfmeB1007@@QAEDHPAX@Z,0x000420A5,pin
 ?bfmeSend1009@BfmeSink1009@@QAEXH@Z,0x000122AB,pin
 ?bfmeSend1009C@BfmeSinkC1009@@QAEDPAX0@Z,0x00004633,pin
+?bfmeSend1011@BfmeA1011@@QAEXHHHHH@Z,0x000061E5,pin
 ?bfmeSend975B@BfmeB975@@QAEXHH@Z,0x0002D6F5,pin
 ?bfmeSend979B@BfmeSink979@@QAEXPAVBfmeKey979@@@Z,0x00038938,pin
 ?bfmeSend986C@BfmeC986@@QAEXHHHHH@Z,0x0001A6B3,pin
@@ -75423,6 +75427,7 @@ name,address,notes
 ?g_bfmeLog993@@3PAVBfmeLog993@@A,0x00EF19E8,pin
 ?g_bfmeLog995@@3PAVBfmeLog995@@A,0x00EF19E8,pin
 ?g_bfmeLook1001@@3PAVBfmeLook1001@@A,0x00EF0898,pin
+?g_bfmeLook1011@@3PAVBfmeLook1011@@A,0x00EF0898,pin
 ?g_bfmeLook978@@3PAVBfmeLook978@@A,0x00EF0898,pin
 ?g_bfmeLook979@@3PAVBfmeLook979@@A,0x00EF0898,pin
 ?g_bfmeLook987@@3PAVBfmeLook987@@A,0x00EF0898,pin
