@@ -777,6 +777,7 @@ name,address,notes
 ??$__copy_backward@PAUGen_t_000fce70_p128pod@@PAU1@H@_STL@@YAPAUGen_t_000fce70_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000FCD80,gen-tgrid payload member
 ??$__copy_backward@PAUGen_t_000fcea0_p128pod@@PAU1@H@_STL@@YAPAUGen_t_000fcea0_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000FC5D0,gen-tgrid payload member
 ??$__copy_backward@PAUGen_t_000fd5c0_p128pod@@PAU1@H@_STL@@YAPAUGen_t_000fd5c0_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000FCF70,gen-tgrid payload member
+??$__copy_backward@PAUGeometryShape@@PAU1@H@_STL@@YAPAUGeometryShape@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000FCF70,GeometryInfo shape-vector insertion path at retail 0x004FF8F0; 0x24-byte element and StringBase assignment identify the instantiation
 ??$__copy_backward@PAUGen_t_00126660_p128pod@@PAU1@H@_STL@@YAPAUGen_t_00126660_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00125130,gen-tgrid payload member
 ??$__copy_backward@PAUGen_t_00133f20_p128pod@@PAU1@H@_STL@@YAPAUGen_t_00133f20_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00133700,gen-tgrid payload member
 ??$__copy_backward@PAUGen_t_00134080_p128pod@@PAU1@H@_STL@@YAPAUGen_t_00134080_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00133860,gen-tgrid payload member
