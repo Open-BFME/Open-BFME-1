@@ -168,7 +168,6 @@ struct BfmeRadiusDecalLayout
 	Int bfmeExtra;									///< retail this+0x0C; the reference class stops before it
 };
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_ctor.cpp
 RadiusDecal::RadiusDecal() : 
 	m_template(NULL), 
 	m_decal(NULL),
@@ -178,7 +177,6 @@ RadiusDecal::RadiusDecal() :
 }
 
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_ctor.cpp
 // ??0RadiusDecal@@QAE@ABV0@@Z present-unmatched
 RadiusDecal::RadiusDecal(const RadiusDecal& that) : 
 	m_template(NULL), 
@@ -216,7 +214,6 @@ void RadiusDecal::xferRadiusDecal( Xfer *xfer )
 }
 
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_clear.cpp
 void RadiusDecal::clear()
 {
 	BfmeRadiusDecalLayout *self = (BfmeRadiusDecalLayout *)this;
@@ -231,7 +228,6 @@ void RadiusDecal::clear()
 }
 
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_dtor.cpp
 // Thirty-four bytes identical to clear() above, which the linker did not fold.
 // Spelled out rather than as a call to clear(), because a call is what retail
 // does not have.
@@ -284,7 +280,6 @@ void RadiusDecal::setOpacity( Real o )
 }
 
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_setPosition.cpp
 void RadiusDecal::setPosition(const Coord3D& pos)
 {
 	BfmeRadiusDecalLayout *self = (BfmeRadiusDecalLayout *)this;
