@@ -79368,6 +79368,7 @@ __ehhandler$?getClassMemoryPool@WeaponSetUpgrade@@CAPAVMemoryPool@@XZ,0x00C14DFE
 __ehhandler$?getClassMemoryPool@WorkerAIUpdate@@CAPAVMemoryPool@@XZ,0x00C140BE,pool-glue cascade static (back-solved)
 __ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00BFAB08,PlayerTemplate time-change retail exception handler
 __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
+__imp_?bfmeClose1012@@YGXPAX@Z,0x00F58ECC,pin
 __imp_?bfmeFree912B@@YGXPAX@Z,0x00F58CCC,pin
 __imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
 __imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
@@ -79375,6 +79376,7 @@ __imp_?bfmeImport928G@@YGXPAX@Z,0x00F58F08,pin
 __imp_?bfmeImport930C@@YAXPAX@Z,0x00F593D4,pin
 __imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
+__imp_?bfmeWait1012@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
