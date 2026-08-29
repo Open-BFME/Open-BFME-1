@@ -1723,6 +1723,26 @@ Bool AIInternalMoveToState::computePath()
  */
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateThunks.cpp
 // ?onEnter@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ present-unmatched
+// AIInternalMoveToStateThunks.cpp is DECLINED, and the reason is structural
+// rather than a judgement call, so it is written out here.
+//
+// It offers three rows -- onEnter and update on AIInternalMoveToState, update on
+// AIMoveOutOfTheWayState -- and all three are FIVE-BYTE ILT thunks. This file
+// already holds full readable Zero Hour bodies for all three (this one, the
+// update below it, and AIMoveOutOfTheWayState::update further down), so the
+// merge would replace three readable bodies with forwarding stubs. The stubs'
+// jump targets decode to:
+//     0x00172600 -> ?d_00172600@@YAXXZ  1524 bytes  Code/gen_asm/d_0016f340.asm
+//     0x00172E70 -> ?d_00172e70@@YAXXZ  1166 bytes  Code/gen_asm/d_0016f340.asm
+// i.e. 2,690 bytes of unconverted MASM. The readability metric would have scored
+// that as progress: one donor deleted, three rows moved.
+//
+// The structural half is the decisive one. There is only ONE ledger row per
+// mangled name -- the thunk -- so the readable bodies in this file are
+// UNCLAIMED. The fold would require this TU to emit a five-byte stub under a
+// name whose real body it already contains, which one translation unit cannot do
+// twice. The decline is not a preference about readability; the merge does not
+// have a valid form.
 StateReturnType AIInternalMoveToState::onEnter()
 {
 	m_ambientPlayingHandle = AHSV_Error;
@@ -2129,6 +2149,28 @@ AIAttackMoveStateMachine::~AIAttackMoveStateMachine()
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIMoveToStateCtorThunk.cpp
 // ??0AIMoveToState@@QAE@PAVStateMachine@@@Z present-unmatched
+// This constructor cannot come home: class shape. Recorded with the part that
+// DID work, because that half is reusable elsewhere.
+//
+// What worked: retail constructs the "AIMoveToState" name by CALLING
+// AsciiString::AsciiString(const char*) out of line at 0x00888BC0, while this
+// tree inlines it -- the vendored header defines that constructor inline and so
+// does reference/shims/asciistringsetoutofline. The fix is
+// reference/shims/campaignmanagerascii on this file's own cl line: its
+// constructor is a VISIBLE inline delegating to a StringBase constructor that is
+// declared and never defined, which is the shape that keeps the call. With it,
+// the string construction, the base call and the vtable store all matched
+// exactly, and all 155 other bodies in this TU re-verified unchanged. That shim
+// needs /ICode/Libraries/Source/WWVegas/WWLib on the line too, for string_base.h.
+//
+// What blocks it: this tree then emits one extra seven-byte store,
+// mov dword ptr [esi+4], <imm32>, immediately after the vtable store, which
+// retail does not have -- a second vptr or member that the vendored State
+// hierarchy carries and BFME's does not. Retail writes one vtable pointer at
+// [esi] and nothing at [esi+4]. A constructor's base and vptr stores are emitted
+// from the CLASS, not from the body, so no cast or view in this .cpp reaches it,
+// and the initializer-list order is not the cause -- reordering base-first
+// against member-first produces byte-identical output.
 AIMoveToState::AIMoveToState(StateMachine *machine) : m_isMoveTo(true), AIInternalMoveToState( machine, "AIMoveToState" )
 {
 	// m_isMoveTo is a boolean that specifies that this thing is ACTUALLY A MOVE TO.
