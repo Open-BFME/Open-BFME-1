@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/asciistringsetoutofline /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -61,13 +61,16 @@ m_dumpDraw(false)
 }
 
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/System/subsystem_interface.cpp
-// ??1SubsystemInterface@@UAE@XZ present-unmatched
+// BFME's destructor is EMPTY. The Zero Hour body below unregisters the subsystem
+// from TheSubsystemList; retail's 14 bytes are the vptr restore and a tail jump
+// to destroy m_name and nothing else, which only comes out of an empty body. So
+// a BFME subsystem destroyed individually stays in the list -- shutdownAll is
+// what empties it, and it deletes through the list rather than being driven by it.
 SubsystemInterface::~SubsystemInterface()
 {
-	if (TheSubsystemList) {
-		TheSubsystemList->removeSubsystem(this);
-	}
+//	if (TheSubsystemList) {
+//		TheSubsystemList->removeSubsystem(this);
+//	}
 }
 
 #ifdef DUMP_PERF_STATS
@@ -193,14 +196,41 @@ void SubsystemInterfaceList::postProcessLoadAll()
 }
 
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/System/SubsystemInterfaceListResetAllBfmeLayout.cpp
-// ?resetAll@SubsystemInterfaceList@@QAEXXZ present-unmatched
+// BFME's subsystem list holds eight-byte subsystem/slot PAIRS where the vendored
+// header has a plain vector<SubsystemInterface*>, and reset is at vtable +0x10
+// rather than +0x0C. The walk is otherwise the reverse iteration the reference
+// spells, including re-reading m_begin on every iteration.
+class BfmeSubsystemInterface
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0C() = 0;
+	virtual void reset() = 0;					///< vtable +0x10
+};
+
+struct BfmeSubsystemEntry
+{
+	BfmeSubsystemInterface *m_subsystem;
+	void *m_slot;
+};
+
+struct BfmeSubsystemList
+{
+	BfmeSubsystemEntry *m_begin;
+	BfmeSubsystemEntry *m_end;
+	BfmeSubsystemEntry *m_capacity;
+};
+
 void SubsystemInterfaceList::resetAll()
 {
+	BfmeSubsystemList *self = (BfmeSubsystemList *)this;
+
 //	for (SubsystemList::iterator it = m_subsystems.begin(); it != m_subsystems.end(); ++it)
-	for (SubsystemList::reverse_iterator it = m_subsystems.rbegin(); it != m_subsystems.rend(); ++it)
+	for (BfmeSubsystemEntry *it = self->m_end; it != self->m_begin; --it)
 	{
-		(*it)->reset();
+		(it - 1)->m_subsystem->reset();
 	}
 }
 
