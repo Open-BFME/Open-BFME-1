@@ -6552,16 +6552,27 @@ void Drawable::enableAmbientSoundFromScript( Bool enable )
 //-------------------------------------------------------------------------------------------------
 /** add self to the linked list */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Drawable_prependToList.cpp
-// ?prependToList@Drawable@@QAEXPAPAV1@@Z present-unmatched
+// The same +0x104/+0x108 links removeFromList below reads. Retail loads the head
+// twice rather than caching it -- once for the next link and once for the
+// back-link test -- which is what reading *pListHead twice through a pointer the
+// compiler cannot prove unaliased compiles to.
+// ?prependToList@Drawable@@QAEXPAPAV1@@Z
 void Drawable::prependToList(Drawable **pListHead)
 {
+	struct Links {
+		unsigned char pad[0x104];
+		Links *next;
+		Links *prev;
+	};
+	Links *self = reinterpret_cast<Links *>(this);
+	Links **head = reinterpret_cast<Links **>(pListHead);
+
 	// add the object to the global list
-	m_prevDrawable = NULL;
-	m_nextDrawable = *pListHead;
-	if (*pListHead)
-		(*pListHead)->m_prevDrawable = this;
-	*pListHead = this;
+	self->prev = NULL;
+	self->next = *head;
+	if (*head)
+		(*head)->prev = self;
+	*head = self;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -7467,24 +7478,39 @@ void TintEnvelope::play(const RGBColor *peak, UnsignedInt atackFrames, UnsignedI
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/TintEnvelopeRates.cpp
-// ?setAttackFrames@TintEnvelope@@AAEXI@Z present-unmatched
+// BFME's TintEnvelope carries ONE vtable pointer where the reference class
+// derives from both MemoryPoolObject and Snapshot and carries two, so every
+// colour vector sits four bytes earlier: m_attackRate at +0x04, m_decayRate at
+// +0x10, m_peakColor at +0x1c and m_currentColor at +0x28.
+struct BfmeTintEnvelopeRates
+{
+	void *m_vtable;
+	Vector3 m_attackRate;						///< retail this+0x04
+	Vector3 m_decayRate;						///< retail this+0x10
+	Vector3 m_peakColor;						///< retail this+0x1c
+	Vector3 m_currentColor;						///< retail this+0x28
+};
+
+// ?setAttackFrames@TintEnvelope@@AAEXI@Z
 void TintEnvelope::setAttackFrames(UnsignedInt frames) 
 {
+	BfmeTintEnvelopeRates *self = (BfmeTintEnvelopeRates *)this;
+
 	Real recipFrames = 1.0f / (Real)MAX(1,frames);
-	m_attackRate.Set( m_currentColor );
-	Vector3::Subtract( m_peakColor, m_attackRate, &m_attackRate);
-	m_attackRate.Scale( Vector3(recipFrames, recipFrames, recipFrames) );
+	self->m_attackRate.Set( self->m_currentColor );
+	Vector3::Subtract( self->m_peakColor, self->m_attackRate, &self->m_attackRate);
+	self->m_attackRate.Scale( Vector3(recipFrames, recipFrames, recipFrames) );
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/TintEnvelopeRates.cpp
-// ?setDecayFrames@TintEnvelope@@AAEXI@Z present-unmatched
+// ?setDecayFrames@TintEnvelope@@AAEXI@Z
 void TintEnvelope::setDecayFrames( UnsignedInt frames )
 {
+	BfmeTintEnvelopeRates *self = (BfmeTintEnvelopeRates *)this;
+
 	Real recipFrames = ( -1.0f ) / (Real)MAX(1,frames);
-	m_decayRate.Set( m_peakColor );
-	m_decayRate.Scale( Vector3(recipFrames, recipFrames, recipFrames) );
+	self->m_decayRate.Set( self->m_peakColor );
+	self->m_decayRate.Scale( Vector3(recipFrames, recipFrames, recipFrames) );
 }
 
 //-------------------------------------------------------------------------------------------------
