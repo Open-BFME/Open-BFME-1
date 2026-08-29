@@ -541,15 +541,52 @@ __declspec(noinline) void DisconnectManager::processDisconnectScreenOff(NetComma
 	turnOffScreen(conMgr->getLocalPlayerID());
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/DisconnectManager_applyDisconnectVote_Thunk.cpp
-// ?applyDisconnectVote@DisconnectManager@@IAEXHIHPAVConnectionManager@@@Z present-unmatched
+// BFME does NOT translate the slot here: it votes, sends and applies against the
+// slot it was handed, where the reference copy first maps it through
+// untranslatedSlotPosition and uses that everywhere. The vote table itself is at
+// DisconnectManager+0x30, eight bytes per entry -- the flag at +0x00 and the
+// frame at +0x04.
+struct BfmePlayerVote
+{
+	Bool vote;							///< retail this+0x00
+	UnsignedInt frame;						///< retail this+0x04
+};
+
+struct BfmeDisconnectVoteTable
+{
+	char m_unreconstructed_00[0x30];
+	BfmePlayerVote m_playerVotes[MAX_SLOTS][MAX_SLOTS];		///< retail this+0x30
+};
+
+// Both callees are DEFINED earlier in this TU, so MSVC inlines them here where
+// retail emits calls. Declaring them on a view -- declared, never defined --
+// keeps the calls, and the aliases name the same ILTs the real spellings carry.
+class BfmeDisconnectVoteSender
+{
+public:
+	void sendVoteCommand( Int slot, ConnectionManager *conMgr );	///< retail ILT 0x0002ee79
+	void applyDisconnectVote( Int slot, UnsignedInt frame, Int fromSlot,
+			ConnectionManager *conMgr );				///< retail ILT 0x000215ad
+};
+
+// BFME's vote count takes the connection manager as a second argument where the
+// reference declares a one-argument form, and BFME null-checks TheDisconnectMenu
+// before touching it -- the reference copy dereferences it unconditionally.
+class BfmeVoteCounter
+{
+public:
+	Int countVotesForPlayer( Int slot, ConnectionManager *conMgr );	///< retail ILT 0x00003751
+};
+
+// ?applyDisconnectVote@DisconnectManager@@IAEXHIHPAVConnectionManager@@@Z
 void DisconnectManager::applyDisconnectVote(Int slot, UnsignedInt frame, Int fromSlot, ConnectionManager *conMgr) {
-	m_playerVotes[slot][fromSlot].vote = TRUE;
-	m_playerVotes[slot][fromSlot].frame = frame;
-	Int numVotes = countVotesForPlayer(slot);
-	DEBUG_LOG(("DisconnectManager::applyDisconnectVote - added a vote to disconnect slot %d, from slot %d, for frame %d, current votes are %d\n", slot, fromSlot, frame, numVotes));
+	BfmeDisconnectVoteTable *self = (BfmeDisconnectVoteTable *)this;
+
+	self->m_playerVotes[slot][fromSlot].vote = TRUE;
+	self->m_playerVotes[slot][fromSlot].frame = frame;
+	Int numVotes = ((BfmeVoteCounter *)this)->countVotesForPlayer(slot, conMgr);
 	Int transSlot = translatedSlotPosition(slot, conMgr->getLocalPlayerID());
-	if (transSlot != -1) {
+	if (transSlot != -1 && TheDisconnectMenu) {
 		TheDisconnectMenu->updateVotes(transSlot, numVotes);
 	}
 }
@@ -802,33 +839,6 @@ void DisconnectManager::sendVoteCommand(Int slot, ConnectionManager *conMgr) {
 	msg->detach();
 }
 
-// BFME does NOT translate the slot here: it votes, sends and applies against the
-// slot it was handed, where the reference copy first maps it through
-// untranslatedSlotPosition and uses that everywhere. The vote table itself is at
-// DisconnectManager+0x30, eight bytes per entry -- the flag at +0x00 and the
-// frame at +0x04.
-struct BfmePlayerVote
-{
-	Bool vote;							///< retail this+0x00
-	UnsignedInt frame;						///< retail this+0x04
-};
-
-struct BfmeDisconnectVoteTable
-{
-	char m_unreconstructed_00[0x30];
-	BfmePlayerVote m_playerVotes[MAX_SLOTS][MAX_SLOTS];		///< retail this+0x30
-};
-
-// Both callees are DEFINED earlier in this TU, so MSVC inlines them here where
-// retail emits calls. Declaring them on a view -- declared, never defined --
-// keeps the calls, and the aliases name the same ILTs the real spellings carry.
-class BfmeDisconnectVoteSender
-{
-public:
-	void sendVoteCommand( Int slot, ConnectionManager *conMgr );	///< retail ILT 0x0002ee79
-	void applyDisconnectVote( Int slot, UnsignedInt frame, Int fromSlot,
-			ConnectionManager *conMgr );				///< retail ILT 0x000215ad
-};
 
 // ?voteForPlayerDisconnect@DisconnectManager@@QAEXHPAVConnectionManager@@@Z
 void DisconnectManager::voteForPlayerDisconnect(Int slot, ConnectionManager *conMgr) {
