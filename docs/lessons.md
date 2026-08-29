@@ -2212,3 +2212,31 @@ believe the large ones.
 
 Eleven of the 67 are donors in the marker queue, so screening them returns a
 small `miss(N)` that means nothing at all.
+
+## $L numbering is file-sequential, so a typedef freezes a TU as hard as a class
+
+"$L-anchored rows are broken by ANY added declaration" is true but understates
+it. The counter runs across the whole translation unit in source order, so any
+change that alters codegen ABOVE a pinned funclet renumbers it -- not only new
+declarations, and not only new types.
+
+Measured on StagingRoomGameInfo.cpp, which owns `$L70459` and `$L64396`. A
+class-template slot view renumbers them, as expected. So does this, which
+declares no class and emits no code of its own:
+
+    typedef Bool (__fastcall *BfmeAmIHostFn)( const GameSpyStagingRoom * );
+    if ((*(BfmeAmIHostFn **)this)[4]( this ))
+
+Both die with `symbol not found in object: $L70459`. Contrast a `#line`
+directive, which is genuinely free and renumbers nothing. So when a destination
+carries `object-symbol=$` rows, the question is not "can I avoid declaring a
+class" -- it is whether the funclet pins get re-anchored first.
+
+Two smaller notes from the same attempt. MSVC 7.1 rejects `__thiscall` on a
+function-pointer type outright (`error C4234: nonstandard extension used`), so a
+hand-rolled vtable call has to be `__fastcall`, which is call-compatible for a
+method taking no arguments. And the cost of re-anchoring is worth weighing
+against the whole destination, not one body: StagingRoomGameInfo.cpp is one byte
+from closing `?resetAccepted@GameSpyStagingRoom@@` -- retail tail-calls slot
++0x10 where the shared header computes +0x08 -- and carries eleven queue entries
+behind the same freeze.
