@@ -88,16 +88,43 @@ CachedFileInputStream::~CachedFileInputStream(void)
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/Common/CachedFileInputStream_open_Thunk.cpp
+// BFME's AsciiString carries the eight-byte StringBase header where this TU
+// compiles the four-byte one, so str() is spelled out at retail's offset.
+#define BFME_STR8(s) (*(char *const *)&(s) ? *(char *const *)&(s) + 8 : (char *)"")
+
+// File's virtuals sit one entry lower than the vendored header declares:
+// close is +0x08, size is +0x2C and readEntireAndClose is +0x34, against
+// +0x0C, +0x30 and +0x38.  FileSystem::openFile is a DIRECT call in both and
+// needs no view.
+class BfmeFileView
+{
+public:
+	virtual void _bfme_file_v0( void ) = 0;
+	virtual void _bfme_file_v1( void ) = 0;
+	virtual void close( void ) = 0;							///< vtable +0x08
+	virtual void _bfme_file_v3( void ) = 0;
+	virtual void _bfme_file_v4( void ) = 0;
+	virtual void _bfme_file_v5( void ) = 0;
+	virtual void _bfme_file_v6( void ) = 0;
+	virtual void _bfme_file_v7( void ) = 0;
+	virtual void _bfme_file_v8( void ) = 0;
+	virtual void _bfme_file_v9( void ) = 0;
+	virtual void _bfme_file_v10( void ) = 0;
+	virtual Int size( void ) = 0;							///< vtable +0x2C
+	virtual void _bfme_file_v12( void ) = 0;
+	virtual char *readEntireAndClose( void ) = 0;			///< vtable +0x34
+};
+
 // ?open@CachedFileInputStream@@QAE_NVAsciiString@@@Z present-unmatched
 Bool CachedFileInputStream::open(AsciiString path)
 {
-	File *file=TheFileSystem->openFile(path.str(), File::READ | File::BINARY);
+	File *file=TheFileSystem->openFile(BFME_STR8(path), File::READ | File::BINARY);
 	m_size = 0;
 
 	if (file) {
-		m_size=file->size();
+		m_size=((BfmeFileView *)file)->size();
 		if (m_size) {
-			m_buffer = file->readEntireAndClose();
+			m_buffer = ((BfmeFileView *)file)->readEntireAndClose();
 			file = NULL;
 		}
 		m_pos=0;
@@ -136,7 +163,7 @@ Bool CachedFileInputStream::open(AsciiString path)
 
 	if (file)
 	{
-		file->close();
+		((BfmeFileView *)file)->close();
 	}
 	return m_size != 0;
 }
