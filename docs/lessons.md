@@ -1772,12 +1772,26 @@ it. The rule is the same one that names members from an ordered call sequence:
 one agreement is a guess, and the whole sequence has to line up before you can
 claim any of it.
 
-## $L-anchored rows are broken by ANY added declaration, not just a header change
+## $L-anchored rows break on ANY codegen change ABOVE them in source order
 
 The 403-row re-anchoring cost is usually quoted against the tree-wide string
 header, which makes it read as a cost of BIG changes. It is not. The labels are
-assigned across the whole TU during codegen, so ANY edit that adds a
-DECLARATION renumbers them -- a forty-slot view class is enough.
+assigned across the whole TU during codegen, so a forty-slot view class is
+enough to renumber them.
+
+This entry used to say "any added DECLARATION", which named the wrong variable
+and was falsified: a plain function-pointer typedef -- no class, no members, no
+emitted code -- renumbers them too. The rule is POSITION, not construct. $L
+numbering runs across the whole TU in source order, so any codegen change ABOVE
+a pinned funclet renumbers it, and that is why a `#line` directive stays free:
+it is a contrast, not a coincidence. The useful corollary is the one the old
+wording hid -- a view added BELOW every pinned row does not renumber it, so
+check where the pins sit before concluding a TU is frozen.
+
+(Aside for anyone reaching a vtable slot through a function pointer: MSVC 7.1
+rejects `__thiscall` on a function-pointer type with C4234, so the call has to
+be `__fastcall`. That is call-compatible for a no-argument method and has
+nothing to do with the renumbering.)
 
 GameSpyInfo::updateStagingRoom is one instruction from home (addStagingRoom is
 vtable +0xA0 in BFME against the vendored +0x84, and the by-value copy and its
@@ -2295,3 +2309,80 @@ against the whole destination, not one body: StagingRoomGameInfo.cpp is one byte
 from closing `?resetAccepted@GameSpyStagingRoom@@` -- retail tail-calls slot
 +0x10 where the shared header computes +0x08 -- and carries eleven queue entries
 behind the same freeze.
+
+## A class that is too SMALL needs BYTES, not a new class -- and measure per body
+
+Player.cpp carried a written verdict against disableRadar and enableRadar:
+"Cannot come home: retail's AudioEventRTS is 0x70 bytes where this tree's is
+0x64 ... a class-shape difference, not a field view." The diagnosis was right
+and the conclusion was wrong. All three radar bodies now match byte for byte
+(193/193, 186/186, 215/215) on a padded local:
+
+    struct BfmeAudioEventStorage
+    {
+        BfmeAudioEventStorage( const AudioEventRTS &src ) : e(src) { }
+        AudioEventRTS e;
+        UnsignedByte _bfme_tail[12];
+    };
+
+The member sits at offset 0, so its address, constructor and destructor are
+unchanged and every call in the body stays what it was; only the frame grows.
+**The constructor is load-bearing**: declaring the storage and then assigning
+default-constructs and then assigns, where retail copy-constructs in one call.
+Take the source by const reference and initialise in the member list.
+
+The counter-example matters as much. addRadar reserves 0x60 where the other
+three reserve 0x70, orders its EH frame differently, and lives at 0x000FB3F0
+well away from them. The twelve bytes belong to the FRAME those three share,
+not to AudioEventRTS everywhere. Measure the frame per body; do not pad on
+faith. And treat a "cannot come home" verdict as a measurement someone took
+once, not as a closed door.
+
+## A bespoke local replica proves the byte SHAPE, never the IDENTITY
+
+A `*_Thunk.cpp` donor that declares its own little struct to reach an offset has
+chosen those offsets as free parameters to fit the bytes it wanted. It will
+agree with retail and still be about a different function. Squad_isOnSquad.cpp
+declares the membership pair at +0x04 and matches; three siblings compiled from
+the REAL class in Squad.cpp say the pair is at +0x08/+0x0C. Against siblings
+built from the shared class, a local replica is the weaker witness.
+
+This is why a large number of our `*_Thunk.cpp` donors cannot be trusted to name
+the function they claim, and it is the same failure as the 5-byte jmp rows: a
+match against a shape you chose is not evidence of identity.
+
+## Screening one symbol does not license applying the DONOR
+
+`?parseArmorTemplateSet@ArmorTemplateSet@@` screened MATCH into ThingTemplate.cpp,
+but the apply moved a SECOND row in the same donor that was never screened and
+does not match from there. merge_cluster was correct -- selection is by row, and
+a marker named that destination. The screen simply did not cover it. **Compare a
+donor's row count against its marker count before --apply.**
+
+It then failed dishonestly, which is the part to remember: `verify_source_claims`
+read the repointed row as "byte-verified matched from this file" out of the
+LEDGER rather than out of the bytes, and complained that the other symbol's
+marker was a stale annotation. Clearing that marker is what let the real byte
+failure surface on the next build. **A stale-annotation complaint about a row
+that just moved is a question, not an instruction.**
+
+## miss(1) and miss(2) are where a wrong offset lives, not "nearly done"
+
+Forty donors screened in one pass: four landed, six were free, and every
+remaining small miss was a layout fact costing a compile each to learn.
+DecalMeshClass at one byte is a refcount initialiser that fourteen sibling
+classes set the other way. Squad::isOnSquad at two bytes is a class-shape
+contradiction inside one class. The Upgrade family's four bodies at miss(2) are
+one base-ORDER difference: read as spans, eight bytes move out of the second
+base into the first, which is why no define closes it.
+
+Budget a near-miss as a research task, not as a fold that is almost finished.
+
+## Read the compiled SIZE beside the agreement percentage
+
+Once the compiled size differs from retail's, the percentage stops moving even
+as you fix real things, because every byte after the first divergence is being
+compared against the wrong position. Three separate correct offset fixes left
+addSuperweapon at exactly 60.4% while its loads visibly stopped diverging.
+Size converging on retail's is the signal; the percentage alone will tell you
+your correct fixes did nothing.
