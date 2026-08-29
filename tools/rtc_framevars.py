@@ -118,7 +118,9 @@ def main():
                 if rva == args.rva:
                     rows.append((rva, int(row[3]), row[4]))
                 continue
-            if not row[4].startswith("Code/gen_asm/") or "Unwind@" in row[6]:
+            # notes, not the source path: dump rows are not confined to
+            # Code/gen_asm/ and a path test silently skips the ones that moved.
+            if not build.is_scaffold_row({"notes": row[6]}) or "Unwind@" in row[6]:
                 continue
             if args.lo <= rva <= args.hi and args.min_size <= int(row[3]) <= 4096:
                 rows.append((rva, int(row[3]), row[4]))

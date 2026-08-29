@@ -12,13 +12,13 @@ Goal: Source code that rebuilds BFME 1's executable byte-for-byte, and game mode
 
 ## Status
 
-**35.16% of the game rebuilds from what we hold** — C++ we wrote, library source, generators,
+**46.29% of the game rebuilds from what we hold** — C++ we wrote, library source, generators,
 libs we link. The rest is byte-true dumps of retail: a boundary, not source. Converting them
 is the work.
 
 ## Roadmap
 
-* [ ] BFME 1 Source Code (35.16%)
+* [ ] BFME 1 Source Code (46.29%)
 * [x] Network delay fix
 * [ ] Memory fix
 * [ ] Better crash logs

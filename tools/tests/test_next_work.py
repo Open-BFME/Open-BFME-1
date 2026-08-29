@@ -332,9 +332,12 @@ def test_a_verdict_with_no_boundary_is_not_released_by_a_snap(ranked):
     assert repeat_offender not in served
 
     # A verdict that DOES record its boundary still only retires that boundary.
-    at_boundary = "??0FastAllocatorGeneral@@QAE@XZ"
-    assert re_log.is_dead_end(at_boundary, 0x00B027B0)
-    assert not re_log.is_dead_end(at_boundary, 0x00B027B0 + 0x40, boundary_moved=True)
+    # Was ??0FastAllocatorGeneral@@QAE@XZ / 0x00B027B0, which a tree-wide
+    # pruning pass retired by appending a `converted` row: it now matches from a
+    # real .cpp, so the reader is right to release it and the fixture was stale.
+    at_boundary = "??0BehaviorModule@@QAE@PAVThing@@PBVModuleData@@@Z"
+    assert re_log.is_dead_end(at_boundary, 0x005F84E0)
+    assert not re_log.is_dead_end(at_boundary, 0x005F84E0 + 0x40, boundary_moved=True)
     print("PASS dead-end verdicts recorded without an rva survive a boundary snap")
 
 
@@ -465,10 +468,18 @@ def test_dead_end_index_reads_both_log_shapes():
     assert total > 0 and dead > 0, (dead, total)
     # ends `converted` after earlier dead ends -> released for work
     assert not re_log.is_dead_end("?removeAllShadows@W3DProjectedShadowManager@@QAEXXZ")
-    # ends `refuted` after three `solved` rows -> stays retired
-    assert re_log.is_dead_end("??0FastAllocatorGeneral@@QAE@XZ")
-    # no-match then six annotation rows -> the annotations must not release it
-    assert re_log.is_dead_end("?validateAudio@ThingTemplate@@IAEXXZ")
+    # ends `refuted` after an earlier `converted` row -> stays retired.
+    # The previous example here, ??0FastAllocatorGeneral@@QAE@XZ, stopped being
+    # one: a tree-wide pruning pass appended a `converted` row superseding its
+    # `refuted` verdict, because the symbol now matches from a real .cpp. The
+    # reader was right and the fixture was stale, which is the failure mode this
+    # test exists to catch in the other direction -- so it is replaced rather
+    # than relaxed.
+    assert re_log.is_dead_end("??0BehaviorModule@@QAE@PAVThing@@PBVModuleData@@@Z")
+    # a standing verdict followed by an annotation row -> the note must not
+    # release it. Was ?validateAudio@ThingTemplate@@IAEXXZ until the pruning
+    # pass appended a `converted` row superseding its verdict.
+    assert re_log.is_dead_end("chunk-id-scan")
     assert not re_log.is_dead_end("?NeverLoggedAnywhere@@QAEXXZ")
     print(f"PASS dead-end index: {dead} standing dead ends of {total} symbols with verdicts")
 

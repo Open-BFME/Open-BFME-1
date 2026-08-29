@@ -2078,11 +2078,11 @@ def accessor_population(rows=None, read=None):
         row = by_rva.get(rva)
         if row is None:
             raise FormatError(f"accessor batch row 0x{rva:08X} is missing")
-        if row.get("status") != "matched" or not row.get("notes", "").startswith("gen-dump;"):
+        # Dumpness is the gen-dump note, never the source directory: 349 dump
+        # rows live in Code/gen_small/dumps_000.cpp, so a path test rejects live
+        # dumps that have simply been relocated. B.is_scaffold_row is the rule.
+        if row.get("status") != "matched" or not B.is_scaffold_row(row):
             raise FormatError(f"accessor batch row 0x{rva:08X} is not a live gen-dump")
-        source = row.get("source", "")
-        if not source.startswith("Code/gen_asm/"):
-            raise FormatError(f"accessor batch row 0x{rva:08X} moved out of gen_asm: {source}")
         size = int(row["target_size"])
         body = read(rva, size)
         if len(body) != size:
