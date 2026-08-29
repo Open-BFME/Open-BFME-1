@@ -72,14 +72,22 @@ void MaxHealthUpgradeModuleData::buildFieldParse(MultiIniFieldParse& p)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// Screened against BFME_MODULE_NO_MPO and it is NOT the blocker: with the define
-// on, this file's own rows stay green and the constructor comes down to one
-// instruction -- retail stores a FOURTH vtable at this+0x18 that the vendored
-// UpgradeModule hierarchy has nowhere to put. BehaviorModule at +0x00, UpgradeMux
-// at +0x0C and UpgradeModuleInterface at +0x10 are all present and all correct;
-// BFME has one more interface base after them. The same one instruction is
-// missing on MaxHealthUpgrade, StatusBitsUpgrade and ModelConditionUpgrade, so it
-// is the class and not the three bodies. Unblocking it is a header change.
+// The base COUNT is right and two base OFFSETS are wrong. Retail stores four
+// vtables, at +0x00, +0x0C, +0x10 and +0x18; this tree stores four, at +0x00,
+// +0x04, +0x10 and +0x14. So the sub-object at +0x00 spans 0x0C bytes in BFME
+// and 0x04 here -- eight bytes of data the vendored BehaviorModule does not
+// declare -- and bases two and four both slide by that eight. Nothing is
+// missing and nothing is reordered.
+//
+// BFME_MODULE_NO_MPO is not the fix and is actively misleading here: it makes
+// base two land correctly at +0x0C while DELETING base four, so a screen run
+// with the define on shows three stores against retail's four and reads as a
+// missing base class. It is not; that is the define's own removal. Screen this
+// family WITHOUT the define.
+//
+// The same eight-byte shift accounts for MaxHealthUpgrade, StatusBitsUpgrade,
+// ModelConditionUpgrade and ActiveShroudUpgrade, so it is the class and not the
+// four bodies. Unblocking it is a header change.
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeModule.cpp
 // ??0MaxHealthUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 MaxHealthUpgrade::MaxHealthUpgrade( Thing *thing, const ModuleData* moduleData ) : UpgradeModule( thing, moduleData )
