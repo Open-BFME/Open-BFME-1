@@ -72319,6 +72319,7 @@ name,address,notes
 ?bfmeAdd1023@BfmeH1023@@QAEXHH@Z,0x000157DA,pin
 ?bfmeAdd1024@BfmeH1024@@QAEXHH@Z,0x000157DA,pin
 ?bfmeAdd1024@BfmeTab1024@@QAEXHH@Z,0x0089D890,pin
+?bfmeAdd1026@BfmeLst1026@@QAEXHH@Z,0x0002221E,pin
 ?bfmeAdd913D@BfmeThing913D@@QAEDPAX@Z,0x000110E0,pin
 ?bfmeAdd955@BfmeSink955@@QAEXPAHH@Z,0x00037A56,pin
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
@@ -72689,6 +72690,7 @@ name,address,notes
 ?bfmeChanged@Gen_005899B0@@AAEXXZ,0x0001D354,Open-BFME5 the member the change-setter at 0x005899B0 calls
 ?bfmeChanged@Gen_005899D0@@AAEXXZ,0x0000271B,Open-BFME5 the member the change-setter at 0x005899D0 calls
 ?bfmeCheck1003@BfmeA1003@@QAEDPAX@Z,0x000422E9,pin
+?bfmeCheck1026@BfmeQ1026@@QAEDHHH@Z,0x0002BC92,pin
 ?bfmeCheck961@BfmeGate961@@QAEDXZ,0x00041FF1,pin
 ?bfmeCheck986B@@YAHXZ,0x000162A7,pin
 ?bfmeCheckA@@YAHPAX@Z,0x00894D90,Open-BFME5 the guard the cleanup at 0x00783A50 calls
@@ -72796,6 +72798,7 @@ name,address,notes
 ?bfmeDo1015A@BfmeI1015A@@QAEXHHH@Z,0x000449F4,pin
 ?bfmeDo1015B@BfmeI1015B@@QAEXHH@Z,0x000020CC,pin
 ?bfmeDo1025@BfmeStore1025@@QAEXPAX@Z,0x0001D0DE,pin
+?bfmeDo1026@BfmeStore1026@@QAEXH@Z,0x0001D0DE,pin
 ?bfmeDo912C@BfmeThing912C@@QAEXPAUBfmeNode912C@@@Z,0x009F4D80,pin
 ?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
 ?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
@@ -73230,6 +73233,7 @@ name,address,notes
 ?bfmeForward@Gen_00C71570Target@@QAEXXZ,0x009DB7A0,Open-BFME5 the member the singleton forwarder at 0x00C71570 tail-jumps to
 ?bfmeForward@Gen_00C71580Target@@QAEXXZ,0x009DB7A0,Open-BFME5 the member the singleton forwarder at 0x00C71580 tail-jumps to
 ?bfmeFourLF@@YAXXZ,0x00039900,pin
+?bfmeFree1026@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFree915A@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFree923F@@YGXPAXH@Z,0x0003F413,pin
 ?bfmeFreeAEC@@YAXPAX@Z,0x00881EB0,pin
@@ -73313,6 +73317,7 @@ name,address,notes
 ?bfmeGen0002EA91@Gen_00529B10@@QAEXH_N@Z,0x0002EA91,address-derived helper; target read from the second REL32 in the guarded eight-index loop at 0x00529B10
 ?bfmeGeometryIntersects@Object@@QBE_NPBV1@@Z,0x0001E20E,Open-BFME5 ILT thunk to body 0x001BE980; compares two Object GeometryInfo footprints using each position and orientation; descriptive spelling
 ?bfmeGet1002@BfmeMid1002@@QAEPAXXZ,0x000022BB,pin
+?bfmeGet1026@BfmeSrc1026@@QAEHXZ,0x00020824,pin
 ?bfmeGet920D@BfmeX920D@@QAEPAVBfmeRes920D@@XZ,0x0002BE77,pin
 ?bfmeGet948C@BfmeGrid948C@@QAE_NH@Z,0x00017049,pin
 ?bfmeGet948D@BfmeGrid948D@@QAE_NH@Z,0x00017049,pin
@@ -73404,6 +73409,7 @@ name,address,notes
 ?bfmeHandle_00799c90@@YAXPAVGen_00799c90@@PAX@Z,0x0002C7AA,Open-BFME5 ILT the 22-byte submit at 0x00799C90 calls
 ?bfmeHandle_00799cb0@@YAXPAVGen_00799cb0@@PAX@Z,0x0003DC7B,Open-BFME5 ILT the 22-byte submit at 0x00799CB0 calls
 ?bfmeHas1000@BfmeArg1000@@QAEDH@Z,0x00003B1B,pin
+?bfmeHas1026@BfmeTab1026@@QAEDHH@Z,0x0001DA34,pin
 ?bfmeHas985C@BfmeArg985@@QAEDH@Z,0x000077B6,pin
 ?bfmeHas992C@BfmeAsk992@@QAEDXZ,0x007E88A0,pin
 ?bfmeHash00007518@@YAIII@Z,0x00007518,Open-BFME5 ILT the per-type hash helper the bfmeDiffers pair at that sentinel calls
@@ -73861,6 +73867,7 @@ name,address,notes
 ?bfmeSet1016@BfmeDst1016@@QAEXHHH@Z,0x00925D10,pin
 ?bfmeSet1018@BfmeSink1018@@QAEXHH@Z,0x0003EEBE,pin
 ?bfmeSet1020@BfmeJ1020@@QAEXH_N@Z,0x00027237,pin
+?bfmeSet1026@BfmeX1026@@QAEXHD@Z,0x0002BF2B,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
 ?bfmeSetA1004@BfmeObj1004@@QAEXHH@Z,0x00032DEE,pin
@@ -74165,6 +74172,7 @@ name,address,notes
 ?bfmeUpdate@BfmeCellFC@@QAEXH_N@Z,0x00881BE0,Open-BFME5 semantic identity for exact address-derived cell update body at 0x00881BE0
 ?bfmeUpdateCHE@BfmeThingCHE@@QAEXXZ,0x00004A70,pin
 ?bfmeUpdateCMB@BfmeThingCMB@@QAEXXZ,0x00032231,pin
+?bfmeUse1026@BfmeW1026@@QAEXH@Z,0x0002B706,pin
 ?bfmeUse926B@BfmeKeyLC@@QAEXPAUBfmeNodeLC@@@Z,0x00002E69,pin
 ?bfmeUse975D@BfmeD975@@QAEDPAX@Z,0x0003E80B,pin
 ?bfmeUseDXI@BfmeGlobDXI@@QAEXH@Z,0x0004159C,pin
@@ -75499,6 +75507,7 @@ name,address,notes
 ?g_bfmeJ1023@@3PAVBfmeJ1023@@A,0x00EF1044,pin
 ?g_bfmeK1022@@3PAVBfmeK1022@@A,0x00EF7198,pin
 ?g_bfmeK1023@@3PAVBfmeK1023@@A,0x00EF7730,pin
+?g_bfmeKey1026@@3PADA,0x00D096E8,pin
 ?g_bfmeLimit952@@3MA,0x00C977E8,pin
 ?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
@@ -75592,6 +75601,7 @@ name,address,notes
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
+?g_bfmeQ1026@@3PAVBfmeQ1026@@A,0x00EED700,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
@@ -75600,6 +75610,7 @@ name,address,notes
 ?g_bfmeRefEMIa@@3PAUBfmeRefEMI@@A,0x00ED5140,pin
 ?g_bfmeRefEMIb@@3PAUBfmeRefEMI@@A,0x00ED5978,pin
 ?g_bfmeReg1015@@3PAVBfmeReg1015@@A,0x00EF12CC,pin
+?g_bfmeReg1026@@3PAVBfmeReg1026@@A,0x00EF12CC,pin
 ?g_bfmeReg963@@3PAVBfmeReg963@@A,0x00EF10D0,pin
 ?g_bfmeReg988@@3PAVBfmeReg988@@A,0x00EF1044,pin
 ?g_bfmeRegion2DFormat@@3QBDB,0x0114442C,address-derived Region2D format string from retail 0x009D9814
@@ -75637,6 +75648,7 @@ name,address,notes
 ?g_bfmeStore1014@@3PAVBfmeStore1014@@A,0x00EF0898,pin
 ?g_bfmeStore1024@@3PAVBfmeStore1024@@A,0x00EF0898,pin
 ?g_bfmeStore1025@@3PAVBfmeStore1025@@A,0x00EF0898,pin
+?g_bfmeStore1026@@3PAVBfmeStore1026@@A,0x00EF0898,pin
 ?g_bfmeStrA993B@@3PADA,0x00C81238,pin
 ?g_bfmeStrB993B@@3PADA,0x00C80FC0,pin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
@@ -75650,6 +75662,7 @@ name,address,notes
 ?g_bfmeTwoAQA@@3PAVBfmeTwoAQA@@A,0x00EF1028,pin
 ?g_bfmeTwoATC@@3PAUBfmeTwoATC@@A,0x00EF4B58,pin
 ?g_bfmeU1019@@3PAVBfmeU1019@@A,0x00EF076C,pin
+?g_bfmeU1026@@3PAVBfmeU1026@@A,0x00EF076C,pin
 ?g_bfmeUiDZD@@3PAVBfmeUiDZD@@A,0x00EF7194,pin
 ?g_bfmeUiDZE@@3PAVBfmeUiDZE@@A,0x00EF19E8,pin
 ?g_bfmeUiDZF@@3PAVBfmeUiDZF@@A,0x00EF19E8,pin
@@ -75673,6 +75686,7 @@ name,address,notes
 ?g_bfmeVftTA@@3PADA,0x00D2F254,pin
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
+?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
 ?g_bfmeWhatBGE@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWhatBKG@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWordFormat@@3QBDB,0x011442A8,address-derived word format string from the DIR32 operand at retail 0x009D93C0
@@ -79473,6 +79487,7 @@ __ehhandler$?getClassMemoryPool@WorkerAIUpdate@@CAPAVMemoryPool@@XZ,0x00C140BE,p
 __ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00BFAB08,PlayerTemplate time-change retail exception handler
 __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
 __imp_?bfmeClose1012@@YGXPAX@Z,0x00F58ECC,pin
+__imp_?bfmeCmp1026@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeFree912B@@YGXPAX@Z,0x00F58CCC,pin
 __imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
 __imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
