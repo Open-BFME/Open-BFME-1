@@ -1045,7 +1045,25 @@ named callee against your body's own line number, and treat anything defined
 EARLIER in the TU as an inlining candidate. Getting this backwards costs a cycle
 in each direction.
 
-So: try the accessor ONCE. If the diff is a whole-body register swap rather than
+THE ACCESSOR NEEDS A GLOBAL AT THE HEAD OF THE CHAIN. It works by changing how
+that global is fetched, which re-seats everything downstream --
+ControlBar::onPlayerRankChanged starts at ThePlayerList. On a PURE MEMBER WALK
+off `this` there is no global fetch for the extra inline layer to reorder, and
+it cannot help: 0x002B6390 has the identical recorded signature and three shapes
+(accessor on the middle hop, accessors on both, a reference instead of a
+pointer) all produced byte-identical output.
+
+AND CHECK IT IS NOT CSE FIRST. Five 83-byte twins logged as register allocation
+were common-subexpression elimination of a member read: retail consumes m_begin
+as a memory operand of the span subtraction so nothing holds it, then re-loads
+it for the index, while MSVC materialises it into esi once and reuses it --
+which then denies esi to `this` and cascades. The registers are the symptom. A
+view class does NOT defeat this, even reading the index through a distinct view
+type at the same offset, because MSVC folds on the address computation and does
+not care that the struct type differs. Only volatile breaks it, at the cost the
+existing note records.
+
+So: try the accessor ONCE, and only on a global-headed chain. If the diff is a whole-body register swap rather than
 a chain diverging at one load, park it. And a body already parked as
 "register-allocation class" with an eax/ecx chain signature is worth one more
 look, not a permanent skip.
