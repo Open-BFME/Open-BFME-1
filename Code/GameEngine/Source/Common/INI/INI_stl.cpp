@@ -1414,7 +1414,10 @@ void INI::parseDamageFX( INI* ini, void * /*instance*/, void *store, const void*
 //-------------------------------------------------------------------------------------------------
 /** Parse an ObjectCreationList and assign to the 'ObjectCreationList *' at store */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/INI_parseObjectCreationList.cpp
+// The row for this function lives in Code/GameEngine/Source/Common/INI/ini.cpp,
+// which byte-verifies it; this file's copy is a second definition of the same
+// body and owns nothing. The donor that used to hold it carried one marker for
+// each of the two destinations and could only ever feed one of them.
 // ?parseObjectCreationList@INI@@ present-unmatched
 void INI::parseObjectCreationList( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
