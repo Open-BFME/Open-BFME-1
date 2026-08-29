@@ -52,8 +52,6 @@ private:
 	const ThingTemplate *m_template;					///< retail this+0x04
 };
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/Thing/Thing.cpp
-// ?getTemplate@Thing@@QBEPBVThingTemplate@@XZ present-unmatched
 inline const ThingTemplate *Thing::getTemplate( void ) const
 {
 	const ThingTemplate *tmpl = m_template;
