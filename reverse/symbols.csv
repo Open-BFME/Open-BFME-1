@@ -73187,6 +73187,7 @@ name,address,notes
 ?bfmeGet_002198b0@BfmeChainResult@@QAEPAXXZ,0x00036165,Open-BFME5 ILT the lookup at 0x002198B0 tail-jumps through
 ?bfmeGet_002198d0@BfmeChainResult@@QAEPAXXZ,0x000456E2,Open-BFME5 ILT the lookup at 0x002198D0 tail-jumps through
 ?bfmeGlobalCGD@@YAXXZ,0x009A3AD0,pin
+?bfmeGoal952@BfmeHolder952@@QAEPAVBfmeTarget952@@XZ,0x0000E570,pin
 ?bfmeGrab@BfmeSourceA@@QAEPAXPAPAX@Z,0x00019876,Open-BFME5 ILT the vector assignment at 0x00095A50 grabs through
 ?bfmeGrab@BfmeSourceB@@QAEPAXPAPAX@Z,0x000314E9,Open-BFME5 ILT the vector assignment at 0x000B54C0 grabs through
 ?bfmeGrab@BfmeSourceC@@QAEPAXPAPAX@Z,0x0002EBC2,Open-BFME5 ILT the vector assignment at 0x002F8980 grabs through
@@ -75148,6 +75149,7 @@ name,address,notes
 ?g_bfmeInitDYB@@3DA,0x00EED8B0,pin
 ?g_bfmeInt64Format@@3QBDB,0x011442EC,address-derived int64 format string from retail 0x009D9503
 ?g_bfmeIntegerFormat@@3QBDB,0x011442DC,address-derived integer format string from the DIR32 operand at retail 0x009D94B8
+?g_bfmeLimit952@@3MA,0x00C977E8,pin
 ?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
 ?g_bfmeListEYE@@3PAUBfmeListEYE@@A,0x00EED5DC,pin
