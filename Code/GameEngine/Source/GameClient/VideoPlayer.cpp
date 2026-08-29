@@ -171,6 +171,21 @@ VideoPlayer::VideoPlayer()
 
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/VideoPlayerDestructorThunk.cpp
 // ??1VideoPlayer@@UAE@XZ present-unmatched
+// This destructor cannot come home: class shape, and the evidence is worth
+// keeping because it also settles a behaviour question.
+//
+// Retail's 35 bytes at 0x0081C590 account for themselves exactly: a vptr store
+// (6), the singleton compare (6), a jne (2), the clear (10), the interim vptr
+// store (6) and a tail jump into ~SubsystemInterface at 0x009A1A40 (5). There is
+// no room for anything else, so BFME does NOT call deinit() here -- a
+// VideoPlayer destroyed in BFME does not tear its streams down first -- and it
+// has no destructible members, where the vendored class carries
+// VecVideo mVideosAvailableForPlay and the compiler emits that vector's
+// destructor from the CLASS. This tree compiles an SEH frame and a member
+// destructor call before it reaches the first vptr store; no cast in a .cpp
+// reaches either, and the deinit() line is left in place because removing it
+// would put an unverified behaviour change where the next agent reads it as
+// fact. Unblocking this means the class, not the body.
 VideoPlayer::~VideoPlayer()
 {
 	deinit();
