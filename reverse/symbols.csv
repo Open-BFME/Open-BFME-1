@@ -1980,6 +1980,7 @@ name,address,notes
 ??0AutoHealBehaviorModuleData@@QAE@XZ,0x1528a,AutoHealBehavior friend_newModuleData ctor
 ??0BB_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,BuildingBehavior constructor calls the shared ObjectModule constructor ILT
 ??0BFMEAutoLockRef@@QAE@PAVBFMENetworkLock@@I@Z,0x009DB3B0,native BFME lock-ref acquire helper
+??0BFMEDamageInfo@@QAE@XZ,0x0002C9D5,alias of the DamageInfo spelling pinned below; Object.cpp reaches the constructor through a view struct because the reference DamageInfo has a destructor retail's kill does not unwind
 ??0BFMEDesyncCheck@@QAE@XZ,0x000652C0,ctor of the one-dword stack record whose destructor is the ledgered writeReportIfMismatched 0x00065470: *this = (enable byte 0x012ED4E4 set by 0x00061470 and TheGameLogic mode not 8/4) ? GameLogic::getCRC(0) 0x00383150 : 0; constructed by the GameEngine +0x80 body at 0x0006B9A7 (lea ecx [esp+8])
 ??0BFMELANPreferenceKey@@QAE@PBD@Z,0x00888BC0,LANPreferences retail key construction call reaches the established AsciiString const-char constructor
 ??0BFMENetRequestPlayerLeaveCommandMsg@@QAE@XZ,0x006741F0,the constructor; the ledger row at that address carries native_netcommandmsg.cpp's ?construct@ name for the same body

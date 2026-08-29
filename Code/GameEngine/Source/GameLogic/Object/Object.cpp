@@ -2116,20 +2116,70 @@ Real Object::estimateDamage( DamageInfoInput& damageInfo ) const
 /** Do so much damage to an object that it will certainly die */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_kill.cpp
-// ?kill@Object@@QAEXW4DamageType@@W4DeathType@@@Z present-unmatched
+// BFME's DamageInfo is 0x5c bytes with its input half at the front -- source id
+// at +0x08, damage type at +0x10, death type at +0x18, amount at +0x1c and the
+// kill flag at +0x20 -- and its constructor is out of line, so the local needs
+// no unwind funclet. The body module is at object+0x200 with getMaxHealth at
+// vtable +0x18, and attemptDamage is the object's own virtual at vtable +0x34.
+struct BFMEDamageInfoInput
+{
+	unsigned char m_unreconstructed_00[8];
+	ObjectID m_sourceID;				///< +0x08
+	unsigned char m_unreconstructed_0c[4];
+	DamageType m_damageType;			///< +0x10
+	unsigned char m_unreconstructed_14[4];
+	DeathType m_deathType;				///< +0x18
+	Real m_amount;					///< +0x1c
+	Bool m_kill;					///< +0x20
+};
+
+struct BFMEDamageInfo
+{
+	BFMEDamageInfo();				///< retail ILT 0x0002c9d5
+
+	BFMEDamageInfoInput in;
+	unsigned char m_unreconstructed_24[0x5c - 0x24];
+};
+
+struct BFMEBodyMaxHealthShim
+{
+	virtual void bfmeSlot00() = 0;	virtual void bfmeSlot04() = 0;
+	virtual void bfmeSlot08() = 0;	virtual void bfmeSlot0C() = 0;
+	virtual void bfmeSlot10() = 0;	virtual void bfmeSlot14() = 0;
+	virtual Real getMaxHealth() const = 0;		///< vtable +0x18
+};
+
+struct BFMEObjectAttemptDamageShim
+{
+	virtual void bfmeSlot00() = 0;	virtual void bfmeSlot04() = 0;
+	virtual void bfmeSlot08() = 0;	virtual void bfmeSlot0C() = 0;
+	virtual void bfmeSlot10() = 0;	virtual void bfmeSlot14() = 0;
+	virtual void bfmeSlot18() = 0;	virtual void bfmeSlot1C() = 0;
+	virtual void bfmeSlot20() = 0;	virtual void bfmeSlot24() = 0;
+	virtual void bfmeSlot28() = 0;	virtual void bfmeSlot2C() = 0;
+	virtual void bfmeSlot30() = 0;
+	virtual void attemptDamage( BFMEDamageInfo *damageInfo ) = 0;	///< vtable +0x34
+};
+
+struct BFMEObjectBodyField
+{
+	unsigned char m_unreconstructed_000[0x200];
+	BFMEBodyMaxHealthShim *m_body;			///< retail this+0x200
+};
+
+// ?kill@Object@@QAEXW4DamageType@@W4DeathType@@@Z
 void Object::kill( DamageType damageType, DeathType deathType )
 {
-	DamageInfo damageInfo;
+	BFMEDamageInfo damageInfo;
 
 	// Do unmodifiable damage equal to their max health to kill.
 	damageInfo.in.m_damageType = damageType;
 	damageInfo.in.m_deathType = deathType;
 	damageInfo.in.m_sourceID = INVALID_ID;
-	damageInfo.in.m_amount = getBodyModule()->getMaxHealth();
+	damageInfo.in.m_amount =
+		reinterpret_cast<BFMEObjectBodyField *>(this)->m_body->getMaxHealth();
 	damageInfo.in.m_kill = TRUE; // Triggers object to die no matter what.
-	attemptDamage( &damageInfo );
-
-	DEBUG_ASSERTCRASH(!damageInfo.out.m_noEffect, ("Attempting to kill an unKillable object (InactiveBody?)\n"));
+	reinterpret_cast<BFMEObjectAttemptDamageShim *>(this)->attemptDamage( &damageInfo );
 
 }  // end kill
 
@@ -2876,15 +2926,60 @@ Bool Object::isInside(const PolygonTrigger *pTrigger) const
 // ------------------------------------------------------------------------------------------------
 /** Get production exit interface in object is present */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_getObjectExitInterface.cpp
-// ?getObjectExitInterface@Object@@QBEPAVExitInterface@@XZ present-unmatched
+// BFME: m_behaviors at +0x1f0 and m_contain at +0x1fc. Each behavior module
+// carries a second (interface) base at module+0xc whose vtable holds
+// getUpdateExitInterface at slot 19 (+0x4c); the contain module's own vtable
+// holds getContainExitInterface at slot 24 (+0x60), and the walk tail-jumps
+// through it.
+// ?getObjectExitInterface@Object@@QBEPAVExitInterface@@XZ
 ExitInterface *Object::getObjectExitInterface() const
 {
+	struct BFMEObjectExitFields
+	{
+		unsigned char pad[0x1f0];
+		BehaviorModule *const *behaviors;			///< retail this+0x1f0
+		unsigned char pad1f4[0x1fc - 0x1f4];
+		void *contain;						///< retail this+0x1fc
+	};
+	struct BFMEModuleExitShim
+	{
+		virtual void bfmeSlot00() = 0;	virtual void bfmeSlot04() = 0;
+		virtual void bfmeSlot08() = 0;	virtual void bfmeSlot0C() = 0;
+		virtual void bfmeSlot10() = 0;	virtual void bfmeSlot14() = 0;
+		virtual void bfmeSlot18() = 0;	virtual void bfmeSlot1C() = 0;
+		virtual void bfmeSlot20() = 0;	virtual void bfmeSlot24() = 0;
+		virtual void bfmeSlot28() = 0;	virtual void bfmeSlot2C() = 0;
+		virtual void bfmeSlot30() = 0;	virtual void bfmeSlot34() = 0;
+		virtual void bfmeSlot38() = 0;	virtual void bfmeSlot3C() = 0;
+		virtual void bfmeSlot40() = 0;	virtual void bfmeSlot44() = 0;
+		virtual void bfmeSlot48() = 0;
+		virtual ExitInterface *getUpdateExitInterface() = 0;	///< vtable +0x4c
+	};
+	struct BFMEContainExitShim
+	{
+		virtual void bfmeSlot00() = 0;	virtual void bfmeSlot04() = 0;
+		virtual void bfmeSlot08() = 0;	virtual void bfmeSlot0C() = 0;
+		virtual void bfmeSlot10() = 0;	virtual void bfmeSlot14() = 0;
+		virtual void bfmeSlot18() = 0;	virtual void bfmeSlot1C() = 0;
+		virtual void bfmeSlot20() = 0;	virtual void bfmeSlot24() = 0;
+		virtual void bfmeSlot28() = 0;	virtual void bfmeSlot2C() = 0;
+		virtual void bfmeSlot30() = 0;	virtual void bfmeSlot34() = 0;
+		virtual void bfmeSlot38() = 0;	virtual void bfmeSlot3C() = 0;
+		virtual void bfmeSlot40() = 0;	virtual void bfmeSlot44() = 0;
+		virtual void bfmeSlot48() = 0;	virtual void bfmeSlot4C() = 0;
+		virtual void bfmeSlot50() = 0;	virtual void bfmeSlot54() = 0;
+		virtual void bfmeSlot58() = 0;	virtual void bfmeSlot5C() = 0;
+		virtual ExitInterface *getContainExitInterface() = 0;	///< vtable +0x60
+	};
+
+	const BFMEObjectExitFields *self = reinterpret_cast<const BFMEObjectExitFields *>(this);
+
 	ExitInterface *exitInterface = NULL;
 
-	for( BehaviorModule **umod = m_behaviors; *umod; ++umod )
+	for( BehaviorModule *const *umod = self->behaviors; *umod; ++umod )
 	{
-		if( (exitInterface = (*umod)->getUpdateExitInterface()) != NULL )
+		char *adjusted = reinterpret_cast<char *>( const_cast<BehaviorModule *>( *umod ) ) + 0xc;
+		if( (exitInterface = reinterpret_cast<BFMEModuleExitShim *>( adjusted )->getUpdateExitInterface()) != NULL )
 			break;
 	}
 
@@ -2892,7 +2987,7 @@ ExitInterface *Object::getObjectExitInterface() const
 	// since if you can contain something, they will need to get out.
 	if( exitInterface == NULL )
 	{
-		ContainModuleInterface *cmod = getContain();
+		BFMEContainExitShim *cmod = reinterpret_cast<BFMEContainExitShim *>( self->contain );
 		if( cmod )
 		{
 			exitInterface = cmod->getContainExitInterface();
@@ -2950,7 +3045,7 @@ void Object::prependToList(Object **pListHead)
 // BFME: m_layer lives at +0x314, and BFME compiles the bridge-layer
 // interaction check unconditionally (ZH keeps it behind SET_LAYER_INTENSE_DEBUG).
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_setLayer.cpp
-// ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z present-unmatched
+// ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z
 void Object::setLayer(PathfindLayerEnum layer)
 {
 	PathfindLayerEnum *layerField = reinterpret_cast<PathfindLayerEnum *>(
