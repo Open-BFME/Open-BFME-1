@@ -72755,6 +72755,7 @@ name,address,notes
 ?bfmeChk1091@BfmeR1091@@QAEDXZ,0x0003E5A9,pin
 ?bfmeChk1100@BfmeB1100@@QAEDH@Z,0x0000B63B,pin
 ?bfmeChk1112@BfmeSub1112@@QAEDPAUBfmeA1112@@PAUBfmeB1112@@@Z,0x00019BCD,pin
+?bfmeChk1113@BfmeK1113@@QAEDH@Z,0x000077B6,pin
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
 ?bfmeClear1003@BfmeB1003@@QAEXXZ,0x0000A754,pin
 ?bfmeClear1024@BfmeList1024@@QAEXXZ,0x00015640,pin
@@ -73096,6 +73097,7 @@ name,address,notes
 ?bfmeFind1091@BfmeC1091@@QAEHH@Z,0x0004B36C,pin
 ?bfmeFind1094@BfmeB1094@@QAEPAVBfmeK1094@@H@Z,0x0001F253,pin
 ?bfmeFind1101@BfmeJ1101@@QAEPAVBfmeK1101@@H@Z,0x0002F52C,pin
+?bfmeFind1113@BfmeB1113@@QAEPAVBfmeK1113@@H@Z,0x0001F253,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
@@ -73802,6 +73804,7 @@ name,address,notes
 ?bfmeNext1110@@YAPAUBfmeNode1110@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext1111@@YAPAUBfmeNode1111@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext1112@@YAPAUBfmeNode1112@@PAU1@@Z,0x0082B870,pin
+?bfmeNext1113@@YAPAUBfmeNode1113@@PAU1@@Z,0x0082B870,pin
 ?bfmeNext929D@BfmeNext929D@@QAEHH@Z,0x0089CC30,pin
 ?bfmeNext@Gen_00088B60@@AAEXXZ,0x00031FCF,Open-BFME5 the member the flag-then-forward wrapper at 0x00088B60 tail-jumps to
 ?bfmeNext@Gen_000B5690@@AAEXXZ,0x000242A3,Open-BFME5 the member the flag-then-forward wrapper at 0x000B5690 tail-jumps to
@@ -75712,6 +75715,7 @@ name,address,notes
 ?g_bfmeB1094@@3PAVBfmeB1094@@A,0x00EF0898,pin
 ?g_bfmeB1100@@3PAVBfmeB1100@@A,0x00EF1028,pin
 ?g_bfmeB1104@@3HA,0x00F40594,pin
+?g_bfmeB1113@@3PAVBfmeB1113@@A,0x00EF0898,pin
 ?g_bfmeB986B@@3PAHA,0x00EF9D0C,pin
 ?g_bfmeB991@@3PAVBfmeB991@@A,0x00EF9D88,pin
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
