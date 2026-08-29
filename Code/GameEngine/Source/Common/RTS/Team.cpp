@@ -2554,14 +2554,46 @@ void Team::deleteTeam(Bool ignoreDead)
 
 // ------------------------------------------------------------------------
 /* Transfer our units to new team. */
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Team_transferUnitsTo_Thunk.cpp
-// ?transferUnitsTo@Team@@QAEXPAV1@@Z present-unmatched
+// ------------------------------------------------------------------------
+// BFME dispatches Object::setTeam through the vtable at [vtbl+0x50] -- slot 20 --
+// where the vendored header declares it an ordinary member and compiles a direct
+// call.  Only that slot is named; the other twenty exist to place it.  A vcall
+// needs no pin, which is why this costs no symbols.csv row.
+class BfmeTeamMemberObject
+{
+public:
+	virtual void bfmeSlot00() = 0;
+	virtual void bfmeSlot01() = 0;
+	virtual void bfmeSlot02() = 0;
+	virtual void bfmeSlot03() = 0;
+	virtual void bfmeSlot04() = 0;
+	virtual void bfmeSlot05() = 0;
+	virtual void bfmeSlot06() = 0;
+	virtual void bfmeSlot07() = 0;
+	virtual void bfmeSlot08() = 0;
+	virtual void bfmeSlot09() = 0;
+	virtual void bfmeSlot10() = 0;
+	virtual void bfmeSlot11() = 0;
+	virtual void bfmeSlot12() = 0;
+	virtual void bfmeSlot13() = 0;
+	virtual void bfmeSlot14() = 0;
+	virtual void bfmeSlot15() = 0;
+	virtual void bfmeSlot16() = 0;
+	virtual void bfmeSlot17() = 0;
+	virtual void bfmeSlot18() = 0;
+	virtual void bfmeSlot19() = 0;
+	virtual void setTeam( Team *team ) = 0;			///< slot 20, [vtbl+0x50]
+};
+
+// ?transferUnitsTo@Team@@QAEXPAV1@@Z
 void Team::transferUnitsTo(Team *newTeam)
 {
 	if (this == newTeam) return;
 	if (newTeam == NULL) return;
-	Object *obj;
-	while ((obj = getFirstItemIn_TeamMemberList()) != 0) 
+	BfmeTeamMemberObject *obj;
+	// The head is re-read every iteration and the null test is inside the loop:
+	// that is setTeam unlinking the object from this team, seen from here.
+	while ((obj = (BfmeTeamMemberObject *)bfmeTeamFields(this)->getFirstItemIn_TeamMemberList()) != 0) 
 	{
 		obj->setTeam(newTeam);
 	} 
