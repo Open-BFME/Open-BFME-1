@@ -2863,3 +2863,34 @@ They look identical in a report and each needs a different answer:
     matches with its donor in the vendored tree. Repointing a row onto a
     reference-tree source is a different decision from folding two of our own
     files, and should not be taken as ordinary cluster work.
+## A small miss(N) is a classification, not a distance
+
+Screening a whole destination per compile makes miss counts cheap enough to
+gather in bulk -- 493 of them here, after dropping the 5-byte jmp stubs whose
+count is meaningless. Sorted smallest-first they look like a work queue. They are
+not. Every miss(1) and miss(2) read in detail turned out to be one of four
+things, and only the last is work:
+
+  A CONSTANT BFME CHANGED.  WeaponSet's three miss(1)s are all `loop to 4` where
+  ZH's WEAPONSLOT_COUNT is 3: BFME's weapon set has a fourth slot. Fixing the
+  constant widens m_weapons[] by four bytes and moves everything nine matched
+  rows in that file read, so the donors stay split on purpose.
+
+  A FIELD OFFSET.  VertexMaterialClass's three getters are all `[ecx+0x08]`
+  against our `[ecx+0x0C]`; User::setName is `add ecx,0x4C` against `add ecx,4`.
+  One byte on the wire, 4 or 72 bytes of layout behind it.
+
+  A TRUNCATION.  W3DSnowManager::update's three bytes are where OUR body ends
+  and retail keeps going -- one more call and a tail call. When the differing
+  offsets are the LAST bytes of the row, the bodies are different lengths and
+  the number is missing behaviour, not drift.
+
+  TWO FACTS AT ONCE.  WorkerAIUpdate::isCurrentlyFerryingSupplies has three
+  offset bytes with deltas +0x14, -4, -4 across two different classes. A single
+  lever cannot close a miss whose deltas disagree.
+
+So read the DIFFERING BYTES before costing a miss, and check three things in
+order: is the row a 5-byte jmp stub (then the number is noise), do the diffs sit
+at the end (then it is a length difference), do the deltas agree (then one lever
+might close it). A miss(1) is not nearer to landing than a miss(9); it is just
+smaller evidence of whatever it is.
