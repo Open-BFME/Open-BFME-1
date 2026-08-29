@@ -62,6 +62,11 @@ private:
 class Object : public Thing
 {
 public:
+	Bool isInert() const
+	{
+		return getTemplate()->isKindOf(KINDOF_INERT);
+	}
+
 	Bool isEffectivelyDead() const
 	{
 		return *reinterpret_cast<const unsigned char *>(
@@ -81,7 +86,7 @@ Bool BuildAssistant::isRemovableForConstruction(Object *obj)
 	if (obj == 0)
 		return false;
 
-	if (obj->getTemplate()->isKindOf(KINDOF_INERT))
+	if (obj->isInert())
 	{
 		((void)0);
 		return false;
