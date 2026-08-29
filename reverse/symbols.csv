@@ -72584,6 +72584,7 @@ name,address,notes
 ?bfmeCalcEFC@@YGMH@Z,0x0001FEEC,pin
 ?bfmeCalcEOC@@YAMPAX@Z,0x0000991C,pin
 ?bfmeCall1055@@YAXHP6AXXZPAUBfmeT1055@@@Z,0x00866FD0,pin
+?bfmeCall1100@@YAXH@Z,0x00032759,pin
 ?bfmeCall916D@BfmeTail916D@@QAEXPAX@Z,0x0001192D,pin
 ?bfmeCall922F@BfmeTail922F@@QAEXPAXH@Z,0x0002B4F9,pin
 ?bfmeCall922G@BfmeSub922G@@QAEXPAPAX@Z,0x0003B5AC,pin
@@ -72751,6 +72752,7 @@ name,address,notes
 ?bfmeChk1089@BfmeR1089@@QAEDXZ,0x000262B5,pin
 ?bfmeChk1090@BfmeS1090@@QAEDXZ,0x00024500,pin
 ?bfmeChk1091@BfmeR1091@@QAEDXZ,0x0003E5A9,pin
+?bfmeChk1100@BfmeB1100@@QAEDH@Z,0x0000B63B,pin
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
 ?bfmeClear1003@BfmeB1003@@QAEXXZ,0x0000A754,pin
 ?bfmeClear1024@BfmeList1024@@QAEXXZ,0x00015640,pin
@@ -72872,6 +72874,7 @@ name,address,notes
 ?bfmeDo1037@BfmeG1037@@QAEXHH@Z,0x00013CCD,pin
 ?bfmeDo1052@BfmeH1052@@QAEXHPAVBfmeI1052@@H@Z,0x00800BD0,pin
 ?bfmeDo1081@BfmeD1081@@QAEDPAVBfmeE1081@@PAD1H@Z,0x0004A327,pin
+?bfmeDo1100@@YAXH@Z,0x00024848,pin
 ?bfmeDo912C@BfmeThing912C@@QAEXPAUBfmeNode912C@@@Z,0x009F4D80,pin
 ?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
 ?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
@@ -73041,6 +73044,7 @@ name,address,notes
 ?bfmeEmit1023@@YAXPAXPAD0H@Z,0x00049E86,pin
 ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z,0x0002CB79,Open-BFME5 ILT thunk to body 0x00417710; Gen_00417cb0::tail at 0x00417A70 calls it on this with the source result and its own argument; address-derived name in the same synthetic family as the class
 ?bfmeEnable@BfmeElemW@@QAEXHH@Z,0x000482AC,Open-BFME5 the ICF thunk (to 0x004482AC) the clear at 0x004B1720 calls on each element with a pair of ones
+?bfmeEnd1100@BfmeZ1100@@QAEXH@Z,0x0003D578,pin
 ?bfmeEnd982C@BfmeHub982@@QAEXXZ,0x00008D4B,pin
 ?bfmeEnsureWA@BfmeThingWA@@QAEXXZ,0x0002DE02,pin
 ?bfmeEnter@Glo012F1024Item@@QAEXXZ,0x0000BC5D,Open-BFME5 ILT thunk to body 0x003AEE70; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 calls it on the 0xDC-byte item the advanced index selects; address-derived name
@@ -75650,6 +75654,7 @@ name,address,notes
 ?g_bfmeA1086@@3PAVBfmeA1086@@A,0x00EED5B8,pin
 ?g_bfmeA1087@@3PAVBfmeA1087@@A,0x00EF7FE0,pin
 ?g_bfmeA1095@@3PAVBfmeA1095@@A,0x00EF148C,pin
+?g_bfmeA1100@@3PAUBfmeA1100@@A,0x00EF7048,pin
 ?g_bfmeA986B@@3PAHA,0x00EF9D04,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
@@ -75682,6 +75687,7 @@ name,address,notes
 ?g_bfmeB1087@@3PAUBfmeB1087@@A,0x00EF0898,pin
 ?g_bfmeB1091@@3PAUBfmeB1091@@A,0x00EF0898,pin
 ?g_bfmeB1094@@3PAVBfmeB1094@@A,0x00EF0898,pin
+?g_bfmeB1100@@3PAVBfmeB1100@@A,0x00EF1028,pin
 ?g_bfmeB986B@@3PAHA,0x00EF9D0C,pin
 ?g_bfmeB991@@3PAVBfmeB991@@A,0x00EF9D88,pin
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
@@ -75736,6 +75742,7 @@ name,address,notes
 ?g_bfmeD1096@@3PAVBfmeD1096@@A,0x00EED748,pin
 ?g_bfmeD1097@@3PAVBfmeD1097@@A,0x00EED748,pin
 ?g_bfmeD1098@@3PAVBfmeD1098@@A,0x00EED748,pin
+?g_bfmeD1100@@3PAVBfmeD1100@@A,0x00EF1600,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
@@ -76199,6 +76206,7 @@ name,address,notes
 ?g_bfmeY1074@@3PAVBfmeX1074@@A,0x00EB7430,pin
 ?g_bfmeZ1083@@3PAVBfmeZ1083@@A,0x00EF4C5C,pin
 ?g_bfmeZ1095@@3PAVBfmeZ1095@@A,0x00EF4C5C,pin
+?g_bfmeZ1100@@3PAVBfmeZ1100@@A,0x00EF4C5C,pin
 ?g_bfmeZero986B@@3HA,0x00F071C8,pin
 ?g_defaultRespawnPolicy@@3URespawnPolicy@@A,0x012ED8B8,RespawnBody default six-dword policy
 ?g_global12EF1D8@@3PAXA,0x00EEF1D8,pin
