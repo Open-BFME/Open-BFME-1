@@ -79793,3 +79793,7 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?poke@Open2715D80Inner@@QAEPAVOpen2715D80Owner@@XZ,0x000022BB,Open2 0x00715D80 guarded poke (ILT)
+?submit@Open27110F0Sink@@QAEXHHHH@Z,0x00031840,Open2 0x007110F0 sink submit (ILT)
+?flush@Open27110F0Flusher@@QAEXXZ,0x0003139A,Open2 0x007110F0 flush (ILT)
+?drop@Open2List@@QAEXPAVOpen2Node@@@Z,0x00016ED2,Open2 0x0071B4B0 list drop (ILT)
