@@ -72777,6 +72777,7 @@ name,address,notes
 ?bfmeDtorVA@BfmeThingVA@@QAEXXZ,0x00034833,pin
 ?bfmeDtorVB@BfmeThingVB@@QAEXPAX@Z,0x009F6BC8,pin
 ?bfmeDtorVBW@BfmeSubVBW@@QAEXXZ,0x00895260,pin
+?bfmeElse911B@BfmeThing911B@@QAEXPAX@Z,0x00926CB0,pin
 ?bfmeElseBBC@@YAXXZ,0x0000F36C,pin
 ?bfmeElseBBC@BfmeThingBBC@@QAEXXZ,0x0000F36C,pin
 ?bfmeElseBBD@@YAXXZ,0x00842C00,pin
@@ -73463,6 +73464,7 @@ name,address,notes
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
+?bfmePrep911E@BfmeSub911E@@QAEXXZ,0x0090F140,pin
 ?bfmePushBack@BFMEAnimateWindowListPush@@QAEXABQAVAnimateWindow@@@Z,0x00022D36,BFME out-of-line list<AnimateWindow*>::push_back body 0x45DAE0 via ILT thunk
 ?bfmePushBackAux@Gen_00089d90@@IAEXABQAX@Z,0x0002FF1D,Open-BFME5 ILT the deque push_back at 0x00089D90 tail-jumps through
 ?bfmePushBackAux@Gen_0035b840@@IAEXABQAX@Z,0x00025284,Open-BFME5 ILT the deque push_back at 0x0035B840 tail-jumps through
@@ -74890,6 +74892,11 @@ name,address,notes
 ?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
 ?g_activeObj12F0610@@3PAXA,0x00EF0610,pin
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
+?g_bfme911Busy@@3DA,0x0094B208,pin
+?g_bfme911Flag@@3DA,0x008D7188,pin
+?g_bfme911Ptr@@3PAVBfmeObj911C@@A,0x0094B210,pin
+?g_bfme911Val@@3HA,0x008D7184,pin
+?g_bfme911Vft@@3PADA,0x00D37578,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
