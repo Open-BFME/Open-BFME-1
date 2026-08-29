@@ -72495,6 +72495,7 @@ name,address,notes
 ?bfmeAskFDH@BfmeOwnFDH@@QAEDH@Z,0x000225F7,pin
 ?bfmeAskRJ@BfmeAskerRJ@@QAE_NPAX0@Z,0x0001DA34,pin
 ?bfmeAskRV@BfmeMemberRV@@QAE_NXZ,0x000179BD,pin
+?bfmeAssign1176@BfmeS1176@@QAEXPAD@Z,0x0001CB11,pin
 ?bfmeAssign@BfmeCopyElementA@@QAEPAU1@PAU1@@Z,0x00003828,Open-BFME5 the element assign the copy loops call
 ?bfmeAssign@BfmeCopyElementB@@QAEXPAU1@@Z,0x0000D4CC,Open-BFME5 the element assign the copy loops call
 ?bfmeAssign@BfmeCopyElementC@@QAEXPAU1@@Z,0x000470F0,Open-BFME5 the element assign the copy loops call
@@ -74394,6 +74395,7 @@ name,address,notes
 ?bfmeThrow1154@BfmeS1154@@QAEXXZ,0x000132CD,pin
 ?bfmeThrow937C@@YGXI@Z,0x00AFD540,pin
 ?bfmeToggle997@BfmeA997@@QAEXXZ,0x000200D1,pin
+?bfmeTouch1176@BfmeW1176@@QAEXXZ,0x0003336B,pin
 ?bfmeTouch982C@BfmeT982@@QAEXXZ,0x0002D2C7,pin
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
 ?bfmeTransferPowerInfluence@Object@@QAEXPAVPlayer@@0@Z,0x00014B91,Open-BFME5 recursive Object power-influence transfer ILT to body 0x001C3710
