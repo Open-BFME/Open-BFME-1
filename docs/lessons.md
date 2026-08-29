@@ -1772,7 +1772,51 @@ refuses to guess.
 
 COMMENTS ARE FREE; CODE IS NOT. Before adding a view to a TU, check:
     grep -F ",<destination>," reverse/functions.csv | grep -c 'object-symbol=[$]'
-and if it is non-zero, re-anchor those rows (give them a parent=) FIRST.
+and if it is non-zero, re-anchor those rows FIRST.
+
+Re-anchoring is usually just a NOTES fix, and `parent=` alone is not it.
+build.py re-finds a renumbered funclet from its parent's __ehhandler group --
+that is the "Funclet pins: N row(s) verified past a renumbered $L label" line --
+but is_funclet_row() (tools/build.py:920) gates on the notes containing
+**gen-funclet**, AND on a parent=. A row with parent= but no gen-funclet never
+reaches the healer: it dies with "symbol not found in object: $L<n>", which
+reads exactly like a hard wall and is why lanapi.cpp was called frozen for
+weeks. It was one word. `gen-alias` and `gen-funclet` are not exclusive -- an
+ICF-twin alias claim can also be a $L-pinned funclet, and then the notes must
+say both (keep `gen-alias;` leading, check_csv enforces that prefix).
+
+Exactly three rows tree-wide are gen-alias + $L + parent=. lanapi's is fixed;
+?a_00bfd4b8@@YAXXZ (UpgradeNamesPlacementCleanup_00BFD4B8.cpp) and
+?a_00c52ae0@@YAXXZ (VectorClassArrayPlacementCleanup_00C52AE0.cpp) are latent
+the same way. If either destination looks frozen, this is why.
+
+## throw() can be made TU-local with an explicit specialisation
+
+A nothrow declaration is often the whole difference between a merged body and
+retail -- it is what lets MSVC drop the unwind-state bump around a temporary and
+guard it with a liveness flag instead. addGame was 77 diverging instructions
+with the throwing declaration and 6 without it.
+
+The declaration usually lives in a SHARED header you must not change:
+Code/Libraries/Source/WWVegas/WWLib/string_base.h declares
+`int compareNoCase(const StringBase<T> &) const;` and every TU that includes it
+would move. Copying the header into a new shim dir works -- that is what
+reference/shims/asciistring_downloadmanager/string_base.h is, one word different
+from WWLib's -- but you do not need a new file for it:
+
+    template <>
+    class StringBase<UnsignedShort>
+    {
+    public:
+        Int compareNoCase( const StringBase<UnsignedShort> &that ) const throw();
+    };
+
+An explicit specialisation REPLACES the primary for that one argument, so the
+shared declaration every other TU sees is untouched and no shim dir is created.
+It is legal after the primary is defined, as long as nothing has yet forced an
+implicit instantiation for that argument -- check that first, and declare only
+the members this TU actually calls. wchar_t and unsigned short are the same
+mangled type (G) under MSVC 7.1's default, so one specialisation covers both.
 
 ## Run the object-symbol check BEFORE authoring, not after
 
