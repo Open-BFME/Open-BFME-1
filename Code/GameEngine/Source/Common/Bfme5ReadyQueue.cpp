@@ -219,3 +219,65 @@ void __cdecl bfme5SetTextureSlot(int i, TextureClass **src)
 
 	*slot = *src;
 }
+
+void __cdecl operator delete(void *p);
+
+extern void *g_bfme5DetachVtable;
+
+struct Bfme5DetachSink
+{
+	char m_bfmePad[0x1dc];
+	int m_bfme1dc;
+};
+
+class Bfme5Detachable
+{
+public:
+	void *bfmeDestroy(int flags);
+
+	void *m_bfmeVptr;
+	int m_bfme04;
+	Bfme5DetachSink *m_bfmeSink;
+};
+
+void *Bfme5Detachable::bfmeDestroy(int flags)
+{
+	m_bfmeVptr = &g_bfme5DetachVtable;
+
+	Bfme5DetachSink *o = m_bfmeSink;
+
+	if (o) {
+		o->m_bfme1dc = m_bfme04;
+		m_bfmeSink = 0;
+	}
+
+	if (flags & 1)
+		operator delete(this);
+
+	return this;
+}
+
+class Bfme5TextureArray
+{
+public:
+	void bfmeSetSlot(int i, TextureClass **src);
+
+	char m_bfmePad[0x24];
+	TextureClass **m_bfmeSlots;
+};
+
+void Bfme5TextureArray::bfmeSetSlot(int i, TextureClass **src)
+{
+	TextureClass **slot = &m_bfmeSlots[i];
+	TextureClass *t = *src;
+
+	if (t)
+		++t->m_bfmeRefCount;
+
+	TextureClass *old = *slot;
+
+	if (old)
+		old->Release_Ref();
+
+	*slot = *src;
+}
