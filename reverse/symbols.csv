@@ -72852,6 +72852,7 @@ name,address,notes
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
 ?bfmeFind926C@BfmeKey926C@@QAEPAUBfmeObj926C@@XZ,0x00020824,pin
 ?bfmeFind940D@BfmeSrc940D@@QAEPAVBfmeRes940D@@XZ,0x0000F498,pin
+?bfmeFind956@BfmeKey956@@QAEPAUBfmeInfo956@@XZ,0x00020824,pin
 ?bfmeFind@BfmeChainOwner@@QAEPAVBfmeChainResult@@H@Z,0x0002F52C,Open-BFME5 ILT the four lookups around 0x002197E0 call
 ?bfmeFind@BfmeFinder@@QAEPAXXZ,0x000265A8,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 call
 ?bfmeFind@Gen_003C02B0@@AAEPAVBfmeItemAN@@H@Z,0x00032A56,Open-BFME5 the ICF thunk (to 0x00432A56) the remove at 0x003C02B0 looks its item up through
@@ -73338,6 +73339,7 @@ name,address,notes
 ?bfmeJoinBSE@@YAPAXPAX0@Z,0x00042FA0,pin
 ?bfmeJoinENLa@@YAPAXPAX0@Z,0x00023254,pin
 ?bfmeJoinENLb@@YAPAXPAX0@Z,0x0003F7CE,pin
+?bfmeKind956@BfmeAI956@@QAEHXZ,0x0001E33A,pin
 ?bfmeKindBVD@BfmeSubBVD@@QAEHXZ,0x0001E33A,pin
 ?bfmeKindCGG@BfmeOtherCGG@@QAEHPAX@Z,0x0004A719,pin
 ?bfmeKindCQE@BfmeXCQE@@QAEDXZ,0x00012E3B,pin
@@ -75128,6 +75130,7 @@ name,address,notes
 ?g_bfmeFlagsAPB@@3IA,0x00EA6FA0,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeFreeDXG@@3P6AXPAX@ZA,0x00F3782C,pin
+?g_bfmeGlob956@@3PAUBfmeGlob956@@A,0x00EEF214,pin
 ?g_bfmeGlobGI@@3PAVBfmeGlobGI@@A,0x00EF076C,pin
 ?g_bfmeGlobID@@3PAVBfmeGlobID@@A,0x00EED5F0,pin
 ?g_bfmeGlobJB@@3PAVBfmeGlobJB@@A,0x00EF148C,pin
