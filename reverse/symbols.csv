@@ -72354,6 +72354,7 @@ name,address,notes
 ?bfmeAddBFC@BfmeSinkBFC@@QAEXPAUBfmeSubBFC@@@Z,0x0001D606,pin
 ?bfmeAddCFE@BfmeSubCFE@@QAEXPAXH@Z,0x0003D735,pin
 ?bfmeAddCQE@BfmeSubCQE@@QAEXPAVBfmeArgCQE@@@Z,0x00005C22,pin
+?bfmeAdj1096@BfmeR1096@@QAEXH@Z,0x0000E881,pin
 ?bfmeAfterEOC@BfmeThingEOC@@QAEXXZ,0x000106AE,pin
 ?bfmeAfterFCB@BfmeOwnFCB@@QAEXXZ,0x000098B8,pin
 ?bfmeAlloc1036@@YAPAXH@Z,0x00881F30,pin
@@ -73151,6 +73152,7 @@ name,address,notes
 ?bfmeFinishYC@BfmeThingYC@@QAEXPAX@Z,0x00019D17,pin
 ?bfmeFirst1019@@YAXXZ,0x00005D9E,pin
 ?bfmeFirst1095@BfmeP1095@@QAEHHH@Z,0x0004B290,pin
+?bfmeFirst1096@BfmeP1096@@QAEHHH@Z,0x0004B290,pin
 ?bfmeFirstAKB@BfmeThingAKB@@QAE_NPAH@Z,0x00006EF1,pin
 ?bfmeFirstEUA@BfmeGlobAEUA@@QAEHHH@Z,0x0004B290,pin
 ?bfmeFirstRK@BfmeThingRK@@QAEXXZ,0x00020B80,pin
@@ -73665,6 +73667,7 @@ name,address,notes
 ?bfmeLook1093@BfmeD1093@@QAEPAVBfmeR1093@@PAF@Z,0x0002EE60,pin
 ?bfmeLook1094@BfmeD1094@@QAEPAVBfmeR1094@@PAF@Z,0x0002EE60,pin
 ?bfmeLook1095@BfmeD1095A@@QAEPAVBfmeR1095@@PAF@Z,0x0002EE60,pin
+?bfmeLook1096@BfmeD1096@@QAEPAVBfmeR1096@@PAF@Z,0x0002EE60,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
 ?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
 ?bfmeLookBBB@@YAPAXPAX@Z,0x0082B8E0,pin
@@ -73688,6 +73691,7 @@ name,address,notes
 ?bfmeLookup_001c63d0@@YAHPAX@Z,0x0004B218,Open-BFME5 ILT the bit setter at 0x001C63D0 calls
 ?bfmeMake1010@BfmeMake1010@@QAEPAVBfmeHeld1010@@PAXH@Z,0x000122BF,pin
 ?bfmeMake1054@@YAHH@Z,0x0000971E,pin
+?bfmeMake1096@BfmeM1096@@QAEPAVBfmeS1096@@H@Z,0x00028560,pin
 ?bfmeMake926B@@YAPAUBfmeNodeLC@@XZ,0x00012765,pin
 ?bfmeMake980A@BfmeA980@@QAEPAUBfmeRecA980@@H@Z,0x00025347,pin
 ?bfmeMake980B@BfmeB980@@QAEPAUBfmeRecB980@@H@Z,0x00025347,pin
@@ -73817,6 +73821,8 @@ name,address,notes
 ?bfmeNowCBE@@YAPAXXZ,0x008FD440,pin
 ?bfmeObjectEnteringInfluence@Player@@QAEXPAVObject@@@Z,0x00029875,Open-BFME5 Player ILT that adds an Object's power influence; called by recursive transfer wrapper 0x001C3710
 ?bfmeObjectLeavingInfluence@Player@@QAEXPAVObject@@@Z,0x0000EACA,Open-BFME5 Player ILT that removes an Object's power influence; called by recursive transfer wrapper 0x001C3710
+?bfmeOff1096@BfmeR1096@@QAEXPAVBfmeS1096@@@Z,0x0003D90B,pin
+?bfmeOn1096@BfmeR1096@@QAEXPAVBfmeS1096@@@Z,0x0003529C,pin
 ?bfmeOnceBXF@BfmeThingBXF@@QAEXXZ,0x0000E3AE,pin
 ?bfmeOne920F@BfmeThing920F@@QAEXP6AXPAVLocomotorTemplate@@@Z@Z,0x000497DD,pin
 ?bfmeOne921G@BfmeThing921G@@QAEXXZ,0x0004287A,pin
@@ -74060,6 +74066,7 @@ name,address,notes
 ?bfmeSet1058J@BfmeJ1058@@QAEXH_N@Z,0x00027237,pin
 ?bfmeSet1085@BfmeSub1085@@QAEXH@Z,0x00024D70,pin
 ?bfmeSet1087@BfmeN1087@@QAEXH@Z,0x00040007,pin
+?bfmeSet1096@BfmeR1096@@QAEXH@Z,0x00049B02,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
 ?bfmeSetA1004@BfmeObj1004@@QAEXHH@Z,0x00032DEE,pin
@@ -74402,6 +74409,7 @@ name,address,notes
 ?bfmeUse1058@BfmeK1058@@QAEXH@Z,0x00028E93,pin
 ?bfmeUse1059@BfmeA1059@@QAEXH@Z,0x00003B93,pin
 ?bfmeUse1085@BfmeP1085@@QAEXPAVBfmeE1085@@H@Z,0x00044A1C,pin
+?bfmeUse1096@BfmeR1096@@QAEXH@Z,0x000259CD,pin
 ?bfmeUse926B@BfmeKeyLC@@QAEXPAUBfmeNodeLC@@@Z,0x00002E69,pin
 ?bfmeUse975D@BfmeD975@@QAEDPAX@Z,0x0003E80B,pin
 ?bfmeUseDXI@BfmeGlobDXI@@QAEXH@Z,0x0004159C,pin
@@ -75713,6 +75721,7 @@ name,address,notes
 ?g_bfmeD1093@@3PAVBfmeD1093@@A,0x00EED748,pin
 ?g_bfmeD1094@@3PAVBfmeD1094@@A,0x00EED748,pin
 ?g_bfmeD1095@@3PAVBfmeD1095A@@A,0x00EED748,pin
+?g_bfmeD1096@@3PAVBfmeD1096@@A,0x00EED748,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
@@ -75917,6 +75926,7 @@ name,address,notes
 ?g_bfmeM1066@@3PAUBfmeM1066@@A,0x00EED5C8,pin
 ?g_bfmeM1087@@3PAUBfmeM1087@@A,0x00EED5C8,pin
 ?g_bfmeM1091@@3PAUBfmeM1091@@A,0x00EED5C8,pin
+?g_bfmeM1096@@3PAVBfmeM1096@@A,0x00EEF1D8,pin
 ?g_bfmeMake1010@@3PAVBfmeMake1010@@A,0x00EEF738,pin
 ?g_bfmeMakerAWB@@3PAVBfmeMakerAWB@@A,0x00EF12CC,pin
 ?g_bfmeMap1024@@3PAUBfmeMap1024@@A,0x00F3846C,pin
@@ -76008,6 +76018,7 @@ name,address,notes
 ?g_bfmeP1093@@3PAVBfmeP1093@@A,0x00EF076C,pin
 ?g_bfmeP1094@@3PAVBfmeP1094@@A,0x00EF076C,pin
 ?g_bfmeP1095@@3PAVBfmeP1095@@A,0x00EF076C,pin
+?g_bfmeP1096@@3PAVBfmeP1096@@A,0x00EF076C,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
