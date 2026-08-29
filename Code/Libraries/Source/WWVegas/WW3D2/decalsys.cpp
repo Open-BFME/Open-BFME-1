@@ -249,7 +249,7 @@ void DecalGeneratorClass::Add_Mesh(RenderObjClass * mesh)
  * HISTORY:                                                                                    *
  *   1/26/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?Get_Mesh_List@DecalGeneratorClass@@ present-unmatched
+// stale marker removed: ?Get_Mesh_List@DecalGeneratorClass@@ is matched from this file
 NonRefRenderObjListClass & DecalGeneratorClass::Get_Mesh_List(void)
 {
 	return MeshList;

@@ -1539,7 +1539,7 @@ AABTreeIterator::AABTreeIterator(AABTreeCullSystemClass * tree) :
 	WWASSERT(Tree != NULL);
 }
 	
-// ?Reset@AABTreeIterator@@ present-unmatched
+// stale marker removed: ?Reset@AABTreeIterator@@QAEXXZ is matched from this file
 void AABTreeIterator::Reset(void)
 {
 	CurNodeIndex = 0;

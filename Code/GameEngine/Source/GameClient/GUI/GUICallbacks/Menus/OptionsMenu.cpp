@@ -396,7 +396,7 @@ __declspec(naked) Int OptionPreferences::getCampaignDifficulty(void)
 // ?getLANIPAddress@OptionPreferences@@QAEIXZ
 // Body in OptionsMenu_getLANIPAddress.asm (exact 403B retail).
 
-// ?setLANIPAddress@OptionPreferences@@ present-unmatched
+// stale marker removed: the AsciiString overload IS matched from this file
 void OptionPreferences::setLANIPAddress( AsciiString IP )
 {
 	AsciiString key("IPAddress");
@@ -404,7 +404,7 @@ void OptionPreferences::setLANIPAddress( AsciiString IP )
 	slot = IP;
 }
 
-// ?setLANIPAddress@OptionPreferences@@ present-unmatched
+// ?setLANIPAddress@OptionPreferences@@QAEXI@Z present-unmatched
 void OptionPreferences::setLANIPAddress( UnsignedInt IP )
 {
 	AsciiString tmp;
@@ -415,7 +415,7 @@ void OptionPreferences::setLANIPAddress( UnsignedInt IP )
 // ?getOnlineIPAddress@OptionPreferences@@QAEIXZ
 // Body in OptionsMenu_getOnlineIPAddress.asm (exact 397B retail).
 
-// ?setOnlineIPAddress@OptionPreferences@@ present-unmatched
+// stale marker removed: the AsciiString overload IS matched from this file
 void OptionPreferences::setOnlineIPAddress( AsciiString IP )
 {
 	AsciiString key("GameSpyIPAddress");
@@ -423,7 +423,7 @@ void OptionPreferences::setOnlineIPAddress( AsciiString IP )
 	slot = IP;
 }
 
-// ?setOnlineIPAddress@OptionPreferences@@ present-unmatched
+// ?setOnlineIPAddress@OptionPreferences@@QAEXI@Z present-unmatched
 void OptionPreferences::setOnlineIPAddress( UnsignedInt IP )
 {
 	AsciiString tmp;
