@@ -21,6 +21,7 @@
 // readable body of ?parseGameClientRandomVariable@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseICoord2D@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseMappedImage@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
+// readable body of ?parseObjectCreationList@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseParticleSystemTemplate@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseQuotedAsciiString@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseSpecialPowerTemplate@INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp

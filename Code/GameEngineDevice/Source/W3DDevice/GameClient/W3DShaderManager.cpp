@@ -432,7 +432,6 @@ public:
 // reference value because no body here has proven them.
 enum { BFME_DC_GENERIC_PIXEL_SHADER_1_1 = 3 };
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__init_ScreenBWFilter_UAEHXZ_007D0AF0.cpp
 // BFME tests the two device globals directly where the reference calls
 // W3DShaderManager::canRenderToTexture().
 extern void *g_deviceGlobal;								///< retail [0x012F9D04]
@@ -2187,7 +2186,6 @@ Int TerrainShaderPixelShader::shutdown(void)
 	return TRUE;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainShaderPixelShader_init_Thunk.cpp
 Int TerrainShaderPixelShader::init( void )
 {	
 	Int res;
@@ -3787,7 +3785,6 @@ Int FlatTerrainShaderPixelShader::shutdown(void)
 	return TRUE;
 }
 
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/FlatTerrainShaderPixelShader_init_Thunk.cpp
 Int FlatTerrainShaderPixelShader::init( void )
 {	
 	Int res;
