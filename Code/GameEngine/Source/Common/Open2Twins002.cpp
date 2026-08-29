@@ -13,8 +13,6 @@
 // setAsciiString virtual at slot 0x1c while setInt and getInt are direct.
 
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?setBool@UserPreferences@@QAEXVAsciiString@@_N@Z: Code/GameEngine/Source/Common/UserPreferences.cpp
-// readable body of ?setInt@UserPreferences@@QAEXVAsciiString@@H@Z: Code/GameEngine/Source/Common/UserPreferences.cpp
 
 // (declarations carried over from that file)
 //
