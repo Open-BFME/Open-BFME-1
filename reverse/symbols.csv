@@ -73201,6 +73201,7 @@ name,address,notes
 ?bfmeGet948C@BfmeGrid948C@@QAE_NH@Z,0x00017049,pin
 ?bfmeGet948D@BfmeGrid948D@@QAE_NH@Z,0x00017049,pin
 ?bfmeGet979B@BfmeKey979@@QAEPAUBfmeX979@@XZ,0x00020824,pin
+?bfmeGet992C@BfmeAsk992@@QAEHXZ,0x007E88B0,pin
 ?bfmeGetAllocator003D32D0@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QBE?AV?$allocator@PAX@2@XZ,0x0002CE4E,Open-BFME5 address-scoped STLport get_allocator ILT to body 0x003D32D0 used by the key-map copy constructor
 ?bfmeGetAllocator@Gen_000bb890@@ABE?AVBfmeAllocator@@XZ,0x0001E2A4,Open-BFME5 ILT the copy constructor at 0x000BB890 gets its allocator through
 ?bfmeGetAllocator@Gen_000ce890@@ABE?AVBfmeAllocator@@XZ,0x00008BED,Open-BFME5 ILT the copy constructor at 0x000CE890 gets its allocator through
@@ -73281,6 +73282,7 @@ name,address,notes
 ?bfmeHandle_00799c90@@YAXPAVGen_00799c90@@PAX@Z,0x0002C7AA,Open-BFME5 ILT the 22-byte submit at 0x00799C90 calls
 ?bfmeHandle_00799cb0@@YAXPAVGen_00799cb0@@PAX@Z,0x0003DC7B,Open-BFME5 ILT the 22-byte submit at 0x00799CB0 calls
 ?bfmeHas985C@BfmeArg985@@QAEDH@Z,0x000077B6,pin
+?bfmeHas992C@BfmeAsk992@@QAEDXZ,0x007E88A0,pin
 ?bfmeHash00007518@@YAIII@Z,0x00007518,Open-BFME5 ILT the per-type hash helper the bfmeDiffers pair at that sentinel calls
 ?bfmeHash0000DD28@@YAIII@Z,0x0000DD28,Open-BFME5 ILT the per-type hash helper the bfmeDiffers pair at that sentinel calls
 ?bfmeHash00010AFA@@YAIII@Z,0x00010AFA,Open-BFME5 ILT the per-type hash helper the bfmeDiffers pair at that sentinel calls
@@ -78005,6 +78007,7 @@ name,address,notes
 ?removeObjectFromGarrisonPoint@GarrisonContain@@IAEXPAVObject@@H@Z,0x0003F675,GarrisonContain remove point ILT
 ?removeObjectFromLookupTable@GameLogic@@QAEXPAVObject@@@Z,0x00388A90,Open-BFME5 callee of ?setID@Object@@IAEXW4ObjectID@@@Z at 0x001BEC70 via ILT 0x00031656; body erases the m_id key from the GameLogic+0xb0 lookup map
 ?removeObjectFromPathfindMap@Pathfinder@@QAEXPAVObject@@@Z,0x00006D7F,Open-BFME5 retail pathfinder removal thunk
+?removeOverrideTeamRelationship@BfmeTeamInstanceLink@@QAEXI@Z,0x0001A48D,Open-BFME5 view-class spelling of the ILT already pinned as ?removeOverrideTeamRelationship@Team@@QAEXI@Z; called through the view so the in-TU definition cannot inline when retail inlines the TeamPrototype walk into TeamFactory::teamAboutToBeDeleted
 ?removeOverrideTeamRelationship@Team@@QAEXI@Z,0x0001A48D,Open-BFME5 ILT thunk to body 0x000F2530; ?teamAboutToBeDeleted@TeamPrototype@@QAEXPAVTeam@@@Z at 0x000F4090 calls it on every team with the departing team id or zero
 ?removeOverrideTeamRelationship@Team@@QAE_NI@Z,0x0001A48D,Open-BFME5 vendored-header spelling (Bool return) of the ILT already pinned as ?removeOverrideTeamRelationship@Team@@QAEXI@Z; retail returns void and the call site discards it either way
 ?removePlayer@DisconnectMenu@@QAEXHVUnicodeString@@@Z,0x0003F233,DisconnectManager::disconnectPlayer direct-call ILT thunk
@@ -79892,4 +79895,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?removeOverrideTeamRelationship@BfmeTeamInstanceLink@@QAEXI@Z,0x0001A48D,Open-BFME5 view-class spelling of the ILT already pinned as ?removeOverrideTeamRelationship@Team@@QAEXI@Z; called through the view so the in-TU definition cannot inline when retail inlines the TeamPrototype walk into TeamFactory::teamAboutToBeDeleted
