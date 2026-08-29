@@ -2403,18 +2403,69 @@ void AIMoveAndTightenState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/AIMoveAndTightenState_onEnter_Thunk.cpp
-// ?onEnter@AIMoveAndTightenState@@UAE?AW4StateReturnType@@XZ present-unmatched
+// BFME keeps a CritterDesync trace at several onEnter sites that the reference
+// does not have: a guard on two globals, then an fprintf through the incremental
+// link thunk at 0x0003A17A. The message differs per site, which is how the string
+// table identifies which onEnter a given retail body is.
+//
+// The state layout also differs from the vendored StateMachine.h. Retail's
+// StateMachine has about 0x10 bytes of fields between m_goalPosition and m_locked
+// that the header does not declare, and the state's own m_machine and
+// m_goalPosition sit four bytes earlier than the header would place them. These
+// are views rather than a header edit, because 157 rows in this file compile
+// against the shared declarations.
+extern unsigned char g_012F0239;
+extern void *g_012ED4FC;
+extern void j_0003a17a(void);
+typedef void (__cdecl *BfmeCritterDesyncLog)(void *, const char *);
+
+struct BfmeMoveStateMachineFields
+{
+	unsigned char m_unreconstructed_000[ 0x10 ];
+	Object *m_owner;					///< retail this+0x10
+	unsigned char m_unreconstructed_014[ 0x24 - 0x14 ];
+	Coord3D m_goalPosition;					///< retail this+0x24
+	unsigned char m_unreconstructed_030[ 0x40 - 0x30 ];
+	unsigned char m_locked;					///< retail this+0x40
+};
+
+struct BfmeMoveStateFields
+{
+	unsigned char m_unreconstructed_000[ 0x1c ];
+	BfmeMoveStateMachineFields *m_machine;			///< retail this+0x1c
+	unsigned char m_unreconstructed_020[ 4 ];
+	Coord3D m_goalPosition;					///< retail this+0x24
+	unsigned char m_unreconstructed_030[ 0x4c - 0x30 ];
+	unsigned char m_adjustDestinations;			///< retail this+0x4c
+	unsigned char m_unreconstructed_04d[ 0x50 - 0x4d ];
+	unsigned char m_appendGoalPosition;			///< retail this+0x50 on AIMoveAndDeleteState
+};
+
+// The position retail reads inline off the object rather than through getPosition().
+struct BfmeMoveStateObject
+{
+	unsigned char m_unreconstructed_000[ 0x38 ];
+	Coord3D m_position;					///< retail this+0x38
+};
+
 StateReturnType AIMoveAndTightenState::onEnter()
 {
-	setAdjustsDestination(false);
-	Object *obj = getMachineOwner();
+	BfmeMoveStateFields *self = (BfmeMoveStateFields *)this;
+
+	if (g_012F0239 && g_012ED4FC)
+	{
+		((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
+			"CritterDesync: setAdjustDestination(FALSE) 7");
+	}
+	BfmeMoveStateMachineFields *machine = self->m_machine;
+	self->m_adjustDestinations = 0;
+	Object *obj = machine->m_owner;
 	AIUpdateInterface *ai = obj->getAI();
 	m_okToRepathTimes = 1;
 	m_checkForPath = true;
 	TheAI->pathfinder()->removeGoal(obj);
-	m_goalPosition = *getMachineGoalPosition();
-	ai->requestApproachPath(&m_goalPosition);
+	self->m_goalPosition = machine->m_goalPosition;
+	ai->requestApproachPath(&self->m_goalPosition);
 	return AIInternalMoveToState::onEnter();
 }
 
@@ -5274,18 +5325,23 @@ void AIMoveAndDeleteState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/AIMoveAndDeleteState_onEnter_Thunk.cpp
-// ?onEnter@AIMoveAndDeleteState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType AIMoveAndDeleteState::onEnter()
 {
-	setAdjustsDestination(false);
-	getMachine()->lock("AIMoveAndDeleteState::onEnter");
+	BfmeMoveStateFields *self = (BfmeMoveStateFields *)this;
+
+	if (g_012F0239 && g_012ED4FC)
+	{
+		((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
+			"CritterDesync: setAdjustDestination(FALSE) 60");
+	}
+	self->m_adjustDestinations = 0;
+	self->m_machine->m_locked = 1;
 	// if we have a goal object, move to it, otherwise move to goal position
-	if (getMachine()->getGoalObject())
-		m_goalPosition = *getMachine()->getGoalObject()->getPosition();
+	if (((StateMachine *)self->m_machine)->getGoalObject())
+		self->m_goalPosition = ((const BfmeMoveStateObject *)((StateMachine *)self->m_machine)->getGoalObject())->m_position;
 	else
-		m_goalPosition = *getMachine()->getGoalPosition();
-	m_appendGoalPosition = true; // We may be moving off the map.
+		self->m_goalPosition = self->m_machine->m_goalPosition;
+	self->m_appendGoalPosition = 1; // We may be moving off the map.
 	return AIInternalMoveToState::onEnter();
 }
 
