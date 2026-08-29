@@ -1650,7 +1650,9 @@ three were reported as tree-wide hazards; all three are bounded the same way.
 
 ## BFME ships BOTH module layouts -- a family lever is not a family fact
 
-23 donors carry a marker for a ??0X@@QAE@PAVThing@@PBVModuleData@@@Z, every one
+48 donors carry a module-constructor marker (the first screen said 23 -- it
+grepped the full signature and a third of markers name no signature at all, so
+it could not see them). Every one
 holding a constructor byte-identical to what its destination already spells.
 What keeps them apart is the module hierarchy: retail's Module has no
 MemoryPoolObject base, so BehaviorModule spans 0x0C and the second vtable store
@@ -1673,10 +1675,24 @@ SETTING THIS DEFINE TREE-WIDE WOULD BREAK TEN FILES. The screen is per-file and
 cheap; the generalisation is false. Apply the same caution to any switch that
 looks like it characterises a family.
 
-Three of the misses are one finding: retail stores a FOURTH vtable at this+0x18
-that the vendored UpgradeModule hierarchy has nowhere to put -- BehaviorModule
-+0x00, UpgradeMux +0x0C and UpgradeModuleInterface +0x10 are all correct, BFME
-simply has one more interface base after them. Header change, not a fold.
+CORRECTED: an earlier reading of three misses as "retail stores a FOURTH vtable
+the vendored hierarchy has nowhere to put" was wrong, and wrong in an
+instructive way. Retail stores four vptrs, at +0x00/+0x0C/+0x10/+0x18; this tree
+stores four, at +0x00/+0x04/+0x10/+0x14. Nothing is missing and nothing is
+reordered -- the sub-object at +0x00 spans 0x0C in BFME against 0x04 here, eight
+bytes of data the vendored BehaviorModule does not declare, and bases two and
+four both slide by that eight.
+
+The error came from screening those three WITH the define on. The define lands
+base two correctly AND DELETES base four, so three stores showed against
+retail's four and read as a missing base -- an artifact of the experiment read
+as a fact about retail. DO NOT READ A COUNT DIFFERENCE OFF A RUN WHOSE FLAGS
+CHANGE THE COUNT. It surfaced because a fourth family member, invisible until
+the marker fix, screens at 2 diffs WITHOUT the define with all four stores
+present: one body disagreeing with a three-body conclusion.
+
+The actionable statement is "BehaviorModule is eight bytes bigger", not "find a
+missing interface base".
 
 ## The `// cl:` line must be the FIRST line of the file
 
