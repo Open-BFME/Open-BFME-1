@@ -119,6 +119,76 @@ struct BFMEQuickPathFields
 	Int m_validLocomotorSurfaces;
 };
 
+// The rest of the AIUpdateInterface tail the Zero Hour shim cannot place: the
+// state machine, the current victim, and the mood-check deadline with its
+// randomise flag.
+struct BFMEAIUpdateFields
+{
+	char m_unreconstructed_000[0x08];
+	Object *m_object;					///< retail this+0x08
+	char m_unreconstructed_00C[0x30 - 0x0C];
+	StateMachine *m_stateMachine;				///< retail this+0x30
+	char m_unreconstructed_034[0x40 - 0x34];
+	ObjectID m_currentVictimID;				///< retail this+0x40
+	char m_unreconstructed_044[0x1FC - 0x44];
+	UnsignedInt m_nextMoodCheckTime;			///< retail this+0x1FC
+	char m_unreconstructed_200[0x32A - 0x200];
+	Bool m_randomlyOffsetMoodCheck;				///< retail this+0x32A
+};
+
+struct BFMEStateIDField
+{
+	StateID getID() const { return m_id; }
+
+	char m_unreconstructed_000[4];
+	StateID m_id;						///< retail this+0x04
+};
+
+struct BFMEStateMachineFields
+{
+	// BFME's getCurrentStateID is not the reference one-liner: an absent or
+	// invalid current state falls back to a second state at machine+0x1c, which
+	// is why the invalid constant appears twice -- once as the value for an
+	// absent current state, once as the value the comparison tests for.
+	StateID getCurrentStateID() const
+	{
+		StateID id = m_currentState
+				? reinterpret_cast<const BFMEStateIDField *>(m_currentState)->getID()
+				: (StateID)INVALID_STATE_ID;
+
+		if (id == INVALID_STATE_ID)
+		{
+			if (m_fallbackState)
+				return reinterpret_cast<const BFMEStateIDField *>(m_fallbackState)->getID();
+
+			return (StateID)INVALID_STATE_ID;
+		}
+
+		return id;
+	}
+
+	char m_unreconstructed_000[0x1C];
+	State *m_fallbackState;					///< retail this+0x1C
+	char m_unreconstructed_020[0x24 - 0x20];
+	Coord3D m_goalPosition;					///< retail this+0x24
+	char m_unreconstructed_030[0x58 - 0x30];
+	State *m_currentState;					///< retail this+0x58
+};
+
+// The reference GameLogic inlines its object lookup; BFME calls it.
+class BFMEObjectLookup
+{
+public:
+	Object *findObjectByID( ObjectID id );			///< retail ILT 0x0001f253
+};
+
+// The object status word, whose IS_ATTACKING bit is 22.
+struct BFMEObjectStatusWord
+{
+	char m_unreconstructed_000[0x90];
+	UnsignedInt m_status;					///< retail this+0x90
+};
+
 class BFMEDeletablePath : public Path
 {
 public:
@@ -4635,26 +4705,30 @@ void AIUpdateInterface::setCurrentVictim( const Object *victim )
 /**
  * Who is our current victim?
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_getCurrentVictim.cpp
-// ?getCurrentVictim@AIUpdateInterface@@ present-unmatched
+// ?getCurrentVictim@AIUpdateInterface@@QBEPAVObject@@XZ
 Object *AIUpdateInterface::getCurrentVictim( void ) const
 {
-	if (m_currentVictimID != INVALID_ID)
-		return TheGameLogic->findObjectByID( m_currentVictimID );
+	const BFMEAIUpdateFields *self = reinterpret_cast<const BFMEAIUpdateFields *>(this);
+
+	if (self->m_currentVictimID != INVALID_ID)
+		return reinterpret_cast<BFMEObjectLookup *>(TheGameLogic)->findObjectByID(
+			self->m_currentVictimID );
 
 	return NULL;
 }
 
 // if we are attacking a position (and NOT an object), return it. otherwise return null.
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_getCurrentVictimPos.cpp
-// ?getCurrentVictimPos@AIUpdateInterface@@ present-unmatched
+// ?getCurrentVictimPos@AIUpdateInterface@@QBEPBUCoord3D@@XZ
 const Coord3D *AIUpdateInterface::getCurrentVictimPos( void ) const
 {
-	if (getObject()->testStatus(OBJECT_STATUS_IS_ATTACKING))
+	const BFMEAIUpdateFields *self = reinterpret_cast<const BFMEAIUpdateFields *>(this);
+
+	// The status word is read in place: testStatus is not called.
+	if (reinterpret_cast<const BFMEObjectStatusWord *>(self->m_object)->m_status & 0x00400000)
 	{
-		if (m_currentVictimID == INVALID_ID)
+		if (self->m_currentVictimID == INVALID_ID)
 		{
-			return getStateMachine()->getGoalPosition();
+			return &reinterpret_cast<const BFMEStateMachineFields *>(self->m_stateMachine)->m_goalPosition;
 		}
 	}
 
@@ -4682,11 +4756,13 @@ AttitudeType AIUpdateInterface::getAttitude( void ) const
 /**
  * Return the current state the AI is in.
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_getAIStateType.cpp
-// ?getAIStateType@AIUpdateInterface@@ present-unmatched
+// ?getAIStateType@AIUpdateInterface@@QBE?AW4AIStateType@@XZ
 AIStateType AIUpdateInterface::getAIStateType() const
 {
-	return (AIStateType)getStateMachine()->getCurrentStateID();
+	const BFMEStateMachineFields *machine = reinterpret_cast<const BFMEStateMachineFields *>(
+		reinterpret_cast<const BFMEAIUpdateFields *>(this)->m_stateMachine );
+
+	return (AIStateType)machine->getCurrentStateID();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -4890,13 +4966,17 @@ void AIUpdateInterface::wakeUpAndAttemptToTarget( void )
 /**
  * Reset when we should next look for a target. Usually called by *Idle::onEnter
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate_resetNextMoodCheckTime.cpp
-// ?resetNextMoodCheckTime@AIUpdateInterface@@ present-unmatched
+// ?resetNextMoodCheckTime@AIUpdateInterface@@QAEXXZ
 void AIUpdateInterface::resetNextMoodCheckTime()
 {
-	UnsignedInt now = TheGameLogic->getFrame();
-	m_nextMoodCheckTime = now + TheAI->getAiData()->m_forceIdleFramesCount;
-	m_randomlyOffsetMoodCheck = TRUE;
+	BFMEAIUpdateFields *self = reinterpret_cast<BFMEAIUpdateFields *>(this);
+
+	// BFME only pushes the deadline out, never pulls it in.
+	UnsignedInt when = TheAI->getAiData()->m_forceIdleFramesCount + TheGameLogic->getFrame();
+	if (when > self->m_nextMoodCheckTime)
+		self->m_nextMoodCheckTime = when;
+
+	self->m_randomlyOffsetMoodCheck = TRUE;
 }
 
 //----------------------------------------------------------------------------------------------
