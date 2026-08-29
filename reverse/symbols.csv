@@ -10075,6 +10075,7 @@ name,address,notes
 ?LZHLDecompress@@YAHPAXPAEPAIPBE2@Z,0x00823190,LZH-Light decompression wrapper
 ?LZHLDestroyDecompressor@@YAXPAX@Z,0x00823230,LZH-Light decompressor destroy wrapper
 ?Load@INIClass@@QAEHAAVStraw@@@Z,0x009E4680
+?LoadAndCreateD3DShader@BfmeShaderLoader@@SAJPBDPAK@Z,0x0001FC99,alias of ?LoadAndCreateD3DShader@W3DShaderManager@@SAJPBDPAK@Z pinned at the same ILT; W3DShaderManager.cpp compiles the reference five-argument declaration so the BFME two-argument spelling needs a name of its own
 ?LoadAndCreateD3DShader@W3DShaderManager@@SAJPBDPAK@Z,0x0001FC99,FlatTerrainShaderPixelShader retail two-argument loader thunk
 ?Load_W3D@AdaptiveDeltaMotionChannelClass@@QAE_NAAVChunkLoadClass@@@Z,0x00977CC0
 ?Load_W3D@TimeCodedMotionChannelClass@@QAE_NAAVChunkLoadClass@@@Z,0x00977A00
@@ -73924,6 +73925,7 @@ name,address,notes
 ?bfmeRun1067@BfmeR1067@@QAEXPAVBfmeX1067@@PADH11111@Z,0x00015235,pin
 ?bfmeRun1068@BfmeR1068@@QAEXPAVBfmeX1068@@PADH11111@Z,0x00015235,pin
 ?bfmeRun1069@BfmeR1069@@QAEXPAVBfmeX1069@@PADH11111@Z,0x00015235,pin
+?bfmeRun1070@BfmeR1070@@QAEXPAVBfmeX1070@@PADH11111@Z,0x00015235,pin
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
 ?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
 ?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
@@ -74124,6 +74126,7 @@ name,address,notes
 ?bfmeSwapEnds@@YAXPAPAPAVBfmeOwnedI@@0@Z,0x00032FE7,Open-BFME5 the ICF thunk (to 0x00432FE7) the swap in the clear at 0x003C1190 calls for the third pair
 ?bfmeTail1052@BfmeL1052@@QAEXPAUBfmeM1052@@@Z,0x0004115A,pin
 ?bfmeTail1061@BfmeT1061@@QAEXXZ,0x00010F8C,pin
+?bfmeTail1070@BfmeT1070@@QAEXXZ,0x00010F8C,pin
 ?bfmeTail915C@BfmeElem915C@@QAEHPAX@Z,0x00049EA4,pin
 ?bfmeTail921A@BfmeTail921A@@QAEXPAX0@Z,0x00007BCB,pin
 ?bfmeTail922A@BfmeTail922A@@QAEDXZ,0x0001773D,pin
@@ -75656,11 +75659,13 @@ name,address,notes
 ?g_bfmeFmtA1066@@3PADA,0x00D09E28,pin
 ?g_bfmeFmtA1067@@3PADA,0x00D09F64,pin
 ?g_bfmeFmtA1068@@3PADA,0x00D09A60,pin
+?g_bfmeFmtA1070@@3PADA,0x00D05740,pin
 ?g_bfmeFmtA995C@@3PADA,0x00D07374,pin
 ?g_bfmeFmtB1064@@3PADA,0x00D0523C,pin
 ?g_bfmeFmtB1066@@3PADA,0x00D061A0,pin
 ?g_bfmeFmtB1067@@3PADA,0x00D05EC8,pin
 ?g_bfmeFmtB1068@@3PADA,0x00D09A84,pin
+?g_bfmeFmtB1070@@3PADA,0x00D097A4,pin
 ?g_bfmeFmtB995C@@3PADA,0x00D053D4,pin
 ?g_bfmeFmtC1063@@3PADA,0x00D056EC,pin
 ?g_bfmeFmtC1064@@3PADA,0x00D05224,pin
@@ -75668,6 +75673,7 @@ name,address,notes
 ?g_bfmeFmtD1065@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtD1067@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtD1068@@3PADA,0x00C7C7B4,pin
+?g_bfmeFmtD1070@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtE1064@@3PADA,0x00D05E7C,pin
 ?g_bfmeFmtF1065@@3PADA,0x00D09950,pin
 ?g_bfmeFmtG1065@@3PADA,0x00C80F24,pin
@@ -75681,6 +75687,7 @@ name,address,notes
 ?g_bfmeG1024@@3PAVBfmeG1024@@A,0x00EED668,pin
 ?g_bfmeG1059@@3PAVBfmeG1059@@A,0x00EF7FE0,pin
 ?g_bfmeG1061@@3PAVBfmeG1061@@A,0x00EF7730,pin
+?g_bfmeG1070@@3PAVBfmeG1070@@A,0x00EF7730,pin
 ?g_bfmeGate961@@3PAVBfmeGate961@@A,0x00EF706C,pin
 ?g_bfmeGateA979@@3PAHA,0x00EF4B58,pin
 ?g_bfmeGlob956@@3PAUBfmeGlob956@@A,0x00EEF214,pin
@@ -75861,6 +75868,7 @@ name,address,notes
 ?g_bfmeR1067@@3PAVBfmeR1067@@A,0x00EF19E8,pin
 ?g_bfmeR1068@@3PAVBfmeR1068@@A,0x00EF19E8,pin
 ?g_bfmeR1069@@3PAVBfmeR1069@@A,0x00EF19E8,pin
+?g_bfmeR1070@@3PAVBfmeR1070@@A,0x00EF19E8,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
@@ -75919,6 +75927,7 @@ name,address,notes
 ?g_bfmeT1057@@3PAVBfmeT1057@@A,0x00EF1464,pin
 ?g_bfmeT1058@@3PAVBfmeT1058@@A,0x00EF1464,pin
 ?g_bfmeT1061@@3PAVBfmeT1061@@A,0x00EED524,pin
+?g_bfmeT1070@@3PAVBfmeT1070@@A,0x00EED524,pin
 ?g_bfmeTab1021@@3PAHA,0x00EB7D94,pin
 ?g_bfmeTab1053@@3HA,0x00EB9670,pin
 ?g_bfmeTag1028@@3PADA,0x00D23918,pin
@@ -75972,6 +75981,7 @@ name,address,notes
 ?g_bfmeX1065@@3PAVBfmeX1065@@A,0x00EB7D80,pin
 ?g_bfmeX1067@@3PAVBfmeX1067@@A,0x00EB7D80,pin
 ?g_bfmeX1068@@3PAVBfmeX1068@@A,0x00EB7D80,pin
+?g_bfmeX1070@@3PAVBfmeX1070@@A,0x00EB7D80,pin
 ?g_bfmeXEBK@@3PAXA,0x00EC3C58,pin
 ?g_bfmeXEMC@@3PAXA,0x00EC3B2C,pin
 ?g_bfmeY1058@@3HA,0x00EBAA2C,pin
@@ -79793,6 +79803,7 @@ __imp_?bfmePrint1025@@YAXHPADH@Z,0x00F5948C,pin
 __imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
 __imp_?bfmeSpf1065@@YAHPAD0H@Z,0x00F5948C,pin
 __imp_?bfmeSpf1068@@YAHPAD0H@Z,0x00F5948C,pin
+__imp_?bfmeSpf1070@@YAHPAD0H@Z,0x00F5948C,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
 __imp_?bfmeUnlock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58E74,pin
 __imp_?bfmeWait1012@@YGHPAXH@Z,0x00F58F64,pin
@@ -80539,4 +80550,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?LoadAndCreateD3DShader@BfmeShaderLoader@@SAJPBDPAK@Z,0x0001FC99,alias of ?LoadAndCreateD3DShader@W3DShaderManager@@SAJPBDPAK@Z pinned at the same ILT; W3DShaderManager.cpp compiles the reference five-argument declaration so the BFME two-argument spelling needs a name of its own
