@@ -59,7 +59,12 @@ public:
 	static Int getUncompressedSize( const void *mem, Int len );
 
 	static Int compressData( CompressionType compType, void *src, Int srcLen, void *dest, Int destLen ); // 0 on error
-	static Int decompressData( void *src, Int srcLen, void *dest, Int destLen ); // 0 on error
+	// BFME takes the source as CONST: retail's body is
+	// ?decompressData@CompressionManager@@SAHPBXHPAXH@Z at 0x0081E890, and
+	// CompressionManager_decompressData.cpp -- which reproduces it byte for byte --
+	// has to declare its own local class to say so.  The reference header, and this
+	// copy of it, dropped the const.
+	static Int decompressData( const void *src, Int srcLen, void *dest, Int destLen ); // 0 on error
 
 	static const char *getCompressionNameByType( CompressionType compType );
 
