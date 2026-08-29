@@ -73834,6 +73834,8 @@ name,address,notes
 ?bfmeSendEventA11@@YAXPAX00IH@Z,0x000023E2,pin
 ?bfmeSendEventA19@@YAXPAX00IH@Z,0x00049896,pin
 ?bfmeSendRM@BfmeSinkRM@@QAEXPAXH@Z,0x00006613,pin
+?bfmeSendX1017@BfmeJ1017@@QAEXHH@Z,0x008A07A0,pin
+?bfmeSendY1017@BfmeJ1017@@QAEXHHH@Z,0x008A0770,pin
 ?bfmeSet1016@BfmeDst1016@@QAEXHHH@Z,0x00925D10,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
@@ -75232,6 +75234,9 @@ name,address,notes
 ?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
 ?g_activeObj12F0610@@3PAXA,0x00EF0610,pin
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
+?g_bfme1017G@@3DA,0x00F3781C,pin
+?g_bfme1017H@@3HA,0x00F37800,pin
+?g_bfme1017I@@3HA,0x00F377DC,pin
 ?g_bfme911Busy@@3DA,0x0094B208,pin
 ?g_bfme911Flag@@3DA,0x008D7188,pin
 ?g_bfme911Ptr@@3PAVBfmeObj911C@@A,0x0094B210,pin
@@ -75441,6 +75446,7 @@ name,address,notes
 ?g_bfmeInitDYB@@3DA,0x00EED8B0,pin
 ?g_bfmeInt64Format@@3QBDB,0x011442EC,address-derived int64 format string from retail 0x009D9503
 ?g_bfmeIntegerFormat@@3QBDB,0x011442DC,address-derived integer format string from the DIR32 operand at retail 0x009D94B8
+?g_bfmeJ1017@@3PAVBfmeJ1017@@A,0x00F377D8,pin
 ?g_bfmeLimit952@@3MA,0x00C977E8,pin
 ?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
