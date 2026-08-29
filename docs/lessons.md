@@ -2726,20 +2726,42 @@ decoding produced a path to "scripts.cpp" that was nothing of the sort.
 
 ## The rows ALREADY matched tell you which regions are safe to change
 
-Correcting a shared class reads as dangerous because N rows depend on it. It is
-the opposite: those rows are the constraint that makes it safe, and they can be
-read before touching anything.
+Correcting a shared class reads as dangerous because N rows depend on it. Those
+rows are also the constraint that tells you whether it is safe, and they can be
+read before touching anything. The question is never "how many rows depend on
+this class" but **"which of them read the region I am moving, and HOW".**
 
-GameWindow.cpp had 30 matched rows when a four-byte insertion at +0x04 was
-proposed -- everything from m_status onward moving to +0x08, +0x0C, +0x2C,
-+0x30. A body reading m_instData at +0x38 could not have matched retail's +0x3C,
-so no matched row touches the shifted region, and the nine that were failing all
-did. The 30 rows were positive evidence the class was wrong AND that fixing it
-broke nothing.
+**The "how" is the part that was originally got wrong here, and it is the whole
+rule.** This entry first claimed that none of GameWindow.cpp's matched rows read
+the shifted region. The enumeration says TWENTY of 34 do. They did not break,
+and the reason is not that they avoid the region:
 
-So the question is never "how many rows depend on this class". It is "which of
-them read the region I am moving" -- and a matched row that reads it is a
-falsification, not an obstacle.
+  * **A row reaching an offset through a TU-LOCAL VIEW is immune to a header
+    change.** It compiled an absolute number -- `struct BFMEGameWindowOrigin
+    { char pad[0x14]; Int x; Int y; }` and the `BFME_WIN_` macro rows -- and
+    editing the class cannot reach it. Seventeen of the twenty are this.
+  * **A row that reads a member BY NAME is the one at risk.** Three do:
+    winSetNextInLayout writes `this+0x1F8`, winSetPrevInLayout `+0x1FC`,
+    winSetLayout `+0x200`, as plain `m_nextLayout = next;` bodies. Under the
+    gamewindow shim's tail those become 0x208/0x20C/0x210 and stop matching.
+
+So enumerate by MECHANISM, not by offset range. And enumerate properly: the
+first pass here grepped for one macro name (`BFME_WIN`) and so counted five
+view-based rows as symbolic because their views were spelled differently. One
+naming convention is not a census.
+
+## A class can be short at the FRONT and correct at the TAIL
+
+GameWindow needs +4 at the front (m_status 0x08, m_size 0x0C, m_userData 0x2C)
+while its tail already lands on retail's offsets. Both can only be true if
+compensating bytes sit between them -- and the shim names FOUR BFME-only
+insertions, not one: m_bfmeAnchor +0x04, m_bfmeInputExtra +0x1DC,
+m_bfmeCallbackExtra +0x1F0, m_bfmeCallbackExtra2 +0x1F4.
+
+A single measured delta at the front is therefore not evidence that the whole
+class is uniformly shifted, and "one insertion lands a dozen near-misses" is the
+kind of framing that survives only until someone enumerates the tail. Check both
+ends before sizing a header pass.
 
 ## Check a candidate shim against the BODIES, not against the destination
 
