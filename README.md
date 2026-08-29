@@ -3,6 +3,8 @@
 
 Goal: Source code that rebuilds BFME 1's executable byte-for-byte, and game modernization improvements that you've only seen in your dreams.
 
+[Join our Discord to participate!](https://discord.gg/wCvA2XqPUT)
+
 ## What?
 
 * If you take a part of the BFME binary, recreate the exact source code that would make that part of the binary, then compile the source code and inject it into the binary, you get the same binary
@@ -25,8 +27,6 @@ is the work.
 * [ ] AC fix
 * [ ] World builder Source Code
 * [ ] 16 player maps
-
-ping `redbracket` on Discord if there's something else you want to change this roadmap
 
 ## How You Can Help
 
