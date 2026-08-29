@@ -162,6 +162,11 @@ name,address,notes
 ??$_Construct@U?$pair@$$CBHI@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHI@0@ABU10@@Z,0x0001C67A,ILT the int-keyed tree copy at 0x000AAC90 calls to build the pair in its new node
 ??$_Construct@U?$pair@$$CBHPAX@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHPAX@0@ABU10@@Z,0x0001AB59,Open-BFME5 ILT the int-to-pointer hashtable _M_insert at 0x000D3600 copy-constructs the node value through
 ??$_Construct@U?$pair@$$CBHUGen_t_003e2580_p12cd@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUGen_t_003e2580_p12cd@@@0@ABU10@@Z,0x0002446A,Open-BFME5 the value _Construct the tree _M_insert at 0x003DBDC0 reaches
+??$_Construct@U?$pair@$$CBHUOpen2Mapped382010@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUOpen2Mapped382010@_STL@@@0@ABU10@@Z,0x00049AD5,Open2 0x00382010 hashtable node construct (ILT)
+??$_Construct@U?$pair@$$CBHUOpen2Mapped494DA0@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUOpen2Mapped494DA0@_STL@@@0@ABU10@@Z,0x0003974D,Open2 0x00494DA0 hashtable node construct (ILT)
+??$_Construct@U?$pair@$$CBHUOpen2Mapped498B30@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUOpen2Mapped498B30@_STL@@@0@ABU10@@Z,0x0002B260,Open2 0x00498B30 hashtable node construct (ILT)
+??$_Construct@U?$pair@$$CBHUOpen2Mapped5B7CE0@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUOpen2Mapped5B7CE0@_STL@@@0@ABU10@@Z,0x00022499,Open2 0x005B7CE0 hashtable node construct (ILT)
+??$_Construct@U?$pair@$$CBHUOpen2Mapped613250@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUOpen2Mapped613250@_STL@@@0@ABU10@@Z,0x0002A11C,Open2 0x00613250 hashtable node construct (ILT)
 ??$_Construct@U?$pair@$$CBHURva00064B10Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHURva00064B10Value@@@0@ABU10@@Z,0x0000EF6B,Open-BFME5 the element copy the RvaTreeCopy body at 0x00064B10 calls
 ??$_Construct@U?$pair@$$CBHURva0008EAA0Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHURva0008EAA0Value@@@0@ABU10@@Z,0x00029348,Open-BFME5 the value _Construct the tree _M_insert at 0x0008E9C0 reaches
 ??$_Construct@U?$pair@$$CBHURva000A3E50Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHURva000A3E50Value@@@0@ABU10@@Z,0x0002C3A4,Open-BFME5 the value _Construct the tree _M_copy at 0x000A3E50 calls
@@ -75982,6 +75987,7 @@ name,address,notes
 ?getFileTransferProgress@ConnectionManager@@QAEHHVAsciiString@@@Z,0x00038113,ILT thunk to 0x00669A00; the address Network::getFileTransferProgress at 0x00682640 encodes
 ?getFilename@WindowLayout@@QAE?AVAsciiString@@XZ,0x00019D53,BFME WindowLayout +0x04 accessor: Shell::findScreenByFilename retail callsite passes WindowLayout receiver and hidden AsciiString return; ILT 0x00019D53 targets exact 32B StringBase<char> copy-accessor body at 0x004EA450
 ?getFinal@BfmeSubInnerD77@@QAEPAXXZ,0x000022BB,pin
+?getFinalOverride@BfmeControlBarOverridable@@QBEPBV1@XZ,0x000022BB,Open-BFME5 view-class spelling of the ILT already pinned as ?getFinalOverride@Overridable@@QBEPBV1@XZ; ControlBar::findNonConstCommandButton calls it through the view so the vendored inline recursive walk cannot unroll
 ?getFinalOverride@Overridable@@QBEPBV1@XZ,0x000022BB
 ?getFirstItemIn_TeamMemberList@Team@@QBEPAVObject@@XZ,0x0003FD41,Team::getFirstItemIn_TeamMemberList resolves to the retail 5-byte ILT at 0x0003FD41, whose body is the proven +0x0C team-member-head getter used by evaluateTeamCanPathToWaypoint
 ?getFirstObject@GameLogic@@QAEPAVObject@@XZ,0x000358BE,doEnableOrDisableObjectDifficultyBonuses call target (incremental-link thunk)
@@ -78141,6 +78147,11 @@ name,address,notes
 ?resize@?$hashtable@U?$pair@$$CBHUGen_t_006af510_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_006af510_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_006af510_p12cd@@@_STL@@@2@@_STL@@QAEXI@Z,0x006A7B60,gen-tgrid payload member
 ?resize@?$hashtable@U?$pair@$$CBHUGen_t_008534e0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_008534e0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_008534e0_p12cd@@@_STL@@@2@@_STL@@QAEXI@Z,0x00852340,gen-tgrid payload member
 ?resize@?$hashtable@U?$pair@$$CBHUGen_t_00853590_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00853590_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00853590_p12cd@@@_STL@@@2@@_STL@@QAEXI@Z,0x00852340,gen-tgrid payload member
+?resize@?$hashtable@U?$pair@$$CBHUOpen2Mapped382010@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUOpen2Mapped382010@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUOpen2Mapped382010@_STL@@@_STL@@@2@@_STL@@AAEXI@Z,0x000368DB,Open2 0x00382010 hashtable resize (ILT)
+?resize@?$hashtable@U?$pair@$$CBHUOpen2Mapped494DA0@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUOpen2Mapped494DA0@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUOpen2Mapped494DA0@_STL@@@_STL@@@2@@_STL@@AAEXI@Z,0x0001C1CA,Open2 0x00494DA0 hashtable resize (ILT)
+?resize@?$hashtable@U?$pair@$$CBHUOpen2Mapped498B30@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUOpen2Mapped498B30@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUOpen2Mapped498B30@_STL@@@_STL@@@2@@_STL@@AAEXI@Z,0x0004A395,Open2 0x00498B30 hashtable resize (ILT)
+?resize@?$hashtable@U?$pair@$$CBHUOpen2Mapped5B7CE0@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUOpen2Mapped5B7CE0@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUOpen2Mapped5B7CE0@_STL@@@_STL@@@2@@_STL@@AAEXI@Z,0x0002CF5C,Open2 0x005B7CE0 hashtable resize (ILT)
+?resize@?$hashtable@U?$pair@$$CBHUOpen2Mapped613250@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUOpen2Mapped613250@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUOpen2Mapped613250@_STL@@@_STL@@@2@@_STL@@AAEXI@Z,0x00020F86,Open2 0x00613250 hashtable resize (ILT)
 ?resize@?$hashtable@U?$pair@$$CBHW4Relationship@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHW4Relationship@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@2@@_STL@@QAEXI@Z,0x0000309E,ILT the Int-keyed relationship hashtable insert calls first at 0x0078714C
 ?resize@?$hashtable@U?$pair@$$CBIH@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIH@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIH@_STL@@@2@@_STL@@AAEXI@Z,0x00040CF0,Open-BFME5 ILT the unsigned-key hashtable _M_insert at 0x00389A20 calls first
 ?resize@?$hashtable@U?$pair@$$CBIPAX@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIPAX@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIPAX@_STL@@@2@@_STL@@AAEXI@Z,0x0000E4D0,Open-BFME5 ILT the unsigned-to-pointer hashtable _M_insert at 0x00431070 calls first
@@ -79944,14 +79955,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?getFinalOverride@BfmeControlBarOverridable@@QBEPBV1@XZ,0x000022BB,Open-BFME5 view-class spelling of the ILT already pinned as ?getFinalOverride@Overridable@@QBEPBV1@XZ; ControlBar::findNonConstCommandButton calls it through the view so the vendored inline recursive walk cannot unroll
-??$_Construct@U?$pair@$$CBHUOpen2Mapped382010@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUOpen2Mapped382010@_STL@@@0@ABU10@@Z,0x00049AD5,Open2 0x00382010 hashtable node construct (ILT)
-??$_Construct@U?$pair@$$CBHUOpen2Mapped494DA0@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUOpen2Mapped494DA0@_STL@@@0@ABU10@@Z,0x0003974D,Open2 0x00494DA0 hashtable node construct (ILT)
-??$_Construct@U?$pair@$$CBHUOpen2Mapped498B30@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUOpen2Mapped498B30@_STL@@@0@ABU10@@Z,0x0002B260,Open2 0x00498B30 hashtable node construct (ILT)
-??$_Construct@U?$pair@$$CBHUOpen2Mapped5B7CE0@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUOpen2Mapped5B7CE0@_STL@@@0@ABU10@@Z,0x00022499,Open2 0x005B7CE0 hashtable node construct (ILT)
-??$_Construct@U?$pair@$$CBHUOpen2Mapped613250@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUOpen2Mapped613250@_STL@@@0@ABU10@@Z,0x0002A11C,Open2 0x00613250 hashtable node construct (ILT)
-?resize@?$hashtable@U?$pair@$$CBHUOpen2Mapped382010@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUOpen2Mapped382010@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUOpen2Mapped382010@_STL@@@_STL@@@2@@_STL@@AAEXI@Z,0x000368DB,Open2 0x00382010 hashtable resize (ILT)
-?resize@?$hashtable@U?$pair@$$CBHUOpen2Mapped494DA0@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUOpen2Mapped494DA0@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUOpen2Mapped494DA0@_STL@@@_STL@@@2@@_STL@@AAEXI@Z,0x0001C1CA,Open2 0x00494DA0 hashtable resize (ILT)
-?resize@?$hashtable@U?$pair@$$CBHUOpen2Mapped498B30@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUOpen2Mapped498B30@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUOpen2Mapped498B30@_STL@@@_STL@@@2@@_STL@@AAEXI@Z,0x0004A395,Open2 0x00498B30 hashtable resize (ILT)
-?resize@?$hashtable@U?$pair@$$CBHUOpen2Mapped5B7CE0@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUOpen2Mapped5B7CE0@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUOpen2Mapped5B7CE0@_STL@@@_STL@@@2@@_STL@@AAEXI@Z,0x0002CF5C,Open2 0x005B7CE0 hashtable resize (ILT)
-?resize@?$hashtable@U?$pair@$$CBHUOpen2Mapped613250@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUOpen2Mapped613250@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUOpen2Mapped613250@_STL@@@_STL@@@2@@_STL@@AAEXI@Z,0x00020F86,Open2 0x00613250 hashtable resize (ILT)
