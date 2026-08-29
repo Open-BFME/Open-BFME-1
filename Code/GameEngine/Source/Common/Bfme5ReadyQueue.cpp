@@ -4,6 +4,9 @@ class TextureClass
 {
 public:
 	void Release_Ref(void);
+
+	int m_bfme00;
+	unsigned short m_bfmeRefCount;
 };
 
 static void bfme5ReleaseTexture(TextureClass **pp)
@@ -197,4 +200,22 @@ public:
 Bfme5PairArray::Bfme5PairArray(void)
 	: m_bfme00(0), m_bfme04(0), m_bfme08(m_bfmeArray)
 {
+}
+
+extern TextureClass *g_bfme5TextureSlots[];
+
+void __cdecl bfme5SetTextureSlot(int i, TextureClass **src)
+{
+	TextureClass **slot = &g_bfme5TextureSlots[i];
+	TextureClass *t = *src;
+
+	if (t)
+		++t->m_bfmeRefCount;
+
+	TextureClass *old = *slot;
+
+	if (old)
+		old->Release_Ref();
+
+	*slot = *src;
 }
