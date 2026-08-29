@@ -962,13 +962,18 @@ def funclet_candidates(path, row, target):
     stat = path.stat()
     data, sections, symbols = _object_layout(str(path), stat.st_mtime_ns, stat.st_size)
     handler = f"__ehhandler${parent.group(1)}"
-    group = [s["section"] for s in symbols
-             if s["name"] == handler and s["section"] > 0]
+    # Both sections, because neither alone finds every case: MSVC 7.1 emits
+    # __ehhandler$ into its own COMDAT, and in that layout the $L funclet
+    # bodies stay behind in the parent's. Searching only the handler's section
+    # silently returns no candidate and the row dies on the stale pin instead
+    # of healing -- every ehhandler in StagingRoomGameInfo.obj is split this way.
+    group = {s["section"] for s in symbols
+             if s["name"] in (handler, parent.group(1)) and s["section"] > 0}
     if not group:
         return []
     hits = []
     for symbol in symbols:
-        if symbol["section"] != group[0] or not re.fullmatch(r"\$L\d+", symbol["name"]):
+        if symbol["section"] not in group or not re.fullmatch(r"\$L\d+", symbol["name"]):
             continue
         try:
             body, relocs = read_object_symbol_bytes(path, symbol["name"], len(target))

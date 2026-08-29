@@ -476,12 +476,14 @@ GameSpyStagingRoom::GameSpyStagingRoom()
 	m_ladderPort = 0;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyStagingRoom_cleanUpSlotPointers.cpp
-// ?cleanUpSlotPointers@GameSpyStagingRoom@@ present-unmatched
+// BFME starts the slot array at GameSpyStagingRoom+0x58 with a 0x78 stride,
+// where this tree lands it at +0x60 with 0x64. The loop is otherwise retail's
+// instruction for instruction, including the strength-reduced pointer.
+#define BFME_STAGING_SLOT(p, i) ((GameSlot *)((char *)(p) + 0x58 + (i) * 0x78))
 void GameSpyStagingRoom::cleanUpSlotPointers( void )
 {
 	for (Int i = 0; i< MAX_SLOTS; ++i)
-		setSlotPointer(i, &m_GameSpySlot[i]);
+		setSlotPointer(i, BFME_STAGING_SLOT(this, i));
 }
 
 // ?getGameSpySlot@GameSpyStagingRoom@@ present-unmatched

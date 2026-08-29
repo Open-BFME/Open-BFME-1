@@ -157,3 +157,60 @@ def test_a_vanished_pin_with_nothing_to_recover_names_the_symbol(tmp_path):
         compile_row(obj, "$L47551")
 
     assert str(exc.value) == "symbol not found in object: $L47551"
+
+
+def write_split_object(path, bodies):
+    """The same group, laid out the way MSVC 7.1 actually emits it.
+
+    The compiler gives `__ehhandler$<parent>` a COMDAT of its own, so it does
+    NOT share a section with the $L funclet bodies -- those stay in the parent
+    function's. Every one of the eighteen ehhandlers in StagingRoomGameInfo.obj
+    is split this way. Searching only the handler's section therefore finds no
+    candidate at all and a renumbered pin dies instead of healing.
+    """
+    names, blobs = list(bodies), b"".join(bodies.values())
+    offsets, at = {}, 0
+    for name in names:
+        offsets[name] = at
+        at += len(bodies[name])
+
+    relocs, symbols, strings = [], [], bytearray(b"\0\0\0\0")
+
+    def add_symbol(name, value, section):
+        if len(name) <= 8:
+            field = name.encode().ljust(8, b"\0")
+        else:
+            field = struct.pack("<II", 0, len(strings))
+            strings.extend(name.encode() + b"\0")
+        symbols.append(struct.pack("<8sIhHBB", field, value, section, 0, 3, 0))
+
+    add_symbol("?guard@@3HA", 0, 3)
+    add_symbol(PARENT, 0, 1)                    # the parent body, with the labels
+    for name in names:
+        add_symbol(name, offsets[name], 1)
+        for site in (1, len(bodies[name]) - 5):
+            relocs.append(struct.pack("<IIH", offsets[name] + site, 0, 0x0006))
+    add_symbol(f"__ehhandler${PARENT}", 0, 2)   # its own COMDAT, section 2
+
+    raw_at = 20 + 80
+    reloc_at = raw_at + len(blobs)
+    symbol_at = reloc_at + len(relocs) * 10
+    header = struct.pack("<HHIIIHH", 0x014C, 2, 0, symbol_at, len(symbols), 0, 0)
+    text = struct.pack("<8sIIIIIIHHI", b".text\0\0\0", 0, 0, len(blobs), raw_at,
+                       reloc_at, 0, len(relocs), 0, 0)
+    handler = struct.pack("<8sIIIIIIHHI", b".text\0\0\0", 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    path.write_bytes(header + text + handler + blobs + b"".join(relocs)
+                     + b"".join(symbols) + bytes(strings))
+    return path
+
+
+def test_a_renumbered_pin_heals_when_the_ehhandler_is_its_own_comdat(tmp_path):
+    """The parent's section carries the bodies even when the handler's does not."""
+    obj = write_split_object(tmp_path / "split.obj",
+                             {"$L70459": BIT1, "$L70461": BIT0, "$L70463": BIT16})
+
+    patch = compile_row(obj, "$L70459")
+
+    assert patch["bytes"] == patch["target"], "the row's own funclet still compiles exact"
+    assert "$L70459" in patch["note"] and "$L70461" in patch["note"], \
+        "the note names the stale pin and the label holding the body now"
