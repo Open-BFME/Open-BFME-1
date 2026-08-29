@@ -572,6 +572,17 @@ void ScriptActions::doPlaySoundEffect(const AsciiString& sound)
 /** doPlaySoundEffectAt */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doPlaySoundEffectAt_Thunk.cpp
+// Attempted and reverted. Three of the four differences are settled and cost
+// nothing to redo: the event is a BfmeAudioEventRTS (0x70 bytes, positional
+// constructor at ILT 0x0004941D), addAudioEvent is Audio vtable slot 17, and
+// getWaypointByName is TerrainLogic vtable slot 31 taking the name BY VALUE
+// rather than by const reference -- the AsciiString copy before the call, out
+// of line to 0x00887B60, is the proof, and the reference header inlines that
+// addref instead. What blocks it is what the by-value copy does to scheduling:
+// MSVC hoists TheTerrainLogic and its vtable into esi across the copy
+// constructor where retail loads both after it. Reaching the slot through a
+// typed global alias rather than a cast at the call site produces byte-identical
+// output, so the cast is not the cause.
 // ?doPlaySoundEffectAt@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doPlaySoundEffectAt(const AsciiString& sound, const AsciiString& waypoint)
 {	
