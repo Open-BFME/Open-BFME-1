@@ -72,6 +72,19 @@ ActiveShroudUpgradeModuleData::ActiveShroudUpgradeModuleData( void )
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Upgrade/ActiveShroudUpgradeConstructor.cpp
 // ??0ActiveShroudUpgrade@@ present-unmatched
+// Fourth member of the Upgrade family that stops on the same two bytes, and the
+// sibling note in MaxHealthUpgrade.cpp, StatusBitsUpgrade.cpp and
+// ModelConditionUpgrade.cpp applies here unchanged: the base COUNT is right and
+// two base OFFSETS are wrong. Retail stores four vftables at +0x00, +0x0C,
+// +0x10 and +0x18; this tree stores four at +0x00, +0x04, +0x10 and +0x14.
+//
+// Read as sub-object spans that is NOT a uniform shift, which is why no single
+// define fixes it: the first sub-object spans 0x0C in BFME against 0x04 here,
+// the second spans 0x04 against 0x0C, and the third 0x08 against 0x04. Eight
+// bytes move OUT of the second base and INTO the first, and the third gains
+// four -- the shape of a different base order or of members that changed base,
+// not of one class growing. BFME_MODULE_NO_MPO makes it worse: it deletes one
+// of the four vftables the count already agrees on.
 ActiveShroudUpgrade::ActiveShroudUpgrade( Thing *thing, const ModuleData* moduleData ) : 
 							UpgradeModule( thing, moduleData )
 {
