@@ -2396,3 +2396,42 @@ compared against the wrong position. Three separate correct offset fixes left
 addSuperweapon at exactly 60.4% while its loads visibly stopped diverging.
 Size converging on retail's is the signal; the percentage alone will tell you
 your correct fixes did nothing.
+
+## Read which REGISTER a call goes through, not which line it sits next to
+
+`FileSystem::openFile` was assumed virtual because the vtable call NEXT TO IT
+had shifted. Adding the view emitted an extra `mov edx,[ecx]`, which misaligned
+everything after it and took agreement from 98.4% down to 95.7%. It is a DIRECT
+call in both trees.
+
+Proximity to a call you have just corrected is not evidence about a call. The
+indirection is visible in the instruction -- read it. Same family as
+objectChangedTeam: a plausible view that is wrong does not merely fail to help,
+it actively destroys agreement you already had.
+
+## OBJECT_STATUS_UNDER_CONSTRUCTION is bit 2: BFME drops one enum entry
+
+Two independent retail bodies do `test BYTE PTR [eax+0x90],0x4` where this tree
+reads a dword pair at +0x90/+0x94 and tests 0x8. ZH's ObjectStatusTypes runs
+NONE, DESTROYED, CAN_ATTACK, UNDER_CONSTRUCTION -- index 3, so `test()` compiles
+to bit 3. BFME has ONE FEWER entry ahead of it.
+
+240 use sites, so this is a shared-header change behind a lot of rows and not a
+readability-lane fix. But it is solvable rather than guessable, and that is the
+point worth recording: `getStatusBits().test(X)` compiles the enum INDEX into
+the instruction, so every matched body testing ANY status bit is a constraint on
+the ordering. Collect the constraints, solve for which entry BFME drops, and let
+the already-matched rows prove it -- do not edit the enum and see what survives.
+
+## A 100% masked screen is necessary, not sufficient
+
+DataChunkInput::openDataChunk reaches 100% of masked bytes and still fails,
+because the masked comparison cannot see a call that resolves to the WRONG
+FUNCTION. Retail's `AsciiString("")` there calls RVA 0x00102D90 --
+`?d_00102d90@@YAXXZ`, an unidentified 77-byte gen-dump whose body reads `[ecx]`
+and compares `[m_data+0xC]` against its argument, which is a `set` and not the
+constructor at 0x00888BC0 this tree resolves to.
+
+This is the same blindness as the 5-byte jmp thunks arriving from another
+direction: masking hides IDENTITY. A perfect score means every byte you can see
+agrees, and the bytes you cannot see are exactly the ones that name the callee.
