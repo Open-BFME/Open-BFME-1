@@ -72235,6 +72235,7 @@ name,address,notes
 ?bfmeAccept@Gen_0077DCF0@@AAEXPAVBfmeSeedTarget@@@Z,0x00011CBB,Open-BFME5 ILT the seeder at 0x0077DCF0 accepts through
 ?bfmeAccept@Gen_0077F790@@AAEXPAVBfmeSeedTarget@@@Z,0x00011CBB,Open-BFME5 ILT the seeder at 0x0077F790 accepts through
 ?bfmeAccepts@Gen_00684b90Holder@@QAEHPAX@Z,0x00004F6B,Open-BFME5 ILT the guard at 0x00684B90 asks its holder through
+?bfmeActME@BfmeThingME@@QAEXXZ,0x0000C4EB,pin
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
 ?bfmeAddANB@BfmeSinkANB@@QAEXPAVBfmeThingANB@@PAX@Z,0x008520A0,pin
 ?bfmeAddBFC@BfmeSinkBFC@@QAEXPAUBfmeSubBFC@@@Z,0x0001D606,pin
@@ -72689,6 +72690,8 @@ name,address,notes
 ?bfmeDoID@BfmeThingID@@QAEXPAUBfmeNodeID@@H@Z,0x0003FF67,pin
 ?bfmeDoInsertQX@BfmeThingQX@@QAEXPADIE@Z,0x0082FBB0,pin
 ?bfmeDoKA@BfmeItemKA@@QAEXXZ,0x0002EA4B,pin
+?bfmeDoMB@BfmeGlobMB@@QAEXHPAX@Z,0x0003BCCD,pin
+?bfmeDoMG@BfmeObjMG@@QAEXXZ,0x000290D2,pin
 ?bfmeDoOR@@YAXPAX0EPAE@Z,0x0082D2D0,pin
 ?bfmeDoOS@BfmeThingOS@@QAEXPAXPAH@Z,0x0082F610,pin
 ?bfmeDoOU@BfmeThingOU@@QAEXE@Z,0x0003BC23,pin
@@ -73437,6 +73440,7 @@ name,address,notes
 ?bfmeOneGE@BfmeThingGE@@QAEXPAUBfmeSubGE@@PAH1@Z,0x00028650,pin
 ?bfmeOneGH@BfmeResGH@@QAEXPAX0@Z,0x0002133C,pin
 ?bfmeOneLF@@YAXXZ,0x0000A416,pin
+?bfmeOneMD@BfmeObjMD@@QAEXH@Z,0x00033857,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73666,6 +73670,7 @@ name,address,notes
 ?bfmeTailFFC@BfmeSubFFC@@QAEXH@Z,0x0001C882,pin
 ?bfmeTailFHG@@YGXPAX0HH@Z,0x0000F105,pin
 ?bfmeTailJB@BfmeTargetJB@@QAE_NXZ,0x0001FF91,pin
+?bfmeTailMF@BfmeSubMF@@QAEXH@Z,0x0004A1FB,pin
 ?bfmeTailSE@BfmeThingSE@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSF@BfmeThingSF@@QAEXXZ,0x0001AA9B,pin
 ?bfmeTailSG@BfmeThingSG@@QAEXXZ,0x0001AA9B,pin
@@ -73679,6 +73684,7 @@ name,address,notes
 ?bfmeTellRP@BfmeFoundRP@@QAEXPAX@Z,0x00030553,pin
 ?bfmeTest@Rva2225E0Filter@@AAE_NPAVBfmeOverridable@@_N@Z,0x0001B437,Open-BFME5 ILT the filter test whose result Rva2225E0Filter::accepts at 0x003A04A0 returns
 ?bfmeTestLB@BfmeOwnerLB@@QAE_NPAUBfmeThingLB@@@Z,0x0004250A,pin
+?bfmeTestME@BfmeThingME@@QAEHXZ,0x00003EA4,pin
 ?bfmeTheBZF@@3PAVBfmeGlobalBZF@@A,0x00EF1028,pin
 ?bfmeTheCBC@@3HA,0x00F379BC,pin
 ?bfmeTheCBD@@3HA,0x00F379BC,pin
@@ -73750,6 +73756,7 @@ name,address,notes
 ?bfmeTwoGE@BfmeThingGE@@QAEXPAUBfmeSubGE@@PAH1@Z,0x0000D2BA,pin
 ?bfmeTwoGH@BfmeResGH@@QAEXPAX0@Z,0x00017A12,pin
 ?bfmeTwoLF@BfmeGlobLF@@QAE_NXZ,0x0003A5B7,pin
+?bfmeTwoMD@BfmeObjMD@@QAEXXZ,0x0001A483,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -74850,6 +74857,7 @@ name,address,notes
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
+?g_bfmeAMG@@3HA,0x00EB9664,pin
 ?g_bfmeAccDYB@@3HA,0x00EED8A4,pin
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
 ?g_bfmeArgDZE@@3PAXA,0x00EB7D80,pin
@@ -74859,6 +74867,7 @@ name,address,notes
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
 ?g_bfmeBFAE@@3HA,0x00EACB4C,pin
+?g_bfmeBMG@@3HA,0x00EB9660,pin
 ?g_bfmeBegKA@@3PAPAVBfmeItemKA@@A,0x00EF146C,pin
 ?g_bfmeBufDWG@@3PAXA,0x00F378D0,pin
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
@@ -74885,6 +74894,8 @@ name,address,notes
 ?g_bfmeEndKA@@3PAPAVBfmeItemKA@@A,0x00EF1470,pin
 ?g_bfmeFindAMB@@3PAVBfmeFindAMB@@A,0x00EF0898,pin
 ?g_bfmeFlagBRA@@3HA,0x00EF7094,pin
+?g_bfmeFlagMD@@3DA,0x00EF4AFC,pin
+?g_bfmeFlagMG@@3HA,0x00EF4ACC,pin
 ?g_bfmeFlagsAPB@@3IA,0x00EA6FA0,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeFreeDXG@@3P6AXPAX@ZA,0x00F3782C,pin
@@ -74893,6 +74904,8 @@ name,address,notes
 ?g_bfmeGlobJB@@3PAVBfmeGlobJB@@A,0x00EF148C,pin
 ?g_bfmeGlobLE@@3PAVBfmeGlobLE@@A,0x00EF7730,pin
 ?g_bfmeGlobLF@@3PAVBfmeGlobLF@@A,0x00EF387C,pin
+?g_bfmeGlobMB@@3PAVBfmeGlobMB@@A,0x00EF33F8,pin
+?g_bfmeGlobMC@@3PAVBfmeGlobMC@@A,0x00EED668,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeICoord2DFormat@@3QBDB,0x01144414,address-derived ICoord2D format string from retail 0x009D97C5
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
@@ -74954,6 +74967,8 @@ name,address,notes
 ?g_bfmeObjFGC@@3PAUBfmeGlobFGC@@A,0x00EF0898,pin
 ?g_bfmeObjFGE@@3PAVBfmeGlobFGE@@A,0x00EF0898,pin
 ?g_bfmeObjFHH@@3PAVBfmeGlobFHH@@A,0x00EEF1D8,pin
+?g_bfmeObjMD@@3PAVBfmeObjMD@@A,0x00EF19E8,pin
+?g_bfmeObjMG@@3PAVBfmeObjMG@@A,0x00EF19E8,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
@@ -74999,6 +75014,7 @@ name,address,notes
 ?g_bfmeUnsignedByteFormat@@3QBDB,0x011442BC,address-derived unsigned-byte format string from the DIR32 operand at retail 0x009D943A
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
 ?g_bfmeUnsignedShortFormat@@3QBDB,0x01144328,address-derived unsigned-short format string from retail 0x009D95BF
+?g_bfmeValMD@@3HA,0x00EB7D80,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeWhatBGE@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWhatBKG@@3PAXA,0x00EC3BB8,pin
