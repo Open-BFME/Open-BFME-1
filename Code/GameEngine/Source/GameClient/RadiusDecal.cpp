@@ -142,18 +142,44 @@ void RadiusDecalTemplate::xferRadiusDecalTemplate( Xfer *xfer )
 }
 
 // ------------------------------------------------------------------------------------------------
+// BFME's RadiusDecal carries one dword more than the reference class, at
+// +0x0C, and reaches the decal's position as a Coord3D field at +0x08 of the
+// object behind +0x04 rather than through a setter. The shadow releases itself
+// through its own vtable slot +0x08.
+class BfmeRadiusDecalShadow
+{
+public:
+	virtual void _bfme_pad_00( void ) = 0;
+	virtual void _bfme_pad_04( void ) = 0;
+	virtual void release( void ) = 0;				///< vtable +0x08
+};
+
+struct BfmeRadiusDecalShadowPos
+{
+	UnsignedByte pad[8];
+	Coord3D position;								///< retail shadow+0x08
+};
+
+struct BfmeRadiusDecalLayout
+{
+	Int decalTemplate;								///< retail this+0x00
+	BfmeRadiusDecalShadow *shadow;					///< retail this+0x04
+	Bool empty;										///< retail this+0x08
+	Int bfmeExtra;									///< retail this+0x0C; the reference class stops before it
+};
+
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_ctor.cpp
-// ??0RadiusDecal@@ present-unmatched
 RadiusDecal::RadiusDecal() : 
 	m_template(NULL), 
 	m_decal(NULL),
 	m_empty(true)
 {
+	((BfmeRadiusDecalLayout *)this)->bfmeExtra = 0;
 }
 
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_ctor.cpp
-// ??0RadiusDecal@@ present-unmatched
+// ??0RadiusDecal@@QAE@ABV0@@Z present-unmatched
 RadiusDecal::RadiusDecal(const RadiusDecal& that) : 
 	m_template(NULL), 
 	m_decal(NULL),
@@ -191,24 +217,35 @@ void RadiusDecal::xferRadiusDecal( Xfer *xfer )
 
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_clear.cpp
-// ?clear@RadiusDecal@@ present-unmatched
 void RadiusDecal::clear()
 {
-	m_template = NULL;
-	if (m_decal)
+	BfmeRadiusDecalLayout *self = (BfmeRadiusDecalLayout *)this;
+
+	self->decalTemplate = 0;
+	if (self->shadow)
 	{
-		m_decal->release();
+		self->shadow->release();
 	}
-	m_decal = NULL;
-	m_empty = true;
+	self->shadow = NULL;
+	self->empty = true;
 }
 
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_dtor.cpp
-// ??1RadiusDecal@@ present-unmatched
+// Thirty-four bytes identical to clear() above, which the linker did not fold.
+// Spelled out rather than as a call to clear(), because a call is what retail
+// does not have.
 RadiusDecal::~RadiusDecal()
 {
-	clear();
+	BfmeRadiusDecalLayout *self = (BfmeRadiusDecalLayout *)this;
+
+	self->decalTemplate = 0;
+	if (self->shadow)
+	{
+		self->shadow->release();
+	}
+	self->shadow = NULL;
+	self->empty = true;
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -248,11 +285,14 @@ void RadiusDecal::setOpacity( Real o )
 
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecal_setPosition.cpp
-// ?setPosition@RadiusDecal@@ present-unmatched
 void RadiusDecal::setPosition(const Coord3D& pos)
 {
-	if (m_decal)
+	BfmeRadiusDecalLayout *self = (BfmeRadiusDecalLayout *)this;
+
+	// BFME stores the world-space centre straight into the decal's own Coord3D
+	// at +0x08; the reference calls a three-float setter that retail has not.
+	if (self->shadow)
 	{
-		m_decal->setPosition(pos.x, pos.y, pos.z);	//world space position of center of decal
+		((BfmeRadiusDecalShadowPos *)self->shadow)->position = pos;
 	}
 }
