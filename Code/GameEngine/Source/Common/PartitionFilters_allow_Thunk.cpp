@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ??0PartitionFilterPossibleToAttack@@QAE@W4AbleToAttackType@@PBVObject@@W4CommandSourceType@@@Z: Code/GameEngine/Source/GameLogic/Object/PartitionManager.cpp
 // Open-BFME5: partition filter bodies whose member offsets PartitionManager.cpp
 // cannot reproduce -- PartitionFilterIrregularArea::allow,
 // PartitionFilterPlayer::allow, and PartitionFilterPossibleToAttack's
