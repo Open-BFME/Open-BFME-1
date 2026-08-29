@@ -1977,8 +1977,6 @@ void DX8TextureCategoryClass::Render(void)
 					DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHAREF,0x60);
 					vmaterial->Set_Opacity(oldOpacity);	//restore previous value
 					vmaterial->Set_Diffuse(oldDiffuse.X,oldDiffuse.Y,oldDiffuse.Z);
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
-// ?Set_Shader@DX8Wrapper@@SAXABVShaderClass@@@Z present-unmatched
 					DX8Wrapper::Set_Shader(theShader);	//restore previous value
 				}
 				else
