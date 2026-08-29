@@ -2454,3 +2454,43 @@ the check is per symbol, so `?TheRadarClientUpdate@@...` sharing 0x012EF0E4 is a
 ordinary alias. And the completion test needs no gate run: when the rename is
 done the misnamed symbol should have ZERO DIR32 references, not one base. A
 remaining base means a site was missed.
+
+## Markers are COMMENTS, so one compile answers a whole destination
+
+marker_screen.py pays two compiles per (donor, symbol) question. But a marker
+cannot change what the compiler emits, so a destination carrying 65 markers does
+not need 65 builds: compile it ONCE, then ask build.compile_function the same
+question of every marker against that single object. 24 destinations and ~1,300
+markers screened in one pass, against roughly 2,600 compiles the old way.
+
+The general form is worth keeping in mind elsewhere: when the thing you are
+varying is a comment, an annotation or a ledger note, the expensive artifact is
+invariant and belongs outside the loop.
+
+## find_declared_unmatched cannot see a stale marker that has an overloaded sibling
+
+It resolves an abbreviated label by prefix, but only when the file carries
+exactly ONE marker with that label. Overloads share a label, and claiming one
+says nothing about the others -- so a stale marker with an overloaded sibling is
+invisible to it permanently, not merely missed once. Two such markers had made
+their files uncommittable at HEAD and had never been looked at.
+
+Treat this as a known blind spot rather than trusting the check's silence. A
+tool that is confidently wrong costs more than one that stops.
+
+## Prefix resolution binds a truncated marker to the WRONG overload
+
+Fixing stale markers by script would have destroyed true statements.
+render2d.cpp carries three `// ?Add_Quad@Render2DClass@@` markers while the
+matched row is `?Add_Quad@Render2DClass@@QAEXABVRectClass@@0K@Z` -- a fourth
+overload that correctly carries no marker. Seven candidates were rejected on
+reading for this reason.
+
+Same shape as the 5-byte jmp thunks and the 100%-masked screen: a prefix hides
+identity exactly as a mask does, and identity is what the question is about.
+When a fix needs a mangled name spelled out, read it from the compiled object;
+a marker naming a symbol that does not exist is a worse lie than the stale one
+being replaced.
+
+Also: replace such a line in place rather than deleting it. Files that compile
+macros expanding `__LINE__` change bytes below any removed line.
