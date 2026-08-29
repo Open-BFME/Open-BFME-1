@@ -72497,6 +72497,7 @@ name,address,notes
 ?bfmeBaseCLB@BfmeThingCLB@@QAEXPAX@Z,0x00029311,pin
 ?bfmeBaseCVE@BfmeThingCVE@@QAEXXZ,0x00013E58,pin
 ?bfmeBaseDYE@BfmeThingDYE@@QAEXPAU1@@Z,0x00887B60,pin
+?bfmeBaseDtor1033@BfmeD1033@@QAEXXZ,0x007F0300,pin
 ?bfmeBaseENE@BfmeThingENE@@QAEPAUBfmeSubENE@@XZ,0x0002CC8C,pin
 ?bfmeBaseEOA@BfmeThingEOA@@QAEXXZ,0x009D8630,pin
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
@@ -72979,6 +72980,7 @@ name,address,notes
 ?bfmeErase@BfmeShroudList@@QAEXPAVBfmeListHeader@@@Z,0x00016ED2,Open-BFME5 ILT thunk; ?reset30BC@BaseHeightMapResetShroud@@QAEXXZ at 0x00727450 hands it the first node of the list at +0x44 before putting the header back to itself; address-derived name
 ?bfmeErase@S4Mem005879C0@@AAEXPAX@Z,0x00037353,Open-BFME5 ILT thunk; ??1S4Mem005879C0@@QAE@XZ at 0x005879C0 hands it the field at +4 of its header before putting the header back to itself; address-derived name
 ?bfmeEraseFrom@BfmeListW@@QAEXPAVBfmeNodeW@@@Z,0x00037AB5,Open-BFME5 the ICF thunk (to 0x00437AB5) the list clear at 0x004B1720 erases through
+?bfmeFail1033@BfmeSub1033@@QAEXXZ,0x00887940,pin
 ?bfmeFailDXE@@YGXH@Z,0x00AFD540,pin
 ?bfmeFallback1015@BfmeM1015@@QAEXHH@Z,0x008A48A0,pin
 ?bfmeFallback961@BfmeHost961@@QAEXHH@Z,0x0001C46D,pin
@@ -73784,6 +73786,7 @@ name,address,notes
 ?bfmeRebuild@BFMERopeDrawableGetPositionShim@@AAEXH@Z,0x00034C3E,Open-BFME5 ILT the rope getPosition at 0x0041D090 rebuilds through
 ?bfmeRefreshPartitionCells@Object@@QAEXXZ,0x000292DF,Open-BFME5 ILT thunk to body 0x001BFD70; Object virtual-base lookup at +0x68 reaches friend_getPartitionData slot 4 twice then calls the combined dirty-list unlink and cell update; bfme prefix records unrecovered retail spelling
 ?bfmeReg1024@BfmeP1024@@QAEXPAVBfmeE1024@@@Z,0x009EF280,pin
+?bfmeReg1033@@YAXP6AXXZ0@Z,0x0002FCB1,pin
 ?bfmeRegisterDAA@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterDAB@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterDAC@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
@@ -74110,6 +74113,7 @@ name,address,notes
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
 ?bfmeTransferPowerInfluence@Object@@QAEXPAVPlayer@@0@Z,0x00014B91,Open-BFME5 recursive Object power-influence transfer ILT to body 0x001C3710
 ?bfmeTry1009@BfmeC1009@@QAEDPAX0@Z,0x0001D813,pin
+?bfmeTry1033@BfmeSub1033@@QAEHPAVBfmeF1033@@@Z,0x000220C5,pin
 ?bfmeTry996@BfmeB996@@QAEDHHPAD@Z,0x00038163,pin
 ?bfmeTryANA@BfmeThingANA@@QAEHPAX0@Z,0x0003381B,pin
 ?bfmeTwo920F@BfmeThing920F@@QAEXP6AXPAVLocomotorTemplate@@@Z@Z,0x00012B20,pin
@@ -79518,6 +79522,7 @@ __ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00
 __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
 __imp_?bfmeAtoi1027@@YAHPAD@Z,0x00F59384,pin
 __imp_?bfmeClose1012@@YGXPAX@Z,0x00F58ECC,pin
+__imp_?bfmeClose1033@@YGXH@Z,0x00F58CCC,pin
 __imp_?bfmeCmp1026@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeCmp1027@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeFree912B@@YGXPAX@Z,0x00F58CCC,pin
@@ -79627,6 +79632,8 @@ _bfmeFmtStrDZE,0x00C7C7B4,pin
 _bfmeFmtStrDZF,0x00C7C7B4,pin
 _bfmeFmtStrEAA,0x00C7C7B4,pin
 _bfmeFmtStrEAC,0x00C7C7B4,pin
+_bfmeFnA1033,0x000487C0,pin
+_bfmeFnB1033,0x0001E0B0,pin
 _bfmeGlobalTable12A6918,0x00EA6918,pin
 _bfmeInfoDCE,0x00CEA6A8,pin
 _bfmeInfoDCF,0x00D14768,pin
@@ -79708,6 +79715,7 @@ _bfmeVft1029A,0x00D36128,pin
 _bfmeVft1030A,0x00D29A9C,pin
 _bfmeVft1030B,0x00D2EB34,pin
 _bfmeVft1030C,0x00D36D58,pin
+_bfmeVft1033D,0x00D29A9C,pin
 _bfmeVftAGBa,0x00C9C9D0,pin
 _bfmeVftAGBb,0x00CA372C,pin
 _bfmeVftAGBc,0x00CB1404,pin
