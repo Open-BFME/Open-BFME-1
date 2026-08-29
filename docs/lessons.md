@@ -220,7 +220,12 @@ TeamPrototype::hasAnyBuildFacility failed while three structurally identical
 sibling walks passed, because the inliner declined their callees and took that
 one. Declare the callee on a view class -- declared, never defined -- so the
 call survives, then alias that spelling at the ILT address. The screen costs one
-build: list the callees defined in the same TU and rebuild. In
+build: list the callees defined in the same TU and rebuild -- and go one level
+deeper than your own body: for each body RETAIL inlines into yours, screen ITS
+callees for in-TU definitions too. Retail inlines the whole
+TeamPrototype::teamAboutToBeDeleted walk into the TeamFactory one, and at that
+depth MSVC also took Team::removeOverrideTeamRelationship, defined in the same
+TU, where retail still calls it; one view fixed both sites. In
 TeamPrototype::updateState both candidates were declined and the existing pins
 resolved unchanged, so the screen is cheap even when it finds nothing.
 
@@ -907,3 +912,25 @@ The `??2X@@SAPAXI...MagicEnum` and `??3X@@SAXPAX...MagicEnum` hits are pool
 new/delete pairs and are the ones that bite: Player.cpp carries five, Team.cpp
 eight. Any body whose merge would stop emitting one of them is blocked before
 you write anything.
+
+## Two cl-line flags that look like a rewrite and are not
+
+Both are one token on the file's own `// cl:` line -- not a header edit, so
+neither costs a full-tree gate, and both recompile the whole TU so the byte gate
+re-verifies every matched body in it and cannot hide a regression. That is what
+makes them safe to reach for mid-merge.
+
+`/D_STLP_USE_STATIC_LIB` missing makes every STLport call INDIRECT. Without it
+STLport declares its exports dllimport, so a map's tree-increment compiles to a
+six-byte `ff 15` through a pointer where retail has a five-byte direct `e8`. The
+one-byte shift moves the whole tail and an otherwise byte-exact body reads as
+unrelated. 565 cl lines in the tree carry the define, so its ABSENCE is the
+anomaly -- suspect it whenever a merged body's diff starts at a container call.
+A donor that has it merging into a destination that does not is the usual shape.
+
+`/Ireference/shims/asciistringsetoutofline` is the fix when retail CALLS a
+string destructor and the TU inlines it. The vendored header defines
+releaseBuffer inline, so an AsciiString local's destruction compiles to a null
+test, a refcount compare and an indirect dllimport free where retail emits a
+plain out-of-line call. Three TUs already use this shim. Unrelated to the
+m_data+4/+8 payload question, which stays parked.
