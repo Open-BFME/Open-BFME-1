@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep
-// readable body of ?Cross_Product@Vector3@@SAXABV1@0PAV1@@Z: Code/Libraries/Source/WWVegas/WW3D2/streakRender.cpp
 // readable body of ?Fabs@WWMath@@: Code/Libraries/Source/WWVegas/WW3D2/coltest.cpp
 
 #include "colmath.h"
