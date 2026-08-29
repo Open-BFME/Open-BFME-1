@@ -72482,6 +72482,7 @@ name,address,notes
 ?bfmeAssign@BfmeCopySubB@@QAEXPAU1@@Z,0x000FFA60,Open-BFME5 helper assignment body used by BfmeCopyElementA
 ?bfmeAssignOT@BfmeThingOT@@QAEXPAD0@Z,0x0002B297,pin
 ?bfmeAssignPL@BfmeThingPL@@QAEXPAD0@Z,0x0002B297,pin
+?bfmeAt1079@BfmeL1079@@QAEPAVBfmeM1079@@H@Z,0x0001EC18,pin
 ?bfmeAtRT@BfmeMapRT@@QAEPAVBfmeSlotRT@@PAX0@Z,0x0002D74A,pin
 ?bfmeAttach1010@BfmeHeld1010@@QAEXPAUBfmeOwner1010@@@Z,0x0000FED4,pin
 ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z,0x0000C0A4,Open-BFME5 ILT thunk to body 0x00497CE0; ??0BfmeQuickMatchScreenBase@@QAE@PAX@Z at 0x00470620 calls it on this with its own argument as the last thing it does; address-derived name
@@ -72737,6 +72738,7 @@ name,address,notes
 ?bfmeCheckB@@YAHPAX@Z,0x00894DB0,Open-BFME5 the guard the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
 ?bfmeChk1064@BfmeQ1064@@QAEDXZ,0x0001E533,pin
+?bfmeChk1079@BfmeM1079@@QAEDXZ,0x000279CB,pin
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
 ?bfmeClear1003@BfmeB1003@@QAEXXZ,0x0000A754,pin
 ?bfmeClear1024@BfmeList1024@@QAEXXZ,0x00015640,pin
@@ -73940,6 +73942,7 @@ name,address,notes
 ?bfmeRun1076@BfmeR1076@@QAEXPAVBfmeX1076@@PADH11111@Z,0x00015235,pin
 ?bfmeRun1077@BfmeR1077@@QAEXPAVBfmeX1077@@PADH11111@Z,0x00015235,pin
 ?bfmeRun1078@BfmeR1078@@QAEXPAVBfmeX1078@@PADH11111@Z,0x00015235,pin
+?bfmeRun1079@BfmeR1079@@QAEXPAVBfmeX1079@@PADH11111@Z,0x00015235,pin
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
 ?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
 ?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
@@ -75671,6 +75674,7 @@ name,address,notes
 ?g_bfmeFmt1069@@3PADA,0x00D053D4,pin
 ?g_bfmeFmt1076@@3PADA,0x00D0AE60,pin
 ?g_bfmeFmt1078@@3PADA,0x00D056EC,pin
+?g_bfmeFmt1079@@3PADA,0x00D053D4,pin
 ?g_bfmeFmt993B@@3PADA,0x00D09B3C,pin
 ?g_bfmeFmt995B@@3PADA,0x00D05184,pin
 ?g_bfmeFmtA1064@@3PADA,0x00D05BE0,pin
@@ -75796,11 +75800,13 @@ name,address,notes
 ?g_bfmeLitA1067@@3PADA,0x00D05F0C,pin
 ?g_bfmeLitA1069@@3PADA,0x00D073A0,pin
 ?g_bfmeLitA1072@@3PADA,0x00D090F4,pin
+?g_bfmeLitA1079@@3PADA,0x00D073A0,pin
 ?g_bfmeLitB1060@@3PADA,0x00C80FC0,pin
 ?g_bfmeLitB1066@@3PADA,0x00C81238,pin
 ?g_bfmeLitB1067@@3PADA,0x00D05EEC,pin
 ?g_bfmeLitB1069@@3PADA,0x00D07384,pin
 ?g_bfmeLitB1072@@3PADA,0x00CF7734,pin
+?g_bfmeLitB1079@@3PADA,0x00D07384,pin
 ?g_bfmeLitC1060@@3PADA,0x00D09BC4,pin
 ?g_bfmeLitC1062@@3PADA,0x00D09B98,pin
 ?g_bfmeLog1013@@3PAVBfmeLog1013@@A,0x00EF19E8,pin
@@ -75900,6 +75906,7 @@ name,address,notes
 ?g_bfmeP1025@@3PAVBfmeP1025@@A,0x00F4FAAC,pin
 ?g_bfmeP1060@@3PAUBfmeP1060@@A,0x00EF4B98,pin
 ?g_bfmeP1062@@3PAUBfmeP1062@@A,0x00EF4B98,pin
+?g_bfmeP1079@@3PAVBfmeP1079@@A,0x00EF7194,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
@@ -75922,6 +75929,7 @@ name,address,notes
 ?g_bfmeR1076@@3PAVBfmeR1076@@A,0x00EF19E8,pin
 ?g_bfmeR1077@@3PAVBfmeR1077@@A,0x00EF19E8,pin
 ?g_bfmeR1078@@3PAVBfmeR1078@@A,0x00EF19E8,pin
+?g_bfmeR1079@@3PAVBfmeR1079@@A,0x00EF19E8,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
