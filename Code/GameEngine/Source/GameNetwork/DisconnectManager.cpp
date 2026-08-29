@@ -1040,23 +1040,20 @@ Int DisconnectManager::countVotesForPlayer(Int slot) {
 	return retval;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/DisconnectManager_resetPlayersVotes_Thunk.cpp
-// ?resetPlayersVotes@DisconnectManager@@IAEXHIPAVConnectionManager@@@Z present-unmatched
+// ?resetPlayersVotes@DisconnectManager@@IAEXHIPAVConnectionManager@@@Z
 void DisconnectManager::resetPlayersVotes(Int playerID, UnsignedInt frame, ConnectionManager *conMgr) {
-	DEBUG_LOG(("DisconnectManager::resetPlayersVotes - resetting player %d's votes on frame %d\n", playerID, frame));
+	BfmeDisconnectVoteTable *self = (BfmeDisconnectVoteTable *)this;
 
 	// we need to reset this player's votes that happened before or on the given frame.
 	for(Int i = 0; i < MAX_SLOTS; ++i) {
-		if (m_playerVotes[i][playerID].frame <= frame) {
-			DEBUG_LOG(("DisconnectManager::resetPlayersVotes - resetting player %d's vote for player %d from frame %d on frame %d\n", playerID, i, m_playerVotes[i][playerID].frame, frame));
-			m_playerVotes[i][playerID].vote = FALSE;
+		if (self->m_playerVotes[i][playerID].frame <= frame) {
+			self->m_playerVotes[i][playerID].vote = FALSE;
 		}
 	}
 
-	Int numVotes = countVotesForPlayer(playerID);
-	DEBUG_LOG(("DisconnectManager::resetPlayersVotes - after adjusting votes, player %d has %d votes\n", playerID, numVotes));
+	Int numVotes = ((BfmeVoteCounter *)this)->countVotesForPlayer(playerID, conMgr);
 	Int transSlot = translatedSlotPosition(playerID, conMgr->getLocalPlayerID());
-	if (transSlot != -1) {
+	if (transSlot != -1 && TheDisconnectMenu) {
 		TheDisconnectMenu->updateVotes(transSlot, numVotes);
 	}
 }
