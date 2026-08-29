@@ -3071,3 +3071,65 @@ make a body WORSE by moving allocation more than the corrected offset was worth
 (objectChangedTeam, 62.4% to 29.7%), and six correct offsets applied at once did
 exactly that. Same mechanism, opposite direction -- allocation is a TU-level
 response, so TU-level inputs are the only reliable lever on it.
+
+## TWO defects can MULTIPLY to a pass: six green GameWindow rows are false
+
+The worst case in the tree, and the one that most needs stating plainly. Six
+currently-MATCHED rows are green because a wrong row->address BINDING and a
+wrong LAYOUT cancel each other. Fix either alone and all six go red.
+
+Retail emits SIX draw-data setters, not nine, with array bases 0x48 / 0xB4 /
+0x120 and stride 0x6C (9 * sizeof WinDrawData):
+
+    0x00478FE0 byte 0x48   enabled.image     0x00479010 byte 0x4C   enabled.color
+    0x00479070 byte 0xB4   disabled.image    0x004790A0 byte 0xB8   disabled.color
+    0x00479120 byte 0x120  hilite.image      0x00479150 byte 0x124  hilite.color
+
+Nothing writes +8, so the three `winSet*BorderColor` functions were never
+emitted at all -- unreferenced, COMDAT discarded. Yet the ledger has rows for
+them, MATCHED, bound to the `.color` bodies.
+
+Every row in the family is bound ONE FIELD TOO HIGH. Our GameWindow is 4 bytes
+short at the front, so our `.color` write lands on retail's `.image` byte and
+our `.borderColor` lands on retail's `.color` byte. Verified against our own
+object rather than inferred: our compiled `winSetEnabledColor` is
+`lea [eax+eax*2+0x12]; mov [ecx+eax*4]` -- instruction for instruction retail's
+`winSetEnabledImage`.
+
+**So the qualifier this file has needed all along:** a matched row proves the
+offsets it COMPILES, never that the RIGHT FUNCTION compiled them. Where a class
+is uniformly shifted and the fields are a contiguous same-size run, an
+off-by-one-slot name binding is invisible to the gate, because the shift
+supplies exactly the error that cancels it. "The already-matched rows are the
+proof" holds only for offsets, not for identity.
+
+The repair is in the LEDGER, not the header:
+
+    winSetEnabledColor   0x478FE0 -> 0x479010
+    winSetDisabledImage  0x479120 -> 0x479070
+    winSetDisabledColor  0x479070 -> 0x4790A0
+    winSetHiliteColor    0x479120 -> 0x479150
+    the three BorderColor rows have NO retail body at all
+    winSetEnabledImage and winSetHiliteImage were already correct
+
+## A detector for mis-bound rows that offsets alone cannot find
+
+An address claimed by **2+ distinct row names**, where **at least one is matched
+and at least one is not**, AND the names are **same-family functions that cannot
+possibly compile identically** -- so ICF cannot explain the sharing.
+
+In the GameWindow cluster that flags exactly the three real defects and nothing
+else. The fourth multi-named address there,
+GameWinDefaultInput/GameWinDefaultSystem at 0x006CF680, is a genuine ICF fold of
+two identical default handlers, and the family test is what separates it.
+
+Ledger-wide there are **1032 addresses carrying 2+ names**. Most will be honest
+ICF. The family test is the only cheap thing that distinguishes them, and this
+class of defect cannot be found by reading offsets, because the offsets agree --
+that is the whole problem.
+
+The same defect nearly produced a second false green deliberately:
+0x00478EB0 is claimed by both winSetPrev and winSetTooltipFunc; the body writes
+0x1EC, retail's m_tooltip is at 0x1EC and m_prev at 0x1FC, and our class is 16
+short there. winSetTooltipFunc is the true owner. Landing winSetPrev would have
+authored a false green on purpose.
