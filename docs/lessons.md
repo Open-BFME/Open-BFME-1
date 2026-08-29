@@ -2956,3 +2956,49 @@ MSVC encodes both the parameter types and the return type, so these are distinct
 symbols sharing a source name. The practical consequence is the one already
 recorded for winSetLayout: a header declaring one spelling cannot serve the TU
 that defines the other, and a matched row for one says nothing about the other.
+
+## THE MARKER QUEUE, MEASURED END TO END
+
+273 destinations, one compile each. This supersedes every estimate:
+
+    5,182  markers with NO ledger row -- a body present in the tree with no
+           matched retail address behind it. Not foldable by anything. This is
+           AUTHORING work, and it is the overwhelming majority of the queue.
+      792  miss verdicts; dropping 5-byte jmp stubs, whose miss counts are
+           meaningless, leaves ~493 real ones
+      217  errors -- the symbol is not in the destination's object at all
+           (donor-private spellings, ICF twins)
+       46  MATCH, collapsing to 16 distinct symbols, of which 10 landed
+
+The six MATCHes that did not land each failed differently, and the distinctions
+matter: two needed per-symbol `--apply`; two have no cluster at all so the fold
+is not expressible as a merge; one was already home (donor equals destination);
+one has its donor under `reference/`, which is a different decision entirely.
+
+The ten destinations judged "at floor" were screened too: ZERO MATCHes. That
+call is now measured rather than assumed.
+
+**Do not budget a lane against the marker count.** The queue is ~5% foldable and
+~85% unclaimed bodies.
+
+## A small miss(N) is a CLASSIFICATION, not a distance
+
+Every miss(1) and miss(2) opened fell into one of four buckets, and the number
+does not tell you which:
+
+  * **A constant BFME changed.** WeaponSet's three miss(1)s are all "loop to 4"
+    where ZH's WEAPONSLOT_COUNT is 3 -- BFME's weapon set has a fourth slot.
+  * **A field offset.** `User::setName` is `add ecx,0x4C` against our `add ecx,4`:
+    one byte, seventy-two bytes of layout behind it.
+  * **A TRUNCATION -- the one most easily misread as drift.**
+    `W3DSnowManager::update`'s three bytes are where OUR body ENDS and retail
+    keeps going: `mov ecx,esi / call / mov ecx,esi / pop esi / add esp,4 / jmp`.
+    BFME's snow update does two more things per frame than the ZH body. A miss(3)
+    at the end of a row is a MISSING FEATURE, not an offset.
+  * **Two facts at once.** `WorkerAIUpdate::isCurrentlyFerryingSupplies` has
+    deltas +0x14, -4, -4 across two classes. No single lever closes a miss whose
+    deltas disagree.
+
+Three checks before costing a miss: is the row a 5-byte jmp stub (its miss count
+is meaningless); do the diffs sit at the END of the row (truncation, not drift);
+do the deltas agree (one lever, or several).
