@@ -12174,6 +12174,7 @@ name,address,notes
 ?_bfme_isWaitingForPlayers@Network@@UAE_NXZ,0x00681BE0,vtable 0x0111A968 slot 44 (+0xB0) via ILT 0x00005461; returns DisconnectManager(conMgr+0x120E0)+0x270 byte or 0; +0x270 is written 1/0 by update@BFMEDisconnectManager (0x0066CA7A/0x0066CA0B) from the count of connected players that are not slot-active (loop 0x0066C962); callers GameLogic::deleteLoadScreen 0x0038D147 and the game-state probe 0x00382D66
 ?_bfme_leaveScoreScreen@@YAXXZ,0x00573000,EXTRA(not in the slice list): the routine every AptScoreScreen exit path reaches (Exit 0x005731C0 and RestartGame 0x005731D0 through ILT 0x00011464 Continue 0x0057811D the update slot 0x00573BC0): TheAudio->+0x6c(2 1 0); single player (+0x25c==0): if TheCampaignManager(0x012F1028)->0x003BCB00 (current mission has a follow-up) -> [0x012F49B4]->0x0051ED80 and g_theWindowManager->0x00465B80 else TheShell+0x50=1 0x00465B80 [0x012F4C5C]->0x005A4470 g_theWindowManager->bfme_hideBackground 0x00468090(1) and a functor-posted 0x003C00B0/0x0007BA90; multiplayer: Shell2Music then the online/LAN shell screen
 ?_bfme_newMap@VictorySystem@@UAEXXZ,0x001DF4A0,vtable 0x0109FD8C slot 9 (+0x24) via ILT 0x000086B1 = first VictorySystem virtual; called by GameLogic::startNewGame 0x003957B7 right after ThePlayerList->newMap (ZH PlayerList slot +0x28); reset then clamps CellSize +0x0C; terrain extents via 0x012EF4CC vcall +0x24 -> two new(0x1C) cell grids 0x001B1830 (second offset by -CellSize/2) at +0xF8/+0xFC; +0x1C = CellSize*sqrt(2)/2; per player side AsciiString (Player+0x28) -> faction index 0x001DF350 (Default fallback; Observer/Civilian flagged 0x80000000) into +0x24[i]; +0x100=1
+?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QAEPAV1@XZ,0x00022A70,Open-BFME5 view-class spelling of the team instance-list advance already pinned as ?_bfme_nextInInstanceList@Team@@QAEPAV1@XZ; TeamPrototype walks in Team.cpp reach it through the view
 ?_bfme_nextInInstanceList@Team@@QAEPAV1@XZ,0x00022A70,Open-BFME5 shape-only pin: the thunk the team instance list walk advances through; thiscall on the team with the next team back
 ?_bfme_onChatEnterText@BfmeAptScreenDisconnectScreen@@QAEXPBD@Z,0x0050F2B0,EXTRA(not in W3 list) fscommand AptDisconnectScreen::Chat::OnBttnEnterText handler bound at 0x0050FB8E via ILT 0x00041100: ZH DisconnectControlSystem GEM_EDIT_DONE arm: GadgetTextEntryGetText(this+0x25C) clear with TheEmptyString trim and if non-empty sendChat 0x0050EE90 at 0x0050F35B
 ?_bfme_onInitGadget@BfmeAptScreenDisconnectScreen@@QAEXPBDPAXPAVGameWindow@@@Z,0x0050F0B0,EXTRA(not in W3 list) DisconnectScreen::InitGadgets handler bound at 0x0050FA21 via ILT 0x0003EED7: by gadget name ChatBox -> this+0x258 ChatEntry -> this+0x25C (+GadgetTextEntrySetText empty) RulesBox -> GadgetListBoxReset + 0x004B7AE0(win 1) + GadgetListBoxAddEntryText(TheGameText->fetch(APT:DisconnectRules)); ZH InitDisconnectWindow/ShowDisconnectWindow twin
@@ -72385,6 +72386,7 @@ name,address,notes
 ?bfmeBase969D@BfmeD969@@QAEXXZ,0x007FA650,pin
 ?bfmeBase974E@BfmeE974@@QAEXPAUBfmeArg974@@H@Z,0x0004872F,pin
 ?bfmeBase983@BfmeG983@@QAEXHPAXH@Z,0x00016C2A,pin
+?bfmeBase987@BfmeA987@@QAEXXZ,0x00015E0B,pin
 ?bfmeBaseAB@BfmeThingAB@@QAEXPAX@Z,0x0001AD0C,pin
 ?bfmeBaseAGB@BfmeThingAGB@@QAEXPAX0@Z,0x000170E4,pin
 ?bfmeBaseARC@BfmeThingARC@@QAEXXZ,0x009A1A30,pin
@@ -72614,6 +72616,7 @@ name,address,notes
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
 ?bfmeClear927A@BfmeSub927A@@QAEXXZ,0x0004278A,pin
+?bfmeClear987@BfmeDrop987@@QAEXHH@Z,0x00014506,pin
 ?bfmeClear@BfmeListA@@QAEXXZ,0x00021CD3,Open-BFME5 the out-of-line list clear the destructor at 0x0009F7A0 calls
 ?bfmeClear@BfmeListB@@QAEXXZ,0x0001900B,Open-BFME5 the out-of-line list clear the destructor at 0x00080950 calls
 ?bfmeClearEFG@BfmeThingEFG@@QAEXXZ,0x0001D4B7,pin
@@ -72886,6 +72889,7 @@ name,address,notes
 ?bfmeFind980A@BfmeFindA980@@QAEPAVBfmeUseA980@@PAUBfmeRecA980@@@Z,0x00028560,pin
 ?bfmeFind980B@BfmeFindB980@@QAEPAVBfmeUseB980@@PAUBfmeRecB980@@@Z,0x00028560,pin
 ?bfmeFind980C@BfmeLookC980@@QAEPAUBfmeXC980@@H@Z,0x0001F253,pin
+?bfmeFind987@BfmeLook987@@QAEPAUBfmeX987@@H@Z,0x0001F253,pin
 ?bfmeFind@BfmeChainOwner@@QAEPAVBfmeChainResult@@H@Z,0x0002F52C,Open-BFME5 ILT the four lookups around 0x002197E0 call
 ?bfmeFind@BfmeFinder@@QAEPAXXZ,0x000265A8,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 call
 ?bfmeFind@Gen_003C02B0@@AAEPAVBfmeItemAN@@H@Z,0x00032A56,Open-BFME5 the ICF thunk (to 0x00432A56) the remove at 0x003C02B0 looks its item up through
@@ -75267,6 +75271,7 @@ name,address,notes
 ?g_bfmeListEYE@@3PAUBfmeListEYE@@A,0x00EED5DC,pin
 ?g_bfmeLook978@@3PAVBfmeLook978@@A,0x00EF0898,pin
 ?g_bfmeLook979@@3PAVBfmeLook979@@A,0x00EF0898,pin
+?g_bfmeLook987@@3PAVBfmeLook987@@A,0x00EF0898,pin
 ?g_bfmeLookAKC@@3PAVBfmeLookAKC@@A,0x00EF076C,pin
 ?g_bfmeLookAKD@@3PAVBfmeLookAKD@@A,0x00EF076C,pin
 ?g_bfmeLookC980@@3PAVBfmeLookC980@@A,0x00EF0898,pin
@@ -77040,6 +77045,7 @@ name,address,notes
 ?handleMatch@BfmeBaseA97@@QAEXPAX0@Z,0x0000E719,pin
 ?handleMatch@BfmeBaseDF9@@QAEXPAX0@Z,0x000240EB,pin
 ?hasAchievedVictory@VictoryConditions@@UAE_NPAVPlayer@@@Z,0x0035F270,vtable 0x010E8D90 slot 9 (+0x24) via ILT 0x00035661 = ZH VictoryConditionsInterface slot order; ZH body plus BFME gates isPlayerObserver 0x000C9CF0 -> false and the defeat counter +0xC0 > 0; loops m_players +0x14 calling slot +0x2C and areAllies 0x0035F150; on success TheGameLogic->bfme_setPlayerVictoryFrame(i) 0x00383C30
+?hasAnyBuildFacility@BfmeTeamInstanceLink@@QBE_NXZ,0x0003F594,Open-BFME5 view-class spelling of the ILT already pinned as ?hasAnyBuildFacility@Team@@QBE_NXZ; TeamPrototype::hasAnyBuildFacility calls it through the view so the in-TU definition cannot inline
 ?hasAnyBuildFacility@Team@@QBE_NXZ,0x0003F594,Open-BFME5 ILT thunk; ?hasAnyBuildFacility@TeamPrototype@@QBE_NXZ at 0x000F0DA0 asks it of every team on the instance list
 ?hasAnyBuildFacility@TeamPrototype@@QBE_NXZ,0x00032C81,Open-BFME5 ILT thunk to body 0x000F0DA0; ?hasAnyBuildFacility@Player@@QBE_NXZ at 0x000CE100 asks it of every prototype
 ?hasAnyBuildings@Player@@QBE_NV?$BitFlags@$0MA@@@_N@Z,0x00030D19,ILT thunk -> body 0x000CDF70; ZH hasAnyBuildings(KindOfMaskType) grew one arg in BFME (call site pushes 0); KindOfMaskType = width-only BitFlags<192> - see victory_conditions.cpp
@@ -77987,6 +77993,7 @@ name,address,notes
 ?removeObjectFromLookupTable@GameLogic@@QAEXPAVObject@@@Z,0x00388A90,Open-BFME5 callee of ?setID@Object@@IAEXW4ObjectID@@@Z at 0x001BEC70 via ILT 0x00031656; body erases the m_id key from the GameLogic+0xb0 lookup map
 ?removeObjectFromPathfindMap@Pathfinder@@QAEXPAVObject@@@Z,0x00006D7F,Open-BFME5 retail pathfinder removal thunk
 ?removeOverrideTeamRelationship@Team@@QAEXI@Z,0x0001A48D,Open-BFME5 ILT thunk to body 0x000F2530; ?teamAboutToBeDeleted@TeamPrototype@@QAEXPAVTeam@@@Z at 0x000F4090 calls it on every team with the departing team id or zero
+?removeOverrideTeamRelationship@Team@@QAE_NI@Z,0x0001A48D,Open-BFME5 vendored-header spelling (Bool return) of the ILT already pinned as ?removeOverrideTeamRelationship@Team@@QAEXI@Z; retail returns void and the call site discards it either way
 ?removePlayer@DisconnectMenu@@QAEXHVUnicodeString@@@Z,0x0003F233,DisconnectManager::disconnectPlayer direct-call ILT thunk
 ?removePlayer@DisconnectMenu@@QAEXHVUnicodeString@@@Z,0x0050EB00,body of the ILT 0x0003F233 already pinned under this name; ZH removePlayer twin: AS var DisconnectScreen::PlayerName%d := name then TheGameText->fetch(Network:PlayerLeftGame) formatted into the ChatBox listbox this+0x258 via GadgetListBoxAddEntryText 0x004BB4B0 then HideKickButton(slot) and VotesReceived%d := empty; callers DisconnectManager::disconnectPlayer 0x0066C0F5 and the ctor 0x0050FC82 (8 slots with the empty string)
 ?removePos@Pathfinder@@QAEXPAVObject@@@Z,0x0001D9DA,Open-BFME5 ILT; called by ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z at 0x001BEBB0 on TheAI+0x0C before the layer store
@@ -79872,6 +79879,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QAEPAV1@XZ,0x00022A70,Open-BFME5 view-class spelling of the team instance-list advance already pinned as ?_bfme_nextInInstanceList@Team@@QAEPAV1@XZ; TeamPrototype walks in Team.cpp reach it through the view
-?removeOverrideTeamRelationship@Team@@QAE_NI@Z,0x0001A48D,Open-BFME5 vendored-header spelling (Bool return) of the ILT already pinned as ?removeOverrideTeamRelationship@Team@@QAEXI@Z; retail returns void and the call site discards it either way
-?hasAnyBuildFacility@BfmeTeamInstanceLink@@QBE_NXZ,0x0003F594,Open-BFME5 view-class spelling of the ILT already pinned as ?hasAnyBuildFacility@Team@@QBE_NXZ; TeamPrototype::hasAnyBuildFacility calls it through the view so the in-TU definition cannot inline
