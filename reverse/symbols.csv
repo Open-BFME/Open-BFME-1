@@ -79757,3 +79757,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?find@Open26A2FD0Logic@@QAEPAVOpen26A2FD0Object@@PAX@Z,0x0001F253,Open2 0x006A2FD0 lookup (ILT)
 ?getID@Open26A2FD0Drawable@@QAEIXZ,0x00009B01,Open2 0x006A2FD0 id read (ILT)
 ?deliver@Rva006A2FD0@@QAEDPAXI@Z,0x000420A5,Open2 0x006A2FD0 tail consumer (ILT)
+?fetch@Open27110B0Source@@QAEPBVOpen2Triple@@H@Z,0x0000BEB0,Open2 0x007110B0 source lookup (ILT)
