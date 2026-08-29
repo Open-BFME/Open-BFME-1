@@ -80561,12 +80561,14 @@ _g_bfmeHeapSize1149,0x00F0B200,pin
 _g_bfmeHeapSize1150,0x00F0B1B4,pin
 _g_bfmeK1127,0x00C75350,pin
 _g_bfmeList1199,0x00EF3350,pin
+_g_bfmeMain1203,0x00EF7730,pin
 _g_bfmeO1145,0x00F40534,pin
 _g_bfmeO1146,0x00EF1600,pin
 _g_bfmeOwner1179,0x00F40584,pin
 _g_bfmeS1142,0x00EF8008,pin
 _g_bfmeS1177,0x00CCED70,pin
 _g_bfmeTab1182,0x00F4CC58,pin
+_g_bfmeTab1203,0x00EF3C00,pin
 _g_bfmeV1134,0x00CF0AE0,pin
 _g_bfmeV1137A,0x00D20FD4,pin
 _g_bfmeV1137B,0x00D1E23C,pin
