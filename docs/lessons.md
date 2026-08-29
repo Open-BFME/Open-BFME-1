@@ -964,3 +964,40 @@ field, check whether their donors agree on the name BEFORE propagating either.
 When they disagree, name the thing for what is proven -- the value -- and record
 both readings. Renaming to an honest placeholder costs nothing at the gate,
 which is the point: if it were expensive, guessing would be tempting.
+
+## "symbol not found in object" has three causes and none is a byte mismatch
+
+The message means the destination is not EMITTING the symbol the row wants. It
+never means the bytes are wrong, so do not go reading the disassembly. Three
+causes, each with a pre-check that costs one command:
+
+  ACCESS SPECIFIER. MSVC encodes access in the mangled name -- Q public, I
+  protected, A private. A member the shim declares protected emits
+  ?name@Class@@IAE... where the ledger carries the public QAE spelling. Check
+  the row's access letter against the shim's declaration.
+
+  object-symbol NOTE. A row's notes column can pin it to a spelling that is not
+  its name, and build.py reads THAT out of the object.
+  ?WriteScriptsDataChunk@ScriptList@@...QAPAV1@H@Z carries
+  object-symbol=...PBQAV1@H@Z -- PBQAV1@ is what `ScriptList *const []` mangles
+  to, the donor's own declaration, where Scripts.h declares `ScriptList *[]` and
+  emits QAPAV1@. Different parameter TYPES, not a top-level const the compiler
+  would ignore, so the destination cannot produce it without a header change.
+  1,662 of 4,402 cluster-donor rows carry one of these notes, so check it:
+      grep -F "<symbol>," reverse/functions.csv | grep -o "object-symbol=[^;]*"
+
+  A DELETED COMPILER-GENERATED SYMBOL -- the separate recipe above.
+
+## When a reference inline owns a row, and your body needs a different offset
+
+Unmergeable, and it is worth recognising in one read rather than three builds.
+The shape: the reference's inline expansion has its OWN matched row, byte-
+matching retail's standalone body at some offset, while retail inlines a read of
+a DIFFERENT offset into the body you are merging. Both offsets are right -- they
+are not the same member, and the donor's single name for both is doing double
+duty. Keeping the reference call to preserve the row therefore reads the wrong
+field, and dropping it kills the row. You cannot satisfy both, and the standalone
+row is the one already proven.
+Seen twice: Object::areModulesReady (+0x295 standalone against +0x341 inlined in
+becomingTeamMember) and Script::getAction/setAction (+0x28 standalone against
++0x20 inlined in ParseActionDataChunk, two rows at 0x00112980 and 0x00112970).
