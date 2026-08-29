@@ -350,6 +350,108 @@ public:
 // BFME walks twenty command slots; the reference header caps the set at 18.
 enum { BFME_MAX_COMMANDS_PER_SET = 20 };
 
+// BFME's ScriptEngine puts startEndGameTimer at vtable slot 12, and the defeat
+// screen picks its event name from this selector.
+class BfmeScriptEngineVtbl_30
+{
+public:
+	virtual void _seeg_0() = 0;
+	virtual void _seeg_1() = 0;
+	virtual void _seeg_2() = 0;
+	virtual void _seeg_3() = 0;
+	virtual void _seeg_4() = 0;
+	virtual void _seeg_5() = 0;
+	virtual void _seeg_6() = 0;
+	virtual void _seeg_7() = 0;
+	virtual void _seeg_8() = 0;
+	virtual void _seeg_9() = 0;
+	virtual void _seeg_10() = 0;
+	virtual void _seeg_11() = 0;
+	virtual void startEndGameTimer() = 0;
+};
+
+Bool __cdecl BfmeShouldShowGameOverEvent();				///< retail ILT 0x000271AB
+
+// BFME's ScriptEngine puts startCloseWindowTimer at vtable slot 14; the
+// reference header lands it at 11.
+class BfmeScriptEngineVtbl_38
+{
+public:
+	virtual void _sect_0() = 0;
+	virtual void _sect_1() = 0;
+	virtual void _sect_2() = 0;
+	virtual void _sect_3() = 0;
+	virtual void _sect_4() = 0;
+	virtual void _sect_5() = 0;
+	virtual void _sect_6() = 0;
+	virtual void _sect_7() = 0;
+	virtual void _sect_8() = 0;
+	virtual void _sect_9() = 0;
+	virtual void _sect_10() = 0;
+	virtual void _sect_11() = 0;
+	virtual void _sect_12() = 0;
+	virtual void _sect_13() = 0;
+	virtual void startCloseWindowTimer() = 0;
+};
+
+// BFME does not build a .wnd window for defeat. It hands an APT screen and an
+// event name to the victory conditions, which owns the layout; amIObserver is
+// vtable slot 16 and showScreen is slot 18.
+class BfmeGameWindowExistingState
+{
+public:
+	unsigned char m_unreconstructed_00[0x118];
+	Bool m_existingState;									///< retail window+0x118
+};
+
+class BfmeDefeatScreenHolder
+{
+public:
+	unsigned char m_unreconstructed_00[4];
+	GameWindow *m_window;									///< retail holder+0x04
+};
+
+class BfmeGameClientDefeatScreen
+{
+public:
+	unsigned char m_unreconstructed_00[0xc];
+	BfmeDefeatScreenHolder *m_defeatScreenHolder;			///< retail client+0x0C
+};
+
+class BfmeCampaignManagerVictorious
+{
+public:
+	unsigned char m_unreconstructed_00[0x1d];
+	Bool m_victorious;										///< retail manager+0x1D
+};
+
+class BfmeVictoryConditionsVtbl
+{
+public:
+	virtual void _vc_0() = 0;
+	virtual void _vc_1() = 0;
+	virtual void _vc_2() = 0;
+	virtual void _vc_3() = 0;
+	virtual void _vc_4() = 0;
+	virtual void _vc_5() = 0;
+	virtual void _vc_6() = 0;
+	virtual void _vc_7() = 0;
+	virtual void _vc_8() = 0;
+	virtual void _vc_9() = 0;
+	virtual void _vc_10() = 0;
+	virtual void _vc_11() = 0;
+	virtual void _vc_12() = 0;
+	virtual void _vc_13() = 0;
+	virtual void _vc_14() = 0;
+	virtual void _vc_15() = 0;
+	virtual Bool amIObserver() = 0;
+	virtual void _vc_17() = 0;
+	virtual void showScreen( const AsciiString &eventName, Bool existingWindowState,
+		const AsciiString &screen, const void *table ) = 0;
+};
+
+extern unsigned char BfmeDefeatScreenTable[];
+
 // The retail one-dword AsciiString, already spelled this way in ControlBar.cpp
 // and elsewhere: BFME releases out of line where the reference header inlines the
 // refcount drop, and its format takes the format string by value as __cdecl.
@@ -812,46 +914,60 @@ void ScriptActions::doVictory( void )
 /** doDefeat */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doDefeat_Thunk.cpp
-// ?doDefeat@ScriptActions@@IAEXXZ present-unmatched
+// ?doDefeat@ScriptActions@@IAEXXZ
 void ScriptActions::doDefeat( void )
 {
-	closeWindows(FALSE);
+	m_suppressNewWindows = FALSE;
 	TheGameLogic->closeWindows();
 	doDisableInput();
 	if (!m_suppressNewWindows)
 	{
-		const Player *localPlayer = ThePlayerList->getLocalPlayer();
-		Bool showObserverWindow = localPlayer->isPlayerObserver() || TheScriptEngine->hasShownMPLocalDefeatWindow();
-		if(showObserverWindow)
-			m_messageWindow = TheWindowManager->winCreateFromScript("Menus/ObserverQuit.wnd");
-		else
+		BfmeDefeatScreenHolder *holder =
+			((BfmeGameClientDefeatScreen *)TheGameClient)->m_defeatScreenHolder;
+		if (TheVictoryConditions && holder)
 		{
-			m_messageWindow = TheWindowManager->winCreateFromScript("Menus/Defeat.wnd");
+			BFMERetailAsciiString screen( "Gui_DefeatScreen" );
+			BFMERetailAsciiString eventName( BfmeShouldShowGameOverEvent()
+				? "APT:EndGameOver" : "APT:EndDefeat" );
+			GameWindow *existingWindow = holder->m_window;
+			((BfmeVictoryConditionsVtbl *)TheVictoryConditions)->showScreen(
+				*(const AsciiString *)&eventName,
+				existingWindow ? ((BfmeGameWindowExistingState *)existingWindow)->m_existingState : false,
+				*(const AsciiString *)&screen, BfmeDefeatScreenTable);
 		}
 	}
-	if(TheCampaignManager)
-		TheCampaignManager->SetVictorious(FALSE);
-	TheScriptEngine->startEndGameTimer();
+	((BfmeCampaignManagerVictorious *)TheCampaignManager)->m_victorious = FALSE;
+	((BfmeScriptEngineVtbl_30 *)TheScriptEngine)->startEndGameTimer();
 }
 
 //-------------------------------------------------------------------------------------------------
 /** doLocalDefeat */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doLocalDefeat_Thunk.cpp
-// ?doLocalDefeat@ScriptActions@@IAEXXZ present-unmatched
+// ?doLocalDefeat@ScriptActions@@IAEXXZ
 void ScriptActions::doLocalDefeat( void )
 {
 	TheScriptEngine->markMPLocalDefeatWindowShown();
-	closeWindows(FALSE);
+	m_suppressNewWindows = FALSE;
 	TheGameLogic->closeWindows();
-	if (!m_suppressNewWindows)
+	if (!m_suppressNewWindows && TheVictoryConditions &&
+		!((BfmeVictoryConditionsVtbl *)TheVictoryConditions)->amIObserver())
 	{
-		if(!TheVictoryConditions->amIObserver())
-			m_messageWindow = TheWindowManager->winCreateFromScript("Menus/LocalDefeat.wnd");
+		BfmeDefeatScreenHolder *holder =
+			((BfmeGameClientDefeatScreen *)TheGameClient)->m_defeatScreenHolder;
+		if (holder)
+		{
+			BFMERetailAsciiString screen( "Gui_DefeatScreen" );
+			BFMERetailAsciiString eventName( "APT:EndDefeat" );
+			GameWindow *existingWindow = holder->m_window;
+			((BfmeVictoryConditionsVtbl *)TheVictoryConditions)->showScreen(
+				*(const AsciiString *)&eventName,
+				existingWindow ? ((BfmeGameWindowExistingState *)existingWindow)->m_existingState : false,
+				*(const AsciiString *)&screen, BfmeDefeatScreenTable);
+		}
 	}
-	if(TheCampaignManager)
-		TheCampaignManager->SetVictorious(FALSE);
-	TheScriptEngine->startCloseWindowTimer();
+	((BfmeCampaignManagerVictorious *)TheCampaignManager)->m_victorious = FALSE;
+	((BfmeScriptEngineVtbl_38 *)TheScriptEngine)->startCloseWindowTimer();
 }
 
 //-------------------------------------------------------------------------------------------------
