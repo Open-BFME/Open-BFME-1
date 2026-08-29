@@ -72446,6 +72446,7 @@ name,address,notes
 ?bfmeCall928E@@YAXPAVBfmeThing928E@@PAX11@Z,0x00028033,pin
 ?bfmeCall929E@@YAXPAXPAPAX@Z,0x00892230,pin
 ?bfmeCall929F@@YAXPAXPADPAUBfmeArg929F@@@Z,0x00866F90,pin
+?bfmeCall930G@@YAXHHHPAXHH@Z,0x00906B40,pin
 ?bfmeCallCCH@@YAHPAX0H@Z,0x00009084,pin
 ?bfmeCallCIB@@YAHPAX000@Z,0x007EC5C0,pin
 ?bfmeCallCIC@@YAHPAX000@Z,0x007ECE60,pin
@@ -73712,6 +73713,7 @@ name,address,notes
 ?bfmeTail928C@BfmeSub928C@@QAEXPAX@Z,0x0002B526,pin
 ?bfmeTail928F@BfmeSub928F@@QAEXXZ,0x00007EA5,pin
 ?bfmeTail928G@BfmeThing928G@@QAEXXZ,0x000495F8,pin
+?bfmeTail930F@BfmeThing930F@@QAEXXZ,0x0091DD20,pin
 ?bfmeTailBCD@BfmeThingBCD@@QAEXXZ,0x0001CD8C,pin
 ?bfmeTailBED@BfmeThingBED@@QAEXXZ,0x00012C6F,pin
 ?bfmeTailBFG@BfmeThingBFG@@QAEXXZ,0x000286A0,pin
@@ -74987,6 +74989,8 @@ name,address,notes
 ?g_bfme929Ptr@@3PAXA,0x00F0A5B0,pin
 ?g_bfme929Str@@3PADA,0x00D2A5A8,pin
 ?g_bfme929Tab@@3PADA,0x008728D0,pin
+?g_bfme930Glob@@3PAVBfmeGlob930C@@A,0x00F4C7DC,pin
+?g_bfme930Vft@@3PADA,0x00D3BD6C,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
@@ -78900,6 +78904,7 @@ __imp_?bfmeFree912B@@YGXPAX@Z,0x00F58CCC,pin
 __imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
 __imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
 __imp_?bfmeImport928G@@YGXPAX@Z,0x00F58F08,pin
+__imp_?bfmeImport930C@@YAXPAX@Z,0x00F593D4,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
 __imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
