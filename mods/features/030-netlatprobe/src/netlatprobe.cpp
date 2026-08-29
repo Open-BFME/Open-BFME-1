@@ -53,9 +53,27 @@ typedef int(__stdcall *QueryCounter)(unsigned *);
 #define c_qpc (*(QueryCounter *)0x01358EB4)
 #define c_qpf (*(QueryCounter *)0x01358EB8)
 
+// ---- the engine's own readiness test, called rather than reimplemented ----
+// getFrameAdvanceCount consults areFrameCommandsComplete before releasing a
+// frame, so asking the engine's own function is the only reading that cannot
+// disagree with the gate it is measuring. Both it and the two count getters are
+// pure: each resolves frame % FRAME_DATA_LENGTH, indexes the 20-byte ring at
+// manager+4, and reads. Calling them with frame+1 reads a different ring slot
+// and mutates nothing.
+//
+// MSVC 7.1 has no __thiscall on a free function; __fastcall puts `this` in ecx
+// and an ignored dword in edx, which is the same call these take.
+typedef int(__fastcall *FrameReady)(void *self, void *edx, int frame, int unused);
+typedef int(__fastcall *CountAt)(void *self, void *edx, int frame);
+
+#define c_complete ((FrameReady)0x00A633E0)   // ConnectionManager::areFrameCommandsComplete
+#define c_expected ((CountAt)0x00A70780)      // FrameDataManager::getFrameCommandCount
+#define c_received ((CountAt)0x00A70720)      // FrameDataManager::getCommandCount
+
 // ---- the engine's globals and struct layouts -----------------------------
 #define TheGameLogic (*(void **)0x012F0898)
 #define TheNetwork (*(void **)0x012F7714)
+#define TheGlobalDataPtr (*(void **)0x012ED5C8)
 
 enum {
     GL_FRAME = 0x3C,       // current logic frame
@@ -68,6 +86,13 @@ enum {
     CM_LOCALSLOT = 0x12028,
     CM_ROUTERSLOT = 0x1202C,
     CM_CEILING = 0x1205C,  // the frame the router published; clients clamp to it
+    CM_FRAMEDATA = 0x120E4,  // FrameDataManager *[8], one per seat
+
+    GD_RUNAHEADSLACK = 0xCB4,  // NetworkRunAheadSlack. FRAMES in BFME (10 =
+                               // 2000ms at 5Hz); a PERCENTAGE in Generals/ZH.
+                               // Identified by the defaults block at 0x00485272
+                               // matching seven consecutive ZH GlobalData fields.
+    CONN_NUMRETRIES = 0x350,   // Connection::m_numRetries, reset every 10s
 
     MSG_OWNER = 0x0C,      // GameMessage -> the list it was appended to
     MSG_TYPE = 0x10,
@@ -106,6 +131,21 @@ static const char PATH_FMT[] = "%s\\My Battle for Middle-earth Files\\NetLat.jso
 // open-per-record: this writes tens of lines a second and an fopen/fclose pair
 // each time would be an instrument heavy enough to move what it measures. Each
 // line is still flushed, so a crash costs at most the last line.
+// Main-loop iterations since the last logic frame. Bumped by netlat_loop and
+// read (and cleared) by netlat_frame, so the rate rides a line that is already
+// being written -- hooking the loop and logging from it would be 30+ lines a
+// second of its own, which is an instrument heavy enough to move what it
+// measures.
+static unsigned s_loops;
+
+// Driver entries since the last logic frame, counted BEFORE the driver's own
+// `cmp arg0, 1` gate. Paired with s_loops and with the admit lines (which are
+// emitted from INSIDE that gate), three numbers decompose the whole asymmetry:
+// loops says how often the outer loop ran, drivers how often it reached the
+// driver at all, and admits how many of those got past the gate. Guessing which
+// of the three moved is exactly the step this track keeps getting wrong.
+static unsigned s_drivers;
+
 static FILE *s_file;
 static int s_opened;   // the open was attempted; do not retry it every event
 static char s_path[512];
@@ -168,7 +208,25 @@ static void head(FILE *out, void *cm, const char *ev) {
               local, local == i32(cm, CM_ROUTERSLOT));
 }
 
+// Flushed once per logic frame rather than once per line.
+//
+// This is not tidiness, it is a correction. The probe writes ~35 lines a second
+// and flushed every one, and that cost is large enough to have corrupted a
+// finding: comparing a capture from the five-hook build against one from the
+// six-hook build showed the guest freezing 1-2 more times a minute and its p50
+// latency ~43 ms higher, purely from the extra logging. The freeze count is
+// exactly the quantity a fix to the retransmit timer is judged on, so an
+// instrument that moves it by the same order as the effect is not usable for
+// cross-build comparison.
+//
+// Flushing on the frame event alone drops ~35 flushes a second to ~5 while
+// bounding what a crash costs to one logic frame -- and the analysis already
+// tolerates a torn final line, because a crash is how most captures end.
 static void end(FILE *out) {
+    c_fprintf(out, "}\n");
+}
+
+static void end_flushed(FILE *out) {
     c_fprintf(out, "}\n");
     c_fflush(out);
 }
@@ -288,11 +346,61 @@ extern "C" __declspec(dllexport) void __cdecl netlat_frame(void *ecx, void *fram
     // The desync flag is the correctness gate. The obvious observables are the
     // wrong shape: the router's overrun counter zeroes itself on every clean
     // quantum, so sampling it at exit reads 0 almost always.
-    c_fprintf(out, ",\"exec\":%d,\"desync\":%u,\"stalls\":%u",
+    c_fprintf(out, ",\"exec\":%d,\"desync\":%u,\"stalls\":%u,\"loops\":%u,\"drivers\":%u",
               (int)(unsigned)frame,
               logic != 0 ? u8(logic, GL_DESYNC) : 0,
-              ecx != 0 ? u32(ecx, NET_STALLS) : 0);
-    end(out);
+              ecx != 0 ? u32(ecx, NET_STALLS) : 0,
+              s_loops, s_drivers);
+    s_loops = 0;
+    s_drivers = 0;
+    end_flushed(out);
+}
+
+// GameEngine::execute's loop body — the once-per-iteration virtual call.
+//
+// THIS IS NOT A FRAME RATE. It counts outer-loop iterations. Nothing here
+// observes a frame reaching the screen, and a loop can iterate without
+// presenting: an early-out when nothing is ready, or a limiter that skips work
+// rather than sleeping, would both show as iterations. So a 6x difference in
+// this number is a 6x difference in SCHEDULING, and calling it "the guest ran
+// at 13fps" would be a wrong sentence built on a right measurement. Report it
+// as iterations per logic frame. If it ever separates between arms, that is the
+// moment to add a render-side observation, not the moment to name it fps.
+//
+// Why it is here. On the rig the router reaches the frame driver 12.4 times a
+// second and a guest only 5.0. Two things could do that: the outer loop running
+// slower on a guest, or the loop reaching the driver less often. They have very
+// different consequences -- the first would mean a guest RENDERS at a fraction
+// of the host's rate, a larger felt difference than any command latency and
+// nothing to do with the network.
+//
+// The captures already argue for the second: a guest's sends are spread across
+// its 200 ms window with 1.4 ms granularity and a 26.5 ms minimum, which a 5 Hz
+// client half could not produce. So the loop is fast and the driver is being
+// skipped. This counts the loop directly rather than inferring it from the send
+// side, because that inference is the step this track has got wrong before.
+//
+// It writes nothing: the count rides the per-frame line above.
+extern "C" __declspec(dllexport) void __cdecl netlat_loop(void *ecx) {
+    (void)ecx;
+    // Only inside a match. Both counters are cleared by the per-frame line, and
+    // no frame line is written outside a match -- so without this the first
+    // frame of a match reports every loop the shell and the loading screen ran,
+    // which is a number that looks like a measurement.
+    if (live_conmgr() == 0) {
+        return;
+    }
+    ++s_loops;
+}
+
+// The frame driver's entry, ahead of its own `cmp arg0, 1`. Counts every call,
+// including the ones that never reach getFrameAdvanceCount.
+extern "C" __declspec(dllexport) void __cdecl netlat_driver(void *ecx) {
+    (void)ecx;
+    if (live_conmgr() == 0) {
+        return;
+    }
+    ++s_drivers;
 }
 
 // ConnectionManager::sendFrameInfo(cm) — the router publishing the ceiling that
@@ -309,5 +417,126 @@ extern "C" __declspec(dllexport) void __cdecl netlat_ceiling(void *ecx) {
         return;
     }
     head(out, cm, "ceiling");
+    end(out);
+}
+
+// BFMENativeNetwork::getFrameAdvanceCount(net) — the gate that decides whether
+// this machine may run a logic frame at all, sampled on entry, once per engine
+// tick rather than once per logic frame.
+//
+// Why this hook exists. A guest runs frame N exactly one 200 ms quantum after
+// the host does, and reading the binary settled that the ceiling is NOT what
+// holds it: the released-frame test is `ceiling - frame + 1 > 0`, which already
+// admits frame N the moment the ceiling reaches N. So the only term left that
+// can be false during that quantum is areFrameCommandsComplete, and the
+// captures say the commands are already in hand. Something is answering "not
+// ready" for a frame that is. This asks the engine, every tick, which term it
+// is -- and what the expected and received counts were when it said so.
+// ---- the discard site ----------------------------------------------------
+// Connection::update (VA 0x00A620A4), at the point where an ack-required
+// command has just been put in a packet and the engine is about to decide
+// whether to throw it away for good:
+//
+//     mov edx,[ecx+0xcb4]   ; NetworkRunAheadSlack, a FRAME COUNT in BFME
+//     add edx,eax           ; + the command's execution frame
+//     cmp edx,[eax+0x3c]    ; vs TheGameLogic's current frame
+//     jae keep              ; else removeMessage + delete -- gone for good
+//
+// The whole 033-retrytime argument rests on that branch being reached in retail
+// and not with a shortened timer. Until this hook, that was read out of the
+// disassembly and never observed firing, and two attempts to establish it from
+// a proxy (a seat's headroom over the published ceiling) were wrong: the
+// ceiling is a monotonic maximum of ANNOUNCED frames, so it runs ahead of every
+// seat's current frame and bounds this quantity only loosely from above.
+//
+// `margin` is the engine's own slack, in frames, at the moment of the decision:
+// exec + slack - now. It goes negative exactly when the command is discarded, so
+// the distribution says how close ordinary play comes to the cliff, not merely
+// whether it went over. That is the number neither campaign could measure.
+//
+// eax holds the execution frame here, esi the NetCommandRef, edi the Connection.
+// This recomputes the engine's comparison from the same two globals; it decides
+// nothing and alters no control flow.
+extern "C" __declspec(dllexport) void __cdecl netlat_discard(int exec, void *ref,
+                                                             void *conn) {
+    void *gd = TheGlobalDataPtr;
+    void *logic = TheGameLogic;
+    if (gd == 0 || logic == 0 || ref == 0 || conn == 0) {
+        return;
+    }
+    void *cm = live_conmgr();
+    if (cm == 0) {
+        return;
+    }
+    void *msg = ptr(ref, REF_MSG);
+    if (msg == 0) {
+        return;
+    }
+    FILE *out = file();
+    if (out == 0) {
+        return;
+    }
+    int slack = i32(gd, GD_RUNAHEADSLACK);
+    int now = i32(logic, GL_FRAME);
+    head(out, cm, "discard");
+    c_fprintf(out,
+              ",\"exec\":%d,\"slack\":%d,\"now\":%d,\"margin\":%d,"
+              "\"doomed\":%d,\"retries\":%d,\"cmd\":%u,\"type\":%u",
+              exec, slack, now, exec + slack - now,
+              (exec + slack) < now ? 1 : 0, i32(conn, CONN_NUMRETRIES),
+              u16(msg, CMD_ID), u32(msg, CMD_TYPE));
+    // Flushed: a discard is the event that precedes a seat wedging, and a wedged
+    // seat is one of the ways a capture ends. An unflushed last line would lose
+    // exactly the record worth having.
+    end_flushed(out);
+}
+
+extern "C" __declspec(dllexport) void __cdecl netlat_admit(void *ecx) {
+    (void)ecx;
+    void *cm = live_conmgr();
+    if (cm == 0) {
+        return;
+    }
+    void *logic = TheGameLogic;
+    if (logic == 0) {
+        return;
+    }
+    FILE *out = file();
+    if (out == 0) {
+        return;
+    }
+    int frame = i32(logic, GL_FRAME);
+    // Frame 0 predates the ring being filled and every seat reports oddities
+    // there; the analysis drops it anyway, and the div in the count getters is
+    // only safe once a match has initialised FRAME_DATA_LENGTH.
+    if (frame <= 0) {
+        return;
+    }
+    void *local = ptr(cm, CM_FRAMEDATA + 4 * i32(cm, CM_LOCALSLOT));
+    if (local == 0) {
+        return;
+    }
+    // What every other seat has actually sent for this frame, summed the way
+    // areFrameCommandsComplete sums it. The quitting-player skip it does is not
+    // reproduced -- a quitting seat ends the match these are measured in.
+    int got = 0;
+    for (int slot = 0; slot < 8; ++slot) {
+        void *mgr = ptr(cm, CM_FRAMEDATA + 4 * slot);
+        if (mgr != 0) {
+            got += c_received(mgr, 0, frame);
+        }
+    }
+    head(out, cm, "admit");
+    // `ok` is the gate's own answer; `exp`/`got` are the two sides it compares,
+    // so a false `ok` says which side was wrong rather than only that it was.
+    // The +1 pair prices the fix: it is whether the NEXT frame would already
+    // pass, which is exactly the quantum a guest is currently spending.
+    c_fprintf(out, ",\"allow\":%d,\"ok\":%d,\"ok1\":%d,"
+                   "\"exp\":%d,\"got\":%d,\"exp1\":%d",
+              i32(cm, CM_CEILING) - frame + 1,
+              c_complete(cm, 0, frame, 0) & 1,
+              c_complete(cm, 0, frame + 1, 0) & 1,
+              c_expected(local, 0, frame), got,
+              c_expected(local, 0, frame + 1));
     end(out);
 }
