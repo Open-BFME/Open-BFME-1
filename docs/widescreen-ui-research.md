@@ -106,7 +106,7 @@ bodies take precedence over speculative historical notes.
 | GameWindow layouts | `.wnd`; `ControlBar.wnd`, `ReplayControl.wnd`, menu, popup, load-screen, and message-box names | `GameWindowManager`, `GameWindow`, `WindowLayout` | `SCREENRECT ... CREATIONRES`; independent X/Y parse scaling; children become parent-relative | `winRepaint` -> `drawWindow` -> callback/images/text; raw physical mouse hit tests | High |
 | Control Bar | `Data\\INI\\ControlBarScheme.ini`, `Default\\ControlBarScheme.ini`, mapped images; `ControlBar.wnd` | `InGameUI`, `ControlBar`, `ControlBarSchemeManager`, W3D callbacks | scheme `ScreenCreationRes` multiplier plus separately parsed window geometry and marker offsets | W3D command-bar callbacks, direct `TheDisplay` draws, GameWindow hit regions | High |
 | Shell GameWindow UI | `Menus/*.wnd`, shell background and message/load layouts | `Shell`, `ShellMenuSchemeManager`, `GameWindowManager` | stack of window layouts; scheme image/line coordinates are stored integers | window repaint and transitions | High/Medium |
-| Shell APT UI | `MainMenu.apt`, `OnlineShell.apt`, `Options.apt`, `Skirmish.apt`, `LanLobby.apt`, etc. | APT screen factories and WindowManager APT APIs | runtime-owned APT coordinate system not present in source tree | APT manager/runtime; input callbacks registered by screen objects | Medium for existence, Low for scaling |
+| Shell APT UI | `MainMenu.apt`, `OnlineShell.apt`, `Options.apt`, `Skirmish.apt`, `LanLobby.apt`, etc. | APT screen factories and WindowManager APT APIs | runtime-owned APT coordinate system not present in source tree; installed data is packaged under `apt/*.big` | APT manager/runtime; input callbacks registered by screen objects | Medium for existence, Low for scaling |
 | Living World | `LivingWorldUI.apt`, `GuiFX.apt`, LivingWorld INI blocks and campaign data | APT screen plus `TheLivingWorldManager`, logic and campaign manager | UI portion is APT; map/army/animation records are not GameWindow layouts | indexed APT show/hide plus 3D/data subsystems | High for ownership, Low for APT scaling |
 | World-space UI | floating text, world animations, build/radius cursors | `InGameUI`, `TacticalView`, `Anim2D`, display strings | world projection returns physical pixel position; animation size also follows zoom | submitted during `preDraw`, before ordinary UI | High |
 | Loading/mission UI | `ShellGameLoadScreen.wnd`, `MultiplayerLoadScreen.wnd`, map-transfer and connection layouts; load-screen APT names | `LoadScreen`, `WindowVideoManager`, `InGameUI` | GameWindow creation resolution plus video/window dimensions | window tree or per-window movie buffer; load branch draws UI and mouse | High |
@@ -115,12 +115,13 @@ bodies take precedence over speculative historical notes.
 
 ## Asset and loader map
 
-The repository does not contain the retail loose UI data. The baseline folder
-contains the retail executables and manifest, but no loose BFME `.wnd`, `.apt`,
-`.big`, mapped-image, texture, font, or CSF set. The following are therefore
-real retail names recovered from source literals, executable strings, and
-`reverse/string_xrefs.tsv`; the actual contents and exact field values must be
-recovered from the user's retail archives before implementation.
+The source repository does not contain the retail loose UI data. The baseline
+folder contains the retail executables and manifest, but no loose BFME `.wnd`,
+`.apt`, `.big`, mapped-image, texture, font, or CSF set. The names below were
+initially recovered from source literals, executable strings, and
+`reverse/string_xrefs.tsv`; a read-only inspection of the user's BFME1
+installation now supplies representative `.wnd`, `.ini`, and packaged APT
+contents. The source checkout still does not vendor those proprietary assets.
 
 | Asset class | Representative names/paths | Loader/owner | What is known |
 |---|---|---|---|
@@ -232,11 +233,101 @@ button handlers through the APT/WindowManager bridge. Other source uses
 `hideAptWindow`, and `bfme_setAptText`.
 
 The APT runtime implementation and the retail `.apt` layout data are not in
-the source tree. We can establish ownership and lifecycle, but not yet the
-APT root transform, stage viewport, or whether a given screen uses its own
+the source tree. The installed game does provide the layout data, but only as
+members of the `.big` archives described below. We can now establish package
+composition and several asset-side invariants, but not yet the APT root
+transform, stage viewport, or whether a given screen uses its own
 scale/letterbox policy. A future APT transform must be based on a runtime
 trace or a verified retail body; changing GameWindow parser state is not a
 substitute.
+
+### Recovered BFME1 APT archives and `swf2apt` comparison
+
+A read-only sweep of
+`/home/thag/Games/The Battle for Middle earth/prefix/dosdevices/x:/BFME1/`
+found the retail APT data in `apt/`. There are 33 `.big` packages and no
+standalone `.apt` files at that directory level. Every package parsed as a
+valid `BIGF` archive and contains exactly one primary `.apt`, one `.const`,
+and one `.dat` companion. Most packages also contain a screen-specific
+`_geometry/*.ru` set and packed `art/Textures/*.tga` members.
+
+The wider installation contains 347 files totaling about 3.26 GB and 48
+`.big` archives. The 33 `apt/*.big` files are `BIGF`; the 13 root game
+archives and two `lang/*.big` archives are `BIG4`. All archive headers and
+directory bounds parsed cleanly. The largest non-APT families are audio
+(`audio.big`: 4,045 members, mostly `.wav`; `englishaudio.big`: 7,371),
+textures (`textures.big`: 2,231), W3D (`w3d.big`: 5,941), and INI data
+(`ini.big`: 242). The UI-relevant archive members include `window.big`'s 18
+`.wnd` layouts, `ini.big`'s ControlBar/mapped-image/font configuration, and
+menu textures/W3D assets in `textures.big` and `w3d.big`.
+
+The non-APT loose directories are also separate rendering/input paths:
+`data/movies` has 188 `.vp6` files, while `data/cursors` has 65 `.ani`, 13
+`.cur`, and 11 `.ico` files. These movies and cursors should not be treated as
+APT geometry when classifying a widescreen fix. The install also contains a
+dated `.dmp` crash dump; it is diagnostic output, not a game asset.
+
+The recovered `.wnd` layouts use the expected 800x600 creation space in the
+inspected menu/load/replay roots. By contrast, active ControlBar schemes in
+`ini.big` use `ScreenCreationRes X:1024 Y:768`, image parts at `Y:520` with
+`1024x248` size, while `controlbarresizer.ini` contains an alternate
+`ControlBarParent` at `Y:518` with `800x82` size and separate HUD marker
+rectangles. This is direct evidence that the ControlBar must remain a separate
+layout contract from ordinary `.wnd` scaling.
+
+| Recovered APT inventory | Count/result |
+|---|---:|
+| `apt/*.big` packages | 33; `BIGF`; 74,412,859 archive bytes |
+| Primary `.apt` payloads | 33; 4,733,907 payload bytes |
+| `.const` companions | 33 |
+| `.dat` companions | 33 |
+| Geometry `.ru` members | 1,282 |
+| Packed `.tga` members | 337 |
+| APT payload header | all 33 begin bytes `41 70 74 20 44 61 74 61 3A 36 1A 00` (`Apt Data:6\\x1a\\0`) |
+
+The package names cover the full UI family rather than only the shell:
+`AptLevel0`, `Background`, `BannerUI`, `CampaignReview`,
+`DisconnectScreen`, `GameWindowGadgets`, `GuiFX`, `InGameChat`, `LanLobby`,
+`libProgressBar`, `LivingWorldUI`, `LoadScreen`, `MainMenu`, `MenuExport`,
+`MenuFrameAndBg`, `MpGameSetup`, `Objectives`, `OnlineChat`,
+`OnlineCustomMatch`, `OnlineHome`, `OnlineLogin`, `OnlineProfile`,
+`OnlineQuickMatch`, `OnlineShell`, `Options`, `Palantir`, `PalantirExport`,
+`PlayerStatus`, `QuitMenu`, `SaveLoad`, `ScoreScreen`, `Skirmish`, and
+`SpellStore`. This confirms that gameplay HUD, Living World, loading, lobby,
+and shared-control APT paths all have packaged data available for later trace
+work.
+
+Several details matter for the widescreen boundary:
+
+* `GameWindowGadgets.dat` records original texture dimensions and explicitly
+  says they are needed to calculate UV coordinates. The `.dat`, `.ru`, and
+  texture atlas data should therefore be treated as asset/UV data, not as a
+  safe-area transform. The first implementation should transform the APT
+  stage/root at runtime and leave these companions unchanged.
+* `MainMenu.dat` includes original texture sizes such as `1024 768`; those
+  values describe source images, not proof that the APT stage is 1024x768.
+  Separately, the recovered `window.big` `.wnd` roots use `CREATIONRES 800
+  600`, while `ControlBarScheme.ini` uses `ScreenCreationRes X:1024 Y:768`.
+  These are distinct layout contracts and must not be normalized.
+* The root game archives are `BIG4`, while every APT package is `BIGF`. The
+  BFME filesystem code accepts both formats. Its stable-sort/reverse load
+  precedence also means that future override packages must be tested in the
+  actual archive order rather than assumed to win by filename.
+
+The public [`swf2apt`](https://github.com/jonwil/swf2apt) project is a useful
+asset-side analogue, not a proven BFME asset generator. Its converter handles
+SWF/EAF root frame dimensions and transforms, button hit-test geometry,
+`.ru`-style geometry, packed textures, and companion output; its CLI exposes
+RA3/Uprising and Tiberian Twilight modes but no BFME mode
+([CLI](https://github.com/jonwil/swf2apt/blob/master/eaf2apt/Program.cs#L27-L54),
+[converter](https://github.com/jonwil/swf2apt/blob/master/eaf2apt/AptConverter.cs#L202-L233)).
+More importantly, its default non-TT writer emits
+`Apt Data:<SWF version>4...`, whereas every BFME payload inspected here begins
+`Apt Data:6...`; for a version-6 input that is not the same header
+([writer](https://github.com/jonwil/swf2apt/blob/master/eaf2apt/AptOutput.cs#L176-L189)).
+Use `swf2apt` for format anatomy and controlled experiments only after the
+BFME reader's compatibility is proven; do not generate or replace BFME APT
+packages from it by assumption.
 
 ### Living World
 
@@ -579,6 +670,12 @@ draws, and input do not share one layout contract.
 6. Which mapped-image and movie assets are intentional cover/stretch assets.
 7. Windowed-mode client-area and mouse-limit behavior for every safe-area
    policy.
+8. The BFME reader's exact interpretation of `Apt Data:6`, `.const`, `.dat`,
+   and `.ru` companions, and whether APT root transforms cover callback
+   hit-testing as well as rendering.
+9. Whether shared names across APT packages are affected by archive load
+   precedence; override experiments must account for BFME's sorted/reversed
+   archive order.
 
 ## Confidence summary and recommended order
 
@@ -586,19 +683,22 @@ High-confidence facts are the `.wnd` independent scaling and parent-relative
 geometry, physical mouse hit tests, GameWindow draw order, ControlBar's
 `ScreenCreationRes` multiplier, mapped-image load directories, Render2D pixel
 mapping, frame order, W3DView's separate 2D camera, movie buffer ownership,
-and Living World's APT visibility ownership.
+Living World's APT visibility ownership, and the recovered `.big`/APT package
+composition and payload signatures.
 
 Medium-confidence facts are the exact Shell branch used in every mode, the
 screen-specific retail asset values, and the interaction of partially
 reconstructed post-draw bodies with all overlays.
 
-Low-confidence facts are any APT coordinate policy and any claim that a
-renderer-level viewport is visually correct for every BFME UI family.
+Low-confidence facts are any APT coordinate policy or reader compatibility
+claim about third-party APT generation, and any claim that a renderer-level
+viewport is visually correct for every BFME UI family.
 
-Recommended order is: recover representative retail data; freeze the 4:3
-baseline; implement safe-area helpers; solve GameWindow plus inverse input;
-solve ControlBar; solve ShellMenuScheme/direct overlays; trace and solve APT;
-then classify fullscreen movies/transitions and run the complete matrix.
+Recommended order is: use the recovered data to freeze the 4:3 baseline;
+implement safe-area helpers; solve GameWindow plus inverse input; solve
+ControlBar; solve ShellMenuScheme/direct overlays; trace and solve APT using
+the real package companions; then classify fullscreen movies/transitions and
+run the complete matrix.
 
 ## Git and verification handoff
 
