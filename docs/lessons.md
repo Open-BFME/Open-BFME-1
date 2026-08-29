@@ -1424,6 +1424,45 @@ them on three separate folds before spotting it, and one body (Object::setLayer)
 did turn out to match once the marker was dropped -- which is the trap: the
 message is sometimes right by accident.
 
+## Accessor disagrees with a body: is it a SECOND member or a shifted class?
+
+Two classes now carry two links where the reference carries one -- LANGameInfo
+with the accessors on +0x360 and the bodies walking +0x398, Script with the
+accessors on +0x28 and the parser using +0x20. The tempting fix is a view that
+moves the body onto the accessor's offset: it makes the row match and silently
+merges two distinct members, which is a green build hiding a structural error.
+
+There is a cheap mechanical test, and it does not need a view or a build.
+Collect the offsets the class's MATCHED TINY ACCESSORS prove -- they are
+authoritative about their own offset, being byte-verified -- and look at the
+shape of the disagreement:
+
+  * A SECOND MEMBER shows one offset in a GAP the accessors do not cover,
+    while the accessors themselves are internally consistent.
+    LANGameInfo: getNext/setNext prove +0x360 and getLastHeard/setLastHeard
+    prove +0x364, adjacent and consistent; +0x398 is 0x38 further on, covered
+    by no accessor. Script: setActive +0x1C, get/setAction +0x28,
+    setFalseAction +0x2C, setNextScript +0x30, setFrameToEvaluate +0x34 -- a
+    dense consistent run -- and the parser's +0x20 sits in the gap between
+    +0x1C and +0x28 with no accessor over it.
+
+  * A SHIFTED CLASS shows a RUN of consecutive members all displaced by the
+    SAME delta. GameWindow: m_status, m_size, m_userData and m_instData are
+    every one of them exactly +4 from where the vendored class puts them,
+    because BFME has a member at +0x04 that the reference does not. Four
+    coincidental second members all exactly four bytes apart is not credible;
+    one inserted member is.
+
+So: ONE offset in a gap means a second member and the body is right; a RUN at a
+constant delta means the class is short and the header is wrong. Both readings
+are structural claims, and this tells them apart before you write any code.
+
+The remaining doubt on the second-member reading is worth stating: an offset is
+strongest when a MATCHED row proves it. +0x398 has three (addGame's siblings
+removeGame and LookupGameByListOffset among them). Script's +0x20 has none --
+only retail's own bytes, read from the target -- because the body that uses it
+is the one that cannot land.
+
 ## Before adding a shim for a header, check whether the tree OWNS that header
 
 Four separate requests for a new shim in this lane dissolved on an artefact
