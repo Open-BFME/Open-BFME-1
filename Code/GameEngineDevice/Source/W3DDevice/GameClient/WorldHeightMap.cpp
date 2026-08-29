@@ -3340,36 +3340,42 @@ Int WorldHeightMap::updateTileTexturePositions(Int *edgeHeight)
 /** getUVData - Gets the texture coordinates to use.  See getTerrainTexture.
 */
 // byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap_getUVForNdx.cpp
-// ?getUVForNdx@WorldHeightMap@@IAEXHPAM000_N@Z present-unmatched
+// The tile table is at this+0xA4 and the terrain texture height at +0x120C8;
+// a TileData carries its location in the texture at +0x555C, past the mip
+// chain. The reference class lands the table at +0x60.
+struct BfmeTileDataLocation
+{
+	UnsignedByte pad[0x555c];
+	ICoord2D m_tileLocationInTexture;					///< retail TileData+0x555C
+};
+
+struct BfmeUVLayout
+{
+	UnsignedByte pad0[0xa4];
+	BfmeTileDataLocation *sourceTiles[NUM_SOURCE_TILES];	///< retail this+0xA4
+	UnsignedByte pad1[0x120c8 - 0xa4 - NUM_SOURCE_TILES * 4];
+	Int terrainTexHeight;								///< retail this+0x120C8
+};
+
 void WorldHeightMap::getUVForNdx(Int tileNdx, float *minU, float *minV, float *maxU, float*maxV, Bool fullTile)
 {
+	BfmeUVLayout *self = (BfmeUVLayout *)this;
+
 	Short baseNdx = tileNdx>>2;
-	if (m_sourceTiles[baseNdx] == NULL) {
+	if (self->sourceTiles[baseNdx] == NULL) {
 		// Missing texture.
 		*minU = *minV = *maxU = *maxV = 0.0f;
 		return;
 	}
-	ICoord2D pos = m_sourceTiles[baseNdx]->m_tileLocationInTexture;
+	ICoord2D pos = self->sourceTiles[baseNdx]->m_tileLocationInTexture;
 	*minU = pos.x;
 	*minV = pos.y;
 	*maxU = *minU+TILE_PIXEL_EXTENT; 
 	*maxV = *minV+TILE_PIXEL_EXTENT;
-#ifdef EVAL_TILING_MODES 
-	if (m_tileMode == TILE_8x8) {
-		*maxU = *minU+TILE_PIXEL_EXTENT/2.0f; 
-		*maxV = *minV+TILE_PIXEL_EXTENT/2.0f;
-	} else if (m_tileMode == TILE_6x6) {
-		*maxU = *minU+2.0f*TILE_PIXEL_EXTENT/3.0f; 
-		*maxV = *minV+2.0f*TILE_PIXEL_EXTENT/3.0f;
-	} else {
-		*maxU = *minU+TILE_PIXEL_EXTENT; 
-		*maxV = *minV+TILE_PIXEL_EXTENT;
-	}
-#endif
 	*minU/=TEXTURE_WIDTH;
-	*minV/=m_terrainTexHeight;
+	*minV/=self->terrainTexHeight;
 	*maxU/=TEXTURE_WIDTH;
-	*maxV/=m_terrainTexHeight;
+	*maxV/=self->terrainTexHeight;
 	if (!fullTile) {
 		// Tiles are 64x64 pixels, height grids map to 32x32. 
 		// So get the proper quadrant of the tile.
@@ -3403,13 +3409,32 @@ void WorldHeightMap::getUVForBlend(Int edgeClass, Region2D *range)
 
 /// Get whether something is cliff indexed with the offset that HeightMapRenderObjClass uses built in.
 // byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap_isCliffMappedTexture.cpp
-// ?isCliffMappedTexture@WorldHeightMap@@QAE_NHH@Z present-unmatched
+// The five fields this body touches are at retail's offsets, not the reference
+// class's: the row stride at +0x08, the cell count at +0x20, the cliff-info
+// table at +0x94 and the draw origin at +0x120E0/+0x120E4. The index is bounds
+// checked SIGNED at both ends.
+struct BfmeCliffMapLayout
+{
+	UnsignedByte pad0[8];
+	Int stride;											///< retail this+0x08
+	UnsignedByte pad1[0x20 - 0x0c];
+	Int cellCount;										///< retail this+0x20
+	UnsignedByte pad2[0x94 - 0x24];
+	void **cliffInfo;									///< retail this+0x94
+	UnsignedByte pad3[0x120e0 - 0x98];
+	Int originX;										///< retail this+0x120E0
+	Int originY;										///< retail this+0x120E4
+};
+
 Bool WorldHeightMap::isCliffMappedTexture(Int x, Int y) { 
-	Int ndx = x+m_drawOriginX+m_width*(y+m_drawOriginY);
-	if (ndx>=0 && ndx<m_dataSize) {
-		return m_cliffInfoNdxes[ndx] != 0;
-	}
-	return false;
+	BfmeCliffMapLayout *self = (BfmeCliffMapLayout *)this;
+
+	Int ndx = (self->originY + y) * self->stride + self->originX + x;
+
+	if (ndx < 0 || ndx >= self->cellCount)
+		return false;
+
+	return self->cliffInfo[ndx] != 0;
 };
 
 /** getUVData - Gets the texture coordinates to use.  See getTerrainTexture.
