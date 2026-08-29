@@ -80541,6 +80541,7 @@ _g_bfmeV1142A,0x00D1DC88,pin
 _g_bfmeV1142B,0x00D1DC80,pin
 _g_bfmeV1142C,0x00D1DC74,pin
 _g_bfmeV1142D,0x00D1DC60,pin
+_g_bfmeV1159,0x00D26B14,pin
 _gameTextPrepare@16,0x009F6D76,GameTextManager reset prepare helper shim
 _gameTextRelease,0x00881EF0,GameTextManager reset release helper shim
 _getbinopr,0x0099B480,decode_calls pin for _subexpr callee
