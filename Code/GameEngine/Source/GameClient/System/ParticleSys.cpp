@@ -1214,12 +1214,19 @@ void ParticleSystem::destroy( void )
 // ------------------------------------------------------------------------------------------------
 /** Get the position of the particle system */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/System/ParticleSystemGetPositionThunk.cpp
-// ?getPosition@ParticleSystem@@QAEXPAUCoord3D@@@Z present-unmatched
+// m_localTransform is at ParticleSystem+0xC0 in retail and +0x274 in the vendored
+// class -- retail reads the translation column at +0xCC, +0xDC and +0xEC, which is
+// the matrix's own +0x0C/+0x1C/+0x2C. Everything else about the body is identical.
+struct BfmeParticleTransformView
+{
+	unsigned char m_unreconstructed_000[ 0xc0 ];
+	Matrix3D m_localTransform;				///< retail this+0xC0
+};
+
 void ParticleSystem::getPosition( Coord3D *pos )
 {
 	Vector3 vec;
-	m_localTransform.Get_Translation(&vec);
+	((BfmeParticleTransformView *)this)->m_localTransform.Get_Translation(&vec);
 	if (pos)
 	{	pos->x=vec.X;
 		pos->y=vec.Y;
