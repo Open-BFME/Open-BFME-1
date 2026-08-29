@@ -75,3 +75,63 @@ Bfme5IntNode * __stdcall bfme5MakeIntNode(const int *v)
 
 	return n;
 }
+
+class SubsystemInterface
+{
+public:
+	SubsystemInterface(void);
+	virtual ~SubsystemInterface();
+
+	int m_bfmeSubsystem04;
+};
+
+class Bfme5TripleSubsystem : public SubsystemInterface
+{
+public:
+	Bfme5TripleSubsystem(int a, int b, int c);
+	virtual ~Bfme5TripleSubsystem();
+
+	int m_bfme08;
+	int m_bfme0c;
+	int m_bfme10;
+};
+
+Bfme5TripleSubsystem::Bfme5TripleSubsystem(int a, int b, int c)
+{
+	m_bfme08 = a;
+	m_bfme0c = b;
+	m_bfme10 = c;
+}
+
+struct Coord3D;
+
+enum CellShroudStatus
+{
+	BFME5_CELLSHROUD_ZERO
+};
+
+class PartitionManager
+{
+public:
+	CellShroudStatus getShroudStatusForPlayer(int player, const Coord3D *pos) const;
+};
+
+extern PartitionManager *ThePartitionManager;
+
+class Bfme5ShroudedThing
+{
+public:
+	char bfmeIsShrouded(int player);
+
+	char m_bfmePad[0x48];
+	int m_bfmePos;
+};
+
+char Bfme5ShroudedThing::bfmeIsShrouded(int player)
+{
+	if (ThePartitionManager &&
+	    ThePartitionManager->getShroudStatusForPlayer(player, (const Coord3D *)&m_bfmePos) >= 1)
+		return 1;
+
+	return 0;
+}
