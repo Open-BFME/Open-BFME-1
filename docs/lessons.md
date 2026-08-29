@@ -1131,11 +1131,18 @@ individual readings were not:
     PartitionFilterRepulsor::allow            INERT 0x58            (ref 0x54)
 
 KINDOF_STRUCTURE is 7 in both, so the four extra entries are not at the front.
-Anything passing a reference KIND_OF constant to a BFME body above index 41 is
-testing the wrong bit -- and a body that does so still byte-matches, because the
-number is an immediate. Only the VALUE is proven; what BFME calls the four extra
-entries is not, so write the number and say where it came from rather than
-inventing a name.
+
+CORRECTION TO WHAT THIS ENTRY FIRST SAID. I wrote that a body passing a
+reference constant "still byte-matches, because the number is an immediate".
+That is backwards, and it is the error "The gate is blind to NAMES and
+authoritative about IMMEDIATES" below was written to stop: `push 0x54` against
+retail's `push 0x58` is a byte mismatch, so a MATCHED body proves its own
+constants and the exposure is only unconverted bodies and new code. Read that
+entry before sizing an alarm from this one.
+
+What this entry is still for is the SHIFT itself: the value is proven, the
+naming is not, so write the number and say where it came from rather than
+inventing a name for the four entries BFME has and the reference does not.
 
 ## A member-order difference does not need the header changed
 
