@@ -73818,6 +73818,7 @@ name,address,notes
 ?bfmeSend1009@BfmeSink1009@@QAEXH@Z,0x000122AB,pin
 ?bfmeSend1009C@BfmeSinkC1009@@QAEDPAX0@Z,0x00004633,pin
 ?bfmeSend1011@BfmeA1011@@QAEXHHHHH@Z,0x000061E5,pin
+?bfmeSend1020@BfmeLog1020@@QAEXH@Z,0x0002144A,pin
 ?bfmeSend975B@BfmeB975@@QAEXHH@Z,0x0002D6F5,pin
 ?bfmeSend979B@BfmeSink979@@QAEXPAVBfmeKey979@@@Z,0x00038938,pin
 ?bfmeSend986C@BfmeC986@@QAEXHHHHH@Z,0x0001A6B3,pin
@@ -73841,6 +73842,7 @@ name,address,notes
 ?bfmeSendY1017@BfmeJ1017@@QAEXHHH@Z,0x008A0770,pin
 ?bfmeSet1016@BfmeDst1016@@QAEXHHH@Z,0x00925D10,pin
 ?bfmeSet1018@BfmeSink1018@@QAEXHH@Z,0x0003EEBE,pin
+?bfmeSet1020@BfmeJ1020@@QAEXH_N@Z,0x00027237,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
 ?bfmeSetA1004@BfmeObj1004@@QAEXHH@Z,0x00032DEE,pin
@@ -75351,6 +75353,7 @@ name,address,notes
 ?g_bfme967A8@@3PADA,0x00CB0A50,pin
 ?g_bfme967A9@@3PADA,0x00CB0A4C,pin
 ?g_bfmeA1019@@3PAVBfmeA1019@@A,0x00EF1270,pin
+?g_bfmeA1020@@3PAVBfmeA1020@@A,0x00EF1270,pin
 ?g_bfmeA986B@@3PAHA,0x00EF9D04,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
@@ -75375,6 +75378,7 @@ name,address,notes
 ?g_bfmeBegKA@@3PAPAVBfmeItemKA@@A,0x00EF146C,pin
 ?g_bfmeBufDWG@@3PAXA,0x00F378D0,pin
 ?g_bfmeByteFormat@@3QBDB,0x01144298,address-derived byte format string from the DIR32 operand at retail 0x009D937D
+?g_bfmeC1020@@3DA,0x00EB7D84,pin
 ?g_bfmeCFAE@@3HA,0x00EEF418,pin
 ?g_bfmeClock977@@3PAVBfmeClock977@@A,0x00EF1B40,pin
 ?g_bfmeClock983@@3PAVBfmeClock983@@A,0x00EF1B40,pin
@@ -75392,6 +75396,7 @@ name,address,notes
 ?g_bfmeCountTB@@3HA,0x00F0BCA8,pin
 ?g_bfmeCsDWC@@3UBfmeCsDWA@@A,0x00F36E60,pin
 ?g_bfmeCurEYE@@3PAXA,0x00EED5D8,pin
+?g_bfmeD1020@@3DA,0x00EF4AFE,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
@@ -75454,12 +75459,14 @@ name,address,notes
 ?g_bfmeInt64Format@@3QBDB,0x011442EC,address-derived int64 format string from retail 0x009D9503
 ?g_bfmeIntegerFormat@@3QBDB,0x011442DC,address-derived integer format string from the DIR32 operand at retail 0x009D94B8
 ?g_bfmeJ1017@@3PAVBfmeJ1017@@A,0x00F377D8,pin
+?g_bfmeJ1020@@3PAVBfmeJ1020@@A,0x00EF0888,pin
 ?g_bfmeLimit952@@3MA,0x00C977E8,pin
 ?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
 ?g_bfmeList1016@@3VBfmeList1016@@A,0x00F3F468,pin
 ?g_bfmeListEYE@@3PAUBfmeListEYE@@A,0x00EED5DC,pin
 ?g_bfmeLog1013@@3PAVBfmeLog1013@@A,0x00EF19E8,pin
+?g_bfmeLog1020@@3PAVBfmeLog1020@@A,0x00EF19E8,pin
 ?g_bfmeLog993@@3PAVBfmeLog993@@A,0x00EF19E8,pin
 ?g_bfmeLog995@@3PAVBfmeLog995@@A,0x00EF19E8,pin
 ?g_bfmeLook1001@@3PAVBfmeLook1001@@A,0x00EF0898,pin
@@ -75482,6 +75489,8 @@ name,address,notes
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
 ?g_bfmeModeAZC@@3PAUBfmeModeAZC@@A,0x00EF0FE0,pin
+?g_bfmeMsg1020@@3HA,0x00EB7D80,pin
+?g_bfmeN1020@@3PAVBfmeN1020@@A,0x00EF1B40,pin
 ?g_bfmeName1019@@3PADA,0x00D2A5A8,pin
 ?g_bfmeObj1006@@3PAUBfmeObj1006@@A,0x00EF4C38,pin
 ?g_bfmeObj2EGE@@3PAVBfmeObj2EGE@@A,0x00EF148C,pin
