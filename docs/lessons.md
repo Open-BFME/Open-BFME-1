@@ -3393,3 +3393,39 @@ than after the rebase surprises you.
 `$` inside the message; two phrases vanished from one message this way and a
 word from another. Use `<<'EOF'`. Amend before pushing if you catch it; do not
 force-push over shared history to fix prose if you do not.
+
+## A detector that goes quiet has finished; bucket the leftovers, do not list them
+
+The ILT identity sweep ran to exhaustion: five rows re-homed, three retired, and
+the 62 survivors of the unique-stub test bucketed by the RELATIONSHIP between the
+claiming name and the body's name:
+
+    25  FX getClass<T> -> getInstance<T>                       real tail call
+    13  ~ConcreteModuleTemplate<Tag> -> ~<Name>ModuleTemplate  one dtor, two spellings
+     4  same-class pairs reading as genuine tail calls
+     5  cross-class constructors -- the shape that was real
+    15  cross-name oddities needing individual reading
+
+**47 of the 62 need nobody.** That count is the artefact worth having: a bucket
+tells the next agent which rows to stop re-deriving, where a raw list of 62
+invites the whole investigation again.
+
+And the honest limit of the instrument, from running it to the end: **the
+topology test is decisive when the two names are UNRELATED and the body is
+large, and it stops separating cases as soon as the names are related** -- a
+template spelling against a typedef spelling, a method against its own class's
+operator=, a getter against its own instance accessor. It found the real defects
+and then went quiet. That is correct behaviour for a detector, but it means the
+remainder is judgement rather than screening, and should be labelled as such
+instead of left looking like a backlog.
+
+Every survivor that shared the acted-on shape had its own reason to stop:
+`??0SupplyWarehouseCripplingBehavior@@` points at a 154-byte body claimed by SIX
+names, which is either a large ICF group or a defect bigger than one row;
+`??0SimpleParameterClass<int,0>` points at a body claimed by two ClientBehavior
+constructors from one file, an ICF twin pair.
+
+The sharpest thing left is a multi-name case rather than a topology one:
+**0x0000B9CE**, where `?getClassMemoryPool@ObjectDefectionHelper@@` and
+`?Clear@VectorClass<TangentsClass>@@` -- two entirely unrelated names -- both
+claim a stub jumping to a 74-byte `?reset@NetCommandList@@`.
