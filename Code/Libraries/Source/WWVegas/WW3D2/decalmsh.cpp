@@ -203,6 +203,23 @@ static DecalPolyClass _DecalPoly1;
  *=============================================================================================*/
 // byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DecalMeshClass_ctor_Thunk.cpp
 // ??0DecalMeshClass@@QAE@PAVMeshClass@@PAVDecalSystemClass@@@Z present-unmatched
+// One byte away, and the byte is a lifetime difference rather than a layout one.
+// Retail stores 0 at this+0x04 before the vftable; compiled from the shared
+// header it stores 1, because RefCountClass::RefCountClass has NumRefs(1).
+// Everything else in the 32 bytes -- the vftable, Parent at +0x08, DecalSystem
+// at +0x0C -- already agrees.
+//
+// It is NOT a library-wide change to RefCountClass. Of the fifteen matched
+// constructors of RefCountClass-derived classes in retail, fourteen store 1
+// (AABTreeClass, CullableClass, HAnimClass, MaterialPassClass, SceneClass,
+// TextureMapperClass, TileData, VertexBufferClass, VertexMaterialClass,
+// WorldHeightMap among them) and only this one stores 0. So BFME's DecalMeshClass
+// does not take the count its base gives it: a decal mesh is owned by whatever
+// adds it, not by whoever constructed it.
+//
+// The donor keeps this body for that reason -- it declares its own base. Folding
+// it here would need the shared refcount.h to initialise 0, which is wrong for
+// the other fourteen. Do not re-screen this expecting one instruction of work.
 DecalMeshClass::DecalMeshClass(MeshClass * parent,DecalSystemClass * system) :
 	Parent(parent),
 	DecalSystem(system)

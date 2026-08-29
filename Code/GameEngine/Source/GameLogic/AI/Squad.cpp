@@ -141,6 +141,26 @@ Int Squad::getSizeOfGroup(void) const
 // isOnSquad //////////////////////////////////////////////////////////////////////////////////////
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/Squad_isOnSquad.cpp
 // ?isOnSquad@Squad@@QBE_NPBVObject@@@Z present-unmatched
+// Two bytes away, and they are a layout contradiction this file cannot resolve.
+// Retail's 0x0018B520 reads the membership pair from this+0x04 and this+0x08;
+// compiled here it reads +0x08 and +0x0C, because Squad derives from both
+// MemoryPoolObject and Snapshot and carries two vptrs.
+//
+// Three siblings matched FROM THIS FILE say the two-vptr layout is right:
+//   getSizeOfGroup  0x000ED420  mov eax,[ecx+0x0C]; sub eax,[ecx+0x08]
+//   addObjectID     0x0036B770  mov eax,[ecx+0x0C]; mov edx,[ecx+0x10]
+//   removeObject    0x0018B620  mov esi,[ecx+0x08]
+// so m_objectIDs begins at +0x08 and isOnSquad's +0x04 belongs to something
+// else. Dropping MemoryPoolObject from the base list makes isOnSquad match
+// exactly and takes 11 of the 13 rows here red, which is the same statement.
+//
+// The isOnSquad row is matched from Squad_isOnSquad.cpp, whose local replica
+// declares the pair at +0x04 -- and a bespoke replica proves the byte SHAPE,
+// never the identity, because its offsets are chosen to fit. Against three
+// siblings compiled from the real class, the replica is the weaker witness.
+// 0x0018B520 sits 0x100 below removeObject, so the neighbourhood does look like
+// Squad's; settle it from a CALL SITE rather than from the body. Logged in
+// re_attempts.log. Do not fold this until it is settled.
 Bool Squad::isOnSquad(const Object *objToTest) const
 {
 	// @todo need a faster way to do this. Perhaps a more efficient data structure?
