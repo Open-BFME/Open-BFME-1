@@ -2635,23 +2635,36 @@ __declspec(noinline) void ControlBar::triggerRadarAttackGlow( void )
 		retail->glowWindow->winEnable(FALSE);
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBar_updateRadarAttackGlow_Thunk.cpp
-// ?updateRadarAttackGlow@ControlBar@@IAEXXZ present-unmatched
+// The three radar-glow fields sit 0x40 earlier in BFME than the vendored
+// ControlBar puts them: the on flag at +0x2e0, the remaining frame count at
+// +0x2e4 and the window at +0x2e8.
+struct BfmeControlBarRadarGlow
+{
+	unsigned char m_unreconstructed_00[ 0x2e0 ];
+	unsigned char m_radarAttackGlowOn;			///< retail this+0x2e0
+	unsigned char m_unreconstructed_2e1[ 3 ];
+	Int m_remainingRadarAttackGlowFrames;			///< retail this+0x2e4
+	GameWindow *m_radarAttackGlowWindow;			///< retail this+0x2e8
+};
+
+// ?updateRadarAttackGlow@ControlBar@@IAEXXZ
 void ControlBar::updateRadarAttackGlow ( void )
 {
-	if(!m_radarAttackGlowOn || !m_radarAttackGlowWindow)
+	BfmeControlBarRadarGlow *self = (BfmeControlBarRadarGlow *)this;
+
+	if(!self->m_radarAttackGlowOn || !self->m_radarAttackGlowWindow)
 		return;
-	m_remainingRadarAttackGlowFrames--;
-	if(m_remainingRadarAttackGlowFrames <= 0)
+	self->m_remainingRadarAttackGlowFrames--;
+	if(self->m_remainingRadarAttackGlowFrames <= 0)
 	{
-		m_radarAttackGlowOn = FALSE;
-		m_radarAttackGlowWindow->winEnable(TRUE);
+		self->m_radarAttackGlowOn = FALSE;
+		self->m_radarAttackGlowWindow->winEnable(TRUE);
 		return;
 	}
 	
-	if(m_remainingRadarAttackGlowFrames % RADAR_ATTACK_GLOW_NUM_TIMES == 0)
+	if(self->m_remainingRadarAttackGlowFrames % RADAR_ATTACK_GLOW_NUM_TIMES == 0)
 	{
-		m_radarAttackGlowWindow->winEnable(!BitTest(m_radarAttackGlowWindow->winGetStatus(),WIN_STATUS_ENABLED));
+		self->m_radarAttackGlowWindow->winEnable(!BitTest(self->m_radarAttackGlowWindow->winGetStatus(),WIN_STATUS_ENABLED));
 	}
 
 	
