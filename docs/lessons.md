@@ -3317,3 +3317,28 @@ union-merged ledger for a benefit one comment already delivers -- and the
 comment is mandatory: without a line saying the class name is there to shape the
 emitted thunk and is not an identity claim, the file is a trap for the next
 reader.
+
+## Worktrees do NOT isolate the stash stack
+
+The one-lane-per-worktree rule protects the working tree and the index. It does
+not protect `refs/stash`, the reflog, or the object store -- those are one per
+REPOSITORY, shared by every worktree of it.
+
+A lane stashed WIP by explicit path, and while it worked, another lane pushed a
+stash labelled "HOLD until dir32 green". That put the HOLD stash at `stash@{0}`,
+so the first lane's subsequent bare `git stash pop` applied SOMEONE ELSE'S held
+work into its tree and dropped their stash ref.
+
+Recoverable, and worth knowing how: back up the working state, re-create the
+dropped ref from its commit with `git stash store -m '<original message>'
+<sha>`, return the affected files to HEAD, then pop your own by explicit ref.
+
+The rule is in AGENTS.md now: never `git stash pop` bare, and prefer a patch
+file or a temp branch, which no other lane can consume.
+
+**Corollary for push_retry.sh:** it refuses a dirty tree and says so, which is
+correct -- another lane's uncommitted edit is not yours to rebase over. Do NOT
+add `rebase.autoStash`; autostash pushes and pops through the same shared stack,
+so it reintroduces exactly this race. Use
+`git -c rebase.autoStash=true pull --rebase` deliberately and only when you have
+read the stash list, or better, wait for the tree to be yours.

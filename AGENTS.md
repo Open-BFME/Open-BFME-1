@@ -37,6 +37,14 @@ shared header edit costs a full gate: edit every dependent body, pay once.
    poll it; never launch a duplicate build.
 3. Stage explicit paths only: `git add <specific-paths>`, never `git add .`.
    Check every new ledger source is tracked.
+3a. **Never `git stash pop` bare, and prefer not to stash at all.** Separate
+   worktrees isolate the working tree and the index; they do NOT isolate the
+   stash stack, which is one shared `refs/stash` for the whole repository. A
+   bare pop applied another lane's stash — one explicitly labelled HOLD — into
+   the wrong tree and dropped its ref. Read `git stash list` and pop an explicit
+   `stash@{N}`; better, park work in a patch file or a temp branch, which no
+   other lane can consume. Same class as `git add .`: a bare command silently
+   taking something that is not yours.
 4. Commit normally. **Never bypass hooks.**
 5. `git pull --rebase origin master`, `git push`, then pull --rebase again. On
    rejection: rebase, recheck the ledger, retry, final pull.
