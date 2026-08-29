@@ -9651,6 +9651,7 @@ name,address,notes
 ?Delete@?$DynamicVectorClass@VModelNodeClass@HLodClass@@@@QAE_NH@Z,0x0097B0F0,DynamicVectorClass<HLodClass::ModelNodeClass>::Delete pin for HLod Remove_Sub_Object
 ?Delete@?$List@PAUINISection@@@@QAEXXZ,0x009E2630
 ?DeleteBanner@@YAXH@Z,0x00026CE2,ILT to the BannerUI.apt DeleteBanner helper at 0x0050D4F0
+?DescribeObject@@YA?AVAsciiString@@PBVObject@@@Z,0x0000D08A,Open-BFME5 ILT thunk to DescribeObject body 0x001C4310 proven by its Object formatting literals and surviving Object.cpp implementation
 ?Determine_Tail_Diffuse@ParticleBufferClass@@IAE?AW4TailDiffuseTypeEnum@1@XZ,0x0098B750
 ?Do_Mappers_Need_Normals@MeshMatDescClass@@QAE_NXZ,0x00929AD0
 ?DoesCommandRequireACommandID@@YA_NW4NetCommandType@@@Z,0x00015B72
