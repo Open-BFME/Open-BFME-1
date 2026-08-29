@@ -72390,6 +72390,7 @@ name,address,notes
 ?bfmeBase983@BfmeG983@@QAEXHPAXH@Z,0x00016C2A,pin
 ?bfmeBase987@BfmeA987@@QAEXXZ,0x00015E0B,pin
 ?bfmeBase988D@BfmeD988@@QAEXH@Z,0x00029311,pin
+?bfmeBase994C@BfmeC994@@QAEXXZ,0x007E86B0,pin
 ?bfmeBaseAB@BfmeThingAB@@QAEXPAX@Z,0x0001AD0C,pin
 ?bfmeBaseAGB@BfmeThingAGB@@QAEXPAX0@Z,0x000170E4,pin
 ?bfmeBaseARC@BfmeThingARC@@QAEXXZ,0x009A1A30,pin
@@ -75370,8 +75371,10 @@ name,address,notes
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
+?g_bfmeSinkA994@@3PAVBfmeSinkA994@@A,0x00EF7014,pin
 ?g_bfmeSinkAAA@@3PAVBfmeSinkAAA@@A,0x00EF33F8,pin
 ?g_bfmeSinkAAB@@3PAVBfmeSinkAAB@@A,0x00EF33F8,pin
+?g_bfmeSinkB994@@3PAVBfmeSinkB994@@A,0x00EF1464,pin
 ?g_bfmeSinkBFC@@3PAVBfmeSinkBFC@@A,0x00EF6924,pin
 ?g_bfmeSinkBHD@@3PAVBfmeSinkBHD@@A,0x00EED668,pin
 ?g_bfmeSinkBLC@@3PAVBfmeSinkBLC@@A,0x00EED600,pin
@@ -75413,6 +75416,7 @@ name,address,notes
 ?g_bfmeVft969D1@@3PADA,0x00D2B3F0,pin
 ?g_bfmeVft969D2@@3PADA,0x00D2B3AC,pin
 ?g_bfmeVft969D3@@3PADA,0x00D2B3C8,pin
+?g_bfmeVft994C@@3PADA,0x00D296B0,pin
 ?g_bfmeVftAQB@@3PADA,0x00D22470,pin
 ?g_bfmeVftBQB@@3PADA,0x00D223A0,pin
 ?g_bfmeVftTA@@3PADA,0x00D2F254,pin
