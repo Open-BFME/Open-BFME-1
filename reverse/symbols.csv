@@ -73029,6 +73029,7 @@ name,address,notes
 ?bfmeEraseFrom@BfmeListW@@QAEXPAVBfmeNodeW@@@Z,0x00037AB5,Open-BFME5 the ICF thunk (to 0x00437AB5) the list clear at 0x004B1720 erases through
 ?bfmeF1062A@BfmeA1062@@QAEXXZ,0x0003139A,pin
 ?bfmeF1062B@BfmeB1062@@QAEXXZ,0x000095E3,pin
+?bfmeF1076@BfmeQ1076@@QAEXXZ,0x00011464,pin
 ?bfmeFail1033@BfmeSub1033@@QAEXXZ,0x00887940,pin
 ?bfmeFailDXE@@YGXH@Z,0x00AFD540,pin
 ?bfmeFallback1015@BfmeM1015@@QAEXHH@Z,0x008A48A0,pin
@@ -73386,6 +73387,7 @@ name,address,notes
 ?bfmeFreeVG@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVH@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFwd1050@BfmeP1050@@QAEXHHHHH@Z,0x009F5C00,pin
+?bfmeG1076@BfmeQ1076@@QAEXH@Z,0x0003936A,pin
 ?bfmeGen00018C1E@Gen_005291F0@@QAEXH@Z,0x00018C1E,address-derived helper; target read from the guarded eight-index loop REL32 at 0x00529237
 ?bfmeGen00029C35@Gen_00529B10@@QAEXH@Z,0x00029C35,address-derived helper; target read from the first REL32 in the guarded eight-index loop at 0x00529B10
 ?bfmeGen0002D38A@Gen_00529B10@@QAEXH@Z,0x0002D38A,address-derived helper; target read from the third REL32 in the guarded eight-index loop at 0x00529B10
@@ -73932,6 +73934,7 @@ name,address,notes
 ?bfmeRun1072@BfmeR1072@@QAEXPAVBfmeX1072@@PADH11111@Z,0x00015235,pin
 ?bfmeRun1073@BfmeR1073@@QAEXPAVBfmeX1073@@PADH11111@Z,0x00015235,pin
 ?bfmeRun1074@BfmeR1074@@QAEXPAVBfmeX1074@@PADH11111@Z,0x00015235,pin
+?bfmeRun1076@BfmeR1076@@QAEXPAVBfmeX1076@@PADH11111@Z,0x00015235,pin
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
 ?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
 ?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
@@ -75661,6 +75664,7 @@ name,address,notes
 ?g_bfmeFmt1051B@@3PADA,0x00CC03A8,pin
 ?g_bfmeFmt1057@@3PADA,0x00D053D4,pin
 ?g_bfmeFmt1069@@3PADA,0x00D053D4,pin
+?g_bfmeFmt1076@@3PADA,0x00D0AE60,pin
 ?g_bfmeFmt993B@@3PADA,0x00D09B3C,pin
 ?g_bfmeFmt995B@@3PADA,0x00D05184,pin
 ?g_bfmeFmtA1064@@3PADA,0x00D05BE0,pin
@@ -75903,6 +75907,7 @@ name,address,notes
 ?g_bfmeR1072@@3PAVBfmeR1072@@A,0x00EF19E8,pin
 ?g_bfmeR1073@@3PAVBfmeR1073@@A,0x00EF19E8,pin
 ?g_bfmeR1074@@3PAVBfmeR1074@@A,0x00EF19E8,pin
+?g_bfmeR1076@@3PAVBfmeR1076@@A,0x00EF19E8,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
