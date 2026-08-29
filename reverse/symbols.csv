@@ -80561,3 +80561,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?getChipset@BfmeChipsetQuery@@SA?AW4ChipsetType@@XZ,0x000162A7,alias of ?getChipset@W3DShaderManager@@SA?AW4ChipsetType@@XZ pinned at the same ILT; declared-only view so the call keeps the ordinary convention where the same-TU definition would use MSVC's private one
