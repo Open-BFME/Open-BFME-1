@@ -124,10 +124,32 @@ struct BFMEQuickPathFields
 // The rest of the AIUpdateInterface tail the Zero Hour shim cannot place: the
 // state machine, the current victim, and the mood-check deadline with its
 // randomise flag.
+// BFME reaches setGoalObject through the state machine's vtable at +0x38; the
+// reference StateMachine declares it as an ordinary member.
+class BFMEGoalObjectMachine
+{
+public:
+	virtual void slot00() = 0;	virtual void slot04() = 0;
+	virtual void slot08() = 0;	virtual void slot0C() = 0;
+	virtual void slot10() = 0;	virtual void slot14() = 0;
+	virtual void slot18() = 0;	virtual void slot1C() = 0;
+	virtual void slot20() = 0;	virtual void slot24() = 0;
+	virtual void slot28() = 0;	virtual void slot2C() = 0;
+	virtual void slot30() = 0;	virtual void slot34() = 0;
+	virtual void setGoalObject( const Object *object ) = 0;	///< vtable +0x38
+
+	char m_unreconstructed_004[0x40 - 4];
+	Bool m_locked;						///< retail this+0x40
+};
+
 struct BFMEAIUpdateFields
 {
 	Object *getObject() const { return m_object; }
 	Real getPathExtraDistance() const { return m_pathExtraDistance; }
+	BFMEGoalObjectMachine *getGoalObjectMachine() const
+	{
+		return reinterpret_cast<BFMEGoalObjectMachine *>( m_stateMachine );
+	}
 
 	char m_unreconstructed_000[0x08];
 	Object *m_object;					///< retail this+0x08
@@ -143,7 +165,10 @@ struct BFMEAIUpdateFields
 	UnsignedInt m_nextMoodCheckTime;			///< retail this+0x1FC
 	char m_unreconstructed_200[0x32A - 0x200];
 	Bool m_randomlyOffsetMoodCheck;				///< retail this+0x32A
-	char m_unreconstructed_32B[0x333 - 0x32B];
+	Bool m_isAiDead;					///< retail this+0x32B
+	char m_unreconstructed_32C[0x330 - 0x32C];
+	Bool m_isInUpdate;					///< retail this+0x330
+	char m_unreconstructed_331[0x333 - 0x331];
 	Bool m_forbidPlayerCommands;				///< retail this+0x333
 	Bool m_forbidAICommands;				///< retail this+0x334
 };
@@ -282,20 +307,7 @@ enum BFMEAIStateType
 	BFME_AI_ENTER_TRANSPORT			= 0x34
 };
 
-// BFME reaches setGoalObject through the state machine's vtable at +0x38; the
-// reference StateMachine declares it as an ordinary member.
-class BFMEGoalObjectMachine
-{
-public:
-	virtual void slot00() = 0;	virtual void slot04() = 0;
-	virtual void slot08() = 0;	virtual void slot0C() = 0;
-	virtual void slot10() = 0;	virtual void slot14() = 0;
-	virtual void slot18() = 0;	virtual void slot1C() = 0;
-	virtual void slot20() = 0;	virtual void slot24() = 0;
-	virtual void slot28() = 0;	virtual void slot2C() = 0;
-	virtual void slot30() = 0;	virtual void slot34() = 0;
-	virtual void setGoalObject( const Object *object ) = 0;	///< vtable +0x38
-};
+
 
 // The object status word, whose IS_ATTACKING bit is 22.
 struct BFMEObjectStatusWord
@@ -1711,13 +1723,17 @@ void AIUpdateInterface::clearWaypointQueue( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIUpdateInterface_markAsDead_Thunk.cpp
-// ?markAsDead@AIUpdateInterface@@ present-unmatched
+// ?markAsDead@AIUpdateInterface@@QAEXXZ
 void AIUpdateInterface::markAsDead()
 {
-	m_isAiDead = TRUE;
-	getObject()->setEffectivelyDead(TRUE);
-	wakeUpNow();	// wake us up immediately so that our anim plays promptly!
+	BFMEAIUpdateFields *fields = reinterpret_cast<BFMEAIUpdateFields *>(this);
+
+	fields->m_isAiDead = TRUE;
+	fields->getObject()->setEffectivelyDead(TRUE);
+
+	// wakeUpNow(), spelled out: BFME inlines it here rather than calling it.
+	if (getWakeFrame() > UPDATE_SLEEP_NONE && !fields->m_isInUpdate)
+		setWakeFrame(fields->getObject(), UPDATE_SLEEP_NONE);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -2616,15 +2632,19 @@ void AIUpdateInterface::friend_setPath(Path *path)
 /**
  * This is used by the guard tunnel network state to set a target object.
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIUpdateInterface_friend_setGoalObject.cpp
-// ?friend_setGoalObject@AIUpdateInterface@@ present-unmatched
+// ?friend_setGoalObject@AIUpdateInterface@@QAEXPAVObject@@@Z
 void AIUpdateInterface::friend_setGoalObject(Object *obj)
 {
-	Bool locked = getStateMachine()->isLocked();
-	getStateMachine()->unlock();
-	getStateMachine()->setGoalObject(obj);
+	// The lock is the byte at machine+0x40, written directly: BFME records no
+	// lock reason, so the reference copy's re-lock string is never stored. The
+	// machine pointer is re-read after the virtual call rather than kept.
+	BFMEAIUpdateFields *fields = reinterpret_cast<BFMEAIUpdateFields *>(this);
+
+	Bool locked = fields->getGoalObjectMachine()->m_locked;
+	fields->getGoalObjectMachine()->m_locked = FALSE;
+	fields->getGoalObjectMachine()->setGoalObject(obj);
 	if (locked) {
-		getStateMachine()->lock("Friend_setGlobalObject re-locking");
+		fields->getGoalObjectMachine()->m_locked = TRUE;
 	}
 }
 
@@ -4564,12 +4584,12 @@ void AIUpdateInterface::privateExecuteRailedTransport( CommandSourceType cmdSour
 
 //----------------------------------------------------------------------------------------
 ///< life altering state change, if this AI can do it
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateGoProne_Thunk.cpp
-// ?privateGoProne@AIUpdateInterface@@ present-unmatched
+// ?privateGoProne@AIUpdateInterface@@MAEXPBVDamageInfo@@W4CommandSourceType@@@Z
 void AIUpdateInterface::privateGoProne( const DamageInfo *damageInfo, CommandSourceType )
 {
 	static NameKeyType proneModuleKey = TheNameKeyGenerator->nameToKey( "ProneUpdate" );
-	ProneUpdate *proneModule = (ProneUpdate *)getObject()->findUpdateModule( proneModuleKey );
+	ProneUpdate *proneModule = (ProneUpdate *)reinterpret_cast<BFMEAIUpdateFields *>(this)
+			->getObject()->findUpdateModule( proneModuleKey );
 
 	if( proneModule )
 		proneModule->goProne( damageInfo );
