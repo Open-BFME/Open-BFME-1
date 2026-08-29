@@ -334,7 +334,52 @@ Int SpecialPowerStore::getNumSpecialPowers( void )
 /** does the object (and therefore the player) meet all the requirements to use this power */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/SpecialPowerStore_canUseSpecialPower_Thunk.cpp
-// ?canUseSpecialPower@SpecialPowerStore@@ present-unmatched
+// BFME reads the required science at template+0x1C, walking the override chain
+// inline rather than calling an accessor, and asks the controlling player a
+// further question before granting the power.
+// friend_getFinalOverride is inline in the vendored Overridable.h, so calling
+// it there unrolls one more link of the chain than retail does; retail makes
+// the call. Declared-only view, pinned at the ILT the real name already uses.
+class BfmeOverridableChain
+{
+public:
+	const BfmeOverridableChain *friend_getFinalOverride( void ) const;
+
+	void *vtable;
+	const BfmeOverridableChain *nextOverride;			///< Overridable+0x04
+};
+
+struct BfmeSpecialPowerScience
+{
+	void *vtable;
+	const BfmeOverridableChain *nextOverride;			///< Overridable+0x04
+	UnsignedByte pad[0x1c - 8];
+	ScienceType requiredScience;						///< retail template+0x1C
+
+	// Retail walks the override chain here rather than calling an accessor:
+	// one link tested inline, the rest handed to friend_getFinalOverride.
+	__forceinline ScienceType getRequiredScience( void ) const
+	{
+		const BfmeSpecialPowerScience *self;
+		const BfmeOverridableChain *o = nextOverride;
+		if( o )
+		{
+			if( o->nextOverride )
+				o = o->nextOverride->friend_getFinalOverride();
+			self = (const BfmeSpecialPowerScience *)o;
+		}
+		else
+			self = this;
+		return self->requiredScience;
+	}
+};
+
+class BfmeSpecialPowerPlayer
+{
+public:
+	UnsignedByte _bfme_allowsSpecialPower( const SpecialPowerTemplate *tmpl );
+};
+
 Bool SpecialPowerStore::canUseSpecialPower( Object *obj, const SpecialPowerTemplate *specialPowerTemplate )
 {
 
@@ -355,7 +400,7 @@ Bool SpecialPowerStore::canUseSpecialPower( Object *obj, const SpecialPowerTempl
 	//
 	
 	// check for requried science
-	ScienceType requiredScience = specialPowerTemplate->getRequiredScience();
+	ScienceType requiredScience = ((const BfmeSpecialPowerScience *)specialPowerTemplate)->getRequiredScience();
 	if( requiredScience != SCIENCE_INVALID )
 	{
 		Player *player = obj->getControllingPlayer();
@@ -365,12 +410,13 @@ Bool SpecialPowerStore::canUseSpecialPower( Object *obj, const SpecialPowerTempl
 
 	}  // end if
 
-	
-	// I THINK THIS IS WHERE WE BAIL OUT IF A DIFFERENT CONYARD IS ALREADY CHARGIN THIS SPECIAL RIGHT NOW //LORENZEN
-
-
-	// all is well
-	return TRUE;
+	// BFME asks the controlling player one more question here. The reference
+	// returns TRUE the moment the science check passes, so it grants powers
+	// this refuses.
+	// The callee answers with a byte; narrowing it to this function's Bool is
+	// what produces retail's test/setne rather than a plain passthrough.
+	return ((BfmeSpecialPowerPlayer *)obj->getControllingPlayer())
+		->_bfme_allowsSpecialPower( specialPowerTemplate );
 
 }  // end canUseSpecialPower
 
