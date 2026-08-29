@@ -1175,3 +1175,22 @@ Corollary for anyone sizing work off the log: `note`, `evidence`, `lever`,
 `correction` and unrecognised words are ANNOTATIONS, not verdicts, and an
 unrecognised status leaks a candidate rather than burying one. So a grep counts
 things the tool does not. Use re_log.is_dead_end(), not text.
+
+## The first build after --apply can look like a pass it never ran
+
+`merge_cluster.py --apply` repoints the ledger rows; it does NOT clear the
+donor's `present-unmatched` marker. verify_source_claims reads that stale
+annotation and fails BEFORE the byte comparison runs, so the output you get is
+about the marker, not the bytes -- and the line it prints,
+
+    byte-verified matched from this file but still carries an unmatched marker
+    (stale annotation)
+
+reads like a pass. It is not evidence of a byte match; it only means the row now
+names this file while the comment still says otherwise. Only the `Functions:`
+line is evidence.
+
+Clear the marker first, then build. Two agents hit this independently, one of
+them on three separate folds before spotting it, and one body (Object::setLayer)
+did turn out to match once the marker was dropped -- which is the trap: the
+message is sometimes right by accident.
