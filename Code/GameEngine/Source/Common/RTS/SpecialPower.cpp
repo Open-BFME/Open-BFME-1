@@ -333,7 +333,6 @@ Int SpecialPowerStore::getNumSpecialPowers( void )
 //-------------------------------------------------------------------------------------------------
 /** does the object (and therefore the player) meet all the requirements to use this power */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/SpecialPowerStore_canUseSpecialPower_Thunk.cpp
 // BFME reads the required science at template+0x1C, walking the override chain
 // inline rather than calling an accessor, and asks the controlling player a
 // further question before granting the power.
