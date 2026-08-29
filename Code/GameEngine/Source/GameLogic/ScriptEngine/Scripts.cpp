@@ -601,8 +601,37 @@ Int ScriptList::getReadScripts(ScriptList *scriptLists[MAX_PLAYER_COUNT])
 *	Input: DataChunkInput 
 *		
 */
+// BFME's two writers are FREE functions taking the list itself as a second
+// argument, not the static members the reference calls with two -- and it writes
+// the GROUP chunk first. The reference copy writes the script chunk first, so
+// the two produce different chunk orders in the saved map.
+void WriteGroupDataChunk( DataChunkOutput &chunkWriter, ScriptList *scriptList, ScriptGroup *scriptGroup );
+void WriteScriptDataChunk( DataChunkOutput &chunkWriter, ScriptList *scriptList, Script *script );
+
+struct BfmeScriptListHeads
+{
+	UnsignedByte m_unreconstructed_00[4];
+	Script *m_firstScript;						///< retail this+0x04
+	ScriptGroup *m_firstGroup;					///< retail this+0x08
+};
+
 // byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptList_WriteScriptsDataChunk_Thunk.cpp
 // ?WriteScriptsDataChunk@ScriptList@@SAXAAVDataChunkOutput@@QAPAV1@H@Z present-unmatched
+//
+// Blocked on the row's own object-symbol note, which is a variant worth knowing.
+// The row is NAMED ...QAPAV1@H@Z but carries
+// object-symbol=?WriteScriptsDataChunk@ScriptList@@SAXAAVDataChunkOutput@@PBQAV1@H@Z,
+// so the gate reads that second spelling out of the object. PBQAV1@ is what a
+// parameter declared `ScriptList *const []' mangles to -- the donor's own
+// declaration -- while this file's header declares `ScriptList *[]' and emits
+// QAPAV1@. The two are different parameter TYPES, not a top-level const, so the
+// destination cannot emit the donor's spelling without changing Scripts.h, and
+// that is a wide header change for one body. It fails as "symbol not found in
+// object", the same way an access-specifier mismatch does.
+//
+// The body itself is authored and the finding stands: BFME inlines the per-list
+// writes here rather than calling WriteScriptListDataChunk, and writes the group
+// chunk before the script chunk where the reference does the reverse.
 void ScriptList::WriteScriptsDataChunk(DataChunkOutput &chunkWriter, ScriptList *scriptLists[], Int numLists )
 {
 	/**********SCRIPTS DATA ***********************/
@@ -610,7 +639,9 @@ void ScriptList::WriteScriptsDataChunk(DataChunkOutput &chunkWriter, ScriptList 
 		Int i;
 		for (i=0; i<numLists; i++) {
 			chunkWriter.openDataChunk("ScriptList", K_SCRIPT_LIST_DATA_VERSION_1);
+
 			if (scriptLists[i]) scriptLists[i]->WriteScriptListDataChunk(chunkWriter);
+
 			chunkWriter.closeDataChunk();
 		}
 	chunkWriter.closeDataChunk();
@@ -625,13 +656,15 @@ void ScriptList::WriteScriptsDataChunk(DataChunkOutput &chunkWriter, ScriptList 
 *	Input: DataChunkInput 
 *		
 */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptList_WriteScriptListDataChunkBfmeLayout.cpp
-// ?WriteScriptListDataChunk@ScriptList@@QAEXAAVDataChunkOutput@@@Z present-unmatched
+
+// ?WriteScriptListDataChunk@ScriptList@@QAEXAAVDataChunkOutput@@@Z
 void ScriptList::WriteScriptListDataChunk(DataChunkOutput &chunkWriter)
 {
+	BfmeScriptListHeads *self = (BfmeScriptListHeads *)this;
+
 	/**********SCRIPTS DATA ***********************/
-		if (m_firstScript) m_firstScript->WriteScriptDataChunk(chunkWriter, m_firstScript);
-		if (m_firstGroup) m_firstGroup->WriteGroupDataChunk(chunkWriter, m_firstGroup);
+		if (self->m_firstGroup) WriteGroupDataChunk(chunkWriter, this, self->m_firstGroup);
+		if (self->m_firstScript) WriteScriptDataChunk(chunkWriter, this, self->m_firstScript);
 }
 
 
@@ -2550,6 +2583,22 @@ ScriptAction *ScriptAction::ParseAction(DataChunkInput &file, DataChunkInfo *inf
 */
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptsParseActionDataChunkThunk.cpp
 // ?ParseActionDataChunk@ScriptAction@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z present-unmatched
+//
+// Blocked by row dependency, and doubly: this body is the ONLY caller of both
+// Script::getAction and Script::setAction in this TU, and the COMDAT copies MSVC
+// emits for those two inlines are themselves matched rows -- 0x00112980 (4
+// bytes) and 0x00112970 (10 bytes), both claimed from this file. The merged form
+// cannot keep the calls, because they read a DIFFERENT field: the reference
+// inlines read m_action at +0x28 and byte-match retail's standalone bodies
+// there, while retail inlines a read of +0x20 here. Same shape as
+// Object::areModulesReady in Player.cpp -- both offsets are right, they are just
+// not the same member.
+//
+// Only the difference between m_action and its m_actionFalse twin is proven
+// anyway (0x00358fe0 reads this+0x20, the twin at 0x00359030 reads this+0x24,
+// and the reference declares m_action first), so where BFME's Script loses the
+// eight bytes ahead of them is not established. The action's own link is at
+// ScriptAction+0x3c.
 Bool ScriptAction::ParseActionDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData)
 {
 	Script *pScript = (Script *)userData;
