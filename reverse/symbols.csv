@@ -80436,3 +80436,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?adjustFontSize@GlobalLanguage@@QAEHH@Z,0x00004E67,this tree names the class GlobalLanguage where the ledger row at 0x00439000 spells it GlobalLanguageData; ILT 0x00004E67 is what InGameUI::addNamedTimer calls and it jumps straight to that body
