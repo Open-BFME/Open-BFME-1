@@ -76198,6 +76198,7 @@ name,address,notes
 ?getShroudedStatus@Object@@QBE?AW4ObjectShroudStatus@@H@Z,0x0002B81E,Object shroud-status ILT decoded from isObjectShroudedForAction retail callsite
 ?getShroudedStatus@PartitionData@@QAE?AW4ObjectShroudStatus@@H@Z,0x008F8110,Open-BFME5 tail-jmp callee of ?getShroudedStatus@Object@@QBE?AW4ObjectShroudStatus@@H@Z at 0x001C7B30; body range-checks the player index against 16 and indexes a per-player array at this+0x24
 ?getSkillPointsNeeded@RankInfo@@QBEHABVAsciiString@@@Z,0x000066A4,Open-BFME5 ILT thunk to body 0x003A0860; resetRank passes Player::m_side and consumes the returned next-rank threshold; BFME RankInfo has five side override fields at 0x14..0x24
+?getSlot@BfmeDisconnectVoteMsg@@QAEEXZ,0x000058B7,alias of the NetCommandMsg spelling pinned at the same ILT; DisconnectManager.cpp reaches it through a view class
 ?getSlot@NetCommandMsg@@QAEEXZ,0x000058B7,ILT thunk to the disconnect-vote message slot accessor; returns a byte
 ?getSoleHealingBenefactor@Object@@QBE?AW4ObjectID@@XZ,0x000029D7,Open-BFME5 ILT fronts unclaimed 26-byte body 0x001BE770; called by ?privateRepair@DozerAIUpdate@@MAEXPAVObject@@W4CommandSourceType@@@Z at 0x002B6B80
 ?getSound@ThingTemplate@@QBEPBVAudioEventRTS@@H@Z,0x0001BFD1,Open-BFME5 ILT thunk to body 0x00416FA0 - an indexed sound getter that falls back to the no-sound event at 0x012F1318; ?onContaining@OpenContain@@UAEXPAVObject@@_N@Z at 0x00221720 asks it for index 101 where the reference calls getSoundEnter
@@ -76239,6 +76240,7 @@ name,address,notes
 ?getVel@AnimateWindow@@QAE?AUCoord2D@@XZ,0x0000E548,ILT thunk -> 0x495610; retail call sites use the thunk
 ?getVetUpgradeName@@YA?AVAsciiString@@W4VeterancyLevel@@@Z,0x0010AD90,returns AsciiString by value so the hidden result pointer is the first cdecl argument
 ?getVisionRange@Object@@QBEMXZ,0x00014B4B,AIMoveAwayFromRepulsorsState::onEnter direct-call ILT thunk
+?getVoteFrame@BfmeDisconnectVoteMsg@@QAEIXZ,0x00013F20,alias of the NetCommandMsg spelling pinned at the same ILT; DisconnectManager.cpp reaches it through a view class
 ?getVoteFrame@NetCommandMsg@@QAEIXZ,0x00013F20,ILT thunk to the disconnect-vote message vote frame accessor
 ?getVotesNeededToKick@DisconnectManager@@IAEHHPAVConnectionManager@@@Z,0x0002FA63,Open-BFME5 ILT; behaviour-derived name - takes the translated slot and the connection manager and returns the threshold ?isPlayerVotedOut@DisconnectManager@@IAE_NHPAVConnectionManager@@@Z at 0x0066BC30 compares the vote count against where ZH has getNumPlayers()-1
 ?getWakeFrame@UpdateModule@@IBE?AW4UpdateSleepTime@@XZ,0x000176C5,Open-BFME5 ILT fronts unclaimed 24-byte body 0x002B2020; called by ?friend_notifyStateMachineChanged@AIUpdateInterface@@UAEXXZ at 0x0026ED10
@@ -77564,6 +77566,7 @@ name,address,notes
 ?isPlayerConnected@ConnectionManager@@QAE_NH@Z,0x0001514A
 ?isPlayerDead@Player@@QBE_NXZ,0x000C9D00,returns Player+0x680 = m_isPlayerDead: set to TRUE by killPlayer 0x000CE1B2 and cleared again for single player at 0x000CE202 (ZH Player.cpp:2067/2081); Player init sets it from m_observer at 0x000DAB0F (ZH Player.cpp:475)
 ?isPlayerInGame@BFMEConnectionManager@@QAE_NH@Z,0x0004A87C,DisconnectManager status update live-state test through ILT to the existing 0x00662BE0 body
+?isPlayerInGame@BfmeDisconnectRoster@@QAE_NHPAVConnectionManager@@@Z,0x0003A648,alias of the DisconnectManager spelling pinned at the same ILT; processDisconnectVote reaches it through a view class so the call does not bind to the definition later in the same TU
 ?isPlayerInGame@DisconnectManager@@IAE_NHPAVConnectionManager@@@Z,0x0003A648,ILT thunk to DisconnectManager::isPlayerInGame
 ?isPlayerObserver@Player@@QBE_NXZ,0x00020D01,ILT thunk -> body 0x000C9CF0 (byte getter +0x296); sits at ZH's isPlayerObserver call sites in cachePlayerPtrs and the has*Defeated bodies
 ?isPlayerObserver@Player@@QBE_NXZ,0x000C9CF0,returns Player+0x296; cachePlayerPtrs tests it at 0x0035F55B where ZH tests !player->isPlayerObserver(); Player init copies PlayerTemplate IsObserver (+0xBC) into +0x296 at 0x000DAB09
