@@ -80009,3 +80009,8 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??_7BehaviorModuleInterface@@6B@,0x0109C9D0,Open-BFME5 vtable address emitted by ObjectHelper constructor 0x001C0DB0
+??_7UpdateModuleInterface@@6B@,0x0109CBA0,Open-BFME5 vtable address emitted by ObjectHelper constructor 0x001C0DB0
+??_7ObjectHelper@@6BObjectModule@@@,0x0109E45C,Open-BFME5 primary ObjectHelper vtable address emitted by constructor 0x001C0DB0
+??_7ObjectHelper@@6BBehaviorModuleInterface@@@,0x0109E398,Open-BFME5 ObjectHelper BehaviorModuleInterface vtable address emitted by constructor 0x001C0DB0
+??_7ObjectHelper@@6BUpdateModuleInterface@@@,0x0109E38C,Open-BFME5 ObjectHelper UpdateModuleInterface vtable address emitted by constructor 0x001C0DB0
