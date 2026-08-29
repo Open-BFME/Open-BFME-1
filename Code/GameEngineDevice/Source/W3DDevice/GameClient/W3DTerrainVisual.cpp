@@ -1097,10 +1097,14 @@ void W3DTerrainVisual::removeFactionBibDrawable(Drawable *factionBuilding)
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisualRemoveFactionBib.cpp
-// ?removeFactionBib@W3DTerrainVisual@@ present-unmatched
 void W3DTerrainVisual::removeFactionBib(Object *factionBuilding)
 {
-	if (m_terrainRenderObject) {
+	// Same guard as removeFactionBibDrawable above and as the adder: BFME tests
+	// the HEIGHT MAP at this+0x18 and then calls through the render object at
+	// +0x10. The reference guards on the render object it is about to call, so
+	// on a live map with no render object it dereferences null, and on a null
+	// map with one it goes ahead.
+	if (m_logicHeightMap) {
 		m_terrainRenderObject->removeTerrainBib(factionBuilding->getID());
 	}
 }
