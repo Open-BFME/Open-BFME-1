@@ -411,6 +411,27 @@ W3DFilterInterface *ScreenBWFilterList[]=
 	NULL
 };
 
+// BFME's shader loader takes only the file name and the handle to fill. The
+// reference header declares five parameters, so every call site here builds a
+// D3DVSD vertex-shader declaration array the retail loader never sees. The
+// two-argument spelling is already pinned at ILT 0x0001FC99 under the real
+// class name; this view is that same function reached under a name this TU can
+// declare beside the five-argument one.
+class BfmeShaderLoader
+{
+public:
+	static HRESULT LoadAndCreateD3DShader( const char *filename, DWORD *shader );
+};
+
+// BFME's chipset ladder puts the generic pixel-shader 1.1 tier at 3 where the
+// reference enum in Common/GameLOD.h numbers it 9 -- six entries earlier in the
+// same list. Only the VALUE is proven by these bodies; what the six entries the
+// reference has ahead of it are called in BFME is not. Left local rather than
+// corrected in the header, which every other consumer of that enum shares --
+// including the still-unconverted comparisons at lines below, which keep the
+// reference value because no body here has proven them.
+enum { BFME_DC_GENERIC_PIXEL_SHADER_1_1 = 3 };
+
 // byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__init_ScreenBWFilter_UAEHXZ_007D0AF0.cpp
 // ?init@ScreenBWFilter@@UAEHXZ present-unmatched
 Int ScreenBWFilter::init(void)
@@ -1708,6 +1729,8 @@ public:
 	DWORD					m_dwBaseNoise1PixelShader;	///<handle to terrain/single noise D3D pixel shader
 	DWORD					m_dwBaseNoise2PixelShader;	///<handle to terrain/double noise D3D pixel shader
 	DWORD					m_dwBase0PixelShader;	///<handle to terrain only pixel shader
+	DWORD					m_dwTaintPixelShader;	///<BFME-only; retail this+0x18
+	DWORD					m_dwTaint2PixelShader;	///<BFME-only; retail this+0x1C
 	virtual Int set(Int pass);		///<setup shader for the specified rendering pass.
 	virtual Int init(void);			///<perform any one time initialization and validation
 	virtual void reset(void);		///<do any custom resetting necessary to bring W3D in sync.
@@ -2163,7 +2186,6 @@ Int TerrainShaderPixelShader::shutdown(void)
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainShaderPixelShader_init_Thunk.cpp
-// ?init@TerrainShaderPixelShader@@EAEHXZ present-unmatched
 Int TerrainShaderPixelShader::init( void )
 {	
 	Int res;
@@ -2171,34 +2193,22 @@ Int TerrainShaderPixelShader::init( void )
 	return false;
 #endif
 	//this shader will also use the 2Stage shader for some of the passes so initialize it too.
-	if (terrainShader2Stage.init() && (res=W3DShaderManager::getChipset()) >= DC_GENERIC_PIXEL_SHADER_1_1)
+	if (terrainShader2Stage.init() && (res=W3DShaderManager::getChipset()) >= BFME_DC_GENERIC_PIXEL_SHADER_1_1)
 	{
-		if (res >= DC_GENERIC_PIXEL_SHADER_1_1)
+		if (res >= BFME_DC_GENERIC_PIXEL_SHADER_1_1)
 		{
-			//this shader needs some assets that need to be loaded
-			//shader decleration
-			DWORD Declaration[]=
-			{
-				(D3DVSD_STREAM(0)),
-				(D3DVSD_REG(0, D3DVSDT_FLOAT3)), // Position
-				(D3DVSD_REG(1, D3DVSDT_D3DCOLOR)), // Diffuse
-				(D3DVSD_REG(2, D3DVSDT_FLOAT2)), //  Texture Coordinates
-				(D3DVSD_REG(3, D3DVSDT_FLOAT2)), //  Texture Coordinates
-				(D3DVSD_END())
-			};
-
 			//base version which doesn't apply any noise textures.
-			HRESULT hr = W3DShaderManager::LoadAndCreateD3DShader("shaders\\terrain.pso", &Declaration[0], 0, false, &m_dwBasePixelShader);
+			HRESULT hr = BfmeShaderLoader::LoadAndCreateD3DShader("shaders\\terrain.pso", &m_dwBasePixelShader);
 			if (FAILED(hr))
 				return FALSE;
 
 			//version which blends 1 noise texture.
-			hr = W3DShaderManager::LoadAndCreateD3DShader("shaders\\terrainnoise.pso", &Declaration[0], 0, false, &m_dwBaseNoise1PixelShader);
+			hr = BfmeShaderLoader::LoadAndCreateD3DShader("shaders\\terrainnoise.pso", &m_dwBaseNoise1PixelShader);
 			if (FAILED(hr))
 				return FALSE;
 
 			//version which blends 2 noise textures.
-			hr = W3DShaderManager::LoadAndCreateD3DShader("shaders\\terrainnoise2.pso", &Declaration[0], 0, false, &m_dwBaseNoise2PixelShader);
+			hr = BfmeShaderLoader::LoadAndCreateD3DShader("shaders\\terrainnoise2.pso", &m_dwBaseNoise2PixelShader);
 			if (FAILED(hr))
 				return FALSE;
 
@@ -3776,7 +3786,6 @@ Int FlatTerrainShaderPixelShader::shutdown(void)
 }
 
 // byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/FlatTerrainShaderPixelShader_init_Thunk.cpp
-// ?init@FlatTerrainShaderPixelShader@@UAEHXZ present-unmatched
 Int FlatTerrainShaderPixelShader::init( void )
 {	
 	Int res;
@@ -3786,39 +3795,36 @@ Int FlatTerrainShaderPixelShader::init( void )
 #endif
 
 	//this shader will also use the 2Stage shader for some of the passes so initialize it too.
-	if ((res=W3DShaderManager::getChipset()) >= DC_GENERIC_PIXEL_SHADER_1_1)
+	if ((res=W3DShaderManager::getChipset()) >= BFME_DC_GENERIC_PIXEL_SHADER_1_1)
 	{
-		if (res >= DC_GENERIC_PIXEL_SHADER_1_1)
+		if (res >= BFME_DC_GENERIC_PIXEL_SHADER_1_1)
 		{
-			//this shader needs some assets that need to be loaded
-			//shader decleration
-			DWORD Declaration[]=
-			{
-				(D3DVSD_STREAM(0)),
-				(D3DVSD_REG(0, D3DVSDT_FLOAT3)), // Position
-				(D3DVSD_REG(1, D3DVSDT_D3DCOLOR)), // Diffuse
-				(D3DVSD_REG(2, D3DVSDT_FLOAT2)), //  Texture Coordinates
-				(D3DVSD_REG(3, D3DVSDT_FLOAT2)), //  Texture Coordinates
-				(D3DVSD_END())
-			};
-
 			//base version which doesn't apply any noise textures.
-			HRESULT hr = W3DShaderManager::LoadAndCreateD3DShader("shaders\\fterrain.pso", &Declaration[0], 0, false, &m_dwBasePixelShader);
+			HRESULT hr = BfmeShaderLoader::LoadAndCreateD3DShader("shaders\\fterrain.pso", &m_dwBasePixelShader);
+			if (FAILED(hr))
+				return FALSE;
+
+			//BFME-only: the terrain taint shaders, loaded before fterrain0.
+			hr = BfmeShaderLoader::LoadAndCreateD3DShader("shaders\\terraintaint.pso", &m_dwTaintPixelShader);
+			if (FAILED(hr))
+				return FALSE;
+
+			hr = BfmeShaderLoader::LoadAndCreateD3DShader("shaders\\terraintaint2.pso", &m_dwTaint2PixelShader);
 			if (FAILED(hr))
 				return FALSE;
 
 			//base version which doesn't apply any shroud textures.
-			hr = W3DShaderManager::LoadAndCreateD3DShader("shaders\\fterrain0.pso", &Declaration[0], 0, false, &m_dwBase0PixelShader);
+			hr = BfmeShaderLoader::LoadAndCreateD3DShader("shaders\\fterrain0.pso", &m_dwBase0PixelShader);
 			if (FAILED(hr))
 				return FALSE;
 
 			//version which blends 1 noise texture.
-			hr = W3DShaderManager::LoadAndCreateD3DShader("shaders\\fterrainnoise.pso", &Declaration[0], 0, false, &m_dwBaseNoise1PixelShader);
+			hr = BfmeShaderLoader::LoadAndCreateD3DShader("shaders\\fterrainnoise.pso", &m_dwBaseNoise1PixelShader);
 			if (FAILED(hr))
 				return FALSE;
 
 			//version which blends 2 noise textures.
-			hr = W3DShaderManager::LoadAndCreateD3DShader("shaders\\fterrainnoise2.pso", &Declaration[0], 0, false, &m_dwBaseNoise2PixelShader);
+			hr = BfmeShaderLoader::LoadAndCreateD3DShader("shaders\\fterrainnoise2.pso", &m_dwBaseNoise2PixelShader);
 			if (FAILED(hr))
 				return FALSE;
 
@@ -3826,10 +3832,10 @@ Int FlatTerrainShaderPixelShader::init( void )
 			W3DShaders[W3DShaderManager::ST_FLAT_TERRAIN_BASE_NOISE1]=&flatTerrainShaderPixelShader;
 			W3DShaders[W3DShaderManager::ST_FLAT_TERRAIN_BASE_NOISE2]=&flatTerrainShaderPixelShader;
 			W3DShaders[W3DShaderManager::ST_FLAT_TERRAIN_BASE_NOISE12]=&flatTerrainShaderPixelShader;
-			W3DShadersPassCount[W3DShaderManager::ST_FLAT_TERRAIN_BASE]=1;
-			W3DShadersPassCount[W3DShaderManager::ST_FLAT_TERRAIN_BASE_NOISE1]=1;
-			W3DShadersPassCount[W3DShaderManager::ST_FLAT_TERRAIN_BASE_NOISE2]=1;
-			W3DShadersPassCount[W3DShaderManager::ST_FLAT_TERRAIN_BASE_NOISE12]=1;
+			W3DShadersPassCount[W3DShaderManager::ST_FLAT_TERRAIN_BASE]=2;
+			W3DShadersPassCount[W3DShaderManager::ST_FLAT_TERRAIN_BASE_NOISE1]=2;
+			W3DShadersPassCount[W3DShaderManager::ST_FLAT_TERRAIN_BASE_NOISE2]=2;
+			W3DShadersPassCount[W3DShaderManager::ST_FLAT_TERRAIN_BASE_NOISE12]=2;
 			return TRUE;
 		}
 	}
