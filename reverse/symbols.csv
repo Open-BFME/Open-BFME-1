@@ -72378,6 +72378,7 @@ name,address,notes
 ?bfmeBase963@BfmeReg963@@QAEXXZ,0x009A1A30,pin
 ?bfmeBase966A@BfmeVft966A@@QAEXXZ,0x00039D6A,pin
 ?bfmeBase966B@BfmeVft966B@@QAEXXZ,0x00039D6A,pin
+?bfmeBase967A@BfmeVft967A@@QAEXXZ,0x0001AB90,pin
 ?bfmeBaseAB@BfmeThingAB@@QAEXPAX@Z,0x0001AD0C,pin
 ?bfmeBaseAGB@BfmeThingAGB@@QAEXPAX0@Z,0x000170E4,pin
 ?bfmeBaseARC@BfmeThingARC@@QAEXXZ,0x009A1A30,pin
@@ -75125,6 +75126,17 @@ name,address,notes
 ?g_bfme966B7@@3PADA,0x00CAD1FC,pin
 ?g_bfme966B8@@3PADA,0x00CAD1EC,pin
 ?g_bfme966B9@@3PADA,0x00CAD1E8,pin
+?g_bfme967A0@@3PADA,0x00CB0D50,pin
+?g_bfme967A10@@3PADA,0x00CB07E0,pin
+?g_bfme967A1@@3PADA,0x00CB0C88,pin
+?g_bfme967A2@@3PADA,0x00CB0C78,pin
+?g_bfme967A3@@3PADA,0x00CB0AD0,pin
+?g_bfme967A4@@3PADA,0x00CB0AB0,pin
+?g_bfme967A5@@3PADA,0x00CB0AAC,pin
+?g_bfme967A6@@3PADA,0x00CB0A9C,pin
+?g_bfme967A7@@3PADA,0x00CB0A60,pin
+?g_bfme967A8@@3PADA,0x00CB0A50,pin
+?g_bfme967A9@@3PADA,0x00CB0A4C,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
