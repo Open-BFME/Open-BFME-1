@@ -35,6 +35,17 @@ Two verdicts are dead ends and both are free, before any compile runs:
                    `present-unmatched` pair for this symbol, so there is nothing
                    to consume. Sometimes it means the destination has no body at
                    all and the marker is asking for authoring, not repointing.
+  ambiguous-marker a truncated marker matching more than one row the donor owns.
+                   Twelve of these; they need the marker spelled out, not a guess.
+
+A THIRD of the markers name their symbol WITHOUT its signature -- `??0Foo@@`
+rather than `??0Foo@@QAE@PAVThing@@PBVModuleData@@@Z`. 302 of 1035, and they are
+invisible to any tool that looks a marker up in functions.csv directly, which is
+how a 23-donor "family" screen missed a 24th member whose marker happened to be
+truncated. Resolution is unambiguous almost always: take the rows the DONOR owns
+whose symbol starts with the marker's spelling, and if exactly one matches, that
+is it. That is what `resolve` below does, and it is why --queue reports 1023 and
+not 721.
 
 A match prints "OK: bytes match" and NO Disassembly section, so do not detect one
 by counting diff lines -- an errored run also has zero.
@@ -59,6 +70,27 @@ for _line in open(ROOT / "reverse" / "functions.csv", "rb"):
         _notes[_f[0]] = ",".join(_f[5:])
 
 
+_by_source = {}
+for _sym, (_rva, _size, _src) in _rows.items():
+    _by_source.setdefault(_src, []).append(_sym)
+
+
+def resolve(donor, symbol):
+    """The full mangled name a marker means, or None / 'ambiguous'.
+
+    A marker may name its symbol without the signature, and a third of them do.
+    Only rows the DONOR owns are candidates, which is what keeps the prefix from
+    matching an unrelated overload in another file."""
+    if symbol in _rows:
+        return symbol
+    if not symbol.endswith("@@"):
+        return None
+    candidates = [s for s in _by_source.get(donor, []) if s.startswith(symbol)]
+    if len(candidates) == 1:
+        return candidates[0]
+    return "ambiguous" if candidates else None
+
+
 def markers():
     """Every (donor, destination, symbol) the markers name, smallest row first."""
     out = subprocess.run(["grep", "-rn", "readable body of ", "Code/"],
@@ -70,8 +102,11 @@ def markers():
         if not m:
             continue
         donor, symbol, dest = m.group(1), m.group(2), m.group(3)
-        row = _rows.get(symbol)
-        if not row or row[2] != donor:
+        full = resolve(donor, symbol)
+        if not full or full == "ambiguous":
+            continue
+        row = _rows[full]
+        if row[2] != donor:
             continue          # the donor does not own the row; not ours to move
         key = (donor, dest, symbol)
         if key in seen:
@@ -87,9 +122,16 @@ def markers():
 
 
 def screen(donor, dest, symbol):
-    note = re.search(r"object-symbol=([^;\r\n]*)", _notes.get(symbol, ""))
-    if note and note.group(1) != symbol:
-        return "OBJECT-SYMBOL: " + note.group(1)
+    full = resolve(donor, symbol)
+    if full == "ambiguous":
+        return "ambiguous-marker"
+    # An unresolved symbol is NOT a reason to bail here. The marker check and the
+    # restore below are what this function must get right whatever the ledger
+    # says, so the row is required only where the RVA is actually used.
+    if full:
+        note = re.search(r"object-symbol=([^;\r\n]*)", _notes.get(full, ""))
+        if note and note.group(1) != full:
+            return "OBJECT-SYMBOL: " + note.group(1)
 
     path = ROOT / dest
     original = path.read_bytes()
@@ -107,13 +149,13 @@ def screen(donor, dest, symbol):
     # stale-annotation pass that never compared a byte. So restore on any
     # unwind and re-raise.
     try:
-        return _screen_cleared(path, original, dest, symbol)
+        return _screen_cleared(path, original, dest, full)
     except BaseException:
         path.write_bytes(original)
         raise
 
 
-def _screen_cleared(path, original, dest, symbol):
+def _screen_cleared(path, original, dest, full):
     built = subprocess.run(["./build.sh", dest], cwd=ROOT,
                            capture_output=True, text=True, timeout=1800)
     if "Functions: OK" not in built.stdout:
@@ -121,8 +163,11 @@ def _screen_cleared(path, original, dest, symbol):
         failed = re.search(r"^  FAIL.*", built.stdout, re.M)
         return "DEST-RED: " + (failed.group(0).strip() if failed else "build error")
 
-    rva, size, _ = _rows[symbol]
-    diffed = subprocess.run(["python3", "tools/explain_mismatch.py", symbol,
+    if not full:
+        path.write_bytes(original)
+        return "no-row"
+    rva, size, _ = _rows[full]
+    diffed = subprocess.run(["python3", "tools/explain_mismatch.py", full,
                              "--rva", rva, "--size", size, "--source", dest],
                             cwd=ROOT, capture_output=True, text=True, timeout=1800)
     if "OK: bytes match" in diffed.stdout:
