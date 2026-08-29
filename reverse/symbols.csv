@@ -718,6 +718,8 @@ name,address,notes
 ??$__copy@PAVAsciiString@@PAV1@H@_STL@@YAPAVAsciiString@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00042EA6
 ??$__copy@PAVLivingWorldPlayerArmy@@PAV1@H@_STL@@YAPAVLivingWorldPlayerArmy@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00002DD3,REL32 vector range-copy target from 0x003668FB
 ??$__copy@PAVOpen2Elem2EB190@@PAV1@H@_STL@@YAPAVOpen2Elem2EB190@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000AA92,Open2 0x2eb190 vector twin callee
+??$__copy@PAVOpen2Elem39EB70@@PAV1@H@_STL@@YAPAVOpen2Elem39EB70@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00040255,Open2 0x39eb70 vector erase twin callee
+??$__copy@PAVOpen2Elem3A3280@@PAV1@H@_STL@@YAPAVOpen2Elem3A3280@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00013FE3,Open2 0x3a3280 vector erase twin callee
 ??$__copy@PAVOpen2Elem7716A0@@PAV1@H@_STL@@YAPAVOpen2Elem7716A0@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00038CD5,Open2 0x7716a0 vector twin callee
 ??$__copy@PAVProductionPrerequisite@@PAV1@H@_STL@@YAPAVProductionPrerequisite@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000181A1,resweep callee back-solved
 ??$__copy@PAVW3DAnimationInfo@@PAV1@H@_STL@@YAPAVW3DAnimationInfo@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00024023,ILT thunk used by call site
@@ -8569,6 +8571,8 @@ name,address,notes
 ??1ObjectCreationUpgradeModuleDataMemberA@@QAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1ObjectModule@@UAE@XZ,0x00047C53,Open-BFME5 FireWeaponCollide base destructor ILT pin
 ??1Open2Elem2EB190@@QAE@XZ,0x0002AB2B,Open2 0x2eb190 vector twin callee
+??1Open2Elem39EB70@@QAE@XZ,0x00043699,Open2 0x39eb70 vector erase twin callee
+??1Open2Elem3A3280@@QAE@XZ,0x00036241,Open2 0x3a3280 vector erase twin callee
 ??1Open2Elem7716A0@@QAE@XZ,0x0003F4FE,Open2 0x7716a0 vector twin callee
 ??1OptionPreferences@@UAE@XZ,0x00001307
 ??1PB_DeepBase@@UAE@XZ,0x00047C53,Open-BFME5 SlaveWatcherBehavior base destructor ILT pin
@@ -9109,6 +9113,7 @@ name,address,notes
 ??4BfmeIntMap@@QAEAAV0@ABV0@@Z,0x00048013,Open-BFME5 operator= of the 12-byte member at ProductionPrerequisite+0x0C; the ILT here jumps to the _Rb_tree<int> assignment at 0x00064E90
 ??4BfmeLegendString@@QAEAAU0@ABU0@@Z,0x00887C90,SubsystemLegend.cpp AsciiString stand-in operator=; retail AsciiString::operator= body
 ??4BfmeRendererListBase@@QAEAAV0@ABV0@@Z,0x00887B60,provisional structural name: the four-byte base half of Render2DSentenceClass::PendingSurfaceStruct::Renderers; the address is an ICF group the ledger leads with StringBase<char>?s copy ctor
+??4BfmeSmallScaleDownString@@QAEAAU0@ABU0@@Z,0x00887C90,Open-BFME5 view-class spelling of the AsciiString copy-assignment already pinned as ??4AsciiString@@QAEAAV0@ABV0@@Z; declared-not-defined on the view so retail out-of-line call survives instead of the vendored inline expansion
 ??4BoxRenderObjClass@@QAEAAV0@ABV0@@Z,0x00956E40,rel32 pin for exact-ambiguous landing
 ??4BuildListInfo@@QAEAAV0@ABV0@@Z,0x0000D4CC,REL32 pin from BuildListInfo::duplicate @0x1944D0
 ??4CloudEffect@@QAEAAU0@ABU0@@Z,0x0000C662,ILT thunk to the compiler-generated assignment at 0x0040B430
@@ -72765,6 +72770,7 @@ name,address,notes
 ?bfmeDispatchA@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x000075D6,Open-BFME5 ILT the range dispatcher at 0x002610F0 calls
 ?bfmeDispatchB@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x00028501,Open-BFME5 ILT the range dispatcher at 0x00437D30 calls
 ?bfmeDispatchC@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x00027138,Open-BFME5 ILT the range dispatcher at 0x00575A50 calls
+?bfmeDo1006@BfmeHub1006@@QAEXXZ,0x000290D2,pin
 ?bfmeDo912C@BfmeThing912C@@QAEXPAUBfmeNode912C@@@Z,0x009F4D80,pin
 ?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
 ?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
@@ -73738,6 +73744,7 @@ name,address,notes
 ?bfmeResolveZones@@YAXHHPAG00@Z,0x0002B648,Open-BFME5 ILT thunk to exact body 0x00403C90; BFME zone-equivalence list merger
 ?bfmeRestart@Gen_0018BC70@@AAEXXZ,0x0003F1FC,Open-BFME5 the ICF thunk (to 0x0043F1FC) the compaction at 0x0018BC70 calls when its flag is set
 ?bfmeResume@Gen_0018BC70@@AAEXXZ,0x0000764E,Open-BFME5 the ICF thunk (to 0x0040764E) the compaction at 0x0018BC70 calls when its flag is clear
+?bfmeRun1006@BfmeRun1006@@QAEXXZ,0x0003B773,pin
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
 ?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
 ?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
@@ -73883,6 +73890,7 @@ name,address,notes
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
 ?bfmeStop1003@BfmeStop1003@@QAEXXZ,0x00020C84,pin
+?bfmeStop1006@BfmeStop1006@@QAEXXZ,0x00006AAA,pin
 ?bfmeStop@BfmeStopF@@QAEXXZ,0x00015E2E,Open-BFME5 the ICF thunk (to 0x0037C600) the clear at 0x002901C0 calls before emptying its vector
 ?bfmeStopAHA@BfmeSubAHA@@QAEXH@Z,0x0004AB4C,pin
 ?bfmeStopAQA@BfmeOneAQA@@QAEXXZ,0x0001F316,pin
@@ -74441,6 +74449,7 @@ name,address,notes
 ?concat@AsciiString@@QAEXPBD@Z,0x00888060,hit-decoded x2 (body)
 ?concat@AsciiString@@QAEXPBD@Z,0x00888930,hit-decoded x2 (body)
 ?concat@AsciiString@@QAEXPBDH@Z,0x00887D60,TeamInQueue disband call pin
+?concat@BfmeSmallScaleDownString@@QAEXPBDH@Z,0x00887D60,Open-BFME5 view-class spelling of the two-argument concat already pinned as ?concat@AsciiString@@QAEXPBDH@Z; BFME passes an explicit length where the vendored declaration takes only the pointer
 ?concat@UnicodeString@@QAEXPBGH@Z,0x00888600,Apt disconnect-screen quit message uses the StringBase<unsigned short> concat body
 ?configure@ShroudManagerImpl008FBA40@@QAEXURegion3D@@M@Z,0x008FB5F0,RVA 0x008FBAD0 validated Region3D configure call target
 ?connectCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPConnectResponseArg@@@Z,0x000314AD
@@ -75297,6 +75306,7 @@ name,address,notes
 ?g_bfmeArgEAC@@3PAXA,0x00EB7D80,pin
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
 ?g_bfmeAskB993@@3PAVBfmeAskB993@@A,0x00EF4B98,pin
+?g_bfmeAux1006@@3PAUBfmeAux1006@@A,0x00EF4B58,pin
 ?g_bfmeAux985@@3PAUBfmeAux985@@A,0x00EF4B58,pin
 ?g_bfmeB986B@@3PAHA,0x00EF9D0C,pin
 ?g_bfmeB991@@3PAVBfmeB991@@A,0x00EF9D88,pin
@@ -75339,6 +75349,7 @@ name,address,notes
 ?g_bfmeFindA980@@3PAVBfmeFindA980@@A,0x00EEF1D8,pin
 ?g_bfmeFindAMB@@3PAVBfmeFindAMB@@A,0x00EF0898,pin
 ?g_bfmeFindB980@@3PAVBfmeFindB980@@A,0x00EEF1D8,pin
+?g_bfmeFlag1006@@3DA,0x00EF3D4A,pin
 ?g_bfmeFlag961@@3PAUBfmeFlag961@@A,0x00EF7048,pin
 ?g_bfmeFlagBRA@@3HA,0x00EF7094,pin
 ?g_bfmeFlagMD@@3DA,0x00EF4AFC,pin
@@ -75369,6 +75380,7 @@ name,address,notes
 ?g_bfmeGlobRB@@3PAUBfmeObjRB@@A,0x00EF7FDC,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeHeld995B@@3PAXA,0x00EF4974,pin
+?g_bfmeHub1006@@3PAVBfmeHub1006@@A,0x00EF19E8,pin
 ?g_bfmeHub982@@3PAVBfmeHub982@@A,0x00F06954,pin
 ?g_bfmeHub985@@3PAVBfmeHub985@@A,0x00EF19E8,pin
 ?g_bfmeHub993@@3PAVBfmeHub993@@A,0x00EF148C,pin
@@ -75403,6 +75415,7 @@ name,address,notes
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
 ?g_bfmeModeAZC@@3PAUBfmeModeAZC@@A,0x00EF0FE0,pin
+?g_bfmeObj1006@@3PAUBfmeObj1006@@A,0x00EF4C38,pin
 ?g_bfmeObj2EGE@@3PAVBfmeObj2EGE@@A,0x00EF148C,pin
 ?g_bfmeObj985@@3PAUBfmeObj985@@A,0x00EF4B40,pin
 ?g_bfmeObjDXI@@3PAVBfmeGlobDXI@@A,0x00EF4B70,pin
@@ -75465,6 +75478,7 @@ name,address,notes
 ?g_bfmeRegion2DFormat@@3QBDB,0x0114442C,address-derived Region2D format string from retail 0x009D9814
 ?g_bfmeRegion3DFormat@@3QBDB,0x01144388,address-derived Region3D format string from retail 0x009D96EE
 ?g_bfmeResetA961@@3PAVBfmeResetA961@@A,0x00EF1028,pin
+?g_bfmeRun1006@@3PAVBfmeRun1006@@A,0x00EF4998,pin
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
@@ -75488,6 +75502,7 @@ name,address,notes
 ?g_bfmeSrc982@@3PAVBfmeSrc982@@A,0x00EF076C,pin
 ?g_bfmeStateA979@@3PAUBfmeStateA979@@A,0x00EF0898,pin
 ?g_bfmeStop1003@@3PAVBfmeStop1003@@A,0x00EF1024,pin
+?g_bfmeStop1006@@3PAVBfmeStop1006@@A,0x00EF4B58,pin
 ?g_bfmeStrA993B@@3PADA,0x00C81238,pin
 ?g_bfmeStrB993B@@3PADA,0x00C80FC0,pin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
@@ -80036,9 +80051,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?concat@BfmeSmallScaleDownString@@QAEXPBDH@Z,0x00887D60,Open-BFME5 view-class spelling of the two-argument concat already pinned as ?concat@AsciiString@@QAEXPBDH@Z; BFME passes an explicit length where the vendored declaration takes only the pointer
-??4BfmeSmallScaleDownString@@QAEAAU0@ABU0@@Z,0x00887C90,Open-BFME5 view-class spelling of the AsciiString copy-assignment already pinned as ??4AsciiString@@QAEAAV0@ABV0@@Z; declared-not-defined on the view so retail out-of-line call survives instead of the vendored inline expansion
-??$__copy@PAVOpen2Elem39EB70@@PAV1@H@_STL@@YAPAVOpen2Elem39EB70@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00040255,Open2 0x39eb70 vector erase twin callee
-??1Open2Elem39EB70@@QAE@XZ,0x00043699,Open2 0x39eb70 vector erase twin callee
-??$__copy@PAVOpen2Elem3A3280@@PAV1@H@_STL@@YAPAVOpen2Elem3A3280@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00013FE3,Open2 0x3a3280 vector erase twin callee
-??1Open2Elem3A3280@@QAE@XZ,0x00036241,Open2 0x3a3280 vector erase twin callee
