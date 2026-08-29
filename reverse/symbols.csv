@@ -73600,6 +73600,7 @@ name,address,notes
 ?bfmeMake_0054ee00@@YAPAXHH@Z,0x00029771,Open-BFME5 ILT the pair at 0x0054EE00 and 0x0054F390 calls
 ?bfmeMake_0056E900@@YAHHH@Z,0x0003C65A,Open-BFME5 ILT the short-widening ctor at 0x0056E900 calls
 ?bfmeMake_0056e1c0@@YAPAXHH@Z,0x0003C65A,Open-BFME5 ILT the pair at 0x0056E1C0 and 0x0056E7C0 calls
+?bfmeMark1027@BfmeQ1027@@QAEXH@Z,0x00024D70,pin
 ?bfmeMarkUpgradeCompleted@Object@@QAEXPBVUpgradeTemplate@@@Z,0x00007086,Open-BFME5 ILT thunk to body 0x001C5B90; marks the indexed Object upgrade-completed bit then refreshes upgrade modules; descriptive spelling
 ?bfmeMatchRaw@Gen_002da6b0@@AAEEPAX0@Z,0x0001D813,Open-BFME5 ILT the byte-returning match the wrapper at 0x002DA6B0 calls
 ?bfmeMatchRaw@Gen_002da6d0@@AAEEPAX0@Z,0x0002DB69,Open-BFME5 ILT the byte-returning match the wrapper at 0x002DA6D0 calls
@@ -73741,6 +73742,7 @@ name,address,notes
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
 ?bfmeOwner1001@BfmeX1001@@QAEPAXXZ,0x00020824,pin
+?bfmePause1027@BfmeX1027@@QAEXH@Z,0x00007513,pin
 ?bfmePrep911E@BfmeSub911E@@QAEXXZ,0x0090F140,pin
 ?bfmePrep986C@BfmeC986@@QAEXXZ,0x00006258,pin
 ?bfmePushBack@BFMEAnimateWindowListPush@@QAEXABQAVAnimateWindow@@@Z,0x00022D36,BFME out-of-line list<AnimateWindow*>::push_back body 0x45DAE0 via ILT thunk
@@ -73836,6 +73838,7 @@ name,address,notes
 ?bfmeSay1025@BfmeP1025@@QAEDPAD@Z,0x009EEBB0,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
+?bfmeSel1027@BfmeW1027@@QAEXH@Z,0x00002383,pin
 ?bfmeSelect@BfmeElemW@@QAEXHH@Z,0x0001949D,Open-BFME5 the ICF thunk (to 0x0041949D) the clear at 0x004B1720 calls on each element with a pair of minus ones
 ?bfmeSend1002@BfmeB1002@@QAEDPAUBfmeHold1002@@H@Z,0x0000583A,pin
 ?bfmeSend1007@BfmeB1007@@QAEDHPAX@Z,0x000420A5,pin
@@ -73868,6 +73871,7 @@ name,address,notes
 ?bfmeSet1018@BfmeSink1018@@QAEXHH@Z,0x0003EEBE,pin
 ?bfmeSet1020@BfmeJ1020@@QAEXH_N@Z,0x00027237,pin
 ?bfmeSet1026@BfmeX1026@@QAEXHD@Z,0x0002BF2B,pin
+?bfmeSet1027@BfmeQ1027@@QAEXHH@Z,0x000344C3,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
 ?bfmeSetA1004@BfmeObj1004@@QAEXHH@Z,0x00032DEE,pin
@@ -73969,6 +73973,7 @@ name,address,notes
 ?bfmeStop1006@BfmeStop1006@@QAEXXZ,0x00006AAA,pin
 ?bfmeStop1013@BfmeUnit1013@@QAEXH@Z,0x0004A1FB,pin
 ?bfmeStop1019@BfmeA1019@@QAEXH@Z,0x00044A53,pin
+?bfmeStop1027@BfmeX1027@@QAEXXZ,0x0001F212,pin
 ?bfmeStop@BfmeStopF@@QAEXXZ,0x00015E2E,Open-BFME5 the ICF thunk (to 0x0037C600) the clear at 0x002901C0 calls before emptying its vector
 ?bfmeStopAHA@BfmeSubAHA@@QAEXH@Z,0x0004AB4C,pin
 ?bfmeStopAQA@BfmeOneAQA@@QAEXXZ,0x0001F316,pin
@@ -74186,6 +74191,7 @@ name,address,notes
 ?bfmeUseGI@BfmeSubGI@@QAEXPAX@Z,0x0002D2EF,pin
 ?bfmeUseRT@BfmeSlotRT@@QAEXXZ,0x0003A427,pin
 ?bfmeVal1025@BfmeH1025@@QAEHXZ,0x0001F668,pin
+?bfmeVal1027@BfmeVal1027@@QAEMXZ,0x0000D7B5,pin
 ?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVecDtor936B@@YGXPAXIHP6GX0@Z@Z,0x009F6D76,pin
@@ -75508,6 +75514,7 @@ name,address,notes
 ?g_bfmeK1022@@3PAVBfmeK1022@@A,0x00EF7198,pin
 ?g_bfmeK1023@@3PAVBfmeK1023@@A,0x00EF7730,pin
 ?g_bfmeKey1026@@3PADA,0x00D096E8,pin
+?g_bfmeKey1027@@3PADA,0x00D096F4,pin
 ?g_bfmeLimit952@@3MA,0x00C977E8,pin
 ?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
@@ -75618,6 +75625,7 @@ name,address,notes
 ?g_bfmeResetA961@@3PAVBfmeResetA961@@A,0x00EF1028,pin
 ?g_bfmeRun1006@@3PAVBfmeRun1006@@A,0x00EF4998,pin
 ?g_bfmeS1019@@3PAVBfmeS1019@@A,0x00F0A5B0,pin
+?g_bfmeS1027@@3PAUBfmeS1027@@A,0x00EF0898,pin
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
@@ -75663,6 +75671,7 @@ name,address,notes
 ?g_bfmeTwoATC@@3PAUBfmeTwoATC@@A,0x00EF4B58,pin
 ?g_bfmeU1019@@3PAVBfmeU1019@@A,0x00EF076C,pin
 ?g_bfmeU1026@@3PAVBfmeU1026@@A,0x00EF076C,pin
+?g_bfmeU1027@@3PAVBfmeU1027@@A,0x00EF076C,pin
 ?g_bfmeUiDZD@@3PAVBfmeUiDZD@@A,0x00EF7194,pin
 ?g_bfmeUiDZE@@3PAVBfmeUiDZE@@A,0x00EF19E8,pin
 ?g_bfmeUiDZF@@3PAVBfmeUiDZF@@A,0x00EF19E8,pin
@@ -75687,6 +75696,7 @@ name,address,notes
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
+?g_bfmeW1027@@3PAVBfmeW1027@@A,0x00EF4B98,pin
 ?g_bfmeWhatBGE@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWhatBKG@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWordFormat@@3QBDB,0x011442A8,address-derived word format string from the DIR32 operand at retail 0x009D93C0
@@ -79486,8 +79496,10 @@ __ehhandler$?getClassMemoryPool@WeaponSetUpgrade@@CAPAVMemoryPool@@XZ,0x00C14DFE
 __ehhandler$?getClassMemoryPool@WorkerAIUpdate@@CAPAVMemoryPool@@XZ,0x00C140BE,pool-glue cascade static (back-solved)
 __ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00BFAB08,PlayerTemplate time-change retail exception handler
 __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
+__imp_?bfmeAtoi1027@@YAHPAD@Z,0x00F59384,pin
 __imp_?bfmeClose1012@@YGXPAX@Z,0x00F58ECC,pin
 __imp_?bfmeCmp1026@@YAHPAD0H@Z,0x00F594BC,pin
+__imp_?bfmeCmp1027@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeFree912B@@YGXPAX@Z,0x00F58CCC,pin
 __imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
 __imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
