@@ -80539,6 +80539,7 @@ _g_Rva012C47A4,0x012C47A4,DirtySock default alias-list pointer used by 0x0080EF5
 _g_bfmeCount1179,0x00F40588,pin
 _g_bfmeCs1179,0x00F3F4E8,pin
 _g_bfmeCursors1170,0x00EF77A8,pin
+_g_bfmeD1206,0x00F37A08,pin
 _g_bfmeDone1182,0x00F4D058,pin
 _g_bfmeEmpty1191,0x00C7388B,pin
 _g_bfmeEv1179,0x00F3F540,pin
