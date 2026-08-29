@@ -304,6 +304,140 @@ static const char *bfmeStringChars( const AsciiString &str )
 	return data ? (const char *)(data + 1) : "";
 }
 
+// BFME's Object keeps its contain module at +0x1FC and its AI update interface
+// at +0x204; the reference header puts them at +0x190 and +0x19C.
+class BfmeObjectModules
+{
+public:
+	ContainModuleInterface *getContain( void ) const { return m_contain; }
+	AIUpdateInterface *getAIUpdateInterface( void ) const { return m_ai; }
+
+	unsigned char m_unreconstructed_00[0x1fc];
+	ContainModuleInterface *m_contain;						///< retail this+0x1FC
+	unsigned char m_unreconstructed_200[4];
+	AIUpdateInterface *m_ai;								///< retail this+0x204
+};
+
+// BFME's ContainModuleInterface puts getPlayerWhoEntered at vtable slot 76; the
+// reference header lands it at 49.
+class BfmeContainVtbl_130
+{
+public:
+	virtual void _c130_0() = 0;
+	virtual void _c130_1() = 0;
+	virtual void _c130_2() = 0;
+	virtual void _c130_3() = 0;
+	virtual void _c130_4() = 0;
+	virtual void _c130_5() = 0;
+	virtual void _c130_6() = 0;
+	virtual void _c130_7() = 0;
+	virtual void _c130_8() = 0;
+	virtual void _c130_9() = 0;
+	virtual void _c130_10() = 0;
+	virtual void _c130_11() = 0;
+	virtual void _c130_12() = 0;
+	virtual void _c130_13() = 0;
+	virtual void _c130_14() = 0;
+	virtual void _c130_15() = 0;
+	virtual void _c130_16() = 0;
+	virtual void _c130_17() = 0;
+	virtual void _c130_18() = 0;
+	virtual void _c130_19() = 0;
+	virtual void _c130_20() = 0;
+	virtual void _c130_21() = 0;
+	virtual void _c130_22() = 0;
+	virtual void _c130_23() = 0;
+	virtual void _c130_24() = 0;
+	virtual void _c130_25() = 0;
+	virtual void _c130_26() = 0;
+	virtual void _c130_27() = 0;
+	virtual void _c130_28() = 0;
+	virtual void _c130_29() = 0;
+	virtual void _c130_30() = 0;
+	virtual void _c130_31() = 0;
+	virtual void _c130_32() = 0;
+	virtual void _c130_33() = 0;
+	virtual void _c130_34() = 0;
+	virtual void _c130_35() = 0;
+	virtual void _c130_36() = 0;
+	virtual void _c130_37() = 0;
+	virtual void _c130_38() = 0;
+	virtual void _c130_39() = 0;
+	virtual void _c130_40() = 0;
+	virtual void _c130_41() = 0;
+	virtual void _c130_42() = 0;
+	virtual void _c130_43() = 0;
+	virtual void _c130_44() = 0;
+	virtual void _c130_45() = 0;
+	virtual void _c130_46() = 0;
+	virtual void _c130_47() = 0;
+	virtual void _c130_48() = 0;
+	virtual void _c130_49() = 0;
+	virtual void _c130_50() = 0;
+	virtual void _c130_51() = 0;
+	virtual void _c130_52() = 0;
+	virtual void _c130_53() = 0;
+	virtual void _c130_54() = 0;
+	virtual void _c130_55() = 0;
+	virtual void _c130_56() = 0;
+	virtual void _c130_57() = 0;
+	virtual void _c130_58() = 0;
+	virtual void _c130_59() = 0;
+	virtual void _c130_60() = 0;
+	virtual void _c130_61() = 0;
+	virtual void _c130_62() = 0;
+	virtual void _c130_63() = 0;
+	virtual void _c130_64() = 0;
+	virtual void _c130_65() = 0;
+	virtual void _c130_66() = 0;
+	virtual void _c130_67() = 0;
+	virtual void _c130_68() = 0;
+	virtual void _c130_69() = 0;
+	virtual void _c130_70() = 0;
+	virtual void _c130_71() = 0;
+	virtual void _c130_72() = 0;
+	virtual void _c130_73() = 0;
+	virtual void _c130_74() = 0;
+	virtual void _c130_75() = 0;
+	virtual PlayerMaskType getPlayerWhoEntered( void ) const = 0;
+};
+
+// BFME's ScriptEngine carries a second unit lookup one slot past getUnitNamed,
+// at slot 27, which takes the name by value. The reference header has only the
+// by-reference one, so the garrison bodies below reach this one through a view.
+class BfmeScriptEngineVtbl_6c
+{
+public:
+	virtual void _se6c_0() = 0;
+	virtual void _se6c_1() = 0;
+	virtual void _se6c_2() = 0;
+	virtual void _se6c_3() = 0;
+	virtual void _se6c_4() = 0;
+	virtual void _se6c_5() = 0;
+	virtual void _se6c_6() = 0;
+	virtual void _se6c_7() = 0;
+	virtual void _se6c_8() = 0;
+	virtual void _se6c_9() = 0;
+	virtual void _se6c_10() = 0;
+	virtual void _se6c_11() = 0;
+	virtual void _se6c_12() = 0;
+	virtual void _se6c_13() = 0;
+	virtual void _se6c_14() = 0;
+	virtual void _se6c_15() = 0;
+	virtual void _se6c_16() = 0;
+	virtual void _se6c_17() = 0;
+	virtual void _se6c_18() = 0;
+	virtual void _se6c_19() = 0;
+	virtual void _se6c_20() = 0;
+	virtual void _se6c_21() = 0;
+	virtual void _se6c_22() = 0;
+	virtual void _se6c_23() = 0;
+	virtual void _se6c_24() = 0;
+	virtual void _se6c_25() = 0;
+	virtual void _se6c_26() = 0;
+	virtual Object *getUnitNamedByValue( BfmeAsciiStringArg name ) = 0;
+};
+
 // BFME's ScriptEngine vtable puts getTeamNamed at slot 17, it takes the team
 // name by value, and it carries a second Bool the reference header does not
 // declare -- the `push 0` ahead of the string temporary is that argument.
@@ -4008,25 +4142,25 @@ void ScriptActions::doMusicTrackChange(const AsciiString& newTrackName, Bool fad
 /** doTeamGarrisonSpecificBuilding */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamGarrisonSpecificBuilding.cpp
-// ?doTeamGarrisonSpecificBuilding@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
+// ?doTeamGarrisonSpecificBuilding@ScriptActions@@IAEXABVAsciiString@@0@Z
 void ScriptActions::doTeamGarrisonSpecificBuilding(const AsciiString& teamName, const AsciiString& buildingName)
 {
-	Team *theTeam = TheScriptEngine->getTeamNamed( teamName );
+	Team *theTeam = ((BfmeScriptEngineVtbl_44 *)TheScriptEngine)->getTeamNamed( teamName );
 	if (!theTeam) {
 		return;
 	}
 
-	Object *theBuilding = TheScriptEngine->getUnitNamed(buildingName);
+	Object *theBuilding = ((BfmeScriptEngineVtbl_6c *)TheScriptEngine)->getUnitNamedByValue(buildingName);
 	if (!theBuilding) {
 		return;
 	}
 
-	if( !theBuilding->getContain() )
+	if( !((BfmeObjectModules *)theBuilding)->getContain() )
 	{
 		DEBUG_CRASH( ("doTeamGarrisonSpecificBuilding script -- building doesn't have a container!" ) );
 		return;
 	}
-	PlayerMaskType player = theBuilding->getContain()->getPlayerWhoEntered();
+	PlayerMaskType player = ((BfmeContainVtbl_130 *)((BfmeObjectModules *)theBuilding)->getContain())->getPlayerWhoEntered();
 
 	if (!(theBuilding->isKindOf(KINDOF_STRUCTURE) && 
 		(player == 0) || (player == theTeam->getControllingPlayer()->getPlayerMask()))) {
@@ -4175,37 +4309,36 @@ void ScriptActions::doTeamExitAllBuildings(const AsciiString& teamName)
 /** doUnitGarrisonSpecificBuilding */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamGarrisonSpecificBuilding.cpp
-// ?doUnitGarrisonSpecificBuilding@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
+// ?doUnitGarrisonSpecificBuilding@ScriptActions@@IAEXABVAsciiString@@0@Z
 void ScriptActions::doUnitGarrisonSpecificBuilding(const AsciiString& unitName, const AsciiString& buildingName)
 {
-	Object *theUnit = TheScriptEngine->getUnitNamed( unitName );
+	Object *theUnit = ((BFMERetailScriptEngineVTable *)TheScriptEngine)->getUnitNamed( unitName );
 	if (!theUnit) {
 		return;
 	}
 
-	Object *theBuilding = TheScriptEngine->getUnitNamed(buildingName);
+	Object *theBuilding = ((BfmeScriptEngineVtbl_6c *)TheScriptEngine)->getUnitNamedByValue(buildingName);
 	if (!theBuilding) {
 		return;
 	}
 
-	ContainModuleInterface *contain = theBuilding->getContain();
+	ContainModuleInterface *contain = ((BfmeObjectModules *)theBuilding)->getContain();
 	if( !contain )
 	{
 		DEBUG_CRASH(("doUnitGarrisonSpecificBuilding script -- building doesn't have a container" ));
 		return;
 	}
-	PlayerMaskType player = theBuilding->getContain()->getPlayerWhoEntered();
+	PlayerMaskType player = ((BfmeContainVtbl_130 *)contain)->getPlayerWhoEntered();
 
 	if (!(theBuilding->isKindOf(KINDOF_STRUCTURE) && 
 		(player == 0) || (player == theUnit->getControllingPlayer()->getPlayerMask()))) {
 		return;
 	}
-	AIUpdateInterface *ai = theUnit->getAIUpdateInterface();
+	AIUpdateInterface *ai = ((BfmeObjectModules *)theUnit)->getAIUpdateInterface();
 	if (!ai) {
 		return;
 	}
 
-	ai->chooseLocomotorSet(LOCOMOTORSET_NORMAL);
 	ai->aiEnter(theBuilding, CMD_FROM_SCRIPT);
 }
 
@@ -5377,11 +5510,10 @@ void ScriptActions::doTeamUseCommandButtonAbilityOnNamed( const AsciiString& tea
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamUseCommandButtonAbilityAtWaypoint_Thunk.cpp
-// ?doTeamUseCommandButtonAbilityAtWaypoint@ScriptActions@@IAEXABVAsciiString@@00@Z present-unmatched
+// ?doTeamUseCommandButtonAbilityAtWaypoint@ScriptActions@@IAEXABVAsciiString@@00@Z
 void ScriptActions::doTeamUseCommandButtonAbilityAtWaypoint( const AsciiString& team, const AsciiString& ability, const AsciiString& waypoint )
 {
-	Team *theTeam = TheScriptEngine->getTeamNamed( team );
+	Team *theTeam = ((BfmeScriptEngineVtbl_44 *)TheScriptEngine)->getTeamNamed( team );
 	// The team is the team based on the name, and the calling team (if any) and the team that
 	// triggered the condition.  jba. :)
 	if( !theTeam ) 
@@ -5389,7 +5521,7 @@ void ScriptActions::doTeamUseCommandButtonAbilityAtWaypoint( const AsciiString& 
 		return;
 	}
 
-	Waypoint *pWaypoint = TheTerrainLogic->getWaypointByName( waypoint );
+	Waypoint *pWaypoint = ((BfmeTerrainLogicVtbl_7c *)TheTerrainLogic)->getWaypointByName( waypoint );
 	if( !pWaypoint )
 	{
 		return;
