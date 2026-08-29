@@ -240,8 +240,21 @@ void ControlBar::markUIDirty( void )
 // Body in Code/masm_dumps/_str3__populatePurchaseScience_ControlBar_IAEXPAVPlayer_Z_4A0B90.asm (exact 783B retail @ 0x004A0B90).
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBar_updateContextPurchaseScience_Thunk.cpp
-// ?updateContextPurchaseScience@ControlBar@@IAEXXZ present-unmatched
+// BFME's skill points are a Real at Player+0x25C, not an Int: every read floors
+// them through the CRT and converts, which is what the float round trip
+// (fld dword / floor / fstp dword / fistp) in retail is.  The two level bounds
+// either side of the experience bar are plain Ints at +0x268 and +0x26C.
+struct BfmePurchaseSciencePlayer
+{
+	Int getSkillPoints() const { return (Int)floorf( m_skillPoints ); }
+
+	unsigned char m_unreconstructed_000[ 0x25c ];
+	Real m_skillPoints;					///< retail this+0x25C
+	unsigned char m_unreconstructed_260[ 0x268 - 0x260 ];
+	Int m_skillPointsLevelUp;				///< retail this+0x268
+	Int m_skillPointsLevelDown;				///< retail this+0x26C
+};
+
 void ControlBar::updateContextPurchaseScience( void )
 {
 	GameWindow *win =NULL;
@@ -249,8 +262,11 @@ void ControlBar::updateContextPurchaseScience( void )
 	win = TheWindowManager->winGetWindowFromId( m_contextParent[ CP_PURCHASE_SCIENCE ], TheNameKeyGenerator->nameToKey( "GeneralsExpPoints.wnd:ProgressBarExperience" ) );
 	if(win)
 	{
+		BfmePurchaseSciencePlayer *scores = (BfmePurchaseSciencePlayer *)player;
+		Real skillPoints = floorf( scores->m_skillPoints );
+		Int points = fast_float2long_round( skillPoints );
 		Int progress;
-		progress = ((player->getSkillPoints() - player->getSkillPointsLevelDown()) * 100) /(player->getSkillPointsLevelUp() - player->getSkillPointsLevelDown());
+		progress = ((points - scores->m_skillPointsLevelDown) * 100) /(scores->m_skillPointsLevelUp - scores->m_skillPointsLevelDown);
 		GadgetProgressBarSetProgress(win, progress);
 	}
 	
