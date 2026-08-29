@@ -72444,6 +72444,8 @@ name,address,notes
 ?bfmeCall926E@BfmeTail926C@@QAEXPAX0@Z,0x0002F1CB,pin
 ?bfmeCall928D@@YAXPAX@Z,0x00894D80,pin
 ?bfmeCall928E@@YAXPAVBfmeThing928E@@PAX11@Z,0x00028033,pin
+?bfmeCall929E@@YAXPAXPAPAX@Z,0x00892230,pin
+?bfmeCall929F@@YAXPAXPADPAUBfmeArg929F@@@Z,0x00866F90,pin
 ?bfmeCallCCH@@YAHPAX0H@Z,0x00009084,pin
 ?bfmeCallCIB@@YAHPAX000@Z,0x007EC5C0,pin
 ?bfmeCallCIC@@YAHPAX000@Z,0x007ECE60,pin
@@ -73242,6 +73244,8 @@ name,address,notes
 ?bfmeInit00044BFC@@YAXXZ,0x00044BFC,Open-BFME5 ILT the initialiser the run-once latch at 0x005E84E0 calls
 ?bfmeInit0004B0F1@@YAXXZ,0x0004B0F1,Open-BFME5 ILT the initialiser the run-once latch at 0x005E85D0 calls
 ?bfmeInit005DFD50@@YAXXZ,0x00015FB9,Open-BFME5 ILT the initialiser a latched-once body calls
+?bfmeInit929C@@YAXPAD@Z,0x009F7244,pin
+?bfmeInit929G@BfmeThing929G@@QAEXXZ,0x0089E700,pin
 ?bfmeInit@BfmeSub@@QAEXPAX@Z,0x0000DF49,Open-BFME5 the sub-object initialiser the entry append at 0x000D5E90 calls
 ?bfmeInit@Gen008FF1B0@@AAEXPAX@Z,0x008FEC90,Open-BFME5 the initialiser the zeroing constructor at 0x008FF1B0 calls
 ?bfmeInit@Gen0090BE20@@AAEXPAX@Z,0x0090BCF0,Open-BFME5 the initialiser the zeroing constructor at 0x0090BE20 calls
@@ -73389,6 +73393,7 @@ name,address,notes
 ?bfmeMoveTo@Gen_00359B50@@QAEPAUBfmeElem_00359B50@@IPAU2@0@Z,0x00004FD9,Open-BFME5 the element move the vector reserve at 0x00359B50 calls when it already holds storage
 ?bfmeNewAlloc@@YAPAXI@Z,0x00881F30,Open-BFME5 the large-block allocator the allocate-and-copy bodies at 0x000A7820 and its siblings call above 0x80 bytes
 ?bfmeNewMap@BfmePlayerMapState@@QAEXH_N@Z,0x00018679,Open-BFME5 ILT Player::newMap calls for the subobject at Player+0x30; it jumps to 0x000C7A30
+?bfmeNext929D@BfmeNext929D@@QAEHH@Z,0x0089CC30,pin
 ?bfmeNext@Gen_00088B60@@AAEXXZ,0x00031FCF,Open-BFME5 the member the flag-then-forward wrapper at 0x00088B60 tail-jumps to
 ?bfmeNext@Gen_000B5690@@AAEXXZ,0x000242A3,Open-BFME5 the member the flag-then-forward wrapper at 0x000B5690 tail-jumps to
 ?bfmeNext@Gen_000B56A0@@AAEXXZ,0x0002F699,Open-BFME5 the member the flag-then-forward wrapper at 0x000B56A0 tail-jumps to
@@ -74978,6 +74983,10 @@ name,address,notes
 ?g_bfme927Vft@@3PADA,0x00D3A56C,pin
 ?g_bfme928Handler@@3PADA,0x0004975B,pin
 ?g_bfme928Vft@@3PADA,0x00D1C9A8,pin
+?g_bfme929Glob@@3PAUBfmeGlob929E@@A,0x00F377D8,pin
+?g_bfme929Ptr@@3PAXA,0x00F0A5B0,pin
+?g_bfme929Str@@3PADA,0x00D2A5A8,pin
+?g_bfme929Tab@@3PADA,0x008728D0,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
