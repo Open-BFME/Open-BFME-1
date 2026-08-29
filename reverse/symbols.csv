@@ -80422,3 +80422,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??1BfmeMilitarySubtitleRecord@@QAE@XZ,0x00018CE1,ILT for the military-subtitle record destructor InGameUI::removeMilitarySubtitle calls at 0x004431B0; jumps to 0x0043EBF0 which the ledger already holds as a thunk onto releaseBuffer - the record's only destructible member is the UnicodeString at +0x00
