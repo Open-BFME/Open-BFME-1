@@ -1127,8 +1127,9 @@ struct BfmeInGameUIVirtualView {
 	BFME_IN_GAME_UI_SLOT(67)
 	BFME_IN_GAME_UI_SLOT(68)
 	BFME_IN_GAME_UI_SLOT(69)
-	BFME_IN_GAME_UI_SLOT(70)
-	BFME_IN_GAME_UI_SLOT(71)
+	virtual void setRadiusCursor( Int type, const void *powerTemplate,
+			Int weaponSlot, Bool fourth ) = 0;			///< vtable +0x118
+	virtual void setRadiusCursorNone( void ) = 0;			///< vtable +0x11C
 	BFME_IN_GAME_UI_SLOT(72)
 	BFME_IN_GAME_UI_SLOT(73)
 	BFME_IN_GAME_UI_SLOT(74)
@@ -3256,59 +3257,93 @@ Coord2D InGameUI::getScrollAmount( void )
 	* command from the user */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_setGUICommand_Thunk.cpp
-// ?setGUICommand@InGameUI@@UAEXPBVCommandButton@@@Z present-unmatched
+// The pending command is at this+0x230 and the two mouse-mode words at +0x824
+// and +0x828, which is where BFME left them; a CommandButton keeps its options
+// at +0x18, the special-power template at +0x34, the radius-cursor type at
+// +0x38 and the weapon slot at +0x6C.
+struct BfmeGuiCommandUI
+{
+	UnsignedByte pad0[0x230];
+	const CommandButton *pendingGUICommand;			///< retail this+0x230
+	UnsignedByte pad1[0x824 - 0x230 - 4];
+	Int mouseMode;									///< retail this+0x824
+	Int mouseModeCursor;							///< retail this+0x828
+};
+
+struct BfmeGuiCommandButton
+{
+	UnsignedByte pad0[0x18];
+	Int options;									///< retail this+0x18
+	UnsignedByte pad1[0x34 - 0x18 - 4];
+	const void *specialPowerTemplate;				///< retail this+0x34
+	Int radiusCursorType;							///< retail this+0x38
+	UnsignedByte pad2[0x6c - 0x38 - 4];
+	Int weaponSlot;									///< retail this+0x6C
+};
+
+struct BfmeMouseCursorView
+{
+	UnsignedByte pad[0x4da8];
+	Int mouseCursor;								///< retail this+0x4DA8
+};
+
 void InGameUI::setGUICommand( const CommandButton *command )
 {
-	if (TheRecorder->getMode() == RECORDERMODETYPE_PLAYBACK)
+	BfmeGuiCommandUI *self = (BfmeGuiCommandUI *)this;
+	const BfmeGuiCommandButton *button = (const BfmeGuiCommandButton *)command;
+
+	// BFME guards the recorder pointer; the reference dereferences it blind
+	if (TheRecorder && TheRecorder->getMode() == RECORDERMODETYPE_PLAYBACK)
 		return;
 
 	// sanity
 	if( command )
 	{
 
-		if( BitTest( command->getOptions(), COMMAND_OPTION_NEED_TARGET ) == FALSE )
+		if( (button->options & COMMAND_OPTION_NEED_TARGET) == 0 )
 		{
 
-			DEBUG_ASSERTCRASH( 0, ("setGUICommand: Command '%s' does not need additional user interaction\n",	
-														command->getName().str()) );
-			m_pendingGUICommand = NULL;
-			m_mouseMode = MOUSEMODE_DEFAULT;
+			self->pendingGUICommand = NULL;
+			self->mouseMode = MOUSEMODE_DEFAULT;
 			return;
 
 		}  // end if
 
-		m_mouseMode = MOUSEMODE_GUI_COMMAND;
+		self->mouseMode = MOUSEMODE_GUI_COMMAND;
 
 	}  // end if
 	else
 	{
-		m_mouseMode = MOUSEMODE_DEFAULT;
+		self->mouseMode = MOUSEMODE_DEFAULT;
 	}
 
 	// set the command
-	m_pendingGUICommand = command;
+	self->pendingGUICommand = command;
 
 	// set the mouse cursor for commands that need a targeting or to normal with no command
-	if( command && BitTest( command->getOptions(), COMMAND_OPTION_NEED_TARGET ) && !command->isContextCommand() )
+	if( command && (button->options & COMMAND_OPTION_NEED_TARGET) && !command->isContextCommand() )
 	{
-		setMouseCursor( Mouse::ARROW );// This occurs on the mouse-up of a panel button, so make an arrow
+		// retail reaches the cursor directly here rather than through
+		// InGameUI::setMouseCursor, which carries extra work it does not do
+		if (TheMouse)
+			((BfmeMouseVtbl *)TheMouse)->setCursor( Mouse::ARROW );
 		// the mouseoverhint code will take care of the cursor context, once the mouse leaves the panel
 		// but we will set the radius cursor here, so you can see it bleeding out from beneath the panel
 
-		setRadiusCursor(command->getRadiusCursorType(), //*****************************************************************
-										command->getSpecialPowerTemplate(),
-										command->getWeaponSlot());
+		((BfmeInGameUIVirtualView *)this)->setRadiusCursor( button->radiusCursorType,
+										button->specialPowerTemplate,
+										button->weaponSlot, TRUE );
 	}
 	else
 	{
 		if (TheMouse)
 		{
-			setMouseCursor( Mouse::ARROW );
+			((BfmeMouseVtbl *)TheMouse)->setCursor( Mouse::ARROW );
 		}
-		setRadiusCursorNone();
+		((BfmeInGameUIVirtualView *)this)->setRadiusCursorNone();
 	}
 
-	m_mouseModeCursor = TheMouse->getMouseCursor();
+	self->mouseModeCursor = ((BfmeMouseCursorView *)TheMouse)->mouseCursor;
 
 }  // end setGUICommand
 
