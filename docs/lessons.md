@@ -2055,3 +2055,40 @@ Following that rewrites both ledgers normalised -- a ~157,000-line diff that
 conflicts with every branch in flight -- when the correct repair is to drop the
 duplicate ROWS with ledger_io.py keeping the first. The message is wrong for
 this case and agents have followed it. Ignore the hint; the rule is above.
+## Any two 5-byte jmp thunks byte-match, so count the callers
+
+A `jmp rel32` is five bytes of which four are a masked relocation. One byte is
+compared. So EVERY 5-byte tail-call thunk in the tree byte-matches every other,
+and a row parked on the wrong one still says `matched`. It is the same trap as
+the wrong `$L93744` pin that rode along on the PeerDefs funclets, one level up:
+masking is what makes the reconstruction possible and what makes these
+indistinguishable.
+
+The discriminator is the call profile, and it is one pass over `.text`:
+
+    hist = Counter()
+    for i in range(len(text) - 5):
+        if text[i] in (0xE8, 0xE9):
+            hist[tva + i + 5 + int32_at(text, i+1)] += 1
+
+Then read the count against what the claimed function is FOR.
+`?addTeam@TeamsInfoRec@@QAEXPBVDict@@@Z` claimed a stub with 6,947 callers;
+retail calls addTeam from a handful of places, and 6,947 is what a string
+destructor's import thunk looks like. Sure enough the stub was
+`jmp 0x0005EE90`, which functions.csv already recorded as
+`??1AsciiString@@QAE@XZ`'s body.
+
+To find the candidates, sweep for rows whose `target_rva` equals a DIFFERENT
+symbol's `export_rva` and whose first retail byte is 0xE9. That is 1,078 rows,
+and almost all of them are fine: 1,048 are `?j_XXXXXXXX@@YAXXZ` placeholders in
+`Code/gen_small/thunks_*.cpp`, which claim ILT slots by address on purpose. Of
+the 30 with real mangled names, 27 are the FX `getClass<T> -> jmp getInstance<T>`
+pairs -- semantically coherent, ~5 callers each, a real tail call. Three were
+the outlier. So the sweep alone proves nothing; the sweep plus the caller count
+does.
+
+Consequence for triage: `marker_screen` reports a small `miss(N)` when a
+destination holds a real body and the donor row owns a jmp stub -- it is
+comparing the body's first five bytes against a jump. A low miss(N) is only
+meaningful when donor and destination model the same SHAPE of function. Check
+the donor row's size before believing one.
