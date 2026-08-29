@@ -2681,13 +2681,18 @@ Bool Player::calcClosestConstructionZoneLocation( const ThingTemplate *construct
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_doBountyForKill_Thunk.cpp
 // ?doBountyForKill@Player@@QAEXPBVObject@@0@Z present-unmatched
+// BFME's OBJECT_STATUS_UNDER_CONSTRUCTION is BIT 2, not bit 3, and retail tests
+// it as a single byte at Object+0x90 rather than through the vendored pair of
+// status dwords at +0x90 and +0x94.
+#define BFME_UNDER_CONSTRUCTION(o) ((*((const UnsignedByte *)(o) + 0x90) & 0x4) != 0)
+
 void Player::doBountyForKill(const Object* killer, const Object* victim)
 {
 	if (!killer || !victim)
 		return;
 
 	// srj sez: per dustin, no experience (et al) for killing things under construction.
-	if (victim->testStatus(OBJECT_STATUS_UNDER_CONSTRUCTION))
+	if (BFME_UNDER_CONSTRUCTION(victim))
 		return;
 
 	Int costToBuild = victim->getTemplate()->calcCostToBuild(victim->getControllingPlayer());
