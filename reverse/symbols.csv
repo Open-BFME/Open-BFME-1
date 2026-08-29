@@ -72880,6 +72880,7 @@ name,address,notes
 ?bfmeDoSevenRL@@YAXPAX0000PAPAXH@Z,0x00019C45,pin
 ?bfmeDoSixRC@@YAXPAX0000H@Z,0x00028358,pin
 ?bfmeDrop1010@BfmeSink1010@@QAEXPAVBfmeItem1010@@@Z,0x0001D0DE,pin
+?bfmeDrop1022@BfmeE1022@@QAEXHPAX@Z,0x0003BCCD,pin
 ?bfmeDrop988@BfmeReg988@@QAEXPAVBfmeE988@@@Z,0x00010F46,pin
 ?bfmeDrop@BfmeSinkAM@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the remove at 0x003BEBA0 tells about the entry
 ?bfmeDrop@Rva003D8530Owner@@QAEXPAX@Z,0x00016DB0,Open-BFME5 ILT thunk to body 0x003D8530; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it on the sub-object at +0x0C of _TheAIParseDefinitionAI for each live slot whose kind is one of four; address-derived name
@@ -75409,6 +75410,7 @@ name,address,notes
 ?g_bfmeDropDXH@@3P6AXPAVBfmeSubDXH@@@ZA,0x00F378A0,pin
 ?g_bfmeE1014@@3PAVBfmeE1014@@A,0x00EF3A90,pin
 ?g_bfmeE1021@@3PAVBfmeE1021@@A,0x00EF1464,pin
+?g_bfmeE1022@@3PAVBfmeE1022@@A,0x00EF33F8,pin
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
 ?g_bfmeEndC976@@3PAVBfmeEndC976@@A,0x00EF64BC,pin
@@ -75432,6 +75434,7 @@ name,address,notes
 ?g_bfmeFmtB995C@@3PADA,0x00D053D4,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeFreeDXG@@3P6AXPAX@ZA,0x00F3782C,pin
+?g_bfmeG1022@@3PAVBfmeG1022@@A,0x00EED668,pin
 ?g_bfmeGate961@@3PAVBfmeGate961@@A,0x00EF706C,pin
 ?g_bfmeGateA979@@3PAHA,0x00EF4B58,pin
 ?g_bfmeGlob956@@3PAUBfmeGlob956@@A,0x00EEF214,pin
@@ -75465,6 +75468,7 @@ name,address,notes
 ?g_bfmeIntegerFormat@@3QBDB,0x011442DC,address-derived integer format string from the DIR32 operand at retail 0x009D94B8
 ?g_bfmeJ1017@@3PAVBfmeJ1017@@A,0x00F377D8,pin
 ?g_bfmeJ1020@@3PAVBfmeJ1020@@A,0x00EF0888,pin
+?g_bfmeK1022@@3PAVBfmeK1022@@A,0x00EF7198,pin
 ?g_bfmeLimit952@@3MA,0x00C977E8,pin
 ?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
@@ -75499,6 +75503,7 @@ name,address,notes
 ?g_bfmeMsg1021@@3HA,0x00EB7D80,pin
 ?g_bfmeN1020@@3PAVBfmeN1020@@A,0x00EF1B40,pin
 ?g_bfmeN1021@@3PAVBfmeN1021@@A,0x00EF1B40,pin
+?g_bfmeN1022@@3PAVBfmeN1022@@A,0x00EF1B40,pin
 ?g_bfmeName1019@@3PADA,0x00D2A5A8,pin
 ?g_bfmeObj1006@@3PAUBfmeObj1006@@A,0x00EF4C38,pin
 ?g_bfmeObj2EGE@@3PAVBfmeObj2EGE@@A,0x00EF148C,pin
