@@ -75,11 +75,15 @@ State::State( StateMachine *machine, AsciiString name )
 /**
  * Add another state transition condition for this state
  */
-// byte-exact reconstruction: Code/GameEngine/Source/Common/State_friend_onCondition_Thunk.cpp
-// ?friend_onCondition@State@@ present-unmatched
+// The rebase belongs HERE and not at the call site, because this body has two
+// callers that need opposite things: the out-of-line copy is entered with a
+// real State * and defineState below inlines it after rebasing already. Doing
+// it once, inside, serves both; doing it in defineState alone left this copy
+// reading m_transitions at +0x14 where retail reads +0x10. See retailLayout.
+static State *retailLayout( State *p );
 void State::friend_onCondition( StateTransFuncPtr test, StateID toStateID, void* userData, const char* description )
 {
-	m_transitions.push_back(TransitionInfo(test, toStateID, userData, description));
+	retailLayout(this)->m_transitions.push_back(TransitionInfo(test, toStateID, userData, description));
 }
 
 
@@ -549,7 +553,7 @@ void StateMachine::defineState( StateID id, State *state, StateID successID, Sta
 	
 	while (c && c->test != NULL)
 	{
-		retailLayout(state)->friend_onCondition(c->test, c->toStateID, c->userData);
+		state->friend_onCondition(c->test, c->toStateID, c->userData);
 		++c;
 	}
 
