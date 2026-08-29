@@ -9450,6 +9450,7 @@ name,address,notes
 ?AppendDebugMessage@ScriptEngine@@QAEXABVAsciiString@@_N@Z,0x00028CE0,TeamInQueue disband call pin
 ?Apply@ScaleTextureMapperClass@@UAEXH@Z,0x00966490,zh-sweep callee pin derived from retail REL32 displacement
 ?Apply_Render_State_Changes@DX8Wrapper@@SAXXZ,0x00904890
+?AptGetSwfVersion@@YAIXZ,0x00892370,EA Apt 2.00.00 SWF version getter called by the ActionScript BitAnd handler
 ?AptLivingWorldWindowIndex@@YAHHH@Z,0x000019F6,BFME APT Living World visibility helpers call the established two-int wrapper through this retail ILT
 ?AsciiStringToQuotedPrintable@@YA?AVAsciiString@@V1@@Z,0x0001E1F0,Open-BFME5 ILT called by the exact CustomMatchPreferences::setPreferredMap body at 0x000ADFC0; fronts the shared body at 0x00106150
 ?AsciiStringToQuotedPrintable@@YA?AVAsciiString@@V1@@Z,0x00106150,authoritative WWLib quoted_printable.cpp identity; retail encode buffer 0x012EDDA8
@@ -9629,6 +9630,7 @@ name,address,notes
 ?Copy@DX8VertexBufferClass@@QAEXPBVVector3@@0PBVVector2@@PBVVector4@@II@Z,0x0091EB40,DX8VertexBufferClass ctor copy helper
 ?Copy@DX8VertexBufferClass@@QAEXPBVVector3@@PBVVector2@@II@Z,0x0091E690,DX8VertexBufferClass ctor copy helper
 ?Copy@DX8VertexBufferClass@@QAEXPBVVector3@@PBVVector2@@PBVVector4@@II@Z,0x0091EDE0,DX8VertexBufferClass ctor copy helper
+?Create@AptInteger@@SAPAV1@H@Z,0x008A11E0,EA Apt 2.00.00 integer factory called by the ActionScript BitAnd handler
 ?Create_Device@DX8Wrapper@@KA_NXZ,0x0090AE60,retail call target for Set_Render_Device
 ?Create_New_Particles@ParticleEmitterClass@@AAEXABVQuaternion@@ABVVector3@@@Z,0x0097F930,rel32 pin for exact-ambiguous landing
 ?Create_Vertex_Buffer@DX8VertexBufferClass@@IAEXW4UsageType@1@@Z,0x0091E0C0,DX8VertexBufferClass ctor helper
@@ -10548,6 +10550,7 @@ name,address,notes
 ?TheSupplyWarehouseDockUpdatePool@?1??getClassMemoryPool@SupplyWarehouseDockUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF04EC,pool-glue cascade static (back-solved)
 ?TheTacticalViewFadeShim@@3PAVTacticalViewFadeShim@@A,0x012F1600,Open-BFME5 retail tactical-view global
 ?TheTaintManager@@3PAVBfmeTaintManager@@A,0x012ED5C0,BFME TheTaintManager global named by its subsystem registration string
+?TheTerrainLogic@@3PAVTerrainLogic@@A,0x012EF4CC,typed ABI spelling for the proven terrain singleton used by retail setGoalPositionClipped
 ?TheTerrainLogic@@3PAXA,0x012EF4CC,Open-BFME5 TerrainLogic global pointer used by virtual slot 4 wrapper
 ?TheTransitionDamageFXPool@?1??getClassMemoryPool@TransitionDamageFX@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFBEC,pool-glue cascade static (back-solved)
 ?TheTransportAIUpdatePool@?1??getClassMemoryPool@TransportAIUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0468,pool-glue cascade static (back-solved)
@@ -73268,6 +73271,7 @@ name,address,notes
 ?bfmeIsAlive@BfmeItemAK@@QAE_NXZ,0x00001C03,Open-BFME5 the ICF thunk (to 0x00401C03) the compaction at 0x0018BC70 asks each entry
 ?bfmeIsComputerControlled@Object@@QBE_NXZ,0x00010EA1,Open-BFME5 ILT thunk to body 0x001BE410; three Pathfinder callers use the controlling Player type check for computer pathfinding behavior; bfme prefix records unrecovered retail spelling
 ?bfmeIsGiantBird@Object@@QBEHXZ,0x0000E462,Open-BFME5 ILT thunk to body 0x001BE9D0; Object AI slot 76 is false in the base AIUpdateInterface and true in GiantBirdAIUpdate; AIAttackState uses the promoted result for BFME attack-mode selection
+?bfmeIsKindOf@Thing@@QBE_NW4KindOfType@@@Z,0x0003251F,TU ABI alias for authentic Thing::isKindOf ILT used by retail setGoalPositionClipped
 ?bfmeIsReady@BfmeSubEFB@@QAE_NXZ,0x0003D2F8,pin
 ?bfmeIsSet@BfmeGameOverGateA@@QAE_NXZ,0x000330DC,Open-BFME5 ILT the first early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012ED748 is unidentified
 ?bfmeIsSet@BfmeGameOverGateB@@QAE_NXZ,0x0000CFC7,Open-BFME5 ILT the second early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012F076C is unidentified
@@ -73582,6 +73586,7 @@ name,address,notes
 ?bfmeSetBZC@BfmeSubBZC@@QAEXH@Z,0x00802C30,pin
 ?bfmeSetCBE@@YAXPAXH@Z,0x008FE0E0,pin
 ?bfmeSetDYF@BfmeGlobDYF@@QAEX_N@Z,0x0003D578,pin
+?bfmeSetGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z,0x0000314D,TU ABI alias for authentic StateMachine::setGoalPosition ILT used by retail setGoalPositionClipped
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
 ?bfmeSetOneCAC@BfmePairCAC@@QAEXHH@Z,0x0004A43A,pin
 ?bfmeSetPG@BfmeThingPG@@QAEXHPAX@Z,0x00021C1F,pin
@@ -77143,6 +77148,7 @@ name,address,notes
 ?isRoomForProgressMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00677D40,decode_calls: first call site inside addProgressMessage (0x0067B250); idiom-verified
 ?isRoomForWrapperMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00044FEE,decode_calls pin for addWrapperCommand callee (ILT thunk -> body 0x00677BC0)
 ?isScienceGrantable@ScienceStore@@QBE_NW4ScienceType@@@Z,0x0003882A
+?isSignificantlyAboveTerrain@Thing@@QBE_NXZ,0x00019FF1,pristine EA setGoalPositionClipped call and retail AI/Drawable callers identify Thing terrain-height helper ILT
 ?isSlotLocalAlly@@YA_NPBVGameSlot@@@Z,0x0061ED20
 ?isStealthedAndUndetected@BFMEObjectStealthQuery@@QBE_NPBVObject@@@Z,0x00003B1B,TU-specific ABI name for the stealth visibility query ILT; target body 0x001CAEE0 proves the semantics while its canonical retail spelling remains unknown
 ?isSupplySourceAttacked@AIPlayer@@QAE_NXZ,0x0003C542,Open-BFME5 ILT at guardSupplyCenter 0x001668CE; the returned Bool gates the attacked supply-center lookup
@@ -78226,6 +78232,7 @@ name,address,notes
 ?testSetAndClear@?$BitFlags@$0HE@@@QBE_NABV1@0@Z,0x007EA380,pinharvest x1 (body)
 ?testStatus@BFMEActionObject@@QBE_NH@Z,0x000016A4,BFME Object status helper ILT decoded from ActionManager::canGetHealedAt
 ?timeOutGameStart@GameLogic@@QAEXXZ,0x00383730,mov byte [ecx+0x148] = 1 is m_forceGameStartByTimeOut (follows m_progressComplete[8] at +0x120 and m_progressCompleteTimeout[8] at +0x128); ZH GameLogic::timeOutGameStart; called with ecx = TheGameLogic from BFMEConnectionManager::processIncomingCommand case 17 (NETCOMMANDTYPE_TIMEOUTSTART) at 0x0066A590 via ILT 0x00012AA8
+?toInteger@AptValue@@QBEHXZ,0x00898300,EA Apt 2.00.00 integer coercion called by the ActionScript BitAnd handler
 ?toLower@AsciiString@@QAEXXZ,0x00887DA0,same body the ledger claims as ?toLower@?$StringBase@D@@QAEXXZ
 ?tossEmitters@W3DTankTruckDraw@@IAEXXZ,0x00034A59,ILT; from W3DTankTruckDraw::setFullyObscuredByShroud
 ?tossSegments@W3DRopeDraw@@AAEXXZ,0x0002C020,W3DRopeDraw destructor member call through retail ILT
@@ -79541,10 +79548,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?isSignificantlyAboveTerrain@Thing@@QBE_NXZ,0x00019FF1,pristine EA setGoalPositionClipped call and retail AI/Drawable callers identify Thing terrain-height helper ILT
-?bfmeIsKindOf@Thing@@QBE_NW4KindOfType@@@Z,0x0003251F,TU ABI alias for authentic Thing::isKindOf ILT used by retail setGoalPositionClipped
-?bfmeSetGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z,0x0000314D,TU ABI alias for authentic StateMachine::setGoalPosition ILT used by retail setGoalPositionClipped
-?TheTerrainLogic@@3PAVTerrainLogic@@A,0x012EF4CC,typed ABI spelling for the proven terrain singleton used by retail setGoalPositionClipped
-?AptGetSwfVersion@@YAIXZ,0x00892370,EA Apt 2.00.00 SWF version getter called by the ActionScript BitAnd handler
-?toInteger@AptValue@@QBEHXZ,0x00898300,EA Apt 2.00.00 integer coercion called by the ActionScript BitAnd handler
-?Create@AptInteger@@SAPAV1@H@Z,0x008A11E0,EA Apt 2.00.00 integer factory called by the ActionScript BitAnd handler
