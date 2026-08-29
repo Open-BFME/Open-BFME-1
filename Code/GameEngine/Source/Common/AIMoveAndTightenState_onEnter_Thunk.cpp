@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?onEnter@AIMoveAndTightenState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME5: lift the retail AIMoveAndTightenState::onEnter body to C++.
 
 enum StateReturnType

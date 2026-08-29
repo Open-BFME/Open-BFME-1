@@ -2441,11 +2441,16 @@ struct BfmeMoveStateFields
 	unsigned char m_appendGoalPosition;			///< retail this+0x50 on AIMoveAndDeleteState
 };
 
-// The position retail reads inline off the object rather than through getPosition().
+// The fields retail reads inline off the object rather than through an accessor.
+// m_ai is the one that cannot go through Object::getAI(): the reference header
+// puts m_ai at +0x19C and retail reads +0x204, so the shared inline compiles a
+// read of the wrong member.
 struct BfmeMoveStateObject
 {
 	unsigned char m_unreconstructed_000[ 0x38 ];
 	Coord3D m_position;					///< retail this+0x38
+	unsigned char m_unreconstructed_044[ 0x204 - 0x44 ];
+	AIUpdateInterface *m_ai;				///< retail this+0x204
 };
 
 StateReturnType AIMoveAndTightenState::onEnter()
@@ -2460,11 +2465,11 @@ StateReturnType AIMoveAndTightenState::onEnter()
 	BfmeMoveStateMachineFields *machine = self->m_machine;
 	self->m_adjustDestinations = 0;
 	Object *obj = machine->m_owner;
-	AIUpdateInterface *ai = obj->getAI();
+	AIUpdateInterface *ai = ((BfmeMoveStateObject *)obj)->m_ai;
 	m_okToRepathTimes = 1;
 	m_checkForPath = true;
 	TheAI->pathfinder()->removeGoal(obj);
-	self->m_goalPosition = machine->m_goalPosition;
+	self->m_goalPosition = self->m_machine->m_goalPosition;
 	ai->requestApproachPath(&self->m_goalPosition);
 	return AIInternalMoveToState::onEnter();
 }
