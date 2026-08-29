@@ -651,6 +651,16 @@ inlining the expression into the call argument, swapping the `end.x`/`end.y`
 statements, and reordering the `ICoord2D` declarations. `/G6` changed nothing;
 `/G7` rewrote the body to 234 bytes.
 
+That instance is still a wall, but the class is not: when one of the two
+operands comes from a member of a padded VIEW STRUCT, re-spell that member as
+a direct address dereference before parking it. `InGameUI::removeMilitarySubtitle`
+came out 154 of 154 with one byte wrong -- retail `8b 04 07` (`mov eax,[edi+eax]`)
+against `8b 04 38` -- and reaching the record pointer as
+`*(Rec **)((UnsignedByte *)this + 0x818)` instead of `view->militarySubtitle`
+encoded it retail's way. Same registers, same operation, same length either way,
+and reversing the subscript does nothing (`i[p]` is `p[i]` to the front end).
+Both spellings are ordinary tree idiom, so the choice looks free and is not.
+
 **An allocator split.** `drawStaticTextText` came out 344 of 346. Retail spills
 `tData` to `[esp+0xc]` and defers `push ebx / push ebp` past the early return,
 which leaves a register free later; this toolchain keeps `tData` in EBX and
@@ -830,6 +840,50 @@ both are worth as much as the landing would have been.
   It also orders `add ecx,K` before the argument push instead of after. Two
   unrelated families needed exactly this on the same day.
 
+## Two STLport knobs a merged container body usually needs
+
+Both are cl-line changes, so neither costs a full-tree gate, and both recompile
+the TU so the byte gate re-verifies every row in it.
+
+**The node allocator.** `PreRTS.h` and `Common/STLTypedefs.h` both force
+`_STLP_USE_NEWALLOC`, which flattens a container node deallocation to a bare
+`operator delete`; retail pushes the node SIZE alongside the pointer and calls
+`__node_alloc::_M_deallocate` (0x0082E5F0). If a merged body's diff starts at a
+container teardown -- `push eax / call / add esp,4` against retail's
+`push 0xc / push eax / call / add esp,8` -- add
+`/DBFME_STLP_NODE_ALLOC /Ireference/shims/stlp_nodealloc` ahead of the reference
+include path. On InGameUI.cpp it cost nothing: all 65 rows already landing there
+still verified.
+
+**Two node sizes in one TU.** `BFME_PARTICLE_LIST_NODE_TAIL` pads EVERY
+`_List_node` in the TU by 0x20, and a destination can need it for one container
+and not another: InGameUI.cpp's `list<SuperweaponInfo*>` copy constructor
+allocates a 0x2C head node while its idle-worker lists are plain 12-byte nodes.
+The two cannot share `list<>::clear()`. Give the 12-byte one a local node struct
+and a local `clear()` spelled the way STLport spells it -- head re-read on every
+iteration, `_STL::allocator<Node>().deallocate(p, 1)` for the free -- and it
+reproduces retail's reload pattern exactly.
+
+## Half the cluster-marker files are naked dumps, and they are not merge work
+
+Measured over all 887 files carrying a `readable body of` marker: **408 are
+`__declspec(naked)` / `_emit` dumps and 479 are real C++.** A naked donor cannot
+be folded -- the merge would add an `__emit` body to the destination and
+`conversion_gate.py` refuses it -- so draining one means CONVERTING it first,
+which is a different lane. `merge_cluster.py --list`'s per-destination count is
+therefore an upper bound, sometimes a wild one: InGameUI.cpp listed 25 donors of
+which 6 were mergeable. Screen a cluster before committing to it:
+
+    grep -rlE "_emit|declspec\(naked\)" <the cluster's donors>
+
+## reverse/symbols.csv duplicates itself on EVERY rebase over your own pins
+
+Not once -- every time. `merge=union` re-applies your commit's appended pins on
+top of a master that already has them, so a pin lands twice for each rebase that
+crosses it. Check `tools/check_csv.py` after every `pull --rebase`, not just the
+first, and repair with the ledger_io drop-exact-duplicate-payload pass described
+above rather than `dedup_csv.py`.
+
 ## A mixed-ending file turns a one-line edit into a lift accusation
 
 Symptom: you change a comment and `conversion_gate.py` rejects the commit with
@@ -896,6 +950,15 @@ symbol stops being emitted and its row dies. Two proven shapes:
   0x007EFFF0 claimed from Player.cpp. BFME allocates through the class's own
   operator new instead, so a faithful merge emits no newInstance and kills the
   row. Trading a 238-byte row for a 12-byte one is still going backwards.
+
+  But CHECK THE GLUE'S EXPANSION before declining on this one: the rule is that
+  the EXPRESSION disappears, not that retail reaches a different allocator.
+  InGameUI::addNamedTimer holds its TU's only newInstance(NamedTimerInfo) and
+  retail allocates with a plain `push 0x1c; call ::operator new` -- the shape
+  that looks like the blocker. It is not: reference/shims/sweep's
+  MEMORY_POOL_GLUE routes its placement operator new to ::operator new,
+  MSVC inlines it to exactly that call, and still emits the COMDAT. newInstance
+  stayed and all three rows held.
 
   inline COMDAT. becomingTeamMember's call to areModulesReady is the only one in
   the TU, and the COMDAT copy MSVC emits for that inline is the matched 7-byte
