@@ -131,9 +131,10 @@ class BFMEGoalObjectMachine
 public:
 	virtual void slot00() = 0;	virtual void slot04() = 0;
 	virtual void slot08() = 0;	virtual void slot0C() = 0;
-	virtual void slot10() = 0;	virtual void slot14() = 0;
+	virtual void slot10() = 0;	virtual void clear() = 0;		///< vtable +0x14
 	virtual void slot18() = 0;	virtual void slot1C() = 0;
-	virtual void slot20() = 0;	virtual void slot24() = 0;
+	virtual void setState( StateID state ) = 0;			///< vtable +0x20
+	virtual void slot24() = 0;
 	virtual void slot28() = 0;	virtual void slot2C() = 0;
 	virtual void slot30() = 0;	virtual void slot34() = 0;
 	virtual void setGoalObject( const Object *object ) = 0;	///< vtable +0x38
@@ -157,7 +158,9 @@ struct BFMEAIUpdateFields
 	StateMachine *m_stateMachine;				///< retail this+0x30
 	char m_unreconstructed_034[0x40 - 0x34];
 	ObjectID m_currentVictimID;				///< retail this+0x40
-	char m_unreconstructed_044[0x168 - 0x44];
+	char m_unreconstructed_044[0x48 - 0x44];
+	CommandSourceType m_lastCommandSource;			///< retail this+0x48
+	char m_unreconstructed_04C[0x168 - 0x4C];
 	Real m_pathExtraDistance;				///< retail this+0x168
 	char m_unreconstructed_16C[0x1CC - 0x16C];
 	Locomotor *m_curLocomotor;				///< retail this+0x1CC
@@ -274,15 +277,24 @@ public:
 		return finalOverride->m_legalSurfaces;
 	}
 
-	// Retail deliberately reads through the override pointer, so a missing
-	// override stays an invalid locomotor rather than silently meaning this one.
-	Int getAppearance() const
+	BFMELocomotorOverride *bfmeFinalOverride()
 	{
-		BFMELocomotorOverride *finalOverride = m_nextOverride;
-		if (finalOverride && finalOverride->m_nextOverride)
-			finalOverride = finalOverride->m_nextOverride->friend_getFinalOverride();
-		return finalOverride->m_appearance;
+		if (m_nextOverride)
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
 	}
+
+	// Retail carries a null template through rather than guarding it, so the
+	// appearance read below happens off a null base and stays an invalid
+	// locomotor instead of silently meaning this one.
+	BFMELocomotorOverride *bfmeTemplate() const
+	{
+		if (m_nextOverride == NULL)
+			return NULL;
+		return m_nextOverride->bfmeFinalOverride();
+	}
+
+	Int getAppearance() const { return bfmeTemplate()->m_appearance; }
 
 	char m_unreconstructed_000[4];				///< the vtable pointer
 	BFMELocomotorOverride *m_nextOverride;			///< retail this+0x04
@@ -292,8 +304,8 @@ public:
 	Int m_appearance;					///< retail this+0x70
 };
 
-// BFME numbers LOCO_HOVER 2; the reference enum has it at 3.
-enum { BFME_LOCO_HOVER = 2 };
+// BFME numbers LOCO_HOVER 2 and LOCO_WINGS 3; the reference enum has 3 and 5.
+enum { BFME_LOCO_HOVER = 2, BFME_LOCO_WINGS = 3 };
 
 // BFME's AI state ids are not the reference enum's: it has no ENTER_HORDE,
 // ENTER_GARRISON or ENTER_TRANSPORT and numbers the rest differently.
@@ -346,7 +358,8 @@ public:
 	BFME_AIUPDATE_SLOT(064); BFME_AIUPDATE_SLOT(065); BFME_AIUPDATE_SLOT(066); BFME_AIUPDATE_SLOT(067);
 	BFME_AIUPDATE_SLOT(068); BFME_AIUPDATE_SLOT(069); BFME_AIUPDATE_SLOT(070); BFME_AIUPDATE_SLOT(071);
 	BFME_AIUPDATE_SLOT(072); BFME_AIUPDATE_SLOT(073); BFME_AIUPDATE_SLOT(074); BFME_AIUPDATE_SLOT(075);
-	BFME_AIUPDATE_SLOT(076); BFME_AIUPDATE_SLOT(077); BFME_AIUPDATE_SLOT(078); BFME_AIUPDATE_SLOT(079);
+	virtual Bool isGiantBird() const = 0;				///< vtable +0x130
+	BFME_AIUPDATE_SLOT(077); BFME_AIUPDATE_SLOT(078); BFME_AIUPDATE_SLOT(079);
 	BFME_AIUPDATE_SLOT(080); BFME_AIUPDATE_SLOT(081); BFME_AIUPDATE_SLOT(082); BFME_AIUPDATE_SLOT(083);
 	BFME_AIUPDATE_SLOT(084); BFME_AIUPDATE_SLOT(085); BFME_AIUPDATE_SLOT(086); BFME_AIUPDATE_SLOT(087);
 	BFME_AIUPDATE_SLOT(088); BFME_AIUPDATE_SLOT(089); BFME_AIUPDATE_SLOT(090); BFME_AIUPDATE_SLOT(091);
@@ -2979,26 +2992,31 @@ Bool AIUpdateInterface::isDoingGroundMovement(void) const
 Others, like missles, should stack destinations.  AdjustDestination in pathfinder unstacks
 destinations, and this routine identifies non-ground units that should unstack. */
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_isAircraftThatAdjustsDestination.cpp
-// ?isAircraftThatAdjustsDestination@AIUpdateInterface@@ present-unmatched
+// ?isAircraftThatAdjustsDestination@AIUpdateInterface@@QBE_NXZ
 Bool AIUpdateInterface::isAircraftThatAdjustsDestination(void) const
 {
-	if (m_curLocomotor == NULL) 
+	const BFMEAIUpdateFields *fields = reinterpret_cast<const BFMEAIUpdateFields *>(this);
+
+	// BFME opens with a giant-bird case the reference copy has no trace of.
+	if (reinterpret_cast<const BFMEDestroyPathAIUpdate *>(this)->isGiantBird())
+	{
+		return TRUE;
+	}
+
+	BFMELocomotorOverride *curLocomotor =
+		reinterpret_cast<BFMELocomotorOverride *>( fields->m_curLocomotor );
+	if (curLocomotor == NULL) 
 	{
 		return FALSE;	// No loco, so we aren't moving.
 	}
 
-	if (m_curLocomotor->getAppearance() == LOCO_HOVER) 
+	if (curLocomotor->getAppearance() == BFME_LOCO_HOVER) 
 	{
 		return TRUE;	// Hover adjusts.
 	}
-	if (m_curLocomotor->getAppearance() == LOCO_WINGS)
+	if (curLocomotor->getAppearance() == BFME_LOCO_WINGS)
 	{
 		return TRUE; // wings adjusts.
-	}
-	if (m_curLocomotor->getAppearance() == LOCO_THRUST)
-	{
-		return FALSE; // thrust doesn't adjust.
 	}
 
 	return FALSE;
@@ -4422,17 +4440,18 @@ void AIUpdateInterface::privateEnter( Object *obj, CommandSourceType cmdSource )
 /**
  * Dock with the given object
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateDock.cpp
-// ?privateDock@AIUpdateInterface@@ present-unmatched
+// ?privateDock@AIUpdateInterface@@MAEXPAVObject@@W4CommandSourceType@@@Z
 void AIUpdateInterface::privateDock( Object *obj, CommandSourceType cmdSource )
 {
-	if (getObject()->isMobile() == FALSE)
+	BFMEAIUpdateFields *fields = reinterpret_cast<BFMEAIUpdateFields *>(this);
+
+	if (fields->getObject()->isMobile() == FALSE)
 		return;
 
-	getStateMachine()->clear();
-	getStateMachine()->setGoalObject( obj );
-	setLastCommandSource( cmdSource );
-	getStateMachine()->setState( AI_DOCK );
+	fields->getGoalObjectMachine()->clear();
+	fields->getGoalObjectMachine()->setGoalObject( obj );
+	fields->m_lastCommandSource = cmdSource;	// setLastCommandSource is inline
+	fields->getGoalObjectMachine()->setState( (StateID)14 );		// BFME's AI_DOCK
 }
 
 //----------------------------------------------------------------------------------------
