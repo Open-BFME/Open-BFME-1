@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Ireference/shims/stlp_nodealloc /Ireference/shims/asciistringsetoutofline /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -763,33 +763,10 @@ Bool InGameUI::getSuperweaponDisplayEnabledByScript(void) const
 	return m_superweaponHiddenByScript;
 }
 
-// ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_addNamedTimer_Thunk.cpp
-// ?addNamedTimer@InGameUI@@QAEXABVAsciiString@@ABVUnicodeString@@_N@Z present-unmatched
-void InGameUI::addNamedTimer( const AsciiString& timerName, const UnicodeString& text, Bool isCountdown )
-{
-	NamedTimerInfo *info = newInstance( NamedTimerInfo );	
-	info->m_timerName = timerName;
-	info->color = m_namedTimerNormalColor;
-	info->timerText = text;
-	info->displayString = TheDisplayStringManager->newDisplayString();
-	info->displayString->reset();
-	info->displayString->setFont( TheFontLibrary->getFont( m_namedTimerNormalFont, 
-		TheGlobalLanguageData->adjustFontSize(m_namedTimerNormalPointSize), m_namedTimerNormalBold ) );
-	info->displayString->setText( UnicodeString::TheEmptyString );
-	info->timestamp = -1;
-	info->isCountdown = isCountdown;
-
-//	GameFont *font = info->displayString->getFont();
-
-	removeNamedTimer(timerName);
-	m_namedTimers[timerName] = info;
-}
-
-// ------------------------------------------------------------------------------------------------
-// BFME freeDisplayString is DisplayStringManager vtable +0x28 (slot 10).
-class DisplayStringManager_FreeSlot {
+// BFME's DisplayStringManager puts newDisplayString at vtable +0x24 and
+// freeDisplayString at +0x28; DisplayString puts setText at +0x04, reset at
+// +0x14 and setFont at +0x18. None of the four is where the ZH class lands it.
+class BfmeDisplayStringManagerView {
 public:
 	virtual void _pad0(void) = 0;
 	virtual void _pad1(void) = 0;
@@ -800,10 +777,99 @@ public:
 	virtual void _pad6(void) = 0;
 	virtual void _pad7(void) = 0;
 	virtual void _pad8(void) = 0;
-	virtual void _pad9(void) = 0;
-	virtual void freeDisplayString( DisplayString *string ) = 0;
+	virtual DisplayString *newDisplayString( void ) = 0;			///< vtable +0x24
+	virtual void freeDisplayString( DisplayString *string ) = 0;	///< vtable +0x28
 };
 
+// Retail hands setText the empty string by value. The vendored UnicodeString
+// keeps its copy constructor out of line, which leaves the temporary opaque
+// and makes MSVC record its unwind slot AFTER loading the constructor's
+// `this`; retail records it first. A visible copy delegating to a
+// declared-only base gets retail's order -- the shape ScriptActions.cpp
+// already uses for AsciiString. Free on a virtual callee: the view's
+// signature carries the type and no pin is needed.
+class BfmeUnicodeArgBase
+{
+	friend class BfmeUnicodeStringArg;
+private:
+	BfmeUnicodeArgBase( const BfmeUnicodeArgBase &other );	///< retail StringBase<G> copy ctor 0x00888400
+	~BfmeUnicodeArgBase();
+};
+
+class BfmeUnicodeStringArg
+{
+public:
+	BfmeUnicodeStringArg( const UnicodeString &that )
+	{
+		((BfmeUnicodeArgBase *)this)->BfmeUnicodeArgBase::BfmeUnicodeArgBase(
+			*(const BfmeUnicodeArgBase *)&that);
+	}
+	~BfmeUnicodeStringArg();
+private:
+	WideChar *m_text;
+};
+
+class BfmeDisplayStringView {
+public:
+	virtual void _pad0(void) = 0;
+	virtual void setText( BfmeUnicodeStringArg text ) = 0;			///< vtable +0x04
+	virtual void _pad2(void) = 0;
+	virtual void _pad3(void) = 0;
+	virtual void _pad4(void) = 0;
+	virtual void reset( void ) = 0;									///< vtable +0x14
+	virtual void setFont( GameFont *font ) = 0;						///< vtable +0x18
+};
+
+// BFME's FontLibrary takes the name by pointer and the size as a Real, which
+// is the ABI Code/GameEngine/Source/GameClient/FontLibraryBFMERetail_getFont.cpp
+// already names and W3DDisplayString.cpp already calls through.
+class FontLibraryBFMERetail
+{
+public:
+	GameFont *getFont( AsciiString *name, Real size, unsigned char style );
+};
+
+// The named-timer block sits where BFME left it while the ZH class grew:
+// the map at this+0x77C and the four font fields from +0x7A4.
+struct BfmeNamedTimerLayout
+{
+	UnsignedByte pad0[0x77c];
+	NamedTimerMap namedTimers;						///< retail this+0x77C
+	UnsignedByte pad1[0x7a4 - 0x77c - 12];
+	AsciiString namedTimerNormalFont;				///< retail this+0x7A4
+	Int namedTimerNormalPointSize;					///< retail this+0x7A8
+	Bool namedTimerNormalBold;						///< retail this+0x7AC
+	UnsignedByte pad2[3];
+	Color namedTimerNormalColor;					///< retail this+0x7B0
+};
+
+// ------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_addNamedTimer_Thunk.cpp
+void InGameUI::addNamedTimer( const AsciiString& timerName, const UnicodeString& text, Bool isCountdown )
+{
+	BfmeNamedTimerLayout *ui = (BfmeNamedTimerLayout *)this;
+
+	NamedTimerInfo *info = newInstance( NamedTimerInfo );	
+	info->m_timerName = timerName;
+	info->color = ui->namedTimerNormalColor;
+	info->timerText = text;
+	info->displayString = reinterpret_cast<BfmeDisplayStringManagerView *>(TheDisplayStringManager)->newDisplayString();
+	reinterpret_cast<BfmeDisplayStringView *>(info->displayString)->reset();
+	reinterpret_cast<BfmeDisplayStringView *>(info->displayString)->setFont(
+		reinterpret_cast<FontLibraryBFMERetail *>(TheFontLibrary)->getFont( &ui->namedTimerNormalFont, 
+			(Real)TheGlobalLanguageData->adjustFontSize(ui->namedTimerNormalPointSize), ui->namedTimerNormalBold ) );
+	reinterpret_cast<BfmeDisplayStringView *>(info->displayString)->setText( UnicodeString::TheEmptyString );
+	info->timestamp = -1;
+	info->isCountdown = isCountdown;
+
+//	GameFont *font = info->displayString->getFont();
+
+	removeNamedTimer(timerName);
+	ui->namedTimers[timerName] = info;
+}
+
+// ------------------------------------------------------------------------------------------------
 // A NamedTimerInfo's destructor is protected, so `delete` only reaches it
 // through a view; retail frees the timer that way -- vtable slot 0 with the
 // deleting flag -- where the ZH source calls deleteInstance().
@@ -822,7 +888,7 @@ void InGameUI::removeNamedTimer( const AsciiString& timerName )
 	NamedTimerMapIt mapIt = namedTimers->find(timerName);
 	if (mapIt != namedTimers->end())
 	{
-		reinterpret_cast<DisplayStringManager_FreeSlot *>(TheDisplayStringManager)
+		reinterpret_cast<BfmeDisplayStringManagerView *>(TheDisplayStringManager)
 			->freeDisplayString( mapIt->second->displayString );
 		delete reinterpret_cast<BfmeNamedTimerObject *>(mapIt->second);
 		namedTimers->erase(mapIt);
@@ -2276,7 +2342,7 @@ void InGameUI::freeMessageResources( void )
 		DisplayString *ds = *reinterpret_cast<DisplayString **>(esi);
 		if (ds)
 		{
-			reinterpret_cast<DisplayStringManager_FreeSlot *>(TheDisplayStringManager)
+			reinterpret_cast<BfmeDisplayStringManagerView *>(TheDisplayStringManager)
 				->freeDisplayString(ds);
 		}
 		*reinterpret_cast<DisplayString **>(esi) = NULL;
@@ -2422,7 +2488,7 @@ void InGameUI::removeMessageAtIndex( Int i )
 	DisplayString *ds = *reinterpret_cast<DisplayString **>(self + (i + 0x57) * 0x10);
 	if( ds )
 	{
-		reinterpret_cast<DisplayStringManager_FreeSlot *>(TheDisplayStringManager)
+		reinterpret_cast<BfmeDisplayStringManagerView *>(TheDisplayStringManager)
 			->freeDisplayString(ds);
 	}
 	*reinterpret_cast<DisplayString **>(self + (i + 0x57) * 0x10) = NULL;
@@ -7862,13 +7928,13 @@ void InGameUI::removeMilitarySubtitle( void )
 	// loop through and free up the display strings
 	for(Int i = 0; i <= BFME_SUBTITLE(this)->currentDisplayString; i ++)
 	{
-		reinterpret_cast<DisplayStringManager_FreeSlot *>(TheDisplayStringManager)
+		reinterpret_cast<BfmeDisplayStringManagerView *>(TheDisplayStringManager)
 			->freeDisplayString(BFME_SUBTITLE(this)->displayStrings[i]);
 		BFME_SUBTITLE(this)->displayStrings[i] = NULL;
 	}
 
 	// the reference body stops above; retail frees this one too
-	reinterpret_cast<DisplayStringManager_FreeSlot *>(TheDisplayStringManager)
+	reinterpret_cast<BfmeDisplayStringManagerView *>(TheDisplayStringManager)
 		->freeDisplayString(BFME_SUBTITLE(this)->blockString);
 
 	//delete it man!
@@ -10109,33 +10175,6 @@ void InGameUI::updateIdleWorker( void )
 	if((idleCount <= 0 && m_idleWorkerWin) || !getInputEnabled())
 		hideIdleWorkerLayout();
 }
-
-// Retail hands GadgetRadioSetText the empty string by value. The vendored
-// UnicodeString keeps its copy constructor out of line, so the temporary is
-// opaque and MSVC records its unwind slot AFTER loading the constructor's
-// `this`; retail records it first. A visible copy delegating to a
-// declared-only base restores that order -- the shape ScriptActions.cpp
-// already uses for AsciiString.
-class BfmeUnicodeArgBase
-{
-	friend class BfmeUnicodeStringArg;
-private:
-	BfmeUnicodeArgBase( const BfmeUnicodeArgBase &other );	///< retail StringBase<G> copy ctor 0x00888400
-	~BfmeUnicodeArgBase();
-};
-
-class BfmeUnicodeStringArg
-{
-public:
-	BfmeUnicodeStringArg( const UnicodeString &that )
-	{
-		((BfmeUnicodeArgBase *)this)->BfmeUnicodeArgBase::BfmeUnicodeArgBase(
-			*(const BfmeUnicodeArgBase *)&that);
-	}
-	~BfmeUnicodeStringArg();
-private:
-	WideChar *m_text;
-};
 
 extern void GadgetRadioSetText( GameWindow *g, BfmeUnicodeStringArg text );
 
