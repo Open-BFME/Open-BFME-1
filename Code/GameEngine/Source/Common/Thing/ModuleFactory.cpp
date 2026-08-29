@@ -906,8 +906,14 @@ void ModuleFactory::init( void )
 }  // end init
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ModuleFactory_findModuleInterfaceMask_Thunk.cpp
-// ?findModuleInterfaceMask@ModuleFactory@@QAEHABVAsciiString@@W4ModuleType@@@Z present-unmatched
+// The interface mask is at ModuleTemplate+0x0C, not the vendored +0x08. Nothing
+// else in the body moves, including the isEmpty() guard and the tail.
+struct BfmeModuleTemplateMask
+{
+	unsigned char m_unreconstructed_000[ 0x0c ];
+	Int m_whichInterfaces;					///< retail this+0x0C
+};
+
 Int ModuleFactory::findModuleInterfaceMask(const AsciiString& name, ModuleType type)
 {
 	if (name.isEmpty())
@@ -916,7 +922,7 @@ Int ModuleFactory::findModuleInterfaceMask(const AsciiString& name, ModuleType t
 	const ModuleTemplate* moduleTemplate = findModuleTemplate(name, type);
 	if (moduleTemplate)
 	{
-		return moduleTemplate->m_whichInterfaces;
+		return ((const BfmeModuleTemplateMask *)moduleTemplate)->m_whichInterfaces;
 	}
 
 	return 0;
