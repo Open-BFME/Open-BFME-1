@@ -45,8 +45,17 @@ PLACEHOLDER = re.compile(
 
 FOLD = "identical masked bytes and reloc sites - a real fold"
 DIFFER = "DIFFERENT BODIES - cannot share an address"
+ODD_MEMBER = ("one member of a LARGE group compiles differently here - "
+              "evidence about that member, not about the group")
 PLACEHOLDERS = "all-placeholder"
 UNREADABLE = "unreadable object - NOT a clean result"
+
+# Above this many names, "the bodies differ" stops being a claim about the group.
+# Forty names on one nine-byte constructor is an ICF group the linker really
+# built; one member of it compiling differently HERE points at our compile of
+# that member long before it points at thirty-nine wrong rows. Reported apart so
+# a large group is not read as a large defect.
+LARGE_GROUP = 3
 
 
 def is_placeholder(name):
@@ -118,6 +127,8 @@ def classify(rows, read=None):
             yield rva, int(size), names, UNREADABLE, family
         elif len(set(shapes)) == 1:
             yield rva, int(size), names, FOLD, family
+        elif len(names) > LARGE_GROUP:
+            yield rva, int(size), names, ODD_MEMBER, family
         else:
             yield rva, int(size), names, DIFFER, family
 
@@ -128,7 +139,7 @@ def main(argv):
     flagged = []
     for rva, size, names, verdict, family in classify(rows):
         tally[verdict] += 1
-        if verdict in (DIFFER, UNREADABLE):
+        if verdict in (DIFFER, UNREADABLE, ODD_MEMBER):
             flagged.append((size, rva, names, verdict, family))
     print("matched rows; addresses claimed by 2+ names: %d" % sum(tally.values()))
     for verdict, n in tally.most_common():

@@ -92,3 +92,22 @@ def test_same_class_label_does_not_fire_across_classes():
         ["?getFrame@GameLogic@@QAEIXZ", "?winGetStyle@GameWindow@@QAEIXZ"])
     assert not multi_name.same_class_different_methods(
         ["?same@C@@QAEXXZ", "?same@C@@QAEXXZ"]), "one method name is not a family"
+
+
+def test_a_large_group_is_reported_apart_from_a_real_candidate():
+    """Forty names on one nine-byte constructor is an ICF group the linker
+    really built. One member compiling differently HERE points at our compile of
+    that member long before it points at thirty-nine wrong rows, so it must not
+    land in the same bucket as a two-name collision."""
+    def group(n):
+        return [_row("?m%d@C@@QAEXXZ" % i) for i in range(n)]
+    table = {"?m0@C@@QAEXXZ": (b"\x90" * 8, [])}
+    for i in range(1, 40):
+        table["?m%d@C@@QAEXXZ" % i] = (b"\x91" * 8, [])
+    (_, _, _, verdict, _), = multi_name.classify(group(40), _reader(table))
+    assert verdict == multi_name.ODD_MEMBER
+
+    two = [_row("?a@C@@QAEXXZ"), _row("?b@C@@QAEXXZ")]
+    table2 = {"?a@C@@QAEXXZ": (b"\x90" * 8, []), "?b@C@@QAEXXZ": (b"\x91" * 8, [])}
+    (_, _, _, verdict, _), = multi_name.classify(two, _reader(table2))
+    assert verdict == multi_name.DIFFER, "a two-name collision is still a candidate"
