@@ -3218,3 +3218,64 @@ view rather than a different base.
 
 Corrected targets: m_object at this+0x08, hide flag at this+0x9b5, m_originalTeam
 at this+0xd4, Player's default team at observingPlayer+0x230.
+
+## SYMBOLIC vs VIEW-BASED: the sharpest form of "a matched row proves bytes"
+
+The rule that made Squad decidable, in the form it was actually used:
+
+**A symbolic matched row is evidence about the header, because the COMPILER
+chose the number. A view-based matched row is not, because the AUTHOR did.**
+
+Squad.cpp has two matched rows naming the member symbolically -- `m_objectIDs.size()`
+and `m_objectIDs.push_back(objectID)`, no view anywhere near them:
+
+    getSizeOfGroup  0x000ED420  mov eax,[ecx+0x0C]; sub eax,[ecx+0x08]; sar eax,2
+    addObjectID     0x0036B770  mov eax,[ecx+0x0C]; mov edx,[ecx+0x10]; add ecx,8
+
+start +0x08, finish +0x0C, end_of_storage +0x10 -- this tree's two-vptr layout
+exactly. So retail's Squad IS our Squad and the +0x04 claims are the error, which
+is the liveness test answering positively: retail does use our offset.
+
+That indicted a row nobody was looking at. `?removeObject@Squad@@` at 0x0018B620
+is matched only through an inline `struct BFMESquad { char pad[0x04];
+VecObjectID m_objectIDs; }`, and its retail bytes `lea edi,[ecx+0x04]; mov
+esi,[ecx+0x08]` agree with that view while contradicting both symbolic siblings.
+It sits one body after 0x0018B520 and both read a container at +0x04 -- siblings
+of each other, not of Squad.
+
+## CORRECTION: the GameWindow BorderColor bodies DO exist
+
+An earlier reading concluded that nothing writes +8, so the three
+`winSet*BorderColor` functions were never emitted and their rows had no retail
+body. **That was wrong**, and acting on it would have thrown away three genuine
+claims. They are emitted, and already parked under placeholder names as
+`?dup_004790XX@@YAXXZ` in GameWindowBorderColorSetters.cpp.
+
+Nine prologues in 0x478F80..0x4791E0, three groups of three, element stride 0x0C:
+
+    0x478FE0 base 0x48    0x479010 +0x4C   0x479040 +0x50
+    0x479070 base 0xB4    0x4790A0 +0xB8   0x4790E0 +0xBC
+    0x479120 base 0x120   0x479150 +0x124  0x479190 +0x128
+
+Fields are +0x00 Image, +0x04 Color, +0x08 BorderColor, so the true mapping is
+Image/Color/BorderColor in address order within each group. Every Color and
+BorderColor row is one field low; only winSetEnabledImage and winSetHiliteImage
+are correct. A uniform one-field rotation -- the VertexMaterialClass shape again,
+and byte-verifying for the same reason.
+
+The lesson beyond the correction: **"no body writes that offset" is a claim about
+what you enumerated, not about what exists.** Nine bodies were in one address
+range and only six had been listed. Count the prologues in the range before
+concluding a function was never emitted.
+
+## Two placeholder conventions, for two different things
+
+  * `?j_XXXXXXXX@@YAXXZ` -- an ILT thunk claimed by ADDRESS, 5 bytes, no identity
+    claim. 1,048 of these in gen_small.
+  * `?dup_XXXXXXXX@@YAXXZ` -- a REAL BODY whose identity is unknown or disputed,
+    parked under its address.
+
+So a mis-anchored row is re-homed to whichever fits its SIZE: a 5-byte jmp stub
+becomes `?j_`, and a 38- or 62-byte real body becomes `?dup_`. Neither throws
+away the byte coverage, and neither asserts an identity the evidence does not
+support.
