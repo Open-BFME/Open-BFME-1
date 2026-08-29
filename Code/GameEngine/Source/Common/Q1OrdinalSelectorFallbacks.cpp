@@ -47,3 +47,16 @@ Q1_SELECT_OR_FALLBACK( Rva00417180, 0x5B )
 Q1_SELECT_OR_FALLBACK( Rva004171A0, 0x5C )
 Q1_SELECT_OR_FALLBACK( Rva004171C0, 0x5D )
 Q1_SELECT_OR_FALLBACK( Rva004171E0, 0x5E )
+
+void *__stdcall Rva00417260( int selector )
+{
+	void *selected;
+	switch ( selector )
+	{
+		case 1: selected = Q1Selector0000286A( 0x58 ); break;
+		case 2: selected = Q1Selector0000286A( 0x59 ); break;
+		case 3: selected = Q1Selector0000286A( 0x5A ); break;
+		default: selected = Q1Selector0000286A( 0x57 ); break;
+	}
+	return selected ? selected : (void *)&g_q1Fallback012F1318;
+}
