@@ -1019,3 +1019,33 @@ row is the one already proven.
 Seen twice: Object::areModulesReady (+0x295 standalone against +0x341 inlined in
 becomingTeamMember) and Script::getAction/setAction (+0x28 standalone against
 +0x20 inlined in ParseActionDataChunk, two rows at 0x00112980 and 0x00112970).
+
+## Register allocation is sometimes source-controllable, so try once before parking
+
+Two different phenomena get filed as "register allocation" and only one is a
+wall. Telling them apart is worth doing because 123 entries in re_attempts.log
+cite register allocation, and some of that pool is recoverable.
+
+RECOVERABLE -- a chain that switches register one load too early. On
+ControlBar::onPlayerRankChanged the walk switched from eax to ecx ahead of
+retail's; routing the local-player fetch through an IN-CLASS accessor on the view
+made it reuse eax down the chain exactly as retail does. Same lever as the
+scheduling and jump-threading fixes, reaching further than expected.
+
+A WALL -- two registers swapped wholesale. On Path::appendNode retail keeps the
+parameter in esi and `this` in edi while the merged TU does the reverse, and the
+swap also flips two adjacent stores. Three source shapes (a local view pointer, a
+re-evaluated static helper, an inline setter) all produced byte-identical output.
+
+So: try the accessor ONCE. If the diff is a whole-body register swap rather than
+a chain diverging at one load, park it. And a body already parked as
+"register-allocation class" with an eax/ecx chain signature is worth one more
+look, not a permanent skip.
+
+## Retail rarely caches a global or a member across a call
+
+Binding ThePlayerList to a local cost showSpecialPowerShortcut its match: MSVC
+parked the local in ebp where retail loads the global three separate times.
+Writing the global out at each use restored the match. The instinct to hoist a
+repeated expression into a local is the wrong one here -- spell it out as often
+as retail does, and let the compiler decide.
