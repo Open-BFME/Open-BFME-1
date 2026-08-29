@@ -2808,6 +2808,20 @@ void ScriptActions::doTeamWander(const AsciiString& teamName, const AsciiString&
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptActions_doTeamIncreasePriorityThunk.cpp
 // ?doTeamIncreasePriority@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
+//
+// Blocked by the AsciiString local, and that blocker rules out most of this
+// cluster rather than just this body. Retail releases the message string with an
+// OUT-OF-LINE call; the reference AsciiString inlines its release as
+// test/jz/push/call [InterlockedDecrement], which is the same wall the two
+// NetPacket file-buffer fills hit. Any donor here that builds an AsciiString
+// local -- which is every AppendDebugMessage body in this file -- is unreachable
+// until there is a BFME AsciiString, not a field view.
+//
+// The four offsets it also needs are proven and recorded so they are not
+// re-derived: getTeamNamed is ScriptEngine vtable +0x44 (reference +0x38),
+// getPrototype reads Team+0x04 (reference +0x08), getTemplateInfo adds 8 to the
+// prototype (reference 4), and m_productionPriority is at +0x1c8 (reference
+// +0x100).
 void ScriptActions::doTeamIncreasePriority(const AsciiString& teamName)
 {
 	Team *team = TheScriptEngine->getTeamNamed(teamName);
