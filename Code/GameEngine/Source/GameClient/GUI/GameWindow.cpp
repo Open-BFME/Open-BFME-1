@@ -44,6 +44,17 @@
 //
 // Desc:      Game window implementation
 //
+// BFME's GameWindow starts m_instData four bytes further in: retail tests the
+// style word at this+0x3C and writes the enabled-text colours at +0x18C and
+// +0x190, where this tree lands them at +0x38, +0x188 and +0x18C.
+#define BFME_WIN_STYLE(w)          (*(UnsignedInt *)((UnsignedByte *)(w) + 0x3c))
+#define BFME_WIN_STATUS(w)         (*(Int *)((UnsignedByte *)(w) + 0x08))
+#define BFME_WIN_SIZE_X(w)         (*(Int *)((UnsignedByte *)(w) + 0x0c))
+#define BFME_WIN_SIZE_Y(w)         (*(Int *)((UnsignedByte *)(w) + 0x10))
+#define BFME_WIN_USERDATA(w)       (*(void **)((UnsignedByte *)(w) + 0x2c))
+// The four text-colour pairs run consecutively from +0x18C, eight bytes apart.
+#define BFME_WIN_TEXT_COLOR(w, off)  (*(Color *)((UnsignedByte *)(w) + (off)))
+
 //-----------------------------------------------------------------------------
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -587,7 +598,6 @@ Int GameWindow::winSetSize( Int width, Int height )
 /** Get the window's size */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winGetSize@GameWindow@@QAEHPAH0@Z present-unmatched
 Int GameWindow::winGetSize( Int *width, Int *height )
 {
 
@@ -595,8 +605,8 @@ Int GameWindow::winGetSize( Int *width, Int *height )
 	if( width == NULL || height == NULL )
 		return WIN_ERR_INVALID_PARAMETER;
 
-	*width  = m_size.x;
-	*height = m_size.y;
+	*width  = BFME_WIN_SIZE_X(this);
+	*height = BFME_WIN_SIZE_Y(this);
 
 	return WIN_ERR_OK;
 
@@ -632,11 +642,10 @@ Bool GameWindow::winGetEnabled( void )
 /** Am I hidden? */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winIsHidden@GameWindow@@QAE_NXZ present-unmatched
 Bool GameWindow::winIsHidden( void )
 {
 
-	return BitTest( m_status, WIN_STATUS_HIDDEN );
+	return BitTest( BFME_WIN_STATUS(this), WIN_STATUS_HIDDEN );
 
 }  // end WinIsHidden
 
@@ -870,13 +879,6 @@ void GameWindow::winSetFont( GameFont *font )
 /** Set the text colors for the enabled state */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// BFME's GameWindow starts m_instData four bytes further in: retail tests the
-// style word at this+0x3C and writes the enabled-text colours at +0x18C and
-// +0x190, where this tree lands them at +0x38, +0x188 and +0x18C.
-#define BFME_WIN_STYLE(w)          (*(UnsignedInt *)((UnsignedByte *)(w) + 0x3c))
-// The four text-colour pairs run consecutively from +0x18C, eight bytes apart.
-#define BFME_WIN_TEXT_COLOR(w, off)  (*(Color *)((UnsignedByte *)(w) + (off)))
-
 void GameWindow::winSetEnabledTextColors( Color color, Color borderColor )
 {
 	BFME_WIN_TEXT_COLOR(this, 0x18c) = color;
@@ -1087,11 +1089,10 @@ void *GameWindow::winGetUserData( void )
 /** Set the user data stored */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameWindowFields.cpp
-// ?winSetUserData@GameWindow@@QAEXPAX@Z present-unmatched
 void GameWindow::winSetUserData( void *data )
 {
 
-	m_userData = data;
+	BFME_WIN_USERDATA(this) = data;
 
 }  // end WinSetUserData
 
