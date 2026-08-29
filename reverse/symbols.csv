@@ -80270,6 +80270,7 @@ _bfmeTabEYC,0x00EA7410,pin
 _bfmeTagANB,0x00C9E038,pin
 _bfmeTagAPB,0x00DDFC30,pin
 _bfmeTagBNH,0x00D1DC1C,pin
+_bfmeTail1145,0x00903C50,pin
 _bfmeTextAIB,0x00C94960,pin
 _bfmeTextAOA,0x00C88860,pin
 _bfmeTextAPB,0x00C75230,pin
@@ -80493,6 +80494,7 @@ _g_Rva012C47A4,0x012C47A4,DirtySock default alias-list pointer used by 0x0080EF5
 _g_bfmeG1144,0x00EED5C8,pin
 _g_bfmeH1144,0x00EED5AC,pin
 _g_bfmeK1127,0x00C75350,pin
+_g_bfmeO1145,0x00F40534,pin
 _g_bfmeS1142,0x00EF8008,pin
 _g_bfmeV1134,0x00CF0AE0,pin
 _g_bfmeV1137A,0x00D20FD4,pin
