@@ -6947,16 +6947,175 @@ AsciiString AIAttackState::getName(  ) const
 #endif
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIAttackStateChooseWeaponBfmeLayout.cpp
-// ?chooseWeapon@AIAttackState@@AAE_NXZ present-unmatched
+// BFME's AI update interface carries FOUR EXTRA vtable entries ahead of
+// getLastCommandSource, putting it at vtable+0x200 where the shared header has it
+// earlier -- so this call was dispatching to the wrong slot entirely. The
+// interface itself hangs off the object at +0x204, not behind getAI().
+class BfmeChooseWeaponAI
+{
+public:
+	virtual void slot000() = 0;
+	virtual void slot004() = 0;
+	virtual void slot008() = 0;
+	virtual void slot00c() = 0;
+	virtual void slot010() = 0;
+	virtual void slot014() = 0;
+	virtual void slot018() = 0;
+	virtual void slot01c() = 0;
+	virtual void slot020() = 0;
+	virtual void slot024() = 0;
+	virtual void slot028() = 0;
+	virtual void slot02c() = 0;
+	virtual void slot030() = 0;
+	virtual void slot034() = 0;
+	virtual void slot038() = 0;
+	virtual void slot03c() = 0;
+	virtual void slot040() = 0;
+	virtual void slot044() = 0;
+	virtual void slot048() = 0;
+	virtual void slot04c() = 0;
+	virtual void slot050() = 0;
+	virtual void slot054() = 0;
+	virtual void slot058() = 0;
+	virtual void slot05c() = 0;
+	virtual void slot060() = 0;
+	virtual void slot064() = 0;
+	virtual void slot068() = 0;
+	virtual void slot06c() = 0;
+	virtual void slot070() = 0;
+	virtual void slot074() = 0;
+	virtual void slot078() = 0;
+	virtual void slot07c() = 0;
+	virtual void slot080() = 0;
+	virtual void slot084() = 0;
+	virtual void slot088() = 0;
+	virtual void slot08c() = 0;
+	virtual void slot090() = 0;
+	virtual void slot094() = 0;
+	virtual void slot098() = 0;
+	virtual void slot09c() = 0;
+	virtual void slot0a0() = 0;
+	virtual void slot0a4() = 0;
+	virtual void slot0a8() = 0;
+	virtual void slot0ac() = 0;
+	virtual void slot0b0() = 0;
+	virtual void slot0b4() = 0;
+	virtual void slot0b8() = 0;
+	virtual void slot0bc() = 0;
+	virtual void slot0c0() = 0;
+	virtual void slot0c4() = 0;
+	virtual void slot0c8() = 0;
+	virtual void slot0cc() = 0;
+	virtual void slot0d0() = 0;
+	virtual void slot0d4() = 0;
+	virtual void slot0d8() = 0;
+	virtual void slot0dc() = 0;
+	virtual void slot0e0() = 0;
+	virtual void slot0e4() = 0;
+	virtual void slot0e8() = 0;
+	virtual void slot0ec() = 0;
+	virtual void slot0f0() = 0;
+	virtual void slot0f4() = 0;
+	virtual void slot0f8() = 0;
+	virtual void slot0fc() = 0;
+	virtual void slot100() = 0;
+	virtual void slot104() = 0;
+	virtual void slot108() = 0;
+	virtual void slot10c() = 0;
+	virtual void slot110() = 0;
+	virtual void slot114() = 0;
+	virtual void slot118() = 0;
+	virtual void slot11c() = 0;
+	virtual void slot120() = 0;
+	virtual void slot124() = 0;
+	virtual void slot128() = 0;
+	virtual void slot12c() = 0;
+	virtual void slot130() = 0;
+	virtual void slot134() = 0;
+	virtual void slot138() = 0;
+	virtual void slot13c() = 0;
+	virtual void slot140() = 0;
+	virtual void slot144() = 0;
+	virtual void slot148() = 0;
+	virtual void slot14c() = 0;
+	virtual void slot150() = 0;
+	virtual void slot154() = 0;
+	virtual void slot158() = 0;
+	virtual void slot15c() = 0;
+	virtual void slot160() = 0;
+	virtual void slot164() = 0;
+	virtual void slot168() = 0;
+	virtual void slot16c() = 0;
+	virtual void slot170() = 0;
+	virtual void slot174() = 0;
+	virtual void slot178() = 0;
+	virtual void slot17c() = 0;
+	virtual void slot180() = 0;
+	virtual void slot184() = 0;
+	virtual void slot188() = 0;
+	virtual void slot18c() = 0;
+	virtual void slot190() = 0;
+	virtual void slot194() = 0;
+	virtual void slot198() = 0;
+	virtual void slot19c() = 0;
+	virtual void slot1a0() = 0;
+	virtual void slot1a4() = 0;
+	virtual void slot1a8() = 0;
+	virtual void slot1ac() = 0;
+	virtual void slot1b0() = 0;
+	virtual void slot1b4() = 0;
+	virtual void slot1b8() = 0;
+	virtual void slot1bc() = 0;
+	virtual void slot1c0() = 0;
+	virtual void slot1c4() = 0;
+	virtual void slot1c8() = 0;
+	virtual void slot1cc() = 0;
+	virtual void slot1d0() = 0;
+	virtual void slot1d4() = 0;
+	virtual void slot1d8() = 0;
+	virtual void slot1dc() = 0;
+	virtual void slot1e0() = 0;
+	virtual void slot1e4() = 0;
+	virtual void slot1e8() = 0;
+	virtual void slot1ec() = 0;
+	virtual void slot1f0() = 0;
+	virtual void slot1f4() = 0;
+	virtual void slot1f8() = 0;
+	virtual void slot1fc() = 0;
+	virtual CommandSourceType getLastCommandSource() const = 0;	///< vtable +0x200
+};
+
+struct BfmeChooseWeaponSource
+{
+	unsigned char m_unreconstructed_000[ 0x204 ];
+	BfmeChooseWeaponAI *m_ai;				///< retail this+0x204
+};
+
+struct BfmeChooseWeaponMachine
+{
+	unsigned char m_unreconstructed_000[ 0x10 ];
+	Object *m_owner;					///< retail this+0x10
+};
+
+struct BfmeChooseWeaponState
+{
+	unsigned char m_unreconstructed_000[ 0x1c ];
+	StateMachine *m_machine;				///< retail this+0x1c
+	unsigned char m_unreconstructed_020[ 0x45 - 0x20 ];
+	Bool m_isAttackingObject;				///< retail this+0x45
+};
+
+// ?chooseWeapon@AIAttackState@@AAE_NXZ
 Bool AIAttackState::chooseWeapon()
 {
-	Object* victim = getMachineGoalObject();
-	if (m_isAttackingObject && !victim)
+	BfmeChooseWeaponState *self = (BfmeChooseWeaponState *)this;
+
+	Object* victim = self->m_machine->getGoalObject();
+	if (self->m_isAttackingObject && !victim)
 		return FALSE;
 
-	Object* source = getMachineOwner();
-	AIUpdateInterface *ai = source->getAI();
+	Object* source = ((BfmeChooseWeaponMachine *)self->m_machine)->m_owner;
+	BfmeChooseWeaponAI *ai = ((BfmeChooseWeaponSource *)source)->m_ai;
 
 	Bool found = FALSE;
 //	if (victim) // Pardon?  We still need to pick a weapon if we are attacking the ground.
