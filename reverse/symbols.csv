@@ -72448,6 +72448,10 @@ name,address,notes
 ?bfmeCall929F@@YAXPAXPADPAUBfmeArg929F@@@Z,0x00866F90,pin
 ?bfmeCall930G@@YAXHHHPAXHH@Z,0x00906B40,pin
 ?bfmeCall933D@BfmeSub933D@@QAEXXZ,0x0000A862,pin
+?bfmeCall934A@BfmeOther934A@@QAEXPAUBfmeSub934A@@@Z,0x0001A44C,pin
+?bfmeCall934B@@YGXPAXHH@Z,0x0000BF28,pin
+?bfmeCall934D@BfmeNode934D@@QAEXXZ,0x00006235,pin
+?bfmeCall934F@BfmeOther934F@@QAEXPAUBfmeSlot934F@@0@Z,0x00008E68,pin
 ?bfmeCallCCH@@YAHPAX0H@Z,0x00009084,pin
 ?bfmeCallCIB@@YAHPAX000@Z,0x007EC5C0,pin
 ?bfmeCallCIC@@YAHPAX000@Z,0x007ECE60,pin
@@ -73444,6 +73448,7 @@ name,address,notes
 ?bfmeOne927C@BfmeThing927C@@QAEXXZ,0x0003418F,pin
 ?bfmeOne927D@BfmeThing927D@@QAEXXZ,0x0002987A,pin
 ?bfmeOne928F@BfmeThing928F@@QAEXXZ,0x00033D70,pin
+?bfmeOne934G@BfmeThing934G@@QAEHXZ,0x00048761,pin
 ?bfmeOneAPA@@YGPAXPAXPAH@Z,0x009F6BF2,pin
 ?bfmeOneBKE@@YGXPAX@Z,0x0090C610,pin
 ?bfmeOneBKF@BfmePartBKF@@QAEXXZ,0x0090DF10,pin
@@ -73803,6 +73808,7 @@ name,address,notes
 ?bfmeTryANA@BfmeThingANA@@QAEHPAX0@Z,0x0003381B,pin
 ?bfmeTwo920F@BfmeThing920F@@QAEXP6AXPAVLocomotorTemplate@@@Z@Z,0x00012B20,pin
 ?bfmeTwo928F@BfmeThing928F@@QAEXXZ,0x0001C9A9,pin
+?bfmeTwo934G@BfmeThing934G@@QAEHXZ,0x00031AFC,pin
 ?bfmeTwoAPA@@YGPAXPAXPAH@Z,0x009F6BEC,pin
 ?bfmeTwoBKE@@YAXPAX@Z,0x00038389,pin
 ?bfmeTwoBOF@BfmeThingBOF@@QAEXXZ,0x00004156,pin
