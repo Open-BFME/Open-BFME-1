@@ -72333,6 +72333,7 @@ name,address,notes
 ?bfmeAfterFCB@BfmeOwnFCB@@QAEXXZ,0x000098B8,pin
 ?bfmeAlloc1036@@YAPAXH@Z,0x00881F30,pin
 ?bfmeAlloc1037@@YAPAXH@Z,0x00881F30,pin
+?bfmeAlloc1039@@YAPAXH@Z,0x00881F30,pin
 ?bfmeAlloc946@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAlloc950B@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocATA@@YAPAXI@Z,0x0082E540,pin
@@ -73391,6 +73392,7 @@ name,address,notes
 ?bfmeGrab@BfmeSourceB@@QAEPAXPAPAX@Z,0x000314E9,Open-BFME5 ILT the vector assignment at 0x000B54C0 grabs through
 ?bfmeGrab@BfmeSourceC@@QAEPAXPAPAX@Z,0x0002EBC2,Open-BFME5 ILT the vector assignment at 0x002F8980 grabs through
 ?bfmeGrab@BfmeSourceD@@QAEPAXPAPAX@Z,0x00018697,Open-BFME5 ILT the vector assignment at 0x003A9560 grabs through
+?bfmeGrow1039@@YAXPAUBfmeQ1039@@H@Z,0x009959C0,pin
 ?bfmeGrow@Gen_0064C330@@AAEXPAX@Z,0x0004B646,Open-BFME5 the grow routine the bounded append at 0x0064C330 calls
 ?bfmeGrow@Gen_0064C380@@AAEXPAX@Z,0x00005EB1,Open-BFME5 the grow routine the bounded append at 0x0064C380 calls
 ?bfmeGrow@Gen_0064CAA0@@AAEXPAX@Z,0x0004B646,Open-BFME5 the grow routine the bounded append at 0x0064CAA0 calls
@@ -73485,6 +73487,7 @@ name,address,notes
 ?bfmeInit1029@BfmeSub1029@@QAEXXZ,0x007F01B0,pin
 ?bfmeInit1030@BfmeSub1030@@QAEXHPAH@Z,0x0003B318,pin
 ?bfmeInit1037@BfmeD1037@@QAEPAV1@PAVBfmeE1037@@@Z,0x0002D231,pin
+?bfmeInit1039@BfmeC1039@@QAEXPAVBfmeD1039@@@Z,0x00969710,pin
 ?bfmeInit929C@@YAXPAD@Z,0x009F7244,pin
 ?bfmeInit929G@BfmeThing929G@@QAEXXZ,0x0089E700,pin
 ?bfmeInit936G@BfmeThing936G@@QAEXXZ,0x00843990,pin
@@ -79759,6 +79762,8 @@ _bfmeVft1030A,0x00D29A9C,pin
 _bfmeVft1030B,0x00D2EB34,pin
 _bfmeVft1030C,0x00D36D58,pin
 _bfmeVft1033D,0x00D29A9C,pin
+_bfmeVft1039C,0x00D3E630,pin
+_bfmeVft1039D,0x00D3E654,pin
 _bfmeVftAGBa,0x00C9C9D0,pin
 _bfmeVftAGBb,0x00CA372C,pin
 _bfmeVftAGBc,0x00CB1404,pin
