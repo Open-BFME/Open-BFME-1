@@ -1868,6 +1868,16 @@ addMessageText (64.9%) at the top -- it landed 388/388 -- and correctly
 warned off update, which agrees on 19.3% and fails at offset ZERO on an
 `and esp,-8` aligned frame nothing in the body explains.
 
+A 100% SCREEN IS NECESSARY, NOT SUFFICIENT. The screen masks relocation
+sites, so it cannot see a call that resolves to the WRONG FUNCTION -- the
+gate resolves those and will reject what the screen passed.
+DataChunkInput::openDataChunk screens at 100% and fails: retail's
+`AsciiString("")` calls RVA 0x00102D90, an unidentified gen-dump that reads
+[ecx] and compares [m_data+0xC] against its argument -- a `set`, not the
+constructor at 0x00888BC0 the tree resolves to. When a 100% screen fails
+the build, read the relocation SYMBOLS out of the object and check each
+against what retail's call target actually is.
+
 Read the COMPILED SIZE beside the percentage. Once the two sizes differ the
 percentage stops moving even as you fix real things, because every byte
 after the first divergence is compared against the wrong position. On
