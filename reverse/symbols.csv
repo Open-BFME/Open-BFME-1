@@ -72380,6 +72380,7 @@ name,address,notes
 ?bfmeBase966B@BfmeVft966B@@QAEXXZ,0x00039D6A,pin
 ?bfmeBase967A@BfmeVft967A@@QAEXXZ,0x0001AB90,pin
 ?bfmeBase969D@BfmeD969@@QAEXXZ,0x007FA650,pin
+?bfmeBase974E@BfmeE974@@QAEXPAUBfmeArg974@@H@Z,0x0004872F,pin
 ?bfmeBaseAB@BfmeThingAB@@QAEXPAX@Z,0x0001AD0C,pin
 ?bfmeBaseAGB@BfmeThingAGB@@QAEXPAX0@Z,0x000170E4,pin
 ?bfmeBaseARC@BfmeThingARC@@QAEXXZ,0x009A1A30,pin
@@ -72593,6 +72594,7 @@ name,address,notes
 ?bfmeCall_008f73f0@BfmeGlobal_012ed5bc@@QAEXXZ,0x008F73F0,Open-BFME5 the member the 11-byte forwarders on global 0x012ED5BC tail-jump to
 ?bfmeCast2EVB@@YAPAUBfmeObjEVB@@PAX@Z,0x00010424,pin
 ?bfmeCastEVB@@YAPAUBfmeObjEVB@@PAX@Z,0x00042424,pin
+?bfmeCb974D@@YGXXZ,0x0024F2D0,pin
 ?bfmeChanged@Gen_00411DD0@@AAEXXZ,0x000200D1,Open-BFME5 the member the change-setter at 0x00411DD0 calls
 ?bfmeChanged@Gen_0041B0D0@@AAEXXZ,0x0002E564,Open-BFME5 the member the change-setter at 0x0041B0D0 calls
 ?bfmeChanged@Gen_00505530@@AAEXXZ,0x00023A29,Open-BFME5 the member the change-setter at 0x00505530 calls
@@ -73778,6 +73780,7 @@ name,address,notes
 ?bfmeTail935H@BfmeObj935H@@QAEXXZ,0x00030B11,pin
 ?bfmeTail938A@BfmeGlob938A@@QAEXH@Z,0x0000C9CD,pin
 ?bfmeTail939B@BfmeThing939B@@QAEXPAUBfmeElem939B@@@Z,0x0003D4E7,pin
+?bfmeTail974D@BfmeD974@@QAEXXZ,0x0001B8C4,pin
 ?bfmeTailA947C@@YAXXZ,0x000241E0,pin
 ?bfmeTailB947C@BfmeGlob947C@@QAEXXZ,0x000290D2,pin
 ?bfmeTailBCD@BfmeThingBCD@@QAEXXZ,0x0001CD8C,pin
