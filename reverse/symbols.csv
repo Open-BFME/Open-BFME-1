@@ -79685,3 +79685,5 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 _GetCurrentThreadId@0,0x009DB580,Watchdog update call target from retail REL32
+??1WatchdogOwnedState@@QAE@XZ,0x009DB400,Watchdog owned-state destructor from retail stop body
+?stop@BFMENetworkThreadBase@@QAEXXZ,0x009DB5A0,Watchdog stop tail target from retail body

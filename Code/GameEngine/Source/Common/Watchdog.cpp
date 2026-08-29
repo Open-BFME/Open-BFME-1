@@ -33,14 +33,28 @@ private:
 	WatchdogCriticalSection &m_criticalSection;
 };
 
-class Watchdog
+class BFMENetworkThreadBase
+{
+public:
+	void stop(void);
+
+private:
+	char m_storage[0x50];
+};
+
+class WatchdogOwnedState
+{
+public:
+	~WatchdogOwnedState();
+};
+
+class Watchdog : public BFMENetworkThreadBase
 {
 public:
 	void update(void);
 	void stop(void);
 
 private:
-	char m_threadBase[0x50];
 	UnsignedInt m_parentThreadId;
 	long m_lastHeartbeat;
 	UnsignedInt m_timeout;
@@ -51,7 +65,7 @@ private:
 	int m_suppressionCount;
 	WatchdogCriticalSection m_criticalSection;
 	char m_event[8];
-	void *m_ownedState;
+	WatchdogOwnedState *m_ownedState;
 };
 
 void Watchdog::update(void)
@@ -64,4 +78,11 @@ void Watchdog::update(void)
 		ScopedWatchdogLock lock(m_criticalSection);
 		m_lastHeartbeat = now;
 	}
+}
+
+void Watchdog::stop(void)
+{
+	delete m_ownedState;
+	m_ownedState = 0;
+	BFMENetworkThreadBase::stop();
 }
