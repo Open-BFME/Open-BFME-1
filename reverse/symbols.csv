@@ -72466,6 +72466,9 @@ name,address,notes
 ?bfmeCall939D@BfmeGlob939D@@QAEDXZ,0x0001E0AB,pin
 ?bfmeCall939E@BfmeSub939E@@QAEXPAHPAD@Z,0x008520A0,pin
 ?bfmeCall939G@BfmeSub939G@@QAEXXZ,0x00011900,pin
+?bfmeCall940A@@YGHPAX@Z,0x00012224,pin
+?bfmeCall940E@BfmeGlob940E@@QAEXPAX@Z,0x0001D0DE,pin
+?bfmeCall940G@BfmeB940G@@QAEXPAXH@Z,0x0003EEBE,pin
 ?bfmeCallCCH@@YAHPAX0H@Z,0x00009084,pin
 ?bfmeCallCIB@@YAHPAX000@Z,0x007EC5C0,pin
 ?bfmeCallCIC@@YAHPAX000@Z,0x007ECE60,pin
@@ -72842,6 +72845,7 @@ name,address,notes
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
 ?bfmeFind926C@BfmeKey926C@@QAEPAUBfmeObj926C@@XZ,0x00020824,pin
+?bfmeFind940D@BfmeSrc940D@@QAEPAVBfmeRes940D@@XZ,0x0000F498,pin
 ?bfmeFind@BfmeChainOwner@@QAEPAVBfmeChainResult@@H@Z,0x0002F52C,Open-BFME5 ILT the four lookups around 0x002197E0 call
 ?bfmeFind@BfmeFinder@@QAEPAXXZ,0x000265A8,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 call
 ?bfmeFind@Gen_003C02B0@@AAEPAVBfmeItemAN@@H@Z,0x00032A56,Open-BFME5 the ICF thunk (to 0x00432A56) the remove at 0x003C02B0 looks its item up through
@@ -73465,6 +73469,8 @@ name,address,notes
 ?bfmeOne927D@BfmeThing927D@@QAEXXZ,0x0002987A,pin
 ?bfmeOne928F@BfmeThing928F@@QAEXXZ,0x00033D70,pin
 ?bfmeOne934G@BfmeThing934G@@QAEHXZ,0x00048761,pin
+?bfmeOne940B@BfmeThing940B@@QAEXXZ,0x0003D0EB,pin
+?bfmeOne940C@BfmeThing940C@@QAEXXZ,0x00015E0B,pin
 ?bfmeOneAPA@@YGPAXPAXPAH@Z,0x009F6BF2,pin
 ?bfmeOneBKE@@YGXPAX@Z,0x0090C610,pin
 ?bfmeOneBKF@BfmePartBKF@@QAEXXZ,0x0090DF10,pin
@@ -73831,6 +73837,7 @@ name,address,notes
 ?bfmeTwo920F@BfmeThing920F@@QAEXP6AXPAVLocomotorTemplate@@@Z@Z,0x00012B20,pin
 ?bfmeTwo928F@BfmeThing928F@@QAEXXZ,0x0001C9A9,pin
 ?bfmeTwo934G@BfmeThing934G@@QAEHXZ,0x00031AFC,pin
+?bfmeTwo940B@BfmeThing940B@@QAEXXZ,0x00001AFA,pin
 ?bfmeTwoAPA@@YGPAXPAXPAH@Z,0x009F6BEC,pin
 ?bfmeTwoBKE@@YAXPAX@Z,0x00038389,pin
 ?bfmeTwoBOF@BfmeThingBOF@@QAEXXZ,0x00004156,pin
@@ -75041,6 +75048,7 @@ name,address,notes
 ?g_bfme939GlobC@@3PAVBfmeGlob939C@@A,0x00EED668,pin
 ?g_bfme939GlobD@@3PAVBfmeGlob939D@@A,0x00EF0898,pin
 ?g_bfme939Str@@3PADA,0x00EB49B4,pin
+?g_bfme940GlobE@@3PAVBfmeGlob940E@@A,0x00EF0898,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
