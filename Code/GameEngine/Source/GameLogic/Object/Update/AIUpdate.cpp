@@ -411,6 +411,38 @@ public:
 	virtual void addTargeter( ObjectID id, Bool add ) = 0;	///< vtable +0x1cc
 };
 
+// BFME's contain interface places removeAllContained at vtable slot 37 (+0x94).
+class BFMEContainRemoveAll
+{
+public:
+	BFME_AIUPDATE_SLOT(000); BFME_AIUPDATE_SLOT(001); BFME_AIUPDATE_SLOT(002); BFME_AIUPDATE_SLOT(003);
+	BFME_AIUPDATE_SLOT(004); BFME_AIUPDATE_SLOT(005); BFME_AIUPDATE_SLOT(006); BFME_AIUPDATE_SLOT(007);
+	BFME_AIUPDATE_SLOT(008); BFME_AIUPDATE_SLOT(009); BFME_AIUPDATE_SLOT(010); BFME_AIUPDATE_SLOT(011);
+	BFME_AIUPDATE_SLOT(012); BFME_AIUPDATE_SLOT(013); BFME_AIUPDATE_SLOT(014); BFME_AIUPDATE_SLOT(015);
+	BFME_AIUPDATE_SLOT(016); BFME_AIUPDATE_SLOT(017); BFME_AIUPDATE_SLOT(018); BFME_AIUPDATE_SLOT(019);
+	BFME_AIUPDATE_SLOT(020); BFME_AIUPDATE_SLOT(021); BFME_AIUPDATE_SLOT(022); BFME_AIUPDATE_SLOT(023);
+	BFME_AIUPDATE_SLOT(024); BFME_AIUPDATE_SLOT(025); BFME_AIUPDATE_SLOT(026); BFME_AIUPDATE_SLOT(027);
+	BFME_AIUPDATE_SLOT(028); BFME_AIUPDATE_SLOT(029); BFME_AIUPDATE_SLOT(030); BFME_AIUPDATE_SLOT(031);
+	BFME_AIUPDATE_SLOT(032); BFME_AIUPDATE_SLOT(033); BFME_AIUPDATE_SLOT(034); BFME_AIUPDATE_SLOT(035);
+	BFME_AIUPDATE_SLOT(036);
+	virtual void removeAllContained( Bool exposeStealthUnits ) = 0;	///< vtable +0x94
+};
+
+// BFME keeps the object's contain module at +0x1fc and its AI module at +0x204.
+struct BFMEObjectContainField
+{
+	BFMEContainRemoveAll *getContain() const { return m_contain; }
+
+	char m_unreconstructed_000[0x1FC];
+	BFMEContainRemoveAll *m_contain;			///< retail this+0x1fc
+};
+
+static BFMEContainRemoveAll *bfmeContainOf( const AIUpdateInterface *ai )
+{
+	return reinterpret_cast<const BFMEObjectContainField *>(
+		reinterpret_cast<const BFMEAIUpdateFields *>(ai)->getObject() )->getContain();
+}
+
 // BFME keeps the object's AI module at +0x204.
 struct BFMEObjectAIField
 {
@@ -715,6 +747,9 @@ void AIUpdateInterface::setSurrendered( const Object *objWeSurrenderedTo, Bool s
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_setGoalPositionClipped.cpp
 // ?setGoalPositionClipped@AIUpdateInterface@@ present-unmatched
+// Cannot come home: the vendored AIUpdate.h declares this protected, so the TU
+// emits ?setGoalPositionClipped@AIUpdateInterface@@IAE..., and the ledger row
+// is the public QAE spelling. Moving it needs a header edit, not a view.
 void AIUpdateInterface::setGoalPositionClipped(const Coord3D* in, CommandSourceType cmdSource)
 {
 	if (in)
@@ -4455,14 +4490,13 @@ void AIUpdateInterface::privateDock( Object *obj, CommandSourceType cmdSource )
 }
 
 //----------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateCombatDrop.cpp
-// ?privateCombatDrop@AIUpdateInterface@@ present-unmatched
+// ?privateCombatDrop@AIUpdateInterface@@MAEXPAVObject@@ABUCoord3D@@W4CommandSourceType@@@Z
 void AIUpdateInterface::privateCombatDrop( Object *target, const Coord3D& pos, CommandSourceType cmdSource )
 {
 	DEBUG_CRASH(("default implementation, should never be called"));
-	if( getObject()->getContain() )
+	if( bfmeContainOf(this) )
 	{
-		getObject()->getContain()->removeAllContained(FALSE);
+		bfmeContainOf(this)->removeAllContained(FALSE);
 	}
 }
 
