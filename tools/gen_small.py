@@ -2593,6 +2593,18 @@ def named_population(entries, read, blacklist):
     return out
 
 
+def named_batch_population(entries, claimed, source_rel):
+    """Keep unclaimed functions plus rows already owned by this exact batch.
+
+    ``named_population`` deliberately ignores every ``gen-named`` row so a
+    landed batch can regenerate byte-for-byte.  Without the source check here,
+    asking for the next batch emits the previous batch's rows again under a
+    second source file.
+    """
+    return [entry for entry in entries
+            if claimed.get(entry[0]) in (None, source_rel)]
+
+
 def match_family(rva, name, body):
     """(Family, operands) for this function, or (None, why no rule applies)."""
     for family in FAMILIES:
@@ -2634,6 +2646,7 @@ def cmd_gen_named(args):
     source_path, pending_path = named_paths(args.batch)
     source_rel = source_path.relative_to(ROOT).as_posix()
     scanned = named_population(entries, read, load_blacklist())
+    scanned = named_batch_population(scanned, claimed, source_rel)
 
     candidates, underivable = [], []
     for rva, _size, name, body in scanned:
