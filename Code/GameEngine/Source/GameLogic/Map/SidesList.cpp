@@ -4954,8 +4954,22 @@ TeamsInfo *TeamsInfoRec::findTeamInfo(AsciiString name, Int* index /*= NULL*/)
 	return NULL;
 }
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/TeamsInfoRecAddTeamThunk.cpp
 // ?addTeam@TeamsInfoRec@@QAEXPBVDict@@@Z present-unmatched
+// That donor does NOT hold this body, so the pointer to it is gone. It owns
+// three rows on RVA 0x0000D828, and 0x0000D828 is `E9 63 16 05 00` = jmp
+// 0x0005EE90 -- which this same ledger already records as ??1AsciiString@@QAE@XZ
+// (export_rva 0x0000D828, body 0x0005EE90, matched from ascii_string.cpp). The
+// binary settles it by call profile: 6,947 direct call/jmp sites reach that stub
+// and exactly one reaches the body behind it. That is a string destructor's
+// import thunk, not TeamsInfoRec::addTeam, which retail calls from a handful of
+// places. The rows pass verification only because a jmp's rel32 is a masked
+// relocation, so ANY 5-byte tail-call thunk byte-matches any other -- the same
+// mechanism that let a wrong $L pin ride along on the PeerDefs funclets.
+//
+// So do not screen these two against that donor: marker_screen reports miss(4)
+// for addTeam, which is only the first five bytes of this real body compared
+// against a jump. Retail's TeamsInfoRec::addTeam and ::removeTeam are still
+// unlocated. Logged in re_attempts.log as mis-anchored?.
 void TeamsInfoRec::addTeam(const Dict* d)
 {
 	enum
@@ -4986,8 +5000,22 @@ void TeamsInfoRec::addTeam(const Dict* d)
 	m_teams[m_numTeams++].init(d);
 }
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/TeamsInfoRecAddTeamThunk.cpp
 // ?removeTeam@TeamsInfoRec@@QAEXH@Z present-unmatched
+// That donor does NOT hold this body, so the pointer to it is gone. It owns
+// three rows on RVA 0x0000D828, and 0x0000D828 is `E9 63 16 05 00` = jmp
+// 0x0005EE90 -- which this same ledger already records as ??1AsciiString@@QAE@XZ
+// (export_rva 0x0000D828, body 0x0005EE90, matched from ascii_string.cpp). The
+// binary settles it by call profile: 6,947 direct call/jmp sites reach that stub
+// and exactly one reaches the body behind it. That is a string destructor's
+// import thunk, not TeamsInfoRec::addTeam, which retail calls from a handful of
+// places. The rows pass verification only because a jmp's rel32 is a masked
+// relocation, so ANY 5-byte tail-call thunk byte-matches any other -- the same
+// mechanism that let a wrong $L pin ride along on the PeerDefs funclets.
+//
+// So do not screen these two against that donor: marker_screen reports miss(4)
+// for addTeam, which is only the first five bytes of this real body compared
+// against a jump. Retail's TeamsInfoRec::addTeam and ::removeTeam are still
+// unlocated. Logged in re_attempts.log as mis-anchored?.
 void TeamsInfoRec::removeTeam(Int i)
 {
 	if (i < 0 || i >= m_numTeams || m_numTeams <= 1)
