@@ -73079,9 +73079,20 @@ name,address,notes
 ?bfmeErase@BfmeShroudList@@QAEXPAVBfmeListHeader@@@Z,0x00016ED2,Open-BFME5 ILT thunk; ?reset30BC@BaseHeightMapResetShroud@@QAEXXZ at 0x00727450 hands it the first node of the list at +0x44 before putting the header back to itself; address-derived name
 ?bfmeErase@S4Mem005879C0@@AAEXPAX@Z,0x00037353,Open-BFME5 ILT thunk; ??1S4Mem005879C0@@QAE@XZ at 0x005879C0 hands it the field at +4 of its header before putting the header back to itself; address-derived name
 ?bfmeEraseFrom@BfmeListW@@QAEXPAVBfmeNodeW@@@Z,0x00037AB5,Open-BFME5 the ICF thunk (to 0x00437AB5) the list clear at 0x004B1720 erases through
+?bfmeF01148@BfmeS1148@@QAEHXZ,0x0002D41B,pin
 ?bfmeF1062A@BfmeA1062@@QAEXXZ,0x0003139A,pin
 ?bfmeF1062B@BfmeB1062@@QAEXXZ,0x000095E3,pin
 ?bfmeF1076@BfmeQ1076@@QAEXXZ,0x00011464,pin
+?bfmeF11148@BfmeS1148@@QAEHXZ,0x00043707,pin
+?bfmeF21148@BfmeS1148@@QAEDXZ,0x000333CF,pin
+?bfmeF31148@BfmeS1148@@QAEDXZ,0x000365F7,pin
+?bfmeF41148@BfmeS1148@@QAEDXZ,0x000148E4,pin
+?bfmeF51148@BfmeS1148@@QAEDXZ,0x00033262,pin
+?bfmeF61148@BfmeS1148@@QAEDXZ,0x00003003,pin
+?bfmeF71148@BfmeS1148@@QAEDXZ,0x00036EE4,pin
+?bfmeF81148@BfmeS1148@@QAEDXZ,0x0003FC38,pin
+?bfmeF91148@BfmeS1148@@QAEDXZ,0x00041394,pin
+?bfmeFa1148@BfmeS1148@@QAEDXZ,0x0000B735,pin
 ?bfmeFail1033@BfmeSub1033@@QAEXXZ,0x00887940,pin
 ?bfmeFailDXE@@YGXH@Z,0x00AFD540,pin
 ?bfmeFallback1015@BfmeM1015@@QAEXHH@Z,0x008A48A0,pin
@@ -73090,6 +73101,9 @@ name,address,notes
 ?bfmeFatal1042@@YGXPAVBfmeErr1042@@PAD@Z,0x009F6D00,pin
 ?bfmeFatal1043@@YGXPAVBfmeErr1043@@PAD@Z,0x009F6D00,pin
 ?bfmeFatal2_1043@@YGXPAVBfmeErr2_1043@@PAD@Z,0x009F6D00,pin
+?bfmeFb1148@BfmeS1148@@QAEDXZ,0x00020437,pin
+?bfmeFc1148@BfmeS1148@@QAEDXZ,0x0003B69C,pin
+?bfmeFd1148@BfmeS1148@@QAEDXZ,0x00001BE5,pin
 ?bfmeFill1028@BfmeSub1028@@QAEXPAH0@Z,0x00021562,pin
 ?bfmeFill1031@@YAXPAVBfmeG1031@@PAH@Z,0x000139BC,pin
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
@@ -80492,6 +80506,7 @@ _funcstat,0x0099C390,decode_calls pin for _stat callee
 _g_Rva0112C8D0,0x0112C8D0,address-derived terminated lookup table read by 0x0080D890
 _g_Rva012C47A4,0x012C47A4,DirtySock default alias-list pointer used by 0x0080EF50
 _g_bfmeG1144,0x00EED5C8,pin
+_g_bfmeG1148,0x00EED5C8,pin
 _g_bfmeH1144,0x00EED5AC,pin
 _g_bfmeK1127,0x00C75350,pin
 _g_bfmeO1145,0x00F40534,pin
