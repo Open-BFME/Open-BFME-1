@@ -2068,7 +2068,6 @@ Int GameWindow::winSetHiliteBorderColor( Int index, Color color )
 // GameWindow::winGetInputFunc ================================================
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/TurretAI.cpp
-// ?winGetInputFunc@GameWindow@@QAEP6A?AW4WindowMsgHandledType@@PAV1@III@ZXZ present-unmatched
 GameWinInputFunc GameWindow::winGetInputFunc( void )
 {
 
