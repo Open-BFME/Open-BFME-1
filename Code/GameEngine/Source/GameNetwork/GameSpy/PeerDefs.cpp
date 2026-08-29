@@ -406,12 +406,6 @@ void GameSpyInfo::addStagingRoom( GameSpyStagingRoom room )
 // re-anchored first, or a change that adds no declarations at all. Comments are
 // free; code is not.
 //
-// removeFromSavedIgnoreList below is the second body in this file in the same
-// position, and it wants MORE code than this one: retail's m_savedIgnoreMap has a
-// TWELVE-byte value type, not AsciiString, so its _Rb_tree::erase is the generic
-// 12-byte instantiation at 0x006342A0 rather than the AsciiString one at
-// 0x00224870. Reaching that needs a second map instantiation in this TU, which is
-// a great deal more renumbering than one view class. Two bodies, one blocker.
 // addStagingRoom is vtable +0xA0 in BFME and +0x84 in the vendored interface --
 // twenty-eight bytes of extra virtuals ahead of it. The argument handling,
 // including the by-value copy and its unwind slot, already matched; only the slot
@@ -562,6 +556,23 @@ void GameSpyInfo::addToSavedIgnoreList( Int profileID, AsciiString nick)
 // definition so this translation unit emits its matched map template helpers.
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfoRemoveFromSavedIgnoreListThunk.cpp
 // ?removeFromSavedIgnoreList@GameSpyInfo@@UAEXH@Z present-unmatched
+// This one is NOT unblocked by the re-anchoring above, and the reason is worth
+// separating from it. The layout half is settled: retail's m_savedIgnoreMap has a
+// TWELVE-byte value type where the vendored header says AsciiString, so this
+// erase resolves to the generic 12-byte _Rb_tree instantiation at 0x006342A0
+// that Code/gen_small/tgrid_119.cpp already owns rather than the AsciiString one
+// at 0x00224870 -- the same 91-byte body under a different template. A local
+// map<Int, 12-byte> view reaches it and the call site then compiles correctly.
+//
+// What stops it is that this erase is the ONLY expression in this TU that
+// instantiates the AsciiString-valued tree's _M_upper_bound, and that COMDAT is
+// a matched 38-byte row claimed from this file at 0x00222150. Switching the call
+// to the 12-byte instantiation stops it being emitted and the row dies with
+// "symbol not found in object". operator[] at addToSavedIgnoreList and find() at
+// isSavedIgnored do not instantiate it; only erase does.
+//
+// So landing this body trades one matched row for another and needs the 38-byte
+// row retired or rehomed first. That is a ledger decision, not a Tier 1 one.
 void GameSpyInfo::removeFromSavedIgnoreList( Int profileID )
 {
 	m_savedIgnoreMap.erase(profileID);
