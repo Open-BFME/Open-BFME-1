@@ -467,6 +467,11 @@ Bridge::~Bridge()
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/BridgeIsPointOnBridgeThunk.cpp
 // ?isPointOnBridge@Bridge@@QAE_NPBUCoord3D@@@Z present-unmatched
+// DECLINED under the anti-lift rule, not merely unattempted. The donor is a
+// 5-byte ILT whose whole content is a cast-and-call into an unnamed shim, and
+// its jump lands at 0x001a5f40 -- still an unconverted dump (Code/gen_asm/d_001a38b0.asm).
+// This body is therefore the only readable statement of what the function does,
+// and folding would replace it with a three-line stub forwarding into a dump.
 Bool Bridge::isPointOnBridge(const Coord3D *pLoc)
 {
 	if (pLoc->x < m_bounds.lo.x) return(false);
@@ -662,6 +667,11 @@ static Bool PointInRegion2D( const Coord3D *pt, const Region2D *clipRegion )
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/BridgeIsCellOnEndThunk.cpp
 // ?isCellOnEnd@Bridge@@QAE_NPBURegion2D@@@Z present-unmatched
+// DECLINED under the anti-lift rule, not merely unattempted. The donor is a
+// 5-byte ILT whose whole content is a cast-and-call into an unnamed shim, and
+// its jump lands at 0x001a24b0 -- still an unconverted dump (Code/gen_asm/d_00198280.asm).
+// This body is therefore the only readable statement of what the function does,
+// and folding would replace it with a three-line stub forwarding into a dump.
 Bool Bridge::isCellOnEnd(const Region2D *cell)
 {
 	Coord3D endVector;
@@ -960,6 +970,11 @@ void Bridge::updateDamageState( void )
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/BridgeGetBridgeHeightThunk.cpp
 // ?getBridgeHeight@Bridge@@QAEMPBUCoord3D@@PAU2@@Z present-unmatched
+// DECLINED under the anti-lift rule, not merely unattempted. The donor is a
+// 5-byte ILT whose whole content is a cast-and-call into an unnamed shim, and
+// its jump lands at 0x001a7520 -- still an unconverted dump (Code/gen_asm/d_001a38b0.asm).
+// This body is therefore the only readable statement of what the function does,
+// and folding would replace it with a three-line stub forwarding into a dump.
 Real Bridge::getBridgeHeight(const Coord3D *pLoc, Coord3D* normal)
 {
 	Vector3 left1(m_bridgeInfo.fromLeft.x, m_bridgeInfo.fromLeft.y, m_bridgeInfo.fromLeft.z);
@@ -984,6 +999,13 @@ Real Bridge::getBridgeHeight(const Coord3D *pLoc, Coord3D* normal)
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogicCtorThunk.cpp
 // ??0TerrainLogic@@QAE@XZ present-unmatched
+// Blocked on class shape, which no view or alias pin reaches. Retail's is 46
+// bytes and the class it constructs is sizeof 0x1904 with TWO vptrs, at +0x00
+// and +0x04, both rewritten after the base constructor returns; the base
+// subobject reaches at least +0x2c and +0x0c is a BASE member this constructor
+// assigns, not a member of TerrainLogic. A constructor's codegen is a function
+// of the real hierarchy, so reproducing it means changing the class, and
+// TerrainLogic.h is not a header this lane edits for one body.
 TerrainLogic::TerrainLogic()
 {
 	Int i;
