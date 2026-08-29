@@ -80281,6 +80281,7 @@ _bfmeStrENF,0x00C82C44,pin
 _bfmeStrERA,0x00C7301C,pin
 _bfmeString10CF498,0x00CCF498,pin
 _bfmeString10CF748,0x00CCF748,pin
+_bfmeSwapC1151,0x0082D010,pin
 _bfmeTabEAC,0x00D098B0,pin
 _bfmeTabEYC,0x00EA7410,pin
 _bfmeTagANB,0x00C9E038,pin
