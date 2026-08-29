@@ -75060,6 +75060,7 @@ name,address,notes
 ?g_bfme943VftF2@@3PADA,0x00D3D004,pin
 ?g_bfme943VftG1@@3PADA,0x00D3F604,pin
 ?g_bfme943VftG2@@3PADA,0x00D3F5F8,pin
+?g_bfme944Glob@@3PAUBfmeGlob944A@@A,0x00EF0898,pin
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
