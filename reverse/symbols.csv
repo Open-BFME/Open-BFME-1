@@ -79929,3 +79929,9 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?handle@Open2Handler1292C0@@QAE_NPAVGenItem@@PA_N1@Z,0x0003D3B1,Open2 0x001292C0 BitFlags token handler (ILT)
+?handle@Open2Handler142D20@@QAE_NPAVGenItem@@PA_N1@Z,0x0004A7AF,Open2 0x00142D20 BitFlags token handler (ILT)
+?handle@Open2Handler204A80@@QAE_NPAVGenItem@@PA_N1@Z,0x0003D68B,Open2 0x00204A80 BitFlags token handler (ILT)
+?handle@Open2Handler29CE10@@QAE_NPAVGenItem@@PA_N1@Z,0x00006F78,Open2 0x0029CE10 BitFlags token handler (ILT)
+?handle@Open2Handler369790@@QAE_NPAVGenItem@@PA_N1@Z,0x0002E893,Open2 0x00369790 BitFlags token handler (ILT)
+?handle@Open2Handler61CC40@@QAE_NPAVGenItem@@PA_N1@Z,0x000341FD,Open2 0x0061CC40 BitFlags token handler (ILT)
