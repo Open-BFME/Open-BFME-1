@@ -6314,6 +6314,11 @@ const Matrix3D *Drawable::getTransformMatrix( void ) const
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/Drawable_setCaptionText_Thunk.cpp
 // ?setCaptionText@Drawable@@QAEXABVUnicodeString@@@Z present-unmatched
+// m_captionDisplayString is at Drawable+0x2D0 in retail where the vendored
+// class lands it at +0x130 -- the same misplaced-member shape getID above has,
+// not a shifted class: the accessors around it agree with retail.
+#define BFME_CAPTION_DS(d) (*(DisplayString **)((UnsignedByte *)(d) + 0x2d0))
+
 void Drawable::setCaptionText( const UnicodeString& captionText )
 {
 	if (captionText.isEmpty())
@@ -6325,22 +6330,22 @@ void Drawable::setCaptionText( const UnicodeString& captionText )
 	UnicodeString sanitizedString = captionText;
 	TheLanguageFilter->filterLine(sanitizedString);
 
-	if( m_captionDisplayString == NULL )
+	if( BFME_CAPTION_DS(this) == NULL )
 	{
-		m_captionDisplayString = TheDisplayStringManager->newDisplayString();
+		BFME_CAPTION_DS(this) = TheDisplayStringManager->newDisplayString();
 		GameFont *font = TheFontLibrary->getFont(
 			TheInGameUI->getDrawableCaptionFontName(),
 			TheGlobalLanguageData->adjustFontSize(TheInGameUI->getDrawableCaptionPointSize()),
 			TheInGameUI->isDrawableCaptionBold() );
-		m_captionDisplayString->setFont( font );
-		m_captionDisplayString->setText( sanitizedString );
+		BFME_CAPTION_DS(this)->setFont( font );
+		BFME_CAPTION_DS(this)->setText( sanitizedString );
 	}
 	else
 	{
 		// set the string if the value has changed
-		if( m_captionDisplayString->getText().compare(sanitizedString) != 0 )
+		if( BFME_CAPTION_DS(this)->getText().compare(sanitizedString) != 0 )
 		{
-			m_captionDisplayString->setText( sanitizedString );
+			BFME_CAPTION_DS(this)->setText( sanitizedString );
 		}
 	}
 }
@@ -6349,9 +6354,9 @@ void Drawable::setCaptionText( const UnicodeString& captionText )
 // ?clearCaptionText@Drawable@@QAEXXZ present-unmatched
 void Drawable::clearCaptionText( void )
 {
-	if (m_captionDisplayString)
-		TheDisplayStringManager->freeDisplayString(m_captionDisplayString);
-	m_captionDisplayString = NULL;
+	if (BFME_CAPTION_DS(this))
+		TheDisplayStringManager->freeDisplayString(BFME_CAPTION_DS(this));
+	BFME_CAPTION_DS(this) = NULL;
 }
 
 //-------------------------------------------------------------------------------------------------
