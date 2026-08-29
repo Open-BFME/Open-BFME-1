@@ -800,6 +800,18 @@ void DisconnectManager::turnOnScreen(ConnectionManager *conMgr) {
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManager_disconnectPlayer_Thunk.cpp
+// Attempted and reverted, three bytes short. The BFME body ignores the leave
+// code the connection manager returns -- there is no packet-router resend --
+// inlines the slot translation, and skips the disconnect window when it is
+// down. Written that way it reproduces retail except for two things: GameSlot's
+// disconnected flag is at +0x40 in BFME where the reference puts it at +0x3C
+// (`c6 40 40 01` against `c6 40 3c 01`, fixable with a view), and the two
+// by-value UnicodeString arguments each schedule the unwind-slot store after
+// the copy-constructor receiver load where retail stores first. That second one
+// is the vendored header: UnicodeString's copy constructor is declared out of
+// line, which makes the temporary opaque, and retail's compiler saw an inline
+// copy delegating to an undefined base. Same block as populateDisconnectScreen
+// below; both need the string shim, not a view.
 // ?disconnectPlayer@DisconnectManager@@IAEXHPAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::disconnectPlayer(Int slot, ConnectionManager *conMgr) {
 	DEBUG_LOG(("DisconnectManager::disconnectPlayer - Disconnecting slot number %d on frame %d\n", slot, TheGameLogic->getFrame()));
