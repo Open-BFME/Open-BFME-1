@@ -1417,15 +1417,35 @@ void Object::setModelConditionState( ModelConditionFlagType a )
 	}
 }
 
+// BFME builds a single-bit mask on the stack -- three dwords, where the
+// reference ModelConditionFlags is four -- and hands it to an apply helper that
+// is unnamed in the image, with the set flag false. Nothing is asked of the
+// drawable.
+struct BfmeModelConditionFlags
+{
+	BfmeModelConditionFlags() { memset( m_bits, 0, sizeof( m_bits ) ); }
+
+	void set( ModelConditionFlagType bit )
+	{
+		m_bits[ (UnsignedInt)bit >> 5 ] |= 1 << ( (UnsignedInt)bit & 31 );
+	}
+
+	UnsignedInt m_bits[3];
+};
+
+class BfmeObjectFlagApply
+{
+public:
+	void apply( const BfmeModelConditionFlags &flags, Bool set );	///< retail 0x001c7370
+};
+
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_clearModelConditionState.cpp
-// ?clearModelConditionState@Object@@QAEXW4ModelConditionFlagType@@@Z present-unmatched
+// ?clearModelConditionState@Object@@QAEXW4ModelConditionFlagType@@@Z
 void Object::clearModelConditionState( ModelConditionFlagType a )
 {
-	if (m_drawable)
-	{
-		m_drawable->clearModelConditionState(a);
-	}
+	BfmeModelConditionFlags c;
+	c.set( a );
+	reinterpret_cast<BfmeObjectFlagApply *>(this)->apply( c, FALSE );
 }
 
 //=============================================================================
@@ -2300,11 +2320,37 @@ Bool Object::isStructure(void) const
 	return isKindOf(KINDOF_STRUCTURE);
 }
 
+// BFME's kind-of mask is six dwords where the reference BitFlags<KINDOF_COUNT>
+// is four, and retail builds the faction-structure mask on the stack instead of
+// reading the KINDOFMASK_FS global: bits 61, 62, 63, 64 and 134.
+class BfmeKindOfMask
+{
+public:
+	BfmeKindOfMask( Int idx1, Int idx2, Int idx3, Int idx4, Int idx5 )
+	{
+		m_bits.set( idx1 );
+		m_bits.set( idx2 );
+		m_bits.set( idx3 );
+		m_bits.set( idx4 );
+		m_bits.set( idx5 );
+	}
+
+private:
+	std::bitset<192> m_bits;
+};
+
+class BfmeKindOfTester
+{
+public:
+	Bool isAnyKindOf( const BfmeKindOfMask &mask ) const;	///< retail 0x00132ae0
+};
+
 //-------------------------------------------------------------------------------------------------
-// ?isFactionStructure@Object@@QBE_NXZ present-unmatched
+// ?isFactionStructure@Object@@QBE_NXZ
 Bool Object::isFactionStructure(void) const
 {
-	return isAnyKindOf( KINDOFMASK_FS );
+	return reinterpret_cast<const BfmeKindOfTester *>(this)->isAnyKindOf(
+		BfmeKindOfMask( 61, 62, 63, 64, 134 ) );
 }
 
 //-------------------------------------------------------------------------------------------------
