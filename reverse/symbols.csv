@@ -80134,6 +80134,7 @@ __imp__bfmeCpyDYC,0x00F593C8,pin
 __imp__bfmeCvtDXI,0x00F59384,pin
 __imp__bfmeDoDWH@0,0x00F596D8,pin
 __imp__bfmeEnter1172@4,0x00F58D18,pin
+__imp__bfmeEnter1179@4,0x00F58D18,pin
 __imp__bfmeEnterDVC@4,0x00F58D18,pin
 __imp__bfmeEnterDWA@4,0x00F58D18,pin
 __imp__bfmeEnterDWD@4,0x00F58D18,pin
@@ -80146,6 +80147,7 @@ __imp__bfmeIncDYE@4,0x00F58E5C,pin
 __imp__bfmeInitDWA@4,0x00F58E5C,pin
 __imp__bfmeInitDXB@4,0x00F58D0C,pin
 __imp__bfmeLeave1172@4,0x00F58E74,pin
+__imp__bfmeLeave1179@4,0x00F58E74,pin
 __imp__bfmeLeaveDVC@4,0x00F58E74,pin
 __imp__bfmeLeaveDWD@4,0x00F58E74,pin
 __imp__bfmeMaskDXF@4,0x00F58DAC,pin
@@ -80153,6 +80155,7 @@ __imp__bfmeOnDWJ@4,0x00F59090,pin
 __imp__bfmeQueryDXE@4,0x00F591B4,pin
 __imp__bfmeScanDYG,0x00F59494,pin
 __imp__bfmeSetDWI@8,0x00F58F64,pin
+__imp__bfmeSignal1179@4,0x00F58ECC,pin
 __imp__bfmeSnpDZF,0x00F5932C,pin
 __imp__bfmeStartDWB@4,0x00F58D0C,pin
 __imp__bfmeStatusDXD@4,0x00F5958C,pin
@@ -80315,6 +80318,7 @@ _bfmeTextBQF,0x00F36E50,pin
 _bfmeTextBTF,0x00CBF820,pin
 _bfmeTextOneAZB,0x00F36E54,pin
 _bfmeTextTwoAZB,0x00F36E50,pin
+_bfmeTid1179,0x009DB580,pin
 _bfmeTryActivate@12,0x009D8460,address-derived stdcall helper target from the direct REL32 call at retail 0x009D6310
 _bfmeVft1028A,0x00D1A174,pin
 _bfmeVft1029A,0x00D36128,pin
@@ -80527,7 +80531,10 @@ _funcargs,0x0099C410,decode_calls pin for _var_or_func_tail callee
 _funcstat,0x0099C390,decode_calls pin for _stat callee
 _g_Rva0112C8D0,0x0112C8D0,address-derived terminated lookup table read by 0x0080D890
 _g_Rva012C47A4,0x012C47A4,DirtySock default alias-list pointer used by 0x0080EF50
+_g_bfmeCount1179,0x00F40588,pin
+_g_bfmeCs1179,0x00F3F4E8,pin
 _g_bfmeCursors1170,0x00EF77A8,pin
+_g_bfmeEv1179,0x00F3F540,pin
 _g_bfmeFreeList1149,0x00F0B210,pin
 _g_bfmeFreeList1150,0x00F0B1C0,pin
 _g_bfmeG1144,0x00EED5C8,pin
@@ -80542,6 +80549,7 @@ _g_bfmeHeapSize1150,0x00F0B1B4,pin
 _g_bfmeK1127,0x00C75350,pin
 _g_bfmeO1145,0x00F40534,pin
 _g_bfmeO1146,0x00EF1600,pin
+_g_bfmeOwner1179,0x00F40584,pin
 _g_bfmeS1142,0x00EF8008,pin
 _g_bfmeS1177,0x00CCED70,pin
 _g_bfmeV1134,0x00CF0AE0,pin
