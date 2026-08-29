@@ -72807,6 +72807,7 @@ name,address,notes
 ?bfmeFindFFG@BfmeMidFFG@@QAEPAUBfmeResFFG@@PAUBfmeSubFFG@@@Z,0x0003B890,pin
 ?bfmeFindFGE@BfmeGlobFGE@@QAEPAVBfmeResFGE@@PAX@Z,0x0004AD0E,pin
 ?bfmeFindItemE63@@YAPAUBfmeItemE63@@H@Z,0x0000E6E7,pin
+?bfmeFindLC@BfmeKeyLC@@QAEPAUBfmeNodeLC@@XZ,0x00046538,pin
 ?bfmeFindQH@@YAPAHPAHH@Z,0x0082BBC0,pin
 ?bfmeFindRT@BfmeMapRT@@QAEPAXPAX@Z,0x0000C7FC,pin
 ?bfmeFindRecord@FontLibraryBFMERetail@@AAEPAUBfmeFontRecord@@PAVAsciiString@@M@Z,0x000035A3,Open-BFME5 ILT thunk to body 0x00476E20; FontLibraryBFMERetail::getFont at 0x004772D0 calls it on this with the name and size and reads a byte at +8 of what it returns; address-derived name
@@ -72998,6 +72999,7 @@ name,address,notes
 ?bfmeForward@Gen_00C71560Target@@QAEXXZ,0x009DB7A0,Open-BFME5 the member the singleton forwarder at 0x00C71560 tail-jumps to
 ?bfmeForward@Gen_00C71570Target@@QAEXXZ,0x009DB7A0,Open-BFME5 the member the singleton forwarder at 0x00C71570 tail-jumps to
 ?bfmeForward@Gen_00C71580Target@@QAEXXZ,0x009DB7A0,Open-BFME5 the member the singleton forwarder at 0x00C71580 tail-jumps to
+?bfmeFourLF@@YAXXZ,0x00039900,pin
 ?bfmeFreeAEC@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeArrDLA@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrDLB@@YAXPAX@Z,0x00881EF0,pin
@@ -73434,6 +73436,7 @@ name,address,notes
 ?bfmeOneFDD@BfmeOwnFDD@@QAEXXZ,0x0003C8D0,pin
 ?bfmeOneGE@BfmeThingGE@@QAEXPAUBfmeSubGE@@PAH1@Z,0x00028650,pin
 ?bfmeOneGH@BfmeResGH@@QAEXPAX0@Z,0x0002133C,pin
+?bfmeOneLF@@YAXXZ,0x0000A416,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73675,6 +73678,7 @@ name,address,notes
 ?bfmeTellRB@BfmeNodeRB@@QAEXPAX@Z,0x000021CB,pin
 ?bfmeTellRP@BfmeFoundRP@@QAEXPAX@Z,0x00030553,pin
 ?bfmeTest@Rva2225E0Filter@@AAE_NPAVBfmeOverridable@@_N@Z,0x0001B437,Open-BFME5 ILT the filter test whose result Rva2225E0Filter::accepts at 0x003A04A0 returns
+?bfmeTestLB@BfmeOwnerLB@@QAE_NPAUBfmeThingLB@@@Z,0x0004250A,pin
 ?bfmeTheBZF@@3PAVBfmeGlobalBZF@@A,0x00EF1028,pin
 ?bfmeTheCBC@@3HA,0x00F379BC,pin
 ?bfmeTheCBD@@3HA,0x00F379BC,pin
@@ -73699,6 +73703,7 @@ name,address,notes
 ?bfmeThreeCGF@@YAXPAXPAUBfmeSubCGF@@@Z,0x0000C9B4,pin
 ?bfmeThreeCNG@BfmeBCNG@@QAEXXZ,0x00013A61,pin
 ?bfmeThreeDVB@BfmeSubDVB@@QAEXPAX0@Z,0x00025BBC,pin
+?bfmeThreeLF@@YAXXZ,0x0002795D,pin
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
 ?bfmeTryANA@BfmeThingANA@@QAEHPAX0@Z,0x0003381B,pin
 ?bfmeTwoAPA@@YGPAXPAXPAH@Z,0x009F6BEC,pin
@@ -73744,6 +73749,7 @@ name,address,notes
 ?bfmeTwoFDD@BfmeSubFDD@@QAEXPAXH@Z,0x0003926B,pin
 ?bfmeTwoGE@BfmeThingGE@@QAEXPAUBfmeSubGE@@PAH1@Z,0x0000D2BA,pin
 ?bfmeTwoGH@BfmeResGH@@QAEXPAX0@Z,0x00017A12,pin
+?bfmeTwoLF@BfmeGlobLF@@QAE_NXZ,0x0003A5B7,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -74885,6 +74891,8 @@ name,address,notes
 ?g_bfmeGlobGI@@3PAVBfmeGlobGI@@A,0x00EF076C,pin
 ?g_bfmeGlobID@@3PAVBfmeGlobID@@A,0x00EED5F0,pin
 ?g_bfmeGlobJB@@3PAVBfmeGlobJB@@A,0x00EF148C,pin
+?g_bfmeGlobLE@@3PAVBfmeGlobLE@@A,0x00EF7730,pin
+?g_bfmeGlobLF@@3PAVBfmeGlobLF@@A,0x00EF387C,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeICoord2DFormat@@3QBDB,0x01144414,address-derived ICoord2D format string from retail 0x009D97C5
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
