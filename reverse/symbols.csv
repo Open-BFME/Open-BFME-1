@@ -73851,6 +73851,7 @@ name,address,notes
 ?bfmeOneTB@@YAXXZ,0x00831F90,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOpen1071@BfmeR1071@@QAEXPAVBfmeX1071@@@Z,0x0002144A,pin
+?bfmeOpen1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x0002144A,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
 ?bfmeOwner1001@BfmeX1001@@QAEPAXXZ,0x00020824,pin
@@ -74019,6 +74020,7 @@ name,address,notes
 ?bfmeSet1042@BfmeSub1042@@QAEXPADHH@Z,0x00942BC0,pin
 ?bfmeSet1058@BfmeStr1058@@QAEXPADH@Z,0x00887D20,pin
 ?bfmeSet1058J@BfmeJ1058@@QAEXH_N@Z,0x00027237,pin
+?bfmeSet1085@BfmeSub1085@@QAEXH@Z,0x00024D70,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
 ?bfmeSetA1004@BfmeObj1004@@QAEXHH@Z,0x00032DEE,pin
@@ -74052,6 +74054,7 @@ name,address,notes
 ?bfmeShowDisconnectScreen@@YAXXZ,0x0050E9A0,the this-less spelling retail's DisconnectManager::turnOnScreen calls; the same body is pinned as ?showScreen@DisconnectMenu@@QAEXXZ and as the gen-thunk ?b_0050e9a0@@YAXXZ, but the call site passes no receiver
 ?bfmeShowEAA@BfmeUiEAA@@QAEXPAXPBDH01HHH@Z,0x00015235,pin
 ?bfmeShowEAC@BfmeUiEAC@@QAEXPAXPBDH0HHHH@Z,0x00015235,pin
+?bfmeShut1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x00012733,pin
 ?bfmeSize1035@BfmeSubE1035@@QAEHXZ,0x0089CC10,pin
 ?bfmeSlot1024@BfmeSlots1024@@QAEPAPAVBfmeV1024@@H@Z,0x000100A0,pin
 ?bfmeSlot@BfmeDrawableLookupTable@@QAEPAPAVDrawable@@ABI@Z,0x00034A95,Open-BFME5 ILT addDrawableToLookupTable at 0x00431C20 asks for the slot through
@@ -74355,6 +74358,7 @@ name,address,notes
 ?bfmeUse1052@BfmeJ1052@@QAEXPAH@Z,0x00046150,pin
 ?bfmeUse1058@BfmeK1058@@QAEXH@Z,0x00028E93,pin
 ?bfmeUse1059@BfmeA1059@@QAEXH@Z,0x00003B93,pin
+?bfmeUse1085@BfmeP1085@@QAEXPAVBfmeE1085@@H@Z,0x00044A1C,pin
 ?bfmeUse926B@BfmeKeyLC@@QAEXPAUBfmeNodeLC@@@Z,0x00002E69,pin
 ?bfmeUse975D@BfmeD975@@QAEDPAX@Z,0x0003E80B,pin
 ?bfmeUseDXI@BfmeGlobDXI@@QAEXH@Z,0x0004159C,pin
@@ -75663,6 +75667,7 @@ name,address,notes
 ?g_bfmeEndC976@@3PAVBfmeEndC976@@A,0x00EF64BC,pin
 ?g_bfmeEndKA@@3PAPAVBfmeItemKA@@A,0x00EF1470,pin
 ?g_bfmeF1071@@3DA,0x00EB7D84,pin
+?g_bfmeF1085@@3DA,0x00EB7D84,pin
 ?g_bfmeFind975D@@3PAVBfmeFind975D@@A,0x00EEF1D8,pin
 ?g_bfmeFindA980@@3PAVBfmeFindA980@@A,0x00EEF1D8,pin
 ?g_bfmeFindAMB@@3PAVBfmeFindAMB@@A,0x00EF0898,pin
@@ -75746,6 +75751,7 @@ name,address,notes
 ?g_bfmeG1061@@3PAVBfmeG1061@@A,0x00EF7730,pin
 ?g_bfmeG1070@@3PAVBfmeG1070@@A,0x00EF7730,pin
 ?g_bfmeG1078@@3PAUBfmeG1078@@A,0x00EF7730,pin
+?g_bfmeG1085@@3DA,0x00EF4AFD,pin
 ?g_bfmeGate961@@3PAVBfmeGate961@@A,0x00EF706C,pin
 ?g_bfmeGateA979@@3PAHA,0x00EF4B58,pin
 ?g_bfmeGlob956@@3PAUBfmeGlob956@@A,0x00EEF214,pin
@@ -75766,6 +75772,7 @@ name,address,notes
 ?g_bfmeH1025@@3PAVBfmeH1025@@A,0x00EF1028,pin
 ?g_bfmeH1059@@3PAVBfmeH1059@@A,0x00EF7014,pin
 ?g_bfmeH1071@@3DA,0x00EF4AFE,pin
+?g_bfmeH1085@@3DA,0x00EF4AFE,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeHeld995B@@3PAXA,0x00EF4974,pin
 ?g_bfmeHits1054@@3HA,0x00F40594,pin
@@ -75921,6 +75928,7 @@ name,address,notes
 ?g_bfmeP1062@@3PAUBfmeP1062@@A,0x00EF4B98,pin
 ?g_bfmeP1079@@3PAVBfmeP1079@@A,0x00EF7194,pin
 ?g_bfmeP1081@@3PAVBfmeP1081@@A,0x00EF076C,pin
+?g_bfmeP1085@@3PAVBfmeP1085@@A,0x00EF076C,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
@@ -75945,6 +75953,7 @@ name,address,notes
 ?g_bfmeR1077@@3PAVBfmeR1077@@A,0x00EF19E8,pin
 ?g_bfmeR1078@@3PAVBfmeR1078@@A,0x00EF19E8,pin
 ?g_bfmeR1079@@3PAVBfmeR1079@@A,0x00EF19E8,pin
+?g_bfmeR1085@@3PAVBfmeR1085@@A,0x00EF19E8,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
@@ -76074,6 +76083,7 @@ name,address,notes
 ?g_bfmeX1071@@3PAVBfmeX1071@@A,0x00EB7D80,pin
 ?g_bfmeX1073@@3PAVBfmeX1073@@A,0x00EB7D80,pin
 ?g_bfmeX1077@@3PAVBfmeX1077@@A,0x00EB7D80,pin
+?g_bfmeX1085@@3PAVBfmeX1085@@A,0x00EB7D80,pin
 ?g_bfmeXEBK@@3PAXA,0x00EC3C58,pin
 ?g_bfmeXEMC@@3PAXA,0x00EC3B2C,pin
 ?g_bfmeY1058@@3HA,0x00EBAA2C,pin
