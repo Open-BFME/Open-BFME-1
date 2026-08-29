@@ -72337,6 +72337,7 @@ name,address,notes
 ?bfmeAdd1044@BfmeE1044@@QAEXPAVBfmeD1044@@H@Z,0x000157DA,pin
 ?bfmeAdd1054@BfmeD1054@@QAEXPAVBfmeSubC1054@@@Z,0x000361CE,pin
 ?bfmeAdd1059@BfmeG1059@@QAEXPAVBfmeA1059@@H@Z,0x000398BF,pin
+?bfmeAdd1061@BfmeS1061@@QAEHPAD@Z,0x0001EDE9,pin
 ?bfmeAdd913D@BfmeThing913D@@QAEDPAX@Z,0x000110E0,pin
 ?bfmeAdd955@BfmeSink955@@QAEXPAHH@Z,0x00037A56,pin
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
@@ -73535,6 +73536,7 @@ name,address,notes
 ?bfmeInit1037@BfmeD1037@@QAEPAV1@PAVBfmeE1037@@@Z,0x0002D231,pin
 ?bfmeInit1039@BfmeC1039@@QAEXPAVBfmeD1039@@@Z,0x00969710,pin
 ?bfmeInit1051@@YAXPAUBfmeSubN1051@@H@Z,0x0000317F,pin
+?bfmeInit1061@BfmeB1061@@QAEXXZ,0x000165B8,pin
 ?bfmeInit929C@@YAXPAD@Z,0x009F7244,pin
 ?bfmeInit929G@BfmeThing929G@@QAEXXZ,0x0089E700,pin
 ?bfmeInit936G@BfmeThing936G@@QAEXXZ,0x00843990,pin
@@ -74102,6 +74104,7 @@ name,address,notes
 ?bfmeStrERA@BfmeOtherERA@@QAEXPBD@Z,0x00888BC0,pin
 ?bfmeSwapEnds@@YAXPAPAPAVBfmeOwnedI@@0@Z,0x00032FE7,Open-BFME5 the ICF thunk (to 0x00432FE7) the swap in the clear at 0x003C1190 calls for the third pair
 ?bfmeTail1052@BfmeL1052@@QAEXPAUBfmeM1052@@@Z,0x0004115A,pin
+?bfmeTail1061@BfmeT1061@@QAEXXZ,0x00010F8C,pin
 ?bfmeTail915C@BfmeElem915C@@QAEHPAX@Z,0x00049EA4,pin
 ?bfmeTail921A@BfmeTail921A@@QAEXPAX0@Z,0x00007BCB,pin
 ?bfmeTail922A@BfmeTail922A@@QAEDXZ,0x0001773D,pin
@@ -75635,6 +75638,7 @@ name,address,notes
 ?g_bfmeG1023@@3PAVBfmeG1023@@A,0x00EED668,pin
 ?g_bfmeG1024@@3PAVBfmeG1024@@A,0x00EED668,pin
 ?g_bfmeG1059@@3PAVBfmeG1059@@A,0x00EF7FE0,pin
+?g_bfmeG1061@@3PAVBfmeG1061@@A,0x00EF7730,pin
 ?g_bfmeGate961@@3PAVBfmeGate961@@A,0x00EF706C,pin
 ?g_bfmeGateA979@@3PAHA,0x00EF4B58,pin
 ?g_bfmeGlob956@@3PAUBfmeGlob956@@A,0x00EEF214,pin
@@ -75689,6 +75693,7 @@ name,address,notes
 ?g_bfmeLit1035@@3PADA,0x00D3A5CC,pin
 ?g_bfmeLit1042@@3PADA,0x00C7388C,pin
 ?g_bfmeLit1058@@3PADA,0x00C7301C,pin
+?g_bfmeLit1061@@3PADA,0x00C7388B,pin
 ?g_bfmeLitA1060@@3PADA,0x00C81238,pin
 ?g_bfmeLitB1060@@3PADA,0x00C80FC0,pin
 ?g_bfmeLitC1060@@3PADA,0x00D09BC4,pin
@@ -75811,6 +75816,7 @@ name,address,notes
 ?g_bfmeS1019@@3PAVBfmeS1019@@A,0x00F0A5B0,pin
 ?g_bfmeS1027@@3PAUBfmeS1027@@A,0x00EF0898,pin
 ?g_bfmeS1051@@3PAUBfmeS1051@@A,0x00EF0898,pin
+?g_bfmeS1061@@3PAVBfmeS1061@@A,0x00EEF70C,pin
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
@@ -75849,6 +75855,7 @@ name,address,notes
 ?g_bfmeT1019@@3PAUBfmeT1019@@A,0x00EF1024,pin
 ?g_bfmeT1057@@3PAVBfmeT1057@@A,0x00EF1464,pin
 ?g_bfmeT1058@@3PAVBfmeT1058@@A,0x00EF1464,pin
+?g_bfmeT1061@@3PAVBfmeT1061@@A,0x00EED524,pin
 ?g_bfmeTab1021@@3PAHA,0x00EB7D94,pin
 ?g_bfmeTab1053@@3HA,0x00EB9670,pin
 ?g_bfmeTag1028@@3PADA,0x00D23918,pin
