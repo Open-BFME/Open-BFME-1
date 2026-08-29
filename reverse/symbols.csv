@@ -72796,6 +72796,7 @@ name,address,notes
 ?bfmeConstruct_007690F0@@YAXPAUBfmeCopy_007690F0@@PBU1@@Z,0x0002B7AB,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x007690F0 calls per pass
 ?bfmeConv1058@@YAHHH@Z,0x0003B971,pin
 ?bfmeConv1060@BfmeQ1060@@QAEHH@Z,0x0003ADD7,pin
+?bfmeConv1065@@YAPAVBfmeX1065@@PAVBfmeH1065@@@Z,0x00010901,pin
 ?bfmeConv982B@BfmeY982@@QAEPAV1@XZ,0x0000DE9F,pin
 ?bfmeConv998@BfmeC998@@QAEHH@Z,0x00927230,pin
 ?bfmeCopy1029@@YAXPADH0@Z,0x007E8640,pin
@@ -73915,6 +73916,7 @@ name,address,notes
 ?bfmeRun1062@BfmeR1062@@QAEXPAVBfmeX1062@@PADH1HHHH@Z,0x00015235,pin
 ?bfmeRun1063@BfmeR1063@@QAEXPAVBfmeX1063@@PADH11111@Z,0x00015235,pin
 ?bfmeRun1064@BfmeR1064@@QAEXPAVBfmeX1064@@PADH11111@Z,0x00015235,pin
+?bfmeRun1065@BfmeR1065@@QAEXPAVBfmeX1065@@PADH11111@Z,0x00015235,pin
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
 ?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
 ?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
@@ -75648,7 +75650,11 @@ name,address,notes
 ?g_bfmeFmtC1063@@3PADA,0x00D056EC,pin
 ?g_bfmeFmtC1064@@3PADA,0x00D05224,pin
 ?g_bfmeFmtD1064@@3PADA,0x00C7C7B4,pin
+?g_bfmeFmtD1065@@3PADA,0x00C7C7B4,pin
 ?g_bfmeFmtE1064@@3PADA,0x00D05E7C,pin
+?g_bfmeFmtF1065@@3PADA,0x00D09950,pin
+?g_bfmeFmtG1065@@3PADA,0x00C80F24,pin
+?g_bfmeFmtH1065@@3PADA,0x00D09C58,pin
 ?g_bfmeFree1040@@3P6AXPAXH@ZA,0x00F37830,pin
 ?g_bfmeFree1046@@3P6AXPAXH@ZA,0x00F37830,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
@@ -75825,6 +75831,7 @@ name,address,notes
 ?g_bfmeR1062@@3PAVBfmeR1062@@A,0x00EF19E8,pin
 ?g_bfmeR1063@@3PAVBfmeR1063@@A,0x00EF19E8,pin
 ?g_bfmeR1064@@3PAVBfmeR1064@@A,0x00EF19E8,pin
+?g_bfmeR1065@@3PAVBfmeR1065@@A,0x00EF19E8,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
@@ -75888,6 +75895,7 @@ name,address,notes
 ?g_bfmeTag1028@@3PADA,0x00D23918,pin
 ?g_bfmeTarget986B@@3PADA,0x00F071E4,pin
 ?g_bfmeTbl1064@@3PAPADA,0x00D05E9C,pin
+?g_bfmeTbl1065@@3PAPADA,0x00D0C3B0,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
 ?g_bfmeTickC976@@3PAVBfmeTickC976@@A,0x00EF706C,pin
@@ -75931,6 +75939,7 @@ name,address,notes
 ?g_bfmeX1058@@3HA,0x00EF8064,pin
 ?g_bfmeX1060@@3PAVBfmeX1060@@A,0x00EB7D80,pin
 ?g_bfmeX1062@@3PAVBfmeX1062@@A,0x00EB7D80,pin
+?g_bfmeX1065@@3PAVBfmeX1065@@A,0x00EB7D80,pin
 ?g_bfmeXEBK@@3PAXA,0x00EC3C58,pin
 ?g_bfmeXEMC@@3PAXA,0x00EC3B2C,pin
 ?g_bfmeY1058@@3HA,0x00EBAA2C,pin
@@ -79735,6 +79744,7 @@ __imp_?bfmeClose1038@@YGHPAX@Z,0x00F58ECC,pin
 __imp_?bfmeCmp1026@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeCmp1027@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeFmt1064@@YAHPADI0H@Z,0x00F5932C,pin
+__imp_?bfmeFmtD1065@@YAHPADI0N@Z,0x00F5932C,pin
 __imp_?bfmeFree1035@@YAXPAX@Z,0x00F593D4,pin
 __imp_?bfmeFree912B@@YGXPAX@Z,0x00F58CCC,pin
 __imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
@@ -79747,6 +79757,7 @@ __imp_?bfmeMap1044@@YGPAXPAXH@Z,0x00F590FC,pin
 __imp_?bfmeOpen1043@@YGPAXPAD@Z,0x00F58E78,pin
 __imp_?bfmePrint1025@@YAXHPADH@Z,0x00F5948C,pin
 __imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
+__imp_?bfmeSpf1065@@YAHPAD0H@Z,0x00F5948C,pin
 __imp_?bfmeTickKE@@YGPAXH@Z,0x00F59008,pin
 __imp_?bfmeUnlock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58E74,pin
 __imp_?bfmeWait1012@@YGHPAXH@Z,0x00F58F64,pin
