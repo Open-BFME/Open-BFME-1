@@ -72764,6 +72764,8 @@ name,address,notes
 ?bfmeClearPP@BfmeThingPP@@QAEXXZ,0x0082AE40,pin
 ?bfmeClose1086@BfmeD1086@@QAEXXZ,0x008F7B30,pin
 ?bfmeClose@Gen009D1A40@@QAEXXZ,0x009CB880,address-derived close target from the tail REL32 jump at retail 0x009D1A5D
+?bfmeClr1097@BfmeR1097@@QAEXXZ,0x00044F5D,pin
+?bfmeCmp1097@BfmeSub1097@@QAEHPAV1@@Z,0x000220C5,pin
 ?bfmeCmpEBMa@@YADPAX0@Z,0x00013C78,pin
 ?bfmeCmpEBMb@@YADPAX0@Z,0x000397AC,pin
 ?bfmeCmpENF@BfmeSubENF@@QAEHPBD@Z,0x000405E8,pin
@@ -73153,6 +73155,7 @@ name,address,notes
 ?bfmeFirst1019@@YAXXZ,0x00005D9E,pin
 ?bfmeFirst1095@BfmeP1095@@QAEHHH@Z,0x0004B290,pin
 ?bfmeFirst1096@BfmeP1096@@QAEHHH@Z,0x0004B290,pin
+?bfmeFirst1097@BfmeP1097@@QAEHHH@Z,0x0004B290,pin
 ?bfmeFirstAKB@BfmeThingAKB@@QAE_NPAH@Z,0x00006EF1,pin
 ?bfmeFirstEUA@BfmeGlobAEUA@@QAEHHH@Z,0x0004B290,pin
 ?bfmeFirstRK@BfmeThingRK@@QAEXXZ,0x00020B80,pin
@@ -73427,6 +73430,7 @@ name,address,notes
 ?bfmeGet1060@BfmeO1060@@QAEHH@Z,0x00850970,pin
 ?bfmeGet1092@BfmeD1092@@QAEPAVBfmeR1092@@H@Z,0x0001DDE5,pin
 ?bfmeGet1095@BfmeQ1095A@@QAEPAUBfmeZ1095B@@H@Z,0x0002F95A,pin
+?bfmeGet1097@BfmeD1097@@QAEPAVBfmeR1097@@H@Z,0x0001DDE5,pin
 ?bfmeGet920D@BfmeX920D@@QAEPAVBfmeRes920D@@XZ,0x0002BE77,pin
 ?bfmeGet948C@BfmeGrid948C@@QAE_NH@Z,0x00017049,pin
 ?bfmeGet948D@BfmeGrid948D@@QAE_NH@Z,0x00017049,pin
@@ -73822,6 +73826,7 @@ name,address,notes
 ?bfmeObjectEnteringInfluence@Player@@QAEXPAVObject@@@Z,0x00029875,Open-BFME5 Player ILT that adds an Object's power influence; called by recursive transfer wrapper 0x001C3710
 ?bfmeObjectLeavingInfluence@Player@@QAEXPAVObject@@@Z,0x0000EACA,Open-BFME5 Player ILT that removes an Object's power influence; called by recursive transfer wrapper 0x001C3710
 ?bfmeOff1096@BfmeR1096@@QAEXPAVBfmeS1096@@@Z,0x0003D90B,pin
+?bfmeOff1097@BfmeR1097@@QAEXPAVBfmeU1097@@@Z,0x0003D90B,pin
 ?bfmeOn1096@BfmeR1096@@QAEXPAVBfmeS1096@@@Z,0x0003529C,pin
 ?bfmeOnceBXF@BfmeThingBXF@@QAEXXZ,0x0000E3AE,pin
 ?bfmeOne920F@BfmeThing920F@@QAEXP6AXPAVLocomotorTemplate@@@Z@Z,0x000497DD,pin
@@ -75722,6 +75727,7 @@ name,address,notes
 ?g_bfmeD1094@@3PAVBfmeD1094@@A,0x00EED748,pin
 ?g_bfmeD1095@@3PAVBfmeD1095A@@A,0x00EED748,pin
 ?g_bfmeD1096@@3PAVBfmeD1096@@A,0x00EED748,pin
+?g_bfmeD1097@@3PAVBfmeD1097@@A,0x00EED748,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
@@ -76019,6 +76025,7 @@ name,address,notes
 ?g_bfmeP1094@@3PAVBfmeP1094@@A,0x00EF076C,pin
 ?g_bfmeP1095@@3PAVBfmeP1095@@A,0x00EF076C,pin
 ?g_bfmeP1096@@3PAVBfmeP1096@@A,0x00EF076C,pin
+?g_bfmeP1097@@3PAVBfmeP1097@@A,0x00EF076C,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
@@ -76075,6 +76082,7 @@ name,address,notes
 ?g_bfmeS1083_0@@3PAVBfmeS1083@@A,0x00F38398,pin
 ?g_bfmeS1083_1@@3PAVBfmeS1083@@A,0x00F383A0,pin
 ?g_bfmeS1083_2@@3PAVBfmeS1083@@A,0x00F3839C,pin
+?g_bfmeS1097@@3PAUBfmeS1097@@A,0x00EEF1D8,pin
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
