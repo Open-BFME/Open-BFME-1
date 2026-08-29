@@ -1183,6 +1183,31 @@ void Player::initFromDict(const Dict* d)
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Player_becomingTeamMember_Thunk.cpp
 // ?becomingTeamMember@Player@@QAEXPAVObject@@_N@Z present-unmatched
+//
+// Blocked the same way addUpgrade is: a SECOND row depends on an expression this
+// body would stop emitting. The call to areModulesReady below is the only one in
+// this TU, and the COMDAT copy MSVC emits for that inline is itself a matched
+// row -- ?areModulesReady@Object@@QBE_NXZ, 0x002ed260, 7 bytes, claimed from
+// this file. The merged body cannot keep the call: the two read DIFFERENT
+// fields. The reference inline compiles to a read of +0x295 and byte-matches
+// retail's standalone body there, while retail inlines a read of +0x341 here.
+// Both facts are right; they are simply not the same member, so the donor's name
+// for +0x341 is doing double duty.
+//
+// The rest is authored and settled, for whoever unblocks it: object template at
+// +0x04, status byte at +0x90 (bit 2 = under construction), AI module at +0x204,
+// the neutral player at PlayerList+0x14, the battle-plan counters at Player
+// +0x64/+0x68/+0x6c immediately ahead of the bonuses at +0x70, InGameUI's
+// addIdleWorker at vtable +0x17c and removeIdleWorker at +0x180, and
+// AIUpdateInterface::isIdle at +0x180.
+//
+// Behaviour the reference copy gets wrong, worth keeping even unmerged: BFME
+// asks TheNameKeyGenerator for "AutoDepositUpdate" on every call where the
+// reference caches it in a function-local static, and it tests bit 14 of the
+// kind-of mask at ThingTemplate+0xc8 directly instead of calling isKindOf with
+// KINDOF_DOZER. That +0xc8 is the same mask Object.cpp's getShroudedStatus reads
+// at +0xcc -- +0xcc is its SECOND dword, so the flag that body calls bit 20 is
+// bit 52 of the whole 192-bit mask.
 void Player::becomingTeamMember(Object *obj, Bool yes) 
 { 
 	if (!obj)
