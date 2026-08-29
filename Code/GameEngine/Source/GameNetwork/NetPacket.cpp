@@ -988,6 +988,25 @@ struct BfmeNetCommandRef
 	UnsignedByte m_relay;
 };
 
+// BFME's frame command carries three payload words after the header, at +0x1c,
+// +0x20 and +0x24 of the message.
+struct BfmeNetFrameCommandMsg
+{
+	UnsignedByte getNetCommandType() const { return (UnsignedByte)m_commandType; }
+	UnsignedByte getPlayerID() const { return (UnsignedByte)m_playerID; }
+	UnsignedShort getID() const { return m_id; }
+
+	UnsignedByte m_unreconstructed_00[0x0c];
+	UnsignedInt m_playerID;					///< retail this+0x0c
+	UnsignedShort m_id;					///< retail this+0x10
+	UnsignedShort m_unreconstructed_12;
+	Int m_commandType;					///< retail this+0x14
+	Int m_referenceCount;					///< retail this+0x18
+	UnsignedInt m_frame;					///< retail this+0x1c
+	UnsignedInt m_unreconstructed_20;			///< retail this+0x20
+	UnsignedInt m_commandCount;				///< retail this+0x24
+};
+
 // BFME packs the destination port next to the address instead of leaving it
 // after m_lastFrame, so every member from m_numCommands on sits later than the
 // reference class puts it: four bytes for the two words, two for the trailing
@@ -1012,12 +1031,21 @@ struct BfmeStringData
 	UnsignedShort m_refCount;
 	UnsignedShort m_numCharsAllocated;
 	UnsignedShort m_len;				///< retail m_data+0x04
+	UnsignedShort m_unreconstructed_06;
 };
 
 static Int bfmeStringLength(const UnicodeString &str)
 {
 	BfmeStringData *data = *(BfmeStringData * const *)&str;
 	return data ? data->m_len : 0;
+}
+
+// BFME's string block header is eight bytes, so the characters start at
+// m_data+8; the reference header is four and its str() lands mid-header.
+static const WideChar *bfmeStringChars(const UnicodeString &str)
+{
+	BfmeStringData *data = *(BfmeStringData * const *)&str;
+	return data ? (const WideChar *)(data + 1) : L"";
 }
 
 // ?FillBufferWithAckCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
@@ -1065,59 +1093,39 @@ void NetPacket::FillBufferWithAckCommand(UnsignedByte *buffer, NetCommandRef *ms
 	//		DEBUG_LOG(("outgoing - added ACK, original player %d, command id %d\n", origPlayerID, cmdID));
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillFrame.cpp
-// ?FillBufferWithFrameCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
+// BFME's frame command has no 'F' execution-frame tag: the tags are T, R, P, C,
+// D and then the three payload words straight from +0x1c, +0x20 and +0x24.
+// ?FillBufferWithFrameCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
 void NetPacket::FillBufferWithFrameCommand(UnsignedByte *buffer, NetCommandRef *msg) {
-	NetFrameCommandMsg *cmdMsg = (NetFrameCommandMsg *)(msg->getCommand());
+	BfmeNetFrameCommandMsg *cmdMsg =
+		(BfmeNetFrameCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
 	UnsignedShort offset = 0;
-	//		DEBUG_LOG(("NetPacket::addFrameCommand - adding frame command for frame %d, command count = %d, command id = %d\n", cmdMsg->getExecutionFrame(), cmdMsg->getCommandCount(), cmdMsg->getID()));
 
-// If necessary, put the NetCommandType into the packet.
 	buffer[offset] = 'T';
 	++offset;
 	buffer[offset] = cmdMsg->getNetCommandType();
 	offset += sizeof(UnsignedByte);
-
-// If necessary, put the execution frame into the packet.
-	buffer[offset] = 'F';
-	++offset;
-	UnsignedInt newframe = cmdMsg->getExecutionFrame();
-	memcpy(buffer+offset, &newframe, sizeof(UnsignedInt));
-	offset += sizeof(UnsignedInt);
-
-// If necessary, put the relay into the packet.
 	buffer[offset] = 'R';
 	++offset;
-	UnsignedByte newRelay = msg->getRelay();
-	memcpy(buffer+offset, &newRelay, sizeof(UnsignedByte));
+	buffer[offset] = ((BfmeNetCommandRef *)msg)->m_relay;
 	offset += sizeof(UnsignedByte);
-
-//		DEBUG_LOG(("relay = %d, ", m_lastRelay));
-
 	buffer[offset] = 'P';
 	++offset;
 	buffer[offset] = cmdMsg->getPlayerID();
 	offset += sizeof(UnsignedByte);
-
-//		DEBUG_LOG(("player = %d", m_lastPlayerID));
-
-// If necessary, specify the command ID of this command.
 	buffer[offset] = 'C';
 	++offset;
 	UnsignedShort newID = cmdMsg->getID();
-	memcpy(buffer + offset, &newID, sizeof(UnsignedShort));
+	memcpy(buffer+offset, &newID, sizeof(UnsignedShort));
 	offset += sizeof(UnsignedShort);
-
-//		DEBUG_LOG(("command id = %d\n", m_lastCommandID));
-
 	buffer[offset] = 'D';
 	++offset;
-	UnsignedShort cmdCount = cmdMsg->getCommandCount();
-	memcpy(buffer + offset, &cmdCount, sizeof(UnsignedShort));
-	offset += sizeof(UnsignedShort);
-
-	// frameinfodebug
-//		DEBUG_LOG(("outgoing - added frame %d, player %d, command count = %d, command id = %d\n", cmdMsg->getExecutionFrame(), cmdMsg->getPlayerID(), cmdMsg->getCommandCount(), cmdMsg->getID()));
+	memcpy(buffer+offset, &cmdMsg->m_frame, sizeof(UnsignedInt));
+	offset += sizeof(UnsignedInt);
+	memcpy(buffer+offset, &cmdMsg->m_unreconstructed_20, sizeof(UnsignedInt));
+	offset += sizeof(UnsignedInt);
+	memcpy(buffer+offset, &cmdMsg->m_commandCount, sizeof(UnsignedInt));
+	offset += sizeof(UnsignedInt);
 }
 
 // ?FillBufferWithPlayerLeaveCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
@@ -1495,10 +1503,9 @@ void NetPacket::FillBufferWithPacketRouterAckCommand(UnsignedByte *buffer, NetCo
 	++offset;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillDisconnectChat.cpp
-// ?FillBufferWithDisconnectChatCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
+// ?FillBufferWithDisconnectChatCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
 void NetPacket::FillBufferWithDisconnectChatCommand(UnsignedByte *buffer, NetCommandRef *msg) {
-	NetDisconnectChatCommandMsg *cmdMsg = (NetDisconnectChatCommandMsg *)(msg->getCommand());
+	NetDisconnectChatCommandMsg *cmdMsg = (NetDisconnectChatCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
 	UnsignedShort offset = 0;
 //		DEBUG_LOG(("NetPacket::addDisconnectChatCommand - adding run ahead command\n"));
 
@@ -1511,7 +1518,7 @@ void NetPacket::FillBufferWithDisconnectChatCommand(UnsignedByte *buffer, NetCom
 // If necessary, put the relay into the packet.
 	buffer[offset] = 'R';
 	++offset;
-	UnsignedByte newRelay = msg->getRelay();
+	UnsignedByte newRelay = ((BfmeNetCommandRef *)msg)->m_relay;
 	memcpy(buffer+offset, &newRelay, sizeof(UnsignedByte));
 	offset += sizeof(UnsignedByte);
 
@@ -1527,11 +1534,11 @@ void NetPacket::FillBufferWithDisconnectChatCommand(UnsignedByte *buffer, NetCom
 	buffer[offset] = 'D';
 	++offset;
 	UnicodeString unitext = cmdMsg->getText();
-	UnsignedByte length = unitext.getLength();
+	UnsignedByte length = bfmeStringLength(unitext);
 	memcpy(buffer + offset, &length, sizeof(UnsignedByte));
 	offset += sizeof(UnsignedByte);
 
-	memcpy(buffer + offset, unitext.str(), length * sizeof(UnsignedShort));
+	memcpy(buffer + offset, bfmeStringChars(unitext), length * sizeof(UnsignedShort));
 	offset += length * sizeof(UnsignedShort);
 }
 
@@ -1583,10 +1590,9 @@ void NetPacket::FillBufferWithDisconnectVoteCommand(UnsignedByte *buffer, NetCom
 	offset += sizeof(voteFrame);
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fillChatCommand.cpp
-// ?FillBufferWithChatCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
+// ?FillBufferWithChatCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
 void NetPacket::FillBufferWithChatCommand(UnsignedByte *buffer, NetCommandRef *msg) {
-	NetChatCommandMsg *cmdMsg = (NetChatCommandMsg *)(msg->getCommand());
+	NetChatCommandMsg *cmdMsg = (NetChatCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
 	UnsignedShort offset = 0;
 //		DEBUG_LOG(("NetPacket::addDisconnectChatCommand - adding run ahead command\n"));
 
@@ -1606,7 +1612,7 @@ void NetPacket::FillBufferWithChatCommand(UnsignedByte *buffer, NetCommandRef *m
 // If necessary, put the relay into the packet.
 	buffer[offset] = 'R';
 	++offset;
-	UnsignedByte newRelay = msg->getRelay();
+	UnsignedByte newRelay = ((BfmeNetCommandRef *)msg)->m_relay;
 	memcpy(buffer+offset, &newRelay, sizeof(UnsignedByte));
 	offset += sizeof(UnsignedByte);
 
@@ -1631,12 +1637,12 @@ void NetPacket::FillBufferWithChatCommand(UnsignedByte *buffer, NetCommandRef *m
 	buffer[offset] = 'D';
 	++offset;
 	UnicodeString unitext = cmdMsg->getText();
-	UnsignedByte length = unitext.getLength();
+	UnsignedByte length = bfmeStringLength(unitext);
 	Int playerMask = cmdMsg->getPlayerMask();
 	memcpy(buffer + offset, &length, sizeof(UnsignedByte));
 	offset += sizeof(UnsignedByte);
 
-	memcpy(buffer + offset, unitext.str(), length * sizeof(UnsignedShort));
+	memcpy(buffer + offset, bfmeStringChars(unitext), length * sizeof(UnsignedShort));
 	offset += length * sizeof(UnsignedShort);
 
 	memcpy(buffer + offset, &playerMask, sizeof(Int));
