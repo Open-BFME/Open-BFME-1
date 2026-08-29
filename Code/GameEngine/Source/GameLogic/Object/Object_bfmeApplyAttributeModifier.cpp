@@ -2,6 +2,7 @@
 
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 struct AsciiStringData
 {
 	unsigned int m_refCount;
@@ -9,6 +10,7 @@ struct AsciiStringData
 	unsigned short m_capacity;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -53,6 +55,7 @@ public:
 	virtual void applyAttributeModifier(const AsciiString &name, Bool unknown, int duration);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class ContainModuleInterface
 {
 public:
@@ -72,6 +75,7 @@ public:
 	Bool bfmeApplyAttributeModifier(const AsciiString &name, int duration);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
