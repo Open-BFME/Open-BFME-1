@@ -4779,12 +4779,22 @@ AsciiStringVec& GameTextManager::getStringsWithLabelPrefix(AsciiString label)
 // GameTextManager::readLine
 //============================================================================
 
-// ?readLine@GameTextManager@@IAE_NPADHPAVFile@@@Z present-unmatched
+// BFME's File vtable places read at +0x0C.  The shared header models a later
+// layout, so keep the retail slot correction local to this translation unit.
+class BFMEGameTextFileReadLayout
+{
+public:
+	virtual void slot0( void ) = 0;
+	virtual void slot1( void ) = 0;
+	virtual void slot2( void ) = 0;
+	virtual Int read( void *buffer, Int bytes ) = 0;
+};
+
 Bool	GameTextManager::readLine( char *buffer, Int max, File *file )
 {
 	Int ok = FALSE;
 
-	while ( max && file->read( buffer, 1 ) == 1 )
+	while ( max && ((BFMEGameTextFileReadLayout *)file)->read( buffer, 1 ) == 1 )
 	{
 		ok = TRUE;
 
@@ -4805,17 +4815,6 @@ Bool	GameTextManager::readLine( char *buffer, Int max, File *file )
 //============================================================================
 // GameTextManager::readChar
 //============================================================================
-
-// BFME's File vtable places read at +0x0C.  The shared header models a later
-// layout, so keep the retail slot correction local to this translation unit.
-class BFMEGameTextFileReadLayout
-{
-public:
-	virtual void slot0( void ) = 0;
-	virtual void slot1( void ) = 0;
-	virtual void slot2( void ) = 0;
-	virtual Int read( void *buffer, Int bytes ) = 0;
-};
 
 Char	GameTextManager::readChar( File *file )
 {
