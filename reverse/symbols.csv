@@ -79968,3 +79968,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?_M_clear@?$vector@VOpen2Elem063700@@V?$allocator@VOpen2Elem063700@@@_STL@@@_STL@@IAEXXZ,0x0003588C,Open2 0x00063700 vector clear (ILT)
 ??$_Construct@VOpen2Elem247180@@V1@@_STL@@YAXPAVOpen2Elem247180@@ABV1@@Z,0x00028308,Open2 0x00247180 vector element construct (ILT)
 ?_M_clear@?$vector@VOpen2Elem247180@@V?$allocator@VOpen2Elem247180@@@_STL@@@_STL@@IAEXXZ,0x00022534,Open2 0x00247180 vector clear (ILT)
+??4Open2Stats6589E0@@QAEAAV0@ABV0@@Z,0x0001C783,Open2 0x006589E0 stats assignment (ILT)
