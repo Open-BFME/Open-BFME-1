@@ -73425,6 +73425,8 @@ name,address,notes
 ?bfmeOneEEC@BfmeThingEEC@@QAEXPBDH@Z,0x00850920,pin
 ?bfmeOneEFF@@YAPAXPAXH@Z,0x00990250,pin
 ?bfmeOneFDD@BfmeOwnFDD@@QAEXXZ,0x0003C8D0,pin
+?bfmeOneGE@BfmeThingGE@@QAEXPAUBfmeSubGE@@PAH1@Z,0x00028650,pin
+?bfmeOneGH@BfmeResGH@@QAEXPAX0@Z,0x0002133C,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
@@ -73730,6 +73732,8 @@ name,address,notes
 ?bfmeTwoEFF@@YAXHPAX@Z,0x0001327D,pin
 ?bfmeTwoEFFb@@YAXHPAX@Z,0x0001327D,pin
 ?bfmeTwoFDD@BfmeSubFDD@@QAEXPAXH@Z,0x0003926B,pin
+?bfmeTwoGE@BfmeThingGE@@QAEXPAUBfmeSubGE@@PAH1@Z,0x0000D2BA,pin
+?bfmeTwoGH@BfmeResGH@@QAEXPAX0@Z,0x00017A12,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -73762,6 +73766,7 @@ name,address,notes
 ?bfmeUseFEG@BfmeResFEG@@QAEXPAX@Z,0x00028641,pin
 ?bfmeUseFGE@BfmeResFGE@@QAEXPAX0@Z,0x0002E834,pin
 ?bfmeUseFHH@BfmeResFHH@@QAEXPAX0@Z,0x00017A12,pin
+?bfmeUseGI@BfmeSubGI@@QAEXPAX@Z,0x0002D2EF,pin
 ?bfmeUseRT@BfmeSlotRT@@QAEXXZ,0x0003A427,pin
 ?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
@@ -74864,6 +74869,7 @@ name,address,notes
 ?g_bfmeFlagsAPB@@3IA,0x00EA6FA0,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeFreeDXG@@3P6AXPAX@ZA,0x00F3782C,pin
+?g_bfmeGlobGI@@3PAVBfmeGlobGI@@A,0x00EF076C,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeICoord2DFormat@@3QBDB,0x01144414,address-derived ICoord2D format string from retail 0x009D97C5
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
