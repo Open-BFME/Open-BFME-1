@@ -675,14 +675,22 @@ void DisconnectManager::sendKeepAlive(ConnectionManager *conMgr) {
 	}
 }
 
-// Attempted and reverted. The BFME body differs from the one below in three
-// ways, all readable in the retail bytes: it returns early when there is no
-// disconnect menu, it inlines the slot translation as a three-way branch and
-// still runs the caller's now-dead "slot != -1" test, and its vote count takes
-// the connection manager. Written that way the body is byte-identical to retail
-// except for one transposition -- retail stores the unwind slot before loading
-// the copy-constructor receiver, MSVC schedules the two the other way round --
-// which is the same not-source-controllable class as register allocation.
+// Attempted and reverted, but NOT blocked -- the earlier note here called the
+// remaining difference not source-controllable and that was wrong. The BFME body
+// differs from the one below in three ways, all readable in the retail bytes: it
+// returns early when there is no disconnect menu, it inlines the slot
+// translation as a three-way branch and still runs the caller's now-dead
+// "slot != -1" test, and its vote count takes the connection manager. Written
+// that way it is byte-identical to retail except that retail stores the unwind
+// slot before loading the copy-constructor receiver and MSVC schedules the two
+// the other way round. That is the by-value string shape, not scheduling luck:
+// the vendored UnicodeString copy constructor is declared out of line, and
+// retail's compiler saw a VISIBLE copy delegating to an undefined base. Routing
+// the argument through a view of that shape fixes it, as ScriptActions.cpp now
+// does for AsciiString. The cost here is higher because these call sites are
+// non-virtual: getPlayerName, setPlayerName, removePlayer and
+// logPlayerDisconnect would each need an additive alias, plus two for the
+// delegating base. Seven aliases for two bodies, not a header change.
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManager_populateDisconnectScreen_Thunk.cpp
 // ?populateDisconnectScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::populateDisconnectScreen(ConnectionManager *conMgr) {
@@ -807,10 +815,9 @@ void DisconnectManager::turnOnScreen(ConnectionManager *conMgr) {
 // (`c6 40 40 01` against `c6 40 3c 01`, fixable with a view), and the two
 // by-value UnicodeString arguments each schedule the unwind-slot store after
 // the copy-constructor receiver load where retail stores first. That second one
-// is the vendored header: UnicodeString's copy constructor is declared out of
-// line, which makes the temporary opaque, and retail's compiler saw an inline
-// copy delegating to an undefined base. Same block as populateDisconnectScreen
-// below; both need the string shim, not a view.
+// is the by-value string shape described above populateDisconnectScreen below,
+// and a view DOES reach it -- an earlier note here said it needed a header
+// change, which was wrong.
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/DisconnectManager_disconnectPlayer_Thunk.cpp
 // ?disconnectPlayer@DisconnectManager@@IAEXHPAVConnectionManager@@@Z present-unmatched
 void DisconnectManager::disconnectPlayer(Int slot, ConnectionManager *conMgr) {
