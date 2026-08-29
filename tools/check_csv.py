@@ -24,6 +24,16 @@ FUNCTIONS = ROOT / "reverse" / "functions.csv"
 SYMBOLS = ROOT / "reverse" / "symbols.csv"
 DELETED = ROOT / "reverse" / "deleted_rows.csv"
 
+# Union merge duplicates contiguous BLOCKS of records, not single lines, and the
+# ledgers mix \r\r\n, \r\n and bare-LF terminators that add_match indexes by
+# physical line. dedup_csv.py renormalises both files (~157k lines) and conflicts
+# with every branch in flight, so it is the wrong repair for a post-merge
+# duplicate -- it is for whole-file terminator damage, which is why the two
+# checks below still name it.
+DUP_FIX = ("Fix: drop the duplicate record(s) with tools/ledger_io.py keeping the "
+           "first -- expect a contiguous block, not one line. Not dedup_csv: see "
+           "docs/lessons.md 'Union-merge duplicate row'.")
+
 # realcrc.cpp is linked twice in the retail exe, so these two symbols
 # legitimately appear at two addresses each. Any other duplicate name is a bug.
 ALLOWED_DUP_NAMES = {
@@ -113,7 +123,7 @@ def check_functions(raw, problems, sources_ok):
     header_count = sum(1 for r in rows if ",".join(r) == FUNCTIONS_HEADER)
     if header_count > 1:
         problems.append(f"functions.csv: header appears {header_count} times "
-                        "(bad merge). Fix: python3 tools/dedup_csv.py")
+                        "(bad merge). " + DUP_FIX)
 
     seen_exact = set()
     by_rva = {}
@@ -170,7 +180,7 @@ def check_functions(raw, problems, sources_ok):
         key = (name, target_rva)
         if key in seen_exact:
             problems.append(f"functions.csv line {i}: exact duplicate row for {name} @ {target_rva}. "
-                            "Fix: python3 tools/dedup_csv.py")
+                            + DUP_FIX)
         seen_exact.add(key)
 
         rva = int(target_rva, 16)
@@ -270,7 +280,7 @@ def check_symbols(raw, problems):
                             f"more than 8 hex digits; write it as 0x{addr:08X}")
         if (name, addr) in seen_exact:
             problems.append(f"symbols.csv line {i}: exact duplicate row for {name}. "
-                            "Fix: python3 tools/dedup_csv.py")
+                            + DUP_FIX)
         seen_exact.add((name, addr))
     return len(rows) - 1
 
