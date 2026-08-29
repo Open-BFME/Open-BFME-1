@@ -1279,8 +1279,7 @@ void LANAPI::addPlayer( LANPlayer *player )
 	}
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_SetLocalIP.cpp
-// ?SetLocalIP@LANAPI@@ present-unmatched
+// ?SetLocalIP@LANAPI@@UAE_NI@Z present-unmatched
 Bool LANAPI::SetLocalIP( UnsignedInt localIP )
 {
 	Bool retval = TRUE;
@@ -1293,12 +1292,67 @@ Bool LANAPI::SetLocalIP( UnsignedInt localIP )
 	return retval;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_SetLocalIP.cpp
-// ?SetLocalIP@LANAPI@@ present-unmatched
+// The two SetLocalIP overloads are six BFME-only virtuals further down the
+// vtable than this tree's header puts them: retail dispatches the UnsignedInt
+// one at +0xB4 where the shim lands it at +0x9C. MSVC lays overloads of one
+// virtual name out in reverse, so declaring the pair in Zero Hour's order makes
+// the UnsignedInt body slot 45 and this one slot 44.
+class BfmeLANLocalIPView
+{
+public:
+	virtual void _bfme_ip_v0( void ) = 0;
+	virtual void _bfme_ip_v1( void ) = 0;
+	virtual void _bfme_ip_v2( void ) = 0;
+	virtual void _bfme_ip_v3( void ) = 0;
+	virtual void _bfme_ip_v4( void ) = 0;
+	virtual void _bfme_ip_v5( void ) = 0;
+	virtual void _bfme_ip_v6( void ) = 0;
+	virtual void _bfme_ip_v7( void ) = 0;
+	virtual void _bfme_ip_v8( void ) = 0;
+	virtual void _bfme_ip_v9( void ) = 0;
+	virtual void _bfme_ip_v10( void ) = 0;
+	virtual void _bfme_ip_v11( void ) = 0;
+	virtual void _bfme_ip_v12( void ) = 0;
+	virtual void _bfme_ip_v13( void ) = 0;
+	virtual void _bfme_ip_v14( void ) = 0;
+	virtual void _bfme_ip_v15( void ) = 0;
+	virtual void _bfme_ip_v16( void ) = 0;
+	virtual void _bfme_ip_v17( void ) = 0;
+	virtual void _bfme_ip_v18( void ) = 0;
+	virtual void _bfme_ip_v19( void ) = 0;
+	virtual void _bfme_ip_v20( void ) = 0;
+	virtual void _bfme_ip_v21( void ) = 0;
+	virtual void _bfme_ip_v22( void ) = 0;
+	virtual void _bfme_ip_v23( void ) = 0;
+	virtual void _bfme_ip_v24( void ) = 0;
+	virtual void _bfme_ip_v25( void ) = 0;
+	virtual void _bfme_ip_v26( void ) = 0;
+	virtual void _bfme_ip_v27( void ) = 0;
+	virtual void _bfme_ip_v28( void ) = 0;
+	virtual void _bfme_ip_v29( void ) = 0;
+	virtual void _bfme_ip_v30( void ) = 0;
+	virtual void _bfme_ip_v31( void ) = 0;
+	virtual void _bfme_ip_v32( void ) = 0;
+	virtual void _bfme_ip_v33( void ) = 0;
+	virtual void _bfme_ip_v34( void ) = 0;
+	virtual void _bfme_ip_v35( void ) = 0;
+	virtual void _bfme_ip_v36( void ) = 0;
+	virtual void _bfme_ip_v37( void ) = 0;
+	virtual void _bfme_ip_v38( void ) = 0;
+	virtual void _bfme_ip_v39( void ) = 0;
+	virtual void _bfme_ip_v40( void ) = 0;
+	virtual void _bfme_ip_v41( void ) = 0;
+	virtual void _bfme_ip_v42( void ) = 0;
+	virtual void _bfme_ip_v43( void ) = 0;
+	virtual Bool SetLocalIP( UnsignedInt localIP ) = 0;					///< retail vtable +0xB4
+	virtual void SetLocalIP( AsciiString localIP ) = 0;					///< retail vtable +0xB8
+};
+
 void LANAPI::SetLocalIP( AsciiString localIP )
 {
-	UnsignedInt resolvedIP = ResolveIP(localIP);
-	SetLocalIP(resolvedIP);
+	// nested rather than through a named local: retail builds the resolved
+	// address straight into the argument slot.
+	((BfmeLANLocalIPView *)this)->SetLocalIP( ResolveIP( localIP ) );
 }
 
 // ?AmIHost@LANAPI@@UAE_NXZ present-unmatched
