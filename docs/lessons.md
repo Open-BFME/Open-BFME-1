@@ -2664,6 +2664,9 @@ lanapi, InGameUI, Player and DataChunk were unaffected precisely because each
 donor there owned only the rows it had markers for.
 
 ## HYPOTHESIS: BFME classes carry TWO links where the reference carries one
+(Superseded in part: the discriminator below now separates this from a
+shifted class before any code is written. GameWindow was the third witness
+and it was NEGATIVE, which is what bounded the habit.)
 
 Two independent classes now show the same shape, and it is worth testing on a
 third before treating it as a fact.
@@ -2753,3 +2756,50 @@ A shim can therefore carry a correct layout AND a set of signatures that belong
 to one TU only, and a destination gets one or the other. A TU-local view takes
 the layout without the signatures, which is why views keep working where the
 shim cannot be adopted.
+
+## THE DISCRIMINATOR: second member, or short class? Read the SHAPE of the disagreement
+
+A matched tiny accessor is authoritative about its own offset -- it is
+byte-verified and does nothing else. So collect a class's accessor-proven
+offsets and look at how the disputed offset sits among them. This costs four
+disassemblies and no build, and it settles a question that otherwise costs a
+speculative view.
+
+**One disputed offset in a GAP the accessors do not cover, accessors consistent
+among themselves -> a SECOND MEMBER. The body is right.**
+
+    LANGameInfo   getNext/setNext prove +0x360, get/setLastHeard prove +0x364 --
+                  adjacent, consistent, no shift. The link the bodies walk is
+                  +0x398, 0x38 further on, covered by nothing.
+    Script        setActive +0x1C, get/setAction +0x28, setFalseAction +0x2C,
+                  setNextScript +0x30, setFrameToEvaluate +0x34 -- a dense
+                  consistent run. The parser's +0x20 sits in the gap between
+                  +0x1C and +0x28 with no accessor over it.
+
+**A RUN of consecutive members at the SAME delta -> the CLASS IS SHORT. The
+header is wrong.**
+
+    GameWindow    m_status, m_size, m_userData, m_instData are every one exactly
+                  +4 out. Four coincidental second members all four bytes apart
+                  is not credible; one inserted member is -- and the gamewindow
+                  shim's independent reconstruction names it,
+                  `GameWindowAnchor *m_bfmeAnchor // @0x04 (BFME-only)`.
+
+This is the guard the two-links hypothesis needed, because the tempting move --
+a view sliding the body onto the accessor's offset -- makes the row match while
+silently merging two distinct members.
+
+Evidence strength differs and should be carried with the claim: LANGameInfo's
++0x398 is proven by three matched rows (removeGame, LookupGameByListOffset, and
+a reverted addGame); Script's +0x20 rests on retail's bytes alone, because the
+only body that uses it is the one that cannot land. Script is a strong reading,
+not a proven one -- if a later case contradicts the gap rule, re-examine Script
+first.
+
+## retail LANPlayer::setName never touches `this`
+
+0x00624C10, 72 bytes: it constructs something from its by-value argument and
+destroys it again, and never writes through the instance pointer. Same shape as
+the three InGameUI varargs message stubs -- a name that survives a layer BFME
+removed. Not chased; flagged because anyone treating that symbol as an accessor
+is reading a name rather than a body.
