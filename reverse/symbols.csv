@@ -72340,6 +72340,7 @@ name,address,notes
 ?bfmeAlloc1037@@YAPAXH@Z,0x00881F30,pin
 ?bfmeAlloc1039@@YAPAXH@Z,0x00881F30,pin
 ?bfmeAlloc1046@@YAPAXH@Z,0x0082E540,pin
+?bfmeAlloc1047@@YAPAXH@Z,0x0082E540,pin
 ?bfmeAlloc946@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAlloc950B@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocATA@@YAPAXI@Z,0x0082E540,pin
@@ -73544,6 +73545,7 @@ name,address,notes
 ?bfmeInitEOE@@YGXPAUBfmeThingEOE@@HHP6AXXZ1@Z,0x009F6EE4,pin
 ?bfmeInitSubBWD@BfmeSubBWD@@QAEXXZ,0x0000F0A6,pin
 ?bfmeInitSubEFA@@YAXPAX0@Z,0x0000129E,pin
+?bfmeInitVal1047@@YAXPAUBfmeValS1047@@H@Z,0x00007554,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
 ?bfmeInsertQI@BfmeThingQI@@QAEPADPADE@Z,0x0082FE50,pin
