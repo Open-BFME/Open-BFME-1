@@ -3037,6 +3037,7 @@ name,address,notes
 ??0PhysicsBehaviorModuleData@@QAE@XZ,0x0001659F,pinharvest x1 (thunk)
 ??0PhysicsBehaviorModuleData@@QAE@XZ,0x00028D9E,pinharvest x1 (thunk)
 ??0PhysicsBehaviorModuleData@@QAE@XZ,0x0002D22C,pinharvest x1 (thunk)
+??0PickAndPlayInfo@@QAE@XZ,0x0000F164,BFME PickAndPlayInfo constructor; target call follows local DrawableList construction and precedes field population in three adjacent voice response helpers
 ??0PilotFindVehicleUpdateModuleData@@QAE@XZ,0x000118E7,pinharvest x1 (thunk)
 ??0PilotFindVehicleUpdateModuleData@@QAE@XZ,0x000261CA,pinharvest x1 (thunk)
 ??0PilotFindVehicleUpdateModuleData@@QAE@XZ,0x0003035A,pinharvest x1 (thunk)
@@ -3729,6 +3730,7 @@ name,address,notes
 ??1?$_List_base@PAVCampaign@@V?$allocator@PAVCampaign@@@_STL@@@_STL@@QAE@XZ,0x00015686,CampaignManager destructor STLport list base teardown
 ??1?$_List_base@PAVControlBarSchemeAnimation@@V?$allocator@PAVControlBarSchemeAnimation@@@_STL@@@_STL@@QAE@XZ,0x00011EFA
 ??1?$_List_base@PAVCreditsLine@@V?$allocator@PAVCreditsLine@@@_STL@@@_STL@@QAE@XZ,0x0040C510,exact Credits.cpp STLport list-base destructor helper; concrete CreditsLine* node type and direct __node_alloc deallocation verified against retail
+??1?$_List_base@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE@XZ,0x00040863,STLport Drawable pointer list base destructor; cleanup call for the local one-Drawable list in three adjacent voice response helpers
 ??1?$_List_base@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAE@XZ,0x00040278,GameWindowManager dtor call target (incremental-link thunk)
 ??1?$_List_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAE@XZ,0x0000E68D,OpenContain m_containList destructor call target
 ??1?$_List_base@PAVResizerWindow@@V?$allocator@PAVResizerWindow@@@_STL@@@_STL@@QAE@XZ,0x000361BA,ILT thunk; retail call sites use the thunk
@@ -77444,6 +77446,7 @@ name,address,notes
 ?perform@Gen00903090@@QAEXXZ,0x00903090,address-derived callee of the 12-byte this-returning forwarder family; target read from the REL32 at its call sites
 ?performUpgradeFX@UpgradeMuxData@@QBEXPAVObject@@@Z,0x0002EB4F,pinharvest x1 (thunk)
 ?pick@BridgeAreaEffectsRandomPositionShim@@QAEXPAVTerrainRoadType@@PBVBridgeInfo@@PAUCoord3D@@@Z,0x000406FB,BridgeBehavior doAreaEffects retail call at 0x001F249D forwards through the incremental thunk to getRandomSurfacePosition
+?pickAndPlayUnitVoiceResponse@@YAXPBV?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@W4Type@GameMessage@@PAVPickAndPlayInfo@@@Z,0x000196C8,BFME voice dispatcher; adjacent helpers pass the local DrawableList message IDs 0x7E7 or 0x7E8 and PickAndPlayInfo
 ?playAttackVoiceResponse@AIUpdateInterface@@IAEXPAVObject@@@Z,0x00002EF0,BFME AIUpdate attack-voice helper ILT; 0x002737B0 passes the state machine goal for direct player or script commands
 ?playMessageReceivedSound@BFMEConnectionManager@@SAXXZ,0x00662CE0,static helper: TheAudio(0x012ED668 pinned)->slot+0x124() then slot+0x44 (= addAudioEvent; vtable 0x0111C0C0+0x44 -> 0x006B9A40) on the MiscAudio event at +0xC40; replaces ZH's GUIMessageReceived in disconnectPlayer (0x006663C9) and GUICommunicatorIncoming in processChat (0x00667211)
 ?playMoveVoiceResponse@AIUpdateInterface@@IAEXPBUCoord3D@@@Z,0x000462EA,BFME AIUpdate movement-voice helper ILT; call target decoded from the four privateFollowWaypointPath bodies and body 0x00273300 builds a one-drawable list before the voice-response dispatcher
@@ -79501,6 +79504,9 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0PickAndPlayInfo@@QAE@XZ,0x0000F164,BFME PickAndPlayInfo constructor; target call follows local DrawableList construction and precedes field population in three adjacent voice response helpers
-??1?$_List_base@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE@XZ,0x00040863,STLport Drawable pointer list base destructor; cleanup call for the local one-Drawable list in three adjacent voice response helpers
-?pickAndPlayUnitVoiceResponse@@YAXPBV?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@W4Type@GameMessage@@PAVPickAndPlayInfo@@@Z,0x000196C8,BFME voice dispatcher; adjacent helpers pass the local DrawableList message IDs 0x7E7 or 0x7E8 and PickAndPlayInfo
+?bfmeDtorUEW@BfmeThingUEW@@QAEXXZ,0x008A2F30,pin
+__imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
+?bfmeDtorVBW@BfmeSubVBW@@QAEXXZ,0x00895260,pin
+__imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
+?bfmeBaseVDW@BfmeThingVDW@@QAEXHH@Z,0x00899F00,pin
+?g_bfmeVftVDW@@3PADA,0x00D36238,pin
