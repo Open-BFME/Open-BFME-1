@@ -2435,3 +2435,22 @@ constructor at 0x00888BC0 this tree resolves to.
 This is the same blindness as the 5-byte jmp thunks arriving from another
 direction: masking hides IDENTITY. A perfect score means every byte you can see
 agrees, and the bytes you cannot see are exactly the ones that name the callee.
+
+## Before renaming to fix a DIR32 red, check the TARGET symbol's existing bases
+
+Renaming misnamed references onto the correct global is the honest fix, but it
+only clears the red if the name you are moving TO is already consistent. If that
+symbol is itself referenced somewhere at a different address, the rename hands
+it a second base and the gate stays red under a new name -- with the work spent.
+
+One pass of dir32_sites.py over the candidates answers it before any edit. For
+the ThePartitionManager red: `?TheShroudManager@@3PAVShroudManager@@A` already
+had two references and both were at 0x012ED5BC, the same base the misnamed sites
+resolved to; `?TheRadar@@3PAVRadar@@A` had nine, all at 0x012EF0E4. So every
+reference being moved landed on a symbol that already agreed with it.
+
+Two useful corollaries. A second NAME at the same address is not a problem --
+the check is per symbol, so `?TheRadarClientUpdate@@...` sharing 0x012EF0E4 is an
+ordinary alias. And the completion test needs no gate run: when the rename is
+done the misnamed symbol should have ZERO DIR32 references, not one base. A
+remaining base means a site was missed.
