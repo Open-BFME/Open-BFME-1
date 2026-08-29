@@ -2148,6 +2148,7 @@ name,address,notes
 ??0BfmeQuickMatchScreenBase@@QAE@PAX@Z,0x00025D7E,ILT thunk to the base screen constructor at 0x00470620
 ??0BfmeRMiddle@@QAE@PAX0@Z,0x00041CBD,Open-BFME5 the base the multi-vftable constructors at 0x005F2D20 and 0x005F6530 forward to
 ??0BfmeRecorderStore@@QAE@XZ,0x00016D47,Open-BFME5 ILT thunk to body 0x00098EA0; ??0RecorderClass@@QAE@XZ at 0x000993E0 constructs the member at +0x20 through it; address-derived name
+??0BfmeS1059@@QAE@XZ,0x00018A07,pin
 ??0BfmeSMiddle@@QAE@PAX0@Z,0x00025306,Open-BFME5 the base the multi-vftable constructor at 0x006949B0 forwards to
 ??0BfmeSortElem20Tail@@QAE@ABV0@@Z,0x000266BB,Open-BFME5 ILT the copy constructor of the twelve-byte member at S4SortElem20+8
 ??0BfmeSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,Open-BFME5 the incremental-link thunk those constructors encode
@@ -12418,6 +12419,7 @@ name,address,notes
 ?adjust@Rva000C7DC0@@QAEHH@Z,0x000C7D10,address-derived helper called by the accumulator at 0x000C7DC0
 ?adjustDisplay@@YAXPAVGameWindow@@H_N@Z,0x004B7CA0,general 3-arg overload; 3 pushes + add esp 0xc at the GadgetListBoxSetBottomVisibleEntry call site 0x004B857A
 ?adjustDisplay@@YAXPAVGameWindow@@_N@Z,0x004B7B20,BFME-only 2-arg overload (no adjustment param); proven from computeTotalHeight's own bytes (0x4B7ED0: 2 pushes + add esp8) distinct from the general 3-arg adjustDisplay@0x4B7CA0 (addEntry's bytes: 3 pushes + add esp0xc)
+?adjustFontSize@GlobalLanguage@@QAEHH@Z,0x00004E67,this tree names the class GlobalLanguage where the ledger row at 0x00439000 spells it GlobalLanguageData; ILT 0x00004E67 is what InGameUI::addNamedTimer calls and it jumps straight to that body
 ?adjustFontSize@GlobalLanguageData@@QAEHH@Z,0x00004E67,ILT thunk to GlobalLanguageData::adjustFontSize; returns Int in BFME
 ?adjustModelConditionForWeaponStatus@Object@@QAEXXZ,0x000276D3,ILT thunk; real body 0x5CA0F0
 ?adjustStacking@W3DRoadBuffer@@IAEXHH@Z,0x0000448F,ILT thunk pin for insertCrossTypeJoins
@@ -72334,6 +72336,7 @@ name,address,notes
 ?bfmeAdd1040@BfmeH1040@@QAEXPAX@Z,0x0001EF9C,pin
 ?bfmeAdd1044@BfmeE1044@@QAEXPAVBfmeD1044@@H@Z,0x000157DA,pin
 ?bfmeAdd1054@BfmeD1054@@QAEXPAVBfmeSubC1054@@@Z,0x000361CE,pin
+?bfmeAdd1059@BfmeG1059@@QAEXPAVBfmeA1059@@H@Z,0x000398BF,pin
 ?bfmeAdd913D@BfmeThing913D@@QAEDPAX@Z,0x000110E0,pin
 ?bfmeAdd955@BfmeSink955@@QAEXPAHH@Z,0x00037A56,pin
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
@@ -74299,6 +74302,7 @@ name,address,notes
 ?bfmeUse1035@BfmeT1035@@QAEXPAVBfmeX1035@@H@Z,0x00022372,pin
 ?bfmeUse1052@BfmeJ1052@@QAEXPAH@Z,0x00046150,pin
 ?bfmeUse1058@BfmeK1058@@QAEXH@Z,0x00028E93,pin
+?bfmeUse1059@BfmeA1059@@QAEXH@Z,0x00003B93,pin
 ?bfmeUse926B@BfmeKeyLC@@QAEXPAUBfmeNodeLC@@@Z,0x00002E69,pin
 ?bfmeUse975D@BfmeD975@@QAEDPAX@Z,0x0003E80B,pin
 ?bfmeUseDXI@BfmeGlobDXI@@QAEXH@Z,0x0004159C,pin
@@ -75554,6 +75558,7 @@ name,address,notes
 ?g_bfmeC1020@@3DA,0x00EB7D84,pin
 ?g_bfmeC1023@@3PAVBfmeC1023@@A,0x00EF7714,pin
 ?g_bfmeC1038@@3HA,0x00F378D4,pin
+?g_bfmeC1059@@3PAVBfmeC1059@@A,0x00EF1600,pin
 ?g_bfmeCFAE@@3HA,0x00EEF418,pin
 ?g_bfmeCh1035@@3DA,0x00F4ECC8,pin
 ?g_bfmeClock977@@3PAVBfmeClock977@@A,0x00EF1B40,pin
@@ -75625,6 +75630,7 @@ name,address,notes
 ?g_bfmeG1022@@3PAVBfmeG1022@@A,0x00EED668,pin
 ?g_bfmeG1023@@3PAVBfmeG1023@@A,0x00EED668,pin
 ?g_bfmeG1024@@3PAVBfmeG1024@@A,0x00EED668,pin
+?g_bfmeG1059@@3PAVBfmeG1059@@A,0x00EF7FE0,pin
 ?g_bfmeGate961@@3PAVBfmeGate961@@A,0x00EF706C,pin
 ?g_bfmeGateA979@@3PAHA,0x00EF4B58,pin
 ?g_bfmeGlob956@@3PAUBfmeGlob956@@A,0x00EEF214,pin
@@ -75643,6 +75649,7 @@ name,address,notes
 ?g_bfmeGlobQE@@3PAVBfmeGlobQE@@A,0x00F06EEC,pin
 ?g_bfmeGlobRB@@3PAUBfmeObjRB@@A,0x00EF7FDC,pin
 ?g_bfmeH1025@@3PAVBfmeH1025@@A,0x00EF1028,pin
+?g_bfmeH1059@@3PAVBfmeH1059@@A,0x00EF7014,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
 ?g_bfmeHeld995B@@3PAXA,0x00EF4974,pin
 ?g_bfmeHits1054@@3HA,0x00F40594,pin
@@ -80436,4 +80443,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?adjustFontSize@GlobalLanguage@@QAEHH@Z,0x00004E67,this tree names the class GlobalLanguage where the ledger row at 0x00439000 spells it GlobalLanguageData; ILT 0x00004E67 is what InGameUI::addNamedTimer calls and it jumps straight to that body
