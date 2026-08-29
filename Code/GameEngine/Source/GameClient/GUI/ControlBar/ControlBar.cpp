@@ -1406,6 +1406,35 @@ const Image *ControlBar::getStarImage(void )
 // Matched via Code/masm_dumps/ControlBar_onPlayerRankChanged.asm @ 0x0049DC90
 // byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBar_onPlayerRankChanged_Thunk.cpp
 // ?onPlayerRankChanged@ControlBar@@QAEXPBVPlayer@@@Z present-unmatched
+// onPlayerRankChanged cannot come home: it stops two bytes short on the
+// EH-temporary transposition, which docs/lessons.md records as a wall this
+// toolchain does not cross. Recorded so nobody spends the cycle again.
+//
+// The merged form is otherwise EXACT. Every byte matches except one pair:
+// retail writes the unwind cookie before loading ecx with the temporary's
+// address (89 64 24 10 / 8b cc) and this toolchain emits them the other way
+// round. That is the same residue as the 0x002F4080 and 0x002F74E0 families in
+// reverse/re_attempts.log, where /EHs, /GX, /MT, /G7, /O1, /Ox and /Gy were all
+// tried and none moved it.
+//
+// Two levers DID work on the way there and are worth reusing:
+//   - binding the local player's point total to a local on its own line gets
+//     retail's compare form (member against register, not register against
+//     memory);
+//   - routing the local-player fetch through an in-class accessor on the view
+//     fixes the register chain, so the walk reuses eax the way retail does
+//     instead of switching to ecx one load earlier. That is a register
+//     allocation difference that a source shape DID reach, which is worth
+//     knowing given lessons.md says register allocation is not source-controllable.
+//
+// The layout and behaviour are settled: PlayerList's local player at +0x0c, the
+// player's science points at +0x264, ControlBar's UI-dirty flag at +0x24, the
+// star flash at +0x2c8 and the last flashed value at +0x2cc. Two real
+// differences from the reference: TransitionHandler::setGroup takes a SECOND
+// argument, always zero, and the input test reads TWO bytes -- enabled at
+// InGameUI+0x0d AND allowed at +0x0e -- so the arrow transition fires only when
+// input is both enabled and allowed. The setGroup ILT at 0x00045C28 is pinned in
+// reverse/symbols.csv and was byte-proved by this attempt's rel32.
 void ControlBar::onPlayerRankChanged(const Player *p)
 {
 	if (!p->isLocalPlayer())
@@ -1741,6 +1770,16 @@ CommandButton *ControlBar::findNonConstCommandButton( const AsciiString& name )
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarNewCommandSet.cpp
 // ?newCommandButton@ControlBar@@IAEPAVCommandButton@@ABVAsciiString@@@Z present-unmatched
+// The newCommandButton / newCommandSet / newCommandSetOverride family cannot come
+// home: class shape. Retail allocates 472 bytes for a CommandButton and 100 for a
+// CommandSet; the vendored declarations give 224 and 92, and the allocation size
+// comes from the class, not from anything a .cpp can cast. A view class with the
+// right size would have to bring its own pool operator new, which would break the
+// ??2CommandButton / ??2CommandSet rows THIS file owns -- so the workaround costs
+// more rows than it converts. The eight-byte half of the same drift is visible in
+// findNonConstCommandSet above, where a BFME command set holds twenty command
+// slots against Zero Hour's eighteen; there it is only a displacement and a view
+// reaches it.
 CommandButton *ControlBar::newCommandButton( const AsciiString& name )
 {
 	CommandButton *newButton;
@@ -2302,6 +2341,14 @@ void ControlBar::setControlBarSchemeByPlayerTemplate( const PlayerTemplate *pt)
 
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/ControlBarPreloadAssets.cpp
 // ?preloadAssets@ControlBar@@QAEXW4TimeOfDay@@@Z present-unmatched
+// preloadAssets cannot come home, and the blocker is the ledger row rather than
+// the body. Its row carries object-symbol=?bfme_preloadAssets_wrapper@ControlBar@@QAEXXZ,
+// a member name that exists only inside the donor's own private ControlBar. The
+// retail body takes NO argument -- it ends c3 and tail-jumps -- while the row is
+// named for the reference's preloadAssets(TimeOfDay). This TU compiles the real
+// ControlBar, which declares the one-argument form, so it cannot emit a
+// no-argument function and cannot satisfy that object-symbol without a header
+// change. The override is the correct mechanism here, not a wart.
 void ControlBar::preloadAssets( TimeOfDay timeOfDay )
 {
 	if (m_controlBarSchemeManager)
