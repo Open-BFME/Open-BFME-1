@@ -1930,3 +1930,45 @@ It is not something to work around: the file wants a declaration or a marker,
 and that is a ledger decision. Revert your edit, record the file, and pick
 another. Worth screening a destination for it before authoring if the fold is
 large.
+
+## "Naked donor" is not a reason to skip -- 75% of them are the BEST folds
+
+Two opposite operations get confused under the anti-lift policy:
+
+  FOLDING A DUMP INTO A DESTINATION puts `__emit` into readable code. Forbidden,
+  and conversion_gate.py rejects it.
+  DELETING A DUMP whose destination ALREADY has a readable body, and repointing
+  the row at it, retires the dump and lands the row on real C++. That is the
+  best fold available and it is the anti-lift policy working, not breaking.
+
+Measured across the cluster set: 415 marked donors are naked, and 310 of them --
+75% -- have a destination that already defines a body for that symbol.
+LANAPIUpdateThunk.cpp is 2,035 lines of `__asm __emit` for `?update@LANAPI@@`
+while lanapi.cpp carries the readable LANAPI::update(). Nearly the whole
+AIStates cluster is this shape.
+
+So a naked-donor count is not a count of unmergeable work. Screen the pair
+first: does the destination define that symbol? If yes it is a candidate, and
+tools/marker_screen.py measures the distance in two compiles. If no, it is
+genuinely conversion work for another lane.
+
+## Buy throw() with an explicit specialisation, not a shim directory
+
+A nothrow declaration usually lives in a shared header you must not edit
+(WWLib/string_base.h). Copying the header into a shim dir works and creates a
+file; an explicit specialisation does not:
+
+    template <>
+    class StringBase<UnsignedShort>
+    {
+    public:
+        Int compareNoCase( const StringBase<UnsignedShort> &that ) const throw();
+    };
+
+It REPLACES the primary for that one argument, so every other TU sees the shared
+declaration untouched. Legal while nothing has forced an implicit instantiation
+for that argument, and declare only the members the TU calls. wchar_t and
+unsigned short share a mangled type (G) under MSVC 7.1, so one specialisation
+covers both. On one body this was worth 71 of 77 diverging instructions --
+compareNoCase sat between a temporary's construction and its destruction, and
+nothrow let MSVC drop the unwind-state bumps either side.
