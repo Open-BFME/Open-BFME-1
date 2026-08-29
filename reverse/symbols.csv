@@ -73644,6 +73644,7 @@ name,address,notes
 ?bfmeLogCNE@@YGXHH@Z,0x00032DEE,pin
 ?bfmeLogMsg574@@YAXPBD@Z,0x0003EBAD,pin
 ?bfmeLook1087@BfmeD1087@@QAEPAUBfmeR1087@@PAF@Z,0x0002EE60,pin
+?bfmeLook1088@BfmeD1088@@QAEPAUBfmeR1088@@PAF@Z,0x0002EE60,pin
 ?bfmeLookAMB@BfmeFindAMB@@QAEPAXPAXH@Z,0x0001F253,pin
 ?bfmeLookAOA@BfmeTwoAOA@@QAEPAXPAX@Z,0x0003ADD7,pin
 ?bfmeLookBBB@@YAPAXPAX@Z,0x0082B8E0,pin
@@ -73740,6 +73741,7 @@ name,address,notes
 ?bfmeNewMap@BfmePlayerMapState@@QAEXH_N@Z,0x00018679,Open-BFME5 ILT Player::newMap calls for the subobject at Player+0x30; it jumps to 0x000C7A30
 ?bfmeNext1016@BfmeIter1016@@QAEGH@Z,0x00835ED0,pin
 ?bfmeNext1087@BfmeP1087@@QAEHH@Z,0x000230B5,pin
+?bfmeNext1088@BfmeP1088@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext929D@BfmeNext929D@@QAEHH@Z,0x0089CC30,pin
 ?bfmeNext@Gen_00088B60@@AAEXXZ,0x00031FCF,Open-BFME5 the member the flag-then-forward wrapper at 0x00088B60 tail-jumps to
 ?bfmeNext@Gen_000B5690@@AAEXXZ,0x000242A3,Open-BFME5 the member the flag-then-forward wrapper at 0x000B5690 tail-jumps to
@@ -75667,6 +75669,7 @@ name,address,notes
 ?g_bfmeD1072@@3DA,0x00EF4AD1,pin
 ?g_bfmeD1083@@3PAVBfmeD1083@@A,0x00EF1600,pin
 ?g_bfmeD1087@@3PAVBfmeD1087@@A,0x00EED748,pin
+?g_bfmeD1088@@3PAVBfmeD1088@@A,0x00EED748,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
@@ -75952,6 +75955,7 @@ name,address,notes
 ?g_bfmeP1081@@3PAVBfmeP1081@@A,0x00EF076C,pin
 ?g_bfmeP1085@@3PAVBfmeP1085@@A,0x00EF076C,pin
 ?g_bfmeP1087@@3PAVBfmeP1087@@A,0x00EF076C,pin
+?g_bfmeP1088@@3PAVBfmeP1088@@A,0x00EF076C,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
