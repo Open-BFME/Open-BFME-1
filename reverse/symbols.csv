@@ -12439,6 +12439,7 @@ name,address,notes
 ?applyDefectionFrame@ObjectDefectionHelper@@QAEXPAVObject@@H@Z,0x000157DA,ILT thunk to the two-arg defection-frame setter at 0x002B2040
 ?applyDefinition@INI@@QAEXPAVInGameUI@@PAX@Z,0x008520A0,INI parseInGameUIDefinition callee thiscall apply
 ?applyDifficultyBonuses@ScriptActionsDifficultyListNode@@QAEX_N@Z,0x00016F2C,doEnableOrDisableObjectDifficultyBonuses per-node call; ILT thunk for body 0x001BE7D0
+?applyDisconnectVote@BfmeDisconnectVoteSender@@QAEXHIHPAVConnectionManager@@@Z,0x000215AD,alias of the DisconnectManager spelling pinned below; voteForPlayerDisconnect reaches applyDisconnectVote through a view class because both callees are defined earlier in the same TU and MSVC inlines them where retail calls
 ?applyDisconnectVote@DisconnectManager@@IAEXHIHPAVConnectionManager@@@Z,0x000215AD,ILT thunk to DisconnectManager::applyDisconnectVote at 0x0066B910
 ?applyMotiveForce@PhysicsBehavior@@QAEXPBUCoord3D@@@Z,0x0002A284,ILT thunk to PhysicsBehavior::applyMotiveForce at 0x0029AC40
 ?applyRva1C7370@Object@@QAEXABVModelConditionFlags@@_N@Z,0x000307E7,Open-BFME6 RVA 162CD0 flag-apply helper call pin
@@ -78328,6 +78329,7 @@ name,address,notes
 ?sendSignal@BfmeObjE65@@QAEXHH@Z,0x00014506,pin
 ?sendToManglerFromPort@FirewallHelperClass@@QAE_NIGG_N@Z,0x00022C00
 ?sendToManglerFromPort@FirewallHelperClassSendToManglerFromPortShim@@QAE_NIGG_N@Z,0x0066EC50,FirewallHelperClass incremental-link thunk target through a TU-local forwarding shim
+?sendVoteCommand@BfmeDisconnectVoteSender@@QAEXHPAVConnectionManager@@@Z,0x0002EE79,alias of the DisconnectManager spelling pinned below; voteForPlayerDisconnect reaches sendVoteCommand through a view class because both callees are defined earlier in the same TU and MSVC inlines them where retail calls
 ?sendVoteCommand@DisconnectManager@@IAEXHPAVConnectionManager@@@Z,0x0002EE79,ILT thunk to DisconnectManager::sendVoteCommand
 ?set@?$HeaderTemplateStringBase@D@@AAEXABV1@@Z,0x00887C90,Open-BFME5 HeaderTemplateManager init relocation
 ?set@?$bitset@$0ED@@_STL@@QAEAAV12@IH@Z,0x00019BCD,pinharvest x1 (thunk)

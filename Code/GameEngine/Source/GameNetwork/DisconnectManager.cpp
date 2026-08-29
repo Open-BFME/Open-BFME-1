@@ -802,18 +802,44 @@ void DisconnectManager::sendVoteCommand(Int slot, ConnectionManager *conMgr) {
 	msg->detach();
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/DisconnectManager_voteForPlayerDisconnect_Thunk.cpp
-// ?voteForPlayerDisconnect@DisconnectManager@@QAEXHPAVConnectionManager@@@Z present-unmatched
+// BFME does NOT translate the slot here: it votes, sends and applies against the
+// slot it was handed, where the reference copy first maps it through
+// untranslatedSlotPosition and uses that everywhere. The vote table itself is at
+// DisconnectManager+0x30, eight bytes per entry -- the flag at +0x00 and the
+// frame at +0x04.
+struct BfmePlayerVote
+{
+	Bool vote;							///< retail this+0x00
+	UnsignedInt frame;						///< retail this+0x04
+};
+
+struct BfmeDisconnectVoteTable
+{
+	char m_unreconstructed_00[0x30];
+	BfmePlayerVote m_playerVotes[MAX_SLOTS][MAX_SLOTS];		///< retail this+0x30
+};
+
+// Both callees are DEFINED earlier in this TU, so MSVC inlines them here where
+// retail emits calls. Declaring them on a view -- declared, never defined --
+// keeps the calls, and the aliases name the same ILTs the real spellings carry.
+class BfmeDisconnectVoteSender
+{
+public:
+	void sendVoteCommand( Int slot, ConnectionManager *conMgr );	///< retail ILT 0x0002ee79
+	void applyDisconnectVote( Int slot, UnsignedInt frame, Int fromSlot,
+			ConnectionManager *conMgr );				///< retail ILT 0x000215ad
+};
+
+// ?voteForPlayerDisconnect@DisconnectManager@@QAEXHPAVConnectionManager@@@Z
 void DisconnectManager::voteForPlayerDisconnect(Int slot, ConnectionManager *conMgr) {
-	Int transSlot = untranslatedSlotPosition(slot, conMgr->getLocalPlayerID());
+	if (((BfmeDisconnectVoteTable *)this)->m_playerVotes[slot][conMgr->getLocalPlayerID()].vote == FALSE) {
+		((BfmeDisconnectVoteTable *)this)->m_playerVotes[slot][conMgr->getLocalPlayerID()].vote = TRUE;
 
-	if (m_playerVotes[transSlot][conMgr->getLocalPlayerID()].vote == FALSE) {
-		m_playerVotes[transSlot][conMgr->getLocalPlayerID()].vote = TRUE;
-
-		sendVoteCommand(transSlot, conMgr);
+		((BfmeDisconnectVoteSender *)this)->sendVoteCommand(slot, conMgr);
 
 		// we use the game logic frame cause we might not have sent out our own disconnect frame yet.
-		applyDisconnectVote(transSlot, TheGameLogic->getFrame(), conMgr->getLocalPlayerID(), conMgr);
+		((BfmeDisconnectVoteSender *)this)->applyDisconnectVote(slot, TheGameLogic->getFrame(),
+			conMgr->getLocalPlayerID(), conMgr);
 	}
 }
 
