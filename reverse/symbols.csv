@@ -80051,3 +80051,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?bfmeApplyAttributeModifier@AttributeModifierPoolUpdate@@QAE_NABVAsciiString@@H@Z,0x00049585,Open-BFME5 ILT to body 0x0076A570; named modifier apply with duration called by Object wrapper 0x001C1DA0
