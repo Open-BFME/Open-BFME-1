@@ -2014,3 +2014,44 @@ cases, pointed at templates.
 And when you find the real reason, REPLACE the note that named the wrong one. A
 note naming the wrong blocker is worse than no note: it bills the next agent for
 the wrong fix.
+
+## An orphan accessor: retail has NO caller, and your correct fold kills the row
+
+`callers_of` on `?setNext@LANGameInfo@@QAEXPAV1@@Z` and
+`?setName@LANPlayer@@QAEXVUnicodeString@@@Z` returns no named caller anywhere in
+retail. They are orphan COMDATs the linker kept. Our tree held those rows green
+only because converted bodies called accessors that RETAIL INLINES AWAY -- so
+writing the body correctly stops emitting the accessor and the row goes red.
+
+That is why a correct fold can turn a row you never touched red, and it is
+distinct from the pool-glue and template cases: there the emitter was incidental,
+here the emitter exists only because the port is wrong.
+
+Two outcomes, and check which before declining:
+  the row has another real home -- setName is called three times from
+  LANAPIhandlers.cpp and byte-verifies there (7/7), so add_match repointed it and
+  the fold landed;
+  the row has none -- setNext's only call in the tree is on a different class's
+  member, so the fold stays declined until someone rehomes or retires the row.
+
+## Some donors are in the WRONG DESTINATION, not merely hard
+
+/EH mode is per-TU, so a donor needing a different one can never fold into a
+destination that cannot move. Retail's LANAPI::RequestAccept has NO SEH frame at
+all -- `sub esp,0x1e0 / push esi / mov esi,ecx` -- while constructing and
+destroying a temporary, which only happens under /EHs-c-. lanapi.cpp is /EHsc
+and cannot change, because RequestGameJoin, LookupGame and RequestGameOptions
+are matched there WITH frames.
+
+So RequestAccept and RequestGameAnnounce should KEEP their own TU or find a
+different destination. Folding them into lanapi.cpp is wrong in principle, not
+merely blocked -- record it that way, because "blocked" invites a retry and
+"wrong destination" does not.
+
+## check_csv's own fix hint contradicts the duplicate-row rule
+
+check_csv reports a union-merge duplicate with `Fix: python3 tools/dedup_csv.py`.
+Following that rewrites both ledgers normalised -- a ~157,000-line diff that
+conflicts with every branch in flight -- when the correct repair is to drop the
+duplicate ROWS with ledger_io.py keeping the first. The message is wrong for
+this case and agents have followed it. Ignore the hint; the rule is above.
