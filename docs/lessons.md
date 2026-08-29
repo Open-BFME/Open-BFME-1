@@ -187,7 +187,14 @@ The ledgers mix `\r\r\n`, `\r\n` and bare-LF terminators (~94k `\r\r\n` rows)
 and `add_match` indexes them by physical line. `tools/dedup_csv.py` rewrites
 both files normalised — a ~157,000-line diff that conflicts with every branch
 in flight — so ignore the `Fix: dedup_csv` hint for a simple post-merge
-duplicate: it is one line, delete it by hand. Union merge can also silently
+duplicate. But do not assume it is ONE line: union merge duplicates CONTIGUOUS
+BLOCKS -- six exact-duplicate Open2Handler pins arrived in one rebase. The
+procedure that scales and stays inside the rules: drop records whose payload is
+byte-identical to an earlier record, keep the first, and do it with
+tools/ledger_io.py so terminators survive and nothing else in the file moves.
+That is the sanctioned programmatic middle between "never hand-edit the ledger"
+and "do not run dedup_csv here": one row per duplicate, no normalisation.
+Verify with check_csv and pin_consistency before pushing. Union merge can also silently
 drop pins during a rebase; check `git status` before pushing.
 
 ## Comment lines that start with a mangled name are parsed as claims
@@ -987,6 +994,17 @@ causes, each with a pre-check that costs one command:
       grep -F "<symbol>," reverse/functions.csv | grep -o "object-symbol=[^;]*"
 
   A DELETED COMPILER-GENERATED SYMBOL -- the separate recipe above.
+
+The object-symbol case has two shapes and only one is recoverable. A spelling
+the destination COULD emit with the right declaration is a view problem. A
+spelling that names a DONOR-PRIVATE symbol is not:
+?preloadAssets@ControlBar@@QAEXW4TimeOfDay@@@Z carries
+object-symbol=?bfme_preloadAssets_wrapper@ControlBar@@QAEXXZ -- a private
+wrapper, and note the arity differs too (retail's body takes no argument). The
+destination compiles the real ControlBar, which declares
+preloadAssets(TimeOfDay), so it cannot emit a no-argument private wrapper
+without a header change. The override is the correct mechanism, not a wart --
+it is what lets the donor hold a body the real class cannot express.
 
 ## When a reference inline owns a row, and your body needs a different offset
 
