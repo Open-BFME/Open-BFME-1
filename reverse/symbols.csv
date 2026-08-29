@@ -72994,6 +72994,7 @@ name,address,notes
 ?bfmeFind1024@BfmeM1024@@QAEPAVBfmeV1024@@H@Z,0x0001D606,pin
 ?bfmeFind1024@BfmeTab1024@@QAEHH@Z,0x0089CEF0,pin
 ?bfmeFind1024S@BfmeStore1024@@QAEPAUBfmeRec1024@@H@Z,0x0001F253,pin
+?bfmeFind1032@@YGPADH@Z,0x000181FB,pin
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
@@ -73859,6 +73860,7 @@ name,address,notes
 ?bfmeSend1011@BfmeA1011@@QAEXHHHHH@Z,0x000061E5,pin
 ?bfmeSend1020@BfmeLog1020@@QAEXH@Z,0x0002144A,pin
 ?bfmeSend1028@BfmeSink1028@@QAEXHPAH0@Z,0x00803110,pin
+?bfmeSend1032@BfmeSink1032@@QAEXHPAVBfmeD1032@@@Z,0x000147D1,pin
 ?bfmeSend975B@BfmeB975@@QAEXHH@Z,0x0002D6F5,pin
 ?bfmeSend979B@BfmeSink979@@QAEXPAVBfmeKey979@@@Z,0x00038938,pin
 ?bfmeSend986C@BfmeC986@@QAEXHHHHH@Z,0x0001A6B3,pin
@@ -75456,6 +75458,7 @@ name,address,notes
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
+?g_bfmeDefault1032@@3PADA,0x00F36E50,pin
 ?g_bfmeDefault996@@3PADA,0x00D2233C,pin
 ?g_bfmeDisconnectPingResult@@3HA,0x012B9810,standalone disconnect ping-result state read and set by updateDisconnectStatus after the sub-ten-percent ratio check
 ?g_bfmeDoneAPB@@3_NA,0x00EED4E6,pin
