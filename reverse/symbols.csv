@@ -80630,3 +80630,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?_bfme_allowsSpecialPower@BfmeSpecialPowerPlayer@@QAEEPBVSpecialPowerTemplate@@@Z,0x0000226B,alias of ?_bfme_allowsSpecialPower@Player@@QAEEPBVSpecialPowerTemplate@@@Z pinned at the same ILT; SpecialPower.cpp compiles the real Player which does not declare it
+?friend_getFinalOverride@BfmeOverridableChain@@QBEPBV1@XZ,0x00048C61,alias of ?friend_getFinalOverride@Overridable@@QBEPBV1@XZ pinned at the same ILT; declared-only view so the call survives where the vendored header's inline would unroll another link
