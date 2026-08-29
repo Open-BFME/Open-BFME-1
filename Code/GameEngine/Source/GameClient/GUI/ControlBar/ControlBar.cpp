@@ -3349,26 +3349,63 @@ void ControlBar::animateSpecialPowerShortcut( Bool isOn )
 	}
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBar_showSpecialPowerShortcutMethodThunk.cpp
-// ?showSpecialPowerShortcut@ControlBar@@QAEXXZ present-unmatched
+// BFME's final guard asks ONE question where the reference asks two: retail
+// checks only whether the local player has a shortcut special power, and has no
+// hasAnyShortcutSelection() term at all. With the extra term the shortcut bar
+// stayed hidden whenever the player had no shortcut power, even if a selection
+// would have shown it.
+//
+// isGameEnding does not survive as a call -- it inlines to a signed test of the
+// field at TheScriptEngine+0x17080 -- and the array null check is kept even
+// though it cannot fail: retail takes the address of the member array with lea
+// and tests that, which is what testing an array member compiles to.
+struct BfmeShowScriptEngine
+{
+	unsigned char m_unreconstructed_00[ 0x17080 ];
+	Int m_endGameTimer;					///< retail this+0x17080
+
+	Bool isGameEnding() const { return m_endGameTimer >= 0; }
+};
+
+class BfmeShortcutPlayer
+{
+public:
+	// Returns a 32-bit value: retail tests eax, not al.
+	Int hasAnyShortcutSpecialPower(void);			///< ILT 0x0002331C
+};
+
+struct BfmeShortcutPlayerList
+{
+	unsigned char m_unreconstructed_00[ 0x0c ];
+	BfmeShortcutPlayer *m_localPlayer;			///< retail this+0x0c
+
+	BfmeShortcutPlayer *getLocalPlayer() { return m_localPlayer; }
+};
+
+// ?showSpecialPowerShortcut@ControlBar@@QAEXXZ
 void ControlBar::showSpecialPowerShortcut( void )
 {
-	if(TheScriptEngine->isGameEnding() || !m_specialPowerShortcutParent 
-		||!m_specialPowerShortcutButtons || !ThePlayerList || !ThePlayerList->getLocalPlayer())
+	BfmeControlBarShortcutFields *self = (BfmeControlBarShortcutFields *)this;
+
+	// ThePlayerList is re-read from the global at every use rather than hoisted:
+	// retail loads it three separate times.
+
+	if(((const BfmeShowScriptEngine *)TheScriptEngine)->isGameEnding() || !self->m_specialPowerShortcutParent 
+		||!self->m_specialPowerShortcutButtons || !ThePlayerList || !((BfmeShortcutPlayerList *)ThePlayerList)->getLocalPlayer())
 		return;
 	Bool dontAnimate = TRUE;
-	for( Int i = 0; i < m_currentlyUsedSpecialPowersButtons; ++i )
+	for( Int i = 0; i < self->m_currentlyUsedSpecialPowersButtons; ++i )
 	{
-		if (m_specialPowerShortcutButtons[i]->winGetUserData())
+		if (self->m_specialPowerShortcutButtons[i]->winGetUserData())
 		{
 			dontAnimate = FALSE;
 			break;
 		}
 	}
-	if( dontAnimate || (!ThePlayerList->getLocalPlayer()->hasAnyShortcutSpecialPower() && !hasAnyShortcutSelection()) )
+	if( dontAnimate || !((BfmeShortcutPlayerList *)ThePlayerList)->getLocalPlayer()->hasAnyShortcutSpecialPower() )
 		return;
-	m_specialPowerShortcutParent->winHide(FALSE);
-	populateSpecialPowerShortcut(ThePlayerList->getLocalPlayer());
+	self->m_specialPowerShortcutParent->winHide(FALSE);
+	populateSpecialPowerShortcut((Player *)((BfmeShortcutPlayerList *)ThePlayerList)->getLocalPlayer());
 		
 }
 
