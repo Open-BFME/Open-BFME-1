@@ -1651,14 +1651,86 @@ void ControlBar::evaluateContextUI( void )
 //-------------------------------------------------------------------------------------------------
 /** Find a command button of the given name if present */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_findNonConstCommandButton.cpp
-// ?findNonConstCommandButton@ControlBar@@IAEPAVCommandButton@@ABVAsciiString@@@Z present-unmatched
+// ?findNonConstCommandButton@ControlBar@@IAEPAVCommandButton@@ABVAsciiString@@@Z
+// Retail does not call AsciiString::operator== here -- it inlines the whole
+// comparison, reading each string's 16-bit length at header+4 and its payload at
+// header+8, then a repe cmpsb over the shorter of the two and a length
+// subtraction for the tie.  That is BFME's eight-byte string header, so the
+// comparison is spelled against a TU-local view of it rather than against this
+// tree's AsciiString, which puts the payload at header+4 and compares by strcmp.
+struct BfmeControlBarStringHeader
+{
+	int refCount;
+	unsigned short length;					///< retail header+0x04
+	unsigned short capacity;
+	char data[ 1 ];						///< retail header+0x08
+};
+
+struct BfmeControlBarStringView
+{
+	BfmeControlBarStringHeader *m_data;
+
+	int compare( const BfmeControlBarStringView &string ) const
+	{
+		const BfmeControlBarStringView *self = this;
+		const BfmeControlBarStringView *that = &string;
+		int thatLen = that->m_data ? that->m_data->length : 0;
+		const char *thatData = that->m_data ? &that->m_data->data[ 0 ] : (const char *)"";
+		int thisLen = self->m_data ? self->m_data->length : 0;
+		const char *thisData = self->m_data ? &self->m_data->data[ 0 ] : (const char *)"";
+		int n = thisLen < thatLen ? thisLen : thatLen;
+		int c = memcmp( thisData, thatData, n );
+		if( c != 0 )
+			return c;
+		return thisLen - thatLen;
+	}
+};
+
+// Overridable::getFinalOverride is inline AND recursive in the vendored header,
+// so MSVC unrolls one level of the chain walk into this body where retail just
+// calls it through ILT 0x000022BB.  Declared-not-defined on a view, the call
+// survives -- the same lever the Team.cpp folds needed.
+class BfmeControlBarOverridable
+{
+public:
+	const BfmeControlBarOverridable *getFinalOverride() const;	///< ILT 0x000022BB
+};
+
+// One level of the override walk is inline: only a button that actually has an
+// override at +0x04 reaches the out-of-line chain walk.
+struct BfmeCommandButtonNode
+{
+	unsigned char m_unmodelled_000[ 0x04 ];
+	const BfmeControlBarOverridable *m_override;		///< retail this+0x04
+	unsigned char m_unmodelled_008[ 0x0c - 0x08 ];
+	BfmeControlBarStringView m_name;			///< retail this+0x0c
+	unsigned char m_unmodelled_010[ 0x14 - 0x10 ];
+	const BfmeCommandButtonNode *m_next;			///< retail this+0x14
+
+	const BfmeControlBarStringView &getName() const { return m_name; }
+	const BfmeCommandButtonNode *getNext() const { return m_next; }
+	const BfmeCommandButtonNode *getFinalOverride() const
+	{
+		if( m_override )
+			return (const BfmeCommandButtonNode *)m_override->getFinalOverride();
+		return this;
+	}
+};
+
+struct BfmeControlBarButtonList
+{
+	unsigned char m_unmodelled_000[ 0x28 ];
+	const BfmeCommandButtonNode *m_commandButtons;		///< retail this+0x28
+};
+
 CommandButton *ControlBar::findNonConstCommandButton( const AsciiString& name )
 {
-	
-	for( const CommandButton *command = m_commandButtons; command; command = command->getNext() )
-		if( command->getName() == name )
-			return const_cast<CommandButton*>((const CommandButton*)command->getFinalOverride());
+	const BfmeControlBarStringView &searchName = reinterpret_cast<const BfmeControlBarStringView &>( name );
+
+	for( const BfmeCommandButtonNode *command = ((const BfmeControlBarButtonList *)this)->m_commandButtons;
+			command; command = command->getNext() )
+		if( command->getName().compare( searchName ) == 0 )
+			return (CommandButton *)command->getFinalOverride();
 
 	return NULL;  // not found
 
