@@ -72820,6 +72820,8 @@ name,address,notes
 ?bfmeDoBUA@BfmeInnerBUA@@QAEXPAX@Z,0x00024D70,pin
 ?bfmeDoBUC@BfmeSubBUC@@QAEXPAX000@Z,0x00002A59,pin
 ?bfmeDoBVC@BfmeSubBVC@@QAEXPAX000@Z,0x00001C17,pin
+?bfmeDoC1005@BfmeItem1005@@QAEXH@Z,0x00004930,pin
+?bfmeDoD1005@BfmeItem1005@@QAEXH@Z,0x00007513,pin
 ?bfmeDoDZD@BfmeThingDZD@@QAEXXZ,0x00022999,pin
 ?bfmeDoECKa@BfmeHeldECKa@@QAEXXZ,0x007EAA70,pin
 ?bfmeDoECKb@BfmeHeldECKb@@QAEXXZ,0x007EAB40,pin
@@ -73300,6 +73302,8 @@ name,address,notes
 ?bfmeGoal952@BfmeHolder952@@QAEPAVBfmeTarget952@@XZ,0x0000E570,pin
 ?bfmeGoalA1003@BfmeHold1003@@QAEPAXXZ,0x0000E570,pin
 ?bfmeGoalB1003@BfmeSink1003@@QAEPAXXZ,0x0000E570,pin
+?bfmeGoalE1005@BfmeHold1005@@QAEPAUBfmeGoal1005@@XZ,0x0000E570,pin
+?bfmeGoalF1005@BfmeHold1005@@QAEPAUBfmeGoal1005@@XZ,0x0000E570,pin
 ?bfmeGrab@BfmeSourceA@@QAEPAXPAPAX@Z,0x00019876,Open-BFME5 ILT the vector assignment at 0x00095A50 grabs through
 ?bfmeGrab@BfmeSourceB@@QAEPAXPAPAX@Z,0x000314E9,Open-BFME5 ILT the vector assignment at 0x000B54C0 grabs through
 ?bfmeGrab@BfmeSourceC@@QAEPAXPAPAX@Z,0x0002EBC2,Open-BFME5 ILT the vector assignment at 0x002F8980 grabs through
@@ -73460,6 +73464,7 @@ name,address,notes
 ?bfmeKindCGG@BfmeOtherCGG@@QAEHPAX@Z,0x0004A719,pin
 ?bfmeKindCQE@BfmeXCQE@@QAEDXZ,0x00012E3B,pin
 ?bfmeKindFAH@BfmeObjFAH@@QAEHPAX@Z,0x0004A719,pin
+?bfmeLayerForPosition@Pathfinder@@QAEHPAVObject@@UCoord3D@@@Z,0x00040F52,Open-BFME5 Pathfinder ILT to body 0x003E5CA0; returns ground layer 1 or bridge layer 2..15 for an Object position
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLog993B@BfmeLog993@@QAEXHPADH0HHHH@Z,0x00015235,pin
@@ -73595,6 +73600,8 @@ name,address,notes
 ?bfmeNotifyPlain@BFMEPathfindLayerFields@@QAEXXZ,0x0003A03F,alias of the private PathfindLayer spelling pinned below; AIPathfind.cpp reaches the notification setDestroyed makes when the bridge at +0x38 is null through a view struct
 ?bfmeNotifyPlain@PathfindLayer@@AAEXXZ,0x0003A03F,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is null
 ?bfmeNowCBE@@YAPAXXZ,0x008FD440,pin
+?bfmeObjectEnteringInfluence@Player@@QAEXPAVObject@@@Z,0x00029875,Open-BFME5 Player ILT that adds an Object's power influence; called by recursive transfer wrapper 0x001C3710
+?bfmeObjectLeavingInfluence@Player@@QAEXPAVObject@@@Z,0x0000EACA,Open-BFME5 Player ILT that removes an Object's power influence; called by recursive transfer wrapper 0x001C3710
 ?bfmeOnceBXF@BfmeThingBXF@@QAEXXZ,0x0000E3AE,pin
 ?bfmeOne920F@BfmeThing920F@@QAEXP6AXPAVLocomotorTemplate@@@Z@Z,0x000497DD,pin
 ?bfmeOne921G@BfmeThing921G@@QAEXXZ,0x0004287A,pin
@@ -73993,6 +74000,7 @@ name,address,notes
 ?bfmeToggle997@BfmeA997@@QAEXXZ,0x000200D1,pin
 ?bfmeTouch982C@BfmeT982@@QAEXXZ,0x0002D2C7,pin
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
+?bfmeTransferPowerInfluence@Object@@QAEXPAVPlayer@@0@Z,0x00014B91,Open-BFME5 recursive Object power-influence transfer ILT to body 0x001C3710
 ?bfmeTry996@BfmeB996@@QAEDHHPAD@Z,0x00038163,pin
 ?bfmeTryANA@BfmeThingANA@@QAEHPAX0@Z,0x0003381B,pin
 ?bfmeTwo920F@BfmeThing920F@@QAEXP6AXPAVLocomotorTemplate@@@Z@Z,0x00012B20,pin
@@ -80028,7 +80036,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeObjectLeavingInfluence@Player@@QAEXPAVObject@@@Z,0x0000EACA,Open-BFME5 Player ILT that removes an Object's power influence; called by recursive transfer wrapper 0x001C3710
-?bfmeObjectEnteringInfluence@Player@@QAEXPAVObject@@@Z,0x00029875,Open-BFME5 Player ILT that adds an Object's power influence; called by recursive transfer wrapper 0x001C3710
-?bfmeTransferPowerInfluence@Object@@QAEXPAVPlayer@@0@Z,0x00014B91,Open-BFME5 recursive Object power-influence transfer ILT to body 0x001C3710
-?bfmeLayerForPosition@Pathfinder@@QAEHPAVObject@@UCoord3D@@@Z,0x00040F52,Open-BFME5 Pathfinder ILT to body 0x003E5CA0; returns ground layer 1 or bridge layer 2..15 for an Object position
