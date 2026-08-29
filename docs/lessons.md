@@ -864,6 +864,45 @@ and a local `clear()` spelled the way STLport spells it -- head re-read on every
 iteration, `_STL::allocator<Node>().deallocate(p, 1)` for the free -- and it
 reproduces retail's reload pattern exactly.
 
+## Re-anchoring a $L funclet row: bytes narrow it, the COMDAT record settles it
+
+A row whose `object-symbol=` names a compiler-local label (`$L51425`, `$T294`,
+`$SG…`) breaks on ANY edit to its TU -- those numbers are assigned during
+codegen across the whole file, so the gate stops at `symbol not found in
+object: $L51425` before it compares a byte. That makes such a destination
+expensive but not untouchable. Screen for it before choosing a cluster:
+
+    grep -F ",<destination>," reverse/functions.csv | grep -c 'object-symbol=[$]'
+
+Recovering the new label takes TWO filters and neither is enough alone.
+
+  BYTES NARROW IT. Compile, then for every `$…` label in the object compare its
+  bytes against retail at the row's RVA with relocation sites masked on both
+  sides (build.read_object_symbol_bytes returns the relocs). Funclets are 8-25
+  bytes and generic, so expect several hits -- lanapi's three rows matched 2,
+  10 and 2 candidates.
+
+  THE COMDAT RECORD SETTLES IT. A funclet's section is
+  IMAGE_COMDAT_SELECT_ASSOCIATIVE, and the section-definition symbol's aux
+  record carries the associated section number at offset 12 with the selection
+  byte at 14. Intersect the byte candidates with "associated with the section
+  that defines the parent function" and exactly one survives:
+
+      $L50814 -> $L50829   section 206, associated with 205 = RequestChat
+      $L51425 -> $L51415   section 236, associated with 235 = addGame
+
+  The parent comes from the row's own `parent=` note where it has one; a
+  gen-alias row's prose note ("LANAPI::addGame second getName temporary") names
+  it too, and when the association agrees with the prose that is two
+  independent lines of evidence rather than adjacency. If neither filter leaves
+  one candidate, STOP -- a wrong anchor seats a byte-matching row under an
+  invented claim and no gate can see it.
+
+Apply with `add_match.py --replace-existing --notes` (the sanctioned path for
+rewriting a row). Where a TU has several such rows the gate cannot pass until
+all of them are right, so the first N need `--no-verify` and one `./build.sh`
+verifies the set.
+
 ## Half the cluster-marker files are naked dumps, and they are not merge work
 
 Measured over all 887 files carrying a `readable body of` marker: **408 are
