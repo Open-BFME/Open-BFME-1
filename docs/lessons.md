@@ -5288,3 +5288,39 @@ unresolvable case **explicit and separate**: a candidate whose relocation symbol
 resolves to nothing is UNDECIDED, and undecided must never narrow the field. The
 refusal table has to distinguish "this candidate disagrees" from "this candidate
 could not be resolved", or it misleads in exactly the way the two defects did.
+
+## A REGRESSION test and a BOUNDARY GUARD are different things -- label which you wrote
+
+Today produced at least three tests that passed with and without the fix they
+claimed to cover. The distinction that prevents it:
+
+  * **regression test** -- verified FAILING without the change and passing with
+    it. It proves the change did something.
+  * **boundary guard** -- passes either way today, and only fails against a
+    WRONG future implementation. It proves nothing now and protects later.
+
+Both are worth writing. Neither substitutes for the other, and **claiming a
+boundary guard as a regression test is how a suite grows tests that certify
+nothing.** `test_a_tie_is_broken_by_where_the_relocation_points` was verified
+failing first; `test_an_unpinned_symbol_does_not_break_a_tie` was not, and was
+labelled a guard rather than promoted.
+
+## Design a defect out rather than avoiding it
+
+Filter 2 had to avoid two known traps -- set-equality over additive symbol
+addresses, and treating an unpinned symbol as agreement. Neither was avoided by
+remembering to; both were made unreachable:
+
+  * **No new comparison was written.** The gate already resolves a relocation by
+    trying each candidate address until one reproduces retail's bytes, so the
+    verdict asks *"is retail's value among this symbol's addresses"*. Set
+    equality is not expressible on that path. Reusing it is also what the other
+    lane's test would have CALLED rather than reimplemented -- which is the
+    argument for building the shared machinery once.
+  * **The verdict is three-valued** -- `True` / `False` / `None` -- and only
+    `False` eliminates. A candidate whose symbol is absent from the map neither
+    wins nor loses, so an unresolvable tie stays a REPORTED tie rather than
+    collapsing to a false answer.
+
+A rule you must remember fails the moment someone writes a small script that
+feels obviously right. **A shape that cannot express the mistake does not.**
