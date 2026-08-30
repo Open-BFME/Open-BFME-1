@@ -377,9 +377,30 @@ def measure_worktree(root, cache):
     return fold(collections.defaultdict(collections.Counter), scanned, ledger), len(paths)
 
 
-def measure_blobs(root, revision, cache):
+def partial_blobs(root, only):
+    """The blob map a partial commit of `only` would leave behind.
+
+    `--staged` compares the WHOLE index against HEAD, so on a partial commit --
+    `git commit <paths>` while other work sits staged -- it attributes the held
+    work to the commit being made. That misreported a trailer once. This takes
+    the index blob for the committed paths and HEAD's for everything else, which
+    is what the tree will actually look like.
+    """
+    head, index = listed_blobs(root, "HEAD"), listed_blobs(root, None)
+    def selected(path):
+        return any(path == sel or path.startswith(sel.rstrip("/") + "/")
+                   for sel in only)
+    merged = {p: sha for p, sha in head.items() if not selected(p)}
+    merged.update({p: sha for p, sha in index.items() if selected(p)})
+    if merged == head:
+        fail(f"--only selects nothing staged: {', '.join(only)}")
+    return merged
+
+
+def measure_blobs(root, revision, cache, blobs=None):
     """area -> counters for a tree git already holds: HEAD, or the staged index."""
-    blobs = listed_blobs(root, revision)
+    if blobs is None:
+        blobs = listed_blobs(root, revision)
     label = revision or "the index"
     if LEDGER not in blobs:
         fail(f"{label} has no {LEDGER}")
@@ -444,12 +465,19 @@ def main(argv=None):
                         help="repository to measure (default: this repo)")
     parser.add_argument("--staged", action="store_true",
                         help="print only the commit trailer, staged index vs HEAD")
+    parser.add_argument("--only", nargs="+", default=[], metavar="PATH",
+                        help="with --staged, attribute only these paths to the "
+                             "commit and take everything else from HEAD -- for a "
+                             "partial commit made while other work is staged")
     args = parser.parse_args(argv)
     root = args.root.resolve()
     cache = Cache(root)
+    if args.only and not args.staged:
+        fail("--only belongs to --staged")
     if args.staged:
+        after = partial_blobs(root, args.only) if args.only else None
         line = trailer(totals(measure_blobs(root, "HEAD", cache)),
-                       totals(measure_blobs(root, None, cache)))
+                       totals(measure_blobs(root, None, cache, after)))
     else:
         areas, tracked = measure_worktree(root, cache)
         line = table(areas, tracked)
