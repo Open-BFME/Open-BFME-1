@@ -4758,3 +4758,68 @@ constructor by the address it stores.
 **And the framing correction worth keeping: "two questions, not sixty-seven" was
 the right instinct, and both answers came back UNAVAILABLE rather than SETTLED.
 The leverage was real; the evidence was not there to spend it on.**
+
+## A cache keyed on what was OPENED cannot see a file that changes what WILL be opened
+
+The most dangerous no-op yet, because it wears the appearance of a passed
+prediction.
+
+Adding a new header to a shim directory does **not** invalidate the deps cache.
+The sidecar records the files the compiler actually opened last time, and a new
+higher-priority header is not among them -- so nothing looks stale. The run
+reported `Compile: 0 of 3 TU(s)` and a green 209/209, which read exactly like the
+prediction being confirmed. Nothing had been compiled at all.
+
+Caught only by asking the sidecar which `WinInstanceData.h` it had read, rather
+than trusting the green.
+
+**So whenever a change ADDS a file to an include path rather than editing one
+already on it, the deps cache cannot know. Force the rebuild, or verify from the
+sidecar that the new file was opened, before believing any result.** This is the
+same family as editing `reference/.../vertmaterial.h` when a local copy wins:
+both are the build reading something other than what you edited.
+
+## A shim-path grep matched a DIFFERENT shim by prefix
+
+`grep -rl '/Ireference/shims/gamewindow'` also matches
+`/Ireference/shims/gamewindowlist`. A substring false positive hid an entire
+third shim, and with it the fact that two shims disagree about GameWindow's
+layout.
+
+Third matching-or-counting defect of the day, after counting rows instead of
+bodies and the double-counted caller table. **When a name is a prefix of another
+name, an unanchored grep is a guess.** Anchor the path or read the deps sidecar
+-- which is what eventually caught this one, and is the rule this file already
+carried for a different reason.
+
+## PREDICT THE CASUALTIES: first use, and it stopped a wrong change
+
+The discipline is: write down which rows will go red BEFORE compiling, name the
+ones expected to stay green, then compare.
+
+Predicted three -- `winGet{Enabled,Disabled,Hilite}Color` moving position 0 to
+position 2 -- with the three BorderColor getters explicitly called out as
+staying green. **Measured ten.** All six getters plus four `GadgetSlider Get*`
+wrappers; the headline "stays green" prediction was wrong.
+
+The cause was the hidden third shim: `GameWindowManager.cpp` builds against a
+GameWindow.h with no `m_bfmeAnchor`, so its draw-data base sits four low, and
+under that base the ZH field order coincidentally puts `color` and `borderColor`
+where the correct order puts `image` and `borderColor`. Swapping two fields
+slides both by four instead of moving one to position 2.
+
+**Without the written prediction, ten red rows would have read as "the change is
+bigger than expected" rather than "the model is wrong."** A count that misses is
+a falsification; a count you never wrote down is a surprise you rationalise.
+
+## The rotation-hole proof held, independently of the failed change
+
+Untouched by the revert, and it is the strongest evidence in the round: the three
+position-2 getter bodies exist -- 0x0047A280, 0x0047A2C0, 0x0047A300 --
+interleaved with the correctly-named BorderColor getters at 0x0047A260,
+0x0047A2A0, 0x0047A2E0, and **all three are held by `?dup_` placeholders**.
+
+A rotation must leave a hole. There are three holes, one per group, exactly
+where the field order predicts. That is the third confirmed instance of the
+rotation-hole structure, and the first where the prediction was made before the
+holes were looked for.
