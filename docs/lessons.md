@@ -5254,3 +5254,37 @@ have been skipped by the third attempt and absent for the two that mattered
 most.
 
 **Design the check so that using it is cheaper than justifying skipping it.**
+
+## A full gate's GREEN is a statement about the base it ran on
+
+On a tree this busy, that base can be gone before the gate returns. **Eighteen
+commits landed during one full-gate run**, so its green described a tree that no
+longer existed by the time it finished.
+
+The correct handling, and it was not obvious: rebase and **re-verify on the new
+base before pushing**, rather than trusting a result that predates eighteen other
+commits. A green is evidence about a specific tree, not a property the commit
+carries with it.
+
+**And the subtler half: a regenerated artefact from a stale run is worse than no
+regeneration.** That gate refreshed `reloc_names.csv` -- a *valid* refresh of an
+18-commit-stale tree, which is precisely what makes it dangerous: it looks
+current, it is internally consistent, and it silently reverts eighteen commits
+worth of other lanes' updates. It was discarded rather than pushed.
+
+So on a shared tree: check how far the base moved while a long verification ran,
+and treat any file the run REGENERATED as stale output rather than as a result.
+
+## The same defect in a different costume, twice in one evening
+
+`len({a, b}) == 1` with two empty sets comparing equal is filter 1's exact
+failure -- **an absence of evidence counted as a match** -- and it recurred in a
+scratch script written by someone who had just read filter 1.
+
+That is the strongest argument for building the check into the tool rather than
+carrying it as a rule. A rule you have just read does not survive a small script
+that feels obviously right. So an implementation of filter 2 must make the
+unresolvable case **explicit and separate**: a candidate whose relocation symbol
+resolves to nothing is UNDECIDED, and undecided must never narrow the field. The
+refusal table has to distinguish "this candidate disagrees" from "this candidate
+could not be resolved", or it misleads in exactly the way the two defects did.
