@@ -904,6 +904,17 @@ void peerSetQuietMode(PEER peer, int quiet)
 	chatSetQuietMode(connection->chat, quiet);
 }
 
+void peerSetGroupID(PEER peer, int groupID)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->title[0])
+		return;
+	if (!connection->connected)
+		return;
+	connection->groupID = groupID;
+}
+
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
 {
 	piConnection *connection = (piConnection *)peer;
