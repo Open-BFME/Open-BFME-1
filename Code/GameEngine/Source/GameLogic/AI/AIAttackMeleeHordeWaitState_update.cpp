@@ -10,6 +10,11 @@ enum StateReturnType
 	STATE_SUCCESS = -2
 };
 
+enum KindOfType
+{
+	KINDOF_MELEE_HORDE_TARGET = 92
+};
+
 struct Coord3D
 {
 	float x, y, z;
@@ -52,6 +57,9 @@ public:
 	virtual void updateMeleeTarget(Object *target) = 0;
 	HORDE_SLOT(72);
 	virtual Bool isMeleeTargetReady(Object *target) = 0;
+	HORDE_SLOT(74); HORDE_SLOT(75); HORDE_SLOT(76);
+	virtual void prepareMeleeTarget(Object *target) = 0;
+	virtual void setMeleeFormation(unsigned int formation) = 0;
 };
 
 class ContainModuleInterface
@@ -73,6 +81,7 @@ class Thing
 {
 public:
 	float bfmeRelativeAngleTo(const Coord3D *position) const;
+	Bool bfmeIsKindOf(KindOfType kind) const;
 	void setOrientation(float angle);
 
 	const Coord3D *getPosition() const { return &m_position; }
@@ -88,10 +97,19 @@ class Object : public Thing
 {
 public:
 	Player *getControllingPlayer() const;
+	Object *bfmeResolveMeleeTarget(int index);
+	int getLayer() const;
+	float getDistanceSquared(const Object *other) const;
 	ContainModuleInterface *getContain() const { return m_contain; }
+	unsigned int getMeleeFormation() const { return m_meleeFormation; }
+	Bool isMeleeHordeTarget() const { return (m_kindFlags & 0x20) != 0; }
 
 private:
-	unsigned char m_pad_048[0x1b4];
+	unsigned char m_pad_048[0x2c];
+	unsigned int m_meleeFormation;
+	unsigned char m_pad_078[0x1c];
+	unsigned char m_kindFlags;
+	unsigned char m_pad_095[0x167];
 	ContainModuleInterface *m_contain;
 };
 
@@ -118,6 +136,7 @@ Bool bfmeMeleeHordeTargetInvalid(Object *source, Object *target);
 class AIAttackMeleeHordeWaitState
 {
 public:
+	virtual StateReturnType onEnter();
 	virtual StateReturnType update();
 
 private:
@@ -126,6 +145,59 @@ private:
 	unsigned char m_pad_020[4];
 	UnsignedInt m_waitUntil;
 };
+
+StateReturnType AIAttackMeleeHordeWaitState::onEnter()
+{
+	Object *source = m_machine->m_owner;
+	if (m_machine->isGoalObjectDestroyed())
+		return STATE_FAILURE;
+
+	Object *target = m_machine->getGoalObject();
+	if (target == 0)
+		return STATE_FAILURE;
+
+	ContainModuleInterface *contain = source->getContain();
+	if (contain != 0)
+	{
+		HordeContainInterface *horde = contain->getHordeContainInterface();
+		if (horde == 0)
+			return STATE_FAILURE;
+
+		unsigned int formation = target->getMeleeFormation();
+		if (target->isMeleeHordeTarget())
+		{
+			Object *resolved = target->bfmeResolveMeleeTarget(0);
+			if (resolved != 0)
+			{
+				formation = resolved->getMeleeFormation();
+				target = resolved;
+			}
+		}
+
+		if (bfmeMeleeHordeTargetInvalid(source, target))
+			return STATE_SUCCESS;
+
+		if (!horde->isMeleeTargetReady(target))
+		{
+			int maximumDistance = 40;
+			if (target->bfmeIsKindOf(KINDOF_MELEE_HORDE_TARGET) &&
+				source->getLayer() != 1)
+				maximumDistance = 60;
+
+			if (source->getDistanceSquared(target) <
+				(float)(maximumDistance * maximumDistance))
+				horde->prepareMeleeTarget(target);
+			else
+				return STATE_SUCCESS;
+		}
+
+		horde->setMeleeFormation(formation);
+		m_waitUntil = TheGameLogic->m_frame + 15;
+		horde->beginMelee(target);
+	}
+
+	return STATE_CONTINUE;
+}
 
 StateReturnType AIAttackMeleeHordeWaitState::update()
 {

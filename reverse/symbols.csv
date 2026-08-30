@@ -76957,6 +76957,7 @@ name,address,notes
 ?getControllingPlayer@Object@@QBEPAVPlayer@@XZ,0x00020824
 ?bfmeMeleeHordeTargetInvalid@@YA_NPAVObject@@0@Z,0x0002056D,AIAttackMeleeHordeWaitState target-shape helper ILT
 ?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z,0x00049413,TU-specific name for the relative-angle helper used by AIAttackMeleeHordeWaitState
+?bfmeResolveMeleeTarget@Object@@QAEPAV1@H@Z,0x0000FAA6,TU-specific name for the melee target resolution helper used by AIAttackMeleeHordeWaitState
 ?getControllingPlayer@Team@@QBEPAVPlayer@@XZ,0x0002369B
 ?getControllingPlayer@TeamPrototype@@QBEPAVPlayer@@XZ,0x0000F2DB,TeamInQueue disband call pin
 ?getCountdownPercent@OCLUpdate@@QAEMXZ,0x00047069,Open-BFME5 ILT; ?updateContextOCLTimer@ControlBar@@AAEXXZ at 0x004AA980 passes its result to the text display
@@ -76976,6 +76977,7 @@ name,address,notes
 ?getDisconnectSlot@NetDisconnectPlayerCommandMsg@@QAEEXZ,0x00028A1F,ILT thunk; real body 0x673C70
 ?getDisplayName@PlayerTemplate@@QBE?AVUnicodeString@@XZ,0x000300D5,ILT thunk used by call site
 ?getDistanceSquared@SupplyWarehouseActionObject@@QBEMPBV1@@Z,0x00043CED,SupplyWarehouse action TU-local semantic shim; ILT reaches the 0x000ED3B0 object separation-squared body whose layout and sole Object argument prove the call
+?getDistanceSquared@Object@@QBEMPBV1@@Z,0x00043CED,Object separation-squared ILT used by AIAttackMeleeHordeWaitState
 ?getDynamicGameLODIndex@GameLODManager@@QAEHVAsciiString@@@Z,0x0001703F,harvested from parseDynamicGameLODDefinition (thunk)
 ?getEachPlayerFromMask@PlayerList@@QAEPAVPlayer@@AAG@Z,0x0002EE60,ILT getEachPlayerFromMask (body 0xDF4A0)
 ?getEachPlayerFromMask@PlayerList@@QAEPAVPlayer@@AAG@Z,0x000DF4A0,body PlayerList::getEachPlayerFromMask
