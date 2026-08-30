@@ -4118,3 +4118,47 @@ coin flip.
 
 The row needs a body it can name on its own. Re-anchor with the three-filter
 recipe rather than expecting the healer to resolve it.
+
+## A CONSTANT delta is a shifted member list; a SCATTERED one is a different list
+
+The cheapest first read on any near-miss, and it tells you which kind of work it
+is before you spend anything:
+
+  * **constant delta across every differing operand** -> the members are the
+    same and sit at a uniform offset. View-or-shim work.
+  * **scattered divergence** -> the member LIST differs. You need the class;
+    no view reaches it.
+
+`GameInfo::clearSlotList`, `W3DTreeDrawModuleData`'s constructor and
+`evaluateAsVisibleCliff` are all scattered -- header items. `Image`'s
+constructor confirms it from a third direction: it initialises two members BFME
+does not have, and retail's EH state byte is **1** where ours is **2**, so BFME's
+Image tracks one unwindable member where ours tracks two. An EH state count is
+another readout of the member list.
+
+## A frame-size difference is SHIM work by nature, not by preference
+
+`ControlBarSchemeManager::init` is 177 bytes with every operand identical except
+three, and those differ by a uniform **0x1BF0**. Our prologue reserves 0x243c
+through `__chkstk` where retail reserves 0x84c, and the body constructs a local
+`INI`. So **BFME's INI is 7152 bytes smaller than this tree's** -- almost
+certainly a shorter line buffer.
+
+The reason it cannot be a view: **a frame size is computed by the compiler from
+`sizeof`**, so no cast, no local replica and no reinterpretation reaches it. That
+is a different category from "a view would be ugly here" -- it is unreachable in
+principle, like the this-adjustment residue and the ILT-routed call.
+
+It is still TU-scoped, so it is a small contained shim rather than a shared
+header change.
+
+## Sweeping a suspected blind spot and finding it nearly empty IS the result
+
+The `nd > 40` band was taken by hand precisely because the automated scan could
+not see it -- the scan only ever surfaced rows whose difference was small enough
+to be constants. The band contained one shim item and four header items, and no
+views at all.
+
+That closes the question rather than leaving it as a standing "we never looked
+there". A negative sweep of a region you had reason to suspect is worth its cost;
+what is not worth it is carrying the suspicion indefinitely.
