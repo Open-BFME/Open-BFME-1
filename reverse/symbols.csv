@@ -81188,3 +81188,4 @@ _bfmePiDisconnectCleanupFromEsi,0x008572E0,GameSpy Peer static disconnect cleanu
 _bfmePiThinkFromEsi,0x00857370,GameSpy Peer static think helper with peer carried in ESI
 _peerShutdown,0x00858450,GameSpy Peer shutdown reached by the blocking shutdown check
 _piIsCallbackFinishedCompareCallback,0x0085E1F0,GameSpy Peer callback ID comparator ICF alias at gpiTransferCompare
+_piSBStartListingGroups,0x00865280,GameSpy Peer server browser group listing starter
