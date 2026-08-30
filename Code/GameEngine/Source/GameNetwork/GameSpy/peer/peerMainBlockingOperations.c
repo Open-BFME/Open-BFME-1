@@ -1200,6 +1200,15 @@ void peerStartListingGamesA(PEER peer, const unsigned char *fields,
 		piAddListingGamesCallback(peer, 0, 0, 0);
 }
 
+void peerStopListingGames(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->title[0])
+		return;
+	piSBStopListingGames(peer);
+}
+
 typedef struct piEnumPlayersData
 {
 	peerEnumPlayersCallback callback;
