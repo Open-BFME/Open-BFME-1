@@ -1440,17 +1440,20 @@ void StreakRendererClass::RenderStreak
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/StreakRendererClass_getVertexBuffer_Thunk.cpp
-// ?getVertexBuffer@StreakRendererClass@@AAEPAUVertexFormatXYZUV1@@I@Z present-unmatched
+// BFME keeps the pair 0x18 higher than this tree does: m_vertexBufferSize at
+// StreakRendererClass+0x44 and m_vertexBuffer at +0x48, against +0x2c and
+// +0x30 here. Five sites in this body, all of them these two members.
+#define BFME_STREAK_VBSIZE(s) (*(unsigned int *)((char *)(s) + 0x44))
+#define BFME_STREAK_VB(s)     (*(VertexFormatXYZUV1 **)((char *)(s) + 0x48))
 VertexFormatXYZUV1 *StreakRendererClass::getVertexBuffer(unsigned int number)
 {
 	// TODO: use a stl vector instead of our own array.
-	if (number > m_vertexBufferSize)
+	if (number > BFME_STREAK_VBSIZE(this))
 	{
 		unsigned int numberToAlloc = number + (number >> 1);
-	  delete [] m_vertexBuffer;
-		m_vertexBuffer = W3DNEWARRAY VertexFormatXYZUV1[numberToAlloc];		
-		m_vertexBufferSize = numberToAlloc;
+	  delete [] BFME_STREAK_VB(this);
+		BFME_STREAK_VB(this) = W3DNEWARRAY VertexFormatXYZUV1[numberToAlloc];		
+		BFME_STREAK_VBSIZE(this) = numberToAlloc;
 	}
 
 #ifdef _INTERNAL
@@ -1460,5 +1463,5 @@ VertexFormatXYZUV1 *StreakRendererClass::getVertexBuffer(unsigned int number)
 	}
 #endif
 
-	return m_vertexBuffer;
+	return BFME_STREAK_VB(this);
 }
