@@ -80285,6 +80285,7 @@ _bfmeCbAKC,0x00032155,pin
 _bfmeCbEMB,0x00863440,pin
 _bfmeCbEOEa,0x0003A760,pin
 _bfmeCbEOEb,0x0001F951,pin
+_bfmeCheck1252,0x008DB1F0,pin
 _bfmeConst1075350,0x00C75350,pin
 _bfmeCopy1152,0x00005934,pin
 _bfmeCopy1153,0x00005934,pin
@@ -80324,6 +80325,7 @@ _bfmeFmtStrEAA,0x00C7C7B4,pin
 _bfmeFmtStrEAC,0x00C7C7B4,pin
 _bfmeFnA1033,0x000487C0,pin
 _bfmeFnB1033,0x0001E0B0,pin
+_bfmeGet1252,0x008DB190,pin
 _bfmeGlobalTable12A6918,0x00EA6918,pin
 _bfmeHandler1233,0x008B91F0,pin
 _bfmeHash1228,0x008D3C50,pin
