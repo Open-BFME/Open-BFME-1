@@ -331,7 +331,11 @@ public:
 	BuildListInfo *getNext(void) const {return m_nextBuildList;}
 	AsciiString getBuildingName(void) const {return m_buildingName;} ///< Gets the name.
 	AsciiString getTemplateName(void) const {return m_templateName;} ///< Gets the name.
-	void setTemplateName(AsciiString name) {m_templateName = name;}
+	// SHIM: the receiver is bound first on purpose. Retail computes BOTH
+	// addresses before pushing -- lea edx,[param]; lea ecx,[m_templateName];
+	// push edx -- where the plain assignment pushes the parameter and then
+	// loads the receiver into the register it just used.
+	void setTemplateName(AsciiString name) { AsciiString &dst = m_templateName; dst = name; }
 	Int getNumRebuilds(void) {return m_numRebuilds;}
 	void decrementNumRebuilds(void);
 	void incrementNumRebuilds(void);
