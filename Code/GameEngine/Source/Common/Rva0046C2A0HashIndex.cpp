@@ -37,6 +37,23 @@ struct Rva0046C2A0Mapped
 	void *m_value;
 };
 
+struct Rva0046C000Mapped
+{
+	Rva0046C000Mapped() : m_counted(0) {}
+	Rva0046C000Mapped(const Rva0046C000Mapped &other) : m_counted(other.m_counted)
+	{
+		if (m_counted)
+			++m_counted->m_references;
+	}
+	~Rva0046C000Mapped()
+	{
+		if (m_counted && --m_counted->m_references <= 0)
+			m_counted->release(1);
+	}
+
+	Rva0046C2A0Counted *m_counted;
+};
+
 namespace rts
 {
 	template <class T> struct hash;
@@ -58,3 +75,7 @@ namespace rts
 typedef std::hash_map<AsciiString, Rva0046C2A0Mapped, rts::hash<AsciiString>, rts::equal_to<AsciiString> > Rva0046C2A0Map;
 
 template Rva0046C2A0Mapped &Rva0046C2A0Map::operator[](const AsciiString &key);
+
+typedef std::hash_map<AsciiString, Rva0046C000Mapped, rts::hash<AsciiString>, rts::equal_to<AsciiString> > Rva0046C000Map;
+
+template Rva0046C000Mapped &Rva0046C000Map::operator[](const AsciiString &key);
