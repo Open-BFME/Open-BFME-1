@@ -1,4 +1,5 @@
 name,target_rva,reason
+??0PostLoadableClass@@QAE@XZ,0x0039B050,"false ICF alias: its object has a DIR32 relocation to ??_7PostLoadableClass@@6B@ at byte 4, while retail has a literal zero there and no relocation. The same 13 retail bytes remain correctly covered by ??0IPEnumeration@@QAE@XZ, whose object has the literal-zero shape. No named caller reaches this address."
 ?d_000ee770@@YAXXZ,0x000EE770,"gen-dump placeholder superseded by the recovered BfmeIterableObject::bfmeIterate identity and exact C++ body"
 ?d_0040eff0@@YAXXZ,0x0040EFF0,"gen-dump placeholder superseded by the recovered Display::bfmeStopMovie identity and exact C++ body"
 ?d_005ef9a0@@YAXXZ,0x005EF9A0,"gen-dump placeholder superseded by the recovered BfmeSubAccept_00007289 identity and exact C++ body"
