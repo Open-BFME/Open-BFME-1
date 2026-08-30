@@ -9526,6 +9526,7 @@ name,address,notes
 ?Add_Fill_Light@LightEnvironmentClass@@QAEXXZ,0x0094ACB0,retail callee for Calculate_Fill_Light
 ?Add_Head@?$DLListClass@USmudgeSet@@@@QAEXPAV?$DLNodeClass@USmudgeSet@@@@@Z,0x000362D2
 ?Add_Line@Render2DClass@@QAEXABVVector2@@0MK@Z,0x0002A92D,Render2DClass::Add_Outline four direct calls to the retail link thunk
+?Add_Line@Render2DClass@@QAEXABVVector2@@0MKK@Z,0x000409E4,BFME W3DDisplay two-color drawLine callee; ILT to the retail Add_Line body at 0x006E7750
 ?Add_Prototype_Impl@AssetRegistry@@QAEXPAX@Z,0x009EF1A0,Add_Prototype thiscall impl body
 ?Add_Quad@Render2DClass@@QAEXABVRectClass@@0KKKK@Z,0x0004183A,retail ILT thunk to the six-argument quad body at 0x006E7210
 ?Add_To_Collection@CullSystemClass@@IAEXPAVCullableClass@@@Z,0x008E21D0
