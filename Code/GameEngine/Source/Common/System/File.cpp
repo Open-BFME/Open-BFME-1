@@ -346,6 +346,47 @@ __declspec(noinline) RAMFile::RAMFile()
 	m_size = 0;
 }
 
+void RAMFile::nextLine( char *buf, Int bufSize )
+{
+	Int i = 0;
+	while( m_pos < m_size && m_data[m_pos] != '\n' )
+	{
+		if( buf != NULL && i < bufSize - 1 )
+		{
+			buf[i] = m_data[m_pos];
+			++i;
+		}
+		++m_pos;
+	}
+
+	if( m_pos < m_size )
+	{
+		if( buf != NULL && i < bufSize )
+		{
+			buf[i] = m_data[m_pos];
+			++i;
+		}
+		++m_pos;
+	}
+
+	if( buf != NULL )
+	{
+		if( i < bufSize )
+		{
+			buf[i] = 0;
+		}
+		else
+		{
+			buf[bufSize] = 0;
+		}
+	}
+
+	if( m_pos >= m_size )
+	{
+		m_pos = m_size;
+	}
+}
+
 // StreamingArchiveFile, 0x01143CA8 in the table above. It lives here rather than
 // in StreamingArchiveFile.cpp for one reason: it is laid out on BFME's File, and
 // that file compiles against Zero Hour's, which is four bytes shorter because it
