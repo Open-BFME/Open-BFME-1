@@ -20,7 +20,8 @@ typedef struct piConnection
 	char room[3][257];
 	int enteringRoom[3];
 	int inRoom[3];
-	char reserved1[0x9A8 - 0x39C];
+	char names[3][512];
+	int oldFlags[3];
 	int groupID;
 	char titleRoomChannel[257];
 	char reservedTitleRoom[0xAB0 - 0xAAD];
@@ -940,6 +941,15 @@ const char *peerGetRoomChannelA(PEER peer, int roomType)
 	if (!connection->inRoom[roomType] && !connection->enteringRoom[roomType])
 		return 0;
 	return connection->room[roomType];
+}
+
+const char *peerGetRoomNameA(PEER peer, int roomType)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->inRoom[roomType])
+		return 0;
+	return connection->names[roomType];
 }
 
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
