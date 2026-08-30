@@ -3089,16 +3089,22 @@ The worst case in the tree, and the one that most needs stating plainly. Six
 currently-MATCHED rows are green because a wrong row->address BINDING and a
 wrong LAYOUT cancel each other. Fix either alone and all six go red.
 
-Retail emits SIX draw-data setters, not nine, with array bases 0x48 / 0xB4 /
-0x120 and stride 0x6C (9 * sizeof WinDrawData):
+Retail emits NINE draw-data setters, three groups of three, with array bases
+0x48 / 0xB4 / 0x120, element stride 0x0C and fields at +0x00 Image, +0x04
+Color, +0x08 BorderColor:
 
-    0x00478FE0 byte 0x48   enabled.image     0x00479010 byte 0x4C   enabled.color
-    0x00479070 byte 0xB4   disabled.image    0x004790A0 byte 0xB8   disabled.color
-    0x00479120 byte 0x120  hilite.image      0x00479150 byte 0x124  hilite.color
+    0x00478FE0 byte 0x48    0x00479010 byte 0x4C    0x00479040 byte 0x50
+    0x00479070 byte 0xB4    0x004790A0 byte 0xB8    0x004790E0 byte 0xBC
+    0x00479120 byte 0x120   0x00479150 byte 0x124   0x00479190 byte 0x128
 
-Nothing writes +8, so the three `winSet*BorderColor` functions were never
-emitted at all -- unreferenced, COMDAT discarded. Yet the ledger has rows for
-them, MATCHED, bound to the `.color` bodies.
+This paragraph first said SIX, and that the three `winSet*BorderColor` bodies
+were never emitted. **That was wrong** -- they exist, parked under placeholder
+`?dup_004790XX@@YAXXZ` names. See "CORRECTION: the GameWindow BorderColor
+bodies DO exist" below for how they were found and for what the mistake
+teaches. The cancellation described here is unaffected: it is a uniform
+one-field rotation across all nine rows rather than six bodies with three
+missing, which if anything makes it tidier -- there is no retirement to decide,
+only a rebinding.
 
 Every row in the family is bound ONE FIELD TOO HIGH. Our GameWindow is 4 bytes
 short at the front, so our `.color` write lands on retail's `.image` byte and
