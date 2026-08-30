@@ -72431,6 +72431,7 @@ name,address,notes
 ?bfmeAny1133@BfmeThing1133@@QBEDABVBfmeBits1133@@@Z,0x000497D3,pin
 ?bfmeApply1023@BfmeB1023@@QAEXH@Z,0x00003FE4,pin
 ?bfmeApply1040@@YAXPAUBfmeS1040@@H@Z,0x009A6630,pin
+?bfmeApply1236@BfmeB1236@@QAEXPAX@Z,0x008AD8F0,pin
 ?bfmeApply980A@BfmeUseA980@@QAEPAXHH@Z,0x0000DA8A,pin
 ?bfmeApply980B@BfmeUseB980@@QAEPAXHH@Z,0x0004B01F,pin
 ?bfmeApply@BfmeSMCTarget@@QAEXHPBXH@Z,0x0002AD88,Open-BFME5 ILT thunk to body 0x0028EEB0; Object chain-tail forwarder at 0x001C1FB0 supplies the condition index optional opaque descriptor and frame count; bfme name records unrecovered retail types and spelling
@@ -72578,6 +72579,7 @@ name,address,notes
 ?bfmeBaseVDW@BfmeThingVDW@@QAEXHH@Z,0x00899F00,pin
 ?bfmeBaseZA@BfmeThingZA@@QAEXXZ,0x00025E1E,pin
 ?bfmeBaseZD@BfmeThingZD@@QAEXPAXVBfmeStrZD@@@Z,0x000035B2,pin
+?bfmeBegin1236@BfmeA1236@@QAEXXZ,0x008D2B50,pin
 ?bfmeBegin982C@BfmeHub982@@QAEXXZ,0x000219EF,pin
 ?bfmeBegin@BfmeSetupRecord@@QAEXXZ,0x007E8AC0,Open-BFME5 the member the two-field setup stubs call first
 ?bfmeBegin@BfmeSetupTarget@@QAEXXZ,0x007E8AC0,Open-BFME5 the member the setup stubs at 0x007E95A0 and siblings call first
@@ -73078,10 +73080,12 @@ name,address,notes
 ?bfmeElseBBD@@YAXXZ,0x00842C00,pin
 ?bfmeEmit1023@@YAXPAXPAD0H@Z,0x00049E86,pin
 ?bfmeEmit1231@BfmeA1231@@QAEXPAX0PAVBfmeE1231@@10H@Z,0x008CF5A0,pin
+?bfmeEmit1236@BfmeB1236@@QAEXPAXH0@Z,0x008ADBD0,pin
 ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z,0x0002CB79,Open-BFME5 ILT thunk to body 0x00417710; Gen_00417cb0::tail at 0x00417A70 calls it on this with the source result and its own argument; address-derived name in the same synthetic family as the class
 ?bfmeEnable@BfmeElemW@@QAEXHH@Z,0x000482AC,Open-BFME5 the ICF thunk (to 0x004482AC) the clear at 0x004B1720 calls on each element with a pair of ones
 ?bfmeEnd1100@BfmeZ1100@@QAEXH@Z,0x0003D578,pin
 ?bfmeEnd1111@BfmeK1111@@QAEXXZ,0x000097BE,pin
+?bfmeEnd1236@BfmeA1236@@QAEXXZ,0x008D2B80,pin
 ?bfmeEnd982C@BfmeHub982@@QAEXXZ,0x00008D4B,pin
 ?bfmeEnsureWA@BfmeThingWA@@QAEXXZ,0x0002DE02,pin
 ?bfmeEnter@Glo012F1024Item@@QAEXXZ,0x0000BC5D,Open-BFME5 ILT thunk to body 0x003AEE70; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 calls it on the 0xDC-byte item the advanced index selects; address-derived name
@@ -73814,6 +73818,7 @@ name,address,notes
 ?bfmeMake_0056E900@@YAHHH@Z,0x0003C65A,Open-BFME5 ILT the short-widening ctor at 0x0056E900 calls
 ?bfmeMake_0056e1c0@@YAPAXHH@Z,0x0003C65A,Open-BFME5 ILT the pair at 0x0056E1C0 and 0x0056E7C0 calls
 ?bfmeMark1027@BfmeQ1027@@QAEXH@Z,0x00024D70,pin
+?bfmeMark1236@BfmeA1236@@QAEXXZ,0x008D2C80,pin
 ?bfmeMarkUpgradeCompleted@Object@@QAEXPBVUpgradeTemplate@@@Z,0x00007086,Open-BFME5 ILT thunk to body 0x001C5B90; marks the indexed Object upgrade-completed bit then refreshes upgrade modules; descriptive spelling
 ?bfmeMatchRaw@Gen_002da6b0@@AAEEPAX0@Z,0x0001D813,Open-BFME5 ILT the byte-returning match the wrapper at 0x002DA6B0 calls
 ?bfmeMatchRaw@Gen_002da6d0@@AAEEPAX0@Z,0x0002DB69,Open-BFME5 ILT the byte-returning match the wrapper at 0x002DA6D0 calls
@@ -73991,8 +73996,10 @@ name,address,notes
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
 ?bfmeOwner1001@BfmeX1001@@QAEPAXXZ,0x00020824,pin
 ?bfmePause1027@BfmeX1027@@QAEXH@Z,0x00007513,pin
+?bfmePop1236@BfmeA1236@@QAEXXZ,0x008D2CC0,pin
 ?bfmePrep911E@BfmeSub911E@@QAEXXZ,0x0090F140,pin
 ?bfmePrep986C@BfmeC986@@QAEXXZ,0x00006258,pin
+?bfmePush1236@BfmeA1236@@QAEXPAX@Z,0x008D2BB0,pin
 ?bfmePushBack@BFMEAnimateWindowListPush@@QAEXABQAVAnimateWindow@@@Z,0x00022D36,BFME out-of-line list<AnimateWindow*>::push_back body 0x45DAE0 via ILT thunk
 ?bfmePushBackAux@Gen_00089d90@@IAEXABQAX@Z,0x0002FF1D,Open-BFME5 ILT the deque push_back at 0x00089D90 tail-jumps through
 ?bfmePushBackAux@Gen_0035b840@@IAEXABQAX@Z,0x00025284,Open-BFME5 ILT the deque push_back at 0x0035B840 tail-jumps through
@@ -74160,6 +74167,7 @@ name,address,notes
 ?bfmeSet1085@BfmeSub1085@@QAEXH@Z,0x00024D70,pin
 ?bfmeSet1087@BfmeN1087@@QAEXH@Z,0x00040007,pin
 ?bfmeSet1096@BfmeR1096@@QAEXH@Z,0x00049B02,pin
+?bfmeSet1236@BfmeA1236@@QAEXPAX@Z,0x008D2E00,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
 ?bfmeSetA1004@BfmeObj1004@@QAEXHH@Z,0x00032DEE,pin
