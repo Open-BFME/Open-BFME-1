@@ -951,6 +951,54 @@ def holds_funclet(body, relocs, target):
     return left == right
 
 
+def funclet_scan(path, row, target):
+    """Every $L in the parent's group, with what the comparison actually saw.
+
+    Returns [(label, bodylen, surviving, held)], where `surviving` counts the
+    bytes NOT covered by a relocation -- the evidence the comparison had to work
+    with -- and `held` is holds_funclet's verdict. funclet_candidates is this
+    filtered to the ones that held; the rest exists so a refusal can SHOW its
+    reasoning instead of dying with a bare label. `surviving=0` beside
+    `held=True` is the whole diagnosis of a body that matches on nothing.
+    """
+    parent = re.search(r"(?:^|;)parent=([^;]+)", row.get("notes", ""))
+    if not parent:
+        return []
+    stat = path.stat()
+    _data, _sections, symbols = _object_layout(str(path), stat.st_mtime_ns, stat.st_size)
+    handler = f"__ehhandler${parent.group(1)}"
+    group = {s["section"] for s in symbols
+             if s["name"] in (handler, parent.group(1)) and s["section"] > 0}
+    if not group:
+        return []
+    size = len(target)
+    seen = []
+    for symbol in symbols:
+        if symbol["section"] not in group or not re.fullmatch(r"\$L\d+", symbol["name"]):
+            continue
+        try:
+            body, relocs = read_object_symbol_bytes(path, symbol["name"], size)
+        except ValueError:
+            continue
+        masked = {i for offset, _rtype, _sym in relocs if offset + 4 <= size
+                  for i in range(offset, offset + 4)}
+        seen.append((symbol["name"], len(body), size - len(masked),
+                     holds_funclet(body, relocs, target)))
+    return seen
+
+
+def funclet_refusal(row, object_symbol, scan, size, reason):
+    """A refusal that shows its work: every candidate and what was compared."""
+    lines = [f"{row['name']} ({row['source']}): {object_symbol} {reason}."]
+    if scan:
+        for name, bodylen, surviving, held in scan:
+            lines.append(f"    {name:<12} bodylen={bodylen:>4}  "
+                         f"surviving={surviving:>3}/{size}  masked-equal={held}")
+    else:
+        lines.append("    no $L bodies in the parent's group at all")
+    return "\n".join(lines)
+
+
 def funclet_candidates(path, row, target):
     """Every $L body in the claimed parent's group that IS this row's funclet.
 
@@ -967,32 +1015,8 @@ def funclet_candidates(path, row, target):
     whose bytes equal retail at this row's address. The caller decides, and only
     a unique answer may be used; a group of look-alikes has to fail loudly.
     """
-    parent = re.search(r"(?:^|;)parent=([^;]+)", row.get("notes", ""))
-    if not parent:
-        return []
-    stat = path.stat()
-    data, sections, symbols = _object_layout(str(path), stat.st_mtime_ns, stat.st_size)
-    handler = f"__ehhandler${parent.group(1)}"
-    # Both sections, because neither alone finds every case: MSVC 7.1 emits
-    # __ehhandler$ into its own COMDAT, and in that layout the $L funclet
-    # bodies stay behind in the parent's. Searching only the handler's section
-    # silently returns no candidate and the row dies on the stale pin instead
-    # of healing -- every ehhandler in StagingRoomGameInfo.obj is split this way.
-    group = {s["section"] for s in symbols
-             if s["name"] in (handler, parent.group(1)) and s["section"] > 0}
-    if not group:
-        return []
-    hits = []
-    for symbol in symbols:
-        if symbol["section"] not in group or not re.fullmatch(r"\$L\d+", symbol["name"]):
-            continue
-        try:
-            body, relocs = read_object_symbol_bytes(path, symbol["name"], len(target))
-        except ValueError:
-            continue
-        if holds_funclet(body, relocs, target):
-            hits.append(symbol["name"])
-    return hits
+    return [name for name, _bodylen, _surviving, held
+            in funclet_scan(path, row, target) if held]
 
 
 def read_funclet(row, object_symbol, output, target):
@@ -1012,20 +1036,32 @@ def read_funclet(row, object_symbol, output, target):
             return compiled, relocs, None
         gone = None
 
-    hits = funclet_candidates(output, row, target)
+    scan = funclet_scan(output, row, target)
+    hits = [name for name, _bodylen, _surviving, held in scan if held]
     if len(hits) > 1:
-        raise SystemExit(
-            f"{row['name']} ({row['source']}): {object_symbol} does not hold this funclet "
-            f"and {len(hits)} bodies in the parent's group match it equally "
-            f"({', '.join(hits)}). Byte evidence cannot tell them apart, so the gate will "
-            "not pick one — the row needs a body it can name on its own.")
+        raise SystemExit(funclet_refusal(
+            row, object_symbol, scan, len(target),
+            f"does not hold this funclet and {len(hits)} bodies in the parent's group "
+            f"match it equally ({', '.join(hits)}). Byte evidence cannot tell them apart, "
+            "so the gate will not pick one — the row needs a body it can name on its own"))
     if hits:
         compiled, relocs = read_object_symbol_bytes(output, hits[0], len(target))
         return compiled, relocs, (
             f"{object_symbol} was renumbered by an edit to this TU; the body is {hits[0]} "
             "in the object built now (stale ledger pin, not a byte mismatch)")
     if gone is not None:
-        raise gone
+        # Was a bare "symbol not found in object: $L<n>", which killed the gate
+        # before it printed a single result line and named nothing but a
+        # compiler-local label. The pin renumbered and nothing replaced it, so
+        # the row has no anchor at all -- and uw_0045bea0 is the reason the
+        # message asks the question it does: that row could not find a body
+        # because it was two 4-byte accessors and twelve int3 of padding, not a
+        # funclet. A row that cannot find its body may not deserve one.
+        raise SystemExit(funclet_refusal(
+            row, object_symbol, scan, len(target),
+            "is not in the object, and nothing in the parent's group holds this funclet "
+            "either. The pin renumbered and no body replaces it, so the row has no anchor "
+            "-- check whether it deserves one before giving it a new pin"))
     return compiled, relocs, (
         f"{object_symbol} no longer holds this funclet and nothing in the parent's group "
         "does either, so this is the body that label names now")

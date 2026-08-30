@@ -151,13 +151,28 @@ def test_a_vanished_pin_is_still_recovered(tmp_path):
     assert "$L47543" in patch["note"]
 
 
-def test_a_vanished_pin_with_nothing_to_recover_names_the_symbol(tmp_path):
+def test_a_vanished_pin_with_nothing_to_recover_reports_and_still_fails(tmp_path):
+    """The refusal has to show its work AND still fail.
+
+    This used to raise a bare ValueError("symbol not found in object: $L47551"),
+    which killed the gate before it printed a single result line and named
+    nothing but a compiler-local label. It now raises SystemExit carrying the
+    row, the source, the missing pin and every candidate examined -- and
+    SystemExit is what run() records as a failure, so the report cannot turn
+    into a pass. That second half is the point: a refusal that prints nicely and
+    succeeds would be worse than the crash it replaced.
+    """
     obj = write_object(tmp_path / "empty.obj", {"$L47544": BIT1})
 
-    with pytest.raises(ValueError) as exc:
+    with pytest.raises(SystemExit) as exc:
         compile_row(obj, "$L47551")
 
-    assert str(exc.value) == "symbol not found in object: $L47551"
+    message = str(exc.value)
+    assert "$L47551" in message, "the vanished pin is still named"
+    assert "uw_00bfa6c0" in message, "and so is the row that wanted it"
+    assert "deserves one" in message, "and it asks whether the row should heal at all"
+    assert "$L47544" in message, "the candidate examined is shown"
+    assert "surviving=" in message, "with what the comparison actually saw"
 
 
 def write_split_object(path, bodies):
