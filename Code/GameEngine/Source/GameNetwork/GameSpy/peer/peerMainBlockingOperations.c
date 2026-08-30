@@ -25,6 +25,14 @@ typedef struct piConnection
 	int shutdown;
 } piConnection;
 
+typedef struct piPlayer
+{
+	char reserved[0x50];
+	unsigned int IP;
+	int profileID;
+	int gotIPAndProfileID;
+} piPlayer;
+
 int piGetNextID(PEER peer);
 int piNewChangeNickOperation(PEER peer, const char *newNick,
 	void *callback, void *param, int opID);
@@ -46,6 +54,16 @@ void piAddGetRoomKeysCallback(PEER peer, int success, int roomType,
 	void *callback, void *param, int opID);
 void chatSetGlobalKeysA(void *chat, int num, const char **keys,
 	const char **values);
+piPlayer *piGetPlayer(PEER peer, const char *nick);
+int chatGetBasicUserInfoNoWaitA(void *chat, const char *nick,
+	const char **user, const char **address);
+int piDemangleUser(const char *user, unsigned int *IP, int *profileID);
+void piSetPlayerIPAndProfileID(PEER peer, const char *nick, unsigned int IP,
+	int profileID);
+void piAddGetPlayerIPCallback(PEER peer, int success, const char *nick,
+	unsigned int IP, void *callback, void *param, int opID);
+int piNewGetIPOperation(PEER peer, const char *nick, void *callback,
+	void *param, int opID);
 void piAddConnectCallback(PEER peer, int success, int failureReason,
 	void *callback, void *param, int opID);
 void bfmePiDisconnectCleanupFromEsi(void);
@@ -291,4 +309,52 @@ const char *peerGetNickA(PEER peer)
 	if (!connection->connected)
 		return 0;
 	return connection->nick;
+}
+
+void peerGetPlayerIPA(PEER peer, const char *nick, void *callback,
+	void *param, int blocking)
+{
+	piConnection *connection = (piConnection *)peer;
+	int success = 1;
+	piPlayer *player;
+	int opID = piGetNextID(peer);
+
+	player = piGetPlayer(peer, nick);
+	if (player && !player->gotIPAndProfileID)
+	{
+		const char *info;
+		unsigned int IP;
+		int profileID;
+
+		if (chatGetBasicUserInfoNoWaitA(connection->chat, nick, &info, 0) &&
+			piDemangleUser(info, &IP, &profileID))
+			piSetPlayerIPAndProfileID(peer, nick, IP, profileID);
+	}
+
+	if (player && player->gotIPAndProfileID)
+	{
+		piAddGetPlayerIPCallback(peer, 1, nick, player->IP, callback, param,
+			opID);
+	}
+	else if (!piNewGetIPOperation(peer, nick, callback, param, opID))
+	{
+		success = 0;
+	}
+
+	if (!success)
+		piAddGetPlayerIPCallback(peer, 0, nick, 0, callback, param, opID);
+
+	if (blocking)
+	{
+		do
+		{
+			msleep(1);
+			bfmePiThinkFromEsi(opID);
+		}
+		while (!piIsOperationFinished(peer, opID) ||
+			!piIsCallbackFinished(peer, opID));
+
+		if (connection->shutdown && connection->callbackDepth == 0)
+			peerShutdown(peer);
+	}
 }

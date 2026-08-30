@@ -81227,3 +81227,4 @@ _chatConnectSecureA,0x00862380,GameSpy Chat secure connection entry
 _chatConnectLoginA,0x008623E0,GameSpy Chat login connection entry
 _chatConnectPreAuthA,0x00862460,GameSpy Chat pre-auth connection entry
 _chatSetGlobalKeysA,0x00861730,GameSpy Chat global-key setter
+_chatGetBasicUserInfoNoWaitA,0x00861450,GameSpy Chat cached basic-user lookup
