@@ -768,3 +768,37 @@ void peerSetReady(PEER peer, int ready)
 	strcat(buffer, "X\\");
 	peerMessageRoomA(peer, 2, buffer, 0);
 }
+
+int peerGetPlayerInfoNoWaitA(PEER peer, const char *nick,
+	unsigned int *IP, int *profileID)
+{
+	piConnection *connection = (piConnection *)peer;
+	piPlayer *player = piGetPlayer(peer, nick);
+
+	if (!player || !player->gotIPAndProfileID)
+	{
+		const char *info;
+		unsigned int localIP;
+		int localProfileID;
+
+		if (chatGetBasicUserInfoNoWaitA(connection->chat, nick, &info, 0) &&
+			piDemangleUser(info, &localIP, &localProfileID))
+		{
+			if (player)
+				piSetPlayerIPAndProfileID(peer, nick, localIP,
+					localProfileID);
+			if (IP)
+				*IP = localIP;
+			if (profileID)
+				*profileID = localProfileID;
+			return 1;
+		}
+		return 0;
+	}
+
+	if (IP)
+		*IP = player->IP;
+	if (profileID)
+		*profileID = player->profileID;
+	return 1;
+}
