@@ -1,5 +1,26 @@
 # mods/: the cave mechanism, and what it costs to get wrong
 
+## The rules
+
+**Mods always stack.** There is no mix-and-match and no per-feature build:
+`python3 tools/modbuild.py --dist` produces exactly one executable at
+`mods/dist/lotrbfme.exe`, and two features claiming the same address is a hard
+build error, never a last-writer-wins merge. `--dist` refuses `--only` for the
+same reason — a partial build silently replaced the shipped artifact once.
+
+**No mod is part of the byte-exact decomp.** A feature never touches `Code/` or
+`reverse/`, so `./build.sh` and both git hooks are unaffected. That separation
+is what keeps the byte gate meaningful, and why `mods/` sits outside `Code/`.
+
+**`tools/modbuild.py` is the authority on which features exist**, and no
+document lists them. One used to — a `features = [...]` array in a `.toml`
+nothing parsed — and it was already wrong before anyone noticed. A feature
+directory's numeric prefix is its application order, not decoration. `010` is
+deliberately unused: it was reserved for a test-harness feature (`-noDraw` plus
+per-frame logic CRC) that proved unnecessary, since driving the real game with
+synthetic clicks and asserting on screenshots covers the journey, and a
+feature's own output file covers the outcome.
+
 ## The mechanism
 
 `tools/cave.py` appends a `.bfmemod` section and installs a 5-byte `jmp rel32`
