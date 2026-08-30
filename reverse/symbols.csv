@@ -73715,6 +73715,7 @@ name,address,notes
 ?bfmeKindCQE@BfmeXCQE@@QAEDXZ,0x00012E3B,pin
 ?bfmeKindFAH@BfmeObjFAH@@QAEHPAX@Z,0x0004A719,pin
 ?bfmeLayerForPosition@Pathfinder@@QAEHPAVObject@@UCoord3D@@@Z,0x00040F52,Open-BFME5 Pathfinder ILT to body 0x003E5CA0; returns ground layer 1 or bridge layer 2..15 for an Object position
+?bfmeLen1223@BfmeSub1223@@QAEHXZ,0x0089CC10,pin
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLog1013@BfmeLog1013@@QAEXHPADHHHHHH@Z,0x00015235,pin
