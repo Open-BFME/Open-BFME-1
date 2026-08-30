@@ -4423,3 +4423,51 @@ project forbids, wearing the costume of an improvement.
 So when replacing a crash with a diagnostic, check the exit path explicitly:
 does the gate still go red? That is the question, not whether the message reads
 well.
+
+## A HIGH surviving-byte count is not a pass either
+
+The surviving-unmasked-byte column was added on the suspicion that some verdicts
+rested on almost nothing. That suspicion was half right, and the half that was
+wrong is the more useful half.
+
+**Right:** 44 of 958 folds rest on three bytes or fewer, and printed identically
+to the 694 that rest on sixteen or more. The column earns its place.
+
+**Wrong:** no group rests on ZERO bytes, so the logic needed no change -- the ILT
+topology test does cover the thunks, exactly as the complementarity argument
+said.
+
+**And the sharpest case is the inversion: both GameWindow draw-data families rest
+on ALL 37 of their bytes and are still wrong.** Full byte evidence, nothing
+masked, and the error is visible only in the NAMES.
+
+So the column is a caveat and never a verdict. A low count says "this verdict is
+thin"; a high count says nothing at all about identity. **Byte evidence, however
+complete, cannot see a naming error** -- which is the day's central lesson in its
+shortest form, and it took a tool printing 37/37 next to a wrong answer to state
+it that plainly.
+
+## Fourteen predicted addresses, fourteen hits, on full evidence
+
+The GameWindow layout correction was verified the honest way: the shim added to
+the cl line, the three definitions changed to return `Int`, the TU compiled, and
+each emitted body compared against the RETAIL bytes at its PREDICTED address --
+never against our own current output, which is where the false green lives.
+
+    winSetEnabledImage    0x00478FE0  37B  rests on 37/37
+    winSetDisabledBorderColor 0x004790E0 40B rests on 40/40
+    winSetPrev            0x00478DD0  13B  rests on 13/13
+    ... fourteen in all, every one MATCH
+
+The 37/40 size split came out right although nothing in the derivation forced it
+-- the kind of prediction that is hard to satisfy by accident.
+
+**And the predicted trap sprang exactly as forecast.** `winSetPrev` does not
+belong at 0x00478EB0; written in member names against the corrected header it
+walked off the tooltip body onto 0x00478DD0 by itself. One lane predicted that
+behaviour from its own matched rows; the other observed it. Two witnesses, and
+the second was an experiment the first could not run.
+
+Consequence for the commit: the three `?dup_004790XX` rows are NOT renames.
+GameWindow.cpp now emits those bodies byte-exact, so the 101-line replica file
+folds home -- same nine addresses, one fewer file.
