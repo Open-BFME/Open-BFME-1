@@ -81186,5 +81186,5 @@ __imp___strnicmp,0x00F594BC,CRT import used by the _level prefix path helper
 _piNewConnectOperation,0x0085F2F0,GameSpy Peer peerConnectPreAuthA operation constructor
 _bfmePiDisconnectCleanupFromEsi,0x008572E0,GameSpy Peer static disconnect cleanup with peer carried in ESI
 _bfmePiThinkFromEsi,0x00857370,GameSpy Peer static think helper with peer carried in ESI
-_piIsCallbackFinished,0x0085E200,GameSpy Peer blocking callback completion test
 _peerShutdown,0x00858450,GameSpy Peer shutdown reached by the blocking shutdown check
+_piIsCallbackFinishedCompareCallback,0x0085E1F0,GameSpy Peer callback ID comparator ICF alias at gpiTransferCompare
