@@ -4471,3 +4471,54 @@ the second was an experiment the first could not run.
 Consequence for the commit: the three `?dup_004790XX` rows are NOT renames.
 GameWindow.cpp now emits those bodies byte-exact, so the 101-line replica file
 folds home -- same nine addresses, one fewer file.
+
+## A name held HOSTAGE on the wrong address forces someone to invent a name
+
+Third instance of one shape today, and it is now predictive rather than
+anecdotal.
+
+`winSetStatus`'s row sat on a body that ORs into +0x04 -- the anchor pointer.
+`m_status` is +0x08, and TWO matched rows in the same accessor run already said
+so (`winClearStatus`@0x00478440 and `winGetStatus`@0x00478480, both noted
+"BFME m_status@0x08"). The correctly-written body compiles to a 19-byte sequence
+occurring **exactly once** in retail, at 0x00478420 -- immediately before those
+two.
+
+And that address was already claimed, by `?_bfme_winSetStatus@GameWindow@@QAEII@Z`.
+**Someone had converted the right body and had to invent a name for it, because
+the real name was hostage on the wrong address.** `GameWindowStatusThunk.cpp`
+existed only to house that invention.
+
+The three instances:
+
+    VertexMaterialClass   Get_Diffuse_Color_Source unclaimed while its two
+                          neighbours sat one field high
+    W3DTerrainVisual      two ?dup_ placeholders holding the real bodies of two
+                          rotated accessors
+    GameWindow            ?_bfme_winSetStatus invented for a body whose true
+                          name was pinned elsewhere
+
+**So an invented `?_bfme_`, `?dup_` or thunk-file name adjacent to a real one is
+a SYMPTOM.** Someone met a correct body that could not take its correct name and
+worked around it. Read those as evidence of a displaced row nearby, not as
+scaffolding.
+
+## A fabricated MECHANISM in a comment is worse than a wrong offset
+
+`GameWindowFields.cpp` had `winSetDisabledImage` writing `m_hiliteDrawData`,
+under a comment asserting: *"BFME never wrote a distinct disabled-image path
+here; write the same field so our object code folds the same way."*
+
+That is an invented mechanism, constructed to justify a body that made a wrong
+row verify. Retail has nine separate setters at 0x478FE0 + 0x30, and 0x479070 is
+exactly the disabled-image one.
+
+A wrong offset is a mistake and the next reader can measure it. **A wrong
+offset with a mechanism attached is an argument, and the next reader has to
+refute it** -- the reasoning reads as evidence while being the opposite of it.
+It also survives review better than a bare wrong number, which is what makes it
+more expensive.
+
+When correcting one, name the old claim in the comment so nobody re-derives it.
+And when writing one: a comment may state what was MEASURED and what remains
+UNKNOWN. It may not supply a reason the measurement did not establish.
