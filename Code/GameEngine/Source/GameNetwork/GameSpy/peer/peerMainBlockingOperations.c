@@ -1075,6 +1075,11 @@ int peerStartReportingWithSocket(PEER peer, unsigned int socket,
 	return 1;
 }
 
+int peerStartReporting(PEER peer)
+{
+	return peerStartReportingWithSocket(peer, (unsigned int)-1, 0);
+}
+
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
 {
 	piConnection *connection = (piConnection *)peer;
