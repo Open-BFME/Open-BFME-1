@@ -33,9 +33,20 @@ differing in one position) cannot be one body whatever our compile says. That is
 the FAMILY verdict, and it is a candidate list rather than a verdict on the
 ledger -- it is the only test here that reasons from names.
 
-On the live ledger: 954 real folds, 65 all-placeholder, 11 family conflicts,
-7 addresses whose claimants cannot be one body, and 4 large groups with one odd
-member. Five of the seven and two of the eleven are GameWindow.
+On the live ledger: 958 real folds, 65 all-placeholder, 9 family conflicts,
+2 addresses whose claimants cannot be one body, and 4 large groups with one odd
+member. Both GameWindow draw-data families rest on ALL 37 of their bytes -- full
+byte evidence and still wrong, which is the whole reason the name test exists.
+
+EVERY VERDICT PRINTS HOW MANY BYTES IT RESTS ON, because masking makes a cheap
+verdict and an expensive one look identical. A body whose every byte is a
+relocation site compares equal to ANY target of its length -- it is not a match,
+it is an absence of evidence -- and the build's funclet healer paid for that
+lesson with a data table of four label pointers that tied with a real funclet.
+No group here rests on zero bytes, so the verdicts stand as computed; 44 of the
+958 folds rest on three bytes or fewer, which is a 5-byte `E9` jump agreeing
+with another 5-byte `E9` jump on the opcode alone. That is a different claim
+from 600 bytes agreeing, and until this column it printed the same.
 
 An unreadable object is REPORTED, never skipped. A sweep that silently drops the
 rows it could not load reports "consistent" for a symbol whose contradiction it
@@ -119,6 +130,24 @@ def same_class_different_methods(names):
     return len({c for c, _ in bits}) == 1 and len({f for _, f in bits}) > 1
 
 
+Group = collections.namedtuple(
+    "Group", "rva size names verdict family surviving")
+
+
+def surviving(sites, size):
+    """How many of `size` bytes masking left for the comparison to see.
+
+    Callers report it beside the verdict rather than acting on it: it is the
+    difference between "these agree on 600 bytes" and "these agree on the E9
+    opcode", which the verdict string alone cannot express.
+    """
+    covered = set()
+    for offset, _kind in sites:
+        if 0 <= offset < size:
+            covered.update(range(offset, min(offset + 4, size)))
+    return size - len(covered)
+
+
 def shape(row, size, read=None):
     """(reloc sites, bytes with every reloc site zeroed), or None if unreadable.
 
@@ -155,20 +184,25 @@ def groups(rows):
 
 
 def classify(rows, read=None):
-    """Yield (rva, size, names, verdict, same_family) for every shared address."""
+    """Yield a Group for every address two or more names claim."""
     for (rva, size), rs in sorted(groups(rows).items()):
+        size = int(size)
         names = sorted({r["name"] for r in rs})
         family = same_class_different_methods(names)
         if all(is_placeholder(n) for n in names):
-            yield rva, int(size), names, PLACEHOLDERS, family
+            yield Group(rva, size, names, PLACEHOLDERS, family, None)
             continue
         seen = {}
         for row in rs:
             if row["name"] not in seen:
-                seen[row["name"]] = shape(row, int(size), read)
+                seen[row["name"]] = shape(row, size, read)
         shapes = list(seen.values())
+        # The weakest claimant sets what the verdict rests on: an agreement is
+        # only as good as the fewest bytes either side left unmasked.
+        left = min((surviving(s[0], size) for s in shapes if s is not None),
+                   default=None)
         if any(s is None for s in shapes):
-            yield rva, int(size), names, UNREADABLE, family
+            yield Group(rva, size, names, UNREADABLE, family, left)
         elif len(set(shapes)) == 1:
             # Structurally these CAN be one body -- but if the names are one
             # family member apart they cannot be, whatever our compile says.
@@ -178,33 +212,40 @@ def classify(rows, read=None):
             # Image body. Only reported for small groups; a forty-name ICF group
             # of trivial accessors will always contain some one-token pair.
             if len(names) <= LARGE_GROUP and accessor_siblings(names):
-                yield rva, int(size), names, FAMILY, family
+                yield Group(rva, size, names, FAMILY, family, left)
             else:
-                yield rva, int(size), names, FOLD, family
+                yield Group(rva, size, names, FOLD, family, left)
         elif len(names) > LARGE_GROUP:
-            yield rva, int(size), names, ODD_MEMBER, family
+            yield Group(rva, size, names, ODD_MEMBER, family, left)
         else:
-            yield rva, int(size), names, DIFFER, family
+            yield Group(rva, size, names, DIFFER, family, left)
 
 
 def main(argv):
     rows = [r for r in B.load_function_rows() if r["status"] == "matched"]
     tally = collections.Counter()
+    thin = collections.Counter()
     flagged = []
-    for rva, size, names, verdict, family in classify(rows):
-        tally[verdict] += 1
-        if verdict in (DIFFER, UNREADABLE, ODD_MEMBER, FAMILY):
-            flagged.append((size, rva, names, verdict, family))
+    for g in classify(rows):
+        tally[g.verdict] += 1
+        if g.surviving is not None and g.surviving < 4:
+            thin[g.verdict] += 1
+        if g.verdict in (DIFFER, UNREADABLE, ODD_MEMBER, FAMILY):
+            flagged.append(g)
     print("matched rows; addresses claimed by 2+ names: %d" % sum(tally.values()))
     for verdict, n in tally.most_common():
         print("  %5d  %s" % (n, verdict))
+    for verdict, n in thin.most_common():
+        print("  of those, %d rest on fewer than 4 unmasked bytes: %s" % (n, verdict))
     if not flagged:
         return 0
     print("\nworth reading, largest first:")
-    for size, rva, names, verdict, family in sorted(flagged, reverse=True):
-        tag = " [same class, different methods]" if family else ""
-        print("0x%08X %6dB  %s%s" % (rva, size, verdict, tag))
-        for name in names:
+    for g in sorted(flagged, key=lambda g: (g.size, g.rva), reverse=True):
+        tag = " [same class, different methods]" if g.family else ""
+        rests = "n/a" if g.surviving is None else "%d/%d" % (g.surviving, g.size)
+        print("0x%08X %6dB  rests on %-9s %s%s"
+              % (g.rva, g.size, rests, g.verdict, tag))
+        for name in g.names:
             print("      %s" % name[:96])
     return 0
 

@@ -34,7 +34,9 @@ def test_bodies_differing_only_at_reloc_sites_are_a_real_fold():
         "??0B@@QAE@XZ": (b"\xc7\x06BBBB\x33\xc0", [(2, 0x0006, "??_7B@@6B@")]),
     }
     out = list(multi_name.classify(rows, _reader(table)))
-    assert [v for *_, v, _ in out] == [multi_name.FOLD]
+    assert [g.verdict for g in out] == [multi_name.FOLD]
+    # 8 bytes, one 4-wide DIR32 site at offset 2: the fold rests on the other 4.
+    assert [g.surviving for g in out] == [4]
 
 
 def test_bodies_differing_between_the_relocs_cannot_share_an_address():
@@ -44,9 +46,9 @@ def test_bodies_differing_between_the_relocs_cannot_share_an_address():
         "?winSetPrev@GameWindow@@QAEXPAV1@@Z": (b"\x89\x81\xf8\x01\x00\x00\xc3\x90", []),
         "?winSetTooltipFunc@GameWindow@@QAEHXZ": (b"\x89\x81\x00\x02\x00\x00\xc3\x90", []),
     }
-    (rva, size, names, verdict, family), = multi_name.classify(rows, _reader(table))
-    assert verdict == multi_name.DIFFER
-    assert family, "one class, two method names -- the GameWindow shape"
+    got, = multi_name.classify(rows, _reader(table))
+    assert got.verdict == multi_name.DIFFER
+    assert got.family, "one class, two method names -- the GameWindow shape"
 
 
 def test_reloc_sites_at_different_offsets_are_different_bodies():
@@ -57,8 +59,8 @@ def test_reloc_sites_at_different_offsets_are_different_bodies():
         "?a@C@@QAEXXZ": (b"\x00\x00\x00\x00\xc3\x90\x90\x90", [(0, 0x0014, "?x@@YAXXZ")]),
         "?b@C@@QAEXXZ": (b"\x00\x00\x00\x00\xc3\x90\x90\x90", [(1, 0x0014, "?x@@YAXXZ")]),
     }
-    (_, _, _, verdict, _), = multi_name.classify(rows, _reader(table))
-    assert verdict == multi_name.DIFFER
+    got, = multi_name.classify(rows, _reader(table))
+    assert got.verdict == multi_name.DIFFER
 
 
 def test_an_unreadable_object_is_reported_not_treated_as_benign():
@@ -67,8 +69,8 @@ def test_an_unreadable_object_is_reported_not_treated_as_benign():
     trap that put 18 unreviewed entries in a whitelist."""
     rows = [_row("?a@C@@QAEXXZ"), _row("?b@C@@QAEXXZ")]
     table = {"?a@C@@QAEXXZ": (b"\x90" * 8, []), "?b@C@@QAEXXZ": None}
-    (_, _, _, verdict, _), = multi_name.classify(rows, _reader(table))
-    assert verdict == multi_name.UNREADABLE
+    got, = multi_name.classify(rows, _reader(table))
+    assert got.verdict == multi_name.UNREADABLE
 
 
 def test_placeholder_only_groups_are_set_aside():
@@ -76,8 +78,8 @@ def test_placeholder_only_groups_are_set_aside():
     ?dup_ names a real body of unknown identity. Neither asserts an identity, so
     neither can be wrong about one."""
     rows = [_row("?j_00001000@@YAXXZ"), _row("?dup_00001000@@YAXXZ")]
-    (_, _, _, verdict, _), = multi_name.classify(rows, _reader({}))
-    assert verdict == multi_name.PLACEHOLDERS
+    got, = multi_name.classify(rows, _reader({}))
+    assert got.verdict == multi_name.PLACEHOLDERS
 
 
 def test_a_lone_name_is_not_a_group():
@@ -104,13 +106,13 @@ def test_a_large_group_is_reported_apart_from_a_real_candidate():
     table = {"?m0@C@@QAEXXZ": (b"\x90" * 8, [])}
     for i in range(1, 40):
         table["?m%d@C@@QAEXXZ" % i] = (b"\x91" * 8, [])
-    (_, _, _, verdict, _), = multi_name.classify(group(40), _reader(table))
-    assert verdict == multi_name.ODD_MEMBER
+    got, = multi_name.classify(group(40), _reader(table))
+    assert got.verdict == multi_name.ODD_MEMBER
 
     two = [_row("?a@C@@QAEXXZ"), _row("?b@C@@QAEXXZ")]
     table2 = {"?a@C@@QAEXXZ": (b"\x90" * 8, []), "?b@C@@QAEXXZ": (b"\x91" * 8, [])}
-    (_, _, _, verdict, _), = multi_name.classify(two, _reader(table2))
-    assert verdict == multi_name.DIFFER, "a two-name collision is still a candidate"
+    got, = multi_name.classify(two, _reader(table2))
+    assert got.verdict == multi_name.DIFFER, "a two-name collision is still a candidate"
 
 
 def test_a_family_conflict_is_flagged_even_when_the_bodies_match_here():
@@ -122,8 +124,8 @@ def test_a_family_conflict_is_flagged_even_when_the_bodies_match_here():
             _row("?winSetEnabledImage@GameWindow@@QAEHHPBVImage@@@Z")]
     same = (b"\x89\x81\x48\x00\x00\x00\xc3\x90", [])
     table = {r["name"]: same for r in rows}
-    (_, _, _, verdict, _), = multi_name.classify(rows, _reader(table))
-    assert verdict == multi_name.FAMILY
+    got, = multi_name.classify(rows, _reader(table))
+    assert got.verdict == multi_name.FAMILY
 
 
 def test_names_differing_everywhere_are_left_alone():
@@ -135,8 +137,8 @@ def test_names_differing_everywhere_are_left_alone():
             _row("?getModuleNameKey@W3DTruckDraw@@UBE?AW4NameKeyType@@XZ")]
     same = (b"\x90" * 8, [])
     table = {r["name"]: same for r in rows}
-    (_, _, _, verdict, _), = multi_name.classify(rows, _reader(table))
-    assert verdict == multi_name.FOLD
+    got, = multi_name.classify(rows, _reader(table))
+    assert got.verdict == multi_name.FOLD
 
 
 def test_a_large_icf_group_is_not_a_family_conflict():
@@ -147,5 +149,40 @@ def test_a_large_icf_group_is_not_a_family_conflict():
              ("Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot")]
     rows = [_row(n) for n in names]
     same = (b"\x90" * 8, [])
-    (_, _, _, verdict, _), = multi_name.classify(rows, _reader({n: same for n in names}))
-    assert verdict == multi_name.FOLD
+    got, = multi_name.classify(rows, _reader({n: same for n in names}))
+    assert got.verdict == multi_name.FOLD
+
+
+def test_a_verdict_reports_how_many_bytes_it_rests_on():
+    """The number that separates a cheap agreement from an expensive one.
+
+    Masking makes both print the same verdict string, and the build's funclet
+    healer shipped a bug for exactly that reason: a data table whose every byte
+    was a relocation compared equal to a real funclet. Two 5-byte `E9` jumps
+    agree on the opcode and nothing else, and the count is what says so."""
+    jump = (b"\xe9\x00\x00\x00\x00", [(1, 0x0014, "?target@@YAXXZ")])
+    rows = [_row("?a@C@@QAEXXZ", size="5"), _row("?b@C@@QAEXXZ", size="5")]
+    got, = multi_name.classify(rows, _reader({"?a@C@@QAEXXZ": jump,
+                                              "?b@C@@QAEXXZ": jump}))
+    assert got.verdict == multi_name.FOLD
+    assert got.surviving == 1, "the E9 opcode, and nothing else"
+
+
+def test_the_weakest_claimant_sets_what_a_verdict_rests_on():
+    """Relocation sites can differ in COUNT while the group still folds -- the
+    agreement is only as good as the fewest bytes either side left to compare."""
+    body = b"\x90\x90\x00\x00\x00\x00\x90\x90"
+    thin = (body, [(2, 0x0006, "?x@@3HA"), (0, 0x0006, "?y@@3HA")])
+    thick = (body, [(2, 0x0006, "?z@@3HA")])
+    rows = [_row("?a@C@@QAEXXZ"), _row("?b@C@@QAEXXZ")]
+    got, = multi_name.classify(rows, _reader({"?a@C@@QAEXXZ": thick,
+                                              "?b@C@@QAEXXZ": thin}))
+    assert got.surviving == 2, "8 bytes less the 6 the thin claimant masks"
+
+
+def test_surviving_counts_only_the_masked_span_inside_the_body():
+    """A relocation in the last bytes is clipped to the body, not counted past
+    its end -- otherwise a short row reports a negative amount of evidence."""
+    assert multi_name.surviving(((6, 0x0006),), 8) == 6
+    assert multi_name.surviving(((0, 0x0006), (4, 0x0006)), 8) == 0
+    assert multi_name.surviving((), 8) == 8
