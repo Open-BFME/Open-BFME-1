@@ -5114,3 +5114,48 @@ setter-wrapper names. Six single-name setter bodies say BorderColor at position
 1; eighteen internally cross-checked getter names say Color. **That residue is
 left open deliberately** -- it is a fourth derivation on a class that has already
 produced three withdrawals, and nothing depends on it.
+
+## When BOTH witnesses are names, the question may be undecidable -- say so
+
+The `color`-versus-`borderColor` question at `WinDrawData` element+4 resisted
+three derivations, and the reason is structural rather than a failure of effort:
+
+  * the call GRAPH is retail's -- which body a wrapper calls is a fact;
+  * but "bodies named `*BorderColor*` call element+4" leans on the WRAPPER's
+    name, which is a ledger binding;
+  * and the inline getters lean on the GETTER's name, also a ledger binding.
+
+Two name-based witnesses pointing opposite ways, with **no structural
+tiebreak** -- because swapping two same-width fields changes no structure. The
++0x0C Selected spacing, the 0x6C stride, the nine elements and the array bases
+all agree with BOTH readings.
+
+**The question is invisible to every byte measurement available.** Naming that
+is a result. Three internally-consistent answers that each rested on unaudited
+names is what an undecidable question looks like from the inside, and the
+correct output is a park with the unblock conditions written down -- not a
+fourth attempt.
+
+## Retail's own STRINGS are non-circular naming evidence
+
+The one route out that is not circular: **a parse table.** The `.wnd` script
+parser reads these fields by keyword, so `parseDrawData`-style code maps a
+literal string -- `"ENABLEDBORDERCOLOR"` -- to an offset. That is a name
+supplied by RETAIL rather than by our ledger, which is exactly what every other
+witness lacked.
+
+**The machinery already exists.** `tools/fieldnames.py` extracts precisely this
+and has produced `reverse/field_names.csv`: 4,416 rows of
+`table_rva, ini_key, bfme_offset`, e.g.
+
+    0x00cfc430,CommandBarBorderColor,0x30,ControlBarScheme,m_commandBarBorderColor,65,64
+
+So the unblock is not a research project -- it is pointing an existing extractor
+at a specific table, if that table exists. The current file has no `.wnd`
+draw-data entries, so the table has not been located; that is a search, and a
+search has a clean negative.
+
+**General form: when a naming question deadlocks between two ledger-derived
+witnesses, look for a place where retail names the thing itself** -- a parse
+table, a keyword string, a debug format. Those are the only names in the binary
+that are not ours.
