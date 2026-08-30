@@ -39,7 +39,9 @@ typedef struct piConnection
 	int ready;
 	char reservedReady[0x1824 - 0xB58];
 	int callbackDepth;
-	char reserved2[0x18D4 - 0x1828];
+	int away;
+	char awayReason[128];
+	char reserved2[0x18D4 - 0x18AC];
 	int autoMatchStatus;
 	char reserved3[0x1EF8 - 0x18D8];
 	char *autoMatchFilter;
@@ -100,6 +102,7 @@ void chatSetQuietMode(void *chat, int quiet);
 void chatSetChannelTopicA(void *chat, const char *channel, const char *topic);
 void chatSetChannelPasswordA(void *chat, const char *channel, int enable,
 	const char *password);
+void chatSendRawA(void *chat, const char *command);
 piPlayer *piGetPlayer(PEER peer, const char *nick);
 typedef void (*piEnumRoomPlayersCallback)(PEER peer, int roomType,
 	piPlayer *player, int index, void *param);
@@ -1021,6 +1024,21 @@ void *peerGetHostServer(PEER peer)
 	piConnection *connection = (piConnection *)peer;
 
 	return connection->hostServer;
+}
+
+void peerSetAwayModeA(PEER peer, const char *reason)
+{
+	piConnection *connection = (piConnection *)peer;
+	char buffer[134];
+
+	if (!reason)
+		reason = "";
+	connection->away = reason[0] != '\0';
+	strncpy(connection->awayReason, reason, 128);
+	connection->awayReason[127] = '\0';
+	piSetLocalFlags(peer);
+	sprintf(buffer, "AWAY :%s", connection->awayReason);
+	chatSendRawA(connection->chat, buffer);
 }
 
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
