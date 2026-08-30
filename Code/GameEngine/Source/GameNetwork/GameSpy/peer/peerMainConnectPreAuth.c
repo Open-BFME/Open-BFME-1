@@ -16,19 +16,21 @@ typedef struct piConnection
 	unsigned int privateIP;
 	int profileID;
 	char title[64];
-	char reserved[0x1824 - 0xA0];
+	char reserved[0x1794 - 0xA0];
+	int nextID;
+	char reservedNext[0x1824 - 0x1798];
 	int numCallbacksInCall;
 	char reserved2[0x1F04 - 0x1828];
 	PEERBool disconnect;
 	PEERBool shutdown;
 } piConnection;
 
-int piGetNextID(PEER peer);
 int piNewConnectOperation(PEER peer, int type, const char *nick, int namespaceID,
 	const char *email, const char *profilenick, const char *uniquenick,
 	const char *password, const char *authtoken, const char *partnerchallenge,
 	void *callback, void *param, int ID);
 void bfmePiDisconnectCleanupFromEsi(void);
+int piGetNextID(PEER peer);
 void piAddConnectCallback(PEER peer, PEERBool success, int failureReason,
 	void *callback, void *param, int ID);
 void msleep(unsigned int milliseconds);
