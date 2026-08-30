@@ -1,5 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // readable body of ?Do_Mappers_Need_Normals@MeshMatDescClass@@QAE_NXZ: Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp
+// The two `- 4` pointer adjustments this body used to carry are gone with the
+// _bfme_vmat_v0 pad they compensated for: vertmaterial.h padded the class by a
+// dword to hold two mislabelled colour-source rows, and every caller that
+// reached a real field through it had to subtract the pad back off. With the
+// pad removed the class matches retail and the calls are plain again.
 #define Matrix4x4 Matrix4
 
 #include "meshmatdesc.h"
@@ -18,9 +23,7 @@ bool MeshMatDescClass::Do_Mappers_Need_Normals()
 
 	for (int pass = 0; pass < PassCount; ++pass) {
 		if (Material[pass] != 0) {
-			VertexMaterialClass *retailMaterial = reinterpret_cast<VertexMaterialClass *>(
-				reinterpret_cast<unsigned char *>(Material[pass]) - 4);
-			if (retailMaterial->Do_Mappers_Need_Normals()) return true;
+			if (Material[pass]->Do_Mappers_Need_Normals()) return true;
 		} else {
 			VertexMaterialClass *prev_mtl = 0;
 			VertexMaterialClass *mtl;
@@ -32,9 +35,7 @@ bool MeshMatDescClass::Do_Mappers_Need_Normals()
 					mtl = Material[pass];
 				}
 				if (mtl != prev_mtl && mtl != 0) {
-					VertexMaterialClass *retailMaterial = reinterpret_cast<VertexMaterialClass *>(
-						reinterpret_cast<unsigned char *>(mtl) - 4);
-					if (retailMaterial->Do_Mappers_Need_Normals()) return true;
+					if (mtl->Do_Mappers_Need_Normals()) return true;
 					prev_mtl = mtl;
 				}
 			}
