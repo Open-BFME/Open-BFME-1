@@ -3961,3 +3961,56 @@ that symbol loses its address. Before retiring, scan matched rows for calls to
 the address. The full gate is the only thing that catches this after the fact,
 which is an argument for running one after a batch of retirements even when each
 one verified individually.
+
+## Keep the cautious framing when a sharper rule arrives; run BOTH
+
+Two lanes arrived at one rule today from opposite directions, which is why it is
+worth stating twice.
+
+One had the enumeration answer in hand from a loose grep, got a second answer
+from an exact grep, wrote the first off in a line, and lost the central claim of
+a report. The other had a cautious size-based framing for the mis-anchored rows,
+dropped it when a sharper relocation-based rule arrived from the lead, and
+retracted five commits.
+
+**Both errors are the same shape: a disagreement between two methods was
+resolved by picking one, rather than treated as the finding.** The correct move
+in both cases was to run both and notice they disagreed -- which costs one extra
+run and would have caught both.
+
+A sharper rule does not supersede a cautious one until they have been run
+against the same case and agreed. Where they disagree, the disagreement is data
+about the rules, not noise to be resolved by preference.
+
+## None of the four detectors establishes IDENTITY
+
+Written into `size_outlier.py`'s own docstring rather than left as folklore,
+because the natural assumption is that the newest tool replaces the rest:
+
+    the ILT unique-stub test   needs an E9, and cannot say whose a SHARED body is
+    multi_name's structural test  cannot separate two forwarders to one vtable slot
+    multi_name's FAMILY rule   needs two names; most stubs carry one
+    size_outlier               needs siblings implementing the same method
+
+`0x0000B9CE` falls out of `size_outlier` and multi_name correctly does NOT flag
+it -- four 5-byte jmp thunks are structurally identical bytes. Each instrument
+is blind exactly where another sees, so **a clean run from one is not a clean
+bill of health**, and a hit from one is a candidate rather than a verdict.
+
+**A matched caller naming the symbol outranks every inference any of them
+makes.** Check call sites before touching a row.
+
+## size_outlier: both halves of the rule are load-bearing
+
+A row is suspect when its body is SMALL AGAINST ITS FAMILY -- at most a quarter
+of the median size of the same method name across three or more classes, median
+itself at least 48 bytes -- AND the body TAIL-JUMPS. A forwarder delegates; an
+implementation returns.
+
+Size alone flags 104: a virtual method may legitimately have a tiny override,
+and `?onEnter@AIBusyState@@` really is three bytes. Tail-jump alone flags every
+honest thunk in the tree. Together: 14, with the tests pinning both boundaries.
+
+Sharpest of them: `?duplicate@Condition@@` at 5B against a 167B family,
+`?onEnter@AIInternalMoveToState@@` 5B against 122B, `?setPingString@GameSpyInfo@@`
+8B against 102B, `?Free@DistLODClass@@` 5B against 50B.
