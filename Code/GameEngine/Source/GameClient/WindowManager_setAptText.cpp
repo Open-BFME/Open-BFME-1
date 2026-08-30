@@ -19,6 +19,10 @@ public:
 	UnicodeString(const UnicodeString &other);
 	~UnicodeString();
 	void set(const UnicodeString &text);
+	bool isEmpty() const
+	{
+		return m_data == 0 || *(const unsigned short *)((const char *)m_data + 4) == 0;
+	}
 
 private:
 	void *m_data;
@@ -64,6 +68,12 @@ class AptTextRecordMap : private AptTextRecordHashMap
 {
 public:
 	AptTextRecord *findOrInsert(const AsciiString &name);
+	void clearListener(const AsciiString &name)
+	{
+		iterator it = AptTextRecordHashMap::find(name);
+		if (it != end())
+			it->second.listener = 0;
+	}
 };
 
 AptTextRecord *AptTextRecordMap::findOrInsert(const AsciiString &name)
@@ -75,6 +85,7 @@ class WindowManager
 {
 public:
 	void bfme_setAptText(const AsciiString &name, const UnicodeString &text);
+	void bfme_bindAptText(const AsciiString &name, const UnicodeString &text, AptTextListener *listener);
 
 private:
 	// Preserve the retail layout so the named-record map remains at +0x44.
@@ -90,4 +101,17 @@ void WindowManager::bfme_setAptText(const AsciiString &name, const UnicodeString
 
 	if (record->listener != 0)
 		record->listener->setText(&record->text);
+}
+
+void WindowManager::bfme_bindAptText(const AsciiString &name, const UnicodeString &text, AptTextListener *listener)
+{
+	if (listener) {
+		AptTextRecord *record = m_aptTextRecords.findOrInsert(name);
+		record->listener = listener;
+		if (record->text.isEmpty())
+			record->text.set(text);
+		listener->setText(&record->text);
+	} else {
+		m_aptTextRecords.clearListener(name);
+	}
 }
