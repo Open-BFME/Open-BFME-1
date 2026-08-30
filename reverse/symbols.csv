@@ -76341,6 +76341,7 @@ name,address,notes
 ?g_bfmeStore1026@@3PAVBfmeStore1026@@A,0x00EF0898,pin
 ?g_bfmeStr1226@@3PADA,0x00D37344,pin
 ?g_bfmeStr1233@@3UBfmeStr1233@@A,0x00ED5978,pin
+?g_bfmeStr1277@@3PADA,0x00C88D0C,pin
 ?g_bfmeStrA993B@@3PADA,0x00C81238,pin
 ?g_bfmeStrB993B@@3PADA,0x00C80FC0,pin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
