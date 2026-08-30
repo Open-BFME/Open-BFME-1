@@ -126,6 +126,10 @@ void piAddGetPlayerProfileIDCallback(PEER peer, int success,
 	const char *nick, int profileID, void *callback, void *param, int opID);
 int piNewGetProfileIDOperation(PEER peer, const char *nick, void *callback,
 	void *param, int opID);
+void piAddGetPlayerInfoCallback(PEER peer, int success, const char *nick,
+	unsigned int IP, int profileID, void *callback, void *param, int opID);
+int piNewGetPlayerInfoOperation(PEER peer, const char *nick, void *callback,
+	void *param, int opID);
 void piMangleGroupRoom(char *room, int groupID);
 void piMangleTitleRoom(char *room, const char *title);
 int piNewJoinRoomOperation(PEER peer, int roomType, const char *channel,
@@ -487,6 +491,55 @@ void peerGetPlayerProfileIDA(PEER peer, const char *nick, void *callback,
 
 	if (!success)
 		piAddGetPlayerProfileIDCallback(peer, 0, nick, 0, callback, param,
+			opID);
+
+	if (blocking)
+	{
+		do
+		{
+			msleep(1);
+			bfmePiThinkFromEsi(opID);
+		}
+		while (!piIsOperationFinished(peer, opID) ||
+			!piIsCallbackFinished(peer, opID));
+
+		if (connection->shutdown && connection->callbackDepth == 0)
+			peerShutdown(peer);
+	}
+}
+
+void peerGetPlayerInfoA(PEER peer, const char *nick, void *callback,
+	void *param, int blocking)
+{
+	piConnection *connection = (piConnection *)peer;
+	int success = 1;
+	piPlayer *player;
+	int opID = piGetNextID(peer);
+
+	player = piGetPlayer(peer, nick);
+	if (player && !player->gotIPAndProfileID)
+	{
+		const char *info;
+		unsigned int IP;
+		int profileID;
+
+		if (chatGetBasicUserInfoNoWaitA(connection->chat, nick, &info, 0) &&
+			piDemangleUser(info, &IP, &profileID))
+			piSetPlayerIPAndProfileID(peer, nick, IP, profileID);
+	}
+
+	if (player && player->gotIPAndProfileID)
+	{
+		piAddGetPlayerInfoCallback(peer, 1, nick, player->IP,
+			player->profileID, callback, param, opID);
+	}
+	else if (!piNewGetPlayerInfoOperation(peer, nick, callback, param, opID))
+	{
+		success = 0;
+	}
+
+	if (!success)
+		piAddGetPlayerInfoCallback(peer, 0, nick, 0, 0, callback, param,
 			opID);
 
 	if (blocking)
@@ -1115,6 +1168,7 @@ void peerStartAutoMatchA(PEER peer, int maxPlayers, const char *filter,
 	peerStartAutoMatchWithSocketA(peer, maxPlayers, filter,
 		(unsigned int)-1, 0, statusCallback, rateCallback, param, blocking);
 }
+
 
 void peerAlwaysGetPlayerInfo(PEER peer, int always)
 {
