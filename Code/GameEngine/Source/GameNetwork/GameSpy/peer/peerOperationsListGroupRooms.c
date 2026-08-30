@@ -47,6 +47,12 @@ PEERBool piSBStartListingGroups(PEER peer, const char *fields);
 void piGetPlayerInfoCallbackA(void);
 void chatGetBasicUserInfoA(void *chat, const char *nick, void *callback,
 	void *param, int blocking);
+void piChangeNickCallbackA(void);
+void chatChangeNickA(void *chat, const char *newNick, void *callback,
+	void *param, int blocking);
+void piAuthenticateCDKeyCallbackA(void);
+void chatAuthenticateCDKeyA(void *chat, const char *cdkey, void *callback,
+	void *param, int blocking);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -132,5 +138,33 @@ PEERBool piNewGetIPOperation(PEER peer, const char *nick,
 
 	chatGetBasicUserInfoA(connection->chat, nick,
 		piGetPlayerInfoCallbackA, operation, 0);
+	return 1;
+}
+
+PEERBool piNewChangeNickOperation(PEER peer, const char *newNick,
+	PEERCBType callback, void *param, int opID)
+{
+	piConnection *connection = (piConnection *)peer;
+	piOperation *operation = piAddOperation(peer, 9, 0, callback, param, opID);
+
+	if (!operation)
+		return 0;
+
+	chatChangeNickA(connection->chat, newNick,
+		piChangeNickCallbackA, operation, 0);
+	return 1;
+}
+
+PEERBool piNewAuthenticateCDKeyOperation(PEER peer, const char *cdkey,
+	PEERCBType callback, void *param, int opID)
+{
+	piConnection *connection = (piConnection *)peer;
+	piOperation *operation = piAddOperation(peer, 12, 0, callback, param, opID);
+
+	if (!operation)
+		return 0;
+
+	chatAuthenticateCDKeyA(connection->chat, cdkey,
+		piAuthenticateCDKeyCallbackA, operation, 0);
 	return 1;
 }
