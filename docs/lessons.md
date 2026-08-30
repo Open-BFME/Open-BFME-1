@@ -4522,3 +4522,66 @@ more expensive.
 When correcting one, name the old claim in the comment so nobody re-derives it.
 And when writing one: a comment may state what was MEASURED and what remains
 UNKNOWN. It may not supply a reason the measurement did not establish.
+
+## Byte-exactness proves OUR SOURCE COMPILES TO THOSE BYTES -- never that the name is right
+
+The day's central lesson in its final and sharpest form, and it cost a fully
+built, fourteen-address, full-unmasked-evidence GameWindow mapping that was
+wrong.
+
+Fourteen bodies each matched retail exactly at a predicted address, on 37/37 and
+40/40 and 13/13 surviving bytes. The mapping was still wrong, and retail's own
+callers say so -- decoded through the ILT with no names involved:
+
+    GadgetSliderSetEnabledThumbBorderColor  -> ILT 0x000262B0 -> 0x00479010
+    GadgetSliderSetDisabledThumbBorderColor -> ILT 0x0001EAEC -> 0x004790A0
+    GadgetProgressBarSetHiliteBarBorderColor-> ILT 0x000248B1 -> 0x00479150
+    GadgetSliderSetEnabledThumbImage        -> ILT 0x00035E09 -> 0x00478FE0
+    GadgetSliderSetHiliteThumbImage         -> ILT 0x0000B406 -> 0x00479120
+
+Five of the nine addresses, naming **the binding that was already in the
+ledger**. The mapping was derived entirely from body bytes; no call site was ever
+opened.
+
+**The self-check, and it is one grep: before moving a row, ask who calls the
+address it is LEAVING.** A caller that names the old binding is the evidence that
+outranks any amount of byte agreement -- the same rule that refuted five
+re-homings earlier the same day, unused by the same lane a few hours later while
+it was writing the commit message about the vertmaterial pad.
+
+**Only the full gate could see it.** All twelve reds were CALLERS in a third file
+-- `GameWindowManager.cpp` -- green before the change and invisible to a scoped
+run over the two files being edited.
+
+## multi_name's own docstring, falsified by its own tool
+
+The docstring claimed two accessors one family member apart "cannot be one body
+whatever our compile says". **AABTree disproves it.**
+`Cast_AABox_Recursive`, `Cast_OBBox_Recursive` and `Intersect_OBBox_Recursive`
+share 0x0096B100 legitimately: every method they call on their differing type had
+already folded, so the callers became genuinely identical.
+
+The rule that separates the two live cases:
+
+  * **FAMILY is REAL when the difference would have to appear in the COMPARED
+    bytes.** GameWindow -- a field offset is a literal, and the claimants rest on
+    all 37 of their bytes.
+  * **FAMILY is UNDECIDABLE when the difference lives inside the MASKED
+    relocations.** AABTree -- 211/219 surviving, and the difference is in the two
+    calls.
+
+Each FAMILY line now reports which case it is, and **it does not auto-clear**:
+clearing a candidate automatically is how a real defect gets filed as noise --
+the forbidden fallback in this tool's shape.
+
+## Stop at "not self-consistent" rather than guessing twice
+
+The caller evidence does not yet close: 0x00479120 is reached both as
+`GadgetSliderSetHiliteThumbImage`'s image call and as
+`GadgetProgressBarSetHiliteBarColor`'s colour call. Either one of those Gadget
+rows is itself misnamed, or the parameter convention differs.
+
+That is the correct place to stop -- no replacement mapping proposed, and the
+rejected diff banked outside the repo because its four forced discoveries are a
+map of where the pressure is even though the binding is wrong. **A wrong answer
+kept for its by-products, with the answer itself withdrawn.**
