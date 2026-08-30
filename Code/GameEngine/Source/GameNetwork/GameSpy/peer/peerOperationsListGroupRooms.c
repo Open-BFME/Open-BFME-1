@@ -40,7 +40,10 @@ typedef struct piConnection
 	int connected;
 	void *nickErrorCallback;
 	unsigned int lastChatPing;
-	char reserved[0x80 - 0x54];
+	unsigned int publicIP;
+	unsigned int privateIP;
+	int profileID;
+	char title[32];
 	char room[3][257];
 	int enteringRoom[3];
 	int inRoom[3];
@@ -50,7 +53,8 @@ typedef struct piConnection
 	int hosting;
 	char reservedHosting[0xB48 - 0xB44];
 	int maxPlayers;
-	char reservedPlayers[0x1790 - 0xB4C];
+	int passwordedRoom;
+	char reservedPlayers[0x1790 - 0xB50];
 	piOperation *listingGroupsOperation;
 	int nextID;
 	void *operationList;
@@ -96,6 +100,8 @@ void chatSetChannelPasswordA(void *chat, const char *channel, int enabled,
 void piCreateStagingRoomEnumUsersCallbackA(void *chat, int success,
 	const char *channel, int numUsers, const char **users, int *modes,
 	void *param);
+void piCreateStagingRoomEnterChannelCallbackA(void *chat, int success,
+	int result, const char *channel, void *param);
 int piConnectTitle(PEER peer);
 void piDisconnectTitle(PEER peer);
 unsigned int current_time(void);
@@ -137,6 +143,15 @@ int peerIsAutoMatching(PEER peer);
 int piStartHosting(PEER peer, unsigned int socket, unsigned short port);
 void chatSetChannelTopicA(void *chat, const char *channel, const char *topic);
 void chatSetChannelLimitA(void *chat, const char *channel, int limit);
+int qr2_create_socket(unsigned int *socket, const char *ip, int *port);
+typedef struct in_addr
+{
+	unsigned int s_addr;
+} in_addr;
+char *__stdcall inet_ntoa(in_addr address);
+void piMangleStagingRoom(char *room, const char *title,
+	unsigned int publicIP, unsigned int privateIP, unsigned short port);
+char *goastrdup(const char *text);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -550,6 +565,66 @@ PEERBool piNewGetGlobalKeysOperation(PEER peer, const char *target, int num,
 	operation->num = (target[0] == '#');
 	chatGetGlobalKeysA(connection->chat, target, num, keys,
 		piGetGlobalKeysCallbackA, operation, 0);
+	return 1;
+}
+
+PEERBool piNewCreateStagingRoomOperation(PEER peer, const char *name,
+	const char *password, int maxPlayers, unsigned int socket,
+	unsigned short port, PEERCBType callback, void *callbackParam, int opID)
+{
+	piConnection *connection = (piConnection *)peer;
+	piOperation *operation;
+	char channelCallbacks[0x30];
+	char room[257];
+	int createdSocket = 0;
+
+	if (!name)
+		name = "";
+	if (!callback)
+		return 0;
+
+	connection->maxPlayers = maxPlayers;
+	if (socket == (unsigned int)-1)
+	{
+		in_addr address;
+		int privatePort;
+
+		address.s_addr = 0;
+		privatePort = port ? port : 6500;
+		if (qr2_create_socket(&socket, inet_ntoa(address), &privatePort) != 0)
+			return 0;
+
+		port = (unsigned short)privatePort;
+		createdSocket = 1;
+	}
+
+	piMangleStagingRoom(room, connection->title, connection->publicIP,
+		connection->privateIP, port);
+	operation = piAddOperation(peer, 1, 0, callback, callbackParam, opID);
+	if (!operation)
+		return 0;
+
+	operation->socketClose = createdSocket;
+	operation->name = goastrdup(name);
+	if (!operation->name)
+	{
+		piRemoveOperation(peer, operation);
+		return 0;
+	}
+
+	operation->socket = socket;
+	operation->port = port;
+	operation->roomType = 2;
+	if (password[0])
+		operation->password = goastrdup(password);
+
+	piSetChannelCallbacks(peer, channelCallbacks);
+	piStartedEnteringRoom(peer, 2, room);
+	chatEnterChannelA(connection->chat, room, 0, channelCallbacks,
+		piCreateStagingRoomEnterChannelCallbackA, operation, 0);
+
+	if (password[0])
+		connection->passwordedRoom = 1;
 	return 1;
 }
 
