@@ -81200,3 +81200,6 @@ _piSetChannelCallbacks,0x0086BA10,GameSpy Peer channel callback initializer
 _piStartedEnteringRoom,0x00863B40,GameSpy Peer room-entry state transition
 _chatEnterChannelA,0x00860920,GameSpy Chat ANSI channel-entry request
 _piJoinRoomEnterChannelCallbackA,0x0085F960,GameSpy Peer join-room entry callback
+_piJoinRoomEnumUsersCallbackA,0x0085F8A0,GameSpy Peer join-room user enumeration callback
+_chatEnumUsersA,0x00861130,GameSpy Chat ANSI channel-user enumeration
+_piLeaveRoom,0x00863EE0,GameSpy Peer room-leave operation

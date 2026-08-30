@@ -59,9 +59,18 @@ void chatAuthenticateCDKeyA(void *chat, const char *cdkey, void *callback,
 void piSetAutoMatchStatus(PEER peer, int status);
 void piSetChannelCallbacks(PEER peer, void *callbacks);
 void piStartedEnteringRoom(PEER peer, int roomType, const char *channel);
-void piJoinRoomEnterChannelCallbackA(void);
+static void piJoinRoomEnterChannelCallbackA(void *chat, int success,
+	int result, const char *channel, void *param);
 void chatEnterChannelA(void *chat, const char *channel, const char *password,
 	void *callbacks, void *callback, void *param, int blocking);
+void piSBFreeHostServer(PEER peer);
+void piRemoveOperation(PEER peer, piOperation *operation);
+void piJoinRoomEnumUsersCallbackA(void);
+void chatEnumUsersA(void *chat, const char *channel, void *callback,
+	void *param, int blocking);
+void piLeaveRoom(PEER peer, int roomType, const char *reason);
+void piAddJoinRoomCallback(PEER peer, int success, int result, int roomType,
+	PEERCBType callback, void *callbackParam, int opID);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -222,4 +231,57 @@ PEERBool piNewJoinRoomOperation(PEER peer, int roomType,
 	chatEnterChannelA(connection->chat, channel, password, channelCallbacks,
 		piJoinRoomEnterChannelCallbackA, operation, 0);
 	return 1;
+}
+
+static int piEnterResultToJoinResult(int result)
+{
+	switch (result)
+	{
+	case 0:
+		return 0;
+	case 1:
+		return 1;
+	case 2:
+		return 2;
+	case 3:
+		return 3;
+	case 4:
+		return 4;
+	case 5:
+		return 10;
+	default:
+		return 10;
+	}
+}
+
+static void piJoinRoomEnterChannelCallbackA(void *chat, int success,
+	int result, const char *channel, void *param)
+{
+	piOperation *operation = (piOperation *)param;
+	PEER peer = operation->peer;
+	int joinResult;
+
+	if (operation->cancel)
+	{
+		piSBFreeHostServer(peer);
+		piRemoveOperation(peer, operation);
+		return;
+	}
+
+	if (success)
+	{
+		chatEnumUsersA(chat, channel, piJoinRoomEnumUsersCallbackA,
+			operation, 0);
+		return;
+	}
+
+	piLeaveRoom(peer, operation->roomType, 0);
+	if (result == 0)
+		joinResult = 10;
+	else
+		joinResult = piEnterResultToJoinResult(result);
+
+	piAddJoinRoomCallback(peer, 0, joinResult, operation->roomType,
+		operation->callback, operation->callbackParam, operation->ID);
+	piRemoveOperation(peer, operation);
 }
