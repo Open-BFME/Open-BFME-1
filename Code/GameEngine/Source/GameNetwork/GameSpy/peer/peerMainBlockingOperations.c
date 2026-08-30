@@ -178,3 +178,54 @@ void peerDisconnect(PEER peer)
 	if (connection->shutdown && connection->callbackDepth == 0)
 		peerShutdown(peer);
 }
+
+void peerConnectLoginA(PEER peer, int namespaceID, const char *email,
+	const char *profilenick, const char *uniquenick, const char *password,
+	void *nickErrorCallback, void *connectCallback, void *param, int blocking)
+{
+	piConnection *connection = (piConnection *)peer;
+	int success = 1;
+	int opID = piGetNextID(peer);
+
+	if (connection->connected || connection->connecting)
+		success = 0;
+	if (success && !connection->title[0])
+		success = 0;
+
+	if (success)
+	{
+		connection->chat = 0;
+		connection->nick[0] = '\0';
+		connection->connected = 0;
+		connection->connecting = 1;
+		connection->nickErrorCallback = nickErrorCallback;
+		connection->profileID = 0;
+		connection->disconnect = 0;
+
+		if (!piNewConnectOperation(peer,
+				(uniquenick && uniquenick[0]) ? 1 : 2, 0, namespaceID,
+				email, profilenick, uniquenick, password, 0, 0,
+				connectCallback, param, opID))
+		{
+			success = 0;
+			bfmePiDisconnectCleanupFromEsi();
+		}
+	}
+
+	if (!success)
+		piAddConnectCallback(peer, 0, 0, connectCallback, param, opID);
+
+	if (blocking)
+	{
+		do
+		{
+			msleep(1);
+			bfmePiThinkFromEsi(opID);
+		}
+		while (!PeerOperationsComplete(peer, opID) ||
+			!piIsCallbackFinished(peer, opID));
+
+		if (connection->shutdown && connection->callbackDepth == 0)
+			peerShutdown(peer);
+	}
+}
