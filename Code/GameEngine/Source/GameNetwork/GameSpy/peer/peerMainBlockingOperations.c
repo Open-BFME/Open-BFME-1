@@ -933,6 +933,15 @@ int peerInRoom(PEER peer, int roomType)
 	return connection->inRoom[roomType];
 }
 
+const char *peerGetRoomChannelA(PEER peer, int roomType)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->inRoom[roomType] && !connection->enteringRoom[roomType])
+		return 0;
+	return connection->room[roomType];
+}
+
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
 {
 	piConnection *connection = (piConnection *)peer;
