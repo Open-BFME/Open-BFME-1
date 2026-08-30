@@ -3673,3 +3673,52 @@ The circularity is the thing to notice: the twelve-byte struct is what puts our
 constructor in a nineteen-name pool, and the pool membership then reads as
 confirmation. A wrong layout can manufacture the evidence that appears to support
 it.
+
+## A this-ADJUSTMENT residue cannot be viewed, even in principle
+
+The strongest form of "a view is only honest when the number it encodes is the
+member's real offset from the pointer the compiler actually holds".
+
+`WorkerAIUpdate::isCurrentlyFerryingSupplies` is entered with the
+`SupplyTruckAIInterface` sub-object at +0x204, so retail's `mov eax,[ecx+0xe0]`
+and our `[ecx-0x124]` differ by exactly that adjustment. A view written to force
+retail's encoding would read `object+0x204+0xe0` instead of `object+0xe0` -- it
+would **byte-match while reading the wrong member**, and the gate cannot tell the
+difference. `RTS2DScene::draw` is the same in one instruction.
+
+So where the residue is a this-adjustment from base-class ordering, the recorded
+refusal is CORRECT and permanent, not a stale measurement waiting to be
+overturned. Three written "cannot come home" verdicts were re-tested and all
+three held; two held for this reason.
+
+That is the sharpest statement of the trap this file keeps circling: **the gate
+is blind to names AND to which object a displacement lands in.**
+
+## `verify_source_claims` reports the LEDGER's status, not a byte comparison
+
+Its stale-annotation complaint used to read "X is byte-verified matched from
+this file", which sounds like proof. It is not: `matched_sources` is the ledger's
+status column, and `merge_cluster --apply` sets that status without building. So
+immediately after an apply the message asserts a verification nobody performed.
+
+It cost a near-miss. A repointed row was believed proven, an overturned verdict
+was almost written into a source comment, and the build disagreed. The message is
+reworded now and pinned by tests -- it names the ledger as the source of the
+claim and points at `./build.sh` as the thing that would settle it.
+
+General form, and it has bitten twice today: **when a check's message and a
+check's implementation disagree, agents follow the message.** check_csv's
+duplicate hint was the other one. Fix the wording where it is emitted; docs do
+not reach the moment of decision.
+
+## BFME's LANMessage enum carries two extra types, and the enum is POSITIONAL
+
+`LANAPI::setIsActive` stores the type constant directly and reproduces retail
+byte for byte: the wire byte is 0x10 where a build from the reference enum
+computes 0xe. Two additional message types sit ahead of `MSG_INACTIVE`.
+
+Because the enum is positional, **every type after the two additions is
+renumbered by two**. Two clients built from the two enums would not merely
+disagree about inactive announcements -- each would misread every later type as
+its neighbour two places down. The two extra types are not identified yet; only
+that there are exactly two. Recorded in docs/lan-testing.md as behaviour.

@@ -1623,9 +1623,18 @@ def verify_source_claims(only=None):
             # (e.g. the ZH copy of a function landed via an asm-whale scaffold);
             # matched from THIS file, the marker is a stale lie about its state
             if rel in matched_sources.get(label, ()):
+                # Say what this actually knows. `matched_sources` is the LEDGER's
+                # status column, not a byte comparison -- and merge_cluster
+                # --apply sets that status without building. Wording this as
+                # "byte-verified" once had an agent believe a repointed row was
+                # proven and nearly write an overturned verdict into a source
+                # comment; the build is what verifies, and it disagreed.
                 problems.append(
-                    f"{rel}: {label} is byte-verified matched from this file but still "
-                    f"carries an unmatched marker (stale annotation)"
+                    f"{rel}: the LEDGER records {label} as matched from this file "
+                    f"(status only -- not a byte comparison) while the file still "
+                    f"carries an unmatched marker. Either the marker is a stale "
+                    f"annotation, or the row was repointed here and has not been "
+                    f"byte-verified yet; ./build.sh on this file settles which."
                 )
         if matched_by_source.get(rel, 0) == 0:
             problems.append(
