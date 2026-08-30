@@ -80,6 +80,10 @@ void piAddGetRoomKeysCallback(PEER peer, int success, int roomType,
 void chatSetGlobalKeysA(void *chat, int num, const char **keys,
 	const char **values);
 piPlayer *piGetPlayer(PEER peer, const char *nick);
+typedef void (*piEnumRoomPlayersCallback)(PEER peer, int roomType,
+	piPlayer *player, int index, void *param);
+void piEnumRoomPlayers(PEER peer, int roomType,
+	piEnumRoomPlayersCallback callback, void *param);
 int chatGetBasicUserInfoNoWaitA(void *chat, const char *nick,
 	const char **user, const char **address);
 int piDemangleUser(const char *user, unsigned int *IP, int *profileID);
@@ -823,4 +827,29 @@ int peerGetReadyA(PEER peer, const char *nick, int *ready)
 		return 0;
 	*ready = (player->flags[2] & 2) != 0;
 	return 1;
+}
+
+static void piAreAllReadyEnumRoomPlayersCallback(PEER peer, int roomType,
+	piPlayer *player, int index, void *param)
+{
+	if (player && !(player->flags[2] & 2))
+		*(int *)param = 0;
+}
+
+int peerAreAllReady(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+	int allReady;
+
+	if (!connection->title[0])
+		return 0;
+	if (!connection->connected)
+		return 0;
+	if (!connection->inRoom[2])
+		return 0;
+
+	allReady = 1;
+	piEnumRoomPlayers(peer, 2, piAreAllReadyEnumRoomPlayersCallback,
+		&allReady);
+	return allReady;
 }

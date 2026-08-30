@@ -81232,3 +81232,4 @@ _piSBStopListingGames,0x008646C0,GameSpy Peer server-browser listing stop
 _peerMessageRoomA,0x008576F0,GameSpy Peer room-message sender
 _piSetLocalFlags,0x00863C00,GameSpy Peer local-player flag update
 _piSendStateChanged,0x008667A0,GameSpy Peer query-reporting state update
+_piEnumRoomPlayers,0x008633E0
