@@ -926,6 +926,13 @@ int peerGetGroupID(PEER peer)
 	return connection->groupID;
 }
 
+int peerInRoom(PEER peer, int roomType)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	return connection->inRoom[roomType];
+}
+
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
 {
 	piConnection *connection = (piConnection *)peer;
