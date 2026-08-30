@@ -81208,3 +81208,5 @@ _piIsOperationFinished,0x0085F040,GameSpy Peer operation completion check
 _ciClearAllUsers,0x00872930,GameSpy Chat quiet-mode player-list reset
 _ciEnumJoinedChannels,0x00872680,GameSpy Chat joined-channel enumerator
 _ciSetQuietModeEnumJoinedChannelsA,0x00860710,GameSpy Chat quiet-mode channel callback
+_ciAddLISTFilter,0x0086C4A0,GameSpy Chat channel-list filter constructor
+_bfmeCiThinkFromEsi,0x008601F0,GameSpy Chat static think helper with chat carried in ESI
