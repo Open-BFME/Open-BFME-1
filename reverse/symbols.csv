@@ -81210,3 +81210,4 @@ _ciEnumJoinedChannels,0x00872680,GameSpy Chat joined-channel enumerator
 _ciSetQuietModeEnumJoinedChannelsA,0x00860710,GameSpy Chat quiet-mode channel callback
 _ciAddLISTFilter,0x0086C4A0,GameSpy Chat channel-list filter constructor
 _bfmeCiThinkFromEsi,0x008601F0,GameSpy Chat static think helper with chat carried in ESI
+_ciAddJOINFilter,0x0086C4F0,GameSpy Chat channel-join filter constructor

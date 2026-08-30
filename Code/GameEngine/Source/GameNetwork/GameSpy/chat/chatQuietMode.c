@@ -20,6 +20,9 @@ void ciSetQuietModeEnumJoinedChannelsA(void);
 void ciEnumJoinedChannels(CHAT chat, void *callback, void *param);
 int ciAddLISTFilter(CHAT chat, void *callbackEach, void *callbackAll,
 	void *param);
+int ciAddJOINFilter(CHAT chat, const char *channel, void *callback,
+	void *param, void *callbacks, const char *password);
+void ciChannelEntering(CHAT chat, const char *channel);
 void bfmeCiThinkFromEsi(int ID);
 void msleep(unsigned int milliseconds);
 int ciCheckFiltersForID(CHAT chat, int ID);
@@ -65,6 +68,32 @@ void chatEnumChannelsA(CHAT chat, const char *filter, void *callbackEach,
 
 	ciSocketSendf(&connection->chatSocket, "LIST %s", filter);
 	ID = ciAddLISTFilter(chat, callbackEach, callbackAll, param);
+
+	if (blocking)
+	{
+		do
+		{
+			bfmeCiThinkFromEsi(ID);
+			msleep(10);
+		}
+		while (ciCheckForID(chat, ID));
+	}
+}
+
+void chatEnterChannelA(CHAT chat, const char *channel, const char *password,
+	void *callbacks, void *callback, void *param, int blocking)
+{
+	ciConnection *connection = (ciConnection *)chat;
+	int ID;
+
+	if (!chat || !connection->connected)
+		return;
+	if (!password)
+		password = "";
+
+	ciSocketSendf(&connection->chatSocket, "JOIN %s %s", channel, password);
+	ID = ciAddJOINFilter(chat, channel, callback, param, callbacks, password);
+	ciChannelEntering(chat, channel);
 
 	if (blocking)
 	{
