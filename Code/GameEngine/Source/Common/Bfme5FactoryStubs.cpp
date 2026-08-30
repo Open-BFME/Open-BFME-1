@@ -14,9 +14,16 @@ public:
 	static void *operator new(unsigned int n);
 };
 
-extern void *g_bfme5VtA;
-extern void *g_bfme5VtB;
-extern void *g_bfme5VtC;
+// These three each named TWO different globals -- one pair per factory -- which
+// failed the DIR32 check for the whole tree. Split by RVA, following the Rva<hex>
+// convention already used in this directory: the name claims an address and
+// nothing more. The two single-base externs below are deliberately untouched.
+extern void *g_bfmeRva0112B3ACVt;
+extern void *g_bfmeRva0112B3F0Vt;
+extern void *g_bfmeRva0112B3FCVt;
+extern void *g_bfmeRva01118E58Vt;
+extern void *g_bfmeRva01129744Vt;
+extern void *g_bfmeRva0112B2B8Vt;
 extern void *g_bfme5VtD;
 extern void *g_bfme5VtE;
 
@@ -37,9 +44,9 @@ Bfme5Obj18 * __cdecl bfme5MakeObj18(void)
 
 	if (q) {
 		p = (Bfme5Obj18 *)q;
-		*(void *volatile *)&p->m_bfmeV4 = &g_bfme5VtA;
-		*(void *volatile *)&p->m_bfmeV0 = &g_bfme5VtB;
-		*(void *volatile *)&p->m_bfmeV4 = &g_bfme5VtC;
+		*(void *volatile *)&p->m_bfmeV4 = &g_bfmeRva0112B3ACVt;
+		*(void *volatile *)&p->m_bfmeV0 = &g_bfmeRva0112B3FCVt;
+		*(void *volatile *)&p->m_bfmeV4 = &g_bfmeRva0112B3F0Vt;
 		p->m_bfme08 = 0;
 		p->m_bfme0c = 0;
 		p->m_bfme10 = 0;
@@ -66,10 +73,10 @@ Bfme5Obj70 * __cdecl bfme5MakeObj70(int arg)
 
 	if (q) {
 		p = (Bfme5Obj70 *)q;
-		*(void *volatile *)&p->m_bfmeV4 = &g_bfme5VtA;
+		*(void *volatile *)&p->m_bfmeV4 = &g_bfmeRva01129744Vt;
 		*(volatile int *)&p->m_bfme08 = arg;
-		*(void *volatile *)&p->m_bfmeVc = &g_bfme5VtB;
-		*(void *volatile *)&p->m_bfmeV0 = &g_bfme5VtC;
+		*(void *volatile *)&p->m_bfmeVc = &g_bfmeRva01118E58Vt;
+		*(void *volatile *)&p->m_bfmeV0 = &g_bfmeRva0112B2B8Vt;
 		*(void *volatile *)&p->m_bfmeV4 = &g_bfme5VtD;
 		*(void *volatile *)&p->m_bfmeVc = &g_bfme5VtE;
 		return p;

@@ -2,7 +2,11 @@
 
 void * __cdecl operator new(unsigned int n);
 
-extern void *g_bfme5RefVtableD;
+// This named THREE different globals. Split by RVA; the name claims an
+// address and nothing more.
+extern void *g_bfmeRva010FE034Vt;
+extern void *g_bfmeRva010FE04CVt;
+extern void *g_bfmeRva0109FB98Vt;
 
 struct Bfme5RefY
 {
@@ -33,7 +37,7 @@ Bfme5RefHolderD::Bfme5RefHolderD(Bfme5RefPair *s)
 
 	if (q) {
 		q->m_bfmeRefCount = 0;
-		q->m_bfmeVptr = &g_bfme5RefVtableD;
+		q->m_bfmeVptr = &g_bfmeRva010FE034Vt;
 
 		Bfme5RefY *r0 = s->m_bfmeA;
 
@@ -75,7 +79,7 @@ Bfme5RefHolderE::Bfme5RefHolderE(Bfme5RefPair *s)
 
 	if (q) {
 		q->m_bfmeRefCount = 0;
-		q->m_bfmeVptr = &g_bfme5RefVtableD;
+		q->m_bfmeVptr = &g_bfmeRva010FE04CVt;
 
 		Bfme5RefY *r0 = s->m_bfmeA;
 
@@ -127,7 +131,7 @@ void Bfme5PushList::bfmePushFront(void *a, void *b)
 	Bfme5PushNode *n;
 
 	if (q) {
-		q->m_bfmeVptr = &g_bfme5RefVtableD;
+		q->m_bfmeVptr = &g_bfmeRva0109FB98Vt;
 		q->m_bfmeNext = 0;
 		q->m_bfmeA = 0;
 		q->m_bfmeB = 0;
