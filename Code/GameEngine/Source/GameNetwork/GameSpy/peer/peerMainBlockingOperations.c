@@ -283,3 +283,12 @@ void peerSetGlobalKeysA(PEER peer, int num, const char **keys,
 		return;
 	chatSetGlobalKeysA(connection->chat, num, keys, values);
 }
+
+const char *peerGetNickA(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->connected)
+		return 0;
+	return connection->nick;
+}
