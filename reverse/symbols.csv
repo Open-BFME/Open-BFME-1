@@ -81114,3 +81114,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeVisit1236@BfmeNode1236@@QAEXXZ,0x008ADB50,address-derived node method called by the 0x008BD670 traversal
 ?bfmeQuery1279@BfmeQuery1279@@QAEXPAXHPAPAX1@Z,0x008BD0F0,address-derived query method called by the 0x008BD4D0 forwarding body
 ?bfmeProcess1279@BfmeWrapper1279@@QAEXPAX@Z,0x008BD400,address-derived processor called by the 0x008BD4D0 forwarding body
+??0BfmeNestedBE@@QAE@HIH@Z,0x00892DA0,address-derived nested constructor called by BfmeThingBE at 0x008BE3B0
