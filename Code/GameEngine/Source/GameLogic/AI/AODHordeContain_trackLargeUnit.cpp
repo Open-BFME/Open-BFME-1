@@ -51,13 +51,36 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+struct BfmeMemberIndexNode
+{
+	unsigned char m_pad00[0x14];
+	int m_index;
+};
+
+struct BfmeMemberIndexIterator
+{
+	BfmeMemberIndexNode *m_node;
+};
+
+class BfmeMemberIndexMap
+{
+public:
+	BfmeMemberIndexIterator find(const int &id);
+
+	BfmeMemberIndexNode *m_header;
+	unsigned char m_pad04[8];
+};
+
 class BfmeAODHordeContainOwner
 {
 public:
 	void refreshTrackedLargeUnit();
+	int bfmeGetMemberIndex(int memberID);
 
 private:
-	unsigned char m_pad00[0x230];
+	unsigned char m_pad00[0x120];
+	BfmeMemberIndexMap m_memberIndices;
+	unsigned char m_pad12C[0x104];
 	ObjectID m_trackedLargeUnit;
 	unsigned char m_pad234[4];
 	Coord3D m_trackedPosition;
@@ -109,4 +132,12 @@ void BfmeAODHordeContainOwner::refreshTrackedLargeUnit()
 	m_trackedPosition = unit->m_position;
 	m_largeUnitHeightFactor = 17.0f;
 	m_largeUnitHeight = unit->m_geometry.getMaxHeightAbovePosition();
+}
+
+int BfmeAODHordeContainOwner::bfmeGetMemberIndex(int memberID)
+{
+	BfmeMemberIndexIterator i = m_memberIndices.find(memberID);
+	if (i.m_node != m_memberIndices.m_header)
+		return i.m_node->m_index;
+	return 0;
 }
