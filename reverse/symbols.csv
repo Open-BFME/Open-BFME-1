@@ -81133,3 +81133,10 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeFlushSlots1289@BfmeSlotDispatcher1281@@QAEXXZ,0x008BCD80,address-derived slot-state flush reconstructed from the 0x008BCD80 retail body
 ?bfmeSetAxis1289@BfmeSlotState1289@@QAEXHMH@Z,0x008AC9F0,address-derived axis setter called twice by the 0x008BCD80 retail body
 ?bfmeApplyPosition1291@BfmeSlotDispatcher1281@@QAEXXZ,0x008BB0B0,address-derived coordinate clamp reconstructed from the 0x008BB0B0 retail body
+?bfmeGetLookup1282@BfmeEntrySource1282@@QAEPAVBfmeTab1034@@XZ,0x008C41D0,address-derived lookup accessor called by the 0x008BAAB0 retail body
+?bfmeSubmit1282@BfmeRouteManager1282@@QAEXPAXPAVBfmeN1034@@HH@Z,0x008A0960,address-derived route submission called by the 0x008BAAB0 retail body
+?bfmeFlush1282@BfmeBroadcast1282@@QAEXXZ,0x008A1940,address-derived final queue flush called by the 0x008BAAB0 retail body
+g_bfmeRouteTable1282,0x012D5980,address-derived seven-entry route table traversed by the 0x008BAAB0 retail body
+g_bfmeRouteKeys1282,0x01338480,address-derived route key array indexed by the 0x008BAAB0 retail body
+g_bfmeExtra1282,0x01337804,address-derived context argument forwarded by the 0x008BAAB0 retail body
+g_bfmePlay1282,0x01337884,address-derived audio callback invoked by the 0x008BAAB0 retail body

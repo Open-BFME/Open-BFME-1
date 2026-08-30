@@ -16,7 +16,7 @@
 # while nearly every row is readable: a fully built tree leaves 394 unreadable,
 # a tree whose objects were never built leaves 118,251 -- and prints the same 67
 # findings either way. Raising this limit to get green disables the check.
-multi_name.family = 7
+multi_name.family = 6
 multi_name.different = 0
 size_outlier.indicted = 1
 null_reloc.rows = 66
