@@ -1322,3 +1322,25 @@ int peerAreAllReady(PEER peer)
 		&allReady);
 	return allReady;
 }
+
+void piSendChannelUTM(PEER peer, const char *channel, const char *command,
+	const char *parameters, int authenticate)
+{
+	piConnection *connection = (piConnection *)peer;
+	char buffer[512];
+
+	if (!connection->connected)
+		return;
+	if (!channel || !channel[0])
+		return;
+	if (!command || !command[0])
+		return;
+	if (!parameters)
+		parameters = "";
+	if (strlen(command) + strlen(parameters) + 5 > sizeof(buffer))
+		return;
+
+	sprintf(buffer, "%s %s", command, parameters);
+	chatSendChannelMessageA(connection->chat, channel, buffer,
+		authenticate ? 4 : 3);
+}
