@@ -2,6 +2,7 @@
 // Upstream: GameSpy Peer SDK peerOperations.c, 2007 release.
 
 #include <stdlib.h>
+#include <string.h>
 
 typedef void *PEER;
 typedef int PEERBool;
@@ -56,6 +57,11 @@ void piAuthenticateCDKeyCallbackA(void);
 void chatAuthenticateCDKeyA(void *chat, const char *cdkey, void *callback,
 	void *param, int blocking);
 void piSetAutoMatchStatus(PEER peer, int status);
+void piSetChannelCallbacks(PEER peer, void *callbacks);
+void piStartedEnteringRoom(PEER peer, int roomType, const char *channel);
+void piJoinRoomEnterChannelCallbackA(void);
+void chatEnterChannelA(void *chat, const char *channel, const char *password,
+	void *callbacks, void *callback, void *param, int blocking);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -188,5 +194,32 @@ PEERBool piNewAutoMatchOperation(PEER peer, unsigned int socket,
 	operation->port = port;
 	connection->autoMatchOperation = operation;
 	piSetAutoMatchStatus(peer, 1);
+	return 1;
+}
+
+PEERBool piNewJoinRoomOperation(PEER peer, int roomType,
+	const char *channel, const char *password, PEERCBType callback,
+	void *callbackParam, int opID)
+{
+	piConnection *connection = (piConnection *)peer;
+	piOperation *operation;
+	char channelCallbacks[0x30];
+
+	if (!channel || !channel[0])
+		return 0;
+	if (!password)
+		password = "";
+	if (strlen(channel) >= 257)
+		return 0;
+
+	operation = piAddOperation(peer, 2, 0, callback, callbackParam, opID);
+	if (!operation)
+		return 0;
+	operation->roomType = roomType;
+
+	piSetChannelCallbacks(peer, channelCallbacks);
+	piStartedEnteringRoom(peer, roomType, channel);
+	chatEnterChannelA(connection->chat, channel, password, channelCallbacks,
+		piJoinRoomEnterChannelCallbackA, operation, 0);
 	return 1;
 }

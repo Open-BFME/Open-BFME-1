@@ -81196,3 +81196,7 @@ _chatChangeNickA,0x008604C0,GameSpy Chat nick-change request
 _piAuthenticateCDKeyCallbackA,0x00860020,GameSpy Peer CD-key completion callback
 _chatAuthenticateCDKeyA,0x008607A0,GameSpy Chat CD-key authentication request
 _piSetAutoMatchStatus,0x008640A0,GameSpy Peer auto-match status transition
+_piSetChannelCallbacks,0x0086BA10,GameSpy Peer channel callback initializer
+_piStartedEnteringRoom,0x00863B40,GameSpy Peer room-entry state transition
+_chatEnterChannelA,0x00860920,GameSpy Chat ANSI channel-entry request
+_piJoinRoomEnterChannelCallbackA,0x0085F960,GameSpy Peer join-room entry callback
