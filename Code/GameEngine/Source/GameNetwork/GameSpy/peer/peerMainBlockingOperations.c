@@ -1051,6 +1051,17 @@ void peerStartPlaying(PEER peer)
 	piSetLocalFlags(peer);
 }
 
+int peerIsPlaying(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->title[0])
+		return 0;
+	if (!connection->connected)
+		return 0;
+	return connection->playing;
+}
+
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
 {
 	piConnection *connection = (piConnection *)peer;
