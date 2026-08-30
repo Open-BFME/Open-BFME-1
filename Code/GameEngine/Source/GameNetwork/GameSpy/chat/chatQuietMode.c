@@ -23,6 +23,10 @@ int ciAddLISTFilter(CHAT chat, void *callbackEach, void *callbackAll,
 int ciAddJOINFilter(CHAT chat, const char *channel, void *callback,
 	void *param, void *callbacks, const char *password);
 void ciChannelEntering(CHAT chat, const char *channel);
+int ciGetNextID(CHAT chat);
+int ciAddCallback_(CHAT chat, int type, void *callback, void *callbackParams,
+	void *param, int ID, const char *channel, unsigned int callbackParamsSize);
+int ciAddCDKEYFilter(CHAT chat, void *callback, void *param);
 void bfmeCiThinkFromEsi(int ID);
 void msleep(unsigned int milliseconds);
 int ciCheckFiltersForID(CHAT chat, int ID);
@@ -95,6 +99,59 @@ void chatEnterChannelA(CHAT chat, const char *channel, const char *password,
 	ID = ciAddJOINFilter(chat, channel, callback, param, callbacks, password);
 	ciChannelEntering(chat, channel);
 
+	if (blocking)
+	{
+		do
+		{
+			bfmeCiThinkFromEsi(ID);
+			msleep(10);
+		}
+		while (ciCheckForID(chat, ID));
+	}
+}
+
+void chatAuthenticateCDKeyA(CHAT chat, const char *cdkey, void *callback,
+	void *param, int blocking)
+{
+	ciConnection *connection = (ciConnection *)chat;
+	int success = 1;
+	int ID;
+	struct
+	{
+		int result;
+		const char *message;
+	} callbackParams;
+
+	if (!chat || !connection->connected)
+		return;
+	if (!cdkey || !cdkey[0])
+		success = 0;
+
+	if (!success)
+	{
+		if (callback)
+		{
+			callbackParams.result = 0;
+			callbackParams.message = "";
+			ID = ciGetNextID(chat);
+			ciAddCallback_(chat, 31, callback, &callbackParams, param, ID,
+				0, sizeof(callbackParams));
+
+			if (blocking)
+			{
+				do
+				{
+					bfmeCiThinkFromEsi(ID);
+					msleep(10);
+				}
+				while (ciCheckForID(chat, ID));
+			}
+		}
+		return;
+	}
+
+	ciSocketSendf(&connection->chatSocket, "CDKEY %s", cdkey);
+	ID = ciAddCDKEYFilter(chat, callback, param);
 	if (blocking)
 	{
 		do
