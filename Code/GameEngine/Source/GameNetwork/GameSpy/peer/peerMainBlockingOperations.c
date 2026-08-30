@@ -152,6 +152,7 @@ __declspec(dllimport) int __cdecl sprintf(char *buffer,
 void peerMessageRoomA(PEER peer, int roomType, const char *message,
 	int messageType);
 void piSetLocalFlags(PEER peer);
+int piStartReporting(PEER peer, unsigned int socket, unsigned short port);
 void piSetAutoMatchStatus(PEER peer, int status);
 void piSendStateChanged(PEER peer);
 void piAddConnectCallback(PEER peer, int success, int failureReason,
@@ -1060,6 +1061,18 @@ int peerIsPlaying(PEER peer)
 	if (!connection->connected)
 		return 0;
 	return connection->playing;
+}
+
+int peerStartReportingWithSocket(PEER peer, unsigned int socket,
+	unsigned short port)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->title[0])
+		return 0;
+	if (!piStartReporting(peer, socket, port))
+		return 0;
+	return 1;
 }
 
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
