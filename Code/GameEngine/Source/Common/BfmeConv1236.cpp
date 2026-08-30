@@ -115,3 +115,20 @@ void bfmeTransform1236(void *context, BfmeB1236 *b, void *tail)
 	b->bfmeEmit1236(context, (int)current, tail);
 	--g_bfmeArenaCursor;
 }
+
+class BfmeZero1236
+{
+public:
+	BfmeZero1236();
+
+private:
+	int m_values[32];
+	int m_extra;
+};
+
+BfmeZero1236::BfmeZero1236()
+{
+	m_extra = 0;
+	for (int i = 0; i < 32; ++i)
+		m_values[i] = 0;
+}
