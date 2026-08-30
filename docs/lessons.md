@@ -4642,3 +4642,57 @@ overloads return to `present-unmatched`, which is what they are.
 
 The conversion-direction gate stops new ones. This was an old one verifying
 itself.
+
+## COUNT BODIES, NOT ROWS -- where duplicate names are the audit, rows let the defect vote
+
+Second counting defect to change a conclusion today, and the sharper one.
+
+A caller sweep over the GameWindow draw-data run counted ledger ROWS, so a
+single body carrying four claimant names contributed four "caller sites". The
+apparent six-to-three Colour majority at 0x00479010 was **two bodies**:
+
+    0x0047B650   SetEnabledThumbColor | SetDisabledThumbColor |
+                 SetHiliteThumbColor  | SetEnabledThumbBorderColor
+    0x0047B700   the same four names, Selected variants
+
+One 28-byte body wearing four names, counted four times, in a sweep whose whole
+purpose was to detect bodies wearing several names. **Where duplicate names are
+the thing under audit, counting rows lets the defect vote on its own case.**
+
+Recounted by unique body the signal reversed: six unambiguous single-name
+BorderColor bodies across two groups, from two independent wrapper families,
+and not one Color.
+
+## A displacement is a NUMBER; it names nothing
+
+A proposed shortcut for settling `WinDrawData`'s field order -- "check whether
+position 2's displacement is the one our header calls Color" -- is circular, and
+it fails in the direction that looks like confirmation.
+
+Position 2 writes base+8, and our header calls +8 `borderColor`. So the test
+appears to REFUTE the (correct) hypothesis -- but only by assuming our header's
+field order, which is exactly the thing in question. **There is no caller-free
+version of this test.**
+
+What retail alone does give is the geometry, which needs no names: bases
+0x48 / 0xB4 / 0x120, fields at +0 / +4 / +8, stride 0x6C = 9 x 12. So
+MAX_DRAW_DATA is 9 and WinDrawData is three 4-byte fields. Geometry from bytes,
+identity from callers -- and never identity from a byte offset interpreted
+through the header you are auditing.
+
+## Settled: BFME's WinDrawData is {image, borderColor, color}
+
+Position 1 is BorderColor on six single-name bodies across two groups and two
+independent wrapper families; position 2 has no named callers **because the
+Colour wrappers' rows are piled onto the enabled group's position-1 body
+instead**. Our header has the last two fields swapped.
+
+So the GameWindow fix is a `WinDrawData` field-order correction in the shim --
+not the ledger rebinding that was attempted and reverted. The six
+Colour/BorderColor rows and the three `?dup_` position-2 bodies should fall out
+once it lands, with the Image third already proven independently.
+
+One residue that does NOT resolve this way and was correctly left alone:
+`?GadgetProgressBarSetEnabledBarColor@@` at 0x0047A8C0 is a single-name body
+still calling position 0 with idx=4. Under the settled order that looks
+misnamed, but it has no companion name to convict it and no inference was made.
