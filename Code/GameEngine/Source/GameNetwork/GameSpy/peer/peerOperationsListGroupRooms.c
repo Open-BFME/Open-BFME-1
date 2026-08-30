@@ -71,6 +71,9 @@ void chatEnumUsersA(void *chat, const char *channel, void *callback,
 void piLeaveRoom(PEER peer, int roomType, const char *reason);
 void piAddJoinRoomCallback(PEER peer, int success, int result, int roomType,
 	PEERCBType callback, void *callbackParam, int opID);
+void chatSetChannelPasswordA(void *chat, const char *channel, int enabled,
+	const char *password);
+void piCreateStagingRoomEnumUsersCallbackA(void);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -283,5 +286,41 @@ static void piJoinRoomEnterChannelCallbackA(void *chat, int success,
 
 	piAddJoinRoomCallback(peer, 0, joinResult, operation->roomType,
 		operation->callback, operation->callbackParam, operation->ID);
+	piRemoveOperation(peer, operation);
+}
+
+void piCreateStagingRoomEnterChannelCallbackA(void *chat, int success,
+	int result, const char *channel, void *param)
+{
+	piOperation *operation = (piOperation *)param;
+	PEER peer = operation->peer;
+	piConnection *connection = (piConnection *)peer;
+	int joinResult;
+
+	if (operation->cancel)
+	{
+		piRemoveOperation(peer, operation);
+		return;
+	}
+
+	if (success)
+	{
+		if (operation->password)
+			chatSetChannelPasswordA(connection->chat, channel, 1,
+				operation->password);
+
+		chatEnumUsersA(chat, channel, piCreateStagingRoomEnumUsersCallbackA,
+			operation, 0);
+		return;
+	}
+
+	piLeaveRoom(peer, 2, 0);
+	if (result == 0)
+		joinResult = 10;
+	else
+		joinResult = piEnterResultToJoinResult(result);
+
+	piAddJoinRoomCallback(peer, 0, joinResult, 2, operation->callback,
+		operation->callbackParam, operation->ID);
 	piRemoveOperation(peer, operation);
 }
