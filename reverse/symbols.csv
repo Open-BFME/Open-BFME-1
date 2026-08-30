@@ -81154,3 +81154,10 @@ g_bfmeMinimumScore1285,0x01075350,address-derived minimum directional score acce
 ?bfmeGetLookup1285@BfmeEntrySource1285@@QAEPAVBfmeLookup1285@@XZ,0x008C41D0,address-derived lookup accessor called by the 0x008BB570 retail body
 ?bfmeSetState1285@BfmeNode1285@@QAEXH@Z,0x008D3050,address-derived node state method called by the 0x008BB570 retail body
 ?bfmeSubmit1285@BfmeRouteManager1285@@QAEXPAXPAUBfmeNode1285@@HH@Z,0x008A0960,address-derived route submission called by the 0x008BB570 retail body
+?bfmeCompare1294@AsciiString@@QBEHPBD@Z,0x0004B01A,address-derived string comparison called by the 0x003A0860 retail body
+?bfmeUsePrimaryRank1294@BfmeGameLogic1294@@QAE_NXZ,0x0001D1C9,address-derived rank-selection predicate called by the 0x003A0860 retail body
+g_bfmeGameLogic1294,0x012F0898,address-derived game-logic global read by the 0x003A0860 retail body
+g_bfmeSideNameA1294,0x010804D8,address-derived first side-name string used by the 0x003A0860 retail body
+g_bfmeSideNameB1294,0x010804D0,address-derived second side-name string used by the 0x003A0860 retail body
+g_bfmeSideNameC1294,0x010804BC,address-derived third side-name string used by the 0x003A0860 retail body
+g_bfmeSideNameD1294,0x010804C4,address-derived fourth side-name string used by the 0x003A0860 retail body
