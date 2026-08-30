@@ -3879,6 +3879,16 @@ cut.
 
 Hold source in a patch; hold ledger work as a list of tool invocations.
 
+**Sharpened by using it: split by REPRODUCIBILITY, not by file type.** A held
+shim change spanned `functions.csv`, which an unrelated commit also needed. The
+right split was not source-versus-ledger but reproducible-versus-not: the merge
+was one `merge_cluster` command, so it was RESTORED and re-run rather than held,
+while only the hand-written source edits stayed parked. A new shim DIRECTORY is
+untracked, so it survives a rebase untouched and needs no holding at all.
+
+Ask of each piece: can I regenerate this with one command? If yes, let it go and
+re-run it. Only what you cannot reproduce needs a patch.
+
 ## A call through an ILT thunk is PERMANENTLY unreachable from source
 
 `GameSpyInfo::removeFromSavedIgnoreList` reads 118 of 118 bytes exact and the
@@ -4051,3 +4061,22 @@ six-versus-nine setter claim had one grep whose disagreement with another was
 written off. Where a structural change is about to be made on inference, the
 question to ask first is not "how strong is my evidence" but "is there a second,
 independent route to it".
+
+## Two fixes paid off within the hour, on TUs nobody had flagged
+
+Worth recording because both were made on one instance and doubted as
+over-fitting at the time.
+
+`verify_source_claims`' reworded complaint -- "the LEDGER records X as matched
+from this file (status only -- not a byte comparison) ... either the marker is
+stale, or the row was repointed here and has not been byte-verified yet;
+./build.sh settles which" -- reached the same agent who had misread the old
+wording, within the hour, and it went straight to clearing the markers instead
+of inferring a match. Fixing the message where it is EMITTED rather than in a
+doc is the whole difference.
+
+The `funclet_candidates` section fix caught its first unknown case the same way:
+GameText.cpp's `uw_00c222b6` renumbered from `$L37642` to `$L36977` under an
+unrelated struct edit and HEALED rather than freezing the build. That is a TU
+nobody had identified as affected -- the fix was made against one known case and
+immediately earned its keep on another.
