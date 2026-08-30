@@ -34,7 +34,8 @@ typedef struct piConnection
 	int hosting;
 	int playing;
 	int maxPlayers;
-	char reservedMaxPlayers[0xB54 - 0xB4C];
+	int passwordedRoom;
+	void *hostServer;
 	int ready;
 	char reservedReady[0x1824 - 0xB58];
 	int callbackDepth;
@@ -97,6 +98,8 @@ void chatKickUserA(void *chat, const char *channel, const char *nick,
 	const char *reason);
 void chatSetQuietMode(void *chat, int quiet);
 void chatSetChannelTopicA(void *chat, const char *channel, const char *topic);
+void chatSetChannelPasswordA(void *chat, const char *channel, int enable,
+	const char *password);
 piPlayer *piGetPlayer(PEER peer, const char *nick);
 typedef void (*piEnumRoomPlayersCallback)(PEER peer, int roomType,
 	piPlayer *player, int index, void *param);
@@ -969,6 +972,34 @@ void peerSetRoomNameA(PEER peer, int roomType, const char *name)
 	if (!connection->hosting)
 		return;
 	chatSetChannelTopicA(connection->chat, connection->room[roomType], name);
+}
+
+void peerSetPasswordA(PEER peer, int roomType, const char *password)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (roomType != 2)
+		return;
+	if (!password)
+		password = "";
+	if (!connection->title[0])
+		return;
+	if (!connection->connected)
+		return;
+	if (!connection->enteringRoom[roomType] &&
+		!connection->inRoom[roomType])
+		return;
+	if (!connection->hosting)
+		return;
+
+	if (password[0])
+		chatSetChannelPasswordA(connection->chat,
+			connection->room[roomType], 1, password);
+	else
+		chatSetChannelPasswordA(connection->chat,
+			connection->room[roomType], 0, "x");
+	connection->passwordedRoom = password[0] != 0;
+	piSendStateChanged(peer);
 }
 
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
