@@ -4835,14 +4835,26 @@ it was testing. `?parseTooltipDelay@@` breaks it: `add ecx, 0x198` on a
 Combined with two `this`-relative measurements the system becomes
 **over-determined** -- three measurements, two unknowns, no free parameters:
 
-    m_instData                  = 0x1C4 - 0x198 = 0x2C
-    offsetof(m_enabledDrawData) = 0x48  - 0x2C  = 0x1C
-    check:  0x2C + 0x1C = 0x48  and  0x2C + 0x198 = 0x1C4     both close
+**The first solution of it was WRONG, and the way it was wrong is the lesson.**
+It counted `m_id, m_state, m_style, m_status, m_owner` as 0x14 and concluded
+`m_instData = 0x2C`, "8 extra bytes in WinInstanceData", and "neither shim's
+insertion is real". `WinInstanceData` declares `virtual ~WinInstanceData()`, so
+it carries a **vptr at +0** that was not counted. Corrected:
 
-ZH puts `m_enabledDrawData` at 0x14, so **BFME has 8 more bytes before the draw
-arrays**, and `m_instData` sits at the plain ZH 0x2C. Neither shim's 4-byte
-GameWindow-level insertion is real; both were compensating one level up for 8
-bytes that live inside `WinInstanceData`.
+    offsetof(m_enabledDrawData) = 0x18            (vptr + five dwords)
+    m_instData                  = 0x48 - 0x18 = 0x30
+    m_tooltipDelay              = 0x1C4 - 0x30 = 0x194
+    parseTooltipDelay measures                  0x198
+    residual                                      4 bytes, AFTER the arrays
+
+**0x30 is exactly what `reference/shims/gamewindow` already asserts**, so that
+shim was right all along and only `gamewindowlist` is wrong. The residual 4 bytes
+sit after the draw arrays and do not touch the draw-data question.
+
+**Reading five members and stopping is how you get an offset exactly one pointer
+wrong** -- and four or eight bytes is precisely the size of error that still
+produces plausible, self-consistent arithmetic. Count the vptr. A class with any
+virtual function has one, and it is not in the member list you are reading.
 
 This is the same move as the GarrisonContain control view -- the fourth view, on
 the `observingPlayer` PARAMETER, needed no adjustment and isolated the effect to
