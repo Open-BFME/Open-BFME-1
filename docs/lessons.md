@@ -3628,3 +3628,48 @@ bytes verified both times.**
 
 The tombstone chain records the mistake being made and unmade, which is what that
 file is for. A byte-verified upgrade is not proof of identity either.
+
+## An ICF POOL address is never identity evidence
+
+A matched row whose address carries many names tells you only that your body
+compiled to a shape many classes share. It says nothing about whose body it is.
+
+`??0StringInfo@@QAE@XZ` at 0x0005C5D0 shares that address with **eighteen** other
+constructors -- ArmorTemplateSet, ModuleInfo, Smudge, four DLNodeClass<>
+instantiations, TeamsInfoRec. It is the generic "zero three pointers"
+constructor, and our StringInfo lands in that pool precisely BECAUSE we made it
+twelve bytes. The row is a binding to a pool the wrong layout fell into, and it
+would read as proof that the layout is right.
+
+`??_EStringInfo@@QAEPAXI@Z` at 0x0005E420 is the same, shared with five
+HashTemplateClass<StringClass,...>::Entry vector-deleting destructors.
+
+**The converse is the useful half: a UNIQUELY named row IS identity evidence.**
+Retail's `~StringInfo` at 0x004368F0 is the only claimant of that address, and it
+destroys exactly two members -- `lea ecx,[esi+4]` into one destructor, then
+`mov ecx,esi` into a DIFFERENT one. Two members at +0 and +4, reverse order,
+two different destructors: an AsciiString and a UnicodeString. That settled the
+layout where the pool rows could not.
+
+So before treating a matched row as evidence about a class, run one awk pass over
+functions.csv for other names at its address. `tools/multi_name.py` answers it
+directly. This has now cost two hypotheses -- check it before spending a build.
+
+## BFME's StringInfo is 8 bytes, and a 12-byte one manufactures its own proof
+
+`{ AsciiString label; UnicodeString text; }` -- no `speech` field, where ZH has
+three members and this tree copies it. Three independent strands:
+
+  * the uniquely-named `~StringInfo` destroys exactly two members (above);
+  * `GameTextManager::reset` and `::deinit` both pass **8** as the element size
+    to the vector destructor iterator `??_M@YGXPAXIHP6EX0@Z@Z` where our twelve
+    bytes make us pass 0xc -- the ONLY differing byte in either body, 85/85 and
+    137/137 at ndiff 1, with the destructor argument relocating to
+    `??1StringInfo@@QAE@XZ` on both sides;
+  * dropping `speech` reddens exactly two rows, and both are ICF pool members
+    that prove nothing.
+
+The circularity is the thing to notice: the twelve-byte struct is what puts our
+constructor in a nineteen-name pool, and the pool membership then reads as
+confirmation. A wrong layout can manufacture the evidence that appears to support
+it.
