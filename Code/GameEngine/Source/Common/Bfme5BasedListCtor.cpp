@@ -65,6 +65,13 @@ private:
 	int m_bfmeField;					// +0x04
 };
 
+struct BfmeArrayElementD
+{
+	char m_bfmeData[0x0c];
+
+	~BfmeArrayElementD(void) {}
+};
+
 class Gen_000FDA80 : public BfmeCtorBaseD
 {
 public:
@@ -72,7 +79,7 @@ public:
 	virtual ~Gen_000FDA80(void);
 
 private:
-	void *m_bfmeA;						// +0x08
+	BfmeArrayElementD *m_bfmeA;			// +0x08
 	void *m_bfmeB;						// +0x0C
 	BfmeCtorListD m_bfmeList;				// +0x10
 };
@@ -84,4 +91,15 @@ Gen_000FDA80::Gen_000FDA80(void)
 	m_bfmeB = 0;
 
 	m_bfmeList.bfmeClear();
+}
+
+// ??1Gen_000FDA80@@UAE@XZ
+Gen_000FDA80::~Gen_000FDA80(void)
+{
+	if (m_bfmeA)
+	{
+		delete[] m_bfmeA;
+		m_bfmeA = 0;
+		m_bfmeB = 0;
+	}
 }
