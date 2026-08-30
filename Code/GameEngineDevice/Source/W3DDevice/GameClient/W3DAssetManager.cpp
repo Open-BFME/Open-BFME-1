@@ -411,7 +411,6 @@ TextureClass * W3DAssetManager::Find_Texture(const char * name, const int color)
 }
 
 //---------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Recolor_Texture.cpp
 // ?Recolor_Texture@W3DAssetManager@@ present-unmatched
 TextureClass * W3DAssetManager::Recolor_Texture(TextureClass *texture, const int color)
 {
@@ -1677,7 +1676,6 @@ void W3DAssetManager::Recolor_Vertices(unsigned int *color, int count, const Vec
 	}
 }
 
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Recolor_Texture.cpp
 // ?Recolor_Texture@W3DAssetManager@@ present-unmatched
 TextureClass * W3DAssetManager::Recolor_Texture(TextureClass *texture, const Vector3 &hsv_shift)
 {
