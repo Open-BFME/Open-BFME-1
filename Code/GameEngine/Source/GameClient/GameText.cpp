@@ -97,11 +97,16 @@ Bool g_useStringFile = TRUE;
 // StringInfo 
 //===============================
 
+// BFME's StringInfo is 8 bytes where ZH's is 12: the label and the text, and
+// no per-string speech field. Proven by a uniquely-named row rather than by
+// inference -- retail's ~StringInfo at 0x004368F0 destroys exactly two members,
+// lea ecx,[esi+4] into one destructor then mov ecx,esi into a different one,
+// an AsciiString and a UnicodeString. It is also what makes both delete[] sites
+// pass 8 to the vector destructor where twelve bytes made this tree pass 0xc.
 struct StringInfo
 {
 	AsciiString			label;
 	UnicodeString		text;
-	AsciiString			speech;
 };
 
 struct StringLookUp
@@ -3785,8 +3790,6 @@ __declspec(naked) void GameTextManager::init( void )
 //============================================================================
 
 // ?deinit@GameTextManager@@UAEXXZ
-// byte-exact reconstruction: Code/GameEngine/Source/Common/GameTextManager_deinit_Thunk.cpp
-// ?deinit@GameTextManager@@UAEXXZ present-unmatched
 void GameTextManager::deinit( void )
 {
 
@@ -3825,8 +3828,6 @@ void GameTextManager::deinit( void )
 // GameTextManager::reset
 //============================================================================
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/promoted__reset_GameTextManager_UAEXXZ_00437500.cpp
-// ?reset@GameTextManager@@UAEXXZ present-unmatched
 void GameTextManager::reset( void )
 {
 	if( m_mapStringInfo != NULL )
@@ -4409,11 +4410,6 @@ Bool GameTextManager::parseCSF( const Char *filename )
 				}
 				m_buffer[len] = 0;
 
-				if ( num == 0 && len )
-				{
-					// only use the first string found
-					m_stringInfo[listCount].speech = m_buffer;
-				}
 
 			}
 
@@ -4517,7 +4513,6 @@ Bool GameTextManager::parseStringFile( const char *filename )
 					stripSpaces ( tbuffer );
 
 					m_stringInfo[listCount].text = tbuffer ;
-					m_stringInfo[listCount].speech = m_buffer3;
 					readString = TRUE;
 				}
 			}
@@ -4657,7 +4652,6 @@ Bool GameTextManager::parseMapStringFile( const char *filename )
 						TheLanguageFilter->filterLine(text);
 					
 					m_mapStringInfo[listCount].text = text;
-					m_mapStringInfo[listCount].speech = m_buffer3;
 					readString = TRUE;
 				}
 			}
