@@ -375,28 +375,51 @@ def-use scan later in this file, which counts TEN reads of `+0xCB4` and ZERO of
 preserves Zero Hour's field ORDER and spacing here and drops nothing, so any
 derivation that assumes a dropped member is working from pins one slot low.
 
-| Offset | Field | Compiled `imm32` | **Runtime (live read)** | ZH default |
-| --- | --- | --- | --- | --- |
-| `+0xCAC` | `NetworkRunAheadMetricsTime` | 500 | — | 500 |
-| `+0xCB0` | `NetworkCushionHistoryLength` | 10 | — | 10 |
-| `+0xCB4` | **`NetworkRunAheadSlack`** | 10 | **10** (9,984 reads) | 10 |
-| `+0xCB8` | `NetworkKeepAliveDelay` | 20 | **360** | 20 |
-| `+0xCBC` | `NetworkDisconnectTime` | 5000 | **15000** | 5000 |
-| `+0xCC0` | `NetworkPlayerTimeoutTime` | 60000 | **100000** | 60000 |
-| `+0xCC4` | `NetworkDisconnectScreenNotifyTime` | 15000 | — | 15000 |
+There are **three** layers, not two, and a value can change at either of the
+last two:
 
-**The compiled column is what identifies the fields; the runtime column is what
-the game actually uses, and they are not the same.** `_patch222.big` overrides
-`ini.big` per field, which is observed rather than assumed — `KeepAliveDelay`
-reads 360 at runtime against 20 in the base archive. Three of these differ from
-the binary by 3–18×.
+| Offset | Field | Compiled `imm32` | `ini.big` | `_patch222.big` | **Shipped** |
+| --- | --- | --- | --- | --- | --- |
+| `+0xCA4` | `NetworkFPSHistoryLength` | 30 | 30 | 38 | **38** |
+| `+0xCA8` | `NetworkLatencyHistoryLength` | 200 | 200 | 200 | 200 |
+| `+0xCAC` | `NetworkRunAheadMetricsTime` | 500 | 5000 | 60000 | **60000** |
+| `+0xCB0` | `NetworkCushionHistoryLength` | 10 | 10 | 120 | **120** |
+| `+0xCB4` | **`NetworkRunAheadSlack`** | 10 | 10 | 10 | **10** |
+| `+0xCB8` | `NetworkKeepAliveDelay` | 20 | 20 | 360 | **360** |
+| `+0xCBC` | `NetworkDisconnectTime` | 5000 | **15000** | 15000 | **15000** |
+| `+0xCC0` | `NetworkPlayerTimeoutTime` | 60000 | 60000 | 100000 | **100000** |
+| `+0xCC4` | `NetworkDisconnectScreenNotifyTime` | 15000 | 15000 | 30000 | **30000** |
 
-Two consequences. First, **quote the runtime value for any behavioural claim**: a
-"voted out after 60 seconds" statement is wrong by 40 seconds, and dividing a
-stall by the compiled 5000 ms disconnect time overstates the risk 3×. Both errors
-were made in this project and corrected. Second, the identification argument is
-*unaffected* — it rests on the compiled initialisers matching Zero Hour's
-declaration order, which they do, and an INI override does not move a field.
+**Six of nine differ from their compiled default, the largest by 120×.** Read
+the shipped value with `tools/ini_value.py`, which extracts
+`Data/INI/GameData.ini` from both archives and applies the game's load order. It
+needs no running game.
+
+Two details the three-column view exposes that a two-column one hides.
+`NetworkDisconnectTime` is raised to 15000 by **`ini.big` itself** — the patch
+leaves it alone — so "the patch archive overrides everything" is not the rule; a
+base-archive value can differ from the binary all by itself.
+`NetworkRunAheadMetricsTime` moves at *both* layers, 500 → 5000 → 60000.
+
+Cross-checked two ways: the `+0xCB4` row is 9,984 live reads taken inside three
+matches by `netlat_discard`, and `+0xCB8`/`+0xCBC`/`+0xCC0` were read from live
+client memory in a parallel session. Archive and process agree on all four.
+
+**Quote the shipped value for any behavioural claim.** This project published
+wrong numbers twice from the compiled column, both read correctly out of the
+image and both wrong about the game: "voted out after 60 seconds" was wrong by
+forty, and dividing a stall by the compiled 5000 ms disconnect time overstated
+how close a player came to dropping by 3×.
+
+**The identification argument is unaffected.** It rests on the compiled
+initialisers matching Zero Hour's declaration order, which they do, and an INI
+override moves a value, never a field. That is why the compiled column is kept:
+it proves *which* field this is, and the shipped column says what it *does*.
+
+**This generalises past the network block.** 378 GlobalData fields are
+INI-parseable, so for any of them a disassembled `imm32` is a starting point and
+not an answer. Anywhere in this repository that quotes a GlobalData constant as
+behaviour, check it with `tools/ini_value.py` first.
 
 `NetworkRunAheadSlack` is written at `0x00795F79` (value 2) or `0x00795F94`
 (value 5) -- but **neither write executes in a normal match**. Both are gated on
