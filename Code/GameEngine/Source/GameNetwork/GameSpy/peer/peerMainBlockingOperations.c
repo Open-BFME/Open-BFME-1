@@ -18,7 +18,8 @@ typedef struct piConnection
 	int inRoom[3];
 	char reserved1[0x9A8 - 0x39C];
 	int groupID;
-	char reservedGroup[0xAB0 - 0x9AC];
+	char titleRoomChannel[257];
+	char reservedTitleRoom[0xAB0 - 0xAAD];
 	int stayInTitleRoom;
 	char reservedStay[0x1824 - 0xAB4];
 	int callbackDepth;
@@ -73,6 +74,7 @@ void piAddGetPlayerProfileIDCallback(PEER peer, int success,
 int piNewGetProfileIDOperation(PEER peer, const char *nick, void *callback,
 	void *param, int opID);
 void piMangleGroupRoom(char *room, int groupID);
+void piMangleTitleRoom(char *room, const char *title);
 int piNewJoinRoomOperation(PEER peer, int roomType, const char *channel,
 	const char *password, void *callback, void *param, int opID);
 void piAddJoinRoomCallback(PEER peer, int success, int result, int roomType,
@@ -462,6 +464,76 @@ void peerJoinGroupRoom(PEER peer, int groupID, void *callback, void *param,
 		success = 0;
 	if (!success)
 		piAddJoinRoomCallback(peer, 0, result, 1, callback, param, opID);
+
+	if (blocking)
+	{
+		do
+		{
+			msleep(1);
+			bfmePiThinkFromEsi(opID);
+		}
+		while (!piIsOperationFinished(peer, opID) ||
+			!piIsCallbackFinished(peer, opID));
+
+		if (connection->shutdown && connection->callbackDepth == 0)
+			peerShutdown(peer);
+	}
+}
+
+void peerJoinTitleRoomA(PEER peer, const char *password, void *callback,
+	void *param, int blocking)
+{
+	piConnection *connection = (piConnection *)peer;
+	int success = 1;
+	int result = 10;
+	char room[257];
+	int opID = piGetNextID(peer);
+
+	if (!password)
+		password = "";
+	if (!connection->title[0])
+	{
+		success = 0;
+		result = 6;
+	}
+	if (success && !connection->connected)
+	{
+		success = 0;
+		result = 7;
+	}
+	if ((success && connection->enteringRoom[0]) || connection->inRoom[0])
+	{
+		success = 0;
+		result = 5;
+	}
+	if (success && connection->autoMatchStatus &&
+		connection->autoMatchStatus != 5)
+	{
+		success = 0;
+		result = 8;
+	}
+
+	if (success)
+	{
+		if (connection->titleRoomChannel[0])
+		{
+			const char *source = connection->titleRoomChannel;
+			char *destination = room;
+			while ((*destination++ = *source++) != '\0')
+			{
+			}
+		}
+		else
+		{
+			piMangleTitleRoom(room, connection->title);
+		}
+	}
+
+	if (success && !piNewJoinRoomOperation(peer, 0, room, password, callback,
+			param, opID))
+		success = 0;
+	if (!success)
+		piAddJoinRoomCallback(peer, 0, result, 0, callback, param, opID);
 
 	if (blocking)
 	{
