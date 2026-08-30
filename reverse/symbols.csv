@@ -81222,3 +81222,4 @@ _piGlobalKeyChanged,0x00865BA0,GameSpy Peer global-key cache update
 _chatGetGlobalKeysA,0x00861940,GameSpy Chat global-key request
 _piFinishedEnteringRoom,0x00863E70,GameSpy Peer room-entry completion
 _piPlayerJoinedRoom,0x008638D0,GameSpy Peer joined-player insertion
+_piStartHosting,0x00865410,GameSpy Peer query-reporting host startup

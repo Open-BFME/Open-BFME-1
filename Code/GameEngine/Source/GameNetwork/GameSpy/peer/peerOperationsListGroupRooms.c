@@ -44,7 +44,13 @@ typedef struct piConnection
 	char room[3][257];
 	int enteringRoom[3];
 	int inRoom[3];
-	char reservedRooms[0x1790 - 0x39C];
+	char reservedRooms[0xAF0 - 0x39C];
+	void *queryReporting;
+	char reservedReporting[0xB40 - 0xAF4];
+	int hosting;
+	char reservedHosting[0xB48 - 0xB44];
+	int maxPlayers;
+	char reservedPlayers[0x1790 - 0xB4C];
 	piOperation *listingGroupsOperation;
 	int nextID;
 	void *operationList;
@@ -87,7 +93,9 @@ void piAddJoinRoomCallback(PEER peer, int success, int result, int roomType,
 	PEERCBType callback, void *callbackParam, int opID);
 void chatSetChannelPasswordA(void *chat, const char *channel, int enabled,
 	const char *password);
-void piCreateStagingRoomEnumUsersCallbackA(void);
+void piCreateStagingRoomEnumUsersCallbackA(void *chat, int success,
+	const char *channel, int numUsers, const char **users, int *modes,
+	void *param);
 int piConnectTitle(PEER peer);
 void piDisconnectTitle(PEER peer);
 unsigned int current_time(void);
@@ -125,6 +133,10 @@ void chatGetGlobalKeysA(void *chat, const char *target, int num,
 	const char **keys, void *callback, void *param, int blocking);
 void piFinishedEnteringRoom(PEER peer, int roomType, const char *reason);
 void piPlayerJoinedRoom(PEER peer, const char *nick, int roomType, int mode);
+int peerIsAutoMatching(PEER peer);
+int piStartHosting(PEER peer, unsigned int socket, unsigned short port);
+void chatSetChannelTopicA(void *chat, const char *channel, const char *topic);
+void chatSetChannelLimitA(void *chat, const char *channel, int limit);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -316,6 +328,76 @@ void piJoinRoomEnumUsersCallbackA(void *chat, int success,
 
 	(void)chat;
 	(void)channel;
+}
+
+void piCreateStagingRoomEnumUsersCallbackA(void *chat, int success,
+	const char *channel, int numUsers, const char **users, int *modes,
+	void *param)
+{
+	typedef struct qr2_s
+	{
+		char reserved[0xC4];
+		int read_socket;
+	} qr2_t;
+
+	piOperation *operation = (piOperation *)param;
+	PEER peer = operation->peer;
+	piConnection *connection = (piConnection *)peer;
+	int i;
+
+	if (operation->cancel)
+	{
+		piRemoveOperation(peer, operation);
+		return;
+	}
+
+	if (success)
+	{
+		if (!peerIsAutoMatching(peer))
+		{
+			if (!piStartHosting(peer, operation->socket, operation->port))
+				success = 0;
+			else if (operation->socketClose)
+			{
+				operation->socketClose = 0;
+				((qr2_t *)connection->queryReporting)->read_socket = 1;
+			}
+		}
+		else
+		{
+			connection->hosting = 1;
+		}
+	}
+
+	if (success)
+	{
+		piFinishedEnteringRoom(peer, 2, operation->name);
+		for (i = 0; i < numUsers; i++)
+			piPlayerJoinedRoom(peer, users[i], 2, modes[i]);
+
+		chatSetChannelTopicA(connection->chat, channel, operation->name);
+		if (connection->maxPlayers)
+			chatSetChannelLimitA(connection->chat, channel,
+				connection->maxPlayers);
+
+		if (operation->socketClose && peerIsAutoMatching(peer))
+		{
+			connection->autoMatchOperation->socket = operation->socket;
+			connection->autoMatchOperation->port = operation->port;
+			connection->autoMatchOperation->socketClose = 1;
+			operation->socketClose = 0;
+		}
+	}
+	else
+	{
+		piLeaveRoom(peer, 2, 0);
+	}
+
+	piAddJoinRoomCallback(peer, success, success ? 0 : 10, 2,
+		operation->callback, operation->callbackParam, operation->ID);
+	piRemoveOperation(peer, operation);
+
+	(void)chat;
 }
 
 PEERBool piNewListGroupRoomsOperation(PEER peer, const char *fields,
