@@ -3,6 +3,17 @@
 typedef unsigned int ObjectID;
 typedef unsigned int UnsignedInt;
 
+struct Coord3D
+{
+	float x, y, z;
+};
+
+class GeometryInfo
+{
+public:
+	float getMaxHeightAbovePosition() const;
+};
+
 class BfmeLocomotorTemplate
 {
 public:
@@ -19,15 +30,21 @@ class Object
 public:
 	unsigned char m_pad00[4];
 	BfmeLocomotorTemplate *m_locomotorTemplate;
-	unsigned char m_pad08[0x6c];
+	unsigned char m_pad08[0x30];
+	Coord3D m_position;
+	unsigned char m_pad44[0x30];
 	ObjectID m_id;
-	unsigned char m_pad78[0x2cc];
+	unsigned char m_pad78[0x34];
+	GeometryInfo m_geometry;
+	unsigned char m_padAD[0x297];
 	UnsignedInt m_status;
 };
 
 class GameLogic
 {
 public:
+	Object *findObjectByID(int id);
+
 	unsigned char m_pad00[0x3c];
 	UnsignedInt m_frame;
 };
@@ -38,6 +55,14 @@ class BfmeAODHordeContainOwner
 {
 public:
 	void refreshTrackedLargeUnit();
+
+private:
+	unsigned char m_pad00[0x230];
+	ObjectID m_trackedLargeUnit;
+	unsigned char m_pad234[4];
+	Coord3D m_trackedPosition;
+	float m_largeUnitHeightFactor;
+	float m_largeUnitHeight;
 };
 
 class AODHordeContainInterfaceView
@@ -70,4 +95,18 @@ void AODHordeContainInterfaceView::bfmeTrackLargeUnit(Object *, Object *unit)
 			reinterpret_cast<unsigned char *>(this) - 0xe4)->refreshTrackedLargeUnit();
 		m_lastLargeUnitFrame = TheGameLogic->m_frame;
 	}
+}
+
+void BfmeAODHordeContainOwner::refreshTrackedLargeUnit()
+{
+	Object *unit = TheGameLogic->findObjectByID((int)m_trackedLargeUnit);
+	if (unit == 0)
+	{
+		m_trackedLargeUnit = 0;
+		return;
+	}
+
+	m_trackedPosition = unit->m_position;
+	m_largeUnitHeightFactor = 17.0f;
+	m_largeUnitHeight = unit->m_geometry.getMaxHeightAbovePosition();
 }
