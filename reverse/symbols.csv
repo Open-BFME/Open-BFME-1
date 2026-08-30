@@ -81062,6 +81062,7 @@ g_bfmeHolderBQ,0x012F1464,Open-BFME5 the singleton the setter at 0x002F0DF0 writ
 g_bfmeHolderBS,0x012EF4CC,Open-BFME5 the singleton the clear at 0x002ED870 also clears a flag in
 g_bfmeHolderBU,0x013377D8,Open-BFME5 the singleton the test at 0x00892210 reads its field from
 g_bfmeDispatchEnabled1281,0x0133781C,address-derived encoded-command gate read by the 0x008BCCC0 retail body
+??_7BfmeDerived1283@@6B@,0x01136E0C,address-derived derived-class vtable written by the 0x008BE700 retail constructor
 g_bfmeDefaultString1284,0x012D5298,address-derived shared empty-string block used by the 0x008B9460 retail body
 g_bfmeStringPool1284,0x01337A30,address-derived refcounted-string pool used by the 0x008B9460 retail body
 g_bfmeIndexFA,0x012D5DC8,Open-BFME5 the index the seeder at 0x008D3AB0 clears
