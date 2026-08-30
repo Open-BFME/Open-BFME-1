@@ -72434,6 +72434,7 @@ name,address,notes
 ?bfmeApply1023@BfmeB1023@@QAEXH@Z,0x00003FE4,pin
 ?bfmeApply1040@@YAXPAUBfmeS1040@@H@Z,0x009A6630,pin
 ?bfmeApply1236@BfmeB1236@@QAEXPAX@Z,0x008AD8F0,pin
+?bfmeApply1243@BfmeA1243@@QAEXPAX00@Z,0x008B65E0,pin
 ?bfmeApply980A@BfmeUseA980@@QAEPAXHH@Z,0x0000DA8A,pin
 ?bfmeApply980B@BfmeUseB980@@QAEPAXHH@Z,0x0004B01F,pin
 ?bfmeApply@BfmeSMCTarget@@QAEXHPBXH@Z,0x0002AD88,Open-BFME5 ILT thunk to body 0x0028EEB0; Object chain-tail forwarder at 0x001C1FB0 supplies the condition index optional opaque descriptor and frame count; bfme name records unrecovered retail types and spelling
@@ -74561,6 +74562,7 @@ name,address,notes
 ?bfmeVal1231@BfmeE1231@@QAEPAXXZ,0x00898300,pin
 ?bfmeVal1239@BfmeE1239@@QAEHXZ,0x00898300,pin
 ?bfmeVal1240@BfmeE1240@@QAEHXZ,0x00898300,pin
+?bfmeVal1243@BfmeE1243@@QAEPAXXZ,0x00898300,pin
 ?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVecCtor1030@@YGXPAX0HHP6AXXZ1@Z,0x009F7036,pin
@@ -75801,6 +75803,7 @@ name,address,notes
 ?g_bfmeArgEAC@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArr1233@@3PAPAVBfmeE1233@@A,0x00F38750,pin
 ?g_bfmeArr1242@@3PAPAVBfmeE1242@@A,0x00F38750,pin
+?g_bfmeArr1243@@3PAPAVBfmeE1243@@A,0x00F38750,pin
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
 ?g_bfmeAskB993@@3PAVBfmeAskB993@@A,0x00EF4B98,pin
 ?g_bfmeAux1006@@3PAUBfmeAux1006@@A,0x00EF4B58,pin
@@ -75855,6 +75858,7 @@ name,address,notes
 ?g_bfmeCount1054@@3HA,0x00F4054C,pin
 ?g_bfmeCount1233@@3HA,0x00F38748,pin
 ?g_bfmeCount1242@@3HA,0x00F38748,pin
+?g_bfmeCount1243@@3HA,0x00F38748,pin
 ?g_bfmeCountBBD@@3HA,0x00F0BD30,pin
 ?g_bfmeCountELH@@3HA,0x00F40594,pin
 ?g_bfmeCountQB@@3HA,0x00F04B60,pin
@@ -76238,6 +76242,7 @@ name,address,notes
 ?g_bfmeResult1239@@3PAVBfmeE1239@@A,0x00F379BC,pin
 ?g_bfmeResult1240@@3PAVBfmeE1240@@A,0x00F379BC,pin
 ?g_bfmeResult1242@@3PAXA,0x00F379BC,pin
+?g_bfmeResult1243@@3PAXA,0x00F379BC,pin
 ?g_bfmeRun1006@@3PAVBfmeRun1006@@A,0x00EF4998,pin
 ?g_bfmeS1019@@3PAVBfmeS1019@@A,0x00F0A5B0,pin
 ?g_bfmeS1027@@3PAUBfmeS1027@@A,0x00EF0898,pin
@@ -80348,6 +80353,7 @@ _bfmeLitZD,0x00CC79BC,pin
 _bfmeMake1239,0x008A11E0,pin
 _bfmeMake1240,0x008A11E0,pin
 _bfmeMake1242,0x008A11E0,pin
+_bfmeMake1243,0x008A11E0,pin
 _bfmeMakeF1239,0x008A4CD0,pin
 _bfmeMakeF1240,0x008A4CD0,pin
 _bfmeMalloc1149,0x0082ADA0,pin
