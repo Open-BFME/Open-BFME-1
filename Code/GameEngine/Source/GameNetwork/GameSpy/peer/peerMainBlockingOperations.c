@@ -1344,3 +1344,25 @@ void piSendChannelUTM(PEER peer, const char *channel, const char *command,
 	chatSendChannelMessageA(connection->chat, channel, buffer,
 		authenticate ? 4 : 3);
 }
+
+void piSendPlayerUTM(PEER peer, const char *nick, const char *command,
+	const char *parameters, int authenticate)
+{
+	piConnection *connection = (piConnection *)peer;
+	char buffer[512];
+
+	if (!connection->connected)
+		return;
+	if (!nick || !nick[0])
+		return;
+	if (!command || !command[0])
+		return;
+	if (!parameters)
+		parameters = "";
+	if (strlen(command) + strlen(parameters) + 5 > sizeof(buffer))
+		return;
+
+	sprintf(buffer, "%s %s", command, parameters);
+	chatSendUserMessageA(connection->chat, nick, buffer,
+		authenticate ? 4 : 3);
+}
