@@ -81273,3 +81273,5 @@ g_bfmeGridWaterHandle,0x012EF4D4,TerrainLogic getWaterHandle retail grid-water s
 ?find@BfmeMemberIndexMap@@QAE?AUBfmeMemberIndexIterator@@ABH@Z,0x0001F000,HordeContain member-index lookup reaches the retail STLport map find instantiation
 ?bfmeBaseXfer@BfmeAODHordeContainOwner@@QAEXPAVBfmeXfer@@@Z,0x00024BDB,AODHordeContain xfer delegates to the base HordeContain transfer body
 ?bfmeXferObjectID@@YAXPAVBfmeXfer@@PAI@Z,0x0000C9B4,AODHordeContain xfer reaches the existing ObjectID transfer helper
+?resolveMeleeTarget@BfmeTargetObject@@QAEPAV1@D@Z,0x0000FAA6,BannerCarrier target predicate resolves contained melee targets through the retail object helper
+?getGoalObject@BfmeStateMachine@@QAEPAVBfmeTargetObject@@XZ,0x0000E570,BannerCarrier target predicate reads the source state machine goal object
