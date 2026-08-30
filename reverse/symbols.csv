@@ -72367,6 +72367,11 @@ name,address,notes
 ?bfmeAdd1034@BfmeSubA1034@@QAEXH@Z,0x00887C90,pin
 ?bfmeAdd1038@BfmeSubF1038@@QAEXHH@Z,0x008BDBB0,pin
 ?bfmeApplySlot1281@BfmeSlotDispatcher1281@@QAEXPAXH0@Z,0x008BB200,address-derived slot dispatcher callee; argument shape decoded from the 0x008BC360 retail call site
+?bfmeDispatchDirect1281@BfmeSlotDispatcher1281@@QAEXI@Z,0x008BB720,address-derived encoded-command callee; argument shape decoded from the 0x008BCCC0 retail call site
+?bfmeFallback1281@BfmeSlotDispatcher1281@@QAEXPAXHH@Z,0x008BC710,address-derived fallback callee; argument shape decoded from the 0x008BCCC0 retail call site
+?bfmeMirror1281@BfmeSlotDispatcher1281@@QAEXHHI@Z,0x008BC120,address-derived mirror callee; argument shape decoded from the 0x008BCCC0 retail call site
+?bfmePrepare1281@BfmeSlotDispatcher1281@@QAEXHHI@Z,0x008BBDB0,address-derived preparation callee; argument shape decoded from the 0x008BCCC0 retail call site
+?bfmeResolve1281@BfmeSlotDispatcher1281@@QAEXHHPAPAXPA_N@Z,0x008BC3E0,address-derived resolver callee; argument shape decoded from the 0x008BCCC0 retail call site
 ?bfmeEmit1281@BfmeNodeDX@@QAEXHPAXH@Z,0x008D22C0,address-derived node emitter; argument shape decoded from the 0x008BC090 retail call site
 ?bfmeAdd1040@BfmeH1040@@QAEXPAX@Z,0x0001EF9C,pin
 ?bfmeAdd1044@BfmeE1044@@QAEXPAVBfmeD1044@@H@Z,0x000157DA,pin
@@ -81054,6 +81059,7 @@ g_bfmeHolderBP,0x012F1464,Open-BFME5 the singleton the setter at 0x002F0DD0 writ
 g_bfmeHolderBQ,0x012F1464,Open-BFME5 the singleton the setter at 0x002F0DF0 writes its second flag into
 g_bfmeHolderBS,0x012EF4CC,Open-BFME5 the singleton the clear at 0x002ED870 also clears a flag in
 g_bfmeHolderBU,0x013377D8,Open-BFME5 the singleton the test at 0x00892210 reads its field from
+g_bfmeDispatchEnabled1281,0x0133781C,address-derived encoded-command gate read by the 0x008BCCC0 retail body
 g_bfmeIndexFA,0x012D5DC8,Open-BFME5 the index the seeder at 0x008D3AB0 clears
 g_bfmeLimitsDF,0x012F401C,Open-BFME5 the limits the band search at 0x00553DF0 walks
 g_bfmeListCK,0x012ED584,Open-BFME5 the list the search at 0x0007B5F0 walks
