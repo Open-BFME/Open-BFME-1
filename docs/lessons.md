@@ -4379,3 +4379,47 @@ So when work is queued behind a blocker, expect the ledger half of every held
 piece but the first to be re-run once per landing ahead of it. Keeping that half
 as a short list of tool invocations rather than a patch is what makes re-running
 it cheap; one held piece had its four tool calls re-run three times.
+
+## Making a broken thing HEAL is not the same as making it right
+
+`uw_0045bea0` was the single parent-less `gen-funclet` row in a hand-edited TU in
+the whole tree. It was annotated with a `parent=` so the healer could find it --
+a reasonable-looking tooling fix, and the row then healed onto `$L70461`: twenty
+bytes, all twenty relocated, matching on nothing. It stayed green for another
+half day.
+
+The row was already bogus before the annotation -- twelve `int3` through the
+middle of a claimed funclet, two ILT slots, two `?b_` pins -- so the annotation
+did not create the false green. **It extended its life by one heal.**
+
+The failure is treating an unhealable row as a TOOLING gap without asking whether
+the row deserved to heal. A row that cannot find its body is telling you
+something; the first question is whether it should have one, not how to help it
+find one.
+
+## A fix that resolves cases DESTROYS the test cases for its own diagnostics
+
+Sequencing insight, and it decided an ordering:
+
+The refusal diagnostic (print each candidate with its surviving unmasked byte
+count) and filter 2 (resolve ties by relocation symbol) were queued in that
+order by default. But **filter 2 resolves ties, so after it lands there are
+strictly fewer refusals left to exercise the diagnostic against.** Right now two
+live refusals exist -- a no-candidate case and a genuine three-way tie -- and
+building the reporting first means checking its output against real refusals
+rather than synthetic ones.
+
+So: **when one change removes instances of the condition another change reports
+on, build the reporting first.** The general form is that diagnostics are
+cheapest to validate while the thing they diagnose still happens.
+
+## A refusal that prints nicely and PASSES is worse than a crash
+
+The guard to write into any change that turns a crash into a report. A bare
+`ValueError` killing the gate is unreadable but honest -- it stops. A refusal
+that reports beautifully and lets the row through is the fallback path this
+project forbids, wearing the costume of an improvement.
+
+So when replacing a crash with a diagnostic, check the exit path explicitly:
+does the gate still go red? That is the question, not whether the message reads
+well.
