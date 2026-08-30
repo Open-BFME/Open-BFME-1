@@ -39,7 +39,7 @@ BIT1 = funclet(bytes.fromhex("83e0fd"))        # and eax,-3
 BIT16 = funclet(bytes.fromhex("25fffeffff"))   # and eax,0xFFFEFFFF  -- two longer
 
 
-def write_object(path, bodies):
+def write_object(path, bodies, sites=None):
     """A one-section object: `bodies` back to back as {label: bytes}, each with
     its two DIR32 sites, plus the __ehhandler$ symbol that marks the group."""
     names, blobs = list(bodies), b"".join(bodies.values())
@@ -61,7 +61,8 @@ def write_object(path, bodies):
     add_symbol("?guard@@3HA", 0, 2)  # the static-local guard the bodies read
     for name in names:
         add_symbol(name, offsets[name], 1)
-        for site in (1, len(bodies[name]) - 5):
+        where = (sites or {}).get(name, (1, len(bodies[name]) - 5))
+        for site in where:
             relocs.append(struct.pack("<IIH", offsets[name] + site, 0, 0x0006))
     add_symbol(f"__ehhandler${PARENT}", len(blobs), 1)
 
@@ -214,3 +215,25 @@ def test_a_renumbered_pin_heals_when_the_ehhandler_is_its_own_comdat(tmp_path):
     assert patch["bytes"] == patch["target"], "the row's own funclet still compiles exact"
     assert "$L70459" in patch["note"] and "$L70461" in patch["note"], \
         "the note names the stale pin and the label holding the body now"
+
+
+def test_a_fully_relocated_body_is_not_a_candidate(tmp_path):
+    """A body with no unmasked byte left compares equal to ANY target its size.
+
+    That is an absence of evidence, not a match, and counting it is how a DATA
+    table ties with a real funclet. AIPlayer.cpp's $L86009 is four label
+    pointers covering all eight of its bytes; it tied with $L85915, which
+    decodes to retail's own `lea ecx,[ebp-0x1c]; jmp <dtor>`, and the gate
+    refused the pair rather than pick between them. Requiring one surviving
+    byte separates them without choosing.
+    """
+    decoy = b"\0" * len(TARGET)                      # every byte a relocation site
+    obj = write_object(tmp_path / "table.obj",
+                       {"$L47543": BIT0, "$L47547": decoy, "$L47551": BIT16},
+                       sites={"$L47547": (0, 4, 8, 10)})   # covers all 14 bytes
+
+    patch = compile_row(obj, "$L47551")
+
+    assert patch["bytes"] == patch["target"], "the real funclet still compiles exact"
+    assert "$L47543" in patch["note"], "the note names the body that actually holds it"
+    assert "$L47547" not in patch["note"], "the all-masked table is not a candidate"

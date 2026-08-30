@@ -934,9 +934,20 @@ def holds_funclet(body, relocs, target):
     if len(body) < size:
         return False
     left, right = bytearray(body[:size]), bytearray(target)
+    masked = set()
     for offset, _rtype, _sym in relocs:
         if offset + 4 <= size:
             left[offset:offset + 4] = right[offset:offset + 4] = b"\0\0\0\0"
+            masked.update(range(offset, offset + 4))
+    # A body whose every byte is a relocation site compares equal to ANY target
+    # of its length, because nothing of it is left to compare. That is not a
+    # match, it is an absence of evidence, and counting it is how a DATA table
+    # ends up tying with a real funclet: AIPlayer.cpp's $L86009 is four label
+    # pointers ($L78697..$L78700) covering all eight bytes, and it tied with
+    # $L85915, which decodes to retail's own `lea ecx,[ebp-0x1c]; jmp <dtor>`.
+    # Requiring one surviving byte separates them without choosing between them.
+    if len(masked) >= size:
+        return False
     return left == right
 
 
