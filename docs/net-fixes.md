@@ -76,20 +76,30 @@ retransmissions rather than ten events a match.
   0.45–2.20% fixed. Not a condition the fix introduces.
 * They are rejected by identity: `FrameData::addCommand` looks a command up
   before inserting, comparing player and command id.
-* The engine's own desync flag stayed zero in every match, at 150 ms and 300 ms
-  round trip.
+* The engine's own desync flag stayed zero in every match, at 150 ms, 300 ms and
+  500 ms round trip — 5,423 frame events across the eight 500 ms captures.
 * Every player in a lobby must run the same build, which the launcher's MD5
   check already enforces.
 
 ## Not claimed
 
-* Tested to 300 ms round trip. Above ~400 ms the timer would fire before an ack
-  could return — extra traffic, not a correctness problem, but unmeasured.
-* The engine can discard a command outright, and the fix removes that: retail
-  crosses the guard on 2.52% of router game commands, the fix never comes within
-  five frames. But **every discard observed was of a command the peer had
-  already received**, so this prevents a precondition, not an observed
-  disconnect.
+* **Tested to 500 ms round trip** (2026-08-30, two matches per arm). Above
+  ~400 ms the timer does fire before an ack can return, and the retransmission
+  counter shows it — `Connection::numRetries` median 1 → 38. It is extra traffic
+  and it is not a correctness problem: desync stayed 0, and the early retry is
+  what holds discarded commands to 0.07% against retail's 3.61% at that RTT.
+  Guest frame-gap p99 is 420 ms at 500 ms RTT — the same 420 ms as at 150 ms,
+  because the freeze floor is the retry interval and not the link. Above 500 ms
+  is still unmeasured. See `mods/features/035-adaptretry/README.md`.
+* The engine can discard a command outright, and the fix largely removes that:
+  retail crosses the guard on 2.52% of router game commands, and at 150 ms the
+  fix never comes within five frames. **That margin is RTT-dependent and the
+  "never" does not survive 500 ms**: there the fix still crosses, twice in four
+  matches, worst margin −2 frames — against retail's −10 on every capture, and
+  0.07% of decisions against 3.61%. In the 150 ms work **every discard observed
+  was of a command the peer had already received**, so this prevents a
+  precondition, not an observed disconnect — that cross-seat check was NOT
+  repeated on the 500 ms captures, so it is not claimed for them.
 * Two-player rig. Eight-player behaviour is modelled, not measured — the
   ladder's own drop-rate data would settle it.
 
