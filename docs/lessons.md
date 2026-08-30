@@ -4696,3 +4696,65 @@ One residue that does NOT resolve this way and was correctly left alone:
 `?GadgetProgressBarSetEnabledBarColor@@` at 0x0047A8C0 is a single-name body
 still calling position 0 with idx=4. Under the settled order that looks
 misnamed, but it has no companion name to convict it and no inference was made.
+
+## Validate a NULL against a control before trusting it
+
+"Zero callers" and "my query is broken" produce identical output. Before
+concluding that 0x00061D90 and 0x00087A50 have no call sites, the same code path
+was run against 0x00478FE0 and returned **70 caller bodies**, ILT hops included.
+Only then was the null evidence.
+
+This costs one extra query and it is the difference between a finding and a
+silent failure -- the same shape as the sweep that once reported "0 refs" for 314
+objects it had failed to load, and the regression test that passed with and
+without its fix.
+
+**Any time an absence is the result, produce the control that proves the
+instrument can see a presence.**
+
+## POOL CAPACITY is evidence, and it can point opposite ways for one defect
+
+The 67-row `null_reloc` family looked like one problem with a leverage point --
+44 of the rows on two addresses. The two addresses turned out structurally
+opposite:
+
+     9-byte shape   215 pointer-storing bodies   190 free   for 21 rows
+    18-byte shape    66 pointer-storing bodies     4 free   for 23 rows
+
+The 9-byte pool has room to spare. **The 18-byte pool has none**: 62 of its 66
+bodies are held by a legitimate, coherent template family --
+`??0?$SubsystemSlot@V<T>@@@@QAE@PAX@Z`, one instantiation per subsystem, each
+with its own vftable -- and those names look right. So its 23 claimants have
+nowhere in that pool to go, while the other 21 have 190 candidate homes.
+
+Counting the free bodies in the destination pool tells you whether a re-homing is
+even arithmetically possible, before any per-row work.
+
+## Four closed routes are a result; the hypothesis they suggest is still not one
+
+For those 44 rows the negative is solid -- all store a vftable through a DIR32
+where retail stores a literal zero, and a linked absolute address is never zero.
+The positive half is unavailable, and every route was checked rather than
+assumed:
+
+    call sites          zero caller bodies for either (control-validated);
+                        expected -- a 9-byte base ctor is inlined into every
+                        derived ctor at /O2
+    vftable pins        73 ??_7 symbols pinned; none of the 44 classes
+    object-symbol=      zero of 146 placeholder-named bodies carries one
+    vftable by contents  no matched virtuals exist -- they are abstract interfaces
+
+The hypothesis this suggests -- that retail emits **no standalone constructor at
+all** for these classes -- fits every observation and matches the `StringInfo`
+disposition already in `deleted_rows.csv`. **It was recorded and not acted on.**
+Retiring 44 rows on an inference with no positive evidence would be the reverted
+GameWindow mapping at twenty-three times the scale.
+
+Leave them flagged. Either of two events cracks the 9-byte group at once, since
+it has 190 free bodies waiting: a vftable pin for one of these classes, or a
+single matched virtual method, which locates the vftable by contents and then the
+constructor by the address it stores.
+
+**And the framing correction worth keeping: "two questions, not sixty-seven" was
+the right instinct, and both answers came back UNAVAILABLE rather than SETTLED.
+The leverage was real; the evidence was not there to spend it on.**
