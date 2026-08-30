@@ -10,7 +10,9 @@ typedef struct piConnection
 	int connecting;
 	int connected;
 	void *nickErrorCallback;
-	char reserved0[0x5C - 0x50];
+	unsigned int lastChatPing;
+	unsigned int publicIP;
+	unsigned int privateIP;
 	int profileID;
 	char title[32];
 	char room[3][257];
@@ -21,7 +23,13 @@ typedef struct piConnection
 	char titleRoomChannel[257];
 	char reservedTitleRoom[0xAB0 - 0xAAD];
 	int stayInTitleRoom;
-	char reservedStay[0xB48 - 0xAB4];
+	char reservedStay[0xAF0 - 0xAB4];
+	void *queryReporting;
+	char reservedReporting[0xB38 - 0xAF4];
+	int reportingOptions;
+	char reservedReportingOptions[0xB40 - 0xB3C];
+	int hosting;
+	int playing;
 	int maxPlayers;
 	char reservedMaxPlayers[0x1824 - 0xB4C];
 	int callbackDepth;
@@ -97,6 +105,20 @@ int piNewAutoMatchOperation(PEER peer, unsigned int socket,
 	int opID);
 void piAddAutoMatchStatusCallback(PEER peer);
 __declspec(dllimport) void __cdecl free(void *memory);
+void piSendChannelUTM(PEER peer, const char *channel, const char *command,
+	const char *parameters, int authenticate);
+typedef struct in_addr
+{
+	unsigned int s_addr;
+} in_addr;
+char *__stdcall inet_ntoa(in_addr address);
+__declspec(dllimport) int __cdecl sprintf(char *buffer,
+	const char *format, ...);
+void peerMessageRoomA(PEER peer, int roomType, const char *message,
+	int messageType);
+void piSetLocalFlags(PEER peer);
+void piSetAutoMatchStatus(PEER peer, int status);
+void piSendStateChanged(PEER peer);
 void piAddConnectCallback(PEER peer, int success, int failureReason,
 	void *callback, void *param, int opID);
 void bfmePiDisconnectCleanupFromEsi(void);
@@ -678,4 +700,44 @@ void peerStartAutoMatchWithSocketA(PEER peer, int maxPlayers,
 failed:
 	connection->autoMatchStatus = 0;
 	piAddAutoMatchStatusCallback(peer);
+}
+
+void peerStartGameA(PEER peer, const char *message, int reportingOptions)
+{
+	piConnection *connection = (piConnection *)peer;
+	char buffer[32];
+	in_addr address;
+
+	if (!connection->title[0])
+		return;
+	if (!connection->connected)
+		return;
+	if (!connection->inRoom[2])
+		return;
+	if (!connection->hosting)
+		return;
+	if (!message)
+		message = "";
+
+	piSendChannelUTM(peer, connection->room[2], "GML", message, 0);
+	address.s_addr = connection->publicIP;
+	sprintf(buffer, "@@@GML %s/OLD", inet_ntoa(address));
+	peerMessageRoomA(peer, 2, buffer, 0);
+
+	connection->playing = 1;
+	piSetLocalFlags(peer);
+	if (connection->autoMatchStatus && connection->autoMatchStatus != 5)
+	{
+		piSetAutoMatchStatus(peer, 5);
+	}
+	else if (connection->queryReporting)
+	{
+		if (reportingOptions & 1)
+			piStopReporting(peer);
+		else
+		{
+			connection->reportingOptions = reportingOptions;
+			piSendStateChanged(peer);
+		}
+	}
 }
