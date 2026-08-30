@@ -72363,6 +72363,7 @@ name,address,notes
 ?bfmeAdd1061@BfmeS1061@@QAEHPAD@Z,0x0001EDE9,pin
 ?bfmeAdd1081@BfmeJ1081@@QAEXPAVBfmeF1081@@PAVBfmeE1081@@HH@Z,0x0000D58A,pin
 ?bfmeAdd1095@BfmeR1095@@QAEXPAUBfmeZ1095B@@H@Z,0x00040327,pin
+?bfmeAdd1226@BfmeR1226@@QAEXPAX0H@Z,0x008CCED0,pin
 ?bfmeAdd913D@BfmeThing913D@@QAEDPAX@Z,0x000110E0,pin
 ?bfmeAdd955@BfmeSink955@@QAEXPAHH@Z,0x00037A56,pin
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
@@ -73718,6 +73719,7 @@ name,address,notes
 ?bfmeLen1223@BfmeSub1223@@QAEHXZ,0x0089CC10,pin
 ?bfmeLen1224@BfmeSub1224@@QAEHXZ,0x0089CC10,pin
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
+?bfmeLine1226@BfmeR1226@@QAEXPAD@Z,0x008A0F40,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLog1013@BfmeLog1013@@QAEXHPADHHHHHH@Z,0x00015235,pin
 ?bfmeLog1021@BfmeLog1021@@QAEXHPADHHHHHH@Z,0x00015235,pin
@@ -76178,6 +76180,7 @@ name,address,notes
 ?g_bfmeR1079@@3PAVBfmeR1079@@A,0x00EF19E8,pin
 ?g_bfmeR1085@@3PAVBfmeR1085@@A,0x00EF19E8,pin
 ?g_bfmeR1101@@3PAVBfmeR1101@@A,0x00EF1B40,pin
+?g_bfmeR1226@@3VBfmeR1226@@A,0x00F38748,pin
 ?g_bfmeRGBAColorIntFormat@@3QBDB,0x011444E0,address-derived RGBAColorInt format string from retail 0x009D997E
 ?g_bfmeRGBAColorRealFormat@@3QBDB,0x011444B8,address-derived RGBAColorReal format string from retail 0x009D9934
 ?g_bfmeRGBColorFormat@@3QBDB,0x01144498,address-derived RGBColor format string from retail 0x009D98E0
@@ -76241,6 +76244,7 @@ name,address,notes
 ?g_bfmeStore1024@@3PAVBfmeStore1024@@A,0x00EF0898,pin
 ?g_bfmeStore1025@@3PAVBfmeStore1025@@A,0x00EF0898,pin
 ?g_bfmeStore1026@@3PAVBfmeStore1026@@A,0x00EF0898,pin
+?g_bfmeStr1226@@3PADA,0x00D37344,pin
 ?g_bfmeStrA993B@@3PADA,0x00C81238,pin
 ?g_bfmeStrB993B@@3PADA,0x00C80FC0,pin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
