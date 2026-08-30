@@ -174,7 +174,16 @@ public:
 	void initFromINIMultiProc(void *p, void (__cdecl *proc)(MultiIniFieldParse &));
 };
 
-extern void *g_bfme5ParseVtable;
+// Three DISTINCT vtables, one per factory. They shared a single name until
+// the DIR32 check caught it resolving to three addresses -- one name
+// asserting three globals are one object, which failed the gate tree-wide.
+// Named after their own RVAs, following this file's Rva<hex> convention for
+// something whose identity is not yet known: the name claims an address and
+// nothing more. (g_bfme5RefVtable below is genuinely shared -- one base,
+// two references -- and is deliberately left as one name.)
+extern void *g_bfmeRva0108B1B8ParseVtable;
+extern void *g_bfmeRva0108D638ParseVtable;
+extern void *g_bfmeRva0108D748ParseVtable;
 void __cdecl bfme5ParseProcA(MultiIniFieldParse &m);
 void __cdecl bfme5ParseProcB(MultiIniFieldParse &m);
 
@@ -190,7 +199,7 @@ void * __cdecl bfme5MakeParseNodeA(INI *ini)
 	Bfme5ParseNode *p;
 
 	if (q) {
-		q->m_bfmeVptr = &g_bfme5ParseVtable;
+		q->m_bfmeVptr = &g_bfmeRva0108B1B8ParseVtable;
 		p = q;
 	} else {
 		p = 0;
@@ -208,7 +217,7 @@ void * __cdecl bfme5MakeParseNodeB(INI *ini)
 	Bfme5ParseNode *p;
 
 	if (q) {
-		q->m_bfmeVptr = &g_bfme5ParseVtable;
+		q->m_bfmeVptr = &g_bfmeRva0108D638ParseVtable;
 		p = q;
 	} else {
 		p = 0;
@@ -264,7 +273,7 @@ void * __cdecl bfme5MakeParseNodeC(INI *ini)
 	Bfme5ParseNode12 *p;
 
 	if (q) {
-		q->m_bfmeVptr = &g_bfme5ParseVtable;
+		q->m_bfmeVptr = &g_bfmeRva0108D748ParseVtable;
 		q->m_bfme08 = 1;
 		p = q;
 	} else {
