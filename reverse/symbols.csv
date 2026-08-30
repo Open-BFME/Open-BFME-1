@@ -72372,6 +72372,7 @@ name,address,notes
 ?bfmeMirror1281@BfmeSlotDispatcher1281@@QAEXHHI@Z,0x008BC120,address-derived mirror callee; argument shape decoded from the 0x008BCCC0 retail call site
 ?bfmePrepare1281@BfmeSlotDispatcher1281@@QAEXHHI@Z,0x008BBDB0,address-derived preparation callee; argument shape decoded from the 0x008BCCC0 retail call site
 ?bfmeResolve1281@BfmeSlotDispatcher1281@@QAEXHHPAPAXPA_N@Z,0x008BC3E0,address-derived resolver callee; argument shape decoded from the 0x008BCCC0 retail call site
+?bfmeSubmit1283@BfmeSubmitter1283@@QAEXHHHHHHHPAMHHHH@Z,0x008BEBF0,address-derived twelve-argument submitter; argument shape decoded from the 0x008BEE50 retail call site
 ?bfmeEmit1281@BfmeNodeDX@@QAEXHPAXH@Z,0x008D22C0,address-derived node emitter; argument shape decoded from the 0x008BC090 retail call site
 ?bfmeAdd1040@BfmeH1040@@QAEXPAX@Z,0x0001EF9C,pin
 ?bfmeAdd1044@BfmeE1044@@QAEXPAVBfmeD1044@@H@Z,0x000157DA,pin
