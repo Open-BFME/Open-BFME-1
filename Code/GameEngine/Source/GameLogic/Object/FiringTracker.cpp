@@ -192,46 +192,6 @@ void FiringTracker::shotFired(const Weapon* weaponFired, ObjectID victimID)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?update@FiringTracker@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
-UpdateSleepTime FiringTracker::update()
-{
-	//DEBUG_ASSERTCRASH(m_frameToStartCooldown != 0 || m_frameToStopLoopingSound != 0, ("hmm, should be asleep"));
-
-	UnsignedInt now = TheGameLogic->getFrame();
-
- 	// I have been idle long enough that I should reload, so I do not hang around with a near empty clip forever.
- 	if( m_frameToForceReload != 0  &&  now >= m_frameToForceReload )
- 	{
- 		getObject()->reloadAllAmmo(TRUE);
- 		m_frameToForceReload = 0;
- 	}
- 
-	// If it has been too long since I fired.  I have to start over.
-	// (don't call if we don't need to cool down... it's expensive!)
-
-	if (m_frameToStopLoopingSound != 0)
-	{
-		if (now >= m_frameToStopLoopingSound)
-		{
-			TheAudio->removeAudioEvent( m_audioHandle );
-			m_audioHandle = AHSV_NoSound;
-			m_frameToStopLoopingSound = 0;
-		}
-	}
-
-	if( m_frameToStartCooldown != 0 && now > m_frameToStartCooldown )
-	{
-		m_frameToStartCooldown = now + LOGICFRAMES_PER_SECOND;
-		coolDown();// if this is the coolest call to cooldown, it will set m_frameToStartCooldown to zero
-		return UPDATE_SLEEP(LOGICFRAMES_PER_SECOND);
-	}
-
-	UpdateSleepTime sleepTime = calcTimeToSleep();
-
-	return sleepTime;
-}
-
-//-------------------------------------------------------------------------------------------------
 // ?calcTimeToSleep@FiringTracker@@AAE?AW4UpdateSleepTime@@XZ present-unmatched
 UpdateSleepTime FiringTracker::calcTimeToSleep()
 {
