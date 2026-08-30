@@ -4823,3 +4823,47 @@ A rotation must leave a hole. There are three holes, one per group, exactly
 where the field order predicts. That is the third confirmed instance of the
 rotation-hole structure, and the first where the prediction was made before the
 holes were looked for.
+
+## Measure on a PARAMETER to break the circularity
+
+Every GameWindow derivation until now went through `GameWindow`'s own layout --
+which was the thing under question -- so each answer depended on the assumption
+it was testing. `?parseTooltipDelay@@` breaks it: `add ecx, 0x198` on a
+**`WinInstanceData*` PARAMETER**, so the offset is measured INSIDE
+`WinInstanceData` with no GameWindow layout anywhere in the path.
+
+Combined with two `this`-relative measurements the system becomes
+**over-determined** -- three measurements, two unknowns, no free parameters:
+
+    m_instData                  = 0x1C4 - 0x198 = 0x2C
+    offsetof(m_enabledDrawData) = 0x48  - 0x2C  = 0x1C
+    check:  0x2C + 0x1C = 0x48  and  0x2C + 0x198 = 0x1C4     both close
+
+ZH puts `m_enabledDrawData` at 0x14, so **BFME has 8 more bytes before the draw
+arrays**, and `m_instData` sits at the plain ZH 0x2C. Neither shim's 4-byte
+GameWindow-level insertion is real; both were compensating one level up for 8
+bytes that live inside `WinInstanceData`.
+
+This is the same move as the GarrisonContain control view -- the fourth view, on
+the `observingPlayer` PARAMETER, needed no adjustment and isolated the effect to
+`this`. **A parameter-relative measurement carries no assumption about the class
+you are auditing.** Look for one before deriving a layout from `this` alone.
+
+## A shim comment named its own resolution condition, and evidence arrived later
+
+`reference/shims/gamewindowlist` documented the conflict it could not settle: the
+`gamewindow` spread "breaks all seven" accessors, and the +0x04 field "can only
+coexist with them if something before +0x48 is 4 bytes SMALLER in BFME, which
+nothing here proves."
+
+Caller evidence supplied exactly that, from the other side: **three of those
+seven pins are on the wrong bodies.** `winGet{Enabled,Disabled,Hilite}Color` sit
+at position 0 -- the Image bodies -- so the +0x48 pin they appeared to provide
+was never real, and the constraint the author could not discharge was never
+binding.
+
+Worth the pattern: **a comment that states its unproven condition precisely is
+worth writing even when you cannot discharge it.** It let a later measurement
+close a question its author had correctly refused to guess at. Contrast the
+fabricated `winSetDisabledImage` mechanism, which asserted a reason and cost a
+reader the work of refuting it.
