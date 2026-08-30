@@ -186,3 +186,33 @@ def test_surviving_counts_only_the_masked_span_inside_the_body():
     assert multi_name.surviving(((6, 0x0006),), 8) == 6
     assert multi_name.surviving(((0, 0x0006), (4, 0x0006)), 8) == 0
     assert multi_name.surviving((), 8) == 8
+
+
+def test_a_family_whose_difference_was_masked_is_marked_undecidable():
+    """AABTreeClass in miniature. Two siblings differing only in the type of
+    their argument call different methods OF that type -- and those calls are
+    REL32s the comparison masks, so identical compared bytes say nothing."""
+    body = b"\xe8\x00\x00\x00\x00\xc3\x90\x90"
+    rows = [_row("?Cast_AABox@T@@AAE_NXZ"), _row("?Cast_OBBox@T@@AAE_NXZ")]
+    got, = multi_name.classify(rows, _reader({
+        "?Cast_AABox@T@@AAE_NXZ": (body, [(1, 0x0014, "?Hit@AABox@@QAE_NXZ")]),
+        "?Cast_OBBox@T@@AAE_NXZ": (body, [(1, 0x0014, "?Hit@OBBox@@QAE_NXZ")]),
+    }))
+    assert got.verdict == multi_name.FAMILY, "still a candidate, never auto-cleared"
+    assert got.masked_split, "the discriminator is inside the masked relocation"
+
+
+def test_a_family_with_nothing_masked_has_nowhere_left_to_differ():
+    """The GameWindow shape. Two setters of different FIELDS compile to the same
+    bytes with no relocations at all -- a field offset is a literal, so there is
+    no masked region for the difference to be hiding in."""
+    body = b"\x89\x81\x4c\x00\x00\x00\xc3\x90"
+    rows = [_row("?winSetEnabledColor@GameWindow@@QAEHHH@Z"),
+            _row("?winSetEnabledImage@GameWindow@@QAEHHH@Z")]
+    got, = multi_name.classify(rows, _reader({
+        "?winSetEnabledColor@GameWindow@@QAEHHH@Z": (body, []),
+        "?winSetEnabledImage@GameWindow@@QAEHHH@Z": (body, []),
+    }))
+    assert got.verdict == multi_name.FAMILY
+    assert not got.masked_split
+    assert got.surviving == 8, "every byte was compared and they still agreed"

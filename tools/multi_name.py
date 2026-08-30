@@ -29,9 +29,29 @@ header is short by a field there, so `winSetEnabledColor` compiles to exactly
 retail's `winSetEnabledImage` -- two names on one address, structurally
 identical HERE, and both green. No byte comparison can see that. What can is the
 NAMES: two accessors one family member apart (same class, same token count,
-differing in one position) cannot be one body whatever our compile says. That is
-the FAMILY verdict, and it is a candidate list rather than a verdict on the
-ledger -- it is the only test here that reasons from names.
+differing in one position). That is the FAMILY verdict, and it is a candidate
+list rather than a verdict on the ledger -- it is the only test here that
+reasons from names.
+
+FAMILY IS NOT PROOF, AND AABTreeClass IS WHY. Cast_AABox_Recursive,
+Cast_OBBox_Recursive and Intersect_OBBox_Recursive share one body at 0x0096B100
+and legitimately do: they differ only in the type of the test object, every
+method they call on it folded too, and the calls are REL32s the comparison
+masks. So the flag depends on WHERE the difference would have to appear. The
+GameWindow families differ in which FIELD they write, and a field offset is a
+literal in the instruction stream -- it cannot fold, so identical compared bytes
+prove a defect. The AABTree families differ in a TYPE, and everything the type
+contributed is inside the masked relocations, so identical compared bytes prove
+nothing. Each FAMILY line reports which case it is by asking whether the
+claimants name the same relocation targets. It does not change the verdict:
+clearing a candidate automatically is how a real defect gets filed as noise.
+
+Different target NAMES do not settle it either way, and the next step is the
+same for both outcomes: resolve each name to an ADDRESS. AABTreeClass folds
+because all three of its differing calls land on one address -- the callees
+folded first, so the callers became identical. A family whose differing
+relocations resolve to DIFFERENT addresses cannot be one body at all, whatever
+the compared bytes say, because the linked bodies would not match.
 
 On the live ledger: 958 real folds, 65 all-placeholder, 9 family conflicts,
 2 addresses whose claimants cannot be one body, and 4 large groups with one odd
@@ -131,7 +151,7 @@ def same_class_different_methods(names):
 
 
 Group = collections.namedtuple(
-    "Group", "rva size names verdict family surviving")
+    "Group", "rva size names verdict family surviving masked_split")
 
 
 def surviving(sites, size):
@@ -148,12 +168,13 @@ def surviving(sites, size):
     return size - len(covered)
 
 
-def shape(row, size, read=None):
-    """(reloc sites, bytes with every reloc site zeroed), or None if unreadable.
+def probe(row, size, read=None):
+    """(shape, relocation targets by site), or None if unreadable.
 
-    Zeroing the sites is the whole point: a body's identity for folding purposes
-    is what the compiler emitted BETWEEN its relocations, because the linker
-    patches the rest."""
+    The shape decides identity; the targets never do -- they are what the
+    comparison could not see, and reporting them is how a reader knows whether
+    an agreement had anywhere left to disagree.
+    """
     read = read or _read
     got = read(row, size)
     if got is None:
@@ -165,7 +186,18 @@ def shape(row, size, read=None):
             width = min(4, size - off)
             masked[off:off + width] = b"\0" * width
     sites = tuple(sorted((off, kind) for off, kind, _ in relocs if off < size))
-    return sites, bytes(masked)
+    targets = tuple(sorted((off, sym) for off, _kind, sym in relocs if off < size))
+    return (sites, bytes(masked)), targets
+
+
+def shape(row, size, read=None):
+    """(reloc sites, bytes with every reloc site zeroed), or None if unreadable.
+
+    Zeroing the sites is the whole point: a body's identity for folding purposes
+    is what the compiler emitted BETWEEN its relocations, because the linker
+    patches the rest."""
+    got = probe(row, size, read)
+    return None if got is None else got[0]
 
 
 def _read(row, size):
@@ -190,19 +222,24 @@ def classify(rows, read=None):
         names = sorted({r["name"] for r in rs})
         family = same_class_different_methods(names)
         if all(is_placeholder(n) for n in names):
-            yield Group(rva, size, names, PLACEHOLDERS, family, None)
+            yield Group(rva, size, names, PLACEHOLDERS, family, None, False)
             continue
         seen = {}
         for row in rs:
             if row["name"] not in seen:
-                seen[row["name"]] = shape(row, size, read)
-        shapes = list(seen.values())
+                seen[row["name"]] = probe(row, size, read)
+        shapes = [None if p is None else p[0] for p in seen.values()]
+        # Whether the claimants name DIFFERENT relocation targets. If they do,
+        # the only thing telling them apart sits in the bytes the comparison
+        # blanked, so identical shapes are not evidence that they are one body.
+        # If they do not, identical shapes are the whole story.
+        split = len({p[1] for p in seen.values() if p is not None}) > 1
         # The weakest claimant sets what the verdict rests on: an agreement is
         # only as good as the fewest bytes either side left unmasked.
         left = min((surviving(s[0], size) for s in shapes if s is not None),
                    default=None)
         if any(s is None for s in shapes):
-            yield Group(rva, size, names, UNREADABLE, family, left)
+            yield Group(rva, size, names, UNREADABLE, family, left, split)
         elif len(set(shapes)) == 1:
             # Structurally these CAN be one body -- but if the names are one
             # family member apart they cannot be, whatever our compile says.
@@ -212,13 +249,13 @@ def classify(rows, read=None):
             # Image body. Only reported for small groups; a forty-name ICF group
             # of trivial accessors will always contain some one-token pair.
             if len(names) <= LARGE_GROUP and accessor_siblings(names):
-                yield Group(rva, size, names, FAMILY, family, left)
+                yield Group(rva, size, names, FAMILY, family, left, split)
             else:
-                yield Group(rva, size, names, FOLD, family, left)
+                yield Group(rva, size, names, FOLD, family, left, split)
         elif len(names) > LARGE_GROUP:
-            yield Group(rva, size, names, ODD_MEMBER, family, left)
+            yield Group(rva, size, names, ODD_MEMBER, family, left, split)
         else:
-            yield Group(rva, size, names, DIFFER, family, left)
+            yield Group(rva, size, names, DIFFER, family, left, split)
 
 
 def main(argv):
@@ -245,6 +282,12 @@ def main(argv):
         rests = "n/a" if g.surviving is None else "%d/%d" % (g.surviving, g.size)
         print("0x%08X %6dB  rests on %-9s %s%s"
               % (g.rva, g.size, rests, g.verdict, tag))
+        if g.verdict == FAMILY:
+            print("      %s" % ("the claimants name different relocation targets, so what "
+                                "separates them was masked - undecidable here"
+                                if g.masked_split else
+                                "the claimants name the SAME relocation targets, so a "
+                                "difference would have to show in the compared bytes"))
         for name in g.names:
             print("      %s" % name[:96])
     return 0
