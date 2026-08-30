@@ -12,8 +12,11 @@ typedef struct piConnection
 	void *nickErrorCallback;
 	char reserved0[0x5C - 0x50];
 	int profileID;
-	char title[64];
-	char reserved1[0xAB0 - 0xA0];
+	char title[32];
+	char room[3][257];
+	int enteringRoom[3];
+	int inRoom[3];
+	char reserved1[0xAB0 - 0x39C];
 	int stayInTitleRoom;
 	char reservedStay[0x1824 - 0xAB4];
 	int callbackDepth;
@@ -29,6 +32,8 @@ void piAddChangeNickCallback(PEER peer, int success, const char *oldNick,
 	const char *newNick, void *callback, void *param, int opID);
 int piNewGetGlobalKeysOperation(PEER peer, const char *target, int num,
 	const char **keys, void *callback, void *param, int opID);
+int piNewGetRoomKeysOperation(PEER peer, int roomType, const char *nick,
+	int num, const char **keys, void *callback, void *param, int opID);
 int piNewConnectOperation(PEER peer, int type, const char *nick,
 	int namespaceID, const char *email, const char *profilenick,
 	const char *uniquenick, const char *password, const char *authtoken,
@@ -36,6 +41,9 @@ int piNewConnectOperation(PEER peer, int type, const char *nick,
 void piAddGetGlobalKeysCallback(PEER peer, int success, const char *nick,
 	int num, const char **keys, const char **values, void *callback,
 	void *param, int opID);
+void piAddGetRoomKeysCallback(PEER peer, int success, int roomType,
+	const char *nick, int num, const char **keys, const char **values,
+	void *callback, void *param, int opID);
 void piAddConnectCallback(PEER peer, int success, int failureReason,
 	void *callback, void *param, int opID);
 void bfmePiDisconnectCleanupFromEsi(void);
@@ -223,6 +231,40 @@ void peerConnectLoginA(PEER peer, int namespaceID, const char *email,
 			bfmePiThinkFromEsi(opID);
 		}
 		while (!PeerOperationsComplete(peer, opID) ||
+			!piIsCallbackFinished(peer, opID));
+
+		if (connection->shutdown && connection->callbackDepth == 0)
+			peerShutdown(peer);
+	}
+}
+
+void peerGetRoomKeysA(PEER peer, int roomType, const char *nick, int num,
+	const char **keys, void *callback, void *param, int blocking)
+{
+	piConnection *connection = (piConnection *)peer;
+	int success = 1;
+	int opID = piGetNextID(peer);
+
+	if (!connection->connected)
+		return;
+	if (!connection->enteringRoom[roomType] && !connection->inRoom[roomType])
+		return;
+
+	if (!piNewGetRoomKeysOperation(peer, roomType, nick, num, keys, callback,
+			param, opID))
+		success = 0;
+	if (!success)
+		piAddGetRoomKeysCallback(peer, 0, roomType, nick, 0, 0, 0,
+			callback, param, opID);
+
+	if (blocking)
+	{
+		do
+		{
+			msleep(1);
+			bfmePiThinkFromEsi(opID);
+		}
+		while (!piIsOperationFinished(peer, opID) ||
 			!piIsCallbackFinished(peer, opID));
 
 		if (connection->shutdown && connection->callbackDepth == 0)
