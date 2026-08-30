@@ -1002,6 +1002,20 @@ void peerSetPasswordA(PEER peer, int roomType, const char *password)
 	piSendStateChanged(peer);
 }
 
+void peerSetTitleRoomChannelA(PEER peer, const char *channel)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->title[0])
+		return;
+	if (!connection->connected)
+		return;
+	if (!channel)
+		channel = "";
+	strncpy(connection->titleRoomChannel, channel, 257);
+	connection->titleRoomChannel[256] = '\0';
+}
+
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
 {
 	piConnection *connection = (piConnection *)peer;
