@@ -4223,3 +4223,36 @@ It earned its place on exactly one find, the virtual-dispatch thunk at
 delegation explanation exists. One real find and a clean sweep is a fair account
 of a weak-but-real instrument, and it is worth writing down rather than quietly
 retiring the tool or quietly trusting it.
+
+## THE MASKING RULE, generalised: ask what a fully-masked input compares equal to
+
+Three places in this tree mask bytes before comparing, and the same failure hides
+in each. Stated once, because it has now been discovered three times separately:
+
+**Wherever you mask before comparing, a input with nothing left unmasked
+compares equal to EVERYTHING of its length. That is an absence of evidence, and
+counting it as a match is how the comparison certifies whatever you hand it.**
+
+    the FOLD comparison    -- "a 100% masked screen is necessary, not sufficient".
+                              openDataChunk scores 100% and still fails, because
+                              masking hides the callee.
+    holds_funclet          -- a DATA table of four label pointers, relocations
+                              covering all eight bytes, tied with a real funclet.
+                              Now requires one surviving byte.
+    multi_name's STRUCTURAL test -- ** worth re-examining. ** It classifies
+                              0x0000B9CE as a real fold because four 5-byte jmp
+                              thunks are "structurally identical". They are --
+                              but a 5-byte jmp has ONE unmasked byte, the E9
+                              opcode. Every 5-byte jmp in the tree is
+                              structurally identical to every other by that
+                              measure.
+
+The third is not necessarily wrong -- the ILT topology test covers that case, and
+the two instruments were designed to be complementary -- but the verdict
+"identical masked bytes and reloc sites, therefore a real fold" is carrying much
+less evidence for a 5-byte thunk than for a 154-byte constructor, and the output
+does not distinguish them.
+
+**The cheap guard, wherever this pattern appears: report the number of surviving
+unmasked bytes alongside the verdict.** A match on 1 byte and a match on 600 are
+not the same claim, and today they printed the same way in three different tools.
