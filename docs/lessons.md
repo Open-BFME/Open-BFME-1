@@ -5205,3 +5205,52 @@ Worth remembering when a tool's cautious verdict feels unsatisfying: the
 caution was the tool being correct about the limits of its evidence, and the
 instinct to go past it needs an instrument at least as careful as the one that
 stopped.
+
+## CLOSED: retail contains no `BORDERCOLOR` string, so the parse-table route does not exist
+
+The `.wnd` route was the one non-circular way to name `WinDrawData` element+4.
+It is closed on the strongest evidence available -- **the name is not in the
+binary**:
+
+    ENABLEDDRAWDATA    5 hits
+    DISABLEDDRAWDATA   5 hits
+    HILITEDRAWDATA     5 hits
+    ENABLEDCOLOR       1 hit   (a TEXT colour, alongside SELECTED/HILITE/DISABLED)
+    BORDERCOLOR        0 hits
+    IMAGE:             0 hits
+    COLOR:             0 hits
+
+The `...DRAWDATA` keywords exist; their sub-fields do not. The parser reads the
+three fields **positionally** inside the value, so retail never spells `color`
+or `borderColor` as a string, and there is no `{token, proc, offset}` table for
+`fieldnames.py` to read.
+
+**Record it as CLOSED rather than open.** "We could not find the table" invites
+another search; "there is nothing to find" does not. A negative established this
+firmly is a permanent saving.
+
+So element+4 has **no retail-side name evidence of any kind**. Three sources
+could in principle have named it -- the setter wrappers, the inline getters, and
+the parser -- and the first two are ledger bindings pointing opposite ways while
+the third does not name it at all. With the structural point that swapping two
+same-width fields changes no structure, the question is **undecidable from the
+tree as it stands**, not merely unsolved.
+
+What could still unblock it, from elsewhere: a caller passing a **literal colour
+value** to a position-1 setter, or independent identity for any one of the
+`Gadget*Get*Color` / `Set*BorderColor` wrappers from its own callers.
+
+## A discipline survives only if it is cheap enough to use every time
+
+The prediction files, the deps-sidecar check and the stop rule caught five wrong
+bindings in one day and let none of them reach the tree. The reason they worked
+is not that they were rigorous -- it is that **each one costs almost nothing**.
+
+Banking a prediction to a file before compiling is seconds. Asking the sidecar
+which header was opened is one command. Stopping when an unpredicted row goes
+red requires no analysis at all. The expensive version of that discipline --
+review boards, second opinions, formal write-ups before each attempt -- would
+have been skipped by the third attempt and absent for the two that mattered
+most.
+
+**Design the check so that using it is cheaper than justifying skipping it.**
