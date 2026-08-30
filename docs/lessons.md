@@ -4162,3 +4162,47 @@ views at all.
 That closes the question rather than leaving it as a standing "we never looked
 there". A negative sweep of a region you had reason to suspect is worth its cost;
 what is not worth it is carrying the suspicion indefinitely.
+
+## Every base class in a virtual family is a size outlier BY CONSTRUCTION
+
+The dominant false positive in size-against-siblings, and it is structural
+rather than incidental. `?Flush@Pipe@@` is 17 bytes **precisely because**
+`?Flush@Base64Pipe@@` is 299 and does the work. The family median is computed
+over the derived implementations, so a thin base-class body is not an anomaly --
+it is what a base class in a virtual family looks like.
+
+Five of six clearances in the call-site sweep were exactly that shape.
+
+The clearing test, now in the tool: build the caller index once, then clear any
+candidate whose callers include **the same method name in a different class**
+(delegation) **or any method of its own class**.
+
+That second clause has a mangling trap in it: **a constructor or destructor
+names its class without a leading `@`** -- `??1DistLODClass@@`, not
+`@DistLODClass@@` -- so a naive same-class check misses its own destructor. A
+first pass did exactly that and reported `?Free@DistLODClass@@` as suspicious
+when its only caller was `??1DistLODClass@@`.
+
+## Silence is UNDECIDED, never confirmed
+
+Of 14 candidates: 6 cleared, **7 with no matched caller at all**, 1 other, and
+**0 confirmed defects**. The seven are undecided, not guilty. No caller is not
+evidence of a defect -- it is the absence of the evidence that would decide, and
+this tree has plenty of matched bodies nothing else matched calls.
+
+There is a test pinning that specifically, because a verdict tally is exactly
+where "no evidence" quietly becomes "evidence of".
+
+## A detector that returns nothing across a full sweep has reported a result
+
+`size_outlier` found zero defects in its own 14 candidates. That is not a
+failure to report: it means the sweep is clean, and it says something honest
+about the instrument -- **size-against-siblings is much weaker than the other
+three**, because a small base-class body is normal where a 5-byte jmp thunk or a
+one-name-three-addresses collision is not.
+
+It earned its place on exactly one find, the virtual-dispatch thunk at
+0x00495580, where the class has no siblings implementing that method so no
+delegation explanation exists. One real find and a clean sweep is a fair account
+of a weak-but-real instrument, and it is worth writing down rather than quietly
+retiring the tool or quietly trusting it.
