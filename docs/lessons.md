@@ -3749,3 +3749,44 @@ consumes. A reimplementation of the consumer's logic can agree with the proposal
 and disagree with the consumer -- which is exactly the drift that put a
 measuring tool and an acting tool out of step earlier today, where merge_cluster
 had the rule right and screen_cluster did not. Call the real thing.
+
+## A THIRD kind of false green: the five-byte virtual-dispatch thunk
+
+`0x00495580` is `8b 01 ff 60 0c` -- `mov eax,[ecx]; jmp [eax+0x0C]`. **No E9, no
+jump target.** It was handed between lanes as an ILT stub and a ready-made
+re-homing; it is neither.
+
+**Neither detector can see this class.** The unique-stub topology test needs an
+E9 to follow. The structural comparison cannot separate two forwarders to the
+same vtable slot, because they genuinely are the same five bytes. So this joins
+the E9 ILT jump and the local-replica body as a third way a row goes green while
+naming the wrong function -- and it is the first one no instrument catches.
+
+**What caught it was SIZE AGAINST SIBLINGS.** The three other
+`reverseAnimateWindow` implementations in retail are 260 to 263 bytes --
+SlideFromBottom 0x004966E0, SlideFromTop 0x00496260, SlideFromRightFast
+0x00497760. A real one is not five bytes of forwarding. The row verified only
+because its `object-symbol` pinned it to the first five bytes of an unrelated
+function, and ANY method forwarding to vtable slot +0x0C compiles to exactly
+those bytes.
+
+That heuristic -- compare a row's size against its named family's siblings -- is
+cheap, is in neither tool, and is the obvious fourth pass.
+
+Re-homed to `?dup_00495580@@YAXXZ` rather than `?j_`: a real body of unknown
+owner, not an ILT entry. `?j_` is for a 5-byte E9 claimed by address; this is
+five bytes of something else.
+
+## Re-derive a row handed over pre-diagnosed, from the bytes
+
+The premise travelled between two lanes and a team lead and was wrong at every
+hop: "a 5-byte ILT row whose destination already compiles it byte-exact." It was
+not an ILT row, and `batch_screen` on the destination returns
+`error symbol not found in object: ?init@ScriptActions@@UAEXXZ` -- the row's
+`object-symbol` exists only in the donor, so a repoint could never have verified.
+
+Ten minutes of reading bytes stopped a repoint that could not have worked. **A
+diagnosis arriving from another lane is a hypothesis with a good prior, not a
+finding**, and the cost of re-deriving it is far below the cost of acting on it.
+This applies with most force to the relay in the middle: a lead passing a lane's
+diagnosis onward launders it into fact.
