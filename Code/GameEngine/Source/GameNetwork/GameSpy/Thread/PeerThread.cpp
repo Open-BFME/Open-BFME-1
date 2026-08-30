@@ -442,12 +442,15 @@ void PeerThreadClass::getStatsFromRoom(PEER peer, RoomType roomType)
 }
 #endif // USE_BROADCAST_KEYS
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadAddServerToMap.cpp
-// ?addServerToMap@PeerThreadClass@@ present-unmatched
+// BFME keeps m_nextStagingServer at PeerThreadClass+0x208 and the staging map
+// straight after it at +0x20c, where this tree lands them at +0x1f8 and
+// +0x1fc. Per-site, so removeServerFromMap below keeps its own spelling.
+#define BFME_PEER_NEXTSTAGING(p) (*(Int *)((char *)(p) + 0x208))
+#define BFME_PEER_STAGINGMAP(p)  (*(std::map<Int, SBServer> *)((char *)(p) + 0x20c))
 Int PeerThreadClass::addServerToMap( SBServer server )
 {
-	Int val = m_nextStagingServer++;
-	m_stagingServers[val] = server;
+	Int val = BFME_PEER_NEXTSTAGING(this)++;
+	BFME_PEER_STAGINGMAP(this)[val] = server;
 	return val;
 }
 
