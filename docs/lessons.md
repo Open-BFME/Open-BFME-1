@@ -4080,3 +4080,41 @@ GameText.cpp's `uw_00c222b6` renumbered from `$L37642` to `$L36977` under an
 unrelated struct edit and HEALED rather than freezing the build. That is a TU
 nobody had identified as affected -- the fix was made against one known case and
 immediately earned its keep on another.
+
+## The gate swallowed its own error text, and we diagnosed the silence twice
+
+`build.py`'s `run(label, check)` catches `SystemExit` so every check reports
+before the gate exits once -- a good design. But it discarded `exc.code`, and
+`exc.code` is where a check raising `SystemExit("<explanation>")` puts its whole
+diagnosis. So this:
+
+    uw_00c054b0 (AIPlayer.cpp): $L85894 does not hold this funclet and 2 bodies
+    in the parent's group match it equally ($L85915, $L86009). Byte evidence
+    cannot tell them apart, so the gate will not pick one.
+
+was reduced to "verify_functions did not produce a patch set" -- which reads as
+a crash rather than a finding. **Two people independently concluded "race" from
+the absence of output**, across three full-gate runs, before anyone called
+`verify_functions()` directly to recover the text.
+
+Fixed where it is emitted: the handler prints `exc.code` unless it is an int (a
+bare exit status carries no diagnosis). Third time today a tool's MESSAGE, not
+its logic, was the defect -- after check_csv's duplicate hint and
+verify_source_claims' false "byte-verified" claim.
+
+**The organisational half is worth as much:** the "everyone diagnosing everyone
+else's file" problem is partly a reporting problem. Four consecutive reds
+belonged to a lane other than the one that hit them, and this one took three
+runs to attribute only because the tool ate the evidence. A check that names its
+TU and its candidates hands the right lane the right file immediately.
+
+## An ambiguous funclet heal is a REFUSAL, not a crash
+
+Distinct from the withdrawn tripwire, which was `symbol not found in object`.
+Here the pin renumbered, the self-heal searched the parent's group, and **two
+bodies matched equally** -- so it declined to pick one. That is correct: byte
+evidence genuinely cannot separate them, and guessing would anchor a row on a
+coin flip.
+
+The row needs a body it can name on its own. Re-anchor with the three-filter
+recipe rather than expecting the healer to resolve it.

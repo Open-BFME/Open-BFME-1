@@ -1703,6 +1703,15 @@ def main(only=None):
         except SystemExit as exc:
             if not exc.code:
                 raise
+            # A check that raises SystemExit("<explanation>") carries its whole
+            # diagnosis in exc.code. Dropping it reduced a named, actionable
+            # error -- an ambiguous funclet heal naming its TU and both
+            # candidate bodies -- to "verify_functions did not produce a patch
+            # set", which reads as a crash. That cost three full-gate runs and
+            # two wrong diagnoses before anyone called the check directly to
+            # recover the text. An int is a bare exit status and says nothing.
+            if not isinstance(exc.code, int):
+                print(f"{label}: {exc.code}")
             failed.append(label)
             return None
 
