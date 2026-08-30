@@ -94,6 +94,7 @@ void chatSendUserMessageA(void *chat, const char *nick, const char *message,
 	int messageType);
 void chatKickUserA(void *chat, const char *channel, const char *nick,
 	const char *reason);
+void chatSetQuietMode(void *chat, int quiet);
 piPlayer *piGetPlayer(PEER peer, const char *nick);
 typedef void (*piEnumRoomPlayersCallback)(PEER peer, int roomType,
 	piPlayer *player, int index, void *param);
@@ -894,6 +895,13 @@ void peerStayInRoom(PEER peer, int roomType)
 	if (!connection->title[0])
 		return;
 	connection->stayInTitleRoom = 1;
+}
+
+void peerSetQuietMode(PEER peer, int quiet)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	chatSetQuietMode(connection->chat, quiet);
 }
 
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
