@@ -4915,3 +4915,52 @@ Neither route used the other's evidence, and the rotation-hole argument predicte
 the holes before either had been checked. **Three independent derivations meeting
 on the same three addresses** is the strongest standard reached on this class,
 and it is the standard the two reverted attempts did not have.
+
+## Investigation sequencing is not COMMIT sequencing
+
+A standing instruction -- "one change, one prediction, its own commit" -- does
+not survive when the first change has no green state of its own.
+
+Probe 1 (restore `m_userData`, shrink the pad) leaves 11 rows red; that is what
+the probe MEASURED. Those casualties are repaired only by the field order plus
+the ledger moves. So splitting it into two commits means landing the first one
+red, which is worse than any benefit the split offers.
+
+**The split was right as INVESTIGATION and it worked** -- probing the anchor
+alone is what proved the model and localised the residue. It simply is not
+separable as commits. When a staged investigation converges, ask whether each
+stage has a green state before insisting on one commit per stage; if it does
+not, the whole convergence is one commit with one prediction covering all of it.
+
+## The residual dissolved by asking the call-site question first
+
+`setTooltipDelay` compiled to 0x1C8 where retail wrote 0x1C4 -- a 4-byte residue
+that would otherwise have gone in as unnamed padding. Asking who calls it
+instead:
+
+    0x0098D2B0  writes +0x1C4, claimed by TWO names --
+                ?Set_Frame_Mode@ParticleEmitterDefClass@@UAEXH@Z
+                ?setTooltipDelay@GameWindow@@QAEXH@Z   <- ZERO callers
+    0x0047A330  writes +0x1C8, held by ?set@Rva0047A330DwordSlot@@, whose own
+                note reads "disp32 accessor at this+0x1C8; address-derived
+                placeholder"
+
+`setTooltipDelay` was on an ICF body shared with an unrelated class's virtual
+setter, with no callers -- while a body writing exactly the predicted offset sat
+under a placeholder **in the middle of the GameWindow accessor run**. No padding
+was needed; the row was simply in the wrong place.
+
+**Five placeholders in one accessor run is itself a signal.** 0x0047A280,
+0x0047A2C0, 0x0047A300 and 0x0047A330 all sit interleaved with correctly-named
+getters. A dense band of address-derived names inside an otherwise-named run
+marks displaced rows, not scaffolding.
+
+And the arithmetic now closes with **zero free parameters** on four independent
+measurements:
+
+    m_instData 0x30 + offsetof(m_enabledDrawData) 0x18  = 0x48   caller-confirmed
+    m_instData 0x30 + offsetof(m_tooltipDelay)   0x198  = 0x1C8  body at 0x0047A330
+
+The parameter-relative 0x198 is the only number in the system that never passes
+through `GameWindow`, and it is the only one that survived both failed
+derivations unchanged.
