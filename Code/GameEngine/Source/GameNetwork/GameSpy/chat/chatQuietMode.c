@@ -208,3 +208,24 @@ void chatGetChannelTopicA(CHAT chat, const char *channel, void *callback,
 		while (ciCheckForID(chat, ID));
 	}
 }
+
+void chatSendUserMessageA(CHAT chat, const char *user,
+	const char *message, int type)
+{
+	ciConnection *connection = (ciConnection *)chat;
+
+	if (!chat || !connection->connected || !message || !message[0])
+		return;
+
+	if (type == 0)
+		ciSocketSendf(&connection->chatSocket, "PRIVMSG %s :%s", user, message);
+	else if (type == 1)
+		ciSocketSendf(&connection->chatSocket,
+			"PRIVMSG %s :\001ACTION %s\001", user, message);
+	else if (type == 2)
+		ciSocketSendf(&connection->chatSocket, "NOTICE %s :%s", user, message);
+	else if (type == 3)
+		ciSocketSendf(&connection->chatSocket, "UTM %s :%s", user, message);
+	else if (type == 4)
+		ciSocketSendf(&connection->chatSocket, "ATM %s :%s", user, message);
+}
