@@ -81161,3 +81161,7 @@ g_bfmeSideNameA1294,0x010804D8,address-derived first side-name string used by th
 g_bfmeSideNameB1294,0x010804D0,address-derived second side-name string used by the 0x003A0860 retail body
 g_bfmeSideNameC1294,0x010804BC,address-derived third side-name string used by the 0x003A0860 retail body
 g_bfmeSideNameD1294,0x010804C4,address-derived fourth side-name string used by the 0x003A0860 retail body
+?bfmeContains6DF1F0@BfmePolygon6DF1F0@@QBEDABUBfmeCoord6DF1F0@@@Z,0x0000A7DB,address-derived polygon predicate thunk called by the 0x006DF1F0 retail body
+?bfmeStatus6DF1F0@BfmeShroud6DF1F0@@QBEHHPBUBfmeCoord6DF1F0@@@Z,0x008F7430,address-derived location-shroud query called by the 0x006DF1F0 retail body
+g_bfmePlayerList6DF1F0,0x012ED748,address-derived player-list global read by the 0x006DF1F0 retail body
+g_bfmeShroud6DF1F0,0x012ED5BC,address-derived shroud-manager global read by the 0x006DF1F0 retail body
