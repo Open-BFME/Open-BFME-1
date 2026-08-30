@@ -81031,3 +81031,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?addInfo@AISideBuildList@@QAEXPAVBuildListInfo@@@Z,0x0003A8F0,REL32 pin from BuildListInfo::parseStructure @0x1943D0
+??0AutoHealBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048B9E,REL32 pin from AutoHealBehavior::friend_newModuleInstance @0x114200
