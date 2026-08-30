@@ -8,7 +8,73 @@
 #define _STLP_CR 13
 #define _STLP_CTRLZ 26
 
+extern "C" __declspec(dllimport) BOOL WINAPI SetEndOfFile(HANDLE);
+bool bfmeGoDXF(void *file);
+
 _STLP_BEGIN_NAMESPACE
+
+bool _Filebuf_base::_M_open(const char *name, ios_base::openmode openmode,
+                            long permission)
+{
+  _STLP_fd file_no;
+
+  if (_M_is_open)
+    return false;
+
+  DWORD dwDesiredAccess, dwCreationDisposition;
+  bool doTruncate = false;
+
+  switch (openmode & (~ios_base::ate & ~ios_base::binary)) {
+  case ios_base::out:
+  case ios_base::out | ios_base::trunc:
+    dwDesiredAccess = GENERIC_WRITE;
+    dwCreationDisposition = OPEN_ALWAYS;
+    doTruncate = true;
+    break;
+  case ios_base::out | ios_base::app:
+    dwDesiredAccess = GENERIC_WRITE;
+    dwCreationDisposition = OPEN_ALWAYS;
+    break;
+  case ios_base::in:
+    dwDesiredAccess = GENERIC_READ;
+    dwCreationDisposition = OPEN_EXISTING;
+    permission = 0;
+    break;
+  case ios_base::in | ios_base::out:
+    dwDesiredAccess = GENERIC_READ | GENERIC_WRITE;
+    dwCreationDisposition = OPEN_EXISTING;
+    break;
+  case ios_base::in | ios_base::out | ios_base::trunc:
+    dwDesiredAccess = GENERIC_READ | GENERIC_WRITE;
+    dwCreationDisposition = OPEN_ALWAYS;
+    doTruncate = true;
+    break;
+  default:
+    return false;
+  }
+
+  DWORD dwShareMode = FILE_SHARE_READ | FILE_SHARE_WRITE;
+  file_no = CreateFileA(name, dwDesiredAccess, dwShareMode, 0,
+                        dwCreationDisposition, permission, 0);
+
+  if (file_no == INVALID_HANDLE_VALUE)
+    return false;
+
+  if ((doTruncate && SetEndOfFile(file_no) == 0) ||
+      (((openmode & ios_base::ate) != 0) &&
+       (SetFilePointer(file_no, 0, NULL, FILE_END) == (DWORD)-1))) {
+    CloseHandle(file_no);
+    return false;
+  }
+
+  _M_is_open = true;
+  _M_file_id = file_no;
+  _M_should_close = _M_is_open;
+  _M_openmode = openmode;
+  _M_regular_file = bfmeGoDXF(_M_file_id);
+
+  return _M_is_open;
+}
 
 bool _Filebuf_base::_M_close()
 {
