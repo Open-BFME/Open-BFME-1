@@ -9730,6 +9730,7 @@ name,address,notes
 ?Cull@OBBoxCollisionTestClass@@QAE_NABVVector3@@0@Z,0x0096A700,derived-ICF
 ?Cull_Box@BFMECameraCullBox@@QBE_NABVAABoxClass@@@Z,0x009330C0,BFME 183B Cull_Box body used by W3DTerrainBackground::updateCenter (not 38B ICF twin)
 ?Cur_Chunk_ID@ChunkLoadClass@@QAEKXZ,0x009E1440
+?Free@HTreeClass@@AAEXXZ,0x00952230,HTreeClass storage reset reached on hierarchy load failure
 ?Cur_Chunk_Length@ChunkLoadClass@@QAEKXZ,0x009E1450
 ?Cur_Micro_Chunk_ID@ChunkLoadClass@@QAEKXZ,0x009E14E0
 ?DX8_Assert@@YAXXZ,0x009024F0,DX8 index-buffer lock and unlock paths call the shared retail device/thread assertion helper
