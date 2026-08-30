@@ -54,7 +54,10 @@ typedef struct piConnection
 	char reservedHosting[0xB48 - 0xB44];
 	int maxPlayers;
 	int passwordedRoom;
-	char reservedPlayers[0x1790 - 0xB50];
+	char reservedPlayers0[0xB58 - 0xB50];
+	char sbName[32];
+	char sbSecretKey[8];
+	char reservedPlayers[0x1790 - 0xB80];
 	piOperation *listingGroupsOperation;
 	int nextID;
 	void *operationList;
@@ -64,6 +67,15 @@ typedef struct piConnection
 	char reserved3[0x1F04 - 0x1EF4];
 	int disconnect;
 } piConnection;
+
+typedef struct chatGlobalCallbacks
+{
+	void *raw;
+	void *disconnected;
+	void *privateMessage;
+	void *invited;
+	void *param;
+} chatGlobalCallbacks;
 
 void *memset(void *dest, int value, unsigned int count);
 void ArrayAppend(void *array, const void *element);
@@ -152,6 +164,29 @@ char *__stdcall inet_ntoa(in_addr address);
 void piMangleStagingRoom(char *room, const char *title,
 	unsigned int publicIP, unsigned int privateIP, unsigned short port);
 char *goastrdup(const char *text);
+extern const char *(__cdecl *GOAGetUniqueID)(void);
+void MD5Digest(const unsigned char *text, unsigned int length, char *digest);
+void piChatDisconnectedA(void);
+void piChatPrivateMessageA(void);
+void piConnectNickErrorCallbackA(void);
+void piConnectFillInUserCallbackA(void);
+void piConnectConnectCallback(void *chat, int success,
+	int failureReason, void *param);
+void *chatConnectSecureA(const char *server, int port, const char *nick,
+	const char *name, const char *game, const char *secret,
+	chatGlobalCallbacks *callbacks, void *nickErrorCallback,
+	void *fillInUserCallback, void *connectCallback, void *param, int blocking);
+void *chatConnectLoginA(const char *server, int port, int namespaceID,
+	const char *email, const char *profilenick, const char *uniquenick,
+	const char *password, const char *name, const char *game,
+	const char *secret, chatGlobalCallbacks *callbacks,
+	void *nickErrorCallback, void *fillInUserCallback, void *connectCallback,
+	void *param, int blocking);
+void *chatConnectPreAuthA(const char *server, int port,
+	const char *authtoken, const char *partnerchallenge, const char *name,
+	const char *game, const char *secret, chatGlobalCallbacks *callbacks,
+	void *nickErrorCallback, void *fillInUserCallback, void *connectCallback,
+	void *param, int blocking);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -182,6 +217,67 @@ static piOperation *piAddOperation(PEER peer, int type, void *data,
 	connection->operationsStarted++;
 
 	return operation;
+}
+
+PEERBool piNewConnectOperation(PEER peer, int connectType, const char *nick,
+	int namespaceID, const char *email, const char *profilenick,
+	const char *uniquenick, const char *password, const char *authtoken,
+	const char *partnerchallenge, PEERCBType callback, void *callbackParam,
+	int opID)
+{
+	static const char server[] = "peerchat.gamespy.com";
+	piConnection *connection = (piConnection *)peer;
+	piOperation *operation;
+	chatGlobalCallbacks globalCallbacks;
+	const char *uniqueID;
+	char encodedUniqueID[33];
+	void *nickErrorCallback;
+
+	operation = piAddOperation(peer, 0, 0, callback, callbackParam, opID);
+	if (!operation)
+		return 0;
+
+	memset(&globalCallbacks, 0, sizeof(globalCallbacks));
+	globalCallbacks.disconnected = piChatDisconnectedA;
+	globalCallbacks.privateMessage = piChatPrivateMessageA;
+	globalCallbacks.param = peer;
+
+	uniqueID = GOAGetUniqueID();
+	MD5Digest((const unsigned char *)uniqueID, strlen(uniqueID),
+		encodedUniqueID);
+
+	nickErrorCallback = connection->nickErrorCallback ?
+		piConnectNickErrorCallbackA : 0;
+	if (connectType == 0)
+	{
+		connection->chat = chatConnectSecureA(server, 6667, nick,
+			encodedUniqueID, connection->sbName, connection->sbSecretKey,
+			&globalCallbacks, nickErrorCallback, piConnectFillInUserCallbackA,
+			piConnectConnectCallback, operation, 0);
+	}
+	else if (connectType == 1 || connectType == 2)
+	{
+		connection->chat = chatConnectLoginA(server, 6667, namespaceID,
+			email, profilenick, uniquenick, password, encodedUniqueID,
+			connection->sbName, connection->sbSecretKey, &globalCallbacks,
+			nickErrorCallback, piConnectFillInUserCallbackA,
+			piConnectConnectCallback, operation, 0);
+	}
+	else if (connectType == 3)
+	{
+		connection->chat = chatConnectPreAuthA(server, 6667, authtoken,
+			partnerchallenge, encodedUniqueID, connection->sbName,
+			connection->sbSecretKey, &globalCallbacks, nickErrorCallback,
+			piConnectFillInUserCallbackA, piConnectConnectCallback,
+			operation, 0);
+	}
+
+	if (!connection->chat)
+	{
+		piRemoveOperation(peer, operation);
+		return 0;
+	}
+	return 1;
 }
 
 void piConnectConnectCallback(void *chat, int success,

@@ -81223,3 +81223,6 @@ _chatGetGlobalKeysA,0x00861940,GameSpy Chat global-key request
 _piFinishedEnteringRoom,0x00863E70,GameSpy Peer room-entry completion
 _piPlayerJoinedRoom,0x008638D0,GameSpy Peer joined-player insertion
 _piStartHosting,0x00865410,GameSpy Peer query-reporting host startup
+_chatConnectSecureA,0x00862380,GameSpy Chat secure connection entry
+_chatConnectLoginA,0x008623E0,GameSpy Chat login connection entry
+_chatConnectPreAuthA,0x00862460,GameSpy Chat pre-auth connection entry
