@@ -96,4 +96,4 @@ retransmissions rather than ten events a match.
 ---
 
 Evidence, corrections and the measurement traps behind all of this:
-`reverse/network_delay/FINDINGS.md`. Instrument: `docs/net-latency.md`.
+`reverse/network_delay/FINDINGS.md`. Instrument: `docs/measuring.md`.

@@ -38,7 +38,7 @@ virtuals are called `__fastcall` with an unused `edx`.
 
 The feature detours `VictoryConditions::update` (`0x0035F920`) and
 `sendPlayerLeaveCommands` (`0x00665C10`), writing the JSONL of
-`docs/game-quitting.md`. Both targets are `__declspec(naked)` `__asm` lifts — no
+`mods/features/020-gameresult/README.md`. Both targets are `__declspec(naked)` `__asm` lifts — no
 semantics to edit — which is the only reason a detour is needed; convert one and
 its detour disappears. A mod never joins the byte-exact rebuild: it
 must not move the byte gate.
@@ -87,7 +87,7 @@ with its bug restored.
 
 `FEATURES` ships; `INSTRUMENTS` measures. `030-netlatprobe` writes tens of lines a
 second, so it is selected only by name and `--dist` refuses to carry one —
-`mods/dist` is what every ladder player runs. See `docs/net-latency.md`.
+`mods/dist` is what every ladder player runs. See `docs/measuring.md`.
 
 A hook that needs the target's own argument uses `detour_call(..., args=("ecx",
 "stack:0"))`: a thiscall's `this` arrives in ecx and its arguments do not, and
@@ -100,4 +100,4 @@ function's **entry**, before the body has pushed anything.
 python3 tools/modbuild.py --dist    # -> mods/dist/lotrbfme.exe (needs wine)
 ```
 
-Tests, and what producing `measured.jsonl` costs: `docs/lan-testing.md`.
+Tests, and what producing `measured.jsonl` costs: `docs/measuring.md`.

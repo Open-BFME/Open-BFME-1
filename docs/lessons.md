@@ -3744,7 +3744,7 @@ Because the enum is positional, **every type after the two additions is
 renumbered by two**. Two clients built from the two enums would not merely
 disagree about inactive announcements -- each would misread every later type as
 its neighbour two places down. The two extra types are not identified yet; only
-that there are exactly two. Recorded in docs/lan-testing.md as behaviour.
+that there are exactly two. Recorded in docs/measuring.md as behaviour.
 
 ## Validate a proposal by running the REAL consumer, not a reimplementation
 
