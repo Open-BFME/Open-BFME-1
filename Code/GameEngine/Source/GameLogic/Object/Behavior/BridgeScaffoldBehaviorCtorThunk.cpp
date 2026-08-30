@@ -1,17 +1,19 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
-// THE NAME OF THIS FILE IS NOT A CLAIM. Its row is ?j_0001002d@@YAXXZ -- the
-// address-derived ILT convention gen_small already uses for 1,048 slots -- with
-// an object-symbol note pointing at the constructor symbol this C++ emits. The
-// C++ still spells that constructor because that is what makes the compiler emit
-// a tail-call thunk of the right shape, and for no other reason.
+// This row was re-homed to a ?j_ name and then RESTORED, and the reason is worth
+// keeping: retail really did fold several module constructors onto one body, and
+// the argument that it could not was wrong.
 //
-// 0x0001002D is a 5-byte jmp to 0x001F59F0, a 138-byte matched ??0ParkingPlaceBehavior@@, and
-// exactly one stub in .text jumps there, so it is that function's import thunk.
-// One class's constructor does not tail-call another's, and ICF cannot explain it:
-// folding needs identical bodies WITH identical relocations, and two module
-// constructors store different vftables -- 138 bytes could not fold in any case.
-// The old name is tombstoned in deleted_rows.csv; retail's is UNLOCATED.
-// readable body of ??0BridgeScaffoldBehavior@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeScaffoldBehavior.cpp
+// I reasoned that ICF needs identical bodies WITH identical relocations, so two
+// classes storing different vftables could never fold -- and concluded the stub
+// belonged to whichever class owned the body it jumps to. CALL SITES REFUTE THAT.
+// Several classes' ?friend_newModuleInstance@ factories, each a matched row, call
+// this same stub to construct their object. A factory calling it to build an
+// instance of its own class is direct evidence of what the stub constructs, and
+// several of them naming one stub is direct evidence of a real fold.
+//
+// A call site that names the symbol beats any inference from stub topology. The
+// unique-stub test says which body a stub reaches; it cannot say whose the body
+// is when the body is shared.
 
 class Thing;
 class ModuleData;

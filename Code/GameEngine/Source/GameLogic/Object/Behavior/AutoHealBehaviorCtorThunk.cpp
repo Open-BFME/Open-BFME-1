@@ -5,18 +5,21 @@
 // this is the only stub in .text jumping there. So this is SpyVisionUpdate's
 // import thunk under the wrong name; the row survives only because a jmp's rel32
 // is masked and every 5-byte tail-call thunk matches every other. Retiring it
-// RE-HOMED. The row is now ?j_00048b9e@@YAXXZ -- the address-derived ILT
-// convention gen_small already uses for 1,048 slots -- with an object-symbol
-// note pointing at the ctor symbol this file emits. The five bytes keep their
-// coverage, because they are real, and the row no longer asserts an identity
-// the binary contradicts. The old name is tombstoned in deleted_rows.csv so a
-// union merge cannot bring it back.
+// This row was re-homed to a ?j_ name and then RESTORED, and the reason is worth
+// keeping: retail really did fold several module constructors onto one body, and
+// the argument that it could not was wrong.
 //
-// This file survives only to emit those five bytes. Its C++ still spells
-// AutoHealBehavior's constructor because that is what makes the compiler emit a
-// tail-call thunk of the right shape; do not read the name as a claim.
-// (Do not write the cluster marker's phrase in prose here -- merge_cluster scans
-// every line for it and hard-fails tree-wide on one that does not parse.)
+// I reasoned that ICF needs identical bodies WITH identical relocations, so two
+// classes storing different vftables could never fold -- and concluded the stub
+// belonged to whichever class owned the body it jumps to. CALL SITES REFUTE THAT.
+// Several classes' ?friend_newModuleInstance@ factories, each a matched row, call
+// this same stub to construct their object. A factory calling it to build an
+// instance of its own class is direct evidence of what the stub constructs, and
+// several of them naming one stub is direct evidence of a real fold.
+//
+// A call site that names the symbol beats any inference from stub topology. The
+// unique-stub test says which body a stub reaches; it cannot say whose the body
+// is when the body is shared.
 
 class Thing;
 class ModuleData;

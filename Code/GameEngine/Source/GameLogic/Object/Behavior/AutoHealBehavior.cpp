@@ -108,20 +108,16 @@ struct BfmeAutoHealDamageData
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ??0AutoHealBehavior@@ present-unmatched
-// The pointer to AutoHealBehaviorCtorThunk.cpp is removed: that donor does not
-// hold this body. It owns one 5-byte row at RVA 0x00048B9E, and 0x00048B9E is a
-// jmp to 0x001EE950 -- a 276-byte body this ledger already has matched as
-// ??0SpyVisionUpdate@@QAE@PAVThing@@PBVModuleData@@@Z. That stub is the ONLY one
-// in .text jumping there, so it is SpyVisionUpdate's import thunk, and one
-// class's constructor does not tail-call another's. ICF cannot explain it either:
-// folding needs identical bodies WITH identical relocations, and two module
-// constructors store different vftables.
+// I claimed here that AutoHealBehaviorCtorThunk.cpp does not hold this body, and
+// that was WRONG. Call sites settle it: several ?friend_newModuleInstance@
+// factories -- AutoHealBehavior's own, and SpyVisionUpdate's, EMPUpdate's and
+// FireOCLAfterWeaponCooldownUpdate's -- are matched rows that all CALL the stub
+// at 0x00048B9E to construct their object. Retail folded those constructors onto
+// one body, which is exactly what I argued it could not do.
 //
-// The row passes because a jmp's rel32 is masked, leaving one compared byte, so
-// any 5-byte tail-call thunk matches any other. Screening this body against that
-// donor reports miss(3) -- the first five bytes of the real constructor below
-// against a jump -- which is noise, not three instructions of work. Logged
-// mis-anchored? in re_attempts.log; retail's AutoHealBehavior ctor is unlocated.
+// The row is restored and the cluster marker with it. A call site that names the
+// symbol beats any inference from stub topology: the unique-stub test says which
+// body a stub reaches, not whose the body is when it is shared.
 AutoHealBehavior::AutoHealBehavior( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {
 	const AutoHealBehaviorModuleData *d = getAutoHealBehaviorModuleData();
