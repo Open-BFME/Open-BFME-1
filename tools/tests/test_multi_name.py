@@ -111,3 +111,41 @@ def test_a_large_group_is_reported_apart_from_a_real_candidate():
     table2 = {"?a@C@@QAEXXZ": (b"\x90" * 8, []), "?b@C@@QAEXXZ": (b"\x91" * 8, [])}
     (_, _, _, verdict, _), = multi_name.classify(two, _reader(table2))
     assert verdict == multi_name.DIFFER, "a two-name collision is still a candidate"
+
+
+def test_a_family_conflict_is_flagged_even_when_the_bodies_match_here():
+    """The GameWindow case, and the only one structure cannot see. Our header is
+    short by a field, so winSetEnabledColor compiles to exactly what retail's
+    winSetEnabledImage does -- identical bytes, both green, and one of the two
+    names is on the wrong body."""
+    rows = [_row("?winSetEnabledColor@GameWindow@@QAEHHH@Z"),
+            _row("?winSetEnabledImage@GameWindow@@QAEHHPBVImage@@@Z")]
+    same = (b"\x89\x81\x48\x00\x00\x00\xc3\x90", [])
+    table = {r["name"]: same for r in rows}
+    (_, _, _, verdict, _), = multi_name.classify(rows, _reader(table))
+    assert verdict == multi_name.FAMILY
+
+
+def test_names_differing_everywhere_are_left_alone():
+    """getClassMemoryPool and getModuleNameKey share a body legitimately -- they
+    are two functions, not one operation on two fields. This is why the test is
+    ONE token apart rather than any name difference; a looser rule flags all
+    seven pool-glue groups."""
+    rows = [_row("?getClassMemoryPool@W3DTruckDraw@@CAPAVMemoryPool@@XZ"),
+            _row("?getModuleNameKey@W3DTruckDraw@@UBE?AW4NameKeyType@@XZ")]
+    same = (b"\x90" * 8, [])
+    table = {r["name"]: same for r in rows}
+    (_, _, _, verdict, _), = multi_name.classify(rows, _reader(table))
+    assert verdict == multi_name.FOLD
+
+
+def test_a_large_icf_group_is_not_a_family_conflict():
+    """Any forty-name group of trivial accessors contains SOME one-token pair.
+    Applying the name test to it would flag the largest honest folds in the
+    tree, so it is bounded by the same size threshold."""
+    names = ["?get%s@C@@QBEHXZ" % w for w in
+             ("Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot")]
+    rows = [_row(n) for n in names]
+    same = (b"\x90" * 8, [])
+    (_, _, _, verdict, _), = multi_name.classify(rows, _reader({n: same for n in names}))
+    assert verdict == multi_name.FOLD

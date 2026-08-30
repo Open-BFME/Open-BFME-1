@@ -22,10 +22,20 @@ tried on the live ledger before this settled:
 What works is structure rather than names. Mask every relocation site to zero in
 both bodies, then compare the remaining bytes AND the (offset, type) list. Two
 ICF-folded bodies ARE the same bytes, so their relocation sites must coincide
-however differently our objects happen to name the targets. On the live ledger
-that gives 965 real folds, 65 all-placeholder groups, and 11 addresses whose
-claimants cannot be one body -- five of them GameWindow, four of those unknown
-before this ran.
+however differently our objects happen to name the targets.
+
+STRUCTURE IS NOT ENOUGH ON ITS OWN, and the GameWindow setters are why. Our
+header is short by a field there, so `winSetEnabledColor` compiles to exactly
+retail's `winSetEnabledImage` -- two names on one address, structurally
+identical HERE, and both green. No byte comparison can see that. What can is the
+NAMES: two accessors one family member apart (same class, same token count,
+differing in one position) cannot be one body whatever our compile says. That is
+the FAMILY verdict, and it is a candidate list rather than a verdict on the
+ledger -- it is the only test here that reasons from names.
+
+On the live ledger: 954 real folds, 65 all-placeholder, 11 family conflicts,
+7 addresses whose claimants cannot be one body, and 4 large groups with one odd
+member. Five of the seven and two of the eleven are GameWindow.
 
 An unreadable object is REPORTED, never skipped. A sweep that silently drops the
 rows it could not load reports "consistent" for a symbol whose contradiction it
@@ -47,6 +57,8 @@ FOLD = "identical masked bytes and reloc sites - a real fold"
 DIFFER = "DIFFERENT BODIES - cannot share an address"
 ODD_MEMBER = ("one member of a LARGE group compiles differently here - "
               "evidence about that member, not about the group")
+FAMILY = ("FOLDS HERE but the names are one family member apart - "
+          "what a shared layout error looks like")
 PLACEHOLDERS = "all-placeholder"
 UNREADABLE = "unreadable object - NOT a clean result"
 
@@ -60,6 +72,38 @@ LARGE_GROUP = 3
 
 def is_placeholder(name):
     return bool(PLACEHOLDER.match(name)) or "Shim" in name or "Gen_t_" in name
+
+
+def tokens(name):
+    """(class, method tokens) for a plain `?method@Class@@...` name, else None."""
+    m = re.match(r"^\?([A-Za-z_0-9]+)@([A-Za-z_0-9]+)@@", name)
+    if not m:
+        return None
+    method, cls = m.group(1), m.group(2)
+    words = [w for w in re.split(
+        r"_|(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])", method) if w]
+    return cls, tuple(words)
+
+
+def accessor_siblings(names):
+    """True when two names are one family member apart: same class, same token
+    count, differing in exactly ONE position.
+
+    `winSetEnabledColor` and `winSetEnabledImage` differ only at the last word,
+    so they are the same operation on two different fields and CANNOT be one
+    body. `getClassMemoryPool` and `getModuleNameKey` differ everywhere and are
+    simply two functions that happen to share one, which the linker is entitled
+    to do -- that pair is the reason this is a one-token test rather than any
+    name difference."""
+    parsed = [tokens(n) for n in names]
+    for i, a in enumerate(parsed):
+        for b in parsed[i + 1:]:
+            if a is None or b is None or a[0] != b[0]:
+                continue
+            x, y = a[1], b[1]
+            if len(x) == len(y) >= 2 and sum(p != q for p, q in zip(x, y)) == 1:
+                return True
+    return False
 
 
 def same_class_different_methods(names):
@@ -126,7 +170,17 @@ def classify(rows, read=None):
         if any(s is None for s in shapes):
             yield rva, int(size), names, UNREADABLE, family
         elif len(set(shapes)) == 1:
-            yield rva, int(size), names, FOLD, family
+            # Structurally these CAN be one body -- but if the names are one
+            # family member apart they cannot be, whatever our compile says.
+            # Two setters of different fields producing identical bytes here is
+            # the signature of a class that is short by a field: the GameWindow
+            # setters read as perfectly matched while every Color row sat on the
+            # Image body. Only reported for small groups; a forty-name ICF group
+            # of trivial accessors will always contain some one-token pair.
+            if len(names) <= LARGE_GROUP and accessor_siblings(names):
+                yield rva, int(size), names, FAMILY, family
+            else:
+                yield rva, int(size), names, FOLD, family
         elif len(names) > LARGE_GROUP:
             yield rva, int(size), names, ODD_MEMBER, family
         else:
@@ -139,7 +193,7 @@ def main(argv):
     flagged = []
     for rva, size, names, verdict, family in classify(rows):
         tally[verdict] += 1
-        if verdict in (DIFFER, UNREADABLE, ODD_MEMBER):
+        if verdict in (DIFFER, UNREADABLE, ODD_MEMBER, FAMILY):
             flagged.append((size, rva, names, verdict, family))
     print("matched rows; addresses claimed by 2+ names: %d" % sum(tally.values()))
     for verdict, n in tally.most_common():
