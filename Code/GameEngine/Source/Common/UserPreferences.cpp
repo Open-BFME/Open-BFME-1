@@ -1026,8 +1026,8 @@ void CustomMatchPreferences::setUseStats( Bool useStats )
 GameSpyMiscPreferences::GameSpyMiscPreferences()
 {
 	AsciiString userPrefFilename;
-	Int localProfile = TheGameSpyInfo->getLocalProfileID();
-	userPrefFilename.format("GeneralsOnline\\GSMiscPref%d.ini", localProfile);
+	Int localProfile = reinterpret_cast<BfmeGameSpyInfoLocalProfileView *>(TheGameSpyInfo)->getLocalProfileID();
+	userPrefFilename.format("LoTRB4MEOnline\\GSMiscPref%d.ini", localProfile);
 	load(userPrefFilename);
 }
 
