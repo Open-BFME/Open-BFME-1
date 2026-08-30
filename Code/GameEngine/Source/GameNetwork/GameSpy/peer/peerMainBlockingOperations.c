@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD
 // Upstream: GameSpy Peer SDK peerMain.c, 2007 release.
 
+#include <string.h>
+
 typedef void *PEER;
 
 typedef struct piConnection
@@ -31,7 +33,9 @@ typedef struct piConnection
 	int hosting;
 	int playing;
 	int maxPlayers;
-	char reservedMaxPlayers[0x1824 - 0xB4C];
+	char reservedMaxPlayers[0xB54 - 0xB4C];
+	int ready;
+	char reservedReady[0x1824 - 0xB58];
 	int callbackDepth;
 	char reserved2[0x18D4 - 0x1828];
 	int autoMatchStatus;
@@ -740,4 +744,27 @@ void peerStartGameA(PEER peer, const char *message, int reportingOptions)
 			piSendStateChanged(peer);
 		}
 	}
+}
+
+void peerSetReady(PEER peer, int ready)
+{
+	piConnection *connection = (piConnection *)peer;
+	char buffer[32];
+
+	if (!connection->title[0])
+		return;
+	if (!connection->connected)
+		return;
+	if (!connection->inRoom[2])
+		return;
+	if (connection->ready == ready)
+		return;
+
+	connection->ready = ready;
+	piSetLocalFlags(peer);
+	strcpy(buffer, "@@@NFO \\$flags$\\");
+	if (ready)
+		strcat(buffer, "r");
+	strcat(buffer, "X\\");
+	peerMessageRoomA(peer, 2, buffer, 0);
 }
