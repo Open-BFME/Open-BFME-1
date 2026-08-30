@@ -3548,17 +3548,32 @@ searching the parent's own section as well as the handler's; both paths still go
 through `holds_funclet` and a group of look-alikes still fails loudly, so this
 widens where evidence is sought without picking anything on faith.
 
-**The unfixed half is a tripwire under all header work: 18,690 `gen-funclet`
-rows carry no `parent=` at all, against 1,362 that do.** Without it
-`funclet_candidates` returns immediately and cannot heal anything, so ANY edit to
-a TU holding one of those rows freezes the build on that same unreadable symbol
-error -- and it fires on TUs nobody edited deliberately.
+**RETRACTED: there is no tree-wide tripwire.** This entry claimed 18,690
+parent-less `gen-funclet` rows were a hazard under every header change. Scoping
+the back-fill answered the question instead of starting it. Of 20,052
+`gen-funclet` rows:
 
-The back-fill is mechanical and evidence-based: build the TU, find the `$L`
-symbol the pin names, record the non-`$L` symbol sharing its section. **Do it per
-TU, on demand, not as a tree-wide sweep** -- 18,690 annotated rows is a diff on
-the scale that conflicts with every branch in flight, and the tripwire only fires
-on a TU you actually edit. Back-fill the file you are about to touch.
+    hand-edited sources    1,361 rows -- ALL carry parent=, zero without
+    generated sources      18,689 without, 2 with   (gen_small/, gen_asm/)
+
+Every parent-less row is in a GENERATED TU. Checked against git rather than
+inferred: before the StagingRoomGameInfo fix there was exactly ONE parent-less
+funclet row in a hand-edited TU in the whole tree, and that was the one that
+froze the build. Someone had already done the annotation everywhere else; the
+last gap is now closed.
+
+The error is worth keeping: a tree-wide hazard was inferred from one instance
+without checking how the instances were DISTRIBUTED. Alarm is as much a failure
+of measurement as complacency, and it is the easier one to feel virtuous about.
+
+What survives is a REGENERATION risk, not an edit risk: if whatever produces
+`gen_small` re-emits those TUs with different label numbering, 18,689 rows go
+stale at once and none can self-heal. Not urgent, not blocking, worth someone's
+judgement before a regeneration.
+
+The back-fill method, if it is ever needed: build the TU, find the `$L` symbol
+the pin names, record the non-`$L` symbol sharing its section, refuse any section
+with more than one candidate owner.
 
 ## Two cheap screens that save a build
 
@@ -3722,3 +3737,15 @@ renumbered by two**. Two clients built from the two enums would not merely
 disagree about inactive announcements -- each would misread every later type as
 its neighbour two places down. The two extra types are not identified yet; only
 that there are exactly two. Recorded in docs/lan-testing.md as behaviour.
+
+## Validate a proposal by running the REAL consumer, not a reimplementation
+
+The funclet back-fill tool does not merely resolve a parent and write it. For
+each proposal it runs the actual `funclet_candidates` and requires it to recover
+the funclet before the annotation is offered at all.
+
+That is the right shape for any tool that writes ledger annotations another tool
+consumes. A reimplementation of the consumer's logic can agree with the proposal
+and disagree with the consumer -- which is exactly the drift that put a
+measuring tool and an acting tool out of step earlier today, where merge_cluster
+had the rule right and screen_cluster did not. Call the real thing.
