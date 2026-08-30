@@ -220,11 +220,13 @@ void W3DTankTruckDraw::tossEmitters()
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankTruckDraw_setFullyObscuredByShroud_Thunk.cpp
-// ?setFullyObscuredByShroud@W3DTankTruckDraw@@ present-unmatched
+// BFME keeps the shroud flag at DrawModule+0x2d where this tree reads it at
+// +0x4d. The view is per-site: the other getFullyObscuredByShroud() call in
+// this file keeps its own spelling.
+#define BFME_DRAW_OBSCURED(d) (*(const Bool *)((const char *)(d) + 0x2d))
 void W3DTankTruckDraw::setFullyObscuredByShroud(Bool fullyObscured)
 {
-	if (fullyObscured != getFullyObscuredByShroud())
+	if (fullyObscured != BFME_DRAW_OBSCURED(this))
 	{
 		if (fullyObscured)
 			tossEmitters();
