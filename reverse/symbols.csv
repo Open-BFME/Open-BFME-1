@@ -76209,6 +76209,7 @@ name,address,notes
 ?g_bfmeRegion3DFormat@@3QBDB,0x01144388,address-derived Region3D format string from retail 0x009D96EE
 ?g_bfmeResetA961@@3PAVBfmeResetA961@@A,0x00EF1028,pin
 ?g_bfmeResult1233@@3PAXA,0x00F379BC,pin
+?g_bfmeResult1234@@3PAXA,0x00F379BC,pin
 ?g_bfmeRun1006@@3PAVBfmeRun1006@@A,0x00EF4998,pin
 ?g_bfmeS1019@@3PAVBfmeS1019@@A,0x00F0A5B0,pin
 ?g_bfmeS1027@@3PAUBfmeS1027@@A,0x00EF0898,pin
