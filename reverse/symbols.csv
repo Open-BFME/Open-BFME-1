@@ -81148,3 +81148,9 @@ g_bfmeInvalidScore1285,0x0109BF3C,address-derived invalid-direction sentinel ret
 ?bfmeNext1285@BfmeIteratorList1285@@QAEPAUBfmeIterator1285@@PAU2@@Z,0x0089D140,address-derived iterator advance method called by the 0x008BB3F0 retail body
 ?bfmeAllows1285@BfmeRouteManager1285@@QAE_NPAUBfmeNode1285@@@Z,0x008A0C30,address-derived candidate filter called by the 0x008BB3F0 retail body
 g_bfmeMinimumScore1285,0x01075350,address-derived minimum directional score accepted by the 0x008BB3F0 retail body
+?bfmeBroadcast1285@BfmeBroadcast1285@@QAEXPAUBfmeNode1285@@H@Z,0x008BAAB0,address-derived broadcast method called by the 0x008BB570 retail body
+?bfmeFind1285@BfmeLookup1285@@QAEPAUBfmeNode1285@@H@Z,0x0089CEF0,address-derived lookup method called by the 0x008BB570 retail body
+?bfmeFlush1285@BfmeBroadcast1285@@QAEXXZ,0x008A1940,address-derived queue flush called by the 0x008BB570 retail body
+?bfmeGetLookup1285@BfmeEntrySource1285@@QAEPAVBfmeLookup1285@@XZ,0x008C41D0,address-derived lookup accessor called by the 0x008BB570 retail body
+?bfmeSetState1285@BfmeNode1285@@QAEXH@Z,0x008D3050,address-derived node state method called by the 0x008BB570 retail body
+?bfmeSubmit1285@BfmeRouteManager1285@@QAEXPAXPAUBfmeNode1285@@HH@Z,0x008A0960,address-derived route submission called by the 0x008BB570 retail body
