@@ -671,14 +671,13 @@ Int CustomMatchPreferences::getPreferredColor(void)
 	return ret;
 }
 
-// Retail folds this onto setDisallowAsianText above -- same key, same body, the
-// value narrowed to a byte. The name survives as an ICF alias of that address.
 // ?setPreferredColor@CustomMatchPreferences@@QAEXH@Z
+// ?setPreferredColor@CustomMatchPreferences@@QAEXH@Z present-unmatched
 void CustomMatchPreferences::setPreferredColor(Int val)
 {
 	AsciiString s;
-	s.format("%d", (UnsignedByte)val);
-	(*this)["DisallowAsianText"] = s;
+	s.format("%d", val);
+	(*this)["Color"] = s;
 }
 
 // ?getChatSizeSlider@CustomMatchPreferences@@QAEHXZ
