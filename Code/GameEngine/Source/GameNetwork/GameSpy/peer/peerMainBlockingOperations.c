@@ -79,6 +79,10 @@ int piNewJoinRoomOperation(PEER peer, int roomType, const char *channel,
 	const char *password, void *callback, void *param, int opID);
 void piAddJoinRoomCallback(PEER peer, int success, int result, int roomType,
 	void *callback, void *param, int opID);
+void piStopHosting(PEER peer, int stopReporting);
+int piNewCreateStagingRoomOperation(PEER peer, const char *name,
+	const char *password, int maxPlayers, unsigned int socket,
+	unsigned short port, void *callback, void *param, int opID);
 void piAddConnectCallback(PEER peer, int success, int failureReason,
 	void *callback, void *param, int opID);
 void bfmePiDisconnectCleanupFromEsi(void);
@@ -534,6 +538,62 @@ void peerJoinTitleRoomA(PEER peer, const char *password, void *callback,
 		success = 0;
 	if (!success)
 		piAddJoinRoomCallback(peer, 0, result, 0, callback, param, opID);
+
+	if (blocking)
+	{
+		do
+		{
+			msleep(1);
+			bfmePiThinkFromEsi(opID);
+		}
+		while (!piIsOperationFinished(peer, opID) ||
+			!piIsCallbackFinished(peer, opID));
+
+		if (connection->shutdown && connection->callbackDepth == 0)
+			peerShutdown(peer);
+	}
+}
+
+void peerCreateStagingRoomWithSocketA(PEER peer, const char *name,
+	int maxPlayers, const char *password, unsigned int socket,
+	unsigned short port, void *callback, void *param, int blocking)
+{
+	piConnection *connection = (piConnection *)peer;
+	int success = 1;
+	int result = 10;
+	int opID = piGetNextID(peer);
+
+	if (!password)
+		password = "";
+	if (!connection->title[0])
+	{
+		success = 0;
+		result = 6;
+	}
+	if (success && !connection->connected)
+	{
+		success = 0;
+		result = 7;
+	}
+	if (success && (connection->enteringRoom[2] || connection->inRoom[2]))
+	{
+		success = 0;
+		result = 5;
+	}
+	if (success && connection->autoMatchStatus &&
+		connection->autoMatchStatus != 5)
+	{
+		success = 0;
+		result = 8;
+	}
+
+	if (success)
+		piStopHosting(peer, 1);
+	if (success && !piNewCreateStagingRoomOperation(peer, name, password,
+			maxPlayers, socket, port, callback, param, opID))
+		success = 0;
+	if (!success)
+		piAddJoinRoomCallback(peer, 0, result, 2, callback, param, opID);
 
 	if (blocking)
 	{
