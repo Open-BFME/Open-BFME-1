@@ -13,7 +13,9 @@ typedef struct piConnection
 	char reserved0[0x5C - 0x50];
 	int profileID;
 	char title[64];
-	char reserved1[0x1824 - 0xA0];
+	char reserved1[0xAB0 - 0xA0];
+	int stayInTitleRoom;
+	char reservedStay[0x1824 - 0xAB4];
 	int callbackDepth;
 	char reserved2[0x1F04 - 0x1828];
 	int disconnect;
@@ -156,4 +158,23 @@ void peerConnectA(PEER peer, const char *nick, int profileID,
 		if (connection->shutdown && connection->callbackDepth == 0)
 			peerShutdown(peer);
 	}
+}
+
+void peerDisconnect(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (connection->callbackDepth > 0)
+	{
+		connection->disconnect = 1;
+	}
+	else
+	{
+		connection->stayInTitleRoom = 0;
+		bfmePiDisconnectCleanupFromEsi();
+		bfmePiThinkFromEsi(-1);
+	}
+
+	if (connection->shutdown && connection->callbackDepth == 0)
+		peerShutdown(peer);
 }
