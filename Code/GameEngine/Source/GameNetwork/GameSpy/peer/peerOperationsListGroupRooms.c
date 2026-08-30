@@ -104,9 +104,16 @@ void piAddGetPlayerProfileIDCallback(PEER peer, int success,
 	void *callbackParam, int opID);
 void piAddGetPlayerIPCallback(PEER peer, int success, const char *nick,
 	unsigned int IP, PEERCBType callback, void *callbackParam, int opID);
-void piGetChannelKeysCallbackA(void);
+void piGetChannelKeysCallbackA(void *chat, int success, const char *channel,
+	const char *user, int num, const char **keys, const char **values,
+	void *param);
 void chatGetChannelKeysA(void *chat, const char *channel, const char *nick,
 	int num, const char **keys, void *callback, void *param, int blocking);
+void piRoomKeyChanged(PEER peer, int roomType, const char *nick,
+	const char *key, const char *value);
+void piAddGetRoomKeysCallback(PEER peer, int success, int roomType,
+	const char *nick, int num, const char **keys, const char **values,
+	PEERCBType callback, void *callbackParam, int opID);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -214,6 +221,33 @@ void piGetPlayerInfoCallbackA(void *chat, int success, const char *nick,
 	piRemoveOperation(peer, operation);
 	(void)chat;
 	(void)address;
+}
+
+void piGetChannelKeysCallbackA(void *chat, int success, const char *channel,
+	const char *user, int num, const char **keys, const char **values,
+	void *param)
+{
+	piOperation *operation = (piOperation *)param;
+	PEER peer = operation->peer;
+	int i;
+
+	if (success && user)
+	{
+		for (i = 0; i < num; i++)
+			piRoomKeyChanged(peer, operation->roomType, user,
+				keys[i], values[i]);
+	}
+
+	if (operation->callback)
+		piAddGetRoomKeysCallback(peer, success, operation->roomType, user,
+			num, keys, values, operation->callback,
+			operation->callbackParam, operation->ID);
+
+	if (!success || !user || !operation->num)
+		piRemoveOperation(peer, operation);
+
+	(void)chat;
+	(void)channel;
 }
 
 PEERBool piNewListGroupRoomsOperation(PEER peer, const char *fields,
