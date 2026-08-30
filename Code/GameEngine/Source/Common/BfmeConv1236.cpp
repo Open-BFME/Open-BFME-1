@@ -132,3 +132,38 @@ BfmeZero1236::BfmeZero1236()
 	for (int i = 0; i < 32; ++i)
 		m_values[i] = 0;
 }
+
+class BfmeNode1236
+{
+public:
+	void bfmeVisit1236();
+
+private:
+	char m_padding[0x58];
+
+public:
+	BfmeNode1236 *m_next;
+};
+
+struct BfmeList1236
+{
+	BfmeNode1236 *m_head;
+};
+
+class BfmeWalk1236
+{
+public:
+	void bfmeWalk1236();
+
+private:
+	BfmeList1236 *m_list;
+};
+
+void BfmeWalk1236::bfmeWalk1236()
+{
+	BfmeNode1236 *node = m_list->m_head->m_next;
+	while (node) {
+		node->bfmeVisit1236();
+		node = node->m_next;
+	}
+}
