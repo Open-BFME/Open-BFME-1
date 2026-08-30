@@ -56,7 +56,7 @@ typedef struct piConnection
 
 typedef struct piPlayer
 {
-	char reserved[0x40];
+	char nick[64];
 	int inRoom[3];
 	int local;
 	unsigned int IP;
@@ -113,6 +113,8 @@ typedef void (*piEnumRoomPlayersCallback)(PEER peer, int roomType,
 	piPlayer *player, int index, void *param);
 void piEnumRoomPlayers(PEER peer, int roomType,
 	piEnumRoomPlayersCallback callback, void *param);
+typedef void (*peerEnumPlayersCallback)(PEER peer, int success, int roomType,
+	int index, const char *nick, int flags, void *param);
 int chatGetBasicUserInfoNoWaitA(void *chat, const char *nick,
 	const char **user, const char **address);
 int piDemangleUser(const char *user, unsigned int *IP, int *profileID);
@@ -556,6 +558,7 @@ void peerGetPlayerInfoA(PEER peer, const char *nick, void *callback,
 			peerShutdown(peer);
 	}
 }
+
 
 void peerJoinGroupRoom(PEER peer, int groupID, void *callback, void *param,
 	int blocking)
@@ -1168,6 +1171,51 @@ void peerStartAutoMatchA(PEER peer, int maxPlayers, const char *filter,
 	peerStartAutoMatchWithSocketA(peer, maxPlayers, filter,
 		(unsigned int)-1, 0, statusCallback, rateCallback, param, blocking);
 }
+
+typedef struct piEnumPlayersData
+{
+	peerEnumPlayersCallback callback;
+	void *param;
+} piEnumPlayersData;
+
+static void piEnumPlayersEnumRoomPlayersCallback(PEER peer, int roomType,
+	piPlayer *player, int index, void *param)
+{
+	piEnumPlayersData *data = (piEnumPlayersData *)param;
+	const char *nick;
+	int flags;
+
+	if (player)
+	{
+		nick = player->nick;
+		flags = player->flags[roomType];
+	}
+	else
+	{
+		nick = 0;
+		flags = 0;
+	}
+	data->callback(peer, 1, roomType, index, nick, flags, data->param);
+}
+
+void peerEnumPlayers(PEER peer, int roomType,
+	peerEnumPlayersCallback callback, void *param)
+{
+	piConnection *connection = (piConnection *)peer;
+	piEnumPlayersData data;
+
+	if (!connection->inRoom[roomType])
+	{
+		callback(peer, 0, roomType, -1, 0, 0, param);
+		return;
+	}
+	data.callback = callback;
+	data.param = param;
+	piEnumRoomPlayers(peer, roomType,
+		piEnumPlayersEnumRoomPlayersCallback, &data);
+}
+
+
 
 
 void peerAlwaysGetPlayerInfo(PEER peer, int always)
