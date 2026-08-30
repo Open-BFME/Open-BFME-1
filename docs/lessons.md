@@ -3837,3 +3837,42 @@ interface", so the log records both and picks neither.
 A single observation that would rewrite a large shared assumption is exactly the
 one to hold rather than bank -- especially when a hundred matched rows already
 constrain the same artefact.
+
+## A FOURTH false green: the adjustor thunk, and it has MORE real bytes than the others
+
+    0x00C2787D   add ecx,0x194 ; jmp 0x0000D828
+    0x0000D828   jmp 0x0005EE90   =   ??1AsciiString@@QAE@XZ
+
+Eleven bytes that adjust `this` by 0x194 to reach an AsciiString member and
+destroy it. Two rows claimed it -- `?addTeam@SidesList@@` and
+`?removeTeam@SidesList@@`, neither of which is a string destructor; both forward
+to `m_teamrec`. They matched because the jump is masked, so the only compared
+content is the add-ecx immediate, and our `m_teamrec` offset happens to equal
+retail's AsciiString member offset.
+
+**Name it separately because it has MORE compared bytes than the other three** --
+six bytes of real immediate, against a 5-byte jmp's one. That is exactly why two
+rows could share it and look solid. **A comparison being partly real is not the
+same as it being enough.** The question is never how many bytes agreed, but
+whether the bytes that agreed could distinguish this function from another.
+
+The four classes now: the E9 ILT jump, the local-replica body, the
+virtual-dispatch thunk, and the adjustor thunk. Retail's
+`SidesList::addTeam`/`::removeTeam` are UNLOCATED, exactly as TeamsInfoRec's pair
+turned out to be -- the same family, found four hours later, in the finder's own
+file, by its own detector's FAMILY refinement.
+
+## Redo a stale ledger patch with the TOOLS; never replay it
+
+A held patch stopped applying once `functions.csv`, `re_attempts.log` and
+`reloc_names.csv` moved under it. The source half still applied cleanly and was
+kept. The ledger half was **redone with `add_match` and `merge_cluster` against
+the current ledger** rather than replayed.
+
+That is the right split and the reason is specific: replaying a stale ledger
+patch is how a union merge resurrects a retired row -- the patch reintroduces
+lines the tombstone was written to keep out. The tools re-verify as they go and
+operate on the ledger that exists, not the one that existed when the patch was
+cut.
+
+Hold source in a patch; hold ledger work as a list of tool invocations.
