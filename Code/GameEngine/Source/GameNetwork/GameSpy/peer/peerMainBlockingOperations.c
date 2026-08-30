@@ -44,6 +44,8 @@ void piAddGetGlobalKeysCallback(PEER peer, int success, const char *nick,
 void piAddGetRoomKeysCallback(PEER peer, int success, int roomType,
 	const char *nick, int num, const char **keys, const char **values,
 	void *callback, void *param, int opID);
+void chatSetGlobalKeysA(void *chat, int num, const char **keys,
+	const char **values);
 void piAddConnectCallback(PEER peer, int success, int failureReason,
 	void *callback, void *param, int opID);
 void bfmePiDisconnectCleanupFromEsi(void);
@@ -270,4 +272,14 @@ void peerGetRoomKeysA(PEER peer, int roomType, const char *nick, int num,
 		if (connection->shutdown && connection->callbackDepth == 0)
 			peerShutdown(peer);
 	}
+}
+
+void peerSetGlobalKeysA(PEER peer, int num, const char **keys,
+	const char **values)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->connected)
+		return;
+	chatSetGlobalKeysA(connection->chat, num, keys, values);
 }
