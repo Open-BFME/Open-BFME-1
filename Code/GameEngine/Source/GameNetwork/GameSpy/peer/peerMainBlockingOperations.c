@@ -99,6 +99,8 @@ void chatSetGlobalKeysA(void *chat, int num, const char **keys,
 	const char **values);
 void chatSendUserMessageA(void *chat, const char *nick, const char *message,
 	int messageType);
+void chatSendChannelMessageA(void *chat, const char *channel,
+	const char *message, int messageType);
 void chatKickUserA(void *chat, const char *channel, const char *nick,
 	const char *reason);
 void chatSetQuietMode(void *chat, int quiet);
@@ -1081,6 +1083,19 @@ int peerStartReportingWithSocket(PEER peer, unsigned int socket,
 int peerStartReporting(PEER peer)
 {
 	return peerStartReportingWithSocket(peer, (unsigned int)-1, 0);
+}
+
+void peerMessageRoomA(PEER peer, int roomType, const char *message,
+	int messageType)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!message || !message[0])
+		return;
+	if (!connection->inRoom[roomType])
+		return;
+	chatSendChannelMessageA(connection->chat, connection->room[roomType],
+		message, messageType);
 }
 
 void peerAlwaysGetPlayerInfo(PEER peer, int always)

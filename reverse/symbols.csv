@@ -81239,3 +81239,4 @@ _chatKickUserA,0x00861510
 ??$_Construct@UcrateCreationEntry@@U1@@_STL@@YAXPAUcrateCreationEntry@@ABU1@@Z,0x0002E20D,CrateTemplate parser list element construction; ICF target is j_0002e20d
 _sscanf,0x009F6FA6,MSVCR71 sscanf import thunk; IAT slot 0x01359494 used by CrateTemplate parser
 _piStartReporting,0x00866820
+_chatSendChannelMessageA,0x008609F0
