@@ -73835,6 +73835,7 @@ name,address,notes
 ?bfmeMoveTo@Gen_0023E120@@QAEPAUBfmeElem_0023E120@@IPAU2@0@Z,0x00041D85,Open-BFME5 the element move the vector reserve at 0x0023E120 calls when it already holds storage
 ?bfmeMoveTo@Gen_00359A80@@QAEPAUBfmeElem_00359A80@@IPAU2@0@Z,0x00014687,Open-BFME5 the element move the vector reserve at 0x00359A80 calls when it already holds storage
 ?bfmeMoveTo@Gen_00359B50@@QAEPAUBfmeElem_00359B50@@IPAU2@0@Z,0x00004FD9,Open-BFME5 the element move the vector reserve at 0x00359B50 calls when it already holds storage
+?bfmeName1233@BfmeE1233@@QAEXPAUBfmeStr1233@@@Z,0x008985C0,pin
 ?bfmeNewAlloc@@YAPAXI@Z,0x00881F30,Open-BFME5 the large-block allocator the allocate-and-copy bodies at 0x000A7820 and its siblings call above 0x80 bytes
 ?bfmeNewMap@BfmePlayerMapState@@QAEXH_N@Z,0x00018679,Open-BFME5 ILT Player::newMap calls for the subobject at Player+0x30; it jumps to 0x000C7A30
 ?bfmeNext1016@BfmeIter1016@@QAEGH@Z,0x00835ED0,pin
@@ -75769,6 +75770,7 @@ name,address,notes
 ?g_bfmeAlloc1034@@3PAUBfmeAlloc1034@@A,0x00F37A30,pin
 ?g_bfmeAlloc1041@@3PAUBfmeAlloc1041@@A,0x00F37A30,pin
 ?g_bfmeAlloc1045@@3PAUBfmeAlloc1045@@A,0x00F37A30,pin
+?g_bfmeAlloc1233@@3PAUBfmeAlloc1233@@A,0x00F37A30,pin
 ?g_bfmeArg1051@@3PADA,0x00D090E8,pin
 ?g_bfmeArg1057@@3PADA,0x00D07374,pin
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
@@ -75776,6 +75778,7 @@ name,address,notes
 ?g_bfmeArgDZF@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgEAA@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgEAC@@3PAXA,0x00EB7D80,pin
+?g_bfmeArr1233@@3PAPAVBfmeE1233@@A,0x00F38750,pin
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
 ?g_bfmeAskB993@@3PAVBfmeAskB993@@A,0x00EF4B98,pin
 ?g_bfmeAux1006@@3PAUBfmeAux1006@@A,0x00EF4B58,pin
@@ -75828,6 +75831,7 @@ name,address,notes
 ?g_bfmeCoord2DFormat@@3QBDB,0x011443F8,address-derived Coord2D format string from retail 0x009D9789
 ?g_bfmeCoord3DFormat@@3QBDB,0x01144348,address-derived Coord3D format string from retail 0x009D9650
 ?g_bfmeCount1054@@3HA,0x00F4054C,pin
+?g_bfmeCount1233@@3HA,0x00F38748,pin
 ?g_bfmeCountBBD@@3HA,0x00F0BD30,pin
 ?g_bfmeCountELH@@3HA,0x00F40594,pin
 ?g_bfmeCountQB@@3HA,0x00F04B60,pin
@@ -75869,6 +75873,7 @@ name,address,notes
 ?g_bfmeE1056@@3PAUBfmeE1056@@A,0x00F40534,pin
 ?g_bfmeE1057@@3PAUBfmeE1057@@A,0x00F40534,pin
 ?g_bfmeE1095@@3PAVBfmeE1095@@A,0x00EF1600,pin
+?g_bfmeEmpty1233@@3UBfmeBuf1233@@A,0x00ED5298,pin
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
 ?g_bfmeEndC976@@3PAVBfmeEndC976@@A,0x00EF64BC,pin
@@ -76203,6 +76208,7 @@ name,address,notes
 ?g_bfmeRegion2DFormat@@3QBDB,0x0114442C,address-derived Region2D format string from retail 0x009D9814
 ?g_bfmeRegion3DFormat@@3QBDB,0x01144388,address-derived Region3D format string from retail 0x009D96EE
 ?g_bfmeResetA961@@3PAVBfmeResetA961@@A,0x00EF1028,pin
+?g_bfmeResult1233@@3PAXA,0x00F379BC,pin
 ?g_bfmeRun1006@@3PAVBfmeRun1006@@A,0x00EF4998,pin
 ?g_bfmeS1019@@3PAVBfmeS1019@@A,0x00F0A5B0,pin
 ?g_bfmeS1027@@3PAUBfmeS1027@@A,0x00EF0898,pin
@@ -76253,6 +76259,7 @@ name,address,notes
 ?g_bfmeStore1025@@3PAVBfmeStore1025@@A,0x00EF0898,pin
 ?g_bfmeStore1026@@3PAVBfmeStore1026@@A,0x00EF0898,pin
 ?g_bfmeStr1226@@3PADA,0x00D37344,pin
+?g_bfmeStr1233@@3UBfmeStr1233@@A,0x00ED5978,pin
 ?g_bfmeStrA993B@@3PADA,0x00C81238,pin
 ?g_bfmeStrB993B@@3PADA,0x00C80FC0,pin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
@@ -80282,6 +80289,7 @@ _bfmeFmtStrEAC,0x00C7C7B4,pin
 _bfmeFnA1033,0x000487C0,pin
 _bfmeFnB1033,0x0001E0B0,pin
 _bfmeGlobalTable12A6918,0x00EA6918,pin
+_bfmeHandler1233,0x008B91F0,pin
 _bfmeHash1228,0x008D3C50,pin
 _bfmeHash1229,0x008A3190,pin
 _bfmeHook1052,0x0003695D,pin
@@ -80335,6 +80343,7 @@ _bfmeOnEAA,0x00D09920,pin
 _bfmeOnEAB,0x00D05E6C,pin
 _bfmeRegZB,0x00EF1094,pin
 _bfmeReload1221,0x008D3AE0,pin
+_bfmeReport1233,0x009F7D80,pin
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
 _bfmeSearch1155,0x0082F1A0,pin
 _bfmeStep1211A,0x008D0B00,pin
