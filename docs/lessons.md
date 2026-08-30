@@ -4116,8 +4116,25 @@ bodies matched equally** -- so it declined to pick one. That is correct: byte
 evidence genuinely cannot separate them, and guessing would anchor a row on a
 coin flip.
 
-The row needs a body it can name on its own. Re-anchor with the three-filter
-recipe rather than expecting the healer to resolve it.
+RESOLVED, and not by re-anchoring: **the two candidates were never equal.**
+`$L85915` is `lea ecx,[ebp-0x1c]; jmp <AsciiString dtor>` -- retail's own
+instructions with only the jump target relocated. `$L86009` is a DATA table of
+four label pointers, `$L78697` through `$L78700`, whose relocations cover ALL
+EIGHT of its bytes.
+
+`holds_funclet` masks every relocation site on both sides, so **a body with no
+unmasked byte left compares equal to ANY target of its length.** The table was
+not matching the funclet; there was nothing left of it to compare. The tie was
+between one candidate carrying byte evidence and one carrying none.
+
+Requiring at least one surviving byte separates them without choosing between
+them, and the refusal on a genuine tie still fires. Three rows healed on it --
+uw_00c054b0, uw_00c054b8 and uw_00c056a0 -- and AIPlayer.cpp went 42/42.
+
+**This is the file's own "100 percent masked is not a pass" rule, which we apply
+to folds, missing from the healer that does the same masking.** Before treating
+an ambiguous heal as a re-anchoring job, check whether a candidate is fully
+relocated: it is not a rival body, it is an absence of evidence.
 
 ## A CONSTANT delta is a shifted member list; a SCATTERED one is a different list
 
