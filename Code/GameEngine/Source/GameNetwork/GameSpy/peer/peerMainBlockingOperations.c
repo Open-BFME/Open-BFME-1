@@ -26,7 +26,10 @@ typedef struct piConnection
 	char titleRoomChannel[257];
 	char reservedTitleRoom[0xAB0 - 0xAAD];
 	int stayInTitleRoom;
-	char reservedStay[0xAF0 - 0xAB4];
+	void *players;
+	int numPlayers[3];
+	int alwaysRequestPlayerInfo;
+	char reservedStay[0xAF0 - 0xAC8];
 	void *queryReporting;
 	char reservedReporting[0xB38 - 0xAF4];
 	int reportingOptions;
@@ -1079,6 +1082,15 @@ int peerStartReporting(PEER peer)
 {
 	return peerStartReportingWithSocket(peer, (unsigned int)-1, 0);
 }
+
+void peerAlwaysGetPlayerInfo(PEER peer, int always)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	connection->alwaysRequestPlayerInfo = always;
+}
+
+
 
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
 {
