@@ -81063,6 +81063,7 @@ g_bfmeUint32Scale,0x01075358,address-derived 2^32 float conversion fixup used by
 _cleanup,0x00881EB0,address-derived cleanup call recovered from 0x0093C440
 ?g_lookup@@3P6APAXPAX0@ZA,0x0135933C,address-derived IAT lookup recovered from 0x0093D2D0
 ?g_global@@3PAXA,0x013592F0,address-derived global pointer recovered from 0x0083E8F0
+?helper@@YGXPAH@Z,0x007EA0A0,address-derived stdcall helper recovered from 0x007EA300
 ?g_call@@3P6AXPAX0@ZA,0x013593C8,address-derived IAT call recovered from 0x0083E8F0
 g_bfmeDefaultCU,0x012B4FF8,Open-BFME5 the thirty-six byte block the reset at 0x00421DE0 copies from
 g_bfmeDefaultEG,0x01097114,Open-BFME5 the angle the test at 0x0045B850 falls back to
