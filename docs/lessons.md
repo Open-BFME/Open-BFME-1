@@ -5005,3 +5005,49 @@ Here: the "Selected" variants should differ from their plain siblings by INDEX
 -- twelve bytes, one `WinDrawData` -- and not by four. If they differ by four,
 that is an index-versus-field confusion large enough to explain the whole
 contradiction, and it is read-only to check.
+
+## A getter and a setter for one property cannot disagree about which SLOT it lives in
+
+The invariant that resolved the WinDrawData contradiction, and it settles a
+two-witness deadlock without counting either side.
+
+The inline getter names, taken at face value, do not fit EITHER candidate order.
+They fit a third:
+
+                              +0xB4     +0xB8         +0xBC
+    getter names say          Color     BorderColor   SelectedImage
+    {image, color, border}    image X   color X       borderColor X
+    {image, border, color}    image X   borderColor X color X
+    {color, border, image}    color OK  borderColor OK image OK
+
+**A witness that fits neither candidate is not evidence between them** -- it is a
+claim about a third possibility, and that possibility has its own consequences to
+test. Here: `{color, borderColor, image}` requires "Selected" to mean a different
+FIELD of one element.
+
+It does not. Retail's call graph shows every `Selected` wrapper calling the SAME
+setter as its plain sibling with a different INDEX:
+
+    GadgetButtonSetEnabledImage          -> 0x00478FE0   idx 0, 5, 6
+    GadgetButtonSetEnabledSelectedImage  -> 0x00478FE0   idx 1, 2, 3
+
+Same body, same field, different slot in the nine-element array. So under the
+getter-name reading, `GetDisabledSelectedImage` would read index 0's THIRD FIELD
+while `SetDisabledSelectedImage` writes index 1's FIRST FIELD -- a getter and a
+setter for one property disagreeing about which slot it occupies. That cannot be.
+
+`{image, borderColor, color}` stands. And the inline getters have **zero
+callers** -- their names are ledger bindings and nothing else -- so they are the
+next wrong-body family rather than a refutation.
+
+## Refuse a stale go-ahead
+
+An approval to run probe 2 crossed the stop report that made probe 2 wrong.
+Acting on it would have been "absorbing a known problem" with a lead's
+authorisation attached.
+
+**An instruction issued before your latest evidence is not an instruction about
+it.** When a go-ahead crosses a finding that changes the question, the finding
+wins and the approval needs re-asking. This is the second time today a lane has
+been right to decline an instruction of mine -- the other being the
+one-commit-per-change rule that would have required landing red.
