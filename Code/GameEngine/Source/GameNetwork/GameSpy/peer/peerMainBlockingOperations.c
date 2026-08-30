@@ -49,10 +49,13 @@ typedef struct piConnection
 
 typedef struct piPlayer
 {
-	char reserved[0x50];
+	char reserved[0x40];
+	int inRoom[3];
+	char reservedInRoom[0x50 - 0x4C];
 	unsigned int IP;
 	int profileID;
 	int gotIPAndProfileID;
+	int flags[3];
 } piPlayer;
 
 int piGetNextID(PEER peer);
@@ -800,5 +803,24 @@ int peerGetPlayerInfoNoWaitA(PEER peer, const char *nick,
 		*IP = player->IP;
 	if (profileID)
 		*profileID = player->profileID;
+	return 1;
+}
+
+int peerGetReadyA(PEER peer, const char *nick, int *ready)
+{
+	piConnection *connection = (piConnection *)peer;
+	piPlayer *player;
+
+	if (!connection->title[0])
+		return 0;
+	if (!connection->connected)
+		return 0;
+	if (!connection->inRoom[2])
+		return 0;
+
+	player = piGetPlayer(peer, nick);
+	if (!player || !player->inRoom[2])
+		return 0;
+	*ready = (player->flags[2] & 2) != 0;
 	return 1;
 }
