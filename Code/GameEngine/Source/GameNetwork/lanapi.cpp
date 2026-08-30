@@ -1516,20 +1516,26 @@ Bool LANAPI::AmIHost( void )
 	return m_currentGame && m_currentGame->getIP(0) == m_localIP;
 }
 
-// ?setIsActive@LANAPI@@UAEX_N@Z present-unmatched
+// Two BFME facts. m_isActive sits at LANAPI+0x58 where this tree lands it at
+// +0x5c, and BFME's LANMessage enum carries two more types ahead of
+// MSG_INACTIVE, putting it at 0x10 against this tree's 0xe. The enum is
+// anonymous so there is no type to cast to, and the honest home for the value
+// is the shim header -- but a header edit runs the full gate, which is red on
+// another effort's symbol, so it is pinned at the one site that needs it.
+#define BFME_LANAPI_ISACTIVE(p) (*(Bool *)((char *)(p) + 0x58))
 void LANAPI::setIsActive(Bool isActive) {
 	DEBUG_LOG(("LANAPI::setIsActive - entering\n"));
-	if (isActive != m_isActive) {
+	if (isActive != BFME_LANAPI_ISACTIVE(this)) {
 		DEBUG_LOG(("LANAPI::setIsActive - m_isActive changed to %s\n", isActive ? "TRUE" : "FALSE"));
 		if (isActive == FALSE) {
 			if ((m_inLobby == FALSE) && (m_currentGame != NULL)) {
 				LANMessage msg;
 				fillInLANMessage( &msg );
-				msg.LANMessageType = LANMessage::MSG_INACTIVE;
+				*(Int *)&msg.LANMessageType = 0x10;  // BFME's MSG_INACTIVE
 				sendMessage(&msg);
 				DEBUG_LOG(("LANAPI::setIsActive - sent an IsActive message\n"));
 			}
 		}
 	}
-	m_isActive = isActive;
+	BFME_LANAPI_ISACTIVE(this) = isActive;
 }
