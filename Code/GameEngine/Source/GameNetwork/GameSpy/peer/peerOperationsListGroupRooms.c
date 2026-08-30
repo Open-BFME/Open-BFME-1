@@ -33,7 +33,8 @@ typedef struct piOperationContainer
 
 typedef struct piConnection
 {
-	char reserved[0x1790];
+	void *chat;
+	char reserved[0x1790 - sizeof(void *)];
 	piOperation *listingGroupsOperation;
 	int nextID;
 	void *operationList;
@@ -43,6 +44,9 @@ typedef struct piConnection
 void *memset(void *dest, int value, unsigned int count);
 void ArrayAppend(void *array, const void *element);
 PEERBool piSBStartListingGroups(PEER peer, const char *fields);
+void piGetPlayerInfoCallbackA(void);
+void chatGetBasicUserInfoA(void *chat, const char *nick, void *callback,
+	void *param, int blocking);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -87,4 +91,46 @@ PEERBool piNewListGroupRoomsOperation(PEER peer, const char *fields,
 		return 0;
 
 	return piSBStartListingGroups(peer, fields);
+}
+
+PEERBool piNewGetPlayerInfoOperation(PEER peer, const char *nick,
+	PEERCBType callback, void *param, int opID)
+{
+	piConnection *connection = (piConnection *)peer;
+	piOperation *operation = piAddOperation(peer, 6, 0, callback, param, opID);
+
+	if (!operation)
+		return 0;
+
+	chatGetBasicUserInfoA(connection->chat, nick,
+		piGetPlayerInfoCallbackA, operation, 0);
+	return 1;
+}
+
+PEERBool piNewGetProfileIDOperation(PEER peer, const char *nick,
+	PEERCBType callback, void *param, int opID)
+{
+	piConnection *connection = (piConnection *)peer;
+	piOperation *operation = piAddOperation(peer, 7, 0, callback, param, opID);
+
+	if (!operation)
+		return 0;
+
+	chatGetBasicUserInfoA(connection->chat, nick,
+		piGetPlayerInfoCallbackA, operation, 0);
+	return 1;
+}
+
+PEERBool piNewGetIPOperation(PEER peer, const char *nick,
+	PEERCBType callback, void *param, int opID)
+{
+	piConnection *connection = (piConnection *)peer;
+	piOperation *operation = piAddOperation(peer, 8, 0, callback, param, opID);
+
+	if (!operation)
+		return 0;
+
+	chatGetBasicUserInfoA(connection->chat, nick,
+		piGetPlayerInfoCallbackA, operation, 0);
+	return 1;
 }

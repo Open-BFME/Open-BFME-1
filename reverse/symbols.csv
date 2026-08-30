@@ -81189,3 +81189,5 @@ _bfmePiThinkFromEsi,0x00857370,GameSpy Peer static think helper with peer carrie
 _peerShutdown,0x00858450,GameSpy Peer shutdown reached by the blocking shutdown check
 _piIsCallbackFinishedCompareCallback,0x0085E1F0,GameSpy Peer callback ID comparator ICF alias at gpiTransferCompare
 _piSBStartListingGroups,0x00865280,GameSpy Peer server browser group listing starter
+_piGetPlayerInfoCallbackA,0x0085FAF0,GameSpy Peer shared player-info completion callback
+_chatGetBasicUserInfoA,0x00861370,GameSpy Chat basic-user-info request
