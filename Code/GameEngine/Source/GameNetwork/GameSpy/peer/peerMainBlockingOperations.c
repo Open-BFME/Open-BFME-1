@@ -79,6 +79,8 @@ void piAddGetRoomKeysCallback(PEER peer, int success, int roomType,
 	void *callback, void *param, int opID);
 void chatSetGlobalKeysA(void *chat, int num, const char **keys,
 	const char **values);
+void chatSendUserMessageA(void *chat, const char *nick, const char *message,
+	int messageType);
 piPlayer *piGetPlayer(PEER peer, const char *nick);
 typedef void (*piEnumRoomPlayersCallback)(PEER peer, int roomType,
 	piPlayer *player, int index, void *param);
@@ -808,6 +810,18 @@ int peerGetPlayerInfoNoWaitA(PEER peer, const char *nick,
 	if (profileID)
 		*profileID = player->profileID;
 	return 1;
+}
+
+void peerMessagePlayerA(PEER peer, const char *nick, const char *message,
+	int messageType)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->connected)
+		return;
+	if (!message || !message[0])
+		return;
+	chatSendUserMessageA(connection->chat, nick, message, messageType);
 }
 
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
