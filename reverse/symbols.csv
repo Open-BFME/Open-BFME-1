@@ -72366,6 +72366,7 @@ name,address,notes
 ?bfmeAdd1026@BfmeLst1026@@QAEXHH@Z,0x0002221E,pin
 ?bfmeAdd1034@BfmeSubA1034@@QAEXH@Z,0x00887C90,pin
 ?bfmeAdd1038@BfmeSubF1038@@QAEXHH@Z,0x008BDBB0,pin
+?bfmeApplySlot1281@BfmeSlotDispatcher1281@@QAEXPAXH0@Z,0x008BB200,address-derived slot dispatcher callee; argument shape decoded from the 0x008BC360 retail call site
 ?bfmeAdd1040@BfmeH1040@@QAEXPAX@Z,0x0001EF9C,pin
 ?bfmeAdd1044@BfmeE1044@@QAEXPAVBfmeD1044@@H@Z,0x000157DA,pin
 ?bfmeAdd1054@BfmeD1054@@QAEXPAVBfmeSubC1054@@@Z,0x000361CE,pin
