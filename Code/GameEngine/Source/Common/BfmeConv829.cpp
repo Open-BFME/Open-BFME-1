@@ -65,22 +65,6 @@ void __cdecl bfmeCallAll250(void *arg)
 	bfmeStep4_250(arg);
 }
 
-struct BfmeThing79B
-{
-	void *m_val0;
-	unsigned char pad[0x48 - 4];
-	void *m_field48;
-};
-
-void __cdecl bfmeTarget861210(void *val0, void *b, const char *c);
-
-void __cdecl bfmeForwardIfValid79B(BfmeThing79B *a, void *b, const char *c)
-{
-	if (a->m_field48 && c && *c) {
-		bfmeTarget861210(a->m_val0, b, c);
-	}
-}
-
 typedef void (__stdcall *ProcessValFn)(int val);
 extern ProcessValFn g_processVal13596B8;
 
