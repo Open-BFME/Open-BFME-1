@@ -81140,3 +81140,5 @@ g_bfmeRouteTable1282,0x012D5980,address-derived seven-entry route table traverse
 g_bfmeRouteKeys1282,0x01338480,address-derived route key array indexed by the 0x008BAAB0 retail body
 g_bfmeExtra1282,0x01337804,address-derived context argument forwarded by the 0x008BAAB0 retail body
 g_bfmePlay1282,0x01337884,address-derived audio callback invoked by the 0x008BAAB0 retail body
+g_bfmeEmptyString1285,0x012D5298,address-derived shared empty-string sentinel checked by the 0x008BA8B0 retail parser
+_isdigit,0x009F7024,address-derived CRT import thunk called by the 0x008BA8B0 retail parser
