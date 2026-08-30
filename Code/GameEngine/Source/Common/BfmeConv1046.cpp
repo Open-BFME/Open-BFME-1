@@ -100,6 +100,7 @@ class BfmeD1046
 {
 public:
 	void bfmeGo1046D(void);
+	void bfmeGo1046E(void);
 	void bfmeReset1046(int n);
 
 	BfmeE1046 *m_bfmeP;
@@ -118,4 +119,17 @@ void BfmeD1046::bfmeGo1046D(void)
 	}
 
 	m_bfmeP = 0;
+}
+
+void BfmeD1046::bfmeGo1046E(void)
+{
+	bfmeReset1046(0);
+
+	BfmeE1046 *p = m_bfmeP;
+
+	if (p != 0) {
+		p->m_bfmeQ->m_bfme50 = 0;
+		p->m_bfmeQ->bfmeStop1046();
+		g_bfmeFree1046(p, 4);
+	}
 }
