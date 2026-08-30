@@ -81262,48 +81262,6 @@ _chatRetryWithNickA,0x008624C0
 g_bfmePolygonTriggerTable,0x012ACB50,TerrainLogic getWaterHandle retail polygon-trigger table
 g_bfmeTerrainVisual,0x012F7014,TerrainLogic getWaterHandle retail terrain-visual singleton
 g_bfmeGridWaterHandle,0x012EF4D4,TerrainLogic getWaterHandle retail grid-water singleton
-?adjust@Rva000C7DA0@@QAEHH@Z,0x000C7D10,address-derived helper called by the accumulator at 0x000C7DA0
-?adjust@Rva000C7DC0@@QAEHH@Z,0x000C7D10,address-derived helper called by the accumulator at 0x000C7DC0
-?_bfme_shouldSkipClientFrameCall@GameEngine@@AAE_NXZ,0x000358EB,ILT entry used by GameEngine::_bfme_updateClientSubsystems for _bfme_shouldSkipClientFrame body 0x0006B830
-?deleteLoadScreen@GameLogicClientUpdate@@QAEXXZ,0x00040791,ILT used by GameEngine::_bfme_updateClientSubsystems for GameLogic::deleteLoadScreen body 0x0038D100
-?TheGameClientClientUpdate@@3PAVClientFrameSubsystem@@A,0x012F1464,GameClient pointer used by GameEngine::_bfme_updateClientSubsystems
-?TheRadarClientUpdate@@3PAVRadarSubsystem@@A,0x012EF0E4,Radar pointer used by GameEngine::_bfme_updateClientSubsystems
-?BfmeSkippedClientFrames@@3HA,0x012ED504,skipped client-frame counter used by GameEngine::_bfme_updateClientSubsystems
-?BfmeSavedClientFrame@@3HA,0x012ED508,saved GameClient frame used by GameEngine::_bfme_updateClientSubsystems and the execute pacing gate
-?TheAudioClientUpdate@@3PAVClientSubsystem@@A,0x012ED668,Audio subsystem pointer used by GameEngine::_bfme_updateClientSubsystems
-?BfmeTimedOpInputLocked@@3HA,0x012ED530,timed-operation input lock state used by GameEngine::_bfme_updateClientSubsystems
-??1LargeGroupAudioKeyMap@@QAE@XZ,0x000181C9,Open-BFME5 ILT to body 0x003D4490 called on collector temporaries and the class member at +0x0C
-?bfmeUpdate@BfmeCellFC@@QAEXH_N@Z,0x00881BE0,Open-BFME5 semantic identity for exact address-derived cell update body at 0x00881BE0
-?bfmeApplyCircle@Gen_008812D0@@QAEXHHHH_N@Z,0x00881B90,Open-BFME5 semantic identity for the exact TaintManager grid circle-update wrapper already claimed under an address-derived class
-?bfmeGetAllocator003D32D0@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QBE?AV?$allocator@PAX@2@XZ,0x0002CE4E,Open-BFME5 address-scoped STLport get_allocator ILT to body 0x003D32D0 used by the key-map copy constructor
-??0?$Rva003D3540VectorBase@PAXV?$allocator@PAX@_STL@@@_STL@@QAE@IABV?$allocator@PAX@1@@Z,0x0000799B,Open-BFME5 address-scoped STLport vector-base constructor ILT to body 0x003D3540 used by the key-map copy constructor
-?bfmeReset@Gen_008812D0@@QAEXXZ,0x008811A0,Open-BFME5 semantic no-op reset hook called immediately before the Taint grid region is cleared
-?j_0003152a@Glo012F1024Item@@QAEXXZ,0x0003152A,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_000250d6@Glo012F1024Item@@QAEXXZ,0x000250D6,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_0001eb9b@Glo012F1024Item@@QAEXXZ,0x0001EB9B,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_0000df76@Glo012F1024Item@@QAEXXZ,0x0000DF76,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00008053@Glo012F1024Item@@QAEXXZ,0x00008053,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_0000d1d4@Glo012F1024Item@@QAEXXZ,0x0000D1D4,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00010712@Glo012F1024Item@@QAEXXZ,0x00010712,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_0002d3e4@Glo012F1024Item@@QAEXXZ,0x0002D3E4,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_0000ca59@Glo012F1024Item@@QAE_NXZ,0x0000CA59,"conditional direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00008c0b@Glo012F1028Type@@QAEXXZ,0x00008C0B,"conditional global notification thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_0002a969@Glo012F1024Item@@QAEXXZ,0x0002A969,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00021f26@Glo012F1024Item@@QAEXXZ,0x00021F26,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_0002eeec@Glo012F1024Item@@QAEXXZ,0x0002EEEC,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00019eca@Glo012F1024Item@@QAEXXZ,0x00019ECA,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00040c32@Glo012F1024Item@@QAEXXZ,0x00040C32,"direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00036124@Glo012F1024Item@@QAEXXZ,0x00036124,"tail-called retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?j_00010bcc@Glo012F1024Item@@QAEXXZ,0x00010BCC,"tail-called continuation of ?bfmeEnter@Glo012F1024Item@@QAEXXZ"
-?set@BfmeQuickMatchSlot@@QAEXABV1@@Z,0x00887C90,"string-member assignment used by ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z"
-?bfmeReset@Gen_008812D0@@QAEXXZ,0x008811A0,Open-BFME5 semantic no-op reset hook called immediately before the Taint grid region is cleared
-??$insert_unique@U?$_Rb_tree_iterator@PAURva001408C0Target@@U?$_Const_traits@PAURva001408C0Target@@@_STL@@@_STL@@@?$_Rb_tree@PAURva001408C0Target@@PAU1@U?$_Identity@PAURva001408C0Target@@@_STL@@U?$less@PAURva001408C0Target@@@3@V?$allocator@PAURva001408C0Target@@@3@@_STL@@QAEXU?$_Rb_tree_iterator@PAURva001408C0Target@@U?$_Const_traits@PAURva001408C0Target@@@_STL@@@1@0@Z,0x0003AFD0,AssetList set range-insert ILT to body 0x00140CA0
-?bfmeAllocBAA@@YAPAXI@Z,0x0082E540,pin
-?bfmeDropBAB@BfmeOwnerBAB@@QAEXPAX@Z,0x007F9590,pin
-?setCameraTransform@W3DView@@AAEXXZ,0x000312A0,BFME thunk reached by W3DView::setPitch
-?_M_reallocate_map@?$deque@UGen_t_008fb570_p8pod@@V?$allocator@UGen_t_008fb570_p8pod@@@_STL@@@_STL@@IAEXI_N@Z,0x008FABB0,RVA 0x008FB570 exact auxiliary call target
-??$_Construct@UGen_t_008fb570_p8pod@@U1@@_STL@@YAXPAUGen_t_008fb570_p8pod@@ABU1@@Z,0x008F9C70,RVA 0x008FB570 exact auxiliary call target
-?_M_reallocate_map@?$deque@UGen_t_008fb4d0_p20pod@@V?$allocator@UGen_t_008fb4d0_p20pod@@@_STL@@@_STL@@IAEXI_N@Z,0x008FAA40,RVA 0x008FB4D0 exact auxiliary call target
 ??0?$vector@UGeometryShape@@V?$allocator@UGeometryShape@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00027570,GeometryInfo copy constructor vector<GeometryShape> member at retail 0x000FFD10
 ??0?$vector@UGeometryRecord@@V?$allocator@UGeometryRecord@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000149DE,GeometryInfo copy constructor vector<GeometryRecord> member at retail 0x000FFD10
 ?write@DataChunkTableOfContents@@QAEXAAVOutputStream@@@Z,0x00102E60,DataChunkOutput::~DataChunkOutput callsite at retail 0x001036C0 writes the CkMp table through m_contents
