@@ -81271,3 +81271,5 @@ g_bfmeGridWaterHandle,0x012EF4D4,TerrainLogic getWaterHandle retail grid-water s
 ?getFinalOverride@BfmeLocomotorTemplate@@QAEPAV1@XZ,0x000022BB,AODHordeContain large-unit hook reaches the existing locomotor override-chain walker
 ?refreshTrackedLargeUnit@BfmeAODHordeContainOwner@@QAEXXZ,0x00031372,AODHordeContain large-unit hook refreshes the cached position through the 0x002302E0 body
 ?find@BfmeMemberIndexMap@@QAE?AUBfmeMemberIndexIterator@@ABH@Z,0x0001F000,HordeContain member-index lookup reaches the retail STLport map find instantiation
+?bfmeBaseXfer@BfmeAODHordeContainOwner@@QAEXPAVBfmeXfer@@@Z,0x00024BDB,AODHordeContain xfer delegates to the base HordeContain transfer body
+?bfmeXferObjectID@@YAXPAVBfmeXfer@@PAI@Z,0x0000C9B4,AODHordeContain xfer reaches the existing ObjectID transfer helper

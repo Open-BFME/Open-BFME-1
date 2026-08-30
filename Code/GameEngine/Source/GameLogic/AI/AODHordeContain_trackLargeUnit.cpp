@@ -71,21 +71,55 @@ public:
 	unsigned char m_pad04[8];
 };
 
+struct BfmeXferVersion
+{
+	unsigned char m_version;
+	unsigned char m_minimumVersion;
+};
+
+class BfmeXfer
+{
+public:
+	virtual void v00() = 0; virtual void v01() = 0;
+	virtual void v02() = 0; virtual void v03() = 0;
+	virtual void v04() = 0; virtual void v05() = 0;
+	virtual void v06() = 0; virtual void v07() = 0;
+	virtual void v08() = 0; virtual void v09() = 0;
+	virtual void xferVersion(BfmeXferVersion *version) = 0;
+	virtual void v11() = 0; virtual void v12() = 0;
+	virtual void v13() = 0; virtual void v14() = 0;
+	virtual void v15() = 0; virtual void v16() = 0;
+	virtual void v17() = 0; virtual void v18() = 0;
+	virtual void v19() = 0; virtual void v20() = 0;
+	virtual void v21() = 0; virtual void v22() = 0;
+	virtual void v23() = 0;
+	virtual void xferTrackedPosition(Coord3D *position) = 0;
+	virtual void v25() = 0; virtual void v26() = 0;
+	virtual void xferLargeUnitValue(float *value) = 0;
+	virtual void v28() = 0;
+	virtual void xferTrackedFrame(UnsignedInt *frame) = 0;
+};
+
+void bfmeXferObjectID(BfmeXfer *xfer, ObjectID *id);
+
 class BfmeAODHordeContainOwner
 {
 public:
 	void refreshTrackedLargeUnit();
 	int bfmeGetMemberIndex(int memberID);
+	void xfer(BfmeXfer *xfer);
+	void bfmeBaseXfer(BfmeXfer *xfer);
 
 private:
 	unsigned char m_pad00[0x120];
 	BfmeMemberIndexMap m_memberIndices;
 	unsigned char m_pad12C[0x104];
 	ObjectID m_trackedLargeUnit;
-	unsigned char m_pad234[4];
+	UnsignedInt m_lastLargeUnitFrame;
 	Coord3D m_trackedPosition;
 	float m_largeUnitHeightFactor;
 	float m_largeUnitHeight;
+	float m_largeUnitTailOff;
 };
 
 class AODHordeContainInterfaceView
@@ -140,4 +174,17 @@ int BfmeAODHordeContainOwner::bfmeGetMemberIndex(int memberID)
 	if (i.m_node != m_memberIndices.m_header)
 		return i.m_node->m_index;
 	return 0;
+}
+
+void BfmeAODHordeContainOwner::xfer(BfmeXfer *xfer)
+{
+	BfmeXferVersion version = { 1, 1 };
+	xfer->xferVersion(&version);
+	bfmeBaseXfer(xfer);
+	bfmeXferObjectID(xfer, &m_trackedLargeUnit);
+	xfer->xferLargeUnitValue(&m_largeUnitTailOff);
+	xfer->xferTrackedFrame(&m_lastLargeUnitFrame);
+	if (m_trackedLargeUnit != 0)
+		refreshTrackedLargeUnit();
+	xfer->xferTrackedPosition(&m_trackedPosition);
 }
