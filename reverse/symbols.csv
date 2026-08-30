@@ -75675,6 +75675,7 @@ name,address,notes
 ?g_bfme1263@@3PAVBfmeR1263@@A,0x00EEF4CC,pin
 ?g_bfme1264@@3PAVBfmeR1264@@A,0x00EF4974,pin
 ?g_bfme1267@@3PAVBfmeG1267@@A,0x00EF0898,pin
+?g_bfme1268@@3PAVBfmeR1268@@A,0x00EEF4CC,pin
 ?g_bfme911Busy@@3DA,0x0094B208,pin
 ?g_bfme911Flag@@3DA,0x008D7188,pin
 ?g_bfme911Ptr@@3PAVBfmeObj911C@@A,0x0094B210,pin
@@ -76072,6 +76073,7 @@ name,address,notes
 ?g_bfmeK1266D@@3MB,0x00C7533C,pin
 ?g_bfmeK1267A@@3MB,0x00C7533C,pin
 ?g_bfmeK1267B@@3MB,0x00C7533C,pin
+?g_bfmeK1268@@3MB,0x00C7533C,pin
 ?g_bfmeKey1026@@3PADA,0x00D096E8,pin
 ?g_bfmeKey1027@@3PADA,0x00D096F4,pin
 ?g_bfmeLeft1221@@3HA,0x00ED5DC8,pin
