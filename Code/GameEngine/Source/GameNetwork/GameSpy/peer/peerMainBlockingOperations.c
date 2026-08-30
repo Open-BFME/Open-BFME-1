@@ -915,6 +915,17 @@ void peerSetGroupID(PEER peer, int groupID)
 	connection->groupID = groupID;
 }
 
+int peerGetGroupID(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->title[0])
+		return 0;
+	if (!connection->connected)
+		return 0;
+	return connection->groupID;
+}
+
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
 {
 	piConnection *connection = (piConnection *)peer;
