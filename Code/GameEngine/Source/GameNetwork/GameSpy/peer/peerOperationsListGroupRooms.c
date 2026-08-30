@@ -119,6 +119,8 @@ void piGlobalKeyChanged(PEER peer, const char *nick, const char *key,
 void piAddGetGlobalKeysCallback(PEER peer, int success, const char *nick,
 	int num, const char **keys, const char **values, PEERCBType callback,
 	void *callbackParam, int opID);
+void chatGetGlobalKeysA(void *chat, const char *target, int num,
+	const char **keys, void *callback, void *param, int blocking);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -407,6 +409,27 @@ PEERBool piNewGetRoomKeysOperation(PEER peer, int roomType,
 
 	chatGetChannelKeysA(connection->chat, connection->room[roomType], nick,
 		num, keys, piGetChannelKeysCallbackA, operation, 0);
+	return 1;
+}
+
+PEERBool piNewGetGlobalKeysOperation(PEER peer, const char *target, int num,
+	const char **keys, PEERCBType callback, void *param, int opID)
+{
+	piConnection *connection = (piConnection *)peer;
+	piOperation *operation;
+
+	if (!target || !target[0])
+		return 0;
+	if (num <= 0)
+		return 0;
+
+	operation = piAddOperation(peer, 10, 0, callback, param, opID);
+	if (!operation)
+		return 0;
+
+	operation->num = (target[0] == '#');
+	chatGetGlobalKeysA(connection->chat, target, num, keys,
+		piGetGlobalKeysCallbackA, operation, 0);
 	return 1;
 }
 
