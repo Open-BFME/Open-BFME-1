@@ -1093,7 +1093,6 @@ void Object::setStatus( ObjectStatusMaskType objectStatus, Bool set )
 }
 
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?setScriptStatus@Object@@QAEXW4ObjectScriptStatusBit@@_N@Z present-unmatched
 void Object::setScriptStatus( ObjectScriptStatusBit bit, Bool set )
 {
@@ -3774,10 +3773,19 @@ void Object::maskObject( Bool mask )
  * returns true if the current locomotor is an airborne one
  */
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
-// ?isUsingAirborneLocomotor@Object@@QBE_NXZ present-unmatched
+// Three BFME offsets down one chain. Object::m_ai is at +0x204 where this
+// tree puts it at +0x19c and AIUpdate's current locomotor at +0x1cc against
+// +0x1b8; both are read once and reused, as retail does. The third is inside
+// Locomotor: its m_template sits at +4 rather than +8, so rebasing the
+// pointer by -4 lets the real getLegalSurfaces accessor compile retail's
+// encoding instead of open-coding it here. The tail already agrees.
+#define BFME_OBJ_AI(o)     (*(AIUpdateInterface *const *)((const char *)(o) + 0x204))
+#define BFME_AI_CURLOCO(a) (*(Locomotor *const *)((const char *)(a) + 0x1cc))
+#define BFME_LOCO(l)       ((const Locomotor *)((const char *)(l) - 4))
 Bool Object::isUsingAirborneLocomotor( void ) const
 {
-	return ( m_ai && m_ai->getCurLocomotor() && ((m_ai->getCurLocomotor()->getLegalSurfaces() & LOCOMOTORSURFACE_AIR) != 0) );
+	return ( BFME_OBJ_AI(this) && BFME_AI_CURLOCO(BFME_OBJ_AI(this)) &&
+	         ((BFME_LOCO(BFME_AI_CURLOCO(BFME_OBJ_AI(this)))->getLegalSurfaces() & LOCOMOTORSURFACE_AIR) != 0) );
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -10,7 +10,6 @@
 // readable body of ?giveUpgrade@Object@@QAEXPBVUpgradeTemplate@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 // readable body of ?hasSpecialPower@Object@@QBE_NW4SpecialPowerType@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 // readable body of ?internal_classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
-// readable body of ?isUsingAirborneLocomotor@Object@@QBE_NXZ: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 // readable body of ?removeUpgrade@Object@@QAEXPBVUpgradeTemplate@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 // readable body of ?setScriptStatus@Object@@QAEXW4ObjectScriptStatusBit@@_N@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 /*
