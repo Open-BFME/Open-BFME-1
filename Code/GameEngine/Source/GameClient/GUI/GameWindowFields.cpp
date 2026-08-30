@@ -251,7 +251,7 @@ Int GameWindow::winSetHiliteImage( Int index, const Image *image )
 // objdump: index math -> m_instData offset 0x130 = &m_hiliteDrawData[index].image).
 // BFME never wrote a distinct disabled-image path here; write the same field so
 // our object code folds the same way and matches the retail bytes.
-// ?winSetDisabledImage@GameWindow@@QAEHHPBVImage@@@Z
+// ?winSetDisabledImage@GameWindow@@QAEHHPBVImage@@@Z present-unmatched
 Int GameWindow::winSetDisabledImage( Int index, const Image *image )
 {
 	if( index < 0 || index >= MAX_DRAW_DATA )

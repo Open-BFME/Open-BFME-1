@@ -2015,6 +2015,7 @@ Int GameWindow::winSetHiliteImage( Int index, const Image *image )
 // GameWindow::winSetHiliteColor ==============================================
 /** set color for hilite state at index */
 //=============================================================================
+// ?winSetHiliteColor@GameWindow@@QAEHHH@Z present-unmatched
 Int GameWindow::winSetHiliteColor( Int index, Color color )
 {
 
