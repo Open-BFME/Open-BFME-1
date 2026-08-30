@@ -81255,3 +81255,4 @@ _chatRetryWithNickA,0x008624C0
 ??A?$map@GEU?$less@G@_STL@@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAEAAEABG@Z,0x00043437,processFileAnnounce calls the ILT for the file recipient mask map operator[] at 0x006694D0
 ?getPlayerMask@NetFileAnnounceCommandMsg@@QAEEXZ,0x000478F2,processFileAnnounce calls the ILT for the matched 0x00674010 accessor
 ??A?$map@GHU?$less@G@_STL@@V?$allocator@U?$pair@$$CBGH@_STL@@@2@@_STL@@QAEAAHABG@Z,0x000302F1,processFileAnnounce calls the ILT for the file progress map operator[] at 0x00669560
+??0Rva00971CE0AggregatePrototype@@QAE@PBDHH@Z,0x00971CE0,address-qualified ABI view of the 36-byte AGGR catalog prototype constructed by Register_Aggregate_Prototype
