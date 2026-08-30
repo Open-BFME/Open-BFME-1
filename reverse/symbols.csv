@@ -81213,3 +81213,5 @@ _bfmeCiThinkFromEsi,0x008601F0,GameSpy Chat static think helper with chat carrie
 _ciAddJOINFilter,0x0086C4F0,GameSpy Chat channel-join filter constructor
 _ciAddCDKEYFilter,0x0086CB80,GameSpy Chat CD-key response filter constructor
 _ciAddTOPICFilter,0x0086C570,GameSpy Chat channel-topic filter constructor
+_piConnectTitle,0x00857210,GameSpy Peer title subsystem initialization
+_piDisconnectTitle,0x00857250,GameSpy Peer title subsystem cleanup

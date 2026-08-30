@@ -35,13 +35,20 @@ typedef struct piOperationContainer
 typedef struct piConnection
 {
 	void *chat;
-	char reserved[0x1790 - sizeof(void *)];
+	char nick[64];
+	int connecting;
+	int connected;
+	void *nickErrorCallback;
+	unsigned int lastChatPing;
+	char reserved[0x1790 - 0x54];
 	piOperation *listingGroupsOperation;
 	int nextID;
 	void *operationList;
 	int operationsStarted;
 	char reserved2[0x1EF0 - 0x17A0];
 	piOperation *autoMatchOperation;
+	char reserved3[0x1F04 - 0x1EF4];
+	int disconnect;
 } piConnection;
 
 void *memset(void *dest, int value, unsigned int count);
@@ -74,6 +81,13 @@ void piAddJoinRoomCallback(PEER peer, int success, int result, int roomType,
 void chatSetChannelPasswordA(void *chat, const char *channel, int enabled,
 	const char *password);
 void piCreateStagingRoomEnumUsersCallbackA(void);
+int piConnectTitle(PEER peer);
+void piDisconnectTitle(PEER peer);
+unsigned int current_time(void);
+const char *chatGetNickA(void *chat);
+__declspec(dllimport) int strcmpi(const char *left, const char *right);
+void piAddConnectCallback(PEER peer, int success, int failureReason,
+	PEERCBType callback, void *callbackParam, int opID);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -104,6 +118,44 @@ static piOperation *piAddOperation(PEER peer, int type, void *data,
 	connection->operationsStarted++;
 
 	return operation;
+}
+
+void piConnectConnectCallback(void *chat, int success,
+	int failureReason, void *param)
+{
+	piOperation *operation = (piOperation *)param;
+	PEER peer = operation->peer;
+	piConnection *connection = (piConnection *)peer;
+
+	if (success)
+	{
+		if (!piConnectTitle(peer))
+		{
+			piDisconnectTitle(peer);
+			success = 0;
+		}
+	}
+
+	connection->connecting = 0;
+	connection->connected = success;
+
+	if (success)
+	{
+		const char *nick;
+
+		connection->lastChatPing = current_time();
+		nick = chatGetNickA(chat);
+		if (strcmpi(connection->nick, nick) != 0)
+			strcpy(connection->nick, nick);
+	}
+	else
+	{
+		connection->disconnect = 1;
+	}
+
+	piAddConnectCallback(peer, success, failureReason, operation->callback,
+		operation->callbackParam, operation->ID);
+	piRemoveOperation(peer, operation);
 }
 
 PEERBool piNewListGroupRoomsOperation(PEER peer, const char *fields,
