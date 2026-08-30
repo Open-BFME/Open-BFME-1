@@ -4585,3 +4585,60 @@ That is the correct place to stop -- no replacement mapping proposed, and the
 rejected diff banked outside the repo because its four forced discoveries are a
 map of where the pressure is even though the binding is wrong. **A wrong answer
 kept for its by-products, with the answer itself withdrawn.**
+
+## THE ASYMMETRY FAILURE: a relocation WE have and retail does not
+
+Third distinct way masking hides a difference, and the largest so far: **67
+matched rows across 20 bodies.**
+
+Masking blanks every DIR32 site, and it chooses WHICH bytes to blank from the
+COMPILED side's relocation list. So a site that is a relocation for us and a
+plain literal for retail gets blanked on both sides -- and the one field that
+separates the two bodies is the one field nobody compares:
+
+    ours    8b c1  c7 00 <DIR32 ??_7X@@6B@>  c3     mov [eax], vftable
+    retail  8b c1  c7 00  00 00 00 00        c3     mov [eax], 0
+
+**A linked absolute address is never zero. All-zero retail bytes under one of our
+DIR32 sites prove retail stored NO POINTER there.**
+
+The three masking failures, now distinct:
+
+    QUANTITY   no surviving byte at all (AIPlayer's data table)
+    LOCATION   identical surviving bytes, discriminator inside the mask
+    ASYMMETRY  we have a relocation site retail does not -- and these rows have
+               PLENTY of surviving bytes, all of which agree
+
+15 of the 67 carry an explicit `icf-owner=`, which made the alias look
+sanctioned. 23 sit on 0x00087A50 and 21 on 0x00061D90, both storing literal
+zero: abstract-base and interface constructors -- MemoryPoolObject, InputStream,
+DockUpdateInterface, ObjectDrawInterface, the eight Blit*Xlat instantiations,
+PostLoadableClass.
+
+**The real constructors exist and are distinguishable.** Retail holds 215
+pointer-storing bodies of the 9-byte shape against 203 zero-storing, and 66 of
+the 18-byte shape against 3, each storing a different vftable. So these rows are
+on the wrong side of a fork the comparison cannot see, and each is in principle
+re-homeable by its own `??_7X@@6B@` address.
+
+**One legitimate zero, excluded BY NAME with a test rather than by a threshold:**
+`mov eax, fs:[__except_list]` really does relocate against absolute 0 -- a TIB
+offset, not a linked address -- and it opens every try-block in the tree. A
+threshold would have buried the result or admitted noise; naming the one real
+case does neither.
+
+## A green row over an `__emit` dump is evidence about the DUMP, never its name
+
+`?Recolor_Texture@W3DAssetManager@@QAEHHHHHHHHHH@Z` was a fabricated nine-int
+thiscall signature resting on a 658-line `__emit` dump. **Re-emitting retail's
+bytes cannot fail to match**, so the green said nothing whatever about whether
+the name was right.
+
+Settled by call sites, as it should have been originally: the only two callers of
+0x00A5828A in the whole image are `D3DXSaveMeshToXofEx` and
+`D3DXPatchSaveMeshToXofEx`, both from `d3dx9.lib`. Retired; the d3dx9 row still
+covers the address so no bytes are lost, and both real `Recolor_Texture`
+overloads return to `present-unmatched`, which is what they are.
+
+The conversion-direction gate stops new ones. This was an old one verifying
+itself.
