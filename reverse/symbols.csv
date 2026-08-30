@@ -76008,6 +76008,7 @@ name,address,notes
 ?g_bfmeKey1026@@3PADA,0x00D096E8,pin
 ?g_bfmeKey1027@@3PADA,0x00D096F4,pin
 ?g_bfmeLeft1221@@3HA,0x00ED5DC8,pin
+?g_bfmeLens1228@@3PAEA,0x00ED5DFC,pin
 ?g_bfmeLimit952@@3MA,0x00C977E8,pin
 ?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
@@ -76055,6 +76056,7 @@ name,address,notes
 ?g_bfmeLookC980@@3PAVBfmeLookC980@@A,0x00EF0898,pin
 ?g_bfmeLookRP@@3PAVBfmeLookRP@@A,0x00EF076C,pin
 ?g_bfmeLookRQ@@3PAVBfmeLookRQ@@A,0x00EF076C,pin
+?g_bfmeLookup1228@@3PACA,0x00ED5E04,pin
 ?g_bfmeM1024@@3PAVBfmeM1024@@A,0x00EF6924,pin
 ?g_bfmeM1066@@3PAUBfmeM1066@@A,0x00EED5C8,pin
 ?g_bfmeM1087@@3PAUBfmeM1087@@A,0x00EED5C8,pin
@@ -76307,6 +76309,7 @@ name,address,notes
 ?g_bfmeWhatBGE@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWhatBKG@@3PAXA,0x00EC3BB8,pin
 ?g_bfmeWordFormat@@3QBDB,0x011442A8,address-derived word format string from the DIR32 operand at retail 0x009D93C0
+?g_bfmeWords1228@@3PAUBfmeW1228@@A,0x00ED5DCC,pin
 ?g_bfmeWorldRV@@3PAUBfmeWorldRV@@A,0x00EF33F8,pin
 ?g_bfmeX1058@@3HA,0x00EF8064,pin
 ?g_bfmeX1060@@3PAVBfmeX1060@@A,0x00EB7D80,pin
@@ -80274,6 +80277,7 @@ _bfmeFmtStrEAC,0x00C7C7B4,pin
 _bfmeFnA1033,0x000487C0,pin
 _bfmeFnB1033,0x0001E0B0,pin
 _bfmeGlobalTable12A6918,0x00EA6918,pin
+_bfmeHash1228,0x008D3C50,pin
 _bfmeHook1052,0x0003695D,pin
 _bfmeHook1053,0x000066EA,pin
 _bfmeHook1055,0x00863A70,pin
