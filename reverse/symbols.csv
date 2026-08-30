@@ -81220,3 +81220,5 @@ _chatGetChannelKeysA,0x00861C60,GameSpy Chat channel-key request
 _piRoomKeyChanged,0x00865C30,GameSpy Peer room-key cache update
 _piGlobalKeyChanged,0x00865BA0,GameSpy Peer global-key cache update
 _chatGetGlobalKeysA,0x00861940,GameSpy Chat global-key request
+_piFinishedEnteringRoom,0x00863E70,GameSpy Peer room-entry completion
+_piPlayerJoinedRoom,0x008638D0,GameSpy Peer joined-player insertion

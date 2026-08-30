@@ -77,7 +77,9 @@ void chatEnterChannelA(void *chat, const char *channel, const char *password,
 	void *callbacks, void *callback, void *param, int blocking);
 void piSBFreeHostServer(PEER peer);
 void piRemoveOperation(PEER peer, piOperation *operation);
-void piJoinRoomEnumUsersCallbackA(void);
+void piJoinRoomEnumUsersCallbackA(void *chat, int success,
+	const char *channel, int numUsers, const char **users, int *modes,
+	void *param);
 void chatEnumUsersA(void *chat, const char *channel, void *callback,
 	void *param, int blocking);
 void piLeaveRoom(PEER peer, int roomType, const char *reason);
@@ -121,6 +123,8 @@ void piAddGetGlobalKeysCallback(PEER peer, int success, const char *nick,
 	void *callbackParam, int opID);
 void chatGetGlobalKeysA(void *chat, const char *target, int num,
 	const char **keys, void *callback, void *param, int blocking);
+void piFinishedEnteringRoom(PEER peer, int roomType, const char *reason);
+void piPlayerJoinedRoom(PEER peer, const char *nick, int roomType, int mode);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -278,6 +282,40 @@ void piGetGlobalKeysCallbackA(void *chat, int success, const char *user,
 		piRemoveOperation(peer, operation);
 
 	(void)chat;
+}
+
+void piJoinRoomEnumUsersCallbackA(void *chat, int success,
+	const char *channel, int numUsers, const char **users, int *modes,
+	void *param)
+{
+	piOperation *operation = (piOperation *)param;
+	PEER peer = operation->peer;
+	int i;
+
+	if (operation->cancel)
+	{
+		piRemoveOperation(peer, operation);
+		return;
+	}
+
+	if (success)
+	{
+		piFinishedEnteringRoom(peer, operation->roomType, "");
+		for (i = 0; i < numUsers; i++)
+			piPlayerJoinedRoom(peer, users[i], operation->roomType, modes[i]);
+	}
+	else
+	{
+		piLeaveRoom(peer, operation->roomType, 0);
+	}
+
+	piAddJoinRoomCallback(peer, success, success ? 0 : 10,
+		operation->roomType, operation->callback, operation->callbackParam,
+		operation->ID);
+	piRemoveOperation(peer, operation);
+
+	(void)chat;
+	(void)channel;
 }
 
 PEERBool piNewListGroupRoomsOperation(PEER peer, const char *fields,
