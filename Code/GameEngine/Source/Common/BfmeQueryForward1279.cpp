@@ -13,11 +13,19 @@ class BfmeWrapper1279
 {
 public:
 	void bfmeProcess1279(void *value);
+	void bfmeForwardValue1279(void *value);
 	void bfmeForward1279(BfmeInput1279 *input);
 
 private:
 	BfmeQuery1279 *m_query;
 };
+
+void BfmeWrapper1279::bfmeForwardValue1279(void *value)
+{
+	void *other;
+	m_query->bfmeQuery1279(value, 0, &other, &value);
+	bfmeProcess1279(value);
+}
 
 void BfmeWrapper1279::bfmeForward1279(BfmeInput1279 *input)
 {
