@@ -4312,3 +4312,50 @@ a padded local closed. **A logged verdict is a measurement, not a door.** Both
 were overturned by looking at evidence the original measurement had no reason to
 consult -- and in both cases the person who overturned it went and re-derived
 rather than trusting the note.
+
+## For a family of forwarders, THE CALLEE NAMES THE CALLER
+
+No heuristic, no stub topology, no name comparison: decode the rel32, follow the
+ILT, read the name. W3DTerrainVisual's water accessors are thin forwarders into
+WaterRenderObjClass, so each is named by what it calls:
+
+    0x00730A20 -> setGridChangeAttenuationFactors  = setWaterAttenuationFactors
+    0x00730A50 -> setGridTransform                 = setWaterTransform
+    0x00730AC0 -> setGridResolution                = setWaterGridResolution
+    0x00730AF0 -> getGridResolution                = getWaterGridResolution
+
+The ledger had `setWaterTransform` and `getWaterGridResolution` each one body
+early. Both retired, tombstoned and re-anchored; W3DTerrainVisual.cpp 27/27.
+
+This is the same evidence class that refuted five wrong re-homings earlier the
+same day -- a call site naming the symbol -- used constructively rather than
+defensively.
+
+## A one-slot rotation MUST leave a hole: the spare placeholder is the proof
+
+The strongest form an identity argument has taken here. A rotation cannot
+consume its own displaced body, so it necessarily leaves one body spare -- and
+in both confirmed cases the spare was sitting in the ledger under a generated
+`?dup_` name.
+
+    VertexMaterialClass   the colour-source rotation left Get_Diffuse_Color_Source
+                          unclaimed, with a marker and no row
+    W3DTerrainVisual      two one-slot rotations left ?dup_00730a50@@ and
+                          ?dup_00730af0@@ holding the two real bodies
+
+That converts "these two rows look wrong" into a positive prediction the evidence
+either satisfies or refutes. **If you suspect a rotation and there is no spare
+body, that absence is evidence AGAINST it** -- which is what makes this stronger
+than any of the four detectors.
+
+## Two pending pieces that both touch the ledger cannot be stashed independently
+
+Sharper form of "hold source as a patch, ledger as tool calls". If two held
+changes both write `functions.csv`, the second to land cannot be restored -- its
+rows would point at bodies whose source changes are still parked. It has to be
+REDONE with the tools against the ledger that exists.
+
+So when work is queued behind a blocker, expect the ledger half of every held
+piece but the first to be re-run once per landing ahead of it. Keeping that half
+as a short list of tool invocations rather than a patch is what makes re-running
+it cheap; one held piece had its four tool calls re-run three times.
