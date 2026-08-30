@@ -81142,3 +81142,5 @@ g_bfmeExtra1282,0x01337804,address-derived context argument forwarded by the 0x0
 g_bfmePlay1282,0x01337884,address-derived audio callback invoked by the 0x008BAAB0 retail body
 g_bfmeEmptyString1285,0x012D5298,address-derived shared empty-string sentinel checked by the 0x008BA8B0 retail parser
 _isdigit,0x009F7024,address-derived CRT import thunk called by the 0x008BA8B0 retail parser
+g_bfmeDirectionWeight1285,0x01075C74,address-derived perpendicular-distance weight used by the 0x008BA970 retail scorer
+g_bfmeInvalidScore1285,0x0109BF3C,address-derived invalid-direction sentinel returned by the 0x008BA970 retail scorer

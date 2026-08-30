@@ -15,6 +15,49 @@ struct BfmeString1285
 };
 
 extern BfmeStringData1285 g_bfmeEmptyString1285;
+extern float g_bfmeDirectionWeight1285;
+extern float g_bfmeInvalidScore1285;
+
+static __forceinline int bfmeAbs1285(int value)
+{
+	return value < 0 ? -value : value;
+}
+
+static __declspec(noinline) float bfmeDirectionalScore1285(
+	int direction, int referenceFirst, int referenceSecond,
+	int candidateFirst, int candidateSecond)
+{
+	int dy;
+	int dx = candidateSecond - referenceSecond;
+	dy = candidateFirst - referenceFirst;
+	switch (direction) {
+	case 14:
+		if (dx >= 0)
+			return g_bfmeInvalidScore1285;
+		{
+			int primary = bfmeAbs1285(dx);
+			int perpendicular = bfmeAbs1285(dy);
+			return (float)perpendicular * g_bfmeDirectionWeight1285 + primary;
+		}
+	case 15:
+		if (dx <= 0)
+			return g_bfmeInvalidScore1285;
+		return (float)bfmeAbs1285(dy) * g_bfmeDirectionWeight1285 + dx;
+	case 1:
+		if (dy >= 0)
+			return g_bfmeInvalidScore1285;
+		{
+			int primary = bfmeAbs1285(dy);
+			int perpendicular = bfmeAbs1285(dx);
+			return (float)perpendicular * g_bfmeDirectionWeight1285 + primary;
+		}
+	case 2:
+		if (dy <= 0)
+			return g_bfmeInvalidScore1285;
+		return (float)bfmeAbs1285(dx) * g_bfmeDirectionWeight1285 + dy;
+	}
+	return g_bfmeInvalidScore1285;
+}
 
 static __declspec(noinline) bool bfmeParseSuffix1285(
 	BfmeString1285 *value, int *first, int *second)
@@ -51,5 +94,14 @@ int bfmeUseSuffix1285(BfmeString1285 *value)
 	if (!bfmeParseSuffix1285(value, &first, &second))
 		return 0;
 	return first + second;
+}
+
+// ?bfmeUseDirectionalScore1285@@YAMHHHHH@Z absent-from-retail
+float bfmeUseDirectionalScore1285(
+	int direction, int referenceFirst, int referenceSecond,
+	int candidateFirst, int candidateSecond)
+{
+	return bfmeDirectionalScore1285(
+		direction, referenceFirst, referenceSecond, candidateFirst, candidateSecond);
 }
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
