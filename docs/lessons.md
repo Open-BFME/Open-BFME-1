@@ -4680,7 +4680,10 @@ MAX_DRAW_DATA is 9 and WinDrawData is three 4-byte fields. Geometry from bytes,
 identity from callers -- and never identity from a byte offset interpreted
 through the header you are auditing.
 
-## Settled: BFME's WinDrawData is {image, borderColor, color}
+## WITHDRAWN: BFME's WinDrawData is ZH's {image, color, borderColor}
+**This entry claimed a swapped field order. It is wrong -- the order is
+UNCHANGED from ZH. See "an offset is only as absolute as its TU's layout" below;
+the apparent swap was a uniform 4-byte base bias read as a field rotation.**
 
 Position 1 is BorderColor on six single-name bodies across two groups and two
 independent wrapper families; position 2 has no named callers **because the
@@ -5036,9 +5039,12 @@ getter-name reading, `GetDisabledSelectedImage` would read index 0's THIRD FIELD
 while `SetDisabledSelectedImage` writes index 1's FIRST FIELD -- a getter and a
 setter for one property disagreeing about which slot it occupies. That cannot be.
 
-`{image, borderColor, color}` stands. And the inline getters have **zero
-callers** -- their names are ledger bindings and nothing else -- so they are the
-next wrong-body family rather than a refutation.
+The invariant is sound and it does rule out `{color, borderColor, image}`. But
+the conclusion drawn from it -- that `{image, borderColor, color}` therefore
+stands -- **was wrong**: the third candidate was an artefact of a 4-byte base
+bias, and removing it restores ZH's `{image, color, borderColor}` rather than the
+swap. The getters' zero-caller status is still true and still makes them weak as
+NAMES; what was misread was their OFFSETS. See the entry below.
 
 ## Refuse a stale go-ahead
 
@@ -5051,3 +5057,60 @@ it.** When a go-ahead crosses a finding that changes the question, the finding
 wins and the approval needs re-asking. This is the second time today a lane has
 been right to decline an instruction of mine -- the other being the
 one-commit-per-change rule that would have required landing red.
+
+## An offset read out of a TU is only as ABSOLUTE as that TU's layout
+
+The whole GameWindow field-order detour, in one rule.
+
+`Selected` is exactly `+0x0C` from its plain sibling -- one whole `WinDrawData`
+-- across six independent pairs in two groups, eighteen names fitting one model
+with no exceptions:
+
+    +0x0B0 GetDisabledImage        +0x0BC GetDisabledSelectedImage
+    +0x0B4 GetDisabledColor        +0x0C0 GetDisabledSelectedColor
+    +0x0B8 GetDisabledBorderColor  +0x0C4 GetDisabledSelectedBorderColor
+
+So the order is **image +0, color +4, borderColor +8 -- ZH's, unchanged.**
+
+The apparent conflict with the setter callers was never about field order. It is
+a uniform **4-byte base offset**:
+
+    enabled   getters say 0x44   setters say 0x48
+    disabled  getters say 0xB0   setters say 0xB4
+    hilite    getters say 0x11C  setters say 0x120
+
+The inline getters live in a TU whose `GameWindow` is four bytes short -- the
+same unshimmed defect already proved for `GameWindow.cpp` and `gamewindowlist`.
+**A global -4 makes `{image, color, borderColor}` read as
+`{color, borderColor, image}` shifted into the neighbouring slots**, which is
+exactly the phantom third order that looked like a decisive third witness.
+
+**Compare DIFFERENCES before comparing OFFSETS.** The getters' spacing was
+trustworthy from the first look; their absolute values carried a bias already
+measured in two other files. Two errors, and the second was hidden by the first:
+absolute offsets read out of a biased TU, and a field-order swap inferred from
+setter-caller names when no swap existed.
+
+The `Selected` labels are ledger names and carry no weight. **The load-bearing
+evidence is the 0x0C spacing** -- six pairs at one constant is a structural fact;
+the words attached to them are not.
+
+## What GameWindow actually established, after three withdrawn derivations
+
+Parked. Solid:
+
+  * geometry -- bases 0x48 / 0xB4 / 0x120, stride 0x6C, nine elements of twelve
+  * `m_instData` at 0x30 and `setTooltipDelay` at 0x1C8, closing with no free
+    parameter on a parameter-relative measurement
+  * `setTooltipDelay` mis-anchored on an ICF body with zero callers; real home
+    0x0047A330
+  * `gamewindowlist` is four bytes short because `m_userData` was moved to the
+    tail -- and the inline getters are a SECOND, independent witness to that
+    same shift
+  * five placeholders interleaved through one named accessor run
+
+Not established: which of `color`/`borderColor` sits at element+4 under the
+setter-wrapper names. Six single-name setter bodies say BorderColor at position
+1; eighteen internally cross-checked getter names say Color. **That residue is
+left open deliberately** -- it is a fourth derivation on a class that has already
+produced three withdrawals, and nothing depends on it.
