@@ -81055,6 +81055,7 @@ g_bfmeDefaultCJ,0x01075334,Open-BFME5 the default the ratio at 0x000C7DE0 answer
 g_bfmeUint32Scale,0x01075358,address-derived 2^32 float conversion fixup used by the unsigned scale update at 0x00784480
 ?first@Gen_00943CF0@@AAEXPAXPAPAX11@Z,0x009432B0,address-derived helper call recovered from 0x00943CF0
 ?second@Gen_00943CF0@@AAEXPAX000@Z,0x009433A0,address-derived helper call recovered from 0x00943CF0
+?helper@Gen_00942BC0@@AAEXPAHPAX11H@Z,0x00942430,address-derived helper call recovered from 0x00942BC0
 g_bfmeDefaultCU,0x012B4FF8,Open-BFME5 the thirty-six byte block the reset at 0x00421DE0 copies from
 g_bfmeDefaultEG,0x01097114,Open-BFME5 the angle the test at 0x0045B850 falls back to
 g_bfmeDefaultFE,0x012BC0C8,Open-BFME5 the default the reset at 0x007CCD90 points every slot at
