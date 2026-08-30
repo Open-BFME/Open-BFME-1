@@ -88,6 +88,48 @@ def scan(rows, read=None, retail=None):
     scan.unreadable = unreadable
 
 
+def verify():
+    """Full-gate entry point. ~70s, which is why the hook runs the fast two.
+
+    Two numbers, because the finding count alone is not trustworthy: a sweep
+    that cannot READ a row reports it clean. Run against a tree whose objects
+    were never built, this scan called 118,251 of 161,789 rows clean without
+    looking at one byte of them, and still printed the same 67 findings. So the
+    coverage floor is the real check and the count rides on top of it.
+    """
+    import identity_guard as G
+    base = G.read_baseline()
+    rows = [r for r in B.load_function_rows() if r["status"] == "matched"]
+    findings = list(scan(rows))
+    bodies = {(f.rva, f.size) for f in findings}
+    unreadable = len(scan.unreadable)
+
+    if unreadable > base["null_reloc.max_unreadable"]:
+        print("Null relocs: FAIL %d of %d row(s) could not be read (limit %d)"
+              % (unreadable, len(rows), base["null_reloc.max_unreadable"]))
+        print("    A row this scan cannot read is a row it calls clean without")
+        print("    looking. That is the failure this check exists to catch, so it")
+        print("    is a red rather than a footnote. Usual cause: the objects were")
+        print("    never built -- run a full build first, do not raise the limit.")
+        raise SystemExit(1)
+
+    for key, now in (("null_reloc.rows", len(findings)),
+                     ("null_reloc.bodies", len(bodies))):
+        was = base[key]
+        if now > was:
+            print("Null relocs: FAIL %s %d -> %d" % (key, was, now))
+            print("    A vftable store of ours lands where retail wrote a literal")
+            print("    zero, so the row byte-matches under the wrong name. Run")
+            print("    tools/null_reloc.py for the addresses.")
+            raise SystemExit(1)
+        if now < was:
+            print("Null relocs: FIXED %s = %d (was %d) -- lower it in this commit"
+                  % (key, now, was))
+            raise SystemExit(1)
+    print("Null relocs: OK (%d known row(s) over %d bodies, %d unreadable of %d)"
+          % (len(findings), len(bodies), unreadable, len(rows)))
+
+
 def main(argv):
     rows = [r for r in B.load_function_rows() if r["status"] == "matched"]
     findings = list(scan(rows))

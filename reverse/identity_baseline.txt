@@ -1,0 +1,24 @@
+# Known rows that byte-match while naming the wrong function.
+# Read by tools/identity_guard.py (commit hook) -- see that file for the rules.
+#
+# These numbers only go DOWN. Raising one to make a commit pass converts a found
+# defect into a permanent one, exactly as raising ORPHAN_BASELINE would.
+#
+# multi_name.family     two accessors one family member apart sharing a body:
+#                       what a shared layout error looks like. Undecided, not
+#                       proven -- see docs/lessons.md on FAMILY flags.
+# multi_name.different  bodies that cannot share an address at all.
+# size_outlier.indicted a forwarder-shaped body whose callers place it elsewhere.
+#
+# null_reloc.* is read by the FULL GATE, not the hook: that sweep takes ~70s.
+# max_unreadable is a coverage floor, not a defect count. A row the sweep cannot
+# read is one it reports clean without looking, so the scan is only meaningful
+# while nearly every row is readable: a fully built tree leaves 394 unreadable,
+# a tree whose objects were never built leaves 118,251 -- and prints the same 67
+# findings either way. Raising this limit to get green disables the check.
+multi_name.family = 9
+multi_name.different = 1
+size_outlier.indicted = 1
+null_reloc.rows = 67
+null_reloc.bodies = 20
+null_reloc.max_unreadable = 1000

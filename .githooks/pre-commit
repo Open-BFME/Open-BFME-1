@@ -169,6 +169,11 @@ PY
     )
 fi
 
+# A pin naming the wrong function still byte-matches, so nothing above can see
+# an identity defect. This runs the two detectors fast enough for a hook (~4s);
+# the third, null_reloc, takes ~70s and runs in the full gate instead.
+python3 tools/identity_guard.py || fail "a byte-matching row now names the wrong function (see above)"
+
 if [ "${#verify_set[@]}" -ne 0 ]; then
     BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${!verify_set[@]}" \
         || fail "byte-verify of changed sources (see above)"
