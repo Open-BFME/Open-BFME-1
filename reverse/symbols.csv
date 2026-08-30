@@ -81215,3 +81215,5 @@ _ciAddCDKEYFilter,0x0086CB80,GameSpy Chat CD-key response filter constructor
 _ciAddTOPICFilter,0x0086C570,GameSpy Chat channel-topic filter constructor
 _piConnectTitle,0x00857210,GameSpy Peer title subsystem initialization
 _piDisconnectTitle,0x00857250,GameSpy Peer title subsystem cleanup
+_piGetChannelKeysCallbackA,0x0085FEB0,GameSpy Peer room-key completion callback
+_chatGetChannelKeysA,0x00861C60,GameSpy Chat channel-key request

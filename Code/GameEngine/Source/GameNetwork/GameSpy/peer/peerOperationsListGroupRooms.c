@@ -40,7 +40,11 @@ typedef struct piConnection
 	int connected;
 	void *nickErrorCallback;
 	unsigned int lastChatPing;
-	char reserved[0x1790 - 0x54];
+	char reserved[0x80 - 0x54];
+	char room[3][257];
+	int enteringRoom[3];
+	int inRoom[3];
+	char reservedRooms[0x1790 - 0x39C];
 	piOperation *listingGroupsOperation;
 	int nextID;
 	void *operationList;
@@ -100,6 +104,9 @@ void piAddGetPlayerProfileIDCallback(PEER peer, int success,
 	void *callbackParam, int opID);
 void piAddGetPlayerIPCallback(PEER peer, int success, const char *nick,
 	unsigned int IP, PEERCBType callback, void *callbackParam, int opID);
+void piGetChannelKeysCallbackA(void);
+void chatGetChannelKeysA(void *chat, const char *channel, const char *nick,
+	int num, const char **keys, void *callback, void *param, int blocking);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -309,6 +316,35 @@ PEERBool piNewAutoMatchOperation(PEER peer, unsigned int socket,
 	operation->port = port;
 	connection->autoMatchOperation = operation;
 	piSetAutoMatchStatus(peer, 1);
+	return 1;
+}
+
+PEERBool piNewGetRoomKeysOperation(PEER peer, int roomType,
+	const char *nick, int num, const char **keys, PEERCBType callback,
+	void *param, int opID)
+{
+	piConnection *connection = (piConnection *)peer;
+	piOperation *operation;
+
+	if (num < 0)
+		return 0;
+	if (num > 0 && !keys)
+		return 0;
+	if (!connection->enteringRoom[roomType] && !connection->inRoom[roomType])
+		return 0;
+
+	operation = piAddOperation(peer, 11, 0, callback, param, opID);
+	if (!operation)
+		return 0;
+	operation->roomType = roomType;
+
+	if (nick)
+		operation->num = (strcmp(nick, "*") == 0);
+	else
+		operation->num = 0;
+
+	chatGetChannelKeysA(connection->chat, connection->room[roomType], nick,
+		num, keys, piGetChannelKeysCallbackA, operation, 0);
 	return 1;
 }
 
