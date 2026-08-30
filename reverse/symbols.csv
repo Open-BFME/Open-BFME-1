@@ -72811,6 +72811,7 @@ name,address,notes
 ?bfmeClose1086@BfmeD1086@@QAEXXZ,0x008F7B30,pin
 ?bfmeClose1222@BfmeSub1222@@QAEXXZ,0x0089C880,pin
 ?bfmeClose1280@BfmeE1280@@QAEXXZ,0x00042A32,pin
+?bfmeClose1281@BfmeE1281@@QAEXXZ,0x00028EC0,pin
 ?bfmeClose@Gen009D1A40@@QAEXXZ,0x009CB880,address-derived close target from the tail REL32 jump at retail 0x009D1A5D
 ?bfmeClr1097@BfmeR1097@@QAEXXZ,0x00044F5D,pin
 ?bfmeCmp1097@BfmeSub1097@@QAEHPAV1@@Z,0x000220C5,pin
@@ -73910,6 +73911,7 @@ name,address,notes
 ?bfmeNote1049@@YGXHH@Z,0x00047807,pin
 ?bfmeNoteWD@BfmeThingWD@@QAEXXZ,0x0002191D,pin
 ?bfmeNotify1280@BfmeA1280@@QAEXH@Z,0x00019574,pin
+?bfmeNotify1281@BfmeA1281@@QAEXH@Z,0x0003E85B,pin
 ?bfmeNotify1_574@@YAXPAX0@Z,0x00034B67,pin
 ?bfmeNotify2_574@@YAXPAX0@Z,0x0000630C,pin
 ?bfmeNotify@BfmeOwnedE@@QAEXXZ,0x000263EB,Open-BFME5 the ICF thunk (to 0x003C9320) the clear at 0x003C0EF0 tail-calls
@@ -80379,6 +80381,7 @@ _bfmeFmtStrEAC,0x00C7C7B4,pin
 _bfmeFnA1033,0x000487C0,pin
 _bfmeFnB1033,0x0001E0B0,pin
 _bfmeFree1280,0x00881EB0,pin
+_bfmeFree1281,0x00881EB0,pin
 _bfmeGet1252,0x008DB190,pin
 _bfmeGlobalTable12A6918,0x00EA6918,pin
 _bfmeHandler1233,0x008B91F0,pin
