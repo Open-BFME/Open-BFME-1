@@ -4964,3 +4964,44 @@ measurements:
 The parameter-relative 0x198 is the only number in the system that never passes
 through `GameWindow`, and it is the only one that survived both failed
 derivations unchanged.
+
+## Check both the READERS and the WRITERS before naming a field
+
+The field order was derived from setter call sites -- 81 of them, six wrapper
+families, counted by body -- and the getters were never asked. They disagree.
+
+    setters (call graph)     group+0 is IMAGE
+    inline getters (names)   group+0 is COLOR, and the third field is image
+
+Both families are internally consistent. `GadgetButtonGetDisabledColor` and
+`GadgetCheckBoxGetDisabledColor` both read +0xB4; the BorderColor pair both read
++0xB8; the SelectedImage pair both read +0xBC -- and the same pattern repeats
+exactly at +0x120 / +0x124 / +0x128 in the hilite group. That is structural
+agreement across two groups, not one row's opinion.
+
+**One grep would have caught it.** A field has readers and writers, and deriving
+its identity from only one side is the same single-derivation failure that
+produced two reverted mappings earlier the same day, in a narrower form.
+
+## When two witnesses contradict, rank them by HOW THEY COULD BE WRONG
+
+Not by count, and not by which was found first.
+
+    setter evidence   retail's own CALL GRAPH. No ledger binding can distort it;
+                      a wrong row name cannot move where retail jumps.
+    getter evidence   ledger row NAMES -- the exact class of thing this lane
+                      exists because it is unreliable. Several of those
+                      addresses carry two names, with `?dup_` siblings at each
+                      offset.
+
+So the setters are the stronger witness *by kind*. But that is a lean, not a
+settlement, and a lean is not what should move nine rows. The getter family is
+not weak either -- `...GetHiliteSelectedImage` reading the same field offset in
+two different groups is a structural claim.
+
+**The resolution of two internally-consistent contradictory witnesses is not a
+third derivation. It is finding the question whose answer both must satisfy.**
+Here: the "Selected" variants should differ from their plain siblings by INDEX
+-- twelve bytes, one `WinDrawData` -- and not by four. If they differ by four,
+that is an index-versus-field confusion large enough to explain the whole
+contradiction, and it is read-only to check.
