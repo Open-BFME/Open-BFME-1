@@ -81295,3 +81295,4 @@ g_bfmeJpegExtendedMessage,0x01081238,JPEG extended message-table text selected f
 ?bfmeXferObjectID@@YAXPAVBfmeXfer@@PAI@Z,0x0000C9B4,AODHordeContain xfer reaches the existing ObjectID transfer helper
 ?resolveMeleeTarget@BfmeTargetObject@@QAEPAV1@D@Z,0x0000FAA6,BannerCarrier target predicate resolves contained melee targets through the retail object helper
 ?getGoalObject@BfmeStateMachine@@QAEPAVBfmeTargetObject@@XZ,0x0000E570,BannerCarrier target predicate reads the source state machine goal object
+?notifyState@@YGXH@Z,0x0000DBF2,address-derived stdcall ILT recovered from 0x00569BA0
