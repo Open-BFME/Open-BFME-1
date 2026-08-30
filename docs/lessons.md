@@ -5275,6 +5275,18 @@ worth of other lanes' updates. It was discarded rather than pushed.
 So on a shared tree: check how far the base moved while a long verification ran,
 and treat any file the run REGENERATED as stale output rather than as a result.
 
+**And there is a cheap third option, which is the one to take.** A background
+gate can outlive its own premise -- both long runs in one evening finished
+against a moved base, one by eighteen commits. The choices look like *trust it*
+(wrong) or *re-run it* (ten minutes, and the base may move again). The one that
+works is neither: **treat the green as provisional and re-verify cheaply on the
+new base** -- one scoped `./build.sh <file>`, seconds -- since the expensive
+part of the gate was establishing that everything else is green, and only your
+own change needs re-checking against the new base.
+
+Two full gates were killed this evening for want of that option. Killing them
+was right; a scoped re-verify would have been better still.
+
 ## The same defect in a different costume, twice in one evening
 
 `len({a, b}) == 1` with two empty sets comparing equal is filter 1's exact
