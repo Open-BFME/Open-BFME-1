@@ -1,4 +1,4 @@
-# mods/: modding without decompiling
+# mods/: the cave mechanism, and what it costs to get wrong
 
 ## The mechanism
 

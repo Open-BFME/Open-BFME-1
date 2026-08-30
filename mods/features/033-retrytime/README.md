@@ -1,9 +1,9 @@
-# 033-retrytime — shorten the lockstep resend timer
+# 033-retrytime — frame-gap p99: 1769 ms → 420 ms
 
 `Connection::init` sets `m_retryTime = 2000`. Rewritten to `RETRY_MS` (400) at
 RVA `0x006623DE`. No cave, no detour — one imm32.
 
-**SHIPPED** in `mods/dist` as of 2026-08-29. See `docs/net-freeze-fix.md` for
+**SHIPPED** in `mods/dist` as of 2026-08-29. See `docs/net-fixes.md` for
 results; this file records the mechanism and the limits.
 
 ## Why 2000 is the wrong number
@@ -27,9 +27,11 @@ BFME diverges from Zero Hour here, and it matters:
 * Type 9 (`REQUESTFRAMEDATA`) is constructed only on the receive path and on
   player-leave.
 
-So a missing command blocks its frame forever. The victim freezes, the disconnect
-timers fire, they get dropped. The symptom is a **stuck seat and a drop**, not a
-CRC mismatch — a desync gate cannot see this.
+So a missing command blocks its frame forever, and the symptom would be a
+**stuck seat and a drop**, not a CRC mismatch — a desync gate cannot see this.
+
+**But that is the consequence of losing a command, not of every discard.** See
+below: every discard actually observed was of a command the peer already had.
 
 ## Duplicate delivery is safe, measured and traced
 
@@ -57,9 +59,33 @@ The timer must exceed the round trip or it retransmits before an ack can arrive.
 commented-out `m_retryTime = m_averageLatency * 1.5` brackets every value we
 found to work. Above ~300 ms RTT prefer 800; see `035-adaptretry`.
 
-## Unsettled
+## The discard branch, measured at the decision site
 
-The discard branch has never been caught executing — mechanism from disassembly
-plus circumstantial evidence. Which seat can abandon is unknown (an earlier
-headroom argument for "only the router" was withdrawn; headroom is not the guard
-quantity). All evidence is 2-player, 4-minute matches.
+`netlat_discard` hooks the decision itself and records the engine's own margin.
+One retail match, ~700 router game-command decisions:
+
+| | retail | 400 ms timer |
+|---|---|---|
+| game commands discarded | **18 / 713 (2.52%)** | **0 / 684** |
+| closest approach to the cliff | −8 frames | **+5 frames** |
+
+Retail crosses the guard routinely; the fix never comes within five frames of it.
+
+**Two results that cut against the alarming reading, both worth keeping:**
+
+* **Every discard observed was harmless.** All 18 had already reached the peer —
+  the guard fires when an *acknowledgement* is lost, and dropping an
+  already-delivered command costs nothing. The harmful case needs a discard AND
+  non-delivery (~p²) and has never been observed. So the fix removes a
+  *precondition*, not a measured disconnect.
+* **Only the router can discard a game command**, and structurally: a guest's own
+  commands carry `exec == -1` until the router binds them, and the guard skips
+  unbound commands (`cmp eax,-1; je`). A guest reaches this site only for frame
+  info. An earlier headroom argument for the same conclusion was withdrawn as
+  wrong reasoning; this is the measurement.
+
+## Still unsettled
+
+All evidence is 2-player, 4-minute matches. The harmful discard — one that was
+never delivered — has not been observed in any arm, and at ~0.3 expected per
+match that is the predicted outcome rather than evidence of absence.

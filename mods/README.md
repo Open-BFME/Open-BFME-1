@@ -1,4 +1,4 @@
-# mods/: features patched into retail lotrbfme.exe
+# mods/: the rules. `docs/mods.md` is the mechanism.
 
 Mods always stack. There is no mix-and-match and no per-feature build —
 `python3 tools/modbuild.py --dist` produces exactly one executable at
@@ -10,13 +10,11 @@ Nothing here is part of the byte-exact decomp. A mod never touches `Code/` or
 separation is what keeps the byte gate meaningful, and it is why this tree sits
 outside `Code/` rather than in it.
 
-Mechanism: `tools/cave.py` appends a `.bfmemod` section to the image and
-installs a 5-byte jmp-rel32 at the target, relocating the instructions it
-displaces. A feature therefore needs only an address and a struct layout — the
-target does **not** have to be decompiled. That is what makes the ~65% of
-`.text` still held as raw retail bytes reachable today.
+A feature needs only an address and a struct layout — the target does **not**
+have to be decompiled, which is what makes the `.text` still held as raw retail
+bytes reachable today. `docs/mods.md` has the mechanism and the gotchas.
 
-`docs/mods.md` is the guide; `tools/modbuild.py` is the authority on which
+`tools/modbuild.py` is the authority on which
 features exist. This file deliberately does not list them: it used to, as a
 `features = [...]` array in a `.toml` nothing ever parsed, and it was already
 wrong by the time anyone noticed. The numeric prefix on a feature directory is

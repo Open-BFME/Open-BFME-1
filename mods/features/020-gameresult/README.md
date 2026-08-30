@@ -1,4 +1,4 @@
-# 020-gameresult — who won, written to a file
+# 020-gameresult — match results, plus the desync flag retail hides
 
 Shipped in `mods/dist`, and the feature the ladder already runs.
 
