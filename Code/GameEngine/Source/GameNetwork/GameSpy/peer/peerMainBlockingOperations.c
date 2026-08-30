@@ -64,6 +64,10 @@ void piAddGetPlayerIPCallback(PEER peer, int success, const char *nick,
 	unsigned int IP, void *callback, void *param, int opID);
 int piNewGetIPOperation(PEER peer, const char *nick, void *callback,
 	void *param, int opID);
+void piAddGetPlayerProfileIDCallback(PEER peer, int success,
+	const char *nick, int profileID, void *callback, void *param, int opID);
+int piNewGetProfileIDOperation(PEER peer, const char *nick, void *callback,
+	void *param, int opID);
 void piAddConnectCallback(PEER peer, int success, int failureReason,
 	void *callback, void *param, int opID);
 void bfmePiDisconnectCleanupFromEsi(void);
@@ -343,6 +347,55 @@ void peerGetPlayerIPA(PEER peer, const char *nick, void *callback,
 
 	if (!success)
 		piAddGetPlayerIPCallback(peer, 0, nick, 0, callback, param, opID);
+
+	if (blocking)
+	{
+		do
+		{
+			msleep(1);
+			bfmePiThinkFromEsi(opID);
+		}
+		while (!piIsOperationFinished(peer, opID) ||
+			!piIsCallbackFinished(peer, opID));
+
+		if (connection->shutdown && connection->callbackDepth == 0)
+			peerShutdown(peer);
+	}
+}
+
+void peerGetPlayerProfileIDA(PEER peer, const char *nick, void *callback,
+	void *param, int blocking)
+{
+	piConnection *connection = (piConnection *)peer;
+	int success = 1;
+	piPlayer *player;
+	int opID = piGetNextID(peer);
+
+	player = piGetPlayer(peer, nick);
+	if (player && !player->gotIPAndProfileID)
+	{
+		const char *info;
+		unsigned int IP;
+		int profileID;
+
+		if (chatGetBasicUserInfoNoWaitA(connection->chat, nick, &info, 0) &&
+			piDemangleUser(info, &IP, &profileID))
+			piSetPlayerIPAndProfileID(peer, nick, IP, profileID);
+	}
+
+	if (player && player->gotIPAndProfileID)
+	{
+		piAddGetPlayerProfileIDCallback(peer, 1, nick, player->profileID,
+			callback, param, opID);
+	}
+	else if (!piNewGetProfileIDOperation(peer, nick, callback, param, opID))
+	{
+		success = 0;
+	}
+
+	if (!success)
+		piAddGetPlayerProfileIDCallback(peer, 0, nick, 0, callback, param,
+			opID);
 
 	if (blocking)
 	{
