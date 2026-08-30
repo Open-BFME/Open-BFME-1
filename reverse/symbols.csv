@@ -81234,3 +81234,7 @@ _piSetLocalFlags,0x00863C00,GameSpy Peer local-player flag update
 _piSendStateChanged,0x008667A0,GameSpy Peer query-reporting state update
 _piEnumRoomPlayers,0x008633E0
 _chatKickUserA,0x00861510
+??1BfmeCtorBaseD@@UAE@XZ,0x009A1A40,Open-BFME5 base destructor called by Gen_000FDA80 at 0x000FDB40
+??1BfmeCtorListD@@QAE@XZ,0x000FD4A0,Open-BFME5 list member destructor called by Gen_000FDA80 at 0x000FDB40
+??$_Construct@UcrateCreationEntry@@U1@@_STL@@YAXPAUcrateCreationEntry@@ABU1@@Z,0x0002E20D,CrateTemplate parser list element construction; ICF target is j_0002e20d
+_sscanf,0x009F6FA6,MSVCR71 sscanf import thunk; IAT slot 0x01359494 used by CrateTemplate parser

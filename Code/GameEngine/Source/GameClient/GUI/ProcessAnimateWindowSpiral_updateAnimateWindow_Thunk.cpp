@@ -1,283 +1,50 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME-DS06: lift retail bytes to standalone C++ thunk.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+#define __PLACEMENT_VEC_NEW_INLINE
+#define Matrix4x4 Matrix4
 
-class AnimateWindow;
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ProcessAnimateWindow.h
-class ProcessAnimateWindowSpiral
-{
-public:
-	virtual bool updateAnimateWindow(AnimateWindow *);
-};
+// Open-BFME: clean reconstruction of the retail Spiral animation update.
+
+#include "PreRTS.h"
+#include "GameClient/ProcessAnimateWindow.h"
+#include "GameClient/AnimateWindowManager.h"
+#include "GameClient/GameWindow.h"
 
 // ?updateAnimateWindow@ProcessAnimateWindowSpiral@@UAE_NPAVAnimateWindow@@@Z
-__declspec(naked) bool ProcessAnimateWindowSpiral::updateAnimateWindow(AnimateWindow *)
+Bool ProcessAnimateWindowSpiral::updateAnimateWindow( AnimateWindow *animWin )
 {
-	__asm {
-		__emit 0x83
-		__emit 0xec
-		__emit 0x1c
-		__emit 0x56
-		__emit 0x8b
-		__emit 0x74
-		__emit 0x24
-		__emit 0x24
-		__emit 0x85
-		__emit 0xf6
-		__emit 0x89
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x04
-		__emit 0x74
-		__emit 0x07
-		__emit 0x8a
-		__emit 0x46
-		__emit 0x41
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x09
-		__emit 0xb0
-		__emit 0x01
-		__emit 0x5e
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x1c
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
-		__emit 0x57
-		__emit 0x8b
-		__emit 0x7e
-		__emit 0x28
-		__emit 0x85
-		__emit 0xff
-		__emit 0x75
-		__emit 0x0a
-		__emit 0x5f
-		__emit 0xb0
-		__emit 0x01
-		__emit 0x5e
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x1c
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4e
-		__emit 0x1c
-		__emit 0x8b
-		__emit 0x46
-		__emit 0x18
-		__emit 0x8b
-		__emit 0x56
-		__emit 0x10
-		__emit 0x53
-		__emit 0x89
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x55
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x8b
-		__emit 0x46
-		__emit 0x14
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x51
-		__emit 0x8b
-		__emit 0xce
-		__emit 0x89
-		__emit 0x54
-		__emit 0x24
-		__emit 0x20
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0xe8
-		__emit 0x0c
-		__emit 0x77
-		__emit 0xb7
-		__emit 0xff
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0xd9
-		__emit 0xff
-		__emit 0xd8
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x18
-		__emit 0xda
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0xe8
-		__emit 0xe9
-		__emit 0xff
-		__emit 0x55
-		__emit 0x00
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0xd9
-		__emit 0xfe
-		__emit 0x8b
-		__emit 0xd8
-		__emit 0xd8
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x18
-		__emit 0xda
-		__emit 0x44
-		__emit 0x24
-		__emit 0x20
-		__emit 0xe8
-		__emit 0xd4
-		__emit 0xff
-		__emit 0x55
-		__emit 0x00
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x24
-		__emit 0x10
-		__emit 0xd8
-		__emit 0x62
-		__emit 0x04
-		__emit 0x8b
-		__emit 0xe8
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0x50
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x18
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x28
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x51
-		__emit 0xd8
-		__emit 0x05
-		__emit 0x44
-		__emit 0x53
-		__emit 0x07
-		__emit 0x01
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x20
-		__emit 0xe8
-		__emit 0x28
-		__emit 0x00
-		__emit 0xba
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x24
-		__emit 0x10
-		__emit 0xdb
-		__emit 0x42
-		__emit 0x08
-		__emit 0xd8
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x18
-		__emit 0xdf
-		__emit 0xe0
-		__emit 0xf6
-		__emit 0xc4
-		__emit 0x05
-		__emit 0x7a
-		__emit 0x0f
-		__emit 0x5d
-		__emit 0x5b
-		__emit 0xb0
-		__emit 0x01
-		__emit 0x5f
-		__emit 0x88
-		__emit 0x46
-		__emit 0x41
-		__emit 0x5e
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x1c
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
-		__emit 0x55
-		__emit 0x53
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0xdf
-		__emit 0x25
-		__emit 0xb8
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x18
-		__emit 0x89
-		__emit 0x6e
-		__emit 0x1c
-		__emit 0x5d
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x18
-		__emit 0x8b
-		__emit 0xd0
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x5b
-		__emit 0x8b
-		__emit 0xc1
-		__emit 0x89
-		__emit 0x46
-		__emit 0x30
-		__emit 0x5f
-		__emit 0x89
-		__emit 0x56
-		__emit 0x2c
-		__emit 0x89
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x32
-		__emit 0xc0
-		__emit 0x5e
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x1c
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
+	if (!animWin)
+		return TRUE;
+
+	if (animWin->isFinished())
+		return TRUE;
+
+	GameWindow *win = animWin->getGameWindow();
+	if (!win)
+		return TRUE;
+
+	ICoord2D curPos = animWin->getCurPos();
+	ICoord2D endPos = animWin->getEndPos();
+	Coord2D vel = animWin->getVel();
+
+	curPos.x = (vel.y * cos(vel.x)) + endPos.x;
+	curPos.y = (vel.y * sin(vel.x)) + endPos.y;
+
+	vel.x = vel.x - m_deltaTheta;
+	vel.y += 5;
+
+	ICoord2D size;
+	win->winGetSize(&size.x, &size.y);
+
+	if (vel.y > m_maxR)
+	{
+		animWin->setFinished(TRUE);
+		return TRUE;
 	}
+
+	win->winSetPosition(curPos.x, curPos.y);
+	animWin->setCurPos(curPos);
+	Coord2D storedVel = {vel.x, vel.y};
+	animWin->setVel(storedVel);
+	return FALSE;
 }
