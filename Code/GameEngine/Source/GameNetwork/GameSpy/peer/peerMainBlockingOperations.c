@@ -40,7 +40,11 @@ typedef struct piConnection
 	int passwordedRoom;
 	void *hostServer;
 	int ready;
-	char reservedReady[0x1824 - 0xB58];
+	char reservedReady[0x1784 - 0xB58];
+	void *gameListCallback;
+	void *gameListParam;
+	int initialGameList;
+	char reservedGameList[0x1824 - 0x1790];
 	int callbackDepth;
 	int away;
 	char awayReason[128];
@@ -145,6 +149,10 @@ int piNewCreateStagingRoomOperation(PEER peer, const char *name,
 void piLeaveRoom(PEER peer, int roomType, const char *reason);
 void piStopReporting(PEER peer);
 void piSBStopListingGames(PEER peer);
+int piSBStartListingGames(PEER peer, const unsigned char *fields,
+	int numFields, const char *filter);
+void piAddListingGamesCallback(PEER peer, int success, void *server,
+	int message);
 char *goastrdup(const char *text);
 int piNewAutoMatchOperation(PEER peer, unsigned int socket,
 	unsigned short port, void *statusCallback, void *rateCallback, void *param,
@@ -1170,6 +1178,26 @@ void peerStartAutoMatchA(PEER peer, int maxPlayers, const char *filter,
 {
 	peerStartAutoMatchWithSocketA(peer, maxPlayers, filter,
 		(unsigned int)-1, 0, statusCallback, rateCallback, param, blocking);
+}
+
+void peerStartListingGamesA(PEER peer, const unsigned char *fields,
+	int numFields, const char *filter, void *callback, void *param)
+{
+	piConnection *connection = (piConnection *)peer;
+	int success;
+
+	if (!connection->title[0])
+		return;
+	if (filter && !filter[0])
+		filter = 0;
+	if (!fields || numFields <= 0)
+		numFields = 0;
+
+	connection->gameListCallback = callback;
+	connection->gameListParam = param;
+	success = piSBStartListingGames(peer, fields, numFields, filter);
+	if (!success)
+		piAddListingGamesCallback(peer, 0, 0, 0);
 }
 
 typedef struct piEnumPlayersData
