@@ -77,3 +77,28 @@ def test_tail_jump_ignores_a_jump_in_the_middle():
     """A jump in the middle is control flow; a jump at the end is delegation."""
     assert not size_outlier.tail_jumps(b"\xe9\x00\x00\x00\x00" + b"\x90" * 40)
     assert size_outlier.tail_jumps(b"\x90" * 40 + b"\xe9\x00\x00\x00\x00")
+
+
+def test_a_derived_override_delegating_to_this_base_clears_it():
+    """The dominant false positive. Pipe::Flush is 17 bytes precisely BECAUSE
+    Base64Pipe::Flush is 299 and does the work, so a family median that counts
+    the derived implementations makes every base class look like an outlier."""
+    assert size_outlier.verdict("Flush", "Pipe", ["?Flush@Base64Pipe@@UAEHXZ"]) \
+        .startswith("CLEARED")
+
+
+def test_its_own_destructor_calling_it_clears_it():
+    """?Free@DistLODClass@@ is called by ??1DistLODClass@@ -- and a ctor/dtor
+    names its class WITHOUT a leading @, which a naive same-class test misses."""
+    assert size_outlier.verdict("Free", "DistLODClass", ["??1DistLODClass@@UAE@XZ"]) \
+        .startswith("CLEARED")
+
+
+def test_unrelated_callers_do_not_clear_it():
+    assert not size_outlier.verdict("f", "C", ["?g@Other@@QAEXXZ"]).startswith("CLEARED")
+
+
+def test_no_caller_is_undecided_not_confirmed():
+    """Silence is not evidence. Seven of the fourteen have no matched caller at
+    all, and none of them is thereby a defect."""
+    assert size_outlier.verdict("f", "C", []).startswith("UNDECIDED")

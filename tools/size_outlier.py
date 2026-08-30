@@ -123,15 +123,77 @@ def outliers(rows, read):
                 yield median, size, method, cls, row
 
 
+def method_and_class(name):
+    m = re.match(r"^\?([A-Za-z_0-9]+)@([A-Za-z_0-9]+)@@", name)
+    if m:
+        return m.group(1), m.group(2)
+    m = re.match(r"^\?\?[01]([A-Za-z_0-9]+)@@", name)   # ctor/dtor name the class directly
+    if m:
+        return "~ctor/dtor", m.group(1)
+    return None, None
+
+
+def callers_of(rows, addresses, data, secs):
+    """address -> [names of matched rows containing a direct call to it]."""
+    def off(rva):
+        for va, vsz, ptr, rsz in secs:
+            if va <= rva < va + max(vsz, rsz):
+                return ptr + (rva - va)
+    found = collections.defaultdict(list)
+    for row in rows:
+        try:
+            rva, size = int(row["target_rva"], 16), int(row["target_size"])
+        except ValueError:
+            continue
+        o = off(rva)
+        if o is None or size > 4000:
+            continue
+        body = data[o:o + size]
+        for i in range(len(body) - 4):
+            if body[i] == 0xE8:
+                t = (rva + i + 5 + struct.unpack_from("<i", body, i + 1)[0]) & 0xFFFFFFFF
+                if t in addresses:
+                    found[t].append(row["name"])
+    return found
+
+
+def verdict(method, cls, caller_names):
+    """A CALL SITE OUTRANKS THE SIZE HEURISTIC, and it clears far more than it
+    confirms. The dominant false positive is base-class delegation: Pipe::Flush
+    is 17 bytes precisely BECAUSE Base64Pipe::Flush is 299 and does the work, so
+    the family median -- which counts the derived implementations -- makes every
+    base look like an outlier. A caller with the SAME method name in a DIFFERENT
+    class is a derived override calling its base, and that clears it."""
+    same_method, own_class = [], []
+    for name in caller_names:
+        m, k = method_and_class(name)
+        if m == method and k != cls:
+            same_method.append(name)
+        elif k == cls:
+            own_class.append(name)
+    if same_method:
+        return "CLEARED - a derived override delegates to this base"
+    if own_class:
+        return "CLEARED - called by its own class"
+    if caller_names:
+        return "callers exist, none same-method or same-class"
+    return "UNDECIDED - no matched caller"
+
+
 def main(argv):
     rows = [r for r in B.load_function_rows() if r["status"] == "matched"]
     data, secs = _image()
     found = sorted(outliers(rows, reader(data, secs)), key=lambda t: (-t[0], t[1]))
+    calls = callers_of(rows, {int(r["target_rva"], 16) for *_, r in found}, data, secs)
+    tally = collections.Counter()
     print("forwarder-shaped size outliers: %d" % len(found))
     for median, size, method, cls, row in found:
-        print("  %4dB vs family median %5.0fB  %-30s %-24s %s  %s"
-              % (size, median, method[:30], cls[:24], row["target_rva"],
-                 row["source"].split("/")[-1][:34]))
+        names = sorted(set(calls.get(int(row["target_rva"], 16), [])))
+        v = verdict(method, cls, names)
+        tally[v.split(" - ")[0]] += 1
+        print("  %4dB vs family median %5.0fB  %-26s %-22s %s"
+              % (size, median, method[:26], cls[:22], v))
+    print("\n" + ", ".join("%s=%d" % kv for kv in sorted(tally.items())))
     return 0
 
 
