@@ -81144,3 +81144,7 @@ g_bfmeEmptyString1285,0x012D5298,address-derived shared empty-string sentinel ch
 _isdigit,0x009F7024,address-derived CRT import thunk called by the 0x008BA8B0 retail parser
 g_bfmeDirectionWeight1285,0x01075C74,address-derived perpendicular-distance weight used by the 0x008BA970 retail scorer
 g_bfmeInvalidScore1285,0x0109BF3C,address-derived invalid-direction sentinel returned by the 0x008BA970 retail scorer
+?bfmeFirst1285@BfmeIteratorList1285@@QAEPAUBfmeIterator1285@@XZ,0x0089D100,address-derived iterator begin method called by the 0x008BB3F0 retail body
+?bfmeNext1285@BfmeIteratorList1285@@QAEPAUBfmeIterator1285@@PAU2@@Z,0x0089D140,address-derived iterator advance method called by the 0x008BB3F0 retail body
+?bfmeAllows1285@BfmeRouteManager1285@@QAE_NPAUBfmeNode1285@@@Z,0x008A0C30,address-derived candidate filter called by the 0x008BB3F0 retail body
+g_bfmeMinimumScore1285,0x01075350,address-derived minimum directional score accepted by the 0x008BB3F0 retail body
