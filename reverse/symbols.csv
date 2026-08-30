@@ -73076,6 +73076,7 @@ name,address,notes
 ?bfmeElseBBC@BfmeThingBBC@@QAEXXZ,0x0000F36C,pin
 ?bfmeElseBBD@@YAXXZ,0x00842C00,pin
 ?bfmeEmit1023@@YAXPAXPAD0H@Z,0x00049E86,pin
+?bfmeEmit1231@BfmeA1231@@QAEXPAX0PAVBfmeE1231@@10H@Z,0x008CF5A0,pin
 ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z,0x0002CB79,Open-BFME5 ILT thunk to body 0x00417710; Gen_00417cb0::tail at 0x00417A70 calls it on this with the source result and its own argument; address-derived name in the same synthetic family as the class
 ?bfmeEnable@BfmeElemW@@QAEXHH@Z,0x000482AC,Open-BFME5 the ICF thunk (to 0x004482AC) the clear at 0x004B1720 calls on each element with a pair of ones
 ?bfmeEnd1100@BfmeZ1100@@QAEXH@Z,0x0003D578,pin
@@ -74537,6 +74538,7 @@ name,address,notes
 ?bfmeVal1038@BfmeY1038@@QAEHXZ,0x00033AC8,pin
 ?bfmeVal1089@BfmeR1089@@QAEHXZ,0x000271B5,pin
 ?bfmeVal1090@BfmeR1090@@QAEHXZ,0x000108CF,pin
+?bfmeVal1231@BfmeE1231@@QAEPAXXZ,0x00898300,pin
 ?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVecCtor1030@@YGXPAX0HHP6AXXZ1@Z,0x009F7036,pin
