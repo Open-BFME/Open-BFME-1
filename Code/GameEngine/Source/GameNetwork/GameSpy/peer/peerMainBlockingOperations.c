@@ -56,10 +56,17 @@ typedef struct piPlayer
 	int profileID;
 	int gotIPAndProfileID;
 	int flags[3];
-	char reservedFlags[0x80 - 0x68];
+	char reservedFlags[0x74 - 0x68];
+	int waitingForPing;
+	char reservedWaitingForPing[0x80 - 0x78];
 	int pingAverage;
 	char reservedPingAverage[0x98 - 0x84];
 	int numPings;
+	char reservedNumPings[0xA0 - 0x9C];
+	int inPingRoom;
+	char reservedInPingRoom[0xA8 - 0xA4];
+	int mustPing;
+	int pingOnce;
 } piPlayer;
 
 int piGetNextID(PEER peer);
@@ -856,6 +863,25 @@ int peerGetPlayerPingA(PEER peer, const char *nick, int *ping)
 			return 0;
 		*ping = player->pingAverage;
 	}
+	return 1;
+}
+
+int peerPingPlayerA(PEER peer, const char *nick)
+{
+	piPlayer *player = piGetPlayer(peer, nick);
+
+	if (!player)
+		return 0;
+	if (player->local)
+		return 0;
+	if (!player->gotIPAndProfileID)
+		return 0;
+	if (player->waitingForPing)
+		return 1;
+
+	player->mustPing = 1;
+	if (!player->inPingRoom)
+		player->pingOnce = 1;
 	return 1;
 }
 
