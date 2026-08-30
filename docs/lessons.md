@@ -4014,3 +4014,40 @@ honest thunk in the tree. Together: 14, with the tests pinning both boundaries.
 Sharpest of them: `?duplicate@Condition@@` at 5B against a 167B family,
 `?onEnter@AIInternalMoveToState@@` 5B against 122B, `?setPingString@GameSpyInfo@@`
 8B against 102B, `?Free@DistLODClass@@` 5B against 50B.
+
+## Never validate a layout fix against the CURRENT byte output
+
+GameWindow.cpp's `winSetPrev` body is `m_prev = prev`. Under our short header
+that writes +0x1EC, and retail's byte at that site agrees -- so the body **looks
+correct and is not**. `m_prev` is at +0x1FC; +0x1EC is `m_tooltip`, which a
+separate matched row already claims.
+
+So when correcting a layout, write the definitions in terms of the MEMBERS and
+let the corrected header supply the offsets. Checking the result against the
+bytes the current header produces confirms the bug: the agreement you are
+testing against is the thing you are fixing.
+
+Same shape as the six draw-data false greens one level up -- a body right about
+its member name and wrong about where that member lives, agreeing with retail
+because two errors cancel.
+
+## Two independent derivations meeting is the standard to reach BEFORE acting
+
+The GameWindow renames had a byte proof from one lane -- thirteen getters, each
+a single load, plus the setters read against them. They also had, from the other
+lane and derived independently, three ALREADY-MATCHED rows landing on the same
+offsets from the opposite side of the getter/setter pair:
+
+    matched winGetPrev reads +0x1FC   <->  the void winSetPrevInLayout writes +0x1FC
+    two matched rows read +0x200 as parent <-> the void winSetLayout writes +0x200
+    matched winSetTooltipFunc holds +0x1EC, so +0x1EC cannot also be m_prev
+
+**A matched getter and a matched setter agreeing on one offset settles a
+member.** Neither derivation used the other's evidence.
+
+Worth naming because today's retractions all share the opposite shape: a single
+derivation, acted on, then falsified. The five re-homings had one argument; the
+six-versus-nine setter claim had one grep whose disagreement with another was
+written off. Where a structural change is about to be made on inference, the
+question to ask first is not "how strong is my evidence" but "is there a second,
+independent route to it".
