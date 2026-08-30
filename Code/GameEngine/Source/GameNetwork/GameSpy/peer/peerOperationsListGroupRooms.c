@@ -39,6 +39,8 @@ typedef struct piConnection
 	int nextID;
 	void *operationList;
 	int operationsStarted;
+	char reserved2[0x1EF0 - 0x17A0];
+	piOperation *autoMatchOperation;
 } piConnection;
 
 void *memset(void *dest, int value, unsigned int count);
@@ -53,6 +55,7 @@ void chatChangeNickA(void *chat, const char *newNick, void *callback,
 void piAuthenticateCDKeyCallbackA(void);
 void chatAuthenticateCDKeyA(void *chat, const char *cdkey, void *callback,
 	void *param, int blocking);
+void piSetAutoMatchStatus(PEER peer, int status);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -166,5 +169,24 @@ PEERBool piNewAuthenticateCDKeyOperation(PEER peer, const char *cdkey,
 
 	chatAuthenticateCDKeyA(connection->chat, cdkey,
 		piAuthenticateCDKeyCallbackA, operation, 0);
+	return 1;
+}
+
+PEERBool piNewAutoMatchOperation(PEER peer, unsigned int socket,
+	unsigned short port, PEERCBType statusCallback,
+	PEERCBType rateCallback, void *param, int opID)
+{
+	piConnection *connection = (piConnection *)peer;
+	piOperation *operation =
+		piAddOperation(peer, 13, 0, statusCallback, param, opID);
+
+	if (!operation)
+		return 0;
+
+	operation->callback2 = rateCallback;
+	operation->socket = socket;
+	operation->port = port;
+	connection->autoMatchOperation = operation;
+	piSetAutoMatchStatus(peer, 1);
 	return 1;
 }

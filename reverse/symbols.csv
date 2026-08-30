@@ -81195,3 +81195,4 @@ _piChangeNickCallbackA,0x0085FCD0,GameSpy Peer change-nick completion callback
 _chatChangeNickA,0x008604C0,GameSpy Chat nick-change request
 _piAuthenticateCDKeyCallbackA,0x00860020,GameSpy Peer CD-key completion callback
 _chatAuthenticateCDKeyA,0x008607A0,GameSpy Chat CD-key authentication request
+_piSetAutoMatchStatus,0x008640A0,GameSpy Peer auto-match status transition
