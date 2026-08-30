@@ -81204,3 +81204,4 @@ _piJoinRoomEnumUsersCallbackA,0x0085F8A0,GameSpy Peer join-room user enumeration
 _chatEnumUsersA,0x00861130,GameSpy Chat ANSI channel-user enumeration
 _piLeaveRoom,0x00863EE0,GameSpy Peer room-leave operation
 _piCreateStagingRoomEnumUsersCallbackA,0x0085F4F0,GameSpy Peer staging-room user enumeration callback
+_piIsOperationFinished,0x0085F040,GameSpy Peer operation completion check
