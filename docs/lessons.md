@@ -4256,3 +4256,59 @@ does not distinguish them.
 **The cheap guard, wherever this pattern appears: report the number of surviving
 unmasked bytes alongside the verdict.** A match on 1 byte and a match on 600 are
 not the same claim, and today they printed the same way in three different tools.
+
+## THE AMBIGUOUS-HEAL PROCEDURE (there was no "three-filter recipe"; here is the real one)
+
+A phrase -- "re-anchor with the three-filter recipe" -- circulated between two
+lanes and a lead as though it named a documented procedure. It did not exist
+anywhere. What follows was derived from the data instead, and both filters are
+demonstrated on real cases.
+
+On an ambiguous heal, BEFORE reaching for a re-anchor:
+
+**(1) Drop any candidate with no unmasked byte.** `holds_funclet` masks every
+relocation site on both sides, so a body that is entirely relocations compares
+equal to any target of its length. AIPlayer.cpp's `$L86009` is a data table of
+four label pointers covering all eight bytes; it tied with `$L85915`, which is
+retail's own `lea ecx,[ebp-0x14]; jmp <dtor>`. Requiring one surviving byte
+separates them without choosing between them. **Implemented and tested.**
+
+**(2) When the survivors differ only INSIDE the masked region, resolve the
+relocation.** `uw_00c46f00` in LANGameInfo.cpp has three candidates that really
+are byte-identical in everything `holds_funclet` compares -- `$L49714`,
+`$L49524`, `$L49691`, each four unmasked bytes of `lea ecx,[ebp-0x14]; jmp`.
+Their relocation TARGETS differ:
+
+    $L49714 -> ??1UnicodeString@@QAE@XZ
+    $L49524 -> ??1?$pair@$$CBVUnicodeString@@V1@@_STL@@QAE@XZ
+    $L49691 -> ??1UnicodeString@@QAE@XZ
+
+and retail settles it: decoding the jump in the target bytes gives 0x00047EFB,
+the ILT `?j_00047efb@@YAXXZ`, which forwards to 0x0068E6D0 -- the **pair**
+destructor. Only `$L49524` relocates where retail jumps. `load_symbol_map`
+already builds the body-plus-thunks list this needs. **Demonstrated by hand, not
+yet implemented.**
+
+**(3) Only if more than one survives both filters is it a genuine tie** -- and
+then it is a boundary finding, not a task.
+
+**The insight worth carrying past funclets: the masking is correct for the
+COMPARISON and wrong for the TIE-BREAK.** A pre-link addend is not an address, so
+masking it is right when asking "are these the same body". But when two bodies
+have already compared equal, the only thing left to distinguish them is exactly
+what was masked. **A discriminator can live precisely where the comparison
+refuses to look.**
+
+## A second "permanently blocked" verdict overturned by measurement
+
+`isUser@LANGameSlot` -- 132 bytes with "zero differences outside two REL32s" --
+is logged as blocked, with the only escapes recorded as a new anchor or a
+separate thunk TU. Its sole blocker was the `uw_00c46f00` tie above, and that tie
+is resolvable. The verdict was a correct measurement of what was then visible and
+is now simply out of date.
+
+That is the second today, after the "cannot come home" AudioEventRTS verdict that
+a padded local closed. **A logged verdict is a measurement, not a door.** Both
+were overturned by looking at evidence the original measurement had no reason to
+consult -- and in both cases the person who overturned it went and re-derived
+rather than trusting the note.
