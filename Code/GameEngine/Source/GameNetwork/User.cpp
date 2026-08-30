@@ -78,8 +78,8 @@ Bool User::operator!= (const User *other)
 /**
  * Set the name of this user.
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/User_setName_Thunk.cpp
-// ?setName@User@@ present-unmatched
+// BFME keeps User::m_name at +0x4c where this tree lands it at +4.
+#define BFME_USER_NAME(u) (*(UnicodeString *)((char *)(u) + 0x4c))
 void User::setName(UnicodeString name) {
-	m_name.set(name);
+	BFME_USER_NAME(this).set(name);
 }
