@@ -22,17 +22,26 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BASELINE = ROOT / "reverse" / "identity_baseline.txt"
 
-# (label, tool, regex over the tool's stdout capturing an integer count)
+# An ANCHOR is a line the tool prints unconditionally, so its presence proves the
+# output is still the format the count pattern was written against. multi_name
+# tallies its verdicts and prints only the categories that occurred, so a
+# category that falls to zero loses its line entirely: without an anchor there
+# is no way to tell "clean" from "the format moved", and guessing either way is
+# wrong. A check whose anchor is None must always print its own line.
+# (label, tool, count regex, anchor regex or None)
 CHECKS = [
     ("multi_name.family",
      "multi_name.py",
-     re.compile(r"^\s+(\d+)\s+FOLDS HERE but the names are one family member apart", re.M)),
+     re.compile(r"^\s+(\d+)\s+FOLDS HERE but the names are one family member apart", re.M),
+     re.compile(r"^matched rows; addresses claimed by 2\+ names: \d+", re.M)),
     ("multi_name.different",
      "multi_name.py",
-     re.compile(r"^\s+(\d+)\s+DIFFERENT BODIES - cannot share an address", re.M)),
+     re.compile(r"^\s+(\d+)\s+DIFFERENT BODIES - cannot share an address", re.M),
+     re.compile(r"^matched rows; addresses claimed by 2\+ names: \d+", re.M)),
     ("size_outlier.indicted",
      "size_outlier.py",
-     re.compile(r"none same-method or same-class=(\d+)")),
+     re.compile(r"none same-method or same-class=(\d+)"),
+     None),
 ]
 
 
@@ -52,7 +61,7 @@ def read_baseline():
 
 def measure():
     cache, found = {}, {}
-    for label, tool, pattern in CHECKS:
+    for label, tool, pattern, anchor in CHECKS:
         if tool not in cache:
             done = subprocess.run([sys.executable, str(ROOT / "tools" / tool)],
                                   capture_output=True, text=True, cwd=ROOT)
@@ -62,10 +71,16 @@ def measure():
         match = pattern.search(cache[tool])
         if match is None:
             # A silent zero here would read as "clean" -- the exact failure this
-            # whole family of checks exists to catch.
-            sys.exit(f"identity_guard: could not find the {label} count in "
-                     f"{tool}'s output. The tool's format changed; fix the "
-                     f"pattern rather than assuming zero.")
+            # whole family of checks exists to catch. Read zero only when the
+            # anchor proves the tool did print its tally and this category
+            # simply did not occur in it.
+            if anchor is None or not anchor.search(cache[tool]):
+                sys.exit(f"identity_guard: could not find the {label} count in "
+                         f"{tool}'s output, and its anchor line is missing too. "
+                         f"The tool's format changed; fix the pattern rather "
+                         f"than assuming zero.")
+            found[label] = 0
+            continue
         found[label] = int(match.group(1))
     return found
 

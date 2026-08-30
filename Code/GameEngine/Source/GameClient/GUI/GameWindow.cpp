@@ -1884,6 +1884,7 @@ Int GameWindow::winSetEnabledImage( Int index, const Image *image )
 // GameWindow::winSetEnabledColor =============================================
 /** set color for enabled state at index */
 //=============================================================================
+// ?winSetEnabledColor@GameWindow@@QAEHHH@Z present-unmatched
 Int GameWindow::winSetEnabledColor( Int index, Color color )
 {
 
