@@ -3350,8 +3350,10 @@ so it reintroduces exactly this race. Use
 read the stash list, or better, wait for the tree to be yours.
 
 ## ICF needs identical RELOCATIONS, so relocations decide it -- not size
-**(The naive form of this test is WRONG. Read the correction below before using
-it: compare relocation STRUCTURE, never target names.)**
+**FALSIFIED AS A RULE ABOUT IDENTITY. Retail folds constructors that store
+DIFFERENT vftables. This test says whether two bodies are byte-identical; it
+does NOT say whether a shared address is a mis-anchoring. See "a call site beats
+stub topology" below. It cost five wrong retirements.**
 
 The ambiguous middle of the mis-anchored list was framed as a size question:
 bodies between 32 and 130 bytes where an ICF fold is a live alternative to a
@@ -3916,3 +3918,46 @@ data reference to a named global -- so no direct call could resolve wrongly).
 
 Check what your filter excludes at BOTH ends. A tool built to measure distance
 will quietly drop the zero.
+
+## A CALL SITE beats stub topology, and beats the relocation argument
+
+Five rows were re-homed on this reasoning: ICF needs identical bodies WITH
+identical relocations, so two module constructors storing different vftables can
+never fold, so each stub must belong to whichever class owns the body it jumps
+to. **Retail folds them anyway.** All five re-homings were wrong and are
+retracted.
+
+The evidence that settles it is the caller, not the stub:
+
+    0x00048B9E  called by friend_newModuleInstance of AutoHealBehavior,
+                SpyVisionUpdate, EMPUpdate and FireOCLAfterWeaponCooldownUpdate
+    0x0002A379  called by FireWeaponWhenDamagedBehavior and MobMemberSlavedUpdate
+    0x0001002D  called by BridgeScaffoldBehavior and ParkingPlaceBehavior
+
+Several classes' factories calling ONE constructor stub is direct evidence of a
+real fold. Each row was a legitimate member of an ICF group.
+
+**The rule: the unique-stub test says which body a stub REACHES. It cannot say
+whose that body IS when the body is shared.** A matched caller that names the
+symbol outranks any inference from topology or from relocation structure. Check
+callers before re-homing anything.
+
+Note what still stands, because it was re-verified the same way rather than
+assumed: the TeamsInfoRec trio at 0x0000D828 keeps its retirement -- its 31
+matched callers are all destructor paths (`_Destroy`, `__destroy_aux`,
+`_M_clear`, scalar-deleting destructors), which is what a string destructor's
+thunk looks like and not what `addTeam` looks like. SidesList 0x00C2787D and
+0x00495580 have no matched callers at all, so they rest on their own evidence.
+
+## Retiring a row can break a matched row in ANOTHER file, and delta verify misses it
+
+Retiring the AutoHealBehavior row broke `?friend_newModuleInstance@AutoHealBehavior@@`
+at 0x00114200 -- a 96-byte matched body in a different file -- with
+`unresolved call(s)`. **The delta verify that passed when the retirement landed
+only built the donor.**
+
+So: a retirement removes a symbol from the map, and any matched row that CALLS
+that symbol loses its address. Before retiring, scan matched rows for calls to
+the address. The full gate is the only thing that catches this after the fact,
+which is an argument for running one after a batch of retirements even when each
+one verified individually.
