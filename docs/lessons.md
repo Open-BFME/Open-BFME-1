@@ -4229,9 +4229,13 @@ retiring the tool or quietly trusting it.
 Three places in this tree mask bytes before comparing, and the same failure hides
 in each. Stated once, because it has now been discovered three times separately:
 
-**Wherever you mask before comparing, a input with nothing left unmasked
+**Wherever you mask before comparing, an input with nothing left unmasked
 compares equal to EVERYTHING of its length. That is an absence of evidence, and
 counting it as a match is how the comparison certifies whatever you hand it.**
+
+(This is the QUANTITY failure -- filter 1 above. It is distinct from the
+LOCATION failure, where the bytes that survive masking are identical and the
+discriminator sits in the masked region. Different diagnoses, different fixes.)
 
     the FOLD comparison    -- "a 100% masked screen is necessary, not sufficient".
                               openDataChunk scores 100% and still fails, because
@@ -4292,12 +4296,28 @@ yet implemented.**
 **(3) Only if more than one survives both filters is it a genuine tie** -- and
 then it is a boundary finding, not a task.
 
-**The insight worth carrying past funclets: the masking is correct for the
-COMPARISON and wrong for the TIE-BREAK.** A pre-link addend is not an address, so
-masking it is right when asking "are these the same body". But when two bodies
-have already compared equal, the only thing left to distinguish them is exactly
-what was masked. **A discriminator can live precisely where the comparison
-refuses to look.**
+**The two filters are DIFFERENT failure modes and must not be collapsed.**
+
+  * **Filter 1 is about the QUANTITY of evidence.** `$L86009` did not hide a
+    discriminator -- it had no unmasked region at all, so nothing about it was
+    ever compared in either direction. This is the repo's own "a 100% masked
+    screen is necessary, not sufficient", applied to a tie-break instead of a
+    fold. Someone handed the filter-2 rule and AIPlayer's tie would go hunting
+    for a discriminator inside a data table's relocations, and there is nothing
+    there to find.
+  * **Filter 2 is about the LOCATION of evidence.** The LANGameInfo candidates
+    had IDENTICAL unmasked bytes; the only thing separating them was the
+    relocation target, which is exactly what the comparison masks. Once two
+    bodies have compared equal, the discriminator can only be in what was
+    masked.
+
+**And filter 2 does NOT mean "unmask it".** A pre-link addend genuinely is not
+an address, so comparing those bytes raw compares nothing meaningful. Filter 2 is
+a DIFFERENT OPERATION: resolve the relocation's SYMBOL to its ledger address,
+thunks included, and compare that against the destination decoded from retail's
+own bytes. A symbolic comparison where the byte comparison has nothing to say --
+not the same comparison with masking switched off. That distinction is the whole
+implementation.
 
 ## A second "permanently blocked" verdict overturned by measurement
 
