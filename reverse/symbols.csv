@@ -72601,6 +72601,7 @@ name,address,notes
 ?bfmeBigFreePM@@YAXPAX@Z,0x0002AB35,pin
 ?bfmeBigFreePZ@@YAXPAX@Z,0x0002AB35,pin
 ?bfmeBigFreeQJ@@YAXPAX@Z,0x0002AB35,pin
+?bfmeBind1282@BfmeQ1282@@QAEXPAX@Z,0x000361CE,pin
 ?bfmeBlendTileEmit@@YAXPAD0HH@Z,0x00747940,Open-BFME5 the 180-byte cdecl emitter the blendTileData at 0x0074A240 finishes with
 ?bfmeBlendTileFits@@YG_NGHPADH@Z,0x000274A8,Open-BFME5 ILT the blendTileData at 0x0074A240 tests through
 ?bfmeBlendTileOffset@BFMERetailWorldHeightMapBlendTileDataShim@@AAEHHPAUTBlendTileInfo@@@Z,0x0003D965,Open-BFME5 ILT the blendTileData at 0x0074A240 asks for its offset through
@@ -73220,6 +73221,7 @@ name,address,notes
 ?bfmeFinish1010A@BfmeA1010@@QAEXXZ,0x0002A05E,pin
 ?bfmeFinish1010B@BfmeThing1010@@QAEXH@Z,0x0001AA0A,pin
 ?bfmeFinish1013@BfmeB1013@@QAEXXZ,0x00011464,pin
+?bfmeFinish1282@BfmeA1282@@QAEXPAVBfmeQ1282@@HHH@Z,0x0001C7EC,pin
 ?bfmeFinish961@BfmeGate961@@QAEXXZ,0x0002D169,pin
 ?bfmeFinish991@@YAXXZ,0x000114DC,pin
 ?bfmeFinish@Gen_0015BCB0@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 tail-jump to
@@ -80460,6 +80462,7 @@ _bfmeStep1214A,0x008D0F10,pin
 _bfmeStep1214B,0x008CD130,pin
 _bfmeStep1215A,0x008D0B00,pin
 _bfmeStep1216A,0x008D0F10,pin
+_bfmeStep1282@12,0x00012F5D,pin
 _bfmeStrAEYC,0x00C76C18,pin
 _bfmeStrBEYC,0x00C76C14,pin
 _bfmeStrDULa,0x00D1D7F0,pin
