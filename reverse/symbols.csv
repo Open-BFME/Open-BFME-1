@@ -76955,6 +76955,8 @@ name,address,notes
 ?getCompressionType@CompressionManager@@SA?AW4CompressionType@@PBXH@Z,0x0081E560,decode_calls pin for isDataCompressed/getUncompressedSize callee
 ?getContainCount@TunnelTracker@@QAEIH@Z,0x00036165,Open-BFME5 ILT; BFME gives it an argument the reference does not have and ?canSwitchIndexToIndex@CaveSystem@@QAE_NHH@Z at 0x003782D0 passes zero at both call sites
 ?getControllingPlayer@Object@@QBEPAVPlayer@@XZ,0x00020824
+?bfmeMeleeHordeTargetInvalid@@YA_NPAVObject@@0@Z,0x0002056D,AIAttackMeleeHordeWaitState target-shape helper ILT
+?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z,0x00049413,TU-specific name for the relative-angle helper used by AIAttackMeleeHordeWaitState
 ?getControllingPlayer@Team@@QBEPAVPlayer@@XZ,0x0002369B
 ?getControllingPlayer@TeamPrototype@@QBEPAVPlayer@@XZ,0x0000F2DB,TeamInQueue disband call pin
 ?getCountdownPercent@OCLUpdate@@QAEMXZ,0x00047069,Open-BFME5 ILT; ?updateContextOCLTimer@ControlBar@@AAEXXZ at 0x004AA980 passes its result to the text display
@@ -78536,6 +78538,7 @@ name,address,notes
 ?isSignificantlyAboveTerrain@Thing@@QBE_NXZ,0x00019FF1,pristine EA setGoalPositionClipped call and retail AI/Drawable callers identify Thing terrain-height helper ILT
 ?isSlotLocalAlly@@YA_NPBVGameSlot@@@Z,0x0061ED20
 ?isStealthedAndUndetected@BFMEObjectStealthQuery@@QBE_NPBVObject@@@Z,0x00003B1B,TU-specific ABI name for the stealth visibility query ILT; target body 0x001CAEE0 proves the semantics while its canonical retail spelling remains unknown
+?isGoalObjectDestroyed@StateMachine@@QBE_NXZ,0x0000432C,StateMachine goal-object destroyed query ILT
 ?isSupplySourceAttacked@AIPlayer@@QAE_NXZ,0x0003C542,Open-BFME5 ILT at guardSupplyCenter 0x001668CE; the returned Bool gates the attacked supply-center lookup
 ?isTimeFast@ScriptEngine@@QAE_NXZ,0x0000A8A8,ILT for the ScriptEngine fast-mode query at 0x00336FB0
 ?isTimeFrozenDebug@ScriptEngine@@QAE_NXZ,0x0003F23D,ILT for the logic-frame debug freeze gate body at 0x00336F20
