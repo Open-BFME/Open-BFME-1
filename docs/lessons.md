@@ -4879,3 +4879,39 @@ worth writing even when you cannot discharge it.** It let a later measurement
 close a question its author had correctly refused to guess at. Contrast the
 fabricated `winSetDisabledImage` mechanism, which asserted a reason and cost a
 reader the work of refuting it.
+
+## Predict the OFFSET, not just which rows go red
+
+The prediction discipline sharpened by one turn. First use predicted a set of
+rows and got ten where three were named -- a falsification, correctly reverted.
+Second use predicted **each row's resulting offset**:
+
+    winGetEnabledColor        -> +0x4C   measured +0x4C
+    winGetDisabledBorderColor -> +0xBC   measured +0xBC
+    winGetHiliteColor         -> +0x124  measured +0x124
+    setTooltipDelay           -> 0x1C8 against retail 0x1C4, red with no home
+    ... 11 predicted, 11 measured, zero unpredicted
+
+**A set of row names can be satisfied by a wrong model that happens to break the
+same rows. A set of offsets cannot.** Predicting where each row LANDS turns the
+check from "did I anticipate the damage" into "is my model of the layout right",
+and it costs nothing extra to write down.
+
+Note the fix that came out of it was not the one authorised: not an invented
+`m_bfmeAnchor`, but **restoring `m_userData` to its ZH position in front of
+`m_instData`**, which `gamewindowlist` had moved to the tail. Restoring a
+vendored position beats adding a BFME-only member whenever the arithmetic allows
+both -- one asserts less.
+
+## Two independent routes meeting on the same three bodies
+
+The Colour field order was derived from **callers** (six single-name BorderColor
+bodies across two groups, counted by body). The probe then derived it from
+**layout**: with the field order corrected, Color lands at elem+8 -> +0x50 /
++0xBC / +0x128, which are 0x0047A280 / 0x0047A2C0 / 0x0047A300 -- the three
+`?dup_` placeholder bodies.
+
+Neither route used the other's evidence, and the rotation-hole argument predicted
+the holes before either had been checked. **Three independent derivations meeting
+on the same three addresses** is the strongest standard reached on this class,
+and it is the standard the two reverted attempts did not have.
