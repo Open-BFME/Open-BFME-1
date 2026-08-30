@@ -81020,6 +81020,8 @@ _setsockopt@20,0x0081BE50,vendored=gamespy-2004
 _shutdown@8,0x0081BE44,vendored=gamespy-2004
 _simpleexp,0x0099C810,decode_calls pin for _subexpr callee
 _socket@12,0x0081BE1A,vendored=gamespy-2004
+??$_Construct@UcrateCreationEntry@@U1@@_STL@@YAXPAUcrateCreationEntry@@ABU1@@Z,0x0002E20D,CrateTemplate parser list element construction; ICF target is j_0002e20d
+_sscanf,0x009F6FA6,MSVCR71 sscanf import thunk; IAT slot 0x01359494 used by CrateTemplate::parseCrateCreationEntry
 _sprintf,0x009F6DE2,V2 lane: sprintf import thunk (reverse/functions.csv gen-import ?ji_009f6de2@@YAXXZ names the same address)
 _stat,0x0099D0C0,pin _stat from _chunk call site @0x99D2FC (retail target 0x99D0C0)
 _str_checkname,0x0099AC90,vendored=lua-4.0.1
