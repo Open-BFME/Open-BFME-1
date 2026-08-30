@@ -76000,6 +76000,7 @@ name,address,notes
 ?g_bfmeK1058@@3PAVBfmeK1058@@A,0x00EF70E8,pin
 ?g_bfmeKey1026@@3PADA,0x00D096E8,pin
 ?g_bfmeKey1027@@3PADA,0x00D096F4,pin
+?g_bfmeLeft1221@@3HA,0x00ED5DC8,pin
 ?g_bfmeLimit952@@3MA,0x00C977E8,pin
 ?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
@@ -76079,6 +76080,7 @@ name,address,notes
 ?g_bfmeName1019@@3PADA,0x00D2A5A8,pin
 ?g_bfmeName1052@@3PADA,0x00D2C144,pin
 ?g_bfmeName1053@@3PADA,0x00C892DC,pin
+?g_bfmeNext1221@@3PAIA,0x00F391A4,pin
 ?g_bfmeObj1006@@3PAUBfmeObj1006@@A,0x00EF4C38,pin
 ?g_bfmeObj2EGE@@3PAVBfmeObj2EGE@@A,0x00EF148C,pin
 ?g_bfmeObj985@@3PAUBfmeObj985@@A,0x00EF4B40,pin
@@ -80311,6 +80313,7 @@ _bfmeOffEAB,0x00D05E70,pin
 _bfmeOnEAA,0x00D09920,pin
 _bfmeOnEAB,0x00D05E6C,pin
 _bfmeRegZB,0x00EF1094,pin
+_bfmeReload1221,0x008D3AE0,pin
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
 _bfmeSearch1155,0x0082F1A0,pin
 _bfmeStep1211A,0x008D0B00,pin
