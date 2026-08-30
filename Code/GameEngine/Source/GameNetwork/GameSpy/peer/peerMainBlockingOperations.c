@@ -1016,6 +1016,13 @@ void peerSetTitleRoomChannelA(PEER peer, const char *channel)
 	connection->titleRoomChannel[256] = '\0';
 }
 
+void *peerGetHostServer(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	return connection->hostServer;
+}
+
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
 {
 	piConnection *connection = (piConnection *)peer;
