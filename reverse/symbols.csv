@@ -2158,6 +2158,7 @@ name,address,notes
 ??0BfmeMemberB_009CF070@@QAE@ABV0@@Z,0x009CEBF0,Open-BFME5 the second-member copy ctor the two-member ctor at 0x009CF070 calls
 ??0BfmeNamedSlot@@QAE@ABVAsciiString@@H@Z,0x00025306,Open-BFME5 ILT thunk; ??0BloodthirstyUpdateModuleData@@QAE@XZ at 0x00286EC0 constructs its two 0x70-byte members at +0x10 and +0x80 through it with the global AsciiString and a zero; address-derived name
 ??0BfmeOnlineProfileScreen@@QAE@PAX@Z,0x00035283,ILT thunk to the online profile screen constructor at 0x00557C00
+??0BfmeQ1275@@QAE@XZ,0x00037EC5,pin
 ??0BfmeQMiddle@@QAE@PAX0@Z,0x0000C315,Open-BFME5 the base the multi-vftable constructor at 0x002D7770 forwards to
 ??0BfmeQuickMatchScreenBase@@QAE@PAX@Z,0x00025D7E,ILT thunk to the base screen constructor at 0x00470620
 ??0BfmeRMiddle@@QAE@PAX0@Z,0x00041CBD,Open-BFME5 the base the multi-vftable constructors at 0x005F2D20 and 0x005F6530 forward to
@@ -17314,6 +17315,7 @@ name,address,notes
 ?b_000ba930@@YAXXZ,0x000BA930,gen-thunk body
 ?b_000ba9b0@@YAXXZ,0x000BA9B0,gen-thunk body
 ?b_000baaa0@@YAXXZ,0x000BAAA0,gen-thunk body
+?b_000bab30@@YAXXZ,0x000BAB30,gen-thunk body
 ?b_000babf0@@YAXXZ,0x000BABF0,gen-thunk body
 ?b_000bad60@@YAXXZ,0x000BAD60,gen-thunk body
 ?b_000bae50@@YAXXZ,0x000BAE50,gen-thunk body
@@ -17384,6 +17386,7 @@ name,address,notes
 ?b_000bcc80@@YAXXZ,0x000BCC80,gen-thunk body
 ?b_000bcce0@@YAXXZ,0x000BCCE0,gen-thunk body
 ?b_000bcd40@@YAXXZ,0x000BCD40,gen-thunk body
+?b_000bcd80@@YAXXZ,0x000BCD80,gen-thunk body
 ?b_000bce80@@YAXXZ,0x000BCE80,gen-thunk body
 ?b_000bcfa0@@YAXXZ,0x000BCFA0,gen-thunk body
 ?b_000bd060@@YAXXZ,0x000BD060,gen-thunk body
@@ -35371,8 +35374,11 @@ name,address,notes
 ?b_002c0e70@@YAXXZ,0x002C0E70,gen-thunk body
 ?b_002c0fd0@@YAXXZ,0x002C0FD0,gen-thunk body
 ?b_002c0fe0@@YAXXZ,0x002C0FE0,gen-thunk body
+?b_002c1150@@YAXXZ,0x002C1150,gen-thunk body
 ?b_002c11a0@@YAXXZ,0x002C11A0,gen-thunk body
 ?b_002c11d0@@YAXXZ,0x002C11D0,gen-thunk body
+?b_002c11e0@@YAXXZ,0x002C11E0,gen-thunk body
+?b_002c1250@@YAXXZ,0x002C1250,gen-thunk body
 ?b_002c1260@@YAXXZ,0x002C1260,gen-thunk body
 ?b_002c12e0@@YAXXZ,0x002C12E0,gen-thunk body
 ?b_002c1480@@YAXXZ,0x002C1480,gen-thunk body
@@ -46332,6 +46338,7 @@ name,address,notes
 ?b_004390e0@@YAXXZ,0x004390E0,gen-thunk body
 ?b_00439120@@YAXXZ,0x00439120,gen-thunk body
 ?b_00439130@@YAXXZ,0x00439130,gen-thunk body
+?b_00439150@@YAXXZ,0x00439150,gen-thunk body
 ?b_00439200@@YAXXZ,0x00439200,gen-thunk body
 ?b_00439220@@YAXXZ,0x00439220,gen-thunk body
 ?b_00439280@@YAXXZ,0x00439280,gen-thunk body
@@ -72914,6 +72921,7 @@ name,address,notes
 ?bfmeDo1100@@YAXH@Z,0x00024848,pin
 ?bfmeDo1207@BfmeA1207@@QAEXABUBfmeV1207@@00000H@Z,0x00024BCC,pin
 ?bfmeDo1235@BfmeN1235@@QAEXPAX0@Z,0x008AE180,pin
+?bfmeDo1275@BfmeA1275@@QAEXHHPAVBfmeQ1275@@HH@Z,0x00023448,pin
 ?bfmeDo912C@BfmeThing912C@@QAEXPAUBfmeNode912C@@@Z,0x009F4D80,pin
 ?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
 ?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
@@ -81087,9 +81095,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?b_00439150@@YAXXZ,0x00439150,gen-thunk body
-?b_002c11e0@@YAXXZ,0x002C11E0,gen-thunk body
-?b_002c1250@@YAXXZ,0x002C1250,gen-thunk body
-?b_000bcd80@@YAXXZ,0x000BCD80,gen-thunk body
-?b_002c1150@@YAXXZ,0x002C1150,gen-thunk body
-?b_000bab30@@YAXXZ,0x000BAB30,gen-thunk body
