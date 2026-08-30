@@ -13,6 +13,7 @@ class BfmeSlotDispatcher1281
 public:
 	void bfmeRouteEncoded1281(unsigned int encoded);
 	void bfmeFlushSlots1289();
+	void bfmeApplyPosition1291();
 
 private:
 	char m_padding00[0x1238];
@@ -61,5 +62,24 @@ void BfmeSlotDispatcher1281::bfmeFlushSlots1289()
 		m_reset1264 = 0;
 	}
 	m_count1238 = 0;
+}
+
+void BfmeSlotDispatcher1281::bfmeApplyPosition1291()
+{
+	float x = m_positionX1274 - m_offsetX1254;
+	float y = m_positionY1278 - m_offsetY1258;
+	const float unset = -9999.0f;
+
+	if (m_minX1244 != unset && x < m_minX1244)
+		x = m_minX1244;
+	if (m_maxX124c != unset && x > m_maxX124c)
+		x = m_maxX124c;
+	if (m_minY1248 != unset && y < m_minY1248)
+		y = m_minY1248;
+	if (m_maxY1250 != unset && y > m_maxY1250)
+		y = m_maxY1250;
+
+	m_state1240->bfmeSetAxis1289(0, x, 1);
+	m_state1240->bfmeSetAxis1289(1, y, 1);
 }
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD

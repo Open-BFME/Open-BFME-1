@@ -81132,3 +81132,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0BfmeNestedBE@@QAE@HIH@Z,0x00892DA0,address-derived nested constructor called by BfmeThingBE at 0x008BE3B0
 ?bfmeFlushSlots1289@BfmeSlotDispatcher1281@@QAEXXZ,0x008BCD80,address-derived slot-state flush reconstructed from the 0x008BCD80 retail body
 ?bfmeSetAxis1289@BfmeSlotState1289@@QAEXHMH@Z,0x008AC9F0,address-derived axis setter called twice by the 0x008BCD80 retail body
+?bfmeApplyPosition1291@BfmeSlotDispatcher1281@@QAEXXZ,0x008BB0B0,address-derived coordinate clamp reconstructed from the 0x008BB0B0 retail body
