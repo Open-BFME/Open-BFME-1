@@ -1109,6 +1109,13 @@ void peerUTMRoomA(PEER peer, int roomType, const char *command,
 		authenticate);
 }
 
+void peerStartAutoMatchA(PEER peer, int maxPlayers, const char *filter,
+	void *statusCallback, void *rateCallback, void *param, int blocking)
+{
+	peerStartAutoMatchWithSocketA(peer, maxPlayers, filter,
+		(unsigned int)-1, 0, statusCallback, rateCallback, param, blocking);
+}
+
 void peerAlwaysGetPlayerInfo(PEER peer, int always)
 {
 	piConnection *connection = (piConnection *)peer;
