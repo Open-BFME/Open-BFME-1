@@ -76,6 +76,26 @@ client really has its own address before looking anywhere else.
 Every offset above is read from a body that reproduces retail byte for byte, so
 this is what the shipped game does rather than what the reference source says.
 
+## The message-type numbers are not the reference source's
+
+BFME's `LANMessage` enum carries two more message types ahead of
+`MSG_INACTIVE` than the Zero Hour source does, so the type byte it puts on the
+wire is **0x10** where a build from the reference enum computes 0xe. Read from
+`LANAPI::setIsActive` at 0x00685320, which stores the constant directly and
+reproduces retail byte for byte.
+
+That matters beyond one message. The enum is positional, so every type
+declared after the two BFME additions is renumbered by the same two. Two
+clients built from the two enums would not merely disagree about what an
+inactive announcement is; they would misread each later type as its
+predecessor's neighbour. If you are debugging a mesh where clients connect and
+then talk past each other, compare the type numbers on the wire against this
+before suspecting the payloads.
+
+The two extra types are not identified yet -- only that there are exactly two
+and that they sit before `MSG_INACTIVE`, which is what the constant 0x10 pins.
+`LANAPI::m_isActive` is at +0x58, four below where this tree lands it.
+
 ## Adding a row
 
 Declare it in `tools/tests/rows.py` **before** running it — shape, each seat's
