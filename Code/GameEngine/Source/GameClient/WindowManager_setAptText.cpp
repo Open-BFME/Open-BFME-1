@@ -1,12 +1,27 @@
 // cl: /DNDEBUG /MD /EHsc
+// stlport
 
-class AsciiString;
+class AsciiString
+{
+public:
+	AsciiString(const AsciiString &other);
+	~AsciiString();
+
+private:
+	void *m_data;
+};
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
+	UnicodeString() : m_data(0) {}
+	UnicodeString(const UnicodeString &other);
+	~UnicodeString();
 	void set(const UnicodeString &text);
+
+private:
+	void *m_data;
 };
 
 class AptTextListener
@@ -18,15 +33,43 @@ public:
 
 struct AptTextRecord
 {
+	AptTextRecord() : listener(0), text() {}
+	~AptTextRecord() { listener = 0; }
+
 	AptTextListener *listener;
 	UnicodeString text;
 };
 
-class AptTextRecordMap
+namespace rts
+{
+	template <class T> struct hash;
+	template <class T> struct equal_to;
+
+	template <> struct hash<AsciiString>
+	{
+		unsigned int operator()(AsciiString value) const;
+	};
+
+	template <> struct equal_to<AsciiString>
+	{
+		int operator()(const AsciiString &left, const AsciiString &right) const;
+	};
+}
+
+#include <hash_map>
+
+typedef std::hash_map<AsciiString, AptTextRecord, rts::hash<AsciiString>, rts::equal_to<AsciiString> > AptTextRecordHashMap;
+
+class AptTextRecordMap : private AptTextRecordHashMap
 {
 public:
 	AptTextRecord *findOrInsert(const AsciiString &name);
 };
+
+AptTextRecord *AptTextRecordMap::findOrInsert(const AsciiString &name)
+{
+	return &operator[](name);
+}
 
 class WindowManager
 {
