@@ -3876,3 +3876,43 @@ operate on the ledger that exists, not the one that existed when the patch was
 cut.
 
 Hold source in a patch; hold ledger work as a list of tool invocations.
+
+## A call through an ILT thunk is PERMANENTLY unreachable from source
+
+`GameSpyInfo::removeFromSavedIgnoreList` reads 118 of 118 bytes exact and the
+gate still refuses it. Retail's call at +35 lands on `?j_000052bd`, an
+incremental-link thunk in gen_small, where this tree calls the map's `erase`
+directly. Every other call in the body matches.
+
+**Nothing in the source chooses whether a call goes through an ILT stub.** That
+is a property of how retail's binary was linked, so no view, no spelling, no
+shim and no cl-line flag reaches it. Record it as permanent, not deferred --
+this is the same category as the this-adjustment residue, not the same category
+as a missing header fact.
+
+**The consequence that changes how donors are read: an `__emit` body can be
+LOAD-BEARING.** It encodes the rel32 that points at the thunk, which readable
+C++ cannot express. So a naked dump is not always scaffolding waiting to be
+drained, and "the destination already compiles this exactly" is not sufficient
+grounds to fold.
+
+The screen is cheap and belongs in front of every fold: for each direct call in
+the retail body, decode the rel32, resolve the destination in functions.csv, and
+look for a `?j_` name. Running it on `Set_Transform` cleared that fold before a
+build was spent; running it after would have cost one.
+
+## A near-miss filter hides the already-perfect
+
+A scan built to surface rows within N bytes of retail filtered out `nd == 0`
+along with the rows too far away to reach. Those are the CHEAPEST wins in the
+tree -- rows whose destination already compiles them exactly and whose donor is
+pointed at for no reason -- and the instrument was structurally blind to them
+because it was built to find near-misses.
+
+Two folds came out of noticing it: `UnicodeString`'s default constructor (9
+bytes, no relocations at all, uniquely named) and
+`DX8Wrapper::Set_Transform(Matrix3D)` (682 bytes, forty relocations, every one a
+data reference to a named global -- so no direct call could resolve wrongly).
+
+Check what your filter excludes at BOTH ends. A tool built to measure distance
+will quietly drop the zero.
