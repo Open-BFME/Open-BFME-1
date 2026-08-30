@@ -2007,6 +2007,7 @@ name,address,notes
 ??0AutoDepositUpdateModuleData@@QAE@XZ,0x0002E069,pinharvest x1 (thunk)
 ??0AutoFindHealingUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x02E12C,module ctor (friend_newModuleInstance retail call target)
 ??0AutoFindHealingUpdateModuleData@@QAE@XZ,0x0001D4EE,module-glue cascade callee (from retail call site)
+??0AutoHealBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048B9E,REL32 pin from AutoHealBehavior::friend_newModuleInstance @0x114200
 ??0AutoHealBehaviorModuleData@@QAE@XZ,0x1528a,AutoHealBehavior friend_newModuleData ctor
 ??0BB_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,BuildingBehavior constructor calls the shared ObjectModule constructor ILT
 ??0BFMEAutoLockRef@@QAE@PAVBFMENetworkLock@@I@Z,0x009DB3B0,native BFME lock-ref acquire helper
@@ -12383,6 +12384,7 @@ name,address,notes
 ?addGameCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0067CA00,addCommand's jump-table arm for command type 4
 ?addGameSpyStatsAuthKeyCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0001C69D,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addGameSpyStatsAuthKeyCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00680620,addCommand's jump-table arm for command type 6
+?addInfo@AISideBuildList@@QAEXPAVBuildListInfo@@@Z,0x0003A8F0,REL32 pin from BuildListInfo::parseStructure @0x1943D0
 ?addInformPlayerLeaveFrameCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0004901C,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addInformPlayerLeaveFrameCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00679B00,addCommand's jump-table arm for command type 8
 ?addInt64@Rva007E8810Message@@QAEXPBD_J@Z,0x007E8E90,V2 lane: FESL message append key/value __int64 field via %I64d
@@ -74020,6 +74022,7 @@ name,address,notes
 ?bfmePushBackAux@Gen_00369e30@@IAEXABQAX@Z,0x00036C82,Open-BFME5 ILT the deque push_back at 0x00369E30 tail-jumps through
 ?bfmePushBackAux@Gen_00647430@@IAEXABQAX@Z,0x000399D7,Open-BFME5 ILT the deque push_back at 0x00647430 tail-jumps through
 ?bfmePushQI@BfmeThingQI@@QAEXE@Z,0x0003BC23,pin
+?bfmePut1242@BfmeN1242@@QAEXHPAVBfmeE1242@@@Z,0x008B84C0,pin
 ?bfmeQuery1040@@YAXHPAH@Z,0x00008945,pin
 ?bfmeQuery932C@BfmeSub932C@@QAEEXZ,0x00048928,pin
 ?bfmeQuery@BfmeFilterObject@@QAE_NPAVPlayer@@@Z,0x00020824,Open-BFME5 ILT the object query in Rva2225E0Filter::accepts at 0x003A04A0 goes through
@@ -74058,6 +74061,7 @@ name,address,notes
 ?bfmeRemove@BfmeManagerP@@QAEXPAVBfmeOwnedP@@@Z,0x000218B9,Open-BFME5 the ICF thunk (to 0x004218B9) the clear at 0x00371120 calls on its manager per element
 ?bfmeRemove@BfmeSingletonH@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the singleton clear at 0x003C0DB0 calls per element
 ?bfmeReport1028@@YAXHHPADH@Z,0x00027AAC,pin
+?bfmeReserve1242@BfmeN1242@@QAEXH@Z,0x008B8D60,pin
 ?bfmeReserve@Gen_00095A50@@AAEXHPAX@Z,0x000472DA,Open-BFME5 ILT the vector assignment at 0x00095A50 reserves through
 ?bfmeReserve@Gen_000B54C0@@AAEXHPAX@Z,0x00043E37,Open-BFME5 ILT the vector assignment at 0x000B54C0 reserves through
 ?bfmeReserve@Gen_002F8980@@AAEXHPAX@Z,0x00015ABE,Open-BFME5 ILT the vector assignment at 0x002F8980 reserves through
@@ -75796,6 +75800,7 @@ name,address,notes
 ?g_bfmeArgEAA@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgEAC@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArr1233@@3PAPAVBfmeE1233@@A,0x00F38750,pin
+?g_bfmeArr1242@@3PAPAVBfmeE1242@@A,0x00F38750,pin
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
 ?g_bfmeAskB993@@3PAVBfmeAskB993@@A,0x00EF4B98,pin
 ?g_bfmeAux1006@@3PAUBfmeAux1006@@A,0x00EF4B58,pin
@@ -75849,6 +75854,7 @@ name,address,notes
 ?g_bfmeCoord3DFormat@@3QBDB,0x01144348,address-derived Coord3D format string from retail 0x009D9650
 ?g_bfmeCount1054@@3HA,0x00F4054C,pin
 ?g_bfmeCount1233@@3HA,0x00F38748,pin
+?g_bfmeCount1242@@3HA,0x00F38748,pin
 ?g_bfmeCountBBD@@3HA,0x00F0BD30,pin
 ?g_bfmeCountELH@@3HA,0x00F40594,pin
 ?g_bfmeCountQB@@3HA,0x00F04B60,pin
@@ -76231,6 +76237,7 @@ name,address,notes
 ?g_bfmeResult1234@@3PAXA,0x00F379BC,pin
 ?g_bfmeResult1239@@3PAVBfmeE1239@@A,0x00F379BC,pin
 ?g_bfmeResult1240@@3PAVBfmeE1240@@A,0x00F379BC,pin
+?g_bfmeResult1242@@3PAXA,0x00F379BC,pin
 ?g_bfmeRun1006@@3PAVBfmeRun1006@@A,0x00EF4998,pin
 ?g_bfmeS1019@@3PAVBfmeS1019@@A,0x00F0A5B0,pin
 ?g_bfmeS1027@@3PAUBfmeS1027@@A,0x00EF0898,pin
@@ -80340,10 +80347,12 @@ _bfmeLen1153,0x00006B9A,pin
 _bfmeLitZD,0x00CC79BC,pin
 _bfmeMake1239,0x008A11E0,pin
 _bfmeMake1240,0x008A11E0,pin
+_bfmeMake1242,0x008A11E0,pin
 _bfmeMakeF1239,0x008A4CD0,pin
 _bfmeMakeF1240,0x008A4CD0,pin
 _bfmeMalloc1149,0x0082ADA0,pin
 _bfmeMalloc1150,0x0082ADA0,pin
+_bfmeMove1242,0x009F6EC6,pin
 _bfmeMsgDZEa,0x00D09990,pin
 _bfmeMsgDZEb,0x00D09AAC,pin
 _bfmeMsgDZEc,0x00D09AD8,pin
@@ -81031,5 +81040,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?addInfo@AISideBuildList@@QAEXPAVBuildListInfo@@@Z,0x0003A8F0,REL32 pin from BuildListInfo::parseStructure @0x1943D0
-??0AutoHealBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048B9E,REL32 pin from AutoHealBehavior::friend_newModuleInstance @0x114200
