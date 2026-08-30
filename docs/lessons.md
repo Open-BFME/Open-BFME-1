@@ -5159,3 +5159,49 @@ search has a clean negative.
 witnesses, look for a place where retail names the thing itself** -- a parse
 table, a keyword string, a debug format. Those are the only names in the binary
 that are not ours.
+
+## A THROWAWAY script gets the same audit as a committed tool
+
+The sharpest self-catch of the day. A small follow-up script, written four hours
+after the tool that detects exactly this, did:
+
+    len({addrs_a, addrs_b}) == 1
+
+Two **empty** tuples compare equal, so an unpinned symbol on both sides printed
+`same-address=True` and was declared a real fold. **Absence of evidence counted
+as agreement** -- the masking failure the entire day has been about, reproduced
+in a fresh script because the script was small and felt obviously right.
+
+It is the throwaway ones nobody reviews. **Ask a scratch script the same
+question you ask a committed one: what does an empty result compare equal to?**
+
+## `symbols.csv` is ADDITIVE, so intersect the candidate sets -- never compare them
+
+Second defect in the same script, and it inverted two verdicts. The resolver
+keeps the first pinned address that reproduces retail, so a symbol legitimately
+carries several candidates. Comparing SETS for equality calls two claimants
+different when they merely have different candidate lists; what matters is
+whether the **intersection is non-empty**.
+
+    0x006F7C80  Cull_Box / Cull_Sphere       {0x008DB060, 0x008DB380} vs {0x008DB060}
+    0x00979D20  Set_Position / Set_Transform  all three sets contain 0x00982110
+
+Both had been called "cannot be one body". Neither is refuted at all. A corrected
+test intersects the sets AND treats an unpinned symbol as *no information*
+rather than as agreement.
+
+## The careful tool was right; the quick script was not
+
+`multi_name` reported all five FAMILY candidates as *"the claimants name
+different relocation targets, so what separates them was masked"* -- it declined
+to guess, and it was right about every one. The follow-up script written to
+"settle" them produced two wrong refutations and two false folds.
+
+Honest tally: **1 resolved, 4 undecided**, not the 1-plus-4-defects the first
+read suggested. 0x00924840 is real ICF -- all three claimants' single relocation
+resolves to exactly 0x0096B100, consistent with the other two AABTree families.
+
+Worth remembering when a tool's cautious verdict feels unsatisfying: the
+caution was the tool being correct about the limits of its evidence, and the
+instinct to go past it needs an instrument at least as careful as the one that
+stopped.
