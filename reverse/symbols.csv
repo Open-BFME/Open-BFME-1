@@ -2159,6 +2159,7 @@ name,address,notes
 ??0BfmeNamedSlot@@QAE@ABVAsciiString@@H@Z,0x00025306,Open-BFME5 ILT thunk; ??0BloodthirstyUpdateModuleData@@QAE@XZ at 0x00286EC0 constructs its two 0x70-byte members at +0x10 and +0x80 through it with the global AsciiString and a zero; address-derived name
 ??0BfmeOnlineProfileScreen@@QAE@PAX@Z,0x00035283,ILT thunk to the online profile screen constructor at 0x00557C00
 ??0BfmeQ1275@@QAE@XZ,0x00037EC5,pin
+??0BfmeQ1276@@QAE@H@Z,0x0002DE20,pin
 ??0BfmeQMiddle@@QAE@PAX0@Z,0x0000C315,Open-BFME5 the base the multi-vftable constructor at 0x002D7770 forwards to
 ??0BfmeQuickMatchScreenBase@@QAE@PAX@Z,0x00025D7E,ILT thunk to the base screen constructor at 0x00470620
 ??0BfmeRMiddle@@QAE@PAX0@Z,0x00041CBD,Open-BFME5 the base the multi-vftable constructors at 0x005F2D20 and 0x005F6530 forward to
@@ -72922,6 +72923,7 @@ name,address,notes
 ?bfmeDo1207@BfmeA1207@@QAEXABUBfmeV1207@@00000H@Z,0x00024BCC,pin
 ?bfmeDo1235@BfmeN1235@@QAEXPAX0@Z,0x008AE180,pin
 ?bfmeDo1275@BfmeA1275@@QAEXHHPAVBfmeQ1275@@HH@Z,0x00023448,pin
+?bfmeDo1276@BfmeA1276@@QAEXHHPAVBfmeQ1276@@HH@Z,0x00002400,pin
 ?bfmeDo912C@BfmeThing912C@@QAEXPAUBfmeNode912C@@@Z,0x009F4D80,pin
 ?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
 ?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
