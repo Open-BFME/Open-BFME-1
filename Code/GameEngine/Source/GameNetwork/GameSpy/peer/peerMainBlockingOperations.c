@@ -51,11 +51,15 @@ typedef struct piPlayer
 {
 	char reserved[0x40];
 	int inRoom[3];
-	char reservedInRoom[0x50 - 0x4C];
+	int local;
 	unsigned int IP;
 	int profileID;
 	int gotIPAndProfileID;
 	int flags[3];
+	char reservedFlags[0x80 - 0x68];
+	int pingAverage;
+	char reservedPingAverage[0x98 - 0x84];
+	int numPings;
 } piPlayer;
 
 int piGetNextID(PEER peer);
@@ -834,6 +838,25 @@ void peerKickPlayerA(PEER peer, int roomType, const char *nick,
 	if (!connection->connected)
 		return;
 	chatKickUserA(connection->chat, connection->room[roomType], nick, reason);
+}
+
+int peerGetPlayerPingA(PEER peer, const char *nick, int *ping)
+{
+	piPlayer *player = piGetPlayer(peer, nick);
+
+	if (!player)
+		return 0;
+	if (player->local)
+	{
+		*ping = 0;
+	}
+	else
+	{
+		if (!player->numPings)
+			return 0;
+		*ping = player->pingAverage;
+	}
+	return 1;
 }
 
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
