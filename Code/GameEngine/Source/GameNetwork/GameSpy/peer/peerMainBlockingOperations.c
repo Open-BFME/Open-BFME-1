@@ -1041,6 +1041,16 @@ void peerSetAwayModeA(PEER peer, const char *reason)
 	chatSendRawA(connection->chat, buffer);
 }
 
+void peerStartPlaying(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->title[0])
+		return;
+	connection->playing = 1;
+	piSetLocalFlags(peer);
+}
+
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
 {
 	piConnection *connection = (piConnection *)peer;
