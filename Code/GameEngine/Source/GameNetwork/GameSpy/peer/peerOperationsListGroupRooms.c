@@ -54,7 +54,8 @@ typedef struct piConnection
 void *memset(void *dest, int value, unsigned int count);
 void ArrayAppend(void *array, const void *element);
 PEERBool piSBStartListingGroups(PEER peer, const char *fields);
-void piGetPlayerInfoCallbackA(void);
+void piGetPlayerInfoCallbackA(void *chat, int success, const char *nick,
+	const char *user, const char *address, void *param);
 void chatGetBasicUserInfoA(void *chat, const char *nick, void *callback,
 	void *param, int blocking);
 void piChangeNickCallbackA(void);
@@ -88,6 +89,17 @@ const char *chatGetNickA(void *chat);
 __declspec(dllimport) int strcmpi(const char *left, const char *right);
 void piAddConnectCallback(PEER peer, int success, int failureReason,
 	PEERCBType callback, void *callbackParam, int opID);
+int piDemangleUser(const char *user, unsigned int *IP, int *profileID);
+void piSetPlayerIPAndProfileID(PEER peer, const char *nick, unsigned int IP,
+	int profileID);
+void piAddGetPlayerInfoCallback(PEER peer, int success, const char *nick,
+	unsigned int IP, int profileID, PEERCBType callback,
+	void *callbackParam, int opID);
+void piAddGetPlayerProfileIDCallback(PEER peer, int success,
+	const char *nick, int profileID, PEERCBType callback,
+	void *callbackParam, int opID);
+void piAddGetPlayerIPCallback(PEER peer, int success, const char *nick,
+	unsigned int IP, PEERCBType callback, void *callbackParam, int opID);
 
 static piOperation *piAddOperation(PEER peer, int type, void *data,
 	PEERCBType callback, void *callbackParam, int opID)
@@ -156,6 +168,45 @@ void piConnectConnectCallback(void *chat, int success,
 	piAddConnectCallback(peer, success, failureReason, operation->callback,
 		operation->callbackParam, operation->ID);
 	piRemoveOperation(peer, operation);
+}
+
+void piGetPlayerInfoCallbackA(void *chat, int success, const char *nick,
+	const char *user, const char *address, void *param)
+{
+	int profileID = 0;
+	unsigned int IP = 0;
+	piOperation *operation = (piOperation *)param;
+	PEER peer = operation->peer;
+
+	if (success)
+	{
+		if (!piDemangleUser(user, &IP, &profileID))
+			success = 0;
+		if (success)
+			piSetPlayerIPAndProfileID(peer, nick, IP, profileID);
+	}
+	if (!success)
+	{
+		profileID = 0;
+		IP = 0;
+	}
+
+	if (operation->callback)
+	{
+		if (operation->type == 6)
+			piAddGetPlayerInfoCallback(peer, success, nick, IP, profileID,
+				operation->callback, operation->callbackParam, operation->ID);
+		else if (operation->type == 7)
+			piAddGetPlayerProfileIDCallback(peer, success, nick, profileID,
+				operation->callback, operation->callbackParam, operation->ID);
+		else if (operation->type == 8)
+			piAddGetPlayerIPCallback(peer, success, nick, IP,
+				operation->callback, operation->callbackParam, operation->ID);
+	}
+
+	piRemoveOperation(peer, operation);
+	(void)chat;
+	(void)address;
 }
 
 PEERBool piNewListGroupRoomsOperation(PEER peer, const char *fields,
