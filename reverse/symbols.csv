@@ -81273,6 +81273,9 @@ _chatRetryWithNickA,0x008624C0
 g_bfmePolygonTriggerTable,0x012ACB50,TerrainLogic getWaterHandle retail polygon-trigger table
 g_bfmeTerrainVisual,0x012F7014,TerrainLogic getWaterHandle retail terrain-visual singleton
 g_bfmeGridWaterHandle,0x012EF4D4,TerrainLogic getWaterHandle retail grid-water singleton
+g_bfmeJpegState,0x012ED5AC,JPEG message copier state pointer
+g_bfmeJpegSingleMessage,0x01080FC0,JPEG base message-table text selected for one table
+g_bfmeJpegExtendedMessage,0x01081238,JPEG extended message-table text selected for multiple tables
 ?handleStateTwo@BfmeMessageStateHandler@@QAEXH@Z,0x0003FFDA,message handler state-two transition call
 ?handleDefaultState@BfmeMessageStateHandler@@QAEXH@Z,0x000394F5,message handler default-state transition call
 ?handleActiveState@BfmeMessageStateHandler@@QAEXH@Z,0x00021E4F,message handler active-state transition call
