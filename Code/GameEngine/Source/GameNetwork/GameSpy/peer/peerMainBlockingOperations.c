@@ -21,11 +21,16 @@ typedef struct piConnection
 	char titleRoomChannel[257];
 	char reservedTitleRoom[0xAB0 - 0xAAD];
 	int stayInTitleRoom;
-	char reservedStay[0x1824 - 0xAB4];
+	char reservedStay[0xB48 - 0xAB4];
+	int maxPlayers;
+	char reservedMaxPlayers[0x1824 - 0xB4C];
 	int callbackDepth;
 	char reserved2[0x18D4 - 0x1828];
 	int autoMatchStatus;
-	char reserved3[0x1F04 - 0x18D8];
+	char reserved3[0x1EF8 - 0x18D8];
+	char *autoMatchFilter;
+	int autoMatchSBFailed;
+	int autoMatchQRFailed;
 	int disconnect;
 	int shutdown;
 } piConnection;
@@ -83,6 +88,15 @@ void piStopHosting(PEER peer, int stopReporting);
 int piNewCreateStagingRoomOperation(PEER peer, const char *name,
 	const char *password, int maxPlayers, unsigned int socket,
 	unsigned short port, void *callback, void *param, int opID);
+void piLeaveRoom(PEER peer, int roomType, const char *reason);
+void piStopReporting(PEER peer);
+void piSBStopListingGames(PEER peer);
+char *goastrdup(const char *text);
+int piNewAutoMatchOperation(PEER peer, unsigned int socket,
+	unsigned short port, void *statusCallback, void *rateCallback, void *param,
+	int opID);
+void piAddAutoMatchStatusCallback(PEER peer);
+__declspec(dllimport) void __cdecl free(void *memory);
 void piAddConnectCallback(PEER peer, int success, int failureReason,
 	void *callback, void *param, int opID);
 void bfmePiDisconnectCleanupFromEsi(void);
@@ -608,4 +622,60 @@ void peerCreateStagingRoomWithSocketA(PEER peer, const char *name,
 		if (connection->shutdown && connection->callbackDepth == 0)
 			peerShutdown(peer);
 	}
+}
+
+void peerStartAutoMatchWithSocketA(PEER peer, int maxPlayers,
+	const char *filter, unsigned int socket, unsigned short port,
+	void *statusCallback, void *rateCallback, void *param, int blocking)
+{
+	piConnection *connection = (piConnection *)peer;
+	int opID = piGetNextID(peer);
+
+	if (!filter)
+		filter = "";
+	if (!connection->title[0])
+		goto failed;
+	if (!connection->connected)
+		goto failed;
+	if (connection->autoMatchStatus && connection->autoMatchStatus != 5)
+		goto failed;
+
+	if (connection->enteringRoom[2])
+		piLeaveRoom(peer, 2, "");
+	piStopReporting(peer);
+	piSBStopListingGames(peer);
+
+	connection->maxPlayers = maxPlayers;
+	connection->autoMatchFilter = goastrdup(filter);
+	if (!connection->autoMatchFilter)
+		goto failed;
+
+	connection->autoMatchStatus = 0;
+	connection->autoMatchSBFailed = 0;
+	connection->autoMatchQRFailed = 0;
+	if (!piNewAutoMatchOperation(peer, socket, port, statusCallback,
+			rateCallback, param, opID))
+	{
+		free(connection->autoMatchFilter);
+		goto failed;
+	}
+
+	if (blocking)
+	{
+		do
+		{
+			msleep(1);
+			bfmePiThinkFromEsi(opID);
+		}
+		while (!piIsOperationFinished(peer, opID) ||
+			!piIsCallbackFinished(peer, opID));
+
+		if (connection->shutdown && connection->callbackDepth == 0)
+			peerShutdown(peer);
+	}
+	return;
+
+failed:
+	connection->autoMatchStatus = 0;
+	piAddAutoMatchStatusCallback(peer);
 }
