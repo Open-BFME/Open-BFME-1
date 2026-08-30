@@ -3790,3 +3790,44 @@ diagnosis arriving from another lane is a hypothesis with a good prior, not a
 finding**, and the cost of re-deriving it is far below the cost of acting on it.
 This applies with most force to the relay in the middle: a lead passing a lane's
 diagnosis onward launders it into fact.
+
+## When two measurements of the same thing DISAGREE, the finding is the disagreement
+
+The single most expensive one-line decision of this effort, and it is worth
+stating as a rule because the reasoning felt entirely normal at the time.
+
+An enumeration of the GameWindow draw-data bodies was run twice. A loose grep
+returned 0x479040, 0x4790E0, 0x479190. An exact mangled-name grep returned
+0x479010, 0x4790A0, 0x479150. Two answers to one question. The exact one looked
+more trustworthy, the loose one was written off as an artifact in a single line,
+and the report that followed claimed three retail bodies had never been emitted
+at all.
+
+**The exact grep reads the LEDGER's bindings -- which were the thing under
+suspicion.** So a contradiction was resolved by trusting the very source being
+audited, and the loose grep, which had stumbled onto the real bodies, was
+discarded. All nine bodies exist; they were parked under `?dup_004790XX@@YAXXZ`
+placeholder names, which is precisely why a search for the real names found
+nothing.
+
+Neither measurement is "the corrected one" until you know WHY they differ. A
+discrepancy is data. Write off a discrepancy and you have chosen an answer
+without reading the evidence that would have chosen it for you -- and if one of
+the two methods reads the artefact you are auditing, it is the one to distrust.
+
+## Log both hypotheses when one call site cannot choose between them
+
+`DX8Wrapper::Set_Gamma` agrees on 482 of 568 bytes. Retail's gamma call pushes an
+extra leading zero and uses vtable slot 0x54 where the d3d8 shim gives
+`SetGammaRamp` two arguments at 0x48 -- which is the D3D9 signature shape.
+
+The tempting conclusion is that BFME is a D3D9 title. It was NOT drawn, and the
+reason is the right one: all 101 rows in `dx8wrapper.cpp` are matched and their
+retail bytes call slots up to 0x178, several above 0x54, so the shim's ordering
+is correct everywhere those rows touch. One call site cannot distinguish "the
+shim mis-places this one method" from "this method goes through another
+interface", so the log records both and picks neither.
+
+A single observation that would rewrite a large shared assumption is exactly the
+one to hold rather than bank -- especially when a hundred matched rows already
+constrain the same artefact.
