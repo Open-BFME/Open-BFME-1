@@ -885,6 +885,17 @@ int peerPingPlayerA(PEER peer, const char *nick)
 	return 1;
 }
 
+void peerStayInRoom(PEER peer, int roomType)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (roomType != 0)
+		return;
+	if (!connection->title[0])
+		return;
+	connection->stayInTitleRoom = 1;
+}
+
 int peerGetReadyA(PEER peer, const char *nick, int *ready)
 {
 	piConnection *connection = (piConnection *)peer;
