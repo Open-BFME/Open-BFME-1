@@ -630,6 +630,8 @@ void SidesList::emptyTeams()
 // SidesListAddSideThunk.cpp. (Name in prose: a comment line that starts with a
 // mangled name is read as a present-unmatched marker for whatever follows it.)
 
+// RE-HOMED with ::removeTeam -- see the note there for the evidence.
+// ?addTeam@SidesList@@QAEXPBVDict@@@Z present-unmatched
 void SidesList::addTeam(const Dict* d)
 {
 	m_teamrec.addTeam(d);
@@ -656,6 +658,16 @@ void SidesList::removeSide(Int i)
 	--m_numSides;
 }
 
+// RE-HOMED, with ::addTeam below. Retail's 0x00C2787D is
+// `add ecx,0x194; jmp 0x0000D828`, and 0x0000D828 is `jmp 0x0005EE90` =
+// ??1AsciiString@@QAE@XZ. That eleven-byte body is a this-adjusting DESTRUCTOR
+// helper -- adjust this by 0x194 to reach an AsciiString member and destroy it.
+// Neither of these two forwards to a string destructor; both forward to
+// m_teamrec. They matched because the jump is a masked relocation and the only
+// compared prefix is the add-ecx immediate, which our m_teamrec offset happens
+// to share. Third instance of the AsciiString import-thunk family after the
+// TeamsInfoRec trio. One ?dup_00c2787d@@YAXXZ row keeps the bytes covered.
+// ?removeTeam@SidesList@@QAEXH@Z present-unmatched
 void SidesList::removeTeam(Int i)
 {
 	m_teamrec.removeTeam(i);
