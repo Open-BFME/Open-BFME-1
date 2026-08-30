@@ -1098,6 +1098,17 @@ void peerMessageRoomA(PEER peer, int roomType, const char *message,
 		message, messageType);
 }
 
+void peerUTMRoomA(PEER peer, int roomType, const char *command,
+	const char *parameters, int authenticate)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->inRoom[roomType])
+		return;
+	piSendChannelUTM(peer, connection->room[roomType], command, parameters,
+		authenticate);
+}
+
 void peerAlwaysGetPlayerInfo(PEER peer, int always)
 {
 	piConnection *connection = (piConnection *)peer;
