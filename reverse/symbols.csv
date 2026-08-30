@@ -81241,3 +81241,4 @@ _sscanf,0x009F6FA6,MSVCR71 sscanf import thunk; IAT slot 0x01359494 used by Crat
 _piStartReporting,0x00866820
 _chatSendChannelMessageA,0x008609F0
 _piSBStartListingGames,0x00864FE0
+_chatRetryWithNickA,0x008624C0

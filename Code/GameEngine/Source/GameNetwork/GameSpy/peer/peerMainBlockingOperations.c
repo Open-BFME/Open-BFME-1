@@ -112,6 +112,7 @@ void chatSetChannelTopicA(void *chat, const char *channel, const char *topic);
 void chatSetChannelPasswordA(void *chat, const char *channel, int enable,
 	const char *password);
 void chatSendRawA(void *chat, const char *command);
+void chatRetryWithNickA(void *chat, const char *nick);
 piPlayer *piGetPlayer(PEER peer, const char *nick);
 typedef void (*piEnumRoomPlayersCallback)(PEER peer, int roomType,
 	piPlayer *player, int index, void *param);
@@ -1207,6 +1208,20 @@ void peerStopListingGames(PEER peer)
 	if (!connection->title[0])
 		return;
 	piSBStopListingGames(peer);
+}
+
+void peerRetryWithNickA(PEER peer, const char *nick)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->connecting)
+		return;
+	if (nick && nick[0])
+	{
+		strncpy(connection->nick, nick, 64);
+		connection->nick[63] = '\0';
+	}
+	chatRetryWithNickA(connection->chat, nick);
 }
 
 typedef struct piEnumPlayersData
