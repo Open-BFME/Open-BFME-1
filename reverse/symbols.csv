@@ -81218,3 +81218,4 @@ _piDisconnectTitle,0x00857250,GameSpy Peer title subsystem cleanup
 _piGetChannelKeysCallbackA,0x0085FEB0,GameSpy Peer room-key completion callback
 _chatGetChannelKeysA,0x00861C60,GameSpy Chat channel-key request
 _piRoomKeyChanged,0x00865C30,GameSpy Peer room-key cache update
+_piGlobalKeyChanged,0x00865BA0,GameSpy Peer global-key cache update
