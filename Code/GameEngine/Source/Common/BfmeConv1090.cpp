@@ -40,6 +40,14 @@ public:
 extern BfmeD1090 *g_bfmeD1090;
 extern BfmeP1090 *g_bfmeP1090;
 
+class Parameter;
+
+class ScriptConditions
+{
+protected:
+	bool evaluatePlayerHasPower(Parameter *playerParm);
+};
+
 char __stdcall bfmeGo1090A(int a, BfmeT1090 *t)
 {
 	a = g_bfmeP1090->bfmeNext1090(a);
@@ -68,11 +76,14 @@ char __stdcall bfmeGo1090B(int a)
 	return 0;
 }
 
-char __stdcall bfmeGo1090C(int a)
+// ?evaluatePlayerHasPower@ScriptConditions@@IAE_NPAVParameter@@@Z
+bool ScriptConditions::evaluatePlayerHasPower(Parameter *playerParm)
 {
-	a = g_bfmeP1090->bfmeNext1090(a);
-	while ((short)a) {
-		BfmeR1090 *r = g_bfmeD1090->bfmeLook1090((short *)&a);
+	playerParm = reinterpret_cast<Parameter *>(
+		g_bfmeP1090->bfmeNext1090(reinterpret_cast<int>(playerParm)));
+	while ((short)reinterpret_cast<int>(playerParm)) {
+		BfmeR1090 *r = g_bfmeD1090->bfmeLook1090(
+			reinterpret_cast<short *>(&playerParm));
 
 		if (r) {
 			int v = r->m_bfme258;
