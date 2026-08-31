@@ -130,7 +130,7 @@ struct SFWRec
  * Returns true if the drawable can be selected under the current rules
  * of the system 
  */
-Bool CanSelectDrawable( const Drawable *draw, Bool dragSelecting )
+Bool CanSelectDrawableZeroHourReference( const Drawable *draw, Bool dragSelecting )
 {
 
 	if(!draw || !draw->getObject())

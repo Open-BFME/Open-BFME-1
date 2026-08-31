@@ -81360,3 +81360,9 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?_M_clear@?$vector@URva006F2C70Element@@V?$allocator@URva006F2C70Element@@@_STL@@@_STL@@IAEXXZ,0x00005A9C,Clean C++ STLport clear callee of the 56-byte vector overflow at 0x006F2B00
+?isDrawableEffectivelyHidden@Drawable@@QBE_NXZ,0x00012E3B,CanSelectDrawable retail ILT
+?getPosition@BFMESelectionDrawablePositionView@@QBEPBUCoord3D@@XZ,0x0004B12D,TU-scoped BFME Drawable position view; CanSelectDrawable retail ILT
+?worldToScreen@View@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z,0x0001C936,CanSelectDrawable retail ILT
+?test@BFMESelectionStatusBits@@QBE_NI@Z,0x0003AB20,TU-scoped BFME Object status-bit view; CanSelectDrawable retail ILT
+?testStatus@BFMESelectionObjectStatus@@QBE_NH@Z,0x000016A4,TU-scoped BFME selection status view; CanSelectDrawable retail ILT
+?isSelectable@Object@@QBE_NXZ,0x00001C03,CanSelectDrawable retail ILT
