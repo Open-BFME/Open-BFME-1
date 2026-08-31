@@ -125,6 +125,7 @@ class TransitionWindow
 public:
 	void init(void);
 	void draw(void);
+	void update(int frame);
 	void reverse(int totalFrames);
 	void skip(void);
 	int getTotalFrames(void);
@@ -151,6 +152,16 @@ inline void TransitionWindow::draw(void)
 {
 	if (m_transition)
 		m_transition->draw();
+}
+
+inline void TransitionWindow::update(int frame)
+{
+	if (frame < m_currentFrameDelay ||
+		frame > m_currentFrameDelay + m_transition->getFrameLength())
+		return;
+
+	if (m_transition)
+		m_transition->update(frame - m_currentFrameDelay);
 }
 
 inline void TransitionWindow::reverse(int)
@@ -189,6 +200,7 @@ class TransitionGroup
 public:
 	void init(void);
 	void draw(void);
+	void update(void);
 	void reverse(void);
 	void skip(void);
 	int getTotalFrames(void);
@@ -228,6 +240,19 @@ void TransitionGroup::draw(void)
 	{
 		TransitionWindow *window = *it;
 		window->draw();
+		++it;
+	}
+}
+
+// ?update@TransitionGroup@@QAEXXZ
+void TransitionGroup::update(void)
+{
+	m_currentFrame += m_directionMultiplier;
+	_STL::list<TransitionWindow *>::iterator it = m_transitionWindowList.begin();
+	while (it != m_transitionWindowList.end())
+	{
+		TransitionWindow *window = *it;
+		window->update(m_currentFrame);
 		++it;
 	}
 }
