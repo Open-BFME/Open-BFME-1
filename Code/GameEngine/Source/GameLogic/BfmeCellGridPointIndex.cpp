@@ -10,8 +10,6 @@ struct BfmePoint1560
 	Real Y;
 };
 
-extern const Real g_bfmeZero1560;
-
 class BfmeCellGrid
 {
 public:
@@ -27,7 +25,7 @@ private:
 
 UnsignedInt BfmeCellGrid::bfmePointIndex(const BfmePoint1560 &point)
 {
-	if (m_cellSize > g_bfmeZero1560)
+	if (m_cellSize > 0.0f)
 	{
 		Int row = (Int)((point.Y - m_origin) / m_cellSize);
 		Int index = row * m_width;
