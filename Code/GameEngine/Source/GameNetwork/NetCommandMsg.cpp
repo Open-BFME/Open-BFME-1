@@ -6,8 +6,41 @@
 
 #include "GameNetwork/NetCommandMsg.h"
 
+class BfmeNetGameMessageArgument
+{
+public:
+	BfmeNetGameMessageArgument() {}
+	virtual ~BfmeNetGameMessageArgument() {}
+
+	BfmeNetGameMessageArgument *m_next;
+	GameMessageArgumentType m_data;
+	GameMessageArgumentDataType m_type;
+};
+
 NetCommandMsg::~NetCommandMsg()
 {
+}
+
+void NetGameCommandMsg::addArgument(
+	const GameMessageArgumentDataType type, GameMessageArgumentType arg)
+{
+	if (m_argTail == NULL) {
+		BfmeNetGameMessageArgument *newArg = new BfmeNetGameMessageArgument;
+		m_argList = reinterpret_cast<GameMessageArgument *>(newArg);
+		m_argTail = m_argList;
+		m_argList->m_data = arg;
+		m_argList->m_type = type;
+		m_argList->m_next = NULL;
+		return;
+	}
+
+	GameMessageArgument *newArg = reinterpret_cast<GameMessageArgument *>(
+		new BfmeNetGameMessageArgument);
+	newArg->m_data = arg;
+	newArg->m_type = type;
+	newArg->m_next = NULL;
+	m_argTail->m_next = newArg;
+	m_argTail = newArg;
 }
 
 __declspec(naked) void NetCommandMsg::detach()
