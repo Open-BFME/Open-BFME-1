@@ -115,6 +115,11 @@ private:
 // accessor (pinned by the conversion ledger when this row is landed).
 HeaderTemplateString HeaderTemplateGetRegistryLanguage( void );
 
+HeaderTemplateString bfmeHeaderTemplateRegistryLanguage( void )
+{
+	return HeaderTemplateGetRegistryLanguage();
+}
+
 enum HeaderTemplateINILoadType
 {
 	HEADER_TEMPLATE_INI_LOAD_OVERWRITE = 1
