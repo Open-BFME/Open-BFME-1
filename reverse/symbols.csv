@@ -79701,6 +79701,7 @@ name,address,notes
 ?unidentified_00015235@Open2WindowManager@@QAEXHPBDHPBXHHHH@Z,0x00015235,Open2 0x0051B050 family window-manager forwarder (ILT)
 ?unidentified_00015235@WindowManager@@QAEXHPBDHPBX1111@Z,0x00015235,ILT thunk -> body 0x004675F0; eight-dword __thiscall scripted-UI event dispatcher on g_theWindowManager: (0xB; event name; arg count; up to five args); pushes ShowEndGame/HideEndGame from the VictoryConditions banner bodies; address-derived name
 ?unidentified_00015235@WindowManager@@QAEXHPBDHPBXHHHH@Z,0x00015235,DisconnectMenu setPlayerName invokes HideKickButton through the established scripted-UI dispatcher ILT
+?unidentified_00015235@WindowManager@@QAEXHPBDHPBX1HHH@Z,0x00015235,DisconnectMenu timeout percentage passes two string arguments through the established scripted-UI dispatcher ILT
 ?unidentified_0001FC99@@YAHPBDPAI@Z,0x0001FC99,UNIDENTIFIED cdecl shader loader; address-derived name; loads shaders\monochrome.pso for ScreenBWFilter::init
 ?unidentified_0001e0ab@GameLogicShim@@QAE_NXZ,0x0001E0AB,ILT thunk -> body 0x00382C20: true when TheGameLogic mode is 1/2/5 or TheRecorder plays back a multiplayer session; gates the score-screen fade in hideEndGame; address-derived shim name
 ?unidentified_0002181E@Object@@QAEXABVModelConditionFlags@@H@Z,0x0002181E,UNIDENTIFIED Object helper reached by the address-derived body at 0x000F20F0

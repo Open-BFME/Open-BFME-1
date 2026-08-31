@@ -162,6 +162,10 @@ public:
 	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
 	~AsciiString() {}
 	void format( AsciiString format, ... );
+	const char *str() const
+	{
+		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
+	}
 };
 
 extern "C" __declspec(dllimport) unsigned int __cdecl wcslen( const unsigned short *text );
@@ -254,7 +258,7 @@ public:
 	__declspec( noinline ) void bfme_showBackground( int kind );
 	void bfme_setAptText( const AsciiString &name, const UnicodeString &text );
 	void unidentified_00015235( int movie, const char *function, int argumentCount,
-		const void *argument, int unused1, int unused2, int unused3, int unused4 );
+		const void *argument1, const void *argument2, int unused1, int unused2, int unused3 );
 
 private:
 	char m_bfmePrefix[ 0x1B8 ];
@@ -281,13 +285,15 @@ void WindowManager::bfme_showBackground( int kind )
 		m_bfmeRememberedBackgroundKind = zero;
 		unidentified_00015235(
 			m_bfmeBackgroundMovie, "ShowInGameBackground", zero,
-			reinterpret_cast< const void * >( zero ), zero, zero, zero, zero );
+			reinterpret_cast< const void * >( zero ),
+			reinterpret_cast< const void * >( zero ), zero, zero, zero );
 		break;
 	case 1:
 		m_bfmeRememberedBackgroundKind = zero;
 		unidentified_00015235(
 			m_bfmeBackgroundMovie, "ShowFrontEndBackground", zero,
-			reinterpret_cast< const void * >( zero ), zero, zero, zero, zero );
+			reinterpret_cast< const void * >( zero ),
+			reinterpret_cast< const void * >( zero ), zero, zero, zero );
 		break;
 	}
 }
@@ -495,10 +501,26 @@ void DisconnectMenu::setPlayerName( int slot, UnicodeString playerName )
 
 		int movie = *(int *)( (char *)this + 0x250 );
 		g_theWindowManager->unidentified_00015235(
-			movie, "HideKickButton", 1, slotText, 0, 0, 0, 0 );
+			movie, "HideKickButton", 1, slotText,
+			reinterpret_cast< const void * >( 0 ), 0, 0, 0 );
 		*(char *)( (char *)this + 0x262 + slot ) = 0;
 		setPlayerTimeoutTime( slot, 100 );
 	}
+}
+
+void DisconnectMenu::setPlayerTimeoutTime( int slot, int percent )
+{
+	AsciiString slotText;
+	slotText.format( (AsciiString)"%d", slot );
+
+	AsciiString percentText;
+	percentText.format( (AsciiString)"%d", percent );
+
+	const char *percentArgument = percentText.str();
+	const char *slotArgument = slotText.str();
+	int movie = *(int *)( (char *)this + 0x250 );
+	g_theWindowManager->unidentified_00015235(
+		movie, "SetBarPercent", 2, slotArgument, percentArgument, 0, 0, 0 );
 }
 
 BfmeAptScreenDisconnectScreen::~BfmeAptScreenDisconnectScreen()
