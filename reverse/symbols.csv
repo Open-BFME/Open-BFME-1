@@ -81466,12 +81466,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??$__match@V?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@PAV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@J@_STL@@YAPAV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@AAV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@0@0PAV10@1PAJ@Z,0x00837190,wide time_get month-name matcher reached directly by the retail specialization
-?_M_getc@?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@QBEXXZ,0x00833D90,TU public-access alias of the already matched protected wide iterator _M_getc body
-??$_M_allocate_and_copy@PBURva00365070Element@@@?$vector@URva00365070Element@@V?$allocator@URva00365070Element@@@_STL@@@_STL@@IAEPAURva00365070Element@@IPBU2@0@Z,0x000321E1,ILT reached by the 0x00365070 vector assignment
-?_M_clear@?$vector@URva00365070Element@@V?$allocator@URva00365070Element@@@_STL@@@_STL@@IAEXXZ,0x0002451E,ILT reached by the 0x00365070 vector assignment
-??$__copy@PBURva00365070Element@@PAU1@H@_STL@@YAPAURva00365070Element@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0002F914,ILT reached by the 0x00365070 vector assignment
-??$_Destroy@PAURva00365070Element@@@_STL@@YAXPAURva00365070Element@@0@Z,0x00040D1D,ILT reached by the 0x00365070 vector assignment
-??$__uninitialized_copy@PBURva00365070Element@@PAU1@@_STL@@YAPAURva00365070Element@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0001738C,ILT reached by the 0x00365070 vector assignment
-?compareNoCaseRaw@?$StringBase@G@@ABEHPBG0H@Z,0x0009ECA0,case-insensitive wide comparison helper reached by the 0x0009F090 list search
 ??$_Construct@URva00244A80Element@@U1@@_STL@@YAXPAURva00244A80Element@@ABU1@@Z,0x000128DC,ILT reached by the 0x00240230 vector overflow body
