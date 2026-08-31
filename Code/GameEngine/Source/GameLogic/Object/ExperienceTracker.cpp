@@ -255,38 +255,6 @@ void ExperienceTracker::crc( Xfer *xfer )
 }  // end crc
 
 //-----------------------------------------------------------------------------
-/** Xfer method
-	* Version Info:
-	* 1: Initial version 
-	*/
-// ----------------------------------------------------------------------------
-// ?xfer@ExperienceTracker@@ present-unmatched
-void ExperienceTracker::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	// no need to save the m_parent pointer, it is connected on allocation time
-	// m_parent
-
-	// current level
-	xfer->xferUser( &m_currentLevel, sizeof( VeterancyLevel ) );
-
-	// current experience
-	xfer->xferInt( &m_currentExperience );
-
-	// experience sink
-	xfer->xferObjectID( &m_experienceSink );
-
-	// experience scalar
-	xfer->xferReal( &m_experienceScalar );
-
-}  // end xfer
-
-//-----------------------------------------------------------------------------
 // ?loadPostProcess@ExperienceTracker@@ present-unmatched
 void ExperienceTracker::loadPostProcess( void )
 {
