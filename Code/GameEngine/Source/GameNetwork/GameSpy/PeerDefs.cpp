@@ -601,36 +601,6 @@ static Int grabHexInt(const char *s)
 	return b;
 }
 
-// ?getPingValue@GameSpyInfo@@UAEHABVAsciiString@@@Z present-unmatched
-Int GameSpyInfo::getPingValue( const AsciiString& otherPing )
-{
-	if (m_pingString.getLength() != otherPing.getLength())
-	{
-		return TheGameSpyConfig->getPingTimeoutInMs();
-	}
-
-	if (m_pingString.getLength() % 2 != 0)
-	{
-		return TheGameSpyConfig->getPingTimeoutInMs();
-	}
-
-	Int best = 255+255;
-	const char *myStr = m_pingString.str();
-	const char *otherStr = otherPing.str();
-
-	while (*myStr)
-	{
-		Int myVal = grabHexInt(myStr);
-		Int otherVal = grabHexInt(otherStr);
-		Int val = myVal + otherVal;
-		best = (val < best) ? val : best;
-		myStr += 2;
-		otherStr += 2;
-	}
-
-	return best * TheGameSpyConfig->getPingTimeoutInMs() / (255+255);
-}
-
 // ?isIgnored@PlayerInfo@@QAE_NXZ present-unmatched
 Bool PlayerInfo::isIgnored( void )
 {
