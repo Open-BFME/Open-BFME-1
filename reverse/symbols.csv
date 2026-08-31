@@ -81353,3 +81353,4 @@ _strtol,0x009F71CC,AptValue::toInteger at 0x00898300 calls the retail strtol imp
 ?bfmeCanAttackTarget@BfmeAttackQuery@@QBE_NPBVObject@@PBUCoord3D@@0PBX@Z,0x0002DB1E,Object BFME attack query calls this protected ILT for source-target permission
 ?bfmeFindTargetGate@@YAPAVBfmeTargetGateModule@@PBVObject@@@Z,0x00003A49,Object BFME attack query calls this protected ILT to locate the target gate module
 ?findExperienceScalarTable@ExperienceLevelSystem@@QAEPAUBfmeVec@@ABVAsciiString@@@Z,0x00021797,BfmeThingEFE constructor calls this ILT to resolve its configured scalar table
+?bfmeDecay@BfmeCell@@QAEXMM@Z,0x0002116B,BfmeCellGrid decay loop calls this ILT to the exact landed 0x001B12B0 cell decay body
