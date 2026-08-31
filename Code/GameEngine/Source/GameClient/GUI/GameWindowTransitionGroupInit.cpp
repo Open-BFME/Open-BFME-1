@@ -110,7 +110,7 @@ public:
 	virtual void update(int frame) = 0;
 	virtual void reverse(void) = 0;
 	virtual void draw(void) = 0;
-	virtual void bfmeSlot5(void) = 0;
+	virtual void reset(void) = 0;
 	virtual void skip(void) = 0;
 
 	int getFrameLength(void) { return m_frameLength; }
@@ -127,6 +127,7 @@ public:
 	void draw(void);
 	void update(int frame);
 	void reverse(int totalFrames);
+	void reset(void);
 	void skip(void);
 	int getTotalFrames(void);
 
@@ -170,6 +171,12 @@ inline void TransitionWindow::reverse(int)
 		m_transition->reverse();
 }
 
+inline void TransitionWindow::reset(void)
+{
+	if (m_transition)
+		m_transition->reset();
+}
+
 inline void TransitionWindow::skip(void)
 {
 	if (m_transition)
@@ -202,6 +209,7 @@ public:
 	void draw(void);
 	void update(void);
 	void reverse(void);
+	void reset(void);
 	void skip(void);
 	int getTotalFrames(void);
 
@@ -282,6 +290,18 @@ void TransitionGroup::reverse(void)
 	}
 
 	m_currentFrame = totalFrames;
+}
+
+// ?reset@TransitionGroup@@QAEXXZ
+void TransitionGroup::reset(void)
+{
+	_STL::list<TransitionWindow *>::iterator it = m_transitionWindowList.begin();
+	while (it != m_transitionWindowList.end())
+	{
+		TransitionWindow *window = *it;
+		window->reset();
+		++it;
+	}
 }
 
 // ?skip@TransitionGroup@@QAEXXZ
