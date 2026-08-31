@@ -11,10 +11,12 @@
 //   0x0084B720 / 0x0084B880   non-virtual size 0x98, virtual base destructor
 //                             at 0x0083F810
 //
-// The two virtual bases are the ones T2 already separated: 0x000414BB ends the
-// 0xBC/0xB8 rows there and 0xC0 here; 0x0083F810 ends the 0x94/0x90 rows there
-// and 0x98 here.  So these two classes are siblings of those four, one per
-// base, each four bytes larger than the largest T2 found.
+// Each body has two non-virtual branches that virtually share one T2 base: the
+// primary branch has a four-byte lead, while the secondary branch contributes
+// only its vbptr.  That shared virtual-base layout is what produces the guarded
+// secondary-vptr reset between the two primary-branch stores after the member
+// destructor.  The A and B bodies use the same layout with different virtual
+// base/member types.
 //
 // The class destructors these stubs call are NOT the ones T2 claimed -- they
 // are the 138-byte bodies at 0x0084B480 and 0x0084B5F0, still unnamed dumps
@@ -23,8 +25,8 @@
 // four-byte member is what makes the compiler assume that.
 //
 // Layout is re-derived from the non-virtual size alone, exactly as in T2: a
-// vbptr, an optional four-byte lead, the four-byte member and tail padding
-// summing to 0xC0 / 0x98.  `/vd0` for the same reason.  Identity is not
+// primary vbptr, a secondary vbptr, the four-byte member at offset 0xC and tail
+// padding summing to 0xC0 / 0x98.  `/vd0` for the same reason.  Identity is not
 // recovered; both names are derived from the class destructor's address.
 
 struct T2VBaseA
@@ -39,36 +41,55 @@ struct T2VBaseB
 	virtual void handle();
 };
 
-struct T2Member4 { char m_body[4]; T2Member4(); ~T2Member4(); };
+struct Gen008427F0 { char m_body[4]; Gen008427F0(); ~Gen008427F0(); };
+struct Gen00842970 { char m_body[4]; Gen00842970(); ~Gen00842970(); };
 
-struct U2MidA_Gap : virtual T2VBaseA
+struct U2BaseA_Gap : virtual T2VBaseA
 {
 	char m_lead[4];
 	virtual void handle();
+	~U2BaseA_Gap() {}
+};
+
+struct U2SecondaryA : virtual T2VBaseA
+{
+	~U2SecondaryA() {}
+};
+
+struct U2MidA_Gap : public U2BaseA_Gap, public U2SecondaryA
+{
 	~U2MidA_Gap() {}
 };
 
-struct U2MidB_Tight : virtual T2VBaseB
+struct U2BaseB_Gap : virtual T2VBaseB
 {
+	char m_lead[4];
 	virtual void handle();
+	~U2BaseB_Gap() {}
+};
+
+struct U2SecondaryB : virtual T2VBaseB
+{
+	~U2SecondaryB() {}
+};
+
+struct U2MidB_Tight : public U2BaseB_Gap, public U2SecondaryB
+{
 	~U2MidB_Tight() {}
 };
 
 struct U2Vb0084B480 : public U2MidA_Gap
 {
-	T2Member4 m_member;
-	char m_tail[0xB4];
-	virtual void handle();
+	Gen008427F0 m_member;
+	char m_tail[0xB0];
 	~U2Vb0084B480();
 };
-// ??1U2Vb0084B480@@UAE@XZ present-unmatched
 U2Vb0084B480::~U2Vb0084B480() {}
 
 struct U2Vb0084B5F0 : public U2MidB_Tight
 {
-	T2Member4 m_member;
-	char m_tail[0x90];
-	virtual void handle();
+	Gen00842970 m_member;
+	char m_tail[0x88];
 	~U2Vb0084B5F0();
 };
 // ??1U2Vb0084B5F0@@UAE@XZ present-unmatched
