@@ -112,6 +112,11 @@ public:
 	virtual void draw(void) = 0;
 	virtual void bfmeSlot5(void) = 0;
 	virtual void skip(void) = 0;
+
+	int getFrameLength(void) { return m_frameLength; }
+
+private:
+	int m_frameLength;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
@@ -120,7 +125,9 @@ class TransitionWindow
 public:
 	void init(void);
 	void draw(void);
+	void reverse(int totalFrames);
 	void skip(void);
+	int getTotalFrames(void);
 
 private:
 	AsciiString m_winName;
@@ -146,10 +153,24 @@ inline void TransitionWindow::draw(void)
 		m_transition->draw();
 }
 
+inline void TransitionWindow::reverse(int)
+{
+	if (m_transition)
+		m_transition->reverse();
+}
+
 inline void TransitionWindow::skip(void)
 {
 	if (m_transition)
 		m_transition->skip();
+}
+
+inline int TransitionWindow::getTotalFrames(void)
+{
+	if (m_transition)
+		return m_frameDelay + m_transition->getFrameLength();
+
+	return m_frameDelay;
 }
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
@@ -168,6 +189,7 @@ class TransitionGroup
 public:
 	void init(void);
 	void draw(void);
+	void reverse(void);
 	void skip(void);
 	int getTotalFrames(void);
 
@@ -208,6 +230,33 @@ void TransitionGroup::draw(void)
 		window->draw();
 		++it;
 	}
+}
+
+// ?reverse@TransitionGroup@@QAEXXZ
+void TransitionGroup::reverse(void)
+{
+	int totalFrames = 0;
+	m_directionMultiplier = -1;
+
+	_STL::list<TransitionWindow *>::iterator it = m_transitionWindowList.begin();
+	while (it != m_transitionWindowList.end())
+	{
+		TransitionWindow *window = *it;
+		int windowFrames = window->getTotalFrames();
+		if (windowFrames > totalFrames)
+			totalFrames = windowFrames;
+		++it;
+	}
+
+	it = m_transitionWindowList.begin();
+	while (it != m_transitionWindowList.end())
+	{
+		TransitionWindow *window = *it;
+		window->reverse(totalFrames);
+		++it;
+	}
+
+	m_currentFrame = totalFrames;
 }
 
 // ?skip@TransitionGroup@@QAEXXZ
