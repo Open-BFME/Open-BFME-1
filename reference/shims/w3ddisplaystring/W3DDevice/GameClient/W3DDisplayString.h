@@ -77,6 +77,7 @@ public:
 	W3DDisplayString( void );
 	// ~W3DDisplayString( void );  // destructor defined by memory pool
 
+	void reset( void );
 	void notifyTextChanged( void );							///< called when text contents change
 	void draw( Int x, Int y, Color color, Color dropColor );  ///< render text
 	void draw( Int x, Int y, Color color, Color dropColor, Int xDrop, Int yDrop );  ///< render text with the drop shadow being at the offsets passed in
@@ -117,10 +118,13 @@ protected:
 	// A further +0x1C lands between m_hotkey and m_size: computeExtents
 	// @0x6F5420 writes m_size at [esi+0x1F0]/[esi+0x1F4] where ours gives
 	// 0x1BC/0x1C0. What occupies it is unknown; only the offset is proven.
-	char _bfme_pad_pre_size[0x1C];
+	Int m_bfmeResetFields[6];
+	Bool m_bfmeFlag1EC;
+	char _bfme_pad_pre_size_tail[3];
 	ICoord2D m_size;				///< (width,height) size of rendered text
 	IRegion2D m_clipRegion; ///< the clipping region for text
 	UnsignedInt m_lastResourceFrame;  ///< last frame resources were used on
+	Bool m_bfmeFlag20C;
 
 };
 

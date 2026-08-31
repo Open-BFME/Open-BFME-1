@@ -124,6 +124,39 @@ W3DDisplayString::W3DDisplayString( void )
 	
 }  // end W3DDisplayString
 
+void W3DDisplayString::reset( void )
+{
+	DisplayString::reset();
+	m_textRenderer.Reset();
+	m_textRendererHotKey.Reset();
+	m_textChanged = FALSE;
+	m_textPos.x = 0;
+	m_textPos.y = 0;
+	m_currTextColor = 0;
+	m_bfmeResetFields[2] = 0;
+	m_currDropColor = 0;
+	m_bfmeResetFields[3] = 0;
+	m_bfmeResetFields[0] = 0;
+	m_bfmeResetFields[4] = 0;
+	m_bfmeResetFields[1] = 0;
+	m_bfmeResetFields[5] = 0;
+	m_size.x = 0;
+	m_size.y = 0;
+	m_fontChanged = FALSE;
+	m_clipRegion.lo.x = 0;
+	m_clipRegion.lo.y = 0;
+	m_clipRegion.hi.x = 0;
+	m_clipRegion.hi.y = 0;
+	m_lastResourceFrame = 0;
+	m_useHotKey = FALSE;
+	m_hotKeyPos.x = 0;
+	m_hotKeyPos.y = 0;
+	m_hotKeyColor = GameMakeColor(255,255,255,255);
+	m_bfmeFlag20C = FALSE;
+	m_bfmeFlag1EC = TRUE;
+	m_hotkey.clear();
+}
+
 // W3DDisplayString::~W3DDisplayString ========================================
 /** */
 //=============================================================================
