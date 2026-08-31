@@ -81335,3 +81335,4 @@ _strtol,0x009F71CC,AptValue::toInteger at 0x00898300 calls the retail strtol imp
 ??1BannerTimerAsciiString@@QAE@XZ,0x00887940,BannerTimerMember element fields use the verified retail AsciiString destructor body directly
 ?bfmeAt@BfmeThingEFE@@QAEMH@Z,0x0001FEEC,ExperienceTracker scalar-table helpers call this retail BfmeThingEFE lookup through its ILT
 ?postLoad@ExperienceLevelSystem@@QAEXPAVObject@@@Z,0x00008DFA,ExperienceTracker transfer calls the retail ExperienceLevelSystem post-load helper through its ILT
+?getBestContactPoint@GeometryInfo@@QBE_NPAUCoord3D@@PBU2@PBDHH_N@Z,0x0087F590,Object contact-point query calls this retail GeometryInfo method through the exact body
