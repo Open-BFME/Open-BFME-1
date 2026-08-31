@@ -11,12 +11,19 @@ struct BfmeRecordOwnerRB
 	ModelConditionFlags m_bfmeRecord;
 };
 
+enum WeaponSlotType { BfmeWeaponSlot };
+enum WhichTurretType { BfmeTurret };
+class Matrix3D { unsigned char m[48]; };
+struct Coord3D { float x, y, z; };
+
 class Drawable
 {
 public:
 	void replaceModelConditionState(const ModelConditionFlags &state, bool dirty, unsigned int effect);
 	void bfmeClearAndSetModelConditionFlags(const ModelConditionFlags &clear, const ModelConditionFlags &set);
 	int bfmeGetBarrelCount(int slot) const;
+	bool getProjectileLaunchOffset(WeaponSlotType slot, int barrel, Matrix3D *launch,
+		WhichTurretType turret, Coord3D *turretRotation, Coord3D *turretPitch) const;
 	void bfmeEnableAmbientSoundFromScript(bool enable);
 	void friend_setSelected();
 	void friend_clearSelected();
@@ -55,7 +62,11 @@ class ObjectDrawInterface
 {
 public:
 	virtual void anchor00(); virtual void anchor04(); virtual void anchor08(); virtual void anchor0c();
-	virtual void anchor10(); virtual void anchor14(); virtual void anchor18(); virtual void anchor1c();
+	virtual void anchor10(); virtual void anchor14();
+	virtual bool getProjectileLaunchOffset(const ModelConditionFlags &state, WeaponSlotType slot,
+		int barrel, Matrix3D *launch, WhichTurretType turret, Coord3D *turretRotation,
+		Coord3D *turretPitch);
+	virtual void anchor1c();
 	virtual void anchor20(); virtual void anchor24(); virtual void anchor28(); virtual void anchor2c();
 	virtual void anchor30(); virtual void anchor34(); virtual void anchor38(); virtual void anchor3c();
 	virtual void anchor40(); virtual void anchor44(); virtual void anchor48();
@@ -226,6 +237,31 @@ int Drawable::bfmeGetBarrelCount(int slot) const
 		}
 	}
 	return 0;
+}
+
+bool Drawable::getProjectileLaunchOffset(WeaponSlotType slot, int barrel, Matrix3D *launch,
+	WhichTurretType turret, Coord3D *turretRotation, Coord3D *turretPitch) const
+{
+	if (m_bfmeIsModelDirty)
+	{
+		m_bfmeConditionState.clearAndSet(m_bfmeClearMask, m_bfmeSetMask);
+		for (DrawModule **module = m_bfmeDrawModules; *module; ++module)
+		{
+			ObjectDrawInterface *interface = (*module)->getObjectDrawInterface();
+			if (interface)
+				interface->replaceModelConditionState(m_bfmeConditionState, false, 0);
+		}
+		m_bfmeIsModelDirty = false;
+	}
+
+	for (DrawModule **module = m_bfmeDrawModules; *module; ++module)
+	{
+		ObjectDrawInterface *interface = (*module)->getObjectDrawInterface();
+		if (interface && interface->getProjectileLaunchOffset(m_bfmeConditionState, slot,
+			barrel, launch, turret, turretRotation, turretPitch))
+			return true;
+	}
+	return false;
 }
 
 class BfmeNodeRB
