@@ -9054,6 +9054,7 @@ name,address,notes
 ??1W3DQuadrupedDrawModuleDataBase@@UAE@XZ,0x0002C71E,Open-BFME5 pin
 ??1W3DQuadrupedElement@@QAE@XZ,0x0000D828,Open-BFME5 W3DQuadruped array element destructor pin
 ??1W3DRadarResetSurface@@QAE@XZ,0x008FC5B0,W3DRadar reset BFME value-surface destructor
+??1W3DRopeDraw@@MAE@XZ,0x0000CC70,W3DRopeDraw deleting-destructor call through retail ILT
 ??1W3DRopeDrawRootBase@@UAE@XZ,0x0002B8C8,W3DRopeDraw destructor drawable-root-base call through retail ILT
 ??1W3DShadowHelperManager@@QAE@XZ,0x007C19A0,Open-BFME5 shadow helper manager dtor (two refcounted members) from retail ~W3DShadowManager call site
 ??1WatchdogOwnedState@@QAE@XZ,0x009DB400,Watchdog owned-state destructor from retail stop body
