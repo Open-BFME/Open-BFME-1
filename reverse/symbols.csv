@@ -74348,6 +74348,7 @@ name,address,notes
 ?bfmeSetQQ@BfmeThingQQ@@QAEXPBDI@Z,0x0088A8F0,pin
 ?bfmeSetQR@BfmeThingQR@@QAEXPBDI@Z,0x0088A8F0,pin
 ?bfmeSetRQ@BfmeInnerRQ@@QAEXHH@Z,0x0000A5DD,pin
+?bfmeSetSLA@BfmeSetterSLA@@QAEXPAXH@Z,0x000307E7,pin
 ?bfmeSetSize@BfmeShadowPart@@QAEXMM@Z,0x00022D86,Open-BFME5 ILT thunk to body 0x00428250; ?setSize@Shadow@@QAEXMM@Z at 0x001E4250 calls it on every live entry of the two four-pointer arrays at +0x94 and +0xA4; address-derived name
 ?bfmeSetState1285@BfmeNode1285@@QAEXH@Z,0x008D3050,address-derived node state method called by the 0x008BB570 retail body
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
