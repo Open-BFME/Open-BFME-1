@@ -73659,6 +73659,8 @@ name,address,notes
 ?bfmeGetMgr1015@@YAPAVBfmeMgr1015@@XZ,0x007EFFC0,pin
 ?bfmeGetNonnegativePreferredLocomotorHeight@Object@@QBEMXZ,0x000047C8,Open-BFME5 ILT thunk to body 0x001BE030; Object m_ai at +0x204 and AIUpdateInterface m_curLocomotor at +0x1CC; returns canonical getPreferredHeight clamped to shared 0.0f; bfme prefix records unrecovered retail spelling
 ?bfmeGetRelationInterface@Object@@QBEPAVBfmeRelationInterface@@XZ,0x0000D3B9,Object relationship body calls this protected ILT for its BFME relation interface
+?bfmeGetSA@BfmeThingSA@@QAEPAXPAX0@Z,0x007E8900,pin
+?bfmeGetSB@BfmeThingSB@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
 ?bfmeGet_002198b0@BfmeChainResult@@QAEPAXXZ,0x00036165,Open-BFME5 ILT the lookup at 0x002198B0 tail-jumps through
@@ -74699,6 +74701,8 @@ name,address,notes
 ?bfmeUseGI@BfmeSubGI@@QAEXPAX@Z,0x0002D2EF,pin
 ?bfmeUsePrimaryRank1294@BfmeGameLogic1294@@QAE_NXZ,0x0001D1C9,address-derived rank-selection predicate called by the 0x003A0860 retail body
 ?bfmeUseRT@BfmeSlotRT@@QAEXXZ,0x0003A427,pin
+?bfmeUseSA@BfmeSinkSA@@QAEXPAX0@Z,0x00809100,pin
+?bfmeUseSB@BfmeSinkSB@@QAEXPAX0@Z,0x00809E00,pin
 ?bfmeVal1025@BfmeH1025@@QAEHXZ,0x0001F668,pin
 ?bfmeVal1027@BfmeVal1027@@QAEMXZ,0x0000D7B5,pin
 ?bfmeVal1034@BfmeN1034@@QAEHXZ,0x00898300,pin
