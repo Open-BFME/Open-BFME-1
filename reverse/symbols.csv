@@ -76212,6 +76212,7 @@ name,address,notes
 ?g_bfmeH1071@@3DA,0x00EF4AFE,pin
 ?g_bfmeH1085@@3DA,0x00EF4AFE,pin
 ?g_bfmeHDWI@@3PAXA,0x00F4DCC0,pin
+?g_bfmeHandleSRA@@3PAXA,0x00EED238,pin
 ?g_bfmeHeld995B@@3PAXA,0x00EF4974,pin
 ?g_bfmeHits1054@@3HA,0x00F40594,pin
 ?g_bfmeHook1040@@3P6AXPAUBfmeS1040@@@ZA,0x00F56DA0,pin
@@ -80472,6 +80473,7 @@ __imp_?bfmeClose1033@@YGXH@Z,0x00F58CCC,pin
 __imp_?bfmeClose1038@@YGHPAX@Z,0x00F58ECC,pin
 __imp_?bfmeCmp1026@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeCmp1027@@YAHPAD0H@Z,0x00F594BC,pin
+__imp_?bfmeFindSRA@@YGPAXPAXH@Z,0x00F59010,pin
 __imp_?bfmeFmt1064@@YAHPADI0H@Z,0x00F5932C,pin
 __imp_?bfmeFmt1067@@YAHPADI0H@Z,0x00F5932C,pin
 __imp_?bfmeFmt1073@@YAHPADI0N@Z,0x00F5932C,pin
@@ -80493,6 +80495,7 @@ __imp_?bfmeOpen1043@@YGPAXPAD@Z,0x00F58E78,pin
 __imp_?bfmeOpenSF@@YAPAUBfmeFileSF@@PBD0@Z,0x00F593BC,pin
 __imp_?bfmePrint1025@@YAXHPADH@Z,0x00F5948C,pin
 __imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
+__imp_?bfmeShowSRA@@YGXPAXHH@Z,0x00F58FD0,pin
 __imp_?bfmeShutSF@@YAHPAUBfmeFileSF@@@Z,0x00F593A0,pin
 __imp_?bfmeSpf1065@@YAHPAD0H@Z,0x00F5948C,pin
 __imp_?bfmeSpf1068@@YAHPAD0H@Z,0x00F5948C,pin
