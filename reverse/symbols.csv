@@ -81329,3 +81329,4 @@ g_bfmeJpegExtendedMessage,0x01081238,JPEG extended message-table text selected f
 ?giveUpgrade@Team@@QAEXPBVUpgradeTemplate@@@Z,0x0002DA5B,TEAM_UPGRADE canonical body grants the template to every team member
 ?calcCostToBuild@ThingTemplate@@QBEHPBVPlayer@@H@Z,0x0000DA8A,Player::canAffordBuild at 0x000C99D0 calls the retail ThingTemplate cost body with this Player and build index -1
 ?bfmeRunEUAe@BfmeSpecialPowerAllowanceStore@@QAEXPAVBfmePlayerSpecialPowerState@@PAX@Z,0x00045039,BfmeItemEUA callback E at 0x000C9930 forwards its state and context to the global allowance store
+??1?$_List_base@PAVControlBarScheme@@V?$allocator@PAVControlBarScheme@@@_STL@@@_STL@@QAE@XZ,0x0003FC60,ControlBarSchemeManager destructor at 0x004AE850 calls the unique retail list-base destructor for its ControlBarScheme pointer list
