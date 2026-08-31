@@ -29,12 +29,27 @@ public:
 class DisplayStringManager
 {
 protected:
+	void link(DisplayString *string);
 	void unLink(DisplayString *string);
 
 private:
 	unsigned char m_unmodelled_00[8];
 	DisplayString *m_head;
 };
+
+void DisplayStringManager::link(DisplayString *string)
+{
+	AsciiString unusedText;
+	unusedText.translate(string->m_text);
+
+	if (string)
+	{
+		string->m_next = m_head;
+		if (m_head)
+			m_head->m_previous = string;
+		m_head = string;
+	}
+}
 
 void DisplayStringManager::unLink(DisplayString *string)
 {
