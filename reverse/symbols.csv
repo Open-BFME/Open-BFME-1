@@ -81316,3 +81316,5 @@ g_bfmeJpegExtendedMessage,0x01081238,JPEG extended message-table text selected f
 ?bfmeTeamGiveExperiencePointsVisitor@@YAXPAVObject@@PAX@Z,0x0001ACB7,TEAM_GIVE_EXPERIENCE_POINTS dispatch and callback body identify the per-object experience-points visitor
 ?bfmeTeamSetExperiencePointsVisitor@@YAXPAVObject@@PAX@Z,0x0000A95C,TEAM_SET_EXPERIENCE_POINTS dispatch and callback body identify the per-object absolute-points visitor
 ?bfmeTeamRefreshExperienceVisitor@@YAXPAVObject@@PAX@Z,0x000029CD,team experience actions call this per-object refresh visitor after changing points or levels
+?findLevel@ExperienceLevelSystem@@QAEPAVBfmeExperienceLevelDefinition@@ABVAsciiString@@@Z,0x000335D2,TEAM_GIVE_EXPERIENCE_LEVEL canonical lookup searches the experience-level definitions by name
+?bfmeTeamGiveExperienceLevelVisitor@@YAXPAVObject@@PAX@Z,0x00025301,TEAM_GIVE_EXPERIENCE_LEVEL dispatch and callback body identify the per-object level visitor
