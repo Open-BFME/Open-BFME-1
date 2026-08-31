@@ -18,6 +18,7 @@ public:
 	void bfmeClearAndSetModelConditionFlags(const ModelConditionFlags &clear, const ModelConditionFlags &set);
 	int bfmeGetBarrelCount(int slot) const;
 	void bfmeEnableAmbientSoundFromScript(bool enable);
+	void friend_setSelected();
 
 private:
 	void bfmeApplyModelConditionFlags(bool immediate);
@@ -26,12 +27,15 @@ private:
 	unsigned char m_bfmeHead[0x140];
 	bool m_bfmeAmbientSoundEnabled;
 	bool m_bfmeAmbientSoundEnabledFromScript;
-	unsigned char m_bfmeGap142[2];
+	unsigned char m_bfmeGap142;
+	bool m_bfmeSelected;
 	class DynamicAudioEventRTS *m_bfmeAmbientSoundA;
 	class DynamicAudioEventRTS *m_bfmeAmbientSoundB;
 	class DynamicAudioEventRTS *m_bfmeAmbientSoundC;
 	class DrawModule **m_bfmeDrawModules;
-	unsigned char m_bfmeGap154[0xfc];
+	unsigned char m_bfmeGap154[4];
+	class BfmeSelectionModule **m_bfmeSelectionModules;
+	unsigned char m_bfmeGap15c[0xf4];
 	mutable ModelConditionFlags m_bfmeConditionState;
 	mutable ModelConditionFlags m_bfmeClearMask;
 	mutable ModelConditionFlags m_bfmeSetMask;
@@ -82,6 +86,22 @@ public:
 	unsigned int m_bfmePlayingHandle;
 };
 
+class BfmeSelectionInterface
+{
+public:
+	virtual void selected();
+	virtual void unselected();
+};
+
+class BfmeSelectionModule
+{
+public:
+	virtual void anchor00(); virtual void anchor04(); virtual void anchor08(); virtual void anchor0c();
+	virtual void anchor10(); virtual void anchor14(); virtual void anchor18(); virtual void anchor1c();
+	virtual void anchor20(); virtual void anchor24();
+	virtual BfmeSelectionInterface *getSelectionInterface();
+};
+
 class AudioManager
 {
 public:
@@ -111,6 +131,30 @@ void Drawable::bfmeEnableAmbientSoundFromScript(bool enable)
 		TheAudio->removeAudioEvent(m_bfmeAmbientSoundB->m_bfmePlayingHandle);
 	if (m_bfmeAmbientSoundC)
 		TheAudio->removeAudioEvent(m_bfmeAmbientSoundC->m_bfmePlayingHandle);
+}
+
+void Drawable::friend_setSelected()
+{
+	if (m_bfmeSelected)
+		return;
+
+	m_bfmeSelected = true;
+	refreshAmbientSound();
+	bfmeStartAmbientSound(false);
+
+	BfmeSelectionModule **module = m_bfmeSelectionModules;
+	if (!module)
+		return;
+
+	do
+	{
+		if (!*module)
+			return;
+		BfmeSelectionInterface *interface = (*module)->getSelectionInterface();
+		if (interface)
+			interface->selected();
+		++module;
+	} while (module);
 }
 
 void Drawable::bfmeApplyModelConditionFlags(bool immediate)
