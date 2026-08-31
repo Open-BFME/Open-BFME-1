@@ -75112,6 +75112,8 @@ name,address,notes
 ?compare@Rva0039C7D0Owner@@ABE_NPBURva0039C7D0Payload@@0@Z,0x00028AF6,Open-BFME5 ILT to the two-argument member worker called by 0x0039C7D0
 ?compareNoCase@AsciiString@@QBEHPBD@Z,0x000405E8,ILT thunk to the case-insensitive AsciiString compare at 0x00075E00
 ?compareNoCaseRaw@?$StringBase@G@@ABEHPBG0H@Z,0x0009ECA0,case-insensitive wide comparison helper reached by the 0x0009F090 list search
+?destroyNodeValue@UnicodeString@@QAEXXZ,0x0003B304,UnicodeString destructor thunk reached by the 0x0009F3E0 list removal
+?Rva0009F3E0Deallocate@@YAXPAXI@Z,0x0082E5F0,STLport small-node deallocator reached by the 0x0009F3E0 list removal
 ?compute@BridgeGetBridgeHeightShim@@QAEMPBUCoord3D@@PAU2@@Z,0x001A7520,Bridge getBridgeHeight incremental-link thunk target through a TU-local forwarding shim
 ?computeApproachPosition@DockUpdate@@IAE?AUCoord3D@@HPAVObject@@@Z,0x0001D7C8
 ?computeBonus@Weapon@@IBEXPBVObject@@IAAVWeaponBonus@@@Z,0x00024591,Open-BFME5 ILT; called by ?getAttackRange@Weapon@@QBEMPBVObject@@@Z at 0x001E2B50 with the source object a zero flag word and the default-constructed bonus block
