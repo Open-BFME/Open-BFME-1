@@ -378,6 +378,7 @@ name,address,notes
 ??$_Construct@URva001ACF10Element@@U1@@_STL@@YAXPAURva001ACF10Element@@ABU1@@Z,0x00030DAA,Open-BFME5 the element _Construct the list insert at 0x001ACF10 calls
 ??$_Construct@URva001CB1F0Element@@U1@@_STL@@YAXPAURva001CB1F0Element@@ABU1@@Z,0x00038217,Open-BFME5 the element _Construct the list insert at 0x001CB1F0 calls
 ??$_Construct@URva001CFDB0Element@@U1@@_STL@@YAXPAURva001CFDB0Element@@ABU1@@Z,0x00038217,Open-BFME5 the element _Construct the list push_back at 0x001CFDB0 calls
+??$_Construct@URva001D28F0Element@@U1@@_STL@@YAXPAURva001D28F0Element@@ABU1@@Z,0x0001811A,ILT reached by the 0x001D25F0 vector overflow body
 ??$_Construct@URva001DFFF0Element@_STL@@@_STL@@YAXPAURva001DFFF0Element@0@ABU10@@Z,0x0000CED2,Open-BFME5 the element _Construct the vector insert at 0x001DFFF0 calls
 ??$_Construct@URva001F4BF0Element@@U1@@_STL@@YAXPAURva001F4BF0Element@@ABU1@@Z,0x00007C84,Open-BFME5 the element _Construct the list insert at 0x001F4BF0 calls
 ??$_Construct@URva001F4C70Element@@U1@@_STL@@YAXPAURva001F4C70Element@@ABU1@@Z,0x00028696,Open-BFME5 the element _Construct the list insert at 0x001F4C70 calls
@@ -10383,6 +10384,7 @@ name,address,notes
 ?RetailScriptVTable@@3PAPAXA,0x010E858C,Open-BFME5 retail Script vtable value
 ?ReturnToGame@AptPlayerStatus@@QAEXPBD@Z,0x0003244D,Objectives/PlayerStatus constructor 0x0052C660 binds this ILT under both ReturnToGame registration strings
 ?Rva00066A40Construct@@YAXPAXPBX@Z,0x00066A40,plain two-pointer spelling of the STLport _Construct<pair<const NameKeyType DamageFX>> the ledger already names at this address (U3_node_allocators.cpp)
+?Rva0009F3E0Deallocate@@YAXPAXI@Z,0x0082E5F0,STLport small-node deallocator reached by the 0x0009F3E0 list removal
 ?Rva00519C90Second@@YAXHH@Z,0x0001D561,ILT for cdecl (0 0) call of 20B wrap at 0x00519C90
 ?Rva0051D990Second@@YAXHHH@Z,0x000079B4,ILT for cdecl (2 3 0) call of 22B wrap at 0x0051D990
 ?Rva0051DB00Second@@YAXXZ,0x0003896A,Open-BFME5 cdecl at ILT of two-call wrap 0x0051DB00
@@ -75113,7 +75115,6 @@ name,address,notes
 ?compareNoCase@AsciiString@@QBEHPBD@Z,0x000405E8,ILT thunk to the case-insensitive AsciiString compare at 0x00075E00
 ?compareNoCaseRaw@?$StringBase@G@@ABEHPBG0H@Z,0x0009ECA0,case-insensitive wide comparison helper reached by the 0x0009F090 list search
 ?destroyNodeValue@UnicodeString@@QAEXXZ,0x0003B304,UnicodeString destructor thunk reached by the 0x0009F3E0 list removal
-?Rva0009F3E0Deallocate@@YAXPAXI@Z,0x0082E5F0,STLport small-node deallocator reached by the 0x0009F3E0 list removal
 ?g_Rva005127A0InGameChat@@3PAVRva005127A0InGameChat@@A,0x012F4988,address-derived InGameChat global used by the guarded 0x005127A0 forwarder
 ?handle@Rva005127A0InGameChat@@QAE_NVUnicodeString@@H@Z,0x00010C6C,address-derived InGameChat member reached by the 0x005127A0 guarded forwarder
 ?compute@BridgeGetBridgeHeightShim@@QAEMPBUCoord3D@@PAU2@@Z,0x001A7520,Bridge getBridgeHeight incremental-link thunk target through a TU-local forwarding shim
@@ -78973,6 +78974,7 @@ name,address,notes
 ?notify@BfmeSub30_7F0@@QAEXHH@Z,0x00044319,pin
 ?notify@BfmeSub30_FCD@@QAEXPAXH@Z,0x00044319,pin
 ?notify@BfmeSubVfn1A6@@QAEXHPAX@Z,0x00044319,pin
+?notify@Gen00587600@@QAEXXZ,0x000271FB,Open-BFME5 ILT target of the guarded notifier at 0x0051A6E0
 ?notify@Q4Base00D35D68@@QAEXHH@Z,0x008975D0,two-argument __thiscall member called at the top of the 94-byte polymorphic destructor family (Q4VptrPairDtors.cpp); address-derived name; identity not recovered
 ?notify@Rva00589690@@AAEXXZ,0x0003643A,Open-BFME5 fresh thiscall at ILT of set-byte+notify 0x00589690
 ?notifyAll@Y3NotifyTail_005C5A50@@QAEXPAX@Z,0x005C5A50,Y4 lane: restored pin a concurrent whole-file rewrite of reverse/symbols.csv dropped; address is the one the Y3 lane encodes in its own address-derived name and the byte gate confirms it
@@ -81475,4 +81477,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??$_Construct@URva001D28F0Element@@U1@@_STL@@YAXPAURva001D28F0Element@@ABU1@@Z,0x0001811A,ILT reached by the 0x001D25F0 vector overflow body
