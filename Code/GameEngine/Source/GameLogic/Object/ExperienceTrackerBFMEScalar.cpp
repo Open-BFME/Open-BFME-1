@@ -22,6 +22,7 @@ private:
 class ExperienceTracker
 {
 public:
+	void bfmeSetScalarIndex(int index);
 	void bfmeSetScalarBaseCount(int count);
 	void bfmeResetScalarBaseCount();
 
@@ -30,6 +31,16 @@ private:
 	int m_scalarIndex;
 	BfmeThingEFE *m_scalarTable;
 };
+
+void ExperienceTracker::bfmeSetScalarIndex(int index)
+{
+	if (index == 0 || m_scalarIndex == index)
+		return;
+
+	m_scalarIndex = index;
+	BfmeThingEFE *table = m_scalarTable;
+	table->m_scalar = table->bfmeAt(table->m_tracker->m_scalarIndex);
+}
 
 void ExperienceTracker::bfmeSetScalarBaseCount(int count)
 {
