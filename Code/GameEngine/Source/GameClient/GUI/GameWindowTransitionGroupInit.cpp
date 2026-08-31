@@ -107,6 +107,9 @@ class Transition
 public:
 	virtual void bfmeSlot0(void) = 0;
 	virtual void init(GameWindow *window) = 0;
+	virtual void update(int frame) = 0;
+	virtual void reverse(void) = 0;
+	virtual void draw(void) = 0;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
@@ -114,6 +117,7 @@ class TransitionWindow
 {
 public:
 	void init(void);
+	void draw(void);
 
 private:
 	AsciiString m_winName;
@@ -133,6 +137,12 @@ inline void TransitionWindow::init(void)
 	m_transition->init(m_win);
 }
 
+inline void TransitionWindow::draw(void)
+{
+	if (m_transition)
+		m_transition->draw();
+}
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class GameWindowTransitionsHandler
 {
@@ -148,6 +158,7 @@ class TransitionGroup
 {
 public:
 	void init(void);
+	void draw(void);
 	int getTotalFrames(void);
 
 private:
@@ -175,4 +186,16 @@ void TransitionGroup::init(void)
 	}
 
 	TheTransitionHandler->m_transitionEndFrame = getTotalFrames() + 3;
+}
+
+// ?draw@TransitionGroup@@QAEXXZ
+void TransitionGroup::draw(void)
+{
+	_STL::list<TransitionWindow *>::iterator it = m_transitionWindowList.begin();
+	while (it != m_transitionWindowList.end())
+	{
+		TransitionWindow *window = *it;
+		window->draw();
+		++it;
+	}
 }
