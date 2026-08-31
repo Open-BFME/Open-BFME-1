@@ -79268,7 +79268,7 @@ name,address,notes
 ?rva00366320InsertionSortCall@@YAXPAURva00364980HeapElement@@0URva00364980HeapCompare@@@Z,0x0002AA4F,REL32 insertion-sort target from 0x00366795
 ?rva00366760FinalInsertionSort@@YAXPAURva00364980HeapElement@@0URva00364980HeapCompare@@@Z,0x000390A4,REL32 final-insertion-sort target from 0x00366FEE
 ?rva00366A20IntrosortLoop@@YAXPAURva00364980HeapElement@@00HURva00364980HeapCompare@@@Z,0x0000AE61,REL32 introsort-loop target from 0x00366FE6
-?rva00381050@ExperienceLevelSystem@@QAEXPAVTeam@@H@Z,0x00027237,ILT doTeamSpinForFramecount tail-jumps to at 0x002F11FE; its target 0x00381050 is in the same TU as the subsystem constructor at 0x00381480
+?gainLevel@ExperienceLevelSystem@@QAEXPAVObject@@_N@Z,0x00027237,UNIT_GAIN_LEVEL dispatch resolves an Object and tail-calls this experience-level body with the FX flag
 ?rva0046ef50@@YAXXZ,0x00018E8F,Open-BFME5 ILT thunk b_0046ef50
 ?rva00536870@@YAXXZ,0x000436E9,Open-BFME5 ILT thunk b_00536870
 ?rva00547730@@YAXXZ,0x0003F2C9,Open-BFME5 ILT thunk b_00547730
