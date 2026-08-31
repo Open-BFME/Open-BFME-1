@@ -72691,6 +72691,8 @@ name,address,notes
 ?bfmeBaseTJ@BfmeThingTJ@@QAEXPAX0@Z,0x00002874,pin
 ?bfmeBaseTK@BfmeThingTK@@QAEXXZ,0x009CB970,pin
 ?bfmeBaseTL@BfmeThingTL@@QAEXPAXH@Z,0x0083FB60,pin
+?bfmeBaseTL@BfmeThingTL@@QAEPAV1@PAXH@Z,0x0083FB60,BfmeThreeHundredFiftyOne identity candidate; retail returns this
+?bfmeLocaleCtor@BfmeLocaleShim@@SAXXZ,0x00832120,BfmeThreeHundredFiftyOne TU-local ABI shim for _STL::locale default constructor
 ?bfmeBaseUpdate@Gen009D6330@@QAEXPAXPBXI@Z,0x009D6E50,address-derived base update target from the direct REL32 call at retail 0x009D634E
 ?bfmeBaseVDW@BfmeThingVDW@@QAEXHH@Z,0x00899F00,pin
 ?bfmeBaseXfer@BfmeAODHordeContainOwner@@QAEXPAVBfmeXfer@@@Z,0x00024BDB,AODHordeContain xfer delegates to the base HordeContain transfer body
