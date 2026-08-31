@@ -21,6 +21,13 @@ public:
 	 ~basic_string();
 };
 
+template <bool threads, int inst>
+class __node_alloc
+{
+public:
+	static void _M_deallocate(void *p, unsigned int bytes);
+};
+
 template <class T, class Allocator>
 class deque
 {
@@ -129,6 +136,19 @@ public:
 private:
 	BFMENetworkLock *m_lock;
 	Bool m_failed;
+};
+
+class BFMENetworkLockRefOwner
+{
+public:
+	~BFMENetworkLockRefOwner()
+	{
+		BFMEAutoLockRef *ref = m_ref;
+		if (ref)
+			delete ref;
+	}
+
+	BFMEAutoLockRef *m_ref;
 };
 
 class BFMENetworkQueueItem
@@ -253,10 +273,22 @@ class BFMENetworkState
 {
 public:
 	BFMENetworkState();
-	~BFMENetworkState();
+	__forceinline ~BFMENetworkState()
+	{
+		char *start = m_start;
+		unsigned int bytes = (unsigned int)(m_capacity - start);
+		if (start != 0) {
+			if (bytes > 128)
+				::operator delete(start);
+			else
+				_STL::__node_alloc<true, 0>::_M_deallocate(start, bytes);
+		}
+	}
 
 private:
-	int m_data[3];
+	char *m_start;
+	char *m_finish;
+	char *m_capacity;
 };
 
 struct BFMENetworkPayloadList
@@ -316,7 +348,10 @@ public:
 class BFMENetworkInterfaceBase
 {
 public:
-	virtual ~BFMENetworkInterfaceBase();
+	virtual ~BFMENetworkInterfaceBase()
+	{
+		*(void **)this = reinterpret_cast<void *>(0x0111985c);
+	}
 };
 
 class BFMENetwork : public BFMENetworkInterfaceBase
@@ -348,7 +383,7 @@ private:
 	BFMENetworkState m_state84;
 	BFMENetworkPayloadList m_list90;
 	BFMENetworkLock m_lock9c;
-	BFMEAutoLockRef *m_backendLockRef;
+	BFMENetworkLockRefOwner m_backendLockRef;
 };
 
 class BFMENetworkDestructorShim
@@ -807,11 +842,11 @@ Bool BFMENetwork::backendHasLiveHandle()
 void BFMENetwork::destroyBackend()
 {
 	if (m_backend) {
-		if (m_backendLockRef) {
-			delete m_backendLockRef;
+		if (m_backendLockRef.m_ref) {
+			delete m_backendLockRef.m_ref;
 		}
 		BFMENetworkBackend *volatile *backendSlot = &m_backend;
-		m_backendLockRef = 0;
+		m_backendLockRef.m_ref = 0;
 		(*backendSlot)->closeLiveHandle();
 		if (m_backend) {
 			delete m_backend;
@@ -835,9 +870,25 @@ BFMENetwork::BFMENetwork() :
 	m_lock1(0),
 	m_lock9c(0)
 {
-	m_backendLockRef = 0;
+	m_backendLockRef.m_ref = 0;
 	m_backend = 0;
 	m_unknown68 = 0;
+}
+
+BFMENetwork::~BFMENetwork()
+{
+	if (m_backend) {
+		if (m_backendLockRef.m_ref) {
+			delete m_backendLockRef.m_ref;
+		}
+		BFMENetworkBackend *volatile *backendSlot = &m_backend;
+		m_backendLockRef.m_ref = 0;
+		(*backendSlot)->closeLiveHandle();
+		if (m_backend) {
+			delete m_backend;
+		}
+	}
+	m_backend = 0;
 }
 
 void BFMENetwork::init()
@@ -847,9 +898,9 @@ void BFMENetwork::init()
 	}
 
 	BFMEAutoLockRef *lockRef = new BFMEAutoLockRef(&m_lock9c, -1);
-	if (lockRef != m_backendLockRef) {
-		delete m_backendLockRef;
-		m_backendLockRef = lockRef;
+	if (lockRef != m_backendLockRef.m_ref) {
+		delete m_backendLockRef.m_ref;
+		m_backendLockRef.m_ref = lockRef;
 	}
 
 	m_backend = new BFMENetworkBackend(&m_lock9c);
