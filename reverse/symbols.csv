@@ -73610,6 +73610,10 @@ name,address,notes
 ?bfmeFreeVG@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVH@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFwd1050@BfmeP1050@@QAEXHHHHH@Z,0x009F5C00,pin
+?bfmeFwdFourSUA@BfmeThingSUA@@QAEXHH@Z,0x0082EF90,pin
+?bfmeFwdOneSUA@BfmeThingSUA@@QAEXDH@Z,0x0002A9E6,pin
+?bfmeFwdThreeSUA@BfmeThingSUA@@QAEXDH@Z,0x0082E070,pin
+?bfmeFwdTwoSUA@BfmeThingSUA@@QAEXHD@Z,0x0082FB10,pin
 ?bfmeG1076@BfmeQ1076@@QAEXH@Z,0x0003936A,pin
 ?bfmeGen00018C1E@Gen_005291F0@@QAEXH@Z,0x00018C1E,address-derived helper; target read from the guarded eight-index loop REL32 at 0x00529237
 ?bfmeGen00029C35@Gen_00529B10@@QAEXH@Z,0x00029C35,address-derived helper; target read from the first REL32 in the guarded eight-index loop at 0x00529B10
