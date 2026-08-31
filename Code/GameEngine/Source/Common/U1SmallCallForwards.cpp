@@ -72,7 +72,45 @@ void U1FloatSink::set( float value )
 
 // ---------------------------------------------------------- indexed element
 
-void u1Call_005C7110( void *a, void *b, void *c, void **element );
+class U1CallReceiver_005C5BD0
+{
+public:
+	void step( int amount );
+};
+
+class U1CallSink
+{
+public:
+	void add( const char *text );
+};
+
+class U1CallReceiver_005C47D0
+{
+public:
+	class Argument;
+	void apply( Argument *argument );
+};
+
+void u1Call_005C7110( void *a, void *b, void *c, void **element )
+{
+	U1CallReceiver_005C5BD0 *receiver = (U1CallReceiver_005C5BD0 *)a;
+	U1CallSink *sink = (U1CallSink *)a;
+	unsigned int count = (unsigned int)b;
+	if( count > 0 )
+	{
+		do
+		{
+			receiver->step( 0x20 );
+			--count;
+		} while( count != 0 );
+	}
+
+	sink->add( (const char *)c );
+	sink->add( (const char *)0x0110FCA8 );
+	sink->add( (const char *)*element );
+	((U1CallReceiver_005C47D0 *)a)->apply(
+		(U1CallReceiver_005C47D0::Argument *)0x0A );
+}
 
 void u1Range_005C8320( void *a, void *b, void *c, int index, int end, void **array )
 {
