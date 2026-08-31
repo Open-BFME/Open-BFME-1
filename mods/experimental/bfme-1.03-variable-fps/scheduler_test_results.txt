@@ -24,4 +24,13 @@ global_sync outputs=1000,1016,1016,1026,1026,1042,1042 expected=1000,1016,1016,1
 pause_manual_animation rendered=11.000000 expected=11.000000 PASS
 low_fps_recovery first=1 second=0 expected=1,0 PASS
 discarded_stall ticks=100 expected=100 PASS
+pending_immediate exec=1 prep=1 attempts=1 network=1 remainder=0.000000 expected=1,1,1,1,0 PASS
+pending_215ms remainder=0.015000 before_400=0 at_400=1 exec=2 prep=2 network=2 expected=0.015,0,1,2,2,2 PASS
+pending_250ms exec=1 prep=1 attempts=2 network=1 remainder=0.050000 expected=1,1,2,1,0.050 PASS
+pending_repeated exec=1 prep=1 attempts=11 network=1 remainder=0.050000 expected=1,1,11,1,0.050 PASS
+pending_550ms exec_at_550=1 total_exec=2 prep=2 network=2 remainder=0.000000 expected=1,2,2,2,0 PASS
+pending_pause_reset exec=1 prep=2 network=1 pending=0 expected=1,2,1,0 PASS
+pending_lifecycle_reset exec=1 prep=2 network=1 pending=0 expected=1,2,1,0 PASS
+pending_long_stall_reset exec=1 prep=2 network=1 remainder=0.000000 expected=1,2,1,0 PASS
+pending_below15_recovery first_allowed=0 second_due=1 exec=2 prep=2 network=2 remainder=0.000000 expected=0,1,2,2,2,0 PASS
 failures=0

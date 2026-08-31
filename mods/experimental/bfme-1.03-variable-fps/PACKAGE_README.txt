@@ -5,7 +5,21 @@ Install
 -------
 1. Close lotrbfme.exe.
 2. Copy dinput8.dll next to lotrbfme.exe (normally C:\BFME1\dinput8.dll).
-3. Remove or rename dinput8.dll to uninstall.
+3. For a clean multiplayer diagnostic run, also copy the included header-only
+   BFME_MULTIPLAYER_TICK_DIAGNOSTIC.csv next to lotrbfme.exe. The DLL appends
+   timing/admission events to that file.
+4. Remove or rename dinput8.dll to uninstall.
+
+Tester return files
+-------------------
+After reproducing the multiplayer test and closing the game, send back:
+- BFME_MULTIPLAYER_TICK_DIAGNOSTIC.csv from the game directory.
+- Host/guest role, approximate FPS, latency/jitter settings, and whether a
+  visible stall, drift, or desync occurred.
+
+Delete the populated CSV and restore the included header-only copy before a
+new independent test session. Keep FramesPerSecondLimit between 15 and 60;
+this build does not support or test rates above 60 FPS.
 
 Behavior
 --------
@@ -15,6 +29,12 @@ Behavior
 - Below 15 FPS, animation uses the same visualFPS / 15 slowdown as gameplay.
 - The legacy six-phase dispatch is completed below 30 FPS without adding
   authoritative phase-1 ticks.
+- A timer-due authoritative tick remains pending while BFME's native network
+  admission gate waits for commands, frame ceiling, or router pacing. The
+  same phase-1 opportunity is retried without repeating legacy phases 2..6;
+  timer time is consumed only when GameLogic actually enters. Short waits
+  retain their cadence remainder, while waits of another full interval or
+  more discard stale debt instead of bursting catch-up ticks.
 - A true pause routes through BFME's native phase-1 pause gate. WindowManager
   and UI presentation continue, while the gate clears GameClient::m_advanceFrame
   so drawable and interpolation state do not advance on following paused
@@ -52,7 +72,9 @@ Verification
 ------------
 The included deterministic test results cover 60, 45, 30, 20, 15, 12, 10,
 and 5 FPS, native phase-1 pause routing with continuous WindowManager updates
-and no GameLogic phase calls, low-FPS recovery, and discarded stalls.
+and no GameLogic phase calls, low-FPS recovery, discarded stalls, immediate
+network admission, admission delays to 215/250/550 ms, repeated blocked
+retries, pause/lifecycle/stall invalidation, and below-15-FPS recovery.
 
 Known test result: restoring native phase-1 client bookkeeping while retaining
 the UI-capable shared clock eliminated the observed pause entry/exit twitch and
@@ -60,13 +82,15 @@ intermittent Elven Woods tree blip in a quick in-game test. The red ornament,
 spellbook presentation, stationary world state, and paused animations remained
 correct.
 
-This diagnostic build also writes C:\BFME1\BFME_FOCUS_DIAGNOSTIC.csv. It
-records focus state, the retail frame limiter fields, measured render timing,
-the scheduler accumulator, and W3D frame time. The probes are read-only and do
-not change focus, pacing, presentation, or timing behavior.
+This diagnostic build also writes
+C:\BFME1\BFME_MULTIPLAYER_TICK_DIAGNOSTIC.csv. It records timer offers,
+blocked/allowed native admission, actual GameLogic entry, pending creation and
+clearing, accumulator/remainder, logic and client frames, SavedClientFrame,
+focus, retail frame-limiter fields, measured render timing, and W3D frame time.
+The probes do not bypass or invoke the native admission gate themselves.
 
 dinput8.dll SHA-256:
-DA5A133120203CAAD1A7726E1AD7A3C3B28FC5A0BBA8AF2615927D02737525B5
+31E73BDF8CDEEE0B373C4F13B738B79540395A27C900DA7CEEFD95955CAAC0D6
 
 This is a local test package. It does not modify lotrbfme.exe or any
 Open-BFME repository branch.

@@ -102,13 +102,15 @@ typedef struct {
   BfmeSchedulerMath clock;
   double activeSeconds,fps,measuredHz,windowStart;
   DWORD visualFrames,logicCalls,logicTicks,dueAttempts,networkBlocks;
+  DWORD pendingCreated,pendingRetries,pendingCleared,pendingDiscarded;
   DWORD windowTicks,lastLogMs;
   int initialized,lastMode,lastClass;
   void *lastLogic;
 } TimingState;
 static TimingState g_timing;
 static HANDLE g_timingLog=INVALID_HANDLE_VALUE;
-static volatile LONG g_dueDecision,g_dueInFlight,g_phaseDecision;
+static volatile LONG g_dueDecision,g_pendingTick,g_admissionAttemptInFlight,g_phaseDecision;
+static double g_pendingInterval;
 static volatile LONG g_skipPhaseDispatch;
 static volatile LONG g_w3dClockFrozen;
 static volatile LONG g_legacyPhaseCalls;
@@ -450,16 +452,17 @@ static const char *timing_class_name(TimingClass value){
   return "UNKNOWN";
 }
 static void open_timing_log(void){
-  DWORD size,wrote;static const char header[]="wall_ms,active_s,visual_fps,logic_calls,logic_ticks,measured_hz,target_hz,interval_s,accumulator_s,animation_delta_s,slowdown,visual_phase,legacy_frame_scale,visual_period,pause,low_fps,network_present,network_admission,classification,game_mode,max_fps,use_fps_limit,limit_frame_rate,logic_time_scale,logic_frame_adjustment,frame_elapsed_ms,sleep_remaining_ms,sleep_total_ms,previous_frame_ms,w3d_frame_ms,engine_active,foreground\r\n";
+  DWORD size,wrote;static const char header[]="wall_ms,active_s,visual_fps,logic_calls,logic_ticks,measured_hz,target_hz,interval_s,accumulator_s,pending_tick,attempt_in_flight,pending_interval_s,due_attempts,network_blocks,pending_created,pending_retries,pending_cleared,pending_discarded,logic_frame,client_frame,saved_client_frame,animation_delta_s,slowdown,visual_phase,legacy_frame_scale,visual_period,pause,low_fps,network_present,network_admission,classification,game_mode,max_fps,use_fps_limit,limit_frame_rate,logic_time_scale,logic_frame_adjustment,frame_elapsed_ms,sleep_remaining_ms,sleep_total_ms,previous_frame_ms,w3d_frame_ms,engine_active,foreground\r\n";
   if(g_timingLog!=INVALID_HANDLE_VALUE)return;
-  g_timingLog=CreateFileA("C:\\BFME1\\BFME_FOCUS_DIAGNOSTIC.csv",GENERIC_WRITE,FILE_SHARE_READ|FILE_SHARE_WRITE,0,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);
-  if(g_timingLog==INVALID_HANDLE_VALUE)g_timingLog=CreateFileA("BFME_FOCUS_DIAGNOSTIC.csv",GENERIC_WRITE,FILE_SHARE_READ|FILE_SHARE_WRITE,0,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);
+  g_timingLog=CreateFileA("C:\\BFME1\\BFME_MULTIPLAYER_TICK_DIAGNOSTIC.csv",GENERIC_WRITE,FILE_SHARE_READ|FILE_SHARE_WRITE,0,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);
+  if(g_timingLog==INVALID_HANDLE_VALUE)g_timingLog=CreateFileA("BFME_MULTIPLAYER_TICK_DIAGNOSTIC.csv",GENERIC_WRITE,FILE_SHARE_READ|FILE_SHARE_WRITE,0,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);
   if(g_timingLog==INVALID_HANDLE_VALUE)return;
   size=GetFileSize(g_timingLog,0);SetFilePointer(g_timingLog,0,0,FILE_END);
   if(size==0)WriteFile(g_timingLog,header,sizeof(header)-1,&wrote,0);
 }
 static void log_timing(TimingClass classification,const char *admission,BOOL force){
-  char line[960];int n,maxFps=0,logicAdjust=0;DWORD wrote,now=GetTickCount(),network=0,frameElapsed=0,sleepRemaining=0,sleepTotal=0,previousFrame=0,w3dFrame=0,foregroundPid=0;double target;float logicScale=0.0f;BYTE useFps=0,limitRate=0,engineActive=0;LONG foreground;void *engine,*global;HWND foregroundWindow;
+  typedef int (__fastcall *ClientFrameProc)(void*,void*);
+  char line[1280];int n,maxFps=0,logicAdjust=0,logicFrame=-1,clientFrame=-1,savedClientFrame=-1;DWORD wrote,now=GetTickCount(),network=0,frameElapsed=0,sleepRemaining=0,sleepTotal=0,previousFrame=0,w3dFrame=0,foregroundPid=0,vt=0;double target;float logicScale=0.0f;BYTE useFps=0,limitRate=0,engineActive=0;LONG foreground,pending,attempt;void *engine,*global,*logic,*client;HWND foregroundWindow;
   foregroundWindow=GetForegroundWindow();if(foregroundWindow)GetWindowThreadProcessId(foregroundWindow,&foregroundPid);foreground=foregroundPid==GetCurrentProcessId();
   if(foreground!=g_lastForeground){g_lastForeground=foreground;force=TRUE;}
   if(!force&&classification==g_timing.lastClass&&(DWORD)(now-g_timing.lastLogMs)<1000)return;
@@ -471,12 +474,20 @@ static void log_timing(TimingClass classification,const char *admission,BOOL for
     limitRate=*(volatile BYTE*)(g_image+(0x012ED520-0x00400000));logicScale=*(volatile float*)(g_image+(0x012A72A4-0x00400000));
     {int *adjust=*(int**)(g_image+(0x012A7244-0x00400000));if(adjust)logicAdjust=*adjust;}
     frameElapsed=*(volatile DWORD*)(g_image+(0x012ED514-0x00400000));sleepRemaining=*(volatile DWORD*)(g_image+(0x012ED510-0x00400000));sleepTotal=*(volatile DWORD*)(g_image+(0x012ED50C-0x00400000));previousFrame=*(volatile DWORD*)(g_image+(0x012ED518-0x00400000));w3dFrame=*(volatile DWORD*)(g_image+W3D_FRAME_MS_RVA);
+    logic=*(void**)(g_image+(0x012F0898-0x00400000));if(logic)logicFrame=*(volatile int*)((BYTE*)logic+0x3C);
+    client=*(void**)(g_image+(0x012F1464-0x00400000));if(client&&(vt=*(volatile DWORD*)client)!=0)clientFrame=((ClientFrameProc)(*(volatile DWORD*)(vt+0x64)))(client,0);
+    savedClientFrame=*(volatile int*)(g_image+(0x012ED508-0x00400000));
   }
-  target=bfme_target_hz(g_timing.fps);
-  n=_snprintf(line,sizeof(line)-1,"%lu,%.6f,%.3f,%lu,%lu,%.3f,%.3f,%.6f,%.6f,%.6f,%.4f,%.4f,%.4f,%.4f,%d,%d,%d,%s,%s,%d,%d,%d,%d,%.6f,%d,%lu,%lu,%lu,%lu,%lu,%d,%d\r\n",
+  target=bfme_target_hz(g_timing.fps);pending=InterlockedCompareExchange(&g_pendingTick,0,0);attempt=InterlockedCompareExchange(&g_admissionAttemptInFlight,0,0);
+  n=_snprintf(line,sizeof(line)-1,"%lu,%.6f,%.3f,%lu,%lu,%.3f,%.3f,%.6f,%.6f,%ld,%ld,%.6f,%lu,%lu,%lu,%lu,%lu,%lu,%d,%d,%d,%.6f,%.4f,%.4f,%.4f,%.4f,%d,%d,%d,%s,%s,%d,%d,%d,%d,%.6f,%d,%lu,%lu,%lu,%lu,%lu,%d,%d\r\n",
     (unsigned long)now,g_timing.activeSeconds,g_timing.fps,
     (unsigned long)g_timing.logicCalls,(unsigned long)g_timing.logicTicks,
-    g_timing.measuredHz,target,g_timing.clock.interval,g_timing.clock.accumulator,g_visual.animationDelta,
+    g_timing.measuredHz,target,g_timing.clock.interval,g_timing.clock.accumulator,
+    (long)pending,(long)attempt,g_pendingInterval,
+    (unsigned long)g_timing.dueAttempts,(unsigned long)g_timing.networkBlocks,
+    (unsigned long)g_timing.pendingCreated,(unsigned long)g_timing.pendingRetries,
+    (unsigned long)g_timing.pendingCleared,(unsigned long)g_timing.pendingDiscarded,
+    logicFrame,clientFrame,savedClientFrame,g_visual.animationDelta,
     g_visual.slowdown,g_visual.phase,g_visual.frameScale,g_visual.visualPeriod,
     classification==PAUSED,classification==LOW_FPS_SLOWDOWN,network!=0,
     admission,timing_class_name(classification),g_timing.lastMode,
@@ -490,6 +501,13 @@ static void update_measured_hz(void){
   double elapsed=g_timing.activeSeconds-g_timing.windowStart;
   if(elapsed>=1.0){g_timing.measuredHz=(double)(g_timing.logicTicks-g_timing.windowTicks)/elapsed;g_timing.windowStart=g_timing.activeSeconds;g_timing.windowTicks=g_timing.logicTicks;}
 }
+static BOOL discard_pending_tick(BOOL discardAccumulator){
+  BOOL discarded=InterlockedExchange(&g_pendingTick,0)!=0;
+  InterlockedExchange(&g_admissionAttemptInFlight,0);g_pendingInterval=0.0;
+  if(discardAccumulator)g_timing.clock.accumulator=0.0;
+  if(discarded)++g_timing.pendingDiscarded;
+  return discarded;
+}
 static void __stdcall reset_time_scheduler(void *engine){
   LARGE_INTEGER now;(void)engine;
   if(!g_timing.frequency.QuadPart)QueryPerformanceFrequency(&g_timing.frequency);
@@ -499,10 +517,10 @@ static void __stdcall reset_time_scheduler(void *engine){
   g_visual.realRenderDelta=0.0;g_visual.animationDelta=0.0;g_visual.frameMsRemainder=0.0;g_visual.slowdown=1.0f;g_visual.frameScale=0.0f;g_visual.visualPeriod=6.0f;g_visual.phase=0.0f;g_visual.active=0;g_visual.heldPeriod=2;
   ZeroMemory(g_states,sizeof(g_states));ZeroMemory(g_objectAnims,sizeof(g_objectAnims));ZeroMemory(g_particleStates,sizeof(g_particleStates));g_particleRenderSerial=0;
   ZeroMemory(&g_fx,sizeof(g_fx));g_fx.phase=1.0f;
-  InterlockedExchange(&g_dueDecision,0);InterlockedExchange(&g_dueInFlight,0);InterlockedExchange(&g_phaseDecision,2);
+  InterlockedExchange(&g_dueDecision,0);InterlockedExchange(&g_pendingTick,0);InterlockedExchange(&g_admissionAttemptInFlight,0);g_pendingInterval=0.0;InterlockedExchange(&g_phaseDecision,2);
   InterlockedExchange(&g_skipPhaseDispatch,0);
   InterlockedExchange(&g_w3dClockFrozen,0);
-  log_timing(LOADING_TRANSITION,"RESET_REBASE",TRUE);
+  log_timing(LOADING_TRANSITION,"RESET/DISCARDED",TRUE);
 }
 static BOOL engine_time_frozen(void){
   typedef BOOL (__fastcall *BoolThisProc)(void*,void*);void *view,*script;DWORD vt;
@@ -556,23 +574,29 @@ static void complete_legacy_phases(void *engine,LONG firstPhase){
   for(phase=firstPhase;phase<=6;phase++){proc(engine,0,phase);InterlockedIncrement(&g_legacyPhaseCalls);}
 }
 static void __stdcall schedule_time_tick(void *engine,LONG newPeriod){
-  LARGE_INTEGER now;double delta,instant,alpha;void *logic;int mode,loading,paused;TimingClass classification;BOOL due;
+  LARGE_INTEGER now;double delta,instant,alpha;void *logic;int mode,loading,paused;TimingClass classification;BOOL due,discarded;LONG pending,previousAttempt;
   InterlockedExchange(&g_dueDecision,0);InterlockedExchange(&g_phaseDecision,newPeriod);InterlockedExchange(&g_skipPhaseDispatch,0);
-  if(InterlockedExchange(&g_dueInFlight,0)!=0){++g_timing.networkBlocks;log_timing(NETWORK_BLOCKED,"BLOCKED",TRUE);}
+  /* If the last admission attempt did not reach the GameLogic entry hook,
+     native BFME blocked it.  Its readiness getter is a poll: on a blocked
+     guest it may pump incoming packets, and on a router it advances only its
+     readiness timer; command consumption happens only on the allowed path. */
+  previousAttempt=InterlockedExchange(&g_admissionAttemptInFlight,0);
+  if(previousAttempt!=0&&InterlockedCompareExchange(&g_pendingTick,0,0)!=0){++g_timing.networkBlocks;log_timing(NETWORK_BLOCKED,"NATIVE_ADMISSION_BLOCKED",TRUE);}
   QueryPerformanceCounter(&now);
   if(!g_timing.initialized||!g_timing.frequency.QuadPart){reset_time_scheduler(engine);g_timing.lastQpc=now;hold_visual_phase(engine,newPeriod,TRUE);return;}
   delta=(double)(now.QuadPart-g_timing.lastQpc.QuadPart)/(double)g_timing.frequency.QuadPart;g_timing.lastQpc=now;++g_timing.visualFrames;
-  if(!(delta>0.0)||delta>0.75){g_timing.clock.accumulator=0.0;hold_visual_phase(engine,newPeriod,TRUE);log_timing(SUSPENDED_LARGE_GAP,"DISCARDED_GAP",TRUE);return;}
+  if(!(delta>0.0)||delta>0.75){discard_pending_tick(TRUE);hold_visual_phase(engine,newPeriod,TRUE);log_timing(SUSPENDED_LARGE_GAP,"RESET/DISCARDED_STALL",TRUE);return;}
   instant=1.0/delta;if(instant<1.0)instant=1.0;if(instant>240.0)instant=240.0;
   if(!(g_timing.fps>0.0))g_timing.fps=instant;else{alpha=delta/(0.5+delta);g_timing.fps+=(instant-g_timing.fps)*alpha;}
   logic=*(void**)(g_image+(0x012F0898-0x00400000));
-  if(!logic){InterlockedExchange(&g_w3dClockFrozen,0);g_timing.lastLogic=0;g_timing.lastMode=-1;g_timing.clock.accumulator=0.0;hold_visual_phase(engine,newPeriod,TRUE);log_timing(LOADING_TRANSITION,"NO_LOGIC",FALSE);return;}
+  if(!logic){InterlockedExchange(&g_w3dClockFrozen,0);g_timing.lastLogic=0;g_timing.lastMode=-1;discard_pending_tick(TRUE);hold_visual_phase(engine,newPeriod,TRUE);log_timing(LOADING_TRANSITION,"RESET/DISCARDED_NO_LOGIC",FALSE);return;}
   mode=*(volatile int*)((BYTE*)logic+0x10C);loading=(*(volatile BYTE*)((BYTE*)logic+0x69)!=0)||(*(volatile BYTE*)((BYTE*)logic+0x6A)!=0)||(*(volatile BYTE*)((BYTE*)logic+0x9D)!=0);
-  if(logic!=g_timing.lastLogic||mode!=g_timing.lastMode){InterlockedExchange(&g_w3dClockFrozen,0);g_timing.clock.accumulator=0.0;g_timing.lastLogic=logic;g_timing.lastMode=mode;hold_visual_phase(engine,newPeriod,TRUE);log_timing(LOADING_TRANSITION,"LIFECYCLE_REBASE",TRUE);return;}
-  if(loading){InterlockedExchange(&g_w3dClockFrozen,0);g_timing.clock.accumulator=0.0;hold_visual_phase(engine,newPeriod,TRUE);log_timing(LOADING_TRANSITION,"INACTIVE",FALSE);return;}
+  if(logic!=g_timing.lastLogic||mode!=g_timing.lastMode){InterlockedExchange(&g_w3dClockFrozen,0);discard_pending_tick(TRUE);g_timing.lastLogic=logic;g_timing.lastMode=mode;hold_visual_phase(engine,newPeriod,TRUE);log_timing(LOADING_TRANSITION,"RESET/DISCARDED_LIFECYCLE",TRUE);return;}
+  if(loading){InterlockedExchange(&g_w3dClockFrozen,0);discard_pending_tick(TRUE);hold_visual_phase(engine,newPeriod,TRUE);log_timing(LOADING_TRANSITION,"RESET/DISCARDED_LOADING",FALSE);return;}
   paused=*(volatile BYTE*)((BYTE*)logic+0x11C)!=0;
   if(paused||engine_time_frozen()){
     InterlockedExchange(&g_w3dClockFrozen,1);
+    discarded=discard_pending_tick(FALSE);if(discarded)g_timing.clock.accumulator=0.0;
     freeze_world_visual_time_for_pause(newPeriod);
     /* Retain retail's phase-1 pause gate.  It clears m_advanceFrame so the
        following client update does not advance drawable/interpolation state,
@@ -580,22 +604,39 @@ static void __stdcall schedule_time_tick(void *engine,LONG newPeriod){
        Unlike the old failed pause build, engine phase/ratio fields are not
        pinned and the shared WW3D clock remains available to UI presentation. */
     InterlockedExchange(&g_phaseDecision,1);
-    log_timing(PAUSED,"NATIVE_PHASE1_UI_CLOCK_PASSTHROUGH",FALSE);return;
+    log_timing(PAUSED,discarded?"RESET/DISCARDED_PAUSE":"NATIVE_PHASE1_UI_CLOCK_PASSTHROUGH",discarded);return;
   }
   InterlockedExchange(&g_w3dClockFrozen,0);
   g_timing.activeSeconds+=delta;advance_visual_time(engine,delta);classification=g_timing.fps<15.0?LOW_FPS_SLOWDOWN:ACTIVE_SIMULATION;
-  due=bfme_scheduler_advance(&g_timing.clock,delta,g_timing.fps)!=0;update_measured_hz();
+  pending=InterlockedCompareExchange(&g_pendingTick,0,0);
+  due=bfme_scheduler_offer(&g_timing.clock,delta,g_timing.fps,pending!=0)!=0;update_measured_hz();
   if(due){
-    LONG denominator=newPeriod>0?newPeriod:1;
+    g_pendingInterval=g_timing.clock.interval;InterlockedExchange(&g_pendingTick,1);++g_timing.pendingCreated;
+    /* Phases 2..6 belong to creation of this due tick.  A later admission
+       retry must not dispatch them again. */
     complete_legacy_phases(engine,newPeriod);
+  }
+  pending=InterlockedCompareExchange(&g_pendingTick,0,0);
+  if(pending!=0){
+    LONG denominator=newPeriod>0?newPeriod:1;
     *(volatile LONG*)((BYTE*)engine+0x34)=denominator;*(volatile BYTE*)((BYTE*)engine+0x3C)=0;
-    ++g_timing.dueAttempts;InterlockedExchange(&g_dueInFlight,1);InterlockedExchange(&g_dueDecision,1);
-    log_timing(classification,"TIMER_DUE",TRUE);
-  }else log_timing(classification,"NOT_DUE",FALSE);
+    ++g_timing.dueAttempts;if(!due)++g_timing.pendingRetries;
+    InterlockedExchange(&g_admissionAttemptInFlight,1);InterlockedExchange(&g_dueDecision,1);
+    log_timing(classification,due?"TIMER_DUE_NEW":"TIMER_DUE_ALREADY_PENDING",TRUE);
+  }else log_timing(classification,"TIMER_NOT_DUE",FALSE);
 }
 static void __stdcall record_logic_update(void){
   ++g_timing.logicCalls;
-  if(InterlockedExchange(&g_dueInFlight,0)!=0){void *engine;g_visual.phase=0.0f;engine=g_image?*(void**)(g_image+(0x012ED524-0x00400000)):0;if(engine)*(volatile float*)((BYTE*)engine+0x38)=0.0f;++g_timing.logicTicks;update_measured_hz();log_timing(g_timing.fps<15.0?LOW_FPS_SLOWDOWN:ACTIVE_SIMULATION,"ALLOWED",TRUE);}
+  if(InterlockedExchange(&g_admissionAttemptInFlight,0)!=0&&InterlockedCompareExchange(&g_pendingTick,0,0)!=0){
+    void *engine;double interval=g_pendingInterval;TimingClass classification=g_timing.fps<15.0?LOW_FPS_SLOWDOWN:ACTIVE_SIMULATION;
+    log_timing(classification,"NATIVE_ADMISSION_ALLOWED",TRUE);
+    if(InterlockedExchange(&g_pendingTick,0)!=0){
+      bfme_scheduler_complete(&g_timing.clock,interval);g_pendingInterval=0.0;g_visual.phase=0.0f;
+      engine=g_image?*(void**)(g_image+(0x012ED524-0x00400000)):0;if(engine)*(volatile float*)((BYTE*)engine+0x38)=0.0f;
+      ++g_timing.logicTicks;++g_timing.pendingCleared;update_measured_hz();
+      log_timing(classification,"GAMELOGIC_EXECUTED",TRUE);log_timing(classification,"PENDING_CLEARED",TRUE);
+    }
+  }
 }
 static ParticleVisualState *particle_visual_state(DWORD particle,DWORD system,BOOL create){
   DWORD i,slot,oldestSlot,oldestAge,serial;

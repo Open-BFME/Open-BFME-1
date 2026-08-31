@@ -77,6 +77,31 @@ static unsigned long sync_math_step(SyncMathTest *clock,unsigned long caller,
   clock->raw=raw;clock->out+=whole;return clock->out;
 }
 
+typedef struct PendingSchedulerTest
+{
+  BfmeSchedulerMath clock;
+  int pending,preparations,attempts,executions,networkAdvances;
+  double pendingInterval;
+} PendingSchedulerTest;
+
+static int pending_scheduler_step(PendingSchedulerTest *test,double delta,
+                                  double fps,int nativeAllows)
+{
+  int newlyDue=bfme_scheduler_offer(&test->clock,delta,fps,test->pending);
+  if(newlyDue){test->pending=1;test->pendingInterval=test->clock.interval;test->preparations++;}
+  if(!test->pending)return 0;
+  test->attempts++;
+  if(!nativeAllows)return 0;
+  test->networkAdvances++;test->executions++;
+  bfme_scheduler_complete(&test->clock,test->pendingInterval);
+  test->pending=0;test->pendingInterval=0.0;return 1;
+}
+
+static void pending_scheduler_discard(PendingSchedulerTest *test)
+{
+  test->pending=0;test->pendingInterval=0.0;test->clock.accumulator=0.0;
+}
+
 int main(void)
 {
   const double fps[] = {60,45,30,20,15,12,10,5};
@@ -160,6 +185,93 @@ int main(void)
   /* A five-second debugger/process stall is discarded by the outer clock. */
   for(i=0;i<600;i++)ticks+=bfme_scheduler_advance(&clock,1.0/60.0,60.0);
   fprintf(out,"discarded_stall ticks=%d expected=100 %s\n",ticks,ticks==100?"PASS":"FAIL");if(ticks!=100)failures++;
+
+  {
+    PendingSchedulerTest test;memset(&test,0,sizeof(test));
+    pending_scheduler_step(&test,0.200,60.0,1);
+    fprintf(out,"pending_immediate exec=%d prep=%d attempts=%d network=%d remainder=%.6f expected=1,1,1,1,0 %s\n",
+      test.executions,test.preparations,test.attempts,test.networkAdvances,test.clock.accumulator,
+      test.executions==1&&test.preparations==1&&test.attempts==1&&test.networkAdvances==1&&absolute(test.clock.accumulator)<1.0e-9?"PASS":"FAIL");
+    if(test.executions!=1||test.preparations!=1||test.attempts!=1||test.networkAdvances!=1||absolute(test.clock.accumulator)>=1.0e-9)failures++;
+  }
+
+  {
+    PendingSchedulerTest test;double remainder;int beforeNominal,atNominal;memset(&test,0,sizeof(test));
+    pending_scheduler_step(&test,0.200,60.0,0);pending_scheduler_step(&test,0.015,60.0,1);
+    remainder=test.clock.accumulator;beforeNominal=pending_scheduler_step(&test,0.184,60.0,1);atNominal=pending_scheduler_step(&test,0.001,60.0,1);
+    fprintf(out,"pending_215ms remainder=%.6f before_400=%d at_400=%d exec=%d prep=%d network=%d expected=0.015,0,1,2,2,2 %s\n",
+      remainder,beforeNominal,atNominal,test.executions,test.preparations,test.networkAdvances,
+      absolute(remainder-0.015)<1.0e-9&&beforeNominal==0&&atNominal==1&&test.executions==2&&test.preparations==2&&test.networkAdvances==2?"PASS":"FAIL");
+    if(absolute(remainder-0.015)>=1.0e-9||beforeNominal!=0||atNominal!=1||test.executions!=2||test.preparations!=2||test.networkAdvances!=2)failures++;
+  }
+
+  {
+    PendingSchedulerTest test;memset(&test,0,sizeof(test));
+    pending_scheduler_step(&test,0.200,60.0,0);pending_scheduler_step(&test,0.050,60.0,1);
+    fprintf(out,"pending_250ms exec=%d prep=%d attempts=%d network=%d remainder=%.6f expected=1,1,2,1,0.050 %s\n",
+      test.executions,test.preparations,test.attempts,test.networkAdvances,test.clock.accumulator,
+      test.executions==1&&test.preparations==1&&test.attempts==2&&test.networkAdvances==1&&absolute(test.clock.accumulator-0.050)<1.0e-9?"PASS":"FAIL");
+    if(test.executions!=1||test.preparations!=1||test.attempts!=2||test.networkAdvances!=1||absolute(test.clock.accumulator-0.050)>=1.0e-9)failures++;
+  }
+
+  {
+    PendingSchedulerTest test;memset(&test,0,sizeof(test));
+    pending_scheduler_step(&test,0.200,60.0,0);
+    for(i=0;i<9;i++)pending_scheduler_step(&test,0.005,60.0,0);
+    pending_scheduler_step(&test,0.005,60.0,1);
+    fprintf(out,"pending_repeated exec=%d prep=%d attempts=%d network=%d remainder=%.6f expected=1,1,11,1,0.050 %s\n",
+      test.executions,test.preparations,test.attempts,test.networkAdvances,test.clock.accumulator,
+      test.executions==1&&test.preparations==1&&test.attempts==11&&test.networkAdvances==1&&absolute(test.clock.accumulator-0.050)<1.0e-9?"PASS":"FAIL");
+    if(test.executions!=1||test.preparations!=1||test.attempts!=11||test.networkAdvances!=1||absolute(test.clock.accumulator-0.050)>=1.0e-9)failures++;
+  }
+
+  {
+    PendingSchedulerTest test;int before;memset(&test,0,sizeof(test));
+    pending_scheduler_step(&test,0.200,60.0,0);pending_scheduler_step(&test,0.350,60.0,1);before=test.executions;
+    pending_scheduler_step(&test,0.199,60.0,1);pending_scheduler_step(&test,0.001,60.0,1);
+    fprintf(out,"pending_550ms exec_at_550=%d total_exec=%d prep=%d network=%d remainder=%.6f expected=1,2,2,2,0 %s\n",
+      before,test.executions,test.preparations,test.networkAdvances,test.clock.accumulator,
+      before==1&&test.executions==2&&test.preparations==2&&test.networkAdvances==2&&absolute(test.clock.accumulator)<1.0e-9?"PASS":"FAIL");
+    if(before!=1||test.executions!=2||test.preparations!=2||test.networkAdvances!=2||absolute(test.clock.accumulator)>=1.0e-9)failures++;
+  }
+
+  {
+    PendingSchedulerTest test;memset(&test,0,sizeof(test));
+    pending_scheduler_step(&test,0.200,60.0,0);pending_scheduler_discard(&test);pending_scheduler_step(&test,0.200,60.0,1);
+    fprintf(out,"pending_pause_reset exec=%d prep=%d network=%d pending=%d expected=1,2,1,0 %s\n",
+      test.executions,test.preparations,test.networkAdvances,test.pending,
+      test.executions==1&&test.preparations==2&&test.networkAdvances==1&&!test.pending?"PASS":"FAIL");
+    if(test.executions!=1||test.preparations!=2||test.networkAdvances!=1||test.pending)failures++;
+  }
+
+  {
+    PendingSchedulerTest test;memset(&test,0,sizeof(test));
+    pending_scheduler_step(&test,0.200,60.0,0);pending_scheduler_discard(&test);pending_scheduler_step(&test,0.200,60.0,1);
+    fprintf(out,"pending_lifecycle_reset exec=%d prep=%d network=%d pending=%d expected=1,2,1,0 %s\n",
+      test.executions,test.preparations,test.networkAdvances,test.pending,
+      test.executions==1&&test.preparations==2&&test.networkAdvances==1&&!test.pending?"PASS":"FAIL");
+    if(test.executions!=1||test.preparations!=2||test.networkAdvances!=1||test.pending)failures++;
+  }
+
+  {
+    PendingSchedulerTest test;memset(&test,0,sizeof(test));
+    pending_scheduler_step(&test,0.200,60.0,0);pending_scheduler_discard(&test);pending_scheduler_step(&test,0.200,60.0,1);
+    fprintf(out,"pending_long_stall_reset exec=%d prep=%d network=%d remainder=%.6f expected=1,2,1,0 %s\n",
+      test.executions,test.preparations,test.networkAdvances,test.clock.accumulator,
+      test.executions==1&&test.preparations==2&&test.networkAdvances==1&&absolute(test.clock.accumulator)<1.0e-9?"PASS":"FAIL");
+    if(test.executions!=1||test.preparations!=2||test.networkAdvances!=1||absolute(test.clock.accumulator)>=1.0e-9)failures++;
+  }
+
+  {
+    PendingSchedulerTest test;int firstDue,secondDue;memset(&test,0,sizeof(test));
+    firstDue=pending_scheduler_step(&test,0.300,10.0,0);
+    pending_scheduler_step(&test,0.050,60.0,1);
+    secondDue=pending_scheduler_step(&test,0.150,60.0,1);
+    fprintf(out,"pending_below15_recovery first_allowed=%d second_due=%d exec=%d prep=%d network=%d remainder=%.6f expected=0,1,2,2,2,0 %s\n",
+      firstDue,secondDue,test.executions,test.preparations,test.networkAdvances,test.clock.accumulator,
+      firstDue==0&&secondDue==1&&test.executions==2&&test.preparations==2&&test.networkAdvances==2&&absolute(test.clock.accumulator)<1.0e-9?"PASS":"FAIL");
+    if(firstDue!=0||secondDue!=1||test.executions!=2||test.preparations!=2||test.networkAdvances!=2||absolute(test.clock.accumulator)>=1.0e-9)failures++;
+  }
 
   fprintf(out,"failures=%d\n",failures);fclose(out);return failures?1:0;
 }
