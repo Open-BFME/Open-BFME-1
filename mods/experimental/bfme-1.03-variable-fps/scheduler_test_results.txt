@@ -1,24 +1,41 @@
 BFME 60 FPS active-time scheduler deterministic tests
+particle_visual_lerp start=10.000 middle=15.000 end=20.000 expected=10,15,20 PASS
 steady fps=60 seconds=60 ticks=300 expected=300 PASS
 animation fps=60 seconds=60 animation_s=60.000000 expected=60.000000 integer_ms=60000 frame_scale=0.500000 visual_period=12.000000 monotonic=PASS phases_2_to_6=PASS PASS
+fx_cadence fps=60 updates=1800 expected=1800 PASS
+camera_scroll fps=60 authored_frames=1800.000000 expected=1800.000000 PASS
 steady fps=45 seconds=60 ticks=300 expected=300 PASS
 animation fps=45 seconds=60 animation_s=60.000000 expected=60.000000 integer_ms=59999 frame_scale=0.666667 visual_period=9.000000 monotonic=PASS phases_2_to_6=PASS PASS
+fx_cadence fps=45 updates=1800 expected=1800 PASS
+camera_scroll fps=45 authored_frames=1800.000000 expected=1800.000000 PASS
 steady fps=30 seconds=60 ticks=300 expected=300 PASS
 animation fps=30 seconds=60 animation_s=60.000000 expected=60.000000 integer_ms=60000 frame_scale=1.000000 visual_period=6.000000 monotonic=PASS phases_2_to_6=PASS PASS
+fx_cadence fps=30 updates=1800 expected=1800 PASS
+camera_scroll fps=30 authored_frames=1800.000000 expected=1800.000000 PASS
 steady fps=20 seconds=60 ticks=300 expected=300 PASS
 animation fps=20 seconds=60 animation_s=60.000000 expected=60.000000 integer_ms=60000 frame_scale=1.500000 visual_period=4.000000 monotonic=PASS phases_2_to_6=PASS PASS
+fx_cadence fps=20 updates=1800 expected=1800 PASS
+camera_scroll fps=20 authored_frames=1800.000000 expected=1800.000000 PASS
 steady fps=15 seconds=60 ticks=300 expected=300 PASS
 animation fps=15 seconds=60 animation_s=60.000000 expected=60.000000 integer_ms=60000 frame_scale=2.000000 visual_period=3.000000 monotonic=PASS phases_2_to_6=PASS PASS
+fx_cadence fps=15 updates=1800 expected=1800 PASS
+camera_scroll fps=15 authored_frames=1800.000000 expected=1800.000000 PASS
 steady fps=12 seconds=60 ticks=240 expected=240 PASS
 animation fps=12 seconds=60 animation_s=48.000000 expected=48.000000 integer_ms=48000 frame_scale=2.000000 visual_period=3.000000 monotonic=PASS phases_2_to_6=PASS PASS
+fx_cadence fps=12 updates=1440 expected=1440 PASS
+camera_scroll fps=12 authored_frames=1800.000000 expected=1800.000000 PASS
 steady fps=10 seconds=60 ticks=200 expected=200 PASS
 animation fps=10 seconds=60 animation_s=40.000000 expected=40.000000 integer_ms=40000 frame_scale=2.000000 visual_period=3.000000 monotonic=PASS phases_2_to_6=PASS PASS
+fx_cadence fps=10 updates=1200 expected=1200 PASS
+camera_scroll fps=10 authored_frames=1800.000000 expected=1800.000000 PASS
 steady fps=5 seconds=60 ticks=100 expected=100 PASS
 animation fps=5 seconds=60 animation_s=20.000000 expected=20.000000 integer_ms=20000 frame_scale=2.000000 visual_period=3.000000 monotonic=PASS phases_2_to_6=PASS PASS
+fx_cadence fps=5 updates=600 expected=600 PASS
+camera_scroll fps=5 authored_frames=1800.000000 expected=1800.000000 PASS
 pause_remainder ticks=1 expected=1 PASS
 pause_visual_phase phase=0.375000 expected=0.375000 PASS
-game_modes shell4=1 singleplayer7=0 expected=1,0 PASS
-global_sync outputs=1000,1016,1016,1026,1026,1042,1042 expected=1000,1016,1016,1026,1026,1042,1042 PASS
+fx_pause_remainder before=0 after=1 expected=0,1 PASS
+w3d_clock shell=1.0 paused=0.0 active_low=0.8 synthetic=1.0 expected=1.0,0.0,0.8,1.0 PASS
 pause_manual_animation rendered=11.000000 expected=11.000000 PASS
 low_fps_recovery first=1 second=0 expected=1,0 PASS
 discarded_stall ticks=100 expected=100 PASS

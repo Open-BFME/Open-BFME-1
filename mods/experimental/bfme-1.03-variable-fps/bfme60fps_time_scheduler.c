@@ -18,6 +18,13 @@ enum { UPDATE_RVA=0x6E910, RESET_RVA=0x6E7A0, LOGIC_UPDATE_RVA=0x38DA10,
        SYNC_RVA=0x8FD310, SYNC_N=14, SYNC_CLOCKS=5,
        W3D_RATE_SET_RVA=0x6FB9C0, W3D_FRAME_MS_RVA=0xEBB1CC,
        FLOAT_TEXT_RVA=0x43F328, FLOAT_TEXT_N=10, FLOAT_TO_INT_RVA=0x9F6E38,
+       PARTICLE_RENDER_RVA=0x6FA9B0, PARTICLE_RENDER_N=7,
+       PARTICLE_GET0_RVA=0x5C30A0, PARTICLE_GET1_RVA=0x5C30C0,
+       PARTICLE_GET2_RVA=0x5C30E0, PARTICLE_GET3_RVA=0x5C3100,
+       PARTICLE_GET4_RVA=0x5C3120, PARTICLE_ALPHA_RVA=0x5C3160,
+       PARTICLE_MANAGER_RVA=0xEF64BC,
+       PARTICLE_UPDATE_CALL_RVA=0x6EB55D, PARTICLE_UPDATE_CALL_N=11,
+       PARTICLE_GET_N=6, PARTICLE_STATE_N=8192, PARTICLE_PATCH_N=16384,
        UPDATE_N=5, SCHED_N=13, RESET_CLOCK_N=18, LOGIC_UPDATE_N=7,
        HLOD_N=11, D1_N=5, D81_N=9, STATE_N=512,
        MANUAL_CALLER=0x00B5CA51, STATE3_CLOCK_CALLER=0x00AF4142 };
@@ -29,8 +36,20 @@ typedef struct { DWORD object,a1,a2,a4,lastTick; float raw3,out3,raw5,out5,raw6,
 typedef struct { DWORD tick,receiver,a1,a2,a3,a4,a5,a6; } D546Event;
 typedef struct { DWORD caller,raw,out; double remainder; BOOL valid; } SyncClock;
 typedef struct { DWORD magic,patched,timerCalls,timerWrites,renderCalls,renderWrites,lastRaw,lastOut; } ProofRecord;
-typedef struct { DWORD magic,patched,calls,caller,raw,out; } SyncProof;
+typedef struct { DWORD magic,patched,calls[SYNC_CLOCKS],raw[SYNC_CLOCKS],out[SYNC_CLOCKS]; } SyncProof;
 typedef struct { DWORD self,animation,lastTick; float raw,out,total; BOOL valid; } TimerState;
+typedef struct {
+  DWORD particle,system,lastSeen,positionTick,scalarTick[6];
+  float previousPosition[3],currentPosition[3];
+  float previousScalar[6],currentScalar[6];
+  BYTE scalarValid[6];
+} ParticleVisualState;
+typedef struct { float *position; float raw[3]; } ParticlePositionPatch;
+typedef float (__fastcall *ParticleFloatGetter)(void *,void *);
+typedef void (__fastcall *ParticleRenderProc)(void *,void *,void *);
+typedef void (__fastcall *ParticleUpdateProc)(void *,void *);
+typedef struct { float x,y; } CameraScrollDelta;
+typedef void (__fastcall *CameraScrollProc)(void *,void *,CameraScrollDelta *);
 static HMODULE g_di; static DirectInput8CreateProc g_create; static volatile LONG g_started;
 static FrameState g_states[STATE_N];
 static ObjectAnimState g_objectAnims[STATE_N];
@@ -38,9 +57,9 @@ static Mode3State g_mode3[STATE_N];
 static HANDLE g_d81Events; static volatile LONG g_d81Count;
 static RenderState g_render[STATE_N];
 static HANDLE g_d546Events; static volatile LONG g_d546Count;
-static SyncClock g_syncClock;
+static SyncClock g_syncClocks[SYNC_CLOCKS];
 static DWORD g_state3ClockRemainder;
-static volatile LONG g_patchApplied,g_syncCalls,g_targetCalls;
+static volatile LONG g_patchApplied,g_syncCalls,g_targetCalls,g_syncCounts[SYNC_CLOCKS];
 static volatile LONG g_clientTargetCaptured;
 static volatile LONG g_clientDispatchCalls,g_clientManagersCaptured;
 static volatile LONG g_deltaProviderCalls;
@@ -53,12 +72,28 @@ static TimerState g_timerStates[STATE_N];
 static volatile LONG g_timerCalls,g_timerWrites,g_renderCalls,g_renderWrites;
 static volatile DWORD g_lastTimerRaw,g_lastTimerOut;
 static volatile DWORD g_w3dOld,g_w3dNew;
+static ParticleVisualState g_particleStates[PARTICLE_STATE_N];
+static ParticlePositionPatch g_particlePatches[PARTICLE_PATCH_N];
+static ParticleFloatGetter g_particleGetters[6];
+static ParticleRenderProc g_particleRenderOriginal;
+static CameraScrollProc g_cameraScrollOriginal;
+static volatile LONG g_cameraScrollCalls;
+static volatile LONG g_particleRenderContext;
+static volatile LONG g_particleRenderCalls,g_particleInterpolated;
+static DWORD g_particleRenderSerial;
+static float g_particleRenderPhase;
 typedef struct {
-  double animationDelta,frameMsRemainder;
+  BfmeFixedFrameClock clock;
+  DWORD ticks,dispatches,skipped,bursts;
+  float phase;
+} FxTiming;
+static FxTiming g_fx={{0.0},0,0,0,0,1.0f};
+typedef struct {
+  double realRenderDelta,animationDelta,frameMsRemainder;
   float slowdown,frameScale,visualPeriod,phase;
   LONG active,heldPeriod;
 } VisualTiming;
-static VisualTiming g_visual={0.0,0.0,1.0f,1.0f,6.0f,0.0f,0,2};
+static VisualTiming g_visual={0.0,0.0,0.0,1.0f,1.0f,6.0f,0.0f,0,2};
 typedef enum { ACTIVE_SIMULATION, PAUSED, LOADING_TRANSITION,
                SUSPENDED_LARGE_GAP, NETWORK_BLOCKED,
                LOW_FPS_SLOWDOWN } TimingClass;
@@ -74,7 +109,9 @@ typedef struct {
 static TimingState g_timing;
 static HANDLE g_timingLog=INVALID_HANDLE_VALUE;
 static volatile LONG g_dueDecision,g_dueInFlight,g_phaseDecision;
+static volatile LONG g_w3dClockFrozen;
 static volatile LONG g_legacyPhaseCalls;
+static LONG g_lastForeground=-1;
 static const BYTE kUpdate[]={0x51,0x53,0x56,0x8B,0xF1};
 static const BYTE kClientUpdate[]={0x6A,0xFF,0x68,0xD8,0x2A,0xFF,0x00};
 static const BYTE kDeltaProvider[]={0x51,0x56,0x8B,0xF1,0x8B,0x86,0x04,0x06,0x00,0x00};
@@ -87,6 +124,14 @@ static const BYTE kLogicUpdate[]={0x6A,0xFF,0x68,0x80,0xBE,0x01,0x01};
 static const BYTE kHlod[]={0x8B,0x44,0x24,0x0C,0x8B,0x54,0x24,0x04,0x56,0x8B,0xF1};
 static const BYTE kW3DSetRate[]={0xD9,0x44,0x24,0x04,0xE8,0x6F,0xB4,0x2F,0x00,0xA3,0xCC,0xB1,0x2B,0x01,0xC2,0x04,0x00};
 static const BYTE kFloatText[]={0xDA,0x71,0x34,0xDE,0xE9,0xE8,0x06,0x7B,0x5B,0x00};
+static const BYTE kParticleRender[]={0x6A,0xFF,0x68,0x58,0xBE,0x04,0x01};
+static const BYTE kParticleGet0[]={0x8B,0x89,0x94,0x00,0x00,0x00};
+static const BYTE kParticleGet1[]={0x8B,0x89,0x94,0x00,0x00,0x00};
+static const BYTE kParticleGet2[]={0x8B,0x89,0x94,0x00,0x00,0x00};
+static const BYTE kParticleGet3[]={0x8B,0x89,0x94,0x00,0x00,0x00};
+static const BYTE kParticleGet4[]={0x8B,0x89,0x94,0x00,0x00,0x00};
+static const BYTE kParticleAlpha[]={0x8B,0x89,0x90,0x00,0x00,0x00};
+static const BYTE kParticleUpdateCall[]={0x8B,0x0D,0xBC,0x64,0x2F,0x01,0x8B,0x11,0xFF,0x52,0x14};
 static const BYTE kD1Call[]={0xE8,0x47,0xD0,0xF9,0xFF};
 static const BYTE kD81[]={0x56,0x8B,0xF1,0x8B,0x8E,0xFC,0x00,0x00,0x00};
 static const BYTE kSync[]={0xA1,0x20,0xF4,0x33,0x01,0x8B,0x4C,0x24,0x04,0xA3,0x24,0xF4,0x33,0x01};
@@ -95,6 +140,33 @@ static BOOL match(const BYTE*a,const BYTE*b,SIZE_T n){SIZE_T i;for(i=0;i<n;i++)i
 static void cp(BYTE*d,const BYTE*s,SIZE_T n){SIZE_T i;for(i=0;i<n;i++)d[i]=s[i];}
 static void b(BYTE**p,BYTE x){*(*p)++=x;} static void d(BYTE**p,DWORD x){cp(*p,(BYTE*)&x,4);*p+=4;}
 static float visual_frame_scale(void){float s=g_visual.frameScale;return s>=0.0f&&s<=2.0f?s:1.0f;}
+/* Keyboard, screen-edge and RMB camera scroll all converge on View vslot
+   0x48.  Retail applies the supplied delta once per 30-Hz visual frame, so
+   scale the local copy by elapsed authored-frame time.  This is client-only:
+   it never changes a message, replay record, or authoritative position. */
+static void __fastcall camera_scroll_hook(void*self,void*unused,CameraScrollDelta*delta){
+  CameraScrollDelta scaled;float scale;(void)unused;
+  if(!g_cameraScrollOriginal||!delta)return;
+  if(g_visual.active)scale=(float)bfme_camera_frame_scale(g_visual.realRenderDelta);
+  else scale=InterlockedCompareExchange(&g_w3dClockFrozen,0,0)!=0?0.0f:1.0f;
+  scaled.x=delta->x*scale;scaled.y=delta->y*scale;
+  InterlockedIncrement(&g_cameraScrollCalls);
+  g_cameraScrollOriginal(self,0,&scaled);
+}
+static BOOL install_camera_scroll(BYTE *image){
+  enum { TACTICAL_VIEW_VA=0x012F1600, SCROLL_VSLOT=0x48 };
+  void *view;DWORD *vtable,*slot,old,back;CameraScrollProc original;
+  if(!image)return FALSE;
+  view=*(void**)(image+(TACTICAL_VIEW_VA-0x00400000));if(!view)return FALSE;
+  vtable=*(DWORD**)view;if(!vtable)return FALSE;slot=(DWORD*)((BYTE*)vtable+SCROLL_VSLOT);
+  original=(CameraScrollProc)(ULONG_PTR)*slot;
+  if(original==camera_scroll_hook)return g_cameraScrollOriginal!=0;
+  if((BYTE*)original<image+0x1000||(BYTE*)original>=image+0x1000000)return FALSE;
+  if(!VirtualProtect(slot,sizeof(*slot),PAGE_EXECUTE_READWRITE,&old))return FALSE;
+  g_cameraScrollOriginal=original;*slot=(DWORD)(ULONG_PTR)&camera_scroll_hook;
+  FlushInstructionCache(GetCurrentProcess(),slot,sizeof(*slot));
+  VirtualProtect(slot,sizeof(*slot),old,&back);return TRUE;
+}
 static void invalidate_state(DWORD object,DWORD motion){DWORD i;if(!object||!motion)return;for(i=0;i<STATE_N;i++)if(g_states[i].object==object&&g_states[i].motion==motion){g_states[i].valid=FALSE;}}
 static float adjust_manual(DWORD caller,DWORD mode,DWORD bits,DWORD object,DWORD motion){
   enum { CONTINUOUS_DELTA_LIMIT=3 };
@@ -320,23 +392,30 @@ static BOOL hook_state3_timer(BYTE*s){
 /* WW3D receives an absolute millisecond clock.  Scale only its delta, retain
    fractional milliseconds, and freeze it while client/game time is frozen. */
 static DWORD __stdcall scaled_w3d_clock(DWORD caller,DWORD raw){
-  DWORD delta,scaled;double amount;float slowdown;SyncClock *clock=&g_syncClock;
+  DWORD delta,scaled,i,slot=SYNC_CLOCKS;double amount;float slowdown;BOOL frozen;
+  SyncClock *clock;
   InterlockedIncrement(&g_syncCalls);
-  InterlockedIncrement(&g_targetCalls);g_lastTargetRaw=raw;
-  if(!clock->valid){clock->caller=caller;clock->raw=raw;clock->out=raw;clock->remainder=0.0;clock->valid=TRUE;g_lastTargetOut=raw;return raw;}
-  /* WW3D has one SyncTime/PreviousSyncTime pair.  A caller switch may also
-     switch raw-clock domains, so rebase only the input.  The transformed
-     output remains monotonic and cannot snap between per-caller timelines. */
-  if(clock->caller!=caller){clock->caller=caller;clock->raw=raw;clock->remainder=0.0;g_lastTargetOut=clock->out;return clock->out;}
+  for(i=0;i<SYNC_CLOCKS;i++){if(g_syncClocks[i].caller==caller){slot=i;break;}if(slot==SYNC_CLOCKS&&g_syncClocks[i].caller==0)slot=i;}
+  if(slot==SYNC_CLOCKS)return raw;
+  clock=&g_syncClocks[slot];
+  if(!clock->caller)clock->caller=caller;
+  InterlockedIncrement(&g_syncCounts[slot]);InterlockedIncrement(&g_targetCalls);g_lastTargetRaw=raw;
+  frozen=InterlockedCompareExchange(&g_w3dClockFrozen,0,0)!=0;
+  /* Before active simulation (including shell startup/loading), preserve the
+     retail argument exactly.  Running it through per-caller transformed
+     timelines can jump the one global WW3D clock and blank the shell map. */
+  if(!g_visual.active&&!frozen){clock->raw=raw;clock->out=raw;clock->remainder=0.0;clock->valid=TRUE;g_lastTargetOut=raw;return raw;}
+  if(!clock->valid){clock->raw=raw;clock->out=raw;clock->remainder=0.0;clock->valid=TRUE;g_lastTargetOut=raw;return raw;}
   delta=raw-clock->raw;
   /* Never convert a reset, suspend, or paused wall-clock gap into catch-up. */
   if(delta>1000){clock->raw=raw;clock->remainder=0.0;g_lastTargetOut=clock->out;return clock->out;}
   /* The main W3DDisplay caller already advances its synthetic input by the
      scaled TheW3DFrameLengthInMsec.  Other absolute-time callers still need
-     the low-FPS slowdown.  Every caller freezes while the visual clock is
-     inactive (notably the in-game menu pause). */
-  slowdown=g_visual.active?(caller==STATE3_CLOCK_CALLER?1.0f:g_visual.slowdown):0.0f;
-  if(slowdown<0.0f)slowdown=0.0f;if(slowdown>1.0f)slowdown=1.0f;
+     the low-FPS slowdown during simulation.  Shell/loading clocks pass at
+     retail speed; only the explicit pause state freezes WW3D. */
+  slowdown=(float)bfme_w3d_clock_scale(g_visual.active,
+    frozen,
+    g_visual.slowdown,caller==STATE3_CLOCK_CALLER);
   amount=(double)delta*(double)slowdown+clock->remainder;scaled=(DWORD)amount;clock->remainder=amount-(double)scaled;
   clock->raw=raw;clock->out+=scaled;g_lastTargetOut=clock->out;
   return clock->out;
@@ -365,26 +444,38 @@ static const char *timing_class_name(TimingClass value){
   return "UNKNOWN";
 }
 static void open_timing_log(void){
-  DWORD size,wrote;static const char header[]="wall_ms,active_s,visual_fps,logic_calls,logic_ticks,measured_hz,target_hz,interval_s,accumulator_s,animation_delta_s,slowdown,visual_phase,legacy_frame_scale,visual_period,pause,low_fps,network_present,network_admission,classification,game_mode\r\n";
+  DWORD size,wrote;static const char header[]="wall_ms,active_s,visual_fps,logic_calls,logic_ticks,measured_hz,target_hz,interval_s,accumulator_s,animation_delta_s,slowdown,visual_phase,legacy_frame_scale,visual_period,pause,low_fps,network_present,network_admission,classification,game_mode,max_fps,use_fps_limit,limit_frame_rate,logic_time_scale,logic_frame_adjustment,frame_elapsed_ms,sleep_remaining_ms,sleep_total_ms,previous_frame_ms,w3d_frame_ms,engine_active,foreground\r\n";
   if(g_timingLog!=INVALID_HANDLE_VALUE)return;
-  g_timingLog=CreateFileA("C:\\BFME1\\BFME_60FPS_TIMING.log",GENERIC_WRITE,FILE_SHARE_READ|FILE_SHARE_WRITE,0,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);
-  if(g_timingLog==INVALID_HANDLE_VALUE)g_timingLog=CreateFileA("BFME_60FPS_TIMING.log",GENERIC_WRITE,FILE_SHARE_READ|FILE_SHARE_WRITE,0,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);
+  g_timingLog=CreateFileA("C:\\BFME1\\BFME_FOCUS_DIAGNOSTIC.csv",GENERIC_WRITE,FILE_SHARE_READ|FILE_SHARE_WRITE,0,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);
+  if(g_timingLog==INVALID_HANDLE_VALUE)g_timingLog=CreateFileA("BFME_FOCUS_DIAGNOSTIC.csv",GENERIC_WRITE,FILE_SHARE_READ|FILE_SHARE_WRITE,0,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);
   if(g_timingLog==INVALID_HANDLE_VALUE)return;
   size=GetFileSize(g_timingLog,0);SetFilePointer(g_timingLog,0,0,FILE_END);
   if(size==0)WriteFile(g_timingLog,header,sizeof(header)-1,&wrote,0);
 }
 static void log_timing(TimingClass classification,const char *admission,BOOL force){
-  char line[640];int n;DWORD wrote,now=GetTickCount(),network=0;double target;
+  char line[960];int n,maxFps=0,logicAdjust=0;DWORD wrote,now=GetTickCount(),network=0,frameElapsed=0,sleepRemaining=0,sleepTotal=0,previousFrame=0,w3dFrame=0,foregroundPid=0;double target;float logicScale=0.0f;BYTE useFps=0,limitRate=0,engineActive=0;LONG foreground;void *engine,*global;HWND foregroundWindow;
+  foregroundWindow=GetForegroundWindow();if(foregroundWindow)GetWindowThreadProcessId(foregroundWindow,&foregroundPid);foreground=foregroundPid==GetCurrentProcessId();
+  if(foreground!=g_lastForeground){g_lastForeground=foreground;force=TRUE;}
   if(!force&&classification==g_timing.lastClass&&(DWORD)(now-g_timing.lastLogMs)<1000)return;
-  if(g_image)network=*(volatile DWORD*)(g_image+(0x012F7714-0x00400000));
+  if(g_image){
+    network=*(volatile DWORD*)(g_image+(0x012F7714-0x00400000));
+    engine=*(void**)(g_image+(0x012ED524-0x00400000));global=*(void**)(g_image+(0x012ED5C8-0x00400000));
+    if(engine){maxFps=*(volatile int*)((BYTE*)engine+8);engineActive=*(volatile BYTE*)((BYTE*)engine+0x0D);}
+    if(global)useFps=*(volatile BYTE*)((BYTE*)global+0x1E);
+    limitRate=*(volatile BYTE*)(g_image+(0x012ED520-0x00400000));logicScale=*(volatile float*)(g_image+(0x012A72A4-0x00400000));
+    {int *adjust=*(int**)(g_image+(0x012A7244-0x00400000));if(adjust)logicAdjust=*adjust;}
+    frameElapsed=*(volatile DWORD*)(g_image+(0x012ED514-0x00400000));sleepRemaining=*(volatile DWORD*)(g_image+(0x012ED510-0x00400000));sleepTotal=*(volatile DWORD*)(g_image+(0x012ED50C-0x00400000));previousFrame=*(volatile DWORD*)(g_image+(0x012ED518-0x00400000));w3dFrame=*(volatile DWORD*)(g_image+W3D_FRAME_MS_RVA);
+  }
   target=bfme_target_hz(g_timing.fps);
-  n=_snprintf(line,sizeof(line)-1,"%lu,%.6f,%.3f,%lu,%lu,%.3f,%.3f,%.6f,%.6f,%.6f,%.4f,%.4f,%.4f,%.4f,%d,%d,%d,%s,%s,%d\r\n",
+  n=_snprintf(line,sizeof(line)-1,"%lu,%.6f,%.3f,%lu,%lu,%.3f,%.3f,%.6f,%.6f,%.6f,%.4f,%.4f,%.4f,%.4f,%d,%d,%d,%s,%s,%d,%d,%d,%d,%.6f,%d,%lu,%lu,%lu,%lu,%lu,%d,%d\r\n",
     (unsigned long)now,g_timing.activeSeconds,g_timing.fps,
     (unsigned long)g_timing.logicCalls,(unsigned long)g_timing.logicTicks,
     g_timing.measuredHz,target,g_timing.clock.interval,g_timing.clock.accumulator,g_visual.animationDelta,
     g_visual.slowdown,g_visual.phase,g_visual.frameScale,g_visual.visualPeriod,
     classification==PAUSED,classification==LOW_FPS_SLOWDOWN,network!=0,
-    admission,timing_class_name(classification),g_timing.lastMode);
+    admission,timing_class_name(classification),g_timing.lastMode,
+    maxFps,(int)useFps,(int)limitRate,logicScale,logicAdjust,
+    (unsigned long)frameElapsed,(unsigned long)sleepRemaining,(unsigned long)sleepTotal,(unsigned long)previousFrame,(unsigned long)w3dFrame,(int)engineActive,(int)foreground);
   if(n<0||n>=(int)sizeof(line))n=sizeof(line)-1;line[n]=0;
   open_timing_log();if(g_timingLog!=INVALID_HANDLE_VALUE)WriteFile(g_timingLog,line,(DWORD)n,&wrote,0);
   g_timing.lastLogMs=now;g_timing.lastClass=classification;
@@ -399,9 +490,11 @@ static void __stdcall reset_time_scheduler(void *engine){
   QueryPerformanceCounter(&now);g_timing.lastQpc=now;g_timing.clock.accumulator=0.0;g_timing.clock.interval=0.2;
   g_timing.activeSeconds=0.0;g_timing.fps=0.0;g_timing.measuredHz=0.0;g_timing.windowStart=0.0;g_timing.windowTicks=g_timing.logicTicks;
   g_timing.initialized=1;g_timing.lastMode=-1;g_timing.lastLogic=0;g_timing.lastClass=-1;
-  g_visual.animationDelta=0.0;g_visual.frameMsRemainder=0.0;g_visual.slowdown=1.0f;g_visual.frameScale=0.0f;g_visual.visualPeriod=6.0f;g_visual.phase=0.0f;g_visual.active=0;g_visual.heldPeriod=2;
-  ZeroMemory(g_states,sizeof(g_states));ZeroMemory(g_objectAnims,sizeof(g_objectAnims));
+  g_visual.realRenderDelta=0.0;g_visual.animationDelta=0.0;g_visual.frameMsRemainder=0.0;g_visual.slowdown=1.0f;g_visual.frameScale=0.0f;g_visual.visualPeriod=6.0f;g_visual.phase=0.0f;g_visual.active=0;g_visual.heldPeriod=2;
+  ZeroMemory(g_states,sizeof(g_states));ZeroMemory(g_objectAnims,sizeof(g_objectAnims));ZeroMemory(g_particleStates,sizeof(g_particleStates));g_particleRenderSerial=0;
+  ZeroMemory(&g_fx,sizeof(g_fx));g_fx.phase=1.0f;
   InterlockedExchange(&g_dueDecision,0);InterlockedExchange(&g_dueInFlight,0);InterlockedExchange(&g_phaseDecision,2);
+  InterlockedExchange(&g_w3dClockFrozen,0);
   log_timing(LOADING_TRANSITION,"RESET_REBASE",TRUE);
 }
 static BOOL engine_time_frozen(void){
@@ -416,16 +509,17 @@ static BOOL engine_time_frozen(void){
   return FALSE;
 }
 static void hold_visual_phase(void *engine,LONG phase,BOOL rebase){
-  if(rebase){g_visual.phase=0.0f;g_visual.frameMsRemainder=0.0;g_visual.heldPeriod=2;}
+  if(rebase){g_visual.phase=0.0f;g_visual.frameMsRemainder=0.0;g_visual.heldPeriod=2;g_fx.clock.accumulator=0.0;g_fx.phase=1.0f;}
   else if(g_visual.active&&phase>=2&&phase<=6)g_visual.heldPeriod=phase;
   if(g_visual.heldPeriod<2||g_visual.heldPeriod>6)g_visual.heldPeriod=2;
-  g_visual.active=0;g_visual.animationDelta=0.0;g_visual.frameScale=0.0f;
+  g_visual.active=0;g_visual.realRenderDelta=0.0;g_visual.animationDelta=0.0;g_visual.frameScale=0.0f;
   *(volatile LONG*)((BYTE*)engine+0x30)=g_visual.heldPeriod;
   *(volatile float*)((BYTE*)engine+0x38)=g_visual.phase;
   InterlockedExchange(&g_phaseDecision,g_visual.heldPeriod);
 }
 static void advance_visual_time(void *engine,double delta){
   double animationDelta,period,frameMsExact;LONG frameMs;
+  g_visual.realRenderDelta=delta;
   g_visual.slowdown=(float)bfme_visual_slowdown(g_timing.fps);
   animationDelta=bfme_animation_delta(delta,g_timing.fps);g_visual.animationDelta=animationDelta;
   g_visual.frameScale=(float)bfme_legacy_frame_scale(delta,g_timing.fps);
@@ -457,12 +551,13 @@ static void __stdcall schedule_time_tick(void *engine,LONG newPeriod){
   instant=1.0/delta;if(instant<1.0)instant=1.0;if(instant>240.0)instant=240.0;
   if(!(g_timing.fps>0.0))g_timing.fps=instant;else{alpha=delta/(0.5+delta);g_timing.fps+=(instant-g_timing.fps)*alpha;}
   logic=*(void**)(g_image+(0x012F0898-0x00400000));
-  if(!logic){g_timing.lastLogic=0;g_timing.lastMode=-1;g_timing.clock.accumulator=0.0;hold_visual_phase(engine,newPeriod,TRUE);log_timing(LOADING_TRANSITION,"NO_LOGIC",FALSE);return;}
-  mode=*(volatile int*)((BYTE*)logic+0x10C);loading=(*(volatile BYTE*)((BYTE*)logic+0x69)!=0)||(*(volatile BYTE*)((BYTE*)logic+0x6A)!=0)||(*(volatile BYTE*)((BYTE*)logic+0x9D)!=0)||bfme_game_mode_suspends_scheduler(mode);
-  if(logic!=g_timing.lastLogic||mode!=g_timing.lastMode){g_timing.clock.accumulator=0.0;g_timing.lastLogic=logic;g_timing.lastMode=mode;hold_visual_phase(engine,newPeriod,TRUE);log_timing(LOADING_TRANSITION,"LIFECYCLE_REBASE",TRUE);return;}
-  if(loading){g_timing.clock.accumulator=0.0;hold_visual_phase(engine,newPeriod,TRUE);log_timing(LOADING_TRANSITION,"INACTIVE",FALSE);return;}
+  if(!logic){InterlockedExchange(&g_w3dClockFrozen,0);g_timing.lastLogic=0;g_timing.lastMode=-1;g_timing.clock.accumulator=0.0;hold_visual_phase(engine,newPeriod,TRUE);log_timing(LOADING_TRANSITION,"NO_LOGIC",FALSE);return;}
+  mode=*(volatile int*)((BYTE*)logic+0x10C);loading=(*(volatile BYTE*)((BYTE*)logic+0x69)!=0)||(*(volatile BYTE*)((BYTE*)logic+0x6A)!=0)||(*(volatile BYTE*)((BYTE*)logic+0x9D)!=0);
+  if(logic!=g_timing.lastLogic||mode!=g_timing.lastMode){InterlockedExchange(&g_w3dClockFrozen,0);g_timing.clock.accumulator=0.0;g_timing.lastLogic=logic;g_timing.lastMode=mode;hold_visual_phase(engine,newPeriod,TRUE);log_timing(LOADING_TRANSITION,"LIFECYCLE_REBASE",TRUE);return;}
+  if(loading){InterlockedExchange(&g_w3dClockFrozen,0);g_timing.clock.accumulator=0.0;hold_visual_phase(engine,newPeriod,TRUE);log_timing(LOADING_TRANSITION,"INACTIVE",FALSE);return;}
   paused=*(volatile BYTE*)((BYTE*)logic+0x11C)!=0;
   if(paused||engine_time_frozen()){
+    InterlockedExchange(&g_w3dClockFrozen,1);
     hold_visual_phase(engine,newPeriod,FALSE);
     /* Preserve the retail pause contract: phase 1 enters
        _bfme_updateNetworkAndLogic's isGamePaused gate and suppresses the
@@ -471,6 +566,7 @@ static void __stdcall schedule_time_tick(void *engine,LONG newPeriod){
     InterlockedExchange(&g_phaseDecision,1);
     log_timing(PAUSED,"NATIVE_PHASE1_PAUSE_GATE",FALSE);return;
   }
+  InterlockedExchange(&g_w3dClockFrozen,0);
   g_timing.activeSeconds+=delta;advance_visual_time(engine,delta);classification=g_timing.fps<15.0?LOW_FPS_SLOWDOWN:ACTIVE_SIMULATION;
   due=bfme_scheduler_advance(&g_timing.clock,delta,g_timing.fps)!=0;update_measured_hz();
   if(due){
@@ -485,7 +581,115 @@ static void __stdcall record_logic_update(void){
   ++g_timing.logicCalls;
   if(InterlockedExchange(&g_dueInFlight,0)!=0){void *engine;g_visual.phase=0.0f;engine=g_image?*(void**)(g_image+(0x012ED524-0x00400000)):0;if(engine)*(volatile float*)((BYTE*)engine+0x38)=0.0f;++g_timing.logicTicks;update_measured_hz();log_timing(g_timing.fps<15.0?LOW_FPS_SLOWDOWN:ACTIVE_SIMULATION,"ALLOWED",TRUE);}
 }
+static ParticleVisualState *particle_visual_state(DWORD particle,DWORD system,BOOL create){
+  DWORD i,slot,oldestSlot,oldestAge,serial;
+  ParticleVisualState *state;
+  if(!particle)return 0;
+  slot=((particle>>4)*2654435761u)&(PARTICLE_STATE_N-1);oldestSlot=slot;oldestAge=0;serial=g_particleRenderSerial;
+  for(i=0;i<32;i++){
+    state=&g_particleStates[(slot+i)&(PARTICLE_STATE_N-1)];
+    if(state->particle==particle){
+      if(system&&state->system!=system){ZeroMemory(state,sizeof(*state));state->particle=particle;state->system=system;}
+      return state;
+    }
+    if(!state->particle){
+      if(!create)return 0;
+      ZeroMemory(state,sizeof(*state));state->particle=particle;state->system=system;return state;
+    }
+    if((DWORD)(serial-state->lastSeen)>=oldestAge){oldestAge=serial-state->lastSeen;oldestSlot=(slot+i)&(PARTICLE_STATE_N-1);}
+  }
+  if(!create)return 0;
+  state=&g_particleStates[oldestSlot];ZeroMemory(state,sizeof(*state));state->particle=particle;state->system=system;return state;
+}
+static float particle_phase(void){
+  float phase;
+  if(!g_visual.active&&InterlockedCompareExchange(&g_w3dClockFrozen,0,0)==0)return 1.0f;
+  phase=g_fx.phase;if(!(phase>=0.0f))return 0.0f;return phase>1.0f?1.0f:phase;
+}
+static DWORD prepare_particle_positions(void){
+  BYTE *manager,*sentinel,*node,*system,*particle;DWORD systems=0,count=0,tick=g_fx.ticks;float *position,phase;ParticleVisualState *state;
+  ++g_particleRenderSerial;phase=particle_phase();g_particleRenderPhase=phase;
+  manager=g_image?*(BYTE**)(g_image+PARTICLE_MANAGER_RVA):0;if(!manager)return 0;
+  sentinel=*(BYTE**)(manager+0x80);if(!sentinel)return 0;node=*(BYTE**)sentinel;
+  while(node&&node!=sentinel&&systems++<8192){
+    system=*(BYTE**)(node+8);particle=system?*(BYTE**)(system+0xA0):0;
+    while(particle&&count<PARTICLE_PATCH_N){
+      position=(float*)(particle+0x1C);state=particle_visual_state((DWORD)(ULONG_PTR)particle,(DWORD)(ULONG_PTR)system,TRUE);
+      if(!state->positionTick){
+        state->previousPosition[0]=state->currentPosition[0]=position[0];state->previousPosition[1]=state->currentPosition[1]=position[1];state->previousPosition[2]=state->currentPosition[2]=position[2];state->positionTick=tick+1;
+      }else if(state->positionTick!=tick+1){
+        state->previousPosition[0]=state->currentPosition[0];state->previousPosition[1]=state->currentPosition[1];state->previousPosition[2]=state->currentPosition[2];
+        state->currentPosition[0]=position[0];state->currentPosition[1]=position[1];state->currentPosition[2]=position[2];state->positionTick=tick+1;
+      }else{
+        state->currentPosition[0]=position[0];state->currentPosition[1]=position[1];state->currentPosition[2]=position[2];
+      }
+      state->lastSeen=g_particleRenderSerial;
+      if(phase<1.0f){
+        g_particlePatches[count].position=position;g_particlePatches[count].raw[0]=position[0];g_particlePatches[count].raw[1]=position[1];g_particlePatches[count].raw[2]=position[2];
+        position[0]=bfme_visual_lerp(state->previousPosition[0],state->currentPosition[0],phase);
+        position[1]=bfme_visual_lerp(state->previousPosition[1],state->currentPosition[1],phase);
+        position[2]=bfme_visual_lerp(state->previousPosition[2],state->currentPosition[2],phase);++count;
+      }
+      particle=*(BYTE**)(particle+0x3C);
+    }
+    node=*(BYTE**)node;
+  }
+  return count;
+}
+static void restore_particle_positions(DWORD count){
+  DWORD i;float *position;for(i=0;i<count;i++){position=g_particlePatches[i].position;position[0]=g_particlePatches[i].raw[0];position[1]=g_particlePatches[i].raw[1];position[2]=g_particlePatches[i].raw[2];}
+}
+static float interpolate_particle_scalar(void *particle,float raw,DWORD index){
+  ParticleVisualState *state;DWORD tick;
+  if(index>=6||InterlockedCompareExchange(&g_particleRenderContext,0,0)==0)return raw;
+  state=particle_visual_state((DWORD)(ULONG_PTR)particle,0,FALSE);if(!state)return raw;tick=g_fx.ticks+1;
+  if(!state->scalarValid[index]){state->previousScalar[index]=state->currentScalar[index]=raw;state->scalarTick[index]=tick;state->scalarValid[index]=1;return raw;}
+  if(state->scalarTick[index]!=tick){state->previousScalar[index]=state->currentScalar[index];state->currentScalar[index]=raw;state->scalarTick[index]=tick;}
+  else state->currentScalar[index]=raw;
+  return bfme_visual_lerp(state->previousScalar[index],state->currentScalar[index],g_particleRenderPhase);
+}
+static float __fastcall particle_get0_hook(void*self,void*unused){(void)unused;return interpolate_particle_scalar(self,g_particleGetters[0](self,0),0);}
+static float __fastcall particle_get1_hook(void*self,void*unused){(void)unused;return interpolate_particle_scalar(self,g_particleGetters[1](self,0),1);}
+static float __fastcall particle_get2_hook(void*self,void*unused){(void)unused;return interpolate_particle_scalar(self,g_particleGetters[2](self,0),2);}
+static float __fastcall particle_get3_hook(void*self,void*unused){(void)unused;return interpolate_particle_scalar(self,g_particleGetters[3](self,0),3);}
+static float __fastcall particle_get4_hook(void*self,void*unused){(void)unused;return interpolate_particle_scalar(self,g_particleGetters[4](self,0),4);}
+static float __fastcall particle_alpha_hook(void*self,void*unused){(void)unused;return interpolate_particle_scalar(self,g_particleGetters[5](self,0),5);}
+static void __fastcall particle_render_hook(void*self,void*unused,void*rinfo){DWORD count;(void)unused;count=prepare_particle_positions();InterlockedIncrement(&g_particleRenderCalls);InterlockedExchange(&g_particleInterpolated,(LONG)count);InterlockedExchange(&g_particleRenderContext,1);g_particleRenderOriginal(self,0,rinfo);InterlockedExchange(&g_particleRenderContext,0);restore_particle_positions(count);}
 static BOOL patch_jump(BYTE *site,DWORD count,BYTE *target){DWORD old,back,rel,i;if(count<5||!VirtualProtect(site,count,PAGE_EXECUTE_READWRITE,&old))return FALSE;site[0]=0xE9;rel=(DWORD)(ULONG_PTR)target-((DWORD)(ULONG_PTR)site+5);cp(site+1,(BYTE*)&rel,4);for(i=5;i<count;i++)site[i]=0x90;FlushInstructionCache(GetCurrentProcess(),site,count);VirtualProtect(site,count,old,&back);return TRUE;}
+static void __stdcall dispatch_particle_updates(void){
+  BYTE *manager;DWORD vtable,i;int updates;ParticleUpdateProc update;
+  ++g_fx.dispatches;manager=g_image?*(BYTE**)(g_image+PARTICLE_MANAGER_RVA):0;if(!manager)return;
+  vtable=*(DWORD*)manager;if(!vtable)return;update=(ParticleUpdateProc)(*(DWORD*)(vtable+0x14));if(!update)return;
+  if(InterlockedCompareExchange(&g_w3dClockFrozen,0,0)!=0){++g_fx.skipped;return;}
+  /* Before an active simulation clock exists (loading/shell setup), preserve
+     retail dispatch. Active gameplay uses the INIs' authored 30-Hz frame
+     cadence, independently of the 5-Hz authoritative scheduler. */
+  if(!g_visual.active||!(g_visual.animationDelta>0.0)){
+    update(manager,0);++g_fx.ticks;g_fx.phase=1.0f;g_fx.clock.accumulator=0.0;return;
+  }
+  updates=bfme_fixed_frame_advance(&g_fx.clock,g_visual.animationDelta,30.0,8);
+  if(updates>1)++g_fx.bursts;
+  g_fx.phase=g_timing.fps>30.0?bfme_fixed_frame_phase(&g_fx.clock,30.0):1.0f;
+  if(!updates)++g_fx.skipped;
+  for(i=0;i<(DWORD)updates;i++){update(manager,0);++g_fx.ticks;}
+}
+static BOOL hook_particle_update_call(BYTE *site){
+  BYTE*t=(BYTE*)VirtualAlloc(0,64,MEM_COMMIT|MEM_RESERVE,PAGE_EXECUTE_READWRITE),*p;DWORD rel;if(!t)return FALSE;p=t;
+  b(&p,0x9C);b(&p,0x60);b(&p,0xB8);d(&p,(DWORD)(ULONG_PTR)&dispatch_particle_updates);b(&p,0xFF);b(&p,0xD0);b(&p,0x61);b(&p,0x9D);
+  b(&p,0xE9);rel=(DWORD)(ULONG_PTR)(site+PARTICLE_UPDATE_CALL_N)-((DWORD)(ULONG_PTR)p+4);d(&p,rel);
+  FlushInstructionCache(GetCurrentProcess(),t,p-t);return patch_jump(site,PARTICLE_UPDATE_CALL_N,t);
+}
+static BOOL make_particle_trampoline(BYTE *site,DWORD count,BYTE *hook,BYTE **original){BYTE*t=(BYTE*)VirtualAlloc(0,count+16,MEM_COMMIT|MEM_RESERVE,PAGE_EXECUTE_READWRITE),*p;DWORD rel;if(!t)return FALSE;p=t;cp(p,site,count);p+=count;b(&p,0xE9);rel=(DWORD)(ULONG_PTR)(site+count)-((DWORD)(ULONG_PTR)p+4);d(&p,rel);FlushInstructionCache(GetCurrentProcess(),t,p-t);*original=t;return patch_jump(site,count,hook);}
+static BOOL install_particle_interpolation(BYTE *render,BYTE **getters){
+  if(!make_particle_trampoline(render,PARTICLE_RENDER_N,(BYTE*)&particle_render_hook,(BYTE**)&g_particleRenderOriginal))return FALSE;
+  if(!make_particle_trampoline(getters[0],PARTICLE_GET_N,(BYTE*)&particle_get0_hook,(BYTE**)&g_particleGetters[0]))return FALSE;
+  if(!make_particle_trampoline(getters[1],PARTICLE_GET_N,(BYTE*)&particle_get1_hook,(BYTE**)&g_particleGetters[1]))return FALSE;
+  if(!make_particle_trampoline(getters[2],PARTICLE_GET_N,(BYTE*)&particle_get2_hook,(BYTE**)&g_particleGetters[2]))return FALSE;
+  if(!make_particle_trampoline(getters[3],PARTICLE_GET_N,(BYTE*)&particle_get3_hook,(BYTE**)&g_particleGetters[3]))return FALSE;
+  if(!make_particle_trampoline(getters[4],PARTICLE_GET_N,(BYTE*)&particle_get4_hook,(BYTE**)&g_particleGetters[4]))return FALSE;
+  if(!make_particle_trampoline(getters[5],PARTICLE_GET_N,(BYTE*)&particle_alpha_hook,(BYTE**)&g_particleGetters[5]))return FALSE;
+  return TRUE;
+}
 static BOOL hook_floating_text(BYTE *site){
   BYTE*t=(BYTE*)VirtualAlloc(0,96,MEM_COMMIT|MEM_RESERVE,PAGE_EXECUTE_READWRITE),*p;DWORD rel;if(!t)return FALSE;p=t;
   b(&p,0xD9);b(&p,0x05);d(&p,(DWORD)(ULONG_PTR)&g_visual.phase);                 /* fld phase */
@@ -519,7 +723,8 @@ static void write_scheduler_proof(void){
   DWORD rec[10],wrote;HANDLE f;rec[0]=0x31534354;rec[1]=1;rec[2]=(DWORD)(ULONG_PTR)(g_image+UPDATE_RVA+UPDATE_SCHED_OFF);rec[3]=(DWORD)(ULONG_PTR)(g_image+RESET_RVA+RESET_CLOCK_OFF);rec[4]=(DWORD)(ULONG_PTR)(g_image+LOGIC_UPDATE_RVA);rec[5]=(DWORD)g_timing.frequency.LowPart;rec[6]=(DWORD)g_timing.frequency.HighPart;rec[7]=g_w3dOld;rec[8]=g_w3dNew;rec[9]=5;
   f=CreateFileA("C:\\BFME1\\BFME_60FPS_TIME_SCHEDULER_PROOF.bin",GENERIC_WRITE,FILE_SHARE_READ,0,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);if(f==INVALID_HANDLE_VALUE)return;WriteFile(f,rec,sizeof(rec),&wrote,0);CloseHandle(f);
 }
-static void write_sync_proof(void){HANDLE f;DWORD wrote;SyncProof p;p.magic=0x32434E53;p.patched=(DWORD)InterlockedCompareExchange(&g_patchApplied,0,0);p.calls=(DWORD)InterlockedCompareExchange(&g_syncCalls,0,0);p.caller=g_syncClock.caller;p.raw=g_syncClock.raw;p.out=g_syncClock.out;f=CreateFileA("BFME_60FPS_ALL_SYNC_PROOF.bin",GENERIC_WRITE,FILE_SHARE_READ,0,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);if(f==INVALID_HANDLE_VALUE)return;WriteFile(f,&p,sizeof(p),&wrote,0);CloseHandle(f);}
+static void write_particle_proof(void){union{float f;DWORD d;}phase;DWORD rec[18],wrote;HANDLE f;phase.f=g_fx.phase;rec[0]=0x32584650;rec[1]=(DWORD)InterlockedCompareExchange(&g_patchApplied,0,0);rec[2]=(DWORD)InterlockedCompareExchange(&g_particleRenderCalls,0,0);rec[3]=(DWORD)InterlockedCompareExchange(&g_particleInterpolated,0,0);rec[4]=(DWORD)(ULONG_PTR)(g_image+PARTICLE_RENDER_RVA);rec[5]=(DWORD)(ULONG_PTR)(g_image+PARTICLE_GET0_RVA);rec[6]=(DWORD)(ULONG_PTR)(g_image+PARTICLE_GET1_RVA);rec[7]=(DWORD)(ULONG_PTR)(g_image+PARTICLE_GET2_RVA);rec[8]=(DWORD)(ULONG_PTR)(g_image+PARTICLE_GET3_RVA);rec[9]=(DWORD)(ULONG_PTR)(g_image+PARTICLE_GET4_RVA);rec[10]=(DWORD)(ULONG_PTR)(g_image+PARTICLE_ALPHA_RVA);rec[11]=g_timing.logicTicks;rec[12]=(DWORD)(ULONG_PTR)(g_image+PARTICLE_UPDATE_CALL_RVA);rec[13]=g_fx.dispatches;rec[14]=g_fx.ticks;rec[15]=g_fx.skipped;rec[16]=g_fx.bursts;rec[17]=phase.d;f=CreateFileA("C:\\BFME1\\BFME_60FPS_PARTICLE_PROOF.bin",GENERIC_WRITE,FILE_SHARE_READ,0,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);if(f==INVALID_HANDLE_VALUE)return;WriteFile(f,rec,sizeof(rec),&wrote,0);CloseHandle(f);}
+static void write_sync_proof(void){HANDLE f;DWORD wrote,i;SyncProof p;p.magic=0x31434E53;p.patched=(DWORD)InterlockedCompareExchange(&g_patchApplied,0,0);for(i=0;i<SYNC_CLOCKS;i++){p.calls[i]=(DWORD)InterlockedCompareExchange(&g_syncCounts[i],0,0);p.raw[i]=g_syncClocks[i].raw;p.out[i]=g_syncClocks[i].out;}f=CreateFileA("BFME_60FPS_ALL_SYNC_PROOF.bin",GENERIC_WRITE,FILE_SHARE_READ,0,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);if(f==INVALID_HANDLE_VALUE)return;WriteFile(f,&p,sizeof(p),&wrote,0);CloseHandle(f);}
 static void write_proof(void){HANDLE f;DWORD wrote;ProofRecord p;p.magic=0x314D4F43;p.patched=(DWORD)InterlockedCompareExchange(&g_patchApplied,0,0);p.timerCalls=(DWORD)InterlockedCompareExchange(&g_timerCalls,0,0);p.timerWrites=(DWORD)InterlockedCompareExchange(&g_timerWrites,0,0);p.renderCalls=(DWORD)InterlockedCompareExchange(&g_renderCalls,0,0);p.renderWrites=(DWORD)InterlockedCompareExchange(&g_renderWrites,0,0);p.lastRaw=g_lastTimerRaw;p.lastOut=g_lastTimerOut;f=CreateFileA("BFME_60FPS_STATE3_COMBINED_PROOF.bin",GENERIC_WRITE,FILE_SHARE_READ,0,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);if(f==INVALID_HANDLE_VALUE)return;WriteFile(f,&p,sizeof(p),&wrote,0);CloseHandle(f);}
 static void dump_d1_code(BYTE *image){HANDLE f;DWORD wrote,header[2];f=CreateFileA("BFME_60FPS_D1FB90_CODE.bin",GENERIC_WRITE,FILE_SHARE_READ,0,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);if(f==INVALID_HANDLE_VALUE)return;header[0]=(DWORD)(ULONG_PTR)(image+D1_TARGET_RVA);header[1]=0x2000;WriteFile(f,header,sizeof(header),&wrote,0);WriteFile(f,image+D1_TARGET_RVA,0x2000,&wrote,0);CloseHandle(f);}
 static void dump_region(const char *name,BYTE *data,DWORD size){HANDLE f;DWORD wrote;f=CreateFileA(name,GENERIC_WRITE,FILE_SHARE_READ,0,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);if(f==INVALID_HANDLE_VALUE)return;WriteFile(f,data,size,&wrote,0);CloseHandle(f);}
@@ -579,8 +784,21 @@ static void write_w3d_clock_proof(void){
 }
 static void __stdcall capture_client_target(DWORD self){DWORD vt,target,rec[3];HANDLE f;DWORD wrote;if(!self||InterlockedCompareExchange(&g_clientTargetCaptured,1,0)!=0)return;vt=*(DWORD*)(ULONG_PTR)self;if(!vt){InterlockedExchange(&g_clientTargetCaptured,0);return;}target=*(DWORD*)((BYTE*)(ULONG_PTR)vt+0x80);rec[0]=self;rec[1]=vt;rec[2]=target;f=CreateFileA("BFME_60FPS_CLIENT_TARGET.bin",GENERIC_WRITE,FILE_SHARE_READ,0,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);if(f==INVALID_HANDLE_VALUE)return;WriteFile(f,rec,sizeof(rec),&wrote,0);if(target>=0x00400000&&target<0x02000000)WriteFile(f,(BYTE*)(ULONG_PTR)target,0x4000,&wrote,0);CloseHandle(f);}
 static BOOL hook_client_capture(BYTE*s){BYTE*t=(BYTE*)VirtualAlloc(0,96,MEM_COMMIT|MEM_RESERVE,PAGE_EXECUTE_READWRITE),*p;DWORD rel,old,back;if(!t)return FALSE;p=t;b(&p,0x9c);b(&p,0x60);b(&p,0x51);b(&p,0xb8);d(&p,(DWORD)(ULONG_PTR)&capture_client_target);b(&p,0xff);b(&p,0xd0);b(&p,0x61);b(&p,0x9d);cp(p,kUpdate,UPDATE_N);p+=UPDATE_N;b(&p,0xe9);rel=(DWORD)(ULONG_PTR)(s+UPDATE_N)-((DWORD)(ULONG_PTR)p+4);d(&p,rel);FlushInstructionCache(GetCurrentProcess(),t,p-t);if(!VirtualProtect(s,UPDATE_N,PAGE_EXECUTE_READWRITE,&old))return FALSE;s[0]=0xe9;rel=(DWORD)(ULONG_PTR)t-((DWORD)(ULONG_PTR)s+5);cp(s+1,(BYTE*)&rel,4);FlushInstructionCache(GetCurrentProcess(),s,UPDATE_N);VirtualProtect(s,UPDATE_N,old,&back);return TRUE;}
-static BOOL apply(void){BYTE*im=(BYTE*)GetModuleHandleA(0),*u,*r,*c,*rate,*logic,*sync,*floating;volatile LONG*frameMs;DWORD old;if(!im)return FALSE;u=im+UPDATE_RVA;r=im+RESET_RVA;c=im+CLIENT_UPDATE_RVA;rate=im+W3D_RATE_SET_RVA;logic=im+LOGIC_UPDATE_RVA;sync=im+SYNC_RVA;floating=im+FLOAT_TEXT_RVA;frameMs=(volatile LONG*)(im+W3D_FRAME_MS_RVA);if(!match(u,kUpdate,5)||!match(u+0x71,kUpdateA,sizeof(kUpdateA))||!match(u+0xB2,kUpdateB,sizeof(kUpdateB))||!match(u+UPDATE_SCHED_OFF,kSched,sizeof(kSched))||!match(r+RESET_CLOCK_OFF,kReset,sizeof(kReset))||!match(logic,kLogicUpdate,sizeof(kLogicUpdate))||!match(c,kClientUpdate,sizeof(kClientUpdate))||!match(rate,kW3DSetRate,sizeof(kW3DSetRate))||!match(sync,kSync,sizeof(kSync))||!match(floating,kFloatText,sizeof(kFloatText)))return FALSE;old=(DWORD)InterlockedCompareExchange(frameMs,0,0);if(old!=33)return FALSE;g_image=im;g_w3dOld=old;g_w3dNew=old;if(!hook_sync(sync))return FALSE;if(!hook_floating_text(floating))return FALSE;if(!install_time_scheduler(u,r,logic))return FALSE;InterlockedExchange(&g_patchApplied,1);write_w3d_clock_proof();write_scheduler_proof();return TRUE;}
-static DWORD WINAPI worker(LPVOID u){DWORD i,j;(void)u;for(i=0;i<1200;i++){if(apply()){for(j=0;j<12;j++){Sleep(5000);write_w3d_clock_proof();}return 0;}Sleep(25);}InterlockedExchange(&g_patchApplied,-1);return 0;}
+static BOOL apply(void){
+  BYTE*im=(BYTE*)GetModuleHandleA(0),*u,*r,*c,*rate,*logic,*sync,*floating,*particleRender,*particleUpdateCall,*particleGetters[6];volatile LONG*frameMs;DWORD old;
+  if(!im)return FALSE;
+  u=im+UPDATE_RVA;r=im+RESET_RVA;c=im+CLIENT_UPDATE_RVA;rate=im+W3D_RATE_SET_RVA;logic=im+LOGIC_UPDATE_RVA;sync=im+SYNC_RVA;floating=im+FLOAT_TEXT_RVA;particleRender=im+PARTICLE_RENDER_RVA;particleUpdateCall=im+PARTICLE_UPDATE_CALL_RVA;
+  particleGetters[0]=im+PARTICLE_GET0_RVA;particleGetters[1]=im+PARTICLE_GET1_RVA;particleGetters[2]=im+PARTICLE_GET2_RVA;particleGetters[3]=im+PARTICLE_GET3_RVA;particleGetters[4]=im+PARTICLE_GET4_RVA;particleGetters[5]=im+PARTICLE_ALPHA_RVA;
+  frameMs=(volatile LONG*)(im+W3D_FRAME_MS_RVA);
+  if(!match(u,kUpdate,5)||!match(u+0x71,kUpdateA,sizeof(kUpdateA))||!match(u+0xB2,kUpdateB,sizeof(kUpdateB))||!match(u+UPDATE_SCHED_OFF,kSched,sizeof(kSched))||!match(r+RESET_CLOCK_OFF,kReset,sizeof(kReset))||!match(logic,kLogicUpdate,sizeof(kLogicUpdate))||!match(c,kClientUpdate,sizeof(kClientUpdate))||!match(rate,kW3DSetRate,sizeof(kW3DSetRate))||!match(sync,kSync,sizeof(kSync))||!match(floating,kFloatText,sizeof(kFloatText))||!match(particleRender,kParticleRender,sizeof(kParticleRender))||!match(particleUpdateCall,kParticleUpdateCall,sizeof(kParticleUpdateCall))||!match(particleGetters[0],kParticleGet0,sizeof(kParticleGet0))||!match(particleGetters[1],kParticleGet1,sizeof(kParticleGet1))||!match(particleGetters[2],kParticleGet2,sizeof(kParticleGet2))||!match(particleGetters[3],kParticleGet3,sizeof(kParticleGet3))||!match(particleGetters[4],kParticleGet4,sizeof(kParticleGet4))||!match(particleGetters[5],kParticleAlpha,sizeof(kParticleAlpha)))return FALSE;
+  old=(DWORD)InterlockedCompareExchange(frameMs,0,0);if(old!=33)return FALSE;g_image=im;g_w3dOld=old;g_w3dNew=old;
+  /* Install the runtime-identified W3DView vslot before modifying code bytes,
+     so an early startup retry cannot leave a partially installed patch. */
+  if(!install_camera_scroll(im))return FALSE;
+  if(!hook_sync(sync))return FALSE;if(!hook_floating_text(floating))return FALSE;if(!install_time_scheduler(u,r,logic))return FALSE;if(!hook_particle_update_call(particleUpdateCall))return FALSE;if(!install_particle_interpolation(particleRender,particleGetters))return FALSE;
+  InterlockedExchange(&g_patchApplied,1);write_w3d_clock_proof();write_scheduler_proof();write_particle_proof();return TRUE;
+}
+static DWORD WINAPI worker(LPVOID u){DWORD i,j;(void)u;for(i=0;i<1200;i++){if(apply()){for(j=0;j<12;j++){Sleep(5000);write_w3d_clock_proof();write_particle_proof();}return 0;}Sleep(25);}InterlockedExchange(&g_patchApplied,-1);return 0;}
 static BOOL load(void){char p[MAX_PATH];UINT n;HMODULE m;if(g_di)return TRUE;n=GetSystemDirectoryA(p,sizeof(p));if(!n||n>=sizeof(p)-13)return FALSE;lstrcatA(p,"\\dinput8.dll");m=LoadLibraryA(p);if(!m)return FALSE;g_create=(DirectInput8CreateProc)GetProcAddress(m,"DirectInput8Create");if(!g_create)return FALSE;g_di=m;return TRUE;}
 HRESULT WINAPI DirectInput8Create(HINSTANCE a,DWORD b,REFIID c,LPVOID*d,LPUNKNOWN e){HANDLE h;if(!load())return E_FAIL;if(InterlockedCompareExchange(&g_started,1,0)==0){h=CreateThread(0,0,worker,0,0,0);if(h)CloseHandle(h);}return g_create(a,b,c,d,e);}
 BOOL WINAPI DllMain(HINSTANCE a,DWORD b,LPVOID c){(void)a;(void)b;(void)c;return TRUE;}
