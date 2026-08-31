@@ -1,10 +1,35 @@
 // Byte-matched BFME ExperienceTracker transfer implementation.
 
 typedef int Int;
+typedef int Bool;
 typedef float Real;
 typedef unsigned char UnsignedByte;
 
-class Object;
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+
+	void *m_vtable;
+	Overridable *m_nextOverride;
+};
+
+class ThingTemplate : public Overridable
+{
+public:
+	unsigned char m_unreconstructed[0x487 - sizeof(Overridable)];
+	bool m_isTrainable;
+};
+
+class Object
+{
+public:
+	void *m_vtable;
+	ThingTemplate *m_template;
+	unsigned char m_pad[0x94 - 8];
+	unsigned int m_status;
+};
+
 class Xfer;
 
 class AsciiString
@@ -103,6 +128,8 @@ public:
 	virtual void crc(Xfer *xfer);
 	virtual void xfer(Xfer *xfer);
 	virtual const char *getSnapshotName() const;
+	bool isTrainable() const;
+	bool isAcceptingExperiencePoints() const;
 
 private:
 	Object *m_parent;
@@ -149,4 +176,20 @@ void ExperienceTracker::xfer(Xfer *xfer)
 
 	if (version.m_minor >= 2)
 		m_scalarTable->xfer(xfer);
+}
+
+inline bool ExperienceTracker::isTrainable() const
+{
+	const ThingTemplate *t = m_parent->m_template;
+	if (t && t->m_nextOverride)
+		t = static_cast<const ThingTemplate *>(t->m_nextOverride->getFinalOverride());
+	return t->m_isTrainable;
+}
+
+bool ExperienceTracker::isAcceptingExperiencePoints() const
+{
+	if (m_parent->m_status & 0x20000000)
+		return false;
+
+	return isTrainable() || (m_experienceSink != 0);
 }
