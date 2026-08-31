@@ -74305,6 +74305,7 @@ name,address,notes
 ?bfmeSendEventA11@@YAXPAX00IH@Z,0x000023E2,pin
 ?bfmeSendEventA19@@YAXPAX00IH@Z,0x00049896,pin
 ?bfmeSendRM@BfmeSinkRM@@QAEXPAXH@Z,0x00006613,pin
+?bfmeSendSKA@BfmeSinkSKA@@QAEXHHH@Z,0x00804010,pin
 ?bfmeSendX1017@BfmeJ1017@@QAEXHH@Z,0x008A07A0,pin
 ?bfmeSendY1017@BfmeJ1017@@QAEXHHH@Z,0x008A0770,pin
 ?bfmeSet1016@BfmeDst1016@@QAEXHHH@Z,0x00925D10,pin
@@ -74567,6 +74568,7 @@ name,address,notes
 ?bfmeTestLB@BfmeOwnerLB@@QAE_NPAUBfmeThingLB@@@Z,0x0004250A,pin
 ?bfmeTestME@BfmeThingME@@QAEHXZ,0x00003EA4,pin
 ?bfmeTestSB@@YAHXZ,0x0085B420,pin
+?bfmeTestSKA@BfmeSubSKA@@QAEDH@Z,0x00809690,pin
 ?bfmeTheBZF@@3PAVBfmeGlobalBZF@@A,0x00EF1028,pin
 ?bfmeTheCBC@@3HA,0x00F379BC,pin
 ?bfmeTheCBD@@3HA,0x00F379BC,pin
