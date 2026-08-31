@@ -24257,3 +24257,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?Set_Transform@CollectionClass@@UAEXABVMatrix3D@@@Z,0x00979D20,"false masked-relocation fold: retail calls Animatable3DObjClass::Set_Transform at 0x00982110, proving HLodClass::Set_Transform. CollectionClass::Set_Transform would call RenderObjClass::Set_Transform and is unlocated."
 ?d_001c77b0@@YAXXZ,0x001C77B0,gen-dump placeholder superseded by the exact clean C++ BFME Object attack eligibility query over the same 331-byte range
 ?d_001b2400@@YAXXZ,0x001B2400,gen-dump placeholder superseded by the exact clean C++ BfmeThingEFE constructor over the same 157-byte range
+?d_001b2570@@YAXXZ,0x001B2570,gen-dump placeholder superseded by the exact clean C++ ExperienceTracker constructor over the same 181-byte range
