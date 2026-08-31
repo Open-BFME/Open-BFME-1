@@ -81454,3 +81454,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?_M_throw_failure@ios_base@_STL@@IAEXXZ,0x0083E8F0,FX particle ostream put setstate failure callee
 ??$_M_init@DV?$char_traits@D@_STL@@@_STL@@YA_NAAV?$basic_ostream@DV?$char_traits@D@_STL@@@0@@Z,0x00046D6C,FX particle ostream put sentry init ILT
 ?flush@?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@QAEAAV12@XZ,0x00030B11,FX particle ostream put sentry unitbuf flush ILT
+??$__match@V?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@PAV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@J@_STL@@YAPAV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@AAV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@0@0PAV10@1PAJ@Z,0x00837190,wide time_get month-name matcher reached directly by the retail specialization
+?_M_getc@?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@QBEXXZ,0x00833D90,TU public-access alias of the already matched protected wide iterator _M_getc body
