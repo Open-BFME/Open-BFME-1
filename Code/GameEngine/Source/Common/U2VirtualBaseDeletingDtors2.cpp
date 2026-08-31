@@ -92,7 +92,6 @@ struct U2Vb0084B5F0 : public U2MidB_Tight
 	char m_tail[0x88];
 	~U2Vb0084B5F0();
 };
-// ??1U2Vb0084B5F0@@UAE@XZ present-unmatched
 U2Vb0084B5F0::~U2Vb0084B5F0() {}
 
 // A complete object on the stack is what makes the compiler emit the ??_D
