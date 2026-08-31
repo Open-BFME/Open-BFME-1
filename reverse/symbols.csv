@@ -81449,3 +81449,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1BFMENetworkPayloadList@@QAE@XZ,0x0003F11B,BFMENetwork destructor payload-list dtor ILT target decoded at 0x00658B9D
 ??1BFMENetworkQueue1@@QAE@XZ,0x00005A8D,BFMENetwork destructor callback-queue dtor ILT target decoded at 0x00658C3A
 ??1BFMENetworkQueue@@QAE@XZ,0x00048117,BFMENetwork destructor dispatcher-queue dtor ILT target decoded at 0x00658C47
+?_M_throw_failure@ios_base@_STL@@IAEXXZ,0x0083E8F0,FX particle ostream put setstate failure callee
+??$_M_init@DV?$char_traits@D@_STL@@@_STL@@YA_NAAV?$basic_ostream@DV?$char_traits@D@_STL@@@0@@Z,0x00046D6C,FX particle ostream put sentry init ILT
+?flush@?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@QAEAAV12@XZ,0x00030B11,FX particle ostream put sentry unitbuf flush ILT
