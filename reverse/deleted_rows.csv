@@ -24243,3 +24243,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_001b12b0@@YAXXZ,0x001B12B0,truncated 352-byte gen-dump placeholder superseded by the exact BfmeCell decay body whose proven retail boundary is 369 bytes through ret 8
 ?d_001c3160@@YAXXZ,0x001C3160,gen-dump placeholder superseded by the exact Object::getWorldspaceBestContactPoint clean C++ body over the same 609-byte range
 ?d_001c2070@@YAXXZ,0x001C2070,gen-dump placeholder superseded by the exact Object single-box boundary-distance clean C++ body over the same 625-byte range
+?d_001c6420@@YAXXZ,0x001C6420,gen-dump placeholder superseded by the exact clean C++ BitFlags<304>::xfer body over the same 271-byte range
