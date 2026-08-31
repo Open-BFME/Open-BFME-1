@@ -10865,6 +10865,7 @@ name,address,notes
 ?_M_clear@?$vector@URva004358A0Element@_STL@@V?$allocator@URva004358A0Element@_STL@@@2@@_STL@@IAEXXZ,0x0003DA5A,Open-BFME5 the vector _M_clear the insert at 0x004358A0 calls
 ?_M_clear@?$vector@URva005751D0Element@_STL@@V?$allocator@URva005751D0Element@_STL@@@2@@_STL@@IAEXXZ,0x00005C81,Open-BFME5 the vector _M_clear the insert at 0x005751D0 calls
 ?_M_clear@?$vector@URva0061AE10Element@_STL@@V?$allocator@URva0061AE10Element@_STL@@@2@@_STL@@IAEXXZ,0x0000B708,Open-BFME5 the vector _M_clear the insert at 0x0061AE10 calls
+?_M_clear@?$vector@URva006F2C70Element@@V?$allocator@URva006F2C70Element@@@_STL@@@_STL@@IAEXXZ,0x00005A9C,Clean C++ STLport clear callee of the 56-byte vector overflow at 0x006F2B00
 ?_M_clear@?$vector@URva007719C0Element@_STL@@V?$allocator@URva007719C0Element@_STL@@@2@@_STL@@IAEXXZ,0x00018967,Open-BFME5 the vector _M_clear the insert at 0x007719C0 calls
 ?_M_clear@?$vector@URva00771B10Element@_STL@@V?$allocator@URva00771B10Element@_STL@@@2@@_STL@@IAEXXZ,0x0003774A,Open-BFME5 the vector _M_clear the insert at 0x00771B10 calls
 ?_M_clear@?$vector@URva007742A0Element@_STL@@V?$allocator@URva007742A0Element@_STL@@@2@@_STL@@IAEXXZ,0x0002BD46,Open-BFME5 the vector _M_clear the insert at 0x007742A0 calls
@@ -77223,6 +77224,7 @@ name,address,notes
 ?getPortableFilename@NetFileCommandMsg@@QAE?AV?$StringBase@D@@XZ,0x00044323,ILT thunk to 0x0067D250; NetPacket::GetFileCommandSize at 0x0067D410 calls it beside the ledgered getFileLength on the same class
 ?getPortableFilename@NetFileCommandMsg@@QAE?AVAsciiString@@XZ,0x00044323,ILT thunk to 0x0067D250; same entry as the StringBase<char> spelling, which is how BFME returns AsciiString
 ?getPosition@BFMERopeDrawable@@QBEPBUCoord3D@@XZ,0x0004B12D,retail Drawable::getPosition ILT thunk
+?getPosition@BFMESelectionDrawablePositionView@@QBEPBUCoord3D@@XZ,0x0004B12D,TU-scoped BFME Drawable position view; CanSelectDrawable retail ILT
 ?getPreferredHeight@Locomotor@@QBEMXZ,0x0002ECAD,Open-BFME5 ILT thunk to four-byte body 0x001B46A0; reads Locomotor m_preferredHeight at +0x3C as established by the BFME locomotor layout shim
 ?getPristineBonePositions@BFMEDrawableBoneQuery@@QBEHPBDHPAUCoord3D@@PAVMatrix3D@@HH@Z,0x0002319B,BFME Drawable::getPristineBonePositions 6-arg (ret 0x18); thunk to 0x413850
 ?getPristineBonePositions@Drawable@@QBEHPBDHPAUCoord3D@@PAVMatrix3D@@HH@Z,0x0002319B,BFME 6-arg getPristineBonePositions (true body 0x413850)
@@ -78599,6 +78601,7 @@ name,address,notes
 ?isContextCommand@CommandButton@@QBE_NXZ,0x0004B1DC,InGameUI retail call uses the import thunk to FUN_0089AE80
 ?isDataCompressed@CompressionManager@@SA_NPBXH@Z,0x0081E980,CachedFileInputStream open retail compression probe
 ?isDieApplicable@DieMuxData@@QBE_NPBVObject@@PBVDamageInfo@@@Z,0x000357D8,Open-BFME5 ILT from zh_sweep packet 00256070
+?isDrawableEffectivelyHidden@Drawable@@QBE_NXZ,0x00012E3B,CanSelectDrawable retail ILT
 ?isEmpty@FXList@@QBE_NXZ,0x00011F77,incremental-link thunk to the 188-byte FXList emptiness body called by UpgradeMuxData::performUpgradeFX
 ?isEmpty@StructureCollapseFXShim@@QBE_NXZ,0x00011F77,StructureCollapse doPhaseStuff FXList emptiness call thunk
 ?isEmpty@UnicodeString@@QBE_NXZ,0x0001F361,PopupReplaySystem GEM_UPDATE_TEXT site thunk to 0x7F7D0
@@ -78659,6 +78662,7 @@ name,address,notes
 ?isRoomForProgressMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00677D40,decode_calls: first call site inside addProgressMessage (0x0067B250); idiom-verified
 ?isRoomForWrapperMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00044FEE,decode_calls pin for addWrapperCommand callee (ILT thunk -> body 0x00677BC0)
 ?isScienceGrantable@ScienceStore@@QBE_NW4ScienceType@@@Z,0x0003882A
+?isSelectable@Object@@QBE_NXZ,0x00001C03,CanSelectDrawable retail ILT
 ?isSignificantlyAboveTerrain@Thing@@QBE_NXZ,0x00019FF1,pristine EA setGoalPositionClipped call and retail AI/Drawable callers identify Thing terrain-height helper ILT
 ?isSlotLocalAlly@@YA_NPBVGameSlot@@@Z,0x0061ED20
 ?isStealthedAndUndetected@BFMEObjectStealthQuery@@QBE_NPBVObject@@@Z,0x00003B1B,TU-specific ABI name for the stealth visibility query ILT; target body 0x001CAEE0 proves the semantics while its canonical retail spelling remains unknown
@@ -79770,6 +79774,7 @@ name,address,notes
 ?take0046DEF0@S4Holder0046DBB0@@QAEXABVAsciiString@@@Z,0x0046DEF0,S4 holder method of the string-vector drain family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ?take@Gen0001581B@@QAEXPAVGenForwardedArg@@@Z,0x0001581B,S2 one-argument member forwarded to by 0x003B70F0 and 0x003B7140; ILT thunk to body 0x00065090
 ?teamAboutToBeDeleted@TeamFactory@@QAEXPAVTeam@@@Z,0x000228EF,Open-BFME5 ILT thunk to body 0x000F6D80; ?updateState@TeamPrototype@@QAEXXZ at 0x000F71C0 calls it on the global at 0x012ED810 just before deleting an empty team
+?test@BFMESelectionStatusBits@@QBE_NI@Z,0x0003AB20,TU-scoped BFME Object status-bit view; CanSelectDrawable retail ILT
 ?test@BridgeCellOnEndShim@@QAE_NPBURegion2D@@@Z,0x001A24B0,Bridge cell-end incremental-link thunk target through a TU-local forwarding shim
 ?test@BridgePointOnBridgeShim@@QAE_NPBUCoord3D@@@Z,0x001A5F40,Bridge point-on-bridge incremental-link thunk target through a TU-local forwarding shim
 ?test@Gen00008E68@@QAE_NPAX0@Z,0x00008E68,second range predicate of the 0x003D08F0/0x003D09A0 pair reached via incremental-link thunk; address-derived name
@@ -79786,6 +79791,7 @@ name,address,notes
 ?testSetAndClear@?$BitFlags@$0HE@@@QBE_NABV1@0@Z,0x007EA320,pinharvest x1 (body)
 ?testSetAndClear@?$BitFlags@$0HE@@@QBE_NABV1@0@Z,0x007EA380,pinharvest x1 (body)
 ?testStatus@BFMEActionObject@@QBE_NH@Z,0x000016A4,BFME Object status helper ILT decoded from ActionManager::canGetHealedAt
+?testStatus@BFMESelectionObjectStatus@@QBE_NH@Z,0x000016A4,TU-scoped BFME selection status view; CanSelectDrawable retail ILT
 ?tick@Rva005A41F0@@QAEXXZ,0x0001CD82,Open2 0x005A41F0 callee (ILT -> 0x005A40E0)
 ?timeOutGameStart@GameLogic@@QAEXXZ,0x00383730,mov byte [ecx+0x148] = 1 is m_forceGameStartByTimeOut (follows m_progressComplete[8] at +0x120 and m_progressCompleteTimeout[8] at +0x128); ZH GameLogic::timeOutGameStart; called with ecx = TheGameLogic from BFMEConnectionManager::processIncomingCommand case 17 (NETCOMMANDTYPE_TIMEOUTSTART) at 0x0066A590 via ILT 0x00012AA8
 ?toInteger@AptValue@@QBEHXZ,0x00898300,EA Apt 2.00.00 integer coercion called by the ActionScript BitAnd handler
@@ -79994,6 +80000,7 @@ name,address,notes
 ?withdraw@Money@@QAEII_N@Z,0x000C8610,body Money::withdraw
 ?worldToCell@Pathfinder@@AAEXPBUCoord3D@@PAUICoord2D@@@Z,0x000171E8,ILT thunk to the world-to-cell conversion at 0x003D7EC0; name is descriptive of what the body does
 ?worldToCell@Pathfinder@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z,0x000171E8
+?worldToScreen@View@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z,0x0001C936,CanSelectDrawable retail ILT
 ?wouldIgnite@FlammableUpdate@@QAE_NXZ,0x00016653
 ?write@ConditionWriteChunkShim@@SAXAAVDataChunkOutput@@PAVCondition@@@Z,0x00352DB0,Condition WriteConditionDataChunk incremental-link thunk target through a TU-local forwarding shim
 ?write@DataChunkTableOfContents@@QAEXAAVOutputStream@@@Z,0x00102E60,DataChunkOutput::~DataChunkOutput callsite at retail 0x001036C0 writes the CkMp table through m_contents
@@ -81359,10 +81366,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?_M_clear@?$vector@URva006F2C70Element@@V?$allocator@URva006F2C70Element@@@_STL@@@_STL@@IAEXXZ,0x00005A9C,Clean C++ STLport clear callee of the 56-byte vector overflow at 0x006F2B00
-?isDrawableEffectivelyHidden@Drawable@@QBE_NXZ,0x00012E3B,CanSelectDrawable retail ILT
-?getPosition@BFMESelectionDrawablePositionView@@QBEPBUCoord3D@@XZ,0x0004B12D,TU-scoped BFME Drawable position view; CanSelectDrawable retail ILT
-?worldToScreen@View@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z,0x0001C936,CanSelectDrawable retail ILT
-?test@BFMESelectionStatusBits@@QBE_NI@Z,0x0003AB20,TU-scoped BFME Object status-bit view; CanSelectDrawable retail ILT
-?testStatus@BFMESelectionObjectStatus@@QBE_NH@Z,0x000016A4,TU-scoped BFME selection status view; CanSelectDrawable retail ILT
-?isSelectable@Object@@QBE_NXZ,0x00001C03,CanSelectDrawable retail ILT
