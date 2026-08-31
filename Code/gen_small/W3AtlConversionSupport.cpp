@@ -57,6 +57,9 @@ extern "C"
 		const WCHAR *wideCharStr, int wideCharCount,
 		char *multiByteStr, int multiByteCount,
 		const char *defaultChar, int *usedDefaultChar);
+	__declspec(dllimport) int __stdcall MultiByteToWideChar(UINT codePage, DWORD flags,
+		const char *multiByteStr, int multiByteCount,
+		WCHAR *wideCharStr, int wideCharCount);
 
 	UINT __stdcall W3AtlThreadAcp(void);							///< ILT 0x00402C34 -> 0x0005B810
 	UINT __stdcall W3AtlParseLocaleAcp(void);						///< ILT 0x0041B770 -> 0x0005B7A0
@@ -94,6 +97,24 @@ UINT __stdcall Rva0005B880GetConversionAcpThunk(void)
 	return g_pfnGetConversionAcp();
 }
 
+// ?Rva0005B890AnsiToWide@@YGPAGPAGPBDHI@Z
+WCHAR *__stdcall Rva0005B890AnsiToWide(WCHAR *destination, const char *source,
+	int destinationLength, UINT codePage)
+{
+	int converted;
+
+	if (destination == 0 || source == 0)
+	{
+		return 0;
+	}
+
+	*destination = 0;
+	converted = MultiByteToWideChar(codePage, 0, source, -1,
+		destination, destinationLength);
+
+	return converted ? destination : 0;
+}
+
 // ?Rva0005B8E0WideToAnsi@@YGPADPADPBGHI@Z
 char *__stdcall Rva0005B8E0WideToAnsi(char *destination, const WCHAR *source,
 	int destinationLength, UINT codePage)
@@ -121,3 +142,21 @@ __declspec(noreturn) void __stdcall Rva0005BA60ThrowLastWin32(void)
 		? (HRESULT)error
 		: (HRESULT)((error & 0x0000FFFF) | 0x80070000));
 }
+
+extern "C" int __stdcall GdipDeleteGraphics(void *graphics);
+
+class Rva0005BB50
+{
+public:
+	void release(void);
+
+	void *m_ptr;
+};
+
+// ?release@Rva0005BB50@@QAEXXZ
+void Rva0005BB50::release(void)
+{
+	GdipDeleteGraphics(m_ptr);
+}
+
+

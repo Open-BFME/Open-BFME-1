@@ -80124,6 +80124,7 @@ _GdipAlloc@4,0x009F6C28,gdiplus.dll import stub (direct REL32 call site; see U3G
 _GdipBitmapLockBits@20,0x009F6BFE,gdiplus.dll import stub (direct REL32 call site; see T3GdiplusImageMembers.cpp)
 _GdipBitmapUnlockBits@8,0x009F6C04,gdiplus.dll import stub (direct REL32 call site; see T3GdiplusImageMembers.cpp)
 _GdipCloneImage@8,0x009F6C2E,gdiplus.dll import stub (direct REL32 call site; see U3GdiplusGraphicsMembers.cpp)
+_GdipDeleteGraphics@4,0x009F6BC2,gdiplus.dll import stub (direct REL32 call site; see W3AtlConversionSupport.cpp)
 _GdipDrawImageI@16,0x009F6C22,gdiplus.dll import stub (direct REL32 call site; see U3GdiplusGraphicsMembers.cpp)
 _GdipGetImageGraphicsContext@8,0x009F6C1C,gdiplus.dll import stub (direct REL32 call site; see U3GdiplusGraphicsMembers.cpp)
 _GdipGetImageHeight@8,0x009F6BD4,gdiplus.dll import stub (direct REL32 call site; see T3GdiplusImageMembers.cpp)
