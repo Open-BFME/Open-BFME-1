@@ -9,6 +9,7 @@ class W3DDisplayString
 {
 public:
 	void setTextColor(Color *colors);
+	void setDropColor(Color *colors);
 
 private:
 	unsigned char m_unmodelled_000[0x1CC];
@@ -37,4 +38,26 @@ void W3DDisplayString::setTextColor(Color *colors)
 	if (!m_colorsChanged && m_textColors[3] != colors[3])
 		m_colorsChanged = true;
 	m_textColors[3] = colors[3];
+}
+
+void W3DDisplayString::setDropColor(Color *colors)
+{
+	if (!m_colorsChanged && m_dropColors[0] != colors[0])
+		m_colorsChanged = true;
+	m_dropColors[0] = colors[0];
+	_ReadWriteBarrier();
+
+	if (!m_colorsChanged && m_dropColors[1] != colors[1])
+		m_colorsChanged = true;
+	m_dropColors[1] = colors[1];
+	_ReadWriteBarrier();
+
+	if (!m_colorsChanged && m_dropColors[2] != colors[2])
+		m_colorsChanged = true;
+	m_dropColors[2] = colors[2];
+	_ReadWriteBarrier();
+
+	if (!m_colorsChanged && m_dropColors[3] != colors[3])
+		m_colorsChanged = true;
+	m_dropColors[3] = colors[3];
 }
