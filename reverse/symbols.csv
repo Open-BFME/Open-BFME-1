@@ -75468,6 +75468,7 @@ name,address,notes
 ?enableWaterGrid@WaterRenderObjClassEnableWaterGridShim@@QAEX_N@Z,0x007A1410,WaterRenderObjClass::enableWaterGrid incremental-link thunk target through a TU-local forwarding shim
 ?endThreads@GameResultsQueue@@UAEXXZ,0x006407D0,GameResultsQueue vtable 0x01119380 slot +0x28; deletes the worker (closeLiveHandle@BFMENetworkBackend 0x009DB5A0 then vslot 0); ZH GameResultsThread.cpp:139; present-unmatched row
 ?ensureStorage@Rva007BDB70ArrayOwner@@QAEXXZ,0x00040EDA,RVA-derived ILT call target used by bounded fixed-record lookup at 0x007BDB70
+?TheMappedImageCollection@@3PAVMappedImageCollection@@A,0x012F6924,canonical BFME mapped-image singleton used by UpgradeTemplate cacheButtonImage
 ?ensureUnique@Dict@@AAEPAUDictPair@1@H_NPAU21@@Z,0x0002BF21
 ?ensureUniqueBufferOfSize@AsciiString@@IAEXH_NPBD1@Z,0x00032182,ILT thunk read out of AIGuardPickUpCrateState ctor call displacement; real body 0x0014F280 (d_0014f280, gen-dump)
 ?entEnragedInitialValue@@YAHHIPBXH@Z,0x00001BAE,Open-BFME5 EntEnragedUpdate initialization helper ILT pin
