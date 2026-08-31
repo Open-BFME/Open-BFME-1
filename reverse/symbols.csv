@@ -81318,3 +81318,5 @@ g_bfmeJpegExtendedMessage,0x01081238,JPEG extended message-table text selected f
 ?bfmeTeamRefreshExperienceVisitor@@YAXPAVObject@@PAX@Z,0x000029CD,team experience actions call this per-object refresh visitor after changing points or levels
 ?findLevel@ExperienceLevelSystem@@QAEPAVBfmeExperienceLevelDefinition@@ABVAsciiString@@@Z,0x000335D2,TEAM_GIVE_EXPERIENCE_LEVEL canonical lookup searches the experience-level definitions by name
 ?bfmeTeamGiveExperienceLevelVisitor@@YAXPAVObject@@PAX@Z,0x00025301,TEAM_GIVE_EXPERIENCE_LEVEL dispatch and callback body identify the per-object level visitor
+?assignUnitReference@ScriptEngine@@QAEXABVAsciiString@@PAVObject@@@Z,0x0003D663,SET_UNIT_REFERENCE dispatch calls the canonical reference-map insertion body
+?copyUnitReference@ScriptEngine@@QAEXABVAsciiString@@V2@@Z,0x0003CB50,SET_UNIT_REFERENCE_TO_REFERENCE dispatch calls the canonical reference-copy body
