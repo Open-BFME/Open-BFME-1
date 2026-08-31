@@ -105,22 +105,20 @@ int main(void)
   fprintf(out,"pause_visual_phase phase=%.6f expected=0.375000 %s\n",phase,absolute(phase-0.375)<1.0e-9?"PASS":"FAIL");if(absolute(phase-0.375)>=1.0e-9)failures++;
 
   {
-    int render,clientFrame=0,advanceFrame=1,logicPhaseCalls=0,presentationPhase=1;
-    double presentationRatio=0.0;
-    /* Model the hook boundary: retail has already set advanceFrame before
-       the scheduler decision.  The presentation-only pause route must leave
-       it set and must not enter any GameLogic phase. */
+    int render,clientFrame=0,advanceFrame=1,windowUpdates=0,nativePauseGates=0,logicPhaseCalls=0;
+    /* WindowManager runs before the phase gate on every render.  Native phase
+       1 then clears advanceFrame, holding subsequent GameClient/drawable
+       frames without admitting a GameLogic update. */
     for(render=0;render<12;render++){
       if(advanceFrame)clientFrame++;
+      windowUpdates++;
       advanceFrame=1;
-      presentationPhase++;
-      presentationRatio=(double)presentationPhase/12.0;
-      if(presentationRatio>1.0)presentationRatio=1.0;
-      /* paused scheduler: skip the phase-dispatch call */
+      nativePauseGates++;
+      advanceFrame=0;
     }
-    fprintf(out,"pause_presentation_route client_frames=%d logic_phases=%d ratio=%.1f expected=12,0,1.0 %s\n",
-      clientFrame,logicPhaseCalls,presentationRatio,(clientFrame==12&&logicPhaseCalls==0&&absolute(presentationRatio-1.0)<1.0e-9)?"PASS":"FAIL");
-    if(clientFrame!=12||logicPhaseCalls!=0||absolute(presentationRatio-1.0)>=1.0e-9)failures++;
+    fprintf(out,"pause_native_phase_route client_frames=%d window_updates=%d pause_gates=%d logic_phases=%d expected=1,12,12,0 %s\n",
+      clientFrame,windowUpdates,nativePauseGates,logicPhaseCalls,(clientFrame==1&&windowUpdates==12&&nativePauseGates==12&&logicPhaseCalls==0)?"PASS":"FAIL");
+    if(clientFrame!=1||windowUpdates!=12||nativePauseGates!=12||logicPhaseCalls!=0)failures++;
   }
 
   {

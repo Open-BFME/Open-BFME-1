@@ -574,16 +574,13 @@ static void __stdcall schedule_time_tick(void *engine,LONG newPeriod){
   if(paused||engine_time_frozen()){
     InterlockedExchange(&g_w3dClockFrozen,1);
     freeze_world_visual_time_for_pause(newPeriod);
-    /* GameEngine::update has already set GameClient::m_advanceFrame = 1.
-       Do not route every paused render through phase 1: retail's phase-1
-       pause gate clears m_advanceFrame, which starves the client-frame clock
-       used by APT/menu and Anim2D presentation.  Skipping the phase dispatch
-       leaves those client-only updates alive while avoiding every GameLogic
-       phase.  GameClient's native isGamePaused checks still freeze drawables
-       and particles, and the explicit W3D clock freeze above stops world
-       animation. */
-    InterlockedExchange(&g_skipPhaseDispatch,1);
-    log_timing(PAUSED,"UI_PHASE_UNPINNED_NO_LOGIC_PHASE",FALSE);return;
+    /* Retain retail's phase-1 pause gate.  It clears m_advanceFrame so the
+       following client update does not advance drawable/interpolation state,
+       but WindowManager::update still runs before this gate every render.
+       Unlike the old failed pause build, engine phase/ratio fields are not
+       pinned and the shared WW3D clock remains available to UI presentation. */
+    InterlockedExchange(&g_phaseDecision,1);
+    log_timing(PAUSED,"NATIVE_PHASE1_UI_CLOCK_PASSTHROUGH",FALSE);return;
   }
   InterlockedExchange(&g_w3dClockFrozen,0);
   g_timing.activeSeconds+=delta;advance_visual_time(engine,delta);classification=g_timing.fps<15.0?LOW_FPS_SLOWDOWN:ACTIVE_SIMULATION;

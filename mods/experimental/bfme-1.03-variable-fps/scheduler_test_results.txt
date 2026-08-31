@@ -17,7 +17,7 @@ steady fps=5 seconds=60 ticks=100 expected=100 PASS
 animation fps=5 seconds=60 animation_s=20.000000 expected=20.000000 integer_ms=20000 frame_scale=2.000000 visual_period=3.000000 monotonic=PASS phases_2_to_6=PASS PASS
 pause_remainder ticks=1 expected=1 PASS
 pause_visual_phase phase=0.375000 expected=0.375000 PASS
-pause_presentation_route client_frames=12 logic_phases=0 ratio=1.0 expected=12,0,1.0 PASS
+pause_native_phase_route client_frames=1 window_updates=12 pause_gates=12 logic_phases=0 expected=1,12,12,0 PASS
 pause_clock_separation w3d_ms=1160 world_frame=42 last_sync=1160 expected=1160,42,1160 PASS
 game_modes shell4=1 singleplayer7=0 expected=1,0 PASS
 global_sync outputs=1000,1016,1016,1026,1026,1042,1042 expected=1000,1016,1016,1026,1026,1042,1042 PASS

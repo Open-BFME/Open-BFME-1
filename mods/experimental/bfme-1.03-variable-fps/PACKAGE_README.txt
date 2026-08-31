@@ -15,16 +15,15 @@ Behavior
 - Below 15 FPS, animation uses the same visualFPS / 15 slowdown as gameplay.
 - The legacy six-phase dispatch is completed below 30 FPS without adding
   authoritative phase-1 ticks.
-- A true pause bypasses GameLogic phase dispatch while retaining BFME's native
-  client-frame presentation updates. Authoritative logic, world drawables,
-  particles, and interpolation remain held. The shared retail WW3D absolute
-  clock continues for APT/menu presentation, while visual-delta and particle
-  gates keep world timing stopped. W3DModelDraw's retail world-animation feeder
-  at caller 0x00B5CA51 is held on the model's existing motion/frame during true
-  pause; other HLOD callers, including menu presentation, remain untouched.
-  The retail setter rebases its private sync timestamp on the held frame, so no
-  paused time becomes an unpause animation jump. The DLL does not pin the
-  GameEngine client phase or interpolation ratio.
+- A true pause routes through BFME's native phase-1 pause gate. WindowManager
+  and UI presentation continue, while the gate clears GameClient::m_advanceFrame
+  so drawable and interpolation state do not advance on following paused
+  renders. Authoritative logic, world drawables, particles, and interpolation
+  remain held. The shared retail WW3D absolute clock continues for APT/menu
+  presentation, while visual-delta and particle gates keep world timing stopped.
+  W3DModelDraw's world-animation feeder at caller 0x00B5CA51 is held on the
+  existing motion/frame during true pause; other HLOD callers remain untouched.
+  The DLL does not pin the GameEngine client phase or interpolation ratio.
 - Shell and loading screens retain the retail real-time WW3D clock, so the
   main-menu Sauron's-tower camera movie advances before gameplay exists.
 - An unpaused shell map receives the same 5-Hz logic cadence as gameplay;
@@ -52,14 +51,14 @@ Behavior
 Verification
 ------------
 The included deterministic test results cover 60, 45, 30, 20, 15, 12, 10,
-and 5 FPS, pause preservation, presentation-only pause routing with no
-GameLogic phase calls, low-FPS recovery, and discarded stalls.
+and 5 FPS, native phase-1 pause routing with continuous WindowManager updates
+and no GameLogic phase calls, low-FPS recovery, and discarded stalls.
 
-Known test result: passing through the shared WW3D clock restored the pause
-ornament but allowed running model loops to continue in place. A subsequent
-global Animatable3DObj progression hook suppressed the ornament and did not
-catch the manually driven soldier path, so it was removed. This build instead
-holds only the known W3DModelDraw world feeder described above.
+Known test result: restoring native phase-1 client bookkeeping while retaining
+the UI-capable shared clock eliminated the observed pause entry/exit twitch and
+intermittent Elven Woods tree blip in a quick in-game test. The red ornament,
+spellbook presentation, stationary world state, and paused animations remained
+correct.
 
 This diagnostic build also writes C:\BFME1\BFME_FOCUS_DIAGNOSTIC.csv. It
 records focus state, the retail frame limiter fields, measured render timing,
@@ -67,7 +66,7 @@ the scheduler accumulator, and W3D frame time. The probes are read-only and do
 not change focus, pacing, presentation, or timing behavior.
 
 dinput8.dll SHA-256:
-72D91C21AB4A5F19187CEECA3A7DBF5FD0853A7571F50A332352B8CCA63E6AA2
+DA5A133120203CAAD1A7726E1AD7A3C3B28FC5A0BBA8AF2615927D02737525B5
 
 This is a local test package. It does not modify lotrbfme.exe or any
 Open-BFME repository branch.
