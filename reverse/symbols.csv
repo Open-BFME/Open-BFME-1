@@ -81343,3 +81343,6 @@ _strtol,0x009F71CC,AptValue::toInteger at 0x00898300 calls the retail strtol imp
 ?boxMinorRadius@BfmeGeometryInfo@@QBEMXZ,0x0087DC30,Single-box distance helper calls the retail GeometryInfo minor-radius accessor
 ?bfmeExperienceForNextLevel@ExperienceLevelSystem@@QAEHPAVObject@@PAH@Z,0x0000C284,ExperienceTracker multi-level gain calls the retail next-level experience query with a null output-level pointer
 ?addExperiencePoints@ExperienceTracker@@QAEXM_N000@Z,0x00010096,ExperienceTracker multi-level gain calls the adjacent retail five-argument add-experience body
+?TheVictorySystem@@3PAVVictorySystem@@A,0x012EF734,VictorySystem singleton proven by GameEngine initialization and cell-grid use
+?bfmeParametersForPlayer@VictorySystem@@QAEPAVGen_001de260@@H@Z,0x00033CA8,ILT to the player-to-FactionVictoryParameters lookup at 0x001DE880
+?bfmeAbove@Gen_001de260@@QBEHPBMH@Z,0x000473C5,ILT to the exact landed integer threshold predicate at 0x001DE260
