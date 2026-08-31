@@ -8,6 +8,11 @@ struct Rva006F2C70Element
 	char m_body[56];
 };
 
+struct Rva001999C0Element
+{
+	char m_body[140];
+};
+
 struct Rva00426C00Element
 {
 	char m_body[28];
@@ -48,6 +53,10 @@ void *__cdecl vectorSmallAllocate(unsigned int bytes);
 
 template <class Type>
 void __cdecl BfmeElementConstruct(Type *destination, const Type &value);
+
+Rva001999C0Element *__cdecl BfmeRva001999C0Copy(
+	Rva001999C0Element *first, Rva001999C0Element *last,
+	Rva001999C0Element *result, const __false_type &);
 
 template <class Type>
 __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
@@ -134,9 +143,61 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	_M_end_of_storage = newStart + length;
 }
 
+template <>
+void vector<Rva001999C0Element, allocator<Rva001999C0Element> >::_M_insert_overflow(
+	Rva001999C0Element *position, const Rva001999C0Element &value,
+	const __false_type &, unsigned int fillLength, bool atEnd)
+{
+	unsigned int oldSize = (unsigned int)(_M_finish - _M_start);
+	const unsigned int &growth = oldSize < fillLength ? fillLength : oldSize;
+	unsigned int length = growth + oldSize;
+
+	Rva001999C0Element *newStart;
+	if (length)
+	{
+		unsigned int bytes = length * sizeof(Rva001999C0Element);
+		if (bytes > 128)
+			newStart = (Rva001999C0Element *)vectorLargeAllocate(bytes);
+		else
+			newStart = (Rva001999C0Element *)vectorSmallAllocate(bytes);
+	}
+	else
+	{
+		newStart = 0;
+	}
+
+	Rva001999C0Element *newFinish = uninitialized_copy(
+		_M_start, position, newStart);
+
+	if (fillLength == 1)
+	{
+		BfmeElementConstruct(newFinish, value);
+		++newFinish;
+	}
+	else
+	{
+		newFinish = uninitialized_fill_n(newFinish, fillLength, value);
+	}
+
+	if (!atEnd)
+		newFinish = BfmeRva001999C0Copy(position, _M_finish, newFinish,
+			reinterpret_cast<const __false_type &>(atEnd));
+
+	_M_clear();
+
+	_M_finish = newFinish;
+	_M_start = newStart;
+	_M_end_of_storage = newStart + length;
+}
+
+// The 140-byte instantiation at retail 0x00197D30 uses the same STLport
+// growth path, but its second uninitialized-copy call remains out of line.
+// The exact push_back caller at 0x001999C0 supplies this identity.
+
 // ?_M_insert_overflow@?$vector@URva006F2C70Element@@V?$allocator@URva006F2C70Element@@@_STL@@@_STL@@IAEXPAURva006F2C70Element@@ABU3@ABU__false_type@2@I_N@Z
 template class vector<Rva006F2C70Element, allocator<Rva006F2C70Element> >;
 
+// ?_M_insert_overflow@?$vector@URva001999C0Element@@V?$allocator@URva001999C0Element@@@_STL@@@_STL@@IAEXPAURva001999C0Element@@ABU3@ABU__false_type@2@I_N@Z
 // ?_M_insert_overflow@?$vector@URva00426C00Element@@V?$allocator@URva00426C00Element@@@_STL@@@_STL@@IAEXPAURva00426C00Element@@ABU3@ABU__false_type@2@I_N@Z
 template class vector<Rva00426C00Element, allocator<Rva00426C00Element> >;
 

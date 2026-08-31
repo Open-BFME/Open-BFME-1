@@ -9652,6 +9652,7 @@ name,address,notes
 ?BfmeRva000BD3B0Destroy@_STL@@YAXPAURva000BD3B0Element@@0ABU__false_type@1@@Z,0x000247E9,Open-BFME5 ILT for the 4-byte-element _STL::_Destroy range helper at 0x000BB5D0
 ?BfmeRva00197EA0Copy@_STL@@YAPAURva00197EA0Element@@PAU2@00ABU__false_type@1@@Z,0x000475FF,Open-BFME5 ILT for the 12-byte-element _STL::__uninitialized_copy at 0x00192190
 ?BfmeRva00197EA0FillN@_STL@@YAPAURva00197EA0Element@@PAU2@IABU2@ABU__false_type@1@@Z,0x0003D4C4,Open-BFME5 ILT for the 12-byte-element _STL::__uninitialized_fill_n at 0x001921E0
+?BfmeRva001999C0Copy@_STL@@YAPAURva001999C0Element@@PAU2@00ABU__false_type@1@@Z,0x0003432E,Open-BFME5 ILT for the trailing uninitialized copy at 0x00197D30
 ?BfmeRva001E9020Construct@_STL@@YAXPAURva001E9020Element@@ABU2@@Z,0x00046AF1,Open-BFME5 ILT for the 8-byte-element _STL::_Construct at 0x001E21F0
 ?BfmeRva0028DAB0TailCopy@_STL@@YAPAVRva0028DAB0Element@@PAV2@00ABU__false_type@1@@Z,0x000030DA,Open-BFME5 ILT for the 48-byte-element _STL::__uninitialized_copy at 0x0028D4E0
 ?BfmeRva002E7C50TailCopy@_STL@@YAPAVRva002E7C50Element@@PAV2@00ABU__false_type@1@@Z,0x0001BC93,Open-BFME5 ILT for the 28-byte-element _STL::__uninitialized_copy at 0x002E3050
@@ -10856,6 +10857,7 @@ name,address,notes
 ?_M_clear@?$vector@URva000B19F0Element@_STL@@V?$allocator@URva000B19F0Element@_STL@@@2@@_STL@@IAEXXZ,0x00010230,Open-BFME5 the vector _M_clear the insert at 0x000B19F0 calls
 ?_M_clear@?$vector@URva00143CE0Element@_STL@@V?$allocator@URva00143CE0Element@_STL@@@2@@_STL@@IAEXXZ,0x00039707,Open-BFME5 the vector _M_clear the insert at 0x00143CE0 calls
 ?_M_clear@?$vector@URva00146940Element@_STL@@V?$allocator@URva00146940Element@_STL@@@2@@_STL@@IAEXXZ,0x00005F42,Open-BFME5 the vector _M_clear the insert at 0x00146940 calls
+?_M_clear@?$vector@URva001999C0Element@@V?$allocator@URva001999C0Element@@@_STL@@@_STL@@IAEXXZ,0x00024EC4,Open-BFME5 ILT for vector clear at 0x00197D30
 ?_M_clear@?$vector@URva0019A900Element@_STL@@V?$allocator@URva0019A900Element@_STL@@@2@@_STL@@IAEXXZ,0x00026DB9,Open-BFME5 the vector _M_clear the insert at 0x0019A900 calls
 ?_M_clear@?$vector@URva001DFFF0Element@_STL@@V?$allocator@URva001DFFF0Element@_STL@@@2@@_STL@@IAEXXZ,0x0003FB34,Open-BFME5 the vector _M_clear the insert at 0x001DFFF0 calls
 ?_M_clear@?$vector@URva00253630Element@@V?$allocator@URva00253630Element@@@_STL@@@_STL@@IAEXXZ,0x0000C9E1
