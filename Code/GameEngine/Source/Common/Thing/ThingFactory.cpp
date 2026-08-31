@@ -2,6 +2,7 @@
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
+#define _STLP_USE_STATIC_LIB 1
 // stlport
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -113,11 +114,10 @@ void ThingFactory::addTemplate( ThingTemplate *tmplate )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??0ThingFactory@@ present-unmatched
 ThingFactory::ThingFactory()
 {
 	m_firstTemplate = NULL;
-	m_nextTemplateID = 1;	// not zero!
+	m_nextTemplateID = 1; // not zero!
 
 	m_templateHashMap.resize( TEMPLATE_HASH_SIZE );
 }  // end ThingFactory
