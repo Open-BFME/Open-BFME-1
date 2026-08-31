@@ -19,6 +19,7 @@ public:
 	int bfmeGetBarrelCount(int slot) const;
 	void bfmeEnableAmbientSoundFromScript(bool enable);
 	void friend_setSelected();
+	void friend_clearSelected();
 
 private:
 	void bfmeApplyModelConditionFlags(bool immediate);
@@ -153,6 +154,34 @@ void Drawable::friend_setSelected()
 		BfmeSelectionInterface *interface = (*module)->getSelectionInterface();
 		if (interface)
 			interface->selected();
+		++module;
+	} while (module);
+}
+
+void Drawable::friend_clearSelected()
+{
+	if (!m_bfmeSelected)
+		return;
+
+	m_bfmeSelected = false;
+	if (m_bfmeAmbientSoundC)
+		TheAudio->removeAudioEvent(m_bfmeAmbientSoundC->m_bfmePlayingHandle);
+	if (m_bfmeAmbientSoundA)
+		TheAudio->removeAudioEvent(m_bfmeAmbientSoundA->m_bfmePlayingHandle);
+	if (m_bfmeAmbientSoundB)
+		TheAudio->removeAudioEvent(m_bfmeAmbientSoundB->m_bfmePlayingHandle);
+
+	BfmeSelectionModule **module = m_bfmeSelectionModules;
+	if (!module)
+		return;
+
+	do
+	{
+		if (!*module)
+			return;
+		BfmeSelectionInterface *interface = (*module)->getSelectionInterface();
+		if (interface)
+			interface->unselected();
 		++module;
 	} while (module);
 }
