@@ -73870,6 +73870,7 @@ name,address,notes
 ?bfmeInitTCB@BfmeBaseTCB@@QAEXXZ,0x0000835F,pin
 ?bfmeInitTEB@BfmeBaseTEB@@QAEXXZ,0x00041970,pin
 ?bfmeInitTFA@BfmeBaseTFA@@QAEXXZ,0x0000835F,pin
+?bfmeInitTHB@@YGXPAVBfmeThingTHB@@0PAX@Z,0x009FACAD,pin
 ?bfmeInitVal1047@@YAXPAUBfmeValS1047@@H@Z,0x00007554,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
@@ -76349,6 +76350,7 @@ name,address,notes
 ?g_bfmeK1SMA@@3MA,0x00CF692C,pin
 ?g_bfmeK2SMA@@3MA,0x00C9D11C,pin
 ?g_bfmeK3SMA@@3MA,0x00C75334,pin
+?g_bfmeKTHE@@3MA,0x00C9ECC0,pin
 ?g_bfmeKey1026@@3PADA,0x00D096E8,pin
 ?g_bfmeKey1027@@3PADA,0x00D096F4,pin
 ?g_bfmeLeft1221@@3HA,0x00ED5DC8,pin
