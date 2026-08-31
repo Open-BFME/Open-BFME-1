@@ -81507,3 +81507,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?getSlot@BfmeGameInfo@@QAEPAVBfmeGameSlot@@H@Z,0x0001EC18,LANAPI::sendMessage direct-connect slot lookup ILT through TU-local BFME layout shim
 ?isHuman@BfmeGameSlot@@QBE_NXZ,0x000279CB,LANAPI::sendMessage human-slot predicate ILT through TU-local BFME layout shim
 ?queueSend@BfmeTransportQueueShim@@QAE_NPBUBfmeTransportAddress@@PBEH@Z,0x00049F80,LANAPI::sendMessage BFME transport queue ILT through TU-local address shim
+?prepare@Rva0060FFC0Owner@@QAEXXZ,0x00028F92,RVA-derived ILT callee of the UI reset at 0x0060FFC0
+?reset@Rva0060FFC0Optional@@QAEXXZ,0x00046B19,RVA-derived ILT callee of the UI reset at 0x0060FFC0
