@@ -74481,6 +74481,7 @@ name,address,notes
 ?bfmeStepCDA@BfmeThingCDA@@QAEXXZ,0x00047B6D,pin
 ?bfmeStepFFF@BfmeThingFFF@@QAEXPAUBfmeSubFFF@@PAX@Z,0x00016C3E,pin
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
+?bfmeStepTAA@@YAXH@Z,0x0081B830,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
 ?bfmeStop1003@BfmeStop1003@@QAEXXZ,0x00020C84,pin
