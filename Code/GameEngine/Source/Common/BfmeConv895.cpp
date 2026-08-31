@@ -153,11 +153,18 @@ struct BfmeGlobFFD
 
 extern BfmeGlobFFD *g_bfmeObjFFD;
 
-int bfmeGoFFD()
+typedef bool Bool;
+
+class ScriptConditions
 {
-	if (g_bfmeObjFFD->bfmeAsk15FFD() && !g_bfmeObjFFD->bfmeAsk14FFD())
-		return 1;
-	return 0;
+protected:
+	Bool evaluateMultiplayerPlayerDefeat();
+};
+
+// ?evaluateMultiplayerPlayerDefeat@ScriptConditions@@IAE_NXZ
+Bool ScriptConditions::evaluateMultiplayerPlayerDefeat()
+{
+	return g_bfmeObjFFD->bfmeAsk15FFD() && !g_bfmeObjFFD->bfmeAsk14FFD();
 }
 
 struct BfmeSubFFF
@@ -220,4 +227,3 @@ int BfmeThingFFG::bfmeGoFFG()
 		return r->m_bfmeK;
 	return -1;
 }
-
