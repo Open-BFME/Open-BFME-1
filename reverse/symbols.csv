@@ -389,6 +389,7 @@ name,address,notes
 ??$_Construct@URva00225B80Element@@U1@@_STL@@YAXPAURva00225B80Element@@ABU1@@Z,0x000028DD,Open-BFME5 the element _Construct the list push_back at 0x00225B80 calls
 ??$_Construct@URva0022D610Element@@U1@@_STL@@YAXPAURva0022D610Element@@ABU1@@Z,0x000402C8,Open-BFME5 the element _Construct the list insert at 0x0022D610 calls
 ??$_Construct@URva0022DA10Element@@U1@@_STL@@YAXPAURva0022DA10Element@@ABU1@@Z,0x000402C8,Open-BFME5 the element _Construct the list push_back at 0x0022DA10 calls
+??$_Construct@URva00244A80Element@@U1@@_STL@@YAXPAURva00244A80Element@@ABU1@@Z,0x000128DC,ILT reached by the 0x00240230 vector overflow body
 ??$_Construct@URva0025CB00Element@_STL@@@_STL@@YAXPAURva0025CB00Element@0@ABU10@@Z,0x0001B99B,Open-BFME5 the element _Construct the vector insert at 0x0025CB00 calls
 ??$_Construct@URva002949D0Element@_STL@@@_STL@@YAXPAURva002949D0Element@0@ABU10@@Z,0x0002C03E,Open-BFME5 the element _Construct the vector insert at 0x002949D0 calls
 ??$_Construct@URva0029FA20Element@_STL@@@_STL@@YAXPAURva0029FA20Element@0@ABU10@@Z,0x0003A3EB,Open-BFME5 the element _Construct the vector insert at 0x0029FA20 calls
@@ -73374,6 +73375,7 @@ name,address,notes
 ?bfmeFlush@Rva003D8530Owner@@QAEXXZ,0x00009787,Open-BFME5 ILT thunk to body 0x003D55C0; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it once on the same sub-object after the slot loop; address-derived name
 ?bfmeFlushQO@BfmeThingQO@@QAEXH@Z,0x0088A230,pin
 ?bfmeFlushSTA@@YAXXZ,0x0088A670,pin
+?bfmeFlushSXA@@YAXXZ,0x0088A670,pin
 ?bfmeFlushSlots1289@BfmeSlotDispatcher1281@@QAEXXZ,0x008BCD80,address-derived slot-state flush reconstructed from the 0x008BCD80 retail body
 ?bfmeFormatAPB@@YAXPADHPAX@Z,0x00850600,pin
 ?bfmeForward@Gen_0002644FTarget@@QAEXXZ,0x0002644F,Open-BFME5 ILT the three negative-displacement forwarders at 0x001FB570 0x001FBF60 and 0x00204450 all jump to
@@ -74788,6 +74790,7 @@ name,address,notes
 ?bfmeWriteNCTA@BfmeOutCTA@@QAEXPAX@Z,0x0000314D,pin
 ?bfmeWriteSTA@@YAXPAXHHH@Z,0x0088A640,pin
 ?bfmeWriteSWA@@YAXPAXHH0@Z,0x0088A640,pin
+?bfmeWriteSXA@@YAXPAXZZ,0x0088A640,pin
 ?bfmeXferObjectID@@YAXPAVBfmeXfer@@PAI@Z,0x0000C9B4,AODHordeContain xfer reaches the existing ObjectID transfer helper
 ?bfme_appendGameOverDetails@GameLogic@@QAEXXZ,0x00387A50,once-only (+0x68 flag): formats Game Over Details and per slot Victory/Defeat frame Quit frame (graceful|voted out|n/a) from the PlayerLeaveStatus[8] records at +0x1b0 copying status into Player+0x484 and appending to the last AsciiString of the vector at +0x54..+0x58; ecx = this = GameLogic at the call 0x00397789; the ledger name ?endMenu@EstablishConnectionsMenu@@ for this 657 B body is wrong; reached via ILT 0x0004A10B
 ?bfme_getPlayerLeaveStatus@GameLogic@@QAEPAUPlayerLeaveStatus@@H@Z,0x00383B90,slot < 8 returns this+0x1b0+slot*0x1c else NULL; neighbour of 0x00383BC0 on the same record array
@@ -76564,6 +76567,7 @@ name,address,notes
 ?g_bfmeTab1021@@3PAHA,0x00EB7D94,pin
 ?g_bfmeTab1053@@3HA,0x00EB9670,pin
 ?g_bfmeTableSWA@@3PAPAXA,0x00EC6FB8,pin
+?g_bfmeTableSXA@@3PAPAXA,0x00EC6FB8,pin
 ?g_bfmeTag1028@@3PADA,0x00D23918,pin
 ?g_bfmeTag1227@@3PAXA,0x00F37804,pin
 ?g_bfmeTarget986B@@3PADA,0x00F071E4,pin
@@ -81466,4 +81470,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??$_Construct@URva00244A80Element@@U1@@_STL@@YAXPAURva00244A80Element@@ABU1@@Z,0x000128DC,ILT reached by the 0x00240230 vector overflow body
