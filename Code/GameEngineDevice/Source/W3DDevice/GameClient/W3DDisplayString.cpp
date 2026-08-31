@@ -449,9 +449,11 @@ void W3DDisplayString::setWordWrap( Int wordWrap )
 		notifyTextChanged();
 }// void setWordWrap( Int wordWrap )
 
-// ?setUseHotkey@W3DDisplayString@@UAEX_NH@Z present-unmatched
 void W3DDisplayString::setUseHotkey( Bool useHotkey, Color hotKeyColor )
 {
+	if( useHotkey == m_useHotKey && hotKeyColor == m_hotKeyColor )
+		return;
+
 	m_useHotKey = useHotkey;
 	m_hotKeyColor = hotKeyColor;
 	m_textRenderer.Set_Hot_Key_Parse(useHotkey);
