@@ -7,6 +7,28 @@
 // BFME inserted ARGUMENTDATATYPE_SQUADID ahead of LOCATION, moving UNKNOWN to 12.
 #define BFME_ARGUMENTDATATYPE_UNKNOWN ((GameMessageArgumentDataType)12)
 
+class BfmeDeletableMessage
+{
+public:
+	virtual ~BfmeDeletableMessage();
+	__forceinline void deleteInstance() { delete this; }
+};
+
+class BfmeCommandList
+{
+public:
+	virtual void slot0();
+	virtual void slot1();
+	virtual void slot2();
+	virtual void slot3();
+	virtual void slot4();
+	virtual void slot5();
+	virtual void slot6();
+	virtual void slot7();
+	virtual void slot8();
+	virtual void appendMessage(GameMessage *message);
+};
+
 MessageStream *TheMessageStream = NULL;
 CommandList *TheCommandList = NULL;
 
@@ -191,7 +213,42 @@ void MessageStream::removeTranslator(TranslatorID id)
 
 			delete ss;
 			break;
+	}
+}
+
+void MessageStream::propagateMessages(void)
+{
+	TranslatorData *translator;
+	GameMessage *message;
+	GameMessage *next;
+
+	for (translator = m_firstTranslator; translator; translator = translator->m_next)
+	{
+		for (message = m_firstMessage; message; message = next)
+		{
+			if (translator->m_translator)
+			{
+				GameMessageDisposition disposition =
+					translator->m_translator->translateGameMessage(message);
+				next = message->next();
+				if (disposition == DESTROY_MESSAGE)
+					reinterpret_cast<BfmeDeletableMessage *>(message)->deleteInstance();
+			}
+			else
+			{
+				next = message->next();
+			}
 		}
+	}
+
+	BfmeCommandList *commandList = reinterpret_cast<BfmeCommandList *>(TheCommandList);
+	for (message = m_firstMessage; message; message = next)
+	{
+		next = message->next();
+		commandList->appendMessage(message);
+	}
+	m_firstMessage = NULL;
+	m_lastMessage = NULL;
 }
 
 void buildRegion(const ICoord2D *anchor, const ICoord2D *dest, IRegion2D *region)
