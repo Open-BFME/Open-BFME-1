@@ -2307,7 +2307,6 @@ name,address,notes
 ??0CrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x00217660,BFME CrateCollide ctor body; ILT 0x0002AC43 used by legacy crate constructors
 ??0CrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0024F450,late-layout CrateCollide ctor body; ILT 0x00026CAB used by constructor group at 0x0024FC20
 ??0CrateCollideModuleData@@QAE@XZ,0x000441CA,Open-BFME5 UnitCrateCollide base constructor pin
-??0Rva000441CAModuleDataBase@@QAE@XZ,0x000441CA,address-derived spelling for the shared module-data base constructor thunk
 ??0CreateCrateDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0CreateCrateDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001F5C3,pinharvest x1 (thunk)
 ??0CreateCrateDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002070C,pinharvest x1 (thunk)
@@ -3259,6 +3258,7 @@ name,address,notes
 ??0Rva0001DD31CtorBase@@QAE@PAX@Z,0x0001DD31,base constructor address decoded from the retail REL32 call site; name is address-derived
 ??0Rva000250BDStateBase@@QAE@PAXVAsciiString@@@Z,0x000250BD,base constructor thunk address decoded from the retail REL32 call site; name is address-derived
 ??0Rva0003707ECtorBase@@QAE@PAX@Z,0x0003707E,base constructor address decoded from the retail REL32 call site; name is address-derived
+??0Rva000441CAModuleDataBase@@QAE@XZ,0x000441CA,address-derived spelling for the shared module-data base constructor thunk
 ??0Rva00048F09CtorBase@@QAE@PAX@Z,0x00048F09,base constructor address decoded from the retail REL32 call site; name is address-derived
 ??0Rva000493F0CtorBase@@QAE@PAX@Z,0x000493F0,base constructor address decoded from the retail REL32 call site; name is address-derived
 ??0Rva0009F820String@@QAE@ABV0@@Z,0x00006320,Open-BFME5 the string copy constructor a by-value accessor calls
@@ -73702,6 +73702,7 @@ name,address,notes
 ?bfmeGetSB@BfmeThingSB@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGetSNA@@YAPAVBfmeLogSNA@@XZ,0x007EB810,pin
 ?bfmeGetTCA@BfmeGetterTCA@@QAEPAXPAX0@Z,0x007E8900,pin
+?bfmeGetTDA@@YAPAVBfmeSinkTDA@@XZ,0x007EFFC0,pin
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
 ?bfmeGet_002198b0@BfmeChainResult@@QAEPAXXZ,0x00036165,Open-BFME5 ILT the lookup at 0x002198B0 tail-jumps through
@@ -74490,6 +74491,7 @@ name,address,notes
 ?bfmeStepFFF@BfmeThingFFF@@QAEXPAUBfmeSubFFF@@PAX@Z,0x00016C3E,pin
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStepTAA@@YAXH@Z,0x0081B830,pin
+?bfmeStepTDB@@YAXXZ,0x00904BA0,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
 ?bfmeStop1003@BfmeStop1003@@QAEXXZ,0x00020C84,pin
@@ -76109,6 +76111,7 @@ name,address,notes
 ?g_bfmeCountQB@@3HA,0x00F04B60,pin
 ?g_bfmeCountSI@@3HA,0x00EED240,pin
 ?g_bfmeCountTB@@3HA,0x00F0BCA8,pin
+?g_bfmeCountTDB@@3HA,0x00F40594,pin
 ?g_bfmeCsDWC@@3UBfmeCsDWA@@A,0x00F36E60,pin
 ?g_bfmeCurEYE@@3PAXA,0x00EED5D8,pin
 ?g_bfmeCx1264@@3HA,0x00EF497C,pin
@@ -76139,6 +76142,7 @@ name,address,notes
 ?g_bfmeDisconnectPingResult@@3HA,0x012B9810,standalone disconnect ping-result state read and set by updateDisconnectStatus after the sub-ten-percent ratio check
 ?g_bfmeDoneAPB@@3_NA,0x00EED4E6,pin
 ?g_bfmeDoneSJA@@3DA,0x00EF4CA4,pin
+?g_bfmeDoneTDB@@3DA,0x00ED6DFC,pin
 ?g_bfmeDrop995@@3PAVBfmeDrop995@@A,0x00EF12CC,pin
 ?g_bfmeDropDXH@@3P6AXPAVBfmeSubDXH@@@ZA,0x00F378A0,pin
 ?g_bfmeE1014@@3PAVBfmeE1014@@A,0x00EF3A90,pin
@@ -76446,6 +76450,7 @@ name,address,notes
 ?g_bfmeObjFHH@@3PAVBfmeGlobFHH@@A,0x00EEF1D8,pin
 ?g_bfmeObjMD@@3PAVBfmeObjMD@@A,0x00EF19E8,pin
 ?g_bfmeObjMG@@3PAVBfmeObjMG@@A,0x00EF19E8,pin
+?g_bfmeObjTDB@@3PAUBfmeObjTDB@@A,0x00F40534,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
@@ -76630,6 +76635,7 @@ name,address,notes
 ?g_bfmeVftBQB@@3PADA,0x00D223A0,pin
 ?g_bfmeVftSE@@3PAPAXA,0x00D28428,pin
 ?g_bfmeVftTA@@3PADA,0x00D2F254,pin
+?g_bfmeVftTDA@@3PAPAXA,0x00D29D30,pin
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
