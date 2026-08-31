@@ -74173,6 +74173,7 @@ name,address,notes
 ?bfmeOneSQA@BfmeSlotSQA@@QAEXH@Z,0x00007E50,pin
 ?bfmeOneTB@@YAXXZ,0x00831F90,pin
 ?bfmeOneTBA@BfmeThingTBA@@QAEXXZ,0x000297F8,pin
+?bfmeOneTED@BfmeThingTED@@QAEXH@Z,0x0003E045,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOpen1071@BfmeR1071@@QAEXPAVBfmeX1071@@@Z,0x0002144A,pin
 ?bfmeOpen1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x0002144A,pin
@@ -74643,6 +74644,7 @@ name,address,notes
 ?bfmeThreeDVB@BfmeSubDVB@@QAEXPAX0@Z,0x00025BBC,pin
 ?bfmeThreeLF@@YAXXZ,0x0002795D,pin
 ?bfmeThreeQE@BfmeGlobQE@@QAEXXZ,0x00003A80,pin
+?bfmeThreeTED@BfmeThingTED@@QAEXXZ,0x00033D89,pin
 ?bfmeThrow1152@BfmeS1152@@QAEXXZ,0x000132CD,pin
 ?bfmeThrow1153@BfmeS1153@@QAEXXZ,0x000132CD,pin
 ?bfmeThrow1154@BfmeS1154@@QAEXXZ,0x000132CD,pin
@@ -74716,6 +74718,7 @@ name,address,notes
 ?bfmeTwoSQA@BfmeSlotSQA@@QAEXH@Z,0x0000F28B,pin
 ?bfmeTwoTB@@YAPAXXZ,0x0083B330,pin
 ?bfmeTwoTBA@BfmeThingTBA@@QAEXXZ,0x00024780,pin
+?bfmeTwoTED@BfmeThingTED@@QAEXXZ,0x0002214C,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -77374,6 +77377,7 @@ name,address,notes
 ?getShroudedStatus@PartitionData@@QAE?AW4ObjectShroudStatus@@H@Z,0x008F8110,Open-BFME5 tail-jmp callee of ?getShroudedStatus@Object@@QBE?AW4ObjectShroudStatus@@H@Z at 0x001C7B30; body range-checks the player index against 16 and indexes a per-player array at this+0x24
 ?getSkillPointsNeeded@RankInfo@@QBEHABVAsciiString@@@Z,0x000066A4,Open-BFME5 ILT thunk to body 0x003A0860; resetRank passes Player::m_side and consumes the returned next-rank threshold; BFME RankInfo has five side override fields at 0x14..0x24
 ?getSlot@BfmeDisconnectVoteMsg@@QAEEXZ,0x000058B7,alias of the NetCommandMsg spelling pinned at the same ILT; DisconnectManager.cpp reaches it through a view class
+?getSlot@BfmeGameInfo@@QAEPAVBfmeGameSlot@@H@Z,0x0001EC18,LANAPI::sendMessage direct-connect slot lookup ILT through TU-local BFME layout shim
 ?getSlot@NetCommandMsg@@QAEEXZ,0x000058B7,ILT thunk to the disconnect-vote message slot accessor; returns a byte
 ?getSoleHealingBenefactor@Object@@QBE?AW4ObjectID@@XZ,0x000029D7,Open-BFME5 ILT fronts unclaimed 26-byte body 0x001BE770; called by ?privateRepair@DozerAIUpdate@@MAEXPAVObject@@W4CommandSourceType@@@Z at 0x002B6B80
 ?getSound@ThingTemplate@@QBEPBVAudioEventRTS@@H@Z,0x0001BFD1,Open-BFME5 ILT thunk to body 0x00416FA0 - an indexed sound getter that falls back to the no-sound event at 0x012F1318; ?onContaining@OpenContain@@UAEXPAVObject@@_N@Z at 0x00221720 asks it for index 101 where the reference calls getSoundEnter
@@ -78735,6 +78739,7 @@ name,address,notes
 ?isGamePaused@BfmeGameLogicPause@@QAE_NXZ,0x00022C96,derived from the REL32 displacement at 0x004DF520
 ?isGoalObjectDestroyed@StateMachine@@QBE_NXZ,0x0000432C,StateMachine goal-object destroyed query ILT
 ?isGroundPathPassable@Pathfinder@@QAE_NABUCoord3D@@W4PathfindLayerEnum@@0H@Z,0x00025090,Open-BFME5 ILT thunk to the four-argument BFME ground-path passability body at 0x003EAC00
+?isHuman@BfmeGameSlot@@QBE_NXZ,0x000279CB,LANAPI::sendMessage human-slot predicate ILT through TU-local BFME layout shim
 ?isInMultiplayerGame@GameLogic@@QAE_NXZ,0x0005C5E0,returns m_gameMode (+0x10c) == 1 GAME_LAN or == 5 GAME_INTERNET which is the ZH inline isInMultiplayerGame; called by the MSG_CLEAR_GAME_DATA arm at 0x003977A4 via ILT 0x000062D5; the converted GameLogic::testTimeOut uses it
 ?isInMultiplayerOrSkirmishGame@GameLogicPortraitShim@@QAE_NXZ,0x0001E0AB,BFME portrait selector ILT to GameLogic mode predicate
 ?isInMultiplayerOrSkirmishGame@Open2Logic143730@@QAE_NXZ,0x0001E0AB,Open2 0x00143730 portrait twin callee
@@ -79229,6 +79234,7 @@ name,address,notes
 ?query@Q2FlagOwner@@QAE_NH@Z,0x00416FC0,byte-returning __thiscall predicate taking one index; every row of the 34-byte queried-index assignment family (Q2QueriedIndexAssignments.cpp) calls this one body; address-derived name; identity not recovered
 ?queue@TransportQueueSendShim@@QAE_NIGPBEH@Z,0x00683830,Transport queueSend incremental-link thunk target through a TU-local forwarding shim
 ?queuePacket@LANAPI@@QAEXPAVLANAPIRequestPacket@@H@Z,0x0002B599,RequestLobbyLeave packet call; ILT thunk for LANAPI::sendMessage body 0x00684CF0
+?queueSend@BfmeTransportQueueShim@@QAE_NPBUBfmeTransportAddress@@PBEH@Z,0x00049F80,LANAPI::sendMessage BFME transport queue ILT through TU-local address shim
 ?queueSend@NATProbeTransport@@QAEXABUNATProbeAddress@@PBEH@Z,0x00049F80,NAT sendAProbe transport queue ILT thunk
 ?queueSend@Transport@@QAE_NIGPBEH@Z,0x00049F80,ILT thunk; real body 0x683830 (from NAT::sendAProbe)
 ?queueSend@Transport@@QAE_NPAUNetPacketAddress@@PBEH@Z,0x00683830,BFME takes the address as a struct pointer, so three args where the reference has four; the ledger row for the four-arg name is the incremental-link thunk
@@ -80543,6 +80549,7 @@ __imp_?bfmeClose1033@@YGXH@Z,0x00F58CCC,pin
 __imp_?bfmeClose1038@@YGHPAX@Z,0x00F58ECC,pin
 __imp_?bfmeCmp1026@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeCmp1027@@YAHPAD0H@Z,0x00F594BC,pin
+__imp_?bfmeEnterTEA@@YGXPAUBfmeLockTEA@@@Z,0x00F58D18,pin
 __imp_?bfmeFindSRA@@YGPAXPAXH@Z,0x00F59010,pin
 __imp_?bfmeFmt1064@@YAHPADI0H@Z,0x00F5932C,pin
 __imp_?bfmeFmt1067@@YAHPADI0H@Z,0x00F5932C,pin
@@ -80557,6 +80564,7 @@ __imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
 __imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
 __imp_?bfmeImport928G@@YGXPAX@Z,0x00F58F08,pin
 __imp_?bfmeImport930C@@YAXPAX@Z,0x00F593D4,pin
+__imp_?bfmeLeaveTEA@@YGXPAUBfmeLockTEA@@@Z,0x00F58E74,pin
 __imp_?bfmeLock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58D18,pin
 __imp_?bfmeLogSF@@YAHPAUBfmeFileSF@@PBDZZ,0x00F593C0,pin
 __imp_?bfmeMake1030@@YGHHHH@Z,0x00F58CF4,pin
@@ -81505,8 +81513,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?getSlot@BfmeGameInfo@@QAEPAVBfmeGameSlot@@H@Z,0x0001EC18,LANAPI::sendMessage direct-connect slot lookup ILT through TU-local BFME layout shim
-?isHuman@BfmeGameSlot@@QBE_NXZ,0x000279CB,LANAPI::sendMessage human-slot predicate ILT through TU-local BFME layout shim
-?queueSend@BfmeTransportQueueShim@@QAE_NPBUBfmeTransportAddress@@PBEH@Z,0x00049F80,LANAPI::sendMessage BFME transport queue ILT through TU-local address shim
 ?prepare@Rva0060FFC0Owner@@QAEXXZ,0x00028F92,RVA-derived ILT callee of the UI reset at 0x0060FFC0
 ?reset@Rva0060FFC0Optional@@QAEXXZ,0x00046B19,RVA-derived ILT callee of the UI reset at 0x0060FFC0
