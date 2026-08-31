@@ -88,6 +88,12 @@ UINT __stdcall Rva0005B820GetConversionCodePage(void)
 	return g_pfnGetConversionAcp();
 }
 
+// ?Rva0005B880GetConversionAcpThunk@@YGIXZ
+UINT __stdcall Rva0005B880GetConversionAcpThunk(void)
+{
+	return g_pfnGetConversionAcp();
+}
+
 // ?Rva0005B8E0WideToAnsi@@YGPADPADPBGHI@Z
 char *__stdcall Rva0005B8E0WideToAnsi(char *destination, const WCHAR *source,
 	int destinationLength, UINT codePage)

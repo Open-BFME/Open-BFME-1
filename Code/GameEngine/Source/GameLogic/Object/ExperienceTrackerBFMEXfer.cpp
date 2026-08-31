@@ -17,15 +17,36 @@ public:
 class ThingTemplate : public Overridable
 {
 public:
-	unsigned char m_unreconstructed[0x487 - sizeof(Overridable)];
+	unsigned char m_unreconstructed[0xC8 - sizeof(Overridable)];
+	char m_kindof;
+	unsigned char m_unreconstructed2[0x487 - 0xC8 - 1];
 	bool m_isTrainable;
 };
 
-class Object
+class GameLogic
 {
 public:
-	void *m_vtable;
+	bool isLivingWorld();
+};
+
+extern GameLogic *TheGameLogic;
+
+class Thing
+{
+public:
+	const ThingTemplate *getTemplate() const { return m_template; }
 	ThingTemplate *m_template;
+};
+
+class MemoryPoolObject
+{
+public:
+	void *m_mp;
+};
+
+class Object : public MemoryPoolObject, public Thing
+{
+public:
 	unsigned char m_pad[0x94 - 8];
 	unsigned int m_status;
 };
@@ -102,6 +123,9 @@ public:
 	virtual ~BfmeThingEFE();
 	virtual void crc(Xfer *xfer);
 	virtual void xfer(Xfer *xfer);
+
+	void *m_tracker;
+	Real m_scalar;
 };
 
 class ExperienceLevelSystem
