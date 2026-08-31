@@ -81321,3 +81321,5 @@ g_bfmeJpegExtendedMessage,0x01081238,JPEG extended message-table text selected f
 ?assignUnitReference@ScriptEngine@@QAEXABVAsciiString@@PAVObject@@@Z,0x0003D663,SET_UNIT_REFERENCE dispatch calls the canonical reference-map insertion body
 ?copyUnitReference@ScriptEngine@@QAEXABVAsciiString@@V2@@Z,0x0003CB50,SET_UNIT_REFERENCE_TO_REFERENCE dispatch calls the canonical reference-copy body
 ?bfmeSetNeedsGateOpenRaw@Team@@QAEXHH@Z,0x0000E6B5,TEAM_NEEDS_OPEN_GATE canonical callee consumes the low byte of the full stack-word flag
+?copyTeamReference@ScriptEngine@@QAEXABVAsciiString@@V2@@Z,0x00011DDD,SET_TEAM_REFERENCE_TO_REFERNECE dispatch calls the canonical reference-copy body
+?assignTeamReference@ScriptEngine@@QAEXABVAsciiString@@PAVTeam@@@Z,0x0001F82A,SET_TEAM_REFERENCE dispatch calls the canonical reference-map insertion body
