@@ -47,3 +47,5 @@ R5_EH_ELEM( Gen00034158, 0x210 )		// 169B at 0x00608C60
 R5_EH_ELEM( Gen00026F35, 0x78 )		// 165B at 0x006A3930
 R5_EH_ELEM( Gen0002A8BA, 0x2C )		// 163B at 0x00774130
 R5_EH_ELEM( Gen001439F0, 0x24 )		// 166B at 0x001439F0, element dtor ILT 0x0003B8FE
+
+template class _STL::vector<_STL::vector<int> >;
