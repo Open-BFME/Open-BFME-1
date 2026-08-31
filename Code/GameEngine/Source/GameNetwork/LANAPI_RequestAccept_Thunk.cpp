@@ -65,11 +65,58 @@ private:
 	UnicodeStringData *m_data;
 };
 
+class BfmeGameSlot;
+
+class BfmeGameInfo
+{
+public:
+	BfmeGameSlot *getSlot( Int slot );
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
-class LANGameInfo
+class LANGameInfo : public BfmeGameInfo
 {
 public:
 	UnicodeString getName( void );
+	virtual void bfmeGameInfoSlot01( void ) = 0;
+	virtual void bfmeGameInfoSlot02( void ) = 0;
+	virtual void bfmeGameInfoSlot03( void ) = 0;
+	virtual void bfmeGameInfoSlot04( void ) = 0;
+	virtual void bfmeGameInfoSlot05( void ) = 0;
+	virtual Int getLocalSlotNum( void ) const = 0;
+
+	Bool getIsDirectConnect( void ) const
+	{
+		return m_isDirectConnect;
+	}
+
+private:
+	unsigned char m_bfmeGameInfoGap[0x3a4 - 4];
+	Bool m_isDirectConnect;
+};
+
+#pragma pack(push, 1)
+struct BfmeTransportAddress
+{
+	UnsignedInt ip;
+	unsigned short port;
+};
+#pragma pack(pop)
+
+class BfmeGameSlot
+{
+public:
+	virtual void bfmeGameSlotVft( void ) = 0;
+	Bool isHuman( void ) const;
+	unsigned char m_bfmeGameSlotGap[0x30 - 4];
+	BfmeTransportAddress m_address;
+};
+
+class BfmeTransportQueueShim
+{
+public:
+	Bool queueSend(const BfmeTransportAddress *address,
+		const unsigned char *data, Int length);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
@@ -157,7 +204,54 @@ private:
 	Bool m_inLobby;											///< +0x3D
 	unsigned char m_unreconstructed_3e[0x40 - 0x3E];
 	LANGameInfo *m_currentGame;								///< +0x40
+	unsigned char m_bfmeHoleBeforeTransport[8];
+	BfmeTransportQueueShim * volatile m_transport;
+	UnsignedInt m_broadcastAddr;
 };
+
+// ?sendMessage@LANAPI@@IAEXPAULANMessage@@I@Z
+void LANAPI::sendMessage( LANMessage *msg, UnsignedInt ip )
+{
+	BfmeTransportAddress *address =
+		reinterpret_cast<BfmeTransportAddress *>(ip);
+	if (address != 0 && (address->ip != 0 || address->port != 0))
+	{
+		m_transport->queueSend(address,
+			reinterpret_cast<const unsigned char *>(msg), sizeof(LANMessage));
+		return;
+	}
+
+	if (m_currentGame != 0 && m_currentGame->getIsDirectConnect())
+	{
+		Int localSlot = m_currentGame->getLocalSlotNum();
+		for (Int i = 0; i < 8; ++i)
+		{
+			if (i == localSlot)
+				continue;
+			// BFME's LANGameInfo subobject starts at the object address; keep this
+			// view explicit because the reference declaration is not BFME's base layout.
+			BfmeGameInfo *gameInfo =
+				reinterpret_cast<BfmeGameInfo *>(m_currentGame);
+			BfmeGameSlot *slot = gameInfo->getSlot(i);
+			if (slot != 0 && slot->isHuman())
+			{
+				m_transport->queueSend(&slot->m_address,
+					reinterpret_cast<const unsigned char *>(msg), sizeof(LANMessage));
+			}
+		}
+	}
+	else
+	{
+		BfmeTransportAddress address;
+		for (unsigned short port = 8086; port < 8094; ++port)
+		{
+			address.ip = m_broadcastAddr;
+			address.port = port;
+			m_transport->queueSend(&address,
+				reinterpret_cast<const unsigned char *>(msg), sizeof(LANMessage));
+		}
+	}
+}
 
 // ?RequestAccept@LANAPI@@UAEXXZ
 void LANAPI::RequestAccept( void )
