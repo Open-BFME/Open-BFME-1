@@ -60,6 +60,162 @@
 
 class Matrix3D;
 
+// Retail W3D vtable slots used by updateTreadObjects.  The vendored ZH
+// headers have a shorter base, so the ordinary member calls dispatch to
+// different slots in this one BFME body.
+struct BfmeTankRenderObjectThunk
+{
+	virtual void Slot0() = 0;
+	virtual void Slot1() = 0;
+	virtual void Slot2() = 0;
+	virtual void Slot3() = 0;
+	virtual void Slot4() = 0;
+	virtual void Slot5() = 0;
+	virtual void Slot6() = 0;
+	virtual void Slot7() = 0;
+	virtual void Slot8() = 0;
+	virtual void Slot9() = 0;
+	virtual void Slot10() = 0;
+	virtual void Slot11() = 0;
+	virtual void Slot12() = 0;
+	virtual void Slot13() = 0;
+	virtual void Slot14() = 0;
+	virtual void Slot15() = 0;
+	virtual void Slot16() = 0;
+	virtual void Slot17() = 0;
+	virtual void Slot18() = 0;
+	virtual void Slot19() = 0;
+	virtual void Slot20() = 0;
+	virtual void Slot21() = 0;
+	virtual void Slot22() = 0;
+	virtual void Slot23() = 0;
+	virtual void Slot24() = 0;
+	virtual void Slot25() = 0;
+	virtual void Slot26() = 0;
+	virtual void Slot27() = 0;
+	virtual void Slot28() = 0;
+	virtual void Slot29() = 0;
+	virtual void Slot30() = 0;
+	virtual void Slot31() = 0;
+	virtual void Slot32() = 0;
+	virtual void Slot33() = 0;
+	virtual void Slot34() = 0;
+	virtual void Slot35() = 0;
+	virtual void Slot36() = 0;
+	virtual void Slot37() = 0;
+	virtual void Slot38() = 0;
+	virtual void Slot39() = 0;
+	virtual void Slot40() = 0;
+	virtual void Slot41() = 0;
+	virtual void Slot42() = 0;
+	virtual void Slot43() = 0;
+	virtual void Slot44() = 0;
+	virtual void Slot45() = 0;
+	virtual RenderObjClass *GetRenderObject() = 0;
+};
+
+struct BfmeTankRenderObjThunk
+{
+	virtual void Slot0() = 0;
+	virtual void Slot1() = 0;
+	virtual void Slot2() = 0;
+	virtual void Slot3() = 0;
+	virtual void Slot4() = 0;
+	virtual void Slot5() = 0;
+	virtual void Slot6() = 0;
+	virtual void Slot7() = 0;
+	virtual void Slot8() = 0;
+	virtual void Slot9() = 0;
+	virtual void Slot10() = 0;
+	virtual void Slot11() = 0;
+	virtual void Slot12() = 0;
+	virtual void Slot13() = 0;
+	virtual void Slot14() = 0;
+	virtual void Slot15() = 0;
+	virtual void Slot16() = 0;
+	virtual void Slot17() = 0;
+	virtual void Slot18() = 0;
+	virtual void Slot19() = 0;
+	virtual void Slot20() = 0;
+	virtual void Slot21() = 0;
+	virtual void Slot22() = 0;
+	virtual void Slot23() = 0;
+	virtual void Slot24() = 0;
+	virtual void Slot25() = 0;
+	virtual void Slot26() = 0;
+	virtual Int GetNumSubObjects() = 0;
+	virtual void Slot27() = 0;
+	virtual RenderObjClass *GetSubObject(Int) = 0;
+	virtual void Slot30() = 0;
+	virtual void Slot31() = 0;
+	virtual void Slot32() = 0;
+	virtual void Slot33() = 0;
+	virtual void Slot34() = 0;
+	virtual void Slot35() = 0;
+	virtual void Slot36() = 0;
+	virtual void Slot37() = 0;
+	virtual void Slot38() = 0;
+	virtual void Slot39() = 0;
+	virtual void Slot40() = 0;
+	virtual void Slot41() = 0;
+	virtual void Slot42() = 0;
+	virtual void Slot43() = 0;
+	virtual void Slot44() = 0;
+	virtual void Slot45() = 0;
+	virtual void Slot46() = 0;
+	virtual void Slot47() = 0;
+	virtual void Slot48() = 0;
+	virtual void Slot49() = 0;
+	virtual void Slot50() = 0;
+	virtual void Slot51() = 0;
+	virtual void Slot52() = 0;
+	virtual void Slot53() = 0;
+	virtual void Slot54() = 0;
+	virtual void Slot55() = 0;
+	virtual void Slot56() = 0;
+	virtual void Slot57() = 0;
+	virtual void Slot58() = 0;
+	virtual void Slot59() = 0;
+	virtual void Slot60() = 0;
+	virtual void Slot61() = 0;
+	virtual void Slot62() = 0;
+	virtual void Slot63() = 0;
+	virtual void Slot64() = 0;
+	virtual void Slot65() = 0;
+	virtual void Slot66() = 0;
+	virtual void Slot67() = 0;
+	virtual void Slot68() = 0;
+	virtual void Slot69() = 0;
+	virtual void Slot70() = 0;
+	virtual void Slot71() = 0;
+	virtual void Slot72() = 0;
+	virtual void Slot73() = 0;
+	virtual void Slot74() = 0;
+	virtual void Slot75() = 0;
+	virtual void Slot76() = 0;
+	virtual void Slot77() = 0;
+	virtual void Slot78() = 0;
+	virtual void Slot79() = 0;
+	virtual void Slot80() = 0;
+	virtual void Slot81() = 0;
+	virtual void Slot82() = 0;
+	virtual void Slot83() = 0;
+	virtual MaterialInfoClass *GetMaterialInfo() = 0;
+	virtual void SetUserData(void *, Bool) = 0;
+};
+
+struct BfmeTankSubObjectIdentityThunk
+{
+	virtual void Slot0() = 0;
+	virtual void Slot1() = 0;
+	virtual void Slot2() = 0;
+	virtual Int Class_ID() = 0;
+	virtual void Slot4() = 0;
+	virtual void Slot5() = 0;
+	virtual const char *GetName() = 0;
+};
+
+
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankDrawModuleDataCtor.cpp
 // ??0W3DTankDrawModuleData@@ present-unmatched
@@ -266,29 +422,48 @@ void W3DTankDraw::updateTreadPositions(Real uvDelta)
 }
 
 /**Grab pointers to the sub-meshes for each tread*/ 
-// ?updateTreadObjects@W3DTankDraw@@ present-unmatched
 void W3DTankDraw::updateTreadObjects(void)
 {
-	RenderObjClass *robj=getRenderObject();
+	// The BFME W3DModelDraw base has a different layout from the ZH reference
+	// header.  This function's retail body proves the render-object virtual
+	// slot and the offsets of the tread state, so keep those accesses local to
+	// this reconstruction rather than changing the shared header.
+	struct BfmeTankLayout
+	{
+		void *vptr;
+		const ModuleData *moduleData;
+		unsigned char unknown[0x28C];
+		RenderObjClass *prevRenderObj;
+		TreadObjectInfo treads[4];
+		Int treadCount;
+	};
+	BfmeTankLayout *tank = (BfmeTankLayout *)this;
+	RenderObjClass *robj = reinterpret_cast<BfmeTankRenderObjectThunk *>(tank)->GetRenderObject();
 
 	//clear all previous tread pointers
-	for (Int i=0; i<m_treadCount; i++)
-		REF_PTR_RELEASE(m_treads[i].m_robj);
-	m_treadCount = 0;
+	for (Int i=0; i<tank->treadCount; i++)
+	{
+		if (tank->treads[i].m_robj)
+			REF_PTR_RELEASE(tank->treads[i].m_robj);
+	}
+	tank->treadCount = 0;
 
 	//Make sure this object has defined a speed for tread scrolling.
-	if (getW3DTankDrawModuleData() && getW3DTankDrawModuleData()->m_treadAnimationRate && robj)
-	{	
-		for (Int i=0; i < robj->Get_Num_Sub_Objects() && m_treadCount < MAX_TREADS_PER_TANK; i++)
+	const W3DTankDrawModuleData *moduleData = (const W3DTankDrawModuleData *)tank->moduleData;
+	if (moduleData && *(Real *)((unsigned char *)moduleData + 0x164) && robj)
+	{
+		BfmeTankRenderObjThunk *retailRobj = reinterpret_cast<BfmeTankRenderObjThunk *>(robj);
+		for (Int i=0; i < retailRobj->GetNumSubObjects() && tank->treadCount < MAX_TREADS_PER_TANK; i++)
 		{
-			RenderObjClass *subObj=robj->Get_Sub_Object(i);
+			RenderObjClass *subObj=retailRobj->GetSubObject(i);
+			BfmeTankSubObjectIdentityThunk *subObjIdentity = reinterpret_cast<BfmeTankSubObjectIdentityThunk *>(subObj);
 			const char *meshName;
 			//Check if subobject name starts with "TREADS".
-			if (subObj && subObj->Class_ID() == RenderObjClass::CLASSID_MESH && subObj->Get_Name()
-				&& ( (meshName=strchr(subObj->Get_Name(),'.') ) != 0 && *(meshName++))
+			if (subObj && subObjIdentity->Class_ID() == RenderObjClass::CLASSID_MESH && subObjIdentity->GetName()
+				&& ( (meshName=strchr(subObjIdentity->GetName(),'.') ) != 0 && *(meshName++))
 				&&_strnicmp(meshName,"TREADS", 6) == 0)
 			{	//check if sub-object has the correct material to do texture scrolling.
-				MaterialInfoClass *mat=subObj->Get_Material_Info();
+				MaterialInfoClass *mat=reinterpret_cast<BfmeTankRenderObjThunk *>(subObj)->GetMaterialInfo();
 				if (mat)
 				{	for (Int j=0; j<mat->Vertex_Material_Count(); j++)
 					{
@@ -297,20 +472,20 @@ void W3DTankDraw::updateTreadObjects(void)
 						if (mapper && mapper->Mapper_ID() == TextureMapperClass::MAPPER_ID_LINEAR_OFFSET)
 						{	mapper->Set_UV_Offset_Delta(Vector2(0,0));	//disable automatic scrolling
 							subObj->Add_Ref();	//increase reference since we're storing the pointer
-							m_treads[m_treadCount].m_robj=subObj;
-							m_treads[m_treadCount].m_type = TREAD_MIDDLE;	//default type
-							subObj->Set_User_Data(&m_treads[m_treadCount].m_materialSettings);	//tell W3D about custom material settings
-							m_treads[m_treadCount].m_materialSettings.customUVOffset=Vector2(0,0);
+							tank->treads[tank->treadCount].m_robj=subObj;
+							tank->treads[tank->treadCount].m_type = TREAD_MIDDLE;	//default type
+							reinterpret_cast<BfmeTankRenderObjThunk *>(subObj)->SetUserData(&tank->treads[tank->treadCount].m_materialSettings, FALSE);	//tell W3D about custom material settings
+							tank->treads[tank->treadCount].m_materialSettings.customUVOffset=Vector2(0,0);
 							switch (meshName[6])	//check next character after 'TREADS'
 							{
 								case 'L':
-								case 'l':	m_treads[m_treadCount].m_type = TREAD_LEFT;
+								case 'l':	tank->treads[tank->treadCount].m_type = TREAD_LEFT;
 										break;
 								case 'R':
-								case 'r':	m_treads[m_treadCount].m_type = TREAD_RIGHT;
+								case 'r':	tank->treads[tank->treadCount].m_type = TREAD_RIGHT;
 										break;
 							}
-							m_treadCount++;
+							tank->treadCount++;
 						}
 					}
 					REF_PTR_RELEASE(mat);
@@ -320,7 +495,7 @@ void W3DTankDraw::updateTreadObjects(void)
 		}
 	}
 
-	m_prevRenderObj = robj;
+	tank->prevRenderObj = robj;
 }
 
 //-------------------------------------------------------------------------------------------------
