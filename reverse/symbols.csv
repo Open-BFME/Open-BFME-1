@@ -72657,6 +72657,7 @@ name,address,notes
 ?bfmeBaseEOA@BfmeThingEOA@@QAEXXZ,0x009D8630,pin
 ?bfmeBaseF1050@BfmeF1050@@QAEXHHH@Z,0x0081C550,pin
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
+?bfmeBaseSE@BfmeThingSE@@QAEXXZ,0x0000AF38,pin
 ?bfmeBaseSJ@BfmeThingSJ@@QAEXH@Z,0x0090E3D0,pin
 ?bfmeBaseSK@BfmeThingSK@@QAEXH@Z,0x009DB4E0,pin
 ?bfmeBaseTA@BfmeThingTA@@QAEXXZ,0x0000AF38,pin
@@ -74369,6 +74370,7 @@ name,address,notes
 ?bfmeStart@Gen_008443A0@@QAEXPAX0PAPAX@Z,0x00042BB8,Open-BFME5 the starter the SEH constructor at 0x008443A0 calls
 ?bfmeStartAllSpecialPowerRecharges@Object@@QBEXXZ,0x00026490,Open-BFME5 ILT thunk to body 0x001BE820; walks Object behaviors at +0x1F0 and calls special-power interface slot +0x40 after the behavior-interface query at +0x1C; bfme prefix records unrecovered retail spelling
 ?bfmeStartSA@BfmeSubSA@@QAEXXZ,0x0000F0A6,pin
+?bfmeStartSE@BfmeThingSE@@QAEXXZ,0x0000E9A3,pin
 ?bfmeStartTD@BfmeSubTD@@QAEXPAX@Z,0x00047B27,pin
 ?bfmeStartTE@BfmeSubTE@@QAEXXZ,0x0000F0A6,pin
 ?bfmeStartTI@BfmeSubTI@@QAEXXZ,0x0000F0A6,pin
@@ -76548,6 +76550,7 @@ name,address,notes
 ?g_bfmeVft994C@@3PADA,0x00D296B0,pin
 ?g_bfmeVftAQB@@3PADA,0x00D22470,pin
 ?g_bfmeVftBQB@@3PADA,0x00D223A0,pin
+?g_bfmeVftSE@@3PAPAXA,0x00D28428,pin
 ?g_bfmeVftTA@@3PADA,0x00D2F254,pin
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
