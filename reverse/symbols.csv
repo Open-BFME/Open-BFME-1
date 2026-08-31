@@ -81348,3 +81348,4 @@ _strtol,0x009F71CC,AptValue::toInteger at 0x00898300 calls the retail strtol imp
 ?bfmeAbove@Gen_001de260@@QBEHPBMH@Z,0x000473C5,ILT to the exact landed integer threshold predicate at 0x001DE260
 ??0BfmeCell@@QAE@XZ,0x00009D4F,BfmeCellGrid vector-new calls this ILT to the exact 0x001B1800 cell initializer
 ??1BfmeCell@@QAE@XZ,0x0003DC2B,BfmeCellGrid vector cleanup calls this ILT to the 0x001B1200 cell destructor
+?bfmeAdd@BfmeCell@@QAEXMHH@Z,0x000057A4,BfmeCellGrid apply helper calls this ILT to the exact 0x001B1240 cell accumulator
