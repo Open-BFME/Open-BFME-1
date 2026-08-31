@@ -81323,3 +81323,4 @@ g_bfmeJpegExtendedMessage,0x01081238,JPEG extended message-table text selected f
 ?bfmeSetNeedsGateOpenRaw@Team@@QAEXHH@Z,0x0000E6B5,TEAM_NEEDS_OPEN_GATE canonical callee consumes the low byte of the full stack-word flag
 ?copyTeamReference@ScriptEngine@@QAEXABVAsciiString@@V2@@Z,0x00011DDD,SET_TEAM_REFERENCE_TO_REFERNECE dispatch calls the canonical reference-copy body
 ?assignTeamReference@ScriptEngine@@QAEXABVAsciiString@@PAVTeam@@@Z,0x0001F82A,SET_TEAM_REFERENCE dispatch calls the canonical reference-map insertion body
+?giveUpgrade@Team@@QAEXPBVUpgradeTemplate@@@Z,0x0002DA5B,TEAM_UPGRADE canonical body grants the template to every team member
