@@ -89,19 +89,7 @@ static Bool currentlyLookingForSelection( )
 }
 
 //-----------------------------------------------------------------------------
-static Bool areAllSelected( const DrawableList& listToCheck )
-{
-	DrawableListCIt it;
-	for ( it = listToCheck.begin(); it != listToCheck.end(); ++it ) {
-		if (!*it)
-			continue;
-
-		if (!(*it)->isSelected())
-			return FALSE;
-	}
-
-	return TRUE;
-}
+Bool areAllSelected( const DrawableList& listToCheck );
 
 //-----------------------------------------------------------------------------
 struct SFWRec
