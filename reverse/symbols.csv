@@ -73865,6 +73865,7 @@ name,address,notes
 ?bfmeInitSubBWD@BfmeSubBWD@@QAEXXZ,0x0000F0A6,pin
 ?bfmeInitSubEFA@@YAXPAX0@Z,0x0000129E,pin
 ?bfmeInitTCB@BfmeBaseTCB@@QAEXXZ,0x0000835F,pin
+?bfmeInitTEB@BfmeBaseTEB@@QAEXXZ,0x00041970,pin
 ?bfmeInitVal1047@@YAXPAUBfmeValS1047@@H@Z,0x00007554,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
@@ -74173,6 +74174,7 @@ name,address,notes
 ?bfmeOneSQA@BfmeSlotSQA@@QAEXH@Z,0x00007E50,pin
 ?bfmeOneTB@@YAXXZ,0x00831F90,pin
 ?bfmeOneTBA@BfmeThingTBA@@QAEXXZ,0x000297F8,pin
+?bfmeOneTEC@BfmeThingTEC@@QAEXXZ,0x0002AC7F,pin
 ?bfmeOneTED@BfmeThingTED@@QAEXH@Z,0x0003E045,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOpen1071@BfmeR1071@@QAEXPAVBfmeX1071@@@Z,0x0002144A,pin
@@ -74395,6 +74397,7 @@ name,address,notes
 ?bfmeSetSize@BfmeShadowPart@@QAEXMM@Z,0x00022D86,Open-BFME5 ILT thunk to body 0x00428250; ?setSize@Shadow@@QAEXMM@Z at 0x001E4250 calls it on every live entry of the two four-pointer arrays at +0x94 and +0xA4; address-derived name
 ?bfmeSetState1285@BfmeNode1285@@QAEXH@Z,0x008D3050,address-derived node state method called by the 0x008BB570 retail body
 ?bfmeSetTCB@BfmeSetterTCB@@QAEXPAXH@Z,0x00037A56,pin
+?bfmeSetTEB@BfmeSubTEB@@QAEXH@Z,0x000122AB,pin
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -74644,6 +74647,7 @@ name,address,notes
 ?bfmeThreeDVB@BfmeSubDVB@@QAEXPAX0@Z,0x00025BBC,pin
 ?bfmeThreeLF@@YAXXZ,0x0002795D,pin
 ?bfmeThreeQE@BfmeGlobQE@@QAEXXZ,0x00003A80,pin
+?bfmeThreeTEC@BfmeBaseTEC@@QAEXXZ,0x000216CA,pin
 ?bfmeThreeTED@BfmeThingTED@@QAEXXZ,0x00033D89,pin
 ?bfmeThrow1152@BfmeS1152@@QAEXXZ,0x000132CD,pin
 ?bfmeThrow1153@BfmeS1153@@QAEXXZ,0x000132CD,pin
@@ -74718,6 +74722,7 @@ name,address,notes
 ?bfmeTwoSQA@BfmeSlotSQA@@QAEXH@Z,0x0000F28B,pin
 ?bfmeTwoTB@@YAPAXXZ,0x0083B330,pin
 ?bfmeTwoTBA@BfmeThingTBA@@QAEXXZ,0x00024780,pin
+?bfmeTwoTEC@BfmeBaseTEC@@QAEXXZ,0x00017A7B,pin
 ?bfmeTwoTED@BfmeThingTED@@QAEXXZ,0x0002214C,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
@@ -79179,6 +79184,7 @@ name,address,notes
 ?postLoad@ExperienceLevelSystem@@QAEXPAVObject@@@Z,0x00008DFA,ExperienceTracker transfer calls the retail ExperienceLevelSystem post-load helper through its ILT
 ?pre@Gen0004A5A7@@QAEXXZ,0x0004A5A7,leading member call of the 0x003D0EE0 nested walk reached via incremental-link thunk; address-derived name
 ?prefMapIncrement@@YAPAUPrefMapNodeShim@@PAU1@@Z,0x0082B870,alias for the STL tree stepper already pinned here as _Rb_global<bool>::_M_increment
+?prepare@Rva0060FFC0Owner@@QAEXXZ,0x00028F92,RVA-derived ILT callee of the UI reset at 0x0060FFC0
 ?prepare@Rva00751EC0Owner@@AAEXPAVRva00751EC0Target@@@Z,0x00011CBB,Open-BFME5 ILT thunk to the 0x00776AC0 target preparation body
 ?prependDirtyModule@PartitionDirtyListOwner@@QAEXPAVPartitionData@@@Z,0x008F8C50,descriptive name; BFME-only dirty-list link helper called from PartitionData::makeDirty
 ?prependToList@Drawable@@QAEXPAPAV1@@Z,0x00025C84,Open-BFME5 ILT; called by ?registerDrawable@GameClient@@UAEXPAVDrawable@@@Z at 0x0042E530
@@ -79395,6 +79401,7 @@ name,address,notes
 ?reset@NetCommandList@@QAEXXZ,0x00037565,pinharvest x1 (thunk)
 ?reset@Network@@UAEXXZ,0x00681910,vtable 0x0111A968 slot 4 (+0x10 = SubsystemInterface::reset position) via ILT 0x0003CF1A; body is mov eax [ecx] / jmp [eax+4] = this->init() = ZH Network::reset(){init();}; ICF class ?dup_00681910 so the pin is address-specific
 ?reset@PathfindCell@@QAEXXZ,0x0002C106,Open-BFME5 ILT thunk to body 0x003F6EC0; BFME PathfindCell reset helper
+?reset@Rva0060FFC0Optional@@QAEXXZ,0x00046B19,RVA-derived ILT callee of the UI reset at 0x0060FFC0
 ?reset@Rva007E8810Message@@QAEXXZ,0x007E8AC0,V2 lane: FESL message reset(); same body the tree also names ?run@Rva007E8AC0@@QAEXXZ
 ?reset@SidesInfoSegmentShim@@QAEXXZ,0x00033F46,SidesInfo clear first segment helper shim
 ?reset@TerrainLogic@@UAEXXZ,0x0001B707,Open-BFME5 ILT fronts unclaimed 183-byte body 0x001ACF90; called by W3DTerrainLogic init/reset
@@ -81513,5 +81520,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?prepare@Rva0060FFC0Owner@@QAEXXZ,0x00028F92,RVA-derived ILT callee of the UI reset at 0x0060FFC0
-?reset@Rva0060FFC0Optional@@QAEXXZ,0x00046B19,RVA-derived ILT callee of the UI reset at 0x0060FFC0
