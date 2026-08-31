@@ -76408,6 +76408,7 @@ name,address,notes
 ?g_bfmeMgr12F0898@@3PAVBfmeMgrEB2@@A,0x00EF0898,pin
 ?g_bfmeMgr12F0898@@3PAVBfmeMgrF5F@@A,0x00EF0898,pin
 ?g_bfmeMgr977@@3PAVBfmeMgr977@@A,0x00EF33F8,pin
+?g_bfmeMillisecondsToSeconds@@3MA,0x00C766EC,float milliseconds-to-seconds scale used by BfmeTimedOpNode::update
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
 ?g_bfmeModeAZC@@3PAUBfmeModeAZC@@A,0x00EF0FE0,pin
