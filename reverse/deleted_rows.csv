@@ -24266,3 +24266,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_001c5c00@@YAXXZ,0x001C5C00,gen-dump placeholder superseded by the exact clean C++ Object snapshot-info builder over the same 194-byte range
 ?bfmeGo1090C@@YGDH@Z,0x00322E10,"generic placeholder identity retracted: retail source-family order and the body prove ScriptConditions::evaluatePlayerHasPower; it resolves players from the parameter mask, reads Player+0x258 as Energy, and calls Energy::hasSufficientPower"
 ?d_001b2c70@@YAXXZ,0x001B2C70,gen-dump placeholder superseded by the exact clean C++ BFME FiringTracker destructor over the same 130-byte range
+?d_001b2d90@@YAXXZ,0x001B2D90,gen-dump placeholder superseded by the exact clean C++ BFME FiringTracker shot query over the same 67-byte range
