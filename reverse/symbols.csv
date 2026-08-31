@@ -73198,6 +73198,7 @@ name,address,notes
 ?bfmeEnd1111@BfmeK1111@@QAEXXZ,0x000097BE,pin
 ?bfmeEnd1236@BfmeA1236@@QAEXXZ,0x008D2B80,pin
 ?bfmeEnd982C@BfmeHub982@@QAEXXZ,0x00008D4B,pin
+?bfmeEndSGA@@YAXXZ,0x0000AF33,pin
 ?bfmeEnsureWA@BfmeThingWA@@QAEXXZ,0x0002DE02,pin
 ?bfmeEnter@Glo012F1024Item@@QAEXXZ,0x0000BC5D,Open-BFME5 ILT thunk to body 0x003AEE70; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 calls it on the 0xDC-byte item the advanced index selects; address-derived name
 ?bfmeEquivalencyIndex@PathfindMovementProfile@@QBEHXZ,0x00046B55,Open-BFME5 ILT thunk to the exact movement-profile equivalency index at 0x00402120
@@ -74126,6 +74127,7 @@ name,address,notes
 ?bfmeOneQE@BfmeThingQE@@QAEXXZ,0x000172D8,pin
 ?bfmeOneRB@@YAXHPAUBfmeObjRB@@@Z,0x0003F427,pin
 ?bfmeOneRF@@YAPAXPAX0@Z,0x007EBCA0,pin
+?bfmeOneSGA@BfmeThingSGA@@QAEXXZ,0x0004A183,pin
 ?bfmeOneTB@@YAXXZ,0x00831F90,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOpen1071@BfmeR1071@@QAEXPAVBfmeX1071@@@Z,0x0002144A,pin
@@ -74657,6 +74659,7 @@ name,address,notes
 ?bfmeTwoQE@BfmeSubQE@@QAEXXZ,0x0001117B,pin
 ?bfmeTwoRB@@YAXHH@Z,0x0003FD82,pin
 ?bfmeTwoRF@@YAPAXPAX0@Z,0x007EE720,pin
+?bfmeTwoSGA@BfmeThingSGA@@QAEXXZ,0x0000A15A,pin
 ?bfmeTwoTB@@YAPAXXZ,0x0083B330,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
@@ -76097,6 +76100,7 @@ name,address,notes
 ?g_bfmeFlagBRA@@3HA,0x00EF7094,pin
 ?g_bfmeFlagMD@@3DA,0x00EF4AFC,pin
 ?g_bfmeFlagMG@@3HA,0x00EF4ACC,pin
+?g_bfmeFlagSGA@@3DA,0x00F3F42F,pin
 ?g_bfmeFlagsAPB@@3IA,0x00EA6FA0,pin
 ?g_bfmeFmt1013@@3PADA,0x00D05BEC,pin
 ?g_bfmeFmt1021B@@3PADA,0x00D08ED8,pin
