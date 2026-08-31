@@ -2046,6 +2046,7 @@ name,address,notes
 ??0BaikonurLaunchPowerModuleData@@QAE@XZ,0x00044FA8,pinharvest x1 (thunk)
 ??0BaikonurLaunchPowerModuleDataBase@@QAE@XZ,0x0003C556,Open-BFME5 the incremental-link thunk that constructor encodes
 ??0BaikonurLaunchPowerModuleDataBase@@QAE@XZ,0x002149D0,Open-BFME5 base constructor BaikonurLaunchPowerModuleData forwards to; byte-identical to and folded with RespawnBodyModuleData so the address cannot name the class
+??0BannerAptCallbackHolder@@QAE@P6AXXZ@Z,0x0000C56D,BannerUI APT callback ref-counted holder ctor ILT
 ??0BannerCarrierUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003DB36,BannerCarrierUpdate ctor for friend_new
 ??0BaseHeightMapResetStringBase@@QAE@PBD@Z,0x00888BC0,BaseHeightMap reset string-base constructor body
 ??0BaseModuleData@@QAE@XZ,0x00048A3B,TensileFormationUpdateModuleData base ctor
@@ -2561,8 +2562,6 @@ name,address,notes
 ??0GenBase00101D50@@QAE@XZ,0x00101D50,base constructor called by the 18-byte vptr-only derived constructors in MidVptrOnlyDerivedCtors.cpp
 ??0GenBase00101E20@@QAE@XZ,0x00101E20,base constructor called by the 18-byte vptr-only derived constructors in MidVptrOnlyDerivedCtors.cpp
 ??0GenBase00138960@@QAE@XZ,0x00138960,base constructor called by the 18-byte vptr-only derived constructors in MidVptrOnlyDerivedCtors.cpp
-?_M_initialize_buckets@?$hashtable@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@@_STL@@AAEXI@Z,0x001378D0,ThingFactory hash map bucket initialization body
-?resize@?$hashtable@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@@_STL@@QAEXI@Z,0x00135ED0,ThingFactory hash map resize body
 ??0GenBase002DF2B0@@QAE@XZ,0x002DF2B0,base constructor called by the 18-byte vptr-only derived constructors in MidVptrOnlyDerivedCtors.cpp
 ??0GenBase003BB1E0@@QAE@XZ,0x003BB1E0,base constructor called by the 18-byte vptr-only derived constructors in MidVptrOnlyDerivedCtors.cpp
 ??0GenBase0046E5E0@@QAE@XZ,0x0046E5E0,base constructor called by the 18-byte vptr-only derived constructors in MidVptrOnlyDerivedCtors.cpp
@@ -11457,6 +11456,7 @@ name,address,notes
 ?_M_initialize_buckets@?$hashtable@U?$pair@$$CBHUGen_t_009f14c0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_009f14c0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_009f14c0_p12cd@@@_STL@@@2@@_STL@@AAEXI@Z,0x009EF9C0,gen-tgrid payload member
 ?_M_initialize_buckets@?$hashtable@U?$pair@$$CBHUGen_t_009f20a0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_009f20a0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_009f20a0_p12cd@@@_STL@@@2@@_STL@@AAEXI@Z,0x009EF950,gen-tgrid payload member
 ?_M_initialize_buckets@?$hashtable@U?$pair@$$CBHUGen_t_009f20f0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_009f20f0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_009f20f0_p12cd@@@_STL@@@2@@_STL@@AAEXI@Z,0x009EF9C0,gen-tgrid payload member
+?_M_initialize_buckets@?$hashtable@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@@_STL@@AAEXI@Z,0x001378D0,ThingFactory hash map bucket initialization body
 ?_M_initialize_buckets@?$hashtable@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@AAEXI@Z,0x00498DE0,body byte-verified from WindowVideoManagerCtor.cpp; call sites reach it via ILT thunk 0x0002DF4C
 ?_M_initialize_map@?$_Deque_base@HV?$allocator@H@_STL@@@_STL@@IAEXI@Z,0x00089190,gen-tgrid shared callee
 ?_M_initialize_map@?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,rel32 pin for exact-ambiguous landing
@@ -72249,6 +72249,8 @@ name,address,notes
 ?b_00c706b0@@YAXXZ,0x00C706B0,gen-thunk body
 ?b_00c706d0@@YAXXZ,0x00C706D0,gen-thunk body
 ?b_00c706e0@@YAXXZ,0x00C706E0,gen-thunk body
+?bannerAptOnButton@@YAXXZ,0x000063FC,BannerUI OnBttnBanner callback ILT
+?bannerAptOnInitialized@@YAXXZ,0x00011B0D,BannerUI OnInitialized callback ILT
 ?bar@Rva000946B0G@@QAEXPAX@Z,0x0001A7DF,Open-BFME5 thiscall at ILT of push-this global wrapper
 ?bar@Rva007B13D0G@@QAEXPAX@Z,0x000181AB,Open-BFME5 thiscall at ILT of push-this global wrapper
 ?bar@Rva007B3E60G@@QAEXPAX@Z,0x000247FD,Open-BFME5 thiscall at ILT of push-this global wrapper
@@ -75816,6 +75818,7 @@ name,address,notes
 ?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
 ?g_activeObj12F0610@@3PAXA,0x00EF0610,pin
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
+?g_bannerAptCallbacksRegistered@@3_NA,0x012F495A,BannerUI one-time callback registration guard
 ?g_bfme1017G@@3DA,0x00F3781C,pin
 ?g_bfme1017H@@3HA,0x00F37800,pin
 ?g_bfme1017I@@3HA,0x00F377DC,pin
@@ -79169,6 +79172,7 @@ name,address,notes
 ?refreshTerrain@Radar@@UAEXPAVTerrainLogic@@@Z,0x0003A21A,pinharvest x1 (thunk)
 ?refreshTerrain@Radar@@UAEXPAVTerrainLogic@@@Z,0x0089F420,pinharvest x1 (body)
 ?refreshTrackedLargeUnit@BfmeAODHordeContainOwner@@QAEXXZ,0x00031372,AODHordeContain large-unit hook refreshes the cached position through the 0x002302E0 body
+?registerAptCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VBannerAptCallbackHolder@@@Z,0x00023083,BannerUI APT callback registry ILT
 ?registerBannerAptCallbacks@@YAXXZ,0x0003DE6F,BannerUI init ILT to the helper that registers AptBannerUI OnBttnBanner and OnInitialized callbacks
 ?registerGameWindow@AnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z,0x00045322,ILT thunk to the window animation registration
 ?registerGameWindow@BfmeAnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z,0x00045322,Open-BFME5 view-class spelling of the ILT already pinned as ?registerGameWindow@AnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z; ControlBar::animateSpecialPowerShortcut reaches it through the view that carries the retail field offsets
@@ -79333,6 +79337,7 @@ name,address,notes
 ?resize@?$hashtable@U?$pair@$$CBHW4Relationship@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHW4Relationship@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@2@@_STL@@QAEXI@Z,0x0000309E,ILT the Int-keyed relationship hashtable insert calls first at 0x0078714C
 ?resize@?$hashtable@U?$pair@$$CBIH@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIH@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIH@_STL@@@2@@_STL@@AAEXI@Z,0x00040CF0,Open-BFME5 ILT the unsigned-key hashtable _M_insert at 0x00389A20 calls first
 ?resize@?$hashtable@U?$pair@$$CBIPAX@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIPAX@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIPAX@_STL@@@2@@_STL@@AAEXI@Z,0x0000E4D0,Open-BFME5 ILT the unsigned-to-pointer hashtable _M_insert at 0x00431070 calls first
+?resize@?$hashtable@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@@_STL@@QAEXI@Z,0x00135ED0,ThingFactory hash map resize body
 ?resize@?$hashtable@U?$pair@$$CBW4NameKeyType@@P6APAVTransition@@XZ@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@P6APAVTransition@@XZ@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@P6APAVTransition@@XZ@_STL@@@2@@_STL@@AAEXI@Z,0x0000266C,Open-BFME5 ILT the NameKeyType-to-Transition-factory hashtable _M_insert at 0x0048B2C0 calls first
 ?resize@?$hashtable@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@@_STL@@QAEXI@Z,0x0008FB70,NameKeyGenerator aux hash_map hashtable<>::resize() proven via nameToKey(const char*) insert call site
 ?resize@?$hashtable@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@@_STL@@AAEXI@Z,0x0003729F,Open-BFME5 ILT the NameKeyType-to-DamageFX hashtable _M_insert at 0x000675E0 calls first
@@ -81398,8 +81403,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0BannerAptCallbackHolder@@QAE@P6AXXZ@Z,0x0000C56D,BannerUI APT callback ref-counted holder ctor ILT
-?registerAptCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VBannerAptCallbackHolder@@@Z,0x00023083,BannerUI APT callback registry ILT
-?bannerAptOnInitialized@@YAXXZ,0x00011B0D,BannerUI OnInitialized callback ILT
-?bannerAptOnButton@@YAXXZ,0x000063FC,BannerUI OnBttnBanner callback ILT
-?g_bannerAptCallbacksRegistered@@3_NA,0x012F495A,BannerUI one-time callback registration guard
