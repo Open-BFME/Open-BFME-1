@@ -77,29 +77,47 @@ public:
 extern BfmeD1088 *g_bfmeD1088;
 extern BfmeP1088 *g_bfmeP1088;
 
-char __stdcall bfmeGo1088_45(int a, int b, int c)
+class Parameter;
+
+class ScriptConditions
 {
-	int v = 0;
+protected:
+	bool evaluatePlayerSpecialPowerFromUnitTriggered(
+		Parameter *playerParm, Parameter *specialPowerParm, Parameter *unitParm);
+};
 
-	if (c) {
-		BfmeE1088 *p = g_bfmeP1088->bfmeSlot1088P_26(c);
+// ?evaluatePlayerSpecialPowerFromUnitTriggered@ScriptConditions@@IAE_NPAVParameter@@00@Z
+bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitTriggered(
+	Parameter *playerParm, Parameter *specialPowerParm, Parameter *unitParm)
+{
+	int sourceID = 0;
 
-		if (!p)
-			return 0;
-		v = p->m_bfme74;
+	if (unitParm) {
+		BfmeE1088 *unit = g_bfmeP1088->bfmeSlot1088P_26(
+			reinterpret_cast<int>(unitParm));
+
+		if (!unit)
+			return false;
+		sourceID = unit->m_bfme74;
 	}
-	c = g_bfmeP1088->bfmeNext1088(a);
-	while ((short)c) {
-		BfmeR1088 *r = g_bfmeD1088->bfmeLook1088((short *)&c);
+	unitParm = reinterpret_cast<Parameter *>(
+		g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(playerParm)));
+	while ((short)reinterpret_cast<int>(unitParm)) {
+		BfmeR1088 *player = g_bfmeD1088->bfmeLook1088(
+			reinterpret_cast<short *>(&unitParm));
 
-		if (r) {
-			int m = r->m_bfme24;
+		if (player) {
+			int playerIndex = player->m_bfme24;
 
-			if (g_bfmeP1088->bfmeSlot1088P_45(m, b + 0x10, 1, v))
-				return 1;
+			if (g_bfmeP1088->bfmeSlot1088P_45(
+					playerIndex,
+					reinterpret_cast<int>(specialPowerParm) + 0x10,
+					1,
+					sourceID))
+				return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 char __stdcall bfmeGo1088_46(int a, int b, int c)
@@ -176,4 +194,3 @@ char __stdcall bfmeGo1088_48(int a, int b, int c)
 	}
 	return 0;
 }
-
