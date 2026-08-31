@@ -73863,6 +73863,7 @@ name,address,notes
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLine1226@BfmeR1226@@QAEXPAD@Z,0x008A0F40,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
+?bfmeLoadSJA@@YAXPAX0PAD@Z,0x0000150A,pin
 ?bfmeLog1013@BfmeLog1013@@QAEXHPADHHHHHH@Z,0x00015235,pin
 ?bfmeLog1021@BfmeLog1021@@QAEXHPADHHHHHH@Z,0x00015235,pin
 ?bfmeLog1051@BfmeLog1051@@QAEXHPADH0HHHH@Z,0x00015235,pin
@@ -74169,6 +74170,7 @@ name,address,notes
 ?bfmeRandom2B7@@YANHMPBDH@Z,0x0002CCA5,pin
 ?bfmeRangeBase@WeaponTemplate@@ABEMPBVObject@@ABVWeaponBonus@@M@Z,0x00009598,Open-BFME5 ILT thunk to body 0x001E2670; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 gets its unbonused range from it with the negated z of the position; address-derived name
 ?bfmeRangeErrorQX@BfmeThingQX@@QAEXXZ,0x000132CD,pin
+?bfmeReadSJA@@YAXPAX0PAD@Z,0x0000FB73,pin
 ?bfmeReady1001@BfmeUnit1001@@QAEDXZ,0x000331C7,pin
 ?bfmeReady986C@BfmeC986@@QAEDXZ,0x000104B0,pin
 ?bfmeRebuild@BFMERopeDrawableGetPositionShim@@AAEXH@Z,0x00034C3E,Open-BFME5 ILT the rope getPosition at 0x0041D090 rebuilds through
@@ -76076,6 +76078,7 @@ name,address,notes
 ?g_bfmeDefault996@@3PADA,0x00D2233C,pin
 ?g_bfmeDisconnectPingResult@@3HA,0x012B9810,standalone disconnect ping-result state read and set by updateDisconnectStatus after the sub-ten-percent ratio check
 ?g_bfmeDoneAPB@@3_NA,0x00EED4E6,pin
+?g_bfmeDoneSJA@@3DA,0x00EF4CA4,pin
 ?g_bfmeDrop995@@3PAVBfmeDrop995@@A,0x00EF12CC,pin
 ?g_bfmeDropDXH@@3P6AXPAVBfmeSubDXH@@@ZA,0x00F378A0,pin
 ?g_bfmeE1014@@3PAVBfmeE1014@@A,0x00EF3A90,pin
@@ -76383,6 +76386,7 @@ name,address,notes
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
 ?g_bfmeOneATC@@3PAVBfmeOneATC@@A,0x00EF19E8,pin
+?g_bfmeOneSJA@@3PADA,0x00EF19B8,pin
 ?g_bfmeOut982@@3PAVBfmeOut982@@A,0x00EED83C,pin
 ?g_bfmeP1024@@3PAVBfmeP1024@@A,0x00F4FAAC,pin
 ?g_bfmeP1025@@3PAVBfmeP1025@@A,0x00F4FAAC,pin
@@ -76528,6 +76532,7 @@ name,address,notes
 ?g_bfmeTwoAOA@@3PAVBfmeTwoAOA@@A,0x00EED600,pin
 ?g_bfmeTwoAQA@@3PAVBfmeTwoAQA@@A,0x00EF1028,pin
 ?g_bfmeTwoATC@@3PAUBfmeTwoATC@@A,0x00EF4B58,pin
+?g_bfmeTwoSJA@@3PADA,0x00EF19A4,pin
 ?g_bfmeU1019@@3PAVBfmeU1019@@A,0x00EF076C,pin
 ?g_bfmeU1026@@3PAVBfmeU1026@@A,0x00EF076C,pin
 ?g_bfmeU1027@@3PAVBfmeU1027@@A,0x00EF076C,pin
