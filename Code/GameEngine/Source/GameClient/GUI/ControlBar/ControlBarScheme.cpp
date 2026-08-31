@@ -189,7 +189,6 @@ __declspec(noinline) ControlBarSchemeImage::ControlBarSchemeImage( void )
 	m_layer = 0;
 }
 
-// ??1ControlBarSchemeImage@@QAE@XZ present-unmatched
 ControlBarSchemeImage::~ControlBarSchemeImage( void )
 {
 	m_image = NULL;
