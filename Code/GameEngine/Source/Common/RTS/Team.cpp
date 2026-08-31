@@ -101,6 +101,22 @@ static TeamID bfmeTeamID( const Team *that )
 	return *(const TeamID *)((const char *)that + 0x08);
 }
 
+// BFME's TeamRelationMap has one base vtable where the shared header models
+// MemoryPoolObject plus Snapshot, and BFME's Team stores the relation pointer
+// at +0xec rather than the Zero Hour offset in Team.h.  Keep this view local so
+// the erase body forms the retail +0x04 hash_map address without changing the
+// shared class ABI used by the rest of this TU.
+struct BfmeTeamRelationMapView
+{
+	void *m_baseVtbl;
+	TeamRelationMapType m_map;
+};
+
+static BfmeTeamRelationMapView *bfmeTeamRelations( const Team *that )
+{
+	return *(BfmeTeamRelationMapView **)((const char *)that + 0xec);
+}
+
 class BfmeTeamInstanceIterator
 {
 public:
@@ -254,6 +270,7 @@ void TeamRelationMap::loadPostProcess( void )
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
+
 // STATIC FUNCTIONS ///////////////////////////////////////////////////////////
 static Bool locoSetMatches(LocomotorSurfaceTypeMask lstm, UnsignedInt surfaceBitFlags)
 {
@@ -1877,22 +1894,21 @@ Object *Team::getTeamTargetObject(void)
 }
 
 // ------------------------------------------------------------------------
-// ?removeOverrideTeamRelationship@Team@@QAE_NI@Z present-unmatched
 Bool Team::removeOverrideTeamRelationship( TeamID teamID )
 {
-	if (!m_teamRelations->m_map.empty())
+	if (!bfmeTeamRelations( this )->m_map.empty())
 	{
 		if (teamID == TEAM_ID_INVALID)
 		{
-			m_teamRelations->m_map.clear();
+			bfmeTeamRelations( this )->m_map.clear();
 			return true;
 		}
 		else
 		{
-			TeamRelationMapType::iterator it = m_teamRelations->m_map.find(teamID);
-			if (it != m_teamRelations->m_map.end())
+			TeamRelationMapType::iterator it = bfmeTeamRelations( this )->m_map.find(teamID);
+			if (it != bfmeTeamRelations( this )->m_map.end())
 			{
-				m_teamRelations->m_map.erase(it);
+				bfmeTeamRelations( this )->m_map.erase(it);
 				return true;
 			}
 		}
@@ -3077,4 +3093,3 @@ void Team::loadPostProcess( void )
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
-
