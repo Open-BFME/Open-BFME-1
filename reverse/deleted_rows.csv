@@ -24245,3 +24245,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_001c2070@@YAXXZ,0x001C2070,gen-dump placeholder superseded by the exact Object single-box boundary-distance clean C++ body over the same 625-byte range
 ?d_001c6420@@YAXXZ,0x001C6420,gen-dump placeholder superseded by the exact clean C++ BitFlags<304>::xfer body over the same 271-byte range
 ?d_001c0be0@@YAXXZ,0x001C0BE0,gen-dump placeholder superseded by the exact clean C++ Drawable transform-history body over the same 217-byte range
+?d_001c5800@@YAXXZ,0x001C5800,gen-dump placeholder superseded by the exact clean C++ Object upgrade-module reconciliation body over the same 349-byte range
