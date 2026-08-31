@@ -344,6 +344,50 @@ def test_a_compiler_emitted_crt_helper_fails_the_build():
             modbuild.compile_payload(source, Path(tmp) / "greedy.obj")
 
 
+_FLOAT_BODY = ('extern "C" __declspec(dllexport) void __cdecl f(float *out)\n'
+               "{ *out = *out * 2.0f + 1.0f; }\n")
+
+
+def test_a_bare_float_payload_is_a_genuine_missing_symbol():
+    """Floating point makes MSVC reference __fltused, which the CRT would
+    normally define. There is no CRT here, so with nothing defining it the
+    symbol really is unresolvable and the build must stop -- this is NOT a false
+    positive, and the message has to say what to do about it."""
+    with tempfile.TemporaryDirectory() as tmp:
+        source = Path(tmp) / "floaty.cpp"
+        source.write_text(_FLOAT_BODY)
+        with pytest.raises(SystemExit, match=r"__fltused"):
+            modbuild.compile_payload(source, Path(tmp) / "floaty.obj")
+
+
+def test_a_payload_defining_fltused_itself_passes():
+    """And once the payload defines the marker, MSVC emits __fltused TWICE --
+    defined (section 2) and referenced (section 0). A check reading only
+    references called that resolved symbol missing and failed the build on the
+    very payload that had fixed itself."""
+    with tempfile.TemporaryDirectory() as tmp:
+        source = Path(tmp) / "floaty.cpp"
+        source.write_text('extern "C" int _fltused = 0;\n' + _FLOAT_BODY)
+        obj = modbuild.compile_payload(source, Path(tmp) / "floaty.obj")
+        assert modbuild.undefined_externals(obj) == []
+
+
+@pytest.mark.parametrize("name,body", [
+    ("__alldiv", 'extern "C" __declspec(dllexport) void __cdecl f(long long *o)\n'
+                 "{ *o = o[0] / o[1]; }\n"),
+    ("__ftol2", 'extern "C" __declspec(dllexport) void __cdecl f(float *i, int *o)\n'
+                "{ *o = (int)*i; }\n"),
+])
+def test_the_externals_check_still_bites_after_the_float_fix(name, body):
+    """Excluding defined symbols must not blunt the check: a genuine
+    compiler-emitted helper is referenced and NOT defined, so it still fails."""
+    with tempfile.TemporaryDirectory() as tmp:
+        source = Path(tmp) / "helper.cpp"
+        source.write_text(body)
+        with pytest.raises(SystemExit, match=name):
+            modbuild.compile_payload(source, Path(tmp) / "helper.obj")
+
+
 def test_cave_section_present_and_baseline_untouched(built):
     pe, _ = built
     cave = [s for s in pe.sections() if s["name"] == ".bfmemod"]

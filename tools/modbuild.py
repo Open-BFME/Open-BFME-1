@@ -52,6 +52,13 @@ TARGET_ADVANCECOUNT = 0x00681F70   # BFMENativeNetwork::getFrameAdvanceCount()
 # just-resent command for good. eax = execution frame, esi = NetCommandRef,
 # edi = Connection. Displaces `mov ecx,ds:0x12ED5C8` (6 bytes).
 TARGET_DISCARD = 0x006620A4
+# 039-replayctl. The CLIENT half of the engine frame, GameEngine vtable slot 32
+# (+0x80). Chosen because it runs on every engine iteration including the ones
+# where the logic tick is skipped -- a hook on the logic side would stop being
+# called the moment it paused the logic, and could never see the key that
+# unpauses it.
+TARGET_REPLAYFRAME = 0x0006B910
+
 TARGET_FRAMEDRIVER = 0x0006BAE0   # the per-iteration frame driver, vtable slot +0x7C
 TARGET_LOOPBODY    = 0x0006BC2B   # GameEngine::execute's once-per-iteration call
 
@@ -154,10 +161,11 @@ def undefined_externals(obj):
     return sorted(unresolved)
 
 
-def compile_payload(source, obj, probe=False):
+def compile_payload(source, obj, probe=False, defines=()):
     command = _msvc("cl.exe") + CL_FLAGS
     if probe:
         command.append("-DPROBE")
+    command += [f"-D{d}" for d in defines]
     command += [f"-Fo{toolchain.wine_path(obj)}", toolchain.wine_path(source)]
     _run(command, f"compiling {Path(source).name}")
 
@@ -251,13 +259,14 @@ def _rebase(image, delta):
         done += block
 
 
-def build_feature(pe, source, entry, hooks, probe=False):
+def build_feature(pe, source, entry, hooks, probe=False, defines=()):
     """Compile one feature's .cpp, lay it in the cave, and hook its entries.
 
     `hooks` is (target rva, exported name, shim arguments) per detour."""
     with tempfile.TemporaryDirectory() as tmp:
         stem = Path(source).stem
-        obj = compile_payload(source, Path(tmp) / f"{stem}.obj", probe=probe)
+        obj = compile_payload(source, Path(tmp) / f"{stem}.obj", probe=probe,
+                              defines=defines)
         image = link_payload(obj, entry, Path(tmp) / f"{stem}.exe")
         # The cave address is only knowable once every earlier blob is down, and
         # the blob has to be relocated to it before it is written.
@@ -319,6 +328,12 @@ def build_framedrain(pe, feature_dir, probe=False):
     ), probe=probe)
 
 
+def build_replayctl(pe, feature_dir, probe=False):
+    return build_feature(pe, feature_dir / "src/replayctl.cpp", "replayctl_frame", (
+        (TARGET_REPLAYFRAME, "replayctl_frame", ("ecx",)),
+    ), probe=probe)
+
+
 def build_retrytime(pe, feature_dir, probe=False):
     """No payload and no detour: one imm32, rewritten in place.
 
@@ -367,7 +382,13 @@ FEATURES = {"020-gameresult": build_gameresult,
             # 805/806/800 vs 2031/3724/3719, game time lost ~0% vs 3-11%. On
             # real build orders, placement goes 0.7-2.6s unpredictable to
             # 0.43-0.65s. docs/net-fixes.md has the numbers.
-            "033-retrytime": build_retrytime}
+            "033-retrytime": build_retrytime,
+            # Promoted 2026-08-30 on a verified end-to-end run: in a real replay
+            # the logic frame held at 937 for 3,176 client iterations while the
+            # camera stayed live, and screenshots 8s apart differ by 5437 px
+            # playing, 0 px paused, 3603 px resumed. Replay-only -- it returns
+            # immediately unless TheGameLogic's mode is GAME_REPLAY.
+            "039-replayctl": build_replayctl}
 # Selected only by name, and refused by --dist. mods/dist is the artifact
 # every ladder player runs: an instrument writes tens of lines a second, and a
 # candidate has not earned a place in it until the spike measuring it is green.

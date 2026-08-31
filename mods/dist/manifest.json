@@ -10,16 +10,20 @@
   },
   "output": {
     "path": "mods/dist/lotrbfme.exe",
-    "sha256": "2cfc51e2466af38b3b023318b1f96451e223e592b0caf27eabcaf03a36cb7e10",
+    "sha256": "f8a80e0d96d03c653649a3e528e3dffa796157a7975f014bee5d3f25ee346184",
     "size": 16498688
   },
   "cave": {
     "section": ".bfmemod",
     "rva": "0x01016000",
     "size": "0x10000",
-    "used": 2073
+    "used": 2330
   },
   "features": [
+    {
+      "name": "039-replayctl",
+      "target_rva": "0x0006B910"
+    },
     {
       "name": "031-earlysend",
       "target_rva": "0x0006BA44"
