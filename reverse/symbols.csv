@@ -73357,6 +73357,7 @@ name,address,notes
 ?bfmeFlush1285@BfmeBroadcast1285@@QAEXXZ,0x008A1940,address-derived queue flush called by the 0x008BB570 retail body
 ?bfmeFlush@Rva003D8530Owner@@QAEXXZ,0x00009787,Open-BFME5 ILT thunk to body 0x003D55C0; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it once on the same sub-object after the slot loop; address-derived name
 ?bfmeFlushQO@BfmeThingQO@@QAEXH@Z,0x0088A230,pin
+?bfmeFlushSTA@@YAXXZ,0x0088A670,pin
 ?bfmeFlushSlots1289@BfmeSlotDispatcher1281@@QAEXXZ,0x008BCD80,address-derived slot-state flush reconstructed from the 0x008BCD80 retail body
 ?bfmeFormatAPB@@YAXPADHPAX@Z,0x00850600,pin
 ?bfmeForward@Gen_0002644FTarget@@QAEXXZ,0x0002644F,Open-BFME5 ILT the three negative-displacement forwarders at 0x001FB570 0x001FBF60 and 0x00204450 all jump to
@@ -74762,6 +74763,7 @@ name,address,notes
 ?bfmeWriteNCSG@BfmeOutCSG@@QAEXPAX@Z,0x00036192,pin
 ?bfmeWriteNCSH@BfmeOutCSH@@QAEXPAX@Z,0x00036192,pin
 ?bfmeWriteNCTA@BfmeOutCTA@@QAEXPAX@Z,0x0000314D,pin
+?bfmeWriteSTA@@YAXPAXHHH@Z,0x0088A640,pin
 ?bfmeXferObjectID@@YAXPAVBfmeXfer@@PAI@Z,0x0000C9B4,AODHordeContain xfer reaches the existing ObjectID transfer helper
 ?bfme_appendGameOverDetails@GameLogic@@QAEXXZ,0x00387A50,once-only (+0x68 flag): formats Game Over Details and per slot Victory/Defeat frame Quit frame (graceful|voted out|n/a) from the PlayerLeaveStatus[8] records at +0x1b0 copying status into Player+0x484 and appending to the last AsciiString of the vector at +0x54..+0x58; ecx = this = GameLogic at the call 0x00397789; the ledger name ?endMenu@EstablishConnectionsMenu@@ for this 657 B body is wrong; reached via ILT 0x0004A10B
 ?bfme_getPlayerLeaveStatus@GameLogic@@QAEPAUPlayerLeaveStatus@@H@Z,0x00383B90,slot < 8 returns this+0x1b0+slot*0x1c else NULL; neighbour of 0x00383BC0 on the same record array
@@ -76506,6 +76508,7 @@ name,address,notes
 ?g_bfmeSinkBTC@@3PAVBfmeSinkBTC@@A,0x00EF0898,pin
 ?g_bfmeSinkBUB@@3PAVBfmeSinkBUB@@A,0x00EF0888,pin
 ?g_bfmeSinkSB@@3PAVBfmeSinkSB@@A,0x00EED668,pin
+?g_bfmeSinkSTA@@3PAXA,0x00EC6FBC,pin
 ?g_bfmeSrc1007@@3PAVBfmeSrc1007@@A,0x00EF1464,pin
 ?g_bfmeSrc1044@@3VBfmeSrc1044@@A,0x00F4FB38,pin
 ?g_bfmeSrc962@@3PAVBfmeSrc962@@A,0x00EF1464,pin
