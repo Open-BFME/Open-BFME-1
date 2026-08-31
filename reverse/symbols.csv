@@ -81307,3 +81307,4 @@ g_bfmeJpegExtendedMessage,0x01081238,JPEG extended message-table text selected f
 ?getUser@BfmeGlobal_012f1024@@QAEPAVUser@@PAX@Z,0x00042523,call-site callee candidate for Glo012F1024Item::j_00019eca; the global at 0x012F1024 receives the vector entry address and returns the matched 0x003B39C0 object
 ?GetName@User@@QAE?AVAsciiString@@XZ,0x0000CA95,call-site callee candidate for Glo012F1024Item::j_00019eca; the returned four-byte string object and hidden return buffer match the 0x003A72F0 body
 ?getEstimateTeamPosition@Team@@QBEPAUCoord3D@@PAU2@@Z,0x000F2420,RECRUIT_TEAM_AT_TEAM and doTeamRadarCreateEvent call this BFME out-parameter average-position body
+?deleteTeam@Team@@QAEX_N@Z,0x00028105,doTeamDelete canonical call after BFME ScriptEngine team lookup
