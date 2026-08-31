@@ -17,8 +17,14 @@ Behavior
   authoritative phase-1 ticks.
 - A true pause bypasses GameLogic phase dispatch while retaining BFME's native
   client-frame presentation updates. Authoritative logic, world drawables,
-  particles, interpolation, and WW3D elapsed animation time remain held, while
-  APT/menu and Anim2D UI presentation can continue as retail expects.
+  particles, and interpolation remain held. The shared retail WW3D absolute
+  clock continues for APT/menu presentation, while visual-delta and particle
+  gates keep world timing stopped. W3DModelDraw's retail world-animation feeder
+  at caller 0x00B5CA51 is held on the model's existing motion/frame during true
+  pause; other HLOD callers, including menu presentation, remain untouched.
+  The retail setter rebases its private sync timestamp on the held frame, so no
+  paused time becomes an unpause animation jump. The DLL does not pin the
+  GameEngine client phase or interpolation ratio.
 - Shell and loading screens retain the retail real-time WW3D clock, so the
   main-menu Sauron's-tower camera movie advances before gameplay exists.
 - An unpaused shell map receives the same 5-Hz logic cadence as gameplay;
@@ -49,9 +55,11 @@ The included deterministic test results cover 60, 45, 30, 20, 15, 12, 10,
 and 5 FPS, pause preservation, presentation-only pause routing with no
 GameLogic phase calls, low-FPS recovery, and discarded stalls.
 
-Known test result: the presentation-only pause-routing experiment did not
-restore the missing single-player pause ornament in the in-game user test.
-It is retained here as a tested negative result, not as a confirmed fix.
+Known test result: passing through the shared WW3D clock restored the pause
+ornament but allowed running model loops to continue in place. A subsequent
+global Animatable3DObj progression hook suppressed the ornament and did not
+catch the manually driven soldier path, so it was removed. This build instead
+holds only the known W3DModelDraw world feeder described above.
 
 This diagnostic build also writes C:\BFME1\BFME_FOCUS_DIAGNOSTIC.csv. It
 records focus state, the retail frame limiter fields, measured render timing,
@@ -59,7 +67,7 @@ the scheduler accumulator, and W3D frame time. The probes are read-only and do
 not change focus, pacing, presentation, or timing behavior.
 
 dinput8.dll SHA-256:
-F1296DBA9BE8E94167CB68CE7A20F265796125A11EDE2B26937BA388143610E6
+72D91C21AB4A5F19187CEECA3A7DBF5FD0853A7571F50A332352B8CCA63E6AA2
 
 This is a local test package. It does not modify lotrbfme.exe or any
 Open-BFME repository branch.

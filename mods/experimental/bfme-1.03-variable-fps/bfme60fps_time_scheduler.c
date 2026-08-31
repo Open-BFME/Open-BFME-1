@@ -168,6 +168,13 @@ static BOOL install_camera_scroll(BYTE *image){
   FlushInstructionCache(GetCurrentProcess(),slot,sizeof(*slot));
   VirtualProtect(slot,sizeof(*slot),old,&back);return TRUE;
 }
+static BOOL world_pause_active(void){
+  void *logic;
+  if(InterlockedCompareExchange(&g_w3dClockFrozen,0,0)!=0)return TRUE;
+  if(!g_image)return FALSE;
+  logic=*(void**)(g_image+(0x012F0898-0x00400000));
+  return logic&&*(volatile BYTE*)((BYTE*)logic+0x11C)!=0;
+}
 static void invalidate_state(DWORD object,DWORD motion){DWORD i;if(!object||!motion)return;for(i=0;i<STATE_N;i++)if(g_states[i].object==object&&g_states[i].motion==motion){g_states[i].valid=FALSE;}}
 static float adjust_manual(DWORD caller,DWORD mode,DWORD bits,DWORD object,DWORD motion){
   enum { CONTINUOUS_DELTA_LIMIT=3 };
@@ -214,20 +221,16 @@ static ObjectAnimState *object_animation_state(DWORD object){
   if(slot==STATE_N)return 0;g_objectAnims[slot].object=object;return &g_objectAnims[slot];
 }
 static void __stdcall adjust_hlod_call(DWORD caller,DWORD object,DWORD *motionBits,DWORD *frameBits,DWORD *modeBits){
-  union{DWORD b;float f;} frame;ObjectAnimState *state;DWORD incomingMotion,incomingMode;
+  DWORD currentMotion;
   if(!object||!motionBits||!frameBits||!modeBits)return;
-  incomingMotion=*motionBits;incomingMode=*modeBits;frame.b=*frameBits;
-  frame.f=adjust_manual(caller,incomingMode,frame.b,object,incomingMotion);
-  state=object_animation_state(object);
-  if(g_visual.active){
-    *frameBits=frame.b;
-    if(state){state->motion=incomingMotion;state->frame=frame.f;state->mode=(int)incomingMode;state->lastTick=GetTickCount();state->valid=TRUE;}
-    return;
-  }
-  /* Freeze the complete render-object animation state.  Holding only a frame
-     is insufficient when two paused client paths alternate motion or mode. */
-  if(state&&state->valid&&state->motion){union{float f;DWORD b;} held;held.f=state->frame;*motionBits=state->motion;*frameBits=held.b;*modeBits=0;state->lastTick=GetTickCount();}
-  else{*frameBits=frame.b;*modeBits=0;if(state){state->motion=incomingMotion;state->frame=frame.f;state->mode=(int)incomingMode;state->lastTick=GetTickCount();state->valid=TRUE;}}
+  /* B5CA51 is W3DModelDraw's authoritative world-model animation feeder.
+     Preserve the object's already-rendered motion/frame only for that caller;
+     APT/menu HLODs use other callers and must continue for the ornament.  The
+     retail setter rebases LastSyncTime on this held frame, preventing debt. */
+  if(caller!=MANUAL_CALLER||!world_pause_active())return;
+  if(*(volatile LONG*)((BYTE*)(ULONG_PTR)object+0x104)!=2)return;
+  currentMotion=*(volatile DWORD*)((BYTE*)(ULONG_PTR)object+0x108);if(!currentMotion)return;
+  *motionBits=currentMotion;*frameBits=*(volatile DWORD*)((BYTE*)(ULONG_PTR)object+0x10C);*modeBits=0;
 }
 static BOOL hook_hlod(BYTE*s){
   BYTE*t=(BYTE*)VirtualAlloc(0,176,MEM_COMMIT|MEM_RESERVE,PAGE_EXECUTE_READWRITE),*p;DWORD r,o,q;if(!t)return FALSE;p=t;
@@ -390,10 +393,14 @@ static BOOL hook_state3_timer(BYTE*s){
   b(&p,0x61);b(&p,0x9d);b(&p,0xe9);r=(DWORD)(ULONG_PTR)tr-((DWORD)(ULONG_PTR)p+4);d(&p,r);FlushInstructionCache(GetCurrentProcess(),t,p-t);
   if(!VirtualProtect(s,B5_TIMER_N,PAGE_EXECUTE_READWRITE,&o))return FALSE;s[0]=0xe9;r=(DWORD)(ULONG_PTR)t-((DWORD)(ULONG_PTR)s+5);cp(s+1,(BYTE*)&r,4);s[5]=0x90;FlushInstructionCache(GetCurrentProcess(),s,B5_TIMER_N);VirtualProtect(s,B5_TIMER_N,o,&q);return TRUE;
 }
-/* WW3D receives an absolute millisecond clock.  Scale only its delta, retain
-   fractional milliseconds, and freeze it while client/game time is frozen. */
+/* WW3D receives an absolute millisecond clock.  Scale only its active-world
+   delta and retain fractional milliseconds.  During a true pause, pass the
+   retail clock through and rebase it: this clock is also consumed by APT/UI
+   presentation, so globally clamping it suppresses the pause ornament and
+   spellbook transitions.  World animation remains stopped independently by
+   the HLOD pause hold, zero visual delta, and particle pause gate. */
 static DWORD __stdcall scaled_w3d_clock(DWORD caller,DWORD raw){
-  DWORD delta,scaled,i,slot=SYNC_CLOCKS;double amount;float slowdown;BOOL frozen;
+  DWORD delta,scaled,i,slot=SYNC_CLOCKS;double amount;float slowdown;
   SyncClock *clock;
   InterlockedIncrement(&g_syncCalls);
   for(i=0;i<SYNC_CLOCKS;i++){if(g_syncClocks[i].caller==caller){slot=i;break;}if(slot==SYNC_CLOCKS&&g_syncClocks[i].caller==0)slot=i;}
@@ -401,21 +408,19 @@ static DWORD __stdcall scaled_w3d_clock(DWORD caller,DWORD raw){
   clock=&g_syncClocks[slot];
   if(!clock->caller)clock->caller=caller;
   InterlockedIncrement(&g_syncCounts[slot]);InterlockedIncrement(&g_targetCalls);g_lastTargetRaw=raw;
-  frozen=InterlockedCompareExchange(&g_w3dClockFrozen,0,0)!=0;
   /* Before active simulation (including shell startup/loading), preserve the
      retail argument exactly.  Running it through per-caller transformed
-     timelines can jump the one global WW3D clock and blank the shell map. */
-  if(!g_visual.active&&!frozen){clock->raw=raw;clock->out=raw;clock->remainder=0.0;clock->valid=TRUE;g_lastTargetOut=raw;return raw;}
+     timelines can jump the one global WW3D clock and blank the shell map.
+     The same pass-through is required while paused for UI presentation. */
+  if(!g_visual.active){clock->raw=raw;clock->out=raw;clock->remainder=0.0;clock->valid=TRUE;g_lastTargetOut=raw;return raw;}
   if(!clock->valid){clock->raw=raw;clock->out=raw;clock->remainder=0.0;clock->valid=TRUE;g_lastTargetOut=raw;return raw;}
   delta=raw-clock->raw;
   /* Never convert a reset, suspend, or paused wall-clock gap into catch-up. */
   if(delta>1000){clock->raw=raw;clock->remainder=0.0;g_lastTargetOut=clock->out;return clock->out;}
   /* The main W3DDisplay caller already advances its synthetic input by the
      scaled TheW3DFrameLengthInMsec.  Other absolute-time callers still need
-     the low-FPS slowdown during simulation.  Shell/loading clocks pass at
-     retail speed; only the explicit pause state freezes WW3D. */
-  slowdown=(float)bfme_w3d_clock_scale(g_visual.active,
-    frozen,
+     the low-FPS slowdown during active simulation. */
+  slowdown=(float)bfme_w3d_clock_scale(TRUE,FALSE,
     g_visual.slowdown,caller==STATE3_CLOCK_CALLER);
   amount=(double)delta*(double)slowdown+clock->remainder;scaled=(DWORD)amount;clock->remainder=amount-(double)scaled;
   clock->raw=raw;clock->out+=scaled;g_lastTargetOut=clock->out;
@@ -519,6 +524,14 @@ static void hold_visual_phase(void *engine,LONG phase,BOOL rebase){
   *(volatile float*)((BYTE*)engine+0x38)=g_visual.phase;
   InterlockedExchange(&g_phaseDecision,g_visual.heldPeriod);
 }
+static void freeze_world_visual_time_for_pause(LONG phase){
+  /* A true pause stops only DLL-owned world timing.  Do not overwrite the
+     GameEngine phase (+0x30) or client-frame ratio (+0x38): retail leaves
+     those presentation fields available to APT/menu transitions while its
+     own GameClient/W3D pause checks hold world state. */
+  if(g_visual.active&&phase>=2&&phase<=6)g_visual.heldPeriod=phase;
+  g_visual.active=0;g_visual.realRenderDelta=0.0;g_visual.animationDelta=0.0;g_visual.frameScale=0.0f;
+}
 static void advance_visual_time(void *engine,double delta){
   double animationDelta,period,frameMsExact;LONG frameMs;
   g_visual.realRenderDelta=delta;
@@ -560,7 +573,7 @@ static void __stdcall schedule_time_tick(void *engine,LONG newPeriod){
   paused=*(volatile BYTE*)((BYTE*)logic+0x11C)!=0;
   if(paused||engine_time_frozen()){
     InterlockedExchange(&g_w3dClockFrozen,1);
-    hold_visual_phase(engine,newPeriod,FALSE);
+    freeze_world_visual_time_for_pause(newPeriod);
     /* GameEngine::update has already set GameClient::m_advanceFrame = 1.
        Do not route every paused render through phase 1: retail's phase-1
        pause gate clears m_advanceFrame, which starves the client-frame clock
@@ -570,7 +583,7 @@ static void __stdcall schedule_time_tick(void *engine,LONG newPeriod){
        and particles, and the explicit W3D clock freeze above stops world
        animation. */
     InterlockedExchange(&g_skipPhaseDispatch,1);
-    log_timing(PAUSED,"PRESENTATION_ONLY_NO_LOGIC_PHASE",FALSE);return;
+    log_timing(PAUSED,"UI_PHASE_UNPINNED_NO_LOGIC_PHASE",FALSE);return;
   }
   InterlockedExchange(&g_w3dClockFrozen,0);
   g_timing.activeSeconds+=delta;advance_visual_time(engine,delta);classification=g_timing.fps<15.0?LOW_FPS_SLOWDOWN:ACTIVE_SIMULATION;
@@ -797,17 +810,17 @@ static void write_w3d_clock_proof(void){
 static void __stdcall capture_client_target(DWORD self){DWORD vt,target,rec[3];HANDLE f;DWORD wrote;if(!self||InterlockedCompareExchange(&g_clientTargetCaptured,1,0)!=0)return;vt=*(DWORD*)(ULONG_PTR)self;if(!vt){InterlockedExchange(&g_clientTargetCaptured,0);return;}target=*(DWORD*)((BYTE*)(ULONG_PTR)vt+0x80);rec[0]=self;rec[1]=vt;rec[2]=target;f=CreateFileA("BFME_60FPS_CLIENT_TARGET.bin",GENERIC_WRITE,FILE_SHARE_READ,0,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);if(f==INVALID_HANDLE_VALUE)return;WriteFile(f,rec,sizeof(rec),&wrote,0);if(target>=0x00400000&&target<0x02000000)WriteFile(f,(BYTE*)(ULONG_PTR)target,0x4000,&wrote,0);CloseHandle(f);}
 static BOOL hook_client_capture(BYTE*s){BYTE*t=(BYTE*)VirtualAlloc(0,96,MEM_COMMIT|MEM_RESERVE,PAGE_EXECUTE_READWRITE),*p;DWORD rel,old,back;if(!t)return FALSE;p=t;b(&p,0x9c);b(&p,0x60);b(&p,0x51);b(&p,0xb8);d(&p,(DWORD)(ULONG_PTR)&capture_client_target);b(&p,0xff);b(&p,0xd0);b(&p,0x61);b(&p,0x9d);cp(p,kUpdate,UPDATE_N);p+=UPDATE_N;b(&p,0xe9);rel=(DWORD)(ULONG_PTR)(s+UPDATE_N)-((DWORD)(ULONG_PTR)p+4);d(&p,rel);FlushInstructionCache(GetCurrentProcess(),t,p-t);if(!VirtualProtect(s,UPDATE_N,PAGE_EXECUTE_READWRITE,&old))return FALSE;s[0]=0xe9;rel=(DWORD)(ULONG_PTR)t-((DWORD)(ULONG_PTR)s+5);cp(s+1,(BYTE*)&rel,4);FlushInstructionCache(GetCurrentProcess(),s,UPDATE_N);VirtualProtect(s,UPDATE_N,old,&back);return TRUE;}
 static BOOL apply(void){
-  BYTE*im=(BYTE*)GetModuleHandleA(0),*u,*r,*c,*rate,*logic,*sync,*floating,*particleRender,*particleUpdateCall,*particleGetters[6];volatile LONG*frameMs;DWORD old;
+  BYTE*im=(BYTE*)GetModuleHandleA(0),*u,*r,*c,*rate,*logic,*sync,*floating,*hlod,*particleRender,*particleUpdateCall,*particleGetters[6];volatile LONG*frameMs;DWORD old;
   if(!im)return FALSE;
-  u=im+UPDATE_RVA;r=im+RESET_RVA;c=im+CLIENT_UPDATE_RVA;rate=im+W3D_RATE_SET_RVA;logic=im+LOGIC_UPDATE_RVA;sync=im+SYNC_RVA;floating=im+FLOAT_TEXT_RVA;particleRender=im+PARTICLE_RENDER_RVA;particleUpdateCall=im+PARTICLE_UPDATE_CALL_RVA;
+  u=im+UPDATE_RVA;r=im+RESET_RVA;c=im+CLIENT_UPDATE_RVA;rate=im+W3D_RATE_SET_RVA;logic=im+LOGIC_UPDATE_RVA;sync=im+SYNC_RVA;floating=im+FLOAT_TEXT_RVA;hlod=im+HLOD_SET_RVA;particleRender=im+PARTICLE_RENDER_RVA;particleUpdateCall=im+PARTICLE_UPDATE_CALL_RVA;
   particleGetters[0]=im+PARTICLE_GET0_RVA;particleGetters[1]=im+PARTICLE_GET1_RVA;particleGetters[2]=im+PARTICLE_GET2_RVA;particleGetters[3]=im+PARTICLE_GET3_RVA;particleGetters[4]=im+PARTICLE_GET4_RVA;particleGetters[5]=im+PARTICLE_ALPHA_RVA;
   frameMs=(volatile LONG*)(im+W3D_FRAME_MS_RVA);
-  if(!match(u,kUpdate,5)||!match(u+0x71,kUpdateA,sizeof(kUpdateA))||!match(u+0xB2,kUpdateB,sizeof(kUpdateB))||!match(u+UPDATE_SCHED_OFF,kSched,sizeof(kSched))||!match(r+RESET_CLOCK_OFF,kReset,sizeof(kReset))||!match(logic,kLogicUpdate,sizeof(kLogicUpdate))||!match(c,kClientUpdate,sizeof(kClientUpdate))||!match(rate,kW3DSetRate,sizeof(kW3DSetRate))||!match(sync,kSync,sizeof(kSync))||!match(floating,kFloatText,sizeof(kFloatText))||!match(particleRender,kParticleRender,sizeof(kParticleRender))||!match(particleUpdateCall,kParticleUpdateCall,sizeof(kParticleUpdateCall))||!match(particleGetters[0],kParticleGet0,sizeof(kParticleGet0))||!match(particleGetters[1],kParticleGet1,sizeof(kParticleGet1))||!match(particleGetters[2],kParticleGet2,sizeof(kParticleGet2))||!match(particleGetters[3],kParticleGet3,sizeof(kParticleGet3))||!match(particleGetters[4],kParticleGet4,sizeof(kParticleGet4))||!match(particleGetters[5],kParticleAlpha,sizeof(kParticleAlpha)))return FALSE;
+  if(!match(u,kUpdate,5)||!match(u+0x71,kUpdateA,sizeof(kUpdateA))||!match(u+0xB2,kUpdateB,sizeof(kUpdateB))||!match(u+UPDATE_SCHED_OFF,kSched,sizeof(kSched))||!match(r+RESET_CLOCK_OFF,kReset,sizeof(kReset))||!match(logic,kLogicUpdate,sizeof(kLogicUpdate))||!match(c,kClientUpdate,sizeof(kClientUpdate))||!match(rate,kW3DSetRate,sizeof(kW3DSetRate))||!match(sync,kSync,sizeof(kSync))||!match(floating,kFloatText,sizeof(kFloatText))||!match(hlod,kHlod,sizeof(kHlod))||!match(particleRender,kParticleRender,sizeof(kParticleRender))||!match(particleUpdateCall,kParticleUpdateCall,sizeof(kParticleUpdateCall))||!match(particleGetters[0],kParticleGet0,sizeof(kParticleGet0))||!match(particleGetters[1],kParticleGet1,sizeof(kParticleGet1))||!match(particleGetters[2],kParticleGet2,sizeof(kParticleGet2))||!match(particleGetters[3],kParticleGet3,sizeof(kParticleGet3))||!match(particleGetters[4],kParticleGet4,sizeof(kParticleGet4))||!match(particleGetters[5],kParticleAlpha,sizeof(kParticleAlpha)))return FALSE;
   old=(DWORD)InterlockedCompareExchange(frameMs,0,0);if(old!=33)return FALSE;g_image=im;g_w3dOld=old;g_w3dNew=old;
   /* Install the runtime-identified W3DView vslot before modifying code bytes,
      so an early startup retry cannot leave a partially installed patch. */
   if(!install_camera_scroll(im))return FALSE;
-  if(!hook_sync(sync))return FALSE;if(!hook_floating_text(floating))return FALSE;if(!install_time_scheduler(u,r,logic))return FALSE;if(!hook_particle_update_call(particleUpdateCall))return FALSE;if(!install_particle_interpolation(particleRender,particleGetters))return FALSE;
+  if(!hook_sync(sync))return FALSE;if(!hook_floating_text(floating))return FALSE;if(!hook_hlod(hlod))return FALSE;if(!install_time_scheduler(u,r,logic))return FALSE;if(!hook_particle_update_call(particleUpdateCall))return FALSE;if(!install_particle_interpolation(particleRender,particleGetters))return FALSE;
   InterlockedExchange(&g_patchApplied,1);write_w3d_clock_proof();write_scheduler_proof();write_particle_proof();return TRUE;
 }
 static DWORD WINAPI worker(LPVOID u){DWORD i,j;(void)u;for(i=0;i<1200;i++){if(apply()){for(j=0;j<12;j++){Sleep(5000);write_w3d_clock_proof();write_particle_proof();}return 0;}Sleep(25);}InterlockedExchange(&g_patchApplied,-1);return 0;}

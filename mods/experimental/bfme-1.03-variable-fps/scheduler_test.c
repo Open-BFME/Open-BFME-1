@@ -105,18 +105,32 @@ int main(void)
   fprintf(out,"pause_visual_phase phase=%.6f expected=0.375000 %s\n",phase,absolute(phase-0.375)<1.0e-9?"PASS":"FAIL");if(absolute(phase-0.375)>=1.0e-9)failures++;
 
   {
-    int render,clientFrame=0,advanceFrame=1,logicPhaseCalls=0;
+    int render,clientFrame=0,advanceFrame=1,logicPhaseCalls=0,presentationPhase=1;
+    double presentationRatio=0.0;
     /* Model the hook boundary: retail has already set advanceFrame before
        the scheduler decision.  The presentation-only pause route must leave
        it set and must not enter any GameLogic phase. */
     for(render=0;render<12;render++){
       if(advanceFrame)clientFrame++;
       advanceFrame=1;
+      presentationPhase++;
+      presentationRatio=(double)presentationPhase/12.0;
+      if(presentationRatio>1.0)presentationRatio=1.0;
       /* paused scheduler: skip the phase-dispatch call */
     }
-    fprintf(out,"pause_presentation_route client_frames=%d logic_phases=%d expected=12,0 %s\n",
-      clientFrame,logicPhaseCalls,(clientFrame==12&&logicPhaseCalls==0)?"PASS":"FAIL");
-    if(clientFrame!=12||logicPhaseCalls!=0)failures++;
+    fprintf(out,"pause_presentation_route client_frames=%d logic_phases=%d ratio=%.1f expected=12,0,1.0 %s\n",
+      clientFrame,logicPhaseCalls,presentationRatio,(clientFrame==12&&logicPhaseCalls==0&&absolute(presentationRatio-1.0)<1.0e-9)?"PASS":"FAIL");
+    if(clientFrame!=12||logicPhaseCalls!=0||absolute(presentationRatio-1.0)>=1.0e-9)failures++;
+  }
+
+  {
+    unsigned long retailW3dClock=1000,worldAnimationFrame=42,lastWorldSync=1000;
+    /* The shared retail clock remains available to pause-menu presentation,
+       while the separate world-animation hold consumes zero visual delta. */
+    for(i=0;i<10;i++){retailW3dClock+=16;lastWorldSync=retailW3dClock;}
+    fprintf(out,"pause_clock_separation w3d_ms=%lu world_frame=%lu last_sync=%lu expected=1160,42,1160 %s\n",
+      retailW3dClock,worldAnimationFrame,lastWorldSync,(retailW3dClock==1160&&worldAnimationFrame==42&&lastWorldSync==1160)?"PASS":"FAIL");
+    if(retailW3dClock!=1160||worldAnimationFrame!=42||lastWorldSync!=1160)failures++;
   }
 
   fprintf(out,"game_modes shell4=%d singleplayer7=%d expected=1,0 %s\n",bfme_game_mode_suspends_scheduler(4),bfme_game_mode_suspends_scheduler(7),bfme_game_mode_suspends_scheduler(4)==1&&bfme_game_mode_suspends_scheduler(7)==0?"PASS":"FAIL");
