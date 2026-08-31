@@ -53,19 +53,6 @@
 #endif
 
 //-------------------------------------------------------------------------------------------------
-// ??0FiringTracker@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
-FiringTracker::FiringTracker(Thing* thing, const ModuleData *modData) : UpdateModule( thing, modData )
-{
-	m_consecutiveShots = 0;
-	m_victimID = INVALID_ID;
-	m_frameToStartCooldown = 0;
- 	m_frameToForceReload = 0;
-	m_frameToStopLoopingSound = 0;
-	m_audioHandle = AHSV_NoSound;
-	setWakeFrame(getObject(), UPDATE_SLEEP_FOREVER);
-}
-
-//-------------------------------------------------------------------------------------------------
 // ??1FiringTracker@@MAE@XZ present-unmatched
 FiringTracker::~FiringTracker()
 {
