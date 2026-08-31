@@ -10350,6 +10350,8 @@ name,address,notes
 ?Rva007EB410NetConnStatus@@YAHHPAXH@Z,0x007EB410,Y2 lane: NetConnStatus -- the body names itself in its own warning string; three-argument query with the third unused
 ?Rva007EB520NetConnMAC@@YAIPAX@Z,0x007EB520,Y2 lane: NetConnMAC -- the body names itself in both of its log lines; NetConnStatus hands it the 0xF0-byte Adapter block
 ?Rva007EB810Get@@YAPAURva007EB810Diag@@XZ,0x007EB810,U2 lane: cdecl getter of the diagnostic reporter used by the FESL asserts at 0x008013F0 and 0x00802980
+?add@Rva007EAServiceList@@QAEXPAVRva00803080@@@Z,0x007EA550,Y2 lane: FESL service-list add callback called by the 0x00803260 pending-request removal body
+?remove@Rva007EAServiceList@@QAEXPAVRva00803080@@@Z,0x007EA590,Y2 lane: FESL service-list remove callback called by the 0x00803260 pending-request removal body
 ?Rva007EBCA0@@YAPADPBD0@Z,0x007EBCA0,Y2 lane: address-derived; the tag lookup 0x007EBF20 and 0x007EBFC0 both hand a record and a tag name to
 ?Rva007F0000Alloc@@YAPAXH@Z,0x007F0000,Y2 DirtySock lane: address-derived; one-argument allocator ProtoMangleCreate calls for the 0x214-byte module record
 ?Rva007F0030Free@@YAXPAX@Z,0x007F0030,Y2 DirtySock lane: address-derived; the matching one-argument release, called by ProtoMangleDestroy
