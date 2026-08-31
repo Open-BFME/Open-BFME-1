@@ -81346,3 +81346,5 @@ _strtol,0x009F71CC,AptValue::toInteger at 0x00898300 calls the retail strtol imp
 ?TheVictorySystem@@3PAVVictorySystem@@A,0x012EF734,VictorySystem singleton proven by GameEngine initialization and cell-grid use
 ?bfmeParametersForPlayer@VictorySystem@@QAEPAVGen_001de260@@H@Z,0x00033CA8,ILT to the player-to-FactionVictoryParameters lookup at 0x001DE880
 ?bfmeAbove@Gen_001de260@@QBEHPBMH@Z,0x000473C5,ILT to the exact landed integer threshold predicate at 0x001DE260
+??0BfmeCell@@QAE@XZ,0x00009D4F,BfmeCellGrid vector-new calls this ILT to the exact 0x001B1800 cell initializer
+??1BfmeCell@@QAE@XZ,0x0003DC2B,BfmeCellGrid vector cleanup calls this ILT to the 0x001B1200 cell destructor
