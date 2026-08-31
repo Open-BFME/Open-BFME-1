@@ -87,7 +87,25 @@ public:
 S4_PARSE_THEN_REGISTER( 0059BDE0, 16 )
 S4_PARSE_THEN_REGISTER( 0059E290, 18 )
 S4_PARSE_THEN_REGISTER( 0059E860, 20 )
-S4_PARSE_THEN_REGISTER( 0059F980, 16 )
+
+extern int g_s4Head0059F980;
+struct S4Parsed0059F980 : public Rva00489210
+{
+	S4Parsed0059F980();
+	int m_10;
+	int m_14;
+	int m_18, m_1C, m_20, m_24, m_28, m_2C, m_30, m_34, m_38;
+	unsigned char m_3C, m_3D, m_3E;
+};
+
+extern const FieldParse s4Table0059F980;
+void s4parse0059F980( INI *ini, Gen_00489270 *sink )
+{
+	S4Parsed0059F980 *t = new S4Parsed0059F980;
+	ini->initFromINI( t, &s4Table0059F980 );
+	t->m_04 = t->m_14;
+	sink->m( (int)t );
+}
 
 S4Parsed0059BDE0::S4Parsed0059BDE0()
 {
@@ -152,5 +170,21 @@ S4Parsed0059E860::S4Parsed0059E860()
 	m_04 = m_storage[ 1 ];
 	m_storage[ 15 ] = 0;
 	m_0C = 0;
+	m_09 = 1;
+}
+
+S4Parsed0059F980::S4Parsed0059F980() : m_14( (m_00 = &g_s4Head0059F980, 30) )
+{
+	m_10 = 0;
+	*reinterpret_cast<int *>( reinterpret_cast<unsigned char *>( this ) + 0x0c ) = 0;
+	m_28 = 0;
+	m_30 = 0;
+	m_34 = 0;
+	m_38 = 0;
+	m_3C = 0;
+	m_3D = 0;
+	m_3E = 0;
+	m_04 = m_14;
+	m_2C = -1;
 	m_09 = 1;
 }
