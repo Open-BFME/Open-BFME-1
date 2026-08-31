@@ -81393,3 +81393,8 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??0BannerAptCallbackHolder@@QAE@P6AXXZ@Z,0x0000C56D,BannerUI APT callback ref-counted holder ctor ILT
+?registerAptCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VBannerAptCallbackHolder@@@Z,0x00023083,BannerUI APT callback registry ILT
+?bannerAptOnInitialized@@YAXXZ,0x00011B0D,BannerUI OnInitialized callback ILT
+?bannerAptOnButton@@YAXXZ,0x000063FC,BannerUI OnBttnBanner callback ILT
+?g_bannerAptCallbacksRegistered@@3_NA,0x012F495A,BannerUI one-time callback registration guard
