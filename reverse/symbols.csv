@@ -74166,6 +74166,7 @@ name,address,notes
 ?bfmeOneSGA@BfmeThingSGA@@QAEXXZ,0x0004A183,pin
 ?bfmeOneSQA@BfmeSlotSQA@@QAEXH@Z,0x00007E50,pin
 ?bfmeOneTB@@YAXXZ,0x00831F90,pin
+?bfmeOneTBA@BfmeThingTBA@@QAEXXZ,0x000297F8,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOpen1071@BfmeR1071@@QAEXPAVBfmeX1071@@@Z,0x0002144A,pin
 ?bfmeOpen1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x0002144A,pin
@@ -74705,6 +74706,7 @@ name,address,notes
 ?bfmeTwoSGA@BfmeThingSGA@@QAEXXZ,0x0000A15A,pin
 ?bfmeTwoSQA@BfmeSlotSQA@@QAEXH@Z,0x0000F28B,pin
 ?bfmeTwoTB@@YAPAXXZ,0x0083B330,pin
+?bfmeTwoTBA@BfmeThingTBA@@QAEXXZ,0x00024780,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -74755,6 +74757,7 @@ name,address,notes
 ?bfmeUseSA@BfmeSinkSA@@QAEXPAX0@Z,0x00809100,pin
 ?bfmeUseSB@BfmeSinkSB@@QAEXPAX0@Z,0x00809E00,pin
 ?bfmeUseSHA@BfmeStoreSHA@@QAEXPAH@Z,0x0001A37A,pin
+?bfmeUseTBB@BfmeThingTBB@@QAEXH@Z,0x0001284B,pin
 ?bfmeVal1025@BfmeH1025@@QAEHXZ,0x0001F668,pin
 ?bfmeVal1027@BfmeVal1027@@QAEMXZ,0x0000D7B5,pin
 ?bfmeVal1034@BfmeN1034@@QAEHXZ,0x00898300,pin
@@ -75558,7 +75561,6 @@ name,address,notes
 ?erase@?$_Rb_tree@UGen_t_006af670_k4@@U?$pair@$$CBUGen_t_006af670_k4@@UGen_t_006af670_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBUGen_t_006af670_k4@@UGen_t_006af670_p12cd@@@_STL@@@3@U?$less@UGen_t_006af670_k4@@@3@V?$allocator@U?$pair@$$CBUGen_t_006af670_k4@@UGen_t_006af670_p12cd@@@_STL@@@3@@_STL@@QAEXU?$_Rb_tree_iterator@U?$pair@$$CBUGen_t_006af670_k4@@UGen_t_006af670_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBUGen_t_006af670_k4@@UGen_t_006af670_p12cd@@@_STL@@@2@@2@0@Z,0x006A7610,gen-tgrid payload member
 ?erase@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V1@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@QAEIABVAsciiString@@@Z,0x000106FE,Open-BFME5 REL32 pin from IgnorePreferences::setIgnore at 0x000AE990
 ?erase@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@QAEIABVAsciiString@@@Z,0x00041AEC
-?eraseViaThunk@Rva00124FC0RbTree@@QAEXPAURva00124FC0RbTreeNode@@@Z,0x000296E0,ILT thunk back to the 0x00124FC0 red-black-tree erase body
 ?erase@?$hashtable@U?$pair@$$CBHPAVObject@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHPAVObject@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHPAVObject@@@_STL@@@2@@_STL@@QAEIABH@Z,0x0003FCE2,Open-BFME5 ILT for the ObjectID/Object* hashtable erase; called by GameLogic::removeObjectFromLookupTable at 0x00388A90 and jumps to the erase body at 0x00387640 matched as tg_00387640
 ?erase@?$hashtable@U?$pair@$$CBHUGen_t_000d3140_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000d3140_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000d3140_p12cd@@@_STL@@@2@@_STL@@QAEXABU?$_Ht_iterator@U?$pair@$$CBHUGen_t_000d3140_p12cd@@@_STL@@U?$_Const_traits@U?$pair@$$CBHUGen_t_000d3140_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000d3140_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000d3140_p12cd@@@_STL@@@2@@2@@Z,0x000D0BC0,gen-tgrid payload member
 ?erase@?$hashtable@U?$pair@$$CBHUGen_t_000d81e0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000d81e0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000d81e0_p12cd@@@_STL@@@2@@_STL@@QAEXABU?$_Ht_iterator@U?$pair@$$CBHUGen_t_000d81e0_p12cd@@@_STL@@U?$_Const_traits@U?$pair@$$CBHUGen_t_000d81e0_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000d81e0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000d81e0_p12cd@@@_STL@@@2@@2@@Z,0x000D64A0,gen-tgrid payload member
@@ -75612,6 +75614,7 @@ name,address,notes
 ?erase@UnicodeStringTreeEraseShim@_STL@@QAEXPAU?$_Rb_tree_node@U?$pair@$$CBVUnicodeString@@_N@_STL@@@2@@Z,0x0044D6F0,_STL _Rb_tree _M_erase UnicodeString incremental-link thunk target through a TU-local forwarding shim
 ?erase@UnsignedPairTreeEraseShim@_STL@@QAEXPAU?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@2@@Z,0x007612D0,_STL unsigned pair tree incremental-link thunk target through a TU-local forwarding shim
 ?erase@WindowVideoHashtableEraseShim@_STL@@QAEXPBX@Z,0x00498A90,_STL hashtable erase GameWindowVideo incremental-link thunk target through a TU-local forwarding shim
+?eraseViaThunk@Rva00124FC0RbTree@@QAEXPAURva00124FC0RbTreeNode@@@Z,0x000296E0,ILT thunk back to the 0x00124FC0 red-black-tree erase body
 ?errorCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPErrorArg@@@Z,0x0000BEE2
 ?estimateWeaponDamage@Weapon@@IAEMPBVObject@@0PBUCoord3D@@@Z,0x0001366F,pinharvest x1 (thunk)
 ?estimateWeaponDamage@Weapon@@IAEMPBVObject@@0PBUCoord3D@@@Z,0x000486EE,pinharvest x1 (thunk)
