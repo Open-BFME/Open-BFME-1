@@ -16,17 +16,18 @@ class Drawable
 public:
 	void replaceModelConditionState(const ModelConditionFlags &state, bool dirty, unsigned int effect);
 	void bfmeClearAndSetModelConditionFlags(const ModelConditionFlags &clear, const ModelConditionFlags &set);
+	int bfmeGetBarrelCount(int slot) const;
 
 private:
 	void bfmeApplyModelConditionFlags(bool immediate);
 	unsigned char m_bfmeHead[0x150];
 	class DrawModule **m_bfmeDrawModules;
 	unsigned char m_bfmeGap154[0xfc];
-	ModelConditionFlags m_bfmeConditionState;
-	ModelConditionFlags m_bfmeClearMask;
-	ModelConditionFlags m_bfmeSetMask;
+	mutable ModelConditionFlags m_bfmeConditionState;
+	mutable ModelConditionFlags m_bfmeClearMask;
+	mutable ModelConditionFlags m_bfmeSetMask;
 	unsigned char m_bfmeGap2c8[0xeb];
-	bool m_bfmeIsModelDirty;
+	mutable bool m_bfmeIsModelDirty;
 };
 
 void Drawable::bfmeClearAndSetModelConditionFlags(const ModelConditionFlags &clear, const ModelConditionFlags &set)
@@ -45,6 +46,8 @@ public:
 	virtual void anchor30(); virtual void anchor34(); virtual void anchor38(); virtual void anchor3c();
 	virtual void anchor40(); virtual void anchor44(); virtual void anchor48();
 	virtual void replaceModelConditionState(const ModelConditionFlags &state, bool immediate, unsigned int effect);
+	virtual void anchor50(); virtual void anchor54();
+	virtual int getBarrelCount(int slot);
 };
 
 class DrawModule
@@ -76,6 +79,33 @@ void Drawable::bfmeApplyModelConditionFlags(bool immediate)
 			interface->replaceModelConditionState(m_bfmeConditionState, immediate, 0);
 	}
 	m_bfmeIsModelDirty = false;
+}
+
+int Drawable::bfmeGetBarrelCount(int slot) const
+{
+	if (m_bfmeIsModelDirty)
+	{
+		m_bfmeConditionState.clearAndSet(m_bfmeClearMask, m_bfmeSetMask);
+		for (DrawModule **module = m_bfmeDrawModules; *module; ++module)
+		{
+			ObjectDrawInterface *interface = (*module)->getObjectDrawInterface();
+			if (interface)
+				interface->replaceModelConditionState(m_bfmeConditionState, false, 0);
+		}
+		m_bfmeIsModelDirty = false;
+	}
+
+	for (DrawModule **module = m_bfmeDrawModules; *module; ++module)
+	{
+		ObjectDrawInterface *interface = (*module)->getObjectDrawInterface();
+		if (interface)
+		{
+			int count = interface->getBarrelCount(slot);
+			if (count)
+				return count;
+		}
+	}
+	return 0;
 }
 
 class BfmeNodeRB
