@@ -81465,3 +81465,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??$_Destroy@PAURva00365070Element@@@_STL@@YAXPAURva00365070Element@@0@Z,0x00040D1D,ILT reached by the 0x00365070 vector assignment
 ??$__uninitialized_copy@PBURva00365070Element@@PAU1@@_STL@@YAPAURva00365070Element@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0001738C,ILT reached by the 0x00365070 vector assignment
 ?compareNoCaseRaw@?$StringBase@G@@ABEHPBG0H@Z,0x0009ECA0,case-insensitive wide comparison helper reached by the 0x0009F090 list search
+??$_Construct@URva00244A80Element@@U1@@_STL@@YAXPAURva00244A80Element@@ABU1@@Z,0x000128DC,ILT reached by the 0x00240230 vector overflow body
