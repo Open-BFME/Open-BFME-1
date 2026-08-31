@@ -17,10 +17,19 @@ public:
 	void replaceModelConditionState(const ModelConditionFlags &state, bool dirty, unsigned int effect);
 	void bfmeClearAndSetModelConditionFlags(const ModelConditionFlags &clear, const ModelConditionFlags &set);
 	int bfmeGetBarrelCount(int slot) const;
+	void bfmeEnableAmbientSoundFromScript(bool enable);
 
 private:
 	void bfmeApplyModelConditionFlags(bool immediate);
-	unsigned char m_bfmeHead[0x150];
+	void bfmeStartAmbientSound(bool onlyIfPermanent);
+	void refreshAmbientSound();
+	unsigned char m_bfmeHead[0x140];
+	bool m_bfmeAmbientSoundEnabled;
+	bool m_bfmeAmbientSoundEnabledFromScript;
+	unsigned char m_bfmeGap142[2];
+	class DynamicAudioEventRTS *m_bfmeAmbientSoundA;
+	class DynamicAudioEventRTS *m_bfmeAmbientSoundB;
+	class DynamicAudioEventRTS *m_bfmeAmbientSoundC;
 	class DrawModule **m_bfmeDrawModules;
 	unsigned char m_bfmeGap154[0xfc];
 	mutable ModelConditionFlags m_bfmeConditionState;
@@ -65,6 +74,44 @@ public:
 	virtual void anchor90(); virtual void anchor94(); virtual void anchor98();
 	virtual ObjectDrawInterface *getObjectDrawInterface();
 };
+
+class DynamicAudioEventRTS
+{
+public:
+	unsigned char m_bfmeHead[0x10];
+	unsigned int m_bfmePlayingHandle;
+};
+
+class AudioManager
+{
+public:
+	virtual void anchor00(); virtual void anchor04(); virtual void anchor08(); virtual void anchor0c();
+	virtual void anchor10(); virtual void anchor14(); virtual void anchor18(); virtual void anchor1c();
+	virtual void anchor20(); virtual void anchor24(); virtual void anchor28(); virtual void anchor2c();
+	virtual void anchor30(); virtual void anchor34(); virtual void anchor38(); virtual void anchor3c();
+	virtual void anchor40(); virtual void anchor44(); virtual void anchor48();
+	virtual void removeAudioEvent(unsigned int handle);
+};
+
+extern AudioManager *TheAudio;
+
+void Drawable::bfmeEnableAmbientSoundFromScript(bool enable)
+{
+	m_bfmeAmbientSoundEnabledFromScript = enable;
+	if (enable)
+	{
+		bfmeStartAmbientSound(false);
+		refreshAmbientSound();
+		return;
+	}
+
+	if (m_bfmeAmbientSoundA)
+		TheAudio->removeAudioEvent(m_bfmeAmbientSoundA->m_bfmePlayingHandle);
+	if (m_bfmeAmbientSoundB)
+		TheAudio->removeAudioEvent(m_bfmeAmbientSoundB->m_bfmePlayingHandle);
+	if (m_bfmeAmbientSoundC)
+		TheAudio->removeAudioEvent(m_bfmeAmbientSoundC->m_bfmePlayingHandle);
+}
 
 void Drawable::bfmeApplyModelConditionFlags(bool immediate)
 {
