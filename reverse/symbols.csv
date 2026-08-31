@@ -74504,6 +74504,7 @@ name,address,notes
 ?bfmeSubmit1283@BfmeSubmitter1283@@QAEXHHHHHHHPAMHHHH@Z,0x008BEBF0,address-derived twelve-argument submitter; argument shape decoded from the 0x008BEE50 retail call site
 ?bfmeSubmit1285@BfmeRouteManager1285@@QAEXPAXPAUBfmeNode1285@@HH@Z,0x008A0960,address-derived route submission called by the 0x008BB570 retail body
 ?bfmeSwapEnds@@YAXPAPAPAVBfmeOwnedI@@0@Z,0x00032FE7,Open-BFME5 the ICF thunk (to 0x00432FE7) the swap in the clear at 0x003C1190 calls for the third pair
+?bfmeSymbolSZA@@YAXIPADI@Z,0x0088C6E0,pin
 ?bfmeTail1052@BfmeL1052@@QAEXPAUBfmeM1052@@@Z,0x0004115A,pin
 ?bfmeTail1061@BfmeT1061@@QAEXXZ,0x00010F8C,pin
 ?bfmeTail1070@BfmeT1070@@QAEXXZ,0x00010F8C,pin
