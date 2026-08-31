@@ -49,3 +49,20 @@ R5_EH_ELEM( Gen0002A8BA, 0x2C )		// 163B at 0x00774130
 R5_EH_ELEM( Gen001439F0, 0x24 )		// 166B at 0x001439F0, element dtor ILT 0x0003B8FE
 
 template class _STL::vector<_STL::vector<int> >;
+
+struct BfmeDtorMemberBElement
+{
+	char *m_begin;
+	char *m_end;
+	char *m_capacity;
+
+	~BfmeDtorMemberBElement()
+	{
+		const unsigned int allocation_size = m_capacity - m_begin;
+		if (m_begin != 0) {
+			_STL::allocator<char>().deallocate(m_begin, allocation_size);
+		}
+	}
+};
+
+template class _STL::vector<BfmeDtorMemberBElement>;
