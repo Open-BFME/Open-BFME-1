@@ -81303,3 +81303,4 @@ g_bfmeJpegExtendedMessage,0x01081238,JPEG extended message-table text selected f
 ?add@U1CallSink@@QAEXPBD@Z,0x0002DFEC,address-derived U1 call-sequence sink append ILT
 ?apply@U1CallReceiver_005C47D0@@QAEXPAVArgument@1@@Z,0x0002408C,address-derived U1 call-sequence final apply ILT
 ?bfmeGoDGE@BfmeGlobal_012f706c@@QAEXPAX0@Z,0x00035779,call-site callee candidate for Glo012F1024Item::j_00040c32; the global at 0x012F706C is loaded into thiscall ecx and the body matches the existing bfmeGoDGE stdcall routine at 0x00612610
+?bfmeCall40F39@BfmeGlobal_012f1024@@QAEXPAX00E@Z,0x00040F39,call-site callee candidate for Glo012F1024Item::j_0002d3e4; the global at 0x012F1024 is loaded into thiscall ecx and the four stack arguments match the 0x003B4510 body
