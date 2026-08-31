@@ -141,4 +141,49 @@ ptrdiff_t _Filebuf_base::_M_read(char *buf, ptrdiff_t n)
   return (ptrdiff_t)NumberOfBytesRead;
 }
 
+static streamoff __file_size(_STLP_fd fd)
+{
+  LARGE_INTEGER li;
+  li.LowPart = GetFileSize(fd, (DWORD *)&li.HighPart);
+  if (li.LowPart == (DWORD)-1 && GetLastError() != 0)
+    return streamoff(0);
+  return li.QuadPart;
+}
+
+streamoff _Filebuf_base::_M_file_size()
+{
+  return __file_size(_M_file_id);
+}
+
+// STLport 4.5.3 Win32 file-position wrapper.
+streamoff _Filebuf_base::_M_seek(streamoff offset, ios_base::seekdir dir)
+{
+  int whence;
+
+  switch (dir) {
+  case ios_base::beg:
+    if (offset < 0)
+      return streamoff(-1);
+    whence = FILE_BEGIN;
+    break;
+  case ios_base::cur:
+    whence = FILE_CURRENT;
+    break;
+  case ios_base::end:
+    if (-offset > _M_file_size())
+      return streamoff(-1);
+    whence = FILE_END;
+    break;
+  default:
+    return streamoff(-1);
+  }
+
+  LARGE_INTEGER li;
+  li.QuadPart = offset;
+  li.LowPart = SetFilePointer(_M_file_id, li.LowPart, &li.HighPart, whence);
+  if (li.LowPart == (DWORD)-1 && GetLastError() != 0)
+    return streamoff(-1);
+  return li.QuadPart;
+}
+
 _STLP_END_NAMESPACE
