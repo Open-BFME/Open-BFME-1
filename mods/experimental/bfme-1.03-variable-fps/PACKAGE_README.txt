@@ -15,8 +15,10 @@ Behavior
 - Below 15 FPS, animation uses the same visualFPS / 15 slowdown as gameplay.
 - The legacy six-phase dispatch is completed below 30 FPS without adding
   authoritative phase-1 ticks.
-- A true pause uses the retail phase-1 pause gate. Logic slices, interpolation,
-  and WW3D elapsed animation time are held until unpause.
+- A true pause bypasses GameLogic phase dispatch while retaining BFME's native
+  client-frame presentation updates. Authoritative logic, world drawables,
+  particles, interpolation, and WW3D elapsed animation time remain held, while
+  APT/menu and Anim2D UI presentation can continue as retail expects.
 - Shell and loading screens retain the retail real-time WW3D clock, so the
   main-menu Sauron's-tower camera movie advances before gameplay exists.
 - An unpaused shell map receives the same 5-Hz logic cadence as gameplay;
@@ -44,7 +46,12 @@ Behavior
 Verification
 ------------
 The included deterministic test results cover 60, 45, 30, 20, 15, 12, 10,
-and 5 FPS, pause preservation, low-FPS recovery, and discarded stalls.
+and 5 FPS, pause preservation, presentation-only pause routing with no
+GameLogic phase calls, low-FPS recovery, and discarded stalls.
+
+Known test result: the presentation-only pause-routing experiment did not
+restore the missing single-player pause ornament in the in-game user test.
+It is retained here as a tested negative result, not as a confirmed fix.
 
 This diagnostic build also writes C:\BFME1\BFME_FOCUS_DIAGNOSTIC.csv. It
 records focus state, the retail frame limiter fields, measured render timing,
@@ -52,7 +59,7 @@ the scheduler accumulator, and W3D frame time. The probes are read-only and do
 not change focus, pacing, presentation, or timing behavior.
 
 dinput8.dll SHA-256:
-197EBDE42048655345A1A820FF6C51371910B436A6D834C4A052B9881AD84CB3
+F1296DBA9BE8E94167CB68CE7A20F265796125A11EDE2B26937BA388143610E6
 
 This is a local test package. It does not modify lotrbfme.exe or any
 Open-BFME repository branch.

@@ -109,6 +109,7 @@ typedef struct {
 static TimingState g_timing;
 static HANDLE g_timingLog=INVALID_HANDLE_VALUE;
 static volatile LONG g_dueDecision,g_dueInFlight,g_phaseDecision;
+static volatile LONG g_skipPhaseDispatch;
 static volatile LONG g_w3dClockFrozen;
 static volatile LONG g_legacyPhaseCalls;
 static LONG g_lastForeground=-1;
@@ -494,6 +495,7 @@ static void __stdcall reset_time_scheduler(void *engine){
   ZeroMemory(g_states,sizeof(g_states));ZeroMemory(g_objectAnims,sizeof(g_objectAnims));ZeroMemory(g_particleStates,sizeof(g_particleStates));g_particleRenderSerial=0;
   ZeroMemory(&g_fx,sizeof(g_fx));g_fx.phase=1.0f;
   InterlockedExchange(&g_dueDecision,0);InterlockedExchange(&g_dueInFlight,0);InterlockedExchange(&g_phaseDecision,2);
+  InterlockedExchange(&g_skipPhaseDispatch,0);
   InterlockedExchange(&g_w3dClockFrozen,0);
   log_timing(LOADING_TRANSITION,"RESET_REBASE",TRUE);
 }
@@ -542,7 +544,7 @@ static void complete_legacy_phases(void *engine,LONG firstPhase){
 }
 static void __stdcall schedule_time_tick(void *engine,LONG newPeriod){
   LARGE_INTEGER now;double delta,instant,alpha;void *logic;int mode,loading,paused;TimingClass classification;BOOL due;
-  InterlockedExchange(&g_dueDecision,0);InterlockedExchange(&g_phaseDecision,newPeriod);
+  InterlockedExchange(&g_dueDecision,0);InterlockedExchange(&g_phaseDecision,newPeriod);InterlockedExchange(&g_skipPhaseDispatch,0);
   if(InterlockedExchange(&g_dueInFlight,0)!=0){++g_timing.networkBlocks;log_timing(NETWORK_BLOCKED,"BLOCKED",TRUE);}
   QueryPerformanceCounter(&now);
   if(!g_timing.initialized||!g_timing.frequency.QuadPart){reset_time_scheduler(engine);g_timing.lastQpc=now;hold_visual_phase(engine,newPeriod,TRUE);return;}
@@ -559,12 +561,16 @@ static void __stdcall schedule_time_tick(void *engine,LONG newPeriod){
   if(paused||engine_time_frozen()){
     InterlockedExchange(&g_w3dClockFrozen,1);
     hold_visual_phase(engine,newPeriod,FALSE);
-    /* Preserve the retail pause contract: phase 1 enters
-       _bfme_updateNetworkAndLogic's isGamePaused gate and suppresses the
-       GameLogic/client slice.  dueDecision remains false, so this is not a
-       scheduled logic tick and does not change the 5-Hz timer. */
-    InterlockedExchange(&g_phaseDecision,1);
-    log_timing(PAUSED,"NATIVE_PHASE1_PAUSE_GATE",FALSE);return;
+    /* GameEngine::update has already set GameClient::m_advanceFrame = 1.
+       Do not route every paused render through phase 1: retail's phase-1
+       pause gate clears m_advanceFrame, which starves the client-frame clock
+       used by APT/menu and Anim2D presentation.  Skipping the phase dispatch
+       leaves those client-only updates alive while avoiding every GameLogic
+       phase.  GameClient's native isGamePaused checks still freeze drawables
+       and particles, and the explicit W3D clock freeze above stops world
+       animation. */
+    InterlockedExchange(&g_skipPhaseDispatch,1);
+    log_timing(PAUSED,"PRESENTATION_ONLY_NO_LOGIC_PHASE",FALSE);return;
   }
   InterlockedExchange(&g_w3dClockFrozen,0);
   g_timing.activeSeconds+=delta;advance_visual_time(engine,delta);classification=g_timing.fps<15.0?LOW_FPS_SLOWDOWN:ACTIVE_SIMULATION;
@@ -701,9 +707,15 @@ static BOOL hook_floating_text(BYTE *site){
   FlushInstructionCache(GetCurrentProcess(),t,p-t);return patch_jump(site,FLOAT_TEXT_N,t);
 }
 static BOOL hook_scheduler_decision(BYTE *site){
-  BYTE*t=(BYTE*)VirtualAlloc(0,160,MEM_COMMIT|MEM_RESERVE,PAGE_EXECUTE_READWRITE),*p;DWORD rel;if(!t)return FALSE;p=t;
+  BYTE*t=(BYTE*)VirtualAlloc(0,192,MEM_COMMIT|MEM_RESERVE,PAGE_EXECUTE_READWRITE),*p;DWORD rel;if(!t)return FALSE;p=t;
   b(&p,0xD9);b(&p,0x5E);b(&p,0x38);b(&p,0x57);b(&p,0x9C);b(&p,0x60);b(&p,0x51);b(&p,0x56);b(&p,0xB8);d(&p,(DWORD)(ULONG_PTR)&schedule_time_tick);b(&p,0xFF);b(&p,0xD0);b(&p,0x61);b(&p,0x9D);
-  b(&p,0x50);b(&p,0xB8);d(&p,(DWORD)(ULONG_PTR)&g_phaseDecision);b(&p,0x8B);b(&p,0x08);b(&p,0xB8);d(&p,(DWORD)(ULONG_PTR)&g_dueDecision);b(&p,0x83);b(&p,0x38);b(&p,0x00);b(&p,0x58);
+  b(&p,0x50);b(&p,0xB8);d(&p,(DWORD)(ULONG_PTR)&g_phaseDecision);b(&p,0x8B);b(&p,0x08);
+  /* A paused presentation frame bypasses _bfme_updateNetworkAndLogic and
+     lands at the common epilogue.  The original push edi at the patch site
+     was reproduced above, so the epilogue's pop edi remains balanced. */
+  b(&p,0xB8);d(&p,(DWORD)(ULONG_PTR)&g_skipPhaseDispatch);b(&p,0x83);b(&p,0x38);b(&p,0x00);b(&p,0x74);b(&p,0x06);b(&p,0x58);
+  b(&p,0xE9);rel=(DWORD)(ULONG_PTR)(site+0xAD)-((DWORD)(ULONG_PTR)p+4);d(&p,rel);
+  b(&p,0xB8);d(&p,(DWORD)(ULONG_PTR)&g_dueDecision);b(&p,0x83);b(&p,0x38);b(&p,0x00);b(&p,0x58);
   b(&p,0x0F);b(&p,0x85);rel=(DWORD)(ULONG_PTR)(site+SCHED_N)-((DWORD)(ULONG_PTR)p+4);d(&p,rel);
   b(&p,0xE9);rel=(DWORD)(ULONG_PTR)(site+0xA5)-((DWORD)(ULONG_PTR)p+4);d(&p,rel);
   FlushInstructionCache(GetCurrentProcess(),t,p-t);return patch_jump(site,SCHED_N,t);

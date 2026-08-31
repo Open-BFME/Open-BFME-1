@@ -34,6 +34,7 @@ fx_cadence fps=5 updates=600 expected=600 PASS
 camera_scroll fps=5 authored_frames=1800.000000 expected=1800.000000 PASS
 pause_remainder ticks=1 expected=1 PASS
 pause_visual_phase phase=0.375000 expected=0.375000 PASS
+pause_presentation_route client_frames=12 logic_phases=0 expected=12,0 PASS
 fx_pause_remainder before=0 after=1 expected=0,1 PASS
 w3d_clock shell=1.0 paused=0.0 active_low=0.8 synthetic=1.0 expected=1.0,0.0,0.8,1.0 PASS
 pause_manual_animation rendered=11.000000 expected=11.000000 PASS

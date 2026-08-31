@@ -104,6 +104,21 @@ int main(void)
   for(i=0;i<600;i++)phase+=bfme_animation_delta(0.0,60.0)/0.2;
   fprintf(out,"pause_visual_phase phase=%.6f expected=0.375000 %s\n",phase,absolute(phase-0.375)<1.0e-9?"PASS":"FAIL");if(absolute(phase-0.375)>=1.0e-9)failures++;
 
+  {
+    int render,clientFrame=0,advanceFrame=1,logicPhaseCalls=0;
+    /* Model the hook boundary: retail has already set advanceFrame before
+       the scheduler decision.  The presentation-only pause route must leave
+       it set and must not enter any GameLogic phase. */
+    for(render=0;render<12;render++){
+      if(advanceFrame)clientFrame++;
+      advanceFrame=1;
+      /* paused scheduler: skip the phase-dispatch call */
+    }
+    fprintf(out,"pause_presentation_route client_frames=%d logic_phases=%d expected=12,0 %s\n",
+      clientFrame,logicPhaseCalls,(clientFrame==12&&logicPhaseCalls==0)?"PASS":"FAIL");
+    if(clientFrame!=12||logicPhaseCalls!=0)failures++;
+  }
+
   fprintf(out,"game_modes shell4=%d singleplayer7=%d expected=1,0 %s\n",bfme_game_mode_suspends_scheduler(4),bfme_game_mode_suspends_scheduler(7),bfme_game_mode_suspends_scheduler(4)==1&&bfme_game_mode_suspends_scheduler(7)==0?"PASS":"FAIL");
   if(bfme_game_mode_suspends_scheduler(4)!=1||bfme_game_mode_suspends_scheduler(7)!=0)failures++;
 
