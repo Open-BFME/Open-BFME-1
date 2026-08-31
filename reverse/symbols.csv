@@ -81504,8 +81504,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?ensureStorage@Rva007BDB70ArrayOwner@@QAEXXZ,0x00040EDA,RVA-derived ILT call target used by bounded fixed-record lookup at 0x007BDB70
-?getState@Rva0024D4E0Owner@@QAEPAURva0024D4E0State@@XZ,0x00021017,RVA-derived ILT call target used by the positive-state clamp at 0x0024D4E0
 ?getSlot@BfmeGameInfo@@QAEPAVBfmeGameSlot@@H@Z,0x0001EC18,LANAPI::sendMessage direct-connect slot lookup ILT through TU-local BFME layout shim
 ?isHuman@BfmeGameSlot@@QBE_NXZ,0x000279CB,LANAPI::sendMessage human-slot predicate ILT through TU-local BFME layout shim
 ?queueSend@BfmeTransportQueueShim@@QAE_NPBUBfmeTransportAddress@@PBEH@Z,0x00049F80,LANAPI::sendMessage BFME transport queue ILT through TU-local address shim
