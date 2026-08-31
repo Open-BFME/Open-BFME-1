@@ -73866,6 +73866,7 @@ name,address,notes
 ?bfmeInitSubEFA@@YAXPAX0@Z,0x0000129E,pin
 ?bfmeInitTCB@BfmeBaseTCB@@QAEXXZ,0x0000835F,pin
 ?bfmeInitTEB@BfmeBaseTEB@@QAEXXZ,0x00041970,pin
+?bfmeInitTFA@BfmeBaseTFA@@QAEXXZ,0x0000835F,pin
 ?bfmeInitVal1047@@YAXPAUBfmeValS1047@@H@Z,0x00007554,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
@@ -73976,6 +73977,7 @@ name,address,notes
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
+?bfmeMakeTFD@BfmeHolderTFD@@QAEXPAX@Z,0x009DB4B0,pin
 ?bfmeMakeW0@@YAIII@Z,0x0004B28B,Open-BFME5 ILT the variant ctor at 0x00390830 calls
 ?bfmeMakeW1@@YAIII@Z,0x00002B8F,Open-BFME5 ILT the variant ctor at 0x003CA5F0 calls
 ?bfmeMakeW2@@YAIII@Z,0x00025225,Open-BFME5 ILT the variant ctor at 0x0054F770 calls
@@ -74176,6 +74178,7 @@ name,address,notes
 ?bfmeOneTBA@BfmeThingTBA@@QAEXXZ,0x000297F8,pin
 ?bfmeOneTEC@BfmeThingTEC@@QAEXXZ,0x0002AC7F,pin
 ?bfmeOneTED@BfmeThingTED@@QAEXH@Z,0x0003E045,pin
+?bfmeOneTFB@BfmeThingTFB@@QAEXXZ,0x0002037E,pin
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOpen1071@BfmeR1071@@QAEXPAVBfmeX1071@@@Z,0x0002144A,pin
 ?bfmeOpen1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x0002144A,pin
@@ -74316,6 +74319,7 @@ name,address,notes
 ?bfmeRunFAA@BfmeSubFAA@@QAEXH@Z,0x00030887,pin
 ?bfmeRunFBG@BfmeItemFBG@@QAEXH@Z,0x00031228,pin
 ?bfmeRunFDB@BfmeThingFDB@@QAEXPAX@Z,0x00048F36,pin
+?bfmeRunTFD@BfmeHolderTFD@@QAEXXZ,0x009DB4D0,pin
 ?bfmeSay1025@BfmeP1025@@QAEDPAD@Z,0x009EEBB0,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
@@ -74398,6 +74402,7 @@ name,address,notes
 ?bfmeSetState1285@BfmeNode1285@@QAEXH@Z,0x008D3050,address-derived node state method called by the 0x008BB570 retail body
 ?bfmeSetTCB@BfmeSetterTCB@@QAEXPAXH@Z,0x00037A56,pin
 ?bfmeSetTEB@BfmeSubTEB@@QAEXH@Z,0x000122AB,pin
+?bfmeSetTFA@BfmeSubTFA@@QAEXH@Z,0x000348EC,pin
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -74724,6 +74729,7 @@ name,address,notes
 ?bfmeTwoTBA@BfmeThingTBA@@QAEXXZ,0x00024780,pin
 ?bfmeTwoTEC@BfmeBaseTEC@@QAEXXZ,0x00017A7B,pin
 ?bfmeTwoTED@BfmeThingTED@@QAEXXZ,0x0002214C,pin
+?bfmeTwoTFB@BfmeThingTFB@@QAEXHH@Z,0x0001621B,pin
 ?bfmeTwoWE@BfmeSubWE@@QAEXPAX@Z,0x00007A63,pin
 ?bfmeUnguardedInsertAO@@YAXPAHHVBfmeCompAO@@@Z,0x0001A424,Open-BFME5 the ICF thunk (to 0x0041A424) the linear insert at 0x00453020 hands its unguarded arm to
 ?bfmeUnguardedInsertAP@@YAXPAHHVBfmeCompAP@@@Z,0x000389B5,Open-BFME5 the ICF thunk (to 0x004389B5) the linear insert at 0x00453110 hands its unguarded arm to
@@ -74776,6 +74782,7 @@ name,address,notes
 ?bfmeUseSHA@BfmeStoreSHA@@QAEXPAH@Z,0x0001A37A,pin
 ?bfmeUseTBB@BfmeThingTBB@@QAEXH@Z,0x0001284B,pin
 ?bfmeUseTCA@BfmeSinkTCA@@QAEXPAX@Z,0x008097D0,pin
+?bfmeUseTFC@BfmeSinkTFC@@QAEXPAX0@Z,0x007F69B0,pin
 ?bfmeVal1025@BfmeH1025@@QAEHXZ,0x0001F668,pin
 ?bfmeVal1027@BfmeVal1027@@QAEMXZ,0x0000D7B5,pin
 ?bfmeVal1034@BfmeN1034@@QAEHXZ,0x00898300,pin
