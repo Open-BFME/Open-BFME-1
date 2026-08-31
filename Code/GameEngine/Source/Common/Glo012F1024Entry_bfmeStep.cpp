@@ -16,6 +16,15 @@
 
 typedef int Int;
 
+class BfmeIntVector
+{
+public:
+	unsigned int bfmeSize(void) const { return m_bfmeEnd - m_bfmeBegin; }
+
+	int *m_bfmeBegin;
+	int *m_bfmeEnd;
+};
+
 class Glo012F1024Item
 {
 public:
@@ -38,7 +47,15 @@ public:
 	void j_00036124(void);
 	void j_00010bcc(void);
 
-	char m_bfmeBody[0xDC];
+	char m_bfmeHead[0x38];
+	BfmeIntVector m_bfmeItems;
+	char m_bfmeTail[0xDC - 0x40];
+};
+
+class Gen_003C02B0
+{
+public:
+	void bfmeRemove(int value);
 };
 
 class Glo012F1028Sub
@@ -56,6 +73,15 @@ public:
 };
 
 extern Glo012F1028Type *Glo012F1028;				// 0x012F1028
+
+extern Gen_003C02B0 *Glo012F1028Remove;				// 0x012F1028
+
+// ?j_00008053@Glo012F1024Item@@QAEXXZ
+void Glo012F1024Item::j_00008053(void)
+{
+	for (unsigned int index = 0; index < m_bfmeItems.bfmeSize(); ++index)
+		Glo012F1028Remove->bfmeRemove((int)(m_bfmeItems.m_bfmeBegin + index));
+}
 
 class Glo012F1024Entry
 {
