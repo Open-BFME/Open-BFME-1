@@ -2180,6 +2180,8 @@ name,address,notes
 ??0BfmeRecorderStore@@QAE@XZ,0x00016D47,Open-BFME5 ILT thunk to body 0x00098EA0; ??0RecorderClass@@QAE@XZ at 0x000993E0 constructs the member at +0x20 through it; address-derived name
 ??0BfmeS1059@@QAE@XZ,0x00018A07,pin
 ??0BfmeSMiddle@@QAE@PAX0@Z,0x00025306,Open-BFME5 the base the multi-vftable constructor at 0x006949B0 forwards to
+??0BfmeSelectFriendsUnicodeBase@@AAE@ABV0@@Z,0x00888400,TU-scoped BFME UnicodeString copy constructor
+??0BfmeSelectFriendsUnicodeBase@@AAE@PBG@Z,0x00888DE0,TU-scoped BFME UnicodeString wide-text constructor
 ??0BfmeSortElem20Tail@@QAE@ABV0@@Z,0x000266BB,Open-BFME5 ILT the copy constructor of the twelve-byte member at S4SortElem20+8
 ??0BfmeSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,Open-BFME5 the incremental-link thunk those constructors encode
 ??0BfmeSpecialPowerModuleDataBase@@QAE@XZ,0x00268120,Open-BFME5 base constructor every SpecialPower module data forwards to; runs to +0x210. Byte-identical to and folded with RiderChangeContainModuleData so the address cannot name the class
@@ -9279,6 +9281,7 @@ name,address,notes
 ??A?$map@HVPSPlayerStats@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHVPSPlayerStats@@@_STL@@@3@@_STL@@QAEAAVPSPlayerStats@@ABH@Z,0x0002D64B,GameSpyPSMessageQueue player-stats map subscript ILT; caller branches assign stats or merged stats
 ??A?$map@IPAVImage@@U?$less@I@_STL@@V?$allocator@U?$pair@$$CBIPAVImage@@@_STL@@@3@@_STL@@QAEAAPAVImage@@ABI@Z,0x0002A52C,REL32 pin from ImageCollection::addImage @0x5D3410
 ??A?$map@JVLadderPref@@U?$less@J@_STL@@V?$allocator@U?$pair@$$CBJVLadderPref@@@_STL@@@3@@_STL@@QAEAAVLadderPref@@ABJ@Z,0x000ACC40,lower_bound by signed key then insert of pair(key; default LadderPref via ??0LadderPref ILT 0x00048329 and _M_insert ILT 0x00031AED) and ??1LadderPref ILT 0x0004723F; returns node+0x14 = mapped LadderPref; callers LadderPreferences::loadProfile 0x000AE391 and 0x000AE8C5; ILT 0x0001C6E8
+??A?$map@PBVThingTemplate@@HU?$less@PBVThingTemplate@@@_STL@@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAEAAHABQBVThingTemplate@@@Z,0x00017111,SelectionTranslator selectFriends retail ILT
 ??A?$map@U?$pair@HH@_STL@@PAVTeamPrototype@@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@QAEAAPAVTeamPrototype@@ABU?$pair@HH@1@@Z,0x000F3A20,call displacement in addTeamPrototypeToList @0x000F3E0A
 ??A?$map@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@HU?$less@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@H@_STL@@@2@@_STL@@QAEAAHABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@1@@Z,0x00017ADF
 ??A?$map@VAsciiString@@MU?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@M@_STL@@@3@@_STL@@QAEAAMABVAsciiString@@@Z,0x000D97B0,PlayerTemplate time-change local map operator owner
@@ -9572,6 +9575,7 @@ name,address,notes
 ?AsciiStringToQuotedPrintable@@YA?AVAsciiString@@V1@@Z,0x0001E1F0,Open-BFME5 ILT called by the exact CustomMatchPreferences::setPreferredMap body at 0x000ADFC0; fronts the shared body at 0x00106150
 ?AsciiStringToQuotedPrintable@@YA?AVAsciiString@@V1@@Z,0x00106150,authoritative WWLib quoted_printable.cpp identity; retail encode buffer 0x012EDDA8
 ?BFMEComputeCRC@@YAIPBEII@Z,0x00065250,the packet CRC; body written in native_packet_crc.cpp, one reassociation short of clean
+?BFMEEmptyUnicodeString@@3GB,0x00C7388C,TU-scoped BFME UnicodeString empty payload
 ?BFMEGetWaterTrackTexture@@YA?AVBFMEWaterTrackTextureHandle@@PADHH@Z,0x0090E910,retail 4-byte texture handle return used by WaterTracksObj::init
 ?BFMENetworkAllocate@@YAPAXI@Z,0x00881F30,native BFME wrapper-list allocation call target
 ?BFME_DX8_Thread_Assert@@YAXXZ,0x00905B10,both retail IndexBufferClass lock destructors tail-dispatch to the shared DX8 thread assertion path
@@ -12543,6 +12547,7 @@ name,address,notes
 ?appendLocationArgument@GameMessage@@QAEXABUCoord3D@@@Z,0x00037AD8,GameMessage::appendLocationArgument thunk
 ?appendNode@Path@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z,0x0003833E,retail Path::appendNode ILT thunk (body 0x0016A4B0)
 ?appendObjectIDArgument@GameMessage@@QAEXI@Z,0x0002BCEC,GameMessage::appendObjectIDArgument thunk
+?appendObjectIDArgument@GameMessage@@QAEXW4ObjectID@@@Z,0x0002BCEC,SelectionTranslator selectFriends retail ILT
 ?appendPixelArgument@GameMessage@@QAEXABUICoord2D@@@Z,0x0002EA41,GameMessage::appendPixelArgument thunk
 ?appendPixelRegionArgument@GameMessage@@QAEXABUIRegion2D@@@Z,0x00011DCE,GameMessage::appendPixelRegionArgument thunk
 ?appendRealArgument@GameMessage@@QAEXM@Z,0x00002608,GameMessage::appendRealArgument thunk
@@ -79163,6 +79168,7 @@ name,address,notes
 ?releaseBuffer@AsciiString@@AAEXXZ,0x00887940,same body already pinned as ?releaseBuffer@BFMERetailAsciiString and ??1AsciiString; BFMERetailAsciiString is this tree's stand-in name for the same class
 ?releaseBuffer@AsciiString@@IAEXXZ,0x00887940,Ghidra GrabWindowInfo direct callee
 ?releaseBuffer@BFMERetailAsciiString@@AAEXXZ,0x00887940
+?releaseBuffer@BfmeSelectFriendsUnicodeBase@@AAEXXZ,0x008881D0,TU-scoped BFME UnicodeString release body
 ?releaseBuffer@CreateObjectDieOCLName@@QAEXXZ,0x00887940,Open-BFME5 CreateObjectDie OCL string release pin
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x0000D828,site-decoded x9 (thunk)
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x00018949,site-decoded x9 (thunk)
@@ -79170,6 +79176,7 @@ name,address,notes
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x00887940,additive; per-TU copy (static 0x01336E2C)
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x008881D0,BFME releaseBuffer body (inlined ~UnicodeString call sites encode this)
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x009409F0
+?releaseBuffer@ZHUnicodeString@@IAEXXZ,0x008881D0,SelectionTranslator selectFriends UnicodeString release body
 ?releaseD3DCursorTextures@W3DMouse@@AAE_NW4MouseCursor@Mouse@@@Z,0x000484C8,retail W3DMouse::setCursor DX8 release call; ILT targets body 0x00700530 whose loop releases the 21 surface/texture slots
 ?releaseData@Dict@@AAEXXZ,0x00014475
 ?releaseInto@MixFileInfoBuffer@@QAEXPAX@Z,0x003F6E10,Open-BFME5 the one-argument member FileInfoStruct's destructor calls on its first member; unnamed in the image
@@ -81367,10 +81374,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?appendObjectIDArgument@GameMessage@@QAEXW4ObjectID@@@Z,0x0002BCEC,SelectionTranslator selectFriends retail ILT
-?BFMEEmptyUnicodeString@@3GB,0x00C7388C,TU-scoped BFME UnicodeString empty payload
-??0BfmeSelectFriendsUnicodeBase@@AAE@PBG@Z,0x00888DE0,TU-scoped BFME UnicodeString wide-text constructor
-??0BfmeSelectFriendsUnicodeBase@@AAE@ABV0@@Z,0x00888400,TU-scoped BFME UnicodeString copy constructor
-?releaseBuffer@ZHUnicodeString@@IAEXXZ,0x008881D0,SelectionTranslator selectFriends UnicodeString release body
-?releaseBuffer@BfmeSelectFriendsUnicodeBase@@AAEXXZ,0x008881D0,TU-scoped BFME UnicodeString release body
-??A?$map@PBVThingTemplate@@HU?$less@PBVThingTemplate@@@_STL@@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAEAAHABQBVThingTemplate@@@Z,0x00017111,SelectionTranslator selectFriends retail ILT
