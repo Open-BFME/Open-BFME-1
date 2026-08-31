@@ -75002,6 +75002,7 @@ name,address,notes
 ?clearAllProps@W3DPropBuffer@@QAEXXZ,0x000298BB
 ?clearAllRoads@W3DRoadBuffer@@QAEXXZ,0x000336F9,first of the seven calls W3DRoadBuffer::loadRoads makes at 0x007105D0, entered with this unchanged; named by position against the four already-named calls that follow it. Body 0x00706E60
 ?clearAndSet@ModelConditionFlags@@QAEXABV1@0@Z,0x0000AF06,Drawable::replaceModelConditionState calls the retail ModelConditionFlags clear-and-set ILT
+?clearAndSetModelConditionFlags@Object@@QAEXABV?$BitFlags@$0BEA@@@0@Z,0x000095ED,FiringTracker speedUp retail ILT for Object model-condition clear-and-set
 ?clearAndSetModelConditionFlags@Object@@QAEXABVModelConditionFlags@@0@Z,0x001C7720,BFME retail Object model-condition forwarding body called by FiringTracker::coolDown at 0x001B33E0
 ?clearAndSetModelConditionFlags@Object@@QAEXABVModelConditionFlags@@PBV2@@Z,0x001C7370,Open-BFME5 the member clearModelConditionState forwards its one-bit mask to with a null set-mask; unnamed in the image
 ?clearAndSetModelConditionState@Drawable@@QAEXW4ModelConditionFlagType@@0@Z,0x0001C8D2
