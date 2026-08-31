@@ -79,6 +79,12 @@ public:
 	GameFont *getFont(AsciiString *name, Real pointSize, UnsignedByte bold);
 };
 
+struct GlobalLanguageDataBFMERetail
+{
+	unsigned char m_unmodelled_00[0x20];
+	Bool m_useHardWrap;
+};
+
 // PRIVATE DATA ///////////////////////////////////////////////////////////////
 
 // PUBLIC DATA ////////////////////////////////////////////////////////////////
@@ -131,7 +137,6 @@ W3DDisplayString::~W3DDisplayString( void )
 	* class so that we can write our own code here to to appropriate things
 	* on the changing of string data */
 //=============================================================================
-// ?notifyTextChanged@W3DDisplayString@@UAEXXZ present-unmatched
 void W3DDisplayString::notifyTextChanged( void )
 {
 
@@ -139,7 +144,7 @@ void W3DDisplayString::notifyTextChanged( void )
 	DisplayString::notifyTextChanged();
 	if(TheGlobalLanguageData)
 	{
-		if(TheGlobalLanguageData->m_useHardWrap == TRUE)
+		if(reinterpret_cast<GlobalLanguageDataBFMERetail *>(TheGlobalLanguageData)->m_useHardWrap == TRUE)
 		{	
 			m_textRenderer.Set_Use_Hard_Word_Wrap(true);
 			m_textRendererHotKey.Set_Use_Hard_Word_Wrap(true);
