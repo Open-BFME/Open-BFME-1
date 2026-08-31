@@ -81341,3 +81341,5 @@ _strtol,0x009F71CC,AptValue::toInteger at 0x00898300 calls the retail strtol imp
 ?transformCenter@BfmeGeometryPiece@@QBEXPAUCoord3D@@M@Z,0x0087DB10,Single-box distance helper calls the retail geometry-piece center transform
 ?boxMajorRadius@BfmeGeometryInfo@@QBEMXZ,0x0087DC20,Single-box distance helper calls the retail GeometryInfo major-radius accessor
 ?boxMinorRadius@BfmeGeometryInfo@@QBEMXZ,0x0087DC30,Single-box distance helper calls the retail GeometryInfo minor-radius accessor
+?bfmeExperienceForNextLevel@ExperienceLevelSystem@@QAEHPAVObject@@PAH@Z,0x0000C284,ExperienceTracker multi-level gain calls the retail next-level experience query with a null output-level pointer
+?addExperiencePoints@ExperienceTracker@@QAEXM_N000@Z,0x00010096,ExperienceTracker multi-level gain calls the adjacent retail five-argument add-experience body
