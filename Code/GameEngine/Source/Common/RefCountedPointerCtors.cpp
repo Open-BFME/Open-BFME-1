@@ -38,6 +38,39 @@
 typedef long Long;
 
 extern "C" __declspec(dllimport) Long __stdcall InterlockedIncrement( Long volatile *addend );
+extern "C" __declspec(dllimport) Long __stdcall InterlockedDecrement( Long volatile *addend );
+
+class RefTargetBase006964E0
+{
+public:
+	virtual ~RefTargetBase006964E0() {}
+	Long m_refCount;
+};
+
+struct Rva006964E0Target
+{
+	char m_unreconstructed_00[ 0x70 ];
+	RefTargetBase006964E0 m_base;
+};
+
+class Rva006964E0Ptr
+{
+public:
+	void reset( void );
+	Rva006964E0Target *m_ptr;
+};
+
+void Rva006964E0Ptr::reset( void )
+{
+	Rva006964E0Target *p = m_ptr;
+	if ( p )
+	{
+		RefTargetBase006964E0 *base = &p->m_base;
+		if ( InterlockedDecrement( &base->m_refCount ) <= 0 )
+			delete base;
+		m_ptr = 0;
+	}
+}
 
 #define RVA_REF_TARGET( NAME, PAD )                                       \
 	struct NAME##Target                                                   \
