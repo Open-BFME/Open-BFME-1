@@ -150,6 +150,25 @@ def same_class_different_methods(names):
     return len({c for c, _ in bits}) == 1 and len({f for _, f in bits}) > 1
 
 
+def reviewed_icf_group(rows):
+    """True when every alias explicitly names the group's one ICF owner.
+
+    add_match validates ``icf-owner=`` against an existing row with the same
+    address, size, and compiled shape.  Carrying that reviewed relationship in
+    the ledger is stronger evidence than re-flagging the names after every
+    clean build; an unannotated sibling remains a FAMILY candidate.
+    """
+    names = {row["name"] for row in rows}
+    aliases = {}
+    for row in rows:
+        match = re.search(r"(?:^|;)icf-owner=([^;]+)", row.get("notes", ""))
+        if match is not None:
+            aliases[row["name"]] = match.group(1)
+    owners = names - set(aliases)
+    return (len(owners) == 1 and len(aliases) == len(names) - 1
+            and set(aliases.values()) == owners)
+
+
 Group = collections.namedtuple(
     "Group", "rva size names verdict family surviving masked_split")
 
@@ -248,7 +267,9 @@ def classify(rows, read=None):
             # setters read as perfectly matched while every Color row sat on the
             # Image body. Only reported for small groups; a forty-name ICF group
             # of trivial accessors will always contain some one-token pair.
-            if len(names) <= LARGE_GROUP and accessor_siblings(names):
+            if reviewed_icf_group(rs):
+                yield Group(rva, size, names, FOLD, family, left, split)
+            elif len(names) <= LARGE_GROUP and accessor_siblings(names):
                 yield Group(rva, size, names, FAMILY, family, left, split)
             else:
                 yield Group(rva, size, names, FOLD, family, left, split)

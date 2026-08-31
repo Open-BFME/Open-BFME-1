@@ -128,6 +128,25 @@ def test_a_family_conflict_is_flagged_even_when_the_bodies_match_here():
     assert got.verdict == multi_name.FAMILY
 
 
+def test_a_reviewed_icf_family_is_not_flagged_again():
+    owner = _row("?Cast_AABox@AABTreeClass@@QAE_NXZ")
+    alias = _row("?Cast_OBBox@AABTreeClass@@QAE_NXZ")
+    alias["notes"] = "icf-owner=?Cast_AABox@AABTreeClass@@QAE_NXZ"
+    same = (b"\xe8\0\0\0\0\xc3\x90\x90", [(1, 0x0014, "?callee@@YAXXZ")])
+    got, = multi_name.classify(
+        [owner, alias], _reader({owner["name"]: same, alias["name"]: same}))
+    assert got.verdict == multi_name.FOLD
+
+
+def test_an_incomplete_icf_annotation_does_not_hide_a_family():
+    rows = [_row("?getAlpha@C@@QBEHXZ"), _row("?getBravo@C@@QBEHXZ"),
+            _row("?getCharlie@C@@QBEHXZ")]
+    rows[1]["notes"] = "icf-owner=?getAlpha@C@@QBEHXZ"
+    same = (b"\x90" * 8, [])
+    got, = multi_name.classify(rows, _reader({r["name"]: same for r in rows}))
+    assert got.verdict == multi_name.FAMILY
+
+
 def test_names_differing_everywhere_are_left_alone():
     """getClassMemoryPool and getModuleNameKey share a body legitimately -- they
     are two functions, not one operation on two fields. This is why the test is
