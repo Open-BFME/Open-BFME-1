@@ -81,3 +81,38 @@ Q4_TABLE_DTOR( Rva008B58E0 )
 Q4_TABLE_DTOR( Rva008CBA20 )
 Q4_TABLE_DTOR( Rva008CBAD0 )
 Q4_TABLE_DTOR( Rva008D5F70 )
+
+class __declspec( novtable ) Q4NotifyItem
+{
+	public:
+	virtual void retain();
+	virtual void release();
+};
+
+extern void (*Rva008A30A0ReleasePtr)( void * );
+
+struct Q4NotifyState
+{
+	char m_gap[ 0x18 ];
+	Q4NotifyItem **m_items;
+	unsigned char m_count;
+};
+
+void Q4Base00D35D68::notify( int a, int b )
+{
+	Q4NotifyState *state = (Q4NotifyState *)this;
+	unsigned int index;
+	for ( index = 0; index < ( (*(unsigned int *)&state->m_count) & 0xff ); ++index )
+	{
+		state->m_items[ index ]->release();
+	}
+
+	Rva008A30A0ReleasePtr( state->m_items );
+	state->m_count = (unsigned char)b;
+	state->m_items = (Q4NotifyItem **)a;
+
+	for ( index = 0; index < ( (*(unsigned int *)&state->m_count) & 0xff ); ++index )
+	{
+		state->m_items[ index ]->retain();
+	}
+}
