@@ -3567,13 +3567,6 @@ void ParticleSystemManager::removeParticle( Particle *particleToRemove)
 // ------------------------------------------------------------------------------------------------
 /** Add a particle system to the master particle system list. */
 // ------------------------------------------------------------------------------------------------
-// ?friend_addParticleSystem@ParticleSystemManager@@QAEXPAVParticleSystem@@@Z present-unmatched
-void ParticleSystemManager::friend_addParticleSystem( ParticleSystem *particleSystemToAdd )
-{
-	m_allParticleSystemList.push_back(particleSystemToAdd);
-	++m_particleSystemCount;
-}
-
 // ------------------------------------------------------------------------------------------------
 /** Remove a particle system from the master particle system list. */
 // ------------------------------------------------------------------------------------------------
