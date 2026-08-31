@@ -81333,3 +81333,4 @@ g_bfmeJpegExtendedMessage,0x01081238,JPEG extended message-table text selected f
 _strtol,0x009F71CC,AptValue::toInteger at 0x00898300 calls the retail strtol import thunk for hexadecimal string coercion
 ??0Emotion@@QAE@PAVObject@@PAVEmotionTrackerUpdateEntry@@@Z,0x0002DD08,EmotionSystem::createEmotion allocates 0x34-byte Emotion and calls this Object-first constructor through its ILT; body at 0x0037BF60
 ??1BannerTimerAsciiString@@QAE@XZ,0x00887940,BannerTimerMember element fields use the verified retail AsciiString destructor body directly
+?bfmeAt@BfmeThingEFE@@QAEMH@Z,0x0001FEEC,ExperienceTracker scalar-table helpers call this retail BfmeThingEFE lookup through its ILT
