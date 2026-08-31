@@ -48,6 +48,83 @@ public:
 	}
 };
 
+class Q4Sub00C9CC70
+{
+public:
+	~Q4Sub00C9CC70();
+};
+
+class Q4Base00D35D68
+{
+public:
+	void notify( int a, int b );
+};
+
+class Rva008B01E0HeaderedRoot
+{
+public:
+	virtual ~Rva008B01E0HeaderedRoot() {}
+
+	static void operator delete( void *storage, unsigned int size )
+	{
+		Rva00897330NotifyFree( storage );
+		g_Va01337830( (char *)storage - 8, size + 8 );
+	}
+};
+
+struct Rva008B01E0ReferenceCount
+{
+	unsigned short m_count;
+};
+
+extern void ( __cdecl **Rva01337A30ReleaseTable )( void * );
+
+class Rva008B01E0Reference
+{
+public:
+	~Rva008B01E0Reference()
+	{
+		Rva008B01E0ReferenceCount *reference = m_reference;
+		--reference->m_count;
+		if( reference->m_count == 0 )
+			Rva01337A30ReleaseTable[ 1 ]( reference );
+	}
+
+private:
+	Rva008B01E0ReferenceCount *m_reference;
+};
+
+class Rva008B01E0HeaderedMiddle : public Rva008B01E0HeaderedRoot
+{
+public:
+	__forceinline virtual ~Rva008B01E0HeaderedMiddle()
+	{
+		((Q4Base00D35D68 *)this)->notify( 0, 0 );
+		m_flag = 0;
+	}
+
+private:
+	char m_gap0[ 8 - 4 ];
+	Q4Sub00C9CC70 m_sub;
+	char m_gap1[ 0x18 - 9 ];
+	int m_flag;
+	char m_gap2[ 0x20 - 0x1C ];
+};
+
+class Rva008B01E0HeaderedDeleting : public Rva008B01E0HeaderedMiddle
+{
+public:
+	virtual ~Rva008B01E0HeaderedDeleting();
+
+private:
+	Rva008B01E0Reference m_reference;
+	char m_pad[ 0x40 - 0x24 ];
+};
+
+Rva008B01E0HeaderedDeleting::~Rva008B01E0HeaderedDeleting()
+{
+}
+
 #define BFME_HEADERED_DELETE_DTOR( NAME, PAD )                                \
 	class NAME : public HeaderedDeleteBase                                    \
 	{                                                                         \
@@ -71,7 +148,6 @@ BFME_HEADERED_DELETE_DTOR( Rva0089A800HeaderedDeleting, 20 )
 BFME_HEADERED_DELETE_DTOR( Rva0089A9A0HeaderedDeleting, 20 )
 BFME_HEADERED_DELETE_DTOR( Rva0089AB40HeaderedDeleting, 20 )
 BFME_HEADERED_DELETE_DTOR( Rva008A6410HeaderedDeleting, 36 )
-BFME_HEADERED_DELETE_DTOR( Rva008B01E0HeaderedDeleting, 60 )
 BFME_HEADERED_DELETE_DTOR( Rva008B2F20HeaderedDeleting, 36 )
 BFME_HEADERED_DELETE_DTOR( Rva008B3A10HeaderedDeleting, 36 )
 BFME_HEADERED_DELETE_DTOR( Rva008B46D0HeaderedDeleting, 32 )
