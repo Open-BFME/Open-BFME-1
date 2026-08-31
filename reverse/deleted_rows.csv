@@ -24274,3 +24274,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??1FiringTracker@@UAE@XZ,0x001B2C70,incorrect public-access mangling replaced by the verified protected FiringTracker destructor identity
 ?bfmeGo1088_45@@YGDHHH@Z,0x003229B0,"generic placeholder identity retracted: ScriptEngine virtual slot 45 is isSpecialPowerTriggered, proving this body is ScriptConditions::evaluatePlayerSpecialPowerFromUnitTriggered"
 ?bfmeGo1088_46@@YGDHHH@Z,0x00322A60,"generic placeholder identity retracted: ScriptEngine virtual slot 46 is isSpecialPowerMidway, proving this body is ScriptConditions::evaluatePlayerSpecialPowerFromUnitMidway"
+?bfmeGo1088_47@@YGDHHH@Z,0x00322B10,"generic placeholder identity retracted: ScriptEngine virtual slot 47 is isSpecialPowerComplete, proving this body is ScriptConditions::evaluatePlayerSpecialPowerFromUnitComplete"
