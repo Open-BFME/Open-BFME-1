@@ -81337,7 +81337,6 @@ _strtol,0x009F71CC,AptValue::toInteger at 0x00898300 calls the retail strtol imp
 ?isLivingWorld@GameLogic@@QAE_NXZ,0x0001D1C9,ExperienceTracker scalar helper calls GameLogic::isLivingWorld through its ILT
 ?postLoad@ExperienceLevelSystem@@QAEXPAVObject@@@Z,0x00008DFA,ExperienceTracker transfer calls the retail ExperienceLevelSystem post-load helper through its ILT
 ?getBestContactPoint@GeometryInfo@@QBE_NPAUCoord3D@@PBU2@PBDHH_N@Z,0x0087F590,Object contact-point query calls this retail GeometryInfo method through the exact body
-?isLivingWorld@GameLogic@@QAE_NXZ,0x0001D1C9,ExperienceTracker living-world scaler calls the retail GameLogic query through its ILT
 ?pieceAt@BfmeGeometryInfo@@QBEPBUBfmeGeometryPiece@@H@Z,0x0087E150,Single-box distance helper calls the retail GeometryInfo piece accessor
 ?transformCenter@BfmeGeometryPiece@@QBEXPAUCoord3D@@M@Z,0x0087DB10,Single-box distance helper calls the retail geometry-piece center transform
 ?boxMajorRadius@BfmeGeometryInfo@@QBEMXZ,0x0087DC20,Single-box distance helper calls the retail GeometryInfo major-radius accessor
